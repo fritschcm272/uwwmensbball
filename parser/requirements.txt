@@ -1,0 +1,11 @@
+# Parser script dependencies (no Spark, no Databricks)
+pandas
+beautifulsoup4
+lxml
+pdfplumber
+openai
+
+# Live opponent-schedule scraping (optional -- falls back to local backup MHTML files if these aren't
+# installed, or if FASTSCOUT_USERNAME/FASTSCOUT_PASSWORD aren't set)
+playwright
+python-dotenv

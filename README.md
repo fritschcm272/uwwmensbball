@@ -1,0 +1,195 @@
+# UWW Basketball Scouting — Portable (No Databricks)
+
+This is a self-contained version of the UW-Whitewater men's basketball scouting system
+that runs entirely outside Databricks. No Spark, no Unity Catalog, no Databricks SDK.
+
+## Project Structure
+
+```
+uww-basketball-scouting-portable/
+├── README.md                    # This file
+├── requirements.txt             # Streamlit app dependencies
+├── streamlit_app.py             # Main app (portable — reads from ./data/)
+├── .streamlit/
+│   └── config.toml              # (copy from original)
+├── data/                        # CSV data files (copy from original app)
+│   ├── uww_schedule.csv
+│   ├── uww_season_stats.csv
+│   ├── uww_pbp_events.csv
+│   ├── uww_pbp_box_score.csv
+│   ├── uww_lineup_stints.csv
+│   ├── uww_coaching_flags.csv
+│   ├── uww_opponent_rosters.csv
+│   ├── uww_player_profiles.csv
+│   ├── uww_opponent_game_plans.csv
+│   ├── uww_ktv_splits.csv
+│   ├── uww_ktv_game_categories.csv
+│   ├── uww_opponent_team_totals.csv
+│   ├── uww_projected_box_score.csv
+│   ├── aurora_projected_box_score.csv
+│   ├── uww_player_comparisons.csv
+│   ├── uww_opp_lineup_season_box.csv
+│   ├── uww_opponent_schedules.csv
+│   ├── uww_pbp_derived_keys.csv
+│   └── logo/                    # Team logos (PNG)
+│       ├── UW-Whitewater.png
+│       └── <opponent>.png
+├── parser/
+│   ├── requirements.txt         # Parser script dependencies
+│   ├── player_comparison.py     # Portable comparison algorithms module
+│   └── (convert notebook cells to parser.py — see below)
+└── inputs/                      # Raw scouting data (you provide)
+    ├── UW-Whitewater - Schedule.mhtml
+    ├── <Opponent>_schedule.mhtml
+    ├── <date>_<opponent>_scout.pdf
+    ├── <date>_<opponent>_pbp.mhtml
+    └── <date>_<opponent>_video.mhtml
+```
+
+## What Was Replaced
+
+| Databricks Feature | Original Usage | Portable Replacement |
+|---|---|---|
+| `databricks-sdk` (WorkspaceClient) | OAuth token for Foundation Model API | Standard `OPENAI_API_KEY` env var |
+| Foundation Model endpoint | `{host}/serving-endpoints` with `databricks-meta-llama-3-3-70b-instruct` | Any OpenAI-compatible API (OpenAI, Azure, Ollama, vLLM) |
+| Unity Catalog Volumes | `/Volumes/ads-predictive-analytics/.../inputs/` | Local `./inputs/` directory |
+| `spark.createDataFrame` + `spark.sql` with `ai_query()` | LLM player comparison in notebook | Direct OpenAI client calls in `player_comparison.py` |
+| `%run` notebook magic | Imports comparison algorithms notebook | Normal `from parser.player_comparison import ...` |
+| `display()` | Renders DataFrames in Databricks UI | `print(df)` or Jupyter `display()` |
+| `dbutils.library.restartPython()` | Restart after pip install | Not needed (install deps beforehand) |
+| Delta table export (`saveAsTable`) | Persists to Unity Catalog | Skipped — CSV export is the only output needed |
+| `app.yaml` | Databricks Apps deployment config | Direct `streamlit run` command |
+
+## Quick Start — Streamlit App
+
+```bash
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. (Optional) Set up AI chat — any OpenAI-compatible provider
+export OPENAI_API_KEY="sk-..."          # Your API key
+export AI_MODEL="gpt-4o-mini"            # Model name (default)
+# export OPENAI_BASE_URL="http://localhost:11434/v1"  # For Ollama/local models
+
+# 3. Run the app
+streamlit run streamlit_app.py
+```
+
+The app will start at http://localhost:8501. All data is read from `./data/*.csv`.
+If `OPENAI_API_KEY` is not set, the Home page chat feature shows a friendly error
+but all other pages (Upcoming Game, Previous Games, Team, Players) work normally.
+
+## Quick Start — Parser Script
+
+The parser converts raw MHTML/PDF scouting files into the CSV data the app needs.
+
+```bash
+cd parser/
+pip install -r requirements.txt
+playwright install chromium   # one-time browser download, only needed for live opponent scraping
+
+# Set up for LLM-based player comparisons (optional)
+export OPENAI_API_KEY="sk-..."
+export AI_MODEL="gpt-4o-mini"
+
+# Set up for live opponent-schedule scraping (optional) -- FastScout login, via Hudl's identity provider.
+# Without these, every opponent falls back to its local backup "<Opponent> - Schedule.mhtml" file instead.
+export FASTSCOUT_USERNAME="you@example.com"
+export FASTSCOUT_PASSWORD="your-password"
+# Or drop a ".env" file (git-ignored!) in this directory with the same two variables instead of exporting
+# them every session -- picked up automatically via python-dotenv.
+
+# Run the parser (you need to convert the notebook to a .py script first — see below)
+python parser.py --input-dir ../inputs --output-dir ../data
+```
+
+UWW's own schedule always comes from `UW-Whitewater - Schedule.mhtml` in `--input-dir`. Every opponent that
+appears in UWW's schedule is scraped live from its FastScout `opponent_url` (requires the credentials
+above); if that fails for any reason, the parser falls back to a local `"<Opponent> - Schedule.mhtml"`
+backup file in `--input-dir` if one exists, or skips that opponent otherwise.
+
+## Converting the Parser Notebook
+
+The original notebook (57 cells) needs manual conversion to a standalone `parser.py` script.
+Here's what to change in each section:
+
+### Cell-by-cell conversion guide:
+
+1. **Cell 1** (`%pip install`): Remove entirely — deps come from `requirements.txt`
+2. **Cell 2** (Parse MHTML): Change the path:
+   ```python
+   # OLD: path = "/Volumes/ads-predictive-analytics/workforce_analytics/inputs/UW-Whitewater - Schedule.mhtml"
+   # NEW:
+   path = os.path.join(INPUT_DIR, "UW-Whitewater - Schedule.mhtml")
+   ```
+3. **Cell 7** (Parse PDFs): Change the volume_dir:
+   ```python
+   # OLD: volume_dir = "/Volumes/ads-predictive-analytics/workforce_analytics/inputs"
+   # NEW:
+   volume_dir = INPUT_DIR
+   ```
+4. **Cell 23** (`%run`): Replace with a normal import:
+   ```python
+   # OLD: %run "/Users/cfritsch2@uwhealth.org/UW Whitewater Player Comparison Algorithms"
+   # NEW:
+   from player_comparison import build_player_comparison_artifacts
+   ```
+5. **Cell 24-28** (LLM comparisons): The `build_player_comparison_artifacts` function in
+   `player_comparison.py` now handles this — just call it without `spark`:
+   ```python
+   # OLD: results = build_player_comparison_artifacts(schedule, scout_reports, player_profiles, spark, ...)
+   # NEW:
+   results = build_player_comparison_artifacts(schedule, scout_reports, player_profiles, use_llm=True)
+   best_matches = results["best_matches"]
+   ```
+6. **Cell 54** (Delta table export): Remove entirely — not needed
+7. **Cell 55** (CSV export): Keep as-is, just change the output path:
+   ```python
+   # OLD: APP_DATA_DIR = "/Workspace/Users/.../uww-basketball-scouting/data"
+   # NEW:
+   APP_DATA_DIR = OUTPUT_DIR
+   ```
+8. **All `display()` calls**: Replace with `print(df.to_string())` or just remove
+
+## Hosting Options
+
+| Option | Cost | Setup |
+|---|---|---|
+| **Local machine** | Free | Just `streamlit run streamlit_app.py` |
+| **Streamlit Community Cloud** | Free | Push to GitHub, connect at share.streamlit.io |
+| **Railway / Render** | ~$5/mo | Docker or buildpack deploy |
+| **Docker** | Free (local) | See Dockerfile example below |
+| **AWS/GCP/Azure VM** | ~$5-20/mo | Install Python, pip, run Streamlit |
+
+### Dockerfile (optional)
+
+```dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+EXPOSE 8501
+CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+```
+
+## LLM Provider Options
+
+The AI chat feature (Home page) and player comparison LLM work with any OpenAI-compatible API:
+
+| Provider | OPENAI_BASE_URL | AI_MODEL | Notes |
+|---|---|---|---|
+| OpenAI | (leave unset) | `gpt-4o-mini` | Default, easiest |
+| Azure OpenAI | `https://<resource>.openai.azure.com/openai/deployments/<deploy>/` | Your deployment name | Need Azure SDK or API key |
+| Ollama (local) | `http://localhost:11434/v1` | `llama3.1` | Free, runs on your machine |
+| vLLM (local) | `http://localhost:8000/v1` | Your model name | High-performance local inference |
+| Together AI | `https://api.together.xyz/v1` | `meta-llama/Llama-3-70b-chat-hf` | Pay-per-token cloud |
+
+## Notes
+
+- The app is already 95% portable — it reads all data from local CSV files, not from a database
+- The only Databricks dependency in the app was the LLM authentication (WorkspaceClient OAuth)
+- The parser's only Spark usage was for Delta table export (redundant with CSV export)
+  and `ai_query()` SQL function (replaced with direct OpenAI client calls)
+- If you don't need the AI chat or LLM player comparisons, you can skip `openai` entirely
+"# uwwmensbball" 

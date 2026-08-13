@@ -1,0 +1,7 @@
+category,side,display_label,games,wins,losses,win_pct
+Ball Security / Turnovers,UWW,UWW: Protect the Ball,1,0,1,0.0
+Field Goal Efficiency,OPP,OPP: Limit Their FG Efficiency,1,0,1,0.0
+Fouls / Discipline,OPP,OPP: They Draw Fouls,1,1,0,1.0
+Perimeter Defense / Ball Pressure,OPP,OPP: On-Ball Defense,2,2,0,1.0
+Rebounding,UWW,UWW: Crash the Boards,4,3,1,0.75
+Scoring Inside,UWW,UWW: Attack the Paint,3,3,0,1.0

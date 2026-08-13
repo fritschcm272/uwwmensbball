@@ -1,0 +1,74 @@
+opponent,game_date,team,player,PTS,FGM,FGA,FG3M,FG3A,FTM,FTA,OREB,DREB,AST,STL,BLK,TO,PF,REB,FG%,3P%,FT%,started
+Aurora Spartans,2025-11-19,Aurora Spartans,Bryden Gryzmala,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,False
+Aurora Spartans,2025-11-19,Aurora Spartans,Cullen Rauls,9,3,5,1,2,2,4,1,3,1,1,0,4,5,4,60.0,50.0,50.0,True
+Aurora Spartans,2025-11-19,Aurora Spartans,Devon Richardson,11,5,8,0,0,1,3,2,6,0,1,0,1,4,8,62.5,,33.3,True
+Aurora Spartans,2025-11-19,Aurora Spartans,Gevon Grant,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,,,,False
+Aurora Spartans,2025-11-19,Aurora Spartans,Isaiah Thompson,3,1,1,1,1,0,0,0,0,0,1,0,0,1,0,100.0,100.0,,False
+Aurora Spartans,2025-11-19,Aurora Spartans,Jeffery Hillmer,8,3,8,1,1,1,2,2,2,0,0,0,0,2,4,37.5,100.0,50.0,True
+Aurora Spartans,2025-11-19,Aurora Spartans,Juan Madrigal,10,2,7,2,4,4,6,0,3,2,0,0,3,3,3,28.6,50.0,66.7,True
+Aurora Spartans,2025-11-19,Aurora Spartans,Larry Carthan,2,1,2,0,0,0,0,1,2,0,0,3,2,5,3,50.0,,,False
+Aurora Spartans,2025-11-19,Aurora Spartans,Mekhi Doby,20,7,12,0,1,6,10,2,2,7,0,1,3,1,4,58.3,0.0,60.0,True
+Aurora Spartans,2025-11-19,Aurora Spartans,Robert Hutson,2,1,1,0,0,0,0,0,0,0,0,0,0,1,0,100.0,,,False
+Aurora Spartans,2025-11-19,Aurora Spartans,Zerrick Johnson,8,2,5,0,0,4,4,0,3,0,0,0,1,2,3,40.0,,100.0,False
+Aurora Spartans,2025-11-19,UW-Whitewater,Brock Marino,8,3,6,0,1,2,9,4,3,2,0,1,2,1,7,50.0,0.0,22.2,True
+Aurora Spartans,2025-11-19,UW-Whitewater,Collin Madson,24,7,10,3,4,7,8,2,4,1,2,0,0,4,6,70.0,75.0,87.5,True
+Aurora Spartans,2025-11-19,UW-Whitewater,Darius Chestnut,0,0,1,0,1,0,0,0,1,0,0,0,2,1,1,0.0,0.0,,False
+Aurora Spartans,2025-11-19,UW-Whitewater,Isaac Verges,9,3,4,0,0,3,4,1,2,1,2,0,0,4,3,75.0,,75.0,True
+Aurora Spartans,2025-11-19,UW-Whitewater,JR Lukenbill,4,1,2,0,0,2,2,1,4,1,1,0,0,3,5,50.0,,100.0,True
+Aurora Spartans,2025-11-19,UW-Whitewater,Jake Quast,6,2,3,0,0,2,3,0,0,0,0,0,0,1,0,66.7,,66.7,False
+Aurora Spartans,2025-11-19,UW-Whitewater,Joey Berezowitz,5,1,4,1,3,2,2,0,2,4,2,0,1,2,2,25.0,33.3,100.0,False
+Aurora Spartans,2025-11-19,UW-Whitewater,Kelton McEwen,6,2,4,2,4,0,0,0,1,0,0,0,1,1,1,50.0,50.0,,False
+Aurora Spartans,2025-11-19,UW-Whitewater,Luke Bara,11,3,11,3,6,2,2,0,1,1,0,0,1,4,1,27.3,50.0,100.0,True
+Aurora Spartans,2025-11-19,UW-Whitewater,Rashad Rogers,4,1,2,0,1,2,2,1,1,1,0,0,1,3,2,50.0,0.0,100.0,False
+Aurora Spartans,2025-11-19,UW-Whitewater,Richie Warren,5,2,7,0,2,1,2,0,2,1,0,0,1,1,2,28.6,0.0,50.0,False
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Aidyn Boone,12,4,6,2,4,2,2,1,1,0,1,1,1,3,2,66.7,50.0,100.0,True
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Dominic Trelenberg,18,7,17,2,6,2,2,3,2,2,0,0,0,1,5,41.2,33.3,100.0,True
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,EJ Marshall,10,4,6,2,3,0,0,0,1,0,0,0,0,1,1,66.7,66.7,,False
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Jack Cherry,7,2,3,0,0,3,4,0,6,3,2,0,0,4,6,66.7,,75.0,False
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Jeffrey Williams,2,1,2,0,1,0,1,1,1,0,1,0,0,0,2,50.0,0.0,0.0,False
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Luke Smith,1,0,4,0,1,1,2,0,1,4,0,0,2,1,1,0.0,0.0,50.0,True
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Sebastian Blachut,14,5,8,0,2,4,6,1,1,4,0,0,4,2,2,62.5,0.0,66.7,True
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Talen Pearson,3,1,2,1,2,0,0,0,1,0,0,0,2,2,1,50.0,50.0,,False
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Vinnie Adjahoungbeta,5,1,5,0,3,3,4,0,6,0,0,2,3,2,6,20.0,0.0,75.0,True
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Brock Marino,2,1,2,0,0,0,2,0,1,0,0,0,1,0,1,50.0,,0.0,False
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Collin Madson,16,6,9,1,2,3,3,2,6,1,1,0,1,2,8,66.7,50.0,100.0,True
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Darius Chestnut,0,0,0,0,0,0,0,0,0,1,0,0,0,2,0,,,,False
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Isaac Verges,13,5,9,0,2,3,4,1,4,3,1,0,1,0,5,55.6,0.0,75.0,True
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,JR Lukenbill,7,3,5,0,2,1,1,0,2,1,0,1,0,1,2,60.0,0.0,100.0,False
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Jake Quast,9,4,7,0,1,1,2,0,1,2,2,0,3,2,1,57.1,0.0,50.0,False
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Joey Berezowitz,2,1,2,0,1,0,0,0,1,1,1,0,0,2,1,50.0,0.0,,False
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Kelton McEwen,3,1,2,1,2,0,0,0,0,0,0,0,0,1,0,50.0,50.0,,False
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Luke Bara,24,8,11,6,8,2,2,0,1,2,0,0,1,5,1,72.7,75.0,100.0,True
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Rashad Rogers,2,1,2,0,0,0,0,0,1,0,0,0,1,2,1,50.0,,,True
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Richie Warren,10,4,9,0,1,2,2,1,8,0,2,0,0,1,9,44.4,0.0,100.0,True
+Simpson Storm,2025-11-25,Simpson Storm,Bo Huston,5,2,6,1,5,0,0,1,2,0,0,0,3,0,3,33.3,20.0,,False
+Simpson Storm,2025-11-25,Simpson Storm,Brogan Fuller,5,2,3,1,1,0,0,3,1,1,0,0,0,2,4,66.7,100.0,,False
+Simpson Storm,2025-11-25,Simpson Storm,Caleb Dyvig,0,0,1,0,1,0,0,1,2,2,0,0,1,2,3,0.0,0.0,,False
+Simpson Storm,2025-11-25,Simpson Storm,Cam Henderson,19,6,8,3,4,4,5,0,1,2,0,0,3,1,1,75.0,75.0,80.0,True
+Simpson Storm,2025-11-25,Simpson Storm,Colton Rasmussen,0,0,2,0,2,0,0,0,0,1,0,0,2,1,0,0.0,0.0,,True
+Simpson Storm,2025-11-25,Simpson Storm,Jachin Mertes,8,4,8,0,2,0,2,2,4,0,0,0,0,1,6,50.0,0.0,0.0,False
+Simpson Storm,2025-11-25,Simpson Storm,Levi Gurwell,18,6,12,2,6,4,4,1,2,3,1,0,4,2,3,50.0,33.3,100.0,True
+Simpson Storm,2025-11-25,Simpson Storm,Logan Kowalski,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,False
+Simpson Storm,2025-11-25,Simpson Storm,Marcus Haupert,11,3,6,0,0,5,5,0,2,0,1,2,1,4,2,50.0,,100.0,True
+Simpson Storm,2025-11-25,Simpson Storm,Mateo Dzolota,2,0,0,0,0,2,2,0,0,1,1,0,1,0,0,,,100.0,False
+Simpson Storm,2025-11-25,Simpson Storm,Michael Kasperbauer,7,2,2,2,2,1,2,0,1,1,0,0,0,0,1,100.0,100.0,50.0,False
+Simpson Storm,2025-11-25,Simpson Storm,Seth Gipple,3,1,8,1,6,0,0,1,1,0,0,0,0,1,2,12.5,16.7,,False
+Simpson Storm,2025-11-25,Simpson Storm,Spencer Holley,0,0,3,0,2,0,0,0,1,2,0,0,2,1,1,0.0,0.0,,True
+Simpson Storm,2025-11-25,UW-Whitewater,Agape Keyes Jr.,0,0,3,0,1,0,0,0,0,0,0,0,0,3,0,0.0,0.0,,False
+Simpson Storm,2025-11-25,UW-Whitewater,Austin Ambrose,2,1,3,0,2,0,0,0,4,0,0,1,0,1,4,33.3,0.0,,False
+Simpson Storm,2025-11-25,UW-Whitewater,Collin Madson,28,12,14,2,3,2,3,1,6,1,2,0,1,0,7,85.7,66.7,66.7,True
+Simpson Storm,2025-11-25,UW-Whitewater,Darius Chestnut,15,6,7,2,2,1,3,0,2,1,2,1,2,1,2,85.7,100.0,33.3,False
+Simpson Storm,2025-11-25,UW-Whitewater,Isaac Verges,2,0,1,0,0,2,2,0,1,3,1,0,0,1,1,0.0,,100.0,True
+Simpson Storm,2025-11-25,UW-Whitewater,Isaiah Robinson,2,1,2,0,1,0,0,0,0,0,2,0,0,0,0,50.0,0.0,,False
+Simpson Storm,2025-11-25,UW-Whitewater,JR Lukenbill,11,4,5,3,4,0,0,1,2,0,1,0,0,1,3,80.0,75.0,,False
+Simpson Storm,2025-11-25,UW-Whitewater,Jake Quast,3,1,3,0,0,1,2,1,0,0,1,0,0,3,1,33.3,,50.0,False
+Simpson Storm,2025-11-25,UW-Whitewater,Joey Berezowitz,0,0,2,0,1,0,0,0,0,1,0,0,0,1,0,0.0,0.0,,False
+Simpson Storm,2025-11-25,UW-Whitewater,Kelton McEwen,7,3,3,1,1,0,0,1,0,1,2,0,0,0,1,100.0,100.0,,False
+Simpson Storm,2025-11-25,UW-Whitewater,Luke Bara,9,3,7,3,6,0,2,0,1,4,0,0,0,0,1,42.9,50.0,0.0,True
+Simpson Storm,2025-11-25,UW-Whitewater,Matthew McKay,2,1,1,0,0,0,1,1,0,0,1,0,1,2,1,100.0,,0.0,False
+Simpson Storm,2025-11-25,UW-Whitewater,Mikey Wildes,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False
+Simpson Storm,2025-11-25,UW-Whitewater,Rashad Rogers,6,3,4,0,0,0,0,0,3,2,0,0,3,3,3,75.0,,,True
+Simpson Storm,2025-11-25,UW-Whitewater,Richie Warren,13,6,11,0,1,1,1,3,4,2,1,0,2,1,7,54.5,0.0,100.0,True
+Simpson Storm,2025-11-25,UW-Whitewater,Trent Grunewald,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0.0,,,False
+Simpson Storm,2025-11-25,UW-Whitewater,Tristian Lynch,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,False
+Simpson Storm,2025-11-25,UW-Whitewater,Zay Howard,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,False
