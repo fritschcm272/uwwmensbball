@@ -1,5 +1,5 @@
 # UWW Basketball Scouting App — portable (no Databricks dependencies)
 streamlit
 pandas
-streamlit-navigation-bar
+streamlit-navigation-bar==3.3.1
 openai
