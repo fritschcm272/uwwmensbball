@@ -4076,7 +4076,7 @@ def main():
         styles=styles,
         options=options,
     )
-    if page == "Home":
+    if not page or page == "Home":
         render_home()
     elif page == "Upcoming Game":
         render_upcoming_game()
