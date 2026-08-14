@@ -4039,42 +4039,45 @@ section[data-testid="stSidebar"] * {
 def main():
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-    # Top navigation bar using streamlit-navigation-bar
-    _logo_svg_path = os.path.join(DATA_DIR, "logo", "uww_logo.svg")
-
-    styles = {
-        "nav": {
-            "background-color": "#4E2A84",
-            "justify-content": "center",
-            "padding": "0 20px",
-            "height": "56px",
-        },
-        "img": {
-            "padding-right": "14px",
-            "height": "40px",
-        },
-        "span": {
-            "color": "rgba(255, 255, 255, 0.85)",
-            "font-size": "14px",
-            "font-family": "Montserrat, sans-serif",
-            "padding": "12px 18px",
-            "border-radius": "4px",
-        },
-        "active": {
-            "background-color": "#6B3FA0",
-            "color": "#FFFFFF",
-            "font-weight": "700",
-            "padding": "12px 18px",
-            "border-radius": "4px",
-        },
+    # Top navigation bar (native Streamlit radio styled as navbar)
+    _NAV_CSS = """
+    <style>
+    div[data-testid="stRadio"][data-st-key="main_nav"] > label { display: none; }
+    div[data-testid="stRadio"][data-st-key="main_nav"] > div {
+        background-color: #4E2A84;
+        padding: 10px 20px;
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        gap: 0;
     }
-    options = {"show_menu": False, "show_sidebar": False}
-
-    page = st_navbar(
-        pages=["Home", "Upcoming Game", "Previous Games", "Team", "Players"],
-        selected="Home",
-        styles=styles,
-        options=options,
+    div[data-testid="stRadio"][data-st-key="main_nav"] > div > label {
+        color: rgba(255, 255, 255, 0.85) !important;
+        font-size: 14px !important;
+        font-family: 'Montserrat', sans-serif !important;
+        padding: 10px 18px !important;
+        border-radius: 4px !important;
+        cursor: pointer;
+        margin: 0 !important;
+        white-space: nowrap;
+    }
+    div[data-testid="stRadio"][data-st-key="main_nav"] > div > label > div:first-child {
+        display: none !important;
+    }
+    div[data-testid="stRadio"][data-st-key="main_nav"] > div > label[data-checked="true"] {
+        background-color: #6B3FA0 !important;
+        color: #FFFFFF !important;
+        font-weight: 700 !important;
+    }
+    </style>
+    """
+    st.markdown(_NAV_CSS, unsafe_allow_html=True)
+    page = st.radio(
+        "Navigation",
+        ["Home", "Upcoming Game", "Previous Games", "Team", "Players"],
+        horizontal=True,
+        label_visibility="collapsed",
+        key="main_nav",
     )
     if page == "Home":
         render_home()
