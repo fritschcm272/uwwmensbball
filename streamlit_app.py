@@ -837,8 +837,12 @@ def render_upcoming_game():
         """Get UWW per-game leaders from box score data."""
         # Cross-reference with season stats roster to handle games where team labels are swapped
         season_stats = load_table("uww_season_stats")
-        uww_roster = set(season_stats["PLAYER"].dropna().tolist()) - {"Team Total", "Opponent"}
-        uww = box_df[box_df["player"].isin(uww_roster)]
+        if season_stats.empty or "PLAYER" not in season_stats.columns:
+            # Fallback: use box score team labels directly
+            uww = box_df[box_df["team"] == "UW-Whitewater"]
+        else:
+            uww_roster = set(season_stats["PLAYER"].dropna().tolist()) - {"Team Total", "Opponent"}
+            uww = box_df[box_df["player"].isin(uww_roster)]
         if uww.empty:
             return {}
         # Compute per-game averages
@@ -854,13 +858,16 @@ def render_upcoming_game():
         totals["ORPG"] = (totals["OREB"] / totals["games"]).round(1)
         totals["TOPG"] = (totals["TO"] / totals["games"]).round(1)
         # Compute MPG from season stats (MIN column is already per-game)
-        season_stats_mpg = season_stats.copy()
-        season_stats_mpg["MIN_num"] = pd.to_numeric(season_stats_mpg["MIN"], errors="coerce")
-        season_stats_mpg = season_stats_mpg[~season_stats_mpg["PLAYER"].isin(["Team Total", "Opponent"])]
-        season_stats_mpg = season_stats_mpg.dropna(subset=["MIN_num"])
-        # Only include players who appear in our PBP box score
-        season_stats_mpg = season_stats_mpg[season_stats_mpg["PLAYER"].isin(totals["player"].tolist())]
         leaders = {}
+        if not season_stats.empty and "PLAYER" in season_stats.columns and "MIN" in season_stats.columns:
+            season_stats_mpg = season_stats.copy()
+            season_stats_mpg["MIN_num"] = pd.to_numeric(season_stats_mpg["MIN"], errors="coerce")
+            season_stats_mpg = season_stats_mpg[~season_stats_mpg["PLAYER"].isin(["Team Total", "Opponent"])]
+            season_stats_mpg = season_stats_mpg.dropna(subset=["MIN_num"])
+            # Only include players who appear in our PBP box score
+            season_stats_mpg = season_stats_mpg[season_stats_mpg["PLAYER"].isin(totals["player"].tolist())]
+        else:
+            season_stats_mpg = pd.DataFrame()
         if not season_stats_mpg.empty:
             mpg_leader = season_stats_mpg.nlargest(1, "MIN_num").iloc[0]
             _pbp_games = int(games_per_player.get(mpg_leader["PLAYER"], 0))
@@ -4096,5 +4103,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
