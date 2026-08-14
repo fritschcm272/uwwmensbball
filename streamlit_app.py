@@ -12,7 +12,7 @@ import re
 import pandas as pd
 import streamlit as st
 from openai import OpenAI
-from streamlit_navigation_bar import st_navbar
+
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
@@ -4072,11 +4072,11 @@ def main():
 
     page = st_navbar(
         pages=["Home", "Upcoming Game", "Previous Games", "Team", "Players"],
-        selected = "Home",
+        selected="Home",
         styles=styles,
         options=options,
     )
-    if not page or page == "Home":
+    if page == "Home":
         render_home()
     elif page == "Upcoming Game":
         render_upcoming_game()
@@ -4090,3 +4090,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
