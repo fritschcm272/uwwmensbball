@@ -28,7 +28,10 @@ st.set_page_config(page_title="UWW Basketball Scouting", page_icon="🏀", layou
 
 @st.cache_data
 def load_table(name: str) -> pd.DataFrame:
-    return pd.read_csv(os.path.join(DATA_DIR, f"{name}.csv"))
+    path = os.path.join(DATA_DIR, f"{name}.csv")
+    if not os.path.exists(path):
+        return pd.DataFrame()
+    return pd.read_csv(path)
 
 
 @st.cache_data
