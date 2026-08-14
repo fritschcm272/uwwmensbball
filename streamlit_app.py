@@ -4072,7 +4072,7 @@ def main():
 
     page = st_navbar(
         pages=["Home", "Upcoming Game", "Previous Games", "Team", "Players"],
-        logo_path=_logo_svg_path if os.path.exists(_logo_svg_path) else None,
+        selected = "Home",
         styles=styles,
         options=options,
     )
