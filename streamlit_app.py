@@ -4084,46 +4084,27 @@ section[data-testid="stSidebar"] * {
 def main():
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-    # Top navigation bar (native Streamlit radio styled as navbar)
-    _NAV_CSS = """
-    <style>
-    div[data-testid="stRadio"][data-st-key="main_nav"] > label { display: none; }
-    div[data-testid="stRadio"][data-st-key="main_nav"] > div {
-        background-color: #4E2A84;
-        padding: 10px 20px;
-        border-radius: 6px;
-        display: flex;
-        justify-content: center;
-        gap: 0;
-    }
-    div[data-testid="stRadio"][data-st-key="main_nav"] > div > label {
-        color: rgba(255, 255, 255, 0.85) !important;
-        font-size: 14px !important;
-        font-family: 'Montserrat', sans-serif !important;
-        padding: 10px 18px !important;
-        border-radius: 4px !important;
-        cursor: pointer;
-        margin: 0 !important;
-        white-space: nowrap;
-    }
-    div[data-testid="stRadio"][data-st-key="main_nav"] > div > label > div:first-child {
-        display: none !important;
-    }
-    div[data-testid="stRadio"][data-st-key="main_nav"] > div > label[data-checked="true"] {
-        background-color: #6B3FA0 !important;
-        color: #FFFFFF !important;
-        font-weight: 700 !important;
-    }
-    </style>
-    """
-    st.markdown(_NAV_CSS, unsafe_allow_html=True)
-    page = st.radio(
-        "Navigation",
-        ["Home", "Upcoming Game", "Previous Games", "Team", "Players"],
-        horizontal=True,
-        label_visibility="collapsed",
-        key="main_nav",
-    )
+    # Navigation state
+    if "nav_page" not in st.session_state:
+        st.session_state.nav_page = "Home"
+
+    pages = ["Home", "Upcoming Game", "Previous Games", "Team", "Players"]
+
+    # Button-based navbar: uses theme primaryColor for the active page, no internal DOM hacks
+    cols = st.columns(len(pages))
+    for i, p in enumerate(pages):
+        with cols[i]:
+            is_active = st.session_state.nav_page == p
+            if st.button(
+                p,
+                key=f"nav_{p}",
+                use_container_width=True,
+                type="primary" if is_active else "secondary",
+            ):
+                st.session_state.nav_page = p
+                st.rerun()
+
+    page = st.session_state.nav_page
     if page == "Home":
         render_home()
     elif page == "Upcoming Game":
