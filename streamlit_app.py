@@ -35,6 +35,59 @@ def load_table(name: str) -> pd.DataFrame:
 
 
 @st.cache_data
+def _get_logo_filenames() -> list:
+    """Return list of logo file stems (without extension) available in data/logo/."""
+    logo_dir = os.path.join(DATA_DIR, "logo")
+    if not os.path.isdir(logo_dir):
+        return []
+    return [os.path.splitext(f)[0] for f in os.listdir(logo_dir) if f.lower().endswith(".png")]
+
+
+def find_logo_b64(*candidate_names: str) -> str:
+    """Find and return base64-encoded logo for the first matching candidate name.
+
+    Matching strategy (tried in order for each candidate):
+      1. Exact match: data/logo/<candidate>.png
+      2. Prefix match: candidate starts with a logo filename (longest match wins)
+         e.g. candidate='Elmhurst Bluejays' matches logo 'Elmhurst.png'
+      3. Reverse prefix: a logo filename starts with the candidate
+         e.g. candidate='UW-Osh' would match logo 'UW-Oshkosh.png'
+    """
+    import base64 as _b64_logo
+    logo_dir = os.path.join(DATA_DIR, "logo")
+    if not os.path.isdir(logo_dir):
+        return ""
+    logo_stems = _get_logo_filenames()
+    # Sort longest-first so the most specific prefix wins
+    logo_stems_sorted = sorted(logo_stems, key=len, reverse=True)
+
+    for name in candidate_names:
+        if not name or pd.isna(name):
+            continue
+        name = str(name).strip()
+        if not name:
+            continue
+        # Strategy 1: exact match
+        logo_path = os.path.join(logo_dir, f"{name}.png")
+        if os.path.exists(logo_path):
+            with open(logo_path, "rb") as _lf:
+                return _b64_logo.b64encode(_lf.read()).decode()
+        # Strategy 2: candidate starts with a logo stem
+        for stem in logo_stems_sorted:
+            if name.startswith(stem) and len(stem) >= 3:
+                logo_path = os.path.join(logo_dir, f"{stem}.png")
+                with open(logo_path, "rb") as _lf:
+                    return _b64_logo.b64encode(_lf.read()).decode()
+        # Strategy 3: a logo stem starts with the candidate (reverse prefix)
+        for stem in logo_stems_sorted:
+            if stem.startswith(name) and len(name) >= 3:
+                logo_path = os.path.join(logo_dir, f"{stem}.png")
+                with open(logo_path, "rb") as _lf:
+                    return _b64_logo.b64encode(_lf.read()).decode()
+    return ""
+
+
+@st.cache_data
 def load_short_opponent_names() -> list:
     """uww_schedule uses full opponent names (e.g. "Ripon Red Hawks"), while every analytical table built from
     scouting reports / PBP / video tagging uses a shorter form (e.g. "Ripon") -- collect the union of short
@@ -564,19 +617,9 @@ def render_upcoming_game():
             pass
 
     # Build broadcast-style HTML banner with team logos
-    import base64 as _b64
-
-    def _load_logo_b64(team_name):
-        """Load a team logo from data/logo/<team_name>.png and return base64 string."""
-        logo_path = os.path.join(DATA_DIR, "logo", f"{team_name}.png")
-        if os.path.exists(logo_path):
-            with open(logo_path, "rb") as _lf:
-                return _b64.b64encode(_lf.read()).decode()
-        return ""
-
-    uww_logo_b64 = _load_logo_b64("UW-Whitewater")
+    uww_logo_b64 = find_logo_b64("UW-Whitewater")
     opp_display = short_opponent or full_opponent
-    opp_logo_b64 = _load_logo_b64(short_opponent) if short_opponent else ""
+    opp_logo_b64 = find_logo_b64(short_opponent, full_opponent)
 
     uww_logo_img = f'<div style="height:64px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;"><img src="data:image/png;base64,{uww_logo_b64}" style="max-height:64px;max-width:90px;object-fit:contain;"></div>' if uww_logo_b64 else '<div style="height:64px;"></div>'
     opp_logo_img = f'<div style="height:64px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;"><img src="data:image/png;base64,{opp_logo_b64}" style="max-height:64px;max-width:90px;object-fit:contain;"></div>' if opp_logo_b64 else '<div style="height:64px;"></div>'
@@ -2429,17 +2472,9 @@ def render_previous_games():
     short_opponent = resolve_short_opponent(full_opponent, short_names)
 
     # --- Broadcast-style game result banner ---
-    import base64 as _b64_pg
-    def _load_logo_b64_pg(team_name):
-        logo_path = os.path.join(DATA_DIR, "logo", f"{team_name}.png")
-        if os.path.exists(logo_path):
-            with open(logo_path, "rb") as _lf:
-                return _b64_pg.b64encode(_lf.read()).decode()
-        return ""
-
-    uww_logo_b64 = _load_logo_b64_pg("UW-Whitewater")
+    uww_logo_b64 = find_logo_b64("UW-Whitewater")
     opp_display = short_opponent or full_opponent
-    opp_logo_b64 = _load_logo_b64_pg(short_opponent) if short_opponent else ""
+    opp_logo_b64 = find_logo_b64(short_opponent, full_opponent)
 
     uww_logo_img = f'<div style="height:56px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;"><img src="data:image/png;base64,{uww_logo_b64}" style="max-height:56px;max-width:80px;object-fit:contain;"></div>' if uww_logo_b64 else '<div style="height:56px;"></div>'
     opp_logo_img = f'<div style="height:56px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;"><img src="data:image/png;base64,{opp_logo_b64}" style="max-height:56px;max-width:80px;object-fit:contain;"></div>' if opp_logo_b64 else '<div style="height:56px;"></div>'
@@ -4103,6 +4138,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
 

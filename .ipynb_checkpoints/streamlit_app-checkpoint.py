@@ -12,7 +12,7 @@ import re
 import pandas as pd
 import streamlit as st
 from openai import OpenAI
-from streamlit_navigation_bar import st_navbar
+
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
@@ -28,7 +28,63 @@ st.set_page_config(page_title="UWW Basketball Scouting", page_icon="🏀", layou
 
 @st.cache_data
 def load_table(name: str) -> pd.DataFrame:
-    return pd.read_csv(os.path.join(DATA_DIR, f"{name}.csv"))
+    path = os.path.join(DATA_DIR, f"{name}.csv")
+    if not os.path.exists(path):
+        return pd.DataFrame()
+    return pd.read_csv(path)
+
+
+@st.cache_data
+def _get_logo_filenames() -> list:
+    """Return list of logo file stems (without extension) available in data/logo/."""
+    logo_dir = os.path.join(DATA_DIR, "logo")
+    if not os.path.isdir(logo_dir):
+        return []
+    return [os.path.splitext(f)[0] for f in os.listdir(logo_dir) if f.lower().endswith(".png")]
+
+
+def find_logo_b64(*candidate_names: str) -> str:
+    """Find and return base64-encoded logo for the first matching candidate name.
+
+    Matching strategy (tried in order for each candidate):
+      1. Exact match: data/logo/<candidate>.png
+      2. Prefix match: candidate starts with a logo filename (longest match wins)
+         e.g. candidate='Elmhurst Bluejays' matches logo 'Elmhurst.png'
+      3. Reverse prefix: a logo filename starts with the candidate
+         e.g. candidate='UW-Osh' would match logo 'UW-Oshkosh.png'
+    """
+    import base64 as _b64_logo
+    logo_dir = os.path.join(DATA_DIR, "logo")
+    if not os.path.isdir(logo_dir):
+        return ""
+    logo_stems = _get_logo_filenames()
+    # Sort longest-first so the most specific prefix wins
+    logo_stems_sorted = sorted(logo_stems, key=len, reverse=True)
+
+    for name in candidate_names:
+        if not name or pd.isna(name):
+            continue
+        name = str(name).strip()
+        if not name:
+            continue
+        # Strategy 1: exact match
+        logo_path = os.path.join(logo_dir, f"{name}.png")
+        if os.path.exists(logo_path):
+            with open(logo_path, "rb") as _lf:
+                return _b64_logo.b64encode(_lf.read()).decode()
+        # Strategy 2: candidate starts with a logo stem
+        for stem in logo_stems_sorted:
+            if name.startswith(stem) and len(stem) >= 3:
+                logo_path = os.path.join(logo_dir, f"{stem}.png")
+                with open(logo_path, "rb") as _lf:
+                    return _b64_logo.b64encode(_lf.read()).decode()
+        # Strategy 3: a logo stem starts with the candidate (reverse prefix)
+        for stem in logo_stems_sorted:
+            if stem.startswith(name) and len(name) >= 3:
+                logo_path = os.path.join(logo_dir, f"{stem}.png")
+                with open(logo_path, "rb") as _lf:
+                    return _b64_logo.b64encode(_lf.read()).decode()
+    return ""
 
 
 @st.cache_data
@@ -561,19 +617,9 @@ def render_upcoming_game():
             pass
 
     # Build broadcast-style HTML banner with team logos
-    import base64 as _b64
-
-    def _load_logo_b64(team_name):
-        """Load a team logo from data/logo/<team_name>.png and return base64 string."""
-        logo_path = os.path.join(DATA_DIR, "logo", f"{team_name}.png")
-        if os.path.exists(logo_path):
-            with open(logo_path, "rb") as _lf:
-                return _b64.b64encode(_lf.read()).decode()
-        return ""
-
-    uww_logo_b64 = _load_logo_b64("UW-Whitewater")
+    uww_logo_b64 = find_logo_b64("UW-Whitewater")
     opp_display = short_opponent or full_opponent
-    opp_logo_b64 = _load_logo_b64(short_opponent) if short_opponent else ""
+    opp_logo_b64 = find_logo_b64(short_opponent, full_opponent)
 
     uww_logo_img = f'<div style="height:64px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;"><img src="data:image/png;base64,{uww_logo_b64}" style="max-height:64px;max-width:90px;object-fit:contain;"></div>' if uww_logo_b64 else '<div style="height:64px;"></div>'
     opp_logo_img = f'<div style="height:64px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;"><img src="data:image/png;base64,{opp_logo_b64}" style="max-height:64px;max-width:90px;object-fit:contain;"></div>' if opp_logo_b64 else '<div style="height:64px;"></div>'
@@ -834,8 +880,12 @@ def render_upcoming_game():
         """Get UWW per-game leaders from box score data."""
         # Cross-reference with season stats roster to handle games where team labels are swapped
         season_stats = load_table("uww_season_stats")
-        uww_roster = set(season_stats["PLAYER"].dropna().tolist()) - {"Team Total", "Opponent"}
-        uww = box_df[box_df["player"].isin(uww_roster)]
+        if season_stats.empty or "PLAYER" not in season_stats.columns:
+            # Fallback: use box score team labels directly
+            uww = box_df[box_df["team"] == "UW-Whitewater"]
+        else:
+            uww_roster = set(season_stats["PLAYER"].dropna().tolist()) - {"Team Total", "Opponent"}
+            uww = box_df[box_df["player"].isin(uww_roster)]
         if uww.empty:
             return {}
         # Compute per-game averages
@@ -851,13 +901,16 @@ def render_upcoming_game():
         totals["ORPG"] = (totals["OREB"] / totals["games"]).round(1)
         totals["TOPG"] = (totals["TO"] / totals["games"]).round(1)
         # Compute MPG from season stats (MIN column is already per-game)
-        season_stats_mpg = season_stats.copy()
-        season_stats_mpg["MIN_num"] = pd.to_numeric(season_stats_mpg["MIN"], errors="coerce")
-        season_stats_mpg = season_stats_mpg[~season_stats_mpg["PLAYER"].isin(["Team Total", "Opponent"])]
-        season_stats_mpg = season_stats_mpg.dropna(subset=["MIN_num"])
-        # Only include players who appear in our PBP box score
-        season_stats_mpg = season_stats_mpg[season_stats_mpg["PLAYER"].isin(totals["player"].tolist())]
         leaders = {}
+        if not season_stats.empty and "PLAYER" in season_stats.columns and "MIN" in season_stats.columns:
+            season_stats_mpg = season_stats.copy()
+            season_stats_mpg["MIN_num"] = pd.to_numeric(season_stats_mpg["MIN"], errors="coerce")
+            season_stats_mpg = season_stats_mpg[~season_stats_mpg["PLAYER"].isin(["Team Total", "Opponent"])]
+            season_stats_mpg = season_stats_mpg.dropna(subset=["MIN_num"])
+            # Only include players who appear in our PBP box score
+            season_stats_mpg = season_stats_mpg[season_stats_mpg["PLAYER"].isin(totals["player"].tolist())]
+        else:
+            season_stats_mpg = pd.DataFrame()
         if not season_stats_mpg.empty:
             mpg_leader = season_stats_mpg.nlargest(1, "MIN_num").iloc[0]
             _pbp_games = int(games_per_player.get(mpg_leader["PLAYER"], 0))
@@ -2419,17 +2472,9 @@ def render_previous_games():
     short_opponent = resolve_short_opponent(full_opponent, short_names)
 
     # --- Broadcast-style game result banner ---
-    import base64 as _b64_pg
-    def _load_logo_b64_pg(team_name):
-        logo_path = os.path.join(DATA_DIR, "logo", f"{team_name}.png")
-        if os.path.exists(logo_path):
-            with open(logo_path, "rb") as _lf:
-                return _b64_pg.b64encode(_lf.read()).decode()
-        return ""
-
-    uww_logo_b64 = _load_logo_b64_pg("UW-Whitewater")
+    uww_logo_b64 = find_logo_b64("UW-Whitewater")
     opp_display = short_opponent or full_opponent
-    opp_logo_b64 = _load_logo_b64_pg(short_opponent) if short_opponent else ""
+    opp_logo_b64 = find_logo_b64(short_opponent, full_opponent)
 
     uww_logo_img = f'<div style="height:56px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;"><img src="data:image/png;base64,{uww_logo_b64}" style="max-height:56px;max-width:80px;object-fit:contain;"></div>' if uww_logo_b64 else '<div style="height:56px;"></div>'
     opp_logo_img = f'<div style="height:56px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;"><img src="data:image/png;base64,{opp_logo_b64}" style="max-height:56px;max-width:80px;object-fit:contain;"></div>' if opp_logo_b64 else '<div style="height:56px;"></div>'
@@ -4039,42 +4084,45 @@ section[data-testid="stSidebar"] * {
 def main():
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-    # Top navigation bar using streamlit-navigation-bar
-    _logo_svg_path = os.path.join(DATA_DIR, "logo", "uww_logo.svg")
-
-    styles = {
-        "nav": {
-            "background-color": "#4E2A84",
-            "justify-content": "center",
-            "padding": "0 20px",
-            "height": "56px",
-        },
-        "img": {
-            "padding-right": "14px",
-            "height": "40px",
-        },
-        "span": {
-            "color": "rgba(255, 255, 255, 0.85)",
-            "font-size": "14px",
-            "font-family": "Montserrat, sans-serif",
-            "padding": "12px 18px",
-            "border-radius": "4px",
-        },
-        "active": {
-            "background-color": "#6B3FA0",
-            "color": "#FFFFFF",
-            "font-weight": "700",
-            "padding": "12px 18px",
-            "border-radius": "4px",
-        },
+    # Top navigation bar (native Streamlit radio styled as navbar)
+    _NAV_CSS = """
+    <style>
+    div[data-testid="stRadio"][data-st-key="main_nav"] > label { display: none; }
+    div[data-testid="stRadio"][data-st-key="main_nav"] > div {
+        background-color: #4E2A84;
+        padding: 10px 20px;
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        gap: 0;
     }
-    options = {"show_menu": False, "show_sidebar": False}
-
-    page = st_navbar(
-        pages=["Home", "Upcoming Game", "Previous Games", "Team", "Players"],
-        logo_path=_logo_svg_path if os.path.exists(_logo_svg_path) else None,
-        styles=styles,
-        options=options,
+    div[data-testid="stRadio"][data-st-key="main_nav"] > div > label {
+        color: rgba(255, 255, 255, 0.85) !important;
+        font-size: 14px !important;
+        font-family: 'Montserrat', sans-serif !important;
+        padding: 10px 18px !important;
+        border-radius: 4px !important;
+        cursor: pointer;
+        margin: 0 !important;
+        white-space: nowrap;
+    }
+    div[data-testid="stRadio"][data-st-key="main_nav"] > div > label > div:first-child {
+        display: none !important;
+    }
+    div[data-testid="stRadio"][data-st-key="main_nav"] > div > label[data-checked="true"] {
+        background-color: #6B3FA0 !important;
+        color: #FFFFFF !important;
+        font-weight: 700 !important;
+    }
+    </style>
+    """
+    st.markdown(_NAV_CSS, unsafe_allow_html=True)
+    page = st.radio(
+        "Navigation",
+        ["Home", "Upcoming Game", "Previous Games", "Team", "Players"],
+        horizontal=True,
+        label_visibility="collapsed",
+        key="main_nav",
     )
     if page == "Home":
         render_home()
@@ -4090,3 +4138,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
