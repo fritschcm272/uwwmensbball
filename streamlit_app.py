@@ -196,14 +196,13 @@ def get_opponent_outcomes(schedule: pd.DataFrame, opponent_names) -> dict:
 
 def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
     """Count of games with a recorded outcome in the opponent's own season schedule (uww_opponent_schedules)
-    -- used to convert an opponent's genuinely season-CUMULATIVE stats (uww_player_profiles' 3PM-A/FTM-A
-    "made-attempted" strings) into per-game rates.
+    -- used to convert an opponent's season-TOTAL stats into per-game rates.
 
-    NOTE: most of uww_player_profiles' other numeric columns (PTS, REB, AST, STL, BLK, TO, MIN) are already
-    PER-GAME averages straight from the source scouting-report boxscore table, NOT season totals -- do not
-    divide those by this helper's result (see the note where opp_team_stats is built in render_upcoming_game
-    for how this was previously done wrong). Only 3PM-A/FTM-A are true season-cumulative "made-attempted"
-    strings that need this conversion.
+    In uww_player_profiles, PTS and REB are already per-game averages (no division needed), but AST/STL/BLK/TO
+    and the 3PM-A/FTM-A "made-attempted" strings are season-CUMULATIVE totals and need dividing by this
+    helper's result. (Confirmed empirically, not just from a comment: summing AST across a roster with no
+    division produces an implausible ~200 "assists per game" figure -- only sane as a season sum. Not every
+    column in this table shares the same units; don't assume otherwise without checking real output again.)
 
     Previously this was a hardcoded `_games_est = 5` sprinkled across several Upcoming Game computations,
     which silently misstates every opponent's per-game rates except in whichever week they happen to have
@@ -843,18 +842,16 @@ def render_upcoming_game():
                 except ValueError:
                     pass
         opp_team_stats["FG%"] = sum(pct * mins for pct, mins in _opp_fg_pcts) / sum(mins for _, mins in _opp_fg_pcts) if _opp_fg_pcts else 0
-        # uww_player_profiles' PTS/REB/AST/STL/BLK/TO/MIN columns are ALL per-player PER-GAME averages -- they
-        # come from the same row of the opponent's season boxscore table (see parser cell 35's `stat_cols`),
-        # and the parser's own team_ppg figure (used just above) is that same table's "Team Total" row PTS
-        # taken directly with no division, which only makes sense if the column is already a per-game rate.
-        # Summing across the roster therefore already gives the team's per-game rate for each stat -- no
-        # `_games_est` division needed here. (3PM-A/FTM-A are a separate, genuinely season-CUMULATIVE
-        # "made-attempted" string format from the same table, which is why those still get divided below.)
+        # REB and PTS are per-game averages (confirmed: team_ppg above is the boxscore's "Team Total" row PTS
+        # taken with no division). AST/STL/BLK/TO are SEASON TOTALS in this same table, though -- confirmed
+        # the other way, empirically: summing AST across a roster with no division produced a ~200 "assists
+        # per game" figure, which is only sane as a season sum. So divide those (but not REB/PTS) by games_est.
+        # (Not every column in this table shares the same units -- don't assume it again without checking.)
         _games_est = get_opponent_games_played(short_opponent)
         opp_team_stats["Rebounds"] = opp_prof_ts["REB"].sum()
-        opp_team_stats["Assists"] = opp_prof_ts["AST"].sum()
-        opp_team_stats["Blocks"] = opp_prof_ts["BLK"].sum()
-        opp_team_stats["Steals"] = opp_prof_ts["STL"].sum()
+        opp_team_stats["Assists"] = opp_prof_ts["AST"].sum() / _games_est
+        opp_team_stats["Blocks"] = opp_prof_ts["BLK"].sum() / _games_est
+        opp_team_stats["Steals"] = opp_prof_ts["STL"].sum() / _games_est
         # Expanded opponent stats for All Stats dialog
         def _parse_ma_ts(series):
             made, att = 0, 0
@@ -869,9 +866,10 @@ def render_upcoming_game():
             return made, att
         _opp_3m, _opp_3a = _parse_ma_ts(opp_prof_ts["3PM-A"]) if "3PM-A" in opp_prof_ts.columns else (0, 0)
         _opp_ftm, _opp_fta = _parse_ma_ts(opp_prof_ts["FTM-A"]) if "FTM-A" in opp_prof_ts.columns else (0, 0)
-        # TO and AST are already per-game averages (see note above) -- NOT divided by _games_est.
-        _opp_to_pg = opp_prof_ts["TO"].sum() if "TO" in opp_prof_ts.columns else 0
-        _opp_ast_pg = opp_prof_ts["AST"].sum() if "AST" in opp_prof_ts.columns else 0
+        _opp_to_total = opp_prof_ts["TO"].sum() if "TO" in opp_prof_ts.columns else 0
+        _opp_ast_total = opp_prof_ts["AST"].sum() if "AST" in opp_prof_ts.columns else 0
+        _opp_to_pg = _opp_to_total / _games_est
+        _opp_ast_pg = _opp_ast_total / _games_est
         opp_team_stats_full = {
             **opp_team_stats,
             "3P%": (_opp_3m / _opp_3a * 100) if _opp_3a > 0 else 0,
@@ -880,7 +878,7 @@ def render_upcoming_game():
             "FTA/game": _opp_fta / _games_est,
             "Turnovers": _opp_to_pg,
             "A:TO Ratio": (_opp_ast_pg / _opp_to_pg) if _opp_to_pg > 0 else 0,
-            "Stocks": opp_prof_ts["STL"].sum() + opp_prof_ts["BLK"].sum(),
+            "Stocks": (opp_prof_ts["STL"].sum() + opp_prof_ts["BLK"].sum()) / _games_est,
         }
 
 
@@ -1083,7 +1081,7 @@ def render_upcoming_game():
         leaders["Blocks"] = {"name": blk_leader["player"], "value": blk_leader["BPG"], "sub": ""}
         return leaders
 
-    def _get_opp_leaders(profiles_df, opp_name):
+    def _get_opp_leaders(profiles_df, opp_name, games_est=5):
         """Get opponent per-game leaders from player profiles."""
         opp = profiles_df[profiles_df["opponent"] == opp_name]
         if opp.empty:
@@ -1107,18 +1105,20 @@ def render_upcoming_game():
         # Rebounds leader (REB is per-game)
         reb_leader = opp.nlargest(1, "REB").iloc[0]
         leaders["Rebounds"] = {"name": reb_leader["name"], "value": reb_leader["REB"], "sub": ""}
-        # Assists leader. AST/TO are ALSO already per-game averages, same as PTS/REB above (all four come from
-        # the same row of the season boxscore table) -- previously divided by an estimated games-played count
-        # here, which was wrong and understated every opponent's assists/steals/blocks leaders by roughly their
-        # games-played count.
-        ast_leader = opp.nlargest(1, "AST").iloc[0]
-        leaders["Assists"] = {"name": ast_leader["name"], "value": ast_leader["AST"], "sub": f"{ast_leader['TO']:.1f} TOPG"}
-        # Steals leader (STL is per-game, see above)
-        stl_leader = opp.nlargest(1, "STL").iloc[0]
-        leaders["Steals"] = {"name": stl_leader["name"], "value": stl_leader["STL"], "sub": ""}
-        # Blocks leader (BLK is per-game, see above)
-        blk_leader = opp.nlargest(1, "BLK").iloc[0]
-        leaders["Blocks"] = {"name": blk_leader["name"], "value": blk_leader["BLK"], "sub": ""}
+        # Assists leader (AST/TO are SEASON TOTALS in this table, unlike PTS/REB -- divide by games_est)
+        opp_copy = opp.copy()
+        opp_copy["APG"] = opp_copy["AST"] / games_est
+        ast_leader = opp_copy.nlargest(1, "APG").iloc[0]
+        topg = ast_leader["TO"] / games_est
+        leaders["Assists"] = {"name": ast_leader["name"], "value": ast_leader["APG"], "sub": f"{topg:.1f} TOPG"}
+        # Steals leader (STL is a season total, divide by games_est)
+        opp_copy["SPG"] = opp_copy["STL"] / games_est
+        stl_leader = opp_copy.nlargest(1, "SPG").iloc[0]
+        leaders["Steals"] = {"name": stl_leader["name"], "value": stl_leader["SPG"], "sub": ""}
+        # Blocks leader (BLK is a season total, divide by games_est)
+        opp_copy["BPG"] = opp_copy["BLK"] / games_est
+        blk_leader = opp_copy.nlargest(1, "BPG").iloc[0]
+        leaders["Blocks"] = {"name": blk_leader["name"], "value": blk_leader["BPG"], "sub": ""}
         return leaders
 
     def _build_season_leaders_html(uww_leaders, opp_leaders, opp_name):
@@ -1148,7 +1148,7 @@ def render_upcoming_game():
         return f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;flex:1;width:100%;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;margin-bottom:8px;">SEASON LEADERS</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px;"><span style="font-size:0.95rem;font-weight:700;color:#4E2A84;">UWW</span><span style="font-size:0.85rem;color:#888;">Avg. Per Game</span><span style="font-size:0.95rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(opp_name))}</span></div>{rows_html}</div>'
 
     uww_leaders = _get_uww_leaders(box, played)
-    opp_leaders = _get_opp_leaders(opp_profiles_ts, short_opponent)
+    opp_leaders = _get_opp_leaders(opp_profiles_ts, short_opponent, games_est=get_opponent_games_played(short_opponent))
 
     # Render: Season Leaders | Team Stats | Last Five Games
     leaders_html = _build_season_leaders_html(uww_leaders, opp_leaders, opp_display)
@@ -2072,12 +2072,15 @@ li {{ margin-bottom: 4px; }}
                         _opp_stats["FG2M"] = _ofg2m / _ong
                         _opp_stats["FG2%"] = (_ofg2m / _ofg2a * 100) if _ofg2a > 0 else 0
                     elif not opp_prof_ts.empty:
-                        # Fallback: derive from player profiles for upcoming opponents
+                        # Fallback: derive from player profiles for upcoming opponents. REB is already
+                        # per-game; AST/STL/BLK/TO are season totals in this table and need dividing by games
+                        # played (see get_opponent_games_played's docstring for how this was confirmed).
+                        _fallback_games_est = get_opponent_games_played(short_opponent)
                         _opp_stats["REB"] = opp_prof_ts["REB"].sum()
-                        _opp_stats["AST"] = opp_prof_ts["AST"].sum()
-                        _opp_stats["STL"] = opp_prof_ts["STL"].sum()
-                        _opp_stats["BLK"] = opp_prof_ts["BLK"].sum()
-                        _opp_stats["TO"] = opp_prof_ts["TO"].sum()
+                        _opp_stats["AST"] = opp_prof_ts["AST"].sum() / _fallback_games_est
+                        _opp_stats["STL"] = opp_prof_ts["STL"].sum() / _fallback_games_est
+                        _opp_stats["BLK"] = opp_prof_ts["BLK"].sum() / _fallback_games_est
+                        _opp_stats["TO"] = opp_prof_ts["TO"].sum() / _fallback_games_est
                         _opp_stats["PF"] = 0
                         # Parse 3PM-A season totals
                         _o3m, _o3a = 0, 0
