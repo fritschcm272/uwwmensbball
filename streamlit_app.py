@@ -4435,7 +4435,13 @@ def render_players():
                         # Season stats mini-line
                         _cs_key = player_name.strip().lower()
                         _cs_alt = alias_key.strip().lower() if alias_key != player_name else ""
-                        _cs_row = _card_season_lookup.get(_cs_key) or _card_season_lookup.get(_cs_alt)
+                        # NOTE: `dict.get(a) or dict.get(b)` is unsafe here -- once .get(a) finds a match it
+                        # returns a pandas Series (one row of _card_season_stats), and `or` tries to evaluate
+                        # that Series' truthiness, which pandas raises a ValueError on ("truth value of a
+                        # Series is ambiguous"). Explicit None-checks avoid ever evaluating a Series as a bool.
+                        _cs_row = _card_season_lookup.get(_cs_key)
+                        if _cs_row is None and _cs_alt:
+                            _cs_row = _card_season_lookup.get(_cs_alt)
                         if _cs_row is not None:
                             _ppg = f"{_cs_row['PTS']:.1f}" if pd.notna(_cs_row.get('PTS')) else "-"
                             _rpg = f"{_cs_row['REB']:.1f}" if pd.notna(_cs_row.get('REB')) else "-"
