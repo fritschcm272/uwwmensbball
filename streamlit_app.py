@@ -2963,17 +2963,30 @@ li {{ margin-bottom: 4px; }}
             # Quick-select from most-used lineups
             if _preset_options:
                 _preset_labels = ["-- Select a lineup --"] + [p["label"] for p in _preset_options]
-                _preset_choice = st.selectbox("Most-used lineups", _preset_labels, index=0, key="lineup_sim_preset")
-                if _preset_choice != "-- Select a lineup --":
-                    _preset_idx = _preset_labels.index(_preset_choice) - 1
-                    _default_sel = _preset_options[_preset_idx]["players"]
-                else:
-                    _default_sel = []
-            else:
-                _default_sel = []
+
+                def _apply_lineup_preset():
+                    # NOTE: this MUST run via on_change (writing directly into the multiselect's own
+                    # session_state slot) rather than via the multiselect's `default=` parameter. Once a
+                    # widget's `key` has ever been set in st.session_state (which happens the moment it's
+                    # first rendered), Streamlit permanently ignores that widget's `default=` on every future
+                    # rerun -- so picking a different preset here would recompute the right player list, but
+                    # it would never actually reach the multiselect. This was confirmed to be exactly why
+                    # "Most-Used Lineup" selections weren't taking effect: the old code relied purely on
+                    # `default=_default_sel`, which only worked before the multiselect's key had a value yet
+                    # (i.e. only on a completely fresh page load with no prior interaction).
+                    _choice = st.session_state.get("lineup_sim_preset")
+                    if _choice and _choice != "-- Select a lineup --" and _choice in _preset_labels:
+                        _idx = _preset_labels.index(_choice) - 1
+                        st.session_state["lineup_sim_select"] = _preset_options[_idx]["players"]
+                    else:
+                        st.session_state["lineup_sim_select"] = []
+
+                st.selectbox(
+                    "Most-used lineups", _preset_labels, index=0, key="lineup_sim_preset",
+                    on_change=_apply_lineup_preset,
+                )
             _selected = st.multiselect(
                 "Select 5 UWW players", _sim_players,
-                default=_default_sel,
                 max_selections=5, key="lineup_sim_select",
             )
             if len(_selected) == 5:
