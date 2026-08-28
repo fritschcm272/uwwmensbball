@@ -34,6 +34,9 @@ uww-basketball-scouting-portable/
 │   ├── uww_clutch_events.csv    # Last-5-min/OT, score within 8 -- powers the Analytics, Team, and Previous
 │   │                             # Games pages' clutch-performance sections
 │   ├── uww_scoring_runs.csv     # Each game's biggest run + largest lead/deficit, with lineups on the floor
+│   ├── uww_coach_notes.csv      # Per-clip coach notes (play calls, execution grades) from "*_recap.csv"
+│   │                             # inputs -- also merged onto uww_pbp_events.coach_note where a clock/player
+│   │                             # match is found, so notes show up inline on the play-by-play tables too
 │   ├── name_aliases.json        # Known player-name spelling mismatches between data sources —
 │   │                             # shared by streamlit_app.py and the parser, so a fix only has to be made once
 │   └── logo/                    # Team logos (PNG)
@@ -48,7 +51,8 @@ uww-basketball-scouting-portable/
     ├── <Opponent>_schedule.mhtml
     ├── <date>_<opponent>_scout.pdf
     ├── <date>_<opponent>_pbp.mhtml
-    └── <date>_<opponent>_video.mhtml
+    ├── <date>_<opponent>_video.mhtml
+    └── <matchup>_recap.csv          # Optional per-game coach-note export (see "Coach Notes" below)
 ```
 
 ## What Was Replaced
@@ -113,9 +117,23 @@ appears in UWW's schedule is scraped live from its FastScout `opponent_url` (req
 above); if that fails for any reason, the parser falls back to a local `"<Opponent> - Schedule.mhtml"`
 backup file in `--input-dir` if one exists, or skips that opponent otherwise.
 
+## Coach Notes (optional per-game recap CSVs)
+
+Drop a `"<matchup>_recap.csv"` file in `--input-dir` for any game to bring in coach-written notes on
+individual plays — an offensive play call and how it was executed, or a defensive breakdown of what went
+right/wrong on a given possession. This is a per-clip export from the video-tagging tool: one row per
+tagged clip, with a `Text Overlay` column holding the note, plus `Pd.` / `Clock` / `Player` / `Team` /
+`Result` columns the parser uses to match each note back to its corresponding play-by-play event.
+
+Not every game needs one of these — an opponent with no recap CSV just has no notes, same as any other
+optional input. The parser attaches a matched note directly onto that play in `uww_pbp_events.coach_note`
+(visible inline on the Previous Games / Team play-by-play tables), and also keeps every note — matched or
+not — in its own `uww_coach_notes.csv`, which powers the Analytics page's "Coach-Tagged Play Notes" section
+(play-call frequency and make/miss rate, and the most common `+`/`-` flagged themes across all notes).
+
 ## Converting the Parser Notebook to a Script
 
-The notebook (`parser_nb.ipynb`, 133 cells) is already fully portable — no Databricks-only APIs
+The notebook (`parser_nb.ipynb`, 137 cells) is already fully portable — no Databricks-only APIs
 (`dbutils`, `display()`, Spark DataFrames, Unity Catalog Volume paths) remain anywhere in it, and
 `INPUT_DIR`/`OUTPUT_DIR`/`USE_LLM`/`reference_date_str` are already plain configurable variables set near the
 top of the notebook. The remaining step is mechanical, not a rewrite:

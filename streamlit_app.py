@@ -4,7 +4,8 @@ Data is bundled directly with the app (CSV files under ./data, exported from the
 tables) rather than queried live from a SQL warehouse -- no Unity Catalog / warehouse permissions are needed
 at runtime. Six sections: Home (AI scouting assistant), Upcoming Game, Previous Games, Team, Players,
 Analytics (possession-adjusted advanced stats -- Four Factors, efficiency/pace, shot quality, ball movement,
-clutch performance, and schedule/rest context; see STAT_GLOSSARY for definitions of every derived metric).
+clutch performance, schedule/rest context, and coach-tagged play notes; see STAT_GLOSSARY for definitions of
+every derived metric).
 """
 
 import html
@@ -883,6 +884,33 @@ def extract_play_type(description, player) -> str:
     if last_player_idx is not None and last_player_idx + 1 < len(segments):
         return segments[last_player_idx + 1]
     return segments[1] if len(segments) > 1 else None
+
+
+def extract_offensive_play_call(note) -> str:
+    """Best-effort extraction of a named play/set call from an OFFENSIVE coach note, e.g. "PANTHER EXECUTION,
+    BIG = WALK YOUR MAN UP" -> "PANTHER", "TWINS SWIRL EXECUTION = +CUT..." -> "TWINS SWIRL". Looks for a
+    short, mostly-uppercase leading phrase immediately before the word "EXECUTION" -- the one consistent
+    signal across this team's own notation. A note that doesn't follow that exact convention returns None
+    rather than guessing at a name -- a wrong guess would be worse than that note simply not appearing in
+    the play-call breakdown (it's still visible, verbatim, in the raw notes browser)."""
+    if pd.isna(note):
+        return None
+    m = re.match(r"^([A-Z][A-Z0-9\-&' ]{1,24}?)\s+EXECUTION\b", str(note).strip())
+    return m.group(1).strip() if m else None
+
+
+def note_sentiment_counts(note) -> tuple:
+    """Count "+"-prefixed (execution point that went well) vs "-"-prefixed (went wrong) clauses within one
+    coach note, splitting on commas -- this team's notation consistently marks individual observations this
+    way within a single note (e.g. "+CUT, -GET TO DEFENDERS BODY, -PASSER LOWER" -> (1, 2)). A note with no
+    +/- markers at all (plenty aren't broken out this way) returns (0, 0) rather than being miscounted as
+    either."""
+    if pd.isna(note):
+        return 0, 0
+    segments = [s.strip() for s in str(note).split(",")]
+    pos = sum(1 for s in segments if s.startswith("+"))
+    neg = sum(1 for s in segments if s.startswith("-"))
+    return pos, neg
 
 
 # --------------------------------------------------------------------------------------------------------------
@@ -3689,7 +3717,11 @@ def render_previous_games():
         with pbp_r2c3:
             pbp_video_search = st.text_input("Video description search", "", key=f"pbp_video_{short_opponent}", placeholder="e.g. P&R, Drives Left, 3pt...")
 
-        video_only = st.checkbox("Show only video-tagged plays", value=False, key=f"pbp_vidonly_{short_opponent}")
+        pbp_r3c1, pbp_r3c2 = st.columns(2)
+        with pbp_r3c1:
+            video_only = st.checkbox("Show only video-tagged plays", value=False, key=f"pbp_vidonly_{short_opponent}")
+        with pbp_r3c2:
+            notes_only = st.checkbox("Show only plays with a coach note", value=False, key=f"pbp_notesonly_{short_opponent}") if "coach_note" in game_pbp.columns else False
 
         filtered_pbp = game_pbp.copy()
         if pbp_team_filter != "All":
@@ -3708,6 +3740,8 @@ def render_previous_games():
             filtered_pbp = filtered_pbp[filtered_pbp["video_description"].str.contains(pbp_video_search.strip(), case=False, na=False)]
         if video_only:
             filtered_pbp = filtered_pbp[filtered_pbp["video_description"].notna()]
+        if notes_only:
+            filtered_pbp = filtered_pbp[filtered_pbp["coach_note"].notna()]
 
         kpi1, kpi2, kpi3, kpi4, kpi5 = st.columns(5)
         kpi1.metric("Total Events", len(filtered_pbp))
@@ -3721,9 +3755,27 @@ def render_previous_games():
         kpi5.metric("Players", unique_players)
 
         display_cols = [c for c in ["period", "time_remaining", "team", "player", "event_type",
-                                     "video_description", "uww_score", "opp_score"]
+                                     "video_description", "coach_note", "uww_score", "opp_score"]
                          if c in filtered_pbp.columns]
-        st.dataframe(filtered_pbp[display_cols], hide_index=True, use_container_width=True, height=400)
+        st.dataframe(
+            filtered_pbp[display_cols].rename(columns={"coach_note": "Coach Note", "video_description": "Video Tag"}),
+            hide_index=True, use_container_width=True, height=400,
+        )
+
+        # --- Coach notes summary, this game only ---
+        if "coach_note" in game_pbp.columns:
+            _game_notes = game_pbp[game_pbp["coach_note"].notna()]
+            if not _game_notes.empty:
+                _pos_total, _neg_total = 0, 0
+                for _n in _game_notes["coach_note"]:
+                    _p, _n_ct = note_sentiment_counts(_n)
+                    _pos_total += _p
+                    _neg_total += _n_ct
+                st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:0.75rem 0;"><div style="font-weight:800;font-size:0.95rem;letter-spacing:0.5px;color:#4E2A84;">COACH NOTES THIS GAME</div></div>', unsafe_allow_html=True)
+                _cn_c1, _cn_c2, _cn_c3 = st.columns(3)
+                _cn_c1.metric("Notes captured", len(_game_notes))
+                _cn_c2.metric("Positive flags", _pos_total)
+                _cn_c3.metric("Negative flags", _neg_total)
 
     # --- COACHING FLAGS ---
     try:
@@ -4190,6 +4242,7 @@ def render_team():
 
         # Toggle for video-tagged only
         team_video_only = st.checkbox("Show only video-tagged plays", value=False, key="team_pbp_vidonly")
+        team_notes_only = st.checkbox("Show only plays with a coach note", value=False, key="team_pbp_notesonly") if "coach_note" in pbp.columns else False
 
         # Apply filters
         filtered = pbp.copy()
@@ -4211,6 +4264,8 @@ def render_team():
             filtered = filtered[filtered["video_description"].str.contains(team_pbp_video.strip(), case=False, na=False)]
         if team_video_only:
             filtered = filtered[filtered["video_description"].notna()]
+        if team_notes_only:
+            filtered = filtered[filtered["coach_note"].notna()]
 
         filtered = filtered.sort_values("event_order")
 
@@ -4227,9 +4282,13 @@ def render_team():
         tkpi5.metric("Players", t_players)
 
         display_cols = [c for c in ["opponent", "period", "time_remaining", "team", "player", "event_type",
-                                     "video_description", "uww_score", "opp_score"]
+                                     "video_description", "coach_note", "uww_score", "opp_score"]
                          if c in filtered.columns]
-        st.dataframe(filtered[display_cols], hide_index=True, use_container_width=True, height=400)
+        st.dataframe(
+            filtered[display_cols].rename(columns={"coach_note": "Coach Note", "video_description": "Video Tag"}),
+            hide_index=True, use_container_width=True, height=400,
+        )
+
 
     # ==================== SITUATIONAL SPLITS ====================
     stints = load_table("uww_lineup_stints")
@@ -4445,6 +4504,39 @@ def render_players():
                         st.dataframe(_gm_df.style.applymap(_cd_player, subset=["vs Proj"]), hide_index=True, use_container_width=True)
             except Exception as _e:
                 report_section_error("Projected vs. actual performance", _e)
+
+            # --- Coach Notes (offensive clips only -- see the Analytics page's "By Player" caveat: a
+            # defensive clip's "player" is the OPPONENT player who acted, not which UWW defender the note is
+            # about, so only this player's own offensive clips can be attributed to them specifically) ---
+            try:
+                _pd_notes = load_table("uww_coach_notes")
+                if not _pd_notes.empty and "clip_side" in _pd_notes.columns:
+                    _pd_alias = KNOWN_NAME_ALIASES.get(player_name.strip().lower(), player_name)
+                    _pd_own_notes = _pd_notes[
+                        (_pd_notes["clip_side"] == "Offense")
+                        & (_pd_notes["player"].isin([player_name, _pd_alias]))
+                    ]
+                    if not _pd_own_notes.empty:
+                        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:10px 14px;margin:1rem 0 0.5rem;"><div style="font-weight:700;font-size:0.9rem;color:#4E2A84;">COACH NOTES</div></div>', unsafe_allow_html=True)
+                        _pd_pos, _pd_neg = 0, 0
+                        for _n in _pd_own_notes["coach_note"]:
+                            _p, _ng = note_sentiment_counts(_n)
+                            _pd_pos += _p
+                            _pd_neg += _ng
+                        _pdc1, _pdc2, _pdc3 = st.columns(3)
+                        _pdc1.metric("Clips", len(_pd_own_notes))
+                        _pdc2.metric("Positive flags", _pd_pos)
+                        _pdc3.metric("Negative flags", _pd_neg)
+                        with st.expander("View notes", expanded=False):
+                            for _, _nr in _pd_own_notes.iterrows():
+                                # Plain st.markdown (no unsafe_allow_html) already sanitizes stray HTML on its
+                                # own -- html.escape()'d text here would incorrectly show literal "&amp;" etc.
+                                # for a note containing a plain "&", so this is NOT the same esc()-wrapped
+                                # pattern used elsewhere in this file for raw-HTML-div blocks.
+                                st.markdown(f"- *{_nr.get('opponent', '')}, {_nr.get('period', '')}:* {_nr['coach_note']}")
+            except Exception as _e:
+                report_section_error("Coach notes", _e)
+
             st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:10px 14px;margin:1rem 0 0.5rem;"><div style="font-weight:700;font-size:0.9rem;color:#4E2A84;">COACHING FLAGS</div></div>', unsafe_allow_html=True)
 
             if player_flags.empty:
@@ -4706,7 +4798,8 @@ def render_players():
 
 
 # --------------------------------------------------------------------------------------------------------------
-# Section 5: Analytics — Four Factors, efficiency/pace, shot quality, ball movement, schedule context
+# Section 5: Analytics — Four Factors, efficiency/pace, shot quality, ball movement, schedule context,
+# coach-tagged play notes
 # --------------------------------------------------------------------------------------------------------------
 def render_analytics():
     st.markdown("## :bar_chart: Analytics")
@@ -4933,6 +5026,107 @@ def render_analytics():
         if not b2b.empty:
             b2b_wins = int((b2b["outcome"] == "W").sum())
             st.caption(f"Back-to-back or same-day games this season: {len(b2b)} (record: {b2b_wins}-{len(b2b) - b2b_wins}).")
+
+    # ==================== COACH-TAGGED PLAY NOTES ====================
+    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">COACH-TAGGED PLAY NOTES</div></div>', unsafe_allow_html=True)
+    with st.popover("ℹ️ What is this?"):
+        st.markdown(
+            "Built from a coach-annotated video-clip export (a `\"<matchup>_recap.csv\"` file per game) -- each "
+            "tagged clip carries the coach's own free-text note for that specific play: an offensive play call "
+            "and how it was executed, or a defensive breakdown of what went right/wrong. Only games with a "
+            "matching recap file have this data; everything else on this page comes from the box score and "
+            "play-by-play alone."
+        )
+    coach_notes = load_table("uww_coach_notes")
+    if coach_notes.empty:
+        st.info("No coach-tagged play notes available yet -- add a \"<matchup>_recap.csv\" file for a game and re-run the parser.")
+    else:
+        off_notes = coach_notes[coach_notes["clip_side"] == "Offense"].copy() if "clip_side" in coach_notes.columns else pd.DataFrame()
+        def_notes = coach_notes[coach_notes["clip_side"] == "Defense"].copy() if "clip_side" in coach_notes.columns else pd.DataFrame()
+
+        cn_col1, cn_col2, cn_col3 = st.columns(3)
+        cn_col1.metric("Total Notes", len(coach_notes))
+        cn_col2.metric("Offensive Clips", len(off_notes))
+        cn_col3.metric("Defensive Clips", len(def_notes))
+
+        # --- Play calls (offense only) ---
+        if not off_notes.empty:
+            off_notes["play_call"] = off_notes["coach_note"].apply(extract_offensive_play_call)
+            call_rows = off_notes[off_notes["play_call"].notna()].copy()
+            st.markdown("**Play Calls**")
+            if not call_rows.empty:
+                call_rows["_is_make"] = call_rows["result"].astype(str).str.contains("Make", case=False, na=False)
+                call_rows["_is_attempt"] = call_rows["result"].astype(str).str.contains("Make|Miss", case=False, regex=True, na=False)
+                call_summary = call_rows.groupby("play_call").agg(
+                    Calls=("coach_note", "count"), Makes=("_is_make", "sum"), Attempts=("_is_attempt", "sum"),
+                ).reset_index()
+                call_summary["FG%"] = (100 * call_summary["Makes"] / call_summary["Attempts"].replace(0, pd.NA)).round(1)
+                call_summary = call_summary.drop(columns=["Makes"]).sort_values("Calls", ascending=False)
+                st.dataframe(call_summary.rename(columns={"play_call": "Play Call"}), hide_index=True, use_container_width=True)
+                st.caption("Play call is a best-effort extraction from the coach's own note text (a name immediately before the word \"EXECUTION\") -- a note that doesn't follow that exact pattern won't show up here, but is still visible in the raw notes browser below.")
+            else:
+                st.caption("No named play calls detected yet (looks for a name immediately before the word \"EXECUTION\" in offensive notes).")
+
+        # --- Most common flagged themes ---
+        def _theme_counts(notes_df, sign):
+            themes = []
+            for note in notes_df["coach_note"].dropna():
+                for seg in str(note).split(","):
+                    seg = seg.strip()
+                    if seg.startswith(sign):
+                        themes.append(seg.lstrip("+-").strip())
+            if not themes:
+                return pd.DataFrame(columns=["Theme", "Times Flagged"])
+            return pd.Series(themes).value_counts().rename_axis("Theme").reset_index(name="Times Flagged").head(8)
+
+        cn_theme_col1, cn_theme_col2 = st.columns(2)
+        with cn_theme_col1:
+            st.markdown("**Most Common Positive Flags**")
+            pos_themes = _theme_counts(coach_notes, "+")
+            if not pos_themes.empty:
+                st.dataframe(pos_themes, hide_index=True, use_container_width=True)
+            else:
+                st.caption("No \"+\"-flagged themes recorded yet.")
+        with cn_theme_col2:
+            st.markdown("**Most Common Negative Flags**")
+            neg_themes = _theme_counts(coach_notes, "-")
+            if not neg_themes.empty:
+                st.dataframe(neg_themes, hide_index=True, use_container_width=True)
+            else:
+                st.caption("No \"-\"-flagged themes recorded yet.")
+        st.caption("Themes are tallied by exact matching text after the +/- marker is stripped -- two notes phrasing the same idea slightly differently (e.g. \"MISSED SWITCH\" vs \"MISSED SWITCH LEADS TO BAD CLOSEOUT\") count as separate themes, not one. Read as a rough signal of what's coming up often, not a precise count.")
+
+        # --- By player (offense only) ---
+        # Defensive clips are tagged with the OPPONENT player who took the shot (that's who "Player" refers
+        # to on a defensive clip), not which UWW defender the note is actually about -- the free text rarely
+        # names a specific UWW defender. Attributing a defensive note to that row's "player" would credit/
+        # blame the wrong team's player, so this breakdown only covers offensive clips, where "player" really
+        # is the UWW player the note is evaluating.
+        if not off_notes.empty:
+            st.markdown("**By Player (Offense)**")
+            _player_rows = []
+            for _player, _grp in off_notes.groupby("player"):
+                _p_pos, _p_neg = 0, 0
+                for _n in _grp["coach_note"]:
+                    _pp, _pn = note_sentiment_counts(_n)
+                    _p_pos += _pp
+                    _p_neg += _pn
+                _player_rows.append({"Player": _player, "Notes": len(_grp), "Positive Flags": _p_pos, "Negative Flags": _p_neg})
+            player_summary = pd.DataFrame(_player_rows).sort_values("Notes", ascending=False)
+            st.dataframe(player_summary, hide_index=True, use_container_width=True)
+            st.caption("Defensive clips aren't broken out by player -- the \"Player\" on a defensive clip is the opponent player who took the shot, not necessarily which UWW defender the note is about, so attributing it to a specific UWW player here would be misleading. Browse defensive notes directly below instead.")
+
+        # --- Browse all notes ---
+        with st.expander("Browse all coach notes", expanded=False):
+            cn_search = st.text_input("Search notes", "", key="coach_notes_search", placeholder="e.g. switch, execution, closeout...")
+            browse_df = coach_notes.copy()
+            if cn_search.strip():
+                browse_df = browse_df[browse_df["coach_note"].str.contains(cn_search.strip(), case=False, na=False)]
+            browse_cols = [c for c in ["opponent", "period", "clip_side", "team", "player", "result", "coach_note"] if c in browse_df.columns]
+            st.dataframe(
+                browse_df[browse_cols].rename(columns={"coach_note": "Coach Note", "clip_side": "Side"}),
+                hide_index=True, use_container_width=True, height=300,
+            )
 
 
 # --------------------------------------------------------------------------------------------------------------
