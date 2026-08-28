@@ -2,10 +2,11 @@
 
 Data is bundled directly with the app (CSV files under ./data, exported from the analysis notebook's Delta
 tables) rather than queried live from a SQL warehouse -- no Unity Catalog / warehouse permissions are needed
-at runtime. Six sections: Home (AI scouting assistant), Upcoming Game, Previous Games, Team, Players,
-Analytics (possession-adjusted advanced stats -- Four Factors, efficiency/pace, shot quality, ball movement,
-clutch performance, schedule/rest context, and coach-tagged play notes; see STAT_GLOSSARY for definitions of
-every derived metric).
+at runtime. Six sections: Home (AI scouting assistant), Upcoming Game (including a "Game Plan
+Recommendations" panel that synthesizes coach notes, lineup, and rate-stat data into specific pre-game
+suggestions), Previous Games, Team, Players, Analytics (possession-adjusted advanced stats -- Four Factors,
+efficiency/pace, shot quality, ball movement, clutch performance, schedule/rest context, and coach-tagged
+play notes; see STAT_GLOSSARY for definitions of every derived metric).
 """
 
 import html
@@ -3109,6 +3110,339 @@ li {{ margin-bottom: 4px; }}
                 st.caption(f"Select {5 - len(_selected)} more player{'s' if 5 - len(_selected) > 1 else ''}.")
         else:
             st.caption("No player data available for simulation.")
+
+    # ==================== GAME PLAN RECOMMENDATIONS ====================
+    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001f4cb GAME PLAN RECOMMENDATIONS</div></div>', unsafe_allow_html=True)
+    with st.popover("\u2139\ufe0f What is this?"):
+        st.markdown(
+            "Data-driven suggestions synthesized from everything else on this page (coach notes, lineup data, "
+            "shooting/rebounding rates, clutch performance) into specific, actionable calls -- **not** a "
+            "replacement for the staff's own read on this opponent. Each card shows the numbers behind it so "
+            "you can judge the suggestion yourself rather than take it on faith. A card is skipped entirely "
+            "(not shown with a placeholder) if there isn't enough data behind it yet."
+        )
+
+    _gp_col1, _gp_col2 = st.columns(2)
+
+    # --- Card: Go-To Plays / Use Sparingly (from coach notes) ---
+    try:
+        with _gp_col1:
+            with st.container(border=True):
+                st.markdown("**\U0001f3c0 Plays to Lean On**")
+                _gp_notes = load_table("uww_coach_notes")
+                _gp_off = _gp_notes[_gp_notes["clip_side"] == "Offense"].copy() if not _gp_notes.empty and "clip_side" in _gp_notes.columns else pd.DataFrame()
+                if _gp_off.empty:
+                    st.caption("No coach-tagged offensive play calls recorded yet this season.")
+                else:
+                    _gp_off["play_call"] = _gp_off["coach_note"].apply(extract_offensive_play_call)
+                    _gp_calls = _gp_off[_gp_off["play_call"].notna()].copy()
+                    if _gp_calls.empty:
+                        st.caption("No named play calls detected in this season's offensive notes yet.")
+                    else:
+                        _gp_calls["_is_make"] = _gp_calls["result"].astype(str).str.contains("Make", case=False, na=False)
+                        _gp_calls["_is_attempt"] = _gp_calls["result"].astype(str).str.contains("Make|Miss", case=False, regex=True, na=False)
+                        _gp_summary = _gp_calls.groupby("play_call").agg(
+                            Calls=("coach_note", "count"), Makes=("_is_make", "sum"), Attempts=("_is_attempt", "sum"),
+                        ).reset_index()
+                        _gp_summary = _gp_summary[_gp_summary["Attempts"] >= 2]  # need a real sample before recommending
+                        if _gp_summary.empty:
+                            st.caption("Not enough repeated play calls with a clear result yet to recommend from (need 2+ tracked attempts on a named call).")
+                        else:
+                            _gp_summary["FG%"] = (100 * _gp_summary["Makes"] / _gp_summary["Attempts"]).round(0)
+                            _go_to = _gp_summary.nlargest(3, "FG%")
+                            for _, _r in _go_to.iterrows():
+                                st.markdown(f"- **{esc(_r['play_call'])}** -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%) this season")
+                            _cold = _gp_summary.nsmallest(2, "FG%")
+                            _cold = _cold[~_cold["play_call"].isin(_go_to["play_call"])]
+                            if not _cold.empty:
+                                st.markdown("**Use sparingly:**")
+                                for _, _r in _cold.iterrows():
+                                    st.markdown(f"- {esc(_r['play_call'])} -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)")
+                            st.caption("Play call names are a best-effort extraction from coach notes (see the Analytics page for the full breakdown and how it's parsed).")
+    except Exception as _e:
+        with _gp_col1:
+            report_section_error("Plays to Lean On", _e)
+
+    # --- Card: Opponent Scoring Reliance ---
+    try:
+        with _gp_col2:
+            with st.container(border=True):
+                st.markdown("**\U0001f3af Opponent Scoring Reliance**")
+                _gp_opp_prof = load_table("uww_player_profiles")
+                _gp_opp_prof = _gp_opp_prof[_gp_opp_prof["opponent"] == short_opponent] if not _gp_opp_prof.empty and short_opponent else pd.DataFrame()
+                if _gp_opp_prof.empty or "PTS" not in _gp_opp_prof.columns:
+                    st.caption("No opponent player scoring data available yet.")
+                else:
+                    _gp_opp_prof = _gp_opp_prof.copy()
+                    _gp_opp_prof["PTS"] = pd.to_numeric(_gp_opp_prof["PTS"], errors="coerce")
+                    _gp_team_pts = _gp_opp_prof["PTS"].sum()
+                    if _gp_team_pts > 0:
+                        _gp_top2 = _gp_opp_prof.nlargest(2, "PTS")
+                        _gp_top2_share = 100 * _gp_top2["PTS"].sum() / _gp_team_pts
+                        _gp_leader = _gp_opp_prof.nlargest(1, "PTS").iloc[0]
+                        if _gp_top2_share >= 45:
+                            st.markdown(f"Their top 2 scorers account for **{_gp_top2_share:.0f}%** of team scoring -- a concentrated attack.")
+                            st.markdown(f"**{esc(_gp_leader['name'])}** leads at {_gp_leader['PTS']:.1f} PPG. Sending extra attention their way is likely to matter more here than against a balanced team.")
+                        else:
+                            st.markdown(f"Their top 2 scorers account for only **{_gp_top2_share:.0f}%** of team scoring -- a balanced attack with no single focal point to key on.")
+                            st.markdown("Defensive game-planning likely matters more at the team-scheme level here than picking one player to load up on.")
+                    else:
+                        st.caption("No usable scoring totals yet.")
+    except Exception as _e:
+        with _gp_col2:
+            report_section_error("Opponent Scoring Reliance", _e)
+
+    _gp_col3, _gp_col4 = st.columns(2)
+
+    # --- Card: Pace & Style ---
+    try:
+        with _gp_col3:
+            with st.container(border=True):
+                st.markdown("**\u23f1\ufe0f Pace & Style**")
+                _gp_uww_box_all = load_table("uww_pbp_box_score")
+                if _gp_uww_box_all.empty:
+                    st.caption("Not enough reconstructed box-score data yet to compute season pace.")
+                else:
+                    _gp_uww_side = _gp_uww_box_all[_gp_uww_box_all["team"] == "UW-Whitewater"]
+                    _gp_opp_side = _gp_uww_box_all[_gp_uww_box_all["team"] != "UW-Whitewater"]
+                    _gp_n_games = _gp_uww_side["opponent"].nunique() if not _gp_uww_side.empty else 0
+                    if _gp_n_games == 0:
+                        st.caption("Not enough games reconstructed yet to compute season pace.")
+                    else:
+                        _gp_pace = compute_efficiency_pace(_gp_uww_side, _gp_opp_side, _gp_n_games)
+                        _gp_team_totals = load_table("uww_opponent_team_totals")
+                        _gp_opp_row = _gp_team_totals[_gp_team_totals["opponent"] == short_opponent] if not _gp_team_totals.empty and short_opponent else pd.DataFrame()
+                        st.markdown(f"UWW season pace: **{_gp_pace['Pace']:.1f}** possessions/game, Net Rtg **{_gp_pace['Net Rtg']:+.1f}**.")
+                        if not _gp_opp_row.empty and "team_ppg" in _gp_opp_row.columns:
+                            _gp_opp_ppg = safe_float(_gp_opp_row.iloc[0].get("team_ppg"))
+                            _gp_opp_ppg_allowed = safe_float(_gp_opp_row.iloc[0].get("opp_ppg_allowed")) if "opp_ppg_allowed" in _gp_opp_row.columns else None
+                            if _gp_opp_ppg is not None:
+                                st.markdown(f"{esc(short_opponent)}: **{_gp_opp_ppg:.1f}** PPG" + (f", allows **{_gp_opp_ppg_allowed:.1f}**" if _gp_opp_ppg_allowed is not None else "") + ".")
+                                if _gp_opp_ppg_allowed is not None and _gp_pace["Net Rtg"] != 0:
+                                    if _gp_opp_ppg_allowed > _gp_opp_ppg:
+                                        st.markdown("They give up more than they score on average -- **push tempo** and get into transition before their defense sets.")
+                                    else:
+                                        st.markdown("They're stingier than their own offense -- a **half-court, execution-first** approach may serve better than trying to speed them up.")
+                        else:
+                            st.caption("No opponent team-total scoring data yet for a pace comparison.")
+    except Exception as _e:
+        with _gp_col3:
+            report_section_error("Pace & Style", _e)
+
+    # --- Card: Rebounding ---
+    try:
+        with _gp_col4:
+            with st.container(border=True):
+                st.markdown("**\U0001f4aa Rebounding Edge**")
+                _gp_box_all = load_table("uww_pbp_box_score")
+                _gp_opp_prof_reb = load_table("uww_player_profiles")
+                _gp_opp_prof_reb = _gp_opp_prof_reb[_gp_opp_prof_reb["opponent"] == short_opponent] if not _gp_opp_prof_reb.empty and short_opponent else pd.DataFrame()
+                if _gp_box_all.empty or _gp_opp_prof_reb.empty:
+                    st.caption("Not enough data yet for a rebounding comparison.")
+                else:
+                    _gp_uww_side_r = _gp_box_all[_gp_box_all["team"] == "UW-Whitewater"]
+                    _gp_n_games_r = _gp_uww_side_r["opponent"].nunique() if not _gp_uww_side_r.empty else 0
+                    _gp_opp_prof_reb = _gp_opp_prof_reb.copy()
+                    _gp_opp_prof_reb["REB"] = pd.to_numeric(_gp_opp_prof_reb["REB"], errors="coerce")
+                    if _gp_n_games_r > 0 and "REB" in _gp_uww_side_r.columns:
+                        _gp_uww_rpg = _gp_uww_side_r["REB"].sum() / _gp_n_games_r
+                        _gp_opp_rpg = _gp_opp_prof_reb["REB"].sum()  # already a roster-wide per-game sum, see uww_player_profiles docs
+                        st.markdown(f"UWW: **{_gp_uww_rpg:.1f}** RPG this season. {esc(short_opponent)}: **{_gp_opp_rpg:.1f}** RPG.")
+                        if _gp_uww_rpg - _gp_opp_rpg >= 3:
+                            st.markdown("A clear rebounding edge on paper -- **crash the offensive glass** for extra possessions rather than getting back in transition D early.")
+                        elif _gp_opp_rpg - _gp_uww_rpg >= 3:
+                            st.markdown("They out-rebound their opponents on paper -- prioritize **boxing out and transition balance** over offensive-rebound crashes.")
+                        else:
+                            st.markdown("Rebounding looks roughly even on paper -- likely decided by effort plays, not a structural mismatch.")
+                    else:
+                        st.caption("Not enough data yet for a rebounding comparison.")
+    except Exception as _e:
+        with _gp_col4:
+            report_section_error("Rebounding Edge", _e)
+
+    _gp_col5, _gp_col6 = st.columns(2)
+
+    # --- Card: Bench Trust Plan ---
+    try:
+        with _gp_col5:
+            with st.container(border=True):
+                st.markdown("**\U0001fa91 Bench Trust Plan**")
+                _gp_box_bench = load_table("uww_pbp_box_score")
+                _gp_uww_bench = _gp_box_bench[_gp_box_bench["team"] == "UW-Whitewater"] if not _gp_box_bench.empty else pd.DataFrame()
+                if _gp_uww_bench.empty or "started" not in _gp_uww_bench.columns:
+                    st.caption("Not enough box-score data yet to identify bench trends.")
+                else:
+                    _gp_bench_rate = _gp_uww_bench.groupby("player")["started"].mean()
+                    _gp_bench_players = _gp_bench_rate[_gp_bench_rate < 0.5].index.tolist()
+                    _gp_bench_rows = _gp_uww_bench[_gp_uww_bench["player"].isin(_gp_bench_players)].copy()
+                    if _gp_bench_rows.empty:
+                        st.caption("No players project as bench-role (started in fewer than half their games) yet this season.")
+                    else:
+                        _gp_bench_rows["_gs"] = _gp_bench_rows.apply(compute_game_score, axis=1)
+                        _gp_bench_summary = _gp_bench_rows.groupby("player").agg(GP=("_gs", "count"), AvgGameScore=("_gs", "mean")).reset_index()
+                        _gp_bench_summary = _gp_bench_summary[_gp_bench_summary["GP"] >= 3].nlargest(2, "AvgGameScore")
+                        if _gp_bench_summary.empty:
+                            st.caption("No bench player has enough games yet (3+) for a reliable read.")
+                        else:
+                            st.markdown("If a starter gets into foul trouble, these bench players have earned the most trust this season:")
+                            for _, _r in _gp_bench_summary.iterrows():
+                                st.markdown(f"- **{esc(_r['player'])}** -- {_r['AvgGameScore']:.1f} avg Game Score off the bench ({int(_r['GP'])} games)")
+    except Exception as _e:
+        with _gp_col5:
+            report_section_error("Bench Trust Plan", _e)
+
+    # --- Card: Clutch Trust ---
+    try:
+        with _gp_col6:
+            with st.container(border=True):
+                st.markdown("**\U0001f3c1 Late-Game Trust**")
+                _gp_clutch = load_table("uww_clutch_events")
+                _gp_clutch_uww = _gp_clutch[_gp_clutch["team"] == "UW-Whitewater"] if not _gp_clutch.empty else pd.DataFrame()
+                if _gp_clutch_uww.empty:
+                    st.caption("No clutch-time possessions (last 5 min, score within 8) recorded yet this season.")
+                else:
+                    def _gp_clutch_pts(r):
+                        if r.get("event_type") == "made_shot":
+                            try:
+                                return int(r.get("shot_type"))
+                            except (TypeError, ValueError):
+                                return 0
+                        return 1 if r.get("event_type") == "free_throw_made" else 0
+                    _gp_clutch_uww = _gp_clutch_uww.copy()
+                    _gp_clutch_uww["_pts"] = _gp_clutch_uww.apply(_gp_clutch_pts, axis=1)
+                    _gp_clutch_scoring = _gp_clutch_uww[_gp_clutch_uww["_pts"] > 0].groupby("player")["_pts"].sum().nlargest(2)
+                    if _gp_clutch_scoring.empty:
+                        st.caption("No clutch-time scoring recorded yet this season.")
+                    else:
+                        st.markdown("Most productive scorers in clutch minutes (last 5 min, score within 8) this season:")
+                        for _player, _pts in _gp_clutch_scoring.items():
+                            st.markdown(f"- **{esc(_player)}** -- {int(_pts)} clutch pts")
+                        st.caption("Worth building the closing possession around, all else equal -- see the Team page's full clutch breakdown for more.")
+    except Exception as _e:
+        with _gp_col6:
+            report_section_error("Late-Game Trust", _e)
+
+    # --- Card: Turnover-Forcing Opportunity ---
+    try:
+        with st.container(border=True):
+            st.markdown("**\U0001f504 Turnover-Forcing Opportunity**")
+            _gp_opp_prof_to = load_table("uww_player_profiles")
+            _gp_opp_prof_to = _gp_opp_prof_to[_gp_opp_prof_to["opponent"] == short_opponent] if not _gp_opp_prof_to.empty and short_opponent else pd.DataFrame()
+            _gp_box_to = load_table("uww_pbp_box_score")
+            if _gp_opp_prof_to.empty or _gp_box_to.empty:
+                st.caption("Not enough data yet for a turnover-pressure comparison.")
+            else:
+                _gp_opp_games = get_opponent_games_played(short_opponent)
+                _gp_opp_to_total = pd.to_numeric(_gp_opp_prof_to["TO"], errors="coerce").sum() if "TO" in _gp_opp_prof_to.columns else 0
+                _gp_opp_topg = _gp_opp_to_total / _gp_opp_games if _gp_opp_games > 0 else 0
+                _gp_uww_side_to = _gp_box_to[_gp_box_to["team"] == "UW-Whitewater"]
+                _gp_n_games_to = _gp_uww_side_to["opponent"].nunique() if not _gp_uww_side_to.empty else 0
+                if _gp_opp_topg > 0 and _gp_n_games_to > 0:
+                    _gp_uww_stl_pg = _gp_uww_side_to["STL"].sum() / _gp_n_games_to if "STL" in _gp_uww_side_to.columns else 0
+                    st.markdown(f"{esc(short_opponent)} averages **{_gp_opp_topg:.1f}** turnovers/game (season total, not opponent-adjusted). UWW forces **{_gp_uww_stl_pg:.1f}** steals/game.")
+                    if _gp_opp_topg >= 13:
+                        st.markdown("A turnover-prone opponent on paper -- **extending ball pressure and denying easy entries** is more likely to pay off here than against a low-turnover team.")
+                    else:
+                        st.markdown("A relatively careful ball-handling team on paper -- pressure is still worth applying, but don't expect turnovers alone to be the deciding factor.")
+                else:
+                    st.caption("Not enough data yet for a turnover-pressure comparison.")
+    except Exception as _e:
+        report_section_error("Turnover-Forcing Opportunity", _e)
+
+    # --- Card: Recommended Closing Lineup ---
+    try:
+        with st.container(border=True):
+            st.markdown("**\U0001f512 Recommended Closing Lineup**")
+            if _uww_lu_agg is None or _uww_lu_agg.empty:
+                st.caption("Not enough lineup-stint data yet to recommend a closing lineup.")
+            else:
+                _gp_lu = _uww_lu_agg[_uww_lu_agg["MIN"] > 0].copy()
+                _gp_lu["rate"] = _gp_lu["+/-"] / _gp_lu["MIN"]
+                # Require a real sample -- a small-minute lineup with a hot rate is noise, not signal.
+                _gp_lu_qualified = _gp_lu[_gp_lu["MIN"] >= 10]
+                if _gp_lu_qualified.empty:
+                    st.caption("No lineup has enough minutes yet (10+) for a reliable net-rating read.")
+                else:
+                    _gp_best_lu = _gp_lu_qualified.nlargest(1, "rate").iloc[0]
+                    _gp_best_names = _last_names(_gp_best_lu["lineup"])
+                    st.markdown(f"**{esc(_gp_best_names)}** -- your best net rating this season among lineups with real minutes: **{_gp_best_lu['rate']:+.2f}/min** over {_gp_best_lu['MIN']:.0f} minutes.")
+                    if _opp_lu is not None and not _opp_lu.empty:
+                        _gp_opp_top_lu = _opp_lu.nlargest(1, "MIN").iloc[0]
+                        _gp_opp_top_names = _last_names(_gp_opp_top_lu["lineup"])
+                        _gp_opp_rate = _gp_opp_top_lu["+/-"] / _gp_opp_top_lu["MIN"] if _gp_opp_top_lu["MIN"] > 0 else 0
+                        st.markdown(f"{esc(short_opponent)}'s most-used lineup (**{esc(_gp_opp_top_names)}**) has run at **{_gp_opp_rate:+.2f}/min**.")
+                        st.markdown(f"Projected edge if both closing units are on the floor: **{_gp_best_lu['rate'] - _gp_opp_rate:+.2f}/min**.")
+                    st.caption("Full lineup-vs-lineup exploration (including untried combinations) is available in the Lineup Simulator above.")
+    except Exception as _e:
+        report_section_error("Recommended Closing Lineup", _e)
+
+    # --- Card: Scouted Tendency Match (bonus -- only shown if a real hit is found) ---
+    try:
+        _gp_pbp_all = load_table("uww_pbp_events")
+        _gp_game_plans = load_table("uww_opponent_game_plans")
+        if (
+            not _gp_pbp_all.empty and "coach_note" in _gp_pbp_all.columns
+            and not _gp_game_plans.empty and short_opponent
+        ):
+            _gp_opp_plan_text = " ".join(
+                _gp_game_plans[_gp_game_plans["opponent"] == short_opponent]["notes"].dropna().astype(str)
+            ).lower()
+            if _gp_opp_plan_text.strip():
+                _gp_notes_pbp = _gp_pbp_all[(_gp_pbp_all["team"] == "UW-Whitewater") & _gp_pbp_all["coach_note"].notna()].copy()
+                if not _gp_notes_pbp.empty:
+                    _gp_notes_pbp["play_call"] = _gp_notes_pbp["coach_note"].apply(extract_offensive_play_call)
+                    _gp_notes_pbp = _gp_notes_pbp[_gp_notes_pbp["play_call"].notna()]
+                    if not _gp_notes_pbp.empty:
+                        _gp_notes_pbp["action_tag"] = _gp_notes_pbp.apply(
+                            lambda r: extract_play_type(r.get("video_description"), r.get("player")), axis=1
+                        )
+                        _gp_call_action = (
+                            _gp_notes_pbp[_gp_notes_pbp["action_tag"].notna()]
+                            .groupby("play_call")["action_tag"]
+                            .agg(lambda s: s.value_counts().idxmax())
+                        )
+                        _gp_hits = [
+                            (call, action) for call, action in _gp_call_action.items()
+                            if isinstance(action, str) and len(action.strip()) >= 4 and action.strip().lower() in _gp_opp_plan_text
+                        ]
+                        if _gp_hits:
+                            with st.container(border=True):
+                                st.markdown("**\U0001f3af Scouted Tendency Match**")
+                                for _call, _action in _gp_hits[:3]:
+                                    st.markdown(f"- **{esc(_call)}** (typically a *{esc(_action)}* action) -- this action type shows up in {esc(short_opponent)}'s own scouting notes.")
+                                st.caption("Best-effort keyword match between your play calls' usual action type and the opponent's scouting notes -- verify against the actual game plan below before relying on it.")
+    except Exception as _e:
+        report_section_error("Scouted Tendency Match", _e)
+
+    # --- Card: Recurring Mistake Caution (bonus -- only shown if a real hit is found) ---
+    try:
+        _gp_all_notes = load_table("uww_coach_notes")
+        _gp_game_plans2 = load_table("uww_opponent_game_plans")
+        if not _gp_all_notes.empty and not _gp_game_plans2.empty and short_opponent:
+            _gp_opp_plan_text2 = " ".join(
+                _gp_game_plans2[_gp_game_plans2["opponent"] == short_opponent]["notes"].dropna().astype(str)
+            ).lower()
+            if _gp_opp_plan_text2.strip():
+                _gp_neg_themes = []
+                for _note in _gp_all_notes["coach_note"].dropna():
+                    for _seg in str(_note).split(","):
+                        _seg = _seg.strip()
+                        if _seg.startswith("-"):
+                            _gp_neg_themes.append(_seg.lstrip("-").strip())
+                if _gp_neg_themes:
+                    _gp_theme_counts = pd.Series(_gp_neg_themes).value_counts()
+                    _gp_theme_hits = [
+                        (theme, count) for theme, count in _gp_theme_counts.items()
+                        if count >= 2 and len(theme) >= 6 and theme.lower() in _gp_opp_plan_text2
+                    ]
+                    if _gp_theme_hits:
+                        with st.container(border=True):
+                            st.markdown("**\u26a0\ufe0f Recurring Mistake -- Worth a Reminder**")
+                            for _theme, _count in _gp_theme_hits[:2]:
+                                st.markdown(f"- \"{esc(_theme)}\" has come up as a coaching flag **{int(_count)} times** this season, and shows up in {esc(short_opponent)}'s own scouting notes too -- worth a specific pre-game reminder.")
+                            st.caption("Best-effort keyword match between recurring negative-flagged themes and the opponent's scouting notes.")
+    except Exception as _e:
+        report_section_error("Recurring Mistake Caution", _e)
 
 
 # --------------------------------------------------------------------------------------------------------------
