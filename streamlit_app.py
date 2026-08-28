@@ -231,6 +231,54 @@ def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
     return n if n > 0 else default
 
 
+def get_opponent_entering_record(short_opponent: str) -> tuple:
+    """The opponent's own W-L record and current streak from the games on THEIR schedule (uww_opponent_schedules)
+    that came before their matchup against UWW -- i.e. what their record looked like entering that specific
+    game. Returns (record_str, streak_str), each "" if it can't be determined (e.g. no opponent-schedule data
+    parsed for them yet).
+
+    Shared by the Upcoming Game banner (that game hasn't happened yet, so "entering" just means "as of now")
+    and the Previous Games banner (a past game, so "entering" means their record as of THAT game).
+
+    CAVEAT: if this opponent played UWW more than once this season (e.g. a conference home-and-home), this
+    always anchors on their FIRST "vs Whitewater"-labeled row on uww_opponent_schedules -- so for a second
+    meeting, the record/streak shown here would actually be "entering the FIRST meeting," not the second.
+    True multi-meeting scheduling is rare enough in this data that a date-based match wasn't worth the added
+    fragility (uww_opponent_schedules' game_date is the same year-less "Fri, Nov 14"-style display string as
+    everywhere else in this app, which can't be safely sorted across the season's Dec->Jan boundary without
+    the same year-inference logic the parser itself uses).
+    """
+    if not short_opponent:
+        return "", ""
+    opp_sched = load_table("uww_opponent_schedules")
+    opp_games = opp_sched[opp_sched["opponent"] == short_opponent] if not opp_sched.empty else pd.DataFrame()
+    if opp_games.empty:
+        return "", ""
+    uww_idx = None
+    for i, r in opp_games.iterrows():
+        vs = str(r.get("vs_opponent", "")).lower()
+        if "whitewater" in vs or "uww" in vs:
+            uww_idx = i
+            break
+    pre_uww = opp_games.loc[:uww_idx].iloc[:-1] if uww_idx is not None else opp_games
+    if pre_uww.empty:
+        return "", ""
+    ow = int((pre_uww["outcome"] == "W").sum())
+    ol = int((pre_uww["outcome"] == "L").sum())
+    record_str = f"{ow}-{ol}"
+    streak_count, streak_type = 0, ""
+    for out in pre_uww["outcome"].iloc[::-1]:
+        if streak_count == 0:
+            streak_type = out
+            streak_count = 1
+        elif out == streak_type:
+            streak_count += 1
+        else:
+            break
+    streak_str = f"{streak_count}{'W' if streak_type == 'W' else 'L'} streak" if streak_count > 1 else ""
+    return record_str, streak_str
+
+
 def get_season_label(schedule: pd.DataFrame) -> str:
     """Derive a "YYYY-YY Season Overview" label (e.g. "2025-26 Season Overview") from the schedule's own game
     dates, instead of a literal hardcoded string that silently goes stale every year the app isn't touched.
@@ -1059,41 +1107,7 @@ def render_upcoming_game():
     opp_streak_str = ""
     # If no record in schedule CSV, compute from opponent_schedules (only pre-UWW games)
     if not opp_record and short_opponent:
-        try:
-            _opp_sched = load_table("uww_opponent_schedules")
-            _opp_games = _opp_sched[_opp_sched["opponent"] == short_opponent].copy()
-            if not _opp_games.empty:
-                # Find the UWW game row and only count games before it
-                _uww_idx = None
-                for _i, _r in _opp_games.iterrows():
-                    _vs = str(_r.get("vs_opponent", "")).lower()
-                    if "whitewater" in _vs or "uww" in _vs:
-                        _uww_idx = _i
-                        break
-                if _uww_idx is not None:
-                    _pre_uww = _opp_games.loc[:_uww_idx].iloc[:-1]
-                else:
-                    _pre_uww = _opp_games
-                if not _pre_uww.empty:
-                    _ow = int((_pre_uww["outcome"] == "W").sum())
-                    _ol = int((_pre_uww["outcome"] == "L").sum())
-                    opp_record = f"{_ow}-{_ol}"
-                    # Compute opponent streak from pre-UWW games
-                    _opp_streak_count = 0
-                    _opp_streak_type = ""
-                    for _out in _pre_uww["outcome"].iloc[::-1]:
-                        if _opp_streak_count == 0:
-                            _opp_streak_type = _out
-                            _opp_streak_count = 1
-                        elif _out == _opp_streak_type:
-                            _opp_streak_count += 1
-                        else:
-                            break
-                    if _opp_streak_count > 1:
-                        _opp_s_label = "W" if _opp_streak_type == "W" else "L"
-                        opp_streak_str = f"{_opp_streak_count}{_opp_s_label} streak"
-        except Exception:
-            pass
+        opp_record, opp_streak_str = get_opponent_entering_record(short_opponent)
 
     # Build broadcast-style HTML banner with team logos
     uww_logo_b64 = find_logo_b64("UW-Whitewater")
@@ -1399,12 +1413,17 @@ def render_upcoming_game():
             season_stats_mpg = pd.DataFrame()
         if not season_stats_mpg.empty:
             mpg_leader = season_stats_mpg.nlargest(1, "MIN_num").iloc[0]
+            # NOTE: this counts games with a RECONSTRUCTED PLAY-BY-PLAY BOX SCORE for this player (i.e. how
+            # many of this player's games have been video-tagged/PBP-parsed so far), not their real season
+            # total games played -- PBP reconstruction is more labor-intensive than basic season-stat
+            # scraping and can lag well behind how many games the team has actually played. Label it
+            # explicitly as "tracked" so it doesn't read as (and get mistaken for) the player's true GP.
             _pbp_games = int(games_per_player.get(mpg_leader["PLAYER"], 0))
-            _gp_sub = f"{_pbp_games} GP" if _pbp_games > 0 else ""
+            _gp_sub = f"{_pbp_games} GP tracked" if _pbp_games > 0 else ""
             leaders["Minutes"] = {"name": mpg_leader["PLAYER"], "value": mpg_leader["MIN_num"], "sub": _gp_sub}
         # Points leader
         pts_leader = totals.nlargest(1, "PPG").iloc[0]
-        leaders["Points"] = {"name": pts_leader["player"], "value": pts_leader["PPG"], "sub": f"{pts_leader['FG_pct']:.1f} FG%, {pts_leader['FT_pct']:.1f} FT%"}
+        leaders["Points"] = {"name": pts_leader["player"], "value": pts_leader["PPG"], "sub": f"{pts_leader['FG_pct']:.1f} FG%\n{pts_leader['FT_pct']:.1f} FT%"}
         # Rebounds leader
         reb_leader = totals.nlargest(1, "RPG").iloc[0]
         leaders["Rebounds"] = {"name": reb_leader["player"], "value": reb_leader["RPG"], "sub": f"{reb_leader['DRPG']} DRPG, {reb_leader['ORPG']} ORPG"}
@@ -1441,7 +1460,7 @@ def render_upcoming_game():
         ft_str = str(pts_leader.get("FT%", "")).replace("%", "").strip()
         fg_val = fg_str if fg_str and fg_str != "nan" else "-"
         ft_val = ft_str if ft_str and ft_str != "nan" else "-"
-        leaders["Points"] = {"name": pts_leader["name"], "value": pts_leader["PTS"], "sub": f"{fg_val} FG%, {ft_val} FT%"}
+        leaders["Points"] = {"name": pts_leader["name"], "value": pts_leader["PTS"], "sub": f"{fg_val} FG%\n{ft_val} FT%"}
         # Rebounds leader (REB is per-game)
         reb_leader = opp.nlargest(1, "REB").iloc[0]
         leaders["Rebounds"] = {"name": reb_leader["name"], "value": reb_leader["REB"], "sub": ""}
@@ -1484,7 +1503,15 @@ def render_upcoming_game():
                 if len(parts) >= 2:
                     return f"{parts[0][0]}. {parts[-1]}"
                 return n
-            rows_html += f'<div style="border:1px solid #eee;border-radius:8px;padding:12px 14px;margin-bottom:8px;"><div style="display:flex;align-items:center;justify-content:space-between;"><div style="text-align:left;flex:1;"><div style="font-weight:700;font-size:1rem;">{html.escape(_short(uww_name))}</div><div style="font-size:0.85rem;color:#888;">{html.escape(uww_sub)}</div></div><div style="text-align:center;flex:1;"><div style="font-size:1.15rem;font-weight:700;">{uww_val:.1f}<span style="font-size:0.85rem;color:#666;margin:0 8px;">{cat}</span>{opp_val:.1f}</div></div><div style="text-align:right;flex:1;"><div style="font-weight:700;font-size:1rem;">{html.escape(_short(opp_name_l))}</div><div style="font-size:0.85rem;color:#888;">{html.escape(opp_sub)}</div></div></div></div>'
+
+            def _sub_html(sub_text):
+                """A "sub" value can carry multiple lines (e.g. FG% and FT% under the Points leader) joined
+                by a literal "\\n" -- escape first (so any stray "<"/">" in the underlying data still renders
+                as plain text, not markup), THEN turn newlines into real <br> line breaks, so each stat sits
+                on its own line instead of being crammed into one comma-separated line."""
+                return html.escape(sub_text).replace("\n", "<br>")
+
+            rows_html += f'<div style="border:1px solid #eee;border-radius:8px;padding:12px 14px;margin-bottom:8px;"><div style="display:flex;align-items:center;justify-content:space-between;"><div style="text-align:left;flex:1;"><div style="font-weight:700;font-size:1rem;">{html.escape(_short(uww_name))}</div><div style="font-size:0.85rem;color:#888;line-height:1.4;">{_sub_html(uww_sub)}</div></div><div style="text-align:center;flex:1;"><div style="font-size:1.15rem;font-weight:700;">{uww_val:.1f}<span style="font-size:0.85rem;color:#666;margin:0 8px;">{cat}</span>{opp_val:.1f}</div></div><div style="text-align:right;flex:1;"><div style="font-weight:700;font-size:1rem;">{html.escape(_short(opp_name_l))}</div><div style="font-size:0.85rem;color:#888;line-height:1.4;">{_sub_html(opp_sub)}</div></div></div></div>'
         return f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;flex:1;width:100%;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;margin-bottom:8px;">SEASON LEADERS</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px;"><span style="font-size:0.95rem;font-weight:700;color:#4E2A84;">UWW</span><span style="font-size:0.85rem;color:#888;">Avg. Per Game</span><span style="font-size:0.95rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(opp_name))}</span></div>{rows_html}</div>'
 
     uww_leaders = _get_uww_leaders(box, played)
@@ -1573,6 +1600,8 @@ def render_upcoming_game():
     _col_leaders, _col_stats, _col_l5 = st.columns(3)
     with _col_leaders:
         st.markdown(leaders_html, unsafe_allow_html=True)
+        if uww_leaders.get("Minutes", {}).get("sub"):
+            st.caption("\"GP tracked\" = games with a reconstructed play-by-play box score so far, not necessarily the player's full season game count -- video/PBP tagging can lag behind games actually played.")
     with _col_stats:
         with st.container(border=True):
             # Strip outer border from stats_html since container provides it
@@ -3106,6 +3135,11 @@ def render_previous_games():
         _uww_wins_pre = 0
         _uww_losses_pre = 0
 
+    # Opponent's own record entering this game (see get_opponent_entering_record's docstring for the
+    # multi-meeting caveat) -- previously never computed at all on this page, unlike UWW's own record above.
+    _opp_record_pg, _opp_streak_pg = get_opponent_entering_record(short_opponent) if short_opponent else ("", "")
+    _opp_entering_html = f'<div style="color:#9DAAAC;font-size:0.9rem;margin-top:2px;">{html.escape(_opp_record_pg)} entering</div>' if _opp_record_pg else ""
+
     outcome_color = "#2e7d32" if outcome == "W" else "#c62828"
     outcome_label = "WIN" if outcome == "W" else "LOSS"
 
@@ -3127,6 +3161,7 @@ def render_previous_games():
         f'{opp_logo_img}'
         f'<div style="color:#ffffff;font-family:Montserrat,sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:0.5px;">{html.escape(opp_display.upper())}</div>'
         f'<div style="color:#ffffff;font-size:2rem;font-weight:800;margin-top:4px;">{opp_score}</div>'
+        f'{_opp_entering_html}'
         f'</div>'
         f'</div>'
     )
@@ -3376,20 +3411,24 @@ def render_previous_games():
     # --- BOX SCORE ---
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">BOX SCORE</div></div>', unsafe_allow_html=True)
 
-    if game_box.empty and game_stints.empty:
-        st.warning("No reconstructed box score or lineup data found for this game yet.")
-    else:
-        # Precompute lineup data
-        if not game_stints.empty:
-            game_stints["margin_per_min"] = (game_stints["uww_margin_change"] / game_stints["stint_minutes"]).round(2)
-            game_stints = game_stints.sort_values("stint_minutes", ascending=False)
+    # Precompute lineup data for the later LINEUP PERFORMANCE section (kept here since it's been computed
+    # alongside the box score since before this fix -- not actually used by the box-score table below).
+    if not game_stints.empty:
+        game_stints["margin_per_min"] = (game_stints["uww_margin_change"] / game_stints["stint_minutes"]).round(2)
+        game_stints = game_stints.sort_values("stint_minutes", ascending=False)
 
+    # NOTE: this used to be gated on `game_box.empty and game_stints.empty` -- so if game_box was empty but
+    # game_stints wasn't, this whole section rendered NOTHING (no table, no warning) instead of explaining
+    # why. The box score table only ever depends on game_box, so check that alone.
+    if game_box.empty:
+        st.warning("No reconstructed box score found for this game yet.")
+    else:
         compact_cols = [c for c in ["player", "PTS", "REB", "AST", "STL", "TO", "FG%"]
                          if c in game_box.columns]
         full_cols = [c for c in ["player", "started", "PTS", "FGM", "FGA", "FG%", "FG3M", "FG3A", "3P%",
                                   "FTM", "FTA", "FT%", "OREB", "DREB", "REB", "AST", "STL", "BLK", "TO", "PF"]
                       if c in game_box.columns]
-        teams = sorted(game_box["team"].unique().tolist()) if not game_box.empty else []
+        teams = sorted(game_box["team"].unique().tolist())
 
         # Side-by-side box score (UWW left, Opp right)
         if len(teams) == 2:
@@ -3411,7 +3450,16 @@ def render_previous_games():
                 st.dataframe(_uww_df[full_cols], hide_index=True, use_container_width=True)
                 st.markdown(f"**{_t_opp}**")
                 st.dataframe(_opp_df[full_cols], hide_index=True, use_container_width=True)
+        elif len(teams) == 1:
+            # Only one team's rows made it into game_box -- still show what's there, with a heads-up that
+            # the other side is missing, rather than silently rendering half a box score with no explanation.
+            st.info(f"Box score data found for {teams[0]} only -- the other team's rows weren't reconstructed for this game.")
+            for team_name in teams:
+                st.markdown(f"**{team_name}**")
+                team_df = game_box[game_box["team"] == team_name].sort_values(["started", "PTS"], ascending=[False, False])
+                st.dataframe(team_df[compact_cols], hide_index=True, use_container_width=True)
         else:
+            st.warning(f"Box score has {len(teams)} distinct team label(s) ({teams}) instead of the expected 2 -- showing each as found.")
             for team_name in teams:
                 st.markdown(f"**{team_name}**")
                 team_df = game_box[game_box["team"] == team_name].sort_values(["started", "PTS"], ascending=[False, False])
