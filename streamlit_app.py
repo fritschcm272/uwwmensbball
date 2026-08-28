@@ -1426,7 +1426,7 @@ def render_upcoming_game():
         leaders["Points"] = {"name": pts_leader["player"], "value": pts_leader["PPG"], "sub": f"{pts_leader['FG_pct']:.1f} FG%\n{pts_leader['FT_pct']:.1f} FT%"}
         # Rebounds leader
         reb_leader = totals.nlargest(1, "RPG").iloc[0]
-        leaders["Rebounds"] = {"name": reb_leader["player"], "value": reb_leader["RPG"], "sub": f"{reb_leader['DRPG']} DRPG, {reb_leader['ORPG']} ORPG"}
+        leaders["Rebounds"] = {"name": reb_leader["player"], "value": reb_leader["RPG"], "sub": f"{reb_leader['DRPG']} DRPG\n{reb_leader['ORPG']} ORPG"}
         # Assists leader
         ast_leader = totals.nlargest(1, "APG").iloc[0]
         leaders["Assists"] = {"name": ast_leader["player"], "value": ast_leader["APG"], "sub": f"{ast_leader['TOPG']} TOPG"}
