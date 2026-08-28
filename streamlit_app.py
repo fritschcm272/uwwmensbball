@@ -6,6 +6,7 @@ at runtime. Four sections: Upcoming Game, Previous Games, Team, Players.
 """
 
 import html
+import json
 import os
 import re
 
@@ -16,12 +17,26 @@ from openai import OpenAI
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
-# A single player's name is spelled differently between two of the underlying source tables (a known,
-# already-reconciled discrepancy from the analysis notebook: the play-by-play/video-tagging pipeline spells
-# him "Mauryon Turner" while the official season-stats page spells him "Maurquis Turner"). uww_coaching_flags
-# already merged onto the season-stats spelling; this alias lets other tables (e.g. uww_pbp_box_score) join
-# consistently against that same canonical name.
-KNOWN_NAME_ALIASES = {"mauryon turner": "Maurquis Turner"}
+
+def _load_name_aliases() -> dict:
+    """Known player-name spelling mismatches BETWEEN data sources (e.g. the play-by-play/video-tagging
+    pipeline spells a player differently than the official season-stats page). Loaded from
+    data/name_aliases.json so the app and the parser notebook (cell 124) share ONE copy instead of two
+    hand-maintained dicts that can silently drift out of sync as new mismatches turn up. Falls back to the
+    one known mismatch inline if the file is missing (e.g. an older data checkout), so this never hard-fails.
+    """
+    path = os.path.join(DATA_DIR, "name_aliases.json")
+    if os.path.exists(path):
+        try:
+            with open(path, "r") as f:
+                raw = json.load(f)
+            return {k: v for k, v in raw.items() if not k.startswith("_")}
+        except Exception:
+            pass
+    return {"mauryon turner": "Maurquis Turner"}
+
+
+KNOWN_NAME_ALIASES = _load_name_aliases()
 
 st.set_page_config(page_title="UWW Basketball Scouting", page_icon="🏀", layout="wide")
 
@@ -114,6 +129,91 @@ def resolve_short_opponent(full_name, short_names: list):
 
 def played_mask(schedule: pd.DataFrame) -> pd.Series:
     return schedule["outcome"].notna() & schedule["team_score"].notna()
+
+
+def get_opponent_outcomes(schedule: pd.DataFrame, opponent_names) -> dict:
+    """Map each short opponent name in `opponent_names` to UWW's game outcome ("W"/"L") against them, by
+    prefix-matching uww_schedule's full opponent names against the short names used by the scouting/PBP
+    tables (same matching rule as resolve_short_opponent).
+
+    This centralizes a "for schedule row -> for short name -> startswith" loop that was previously
+    duplicated near-verbatim in ~6 places across this file (get_data_driven_ktv, the Upcoming Game team-stats
+    builder, Previous Games, Team page situational splits, and the lineup-matchup sections). Keep new
+    win/loss-split features going through this helper rather than re-adding another copy of the loop.
+    """
+    outcomes = {}
+    for _, row in schedule.iterrows():
+        if pd.notna(row.get("outcome")):
+            full_name = str(row["opponent"])
+            for opp in opponent_names:
+                if full_name.startswith(opp):
+                    outcomes[opp] = row["outcome"]
+                    break
+    return outcomes
+
+
+def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
+    """Count of games with a recorded outcome in the opponent's own season schedule (uww_opponent_schedules)
+    -- used to convert an opponent's season-TOTAL stats (uww_player_profiles' AST/STL/BLK/TO columns) into
+    accurate per-game rates.
+
+    Previously this was a hardcoded `_games_est = 5` sprinkled across several Upcoming Game computations,
+    which silently misstates every opponent's per-game rates except in whichever week they happen to have
+    played exactly 5 games. Falls back to `default` only when no schedule data exists yet for that opponent
+    (e.g. very early season, before any of their games have been scraped/parsed).
+    """
+    if not short_opponent:
+        return default
+    opp_sched = load_table("uww_opponent_schedules")
+    if opp_sched.empty or "opponent" not in opp_sched.columns:
+        return default
+    games = opp_sched[(opp_sched["opponent"] == short_opponent) & opp_sched["outcome"].notna()]
+    n = len(games)
+    return n if n > 0 else default
+
+
+def get_season_label(schedule: pd.DataFrame) -> str:
+    """Derive a "YYYY-YY Season Overview" label (e.g. "2025-26 Season Overview") from the schedule's own game
+    dates, instead of a literal hardcoded string that silently goes stale every year the app isn't touched.
+    A college basketball season runs Nov (year Y) through Mar/Apr (year Y+1); games falling Jul-Dec belong to
+    the season that started that same calendar year, games Jan-Jun belong to the season that started the
+    previous calendar year."""
+    try:
+        dates = pd.to_datetime(schedule["date"], errors="coerce").dropna()
+        if dates.empty:
+            return "Season Overview"
+        start_years = dates.dt.year.where(dates.dt.month >= 7, dates.dt.year - 1)
+        start_year = int(start_years.mode().iloc[0])
+        return f"{start_year}-{str(start_year + 1)[-2:]} Season Overview"
+    except Exception:
+        return "Season Overview"
+
+
+def report_section_error(section_name: str, exc: Exception) -> None:
+    """Surface a section-level failure instead of silently hiding it.
+
+    Several optional-but-substantive sections (season projection accuracy, projected-vs-actual performance,
+    coaching flags) were wrapped in bare `except Exception: pass`, so a whole section could vanish from the
+    page with zero indication of whether that's because there's genuinely no data yet, or because something
+    broke. This at least tells the coach which happened, without crashing the page.
+    """
+    st.caption(f"⚠️ {section_name} unavailable right now ({exc.__class__.__name__}: {exc}).")
+
+
+def esc(val) -> str:
+    """html.escape() that tolerates None/NaN -- for any FREE-TEXT data field (scouting notes, coaching-flag
+    text, game-plan notes) going into an f-string rendered with unsafe_allow_html=True.
+
+    Player/opponent NAMES were already consistently escaped throughout this file with html.escape(), but
+    several free-text fields sourced straight from scraped/PDF-parsed scouting reports (coaching-flag
+    "flag"/"evidence"/"recommendation" text, in particular) were being interpolated unescaped. A stray
+    "<"/">" in that source data would silently break the layout; if this app is ever opened to more than one
+    trusted user it's also a stored-HTML-injection surface. Use this wrapper anywhere free text meets
+    unsafe_allow_html=True.
+    """
+    if val is None or (isinstance(val, float) and pd.isna(val)):
+        return ""
+    return html.escape(str(val))
 
 
 def _normalize_case(text: str) -> str:
@@ -260,13 +360,7 @@ def get_data_driven_ktv(short_opponent):
     uww_per_game["FG2%"] = (uww_per_game["FG2M"] / uww_per_game["FG2A"] * 100).round(1)
 
     # Map outcomes from schedule
-    opp_outcome = {}
-    for _, row in schedule.iterrows():
-        if pd.notna(row.get("outcome")):
-            for opp in uww_per_game["opponent"].unique():
-                if str(row["opponent"]).startswith(opp):
-                    opp_outcome[opp] = row["outcome"]
-                    break
+    opp_outcome = get_opponent_outcomes(schedule, uww_per_game["opponent"].unique())
     uww_per_game["outcome"] = uww_per_game["opponent"].map(opp_outcome)
 
     wins = uww_per_game[uww_per_game["outcome"] == "W"]
@@ -702,7 +796,7 @@ def render_upcoming_game():
                     pass
         opp_team_stats["FG%"] = sum(pct * mins for pct, mins in _opp_fg_pcts) / sum(mins for _, mins in _opp_fg_pcts) if _opp_fg_pcts else 0
         # REB and PTS are per-game averages; AST, BLK, STL are season totals (divide by games_est)
-        _games_est = 5
+        _games_est = get_opponent_games_played(short_opponent)
         opp_team_stats["Rebounds"] = opp_prof_ts["REB"].sum()
         opp_team_stats["Assists"] = opp_prof_ts["AST"].sum() / _games_est
         opp_team_stats["Blocks"] = opp_prof_ts["BLK"].sum() / _games_est
@@ -1002,7 +1096,7 @@ def render_upcoming_game():
         return f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;flex:1;width:100%;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;margin-bottom:8px;">SEASON LEADERS</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px;"><span style="font-size:0.95rem;font-weight:700;color:#4E2A84;">UWW</span><span style="font-size:0.85rem;color:#888;">Avg. Per Game</span><span style="font-size:0.95rem;font-weight:700;color:#222;">{html.escape(opp_name.upper())}</span></div>{rows_html}</div>'
 
     uww_leaders = _get_uww_leaders(box, played)
-    opp_leaders = _get_opp_leaders(opp_profiles_ts, short_opponent)
+    opp_leaders = _get_opp_leaders(opp_profiles_ts, short_opponent, games_est=get_opponent_games_played(short_opponent))
 
     # Render: Season Leaders | Team Stats | Last Five Games
     leaders_html = _build_season_leaders_html(uww_leaders, opp_leaders, opp_display)
@@ -1622,6 +1716,55 @@ def render_upcoming_game():
             )
     game_plans = load_table("uww_opponent_game_plans")
     opp_plan = game_plans[game_plans["opponent"] == short_opponent]
+
+    def _build_printable_game_plan_html(opp_name: str, opp_plan_df: pd.DataFrame) -> str:
+        """Self-contained, printable one-pager (Keys to Victory, Team Strengths, and the full offensive/
+        defensive game plan) built from the same uww_opponent_game_plans rows already rendered on this page
+        -- for a coach to print or hand to players, rather than only being viewable on-screen."""
+        sections_html = ""
+        priority_topics = ["KEYS TO VICTORY", "TEAM STRENGTHS"]
+        for topic in priority_topics:
+            rows = opp_plan_df[opp_plan_df["topic"] == topic]
+            if rows.empty:
+                continue
+            notes = str(rows.iloc[0]["notes"])
+            items = [html.escape(re.sub(r"^\d+\.\s*", "", n.strip())) for n in notes.split("|") if n.strip()]
+            sections_html += f"<h2>{html.escape(topic.title())}</h2><ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
+        other_rows = opp_plan_df[~opp_plan_df["topic"].isin(priority_topics)]
+        if not other_rows.empty:
+            sections_html += "<h2>Full Game Plan</h2>"
+            for category in other_rows["category"].unique():
+                group = other_rows[other_rows["category"] == category]
+                sections_html += f"<h3>{html.escape(str(category))}</h3>"
+                for _, r in group.iterrows():
+                    notes = str(r["notes"])
+                    items = [html.escape(n.strip()) for n in notes.split("|") if n.strip()] if "|" in notes else [html.escape(notes)]
+                    sections_html += f"<p><strong>{html.escape(str(r['topic']))}</strong></p><ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
+        return f"""<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Game Plan vs {html.escape(opp_name)}</title>
+<style>
+body {{ font-family: Georgia, serif; max-width: 800px; margin: 2rem auto; color: #222; }}
+h1 {{ color: #4E2A84; border-bottom: 3px solid #4E2A84; padding-bottom: 8px; }}
+h2 {{ color: #4E2A84; margin-top: 1.5rem; }}
+h3 {{ color: #333; margin-top: 1rem; }}
+li {{ margin-bottom: 4px; }}
+@media print {{ body {{ margin: 0.5in; }} }}
+</style></head>
+<body>
+<h1>UW-Whitewater vs {html.escape(opp_name)} — Game Plan</h1>
+{sections_html}
+</body></html>"""
+
+    if not opp_plan.empty:
+        st.download_button(
+            label="🖨️ Print / export game plan",
+            data=_build_printable_game_plan_html(short_opponent, opp_plan),
+            file_name=f"{short_opponent}_Game_Plan.html",
+            mime="text/html",
+            key=f"gameplan_export_{short_opponent}",
+            help="Downloads a printable one-pager of Keys to Victory, Team Strengths, and the full game plan -- open it and use your browser's Print dialog to hand it to players.",
+        )
+
     if opp_plan.empty:
         st.warning(f"No scouting report / game plan found yet for {short_opponent}.")
     else:
@@ -1921,7 +2064,9 @@ def render_upcoming_game():
                         _opp_stats["FG%"] = _opp_fg_pct
                         # Derive per-game stats using PPG and season totals
                         _opp_ppg = opp_prof_ts["PTS"].sum()
-                        _opp_games_est = num_uww_games
+                        # Was previously `num_uww_games` (UWW's own games-played count) used as a stand-in for
+                        # the OPPONENT's games played -- wrong team's denominator. Use the opponent's own count.
+                        _opp_games_est = get_opponent_games_played(short_opponent)
                         _o3m_pg = _o3m / _opp_games_est if _opp_games_est > 0 else 0
                         _o3a_pg = _o3a / _opp_games_est if _opp_games_est > 0 else 0
                         _oftm_pg = _oftm / _opp_games_est if _opp_games_est > 0 else 0
@@ -1976,13 +2121,7 @@ def render_upcoming_game():
                     _uww_allowed_w, _uww_allowed_l = {}, {}
                     if not uww_box.empty:
                         # Map each opponent in box score to W/L outcome
-                        _opp_outcomes = {}
-                        for _, _sr in schedule.iterrows():
-                            if pd.notna(_sr.get("outcome")):
-                                for _opp_name in uww_box["opponent"].unique():
-                                    if str(_sr["opponent"]).startswith(_opp_name):
-                                        _opp_outcomes[_opp_name] = _sr["outcome"]
-                                        break
+                        _opp_outcomes = get_opponent_outcomes(schedule, uww_box["opponent"].unique())
                         _win_opps = [o for o, r in _opp_outcomes.items() if r == "W"]
                         _loss_opps = [o for o, r in _opp_outcomes.items() if r == "L"]
 
@@ -2152,6 +2291,10 @@ def render_upcoming_game():
             height = player_row_dict.get("height", "")
             class_yr = player_row_dict.get("class_year", "")
             info_parts = [str(x) for x in [pos, height, class_yr] if x and str(x).strip() and str(x) != "nan"]
+            # Optional availability/injury status (see the roster-card comment above for how to populate it).
+            _dlg_status_raw = str(player_row_dict.get("status", "")).strip()
+            if _dlg_status_raw and _dlg_status_raw.lower() not in ("nan", "active", "available"):
+                st.warning(f"Status: {_dlg_status_raw}")
             _dlg_img = _get_player_img_b64(player_name)
             if _dlg_img:
                 _dlg_col_img, _dlg_col_info = st.columns([1, 3])
@@ -2257,6 +2400,15 @@ def render_upcoming_game():
                             height = player.get("height", "")
                             prof_row = _comp_profiles[(_comp_profiles["name"] == name) & (_comp_profiles["opponent"] == short_opponent)]
                             pts_str = f"{float(prof_row.iloc[0]['PTS']):.1f}" if not prof_row.empty and pd.notna(prof_row.iloc[0].get("PTS")) else "-"
+                            # Optional availability/injury status. Not currently populated by the parser --
+                            # add a "status" column to uww_opponent_rosters.csv (e.g. "Out", "Questionable",
+                            # "Probable") to surface it here; the app renders nothing if the column is absent
+                            # or blank, so this is safe to leave unpopulated.
+                            _status_raw = str(player.get("status", "")).strip()
+                            _status_badge = ""
+                            if _status_raw and _status_raw.lower() not in ("nan", "active", "available"):
+                                _status_color = "#c62828" if _status_raw.lower() in ("out", "injured") else "#f57c00"
+                                _status_badge = f'<span style="background:{_status_color};color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px;margin-left:4px;">{esc(_status_raw).upper()}</span>'
 
                             with st.container(border=True):
                                 _p_img = _get_player_img_b64(name)
@@ -2264,7 +2416,7 @@ def render_upcoming_game():
                                     st.markdown(f'<div style="text-align:center;margin-bottom:6px;"><img src="data:image/png;base64,{_p_img}" style="width:60px;height:75px;object-fit:cover;border-radius:6px;"></div>', unsafe_allow_html=True)
                                 st.markdown(
                                     f"<div style='min-height:2.8em;line-height:1.4em;'>"
-                                    f"<strong>{jersey_str} {name}</strong></div>",
+                                    f"<strong>{jersey_str} {esc(name)}</strong>{_status_badge}</div>",
                                     unsafe_allow_html=True,
                                 )
                                 info_parts = [str(x) for x in [pos, height] if pd.notna(x) and str(x).strip()]
@@ -2280,17 +2432,72 @@ def render_upcoming_game():
 
 
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">COMPARABLE OPPONENTS</div></div>', unsafe_allow_html=True)
-    st.info("Comparable opponent data will be available once previous game data is collected for this opponent.")
+    _team_totals_co = load_table("uww_opponent_team_totals")
+    if _team_totals_co.empty or not short_opponent or short_opponent not in _team_totals_co["opponent"].values:
+        st.info("Comparable opponent data will be available once previous game data is collected for this opponent.")
+    else:
+        _numeric_cols_co = [c for c in _team_totals_co.columns if c != "opponent" and pd.api.types.is_numeric_dtype(_team_totals_co[c])]
+        if not _numeric_cols_co:
+            st.info("Not enough team-level stats recorded yet to compare opponents.")
+        else:
+            _co_df = _team_totals_co.dropna(subset=_numeric_cols_co, how="all").copy()
+            # Only compare against opponents UWW has actually PLAYED, so the comparison comes with a real result.
+            _co_outcomes = get_opponent_outcomes(schedule, _co_df["opponent"].unique())
+            _co_df = _co_df[_co_df["opponent"].isin(_co_outcomes.keys()) & (_co_df["opponent"] != short_opponent)]
+            if _co_df.empty:
+                st.info("No previously-played opponents with recorded team stats to compare against yet.")
+            else:
+                _target_row = _team_totals_co[_team_totals_co["opponent"] == short_opponent].iloc[0]
+                # Min-max normalize each stat across the candidate pool + the target, so no single stat (e.g. a
+                # PPG figure in the 60-90 range) dominates the distance purely because of its raw scale.
+                _all_vals_co = pd.concat(
+                    [_co_df[_numeric_cols_co], _target_row[_numeric_cols_co].to_frame().T], ignore_index=True
+                ).astype(float)
+                _mins_co = _all_vals_co.min()
+                _ranges_co = (_all_vals_co.max() - _mins_co).replace(0, 1)
+                _target_norm_co = (_target_row[_numeric_cols_co].astype(float) - _mins_co) / _ranges_co
+
+                def _co_distance(row):
+                    row_norm = (row[_numeric_cols_co].astype(float) - _mins_co) / _ranges_co
+                    return float(((row_norm - _target_norm_co) ** 2).sum() ** 0.5)
+
+                _co_df["_similarity_dist"] = _co_df.apply(_co_distance, axis=1)
+                _top_similar = _co_df.nsmallest(min(3, len(_co_df)), "_similarity_dist")
+
+                st.caption(
+                    f"Other scouted opponents whose team-level stats ({', '.join(_numeric_cols_co)}) most closely "
+                    f"resemble {esc(short_opponent)}'s this season — with UWW's actual result against each, as a "
+                    f"rough style proxy for how {esc(short_opponent)} might play."
+                )
+                _co_cols = st.columns(len(_top_similar))
+                for _ci, (_, _cr) in enumerate(_top_similar.iterrows()):
+                    with _co_cols[_ci]:
+                        _co_name = _cr["opponent"]
+                        _co_outcome = _co_outcomes.get(_co_name, "-")
+                        _co_color = "#2e7d32" if _co_outcome == "W" else "#c62828"
+                        _co_game = played[played["opponent"].astype(str).str.startswith(_co_name)] if not played.empty else pd.DataFrame()
+                        _co_score_str = ""
+                        if not _co_game.empty:
+                            _g = _co_game.iloc[0]
+                            if pd.notna(_g.get("team_score")) and pd.notna(_g.get("opponent_score")):
+                                _co_score_str = f"{int(_g['team_score'])}-{int(_g['opponent_score'])}"
+                        with st.container(border=True):
+                            st.markdown(f"**{esc(_co_name)}**")
+                            st.markdown(
+                                f'<span style="color:{_co_color};font-weight:700;">{esc(_co_outcome)}</span> {esc(_co_score_str)}',
+                                unsafe_allow_html=True,
+                            )
+                            st.caption(f"Similarity score: {_cr['_similarity_dist']:.2f} (lower = more similar)")
 
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">PROJECTED BOX SCORE</div></div>', unsafe_allow_html=True)
     uww_proj = load_table("uww_projected_box_score")
-    aurora_proj = load_table("aurora_projected_box_score")
+    opp_proj = load_table("uww_opponent_projected_box_score")  # was mismatched to a nonexistent "aurora_projected_box_score" file — this is the name the parser notebook actually exports (see parser cell 128)
 
-    if uww_proj.empty or aurora_proj.empty:
+    if uww_proj.empty or opp_proj.empty:
         st.info("Projected box score not available yet for this opponent.")
     else:
         proj_uww_total = uww_proj["projected_PTS"].sum()
-        proj_opp_total = aurora_proj["projected_PTS"].sum()
+        proj_opp_total = opp_proj["projected_PTS"].sum()
         pcol1, pcol2, pcol3 = st.columns(3)
         pcol1.metric("Projected UWW", f"{proj_uww_total:.0f}")
         pcol2.metric(f"Projected {short_opponent}", f"{proj_opp_total:.0f}")
@@ -2311,7 +2518,7 @@ def render_upcoming_game():
         with pbox_col2:
             st.markdown(f"**{short_opponent}**")
             render_box_score_with_tooltips(
-                aurora_proj.sort_values("projected_PTS", ascending=False),
+                opp_proj.sort_values("projected_PTS", ascending=False),
                 ["name", "jersey_number", "role", "projected_PTS", "projected_REB", "projected_AST"],
             )
 
@@ -2889,8 +3096,8 @@ def render_previous_games():
                     _up = _under.iloc[0]
                     if _up["total_diff"] < 0:
                         _uc.warning(f"📉 **Below Projection**: {_up['Player']} ({int(_up['total_diff'])} combined PTS/REB/AST)")
-    except Exception:
-        pass
+    except Exception as _e:
+        report_section_error("Projected vs. Actual performance", _e)
 
     # --- LINEUP PERFORMANCE ---
     if not game_stints.empty:
@@ -3067,10 +3274,10 @@ def render_previous_games():
                             _cat_badge = f'<span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:0.75rem;font-weight:600;">{flag_row.get("category", "")}</span>' if pd.notna(flag_row.get("category")) else ""
                             st.markdown(
                                 f'<div style="border-left:3px solid #4caf50;padding:8px 12px;margin:6px 0;background:#f9fdf9;border-radius:4px;">'
-                                f'<div style="font-weight:700;font-size:0.9rem;">{flag_row["player"]} {_cat_badge}</div>'
-                                f'<div style="font-size:0.85rem;margin-top:4px;">{flag_row["flag"]}</div>'
-                                f'<div style="font-size:0.78rem;color:#666;margin-top:3px;"><em>Evidence:</em> {flag_row.get("evidence", "-")}</div>'
-                                f'<div style="font-size:0.78rem;color:#1b5e20;margin-top:2px;"><em>Recommendation:</em> {flag_row.get("recommendation", "-")}</div>'
+                                f'<div style="font-weight:700;font-size:0.9rem;">{esc(flag_row["player"])} {_cat_badge}</div>'
+                                f'<div style="font-size:0.85rem;margin-top:4px;">{esc(flag_row["flag"])}</div>'
+                                f'<div style="font-size:0.78rem;color:#666;margin-top:3px;"><em>Evidence:</em> {esc(flag_row.get("evidence", "-"))}</div>'
+                                f'<div style="font-size:0.78rem;color:#1b5e20;margin-top:2px;"><em>Recommendation:</em> {esc(flag_row.get("recommendation", "-"))}</div>'
                                 f'</div>',
                                 unsafe_allow_html=True,
                             )
@@ -3084,18 +3291,15 @@ def render_previous_games():
                             _cat_badge = f'<span style="background:#fbe9e7;color:#c62828;padding:2px 8px;border-radius:10px;font-size:0.75rem;font-weight:600;">{flag_row.get("category", "")}</span>' if pd.notna(flag_row.get("category")) else ""
                             st.markdown(
                                 f'<div style="border-left:3px solid #ef5350;padding:8px 12px;margin:6px 0;background:#fffafa;border-radius:4px;">'
-                                f'<div style="font-weight:700;font-size:0.9rem;">{flag_row["player"]} {_cat_badge}</div>'
-                                f'<div style="font-size:0.85rem;margin-top:4px;">{flag_row["flag"]}</div>'
-                                f'<div style="font-size:0.78rem;color:#666;margin-top:3px;"><em>Evidence:</em> {flag_row.get("evidence", "-")}</div>'
-                                f'<div style="font-size:0.78rem;color:#b71c1c;margin-top:2px;"><em>Recommendation:</em> {flag_row.get("recommendation", "-")}</div>'
+                                f'<div style="font-weight:700;font-size:0.9rem;">{esc(flag_row["player"])} {_cat_badge}</div>'
+                                f'<div style="font-size:0.85rem;margin-top:4px;">{esc(flag_row["flag"])}</div>'
+                                f'<div style="font-size:0.78rem;color:#666;margin-top:3px;"><em>Evidence:</em> {esc(flag_row.get("evidence", "-"))}</div>'
+                                f'<div style="font-size:0.78rem;color:#b71c1c;margin-top:2px;"><em>Recommendation:</em> {esc(flag_row.get("recommendation", "-"))}</div>'
                                 f'</div>',
                                 unsafe_allow_html=True,
                             )
-    except Exception:
-        pass
-
-
-
+    except Exception as _e:
+        report_section_error("Coaching flags for this game", _e)
 
 # --------------------------------------------------------------------------------------------------------------
 # Section 3: Team
@@ -3140,7 +3344,7 @@ def render_team():
             {_team_logo_html}
             <div>
                 <div style="color:#ffffff;font-family:Montserrat,sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:0.5px;">UW-WHITEWATER</div>
-                <div style="color:#9DAAAC;font-size:1.0rem;margin-top:4px;">2025-26 Season Overview</div>
+                <div style="color:#9DAAAC;font-size:1.0rem;margin-top:4px;">{html.escape(get_season_label(schedule))}</div>
             </div>
         </div>
         <div style="display:flex;gap:32px;align-items:center;">
@@ -3232,10 +3436,8 @@ def render_team():
                     _diff_cols_t = ["PTS Diff", "REB Diff", "AST Diff"]
                     _styled_t = _pa_df.style.applymap(_color_diff_team, subset=_diff_cols_t)
                     st.dataframe(_styled_t, hide_index=True, use_container_width=True)
-    except Exception:
-        pass
-
-    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">COACHING FLAGS OVERVIEW</div></div>', unsafe_allow_html=True)
+    except Exception as _e:
+        report_section_error("Season projection accuracy", _e)
     flags = load_table("uww_coaching_flags")
     if not flags.empty:
         # Team-level aggregates
@@ -3559,13 +3761,7 @@ def render_team():
             return ", ".join(parts[-1] if len(parts := n.split()) > 1 else n for n in names)
 
         # Map stints to W/L outcomes from schedule
-        _opp_outcomes = {}
-        for _, _sr in schedule.iterrows():
-            if pd.notna(_sr.get("outcome")):
-                for _opp_name in stints["opponent"].unique():
-                    if str(_sr["opponent"]).startswith(_opp_name):
-                        _opp_outcomes[_opp_name] = _sr["outcome"]
-                        break
+        _opp_outcomes = get_opponent_outcomes(schedule, stints["opponent"].unique())
         stints_split = stints.copy()
         stints_split["outcome"] = stints_split["opponent"].map(_opp_outcomes)
 
@@ -3720,10 +3916,8 @@ def render_players():
                                 elif val < 0: return "color: #c62828; font-weight: 600;"
                             return ""
                         st.dataframe(_gm_df.style.applymap(_cd_player, subset=["vs Proj"]), hide_index=True, use_container_width=True)
-            except Exception:
-                pass
-
-            # --- Coaching Flags ---
+            except Exception as _e:
+                report_section_error("Projected vs. actual performance", _e)
             st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:10px 14px;margin:1rem 0 0.5rem;"><div style="font-weight:700;font-size:0.9rem;color:#4E2A84;">COACHING FLAGS</div></div>', unsafe_allow_html=True)
 
             if player_flags.empty:
@@ -3739,9 +3933,9 @@ def render_players():
                     for idx, (_, f) in enumerate(positive_flags.iterrows()):
                         st.markdown(
                             f'<div style="border-left:3px solid #4caf50;padding:8px 12px;margin:6px 0;background:#f9fdf9;border-radius:4px;">'
-                            f'<div style="font-weight:700;font-size:0.88rem;">{f["flag"]}</div>'
-                            f'<div style="font-size:0.8rem;color:#555;margin-top:3px;"><em>{f["evidence"]}</em></div>'
-                            f'<div style="font-size:0.78rem;color:#1b5e20;margin-top:2px;">{f.get("recommendation", "") if pd.notna(f.get("recommendation")) else ""}</div>'
+                            f'<div style="font-weight:700;font-size:0.88rem;">{esc(f["flag"])}</div>'
+                            f'<div style="font-size:0.8rem;color:#555;margin-top:3px;"><em>{esc(f["evidence"])}</em></div>'
+                            f'<div style="font-size:0.78rem;color:#1b5e20;margin-top:2px;">{esc(f.get("recommendation", "")) if pd.notna(f.get("recommendation")) else ""}</div>'
                             f'</div>',
                             unsafe_allow_html=True,
                         )
@@ -3753,9 +3947,9 @@ def render_players():
                     for idx, (_, f) in enumerate(negative_flags.iterrows()):
                         st.markdown(
                             f'<div style="border-left:3px solid #ef5350;padding:8px 12px;margin:6px 0;background:#fffafa;border-radius:4px;">'
-                            f'<div style="font-weight:700;font-size:0.88rem;">{f["flag"]}</div>'
-                            f'<div style="font-size:0.8rem;color:#555;margin-top:3px;"><em>{f["evidence"]}</em></div>'
-                            f'<div style="font-size:0.78rem;color:#b71c1c;margin-top:2px;">{f.get("recommendation", "") if pd.notna(f.get("recommendation")) else ""}</div>'
+                            f'<div style="font-weight:700;font-size:0.88rem;">{esc(f["flag"])}</div>'
+                            f'<div style="font-size:0.8rem;color:#555;margin-top:3px;"><em>{esc(f["evidence"])}</em></div>'
+                            f'<div style="font-size:0.78rem;color:#b71c1c;margin-top:2px;">{esc(f.get("recommendation", "")) if pd.notna(f.get("recommendation")) else ""}</div>'
                             f'</div>',
                             unsafe_allow_html=True,
                         )

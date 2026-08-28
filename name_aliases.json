@@ -1,0 +1,4 @@
+{
+  "_comment": "Known player-name spelling mismatches BETWEEN data sources (e.g. the play-by-play/video-tagging pipeline vs. the official season-stats page). Both streamlit_app.py and the parser notebook (cell 124) load this same file, so a fix only needs to be made in one place. Keys and values are lowercase; the app/parser resolve a name through this map before joining across tables.",
+  "mauryon turner": "Maurquis Turner"
+}
