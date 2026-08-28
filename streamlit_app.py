@@ -291,6 +291,27 @@ def safe_scalar(val):
     return val
 
 
+def safe_float(val):
+    """Coerce a value to a float for display formatting (e.g. an f-string ':.1f' spec), or return None if
+    that isn't possible.
+
+    A CSV column pandas infers as `object` dtype (because at least one row in it wasn't cleanly numeric --
+    a stray "-", a blank, a stat recorded as "N/A", etc.) hands back a plain Python str for every row, even
+    the ones that "look like" a number. `pd.notna()` on that string is True (a string isn't null), so a naive
+    `f"{val:.1f}" if pd.notna(val) else "-"` gets past the notna check and then crashes formatting a str with
+    a numeric spec. Route every value through this first: run safe_scalar() to rule out a stray Series too,
+    then try a real numeric conversion, falling back to None (never raising) so the caller's own `if ... else
+    "-"` fallback still works for both "missing" and "not actually numeric" in one place.
+    """
+    val = safe_scalar(val)
+    if val is None or (isinstance(val, float) and pd.isna(val)):
+        return None
+    try:
+        return float(val)
+    except (TypeError, ValueError):
+        return None
+
+
 def _normalize_case(text: str) -> str:
     """Convert ALL-CAPS text to sentence case; leave mixed-case text alone."""
     stripped = re.sub(r"[^a-zA-Z]", "", text)
@@ -4295,16 +4316,16 @@ def render_players():
                         _ps = _p_match.iloc[0]
                         _stat_parts = []
                         for _col, _lbl in [("PTS", "PPG"), ("REB", "RPG"), ("AST", "APG"), ("MIN", "MPG")]:
-                            _val = safe_scalar(_ps.get(_col)) if _col in _ps.index else None
-                            if _val is not None and pd.notna(_val):
+                            _val = safe_float(_ps.get(_col)) if _col in _ps.index else None
+                            if _val is not None:
                                 _stat_parts.append(f'<span style="margin-right:20px;"><span style="color:#666;font-size:0.8rem;">{_lbl}</span> <span style="font-weight:700;font-size:1.1rem;color:#4E2A84;">{_val:.1f}</span></span>')
                         if _stat_parts:
                             st.markdown(f'<div style="margin-top:8px;">{"".join(_stat_parts)}</div>', unsafe_allow_html=True)
                         # Additional stats row
                         _stat_parts2 = []
                         for _col, _lbl in [("FG%", "FG%"), ("3P%", "3P%"), ("FT%", "FT%"), ("STL", "SPG"), ("TO", "TOPG")]:
-                            _val = safe_scalar(_ps.get(_col)) if _col in _ps.index else None
-                            if _val is not None and pd.notna(_val):
+                            _val = safe_float(_ps.get(_col)) if _col in _ps.index else None
+                            if _val is not None:
                                 if "%" in _col:
                                     _stat_parts2.append(f'<span style="margin-right:20px;"><span style="color:#666;font-size:0.75rem;">{_lbl}</span> <span style="font-weight:600;font-size:0.95rem;">{_val:.1f}%</span></span>')
                                 else:
@@ -4422,8 +4443,8 @@ def render_players():
                 mpg = None
                 if not _season_stats_min.empty and "PLAYER" in _season_stats_min.columns:
                     _match = _season_stats_min[_season_stats_min["PLAYER"].str.strip().str.lower() == str(player_name).strip().lower()]
-                    if not _match.empty and pd.notna(safe_scalar(_match.iloc[0].get("MIN"))):
-                        mpg = float(safe_scalar(_match.iloc[0]["MIN"]))
+                    if not _match.empty:
+                        mpg = safe_float(_match.iloc[0].get("MIN"))
                 player_minutes_total = (mpg * n_pg) if mpg else 0
                 team_minutes_total = 5 * 40 * n_pg
                 usage = compute_usage_rate(totals, player_minutes_total, _adv_uww_box[_adv_uww_box["opponent"].isin(p_games["opponent"].unique())], team_minutes_total)
@@ -4470,10 +4491,10 @@ def render_players():
                         if _cs_row is None and _cs_alt:
                             _cs_row = _card_season_lookup.get(_cs_alt)
                         if _cs_row is not None:
-                            _pts_val, _reb_val, _ast_val = safe_scalar(_cs_row.get('PTS')), safe_scalar(_cs_row.get('REB')), safe_scalar(_cs_row.get('AST'))
-                            _ppg = f"{_pts_val:.1f}" if pd.notna(_pts_val) else "-"
-                            _rpg = f"{_reb_val:.1f}" if pd.notna(_reb_val) else "-"
-                            _apg = f"{_ast_val:.1f}" if pd.notna(_ast_val) else "-"
+                            _pts_val, _reb_val, _ast_val = safe_float(_cs_row.get('PTS')), safe_float(_cs_row.get('REB')), safe_float(_cs_row.get('AST'))
+                            _ppg = f"{_pts_val:.1f}" if _pts_val is not None else "-"
+                            _rpg = f"{_reb_val:.1f}" if _reb_val is not None else "-"
+                            _apg = f"{_ast_val:.1f}" if _ast_val is not None else "-"
                             st.markdown(
                                 f'<div style="font-size:0.78rem;color:#4E2A84;margin:2px 0 4px;">'
                                 f'<strong>{_ppg}</strong> pts  <strong>{_rpg}</strong> reb  <strong>{_apg}</strong> ast</div>',
