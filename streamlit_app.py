@@ -48,7 +48,17 @@ def load_table(name: str) -> pd.DataFrame:
     path = os.path.join(DATA_DIR, f"{name}.csv")
     if not os.path.exists(path):
         return pd.DataFrame()
-    return pd.read_csv(path)
+    df = pd.read_csv(path)
+    if df.columns.duplicated().any():
+        # A CSV with two columns sharing the same header (e.g. two "PTS" columns from an upstream parsing
+        # quirk) makes pandas return a Series/DataFrame instead of a scalar for ANY df[col] or row[col] access
+        # on that name -- which then blows up downstream code that assumes a scalar (e.g. an f-string format,
+        # or a `pd.notna(...)` truth check) with "truth value of a Series is ambiguous". Rather than chase
+        # that error down individually everywhere a table gets used, guard it once here at the single
+        # chokepoint every table load already goes through: keep the first occurrence of each duplicated
+        # column name and drop the rest, so every table this function returns has unique column labels.
+        df = df.loc[:, ~df.columns.duplicated()]
+    return df
 
 
 @st.cache_data
