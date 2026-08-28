@@ -127,6 +127,48 @@ def resolve_short_opponent(full_name, short_names: list):
     return None
 
 
+def get_team_abbreviation(name) -> str:
+    """Derive a short (2-4 letter) code for a team name, e.g. "UW-Oshkosh Titans" -> "UWO", "UW-Whitewater"
+    -> "UWW", "Elmhurst" -> "ELM". For narrow paired-column UI (Season Leaders, Team Stats, lineup/last-5
+    comparison headers) where even the "short" scouting-report name (dropping the mascot) is too long to sit
+    opposite "UWW" without crowding or wrapping. Not used for the broadcast-style banners, which have room
+    for the full name.
+
+    There's no official-abbreviation data source in the CSVs, so this is a heuristic:
+      1. Drop any parenthetical content (e.g. "St. Thomas (TX)" -> "St. Thomas").
+      2. Split on spaces and hyphens. A single-word name (e.g. "Elmhurst", "Ripon") uses its first 3 letters.
+      3. A multi-word/hyphenated name takes one letter per word -- except an existing all-caps short token of
+         3 letters or fewer (e.g. "UW") is kept whole, and "St" contributes "S" -- so "UW-Oshkosh" -> "UWO"
+         and "St. Thomas" -> "ST".
+    """
+    if not name or (isinstance(name, float) and pd.isna(name)):
+        return ""
+    name = re.sub(r"\([^)]*\)", "", str(name)).strip()
+    SKIP_WORDS = {"of", "the", "at"}
+    tokens = [t.strip(".") for t in re.split(r"[\s\-]+", name) if t.strip(".")]
+    tokens = [t for t in tokens if t.lower() not in SKIP_WORDS]
+    if not tokens:
+        return re.sub(r"[^A-Za-z]", "", name)[:4].upper()
+    if len(tokens) == 1:
+        letters = re.sub(r"[^A-Za-z]", "", tokens[0])
+        return (letters[:3] if len(letters) > 3 else letters).upper()
+    # Cap at the first 2 tokens: schedule opponent names are typically "<School> <Mascot>" (e.g. "UW-Oshkosh
+    # Titans"), and a trailing mascot word should be DROPPED, not tacked on as a 3rd initial. This matches the
+    # common case correctly (2-word real names like "Wisconsin Lutheran" are unaffected) at the cost of
+    # occasionally under-abbreviating a genuine 3+-word school name with no mascot suffix -- an acceptable
+    # trade-off since those are rare in this schedule.
+    parts = []
+    for t in tokens[:2]:
+        if t.isupper() and len(t) <= 3:
+            parts.append(t)
+        elif t.lower() == "st":
+            parts.append("S")
+        else:
+            parts.append(t[0].upper())
+    abbr = "".join(parts)[:4]
+    return abbr or re.sub(r"[^A-Za-z]", "", name)[:4].upper()
+
+
 def played_mask(schedule: pd.DataFrame) -> pd.Series:
     return schedule["outcome"].notna() & schedule["team_score"].notna()
 
@@ -154,8 +196,14 @@ def get_opponent_outcomes(schedule: pd.DataFrame, opponent_names) -> dict:
 
 def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
     """Count of games with a recorded outcome in the opponent's own season schedule (uww_opponent_schedules)
-    -- used to convert an opponent's season-TOTAL stats (uww_player_profiles' AST/STL/BLK/TO columns) into
-    accurate per-game rates.
+    -- used to convert an opponent's genuinely season-CUMULATIVE stats (uww_player_profiles' 3PM-A/FTM-A
+    "made-attempted" strings) into per-game rates.
+
+    NOTE: most of uww_player_profiles' other numeric columns (PTS, REB, AST, STL, BLK, TO, MIN) are already
+    PER-GAME averages straight from the source scouting-report boxscore table, NOT season totals -- do not
+    divide those by this helper's result (see the note where opp_team_stats is built in render_upcoming_game
+    for how this was previously done wrong). Only 3PM-A/FTM-A are true season-cumulative "made-attempted"
+    strings that need this conversion.
 
     Previously this was a hardcoded `_games_est = 5` sprinkled across several Upcoming Game computations,
     which silently misstates every opponent's per-game rates except in whichever week they happen to have
@@ -795,12 +843,18 @@ def render_upcoming_game():
                 except ValueError:
                     pass
         opp_team_stats["FG%"] = sum(pct * mins for pct, mins in _opp_fg_pcts) / sum(mins for _, mins in _opp_fg_pcts) if _opp_fg_pcts else 0
-        # REB and PTS are per-game averages; AST, BLK, STL are season totals (divide by games_est)
+        # uww_player_profiles' PTS/REB/AST/STL/BLK/TO/MIN columns are ALL per-player PER-GAME averages -- they
+        # come from the same row of the opponent's season boxscore table (see parser cell 35's `stat_cols`),
+        # and the parser's own team_ppg figure (used just above) is that same table's "Team Total" row PTS
+        # taken directly with no division, which only makes sense if the column is already a per-game rate.
+        # Summing across the roster therefore already gives the team's per-game rate for each stat -- no
+        # `_games_est` division needed here. (3PM-A/FTM-A are a separate, genuinely season-CUMULATIVE
+        # "made-attempted" string format from the same table, which is why those still get divided below.)
         _games_est = get_opponent_games_played(short_opponent)
         opp_team_stats["Rebounds"] = opp_prof_ts["REB"].sum()
-        opp_team_stats["Assists"] = opp_prof_ts["AST"].sum() / _games_est
-        opp_team_stats["Blocks"] = opp_prof_ts["BLK"].sum() / _games_est
-        opp_team_stats["Steals"] = opp_prof_ts["STL"].sum() / _games_est
+        opp_team_stats["Assists"] = opp_prof_ts["AST"].sum()
+        opp_team_stats["Blocks"] = opp_prof_ts["BLK"].sum()
+        opp_team_stats["Steals"] = opp_prof_ts["STL"].sum()
         # Expanded opponent stats for All Stats dialog
         def _parse_ma_ts(series):
             made, att = 0, 0
@@ -815,10 +869,9 @@ def render_upcoming_game():
             return made, att
         _opp_3m, _opp_3a = _parse_ma_ts(opp_prof_ts["3PM-A"]) if "3PM-A" in opp_prof_ts.columns else (0, 0)
         _opp_ftm, _opp_fta = _parse_ma_ts(opp_prof_ts["FTM-A"]) if "FTM-A" in opp_prof_ts.columns else (0, 0)
-        _opp_to_total = opp_prof_ts["TO"].sum() if "TO" in opp_prof_ts.columns else 0
-        _opp_ast_total = opp_prof_ts["AST"].sum() if "AST" in opp_prof_ts.columns else 0
-        _opp_to_pg = _opp_to_total / _games_est
-        _opp_ast_pg = _opp_ast_total / _games_est
+        # TO and AST are already per-game averages (see note above) -- NOT divided by _games_est.
+        _opp_to_pg = opp_prof_ts["TO"].sum() if "TO" in opp_prof_ts.columns else 0
+        _opp_ast_pg = opp_prof_ts["AST"].sum() if "AST" in opp_prof_ts.columns else 0
         opp_team_stats_full = {
             **opp_team_stats,
             "3P%": (_opp_3m / _opp_3a * 100) if _opp_3a > 0 else 0,
@@ -827,8 +880,9 @@ def render_upcoming_game():
             "FTA/game": _opp_fta / _games_est,
             "Turnovers": _opp_to_pg,
             "A:TO Ratio": (_opp_ast_pg / _opp_to_pg) if _opp_to_pg > 0 else 0,
-            "Stocks": (opp_prof_ts["STL"].sum() + opp_prof_ts["BLK"].sum()) / _games_est,
+            "Stocks": opp_prof_ts["STL"].sum() + opp_prof_ts["BLK"].sum(),
         }
+
 
     def _build_team_stats_html(uww_s, opp_s, opp_name):
         """Build broadcast-style team stats comparison with bar charts."""
@@ -850,7 +904,7 @@ def render_upcoming_game():
             uww_fmt = f"{uww_val:.1f}%" if is_pct else f"{uww_val:.1f}"
             opp_fmt = f"{opp_val:.1f}%" if is_pct else f"{opp_val:.1f}"
             rows_html += f'<div style="padding:10px 0;border-bottom:1px solid #eee;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span style="font-size:1.2rem;{uww_bold}width:70px;">{uww_fmt}</span><span style="font-size:0.95rem;color:#666;font-weight:600;text-transform:uppercase;flex:1;text-align:center;">{stat}</span><span style="font-size:1.2rem;{opp_bold}width:70px;text-align:right;">{opp_fmt}</span></div><div style="display:flex;gap:4px;height:6px;"><div style="flex:1;display:flex;justify-content:flex-end;"><div style="width:{uww_bar_pct:.0f}%;background:#4E2A84;border-radius:3px;height:100%;"></div></div><div style="flex:1;display:flex;justify-content:flex-start;"><div style="width:{opp_bar_pct:.0f}%;background:#222;border-radius:3px;height:100%;"></div></div></div></div>\n'
-        return f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:16px 18px;flex:1;width:100%;"><div style="font-weight:800;font-size:1.15rem;letter-spacing:0.5px;margin-bottom:12px;">TEAM STATS</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px;"><span style="font-size:1.05rem;font-weight:700;color:#4E2A84;">UWW</span><span style="font-size:1.05rem;font-weight:700;color:#222;">{html.escape(opp_name.upper())}</span></div>{rows_html}</div>'
+        return f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:16px 18px;flex:1;width:100%;"><div style="font-weight:800;font-size:1.15rem;letter-spacing:0.5px;margin-bottom:12px;">TEAM STATS</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px;"><span style="font-size:1.05rem;font-weight:700;color:#4E2A84;">UWW</span><span style="font-size:1.05rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(opp_name))}</span></div>{rows_html}</div>'
 
     def _build_last5_combined_html(uww_rows, opp_rows, opp_name):
         """Build broadcast-style last 5 games comparison matching Season Leaders layout."""
@@ -892,7 +946,7 @@ def render_upcoming_game():
             f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px;">'
             f'<span style="font-size:0.95rem;font-weight:700;color:#4E2A84;">UWW</span>'
             f'<span style="font-size:0.85rem;color:#888;">Recent Results</span>'
-            f'<span style="font-size:0.95rem;font-weight:700;color:#222;">{html.escape(opp_name.upper())}</span>'
+            f'<span style="font-size:0.95rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(opp_name))}</span>'
             f'</div>{rows_html}</div>'
         )
 
@@ -1029,7 +1083,7 @@ def render_upcoming_game():
         leaders["Blocks"] = {"name": blk_leader["player"], "value": blk_leader["BPG"], "sub": ""}
         return leaders
 
-    def _get_opp_leaders(profiles_df, opp_name, games_est=5):
+    def _get_opp_leaders(profiles_df, opp_name):
         """Get opponent per-game leaders from player profiles."""
         opp = profiles_df[profiles_df["opponent"] == opp_name]
         if opp.empty:
@@ -1053,20 +1107,18 @@ def render_upcoming_game():
         # Rebounds leader (REB is per-game)
         reb_leader = opp.nlargest(1, "REB").iloc[0]
         leaders["Rebounds"] = {"name": reb_leader["name"], "value": reb_leader["REB"], "sub": ""}
-        # Assists leader (AST is season total, divide by games)
-        opp_copy = opp.copy()
-        opp_copy["APG"] = opp_copy["AST"] / games_est
-        ast_leader = opp_copy.nlargest(1, "APG").iloc[0]
-        topg = ast_leader["TO"] / games_est
-        leaders["Assists"] = {"name": ast_leader["name"], "value": ast_leader["APG"], "sub": f"{topg:.1f} TOPG"}
-        # Steals leader (STL is season total, divide by games)
-        opp_copy["SPG"] = opp_copy["STL"] / games_est
-        stl_leader = opp_copy.nlargest(1, "SPG").iloc[0]
-        leaders["Steals"] = {"name": stl_leader["name"], "value": stl_leader["SPG"], "sub": ""}
-        # Blocks leader (BLK is season total, divide by games)
-        opp_copy["BPG"] = opp_copy["BLK"] / games_est
-        blk_leader = opp_copy.nlargest(1, "BPG").iloc[0]
-        leaders["Blocks"] = {"name": blk_leader["name"], "value": blk_leader["BPG"], "sub": ""}
+        # Assists leader. AST/TO are ALSO already per-game averages, same as PTS/REB above (all four come from
+        # the same row of the season boxscore table) -- previously divided by an estimated games-played count
+        # here, which was wrong and understated every opponent's assists/steals/blocks leaders by roughly their
+        # games-played count.
+        ast_leader = opp.nlargest(1, "AST").iloc[0]
+        leaders["Assists"] = {"name": ast_leader["name"], "value": ast_leader["AST"], "sub": f"{ast_leader['TO']:.1f} TOPG"}
+        # Steals leader (STL is per-game, see above)
+        stl_leader = opp.nlargest(1, "STL").iloc[0]
+        leaders["Steals"] = {"name": stl_leader["name"], "value": stl_leader["STL"], "sub": ""}
+        # Blocks leader (BLK is per-game, see above)
+        blk_leader = opp.nlargest(1, "BLK").iloc[0]
+        leaders["Blocks"] = {"name": blk_leader["name"], "value": blk_leader["BLK"], "sub": ""}
         return leaders
 
     def _build_season_leaders_html(uww_leaders, opp_leaders, opp_name):
@@ -1093,10 +1145,10 @@ def render_upcoming_game():
                     return f"{parts[0][0]}. {parts[-1]}"
                 return n
             rows_html += f'<div style="border:1px solid #eee;border-radius:8px;padding:12px 14px;margin-bottom:8px;"><div style="display:flex;align-items:center;justify-content:space-between;"><div style="text-align:left;flex:1;"><div style="font-weight:700;font-size:1rem;">{html.escape(_short(uww_name))}</div><div style="font-size:0.85rem;color:#888;">{html.escape(uww_sub)}</div></div><div style="text-align:center;flex:1;"><div style="font-size:1.15rem;font-weight:700;">{uww_val:.1f}<span style="font-size:0.85rem;color:#666;margin:0 8px;">{cat}</span>{opp_val:.1f}</div></div><div style="text-align:right;flex:1;"><div style="font-weight:700;font-size:1rem;">{html.escape(_short(opp_name_l))}</div><div style="font-size:0.85rem;color:#888;">{html.escape(opp_sub)}</div></div></div></div>'
-        return f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;flex:1;width:100%;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;margin-bottom:8px;">SEASON LEADERS</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px;"><span style="font-size:0.95rem;font-weight:700;color:#4E2A84;">UWW</span><span style="font-size:0.85rem;color:#888;">Avg. Per Game</span><span style="font-size:0.95rem;font-weight:700;color:#222;">{html.escape(opp_name.upper())}</span></div>{rows_html}</div>'
+        return f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;flex:1;width:100%;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;margin-bottom:8px;">SEASON LEADERS</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px;"><span style="font-size:0.95rem;font-weight:700;color:#4E2A84;">UWW</span><span style="font-size:0.85rem;color:#888;">Avg. Per Game</span><span style="font-size:0.95rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(opp_name))}</span></div>{rows_html}</div>'
 
     uww_leaders = _get_uww_leaders(box, played)
-    opp_leaders = _get_opp_leaders(opp_profiles_ts, short_opponent, games_est=get_opponent_games_played(short_opponent))
+    opp_leaders = _get_opp_leaders(opp_profiles_ts, short_opponent)
 
     # Render: Season Leaders | Team Stats | Last Five Games
     leaders_html = _build_season_leaders_html(uww_leaders, opp_leaders, opp_display)
@@ -1135,7 +1187,7 @@ def render_upcoming_game():
                 uww_fmt = f"{uww_val:.2f}"
                 opp_fmt = f"{opp_val:.2f}"
             rows_html += f'<div style="padding:10px 0;border-bottom:1px solid #eee;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span style="font-size:1.2rem;{uww_bold}width:70px;">{uww_fmt}</span><span style="font-size:0.95rem;color:#666;font-weight:600;text-transform:uppercase;flex:1;text-align:center;">{stat}</span><span style="font-size:1.2rem;{opp_bold}width:70px;text-align:right;">{opp_fmt}</span></div><div style="display:flex;gap:4px;height:6px;"><div style="flex:1;display:flex;justify-content:flex-end;"><div style="width:{uww_bar_pct:.0f}%;background:#4E2A84;border-radius:3px;height:100%;"></div></div><div style="flex:1;display:flex;justify-content:flex-start;"><div style="width:{opp_bar_pct:.0f}%;background:#222;border-radius:3px;height:100%;"></div></div></div></div>\n'
-        all_html = f'<div style="padding:8px 4px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:0 4px;"><span style="font-size:1.1rem;font-weight:700;color:#4E2A84;">UWW</span><span style="font-size:1.1rem;font-weight:700;color:#222;">{html.escape(opp_display.upper())}</span></div>{rows_html}</div>'
+        all_html = f'<div style="padding:8px 4px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:0 4px;"><span style="font-size:1.1rem;font-weight:700;color:#4E2A84;">UWW</span><span style="font-size:1.1rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(opp_display))}</span></div>{rows_html}</div>'
         st.markdown(all_html, unsafe_allow_html=True)
 
     # All Games dialog
@@ -1172,7 +1224,7 @@ def render_upcoming_game():
         header_html = (
             f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:0 4px;">'
             f'<span style="font-size:1.05rem;font-weight:700;color:#4E2A84;">UWW ({len(uww_all_games)} games)</span>'
-            f'<span style="font-size:1.05rem;font-weight:700;color:#222;">{html.escape(opp_display.upper())} ({len(opp_all_games)} games)</span>'
+            f'<span style="font-size:1.05rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(opp_display))} ({len(opp_all_games)} games)</span>'
             f'</div>'
         )
         st.markdown(f'{header_html}{rows_html}', unsafe_allow_html=True)
@@ -1314,7 +1366,7 @@ def render_upcoming_game():
             f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px;">'
             f'<span style="font-size:0.95rem;font-weight:700;color:#4E2A84;">UWW</span>'
             f'<span style="font-size:0.85rem;color:#888;">Season Totals</span>'
-            f'<span style="font-size:0.95rem;font-weight:700;color:#222;">{html.escape(opp_name.upper())}</span>'
+            f'<span style="font-size:0.95rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(opp_name))}</span>'
             f'</div>{rows_html}</div>'
         )
 
@@ -1440,7 +1492,7 @@ def render_upcoming_game():
             f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px;">'
             f'<span style="font-size:0.95rem;font-weight:700;color:#4E2A84;">UWW</span>'
             f'<span style="font-size:0.85rem;color:#888;">Season Totals</span>'
-            f'<span style="font-size:0.95rem;font-weight:700;color:#222;">{html.escape(opp_name.upper())}</span>'
+            f'<span style="font-size:0.95rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(opp_name))}</span>'
             f'</div>{rows_html}</div>'
         )
 
@@ -1556,7 +1608,7 @@ def render_upcoming_game():
             f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px;">'
             f'<span style="font-size:0.95rem;font-weight:700;color:#4E2A84;">UWW</span>'
             f'<span style="font-size:0.85rem;color:#888;">Season Totals</span>'
-            f'<span style="font-size:0.95rem;font-weight:700;color:#222;">{html.escape(opp_name.upper())}</span>'
+            f'<span style="font-size:0.95rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(opp_name))}</span>'
             f'</div>'
             f'<div style="font-weight:700;font-size:0.9rem;color:#4E2A84;margin:10px 0 6px;border-bottom:1px solid #e0e0e0;padding-bottom:4px;">5-MAN LINEUPS</div>'
             f'{five_rows}'
