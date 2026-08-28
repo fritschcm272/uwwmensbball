@@ -2,7 +2,9 @@
 
 Data is bundled directly with the app (CSV files under ./data, exported from the analysis notebook's Delta
 tables) rather than queried live from a SQL warehouse -- no Unity Catalog / warehouse permissions are needed
-at runtime. Four sections: Upcoming Game, Previous Games, Team, Players.
+at runtime. Six sections: Home (AI scouting assistant), Upcoming Game, Previous Games, Team, Players,
+Analytics (possession-adjusted advanced stats -- Four Factors, efficiency/pace, shot quality, ball movement,
+clutch performance, and schedule/rest context; see STAT_GLOSSARY for definitions of every derived metric).
 """
 
 import html
@@ -500,6 +502,295 @@ def render_box_score_with_tooltips(df: pd.DataFrame, display_cols: list, tooltip
 
 
 # --------------------------------------------------------------------------------------------------------------
+# Stat glossary + tooltip helpers (used by the new advanced-analytics sections below)
+# --------------------------------------------------------------------------------------------------------------
+# Every advanced/derived metric added to the app gets one entry here -- both so coaches can hover/click for a
+# plain-language definition wherever the stat is shown, and so there is a SINGLE source of truth for each
+# formula (rather than the definition living only as a scattered code comment).
+STAT_GLOSSARY = {
+    "eFG%": {
+        "label": "Effective Field Goal %",
+        "formula": "(FGM + 0.5 x 3PM) / FGA",
+        "definition": "Field goal percentage adjusted to give 3-pointers the extra credit they deserve, since a "
+                       "made 3 is worth 50% more than a made 2. A team can have a mediocre raw FG% but a strong "
+                       "eFG% if a lot of those makes are from three.",
+    },
+    "TOV%": {
+        "label": "Turnover Percentage",
+        "formula": "TO / (FGA + 0.44 x FTA + TO)",
+        "definition": "The share of a team's possessions that end in a turnover, rather than a shot or trip to "
+                       "the line. Lower is better. Normalizing by possessions (not just raw turnover count) "
+                       "makes this comparable between a fast team and a slow team.",
+    },
+    "ORB%": {
+        "label": "Offensive Rebound %",
+        "formula": "OREB / (OREB + Opponent DREB)",
+        "definition": "Of all the rebounds available after a team's own missed shot, the percentage it actually "
+                       "grabbed. Better than a raw rebound count because it accounts for how many rebounds were "
+                       "actually up for grabs.",
+    },
+    "FT Rate": {
+        "label": "Free Throw Rate",
+        "formula": "FTA / FGA",
+        "definition": "How often a team gets to the free-throw line relative to its field-goal attempts -- a "
+                       "proxy for how aggressively it's attacking the basket (or how much it's fouling, on "
+                       "defense).",
+    },
+    "Poss": {
+        "label": "Possessions",
+        "formula": "FGA - OREB + TO + 0.44 x FTA",
+        "definition": "The standard estimate of how many possessions a team used, since possessions aren't "
+                       "directly recorded in a normal box score. This is the denominator behind pace and "
+                       "offensive/defensive rating.",
+    },
+    "Pace": {
+        "label": "Pace",
+        "formula": "Possessions / Games",
+        "definition": "Estimated possessions per game -- how fast a team plays. A team can score a lot of points "
+                       "just by playing fast, even if it isn't especially efficient per possession; pace lets "
+                       "you tell those two things apart.",
+    },
+    "ORtg": {
+        "label": "Offensive Rating",
+        "formula": "Points Scored / Possessions x 100",
+        "definition": "Points scored per 100 possessions. The standard way to measure offensive efficiency "
+                       "independent of pace -- a slow team and a fast team can be compared fairly on this "
+                       "number even though their raw PPG looks very different.",
+    },
+    "DRtg": {
+        "label": "Defensive Rating",
+        "formula": "Points Allowed / Possessions x 100",
+        "definition": "Points allowed per 100 possessions -- the defensive mirror of Offensive Rating. Lower is "
+                       "better.",
+    },
+    "Net Rtg": {
+        "label": "Net Rating",
+        "formula": "ORtg - DRtg",
+        "definition": "The point-differential-per-100-possessions summary of a team's overall performance -- "
+                       "positive means the team outscores opponents on a per-possession basis.",
+    },
+    "TS%": {
+        "label": "True Shooting %",
+        "formula": "PTS / (2 x (FGA + 0.44 x FTA))",
+        "definition": "Shooting efficiency across ALL scoring (2s, 3s, and free throws) in one number, instead "
+                       "of three separate percentages. The best single number for \"how efficiently does this "
+                       "player score.\"",
+    },
+    "Game Score": {
+        "label": "Game Score",
+        "formula": "PTS + 0.4xFGM - 0.7xFGA - 0.4x(FTA-FTM) + 0.7xORB + 0.3xDRB + STL + 0.7xAST + 0.7xBLK - 0.4xPF - TO",
+        "definition": "John Hollinger's single-number summary of a box score line -- a quick way to rank \"who "
+                       "had the best game\" that credits efficient scoring and all-around production, not just "
+                       "point totals. A Game Score around 10 is a solid game; 20+ is an excellent one; 40+ is "
+                       "historic.",
+    },
+    "Usage%": {
+        "label": "Usage Rate",
+        "formula": "100 x ((FGA + 0.44xFTA + TO) x (Team MIN/5)) / (MIN x (Team FGA + 0.44xTeam FTA + Team TO))",
+        "definition": "The percentage of a team's plays a player used (by shooting, getting to the line, or "
+                       "turning it over) while on the floor. High usage isn't automatically good or bad -- it "
+                       "just tells you who the offense runs through.",
+    },
+}
+
+
+def glossary_span(key: str, display_text: str = None) -> str:
+    """Return an HTML span with a native browser hover tooltip (the `title` attribute) explaining a stat from
+    STAT_GLOSSARY. Use for compact table/column headers where a full popover would be too heavy -- pairs with
+    render_glossary_popover() below for a fuller, tap-friendly explanation of a whole section's stats."""
+    entry = STAT_GLOSSARY.get(key)
+    text = display_text if display_text is not None else key
+    if not entry:
+        return html.escape(text)
+    tooltip = html.escape(f"{entry['label']}: {entry['definition']} Formula: {entry['formula']}")
+    return f'<span title="{tooltip}" style="cursor:help;border-bottom:1px dotted #999;">{html.escape(text)}</span>'
+
+
+def render_glossary_popover(keys: list, label: str = "ℹ️ What do these mean?") -> None:
+    """Render a tap/click-friendly popover explaining a list of STAT_GLOSSARY stats -- the fuller-detail
+    counterpart to glossary_span's hover tooltips, matching the existing 'KTV Category Reference' popover
+    pattern already used elsewhere in this app. Use one of these at the top of any section that introduces new
+    advanced stats, so a coach unfamiliar with a metric has a place to look it up without leaving the page."""
+    with st.popover(label):
+        for key in keys:
+            entry = STAT_GLOSSARY.get(key)
+            if not entry:
+                continue
+            st.markdown(f"**{entry['label']}** (`{key}`)")
+            st.caption(f"{entry['definition']}  \nFormula: {entry['formula']}")
+
+
+# --------------------------------------------------------------------------------------------------------------
+# Advanced-analytics computation helpers
+# --------------------------------------------------------------------------------------------------------------
+# All of these operate on uww_pbp_box_score (columns confirmed against the parser: opponent, game_date, team,
+# player, PTS, FGM, FGA, FG3M, FG3A, FTM, FTA, OREB, DREB, REB, AST, STL, BLK, TO, PF, FG%, 3P%, FT%, started)
+# and/or uww_pbp_events -- no new data collection needed for any of these.
+
+def estimate_possessions(fga, oreb, to, fta) -> float:
+    """Standard possession estimate (there's no possession count in a normal box score, so this is the widely
+    used approximation): a possession ends on a made shot, a defensive rebound, a turnover, or the last free
+    throw of a trip -- 0.44 approximates "how often a FTA trip is the LAST FTA of its trip" without needing to
+    know FT trip boundaries directly."""
+    return fga - oreb + to + 0.44 * fta
+
+
+def compute_four_factors(team_box: pd.DataFrame, opp_box: pd.DataFrame) -> dict:
+    """Dean Oliver's "Four Factors" (eFG%, TOV%, ORB%, FT Rate) for `team_box`'s side of a game or set of
+    games. `opp_box` (the other side's box-score rows over the same games) is needed for ORB%, since it
+    requires the opponent's defensive rebounds as the denominator. Pass season-wide slices for season figures,
+    or a single game's rows for a per-game breakdown."""
+    fgm = team_box["FGM"].sum() if "FGM" in team_box.columns else 0
+    fga = team_box["FGA"].sum() if "FGA" in team_box.columns else 0
+    fg3m = team_box["FG3M"].sum() if "FG3M" in team_box.columns else 0
+    to = team_box["TO"].sum() if "TO" in team_box.columns else 0
+    fta = team_box["FTA"].sum() if "FTA" in team_box.columns else 0
+    oreb = team_box["OREB"].sum() if "OREB" in team_box.columns else 0
+    opp_dreb = opp_box["DREB"].sum() if "DREB" in opp_box.columns else 0
+    poss = estimate_possessions(fga, oreb, to, fta)
+    return {
+        "eFG%": ((fgm + 0.5 * fg3m) / fga * 100) if fga > 0 else 0,
+        "TOV%": (to / poss * 100) if poss > 0 else 0,
+        "ORB%": (oreb / (oreb + opp_dreb) * 100) if (oreb + opp_dreb) > 0 else 0,
+        "FT Rate": (fta / fga * 100) if fga > 0 else 0,
+    }
+
+
+def compute_efficiency_pace(team_box: pd.DataFrame, opp_box: pd.DataFrame, n_games: int) -> dict:
+    """Offensive/Defensive Rating (points per 100 possessions) and Pace (possessions per game) for `team_box`'s
+    side over `n_games` games, using `opp_box` for the opponent's own possession estimate (averaging both
+    sides' estimates is the standard practice, since either alone is a noisy approximation)."""
+    if n_games <= 0:
+        return {"Pace": 0, "ORtg": 0, "DRtg": 0, "Net Rtg": 0}
+    team_poss = estimate_possessions(
+        team_box["FGA"].sum() if "FGA" in team_box.columns else 0,
+        team_box["OREB"].sum() if "OREB" in team_box.columns else 0,
+        team_box["TO"].sum() if "TO" in team_box.columns else 0,
+        team_box["FTA"].sum() if "FTA" in team_box.columns else 0,
+    )
+    opp_poss = estimate_possessions(
+        opp_box["FGA"].sum() if "FGA" in opp_box.columns else 0,
+        opp_box["OREB"].sum() if "OREB" in opp_box.columns else 0,
+        opp_box["TO"].sum() if "TO" in opp_box.columns else 0,
+        opp_box["FTA"].sum() if "FTA" in opp_box.columns else 0,
+    )
+    avg_poss = (team_poss + opp_poss) / 2 if (team_poss > 0 or opp_poss > 0) else 0
+    team_pts = team_box["PTS"].sum() if "PTS" in team_box.columns else 0
+    opp_pts = opp_box["PTS"].sum() if "PTS" in opp_box.columns else 0
+    ortg = (team_pts / avg_poss * 100) if avg_poss > 0 else 0
+    drtg = (opp_pts / avg_poss * 100) if avg_poss > 0 else 0
+    return {
+        "Pace": avg_poss / n_games,
+        "ORtg": ortg,
+        "DRtg": drtg,
+        "Net Rtg": ortg - drtg,
+    }
+
+
+def compute_true_shooting(pts, fga, fta) -> float:
+    """True Shooting % -- see STAT_GLOSSARY['TS%']. Returns 0 if there were no shooting attempts of any kind."""
+    denom = 2 * (fga + 0.44 * fta)
+    return (pts / denom * 100) if denom > 0 else 0
+
+
+def compute_game_score(row: pd.Series) -> float:
+    """John Hollinger's Game Score for one box-score row -- see STAT_GLOSSARY['Game Score']. Missing columns
+    are treated as 0 rather than raising, since some tables (e.g. season-stats exports) may not carry every
+    field this formula wants."""
+    g = lambda c: row[c] if c in row.index and pd.notna(row[c]) else 0
+    return (
+        g("PTS") + 0.4 * g("FGM") - 0.7 * g("FGA") - 0.4 * (g("FTA") - g("FTM"))
+        + 0.7 * g("OREB") + 0.3 * g("DREB") + g("STL") + 0.7 * g("AST") + 0.7 * g("BLK")
+        - 0.4 * g("PF") - g("TO")
+    )
+
+
+def compute_usage_rate(player_row: pd.Series, player_minutes: float, team_box: pd.DataFrame, team_minutes_total: float) -> float:
+    """Usage Rate -- see STAT_GLOSSARY['Usage%']. `team_box` should be the player's own team's box-score rows
+    over the same set of games used for `player_row`'s totals. Returns 0 if minutes are missing/zero (can't
+    estimate usage for a player with no recorded minutes).
+
+    NOTE: the standard Usage% formula's denominator is "team plays" = Tm FGA + 0.44 x Tm FTA + Tm TOV -- NOT
+    the same "possessions" estimate used elsewhere for pace/ratings (which also subtracts OREB, since an
+    offensive rebound extends the same possession rather than ending it). Using the OREB-subtracted version
+    here would inflate every player's Usage% by roughly however much OREB shrinks the team's own FGA total --
+    typically a 15-25% distortion. So this passes oreb=0 into estimate_possessions on purpose, for both the
+    player and team side, to get the correct "plays" denominator instead of true "possessions".
+    """
+    if player_minutes <= 0 or team_minutes_total <= 0:
+        return 0
+    player_poss_used = estimate_possessions(
+        player_row.get("FGA", 0) or 0, 0, player_row.get("TO", 0) or 0, player_row.get("FTA", 0) or 0
+    )
+    team_poss = estimate_possessions(
+        team_box["FGA"].sum() if "FGA" in team_box.columns else 0,
+        0,
+        team_box["TO"].sum() if "TO" in team_box.columns else 0,
+        team_box["FTA"].sum() if "FTA" in team_box.columns else 0,
+    )
+    if team_poss <= 0:
+        return 0
+    return 100 * (player_poss_used * (team_minutes_total / 5)) / (player_minutes * team_poss)
+
+
+def extract_shot_mechanic(description) -> str:
+    """Parse the shot-mechanic tag out of a video_description string (same tags the parser's video-tagging
+    pipeline already uses -- see parser cell 114): catch-and-shoot vs. pull-up vs. a drive to the rim."""
+    if pd.isna(description):
+        return None
+    d = str(description)
+    if "No Dribble Jumper" in d:
+        return "Catch-and-shoot"
+    if "Dribble Jumper" in d:
+        return "Pull-up off the dribble"
+    if "To Basket" in d:
+        return "Drive to the basket"
+    return "Other"
+
+
+def extract_contest(description) -> str:
+    """Parse the defender-contest tag out of a video_description string (see parser cell 114)."""
+    if pd.isna(description):
+        return None
+    d = str(description)
+    if "Guarded" in d:
+        return "Guarded"
+    if "Open" in d:
+        return "Open"
+    return "N/A (drive, no contest tag)"
+
+
+def extract_distance(description) -> str:
+    """Parse the shot-distance tag out of a video_description string (see parser cell 114)."""
+    if pd.isna(description):
+        return None
+    d = str(description)
+    for tag in ["Long/3pt", "Medium/17' to <3p", "Short to < 17'"]:
+        if tag in d:
+            return tag
+    return "N/A"
+
+
+def extract_play_type(description, player) -> str:
+    """Parse the play-type tag (the action segment right after the shooter's own name-token) out of a
+    video_description string -- same approach as the parser's extract_play_type (cell 112), simplified to a
+    direct case-insensitive match against the row's own `player` value rather than a full roster-name
+    normalizer, since the app already has the canonical player name for that row."""
+    if pd.isna(description) or pd.isna(player):
+        return None
+    segments = [s.strip() for s in str(description).split(">")]
+    player_lower = str(player).strip().lower()
+    last_player_idx = None
+    for idx, seg in enumerate(segments):
+        m = re.match(r"^\d+\s+(.+)$", seg)
+        if m and m.group(1).strip().lower() == player_lower:
+            last_player_idx = idx
+    if last_player_idx is not None and last_player_idx + 1 < len(segments):
+        return segments[last_player_idx + 1]
+    return segments[1] if len(segments) > 1 else None
+
+
+# --------------------------------------------------------------------------------------------------------------
 # Section 0: Home — AI Scouting Assistant
 # --------------------------------------------------------------------------------------------------------------
 
@@ -807,9 +1098,11 @@ def render_upcoming_game():
             "Blocks": uww_box["BLK"].sum() / num_uww_games if "BLK" in uww_box.columns else 0,
             "Steals": uww_box["STL"].sum() / num_uww_games if "STL" in uww_box.columns else 0,
         }
-        # Expanded stats for All Stats dialog
-        _uww_3pm = uww_box["3PM"].sum() if "3PM" in uww_box.columns else 0
-        _uww_3pa = uww_box["3PA"].sum() if "3PA" in uww_box.columns else 0
+        # Expanded stats for All Stats dialog. Column is "FG3M"/"FG3A" in uww_pbp_box_score (confirmed against
+        # the parser's actual box-score construction) -- "3PM"/"3PA" never existed, so this silently summed to
+        # 0 for UWW's own 3P% and 3PA/game in the All Stats dialog.
+        _uww_3pm = uww_box["FG3M"].sum() if "FG3M" in uww_box.columns else 0
+        _uww_3pa = uww_box["FG3A"].sum() if "FG3A" in uww_box.columns else 0
         _uww_ftm = uww_box["FTM"].sum() if "FTM" in uww_box.columns else 0
         _uww_fta = uww_box["FTA"].sum() if "FTA" in uww_box.columns else 0
         _uww_to = uww_box["TO"].sum() / num_uww_games if "TO" in uww_box.columns else 0
@@ -3238,6 +3531,28 @@ def render_previous_games():
                                 st.write(notes)
                             st.markdown("")
 
+    # --- SCORING RUNS & CLUTCH MOMENTS (this game) ---
+    _pg_runs = load_table("uww_scoring_runs")
+    _pg_run_row = _pg_runs[_pg_runs["opponent"] == short_opponent] if not _pg_runs.empty else pd.DataFrame()
+    if not _pg_run_row.empty:
+        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001F4C8 SCORING RUNS &amp; LARGEST LEADS</div></div>', unsafe_allow_html=True)
+        _rr = _pg_run_row.iloc[0]
+        rr_col1, rr_col2 = st.columns(2)
+        rr_col1.metric("UWW biggest run", f"{int(_rr['uww_biggest_run'])} pts")
+        rr_col1.metric("UWW largest lead", f"{int(_rr['uww_largest_lead'])} pts")
+        rr_col2.metric(f"{short_opponent} biggest run", f"{int(_rr['opponent_biggest_run'])} pts")
+        rr_col2.metric(f"{short_opponent} largest lead", f"{int(_rr['opponent_largest_lead'])} pts")
+        st.caption(f"During UWW's run — UWW: {_rr.get('uww_run_uww_lineup', '-')} | {short_opponent}: {_rr.get('uww_run_opp_lineup', '-')}")
+
+    _pg_clutch = load_table("uww_clutch_events")
+    _pg_clutch_game = _pg_clutch[_pg_clutch["opponent"] == short_opponent] if not _pg_clutch.empty else pd.DataFrame()
+    if not _pg_clutch_game.empty:
+        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001F3C0 CLUTCH MOMENTS</div></div>', unsafe_allow_html=True)
+        with st.popover("ℹ️ What counts as clutch?"):
+            st.markdown("Last 5 minutes of the 2nd half or any overtime, with the score within 8 points.")
+        _cg_display_cols = [c for c in ["period", "time_remaining", "team", "player", "event_type", "raw_text", "uww_score", "opp_score"] if c in _pg_clutch_game.columns]
+        st.dataframe(_pg_clutch_game[_cg_display_cols], hide_index=True, use_container_width=True, height=250)
+
     # --- PLAY-BY-PLAY ---
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">PLAY-BY-PLAY</div></div>', unsafe_allow_html=True)
     pbp = load_table("uww_pbp_events")
@@ -3840,6 +4155,54 @@ def render_team():
             st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001F4CA SITUATIONAL SPLITS</div></div>', unsafe_allow_html=True)
             st.markdown(split_html, unsafe_allow_html=True)
 
+    # ==================== CLUTCH PERFORMANCE ====================
+    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001F3C0 CLUTCH PERFORMANCE</div></div>', unsafe_allow_html=True)
+    with st.popover("ℹ️ What counts as clutch?"):
+        st.markdown(
+            "Last 5 minutes of the 2nd half or any overtime, with the score within 8 points. This is computed "
+            "once by the parser (not recomputed here) and grows automatically as closer games are added."
+        )
+    clutch = load_table("uww_clutch_events")
+    if clutch.empty:
+        st.info("No clutch-time stretches yet -- no game this season has been within 8 points in the last 5 minutes of the 2nd half or later.")
+    else:
+        clutch_scoring = clutch[clutch["event_type"].isin(["made_shot", "free_throw_made"])].copy()
+        clutch_scoring["points"] = clutch_scoring.apply(
+            lambda r: int(r["shot_type"]) if (r["event_type"] == "made_shot" and pd.notna(r.get("shot_type"))) else 1, axis=1
+        )
+        by_team = clutch_scoring.groupby("team")["points"].sum().reset_index().rename(columns={"team": "Team", "points": "Clutch Points"})
+        uww_clutch_pts = int(by_team.loc[by_team["Team"] == "UW-Whitewater", "Clutch Points"].sum())
+        opp_clutch_pts = int(by_team.loc[by_team["Team"] != "UW-Whitewater", "Clutch Points"].sum())
+        ccol1, ccol2, ccol3 = st.columns(3)
+        ccol1.metric("UWW clutch points", uww_clutch_pts)
+        ccol2.metric("Opponent clutch points", opp_clutch_pts)
+        ccol3.metric("Clutch stretches logged", clutch["opponent"].nunique())
+
+        uww_clutch_players = clutch_scoring[clutch_scoring["team"] == "UW-Whitewater"].groupby("player")["points"].sum().reset_index().sort_values("points", ascending=False)
+        if not uww_clutch_players.empty:
+            st.markdown("**UWW clutch scorers**")
+            st.dataframe(uww_clutch_players.rename(columns={"player": "Player", "points": "Clutch Points"}), hide_index=True, use_container_width=True)
+
+        with st.expander("Clutch-time event log", expanded=False):
+            _clutch_display_cols = [c for c in ["opponent", "period", "time_remaining", "team", "player", "event_type", "raw_text", "uww_score", "opp_score"] if c in clutch.columns]
+            st.dataframe(clutch[_clutch_display_cols].sort_values(["opponent", "period"]), hide_index=True, use_container_width=True, height=300)
+
+    # ==================== SCORING RUNS & LARGEST LEADS ====================
+    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001F4C8 SCORING RUNS &amp; LARGEST LEADS</div></div>', unsafe_allow_html=True)
+    runs = load_table("uww_scoring_runs")
+    if runs.empty:
+        st.info("No scoring-run data available yet.")
+    else:
+        runs_display = runs[["opponent", "uww_biggest_run", "opponent_biggest_run", "uww_largest_lead", "opponent_largest_lead"]].rename(columns={
+            "opponent": "Opponent", "uww_biggest_run": "UWW Biggest Run", "opponent_biggest_run": "Opp. Biggest Run",
+            "uww_largest_lead": "UWW Largest Lead", "opponent_largest_lead": "Opp. Largest Lead",
+        })
+        st.dataframe(runs_display, hide_index=True, use_container_width=True)
+        with st.expander("Which lineups were on the floor for each biggest run", expanded=False):
+            for _, r in runs.iterrows():
+                st.markdown(f"**{r['opponent']}** — UWW's biggest run: {r['uww_biggest_run']} pts (UWW: {r.get('uww_run_uww_lineup', '-')} | Opp: {r.get('uww_run_opp_lineup', '-')})")
+                st.caption(f"{r['opponent']}'s biggest run: {r['opponent_biggest_run']} pts (UWW: {r.get('opp_run_uww_lineup', '-')} | Opp: {r.get('opp_run_opp_lineup', '-')})")
+
 
 # --------------------------------------------------------------------------------------------------------------
 # Section 4: Players
@@ -4008,6 +4371,42 @@ def render_players():
                             f'</div>',
                             unsafe_allow_html=True,
                         )
+
+        # ==================== ADVANCED STATS LEADERBOARD ====================
+        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:0.5rem 0 1rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">ADVANCED STATS LEADERBOARD</div></div>', unsafe_allow_html=True)
+        render_glossary_popover(["TS%", "Game Score", "Usage%"])
+        _adv_box = load_table("uww_pbp_box_score")
+        _adv_uww_box = _adv_box[_adv_box["team"] == "UW-Whitewater"] if not _adv_box.empty else pd.DataFrame()
+        if _adv_uww_box.empty:
+            st.caption("Not enough box score data yet for advanced stats.")
+        else:
+            _team_minutes_total = None  # per-game team minutes (5 players x game minutes) for usage rate
+            _season_stats_min = load_table("uww_season_stats")
+            _adv_rows = []
+            for player_name, p_games in _adv_uww_box.groupby("player"):
+                totals = p_games[["PTS", "FGM", "FGA", "FTM", "FTA", "OREB", "DREB", "STL", "AST", "BLK", "PF", "TO"]].sum()
+                n_pg = p_games["opponent"].nunique()
+                ts_pct = compute_true_shooting(totals["PTS"], totals["FGA"], totals["FTA"])
+                avg_game_score = p_games.apply(compute_game_score, axis=1).mean()
+                # Usage rate needs the player's own minutes and the team's total minutes over the same games --
+                # season_stats' MIN column is already a per-game average (see uww_season_stats), so approximate
+                # the player's total minutes as MPG x games played, and team minutes as 5 x 40 x games (a full
+                # college game is 40 minutes with 5 players on the floor).
+                mpg = None
+                if not _season_stats_min.empty and "PLAYER" in _season_stats_min.columns:
+                    _match = _season_stats_min[_season_stats_min["PLAYER"].str.strip().str.lower() == str(player_name).strip().lower()]
+                    if not _match.empty and pd.notna(_match.iloc[0].get("MIN")):
+                        mpg = float(_match.iloc[0]["MIN"])
+                player_minutes_total = (mpg * n_pg) if mpg else 0
+                team_minutes_total = 5 * 40 * n_pg
+                usage = compute_usage_rate(totals, player_minutes_total, _adv_uww_box[_adv_uww_box["opponent"].isin(p_games["opponent"].unique())], team_minutes_total)
+                _adv_rows.append({
+                    "Player": player_name, "GP": n_pg, "TS%": round(ts_pct, 1),
+                    "Game Score": round(avg_game_score, 1), "Usage%": round(usage, 1) if mpg else "-",
+                })
+            _adv_df = pd.DataFrame(_adv_rows).sort_values("Game Score", ascending=False)
+            st.dataframe(_adv_df, hide_index=True, use_container_width=True)
+            st.caption("TS% and Game Score are season averages; Usage% needs a recorded MPG (from uww_season_stats) and is left blank without one.")
 
         # Load season stats for card display
         _card_season_stats = load_table("uww_season_stats")
@@ -4191,6 +4590,236 @@ def render_players():
 
 
 # --------------------------------------------------------------------------------------------------------------
+# Section 5: Analytics — Four Factors, efficiency/pace, shot quality, ball movement, schedule context
+# --------------------------------------------------------------------------------------------------------------
+def render_analytics():
+    st.markdown("## :bar_chart: Analytics")
+    st.caption(
+        "Advanced, possession-adjusted stats built entirely from data already being collected -- box scores, "
+        "play-by-play, and the schedule. No new charting or data collection required for anything on this page."
+    )
+
+    schedule = load_table("uww_schedule")
+    box = load_table("uww_pbp_box_score")
+    pbp = load_table("uww_pbp_events")
+
+    if box.empty:
+        st.info("No box score data available yet.")
+        return
+
+    uww_box_all = box[box["team"] == "UW-Whitewater"]
+    opp_box_all = box[box["team"] != "UW-Whitewater"]
+    n_games = uww_box_all["opponent"].nunique() if not uww_box_all.empty else 0
+
+    # Map each opponent to a W/L outcome so every section below can split by wins vs losses.
+    short_names = load_short_opponent_names()
+    opp_outcomes = get_opponent_outcomes(schedule, uww_box_all["opponent"].unique()) if not uww_box_all.empty else {}
+    win_opps = [o for o, r in opp_outcomes.items() if r == "W"]
+    loss_opps = [o for o, r in opp_outcomes.items() if r == "L"]
+
+    # ==================== FOUR FACTORS ====================
+    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">FOUR FACTORS</div></div>', unsafe_allow_html=True)
+    render_glossary_popover(["eFG%", "TOV%", "ORB%", "FT Rate"])
+    if uww_box_all.empty:
+        st.info("Not enough box score data for Four Factors yet.")
+    else:
+        def _four_factors_row(label, team_b, opp_b):
+            ff = compute_four_factors(team_b, opp_b)
+            return {"Split": label, **{k: round(v, 1) for k, v in ff.items()}}
+
+        ff_rows = [_four_factors_row("Season", uww_box_all, opp_box_all)]
+        if win_opps:
+            ff_rows.append(_four_factors_row("In Wins", uww_box_all[uww_box_all["opponent"].isin(win_opps)], opp_box_all[opp_box_all["opponent"].isin(win_opps)]))
+        if loss_opps:
+            ff_rows.append(_four_factors_row("In Losses", uww_box_all[uww_box_all["opponent"].isin(loss_opps)], opp_box_all[opp_box_all["opponent"].isin(loss_opps)]))
+        opp_ff_rows = [_four_factors_row("Opponents (season)", opp_box_all, uww_box_all)]
+
+        ff_col1, ff_col2 = st.columns(2)
+        with ff_col1:
+            st.markdown("**UWW**")
+            st.dataframe(pd.DataFrame(ff_rows), hide_index=True, use_container_width=True)
+        with ff_col2:
+            st.markdown("**Opponents**")
+            st.dataframe(pd.DataFrame(opp_ff_rows), hide_index=True, use_container_width=True)
+        st.caption(
+            "Compare the \"In Wins\" vs \"In Losses\" rows -- whichever factor moves the most between them is "
+            "usually the best evidence for what this team's games actually hinge on, more so than any single "
+            "raw counting stat."
+        )
+
+    # ==================== EFFICIENCY & PACE ====================
+    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">EFFICIENCY &amp; PACE</div></div>', unsafe_allow_html=True)
+    render_glossary_popover(["Pace", "ORtg", "DRtg", "Net Rtg", "Poss"])
+    if uww_box_all.empty or n_games == 0:
+        st.info("Not enough box score data for efficiency/pace yet.")
+    else:
+        eff = compute_efficiency_pace(uww_box_all, opp_box_all, n_games)
+        ecol1, ecol2, ecol3, ecol4 = st.columns(4)
+        ecol1.metric("Pace", f"{eff['Pace']:.1f}", help=STAT_GLOSSARY["Pace"]["definition"])
+        ecol2.metric("ORtg", f"{eff['ORtg']:.1f}", help=STAT_GLOSSARY["ORtg"]["definition"])
+        ecol3.metric("DRtg", f"{eff['DRtg']:.1f}", help=STAT_GLOSSARY["DRtg"]["definition"])
+        ecol4.metric("Net Rtg", f"{eff['Net Rtg']:+.1f}", help=STAT_GLOSSARY["Net Rtg"]["definition"])
+
+        # Per-opponent efficiency trend (chronological, in schedule order) -- the "doable now" trend-chart item.
+        played_order = schedule[played_mask(schedule)].copy()
+        trend_rows = []
+        for _, srow in played_order.iterrows():
+            opp_short = resolve_short_opponent(srow["opponent"], short_names)
+            if not opp_short:
+                continue
+            g_uww = uww_box_all[uww_box_all["opponent"] == opp_short]
+            g_opp = opp_box_all[opp_box_all["opponent"] == opp_short]
+            if g_uww.empty:
+                continue
+            g_eff = compute_efficiency_pace(g_uww, g_opp, 1)
+            trend_rows.append({"Game": opp_short, "ORtg": round(g_eff["ORtg"], 1), "DRtg": round(g_eff["DRtg"], 1), "Net Rtg": round(g_eff["Net Rtg"], 1)})
+        if len(trend_rows) >= 2:
+            trend_df = pd.DataFrame(trend_rows).set_index("Game")
+            st.markdown("**Game-by-game trend** (chronological)")
+            st.line_chart(trend_df[["ORtg", "DRtg"]])
+            st.caption("Rising ORtg / falling DRtg over the season is the clearest single trendline for whether a team is actually improving, independent of schedule strength swings.")
+
+    # ==================== REBOUNDING RATE ====================
+    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">REBOUNDING RATE</div></div>', unsafe_allow_html=True)
+    render_glossary_popover(["ORB%"])
+    if not uww_box_all.empty:
+        uww_oreb = uww_box_all["OREB"].sum()
+        uww_dreb = uww_box_all["DREB"].sum()
+        opp_oreb = opp_box_all["OREB"].sum()
+        opp_dreb = opp_box_all["DREB"].sum()
+        uww_orb_pct = (uww_oreb / (uww_oreb + opp_dreb) * 100) if (uww_oreb + opp_dreb) > 0 else 0
+        uww_drb_pct = (uww_dreb / (uww_dreb + opp_oreb) * 100) if (uww_dreb + opp_oreb) > 0 else 0
+        rcol1, rcol2 = st.columns(2)
+        rcol1.metric("Offensive Rebound %", f"{uww_orb_pct:.1f}%", help="Share of UWW's own missed shots that UWW rebounded.")
+        rcol2.metric("Defensive Rebound %", f"{uww_drb_pct:.1f}%", help="Share of the opponent's missed shots that UWW rebounded.")
+        st.caption("Raw rebound totals are confounded by how many shots were missed in the first place -- these percentages account for that, so they're comparable across games of very different pace.")
+    else:
+        st.info("Not enough box score data for rebounding rate yet.")
+
+    # ==================== SHOT SELECTION / SHOT QUALITY ====================
+    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">SHOT SELECTION &amp; QUALITY</div></div>', unsafe_allow_html=True)
+    with st.popover("ℹ️ What is this?"):
+        st.markdown(
+            "Built from the same video-tagging your scouting pipeline already does for shot-quality diagnosis "
+            "(play type, catch-and-shoot vs. pull-up, contest level, distance) -- surfaced here as a standalone "
+            "team-wide view instead of only being used internally to generate coaching flags."
+        )
+    if pbp.empty or "video_description" not in pbp.columns:
+        st.info("No video-tagged play-by-play data available yet.")
+    else:
+        uww_shots = pbp[
+            (pbp["team"] == "UW-Whitewater")
+            & pbp["event_type"].isin(["made_shot", "missed_shot"])
+            & pbp["video_description"].notna()
+        ].copy()
+        if uww_shots.empty:
+            st.info("No video-tagged shot attempts available yet for UWW.")
+        else:
+            uww_shots["made"] = uww_shots["event_type"] == "made_shot"
+            uww_shots["shot_mechanic"] = uww_shots["video_description"].apply(extract_shot_mechanic)
+            uww_shots["contest"] = uww_shots["video_description"].apply(extract_contest)
+            uww_shots["distance"] = uww_shots["video_description"].apply(extract_distance)
+
+            sq_col1, sq_col2, sq_col3 = st.columns(3)
+            with sq_col1:
+                st.markdown("**By Shot Mechanic**")
+                mech = uww_shots.groupby("shot_mechanic").agg(Attempts=("made", "count"), Makes=("made", "sum")).reset_index()
+                mech["FG%"] = (100 * mech["Makes"] / mech["Attempts"]).round(1)
+                st.dataframe(mech.sort_values("Attempts", ascending=False), hide_index=True, use_container_width=True)
+            with sq_col2:
+                st.markdown("**By Contest Level**")
+                cont = uww_shots.groupby("contest").agg(Attempts=("made", "count"), Makes=("made", "sum")).reset_index()
+                cont["FG%"] = (100 * cont["Makes"] / cont["Attempts"]).round(1)
+                st.dataframe(cont.sort_values("Attempts", ascending=False), hide_index=True, use_container_width=True)
+            with sq_col3:
+                st.markdown("**By Distance**")
+                dist = uww_shots.groupby("distance").agg(Attempts=("made", "count"), Makes=("made", "sum")).reset_index()
+                dist["FG%"] = (100 * dist["Makes"] / dist["Attempts"]).round(1)
+                st.dataframe(dist.sort_values("Attempts", ascending=False), hide_index=True, use_container_width=True)
+            st.caption(f"Based on {len(uww_shots)} video-matched shot attempts across {uww_shots['opponent'].nunique()} game(s).")
+
+    # ==================== ASSIST NETWORK ====================
+    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">ASSIST NETWORK</div></div>', unsafe_allow_html=True)
+    with st.popover("ℹ️ What is this?"):
+        st.markdown(
+            "Pairs each recorded assist event with the made-shot event immediately before it in the same "
+            "team's play-by-play log (the standard convention this data already follows) to build a "
+            "passer -> scorer breakdown -- no new tagging needed beyond what's already recorded per play."
+        )
+    if pbp.empty:
+        st.info("No play-by-play data available yet.")
+    else:
+        uww_pbp = pbp[pbp["team"] == "UW-Whitewater"].sort_values(["opponent", "event_order"]).copy()
+        pairs = []
+        prev_row = None
+        for _, r in uww_pbp.iterrows():
+            if r["event_type"] == "assist" and prev_row is not None and prev_row["event_type"] == "made_shot" and prev_row["opponent"] == r["opponent"]:
+                pairs.append({"Passer": r["player"], "Scorer": prev_row["player"]})
+            prev_row = r
+        if not pairs:
+            st.info("No assist events found in the play-by-play yet.")
+        else:
+            pairs_df = pd.DataFrame(pairs)
+            combo = pairs_df.groupby(["Passer", "Scorer"]).size().reset_index(name="Assists").sort_values("Assists", ascending=False)
+            an_col1, an_col2 = st.columns(2)
+            with an_col1:
+                st.markdown("**Top Passer → Scorer combos**")
+                st.dataframe(combo.head(10), hide_index=True, use_container_width=True)
+            with an_col2:
+                st.markdown("**Assists Given (by passer)**")
+                by_passer = pairs_df.groupby("Passer").size().reset_index(name="Assists").sort_values("Assists", ascending=False)
+                st.dataframe(by_passer, hide_index=True, use_container_width=True)
+
+    # ==================== TRANSITION POINTS OFF TURNOVERS ====================
+    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">TRANSITION OFF TURNOVERS</div></div>', unsafe_allow_html=True)
+    with st.popover("ℹ️ What is this?"):
+        st.markdown(
+            "Matches each steal to whether that same team scored within the next few play-by-play events -- an "
+            "approximation of \"points off turnovers,\" since a live-ball turnover time isn't separately "
+            "flagged in the data. A generous same-team-scores-soon-after window is used since exact shot-clock "
+            "timing after a takeaway isn't recorded."
+        )
+    if pbp.empty:
+        st.info("No play-by-play data available yet.")
+    else:
+        pbp_sorted = pbp.sort_values(["opponent", "event_order"]).reset_index(drop=True)
+        steal_rows = pbp_sorted[pbp_sorted["event_type"] == "steal"]
+        transition_points = {"UW-Whitewater": 0, "Opponent": 0}
+        transition_chances = {"UW-Whitewater": 0, "Opponent": 0}
+        for idx in steal_rows.index:
+            steal_team = pbp_sorted.loc[idx, "team"]
+            opp_name = pbp_sorted.loc[idx, "opponent"]
+            window = pbp_sorted[(pbp_sorted["opponent"] == opp_name) & (pbp_sorted.index > idx) & (pbp_sorted.index <= idx + 4)]
+            side_key = "UW-Whitewater" if steal_team == "UW-Whitewater" else "Opponent"
+            transition_chances[side_key] += 1
+            scoring_after = window[(window["team"] == steal_team) & (window["event_type"].isin(["made_shot", "free_throw_made"]))]
+            if not scoring_after.empty:
+                first_score = scoring_after.iloc[0]
+                pts = int(first_score["shot_type"]) if (first_score["event_type"] == "made_shot" and "shot_type" in first_score.index and pd.notna(first_score.get("shot_type"))) else 1
+                transition_points[side_key] += pts
+        tcol1, tcol2 = st.columns(2)
+        tcol1.metric("UWW points off steals (approx.)", transition_points["UW-Whitewater"], help=f"From {transition_chances['UW-Whitewater']} steals this season.")
+        tcol2.metric("Opponent points off steals (approx.)", transition_points["Opponent"], help=f"From {transition_chances['Opponent']} opponent steals this season.")
+
+    # ==================== SCHEDULE / REST CONTEXT ====================
+    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">SCHEDULE &amp; REST CONTEXT</div></div>', unsafe_allow_html=True)
+    played_sched = schedule[played_mask(schedule)].copy()
+    if played_sched.empty:
+        st.info("No played games yet.")
+    else:
+        played_sched["_parsed_date"] = pd.to_datetime(played_sched["date"], errors="coerce")
+        played_sched = played_sched.sort_values("_parsed_date")
+        played_sched["Rest Days"] = played_sched["_parsed_date"].diff().dt.days
+        display_rest = played_sched[["date", "opponent", "outcome", "point_margin", "Rest Days"]].copy()
+        display_rest["Rest Days"] = display_rest["Rest Days"].apply(lambda x: "-" if pd.isna(x) else ("Back-to-back" if x <= 1 else f"{int(x)} days"))
+        st.dataframe(display_rest.rename(columns={"date": "Date", "opponent": "Opponent", "outcome": "Result", "point_margin": "Margin"}), hide_index=True, use_container_width=True)
+        b2b = played_sched[played_sched["_parsed_date"].diff().dt.days <= 1].dropna(subset=["_parsed_date"])
+        if not b2b.empty:
+            b2b_wins = int((b2b["outcome"] == "W").sum())
+            st.caption(f"Back-to-back or same-day games this season: {len(b2b)} (record: {b2b_wins}-{len(b2b) - b2b_wins}).")
+
+
+# --------------------------------------------------------------------------------------------------------------
 CUSTOM_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Georgia&display=swap');
@@ -4337,7 +4966,7 @@ def main():
     if "nav_page" not in st.session_state:
         st.session_state.nav_page = "Home"
 
-    pages = ["Home", "Upcoming Game", "Previous Games", "Team", "Players"]
+    pages = ["Home", "Upcoming Game", "Previous Games", "Team", "Players", "Analytics"]
 
     # Button-based navbar: uses theme primaryColor for the active page, no internal DOM hacks
     cols = st.columns(len(pages))
@@ -4364,6 +4993,8 @@ def main():
         render_team()
     elif page == "Players":
         render_players()
+    elif page == "Analytics":
+        render_analytics()
 
 
 if __name__ == "__main__":

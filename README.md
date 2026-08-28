@@ -26,18 +26,23 @@ uww-basketball-scouting-portable/
 │   ├── uww_ktv_game_categories.csv
 │   ├── uww_opponent_team_totals.csv
 │   ├── uww_projected_box_score.csv
-│   ├── aurora_projected_box_score.csv
+│   ├── uww_opponent_projected_box_score.csv
 │   ├── uww_player_comparisons.csv
 │   ├── uww_opp_lineup_season_box.csv
 │   ├── uww_opponent_schedules.csv
 │   ├── uww_pbp_derived_keys.csv
+│   ├── uww_clutch_events.csv    # Last-5-min/OT, score within 8 -- powers the Analytics, Team, and Previous
+│   │                             # Games pages' clutch-performance sections
+│   ├── uww_scoring_runs.csv     # Each game's biggest run + largest lead/deficit, with lineups on the floor
+│   ├── name_aliases.json        # Known player-name spelling mismatches between data sources —
+│   │                             # shared by streamlit_app.py and the parser, so a fix only has to be made once
 │   └── logo/                    # Team logos (PNG)
 │       ├── UW-Whitewater.png
 │       └── <opponent>.png
 ├── parser/
 │   ├── requirements.txt         # Parser script dependencies
 │   ├── player_comparison.py     # Portable comparison algorithms module
-│   └── (convert notebook cells to parser.py — see below)
+│   └── parser_nb.ipynb          # Parser notebook — already portable; convert to parser.py, see below
 └── inputs/                      # Raw scouting data (you provide)
     ├── UW-Whitewater - Schedule.mhtml
     ├── <Opponent>_schedule.mhtml
@@ -108,48 +113,30 @@ appears in UWW's schedule is scraped live from its FastScout `opponent_url` (req
 above); if that fails for any reason, the parser falls back to a local `"<Opponent> - Schedule.mhtml"`
 backup file in `--input-dir` if one exists, or skips that opponent otherwise.
 
-## Converting the Parser Notebook
+## Converting the Parser Notebook to a Script
 
-The original notebook (57 cells) needs manual conversion to a standalone `parser.py` script.
-Here's what to change in each section:
+The notebook (`parser_nb.ipynb`, 133 cells) is already fully portable — no Databricks-only APIs
+(`dbutils`, `display()`, Spark DataFrames, Unity Catalog Volume paths) remain anywhere in it, and
+`INPUT_DIR`/`OUTPUT_DIR`/`USE_LLM`/`reference_date_str` are already plain configurable variables set near the
+top of the notebook. The remaining step is mechanical, not a rewrite:
 
-### Cell-by-cell conversion guide:
+```bash
+cd parser/
+jupyter nbconvert --to script parser_nb.ipynb --output parser
+```
 
-1. **Cell 1** (`%pip install`): Remove entirely — deps come from `requirements.txt`
-2. **Cell 2** (Parse MHTML): Change the path:
-   ```python
-   # OLD: path = "/Volumes/ads-predictive-analytics/workforce_analytics/inputs/UW-Whitewater - Schedule.mhtml"
-   # NEW:
-   path = os.path.join(INPUT_DIR, "UW-Whitewater - Schedule.mhtml")
-   ```
-3. **Cell 7** (Parse PDFs): Change the volume_dir:
-   ```python
-   # OLD: volume_dir = "/Volumes/ads-predictive-analytics/workforce_analytics/inputs"
-   # NEW:
-   volume_dir = INPUT_DIR
-   ```
-4. **Cell 23** (`%run`): Replace with a normal import:
-   ```python
-   # OLD: %run "/Users/cfritsch2@uwhealth.org/UW Whitewater Player Comparison Algorithms"
-   # NEW:
-   from player_comparison import build_player_comparison_artifacts
-   ```
-5. **Cell 24-28** (LLM comparisons): The `build_player_comparison_artifacts` function in
-   `player_comparison.py` now handles this — just call it without `spark`:
-   ```python
-   # OLD: results = build_player_comparison_artifacts(schedule, scout_reports, player_profiles, spark, ...)
-   # NEW:
-   results = build_player_comparison_artifacts(schedule, scout_reports, player_profiles, use_llm=True)
-   best_matches = results["best_matches"]
-   ```
-6. **Cell 54** (Delta table export): Remove entirely — not needed
-7. **Cell 55** (CSV export): Keep as-is, just change the output path:
-   ```python
-   # OLD: APP_DATA_DIR = "/Workspace/Users/.../uww-basketball-scouting/data"
-   # NEW:
-   APP_DATA_DIR = OUTPUT_DIR
-   ```
-8. **All `display()` calls**: Replace with `print(df.to_string())` or just remove
+This produces `parser.py`. Open it afterward and:
+
+1. Confirm `INPUT_DIR` / `OUTPUT_DIR` / `USE_LLM` / `reference_date_str` (set near the top of the file) are
+   correct for your environment, or wire them up to CLI args / environment variables if you want to run the
+   parser non-interactively (e.g. via `argparse` around those four values) instead of editing the script
+   before each run.
+2. Remove any leftover diagnostic/inspection cells you don't need in production runs — a handful of cells in
+   the notebook exist purely to preview intermediate DataFrames while developing (`print(df)` or similar);
+   harmless to keep, but noisy in a scheduled/non-interactive run.
+3. Run it: `python parser.py --input-dir ../inputs --output-dir ../data`.
+
+No manual cell-by-cell rewriting is needed beyond that.
 
 ## Hosting Options
 
