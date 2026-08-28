@@ -2481,10 +2481,10 @@ Ripon Red Hawks,2025-11-07,481,H2,,,,period_marker,End 2nd Half,,,,
 Lawrence Vikings,2025-12-10,0,,,,,period_marker,Start 1st Half,,,,
 Lawrence Vikings,2025-12-10,1,H1,19:59 (H1),Lawrence Vikings,Casey Schoenecker,jump_ball_won,Casey Schoenecker Wins Jump Ball,0.0,0.0,,
 Lawrence Vikings,2025-12-10,2,H1,19:59 (H1),UW-Whitewater,Richie Warren,jump_ball_lost,Richie Warren Loses Jump Ball,0.0,0.0,,
-Lawrence Vikings,2025-12-10,3,H1,19:44 (H1),Lawrence Vikings,CJ Campbell,missed_shot,CJ Campbell Misses 3PT Jump Shot,0.0,0.0,15 CJ Campbell > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts,
+Lawrence Vikings,2025-12-10,3,H1,19:44 (H1),Lawrence Vikings,CJ Campbell,missed_shot,CJ Campbell Misses 3PT Jump Shot,0.0,0.0,15 CJ Campbell > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts,LAW OREB : SEAL ON THE BACKSIDE INSTEAD
 Lawrence Vikings,2025-12-10,4,H1,19:38 (H1),Lawrence Vikings,Hogan Demovsky,rebound_offensive,Hogan Demovsky Offensive Rebound,0.0,0.0,,
 Lawrence Vikings,2025-12-10,5,H1,19:38 (H1),Lawrence Vikings,Hogan Demovsky,made_shot,Hogan Demovsky Makes 2PT,0.0,2.0,10 Hogan Demovsky > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,
-Lawrence Vikings,2025-12-10,6,H1,19:24 (H1),UW-Whitewater,Brock Marino,turnover,Brock Marino Turnover (Lost Ball),0.0,2.0,21 Brock Marino > Post-Up > Left Block > Left Shoulder > Dribble Move > Defense Commits > Turnover,
+Lawrence Vikings,2025-12-10,6,H1,19:24 (H1),UW-Whitewater,Brock Marino,turnover,Brock Marino Turnover (Lost Ball),0.0,2.0,21 Brock Marino > Post-Up > Left Block > Left Shoulder > Dribble Move > Defense Commits > Turnover,"SCREEN TO THE INSIDE/PAINT, BE PATIENT"
 Lawrence Vikings,2025-12-10,7,H1,19:24 (H1),Lawrence Vikings,Nicholas Gouriotis,steal,Nicholas Gouriotis Steals,0.0,2.0,,
 Lawrence Vikings,2025-12-10,8,H1,19:18 (H1),Lawrence Vikings,Hogan Demovsky,turnover,Hogan Demovsky Turnover,0.0,2.0,10 Hogan Demovsky > Transition > Left Wing > Turnover,
 Lawrence Vikings,2025-12-10,9,H1,19:03 (H1),UW-Whitewater,Luke Bara,missed_shot,Luke Bara Misses 3PT Jump Shot,0.0,2.0,32 Luke Bara > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
@@ -2495,17 +2495,17 @@ Lawrence Vikings,2025-12-10,13,H1,18:23 (H1),UW-Whitewater,Brock Marino,made_sho
 Lawrence Vikings,2025-12-10,14,H1,18:23 (H1),UW-Whitewater,Isaac Verges,assist,Isaac Verges Assists,2.0,2.0,,
 Lawrence Vikings,2025-12-10,15,H1,18:23 (H1),Lawrence Vikings,Casey Schoenecker,foul,Casey Schoenecker Commits Personal Foul,2.0,2.0,,
 Lawrence Vikings,2025-12-10,16,H1,18:23 (H1),UW-Whitewater,Brock Marino,free_throw_made,Brock Marino Makes Free Throw (1 of 1),3.0,2.0,21 Brock Marino > Post-Up > Right Block > Post Pin > No Dribble Move > To Basket > Make 2 Pts Foul > 1 Pts,
-Lawrence Vikings,2025-12-10,17,H1,18:10 (H1),Lawrence Vikings,Hogan Demovsky,missed_shot,Hogan Demovsky Misses 3PT Jump Shot,3.0,2.0,10 Hogan Demovsky > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
+Lawrence Vikings,2025-12-10,17,H1,18:10 (H1),Lawrence Vikings,Hogan Demovsky,missed_shot,Hogan Demovsky Misses 3PT Jump Shot,3.0,2.0,10 Hogan Demovsky > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,LAW OREB ; NO BOX OUT
 Lawrence Vikings,2025-12-10,18,H1,18:06 (H1),Lawrence Vikings,Casey Schoenecker,rebound_offensive,Casey Schoenecker Offensive Rebound,3.0,2.0,,
 Lawrence Vikings,2025-12-10,19,H1,18:06 (H1),Lawrence Vikings,Casey Schoenecker,made_shot,Casey Schoenecker Makes 2PT,3.0,4.0,20 Casey Schoenecker > Post-Up > Right Block > Right Shoulder > Dribble Move > To Hook > Make 2 Pts,
 Lawrence Vikings,2025-12-10,20,H1,17:46 (H1),UW-Whitewater,Richie Warren,made_shot,Richie Warren Makes 2PT Jump Shot,5.0,4.0,21 Brock Marino > Post-Up > Left Block > Left Shoulder > Dribble Move > Defense Commits > Ball Delivered > 24 Richie Warren > Cut > Flash > Make 2 Pts,
 Lawrence Vikings,2025-12-10,21,H1,17:46 (H1),UW-Whitewater,Brock Marino,assist,Brock Marino Assists,5.0,4.0,,
-Lawrence Vikings,2025-12-10,22,H1,17:26 (H1),Lawrence Vikings,Nathan Valentine,made_shot,Nathan Valentine Makes 3PT Jump Shot,5.0,7.0,15 CJ Campbell > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 3 Nathan Valentine > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,
+Lawrence Vikings,2025-12-10,22,H1,17:26 (H1),Lawrence Vikings,Nathan Valentine,made_shot,Nathan Valentine Makes 3PT Jump Shot,5.0,7.0,15 CJ Campbell > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 3 Nathan Valentine > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,WHAT THE BOXOUTS SHOULD LOOK LIKE
 Lawrence Vikings,2025-12-10,23,H1,17:26 (H1),Lawrence Vikings,CJ Campbell,assist,CJ Campbell Assists,5.0,7.0,,
 Lawrence Vikings,2025-12-10,24,H1,17:14 (H1),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 3PT Jump Shot,8.0,7.0,0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 15 Collin Madson > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,
 Lawrence Vikings,2025-12-10,25,H1,17:14 (H1),UW-Whitewater,Isaac Verges,assist,Isaac Verges Assists,8.0,7.0,,
-Lawrence Vikings,2025-12-10,26,H1,16:56 (H1),Lawrence Vikings,Nicholas Gouriotis,turnover,Nicholas Gouriotis Turnover (Bad Pass),8.0,7.0,22 Nicholas Gouriotis > No Play Type > Turnover,
-Lawrence Vikings,2025-12-10,27,H1,16:36 (H1),UW-Whitewater,Richie Warren,missed_shot,Richie Warren Misses 2PT Layup,8.0,7.0,24 Richie Warren > Spot-Up > Drives Right > To Basket > Miss 2 Pts,
+Lawrence Vikings,2025-12-10,26,H1,16:56 (H1),Lawrence Vikings,Nicholas Gouriotis,turnover,Nicholas Gouriotis Turnover (Bad Pass),8.0,7.0,22 Nicholas Gouriotis > No Play Type > Turnover,GAP POSITIONING
+Lawrence Vikings,2025-12-10,27,H1,16:36 (H1),UW-Whitewater,Richie Warren,missed_shot,Richie Warren Misses 2PT Layup,8.0,7.0,24 Richie Warren > Spot-Up > Drives Right > To Basket > Miss 2 Pts,TURN INTO DEFENDER TO WALK HIM UP. DO NOT DISENGAGE ON THE SKIP
 Lawrence Vikings,2025-12-10,28,H1,16:31 (H1),UW-Whitewater,Richie Warren,rebound_offensive,Richie Warren Offensive Rebound,8.0,7.0,,
 Lawrence Vikings,2025-12-10,29,H1,16:31 (H1),UW-Whitewater,Richie Warren,made_shot,Richie Warren Makes 2PT,10.0,7.0,,
 Lawrence Vikings,2025-12-10,30,H1,16:24 (H1),UW-Whitewater,Richie Warren,foul,Richie Warren Commits Personal Foul,10.0,7.0,3 Nathan Valentine > Non Possession > Non Shooting Foul,
@@ -2515,36 +2515,36 @@ Lawrence Vikings,2025-12-10,33,H1,16:24 (H1),UW-Whitewater,Luke Bara,sub_out,Luk
 Lawrence Vikings,2025-12-10,34,H1,16:24 (H1),Lawrence Vikings,Nicolas Manzanera,sub_in,Nicolas Manzanera Subs In,10.0,7.0,,
 Lawrence Vikings,2025-12-10,35,H1,16:24 (H1),Lawrence Vikings,Cameron Nash,sub_in,Cameron Nash Subs In,10.0,7.0,,
 Lawrence Vikings,2025-12-10,36,H1,16:24 (H1),UW-Whitewater,Joey Berezowitz,sub_in,Joey Berezowitz Subs In,10.0,7.0,,
-Lawrence Vikings,2025-12-10,37,H1,16:13 (H1),Lawrence Vikings,CJ Campbell,missed_shot,CJ Campbell Misses 2PT Layup (Blocked),10.0,7.0,,
+Lawrence Vikings,2025-12-10,37,H1,16:13 (H1),Lawrence Vikings,CJ Campbell,missed_shot,CJ Campbell Misses 2PT Layup (Blocked),10.0,7.0,,ALLOWING BASELINE DRIVE & OREBS
 Lawrence Vikings,2025-12-10,38,H1,16:13 (H1),UW-Whitewater,Richie Warren,block,Richie Warren Blocks,10.0,7.0,,
 Lawrence Vikings,2025-12-10,39,H1,16:08 (H1),Lawrence Vikings,CJ Campbell,rebound_offensive,CJ Campbell Offensive Rebound,10.0,7.0,,
 Lawrence Vikings,2025-12-10,40,H1,16:07 (H1),Lawrence Vikings,CJ Campbell,missed_shot,CJ Campbell Misses 2PT Layup,10.0,7.0,15 CJ Campbell > ISO > Right > Drives Right > To Basket > Miss 2 Pts,
 Lawrence Vikings,2025-12-10,41,H1,16:00 (H1),Lawrence Vikings,Casey Schoenecker,rebound_offensive,Casey Schoenecker Offensive Rebound,10.0,7.0,,
 Lawrence Vikings,2025-12-10,42,H1,16:00 (H1),Lawrence Vikings,Casey Schoenecker,missed_shot,Casey Schoenecker Misses 2PT,10.0,7.0,20 Casey Schoenecker > Post-Up > Left Block > Right Shoulder > Dribble Move > To Basket > Miss 2 Pts,
 Lawrence Vikings,2025-12-10,43,H1,15:57 (H1),UW-Whitewater,Collin Madson,rebound_defensive,Collin Madson Defensive Rebound,10.0,7.0,,
-Lawrence Vikings,2025-12-10,44,H1,15:51 (H1),UW-Whitewater,Brock Marino,made_shot,Brock Marino Makes 2PT Layup,12.0,7.0,21 Brock Marino > Post-Up > Flash Middle > Post Pin > No Dribble Move > To Basket > Make 2 Pts,
+Lawrence Vikings,2025-12-10,44,H1,15:51 (H1),UW-Whitewater,Brock Marino,made_shot,Brock Marino Makes 2PT Layup,12.0,7.0,21 Brock Marino > Post-Up > Flash Middle > Post Pin > No Dribble Move > To Basket > Make 2 Pts,SECONDARY - GOOD HIGH/LOW PASS/SEAL
 Lawrence Vikings,2025-12-10,45,H1,15:51 (H1),UW-Whitewater,Collin Madson,assist,Collin Madson Assists,12.0,7.0,,
 Lawrence Vikings,2025-12-10,46,H1,15:47 (H1),UW-Whitewater,Isaac Verges,sub_out,Isaac Verges Subs Out,12.0,7.0,,
 Lawrence Vikings,2025-12-10,47,H1,15:47 (H1),UW-Whitewater,Kelton McEwen,sub_in,Kelton McEwen Subs In,12.0,7.0,,
-Lawrence Vikings,2025-12-10,48,H1,15:35 (H1),Lawrence Vikings,CJ Campbell,missed_shot,CJ Campbell Misses 2PT Dunk,12.0,7.0,3 Nathan Valentine > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 15 CJ Campbell > Cut > Basket > Miss 2 Pts,
+Lawrence Vikings,2025-12-10,48,H1,15:35 (H1),Lawrence Vikings,CJ Campbell,missed_shot,CJ Campbell Misses 2PT Dunk,12.0,7.0,3 Nathan Valentine > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 15 CJ Campbell > Cut > Basket > Miss 2 Pts,SIDE BALL SCREEN - STAY UNTIL GUARD GETS BETWEEN BIG & BALL
 Lawrence Vikings,2025-12-10,49,H1,15:30 (H1),Lawrence Vikings,CJ Campbell,rebound_offensive,CJ Campbell Offensive Rebound,12.0,7.0,,
 Lawrence Vikings,2025-12-10,50,H1,15:30 (H1),Lawrence Vikings,CJ Campbell,made_shot,CJ Campbell Makes 2PT,12.0,9.0,15 CJ Campbell > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,
 Lawrence Vikings,2025-12-10,51,H1,15:18 (H1),Lawrence Vikings,Cameron Nash,foul,Cameron Nash Commits Personal Foul,12.0,9.0,15 Collin Madson > Non Possession > Non Shooting Foul,
 Lawrence Vikings,2025-12-10,52,H1,15:07 (H1),UW-Whitewater,Richie Warren,missed_shot,Richie Warren Misses 2PT Layup,12.0,9.0,24 Richie Warren > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,
 Lawrence Vikings,2025-12-10,53,H1,15:04 (H1),Lawrence Vikings,Casey Schoenecker,rebound_defensive,Casey Schoenecker Defensive Rebound,12.0,9.0,,
 Lawrence Vikings,2025-12-10,54,H1,15:02 (H1),UW-Whitewater,Kelton McEwen,foul,Kelton McEwen Commits Personal Foul,12.0,9.0,20 Casey Schoenecker > Transition > Ballhandler > To Basket > Foul,
-Lawrence Vikings,2025-12-10,55,H1,15:02 (H1),Lawrence Vikings,Cameron Nash,free_throw_missed,Cameron Nash Misses Free Throw (1 of 2),12.0,9.0,5 Cameron Nash > Non Possession > Free Throw,
+Lawrence Vikings,2025-12-10,55,H1,15:02 (H1),Lawrence Vikings,Cameron Nash,free_throw_missed,Cameron Nash Misses Free Throw (1 of 2),12.0,9.0,5 Cameron Nash > Non Possession > Free Throw,TRANSITION DEFENSE LEADS TO A FOUL
 Lawrence Vikings,2025-12-10,56,H1,15:02 (H1),Lawrence Vikings,Lawrence,team_deadball_rebound_offensive,Lawrence Offensive Deadball Rebound,12.0,9.0,,
-Lawrence Vikings,2025-12-10,57,H1,15:02 (H1),Lawrence Vikings,Cameron Nash,free_throw_made,Cameron Nash Makes Free Throw (2 of 2),12.0,10.0,5 Cameron Nash > Non Possession > Free Throw,
+Lawrence Vikings,2025-12-10,57,H1,15:02 (H1),Lawrence Vikings,Cameron Nash,free_throw_made,Cameron Nash Makes Free Throw (2 of 2),12.0,10.0,5 Cameron Nash > Non Possession > Free Throw,TRANSITION DEFENSE LEADS TO A FOUL
 Lawrence Vikings,2025-12-10,58,H1,15:02 (H1),Lawrence Vikings,CJ Campbell,sub_out,CJ Campbell Subs Out,12.0,10.0,,
 Lawrence Vikings,2025-12-10,59,H1,15:02 (H1),Lawrence Vikings,Caleb Nash,sub_in,Caleb Nash Subs In,12.0,10.0,,
 Lawrence Vikings,2025-12-10,60,H1,14:49 (H1),UW-Whitewater,Kelton McEwen,turnover,Kelton McEwen Turnover (Bad Pass),12.0,10.0,2 Kelton Mcewen > Off Screen > To Shooter's Right > Straight > Turnover,
 Lawrence Vikings,2025-12-10,61,H1,14:27 (H1),UW-Whitewater,Joey Berezowitz,foul,Joey Berezowitz Commits Personal Foul,12.0,10.0,4 Caleb Nash > Non Possession > Non Shooting Foul,
 Lawrence Vikings,2025-12-10,62,H1,14:27 (H1),UW-Whitewater,Richie Warren,sub_out,Richie Warren Subs Out,12.0,10.0,,
 Lawrence Vikings,2025-12-10,63,H1,14:27 (H1),UW-Whitewater,Jake Quast,sub_in,Jake Quast Subs In,12.0,10.0,,
-Lawrence Vikings,2025-12-10,64,H1,14:27 (H1),Lawrence Vikings,Cameron Nash,made_shot,Cameron Nash Makes 3PT Jump Shot,12.0,13.0,5 Cameron Nash > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,
+Lawrence Vikings,2025-12-10,64,H1,14:27 (H1),Lawrence Vikings,Cameron Nash,made_shot,Cameron Nash Makes 3PT Jump Shot,12.0,13.0,5 Cameron Nash > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,LATE COMMUNICATION ON SWITCH
 Lawrence Vikings,2025-12-10,65,H1,14:27 (H1),Lawrence Vikings,Caleb Nash,assist,Caleb Nash Assists,12.0,13.0,,
-Lawrence Vikings,2025-12-10,66,H1,13:56 (H1),UW-Whitewater,Brock Marino,missed_shot,Brock Marino Misses 2PT Layup,12.0,13.0,21 Brock Marino > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,
+Lawrence Vikings,2025-12-10,66,H1,13:56 (H1),UW-Whitewater,Brock Marino,missed_shot,Brock Marino Misses 2PT Layup,12.0,13.0,21 Brock Marino > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,"WE DON'T STEP TO DEFENDER AND BURY HIM, NOTICE HOW HE DOESN'T MOVE V. BUMP"
 Lawrence Vikings,2025-12-10,67,H1,13:54 (H1),UW-Whitewater,Collin Madson,rebound_offensive,Collin Madson Offensive Rebound,12.0,13.0,,
 Lawrence Vikings,2025-12-10,68,H1,13:48 (H1),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 3PT Jump Shot,15.0,13.0,15 Collin Madson > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Make 3 Pts,
 Lawrence Vikings,2025-12-10,69,H1,13:29 (H1),Lawrence Vikings,Caleb Nash,missed_shot,Caleb Nash Misses 3PT Jump Shot,15.0,13.0,3 Nathan Valentine > ISO > Top > Drives Left > Defense Commits > Ball Delivered > 4 Caleb Nash > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
@@ -2557,7 +2557,7 @@ Lawrence Vikings,2025-12-10,75,H1,13:18 (H1),Lawrence Vikings,Nicholas Gouriotis
 Lawrence Vikings,2025-12-10,76,H1,13:18 (H1),Lawrence Vikings,Nolan Koch,sub_in,Nolan Koch Subs In,15.0,13.0,,
 Lawrence Vikings,2025-12-10,77,H1,13:18 (H1),UW-Whitewater,Richie Warren,sub_in,Richie Warren Subs In,15.0,13.0,,
 Lawrence Vikings,2025-12-10,78,H1,13:07 (H1),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT Layup,17.0,13.0,15 Collin Madson > P&R Ball Handler > Left P&R > Side > Go Away from Pick > To Basket > Make 2 Pts,
-Lawrence Vikings,2025-12-10,79,H1,12:47 (H1),Lawrence Vikings,Nicholas Gouriotis,turnover,Nicholas Gouriotis Turnover (Bad Pass),17.0,13.0,12 Nicolas Manzanera > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 22 Nicholas Gouriotis > Cut > Basket > Turnover,
+Lawrence Vikings,2025-12-10,79,H1,12:47 (H1),Lawrence Vikings,Nicholas Gouriotis,turnover,Nicholas Gouriotis Turnover (Bad Pass),17.0,13.0,12 Nicolas Manzanera > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 22 Nicholas Gouriotis > Cut > Basket > Turnover,GOOD HELP & PEEL OFF
 Lawrence Vikings,2025-12-10,80,H1,12:47 (H1),UW-Whitewater,Jake Quast,steal,Jake Quast Steals,17.0,13.0,,
 Lawrence Vikings,2025-12-10,81,H1,12:41 (H1),UW-Whitewater,Kelton McEwen,missed_shot,Kelton McEwen Misses 3PT Jump Shot,17.0,13.0,2 Kelton Mcewen > Transition > Right Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
 Lawrence Vikings,2025-12-10,82,H1,12:38 (H1),Lawrence Vikings,Caleb Nash,rebound_defensive,Caleb Nash Defensive Rebound,17.0,13.0,,
@@ -2565,7 +2565,7 @@ Lawrence Vikings,2025-12-10,83,H1,12:32 (H1),Lawrence Vikings,Nicolas Manzanera,
 Lawrence Vikings,2025-12-10,84,H1,12:32 (H1),UW-Whitewater,Rashad Rogers,sub_in,Rashad Rogers Subs In,17.0,13.0,,
 Lawrence Vikings,2025-12-10,85,H1,12:32 (H1),UW-Whitewater,Richie Warren,sub_out,Richie Warren Subs Out,17.0,13.0,,
 Lawrence Vikings,2025-12-10,86,H1,12:32 (H1),UW-Whitewater,Rashad Rogers,steal,Rashad Rogers Steals,17.0,13.0,,
-Lawrence Vikings,2025-12-10,87,H1,12:25 (H1),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT Layup,19.0,13.0,15 Collin Madson > Transition > Leak Outs > To Basket > Make 2 Pts,
+Lawrence Vikings,2025-12-10,87,H1,12:25 (H1),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT Layup,19.0,13.0,15 Collin Madson > Transition > Leak Outs > To Basket > Make 2 Pts,DIVING ON THE FLOOR & ADVANCING THE BALL IN TRANSITION
 Lawrence Vikings,2025-12-10,88,H1,12:25 (H1),Lawrence Vikings,Caleb Nash,sub_out,Caleb Nash Subs Out,19.0,13.0,,
 Lawrence Vikings,2025-12-10,89,H1,12:25 (H1),Lawrence Vikings,Cameron Nash,sub_out,Cameron Nash Subs Out,19.0,13.0,,
 Lawrence Vikings,2025-12-10,90,H1,12:25 (H1),Lawrence Vikings,Nicolas Manzanera,sub_out,Nicolas Manzanera Subs Out,19.0,13.0,,
@@ -2574,14 +2574,14 @@ Lawrence Vikings,2025-12-10,92,H1,12:25 (H1),Lawrence Vikings,Jackson Weber,sub_
 Lawrence Vikings,2025-12-10,93,H1,12:25 (H1),Lawrence Vikings,CJ Campbell,sub_in,CJ Campbell Subs In,19.0,13.0,,
 Lawrence Vikings,2025-12-10,94,H1,12:25 (H1),Lawrence Vikings,Hogan Demovsky,turnover,Hogan Demovsky Turnover (Bad Pass),19.0,13.0,10 Hogan Demovsky > No Play Type > Turnover,
 Lawrence Vikings,2025-12-10,95,H1,12:25 (H1),UW-Whitewater,Jake Quast,steal,Jake Quast Steals,19.0,13.0,,
-Lawrence Vikings,2025-12-10,96,H1,12:25 (H1),UW-Whitewater,Collin Madson,missed_shot,Collin Madson Misses 2PT Jump Shot,19.0,13.0,15 Collin Madson > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Medium/17' to <3p > Miss 2 Pts,
+Lawrence Vikings,2025-12-10,96,H1,12:25 (H1),UW-Whitewater,Collin Madson,missed_shot,Collin Madson Misses 2PT Jump Shot,19.0,13.0,15 Collin Madson > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Medium/17' to <3p > Miss 2 Pts,DIVING ON THE FLOOR & ADVANCING THE BALL IN TRANSITION
 Lawrence Vikings,2025-12-10,97,H1,12:25 (H1),Lawrence Vikings,CJ Campbell,rebound_defensive,CJ Campbell Defensive Rebound,19.0,13.0,,
-Lawrence Vikings,2025-12-10,98,H1,12:04 (H1),Lawrence Vikings,Hogan Demovsky,missed_shot,Hogan Demovsky Misses 2PT Layup,19.0,13.0,11 Jackson Weber > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 10 Hogan Demovsky > Spot-Up > Drives Left > To Basket > Miss 2 Pts,
+Lawrence Vikings,2025-12-10,98,H1,12:04 (H1),Lawrence Vikings,Hogan Demovsky,missed_shot,Hogan Demovsky Misses 2PT Layup,19.0,13.0,11 Jackson Weber > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 10 Hogan Demovsky > Spot-Up > Drives Left > To Basket > Miss 2 Pts,GAMBLE LEADS TO AN OPEN LAYUP
 Lawrence Vikings,2025-12-10,99,H1,12:01 (H1),UW-Whitewater,Rashad Rogers,rebound_defensive,Rashad Rogers Defensive Rebound,19.0,13.0,,
 Lawrence Vikings,2025-12-10,100,H1,12:00 (H1),UW-Whitewater,Joey Berezowitz,missed_shot,Joey Berezowitz Misses 3PT Jump Shot,19.0,13.0,22 Joey Berezowitz > Transition > Ballhandler > Dribble Jumper > Long/3pt > Miss 3 Pts,
 Lawrence Vikings,2025-12-10,101,H1,12:00 (H1),Lawrence Vikings,Lawrence,team_deadball_rebound_defensive,Lawrence Defensive Deadball Rebound,19.0,13.0,,
 Lawrence Vikings,2025-12-10,102,H1,12:00 (H1),Lawrence Vikings,Lawrence,timeout,Lawrence Timeout,19.0,13.0,,
-Lawrence Vikings,2025-12-10,103,H1,11:43 (H1),Lawrence Vikings,Nolan Koch,made_shot,Nolan Koch Makes 2PT Layup,19.0,15.0,21 Nolan Koch > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Make 2 Pts,
+Lawrence Vikings,2025-12-10,103,H1,11:43 (H1),Lawrence Vikings,Nolan Koch,made_shot,Nolan Koch Makes 2PT Layup,19.0,15.0,21 Nolan Koch > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Make 2 Pts,EXTEND THE CATCH AND KEEP IT OUT
 Lawrence Vikings,2025-12-10,104,H1,11:16 (H1),Lawrence Vikings,Hogan Demovsky,foul,Hogan Demovsky Commits Personal Foul,19.0,15.0,35 Rashad Rogers > Non Possession > Non Shooting Foul,
 Lawrence Vikings,2025-12-10,105,H1,11:08 (H1),UW-Whitewater,Kelton McEwen,turnover,Kelton McEwen Turnover (Bad Pass),19.0,15.0,2 Kelton Mcewen > Off Screen > To Shooter's Left > Straight > Turnover,
 Lawrence Vikings,2025-12-10,106,H1,11:08 (H1),Lawrence Vikings,Nolan Koch,steal,Nolan Koch Steals,19.0,15.0,,
@@ -2598,7 +2598,7 @@ Lawrence Vikings,2025-12-10,116,H1,10:18 (H1),UW-Whitewater,JR Lukenbill,sub_in,
 Lawrence Vikings,2025-12-10,117,H1,10:18 (H1),UW-Whitewater,Luke Bara,sub_in,Luke Bara Subs In,22.0,15.0,,
 Lawrence Vikings,2025-12-10,118,H1,10:11 (H1),Lawrence Vikings,Nicholas Gouriotis,missed_shot,Nicholas Gouriotis Misses 2PT Turnaround Jump Shot,22.0,15.0,10 Hogan Demovsky > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 22 Nicholas Gouriotis > P&R Roll Man > Pick and Pops > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,
 Lawrence Vikings,2025-12-10,119,H1,10:08 (H1),UW-Whitewater,Rashad Rogers,rebound_defensive,Rashad Rogers Defensive Rebound,22.0,15.0,,
-Lawrence Vikings,2025-12-10,120,H1,09:56 (H1),UW-Whitewater,Jake Quast,missed_shot,Jake Quast Misses 2PT Layup,22.0,15.0,22 Joey Berezowitz > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Ball Delivered > 12 Jake Quast > Spot-Up > Drives Left > To Basket > Miss 2 Pts,
+Lawrence Vikings,2025-12-10,120,H1,09:56 (H1),UW-Whitewater,Jake Quast,missed_shot,Jake Quast Misses 2PT Layup,22.0,15.0,22 Joey Berezowitz > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Ball Delivered > 12 Jake Quast > Spot-Up > Drives Left > To Basket > Miss 2 Pts,GOOD CRASH
 Lawrence Vikings,2025-12-10,121,H1,09:52 (H1),UW-Whitewater,Rashad Rogers,rebound_offensive,Rashad Rogers Offensive Rebound,22.0,15.0,,
 Lawrence Vikings,2025-12-10,122,H1,09:52 (H1),UW-Whitewater,Rashad Rogers,made_shot,Rashad Rogers Makes 2PT,24.0,15.0,,
 Lawrence Vikings,2025-12-10,123,H1,09:32 (H1),Lawrence Vikings,Nolan Koch,missed_shot,Nolan Koch Misses 2PT Layup (Blocked),24.0,15.0,21 Nolan Koch > Post-Up > Right Block > Right Shoulder > Dribble Move > To Up and Under > Miss 2 Pts,
@@ -2627,7 +2627,7 @@ Lawrence Vikings,2025-12-10,145,H1,07:29 (H1),Lawrence Vikings,Nicholas Gourioti
 Lawrence Vikings,2025-12-10,146,H1,07:29 (H1),Lawrence Vikings,Nicolas Manzanera,sub_in,Nicolas Manzanera Subs In,30.0,20.0,,
 Lawrence Vikings,2025-12-10,147,H1,07:29 (H1),UW-Whitewater,Jake Quast,sub_out,Jake Quast Subs Out,30.0,20.0,,
 Lawrence Vikings,2025-12-10,148,H1,07:29 (H1),UW-Whitewater,Richie Warren,sub_in,Richie Warren Subs In,30.0,20.0,,
-Lawrence Vikings,2025-12-10,149,H1,07:12 (H1),UW-Whitewater,Richie Warren,made_shot,Richie Warren Makes 2PT Layup,32.0,20.0,21 Brock Marino > Post-Up > Left Block > Face-up > Defense Commits > Ball Delivered > 24 Richie Warren > Cut > Screen > Make 2 Pts,
+Lawrence Vikings,2025-12-10,149,H1,07:12 (H1),UW-Whitewater,Richie Warren,made_shot,Richie Warren Makes 2PT Layup,32.0,20.0,21 Brock Marino > Post-Up > Left Block > Face-up > Defense Commits > Ball Delivered > 24 Richie Warren > Cut > Screen > Make 2 Pts,P4 GOOD EXECUTION
 Lawrence Vikings,2025-12-10,150,H1,06:41 (H1),Lawrence Vikings,Casey Schoenecker,missed_shot,Casey Schoenecker Misses 2PT Layup,32.0,20.0,20 Casey Schoenecker > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,
 Lawrence Vikings,2025-12-10,151,H1,06:39 (H1),UW-Whitewater,Richie Warren,rebound_defensive,Richie Warren Defensive Rebound,32.0,20.0,,
 Lawrence Vikings,2025-12-10,152,H1,06:35 (H1),UW-Whitewater,JR Lukenbill,made_shot,JR Lukenbill Makes 3PT Jump Shot,35.0,20.0,11 Jr Lukenbill > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,
@@ -2648,7 +2648,7 @@ Lawrence Vikings,2025-12-10,166,H1,05:57 (H1),UW-Whitewater,Isaac Verges,sub_in,
 Lawrence Vikings,2025-12-10,167,H1,05:57 (H1),UW-Whitewater,Collin Madson,sub_in,Collin Madson Subs In,35.0,20.0,,
 Lawrence Vikings,2025-12-10,168,H1,05:37 (H1),Lawrence Vikings,CJ Campbell,made_shot,CJ Campbell Makes 3PT Jump Shot,35.0,23.0,15 CJ Campbell > P&R Ball Handler > Right P&R > Side > Takes Early Jump Shot > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,
 Lawrence Vikings,2025-12-10,169,H1,05:37 (H1),Lawrence Vikings,Casey Schoenecker,assist,Casey Schoenecker Assists,35.0,23.0,,
-Lawrence Vikings,2025-12-10,170,H1,05:10 (H1),UW-Whitewater,Luke Bara,missed_shot,Luke Bara Misses 2PT Jump Shot,35.0,23.0,32 Luke Bara > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts,
+Lawrence Vikings,2025-12-10,170,H1,05:10 (H1),UW-Whitewater,Luke Bara,missed_shot,Luke Bara Misses 2PT Jump Shot,35.0,23.0,32 Luke Bara > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts,GOOD OREB
 Lawrence Vikings,2025-12-10,171,H1,05:10 (H1),UW-Whitewater,Brock Marino,rebound_offensive,Brock Marino Offensive Rebound,35.0,23.0,,
 Lawrence Vikings,2025-12-10,172,H1,05:10 (H1),Lawrence Vikings,Casey Schoenecker,foul,Casey Schoenecker Commits Personal Foul,35.0,23.0,21 Brock Marino > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,
 Lawrence Vikings,2025-12-10,173,H1,05:10 (H1),UW-Whitewater,Brock Marino,free_throw_missed,Brock Marino Misses Free Throw (1 of 2),35.0,23.0,21 Brock Marino > Non Possession > Free Throw,
@@ -2670,7 +2670,7 @@ Lawrence Vikings,2025-12-10,188,H1,04:31 (H1),UW-Whitewater,Isaac Verges,free_th
 Lawrence Vikings,2025-12-10,189,H1,04:31 (H1),Lawrence Vikings,Nathan Valentine,sub_out,Nathan Valentine Subs Out,37.0,23.0,,
 Lawrence Vikings,2025-12-10,190,H1,04:31 (H1),Lawrence Vikings,Jackson Weber,sub_in,Jackson Weber Subs In,37.0,23.0,,
 Lawrence Vikings,2025-12-10,191,H1,04:30 (H1),Lawrence Vikings,Nicolas Manzanera,rebound_defensive,Nicolas Manzanera Defensive Rebound,37.0,23.0,,
-Lawrence Vikings,2025-12-10,192,H1,04:11 (H1),Lawrence Vikings,Jackson Weber,turnover,Jackson Weber Turnover (Bad Pass),37.0,23.0,11 Jackson Weber > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Turnover,
+Lawrence Vikings,2025-12-10,192,H1,04:11 (H1),Lawrence Vikings,Jackson Weber,turnover,Jackson Weber Turnover (Bad Pass),37.0,23.0,11 Jackson Weber > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Turnover,"GOOD TAG & RECOVERY, BOTTOM GUY WITH TWO NEEDS TO ACCOUNT FOR CORNER"
 Lawrence Vikings,2025-12-10,193,H1,04:11 (H1),UW-Whitewater,Isaac Verges,steal,Isaac Verges Steals,37.0,23.0,,
 Lawrence Vikings,2025-12-10,194,H1,04:03 (H1),Lawrence Vikings,Cameron Nash,foul,Cameron Nash Commits Personal Foul,37.0,23.0,24 Richie Warren > Post-Up > Right Block > Foul,
 Lawrence Vikings,2025-12-10,195,H1,04:03 (H1),UW-Whitewater,Richie Warren,free_throw_missed,Richie Warren Misses Free Throw (1 of 1),37.0,23.0,24 Richie Warren > Non Possession > Free Throw,
@@ -2678,9 +2678,9 @@ Lawrence Vikings,2025-12-10,196,H1,04:03 (H1),Lawrence Vikings,Cameron Nash,sub_
 Lawrence Vikings,2025-12-10,197,H1,04:03 (H1),Lawrence Vikings,Matai Edgecombe,sub_in,Matai Edgecombe Subs In,37.0,23.0,,
 Lawrence Vikings,2025-12-10,198,H1,04:03 (H1),Lawrence Vikings,CJ Campbell,rebound_defensive,CJ Campbell Defensive Rebound,37.0,23.0,,
 Lawrence Vikings,2025-12-10,199,H1,03:51 (H1),UW-Whitewater,Luke Bara,foul,Luke Bara Commits Personal Foul,37.0,23.0,12 Nicolas Manzanera > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > To Basket > Foul,
-Lawrence Vikings,2025-12-10,200,H1,03:51 (H1),Lawrence Vikings,Nicolas Manzanera,free_throw_missed,Nicolas Manzanera Misses Free Throw (1 of 2),37.0,23.0,12 Nicolas Manzanera > Non Possession > Free Throw,
+Lawrence Vikings,2025-12-10,200,H1,03:51 (H1),Lawrence Vikings,Nicolas Manzanera,free_throw_missed,Nicolas Manzanera Misses Free Throw (1 of 2),37.0,23.0,12 Nicolas Manzanera > Non Possession > Free Throw,HAVE TO BE ENGAGED BEFORE YOUR MAN GETS THE BASKETBALL = FOUL
 Lawrence Vikings,2025-12-10,201,H1,03:51 (H1),Lawrence Vikings,Lawrence,team_deadball_rebound_offensive,Lawrence Offensive Deadball Rebound,37.0,23.0,,
-Lawrence Vikings,2025-12-10,202,H1,03:51 (H1),Lawrence Vikings,Nicolas Manzanera,free_throw_made,Nicolas Manzanera Makes Free Throw (2 of 2),37.0,24.0,12 Nicolas Manzanera > Non Possession > Free Throw,
+Lawrence Vikings,2025-12-10,202,H1,03:51 (H1),Lawrence Vikings,Nicolas Manzanera,free_throw_made,Nicolas Manzanera Makes Free Throw (2 of 2),37.0,24.0,12 Nicolas Manzanera > Non Possession > Free Throw,HAVE TO BE ENGAGED BEFORE YOUR MAN GETS THE BASKETBALL = FOUL
 Lawrence Vikings,2025-12-10,203,H1,03:51 (H1),UW-Whitewater,Brock Marino,sub_out,Brock Marino Subs Out,37.0,24.0,,
 Lawrence Vikings,2025-12-10,204,H1,03:51 (H1),UW-Whitewater,Luke Bara,sub_out,Luke Bara Subs Out,37.0,24.0,,
 Lawrence Vikings,2025-12-10,205,H1,03:51 (H1),UW-Whitewater,Jake Quast,sub_in,Jake Quast Subs In,37.0,24.0,,
@@ -2720,7 +2720,7 @@ Lawrence Vikings,2025-12-10,238,H1,01:47 (H1),UW-Whitewater,Joey Berezowitz,sub_
 Lawrence Vikings,2025-12-10,239,H1,01:30 (H1),Lawrence Vikings,Jackson Weber,foul,Jackson Weber Commits Personal Foul,43.0,27.0,0 Isaac Verges > Spot-Up > Drives Right > Foul,
 Lawrence Vikings,2025-12-10,240,H1,01:30 (H1),UW-Whitewater,Isaac Verges,free_throw_missed,Isaac Verges Misses Free Throw (1 of 1),43.0,27.0,0 Isaac Verges > Non Possession > Free Throw,
 Lawrence Vikings,2025-12-10,241,H1,01:30 (H1),Lawrence Vikings,Matai Edgecombe,rebound_defensive,Matai Edgecombe Defensive Rebound,43.0,27.0,,
-Lawrence Vikings,2025-12-10,242,H1,01:06 (H1),Lawrence Vikings,Landon Key,turnover,Landon Key Turnover (Bad Pass),43.0,27.0,14 Landon Key > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Turnover,
+Lawrence Vikings,2025-12-10,242,H1,01:06 (H1),Lawrence Vikings,Landon Key,turnover,Landon Key Turnover (Bad Pass),43.0,27.0,14 Landon Key > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Turnover,GOOD DEFENSIVE POSSESSION
 Lawrence Vikings,2025-12-10,243,H1,01:06 (H1),UW-Whitewater,JR Lukenbill,steal,JR Lukenbill Steals,43.0,27.0,,
 Lawrence Vikings,2025-12-10,244,H1,00:59 (H1),UW-Whitewater,Jake Quast,missed_shot,Jake Quast Misses 2PT Layup (Blocked),43.0,27.0,12 Jake Quast > Transition > Left Wing > To Basket > Miss 2 Pts,
 Lawrence Vikings,2025-12-10,245,H1,00:59 (H1),Lawrence Vikings,Nicholas Gouriotis,block,Nicholas Gouriotis Blocks,43.0,27.0,,
@@ -2747,7 +2747,7 @@ Lawrence Vikings,2025-12-10,265,H2,19:40 (H2),Lawrence Vikings,Hogan Demovsky,fo
 Lawrence Vikings,2025-12-10,266,H2,19:40 (H2),UW-Whitewater,Luke Bara,missed_shot,Luke Bara Misses 3PT Jump Shot,47.0,27.0,32 Luke Bara > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
 Lawrence Vikings,2025-12-10,267,H2,19:32 (H2),Lawrence Vikings,Nicholas Gouriotis,rebound_defensive,Nicholas Gouriotis Defensive Rebound,47.0,27.0,,
 Lawrence Vikings,2025-12-10,268,H2,19:32 (H2),UW-Whitewater,Collin Madson,foul,Collin Madson Commits Personal Foul,47.0,27.0,20 Casey Schoenecker > Non Possession > Non Shooting Foul,
-Lawrence Vikings,2025-12-10,269,H2,19:17 (H2),Lawrence Vikings,Casey Schoenecker,made_shot,Casey Schoenecker Makes 2PT Layup,47.0,29.0,20 Casey Schoenecker > Cut > Basket > Make 2 Pts Foul > 0 Pts,
+Lawrence Vikings,2025-12-10,269,H2,19:17 (H2),Lawrence Vikings,Casey Schoenecker,made_shot,Casey Schoenecker Makes 2PT Layup,47.0,29.0,20 Casey Schoenecker > Cut > Basket > Make 2 Pts Foul > 0 Pts,POST DEFENSE
 Lawrence Vikings,2025-12-10,270,H2,19:02 (H2),UW-Whitewater,Isaac Verges,turnover,Isaac Verges Turnover (Bad Pass),47.0,29.0,15 Collin Madson > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 0 Isaac Verges > Spot-Up > Drives Right > Turnover,
 Lawrence Vikings,2025-12-10,271,H2,19:02 (H2),Lawrence Vikings,Casey Schoenecker,steal,Casey Schoenecker Steals,47.0,29.0,,
 Lawrence Vikings,2025-12-10,272,H2,18:56 (H2),UW-Whitewater,Richie Warren,foul,Richie Warren Commits Personal Foul,47.0,29.0,20 Casey Schoenecker > Non Possession > Non Shooting Foul,
@@ -2756,10 +2756,10 @@ Lawrence Vikings,2025-12-10,274,H2,18:42 (H2),UW-Whitewater,Richie Warren,reboun
 Lawrence Vikings,2025-12-10,275,H2,18:37 (H2),UW-Whitewater,Isaac Verges,missed_shot,Isaac Verges Misses 2PT Layup,47.0,29.0,0 Isaac Verges > Transition > Ballhandler > To Basket > Miss 2 Pts,
 Lawrence Vikings,2025-12-10,276,H2,18:37 (H2),Lawrence Vikings,Lawrence,team_deadball_rebound_defensive,Lawrence Defensive Deadball Rebound,47.0,29.0,,
 Lawrence Vikings,2025-12-10,277,H2,18:18 (H2),UW-Whitewater,Brock Marino,foul,Brock Marino Commits Personal Foul,47.0,29.0,20 Casey Schoenecker > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Foul,
-Lawrence Vikings,2025-12-10,278,H2,18:18 (H2),Lawrence Vikings,Casey Schoenecker,free_throw_missed,Casey Schoenecker Misses Free Throw (1 of 2),47.0,29.0,20 Casey Schoenecker > Cut > Basket > Make 2 Pts Foul > 0 Pts,
+Lawrence Vikings,2025-12-10,278,H2,18:18 (H2),Lawrence Vikings,Casey Schoenecker,free_throw_missed,Casey Schoenecker Misses Free Throw (1 of 2),47.0,29.0,20 Casey Schoenecker > Cut > Basket > Make 2 Pts Foul > 0 Pts,INSIDE HAND COMES DOWN = FOUL
 Lawrence Vikings,2025-12-10,279,H2,18:18 (H2),Lawrence Vikings,Lawrence,team_deadball_rebound_offensive,Lawrence Offensive Deadball Rebound,47.0,29.0,,
-Lawrence Vikings,2025-12-10,280,H2,18:18 (H2),Lawrence Vikings,Casey Schoenecker,free_throw_made,Casey Schoenecker Makes Free Throw (2 of 2),47.0,30.0,20 Casey Schoenecker > Non Possession > Free Throw,
-Lawrence Vikings,2025-12-10,281,H2,18:03 (H2),UW-Whitewater,Brock Marino,made_shot,Brock Marino Makes 2PT Layup,49.0,30.0,24 Richie Warren > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Brock Marino > P&R Roll Man > Rolls to Basket > Make 2 Pts,
+Lawrence Vikings,2025-12-10,280,H2,18:18 (H2),Lawrence Vikings,Casey Schoenecker,free_throw_made,Casey Schoenecker Makes Free Throw (2 of 2),47.0,30.0,20 Casey Schoenecker > Non Possession > Free Throw,INSIDE HAND COMES DOWN = FOUL
+Lawrence Vikings,2025-12-10,281,H2,18:03 (H2),UW-Whitewater,Brock Marino,made_shot,Brock Marino Makes 2PT Layup,49.0,30.0,24 Richie Warren > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Brock Marino > P&R Roll Man > Rolls to Basket > Make 2 Pts,FORCING THEM TO SLIDE UNDER @ 15 FEET
 Lawrence Vikings,2025-12-10,282,H2,18:03 (H2),UW-Whitewater,Richie Warren,assist,Richie Warren Assists,49.0,30.0,,
 Lawrence Vikings,2025-12-10,283,H2,17:49 (H2),Lawrence Vikings,Nicholas Gouriotis,made_shot,Nicholas Gouriotis Makes 2PT Layup,49.0,32.0,3 Nathan Valentine > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 22 Nicholas Gouriotis > P&R Roll Man > Rolls to Basket > Make 2 Pts,
 Lawrence Vikings,2025-12-10,284,H2,17:49 (H2),Lawrence Vikings,Nathan Valentine,assist,Nathan Valentine Assists,49.0,32.0,,
@@ -2778,20 +2778,20 @@ Lawrence Vikings,2025-12-10,296,H2,17:16 (H2),UW-Whitewater,Rashad Rogers,sub_in
 Lawrence Vikings,2025-12-10,297,H2,17:15 (H2),Lawrence Vikings,Nathan Valentine,turnover,Nathan Valentine Turnover (Bad Pass),49.0,32.0,3 Nathan Valentine > No Play Type > Turnover,
 Lawrence Vikings,2025-12-10,298,H2,17:15 (H2),UW-Whitewater,Collin Madson,steal,Collin Madson Steals,49.0,32.0,,
 Lawrence Vikings,2025-12-10,299,H2,17:12 (H2),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT Layup,51.0,32.0,15 Collin Madson > Transition > Ballhandler > To Basket > Make 2 Pts,
-Lawrence Vikings,2025-12-10,300,H2,16:53 (H2),Lawrence Vikings,Casey Schoenecker,made_shot,Casey Schoenecker Makes 2PT Layup,51.0,34.0,20 Casey Schoenecker > Post-Up > Left Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,
+Lawrence Vikings,2025-12-10,300,H2,16:53 (H2),Lawrence Vikings,Casey Schoenecker,made_shot,Casey Schoenecker Makes 2PT Layup,51.0,34.0,20 Casey Schoenecker > Post-Up > Left Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,RECOVER TOP-SIDE V. SHORT ROLL TO KEEP IT OUT
 Lawrence Vikings,2025-12-10,301,H2,16:53 (H2),Lawrence Vikings,Nathan Valentine,assist,Nathan Valentine Assists,51.0,34.0,,
 Lawrence Vikings,2025-12-10,302,H2,16:31 (H2),UW-Whitewater,Kelton McEwen,missed_shot,Kelton McEwen Misses 3PT Jump Shot,51.0,34.0,2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
 Lawrence Vikings,2025-12-10,303,H2,16:27 (H2),UW-Whitewater,Jake Quast,rebound_offensive,Jake Quast Offensive Rebound,51.0,34.0,,
 Lawrence Vikings,2025-12-10,304,H2,16:18 (H2),UW-Whitewater,Collin Madson,turnover,Collin Madson Turnover (Lost Ball),51.0,34.0,15 Collin Madson > Post-Up > Right Block > Left Shoulder > Dribble Move > Defense Commits > Turnover,
 Lawrence Vikings,2025-12-10,305,H2,16:18 (H2),Lawrence Vikings,Nicholas Gouriotis,steal,Nicholas Gouriotis Steals,51.0,34.0,,
-Lawrence Vikings,2025-12-10,306,H2,16:12 (H2),Lawrence Vikings,CJ Campbell,made_shot,CJ Campbell Makes 3PT Jump Shot,51.0,37.0,15 CJ Campbell > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,
+Lawrence Vikings,2025-12-10,306,H2,16:12 (H2),Lawrence Vikings,CJ Campbell,made_shot,CJ Campbell Makes 3PT Jump Shot,51.0,37.0,15 CJ Campbell > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,"IF YOU CAN, KEEP THE BALL TO ONE SIDE IN TRANSITION. PRIORITY IS GETTING IT STOPPED THOUGH"
 Lawrence Vikings,2025-12-10,307,H2,16:12 (H2),Lawrence Vikings,Nathan Valentine,assist,Nathan Valentine Assists,51.0,37.0,,
 Lawrence Vikings,2025-12-10,308,H2,15:40 (H2),UW-Whitewater,Joey Berezowitz,missed_shot,Joey Berezowitz Misses 2PT Layup (Blocked),51.0,37.0,22 Joey Berezowitz > Spot-Up > Drives Left > To Basket > Miss 2 Pts,
 Lawrence Vikings,2025-12-10,309,H2,15:40 (H2),Lawrence Vikings,Casey Schoenecker,block,Casey Schoenecker Blocks,51.0,37.0,,
 Lawrence Vikings,2025-12-10,310,H2,15:40 (H2),Lawrence Vikings,CJ Campbell,rebound_defensive,CJ Campbell Defensive Rebound,51.0,37.0,,
 Lawrence Vikings,2025-12-10,311,H2,15:32 (H2),UW-Whitewater,Jake Quast,foul,Jake Quast Commits Personal Foul,51.0,37.0,3 Nathan Valentine > Transition > Ballhandler > To Basket > Foul,
-Lawrence Vikings,2025-12-10,312,H2,15:32 (H2),Lawrence Vikings,Nathan Valentine,free_throw_made,Nathan Valentine Makes Free Throw (1 of 2),51.0,38.0,3 Nathan Valentine > P&R Ball Handler > Right P&R > Side > Go Away from Pick > To Basket > Make 2 Pts Foul > 1 Pts,
-Lawrence Vikings,2025-12-10,313,H2,15:32 (H2),Lawrence Vikings,Nathan Valentine,free_throw_made,Nathan Valentine Makes Free Throw (2 of 2),51.0,39.0,3 Nathan Valentine > Non Possession > Free Throw,
+Lawrence Vikings,2025-12-10,312,H2,15:32 (H2),Lawrence Vikings,Nathan Valentine,free_throw_made,Nathan Valentine Makes Free Throw (1 of 2),51.0,38.0,3 Nathan Valentine > P&R Ball Handler > Right P&R > Side > Go Away from Pick > To Basket > Make 2 Pts Foul > 1 Pts,"TRANSITION DEF. = FLOOD THE PAINT, WALL STRAIGHT UP"
+Lawrence Vikings,2025-12-10,313,H2,15:32 (H2),Lawrence Vikings,Nathan Valentine,free_throw_made,Nathan Valentine Makes Free Throw (2 of 2),51.0,39.0,3 Nathan Valentine > Non Possession > Free Throw,"TRANSITION DEF. = FLOOD THE PAINT, WALL STRAIGHT UP"
 Lawrence Vikings,2025-12-10,314,H2,15:32 (H2),Lawrence Vikings,Hogan Demovsky,sub_out,Hogan Demovsky Subs Out,51.0,39.0,,
 Lawrence Vikings,2025-12-10,315,H2,15:32 (H2),Lawrence Vikings,Nicholas Gouriotis,sub_out,Nicholas Gouriotis Subs Out,51.0,39.0,,
 Lawrence Vikings,2025-12-10,316,H2,15:32 (H2),Lawrence Vikings,Cameron Nash,sub_in,Cameron Nash Subs In,51.0,39.0,,
@@ -2801,10 +2801,10 @@ Lawrence Vikings,2025-12-10,319,H2,15:30 (H2),Lawrence Vikings,Caleb Nash,sub_in
 Lawrence Vikings,2025-12-10,320,H2,15:09 (H2),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 3PT Jump Shot,54.0,39.0,15 Collin Madson > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,
 Lawrence Vikings,2025-12-10,321,H2,15:09 (H2),UW-Whitewater,Joey Berezowitz,assist,Joey Berezowitz Assists,54.0,39.0,,
 Lawrence Vikings,2025-12-10,322,H2,15:07 (H2),UW-Whitewater,Wis.-Whitewater,timeout,Wis.-Whitewater Timeout,54.0,39.0,,
-Lawrence Vikings,2025-12-10,323,H2,14:55 (H2),Lawrence Vikings,Caleb Nash,missed_shot,Caleb Nash Misses 2PT Layup,54.0,39.0,4 Caleb Nash > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,
+Lawrence Vikings,2025-12-10,323,H2,14:55 (H2),Lawrence Vikings,Caleb Nash,missed_shot,Caleb Nash Misses 2PT Layup,54.0,39.0,4 Caleb Nash > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,BALL SCREEN DEF
 Lawrence Vikings,2025-12-10,324,H2,14:52 (H2),UW-Whitewater,Jake Quast,rebound_defensive,Jake Quast Defensive Rebound,54.0,39.0,,
 Lawrence Vikings,2025-12-10,325,H2,14:43 (H2),UW-Whitewater,Rashad Rogers,turnover,Rashad Rogers Turnover (Bad Pass),54.0,39.0,35 Rashad Rogers > No Play Type > Turnover,
-Lawrence Vikings,2025-12-10,326,H2,14:30 (H2),Lawrence Vikings,Cameron Nash,missed_shot,Cameron Nash Misses 3PT Jump Shot,54.0,39.0,4 Caleb Nash > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 5 Cameron Nash > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,
+Lawrence Vikings,2025-12-10,326,H2,14:30 (H2),Lawrence Vikings,Cameron Nash,missed_shot,Cameron Nash Misses 3PT Jump Shot,54.0,39.0,4 Caleb Nash > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 5 Cameron Nash > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,BALL SCREEN DEF
 Lawrence Vikings,2025-12-10,327,H2,14:27 (H2),UW-Whitewater,Jake Quast,rebound_defensive,Jake Quast Defensive Rebound,54.0,39.0,,
 Lawrence Vikings,2025-12-10,328,H2,13:59 (H2),UW-Whitewater,Kelton McEwen,missed_shot,Kelton McEwen Misses 3PT Jump Shot,54.0,39.0,2 Kelton Mcewen > ISO > Right > Early Jumper > Dribble Jumper > Long/3pt > Miss 3 Pts,
 Lawrence Vikings,2025-12-10,329,H2,13:58 (H2),UW-Whitewater,Jake Quast,rebound_offensive,Jake Quast Offensive Rebound,54.0,39.0,,
@@ -2815,18 +2815,18 @@ Lawrence Vikings,2025-12-10,333,H2,13:58 (H2),Lawrence Vikings,Caleb Nash,sub_ou
 Lawrence Vikings,2025-12-10,334,H2,13:58 (H2),Lawrence Vikings,Cameron Nash,sub_out,Cameron Nash Subs Out,56.0,39.0,,
 Lawrence Vikings,2025-12-10,335,H2,13:58 (H2),Lawrence Vikings,Jackson Weber,sub_in,Jackson Weber Subs In,56.0,39.0,,
 Lawrence Vikings,2025-12-10,336,H2,13:58 (H2),Lawrence Vikings,Nicholas Gouriotis,sub_in,Nicholas Gouriotis Subs In,56.0,39.0,,
-Lawrence Vikings,2025-12-10,337,H2,13:39 (H2),Lawrence Vikings,Casey Schoenecker,made_shot,Casey Schoenecker Makes 2PT Layup,56.0,41.0,20 Casey Schoenecker > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts Foul > 1 Pts,
+Lawrence Vikings,2025-12-10,337,H2,13:39 (H2),Lawrence Vikings,Casey Schoenecker,made_shot,Casey Schoenecker Makes 2PT Layup,56.0,41.0,20 Casey Schoenecker > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts Foul > 1 Pts,"GET TALL & NARROW, KEEP WIDE FEET TO MAKE THE FINISHING ANGLE MORE DIFFICULT"
 Lawrence Vikings,2025-12-10,338,H2,13:39 (H2),UW-Whitewater,Rashad Rogers,foul,Rashad Rogers Commits Personal Foul,56.0,41.0,,
-Lawrence Vikings,2025-12-10,339,H2,13:39 (H2),Lawrence Vikings,Casey Schoenecker,free_throw_made,Casey Schoenecker Makes Free Throw (1 of 1),56.0,42.0,20 Casey Schoenecker > Non Possession > Free Throw,
+Lawrence Vikings,2025-12-10,339,H2,13:39 (H2),Lawrence Vikings,Casey Schoenecker,free_throw_made,Casey Schoenecker Makes Free Throw (1 of 1),56.0,42.0,20 Casey Schoenecker > Non Possession > Free Throw,"GET TALL & NARROW, KEEP WIDE FEET TO MAKE THE FINISHING ANGLE MORE DIFFICULT"
 Lawrence Vikings,2025-12-10,340,H2,13:39 (H2),Lawrence Vikings,CJ Campbell,sub_out,CJ Campbell Subs Out,56.0,42.0,,
 Lawrence Vikings,2025-12-10,341,H2,13:39 (H2),Lawrence Vikings,Hogan Demovsky,sub_in,Hogan Demovsky Subs In,56.0,42.0,,
 Lawrence Vikings,2025-12-10,342,H2,13:22 (H2),UW-Whitewater,Joey Berezowitz,missed_shot,Joey Berezowitz Misses 3PT Jump Shot,56.0,42.0,15 Collin Madson > Post-Up > Right Block > Defense Commits > Ball Delivered > 22 Joey Berezowitz > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
 Lawrence Vikings,2025-12-10,343,H2,13:17 (H2),Lawrence Vikings,Casey Schoenecker,rebound_defensive,Casey Schoenecker Defensive Rebound,56.0,42.0,,
-Lawrence Vikings,2025-12-10,344,H2,13:06 (H2),Lawrence Vikings,Jackson Weber,made_shot,Jackson Weber Makes 2PT Layup,56.0,44.0,11 Jackson Weber > P&R Ball Handler > Right P&R > Side > Go Away from Pick > To Basket > Make 2 Pts,
+Lawrence Vikings,2025-12-10,344,H2,13:06 (H2),Lawrence Vikings,Jackson Weber,made_shot,Jackson Weber Makes 2PT Layup,56.0,44.0,11 Jackson Weber > P&R Ball Handler > Right P&R > Side > Go Away from Pick > To Basket > Make 2 Pts,ALLOW A BASELINE DRIVE
 Lawrence Vikings,2025-12-10,345,H2,12:56 (H2),Lawrence Vikings,Jackson Weber,foul,Jackson Weber Commits Personal Foul,56.0,44.0,22 Joey Berezowitz > Non Possession > Non Shooting Foul,
 Lawrence Vikings,2025-12-10,346,H2,12:56 (H2),UW-Whitewater,Rashad Rogers,sub_out,Rashad Rogers Subs Out,56.0,44.0,,
 Lawrence Vikings,2025-12-10,347,H2,12:56 (H2),UW-Whitewater,Richie Warren,sub_in,Richie Warren Subs In,56.0,44.0,,
-Lawrence Vikings,2025-12-10,348,H2,12:50 (H2),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT Layup,58.0,44.0,15 Collin Madson > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Make 2 Pts,
+Lawrence Vikings,2025-12-10,348,H2,12:50 (H2),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT Layup,58.0,44.0,15 Collin Madson > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Make 2 Pts,GOOD BALANCE OFF OF TWO.
 Lawrence Vikings,2025-12-10,349,H2,12:34 (H2),UW-Whitewater,Richie Warren,foul,Richie Warren Commits Personal Foul,58.0,44.0,20 Casey Schoenecker > Transition > Left Wing > To Basket > Foul,
 Lawrence Vikings,2025-12-10,350,H2,12:34 (H2),Lawrence Vikings,Casey Schoenecker,free_throw_missed,Casey Schoenecker Misses Free Throw (1 of 2),58.0,44.0,20 Casey Schoenecker > Non Possession > Free Throw,
 Lawrence Vikings,2025-12-10,351,H2,12:34 (H2),Lawrence Vikings,Lawrence,team_deadball_rebound_offensive,Lawrence Offensive Deadball Rebound,58.0,44.0,,
@@ -2836,7 +2836,7 @@ Lawrence Vikings,2025-12-10,354,H2,12:34 (H2),UW-Whitewater,Richie Warren,sub_ou
 Lawrence Vikings,2025-12-10,355,H2,12:34 (H2),UW-Whitewater,Brock Marino,sub_in,Brock Marino Subs In,58.0,44.0,,
 Lawrence Vikings,2025-12-10,356,H2,12:13 (H2),UW-Whitewater,Jake Quast,made_shot,Jake Quast Makes 3PT Jump Shot,61.0,44.0,12 Jake Quast > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,
 Lawrence Vikings,2025-12-10,357,H2,12:13 (H2),UW-Whitewater,Joey Berezowitz,assist,Joey Berezowitz Assists,61.0,44.0,,
-Lawrence Vikings,2025-12-10,358,H2,11:43 (H2),Lawrence Vikings,Casey Schoenecker,missed_shot,Casey Schoenecker Misses 2PT Layup,61.0,44.0,20 Casey Schoenecker > Transition > Leak Outs > To Basket > Miss 2 Pts,
+Lawrence Vikings,2025-12-10,358,H2,11:43 (H2),Lawrence Vikings,Casey Schoenecker,missed_shot,Casey Schoenecker Misses 2PT Layup,61.0,44.0,20 Casey Schoenecker > Transition > Leak Outs > To Basket > Miss 2 Pts,OREB BACK CUTS US & WE LEAVE OUR FEET
 Lawrence Vikings,2025-12-10,359,H2,11:40 (H2),Lawrence Vikings,Nicholas Gouriotis,rebound_offensive,Nicholas Gouriotis Offensive Rebound,61.0,44.0,,
 Lawrence Vikings,2025-12-10,360,H2,11:40 (H2),Lawrence Vikings,Nicholas Gouriotis,made_shot,Nicholas Gouriotis Makes 2PT,61.0,46.0,,
 Lawrence Vikings,2025-12-10,361,H2,11:40 (H2),Lawrence Vikings,Lawrence,timeout,Lawrence Timeout,61.0,46.0,,
@@ -2852,7 +2852,7 @@ Lawrence Vikings,2025-12-10,370,H2,10:49 (H2),UW-Whitewater,Jake Quast,block,Jak
 Lawrence Vikings,2025-12-10,371,H2,10:44 (H2),UW-Whitewater,Jake Quast,rebound_defensive,Jake Quast Defensive Rebound,63.0,46.0,,
 Lawrence Vikings,2025-12-10,372,H2,10:39 (H2),UW-Whitewater,Kelton McEwen,made_shot,Kelton McEwen Makes 3PT Jump Shot,66.0,46.0,2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,
 Lawrence Vikings,2025-12-10,373,H2,10:39 (H2),UW-Whitewater,JR Lukenbill,assist,JR Lukenbill Assists,66.0,46.0,,
-Lawrence Vikings,2025-12-10,374,H2,10:18 (H2),Lawrence Vikings,Nolan Koch,missed_shot,Nolan Koch Misses 2PT Layup,66.0,46.0,21 Nolan Koch > ISO > Right > Drives Right > To Basket > Miss 2 Pts,
+Lawrence Vikings,2025-12-10,374,H2,10:18 (H2),Lawrence Vikings,Nolan Koch,missed_shot,Nolan Koch Misses 2PT Layup,66.0,46.0,21 Nolan Koch > ISO > Right > Drives Right > To Basket > Miss 2 Pts,"SPLIT BOTTOM FOOT, ALLOW BASELINE DRIVE"
 Lawrence Vikings,2025-12-10,375,H2,10:15 (H2),UW-Whitewater,Collin Madson,rebound_defensive,Collin Madson Defensive Rebound,66.0,46.0,,
 Lawrence Vikings,2025-12-10,376,H2,10:10 (H2),Lawrence Vikings,Nicolas Manzanera,foul,Nicolas Manzanera Commits Personal Foul,66.0,46.0,2 Kelton Mcewen > Non Possession > Non Shooting Foul,
 Lawrence Vikings,2025-12-10,377,H2,10:10 (H2),Lawrence Vikings,Nicolas Manzanera,sub_out,Nicolas Manzanera Subs Out,66.0,46.0,,
@@ -2861,8 +2861,8 @@ Lawrence Vikings,2025-12-10,379,H2,10:00 (H2),UW-Whitewater,Jake Quast,missed_sh
 Lawrence Vikings,2025-12-10,380,H2,09:56 (H2),UW-Whitewater,JR Lukenbill,rebound_offensive,JR Lukenbill Offensive Rebound,66.0,46.0,,
 Lawrence Vikings,2025-12-10,381,H2,09:56 (H2),UW-Whitewater,JR Lukenbill,made_shot,JR Lukenbill Makes 2PT,68.0,46.0,11 Jr Lukenbill > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,
 Lawrence Vikings,2025-12-10,382,H2,09:39 (H2),UW-Whitewater,Joey Berezowitz,foul,Joey Berezowitz Commits Personal Foul,68.0,46.0,3 Nathan Valentine > Post-Up > Left Block > Left Shoulder > Dribble Move > Foul,
-Lawrence Vikings,2025-12-10,383,H2,09:39 (H2),Lawrence Vikings,Nathan Valentine,free_throw_made,Nathan Valentine Makes Free Throw (2 of 2),68.0,47.0,3 Nathan Valentine > Non Possession > Free Throw,
-Lawrence Vikings,2025-12-10,384,H2,09:39 (H2),Lawrence Vikings,Nathan Valentine,free_throw_made,Nathan Valentine Makes Free Throw (1 of 2),68.0,48.0,3 Nathan Valentine > Non Possession > Free Throw,
+Lawrence Vikings,2025-12-10,383,H2,09:39 (H2),Lawrence Vikings,Nathan Valentine,free_throw_made,Nathan Valentine Makes Free Throw (2 of 2),68.0,47.0,3 Nathan Valentine > Non Possession > Free Throw,SLAP/RACH = FOUL
+Lawrence Vikings,2025-12-10,384,H2,09:39 (H2),Lawrence Vikings,Nathan Valentine,free_throw_made,Nathan Valentine Makes Free Throw (1 of 2),68.0,48.0,3 Nathan Valentine > Non Possession > Free Throw,SLAP/RACH = FOUL
 Lawrence Vikings,2025-12-10,385,H2,09:39 (H2),Lawrence Vikings,Nolan Koch,sub_out,Nolan Koch Subs Out,68.0,48.0,,
 Lawrence Vikings,2025-12-10,386,H2,09:39 (H2),Lawrence Vikings,Matai Edgecombe,sub_in,Matai Edgecombe Subs In,68.0,48.0,,
 Lawrence Vikings,2025-12-10,387,H2,09:27 (H2),UW-Whitewater,Kelton McEwen,made_shot,Kelton McEwen Makes 3PT Jump Shot,71.0,48.0,2 Kelton Mcewen > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,
@@ -2873,18 +2873,18 @@ Lawrence Vikings,2025-12-10,391,H2,09:00 (H2),UW-Whitewater,Jake Quast,missed_sh
 Lawrence Vikings,2025-12-10,392,H2,08:58 (H2),Lawrence Vikings,Hogan Demovsky,rebound_defensive,Hogan Demovsky Defensive Rebound,71.0,48.0,,
 Lawrence Vikings,2025-12-10,393,H2,08:53 (H2),Lawrence Vikings,Nicholas Gouriotis,turnover,Nicholas Gouriotis Turnover (Lost Ball),71.0,48.0,22 Nicholas Gouriotis > Transition > First Middle > Turnover,
 Lawrence Vikings,2025-12-10,394,H2,08:53 (H2),UW-Whitewater,Collin Madson,steal,Collin Madson Steals,71.0,48.0,,
-Lawrence Vikings,2025-12-10,395,H2,08:37 (H2),UW-Whitewater,Jake Quast,foul,Jake Quast Commits Offensive Foul,71.0,48.0,,
-Lawrence Vikings,2025-12-10,396,H2,08:37 (H2),UW-Whitewater,Jake Quast,turnover,Jake Quast Turnover (Offensive Foul),71.0,48.0,12 Jake Quast > No Play Type > Turnover,
+Lawrence Vikings,2025-12-10,395,H2,08:37 (H2),UW-Whitewater,Jake Quast,foul,Jake Quast Commits Offensive Foul,71.0,48.0,,"SLIDING, MUST GIVE DEFENDER ONE STEP"
+Lawrence Vikings,2025-12-10,396,H2,08:37 (H2),UW-Whitewater,Jake Quast,turnover,Jake Quast Turnover (Offensive Foul),71.0,48.0,12 Jake Quast > No Play Type > Turnover,"SLIDING, MUST GIVE DEFENDER ONE STEP"
 Lawrence Vikings,2025-12-10,397,H2,08:23 (H2),Lawrence Vikings,,jump_ball_held,Jump Ball (Held Ball),71.0,48.0,,
 Lawrence Vikings,2025-12-10,398,H2,08:23 (H2),UW-Whitewater,,jump_ball_held,Jump Ball (Held Ball),71.0,48.0,,
 Lawrence Vikings,2025-12-10,399,H2,08:23 (H2),Lawrence Vikings,Nicholas Gouriotis,sub_out,Nicholas Gouriotis Subs Out,71.0,48.0,,
 Lawrence Vikings,2025-12-10,400,H2,08:23 (H2),Lawrence Vikings,Casey Schoenecker,sub_in,Casey Schoenecker Subs In,71.0,48.0,,
 Lawrence Vikings,2025-12-10,401,H2,08:23 (H2),UW-Whitewater,Kelton McEwen,foul,Kelton McEwen Commits Personal Foul,71.0,48.0,10 Hogan Demovsky > No Play Type > Foul,
-Lawrence Vikings,2025-12-10,402,H2,08:23 (H2),Lawrence Vikings,Hogan Demovsky,free_throw_made,Hogan Demovsky Makes Free Throw (1 of 2),71.0,49.0,10 Hogan Demovsky > Non Possession > Free Throw,
-Lawrence Vikings,2025-12-10,403,H2,08:23 (H2),Lawrence Vikings,Hogan Demovsky,free_throw_missed,Hogan Demovsky Misses Free Throw (2 of 2),71.0,49.0,10 Hogan Demovsky > Non Possession > Free Throw,
+Lawrence Vikings,2025-12-10,402,H2,08:23 (H2),Lawrence Vikings,Hogan Demovsky,free_throw_made,Hogan Demovsky Makes Free Throw (1 of 2),71.0,49.0,10 Hogan Demovsky > Non Possession > Free Throw,NEED TO SHOW HANDS WHEN PRESSING UP/FIGHTING THROUGH
+Lawrence Vikings,2025-12-10,403,H2,08:23 (H2),Lawrence Vikings,Hogan Demovsky,free_throw_missed,Hogan Demovsky Misses Free Throw (2 of 2),71.0,49.0,10 Hogan Demovsky > Non Possession > Free Throw,NEED TO SHOW HANDS WHEN PRESSING UP/FIGHTING THROUGH
 Lawrence Vikings,2025-12-10,404,H2,08:23 (H2),UW-Whitewater,Collin Madson,rebound_defensive,Collin Madson Defensive Rebound,71.0,49.0,,
 Lawrence Vikings,2025-12-10,405,H2,08:07 (H2),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT Pull Up Jump Shot,73.0,49.0,15 Collin Madson > Hand Off > From Dribble > Left > Dribble Jumper > Short to < 17' > Make 2 Pts,
-Lawrence Vikings,2025-12-10,406,H2,07:50 (H2),Lawrence Vikings,CJ Campbell,made_shot,CJ Campbell Makes 2PT Layup,73.0,51.0,15 CJ Campbell > Spot-Up > Drives Left > To Basket > Make 2 Pts,
+Lawrence Vikings,2025-12-10,406,H2,07:50 (H2),Lawrence Vikings,CJ Campbell,made_shot,CJ Campbell Makes 2PT Layup,73.0,51.0,15 CJ Campbell > Spot-Up > Drives Left > To Basket > Make 2 Pts,GAMBLE
 Lawrence Vikings,2025-12-10,407,H2,07:46 (H2),Lawrence Vikings,CJ Campbell,foul,CJ Campbell Commits Technical Foul,73.0,51.0,,
 Lawrence Vikings,2025-12-10,408,H2,07:46 (H2),UW-Whitewater,Collin Madson,free_throw_made,Collin Madson Makes Free Throw (1 of 2),74.0,51.0,15 Collin Madson > Non Possession > Free Throw,
 Lawrence Vikings,2025-12-10,409,H2,07:46 (H2),UW-Whitewater,Collin Madson,free_throw_made,Collin Madson Makes Free Throw (2 of 2),75.0,51.0,15 Collin Madson > Non Possession > Free Throw,
@@ -2898,11 +2898,11 @@ Lawrence Vikings,2025-12-10,416,H2,07:07 (H2),Lawrence Vikings,Casey Schoenecker
 Lawrence Vikings,2025-12-10,417,H2,07:07 (H2),Lawrence Vikings,Casey Schoenecker,turnover,Casey Schoenecker Turnover (Offensive Foul),78.0,51.0,20 Casey Schoenecker > Post-Up > Left Block > Left Shoulder > Dribble Move > Defense Commits > Turnover,
 Lawrence Vikings,2025-12-10,418,H2,07:07 (H2),UW-Whitewater,Collin Madson,sub_out,Collin Madson Subs Out,78.0,51.0,,
 Lawrence Vikings,2025-12-10,419,H2,07:07 (H2),UW-Whitewater,Brock Marino,sub_in,Brock Marino Subs In,78.0,51.0,,
-Lawrence Vikings,2025-12-10,420,H2,06:57 (H2),UW-Whitewater,Brock Marino,foul,Brock Marino Commits Offensive Foul,78.0,51.0,5 Cameron Nash > No Play Type > Foul,
-Lawrence Vikings,2025-12-10,421,H2,06:57 (H2),UW-Whitewater,Brock Marino,turnover,Brock Marino Turnover (Offensive Foul),78.0,51.0,21 Brock Marino > No Play Type > Turnover,
+Lawrence Vikings,2025-12-10,420,H2,06:57 (H2),UW-Whitewater,Brock Marino,foul,Brock Marino Commits Offensive Foul,78.0,51.0,5 Cameron Nash > No Play Type > Foul,ITS THE LEAN
+Lawrence Vikings,2025-12-10,421,H2,06:57 (H2),UW-Whitewater,Brock Marino,turnover,Brock Marino Turnover (Offensive Foul),78.0,51.0,21 Brock Marino > No Play Type > Turnover,ITS THE LEAN
 Lawrence Vikings,2025-12-10,422,H2,06:33 (H2),Lawrence Vikings,Jackson Weber,missed_shot,Jackson Weber Misses 2PT Jump Shot,78.0,51.0,11 Jackson Weber > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > To Basket > Miss 2 Pts,
 Lawrence Vikings,2025-12-10,423,H2,06:33 (H2),UW-Whitewater,Wis.-Whitewater,team_deadball_rebound_defensive,Wis.-Whitewater Defensive Deadball Rebound,78.0,51.0,,
-Lawrence Vikings,2025-12-10,424,H2,06:13 (H2),UW-Whitewater,Brock Marino,made_shot,Brock Marino Makes 2PT Layup,80.0,51.0,21 Brock Marino > Post-Up > Right Block > Left Shoulder > Dribble Move > To Hook > Make 2 Pts,
+Lawrence Vikings,2025-12-10,424,H2,06:13 (H2),UW-Whitewater,Brock Marino,made_shot,Brock Marino Makes 2PT Layup,80.0,51.0,21 Brock Marino > Post-Up > Right Block > Left Shoulder > Dribble Move > To Hook > Make 2 Pts,"BETTER PATIENCE, NOTICE HE STILL DOESN'T ALLOW US INTO THE CIRCLE"
 Lawrence Vikings,2025-12-10,425,H2,05:57 (H2),Lawrence Vikings,Jackson Weber,turnover,Jackson Weber Turnover (Bad Pass),80.0,51.0,11 Jackson Weber > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Turnover,
 Lawrence Vikings,2025-12-10,426,H2,05:57 (H2),UW-Whitewater,JR Lukenbill,steal,JR Lukenbill Steals,80.0,51.0,,
 Lawrence Vikings,2025-12-10,427,H2,05:54 (H2),UW-Whitewater,JR Lukenbill,made_shot,JR Lukenbill Makes 2PT Layup,82.0,51.0,11 Jr Lukenbill > Transition > Ballhandler > To Basket > Make 2 Pts Foul > 0 Pts,
@@ -2925,15 +2925,15 @@ Lawrence Vikings,2025-12-10,443,H2,05:54 (H2),Lawrence Vikings,Caleb Nash,reboun
 Lawrence Vikings,2025-12-10,444,H2,05:26 (H2),Lawrence Vikings,Matai Edgecombe,missed_shot,Matai Edgecombe Misses 2PT Layup,82.0,51.0,14 Landon Key > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 1 Matai Edgecombe > Spot-Up > Drives Right > To Basket > Miss 2 Pts,
 Lawrence Vikings,2025-12-10,445,H2,05:22 (H2),UW-Whitewater,Brock Marino,rebound_defensive,Brock Marino Defensive Rebound,82.0,51.0,,
 Lawrence Vikings,2025-12-10,446,H2,04:50 (H2),Lawrence Vikings,Matai Edgecombe,foul,Matai Edgecombe Commits Personal Foul,82.0,51.0,21 Brock Marino > Post-Up > Right Block > Foul,
-Lawrence Vikings,2025-12-10,447,H2,04:50 (H2),UW-Whitewater,Brock Marino,free_throw_missed,Brock Marino Misses Free Throw (1 of 2),82.0,51.0,21 Brock Marino > Non Possession > Free Throw,
+Lawrence Vikings,2025-12-10,447,H2,04:50 (H2),UW-Whitewater,Brock Marino,free_throw_missed,Brock Marino Misses Free Throw (1 of 2),82.0,51.0,21 Brock Marino > Non Possession > Free Throw,SMASH BACK INTO DEFENDER
 Lawrence Vikings,2025-12-10,448,H2,04:50 (H2),UW-Whitewater,Wis.-Whitewater,team_deadball_rebound_offensive,Wis.-Whitewater Offensive Deadball Rebound,82.0,51.0,,
-Lawrence Vikings,2025-12-10,449,H2,04:50 (H2),UW-Whitewater,Brock Marino,free_throw_missed,Brock Marino Misses Free Throw (2 of 2),82.0,51.0,21 Brock Marino > Non Possession > Free Throw,
+Lawrence Vikings,2025-12-10,449,H2,04:50 (H2),UW-Whitewater,Brock Marino,free_throw_missed,Brock Marino Misses Free Throw (2 of 2),82.0,51.0,21 Brock Marino > Non Possession > Free Throw,SMASH BACK INTO DEFENDER
 Lawrence Vikings,2025-12-10,450,H2,04:50 (H2),UW-Whitewater,Kelton McEwen,sub_out,Kelton McEwen Subs Out,82.0,51.0,,
 Lawrence Vikings,2025-12-10,451,H2,04:50 (H2),UW-Whitewater,Jake Quast,sub_out,Jake Quast Subs Out,82.0,51.0,,
 Lawrence Vikings,2025-12-10,452,H2,04:50 (H2),UW-Whitewater,Agape Keyes Jr.,sub_in,Agape Keyes Jr. Subs In,82.0,51.0,,
 Lawrence Vikings,2025-12-10,453,H2,04:50 (H2),UW-Whitewater,Darius Chestnut,sub_in,Darius Chestnut Subs In,82.0,51.0,,
 Lawrence Vikings,2025-12-10,454,H2,04:50 (H2),Lawrence Vikings,Lawrence,team_deadball_rebound_defensive,Lawrence Defensive Deadball Rebound,82.0,51.0,,
-Lawrence Vikings,2025-12-10,455,H2,04:50 (H2),UW-Whitewater,Brock Marino,sub_out,Brock Marino Subs Out,82.0,51.0,,
+Lawrence Vikings,2025-12-10,455,H2,04:50 (H2),UW-Whitewater,Brock Marino,sub_out,Brock Marino Subs Out,82.0,51.0,,SMASH BACK INTO DEFENDER
 Lawrence Vikings,2025-12-10,456,H2,04:50 (H2),UW-Whitewater,Rashad Rogers,sub_in,Rashad Rogers Subs In,82.0,51.0,,
 Lawrence Vikings,2025-12-10,457,H2,04:25 (H2),UW-Whitewater,Isaiah Robinson,foul,Isaiah Robinson Commits Personal Foul,82.0,51.0,5 Cameron Nash > Hand Off > From Dribble > Left > To Basket > Foul,
 Lawrence Vikings,2025-12-10,458,H2,04:25 (H2),Lawrence Vikings,Nolan Koch,free_throw_made,Nolan Koch Makes Free Throw (1 of 2),82.0,52.0,21 Nolan Koch > Non Possession > Free Throw,
@@ -2998,7 +2998,7 @@ Carroll (WI) Pioneers,2025-12-13,8,H1,19:15 (H1),Carroll (WI) Pioneers,Michael M
 Carroll (WI) Pioneers,2025-12-13,9,H1,19:15 (H1),UW-Whitewater,Collin Madson,free_throw_made,Collin Madson Makes Free Throw (1 of 2),1.0,1.0,15 Collin Madson > Non Possession > Free Throw,
 Carroll (WI) Pioneers,2025-12-13,10,H1,19:14 (H1),UW-Whitewater,Collin Madson,free_throw_missed,Collin Madson Misses Free Throw (2 of 2),1.0,1.0,15 Collin Madson > Non Possession > Free Throw,
 Carroll (WI) Pioneers,2025-12-13,11,H1,19:14 (H1),Carroll (WI) Pioneers,Jacob Naber,rebound_defensive,Jacob Naber Defensive Rebound,1.0,1.0,,
-Carroll (WI) Pioneers,2025-12-13,12,H1,18:56 (H1),Carroll (WI) Pioneers,Peyton McKenna,made_shot,Peyton McKenna Makes 3PT Jump Shot,1.0,4.0,4 Michael McNabb > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 12 Peyton McKenna > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,
+Carroll (WI) Pioneers,2025-12-13,12,H1,18:56 (H1),Carroll (WI) Pioneers,Peyton McKenna,made_shot,Peyton McKenna Makes 3PT Jump Shot,1.0,4.0,4 Michael McNabb > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 12 Peyton McKenna > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,Bottom man = tag | Top man = First Pass
 Carroll (WI) Pioneers,2025-12-13,13,H1,18:56 (H1),Carroll (WI) Pioneers,Jacob Naber,assist,Jacob Naber Assists,1.0,4.0,,
 Carroll (WI) Pioneers,2025-12-13,14,H1,18:35 (H1),UW-Whitewater,Brock Marino,missed_shot,Brock Marino Misses 2PT Layup (Blocked),1.0,4.0,15 Collin Madson > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Brock Marino > P&R Roll Man > Slips the Pick > To Basket > Miss 2 Pts,
 Carroll (WI) Pioneers,2025-12-13,15,H1,18:35 (H1),Carroll (WI) Pioneers,Lamar Smith,block,Lamar Smith Blocks,1.0,4.0,,
@@ -3015,19 +3015,19 @@ Carroll (WI) Pioneers,2025-12-13,25,H1,17:46 (H1),Carroll (WI) Pioneers,Lamar Sm
 Carroll (WI) Pioneers,2025-12-13,26,H1,17:24 (H1),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT,5.0,6.0,15 Collin Madson > Post-Up > Right Block > Right Shoulder > Dribble Move > To Jumper > Make 2 Pts,
 Carroll (WI) Pioneers,2025-12-13,27,H1,17:04 (H1),Carroll (WI) Pioneers,Lamar Smith,made_shot,Lamar Smith Makes 2PT Driving Layup,5.0,8.0,44 Lamar Smith > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts,
 Carroll (WI) Pioneers,2025-12-13,28,H1,16:52 (H1),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT Driving Layup,7.0,8.0,15 Collin Madson > P&R Ball Handler > Right P&R > Side > Go Away from Pick > To Basket > Make 2 Pts,
-Carroll (WI) Pioneers,2025-12-13,29,H1,16:30 (H1),Carroll (WI) Pioneers,Michael McNabb,turnover,Michael McNabb Turnover (Bad Pass),7.0,8.0,4 Michael McNabb > No Play Type > Turnover,
+Carroll (WI) Pioneers,2025-12-13,29,H1,16:30 (H1),Carroll (WI) Pioneers,Michael McNabb,turnover,Michael McNabb Turnover (Bad Pass),7.0,8.0,4 Michael McNabb > No Play Type > Turnover,Good POST D...ACTIVE
 Carroll (WI) Pioneers,2025-12-13,30,H1,16:30 (H1),UW-Whitewater,Brock Marino,steal,Brock Marino Steals,7.0,8.0,,
-Carroll (WI) Pioneers,2025-12-13,31,H1,16:17 (H1),UW-Whitewater,Brock Marino,missed_shot,Brock Marino Misses 2PT Layup (Blocked),7.0,8.0,32 Luke Bara > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Brock Marino > P&R Roll Man > Slips the Pick > To Basket > Miss 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,31,H1,16:17 (H1),UW-Whitewater,Brock Marino,missed_shot,Brock Marino Misses 2PT Layup (Blocked),7.0,8.0,32 Luke Bara > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Brock Marino > P&R Roll Man > Slips the Pick > To Basket > Miss 2 Pts,GATHER FINISH
 Carroll (WI) Pioneers,2025-12-13,32,H1,16:17 (H1),Carroll (WI) Pioneers,Evan Bland,block,Evan Bland Blocks,7.0,8.0,,
 Carroll (WI) Pioneers,2025-12-13,33,H1,16:13 (H1),Carroll (WI) Pioneers,Michael McNabb,rebound_defensive,Michael McNabb Defensive Rebound,7.0,8.0,,
 Carroll (WI) Pioneers,2025-12-13,34,H1,16:08 (H1),UW-Whitewater,Collin Madson,foul,Collin Madson Commits Personal Foul,7.0,8.0,4 Michael McNabb > Non Possession > Non Shooting Foul,
 Carroll (WI) Pioneers,2025-12-13,35,H1,16:08 (H1),Carroll (WI) Pioneers,Evan Bland,sub_out,Evan Bland Subs Out,7.0,8.0,,
 Carroll (WI) Pioneers,2025-12-13,36,H1,16:08 (H1),Carroll (WI) Pioneers,Dennis Estepp,sub_in,Dennis Estepp Subs In,7.0,8.0,,
-Carroll (WI) Pioneers,2025-12-13,37,H1,16:00 (H1),Carroll (WI) Pioneers,Michael McNabb,turnover,Michael McNabb Turnover (Bad Pass),7.0,8.0,12 Peyton McKenna > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 4 Michael McNabb > Spot-Up > Drives Left > Turnover,
+Carroll (WI) Pioneers,2025-12-13,37,H1,16:00 (H1),Carroll (WI) Pioneers,Michael McNabb,turnover,Michael McNabb Turnover (Bad Pass),7.0,8.0,12 Peyton McKenna > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 4 Michael McNabb > Spot-Up > Drives Left > Turnover,STAYING ACTIVE ON TOP SIDE
 Carroll (WI) Pioneers,2025-12-13,38,H1,16:00 (H1),UW-Whitewater,Brock Marino,steal,Brock Marino Steals,7.0,8.0,,
 Carroll (WI) Pioneers,2025-12-13,39,H1,15:49 (H1),UW-Whitewater,Luke Bara,missed_shot,Luke Bara Misses 3PT Jump Shot,7.0,8.0,32 Luke Bara > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,
 Carroll (WI) Pioneers,2025-12-13,40,H1,15:46 (H1),Carroll (WI) Pioneers,Peyton McKenna,rebound_defensive,Peyton McKenna Defensive Rebound,7.0,8.0,,
-Carroll (WI) Pioneers,2025-12-13,41,H1,15:34 (H1),Carroll (WI) Pioneers,Dennis Estepp,missed_shot,Dennis Estepp Misses 3PT Jump Shot,7.0,8.0,33 Dennis Estepp > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,
+Carroll (WI) Pioneers,2025-12-13,41,H1,15:34 (H1),Carroll (WI) Pioneers,Dennis Estepp,missed_shot,Dennis Estepp Misses 3PT Jump Shot,7.0,8.0,33 Dennis Estepp > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,+TRANS. DEF | +EXECUTING SCOUT
 Carroll (WI) Pioneers,2025-12-13,42,H1,15:32 (H1),UW-Whitewater,Richie Warren,rebound_defensive,Richie Warren Defensive Rebound,7.0,8.0,,
 Carroll (WI) Pioneers,2025-12-13,43,H1,15:28 (H1),UW-Whitewater,Richie Warren,turnover,Richie Warren Turnover (Bad Pass),7.0,8.0,24 Richie Warren > Transition > Ballhandler > Turnover,
 Carroll (WI) Pioneers,2025-12-13,44,H1,15:28 (H1),Carroll (WI) Pioneers,Dennis Estepp,steal,Dennis Estepp Steals,7.0,8.0,,
@@ -3044,12 +3044,12 @@ Carroll (WI) Pioneers,2025-12-13,54,H1,15:24 (H1),UW-Whitewater,Jake Quast,sub_i
 Carroll (WI) Pioneers,2025-12-13,55,H1,15:24 (H1),Carroll (WI) Pioneers,Jimmy Tarjan,sub_in,Jimmy Tarjan Subs In,7.0,10.0,,
 Carroll (WI) Pioneers,2025-12-13,56,H1,14:57 (H1),UW-Whitewater,Collin Madson,missed_shot,Collin Madson Misses 2PT Pull Up Jump Shot,7.0,10.0,15 Collin Madson > Spot-Up > Drives Right > Dribble Jumper > Medium/17' to <3p > Miss 2 Pts,
 Carroll (WI) Pioneers,2025-12-13,57,H1,14:54 (H1),Carroll (WI) Pioneers,Lamar Smith,rebound_defensive,Lamar Smith Defensive Rebound,7.0,10.0,,
-Carroll (WI) Pioneers,2025-12-13,58,H1,14:34 (H1),Carroll (WI) Pioneers,Jacob Naber,made_shot,Jacob Naber Makes 2PT Layup,7.0,12.0,44 Lamar Smith > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 41 Jacob Naber > P&R Roll Man > Slips the Pick > To Basket > Make 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,58,H1,14:34 (H1),Carroll (WI) Pioneers,Jacob Naber,made_shot,Jacob Naber Makes 2PT Layup,7.0,12.0,44 Lamar Smith > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 41 Jacob Naber > P&R Roll Man > Slips the Pick > To Basket > Make 2 Pts,+TRANS. DEF | -BALL SCREEN DEF & TAG
 Carroll (WI) Pioneers,2025-12-13,59,H1,14:34 (H1),Carroll (WI) Pioneers,Lamar Smith,assist,Lamar Smith Assists,7.0,12.0,,
-Carroll (WI) Pioneers,2025-12-13,60,H1,14:10 (H1),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT Driving Layup,9.0,12.0,32 Luke Bara > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 15 Collin Madson > Spot-Up > Drives Left > To Basket > Make 2 Pts,
-Carroll (WI) Pioneers,2025-12-13,61,H1,14:03 (H1),Carroll (WI) Pioneers,Jacob Naber,made_shot,Jacob Naber Makes 2PT Layup,9.0,14.0,41 Jacob Naber > Transition > Leak Outs > To Basket > Make 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,60,H1,14:10 (H1),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT Driving Layup,9.0,12.0,32 Luke Bara > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 15 Collin Madson > Spot-Up > Drives Left > To Basket > Make 2 Pts,SURVEY THE FLOOR (OPPOSITE SIDE)
+Carroll (WI) Pioneers,2025-12-13,61,H1,14:03 (H1),Carroll (WI) Pioneers,Jacob Naber,made_shot,Jacob Naber Makes 2PT Layup,9.0,14.0,41 Jacob Naber > Transition > Leak Outs > To Basket > Make 2 Pts,-TRANS. DEF
 Carroll (WI) Pioneers,2025-12-13,62,H1,14:03 (H1),Carroll (WI) Pioneers,Dennis Estepp,assist,Dennis Estepp Assists,9.0,14.0,,
-Carroll (WI) Pioneers,2025-12-13,63,H1,13:31 (H1),UW-Whitewater,Jake Quast,missed_shot,Jake Quast Misses 3PT Jump Shot,9.0,14.0,12 Jake Quast > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
+Carroll (WI) Pioneers,2025-12-13,63,H1,13:31 (H1),UW-Whitewater,Jake Quast,missed_shot,Jake Quast Misses 3PT Jump Shot,9.0,14.0,12 Jake Quast > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,SURVEY -SCREENING & GETTING PUSHED OIUT |THE FLOOR (OPPOSITE SIDE)
 Carroll (WI) Pioneers,2025-12-13,64,H1,13:28 (H1),Carroll (WI) Pioneers,Dennis Estepp,rebound_defensive,Dennis Estepp Defensive Rebound,9.0,14.0,,
 Carroll (WI) Pioneers,2025-12-13,65,H1,13:24 (H1),Carroll (WI) Pioneers,Lamar Smith,turnover,Lamar Smith Turnover (Travel),9.0,14.0,44 Lamar Smith > Transition > Left Wing > Turnover,
 Carroll (WI) Pioneers,2025-12-13,66,H1,13:24 (H1),UW-Whitewater,Isaac Verges,sub_out,Isaac Verges Subs Out,9.0,14.0,,
@@ -3063,7 +3063,7 @@ Carroll (WI) Pioneers,2025-12-13,73,H1,13:24 (H1),Carroll (WI) Pioneers,Greg Smi
 Carroll (WI) Pioneers,2025-12-13,74,H1,13:05 (H1),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT Pull Up Jump Shot,11.0,14.0,15 Collin Madson > ISO > Top > Drives Right > To Basket > Make 2 Pts,
 Carroll (WI) Pioneers,2025-12-13,75,H1,12:42 (H1),UW-Whitewater,,jump_ball_held,Jump Ball (Held Ball),11.0,14.0,,
 Carroll (WI) Pioneers,2025-12-13,76,H1,12:42 (H1),Carroll (WI) Pioneers,,jump_ball_held,Jump Ball (Held Ball),11.0,14.0,,
-Carroll (WI) Pioneers,2025-12-13,77,H1,12:42 (H1),Carroll (WI) Pioneers,Greg Smith,turnover,Greg Smith Turnover (Lost Ball),11.0,14.0,4 Michael McNabb > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 42 Greg Smith > Cut > Flash > Turnover,
+Carroll (WI) Pioneers,2025-12-13,77,H1,12:42 (H1),Carroll (WI) Pioneers,Greg Smith,turnover,Greg Smith Turnover (Lost Ball),11.0,14.0,4 Michael McNabb > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 42 Greg Smith > Cut > Flash > Turnover,+DEFENDING BACKCUT | -NEED TO BE ON THE FLOOR FIRST
 Carroll (WI) Pioneers,2025-12-13,78,H1,12:42 (H1),UW-Whitewater,Joey Berezowitz,steal,Joey Berezowitz Steals,11.0,14.0,,
 Carroll (WI) Pioneers,2025-12-13,79,H1,12:23 (H1),UW-Whitewater,Kelton McEwen,turnover,Kelton McEwen Turnover (Lost Ball),11.0,14.0,2 Kelton Mcewen > P&R Ball Handler > High P&R > Go Away from Pick > Defense Commits > Turnover,
 Carroll (WI) Pioneers,2025-12-13,80,H1,12:23 (H1),Carroll (WI) Pioneers,Peyton McKenna,steal,Peyton McKenna Steals,11.0,14.0,,
@@ -3071,7 +3071,7 @@ Carroll (WI) Pioneers,2025-12-13,81,H1,12:18 (H1),Carroll (WI) Pioneers,Jimmy Ta
 Carroll (WI) Pioneers,2025-12-13,82,H1,12:18 (H1),UW-Whitewater,Joey Berezowitz,steal,Joey Berezowitz Steals,11.0,14.0,,
 Carroll (WI) Pioneers,2025-12-13,83,H1,12:13 (H1),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT Driving Layup,13.0,14.0,15 Collin Madson > Transition > Left Wing > To Basket > Make 2 Pts,
 Carroll (WI) Pioneers,2025-12-13,84,H1,12:13 (H1),UW-Whitewater,Joey Berezowitz,assist,Joey Berezowitz Assists,13.0,14.0,,
-Carroll (WI) Pioneers,2025-12-13,85,H1,12:06 (H1),Carroll (WI) Pioneers,Michael McNabb,missed_shot,Michael McNabb Misses 2PT Driving Layup (Blocked),13.0,14.0,4 Michael McNabb > Transition > Ballhandler > To Basket > Miss 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,85,H1,12:06 (H1),Carroll (WI) Pioneers,Michael McNabb,missed_shot,Michael McNabb Misses 2PT Driving Layup (Blocked),13.0,14.0,4 Michael McNabb > Transition > Ballhandler > To Basket > Miss 2 Pts,+WALLUPS
 Carroll (WI) Pioneers,2025-12-13,86,H1,12:06 (H1),UW-Whitewater,Rashad Rogers,block,Rashad Rogers Blocks,13.0,14.0,,
 Carroll (WI) Pioneers,2025-12-13,87,H1,12:03 (H1),UW-Whitewater,Kelton McEwen,rebound_defensive,Kelton McEwen Defensive Rebound,13.0,14.0,,
 Carroll (WI) Pioneers,2025-12-13,88,H1,11:57 (H1),UW-Whitewater,Jake Quast,missed_shot,Jake Quast Misses 2PT Driving Layup,13.0,14.0,12 Jake Quast > Transition > Trailer > To Basket > Miss 2 Pts,
@@ -3092,7 +3092,7 @@ Carroll (WI) Pioneers,2025-12-13,102,H1,11:08 (H1),Carroll (WI) Pioneers,Jacob N
 Carroll (WI) Pioneers,2025-12-13,103,H1,11:08 (H1),Carroll (WI) Pioneers,Lamar Smith,sub_in,Lamar Smith Subs In,15.0,14.0,,
 Carroll (WI) Pioneers,2025-12-13,104,H1,10:48 (H1),UW-Whitewater,Kelton McEwen,missed_shot,Kelton McEwen Misses 3PT,15.0,14.0,11 Jr Lukenbill > Post-Up > Right Block > Left Shoulder > Dribble Move > Defense Commits > Ball Delivered > 2 Kelton Mcewen > Spot-Up > Drives Right > Dribble Jumper > Long/3pt > Miss 3 Pts,
 Carroll (WI) Pioneers,2025-12-13,105,H1,10:45 (H1),Carroll (WI) Pioneers,Lamar Smith,rebound_defensive,Lamar Smith Defensive Rebound,15.0,14.0,,
-Carroll (WI) Pioneers,2025-12-13,106,H1,10:42 (H1),Carroll (WI) Pioneers,Dennis Estepp,missed_shot,Dennis Estepp Misses 2PT Driving Layup (Blocked),15.0,14.0,33 Dennis Estepp > Transition > Left Wing > To Basket > Miss 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,106,H1,10:42 (H1),Carroll (WI) Pioneers,Dennis Estepp,missed_shot,Dennis Estepp Misses 2PT Driving Layup (Blocked),15.0,14.0,33 Dennis Estepp > Transition > Left Wing > To Basket > Miss 2 Pts,-TURN & SPRINT | +WALLUP
 Carroll (WI) Pioneers,2025-12-13,107,H1,10:42 (H1),UW-Whitewater,Kelton McEwen,block,Kelton McEwen Blocks,15.0,14.0,,
 Carroll (WI) Pioneers,2025-12-13,108,H1,10:42 (H1),UW-Whitewater,,team_deadball_rebound_defensive,Defensive Rebound,15.0,14.0,,
 Carroll (WI) Pioneers,2025-12-13,109,H1,10:18 (H1),UW-Whitewater,Rashad Rogers,missed_shot,Rashad Rogers Misses 2PT Turnaround Jump Shot,15.0,14.0,35 Rashad Rogers > Post-Up > Right Block > Face-up > Jumper > Miss 2 Pts,
@@ -3101,26 +3101,26 @@ Carroll (WI) Pioneers,2025-12-13,111,H1,10:08 (H1),UW-Whitewater,Kelton McEwen,m
 Carroll (WI) Pioneers,2025-12-13,112,H1,10:07 (H1),Carroll (WI) Pioneers,Jacob Naber,rebound_defensive,Jacob Naber Defensive Rebound,15.0,14.0,,
 Carroll (WI) Pioneers,2025-12-13,113,H1,09:53 (H1),UW-Whitewater,Rashad Rogers,sub_out,Rashad Rogers Subs Out,15.0,14.0,,
 Carroll (WI) Pioneers,2025-12-13,114,H1,09:53 (H1),UW-Whitewater,Brock Marino,sub_in,Brock Marino Subs In,15.0,14.0,,
-Carroll (WI) Pioneers,2025-12-13,115,H1,09:39 (H1),Carroll (WI) Pioneers,Dennis Estepp,turnover,Dennis Estepp Turnover (Bad Pass),15.0,14.0,42 Greg Smith > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Ball Delivered > 33 Dennis Estepp > Spot-Up > Drives Left > Turnover,
+Carroll (WI) Pioneers,2025-12-13,115,H1,09:39 (H1),Carroll (WI) Pioneers,Dennis Estepp,turnover,Dennis Estepp Turnover (Bad Pass),15.0,14.0,42 Greg Smith > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Ball Delivered > 33 Dennis Estepp > Spot-Up > Drives Left > Turnover,-HUGGING SCREENER | +WINNING BUMPS | -STAY DOWN!! | +VEERING OUTSIDE THE ELBOW
 Carroll (WI) Pioneers,2025-12-13,116,H1,09:39 (H1),Carroll (WI) Pioneers,Michael McNabb,sub_out,Michael McNabb Subs Out,15.0,14.0,,
 Carroll (WI) Pioneers,2025-12-13,117,H1,09:39 (H1),Carroll (WI) Pioneers,Cai Joseph,sub_in,Cai Joseph Subs In,15.0,14.0,,
 Carroll (WI) Pioneers,2025-12-13,118,H1,09:30 (H1),UW-Whitewater,JR Lukenbill,turnover,JR Lukenbill Turnover,15.0,14.0,11 Jr Lukenbill > Transition > Right Wing > Turnover,
-Carroll (WI) Pioneers,2025-12-13,119,H1,09:21 (H1),Carroll (WI) Pioneers,Cai Joseph,made_shot,Cai Joseph Makes 2PT Layup,15.0,16.0,44 Lamar Smith > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 10 Cai Joseph > P&R Roll Man > Rolls to Basket > Make 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,119,H1,09:21 (H1),Carroll (WI) Pioneers,Cai Joseph,made_shot,Cai Joseph Makes 2PT Layup,15.0,16.0,44 Lamar Smith > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 10 Cai Joseph > P&R Roll Man > Rolls to Basket > Make 2 Pts,-WRAP TIGHT W/ ACTIVE HANDS TO DEFLECT
 Carroll (WI) Pioneers,2025-12-13,120,H1,09:21 (H1),Carroll (WI) Pioneers,Lamar Smith,assist,Lamar Smith Assists,15.0,16.0,,
 Carroll (WI) Pioneers,2025-12-13,121,H1,08:50 (H1),UW-Whitewater,Brock Marino,missed_shot,Brock Marino Misses 3PT Jump Shot,15.0,16.0,21 Brock Marino > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
 Carroll (WI) Pioneers,2025-12-13,122,H1,08:48 (H1),Carroll (WI) Pioneers,Lamar Smith,rebound_defensive,Lamar Smith Defensive Rebound,15.0,16.0,,
-Carroll (WI) Pioneers,2025-12-13,123,H1,08:30 (H1),Carroll (WI) Pioneers,Lamar Smith,made_shot,Lamar Smith Makes 2PT Hook Shot,15.0,18.0,44 Lamar Smith > Cut > Flash > Make 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,123,H1,08:30 (H1),Carroll (WI) Pioneers,Lamar Smith,made_shot,Lamar Smith Makes 2PT Hook Shot,15.0,18.0,44 Lamar Smith > Cut > Flash > Make 2 Pts,+BASELINE CUTOFFS X2 | -FACE CUT | +WALL UP
 Carroll (WI) Pioneers,2025-12-13,124,H1,08:14 (H1),UW-Whitewater,Jake Quast,turnover,Jake Quast Turnover (Bad Pass),15.0,18.0,12 Jake Quast > Transition > Left Wing > Turnover,
 Carroll (WI) Pioneers,2025-12-13,125,H1,08:14 (H1),UW-Whitewater,Jake Quast,sub_out,Jake Quast Subs Out,15.0,18.0,,
 Carroll (WI) Pioneers,2025-12-13,126,H1,08:14 (H1),UW-Whitewater,Collin Madson,sub_in,Collin Madson Subs In,15.0,18.0,,
 Carroll (WI) Pioneers,2025-12-13,127,H1,08:14 (H1),Carroll (WI) Pioneers,Dennis Estepp,sub_out,Dennis Estepp Subs Out,15.0,18.0,,
 Carroll (WI) Pioneers,2025-12-13,128,H1,08:14 (H1),Carroll (WI) Pioneers,Peyton McKenna,sub_in,Peyton McKenna Subs In,15.0,18.0,,
-Carroll (WI) Pioneers,2025-12-13,129,H1,08:03 (H1),Carroll (WI) Pioneers,Lamar Smith,made_shot,Lamar Smith Makes 2PT Driving Layup,15.0,20.0,44 Lamar Smith > Hand Off > From Dribble > Top > To Basket > Make 2 Pts Foul > 1 Pts,
+Carroll (WI) Pioneers,2025-12-13,129,H1,08:03 (H1),Carroll (WI) Pioneers,Lamar Smith,made_shot,Lamar Smith Makes 2PT Driving Layup,15.0,20.0,44 Lamar Smith > Hand Off > From Dribble > Top > To Basket > Make 2 Pts Foul > 1 Pts,-TAKE A BETTER ANGLE TO GET THROUGH | -POST DEFENDER BE ACTIVE | BOTTOM HELP
 Carroll (WI) Pioneers,2025-12-13,130,H1,08:03 (H1),UW-Whitewater,JR Lukenbill,foul,JR Lukenbill Commits Personal Foul,15.0,20.0,,
-Carroll (WI) Pioneers,2025-12-13,131,H1,08:03 (H1),Carroll (WI) Pioneers,Lamar Smith,free_throw_made,Lamar Smith Makes Free Throw (1 of 1),15.0,21.0,44 Lamar Smith > Non Possession > Free Throw,
+Carroll (WI) Pioneers,2025-12-13,131,H1,08:03 (H1),Carroll (WI) Pioneers,Lamar Smith,free_throw_made,Lamar Smith Makes Free Throw (1 of 1),15.0,21.0,44 Lamar Smith > Non Possession > Free Throw,-TAKE A BETTER ANGLE TO GET THROUGH | -POST DEFENDER BE ACTIVE | BOTTOM HELP
 Carroll (WI) Pioneers,2025-12-13,132,H1,08:03 (H1),UW-Whitewater,JR Lukenbill,sub_out,JR Lukenbill Subs Out,15.0,21.0,,
 Carroll (WI) Pioneers,2025-12-13,133,H1,08:03 (H1),UW-Whitewater,Richie Warren,sub_in,Richie Warren Subs In,15.0,21.0,,
-Carroll (WI) Pioneers,2025-12-13,134,H1,07:31 (H1),UW-Whitewater,Brock Marino,made_shot,Brock Marino Makes 2PT Turnaround Jump Shot,17.0,21.0,21 Brock Marino > Post-Up > Left Block > Right Shoulder > Dribble Move > To Jumper > Make 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,134,H1,07:31 (H1),UW-Whitewater,Brock Marino,made_shot,Brock Marino Makes 2PT Turnaround Jump Shot,17.0,21.0,21 Brock Marino > Post-Up > Left Block > Right Shoulder > Dribble Move > To Jumper > Make 2 Pts,-SKIP IT TOO SOON = LET IT CLEAR
 Carroll (WI) Pioneers,2025-12-13,135,H1,07:13 (H1),UW-Whitewater,Richie Warren,foul,Richie Warren Commits Personal Foul,17.0,21.0,41 Jacob Naber > Post-Up > Flash Middle > Left Shoulder > Dribble Move > To Basket > Foul,
 Carroll (WI) Pioneers,2025-12-13,136,H1,07:13 (H1),UW-Whitewater,Official TV,timeout,Official TV Timeout,17.0,21.0,,
 Carroll (WI) Pioneers,2025-12-13,137,H1,07:13 (H1),Carroll (WI) Pioneers,Official TV,timeout,Official TV Timeout,17.0,21.0,,
@@ -3137,7 +3137,7 @@ Carroll (WI) Pioneers,2025-12-13,147,H1,06:57 (H1),Carroll (WI) Pioneers,Evan Bl
 Carroll (WI) Pioneers,2025-12-13,148,H1,06:57 (H1),Carroll (WI) Pioneers,Michael McNabb,sub_in,Michael McNabb Subs In,17.0,23.0,,
 Carroll (WI) Pioneers,2025-12-13,149,H1,06:57 (H1),Carroll (WI) Pioneers,Dennis Estepp,sub_in,Dennis Estepp Subs In,17.0,23.0,,
 Carroll (WI) Pioneers,2025-12-13,150,H1,06:46 (H1),UW-Whitewater,Collin Madson,made_shot,Collin Madson Makes 2PT Pull Up Jump Shot,19.0,23.0,0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 15 Collin Madson > Spot-Up > Drives Right > Dribble Jumper > Short to < 17' > Make 2 Pts,
-Carroll (WI) Pioneers,2025-12-13,151,H1,06:27 (H1),Carroll (WI) Pioneers,Peyton McKenna,missed_shot,Peyton McKenna Misses 3PT Jump Shot,19.0,23.0,12 Peyton McKenna > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
+Carroll (WI) Pioneers,2025-12-13,151,H1,06:27 (H1),Carroll (WI) Pioneers,Peyton McKenna,missed_shot,Peyton McKenna Misses 3PT Jump Shot,19.0,23.0,12 Peyton McKenna > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,+BACKSIDE TAGS = NEVER STOP MOVING | CHECK & SWARM!!
 Carroll (WI) Pioneers,2025-12-13,152,H1,06:24 (H1),Carroll (WI) Pioneers,Lamar Smith,rebound_offensive,Lamar Smith Offensive Rebound,19.0,23.0,,
 Carroll (WI) Pioneers,2025-12-13,153,H1,06:23 (H1),Carroll (WI) Pioneers,Lamar Smith,turnover,Lamar Smith Turnover (Bad Pass),19.0,23.0,,
 Carroll (WI) Pioneers,2025-12-13,154,H1,06:23 (H1),UW-Whitewater,Isaac Verges,steal,Isaac Verges Steals,19.0,23.0,,
@@ -3147,19 +3147,19 @@ Carroll (WI) Pioneers,2025-12-13,157,H1,05:45 (H1),Carroll (WI) Pioneers,Jacob N
 Carroll (WI) Pioneers,2025-12-13,158,H1,05:42 (H1),UW-Whitewater,Jake Quast,rebound_defensive,Jake Quast Defensive Rebound,22.0,23.0,,
 Carroll (WI) Pioneers,2025-12-13,159,H1,05:33 (H1),UW-Whitewater,Kelton McEwen,missed_shot,Kelton McEwen Misses 3PT Jump Shot,22.0,23.0,2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
 Carroll (WI) Pioneers,2025-12-13,160,H1,05:31 (H1),Carroll (WI) Pioneers,Lamar Smith,rebound_defensive,Lamar Smith Defensive Rebound,22.0,23.0,,
-Carroll (WI) Pioneers,2025-12-13,161,H1,05:20 (H1),Carroll (WI) Pioneers,Lamar Smith,missed_shot,Lamar Smith Misses 2PT Driving Layup,22.0,23.0,44 Lamar Smith > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,161,H1,05:20 (H1),Carroll (WI) Pioneers,Lamar Smith,missed_shot,Lamar Smith Misses 2PT Driving Layup,22.0,23.0,44 Lamar Smith > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts,-WE FORCE 44 BACK TO HIS L = NEED THAT GAP DEFENDER
 Carroll (WI) Pioneers,2025-12-13,162,H1,05:19 (H1),UW-Whitewater,Wis.-Whitewater,team_deadball_rebound_defensive,Wis.-Whitewater Defensive Deadball Rebound,22.0,23.0,,
 Carroll (WI) Pioneers,2025-12-13,163,H1,05:19 (H1),Carroll (WI) Pioneers,Jacob Naber,foul,Jacob Naber Commits Personal Foul,22.0,23.0,,
 Carroll (WI) Pioneers,2025-12-13,164,H1,05:19 (H1),UW-Whitewater,Kelton McEwen,sub_out,Kelton McEwen Subs Out,22.0,23.0,,
 Carroll (WI) Pioneers,2025-12-13,165,H1,05:19 (H1),UW-Whitewater,Darius Chestnut,sub_in,Darius Chestnut Subs In,22.0,23.0,,
-Carroll (WI) Pioneers,2025-12-13,166,H1,04:50 (H1),UW-Whitewater,Brock Marino,missed_shot,Brock Marino Misses 2PT Layup,22.0,23.0,21 Brock Marino > Post-Up > Left Block > Right Shoulder > Dribble Move > To Drop Step > Miss 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,166,H1,04:50 (H1),UW-Whitewater,Brock Marino,missed_shot,Brock Marino Misses 2PT Layup,22.0,23.0,21 Brock Marino > Post-Up > Left Block > Right Shoulder > Dribble Move > To Drop Step > Miss 2 Pts,TAKE ANOTHER DRIBBLE
 Carroll (WI) Pioneers,2025-12-13,167,H1,04:47 (H1),UW-Whitewater,Jake Quast,rebound_offensive,Jake Quast Offensive Rebound,22.0,23.0,,
 Carroll (WI) Pioneers,2025-12-13,168,H1,04:47 (H1),UW-Whitewater,Jake Quast,made_shot,Jake Quast Makes 2PT,24.0,23.0,,
 Carroll (WI) Pioneers,2025-12-13,169,H1,04:36 (H1),Carroll (WI) Pioneers,Dennis Estepp,missed_shot,Dennis Estepp Misses 3PT Jump Shot,24.0,23.0,33 Dennis Estepp > Hand Off > From Dribble > Left > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,
 Carroll (WI) Pioneers,2025-12-13,170,H1,04:33 (H1),UW-Whitewater,Jake Quast,rebound_defensive,Jake Quast Defensive Rebound,24.0,23.0,,
 Carroll (WI) Pioneers,2025-12-13,171,H1,04:28 (H1),UW-Whitewater,Jake Quast,turnover,Jake Quast Turnover (Bad Pass),24.0,23.0,12 Jake Quast > Transition > Ballhandler > Turnover,
 Carroll (WI) Pioneers,2025-12-13,172,H1,04:28 (H1),Carroll (WI) Pioneers,Dennis Estepp,steal,Dennis Estepp Steals,24.0,23.0,,
-Carroll (WI) Pioneers,2025-12-13,173,H1,04:23 (H1),Carroll (WI) Pioneers,Dennis Estepp,made_shot,Dennis Estepp Makes 2PT Driving Layup,24.0,25.0,33 Dennis Estepp > Transition > Ballhandler > To Basket > Make 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,173,H1,04:23 (H1),Carroll (WI) Pioneers,Dennis Estepp,made_shot,Dennis Estepp Makes 2PT Driving Layup,24.0,25.0,33 Dennis Estepp > Transition > Ballhandler > To Basket > Make 2 Pts,-??? | NOT COMMUNICATING/SPRINTING BACK
 Carroll (WI) Pioneers,2025-12-13,174,H1,03:58 (H1),UW-Whitewater,Isaac Verges,missed_shot,Isaac Verges Misses 3PT Jump Shot,24.0,25.0,0 Isaac Verges > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,
 Carroll (WI) Pioneers,2025-12-13,175,H1,03:56 (H1),Carroll (WI) Pioneers,Jacob Naber,rebound_defensive,Jacob Naber Defensive Rebound,24.0,25.0,,
 Carroll (WI) Pioneers,2025-12-13,176,H1,03:45 (H1),UW-Whitewater,Jake Quast,foul,Jake Quast Commits Personal Foul,24.0,25.0,33 Dennis Estepp > Non Possession > Non Shooting Foul,
@@ -3177,7 +3177,7 @@ Carroll (WI) Pioneers,2025-12-13,187,H1,03:02 (H1),UW-Whitewater,Isaac Verges,re
 Carroll (WI) Pioneers,2025-12-13,188,H1,03:02 (H1),UW-Whitewater,Isaac Verges,missed_shot,Isaac Verges Misses 2PT,24.0,27.0,,
 Carroll (WI) Pioneers,2025-12-13,189,H1,03:01 (H1),UW-Whitewater,Isaac Verges,rebound_offensive,Isaac Verges Offensive Rebound,24.0,27.0,,
 Carroll (WI) Pioneers,2025-12-13,190,H1,03:01 (H1),UW-Whitewater,Isaac Verges,made_shot,Isaac Verges Makes 2PT,26.0,27.0,,
-Carroll (WI) Pioneers,2025-12-13,191,H1,02:49 (H1),Carroll (WI) Pioneers,Peyton McKenna,missed_shot,Peyton McKenna Misses 3PT Jump Shot,26.0,27.0,33 Dennis Estepp > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 12 Peyton McKenna > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,
+Carroll (WI) Pioneers,2025-12-13,191,H1,02:49 (H1),Carroll (WI) Pioneers,Peyton McKenna,missed_shot,Peyton McKenna Misses 3PT Jump Shot,26.0,27.0,33 Dennis Estepp > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 12 Peyton McKenna > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,Bottom man = tag | Top man = First Pass
 Carroll (WI) Pioneers,2025-12-13,192,H1,02:46 (H1),UW-Whitewater,Darius Chestnut,rebound_defensive,Darius Chestnut Defensive Rebound,26.0,27.0,,
 Carroll (WI) Pioneers,2025-12-13,193,H1,02:32 (H1),UW-Whitewater,Isaac Verges,missed_shot,Isaac Verges Misses 3PT Jump Shot,26.0,27.0,0 Isaac Verges > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
 Carroll (WI) Pioneers,2025-12-13,194,H1,02:31 (H1),UW-Whitewater,,team_deadball_rebound_offensive,Offensive Rebound,26.0,27.0,,
@@ -3210,7 +3210,7 @@ Carroll (WI) Pioneers,2025-12-13,220,H1,01:30 (H1),Carroll (WI) Pioneers,Lamar S
 Carroll (WI) Pioneers,2025-12-13,221,H1,01:30 (H1),Carroll (WI) Pioneers,Cai Joseph,sub_in,Cai Joseph Subs In,29.0,29.0,,
 Carroll (WI) Pioneers,2025-12-13,222,H1,01:17 (H1),UW-Whitewater,Darius Chestnut,made_shot,Darius Chestnut Makes 3PT Jump Shot,32.0,29.0,10 Darius Chestnut > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,
 Carroll (WI) Pioneers,2025-12-13,223,H1,01:17 (H1),UW-Whitewater,Isaac Verges,assist,Isaac Verges Assists,32.0,29.0,,
-Carroll (WI) Pioneers,2025-12-13,224,H1,01:05 (H1),Carroll (WI) Pioneers,Peyton McKenna,turnover,Peyton McKenna Turnover (Bad Pass),32.0,29.0,12 Peyton McKenna > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,
+Carroll (WI) Pioneers,2025-12-13,224,H1,01:05 (H1),Carroll (WI) Pioneers,Peyton McKenna,turnover,Peyton McKenna Turnover (Bad Pass),32.0,29.0,12 Peyton McKenna > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,+HEDGE | -DON'T STAY
 Carroll (WI) Pioneers,2025-12-13,225,H1,01:05 (H1),UW-Whitewater,Isaac Verges,steal,Isaac Verges Steals,32.0,29.0,,
 Carroll (WI) Pioneers,2025-12-13,226,H1,01:01 (H1),UW-Whitewater,Isaac Verges,missed_shot,Isaac Verges Misses 2PT Driving Layup,32.0,29.0,0 Isaac Verges > Transition > Ballhandler > To Basket > Miss 2 Pts,
 Carroll (WI) Pioneers,2025-12-13,227,H1,01:00 (H1),Carroll (WI) Pioneers,,team_deadball_rebound_defensive,Defensive Rebound,32.0,29.0,,
@@ -3228,29 +3228,29 @@ Carroll (WI) Pioneers,2025-12-13,238,H1,00:24 (H1),Carroll (WI) Pioneers,Lamar S
 Carroll (WI) Pioneers,2025-12-13,239,H1,00:24 (H1),Carroll (WI) Pioneers,Carroll (WI),timeout,Carroll (WI) Timeout,34.0,29.0,,
 Carroll (WI) Pioneers,2025-12-13,240,H1,00:09 (H1),Carroll (WI) Pioneers,Dennis Estepp,turnover,Dennis Estepp Turnover (Bad Pass),34.0,29.0,33 Dennis Estepp > No Play Type > Turnover,
 Carroll (WI) Pioneers,2025-12-13,241,H1,00:09 (H1),UW-Whitewater,Darius Chestnut,steal,Darius Chestnut Steals,34.0,29.0,,
-Carroll (WI) Pioneers,2025-12-13,242,H1,00:04 (H1),UW-Whitewater,Isaac Verges,made_shot,Isaac Verges Makes 2PT Alley-Oop,36.0,29.0,0 Isaac Verges > Transition > First Middle > To Basket > Make 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,242,H1,00:04 (H1),UW-Whitewater,Isaac Verges,made_shot,Isaac Verges Makes 2PT Alley-Oop,36.0,29.0,0 Isaac Verges > Transition > First Middle > To Basket > Make 2 Pts,+EFFORT PLAY TO END THE HALF
 Carroll (WI) Pioneers,2025-12-13,243,H1,00:04 (H1),UW-Whitewater,Joey Berezowitz,assist,Joey Berezowitz Assists,36.0,29.0,,
 Carroll (WI) Pioneers,2025-12-13,244,H1,,,,period_marker,End 1st Half,,,,
 Carroll (WI) Pioneers,2025-12-13,245,H1,,,,period_marker,Start 2nd Half,,,,
 Carroll (WI) Pioneers,2025-12-13,246,H2,19:48 (H2),Carroll (WI) Pioneers,Lamar Smith,turnover,Lamar Smith Turnover (Bad Pass),36.0,29.0,44 Lamar Smith > Cut > Basket > Turnover,
 Carroll (WI) Pioneers,2025-12-13,247,H2,19:48 (H2),UW-Whitewater,Collin Madson,steal,Collin Madson Steals,36.0,29.0,,
-Carroll (WI) Pioneers,2025-12-13,248,H2,19:37 (H2),UW-Whitewater,Richie Warren,missed_shot,Richie Warren Misses 2PT Jump Shot,36.0,29.0,0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 24 Richie Warren > Spot-Up > Drives Right > To Basket > Miss 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,248,H2,19:37 (H2),UW-Whitewater,Richie Warren,missed_shot,Richie Warren Misses 2PT Jump Shot,36.0,29.0,0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 24 Richie Warren > Spot-Up > Drives Right > To Basket > Miss 2 Pts,FLIP IT & GO DRIVE TO POST
 Carroll (WI) Pioneers,2025-12-13,249,H2,19:33 (H2),Carroll (WI) Pioneers,Jacob Naber,rebound_defensive,Jacob Naber Defensive Rebound,36.0,29.0,,
 Carroll (WI) Pioneers,2025-12-13,250,H2,19:19 (H2),Carroll (WI) Pioneers,Evan Bland,turnover,Evan Bland Turnover (Bad Pass),36.0,29.0,15 Evan Bland > Transition > Ballhandler > Turnover,
-Carroll (WI) Pioneers,2025-12-13,251,H2,19:13 (H2),UW-Whitewater,Richie Warren,missed_shot,Richie Warren Misses 2PT Jump Shot,36.0,29.0,24 Richie Warren > Cut > Flash > Miss 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,251,H2,19:13 (H2),UW-Whitewater,Richie Warren,missed_shot,Richie Warren Misses 2PT Jump Shot,36.0,29.0,24 Richie Warren > Cut > Flash > Miss 2 Pts,"GOOD PACE ON ATTACK, PLAYING OFF OF TWO FEET"
 Carroll (WI) Pioneers,2025-12-13,252,H2,19:06 (H2),Carroll (WI) Pioneers,,team_deadball_rebound_defensive,Defensive Rebound,36.0,29.0,,
 Carroll (WI) Pioneers,2025-12-13,253,H2,19:01 (H2),UW-Whitewater,Luke Bara,foul,Luke Bara Commits Personal Foul,36.0,29.0,15 Evan Bland > Non Possession > Non Shooting Foul,
 Carroll (WI) Pioneers,2025-12-13,254,H2,19:00 (H2),Carroll (WI) Pioneers,Jacob Naber,foul,Jacob Naber Commits Offensive Foul,36.0,29.0,,
 Carroll (WI) Pioneers,2025-12-13,255,H2,19:00 (H2),Carroll (WI) Pioneers,Jacob Naber,turnover,Jacob Naber Turnover (Offensive Foul),36.0,29.0,41 Jacob Naber > No Play Type > Turnover,
 Carroll (WI) Pioneers,2025-12-13,256,H2,18:37 (H2),Carroll (WI) Pioneers,Michael McNabb,foul,Michael McNabb Commits Personal Foul,36.0,29.0,15 Collin Madson > Non Possession > Non Shooting Foul,
-Carroll (WI) Pioneers,2025-12-13,257,H2,18:27 (H2),UW-Whitewater,Richie Warren,missed_shot,Richie Warren Misses 3PT Jump Shot,36.0,29.0,0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 24 Richie Warren > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,
+Carroll (WI) Pioneers,2025-12-13,257,H2,18:27 (H2),UW-Whitewater,Richie Warren,missed_shot,Richie Warren Misses 3PT Jump Shot,36.0,29.0,0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 24 Richie Warren > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,NOVA ACTION = STAY SPACED IN THE FAR CORNER
 Carroll (WI) Pioneers,2025-12-13,258,H2,18:21 (H2),UW-Whitewater,Isaac Verges,rebound_offensive,Isaac Verges Offensive Rebound,36.0,29.0,,
 Carroll (WI) Pioneers,2025-12-13,259,H2,18:20 (H2),UW-Whitewater,Isaac Verges,turnover,Isaac Verges Turnover (Bad Pass),36.0,29.0,,
 Carroll (WI) Pioneers,2025-12-13,260,H2,18:20 (H2),Carroll (WI) Pioneers,Michael McNabb,steal,Michael McNabb Steals,36.0,29.0,,
-Carroll (WI) Pioneers,2025-12-13,261,H2,18:14 (H2),Carroll (WI) Pioneers,Michael McNabb,missed_shot,Michael McNabb Misses 3PT Jump Shot,36.0,29.0,4 Michael McNabb > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
+Carroll (WI) Pioneers,2025-12-13,261,H2,18:14 (H2),Carroll (WI) Pioneers,Michael McNabb,missed_shot,Michael McNabb Misses 3PT Jump Shot,36.0,29.0,4 Michael McNabb > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,+EFFORT PLAY
 Carroll (WI) Pioneers,2025-12-13,262,H2,18:14 (H2),Carroll (WI) Pioneers,,team_deadball_rebound_offensive,Offensive Rebound,36.0,29.0,,
 Carroll (WI) Pioneers,2025-12-13,263,H2,18:14 (H2),UW-Whitewater,Richie Warren,block,Richie Warren Blocks,36.0,29.0,,
-Carroll (WI) Pioneers,2025-12-13,264,H2,18:11 (H2),Carroll (WI) Pioneers,Jacob Naber,missed_shot,Jacob Naber Misses 2PT Jump Shot,36.0,29.0,15 Evan Bland > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 41 Jacob Naber > P&R Roll Man > Slips the Pick > To Basket > Miss 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,264,H2,18:11 (H2),Carroll (WI) Pioneers,Jacob Naber,missed_shot,Jacob Naber Misses 2PT Jump Shot,36.0,29.0,15 Evan Bland > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 41 Jacob Naber > P&R Roll Man > Slips the Pick > To Basket > Miss 2 Pts,-LEVERAGE UP & OVER BALL SCREEN | +WALL UP
 Carroll (WI) Pioneers,2025-12-13,265,H2,18:06 (H2),UW-Whitewater,Brock Marino,rebound_defensive,Brock Marino Defensive Rebound,36.0,29.0,,
 Carroll (WI) Pioneers,2025-12-13,266,H2,18:04 (H2),Carroll (WI) Pioneers,Evan Bland,foul,Evan Bland Commits Personal Foul,36.0,29.0,32 Luke Bara > Non Possession > Non Shooting Foul,
 Carroll (WI) Pioneers,2025-12-13,267,H2,18:02 (H2),UW-Whitewater,Richie Warren,missed_shot,Richie Warren Misses 2PT Layup,36.0,29.0,24 Richie Warren > Cut > Basket > Miss 2 Pts,
@@ -3266,7 +3266,7 @@ Carroll (WI) Pioneers,2025-12-13,276,H2,17:41 (H2),UW-Whitewater,Isaac Verges,st
 Carroll (WI) Pioneers,2025-12-13,277,H2,17:36 (H2),UW-Whitewater,Collin Madson,missed_shot,Collin Madson Misses 2PT Pull Up Jump Shot,36.0,29.0,15 Collin Madson > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts,
 Carroll (WI) Pioneers,2025-12-13,278,H2,17:31 (H2),Carroll (WI) Pioneers,Lamar Smith,rebound_defensive,Lamar Smith Defensive Rebound,36.0,29.0,,
 Carroll (WI) Pioneers,2025-12-13,279,H2,17:28 (H2),Carroll (WI) Pioneers,Lamar Smith,made_shot,Lamar Smith Makes 2PT Driving Layup,36.0,31.0,44 Lamar Smith > Transition > Ballhandler > To Basket > Make 2 Pts,
-Carroll (WI) Pioneers,2025-12-13,280,H2,17:11 (H2),UW-Whitewater,Collin Madson,missed_shot,Collin Madson Misses 3PT Jump Shot,36.0,31.0,0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 15 Collin Madson > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
+Carroll (WI) Pioneers,2025-12-13,280,H2,17:11 (H2),UW-Whitewater,Collin Madson,missed_shot,Collin Madson Misses 3PT Jump Shot,36.0,31.0,0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 15 Collin Madson > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,+GATHER FINISH
 Carroll (WI) Pioneers,2025-12-13,281,H2,17:03 (H2),UW-Whitewater,Brock Marino,rebound_offensive,Brock Marino Offensive Rebound,36.0,31.0,,
 Carroll (WI) Pioneers,2025-12-13,282,H2,17:03 (H2),UW-Whitewater,Brock Marino,made_shot,Brock Marino Makes 2PT,38.0,31.0,21 Brock Marino > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,
 Carroll (WI) Pioneers,2025-12-13,283,H2,16:37 (H2),Carroll (WI) Pioneers,Michael McNabb,missed_shot,Michael McNabb Misses 2PT Driving Layup (Blocked),38.0,31.0,4 Michael McNabb > Hand Off > From Dribble > Right > To Basket > Miss 2 Pts,
@@ -3286,8 +3286,8 @@ Carroll (WI) Pioneers,2025-12-13,296,H2,15:59 (H2),Carroll (WI) Pioneers,Jimmy T
 Carroll (WI) Pioneers,2025-12-13,297,H2,15:52 (H2),UW-Whitewater,Official TV,timeout,Official TV Timeout,40.0,31.0,,
 Carroll (WI) Pioneers,2025-12-13,298,H2,15:52 (H2),Carroll (WI) Pioneers,Official TV,timeout,Official TV Timeout,40.0,31.0,,
 Carroll (WI) Pioneers,2025-12-13,299,H2,15:52 (H2),UW-Whitewater,Isaac Verges,foul,Isaac Verges Commits Personal Foul,40.0,31.0,33 Dennis Estepp > Transition > Ballhandler > To Basket > Foul,
-Carroll (WI) Pioneers,2025-12-13,300,H2,15:52 (H2),Carroll (WI) Pioneers,Dennis Estepp,free_throw_made,Dennis Estepp Makes Free Throw (2 of 2),40.0,32.0,33 Dennis Estepp > Non Possession > Free Throw,
-Carroll (WI) Pioneers,2025-12-13,301,H2,15:52 (H2),Carroll (WI) Pioneers,Dennis Estepp,free_throw_made,Dennis Estepp Makes Free Throw (1 of 2),40.0,33.0,33 Dennis Estepp > Non Possession > Free Throw,
+Carroll (WI) Pioneers,2025-12-13,300,H2,15:52 (H2),Carroll (WI) Pioneers,Dennis Estepp,free_throw_made,Dennis Estepp Makes Free Throw (2 of 2),40.0,32.0,33 Dennis Estepp > Non Possession > Free Throw,+HOW WE FOUL IN TRANSITION
+Carroll (WI) Pioneers,2025-12-13,301,H2,15:52 (H2),Carroll (WI) Pioneers,Dennis Estepp,free_throw_made,Dennis Estepp Makes Free Throw (1 of 2),40.0,33.0,33 Dennis Estepp > Non Possession > Free Throw,+HOW WE FOUL IN TRANSITION
 Carroll (WI) Pioneers,2025-12-13,302,H2,15:52 (H2),UW-Whitewater,Richie Warren,sub_out,Richie Warren Subs Out,40.0,33.0,,
 Carroll (WI) Pioneers,2025-12-13,303,H2,15:52 (H2),UW-Whitewater,Luke Bara,sub_out,Luke Bara Subs Out,40.0,33.0,,
 Carroll (WI) Pioneers,2025-12-13,304,H2,15:52 (H2),UW-Whitewater,Darius Chestnut,sub_in,Darius Chestnut Subs In,40.0,33.0,,
@@ -3308,13 +3308,13 @@ Carroll (WI) Pioneers,2025-12-13,318,H2,14:45 (H2),UW-Whitewater,Jake Quast,made
 Carroll (WI) Pioneers,2025-12-13,319,H2,14:28 (H2),UW-Whitewater,Collin Madson,foul,Collin Madson Commits Personal Foul,42.0,35.0,4 Michael McNabb > Non Possession > Non Shooting Foul,
 Carroll (WI) Pioneers,2025-12-13,320,H2,14:28 (H2),UW-Whitewater,Brock Marino,sub_out,Brock Marino Subs Out,42.0,35.0,,
 Carroll (WI) Pioneers,2025-12-13,321,H2,14:28 (H2),UW-Whitewater,Rashad Rogers,sub_in,Rashad Rogers Subs In,42.0,35.0,,
-Carroll (WI) Pioneers,2025-12-13,322,H2,14:08 (H2),Carroll (WI) Pioneers,Michael McNabb,missed_shot,Michael McNabb Misses 2PT Jump Shot,42.0,35.0,4 Michael McNabb > No Play Type > To Basket > Miss 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,322,H2,14:08 (H2),Carroll (WI) Pioneers,Michael McNabb,missed_shot,Michael McNabb Misses 2PT Jump Shot,42.0,35.0,4 Michael McNabb > No Play Type > To Basket > Miss 2 Pts,+GREAT LEVERAGING UP & OVER BALL SCREEN | +GREAT TEAM DEF V MCNABB
 Carroll (WI) Pioneers,2025-12-13,323,H2,14:03 (H2),Carroll (WI) Pioneers,Jimmy Tarjan,rebound_offensive,Jimmy Tarjan Offensive Rebound,42.0,35.0,,
-Carroll (WI) Pioneers,2025-12-13,324,H2,14:01 (H2),Carroll (WI) Pioneers,Michael McNabb,made_shot,Michael McNabb Makes 2PT Layup,42.0,37.0,4 Michael McNabb > Spot-Up > Drives Right > To Basket > Make 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,324,H2,14:01 (H2),Carroll (WI) Pioneers,Michael McNabb,made_shot,Michael McNabb Makes 2PT Layup,42.0,37.0,4 Michael McNabb > Spot-Up > Drives Right > To Basket > Make 2 Pts,-NEED TO BE THERE V THE SPIN BACK
 Carroll (WI) Pioneers,2025-12-13,325,H2,13:48 (H2),UW-Whitewater,Darius Chestnut,foul,Darius Chestnut Commits Personal Foul,42.0,37.0,,
 Carroll (WI) Pioneers,2025-12-13,326,H2,13:48 (H2),UW-Whitewater,Collin Madson,sub_out,Collin Madson Subs Out,42.0,37.0,,
 Carroll (WI) Pioneers,2025-12-13,327,H2,13:48 (H2),UW-Whitewater,Kelton McEwen,sub_in,Kelton McEwen Subs In,42.0,37.0,,
-Carroll (WI) Pioneers,2025-12-13,328,H2,13:29 (H2),Carroll (WI) Pioneers,Dennis Estepp,missed_shot,Dennis Estepp Misses 2PT Jump Shot,42.0,37.0,33 Dennis Estepp > Hand Off > From Dribble > Top > To Basket > Miss 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,328,H2,13:29 (H2),Carroll (WI) Pioneers,Dennis Estepp,missed_shot,Dennis Estepp Misses 2PT Jump Shot,42.0,37.0,33 Dennis Estepp > Hand Off > From Dribble > Top > To Basket > Miss 2 Pts,+GOOD V. HANDOFFS | -HEAVIER IN GAP (V NON-SHOOTER) | + WALL UP
 Carroll (WI) Pioneers,2025-12-13,329,H2,13:25 (H2),UW-Whitewater,Jake Quast,rebound_defensive,Jake Quast Defensive Rebound,42.0,37.0,,
 Carroll (WI) Pioneers,2025-12-13,330,H2,13:20 (H2),Carroll (WI) Pioneers,Jimmy Tarjan,foul,Jimmy Tarjan Commits Personal Foul,42.0,37.0,12 Jake Quast > Transition > Ballhandler > To Basket > Foul,
 Carroll (WI) Pioneers,2025-12-13,331,H2,13:20 (H2),UW-Whitewater,Jake Quast,free_throw_made,Jake Quast Makes Free Throw (1 of 2),43.0,37.0,12 Jake Quast > Non Possession > Free Throw,
@@ -3325,7 +3325,7 @@ Carroll (WI) Pioneers,2025-12-13,335,H2,13:20 (H2),Carroll (WI) Pioneers,Dennis 
 Carroll (WI) Pioneers,2025-12-13,336,H2,13:20 (H2),Carroll (WI) Pioneers,Cai Joseph,sub_in,Cai Joseph Subs In,44.0,37.0,,
 Carroll (WI) Pioneers,2025-12-13,337,H2,13:05 (H2),Carroll (WI) Pioneers,Cai Joseph,turnover,Cai Joseph Turnover (Bad Pass),44.0,37.0,10 Cai Joseph > No Play Type > Turnover,
 Carroll (WI) Pioneers,2025-12-13,338,H2,13:05 (H2),UW-Whitewater,Darius Chestnut,steal,Darius Chestnut Steals,44.0,37.0,,
-Carroll (WI) Pioneers,2025-12-13,339,H2,13:01 (H2),UW-Whitewater,Darius Chestnut,made_shot,Darius Chestnut Makes 2PT Dunk,46.0,37.0,10 Darius Chestnut > Transition > First Middle > To Basket > Make 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,339,H2,13:01 (H2),UW-Whitewater,Darius Chestnut,made_shot,Darius Chestnut Makes 2PT Dunk,46.0,37.0,10 Darius Chestnut > Transition > First Middle > To Basket > Make 2 Pts,+EFFORT PLAY
 Carroll (WI) Pioneers,2025-12-13,340,H2,13:01 (H2),UW-Whitewater,Kelton McEwen,assist,Kelton McEwen Assists,46.0,37.0,,
 Carroll (WI) Pioneers,2025-12-13,341,H2,12:55 (H2),UW-Whitewater,Jake Quast,foul,Jake Quast Commits Personal Foul,46.0,37.0,44 Lamar Smith > Non Possession > Non Shooting Foul,
 Carroll (WI) Pioneers,2025-12-13,342,H2,12:42 (H2),Carroll (WI) Pioneers,Lamar Smith,turnover,Lamar Smith Turnover (Bad Pass),46.0,37.0,44 Lamar Smith > Spot-Up > Drives Right > Turnover,
@@ -3345,11 +3345,11 @@ Carroll (WI) Pioneers,2025-12-13,355,H2,11:40 (H2),UW-Whitewater,Official TV,tim
 Carroll (WI) Pioneers,2025-12-13,356,H2,11:40 (H2),Carroll (WI) Pioneers,Official TV,timeout,Official TV Timeout,46.0,38.0,,
 Carroll (WI) Pioneers,2025-12-13,357,H2,11:40 (H2),UW-Whitewater,Rashad Rogers,sub_out,Rashad Rogers Subs Out,46.0,38.0,,
 Carroll (WI) Pioneers,2025-12-13,358,H2,11:40 (H2),UW-Whitewater,Brock Marino,sub_in,Brock Marino Subs In,46.0,38.0,,
-Carroll (WI) Pioneers,2025-12-13,359,H2,11:16 (H2),UW-Whitewater,Joey Berezowitz,made_shot,Joey Berezowitz Makes 3PT Jump Shot,49.0,38.0,22 Joey Berezowitz > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,
+Carroll (WI) Pioneers,2025-12-13,359,H2,11:16 (H2),UW-Whitewater,Joey Berezowitz,made_shot,Joey Berezowitz Makes 3PT Jump Shot,49.0,38.0,22 Joey Berezowitz > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,TWINS PITCH = NEED TO BE LOWER FOR A BETTER ENTRY PASS |+ POSS
 Carroll (WI) Pioneers,2025-12-13,360,H2,11:16 (H2),UW-Whitewater,Darius Chestnut,assist,Darius Chestnut Assists,49.0,38.0,,
-Carroll (WI) Pioneers,2025-12-13,361,H2,10:41 (H2),Carroll (WI) Pioneers,Jacob Naber,missed_shot,Jacob Naber Misses 2PT Jump Shot,49.0,38.0,41 Jacob Naber > Cut > Flash > Miss 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,361,H2,10:41 (H2),Carroll (WI) Pioneers,Jacob Naber,missed_shot,Jacob Naber Misses 2PT Jump Shot,49.0,38.0,41 Jacob Naber > Cut > Flash > Miss 2 Pts,-LOSE MAN ON BACK CUT | +WALL UPS & +BOX OUTS
 Carroll (WI) Pioneers,2025-12-13,362,H2,10:37 (H2),UW-Whitewater,Darius Chestnut,rebound_defensive,Darius Chestnut Defensive Rebound,49.0,38.0,,
-Carroll (WI) Pioneers,2025-12-13,363,H2,10:18 (H2),UW-Whitewater,Brock Marino,made_shot,Brock Marino Makes 2PT Layup,51.0,38.0,21 Brock Marino > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts Foul > 0 Pts,
+Carroll (WI) Pioneers,2025-12-13,363,H2,10:18 (H2),UW-Whitewater,Brock Marino,made_shot,Brock Marino Makes 2PT Layup,51.0,38.0,21 Brock Marino > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts Foul > 0 Pts,-BETTER STAGGERED SCREENS | +POSS
 Carroll (WI) Pioneers,2025-12-13,364,H2,10:18 (H2),UW-Whitewater,Jake Quast,assist,Jake Quast Assists,51.0,38.0,,
 Carroll (WI) Pioneers,2025-12-13,365,H2,10:17 (H2),Carroll (WI) Pioneers,Jacob Naber,foul,Jacob Naber Commits Personal Foul,51.0,38.0,,
 Carroll (WI) Pioneers,2025-12-13,366,H2,10:17 (H2),UW-Whitewater,Brock Marino,free_throw_missed,Brock Marino Misses Free Throw (1 of 1),51.0,38.0,21 Brock Marino > Non Possession > Free Throw,
@@ -3360,14 +3360,14 @@ Carroll (WI) Pioneers,2025-12-13,370,H2,10:17 (H2),Carroll (WI) Pioneers,Michael
 Carroll (WI) Pioneers,2025-12-13,371,H2,10:17 (H2),Carroll (WI) Pioneers,Evan Bland,sub_in,Evan Bland Subs In,51.0,38.0,,
 Carroll (WI) Pioneers,2025-12-13,372,H2,10:17 (H2),Carroll (WI) Pioneers,Greg Smith,sub_in,Greg Smith Subs In,51.0,38.0,,
 Carroll (WI) Pioneers,2025-12-13,373,H2,10:16 (H2),UW-Whitewater,Darius Chestnut,rebound_offensive,Darius Chestnut Offensive Rebound,51.0,38.0,,
-Carroll (WI) Pioneers,2025-12-13,374,H2,10:04 (H2),UW-Whitewater,Joey Berezowitz,missed_shot,Joey Berezowitz Misses 3PT Jump Shot,51.0,38.0,21 Brock Marino > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Ball Delivered > 22 Joey Berezowitz > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
+Carroll (WI) Pioneers,2025-12-13,374,H2,10:04 (H2),UW-Whitewater,Joey Berezowitz,missed_shot,Joey Berezowitz Misses 3PT Jump Shot,51.0,38.0,21 Brock Marino > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Ball Delivered > 22 Joey Berezowitz > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,"+INSIDE OUT 3, +OREB EFFORT X2 | SHOT FAKE & GET TO TWO FEET"
 Carroll (WI) Pioneers,2025-12-13,375,H2,09:59 (H2),UW-Whitewater,Jake Quast,rebound_offensive,Jake Quast Offensive Rebound,51.0,38.0,,
-Carroll (WI) Pioneers,2025-12-13,376,H2,09:53 (H2),UW-Whitewater,Jake Quast,made_shot,Jake Quast Makes 2PT Driving Layup,53.0,38.0,12 Jake Quast > Spot-Up > Drives Left > To Basket > Make 2 Pts,
-Carroll (WI) Pioneers,2025-12-13,377,H2,09:32 (H2),Carroll (WI) Pioneers,Peyton McKenna,turnover,Peyton McKenna Turnover (Lost Ball),53.0,38.0,12 Peyton McKenna > Off Screen > To Shooter's Right > Curl > Turnover,
+Carroll (WI) Pioneers,2025-12-13,376,H2,09:53 (H2),UW-Whitewater,Jake Quast,made_shot,Jake Quast Makes 2PT Driving Layup,53.0,38.0,12 Jake Quast > Spot-Up > Drives Left > To Basket > Make 2 Pts,+SHOT FAKE & ATTACK TO TWO FEET
+Carroll (WI) Pioneers,2025-12-13,377,H2,09:32 (H2),Carroll (WI) Pioneers,Peyton McKenna,turnover,Peyton McKenna Turnover (Lost Ball),53.0,38.0,12 Peyton McKenna > Off Screen > To Shooter's Right > Curl > Turnover,+POSS +HELP THE HELPER
 Carroll (WI) Pioneers,2025-12-13,378,H2,09:32 (H2),UW-Whitewater,Joey Berezowitz,steal,Joey Berezowitz Steals,53.0,38.0,,
 Carroll (WI) Pioneers,2025-12-13,379,H2,09:28 (H2),UW-Whitewater,Darius Chestnut,missed_shot,Darius Chestnut Misses 2PT Driving Layup,53.0,38.0,10 Darius Chestnut > Transition > Left Wing > To Basket > Miss 2 Pts,
 Carroll (WI) Pioneers,2025-12-13,380,H2,09:23 (H2),Carroll (WI) Pioneers,Peyton McKenna,rebound_defensive,Peyton McKenna Defensive Rebound,53.0,38.0,,
-Carroll (WI) Pioneers,2025-12-13,381,H2,09:19 (H2),Carroll (WI) Pioneers,Lamar Smith,made_shot,Lamar Smith Makes 2PT Driving Layup,53.0,40.0,44 Lamar Smith > Transition > Left Wing > To Basket > Make 2 Pts Foul > 0 Pts,
+Carroll (WI) Pioneers,2025-12-13,381,H2,09:19 (H2),Carroll (WI) Pioneers,Lamar Smith,made_shot,Lamar Smith Makes 2PT Driving Layup,53.0,40.0,44 Lamar Smith > Transition > Left Wing > To Basket > Make 2 Pts Foul > 0 Pts,-DON'T SPRINT BACK | DON'T SPRINT TO OUR GAP = 5 PT SWING
 Carroll (WI) Pioneers,2025-12-13,382,H2,09:19 (H2),UW-Whitewater,Darius Chestnut,foul,Darius Chestnut Commits Personal Foul,53.0,40.0,,
 Carroll (WI) Pioneers,2025-12-13,383,H2,09:17 (H2),Carroll (WI) Pioneers,Lamar Smith,free_throw_missed,Lamar Smith Misses Free Throw (1 of 1),53.0,40.0,44 Lamar Smith > Non Possession > Free Throw,
 Carroll (WI) Pioneers,2025-12-13,384,H2,09:15 (H2),UW-Whitewater,Brock Marino,rebound_defensive,Brock Marino Defensive Rebound,53.0,40.0,,
@@ -3407,7 +3407,7 @@ Carroll (WI) Pioneers,2025-12-13,417,H2,05:55 (H2),UW-Whitewater,Jake Quast,sub_
 Carroll (WI) Pioneers,2025-12-13,418,H2,05:49 (H2),Carroll (WI) Pioneers,Jacob Naber,made_shot,Jacob Naber Makes 2PT Driving Layup,57.0,42.0,41 Jacob Naber > Post-Up > Left Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts Foul > 1 Pts,
 Carroll (WI) Pioneers,2025-12-13,419,H2,05:49 (H2),UW-Whitewater,Jake Quast,foul,Jake Quast Commits Personal Foul,57.0,42.0,,
 Carroll (WI) Pioneers,2025-12-13,420,H2,05:49 (H2),Carroll (WI) Pioneers,Jacob Naber,free_throw_made,Jacob Naber Makes Free Throw (1 of 1),57.0,43.0,41 Jacob Naber > Non Possession > Free Throw,
-Carroll (WI) Pioneers,2025-12-13,421,H2,05:35 (H2),UW-Whitewater,Joey Berezowitz,turnover,Joey Berezowitz Turnover (Bad Pass),57.0,43.0,22 Joey Berezowitz > P&R Ball Handler > High P&R > Go Away from Pick > Defense Commits > Turnover,
+Carroll (WI) Pioneers,2025-12-13,421,H2,05:35 (H2),UW-Whitewater,Joey Berezowitz,turnover,Joey Berezowitz Turnover (Bad Pass),57.0,43.0,22 Joey Berezowitz > P&R Ball Handler > High P&R > Go Away from Pick > Defense Commits > Turnover,-GET TO TWO FEET
 Carroll (WI) Pioneers,2025-12-13,422,H2,05:35 (H2),Carroll (WI) Pioneers,Michael McNabb,steal,Michael McNabb Steals,57.0,43.0,,
 Carroll (WI) Pioneers,2025-12-13,423,H2,05:30 (H2),Carroll (WI) Pioneers,Michael McNabb,made_shot,Michael McNabb Makes 2PT Driving Layup,57.0,45.0,4 Michael McNabb > Transition > Ballhandler > To Basket > Make 2 Pts,
 Carroll (WI) Pioneers,2025-12-13,424,H2,05:20 (H2),UW-Whitewater,Kelton McEwen,missed_shot,Kelton McEwen Misses 3PT Jump Shot,57.0,45.0,2 Kelton Mcewen > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
@@ -3419,7 +3419,7 @@ Carroll (WI) Pioneers,2025-12-13,429,H2,05:11 (H2),UW-Whitewater,Collin Madson,s
 Carroll (WI) Pioneers,2025-12-13,430,H2,05:11 (H2),UW-Whitewater,Joey Berezowitz,sub_out,Joey Berezowitz Subs Out,57.0,47.0,,
 Carroll (WI) Pioneers,2025-12-13,431,H2,05:11 (H2),UW-Whitewater,Isaac Verges,sub_in,Isaac Verges Subs In,57.0,47.0,,
 Carroll (WI) Pioneers,2025-12-13,432,H2,05:11 (H2),UW-Whitewater,Darius Chestnut,sub_in,Darius Chestnut Subs In,57.0,47.0,,
-Carroll (WI) Pioneers,2025-12-13,433,H2,04:44 (H2),UW-Whitewater,Brock Marino,missed_shot,Brock Marino Misses 2PT Jump Shot (Blocked),57.0,47.0,21 Brock Marino > Cut > Basket > Miss 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,433,H2,04:44 (H2),UW-Whitewater,Brock Marino,missed_shot,Brock Marino Misses 2PT Jump Shot (Blocked),57.0,47.0,21 Brock Marino > Cut > Basket > Miss 2 Pts,-PIN TO FLARE (HAVE TO WAIT FOR CUTTER) | -HAVE TIME TO SHOT FAKE
 Carroll (WI) Pioneers,2025-12-13,434,H2,04:44 (H2),Carroll (WI) Pioneers,Peyton McKenna,block,Peyton McKenna Blocks,57.0,47.0,,
 Carroll (WI) Pioneers,2025-12-13,435,H2,04:39 (H2),Carroll (WI) Pioneers,Peyton McKenna,rebound_defensive,Peyton McKenna Defensive Rebound,57.0,47.0,,
 Carroll (WI) Pioneers,2025-12-13,436,H2,04:31 (H2),Carroll (WI) Pioneers,Dennis Estepp,missed_shot,Dennis Estepp Misses 2PT Jump Shot,57.0,47.0,12 Peyton McKenna > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 33 Dennis Estepp > Spot-Up > Drives Right > To Basket > Miss 2 Pts,
@@ -3433,7 +3433,7 @@ Carroll (WI) Pioneers,2025-12-13,443,H2,04:06 (H2),Carroll (WI) Pioneers,Michael
 Carroll (WI) Pioneers,2025-12-13,444,H2,03:44 (H2),UW-Whitewater,Brock Marino,missed_shot,Brock Marino Misses 2PT Layup,59.0,49.0,21 Brock Marino > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,
 Carroll (WI) Pioneers,2025-12-13,445,H2,03:40 (H2),UW-Whitewater,Jake Quast,rebound_offensive,Jake Quast Offensive Rebound,59.0,49.0,,
 Carroll (WI) Pioneers,2025-12-13,446,H2,03:35 (H2),UW-Whitewater,Darius Chestnut,made_shot,Darius Chestnut Makes 2PT Driving Layup,61.0,49.0,10 Darius Chestnut > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Medium/17' to <3p > Make 2 Pts,
-Carroll (WI) Pioneers,2025-12-13,447,H2,03:25 (H2),Carroll (WI) Pioneers,Michael McNabb,missed_shot,Michael McNabb Misses 2PT Driving Layup,61.0,49.0,4 Michael McNabb > Transition > Left Wing > To Basket > Miss 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,447,H2,03:25 (H2),Carroll (WI) Pioneers,Michael McNabb,missed_shot,Michael McNabb Misses 2PT Driving Layup,61.0,49.0,4 Michael McNabb > Transition > Left Wing > To Basket > Miss 2 Pts,-SPRINT AHEAD OF THE BALL | -FINISH THE POSSESSION
 Carroll (WI) Pioneers,2025-12-13,448,H2,03:20 (H2),Carroll (WI) Pioneers,Michael McNabb,rebound_offensive,Michael McNabb Offensive Rebound,61.0,49.0,,
 Carroll (WI) Pioneers,2025-12-13,449,H2,03:20 (H2),Carroll (WI) Pioneers,Michael McNabb,made_shot,Michael McNabb Makes 2PT,61.0,51.0,,
 Carroll (WI) Pioneers,2025-12-13,450,H2,03:00 (H2),UW-Whitewater,Official TV,timeout,Official TV Timeout,61.0,51.0,,
@@ -3467,7 +3467,7 @@ Carroll (WI) Pioneers,2025-12-13,477,H2,01:43 (H2),Carroll (WI) Pioneers,Jacob N
 Carroll (WI) Pioneers,2025-12-13,478,H2,01:05 (H2),UW-Whitewater,,turnover,Turnover,61.0,57.0,,
 Carroll (WI) Pioneers,2025-12-13,479,H2,00:55 (H2),Carroll (WI) Pioneers,Michael McNabb,foul,Michael McNabb Commits Offensive Foul,61.0,57.0,,
 Carroll (WI) Pioneers,2025-12-13,480,H2,00:55 (H2),Carroll (WI) Pioneers,Michael McNabb,turnover,Michael McNabb Turnover (Offensive Foul),61.0,57.0,4 Michael McNabb > Hand Off > From Dribble > Left > Turnover,
-Carroll (WI) Pioneers,2025-12-13,481,H2,00:28 (H2),UW-Whitewater,Jake Quast,made_shot,Jake Quast Makes 2PT Layup,63.0,57.0,12 Jake Quast > Spot-Up > Drives Left > To Basket > Make 2 Pts,
+Carroll (WI) Pioneers,2025-12-13,481,H2,00:28 (H2),UW-Whitewater,Jake Quast,made_shot,Jake Quast Makes 2PT Layup,63.0,57.0,12 Jake Quast > Spot-Up > Drives Left > To Basket > Make 2 Pts,+SHOT FAKE AND ATTACK OFF OF TWO FEET TO FINISH
 Carroll (WI) Pioneers,2025-12-13,482,H2,00:13 (H2),Carroll (WI) Pioneers,Peyton McKenna,missed_shot,Peyton McKenna Misses 3PT Jump Shot,63.0,57.0,12 Peyton McKenna > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
 Carroll (WI) Pioneers,2025-12-13,483,H2,00:10 (H2),UW-Whitewater,Isaac Verges,rebound_defensive,Isaac Verges Defensive Rebound,63.0,57.0,,
 Carroll (WI) Pioneers,2025-12-13,484,H2,00:10 (H2),Carroll (WI) Pioneers,Jacob Naber,foul,Jacob Naber Commits Personal Foul,63.0,57.0,0 Isaac Verges > No Play Type > Foul,
@@ -5038,10 +5038,10 @@ Coe Kohawks,2025-12-30,101,H1,08:49 (H1),UW-Whitewater,Kelton McEwen,sub_out,Kel
 Coe Kohawks,2025-12-30,102,H1,08:49 (H1),UW-Whitewater,Luke Bara,sub_in,Luke Bara Subs In,18.0,17.0,,
 Coe Kohawks,2025-12-30,103,H1,08:44 (H1),Coe Kohawks,Ryan Dolphin,made_shot,Ryan Dolphin Makes 3PT Jump Shot,18.0,20.0,2 Ryan Dolphin > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,
 Coe Kohawks,2025-12-30,104,H1,08:44 (H1),Coe Kohawks,C. Reece Breitenbach,assist,C. Reece Breitenbach Assists,18.0,20.0,,
-Coe Kohawks,2025-12-30,105,H1,08:26 (H1),Coe Kohawks,C. Reece Breitenbach,foul,C. Reece Breitenbach Commits Personal Foul,18.0,20.0,,
+Coe Kohawks,2025-12-30,105,H1,08:26 (H1),Coe Kohawks,C. Reece Breitenbach,foul,C. Reece Breitenbach Commits Personal Foul,18.0,20.0,15 Collin Madson > Non Possession > Non Shooting Foul,
 Coe Kohawks,2025-12-30,106,H1,08:26 (H1),Coe Kohawks,C. Reece Breitenbach,sub_out,C. Reece Breitenbach Subs Out,18.0,20.0,,
 Coe Kohawks,2025-12-30,107,H1,08:26 (H1),Coe Kohawks,Jay Akin,sub_in,Jay Akin Subs In,18.0,20.0,,
-Coe Kohawks,2025-12-30,108,H1,08:18 (H1),Coe Kohawks,Jackson Newell,foul,Jackson Newell Commits Personal Foul,18.0,20.0,,
+Coe Kohawks,2025-12-30,108,H1,08:18 (H1),Coe Kohawks,Jackson Newell,foul,Jackson Newell Commits Personal Foul,18.0,20.0,15 Collin Madson > Spot-Up > Drives Right > To Basket > Foul,
 Coe Kohawks,2025-12-30,109,H1,08:18 (H1),UW-Whitewater,Collin Madson,free_throw_missed,Collin Madson Misses Free Throw (1 of 2),18.0,20.0,15 Collin Madson > Non Possession > Free Throw,
 Coe Kohawks,2025-12-30,110,H1,08:18 (H1),UW-Whitewater,Wis.-Whitewater,team_deadball_rebound_offensive,Wis.-Whitewater Offensive Deadball Rebound,18.0,20.0,,
 Coe Kohawks,2025-12-30,111,H1,08:18 (H1),UW-Whitewater,Collin Madson,free_throw_made,Collin Madson Makes Free Throw (2 of 2),19.0,20.0,15 Collin Madson > Non Possession > Free Throw,
@@ -5091,13 +5091,13 @@ Coe Kohawks,2025-12-30,154,H1,04:26 (H1),Coe Kohawks,Deuce Walters,assist,Deuce 
 Coe Kohawks,2025-12-30,155,H1,04:24 (H1),UW-Whitewater,Luke Bara,foul,Luke Bara Commits Personal Foul,25.0,36.0,34 Kanyon Bryte > No Play Type > Foul,
 Coe Kohawks,2025-12-30,156,H1,04:24 (H1),Coe Kohawks,Kanyon Bryte,free_throw_made,Kanyon Bryte Makes Free Throw (1 of 2),25.0,37.0,34 Kanyon Bryte > Non Possession > Free Throw,
 Coe Kohawks,2025-12-30,157,H1,04:24 (H1),Coe Kohawks,Kanyon Bryte,free_throw_made,Kanyon Bryte Makes Free Throw (2 of 2),25.0,38.0,34 Kanyon Bryte > Non Possession > Free Throw,
-Coe Kohawks,2025-12-30,158,H1,04:12 (H1),Coe Kohawks,Jay Akin,foul,Jay Akin Commits Personal Foul,25.0,38.0,,
-Coe Kohawks,2025-12-30,159,H1,04:09 (H1),Coe Kohawks,Jay Akin,foul,Jay Akin Commits Personal Foul,25.0,38.0,,
+Coe Kohawks,2025-12-30,158,H1,04:12 (H1),Coe Kohawks,Jay Akin,foul,Jay Akin Commits Personal Foul,25.0,38.0,32 Luke Bara > Non Possession > Non Shooting Foul,
+Coe Kohawks,2025-12-30,159,H1,04:09 (H1),Coe Kohawks,Jay Akin,foul,Jay Akin Commits Personal Foul,25.0,38.0,21 Brock Marino > Cut > Basket > Foul,
 Coe Kohawks,2025-12-30,160,H1,04:09 (H1),UW-Whitewater,Brock Marino,free_throw_made,Brock Marino Makes Free Throw (1 of 2),26.0,38.0,21 Brock Marino > Non Possession > Free Throw,
 Coe Kohawks,2025-12-30,161,H1,04:09 (H1),UW-Whitewater,Brock Marino,free_throw_made,Brock Marino Makes Free Throw (2 of 2),27.0,38.0,21 Brock Marino > Non Possession > Free Throw,
 Coe Kohawks,2025-12-30,162,H1,03:52 (H1),Coe Kohawks,Jackson Bowman,made_shot,Jackson Bowman Makes 3PT Jump Shot,27.0,41.0,4 Deuce Walters > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 22 Jackson Bowman > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,
 Coe Kohawks,2025-12-30,163,H1,03:52 (H1),Coe Kohawks,Deuce Walters,assist,Deuce Walters Assists,27.0,41.0,,
-Coe Kohawks,2025-12-30,164,H1,03:31 (H1),Coe Kohawks,Jackson Bowman,foul,Jackson Bowman Commits Personal Foul,27.0,41.0,,
+Coe Kohawks,2025-12-30,164,H1,03:31 (H1),Coe Kohawks,Jackson Bowman,foul,Jackson Bowman Commits Personal Foul,27.0,41.0,32 Luke Bara > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 15 Collin Madson > Spot-Up > Drives Left > To Basket > Foul,
 Coe Kohawks,2025-12-30,165,H1,03:30 (H1),UW-Whitewater,Collin Madson,free_throw_made,Collin Madson Makes Free Throw (1 of 2),28.0,41.0,15 Collin Madson > Non Possession > Free Throw,
 Coe Kohawks,2025-12-30,166,H1,03:30 (H1),UW-Whitewater,Collin Madson,free_throw_made,Collin Madson Makes Free Throw (2 of 2),29.0,41.0,15 Collin Madson > Non Possession > Free Throw,
 Coe Kohawks,2025-12-30,167,H1,03:30 (H1),Coe Kohawks,Jay Akin,sub_out,Jay Akin Subs Out,29.0,41.0,,
@@ -5110,21 +5110,21 @@ Coe Kohawks,2025-12-30,173,H1,02:58 (H1),Coe Kohawks,Jackson Bowman,rebound_defe
 Coe Kohawks,2025-12-30,174,H1,02:42 (H1),Coe Kohawks,Kanyon Bryte,made_shot,Kanyon Bryte Makes 2PT Dunk,29.0,45.0,34 Kanyon Bryte > Post-Up > Right Block > Post Pin > No Dribble Move > To Basket > Make 2 Pts,
 Coe Kohawks,2025-12-30,175,H1,02:42 (H1),Coe Kohawks,Deuce Walters,assist,Deuce Walters Assists,29.0,45.0,,
 Coe Kohawks,2025-12-30,176,H1,02:30 (H1),UW-Whitewater,Commits Foul,unclassified,Commits Foul,29.0,45.0,,
-Coe Kohawks,2025-12-30,177,H1,02:30 (H1),UW-Whitewater,Turnover (Offensive Foul),unclassified,Turnover (Offensive Foul),29.0,45.0,,
+Coe Kohawks,2025-12-30,177,H1,02:30 (H1),UW-Whitewater,,turnover,Turnover (Offensive Foul),29.0,45.0,,
 Coe Kohawks,2025-12-30,178,H1,02:30 (H1),Coe Kohawks,Cooper Nailor,free_throw_made,Cooper Nailor Makes Free Throw (1 of 2),29.0,46.0,5 Cooper Nailor > Non Possession > Free Throw,
 Coe Kohawks,2025-12-30,179,H1,02:30 (H1),Coe Kohawks,Cooper Nailor,free_throw_made,Cooper Nailor Makes Free Throw (2 of 2),29.0,47.0,5 Cooper Nailor > Non Possession > Free Throw,
-Coe Kohawks,2025-12-30,180,H1,02:15 (H1),Coe Kohawks,Austin Beeson,foul,Austin Beeson Commits Personal Foul,29.0,47.0,,
+Coe Kohawks,2025-12-30,180,H1,02:15 (H1),Coe Kohawks,Austin Beeson,foul,Austin Beeson Commits Personal Foul,29.0,47.0,15 Collin Madson > Post-Up > Right Block > Right Shoulder > Dribble Move > To Jumper > Foul,
 Coe Kohawks,2025-12-30,181,H1,02:15 (H1),UW-Whitewater,Collin Madson,free_throw_made,Collin Madson Makes Free Throw (1 of 2),30.0,47.0,15 Collin Madson > Non Possession > Free Throw,
 Coe Kohawks,2025-12-30,182,H1,02:15 (H1),UW-Whitewater,Collin Madson,free_throw_made,Collin Madson Makes Free Throw (2 of 2),31.0,47.0,15 Collin Madson > Non Possession > Free Throw,
 Coe Kohawks,2025-12-30,183,H1,02:04 (H1),Coe Kohawks,Cooper Nailor,turnover,Cooper Nailor Turnover (Bad Pass),31.0,47.0,5 Cooper Nailor > No Play Type > Turnover,
-Coe Kohawks,2025-12-30,184,H1,01:51 (H1),Coe Kohawks,Austin Beeson,foul,Austin Beeson Commits Personal Foul,31.0,47.0,,
+Coe Kohawks,2025-12-30,184,H1,01:51 (H1),Coe Kohawks,Austin Beeson,foul,Austin Beeson Commits Personal Foul,31.0,47.0,15 Collin Madson > Post-Up > Left Block > Left Shoulder > Dribble Move > Foul,
 Coe Kohawks,2025-12-30,185,H1,01:51 (H1),UW-Whitewater,Collin Madson,free_throw_made,Collin Madson Makes Free Throw (1 of 2),32.0,47.0,15 Collin Madson > Non Possession > Free Throw,
 Coe Kohawks,2025-12-30,186,H1,01:51 (H1),UW-Whitewater,Collin Madson,free_throw_made,Collin Madson Makes Free Throw (2 of 2),33.0,47.0,15 Collin Madson > Non Possession > Free Throw,
 Coe Kohawks,2025-12-30,187,H1,01:51 (H1),UW-Whitewater,Jake Quast,sub_out,Jake Quast Subs Out,33.0,47.0,,
 Coe Kohawks,2025-12-30,188,H1,01:51 (H1),UW-Whitewater,Tyshawn Teague-Johnson,sub_in,Tyshawn Teague-Johnson Subs In,33.0,47.0,,
 Coe Kohawks,2025-12-30,189,H1,01:37 (H1),Coe Kohawks,Deuce Walters,missed_shot,Deuce Walters Misses 3PT Jump Shot,33.0,47.0,4 Deuce Walters > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,
 Coe Kohawks,2025-12-30,190,H1,01:35 (H1),UW-Whitewater,Collin Madson,rebound_defensive,Collin Madson Defensive Rebound,33.0,47.0,,
-Coe Kohawks,2025-12-30,191,H1,01:35 (H1),Coe Kohawks,Kanyon Bryte,foul,Kanyon Bryte Commits Personal Foul,33.0,47.0,,
+Coe Kohawks,2025-12-30,191,H1,01:35 (H1),Coe Kohawks,Kanyon Bryte,foul,Kanyon Bryte Commits Personal Foul,33.0,47.0,15 Collin Madson > No Play Type > Foul,
 Coe Kohawks,2025-12-30,192,H1,01:35 (H1),UW-Whitewater,Collin Madson,free_throw_made,Collin Madson Makes Free Throw (1 of 2),34.0,47.0,15 Collin Madson > Non Possession > Free Throw,
 Coe Kohawks,2025-12-30,193,H1,01:35 (H1),UW-Whitewater,Collin Madson,free_throw_made,Collin Madson Makes Free Throw (2 of 2),35.0,47.0,15 Collin Madson > Non Possession > Free Throw,
 Coe Kohawks,2025-12-30,194,H1,01:22 (H1),Coe Kohawks,Austin Beeson,made_shot,Austin Beeson Makes 2PT Layup,35.0,49.0,25 Austin Beeson > Spot-Up > Drives Right > To Basket > Make 2 Pts,
