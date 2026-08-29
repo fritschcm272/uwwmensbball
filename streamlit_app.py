@@ -417,16 +417,16 @@ STAT_LABELS = {
 
 # KTV Category Reference: maps categories to the keywords and stats they track
 KTV_CATEGORY_REFERENCE = {
-    "Ball Security / Turnovers": {"keywords": "ball security, turnover, protect the ball, take care of the ball, limit turnovers, careless", "stats": "TO"},
-    "Rebounding": {"keywords": "own the paint, bully, glass, rebound, board, second chance, crash, dominate the paint", "stats": "REB, ORB, DRB"},
-    "Three-Point Shooting": {"keywords": "three, 3 pt, 3pt, perimeter shooting, spacing, shooting ability, shooting team, sniper, will shoot", "stats": "3PM-A, 3P%"},
-    "Free Throws": {"keywords": "free throw, ft line, getting to ft", "stats": "FTM-A, FT%"},
-    "Fouls / Discipline": {"keywords": "foul, wall up, drawing fouls", "stats": "PF"},
-    "Ball Movement / Assists": {"keywords": "assist, ball movement, share the ball, playmaking, playmaker, create", "stats": "AST"},
-    "Paint Protection / Blocks": {"keywords": "block, protect the rim, paint protection", "stats": "BLK"},
-    "Perimeter Defense / Ball Pressure": {"keywords": "steal, press capable, full court press, force turnovers, force to's, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure", "stats": "STL"},
-    "Scoring Inside": {"keywords": "dominate the paint, attack the paint, live in the paint, attack the basket, scoring at the rim, get to rim, attack the rim, get to the rim", "stats": "FG2M, FG2A, FG2%"},
-    "Field Goal Efficiency": {"keywords": "limit their scoring", "stats": "FGM-A, FG%"},
+    "Ball Security / Turnovers": {"keywords": "ball security, turnover, turnovers, protect the ball, take care of the ball, limit turnovers, careless, live dribble, sloppy, giveaway, giveaways, unforced", "stats": "TO"},
+    "Rebounding": {"keywords": "own the paint, bully, glass, rebound, rebounding, rebounds, board, boards, second chance, crash, dominate the paint, box out, put back, putback", "stats": "REB, ORB, DRB"},
+    "Three-Point Shooting": {"keywords": "three, threes, 3, 3s, 3's, 3 pt, 3pt, 3-pt, 3-point, 3-pointer, 3-pointers, three-point, three-pointer, three-pointers, three point, perimeter shooting, spacing, shooting ability, shooting team, sniper, will shoot, trey, treys, deep ball, deep balls, beyond the arc, from deep, transition three, transition threes, transition 3, transition 3's, catch and shoot, corner three, corner 3, above the break", "stats": "3PM-A, 3P%"},
+    "Free Throws": {"keywords": "free throw, free throws, ft line, getting to ft, foul line, and-one, and one", "stats": "FTM-A, FT%"},
+    "Fouls / Discipline": {"keywords": "foul, fouls, wall up, drawing fouls, discipline, reach, reaching, hand check", "stats": "PF"},
+    "Ball Movement / Assists": {"keywords": "assist, assists, ball movement, share the ball, playmaking, playmaker, create, extra pass, hockey assist, swing the ball", "stats": "AST"},
+    "Paint Protection / Blocks": {"keywords": "block, blocks, protect the rim, paint protection, rim protection, shot blocking, contest at the rim", "stats": "BLK"},
+    "Perimeter Defense / Ball Pressure": {"keywords": "steal, steals, press capable, full court press, force turnovers, force to's, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure, ball pressure, deny, deflection, deflections", "stats": "STL"},
+    "Scoring Inside": {"keywords": "dominate the paint, attack the paint, live in the paint, attack the basket, scoring at the rim, get to rim, attack the rim, get to the rim, post up, post-up, paint touches, drive, drives, downhill, finish at the rim", "stats": "FG2M, FG2A, FG2%"},
+    "Field Goal Efficiency": {"keywords": "limit their scoring, field goal, field goal%, fg%, shooting percentage, efficient shooting, efficiency, good shots, quality shots", "stats": "FGM-A, FG%"},
 }
 
 # Side detection: maps scouting phrases to whether they describe UWW (proactive) or OPP (contain opponent)
@@ -439,8 +439,14 @@ PHRASE_SIDE = {
     "rebound": "UWW", "board": "UWW", "second chance": "UWW", "crash": "UWW",
     "box out": "OPP", "keep off glass": "OPP",
     # Three-Point Shooting: UWW = hit shots; OPP = contest/run off
-    "three": "UWW", "3 pt": "OPP", "3pt": "OPP", "perimeter shooting": "UWW", "spacing": "UWW",
+    "three": "UWW", "threes": "UWW", "3": "UWW", "3s": "UWW", "3's": "UWW",
+    "3 pt": "OPP", "3pt": "OPP", "3-pt": "OPP", "3-point": "UWW", "3-pointer": "UWW", "3-pointers": "UWW",
+    "three-point": "UWW", "three-pointer": "UWW", "three-pointers": "UWW", "three point": "UWW",
+    "perimeter shooting": "UWW", "spacing": "UWW",
     "shooting ability": "OPP", "shooting team": "OPP", "sniper": "OPP", "will shoot": "OPP",
+    "trey": "UWW", "treys": "UWW", "deep ball": "UWW", "deep balls": "UWW", "from deep": "UWW",
+    "transition three": "UWW", "transition threes": "UWW", "transition 3": "UWW", "transition 3's": "UWW",
+    "catch and shoot": "UWW", "corner three": "UWW", "corner 3": "UWW", "above the break": "UWW",
     "close out": "OPP", "closeout": "OPP", "run off the line": "OPP",
     # Free Throws: UWW = get to line; OPP = keep off line
     "free throw": "UWW", "ft line": "UWW", "getting to ft": "UWW",
@@ -5228,6 +5234,18 @@ def render_upcoming_opponent_new():
         }
         _valid_cats = set(load_table("uww_ktv_splits")["category"].unique()) | set(KTV_CATEGORY_REFERENCE.keys())
 
+        def _keyword_matches(keyword, text_lower):
+            """Word-boundary match instead of naive substring -- a bare "3" as a keyword now correctly
+            matches "3's"/"3s"/"hit their 3" (a real gap: "hunt transition 3's" matched NO Three-Point
+            Shooting keyword under the old naive `kw in text` check, since none of "three"/"3 pt"/"3pt" is a
+            literal substring of "transition 3's" -- landing it in "Other" instead of being tagged). \\b
+            treats a boundary between a word character and a non-word character (or string start/end), so
+            \\b3\\b matches the "3" in "3's" (digit -> apostrophe is a boundary) and in "hit 3 shots", but
+            NOT the "3" inside "23" or "63.4" (no boundary between two digits) -- so this doesn't introduce
+            false positives on stray numbers the way a bare substring check of "3" would have.
+            """
+            return re.search(r"\b" + re.escape(keyword) + r"\b", text_lower) is not None
+
         def _match_categories(text):
             text_lower = str(text).lower()
             matched = []
@@ -5235,7 +5253,7 @@ def render_upcoming_opponent_new():
                 if _cat not in _valid_cats:
                     continue
                 for _kw in [_kw.strip() for _kw in _details["keywords"].split(",")]:
-                    if _kw in text_lower:
+                    if _kw and _keyword_matches(_kw, text_lower):
                         if _cat not in matched:
                             matched.append(_cat)
                         break
@@ -5245,7 +5263,7 @@ def render_upcoming_opponent_new():
             text_lower = str(text).lower()
             sides_found = set()
             for phrase, side in PHRASE_SIDE.items():
-                if phrase in text_lower:
+                if phrase and _keyword_matches(phrase, text_lower):
                     sides_found.add(side)
             if "OPP" in sides_found and "UWW" not in sides_found:
                 return "OPP"
