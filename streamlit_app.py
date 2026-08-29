@@ -5061,13 +5061,10 @@ def render_upcoming_opponent_new():
                         _s = re.sub(r"^\d+\.\s*", "", _s.strip())
                         if _s:
                             _keys.append(("\u26a0\ufe0f", f"Opponent strength: {_s}", None, None, "Team Strengths"))
-                _sr_other = _sr_opp_plan[~_sr_opp_plan["topic"].isin(["KEYS TO VICTORY", "TEAM STRENGTHS"])]
-                for _, _sr_row in _sr_other.iterrows():
-                    _sr_notes = str(_sr_row["notes"])
-                    _sr_items = [_i.strip() for _i in _sr_notes.split("|") if _i.strip()] if "|" in _sr_notes else [_sr_notes.strip()]
-                    for _sr_item in _sr_items:
-                        if _sr_item:
-                            _keys.append(("\U0001f4cb", _sr_item, None, str(_sr_row["topic"]), str(_sr_row["category"])))
+                # The rest of the game plan (categories with "Game Plan" in the name, e.g. "Offensive Game
+                # Plan"/"Defensive Game Plan") is NOT flattened into individual keys here anymore -- it's
+                # shown in the "\U0001f4cb Game Plan" popup dialog instead (see _show_game_plan_dialog below),
+                # since listing every full-game-plan bullet out inline made the list too long.
         except Exception:
             pass
 
@@ -5446,9 +5443,38 @@ def render_upcoming_opponent_new():
                     return None
                 return None  # Defensive Efficiency and any future category with no single clean box-score stat
 
+            @st.dialog("\U0001f4cb Game Plan", width="large")
+            def _show_game_plan_dialog():
+                """The rest of the scouting report -- any game-plan category with "Game Plan" in its own name
+                (e.g. "Offensive Game Plan"/"Defensive Game Plan"), organized by that category and then by
+                topic within it. Triggered by the "Game Plan" button under any KTV category header -- all of
+                them open this same dialog, since the game plan itself isn't split per KTV category."""
+                _gpd_plans = load_table("uww_opponent_game_plans")
+                _gpd_opp = _gpd_plans[_gpd_plans["opponent"] == short_opponent] if not _gpd_plans.empty and short_opponent else pd.DataFrame()
+                _gpd_other = _gpd_opp[~_gpd_opp["topic"].isin(["KEYS TO VICTORY", "TEAM STRENGTHS"])] if not _gpd_opp.empty else pd.DataFrame()
+                _gpd_other = _gpd_other[_gpd_other["category"].astype(str).str.contains("game plan", case=False, na=False)] if not _gpd_other.empty else _gpd_other
+                if _gpd_other.empty:
+                    st.info(f"No full game plan recorded yet for {short_opponent}.")
+                    return
+                for _gpd_cat in _gpd_other["category"].unique():
+                    _gpd_group = _gpd_other[_gpd_other["category"] == _gpd_cat]
+                    st.markdown(f"#### {_gpd_cat}")
+                    for _, _gpd_row in _gpd_group.iterrows():
+                        st.markdown(f"**{_gpd_row['topic']}**")
+                        _gpd_notes = str(_gpd_row["notes"])
+                        _gpd_items = [_i.strip() for _i in _gpd_notes.split("|") if _i.strip()] if "|" in _gpd_notes else [_gpd_notes.strip()]
+                        for _gpd_item in _gpd_items:
+                            st.markdown(f"- {_gpd_item}")
+                    st.markdown("")
+
             for _cat in _cat_order:
                 _bg, _fg = _CAT_COLORS.get(_cat, ("#e8e0f0", "#4E2A84"))
-                st.markdown(f'<div style="background:{_bg};color:{_fg};display:inline-block;font-size:0.85rem;font-weight:700;padding:3px 12px;border-radius:10px;margin:10px 0 6px;">{html.escape(_cat)}</div>', unsafe_allow_html=True)
+                _cat_hdr_c1, _cat_hdr_c2 = st.columns([0.8, 0.2])
+                with _cat_hdr_c1:
+                    st.markdown(f'<div style="background:{_bg};color:{_fg};display:inline-block;font-size:0.85rem;font-weight:700;padding:3px 12px;border-radius:10px;margin:10px 0 6px;">{html.escape(_cat)}</div>', unsafe_allow_html=True)
+                with _cat_hdr_c2:
+                    if st.button("\U0001f4cb Game Plan", key=f"gameplan_btn_{_cat}", use_container_width=True):
+                        _show_game_plan_dialog()
                 _cs_line = _category_stat_line(_cat)
                 if _cs_line and (_cs_line[0] or _cs_line[1]):
                     st.caption("  |  ".join(x for x in _cs_line if x))
