@@ -5067,7 +5067,7 @@ def render_upcoming_opponent_new():
                     _sr_items = [_i.strip() for _i in _sr_notes.split("|") if _i.strip()] if "|" in _sr_notes else [_sr_notes.strip()]
                     for _sr_item in _sr_items:
                         if _sr_item:
-                            _keys.append(("\U0001f4cb", _sr_item, None, f"{_sr_row['category']}: {_sr_row['topic']}", "Full Game Plan"))
+                            _keys.append(("\U0001f4cb", _sr_item, None, str(_sr_row["topic"]), str(_sr_row["category"])))
         except Exception:
             pass
 
@@ -5297,12 +5297,14 @@ def render_upcoming_opponent_new():
             return badges
 
         # Source badges use an outlined style (colored border + white fill) instead of the category badges'
-        # solid fill, so the two badge types read as visually distinct at a glance.
+        # solid fill, so the two badge types read as visually distinct at a glance. Full Game Plan items use
+        # their own game-plan "category" field as the source badge instead of one generic "Full Game Plan"
+        # label -- those category names are staff-defined per opponent, so they aren't enumerable here and
+        # fall back to _source_badge_html's default gray outline instead of a specific color.
         _SOURCE_COLORS = {
             "Data-Driven": "#37474f",
             "Keys to Victory": "#4E2A84",
             "Team Strengths": "#c62828",
-            "Full Game Plan": "#00695c",
             "Lineup Scouting": "#5d4037",
         }
 
