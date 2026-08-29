@@ -5327,9 +5327,8 @@ def render_upcoming_opponent_new():
 
             def _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source):
                 # No per-item category badge -- the section header above already names the category, so
-                # repeating it on every item was redundant. Side (UWW/OPP) isn't shown anywhere else, so
-                # that badge stays.
-                st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">{_n}. {_icon} {html.escape(_headline)}</span>{_side_badge_html(_side)}{_source_badge_html(_source)}</div>', unsafe_allow_html=True)
+                # repeating it on every item was redundant. Side (UWW/OPP) badges removed too, per request.
+                st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">{_n}. {_icon} {html.escape(_headline)}</span>{_source_badge_html(_source)}</div>', unsafe_allow_html=True)
                 if _caption:
                     st.caption(_caption)
                 if _reason:
