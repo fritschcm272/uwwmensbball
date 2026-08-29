@@ -2192,22 +2192,21 @@ def render_upcoming_game():
         import re as _re
         _active_lineup_html = _re.sub(r'<div style="font-weight:800;font-size:1\.05rem;letter-spacing:0\.5px;margin-bottom:8px;">TOP [53]-MAN [A-Z]+</div>', '', _active_lineup_html, count=1)
         _active_lineup_html = _re.sub(r'^<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;width:100%;margin:1\.5rem 0 0\.75rem;">', '<div style="zoom:1.1;">', _active_lineup_html, count=1)
-        with st.container(border=True):
-            # Center the toggle button via CSS
-            st.markdown('<style>[data-testid="stButton"] button[kind="secondary"] { display: block; margin: 0 auto; }</style>', unsafe_allow_html=True)
-            _left_pad, _btn_col, _right_pad = st.columns([1, 2, 1])
-            with _btn_col:
-                if st.button(f"{_current_title}  ⇄", key="lineup_toggle_btn", use_container_width=True):
-                    st.session_state.lineup_view = _other_view
-                    st.rerun()
-            st.markdown(_active_lineup_html, unsafe_allow_html=True)
-        # Lineup Scouting -- UWW Core Players, {Opponent} Vulnerabilities, Counter-Lineup Recommendations.
-        # This used to be dropped from rendering entirely (its top-line findings were summarized into two
-        # "Lineup Scouting" items in the unified Keys to Victory list instead), but that lost UWW Core
-        # Players altogether and flattened Vulnerabilities/Counter-Lineup down to one item each instead of
-        # the fuller top-3 breakdown below -- so the full card is back, in addition to (not instead of) the
-        # quick-glance versions in Keys to Victory.
-        st.markdown(f'<div style="zoom:1.1;">{_scouting_html}</div>', unsafe_allow_html=True)
+        _col_lu, _col_sc = st.columns([1.4, 0.8])
+        with _col_lu:
+            with st.container(border=True):
+                # Center the toggle button via CSS
+                st.markdown('<style>[data-testid="stButton"] button[kind="secondary"] { display: block; margin: 0 auto; }</style>', unsafe_allow_html=True)
+                _left_pad, _btn_col, _right_pad = st.columns([1, 2, 1])
+                with _btn_col:
+                    if st.button(f"{_current_title}  ⇄", key="lineup_toggle_btn", use_container_width=True):
+                        st.session_state.lineup_view = _other_view
+                        st.rerun()
+                st.markdown(_active_lineup_html, unsafe_allow_html=True)
+        with _col_sc:
+            # Lineup Scouting -- UWW Core Players, {Opponent} Vulnerabilities, Counter-Lineup Recommendations.
+            # Back to sitting alongside the lineup toggle, same as originally, rather than stacked below it.
+            st.markdown(f'<div style="zoom:1.1;">{_scouting_html}</div>', unsafe_allow_html=True)
 
 
     # Scouting Report header with PDF download link
@@ -3077,14 +3076,15 @@ def render_upcoming_game():
         except Exception:
             pass
 
-        for _label, _value, _help in _at_a_glance:
-            _icon, _rest = (_label.split(" ", 1) + [""])[:2]
-            _keys.append((_icon or "\U0001f3af", f"{_rest or _label}: {_value}", None, _help, "Data-Driven"))
+        # NOTE: _at_a_glance itself is no longer converted into condensed "Data-Driven" entries in _keys --
+        # the Full Game Plan Recommendations grid below is the sole representation of this data now, not an
+        # addition alongside a condensed duplicate of it in the Keys to Victory list.
 
         # --- Full Game Plan Recommendations: the fuller version of the 8 tiles above (top-3 plays and a
         # "use sparingly" list instead of just the single best/worst, 2 bench/clutch players instead of 1,
-        # the opponent's actual lineup names, etc.) -- this got lost when the recommendations were folded
-        # into the single-line Keys to Victory list further down, so it's back as its own visible grid. ---
+        # the opponent's actual lineup names, etc.). This REPLACES the condensed single-line "Data-Driven"
+        # entries that used to also appear in the Keys to Victory list below -- shown here instead of there,
+        # not in addition to it. ---
         if _card_data:
             st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001f4cb FULL GAME PLAN RECOMMENDATIONS</div></div>', unsafe_allow_html=True)
             _fp_col1, _fp_col2 = st.columns(2)
