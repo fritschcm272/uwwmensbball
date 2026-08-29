@@ -3533,8 +3533,8 @@ def render_upcoming_opponent_new():
     _new_tab_stats, _new_tab_ktv, _new_tab_personnel, _new_tab_tools = st.tabs(["\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f3ae Tools"])
     with _new_tab_stats:
         _new_stats_leaders_c = st.container()
+        _new_stats_top5_c = st.container()
         _new_stats_comparable_c = st.container()
-        _new_stats_proj_c = st.container()
     with _new_tab_ktv:
         _new_ktv_container = st.container()
         _new_rec_container = st.container()
@@ -3542,6 +3542,7 @@ def render_upcoming_opponent_new():
         _new_personnel_roster_c = st.container()
         _new_personnel_scouting_c = st.container()
     with _new_tab_tools:
+        _new_tools_proj_c = st.container()
         _new_tools_lineup_c = st.container()
 
     # --- NEW: Data-Driven Keys to Victory (get_data_driven_ktv() already existed but was never wired
@@ -4519,30 +4520,31 @@ def render_upcoming_opponent_new():
     _combined_lineups_html = _build_combined_lineups_card(_uww_lu_agg, _opp_lu, _uww_3man_agg, _opp_3man_agg, opp_display)
     _scouting_html = _build_scouting_summary_html(_uww_lu_agg, _uww_3man_agg, _opp_lu, opp_display, _stints)
 
-    # Spacing between sections above and lineup row below
-    st.markdown('<div style="margin-top:2.5rem;"></div>', unsafe_allow_html=True)
+    with _new_stats_top5_c:
+        # Spacing between sections above and lineup row below
+        st.markdown('<div style="margin-top:2.5rem;"></div>', unsafe_allow_html=True)
 
-    # Render: Lineup toggle (5-Man or 3-Man) | Lineup Scouting in one row
-    if "lineup_view" not in st.session_state:
-        st.session_state.lineup_view = "5-Man Lineups"
-    _current_title = "TOP 5-MAN LINEUPS" if st.session_state.lineup_view == "5-Man Lineups" else "TOP 3-MAN COMBINATIONS"
-    _other_view = "3-Man Combinations" if st.session_state.lineup_view == "5-Man Lineups" else "5-Man Lineups"
-    _active_lineup_html = _lineups_html if st.session_state.lineup_view == "5-Man Lineups" else _3man_html
-    # Strip outer card wrapper (border/padding) and title — we'll use st.container for the border
-    import re as _re
-    _active_lineup_html = _re.sub(r'<div style="font-weight:800;font-size:1\.05rem;letter-spacing:0\.5px;margin-bottom:8px;">TOP [53]-MAN [A-Z]+</div>', '', _active_lineup_html, count=1)
-    _active_lineup_html = _re.sub(r'^<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;width:100%;margin:1\.5rem 0 0\.75rem;">', '<div style="zoom:1.1;">', _active_lineup_html, count=1)
-    with st.container(border=True):
-        # Center the toggle button via CSS
-        st.markdown('<style>[data-testid="stButton"] button[kind="secondary"] { display: block; margin: 0 auto; }</style>', unsafe_allow_html=True)
-        _left_pad, _btn_col, _right_pad = st.columns([1, 2, 1])
-        with _btn_col:
-            if st.button(f"{_current_title}  ⇄", key="lineup_toggle_btn", use_container_width=True):
-                st.session_state.lineup_view = _other_view
-                st.rerun()
-        st.markdown(_active_lineup_html, unsafe_allow_html=True)
-    # (Lineup Scouting -- opponent vulnerabilities & counter-lineup recs -- moved into the unified
-    # Keys to Victory section up top, instead of sitting here as its own column.)
+        # Render: Lineup toggle (5-Man or 3-Man) | Lineup Scouting in one row
+        if "lineup_view" not in st.session_state:
+            st.session_state.lineup_view = "5-Man Lineups"
+        _current_title = "TOP 5-MAN LINEUPS" if st.session_state.lineup_view == "5-Man Lineups" else "TOP 3-MAN COMBINATIONS"
+        _other_view = "3-Man Combinations" if st.session_state.lineup_view == "5-Man Lineups" else "5-Man Lineups"
+        _active_lineup_html = _lineups_html if st.session_state.lineup_view == "5-Man Lineups" else _3man_html
+        # Strip outer card wrapper (border/padding) and title — we'll use st.container for the border
+        import re as _re
+        _active_lineup_html = _re.sub(r'<div style="font-weight:800;font-size:1\.05rem;letter-spacing:0\.5px;margin-bottom:8px;">TOP [53]-MAN [A-Z]+</div>', '', _active_lineup_html, count=1)
+        _active_lineup_html = _re.sub(r'^<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;width:100%;margin:1\.5rem 0 0\.75rem;">', '<div style="zoom:1.1;">', _active_lineup_html, count=1)
+        with st.container(border=True):
+            # Center the toggle button via CSS
+            st.markdown('<style>[data-testid="stButton"] button[kind="secondary"] { display: block; margin: 0 auto; }</style>', unsafe_allow_html=True)
+            _left_pad, _btn_col, _right_pad = st.columns([1, 2, 1])
+            with _btn_col:
+                if st.button(f"{_current_title}  ⇄", key="lineup_toggle_btn", use_container_width=True):
+                    st.session_state.lineup_view = _other_view
+                    st.rerun()
+            st.markdown(_active_lineup_html, unsafe_allow_html=True)
+        # (Lineup Scouting -- opponent vulnerabilities & counter-lineup recs -- moved into the unified
+        # Keys to Victory section up top, instead of sitting here as its own column.)
 
 
     # Scouting Report header with PDF download link
@@ -4791,7 +4793,7 @@ def render_upcoming_opponent_new():
                                 st.caption(f"Similarity score: {_cr['_similarity_dist']:.2f} (lower = more similar)")
 
 
-    with _new_stats_proj_c:
+    with _new_tools_proj_c:
         st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">PROJECTED BOX SCORE</div></div>', unsafe_allow_html=True)
         uww_proj = load_table("uww_projected_box_score")
         opp_proj = load_table("uww_opponent_projected_box_score")  # was mismatched to a nonexistent "aurora_projected_box_score" file — this is the name the parser notebook actually exports (see parser cell 128)
