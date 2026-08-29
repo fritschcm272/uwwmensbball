@@ -5050,20 +5050,20 @@ def render_upcoming_opponent_new():
                     for _k in str(_sr_ktv.iloc[0]["notes"]).split("|"):
                         _k = re.sub(r"^\d+\.\s*", "", _k.strip())
                         if _k:
-                            _keys.append(("\U0001f4cb", _k, None, f"From the staff's scouting report for {short_opponent} (Keys to Victory).", "Keys to Victory"))
+                            _keys.append(("\U0001f4cb", _k, None, None, "Keys to Victory"))
                 _sr_strengths = _sr_opp_plan[_sr_opp_plan["topic"] == "TEAM STRENGTHS"]
                 if not _sr_strengths.empty:
                     for _s in str(_sr_strengths.iloc[0]["notes"]).split("|"):
                         _s = re.sub(r"^\d+\.\s*", "", _s.strip())
                         if _s:
-                            _keys.append(("\u26a0\ufe0f", f"Opponent strength: {_s}", None, f"Scouted strength for {short_opponent} -- defend accordingly.", "Team Strengths"))
+                            _keys.append(("\u26a0\ufe0f", f"Opponent strength: {_s}", None, None, "Team Strengths"))
                 _sr_other = _sr_opp_plan[~_sr_opp_plan["topic"].isin(["KEYS TO VICTORY", "TEAM STRENGTHS"])]
                 for _, _sr_row in _sr_other.iterrows():
                     _sr_notes = str(_sr_row["notes"])
                     _sr_items = [_i.strip() for _i in _sr_notes.split("|") if _i.strip()] if "|" in _sr_notes else [_sr_notes.strip()]
                     for _sr_item in _sr_items:
                         if _sr_item:
-                            _keys.append(("\U0001f4cb", _sr_item, None, f"From the full game plan \u2014 {_sr_row['category']}: {_sr_row['topic']}.", "Full Game Plan"))
+                            _keys.append(("\U0001f4cb", _sr_item, None, f"{_sr_row['category']}: {_sr_row['topic']}", "Full Game Plan"))
         except Exception:
             pass
 
@@ -5323,10 +5323,10 @@ def render_upcoming_opponent_new():
             _cat_order = [c for c in KTV_CATEGORY_REFERENCE if c in _grouped]
 
             def _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source):
-                if _cats:
-                    st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">{_n}. {_icon} {html.escape(_headline)}</span>{_badges_html(_cats, _side)}{_source_badge_html(_source)}</div>', unsafe_allow_html=True)
-                else:
-                    st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">{_n}. {_icon} {html.escape(_headline)}</span>{_source_badge_html(_source)}</div>', unsafe_allow_html=True)
+                # No per-item category badge -- the section header above already names the category, so
+                # repeating it on every item was redundant. Side (UWW/OPP) isn't shown anywhere else, so
+                # that badge stays.
+                st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">{_n}. {_icon} {html.escape(_headline)}</span>{_side_badge_html(_side)}{_source_badge_html(_source)}</div>', unsafe_allow_html=True)
                 if _caption:
                     st.caption(_caption)
                 if _reason:
