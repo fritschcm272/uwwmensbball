@@ -428,7 +428,7 @@ KTV_CATEGORY_REFERENCE = {
     "Scoring Inside": {"keywords": "dominate the paint, attack the paint, live in the paint, attack the basket, scoring at the rim, get to rim, attack the rim, get to the rim, post up, post-up, paint touches, drive, drives, downhill, finish at the rim", "stats": "FG2M, FG2A, FG2%"},
     "Field Goal Efficiency": {"keywords": "limit their scoring, field goal, field goal%, fg%, shooting percentage, efficient shooting, efficiency, good shots, quality shots", "stats": "FGM-A, FG%"},
     "Defensive Efficiency": {"keywords": "high-volume, high volume, funnel, funneling, take away, most efficient, shot profile, shot diet, inefficient looks, worst looks, multiple efforts, multiple effort, never stop", "stats": "Opp FG% by shot type"},
-    "Offensive Efficiency": {"keywords": "attack & execute, attack and execute, execute offensively, attack offensively", "stats": "TS%, eFG%"},
+    "Offensive Efficiency": {"keywords": "attack & execute, attack and execute, execute offensively, attack offensively, shot selection, shot quality, best shot type", "stats": "TS%, eFG%"},
 }
 
 # Side detection: maps scouting phrases to whether they describe UWW (proactive) or OPP (contain opponent)
@@ -5090,6 +5090,63 @@ def render_upcoming_opponent_new():
                 if not _ls_opp_top.empty and not _ls_best_uww.empty:
                     _ls_bu = _ls_best_uww.iloc[0]
                     _keys.append(("\U0001f512", f"Counter with {_last_names(_ls_bu['lineup'])}", f"{_ls_bu['+/-']:+.1f} in {_ls_bu['MIN']:.1f} min", f"Best UWW lineup by net rating vs. {short_opponent}'s most-used lineup ({_last_names(_ls_opp_top.iloc[0]['lineup'])}).", "Lineup Scouting"))
+        except Exception:
+            pass
+
+        # E2. Best shot type: what UWW is most efficient at as a team (shot mechanic + contest level, from
+        # the same video-tagging the Analytics page's Shot Selection & Quality section already uses), which
+        # 5-man lineup gets that shot type most efficiently, and which offensive play call generates it most
+        # often. All three combined into one Offensive Efficiency key.
+        try:
+            _ss_pbp = load_table("uww_pbp_events")
+            _ss_uww = _ss_pbp[(_ss_pbp["team"] == "UW-Whitewater") & (_ss_pbp["event_type"].isin(["made_shot", "missed_shot"]))].copy()
+            _ss_uww = _ss_uww[_ss_uww["video_description"].notna()]
+            if not _ss_uww.empty:
+                _ss_uww["_mechanic"] = _ss_uww["video_description"].apply(extract_shot_mechanic)
+                _ss_uww["_contest"] = _ss_uww["video_description"].apply(extract_contest)
+                _ss_uww["_make"] = _ss_uww["event_type"] == "made_shot"
+                _ss_grouped = _ss_uww[_ss_uww["_mechanic"].notna() & _ss_uww["_contest"].notna()].groupby(["_mechanic", "_contest"]).agg(
+                    Attempts=("_make", "count"), Makes=("_make", "sum"),
+                ).reset_index()
+                _ss_grouped = _ss_grouped[_ss_grouped["Attempts"] >= 8]  # need a real sample before calling it "best"
+                if not _ss_grouped.empty:
+                    _ss_grouped["FG%"] = 100 * _ss_grouped["Makes"] / _ss_grouped["Attempts"]
+                    _ss_best = _ss_grouped.nlargest(1, "FG%").iloc[0]
+                    _ss_best_mechanic, _ss_best_contest = _ss_best["_mechanic"], _ss_best["_contest"]
+                    _ss_best_rows = _ss_uww[(_ss_uww["_mechanic"] == _ss_best_mechanic) & (_ss_uww["_contest"] == _ss_best_contest)]
+
+                    # Which 5-man lineup gets this specific shot type most efficiently (needs uww_lineup on
+                    # pbp_events -- only present after re-running the parser with the export fix; gracefully
+                    # omitted rather than guessed at if it's not there yet).
+                    _ss_lineup_txt = None
+                    if "uww_lineup" in _ss_best_rows.columns:
+                        _ss_lu_rows = _ss_best_rows[_ss_best_rows["uww_lineup"].notna()]
+                        if not _ss_lu_rows.empty:
+                            _ss_lu_grouped = _ss_lu_rows.groupby("uww_lineup").agg(Attempts=("_make", "count"), Makes=("_make", "sum")).reset_index()
+                            _ss_lu_grouped = _ss_lu_grouped[_ss_lu_grouped["Attempts"] >= 3]
+                            if not _ss_lu_grouped.empty:
+                                _ss_lu_grouped["FG%"] = 100 * _ss_lu_grouped["Makes"] / _ss_lu_grouped["Attempts"]
+                                _ss_best_lu = _ss_lu_grouped.nlargest(1, "FG%").iloc[0]
+                                _ss_lineup_txt = f"{_last_names(_ss_best_lu['uww_lineup'])} gets it best ({int(_ss_best_lu['Makes'])}/{int(_ss_best_lu['Attempts'])}, {_ss_best_lu['FG%']:.0f}%)"
+
+                    # Which offensive play call generates this shot type most often (needs a coach_note with
+                    # an extractable play call on the same event -- only present for games with a recap CSV).
+                    _ss_play_txt = None
+                    if "coach_note" in _ss_best_rows.columns:
+                        _ss_calls = _ss_best_rows["coach_note"].apply(extract_offensive_play_call).dropna()
+                        if not _ss_calls.empty:
+                            _ss_top_call = _ss_calls.value_counts().idxmax()
+                            _ss_play_txt = f'"{_ss_top_call}" generates it most often ({int((_ss_calls == _ss_top_call).sum())}x)'
+
+                    _ss_parts = [p for p in [_ss_lineup_txt, _ss_play_txt] if p]
+                    _ss_reason = " -- ".join(_ss_parts) if _ss_parts else "Not enough lineup/play-call data linked to these shots yet to say which lineup or play generates them most."
+                    _keys.append((
+                        "\U0001f3c0",
+                        f"Best shot selection & quality: {_ss_best_mechanic}, {_ss_best_contest}",
+                        f"{int(_ss_best['Makes'])}/{int(_ss_best['Attempts'])} ({_ss_best['FG%']:.0f}%) this season",
+                        _ss_reason,
+                        "Data-Driven",
+                    ))
         except Exception:
             pass
 
