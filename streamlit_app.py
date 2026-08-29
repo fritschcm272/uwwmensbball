@@ -908,6 +908,21 @@ def extract_offensive_play_call(note) -> str:
     return m.group(1).strip() if m else None
 
 
+def resolve_play_calls(df: pd.DataFrame, coach_note_col: str = "coach_note") -> pd.Series:
+    """Play-call name per row, preferring the parser's own real "play_call" column (populated when a
+    season-wide play-call log CSV -- e.g. "uww_plays_25_26.csv" -- covers that row) over the regex-based
+    extract_offensive_play_call() guess from free-text coach commentary. The real column is exact,
+    structured data straight from the play log; the regex is a best-effort fallback for rows that only have
+    a coach's free-text note (from a single-game "*_recap.csv") with no matching play-log entry. Falls back
+    entirely to the regex if "play_call" isn't a column at all yet (older data, before the parser's been
+    re-run with this field added). Returns a Series aligned to df's index."""
+    _regex_fallback = df[coach_note_col].apply(extract_offensive_play_call)
+    if "play_call" not in df.columns:
+        return _regex_fallback
+    _has_real_call = df["play_call"].notna() & (df["play_call"].astype(str).str.strip() != "")
+    return df["play_call"].where(_has_real_call, _regex_fallback)
+
+
 def note_sentiment_counts(note) -> tuple:
     """Count "+"-prefixed (execution point that went well) vs "-"-prefixed (went wrong) clauses within one
     coach note, splitting on commas -- this team's notation consistently marks individual observations this
@@ -3144,7 +3159,7 @@ li {{ margin-bottom: 4px; }}
                 if _gp_off.empty:
                     st.caption("No coach-tagged offensive play calls recorded yet this season.")
                 else:
-                    _gp_off["play_call"] = _gp_off["coach_note"].apply(extract_offensive_play_call)
+                    _gp_off["play_call"] = resolve_play_calls(_gp_off)
                     _gp_calls = _gp_off[_gp_off["play_call"].notna()].copy()
                     if _gp_calls.empty:
                         st.caption("No named play calls detected in this season's offensive notes yet.")
@@ -3400,7 +3415,7 @@ li {{ margin-bottom: 4px; }}
             if _gp_opp_plan_text.strip():
                 _gp_notes_pbp = _gp_pbp_all[(_gp_pbp_all["team"] == "UW-Whitewater") & _gp_pbp_all["coach_note"].notna()].copy()
                 if not _gp_notes_pbp.empty:
-                    _gp_notes_pbp["play_call"] = _gp_notes_pbp["coach_note"].apply(extract_offensive_play_call)
+                    _gp_notes_pbp["play_call"] = resolve_play_calls(_gp_notes_pbp)
                     _gp_notes_pbp = _gp_notes_pbp[_gp_notes_pbp["play_call"].notna()]
                     if not _gp_notes_pbp.empty:
                         _gp_notes_pbp["action_tag"] = _gp_notes_pbp.apply(
@@ -5133,7 +5148,7 @@ def render_upcoming_opponent_new():
                     # an extractable play call on the same event -- only present for games with a recap CSV).
                     _ss_play_txt = None
                     if "coach_note" in _ss_best_rows.columns:
-                        _ss_calls = _ss_best_rows["coach_note"].apply(extract_offensive_play_call).dropna()
+                        _ss_calls = resolve_play_calls(_ss_best_rows).dropna()
                         if not _ss_calls.empty:
                             _ss_top_call = _ss_calls.value_counts().idxmax()
                             _ss_play_txt = f'"{_ss_top_call}" generates it most often ({int((_ss_calls == _ss_top_call).sum())}x)'
@@ -5158,7 +5173,7 @@ def render_upcoming_opponent_new():
         try:
             _ag_notes = load_table("uww_coach_notes")
             _ag_off = _ag_notes[_ag_notes["clip_side"] == "Offense"].copy() if not _ag_notes.empty and "clip_side" in _ag_notes.columns else pd.DataFrame()
-            _ag_off["play_call"] = _ag_off["coach_note"].apply(extract_offensive_play_call) if not _ag_off.empty else None
+            _ag_off["play_call"] = resolve_play_calls(_ag_off) if not _ag_off.empty else None
             _ag_calls = _ag_off[_ag_off["play_call"].notna()].copy() if not _ag_off.empty else pd.DataFrame()
             if not _ag_calls.empty:
                 _ag_calls["_mk"] = _ag_calls["result"].astype(str).str.contains("Make", case=False, na=False)
@@ -7519,7 +7534,7 @@ def render_analytics():
 
         # --- Play calls (offense only) ---
         if not off_notes.empty:
-            off_notes["play_call"] = off_notes["coach_note"].apply(extract_offensive_play_call)
+            off_notes["play_call"] = resolve_play_calls(off_notes)
             call_rows = off_notes[off_notes["play_call"].notna()].copy()
             st.markdown("**Play Calls**")
             if not call_rows.empty:
