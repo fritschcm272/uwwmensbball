@@ -5443,38 +5443,59 @@ def render_upcoming_opponent_new():
                     return None
                 return None  # Defensive Efficiency and any future category with no single clean box-score stat
 
+            # --- Map every full-game-plan item to whichever KTV category(ies) it actually relates to, using
+            # the same matcher the keys themselves use -- so each category's "Game Plan" button shows only
+            # the game-plan content relevant to THAT category, not the entire game plan every time. ---
+            _gpd_plans_all = load_table("uww_opponent_game_plans")
+            _gpd_opp_all = _gpd_plans_all[_gpd_plans_all["opponent"] == short_opponent] if not _gpd_plans_all.empty and short_opponent else pd.DataFrame()
+            _gpd_other_all = _gpd_opp_all[~_gpd_opp_all["topic"].isin(["KEYS TO VICTORY", "TEAM STRENGTHS"])] if not _gpd_opp_all.empty else pd.DataFrame()
+            _gpd_other_all = _gpd_other_all[_gpd_other_all["category"].astype(str).str.contains("game plan", case=False, na=False)] if not _gpd_other_all.empty else _gpd_other_all
+
+            _game_plan_by_cat = {}  # KTV category -> list of (game-plan category, topic, item text)
+            if not _gpd_other_all.empty:
+                for _, _gpd_row in _gpd_other_all.iterrows():
+                    _gpd_notes = str(_gpd_row["notes"])
+                    _gpd_items = [_i.strip() for _i in _gpd_notes.split("|") if _i.strip()] if "|" in _gpd_notes else [_gpd_notes.strip()]
+                    for _gpd_item in _gpd_items:
+                        if not _gpd_item:
+                            continue
+                        for _gpd_ktv_cat in _match_categories(f"{_gpd_row['topic']} {_gpd_item}"):
+                            _game_plan_by_cat.setdefault(_gpd_ktv_cat, []).append((_gpd_row["category"], _gpd_row["topic"], _gpd_item))
+
             @st.dialog("\U0001f4cb Game Plan", width="large")
-            def _show_game_plan_dialog():
-                """The rest of the scouting report -- any game-plan category with "Game Plan" in its own name
-                (e.g. "Offensive Game Plan"/"Defensive Game Plan"), organized by that category and then by
-                topic within it. Triggered by the "Game Plan" button under any KTV category header -- all of
-                them open this same dialog, since the game plan itself isn't split per KTV category."""
-                _gpd_plans = load_table("uww_opponent_game_plans")
-                _gpd_opp = _gpd_plans[_gpd_plans["opponent"] == short_opponent] if not _gpd_plans.empty and short_opponent else pd.DataFrame()
-                _gpd_other = _gpd_opp[~_gpd_opp["topic"].isin(["KEYS TO VICTORY", "TEAM STRENGTHS"])] if not _gpd_opp.empty else pd.DataFrame()
-                _gpd_other = _gpd_other[_gpd_other["category"].astype(str).str.contains("game plan", case=False, na=False)] if not _gpd_other.empty else _gpd_other
-                if _gpd_other.empty:
-                    st.info(f"No full game plan recorded yet for {short_opponent}.")
+            def _show_game_plan_dialog(ktv_category):
+                """Only the full-game-plan items that matched THIS KTV category (see _game_plan_by_cat above)
+                -- organized by the game plan's own category and topic, same as the old page's expander did,
+                just scoped down to what's actually relevant here instead of the whole game plan."""
+                _gpd_items_for_cat = _game_plan_by_cat.get(ktv_category, [])
+                if not _gpd_items_for_cat:
+                    st.info(f"No full game plan items matched to {ktv_category} yet for {short_opponent}.")
                     return
-                for _gpd_cat in _gpd_other["category"].unique():
-                    _gpd_group = _gpd_other[_gpd_other["category"] == _gpd_cat]
+                st.caption(f"Game plan items related to **{ktv_category}**:")
+                _gpd_by_gp_cat = {}
+                for _gpd_cat, _gpd_topic, _gpd_item in _gpd_items_for_cat:
+                    _gpd_by_gp_cat.setdefault(_gpd_cat, {}).setdefault(_gpd_topic, []).append(_gpd_item)
+                for _gpd_cat, _gpd_topics in _gpd_by_gp_cat.items():
                     st.markdown(f"#### {_gpd_cat}")
-                    for _, _gpd_row in _gpd_group.iterrows():
-                        st.markdown(f"**{_gpd_row['topic']}**")
-                        _gpd_notes = str(_gpd_row["notes"])
-                        _gpd_items = [_i.strip() for _i in _gpd_notes.split("|") if _i.strip()] if "|" in _gpd_notes else [_gpd_notes.strip()]
-                        for _gpd_item in _gpd_items:
+                    for _gpd_topic, _gpd_item_list in _gpd_topics.items():
+                        st.markdown(f"**{_gpd_topic}**")
+                        for _gpd_item in _gpd_item_list:
                             st.markdown(f"- {_gpd_item}")
                     st.markdown("")
 
             for _cat in _cat_order:
                 _bg, _fg = _CAT_COLORS.get(_cat, ("#e8e0f0", "#4E2A84"))
-                _cat_hdr_c1, _cat_hdr_c2 = st.columns([0.8, 0.2])
+                _cat_has_gp = bool(_game_plan_by_cat.get(_cat))
+                if _cat_has_gp:
+                    _cat_hdr_c1, _cat_hdr_c2 = st.columns([0.8, 0.2])
+                else:
+                    _cat_hdr_c1 = st.container()
                 with _cat_hdr_c1:
                     st.markdown(f'<div style="background:{_bg};color:{_fg};display:inline-block;font-size:0.85rem;font-weight:700;padding:3px 12px;border-radius:10px;margin:10px 0 6px;">{html.escape(_cat)}</div>', unsafe_allow_html=True)
-                with _cat_hdr_c2:
-                    if st.button("\U0001f4cb Game Plan", key=f"gameplan_btn_{_cat}", use_container_width=True):
-                        _show_game_plan_dialog()
+                if _cat_has_gp:
+                    with _cat_hdr_c2:
+                        if st.button("\U0001f4cb Game Plan", key=f"gameplan_btn_{_cat}", use_container_width=True):
+                            _show_game_plan_dialog(_cat)
                 _cs_line = _category_stat_line(_cat)
                 if _cs_line and (_cs_line[0] or _cs_line[1]):
                     st.caption("  |  ".join(x for x in _cs_line if x))
