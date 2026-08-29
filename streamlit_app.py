@@ -5029,7 +5029,7 @@ def render_upcoming_opponent_new():
             _dk_all = load_table("uww_pbp_derived_keys")
             _dk_opp = _dk_all[_dk_all["opponent"] == short_opponent].sort_values("key_number") if not _dk_all.empty and short_opponent else pd.DataFrame()
             for _, _dk in _dk_opp.iterrows():
-                _keys.append(("\U0001f4ca", str(_dk["title"]), f"{_dk['supporting_stats']} \u2014 {_dk['recommendation']}"))
+                _keys.append(("\U0001f4ca", str(_dk["title"]), str(_dk["supporting_stats"]), str(_dk["recommendation"])))
         except Exception:
             pass
 
@@ -5044,20 +5044,20 @@ def render_upcoming_opponent_new():
                     for _k in str(_sr_ktv.iloc[0]["notes"]).split("|"):
                         _k = re.sub(r"^\d+\.\s*", "", _k.strip())
                         if _k:
-                            _keys.append(("\U0001f4cb", _k, f"From the staff's scouting report for {short_opponent} (Keys to Victory)."))
+                            _keys.append(("\U0001f4cb", _k, None, f"From the staff's scouting report for {short_opponent} (Keys to Victory)."))
                 _sr_strengths = _sr_opp_plan[_sr_opp_plan["topic"] == "TEAM STRENGTHS"]
                 if not _sr_strengths.empty:
                     for _s in str(_sr_strengths.iloc[0]["notes"]).split("|"):
                         _s = re.sub(r"^\d+\.\s*", "", _s.strip())
                         if _s:
-                            _keys.append(("\u26a0\ufe0f", f"Opponent strength: {_s}", f"Scouted strength for {short_opponent} -- defend accordingly."))
+                            _keys.append(("\u26a0\ufe0f", f"Opponent strength: {_s}", None, f"Scouted strength for {short_opponent} -- defend accordingly."))
                 _sr_other = _sr_opp_plan[~_sr_opp_plan["topic"].isin(["KEYS TO VICTORY", "TEAM STRENGTHS"])]
                 for _, _sr_row in _sr_other.iterrows():
                     _sr_notes = str(_sr_row["notes"])
                     _sr_items = [_i.strip() for _i in _sr_notes.split("|") if _i.strip()] if "|" in _sr_notes else [_sr_notes.strip()]
                     for _sr_item in _sr_items:
                         if _sr_item:
-                            _keys.append(("\U0001f4cb", _sr_item, f"From the full game plan \u2014 {_sr_row['category']}: {_sr_row['topic']}."))
+                            _keys.append(("\U0001f4cb", _sr_item, None, f"From the full game plan \u2014 {_sr_row['category']}: {_sr_row['topic']}."))
         except Exception:
             pass
 
@@ -5068,13 +5068,13 @@ def render_upcoming_opponent_new():
                 _ls_worst = _opp_lu[_opp_lu["MIN"] >= 3.0].nsmallest(1, "+/-")
                 if not _ls_worst.empty:
                     _ls_wr = _ls_worst.iloc[0]
-                    _keys.append(("\U0001f512", f"Attack {short_opponent}'s {_last_names(_ls_wr['lineup'])} lineup", f"Their worst net-rating lineup with real minutes this season: {_ls_wr['+/-']:+.1f} in {_ls_wr['MIN']:.1f} min."))
+                    _keys.append(("\U0001f512", f"Attack {short_opponent}'s {_last_names(_ls_wr['lineup'])} lineup", f"{_ls_wr['+/-']:+.1f} in {_ls_wr['MIN']:.1f} min", "Their worst net-rating lineup with real minutes this season."))
             if _opp_lu is not None and not _opp_lu.empty and _uww_lu_agg is not None and not _uww_lu_agg.empty:
                 _ls_opp_top = _opp_lu.nlargest(1, "MIN")
                 _ls_best_uww = _uww_lu_agg[_uww_lu_agg["MIN"] >= 3.0].nlargest(1, "+/-")
                 if not _ls_opp_top.empty and not _ls_best_uww.empty:
                     _ls_bu = _ls_best_uww.iloc[0]
-                    _keys.append(("\U0001f512", f"Counter with {_last_names(_ls_bu['lineup'])}", f"Best UWW lineup by net rating vs. {short_opponent}'s most-used lineup ({_last_names(_ls_opp_top.iloc[0]['lineup'])}): {_ls_bu['+/-']:+.1f} in {_ls_bu['MIN']:.1f} min."))
+                    _keys.append(("\U0001f512", f"Counter with {_last_names(_ls_bu['lineup'])}", f"{_ls_bu['+/-']:+.1f} in {_ls_bu['MIN']:.1f} min", f"Best UWW lineup by net rating vs. {short_opponent}'s most-used lineup ({_last_names(_ls_opp_top.iloc[0]['lineup'])})."))
         except Exception:
             pass
 
@@ -5209,19 +5209,106 @@ def render_upcoming_opponent_new():
 
         for _label, _value, _help in _at_a_glance:
             _icon, _rest = (_label.split(" ", 1) + [""])[:2]
-            _keys.append((_icon or "\U0001f3af", f"{_rest or _label}: {_value}", _help))
+            _keys.append((_icon or "\U0001f3af", f"{_rest or _label}: {_value}", None, _help))
 
-        # --- Render: one flowing list, not separate cards/sections -- a small \u2753 popover per row
-        # holds the reason why, so the list itself stays scannable. ---
+        # --- Group by KTV category and render like the old page's "Keys to Victory (Data-Driven)" section:
+        # numbered items with colored category badges, a stat caption, and the reasoning in italics --
+        # instead of a flat list with reasoning hidden behind a popover. ---
+        _CAT_COLORS = {
+            "Ball Security / Turnovers": ("#fff3e0", "#e65100"),
+            "Rebounding": ("#e8f5e9", "#2e7d32"),
+            "Three-Point Shooting": ("#e3f2fd", "#1565c0"),
+            "Free Throws": ("#fce4ec", "#c62828"),
+            "Fouls / Discipline": ("#fff8e1", "#f57f17"),
+            "Ball Movement / Assists": ("#f3e5f5", "#6a1b9a"),
+            "Paint Protection / Blocks": ("#efebe9", "#4e342e"),
+            "Perimeter Defense / Ball Pressure": ("#e0f7fa", "#00838f"),
+            "Scoring Inside": ("#ede7f6", "#4527a0"),
+            "Field Goal Efficiency": ("#e8e0f0", "#4E2A84"),
+        }
+        _valid_cats = set(load_table("uww_ktv_splits")["category"].unique()) | set(KTV_CATEGORY_REFERENCE.keys())
+
+        def _match_categories(text):
+            text_lower = str(text).lower()
+            matched = []
+            for _cat, _details in KTV_CATEGORY_REFERENCE.items():
+                if _cat not in _valid_cats:
+                    continue
+                for _kw in [_kw.strip() for _kw in _details["keywords"].split(",")]:
+                    if _kw in text_lower:
+                        if _cat not in matched:
+                            matched.append(_cat)
+                        break
+            return matched
+
+        def _detect_side(text):
+            text_lower = str(text).lower()
+            sides_found = set()
+            for phrase, side in PHRASE_SIDE.items():
+                if phrase in text_lower:
+                    sides_found.add(side)
+            if "OPP" in sides_found and "UWW" not in sides_found:
+                return "OPP"
+            if "UWW" in sides_found and "OPP" not in sides_found:
+                return "UWW"
+            if "OPP" in sides_found and "UWW" in sides_found:
+                return "BOTH"
+            return None
+
+        def _side_badge_html(side):
+            if side == "UWW":
+                return ' <span style="background:#4E2A84;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px;margin-left:3px;">UWW</span>'
+            elif side == "OPP":
+                return ' <span style="background:#1a1a2e;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px;margin-left:3px;">OPP</span>'
+            elif side == "BOTH":
+                return (' <span style="background:#4E2A84;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px 0 0 8px;margin-left:3px;">UWW</span>'
+                        '<span style="background:#1a1a2e;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:0 8px 8px 0;">OPP</span>')
+            return ""
+
+        def _badges_html(cats, side=None):
+            badges = _side_badge_html(side) if side else ""
+            for c in cats:
+                bg, fg = _CAT_COLORS.get(c, ("#e8e0f0", "#4E2A84"))
+                badges += f' <span style="background:{bg};color:{fg};font-size:0.7rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:4px;">{html.escape(c)}</span>'
+            return badges
+
         if _keys:
-            for _ki, (_icon, _headline, _reason) in enumerate(_keys):
-                _row_c1, _row_c2 = st.columns([0.94, 0.06])
-                with _row_c1:
-                    st.markdown(f"{_icon} {esc(_headline)}")
-                with _row_c2:
-                    with st.popover("\u2753"):
-                        st.caption("**Reason why:**")
-                        st.write(_reason)
+            _grouped = {}
+            _ungrouped = []
+            for _icon, _headline, _caption, _reason in _keys:
+                _match_text = f"{_headline} {_caption or ''} {_reason or ''}"
+                _cats = _match_categories(_match_text)
+                _side = _detect_side(_match_text)
+                if _cats:
+                    _grouped.setdefault(_cats[0], []).append((_icon, _headline, _caption, _reason, _cats, _side))
+                else:
+                    _ungrouped.append((_icon, _headline, _caption, _reason, [], _side))
+
+            # Stable category order: whichever order they're defined in KTV_CATEGORY_REFERENCE, skipping
+            # any category nothing matched this game.
+            _cat_order = [c for c in KTV_CATEGORY_REFERENCE if c in _grouped]
+
+            def _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side):
+                if _cats:
+                    st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">{_n}. {_icon} {html.escape(_headline)}</span>{_badges_html(_cats, _side)}</div>', unsafe_allow_html=True)
+                else:
+                    st.markdown(f"**{_n}. {_icon} {_headline}**")
+                if _caption:
+                    st.caption(_caption)
+                if _reason:
+                    st.markdown(f"_{_reason}_")
+                st.markdown("")
+
+            for _cat in _cat_order:
+                _bg, _fg = _CAT_COLORS.get(_cat, ("#e8e0f0", "#4E2A84"))
+                st.markdown(f'<div style="background:{_bg};color:{_fg};display:inline-block;font-size:0.85rem;font-weight:700;padding:3px 12px;border-radius:10px;margin:10px 0 6px;">{html.escape(_cat)}</div>', unsafe_allow_html=True)
+                for _n, (_icon, _headline, _caption, _reason, _cats, _side) in enumerate(_grouped[_cat], start=1):
+                    _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side)
+
+            if _ungrouped:
+                st.markdown('<div style="background:#eee;color:#555;display:inline-block;font-size:0.85rem;font-weight:700;padding:3px 12px;border-radius:10px;margin:10px 0 6px;">Other</div>', unsafe_allow_html=True)
+                for _n, (_icon, _headline, _caption, _reason, _cats, _side) in enumerate(_ungrouped, start=1):
+                    _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side)
         else:
             st.info("No scouting data available yet for this opponent.")
 
