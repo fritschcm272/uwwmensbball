@@ -429,6 +429,7 @@ KTV_CATEGORY_REFERENCE = {
     "Field Goal Efficiency": {"keywords": "limit their scoring, field goal, field goal%, fg%, shooting percentage, efficient shooting, efficiency, good shots, quality shots", "stats": "FGM-A, FG%"},
     "Defensive Efficiency": {"keywords": "high-volume, high volume, funnel, funneling, take away, most efficient, shot profile, shot diet, inefficient looks, worst looks, multiple efforts, multiple effort, never stop", "stats": "Opp FG% by shot type"},
     "Offensive Efficiency": {"keywords": "attack & execute, attack and execute, execute offensively, attack offensively, shot selection, shot quality, best shot type", "stats": "TS%, eFG%"},
+    "Personnel/Rotation": {"keywords": "bench trust, off the bench, foul trouble, closing lineup, closing 5, close the game, clutch, late-game, late game, rotation, sub pattern, substitution pattern, trust plan, who to trust, core players", "stats": "MIN, Game Score"},
 }
 
 # Side detection: maps scouting phrases to whether they describe UWW (proactive) or OPP (contain opponent)
@@ -2936,6 +2937,97 @@ def render_upcoming_game():
         # F. Season-stat-based recommendations (pace/style, rebounding, bench trust, clutch, turnovers,
         # closing lineup, top play call) -- same computations as before, now feeding the same list
         # instead of their own separate tile grid.
+        _CAT_COLORS = {
+            "Ball Security": ("#fff3e0", "#e65100"),
+            "Rebounding": ("#e8f5e9", "#2e7d32"),
+            "Three-Point Shooting": ("#e3f2fd", "#1565c0"),
+            "Free Throws": ("#fce4ec", "#c62828"),
+            "Fouls / Discipline": ("#fff8e1", "#f57f17"),
+            "Ball Movement / Assists": ("#f3e5f5", "#6a1b9a"),
+            "Paint Protection / Blocks": ("#efebe9", "#4e342e"),
+            "Perimeter Defense / Ball Pressure/ Create Turnovers": ("#e0f7fa", "#00838f"),
+            "Scoring Inside": ("#ede7f6", "#4527a0"),
+            "Field Goal Efficiency": ("#e8e0f0", "#4E2A84"),
+            "Defensive Efficiency": ("#eceff1", "#37474f"),
+            "Offensive Efficiency": ("#fff9c4", "#f9a825"),
+            "Personnel/Rotation": ("#e1f5fe", "#0277bd"),
+        }
+        _valid_cats = set(load_table("uww_ktv_splits")["category"].unique()) | set(KTV_CATEGORY_REFERENCE.keys())
+
+        def _keyword_matches(keyword, text_lower):
+            """Word-boundary match instead of naive substring -- a bare "3" as a keyword now correctly
+            matches "3's"/"3s"/"hit their 3" (a real gap: "hunt transition 3's" matched NO Three-Point
+            Shooting keyword under the old naive `kw in text` check, since none of "three"/"3 pt"/"3pt" is a
+            literal substring of "transition 3's" -- landing it in "Other" instead of being tagged). \\b
+            treats a boundary between a word character and a non-word character (or string start/end), so
+            \\b3\\b matches the "3" in "3's" (digit -> apostrophe is a boundary) and in "hit 3 shots", but
+            NOT the "3" inside "23" or "63.4" (no boundary between two digits) -- so this doesn't introduce
+            false positives on stray numbers the way a bare substring check of "3" would have.
+            """
+            return re.search(r"\b" + re.escape(keyword) + r"\b", text_lower) is not None
+
+        def _match_categories(text):
+            text_lower = str(text).lower()
+            matched = []
+            for _cat, _details in KTV_CATEGORY_REFERENCE.items():
+                if _cat not in _valid_cats:
+                    continue
+                for _kw in [_kw.strip() for _kw in _details["keywords"].split(",")]:
+                    if _kw and _keyword_matches(_kw, text_lower):
+                        if _cat not in matched:
+                            matched.append(_cat)
+                        break
+            return matched
+
+        def _detect_side(text):
+            text_lower = str(text).lower()
+            sides_found = set()
+            for phrase, side in PHRASE_SIDE.items():
+                if phrase and _keyword_matches(phrase, text_lower):
+                    sides_found.add(side)
+            if "OPP" in sides_found and "UWW" not in sides_found:
+                return "OPP"
+            if "UWW" in sides_found and "OPP" not in sides_found:
+                return "UWW"
+            if "OPP" in sides_found and "UWW" in sides_found:
+                return "BOTH"
+            return None
+
+        def _side_badge_html(side):
+            if side == "UWW":
+                return ' <span style="background:#4E2A84;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px;margin-left:3px;">UWW</span>'
+            elif side == "OPP":
+                return ' <span style="background:#1a1a2e;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px;margin-left:3px;">OPP</span>'
+            elif side == "BOTH":
+                return (' <span style="background:#4E2A84;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px 0 0 8px;margin-left:3px;">UWW</span>'
+                        '<span style="background:#1a1a2e;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:0 8px 8px 0;">OPP</span>')
+            return ""
+
+        def _badges_html(cats, side=None):
+            badges = _side_badge_html(side) if side else ""
+            for c in cats:
+                bg, fg = _CAT_COLORS.get(c, ("#e8e0f0", "#4E2A84"))
+                badges += f' <span style="background:{bg};color:{fg};font-size:0.7rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:4px;">{html.escape(c)}</span>'
+            return badges
+
+        # Source badges use an outlined style (colored border + white fill) instead of the category badges'
+        # solid fill, so the two badge types read as visually distinct at a glance. Full Game Plan items use
+        # their own game-plan "category" field as the source badge instead of one generic "Full Game Plan"
+        # label -- those category names are staff-defined per opponent, so they aren't enumerable here and
+        # fall back to _source_badge_html's default gray outline instead of a specific color.
+        _SOURCE_COLORS = {
+            "Data-Driven": "#37474f",
+            "Keys to Victory": "#4E2A84",
+            "Team Strengths": "#c62828",
+            "Lineup Scouting": "#5d4037",
+        }
+
+        def _source_badge_html(source):
+            if not source:
+                return ""
+            _color = _SOURCE_COLORS.get(source, "#666")
+            return f' <span style="border:1px solid {_color};color:{_color};background:#fff;font-size:0.65rem;font-weight:600;padding:1px 7px;border-radius:8px;margin-left:4px;">{html.escape(source)}</span>'
+
         _at_a_glance = []  # list of (label, value, help) -- filled defensively, one try per tile
         _card_data = {}  # richer detail behind each tile (top-3 plays, 2 bench players, etc.), for the full
         # card grid below -- stashed here instead of relying on each try block's own local variables still
@@ -3100,7 +3192,7 @@ def render_upcoming_game():
             if "plays" in _card_data:
                 with _fp_next_col():
                     with st.container(border=True):
-                        st.markdown("**\U0001f3c0 Plays to Lean On**")
+                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f3c0 Plays to Lean On</span>{_badges_html(["Offensive Efficiency"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
                         _fp_plays = _card_data["plays"]
                         _fp_go_to = _fp_plays.nlargest(3, "FG%")
                         for _, _r in _fp_go_to.iterrows():
@@ -3116,7 +3208,7 @@ def render_upcoming_game():
             if "scoring_reliance" in _card_data:
                 with _fp_next_col():
                     with st.container(border=True):
-                        st.markdown("**\U0001f3af Opponent Scoring Reliance**")
+                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f3af Opponent Scoring Reliance</span>{_badges_html(["Defensive Efficiency"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
                         _fp_share, _fp_val = _card_data["scoring_reliance"]
                         if _fp_val == "Concentrated":
                             st.markdown(f"Their top 2 scorers account for **{_fp_share:.0f}%** of team scoring -- a concentrated attack. Sending extra attention their way is likely to matter more here than against a balanced team.")
@@ -3127,7 +3219,7 @@ def render_upcoming_game():
             if "pace_style" in _card_data:
                 with _fp_next_col():
                     with st.container(border=True):
-                        st.markdown("**\u23f1\ufe0f Pace & Style**")
+                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\u23f1\ufe0f Pace & Style</span>{_badges_html(["Offensive Efficiency"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
                         _fp_pace_d, _fp_opp_ppg, _fp_opp_allowed, _fp_style = _card_data["pace_style"]
                         st.markdown(f"UWW season pace: **{_fp_pace_d['Pace']:.1f}** possessions/game, Net Rtg **{_fp_pace_d['Net Rtg']:+.1f}**.")
                         st.markdown(f"{short_opponent}: **{_fp_opp_ppg:.1f}** PPG, allows **{_fp_opp_allowed:.1f}**.")
@@ -3139,7 +3231,7 @@ def render_upcoming_game():
             if "rebounding" in _card_data:
                 with _fp_next_col():
                     with st.container(border=True):
-                        st.markdown("**\U0001f4aa Rebounding Edge**")
+                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f4aa Rebounding Edge</span>{_badges_html(["Rebounding"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
                         _fp_uww_rpg, _fp_opp_rpg, _fp_reb_val = _card_data["rebounding"]
                         st.markdown(f"UWW: **{_fp_uww_rpg:.1f}** RPG this season. {short_opponent}: **{_fp_opp_rpg:.1f}** RPG.")
                         if _fp_reb_val == "Crash the Glass":
@@ -3152,7 +3244,7 @@ def render_upcoming_game():
             if "bench" in _card_data:
                 with _fp_next_col():
                     with st.container(border=True):
-                        st.markdown("**\U0001fa91 Bench Trust Plan**")
+                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001fa91 Bench Trust Plan</span>{_badges_html(["Personnel/Rotation"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
                         st.markdown("If a starter gets into foul trouble, these bench players have earned the most trust this season:")
                         for _, _r in _card_data["bench"].nlargest(2, "Avg").iterrows():
                             st.markdown(f"- **{_r['player']}** -- {_r['Avg']:.1f} avg Game Score off the bench ({int(_r['GP'])} games)")
@@ -3160,7 +3252,7 @@ def render_upcoming_game():
             if "clutch" in _card_data:
                 with _fp_next_col():
                     with st.container(border=True):
-                        st.markdown("**\U0001f3c1 Late-Game Trust**")
+                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f3c1 Late-Game Trust</span>{_badges_html(["Personnel/Rotation"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
                         st.markdown("Most productive scorers in clutch minutes (last 5 min, score within 8) this season:")
                         for _player, _pts in _card_data["clutch"].nlargest(2).items():
                             st.markdown(f"- **{_player}** -- {int(_pts)} clutch pts")
@@ -3169,7 +3261,7 @@ def render_upcoming_game():
             if "turnovers" in _card_data:
                 with _fp_next_col():
                     with st.container(border=True):
-                        st.markdown("**\U0001f504 Turnover-Forcing Opportunity**")
+                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f504 Turnover-Forcing Opportunity</span>{_badges_html(["Perimeter Defense / Ball Pressure/ Create Turnovers"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
                         _fp_topg, _fp_uww_stl, _fp_to_val = _card_data["turnovers"]
                         st.markdown(f"{short_opponent} averages **{_fp_topg:.1f}** turnovers/game (season total, not opponent-adjusted). UWW forces **{_fp_uww_stl:.1f}** steals/game.")
                         if _fp_to_val == "Press / Extend":
@@ -3180,7 +3272,7 @@ def render_upcoming_game():
             if "closing_lineup" in _card_data:
                 with _fp_next_col():
                     with st.container(border=True):
-                        st.markdown("**\U0001f512 Recommended Closing Lineup**")
+                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f512 Recommended Closing Lineup</span>{_badges_html(["Personnel/Rotation"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
                         _fp_best_lu = _card_data["closing_lineup"]
                         st.markdown(f"**{_last_names(_fp_best_lu['lineup'])}** -- your best net rating this season among lineups with real minutes: **{_fp_best_lu['rate']:+.2f}/min** over {_fp_best_lu['MIN']:.0f} minutes.")
                         if _opp_lu is not None and not _opp_lu.empty:
@@ -3194,95 +3286,6 @@ def render_upcoming_game():
         # --- Group by KTV category and render like the old page's "Keys to Victory (Data-Driven)" section:
         # numbered items with colored category badges, a stat caption, and the reasoning in italics --
         # instead of a flat list with reasoning hidden behind a popover. ---
-        _CAT_COLORS = {
-            "Ball Security": ("#fff3e0", "#e65100"),
-            "Rebounding": ("#e8f5e9", "#2e7d32"),
-            "Three-Point Shooting": ("#e3f2fd", "#1565c0"),
-            "Free Throws": ("#fce4ec", "#c62828"),
-            "Fouls / Discipline": ("#fff8e1", "#f57f17"),
-            "Ball Movement / Assists": ("#f3e5f5", "#6a1b9a"),
-            "Paint Protection / Blocks": ("#efebe9", "#4e342e"),
-            "Perimeter Defense / Ball Pressure/ Create Turnovers": ("#e0f7fa", "#00838f"),
-            "Scoring Inside": ("#ede7f6", "#4527a0"),
-            "Field Goal Efficiency": ("#e8e0f0", "#4E2A84"),
-            "Defensive Efficiency": ("#eceff1", "#37474f"),
-            "Offensive Efficiency": ("#fff9c4", "#f9a825"),
-        }
-        _valid_cats = set(load_table("uww_ktv_splits")["category"].unique()) | set(KTV_CATEGORY_REFERENCE.keys())
-
-        def _keyword_matches(keyword, text_lower):
-            """Word-boundary match instead of naive substring -- a bare "3" as a keyword now correctly
-            matches "3's"/"3s"/"hit their 3" (a real gap: "hunt transition 3's" matched NO Three-Point
-            Shooting keyword under the old naive `kw in text` check, since none of "three"/"3 pt"/"3pt" is a
-            literal substring of "transition 3's" -- landing it in "Other" instead of being tagged). \\b
-            treats a boundary between a word character and a non-word character (or string start/end), so
-            \\b3\\b matches the "3" in "3's" (digit -> apostrophe is a boundary) and in "hit 3 shots", but
-            NOT the "3" inside "23" or "63.4" (no boundary between two digits) -- so this doesn't introduce
-            false positives on stray numbers the way a bare substring check of "3" would have.
-            """
-            return re.search(r"\b" + re.escape(keyword) + r"\b", text_lower) is not None
-
-        def _match_categories(text):
-            text_lower = str(text).lower()
-            matched = []
-            for _cat, _details in KTV_CATEGORY_REFERENCE.items():
-                if _cat not in _valid_cats:
-                    continue
-                for _kw in [_kw.strip() for _kw in _details["keywords"].split(",")]:
-                    if _kw and _keyword_matches(_kw, text_lower):
-                        if _cat not in matched:
-                            matched.append(_cat)
-                        break
-            return matched
-
-        def _detect_side(text):
-            text_lower = str(text).lower()
-            sides_found = set()
-            for phrase, side in PHRASE_SIDE.items():
-                if phrase and _keyword_matches(phrase, text_lower):
-                    sides_found.add(side)
-            if "OPP" in sides_found and "UWW" not in sides_found:
-                return "OPP"
-            if "UWW" in sides_found and "OPP" not in sides_found:
-                return "UWW"
-            if "OPP" in sides_found and "UWW" in sides_found:
-                return "BOTH"
-            return None
-
-        def _side_badge_html(side):
-            if side == "UWW":
-                return ' <span style="background:#4E2A84;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px;margin-left:3px;">UWW</span>'
-            elif side == "OPP":
-                return ' <span style="background:#1a1a2e;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px;margin-left:3px;">OPP</span>'
-            elif side == "BOTH":
-                return (' <span style="background:#4E2A84;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px 0 0 8px;margin-left:3px;">UWW</span>'
-                        '<span style="background:#1a1a2e;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:0 8px 8px 0;">OPP</span>')
-            return ""
-
-        def _badges_html(cats, side=None):
-            badges = _side_badge_html(side) if side else ""
-            for c in cats:
-                bg, fg = _CAT_COLORS.get(c, ("#e8e0f0", "#4E2A84"))
-                badges += f' <span style="background:{bg};color:{fg};font-size:0.7rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:4px;">{html.escape(c)}</span>'
-            return badges
-
-        # Source badges use an outlined style (colored border + white fill) instead of the category badges'
-        # solid fill, so the two badge types read as visually distinct at a glance. Full Game Plan items use
-        # their own game-plan "category" field as the source badge instead of one generic "Full Game Plan"
-        # label -- those category names are staff-defined per opponent, so they aren't enumerable here and
-        # fall back to _source_badge_html's default gray outline instead of a specific color.
-        _SOURCE_COLORS = {
-            "Data-Driven": "#37474f",
-            "Keys to Victory": "#4E2A84",
-            "Team Strengths": "#c62828",
-            "Lineup Scouting": "#5d4037",
-        }
-
-        def _source_badge_html(source):
-            if not source:
-                return ""
-            _color = _SOURCE_COLORS.get(source, "#666")
-            return f' <span style="border:1px solid {_color};color:{_color};background:#fff;font-size:0.65rem;font-weight:600;padding:1px 7px;border-radius:8px;margin-left:4px;">{html.escape(source)}</span>'
 
         if _keys:
             _grouped = {}
