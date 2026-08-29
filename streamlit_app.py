@@ -3457,45 +3457,39 @@ def render_upcoming_game():
                     st.markdown("")
 
             for _cat in _cat_order:
-                _bg, _fg = _CAT_COLORS.get(_cat, ("#e8e0f0", "#4E2A84"))
-                _cat_has_gp = bool(_game_plan_by_cat.get(_cat))
-                if _cat_has_gp:
-                    _cat_hdr_c1, _cat_hdr_c2 = st.columns([0.8, 0.2])
-                else:
-                    _cat_hdr_c1 = st.container()
-                with _cat_hdr_c1:
-                    st.markdown(f'<div style="background:{_bg};color:{_fg};display:inline-block;font-size:0.85rem;font-weight:700;padding:3px 12px;border-radius:10px;margin:10px 0 6px;">{html.escape(_cat)}</div>', unsafe_allow_html=True)
-                if _cat_has_gp:
-                    with _cat_hdr_c2:
-                        if st.button("\U0001f4cb Game Plan", key=f"gameplan_btn_{_cat}", use_container_width=True):
-                            _show_game_plan_dialog(_cat)
-                _cs_line = _category_stat_line(_cat)
-                if _cs_line and (_cs_line[0] or _cs_line[1]):
-                    st.caption("  |  ".join(x for x in _cs_line if x))
-                for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_grouped.get(_cat, []), start=1):
-                    _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source)
-
-                # Full Game Plan Recommendation card(s) tagged to this same category, rendered right alongside
-                # the numbered items above instead of in a separate section -- this is what actually combines
-                # them. Two-column layout when a category has 2+ cards (Offensive Efficiency, Personnel/
-                # Rotation both do), single full-width card otherwise.
+                _cat_items = _grouped.get(_cat, [])
                 _cat_cards = _cards_by_category.get(_cat, [])
-                if _cat_cards:
-                    if len(_cat_cards) >= 2:
-                        _card_cols = st.columns(2)
-                        for _ci, _renderer in enumerate(_cat_cards):
-                            with _card_cols[_ci % 2]:
-                                with st.container(border=True):
-                                    _renderer()
-                    else:
-                        with st.container(border=True):
-                            _cat_cards[0]()
-                    st.markdown("")
+                _n_items = len(_cat_items) + len(_cat_cards)
+                with st.expander(f"{_cat} \u2014 {_n_items} item{'s' if _n_items != 1 else ''}", expanded=False):
+                    _cat_has_gp = bool(_game_plan_by_cat.get(_cat))
+                    if _cat_has_gp:
+                        if st.button("\U0001f4cb Game Plan", key=f"gameplan_btn_{_cat}"):
+                            _show_game_plan_dialog(_cat)
+                    _cs_line = _category_stat_line(_cat)
+                    if _cs_line and (_cs_line[0] or _cs_line[1]):
+                        st.caption("  |  ".join(x for x in _cs_line if x))
+                    for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_cat_items, start=1):
+                        _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source)
+
+                    # Full Game Plan Recommendation card(s) tagged to this same category, rendered right
+                    # alongside the numbered items above instead of in a separate section -- this is what
+                    # actually combines them. Two-column layout when a category has 2+ cards (Offensive
+                    # Efficiency, Personnel/Rotation both do), single full-width card otherwise.
+                    if _cat_cards:
+                        if len(_cat_cards) >= 2:
+                            _card_cols = st.columns(2)
+                            for _ci, _renderer in enumerate(_cat_cards):
+                                with _card_cols[_ci % 2]:
+                                    with st.container(border=True):
+                                        _renderer()
+                        else:
+                            with st.container(border=True):
+                                _cat_cards[0]()
 
             if _ungrouped:
-                st.markdown('<div style="background:#eee;color:#555;display:inline-block;font-size:0.85rem;font-weight:700;padding:3px 12px;border-radius:10px;margin:10px 0 6px;">Other</div>', unsafe_allow_html=True)
-                for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_ungrouped, start=1):
-                    _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source)
+                with st.expander(f"Other \u2014 {len(_ungrouped)} item{'s' if len(_ungrouped) != 1 else ''}", expanded=False):
+                    for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_ungrouped, start=1):
+                        _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source)
         else:
             st.info("No scouting data available yet for this opponent.")
 
