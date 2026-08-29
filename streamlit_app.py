@@ -3456,7 +3456,19 @@ def render_upcoming_game():
                             st.markdown(f"- {_gpd_item}")
                     st.markdown("")
 
-            for _cat in _cat_order:
+            # Two-column Offense/Defense split instead of one flat stack of category expanders. Categories
+            # that don't cleanly belong to either side (Personnel/Rotation -- a personnel decision, not a
+            # stat category) render full-width below the two columns instead of being forced into one.
+            _OFFENSE_CATS = {
+                "Ball Security", "Three-Point Shooting", "Free Throws", "Ball Movement / Assists",
+                "Scoring Inside", "Field Goal Efficiency", "Offensive Efficiency",
+            }
+            _DEFENSE_CATS = {
+                "Rebounding", "Fouls / Discipline", "Paint Protection / Blocks",
+                "Perimeter Defense / Ball Pressure/ Create Turnovers", "Defensive Efficiency",
+            }
+
+            def _render_cat_expander(_cat):
                 _cat_items = _grouped.get(_cat, [])
                 _cat_cards = _cards_by_category.get(_cat, [])
                 _n_items = len(_cat_items) + len(_cat_cards)
@@ -3485,6 +3497,36 @@ def render_upcoming_game():
                         else:
                             with st.container(border=True):
                                 _cat_cards[0]()
+
+            _offense_order = [c for c in _cat_order if c in _OFFENSE_CATS]
+            _defense_order = [c for c in _cat_order if c in _DEFENSE_CATS]
+            _personnel_order = [c for c in _cat_order if c not in _OFFENSE_CATS and c not in _DEFENSE_CATS]
+
+            _off_col, _def_col, _pers_col = st.columns(3)
+            with _off_col:
+                st.markdown('<div style="font-weight:700;font-size:0.95rem;color:#4E2A84;margin-bottom:4px;">Offense</div>', unsafe_allow_html=True)
+                if _offense_order:
+                    for _cat in _offense_order:
+                        _render_cat_expander(_cat)
+                else:
+                    st.caption("Nothing tagged yet.")
+            with _def_col:
+                st.markdown('<div style="font-weight:700;font-size:0.95rem;color:#4E2A84;margin-bottom:4px;">Defense</div>', unsafe_allow_html=True)
+                if _defense_order:
+                    for _cat in _defense_order:
+                        _render_cat_expander(_cat)
+                else:
+                    st.caption("Nothing tagged yet.")
+            with _pers_col:
+                # Categories that aren't cleanly offense or defense -- currently just Personnel/Rotation (a
+                # rotation/personnel decision, not a stat category). Its own column, same footing as Offense
+                # and Defense, rather than a lesser full-width row underneath them.
+                st.markdown('<div style="font-weight:700;font-size:0.95rem;color:#4E2A84;margin-bottom:4px;">Personnel/Rotation</div>', unsafe_allow_html=True)
+                if _personnel_order:
+                    for _cat in _personnel_order:
+                        _render_cat_expander(_cat)
+                else:
+                    st.caption("Nothing tagged yet.")
 
             if _ungrouped:
                 with st.expander(f"Other \u2014 {len(_ungrouped)} item{'s' if len(_ungrouped) != 1 else ''}", expanded=False):
