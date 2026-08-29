@@ -3983,8 +3983,10 @@ def render_previous_games():
         lineup_agg = lineup_agg.sort_values("minutes", ascending=False)
 
         # Show best and worst lineups side by side
-        _best_lu = lineup_agg[lineup_agg["minutes"] >= 2.0].nlargest(3, "margin_per_min")
-        _worst_lu = lineup_agg[lineup_agg["minutes"] >= 2.0].nsmallest(3, "margin_per_min")
+        # Minimum 1 minute played this game -- keeps a lineup that barely saw the floor from topping the
+        # list off a small, noisy sample (e.g. a 20-second stretch with a lucky run).
+        _best_lu = lineup_agg[lineup_agg["minutes"] >= 1.0].nlargest(3, "margin_per_min")
+        _worst_lu = lineup_agg[lineup_agg["minutes"] >= 1.0].nsmallest(3, "margin_per_min")
 
         def _last_names_pg(lineup_str):
             names = [n.strip() for n in str(lineup_str).split(",")]
@@ -4001,6 +4003,7 @@ def render_previous_games():
             for _, r in _worst_lu.iterrows():
                 ln = _last_names_pg(r["lineup"])
                 st.markdown(f'<div style="font-size:0.85rem;margin:4px 0;"><strong style="color:#c62828;">{r["margin_per_min"]:+.2f}</strong>/min ({r["minutes"]:.1f} min) — {html.escape(ln)}</div>', unsafe_allow_html=True)
+        st.caption("Best/Worst Lineups require a minimum of 1 minute played this game, so a lineup that was on the floor for a few seconds can't top the list on a fluke run.")
 
         with st.expander("All lineups", expanded=False):
             st.dataframe(
