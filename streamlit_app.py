@@ -372,7 +372,7 @@ def _normalize_case(text: str) -> str:
 
 # Keys-to-Victory stat mapping: basketball terminology → stat columns
 KEYS_TO_VICTORY_STAT_MAP = {
-    # Ball Security / Turnovers
+    # Ball Security
     "ball security": ["TO"], "turnover": ["TO"], "protect the ball": ["TO"], "take care of the ball": ["TO"],
     "limit turnovers": ["TO"], "careless": ["TO"],
     # Rebounding
@@ -417,14 +417,14 @@ STAT_LABELS = {
 
 # KTV Category Reference: maps categories to the keywords and stats they track
 KTV_CATEGORY_REFERENCE = {
-    "Ball Security / Turnovers": {"keywords": "ball security, turnover, turnovers, protect the ball, take care of the ball, limit turnovers, careless, live dribble, sloppy, giveaway, giveaways, unforced", "stats": "TO"},
+    "Ball Security": {"keywords": "ball security, protect the ball, take care of the ball, limit turnovers, our turnovers, live-ball turnover, live-ball turnovers, dead-ball turnover, dead-ball turnovers, careless, live dribble, sloppy, giveaway, giveaways, unforced", "stats": "TO"},
     "Rebounding": {"keywords": "own the paint, bully, glass, rebound, rebounding, rebounds, board, boards, second chance, crash, dominate the paint, box out, put back, putback", "stats": "REB, ORB, DRB"},
     "Three-Point Shooting": {"keywords": "three, threes, 3, 3s, 3's, 3 pt, 3pt, 3-pt, 3-point, 3-pointer, 3-pointers, three-point, three-pointer, three-pointers, three point, perimeter shooting, spacing, shooting ability, shooting team, sniper, will shoot, trey, treys, deep ball, deep balls, beyond the arc, from deep, transition three, transition threes, transition 3, transition 3's, catch and shoot, corner three, corner 3, above the break", "stats": "3PM-A, 3P%"},
     "Free Throws": {"keywords": "free throw, free throws, ft line, getting to ft, foul line, and-one, and one", "stats": "FTM-A, FT%"},
     "Fouls / Discipline": {"keywords": "foul, fouls, wall up, drawing fouls, discipline, reach, reaching, hand check", "stats": "PF"},
     "Ball Movement / Assists": {"keywords": "assist, assists, ball movement, share the ball, playmaking, playmaker, create, extra pass, hockey assist, swing the ball", "stats": "AST"},
     "Paint Protection / Blocks": {"keywords": "block, blocks, protect the rim, paint protection, rim protection, shot blocking, contest at the rim", "stats": "BLK"},
-    "Perimeter Defense / Ball Pressure": {"keywords": "steal, steals, press capable, full court press, force turnovers, force to's, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure, ball pressure, deny, deflection, deflections", "stats": "STL"},
+    "Perimeter Defense / Ball Pressure/ Create Turnovers": {"keywords": "steal, steals, press capable, full court press, force turnovers, force to's, forcing turnovers, generate turnovers, turnover trigger, turnover triggers, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure, ball pressure, deny, deflection, deflections", "stats": "STL"},
     "Scoring Inside": {"keywords": "dominate the paint, attack the paint, live in the paint, attack the basket, scoring at the rim, get to rim, attack the rim, get to the rim, post up, post-up, paint touches, drive, drives, downhill, finish at the rim", "stats": "FG2M, FG2A, FG2%"},
     "Field Goal Efficiency": {"keywords": "limit their scoring, field goal, field goal%, fg%, shooting percentage, efficient shooting, efficiency, good shots, quality shots", "stats": "FGM-A, FG%"},
 }
@@ -522,14 +522,14 @@ def get_data_driven_ktv(short_opponent):
 
     # Map KTV categories to stat columns
     cat_stat_map = {
-        "Ball Security / Turnovers": ["TO"],
+        "Ball Security": ["TO"],
         "Rebounding": ["REB", "OREB", "DREB"],
         "Three-Point Shooting": ["FG3M", "3P%"],
         "Free Throws": ["FTM", "FT%"],
         "Fouls / Discipline": ["PF"],
         "Ball Movement / Assists": ["AST"],
         "Paint Protection / Blocks": ["BLK"],
-        "Perimeter Defense / Ball Pressure": ["STL"],
+        "Perimeter Defense / Ball Pressure/ Create Turnovers": ["STL"],
         "Scoring Inside": ["FG2M", "FG2%"],
         "Field Goal Efficiency": ["FG%", "FGM"],
     }
@@ -2237,14 +2237,14 @@ li {{ margin-bottom: 4px; }}
                 ktv_notes = ktv_match.iloc[0]["notes"]
                 keys = [_normalize_case(re.sub(r"^\d+\.\s*", "", k.strip())) for k in str(ktv_notes).split("|") if k.strip()]
                 _CAT_COLORS = {
-                    "Ball Security / Turnovers": ("#fff3e0", "#e65100"),
+                    "Ball Security": ("#fff3e0", "#e65100"),
                     "Rebounding": ("#e8f5e9", "#2e7d32"),
                     "Three-Point Shooting": ("#e3f2fd", "#1565c0"),
                     "Free Throws": ("#fce4ec", "#c62828"),
                     "Fouls / Discipline": ("#fff8e1", "#f57f17"),
                     "Ball Movement / Assists": ("#f3e5f5", "#6a1b9a"),
                     "Paint Protection / Blocks": ("#efebe9", "#4e342e"),
-                    "Perimeter Defense / Ball Pressure": ("#e0f7fa", "#00838f"),
+                    "Perimeter Defense / Ball Pressure/ Create Turnovers": ("#e0f7fa", "#00838f"),
                     "Scoring Inside": ("#ede7f6", "#4527a0"),
                     "Field Goal Efficiency": ("#e8e0f0", "#4E2A84"),
                 }
@@ -2356,8 +2356,8 @@ li {{ margin-bottom: 4px; }}
                 ktv_splits = load_table("uww_ktv_splits")
                 # Derive this game's emphasis LIVE from KTV notes (same as badge detection)
                 _SIDE_DISPLAY = {
-                    ("Ball Security / Turnovers", "UWW"): "UWW: Protect the Ball",
-                    ("Ball Security / Turnovers", "OPP"): "OPP: Force Turnovers",
+                    ("Ball Security", "UWW"): "UWW: Protect the Ball",
+                    ("Ball Security", "OPP"): "OPP: Force Turnovers",
                     ("Rebounding", "UWW"): "UWW: Crash the Boards",
                     ("Rebounding", "OPP"): "OPP: Limit Their Rebounding",
                     ("Three-Point Shooting", "UWW"): "UWW: Hit Our Threes",
@@ -2368,8 +2368,8 @@ li {{ margin-bottom: 4px; }}
                     ("Fouls / Discipline", "OPP"): "OPP: They Draw Fouls",
                     ("Ball Movement / Assists", "UWW"): "UWW: Share the Ball",
                     ("Ball Movement / Assists", "OPP"): "OPP: Disrupt Their Ball Movement",
-                    ("Perimeter Defense / Ball Pressure", "UWW"): "UWW: Create Pressure",
-                    ("Perimeter Defense / Ball Pressure", "OPP"): "OPP: On-Ball Defense",
+                    ("Perimeter Defense / Ball Pressure/ Create Turnovers", "UWW"): "UWW: Create Pressure",
+                    ("Perimeter Defense / Ball Pressure/ Create Turnovers", "OPP"): "OPP: On-Ball Defense",
                     ("Paint Protection / Blocks", "UWW"): "UWW: Protect Our Rim",
                     ("Paint Protection / Blocks", "OPP"): "OPP: Limit Their Interior",
                     ("Scoring Inside", "UWW"): "UWW: Attack the Paint",
@@ -2543,9 +2543,9 @@ li {{ margin-bottom: 4px; }}
                     _CAT_STAT_DISPLAY = {
                         "Rebounding": [("RPG", "REB")],
                         "Three-Point Shooting": [("3P%", "3P%"), ("3PM/gm", "3PM")],
-                        "Perimeter Defense / Ball Pressure": [("STL/gm", "STL")],
+                        "Perimeter Defense / Ball Pressure/ Create Turnovers": [("STL/gm", "STL")],
                         "Scoring Inside": [("2PT FG%", "FG2%"), ("2PT FGM/gm", "FG2M")],
-                        "Ball Security / Turnovers": [("TO/gm", "TO")],
+                        "Ball Security": [("TO/gm", "TO")],
                         "Ball Movement / Assists": [("AST/gm", "AST")],
                         "Paint Protection / Blocks": [("BLK/gm", "BLK")],
                         "Free Throws": [("FT%", "FT%"), ("FTM/gm", "FTM")],
@@ -5221,14 +5221,14 @@ def render_upcoming_opponent_new():
         # numbered items with colored category badges, a stat caption, and the reasoning in italics --
         # instead of a flat list with reasoning hidden behind a popover. ---
         _CAT_COLORS = {
-            "Ball Security / Turnovers": ("#fff3e0", "#e65100"),
+            "Ball Security": ("#fff3e0", "#e65100"),
             "Rebounding": ("#e8f5e9", "#2e7d32"),
             "Three-Point Shooting": ("#e3f2fd", "#1565c0"),
             "Free Throws": ("#fce4ec", "#c62828"),
             "Fouls / Discipline": ("#fff8e1", "#f57f17"),
             "Ball Movement / Assists": ("#f3e5f5", "#6a1b9a"),
             "Paint Protection / Blocks": ("#efebe9", "#4e342e"),
-            "Perimeter Defense / Ball Pressure": ("#e0f7fa", "#00838f"),
+            "Perimeter Defense / Ball Pressure/ Create Turnovers": ("#e0f7fa", "#00838f"),
             "Scoring Inside": ("#ede7f6", "#4527a0"),
             "Field Goal Efficiency": ("#e8e0f0", "#4E2A84"),
         }
