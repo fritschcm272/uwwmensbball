@@ -3177,117 +3177,114 @@ def render_upcoming_game():
         # the opponent's actual lineup names, etc.). This REPLACES the condensed single-line "Data-Driven"
         # entries that used to also appear in the Keys to Victory list below -- shown here instead of there,
         # not in addition to it. ---
-        if _card_data:
-            st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001f4cb FULL GAME PLAN RECOMMENDATIONS</div></div>', unsafe_allow_html=True)
-            _fp_col1, _fp_col2 = st.columns(2)
-            _fp_cols = [_fp_col1, _fp_col2]
-            _fp_i = 0
+        # --- Full Game Plan Recommendation cards (Plays to Lean On, Opponent Scoring Reliance, Pace & Style,
+        # Rebounding Edge, Bench Trust Plan, Late-Game Trust, Turnover-Forcing Opportunity, Recommended
+        # Closing Lineup) -- defined as render functions here, keyed the same as _card_data, and CALLED from
+        # within each category's own section further down instead of as a separate top-level block. This is
+        # what actually combines them with the rest of Keys to Victory: a coach looking at "Rebounding" sees
+        # the Rebounding Edge card right alongside every other Rebounding-tagged item, not in a different
+        # section of the page.
+        def _render_plays_card():
+            st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f3c0 Plays to Lean On</span>{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
+            _fp_plays = _card_data["plays"]
+            _fp_go_to = _fp_plays.nlargest(3, "FG%")
+            for _, _r in _fp_go_to.iterrows():
+                st.markdown(f"- **{_r['play_call']}** -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%) this season")
+            _fp_cold = _fp_plays.nsmallest(2, "FG%")
+            _fp_cold = _fp_cold[~_fp_cold["play_call"].isin(_fp_go_to["play_call"])]
+            if not _fp_cold.empty:
+                st.markdown("**Use sparingly:**")
+                for _, _r in _fp_cold.iterrows():
+                    st.markdown(f"- {_r['play_call']} -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)")
+            st.caption("Play call names are a best-effort extraction from coach notes (see the Analytics page for the full breakdown and how it's parsed).")
 
-            def _fp_next_col():
-                nonlocal _fp_i
-                c = _fp_cols[_fp_i % 2]
-                _fp_i += 1
-                return c
+        def _render_scoring_reliance_card():
+            st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f3af Opponent Scoring Reliance</span>{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
+            _fp_share, _fp_val = _card_data["scoring_reliance"]
+            if _fp_val == "Concentrated":
+                st.markdown(f"Their top 2 scorers account for **{_fp_share:.0f}%** of team scoring -- a concentrated attack. Sending extra attention their way is likely to matter more here than against a balanced team.")
+            else:
+                st.markdown(f"Their top 2 scorers account for only **{_fp_share:.0f}%** of team scoring -- a balanced attack with no single focal point to key on.")
+                st.markdown("Defensive game-planning likely matters more at the team-scheme level here than picking one player to load up on.")
 
-            if "plays" in _card_data:
-                with _fp_next_col():
-                    with st.container(border=True):
-                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f3c0 Plays to Lean On</span>{_badges_html(["Offensive Efficiency"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
-                        _fp_plays = _card_data["plays"]
-                        _fp_go_to = _fp_plays.nlargest(3, "FG%")
-                        for _, _r in _fp_go_to.iterrows():
-                            st.markdown(f"- **{_r['play_call']}** -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%) this season")
-                        _fp_cold = _fp_plays.nsmallest(2, "FG%")
-                        _fp_cold = _fp_cold[~_fp_cold["play_call"].isin(_fp_go_to["play_call"])]
-                        if not _fp_cold.empty:
-                            st.markdown("**Use sparingly:**")
-                            for _, _r in _fp_cold.iterrows():
-                                st.markdown(f"- {_r['play_call']} -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)")
-                        st.caption("Play call names are a best-effort extraction from coach notes (see the Analytics page for the full breakdown and how it's parsed).")
+        def _render_pace_style_card():
+            st.markdown(f'<span style="font-weight:700;font-size:1rem;">\u23f1\ufe0f Pace & Style</span>{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
+            _fp_pace_d, _fp_opp_ppg, _fp_opp_allowed, _fp_style = _card_data["pace_style"]
+            st.markdown(f"UWW season pace: **{_fp_pace_d['Pace']:.1f}** possessions/game, Net Rtg **{_fp_pace_d['Net Rtg']:+.1f}**.")
+            st.markdown(f"{short_opponent}: **{_fp_opp_ppg:.1f}** PPG, allows **{_fp_opp_allowed:.1f}**.")
+            if _fp_style == "Push Tempo":
+                st.markdown("They give up more than they score on average -- **push tempo** and get into transition before their defense sets.")
+            else:
+                st.markdown("They're stingier than their own offense -- a **half-court, execution-first** approach may serve better than trying to speed them up.")
 
-            if "scoring_reliance" in _card_data:
-                with _fp_next_col():
-                    with st.container(border=True):
-                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f3af Opponent Scoring Reliance</span>{_badges_html(["Defensive Efficiency"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
-                        _fp_share, _fp_val = _card_data["scoring_reliance"]
-                        if _fp_val == "Concentrated":
-                            st.markdown(f"Their top 2 scorers account for **{_fp_share:.0f}%** of team scoring -- a concentrated attack. Sending extra attention their way is likely to matter more here than against a balanced team.")
-                        else:
-                            st.markdown(f"Their top 2 scorers account for only **{_fp_share:.0f}%** of team scoring -- a balanced attack with no single focal point to key on.")
-                            st.markdown("Defensive game-planning likely matters more at the team-scheme level here than picking one player to load up on.")
+        def _render_rebounding_card():
+            st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f4aa Rebounding Edge</span>{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
+            _fp_uww_rpg, _fp_opp_rpg, _fp_reb_val = _card_data["rebounding"]
+            st.markdown(f"UWW: **{_fp_uww_rpg:.1f}** RPG this season. {short_opponent}: **{_fp_opp_rpg:.1f}** RPG.")
+            if _fp_reb_val == "Crash the Glass":
+                st.markdown("A clear rebounding edge on paper -- **crash the offensive glass** for extra possessions rather than getting back in transition D early.")
+            elif _fp_reb_val == "Prioritize Balance":
+                st.markdown("They out-rebound their opponents on paper -- prioritize **boxing out and transition balance** over offensive-rebound crashes.")
+            else:
+                st.markdown("Rebounding looks roughly even on paper -- likely decided by effort plays, not a structural mismatch.")
 
-            if "pace_style" in _card_data:
-                with _fp_next_col():
-                    with st.container(border=True):
-                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\u23f1\ufe0f Pace & Style</span>{_badges_html(["Offensive Efficiency"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
-                        _fp_pace_d, _fp_opp_ppg, _fp_opp_allowed, _fp_style = _card_data["pace_style"]
-                        st.markdown(f"UWW season pace: **{_fp_pace_d['Pace']:.1f}** possessions/game, Net Rtg **{_fp_pace_d['Net Rtg']:+.1f}**.")
-                        st.markdown(f"{short_opponent}: **{_fp_opp_ppg:.1f}** PPG, allows **{_fp_opp_allowed:.1f}**.")
-                        if _fp_style == "Push Tempo":
-                            st.markdown("They give up more than they score on average -- **push tempo** and get into transition before their defense sets.")
-                        else:
-                            st.markdown("They're stingier than their own offense -- a **half-court, execution-first** approach may serve better than trying to speed them up.")
+        def _render_bench_card():
+            st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001fa91 Bench Trust Plan</span>{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
+            st.markdown("If a starter gets into foul trouble, these bench players have earned the most trust this season:")
+            for _, _r in _card_data["bench"].nlargest(2, "Avg").iterrows():
+                st.markdown(f"- **{_r['player']}** -- {_r['Avg']:.1f} avg Game Score off the bench ({int(_r['GP'])} games)")
 
-            if "rebounding" in _card_data:
-                with _fp_next_col():
-                    with st.container(border=True):
-                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f4aa Rebounding Edge</span>{_badges_html(["Rebounding"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
-                        _fp_uww_rpg, _fp_opp_rpg, _fp_reb_val = _card_data["rebounding"]
-                        st.markdown(f"UWW: **{_fp_uww_rpg:.1f}** RPG this season. {short_opponent}: **{_fp_opp_rpg:.1f}** RPG.")
-                        if _fp_reb_val == "Crash the Glass":
-                            st.markdown("A clear rebounding edge on paper -- **crash the offensive glass** for extra possessions rather than getting back in transition D early.")
-                        elif _fp_reb_val == "Prioritize Balance":
-                            st.markdown("They out-rebound their opponents on paper -- prioritize **boxing out and transition balance** over offensive-rebound crashes.")
-                        else:
-                            st.markdown("Rebounding looks roughly even on paper -- likely decided by effort plays, not a structural mismatch.")
+        def _render_clutch_card():
+            st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f3c1 Late-Game Trust</span>{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
+            st.markdown("Most productive scorers in clutch minutes (last 5 min, score within 8) this season:")
+            for _player, _pts in _card_data["clutch"].nlargest(2).items():
+                st.markdown(f"- **{_player}** -- {int(_pts)} clutch pts")
+            st.caption("Worth building the closing possession around, all else equal -- see the Team page's full clutch breakdown for more.")
 
-            if "bench" in _card_data:
-                with _fp_next_col():
-                    with st.container(border=True):
-                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001fa91 Bench Trust Plan</span>{_badges_html(["Personnel/Rotation"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
-                        st.markdown("If a starter gets into foul trouble, these bench players have earned the most trust this season:")
-                        for _, _r in _card_data["bench"].nlargest(2, "Avg").iterrows():
-                            st.markdown(f"- **{_r['player']}** -- {_r['Avg']:.1f} avg Game Score off the bench ({int(_r['GP'])} games)")
+        def _render_turnovers_card():
+            st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f504 Turnover-Forcing Opportunity</span>{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
+            _fp_topg, _fp_uww_stl, _fp_to_val = _card_data["turnovers"]
+            st.markdown(f"{short_opponent} averages **{_fp_topg:.1f}** turnovers/game (season total, not opponent-adjusted). UWW forces **{_fp_uww_stl:.1f}** steals/game.")
+            if _fp_to_val == "Press / Extend":
+                st.markdown("A turnover-prone opponent on paper -- **extending ball pressure and denying easy entries** is more likely to pay off here than against a low-turnover team.")
+            else:
+                st.markdown("A relatively careful ball-handling team on paper -- pressure is still worth applying, but don't expect turnovers alone to be the deciding factor.")
 
-            if "clutch" in _card_data:
-                with _fp_next_col():
-                    with st.container(border=True):
-                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f3c1 Late-Game Trust</span>{_badges_html(["Personnel/Rotation"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
-                        st.markdown("Most productive scorers in clutch minutes (last 5 min, score within 8) this season:")
-                        for _player, _pts in _card_data["clutch"].nlargest(2).items():
-                            st.markdown(f"- **{_player}** -- {int(_pts)} clutch pts")
-                        st.caption("Worth building the closing possession around, all else equal -- see the Team page's full clutch breakdown for more.")
+        def _render_closing_lineup_card():
+            st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f512 Recommended Closing Lineup</span>{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
+            _fp_best_lu = _card_data["closing_lineup"]
+            st.markdown(f"**{_last_names(_fp_best_lu['lineup'])}** -- your best net rating this season among lineups with real minutes: **{_fp_best_lu['rate']:+.2f}/min** over {_fp_best_lu['MIN']:.0f} minutes.")
+            if _opp_lu is not None and not _opp_lu.empty:
+                _fp_opp_top_lu = _opp_lu.nlargest(1, "MIN").iloc[0]
+                _fp_opp_rate = _fp_opp_top_lu["+/-"] / _fp_opp_top_lu["MIN"] if _fp_opp_top_lu["MIN"] > 0 else 0
+                st.markdown(f"{short_opponent}'s most-used lineup (**{_last_names(_fp_opp_top_lu['lineup'])}**) has run at **{_fp_opp_rate:+.2f}/min**.")
+                st.markdown(f"Projected edge if both closing units are on the floor: **{_fp_best_lu['rate'] - _fp_opp_rate:+.2f}/min**.")
+            st.caption("Full lineup-vs-lineup exploration (including untried combinations) is available in the Lineup Simulator above.")
 
-            if "turnovers" in _card_data:
-                with _fp_next_col():
-                    with st.container(border=True):
-                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f504 Turnover-Forcing Opportunity</span>{_badges_html(["Perimeter Defense / Ball Pressure/ Create Turnovers"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
-                        _fp_topg, _fp_uww_stl, _fp_to_val = _card_data["turnovers"]
-                        st.markdown(f"{short_opponent} averages **{_fp_topg:.1f}** turnovers/game (season total, not opponent-adjusted). UWW forces **{_fp_uww_stl:.1f}** steals/game.")
-                        if _fp_to_val == "Press / Extend":
-                            st.markdown("A turnover-prone opponent on paper -- **extending ball pressure and denying easy entries** is more likely to pay off here than against a low-turnover team.")
-                        else:
-                            st.markdown("A relatively careful ball-handling team on paper -- pressure is still worth applying, but don't expect turnovers alone to be the deciding factor.")
-
-            if "closing_lineup" in _card_data:
-                with _fp_next_col():
-                    with st.container(border=True):
-                        st.markdown(f'<span style="font-weight:700;font-size:1rem;">\U0001f512 Recommended Closing Lineup</span>{_badges_html(["Personnel/Rotation"])}{_source_badge_html("Data-Driven")}', unsafe_allow_html=True)
-                        _fp_best_lu = _card_data["closing_lineup"]
-                        st.markdown(f"**{_last_names(_fp_best_lu['lineup'])}** -- your best net rating this season among lineups with real minutes: **{_fp_best_lu['rate']:+.2f}/min** over {_fp_best_lu['MIN']:.0f} minutes.")
-                        if _opp_lu is not None and not _opp_lu.empty:
-                            _fp_opp_top_lu = _opp_lu.nlargest(1, "MIN").iloc[0]
-                            _fp_opp_rate = _fp_opp_top_lu["+/-"] / _fp_opp_top_lu["MIN"] if _fp_opp_top_lu["MIN"] > 0 else 0
-                            st.markdown(f"{short_opponent}'s most-used lineup (**{_last_names(_fp_opp_top_lu['lineup'])}**) has run at **{_fp_opp_rate:+.2f}/min**.")
-                            st.markdown(f"Projected edge if both closing units are on the floor: **{_fp_best_lu['rate'] - _fp_opp_rate:+.2f}/min**.")
-                        st.caption("Full lineup-vs-lineup exploration (including untried combinations) is available in the Lineup Simulator above.")
+        # card_data key -> (KTV category it belongs under, render function). Direct assignment rather than
+        # running each card's text through the fuzzy keyword matcher -- these are 8 fixed, known card types,
+        # so a reliable direct mapping beats hoping the wording happens to trip the right keywords.
+        _CARD_CATEGORY_MAP = {
+            "plays": ("Offensive Efficiency", _render_plays_card),
+            "scoring_reliance": ("Defensive Efficiency", _render_scoring_reliance_card),
+            "pace_style": ("Offensive Efficiency", _render_pace_style_card),
+            "rebounding": ("Rebounding", _render_rebounding_card),
+            "bench": ("Personnel/Rotation", _render_bench_card),
+            "clutch": ("Personnel/Rotation", _render_clutch_card),
+            "turnovers": ("Perimeter Defense / Ball Pressure/ Create Turnovers", _render_turnovers_card),
+            "closing_lineup": ("Personnel/Rotation", _render_closing_lineup_card),
+        }
+        _cards_by_category = {}
+        for _cd_key, (_cd_cat, _cd_renderer) in _CARD_CATEGORY_MAP.items():
+            if _cd_key in _card_data:
+                _cards_by_category.setdefault(_cd_cat, []).append(_cd_renderer)
 
 
         # --- Group by KTV category and render like the old page's "Keys to Victory (Data-Driven)" section:
         # numbered items with colored category badges, a stat caption, and the reasoning in italics --
         # instead of a flat list with reasoning hidden behind a popover. ---
 
-        if _keys:
+        if _keys or _card_data:
             _grouped = {}
             _ungrouped = []
             for _icon, _headline, _caption, _reason, _source in _keys:
@@ -3301,7 +3298,7 @@ def render_upcoming_game():
 
             # Stable category order: whichever order they're defined in KTV_CATEGORY_REFERENCE, skipping
             # any category nothing matched this game.
-            _cat_order = [c for c in KTV_CATEGORY_REFERENCE if c in _grouped]
+            _cat_order = [c for c in KTV_CATEGORY_REFERENCE if c in _grouped or c in _cards_by_category]
 
             def _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source):
                 # No per-item category badge -- the section header above already names the category, so
@@ -3475,8 +3472,25 @@ def render_upcoming_game():
                 _cs_line = _category_stat_line(_cat)
                 if _cs_line and (_cs_line[0] or _cs_line[1]):
                     st.caption("  |  ".join(x for x in _cs_line if x))
-                for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_grouped[_cat], start=1):
+                for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_grouped.get(_cat, []), start=1):
                     _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source)
+
+                # Full Game Plan Recommendation card(s) tagged to this same category, rendered right alongside
+                # the numbered items above instead of in a separate section -- this is what actually combines
+                # them. Two-column layout when a category has 2+ cards (Offensive Efficiency, Personnel/
+                # Rotation both do), single full-width card otherwise.
+                _cat_cards = _cards_by_category.get(_cat, [])
+                if _cat_cards:
+                    if len(_cat_cards) >= 2:
+                        _card_cols = st.columns(2)
+                        for _ci, _renderer in enumerate(_cat_cards):
+                            with _card_cols[_ci % 2]:
+                                with st.container(border=True):
+                                    _renderer()
+                    else:
+                        with st.container(border=True):
+                            _cat_cards[0]()
+                    st.markdown("")
 
             if _ungrouped:
                 st.markdown('<div style="background:#eee;color:#555;display:inline-block;font-size:0.85rem;font-weight:700;padding:3px 12px;border-radius:10px;margin:10px 0 6px;">Other</div>', unsafe_allow_html=True)
