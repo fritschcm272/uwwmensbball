@@ -5340,9 +5340,118 @@ def render_upcoming_opponent_new():
                     st.markdown(f"_{_reason}_")
                 st.markdown("")
 
+            # --- Per-category stat lines: real UWW-vs-opponent numbers for whatever this category actually
+            # tracks, not just the abstract stat names. Loaded once here rather than per-category. ---
+            _cs_uww_box_all = load_table("uww_pbp_box_score")
+            _cs_uww_side = _cs_uww_box_all[_cs_uww_box_all["team"] == "UW-Whitewater"] if not _cs_uww_box_all.empty else pd.DataFrame()
+            _cs_n_games = _cs_uww_side["opponent"].nunique() if not _cs_uww_side.empty else 0
+            _cs_opp_prof = load_table("uww_player_profiles")
+            _cs_opp_prof = _cs_opp_prof[_cs_opp_prof["opponent"] == short_opponent] if not _cs_opp_prof.empty and short_opponent else pd.DataFrame()
+            _cs_opp_games = get_opponent_games_played(short_opponent) if short_opponent else 0
+            _cs_team_totals = load_table("uww_opponent_team_totals")
+            _cs_opp_totals_row = _cs_team_totals[_cs_team_totals["opponent"] == short_opponent] if not _cs_team_totals.empty and short_opponent else pd.DataFrame()
+
+            def _parse_ma_totals(series):
+                made, att = 0, 0
+                for val in series.dropna():
+                    parts = str(val).split("-")
+                    if len(parts) == 2:
+                        try:
+                            made += int(parts[0])
+                            att += int(parts[1])
+                        except ValueError:
+                            pass
+                return made, att
+
+            def _category_stat_line(cat):
+                """Real per-game numbers for whatever this category tracks -- (uww_str, opp_str) or None for
+                a side that isn't reliably computable from available data (e.g. opponent 2-pt FG% -- we only
+                have their overall FG% per player, not a made/attempted split). PTS and REB are already
+                per-game for the opponent; AST/STL/BLK/TO are season totals there and need /opp_games --
+                confirmed the hard way earlier in this project, so this distinction is deliberate, not an
+                oversight."""
+                if _cs_n_games == 0:
+                    return None
+                if cat == "Ball Security":
+                    u = _cs_uww_side["TO"].sum() / _cs_n_games if "TO" in _cs_uww_side.columns else None
+                    o = pd.to_numeric(_cs_opp_prof["TO"], errors="coerce").sum() / _cs_opp_games if not _cs_opp_prof.empty and "TO" in _cs_opp_prof.columns and _cs_opp_games > 0 else None
+                    return (f"UWW: {u:.1f} TO/gm" if u is not None else None, f"{short_opponent}: {o:.1f} TO/gm" if o is not None else None)
+                if cat == "Rebounding":
+                    u = _cs_uww_side["REB"].sum() / _cs_n_games if "REB" in _cs_uww_side.columns else None
+                    o = pd.to_numeric(_cs_opp_prof["REB"], errors="coerce").sum() if not _cs_opp_prof.empty and "REB" in _cs_opp_prof.columns else None
+                    return (f"UWW: {u:.1f} RPG" if u is not None else None, f"{short_opponent}: {o:.1f} RPG" if o is not None else None)
+                if cat == "Three-Point Shooting":
+                    u_txt = None
+                    if {"FG3M", "FG3A"} <= set(_cs_uww_side.columns) and _cs_uww_side["FG3A"].sum() > 0:
+                        u_m, u_a = _cs_uww_side["FG3M"].sum(), _cs_uww_side["FG3A"].sum()
+                        u_txt = f"UWW: {u_m/_cs_n_games:.1f}/{u_a/_cs_n_games:.1f} 3PA/gm ({100*u_m/u_a:.0f}%)"
+                    o_txt = None
+                    if not _cs_opp_prof.empty and "3PM-A" in _cs_opp_prof.columns:
+                        o_m, o_a = _parse_ma_totals(_cs_opp_prof["3PM-A"])
+                        if o_a > 0 and _cs_opp_games > 0:
+                            o_txt = f"{short_opponent}: {o_m/_cs_opp_games:.1f}/{o_a/_cs_opp_games:.1f} 3PA/gm ({100*o_m/o_a:.0f}%)"
+                    return (u_txt, o_txt)
+                if cat == "Free Throws":
+                    u_txt = None
+                    if {"FTM", "FTA"} <= set(_cs_uww_side.columns) and _cs_uww_side["FTA"].sum() > 0:
+                        u_m, u_a = _cs_uww_side["FTM"].sum(), _cs_uww_side["FTA"].sum()
+                        u_txt = f"UWW: {u_m/_cs_n_games:.1f}/{u_a/_cs_n_games:.1f} FTA/gm ({100*u_m/u_a:.0f}%)"
+                    o_txt = None
+                    if not _cs_opp_prof.empty and "FTM-A" in _cs_opp_prof.columns:
+                        o_m, o_a = _parse_ma_totals(_cs_opp_prof["FTM-A"])
+                        if o_a > 0 and _cs_opp_games > 0:
+                            o_txt = f"{short_opponent}: {o_m/_cs_opp_games:.1f}/{o_a/_cs_opp_games:.1f} FTA/gm ({100*o_m/o_a:.0f}%)"
+                    return (u_txt, o_txt)
+                if cat == "Fouls / Discipline":
+                    u = _cs_uww_side["PF"].sum() / _cs_n_games if "PF" in _cs_uww_side.columns else None
+                    # Opponent PF isn't tracked in uww_player_profiles -- UWW-only, not a gap in this logic.
+                    return (f"UWW: {u:.1f} PF/gm" if u is not None else None, None)
+                if cat == "Ball Movement / Assists":
+                    u = _cs_uww_side["AST"].sum() / _cs_n_games if "AST" in _cs_uww_side.columns else None
+                    o = pd.to_numeric(_cs_opp_prof["AST"], errors="coerce").sum() / _cs_opp_games if not _cs_opp_prof.empty and "AST" in _cs_opp_prof.columns and _cs_opp_games > 0 else None
+                    return (f"UWW: {u:.1f} APG" if u is not None else None, f"{short_opponent}: {o:.1f} APG" if o is not None else None)
+                if cat == "Paint Protection / Blocks":
+                    u = _cs_uww_side["BLK"].sum() / _cs_n_games if "BLK" in _cs_uww_side.columns else None
+                    o = pd.to_numeric(_cs_opp_prof["BLK"], errors="coerce").sum() / _cs_opp_games if not _cs_opp_prof.empty and "BLK" in _cs_opp_prof.columns and _cs_opp_games > 0 else None
+                    return (f"UWW: {u:.1f} BPG" if u is not None else None, f"{short_opponent}: {o:.1f} BPG" if o is not None else None)
+                if cat == "Perimeter Defense / Ball Pressure/ Create Turnovers":
+                    u = _cs_uww_side["STL"].sum() / _cs_n_games if "STL" in _cs_uww_side.columns else None
+                    o_stl = pd.to_numeric(_cs_opp_prof["STL"], errors="coerce").sum() / _cs_opp_games if not _cs_opp_prof.empty and "STL" in _cs_opp_prof.columns and _cs_opp_games > 0 else None
+                    o_to = pd.to_numeric(_cs_opp_prof["TO"], errors="coerce").sum() / _cs_opp_games if not _cs_opp_prof.empty and "TO" in _cs_opp_prof.columns and _cs_opp_games > 0 else None
+                    o_txt = None
+                    if o_stl is not None or o_to is not None:
+                        _bits = []
+                        if o_to is not None:
+                            _bits.append(f"forces {o_to:.1f} TO/gm on themselves")
+                        o_txt = f"{short_opponent}: {', '.join(_bits)}" if _bits else None
+                    return (f"UWW: {u:.1f} SPG" if u is not None else None, o_txt)
+                if cat == "Scoring Inside":
+                    if {"FGM", "FGA", "FG3M", "FG3A"} <= set(_cs_uww_side.columns):
+                        _2m, _2a = _cs_uww_side["FGM"].sum() - _cs_uww_side["FG3M"].sum(), _cs_uww_side["FGA"].sum() - _cs_uww_side["FG3A"].sum()
+                        if _2a > 0:
+                            return (f"UWW: {_2m/_cs_n_games:.1f}/{_2a/_cs_n_games:.1f} 2PA/gm ({100*_2m/_2a:.0f}%)", None)
+                    return None
+                if cat == "Field Goal Efficiency":
+                    u_txt = None
+                    if {"FGM", "FGA"} <= set(_cs_uww_side.columns) and _cs_uww_side["FGA"].sum() > 0:
+                        u_txt = f"UWW: {100*_cs_uww_side['FGM'].sum()/_cs_uww_side['FGA'].sum():.0f}% FG"
+                    o_txt = None
+                    if not _cs_opp_totals_row.empty and "team_ppg" in _cs_opp_totals_row.columns:
+                        pass  # team_totals doesn't carry a team FG% -- left out rather than guessed at
+                    return (u_txt, o_txt)
+                if cat == "Offensive Efficiency":
+                    if {"PTS", "FGA", "FTA"} <= set(_cs_uww_side.columns) and _cs_uww_side["FGA"].sum() > 0:
+                        _ts = compute_true_shooting(_cs_uww_side["PTS"].sum(), _cs_uww_side["FGA"].sum(), _cs_uww_side["FTA"].sum())
+                        return (f"UWW: {_ts:.1f} TS%", None)
+                    return None
+                return None  # Defensive Efficiency and any future category with no single clean box-score stat
+
             for _cat in _cat_order:
                 _bg, _fg = _CAT_COLORS.get(_cat, ("#e8e0f0", "#4E2A84"))
                 st.markdown(f'<div style="background:{_bg};color:{_fg};display:inline-block;font-size:0.85rem;font-weight:700;padding:3px 12px;border-radius:10px;margin:10px 0 6px;">{html.escape(_cat)}</div>', unsafe_allow_html=True)
+                _cs_line = _category_stat_line(_cat)
+                if _cs_line and (_cs_line[0] or _cs_line[1]):
+                    st.caption("  |  ".join(x for x in _cs_line if x))
                 for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_grouped[_cat], start=1):
                     _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source)
 
