@@ -3534,25 +3534,8 @@ def render_upcoming_opponent_new():
     # into any page -- surfacing it here, right under the recommendations, was one of the specific
     # things asked for in the reorganization plan). ---
     with _new_ktv_container:
-        try:
-            _new_ktv_result = get_data_driven_ktv(short_opponent) if short_opponent else None
-            if _new_ktv_result is not None:
-                _new_ktv_df, _new_ktv_cats, _new_ktv_w, _new_ktv_l = _new_ktv_result
-                st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:0 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001f511 DATA-DRIVEN KEYS TO VICTORY</div></div>', unsafe_allow_html=True)
-                st.metric(
-                    "Key Stats to Hit", len(_new_ktv_df),
-                    help=(
-                        f"UWW's own win ({_new_ktv_w}) vs. loss ({_new_ktv_l}) splits this season, for the stat "
-                        f"categories already flagged as Keys to Victory for {short_opponent} "
-                        f"({', '.join(_new_ktv_cats)}). Why it's here: this is what actually correlates with UWW "
-                        f"winning, not just what's true about the opponent -- open the table below for the exact "
-                        f"targets to hit."
-                    ),
-                )
-                with st.expander("View win/loss comparison", expanded=False):
-                    st.dataframe(_new_ktv_df, hide_index=True, use_container_width=True)
-        except Exception as _new_ktv_e:
-            report_section_error("Data-Driven Keys to Victory", _new_ktv_e)
+        pass  # folded into the unified Keys to Victory section below (was a separate card here)
+
 
     # --- PPG comparison below banner ---
     uww_ppg = f"{played['team_score'].mean():.1f}" if not played.empty else "-"
@@ -4533,19 +4516,17 @@ def render_upcoming_opponent_new():
     import re as _re
     _active_lineup_html = _re.sub(r'<div style="font-weight:800;font-size:1\.05rem;letter-spacing:0\.5px;margin-bottom:8px;">TOP [53]-MAN [A-Z]+</div>', '', _active_lineup_html, count=1)
     _active_lineup_html = _re.sub(r'^<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;width:100%;margin:1\.5rem 0 0\.75rem;">', '<div style="zoom:1.1;">', _active_lineup_html, count=1)
-    _col_lu, _col_sc = st.columns([1.4, 0.8])
-    with _col_lu:
-        with st.container(border=True):
-            # Center the toggle button via CSS
-            st.markdown('<style>[data-testid="stButton"] button[kind="secondary"] { display: block; margin: 0 auto; }</style>', unsafe_allow_html=True)
-            _left_pad, _btn_col, _right_pad = st.columns([1, 2, 1])
-            with _btn_col:
-                if st.button(f"{_current_title}  ⇄", key="lineup_toggle_btn", use_container_width=True):
-                    st.session_state.lineup_view = _other_view
-                    st.rerun()
-            st.markdown(_active_lineup_html, unsafe_allow_html=True)
-    with _col_sc:
-        st.markdown(f'<div style="zoom:1.1;">{_scouting_html}</div>', unsafe_allow_html=True)
+    with st.container(border=True):
+        # Center the toggle button via CSS
+        st.markdown('<style>[data-testid="stButton"] button[kind="secondary"] { display: block; margin: 0 auto; }</style>', unsafe_allow_html=True)
+        _left_pad, _btn_col, _right_pad = st.columns([1, 2, 1])
+        with _btn_col:
+            if st.button(f"{_current_title}  ⇄", key="lineup_toggle_btn", use_container_width=True):
+                st.session_state.lineup_view = _other_view
+                st.rerun()
+        st.markdown(_active_lineup_html, unsafe_allow_html=True)
+    # (Lineup Scouting -- opponent vulnerabilities & counter-lineup recs -- moved into the unified
+    # Keys to Victory section up top, instead of sitting here as its own column.)
 
 
     # Scouting Report header with PDF download link
@@ -4557,567 +4538,10 @@ def render_upcoming_opponent_new():
                 report_path = os.path.join(reports_dir, f)
                 break
     with _new_personnel_scouting_c:
-        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">SCOUTING REPORT</div></div>', unsafe_allow_html=True)
-        if report_path and os.path.exists(report_path):
-            with open(report_path, "rb") as pdf_file:
-                st.download_button(
-                    label="📄 Download PDF",
-                    data=pdf_file,
-                    file_name=f"{short_opponent}_Scouting_Report.pdf",
-                    mime="application/pdf",
-                    key=f"pdf_download_{short_opponent}",
-                    use_container_width=False,
-                )
-        game_plans = load_table("uww_opponent_game_plans")
-        opp_plan = game_plans[game_plans["opponent"] == short_opponent]
+        pass  # Scouting Report content (Keys to Victory, Team Strengths, Full Game Plan, PDF/export
+        # buttons) is now folded into the unified Keys to Victory section up top, instead of living
+        # here as its own separate tab section.
 
-        def _build_printable_game_plan_html(opp_name: str, opp_plan_df: pd.DataFrame) -> str:
-            """Self-contained, printable one-pager (Keys to Victory, Team Strengths, and the full offensive/
-            defensive game plan) built from the same uww_opponent_game_plans rows already rendered on this page
-            -- for a coach to print or hand to players, rather than only being viewable on-screen."""
-            sections_html = ""
-            priority_topics = ["KEYS TO VICTORY", "TEAM STRENGTHS"]
-            for topic in priority_topics:
-                rows = opp_plan_df[opp_plan_df["topic"] == topic]
-                if rows.empty:
-                    continue
-                notes = str(rows.iloc[0]["notes"])
-                items = [html.escape(re.sub(r"^\d+\.\s*", "", n.strip())) for n in notes.split("|") if n.strip()]
-                sections_html += f"<h2>{html.escape(topic.title())}</h2><ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
-            other_rows = opp_plan_df[~opp_plan_df["topic"].isin(priority_topics)]
-            if not other_rows.empty:
-                sections_html += "<h2>Full Game Plan</h2>"
-                for category in other_rows["category"].unique():
-                    group = other_rows[other_rows["category"] == category]
-                    sections_html += f"<h3>{html.escape(str(category))}</h3>"
-                    for _, r in group.iterrows():
-                        notes = str(r["notes"])
-                        items = [html.escape(n.strip()) for n in notes.split("|") if n.strip()] if "|" in notes else [html.escape(notes)]
-                        sections_html += f"<p><strong>{html.escape(str(r['topic']))}</strong></p><ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
-            return f"""<!DOCTYPE html>
-    <html><head><meta charset="utf-8"><title>Game Plan vs {html.escape(opp_name)}</title>
-    <style>
-    body {{ font-family: Georgia, serif; max-width: 800px; margin: 2rem auto; color: #222; }}
-    h1 {{ color: #4E2A84; border-bottom: 3px solid #4E2A84; padding-bottom: 8px; }}
-    h2 {{ color: #4E2A84; margin-top: 1.5rem; }}
-    h3 {{ color: #333; margin-top: 1rem; }}
-    li {{ margin-bottom: 4px; }}
-    @media print {{ body {{ margin: 0.5in; }} }}
-    </style></head>
-    <body>
-    <h1>UW-Whitewater vs {html.escape(opp_name)} — Game Plan</h1>
-    {sections_html}
-    </body></html>"""
-
-        if not opp_plan.empty:
-            st.download_button(
-                label="🖨️ Print / export game plan",
-                data=_build_printable_game_plan_html(short_opponent, opp_plan),
-                file_name=f"{short_opponent}_Game_Plan.html",
-                mime="text/html",
-                key=f"gameplan_export_{short_opponent}",
-                help="Downloads a printable one-pager of Keys to Victory, Team Strengths, and the full game plan -- open it and use your browser's Print dialog to hand it to players.",
-            )
-
-        if opp_plan.empty:
-            st.warning(f"No scouting report / game plan found yet for {short_opponent}.")
-        else:
-            ktv_match = opp_plan[opp_plan["topic"] == "KEYS TO VICTORY"]
-            strengths_match = opp_plan[opp_plan["topic"] == "TEAM STRENGTHS"]
-
-            # Three-column layout: Keys to Victory + Team Strengths | Keys to Victory (data-driven) | How We Stack Up
-            col_ktv, col_dd, col_hwsu = st.columns(3)
-
-            with col_ktv:
-              with st.container(border=True):
-                st.markdown('<div style="font-weight:800;font-size:0.95rem;letter-spacing:0.3px;color:#4E2A84;margin-bottom:8px;">Keys to Victory</div>', unsafe_allow_html=True)
-                if not ktv_match.empty:
-                    ktv_notes = ktv_match.iloc[0]["notes"]
-                    keys = [_normalize_case(re.sub(r"^\d+\.\s*", "", k.strip())) for k in str(ktv_notes).split("|") if k.strip()]
-                    _CAT_COLORS = {
-                        "Ball Security / Turnovers": ("#fff3e0", "#e65100"),
-                        "Rebounding": ("#e8f5e9", "#2e7d32"),
-                        "Three-Point Shooting": ("#e3f2fd", "#1565c0"),
-                        "Free Throws": ("#fce4ec", "#c62828"),
-                        "Fouls / Discipline": ("#fff8e1", "#f57f17"),
-                        "Ball Movement / Assists": ("#f3e5f5", "#6a1b9a"),
-                        "Paint Protection / Blocks": ("#efebe9", "#4e342e"),
-                        "Perimeter Defense / Ball Pressure": ("#e0f7fa", "#00838f"),
-                        "Scoring Inside": ("#ede7f6", "#4527a0"),
-                        "Field Goal Efficiency": ("#e8e0f0", "#4E2A84"),
-                    }
-                    _valid_cats = set(load_table("uww_ktv_splits")["category"].unique()) | set(KTV_CATEGORY_REFERENCE.keys())
-                    def _detect_side(text):
-                        """Detect if a bullet is UWW (proactive) or OPP (contain opponent)."""
-                        text_lower = text.lower()
-                        sides_found = set()
-                        for phrase, side in PHRASE_SIDE.items():
-                            if phrase in text_lower:
-                                sides_found.add(side)
-                        if "OPP" in sides_found and "UWW" not in sides_found:
-                            return "OPP"
-                        if "UWW" in sides_found and "OPP" not in sides_found:
-                            return "UWW"
-                        if "OPP" in sides_found and "UWW" in sides_found:
-                            return "BOTH"
-                        return None
-                    def _match_categories(text):
-                        text_lower = text.lower()
-                        matched = []
-                        for _cat, _details in KTV_CATEGORY_REFERENCE.items():
-                            if _cat not in _valid_cats:
-                                continue
-                            _kws = [_kw.strip() for _kw in _details["keywords"].split(",")]
-                            for _kw in _kws:
-                                if _kw in text_lower:
-                                    if _cat not in matched:
-                                        matched.append(_cat)
-                                    break
-                        return matched
-                    def _side_badge_html(side):
-                        if side == "UWW":
-                            return ' <span style="background:#4E2A84;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px;margin-left:3px;">UWW</span>'
-                        elif side == "OPP":
-                            return ' <span style="background:#1a1a2e;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px;margin-left:3px;">OPP</span>'
-                        elif side == "BOTH":
-                            return (' <span style="background:#4E2A84;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px 0 0 8px;margin-left:3px;">UWW</span>'
-                                    '<span style="background:#1a1a2e;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:0 8px 8px 0;">OPP</span>')
-                        return ""
-                    def _badges_html(cats, side=None):
-                        badges = ""
-                        if side:
-                            badges += _side_badge_html(side)
-                        for c in cats:
-                            bg, fg = _CAT_COLORS.get(c, ("#e8e0f0", "#4E2A84"))
-                            badges += f' <span style="background:{bg};color:{fg};font-size:0.7rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:4px;">{html.escape(c)}</span>'
-                        return badges
-                    for k in keys:
-                        _cats = _match_categories(k)
-                        _side = _detect_side(k)
-                        if _cats or _side:
-                            st.markdown(f'<div style="margin-bottom:6px;"><span style="font-size:0.95rem;">\u2022 {html.escape(k)}</span>{_badges_html(_cats, _side)}</div>', unsafe_allow_html=True)
-                        else:
-                            st.markdown(f'<div style="margin-bottom:6px;"><span style="font-size:0.95rem;">\u2022 {html.escape(k)}</span></div>', unsafe_allow_html=True)
-                else:
-                    st.caption("Not available.")
-              with st.container(border=True):
-                st.markdown('<div style="font-weight:800;font-size:0.95rem;letter-spacing:0.3px;color:#4E2A84;margin-bottom:8px;">Team Strengths</div>', unsafe_allow_html=True)
-                if not strengths_match.empty:
-                    str_notes = strengths_match.iloc[0]["notes"]
-                    items = [re.sub(r"^\d+\.\s*", "", s.strip()) for s in str(str_notes).split("|") if s.strip()]
-                    for item in items:
-                        _cats = _match_categories(item)
-                        # Team Strengths always describe the OPPONENT's capabilities
-                        if _cats:
-                            st.markdown(f'<div style="margin-bottom:6px;"><span style="font-size:0.95rem;">{html.escape(item)}</span>{_badges_html(_cats, "OPP")}</div>', unsafe_allow_html=True)
-                        else:
-                            st.markdown(f'<div style="margin-bottom:6px;"><span style="font-size:0.95rem;">{html.escape(item)}</span>{_side_badge_html("OPP")}</div>', unsafe_allow_html=True)
-                else:
-                    st.caption("Not available.")
-
-            with col_dd:
-              with st.container(border=True):
-                st.markdown('<div style="font-weight:800;font-size:0.95rem;letter-spacing:0.3px;color:#4E2A84;margin-bottom:8px;">Keys to Victory (Data-Driven)</div>', unsafe_allow_html=True)
-                derived_keys = load_table("uww_pbp_derived_keys")
-                opp_keys = derived_keys[derived_keys["opponent"] == short_opponent].sort_values("key_number")
-                if not opp_keys.empty:
-                    for _, dk_row in opp_keys.iterrows():
-                        _dd_title = dk_row['title']
-                        _dd_cats = _match_categories(_dd_title)
-                        if not _dd_cats:
-                            _dd_cats = _match_categories(dk_row['supporting_stats'])
-                        _dd_side = _detect_side(_dd_title) or _detect_side(dk_row['recommendation'])
-                        if _dd_cats:
-                            st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">{int(dk_row["key_number"])}. {html.escape(_dd_title)}</span>{_badges_html(_dd_cats, _dd_side)}</div>', unsafe_allow_html=True)
-                        else:
-                            st.markdown(f"**{int(dk_row['key_number'])}. {_dd_title}**")
-                        st.caption(dk_row["supporting_stats"])
-                        st.markdown(f"_{dk_row['recommendation']}_")
-                        st.markdown("")
-                else:
-                    st.caption("No PBP-derived keys available for this opponent.")
-
-            with col_hwsu:
-              with st.container(border=True):
-                hwsu_title, hwsu_info = st.columns([5, 1])
-                with hwsu_title:
-                    st.markdown('<div style="font-weight:800;font-size:0.95rem;letter-spacing:0.3px;color:#4E2A84;margin-bottom:8px;">How We Stack Up</div>', unsafe_allow_html=True)
-                with hwsu_info:
-                    with st.popover("ℹ️"):
-                        st.markdown("**KTV Category Reference**")
-                        st.caption("How Keys to Victory keywords map to tracked stats:")
-                        ref_rows = []
-                        for cat, details in KTV_CATEGORY_REFERENCE.items():
-                            ref_rows.append({"Category": cat, "Trigger Keywords": details["keywords"], "Stats Tracked": details["stats"]})
-                        st.dataframe(pd.DataFrame(ref_rows), hide_index=True, use_container_width=True)
-                if not ktv_match.empty:
-                    ktv_splits = load_table("uww_ktv_splits")
-                    # Derive this game's emphasis LIVE from KTV notes (same as badge detection)
-                    _SIDE_DISPLAY = {
-                        ("Ball Security / Turnovers", "UWW"): "UWW: Protect the Ball",
-                        ("Ball Security / Turnovers", "OPP"): "OPP: Force Turnovers",
-                        ("Rebounding", "UWW"): "UWW: Crash the Boards",
-                        ("Rebounding", "OPP"): "OPP: Limit Their Rebounding",
-                        ("Three-Point Shooting", "UWW"): "UWW: Hit Our Threes",
-                        ("Three-Point Shooting", "OPP"): "OPP: Contest Their Shooting",
-                        ("Free Throws", "UWW"): "UWW: Get to the FT Line",
-                        ("Free Throws", "OPP"): "OPP: Keep Them Off the Line",
-                        ("Fouls / Discipline", "UWW"): "UWW: Stay Disciplined",
-                        ("Fouls / Discipline", "OPP"): "OPP: They Draw Fouls",
-                        ("Ball Movement / Assists", "UWW"): "UWW: Share the Ball",
-                        ("Ball Movement / Assists", "OPP"): "OPP: Disrupt Their Ball Movement",
-                        ("Perimeter Defense / Ball Pressure", "UWW"): "UWW: Create Pressure",
-                        ("Perimeter Defense / Ball Pressure", "OPP"): "OPP: On-Ball Defense",
-                        ("Paint Protection / Blocks", "UWW"): "UWW: Protect Our Rim",
-                        ("Paint Protection / Blocks", "OPP"): "OPP: Limit Their Interior",
-                        ("Scoring Inside", "UWW"): "UWW: Attack the Paint",
-                        ("Scoring Inside", "OPP"): "OPP: Limit Their Inside Scoring",
-                        ("Field Goal Efficiency", "UWW"): "UWW: Efficient Shooting",
-                        ("Field Goal Efficiency", "OPP"): "OPP: Limit Their FG Efficiency",
-                    }
-                    _live_emphasis = []
-                    _live_cats = set()
-                    # Scan Keys to Victory notes
-                    _ktv_text = str(ktv_match.iloc[0]["notes"])
-                    for _kpart in _ktv_text.split("|"):
-                        _kpart = _kpart.strip()
-                        if not _kpart:
-                            continue
-                        _part_cats = _match_categories(_kpart)
-                        _part_side = _detect_side(_kpart) or "UWW"
-                        for _pc in _part_cats:
-                            if (_pc, _part_side) not in _live_cats:
-                                _live_cats.add((_pc, _part_side))
-                                _live_emphasis.append((_pc, _part_side))
-                    # Also scan Team Strengths notes (always OPP side)
-                    if not strengths_match.empty:
-                        _str_text = str(strengths_match.iloc[0]["notes"])
-                        for _spart in _str_text.split("|"):
-                            _spart = _spart.strip()
-                            if not _spart:
-                                continue
-                            _spart_cats = _match_categories(_spart)
-                            for _sc in _spart_cats:
-                                if (_sc, "OPP") not in _live_cats:
-                                    _live_cats.add((_sc, "OPP"))
-                                    _live_emphasis.append((_sc, "OPP"))
-                    # (emphasis categories used for splits below)
-                    opp_cats = [c for c, _ in _live_emphasis]
-                    ktv_games = load_table("uww_ktv_game_categories")
-                    if len(opp_cats) > 0:
-                        # Compute per-game stats for comparison
-                        _uww_stats = {}
-                        _opp_stats = {}
-                        if not uww_box.empty:
-                            _ng = uww_box["opponent"].nunique() or 1
-                            _uww_stats["REB"] = uww_box["REB"].sum() / _ng
-                            _uww_stats["AST"] = uww_box["AST"].sum() / _ng
-                            _uww_stats["STL"] = uww_box["STL"].sum() / _ng
-                            _uww_stats["BLK"] = uww_box["BLK"].sum() / _ng
-                            _uww_stats["TO"] = uww_box["TO"].sum() / _ng
-                            _uww_stats["PF"] = uww_box["PF"].sum() / _ng
-                            _uww_stats["FG%"] = (uww_box["FGM"].sum() / uww_box["FGA"].sum() * 100) if uww_box["FGA"].sum() > 0 else 0
-                            _uww_stats["3PM"] = uww_box["FG3M"].sum() / _ng
-                            _uww_stats["3P%"] = (uww_box["FG3M"].sum() / uww_box["FG3A"].sum() * 100) if uww_box["FG3A"].sum() > 0 else 0
-                            _uww_stats["FTM"] = uww_box["FTM"].sum() / _ng
-                            _uww_stats["FT%"] = (uww_box["FTM"].sum() / uww_box["FTA"].sum() * 100) if uww_box["FTA"].sum() > 0 else 0
-                            _fg2m = uww_box["FGM"].sum() - uww_box["FG3M"].sum()
-                            _fg2a = uww_box["FGA"].sum() - uww_box["FG3A"].sum()
-                            _uww_stats["FG2M"] = _fg2m / _ng
-                            _uww_stats["FG2%"] = (_fg2m / _fg2a * 100) if _fg2a > 0 else 0
-                        # Try opponent lineup season box (reuse validated _opp_lu from above)
-                        _opp_lineup_box = _opp_lu if _opp_lu is not None else pd.DataFrame()
-                        if not _opp_lineup_box.empty and "MIN" in _opp_lineup_box.columns:
-                            _olb_min = _opp_lineup_box["MIN"].sum()
-                            _olb_games = _olb_min / 40 if _olb_min > 0 else 1
-                            _stat_cols = ["PTS", "FGM", "FGA", "FG3M", "FG3A", "FTM", "FTA", "REB", "AST", "STL", "BLK", "TO", "PF"]
-                            _olb_totals = {c: _opp_lineup_box[c].sum() for c in _stat_cols if c in _opp_lineup_box.columns}
-                            _opp_stats["REB"] = _olb_totals.get("REB", 0) / _olb_games
-                            _opp_stats["AST"] = _olb_totals.get("AST", 0) / _olb_games
-                            _opp_stats["STL"] = _olb_totals.get("STL", 0) / _olb_games
-                            _opp_stats["BLK"] = _olb_totals.get("BLK", 0) / _olb_games
-                            _opp_stats["TO"] = _olb_totals.get("TO", 0) / _olb_games
-                            _opp_stats["PF"] = _olb_totals.get("PF", 0) / _olb_games
-                            _opp_stats["FG%"] = (_olb_totals.get("FGM", 0) / _olb_totals.get("FGA", 1) * 100) if _olb_totals.get("FGA", 0) > 0 else 0
-                            _opp_stats["3PM"] = _olb_totals.get("FG3M", 0) / _olb_games
-                            _opp_stats["3P%"] = (_olb_totals.get("FG3M", 0) / _olb_totals.get("FG3A", 1) * 100) if _olb_totals.get("FG3A", 0) > 0 else 0
-                            _opp_stats["FTM"] = _olb_totals.get("FTM", 0) / _olb_games
-                            _opp_stats["FT%"] = (_olb_totals.get("FTM", 0) / _olb_totals.get("FTA", 1) * 100) if _olb_totals.get("FTA", 0) > 0 else 0
-                            _ofg2m = _olb_totals.get("FGM", 0) - _olb_totals.get("FG3M", 0)
-                            _ofg2a = _olb_totals.get("FGA", 0) - _olb_totals.get("FG3A", 0)
-                            _opp_stats["FG2M"] = _ofg2m / _olb_games
-                            _opp_stats["FG2%"] = (_ofg2m / _ofg2a * 100) if _ofg2a > 0 else 0
-                        # Fallback: box score from games played vs UWW
-                        elif not uww_box.empty and "team" in uww_box.columns:
-                          _opp_box = uww_box[uww_box["team"] != "UW-Whitewater"]
-                          _opp_box_match = _opp_box[_opp_box["team"] == short_opponent] if not _opp_box.empty else pd.DataFrame()
-                        else:
-                          _opp_box_match = pd.DataFrame()
-                        if not _opp_lineup_box.empty:
-                            pass  # Already computed above
-                        elif not _opp_box_match.empty:
-                            # Compute from box score (same method as UWW)
-                            _ong = _opp_box_match["game_date"].nunique() if "game_date" in _opp_box_match.columns else 1
-                            _opp_stats["REB"] = _opp_box_match["REB"].sum() / _ong
-                            _opp_stats["AST"] = _opp_box_match["AST"].sum() / _ong
-                            _opp_stats["STL"] = _opp_box_match["STL"].sum() / _ong
-                            _opp_stats["BLK"] = _opp_box_match["BLK"].sum() / _ong
-                            _opp_stats["TO"] = _opp_box_match["TO"].sum() / _ong
-                            _opp_stats["PF"] = _opp_box_match["PF"].sum() / _ong
-                            _opp_stats["FG%"] = (_opp_box_match["FGM"].sum() / _opp_box_match["FGA"].sum() * 100) if _opp_box_match["FGA"].sum() > 0 else 0
-                            _opp_stats["3PM"] = _opp_box_match["FG3M"].sum() / _ong
-                            _opp_stats["3P%"] = (_opp_box_match["FG3M"].sum() / _opp_box_match["FG3A"].sum() * 100) if _opp_box_match["FG3A"].sum() > 0 else 0
-                            _opp_stats["FTM"] = _opp_box_match["FTM"].sum() / _ong
-                            _opp_stats["FT%"] = (_opp_box_match["FTM"].sum() / _opp_box_match["FTA"].sum() * 100) if _opp_box_match["FTA"].sum() > 0 else 0
-                            _ofg2m = _opp_box_match["FGM"].sum() - _opp_box_match["FG3M"].sum()
-                            _ofg2a = _opp_box_match["FGA"].sum() - _opp_box_match["FG3A"].sum()
-                            _opp_stats["FG2M"] = _ofg2m / _ong
-                            _opp_stats["FG2%"] = (_ofg2m / _ofg2a * 100) if _ofg2a > 0 else 0
-                        elif not opp_prof_ts.empty:
-                            # Fallback: derive from player profiles for upcoming opponents. REB is already
-                            # per-game; AST/STL/BLK/TO are season totals in this table and need dividing by games
-                            # played (see get_opponent_games_played's docstring for how this was confirmed).
-                            _fallback_games_est = get_opponent_games_played(short_opponent)
-                            _opp_stats["REB"] = opp_prof_ts["REB"].sum()
-                            _opp_stats["AST"] = opp_prof_ts["AST"].sum() / _fallback_games_est
-                            _opp_stats["STL"] = opp_prof_ts["STL"].sum() / _fallback_games_est
-                            _opp_stats["BLK"] = opp_prof_ts["BLK"].sum() / _fallback_games_est
-                            _opp_stats["TO"] = opp_prof_ts["TO"].sum() / _fallback_games_est
-                            _opp_stats["PF"] = 0
-                            # Parse 3PM-A season totals
-                            _o3m, _o3a = 0, 0
-                            for _, _op in opp_prof_ts.iterrows():
-                                _tpa = str(_op.get("3PM-A", "")).strip()
-                                if "-" in _tpa and _tpa != "nan":
-                                    parts = _tpa.split("-")
-                                    try:
-                                        _o3m += float(parts[0])
-                                        _o3a += float(parts[1])
-                                    except (ValueError, IndexError):
-                                        pass
-                            _opp_stats["3P%"] = (_o3m / _o3a * 100) if _o3a > 0 else 0
-                            # Parse FTM-A season totals
-                            _oftm, _ofta = 0, 0
-                            for _, _op in opp_prof_ts.iterrows():
-                                _fta = str(_op.get("FTM-A", "")).strip()
-                                if "-" in _fta and _fta != "nan":
-                                    parts = _fta.split("-")
-                                    try:
-                                        _oftm += float(parts[0])
-                                        _ofta += float(parts[1])
-                                    except (ValueError, IndexError):
-                                        pass
-                            _opp_stats["FT%"] = (_oftm / _ofta * 100) if _ofta > 0 else 0
-                            # FG% (minutes-weighted)
-                            _opp_fg_vals = []
-                            for _, _op in opp_prof_ts.iterrows():
-                                _fgs = str(_op.get("FG%", "")).replace("%", "").strip()
-                                if _fgs and _fgs != "nan":
-                                    try:
-                                        _opp_fg_vals.append((float(_fgs), float(_op.get("MIN", 1))))
-                                    except ValueError:
-                                        pass
-                            _opp_fg_pct = sum(v * m for v, m in _opp_fg_vals) / sum(m for _, m in _opp_fg_vals) if _opp_fg_vals else 0
-                            _opp_stats["FG%"] = _opp_fg_pct
-                            # Derive per-game stats using PPG and season totals
-                            _opp_ppg = opp_prof_ts["PTS"].sum()
-                            # Was previously `num_uww_games` (UWW's own games-played count) used as a stand-in for
-                            # the OPPONENT's games played -- wrong team's denominator. Use the opponent's own count.
-                            _opp_games_est = get_opponent_games_played(short_opponent)
-                            _o3m_pg = _o3m / _opp_games_est if _opp_games_est > 0 else 0
-                            _o3a_pg = _o3a / _opp_games_est if _opp_games_est > 0 else 0
-                            _oftm_pg = _oftm / _opp_games_est if _opp_games_est > 0 else 0
-                            _opp_stats["3PM"] = _o3m_pg
-                            _opp_stats["FTM"] = _oftm_pg
-                            # FGM/gm from PTS = 2*FGM + FG3M + FTM
-                            _opp_fgm_pg = (_opp_ppg - _o3m_pg - _oftm_pg) / 2
-                            _opp_fga_pg = _opp_fgm_pg / (_opp_fg_pct / 100) if _opp_fg_pct > 0 else 0
-                            _opp_fg2m_pg = _opp_fgm_pg - _o3m_pg
-                            _opp_fg2a_pg = _opp_fga_pg - _o3a_pg
-                            _opp_stats["FG2M"] = max(_opp_fg2m_pg, 0)
-                            _opp_stats["FG2%"] = (_opp_fg2m_pg / _opp_fg2a_pg * 100) if _opp_fg2a_pg > 0 else 0
-
-                        # Stat display config per category
-                        _CAT_STAT_DISPLAY = {
-                            "Rebounding": [("RPG", "REB")],
-                            "Three-Point Shooting": [("3P%", "3P%"), ("3PM/gm", "3PM")],
-                            "Perimeter Defense / Ball Pressure": [("STL/gm", "STL")],
-                            "Scoring Inside": [("2PT FG%", "FG2%"), ("2PT FGM/gm", "FG2M")],
-                            "Ball Security / Turnovers": [("TO/gm", "TO")],
-                            "Ball Movement / Assists": [("AST/gm", "AST")],
-                            "Paint Protection / Blocks": [("BLK/gm", "BLK")],
-                            "Free Throws": [("FT%", "FT%"), ("FTM/gm", "FTM")],
-                            "Fouls / Discipline": [("PF/gm", "PF")],
-                            "Field Goal Efficiency": [("FG%", "FG%")],
-                        }
-
-                        # Compute UWW defensive stats (what opponents do AGAINST UWW)
-                        _uww_allowed = {}
-                        if not box.empty and "team" in box.columns:
-                            _def_box = box[box["team"] != "UW-Whitewater"]
-                            _dg = _def_box["opponent"].nunique() if not _def_box.empty else 1
-                            if not _def_box.empty:
-                                _uww_allowed["REB"] = _def_box["REB"].sum() / _dg
-                                _uww_allowed["AST"] = _def_box["AST"].sum() / _dg
-                                _uww_allowed["STL"] = _def_box["STL"].sum() / _dg
-                                _uww_allowed["BLK"] = _def_box["BLK"].sum() / _dg
-                                _uww_allowed["TO"] = _def_box["TO"].sum() / _dg
-                                _uww_allowed["PF"] = _def_box["PF"].sum() / _dg
-                                _uww_allowed["FG%"] = (_def_box["FGM"].sum() / _def_box["FGA"].sum() * 100) if _def_box["FGA"].sum() > 0 else 0
-                                _uww_allowed["3PM"] = _def_box["FG3M"].sum() / _dg
-                                _uww_allowed["3P%"] = (_def_box["FG3M"].sum() / _def_box["FG3A"].sum() * 100) if _def_box["FG3A"].sum() > 0 else 0
-                                _uww_allowed["FTM"] = _def_box["FTM"].sum() / _dg
-                                _uww_allowed["FT%"] = (_def_box["FTM"].sum() / _def_box["FTA"].sum() * 100) if _def_box["FTA"].sum() > 0 else 0
-                                _dfg2m = _def_box["FGM"].sum() - _def_box["FG3M"].sum()
-                                _dfg2a = _def_box["FGA"].sum() - _def_box["FG3A"].sum()
-                                _uww_allowed["FG2M"] = _dfg2m / _dg
-                                _uww_allowed["FG2%"] = (_dfg2m / _dfg2a * 100) if _dfg2a > 0 else 0
-
-                        # --- Win/Loss stat breakdowns ---
-                        _uww_stats_w, _uww_stats_l = {}, {}
-                        _uww_allowed_w, _uww_allowed_l = {}, {}
-                        if not uww_box.empty:
-                            # Map each opponent in box score to W/L outcome
-                            _opp_outcomes = get_opponent_outcomes(schedule, uww_box["opponent"].unique())
-                            _win_opps = [o for o, r in _opp_outcomes.items() if r == "W"]
-                            _loss_opps = [o for o, r in _opp_outcomes.items() if r == "L"]
-
-                            def _compute_split_stats(_df, _n_games):
-                                """Compute per-game stats from a filtered box score subset."""
-                                _s = {}
-                                if _df.empty or _n_games == 0:
-                                    return _s
-                                _s["REB"] = _df["REB"].sum() / _n_games
-                                _s["AST"] = _df["AST"].sum() / _n_games
-                                _s["STL"] = _df["STL"].sum() / _n_games
-                                _s["BLK"] = _df["BLK"].sum() / _n_games
-                                _s["TO"] = _df["TO"].sum() / _n_games
-                                _s["PF"] = _df["PF"].sum() / _n_games
-                                _s["FG%"] = (_df["FGM"].sum() / _df["FGA"].sum() * 100) if _df["FGA"].sum() > 0 else 0
-                                _s["3PM"] = _df["FG3M"].sum() / _n_games
-                                _s["3P%"] = (_df["FG3M"].sum() / _df["FG3A"].sum() * 100) if _df["FG3A"].sum() > 0 else 0
-                                _s["FTM"] = _df["FTM"].sum() / _n_games
-                                _s["FT%"] = (_df["FTM"].sum() / _df["FTA"].sum() * 100) if _df["FTA"].sum() > 0 else 0
-                                _fg2m = _df["FGM"].sum() - _df["FG3M"].sum()
-                                _fg2a = _df["FGA"].sum() - _df["FG3A"].sum()
-                                _s["FG2M"] = _fg2m / _n_games
-                                _s["FG2%"] = (_fg2m / _fg2a * 100) if _fg2a > 0 else 0
-                                return _s
-
-                            # UWW offensive stats in wins vs losses
-                            if _win_opps:
-                                _uww_w_box = uww_box[uww_box["opponent"].isin(_win_opps)]
-                                _uww_stats_w = _compute_split_stats(_uww_w_box, len(_win_opps))
-                            if _loss_opps:
-                                _uww_l_box = uww_box[uww_box["opponent"].isin(_loss_opps)]
-                                _uww_stats_l = _compute_split_stats(_uww_l_box, len(_loss_opps))
-
-                            # UWW allowed (defensive) stats in wins vs losses
-                            if _win_opps and not box.empty:
-                                _def_w = box[(box["team"] != "UW-Whitewater") & (box["opponent"].isin(_win_opps))]
-                                _uww_allowed_w = _compute_split_stats(_def_w, len(_win_opps))
-                            if _loss_opps and not box.empty:
-                                _def_l = box[(box["team"] != "UW-Whitewater") & (box["opponent"].isin(_loss_opps))]
-                                _uww_allowed_l = _compute_split_stats(_def_l, len(_loss_opps))
-
-                        _n_wins = len(_win_opps) if not uww_box.empty else 0
-                        _n_losses = len(_loss_opps) if not uww_box.empty else 0
-
-                        # Show splits + stats for each detected category
-                        for _cat, _side in _live_emphasis:
-                            _badge = _side_badge_html(_side) if _side else ""
-                            # Find matching split row
-                            _split_match = ktv_splits[(ktv_splits["category"] == _cat) & (ktv_splits["side"] == _side)] if not ktv_splits.empty and "side" in ktv_splits.columns else pd.DataFrame()
-                            if _split_match.empty:
-                                _split_match = ktv_splits[ktv_splits["category"] == _cat] if not ktv_splits.empty else pd.DataFrame()
-                            # Build split text
-                            if not _split_match.empty:
-                                sr = _split_match.iloc[0]
-                                games_played = int(sr["games"])
-                                if games_played > 0:
-                                    w, l = int(sr["wins"]), int(sr["losses"])
-                                    pct = sr["win_pct"]
-                                    pct_str = f" ({pct:.0%})" if pd.notna(pct) else ""
-                                    _split_txt = f"{w}W\u2013{l}L{pct_str}"
-                                else:
-                                    _split_txt = "No previous games"
-                            else:
-                                _split_txt = ""
-                            # Category header with split
-                            _split_span = f' <span style="font-size:0.85rem;color:#555;margin-left:6px;">{_split_txt}</span>' if _split_txt else ""
-                            st.markdown(f'<div style="margin-bottom:2px;"><strong>{html.escape(_cat)}</strong>{_split_span}{_badge}</div>', unsafe_allow_html=True)
-                            # Stat comparison – 2 rows for clarity
-                            _stat_items = _CAT_STAT_DISPLAY.get(_cat, [])
-                            if _stat_items and (_uww_stats or _opp_stats):
-                                if _side == "OPP":
-                                    # Row 1: opponent's offensive stats
-                                    _r1_parts = []
-                                    for _lbl, _key in _stat_items:
-                                        _ov = _opp_stats.get(_key, 0)
-                                        if "%" in _lbl:
-                                            _r1_parts.append(f"{_lbl}: <strong>{_ov:.1f}%</strong>")
-                                        else:
-                                            _r1_parts.append(f"{_lbl}: <strong>{_ov:.1f}</strong>")
-                                    _r1 = " &nbsp;|&nbsp; ".join(_r1_parts)
-                                    # Row 2: what UWW allows (defensive)
-                                    _r2_parts = []
-                                    for _lbl, _key in _stat_items:
-                                        _uv = _uww_stats.get(_key, 0)
-                                        if "%" in _lbl:
-                                            _r2_parts.append(f"{_lbl}: {_uv:.1f}%")
-                                        else:
-                                            _r2_parts.append(f"{_lbl}: {_uv:.1f}")
-                                    _r2 = " &nbsp;|&nbsp; ".join(_r2_parts)
-                                    st.markdown(f'<div style="font-size:0.85rem;color:#444;margin:0 0 2px 8px;">{html.escape(opp_display)}: {_r1}</div>', unsafe_allow_html=True)
-                                    st.markdown(f'<div style="font-size:0.85rem;color:#666;margin:0 0 10px 8px;">UWW allows: {_r2}</div>', unsafe_allow_html=True)
-                                else:
-                                    # Row 1: UWW offensive stats
-                                    _r1_parts = []
-                                    for _lbl, _key in _stat_items:
-                                        _uv = _uww_stats.get(_key, 0)
-                                        if "%" in _lbl:
-                                            _r1_parts.append(f"{_lbl}: <strong>{_uv:.1f}%</strong>")
-                                        else:
-                                            _r1_parts.append(f"{_lbl}: <strong>{_uv:.1f}</strong>")
-                                    _r1 = " &nbsp;|&nbsp; ".join(_r1_parts)
-                                    # Row 2: opponent's stats for comparison
-                                    _r2_parts = []
-                                    for _lbl, _key in _stat_items:
-                                        _ov = _opp_stats.get(_key, 0)
-                                        if "%" in _lbl:
-                                            _r2_parts.append(f"{_lbl}: {_ov:.1f}%")
-                                        else:
-                                            _r2_parts.append(f"{_lbl}: {_ov:.1f}")
-                                    _r2 = " &nbsp;|&nbsp; ".join(_r2_parts)
-                                    st.markdown(f'<div style="font-size:0.85rem;color:#444;margin:0 0 2px 8px;">UWW: {_r1}</div>', unsafe_allow_html=True)
-                                    st.markdown(f'<div style="font-size:0.85rem;color:#666;margin:0 0 10px 8px;">{html.escape(opp_display)}: {_r2}</div>', unsafe_allow_html=True)
-                else:
-                    st.caption("Not available.")
-
-            # Full game plan in expander
-            other = opp_plan[~opp_plan["topic"].isin(["KEYS TO VICTORY", "TEAM STRENGTHS"])]
-            if not other.empty:
-                st.markdown("")
-                with st.expander("📋 **FULL GAME PLAN** — Offensive & Defensive Schemes", expanded=False):
-                    categories = list(other["category"].unique())
-                    # Split into two columns (Offense left, Defense right)
-                    gp_left, gp_right = st.columns(2)
-                    for idx, category in enumerate(categories):
-                        group = other[other["category"] == category]
-                        col = gp_left if idx % 2 == 0 else gp_right
-                        with col:
-                            with st.container(border=True):
-                                st.markdown(f"#### {category}")
-                                for _, r in group.iterrows():
-                                    st.markdown(f"**{r['topic']}**")
-                                    notes = str(r["notes"])
-                                    if "|" in notes:
-                                        items = [item.strip() for item in notes.split("|") if item.strip()]
-                                        for item in items:
-                                            st.markdown(f"- {item}")
-                                    else:
-                                        st.write(notes)
-                                    st.markdown("")
 
 
     with _new_personnel_roster_c:
@@ -5526,20 +4950,137 @@ def render_upcoming_opponent_new():
         # ==================== GAME PLAN RECOMMENDATIONS ====================
 
     with _new_rec_container:
-        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001f4cb GAME PLAN RECOMMENDATIONS</div></div>', unsafe_allow_html=True)
+        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001f511 KEYS TO VICTORY</div></div>', unsafe_allow_html=True)
         with st.popover("\u2139\ufe0f What is this?"):
             st.markdown(
-                "Data-driven suggestions synthesized from everything else on this page (coach notes, lineup data, "
-                "shooting/rebounding rates, clutch performance) into specific, actionable calls -- **not** a "
-                "replacement for the staff's own read on this opponent. Each card shows the numbers behind it so "
-                "you can judge the suggestion yourself rather than take it on faith. A card is skipped entirely "
-                "(not shown with a placeholder) if there isn't enough data behind it yet."
+                "Everything the staff and the data have on this opponent, combined into one list -- "
+                "pre-computed data-driven keys, the staff's own written scouting report (Keys to "
+                "Victory, Team Strengths, the full game plan), lineup scouting, and season-stat-based "
+                "recommendations. Tap the \u2753 next to any item for the reasoning and numbers behind it."
             )
 
-        # --- AT A GLANCE: the most decision-relevant number from each recommendation, as a hover-
-        # tooltipped metric. Hover (or tap, on mobile) each one for the reasoning and the numbers
-        # behind it -- full detail for all of these (plus two situational bonus call-outs that only
-        # appear when there's a real match) is in the expander below.
+        def _build_printable_game_plan_html(opp_name: str, opp_plan_df: pd.DataFrame) -> str:
+            """Self-contained, printable one-pager (Keys to Victory, Team Strengths, and the full offensive/
+            defensive game plan) built from the same uww_opponent_game_plans rows already rendered on this page
+            -- for a coach to print or hand to players, rather than only being viewable on-screen."""
+            sections_html = ""
+            priority_topics = ["KEYS TO VICTORY", "TEAM STRENGTHS"]
+            for topic in priority_topics:
+                rows = opp_plan_df[opp_plan_df["topic"] == topic]
+                if rows.empty:
+                    continue
+                notes = str(rows.iloc[0]["notes"])
+                items = [html.escape(re.sub(r"^\d+\.\s*", "", n.strip())) for n in notes.split("|") if n.strip()]
+                sections_html += f"<h2>{html.escape(topic.title())}</h2><ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
+            other_rows = opp_plan_df[~opp_plan_df["topic"].isin(priority_topics)]
+            if not other_rows.empty:
+                sections_html += "<h2>Full Game Plan</h2>"
+                for category in other_rows["category"].unique():
+                    group = other_rows[other_rows["category"] == category]
+                    sections_html += f"<h3>{html.escape(str(category))}</h3>"
+                    for _, r in group.iterrows():
+                        notes = str(r["notes"])
+                        items = [html.escape(n.strip()) for n in notes.split("|") if n.strip()] if "|" in notes else [html.escape(notes)]
+                        sections_html += f"<p><strong>{html.escape(str(r['topic']))}</strong></p><ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
+            return f"""<!DOCTYPE html>
+    <html><head><meta charset="utf-8"><title>Game Plan vs {html.escape(opp_name)}</title>
+    <style>
+    body {{ font-family: Georgia, serif; max-width: 800px; margin: 2rem auto; color: #222; }}
+    h1 {{ color: #4E2A84; border-bottom: 3px solid #4E2A84; padding-bottom: 8px; }}
+    h2 {{ color: #4E2A84; margin-top: 1.5rem; }}
+    h3 {{ color: #333; margin-top: 1rem; }}
+    li {{ margin-bottom: 4px; }}
+    @media print {{ body {{ margin: 0.5in; }} }}
+    </style></head>
+    <body>
+    <h1>UW-Whitewater vs {html.escape(opp_name)} — Game Plan</h1>
+    {sections_html}
+    </body></html>"""
+
+        _util_c1, _util_c2 = st.columns(2)
+        with _util_c1:
+            if report_path and os.path.exists(report_path):
+                with open(report_path, "rb") as pdf_file:
+                    st.download_button(
+                        label="\U0001f4c4 Download Scouting Report PDF", data=pdf_file,
+                        file_name=f"{short_opponent}_Scouting_Report.pdf", mime="application/pdf",
+                        key=f"pdf_download_{short_opponent}", use_container_width=True,
+                    )
+        with _util_c2:
+            try:
+                _u_game_plans = load_table("uww_opponent_game_plans")
+                _u_opp_plan = _u_game_plans[_u_game_plans["opponent"] == short_opponent] if not _u_game_plans.empty and short_opponent else pd.DataFrame()
+                if not _u_opp_plan.empty:
+                    st.download_button(
+                        label="\U0001f5a8\ufe0f Print / export game plan",
+                        data=_build_printable_game_plan_html(short_opponent, _u_opp_plan),
+                        file_name=f"{short_opponent}_Game_Plan.html", mime="text/html",
+                        key=f"gameplan_export_new_{short_opponent}", use_container_width=True,
+                        help="Downloads a printable one-pager -- open it and use your browser's Print dialog to hand it to players.",
+                    )
+            except Exception:
+                pass
+
+        _keys = []  # list of (icon, headline, reason) -- every source below appends here, nothing renders separately
+
+        # A. Pre-computed data-driven keys (title + supporting stat + recommendation, already in
+        # exactly a "key + reason why" shape from the parser)
+        try:
+            _dk_all = load_table("uww_pbp_derived_keys")
+            _dk_opp = _dk_all[_dk_all["opponent"] == short_opponent].sort_values("key_number") if not _dk_all.empty and short_opponent else pd.DataFrame()
+            for _, _dk in _dk_opp.iterrows():
+                _keys.append(("\U0001f4ca", str(_dk["title"]), f"{_dk['supporting_stats']} \u2014 {_dk['recommendation']}"))
+        except Exception:
+            pass
+
+        # B/C/D. The staff's own written scouting report -- Keys to Victory, Team Strengths, and
+        # the rest of the full game plan (offensive/defensive schemes by category)
+        try:
+            _sr_game_plans = load_table("uww_opponent_game_plans")
+            _sr_opp_plan = _sr_game_plans[_sr_game_plans["opponent"] == short_opponent] if not _sr_game_plans.empty and short_opponent else pd.DataFrame()
+            if not _sr_opp_plan.empty:
+                _sr_ktv = _sr_opp_plan[_sr_opp_plan["topic"] == "KEYS TO VICTORY"]
+                if not _sr_ktv.empty:
+                    for _k in str(_sr_ktv.iloc[0]["notes"]).split("|"):
+                        _k = re.sub(r"^\d+\.\s*", "", _k.strip())
+                        if _k:
+                            _keys.append(("\U0001f4cb", _k, f"From the staff's scouting report for {short_opponent} (Keys to Victory)."))
+                _sr_strengths = _sr_opp_plan[_sr_opp_plan["topic"] == "TEAM STRENGTHS"]
+                if not _sr_strengths.empty:
+                    for _s in str(_sr_strengths.iloc[0]["notes"]).split("|"):
+                        _s = re.sub(r"^\d+\.\s*", "", _s.strip())
+                        if _s:
+                            _keys.append(("\u26a0\ufe0f", f"Opponent strength: {_s}", f"Scouted strength for {short_opponent} -- defend accordingly."))
+                _sr_other = _sr_opp_plan[~_sr_opp_plan["topic"].isin(["KEYS TO VICTORY", "TEAM STRENGTHS"])]
+                for _, _sr_row in _sr_other.iterrows():
+                    _sr_notes = str(_sr_row["notes"])
+                    _sr_items = [_i.strip() for _i in _sr_notes.split("|") if _i.strip()] if "|" in _sr_notes else [_sr_notes.strip()]
+                    for _sr_item in _sr_items:
+                        if _sr_item:
+                            _keys.append(("\U0001f4cb", _sr_item, f"From the full game plan \u2014 {_sr_row['category']}: {_sr_row['topic']}."))
+        except Exception:
+            pass
+
+        # E. Lineup scouting (opponent vulnerability + best UWW counter, from the same lineup data
+        # the Tools tab's simulator uses)
+        try:
+            if _opp_lu is not None and not _opp_lu.empty:
+                _ls_worst = _opp_lu[_opp_lu["MIN"] >= 3.0].nsmallest(1, "+/-")
+                if not _ls_worst.empty:
+                    _ls_wr = _ls_worst.iloc[0]
+                    _keys.append(("\U0001f512", f"Attack {short_opponent}'s {_last_names(_ls_wr['lineup'])} lineup", f"Their worst net-rating lineup with real minutes this season: {_ls_wr['+/-']:+.1f} in {_ls_wr['MIN']:.1f} min."))
+            if _opp_lu is not None and not _opp_lu.empty and _uww_lu_agg is not None and not _uww_lu_agg.empty:
+                _ls_opp_top = _opp_lu.nlargest(1, "MIN")
+                _ls_best_uww = _uww_lu_agg[_uww_lu_agg["MIN"] >= 3.0].nlargest(1, "+/-")
+                if not _ls_opp_top.empty and not _ls_best_uww.empty:
+                    _ls_bu = _ls_best_uww.iloc[0]
+                    _keys.append(("\U0001f512", f"Counter with {_last_names(_ls_bu['lineup'])}", f"Best UWW lineup by net rating vs. {short_opponent}'s most-used lineup ({_last_names(_ls_opp_top.iloc[0]['lineup'])}): {_ls_bu['+/-']:+.1f} in {_ls_bu['MIN']:.1f} min."))
+        except Exception:
+            pass
+
+        # F. Season-stat-based recommendations (pace/style, rebounding, bench trust, clutch, turnovers,
+        # closing lineup, top play call) -- same computations as before, now feeding the same list
+        # instead of their own separate tile grid.
         _at_a_glance = []  # list of (label, value, help) -- filled defensively, one try per tile
 
         try:
@@ -5666,336 +5207,25 @@ def render_upcoming_opponent_new():
         except Exception:
             pass
 
-        if _at_a_glance:
-            _ag_cols = st.columns(4)
-            for _ag_i, (_ag_label, _ag_value, _ag_help) in enumerate(_at_a_glance):
-                with _ag_cols[_ag_i % 4]:
-                    st.metric(_ag_label, _ag_value, help=_ag_help)
+        for _label, _value, _help in _at_a_glance:
+            _icon, _rest = (_label.split(" ", 1) + [""])[:2]
+            _keys.append((_icon or "\U0001f3af", f"{_rest or _label}: {_value}", _help))
+
+        # --- Render: one flowing list, not separate cards/sections -- a small \u2753 popover per row
+        # holds the reason why, so the list itself stays scannable. ---
+        if _keys:
+            for _ki, (_icon, _headline, _reason) in enumerate(_keys):
+                _row_c1, _row_c2 = st.columns([0.94, 0.06])
+                with _row_c1:
+                    st.markdown(f"{_icon} {esc(_headline)}")
+                with _row_c2:
+                    with st.popover("\u2753"):
+                        st.caption("**Reason why:**")
+                        st.write(_reason)
         else:
-            st.caption("Not enough data yet for an at-a-glance summary -- check the details below as data fills in.")
+            st.info("No scouting data available yet for this opponent.")
 
-        with st.expander("\U0001f4cb Full Game Plan Details", expanded=False):
-            _gp_col1, _gp_col2 = st.columns(2)
 
-            # --- Card: Go-To Plays / Use Sparingly (from coach notes) ---
-            try:
-                with _gp_col1:
-                    with st.container(border=True):
-                        st.markdown("**\U0001f3c0 Plays to Lean On**")
-                        _gp_notes = load_table("uww_coach_notes")
-                        _gp_off = _gp_notes[_gp_notes["clip_side"] == "Offense"].copy() if not _gp_notes.empty and "clip_side" in _gp_notes.columns else pd.DataFrame()
-                        if _gp_off.empty:
-                            st.caption("No coach-tagged offensive play calls recorded yet this season.")
-                        else:
-                            _gp_off["play_call"] = _gp_off["coach_note"].apply(extract_offensive_play_call)
-                            _gp_calls = _gp_off[_gp_off["play_call"].notna()].copy()
-                            if _gp_calls.empty:
-                                st.caption("No named play calls detected in this season's offensive notes yet.")
-                            else:
-                                _gp_calls["_is_make"] = _gp_calls["result"].astype(str).str.contains("Make", case=False, na=False)
-                                _gp_calls["_is_attempt"] = _gp_calls["result"].astype(str).str.contains("Make|Miss", case=False, regex=True, na=False)
-                                _gp_summary = _gp_calls.groupby("play_call").agg(
-                                    Calls=("coach_note", "count"), Makes=("_is_make", "sum"), Attempts=("_is_attempt", "sum"),
-                                ).reset_index()
-                                _gp_summary = _gp_summary[_gp_summary["Attempts"] >= 2]  # need a real sample before recommending
-                                if _gp_summary.empty:
-                                    st.caption("Not enough repeated play calls with a clear result yet to recommend from (need 2+ tracked attempts on a named call).")
-                                else:
-                                    _gp_summary["FG%"] = (100 * _gp_summary["Makes"] / _gp_summary["Attempts"]).round(0)
-                                    _go_to = _gp_summary.nlargest(3, "FG%")
-                                    for _, _r in _go_to.iterrows():
-                                        st.markdown(f"- **{esc(_r['play_call'])}** -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%) this season")
-                                    _cold = _gp_summary.nsmallest(2, "FG%")
-                                    _cold = _cold[~_cold["play_call"].isin(_go_to["play_call"])]
-                                    if not _cold.empty:
-                                        st.markdown("**Use sparingly:**")
-                                        for _, _r in _cold.iterrows():
-                                            st.markdown(f"- {esc(_r['play_call'])} -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)")
-                                    st.caption("Play call names are a best-effort extraction from coach notes (see the Analytics page for the full breakdown and how it's parsed).")
-            except Exception as _e:
-                with _gp_col1:
-                    report_section_error("Plays to Lean On", _e)
-
-            # --- Card: Opponent Scoring Reliance ---
-            try:
-                with _gp_col2:
-                    with st.container(border=True):
-                        st.markdown("**\U0001f3af Opponent Scoring Reliance**")
-                        _gp_opp_prof = load_table("uww_player_profiles")
-                        _gp_opp_prof = _gp_opp_prof[_gp_opp_prof["opponent"] == short_opponent] if not _gp_opp_prof.empty and short_opponent else pd.DataFrame()
-                        if _gp_opp_prof.empty or "PTS" not in _gp_opp_prof.columns:
-                            st.caption("No opponent player scoring data available yet.")
-                        else:
-                            _gp_opp_prof = _gp_opp_prof.copy()
-                            _gp_opp_prof["PTS"] = pd.to_numeric(_gp_opp_prof["PTS"], errors="coerce")
-                            _gp_team_pts = _gp_opp_prof["PTS"].sum()
-                            if _gp_team_pts > 0:
-                                _gp_top2 = _gp_opp_prof.nlargest(2, "PTS")
-                                _gp_top2_share = 100 * _gp_top2["PTS"].sum() / _gp_team_pts
-                                _gp_leader = _gp_opp_prof.nlargest(1, "PTS").iloc[0]
-                                if _gp_top2_share >= 45:
-                                    st.markdown(f"Their top 2 scorers account for **{_gp_top2_share:.0f}%** of team scoring -- a concentrated attack.")
-                                    st.markdown(f"**{esc(_gp_leader['name'])}** leads at {_gp_leader['PTS']:.1f} PPG. Sending extra attention their way is likely to matter more here than against a balanced team.")
-                                else:
-                                    st.markdown(f"Their top 2 scorers account for only **{_gp_top2_share:.0f}%** of team scoring -- a balanced attack with no single focal point to key on.")
-                                    st.markdown("Defensive game-planning likely matters more at the team-scheme level here than picking one player to load up on.")
-                            else:
-                                st.caption("No usable scoring totals yet.")
-            except Exception as _e:
-                with _gp_col2:
-                    report_section_error("Opponent Scoring Reliance", _e)
-
-            _gp_col3, _gp_col4 = st.columns(2)
-
-            # --- Card: Pace & Style ---
-            try:
-                with _gp_col3:
-                    with st.container(border=True):
-                        st.markdown("**\u23f1\ufe0f Pace & Style**")
-                        _gp_uww_box_all = load_table("uww_pbp_box_score")
-                        if _gp_uww_box_all.empty:
-                            st.caption("Not enough reconstructed box-score data yet to compute season pace.")
-                        else:
-                            _gp_uww_side = _gp_uww_box_all[_gp_uww_box_all["team"] == "UW-Whitewater"]
-                            _gp_opp_side = _gp_uww_box_all[_gp_uww_box_all["team"] != "UW-Whitewater"]
-                            _gp_n_games = _gp_uww_side["opponent"].nunique() if not _gp_uww_side.empty else 0
-                            if _gp_n_games == 0:
-                                st.caption("Not enough games reconstructed yet to compute season pace.")
-                            else:
-                                _gp_pace = compute_efficiency_pace(_gp_uww_side, _gp_opp_side, _gp_n_games)
-                                _gp_team_totals = load_table("uww_opponent_team_totals")
-                                _gp_opp_row = _gp_team_totals[_gp_team_totals["opponent"] == short_opponent] if not _gp_team_totals.empty and short_opponent else pd.DataFrame()
-                                st.markdown(f"UWW season pace: **{_gp_pace['Pace']:.1f}** possessions/game, Net Rtg **{_gp_pace['Net Rtg']:+.1f}**.")
-                                if not _gp_opp_row.empty and "team_ppg" in _gp_opp_row.columns:
-                                    _gp_opp_ppg = safe_float(_gp_opp_row.iloc[0].get("team_ppg"))
-                                    _gp_opp_ppg_allowed = safe_float(_gp_opp_row.iloc[0].get("opp_ppg_allowed")) if "opp_ppg_allowed" in _gp_opp_row.columns else None
-                                    if _gp_opp_ppg is not None:
-                                        st.markdown(f"{esc(short_opponent)}: **{_gp_opp_ppg:.1f}** PPG" + (f", allows **{_gp_opp_ppg_allowed:.1f}**" if _gp_opp_ppg_allowed is not None else "") + ".")
-                                        if _gp_opp_ppg_allowed is not None and _gp_pace["Net Rtg"] != 0:
-                                            if _gp_opp_ppg_allowed > _gp_opp_ppg:
-                                                st.markdown("They give up more than they score on average -- **push tempo** and get into transition before their defense sets.")
-                                            else:
-                                                st.markdown("They're stingier than their own offense -- a **half-court, execution-first** approach may serve better than trying to speed them up.")
-                                else:
-                                    st.caption("No opponent team-total scoring data yet for a pace comparison.")
-            except Exception as _e:
-                with _gp_col3:
-                    report_section_error("Pace & Style", _e)
-
-            # --- Card: Rebounding ---
-            try:
-                with _gp_col4:
-                    with st.container(border=True):
-                        st.markdown("**\U0001f4aa Rebounding Edge**")
-                        _gp_box_all = load_table("uww_pbp_box_score")
-                        _gp_opp_prof_reb = load_table("uww_player_profiles")
-                        _gp_opp_prof_reb = _gp_opp_prof_reb[_gp_opp_prof_reb["opponent"] == short_opponent] if not _gp_opp_prof_reb.empty and short_opponent else pd.DataFrame()
-                        if _gp_box_all.empty or _gp_opp_prof_reb.empty:
-                            st.caption("Not enough data yet for a rebounding comparison.")
-                        else:
-                            _gp_uww_side_r = _gp_box_all[_gp_box_all["team"] == "UW-Whitewater"]
-                            _gp_n_games_r = _gp_uww_side_r["opponent"].nunique() if not _gp_uww_side_r.empty else 0
-                            _gp_opp_prof_reb = _gp_opp_prof_reb.copy()
-                            _gp_opp_prof_reb["REB"] = pd.to_numeric(_gp_opp_prof_reb["REB"], errors="coerce")
-                            if _gp_n_games_r > 0 and "REB" in _gp_uww_side_r.columns:
-                                _gp_uww_rpg = _gp_uww_side_r["REB"].sum() / _gp_n_games_r
-                                _gp_opp_rpg = _gp_opp_prof_reb["REB"].sum()  # already a roster-wide per-game sum, see uww_player_profiles docs
-                                st.markdown(f"UWW: **{_gp_uww_rpg:.1f}** RPG this season. {esc(short_opponent)}: **{_gp_opp_rpg:.1f}** RPG.")
-                                if _gp_uww_rpg - _gp_opp_rpg >= 3:
-                                    st.markdown("A clear rebounding edge on paper -- **crash the offensive glass** for extra possessions rather than getting back in transition D early.")
-                                elif _gp_opp_rpg - _gp_uww_rpg >= 3:
-                                    st.markdown("They out-rebound their opponents on paper -- prioritize **boxing out and transition balance** over offensive-rebound crashes.")
-                                else:
-                                    st.markdown("Rebounding looks roughly even on paper -- likely decided by effort plays, not a structural mismatch.")
-                            else:
-                                st.caption("Not enough data yet for a rebounding comparison.")
-            except Exception as _e:
-                with _gp_col4:
-                    report_section_error("Rebounding Edge", _e)
-
-            _gp_col5, _gp_col6 = st.columns(2)
-
-            # --- Card: Bench Trust Plan ---
-            try:
-                with _gp_col5:
-                    with st.container(border=True):
-                        st.markdown("**\U0001fa91 Bench Trust Plan**")
-                        _gp_box_bench = load_table("uww_pbp_box_score")
-                        _gp_uww_bench = _gp_box_bench[_gp_box_bench["team"] == "UW-Whitewater"] if not _gp_box_bench.empty else pd.DataFrame()
-                        if _gp_uww_bench.empty or "started" not in _gp_uww_bench.columns:
-                            st.caption("Not enough box-score data yet to identify bench trends.")
-                        else:
-                            _gp_bench_rate = _gp_uww_bench.groupby("player")["started"].mean()
-                            _gp_bench_players = _gp_bench_rate[_gp_bench_rate < 0.5].index.tolist()
-                            _gp_bench_rows = _gp_uww_bench[_gp_uww_bench["player"].isin(_gp_bench_players)].copy()
-                            if _gp_bench_rows.empty:
-                                st.caption("No players project as bench-role (started in fewer than half their games) yet this season.")
-                            else:
-                                _gp_bench_rows["_gs"] = _gp_bench_rows.apply(compute_game_score, axis=1)
-                                _gp_bench_summary = _gp_bench_rows.groupby("player").agg(GP=("_gs", "count"), AvgGameScore=("_gs", "mean")).reset_index()
-                                _gp_bench_summary = _gp_bench_summary[_gp_bench_summary["GP"] >= 3].nlargest(2, "AvgGameScore")
-                                if _gp_bench_summary.empty:
-                                    st.caption("No bench player has enough games yet (3+) for a reliable read.")
-                                else:
-                                    st.markdown("If a starter gets into foul trouble, these bench players have earned the most trust this season:")
-                                    for _, _r in _gp_bench_summary.iterrows():
-                                        st.markdown(f"- **{esc(_r['player'])}** -- {_r['AvgGameScore']:.1f} avg Game Score off the bench ({int(_r['GP'])} games)")
-            except Exception as _e:
-                with _gp_col5:
-                    report_section_error("Bench Trust Plan", _e)
-
-            # --- Card: Clutch Trust ---
-            try:
-                with _gp_col6:
-                    with st.container(border=True):
-                        st.markdown("**\U0001f3c1 Late-Game Trust**")
-                        _gp_clutch = load_table("uww_clutch_events")
-                        _gp_clutch_uww = _gp_clutch[_gp_clutch["team"] == "UW-Whitewater"] if not _gp_clutch.empty else pd.DataFrame()
-                        if _gp_clutch_uww.empty:
-                            st.caption("No clutch-time possessions (last 5 min, score within 8) recorded yet this season.")
-                        else:
-                            def _gp_clutch_pts(r):
-                                if r.get("event_type") == "made_shot":
-                                    try:
-                                        return int(r.get("shot_type"))
-                                    except (TypeError, ValueError):
-                                        return 0
-                                return 1 if r.get("event_type") == "free_throw_made" else 0
-                            _gp_clutch_uww = _gp_clutch_uww.copy()
-                            _gp_clutch_uww["_pts"] = _gp_clutch_uww.apply(_gp_clutch_pts, axis=1)
-                            _gp_clutch_scoring = _gp_clutch_uww[_gp_clutch_uww["_pts"] > 0].groupby("player")["_pts"].sum().nlargest(2)
-                            if _gp_clutch_scoring.empty:
-                                st.caption("No clutch-time scoring recorded yet this season.")
-                            else:
-                                st.markdown("Most productive scorers in clutch minutes (last 5 min, score within 8) this season:")
-                                for _player, _pts in _gp_clutch_scoring.items():
-                                    st.markdown(f"- **{esc(_player)}** -- {int(_pts)} clutch pts")
-                                st.caption("Worth building the closing possession around, all else equal -- see the Team page's full clutch breakdown for more.")
-            except Exception as _e:
-                with _gp_col6:
-                    report_section_error("Late-Game Trust", _e)
-
-            # --- Card: Turnover-Forcing Opportunity ---
-            try:
-                with st.container(border=True):
-                    st.markdown("**\U0001f504 Turnover-Forcing Opportunity**")
-                    _gp_opp_prof_to = load_table("uww_player_profiles")
-                    _gp_opp_prof_to = _gp_opp_prof_to[_gp_opp_prof_to["opponent"] == short_opponent] if not _gp_opp_prof_to.empty and short_opponent else pd.DataFrame()
-                    _gp_box_to = load_table("uww_pbp_box_score")
-                    if _gp_opp_prof_to.empty or _gp_box_to.empty:
-                        st.caption("Not enough data yet for a turnover-pressure comparison.")
-                    else:
-                        _gp_opp_games = get_opponent_games_played(short_opponent)
-                        _gp_opp_to_total = pd.to_numeric(_gp_opp_prof_to["TO"], errors="coerce").sum() if "TO" in _gp_opp_prof_to.columns else 0
-                        _gp_opp_topg = _gp_opp_to_total / _gp_opp_games if _gp_opp_games > 0 else 0
-                        _gp_uww_side_to = _gp_box_to[_gp_box_to["team"] == "UW-Whitewater"]
-                        _gp_n_games_to = _gp_uww_side_to["opponent"].nunique() if not _gp_uww_side_to.empty else 0
-                        if _gp_opp_topg > 0 and _gp_n_games_to > 0:
-                            _gp_uww_stl_pg = _gp_uww_side_to["STL"].sum() / _gp_n_games_to if "STL" in _gp_uww_side_to.columns else 0
-                            st.markdown(f"{esc(short_opponent)} averages **{_gp_opp_topg:.1f}** turnovers/game (season total, not opponent-adjusted). UWW forces **{_gp_uww_stl_pg:.1f}** steals/game.")
-                            if _gp_opp_topg >= 13:
-                                st.markdown("A turnover-prone opponent on paper -- **extending ball pressure and denying easy entries** is more likely to pay off here than against a low-turnover team.")
-                            else:
-                                st.markdown("A relatively careful ball-handling team on paper -- pressure is still worth applying, but don't expect turnovers alone to be the deciding factor.")
-                        else:
-                            st.caption("Not enough data yet for a turnover-pressure comparison.")
-            except Exception as _e:
-                report_section_error("Turnover-Forcing Opportunity", _e)
-
-            # --- Card: Recommended Closing Lineup ---
-            try:
-                with st.container(border=True):
-                    st.markdown("**\U0001f512 Recommended Closing Lineup**")
-                    if _uww_lu_agg is None or _uww_lu_agg.empty:
-                        st.caption("Not enough lineup-stint data yet to recommend a closing lineup.")
-                    else:
-                        _gp_lu = _uww_lu_agg[_uww_lu_agg["MIN"] > 0].copy()
-                        _gp_lu["rate"] = _gp_lu["+/-"] / _gp_lu["MIN"]
-                        # Require a real sample -- a small-minute lineup with a hot rate is noise, not signal.
-                        _gp_lu_qualified = _gp_lu[_gp_lu["MIN"] >= 10]
-                        if _gp_lu_qualified.empty:
-                            st.caption("No lineup has enough minutes yet (10+) for a reliable net-rating read.")
-                        else:
-                            _gp_best_lu = _gp_lu_qualified.nlargest(1, "rate").iloc[0]
-                            _gp_best_names = _last_names(_gp_best_lu["lineup"])
-                            st.markdown(f"**{esc(_gp_best_names)}** -- your best net rating this season among lineups with real minutes: **{_gp_best_lu['rate']:+.2f}/min** over {_gp_best_lu['MIN']:.0f} minutes.")
-                            if _opp_lu is not None and not _opp_lu.empty:
-                                _gp_opp_top_lu = _opp_lu.nlargest(1, "MIN").iloc[0]
-                                _gp_opp_top_names = _last_names(_gp_opp_top_lu["lineup"])
-                                _gp_opp_rate = _gp_opp_top_lu["+/-"] / _gp_opp_top_lu["MIN"] if _gp_opp_top_lu["MIN"] > 0 else 0
-                                st.markdown(f"{esc(short_opponent)}'s most-used lineup (**{esc(_gp_opp_top_names)}**) has run at **{_gp_opp_rate:+.2f}/min**.")
-                                st.markdown(f"Projected edge if both closing units are on the floor: **{_gp_best_lu['rate'] - _gp_opp_rate:+.2f}/min**.")
-                            st.caption("Full lineup-vs-lineup exploration (including untried combinations) is available in the Lineup Simulator above.")
-            except Exception as _e:
-                report_section_error("Recommended Closing Lineup", _e)
-
-            # --- Card: Scouted Tendency Match (bonus -- only shown if a real hit is found) ---
-            try:
-                _gp_pbp_all = load_table("uww_pbp_events")
-                _gp_game_plans = load_table("uww_opponent_game_plans")
-                if (
-                    not _gp_pbp_all.empty and "coach_note" in _gp_pbp_all.columns
-                    and not _gp_game_plans.empty and short_opponent
-                ):
-                    _gp_opp_plan_text = " ".join(
-                        _gp_game_plans[_gp_game_plans["opponent"] == short_opponent]["notes"].dropna().astype(str)
-                    ).lower()
-                    if _gp_opp_plan_text.strip():
-                        _gp_notes_pbp = _gp_pbp_all[(_gp_pbp_all["team"] == "UW-Whitewater") & _gp_pbp_all["coach_note"].notna()].copy()
-                        if not _gp_notes_pbp.empty:
-                            _gp_notes_pbp["play_call"] = _gp_notes_pbp["coach_note"].apply(extract_offensive_play_call)
-                            _gp_notes_pbp = _gp_notes_pbp[_gp_notes_pbp["play_call"].notna()]
-                            if not _gp_notes_pbp.empty:
-                                _gp_notes_pbp["action_tag"] = _gp_notes_pbp.apply(
-                                    lambda r: extract_play_type(r.get("video_description"), r.get("player")), axis=1
-                                )
-                                _gp_call_action = (
-                                    _gp_notes_pbp[_gp_notes_pbp["action_tag"].notna()]
-                                    .groupby("play_call")["action_tag"]
-                                    .agg(lambda s: s.value_counts().idxmax())
-                                )
-                                _gp_hits = [
-                                    (call, action) for call, action in _gp_call_action.items()
-                                    if isinstance(action, str) and len(action.strip()) >= 4 and action.strip().lower() in _gp_opp_plan_text
-                                ]
-                                if _gp_hits:
-                                    with st.container(border=True):
-                                        st.markdown("**\U0001f3af Scouted Tendency Match**")
-                                        for _call, _action in _gp_hits[:3]:
-                                            st.markdown(f"- **{esc(_call)}** (typically a *{esc(_action)}* action) -- this action type shows up in {esc(short_opponent)}'s own scouting notes.")
-                                        st.caption("Best-effort keyword match between your play calls' usual action type and the opponent's scouting notes -- verify against the actual game plan below before relying on it.")
-            except Exception as _e:
-                report_section_error("Scouted Tendency Match", _e)
-
-            # --- Card: Recurring Mistake Caution (bonus -- only shown if a real hit is found) ---
-            try:
-                _gp_all_notes = load_table("uww_coach_notes")
-                _gp_game_plans2 = load_table("uww_opponent_game_plans")
-                if not _gp_all_notes.empty and not _gp_game_plans2.empty and short_opponent:
-                    _gp_opp_plan_text2 = " ".join(
-                        _gp_game_plans2[_gp_game_plans2["opponent"] == short_opponent]["notes"].dropna().astype(str)
-                    ).lower()
-                    if _gp_opp_plan_text2.strip():
-                        _gp_neg_themes = []
-                        for _note in _gp_all_notes["coach_note"].dropna():
-                            for _seg in str(_note).split(","):
-                                _seg = _seg.strip()
-                                if _seg.startswith("-"):
-                                    _gp_neg_themes.append(_seg.lstrip("-").strip())
-                        if _gp_neg_themes:
-                            _gp_theme_counts = pd.Series(_gp_neg_themes).value_counts()
-                            _gp_theme_hits = [
-                                (theme, count) for theme, count in _gp_theme_counts.items()
-                                if count >= 2 and len(theme) >= 6 and theme.lower() in _gp_opp_plan_text2
-                            ]
-                            if _gp_theme_hits:
-                                with st.container(border=True):
-                                    st.markdown("**\u26a0\ufe0f Recurring Mistake -- Worth a Reminder**")
-                                    for _theme, _count in _gp_theme_hits[:2]:
-                                        st.markdown(f"- \"{esc(_theme)}\" has come up as a coaching flag **{int(_count)} times** this season, and shows up in {esc(short_opponent)}'s own scouting notes too -- worth a specific pre-game reminder.")
-                                    st.caption("Best-effort keyword match between recurring negative-flagged themes and the opponent's scouting notes.")
-            except Exception as _e:
-                report_section_error("Recurring Mistake Caution", _e)
 
 
 
