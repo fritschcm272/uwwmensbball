@@ -2487,7 +2487,7 @@ def render_upcoming_game():
                 st.markdown(f"**{short_opponent}**")
                 render_box_score_with_tooltips(
                     opp_proj.sort_values("projected_PTS", ascending=False),
-                    ["name", "jersey_number", "role", "projected_PTS", "projected_REB", "projected_AST"],
+                    [c for c in ["name", "jersey_number", "role", "MIN", "projected_PTS", "projected_REB", "projected_AST"] if c in opp_proj.columns],
                 )
 
         # ==================== LINEUP SIMULATOR ====================
@@ -3851,9 +3851,9 @@ def render_previous_games():
     if game_box.empty:
         st.warning("No reconstructed box score found for this game yet.")
     else:
-        compact_cols = [c for c in ["player", "PTS", "REB", "AST", "STL", "TO", "FG%"]
+        compact_cols = [c for c in ["player", "MIN", "PTS", "REB", "AST", "STL", "TO", "FG%"]
                          if c in game_box.columns]
-        full_cols = [c for c in ["player", "started", "PTS", "FGM", "FGA", "FG%", "FG3M", "FG3A", "3P%",
+        full_cols = [c for c in ["player", "MIN", "started", "PTS", "FGM", "FGA", "FG%", "FG3M", "FG3A", "3P%",
                                   "FTM", "FTA", "FT%", "OREB", "DREB", "REB", "AST", "STL", "BLK", "TO", "PF"]
                       if c in game_box.columns]
         teams = sorted(game_box["team"].unique().tolist())

@@ -1,54 +1,313 @@
-opponent,game_date,team,player,PTS,FGM,FGA,FG3M,FG3A,FTM,FTA,OREB,DREB,AST,STL,BLK,TO,PF,REB,FG%,3P%,FT%,started
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Anton Kilde,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,False
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,CJ Brown,7,2,6,1,2,2,2,0,0,2,2,0,2,4,0,33.3,50.0,100.0,True
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Christian Wilson,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Isaac Knoll,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Jack Field,3,1,6,0,2,1,1,1,0,0,0,0,1,4,1,16.7,0.0,100.0,False
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Jackson Flowers,2,0,0,0,0,2,2,0,0,0,0,0,0,0,0,,,100.0,False
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Jake Thomsen,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0.0,0.0,,False
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Jarton Davis,0,0,2,0,1,0,0,0,0,1,0,0,1,1,0,0.0,0.0,,False
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Joey Daun,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,False
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Keenan Rahn,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,,,,False
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Kolby Williams,7,3,8,0,0,1,3,3,3,0,1,1,3,4,6,37.5,,33.3,True
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Landon Lee,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Michael Asman,18,6,8,4,6,2,2,1,2,0,2,2,1,3,3,75.0,66.7,100.0,True
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Sam Leoni,4,0,2,0,1,4,4,0,1,5,0,0,0,2,1,0.0,0.0,100.0,True
-Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Seth Bunders,17,7,17,2,7,1,2,0,7,3,1,0,4,3,7,41.2,28.6,50.0,True
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Agape Keyes Jr.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Austin Ambrose,3,1,1,1,1,0,0,0,2,0,1,0,1,2,2,100.0,100.0,,False
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Brock Marino,16,7,9,0,0,2,6,3,3,0,0,1,1,3,6,77.8,,33.3,True
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Collin Madson,13,4,12,2,8,3,3,0,5,1,1,0,2,3,5,33.3,25.0,100.0,True
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Darius Chestnut,9,2,4,0,2,5,7,1,2,0,1,0,2,1,3,50.0,0.0,71.4,False
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Isaac Verges,15,5,10,0,1,5,6,3,4,2,1,0,1,1,7,50.0,0.0,83.3,True
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Isaiah Robinson,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False
-Ripon Red Hawks,2025-11-07,UW-Whitewater,JR Lukenbill,5,2,4,0,2,1,2,3,2,0,2,1,0,1,5,50.0,0.0,50.0,True
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Jake Quast,11,2,3,1,1,6,9,1,1,0,0,0,1,1,2,66.7,100.0,66.7,False
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Joey Berezowitz,0,0,0,0,0,0,0,0,1,2,2,0,0,0,1,,,,False
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Kelton McEwen,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,False
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Luke Bara,2,1,4,0,1,0,0,0,2,0,0,0,2,0,2,25.0,0.0,,True
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Mauryon Turner,2,1,1,0,0,0,0,0,0,0,1,0,1,1,0,100.0,,,False
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Rashad Rogers,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False
-Ripon Red Hawks,2025-11-07,UW-Whitewater,Richie Warren,0,0,3,0,1,0,0,1,2,0,0,0,1,3,3,0.0,0.0,,False
-St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Angel Johnson,17,7,12,1,1,2,3,0,1,3,3,0,2,3,1,58.3,100.0,66.7,True
-St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Brennan Webb,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False
-St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Charles Gitonga,4,1,3,0,1,2,4,1,3,0,0,0,0,1,4,33.3,0.0,50.0,True
-St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Corey Thompson,17,7,12,2,5,1,1,2,1,2,3,0,2,3,3,58.3,40.0,100.0,True
-St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Garrett Rodgers,7,3,7,0,0,1,2,0,2,0,0,0,0,3,2,42.9,,50.0,False
-St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Jaden Ross,6,2,4,0,0,2,2,0,0,0,0,0,1,1,0,50.0,,100.0,False
-St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Nathan Kongolo,13,5,10,2,3,1,2,1,3,3,1,0,0,2,4,50.0,66.7,50.0,True
-St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Nicholas Buffalo,8,3,6,0,0,2,3,5,4,0,0,0,0,4,9,50.0,,66.7,True
-St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Omar Gayle,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,False
-St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Reyce Allen,9,3,3,0,0,3,3,1,0,0,0,0,2,5,1,100.0,,100.0,False
-St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Tamarcus Butler,0,0,1,0,1,0,0,0,1,0,0,0,0,1,1,0.0,0.0,,False
-St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Austin Ambrose,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,,,,False
-St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Brock Marino,10,3,4,3,3,1,4,0,3,0,0,0,1,5,3,75.0,100.0,25.0,True
-St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Collin Madson,24,6,8,3,4,9,10,3,4,1,1,0,1,1,7,75.0,75.0,90.0,True
-St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Darius Chestnut,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0.0,0.0,,False
-St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Isaac Verges,3,0,4,0,1,3,4,1,1,3,1,0,2,2,2,0.0,0.0,75.0,True
-St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,JR Lukenbill,7,2,5,2,3,1,4,1,1,0,0,1,2,3,2,40.0,66.7,25.0,True
-St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Jake Quast,8,2,6,0,0,4,4,2,0,1,1,0,1,1,2,33.3,,100.0,False
-St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Joey Berezowitz,0,0,0,0,0,0,0,1,1,1,1,0,1,1,2,,,,False
-St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Kelton McEwen,6,2,4,1,3,1,2,0,1,1,0,0,0,0,1,50.0,33.3,50.0,False
-St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Luke Bara,6,2,5,2,5,0,0,0,1,2,0,0,3,2,1,40.0,40.0,,True
-St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Rashad Rogers,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,False
-St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Richie Warren,9,3,8,0,1,3,7,2,3,2,1,1,3,2,5,37.5,0.0,42.9,False
+opponent,game_date,team,player,PTS,FGM,FGA,FG3M,FG3A,FTM,FTA,OREB,DREB,AST,STL,BLK,TO,PF,REB,FG%,3P%,FT%,started,MIN
+Alma Scots,2025-12-20,Alma Scots,Donovan Collins,17,5,10,5,9,2,3,0,0,1,0,0,0,0,0,50.0,55.6,66.7,True,31.7
+Alma Scots,2025-12-20,Alma Scots,Elijah Sykes,7,3,9,1,4,0,0,0,0,2,1,0,1,0,0,33.3,25.0,,False,15.3
+Alma Scots,2025-12-20,Alma Scots,Josh Elliott,9,3,7,2,6,1,1,0,3,0,1,0,3,1,3,42.9,33.3,100.0,True,31.3
+Alma Scots,2025-12-20,Alma Scots,Joss Bradley,3,0,2,0,0,3,4,1,1,4,0,1,0,2,2,0.0,,75.0,False,18.9
+Alma Scots,2025-12-20,Alma Scots,Korbin Heitzman,14,4,10,0,1,6,8,5,11,1,0,1,6,4,16,40.0,0.0,75.0,True,32.9
+Alma Scots,2025-12-20,Alma Scots,Logan St. Martin,2,1,4,0,1,0,0,0,3,0,0,1,0,3,3,25.0,0.0,,True,19.7
+Alma Scots,2025-12-20,Alma Scots,Luciano Guerrazzi,5,2,2,1,1,0,0,1,1,1,1,1,5,1,2,100.0,100.0,,False,15.3
+Alma Scots,2025-12-20,Alma Scots,Preston Malpass,2,1,3,0,2,0,1,1,3,0,1,0,2,2,4,33.3,0.0,0.0,False,12.8
+Alma Scots,2025-12-20,Alma Scots,Raine Rodich,2,1,2,0,0,0,0,0,0,3,1,0,5,1,0,50.0,,,True,20.8
+Alma Scots,2025-12-20,UW-Whitewater,Agape Keyes Jr.,3,1,1,1,1,0,0,0,0,0,1,0,0,1,0,100.0,100.0,,False,3.6
+Alma Scots,2025-12-20,UW-Whitewater,Brock Marino,7,1,6,0,0,5,6,1,1,1,4,0,1,3,2,16.7,,83.3,True,18.2
+Alma Scots,2025-12-20,UW-Whitewater,Collin Madson,13,4,7,0,0,5,6,1,5,3,2,0,0,2,6,57.1,,83.3,True,26.5
+Alma Scots,2025-12-20,UW-Whitewater,Darius Chestnut,10,4,4,2,2,0,0,0,0,0,0,0,0,2,0,100.0,100.0,,False,13.7
+Alma Scots,2025-12-20,UW-Whitewater,Isaac Verges,9,4,7,1,2,0,0,0,2,1,0,0,1,3,2,57.1,50.0,,True,12.9
+Alma Scots,2025-12-20,UW-Whitewater,Isaiah Robinson,0,0,1,0,1,0,0,1,0,2,1,0,0,0,1,0.0,0.0,,False,4.1
+Alma Scots,2025-12-20,UW-Whitewater,Jake Quast,11,5,7,1,2,0,1,0,3,0,3,0,2,3,3,71.4,50.0,0.0,False,13.0
+Alma Scots,2025-12-20,UW-Whitewater,Joey Berezowitz,16,6,8,4,5,0,0,2,0,0,2,0,0,0,2,75.0,80.0,,False,20.5
+Alma Scots,2025-12-20,UW-Whitewater,Kelton McEwen,0,0,2,0,2,0,0,0,0,1,1,0,0,0,0,0.0,0.0,,False,9.9
+Alma Scots,2025-12-20,UW-Whitewater,Luke Bara,3,1,5,1,2,0,0,0,1,0,0,0,0,0,1,20.0,50.0,,True,25.5
+Alma Scots,2025-12-20,UW-Whitewater,Mauryon Turner,2,1,1,0,0,0,0,0,0,0,0,0,0,1,0,100.0,,,False,3.2
+Alma Scots,2025-12-20,UW-Whitewater,Rashad Rogers,2,1,2,0,0,0,0,0,2,0,0,1,2,0,2,50.0,,,False,6.3
+Alma Scots,2025-12-20,UW-Whitewater,Richie Warren,5,1,6,0,1,3,3,2,2,2,3,1,1,2,4,16.7,0.0,100.0,True,23.1
+Alma Scots,2025-12-20,UW-Whitewater,Trent Grunewald,0,0,1,0,0,0,0,1,0,1,0,0,1,0,1,0.0,,,False,3.3
+Alma Scots,2025-12-20,UW-Whitewater,Tyshawn Teague-Johnson,9,4,7,1,1,0,1,1,2,2,0,0,2,1,3,57.1,100.0,0.0,False,15.0
+Aurora Spartans,2025-11-19,Aurora Spartans,Bryden Gryzmala,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,False,3.2
+Aurora Spartans,2025-11-19,Aurora Spartans,Cullen Rauls,9,3,5,1,2,2,4,1,3,1,1,0,4,5,4,60.0,50.0,50.0,True,25.8
+Aurora Spartans,2025-11-19,Aurora Spartans,Devon Richardson,11,5,8,0,0,1,3,2,6,0,1,0,1,4,8,62.5,,33.3,True,22.5
+Aurora Spartans,2025-11-19,Aurora Spartans,Gevon Grant,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,,,,False,5.2
+Aurora Spartans,2025-11-19,Aurora Spartans,Isaiah Thompson,3,1,1,1,1,0,0,0,0,0,1,0,0,1,0,100.0,100.0,,False,8.0
+Aurora Spartans,2025-11-19,Aurora Spartans,Jeffery Hillmer,8,3,8,1,1,1,2,2,2,0,0,0,0,2,4,37.5,100.0,50.0,True,29.3
+Aurora Spartans,2025-11-19,Aurora Spartans,Juan Madrigal,10,2,7,2,4,4,6,0,3,2,0,0,3,3,3,28.6,50.0,66.7,True,27.7
+Aurora Spartans,2025-11-19,Aurora Spartans,Larry Carthan,2,1,2,0,0,0,0,1,2,0,0,3,2,5,3,50.0,,,False,11.6
+Aurora Spartans,2025-11-19,Aurora Spartans,Mekhi Doby,20,7,12,0,1,6,10,2,2,7,0,1,3,1,4,58.3,0.0,60.0,True,33.8
+Aurora Spartans,2025-11-19,Aurora Spartans,Robert Hutson,2,1,1,0,0,0,0,0,0,0,0,0,0,1,0,100.0,,,False,6.6
+Aurora Spartans,2025-11-19,Aurora Spartans,Zerrick Johnson,8,2,5,0,0,4,4,0,3,0,0,0,1,2,3,40.0,,100.0,False,21.5
+Aurora Spartans,2025-11-19,UW-Whitewater,Brock Marino,8,3,6,0,1,2,9,4,3,2,0,1,2,1,7,50.0,0.0,22.2,True,27.7
+Aurora Spartans,2025-11-19,UW-Whitewater,Collin Madson,24,7,10,3,4,7,8,2,4,1,2,0,0,4,6,70.0,75.0,87.5,True,34.5
+Aurora Spartans,2025-11-19,UW-Whitewater,Darius Chestnut,0,0,1,0,1,0,0,0,1,0,0,0,2,1,1,0.0,0.0,,False,5.7
+Aurora Spartans,2025-11-19,UW-Whitewater,Isaac Verges,9,3,4,0,0,3,4,1,2,1,2,0,0,4,3,75.0,,75.0,True,17.2
+Aurora Spartans,2025-11-19,UW-Whitewater,JR Lukenbill,4,1,2,0,0,2,2,1,4,1,1,0,0,3,5,50.0,,100.0,True,18.1
+Aurora Spartans,2025-11-19,UW-Whitewater,Jake Quast,6,2,3,0,0,2,3,0,0,0,0,0,0,1,0,66.7,,66.7,False,8.2
+Aurora Spartans,2025-11-19,UW-Whitewater,Joey Berezowitz,5,1,4,1,3,2,2,0,2,4,2,0,1,2,2,25.0,33.3,100.0,False,20.2
+Aurora Spartans,2025-11-19,UW-Whitewater,Kelton McEwen,6,2,4,2,4,0,0,0,1,0,0,0,1,1,1,50.0,50.0,,False,11.5
+Aurora Spartans,2025-11-19,UW-Whitewater,Luke Bara,11,3,11,3,6,2,2,0,1,1,0,0,1,4,1,27.3,50.0,100.0,True,23.5
+Aurora Spartans,2025-11-19,UW-Whitewater,Rashad Rogers,4,1,2,0,1,2,2,1,1,1,0,0,1,3,2,50.0,0.0,100.0,False,10.8
+Aurora Spartans,2025-11-19,UW-Whitewater,Richie Warren,5,2,7,0,2,1,2,0,2,1,0,0,1,1,2,28.6,0.0,50.0,False,17.8
+Carroll (WI) Pioneers,2025-12-13,Carroll (WI) Pioneers,Cai Joseph,2,1,1,0,0,0,0,0,0,0,0,0,1,2,0,100.0,,,False,6.8
+Carroll (WI) Pioneers,2025-12-13,Carroll (WI) Pioneers,Dennis Estepp,7,1,10,0,5,5,6,0,2,1,2,0,2,1,2,10.0,0.0,83.3,False,25.7
+Carroll (WI) Pioneers,2025-12-13,Carroll (WI) Pioneers,Evan Bland,0,0,1,0,0,0,0,0,0,0,0,1,1,5,0,0.0,,,True,14.5
+Carroll (WI) Pioneers,2025-12-13,Carroll (WI) Pioneers,Greg Smith,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,False,7.2
+Carroll (WI) Pioneers,2025-12-13,Carroll (WI) Pioneers,Jacob Naber,13,3,6,0,0,7,7,2,4,1,1,0,1,5,6,50.0,,100.0,True,26.8
+Carroll (WI) Pioneers,2025-12-13,Carroll (WI) Pioneers,Jimmy Tarjan,0,0,0,0,0,0,0,1,0,0,1,0,2,2,1,,,,False,14.5
+Carroll (WI) Pioneers,2025-12-13,Carroll (WI) Pioneers,Lamar Smith,22,8,9,0,0,6,10,3,8,2,0,1,7,1,11,88.9,,60.0,True,33.8
+Carroll (WI) Pioneers,2025-12-13,Carroll (WI) Pioneers,Michael McNabb,13,5,11,0,2,3,4,1,3,1,2,0,3,3,4,45.5,0.0,75.0,True,32.7
+Carroll (WI) Pioneers,2025-12-13,Carroll (WI) Pioneers,Peyton McKenna,3,1,6,1,6,0,0,0,4,0,3,1,4,2,4,16.7,16.7,,True,36.0
+Carroll (WI) Pioneers,2025-12-13,UW-Whitewater,Brock Marino,8,3,10,0,1,2,3,1,5,0,2,2,1,3,6,30.0,0.0,66.7,True,25.7
+Carroll (WI) Pioneers,2025-12-13,UW-Whitewater,Collin Madson,22,9,14,1,3,3,4,0,0,0,1,1,1,4,0,64.3,33.3,75.0,True,27.4
+Carroll (WI) Pioneers,2025-12-13,UW-Whitewater,Darius Chestnut,7,3,6,1,2,0,0,1,2,1,2,0,0,3,3,50.0,50.0,,False,15.8
+Carroll (WI) Pioneers,2025-12-13,UW-Whitewater,Isaac Verges,5,2,8,0,2,1,3,4,1,2,3,0,2,2,5,25.0,0.0,33.3,True,25.3
+Carroll (WI) Pioneers,2025-12-13,UW-Whitewater,JR Lukenbill,0,0,0,0,0,0,0,3,0,0,0,0,2,2,3,,,,False,8.2
+Carroll (WI) Pioneers,2025-12-13,UW-Whitewater,Jake Quast,10,4,6,0,1,2,2,4,3,1,1,0,3,4,7,66.7,0.0,100.0,False,25.0
+Carroll (WI) Pioneers,2025-12-13,UW-Whitewater,Joey Berezowitz,3,1,2,1,2,0,0,0,1,2,4,0,2,0,1,50.0,50.0,,False,14.6
+Carroll (WI) Pioneers,2025-12-13,UW-Whitewater,Kelton McEwen,0,0,5,0,5,0,0,0,1,1,0,1,1,0,1,0.0,0.0,,False,20.5
+Carroll (WI) Pioneers,2025-12-13,UW-Whitewater,Luke Bara,0,0,4,0,3,0,0,1,1,0,0,0,1,1,2,0.0,0.0,,True,12.3
+Carroll (WI) Pioneers,2025-12-13,UW-Whitewater,Rashad Rogers,5,1,2,0,0,3,4,3,2,0,0,1,1,1,5,50.0,,75.0,False,12.0
+Carroll (WI) Pioneers,2025-12-13,UW-Whitewater,Richie Warren,4,1,6,0,1,2,2,1,3,0,0,1,1,4,4,16.7,0.0,100.0,True,11.2
+Coe Kohawks,2025-12-30,Coe Kohawks,Aaron Foote,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,3.4
+Coe Kohawks,2025-12-30,Coe Kohawks,Aleks Jajic,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,,,,False,5.3
+Coe Kohawks,2025-12-30,Coe Kohawks,Austin Beeson,2,1,2,0,1,0,0,0,1,0,0,0,0,2,1,50.0,0.0,,False,4.9
+Coe Kohawks,2025-12-30,Coe Kohawks,C. Reece Breitenbach,6,2,3,2,3,0,0,2,1,3,0,0,3,2,3,66.7,66.7,,True,19.2
+Coe Kohawks,2025-12-30,Coe Kohawks,Cooper Nailor,19,5,10,3,6,6,6,0,2,5,2,0,3,1,2,50.0,50.0,100.0,True,38.4
+Coe Kohawks,2025-12-30,Coe Kohawks,Deuce Walters,10,5,13,0,2,0,0,1,0,4,2,0,1,2,1,38.5,0.0,,True,30.6
+Coe Kohawks,2025-12-30,Coe Kohawks,Jackson Bowman,15,5,10,1,2,4,4,2,4,2,0,0,0,2,6,50.0,50.0,100.0,True,31.8
+Coe Kohawks,2025-12-30,Coe Kohawks,Jackson Newell,6,3,3,0,0,0,0,1,1,1,0,2,0,1,2,100.0,,,False,9.3
+Coe Kohawks,2025-12-30,Coe Kohawks,Jay Akin,2,1,1,0,0,0,0,0,1,0,0,0,1,2,1,100.0,,,False,6.4
+Coe Kohawks,2025-12-30,Coe Kohawks,Kanyon Bryte,18,6,9,1,1,5,6,5,5,1,0,3,0,2,10,66.7,100.0,83.3,True,29.8
+Coe Kohawks,2025-12-30,Coe Kohawks,Ryan Dolphin,8,3,5,2,4,0,0,0,1,2,1,0,4,3,1,60.0,50.0,,False,18.5
+Coe Kohawks,2025-12-30,Coe Kohawks,Zach Strauss,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,,,,False,1.4
+Coe Kohawks,2025-12-30,UW-Whitewater,Agape Keyes Jr.,0,0,2,0,0,0,0,1,0,0,0,0,0,0,1,0.0,,,False,2.2
+Coe Kohawks,2025-12-30,UW-Whitewater,Brock Marino,8,3,4,0,0,2,2,2,2,1,0,0,1,1,4,75.0,,100.0,True,12.2
+Coe Kohawks,2025-12-30,UW-Whitewater,Collin Madson,11,1,4,0,2,9,10,0,1,0,1,0,0,2,1,25.0,0.0,90.0,True,20.9
+Coe Kohawks,2025-12-30,UW-Whitewater,Commits Foul,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,True,20.0
+Coe Kohawks,2025-12-30,UW-Whitewater,Darius Chestnut,3,1,5,0,1,1,2,3,1,0,0,0,1,1,4,20.0,0.0,50.0,False,17.3
+Coe Kohawks,2025-12-30,UW-Whitewater,Isaiah Robinson,2,1,1,0,0,0,0,0,0,0,1,0,0,0,0,100.0,,,False,2.2
+Coe Kohawks,2025-12-30,UW-Whitewater,JR Lukenbill,6,3,6,0,0,0,0,2,0,0,1,0,1,3,2,50.0,,,False,18.5
+Coe Kohawks,2025-12-30,UW-Whitewater,Jake Quast,9,3,7,0,1,3,4,4,3,2,1,0,1,0,7,42.9,0.0,75.0,False,20.4
+Coe Kohawks,2025-12-30,UW-Whitewater,Joey Berezowitz,5,2,2,1,1,0,0,0,0,0,0,0,1,0,0,100.0,100.0,,True,14.1
+Coe Kohawks,2025-12-30,UW-Whitewater,Kelton McEwen,0,0,4,0,4,0,0,0,0,0,1,0,1,2,0,0.0,0.0,,False,18.6
+Coe Kohawks,2025-12-30,UW-Whitewater,Luke Bara,8,2,8,2,5,2,2,0,0,0,0,0,1,1,0,25.0,40.0,100.0,True,18.4
+Coe Kohawks,2025-12-30,UW-Whitewater,Matthew McKay,2,1,1,0,0,0,0,1,0,0,0,0,0,1,1,100.0,,,False,2.2
+Coe Kohawks,2025-12-30,UW-Whitewater,Mikey Wildes,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,False,2.2
+Coe Kohawks,2025-12-30,UW-Whitewater,Rashad Rogers,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,,,,False,1.2
+Coe Kohawks,2025-12-30,UW-Whitewater,Richie Warren,6,3,6,0,0,0,0,0,1,2,1,0,0,3,1,50.0,,,True,12.1
+Coe Kohawks,2025-12-30,UW-Whitewater,Trent Grunewald,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,False,2.2
+Coe Kohawks,2025-12-30,UW-Whitewater,Tyshawn Teague-Johnson,13,6,10,1,3,0,0,2,3,0,1,0,2,3,5,60.0,33.3,,False,19.7
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Aidyn Boone,12,4,6,2,4,2,2,1,1,0,1,1,1,3,2,66.7,50.0,100.0,True,19.8
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Dominic Trelenberg,18,7,17,2,6,2,2,3,2,2,0,0,0,1,5,41.2,33.3,100.0,True,37.3
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,EJ Marshall,10,4,6,2,3,0,0,0,1,0,0,0,0,1,1,66.7,66.7,,False,17.0
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Jack Cherry,7,2,3,0,0,3,4,0,6,3,2,0,0,4,6,66.7,,75.0,False,24.1
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Jeffrey Williams,2,1,2,0,1,0,1,1,1,0,1,0,0,0,2,50.0,0.0,0.0,False,8.4
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Luke Smith,1,0,4,0,1,1,2,0,1,4,0,0,2,1,1,0.0,0.0,50.0,True,18.9
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Sebastian Blachut,14,5,8,0,2,4,6,1,1,4,0,0,4,2,2,62.5,0.0,66.7,True,34.9
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Talen Pearson,3,1,2,1,2,0,0,0,1,0,0,0,2,2,1,50.0,50.0,,False,13.6
+Elmhurst Bluejays,2025-12-02,Elmhurst Bluejays,Vinnie Adjahoungbeta,5,1,5,0,3,3,4,0,6,0,0,2,3,2,6,20.0,0.0,75.0,True,23.2
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Brock Marino,2,1,2,0,0,0,2,0,1,0,0,0,1,0,1,50.0,,0.0,False,8.3
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Collin Madson,16,6,9,1,2,3,3,2,6,1,1,0,1,2,8,66.7,50.0,100.0,True,36.9
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Darius Chestnut,0,0,0,0,0,0,0,0,0,1,0,0,0,2,0,,,,False,2.9
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Isaac Verges,13,5,9,0,2,3,4,1,4,3,1,0,1,0,5,55.6,0.0,75.0,True,25.0
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,JR Lukenbill,7,3,5,0,2,1,1,0,2,1,0,1,0,1,2,60.0,0.0,100.0,False,19.6
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Jake Quast,9,4,7,0,1,1,2,0,1,2,2,0,3,2,1,57.1,0.0,50.0,False,22.2
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Joey Berezowitz,2,1,2,0,1,0,0,0,1,1,1,0,0,2,1,50.0,0.0,,False,14.5
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Kelton McEwen,3,1,2,1,2,0,0,0,0,0,0,0,0,1,0,50.0,50.0,,False,5.7
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Luke Bara,24,8,11,6,8,2,2,0,1,2,0,0,1,5,1,72.7,75.0,100.0,True,30.5
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Rashad Rogers,2,1,2,0,0,0,0,0,1,0,0,0,1,2,1,50.0,,,True,6.8
+Elmhurst Bluejays,2025-12-02,UW-Whitewater,Richie Warren,10,4,9,0,1,2,2,1,8,0,2,0,0,1,9,44.4,0.0,100.0,True,24.9
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Amare Brokemond,6,2,4,0,0,2,2,0,1,0,0,0,1,0,1,50.0,,100.0,False,3.7
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Andrew Coker,7,3,4,1,1,0,0,1,1,2,0,0,0,2,2,75.0,100.0,,True,16.6
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Andrew Wells,3,1,2,0,0,1,2,1,0,0,0,0,1,1,1,50.0,,50.0,False,7.4
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Ben Carter,10,3,5,0,2,4,4,0,2,0,2,0,3,2,2,60.0,0.0,100.0,True,25.1
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Blake Logsdon,3,1,1,1,1,0,0,0,0,0,0,0,2,0,0,100.0,100.0,,False,10.9
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Colin DeLaere,0,0,3,0,2,0,0,1,1,1,0,0,1,3,2,0.0,0.0,,True,13.6
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Damuzha Moore,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,4.8
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Dylan Logsdon,1,0,0,0,0,1,2,1,1,0,0,0,0,0,2,,,50.0,False,4.9
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Jacob Gonzalez,6,3,9,0,0,0,2,0,1,3,1,0,1,2,1,33.3,,0.0,False,19.2
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Jaxson Provost,12,5,9,1,4,1,1,0,0,3,1,0,2,1,0,55.6,25.0,100.0,True,17.4
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Joel Ewald,3,1,2,1,2,0,0,0,2,0,0,0,0,0,2,50.0,50.0,,False,8.1
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Jonah Lauff,6,2,4,2,3,0,0,0,3,0,0,0,1,1,3,50.0,66.7,,False,15.6
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Max Richardson,5,2,3,1,2,0,0,1,0,1,0,0,1,2,1,66.7,50.0,,False,13.0
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Micah Bruer,0,0,5,0,4,0,0,0,1,3,2,0,3,1,1,0.0,0.0,,True,13.6
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Mussie Hayelom,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,4.9
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Nicholaus Harris-Huntley,6,1,3,1,1,3,4,0,2,0,0,0,0,0,2,33.3,100.0,75.0,False,8.2
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Nolan Kerr,2,1,2,0,0,0,0,1,0,0,0,0,0,0,1,50.0,,,False,5.3
+Eureka Red Devils,2025-11-15,Eureka Red Devils,Zachy Qader,3,1,1,0,0,1,2,0,1,2,0,0,1,0,1,100.0,,50.0,False,6.2
+Eureka Red Devils,2025-11-15,UW-Whitewater,Agape Keyes Jr.,6,2,4,2,4,0,0,0,0,1,0,0,0,1,0,50.0,50.0,,False,6.1
+Eureka Red Devils,2025-11-15,UW-Whitewater,Austin Ambrose,0,0,2,0,1,0,2,1,0,0,0,0,1,1,1,0.0,0.0,0.0,False,3.3
+Eureka Red Devils,2025-11-15,UW-Whitewater,Brock Marino,9,4,6,0,0,1,4,1,5,5,2,0,2,1,6,66.7,,25.0,True,20.3
+Eureka Red Devils,2025-11-15,UW-Whitewater,Collin Madson,11,4,5,0,0,3,3,0,2,2,3,0,2,0,2,80.0,,100.0,True,11.5
+Eureka Red Devils,2025-11-15,UW-Whitewater,Darius Chestnut,10,4,7,2,4,0,0,1,0,0,0,0,1,0,1,57.1,50.0,,False,17.3
+Eureka Red Devils,2025-11-15,UW-Whitewater,Isaac Verges,10,4,4,1,1,1,1,0,0,1,1,0,1,2,0,100.0,100.0,100.0,True,11.6
+Eureka Red Devils,2025-11-15,UW-Whitewater,Isaiah Robinson,11,4,5,3,4,0,0,0,1,0,3,0,1,1,1,80.0,75.0,,False,8.0
+Eureka Red Devils,2025-11-15,UW-Whitewater,JR Lukenbill,2,1,2,0,1,0,0,1,1,1,0,0,0,2,2,50.0,0.0,,True,14.5
+Eureka Red Devils,2025-11-15,UW-Whitewater,Jake Quast,10,3,5,1,2,3,3,1,2,1,2,1,0,0,3,60.0,50.0,100.0,False,14.0
+Eureka Red Devils,2025-11-15,UW-Whitewater,Joey Berezowitz,8,3,3,2,2,0,0,0,1,5,0,0,0,0,1,100.0,100.0,,False,13.6
+Eureka Red Devils,2025-11-15,UW-Whitewater,Kelton McEwen,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0.0,,,False,9.0
+Eureka Red Devils,2025-11-15,UW-Whitewater,Luke Bara,19,7,10,5,8,0,0,0,2,2,2,0,1,0,2,70.0,62.5,,True,13.9
+Eureka Red Devils,2025-11-15,UW-Whitewater,Mauryon Turner,0,0,1,0,0,0,2,0,1,0,0,0,0,0,1,0.0,,0.0,False,6.0
+Eureka Red Devils,2025-11-15,UW-Whitewater,Mikey Wildes,0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,,,,False,3.7
+Eureka Red Devils,2025-11-15,UW-Whitewater,Rashad Rogers,4,1,2,0,1,2,2,1,5,2,1,2,1,4,6,50.0,0.0,100.0,False,16.1
+Eureka Red Devils,2025-11-15,UW-Whitewater,Richie Warren,12,5,7,0,0,2,2,4,3,0,0,0,0,0,7,71.4,,100.0,False,12.2
+Eureka Red Devils,2025-11-15,UW-Whitewater,Trent Grunewald,2,1,3,0,1,0,0,1,1,1,0,0,0,0,2,33.3,0.0,,False,9.9
+Eureka Red Devils,2025-11-15,UW-Whitewater,Tristian Lynch,2,1,2,0,1,0,0,0,1,0,0,0,0,2,1,50.0,0.0,,False,5.7
+Eureka Red Devils,2025-11-15,UW-Whitewater,Zay Howard,0,0,1,0,0,0,0,0,0,1,1,0,0,1,0,0.0,,,False,1.9
+Hope Flying Dutchmen,2025-12-19,Hope Flying Dutchmen,Avery Sanchez,3,1,2,0,0,1,1,0,0,0,0,0,1,4,0,50.0,,100.0,False,7.7
+Hope Flying Dutchmen,2025-12-19,Hope Flying Dutchmen,Brady Miller,8,3,6,0,1,2,2,0,0,0,0,0,1,2,0,50.0,0.0,100.0,False,12.2
+Hope Flying Dutchmen,2025-12-19,Hope Flying Dutchmen,Brendan Cargill,23,8,11,4,6,3,3,2,2,0,1,0,0,2,4,72.7,66.7,100.0,True,29.8
+Hope Flying Dutchmen,2025-12-19,Hope Flying Dutchmen,Carter Bishop,2,1,1,0,0,0,0,1,0,1,0,0,0,0,1,100.0,,,False,4.0
+Hope Flying Dutchmen,2025-12-19,Hope Flying Dutchmen,Charles Howell,2,1,1,0,0,0,0,1,0,0,0,1,2,2,1,100.0,,,False,15.0
+Hope Flying Dutchmen,2025-12-19,Hope Flying Dutchmen,Jared Ryg,0,0,0,0,0,0,0,0,0,2,1,0,2,1,0,,,,False,7.5
+Hope Flying Dutchmen,2025-12-19,Hope Flying Dutchmen,Justice Mims,4,1,4,0,1,2,2,0,0,0,0,0,1,5,0,25.0,0.0,100.0,True,17.9
+Hope Flying Dutchmen,2025-12-19,Hope Flying Dutchmen,Kyle Blauch,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,3.3
+Hope Flying Dutchmen,2025-12-19,Hope Flying Dutchmen,Marcus Wourman,12,5,10,1,4,1,4,0,0,1,1,0,1,2,0,50.0,25.0,25.0,True,31.3
+Hope Flying Dutchmen,2025-12-19,Hope Flying Dutchmen,Orion Yant,11,4,7,0,0,3,6,2,3,3,6,0,2,3,5,57.1,,50.0,True,28.6
+Hope Flying Dutchmen,2025-12-19,Hope Flying Dutchmen,Parker Hovey,25,6,10,1,2,12,15,3,7,5,1,2,2,3,10,60.0,50.0,80.0,True,31.2
+Hope Flying Dutchmen,2025-12-19,Hope Flying Dutchmen,Simon Neuhaus,2,0,2,0,1,2,2,0,1,0,1,0,0,1,1,0.0,0.0,100.0,False,9.8
+Hope Flying Dutchmen,2025-12-19,UW-Whitewater,Brock Marino,17,6,10,0,0,5,6,1,2,1,0,0,2,4,3,60.0,,83.3,True,22.6
+Hope Flying Dutchmen,2025-12-19,UW-Whitewater,Collin Madson,20,5,9,2,3,8,11,6,5,3,1,0,4,3,11,55.6,66.7,72.7,True,38.7
+Hope Flying Dutchmen,2025-12-19,UW-Whitewater,Darius Chestnut,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,3.6
+Hope Flying Dutchmen,2025-12-19,UW-Whitewater,Isaac Verges,19,8,13,1,2,2,3,5,5,1,1,0,1,3,10,61.5,50.0,66.7,True,22.9
+Hope Flying Dutchmen,2025-12-19,UW-Whitewater,Jake Quast,0,0,2,0,1,0,0,1,0,1,0,0,1,3,1,0.0,0.0,,False,12.6
+Hope Flying Dutchmen,2025-12-19,UW-Whitewater,Joey Berezowitz,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,,,,False,8.5
+Hope Flying Dutchmen,2025-12-19,UW-Whitewater,Kelton McEwen,9,2,4,1,1,4,6,0,0,0,2,0,1,1,0,50.0,100.0,66.7,False,19.7
+Hope Flying Dutchmen,2025-12-19,UW-Whitewater,Luke Bara,12,3,8,3,7,3,3,1,1,1,1,0,0,4,2,37.5,42.9,100.0,True,25.1
+Hope Flying Dutchmen,2025-12-19,UW-Whitewater,Rashad Rogers,3,1,2,0,1,1,3,0,1,0,1,3,1,0,1,50.0,0.0,33.3,False,16.2
+Hope Flying Dutchmen,2025-12-19,UW-Whitewater,Richie Warren,6,3,8,0,1,0,0,1,2,0,1,0,1,5,3,37.5,0.0,,True,15.5
+Hope Flying Dutchmen,2025-12-19,UW-Whitewater,Tyshawn Teague-Johnson,9,4,6,1,1,0,0,2,1,1,0,0,1,2,3,66.7,100.0,,False,12.9
+Lawrence Vikings,2025-12-10,Lawrence Vikings,CJ Campbell,15,5,12,3,5,2,2,2,6,1,0,1,0,1,8,41.7,60.0,100.0,True,25.9
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Caleb Nash,1,0,3,0,1,1,2,0,2,2,0,0,0,0,2,0.0,0.0,50.0,False,9.0
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Cameron Nash,4,1,2,1,2,1,2,0,0,0,0,0,0,4,0,50.0,50.0,50.0,False,10.8
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Casey Schoenecker,10,4,7,0,0,2,5,2,3,1,1,2,2,3,5,57.1,,40.0,True,20.8
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Damian Cejka,2,1,1,0,0,0,0,0,0,0,0,0,1,0,0,100.0,,,False,4.2
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Hogan Demovsky,3,1,6,0,3,1,2,1,2,0,0,0,2,2,3,16.7,0.0,50.0,True,22.0
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Jackson Weber,4,2,3,0,0,0,0,1,0,0,0,0,2,2,1,66.7,,,False,12.9
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Joe Whitfill,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,0.8
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Landon Key,0,0,0,0,0,0,0,0,4,0,0,0,1,0,4,,,,False,7.4
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Matai Edgecombe,1,0,2,0,1,1,2,0,2,0,1,0,0,4,2,0.0,0.0,50.0,False,11.4
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Nathan Valentine,7,1,4,1,3,4,4,0,0,4,0,0,1,0,0,25.0,33.3,100.0,True,20.6
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Nicholas Gouriotis,4,2,4,0,1,0,0,1,1,0,2,1,4,1,2,50.0,0.0,,True,22.7
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Nicolas Manzanera,1,0,1,0,0,1,2,0,1,0,0,0,1,3,1,0.0,,50.0,False,14.3
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Noah Portalatin,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,False,0.8
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Nolan Koch,6,1,3,0,0,4,6,1,0,0,1,0,0,0,1,33.3,,66.7,False,13.1
+Lawrence Vikings,2025-12-10,Lawrence Vikings,Robert Olive,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,False,0.8
+Lawrence Vikings,2025-12-10,UW-Whitewater,Agape Keyes Jr.,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,False,4.6
+Lawrence Vikings,2025-12-10,UW-Whitewater,Austin Ambrose,4,2,2,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,False,2.1
+Lawrence Vikings,2025-12-10,UW-Whitewater,Brock Marino,9,4,7,0,1,1,5,2,2,2,0,0,2,2,4,57.1,0.0,20.0,True,17.2
+Lawrence Vikings,2025-12-10,UW-Whitewater,Collin Madson,33,12,15,5,6,4,5,1,6,1,2,0,1,1,7,80.0,83.3,80.0,True,28.3
+Lawrence Vikings,2025-12-10,UW-Whitewater,Darius Chestnut,2,1,2,0,0,0,0,0,0,1,0,0,0,0,0,50.0,,,False,4.6
+Lawrence Vikings,2025-12-10,UW-Whitewater,Isaac Verges,0,0,1,0,0,0,3,1,1,3,1,0,1,0,2,0.0,,0.0,True,12.6
+Lawrence Vikings,2025-12-10,UW-Whitewater,Isaiah Robinson,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,,,,False,5.7
+Lawrence Vikings,2025-12-10,UW-Whitewater,JR Lukenbill,9,4,5,1,1,0,1,1,0,3,2,0,0,0,1,80.0,100.0,0.0,False,12.7
+Lawrence Vikings,2025-12-10,UW-Whitewater,Jake Quast,8,2,6,2,3,2,2,2,6,0,2,1,1,2,8,33.3,66.7,100.0,False,23.3
+Lawrence Vikings,2025-12-10,UW-Whitewater,Joey Berezowitz,0,0,4,0,3,0,0,1,0,4,1,1,0,2,1,0.0,0.0,,False,23.6
+Lawrence Vikings,2025-12-10,UW-Whitewater,Kelton McEwen,9,3,6,3,6,0,1,0,0,0,0,0,2,3,0,50.0,50.0,0.0,False,17.9
+Lawrence Vikings,2025-12-10,UW-Whitewater,Luke Bara,3,1,5,1,4,0,0,0,0,1,0,0,0,1,0,20.0,25.0,,True,12.5
+Lawrence Vikings,2025-12-10,UW-Whitewater,Rashad Rogers,2,1,2,0,0,0,0,1,3,1,1,0,1,5,4,50.0,,,False,12.7
+Lawrence Vikings,2025-12-10,UW-Whitewater,Richie Warren,9,4,8,0,1,1,2,2,3,1,0,1,0,4,5,50.0,0.0,50.0,True,14.1
+Lawrence Vikings,2025-12-10,UW-Whitewater,Trent Grunewald,0,0,1,0,1,0,0,0,4,0,0,0,1,0,4,0.0,0.0,,False,5.7
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Anton Kilde,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,False,0.9
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,CJ Brown,7,2,6,1,2,2,2,0,0,2,2,0,2,4,0,33.3,50.0,100.0,True,33.4
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Christian Wilson,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,0.9
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Isaac Knoll,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,1.0
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Jack Field,3,1,6,0,2,1,1,1,0,0,0,0,1,4,1,16.7,0.0,100.0,False,19.9
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Jackson Flowers,2,0,0,0,0,2,2,0,0,0,0,0,0,0,0,,,100.0,False,0.9
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Jake Thomsen,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0.0,0.0,,False,3.8
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Jarton Davis,0,0,2,0,1,0,0,0,0,1,0,0,1,1,0,0.0,0.0,,False,11.8
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Joey Daun,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,False,0.9
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Keenan Rahn,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,,,,False,4.5
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Kolby Williams,7,3,8,0,0,1,3,3,3,0,1,1,3,4,6,37.5,,33.3,True,23.3
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Landon Lee,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,0.9
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Michael Asman,18,6,8,4,6,2,2,1,2,0,2,2,1,3,3,75.0,66.7,100.0,True,33.3
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Sam Leoni,4,0,2,0,1,4,4,0,1,5,0,0,0,2,1,0.0,0.0,100.0,True,28.3
+Ripon Red Hawks,2025-11-07,Ripon Red Hawks,Seth Bunders,17,7,17,2,7,1,2,0,7,3,1,0,4,3,7,41.2,28.6,50.0,True,35.0
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Agape Keyes Jr.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,0.9
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Austin Ambrose,3,1,1,1,1,0,0,0,2,0,1,0,1,2,2,100.0,100.0,,False,8.6
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Brock Marino,16,7,9,0,0,2,6,3,3,0,0,1,1,3,6,77.8,,33.3,True,30.2
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Collin Madson,13,4,12,2,8,3,3,0,5,1,1,0,2,3,5,33.3,25.0,100.0,True,32.6
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Darius Chestnut,9,2,4,0,2,5,7,1,2,0,1,0,2,1,3,50.0,0.0,71.4,False,20.1
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Isaac Verges,15,5,10,0,1,5,6,3,4,2,1,0,1,1,7,50.0,0.0,83.3,True,28.3
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Isaiah Robinson,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,0.9
+Ripon Red Hawks,2025-11-07,UW-Whitewater,JR Lukenbill,5,2,4,0,2,1,2,3,2,0,2,1,0,1,5,50.0,0.0,50.0,True,22.6
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Jake Quast,11,2,3,1,1,6,9,1,1,0,0,0,1,1,2,66.7,100.0,66.7,False,10.4
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Joey Berezowitz,0,0,0,0,0,0,0,0,1,2,2,0,0,0,1,,,,False,11.9
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Kelton McEwen,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,False,0.9
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Luke Bara,2,1,4,0,1,0,0,0,2,0,0,0,2,0,2,25.0,0.0,,True,17.5
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Mauryon Turner,2,1,1,0,0,0,0,0,0,0,1,0,1,1,0,100.0,,,False,0.9
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Rashad Rogers,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,0.9
+Ripon Red Hawks,2025-11-07,UW-Whitewater,Richie Warren,0,0,3,0,1,0,0,1,2,0,0,0,1,3,3,0.0,0.0,,False,12.1
+Simpson Storm,2025-11-25,Simpson Storm,Bo Huston,5,2,6,1,5,0,0,1,2,0,0,0,3,0,3,33.3,20.0,,False,21.5
+Simpson Storm,2025-11-25,Simpson Storm,Brogan Fuller,5,2,3,1,1,0,0,3,1,1,0,0,0,2,4,66.7,100.0,,False,20.7
+Simpson Storm,2025-11-25,Simpson Storm,Caleb Dyvig,0,0,1,0,1,0,0,1,2,2,0,0,1,2,3,0.0,0.0,,False,6.6
+Simpson Storm,2025-11-25,Simpson Storm,Cam Henderson,19,6,8,3,4,4,5,0,1,2,0,0,3,1,1,75.0,75.0,80.0,True,23.7
+Simpson Storm,2025-11-25,Simpson Storm,Colton Rasmussen,0,0,2,0,2,0,0,0,0,1,0,0,2,1,0,0.0,0.0,,True,13.3
+Simpson Storm,2025-11-25,Simpson Storm,Jachin Mertes,8,4,8,0,2,0,2,2,4,0,0,0,0,1,6,50.0,0.0,0.0,False,17.8
+Simpson Storm,2025-11-25,Simpson Storm,Levi Gurwell,18,6,12,2,6,4,4,1,2,3,1,0,4,2,3,50.0,33.3,100.0,True,21.3
+Simpson Storm,2025-11-25,Simpson Storm,Logan Kowalski,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,False,1.8
+Simpson Storm,2025-11-25,Simpson Storm,Marcus Haupert,11,3,6,0,0,5,5,0,2,0,1,2,1,4,2,50.0,,100.0,True,21.7
+Simpson Storm,2025-11-25,Simpson Storm,Mateo Dzolota,2,0,0,0,0,2,2,0,0,1,1,0,1,0,0,,,100.0,False,5.2
+Simpson Storm,2025-11-25,Simpson Storm,Michael Kasperbauer,7,2,2,2,2,1,2,0,1,1,0,0,0,0,1,100.0,100.0,50.0,False,9.8
+Simpson Storm,2025-11-25,Simpson Storm,Seth Gipple,3,1,8,1,6,0,0,1,1,0,0,0,0,1,2,12.5,16.7,,False,14.2
+Simpson Storm,2025-11-25,Simpson Storm,Spencer Holley,0,0,3,0,2,0,0,0,1,2,0,0,2,1,1,0.0,0.0,,True,20.6
+Simpson Storm,2025-11-25,UW-Whitewater,Agape Keyes Jr.,0,0,3,0,1,0,0,0,0,0,0,0,0,3,0,0.0,0.0,,False,4.8
+Simpson Storm,2025-11-25,UW-Whitewater,Austin Ambrose,2,1,3,0,2,0,0,0,4,0,0,1,0,1,4,33.3,0.0,,False,12.6
+Simpson Storm,2025-11-25,UW-Whitewater,Collin Madson,28,12,14,2,3,2,3,1,6,1,2,0,1,0,7,85.7,66.7,66.7,True,24.1
+Simpson Storm,2025-11-25,UW-Whitewater,Darius Chestnut,15,6,7,2,2,1,3,0,2,1,2,1,2,1,2,85.7,100.0,33.3,False,15.8
+Simpson Storm,2025-11-25,UW-Whitewater,Isaac Verges,2,0,1,0,0,2,2,0,1,3,1,0,0,1,1,0.0,,100.0,True,15.8
+Simpson Storm,2025-11-25,UW-Whitewater,Isaiah Robinson,2,1,2,0,1,0,0,0,0,0,2,0,0,0,0,50.0,0.0,,False,7.2
+Simpson Storm,2025-11-25,UW-Whitewater,JR Lukenbill,11,4,5,3,4,0,0,1,2,0,1,0,0,1,3,80.0,75.0,,False,17.8
+Simpson Storm,2025-11-25,UW-Whitewater,Jake Quast,3,1,3,0,0,1,2,1,0,0,1,0,0,3,1,33.3,,50.0,False,10.1
+Simpson Storm,2025-11-25,UW-Whitewater,Joey Berezowitz,0,0,2,0,1,0,0,0,0,1,0,0,0,1,0,0.0,0.0,,False,10.5
+Simpson Storm,2025-11-25,UW-Whitewater,Kelton McEwen,7,3,3,1,1,0,0,1,0,1,2,0,0,0,1,100.0,100.0,,False,10.1
+Simpson Storm,2025-11-25,UW-Whitewater,Luke Bara,9,3,7,3,6,0,2,0,1,4,0,0,0,0,1,42.9,50.0,0.0,True,15.8
+Simpson Storm,2025-11-25,UW-Whitewater,Matthew McKay,2,1,1,0,0,0,1,1,0,0,1,0,1,2,1,100.0,,0.0,False,3.2
+Simpson Storm,2025-11-25,UW-Whitewater,Mikey Wildes,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,1.7
+Simpson Storm,2025-11-25,UW-Whitewater,Rashad Rogers,6,3,4,0,0,0,0,0,3,2,0,0,3,3,3,75.0,,,True,16.0
+Simpson Storm,2025-11-25,UW-Whitewater,Richie Warren,13,6,11,0,1,1,1,3,4,2,1,0,2,1,7,54.5,0.0,100.0,True,24.7
+Simpson Storm,2025-11-25,UW-Whitewater,Trent Grunewald,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0.0,,,False,4.8
+Simpson Storm,2025-11-25,UW-Whitewater,Tristian Lynch,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,False,2.1
+Simpson Storm,2025-11-25,UW-Whitewater,Zay Howard,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,False,1.2
+St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Angel Johnson,17,7,12,1,1,2,3,0,1,3,3,0,2,3,1,58.3,100.0,66.7,True,29.7
+St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Brennan Webb,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,False,1.3
+St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Charles Gitonga,4,1,3,0,1,2,4,1,3,0,0,0,0,1,4,33.3,0.0,50.0,True,25.2
+St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Corey Thompson,17,7,12,2,5,1,1,2,1,2,3,0,2,3,3,58.3,40.0,100.0,True,30.3
+St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Garrett Rodgers,7,3,7,0,0,1,2,0,2,0,0,0,0,3,2,42.9,,50.0,False,13.5
+St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Jaden Ross,6,2,4,0,0,2,2,0,0,0,0,0,1,1,0,50.0,,100.0,False,14.9
+St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Nathan Kongolo,13,5,10,2,3,1,2,1,3,3,1,0,0,2,4,50.0,66.7,50.0,True,30.9
+St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Nicholas Buffalo,8,3,6,0,0,2,3,5,4,0,0,0,0,4,9,50.0,,66.7,True,27.6
+St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Omar Gayle,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,False,4.1
+St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Reyce Allen,9,3,3,0,0,3,3,1,0,0,0,0,2,5,1,100.0,,100.0,False,12.7
+St. Thomas (TX) Celts,2025-11-14,St. Thomas (TX) Celts,Tamarcus Butler,0,0,1,0,1,0,0,0,1,0,0,0,0,1,1,0.0,0.0,,False,7.2
+St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Austin Ambrose,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,,,,False,2.6
+St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Brock Marino,10,3,4,3,3,1,4,0,3,0,0,0,1,5,3,75.0,100.0,25.0,True,19.9
+St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Collin Madson,24,6,8,3,4,9,10,3,4,1,1,0,1,1,7,75.0,75.0,90.0,True,31.8
+St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Darius Chestnut,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0.0,0.0,,False,4.7
+St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Isaac Verges,3,0,4,0,1,3,4,1,1,3,1,0,2,2,2,0.0,0.0,75.0,True,18.1
+St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,JR Lukenbill,7,2,5,2,3,1,4,1,1,0,0,1,2,3,2,40.0,66.7,25.0,True,26.7
+St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Jake Quast,8,2,6,0,0,4,4,2,0,1,1,0,1,1,2,33.3,,100.0,False,20.5
+St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Joey Berezowitz,0,0,0,0,0,0,0,1,1,1,1,0,1,1,2,,,,False,13.4
+St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Kelton McEwen,6,2,4,1,3,1,2,0,1,1,0,0,0,0,1,50.0,33.3,50.0,False,14.9
+St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Luke Bara,6,2,5,2,5,0,0,0,1,2,0,0,3,2,1,40.0,40.0,,True,17.3
+St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Rashad Rogers,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,False,0.4
+St. Thomas (TX) Celts,2025-11-14,UW-Whitewater,Richie Warren,9,3,8,0,1,3,7,2,3,2,1,1,3,2,5,37.5,0.0,42.9,False,27.0
+UW-Oshkosh Titans,2026-01-03,UW-Oshkosh Titans,Aiden Hawkinson,4,1,3,0,2,2,2,0,1,2,0,1,1,2,1,33.3,0.0,100.0,False,19.0
+UW-Oshkosh Titans,2026-01-03,UW-Oshkosh Titans,Brandon Beck,17,6,9,3,5,2,4,1,1,3,1,0,2,4,2,66.7,60.0,50.0,True,20.8
+UW-Oshkosh Titans,2026-01-03,UW-Oshkosh Titans,Carter Thomas,14,2,4,2,4,8,10,0,5,2,0,0,2,2,5,50.0,50.0,80.0,True,22.1
+UW-Oshkosh Titans,2026-01-03,UW-Oshkosh Titans,Jay Dalton,0,0,0,0,0,0,0,0,0,0,0,1,1,2,0,,,,False,4.7
+UW-Oshkosh Titans,2026-01-03,UW-Oshkosh Titans,Joey LaChapell,9,3,4,1,1,2,2,0,2,3,0,0,2,3,2,75.0,100.0,100.0,True,20.9
+UW-Oshkosh Titans,2026-01-03,UW-Oshkosh Titans,Jonah Rindfleisch,4,0,1,0,0,4,4,0,4,0,0,2,0,0,4,0.0,,100.0,False,15.6
+UW-Oshkosh Titans,2026-01-03,UW-Oshkosh Titans,Logan Rindfleisch,3,1,6,1,1,0,0,0,0,0,0,0,1,2,0,16.7,100.0,,False,8.0
+UW-Oshkosh Titans,2026-01-03,UW-Oshkosh Titans,Matt Imig,9,3,5,3,4,0,0,0,0,3,1,0,1,0,0,60.0,75.0,,False,12.9
+UW-Oshkosh Titans,2026-01-03,UW-Oshkosh Titans,Michael Metcalf-Grassman,21,7,12,2,3,5,7,0,1,1,2,0,0,4,1,58.3,66.7,71.4,True,21.5
+UW-Oshkosh Titans,2026-01-03,UW-Oshkosh Titans,Nate Nazos,3,1,1,1,1,0,0,2,2,2,1,0,2,2,4,100.0,100.0,,True,21.5
+UW-Oshkosh Titans,2026-01-03,UW-Oshkosh Titans,Oskar Kangas,6,2,6,2,5,0,0,1,3,2,1,1,0,4,4,33.3,40.0,,False,17.6
+UW-Oshkosh Titans,2026-01-03,UW-Oshkosh Titans,Vitorio Dante,0,0,1,0,0,0,2,1,2,0,0,0,0,1,3,0.0,,0.0,False,14.0
+UW-Oshkosh Titans,2026-01-03,UW-Whitewater,Brock Marino,15,4,6,0,0,7,11,2,7,2,1,0,1,3,9,66.7,,63.6,True,23.8
+UW-Oshkosh Titans,2026-01-03,UW-Whitewater,Collin Madson,17,6,19,1,6,4,4,2,0,1,2,0,0,2,2,31.6,16.7,100.0,True,39.7
+UW-Oshkosh Titans,2026-01-03,UW-Whitewater,Darius Chestnut,3,1,4,1,2,0,0,0,1,1,0,0,0,0,1,25.0,50.0,,False,10.2
+UW-Oshkosh Titans,2026-01-03,UW-Whitewater,JR Lukenbill,0,0,3,0,2,0,0,0,2,2,2,0,1,3,2,0.0,0.0,,True,23.3
+UW-Oshkosh Titans,2026-01-03,UW-Whitewater,Jake Quast,8,3,7,0,1,2,3,4,2,0,1,0,0,5,6,42.9,0.0,66.7,False,17.8
+UW-Oshkosh Titans,2026-01-03,UW-Whitewater,Joey Berezowitz,4,1,4,0,1,2,2,1,1,1,1,0,0,2,2,25.0,0.0,100.0,False,18.1
+UW-Oshkosh Titans,2026-01-03,UW-Whitewater,Kelton McEwen,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,False,3.6
+UW-Oshkosh Titans,2026-01-03,UW-Whitewater,Luke Bara,14,3,8,3,6,5,6,0,2,3,1,0,4,3,2,37.5,50.0,83.3,True,27.8
+UW-Oshkosh Titans,2026-01-03,UW-Whitewater,Richie Warren,17,7,14,1,2,2,3,5,4,0,1,4,3,2,9,50.0,50.0,66.7,True,28.9
+UW-Oshkosh Titans,2026-01-03,UW-Whitewater,Tyshawn Teague-Johnson,0,0,0,0,0,0,1,0,2,0,0,0,0,1,2,,,0.0,False,5.5
