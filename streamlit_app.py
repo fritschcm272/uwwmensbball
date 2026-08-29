@@ -427,7 +427,8 @@ KTV_CATEGORY_REFERENCE = {
     "Perimeter Defense / Ball Pressure/ Create Turnovers": {"keywords": "steal, steals, press capable, full court press, force turnovers, force to's, forcing turnovers, generate turnovers, turnover trigger, turnover triggers, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure, ball pressure, deny, deflection, deflections", "stats": "STL"},
     "Scoring Inside": {"keywords": "dominate the paint, attack the paint, live in the paint, attack the basket, scoring at the rim, get to rim, attack the rim, get to the rim, post up, post-up, paint touches, drive, drives, downhill, finish at the rim", "stats": "FG2M, FG2A, FG2%"},
     "Field Goal Efficiency": {"keywords": "limit their scoring, field goal, field goal%, fg%, shooting percentage, efficient shooting, efficiency, good shots, quality shots", "stats": "FGM-A, FG%"},
-    "Defensive Efficiency": {"keywords": "high-volume, high volume, funnel, funneling, take away, most efficient, shot profile, shot diet, inefficient looks, worst looks", "stats": "Opp FG% by shot type"},
+    "Defensive Efficiency": {"keywords": "high-volume, high volume, funnel, funneling, take away, most efficient, shot profile, shot diet, inefficient looks, worst looks, multiple efforts, multiple effort, never stop", "stats": "Opp FG% by shot type"},
+    "Offensive Efficiency": {"keywords": "attack & execute, attack and execute, execute offensively, attack offensively", "stats": "TS%, eFG%"},
 }
 
 # Side detection: maps scouting phrases to whether they describe UWW (proactive) or OPP (contain opponent)
@@ -2249,6 +2250,7 @@ li {{ margin-bottom: 4px; }}
                     "Scoring Inside": ("#ede7f6", "#4527a0"),
                     "Field Goal Efficiency": ("#e8e0f0", "#4E2A84"),
                     "Defensive Efficiency": ("#eceff1", "#37474f"),
+                    "Offensive Efficiency": ("#fff9c4", "#f9a825"),
                 }
                 _valid_cats = set(load_table("uww_ktv_splits")["category"].unique()) | set(KTV_CATEGORY_REFERENCE.keys())
                 def _detect_side(text):
@@ -5234,6 +5236,7 @@ def render_upcoming_opponent_new():
             "Scoring Inside": ("#ede7f6", "#4527a0"),
             "Field Goal Efficiency": ("#e8e0f0", "#4E2A84"),
             "Defensive Efficiency": ("#eceff1", "#37474f"),
+            "Offensive Efficiency": ("#fff9c4", "#f9a825"),
         }
         _valid_cats = set(load_table("uww_ktv_splits")["category"].unique()) | set(KTV_CATEGORY_REFERENCE.keys())
 
