@@ -5035,7 +5035,7 @@ def render_upcoming_opponent_new():
             _dk_all = load_table("uww_pbp_derived_keys")
             _dk_opp = _dk_all[_dk_all["opponent"] == short_opponent].sort_values("key_number") if not _dk_all.empty and short_opponent else pd.DataFrame()
             for _, _dk in _dk_opp.iterrows():
-                _keys.append(("\U0001f4ca", str(_dk["title"]), str(_dk["supporting_stats"]), str(_dk["recommendation"]), "Data-Driven Keys"))
+                _keys.append(("\U0001f4ca", str(_dk["title"]), str(_dk["supporting_stats"]), str(_dk["recommendation"]), "Data-Driven"))
         except Exception:
             pass
 
@@ -5215,7 +5215,7 @@ def render_upcoming_opponent_new():
 
         for _label, _value, _help in _at_a_glance:
             _icon, _rest = (_label.split(" ", 1) + [""])[:2]
-            _keys.append((_icon or "\U0001f3af", f"{_rest or _label}: {_value}", None, _help, "Season-Stat Recommendations"))
+            _keys.append((_icon or "\U0001f3af", f"{_rest or _label}: {_value}", None, _help, "Data-Driven"))
 
         # --- Group by KTV category and render like the old page's "Keys to Victory (Data-Driven)" section:
         # numbered items with colored category badges, a stat caption, and the reasoning in italics --
@@ -5293,12 +5293,11 @@ def render_upcoming_opponent_new():
         # Source badges use an outlined style (colored border + white fill) instead of the category badges'
         # solid fill, so the two badge types read as visually distinct at a glance.
         _SOURCE_COLORS = {
-            "Data-Driven Keys": "#37474f",
+            "Data-Driven": "#37474f",
             "Keys to Victory": "#4E2A84",
             "Team Strengths": "#c62828",
             "Full Game Plan": "#00695c",
             "Lineup Scouting": "#5d4037",
-            "Season-Stat Recommendations": "#1565c0",
         }
 
         def _source_badge_html(source):
