@@ -427,6 +427,7 @@ KTV_CATEGORY_REFERENCE = {
     "Perimeter Defense / Ball Pressure/ Create Turnovers": {"keywords": "steal, steals, press capable, full court press, force turnovers, force to's, forcing turnovers, generate turnovers, turnover trigger, turnover triggers, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure, ball pressure, deny, deflection, deflections", "stats": "STL"},
     "Scoring Inside": {"keywords": "dominate the paint, attack the paint, live in the paint, attack the basket, scoring at the rim, get to rim, attack the rim, get to the rim, post up, post-up, paint touches, drive, drives, downhill, finish at the rim", "stats": "FG2M, FG2A, FG2%"},
     "Field Goal Efficiency": {"keywords": "limit their scoring, field goal, field goal%, fg%, shooting percentage, efficient shooting, efficiency, good shots, quality shots", "stats": "FGM-A, FG%"},
+    "Defensive Efficiency": {"keywords": "high-volume, high volume, funnel, funneling, take away, most efficient, shot profile, shot diet, inefficient looks, worst looks", "stats": "Opp FG% by shot type"},
 }
 
 # Side detection: maps scouting phrases to whether they describe UWW (proactive) or OPP (contain opponent)
@@ -2247,6 +2248,7 @@ li {{ margin-bottom: 4px; }}
                     "Perimeter Defense / Ball Pressure/ Create Turnovers": ("#e0f7fa", "#00838f"),
                     "Scoring Inside": ("#ede7f6", "#4527a0"),
                     "Field Goal Efficiency": ("#e8e0f0", "#4E2A84"),
+                    "Defensive Efficiency": ("#eceff1", "#37474f"),
                 }
                 _valid_cats = set(load_table("uww_ktv_splits")["category"].unique()) | set(KTV_CATEGORY_REFERENCE.keys())
                 def _detect_side(text):
@@ -5102,7 +5104,7 @@ def render_upcoming_opponent_new():
                 if not _ag_sum.empty:
                     _ag_sum["FG%"] = 100 * _ag_sum["Makes"] / _ag_sum["Attempts"]
                     _ag_best = _ag_sum.nlargest(1, "FG%").iloc[0]
-                    _at_a_glance.append(("\U0001f3c0 Top Play", str(_ag_best["play_call"]), f"Best make rate among plays with 2+ tracked attempts this season: {int(_ag_best['Makes'])}/{int(_ag_best['Attempts'])} ({_ag_best['FG%']:.0f}%). Why it's here: a coach-tagged play call is only worth calling out once it has a real sample behind it -- see Full Game Plan Details for the complete list, including plays to avoid."))
+                    _at_a_glance.append(("\U0001f3c0 Top Play", str(_ag_best["play_call"]), f"Best make rate among plays with 2+ tracked attempts this season: {int(_ag_best['Makes'])}/{int(_ag_best['Attempts'])} ({_ag_best['FG%']:.0f}%)."))
         except Exception:
             pass
 
@@ -5116,7 +5118,7 @@ def render_upcoming_opponent_new():
                 if _ag_team_pts > 0:
                     _ag_share = 100 * _ag_op.nlargest(2, "PTS")["PTS"].sum() / _ag_team_pts
                     _ag_val = "Concentrated" if _ag_share >= 45 else "Balanced"
-                    _at_a_glance.append(("\U0001f3af Scoring Focus", _ag_val, f"Their top 2 scorers account for {_ag_share:.0f}% of team points. Why it's here: tells you whether keying on one or two players is worth the defensive attention, or whether their offense doesn't have a single focal point. See Full Game Plan Details for who leads."))
+                    _at_a_glance.append(("\U0001f3af Scoring Focus", _ag_val, f"Their top 2 scorers account for {_ag_share:.0f}% of team points."))
         except Exception:
             pass
 
@@ -5133,7 +5135,7 @@ def render_upcoming_opponent_new():
                 _ag_opp_allowed = safe_float(_ag_tt_row.iloc[0].get("opp_ppg_allowed")) if "opp_ppg_allowed" in _ag_tt_row.columns else None
                 if _ag_opp_ppg is not None and _ag_opp_allowed is not None:
                     _ag_style = "Push Tempo" if _ag_opp_allowed > _ag_opp_ppg else "Slow It Down"
-                    _at_a_glance.append(("\u23f1\ufe0f Style", _ag_style, f"UWW season pace: {_ag_pace_d['Pace']:.1f} poss/game. {esc(short_opponent)}: {_ag_opp_ppg:.1f} PPG, allows {_ag_opp_allowed:.1f}. Why it's here: whether they give up more than they score suggests which tempo favors us. See Full Game Plan Details for the full numbers."))
+                    _at_a_glance.append(("\u23f1\ufe0f Style", _ag_style, f"UWW season pace: {_ag_pace_d['Pace']:.1f} poss/game. {esc(short_opponent)}: {_ag_opp_ppg:.1f} PPG, allows {_ag_opp_allowed:.1f}."))
         except Exception:
             pass
 
@@ -5150,7 +5152,7 @@ def render_upcoming_opponent_new():
                 _ag_opp_rpg = _ag_op2["REB"].sum()
                 _ag_diff = _ag_uww_rpg - _ag_opp_rpg
                 _ag_reb_val = "Crash the Glass" if _ag_diff >= 3 else ("Prioritize Balance" if _ag_diff <= -3 else "Roughly Even")
-                _at_a_glance.append(("\U0001f4aa Boards", _ag_reb_val, f"UWW: {_ag_uww_rpg:.1f} RPG this season. {esc(short_opponent)}: {_ag_opp_rpg:.1f} RPG. Why it's here: a clear rebounding edge (either direction) changes whether crashing the glass is worth the transition-defense risk."))
+                _at_a_glance.append(("\U0001f4aa Boards", _ag_reb_val, f"UWW: {_ag_uww_rpg:.1f} RPG this season. {esc(short_opponent)}: {_ag_opp_rpg:.1f} RPG."))
         except Exception:
             pass
 
@@ -5160,7 +5162,7 @@ def render_upcoming_opponent_new():
                 if not _ag_lu.empty:
                     _ag_lu["rate"] = _ag_lu["+/-"] / _ag_lu["MIN"]
                     _ag_best_lu = _ag_lu.nlargest(1, "rate").iloc[0]
-                    _at_a_glance.append(("\U0001f512 Closing 5", _last_names(_ag_best_lu["lineup"]), f"Best net rating this season among lineups with real minutes: {_ag_best_lu['rate']:+.2f}/min over {_ag_best_lu['MIN']:.0f} minutes. Why it's here: this is the group to trust with the game on the line, before even looking at how it matches up. See Full Game Plan Details for the matchup comparison, and Tools for the full simulator."))
+                    _at_a_glance.append(("\U0001f512 Closing 5", _last_names(_ag_best_lu["lineup"]), f"Best net rating this season among lineups with real minutes: {_ag_best_lu['rate']:+.2f}/min over {_ag_best_lu['MIN']:.0f} minutes."))
         except Exception:
             pass
 
@@ -5177,7 +5179,7 @@ def render_upcoming_opponent_new():
                     _ag_bench_sum = _ag_bench_sum[_ag_bench_sum["GP"] >= 3]
                     if not _ag_bench_sum.empty:
                         _ag_top_bench = _ag_bench_sum.nlargest(1, "Avg").iloc[0]
-                        _at_a_glance.append(("\U0001fa91 Bench Trust", str(_ag_top_bench["player"]), f"{_ag_top_bench['Avg']:.1f} avg Game Score off the bench over {int(_ag_top_bench['GP'])} games this season. Why it's here: who to trust first if a starter picks up early fouls."))
+                        _at_a_glance.append(("\U0001fa91 Bench Trust", str(_ag_top_bench["player"]), f"{_ag_top_bench['Avg']:.1f} avg Game Score off the bench over {int(_ag_top_bench['GP'])} games this season."))
         except Exception:
             pass
 
@@ -5196,7 +5198,7 @@ def render_upcoming_opponent_new():
                 _ag_clutch_scoring = _ag_clutch_u[_ag_clutch_u["_pts"] > 0].groupby("player")["_pts"].sum()
                 if not _ag_clutch_scoring.empty:
                     _ag_top_clutch = _ag_clutch_scoring.idxmax()
-                    _at_a_glance.append(("\U0001f3c1 Clutch Option", str(_ag_top_clutch), f"{int(_ag_clutch_scoring.max())} points in clutch minutes (last 5 min, score within 8) this season -- the most of anyone on the roster. Why it's here: worth building the closing possession around, all else equal."))
+                    _at_a_glance.append(("\U0001f3c1 Clutch Option", str(_ag_top_clutch), f"{int(_ag_clutch_scoring.max())} points in clutch minutes (last 5 min, score within 8) this season -- the most of anyone on the roster."))
         except Exception:
             pass
 
@@ -5209,7 +5211,7 @@ def render_upcoming_opponent_new():
                 _ag_topg = pd.to_numeric(_ag_op3["TO"], errors="coerce").sum() / _ag_games if _ag_games > 0 else 0
                 if _ag_topg > 0:
                     _ag_to_val = "Press / Extend" if _ag_topg >= 13 else "Standard Pressure"
-                    _at_a_glance.append(("\U0001f504 TO Pressure", _ag_to_val, f"{esc(short_opponent)} averages {_ag_topg:.1f} turnovers/game (season total, not opponent-adjusted). Why it's here: a turnover-prone opponent makes extended ball pressure a higher-value bet than it would be against a careful ball-handling team."))
+                    _at_a_glance.append(("\U0001f504 TO Pressure", _ag_to_val, f"{esc(short_opponent)} averages {_ag_topg:.1f} turnovers/game (season total, not opponent-adjusted)."))
         except Exception:
             pass
 
@@ -5231,6 +5233,7 @@ def render_upcoming_opponent_new():
             "Perimeter Defense / Ball Pressure/ Create Turnovers": ("#e0f7fa", "#00838f"),
             "Scoring Inside": ("#ede7f6", "#4527a0"),
             "Field Goal Efficiency": ("#e8e0f0", "#4E2A84"),
+            "Defensive Efficiency": ("#eceff1", "#37474f"),
         }
         _valid_cats = set(load_table("uww_ktv_splits")["category"].unique()) | set(KTV_CATEGORY_REFERENCE.keys())
 
