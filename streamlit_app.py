@@ -3322,7 +3322,14 @@ def render_upcoming_game():
             # tracks, not just the abstract stat names. Loaded once here rather than per-category. ---
             _cs_uww_box_all = load_table("uww_pbp_box_score")
             _cs_uww_side = _cs_uww_box_all[_cs_uww_box_all["team"] == "UW-Whitewater"] if not _cs_uww_box_all.empty else pd.DataFrame()
-            _cs_n_games = _cs_uww_side["opponent"].nunique() if not _cs_uww_side.empty else 0
+            # CONFIRMED BUG (fixed here): this used to be _cs_uww_side["opponent"].nunique() -- the count of
+            # opponents actually present in the RECONSTRUCTED box score, not how many games UWW has actually
+            # played. If box-score reconstruction is missing even one game (a known, real gap -- e.g. a PBP
+            # file that failed to parse), that undercounts games and INFLATES every "per game" stat computed
+            # below, since the same (possibly also incomplete) numerator gets divided by a smaller-than-real
+            # denominator. `played` (from the schedule's own played_mask, already computed earlier in this
+            # function) is the actual games-played count regardless of box-score completeness.
+            _cs_n_games = len(played)
             _cs_opp_prof = load_table("uww_player_profiles")
             _cs_opp_prof = _cs_opp_prof[_cs_opp_prof["opponent"] == short_opponent] if not _cs_opp_prof.empty and short_opponent else pd.DataFrame()
             _cs_opp_games = get_opponent_games_played(short_opponent) if short_opponent else 0
@@ -3352,8 +3359,13 @@ def render_upcoming_game():
                     return None
                 if cat == "Ball Security":
                     u = _cs_uww_side["TO"].sum() / _cs_n_games if "TO" in _cs_uww_side.columns else None
-                    o = pd.to_numeric(_cs_opp_prof["TO"], errors="coerce").sum() / _cs_opp_games if not _cs_opp_prof.empty and "TO" in _cs_opp_prof.columns and _cs_opp_games > 0 else None
-                    return (f"UWW: {u:.1f} TO/gm" if u is not None else None, f"{short_opponent}: {o:.1f} TO/gm" if o is not None else None)
+                    # Opponent side is turnovers THEY FORCE (their own STL, the same forces-turnovers proxy
+                    # already used by the Turnover-Forcing Opportunity card elsewhere on this page) -- not
+                    # their own turnovers committed, which isn't a relevant comparison for UWW's own ball
+                    # security. Previously showed the opponent's own TO/gm here, which answered a different
+                    # question than the one this category is actually about.
+                    o = pd.to_numeric(_cs_opp_prof["STL"], errors="coerce").sum() / _cs_opp_games if not _cs_opp_prof.empty and "STL" in _cs_opp_prof.columns and _cs_opp_games > 0 else None
+                    return (f"UWW turnovers/gm: {u:.1f}" if u is not None else None, f"{short_opponent} turnovers forced/gm: {o:.1f}" if o is not None else None)
                 if cat == "Rebounding":
                     u = _cs_uww_side["REB"].sum() / _cs_n_games if "REB" in _cs_uww_side.columns else None
                     o = pd.to_numeric(_cs_opp_prof["REB"], errors="coerce").sum() if not _cs_opp_prof.empty and "REB" in _cs_opp_prof.columns else None
