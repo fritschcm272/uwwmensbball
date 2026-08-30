@@ -1621,7 +1621,11 @@ def render_upcoming_game():
             selection analysis, not a separate live-scrape)."""
             st.markdown(f"#### {_game_label}")
             if not _game_key:
-                st.info("Could not resolve which opponent this game's box score is filed under.")
+                # This isn't a name-matching bug -- it means no game in _source_table matched this opponent
+                # at all, which happens when no local/live-scraped PBP data was ever collected for this
+                # specific game (confirmed case: missing FastScout credentials + no local backup file). Same
+                # underlying situation as the "empty box score" case below, just caught one step earlier.
+                st.info("No box score data collected yet for this game -- no local or live-scraped play-by-play was available for it.")
                 return
             _gd_box_all = load_table(_source_table)
             _gd_game_box = _gd_box_all[_gd_box_all["opponent"] == _game_key] if not _gd_box_all.empty else pd.DataFrame()
@@ -3475,19 +3479,6 @@ def render_upcoming_game():
                     # security. Previously showed the opponent's own TO/gm here, which answered a different
                     # question than the one this category is actually about.
                     o = pd.to_numeric(_cs_opp_prof["STL"], errors="coerce").sum() / _cs_opp_games if not _cs_opp_prof.empty and "STL" in _cs_opp_prof.columns and _cs_opp_games > 0 else None
-                    # TEMPORARY diagnostic -- kept one more round to confirm the real fix (filtering
-                    # _cs_uww_side itself to games before the upcoming game, not just fixing the games-count
-                    # denominator) actually lines up now. Remove once confirmed against real data.
-                    with st.expander("\U0001f527 Debug: Ball Security TO/gm calculation", expanded=True):
-                        st.code(
-                            f"played (games before upcoming game) opponents = {played['opponent'].dropna().tolist() if not played.empty else []}\n"
-                            f"_cs_prior_opponents (resolved short names)    = {_cs_prior_opponents}\n"
-                            f"_cs_uww_side['TO'].sum() (filtered numerator) = {_cs_uww_side['TO'].sum() if 'TO' in _cs_uww_side.columns else 'N/A'}\n"
-                            f"_cs_uww_side row count (filtered)             = {len(_cs_uww_side)}\n"
-                            f"_cs_uww_side['opponent'].unique() (filtered)  = {_cs_uww_side['opponent'].unique().tolist() if not _cs_uww_side.empty else []}\n"
-                            f"_cs_n_games (= len(played))                   = {_cs_n_games}\n"
-                            f"=> computed UWW TO/gm                         = {u}"
-                        )
                     return (f"UWW turnovers/gm: {u:.1f}" if u is not None else None, f"{short_opponent} turnovers forced/gm: {o:.1f}" if o is not None else None)
                 if cat == "Rebounding":
                     u = _cs_uww_side["REB"].sum() / _cs_n_games if "REB" in _cs_uww_side.columns else None
