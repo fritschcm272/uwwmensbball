@@ -3321,16 +3321,24 @@ def render_upcoming_game():
             # --- Per-category stat lines: real UWW-vs-opponent numbers for whatever this category actually
             # tracks, not just the abstract stat names. Loaded once here rather than per-category. ---
             _cs_uww_box_all = load_table("uww_pbp_box_score")
-            _cs_uww_side = _cs_uww_box_all[_cs_uww_box_all["team"] == "UW-Whitewater"] if not _cs_uww_box_all.empty else pd.DataFrame()
-            # CONFIRMED BUG (fixed here, again): using `played` (built via pre_upcoming/next_game_idx .loc
-            # slicing earlier in this function) made this WORSE, not better -- it returned roughly half the
-            # actual played-game count, inflating every per-game stat by ~2x instead of fixing the original
-            # undercount. Rather than keep guessing at what's wrong with that slice, use a fresh, direct,
-            # independently-verifiable count instead: uww_schedule.csv is already filtered by the parser to
-            # just the scouted+played games plus the ONE upcoming game (see build_team_schedule_from_html's
-            # is_scouted/reference_date keep_mask) -- so every row with a real outcome in the WHOLE table IS
-            # a played game, with no date-slicing needed at all.
-            _cs_n_games = int(played_mask(schedule).sum()) if not schedule.empty else 0
+            _cs_uww_side_all = _cs_uww_box_all[_cs_uww_box_all["team"] == "UW-Whitewater"] if not _cs_uww_box_all.empty else pd.DataFrame()
+            # ROOT CAUSE FOUND (confirmed against real diagnostic output, after two wrong attempts at this):
+            # `played` (games strictly before the upcoming game, via pre_upcoming/next_game_idx) was correct
+            # all along -- len(played)==1 matches what the user confirmed should be true. The actual bug was
+            # never the denominator: it was that _cs_uww_side pulled from the ENTIRE uww_pbp_box_score table,
+            # unfiltered by date, which can (and here does) contain box-score data for games beyond just
+            # "before the upcoming game" -- e.g. when reference_date is set artificially early for testing
+            # against a real, further-along season, box scores exist for games chronologically AFTER the
+            # simulated "upcoming" game too. Both the numerator (turnovers summed) and denominator (games
+            # count) need the SAME "games before the upcoming game" scope, or they silently disagree.
+            _cs_prior_opponent_shortnames = _cs_uww_box_all["opponent"].unique().tolist() if not _cs_uww_box_all.empty else []
+            _cs_prior_opponent_shortnames.sort(key=len, reverse=True)  # longest-first so the most specific match wins
+            _cs_prior_opponents = {
+                resolve_short_opponent(_po, _cs_prior_opponent_shortnames)
+                for _po in played["opponent"].dropna()
+            } - {None}
+            _cs_uww_side = _cs_uww_side_all[_cs_uww_side_all["opponent"].isin(_cs_prior_opponents)] if _cs_prior_opponents else _cs_uww_side_all.iloc[0:0]
+            _cs_n_games = len(played)
             _cs_opp_prof = load_table("uww_player_profiles")
             _cs_opp_prof = _cs_opp_prof[_cs_opp_prof["opponent"] == short_opponent] if not _cs_opp_prof.empty and short_opponent else pd.DataFrame()
             _cs_opp_games = get_opponent_games_played(short_opponent) if short_opponent else 0
@@ -3366,20 +3374,18 @@ def render_upcoming_game():
                     # security. Previously showed the opponent's own TO/gm here, which answered a different
                     # question than the one this category is actually about.
                     o = pd.to_numeric(_cs_opp_prof["STL"], errors="coerce").sum() / _cs_opp_games if not _cs_opp_prof.empty and "STL" in _cs_opp_prof.columns and _cs_opp_games > 0 else None
-                    # TEMPORARY diagnostic -- two prior fix attempts on this exact number both produced a
-                    # wrong result (13.5, then 27.0, then this one), so this shows the raw numbers behind the
-                    # calculation directly rather than guessing at a fourth formula blind. Remove once the
-                    # correct source of _cs_n_games is confirmed against real data.
+                    # TEMPORARY diagnostic -- kept one more round to confirm the real fix (filtering
+                    # _cs_uww_side itself to games before the upcoming game, not just fixing the games-count
+                    # denominator) actually lines up now. Remove once confirmed against real data.
                     with st.expander("\U0001f527 Debug: Ball Security TO/gm calculation", expanded=True):
                         st.code(
-                            f"_cs_uww_side['TO'].sum() = {_cs_uww_side['TO'].sum() if 'TO' in _cs_uww_side.columns else 'N/A'}\n"
-                            f"_cs_uww_side row count    = {len(_cs_uww_side)}\n"
-                            f"_cs_uww_side['opponent'].nunique() = {_cs_uww_side['opponent'].nunique() if not _cs_uww_side.empty else 'N/A'}\n"
-                            f"schedule row count        = {len(schedule)}\n"
-                            f"played_mask(schedule).sum() = {int(played_mask(schedule).sum()) if not schedule.empty else 'N/A'}\n"
-                            f"schedule['outcome'].value_counts():\n{schedule['outcome'].value_counts(dropna=False).to_string() if not schedule.empty and 'outcome' in schedule.columns else 'N/A'}\n"
-                            f"_cs_n_games actually used  = {_cs_n_games}\n"
-                            f"=> computed UWW TO/gm      = {u}"
+                            f"played (games before upcoming game) opponents = {played['opponent'].dropna().tolist() if not played.empty else []}\n"
+                            f"_cs_prior_opponents (resolved short names)    = {_cs_prior_opponents}\n"
+                            f"_cs_uww_side['TO'].sum() (filtered numerator) = {_cs_uww_side['TO'].sum() if 'TO' in _cs_uww_side.columns else 'N/A'}\n"
+                            f"_cs_uww_side row count (filtered)             = {len(_cs_uww_side)}\n"
+                            f"_cs_uww_side['opponent'].unique() (filtered)  = {_cs_uww_side['opponent'].unique().tolist() if not _cs_uww_side.empty else []}\n"
+                            f"_cs_n_games (= len(played))                   = {_cs_n_games}\n"
+                            f"=> computed UWW TO/gm                         = {u}"
                         )
                     return (f"UWW turnovers/gm: {u:.1f}" if u is not None else None, f"{short_opponent} turnovers forced/gm: {o:.1f}" if o is not None else None)
                 if cat == "Rebounding":
