@@ -210,13 +210,25 @@ def get_opponent_outcomes(schedule: pd.DataFrame, opponent_names) -> dict:
 
 def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
     """Count of games with a recorded outcome in the opponent's own season schedule (uww_opponent_schedules)
-    -- used to convert an opponent's season-TOTAL stats into per-game rates.
+    THAT CAME BEFORE THEIR MATCHUP AGAINST UWW -- used to convert an opponent's season-TOTAL stats into
+    per-game rates.
 
     In uww_player_profiles, PTS and REB are already per-game averages (no division needed), but AST/STL/BLK/TO
     and the 3PM-A/FTM-A "made-attempted" strings are season-CUMULATIVE totals and need dividing by this
     helper's result. (Confirmed empirically, not just from a comment: summing AST across a roster with no
     division produces an implausible ~200 "assists per game" figure -- only sane as a season sum. Not every
     column in this table shares the same units; don't assume otherwise without checking real output again.)
+
+    CONFIRMED BUG (fixed here): this used to count EVERY game in the opponent's full uww_opponent_schedules
+    entry, with no "before facing UWW" scoping at all -- get_opponent_entering_record() (right below) already
+    correctly slices to pre-UWW games for the exact same table, this one just never got the same treatment.
+    In normal use (reference_date left at the real "today") this barely shows up, since an opponent's
+    schedule naturally only has outcomes recorded up through "now" anyway. But when simulating an earlier
+    point in an already-completed season (exactly how this was caught: an opponent confirmed to have played
+    only 2 games before facing UWW, where this was silently counting their entire, much longer, real season),
+    every AST/STL/BLK-per-game figure derived from this was accordingly deflated by the same ratio. Same
+    "anchor on the first 'vs Whitewater' row, take everything before it" logic and the same multi-meeting
+    caveat as get_opponent_entering_record() -- kept identical on purpose rather than diverging.
 
     Previously this was a hardcoded `_games_est = 5` sprinkled across several Upcoming Game computations,
     which silently misstates every opponent's per-game rates except in whichever week they happen to have
@@ -228,7 +240,17 @@ def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
     opp_sched = load_table("uww_opponent_schedules")
     if opp_sched.empty or "opponent" not in opp_sched.columns:
         return default
-    games = opp_sched[(opp_sched["opponent"] == short_opponent) & opp_sched["outcome"].notna()]
+    opp_games = opp_sched[opp_sched["opponent"] == short_opponent]
+    if opp_games.empty:
+        return default
+    uww_idx = None
+    for i, r in opp_games.iterrows():
+        vs = str(r.get("vs_opponent", "")).lower()
+        if "whitewater" in vs or "uww" in vs:
+            uww_idx = i
+            break
+    pre_uww = opp_games.loc[:uww_idx].iloc[:-1] if uww_idx is not None else opp_games
+    games = pre_uww[pre_uww["outcome"].notna()]
     n = len(games)
     return n if n > 0 else default
 
