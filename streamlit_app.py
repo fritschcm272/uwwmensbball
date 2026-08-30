@@ -3366,6 +3366,21 @@ def render_upcoming_game():
                     # security. Previously showed the opponent's own TO/gm here, which answered a different
                     # question than the one this category is actually about.
                     o = pd.to_numeric(_cs_opp_prof["STL"], errors="coerce").sum() / _cs_opp_games if not _cs_opp_prof.empty and "STL" in _cs_opp_prof.columns and _cs_opp_games > 0 else None
+                    # TEMPORARY diagnostic -- two prior fix attempts on this exact number both produced a
+                    # wrong result (13.5, then 27.0, then this one), so this shows the raw numbers behind the
+                    # calculation directly rather than guessing at a fourth formula blind. Remove once the
+                    # correct source of _cs_n_games is confirmed against real data.
+                    with st.expander("\U0001f527 Debug: Ball Security TO/gm calculation", expanded=True):
+                        st.code(
+                            f"_cs_uww_side['TO'].sum() = {_cs_uww_side['TO'].sum() if 'TO' in _cs_uww_side.columns else 'N/A'}\n"
+                            f"_cs_uww_side row count    = {len(_cs_uww_side)}\n"
+                            f"_cs_uww_side['opponent'].nunique() = {_cs_uww_side['opponent'].nunique() if not _cs_uww_side.empty else 'N/A'}\n"
+                            f"schedule row count        = {len(schedule)}\n"
+                            f"played_mask(schedule).sum() = {int(played_mask(schedule).sum()) if not schedule.empty else 'N/A'}\n"
+                            f"schedule['outcome'].value_counts():\n{schedule['outcome'].value_counts(dropna=False).to_string() if not schedule.empty and 'outcome' in schedule.columns else 'N/A'}\n"
+                            f"_cs_n_games actually used  = {_cs_n_games}\n"
+                            f"=> computed UWW TO/gm      = {u}"
+                        )
                     return (f"UWW turnovers/gm: {u:.1f}" if u is not None else None, f"{short_opponent} turnovers forced/gm: {o:.1f}" if o is not None else None)
                 if cat == "Rebounding":
                     u = _cs_uww_side["REB"].sum() / _cs_n_games if "REB" in _cs_uww_side.columns else None
