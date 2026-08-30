@@ -1612,45 +1612,54 @@ def render_upcoming_game():
         stats_html = _build_team_stats_html(uww_team_stats, opp_team_stats, opp_display) if uww_team_stats and opp_team_stats else ""
 
         @st.dialog("Game Detail", width="large")
-        def _show_last5_game_dialog(_game_short_opp, _game_label):
+        def _show_last5_game_dialog(_game_key, _game_label, _source_table="uww_pbp_box_score", _team_a_hint="UW-Whitewater"):
             """Full box score + a simple team-stats comparison for one specific past game -- triggered by
-            clicking a UWW result in the Last Five Games list. Only wired up for UWW's own games (reliable
-            uww_pbp_box_score data); the opponent's pre-UWW results in that same list aren't clickable, since
-            we don't reliably have box-score-level detail for those without live-scrape credentials."""
+            clicking a result in the Last Five Games list, either UWW's own (_source_table="uww_pbp_box_score",
+            keyed by the opponent they played) or the upcoming opponent's own prior-game result
+            (_source_table="uww_opponent_prior_games_box_score", keyed by whoever THEY played that game --
+            reconstructed from the same shot-by-shot video-tagged data already collected for the shot-
+            selection analysis, not a separate live-scrape)."""
             st.markdown(f"#### {_game_label}")
-            if not _game_short_opp:
+            if not _game_key:
                 st.info("Could not resolve which opponent this game's box score is filed under.")
                 return
-            _gd_box_all = load_table("uww_pbp_box_score")
-            _gd_game_box = _gd_box_all[_gd_box_all["opponent"] == _game_short_opp] if not _gd_box_all.empty else pd.DataFrame()
+            _gd_box_all = load_table(_source_table)
+            _gd_game_box = _gd_box_all[_gd_box_all["opponent"] == _game_key] if not _gd_box_all.empty else pd.DataFrame()
             if _gd_game_box.empty:
                 st.warning("No reconstructed box score found for this game yet.")
                 return
-            _gd_uww_side = _gd_game_box[_gd_game_box["team"] == "UW-Whitewater"]
-            _gd_opp_side = _gd_game_box[_gd_game_box["team"] != "UW-Whitewater"]
+            _gd_teams = sorted(_gd_game_box["team"].dropna().unique().tolist())
+            if _team_a_hint in _gd_teams:
+                _team_a = _team_a_hint
+                _team_b = next((t for t in _gd_teams if t != _team_a), _team_a)
+            else:
+                _team_a = _gd_teams[0] if _gd_teams else _team_a_hint
+                _team_b = _gd_teams[1] if len(_gd_teams) > 1 else _team_a
+            _gd_uww_side = _gd_game_box[_gd_game_box["team"] == _team_a]
+            _gd_opp_side = _gd_game_box[_gd_game_box["team"] == _team_b]
 
             st.markdown("**Team Stats**")
             _gd_stat_cols = [c for c in ["PTS", "REB", "AST", "STL", "BLK", "TO", "PF"] if c in _gd_game_box.columns]
-            _gd_rows = [{"Stat": _sc, "UWW": _gd_uww_side[_sc].sum(), _game_short_opp: _gd_opp_side[_sc].sum()} for _sc in _gd_stat_cols]
+            _gd_rows = [{"Stat": _sc, _team_a: _gd_uww_side[_sc].sum(), _team_b: _gd_opp_side[_sc].sum()} for _sc in _gd_stat_cols]
             if {"FGM", "FGA"} <= set(_gd_game_box.columns):
                 _u_fgm, _u_fga = _gd_uww_side["FGM"].sum(), _gd_uww_side["FGA"].sum()
                 _o_fgm, _o_fga = _gd_opp_side["FGM"].sum(), _gd_opp_side["FGA"].sum()
-                _gd_rows.append({"Stat": "FG%", "UWW": f"{100*_u_fgm/_u_fga:.1f}%" if _u_fga else "-", _game_short_opp: f"{100*_o_fgm/_o_fga:.1f}%" if _o_fga else "-"})
+                _gd_rows.append({"Stat": "FG%", _team_a: f"{100*_u_fgm/_u_fga:.1f}%" if _u_fga else "-", _team_b: f"{100*_o_fgm/_o_fga:.1f}%" if _o_fga else "-"})
             if {"FG3M", "FG3A"} <= set(_gd_game_box.columns):
                 _u_3m, _u_3a = _gd_uww_side["FG3M"].sum(), _gd_uww_side["FG3A"].sum()
                 _o_3m, _o_3a = _gd_opp_side["FG3M"].sum(), _gd_opp_side["FG3A"].sum()
-                _gd_rows.append({"Stat": "3P%", "UWW": f"{100*_u_3m/_u_3a:.1f}%" if _u_3a else "-", _game_short_opp: f"{100*_o_3m/_o_3a:.1f}%" if _o_3a else "-"})
+                _gd_rows.append({"Stat": "3P%", _team_a: f"{100*_u_3m/_u_3a:.1f}%" if _u_3a else "-", _team_b: f"{100*_o_3m/_o_3a:.1f}%" if _o_3a else "-"})
             st.dataframe(pd.DataFrame(_gd_rows), hide_index=True, use_container_width=True)
 
             st.markdown("**Box Score**")
             _gd_compact_cols = [c for c in ["player", "MIN", "PTS", "REB", "AST", "STL", "TO", "FG%"] if c in _gd_game_box.columns]
             _gd_col1, _gd_col2 = st.columns(2)
             with _gd_col1:
-                st.markdown("**UW-Whitewater**")
+                st.markdown(f"**{_team_a}**")
                 _gd_uww_sorted = _gd_uww_side.sort_values("PTS", ascending=False) if "PTS" in _gd_uww_side.columns else _gd_uww_side
                 st.dataframe(_gd_uww_sorted[_gd_compact_cols], hide_index=True, use_container_width=True)
             with _gd_col2:
-                st.markdown(f"**{_game_short_opp}**")
+                st.markdown(f"**{_team_b}**")
                 _gd_opp_sorted = _gd_opp_side.sort_values("PTS", ascending=False) if "PTS" in _gd_opp_side.columns else _gd_opp_side
                 st.dataframe(_gd_opp_sorted[_gd_compact_cols], hide_index=True, use_container_width=True)
 
@@ -1659,6 +1668,11 @@ def render_upcoming_game():
         # "Ripon") -- same resolve_short_opponent pattern used throughout this file.
         _l5_short_names = load_table("uww_pbp_box_score")["opponent"].unique().tolist()
         _l5_short_names.sort(key=len, reverse=True)
+        # Same idea for the upcoming opponent's OWN prior-game results -- uww_opponent_prior_games_box_score
+        # keys each game by whichever THIRD PARTY they played (not by short_opponent itself), reconstructed
+        # from the same shot-by-shot data already collected for the shot-selection analysis.
+        _l5_opp_short_names = load_table("uww_opponent_prior_games_box_score")["opponent"].unique().tolist()
+        _l5_opp_short_names.sort(key=len, reverse=True)
 
         # All Stats dialog (full team comparison including TENDENCIES stats)
         @st.dialog("ALL STATS", width="large")
@@ -1787,15 +1801,19 @@ def render_upcoming_game():
                             _o_opp_label = str(_o_game.get("opp_name", ""))
                             if len(_o_opp_label) > 16:
                                 _o_opp_label = _o_opp_label[:14] + "..."
-                            _o_color = "#2e7d32" if _o_game["outcome"] == "W" else "#c62828"
-                            st.markdown(
-                                f'<div style="text-align:right;padding-top:6px;"><span style="font-weight:700;color:{_o_color};">{_o_game["outcome"]}</span> {_o_score}'
-                                f'<div style="font-size:0.8rem;color:#888;">{_o_loc}{html.escape(_o_opp_label)}</div></div>',
-                                unsafe_allow_html=True,
-                            )
+                            # Now reconstructed from the same shot-by-shot data already collected for the
+                            # shot-selection analysis (uww_opponent_prior_games_box_score), not a separate
+                            # live-scrape -- so these ARE clickable now, same as UWW's own results, wherever
+                            # that reconstruction actually found data for this specific game.
+                            _o_third_party_short = resolve_short_opponent(_o_game["opp_name"], _l5_opp_short_names)
+                            if st.button(f"{_o_game['outcome']} {_o_score} {_o_loc}{_o_opp_label}", key=f"l5_opp_btn_{_l5_i}", use_container_width=True):
+                                _show_last5_game_dialog(
+                                    _o_third_party_short, f"{short_opponent} vs {_o_game['opp_name']} \u2014 {_o_game.get('date', '')}",
+                                    _source_table="uww_opponent_prior_games_box_score", _team_a_hint=short_opponent,
+                                )
                         else:
                             st.caption("\u2014")
-                st.caption(f"{short_opponent}'s results aren't clickable yet -- reliable box-score-level detail for their non-UWW games needs live-scrape credentials or local files, same limitation as the rest of their prior-game data.")
+                st.caption(f"{short_opponent}'s results are clickable when a box score has been reconstructed for that specific game -- some prior games may not have one yet (e.g. no local/live-scraped PBP data was available for that game).")
                 if st.button("\U0001f4c5 All Games", key="all_games_btn", use_container_width=True):
                     _show_all_games_dialog()
 
