@@ -3322,14 +3322,15 @@ def render_upcoming_game():
             # tracks, not just the abstract stat names. Loaded once here rather than per-category. ---
             _cs_uww_box_all = load_table("uww_pbp_box_score")
             _cs_uww_side = _cs_uww_box_all[_cs_uww_box_all["team"] == "UW-Whitewater"] if not _cs_uww_box_all.empty else pd.DataFrame()
-            # CONFIRMED BUG (fixed here): this used to be _cs_uww_side["opponent"].nunique() -- the count of
-            # opponents actually present in the RECONSTRUCTED box score, not how many games UWW has actually
-            # played. If box-score reconstruction is missing even one game (a known, real gap -- e.g. a PBP
-            # file that failed to parse), that undercounts games and INFLATES every "per game" stat computed
-            # below, since the same (possibly also incomplete) numerator gets divided by a smaller-than-real
-            # denominator. `played` (from the schedule's own played_mask, already computed earlier in this
-            # function) is the actual games-played count regardless of box-score completeness.
-            _cs_n_games = len(played)
+            # CONFIRMED BUG (fixed here, again): using `played` (built via pre_upcoming/next_game_idx .loc
+            # slicing earlier in this function) made this WORSE, not better -- it returned roughly half the
+            # actual played-game count, inflating every per-game stat by ~2x instead of fixing the original
+            # undercount. Rather than keep guessing at what's wrong with that slice, use a fresh, direct,
+            # independently-verifiable count instead: uww_schedule.csv is already filtered by the parser to
+            # just the scouted+played games plus the ONE upcoming game (see build_team_schedule_from_html's
+            # is_scouted/reference_date keep_mask) -- so every row with a real outcome in the WHOLE table IS
+            # a played game, with no date-slicing needed at all.
+            _cs_n_games = int(played_mask(schedule).sum()) if not schedule.empty else 0
             _cs_opp_prof = load_table("uww_player_profiles")
             _cs_opp_prof = _cs_opp_prof[_cs_opp_prof["opponent"] == short_opponent] if not _cs_opp_prof.empty and short_opponent else pd.DataFrame()
             _cs_opp_games = get_opponent_games_played(short_opponent) if short_opponent else 0
