@@ -3063,13 +3063,24 @@ def render_upcoming_game():
             """Word-boundary match instead of naive substring -- a bare "3" as a keyword now correctly
             matches "3's"/"3s"/"hit their 3" (a real gap: "hunt transition 3's" matched NO Three-Point
             Shooting keyword under the old naive `kw in text` check, since none of "three"/"3 pt"/"3pt" is a
-            literal substring of "transition 3's" -- landing it in "Other" instead of being tagged). \\b
-            treats a boundary between a word character and a non-word character (or string start/end), so
-            \\b3\\b matches the "3" in "3's" (digit -> apostrophe is a boundary) and in "hit 3 shots", but
-            NOT the "3" inside "23" or "63.4" (no boundary between two digits) -- so this doesn't introduce
-            false positives on stray numbers the way a bare substring check of "3" would have.
+            literal substring of "transition 3's" -- landing it in "Other" instead of being tagged).
+
+            CONFIRMED BUG (fixed here): plain \\b3\\b, while correctly avoiding "23" (no boundary between two
+            digits), does NOT avoid a decimal number ending in .3 -- e.g. "8.3%": "." is a non-word character
+            just like a space or apostrophe, so \\b still sees a boundary on both sides of the "3" in "8.3%"
+            and fires. This is a common shape in a stat-heavy app (any FG%/turnover-rate/etc. number that
+            happens to end in .3), so it was a real, frequent false positive (confirmed: "Pressure their
+            biggest turnover triggers" -- containing "(8.3%)" -- landing under Three-Point Shooting instead
+            of Perimeter Defense/Ball Pressure/Create Turnovers). Purely numeric keywords (just "3" here) now
+            use a decimal-aware pattern instead: a negative lookbehind/lookahead excluding a digit or "." on
+            either side, so "8.3%" and "3.5" are correctly excluded while "3's"/"hit 3 shots"/"transition 3"
+            still match (apostrophes, spaces, and word characters aren't in the exclusion set).
             """
-            return re.search(r"\b" + re.escape(keyword) + r"\b", text_lower) is not None
+            if keyword.isdigit():
+                pattern = r"(?<![\d.])" + re.escape(keyword) + r"(?![\d.])"
+            else:
+                pattern = r"\b" + re.escape(keyword) + r"\b"
+            return re.search(pattern, text_lower) is not None
 
         def _match_categories(text):
             text_lower = str(text).lower()
