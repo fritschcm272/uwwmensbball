@@ -1,10 +1,10 @@
 target_player,target_position,target_role,target_opponent,target_game_date,compared_opponent,compared_game_date,compared_player,compared_position,compared_role,similarity_score,shared_notes_tags,shared_keys_tags,height_diff_in,stat_similarity,target_PTS,compared_PTS,target_REB,compared_REB,target_AST,compared_AST,target_FG%,compared_FG%,target_3P%,compared_3P%
-Nicholas Buffalo,F,Starter,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Kolby Williams,F,Starter,10.87,rebounder,box_out_priority,1.0,0.587,8.5,9.3,4.0,5.9,0.0,0.6,60.0%,46.5%,-,33.3%
+Nicholas Buffalo,F,Starter,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Kolby Williams,F,Starter,10.95,rebounder,box_out_priority,1.0,0.587,8.5,9.3,4.0,5.9,0.0,0.6,60.0%,46.5%,-,33.3%
 Corey Thompson,G,Starter,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Marshawn Robinson,G,Starter,10.17,"slasher_driver, three_point_shooter",anticipate_move,1.0,0.306,15.0,5.6,2.0,1.7,3.0,1.0,40.9%,36.5%,40.0%,28.6%
-Garret Rodgers,F,Bench,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Kolby Williams,F,Starter,9.71,rebounder,box_out_priority,1.0,0.479,11.5,9.3,4.0,5.9,0.5,0.6,72.7%,46.5%,50.0%,33.3%
-Brennan Webb,G,Bench,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Jarton Davis,G,Bench,9.49,three_point_shooter,,0.0,0.845,4.5,3.2,2.0,1.2,0.0,0.1,30.0%,29.5%,28.6%,24.0%
+Garret Rodgers,F,Bench,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Kolby Williams,F,Starter,9.77,rebounder,box_out_priority,1.0,0.479,11.5,9.3,4.0,5.9,0.5,0.6,72.7%,46.5%,50.0%,33.3%
+Brennan Webb,G,Bench,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Jarton Davis,G,Bench,9.5,three_point_shooter,,0.0,0.845,4.5,3.2,2.0,1.2,0.0,0.1,30.0%,29.5%,28.6%,24.0%
 Omar Gayle,G,Bench,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",CJ Brown,G,Starter,6.79,,anticipate_move,5.0,0.486,4.0,5.6,1.0,1.7,2.5,1.0,36.4%,36.5%,0.0%,28.6%
-Angel Johnson,G,Starter,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",CJ Brown,G,Starter,6.76,,anticipate_move,1.0,0.179,10.5,5.6,3.0,1.7,3.5,1.0,41.2%,36.5%,0.0%,28.6%
+Angel Johnson,G,Starter,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",CJ Brown,G,Starter,6.77,,anticipate_move,1.0,0.179,10.5,5.6,3.0,1.7,3.5,1.0,41.2%,36.5%,0.0%,28.6%
 Charles Gitonga,F,Starter,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Kolby Williams,F,Starter,6.72,,,1.0,0.518,5.0,9.3,6.0,5.9,1.5,0.6,66.7%,46.5%,-,33.3%
 Nathan Kongolo,G/F,Starter,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",CJ Brown,G,Starter,6.08,,anticipate_move,1.0,0.638,6.0,5.6,3.0,1.7,1.5,1.0,40.0%,36.5%,50.0%,28.6%
 Reyce Allen,F,Bench,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Michael Asman,F,Starter,6.07,,,2.0,0.579,7.0,5.3,3.5,2.4,1.5,0.1,50.0%,53.7%,-,41.4%
