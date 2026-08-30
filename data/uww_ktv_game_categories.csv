@@ -1,6 +1,27 @@
 opponent,outcome,category,side,display_label
-St. Thomas (TX) Celts,,Ball Security / Turnovers,UWW,UWW: Protect the Ball
-St. Thomas (TX) Celts,,Field Goal Efficiency,OPP,OPP: Limit Their FG Efficiency
-St. Thomas (TX) Celts,,Rebounding,UWW,UWW: Crash the Boards
+St. Thomas (TX) Celts,L,Ball Security / Turnovers,UWW,UWW: Protect the Ball
+St. Thomas (TX) Celts,L,Field Goal Efficiency,OPP,OPP: Limit Their FG Efficiency
+St. Thomas (TX) Celts,L,Rebounding,UWW,UWW: Crash the Boards
+Eureka Red Devils,W,Perimeter Defense / Ball Pressure,OPP,OPP: On-Ball Defense
+Eureka Red Devils,W,Rebounding,UWW,UWW: Crash the Boards
+Aurora Spartans,W,Fouls / Discipline,OPP,OPP: They Draw Fouls
+Aurora Spartans,W,Perimeter Defense / Ball Pressure,OPP,OPP: On-Ball Defense
+Aurora Spartans,W,Scoring Inside,UWW,UWW: Attack the Paint
+Simpson Storm,W,Rebounding,UWW,UWW: Crash the Boards
+Simpson Storm,W,Scoring Inside,UWW,UWW: Attack the Paint
 Ripon Red Hawks,W,Rebounding,UWW,UWW: Crash the Boards
 Ripon Red Hawks,W,Scoring Inside,UWW,UWW: Attack the Paint
+Lawrence Vikings,W,Scoring Inside,UWW,UWW: Attack the Paint
+Lawrence Vikings,W,Three-Point Shooting,OPP,OPP: Contest Their Shooting
+Carroll (WI) Pioneers,W,Perimeter Defense / Ball Pressure,OPP,OPP: On-Ball Defense
+Carroll (WI) Pioneers,W,Scoring Inside,UWW,UWW: Attack the Paint
+Alma Scots,W,Fouls / Discipline,OPP,OPP: They Draw Fouls
+Elmhurst Bluejays,W,Perimeter Defense / Ball Pressure,OPP,OPP: On-Ball Defense
+Elmhurst Bluejays,W,Scoring Inside,UWW,UWW: Attack the Paint
+Coe Kohawks,L,Scoring Inside,UWW,UWW: Attack the Paint
+UW-La Crosse Eagles,L,(no matched category),,: (no matched category)
+UW-Stout Blue Devils,W,Rebounding,UWW,UWW: Crash the Boards
+UW-Platteville Pioneers,L,(no matched category),,: (no matched category)
+UW-Eau Claire Blugolds,L,Perimeter Defense / Ball Pressure,OPP,OPP: On-Ball Defense
+UW-Eau Claire Blugolds,L,Scoring Inside,UWW,UWW: Attack the Paint
+UW-Oshkosh Titans,,Rebounding,UWW,UWW: Crash the Boards

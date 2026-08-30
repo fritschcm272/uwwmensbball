@@ -1,13 +1,11 @@
 target_player,target_position,target_role,target_opponent,target_game_date,compared_opponent,compared_game_date,compared_player,compared_position,compared_role,similarity_score,shared_notes_tags,shared_keys_tags,height_diff_in,stat_similarity,target_PTS,compared_PTS,target_REB,compared_REB,target_AST,compared_AST,target_FG%,compared_FG%,target_3P%,compared_3P%
-Nicholas Buffalo,F,Starter,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Kolby Williams,F,Starter,10.95,rebounder,box_out_priority,1.0,0.587,8.5,9.3,4.0,5.9,0.0,0.6,60.0%,46.5%,-,33.3%
-Corey Thompson,G,Starter,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Marshawn Robinson,G,Starter,10.17,"slasher_driver, three_point_shooter",anticipate_move,1.0,0.306,15.0,5.6,2.0,1.7,3.0,1.0,40.9%,36.5%,40.0%,28.6%
-Garret Rodgers,F,Bench,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Kolby Williams,F,Starter,9.77,rebounder,box_out_priority,1.0,0.479,11.5,9.3,4.0,5.9,0.5,0.6,72.7%,46.5%,50.0%,33.3%
-Brennan Webb,G,Bench,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Jarton Davis,G,Bench,9.5,three_point_shooter,,0.0,0.845,4.5,3.2,2.0,1.2,0.0,0.1,30.0%,29.5%,28.6%,24.0%
-Omar Gayle,G,Bench,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",CJ Brown,G,Starter,6.79,,anticipate_move,5.0,0.486,4.0,5.6,1.0,1.7,2.5,1.0,36.4%,36.5%,0.0%,28.6%
-Angel Johnson,G,Starter,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",CJ Brown,G,Starter,6.77,,anticipate_move,1.0,0.179,10.5,5.6,3.0,1.7,3.5,1.0,41.2%,36.5%,0.0%,28.6%
-Charles Gitonga,F,Starter,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Kolby Williams,F,Starter,6.72,,,1.0,0.518,5.0,9.3,6.0,5.9,1.5,0.6,66.7%,46.5%,-,33.3%
-Nathan Kongolo,G/F,Starter,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",CJ Brown,G,Starter,6.08,,anticipate_move,1.0,0.638,6.0,5.6,3.0,1.7,1.5,1.0,40.0%,36.5%,50.0%,28.6%
-Reyce Allen,F,Bench,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Michael Asman,F,Starter,6.07,,,2.0,0.579,7.0,5.3,3.5,2.4,1.5,0.1,50.0%,53.7%,-,41.4%
-Tamarcus Butler,,Bench,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Caeden Holly,G,Bench,3.06,,,,0.855,0.0,0.0,1.5,0.8,0.5,0.0,0.0%,0.0%,0.0%,-
-Legborsi Mato,,Bench,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Keenan Rahn,G,Bench,2.29,,,,0.598,2.5,0.4,0.0,0.6,0.0,0.0,66.7%,33.3%,50.0%,-
-Jaden Ross,,Bench,St. Thomas (TX) Celts,"Fri, Nov 14",Ripon Red Hawks,"Fri, Nov 7",Jake Thomsen,G,Bench,2.24,,,,0.579,4.0,1.3,0.0,0.8,0.0,0.1,66.7%,38.5%,-,30.0%
+Aiden Wieczorek,G,Starter,UW-Platteville Pioneers,"Sat, Nov 15",UW-Eau Claire Blugolds,"Sat, Nov 22",Kenji Scales,G,Bench,12.06,"slasher_driver, three_point_shooter",pressure_disrupt,1.0,0.798,7.7,9.7,5.0,3.6,36,34,41.3%,37.7%,28.6%,28.6%
+Kaden MacKenize,G,Bench,UW-Platteville Pioneers,"Sat, Nov 15",UW-Eau Claire Blugolds,"Sat, Nov 22",Kenji Scales,G,Bench,12.04,"slasher_driver, three_point_shooter",pressure_disrupt,1.0,0.623,3.2,9.7,1.9,3.6,40,34,40.3%,37.7%,27.8%,28.6%
+Bristol Lewis,G,Starter,UW-Platteville Pioneers,"Sat, Nov 15",Aurora Spartans,"Wed, Nov 19",Zerrick Johnson,G,Starter,11.75,"slasher_driver, three_point_shooter",physical_discipline,0.0,0.416,15.8,10.8,3.8,3.4,40,3,42.2%,48.5%,43.4%,40.0%
+Joey Fuhremann,F,Starter,UW-Platteville Pioneers,"Sat, Nov 15",Aurora Spartans,"Wed, Nov 19",Devon Richardson,C,Starter,10.34,post_scorer,,0.0,0.613,11.8,13.0,7.0,6.6,26,2,67.4%,64.1%,0.0%,-
+Max Love,F,Starter,UW-Platteville Pioneers,"Sat, Nov 15",Lawrence Vikings,"Wed, Dec 10",Nicholas Gouriotis,F,Starter,9.29,"slasher_driver, three_point_shooter",,1.0,0.375,12.4,10.4,5.1,4.0,48,14,39.3%,47.6%,31.5%,46.2%
+Lucas Rameker,G/F,Starter,UW-Platteville Pioneers,"Sat, Nov 15",UW-Eau Claire Blugolds,"Sat, Nov 22",Kenji Scales,G,Bench,9.02,"slasher_driver, three_point_shooter",pressure_disrupt,1.0,0.783,6.6,9.7,3.6,3.6,35,34,42.1%,37.7%,39.8%,28.6%
+Miles Hettinger,F,Bench,UW-Platteville Pioneers,"Sat, Nov 15",Alma Scots,"Sat, Dec 20",Korbin Heitzman,F,Starter,8.82,"post_scorer, slasher_driver",,0.0,0.273,8.3,14.9,4.0,8.8,15,13,54.1%,45.7%,0.0%,16.7%
+Max Lucey,F,Bench,UW-Platteville Pioneers,"Sat, Nov 15",UW-Eau Claire Blugolds,"Sat, Nov 22",Kenji Scales,G,Bench,8.56,"slasher_driver, three_point_shooter",pressure_disrupt,1.0,0.466,3.3,9.7,1.6,3.6,23,34,30.9%,37.7%,20.5%,28.6%
+Sawyer Schipper,,Bench,UW-Platteville Pioneers,"Sat, Nov 15",Carroll (WI) Pioneers,"Sat, Dec 13",Greg Smith,F,Bench,3.23,,,,0.909,1.5,0.4,0.6,1.1,2,3,40.0%,40.0%,0.0%,-
+Cooper Hoffman,,Bench,UW-Platteville Pioneers,"Sat, Nov 15",Eureka Red Devils,"Sat, Nov 15",Dylan Logsdon,F,Bench,3.17,,,,0.891,1.4,0.5,0.4,1.0,0,0.0,62.5%,-,33.3%,-
