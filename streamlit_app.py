@@ -3484,13 +3484,29 @@ def render_upcoming_game():
                     return None
                 if cat == "Ball Security":
                     u = _cs_uww_side["TO"].sum() / _cs_n_games if "TO" in _cs_uww_side.columns else None
-                    # Opponent side is turnovers THEY FORCE (their own STL, the same forces-turnovers proxy
-                    # already used by the Turnover-Forcing Opportunity card elsewhere on this page) -- not
-                    # their own turnovers committed, which isn't a relevant comparison for UWW's own ball
-                    # security. Previously showed the opponent's own TO/gm here, which answered a different
-                    # question than the one this category is actually about.
-                    o = pd.to_numeric(_cs_opp_prof["STL"], errors="coerce").sum() / _cs_opp_games if not _cs_opp_prof.empty and "STL" in _cs_opp_prof.columns and _cs_opp_games > 0 else None
-                    return (f"UWW turnovers/gm: {u:.1f}" if u is not None else None, f"{short_opponent} turnovers forced/gm: {o:.1f}" if o is not None else None)
+                    # Opponent side is turnovers THEY FORCE, computed directly from real third-party PBP data
+                    # (uww_opponent_prior_games_pbp: whoever they actually played, before facing UWW) instead
+                    # of the STL-based proxy this used before. This is a genuinely different number from the
+                    # "X of 24 turnovers" shown elsewhere on this page for the "turnover triggers" key -- that
+                    # 24 is the opponent's OWN turnovers committed (their ball-security weakness, a RAW TOTAL
+                    # across all their prior games), not turnovers they forced on someone else, and not a
+                    # per-game rate. The raw components are shown directly below rather than asserted, since
+                    # this exact stat has been wrong twice already in this project and a third unverified claim
+                    # isn't worth as much as the coach being able to check the arithmetic themselves.
+                    o = None
+                    _cs_forced_total, _cs_forced_games = None, None
+                    _cs_prior_pbp = load_table("uww_opponent_prior_games_pbp")
+                    if not _cs_prior_pbp.empty and short_opponent:
+                        _cs_forced = _cs_prior_pbp[
+                            (_cs_prior_pbp["team"] != short_opponent) & _cs_prior_pbp["team"].notna()
+                            & (_cs_prior_pbp["event_type"] == "turnover")
+                        ]
+                        _cs_forced_total = len(_cs_forced)
+                        _cs_forced_games = _cs_prior_pbp.loc[_cs_prior_pbp["team"] != short_opponent, "opponent"].nunique()
+                        if _cs_forced_games > 0:
+                            o = _cs_forced_total / _cs_forced_games
+                    _o_label = f"{short_opponent} turnovers forced/gm: {o:.1f} ({_cs_forced_total} forced across {_cs_forced_games} game(s) with data)" if o is not None else None
+                    return (f"UWW turnovers/gm: {u:.1f}" if u is not None else None, _o_label)
                 if cat == "Rebounding":
                     u = _cs_uww_side["REB"].sum() / _cs_n_games if "REB" in _cs_uww_side.columns else None
                     o = pd.to_numeric(_cs_opp_prof["REB"], errors="coerce").sum() if not _cs_opp_prof.empty and "REB" in _cs_opp_prof.columns else None
