@@ -1913,7 +1913,6 @@ def render_upcoming_game():
                                 )
                         else:
                             st.caption("\u2014")
-                st.caption(f"{short_opponent}'s results are clickable when a box score has been reconstructed for that specific game -- some prior games may not have one yet (e.g. no local/live-scraped PBP data was available for that game).")
                 if st.button("\U0001f4c5 All Games", key="all_games_btn", use_container_width=True):
                     _show_all_games_dialog()
 
@@ -2850,45 +2849,9 @@ def render_upcoming_game():
                 "recommendations. Tap the \u2753 next to any item for the reasoning and numbers behind it."
             )
 
-        def _build_printable_game_plan_html(opp_name: str, opp_plan_df: pd.DataFrame) -> str:
-            """Self-contained, printable one-pager (Keys to Victory, Team Strengths, and the full offensive/
-            defensive game plan) built from the same uww_opponent_game_plans rows already rendered on this page
-            -- for a coach to print or hand to players, rather than only being viewable on-screen."""
-            sections_html = ""
-            priority_topics = ["KEYS TO VICTORY", "TEAM STRENGTHS"]
-            for topic in priority_topics:
-                rows = opp_plan_df[opp_plan_df["topic"] == topic]
-                if rows.empty:
-                    continue
-                notes = str(rows.iloc[0]["notes"])
-                items = [html.escape(re.sub(r"^\d+\.\s*", "", n.strip())) for n in notes.split("|") if n.strip()]
-                sections_html += f"<h2>{html.escape(topic.title())}</h2><ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
-            other_rows = opp_plan_df[~opp_plan_df["topic"].isin(priority_topics)]
-            if not other_rows.empty:
-                sections_html += "<h2>Full Game Plan</h2>"
-                for category in other_rows["category"].unique():
-                    group = other_rows[other_rows["category"] == category]
-                    sections_html += f"<h3>{html.escape(str(category))}</h3>"
-                    for _, r in group.iterrows():
-                        notes = str(r["notes"])
-                        items = [html.escape(n.strip()) for n in notes.split("|") if n.strip()] if "|" in notes else [html.escape(notes)]
-                        sections_html += f"<p><strong>{html.escape(str(r['topic']))}</strong></p><ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
-            return f"""<!DOCTYPE html>
-    <html><head><meta charset="utf-8"><title>Game Plan vs {html.escape(opp_name)}</title>
-    <style>
-    body {{ font-family: Georgia, serif; max-width: 800px; margin: 2rem auto; color: #222; }}
-    h1 {{ color: #4E2A84; border-bottom: 3px solid #4E2A84; padding-bottom: 8px; }}
-    h2 {{ color: #4E2A84; margin-top: 1.5rem; }}
-    h3 {{ color: #333; margin-top: 1rem; }}
-    li {{ margin-bottom: 4px; }}
-    @media print {{ body {{ margin: 0.5in; }} }}
-    </style></head>
-    <body>
-    <h1>UW-Whitewater vs {html.escape(opp_name)} — Game Plan</h1>
-    {sections_html}
-    </body></html>"""
-
-        _util_c1, _util_c2 = st.columns(2)
+        # Still two columns with the second left empty, so the remaining PDF button keeps the same half-width
+        # placement it has always had rather than stretching to full width.
+        _util_c1, _ = st.columns(2)
         with _util_c1:
             if report_path and os.path.exists(report_path):
                 with open(report_path, "rb") as pdf_file:
@@ -2897,20 +2860,6 @@ def render_upcoming_game():
                         file_name=f"{short_opponent}_Scouting_Report.pdf", mime="application/pdf",
                         key=f"pdf_download_{short_opponent}", use_container_width=True,
                     )
-        with _util_c2:
-            try:
-                _u_game_plans = load_table("uww_opponent_game_plans")
-                _u_opp_plan = _u_game_plans[_u_game_plans["opponent"] == short_opponent] if not _u_game_plans.empty and short_opponent else pd.DataFrame()
-                if not _u_opp_plan.empty:
-                    st.download_button(
-                        label="\U0001f5a8\ufe0f Print / export game plan",
-                        data=_build_printable_game_plan_html(short_opponent, _u_opp_plan),
-                        file_name=f"{short_opponent}_Game_Plan.html", mime="text/html",
-                        key=f"gameplan_export_new_{short_opponent}", use_container_width=True,
-                        help="Downloads a printable one-pager -- open it and use your browser's Print dialog to hand it to players.",
-                    )
-            except Exception:
-                pass
 
         _keys = []  # list of (icon, headline, reason) -- every source below appends here, nothing renders separately
 
@@ -3516,9 +3465,17 @@ def render_upcoming_game():
         if _keys or _card_data:
             _grouped = {}
             _ungrouped = []
+            # A key's SOURCE can determine its category outright, overriding the keyword matcher. Lineup
+            # Scouting keys ("Attack <their worst lineup>", "Counter with <our best lineup>") are personnel
+            # decisions by definition, but their text is about net rating and minutes, so _match_categories
+            # scattered them into whatever stat category their wording happened to trip -- or dropped them
+            # into _ungrouped when nothing matched. Pin them to Personnel/Rotation instead of trying to
+            # express "this came from lineup data" as more keywords.
+            _SOURCE_FORCED_CATEGORY = {"Lineup Scouting": "Personnel/Rotation"}
             for _icon, _headline, _caption, _reason, _source in _keys:
                 _match_text = f"{_headline} {_caption or ''} {_reason or ''}"
-                _cats = _match_categories(_match_text)
+                _forced_cat = _SOURCE_FORCED_CATEGORY.get(_source)
+                _cats = [_forced_cat] if _forced_cat else _match_categories(_match_text)
                 _side = _detect_side(_match_text)
                 if _cats:
                     _grouped.setdefault(_cats[0], []).append((_icon, _headline, _caption, _reason, _cats, _side, _source))
