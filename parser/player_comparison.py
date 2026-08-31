@@ -170,7 +170,7 @@ def parse_pct(val):
 
 
 def build_player_comparison_artifacts(schedule, scout_reports, player_profiles,
-                                      cache_path=None, use_llm=True):
+                                      cache_path=None, use_llm=True, upcoming_opponent=None):
     """Build player comparison data. No Spark required.
 
 
@@ -180,6 +180,9 @@ def build_player_comparison_artifacts(schedule, scout_reports, player_profiles,
         player_profiles: DataFrame with player scouting profiles
         cache_path: path to LLM cache file (default: ./_cache/...)
         use_llm: whether to use LLM for comparisons (requires OPENAI_API_KEY)
+        upcoming_opponent: the opponent to build comparisons FOR. Pass the notebook's
+            `upcoming_opponent_short`. When None, falls back to the old behavior of picking whichever
+            scouted opponent has the highest schedule game number ("most recently scouted").
 
 
     Returns:
@@ -222,7 +225,55 @@ def build_player_comparison_artifacts(schedule, scout_reports, player_profiles,
     scouted_with_game_number = {opp: num for opp, num in scout_game_numbers.items() if num is not None}
 
 
-    if not scouted_with_game_number:
+    def resolve_scouted_name(name, scouted_names):
+        """Match `name` onto whichever key scout_reports actually uses, tolerating the short-vs-full naming
+        drift documented in the notebook (scouted_opponents holds full names like "Eureka Red Devils" since
+        auto-downloaded HTML reports carry the schedule's full name, while older material used "Eureka")."""
+        if name is None:
+            return None
+        target = str(name).strip().casefold()
+        names = sorted((str(n) for n in scouted_names), key=len, reverse=True)
+        for candidate in names:                      # exact
+            if candidate.strip().casefold() == target:
+                return candidate
+        for candidate in names:                      # either side a prefix of the other
+            c = candidate.strip().casefold()
+            if c.startswith(target) or target.startswith(c):
+                return candidate
+        return None
+
+
+    # The comparison target is the UPCOMING opponent -- the team being prepared for -- not whichever scouted
+    # report happens to sit latest on the schedule.
+    #
+    # CONFIRMED BUG (fixed here): target_opponent was `max(scouted_with_game_number, ...)`, i.e. "most
+    # recently scouted game". Whenever a scout report existed for a game further down the schedule than the
+    # upcoming one, every row of uww_player_comparisons was built for THAT team instead, and the app's Player
+    # Details dialog -- which looks up the upcoming opponent's roster players -- matched nothing and showed
+    # "No comparable player found" against a CSV that was full of data for a different team.
+    if upcoming_opponent is not None:
+        resolved_target = resolve_scouted_name(upcoming_opponent, scout_game_numbers.keys())
+        if resolved_target is None:
+            # Deliberately NOT falling back to the old "latest scouted" pick: silently comparing a different
+            # team is exactly the failure this parameter exists to prevent. Better an empty result that says
+            # why.
+            print(f"WARNING: upcoming opponent {upcoming_opponent!r} has no scout report loaded "
+                  f"(scouted: {sorted(scout_game_numbers)}) -- player comparisons will be empty for them. "
+                  f"Add their scout report to INPUT_DIR and re-run.")
+            target_opponent = upcoming_opponent
+            target_game_number = None
+        else:
+            target_opponent = resolved_target
+            target_game_number = scout_game_numbers.get(target_opponent)
+        if target_game_number is None:
+            # Not resolvable on the schedule: compare against every other scouted opponent rather than none.
+            previous_opponents = [opp for opp in scouted_with_game_number if opp != target_opponent]
+        else:
+            previous_opponents = [
+                opp for opp, num in scouted_with_game_number.items()
+                if num < target_game_number and opp != target_opponent
+            ]
+    elif not scouted_with_game_number:
         target_opponent = None
         target_game_number = None
         previous_opponents = []
