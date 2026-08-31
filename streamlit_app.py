@@ -1569,7 +1569,10 @@ def render_upcoming_game():
                 opp_min = opp_min.dropna(subset=["MIN_num"])
                 if not opp_min.empty:
                     min_leader = opp_min.nlargest(1, "MIN_num").iloc[0]
-                    leaders["Minutes"] = {"name": min_leader["name"], "value": min_leader["MIN_num"], "sub": ""}
+                    # Matches UWW's own Minutes leader sub ("X GP") -- games_est is already the correctly-
+                    # scoped (pre-UWW-matchup) games-played count passed in by the caller.
+                    _opp_gp_sub = f"{games_est} GP" if games_est else ""
+                    leaders["Minutes"] = {"name": min_leader["name"], "value": min_leader["MIN_num"], "sub": _opp_gp_sub}
             # Points leader (PTS is already per-game in profiles)
             pts_leader = opp.nlargest(1, "PTS").iloc[0]
             fg_str = str(pts_leader.get("FG%", "")).replace("%", "").strip()
@@ -1577,9 +1580,17 @@ def render_upcoming_game():
             fg_val = fg_str if fg_str and fg_str != "nan" else "-"
             ft_val = ft_str if ft_str and ft_str != "nan" else "-"
             leaders["Points"] = {"name": pts_leader["name"], "value": pts_leader["PTS"], "sub": f"{fg_val} FG%\n{ft_val} FT%"}
-            # Rebounds leader (REB is per-game)
+            # Rebounds leader (REB is per-game). DRPG/ORPG sub only exists for the CURRENT upcoming opponent
+            # -- their prior-games PBP reconstruction has an offensive/defensive rebound split, unlike the
+            # PDF-sourced stats every other scouted opponent still uses, which only ever have a combined REB.
             reb_leader = opp.nlargest(1, "REB").iloc[0]
-            leaders["Rebounds"] = {"name": reb_leader["name"], "value": reb_leader["REB"], "sub": ""}
+            _reb_sub = ""
+            if {"OREB", "DREB"} <= set(opp.columns):
+                _reb_oreb = pd.to_numeric(reb_leader.get("OREB"), errors="coerce")
+                _reb_dreb = pd.to_numeric(reb_leader.get("DREB"), errors="coerce")
+                if pd.notna(_reb_oreb) and pd.notna(_reb_dreb):
+                    _reb_sub = f"{_reb_dreb:.1f} DRPG\n{_reb_oreb:.1f} ORPG"
+            leaders["Rebounds"] = {"name": reb_leader["name"], "value": reb_leader["REB"], "sub": _reb_sub}
             # Assists leader (AST/TO are SEASON TOTALS in this table, unlike PTS/REB -- divide by games_est)
             opp_copy = opp.copy()
             opp_copy["APG"] = opp_copy["AST"] / games_est
