@@ -45,8 +45,18 @@ KNOWN_NAME_ALIASES = _load_name_aliases()
 st.set_page_config(page_title="UWW Basketball Scouting", page_icon="🏀", layout="wide")
 
 
-@st.cache_data
+@st.cache_data(ttl=60)
 def load_table(name: str) -> pd.DataFrame:
+    """Loads a parser-exported CSV from DATA_DIR, cached for up to 60 seconds. A short TTL instead of the
+    default no-expiry cache: with no TTL, a re-run of the parser (new CSVs on disk) has NO EFFECT on an
+    already-running Streamlit process until it's manually restarted -- st.cache_data has no idea the
+    underlying file changed, since it's keyed only on this function's arguments (`name`), not the file's own
+    modification time. Confirmed as a real, live symptom, not a hypothetical: a fix that was verified correct
+    against the parser's own data kept showing the old, pre-fix number in the app after a re-run. A short TTL
+    trades a small amount of staleness (up to 60s) for the app self-correcting after any re-run without
+    requiring a manual restart every single time -- a much better trade for how this app is actually used
+    (frequent parser re-runs during active development/testing) than either extreme (no expiry, or no
+    caching at all, which would reload every CSV on every single interaction)."""
     path = os.path.join(DATA_DIR, f"{name}.csv")
     if not os.path.exists(path):
         return pd.DataFrame()
