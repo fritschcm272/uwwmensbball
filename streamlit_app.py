@@ -158,6 +158,155 @@ def resolve_short_opponent(full_name, short_names: list):
     return None
 
 
+# --------------------------------------------------------------------------------------------------------------
+# Lineup profile matching -- what makes two opponent 5-man units "alike"
+# --------------------------------------------------------------------------------------------------------------
+# The Counter-Lineup panel used to rank UWW's best net-margin lineups season-wide and label them "vs <opponent>'s
+# top lineup", even though nothing about the opponent entered the calculation -- the same three lineups came back
+# for every opponent. A real counter has to depend on WHO is being countered.
+#
+# There is no head-to-head history to lean on for a first meeting, but uww_lineup_stints records the OPPONENT
+# lineup on the floor for every stint UWW has played, and uww_player_profiles describes every scouted opponent
+# player. So a lineup can be characterised (position mix, size, starters, scouted style) and UWW's record against
+# SIMILAR units measured, even against a team never played.
+LINEUP_STYLE_TAGS = ("three_point_shooter", "slasher_driver", "post_scorer", "playmaker",
+                     "rebounder", "catch_and_shoot")
+_POSITION_SLOTS = ("Guard", "Wing", "Forward/Post")
+
+# Position mix carries full weight; a scouted style trait or an extra starter counts half as much. Height is
+# handled separately in profile_distance().
+_PROFILE_WEIGHTS = {**{f"pos_{p}": 1.0 for p in _POSITION_SLOTS},
+                    "starters": 0.5,
+                    **{f"tag_{t}": 0.5 for t in LINEUP_STYLE_TAGS}}
+
+
+@st.cache_data(ttl=60)
+def _opponent_player_lookup() -> dict:
+    """(opponent, casefolded name) -> position group, role, height, scouted style tags."""
+    prof = load_table("uww_player_profiles")
+    lookup = {}
+    if prof.empty or "name" not in prof.columns:
+        return lookup
+    for _, row in prof.iterrows():
+        name = str(row.get("name", "")).strip()
+        if not name:
+            continue
+        tags = str(row.get("notes_tags_display", "") or "")
+        lookup[(str(row.get("opponent", "")).strip(), name.casefold())] = {
+            "position_group": str(row.get("position_group", "") or "Unknown"),
+            "role": str(row.get("role", "") or ""),
+            "height_inches": safe_float(row.get("height_inches")),
+            "tags": {t.strip() for t in tags.split(",") if t.strip()},
+        }
+    return lookup
+
+
+def lineup_profile(opponent, lineup_str):
+    """Characterise one opponent 5-man unit, or None if it can't be characterised reliably.
+
+    Returns None when fewer than three of the five players resolve in uww_player_profiles -- a profile built
+    from two known players describes the gaps in the scouting data more than it describes the lineup, and
+    silently matching on it would be worse than admitting there's no match.
+    """
+    lookup = _opponent_player_lookup()
+    names = [n.strip() for n in str(lineup_str).split(",") if n.strip()]
+    known = [p for p in (lookup.get((str(opponent).strip(), n.casefold())) for n in names) if p]
+    if len(known) < 3:
+        return None
+    profile = {f"pos_{slot}": 0.0 for slot in _POSITION_SLOTS}
+    for player in known:
+        key = f"pos_{player['position_group']}"
+        if key in profile:
+            profile[key] += 1.0
+    heights = [p["height_inches"] for p in known if p["height_inches"]]
+    profile["height"] = (sum(heights) / len(heights)) if heights else None
+    profile["starters"] = float(sum(1 for p in known if p["role"] == "Starter"))
+    for tag in LINEUP_STYLE_TAGS:
+        profile[f"tag_{tag}"] = float(sum(1 for p in known if tag in p["tags"]))
+    profile["_known"] = len(known)
+    return profile
+
+
+def profile_distance(a, b) -> float:
+    """Weighted Euclidean distance between two lineup profiles -- lower means more alike.
+
+    Average height is compared in 3-inch units so that a three-inch difference in size counts about the same
+    as one position slot differing; in raw inches it would swamp every other feature.
+    """
+    if not a or not b:
+        return float("inf")
+    total = sum(w * (a.get(k, 0.0) - b.get(k, 0.0)) ** 2 for k, w in _PROFILE_WEIGHTS.items())
+    if a.get("height") and b.get("height"):
+        total += ((a["height"] - b["height"]) / 3.0) ** 2
+    return total ** 0.5
+
+
+def describe_profile(profile) -> str:
+    """Plain-language summary of a lineup profile, e.g. "3 guard, 2 forward - avg 6'4\" - three point shooter"."""
+    if not profile:
+        return ""
+    bits = []
+    mix = [f"{int(profile['pos_' + slot])} {slot.split('/')[0].lower()}"
+           for slot in _POSITION_SLOTS if profile.get(f"pos_{slot}")]
+    if mix:
+        bits.append(", ".join(mix))
+    if profile.get("height"):
+        inches = profile["height"]
+        bits.append(f"avg {int(inches // 12)}'{int(round(inches % 12))}\"")
+    traits = [t.replace("_", " ") for t in LINEUP_STYLE_TAGS if profile.get(f"tag_{t}", 0) >= 2]
+    if traits:
+        bits.append(" / ".join(traits))
+    return " · ".join(bits)
+
+
+def counter_lineups(short_opponent, target_lineup, stints_df,
+                    min_matched_minutes: float = 40.0, min_lineup_minutes: float = 2.0):
+    """UWW's 5-man units ranked by net margin against opponent lineups that RESEMBLE `target_lineup`.
+
+    Walks outward from the most similar opponent lineup UWW has faced until at least `min_matched_minutes`
+    of floor time has been gathered, so the sample adapts to how much comparable basketball has been played
+    rather than relying on a fixed similarity cutoff.
+
+    Returns (table, matched_minutes, n_similar_units, target_description). `table` is None whenever the
+    profile match can't be made -- the caller is expected to say so rather than quietly showing a
+    season-wide ranking under a matchup-specific heading.
+    """
+    target = lineup_profile(short_opponent, target_lineup)
+    needed = {"opponent", "opp_lineup", "uww_lineup", "stint_minutes", "uww_margin_change"}
+    if target is None or stints_df is None or stints_df.empty or not needed <= set(stints_df.columns):
+        return None, 0.0, 0, describe_profile(target)
+
+    faced = stints_df[["opponent", "opp_lineup"]].dropna().drop_duplicates()
+    scored = []
+    for opp, lineup in faced.itertuples(index=False):
+        distance = profile_distance(target, lineup_profile(opp, lineup))
+        if distance != float("inf"):
+            scored.append((distance, opp, lineup))
+    if not scored:
+        return None, 0.0, 0, describe_profile(target)
+    scored.sort(key=lambda row: row[0])
+
+    minutes_by_unit = stints_df.groupby(["opponent", "opp_lineup"])["stint_minutes"].sum()
+    keep, matched_minutes = set(), 0.0
+    for _, opp, lineup in scored:
+        keep.add((opp, lineup))
+        matched_minutes += float(minutes_by_unit.get((opp, lineup), 0.0))
+        if matched_minutes >= min_matched_minutes:
+            break
+    if matched_minutes <= 0:
+        return None, 0.0, 0, describe_profile(target)
+
+    matched = stints_df[[(o, l) in keep for o, l in zip(stints_df["opponent"], stints_df["opp_lineup"])]]
+    agg = (matched.groupby("uww_lineup")
+                  .agg(MIN=("stint_minutes", "sum"), net=("uww_margin_change", "sum"))
+                  .reset_index())
+    agg = agg[agg["MIN"] >= min_lineup_minutes]
+    if agg.empty:
+        return None, matched_minutes, len(keep), describe_profile(target)
+    agg["rate"] = agg["net"] / agg["MIN"]
+    return (agg.sort_values("rate", ascending=False), matched_minutes, len(keep), describe_profile(target))
+
+
 def get_team_abbreviation(name) -> str:
     """Derive a short (2-4 letter) code for a team name, e.g. "UW-Oshkosh Titans" -> "UWO", "UW-Whitewater"
     -> "UWW", "Elmhurst" -> "ELM". For narrow paired-column UI (Season Leaders, Team Stats, lineup/last-5
@@ -2491,22 +2640,68 @@ def render_upcoming_game():
         )
 
         # --- COUNTER-LINEUP RECOMMENDATIONS ---
+        # Two modes, and the card always says which one it is in:
+        #   MATCHED  -- UWW's net margin against opponent lineups that RESEMBLE the one being prepared for
+        #               (position mix, size, starters, scouted style). A genuine counter recommendation.
+        #   FALLBACK -- UWW's best net-margin lineups season-wide. Useful, but NOT opponent-specific, and
+        #               labelled as such instead of being dressed up with a "vs <opponent>" heading.
+        counter_title = "\U0001F3AF Counter-Lineup Recommendations"
         counter_rows = ""
-        if opp_lu_df is not None and not opp_lu_df.empty and uww_5man is not None and not uww_5man.empty:
-            opp_top = opp_lu_df.nlargest(1, "MIN")
-            if not opp_top.empty:
-                opp_top_lineup = _last_names(opp_top.iloc[0]["lineup"])
-                best_uww = uww_5man[uww_5man["MIN"] >= 3.0].nlargest(3, "+/-")
-                counter_rows += f'<div style="font-size:0.75rem;color:#888;margin-bottom:2px;">vs {html.escape(opp_name)}\'s top lineup ({html.escape(opp_top_lineup)}):</div>'
-                for _, r in best_uww.iterrows():
-                    ln = _last_names(r["lineup"])
-                    rate = r["+/-"] / r["MIN"] if r["MIN"] > 0 else 0
-                    counter_rows += f'<div style="font-size:0.8rem;margin:2px 0;"><strong style="color:#2e7d32;">{rate:+.2f}</strong>/min ({r["+/-"]:+.1f} total) \u2014 {html.escape(ln)}</div>'
+        _target_lineup = None
+        if opp_lu_df is not None and not opp_lu_df.empty:
+            _opp_top = opp_lu_df.nlargest(1, "MIN")
+            if not _opp_top.empty:
+                _target_lineup = _opp_top.iloc[0]["lineup"]
+
+        _matched, _matched_min, _n_similar, _target_desc = (None, 0.0, 0, "")
+        if _target_lineup is not None:
+            try:
+                _matched, _matched_min, _n_similar, _target_desc = counter_lineups(
+                    short_opponent, _target_lineup, stints_df,
+                )
+            except Exception as _cl_err:
+                report_section_error("Counter-lineup profile match", _cl_err)
+
+        if _matched is not None and not _matched.empty:
+            counter_rows += (
+                f'<div style="font-size:0.75rem;color:#888;margin-bottom:1px;">vs lineups like '
+                f'{html.escape(_last_names(_target_lineup))}</div>'
+            )
+            if _target_desc:
+                counter_rows += f'<div style="font-size:0.72rem;color:#aaa;margin-bottom:3px;">{html.escape(_target_desc)}</div>'
+            for _, r in _matched.head(3).iterrows():
+                counter_rows += (
+                    f'<div style="font-size:0.8rem;margin:2px 0;">'
+                    f'<strong style="color:#2e7d32;">{r["rate"]:+.2f}</strong>/min '
+                    f'<span style="color:#777;">({r["net"]:+.0f} in {r["MIN"]:.1f} min)</span> '
+                    f'\u2014 {html.escape(_last_names(r["uww_lineup"]))}</div>'
+                )
+            counter_rows += (
+                f'<div style="font-size:0.7rem;color:#aaa;margin-top:4px;">Measured across {_n_similar} '
+                f'comparable opponent unit(s), {_matched_min:.0f} min this season.</div>'
+            )
+        elif uww_5man is not None and not uww_5man.empty:
+            # Option 1: say plainly that this is not opponent-specific.
+            counter_title = "\U0001F3AF Best UWW Lineups by Net Margin"
+            _why = ("no comparable opponent lineups on record yet"
+                    if _target_lineup is not None else "no opponent lineup data yet")
+            counter_rows += (
+                f'<div style="font-size:0.75rem;color:#888;margin-bottom:2px;">Season-wide, '
+                f'<strong>not</strong> matchup-specific \u2014 {_why}.</div>'
+            )
+            for _, r in uww_5man[uww_5man["MIN"] >= 3.0].nlargest(3, "+/-").iterrows():
+                _rate = r["+/-"] / r["MIN"] if r["MIN"] > 0 else 0
+                counter_rows += (
+                    f'<div style="font-size:0.8rem;margin:2px 0;">'
+                    f'<strong style="color:#2e7d32;">{r["+/-"]:+.1f}</strong> total '
+                    f'<span style="color:#777;">({_rate:+.2f}/min in {r["MIN"]:.1f} min)</span> '
+                    f'\u2014 {html.escape(_last_names(r["lineup"]))}</div>'
+                )
         if not counter_rows:
-            counter_rows = '<div style="font-size:0.8rem;color:#aaa;">Need opponent lineup data</div>'
+            counter_rows = '<div style="font-size:0.8rem;color:#aaa;">Need lineup data</div>'
         sections += (
             f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 12px;margin-bottom:8px;">'
-            f'<div style="font-size:0.85rem;font-weight:700;color:#555;margin-bottom:4px;">\U0001F3AF Counter-Lineup Recommendations</div>'
+            f'<div style="font-size:0.85rem;font-weight:700;color:#555;margin-bottom:4px;">{counter_title}</div>'
             f'{counter_rows}</div>'
         )
 
