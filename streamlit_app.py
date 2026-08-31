@@ -197,6 +197,85 @@ def played_mask(schedule: pd.DataFrame) -> pd.Series:
     return schedule["outcome"].notna() & schedule["team_score"].notna()
 
 
+# --------------------------------------------------------------------------------------------------------------
+# Game identity: a game is (opponent, game_date), never the opponent name alone
+# --------------------------------------------------------------------------------------------------------------
+# UWW plays several conference opponents two or three times a season. Every table the parser exports is keyed on
+# (opponent, game_date) for exactly that reason, but uww_schedule only carries a year-less DISPLAY date
+# ("Sat, Jan 3"), so joining a schedule row to its game needs a translation step.
+#
+# Rather than re-infer the season's calendar year (the Dec->Jan boundary problem the parser itself has to solve),
+# match on month/day against the ISO dates the data already carries. Two games can't share a month/day within one
+# season, so the mapping is unambiguous and can't drift from whatever the parser produced.
+_MONTH_ABBR = {"Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6,
+               "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12}
+
+
+@st.cache_data(ttl=60)
+def _game_date_index() -> dict:
+    """(month, day) -> ISO 'YYYY-MM-DD', collected from every game-keyed table's own game_date column."""
+    index = {}
+    for table in ("uww_pbp_box_score", "uww_pbp_events", "uww_lineup_stints", "uww_scoring_runs"):
+        df = load_table(table)
+        if df.empty or "game_date" not in df.columns:
+            continue
+        for raw in df["game_date"].dropna().astype(str).unique():
+            iso = raw[:10]
+            try:
+                _, month, day = (int(part) for part in iso.split("-"))
+            except ValueError:
+                continue
+            index.setdefault((month, day), iso)
+    return index
+
+
+def resolve_game_date(display_date):
+    """'Sat, Jan 3' -> '2026-01-03'. Returns None when no parsed game matches that day."""
+    m = re.match(r"^\w{3},\s+(\w{3})\s+(\d+)$", str(display_date).strip())
+    if not m:
+        return None
+    month = _MONTH_ABBR.get(m.group(1))
+    return _game_date_index().get((month, int(m.group(2)))) if month else None
+
+
+def played_game_dates(played: pd.DataFrame) -> set:
+    """ISO dates of the games in `played` that actually have parsed data behind them."""
+    if played.empty or "date" not in played.columns:
+        return set()
+    return {d for d in (resolve_game_date(v) for v in played["date"]) if d}
+
+
+def scope_to_played(df: pd.DataFrame, played: pd.DataFrame) -> pd.DataFrame:
+    """Restrict a game-keyed table to the games in `played`, matching on DATE rather than opponent name.
+
+    Filtering on opponent name (what this app used to do) cannot express "the first Oshkosh game but not the
+    second": both meetings share one name, so a season aggregate built before the rematch silently swallowed
+    the rematch too. Falls back to returning `df` unchanged only when the table has no game_date at all.
+    """
+    if df.empty or "game_date" not in df.columns:
+        return df
+    dates = played_game_dates(played)
+    if not dates:
+        return df.iloc[0:0]
+    return df[df["game_date"].astype(str).str[:10].isin(dates)]
+
+
+def get_game_outcomes(schedule: pd.DataFrame) -> dict:
+    """ISO game_date -> "W"/"L". The per-DATE counterpart to get_opponent_outcomes().
+
+    get_opponent_outcomes() keys on the opponent's name, so for a home-and-home it can only report ONE result
+    for two games -- and quietly reports the first meeting's for both. Use this wherever a per-game outcome is
+    what's actually meant (win/loss splits, situational splits, trend charts).
+    """
+    outcomes = {}
+    for _, row in schedule.iterrows():
+        if pd.notna(row.get("outcome")):
+            iso = resolve_game_date(row["date"])
+            if iso:
+                outcomes[iso] = row["outcome"]
+    return outcomes
+
+
 def get_opponent_outcomes(schedule: pd.DataFrame, opponent_names) -> dict:
     """Map each short opponent name in `opponent_names` to UWW's game outcome ("W"/"L") against them, by
     prefix-matching uww_schedule's full opponent names against the short names used by the scouting/PBP
@@ -219,6 +298,11 @@ def get_opponent_outcomes(schedule: pd.DataFrame, opponent_names) -> dict:
 
 
 def prior_opponent_shortnames(box: pd.DataFrame, played: pd.DataFrame) -> set:
+    """DEPRECATED -- use scope_to_played(), which filters on game_date instead of opponent name.
+
+    Kept only so an older call site still imports cleanly. Opponent names cannot distinguish a first meeting
+    from a rematch, so this can never express "before the upcoming game" for a repeat opponent.
+    """
     """The set of short opponent names in `box` (any table keyed the way uww_pbp_box_score is) corresponding
     to games UWW played BEFORE the upcoming game -- i.e. the rows in `played`.
 
@@ -564,7 +648,7 @@ def get_data_driven_ktv(short_opponent, played: pd.DataFrame):
     EVERY opponent in the table, with no notion of a reference date -- two independent leaks of post-upcoming
     games into a pre-game win/loss split. The equivalent live code path (the per-category stat lines in the
     unified Keys to Victory section) was already fixed this way; this was its unscoped twin, left behind
-    because nothing currently calls it. Both now go through prior_opponent_shortnames() so they can't drift
+    because nothing currently calls it. Both now go through scope_to_played() so they can't drift
     apart again.
     """
     ktv_games = load_table("uww_ktv_game_categories")
@@ -576,16 +660,14 @@ def get_data_driven_ktv(short_opponent, played: pd.DataFrame):
         return None
 
     # Build per-game UWW team totals from PBP box score -- restricted to games before the upcoming one.
-    uww_box = box[box["team"] == "UW-Whitewater"]
-    _ktv_prior = prior_opponent_shortnames(uww_box, played)
-    uww_box = uww_box[uww_box["opponent"].isin(_ktv_prior)] if _ktv_prior else uww_box.iloc[0:0]
+    uww_box = scope_to_played(box[box["team"] == "UW-Whitewater"], played)
     if uww_box.empty:
         return None
-    uww_per_game = uww_box.groupby("opponent").agg({
+    uww_per_game = uww_box.groupby(["opponent", "game_date"], as_index=False).agg({
         "PTS": "sum", "FGM": "sum", "FGA": "sum", "FG3M": "sum", "FG3A": "sum",
         "FTM": "sum", "FTA": "sum", "OREB": "sum", "DREB": "sum", "REB": "sum",
         "AST": "sum", "STL": "sum", "BLK": "sum", "TO": "sum", "PF": "sum"
-    }).reset_index()
+    })
     uww_per_game["FG%"] = (uww_per_game["FGM"] / uww_per_game["FGA"] * 100).round(1)
     uww_per_game["3P%"] = (uww_per_game["FG3M"] / uww_per_game["FG3A"] * 100).round(1)
     uww_per_game["FT%"] = (uww_per_game["FTM"] / uww_per_game["FTA"] * 100).round(1)
@@ -595,8 +677,8 @@ def get_data_driven_ktv(short_opponent, played: pd.DataFrame):
 
     # Map outcomes from the pre-upcoming games only -- passing the full schedule here would readmit the
     # future results that the box-score scoping above just excluded.
-    opp_outcome = get_opponent_outcomes(played, uww_per_game["opponent"].unique())
-    uww_per_game["outcome"] = uww_per_game["opponent"].map(opp_outcome)
+    # Per-DATE outcome: two meetings with the same opponent can have opposite results.
+    uww_per_game["outcome"] = uww_per_game["game_date"].astype(str).str[:10].map(get_game_outcomes(played))
 
     wins = uww_per_game[uww_per_game["outcome"] == "W"]
     losses = uww_per_game[uww_per_game["outcome"] == "L"]
@@ -1314,15 +1396,12 @@ def render_upcoming_game():
         # --- Team Stats + Last Five Games (side by side) ---
         # Compute team stats for comparison (only games before the upcoming game)
         box = load_table("uww_pbp_box_score")
-        # Filter box score to only include pre-upcoming games
-        _played_opponents_short = set()
-        for _, _row in played.iterrows():
-            _short = resolve_short_opponent(_row["opponent"], short_names)
-            if _short:
-                _played_opponents_short.add(_short)
-        box = box[box["opponent"].isin(_played_opponents_short)]
+        # Restrict to games played BEFORE the upcoming one, by date. The old opponent-name filter let a
+        # rematch played after the upcoming game slip into these season averages, since both meetings share
+        # a name.
+        box = scope_to_played(box, played)
         uww_box = box[box["team"] == "UW-Whitewater"]
-        num_uww_games = uww_box["opponent"].nunique() if not uww_box.empty else 1
+        num_uww_games = uww_box["game_date"].nunique() if not uww_box.empty else 1
         uww_team_stats = {}
         uww_team_stats_full = {}
         if not uww_box.empty:
@@ -1565,7 +1644,9 @@ def render_upcoming_game():
             if uww.empty:
                 return {}
             # Compute per-game averages
-            games_per_player = uww.groupby("player")["opponent"].nunique()
+            # Count distinct GAMES, not distinct opponents. With three UW-La Crosse meetings on the
+            # schedule, nunique("opponent") returns 1 for all three, inflating every per-game average.
+            games_per_player = uww.groupby("player")["game_date"].nunique()
             totals = uww.groupby("player").agg({"PTS": "sum", "REB": "sum", "AST": "sum", "STL": "sum", "BLK": "sum", "TO": "sum", "FGM": "sum", "FGA": "sum", "FTM": "sum", "FTA": "sum", "OREB": "sum", "DREB": "sum"}).reset_index()
             if "MIN" in uww.columns:
                 totals["MIN_total"] = totals["player"].map(uww.groupby("player")["MIN"].sum())
@@ -1707,7 +1788,7 @@ def render_upcoming_game():
         stats_html = _build_team_stats_html(uww_team_stats, opp_team_stats, opp_display) if uww_team_stats and opp_team_stats else ""
 
         @st.dialog("Game Detail", width="large")
-        def _show_last5_game_dialog(_game_key, _game_label, _source_table="uww_pbp_box_score", _team_a_hint="UW-Whitewater"):
+        def _show_last5_game_dialog(_game_key, _game_label, _source_table="uww_pbp_box_score", _team_a_hint="UW-Whitewater", _game_date=None):
             """Full box score + a simple team-stats comparison for one specific past game -- triggered by
             clicking a result in the Last Five Games list, either UWW's own (_source_table="uww_pbp_box_score",
             keyed by the opponent they played) or the upcoming opponent's own prior-game result
@@ -1724,6 +1805,12 @@ def render_upcoming_game():
                 return
             _gd_box_all = load_table(_source_table)
             _gd_game_box = _gd_box_all[_gd_box_all["opponent"] == _game_key] if not _gd_box_all.empty else pd.DataFrame()
+            # Narrow to the one meeting that was clicked -- without this, a home-and-home shows both games'
+            # rows stacked, so every player appears twice.
+            if _game_date and not _gd_game_box.empty and "game_date" in _gd_game_box.columns:
+                _gd_same_date = _gd_game_box[_gd_game_box["game_date"].astype(str).str[:10] == _game_date]
+                if not _gd_same_date.empty:
+                    _gd_game_box = _gd_same_date
             if _gd_game_box.empty:
                 st.warning("No reconstructed box score found for this game yet.")
                 return
@@ -1891,7 +1978,10 @@ def render_upcoming_game():
                                 _u_opp_short_label = _u_opp_short_label[:14] + "..."
                             if st.button(f"{_u_game['outcome']} {_u_score} {_u_loc}{_u_opp_short_label}", key=f"l5_uww_btn_{_l5_i}", use_container_width=True):
                                 _u_short = resolve_short_opponent(_u_game["opp_name"], _l5_short_names)
-                                _show_last5_game_dialog(_u_short, f"UWW vs {_u_game['opp_name']} \u2014 {_u_game.get('date', '')}")
+                                _show_last5_game_dialog(
+                                    _u_short, f"UWW vs {_u_game['opp_name']} \u2014 {_u_game.get('date', '')}",
+                                    _game_date=resolve_game_date(_u_game.get("date")),
+                                )
                         else:
                             st.caption("\u2014")
                     with _l5_c2:
@@ -2034,14 +2124,15 @@ def render_upcoming_game():
     _stints = load_table("uww_lineup_stints")
     _uww_lu_agg = None
     if not _stints.empty:
-        # Only include games before the upcoming game, and exclude Aurora (lineup columns swapped)
-        _stints = _stints[_stints["opponent"].isin(_played_opponents_short - {"Aurora"})].copy()
+        # Only include games before the upcoming game (by date), and exclude Aurora (lineup columns swapped)
+        _stints = scope_to_played(_stints, played)
+        _stints = _stints[_stints["opponent"] != "Aurora"].copy()
         _stints["uww_pts"] = _stints["end_uww_score"] - _stints["start_prev_uww_score"]
         _uww_lu_agg = _stints.groupby("uww_lineup").agg(
             MIN=("stint_minutes", "sum"),
             PTS=("uww_pts", "sum"),
             plus_minus=("uww_margin_change", "sum"),
-            GP=("opponent", "nunique")
+            GP=("game_date", "nunique")
         ).reset_index().rename(columns={"uww_lineup": "lineup", "plus_minus": "+/-"})
 
     # Compute opponent lineup data (validate it actually belongs to the current opponent)
@@ -2174,6 +2265,7 @@ def render_upcoming_game():
                     "uww_pts": _pts,
                     "uww_margin_change": _margin,
                     "opponent": _opp_name_3,
+                    "game_date": _stint_row.get("game_date"),
                 })
         if _3man_records:
             _3man_df = pd.DataFrame(_3man_records)
@@ -2181,7 +2273,7 @@ def render_upcoming_game():
                 MIN=("stint_minutes", "sum"),
                 PTS=("uww_pts", "sum"),
                 plus_minus=("uww_margin_change", "sum"),
-                GP=("opponent", "nunique")
+                GP=("game_date", "nunique")
             ).reset_index().rename(columns={"plus_minus": "+/-"})
 
     # Compute opponent 3-man combination aggregates
@@ -3537,10 +3629,9 @@ def render_upcoming_game():
             # against a real, further-along season, box scores exist for games chronologically AFTER the
             # simulated "upcoming" game too. Both the numerator (turnovers summed) and denominator (games
             # count) need the SAME "games before the upcoming game" scope, or they silently disagree.
-            # Same intersection get_data_driven_ktv() does -- shared via prior_opponent_shortnames() so the
+            # Same date-based scoping get_data_driven_ktv() does -- shared via scope_to_played() so the
             # two can't drift apart (this exact scoping was fixed here first, then found missing there).
-            _cs_prior_opponents = prior_opponent_shortnames(_cs_uww_box_all, played)
-            _cs_uww_side = _cs_uww_side_all[_cs_uww_side_all["opponent"].isin(_cs_prior_opponents)] if _cs_prior_opponents else _cs_uww_side_all.iloc[0:0]
+            _cs_uww_side = scope_to_played(_cs_uww_side_all, played)
             _cs_n_games = len(played)
             _cs_opp_prof = load_table("uww_player_profiles")
             _cs_opp_prof = _cs_opp_prof[_cs_opp_prof["opponent"] == short_opponent] if not _cs_opp_prof.empty and short_opponent else pd.DataFrame()
@@ -3881,10 +3972,26 @@ def render_previous_games():
         return
 
     # --- Load game data ---
+    # Everything on this page is about ONE game, so filter on the date as well as the opponent. Filtering on
+    # the opponent alone stacks every meeting with that team into one "game": duplicate players in the box
+    # score, lineup minutes summed across both nights, and a Plan-vs-Reality panel comparing a two-game total
+    # against a one-game average.
+    _pg_game_date = resolve_game_date(game.get("date"))
+
+    def _this_game(df):
+        if df.empty or "opponent" not in df.columns:
+            return df
+        out = df[df["opponent"] == short_opponent]
+        if _pg_game_date and "game_date" in out.columns:
+            same = out[out["game_date"].astype(str).str[:10] == _pg_game_date]
+            if not same.empty:
+                return same.copy()
+        return out.copy()
+
     box = load_table("uww_pbp_box_score")
-    game_box = box[box["opponent"] == short_opponent].copy()
+    game_box = _this_game(box)
     stints = load_table("uww_lineup_stints")
-    game_stints = stints[stints["opponent"] == short_opponent].copy()
+    game_stints = _this_game(stints)
 
     # Fix swapped team labels / lineup columns
     _flags_df = load_table("uww_coaching_flags")
@@ -3930,13 +4037,7 @@ def render_previous_games():
         actual_stats["A:TO Ratio"] = (actual_stats["Assists"] / actual_stats["Turnovers"]) if actual_stats["Turnovers"] > 0 else 0
 
         # Compute season averages going INTO this game (expected)
-        _played_opponents_pre = set()
-        if _game_original_pos is not None and _game_original_pos > 0:
-            for _, _row in _orig_played.iloc[:_game_original_pos].iterrows():
-                _short = resolve_short_opponent(_row["opponent"], short_names)
-                if _short:
-                    _played_opponents_pre.add(_short)
-        _pre_box = box[box["opponent"].isin(_played_opponents_pre)]
+        _pre_box = scope_to_played(box, _orig_played.iloc[:_game_original_pos]) if _game_original_pos else box.iloc[0:0]
         _pre_uww_box = _pre_box[_pre_box["team"] == "UW-Whitewater"] if not _pre_box.empty else pd.DataFrame()
         # Validate using roster
         if not _pre_uww_box.empty:
@@ -4340,7 +4441,7 @@ def render_previous_games():
 
     # --- SCORING RUNS & CLUTCH MOMENTS (this game) ---
     _pg_runs = load_table("uww_scoring_runs")
-    _pg_run_row = _pg_runs[_pg_runs["opponent"] == short_opponent] if not _pg_runs.empty else pd.DataFrame()
+    _pg_run_row = _this_game(_pg_runs) if not _pg_runs.empty else pd.DataFrame()
     if not _pg_run_row.empty:
         st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001F4C8 SCORING RUNS &amp; LARGEST LEADS</div></div>', unsafe_allow_html=True)
         _rr = _pg_run_row.iloc[0]
@@ -4352,7 +4453,7 @@ def render_previous_games():
         st.caption(f"During UWW's run — UWW: {_rr.get('uww_run_uww_lineup', '-')} | {short_opponent}: {_rr.get('uww_run_opp_lineup', '-')}")
 
     _pg_clutch = load_table("uww_clutch_events")
-    _pg_clutch_game = _pg_clutch[_pg_clutch["opponent"] == short_opponent] if not _pg_clutch.empty else pd.DataFrame()
+    _pg_clutch_game = _this_game(_pg_clutch) if not _pg_clutch.empty else pd.DataFrame()
     if not _pg_clutch_game.empty:
         st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001F3C0 CLUTCH MOMENTS</div></div>', unsafe_allow_html=True)
         with st.popover("ℹ️ What counts as clutch?"):
@@ -4363,7 +4464,7 @@ def render_previous_games():
     # --- PLAY-BY-PLAY ---
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">PLAY-BY-PLAY</div></div>', unsafe_allow_html=True)
     pbp = load_table("uww_pbp_events")
-    game_pbp = pbp[pbp["opponent"] == short_opponent].sort_values("event_order")
+    game_pbp = _this_game(pbp).sort_values("event_order")
     if game_pbp.empty:
         st.warning("No play-by-play data found for this game yet.")
     else:
@@ -4807,7 +4908,7 @@ def render_team():
         .agg(
             total_minutes=("stint_minutes", "sum"),
             net_margin=("uww_margin_change", "sum"),
-            games=("opponent", "nunique"),
+            games=("game_date", "nunique"),
             stints=("stint_num", "count"),
         )
         .reset_index()
@@ -4968,10 +5069,13 @@ def render_team():
             names = [n.strip() for n in str(lineup_str).split(",")]
             return ", ".join(parts[-1] if len(parts := n.split()) > 1 else n for n in names)
 
-        # Map stints to W/L outcomes from schedule
-        _opp_outcomes = get_opponent_outcomes(schedule, stints["opponent"].unique())
+        # Map stints to W/L outcomes from the schedule, per GAME -- an opponent UWW split a home-and-home
+        # with has one result per meeting, not one result overall.
         stints_split = stints.copy()
-        stints_split["outcome"] = stints_split["opponent"].map(_opp_outcomes)
+        if "game_date" in stints_split.columns:
+            stints_split["outcome"] = stints_split["game_date"].astype(str).str[:10].map(get_game_outcomes(schedule))
+        else:
+            stints_split["outcome"] = stints_split["opponent"].map(get_opponent_outcomes(schedule, stints["opponent"].unique()))
 
         split_html = ""
         for outcome_label, outcome_val in [("Wins", "W"), ("Losses", "L")]:
@@ -5257,7 +5361,7 @@ def render_players():
             _adv_rows = []
             for player_name, p_games in _adv_uww_box.groupby("player"):
                 totals = p_games[["PTS", "FGM", "FGA", "FTM", "FTA", "OREB", "DREB", "STL", "AST", "BLK", "PF", "TO"]].sum()
-                n_pg = p_games["opponent"].nunique()
+                n_pg = p_games["game_date"].nunique() if "game_date" in p_games.columns else p_games["opponent"].nunique()
                 ts_pct = compute_true_shooting(totals["PTS"], totals["FGA"], totals["FTA"])
                 avg_game_score = p_games.apply(compute_game_score, axis=1).mean()
                 # Usage rate needs the player's own minutes and the team's total minutes over the same games --
@@ -5271,7 +5375,10 @@ def render_players():
                         mpg = safe_float(_match.iloc[0].get("MIN"))
                 player_minutes_total = (mpg * n_pg) if mpg else 0
                 team_minutes_total = 5 * 40 * n_pg
-                usage = compute_usage_rate(totals, player_minutes_total, _adv_uww_box[_adv_uww_box["opponent"].isin(p_games["opponent"].unique())], team_minutes_total)
+                _adv_scope = (_adv_uww_box[_adv_uww_box["game_date"].isin(p_games["game_date"].unique())]
+                              if "game_date" in _adv_uww_box.columns
+                              else _adv_uww_box[_adv_uww_box["opponent"].isin(p_games["opponent"].unique())])
+                usage = compute_usage_rate(totals, player_minutes_total, _adv_scope, team_minutes_total)
                 _adv_rows.append({
                     "Player": player_name, "GP": n_pg, "TS%": round(ts_pct, 1),
                     "Game Score": round(avg_game_score, 1), "Usage%": round(usage, 1) if mpg else "-",
@@ -5489,13 +5596,15 @@ def render_analytics():
 
     uww_box_all = box[box["team"] == "UW-Whitewater"]
     opp_box_all = box[box["team"] != "UW-Whitewater"]
-    n_games = uww_box_all["opponent"].nunique() if not uww_box_all.empty else 0
+    n_games = uww_box_all["game_date"].nunique() if not uww_box_all.empty else 0
 
-    # Map each opponent to a W/L outcome so every section below can split by wins vs losses.
+    # Split by GAME date, not opponent name: a team UWW beat once and lost to once would otherwise land
+    # entirely in whichever bucket the first meeting fell into.
     short_names = load_short_opponent_names()
-    opp_outcomes = get_opponent_outcomes(schedule, uww_box_all["opponent"].unique()) if not uww_box_all.empty else {}
-    win_opps = [o for o, r in opp_outcomes.items() if r == "W"]
-    loss_opps = [o for o, r in opp_outcomes.items() if r == "L"]
+    game_outcomes = get_game_outcomes(schedule)
+    _iso = lambda df: df["game_date"].astype(str).str[:10]
+    win_dates = {d for d, r in game_outcomes.items() if r == "W"}
+    loss_dates = {d for d, r in game_outcomes.items() if r == "L"}
 
     # ==================== FOUR FACTORS ====================
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">FOUR FACTORS</div></div>', unsafe_allow_html=True)
@@ -5508,10 +5617,10 @@ def render_analytics():
             return {"Split": label, **{k: round(v, 1) for k, v in ff.items()}}
 
         ff_rows = [_four_factors_row("Season", uww_box_all, opp_box_all)]
-        if win_opps:
-            ff_rows.append(_four_factors_row("In Wins", uww_box_all[uww_box_all["opponent"].isin(win_opps)], opp_box_all[opp_box_all["opponent"].isin(win_opps)]))
-        if loss_opps:
-            ff_rows.append(_four_factors_row("In Losses", uww_box_all[uww_box_all["opponent"].isin(loss_opps)], opp_box_all[opp_box_all["opponent"].isin(loss_opps)]))
+        if win_dates:
+            ff_rows.append(_four_factors_row("In Wins", uww_box_all[_iso(uww_box_all).isin(win_dates)], opp_box_all[_iso(opp_box_all).isin(win_dates)]))
+        if loss_dates:
+            ff_rows.append(_four_factors_row("In Losses", uww_box_all[_iso(uww_box_all).isin(loss_dates)], opp_box_all[_iso(opp_box_all).isin(loss_dates)]))
         opp_ff_rows = [_four_factors_row("Opponents (season)", opp_box_all, uww_box_all)]
 
         ff_col1, ff_col2 = st.columns(2)
@@ -5545,14 +5654,17 @@ def render_analytics():
         trend_rows = []
         for _, srow in played_order.iterrows():
             opp_short = resolve_short_opponent(srow["opponent"], short_names)
-            if not opp_short:
+            g_date = resolve_game_date(srow["date"])
+            if not opp_short or not g_date:
                 continue
-            g_uww = uww_box_all[uww_box_all["opponent"] == opp_short]
-            g_opp = opp_box_all[opp_box_all["opponent"] == opp_short]
+            # One point per GAME. Selecting by opponent name plotted a rematch's combined totals twice.
+            g_uww = uww_box_all[_iso(uww_box_all) == g_date]
+            g_opp = opp_box_all[_iso(opp_box_all) == g_date]
             if g_uww.empty:
                 continue
             g_eff = compute_efficiency_pace(g_uww, g_opp, 1)
-            trend_rows.append({"Game": opp_short, "ORtg": round(g_eff["ORtg"], 1), "DRtg": round(g_eff["DRtg"], 1), "Net Rtg": round(g_eff["Net Rtg"], 1)})
+            label = f"{opp_short} {g_date[5:]}" if (played_order["opponent"] == srow["opponent"]).sum() > 1 else opp_short
+            trend_rows.append({"Game": label, "ORtg": round(g_eff["ORtg"], 1), "DRtg": round(g_eff["DRtg"], 1), "Net Rtg": round(g_eff["Net Rtg"], 1)})
         if len(trend_rows) >= 2:
             trend_df = pd.DataFrame(trend_rows).set_index("Game")
             st.markdown("**Game-by-game trend** (chronological)")
@@ -5616,7 +5728,7 @@ def render_analytics():
                 dist = uww_shots.groupby("distance").agg(Attempts=("made", "count"), Makes=("made", "sum")).reset_index()
                 dist["FG%"] = (100 * dist["Makes"] / dist["Attempts"]).round(1)
                 st.dataframe(dist.sort_values("Attempts", ascending=False), hide_index=True, use_container_width=True)
-            st.caption(f"Based on {len(uww_shots)} video-matched shot attempts across {uww_shots['opponent'].nunique()} game(s).")
+            st.caption(f"Based on {len(uww_shots)} video-matched shot attempts across {uww_shots['game_date'].nunique() if 'game_date' in uww_shots.columns else uww_shots['opponent'].nunique()} game(s).")
 
     # ==================== ASSIST NETWORK ====================
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">ASSIST NETWORK</div></div>', unsafe_allow_html=True)
