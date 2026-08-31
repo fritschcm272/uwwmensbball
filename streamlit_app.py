@@ -1509,6 +1509,8 @@ def render_upcoming_game():
             # Compute per-game averages
             games_per_player = uww.groupby("player")["opponent"].nunique()
             totals = uww.groupby("player").agg({"PTS": "sum", "REB": "sum", "AST": "sum", "STL": "sum", "BLK": "sum", "TO": "sum", "FGM": "sum", "FGA": "sum", "FTM": "sum", "FTA": "sum", "OREB": "sum", "DREB": "sum"}).reset_index()
+            if "MIN" in uww.columns:
+                totals["MIN_total"] = totals["player"].map(uww.groupby("player")["MIN"].sum())
             totals["games"] = totals["player"].map(games_per_player)
             totals["PPG"] = totals["PTS"] / totals["games"]
             totals["RPG"] = totals["REB"] / totals["games"]
@@ -1518,27 +1520,28 @@ def render_upcoming_game():
             totals["DRPG"] = (totals["DREB"] / totals["games"]).round(1)
             totals["ORPG"] = (totals["OREB"] / totals["games"]).round(1)
             totals["TOPG"] = (totals["TO"] / totals["games"]).round(1)
-            # Compute MPG from season stats (MIN column is already per-game)
+            # CONFIRMED BUG (fixed here): Minutes used to come from uww_season_stats -- UWW's own OFFICIAL
+            # scraped season-stats page, live-rendered off the current real season, with the exact same
+            # "no reference_date awareness at all" problem the opponent's scouting-report PDFs had (already
+            # fixed for the opponent side by aggregating from PBP instead). Now computed the same way as
+            # PPG/RPG/APG immediately above -- from `uww` (box_df, already correctly scoped to games before
+            # reference_date by the pbp_events fix earlier in this project) -- instead of a second, unscoped
+            # data source that silently disagreed with everything else on this page.
             leaders = {}
-            if not season_stats.empty and "PLAYER" in season_stats.columns and "MIN" in season_stats.columns:
-                season_stats_mpg = season_stats.copy()
-                season_stats_mpg["MIN_num"] = pd.to_numeric(season_stats_mpg["MIN"], errors="coerce")
-                season_stats_mpg = season_stats_mpg[~season_stats_mpg["PLAYER"].isin(["Team Total", "Opponent"])]
-                season_stats_mpg = season_stats_mpg.dropna(subset=["MIN_num"])
-                # Only include players who appear in our PBP box score
-                season_stats_mpg = season_stats_mpg[season_stats_mpg["PLAYER"].isin(totals["player"].tolist())]
-            else:
-                season_stats_mpg = pd.DataFrame()
-            if not season_stats_mpg.empty:
-                mpg_leader = season_stats_mpg.nlargest(1, "MIN_num").iloc[0]
-                # NOTE: this counts games with a RECONSTRUCTED PLAY-BY-PLAY BOX SCORE for this player (i.e. how
-                # many of this player's games have been video-tagged/PBP-parsed so far), not their real season
-                # total games played -- PBP reconstruction is more labor-intensive than basic season-stat
-                # scraping and can lag well behind how many games the team has actually played. Label it
-                # explicitly as "tracked" so it doesn't read as (and get mistaken for) the player's true GP.
-                _pbp_games = int(games_per_player.get(mpg_leader["PLAYER"], 0))
-                _gp_sub = f"{_pbp_games} GP tracked" if _pbp_games > 0 else ""
-                leaders["Minutes"] = {"name": mpg_leader["PLAYER"], "value": mpg_leader["MIN_num"], "sub": _gp_sub}
+            if "MIN_total" in totals.columns:
+                mpg_totals = totals.dropna(subset=["MIN_total"])
+                if not mpg_totals.empty:
+                    mpg_totals = mpg_totals.copy()
+                    mpg_totals["MIN_num"] = (mpg_totals["MIN_total"] / mpg_totals["games"]).round(1)
+                    mpg_leader = mpg_totals.nlargest(1, "MIN_num").iloc[0]
+                    # NOTE: this counts games with a RECONSTRUCTED PLAY-BY-PLAY BOX SCORE for this player (i.e. how
+                    # many of this player's games have been video-tagged/PBP-parsed so far), not their real season
+                    # total games played -- PBP reconstruction is more labor-intensive than basic season-stat
+                    # scraping and can lag well behind how many games the team has actually played. Label it
+                    # explicitly as "tracked" so it doesn't read as (and get mistaken for) the player's true GP.
+                    _pbp_games = int(mpg_leader["games"])
+                    _gp_sub = f"{_pbp_games} GP tracked" if _pbp_games > 0 else ""
+                    leaders["Minutes"] = {"name": mpg_leader["player"], "value": mpg_leader["MIN_num"], "sub": _gp_sub}
             # Points leader
             pts_leader = totals.nlargest(1, "PPG").iloc[0]
             leaders["Points"] = {"name": pts_leader["player"], "value": pts_leader["PPG"], "sub": f"{pts_leader['FG_pct']:.1f} FG%\n{pts_leader['FT_pct']:.1f} FT%"}
