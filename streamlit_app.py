@@ -11,6 +11,7 @@ play notes; see STAT_GLOSSARY for definitions of every derived metric).
 
 import html
 import json
+import math
 import os
 import re
 
@@ -305,6 +306,264 @@ def counter_lineups(short_opponent, target_lineup, stints_df,
         return None, matched_minutes, len(keep), describe_profile(target)
     agg["rate"] = agg["net"] / agg["MIN"]
     return (agg.sort_values("rate", ascending=False), matched_minutes, len(keep), describe_profile(target))
+
+
+# --------------------------------------------------------------------------------------------------------------
+# Opponent style profiles -- the basis for COMPARABLE OPPONENTS
+# --------------------------------------------------------------------------------------------------------------
+# The old comparison used the only two numbers in uww_opponent_team_totals -- points scored and points allowed --
+# and called the nearest team "comparable". Two teams can post identical scoring lines and play nothing alike: a
+# fast team that lives at the rim and a slow one that shoots 30 threes land on the same PPG. Points tell you how
+# MUCH a team scores, not HOW, and "how" is what a game plan is built against.
+#
+# This builds a fuller profile per opponent out of tables that already exist, grouped into six style categories.
+# Each CATEGORY carries equal weight in the distance, then splits that weight among its own features -- otherwise
+# the four shot-profile numbers would outvote the single size number four to one purely by being more numerous.
+#
+# (key, display label, category)
+OPPONENT_FEATURE_SPEC = [
+    ("pts_pg",        "Points/gm",      "Scoring"),
+    ("opp_pts_pg",    "Points allowed", "Scoring"),
+    ("fg_pct",        "FG%",            "Shot profile"),
+    ("tpa_pg",        "3PA/gm",         "Shot profile"),
+    ("tp_pct",        "3P%",            "Shot profile"),
+    ("fta_pg",        "FTA/gm",         "Shot profile"),
+    ("ast_pg",        "Assists/gm",     "Ball control"),
+    ("to_pg",         "Turnovers/gm",   "Ball control"),
+    ("reb_pg",        "Rebounds/gm",    "Glass & rim"),
+    ("blk_pg",        "Blocks/gm",      "Glass & rim"),
+    ("stl_pg",        "Steals/gm",      "Pressure"),
+    ("height_in",     "Avg height",     "Personnel"),
+    ("share_shooter", "Shooter share",  "Personnel"),
+    ("share_post",    "Post share",     "Personnel"),
+]
+OPPONENT_FEATURE_CATEGORIES = {}
+for _k, _lbl, _cat in OPPONENT_FEATURE_SPEC:
+    OPPONENT_FEATURE_CATEGORIES.setdefault(_cat, []).append(_k)
+
+
+def _profile_games(opponent, group) -> tuple:
+    """(games, is_verified) for an opponent's season -- the divisor behind every rate in the profile.
+
+    get_opponent_games_played() falls back to a hardcoded 5 when it can't work the number out, which turns a
+    28-game season into rates inflated more than fivefold (observed: 146 3PA/gm). A number that large is
+    obviously wrong, but a 12-game team defaulting to 5 would produce a plausible-looking profile that is
+    simply false -- and it would then be ranked as "comparable" on the strength of it. So the count is only
+    treated as verified when it comes from real data, and unverified opponents have their rate-derived
+    features dropped instead of guessed.
+    """
+    if "games_played" in group.columns:
+        per_player = pd.to_numeric(group["games_played"], errors="coerce")
+        if per_player.notna().any() and per_player.max() > 0:
+            return float(per_player.max()), True
+    # Deliberately NOT get_opponent_games_played(): its first branch counts games in
+    # uww_opponent_prior_games_pbp keyed on `team`, which for a PAST opponent returns the handful of games
+    # the UPCOMING opponent happened to play against them. Coe Kohawks came back as 3 that way, and Coe's
+    # full-season totals divided by 3 read as 83.7 3PA/gm. Count from the opponent's own schedule instead.
+    schedules = load_table("uww_opponent_schedules")
+    if not schedules.empty and {"opponent", "outcome"} <= set(schedules.columns):
+        own = schedules[schedules["opponent"] == opponent]
+        completed = int(own["outcome"].notna().sum())
+        if completed > 0:
+            return float(completed), True
+    return 5.0, False
+
+
+def _pct_value(raw):
+    """'44.8%' -> 44.8. Returns None for '-' / blank / unparseable."""
+    text = str(raw).strip().rstrip("%")
+    if not text or text.lower() in ("nan", "none", "-"):
+        return None
+    try:
+        return float(text)
+    except ValueError:
+        return None
+
+
+def _sum_made_attempted(series) -> tuple:
+    """Sum a column of 'made-attempted' strings (e.g. '73-201') into (made, attempted)."""
+    made = attempted = 0
+    for value in series.dropna():
+        parts = str(value).split("-")
+        if len(parts) == 2:
+            try:
+                made += int(parts[0]); attempted += int(parts[1])
+            except ValueError:
+                continue
+    return made, attempted
+
+
+def format_feature(key, value) -> str:
+    if value is None or (isinstance(value, float) and pd.isna(value)):
+        return "-"
+    if key == "height_in":
+        return f"{int(value // 12)}'{int(round(value % 12))}\""
+    if key.startswith("share_"):
+        return f"{value * 100:.0f}%"
+    if key.endswith("_pct"):
+        return f"{value:.1f}%"
+    return f"{value:.1f}"
+
+
+@st.cache_data(ttl=60)
+def opponent_style_profiles() -> pd.DataFrame:
+    """One row per scouted opponent describing HOW they play, indexed by opponent name.
+
+    Built from uww_player_profiles (per-player season stats, size and scouted style tags) plus
+    uww_opponent_team_totals for team scoring. Note the unit convention this table carries: PTS/REB/MIN are
+    already per game, while AST/STL/BLK/TO are season TOTALS -- so the totals are divided by each player's own
+    games played before being summed into a team rate.
+    """
+    prof = load_table("uww_player_profiles")
+    totals = load_table("uww_opponent_team_totals")
+    if prof.empty or "opponent" not in prof.columns:
+        return pd.DataFrame()
+
+    totals_by_opp = totals.set_index("opponent") if not totals.empty and "opponent" in totals.columns else pd.DataFrame()
+    records = {}
+    for opponent, group in prof.groupby("opponent"):
+        group = group[~group["name"].astype(str).str.contains(JUNK_PLAYER_RE, na=False)]
+        if group.empty:
+            continue
+        team_games, games_verified = _profile_games(opponent, group)
+        team_games = team_games or 1
+        games = (pd.to_numeric(group["games_played"], errors="coerce")
+                 if "games_played" in group.columns else pd.Series(index=group.index, dtype="float64"))
+        games = games.where(games > 0).fillna(team_games)
+
+        col = lambda c: (pd.to_numeric(group[c], errors="coerce")
+                         if c in group.columns else pd.Series(index=group.index, dtype="float64"))
+        minutes = col("MIN").fillna(0.0)
+        rotation = minutes >= 8.0                      # the players who actually shape how a team plays
+        if not rotation.any():
+            rotation = minutes > 0
+        weights = minutes.where(rotation, 0.0)
+        weight_total = float(weights.sum())
+
+        def minute_weighted(values):
+            usable = values.notna() & (weights > 0)
+            return float((values[usable] * weights[usable]).sum() / weights[usable].sum()) if usable.any() else None
+
+        tpm, tpa = _sum_made_attempted(group["3PM-A"]) if "3PM-A" in group.columns else (0, 0)
+        _, fta = _sum_made_attempted(group["FTM-A"]) if "FTM-A" in group.columns else (0, 0)
+        # Those made-attempted strings are season totals for the whole roster, so divide by team games.
+        record = {
+            "pts_pg": float(totals_by_opp.at[opponent, "team_ppg"]) if opponent in getattr(totals_by_opp, "index", []) and pd.notna(totals_by_opp.at[opponent, "team_ppg"]) else float(((col("PTS") * games).sum(skipna=True)) / team_games),
+            "opp_pts_pg": float(totals_by_opp.at[opponent, "opp_ppg_allowed"]) if opponent in getattr(totals_by_opp, "index", []) and "opp_ppg_allowed" in totals_by_opp.columns and pd.notna(totals_by_opp.at[opponent, "opp_ppg_allowed"]) else None,
+            "fg_pct": minute_weighted(group["FG%"].apply(_pct_value) if "FG%" in group.columns else pd.Series(dtype=float)),
+            "tpa_pg": (tpa / team_games) if tpa else None,
+            "tp_pct": (100.0 * tpm / tpa) if tpa else None,
+            "fta_pg": (fta / team_games) if fta else None,
+            # TEAM rate = every player's season total over the TEAM's games. Dividing each player's total by
+            # his own games first and then summing answers a different question ("per game while available")
+            # and overstates the team: it read 17.8 assists/gm where the play-by-play says 14.0.
+            "ast_pg": float(col("AST").sum(skipna=True) / team_games),
+            "to_pg": float(col("TO").sum(skipna=True) / team_games),
+            # PTS/REB are per-player per-game averages over each player's OWN games. Summing them straight
+            # overstates a team that rotates: ten players averaging 8 points across different subsets of the
+            # season don't add up to 80 team points per game. Re-weight to real totals -> team games.
+            "reb_pg": float(((col("REB") * games).sum(skipna=True)) / team_games),
+            "blk_pg": float(col("BLK").sum(skipna=True) / team_games),
+            "stl_pg": float(col("STL").sum(skipna=True) / team_games),
+            "height_in": minute_weighted(col("height_inches")),
+            "_players": int(len(group)),
+            "_games": int(team_games),
+        }
+        # Without a trustworthy games count, every per-game rate derived from a season total is fiction.
+        # Drop those features rather than publish them; the games-independent ones (scoring, size, style
+        # shares) still stand, and the distance simply uses fewer features for this opponent.
+        if not games_verified:
+            for _unreliable in ("tpa_pg", "fta_pg", "ast_pg", "to_pg", "blk_pg", "stl_pg"):
+                record[_unreliable] = None
+        record["_games_verified"] = bool(games_verified)
+
+        tags = group["notes_tags_display"].astype(str) if "notes_tags_display" in group.columns else pd.Series("", index=group.index)
+        for share_key, tag in (("share_shooter", "three_point_shooter"), ("share_post", "post_scorer")):
+            has_tag = tags.str.contains(tag, na=False)
+            record[share_key] = float(weights[has_tag].sum() / weight_total) if weight_total > 0 else None
+        records[opponent] = record
+
+    frame = pd.DataFrame.from_dict(records, orient="index")
+    return frame.replace([float("inf"), float("-inf")], pd.NA)
+
+
+def _robust_scale(frame: pd.DataFrame) -> pd.DataFrame:
+    """Median/IQR z-scores, clipped to +/-3.
+
+    Deliberately not min-max (what this comparison used to do): min-max pins the range to the two most extreme
+    teams, so one bad scrape -- and this pipeline has had them, hence the existing `team_ppg < 200` outlier
+    guard -- squashes every real difference into a sliver of the 0-1 range. Median and IQR barely move.
+    """
+    scaled = pd.DataFrame(index=frame.index)
+    for column in frame.columns:
+        values = pd.to_numeric(frame[column], errors="coerce")
+        spread = (values.quantile(0.75) - values.quantile(0.25)) / 1.349
+        if not spread or pd.isna(spread) or spread == 0:
+            spread = values.std(ddof=0)
+        if not spread or pd.isna(spread) or spread == 0:
+            scaled[column] = 0.0
+            continue
+        scaled[column] = ((values - values.median()) / spread).clip(-3, 3)
+    return scaled
+
+
+def comparable_opponents(target_opponent: str, candidate_opponents, k: int = 3):
+    """Rank `candidate_opponents` by how closely their style resembles `target_opponent`.
+
+    Distance is a weighted RMS of z-score differences. Each category contributes equally; within a category the
+    weight is split across its features; and the total is divided by the weight ACTUALLY used, so a team missing
+    a feature isn't rewarded for having fewer things to differ on.
+
+    Match score is 100*exp(-0.7*d): identical profiles score 100, a one-standard-deviation average gap scores
+    about 50. Returns (ranked DataFrame, profile table) or (None, profiles).
+    """
+    profiles = opponent_style_profiles()
+    feature_keys = [key for key, _, _ in OPPONENT_FEATURE_SPEC]
+    if profiles.empty or target_opponent not in profiles.index:
+        return None, profiles
+    pool = [o for o in dict.fromkeys(candidate_opponents) if o in profiles.index and o != target_opponent]
+    if not pool:
+        return None, profiles
+
+    present = [c for c in feature_keys if c in profiles.columns]
+    scaled = _robust_scale(profiles[present])
+    target = scaled.loc[target_opponent]
+    category_weight = 1.0 / len(OPPONENT_FEATURE_CATEGORIES)
+
+    rows = []
+    for opponent in pool:
+        candidate = scaled.loc[opponent]
+        weighted_sq = used_weight = 0.0
+        per_category = {}
+        for category, keys in OPPONENT_FEATURE_CATEGORIES.items():
+            keys = [key for key in keys if key in present]
+            if not keys:
+                continue
+            each = category_weight / len(keys)
+            cat_sq = cat_weight = 0.0
+            for key in keys:
+                a, b = target.get(key), candidate.get(key)
+                if pd.isna(a) or pd.isna(b) or pd.isna(profiles.at[target_opponent, key]) or pd.isna(profiles.at[opponent, key]):
+                    continue
+                cat_sq += each * (a - b) ** 2
+                cat_weight += each
+            if cat_weight > 0:
+                per_category[category] = (cat_sq / cat_weight) ** 0.5
+                weighted_sq += cat_sq
+                used_weight += cat_weight
+        if used_weight <= 0:
+            continue
+        distance = (weighted_sq / used_weight) ** 0.5
+        rows.append({"opponent": opponent, "distance": distance,
+                     "match": int(round(100 * math.exp(-0.7 * distance))),
+                     "features_used": sum(1 for key in present
+                                          if not pd.isna(profiles.at[target_opponent, key])
+                                          and not pd.isna(profiles.at[opponent, key])),
+                     **{f"cat::{c}": v for c, v in per_category.items()}})
+    if not rows:
+        return None, profiles
+    ranked = pd.DataFrame(rows).sort_values("distance").head(k).reset_index(drop=True)
+    return ranked, profiles
 
 
 def get_team_abbreviation(name) -> str:
@@ -2970,71 +3229,119 @@ def render_upcoming_game():
 
     with _new_stats_comparable_c:
         st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">COMPARABLE OPPONENTS</div></div>', unsafe_allow_html=True)
-        _team_totals_co = load_table("uww_opponent_team_totals")
-        if _team_totals_co.empty or not short_opponent or short_opponent not in _team_totals_co["opponent"].values:
-            st.info("Comparable opponent data will be available once previous game data is collected for this opponent.")
+        # Which teams UWW has ALREADY PLAYED most resemble the one being prepared for -- so the staff can look
+        # at what actually worked (and didn't) against that style. Scoped to `played`, i.e. games before the
+        # upcoming one, so a result that hasn't happened yet can never appear here.
+        _co_profiles_all = opponent_style_profiles()
+        if _co_profiles_all.empty or not short_opponent or short_opponent not in _co_profiles_all.index:
+            st.info("Comparable opponent data will be available once a style profile can be built for this opponent.")
         else:
-            _numeric_cols_co = [c for c in _team_totals_co.columns if c != "opponent" and pd.api.types.is_numeric_dtype(_team_totals_co[c])]
-            if not _numeric_cols_co:
-                st.info("Not enough team-level stats recorded yet to compare opponents.")
+            # Map each played game onto the opponent name the profile table uses, keeping EVERY meeting -- a
+            # home-and-home is two separate results, and the split may be the most interesting thing about it.
+            _co_index = sorted(_co_profiles_all.index.astype(str), key=len, reverse=True)
+            _co_games = {}
+            for _, _g in played.iterrows():
+                _s = resolve_short_opponent(_g["opponent"], _co_index)
+                if _s and _s != short_opponent:
+                    _co_games.setdefault(_s, []).append(_g)
+
+            _co_ranked, _co_profiles = comparable_opponents(short_opponent, list(_co_games), k=3)
+            if _co_ranked is None or _co_ranked.empty:
+                st.info("No previously-played opponent has enough profile data to compare against yet.")
             else:
-                _co_df = _team_totals_co.dropna(subset=_numeric_cols_co, how="all").copy()
-                # Only compare against opponents UWW has actually PLAYED, so the comparison comes with a real
-                # result -- and only ones played BEFORE the upcoming game.
-                #
-                # CONFIRMED BUG (fixed here): this passed the full `schedule`, so any opponent scheduled AFTER
-                # the upcoming game whose row already carries an outcome (a schedule CSV covering the whole
-                # season, or a reference_date set artificially early for testing) was eligible to surface here
-                # as a "comparable opponent" -- complete with UWW's result against them, which hasn't happened
-                # yet from this page's point of view. Every other consumer on this page already scopes to
-                # `played` (built from pre_upcoming via next_game_idx); this one call site was left on the raw
-                # schedule. Same reference_date scoping family this project has hit before.
-                _co_outcomes = get_opponent_outcomes(played, _co_df["opponent"].unique())
-                _co_df = _co_df[_co_df["opponent"].isin(_co_outcomes.keys()) & (_co_df["opponent"] != short_opponent)]
-                if _co_df.empty:
-                    st.info("No previously-played opponents with recorded team stats to compare against yet.")
-                else:
-                    _target_row = _team_totals_co[_team_totals_co["opponent"] == short_opponent].iloc[0]
-                    # Min-max normalize each stat across the candidate pool + the target, so no single stat (e.g. a
-                    # PPG figure in the 60-90 range) dominates the distance purely because of its raw scale.
-                    _all_vals_co = pd.concat(
-                        [_co_df[_numeric_cols_co], _target_row[_numeric_cols_co].to_frame().T], ignore_index=True
-                    ).astype(float)
-                    _mins_co = _all_vals_co.min()
-                    _ranges_co = (_all_vals_co.max() - _mins_co).replace(0, 1)
-                    _target_norm_co = (_target_row[_numeric_cols_co].astype(float) - _mins_co) / _ranges_co
+                _co_target = _co_profiles.loc[short_opponent]
+                st.caption(
+                    f"Ranked on a {len(OPPONENT_FEATURE_SPEC)}-feature style profile across "
+                    f"{len(OPPONENT_FEATURE_CATEGORIES)} categories ({', '.join(OPPONENT_FEATURE_CATEGORIES)}), "
+                    f"each category weighted equally. Match is 100 for an identical profile, ~50 for an average "
+                    f"gap of one standard deviation."
+                )
 
-                    def _co_distance(row):
-                        row_norm = (row[_numeric_cols_co].astype(float) - _mins_co) / _ranges_co
-                        return float(((row_norm - _target_norm_co) ** 2).sum() ** 0.5)
-
-                    _co_df["_similarity_dist"] = _co_df.apply(_co_distance, axis=1)
-                    _top_similar = _co_df.nsmallest(min(3, len(_co_df)), "_similarity_dist")
-
-                    st.caption(
-                        f"Other scouted opponents whose team-level stats ({', '.join(_numeric_cols_co)}) most closely "
-                        f"resemble {esc(short_opponent)}'s this season — with UWW's actual result against each, as a "
-                        f"rough style proxy for how {esc(short_opponent)} might play."
-                    )
-                    _co_cols = st.columns(len(_top_similar))
-                    for _ci, (_, _cr) in enumerate(_top_similar.iterrows()):
-                        with _co_cols[_ci]:
-                            _co_name = _cr["opponent"]
-                            _co_outcome = _co_outcomes.get(_co_name, "-")
-                            _co_color = "#2e7d32" if _co_outcome == "W" else "#c62828"
-                            _co_game = played[played["opponent"].astype(str).str.startswith(_co_name)] if not played.empty else pd.DataFrame()
-                            _co_score_str = ""
-                            if not _co_game.empty:
-                                _g = _co_game.iloc[0]
-                                if pd.notna(_g.get("team_score")) and pd.notna(_g.get("opponent_score")):
-                                    _co_score_str = f"{int(_g['team_score'])}-{int(_g['opponent_score'])}"
-                            with st.container(border=True):
-                                st.markdown(f"**{esc(_co_name)}**")
+                _co_cols = st.columns(len(_co_ranked))
+                for _ci, (_, _cr) in enumerate(_co_ranked.iterrows()):
+                    _co_name = _cr["opponent"]
+                    _co_row = _co_profiles.loc[_co_name]
+                    _cats = {c.split("::", 1)[1]: _cr[c] for c in _co_ranked.columns
+                             if c.startswith("cat::") and pd.notna(_cr[c])}
+                    _alike = sorted(_cats, key=_cats.get)[:2]
+                    _differs = sorted(_cats, key=_cats.get, reverse=True)[:1]
+                    with _co_cols[_ci]:
+                        with st.container(border=True):
+                            st.markdown(
+                                f'<div style="font-weight:700;font-size:0.95rem;color:#4E2A84;">{esc(_co_name)}</div>'
+                                f'<div style="font-size:1.6rem;font-weight:800;line-height:1.1;">{int(_cr["match"])}'
+                                f'<span style="font-size:0.7rem;color:#888;font-weight:600;"> / 100 match</span></div>',
+                                unsafe_allow_html=True,
+                            )
+                            # Every meeting, with its own result -- not one result standing in for two games.
+                            for _g in _co_games.get(_co_name, []):
+                                _oc = _g.get("outcome")
+                                _colr = "#2e7d32" if _oc == "W" else "#c62828"
+                                _sc = (f"{int(_g['team_score'])}-{int(_g['opponent_score'])}"
+                                       if pd.notna(_g.get("team_score")) and pd.notna(_g.get("opponent_score")) else "")
                                 st.markdown(
-                                    f'<span style="color:{_co_color};font-weight:700;">{esc(_co_outcome)}</span> {esc(_co_score_str)}',
+                                    f'<div style="font-size:0.85rem;margin-top:2px;">'
+                                    f'<span style="color:{_colr};font-weight:700;">{esc(_oc)}</span> {esc(_sc)}'
+                                    f'<span style="color:#999;font-size:0.75rem;"> · {esc(_g.get("date", ""))}</span></div>',
                                     unsafe_allow_html=True,
                                 )
-                                st.caption(f"Similarity score: {_cr['_similarity_dist']:.2f} (lower = more similar)")
+                            if _alike:
+                                st.markdown(
+                                    f'<div style="font-size:0.75rem;color:#2e7d32;margin-top:6px;">Alike: '
+                                    f'{esc(", ".join(_alike))}</div>', unsafe_allow_html=True)
+                            if _differs:
+                                st.markdown(
+                                    f'<div style="font-size:0.75rem;color:#c62828;">Differs: '
+                                    f'{esc(", ".join(_differs))}</div>', unsafe_allow_html=True)
+                            # The two features that separate them most, with both teams' actual numbers, so a
+                            # coach can judge the match instead of trusting the score.
+                            _gaps = []
+                            for _fk, _flabel, _fcat in OPPONENT_FEATURE_SPEC:
+                                _a, _b = _co_target.get(_fk), _co_row.get(_fk)
+                                if pd.isna(_a) or pd.isna(_b):
+                                    continue
+                                _gaps.append((abs(float(_a) - float(_b)) / (abs(float(_a)) + 1e-6), _fk, _flabel, _a, _b))
+                            for _, _fk, _flabel, _a, _b in sorted(_gaps, reverse=True)[:2]:
+                                st.markdown(
+                                    f'<div style="font-size:0.72rem;color:#666;margin-top:2px;">{esc(_flabel)}: '
+                                    f'<strong>{esc(format_feature(_fk, _b))}</strong> vs {esc(format_feature(_fk, _a))} '
+                                    f'({esc(get_team_abbreviation(short_opponent))})</div>', unsafe_allow_html=True)
+
+                # What actually happened against this style -- the reason the panel exists.
+                _co_rows = [g for name in _co_ranked["opponent"] for g in _co_games.get(name, [])]
+                if _co_rows:
+                    _co_played = pd.DataFrame(_co_rows)
+                    _w = int((_co_played["outcome"] == "W").sum())
+                    _l = int((_co_played["outcome"] == "L").sum())
+                    _pf, _pa = _co_played["team_score"].mean(), _co_played["opponent_score"].mean()
+                    _season_pf = played["team_score"].mean() if not played.empty else None
+                    _season_pa = played["opponent_score"].mean() if not played.empty else None
+                    _delta = ""
+                    if _season_pf is not None and pd.notna(_season_pf):
+                        _delta = (f" ({_pf - _season_pf:+.1f} pts scored, {_pa - _season_pa:+.1f} allowed "
+                                  f"vs UWW's season average)")
+                    st.markdown(
+                        f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 12px;margin-top:8px;'
+                        f'font-size:0.85rem;">Against these {len(_co_ranked)} teams UWW is <strong>{_w}-{_l}</strong>, '
+                        f'averaging <strong>{_pf:.1f}</strong> scored and <strong>{_pa:.1f}</strong> allowed'
+                        f'{esc(_delta)}.</div>', unsafe_allow_html=True)
+
+                with st.expander("Full style profile comparison", expanded=False):
+                    _co_table = []
+                    for _fk, _flabel, _fcat in OPPONENT_FEATURE_SPEC:
+                        _entry = {"Category": _fcat, "Feature": _flabel,
+                                  f"{get_team_abbreviation(short_opponent)} (upcoming)": format_feature(_fk, _co_target.get(_fk))}
+                        for _cn in _co_ranked["opponent"]:
+                            _entry[get_team_abbreviation(_cn)] = format_feature(_fk, _co_profiles.loc[_cn].get(_fk))
+                        _co_table.append(_entry)
+                    st.dataframe(pd.DataFrame(_co_table), hide_index=True, use_container_width=True)
+                    st.caption(
+                        "PTS/REB are per game in the source table; AST/STL/BLK/TO are season totals there and are "
+                        "divided by each player's own games played. Size and style shares are minutes-weighted "
+                        "across the rotation (8+ MPG). Profiles for opponents already played come from their own "
+                        "scouting report, so a thinly scouted team will have fewer comparable features -- the "
+                        "match score only counts features both teams actually have."
+                    )
 
 
     with _new_tools_proj_c:
