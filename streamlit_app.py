@@ -200,6 +200,23 @@ def get_team_abbreviation(name) -> str:
     return abbr or re.sub(r"[^A-Za-z]", "", name)[:4].upper()
 
 
+# A generational suffix is not a surname. Taking the last whitespace-separated token turned
+# "Agape Keyes Jr." into a lineup member called "Jr." -- so strip any trailing suffix first and keep it
+# attached to the name it belongs to.
+_NAME_SUFFIXES = {"jr", "sr", "ii", "iii", "iv", "v"}
+
+
+def surname(full_name) -> str:
+    """'Agape Keyes Jr.' -> 'Keyes Jr.'; 'Tyshawn Teague-Johnson' -> 'Teague-Johnson'."""
+    parts = [p for p in str(full_name).split() if p]
+    if len(parts) < 2:
+        return str(full_name).strip()
+    suffix = []
+    while len(parts) > 1 and parts[-1].strip(".").lower() in _NAME_SUFFIXES:
+        suffix.insert(0, parts.pop())
+    return " ".join(parts[-1:] + suffix)
+
+
 def played_mask(schedule: pd.DataFrame) -> pd.Series:
     return schedule["outcome"].notna() & schedule["team_score"].notna()
 
@@ -2045,8 +2062,7 @@ def render_upcoming_game():
     # ==================== TOP 5-MAN LINEUPS SECTION ====================
     def _last_names(lineup_str):
         """Convert 'First Last, First Last, ...' to 'Last, Last, ...' for compact display."""
-        names = [n.strip() for n in str(lineup_str).split(",")]
-        return ", ".join(parts[-1] if len(parts := n.split()) > 1 else n for n in names)
+        return ", ".join(surname(n) for n in str(lineup_str).split(",") if n.strip())
 
     def _get_core_players(all_top_players_list):
         """Return list of (player, count) for players in 2+ of the 3 metric top-3 lists."""
@@ -2063,8 +2079,8 @@ def render_upcoming_game():
         players = set()
         for _, row in top.iterrows():
             for n in str(row["lineup"]).split(","):
-                parts = n.strip().split()
-                players.add(parts[-1] if len(parts) > 1 else n.strip())
+                if n.strip():
+                    players.add(surname(n))
         return players
 
     def _build_lineup_rows_html(df_sorted, metric_col, min_col="MIN"):
@@ -2110,7 +2126,10 @@ def render_upcoming_game():
                     _uww_s["EFF"] = (_uww_s["+/-"] / _uww_s["MIN"].replace(0, float('nan'))).round(3)
                     _uww_s = _uww_s.assign(_r=_uww_s["EFF"])
                 else:
-                    _uww_s = uww_agg.assign(_r=uww_agg[metric_col] / uww_agg["MIN"].replace(0, float('nan')))
+                    # PTS and +/- rank on the season TOTAL, matching By Minutes. Ranking on value/MIN put
+                    # sub-minute stints on top -- 4 points in 0.12 min read as "33.33/min" and
+                    # outranked the starting five's whole season. The rate still prints as context.
+                    _uww_s = uww_agg.assign(_r=uww_agg[metric_col])
                 uww_rows = _build_lineup_rows_html(_uww_s.sort_values("_r", ascending=False).drop(columns=["_r"]), metric_col, min_col="MIN")
             else:
                 uww_rows = '<div style="font-size:0.82rem;color:#aaa;">No data</div>'
@@ -2122,7 +2141,7 @@ def render_upcoming_game():
                     _opp_s["EFF"] = (_opp_s["+/-"] / _opp_s["MIN"].replace(0, float('nan'))).round(3)
                     _opp_s = _opp_s.assign(_r=_opp_s["EFF"])
                 else:
-                    _opp_s = opp_lu.assign(_r=opp_lu[metric_col] / opp_lu["MIN"].replace(0, float('nan')))
+                    _opp_s = opp_lu.assign(_r=opp_lu[metric_col])
                 opp_rows = _build_lineup_rows_html(_opp_s.sort_values("_r", ascending=False).drop(columns=["_r"]), metric_col, min_col="MIN")
             else:
                 opp_rows = '<div style="font-size:0.82rem;color:#aaa;">No data</div>'
@@ -2204,7 +2223,7 @@ def render_upcoming_game():
                     _uww_s["EFF"] = (_uww_s["+/-"] / _uww_s["MIN"].replace(0, float('nan'))).round(3)
                     _uww_s = _uww_s.assign(_r=_uww_s["EFF"])
                 else:
-                    _uww_s = uww_3man.assign(_r=uww_3man[metric_col] / uww_3man["MIN"].replace(0, float('nan')))
+                    _uww_s = uww_3man.assign(_r=uww_3man[metric_col])   # season total, as above
                 uww_rows = _build_lineup_rows_html(_uww_s.sort_values("_r", ascending=False).drop(columns=["_r"]), metric_col, min_col="MIN")
             else:
                 uww_rows = '<div style="font-size:0.82rem;color:#aaa;">No data</div>'
@@ -2216,7 +2235,7 @@ def render_upcoming_game():
                     _opp_s["EFF"] = (_opp_s["+/-"] / _opp_s["MIN"].replace(0, float('nan'))).round(3)
                     _opp_s = _opp_s.assign(_r=_opp_s["EFF"])
                 else:
-                    _opp_s = opp_3man.assign(_r=opp_3man[metric_col] / opp_3man["MIN"].replace(0, float('nan')))
+                    _opp_s = opp_3man.assign(_r=opp_3man[metric_col])   # season total, as above
                 opp_rows = _build_lineup_rows_html(_opp_s.sort_values("_r", ascending=False).drop(columns=["_r"]), metric_col, min_col="MIN")
             else:
                 opp_rows = '<div style="font-size:0.82rem;color:#aaa;">No data</div>'
@@ -2352,7 +2371,7 @@ def render_upcoming_game():
                         _s["EFF"] = (_s["+/-"] / _s["MIN"].replace(0, float('nan'))).round(3)
                         _s = _s.assign(_r=_s["EFF"])
                     else:
-                        _s = uww_agg.assign(_r=uww_agg[metric_col] / uww_agg["MIN"].replace(0, float('nan')))
+                        _s = uww_agg.assign(_r=uww_agg[metric_col])   # season total, as above
                     uww_rows = _build_lineup_rows_html(_s.sort_values("_r", ascending=False).drop(columns=["_r"]), metric_col, min_col="MIN")
                 else:
                     uww_rows = '<div style="font-size:0.82rem;color:#aaa;">No data</div>'
@@ -2364,7 +2383,7 @@ def render_upcoming_game():
                         _s["EFF"] = (_s["+/-"] / _s["MIN"].replace(0, float('nan'))).round(3)
                         _s = _s.assign(_r=_s["EFF"])
                     else:
-                        _s = opp_lu.assign(_r=opp_lu[metric_col] / opp_lu["MIN"].replace(0, float('nan')))
+                        _s = opp_lu.assign(_r=opp_lu[metric_col])   # season total, as above
                     opp_rows = _build_lineup_rows_html(_s.sort_values("_r", ascending=False).drop(columns=["_r"]), metric_col, min_col="MIN")
                 else:
                     opp_rows = '<div style="font-size:0.82rem;color:#aaa;">No data</div>'
@@ -4411,8 +4430,7 @@ def render_previous_games():
         _worst_lu = lineup_agg[lineup_agg["minutes"] >= 1.0].nsmallest(3, "margin_per_min")
 
         def _last_names_pg(lineup_str):
-            names = [n.strip() for n in str(lineup_str).split(",")]
-            return ", ".join(parts[-1] if len(parts := n.split()) > 1 else n for n in names)
+            return ", ".join(surname(n) for n in str(lineup_str).split(",") if n.strip())
 
         _lu_col1, _lu_col2 = st.columns(2)
         with _lu_col1:
@@ -4959,8 +4977,7 @@ def render_team():
 
     # Best / Worst lineups with styled cards
     def _last_names_card(lineup_str):
-        names = [n.strip() for n in str(lineup_str).split(",")]
-        return ", ".join(parts[-1] if len(parts := n.split()) > 1 else n for n in names)
+        return ", ".join(surname(n) for n in str(lineup_str).split(",") if n.strip())
 
     _best_5 = meaningful.sort_values("margin_per_min", ascending=False).head(5)
     _worst_5 = meaningful.sort_values("margin_per_min", ascending=True).head(5)
@@ -5106,8 +5123,7 @@ def render_team():
     stints = load_table("uww_lineup_stints")
     if not stints.empty:
         def _last_names_team(lineup_str):
-            names = [n.strip() for n in str(lineup_str).split(",")]
-            return ", ".join(parts[-1] if len(parts := n.split()) > 1 else n for n in names)
+            return ", ".join(surname(n) for n in str(lineup_str).split(",") if n.strip())
 
         # Map stints to W/L outcomes from the schedule, per GAME -- an opponent UWW split a home-and-home
         # with has one result per meeting, not one result overall.
