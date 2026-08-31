@@ -42,6 +42,13 @@ def _load_name_aliases() -> dict:
 
 KNOWN_NAME_ALIASES = _load_name_aliases()
 
+# Play-by-play strings the parser's classify_event() couldn't recognise used to be stored as the event's
+# "player", producing rows like "Commits Foul" or "Jump Ball (Block Tie Up)" with real minutes attached --
+# one of them outranked every actual player on total minutes. The parser no longer does this, but the app
+# still screens leaderboard inputs so an older CSV export (or a future unrecognised string) can't put a
+# play description on the Season Leaders card.
+JUNK_PLAYER_RE = r"(?i)^(?:TEAM$|Commits |Turnover|Jump Ball|Subs In|Subs Out|Timeout|Official )|(?: Commits Foul$)"
+
 st.set_page_config(page_title="UWW Basketball Scouting", page_icon="🏀", layout="wide")
 
 
@@ -1641,6 +1648,7 @@ def render_upcoming_game():
             else:
                 uww_roster = set(season_stats["PLAYER"].dropna().tolist()) - {"Team Total", "Opponent"}
                 uww = box_df[box_df["player"].isin(uww_roster)]
+            uww = uww[~uww["player"].astype(str).str.contains(JUNK_PLAYER_RE, na=False)]
             if uww.empty:
                 return {}
             # Compute per-game averages
@@ -1698,8 +1706,21 @@ def render_upcoming_game():
         def _get_opp_leaders(profiles_df, opp_name, games_est=5):
             """Get opponent per-game leaders from player profiles."""
             opp = profiles_df[profiles_df["opponent"] == opp_name]
+            opp = opp[~opp["name"].astype(str).str.contains(JUNK_PLAYER_RE, na=False)]
             if opp.empty:
                 return {}
+
+            # PTS/REB/MIN in this table are already per game; AST/STL/BLK/TO are SEASON TOTALS the app has to
+            # divide. It used to divide by the TEAM's games played, which understates anyone who missed time --
+            # 73 assists over the 24 games a player actually appeared in rendered as 2.6/gm instead of 3.0
+            # because the divisor was the team's 28. Use the per-player games_played the parser now exports,
+            # falling back to the team count for an opponent whose stats still come from a scouting-report PDF.
+            if "games_played" in opp.columns:
+                _opp_gp = pd.to_numeric(opp["games_played"], errors="coerce")
+            else:
+                _opp_gp = pd.Series(index=opp.index, dtype="float64")
+            _opp_gp = _opp_gp.where(_opp_gp > 0).fillna(games_est if games_est else 1)
+
             leaders = {}
             # Minutes leader
             if "MIN" in opp.columns:
@@ -1710,7 +1731,8 @@ def render_upcoming_game():
                     min_leader = opp_min.nlargest(1, "MIN_num").iloc[0]
                     # Matches UWW's own Minutes leader sub ("X GP") -- games_est is already the correctly-
                     # scoped (pre-UWW-matchup) games-played count passed in by the caller.
-                    _opp_gp_sub = f"{games_est} GP" if games_est else ""
+                    _min_gp = _opp_gp.get(min_leader.name, games_est)
+                    _opp_gp_sub = f"{int(_min_gp)} GP" if _min_gp else ""
                     leaders["Minutes"] = {"name": min_leader["name"], "value": min_leader["MIN_num"], "sub": _opp_gp_sub}
             # Points leader (PTS is already per-game in profiles)
             pts_leader = opp.nlargest(1, "PTS").iloc[0]
@@ -1730,18 +1752,17 @@ def render_upcoming_game():
                 if pd.notna(_reb_oreb) and pd.notna(_reb_dreb):
                     _reb_sub = f"{_reb_dreb:.1f} DRPG\n{_reb_oreb:.1f} ORPG"
             leaders["Rebounds"] = {"name": reb_leader["name"], "value": reb_leader["REB"], "sub": _reb_sub}
-            # Assists leader (AST/TO are SEASON TOTALS in this table, unlike PTS/REB -- divide by games_est)
+            # Season totals -> per game, each divided by that player's own games (see _opp_gp above).
             opp_copy = opp.copy()
-            opp_copy["APG"] = opp_copy["AST"] / games_est
+            opp_copy["APG"] = pd.to_numeric(opp_copy["AST"], errors="coerce") / _opp_gp
+            opp_copy["TOPG"] = pd.to_numeric(opp_copy["TO"], errors="coerce") / _opp_gp
             ast_leader = opp_copy.nlargest(1, "APG").iloc[0]
-            topg = ast_leader["TO"] / games_est
-            leaders["Assists"] = {"name": ast_leader["name"], "value": ast_leader["APG"], "sub": f"{topg:.1f} TOPG"}
-            # Steals leader (STL is a season total, divide by games_est)
-            opp_copy["SPG"] = opp_copy["STL"] / games_est
+            leaders["Assists"] = {"name": ast_leader["name"], "value": ast_leader["APG"],
+                                  "sub": f"{ast_leader['TOPG']:.1f} TOPG" if pd.notna(ast_leader["TOPG"]) else ""}
+            opp_copy["SPG"] = pd.to_numeric(opp_copy["STL"], errors="coerce") / _opp_gp
             stl_leader = opp_copy.nlargest(1, "SPG").iloc[0]
             leaders["Steals"] = {"name": stl_leader["name"], "value": stl_leader["SPG"], "sub": ""}
-            # Blocks leader (BLK is a season total, divide by games_est)
-            opp_copy["BPG"] = opp_copy["BLK"] / games_est
+            opp_copy["BPG"] = pd.to_numeric(opp_copy["BLK"], errors="coerce") / _opp_gp
             blk_leader = opp_copy.nlargest(1, "BPG").iloc[0]
             leaders["Blocks"] = {"name": blk_leader["name"], "value": blk_leader["BPG"], "sub": ""}
             return leaders
@@ -2581,11 +2602,20 @@ def render_upcoming_game():
                     player_prof = _comp_profiles[(_comp_profiles["name"] == player_name) & (_comp_profiles["opponent"] == short_opponent)]
                     if not player_prof.empty:
                         p = player_prof.iloc[0]
-                        stat_cols = ["PTS", "REB", "AST", "STL", "BLK", "TO", "FG%", "3P%"]
                         # One row, stats as columns (was one row PER stat with a "Stat"/"Avg" pair) -- reads
-                        # like a box-score line instead of a tall 8-row list in a narrow dialog.
-                        s_row = {sc: str(p.get(sc)) for sc in stat_cols
-                                 if pd.notna(p.get(sc)) and str(p.get(sc)).strip()}
+                        # like a box-score line instead of a tall 8-row list in a narrow dialog. PTS/REB are
+                        # per game here but AST/STL/BLK/TO are season totals; printed side by side they read
+                        # as one box-score line, so convert the totals to per game (by this player's own
+                        # games) rather than showing four raw season sums next to four per-game figures.
+                        _pd_gp = safe_float(p.get("games_played")) or (get_opponent_games_played(short_opponent) or 1)
+                        _pd_season_totals = {"AST", "STL", "BLK", "TO"}
+                        s_row = {}
+                        for sc in ["PTS", "REB", "AST", "STL", "BLK", "TO", "FG%", "3P%"]:
+                            _sv = p.get(sc)
+                            if not (pd.notna(_sv) and str(_sv).strip()):
+                                continue
+                            _sn = safe_float(_sv) if sc in _pd_season_totals else None
+                            s_row[sc] = f"{_sn / _pd_gp:.1f}" if _sn is not None and _pd_gp else str(_sv)
                         if s_row:
                             st.dataframe(pd.DataFrame([s_row]), hide_index=True, use_container_width=True)
                         else:
@@ -5528,7 +5558,10 @@ def render_players():
                         _ht = _pr.get("height", "")
                         _pts = f"{_pr['PTS']:.1f}" if pd.notna(_pr.get("PTS")) else "-"
                         _reb = f"{_pr['REB']:.1f}" if pd.notna(_pr.get("REB")) else "-"
-                        _ast = f"{_pr['AST']:.1f}" if pd.notna(_pr.get("AST")) else "-"
+                        # AST is a season total in this table -- divide by this player's own games played.
+                        _card_gp = safe_float(_pr.get("games_played")) or (get_opponent_games_played(opponent_choice) or 1)
+                        _ast_val = safe_float(_pr.get("AST"))
+                        _ast = f"{_ast_val / _card_gp:.1f}" if _ast_val is not None and _card_gp else "-"
                         _fg = f"{_pr['FG%']:.0f}%" if pd.notna(_pr.get("FG%")) else "-"
                         _notes = str(_pr.get("player_notes", "")) if pd.notna(_pr.get("player_notes")) else ""
                         _keys = str(_pr.get("keys_to_defending", "")) if pd.notna(_pr.get("keys_to_defending")) else ""
@@ -5565,6 +5598,17 @@ def render_players():
                 subset["shared_defense"] = subset["name"].map(
                     lambda n: comp_lookup[n]["shared_keys"] if n in comp_lookup else ""
                 )
+
+            # Put AST/TO/STL/BLK on the same per-game footing as PTS/REB, using each player's own games.
+            subset = subset.copy()
+            if "games_played" in subset.columns:
+                _tbl_gp = pd.to_numeric(subset["games_played"], errors="coerce")
+            else:
+                _tbl_gp = pd.Series(index=subset.index, dtype="float64")
+            _tbl_gp = _tbl_gp.where(_tbl_gp > 0).fillna(get_opponent_games_played(opponent_choice) or 1)
+            for _tc in ("AST", "TO", "STL", "BLK"):
+                if _tc in subset.columns:
+                    subset[_tc] = (pd.to_numeric(subset[_tc], errors="coerce") / _tbl_gp).round(1)
 
             display_cols = [c for c in [
                 "name", "role", "position", "height", "class_year",
