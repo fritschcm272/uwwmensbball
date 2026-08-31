@@ -245,8 +245,16 @@ def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
         return default
     try:
         pbp_upcoming = load_table("uww_opponent_prior_games_pbp")
-        if not pbp_upcoming.empty and short_opponent in set(pbp_upcoming["opponent"]):
-            n_pbp = pbp_upcoming.loc[pbp_upcoming["opponent"] == short_opponent, "game_date"].nunique()
+        # CONFIRMED BUG (fixed here): this matched on the "opponent" COLUMN, which in this table does NOT mean
+        # "the upcoming opponent" -- the parser sets it to whoever the upcoming opponent ACTUALLY PLAYED in
+        # each of those prior games (they're the opponent's games BEFORE facing UWW, so Whitewater isn't in
+        # them at all). So `opponent == short_opponent` matched ZERO rows for every opponent, the PBP branch
+        # never fired, and this silently fell through to the hardcoded default of 5 -- which is exactly why
+        # Eureka's 5 season blocks kept rendering as 1.0 BPG (5/5) instead of 1.67 (5 blocks / 3 games).
+        # The column that identifies the upcoming opponent here is "team" (which side each event belongs to).
+        if not pbp_upcoming.empty and "team" in pbp_upcoming.columns:
+            own_rows = pbp_upcoming[pbp_upcoming["team"] == short_opponent]
+            n_pbp = own_rows["game_date"].nunique() if not own_rows.empty else 0
             if n_pbp > 0:
                 return n_pbp
     except Exception:
@@ -1338,20 +1346,6 @@ def render_upcoming_game():
             opp_team_stats["Assists"] = opp_prof_ts["AST"].sum() / _games_est
             opp_team_stats["Blocks"] = opp_prof_ts["BLK"].sum() / _games_est
             opp_team_stats["Steals"] = opp_prof_ts["STL"].sum() / _games_est
-            # TEMPORARY DIAGNOSTIC -- Blocks has now shown 1.0 instead of 1.66 four separate times after
-            # fixes that each appeared correct; rather than guess a fifth time, show the exact raw values.
-            import streamlit as _st_diag
-            with _st_diag.expander("🔧 Debug: Blocks BPG calculation", expanded=True):
-                _st_diag.code(
-                    f"short_opponent                            = {short_opponent!r}\n"
-                    f"_games_est (get_opponent_games_played)    = {_games_est}\n"
-                    f"opp_prof_ts['BLK'].sum()                  = {opp_prof_ts['BLK'].sum()}\n"
-                    f"opp_prof_ts['BLK'].tolist()               = {opp_prof_ts['BLK'].tolist()}\n"
-                    f"=> Blocks computed as                     = {opp_prof_ts['BLK'].sum() / _games_est}\n"
-                    f"\n"
-                    f"uww_opponent_prior_games_pbp rows for opp = "
-                    + str(load_table('uww_opponent_prior_games_pbp')[load_table('uww_opponent_prior_games_pbp')['opponent'] == short_opponent]['game_date'].nunique() if not load_table('uww_opponent_prior_games_pbp').empty else 'table empty')
-                )
             # Expanded opponent stats for All Stats dialog
             def _parse_ma_ts(series):
                 made, att = 0, 0
