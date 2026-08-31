@@ -218,6 +218,23 @@ def get_opponent_outcomes(schedule: pd.DataFrame, opponent_names) -> dict:
     return outcomes
 
 
+def prior_opponent_shortnames(box: pd.DataFrame, played: pd.DataFrame) -> set:
+    """The set of short opponent names in `box` (any table keyed the way uww_pbp_box_score is) corresponding
+    to games UWW played BEFORE the upcoming game -- i.e. the rows in `played`.
+
+    Box-score tables are NOT scoped by date: they hold every game that has been parsed, which can include
+    games chronologically AFTER the simulated "upcoming" game whenever reference_date is set artificially
+    early to test against a real, further-along season. Any season aggregate that doesn't intersect against
+    `played` first will therefore quietly include the future. This is the single most repeated bug class in
+    this project, so the intersection lives here once instead of being rewritten at each call site.
+    """
+    if box.empty or played.empty or "opponent" not in box.columns:
+        return set()
+    names = box["opponent"].dropna().unique().tolist()
+    names.sort(key=len, reverse=True)  # longest-first so the most specific match wins
+    return {resolve_short_opponent(_po, names) for _po in played["opponent"].dropna()} - {None}
+
+
 def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
     """Count of games played by the opponent, before their matchup against UWW -- used to convert an
     opponent's season-TOTAL stats into per-game rates.
@@ -536,19 +553,32 @@ PHRASE_SIDE = {
 }
 
 
-def get_data_driven_ktv(short_opponent):
-    """Compute data-driven Keys to Victory: win/loss stat splits for the upcoming opponent's KTV categories."""
+def get_data_driven_ktv(short_opponent, played: pd.DataFrame):
+    """Compute data-driven Keys to Victory: win/loss stat splits for the upcoming opponent's KTV categories.
+
+    `played` is REQUIRED (games strictly before the upcoming game -- pre_upcoming/next_game_idx on the
+    Upcoming Game page). It is a parameter rather than something loaded in here so this function cannot be
+    called without a caller deciding what "before" means.
+
+    CONFIRMED BUG (fixed here): this used to load uww_schedule itself and aggregate uww_pbp_box_score across
+    EVERY opponent in the table, with no notion of a reference date -- two independent leaks of post-upcoming
+    games into a pre-game win/loss split. The equivalent live code path (the per-category stat lines in the
+    unified Keys to Victory section) was already fixed this way; this was its unscoped twin, left behind
+    because nothing currently calls it. Both now go through prior_opponent_shortnames() so they can't drift
+    apart again.
+    """
     ktv_games = load_table("uww_ktv_game_categories")
     box = load_table("uww_pbp_box_score")
-    schedule = load_table("uww_schedule")
 
     # Get categories assigned to this opponent
     opp_cats = ktv_games[ktv_games["opponent"] == short_opponent]["category"].unique()
     if len(opp_cats) == 0:
         return None
 
-    # Build per-game UWW team totals from PBP box score
+    # Build per-game UWW team totals from PBP box score -- restricted to games before the upcoming one.
     uww_box = box[box["team"] == "UW-Whitewater"]
+    _ktv_prior = prior_opponent_shortnames(uww_box, played)
+    uww_box = uww_box[uww_box["opponent"].isin(_ktv_prior)] if _ktv_prior else uww_box.iloc[0:0]
     if uww_box.empty:
         return None
     uww_per_game = uww_box.groupby("opponent").agg({
@@ -563,8 +593,9 @@ def get_data_driven_ktv(short_opponent):
     uww_per_game["FG2A"] = uww_per_game["FGA"] - uww_per_game["FG3A"]
     uww_per_game["FG2%"] = (uww_per_game["FG2M"] / uww_per_game["FG2A"] * 100).round(1)
 
-    # Map outcomes from schedule
-    opp_outcome = get_opponent_outcomes(schedule, uww_per_game["opponent"].unique())
+    # Map outcomes from the pre-upcoming games only -- passing the full schedule here would readmit the
+    # future results that the box-score scoping above just excluded.
+    opp_outcome = get_opponent_outcomes(played, uww_per_game["opponent"].unique())
     uww_per_game["outcome"] = uww_per_game["opponent"].map(opp_outcome)
 
     wins = uww_per_game[uww_per_game["outcome"] == "W"]
@@ -2577,8 +2608,17 @@ def render_upcoming_game():
                 st.info("Not enough team-level stats recorded yet to compare opponents.")
             else:
                 _co_df = _team_totals_co.dropna(subset=_numeric_cols_co, how="all").copy()
-                # Only compare against opponents UWW has actually PLAYED, so the comparison comes with a real result.
-                _co_outcomes = get_opponent_outcomes(schedule, _co_df["opponent"].unique())
+                # Only compare against opponents UWW has actually PLAYED, so the comparison comes with a real
+                # result -- and only ones played BEFORE the upcoming game.
+                #
+                # CONFIRMED BUG (fixed here): this passed the full `schedule`, so any opponent scheduled AFTER
+                # the upcoming game whose row already carries an outcome (a schedule CSV covering the whole
+                # season, or a reference_date set artificially early for testing) was eligible to surface here
+                # as a "comparable opponent" -- complete with UWW's result against them, which hasn't happened
+                # yet from this page's point of view. Every other consumer on this page already scopes to
+                # `played` (built from pre_upcoming via next_game_idx); this one call site was left on the raw
+                # schedule. Same reference_date scoping family this project has hit before.
+                _co_outcomes = get_opponent_outcomes(played, _co_df["opponent"].unique())
                 _co_df = _co_df[_co_df["opponent"].isin(_co_outcomes.keys()) & (_co_df["opponent"] != short_opponent)]
                 if _co_df.empty:
                     st.info("No previously-played opponents with recorded team stats to compare against yet.")
@@ -3512,12 +3552,9 @@ def render_upcoming_game():
             # against a real, further-along season, box scores exist for games chronologically AFTER the
             # simulated "upcoming" game too. Both the numerator (turnovers summed) and denominator (games
             # count) need the SAME "games before the upcoming game" scope, or they silently disagree.
-            _cs_prior_opponent_shortnames = _cs_uww_box_all["opponent"].unique().tolist() if not _cs_uww_box_all.empty else []
-            _cs_prior_opponent_shortnames.sort(key=len, reverse=True)  # longest-first so the most specific match wins
-            _cs_prior_opponents = {
-                resolve_short_opponent(_po, _cs_prior_opponent_shortnames)
-                for _po in played["opponent"].dropna()
-            } - {None}
+            # Same intersection get_data_driven_ktv() does -- shared via prior_opponent_shortnames() so the
+            # two can't drift apart (this exact scoping was fixed here first, then found missing there).
+            _cs_prior_opponents = prior_opponent_shortnames(_cs_uww_box_all, played)
             _cs_uww_side = _cs_uww_side_all[_cs_uww_side_all["opponent"].isin(_cs_prior_opponents)] if _cs_prior_opponents else _cs_uww_side_all.iloc[0:0]
             _cs_n_games = len(played)
             _cs_opp_prof = load_table("uww_player_profiles")
