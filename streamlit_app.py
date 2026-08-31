@@ -2490,9 +2490,12 @@ def render_upcoming_game():
                     if not player_prof.empty:
                         p = player_prof.iloc[0]
                         stat_cols = ["PTS", "REB", "AST", "STL", "BLK", "TO", "FG%", "3P%"]
-                        s_data = [{"Stat": sc, "Avg": str(p.get(sc))} for sc in stat_cols if pd.notna(p.get(sc)) and str(p.get(sc)).strip()]
-                        if s_data:
-                            st.dataframe(pd.DataFrame(s_data), hide_index=True, use_container_width=True)
+                        # One row, stats as columns (was one row PER stat with a "Stat"/"Avg" pair) -- reads
+                        # like a box-score line instead of a tall 8-row list in a narrow dialog.
+                        s_row = {sc: str(p.get(sc)) for sc in stat_cols
+                                 if pd.notna(p.get(sc)) and str(p.get(sc)).strip()}
+                        if s_row:
+                            st.dataframe(pd.DataFrame([s_row]), hide_index=True, use_container_width=True)
                         else:
                             st.caption("No season stats available.")
                     else:
@@ -2501,8 +2504,33 @@ def render_upcoming_game():
                 with st.container(border=True):
                     st.markdown("**Comparable Player**")
                     if not _comparisons.empty:
-                        comp_match = _comparisons[_comparisons["target_player"] == player_name]
-                        if not comp_match.empty:
+                        # Match on target_player AND target_opponent, case/whitespace-tolerantly.
+                        # uww_player_comparisons is built for ONE opponent per parser run -- the most recently
+                        # scouted game (see the parser's `target_opponent`) -- so a name-only match could pull
+                        # a same-named player from a different team's block, and an exact-string match is
+                        # brittle against roster-vs-report name spacing.
+                        _cmp_key = str(player_name).strip().casefold()
+                        comp_match = _comparisons[
+                            (_comparisons["target_player"].astype(str).str.strip().str.casefold() == _cmp_key)
+                            & (_comparisons["target_opponent"].astype(str).str.strip().str.casefold()
+                               == str(short_opponent).strip().casefold())
+                        ] if "target_opponent" in _comparisons.columns else _comparisons[
+                            _comparisons["target_player"].astype(str).str.strip().str.casefold() == _cmp_key
+                        ]
+                        # The whole table targets a different opponent -- say so instead of the generic "no
+                        # comparable player found", which reads as "this player has no match" and hides the
+                        # real cause (the comparison cells were last run against another opponent).
+                        _cmp_targets = (
+                            sorted(_comparisons["target_opponent"].dropna().astype(str).unique())
+                            if "target_opponent" in _comparisons.columns else []
+                        )
+                        if comp_match.empty and _cmp_targets and short_opponent not in _cmp_targets:
+                            st.caption(
+                                f"No comparison data for {short_opponent} yet -- uww_player_comparisons "
+                                f"currently targets {', '.join(_cmp_targets)}. Re-run the parser's player "
+                                f"comparison cells with {short_opponent} as the most recently scouted game."
+                            )
+                        elif not comp_match.empty:
                             comp = comp_match.iloc[0]
                             game_date = comp.get("compared_game_date", "")
                             date_str = f" — {game_date}" if pd.notna(game_date) and str(game_date).strip() else ""
