@@ -1338,6 +1338,20 @@ def render_upcoming_game():
             opp_team_stats["Assists"] = opp_prof_ts["AST"].sum() / _games_est
             opp_team_stats["Blocks"] = opp_prof_ts["BLK"].sum() / _games_est
             opp_team_stats["Steals"] = opp_prof_ts["STL"].sum() / _games_est
+            # TEMPORARY DIAGNOSTIC -- Blocks has now shown 1.0 instead of 1.66 four separate times after
+            # fixes that each appeared correct; rather than guess a fifth time, show the exact raw values.
+            import streamlit as _st_diag
+            with _st_diag.expander("🔧 Debug: Blocks BPG calculation", expanded=True):
+                _st_diag.code(
+                    f"short_opponent                            = {short_opponent!r}\n"
+                    f"_games_est (get_opponent_games_played)    = {_games_est}\n"
+                    f"opp_prof_ts['BLK'].sum()                  = {opp_prof_ts['BLK'].sum()}\n"
+                    f"opp_prof_ts['BLK'].tolist()               = {opp_prof_ts['BLK'].tolist()}\n"
+                    f"=> Blocks computed as                     = {opp_prof_ts['BLK'].sum() / _games_est}\n"
+                    f"\n"
+                    f"uww_opponent_prior_games_pbp rows for opp = "
+                    + str(load_table('uww_opponent_prior_games_pbp')[load_table('uww_opponent_prior_games_pbp')['opponent'] == short_opponent]['game_date'].nunique() if not load_table('uww_opponent_prior_games_pbp').empty else 'table empty')
+                )
             # Expanded opponent stats for All Stats dialog
             def _parse_ma_ts(series):
                 made, att = 0, 0
