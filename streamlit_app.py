@@ -209,9 +209,8 @@ def get_opponent_outcomes(schedule: pd.DataFrame, opponent_names) -> dict:
 
 
 def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
-    """Count of games with a recorded outcome in the opponent's own season schedule (uww_opponent_schedules)
-    THAT CAME BEFORE THEIR MATCHUP AGAINST UWW -- used to convert an opponent's season-TOTAL stats into
-    per-game rates.
+    """Count of games played by the opponent, before their matchup against UWW -- used to convert an
+    opponent's season-TOTAL stats into per-game rates.
 
     In uww_player_profiles, PTS and REB are already per-game averages (no division needed), but AST/STL/BLK/TO
     and the 3PM-A/FTM-A "made-attempted" strings are season-CUMULATIVE totals and need dividing by this
@@ -219,24 +218,29 @@ def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
     division produces an implausible ~200 "assists per game" figure -- only sane as a season sum. Not every
     column in this table shares the same units; don't assume otherwise without checking real output again.)
 
-    CONFIRMED BUG (fixed here): this used to count EVERY game in the opponent's full uww_opponent_schedules
-    entry, with no "before facing UWW" scoping at all -- get_opponent_entering_record() (right below) already
-    correctly slices to pre-UWW games for the exact same table, this one just never got the same treatment.
-    In normal use (reference_date left at the real "today") this barely shows up, since an opponent's
-    schedule naturally only has outcomes recorded up through "now" anyway. But when simulating an earlier
-    point in an already-completed season (exactly how this was caught: an opponent confirmed to have played
-    only 2 games before facing UWW, where this was silently counting their entire, much longer, real season),
-    every AST/STL/BLK-per-game figure derived from this was accordingly deflated by the same ratio. Same
-    "anchor on the first 'vs Whitewater' row, take everything before it" logic and the same multi-meeting
-    caveat as get_opponent_entering_record() -- kept identical on purpose rather than diverging.
-
-    Previously this was a hardcoded `_games_est = 5` sprinkled across several Upcoming Game computations,
-    which silently misstates every opponent's per-game rates except in whichever week they happen to have
-    played exactly 5 games. Falls back to `default` only when no schedule data exists yet for that opponent
-    (e.g. very early season, before any of their games have been scraped/parsed).
+    CONFIRMED BUG (fixed here, a second time): first fix corrected this to slice uww_opponent_schedules down
+    to "games before facing UWW" instead of counting their whole season -- correct in general, but for the
+    CURRENT upcoming opponent specifically it's the WRONG SOURCE now that pbp_box_score_upcoming exists.
+    Confirmed directly: Eureka's BLK/gm showed 1.0 instead of the real 1.67 (5 blocks over 3 games) -- exactly
+    the shape of 5 blocks / 5 (this function's own DEFAULT fallback), meaning uww_opponent_schedules either
+    had no usable pre-UWW entry for them or disagreed with the actual PBP-reconstructed game count. Two
+    independent sources claiming to both mean "games before facing UWW" is exactly the kind of drift this
+    project has hit before (the reference_date scoping bugs). For the CURRENT upcoming opponent, prefer
+    pbp_box_score_upcoming's own game count directly -- the same data uww_player_profiles' BLK (etc.) now
+    comes from after the parser-side override, so numerator and denominator are guaranteed to agree instead of
+    trusting two different tables to have stayed in sync. Falls back to the schedule-based count (then the
+    hardcoded default) only for an opponent that ISN'T the current upcoming one, where no PBP game log exists.
     """
     if not short_opponent:
         return default
+    try:
+        pbp_upcoming = load_table("uww_opponent_prior_games_pbp")
+        if not pbp_upcoming.empty and short_opponent in set(pbp_upcoming["opponent"]):
+            n_pbp = pbp_upcoming.loc[pbp_upcoming["opponent"] == short_opponent, "game_date"].nunique()
+            if n_pbp > 0:
+                return n_pbp
+    except Exception:
+        pass
     opp_sched = load_table("uww_opponent_schedules")
     if opp_sched.empty or "opponent" not in opp_sched.columns:
         return default
