@@ -2100,7 +2100,11 @@ def render_upcoming_game():
             # Sort by rate: MIN→per game, EFF→net per min (min 3 min), others→per minute
             if uww_agg is not None and not uww_agg.empty:
                 if metric_col == "MIN":
-                    _uww_s = uww_agg.assign(_r=uww_agg["MIN"] / uww_agg["GP"].replace(0, float('nan')))
+                    # "Top lineups by minutes" means MOST USED, so rank on the season total. Ranking on MIN/GP
+                    # let a unit that shared the floor for one blowout outrank the starting five's
+                    # entire season (12.6 min in 1 game placed above 203.0 min across 21). The
+                    # per-game figure still prints alongside as context.
+                    _uww_s = uww_agg.assign(_r=uww_agg["MIN"])
                 elif metric_col == "EFF":
                     _uww_s = uww_agg[uww_agg["MIN"] >= 3.0].copy()
                     _uww_s["EFF"] = (_uww_s["+/-"] / _uww_s["MIN"].replace(0, float('nan'))).round(3)
@@ -2112,7 +2116,7 @@ def render_upcoming_game():
                 uww_rows = '<div style="font-size:0.82rem;color:#aaa;">No data</div>'
             if opp_lu is not None and not opp_lu.empty:
                 if metric_col == "MIN":
-                    _opp_s = opp_lu.assign(_r=opp_lu["MIN"] / opp_lu["GP"].replace(0, float('nan')))
+                    _opp_s = opp_lu.assign(_r=opp_lu["MIN"])
                 elif metric_col == "EFF":
                     _opp_s = opp_lu[opp_lu["MIN"] >= 3.0].copy()
                     _opp_s["EFF"] = (_opp_s["+/-"] / _opp_s["MIN"].replace(0, float('nan'))).round(3)
@@ -2194,7 +2198,7 @@ def render_upcoming_game():
         for metric_col, label in metrics:
             if uww_3man is not None and not uww_3man.empty:
                 if metric_col == "MIN":
-                    _uww_s = uww_3man.assign(_r=uww_3man["MIN"] / uww_3man["GP"].replace(0, float('nan')))
+                    _uww_s = uww_3man.assign(_r=uww_3man["MIN"])   # most-used: rank on the season total
                 elif metric_col == "EFF":
                     _uww_s = uww_3man[uww_3man["MIN"] >= 5.0].copy()
                     _uww_s["EFF"] = (_uww_s["+/-"] / _uww_s["MIN"].replace(0, float('nan'))).round(3)
@@ -2206,7 +2210,7 @@ def render_upcoming_game():
                 uww_rows = '<div style="font-size:0.82rem;color:#aaa;">No data</div>'
             if opp_3man is not None and not opp_3man.empty:
                 if metric_col == "MIN":
-                    _opp_s = opp_3man.assign(_r=opp_3man["MIN"] / opp_3man["GP"].replace(0, float('nan')))
+                    _opp_s = opp_3man.assign(_r=opp_3man["MIN"])   # most-used: rank on the season total
                 elif metric_col == "EFF":
                     _opp_s = opp_3man[opp_3man["MIN"] >= 5.0].copy()
                     _opp_s["EFF"] = (_opp_s["+/-"] / _opp_s["MIN"].replace(0, float('nan'))).round(3)
@@ -2338,7 +2342,11 @@ def render_upcoming_game():
             for metric_col, label in metrics:
                 if uww_agg is not None and not uww_agg.empty:
                     if metric_col == "MIN":
-                        _s = uww_agg.assign(_r=uww_agg["MIN"] / uww_agg["GP"].replace(0, float('nan')))
+                        # "Top lineups by minutes" means MOST USED, so rank on the season total. Ranking on MIN/GP
+                        # let a unit that shared the floor for one blowout outrank the starting five's
+                        # entire season (12.6 min in 1 game placed above 203.0 min across 21). The
+                        # per-game figure still prints alongside as context.
+                        _s = uww_agg.assign(_r=uww_agg["MIN"])
                     elif metric_col == "EFF":
                         _s = uww_agg[uww_agg["MIN"] >= min_thresh_eff].copy()
                         _s["EFF"] = (_s["+/-"] / _s["MIN"].replace(0, float('nan'))).round(3)
@@ -2350,7 +2358,7 @@ def render_upcoming_game():
                     uww_rows = '<div style="font-size:0.82rem;color:#aaa;">No data</div>'
                 if opp_lu is not None and not opp_lu.empty:
                     if metric_col == "MIN":
-                        _s = opp_lu.assign(_r=opp_lu["MIN"] / opp_lu["GP"].replace(0, float('nan')))
+                        _s = opp_lu.assign(_r=opp_lu["MIN"])
                     elif metric_col == "EFF":
                         _s = opp_lu[opp_lu["MIN"] >= min_thresh_eff].copy()
                         _s["EFF"] = (_s["+/-"] / _s["MIN"].replace(0, float('nan'))).round(3)
@@ -3443,7 +3451,9 @@ def render_upcoming_game():
                 if not _ag_bench_rows.empty:
                     _ag_bench_rows["_gs"] = _ag_bench_rows.apply(compute_game_score, axis=1)
                     _ag_bench_sum = _ag_bench_rows.groupby("player").agg(GP=("_gs", "count"), Avg=("_gs", "mean")).reset_index()
-                    _ag_bench_sum = _ag_bench_sum[_ag_bench_sum["GP"] >= 3]
+                    # No games-played minimum: every bench player who has logged a game is eligible here,
+                    # so a small sample is surfaced rather than hidden. The games count is shown with the
+                    # figure, so a one-game average is visible as exactly that.
                     if not _ag_bench_sum.empty:
                         _ag_top_bench = _ag_bench_sum.nlargest(1, "Avg").iloc[0]
                         _at_a_glance.append(("\U0001fa91 Bench Trust", str(_ag_top_bench["player"]), f"{_ag_top_bench['Avg']:.1f} avg Game Score off the bench over {int(_ag_top_bench['GP'])} games this season."))
