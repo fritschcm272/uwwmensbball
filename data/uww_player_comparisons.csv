@@ -1,15 +1,13 @@
 target_player,target_position,target_role,target_opponent,target_game_date,compared_opponent,compared_game_date,compared_player,compared_position,compared_role,similarity_score,shared_notes_tags,shared_keys_tags,height_diff_in,stat_similarity,target_PTS,compared_PTS,target_REB,compared_REB,target_AST,compared_AST,target_FG%,compared_FG%,target_3P%,compared_3P%
-Jonah Lauff,F,Starter,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Michael Asman,F,Starter,9.85,three_point_shooter,deny_catch_and_shoot,2.0,0.714,7.8,5.3,3.5,2.4,0.0,0.1,40.7%,53.7%,38.5%,41.4%
-Jaxson Provost,G,Starter,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Corey Thompson,G,Starter,7.62,slasher_driver,,4.0,0.638,19.5,15.0,2.2,2.0,2.2,3.0,51.8%,40.9%,35.3%,40.0%
-Micah Bruer,G,Starter,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Seth Bunders,G,Starter,7.62,,,0.0,0.708,8.0,5.1,3.5,3.6,3.0,1.7,37.9%,35.0%,28.6%,30.3%
-Andrew Coker,F,Starter,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Reyce Allen,F,Bench,7.36,,,0.0,0.785,7.2,7.0,4.5,3.5,1.8,1.5,42.9%,50.0%,33.3%,-
-Jacob Gonzalez,G,Bench,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Omar Gayle,G,Bench,7.25,,,2.0,0.804,4.8,4.0,1.0,1.0,1.2,2.5,37.5%,36.4%,0.0%,0.0%
-Ben Carter,G/F,Starter,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Nathan Kongolo,G/F,Starter,6.97,,,0.0,0.491,6.0,6.0,6.8,3.0,2.5,1.5,41.2%,40.0%,36.4%,50.0%
-Damuzha Moore,F,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Michael Asman,F,Starter,5.46,,,4.0,0.599,2.5,5.3,0.5,2.4,0.2,0.1,33.3%,53.7%,40.0%,41.4%
-Dylan Logsdon,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Caeden Holly,G,Bench,3.35,,,,0.949,0.5,0.0,1.0,0.8,0.0,0.0,-,0.0%,-,-
-Amare Brokemond,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Keenan Rahn,G,Bench,3.29,,,,0.93,2.0,0.4,0.7,0.6,0.0,0.0,33.3%,33.3%,-,-
-Max Richardson,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Jake Thomsen,G,Bench,3.04,,,,0.847,2.8,1.3,0.8,0.8,0.2,0.1,42.9%,38.5%,40.0%,30.0%
-Colin DeLaere,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Keenan Rahn,G,Bench,2.97,,,,0.824,1.2,0.4,1.0,0.6,0.2,0.0,25.0%,33.3%,0.0%,-
-Tony Mabon,,Bench,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Brennan Webb,G,Bench,2.94,,,,0.813,2.0,4.5,2.0,2.0,0.0,0.0,20.0%,30.0%,-,28.6%
-Blake Logsdon,,Bench,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Jaden Ross,G,Bench,2.84,,,,0.779,1.2,4.0,1.2,0.0,0.0,0.0,66.7%,66.7%,100.0%,-
-Nolan Kerr,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Jake Thomsen,G,Bench,2.77,,,,0.756,2.2,1.3,1.2,0.8,0.5,0.1,40.0%,38.5%,50.0%,30.0%
+Deng Makeer,G,Bench,Loras Duhawks,"Fri, Mar 6",UW-Stout Blue Devils,"Sat, Jan 17",Jackson Wilhelmson,G,Bench,12.39,three_point_shooter,deny_catch_and_shoot,2.0,0.853,4.6,4.8,1.5,1.3,10,2,37.7%,40.8%,34.9%,38.6%
+Kyle Kober,G,Bench,Loras Duhawks,"Fri, Mar 6",UW-River Falls Falcons,"Sat, Jan 10",Gavin Ralph,G,Starter,12.12,"slasher_driver, three_point_shooter",anticipate_move,0.0,0.705,8.9,9.4,2.7,5.7,34,30,42.6%,46.5%,32.5%,31.6%
+Connor Mosele,G,Bench,Loras Duhawks,"Fri, Mar 6",Elmhurst Bluejays,"Tue, Dec 2",Talen Pearson,G,Bench,11.97,three_point_shooter,deny_catch_and_shoot,2.0,0.713,1.0,2.3,0.8,0.8,12,5,16.7%,28.6%,25.0%,15.4%
+Jack Haynes,F,Starter,Loras Duhawks,"Fri, Mar 6",Alma Scots,"Sat, Dec 20",Korbin Heitzman,F,Starter,11.59,"post_scorer, slasher_driver",post_defense,0.0,0.626,16.1,14.9,9.4,8.8,24,13,55.5%,45.7%,31.0%,16.7%
+Nolan Berendes,F,Starter,Loras Duhawks,"Fri, Mar 6",Lawrence Vikings,"Wed, Dec 10",Nicholas Gouriotis,F,Starter,11.51,"slasher_driver, three_point_shooter",deny_catch_and_shoot,1.0,0.448,12.8,10.4,6.8,4.0,38,14,44.5%,47.6%,38.0%,46.2%
+Damyen Jackson,G,Starter,Loras Duhawks,"Fri, Mar 6",UW-River Falls Falcons,"Sat, Jan 10",Gavin Ralph,G,Starter,11.08,"slasher_driver, three_point_shooter",anticipate_move,3.0,0.527,7.3,9.4,2.7,5.7,46,30,42.9%,46.5%,37.1%,31.6%
+Johnny Semany,G,Starter,Loras Duhawks,"Fri, Mar 6",UW-Eau Claire Blugolds,"Sat, Jan 24",Andre Renta,G,Starter,10.19,"slasher_driver, three_point_shooter",,0.0,0.564,6.1,12.6,2.4,3.2,52,71,43.4%,41.5%,32.7%,36.0%
+Gavin Sarvis,G,Starter,Loras Duhawks,"Fri, Mar 6",UW-Eau Claire Blugolds,"Sat, Jan 24",Andre Renta,G,Starter,7.33,,,2.0,0.833,13.2,12.6,3.8,3.2,75,71,44.8%,41.5%,30.4%,36.0%
+Patrick Quarnstrom,,Bench,Loras Duhawks,"Fri, Mar 6",UW-Eau Claire Blugolds,"Sat, Jan 24",Roman Richards,F,Bench,3.2,,,,0.901,1.5,1.8,1.4,1.4,7,5,40.9%,37.9%,14.3%,20.0%
+Patrick Coen,,Bench,Loras Duhawks,"Fri, Mar 6",UW-La Crosse Eagles,"Wed, Jan 14",Ben Goedheer,F,Bench,3.18,,,,0.893,1.7,1.6,1.5,1.4,3,1,47.8%,41.7%,30.8%,33.3%
+Brock Massey,,Bench,Loras Duhawks,"Fri, Mar 6",UW-Platteville Pioneers,"Wed, Jan 21",Kaden MacKenize,G,Bench,3.03,,,,0.844,4.2,3.2,2.6,1.9,38,40,41.9%,40.3%,21.4%,27.8%
+Dylan Kurt,,Bench,Loras Duhawks,"Fri, Mar 6",UW-Eau Claire Blugolds,"Sat, Jan 24",Kenji Scales,G,Bench,2.94,,,,0.813,8.0,9.7,2.5,3.6,37,34,39.8%,37.7%,31.3%,28.6%

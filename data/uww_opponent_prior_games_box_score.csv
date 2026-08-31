@@ -1,87 +1,665 @@
 opponent,game_date,team,player,PTS,FGM,FGA,FG3M,FG3A,FTM,FTA,OREB,DREB,AST,STL,BLK,TO,PF,REB,FG%,3P%,FT%,MIN
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Adrian Pelszynski,14,6,13,2,6,0,1,0,8,4,2,0,2,3,8,46.2,33.3,0.0,31.8
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Antony Fernandez,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,4.2
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Braydon Murphy,9,4,13,0,0,1,3,7,7,2,1,2,4,2,14,30.8,,33.3,30.4
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Chase LeFevre,4,1,3,0,1,2,4,3,1,3,0,0,0,4,4,33.3,0.0,50.0,25.0
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Dominic Crapia,17,4,11,1,7,8,9,0,6,1,4,0,2,2,6,36.4,14.3,88.9,36.0
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Elijah Daugherty,3,1,6,1,5,0,0,1,3,2,0,0,1,1,4,16.7,20.0,,14.8
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Emmanuel Fuller,9,4,7,0,0,1,2,1,4,1,1,0,1,4,5,57.1,,50.0,18.6
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Frank Paszkowski,3,1,7,1,5,0,0,1,1,0,1,1,1,1,2,14.3,20.0,,16.9
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Ismael Ndiaye,2,1,4,0,0,0,0,0,1,1,0,0,0,3,1,25.0,,,7.9
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Lucas Underwood,24,9,17,3,10,3,5,0,1,3,2,0,5,3,1,52.9,30.0,60.0,36.5
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Andrew Coker,11,5,9,1,2,0,0,2,5,0,2,0,2,4,7,55.6,50.0,,20.9
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Andrew Wells,2,0,2,0,0,2,2,0,2,0,0,2,0,1,2,0.0,,100.0,10.8
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Ben Carter,8,2,6,2,5,2,2,3,11,6,3,0,7,2,14,33.3,40.0,100.0,34.7
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Blake Logsdon,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0.0,,,2.3
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Colin DeLaere,0,0,1,0,0,0,1,0,1,0,0,0,0,2,1,0.0,,0.0,6.0
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Damuzha Moore,5,2,5,1,1,0,2,0,0,1,1,0,1,2,0,40.0,100.0,0.0,14.3
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Jacob Gonzalez,2,1,3,0,0,0,1,0,2,0,0,0,0,1,2,33.3,,0.0,12.6
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Jaxson Provost,30,9,17,3,4,9,12,1,2,3,5,0,2,2,3,52.9,75.0,75.0,32.1
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Jonah Lauff,18,7,12,2,5,2,2,1,6,0,0,0,0,1,7,58.3,40.0,100.0,27.3
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Max Richardson,3,0,2,0,1,3,4,1,1,0,0,0,3,0,2,0.0,0.0,75.0,10.3
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Micah Bruer,6,2,4,1,3,1,2,0,4,3,0,0,5,4,4,50.0,33.3,50.0,31.2
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Nolan Kerr,3,1,2,1,1,0,0,0,1,0,0,0,1,1,1,50.0,100.0,,11.3
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Tony Mabon,2,1,5,0,0,0,0,1,1,0,0,0,0,1,2,20.0,,,8.2
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Amare Brokemond,0,0,2,0,0,0,0,0,1,0,0,0,0,0,1,0.0,,,6.4
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Andrew Coker,11,4,12,1,5,2,2,3,4,3,0,0,0,1,7,33.3,20.0,100.0,23.1
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Andrew Wells,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,3.5
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Ben Carter,0,0,3,0,2,0,2,0,4,2,0,1,2,1,4,0.0,0.0,0.0,26.0
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Blake Logsdon,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,3.9
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Colin DeLaere,1,0,0,0,0,1,2,0,1,0,1,0,0,1,1,,,50.0,2.9
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Damuzha Moore,3,1,5,1,4,0,0,0,2,0,0,2,1,4,2,20.0,25.0,,14.5
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Jacob Gonzalez,5,2,3,0,1,1,1,0,0,2,1,0,2,0,0,66.7,0.0,100.0,13.2
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Jaxson Provost,26,11,20,2,6,2,4,1,1,2,0,0,2,1,2,55.0,33.3,50.0,29.3
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Jonah Lauff,5,2,5,1,2,0,0,0,4,0,0,0,1,0,4,40.0,50.0,,19.7
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Max Richardson,3,1,1,1,1,0,0,0,0,0,0,0,0,2,0,100.0,100.0,,13.6
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Micah Bruer,16,5,11,1,3,5,5,0,3,4,1,0,0,3,3,45.5,33.3,100.0,23.8
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Nicholaus Harris-Huntley,0,0,2,0,0,0,0,0,0,0,2,0,1,2,0,0.0,,,4.9
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Nolan Kerr,2,1,3,0,1,0,0,3,0,1,1,0,0,1,3,33.3,0.0,,13.4
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Brock Card,0,0,1,0,1,0,0,0,0,0,0,0,1,1,0,0.0,0.0,,2.2
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Cameron Thomas,16,6,16,2,6,2,2,4,1,0,0,0,2,2,5,37.5,33.3,100.0,25.2
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Connor Watson,0,0,2,0,1,0,0,0,1,1,0,0,0,3,1,0.0,0.0,,12.0
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Jase Whiteman,8,3,5,2,4,0,0,0,1,2,1,0,0,0,1,60.0,50.0,,13.5
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Jason Huber,3,1,4,1,4,0,0,9,4,4,0,2,1,2,13,25.0,25.0,,21.8
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Jay Brown,3,1,3,0,0,1,2,2,3,1,0,0,1,0,5,33.3,,50.0,11.6
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Kamran Banks,14,4,8,1,2,5,6,1,3,0,2,0,1,1,4,50.0,50.0,83.3,18.7
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Kyle Taylor,16,4,9,2,5,6,6,0,1,4,1,0,2,3,1,44.4,40.0,100.0,27.7
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Max Maring,13,5,10,0,0,3,7,5,1,2,0,2,1,1,6,50.0,,42.9,25.8
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Payton Crims,4,2,2,0,0,0,0,2,1,1,0,0,1,1,3,100.0,,,8.2
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Zay Brown,13,5,17,0,2,3,7,5,11,3,0,1,1,2,16,29.4,0.0,42.9,31.4
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Amare Brokemond,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.4
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Andrew Coker,0,0,3,0,1,0,0,0,2,2,0,0,3,1,2,0.0,0.0,,14.2
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Andrew Wells,4,1,4,0,1,2,2,1,0,0,1,0,1,2,1,25.0,0.0,100.0,12.5
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Ben Carter,6,2,3,2,2,0,0,0,7,2,1,0,1,1,7,66.7,100.0,,21.7
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Blake Logsdon,2,1,1,0,0,0,1,0,4,0,0,0,1,0,4,100.0,,0.0,7.0
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Caden Latta,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,1.7
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Colin DeLaere,4,2,4,0,2,0,0,0,0,0,1,0,2,1,0,50.0,0.0,,12.8
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Damuzha Moore,2,1,2,0,0,0,0,0,0,0,0,0,0,1,0,50.0,,,13.1
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Dylan Logsdon,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,1.7
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Jacob Gonzalez,6,3,9,0,0,0,1,0,1,0,1,0,1,2,1,33.3,,0.0,17.5
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Jaxson Provost,10,4,10,0,3,2,2,1,3,1,0,0,2,1,4,40.0,0.0,100.0,21.5
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Joel Ewald,1,0,0,0,0,1,2,0,0,0,0,0,0,1,0,,,50.0,4.9
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Jonah Lauff,2,0,6,0,3,2,2,0,0,0,0,0,0,1,0,0.0,0.0,100.0,12.4
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Max Richardson,0,0,1,0,1,0,0,0,0,0,0,0,0,2,0,0.0,0.0,,9.1
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Micah Bruer,10,4,9,2,4,0,0,3,3,2,0,0,4,1,6,44.4,50.0,,19.3
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Mussie Hayelom,2,1,1,0,0,0,0,0,0,0,0,0,2,1,0,100.0,,,4.9
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Nicholaus Harris-Huntley,0,0,2,0,0,0,0,0,0,0,0,0,1,1,0,0.0,,,5.1
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Nolan Kerr,2,1,3,0,0,0,0,0,0,1,0,0,1,0,0,33.3,,,10.6
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Santino Ruma,2,1,1,0,0,0,0,0,1,0,1,0,0,1,1,100.0,,,1.7
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Zachy Qader,0,0,1,0,0,0,0,0,1,0,0,0,1,0,1,0.0,,,3.5
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Anthony Przybilla,14,7,7,0,0,0,0,1,2,3,1,0,0,1,3,100.0,,,15.7
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Calvin Kapral,5,2,2,0,0,1,2,1,1,0,0,0,1,1,2,100.0,,50.0,10.7
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Colby Smith,4,1,7,0,6,2,2,0,2,1,1,0,0,0,2,14.3,0.0,100.0,12.3
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Connor May,8,3,5,2,3,0,0,1,2,3,2,0,0,0,3,60.0,66.7,,14.0
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,George Gale,2,1,3,0,1,0,0,1,4,1,0,2,0,1,5,33.3,0.0,,11.2
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Jack Cubbage,6,2,2,0,0,2,5,0,1,0,0,1,1,0,1,100.0,,40.0,8.6
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Jake Davis,2,1,2,0,1,0,0,1,1,0,2,0,0,0,2,50.0,0.0,,9.0
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Josh Kim,7,3,6,1,2,0,0,1,1,1,1,0,1,1,2,50.0,50.0,,13.2
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Kyle Beedon,3,1,2,1,2,0,0,0,0,0,1,0,0,1,0,50.0,50.0,,8.1
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Lleyton Thomas-Johnson,14,5,7,2,3,2,2,1,4,1,1,0,1,2,5,71.4,66.7,100.0,17.8
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Lucas Vogel,8,3,4,1,2,1,2,0,2,1,3,0,1,1,2,75.0,50.0,50.0,14.4
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Ryan Cohen,8,2,5,2,4,2,2,0,1,3,1,0,0,3,1,40.0,50.0,100.0,16.8
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Theo Rocca,8,2,7,2,5,2,4,1,4,2,1,0,0,1,5,28.6,40.0,50.0,15.4
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Will Grudzinski,8,2,7,2,6,2,4,0,3,3,1,0,1,0,3,28.6,33.3,50.0,16.3
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Yogi Oliff,2,1,1,0,0,0,0,0,3,2,0,0,1,0,3,100.0,,,6.6
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Yusuf Cisse,1,0,0,0,0,1,2,0,1,1,2,0,0,2,1,,,50.0,7.8
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Bethany Lutheran Vikings,2025-12-31,Bethany Lutheran Vikings,Amory Peterson,0,0,3,0,1,0,0,2,3,1,0,0,1,3,5,0.0,0.0,,11.0
+Bethany Lutheran Vikings,2025-12-31,Bethany Lutheran Vikings,Blue Smaller,6,3,3,0,0,0,0,1,2,2,1,1,1,4,3,100.0,,,26.2
+Bethany Lutheran Vikings,2025-12-31,Bethany Lutheran Vikings,Brady Ingersoll,5,1,3,1,2,2,2,1,1,0,0,0,1,1,2,33.3,50.0,100.0,11.2
+Bethany Lutheran Vikings,2025-12-31,Bethany Lutheran Vikings,Cooper Mensink,12,4,7,4,7,0,0,0,1,0,1,0,0,2,1,57.1,57.1,,19.6
+Bethany Lutheran Vikings,2025-12-31,Bethany Lutheran Vikings,Elliot Whitney,6,3,6,0,0,0,0,1,4,5,0,0,2,1,5,50.0,,,27.6
+Bethany Lutheran Vikings,2025-12-31,Bethany Lutheran Vikings,Hudsen Jenniges,5,2,2,1,1,0,0,0,1,0,0,0,0,1,1,100.0,100.0,,5.6
+Bethany Lutheran Vikings,2025-12-31,Bethany Lutheran Vikings,Jack Brockmann,18,5,8,1,1,7,8,1,1,4,2,1,4,3,2,62.5,100.0,87.5,31.3
+Bethany Lutheran Vikings,2025-12-31,Bethany Lutheran Vikings,Max Briggs,21,7,16,3,6,4,5,0,4,1,0,0,2,2,4,43.8,50.0,80.0,31.4
+Bethany Lutheran Vikings,2025-12-31,Bethany Lutheran Vikings,Rysley Borman,0,0,4,0,2,0,0,0,0,2,0,0,0,0,0,0.0,0.0,,11.2
+Bethany Lutheran Vikings,2025-12-31,Bethany Lutheran Vikings,Will Walter,14,5,8,4,7,0,0,0,1,1,0,0,1,5,1,62.5,57.1,,23.2
+Bethany Lutheran Vikings,2025-12-31,Loras Duhawks,Brock Massey,11,4,5,1,1,2,2,0,2,3,1,0,0,3,2,80.0,100.0,100.0,18.3
+Bethany Lutheran Vikings,2025-12-31,Loras Duhawks,Damyen Jackson,10,5,6,0,1,0,0,2,1,1,1,0,1,1,3,83.3,0.0,,17.2
+Bethany Lutheran Vikings,2025-12-31,Loras Duhawks,Deng Makeer,9,3,4,3,4,0,0,1,1,1,0,2,0,0,2,75.0,75.0,,24.4
+Bethany Lutheran Vikings,2025-12-31,Loras Duhawks,Dylan Kurt,5,2,3,0,0,1,3,0,0,1,0,0,2,1,0,66.7,,33.3,13.6
+Bethany Lutheran Vikings,2025-12-31,Loras Duhawks,Gavin Sarvis,18,5,7,2,3,6,6,1,4,2,3,1,1,1,5,71.4,66.7,100.0,24.3
+Bethany Lutheran Vikings,2025-12-31,Loras Duhawks,Jack Haynes,17,4,10,0,1,9,11,2,5,1,1,0,1,1,7,40.0,0.0,81.8,16.4
+Bethany Lutheran Vikings,2025-12-31,Loras Duhawks,Johnny Semany,10,5,7,0,0,0,1,1,1,1,0,0,1,2,2,71.4,,0.0,23.2
+Bethany Lutheran Vikings,2025-12-31,Loras Duhawks,Kyle Kober,2,1,5,0,2,0,0,0,2,1,1,0,2,1,2,20.0,0.0,,22.5
+Bethany Lutheran Vikings,2025-12-31,Loras Duhawks,Nolan Berendes,9,4,11,1,4,0,0,2,7,3,0,1,1,3,9,36.4,25.0,,34.4
+Bethany Lutheran Vikings,2025-12-31,Loras Duhawks,Patrick Coen,2,1,2,0,1,0,0,0,0,0,2,0,0,0,0,50.0,0.0,,4.0
+Blackburn Beavers,2025-11-14,Blackburn Beavers,Bradyn Pieper,0,0,1,0,1,0,0,0,0,0,0,0,2,1,0,0.0,0.0,,7.1
+Blackburn Beavers,2025-11-14,Blackburn Beavers,Camden Nelson,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,5.2
+Blackburn Beavers,2025-11-14,Blackburn Beavers,Cooper Carter,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,1.4
+Blackburn Beavers,2025-11-14,Blackburn Beavers,Darius Duff,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,,,,6.1
+Blackburn Beavers,2025-11-14,Blackburn Beavers,Evan Jordan,17,7,12,0,3,3,5,0,6,0,4,0,1,1,6,58.3,0.0,60.0,36.2
+Blackburn Beavers,2025-11-14,Blackburn Beavers,Jaylen Jeter,16,4,7,1,2,7,9,1,1,3,2,0,2,3,2,57.1,50.0,77.8,28.6
+Blackburn Beavers,2025-11-14,Blackburn Beavers,Kamerin Carter,8,4,12,0,2,0,0,0,1,2,1,0,6,4,1,33.3,0.0,,24.1
+Blackburn Beavers,2025-11-14,Blackburn Beavers,Kcion Welch,12,5,6,0,1,2,6,0,6,1,1,1,4,4,6,83.3,0.0,33.3,35.8
+Blackburn Beavers,2025-11-14,Blackburn Beavers,Nick Cook,1,0,3,0,1,1,2,1,2,0,0,0,2,2,3,0.0,0.0,50.0,9.0
+Blackburn Beavers,2025-11-14,Blackburn Beavers,Owen Walter,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.6
+Blackburn Beavers,2025-11-14,Blackburn Beavers,Payton Cook,9,4,5,1,1,0,1,1,2,2,2,0,2,2,3,80.0,100.0,0.0,30.9
+Blackburn Beavers,2025-11-14,Blackburn Beavers,Victor McGill,3,1,2,1,1,0,0,0,2,1,1,1,1,0,2,50.0,100.0,,13.0
+Blackburn Beavers,2025-11-14,Loras Duhawks,Connor Mosele,0,0,2,0,1,0,0,0,0,2,0,0,0,0,0,0.0,0.0,,11.3
+Blackburn Beavers,2025-11-14,Loras Duhawks,Damyen Jackson,3,1,4,0,1,1,2,1,3,2,0,1,3,1,4,25.0,0.0,50.0,18.9
+Blackburn Beavers,2025-11-14,Loras Duhawks,Deng Makeer,20,7,15,6,12,0,0,2,2,1,1,0,0,3,4,46.7,50.0,,19.8
+Blackburn Beavers,2025-11-14,Loras Duhawks,Dylan Kurt,15,3,9,1,5,8,8,2,4,1,3,0,4,3,6,33.3,20.0,100.0,22.5
+Blackburn Beavers,2025-11-14,Loras Duhawks,Emmett Loew,7,3,8,1,5,0,0,1,0,1,0,0,2,2,1,37.5,20.0,,25.3
+Blackburn Beavers,2025-11-14,Loras Duhawks,Jack Haynes,13,6,9,0,0,1,2,7,9,2,1,0,2,1,16,66.7,,50.0,30.5
+Blackburn Beavers,2025-11-14,Loras Duhawks,Johnny Semany,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0.0,0.0,,2.6
+Blackburn Beavers,2025-11-14,Loras Duhawks,Kyle Kober,5,1,5,0,3,3,4,4,2,2,1,0,4,2,6,20.0,0.0,75.0,23.2
+Blackburn Beavers,2025-11-14,Loras Duhawks,Nolan Berendes,1,0,6,0,6,1,2,0,5,1,0,0,0,0,5,0.0,0.0,50.0,22.8
+Blackburn Beavers,2025-11-14,Loras Duhawks,Patrick Coen,0,0,0,0,0,0,0,0,0,1,0,0,1,4,0,,,,5.8
+Blackburn Beavers,2025-11-14,Loras Duhawks,Patrick Quarnstrom,7,3,6,1,3,0,0,0,1,2,0,0,2,3,1,50.0,33.3,,16.3
+Buena Vista Beavers,2026-01-10,Buena Vista Beavers,Adam Bryte,11,4,13,2,6,1,1,1,4,1,1,2,0,2,5,30.8,33.3,100.0,178.6
+Buena Vista Beavers,2026-01-10,Buena Vista Beavers,August Hubbard,10,4,4,2,2,0,0,0,0,0,0,0,1,0,0,100.0,100.0,,58.7
+Buena Vista Beavers,2026-01-10,Buena Vista Beavers,Carter Sievers,19,4,7,2,2,9,10,0,1,4,0,0,2,1,1,57.1,100.0,90.0,193.6
+Buena Vista Beavers,2026-01-10,Buena Vista Beavers,Eli Salas,0,0,1,0,1,0,0,0,2,0,0,0,0,1,2,0.0,0.0,,14.2
+Buena Vista Beavers,2026-01-10,Buena Vista Beavers,Jackson Jones,8,3,5,1,2,1,2,0,0,1,0,0,0,3,0,60.0,50.0,50.0,237.7
+Buena Vista Beavers,2026-01-10,Buena Vista Beavers,Jaden Jones,6,2,5,0,1,2,2,0,3,2,1,0,3,1,3,40.0,0.0,100.0,238.1
+Buena Vista Beavers,2026-01-10,Buena Vista Beavers,Keaton Flaherty,4,1,3,0,0,2,2,0,6,0,0,0,1,2,6,33.3,,100.0,101.0
+Buena Vista Beavers,2026-01-10,Buena Vista Beavers,Kyle Sternberg,8,3,7,0,3,2,5,2,4,1,1,0,3,3,6,42.9,0.0,40.0,102.1
+Buena Vista Beavers,2026-01-10,Buena Vista Beavers,Landon Blacthford,0,0,2,0,1,0,0,1,0,0,0,0,1,0,1,0.0,0.0,,3.6
+Buena Vista Beavers,2026-01-10,Buena Vista Beavers,Max Devries,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0.0,0.0,,14.2
+Buena Vista Beavers,2026-01-10,Buena Vista Beavers,Ned Hayes,0,0,0,0,0,0,0,0,2,0,0,0,1,1,2,,,,149.7
+Buena Vista Beavers,2026-01-10,Buena Vista Beavers,Shane Bierle,3,1,2,1,1,0,0,0,4,0,0,0,4,1,4,50.0,100.0,,175.1
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Athan Berchos,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,15.9
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Brock Massey,6,2,6,0,4,2,2,2,3,6,1,0,0,3,5,33.3,0.0,100.0,141.7
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Cooper Grams,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Damyen Jackson,8,3,4,2,3,0,0,0,4,3,2,1,0,3,4,75.0,66.7,,196.6
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Deng Makeer,6,2,3,2,3,0,0,0,0,0,0,0,1,1,0,66.7,66.7,,121.3
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Dylan Kurt,13,3,8,3,7,4,4,0,0,1,1,0,1,0,0,37.5,42.9,100.0,151.0
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Ethan Meyer,2,1,1,0,0,0,0,0,1,0,1,0,0,0,1,100.0,,,15.9
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Gavin Sarvis,17,7,9,2,4,1,3,2,5,2,1,0,2,3,7,77.8,50.0,33.3,288.9
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Jack Haynes,11,5,12,1,4,0,1,3,3,2,2,0,1,1,6,41.7,25.0,0.0,253.6
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Johnny Semany,26,9,16,6,11,2,2,0,4,1,0,0,0,4,4,56.2,54.5,100.0,129.0
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Juvon Crawford,1,0,0,0,0,1,2,0,1,0,0,0,0,0,1,,,50.0,
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Kyle Kober,0,0,2,0,2,0,0,1,1,1,0,0,0,1,2,0.0,0.0,,81.8
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Nolan Berendes,6,2,4,2,3,0,0,0,4,1,1,0,0,0,4,50.0,66.7,,187.8
+Buena Vista Beavers,2026-01-10,Loras Duhawks,Patrick Coen,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,
+Buena Vista Beavers,2026-02-21,Buena Vista Beavers,Adam Bryte,7,2,11,0,3,3,4,2,1,1,0,1,0,5,3,18.2,0.0,75.0,178.6
+Buena Vista Beavers,2026-02-21,Buena Vista Beavers,August Hubbard,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,58.7
+Buena Vista Beavers,2026-02-21,Buena Vista Beavers,Carter Sievers,17,4,14,1,4,8,9,1,3,2,2,0,2,2,4,28.6,25.0,88.9,193.6
+Buena Vista Beavers,2026-02-21,Buena Vista Beavers,Jackson Jones,17,5,9,3,7,4,4,2,4,3,0,0,0,1,6,55.6,42.9,100.0,237.7
+Buena Vista Beavers,2026-02-21,Buena Vista Beavers,Jayden Brink,14,5,10,2,6,2,3,0,4,2,0,0,3,2,4,50.0,33.3,66.7,310.4
+Buena Vista Beavers,2026-02-21,Buena Vista Beavers,Keaton Flaherty,2,1,1,0,0,0,1,0,2,0,0,2,1,3,2,100.0,,0.0,101.0
+Buena Vista Beavers,2026-02-21,Buena Vista Beavers,Kyle Sternberg,8,2,8,0,1,4,4,2,3,2,2,0,1,3,5,25.0,0.0,100.0,102.1
+Buena Vista Beavers,2026-02-21,Buena Vista Beavers,Ned Hayes,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0.0,0.0,,149.7
+Buena Vista Beavers,2026-02-21,Buena Vista Beavers,Shane Bierle,0,0,1,0,0,0,0,1,4,3,0,0,0,2,5,0.0,,,175.1
+Buena Vista Beavers,2026-02-21,Loras Duhawks,Brock Massey,0,0,1,0,1,0,0,0,1,1,0,0,1,2,1,0.0,0.0,,141.7
+Buena Vista Beavers,2026-02-21,Loras Duhawks,Connor Mosele,2,0,1,0,0,2,2,0,1,0,0,0,1,1,1,0.0,,100.0,153.8
+Buena Vista Beavers,2026-02-21,Loras Duhawks,Damyen Jackson,5,2,9,0,5,1,2,0,0,5,0,0,2,4,0,22.2,0.0,50.0,196.6
+Buena Vista Beavers,2026-02-21,Loras Duhawks,Deng Makeer,0,0,3,0,3,0,0,0,0,0,0,0,0,1,0,0.0,0.0,,121.3
+Buena Vista Beavers,2026-02-21,Loras Duhawks,Gavin Sarvis,20,5,9,1,3,9,10,2,2,2,0,0,1,3,4,55.6,33.3,90.0,288.9
+Buena Vista Beavers,2026-02-21,Loras Duhawks,Jack Haynes,16,8,13,0,2,0,2,4,11,1,3,1,2,3,15,61.5,0.0,0.0,253.6
+Buena Vista Beavers,2026-02-21,Loras Duhawks,Johnny Semany,2,1,3,0,0,0,0,0,2,3,0,0,2,3,2,33.3,,,129.0
+Buena Vista Beavers,2026-02-21,Loras Duhawks,Kyle Kober,4,0,8,0,3,4,4,2,2,1,0,0,0,3,4,0.0,0.0,100.0,81.8
+Buena Vista Beavers,2026-02-21,Loras Duhawks,Lukas Balling,0,0,0,0,0,0,0,2,0,0,0,0,0,0,2,,,,3.8
+Buena Vista Beavers,2026-02-21,Loras Duhawks,Nolan Berendes,13,4,9,3,7,2,2,2,6,0,2,2,3,2,8,44.4,42.9,100.0,187.8
+Buena Vista Beavers,2026-02-21,Loras Duhawks,Patrick Quarnstrom,0,0,0,0,0,0,0,0,1,2,0,1,0,0,1,,,,32.2
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Alex Ruba,8,4,6,0,1,0,0,2,1,0,0,0,2,1,3,66.7,0.0,,183.3
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Alier Agau,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.0
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Anthony Gott,6,3,5,0,0,0,0,2,3,1,0,1,2,2,5,60.0,,,204.8
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Brad Curren,0,0,0,0,0,0,0,0,0,1,0,0,2,0,0,,,,148.4
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Braylon Thomsen,12,4,10,4,8,0,2,0,3,0,1,0,4,3,3,40.0,50.0,0.0,206.2
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Carson Jones,9,4,9,0,4,1,3,1,0,0,0,0,0,2,1,44.4,0.0,33.3,170.7
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Derek Thissen,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,6.3
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Evan Hatcher,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Grant Uecker,6,2,11,2,8,0,0,4,5,4,1,1,3,1,9,18.2,25.0,,292.8
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Kip Tupa,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.0
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Kyle Cason,14,5,13,0,3,4,5,1,5,2,3,0,4,1,6,38.5,0.0,80.0,236.3
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Owen Schipper,3,1,4,1,3,0,0,0,1,2,1,0,3,2,1,25.0,33.3,,215.4
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Ross Kusel,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,,,,6.3
+Central (IA) Dutch,2026-01-07,Central (IA) Dutch,Sage Suntken,2,0,2,0,2,2,2,0,1,1,0,0,1,1,1,0.0,0.0,100.0,82.2
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Athan Berchos,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,53.3
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Brock Massey,7,3,4,1,2,0,0,0,4,2,3,1,2,2,4,75.0,50.0,,155.5
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Cooper Grams,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,7.0
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Damyen Jackson,6,2,3,0,1,2,2,1,2,1,1,0,2,1,3,66.7,0.0,100.0,145.2
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Deng Makeer,10,4,7,2,4,0,0,0,0,0,0,0,1,1,0,57.1,50.0,,148.8
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Dylan Kurt,5,1,4,1,2,2,2,1,1,1,1,1,0,1,2,25.0,50.0,100.0,180.5
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Ethan Meyer,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,6.8
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Gavin Sarvis,22,6,12,4,5,6,8,2,5,5,2,0,1,1,7,50.0,80.0,75.0,222.9
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Jack Haynes,20,9,14,0,1,2,3,5,5,1,0,0,3,2,10,64.3,0.0,66.7,160.0
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Jim Navarrete,2,1,2,0,0,0,0,0,0,0,0,0,0,0,0,50.0,,,6.8
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Johnny Semany,8,3,6,1,3,1,2,0,1,2,4,0,2,0,1,50.0,33.3,50.0,189.3
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Juvon Crawford,3,1,1,1,1,0,0,0,0,0,0,0,0,0,0,100.0,100.0,,6.8
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Kyle Kober,0,0,5,0,2,0,0,0,1,1,0,0,2,0,1,0.0,0.0,,164.8
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Lukas Balling,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,7.0
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Nolan Berendes,6,3,5,0,1,0,0,2,8,2,0,0,1,3,10,60.0,0.0,,202.0
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Patrick Coen,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,52.5
+Central (IA) Dutch,2026-01-07,Loras Duhawks,Patrick Quarnstrom,1,0,1,0,0,1,2,0,0,0,0,0,0,0,0,0.0,,50.0,76.0
+Central (IA) Dutch,2026-02-04,Central (IA) Dutch,Alex Ruba,5,2,2,1,1,0,0,0,1,2,0,1,0,1,1,100.0,100.0,,183.3
+Central (IA) Dutch,2026-02-04,Central (IA) Dutch,Anthony Gott,7,3,7,0,0,1,3,3,3,0,0,0,1,4,6,42.9,,33.3,204.8
+Central (IA) Dutch,2026-02-04,Central (IA) Dutch,Boaz Clark,5,2,2,1,1,0,0,1,0,1,0,0,0,0,1,100.0,100.0,,30.1
+Central (IA) Dutch,2026-02-04,Central (IA) Dutch,Brad Curren,0,0,1,0,1,0,0,0,1,1,1,0,4,0,1,0.0,0.0,,148.4
+Central (IA) Dutch,2026-02-04,Central (IA) Dutch,Braylon Thomsen,15,5,10,1,3,4,5,2,4,1,0,0,4,2,6,50.0,33.3,80.0,206.2
+Central (IA) Dutch,2026-02-04,Central (IA) Dutch,Carson Jones,2,1,7,0,3,0,0,1,3,0,0,0,0,1,4,14.3,0.0,,170.7
+Central (IA) Dutch,2026-02-04,Central (IA) Dutch,Kyle Cason,21,9,18,0,4,3,3,2,4,1,1,1,6,1,6,50.0,0.0,100.0,236.3
+Central (IA) Dutch,2026-02-04,Central (IA) Dutch,Owen Schipper,6,3,7,0,3,0,0,0,3,0,0,0,1,0,3,42.9,0.0,,215.4
+Central (IA) Dutch,2026-02-04,Central (IA) Dutch,Sage Suntken,5,2,4,1,2,0,0,0,0,1,0,0,1,0,0,50.0,50.0,,82.2
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Athan Berchos,3,1,3,1,3,0,0,0,0,0,0,0,1,0,0,33.3,33.3,,53.3
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Brock Massey,0,0,2,0,1,0,0,1,3,0,0,0,0,0,4,0.0,0.0,,155.5
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Cooper Grams,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,7.0
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Damyen Jackson,6,2,5,2,2,0,0,0,0,1,1,0,1,1,0,40.0,100.0,,145.2
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Deng Makeer,6,2,8,2,7,0,0,0,2,1,0,0,0,1,2,25.0,28.6,,148.8
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Ethan Meyer,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,6.8
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Gavin Sarvis,12,6,10,0,1,0,0,1,1,6,3,0,0,2,2,60.0,0.0,,222.9
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Jack Haynes,25,11,20,0,2,3,7,9,2,1,1,0,1,3,11,55.0,0.0,42.9,160.0
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Jim Navarrete,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,6.8
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Johnny Semany,3,1,2,1,1,0,0,0,1,1,2,1,1,3,1,50.0,100.0,,189.3
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Juvon Crawford,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,6.8
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Kyle Kober,17,7,11,1,2,2,4,1,2,3,1,0,0,1,3,63.6,50.0,50.0,164.8
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Lukas Balling,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,7.0
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Nolan Berendes,8,3,6,2,5,0,0,1,2,2,3,0,1,0,3,50.0,40.0,,202.0
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Patrick Coen,3,1,2,1,1,0,0,0,2,0,1,0,0,2,2,50.0,100.0,,52.5
+Central (IA) Dutch,2026-02-04,Loras Duhawks,Patrick Quarnstrom,2,1,2,0,0,0,0,1,1,1,0,0,1,0,2,50.0,,,76.0
+Coe Kohawks,2026-01-03,Coe Kohawks,Aaron Foote,0,0,1,0,0,0,0,0,1,0,0,0,1,0,1,0.0,,,349.5
+Coe Kohawks,2026-01-03,Coe Kohawks,Austin Beeson,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,,,,264.3
+Coe Kohawks,2026-01-03,Coe Kohawks,C. Reece Breitenbach,4,1,5,0,2,2,2,1,1,4,0,0,3,1,2,20.0,0.0,100.0,693.3
+Coe Kohawks,2026-01-03,Coe Kohawks,Cooper Nailor,13,5,11,1,4,2,2,1,4,7,2,0,5,4,5,45.5,25.0,100.0,769.0
+Coe Kohawks,2026-01-03,Coe Kohawks,Jackson Bowman,21,8,14,1,2,4,5,1,5,0,0,0,5,3,6,57.1,50.0,80.0,1074.5
+Coe Kohawks,2026-01-03,Coe Kohawks,Jackson Newell,7,3,3,1,1,0,0,1,2,0,2,1,0,3,3,100.0,100.0,,256.1
+Coe Kohawks,2026-01-03,Coe Kohawks,Jay Akin,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,,,,303.0
+Coe Kohawks,2026-01-03,Coe Kohawks,Kanyon Bryte,9,4,7,0,0,1,2,1,5,1,2,2,0,4,6,57.1,,50.0,690.0
+Coe Kohawks,2026-01-03,Coe Kohawks,Ryan Dolphin,11,5,10,1,2,0,0,0,2,1,1,0,1,4,2,50.0,50.0,,790.8
+Coe Kohawks,2026-01-03,Coe Kohawks,Zach Strauss,11,3,7,3,6,2,2,0,1,2,0,0,4,1,1,42.9,50.0,100.0,589.6
+Coe Kohawks,2026-01-03,Loras Duhawks,Athan Berchos,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,
+Coe Kohawks,2026-01-03,Loras Duhawks,Brock Massey,8,4,8,0,2,0,0,0,2,0,1,0,1,0,2,50.0,0.0,,937.5
+Coe Kohawks,2026-01-03,Loras Duhawks,Damyen Jackson,2,1,3,0,1,0,0,0,5,2,5,0,1,1,5,33.3,0.0,,693.8
+Coe Kohawks,2026-01-03,Loras Duhawks,Deng Makeer,2,1,3,0,0,0,0,0,1,0,1,0,0,2,1,33.3,,,751.2
+Coe Kohawks,2026-01-03,Loras Duhawks,Dylan Kurt,0,0,0,0,0,0,0,0,2,1,1,0,1,1,2,,,,167.2
+Coe Kohawks,2026-01-03,Loras Duhawks,Gavin Sarvis,31,11,16,3,3,6,9,2,2,1,2,1,2,3,4,68.8,100.0,66.7,405.1
+Coe Kohawks,2026-01-03,Loras Duhawks,Jack Haynes,22,8,13,0,1,6,7,5,1,1,1,2,1,1,6,61.5,0.0,85.7,894.1
+Coe Kohawks,2026-01-03,Loras Duhawks,Johnny Semany,8,1,9,0,2,6,6,0,3,3,0,0,0,3,3,11.1,0.0,100.0,588.4
+Coe Kohawks,2026-01-03,Loras Duhawks,Kyle Kober,3,1,5,1,3,0,0,0,0,1,0,0,2,2,0,20.0,33.3,,587.4
+Coe Kohawks,2026-01-03,Loras Duhawks,Nolan Berendes,9,4,9,1,6,0,0,3,3,0,3,0,2,4,6,44.4,16.7,,724.3
+Coe Kohawks,2026-02-07,Coe Kohawks,Aaron Foote,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,,,,349.5
+Coe Kohawks,2026-02-07,Coe Kohawks,C. Reece Breitenbach,6,2,4,1,2,1,2,0,2,2,0,0,0,1,2,50.0,50.0,50.0,693.3
+Coe Kohawks,2026-02-07,Coe Kohawks,Cooper Nailor,8,2,8,0,1,4,5,1,7,10,1,0,4,3,8,25.0,0.0,80.0,769.0
+Coe Kohawks,2026-02-07,Coe Kohawks,Deuce Walters,14,5,10,0,1,4,6,0,0,6,1,0,0,4,0,50.0,0.0,66.7,889.1
+Coe Kohawks,2026-02-07,Coe Kohawks,Jackson Bowman,22,9,14,0,2,4,5,0,12,0,1,0,1,1,12,64.3,0.0,80.0,1074.5
+Coe Kohawks,2026-02-07,Coe Kohawks,Jackson Newell,0,0,1,0,0,0,0,1,4,0,1,0,0,4,5,0.0,,,256.1
+Coe Kohawks,2026-02-07,Coe Kohawks,Jay Akin,0,0,1,0,0,0,2,1,0,0,0,0,0,1,1,0.0,,0.0,303.0
+Coe Kohawks,2026-02-07,Coe Kohawks,Kanyon Bryte,6,3,8,0,0,0,1,6,2,0,1,1,4,5,8,37.5,,0.0,690.0
+Coe Kohawks,2026-02-07,Coe Kohawks,Ryan Dolphin,3,1,4,1,2,0,0,1,0,1,0,0,2,1,1,25.0,50.0,,790.8
+Coe Kohawks,2026-02-07,Coe Kohawks,Zach Strauss,19,7,11,5,8,0,0,0,1,0,0,0,0,2,1,63.6,62.5,,589.6
+Coe Kohawks,2026-02-07,Loras Duhawks,Brock Massey,2,1,2,0,1,0,0,1,1,1,0,0,1,2,2,50.0,0.0,,937.5
+Coe Kohawks,2026-02-07,Loras Duhawks,Damyen Jackson,14,3,10,1,2,7,8,4,2,5,3,0,1,4,6,30.0,50.0,87.5,693.8
+Coe Kohawks,2026-02-07,Loras Duhawks,Deng Makeer,0,0,5,0,5,0,0,1,2,1,0,0,0,0,3,0.0,0.0,,751.2
+Coe Kohawks,2026-02-07,Loras Duhawks,Gavin Sarvis,17,4,11,0,3,9,13,1,3,5,1,2,1,4,4,36.4,0.0,69.2,405.1
+Coe Kohawks,2026-02-07,Loras Duhawks,Jack Haynes,16,7,13,0,0,2,2,1,3,0,1,0,2,1,4,53.8,,100.0,894.1
+Coe Kohawks,2026-02-07,Loras Duhawks,Jim Navarrete,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,10.4
+Coe Kohawks,2026-02-07,Loras Duhawks,Johnny Semany,5,2,3,0,1,1,2,1,2,0,1,0,1,3,3,66.7,0.0,50.0,588.4
+Coe Kohawks,2026-02-07,Loras Duhawks,Kyle Kober,5,1,6,0,4,3,4,2,4,1,1,0,0,3,6,16.7,0.0,75.0,587.4
+Coe Kohawks,2026-02-07,Loras Duhawks,Nolan Berendes,15,5,11,4,9,1,2,0,7,1,0,0,2,3,7,45.5,44.4,50.0,724.3
+Coe Kohawks,2026-02-07,Loras Duhawks,Patrick Coen,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,,,,315.5
+Coe Kohawks,2026-02-07,Loras Duhawks,Patrick Quarnstrom,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,137.4
+Coe Kohawks,2026-02-26,Coe Kohawks,C. Reece Breitenbach,2,0,2,0,2,2,2,1,2,0,0,0,0,1,3,0.0,0.0,100.0,693.3
+Coe Kohawks,2026-02-26,Coe Kohawks,Cooper Nailor,20,8,16,2,6,2,2,1,5,6,2,0,2,2,6,50.0,33.3,100.0,769.0
+Coe Kohawks,2026-02-26,Coe Kohawks,Deuce Walters,12,4,12,3,5,1,2,0,2,1,1,0,3,3,2,33.3,60.0,50.0,889.1
+Coe Kohawks,2026-02-26,Coe Kohawks,Jackson Bowman,7,3,10,1,3,0,0,2,2,0,0,1,1,3,4,30.0,33.3,,1074.5
+Coe Kohawks,2026-02-26,Coe Kohawks,Jackson Newell,5,1,3,1,3,2,2,1,2,0,0,1,1,2,3,33.3,33.3,100.0,256.1
+Coe Kohawks,2026-02-26,Coe Kohawks,Kanyon Bryte,15,6,11,0,0,3,4,4,5,2,2,2,0,3,9,54.5,,75.0,690.0
+Coe Kohawks,2026-02-26,Coe Kohawks,Ryan Dolphin,10,3,6,2,4,2,2,0,3,1,2,0,3,2,3,50.0,50.0,100.0,790.8
+Coe Kohawks,2026-02-26,Coe Kohawks,Zach Strauss,0,0,1,0,1,0,0,0,0,0,1,0,1,2,0,0.0,0.0,,589.6
+Coe Kohawks,2026-02-26,Loras Duhawks,Brock Massey,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,937.5
+Coe Kohawks,2026-02-26,Loras Duhawks,Connor Mosele,3,1,1,1,1,0,0,0,0,1,0,0,0,2,0,100.0,100.0,,433.0
+Coe Kohawks,2026-02-26,Loras Duhawks,Damyen Jackson,20,7,12,2,4,4,4,0,3,1,1,0,3,4,3,58.3,50.0,100.0,693.8
+Coe Kohawks,2026-02-26,Loras Duhawks,Deng Makeer,2,1,4,0,2,0,0,0,1,1,0,2,0,0,1,25.0,0.0,,751.2
+Coe Kohawks,2026-02-26,Loras Duhawks,Gavin Sarvis,5,2,5,0,1,1,2,1,2,2,0,0,2,4,3,40.0,0.0,50.0,405.1
+Coe Kohawks,2026-02-26,Loras Duhawks,Jack Haynes,22,8,14,1,4,5,7,2,5,1,0,2,1,1,7,57.1,25.0,71.4,894.1
+Coe Kohawks,2026-02-26,Loras Duhawks,Johnny Semany,6,2,4,0,1,2,4,0,3,3,0,0,6,2,3,50.0,0.0,50.0,588.4
+Coe Kohawks,2026-02-26,Loras Duhawks,Kyle Kober,0,0,2,0,0,0,2,1,0,0,1,0,0,0,1,0.0,,0.0,587.4
+Coe Kohawks,2026-02-26,Loras Duhawks,Nolan Berendes,14,5,8,1,3,3,4,1,8,1,0,2,2,3,9,62.5,33.3,75.0,724.3
+Coe Kohawks,2026-02-26,Loras Duhawks,Patrick Coen,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,315.5
+Coe Kohawks,2026-02-26,Loras Duhawks,Patrick Quarnstrom,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0.0,,,137.4
+DePauw Tigers,2025-11-08,DePauw Tigers,Andre Ozlowski,5,2,2,1,1,0,0,0,0,0,0,0,2,0,0,100.0,100.0,,5.5
+DePauw Tigers,2025-11-08,DePauw Tigers,Billy Bach,0,0,0,0,0,0,0,0,1,3,0,1,0,4,1,,,,11.2
+DePauw Tigers,2025-11-08,DePauw Tigers,Brady Kunka,10,4,7,0,1,2,7,2,3,2,1,0,1,2,5,57.1,0.0,28.6,25.1
+DePauw Tigers,2025-11-08,DePauw Tigers,Caleb Washington,9,3,5,0,0,3,4,4,5,4,0,1,0,1,9,60.0,,75.0,34.1
+DePauw Tigers,2025-11-08,DePauw Tigers,Eli Ellis,3,1,1,1,1,0,0,0,0,1,1,0,3,1,0,100.0,100.0,,8.1
+DePauw Tigers,2025-11-08,DePauw Tigers,Joe Smith,7,2,6,2,4,1,2,0,1,1,0,0,3,1,1,33.3,50.0,50.0,23.6
+DePauw Tigers,2025-11-08,DePauw Tigers,Logan Sigler,0,0,1,0,1,0,0,0,2,0,0,0,0,0,2,0.0,0.0,,2.9
+DePauw Tigers,2025-11-08,DePauw Tigers,Owen Goddard,0,0,1,0,0,0,0,0,2,0,0,0,1,1,2,0.0,,,4.2
+DePauw Tigers,2025-11-08,DePauw Tigers,Patrick Joyce,0,0,1,0,1,0,0,0,1,1,0,0,0,1,1,0.0,0.0,,7.9
+DePauw Tigers,2025-11-08,DePauw Tigers,Reph Stevenson,18,7,9,0,1,4,9,4,6,0,1,0,5,1,10,77.8,0.0,44.4,30.7
+DePauw Tigers,2025-11-08,DePauw Tigers,Sam Jacobs,25,8,13,2,5,7,7,0,1,1,1,0,8,3,1,61.5,40.0,100.0,34.6
+DePauw Tigers,2025-11-08,DePauw Tigers,Vince Nixon,0,0,1,0,0,0,0,2,2,0,1,0,2,3,4,0.0,,,9.9
+DePauw Tigers,2025-11-08,Loras Duhawks,Brock Massey,2,1,4,0,1,0,0,5,1,2,1,0,0,1,6,25.0,0.0,,17.3
+DePauw Tigers,2025-11-08,Loras Duhawks,Commits Foul,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,19.6
+DePauw Tigers,2025-11-08,Loras Duhawks,Connor Mosele,0,0,3,0,2,0,0,0,2,3,2,0,1,4,2,0.0,0.0,,14.8
+DePauw Tigers,2025-11-08,Loras Duhawks,Damyen Jackson,0,0,4,0,2,0,0,2,0,0,0,0,1,0,2,0.0,0.0,,2.7
+DePauw Tigers,2025-11-08,Loras Duhawks,Dylan Kurt,7,2,3,1,2,2,2,0,0,0,0,0,0,0,0,66.7,50.0,100.0,6.0
+DePauw Tigers,2025-11-08,Loras Duhawks,Emmett Loew,20,9,14,1,4,1,1,0,1,3,6,0,0,2,1,64.3,25.0,100.0,26.3
+DePauw Tigers,2025-11-08,Loras Duhawks,Gavin Sarvis,10,3,7,0,1,4,4,2,2,0,2,0,3,4,4,42.9,0.0,100.0,21.7
+DePauw Tigers,2025-11-08,Loras Duhawks,Jack Haynes,9,3,7,0,0,3,3,1,4,3,2,0,1,4,5,42.9,,100.0,25.2
+DePauw Tigers,2025-11-08,Loras Duhawks,Johnny Semany,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,,,,6.7
+DePauw Tigers,2025-11-08,Loras Duhawks,Kyle Kober,15,5,16,2,5,3,4,0,1,1,2,0,3,2,1,31.2,40.0,75.0,22.1
+DePauw Tigers,2025-11-08,Loras Duhawks,Nolan Berendes,5,2,6,1,3,0,0,1,3,1,2,1,3,1,4,33.3,33.3,,28.3
+DePauw Tigers,2025-11-08,Loras Duhawks,Patrick Quarnstrom,6,2,2,0,0,2,2,1,1,0,0,0,1,2,2,100.0,,100.0,10.1
+Dubuque Spartans,2025-12-03,Dubuque Spartans,Andrew Apiagyei,0,0,0,0,0,0,2,0,2,0,0,0,0,0,2,,,0.0,243.2
+Dubuque Spartans,2025-12-03,Dubuque Spartans,Dylan Hibicke,0,0,2,0,2,0,0,1,3,0,0,0,0,2,4,0.0,0.0,,515.7
+Dubuque Spartans,2025-12-03,Dubuque Spartans,Ethan Henderson,15,5,10,2,5,3,5,1,7,0,0,0,4,3,8,50.0,40.0,60.0,742.4
+Dubuque Spartans,2025-12-03,Dubuque Spartans,Grady Thompson,1,0,4,0,3,1,2,0,5,2,1,0,0,0,5,0.0,0.0,50.0,605.8
+Dubuque Spartans,2025-12-03,Dubuque Spartans,Ian Mindrup,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,133.8
+Dubuque Spartans,2025-12-03,Dubuque Spartans,Jacob Williams,25,9,16,1,3,6,11,0,4,0,1,2,1,2,4,56.2,33.3,54.5,943.3
+Dubuque Spartans,2025-12-03,Dubuque Spartans,Joey Coppola IV,8,3,7,1,4,1,2,0,2,1,0,2,4,1,2,42.9,25.0,50.0,198.7
+Dubuque Spartans,2025-12-03,Dubuque Spartans,Josh Senica,5,1,2,0,0,3,4,2,1,2,1,0,2,2,3,50.0,,75.0,490.0
+Dubuque Spartans,2025-12-03,Dubuque Spartans,Logan Sluder,8,3,8,2,4,0,0,0,0,0,0,0,0,3,0,37.5,50.0,,528.8
+Dubuque Spartans,2025-12-03,Dubuque Spartans,Nick Kennedy,5,2,8,0,3,1,2,1,1,3,0,0,1,2,2,25.0,0.0,50.0,613.7
+Dubuque Spartans,2025-12-03,Dubuque Spartans,Quincy Underwood,2,1,1,0,0,0,0,1,0,0,0,0,0,0,1,100.0,,,
+Dubuque Spartans,2025-12-03,Loras Duhawks,Damyen Jackson,12,2,7,0,3,8,10,1,2,1,0,1,1,2,3,28.6,0.0,80.0,584.5
+Dubuque Spartans,2025-12-03,Loras Duhawks,Deng Makeer,9,3,8,2,6,1,2,0,1,0,2,1,0,3,1,37.5,33.3,50.0,631.7
+Dubuque Spartans,2025-12-03,Loras Duhawks,Dylan Kurt,8,4,10,0,5,0,1,1,0,0,0,0,0,3,1,40.0,0.0,0.0,416.0
+Dubuque Spartans,2025-12-03,Loras Duhawks,Emmett Loew,5,2,7,1,4,0,0,0,1,4,1,0,2,2,1,28.6,25.0,,539.8
+Dubuque Spartans,2025-12-03,Loras Duhawks,Jack Haynes,12,5,13,0,2,2,2,7,10,2,1,1,0,0,17,38.5,0.0,100.0,672.4
+Dubuque Spartans,2025-12-03,Loras Duhawks,Johnny Semany,2,1,3,0,0,0,0,1,4,1,0,0,1,2,5,33.3,,,240.0
+Dubuque Spartans,2025-12-03,Loras Duhawks,Kyle Kober,25,9,14,2,4,5,7,3,2,2,1,0,1,3,5,64.3,50.0,71.4,512.0
+Dubuque Spartans,2025-12-03,Loras Duhawks,Nolan Berendes,11,4,9,2,5,1,1,3,4,3,3,1,2,3,7,44.4,40.0,100.0,442.9
+Dubuque Spartans,2025-12-03,Loras Duhawks,Patrick Coen,0,0,1,0,0,0,0,0,2,0,0,0,0,2,2,0.0,,,152.8
+Dubuque Spartans,2026-01-28,Dubuque Spartans,Andrew Apiagyei,3,1,1,1,1,0,3,0,3,0,0,2,1,1,3,100.0,100.0,0.0,243.2
+Dubuque Spartans,2026-01-28,Dubuque Spartans,Dylan Hibicke,4,1,4,1,3,1,2,0,4,0,0,0,1,1,4,25.0,33.3,50.0,515.7
+Dubuque Spartans,2026-01-28,Dubuque Spartans,Ethan Henderson,12,4,9,0,2,4,4,1,7,3,0,0,0,3,8,44.4,0.0,100.0,742.4
+Dubuque Spartans,2026-01-28,Dubuque Spartans,Grady Thompson,19,8,12,2,5,1,1,1,2,1,2,0,3,3,3,66.7,40.0,100.0,605.8
+Dubuque Spartans,2026-01-28,Dubuque Spartans,Ian Mindrup,1,0,2,0,0,1,2,1,1,0,0,0,0,0,2,0.0,,50.0,133.8
+Dubuque Spartans,2026-01-28,Dubuque Spartans,Jacob Williams,23,9,14,1,4,4,5,3,4,1,0,0,3,2,7,64.3,25.0,80.0,943.3
+Dubuque Spartans,2026-01-28,Dubuque Spartans,Jalen Scott,11,3,3,2,2,3,5,0,3,5,1,1,2,4,3,100.0,100.0,60.0,430.0
+Dubuque Spartans,2026-01-28,Dubuque Spartans,Jayden Hunt,0,0,1,0,0,0,0,1,0,0,0,0,0,1,1,0.0,,,208.3
+Dubuque Spartans,2026-01-28,Dubuque Spartans,Joey Coppola IV,9,3,7,2,6,1,2,0,3,2,3,0,1,3,3,42.9,33.3,50.0,198.7
+Dubuque Spartans,2026-01-28,Dubuque Spartans,Josh Senica,6,3,8,0,0,0,1,5,1,1,0,0,1,2,6,37.5,,0.0,490.0
+Dubuque Spartans,2026-01-28,Dubuque Spartans,Logan Sluder,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,528.8
+Dubuque Spartans,2026-01-28,Dubuque Spartans,Nick Kennedy,2,1,4,0,1,0,0,0,0,3,0,0,0,4,0,25.0,0.0,,613.7
+Dubuque Spartans,2026-01-28,Dubuque Spartans,Spencer Roeder,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,361.6
+Dubuque Spartans,2026-01-28,Loras Duhawks,Athan Berchos,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,,,,157.6
+Dubuque Spartans,2026-01-28,Loras Duhawks,Brock Massey,4,0,1,0,0,4,4,0,2,2,0,0,0,3,2,0.0,,100.0,613.5
+Dubuque Spartans,2026-01-28,Loras Duhawks,Damyen Jackson,9,4,10,0,3,1,2,0,3,1,1,1,0,1,3,40.0,0.0,50.0,584.5
+Dubuque Spartans,2026-01-28,Loras Duhawks,Deng Makeer,0,0,0,0,0,0,0,0,2,0,0,1,1,2,2,,,,631.7
+Dubuque Spartans,2026-01-28,Loras Duhawks,Dylan Kurt,2,1,2,0,1,0,0,0,0,1,0,0,3,3,0,50.0,0.0,,416.0
+Dubuque Spartans,2026-01-28,Loras Duhawks,Gavin Sarvis,5,2,9,1,4,0,0,2,2,1,0,0,3,2,4,22.2,25.0,,435.8
+Dubuque Spartans,2026-01-28,Loras Duhawks,Jack Haynes,15,5,8,0,0,5,9,3,5,0,0,2,0,4,8,62.5,,55.6,672.4
+Dubuque Spartans,2026-01-28,Loras Duhawks,Johnny Semany,7,2,3,0,0,3,4,0,2,2,1,1,4,3,2,66.7,,75.0,240.0
+Dubuque Spartans,2026-01-28,Loras Duhawks,Kyle Kober,19,5,10,3,6,6,8,0,0,0,1,0,0,2,0,50.0,50.0,75.0,512.0
+Dubuque Spartans,2026-01-28,Loras Duhawks,Nolan Berendes,13,4,11,2,7,3,4,1,6,1,0,0,1,2,7,36.4,28.6,75.0,442.9
+Dubuque Spartans,2026-01-28,Loras Duhawks,Patrick Quarnstrom,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,,,,320.8
+Dubuque Spartans,2026-02-28,Dubuque Spartans,Andrew Apiagyei,2,1,1,0,0,0,0,0,2,0,0,0,1,0,2,100.0,,,243.2
+Dubuque Spartans,2026-02-28,Dubuque Spartans,Ethan Henderson,13,5,11,0,1,3,8,0,4,1,1,0,1,4,4,45.5,0.0,37.5,742.4
+Dubuque Spartans,2026-02-28,Dubuque Spartans,Grady Thompson,13,4,10,2,6,3,5,0,8,1,0,0,1,3,8,40.0,33.3,60.0,605.8
+Dubuque Spartans,2026-02-28,Dubuque Spartans,Ian Mindrup,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,133.8
+Dubuque Spartans,2026-02-28,Dubuque Spartans,Jacob Williams,14,5,13,0,5,4,5,1,2,0,0,0,2,2,3,38.5,0.0,80.0,943.3
+Dubuque Spartans,2026-02-28,Dubuque Spartans,Jalen Scott,6,2,8,1,5,1,4,0,4,5,2,3,4,2,4,25.0,20.0,25.0,430.0
+Dubuque Spartans,2026-02-28,Dubuque Spartans,Jayden Hunt,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,,,,208.3
+Dubuque Spartans,2026-02-28,Dubuque Spartans,Josh Senica,6,2,5,0,1,2,2,3,3,1,1,1,0,5,6,40.0,0.0,100.0,490.0
+Dubuque Spartans,2026-02-28,Dubuque Spartans,Logan Sluder,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,528.8
+Dubuque Spartans,2026-02-28,Dubuque Spartans,Nick Kennedy,0,0,3,0,1,0,0,0,1,0,0,0,1,0,1,0.0,0.0,,613.7
+Dubuque Spartans,2026-02-28,Dubuque Spartans,Spencer Roeder,6,2,2,2,2,0,0,0,1,0,0,0,0,3,1,100.0,100.0,,361.6
+Dubuque Spartans,2026-02-28,Loras Duhawks,Athan Berchos,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,157.6
+Dubuque Spartans,2026-02-28,Loras Duhawks,Brock Massey,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,613.5
+Dubuque Spartans,2026-02-28,Loras Duhawks,Connor Mosele,0,0,1,0,1,0,0,1,0,1,0,0,0,2,1,0.0,0.0,,181.9
+Dubuque Spartans,2026-02-28,Loras Duhawks,Cooper Grams,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,
+Dubuque Spartans,2026-02-28,Loras Duhawks,Damyen Jackson,24,8,13,4,6,4,5,0,5,0,1,0,0,3,5,61.5,66.7,80.0,584.5
+Dubuque Spartans,2026-02-28,Loras Duhawks,Deng Makeer,6,2,3,2,3,0,0,0,1,1,0,0,0,2,1,66.7,66.7,,631.7
+Dubuque Spartans,2026-02-28,Loras Duhawks,Ethan Meyer,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,
+Dubuque Spartans,2026-02-28,Loras Duhawks,Gavin Sarvis,10,5,17,0,5,0,0,2,4,6,0,3,4,1,6,29.4,0.0,,435.8
+Dubuque Spartans,2026-02-28,Loras Duhawks,Jack Haynes,23,9,12,2,3,3,5,2,7,1,1,1,0,2,9,75.0,66.7,60.0,672.4
+Dubuque Spartans,2026-02-28,Loras Duhawks,Jim Navarrete,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,,,,
+Dubuque Spartans,2026-02-28,Loras Duhawks,Johnny Semany,2,1,3,0,2,0,1,0,0,3,0,0,0,3,0,33.3,0.0,0.0,240.0
+Dubuque Spartans,2026-02-28,Loras Duhawks,Juvon Crawford,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,107.7
+Dubuque Spartans,2026-02-28,Loras Duhawks,Kyle Kober,10,3,5,0,0,4,4,3,3,1,3,0,0,4,6,60.0,,100.0,512.0
+Dubuque Spartans,2026-02-28,Loras Duhawks,Nolan Berendes,6,1,9,1,6,3,4,1,6,1,4,2,1,2,7,11.1,16.7,75.0,442.9
+Dubuque Spartans,2026-02-28,Loras Duhawks,Patrick Coen,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,152.8
+Dubuque Spartans,2026-02-28,Loras Duhawks,Patrick Quarnstrom,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,320.8
+Kalamazoo Hornets,2025-11-09,Kalamazoo Hornets,Ben VanSumeren,0,0,2,0,0,0,0,0,1,0,0,0,1,1,1,0.0,,,7.3
+Kalamazoo Hornets,2025-11-09,Kalamazoo Hornets,Caleb Caul,5,0,1,0,1,5,8,1,0,0,0,0,1,0,1,0.0,0.0,62.5,5.9
+Kalamazoo Hornets,2025-11-09,Kalamazoo Hornets,Carter Bandemer,10,2,6,1,4,5,7,1,2,1,1,0,3,3,3,33.3,25.0,71.4,31.6
+Kalamazoo Hornets,2025-11-09,Kalamazoo Hornets,Connor Kouki,14,4,9,2,3,4,6,1,3,2,0,0,1,4,4,44.4,66.7,66.7,25.3
+Kalamazoo Hornets,2025-11-09,Kalamazoo Hornets,Gavin Van Kampen,5,1,2,0,0,3,4,1,0,1,0,0,3,0,1,50.0,,75.0,19.1
+Kalamazoo Hornets,2025-11-09,Kalamazoo Hornets,JJ Stevens,5,2,2,1,1,0,2,0,3,0,1,3,3,0,3,100.0,100.0,0.0,10.3
+Kalamazoo Hornets,2025-11-09,Kalamazoo Hornets,Jackson Keefer,4,1,4,1,3,1,2,0,2,1,0,0,3,0,2,25.0,33.3,50.0,16.1
+Kalamazoo Hornets,2025-11-09,Kalamazoo Hornets,John Kaul,0,0,4,0,2,0,1,0,0,0,0,0,1,2,0,0.0,0.0,0.0,14.2
+Kalamazoo Hornets,2025-11-09,Kalamazoo Hornets,Nelson Sompa,4,2,8,0,0,0,0,1,5,2,3,1,3,5,6,25.0,,,21.1
+Kalamazoo Hornets,2025-11-09,Kalamazoo Hornets,Patrick Perez,1,0,4,0,0,1,2,2,2,0,1,0,3,2,4,0.0,,50.0,15.2
+Kalamazoo Hornets,2025-11-09,Kalamazoo Hornets,Trey Bolling,1,0,0,0,0,1,2,0,0,0,0,0,1,0,0,,,50.0,3.4
+Kalamazoo Hornets,2025-11-09,Kalamazoo Hornets,Zander Nash,3,1,5,0,1,1,4,1,4,0,1,0,3,0,5,20.0,0.0,25.0,26.9
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Athan Berchos,3,0,0,0,0,3,3,0,0,1,1,0,0,0,0,,,100.0,3.4
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Brock Massey,5,2,5,0,1,1,2,1,2,1,2,0,0,2,3,40.0,0.0,50.0,14.2
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Connor Mosele,0,0,2,0,1,0,0,0,0,0,1,0,1,5,0,0.0,0.0,,10.3
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Cooper Grams,0,0,2,0,2,0,0,0,0,0,0,0,0,1,0,0.0,0.0,,5.6
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Damyen Jackson,3,1,2,0,1,1,1,1,0,2,0,0,3,5,1,50.0,0.0,100.0,8.6
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Dylan Kurt,8,3,5,0,2,2,2,0,0,2,0,1,0,2,0,60.0,0.0,100.0,13.0
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Emmett Loew,19,7,12,5,10,0,0,1,0,3,3,1,2,1,1,58.3,50.0,,22.4
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Ethan Meyer,2,1,1,0,0,0,0,0,1,0,0,0,0,1,1,100.0,,,5.1
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Gavin Sarvis,2,1,1,0,0,0,0,0,0,0,1,0,2,1,0,100.0,,,4.8
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Jack Haynes,17,7,9,1,1,2,2,1,6,1,4,0,1,2,7,77.8,100.0,100.0,19.4
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Jim Navarrete,4,1,2,0,0,2,2,2,1,0,0,0,0,2,3,50.0,,100.0,5.0
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Johnny Semany,2,1,4,0,1,0,0,2,3,1,0,0,2,0,5,25.0,0.0,,7.6
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Juvon Crawford,3,1,3,1,3,0,0,0,0,0,1,0,0,0,0,33.3,33.3,,4.3
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Kyle Kober,9,3,8,1,4,2,2,1,3,6,3,1,2,2,4,37.5,25.0,100.0,21.4
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Lukas Balling,4,2,3,0,0,0,0,1,2,0,0,0,1,0,3,66.7,,,3.9
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Nolan Berendes,15,5,10,5,8,0,0,1,3,2,0,1,0,1,4,50.0,62.5,,20.5
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Patrick Coen,5,2,3,1,2,0,0,0,6,0,1,0,2,2,6,66.7,50.0,,12.8
+Kalamazoo Hornets,2025-11-09,Loras Duhawks,Patrick Quarnstrom,4,1,5,0,3,2,3,1,3,0,0,0,0,1,4,20.0,0.0,66.7,14.3
+Lake Forest Foresters,2025-12-30,Lake Forest Foresters,Alex Brown,5,0,2,0,2,5,6,1,3,1,1,0,2,3,4,0.0,0.0,83.3,17.9
+Lake Forest Foresters,2025-12-30,Lake Forest Foresters,Alex Forowycz,35,10,14,6,7,9,9,0,2,2,0,1,1,1,2,71.4,85.7,100.0,32.4
+Lake Forest Foresters,2025-12-30,Lake Forest Foresters,Anthony Favia,8,2,6,0,2,4,6,1,1,2,1,0,1,0,2,33.3,0.0,66.7,21.3
+Lake Forest Foresters,2025-12-30,Lake Forest Foresters,Ben Bochicchio,0,0,0,0,0,0,0,0,0,1,0,0,0,2,0,,,,7.1
+Lake Forest Foresters,2025-12-30,Lake Forest Foresters,Chase Honarvar,2,1,1,0,0,0,0,3,0,0,0,1,0,1,3,100.0,,,9.3
+Lake Forest Foresters,2025-12-30,Lake Forest Foresters,Coltrane Marchand,10,4,7,0,1,2,3,0,8,3,1,0,0,2,8,57.1,0.0,66.7,27.5
+Lake Forest Foresters,2025-12-30,Lake Forest Foresters,Cristian Rodriguez,14,2,6,0,0,10,10,1,4,1,1,2,2,2,5,33.3,,100.0,30.0
+Lake Forest Foresters,2025-12-30,Lake Forest Foresters,Luke Arington,11,2,3,1,2,6,6,0,0,0,0,0,4,3,0,66.7,50.0,100.0,18.6
+Lake Forest Foresters,2025-12-30,Lake Forest Foresters,Marko Visnjevac,10,2,3,2,2,4,4,0,1,3,0,0,4,4,1,66.7,100.0,100.0,19.0
+Lake Forest Foresters,2025-12-30,Lake Forest Foresters,Nikolas Popovic,2,1,4,0,0,0,0,0,4,2,1,0,1,3,4,25.0,,,15.3
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Brock Massey,3,1,3,0,1,1,2,1,3,1,0,0,0,0,4,33.3,0.0,50.0,16.7
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Commits Foul,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,19.8
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Damyen Jackson,4,2,4,0,0,0,0,1,0,1,1,0,2,1,1,50.0,,,10.2
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Deng Makeer,18,6,12,4,10,2,2,1,1,0,0,0,2,0,2,50.0,40.0,100.0,14.3
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Dylan Kurt,2,0,4,0,3,2,2,2,1,1,1,0,0,3,3,0.0,0.0,100.0,8.2
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Emmett Loew,0,0,3,0,3,0,0,1,0,2,0,0,1,3,1,0.0,0.0,,16.8
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Gavin Sarvis,8,3,11,1,4,1,2,4,3,4,0,1,1,3,7,27.3,25.0,50.0,23.9
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Jack Haynes,15,7,7,1,1,0,0,1,0,0,0,0,0,1,1,100.0,100.0,,8.7
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Johnny Semany,11,2,7,1,4,6,8,0,4,3,2,0,0,4,4,28.6,25.0,75.0,18.5
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Kyle Kober,15,5,10,3,6,2,2,2,2,1,1,0,1,3,4,50.0,50.0,100.0,22.7
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Lukas Balling,0,0,3,0,0,0,0,1,0,0,0,0,1,1,1,0.0,,,3.9
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Nolan Berendes,12,4,10,0,5,4,5,4,3,1,3,1,1,4,7,40.0,0.0,80.0,32.8
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Patrick Coen,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.6
+Lake Forest Foresters,2025-12-30,Loras Duhawks,Patrick Quarnstrom,0,0,1,0,0,0,0,1,1,0,0,0,1,0,2,0.0,,,2.7
+Luther Norse,2026-01-14,Loras Duhawks,Brock Massey,10,2,4,0,0,6,6,1,4,3,0,0,0,2,5,50.0,,100.0,223.9
+Luther Norse,2026-01-14,Loras Duhawks,Damyen Jackson,6,2,3,2,2,0,0,1,1,2,1,0,2,3,2,66.7,100.0,,251.7
+Luther Norse,2026-01-14,Loras Duhawks,Deng Makeer,0,0,2,0,0,0,0,1,0,0,0,0,0,2,1,0.0,,,62.4
+Luther Norse,2026-01-14,Loras Duhawks,Dylan Kurt,0,0,4,0,2,0,0,2,0,2,1,0,0,1,2,0.0,0.0,,162.0
+Luther Norse,2026-01-14,Loras Duhawks,Gavin Sarvis,20,6,16,1,4,7,8,3,3,2,3,0,3,3,6,37.5,25.0,87.5,234.2
+Luther Norse,2026-01-14,Loras Duhawks,Jack Haynes,17,5,10,2,2,5,6,4,6,0,0,0,1,3,10,50.0,100.0,83.3,209.4
+Luther Norse,2026-01-14,Loras Duhawks,Johnny Semany,6,2,4,1,3,1,2,0,4,2,1,0,1,1,4,50.0,33.3,50.0,264.2
+Luther Norse,2026-01-14,Loras Duhawks,Kyle Kober,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0.0,0.0,,184.2
+Luther Norse,2026-01-14,Loras Duhawks,Nolan Berendes,15,6,11,0,1,3,3,0,5,0,0,0,2,3,5,54.5,0.0,100.0,238.0
+Luther Norse,2026-01-14,Luther Norse,Andre Palavra,16,6,12,4,5,0,3,0,1,0,0,0,1,1,1,50.0,80.0,0.0,187.8
+Luther Norse,2026-01-14,Luther Norse,Charlie Mason,4,1,2,0,1,2,2,0,1,0,0,0,0,4,1,50.0,0.0,100.0,206.2
+Luther Norse,2026-01-14,Luther Norse,Charlie Wunderlich,11,3,11,3,5,2,2,0,2,1,0,0,1,0,2,27.3,60.0,100.0,304.5
+Luther Norse,2026-01-14,Luther Norse,Clint Smith,3,1,4,1,2,0,0,0,1,2,0,0,1,1,1,25.0,50.0,,179.7
+Luther Norse,2026-01-14,Luther Norse,Henry Kreckman,6,3,6,0,0,0,2,1,3,1,1,1,0,2,4,50.0,,0.0,264.3
+Luther Norse,2026-01-14,Luther Norse,Javier Rowell,8,2,4,1,1,3,5,0,1,1,2,0,1,1,1,50.0,100.0,60.0,172.6
+Luther Norse,2026-01-14,Luther Norse,Jeremy Andera,4,1,2,1,1,1,2,1,1,3,2,1,1,4,2,50.0,100.0,50.0,140.5
+Luther Norse,2026-01-14,Luther Norse,Owen Bockenstedt,5,2,3,1,1,0,1,3,7,1,0,2,2,2,10,66.7,100.0,0.0,194.0
+Luther Norse,2026-01-14,Luther Norse,Owen Poloronis,4,2,3,0,1,0,0,0,0,0,0,0,2,0,0,66.7,0.0,,183.7
+Luther Norse,2026-01-14,Luther Norse,Yigit Yarisci,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,,,,153.0
+Luther Norse,2026-02-11,Loras Duhawks,Brock Massey,0,0,3,0,2,0,0,0,0,0,1,0,0,0,0,0.0,0.0,,223.9
+Luther Norse,2026-02-11,Loras Duhawks,Damyen Jackson,9,3,12,1,5,2,2,3,1,1,1,0,2,1,4,25.0,20.0,100.0,251.7
+Luther Norse,2026-02-11,Loras Duhawks,Deng Makeer,0,0,3,0,2,0,0,1,0,0,2,1,0,1,1,0.0,0.0,,62.4
+Luther Norse,2026-02-11,Loras Duhawks,Gavin Sarvis,11,3,8,0,2,5,8,2,1,2,0,0,0,4,3,37.5,0.0,62.5,234.2
+Luther Norse,2026-02-11,Loras Duhawks,Jack Haynes,20,8,17,0,2,4,5,6,6,1,0,0,0,3,12,47.1,0.0,80.0,209.4
+Luther Norse,2026-02-11,Loras Duhawks,Johnny Semany,6,2,4,1,1,1,3,1,3,1,1,0,2,3,4,50.0,100.0,33.3,264.2
+Luther Norse,2026-02-11,Loras Duhawks,Kyle Kober,5,1,7,0,2,3,4,2,4,0,3,0,0,2,6,14.3,0.0,75.0,184.2
+Luther Norse,2026-02-11,Loras Duhawks,Lukas Balling,2,0,0,0,0,2,2,0,1,1,0,0,0,0,1,,,100.0,79.5
+Luther Norse,2026-02-11,Loras Duhawks,Nolan Berendes,9,1,7,1,6,6,6,0,8,1,1,0,1,2,8,14.3,16.7,100.0,238.0
+Luther Norse,2026-02-11,Loras Duhawks,Patrick Quarnstrom,1,0,0,0,0,1,2,1,2,1,0,0,0,2,3,,,50.0,89.0
+Luther Norse,2026-02-11,Luther Norse,Andre Palavra,13,3,10,1,3,6,7,0,1,2,0,0,1,5,1,30.0,33.3,85.7,187.8
+Luther Norse,2026-02-11,Luther Norse,Charlie Mason,0,0,2,0,1,0,0,0,0,0,1,0,1,2,0,0.0,0.0,,206.2
+Luther Norse,2026-02-11,Luther Norse,Charlie Wunderlich,7,3,12,0,5,1,1,1,4,1,0,0,3,1,5,25.0,0.0,100.0,304.5
+Luther Norse,2026-02-11,Luther Norse,Clint Smith,3,1,4,1,3,0,0,0,1,0,0,0,1,2,1,25.0,33.3,,179.7
+Luther Norse,2026-02-11,Luther Norse,Henry Kreckman,9,2,4,0,0,5,6,3,8,0,1,1,2,1,11,50.0,,83.3,264.3
+Luther Norse,2026-02-11,Luther Norse,Javier Rowell,2,1,4,0,1,0,2,0,7,2,0,0,1,1,7,25.0,0.0,0.0,172.6
+Luther Norse,2026-02-11,Luther Norse,Jeremy Andera,14,5,9,4,7,0,0,2,1,0,1,0,1,4,3,55.6,57.1,,140.5
+Luther Norse,2026-02-11,Luther Norse,Owen Bockenstedt,8,3,7,0,2,2,3,1,5,0,0,0,0,1,6,42.9,0.0,66.7,194.0
+Luther Norse,2026-02-11,Luther Norse,Owen Poloronis,2,1,3,0,1,0,0,0,2,1,0,0,1,1,2,33.3,0.0,,183.7
+Luther Norse,2026-02-11,Luther Norse,Yigit Yarisci,0,0,0,0,0,0,0,0,0,1,0,0,1,3,0,,,,153.0
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Athan Berchos,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,,,,2.2
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Brock Massey,8,3,6,2,3,0,0,2,1,4,1,0,1,0,3,50.0,66.7,,23.0
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Connor Mosele,3,1,1,1,1,0,0,0,0,0,0,0,0,0,0,100.0,100.0,,1.2
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Deng Makeer,2,1,3,0,2,0,0,1,1,0,0,0,1,2,2,33.3,0.0,,8.2
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Dylan Kurt,0,0,4,0,2,0,2,1,1,2,1,0,0,2,2,0.0,0.0,0.0,20.2
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Emmett Loew,9,2,4,2,3,3,3,0,1,2,1,0,0,2,1,50.0,66.7,100.0,18.4
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Gavin Sarvis,7,2,8,1,5,2,3,2,0,5,1,1,4,3,2,25.0,20.0,66.7,26.8
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Jim Navarrete,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,1.2
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Johnny Semany,5,2,6,1,3,0,0,0,4,2,0,0,2,3,4,33.3,33.3,,20.0
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Kyle Kober,16,6,11,1,2,3,5,3,0,0,1,0,0,2,3,54.5,50.0,60.0,26.7
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Lukas Balling,5,1,6,1,1,2,2,0,0,0,0,0,0,1,0,16.7,100.0,100.0,16.1
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Nolan Berendes,24,9,14,4,7,2,3,4,9,2,2,0,1,1,13,64.3,57.1,66.7,31.5
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Patrick Coen,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,1.2
+Monmouth (IL) Fighting Scots,2025-12-18,Loras Duhawks,Patrick Quarnstrom,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,1.2
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Adam Waite,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.2
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Brock Card,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,1.2
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Cameron Thomas,11,4,8,1,4,2,2,0,2,1,0,0,2,2,2,50.0,25.0,100.0,29.5
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Connor Watson,5,2,3,1,2,0,0,0,0,1,1,0,0,2,0,66.7,50.0,,11.4
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Jase Whiteman,2,1,2,0,1,0,0,0,2,0,3,0,0,2,2,50.0,0.0,,14.7
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Jason Huber,1,0,5,0,0,1,2,1,5,1,0,1,2,2,6,0.0,,50.0,22.2
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Julian Samuels,6,2,6,1,2,1,2,1,0,0,0,1,1,0,1,33.3,50.0,50.0,11.7
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Kamran Banks,5,2,5,1,1,0,0,0,2,0,0,1,1,1,2,40.0,100.0,,14.0
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Kyle Taylor,4,1,3,0,2,2,2,0,3,2,1,0,2,2,3,33.3,0.0,100.0,25.8
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Max Maring,2,0,1,0,0,2,2,1,0,0,0,0,1,0,1,0.0,,100.0,8.5
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Nick Plesko,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,1.2
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,O'Cien Valdes,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.2
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Payton Crims,6,2,5,0,2,2,3,2,2,0,1,0,1,3,4,40.0,0.0,66.7,21.8
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Ryan Meyer,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.2
+Monmouth (IL) Fighting Scots,2025-12-18,Monmouth (IL) Fighting Scots,Zay Brown,17,6,10,0,2,5,6,2,5,4,1,2,4,3,7,60.0,0.0,83.3,32.6
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Loras Duhawks,Brock Massey,2,1,3,0,0,0,0,1,2,2,2,1,1,0,3,33.3,,,291.8
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Loras Duhawks,Commits Foul,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,297.6
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Loras Duhawks,Damyen Jackson,2,1,3,0,2,0,0,0,2,2,1,0,3,2,2,33.3,0.0,,183.8
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Loras Duhawks,Damyen Jackson Commits Foul,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,238.1
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Loras Duhawks,Deng Makeer,4,1,5,1,4,1,2,2,0,0,0,1,0,2,2,20.0,25.0,50.0,178.4
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Loras Duhawks,Dylan Kurt,6,2,5,2,4,0,0,0,1,2,0,0,1,1,1,40.0,50.0,,97.5
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Loras Duhawks,Gavin Sarvis,13,5,10,1,4,2,2,1,4,6,0,2,1,4,5,50.0,25.0,100.0,321.2
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Loras Duhawks,Jack Haynes,17,7,10,3,4,0,0,2,8,0,0,1,2,2,10,70.0,75.0,,259.9
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Loras Duhawks,Johnny Semany,10,4,6,1,2,1,4,0,5,1,0,0,1,3,5,66.7,50.0,25.0,132.0
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Loras Duhawks,Kyle Kober,5,2,3,1,2,0,0,0,0,2,0,0,0,2,0,66.7,50.0,,189.6
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Loras Duhawks,Nolan Berendes,15,7,14,1,4,0,0,2,0,3,0,0,3,2,2,50.0,25.0,,366.0
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Nebraska Wesleyan Prairie Wolves,Amun-Ra Collins,8,1,3,0,0,6,6,0,4,2,2,0,0,2,4,33.3,,100.0,235.8
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Nebraska Wesleyan Prairie Wolves,Cash McCullough,0,0,0,0,0,0,0,1,1,0,0,0,1,0,2,,,,58.8
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Nebraska Wesleyan Prairie Wolves,Christian Winn,13,5,12,1,2,2,3,4,1,3,1,1,2,3,5,41.7,50.0,66.7,498.9
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Nebraska Wesleyan Prairie Wolves,Devin Holmon,7,2,7,0,4,3,5,0,0,5,0,2,0,0,0,28.6,0.0,60.0,288.1
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Nebraska Wesleyan Prairie Wolves,Jared Townsley,20,6,9,3,6,5,6,0,2,1,3,0,0,3,2,66.7,50.0,83.3,233.5
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Nebraska Wesleyan Prairie Wolves,Kason Simpson,3,1,1,0,0,1,2,2,0,0,0,0,1,0,2,100.0,,50.0,235.3
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Nebraska Wesleyan Prairie Wolves,Neal Mosser,4,1,4,1,3,1,1,0,1,1,0,0,0,0,1,25.0,33.3,100.0,236.2
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Nebraska Wesleyan Prairie Wolves,Nick Howard,14,6,11,0,4,2,3,1,4,1,1,2,2,3,5,54.5,0.0,66.7,339.5
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Nebraska Wesleyan Prairie Wolves,Owen Alleman,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,30.2
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Nebraska Wesleyan Prairie Wolves,Payson Gillespie,3,1,1,1,1,0,0,0,0,0,0,0,0,1,0,100.0,100.0,,41.4
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Nebraska Wesleyan Prairie Wolves,Reece Carson,2,1,2,0,1,0,0,0,0,0,0,0,0,0,0,50.0,0.0,,44.0
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Nebraska Wesleyan Prairie Wolves,Seth Newton,8,3,7,2,6,0,0,0,5,5,0,0,0,0,5,42.9,33.3,,436.9
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Loras Duhawks,Brock Massey,1,0,0,0,0,1,2,0,2,0,0,0,0,2,2,,,50.0,291.8
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Loras Duhawks,Connor Mosele,4,1,5,1,4,1,2,0,4,3,0,0,1,3,4,20.0,25.0,50.0,135.1
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Loras Duhawks,Damyen Jackson,9,3,4,3,4,0,0,1,3,0,0,0,2,2,4,75.0,75.0,,183.8
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Loras Duhawks,Deng Makeer,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,178.4
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Loras Duhawks,Emmett Loew,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Loras Duhawks,Gavin Sarvis,21,7,13,1,5,6,6,2,2,5,1,0,4,3,4,53.8,20.0,100.0,321.2
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Loras Duhawks,Jack Haynes,21,9,14,0,3,3,6,5,4,0,1,1,1,2,9,64.3,0.0,50.0,259.9
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Loras Duhawks,Johnny Semany,2,1,5,0,4,0,0,0,1,3,1,0,3,0,1,20.0,0.0,,132.0
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Loras Duhawks,Kyle Kober,0,0,3,0,2,0,0,1,3,0,0,0,1,0,4,0.0,0.0,,189.6
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Loras Duhawks,Lukas Balling,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0.0,,,
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Loras Duhawks,Nolan Berendes,14,3,9,0,1,8,8,4,4,2,0,2,1,1,8,33.3,0.0,100.0,366.0
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Loras Duhawks,Patrick Quarnstrom,0,0,1,0,1,0,0,0,0,0,1,0,1,2,0,0.0,0.0,,33.4
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Nebraska Wesleyan Prairie Wolves,Amun-Ra Collins,8,2,3,2,3,2,2,0,1,1,0,0,2,3,1,66.7,66.7,100.0,235.8
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Nebraska Wesleyan Prairie Wolves,Cash McCullough,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,58.8
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Nebraska Wesleyan Prairie Wolves,Christian Winn,17,6,18,1,7,4,6,4,2,3,3,0,1,2,6,33.3,14.3,66.7,498.9
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Nebraska Wesleyan Prairie Wolves,Devin Holmon,3,1,3,0,2,1,2,0,0,1,2,0,1,4,0,33.3,0.0,50.0,288.1
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Nebraska Wesleyan Prairie Wolves,Jaeden Newsom,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.0
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Nebraska Wesleyan Prairie Wolves,Jared Townsley,2,1,4,0,1,0,0,2,0,0,0,0,0,1,2,25.0,0.0,,233.5
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Nebraska Wesleyan Prairie Wolves,Kason Simpson,4,2,3,0,0,0,0,0,2,0,1,0,2,1,2,66.7,,,235.3
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Nebraska Wesleyan Prairie Wolves,Neal Mosser,4,1,4,0,3,2,2,1,1,2,0,0,1,0,2,25.0,0.0,100.0,236.2
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Nebraska Wesleyan Prairie Wolves,Nick Howard,18,7,13,1,4,3,4,2,6,2,0,3,3,3,8,53.8,25.0,75.0,339.5
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Nebraska Wesleyan Prairie Wolves,Owen Alleman,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0.0,,,30.2
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Nebraska Wesleyan Prairie Wolves,Reece Carson,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,,,,44.0
+Nebraska Wesleyan Prairie Wolves,2026-02-14,Nebraska Wesleyan Prairie Wolves,Seth Newton,10,3,9,2,7,2,2,1,5,5,4,0,0,3,6,33.3,28.6,100.0,436.9
+North Central (IL) Cardinals,2025-11-22,Loras Duhawks,Connor Mosele,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.0
+North Central (IL) Cardinals,2025-11-22,Loras Duhawks,Damyen Jackson,0,0,2,0,1,0,1,0,1,0,0,0,3,1,1,0.0,0.0,0.0,11.4
+North Central (IL) Cardinals,2025-11-22,Loras Duhawks,Deng Makeer,0,0,1,0,0,0,0,0,1,1,1,3,0,1,1,0.0,,,8.8
+North Central (IL) Cardinals,2025-11-22,Loras Duhawks,Dylan Kurt,9,3,8,1,4,2,2,3,2,4,2,1,2,3,5,37.5,25.0,100.0,27.6
+North Central (IL) Cardinals,2025-11-22,Loras Duhawks,Emmett Loew,14,5,9,4,7,0,0,0,1,1,0,0,3,2,1,55.6,57.1,,23.0
+North Central (IL) Cardinals,2025-11-22,Loras Duhawks,Gavin Sarvis,17,6,13,1,5,4,5,0,2,5,2,0,3,3,2,46.2,20.0,80.0,31.5
+North Central (IL) Cardinals,2025-11-22,Loras Duhawks,Jack Haynes,6,2,6,0,1,2,4,3,7,0,2,0,1,2,10,33.3,0.0,50.0,32.2
+North Central (IL) Cardinals,2025-11-22,Loras Duhawks,Kyle Kober,13,5,9,3,5,0,0,1,1,1,0,0,0,1,2,55.6,60.0,,22.8
+North Central (IL) Cardinals,2025-11-22,Loras Duhawks,Nolan Berendes,11,3,9,1,6,4,5,2,9,1,3,1,0,1,11,33.3,16.7,80.0,30.1
+North Central (IL) Cardinals,2025-11-22,Loras Duhawks,Patrick Coen,3,1,4,1,4,0,0,0,3,1,0,0,0,1,3,25.0,25.0,,10.9
+North Central (IL) Cardinals,2025-11-22,North Central (IL) Cardinals,Alejandro Diaz,14,4,10,2,6,4,4,0,7,6,1,1,6,3,7,40.0,33.3,100.0,32.2
+North Central (IL) Cardinals,2025-11-22,North Central (IL) Cardinals,Ethan Marlowe,4,2,5,0,0,0,0,3,3,1,0,0,2,3,6,40.0,,,13.0
+North Central (IL) Cardinals,2025-11-22,North Central (IL) Cardinals,James Bullock,23,9,20,1,5,4,6,0,5,0,0,2,1,0,5,45.0,20.0,66.7,34.6
+North Central (IL) Cardinals,2025-11-22,North Central (IL) Cardinals,Jaydon James,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0.0,,,3.8
+North Central (IL) Cardinals,2025-11-22,North Central (IL) Cardinals,Justin Sveiteris,8,3,6,0,0,2,3,4,2,1,0,0,0,2,6,50.0,,66.7,19.8
+North Central (IL) Cardinals,2025-11-22,North Central (IL) Cardinals,Sean Molloy,6,2,4,2,2,0,0,1,4,3,2,0,0,1,5,50.0,100.0,,22.8
+North Central (IL) Cardinals,2025-11-22,North Central (IL) Cardinals,Simon Krugliakovas,0,0,2,0,1,0,0,0,0,3,0,0,2,3,0,0.0,0.0,,9.7
+North Central (IL) Cardinals,2025-11-22,North Central (IL) Cardinals,Tre Davis,0,0,1,0,0,0,0,0,1,3,1,0,1,0,1,0.0,,,11.6
+North Central (IL) Cardinals,2025-11-22,North Central (IL) Cardinals,Tyler DiSilvio,5,2,5,0,0,1,2,2,2,1,0,0,0,3,4,40.0,,50.0,14.8
+North Central (IL) Cardinals,2025-11-22,North Central (IL) Cardinals,Tyler Surin,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,4.6
+North Central (IL) Cardinals,2025-11-22,North Central (IL) Cardinals,Tyler Swierczek,9,3,9,3,6,0,0,0,1,0,1,0,0,2,1,33.3,50.0,,31.2
+Simpson Storm,2025-12-06,Loras Duhawks,Damyen Jackson,7,3,4,1,1,0,0,1,5,6,2,1,4,2,6,75.0,100.0,,166.1
+Simpson Storm,2025-12-06,Loras Duhawks,Deng Makeer,0,0,0,0,0,0,0,1,2,0,0,0,3,0,3,,,,88.7
+Simpson Storm,2025-12-06,Loras Duhawks,Dylan Kurt,19,4,10,2,4,9,10,2,1,1,1,1,2,2,3,40.0,50.0,90.0,345.3
+Simpson Storm,2025-12-06,Loras Duhawks,Emmett Loew,5,1,7,0,4,3,4,0,0,1,1,0,1,5,0,14.3,0.0,75.0,349.2
+Simpson Storm,2025-12-06,Loras Duhawks,Johnny Semany,3,1,4,0,1,1,1,0,2,0,3,0,0,0,2,25.0,0.0,100.0,324.3
+Simpson Storm,2025-12-06,Loras Duhawks,Kyle Kober,14,5,8,1,4,3,7,1,3,0,1,0,0,2,4,62.5,25.0,42.9,408.3
+Simpson Storm,2025-12-06,Loras Duhawks,Lukas Balling,4,2,4,0,1,0,0,0,3,2,1,0,1,0,3,50.0,0.0,,136.4
+Simpson Storm,2025-12-06,Loras Duhawks,Nolan Berendes,25,7,12,6,10,5,5,1,5,1,2,1,1,1,6,58.3,60.0,100.0,326.0
+Simpson Storm,2025-12-06,Loras Duhawks,Patrick Coen,8,3,5,0,1,2,2,2,1,0,0,0,0,1,3,60.0,0.0,100.0,67.3
+Simpson Storm,2025-12-06,Loras Duhawks,Patrick Quarnstrom,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,,,,31.3
+Simpson Storm,2025-12-06,Simpson Storm,Bo Huston,15,5,9,3,6,2,3,1,2,2,3,0,2,4,3,55.6,50.0,66.7,396.8
+Simpson Storm,2025-12-06,Simpson Storm,Brogan Fuller,0,0,0,0,0,0,0,2,1,4,0,1,1,1,3,,,,329.0
+Simpson Storm,2025-12-06,Simpson Storm,Cam Henderson,12,4,8,1,3,3,3,0,1,1,0,0,2,1,1,50.0,33.3,100.0,190.9
+Simpson Storm,2025-12-06,Simpson Storm,Colton Rasmussen,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.0
+Simpson Storm,2025-12-06,Simpson Storm,Isaac Averill,8,3,6,0,2,2,2,2,3,1,0,1,5,3,5,50.0,0.0,100.0,353.0
+Simpson Storm,2025-12-06,Simpson Storm,Jachin Mertes,0,0,3,0,0,0,0,0,3,0,0,2,0,1,3,0.0,,,93.6
+Simpson Storm,2025-12-06,Simpson Storm,Levi Gurwell,14,4,14,2,9,4,4,0,5,6,1,0,1,3,5,28.6,22.2,100.0,146.6
+Simpson Storm,2025-12-06,Simpson Storm,Marcus Haupert,8,4,6,0,0,0,0,1,3,0,1,0,3,4,4,66.7,,,177.2
+Simpson Storm,2025-12-06,Simpson Storm,Seth Gipple,17,6,11,5,8,0,0,1,1,1,0,0,1,1,2,54.5,62.5,,385.0
+Simpson Storm,2025-12-06,Simpson Storm,Spencer Holley,7,3,5,1,2,0,1,1,3,1,0,1,0,3,4,60.0,50.0,0.0,332.4
+Simpson Storm,2026-01-24,Loras Duhawks,Brock Massey,9,2,5,1,2,4,4,2,1,4,1,0,2,3,3,40.0,50.0,100.0,189.4
+Simpson Storm,2026-01-24,Loras Duhawks,Damyen Jackson,4,1,3,0,0,2,3,1,2,0,1,1,2,1,3,33.3,,66.7,166.1
+Simpson Storm,2026-01-24,Loras Duhawks,Deng Makeer,0,0,0,0,0,0,0,1,0,0,0,0,2,1,1,,,,88.7
+Simpson Storm,2026-01-24,Loras Duhawks,Dylan Kurt,11,3,6,1,1,4,4,0,4,2,1,0,1,2,4,50.0,100.0,100.0,345.3
+Simpson Storm,2026-01-24,Loras Duhawks,Gavin Sarvis,10,3,13,0,2,4,7,1,4,1,1,1,1,3,5,23.1,0.0,57.1,382.0
+Simpson Storm,2026-01-24,Loras Duhawks,Jack Haynes,21,8,16,1,2,4,5,4,7,1,1,1,0,2,11,50.0,50.0,80.0,369.0
+Simpson Storm,2026-01-24,Loras Duhawks,Johnny Semany,9,2,10,1,4,4,5,1,2,3,2,0,0,0,3,20.0,25.0,80.0,324.3
+Simpson Storm,2026-01-24,Loras Duhawks,Kyle Kober,2,1,4,0,2,0,0,0,2,0,0,0,0,2,2,25.0,0.0,,408.3
+Simpson Storm,2026-01-24,Loras Duhawks,Nolan Berendes,11,4,6,1,2,2,2,0,10,1,0,0,2,4,10,66.7,50.0,100.0,326.0
+Simpson Storm,2026-01-24,Simpson Storm,Bo Huston,2,0,5,0,3,2,2,1,7,2,2,0,1,5,8,0.0,0.0,100.0,396.8
+Simpson Storm,2026-01-24,Simpson Storm,Brogan Fuller,1,0,4,0,2,1,2,0,2,1,0,0,0,1,2,0.0,0.0,50.0,329.0
+Simpson Storm,2026-01-24,Simpson Storm,Calix Cahill,17,7,9,0,0,3,5,1,7,1,1,0,1,1,8,77.8,,60.0,374.4
+Simpson Storm,2026-01-24,Simpson Storm,Cam Henderson,15,6,16,1,5,2,2,0,3,2,1,1,0,1,3,37.5,20.0,100.0,190.9
+Simpson Storm,2026-01-24,Simpson Storm,Camden Seuferer,9,3,4,1,2,2,2,1,0,0,0,0,0,3,1,75.0,50.0,100.0,300.1
+Simpson Storm,2026-01-24,Simpson Storm,Isaac Averill,8,3,7,0,1,2,2,1,4,2,1,0,2,1,5,42.9,0.0,100.0,353.0
+Simpson Storm,2026-01-24,Simpson Storm,Jachin Mertes,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,93.6
+Simpson Storm,2026-01-24,Simpson Storm,Levi Gurwell,0,0,4,0,2,0,0,0,0,0,1,0,1,5,0,0.0,0.0,,146.6
+Simpson Storm,2026-01-24,Simpson Storm,Marcus Haupert,6,2,6,0,0,2,2,1,0,0,0,1,1,2,1,33.3,,100.0,177.2
+Simpson Storm,2026-01-24,Simpson Storm,Seth Gipple,0,0,1,0,0,0,0,0,2,0,0,0,0,1,2,0.0,,,385.0
+Simpson Storm,2026-01-24,Simpson Storm,Spencer Holley,13,5,9,2,5,1,4,2,3,2,1,0,2,4,5,55.6,40.0,25.0,332.4
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Athan Berchos,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0.0,0.0,,1.8
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Connor Mosele,0,0,1,0,0,0,0,1,0,1,0,0,1,1,1,0.0,,,8.5
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Cooper Grams,3,1,1,1,1,0,0,0,0,0,0,0,0,0,0,100.0,100.0,,1.8
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Damyen Jackson,12,2,8,0,2,8,10,2,2,1,2,0,1,2,4,25.0,0.0,80.0,18.9
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Deng Makeer,0,0,1,0,1,0,0,0,3,1,1,0,1,2,3,0.0,0.0,,12.7
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Dylan Kurt,11,5,10,1,3,0,0,1,2,1,1,0,0,2,3,50.0,33.3,,19.0
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Emmett Loew,3,1,7,1,4,0,0,0,0,2,0,0,1,1,0,14.3,25.0,,20.0
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Ethan Meyer,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.8
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Jack Haynes,8,2,8,0,1,4,4,6,8,2,2,1,2,4,14,25.0,0.0,100.0,26.4
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Jim Navarrete,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,3.6
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Johnny Semany,4,2,5,0,1,0,0,0,0,2,0,0,0,2,0,40.0,0.0,,13.2
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Juvon Crawford,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,,,,1.8
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Kyle Kober,19,6,6,3,3,4,6,2,0,0,3,1,3,1,2,100.0,100.0,66.7,20.5
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Lukas Balling,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.4
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Nolan Berendes,9,3,6,2,2,1,2,1,0,0,1,1,2,1,1,50.0,100.0,50.0,21.0
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Patrick Coen,3,1,3,1,3,0,0,0,4,0,0,0,1,4,4,33.3,33.3,,13.8
+Southern Indiana Screaming Eagles,2025-11-16,Loras Duhawks,Patrick Quarnstrom,2,1,2,0,0,0,0,0,1,0,0,0,2,0,1,50.0,,,13.6
+Southern Indiana Screaming Eagles,2025-11-16,Southern Indiana Screaming Eagles,Alem Fejzic,6,2,4,2,4,0,0,1,1,1,0,0,1,3,2,50.0,50.0,,13.7
+Southern Indiana Screaming Eagles,2025-11-16,Southern Indiana Screaming Eagles,Ben Ezeagu,7,3,4,0,0,1,5,1,2,0,0,0,0,3,3,75.0,,20.0,10.6
+Southern Indiana Screaming Eagles,2025-11-16,Southern Indiana Screaming Eagles,Cayden Gehlhausen,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.8
+Southern Indiana Screaming Eagles,2025-11-16,Southern Indiana Screaming Eagles,Devin Curtis,0,0,3,0,0,0,0,0,2,0,0,1,1,1,2,0.0,,,11.9
+Southern Indiana Screaming Eagles,2025-11-16,Southern Indiana Screaming Eagles,Ismail Habib,21,6,9,5,8,4,5,1,1,1,1,0,3,1,2,66.7,62.5,80.0,29.2
+Southern Indiana Screaming Eagles,2025-11-16,Southern Indiana Screaming Eagles,Kaden Brown,3,1,3,1,2,0,0,0,2,1,2,0,1,3,2,33.3,50.0,,20.8
+Southern Indiana Screaming Eagles,2025-11-16,Southern Indiana Screaming Eagles,Ola Ajiboye,5,2,4,0,0,1,2,4,1,0,2,1,1,2,5,50.0,,50.0,17.2
+Southern Indiana Screaming Eagles,2025-11-16,Southern Indiana Screaming Eagles,Sheridan Sharp,5,1,4,0,0,3,4,0,3,11,3,0,3,1,3,25.0,,75.0,27.2
+Southern Indiana Screaming Eagles,2025-11-16,Southern Indiana Screaming Eagles,Steven Clay,13,4,5,4,4,1,2,2,3,0,0,1,2,2,5,80.0,100.0,50.0,20.0
+Southern Indiana Screaming Eagles,2025-11-16,Southern Indiana Screaming Eagles,Tolu Samuels,11,5,7,0,0,1,7,4,5,1,0,0,1,0,9,71.4,,14.3,23.5
+Southern Indiana Screaming Eagles,2025-11-16,Southern Indiana Screaming Eagles,Trey Thomas,20,9,19,2,6,0,0,3,1,1,2,0,4,1,4,47.4,33.3,,22.8
+Wartburg Knights,2025-12-13,Loras Duhawks,Brock Massey,7,3,5,0,1,1,3,1,2,1,0,0,0,1,3,60.0,0.0,33.3,159.6
+Wartburg Knights,2025-12-13,Loras Duhawks,Damyen Jackson,7,3,3,1,1,0,0,0,0,2,0,0,0,3,0,100.0,100.0,,358.0
+Wartburg Knights,2025-12-13,Loras Duhawks,Deng Makeer,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,513.2
+Wartburg Knights,2025-12-13,Loras Duhawks,Dylan Kurt,15,5,11,0,3,5,6,4,2,3,0,0,1,4,6,45.5,0.0,83.3,496.9
+Wartburg Knights,2025-12-13,Loras Duhawks,Emmett Loew,2,0,4,0,3,2,2,0,2,1,0,0,1,2,2,0.0,0.0,100.0,257.2
+Wartburg Knights,2025-12-13,Loras Duhawks,Gavin Sarvis,24,9,14,3,5,3,4,1,1,3,2,0,4,3,2,64.3,60.0,75.0,562.6
+Wartburg Knights,2025-12-13,Loras Duhawks,Johnny Semany,7,2,2,1,1,2,2,1,1,3,1,0,0,4,2,100.0,100.0,100.0,251.4
+Wartburg Knights,2025-12-13,Loras Duhawks,Kyle Kober,14,5,11,3,7,1,2,0,1,1,3,0,2,3,1,45.5,42.9,50.0,605.8
+Wartburg Knights,2025-12-13,Loras Duhawks,Lukas Balling,2,0,3,0,0,2,2,1,2,0,0,0,0,1,3,0.0,,100.0,145.6
+Wartburg Knights,2025-12-13,Loras Duhawks,Nolan Berendes,13,3,7,3,6,4,6,2,8,0,1,0,0,4,10,42.9,50.0,66.7,699.3
+Wartburg Knights,2025-12-13,Wartburg Knights,Austin Bienemann,11,4,11,0,3,3,4,0,2,1,1,0,2,3,2,36.4,0.0,75.0,707.8
+Wartburg Knights,2025-12-13,Wartburg Knights,Austin Bienemann Commits Foul,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,685.5
+Wartburg Knights,2025-12-13,Wartburg Knights,Cael Schramm,20,7,9,0,0,6,10,7,4,1,1,1,4,1,11,77.8,,60.0,372.7
+Wartburg Knights,2025-12-13,Wartburg Knights,Drake Wemark,6,3,8,0,2,0,0,1,0,0,0,1,2,4,1,37.5,0.0,,570.6
+Wartburg Knights,2025-12-13,Wartburg Knights,Ethan Yungtum,10,4,9,0,2,2,3,3,8,2,0,0,1,2,11,44.4,0.0,66.7,653.5
+Wartburg Knights,2025-12-13,Wartburg Knights,Evan Gray,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,
+Wartburg Knights,2025-12-13,Wartburg Knights,Gabe Trujillo,13,3,9,1,3,6,8,1,3,1,2,1,1,1,4,33.3,33.3,75.0,715.4
+Wartburg Knights,2025-12-13,Wartburg Knights,Giovanni St. Onge,0,0,0,0,0,0,0,0,1,0,0,0,1,5,1,,,,156.8
+Wartburg Knights,2025-12-13,Wartburg Knights,Jamison Poe,5,2,3,1,2,0,0,0,1,0,0,0,0,0,1,66.7,50.0,,26.9
+Wartburg Knights,2025-12-13,Wartburg Knights,Luke Ladwig,7,1,5,1,2,4,4,2,1,5,0,0,1,3,3,20.0,50.0,100.0,885.3
+Wartburg Knights,2025-12-13,Wartburg Knights,Lyle Olsen,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0.0,0.0,,26.9
+Wartburg Knights,2025-12-13,Wartburg Knights,Mason Matson,7,2,5,1,3,2,2,0,0,0,0,0,0,0,0,40.0,33.3,100.0,140.1
+Wartburg Knights,2026-01-31,Loras Duhawks,Brock Massey,2,0,2,0,2,2,2,0,2,3,2,0,0,2,2,0.0,0.0,100.0,159.6
+Wartburg Knights,2026-01-31,Loras Duhawks,Cooper Grams,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,,,,40.5
+Wartburg Knights,2026-01-31,Loras Duhawks,Damyen Jackson,4,1,4,1,2,1,2,0,1,1,0,0,0,4,1,25.0,50.0,50.0,358.0
+Wartburg Knights,2026-01-31,Loras Duhawks,Deng Makeer,3,1,3,1,3,0,0,0,1,0,0,1,0,0,1,33.3,33.3,,513.2
+Wartburg Knights,2026-01-31,Loras Duhawks,Dylan Kurt,13,4,6,3,4,2,2,0,4,6,2,0,1,3,4,66.7,75.0,100.0,496.9
+Wartburg Knights,2026-01-31,Loras Duhawks,Ethan Meyer,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,41.7
+Wartburg Knights,2026-01-31,Loras Duhawks,Gavin Sarvis,0,0,1,0,0,0,0,0,1,3,0,0,3,2,1,0.0,,,562.6
+Wartburg Knights,2026-01-31,Loras Duhawks,Jack Haynes,19,7,9,1,1,4,4,5,3,1,2,0,1,3,8,77.8,100.0,100.0,583.5
+Wartburg Knights,2026-01-31,Loras Duhawks,Jim Navarrete,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,0.0,,,41.7
+Wartburg Knights,2026-01-31,Loras Duhawks,Johnny Semany,2,1,1,0,0,0,0,0,1,4,2,0,0,2,1,100.0,,,251.4
+Wartburg Knights,2026-01-31,Loras Duhawks,Juvon Crawford,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,
+Wartburg Knights,2026-01-31,Loras Duhawks,Kyle Kober,17,5,9,2,3,5,7,2,1,5,2,0,1,2,3,55.6,66.7,71.4,605.8
+Wartburg Knights,2026-01-31,Loras Duhawks,Nolan Berendes,44,14,23,10,19,6,6,2,6,2,1,0,1,2,8,60.9,52.6,100.0,699.3
+Wartburg Knights,2026-01-31,Loras Duhawks,Patrick Coen,5,2,3,0,1,1,2,2,0,0,0,0,1,2,2,66.7,0.0,50.0,89.1
+Wartburg Knights,2026-01-31,Loras Duhawks,Patrick Quarnstrom,2,1,1,0,0,0,1,0,2,0,0,0,1,0,2,100.0,,0.0,118.3
+Wartburg Knights,2026-01-31,Wartburg Knights,Austin Bienemann,28,11,17,3,7,3,4,1,4,3,1,1,1,5,5,64.7,42.9,75.0,707.8
+Wartburg Knights,2026-01-31,Wartburg Knights,Brody Bauer,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,46.4
+Wartburg Knights,2026-01-31,Wartburg Knights,Cael Schramm,14,5,8,0,0,4,6,0,3,1,0,2,1,3,3,62.5,,66.7,372.7
+Wartburg Knights,2026-01-31,Wartburg Knights,Clay Nielsen,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,
+Wartburg Knights,2026-01-31,Wartburg Knights,Dominic Braet,2,0,2,0,0,2,2,1,1,0,0,0,0,0,2,0.0,,100.0,46.4
+Wartburg Knights,2026-01-31,Wartburg Knights,Drake Wemark,7,3,5,0,1,1,1,0,0,6,1,0,2,2,0,60.0,0.0,100.0,570.6
+Wartburg Knights,2026-01-31,Wartburg Knights,Drew Britson,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,46.4
+Wartburg Knights,2026-01-31,Wartburg Knights,Ethan Yungtum,21,6,8,4,4,5,8,4,6,1,0,0,1,4,10,75.0,100.0,62.5,653.5
+Wartburg Knights,2026-01-31,Wartburg Knights,Gabe Trujillo,6,3,7,0,3,0,0,3,1,2,0,0,3,2,4,42.9,0.0,,715.4
+Wartburg Knights,2026-01-31,Wartburg Knights,Giovanni St. Onge,1,0,0,0,0,1,2,1,1,0,1,0,0,1,2,,,50.0,156.8
+Wartburg Knights,2026-01-31,Wartburg Knights,Luke Ladwig,7,2,9,1,4,2,5,1,2,1,2,1,4,2,3,22.2,25.0,40.0,885.3
+Wartburg Knights,2026-01-31,Wartburg Knights,Lyle Olsen,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,,,,26.9
+Wartburg Knights,2026-01-31,Wartburg Knights,Mason Matson,2,1,3,0,2,0,0,0,0,2,0,0,0,1,0,33.3,0.0,,140.1
+Westminster (MO) Blue Jays,2025-12-15,Loras Duhawks,Brock Massey,5,2,4,1,3,0,0,0,1,1,2,0,1,1,1,50.0,33.3,,14.1
+Westminster (MO) Blue Jays,2025-12-15,Loras Duhawks,Connor Mosele,0,0,1,0,1,0,0,0,0,1,0,0,0,1,0,0.0,0.0,,3.3
+Westminster (MO) Blue Jays,2025-12-15,Loras Duhawks,Damyen Jackson,3,1,6,1,1,0,0,1,1,1,0,0,2,3,2,16.7,100.0,,15.8
+Westminster (MO) Blue Jays,2025-12-15,Loras Duhawks,Deng Makeer,8,3,6,1,4,1,2,1,2,1,2,1,0,2,3,50.0,25.0,50.0,15.6
+Westminster (MO) Blue Jays,2025-12-15,Loras Duhawks,Dylan Kurt,10,3,8,2,6,2,4,3,1,3,1,0,2,0,4,37.5,33.3,50.0,17.7
+Westminster (MO) Blue Jays,2025-12-15,Loras Duhawks,Emmett Loew,3,1,3,1,3,0,0,0,0,1,1,0,0,3,0,33.3,33.3,,14.9
+Westminster (MO) Blue Jays,2025-12-15,Loras Duhawks,Gavin Sarvis,6,3,9,0,2,0,1,1,2,2,2,0,3,1,3,33.3,0.0,0.0,22.6
+Westminster (MO) Blue Jays,2025-12-15,Loras Duhawks,Johnny Semany,7,2,2,1,1,2,2,1,2,3,1,0,1,3,3,100.0,100.0,100.0,24.3
+Westminster (MO) Blue Jays,2025-12-15,Loras Duhawks,Kyle Kober,9,4,6,0,0,1,2,0,2,0,1,0,1,3,2,66.7,,50.0,18.1
+Westminster (MO) Blue Jays,2025-12-15,Loras Duhawks,Lukas Balling,10,2,2,0,0,6,6,1,1,0,0,0,1,0,2,100.0,,100.0,16.2
+Westminster (MO) Blue Jays,2025-12-15,Loras Duhawks,Nolan Berendes,18,6,12,4,9,2,2,2,4,0,0,2,2,1,6,50.0,44.4,100.0,35.5
+Westminster (MO) Blue Jays,2025-12-15,Westminster (MO) Blue Jays,Aidan Temple,2,1,3,0,0,0,0,1,1,0,0,0,0,2,2,33.3,,,13.4
+Westminster (MO) Blue Jays,2025-12-15,Westminster (MO) Blue Jays,Carlitos Sanchez,0,0,2,0,0,0,0,0,1,2,0,0,2,2,1,0.0,,,15.0
+Westminster (MO) Blue Jays,2025-12-15,Westminster (MO) Blue Jays,Gavin Hendrix,6,3,6,0,0,0,0,1,4,2,0,0,0,1,5,50.0,,,26.1
+Westminster (MO) Blue Jays,2025-12-15,Westminster (MO) Blue Jays,Jamile Johnson,12,5,6,0,0,2,4,3,6,2,2,0,1,0,9,83.3,,50.0,28.4
+Westminster (MO) Blue Jays,2025-12-15,Westminster (MO) Blue Jays,Kobe Jones,7,3,4,0,0,1,3,1,2,4,0,0,6,2,3,75.0,,33.3,24.6
+Westminster (MO) Blue Jays,2025-12-15,Westminster (MO) Blue Jays,Kolton Garner,16,6,11,4,6,0,0,0,4,1,0,3,2,4,4,54.5,66.7,,24.8
+Westminster (MO) Blue Jays,2025-12-15,Westminster (MO) Blue Jays,Roman Philips,2,1,4,0,0,0,0,2,1,0,0,1,1,4,3,25.0,,,11.3
+Westminster (MO) Blue Jays,2025-12-15,Westminster (MO) Blue Jays,Sean LeRose,6,2,4,2,3,0,0,1,0,0,0,1,1,2,1,50.0,66.7,,17.4
+Westminster (MO) Blue Jays,2025-12-15,Westminster (MO) Blue Jays,Walker Gohring,33,11,17,6,10,5,8,0,4,8,0,0,4,1,4,64.7,60.0,62.5,37.3
+Wisconsin-Superior Yellowjackets,2025-11-29,Loras Duhawks,Damyen Jackson,9,4,9,1,3,0,0,2,1,4,2,0,0,2,3,44.4,33.3,,21.2
+Wisconsin-Superior Yellowjackets,2025-11-29,Loras Duhawks,Deng Makeer,15,5,9,3,6,2,5,0,3,1,2,3,2,1,3,55.6,50.0,40.0,19.4
+Wisconsin-Superior Yellowjackets,2025-11-29,Loras Duhawks,Dylan Kurt,6,2,6,1,2,1,2,4,1,2,2,0,4,1,5,33.3,50.0,50.0,18.5
+Wisconsin-Superior Yellowjackets,2025-11-29,Loras Duhawks,Emmett Loew,0,0,3,0,2,0,0,1,0,0,1,0,2,2,1,0.0,0.0,,16.3
+Wisconsin-Superior Yellowjackets,2025-11-29,Loras Duhawks,Gavin Sarvis,9,4,12,1,4,0,0,0,2,3,2,1,4,0,2,33.3,25.0,,31.6
+Wisconsin-Superior Yellowjackets,2025-11-29,Loras Duhawks,Jack Haynes,13,3,10,0,1,7,8,7,7,1,3,0,3,3,14,30.0,0.0,87.5,32.9
+Wisconsin-Superior Yellowjackets,2025-11-29,Loras Duhawks,Kyle Kober,8,3,6,0,1,2,2,1,0,2,2,0,0,3,1,50.0,0.0,100.0,18.1
+Wisconsin-Superior Yellowjackets,2025-11-29,Loras Duhawks,Nolan Berendes,8,3,13,1,6,1,2,3,5,1,1,1,0,2,8,23.1,16.7,50.0,32.7
+Wisconsin-Superior Yellowjackets,2025-11-29,Loras Duhawks,Patrick Coen,0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,,,,7.2
+Wisconsin-Superior Yellowjackets,2025-11-29,Wisconsin-Superior Yellowjackets,Andrew Beers,3,1,3,0,0,1,1,2,5,1,2,0,2,0,7,33.3,,100.0,26.1
+Wisconsin-Superior Yellowjackets,2025-11-29,Wisconsin-Superior Yellowjackets,Caiden Lecce,21,9,15,2,5,1,2,2,4,6,2,0,3,2,6,60.0,40.0,50.0,34.0
+Wisconsin-Superior Yellowjackets,2025-11-29,Wisconsin-Superior Yellowjackets,Evan Bennett,10,4,10,2,6,0,0,1,1,1,1,0,2,2,2,40.0,33.3,,23.8
+Wisconsin-Superior Yellowjackets,2025-11-29,Wisconsin-Superior Yellowjackets,Gage Braiedy,4,1,4,0,0,2,2,2,1,1,0,0,3,5,3,25.0,,100.0,13.1
+Wisconsin-Superior Yellowjackets,2025-11-29,Wisconsin-Superior Yellowjackets,Hayden Quimby,0,0,1,0,1,0,0,1,1,1,1,0,1,0,2,0.0,0.0,,5.6
+Wisconsin-Superior Yellowjackets,2025-11-29,Wisconsin-Superior Yellowjackets,Kenny Garth,0,0,6,0,4,0,0,0,1,2,0,0,3,1,1,0.0,0.0,,16.7
+Wisconsin-Superior Yellowjackets,2025-11-29,Wisconsin-Superior Yellowjackets,Landen Thomer,8,2,3,0,1,4,4,2,2,1,1,1,2,3,4,66.7,0.0,100.0,17.3
+Wisconsin-Superior Yellowjackets,2025-11-29,Wisconsin-Superior Yellowjackets,Micah Young,6,2,3,2,3,0,0,0,4,0,0,1,4,1,4,66.7,66.7,,25.7
+Wisconsin-Superior Yellowjackets,2025-11-29,Wisconsin-Superior Yellowjackets,Nick Nordaune,9,3,8,3,7,0,0,0,1,0,1,1,0,1,1,37.5,42.9,,13.8
+Wisconsin-Superior Yellowjackets,2025-11-29,Wisconsin-Superior Yellowjackets,Rocco Paulson,4,1,4,0,0,2,3,3,3,3,0,1,2,3,6,25.0,,66.7,22.0
+Bethany Lutheran Vikings,2025-12-31,Loras Duhawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Blackburn Beavers,2025-11-14,Blackburn Beavers,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Buena Vista Beavers,2026-01-10,Buena Vista Beavers,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Buena Vista Beavers,2026-02-21,Buena Vista Beavers,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,
+Central (IA) Dutch,2026-02-04,Central (IA) Dutch,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Coe Kohawks,2026-01-03,Coe Kohawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Coe Kohawks,2026-02-07,Coe Kohawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,,,,
+Coe Kohawks,2026-02-26,Coe Kohawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Dubuque Spartans,2025-12-03,Dubuque Spartans,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Dubuque Spartans,2025-12-03,Loras Duhawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Dubuque Spartans,2026-02-28,Loras Duhawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,
+Luther Norse,2026-01-14,Luther Norse,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Nebraska Wesleyan Prairie Wolves,2026-01-17,Loras Duhawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Southern Indiana Screaming Eagles,2025-11-16,Southern Indiana Screaming Eagles,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,
+Wartburg Knights,2025-12-13,Wartburg Knights,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Westminster (MO) Blue Jays,2025-12-15,Westminster (MO) Blue Jays,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Wisconsin-Superior Yellowjackets,2025-11-29,Wisconsin-Superior Yellowjackets,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,

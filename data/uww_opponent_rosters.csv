@@ -15,23 +15,23 @@ Eureka Red Devils,2025-11-15,#30,Jonah Lauff,F,"6'5""",,SR,Starter,Shooter!,No C
 Eureka Red Devils,2025-11-15,#33,Andrew Coker,F,"6'5""",170 lbs,SR,Starter,Perimeter Big,Keep in Front w/ Contest,True
 Eureka Red Devils,2025-11-15,#7,Damuzha Moore,F,"6'3""",,SR,Bench,Back Up Wing,Keep in Front w/ Contest,True
 Eureka Red Devils,2025-11-15,#6,Jacob Gonzalez,G,"6'0""",,SR,Bench,Back Up PG,Be a Helper,True
-Aurora Spartans,,#11,Mekhi Doby,G,"6'3""",,JR,Starter,Heavy RHD,Anticipate Crossover + RHD,True
-Aurora Spartans,,#13,Zerrick Johnson,G,"6'2""",,FR,Starter,Driver/shooter,No fouls!,True
-Aurora Spartans,,#3,Jeffery Hillmer,G,"6'4""",,JR,Starter,Driver First,Box Out!!!,True
-Aurora Spartans,,#2,Juan Madrigal,G,"6'4""",,JR,Starter,Shooter/Driver,High Early hand on closeouts!,True
-Aurora Spartans,,#22,Devon Richardson,C,"6'8""",,JR,Starter,"Prefers LS/RH, capable with RS/LH",Box out!!!,True
-Aurora Spartans,,#24,Gevon Grant,G,"6'0""",,JR,Bench,RHD/Shooter (PG),Stop initial push in transition,True
-Aurora Spartans,,#5,Larry Carthan,F,"6'7""",,JR,Bench,Back up 5 man,NLS,True
-Aurora Spartans,,#12,Robert Hutson,G,"6'3""",,SO,Bench,Capable shooter & driver,Anticipate LHD,True
-Aurora Spartans,,#1,Bryden Gryzmala,G,"5'11""",,FR,Bench,PG,Anticipate pull ups on LHD,True
-Simpson Storm,,#23,Cam Henderson,G,"5'10""",,SO,Starter,LH Driver/shooter,Anticipate LHD,True
-Simpson Storm,,#13,Levi Gurwell,G,"6'0""",145 lbs,SR,Starter,Efficient 3 level scorer,Stay down on Pump fakes,True
-Simpson Storm,,#11,Spencer Holley,G,"6'4""",,FR,Starter,RHD,Antcipate RHD,True
-Simpson Storm,,#30,Brogan Fuller,G,"6'4""",,SO,Starter,Shooter/Driver,No C&S 3's,True
-Simpson Storm,,#34,Marcus Haupert,F,"6'5""",,SR,Starter,LS/RH Post,No LS/RH,True
-Simpson Storm,,#2,Bo Huston,G,"5'10""",160 lbs,SR,Bench,LH Shooter,High/Early hand on closeout!,True
-Simpson Storm,,#0,Jachin Mertes,G,"6'6""",,JR,Bench,"Will post, drive, & shoot",Antcipate RHD,True
-Simpson Storm,,#3,Isaac Averill,G,"6'4""",,FR,Bench,RH but prefers to attack L,Antcipate step back on LHD,True
+Aurora Spartans,2025-11-19,#11,Mekhi Doby,G,"6'3""",,JR,Starter,Heavy RHD,Anticipate Crossover + RHD,True
+Aurora Spartans,2025-11-19,#13,Zerrick Johnson,G,"6'2""",,FR,Starter,Driver/shooter,No fouls!,True
+Aurora Spartans,2025-11-19,#3,Jeffery Hillmer,G,"6'4""",,JR,Starter,Driver First,Box Out!!!,True
+Aurora Spartans,2025-11-19,#2,Juan Madrigal,G,"6'4""",,JR,Starter,Shooter/Driver,High Early hand on closeouts!,True
+Aurora Spartans,2025-11-19,#22,Devon Richardson,C,"6'8""",,JR,Starter,"Prefers LS/RH, capable with RS/LH",Box out!!!,True
+Aurora Spartans,2025-11-19,#24,Gevon Grant,G,"6'0""",,JR,Bench,RHD/Shooter (PG),Stop initial push in transition,True
+Aurora Spartans,2025-11-19,#5,Larry Carthan,F,"6'7""",,JR,Bench,Back up 5 man,NLS,True
+Aurora Spartans,2025-11-19,#12,Robert Hutson,G,"6'3""",,SO,Bench,Capable shooter & driver,Anticipate LHD,True
+Aurora Spartans,2025-11-19,#1,Bryden Gryzmala,G,"5'11""",,FR,Bench,PG,Anticipate pull ups on LHD,True
+Simpson Storm,2025-11-25,#23,Cam Henderson,G,"5'10""",,SO,Starter,LH Driver/shooter,Anticipate LHD,True
+Simpson Storm,2025-11-25,#13,Levi Gurwell,G,"6'0""",145 lbs,SR,Starter,Efficient 3 level scorer,Stay down on Pump fakes,True
+Simpson Storm,2025-11-25,#11,Spencer Holley,G,"6'4""",,FR,Starter,RHD,Antcipate RHD,True
+Simpson Storm,2025-11-25,#30,Brogan Fuller,G,"6'4""",,SO,Starter,Shooter/Driver,No C&S 3's,True
+Simpson Storm,2025-11-25,#34,Marcus Haupert,F,"6'5""",,SR,Starter,LS/RH Post,No LS/RH,True
+Simpson Storm,2025-11-25,#2,Bo Huston,G,"5'10""",160 lbs,SR,Bench,LH Shooter,High/Early hand on closeout!,True
+Simpson Storm,2025-11-25,#0,Jachin Mertes,G,"6'6""",,JR,Bench,"Will post, drive, & shoot",Antcipate RHD,True
+Simpson Storm,2025-11-25,#3,Isaac Averill,G,"6'4""",,FR,Bench,RH but prefers to attack L,Antcipate step back on LHD,True
 Ripon Red Hawks,2025-11-07,#3,Seth Bunders,G,"6'0""",140 lbs,JR,Starter,Shooter!,NO C&S 3's!!!,True
 Ripon Red Hawks,2025-11-07,#13,CJ Brown,G,"6'3""",,SR,Starter,Go To=mid range pull up (1-2 dribbles),Anticipate 1 dribble pull up,True
 Ripon Red Hawks,2025-11-07,#44,Marshawn Robinson,G,"6'3""",180 lbs,JR,Starter,Driver/Shooter,Anticipate pull up when he goes left,True
@@ -39,132 +39,134 @@ Ripon Red Hawks,2025-11-07,#35,Michael Asman,F,"6'7""",,SO,Starter,C&S 3's,No C&
 Ripon Red Hawks,2025-11-07,#12,Kolby Williams,F,"6'7""",,SR,Starter,Rebounds Hard!,Boxout!!!,True
 Ripon Red Hawks,2025-11-07,#4,Jarton Davis,G,"6'1""",,JR,Bench,Shooter/Driver,Limit C&S 3's,True
 Ripon Red Hawks,2025-11-07,#5,Jake Thomsen,G,"6'2""",,JR,Bench,C&S 3's,No C&S 3's,True
-Lawrence Vikings,,#3,Nathan Valentine,G,"5'11""",170 lbs,SR,Starter,Shooter (C & S 3's),No C & S 3's,True
-Lawrence Vikings,,#10,Hogan Demovsky,G,"6'3""",185 lbs,JR,Starter,Shooter with DEEP range (esp. Late in clock),No C & S 3's,True
-Lawrence Vikings,,#22,Nicholas Gouriotis,F,"6'5""",200 lbs,JR,Starter,Shooter/Driver,No C & S 3's,True
-Lawrence Vikings,,#15,CJ Campbell,F,"6'7""",190 lbs,JR,Starter,Shooter/Driver,No Rhythm 3's,True
-Lawrence Vikings,,#20,Casey Schoenecker,F,"6'6""",210 lbs,JR,Starter,Attacks from perimeter & scores in post,Anticipate LS/RH Finishes,True
-Lawrence Vikings,,#12,Nicolas Manzanera,G,"6'0""",205 lbs,SR,Bench,Shooter,No C & S 3's,True
-Lawrence Vikings,,#21,Nolan Koch,F,"6'5""",215 lbs,SO,Bench,LS/RH in Post (Non-shooter),NLS/RH,True
-Lawrence Vikings,,#14,Landon Key,F,"6'4""",180 lbs,SO,Bench,Driver (either way),Be a helper!!,True
-Lawrence Vikings,,#4,Caleb Nash,G,"6'1""",190 lbs,SO,Bench,Driver (either way),Be a Helper!!,True
-Carroll (WI) Pioneers,,#33,Dennis Estepp,G,"6'0""",170 lbs,JR,Starter,PG - pushes tempo in transition,Stop him down in transition,True
-Carroll (WI) Pioneers,,#12,Peyton McKenna,G,"6'2""",175 lbs,SO,Starter,Shooter! (70 of 78 shot attempts are 3's),LOCK & TRAIL!!!,True
-Carroll (WI) Pioneers,,#4,Michael McNabb,G,"6'5""",205 lbs,SO,Starter,LH Driver/Shooter,Show hands/don't foul on drives!!,True
-Carroll (WI) Pioneers,,#44,Lamar Smith,F,"6'4""",185 lbs,SR,Starter,Driver (Prefers RHD but capable LHD),Anticipate quick 1st step,True
-Carroll (WI) Pioneers,,#41,Jacob Naber,F,"6'8""",230 lbs,SR,Starter,Posts hard after DHO or ball screen,Extend & Limit Catches | Crash to 3/4 front,True
-Carroll (WI) Pioneers,,#3,Lucas Parker,G,"6'4""",185 lbs,JR,Bench,Shooter,NO C&S 3's!!!,True
-Carroll (WI) Pioneers,,#15,Evan Bland,G,"6'0""",165 lbs,SR,Bench,"Aggressive Driver (prefers RH, will go both)",Anticipate RHD,True
-Carroll (WI) Pioneers,,#42,Greg Smith,F,"6'7""",,FR,Bench,Back up 5 man,Be a Helper!!!,True
-Alma Scots,,#14,Raine Rodich,G,"6'0""",185 lbs,SO,Starter,Driver (Non-shooter),Anticipate spin back on finishes,True
-Alma Scots,,#3,Donovan Collins,G,"6'0""",150 lbs,JR,Starter,Shooter,High early hand on closeouts,True
-Alma Scots,,#20,Josh Elliott,G,"6'3""",185 lbs,SR,Starter,Shooter (no made 2's this season),Locate early in transition,True
-Alma Scots,,#11,Korbin Heitzman,F,"6'7""",190 lbs,JR,Starter,Efficient in post and drives (Non-shooter),No LS/RH,True
-Alma Scots,,#24,Logan St. Martin,F/C,"6'6""",220 lbs,JR,Starter,Scores in Post & O-Boards,No LS/RH,True
-Alma Scots,,#1,Elijah Sykes,G,"5'10""",165 lbs,FR,Bench,Shooter/Driver,High early hand on closeouts,True
-Alma Scots,,#10,Joss Bradley,G,"6'1""",180 lbs,SO,Bench,RH Driver,Wall up + No Fouls on Finishes,True
-Alma Scots,,#15,Preston Malpass,F,"6'7""",185 lbs,SO,Bench,Shooter,No C & S 3's,True
-Alma Scots,,#21,Luciano Guerrazzi,F,"6'7""",210 lbs,JR,Bench,Back up 5 man,No LS/RH,True
-Elmhurst Bluejays,,#2,Luke Smith,G,"6'0""",185 lbs,FR,Starter,Primary PG,No Rhythm C & S 3's,True
-Elmhurst Bluejays,,#0,Sebastian Blachut,G,"6'2""",185 lbs,SR,Starter,Driver/Shooter,Close out = Driver First,True
-Elmhurst Bluejays,,#1,Dominic Trelenberg,F,"6'5""",205 lbs,SR,Starter,LH 3 level scorer,Anticipate quick 1st step (LHD),True
-Elmhurst Bluejays,,#40,Aidyn Boone,F,"6'5""",230 lbs,JR,Starter,Shooter (22 of 34 FGA from 3),Expect pops after screens on & off ball,True
-Elmhurst Bluejays,,#15,Vinnie Adjahoungbeta,F,"6'5""",200 lbs,SO,Starter,"3 level scorer (Shoots, drives, & posts)",No C & S 3's,True
-Elmhurst Bluejays,,#21,Talen Pearson,G,"6'5""",180 lbs,SO,Bench,Shoot 1st,High hand on closeout,True
-Elmhurst Bluejays,,#11,Jack Cherry,G,"6'2""",190 lbs,SO,Bench,Shooter,No C & S 3's,True
-Elmhurst Bluejays,,#4,EJ Marshall,G,"6'0""",180 lbs,JR,Bench,Driver/shooter,Anticipate RHD,True
-Elmhurst Bluejays,,#22,Jeffrey Williams,F,"6'4""",210 lbs,SO,Bench,Shooter,No C & S 3's!!,True
-Coe Kohawks,,#5,Cooper Nailor,G,"6'1""",,SR,Starter,Main creator & scorer,No C & S 3's,True
-Coe Kohawks,,#4,Deuce Walters,G,"5'11""",,JR,Starter,Go to=Mid range pull up,Anticipate step back mid-range pull up,True
-Coe Kohawks,,#12,C. Reece Breitenbach,G,"5'11""",,JR,Starter,Shooter/Driver,No C & S 3's,True
-Coe Kohawks,,#22,Jackson Bowman,F,"6'7""",,SR,Starter,Slasher/finisher - Attacks to score (6 asts),Anticipate RHD,True
-Coe Kohawks,,#34,Kanyon Bryte,F,"6'8""",,SO,Starter,LS/RH in post,NLS,True
-Coe Kohawks,,#2,Ryan Dolphin,G,"5'9""",,SR,Bench,Shooter,No C & S 3's,True
-Coe Kohawks,,#20,Aaron Foote,F,"6'6""",,SR,Bench,Scores on back cuts & Slips,No Back cuts,True
-Coe Kohawks,,#35,Jackson Newell,F,"6'9""",,JR,Bench,Shoots mid range & 3's,Anticipate C & S (mid range and 3's),True
-UW-River Falls Falcons,,#14,Reggie Postel,G,"6'2""",175 lbs,SO,Starter,Shooter/Driver,NO C&S 3's,True
-UW-River Falls Falcons,,#10,Gavin Ralph,G,"6'3""",185 lbs,SR,Starter,Driver/Shooter,Anticipate RHD & Finish,True
-UW-River Falls Falcons,,#3,Owen Havlik,G,"6'4""",185 lbs,SO,Starter,Pass 1st (but capable of scoring at all 3 levels),Pressure,True
-UW-River Falls Falcons,,#11,Micah Thompson,F,"6'6""",215 lbs,JR,Starter,Physical driver,Cut off Drives & Keep out of the paint,True
-UW-River Falls Falcons,,#25,Jack Leifker,C,"6'8""",220 lbs,SR,Starter,LS/RH in Post,NO LS/RH finishes,True
-UW-River Falls Falcons,,#30,Drew Tengblad,F,"6'7""",205 lbs,JR,Bench,Shooter (only has 7 two pt attempts on season),No C & S 3's,True
-UW-River Falls Falcons,,#34,Reid Tengblad,F,"6'7""",205 lbs,JR,Bench,Back up 5 man,Wall up & don't foul on finishes,True
-UW-River Falls Falcons,,#2,Evan Clausen,F,"6'6""",215 lbs,FR,Bench,LH Shooter,No C & S 3's,True
-UW-La Crosse Eagles,,#15,Sam Grieger,G,"6'4""",175 lbs,JR,Starter,LH 3 level scorer (Leads WIAC in scoring),Limit drives into the paint (HEAVY GAP),True
-UW-La Crosse Eagles,,#24,Jack Crowley,G,"6'4""",190 lbs,FR,Starter,Shooter,High hand on closeouts,True
-UW-La Crosse Eagles,,#11,Dustin Derousseau,G,"6'3""",195 lbs,SR,Starter,Effective shooter and driver,Anticipate RHD (HEAVY GAP),True
-UW-La Crosse Eagles,,#0,Jacob Butler,G,"6'5""",200 lbs,SR,Starter,Plays the 4 and 5,Anticipate Pick & Pop,True
-UW-La Crosse Eagles,,#13,JJ Paider,F,"6'7""",230 lbs,SR,Starter,Scores in post & drive to post,BOX OUT!!!!!!!!!!,True
-UW-La Crosse Eagles,,#3,Carson Bauer,G,"6'4""",200 lbs,FR,Bench,Driver/Shooter,Anticipate RHD,True
-UW-La Crosse Eagles,,#23,Eli Schroeder,G,"6'1""",165 lbs,FR,Bench,Shooter! (4 made 2 pt this season),No C&S 3's,True
-UW-La Crosse Eagles,,#1,Sam Ferge,G,"6'4""",185 lbs,SO,Bench,Shooter/Driver,No C&S 3's,True
-UW-La Crosse Eagles,,#33,Ben Goedheer,F,"6'6""",215 lbs,JR,Bench,Back up 5 man,NLS/RH Finishes,True
-UW-La Crosse Eagles,,#5,Devon Fielding,G,"6'3""",190 lbs,JR,Bench,Shooter/Driver,No C&S 3's,True
-UW-Stout Blue Devils,,#12,Collin Vick,G,"6'1""",185 lbs,JR,Starter,Pass 1st PG (55 made FG's/89 assists),Don't over-help on drives,True
-UW-Stout Blue Devils,,#11,Domanyck Schwarzenburger,G,"6'3""",175 lbs,SO,Starter,Shooter/Driver,No C&S 3's!!,True
-UW-Stout Blue Devils,,#24,Mason Stoik,G,"6'4""",180 lbs,JR,Starter,Shooter/Driver,No C&S 3's,True
-UW-Stout Blue Devils,,#22,Wesley Mboga,G,"6'4""",200 lbs,FR,Starter,Shooter/Driver,Anticipate RHD,True
-UW-Stout Blue Devils,,#30,Nolan Stauffacher,F,"6'5""",215 lbs,JR,Starter,LS/RH finishes,NLS,True
-UW-Stout Blue Devils,,#3,AJ Uttech,G,"6'2""",195 lbs,JR,Bench,Driver/Shooter,No straight line drives,True
-UW-Stout Blue Devils,,#40,Aidan Shore,C,"6'10""",205 lbs,GR,Bench,Crashes O-Boards hard! (Lefty),Be a Helper & BOX OUT!!!,True
-UW-Stout Blue Devils,,#23,Gavin Johnson,G,"6'5""",195 lbs,FR,Bench,Shooter/Driver,No C&S 3's,True
-UW-Stout Blue Devils,,#4,Jackson Wilhelmson,G,"6'4""",185 lbs,JR,Bench,Shooter,No C&S 3's,True
-UW-Platteville Pioneers,,#2,Aiden Wieczorek,G,"6'3""",198 lbs,SR,Starter,Driver/shooter (PG),Jam & Pressure,True
-UW-Platteville Pioneers,,#0,Bristol Lewis,G,"6'2""",188 lbs,JR,Starter,Shooter/Driver,Be physical climbing over ball screens,True
-UW-Platteville Pioneers,,#5,Lucas Rameker,G/F,"6'3""",188 lbs,JR,Starter,Shooter/Driver,Pressure & Disrupt,True
-UW-Platteville Pioneers,,#21,Max Love,F,"6'4""",192 lbs,SR,Starter,Capable shooter and driver,STAY DOWN v. Shot Fakes,True
-UW-Platteville Pioneers,,#42,Joey Fuhremann,F,"6'8""",226 lbs,SR,Starter,LS/RH in post,Extend Catches to hash & Slide behind,True
-UW-Platteville Pioneers,,#33,Miles Hettinger,F,"6'7""",232 lbs,SR,Bench,"Scores on Rim runs, drives, and in post",Extend Catches to hash & Slide behind,True
-UW-Platteville Pioneers,,#1,Kaden MacKenize,G,"6'3""",190 lbs,FR,Bench,Driver/Shooter,Pressure & Disrupt = TO's,True
-UW-Platteville Pioneers,,#22,Max Lucey,F,"6'3""",186 lbs,JR,Bench,Shooter/Driver,Pressure & Disrupt,True
-UW-Eau Claire Blugolds,,#1,Andre Renta,G,"6'1""",175 lbs,SR,Starter,LH Driver/Shooter (PG),Anticipate LHD (Heavy Gap going Left),True
-UW-Eau Claire Blugolds,,#11,Tyler Haney,G,"6'1""",,FR,Starter,Shooter/Driver,No C&S 3's,True
-UW-Eau Claire Blugolds,,#3,Will Boser,G,"6'6""",170 lbs,JR,Starter,Shooter (85% shot attempts are 3's),LOCK & TRAIL = NEVER SHOOT THROUGH!!!,True
-UW-Eau Claire Blugolds,,#2,Carter Lichtsinn,F,"6'3""",,SR,Starter,Physical Driver,Anticipate RHD,True
-UW-Eau Claire Blugolds,,#23,Xavier Lewis,F,"6'7""",225 lbs,SR,Starter,Face up & attack 5 man (non-shooter),Move your feet - show hands - Stay down,True
-UW-Eau Claire Blugolds,,#22,Roan Demovsky,G,"6'0""",,FR,Bench,Backup PG Back up 5 man,Anticipate RHD No LS/RH,True
-UW-Eau Claire Blugolds,,#10,Joey Butz,G,"6'0""",,SO,Bench,Shooter (57 of 65 FGA are 3's),No C&S 3's,True
-UW-Eau Claire Blugolds,,#5,Kenji Scales,G,"6'2""",195 lbs,SR,Bench,Driver/Shooter,"Jam and Pressure in ""10""",True
-UW-Oshkosh Titans,,#2,Joey LaChapell,G,"6'0""",175 lbs,SO,Starter,Shooter/Driver (seeks contact on jump shots),No transition 3's (locate early),True
-UW-Oshkosh Titans,,#10,Nate Nazos,G,"6'0""",175 lbs,SO,Starter,Shooter & ball mover,No C & S 3's,True
-UW-Oshkosh Titans,,#21,Carter Thomas,G,"6'5""",190 lbs,SR,Starter,Shooter/Driver,No C & S 3's,True
-UW-Oshkosh Titans,,#4,Michael Metcalf-Grassman,G,"6'5""",200 lbs,JR,Starter,Driver (Prefers RHD),No RHD,True
-UW-Oshkosh Titans,,#0,Brandon Beck,F,"6'7""",195 lbs,SO,Starter,High level shooter and driver,Early high hand,True
-UW-Oshkosh Titans,,#13,Logan Rindfleisch,G,"6'5""",190 lbs,SO,Bench,Driver/shooter,No rhythm 3's,True
-UW-Oshkosh Titans,,#1,Aiden Hawkinson,G,"6'3""",180 lbs,FR,Bench,Shooter,No C & S 3's,True
-UW-Oshkosh Titans,,#23,Oskar Kangas,F,"6'5""",205 lbs,FR,Bench,Shooter,Early high hand on closeouts,True
-UW-Oshkosh Titans,,#12,Jonah Rindfleisch,F,"6'8""",215 lbs,SR,Bench,Rebounds hard!,BOX OUT!!!,True
-UW-Oshkosh Titans,,#5,Matt Imig,G,"6'1""",180 lbs,SR,Bench,Shooter (C&S & off dribble),No C & S 3's,True
-UW-Stevens Point Pointers,,#4,Josiah Butler,G,"6'2""",185 lbs,JR,Starter,3 level scorer,Cutoff baseline drives early,True
-UW-Stevens Point Pointers,,#5,Carter Combs,G,"6'0""",185 lbs,SO,Starter,Shooter,No C&S 3's,True
-UW-Stevens Point Pointers,,#15,Logan Baumgartner,G/F,"6'4""",225 lbs,JR,Starter,Shooter!!!,Find in Transition!!,True
-UW-Stevens Point Pointers,,#2,Seth Miron,G/F,"6'5""",215 lbs,JR,Starter,Driver/Shooter,Hold ground & STAY DOWN!!!,True
-UW-Stevens Point Pointers,,#12,Cal Krohn,F,"6'8""",240 lbs,JR,Starter,LH Post (Non 3 pt shooter),No RS/LH,True
-UW-Stevens Point Pointers,,#14,Joshua Bocher,F,"6'6""",,SR,Bench,Aggressive & physical driver (LH),Anticipate LH Drive & Finish,True
-UW-Stevens Point Pointers,,#23,Max Raimer,G,"6'4""",175 lbs,FR,Bench,Driver/Shooter,No back cuts,True
-UW-Stevens Point Pointers,,#13,Isaiah Moore,G/F,"6'4""",170 lbs,FR,Bench,3 level scorer,Anticipate pull up on drives,True
-UW-Stevens Point Pointers,,#24,Grant Manz,F,"6'6""",220 lbs,SO,Bench,Back up post,Heavy help off ball,True
-Loras Duhawks,,#2,Damyen Jackson,G,"6'0""",180 lbs,FR,Starter,Capable shooter and driver (22 ppg last 2 games),Anticipate multiple driving efforts,True
-Loras Duhawks,,#32,Johnny Semany,G,"6'1""",170 lbs,JR,Starter,Driver/Shooter,No RHD,True
-Loras Duhawks,,#11,Gavin Sarvis,G,"6'3""",215 lbs,SR,Starter,Most scoring in post & cutting off back screens,Limit post touches,True
-Loras Duhawks,,#12,Nolan Berendes,F,"6'6""",225 lbs,JR,Starter,Shooter/Driver,No C&S 3's,True
-Loras Duhawks,,#23,Jack Haynes,F,"6'7""",235 lbs,SR,Starter,"Scores in post, drives, and can shoot",No LS/RH Finish (no stare down 3's),True
-Loras Duhawks,,#24,Kyle Kober,G,"6'3""",195 lbs,JR,Bench,Driver/Shooter,Anticipate RHD,True
-Loras Duhawks,,#20,Connor Mosele,G,"6'3""",205 lbs,JR,Bench,Shooter,High Hand v. 3s,True
-Loras Duhawks,,#1,Deng Makeer,G,"6'6""",175 lbs,FR,Bench,Shooter (nealy 80% of shots are 3s),No C&S 3's,True
-Washington-St. Louis Bears,2025-11-14,#3,Josh Kim,G,"6'3""",175 lbs,FR,Starter,Driver/Shooter,Anticipate RH Finish,True
-Washington-St. Louis Bears,2025-11-14,#10,Yogi Oliff,G,"6'3""",175 lbs,SR,Starter,Driver/Shooter,No RHD - Keep him in FRONT!!,True
-Washington-St. Louis Bears,2025-11-14,#11,Ryan Cohen,G,"6'3""",180 lbs,JR,Starter,Shooter with quick release! (85% shot attempts are 3's),Locate early in transition,True
-Washington-St. Louis Bears,2025-11-14,#21,Connor May,F,"6'6""",210 lbs,SO,Starter,3 level scorer (high level shooter),Anticipate RHD,True
-Washington-St. Louis Bears,2025-11-14,#34,Calvin Kapral,C,"6'8""",225 lbs,SR,Starter,Scores in post & dump offs on drives,No LS/RH!,True
-Washington-St. Louis Bears,2025-11-14,#23,Anthony Przybilla,F,"6'6""",200 lbs,SO,Bench,Driver/Finisher,Keep vision of man & ball,True
-Washington-St. Louis Bears,2025-11-14,#32,Will Grudzinski,G,"6'6""",200 lbs,SR,Bench,Shooter/Driver,High early hand on closeouts,True
-Washington-St. Louis Bears,2025-11-14,#30,Theo Rocca,G,"6'3""",190 lbs,FR,Bench,Capable shooter & driver,No C&S 3's,True
-Washington-St. Louis Bears,2025-11-14,#33,George Gale,F,"6'6""",195 lbs,JR,Bench,LS/RH in post (5 man),No LS/RH,True
-Eureka Red Devils,2025-11-15,,Andrew Wells,,,,,Bench,,,False
-Eureka Red Devils,2025-11-15,,Caden Latta,,,,,Bench,,,False
-Eureka Red Devils,2025-11-15,,Joel Ewald,,,,,Bench,,,False
-Eureka Red Devils,2025-11-15,,Mussie Hayelom,,,,,Bench,,,False
-Eureka Red Devils,2025-11-15,,Nicholaus Harris-Huntley,,,,,Bench,,,False
-Eureka Red Devils,2025-11-15,,Santino Ruma,,,,,Bench,,,False
-Eureka Red Devils,2025-11-15,,Zachy Qader,,,,,Bench,,,False
+Lawrence Vikings,2025-12-10,#3,Nathan Valentine,G,"5'11""",170 lbs,SR,Starter,Shooter (C & S 3's),No C & S 3's,True
+Lawrence Vikings,2025-12-10,#10,Hogan Demovsky,G,"6'3""",185 lbs,JR,Starter,Shooter with DEEP range (esp. Late in clock),No C & S 3's,True
+Lawrence Vikings,2025-12-10,#22,Nicholas Gouriotis,F,"6'5""",200 lbs,JR,Starter,Shooter/Driver,No C & S 3's,True
+Lawrence Vikings,2025-12-10,#15,CJ Campbell,F,"6'7""",190 lbs,JR,Starter,Shooter/Driver,No Rhythm 3's,True
+Lawrence Vikings,2025-12-10,#20,Casey Schoenecker,F,"6'6""",210 lbs,JR,Starter,Attacks from perimeter & scores in post,Anticipate LS/RH Finishes,True
+Lawrence Vikings,2025-12-10,#12,Nicolas Manzanera,G,"6'0""",205 lbs,SR,Bench,Shooter,No C & S 3's,True
+Lawrence Vikings,2025-12-10,#21,Nolan Koch,F,"6'5""",215 lbs,SO,Bench,LS/RH in Post (Non-shooter),NLS/RH,True
+Lawrence Vikings,2025-12-10,#14,Landon Key,F,"6'4""",180 lbs,SO,Bench,Driver (either way),Be a helper!!,True
+Lawrence Vikings,2025-12-10,#4,Caleb Nash,G,"6'1""",190 lbs,SO,Bench,Driver (either way),Be a Helper!!,True
+Carroll (WI) Pioneers,2025-12-13,#33,Dennis Estepp,G,"6'0""",170 lbs,JR,Starter,PG - pushes tempo in transition,Stop him down in transition,True
+Carroll (WI) Pioneers,2025-12-13,#12,Peyton McKenna,G,"6'2""",175 lbs,SO,Starter,Shooter! (70 of 78 shot attempts are 3's),LOCK & TRAIL!!!,True
+Carroll (WI) Pioneers,2025-12-13,#4,Michael McNabb,G,"6'5""",205 lbs,SO,Starter,LH Driver/Shooter,Show hands/don't foul on drives!!,True
+Carroll (WI) Pioneers,2025-12-13,#44,Lamar Smith,F,"6'4""",185 lbs,SR,Starter,Driver (Prefers RHD but capable LHD),Anticipate quick 1st step,True
+Carroll (WI) Pioneers,2025-12-13,#41,Jacob Naber,F,"6'8""",230 lbs,SR,Starter,Posts hard after DHO or ball screen,Extend & Limit Catches | Crash to 3/4 front,True
+Carroll (WI) Pioneers,2025-12-13,#3,Lucas Parker,G,"6'4""",185 lbs,JR,Bench,Shooter,NO C&S 3's!!!,True
+Carroll (WI) Pioneers,2025-12-13,#15,Evan Bland,G,"6'0""",165 lbs,SR,Bench,"Aggressive Driver (prefers RH, will go both)",Anticipate RHD,True
+Carroll (WI) Pioneers,2025-12-13,#42,Greg Smith,F,"6'7""",,FR,Bench,Back up 5 man,Be a Helper!!!,True
+Alma Scots,2025-12-20,#14,Raine Rodich,G,"6'0""",185 lbs,SO,Starter,Driver (Non-shooter),Anticipate spin back on finishes,True
+Alma Scots,2025-12-20,#3,Donovan Collins,G,"6'0""",150 lbs,JR,Starter,Shooter,High early hand on closeouts,True
+Alma Scots,2025-12-20,#20,Josh Elliott,G,"6'3""",185 lbs,SR,Starter,Shooter (no made 2's this season),Locate early in transition,True
+Alma Scots,2025-12-20,#11,Korbin Heitzman,F,"6'7""",190 lbs,JR,Starter,Efficient in post and drives (Non-shooter),No LS/RH,True
+Alma Scots,2025-12-20,#24,Logan St. Martin,F/C,"6'6""",220 lbs,JR,Starter,Scores in Post & O-Boards,No LS/RH,True
+Alma Scots,2025-12-20,#1,Elijah Sykes,G,"5'10""",165 lbs,FR,Bench,Shooter/Driver,High early hand on closeouts,True
+Alma Scots,2025-12-20,#10,Joss Bradley,G,"6'1""",180 lbs,SO,Bench,RH Driver,Wall up + No Fouls on Finishes,True
+Alma Scots,2025-12-20,#15,Preston Malpass,F,"6'7""",185 lbs,SO,Bench,Shooter,No C & S 3's,True
+Alma Scots,2025-12-20,#21,Luciano Guerrazzi,F,"6'7""",210 lbs,JR,Bench,Back up 5 man,No LS/RH,True
+Elmhurst Bluejays,2025-12-02,#2,Luke Smith,G,"6'0""",185 lbs,FR,Starter,Primary PG,No Rhythm C & S 3's,True
+Elmhurst Bluejays,2025-12-02,#0,Sebastian Blachut,G,"6'2""",185 lbs,SR,Starter,Driver/Shooter,Close out = Driver First,True
+Elmhurst Bluejays,2025-12-02,#1,Dominic Trelenberg,F,"6'5""",205 lbs,SR,Starter,LH 3 level scorer,Anticipate quick 1st step (LHD),True
+Elmhurst Bluejays,2025-12-02,#40,Aidyn Boone,F,"6'5""",230 lbs,JR,Starter,Shooter (22 of 34 FGA from 3),Expect pops after screens on & off ball,True
+Elmhurst Bluejays,2025-12-02,#15,Vinnie Adjahoungbeta,F,"6'5""",200 lbs,SO,Starter,"3 level scorer (Shoots, drives, & posts)",No C & S 3's,True
+Elmhurst Bluejays,2025-12-02,#21,Talen Pearson,G,"6'5""",180 lbs,SO,Bench,Shoot 1st,High hand on closeout,True
+Elmhurst Bluejays,2025-12-02,#11,Jack Cherry,G,"6'2""",190 lbs,SO,Bench,Shooter,No C & S 3's,True
+Elmhurst Bluejays,2025-12-02,#4,EJ Marshall,G,"6'0""",180 lbs,JR,Bench,Driver/shooter,Anticipate RHD,True
+Elmhurst Bluejays,2025-12-02,#22,Jeffrey Williams,F,"6'4""",210 lbs,SO,Bench,Shooter,No C & S 3's!!,True
+Coe Kohawks,2025-12-30,#5,Cooper Nailor,G,"6'1""",,SR,Starter,Main creator & scorer,No C & S 3's,True
+Coe Kohawks,2025-12-30,#4,Deuce Walters,G,"5'11""",,JR,Starter,Go to=Mid range pull up,Anticipate step back mid-range pull up,True
+Coe Kohawks,2025-12-30,#12,C. Reece Breitenbach,G,"5'11""",,JR,Starter,Shooter/Driver,No C & S 3's,True
+Coe Kohawks,2025-12-30,#22,Jackson Bowman,F,"6'7""",,SR,Starter,Slasher/finisher - Attacks to score (6 asts),Anticipate RHD,True
+Coe Kohawks,2025-12-30,#34,Kanyon Bryte,F,"6'8""",,SO,Starter,LS/RH in post,NLS,True
+Coe Kohawks,2025-12-30,#2,Ryan Dolphin,G,"5'9""",,SR,Bench,Shooter,No C & S 3's,True
+Coe Kohawks,2025-12-30,#20,Aaron Foote,F,"6'6""",,SR,Bench,Scores on back cuts & Slips,No Back cuts,True
+Coe Kohawks,2025-12-30,#35,Jackson Newell,F,"6'9""",,JR,Bench,Shoots mid range & 3's,Anticipate C & S (mid range and 3's),True
+UW-River Falls Falcons,2026-01-10,#14,Reggie Postel,G,"6'2""",175 lbs,SO,Starter,Shooter/Driver,NO C&S 3's,True
+UW-River Falls Falcons,2026-01-10,#10,Gavin Ralph,G,"6'3""",185 lbs,SR,Starter,Driver/Shooter,Anticipate RHD & Finish,True
+UW-River Falls Falcons,2026-01-10,#3,Owen Havlik,G,"6'4""",185 lbs,SO,Starter,Pass 1st (but capable of scoring at all 3 levels),Pressure,True
+UW-River Falls Falcons,2026-01-10,#11,Micah Thompson,F,"6'6""",215 lbs,JR,Starter,Physical driver,Cut off Drives & Keep out of the paint,True
+UW-River Falls Falcons,2026-01-10,#25,Jack Leifker,C,"6'8""",220 lbs,SR,Starter,LS/RH in Post,NO LS/RH finishes,True
+UW-River Falls Falcons,2026-01-10,#30,Drew Tengblad,F,"6'7""",205 lbs,JR,Bench,Shooter (only has 7 two pt attempts on season),No C & S 3's,True
+UW-River Falls Falcons,2026-01-10,#34,Reid Tengblad,F,"6'7""",205 lbs,JR,Bench,Back up 5 man,Wall up & don't foul on finishes,True
+UW-River Falls Falcons,2026-01-10,#2,Evan Clausen,F,"6'6""",215 lbs,FR,Bench,LH Shooter,No C & S 3's,True
+UW-La Crosse Eagles,2026-01-14,#15,Sam Grieger,G,"6'4""",175 lbs,JR,Starter,LH 3 level scorer (Leads WIAC in scoring),Limit drives into the paint (HEAVY GAP),True
+UW-La Crosse Eagles,2026-01-14,#24,Jack Crowley,G,"6'4""",190 lbs,FR,Starter,Shooter,High hand on closeouts,True
+UW-La Crosse Eagles,2026-01-14,#11,Dustin Derousseau,G,"6'3""",195 lbs,SR,Starter,Effective shooter and driver,Anticipate RHD (HEAVY GAP),True
+UW-La Crosse Eagles,2026-01-14,#0,Jacob Butler,G,"6'5""",200 lbs,SR,Starter,Plays the 4 and 5,Anticipate Pick & Pop,True
+UW-La Crosse Eagles,2026-01-14,#13,JJ Paider,F,"6'7""",230 lbs,SR,Starter,Scores in post & drive to post,BOX OUT!!!!!!!!!!,True
+UW-La Crosse Eagles,2026-01-14,#3,Carson Bauer,G,"6'4""",200 lbs,FR,Bench,Driver/Shooter,Anticipate RHD,True
+UW-La Crosse Eagles,2026-01-14,#23,Eli Schroeder,G,"6'1""",165 lbs,FR,Bench,Shooter! (4 made 2 pt this season),No C&S 3's,True
+UW-La Crosse Eagles,2026-01-14,#1,Sam Ferge,G,"6'4""",185 lbs,SO,Bench,Shooter/Driver,No C&S 3's,True
+UW-La Crosse Eagles,2026-01-14,#33,Ben Goedheer,F,"6'6""",215 lbs,JR,Bench,Back up 5 man,NLS/RH Finishes,True
+UW-La Crosse Eagles,2026-01-14,#5,Devon Fielding,G,"6'3""",190 lbs,JR,Bench,Shooter/Driver,No C&S 3's,True
+UW-Stout Blue Devils,2026-01-17,#12,Collin Vick,G,"6'1""",185 lbs,JR,Starter,Pass 1st PG (55 made FG's/89 assists),Don't over-help on drives,True
+UW-Stout Blue Devils,2026-01-17,#11,Domanyck Schwarzenburger,G,"6'3""",175 lbs,SO,Starter,Shooter/Driver,No C&S 3's!!,True
+UW-Stout Blue Devils,2026-01-17,#24,Mason Stoik,G,"6'4""",180 lbs,JR,Starter,Shooter/Driver,No C&S 3's,True
+UW-Stout Blue Devils,2026-01-17,#22,Wesley Mboga,G,"6'4""",200 lbs,FR,Starter,Shooter/Driver,Anticipate RHD,True
+UW-Stout Blue Devils,2026-01-17,#30,Nolan Stauffacher,F,"6'5""",215 lbs,JR,Starter,LS/RH finishes,NLS,True
+UW-Stout Blue Devils,2026-01-17,#3,AJ Uttech,G,"6'2""",195 lbs,JR,Bench,Driver/Shooter,No straight line drives,True
+UW-Stout Blue Devils,2026-01-17,#40,Aidan Shore,C,"6'10""",205 lbs,GR,Bench,Crashes O-Boards hard! (Lefty),Be a Helper & BOX OUT!!!,True
+UW-Stout Blue Devils,2026-01-17,#23,Gavin Johnson,G,"6'5""",195 lbs,FR,Bench,Shooter/Driver,No C&S 3's,True
+UW-Stout Blue Devils,2026-01-17,#4,Jackson Wilhelmson,G,"6'4""",185 lbs,JR,Bench,Shooter,No C&S 3's,True
+UW-Platteville Pioneers,2026-01-21,#2,Aiden Wieczorek,G,"6'3""",198 lbs,SR,Starter,Driver/shooter (PG),Jam & Pressure,True
+UW-Platteville Pioneers,2026-01-21,#0,Bristol Lewis,G,"6'2""",188 lbs,JR,Starter,Shooter/Driver,Be physical climbing over ball screens,True
+UW-Platteville Pioneers,2026-01-21,#5,Lucas Rameker,G/F,"6'3""",188 lbs,JR,Starter,Shooter/Driver,Pressure & Disrupt,True
+UW-Platteville Pioneers,2026-01-21,#21,Max Love,F,"6'4""",192 lbs,SR,Starter,Capable shooter and driver,STAY DOWN v. Shot Fakes,True
+UW-Platteville Pioneers,2026-01-21,#42,Joey Fuhremann,F,"6'8""",226 lbs,SR,Starter,LS/RH in post,Extend Catches to hash & Slide behind,True
+UW-Platteville Pioneers,2026-01-21,#33,Miles Hettinger,F,"6'7""",232 lbs,SR,Bench,"Scores on Rim runs, drives, and in post",Extend Catches to hash & Slide behind,True
+UW-Platteville Pioneers,2026-01-21,#1,Kaden MacKenize,G,"6'3""",190 lbs,FR,Bench,Driver/Shooter,Pressure & Disrupt = TO's,True
+UW-Platteville Pioneers,2026-01-21,#22,Max Lucey,F,"6'3""",186 lbs,JR,Bench,Shooter/Driver,Pressure & Disrupt,True
+UW-Eau Claire Blugolds,2026-01-24,#1,Andre Renta,G,"6'1""",175 lbs,SR,Starter,LH Driver/Shooter (PG),Anticipate LHD (Heavy Gap going Left),True
+UW-Eau Claire Blugolds,2026-01-24,#11,Tyler Haney,G,"6'1""",,FR,Starter,Shooter/Driver,No C&S 3's,True
+UW-Eau Claire Blugolds,2026-01-24,#3,Will Boser,G,"6'6""",170 lbs,JR,Starter,Shooter (85% shot attempts are 3's),LOCK & TRAIL = NEVER SHOOT THROUGH!!!,True
+UW-Eau Claire Blugolds,2026-01-24,#2,Carter Lichtsinn,F,"6'3""",,SR,Starter,Physical Driver,Anticipate RHD,True
+UW-Eau Claire Blugolds,2026-01-24,#23,Xavier Lewis,F,"6'7""",225 lbs,SR,Starter,Face up & attack 5 man (non-shooter),Move your feet - show hands - Stay down,True
+UW-Eau Claire Blugolds,2026-01-24,#22,Roan Demovsky,G,"6'0""",,FR,Bench,Backup PG Back up 5 man,Anticipate RHD No LS/RH,True
+UW-Eau Claire Blugolds,2026-01-24,#10,Joey Butz,G,"6'0""",,SO,Bench,Shooter (57 of 65 FGA are 3's),No C&S 3's,True
+UW-Eau Claire Blugolds,2026-01-24,#5,Kenji Scales,G,"6'2""",195 lbs,SR,Bench,Driver/Shooter,"Jam and Pressure in ""10""",True
+UW-Oshkosh Titans,2026-01-03,#2,Joey LaChapell,G,"6'0""",175 lbs,SO,Starter,Shooter/Driver (seeks contact on jump shots),No transition 3's (locate early),True
+UW-Oshkosh Titans,2026-01-03,#10,Nate Nazos,G,"6'0""",175 lbs,SO,Starter,Shooter & ball mover,No C & S 3's,True
+UW-Oshkosh Titans,2026-01-03,#21,Carter Thomas,G,"6'5""",190 lbs,SR,Starter,Shooter/Driver,No C & S 3's,True
+UW-Oshkosh Titans,2026-01-03,#4,Michael Metcalf-Grassman,G,"6'5""",200 lbs,JR,Starter,Driver (Prefers RHD),No RHD,True
+UW-Oshkosh Titans,2026-01-03,#0,Brandon Beck,F,"6'7""",195 lbs,SO,Starter,High level shooter and driver,Early high hand,True
+UW-Oshkosh Titans,2026-01-03,#13,Logan Rindfleisch,G,"6'5""",190 lbs,SO,Bench,Driver/shooter,No rhythm 3's,True
+UW-Oshkosh Titans,2026-01-03,#1,Aiden Hawkinson,G,"6'3""",180 lbs,FR,Bench,Shooter,No C & S 3's,True
+UW-Oshkosh Titans,2026-01-03,#23,Oskar Kangas,F,"6'5""",205 lbs,FR,Bench,Shooter,Early high hand on closeouts,True
+UW-Oshkosh Titans,2026-01-03,#12,Jonah Rindfleisch,F,"6'8""",215 lbs,SR,Bench,Rebounds hard!,BOX OUT!!!,True
+UW-Oshkosh Titans,2026-01-03,#5,Matt Imig,G,"6'1""",180 lbs,SR,Bench,Shooter (C&S & off dribble),No C & S 3's,True
+UW-Stevens Point Pointers,2026-01-07,#4,Josiah Butler,G,"6'2""",185 lbs,JR,Starter,3 level scorer,Cutoff baseline drives early,True
+UW-Stevens Point Pointers,2026-01-07,#5,Carter Combs,G,"6'0""",185 lbs,SO,Starter,Shooter,No C&S 3's,True
+UW-Stevens Point Pointers,2026-01-07,#15,Logan Baumgartner,G/F,"6'4""",225 lbs,JR,Starter,Shooter!!!,Find in Transition!!,True
+UW-Stevens Point Pointers,2026-01-07,#2,Seth Miron,G/F,"6'5""",215 lbs,JR,Starter,Driver/Shooter,Hold ground & STAY DOWN!!!,True
+UW-Stevens Point Pointers,2026-01-07,#12,Cal Krohn,F,"6'8""",240 lbs,JR,Starter,LH Post (Non 3 pt shooter),No RS/LH,True
+UW-Stevens Point Pointers,2026-01-07,#14,Joshua Bocher,F,"6'6""",,SR,Bench,Aggressive & physical driver (LH),Anticipate LH Drive & Finish,True
+UW-Stevens Point Pointers,2026-01-07,#23,Max Raimer,G,"6'4""",175 lbs,FR,Bench,Driver/Shooter,No back cuts,True
+UW-Stevens Point Pointers,2026-01-07,#13,Isaiah Moore,G/F,"6'4""",170 lbs,FR,Bench,3 level scorer,Anticipate pull up on drives,True
+UW-Stevens Point Pointers,2026-01-07,#24,Grant Manz,F,"6'6""",220 lbs,SO,Bench,Back up post,Heavy help off ball,True
+Loras Duhawks,2026-03-06,#2,Damyen Jackson,G,"6'0""",180 lbs,FR,Starter,Capable shooter and driver (22 ppg last 2 games),Anticipate multiple driving efforts,True
+Loras Duhawks,2026-03-06,#32,Johnny Semany,G,"6'1""",170 lbs,JR,Starter,Driver/Shooter,No RHD,True
+Loras Duhawks,2026-03-06,#11,Gavin Sarvis,G,"6'3""",215 lbs,SR,Starter,Most scoring in post & cutting off back screens,Limit post touches,True
+Loras Duhawks,2026-03-06,#12,Nolan Berendes,F,"6'6""",225 lbs,JR,Starter,Shooter/Driver,No C&S 3's,True
+Loras Duhawks,2026-03-06,#23,Jack Haynes,F,"6'7""",235 lbs,SR,Starter,"Scores in post, drives, and can shoot",No LS/RH Finish (no stare down 3's),True
+Loras Duhawks,2026-03-06,#24,Kyle Kober,G,"6'3""",195 lbs,JR,Bench,Driver/Shooter,Anticipate RHD,True
+Loras Duhawks,2026-03-06,#20,Connor Mosele,G,"6'3""",205 lbs,JR,Bench,Shooter,High Hand v. 3s,True
+Loras Duhawks,2026-03-06,#1,Deng Makeer,G,"6'6""",175 lbs,FR,Bench,Shooter (nealy 80% of shots are 3s),No C&S 3's,True
+Washington-St. Louis Bears,2025-11-15,#3,Josh Kim,G,"6'3""",175 lbs,FR,Starter,Driver/Shooter,Anticipate RH Finish,True
+Washington-St. Louis Bears,2025-11-15,#10,Yogi Oliff,G,"6'3""",175 lbs,SR,Starter,Driver/Shooter,No RHD - Keep him in FRONT!!,True
+Washington-St. Louis Bears,2025-11-15,#11,Ryan Cohen,G,"6'3""",180 lbs,JR,Starter,Shooter with quick release! (85% shot attempts are 3's),Locate early in transition,True
+Washington-St. Louis Bears,2025-11-15,#21,Connor May,F,"6'6""",210 lbs,SO,Starter,3 level scorer (high level shooter),Anticipate RHD,True
+Washington-St. Louis Bears,2025-11-15,#34,Calvin Kapral,C,"6'8""",225 lbs,SR,Starter,Scores in post & dump offs on drives,No LS/RH!,True
+Washington-St. Louis Bears,2025-11-15,#23,Anthony Przybilla,F,"6'6""",200 lbs,SO,Bench,Driver/Finisher,Keep vision of man & ball,True
+Washington-St. Louis Bears,2025-11-15,#32,Will Grudzinski,G,"6'6""",200 lbs,SR,Bench,Shooter/Driver,High early hand on closeouts,True
+Washington-St. Louis Bears,2025-11-15,#30,Theo Rocca,G,"6'3""",190 lbs,FR,Bench,Capable shooter & driver,No C&S 3's,True
+Washington-St. Louis Bears,2025-11-15,#33,George Gale,F,"6'6""",195 lbs,JR,Bench,LS/RH in post (5 man),No LS/RH,True
+Loras Duhawks,2026-03-06,,Athan Berchos,,,,,Bench,,,False
+Loras Duhawks,2026-03-06,,Commits Foul,,,,,Bench,,,False
+Loras Duhawks,2026-03-06,,Cooper Grams,,,,,Bench,,,False
+Loras Duhawks,2026-03-06,,Damyen Jackson Commits Foul,,,,,Bench,,,False
+Loras Duhawks,2026-03-06,,Emmett Loew,,,,,Bench,,,False
+Loras Duhawks,2026-03-06,,Ethan Meyer,,,,,Bench,,,False
+Loras Duhawks,2026-03-06,,Jim Navarrete,,,,,Bench,,,False
+Loras Duhawks,2026-03-06,,Juvon Crawford,,,,,Bench,,,False
+Loras Duhawks,2026-03-06,,Lukas Balling,,,,,Bench,,,False
