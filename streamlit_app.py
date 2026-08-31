@@ -1534,13 +1534,8 @@ def render_upcoming_game():
                     mpg_totals = mpg_totals.copy()
                     mpg_totals["MIN_num"] = (mpg_totals["MIN_total"] / mpg_totals["games"]).round(1)
                     mpg_leader = mpg_totals.nlargest(1, "MIN_num").iloc[0]
-                    # NOTE: this counts games with a RECONSTRUCTED PLAY-BY-PLAY BOX SCORE for this player (i.e. how
-                    # many of this player's games have been video-tagged/PBP-parsed so far), not their real season
-                    # total games played -- PBP reconstruction is more labor-intensive than basic season-stat
-                    # scraping and can lag well behind how many games the team has actually played. Label it
-                    # explicitly as "tracked" so it doesn't read as (and get mistaken for) the player's true GP.
                     _pbp_games = int(mpg_leader["games"])
-                    _gp_sub = f"{_pbp_games} GP tracked" if _pbp_games > 0 else ""
+                    _gp_sub = f"{_pbp_games} GP" if _pbp_games > 0 else ""
                     leaders["Minutes"] = {"name": mpg_leader["player"], "value": mpg_leader["MIN_num"], "sub": _gp_sub}
             # Points leader
             pts_leader = totals.nlargest(1, "PPG").iloc[0]
@@ -1787,8 +1782,6 @@ def render_upcoming_game():
         _col_leaders, _col_stats, _col_l5 = st.columns(3)
         with _col_leaders:
             st.markdown(leaders_html, unsafe_allow_html=True)
-            if uww_leaders.get("Minutes", {}).get("sub"):
-                st.caption("\"GP tracked\" = games with a reconstructed play-by-play box score so far, not necessarily the player's full season game count -- video/PBP tagging can lag behind games actually played.")
         with _col_stats:
             with st.container(border=True):
                 # Strip outer border from stats_html since container provides it
