@@ -245,18 +245,36 @@ def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
         return default
     try:
         pbp_upcoming = load_table("uww_opponent_prior_games_pbp")
-        # CONFIRMED BUG (fixed here): this matched on the "opponent" COLUMN, which in this table does NOT mean
-        # "the upcoming opponent" -- the parser sets it to whoever the upcoming opponent ACTUALLY PLAYED in
-        # each of those prior games (they're the opponent's games BEFORE facing UWW, so Whitewater isn't in
-        # them at all). So `opponent == short_opponent` matched ZERO rows for every opponent, the PBP branch
-        # never fired, and this silently fell through to the hardcoded default of 5 -- which is exactly why
-        # Eureka's 5 season blocks kept rendering as 1.0 BPG (5/5) instead of 1.67 (5 blocks / 3 games).
-        # The column that identifies the upcoming opponent here is "team" (which side each event belongs to).
-        if not pbp_upcoming.empty and "team" in pbp_upcoming.columns:
-            own_rows = pbp_upcoming[pbp_upcoming["team"] == short_opponent]
-            n_pbp = own_rows["game_date"].nunique() if not own_rows.empty else 0
-            if n_pbp > 0:
-                return n_pbp
+        # CONFIRMED BUG #1 (fixed here): this matched on the "opponent" COLUMN, which in this table does NOT
+        # mean "the upcoming opponent" -- the parser (build_pbp_events) sets it to whoever the upcoming
+        # opponent ACTUALLY PLAYED in each prior game (these are their games BEFORE facing UWW, so Whitewater
+        # isn't in them at all). The column carrying the upcoming opponent is "team".
+        #
+        # CONFIRMED BUG #2 (also fixed here): switching to `team == short_opponent` STILL returned nothing,
+        # because the two sides derive the name from different places and don't have to agree ---
+        #   parser: upcoming_opponent_short = next(s for s in scouted_opponents if re.search(...)) -- from
+        #           SCOUT-REPORT FILENAMES, in arbitrary order, so it can land on "Eureka".
+        #   app:    resolve_short_opponent() -- from pbp_events/game_plans/team_totals/rosters/schedules,
+        #           sorted longest-first, so it can land on "Eureka Red Devils".
+        # Any exact-string match between the two is a coin flip, and losing it silently fell through to the
+        # hardcoded default of 5 -- which is exactly why Eureka's 5 blocks kept rendering as 1.0 BPG (5/5)
+        # instead of 1.67 (5 blocks / 3 games), through several fixes that each looked right.
+        #
+        # So don't identify the opponent by NAME here at all. This table only ever holds the upcoming
+        # opponent's prior games, and structurally they are the one team present in EVERY game while each
+        # third party appears in exactly ONE. Take the team label with the most distinct game_dates; that is
+        # the upcoming opponent regardless of which naming convention produced the string. The name is then
+        # used only as a loose sanity check (either side a prefix of the other, case-insensitive), so that an
+        # opponent who ISN'T the current upcoming one still correctly falls through to the schedule count.
+        if not pbp_upcoming.empty and {"team", "game_date"} <= set(pbp_upcoming.columns):
+            games_per_team = pbp_upcoming.dropna(subset=["team"]).groupby("team")["game_date"].nunique()
+            if not games_per_team.empty:
+                label = games_per_team.idxmax()
+                _a, _b = str(label).strip().lower(), str(short_opponent).strip().lower()
+                if _a and _b and (_a.startswith(_b) or _b.startswith(_a)):
+                    n_pbp = int(games_per_team.max())
+                    if n_pbp > 0:
+                        return n_pbp
     except Exception:
         pass
     opp_sched = load_table("uww_opponent_schedules")
