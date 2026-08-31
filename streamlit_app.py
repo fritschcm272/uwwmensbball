@@ -299,7 +299,7 @@ def get_opponent_entering_record(short_opponent: str) -> tuple:
             streak_count += 1
         else:
             break
-    streak_str = f"{streak_count}{'W' if streak_type == 'W' else 'L'} streak" if streak_count > 1 else ""
+    streak_str = f"{streak_count}{'W' if streak_type == 'W' else 'L'} streak" if streak_count >= 1 else ""
     return record_str, streak_str
 
 
@@ -1184,13 +1184,19 @@ def render_upcoming_game():
         else:
             break
     streak_label = "win" if streak_type == "W" else "loss"
-    streak_str = f"{streak_count}-game {streak_label} streak" if streak_count > 1 else ""
+    streak_str = f"{streak_count}-game {streak_label} streak" if streak_count >= 1 else ""
 
     opp_record = str(record).strip() if pd.notna(record) and str(record).strip() else ""
+    # "should always show the streak for both teams" -- get_opponent_entering_record() is the only source
+    # that computes a streak at all; the schedule CSV's own `record` field (when present) never has one. This
+    # used to only call it when opp_record was ALSO blank, which meant a game with a pre-filled record string
+    # (opp_record truthy) never got a streak at all, silently. Always call it now for the streak specifically,
+    # and only fall back to ITS record string if the schedule's own `record` field was empty.
     opp_streak_str = ""
-    # If no record in schedule CSV, compute from opponent_schedules (only pre-UWW games)
-    if not opp_record and short_opponent:
-        opp_record, opp_streak_str = get_opponent_entering_record(short_opponent)
+    if short_opponent:
+        _entering_record, opp_streak_str = get_opponent_entering_record(short_opponent)
+        if not opp_record:
+            opp_record = _entering_record
 
     # Build broadcast-style HTML banner with team logos
     uww_logo_b64 = find_logo_b64("UW-Whitewater")
