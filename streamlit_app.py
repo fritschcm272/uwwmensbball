@@ -1204,9 +1204,10 @@ def render_box_score_with_tooltips(df: pd.DataFrame, display_cols: list, tooltip
 # --------------------------------------------------------------------------------------------------------------
 # Stat glossary + tooltip helpers (used by the new advanced-analytics sections below)
 # --------------------------------------------------------------------------------------------------------------
-# Every advanced/derived metric added to the app gets one entry here -- both so coaches can hover/click for a
-# plain-language definition wherever the stat is shown, and so there is a SINGLE source of truth for each
-# formula (rather than the definition living only as a scattered code comment).
+# Every advanced/derived metric added to the app gets one entry here -- both so coaches can hover for a
+# plain-language definition wherever the stat is shown (glossary_span on a column header, glossary_help_text
+# on a section header), and so there is a SINGLE source of truth for each formula (rather than the definition
+# living only as a scattered code comment).
 STAT_GLOSSARY = {
     "eFG%": {
         "label": "Effective Field Goal %",
@@ -1296,8 +1297,8 @@ STAT_GLOSSARY = {
 
 def glossary_span(key: str, display_text: str = None) -> str:
     """Return an HTML span with a native browser hover tooltip (the `title` attribute) explaining a stat from
-    STAT_GLOSSARY. Use for compact table/column headers where a full popover would be too heavy -- pairs with
-    render_glossary_popover() below for a fuller, tap-friendly explanation of a whole section's stats."""
+    STAT_GLOSSARY. Use for compact table/column headers where a stat name has to stay short -- pairs with
+    glossary_help_text() below, which explains a whole section's stats on its header icon."""
     entry = STAT_GLOSSARY.get(key)
     text = display_text if display_text is not None else key
     if not entry:
@@ -1306,18 +1307,42 @@ def glossary_span(key: str, display_text: str = None) -> str:
     return f'<span title="{tooltip}" style="cursor:help;border-bottom:1px dotted #999;">{html.escape(text)}</span>'
 
 
-def render_glossary_popover(keys: list, label: str = "ℹ️ What do these mean?") -> None:
-    """Render a tap/click-friendly popover explaining a list of STAT_GLOSSARY stats -- the fuller-detail
-    counterpart to glossary_span's hover tooltips, matching the existing 'KTV Category Reference' popover
-    pattern already used elsewhere in this app. Use one of these at the top of any section that introduces new
-    advanced stats, so a coach unfamiliar with a metric has a place to look it up without leaving the page."""
-    with st.popover(label):
-        for key in keys:
-            entry = STAT_GLOSSARY.get(key)
-            if not entry:
-                continue
-            st.markdown(f"**{entry['label']}** (`{key}`)")
-            st.caption(f"{entry['definition']}  \nFormula: {entry['formula']}")
+def glossary_help_text(keys: list) -> str:
+    """Definitions for a list of STAT_GLOSSARY stats as one block of plain text, for a hover tooltip.
+
+    Replaces render_glossary_popover(), which put a "What do these mean?" BUTTON in its own row under every
+    section header. Pass the result to section_header() instead -- the explanation costs no layout and needs
+    no click.
+    """
+    parts = []
+    for key in keys:
+        entry = STAT_GLOSSARY.get(key)
+        if entry:
+            parts.append(f"{entry['label']} ({key}) = {entry['formula']}\n{entry['definition']}")
+    return "\n\n".join(parts)
+
+
+def section_header(title: str, help_text: str = None, margin: str = "1.5rem 0 0.75rem") -> None:
+    """The app's standard bordered section header, with the section's explanation on a hover icon.
+
+    Every explanation on these pages used to be an st.popover button sitting in its own row beneath the
+    header: a full row of vertical space, plus a click, for text that is only ever context. The icon carries
+    it instead.
+
+    Uses a native `title` tooltip rather than a CSS one on purpose -- these headers sit inside bordered
+    containers, and a CSS-positioned tooltip can be clipped by an ancestor's overflow, while a native tooltip
+    is drawn by the browser and never is. Same mechanism as glossary_span().
+    """
+    icon = ""
+    if help_text:
+        icon = (f'<span title="{html.escape(help_text)}" style="cursor:help;font-size:0.85rem;margin-left:8px;'
+                f'opacity:0.65;font-weight:400;vertical-align:middle;">\u2139\ufe0f</span>')
+    st.markdown(
+        f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:{margin};">'
+        f'<div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">{title}{icon}</div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
 
 
 # --------------------------------------------------------------------------------------------------------------
@@ -3550,14 +3575,18 @@ def render_upcoming_game():
         # ==================== GAME PLAN RECOMMENDATIONS ====================
 
     with _new_rec_container:
-        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001f511 KEYS TO VICTORY</div></div>', unsafe_allow_html=True)
-        with st.popover("\u2139\ufe0f What is this?"):
-            st.markdown(
-                "Everything the staff and the data have on this opponent, combined into one list -- "
-                "pre-computed data-driven keys, the staff's own written scouting report (Keys to "
-                "Victory, Team Strengths, the full game plan), lineup scouting, and season-stat-based "
-                "recommendations. Tap the \u2753 next to any item for the reasoning and numbers behind it."
-            )
+        # Explanation sits on a hover icon in the title rather than a separate button below it: the button
+        # occupied a full row of its own and had to be clicked to reveal text that is only ever context.
+        # Native `title` tooltip, same mechanism as glossary_span() and the box-score hovers, so it can't be
+        # clipped by the bordered containers this header sits inside.
+        _ktv_help = (
+            "Everything the staff and the data have on this opponent, combined into one list: "
+            "pre-computed data-driven keys, the staff's own written scouting report (Keys to Victory, "
+            "Team Strengths, the full game plan), lineup scouting, and season-stat-based recommendations.\n\n"
+            "Each item shows its source, the supporting numbers, and the reasoning behind it. "
+            "Categories with a Game Plan button have written game-plan notes matched to that category."
+        )
+        section_header("\U0001f511 KEYS TO VICTORY", _ktv_help)
 
         # Still two columns with the second left empty, so the remaining PDF button keeps the same half-width
         # placement it has always had rather than stretching to full width.
@@ -5051,9 +5080,7 @@ def render_previous_games():
     _pg_clutch = load_table("uww_clutch_events")
     _pg_clutch_game = _this_game(_pg_clutch) if not _pg_clutch.empty else pd.DataFrame()
     if not _pg_clutch_game.empty:
-        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001F3C0 CLUTCH MOMENTS</div></div>', unsafe_allow_html=True)
-        with st.popover("ℹ️ What counts as clutch?"):
-            st.markdown("Last 5 minutes of the 2nd half or any overtime, with the score within 8 points.")
+        section_header("\U0001F3C0 CLUTCH MOMENTS", "Last 5 minutes of the 2nd half or any overtime, with the score within 8 points.")
         _cg_display_cols = [c for c in ["period", "time_remaining", "team", "player", "event_type", "raw_text", "uww_score", "opp_score"] if c in _pg_clutch_game.columns]
         st.dataframe(_pg_clutch_game[_cg_display_cols], hide_index=True, use_container_width=True, height=250)
 
@@ -5692,12 +5719,10 @@ def render_team():
             st.markdown(split_html, unsafe_allow_html=True)
 
     # ==================== CLUTCH PERFORMANCE ====================
-    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001F3C0 CLUTCH PERFORMANCE</div></div>', unsafe_allow_html=True)
-    with st.popover("ℹ️ What counts as clutch?"):
-        st.markdown(
+    section_header("\U0001F3C0 CLUTCH PERFORMANCE", (
             "Last 5 minutes of the 2nd half or any overtime, with the score within 8 points. This is computed "
             "once by the parser (not recomputed here) and grows automatically as closer games are added."
-        )
+        ))
     clutch = load_table("uww_clutch_events")
     if clutch.empty:
         st.info("No clutch-time stretches yet -- no game this season has been within 8 points in the last 5 minutes of the 2nd half or later.")
@@ -5943,8 +5968,7 @@ def render_players():
                         )
 
         # ==================== ADVANCED STATS LEADERBOARD ====================
-        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:0.5rem 0 1rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">ADVANCED STATS LEADERBOARD</div></div>', unsafe_allow_html=True)
-        render_glossary_popover(["TS%", "Game Score", "Usage%"])
+        section_header("ADVANCED STATS LEADERBOARD", glossary_help_text(["TS%", "Game Score", "Usage%"]), margin="0.5rem 0 1rem")
         _adv_box = load_table("uww_pbp_box_score")
         _adv_uww_box = _adv_box[_adv_box["team"] == "UW-Whitewater"] if not _adv_box.empty else pd.DataFrame()
         if _adv_uww_box.empty:
@@ -6215,8 +6239,7 @@ def render_analytics():
     loss_dates = {d for d, r in game_outcomes.items() if r == "L"}
 
     # ==================== FOUR FACTORS ====================
-    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">FOUR FACTORS</div></div>', unsafe_allow_html=True)
-    render_glossary_popover(["eFG%", "TOV%", "ORB%", "FT Rate"])
+    section_header("FOUR FACTORS", glossary_help_text(["eFG%", "TOV%", "ORB%", "FT Rate"]))
     if uww_box_all.empty:
         st.info("Not enough box score data for Four Factors yet.")
     else:
@@ -6245,8 +6268,7 @@ def render_analytics():
         )
 
     # ==================== EFFICIENCY & PACE ====================
-    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">EFFICIENCY &amp; PACE</div></div>', unsafe_allow_html=True)
-    render_glossary_popover(["Pace", "ORtg", "DRtg", "Net Rtg", "Poss"])
+    section_header("EFFICIENCY &amp; PACE", glossary_help_text(["Pace", "ORtg", "DRtg", "Net Rtg", "Poss"]))
     if uww_box_all.empty or n_games == 0:
         st.info("Not enough box score data for efficiency/pace yet.")
     else:
@@ -6280,8 +6302,7 @@ def render_analytics():
             st.caption("Rising ORtg / falling DRtg over the season is the clearest single trendline for whether a team is actually improving, independent of schedule strength swings.")
 
     # ==================== REBOUNDING RATE ====================
-    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">REBOUNDING RATE</div></div>', unsafe_allow_html=True)
-    render_glossary_popover(["ORB%"])
+    section_header("REBOUNDING RATE", glossary_help_text(["ORB%"]))
     if not uww_box_all.empty:
         uww_oreb = uww_box_all["OREB"].sum()
         uww_dreb = uww_box_all["DREB"].sum()
@@ -6297,13 +6318,11 @@ def render_analytics():
         st.info("Not enough box score data for rebounding rate yet.")
 
     # ==================== SHOT SELECTION / SHOT QUALITY ====================
-    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">SHOT SELECTION &amp; QUALITY</div></div>', unsafe_allow_html=True)
-    with st.popover("ℹ️ What is this?"):
-        st.markdown(
+    section_header("SHOT SELECTION &amp; QUALITY", (
             "Built from the same video-tagging your scouting pipeline already does for shot-quality diagnosis "
             "(play type, catch-and-shoot vs. pull-up, contest level, distance) -- surfaced here as a standalone "
             "team-wide view instead of only being used internally to generate coaching flags."
-        )
+        ))
     if pbp.empty or "video_description" not in pbp.columns:
         st.info("No video-tagged play-by-play data available yet.")
     else:
@@ -6339,13 +6358,11 @@ def render_analytics():
             st.caption(f"Based on {len(uww_shots)} video-matched shot attempts across {uww_shots['game_date'].nunique() if 'game_date' in uww_shots.columns else uww_shots['opponent'].nunique()} game(s).")
 
     # ==================== ASSIST NETWORK ====================
-    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">ASSIST NETWORK</div></div>', unsafe_allow_html=True)
-    with st.popover("ℹ️ What is this?"):
-        st.markdown(
+    section_header("ASSIST NETWORK", (
             "Pairs each recorded assist event with the made-shot event immediately before it in the same "
             "team's play-by-play log (the standard convention this data already follows) to build a "
             "passer -> scorer breakdown -- no new tagging needed beyond what's already recorded per play."
-        )
+        ))
     if pbp.empty:
         st.info("No play-by-play data available yet.")
     else:
@@ -6371,14 +6388,12 @@ def render_analytics():
                 st.dataframe(by_passer, hide_index=True, use_container_width=True)
 
     # ==================== TRANSITION POINTS OFF TURNOVERS ====================
-    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">TRANSITION OFF TURNOVERS</div></div>', unsafe_allow_html=True)
-    with st.popover("ℹ️ What is this?"):
-        st.markdown(
+    section_header("TRANSITION OFF TURNOVERS", (
             "Matches each steal to whether that same team scored within the next few play-by-play events -- an "
             "approximation of \"points off turnovers,\" since a live-ball turnover time isn't separately "
             "flagged in the data. A generous same-team-scores-soon-after window is used since exact shot-clock "
             "timing after a takeaway isn't recorded."
-        )
+        ))
     if pbp.empty:
         st.info("No play-by-play data available yet.")
     else:
@@ -6419,15 +6434,13 @@ def render_analytics():
             st.caption(f"Back-to-back or same-day games this season: {len(b2b)} (record: {b2b_wins}-{len(b2b) - b2b_wins}).")
 
     # ==================== COACH-TAGGED PLAY NOTES ====================
-    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">COACH-TAGGED PLAY NOTES</div></div>', unsafe_allow_html=True)
-    with st.popover("ℹ️ What is this?"):
-        st.markdown(
-            "Built from a coach-annotated video-clip export (a `\"<matchup>_recap.csv\"` file per game) -- each "
+    section_header("COACH-TAGGED PLAY NOTES", (
+            "Built from a coach-annotated video-clip export (a \"<matchup>_recap.csv\" file per game) -- each "
             "tagged clip carries the coach's own free-text note for that specific play: an offensive play call "
             "and how it was executed, or a defensive breakdown of what went right/wrong. Only games with a "
             "matching recap file have this data; everything else on this page comes from the box score and "
             "play-by-play alone."
-        )
+        ))
     coach_notes = load_table("uww_coach_notes")
     if coach_notes.empty:
         st.info("No coach-tagged play notes available yet -- add a \"<matchup>_recap.csv\" file for a game and re-run the parser.")
