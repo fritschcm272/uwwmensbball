@@ -6593,7 +6593,13 @@ def render_analytics():
                 call_summary = call_rows.groupby("play_call").agg(
                     Calls=("coach_note", "count"), Makes=("_is_make", "sum"), Attempts=("_is_attempt", "sum"),
                 ).reset_index()
-                call_summary["FG%"] = (100 * call_summary["Makes"] / call_summary["Attempts"].replace(0, pd.NA)).round(1)
+                # .replace(0, pd.NA) turned Attempts into an OBJECT-dtype Series, so the division produced
+                # object values and .round(1) then called round() on a pd.NA element -> TypeError (crashed
+                # the whole Analytics page). Coerce to float and use NaN for the divide-by-zero guard
+                # instead, which keeps the Series numeric and rounds cleanly.
+                _pc_makes = pd.to_numeric(call_summary["Makes"], errors="coerce")
+                _pc_att = pd.to_numeric(call_summary["Attempts"], errors="coerce").replace(0, float("nan"))
+                call_summary["FG%"] = (100 * _pc_makes / _pc_att).round(1)
                 call_summary = call_summary.drop(columns=["Makes"]).sort_values("Calls", ascending=False)
                 st.dataframe(call_summary.rename(columns={"play_call": "Play Call"}), hide_index=True, use_container_width=True)
                 st.caption("Play call is a best-effort extraction from the coach's own note text (a name immediately before the word \"EXECUTION\") -- a note that doesn't follow that exact pattern won't show up here, but is still visible in the raw notes browser below.")
