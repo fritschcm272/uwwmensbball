@@ -999,19 +999,25 @@ STAT_LABELS = {
 
 # KTV Category Reference: maps categories to the keywords and stats they track
 KTV_CATEGORY_REFERENCE = {
-    "Ball Security": {"keywords": "ball security, protect the ball, take care of the ball, limit turnovers, our turnovers, live-ball turnover, live-ball turnovers, dead-ball turnover, dead-ball turnovers, careless, live dribble, sloppy, giveaway, giveaways, unforced", "stats": "TO"},
-    "Rebounding": {"keywords": "own the paint, bully, glass, rebound, rebounding, rebounds, board, boards, second chance, crash, dominate the paint, box out, put back, putback", "stats": "REB, ORB, DRB"},
+    "Ball Security": {"keywords": "ball security, protect the ball, take care of the ball, limit turnovers, our turnovers, live-ball turnover, live-ball turnovers, dead-ball turnover, dead-ball turnovers, careless, live dribble, sloppy, giveaway, giveaways, unforced, to's, turnover battle, possession battle, win the possession battle", "stats": "TO"},
+    "Rebounding": {"keywords": "own the paint, bully, glass, rebound, rebounding, rebounds, board, boards, second chance, crash, dominate the paint, box out, put back, putback, reb, rebs, o-board, o-boards, d-board, d-boards, offensive board, offensive boards, rebound advantage", "stats": "REB, ORB, DRB"},
     "Three-Point Shooting": {"keywords": "three, threes, 3, 3s, 3's, 3 pt, 3pt, 3-pt, 3-point, 3-pointer, 3-pointers, three-point, three-pointer, three-pointers, three point, perimeter shooting, spacing, shooting ability, shooting team, sniper, will shoot, trey, treys, deep ball, deep balls, beyond the arc, from deep, transition three, transition threes, transition 3, transition 3's, catch and shoot, corner three, corner 3, above the break, shooter, shooters, can shoot, shoot it, stretch big, stretch four", "stats": "3PM-A, 3P%"},
-    "Free Throws": {"keywords": "free throw, free throws, ft line, getting to ft, foul line, and-one, and one", "stats": "FTM-A, FT%"},
+    "Free Throws": {"keywords": "free throw, free throws, ft, ft's, fts, ft line, getting to ft, foul line, ft rate, and-one, and one", "stats": "FTM-A, FT%"},
     "Fouls / Discipline": {"keywords": "foul, fouls, wall up, drawing fouls, discipline, reach, reaching, hand check", "stats": "PF"},
     "Ball Movement / Assists": {"keywords": "assist, assists, ball movement, share the ball, playmaking, playmaker, create, extra pass, hockey assist, swing the ball", "stats": "AST"},
-    "Paint Protection / Blocks": {"keywords": "block, blocks, protect the rim, paint protection, rim protection, shot blocking, contest at the rim", "stats": "BLK"},
-    "Perimeter Defense / Ball Pressure/ Create Turnovers": {"keywords": "steal, steals, press capable, full court press, force turnovers, force to's, forcing turnovers, generate turnovers, turnover trigger, turnover triggers, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure, ball pressure, deny, deflection, deflections", "stats": "STL"},
-    "Scoring Inside": {"keywords": "dominate the paint, attack the paint, live in the paint, attack the basket, scoring at the rim, get to rim, attack the rim, get to the rim, post up, post-up, paint touches, drive, drives, downhill, finish at the rim", "stats": "FG2M, FG2A, FG2%"},
-    "Field Goal Efficiency": {"keywords": "limit their scoring, field goal, field goal%, fg%, shooting percentage, efficient shooting, efficiency, good shots, quality shots", "stats": "FGM-A, FG%"},
-    "Defensive Efficiency": {"keywords": "high-volume, high volume, funnel, funneling, take away, most efficient, shot profile, shot diet, inefficient looks, worst looks, multiple efforts, multiple effort, never stop, multiple scorers, multiple threats, multiple weapons, multiple options, scoring options, scoring threats, balanced scoring, scoring balance, scoring depth, several scorers, many scorers, deep scoring, double-digit scorers, double digit scorers, leading scorer, top scorer, primary scorer, go-to scorer, go to scorer, versatile scorers, score from anywhere, score at all three levels, three levels, three-level scorer, three level scorer, opponent strength, opponent strengths, their scorers, their weapons, set play, set plays, set piece, set pieces, counters, counter action, counter actions, wrinkle, wrinkles, playbook, play call, play calls, scripted, after timeout, out of bounds play, out of bounds plays, blob, slob, baseline out of bounds, sideline out of bounds, horns, stagger, staggered screen, pin down, pindown, down screen, back screen, flare screen, flex, ram screen, ball screen, ball screens, ball screen action, ball screen actions, pick and roll, pick-and-roll, pick and pop, pick-and-pop, dribble handoff, dho, motion offense, continuity, actions, action sets, create advantages, creating advantages, advantage creation, advantages", "stats": "Opp FG% by shot type"},
-    "Offensive Efficiency": {"keywords": "attack & execute, attack and execute, execute offensively, attack offensively, shot selection, shot quality, best shot type, mismatch, mismatches, attacking mismatches, attack mismatches, attack the mismatch, hunt mismatches, hunt the mismatch, exploit mismatches, exploit the mismatch, target mismatches, find the mismatch, size advantage, size mismatch, speed advantage, quickness advantage, switch hunting, hunt switches, hunt the switch, isolate, isolation, iso, post mismatch, favorable matchup, favorable matchups, best matchup, best matchups, exploit matchup, exploit matchups", "stats": "TS%, eFG%"},
-    "Personnel/Rotation": {"keywords": "bench trust, off the bench, foul trouble, closing lineup, closing 5, close the game, clutch, late-game, late game, rotation, sub pattern, substitution pattern, trust plan, who to trust, core players", "stats": "MIN, Game Score"},
+    "Paint Protection / Blocks": {"keywords": "block, blocks, protect the rim, paint protection, rim protection, shot blocking, contest at the rim, pack the paint, pack & protect, pack and protect, protect the paint, paint defense, build a wall, building a wall, wall around the paint, wall off, post defense, physicality, physical defense, strong gap, gap/pack, our paint, must be our paint, no easy paint, limit their scoring, limit their scoring @ the rim, keep them out of the paint", "stats": "BLK"},
+    "Perimeter Defense / Ball Pressure/ Create Turnovers": {"keywords": "steal, steals, press capable, full court press, force turnovers, force to's, forcing turnovers, generate turnovers, turnover trigger, turnover triggers, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure, ball pressure, deny, deflection, deflections, contain, containing, squeeze, squeeze & limit, lock up", "stats": "STL"},
+    "Scoring Inside": {"keywords": "dominate the paint, attack the paint, live in the paint, attack the basket, scoring at the rim, get to rim, attack the rim, get to the rim, post up, post-up, paint touches, drive, drives, downhill, finish at the rim, attacking the paint, attacking the rim, attacking the basket, attacking inside, attack inside, inside-out, inside out, post play, scoring in the paint, points in the paint, paint points, payback inside", "stats": "FG2M, FG2A, FG2%"},
+    "Field Goal Efficiency": {"keywords": "field goal, field goal%, fg%, shooting percentage, efficient shooting, efficiency, good shots, quality shots", "stats": "FGM-A, FG%"},
+    "Defensive Efficiency": {"keywords": "high-volume, high volume, funnel, funneling, take away, most efficient, shot profile, shot diet, inefficient looks, worst looks, multiple efforts, multiple effort, never stop, multiple scorers, multiple threats, multiple weapons, multiple options, scoring options, scoring threats, balanced scoring, scoring balance, scoring depth, several scorers, many scorers, deep scoring, double-digit scorers, double digit scorers, leading scorer, top scorer, primary scorer, go-to scorer, go to scorer, versatile scorers, score from anywhere, score at all three levels, three levels, three-level scorer, three level scorer, their scorers, their weapons, set play, set plays, set piece, set pieces, counters, counter action, counter actions, wrinkle, wrinkles, playbook, play call, play calls, scripted, after timeout, out of bounds play, out of bounds plays, blob, slob, baseline out of bounds, sideline out of bounds, horns, stagger, staggered screen, pin down, pindown, down screen, back screen, flare screen, flex, ram screen, ball screen, ball screens, ball screen action, ball screen actions, pick and roll, pick-and-roll, pick and pop, pick-and-pop, dribble handoff, dho, motion offense, continuity, action, actions, action sets, screening, screening action, switch all screens, switch everything, switching off ball, create advantages, creating advantages, advantage creation, advantages, capable of carrying, carrying offense, carry the offense, main scorer, primary option, focal point, go-to guy, big scoring games, capable of big games, capable of big scoring", "stats": "Opp FG% by shot type"},
+    "Offensive Efficiency": {"keywords": "attack & execute, attack and execute, execute offensively, attack offensively, shot selection, shot quality, best shot type, mismatch, mismatches, attacking mismatches, attack mismatches, attack the mismatch, hunt mismatches, hunt the mismatch, exploit mismatches, exploit the mismatch, target mismatches, find the mismatch, size advantage, size mismatch, speed advantage, quickness advantage, switch hunting, hunt switches, hunt the switch, isolate, isolation, iso, post mismatch, favorable matchup, favorable matchups, best matchup, best matchups, exploit matchup, exploit matchups, attack matchups, attack matchup, attacking matchups, matchups vs switches, attack & execute offensively", "stats": "TS%, eFG%"},
+    "Personnel/Rotation": {"keywords": "bench trust, off the bench, foul trouble, closing lineup, closing 5, close the game, clutch, late-game, late game, rotation, sub pattern, substitution pattern, trust plan, who to trust, core players, deep bench, man rotation", "stats": "MIN, Game Score"},
+    # NEW (added after an audit of every real key): transition/pace and effort/communication language was
+    # scattered across PHRASE_SIDE with no category of its own, so keys like "TRANSITION DEFENSE!!!" and
+    # "RELENTLESS EFFORT & WINNING PLAYS" fell through to the "Other" bucket. Defined LAST on purpose --
+    # _grouped uses the FIRST matched category, so these only claim a key nothing more specific caught.
+    "Transition / Pace": {"keywords": "transition, transition defense, transition offense, get back, getting back, sprint back, run the floor, push the pace, push tempo, push hard, pushing the pace, fast break, fastbreak, early offense, secondary break, pace, tempo, run in transition", "stats": "Fast break pts, Pace"},
+    "Effort / Communication": {"keywords": "effort, relentless, winning plays, connected, being connected, communication, communicate, talk, talking, toughness, tough, compete, competing, finish possessions, finish defensive possessions, late clock, both ends, multiple efforts, multiple effort, never stop, energy, all five, together", "stats": "--"},
 }
 
 # Side detection: maps scouting phrases to whether they describe UWW (proactive) or OPP (contain opponent)
@@ -1101,6 +1107,26 @@ PHRASE_SIDE = {
     "post mismatch": "UWW", "favorable matchup": "UWW", "favorable matchups": "UWW",
     "best matchup": "UWW", "best matchups": "UWW",
     "exploit matchup": "UWW", "exploit matchups": "UWW",
+    # Transition / Pace
+    "transition defense": "OPP", "get back": "OPP", "getting back": "OPP", "sprint back": "OPP",
+    "transition offense": "UWW", "push hard": "UWW", "pushing the pace": "UWW",
+    "early offense": "UWW", "secondary break": "UWW", "run in transition": "UWW",
+    # Paint defense -- what WE do to contain THEM
+    "pack the paint": "OPP", "protect the paint": "OPP", "paint defense": "OPP",
+    "build a wall": "OPP", "building a wall": "OPP", "wall around the paint": "OPP",
+    "post defense": "OPP", "physical defense": "OPP", "strong gap": "OPP",
+    "no easy paint": "OPP", "keep them out of the paint": "OPP",
+    "contain": "OPP", "containing": "OPP", "squeeze": "OPP", "lock up": "OPP",
+    # Opponent go-to scorer language
+    "capable of carrying": "OPP", "carrying offense": "OPP", "carry the offense": "OPP",
+    "main scorer": "OPP", "primary option": "OPP", "focal point": "OPP", "go-to guy": "OPP",
+    "big scoring games": "OPP", "screening": "OPP", "switch all screens": "OPP",
+    # Ours to execute
+    "possession battle": "UWW", "turnover battle": "UWW", "rebound advantage": "UWW",
+    "inside-out": "UWW", "inside out": "UWW", "post play": "UWW",
+    "points in the paint": "UWW", "paint points": "UWW",
+    "attacking the paint": "UWW", "attacking the rim": "UWW", "attacking the basket": "UWW",
+    "attack matchups": "UWW", "attacking matchups": "UWW",
     # General Offensive / Proactive (UWW)
     "run the floor": "UWW", "push tempo": "UWW", "fast break": "UWW",
     "score in transition": "UWW", "finish": "UWW", "execute": "UWW",
@@ -3850,6 +3876,8 @@ def render_upcoming_game():
             "Defensive Efficiency": ("#eceff1", "#37474f"),
             "Offensive Efficiency": ("#fff9c4", "#f9a825"),
             "Personnel/Rotation": ("#e1f5fe", "#0277bd"),
+            "Transition / Pace": ("#fce4ec", "#ad1457"),
+            "Effort / Communication": ("#f1f8e9", "#558b2f"),
         }
         _valid_cats = set(load_table("uww_ktv_splits")["category"].unique()) | set(KTV_CATEGORY_REFERENCE.keys())
 
@@ -3871,9 +3899,16 @@ def render_upcoming_game():
             still match (apostrophes, spaces, and word characters aren't in the exclusion set).
             """
             if keyword.isdigit():
-                pattern = r"(?<![\d.])" + re.escape(keyword) + r"(?![\d.])"
+                pattern = r"(?<![\d.])" + re.escape(keyword) + r"(?:'?s)?(?![\w.])"
             else:
-                pattern = r"\b" + re.escape(keyword) + r"\b"
+                # (?<!\w) / (?!\w) instead of \b, plus an optional plural/tense suffix on the keyword's
+                # last word. Two fixes in one: (a) \b after a keyword ENDING in a non-word character never
+                # matched at all -- "fg%" and "3's" could not fire, since \b needs a word char on one side;
+                # (b) scouting text is written in whatever tense the coach felt like, so "rebound" missed
+                # "rebounds"/"rebounding" and "block" missed "blocks"/"blocking" unless every form was
+                # spelled out as its own keyword. The suffix is deliberately additive only (no stripping),
+                # so "attacking the paint" still needs its own entry -- prefixes aren't stemmed.
+                pattern = r"(?<!\w)" + re.escape(keyword) + r"(?:s|es|ed|ing)?(?!\w)"
             return re.search(pattern, text_lower) is not None
 
         # Category-level false-positive guards: a keyword can fire on text that is plainly about something
@@ -3882,7 +3917,19 @@ def render_upcoming_game():
         # which was mis-tagging opponent-scoring notes as a shooting key. If a category's exclusion pattern
         # matches AND none of its keywords match outside that pattern, the category is skipped.
         _CATEGORY_EXCLUSIONS = {
-            "Ball Movement / Assists": r"\bcreate[sd]?\b(?=\s+(?:advantage|advantages|separation|mismatch|mismatches|problems|issues))",
+            # "foul" (Fouls / Discipline) also fires inside "foul line" -- a Free Throws phrase about
+            # GETTING to the line, not about fouling. Scrub that context so "get to the foul line" is a
+            # Free Throws key only.
+            # "force TO's" / "creates turnovers" describe pressure being applied, not ball security.
+            "Ball Security": r"(?:forc|creat|generat|caus)(?:e|es|ed|ing)\s+(?:\w+\s+){0,2}(?:turnovers?|to's)",
+            "Fouls / Discipline": r"\bfoul\s+line\b|\bfree[- ]throw\s+line\b",
+            # "drive down 3pt attempts" is about REDUCING their threes, not about our drives.
+            "Scoring Inside": r"\bdriv(?:e|es|ing)\s+down\b",
+            # "efficiency" (Field Goal Efficiency) fires on the literal phrases "offensive efficiency" and
+            # "defensive efficiency", which are their own categories -- scrub those two before matching so a
+            # key about offensive efficiency doesn't also land under Field Goal Efficiency.
+            "Field Goal Efficiency": r"\b(?:offensive|defensive)\s+efficienc(?:y|ies)\b",
+            "Ball Movement / Assists": r"\bcreat(?:e|es|ed|ing)\b(?=\s+(?:advantage|advantages|separation|mismatch|mismatches|problems|issues|turnover|turnovers|to's))",
             "Three-Point Shooting": r"\bthree\b(?=\s+(?:double|level|scorer|scorers|players|player|guards|guard|starters|starter|bigs|kids|of\b))|\bthree\s+levels?\b|\bthree[- ]level\b",
         }
 
@@ -3905,7 +3952,7 @@ def render_upcoming_game():
         # phrase, yet "create advantages" in an opponent-strength note is describing THEM, and letting
         # both fire produced a misleading BOTH badge.
         _PHRASE_EXCLUSIONS = {
-            "create": r"\bcreate[sd]?\b(?=\s+(?:advantage|advantages|separation|mismatch|mismatches|problems|issues))",
+            "create": r"\bcreat(?:e|es|ed|ing)\b(?=\s+(?:advantage|advantages|separation|mismatch|mismatches|problems|issues|turnover|turnovers|to's))",
         }
 
         def _detect_side(text):
@@ -4238,10 +4285,15 @@ def render_upcoming_game():
             # express "this came from lineup data" as more keywords.
             _SOURCE_FORCED_CATEGORY = {"Lineup Scouting": "Personnel/Rotation"}
             for _icon, _headline, _caption, _reason, _source in _keys:
-                _match_text = f"{_headline} {_caption or ''} {_reason or ''}"
+                # Data-Driven keys carry raw stat text in _caption/_reason ("Offensive Rebound: 87.7% on
+                # 57 attempts"), which reliably out-voted the title's own wording -- "Take away their most
+                # efficient high-volume actions" was landing under Rebounding. Match their TITLE only.
+                _match_text = _headline if _source == "Data-Driven" else f"{_headline} {_caption or ''} {_reason or ''}"
                 _forced_cat = _SOURCE_FORCED_CATEGORY.get(_source)
                 _cats = [_forced_cat] if _forced_cat else _match_categories(_match_text)
-                _side = _detect_side(_match_text)
+                # "Opponent strength: ..." keys describe THEM, full stop -- the phrase matcher kept reading
+                # their offense as ours ("2 playmaking guards" came back UWW), so the source decides here.
+                _side = "OPP" if _source == "Team Strengths" else _detect_side(_match_text)
                 if _cats:
                     _grouped.setdefault(_cats[0], []).append((_icon, _headline, _caption, _reason, _cats, _side, _source))
                 else:
@@ -4451,12 +4503,57 @@ def render_upcoming_game():
                 "Rebounding", "Fouls / Discipline", "Paint Protection / Blocks",
                 "Perimeter Defense / Ball Pressure/ Create Turnovers", "Defensive Efficiency",
             }
+            # Categories that are genuinely BOTH sides of the ball: "Three-Point Shooting" covers both
+            # hitting ours and contesting theirs, "Free Throws" both getting to the line and keeping them
+            # off it. Hard-coding them as offense sent real defensive keys ("DRIVE DOWN 3PT ATTEMPTS!!!",
+            # "LIMIT THEIR SCORING @ THE RIM") into the Offense section. For these, the detected side
+            # picks the section instead of the category.
+            _DUAL_USE_CATS = {
+                "Three-Point Shooting", "Field Goal Efficiency", "Free Throws", "Fouls / Discipline",
+                "Transition / Pace",
+            }
+            _SEC_OFF, _SEC_DEF, _SEC_PERS = "Offense", "Defense", "Personnel, Rotation & Intangibles"
 
-            def _render_cat_expander(_cat):
+            def _default_section(_cat):
+                if _cat in _OFFENSE_CATS:
+                    return _SEC_OFF
+                if _cat in _DEFENSE_CATS:
+                    return _SEC_DEF
+                return _SEC_PERS
+
+            def _section_for(_cat, _side, _source):
+                # An opponent-strength key is a defensive assignment no matter which stat category its
+                # wording tripped -- "Opponent strength: High level 3pt shooting" is something to guard,
+                # not something we do.
+                if _source == "Team Strengths":
+                    # ...unless the strength is a roster/rotation fact rather than something to guard
+                    # ("Deep Bench (12-13 man rotation)"), which belongs with the other personnel notes.
+                    return _default_section(_cat) if _cat == "Personnel/Rotation" else _SEC_DEF
+                if _cat in _DUAL_USE_CATS:
+                    if _side == "OPP":
+                        return _SEC_DEF
+                    if _side == "UWW":
+                        return _SEC_OFF
+                return _default_section(_cat)
+
+            # Same category can now appear in two sections with different items in each, so grouping is
+            # (section -> category -> items) rather than one section per category.
+            _sectioned = {_SEC_OFF: {}, _SEC_DEF: {}, _SEC_PERS: {}}
+            for _sc_cat, _sc_items in _grouped.items():
+                for _sc_item in _sc_items:
+                    _sc_side, _sc_source = _sc_item[5], _sc_item[6]
+                    _sectioned[_section_for(_sc_cat, _sc_side, _sc_source)].setdefault(_sc_cat, []).append(_sc_item)
+            _cards_sectioned = {}
+            for _cc_cat, _cc_cards in _cards_by_category.items():
+                _cards_sectioned.setdefault(_default_section(_cc_cat), {})[_cc_cat] = _cc_cards
+
+            def _render_cat_expander(_cat, _cat_items=None, _cat_cards=None, _sec_key=""):
                 """One KTV category, always visible (no expander) -- a styled header plus its items,
-                so a coach sees every key at once instead of clicking each category open."""
-                _cat_items = _grouped.get(_cat, [])
-                _cat_cards = _cards_by_category.get(_cat, [])
+                so a coach sees every key at once instead of clicking each category open. Items are
+                passed in per SECTION, since a dual-use category (e.g. Three-Point Shooting) can hold
+                offensive keys in the Offense section and defensive ones in Defense."""
+                _cat_items = _grouped.get(_cat, []) if _cat_items is None else _cat_items
+                _cat_cards = _cards_by_category.get(_cat, []) if _cat_cards is None else _cat_cards
                 _n_items = len(_cat_items) + len(_cat_cards)
                 st.markdown(
                     '<div style="background:#f3f0f9;border-left:4px solid #4E2A84;border-radius:4px;'
@@ -4466,7 +4563,7 @@ def render_upcoming_game():
                 )
                 _cat_has_gp = bool(_game_plan_by_cat.get(_cat))
                 if _cat_has_gp:
-                    if st.button("\U0001f4cb Game Plan", key=f"gameplan_btn_{_cat}"):
+                    if st.button("\U0001f4cb Game Plan", key=f"gameplan_btn_{_sec_key}_{_cat}"):
                         _show_game_plan_dialog(_cat)
                 _cs_line = _category_stat_line(_cat)
                 if _cs_line and (_cs_line[0] or _cs_line[1]):
@@ -4480,18 +4577,13 @@ def render_upcoming_game():
                 for _ci, _renderer in enumerate(_cat_cards):
                     _renderer(len(_cat_items) + _ci + 1)
 
-            _offense_order = [c for c in _cat_order if c in _OFFENSE_CATS]
-            _defense_order = [c for c in _cat_order if c in _DEFENSE_CATS]
-            _personnel_order = [c for c in _cat_order if c not in _OFFENSE_CATS and c not in _DEFENSE_CATS]
-
-            # Stacked top-to-bottom (Offense, then Defense, then Personnel/Rotation) rather than three
-            # side-by-side columns -- full width per section keeps each key readable, and the sections
-            # read in scouting order instead of competing for a third of the page each.
-            for _sec_title, _sec_order in (
-                ("Offense", _offense_order),
-                ("Defense", _defense_order),
-                ("Personnel/Rotation", _personnel_order),
-            ):
+            # Stacked top-to-bottom (Offense, then Defense, then Personnel/Rotation & Intangibles)
+            # rather than three side-by-side columns -- full width per section keeps each key readable,
+            # and the sections read in scouting order instead of competing for a third of the page each.
+            for _sec_title in (_SEC_OFF, _SEC_DEF, _SEC_PERS):
+                _sec_items = _sectioned.get(_sec_title, {})
+                _sec_cards = _cards_sectioned.get(_sec_title, {})
+                _sec_order = [c for c in _cat_order if c in _sec_items or c in _sec_cards]
                 st.markdown(
                     '<div style="font-weight:800;font-size:1.15rem;color:#4E2A84;border-bottom:2px solid #4E2A84;'
                     f'padding-bottom:4px;margin:22px 0 8px 0;">{_sec_title}</div>',
@@ -4499,7 +4591,7 @@ def render_upcoming_game():
                 )
                 if _sec_order:
                     for _cat in _sec_order:
-                        _render_cat_expander(_cat)
+                        _render_cat_expander(_cat, _sec_items.get(_cat, []), _sec_cards.get(_cat, []), _sec_title)
                 else:
                     st.caption("Nothing tagged yet.")
 
