@@ -2888,79 +2888,17 @@ def render_upcoming_game():
             f'</div>'
         )
 
-    # Scouting summary card (right): Core UWW players + Vulnerabilities
-    def _build_scouting_summary_html(uww_5man, uww_3man):
-        """Build the scouting summary card. Opponent vulnerabilities and counter-lineups used to live
-        here too; both are now Keys to Victory items, so this card is the UWW core-players view."""
-        sections = ""
-
-        # --- CORE UWW PLAYERS (combined 5-man + 3-man = 8 metrics) ---
-        from collections import Counter as _CoreCounter
-        _all_tops = []
-        if uww_5man is not None and not uww_5man.empty:
-            _eff5 = uww_5man[uww_5man["MIN"] >= 3.0].copy()
-            _eff5["EFF"] = _eff5["+/-"] / _eff5["MIN"].replace(0, float('nan'))
-            _all_tops.extend([
-                _find_core_players(uww_5man.sort_values("MIN", ascending=False)),
-                _find_core_players(uww_5man.sort_values("PTS", ascending=False)),
-                _find_core_players(uww_5man.sort_values("+/-", ascending=False)),
-                _find_core_players(_eff5.sort_values("EFF", ascending=False)),
-            ])
-        if uww_3man is not None and not uww_3man.empty:
-            _eff3 = uww_3man[uww_3man["MIN"] >= 5.0].copy()
-            _eff3["EFF"] = _eff3["+/-"] / _eff3["MIN"].replace(0, float('nan'))
-            _all_tops.extend([
-                _find_core_players(uww_3man.sort_values("MIN", ascending=False)),
-                _find_core_players(uww_3man.sort_values("PTS", ascending=False)),
-                _find_core_players(uww_3man.sort_values("+/-", ascending=False)),
-                _find_core_players(_eff3.sort_values("EFF", ascending=False)),
-            ])
-        _core_html = ""
-        if _all_tops:
-            _player_counts = _CoreCounter()
-            for _pset in _all_tops:
-                for _p in _pset:
-                    _player_counts[_p] += 1
-            _core_combined = sorted([(_p, _c) for _p, _c in _player_counts.items() if _c >= 2], key=lambda x: -x[1])[:5]
-            if _core_combined:
-                for _p, _c in _core_combined:
-                    _core_html += f'<div style="font-size:0.82rem;margin:2px 0;"><strong>{html.escape(_p)}</strong> <span style="color:#777;">({_c}/8 metrics)</span></div>'
-        if _core_html:
-            sections += (
-                f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 12px;margin-bottom:8px;">'
-                f'<div style="font-size:0.85rem;font-weight:700;color:#4E2A84;margin-bottom:6px;">\u2B50 UWW CORE PLAYERS</div>'
-                f'<div style="font-size:0.75rem;color:#888;margin-bottom:4px;">Players in top-3 across 5-man &amp; 3-man metrics</div>'
-                f'{_core_html}</div>'
-            )
-
-        if not sections:
-            sections = '<div style="font-size:0.8rem;color:#aaa;">Need lineup data</div>'
-
-        # --- OPPONENT VULNERABILITIES: moved out of this card ---
-        # The worst net-rating lineups (with their FG%) and the highest turnover-rate lineups now live in
-        # the "Attack <opponent>'s ... lineup" Keys to Victory item under Personnel/Rotation, next to the
-        # counter-lineup recommendation, instead of in a separate side card.
-
-        # --- COUNTER-LINEUP RECOMMENDATIONS: moved out of this card ---
-        # Everything this section used to show (the profile-matched target description, the top matched UWW
-        # units with their per-minute net margin, the comparable-sample footnote, and the honest season-wide
-        # fallback) now lives in the "Counter with ..." Keys to Victory item under Personnel/Rotation, so the
-        # recommendation sits next to the rest of the game plan instead of in a separate side card.
-
-        return (
-            f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;width:100%;">'
-            f'<div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;margin-bottom:8px;">LINEUP SCOUTING</div>'
-            f'{sections}</div>'
-        )
+    # The LINEUP SCOUTING panel that used to sit to the right of the lineup card is gone. Its opponent
+    # vulnerabilities and counter-lineup recommendations became Keys to Victory items ("Attack ..." and
+    # "Counter with ..."); its UWW Core Players list was removed with the panel.
 
     _combined_lineups_html = _build_combined_lineups_card(_uww_lu_agg, _opp_lu, _uww_3man_agg, _opp_3man_agg, opp_display)
-    _scouting_html = _build_scouting_summary_html(_uww_lu_agg, _uww_3man_agg)
 
     with _new_stats_top5_c:
         # Spacing between sections above and lineup row below
         st.markdown('<div style="margin-top:2.5rem;"></div>', unsafe_allow_html=True)
 
-        # Render: Lineup toggle (5-Man or 3-Man) | Lineup Scouting in one row
+        # Render: Lineup toggle (5-Man or 3-Man), full width now that the Lineup Scouting panel is gone.
         if "lineup_view" not in st.session_state:
             st.session_state.lineup_view = "5-Man Lineups"
         _current_title = "TOP 5-MAN LINEUPS" if st.session_state.lineup_view == "5-Man Lineups" else "TOP 3-MAN COMBINATIONS"
@@ -2970,22 +2908,15 @@ def render_upcoming_game():
         import re as _re
         _active_lineup_html = _re.sub(r'<div style="font-weight:800;font-size:1\.05rem;letter-spacing:0\.5px;margin-bottom:8px;">TOP [53]-MAN [A-Z]+</div>', '', _active_lineup_html, count=1)
         _active_lineup_html = _re.sub(r'^<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;width:100%;margin:1\.5rem 0 0\.75rem;">', '<div style="zoom:1.1;">', _active_lineup_html, count=1)
-        _col_lu, _col_sc = st.columns([1.4, 0.8])
-        with _col_lu:
-            with st.container(border=True):
-                # Center the toggle button via CSS
-                st.markdown('<style>[data-testid="stButton"] button[kind="secondary"] { display: block; margin: 0 auto; }</style>', unsafe_allow_html=True)
-                _left_pad, _btn_col, _right_pad = st.columns([1, 2, 1])
-                with _btn_col:
-                    if st.button(f"{_current_title}  ⇄", key="lineup_toggle_btn", use_container_width=True):
-                        st.session_state.lineup_view = _other_view
-                        st.rerun()
-                st.markdown(_active_lineup_html, unsafe_allow_html=True)
-        with _col_sc:
-            # Lineup Scouting -- UWW Core Players. (Opponent vulnerabilities and counter-lineups moved
-            # to the "Attack ..." and "Counter with ..." Keys to Victory items.)
-            # Back to sitting alongside the lineup toggle, same as originally, rather than stacked below it.
-            st.markdown(f'<div style="zoom:1.1;">{_scouting_html}</div>', unsafe_allow_html=True)
+        with st.container(border=True):
+            # Center the toggle button via CSS
+            st.markdown('<style>[data-testid="stButton"] button[kind="secondary"] { display: block; margin: 0 auto; }</style>', unsafe_allow_html=True)
+            _left_pad, _btn_col, _right_pad = st.columns([1, 2, 1])
+            with _btn_col:
+                if st.button(f"{_current_title}  ⇄", key="lineup_toggle_btn", use_container_width=True):
+                    st.session_state.lineup_view = _other_view
+                    st.rerun()
+            st.markdown(_active_lineup_html, unsafe_allow_html=True)
 
 
     # Scouting Report header with PDF download link
