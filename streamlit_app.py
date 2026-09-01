@@ -4391,52 +4391,52 @@ def render_upcoming_game():
             }
 
             def _render_cat_expander(_cat):
+                """One KTV category, always visible (no expander) -- a styled header plus its items,
+                so a coach sees every key at once instead of clicking each category open."""
                 _cat_items = _grouped.get(_cat, [])
                 _cat_cards = _cards_by_category.get(_cat, [])
                 _n_items = len(_cat_items) + len(_cat_cards)
-                with st.expander(f"{_cat} \u2014 {_n_items} item{'s' if _n_items != 1 else ''}", expanded=False):
-                    _cat_has_gp = bool(_game_plan_by_cat.get(_cat))
-                    if _cat_has_gp:
-                        if st.button("\U0001f4cb Game Plan", key=f"gameplan_btn_{_cat}"):
-                            _show_game_plan_dialog(_cat)
-                    _cs_line = _category_stat_line(_cat)
-                    if _cs_line and (_cs_line[0] or _cs_line[1]):
-                        st.caption("  |  ".join(x for x in _cs_line if x))
-                    for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_cat_items, start=1):
-                        _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source)
+                st.markdown(
+                    '<div style="background:#f3f0f9;border-left:4px solid #4E2A84;border-radius:4px;'
+                    'padding:6px 10px;margin:12px 0 6px 0;font-weight:700;font-size:0.92rem;color:#4E2A84;">'
+                    f'{_cat} &mdash; {_n_items} item{"s" if _n_items != 1 else ""}</div>',
+                    unsafe_allow_html=True,
+                )
+                _cat_has_gp = bool(_game_plan_by_cat.get(_cat))
+                if _cat_has_gp:
+                    if st.button("\U0001f4cb Game Plan", key=f"gameplan_btn_{_cat}"):
+                        _show_game_plan_dialog(_cat)
+                _cs_line = _category_stat_line(_cat)
+                if _cs_line and (_cs_line[0] or _cs_line[1]):
+                    st.caption("  |  ".join(x for x in _cs_line if x))
+                for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_cat_items, start=1):
+                    _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source)
 
-                    # Full Game Plan Recommendation card(s) tagged to this same category -- continuing the
-                    # SAME numbered-item formatting as the keys above (numbered header, source badge, no
-                    # bordered box), instead of a separate boxed-off "card" sitting apart from the list.
-                    for _ci, _renderer in enumerate(_cat_cards):
-                        _renderer(len(_cat_items) + _ci + 1)
+                # Full Game Plan Recommendation card(s) tagged to this same category -- continuing the
+                # SAME numbered-item formatting as the keys above (numbered header, source badge, no
+                # bordered box), instead of a separate boxed-off "card" sitting apart from the list.
+                for _ci, _renderer in enumerate(_cat_cards):
+                    _renderer(len(_cat_items) + _ci + 1)
 
             _offense_order = [c for c in _cat_order if c in _OFFENSE_CATS]
             _defense_order = [c for c in _cat_order if c in _DEFENSE_CATS]
             _personnel_order = [c for c in _cat_order if c not in _OFFENSE_CATS and c not in _DEFENSE_CATS]
 
-            _off_col, _def_col, _pers_col = st.columns(3)
-            with _off_col:
-                st.markdown('<div style="font-weight:700;font-size:0.95rem;color:#4E2A84;margin-bottom:4px;">Offense</div>', unsafe_allow_html=True)
-                if _offense_order:
-                    for _cat in _offense_order:
-                        _render_cat_expander(_cat)
-                else:
-                    st.caption("Nothing tagged yet.")
-            with _def_col:
-                st.markdown('<div style="font-weight:700;font-size:0.95rem;color:#4E2A84;margin-bottom:4px;">Defense</div>', unsafe_allow_html=True)
-                if _defense_order:
-                    for _cat in _defense_order:
-                        _render_cat_expander(_cat)
-                else:
-                    st.caption("Nothing tagged yet.")
-            with _pers_col:
-                # Categories that aren't cleanly offense or defense -- currently just Personnel/Rotation (a
-                # rotation/personnel decision, not a stat category). Its own column, same footing as Offense
-                # and Defense, rather than a lesser full-width row underneath them.
-                st.markdown('<div style="font-weight:700;font-size:0.95rem;color:#4E2A84;margin-bottom:4px;">Personnel/Rotation</div>', unsafe_allow_html=True)
-                if _personnel_order:
-                    for _cat in _personnel_order:
+            # Stacked top-to-bottom (Offense, then Defense, then Personnel/Rotation) rather than three
+            # side-by-side columns -- full width per section keeps each key readable, and the sections
+            # read in scouting order instead of competing for a third of the page each.
+            for _sec_title, _sec_order in (
+                ("Offense", _offense_order),
+                ("Defense", _defense_order),
+                ("Personnel/Rotation", _personnel_order),
+            ):
+                st.markdown(
+                    '<div style="font-weight:800;font-size:1.15rem;color:#4E2A84;border-bottom:2px solid #4E2A84;'
+                    f'padding-bottom:4px;margin:22px 0 8px 0;">{_sec_title}</div>',
+                    unsafe_allow_html=True,
+                )
+                if _sec_order:
+                    for _cat in _sec_order:
                         _render_cat_expander(_cat)
                 else:
                     st.caption("Nothing tagged yet.")
