@@ -2889,8 +2889,9 @@ def render_upcoming_game():
         )
 
     # Scouting summary card (right): Core UWW players + Vulnerabilities
-    def _build_scouting_summary_html(uww_5man, uww_3man, opp_lu_df, opp_name):
-        """Build scouting summary card with core players and opponent vulnerabilities."""
+    def _build_scouting_summary_html(uww_5man, uww_3man):
+        """Build the scouting summary card. Opponent vulnerabilities and counter-lineups used to live
+        here too; both are now Keys to Victory items, so this card is the UWW core-players view."""
         sections = ""
 
         # --- CORE UWW PLAYERS (combined 5-man + 3-man = 8 metrics) ---
@@ -2932,34 +2933,13 @@ def render_upcoming_game():
                 f'{_core_html}</div>'
             )
 
-        # --- OPPONENT VULNERABILITIES ---
-        vuln_rows = ""
-        if opp_lu_df is not None and not opp_lu_df.empty:
-            opp_v = opp_lu_df.copy()
-            opp_v["TO_rate"] = (opp_v["TO"] / opp_v["MIN"] * 40).round(1) if "TO" in opp_v.columns else 0
-            opp_v["FG%"] = pd.to_numeric(opp_v["FG%"], errors="coerce").fillna(0) if "FG%" in opp_v.columns else 0
-            # Worst +/- lineups (min 3 min)
-            worst_pm = opp_v[opp_v["MIN"] >= 3.0].nsmallest(3, "+/-")
-            vuln_rows += '<div style="font-size:0.75rem;color:#888;margin-bottom:2px;">Worst +/- lineups:</div>'
-            for _, r in worst_pm.iterrows():
-                ln = _last_names(r["lineup"])
-                fg = f", {r['FG%']:.0f}% FG" if r.get('FG%', 0) > 0 else ""
-                vuln_rows += f'<div style="font-size:0.8rem;margin:2px 0;"><strong style="color:#c62828;">{r["+/-"]:+.1f}</strong> in {r["MIN"]:.1f} min{fg} \u2014 {html.escape(ln)}</div>'
-            # Highest turnover rate
-            if "TO" in opp_v.columns:
-                high_to = opp_v[opp_v["MIN"] >= 3.0].nlargest(2, "TO_rate")
-                if not high_to.empty:
-                    vuln_rows += '<div style="font-size:0.75rem;color:#888;margin:4px 0 2px;">Highest TO rate (per 40 min):</div>'
-                    for _, r in high_to.iterrows():
-                        ln = _last_names(r["lineup"])
-                        vuln_rows += f'<div style="font-size:0.8rem;margin:2px 0;"><strong style="color:#c62828;">{r["TO_rate"]:.1f}</strong> TO/40 \u2014 {html.escape(ln)}</div>'
-        if not vuln_rows:
-            vuln_rows = '<div style="font-size:0.8rem;color:#aaa;">No opponent lineup data</div>'
-        sections += (
-            f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 12px;margin-bottom:8px;">'
-            f'<div style="font-size:0.85rem;font-weight:700;color:#555;margin-bottom:4px;">\U0001F534 {html.escape(opp_name)} Vulnerabilities</div>'
-            f'{vuln_rows}</div>'
-        )
+        if not sections:
+            sections = '<div style="font-size:0.8rem;color:#aaa;">Need lineup data</div>'
+
+        # --- OPPONENT VULNERABILITIES: moved out of this card ---
+        # The worst net-rating lineups (with their FG%) and the highest turnover-rate lineups now live in
+        # the "Attack <opponent>'s ... lineup" Keys to Victory item under Personnel/Rotation, next to the
+        # counter-lineup recommendation, instead of in a separate side card.
 
         # --- COUNTER-LINEUP RECOMMENDATIONS: moved out of this card ---
         # Everything this section used to show (the profile-matched target description, the top matched UWW
@@ -2974,7 +2954,7 @@ def render_upcoming_game():
         )
 
     _combined_lineups_html = _build_combined_lineups_card(_uww_lu_agg, _opp_lu, _uww_3man_agg, _opp_3man_agg, opp_display)
-    _scouting_html = _build_scouting_summary_html(_uww_lu_agg, _uww_3man_agg, _opp_lu, opp_display)
+    _scouting_html = _build_scouting_summary_html(_uww_lu_agg, _uww_3man_agg)
 
     with _new_stats_top5_c:
         # Spacing between sections above and lineup row below
@@ -3002,8 +2982,8 @@ def render_upcoming_game():
                         st.rerun()
                 st.markdown(_active_lineup_html, unsafe_allow_html=True)
         with _col_sc:
-            # Lineup Scouting -- UWW Core Players and {Opponent} Vulnerabilities. (Counter-lineups moved
-            # to the "Counter with ..." Keys to Victory item.)
+            # Lineup Scouting -- UWW Core Players. (Opponent vulnerabilities and counter-lineups moved
+            # to the "Attack ..." and "Counter with ..." Keys to Victory items.)
             # Back to sitting alongside the lineup toggle, same as originally, rather than stacked below it.
             st.markdown(f'<div style="zoom:1.1;">{_scouting_html}</div>', unsafe_allow_html=True)
 
@@ -3589,10 +3569,41 @@ def render_upcoming_game():
         # the Tools tab's simulator uses)
         try:
             if _opp_lu is not None and not _opp_lu.empty:
-                _ls_worst = _opp_lu[_opp_lu["MIN"] >= 3.0].nsmallest(1, "+/-")
+                # The full opponent-vulnerability picture -- formerly its own card in the Lineup Scouting
+                # panel: their worst net-rating units (with shooting), plus the units that turn it over
+                # most. Both answer the same question ("when are they beatable?"), so they belong in one
+                # key rather than a side card.
+                _vl = _opp_lu.copy()
+                _vl["_pm_fg"] = pd.to_numeric(_vl["FG%"], errors="coerce").fillna(0) if "FG%" in _vl.columns else 0
+                if "TO" in _vl.columns:
+                    _vl["_to_rate"] = (_vl["TO"] / _vl["MIN"].replace(0, float("nan")) * 40).round(1)
+                _vl_qual = _vl[_vl["MIN"] >= 3.0]
+                _ls_worst = _vl_qual.nsmallest(3, "+/-")
                 if not _ls_worst.empty:
                     _ls_wr = _ls_worst.iloc[0]
-                    _keys.append(("\U0001f512", f"Attack {short_opponent}'s {_last_names(_ls_wr['lineup'])} lineup", f"{_ls_wr['+/-']:+.1f} in {_ls_wr['MIN']:.1f} min", "Their worst net-rating lineup with real minutes this season.", "Lineup Scouting"))
+                    _vl_lines = ["_Worst +/- lineups:_"]
+                    for _, _r in _ls_worst.iterrows():
+                        _fg = f", {_r['_pm_fg']:.0f}% FG" if _r.get("_pm_fg", 0) > 0 else ""
+                        _vl_lines.append(
+                            f"**{_r['+/-']:+.1f}** in {_r['MIN']:.1f} min{_fg} — {_last_names(_r['lineup'])}"
+                        )
+                    if "_to_rate" in _vl_qual.columns:
+                        _vl_high_to = _vl_qual.nlargest(2, "_to_rate")
+                        if not _vl_high_to.empty:
+                            _vl_lines.append("_Highest TO rate (per 40 min):_")
+                            for _, _r in _vl_high_to.iterrows():
+                                _vl_lines.append(
+                                    f"**{_r['_to_rate']:.1f}** TO/40 — {_last_names(_r['lineup'])}"
+                                )
+                    _keys.append((
+                        "\U0001f512",
+                        f"Attack {short_opponent}'s {_last_names(_ls_wr['lineup'])} lineup",
+                        "  \n".join(_vl_lines),
+                        f"{short_opponent}'s most exploitable units: their worst net-rating lineups with "
+                        f"real minutes this season (3+ min), and the lineups that give the ball away most "
+                        f"per 40 minutes. The headline names the worst of them.",
+                        "Lineup Scouting",
+                    ))
             # The full counter-lineup recommendation -- formerly its own card in the Lineup Scouting panel.
             # Two modes, and the key always says which one it is in:
             #   MATCHED  -- UWW's net margin against opponent lineups that RESEMBLE the one being prepared
