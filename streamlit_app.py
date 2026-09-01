@@ -1335,7 +1335,14 @@ def section_header(title: str, help_text: str = None, margin: str = "1.5rem 0 0.
     """
     icon = ""
     if help_text:
-        icon = (f'<span title="{html.escape(help_text)}" style="cursor:help;font-size:0.85rem;margin-left:8px;'
+        # A LITERAL newline in this attribute breaks the whole header. st.markdown runs the string through a
+        # Markdown renderer before the HTML reaches the browser, and a blank line ends a raw-HTML block --
+        # so the tag is cut in half and everything after the break renders as visible text, attribute markup
+        # and all. Encode the line breaks as &#10; instead: the browser still shows them as line breaks in
+        # the tooltip, but there is no newline character for Markdown to trip over. Escape FIRST, so
+        # html.escape() can't turn the entity's own "&" into "&amp;".
+        _tip = html.escape(help_text).replace("\r\n", "\n").replace("\n", "&#10;")
+        icon = (f'<span title="{_tip}" style="cursor:help;font-size:0.85rem;margin-left:8px;'
                 f'opacity:0.65;font-weight:400;vertical-align:middle;">\u2139\ufe0f</span>')
     st.markdown(
         f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:{margin};">'
