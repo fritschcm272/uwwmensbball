@@ -1001,7 +1001,7 @@ STAT_LABELS = {
 KTV_CATEGORY_REFERENCE = {
     "Ball Security": {"keywords": "ball security, protect the ball, take care of the ball, limit turnovers, our turnovers, live-ball turnover, live-ball turnovers, dead-ball turnover, dead-ball turnovers, careless, live dribble, sloppy, giveaway, giveaways, unforced", "stats": "TO"},
     "Rebounding": {"keywords": "own the paint, bully, glass, rebound, rebounding, rebounds, board, boards, second chance, crash, dominate the paint, box out, put back, putback", "stats": "REB, ORB, DRB"},
-    "Three-Point Shooting": {"keywords": "three, threes, 3, 3s, 3's, 3 pt, 3pt, 3-pt, 3-point, 3-pointer, 3-pointers, three-point, three-pointer, three-pointers, three point, perimeter shooting, spacing, shooting ability, shooting team, sniper, will shoot, trey, treys, deep ball, deep balls, beyond the arc, from deep, transition three, transition threes, transition 3, transition 3's, catch and shoot, corner three, corner 3, above the break", "stats": "3PM-A, 3P%"},
+    "Three-Point Shooting": {"keywords": "three, threes, 3, 3s, 3's, 3 pt, 3pt, 3-pt, 3-point, 3-pointer, 3-pointers, three-point, three-pointer, three-pointers, three point, perimeter shooting, spacing, shooting ability, shooting team, sniper, will shoot, trey, treys, deep ball, deep balls, beyond the arc, from deep, transition three, transition threes, transition 3, transition 3's, catch and shoot, corner three, corner 3, above the break, shooter, shooters, can shoot, shoot it, stretch big, stretch four", "stats": "3PM-A, 3P%"},
     "Free Throws": {"keywords": "free throw, free throws, ft line, getting to ft, foul line, and-one, and one", "stats": "FTM-A, FT%"},
     "Fouls / Discipline": {"keywords": "foul, fouls, wall up, drawing fouls, discipline, reach, reaching, hand check", "stats": "PF"},
     "Ball Movement / Assists": {"keywords": "assist, assists, ball movement, share the ball, playmaking, playmaker, create, extra pass, hockey assist, swing the ball", "stats": "AST"},
@@ -1009,8 +1009,8 @@ KTV_CATEGORY_REFERENCE = {
     "Perimeter Defense / Ball Pressure/ Create Turnovers": {"keywords": "steal, steals, press capable, full court press, force turnovers, force to's, forcing turnovers, generate turnovers, turnover trigger, turnover triggers, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure, ball pressure, deny, deflection, deflections", "stats": "STL"},
     "Scoring Inside": {"keywords": "dominate the paint, attack the paint, live in the paint, attack the basket, scoring at the rim, get to rim, attack the rim, get to the rim, post up, post-up, paint touches, drive, drives, downhill, finish at the rim", "stats": "FG2M, FG2A, FG2%"},
     "Field Goal Efficiency": {"keywords": "limit their scoring, field goal, field goal%, fg%, shooting percentage, efficient shooting, efficiency, good shots, quality shots", "stats": "FGM-A, FG%"},
-    "Defensive Efficiency": {"keywords": "high-volume, high volume, funnel, funneling, take away, most efficient, shot profile, shot diet, inefficient looks, worst looks, multiple efforts, multiple effort, never stop", "stats": "Opp FG% by shot type"},
-    "Offensive Efficiency": {"keywords": "attack & execute, attack and execute, execute offensively, attack offensively, shot selection, shot quality, best shot type", "stats": "TS%, eFG%"},
+    "Defensive Efficiency": {"keywords": "high-volume, high volume, funnel, funneling, take away, most efficient, shot profile, shot diet, inefficient looks, worst looks, multiple efforts, multiple effort, never stop, multiple scorers, multiple threats, multiple weapons, multiple options, scoring options, scoring threats, balanced scoring, scoring balance, scoring depth, several scorers, many scorers, deep scoring, double-digit scorers, double digit scorers, leading scorer, top scorer, primary scorer, go-to scorer, go to scorer, versatile scorers, score from anywhere, score at all three levels, three levels, three-level scorer, three level scorer, opponent strength, opponent strengths, their scorers, their weapons", "stats": "Opp FG% by shot type"},
+    "Offensive Efficiency": {"keywords": "attack & execute, attack and execute, execute offensively, attack offensively, shot selection, shot quality, best shot type, mismatch, mismatches, attacking mismatches, attack mismatches, attack the mismatch, hunt mismatches, hunt the mismatch, exploit mismatches, exploit the mismatch, target mismatches, find the mismatch, size advantage, size mismatch, speed advantage, quickness advantage, switch hunting, hunt switches, hunt the switch, isolate, isolation, iso, post mismatch, favorable matchup, favorable matchups, best matchup, best matchups, exploit matchup, exploit matchups", "stats": "TS%, eFG%"},
     "Personnel/Rotation": {"keywords": "bench trust, off the bench, foul trouble, closing lineup, closing 5, close the game, clutch, late-game, late game, rotation, sub pattern, substitution pattern, trust plan, who to trust, core players", "stats": "MIN, Game Score"},
 }
 
@@ -1056,12 +1056,36 @@ PHRASE_SIDE = {
     "scoring at the rim": "UWW", "get to rim": "UWW",
     "attack the rim": "UWW", "get to the rim": "UWW",
     "limit their scoring": "OPP",
+    # Defensive Efficiency -- opponent scoring-strength phrases describe THEM, so OPP
+    "multiple scorers": "OPP", "multiple threats": "OPP", "multiple weapons": "OPP",
+    "multiple options": "OPP", "scoring options": "OPP", "scoring threats": "OPP",
+    "balanced scoring": "OPP", "scoring balance": "OPP", "scoring depth": "OPP",
+    "several scorers": "OPP", "many scorers": "OPP", "deep scoring": "OPP",
+    "double-digit scorers": "OPP", "double digit scorers": "OPP",
+    "leading scorer": "OPP", "top scorer": "OPP", "primary scorer": "OPP",
+    "go-to scorer": "OPP", "go to scorer": "OPP", "versatile scorers": "OPP",
+    "score from anywhere": "OPP", "score at all three levels": "OPP",
+    "three-level scorer": "OPP", "three level scorer": "OPP",
+    "opponent strength": "OPP", "opponent strengths": "OPP",
+    "their scorers": "OPP", "their weapons": "OPP",
     # General Defensive / Containment (OPP)
     "take away": "OPP", "funnel": "OPP", "deny": "OPP", "contain": "OPP",
     "limit": "OPP", "contest": "OPP", "make them": "OPP", "load up": "OPP",
     "transition defense": "OPP", "fight over": "OPP", "switch": "OPP",
     "trap": "OPP", "double team": "OPP", "coverage": "OPP",
     "don't help off": "OPP", "take away personnel": "OPP",
+    # Offensive Efficiency -- mismatch/matchup hunting is something UWW does TO the opponent
+    "mismatch": "UWW", "mismatches": "UWW", "attacking mismatches": "UWW",
+    "attack mismatches": "UWW", "attack the mismatch": "UWW",
+    "hunt mismatches": "UWW", "hunt the mismatch": "UWW",
+    "exploit mismatches": "UWW", "exploit the mismatch": "UWW",
+    "target mismatches": "UWW", "find the mismatch": "UWW",
+    "size advantage": "UWW", "size mismatch": "UWW", "speed advantage": "UWW",
+    "quickness advantage": "UWW", "switch hunting": "UWW", "hunt switches": "UWW",
+    "hunt the switch": "UWW", "isolate": "UWW", "isolation": "UWW", "iso": "UWW",
+    "post mismatch": "UWW", "favorable matchup": "UWW", "favorable matchups": "UWW",
+    "best matchup": "UWW", "best matchups": "UWW",
+    "exploit matchup": "UWW", "exploit matchups": "UWW",
     # General Offensive / Proactive (UWW)
     "run the floor": "UWW", "push tempo": "UWW", "fast break": "UWW",
     "score in transition": "UWW", "finish": "UWW", "execute": "UWW",
@@ -3837,14 +3861,25 @@ def render_upcoming_game():
                 pattern = r"\b" + re.escape(keyword) + r"\b"
             return re.search(pattern, text_lower) is not None
 
+        # Category-level false-positive guards: a keyword can fire on text that is plainly about something
+        # else. "three"/"3" is the worst offender -- it is a Three-Point Shooting keyword, but in scouting
+        # text it is just as often a count ("three double-digit scorers", "three levels", "three guards"),
+        # which was mis-tagging opponent-scoring notes as a shooting key. If a category's exclusion pattern
+        # matches AND none of its keywords match outside that pattern, the category is skipped.
+        _CATEGORY_EXCLUSIONS = {
+            "Three-Point Shooting": r"\bthree\b(?=\s+(?:double|level|scorer|scorers|players|player|guards|guard|starters|starter|bigs|kids|of\b))|\bthree\s+levels?\b|\bthree[- ]level\b",
+        }
+
         def _match_categories(text):
             text_lower = str(text).lower()
             matched = []
             for _cat, _details in KTV_CATEGORY_REFERENCE.items():
                 if _cat not in _valid_cats:
                     continue
+                _excl = _CATEGORY_EXCLUSIONS.get(_cat)
+                _scrubbed = re.sub(_excl, " ", text_lower) if _excl else text_lower
                 for _kw in [_kw.strip() for _kw in _details["keywords"].split(",")]:
-                    if _kw and _keyword_matches(_kw, text_lower):
+                    if _kw and _keyword_matches(_kw, _scrubbed):
                         if _cat not in matched:
                             matched.append(_cat)
                         break
