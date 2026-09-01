@@ -1009,7 +1009,7 @@ KTV_CATEGORY_REFERENCE = {
     "Perimeter Defense / Ball Pressure/ Create Turnovers": {"keywords": "steal, steals, press capable, full court press, force turnovers, force to's, forcing turnovers, generate turnovers, turnover trigger, turnover triggers, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure, ball pressure, deny, deflection, deflections", "stats": "STL"},
     "Scoring Inside": {"keywords": "dominate the paint, attack the paint, live in the paint, attack the basket, scoring at the rim, get to rim, attack the rim, get to the rim, post up, post-up, paint touches, drive, drives, downhill, finish at the rim", "stats": "FG2M, FG2A, FG2%"},
     "Field Goal Efficiency": {"keywords": "limit their scoring, field goal, field goal%, fg%, shooting percentage, efficient shooting, efficiency, good shots, quality shots", "stats": "FGM-A, FG%"},
-    "Defensive Efficiency": {"keywords": "high-volume, high volume, funnel, funneling, take away, most efficient, shot profile, shot diet, inefficient looks, worst looks, multiple efforts, multiple effort, never stop, multiple scorers, multiple threats, multiple weapons, multiple options, scoring options, scoring threats, balanced scoring, scoring balance, scoring depth, several scorers, many scorers, deep scoring, double-digit scorers, double digit scorers, leading scorer, top scorer, primary scorer, go-to scorer, go to scorer, versatile scorers, score from anywhere, score at all three levels, three levels, three-level scorer, three level scorer, opponent strength, opponent strengths, their scorers, their weapons", "stats": "Opp FG% by shot type"},
+    "Defensive Efficiency": {"keywords": "high-volume, high volume, funnel, funneling, take away, most efficient, shot profile, shot diet, inefficient looks, worst looks, multiple efforts, multiple effort, never stop, multiple scorers, multiple threats, multiple weapons, multiple options, scoring options, scoring threats, balanced scoring, scoring balance, scoring depth, several scorers, many scorers, deep scoring, double-digit scorers, double digit scorers, leading scorer, top scorer, primary scorer, go-to scorer, go to scorer, versatile scorers, score from anywhere, score at all three levels, three levels, three-level scorer, three level scorer, opponent strength, opponent strengths, their scorers, their weapons, set play, set plays, set piece, set pieces, counters, counter action, counter actions, wrinkle, wrinkles, playbook, play call, play calls, scripted, after timeout, out of bounds play, out of bounds plays, blob, slob, baseline out of bounds, sideline out of bounds, horns, stagger, staggered screen, pin down, pindown, down screen, back screen, flare screen, flex, ram screen, ball screen, ball screens, ball screen action, ball screen actions, pick and roll, pick-and-roll, pick and pop, pick-and-pop, dribble handoff, dho, motion offense, continuity, actions, action sets, create advantages, creating advantages, advantage creation, advantages", "stats": "Opp FG% by shot type"},
     "Offensive Efficiency": {"keywords": "attack & execute, attack and execute, execute offensively, attack offensively, shot selection, shot quality, best shot type, mismatch, mismatches, attacking mismatches, attack mismatches, attack the mismatch, hunt mismatches, hunt the mismatch, exploit mismatches, exploit the mismatch, target mismatches, find the mismatch, size advantage, size mismatch, speed advantage, quickness advantage, switch hunting, hunt switches, hunt the switch, isolate, isolation, iso, post mismatch, favorable matchup, favorable matchups, best matchup, best matchups, exploit matchup, exploit matchups", "stats": "TS%, eFG%"},
     "Personnel/Rotation": {"keywords": "bench trust, off the bench, foul trouble, closing lineup, closing 5, close the game, clutch, late-game, late game, rotation, sub pattern, substitution pattern, trust plan, who to trust, core players", "stats": "MIN, Game Score"},
 }
@@ -1056,6 +1056,21 @@ PHRASE_SIDE = {
     "scoring at the rim": "UWW", "get to rim": "UWW",
     "attack the rim": "UWW", "get to the rim": "UWW",
     "limit their scoring": "OPP",
+    # Defensive Efficiency -- opponent set plays / actions / counters describe THEM, so OPP
+    "set play": "OPP", "set plays": "OPP", "set piece": "OPP", "set pieces": "OPP",
+    "counters": "OPP", "counter action": "OPP", "counter actions": "OPP",
+    "wrinkle": "OPP", "wrinkles": "OPP", "playbook": "OPP",
+    "play call": "OPP", "play calls": "OPP", "scripted": "OPP",
+    "after timeout": "OPP", "out of bounds play": "OPP", "out of bounds plays": "OPP",
+    "blob": "OPP", "slob": "OPP", "baseline out of bounds": "OPP", "sideline out of bounds": "OPP",
+    "horns": "OPP", "stagger": "OPP", "staggered screen": "OPP",
+    "pin down": "OPP", "pindown": "OPP", "down screen": "OPP", "back screen": "OPP",
+    "flare screen": "OPP", "flex": "OPP", "ram screen": "OPP",
+    "ball screen": "OPP", "ball screens": "OPP", "ball screen action": "OPP", "ball screen actions": "OPP",
+    "pick and roll": "OPP", "pick-and-roll": "OPP", "pick and pop": "OPP", "pick-and-pop": "OPP",
+    "dribble handoff": "OPP", "dho": "OPP", "motion offense": "OPP", "continuity": "OPP",
+    "actions": "OPP", "action sets": "OPP",
+    "create advantages": "OPP", "creating advantages": "OPP", "advantage creation": "OPP", "advantages": "OPP",
     # Defensive Efficiency -- opponent scoring-strength phrases describe THEM, so OPP
     "multiple scorers": "OPP", "multiple threats": "OPP", "multiple weapons": "OPP",
     "multiple options": "OPP", "scoring options": "OPP", "scoring threats": "OPP",
@@ -3867,6 +3882,7 @@ def render_upcoming_game():
         # which was mis-tagging opponent-scoring notes as a shooting key. If a category's exclusion pattern
         # matches AND none of its keywords match outside that pattern, the category is skipped.
         _CATEGORY_EXCLUSIONS = {
+            "Ball Movement / Assists": r"\bcreate[sd]?\b(?=\s+(?:advantage|advantages|separation|mismatch|mismatches|problems|issues))",
             "Three-Point Shooting": r"\bthree\b(?=\s+(?:double|level|scorer|scorers|players|player|guards|guard|starters|starter|bigs|kids|of\b))|\bthree\s+levels?\b|\bthree[- ]level\b",
         }
 
@@ -3885,11 +3901,22 @@ def render_upcoming_game():
                         break
             return matched
 
+        # Same false-positive guard as _CATEGORY_EXCLUSIONS, but per side-phrase: "create" is a UWW
+        # phrase, yet "create advantages" in an opponent-strength note is describing THEM, and letting
+        # both fire produced a misleading BOTH badge.
+        _PHRASE_EXCLUSIONS = {
+            "create": r"\bcreate[sd]?\b(?=\s+(?:advantage|advantages|separation|mismatch|mismatches|problems|issues))",
+        }
+
         def _detect_side(text):
             text_lower = str(text).lower()
             sides_found = set()
             for phrase, side in PHRASE_SIDE.items():
-                if phrase and _keyword_matches(phrase, text_lower):
+                if not phrase:
+                    continue
+                _pe = _PHRASE_EXCLUSIONS.get(phrase)
+                _pt = re.sub(_pe, " ", text_lower) if _pe else text_lower
+                if _keyword_matches(phrase, _pt):
                     sides_found.add(side)
             if "OPP" in sides_found and "UWW" not in sides_found:
                 return "OPP"
