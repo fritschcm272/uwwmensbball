@@ -1851,12 +1851,11 @@ def render_upcoming_game():
     # Game Plan Recommendations and the data-driven Keys to Victory render first even though their
     # underlying code still runs later, in its original order. ---
     # Stats & Analysis first (per request), then Keys to Victory as its own tab (previously always-visible
-    # at the top of the page), then Personnel, then Tools.
+    # at the top of the page), then Personnel, then Tools (which leads with Comparable Opponents).
     _new_tab_stats, _new_tab_ktv, _new_tab_personnel, _new_tab_tools = st.tabs(["\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f3ae Tools"])
     with _new_tab_stats:
         _new_stats_leaders_c = st.container()
         _new_stats_top5_c = st.container()
-        _new_stats_comparable_c = st.container()
     with _new_tab_ktv:
         _new_ktv_container = st.container()
         _new_rec_container = st.container()
@@ -1864,6 +1863,10 @@ def render_upcoming_game():
         _new_personnel_roster_c = st.container()
         _new_personnel_scouting_c = st.container()
     with _new_tab_tools:
+        # COMPARABLE OPPONENTS sits at the TOP of Tools (it used to be the last section of Stats &
+        # Analysis). Only the slot moves -- the section's code still runs in its original place further
+        # down, because a Streamlit container renders where it was CREATED, not where it is written to.
+        _new_tools_comparable_c = st.container()
         _new_tools_proj_c = st.container()
         _new_tools_lineup_c = st.container()
 
@@ -3142,7 +3145,7 @@ def render_upcoming_game():
 
 
 
-    with _new_stats_comparable_c:
+    with _new_tools_comparable_c:
         st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">COMPARABLE OPPONENTS</div></div>', unsafe_allow_html=True)
         # Which teams UWW has ALREADY PLAYED most resemble the one being prepared for -- so the staff can look
         # at what actually worked (and didn't) against that style. Scoped to `played`, i.e. games before the
