@@ -1433,9 +1433,27 @@ def compute_usage_rate(player_row: pd.Series, player_minutes: float, team_box: p
     return 100 * (player_poss_used * (team_minutes_total / 5)) / (player_minutes * team_poss)
 
 
+# The tagger's own vocabulary doesn't name every shot; these two labels mark where it runs out. Kept as
+# named constants so the "best shot type" logic can recognise a residual bucket instead of presenting it as
+# a real shot type.
+UNCLASSIFIED_SHOT_MECHANIC = "Unclassified (no mechanic tag)"
+NO_CONTEST_TAG = "Not tagged (contest recorded only on catch-and-shoot)"
+
+
 def extract_shot_mechanic(description) -> str:
-    """Parse the shot-mechanic tag out of a video_description string (same tags the parser's video-tagging
-    pipeline already uses -- see parser cell 114): catch-and-shoot vs. pull-up vs. a drive to the rim."""
+    """Which kind of shot this was, from the video tagger's own chained description.
+
+    The first three tests are the tagger's SHOT MECHANIC vocabulary. Everything else used to fall through to
+    a bucket called "Other" -- which was 19% of all tagged shots and, at 58.9%, the most efficient bucket on
+    the board, so it kept winning "best shot type" while telling a coach nothing. Reading the raw tags, it was
+    cuts to the rim, putbacks off the offensive glass, and post-ups.
+
+    Those three are tested AFTER the mechanic tests, not before: they describe how a shot was CREATED rather
+    than how it was released, and a post-up that finishes as a jumper should still count as a jumper. Checked
+    against real tagged data -- "Cut" and "Offensive Rebound" appear in zero already-classified shots, and
+    "Post-Up" in 169, all of which keep their existing (more specific) label under this ordering. Adding the
+    tier shrinks the residual from 586 shots to 14.
+    """
     if pd.isna(description):
         return None
     d = str(description)
@@ -1445,11 +1463,24 @@ def extract_shot_mechanic(description) -> str:
         return "Pull-up off the dribble"
     if "To Basket" in d:
         return "Drive to the basket"
-    return "Other"
+    # --- fallback tier: shot ORIGIN, for tags carrying no mechanic keyword at all ---
+    if "Offensive Rebound" in d:
+        return "Putback off the offensive glass"
+    if "Cut" in d:
+        return "Cut to the basket"
+    if "Post-Up" in d:
+        return "Post-up"
+    return UNCLASSIFIED_SHOT_MECHANIC
 
 
 def extract_contest(description) -> str:
-    """Parse the defender-contest tag out of a video_description string (see parser cell 114)."""
+    """Defender contest, which the tagger records ONLY on catch-and-shoot jumpers.
+
+    Verified across 3,039 tagged shots: every one of the 1,069 catch-and-shoot attempts carries Guarded or
+    Open, and not one of the other 1,970 does. So a missing contest tag does not mean the shot was a drive --
+    the previous label said "(drive, no contest tag)", which mislabelled every cut, putback and post-up as a
+    drive. It means the contest dimension simply does not apply to this shot type.
+    """
     if pd.isna(description):
         return None
     d = str(description)
@@ -1457,7 +1488,7 @@ def extract_contest(description) -> str:
         return "Guarded"
     if "Open" in d:
         return "Open"
-    return "N/A (drive, no contest tag)"
+    return NO_CONTEST_TAG
 
 
 def extract_distance(description) -> str:
@@ -3612,7 +3643,10 @@ def render_upcoming_game():
                 _ss_grouped = _ss_grouped[_ss_grouped["Attempts"] >= 8]  # need a real sample before calling it "best"
                 if not _ss_grouped.empty:
                     _ss_grouped["FG%"] = 100 * _ss_grouped["Makes"] / _ss_grouped["Attempts"]
-                    _ss_best = _ss_grouped.nlargest(1, "FG%").iloc[0]
+                    # A residual bucket is not a shot type. Prefer the best NAMED one; only fall back to the
+                    # unclassified pile if nothing else clears the attempt threshold, and label it plainly.
+                    _ss_named = _ss_grouped[_ss_grouped["_mechanic"] != UNCLASSIFIED_SHOT_MECHANIC]
+                    _ss_best = (_ss_named if not _ss_named.empty else _ss_grouped).nlargest(1, "FG%").iloc[0]
                     _ss_best_mechanic, _ss_best_contest = _ss_best["_mechanic"], _ss_best["_contest"]
                     _ss_best_rows = _ss_uww[(_ss_uww["_mechanic"] == _ss_best_mechanic) & (_ss_uww["_contest"] == _ss_best_contest)]
 
@@ -3643,7 +3677,9 @@ def render_upcoming_game():
                     _ss_reason = " -- ".join(_ss_parts) if _ss_parts else "Not enough lineup/play-call data linked to these shots yet to say which lineup or play generates them most."
                     _keys.append((
                         "\U0001f3c0",
-                        f"UWW Best Offensive Shot Selection & Quality: {_ss_best_mechanic}, {_ss_best_contest}",
+                        ("UWW Best Offensive Shot Selection & Quality: "
+                         + str(_ss_best_mechanic)
+                         + (f", {_ss_best_contest}" if _ss_best_contest != NO_CONTEST_TAG else "")),
                         f"{int(_ss_best['Makes'])}/{int(_ss_best['Attempts'])} ({_ss_best['FG%']:.0f}%) this season",
                         _ss_reason,
                         "Data-Driven",
