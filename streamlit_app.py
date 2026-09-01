@@ -2888,9 +2888,9 @@ def render_upcoming_game():
             f'</div>'
         )
 
-    # Scouting summary card (right): Core UWW players + Vulnerabilities + Counter-Lineups
-    def _build_scouting_summary_html(uww_5man, uww_3man, opp_lu_df, opp_name, stints_df):
-        """Build scouting summary card with core players, vulnerabilities, and counter-lineups."""
+    # Scouting summary card (right): Core UWW players + Vulnerabilities
+    def _build_scouting_summary_html(uww_5man, uww_3man, opp_lu_df, opp_name):
+        """Build scouting summary card with core players and opponent vulnerabilities."""
         sections = ""
 
         # --- CORE UWW PLAYERS (combined 5-man + 3-man = 8 metrics) ---
@@ -2961,71 +2961,11 @@ def render_upcoming_game():
             f'{vuln_rows}</div>'
         )
 
-        # --- COUNTER-LINEUP RECOMMENDATIONS ---
-        # Two modes, and the card always says which one it is in:
-        #   MATCHED  -- UWW's net margin against opponent lineups that RESEMBLE the one being prepared for
-        #               (position mix, size, starters, scouted style). A genuine counter recommendation.
-        #   FALLBACK -- UWW's best net-margin lineups season-wide. Useful, but NOT opponent-specific, and
-        #               labelled as such instead of being dressed up with a "vs <opponent>" heading.
-        counter_title = "\U0001F3AF Counter-Lineup Recommendations"
-        counter_rows = ""
-        _target_lineup = None
-        if opp_lu_df is not None and not opp_lu_df.empty:
-            _opp_top = opp_lu_df.nlargest(1, "MIN")
-            if not _opp_top.empty:
-                _target_lineup = _opp_top.iloc[0]["lineup"]
-
-        _matched, _matched_min, _n_similar, _target_desc = (None, 0.0, 0, "")
-        if _target_lineup is not None:
-            try:
-                _matched, _matched_min, _n_similar, _target_desc = counter_lineups(
-                    short_opponent, _target_lineup, stints_df,
-                )
-            except Exception as _cl_err:
-                report_section_error("Counter-lineup profile match", _cl_err)
-
-        if _matched is not None and not _matched.empty:
-            counter_rows += (
-                f'<div style="font-size:0.75rem;color:#888;margin-bottom:1px;">vs lineups like '
-                f'{html.escape(_last_names(_target_lineup))}</div>'
-            )
-            if _target_desc:
-                counter_rows += f'<div style="font-size:0.72rem;color:#aaa;margin-bottom:3px;">{html.escape(_target_desc)}</div>'
-            for _, r in _matched.head(3).iterrows():
-                counter_rows += (
-                    f'<div style="font-size:0.8rem;margin:2px 0;">'
-                    f'<strong style="color:#2e7d32;">{r["rate"]:+.2f}</strong>/min '
-                    f'<span style="color:#777;">({r["net"]:+.0f} in {r["MIN"]:.1f} min)</span> '
-                    f'\u2014 {html.escape(_last_names(r["uww_lineup"]))}</div>'
-                )
-            counter_rows += (
-                f'<div style="font-size:0.7rem;color:#aaa;margin-top:4px;">Measured across {_n_similar} '
-                f'comparable opponent unit(s), {_matched_min:.0f} min this season.</div>'
-            )
-        elif uww_5man is not None and not uww_5man.empty:
-            # Option 1: say plainly that this is not opponent-specific.
-            counter_title = "\U0001F3AF Best UWW Lineups by Net Margin"
-            _why = ("no comparable opponent lineups on record yet"
-                    if _target_lineup is not None else "no opponent lineup data yet")
-            counter_rows += (
-                f'<div style="font-size:0.75rem;color:#888;margin-bottom:2px;">Season-wide, '
-                f'<strong>not</strong> matchup-specific \u2014 {_why}.</div>'
-            )
-            for _, r in uww_5man[uww_5man["MIN"] >= 3.0].nlargest(3, "+/-").iterrows():
-                _rate = r["+/-"] / r["MIN"] if r["MIN"] > 0 else 0
-                counter_rows += (
-                    f'<div style="font-size:0.8rem;margin:2px 0;">'
-                    f'<strong style="color:#2e7d32;">{r["+/-"]:+.1f}</strong> total '
-                    f'<span style="color:#777;">({_rate:+.2f}/min in {r["MIN"]:.1f} min)</span> '
-                    f'\u2014 {html.escape(_last_names(r["lineup"]))}</div>'
-                )
-        if not counter_rows:
-            counter_rows = '<div style="font-size:0.8rem;color:#aaa;">Need lineup data</div>'
-        sections += (
-            f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 12px;margin-bottom:8px;">'
-            f'<div style="font-size:0.85rem;font-weight:700;color:#555;margin-bottom:4px;">{counter_title}</div>'
-            f'{counter_rows}</div>'
-        )
+        # --- COUNTER-LINEUP RECOMMENDATIONS: moved out of this card ---
+        # Everything this section used to show (the profile-matched target description, the top matched UWW
+        # units with their per-minute net margin, the comparable-sample footnote, and the honest season-wide
+        # fallback) now lives in the "Counter with ..." Keys to Victory item under Personnel/Rotation, so the
+        # recommendation sits next to the rest of the game plan instead of in a separate side card.
 
         return (
             f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;width:100%;">'
@@ -3034,7 +2974,7 @@ def render_upcoming_game():
         )
 
     _combined_lineups_html = _build_combined_lineups_card(_uww_lu_agg, _opp_lu, _uww_3man_agg, _opp_3man_agg, opp_display)
-    _scouting_html = _build_scouting_summary_html(_uww_lu_agg, _uww_3man_agg, _opp_lu, opp_display, _stints)
+    _scouting_html = _build_scouting_summary_html(_uww_lu_agg, _uww_3man_agg, _opp_lu, opp_display)
 
     with _new_stats_top5_c:
         # Spacing between sections above and lineup row below
@@ -3062,7 +3002,8 @@ def render_upcoming_game():
                         st.rerun()
                 st.markdown(_active_lineup_html, unsafe_allow_html=True)
         with _col_sc:
-            # Lineup Scouting -- UWW Core Players, {Opponent} Vulnerabilities, Counter-Lineup Recommendations.
+            # Lineup Scouting -- UWW Core Players and {Opponent} Vulnerabilities. (Counter-lineups moved
+            # to the "Counter with ..." Keys to Victory item.)
             # Back to sitting alongside the lineup toggle, same as originally, rather than stacked below it.
             st.markdown(f'<div style="zoom:1.1;">{_scouting_html}</div>', unsafe_allow_html=True)
 
@@ -3652,12 +3593,76 @@ def render_upcoming_game():
                 if not _ls_worst.empty:
                     _ls_wr = _ls_worst.iloc[0]
                     _keys.append(("\U0001f512", f"Attack {short_opponent}'s {_last_names(_ls_wr['lineup'])} lineup", f"{_ls_wr['+/-']:+.1f} in {_ls_wr['MIN']:.1f} min", "Their worst net-rating lineup with real minutes this season.", "Lineup Scouting"))
-            if _opp_lu is not None and not _opp_lu.empty and _uww_lu_agg is not None and not _uww_lu_agg.empty:
-                _ls_opp_top = _opp_lu.nlargest(1, "MIN")
-                _ls_best_uww = _uww_lu_agg[_uww_lu_agg["MIN"] >= 3.0].nlargest(1, "+/-")
-                if not _ls_opp_top.empty and not _ls_best_uww.empty:
-                    _ls_bu = _ls_best_uww.iloc[0]
-                    _keys.append(("\U0001f512", f"Counter with {_last_names(_ls_bu['lineup'])}", f"{_ls_bu['+/-']:+.1f} in {_ls_bu['MIN']:.1f} min", f"Best UWW lineup by net rating vs. {short_opponent}'s most-used lineup ({_last_names(_ls_opp_top.iloc[0]['lineup'])}).", "Lineup Scouting"))
+            # The full counter-lineup recommendation -- formerly its own card in the Lineup Scouting panel.
+            # Two modes, and the key always says which one it is in:
+            #   MATCHED  -- UWW's net margin against opponent lineups that RESEMBLE the one being prepared
+            #               for (position mix, size, starters, scouted style). A genuine counter.
+            #   FALLBACK -- UWW's best net-margin lineups season-wide. Useful, but NOT opponent-specific,
+            #               and labelled as such rather than dressed up with a "vs <opponent>" heading.
+            _cl_target_lineup = None
+            if _opp_lu is not None and not _opp_lu.empty:
+                _cl_opp_top = _opp_lu.nlargest(1, "MIN")
+                if not _cl_opp_top.empty:
+                    _cl_target_lineup = _cl_opp_top.iloc[0]["lineup"]
+
+            _cl_matched, _cl_matched_min, _cl_n_similar, _cl_target_desc = (None, 0.0, 0, "")
+            if _cl_target_lineup is not None:
+                try:
+                    _cl_matched, _cl_matched_min, _cl_n_similar, _cl_target_desc = counter_lineups(
+                        short_opponent, _cl_target_lineup, _stints,
+                    )
+                except Exception as _cl_err:
+                    report_section_error("Counter-lineup profile match", _cl_err)
+
+            if _cl_matched is not None and not _cl_matched.empty:
+                _cl_rows = list(_cl_matched.head(3).iterrows())
+                _cl_best = _cl_rows[0][1]
+                # Caption: every recommended unit, best first, with the same per-minute rate and raw
+                # (net in minutes) breakdown the old card showed.
+                _cl_caption_lines = [
+                    f"**{_r['rate']:+.2f}/min** ({_r['net']:+.0f} in {_r['MIN']:.1f} min) — {_last_names(_r['uww_lineup'])}"
+                    for _, _r in _cl_rows
+                ]
+                _cl_caption = "  \n".join(_cl_caption_lines)
+                _cl_reason_parts = [
+                    f"UWW's best net margin against opponent units that resemble {short_opponent}'s "
+                    f"most-used lineup ({_last_names(_cl_target_lineup)})."
+                ]
+                if _cl_target_desc:
+                    _cl_reason_parts.append(f"Target profile: {_cl_target_desc}.")
+                _cl_reason_parts.append(
+                    f"Measured across {_cl_n_similar} comparable opponent unit(s), "
+                    f"{_cl_matched_min:.0f} min this season."
+                )
+                _keys.append((
+                    "\U0001f512",
+                    f"Counter with {_last_names(_cl_best['uww_lineup'])}",
+                    _cl_caption,
+                    " ".join(_cl_reason_parts),
+                    "Lineup Scouting",
+                ))
+            elif _uww_lu_agg is not None and not _uww_lu_agg.empty:
+                _cl_fallback = _uww_lu_agg[_uww_lu_agg["MIN"] >= 3.0].nlargest(3, "+/-")
+                if not _cl_fallback.empty:
+                    _cl_rows = list(_cl_fallback.iterrows())
+                    _cl_best = _cl_rows[0][1]
+                    _cl_caption_lines = []
+                    for _, _r in _cl_rows:
+                        _r_rate = _r["+/-"] / _r["MIN"] if _r["MIN"] > 0 else 0.0
+                        _cl_caption_lines.append(
+                            f"**{_r['+/-']:+.1f}** total ({_r_rate:+.2f}/min in {_r['MIN']:.1f} min) "
+                            f"— {_last_names(_r['lineup'])}"
+                        )
+                    _cl_why = ("no comparable opponent lineups on record yet"
+                               if _cl_target_lineup is not None else "no opponent lineup data yet")
+                    _keys.append((
+                        "\U0001f512",
+                        f"Counter with {_last_names(_cl_best['lineup'])}",
+                        "  \n".join(_cl_caption_lines),
+                        f"UWW's best lineups by net margin season-wide — **not** matchup-specific, "
+                        f"because there are {_cl_why}.",
+                        "Lineup Scouting",
+                    ))
         except Exception:
             pass
 
