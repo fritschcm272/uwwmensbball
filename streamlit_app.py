@@ -4014,7 +4014,7 @@ def render_upcoming_game():
                         (_aw_uww_all["team"] == "UW-Whitewater") & (_aw_uww_all["event_type"].isin(["made_shot", "missed_shot"]))
                     ].copy() if not _aw_uww_all.empty else pd.DataFrame()
                     _aw_uww_shots = _aw_uww_shots[_aw_uww_shots["video_description"].notna()] if not _aw_uww_shots.empty else _aw_uww_shots
-                    _aw_lineup_txt, _aw_play_txt = None, None
+                    _aw_lineup_txt, _aw_play_txt, _aw_volume_txt = None, None, None
                     if not _aw_uww_shots.empty:
                         _aw_uww_shots["_mechanic"] = _aw_uww_shots["video_description"].apply(extract_shot_mechanic)
                         _aw_uww_shots["_contest"] = _aw_uww_shots["video_description"].apply(extract_contest)
@@ -4024,12 +4024,30 @@ def render_upcoming_game():
                         if "uww_lineup" in _aw_match_rows.columns:
                             _aw_lu_rows = _aw_match_rows[_aw_match_rows["uww_lineup"].notna()]
                             if not _aw_lu_rows.empty:
-                                _aw_lu_grouped = _aw_lu_rows.groupby("uww_lineup").agg(Attempts=("_make", "count"), Makes=("_make", "sum")).reset_index()
-                                _aw_lu_grouped = _aw_lu_grouped[_aw_lu_grouped["Attempts"] >= 3]
-                                if not _aw_lu_grouped.empty:
-                                    _aw_lu_grouped["FG%"] = 100 * _aw_lu_grouped["Makes"] / _aw_lu_grouped["Attempts"]
-                                    _aw_best_lu = _aw_lu_grouped.nlargest(1, "FG%").iloc[0]
-                                    _aw_lineup_txt = f"{_last_names(_aw_best_lu['uww_lineup'])} gets it best for us ({int(_aw_best_lu['Makes'])}/{int(_aw_best_lu['Attempts'])}, {_aw_best_lu['FG%']:.0f}%)"
+                                _aw_lu_all = _aw_lu_rows.groupby("uww_lineup").agg(
+                                    Attempts=("_make", "count"), Makes=("_make", "sum"),
+                                ).reset_index()
+                                _aw_lu_all["FG%"] = 100 * _aw_lu_all["Makes"] / _aw_lu_all["Attempts"]
+
+                                def _aw_lu_line(_r, _show_pct=True):
+                                    _nm = _last_names(_r["uww_lineup"])
+                                    return (f"{_nm} {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)"
+                                            if _show_pct else
+                                            f"{_nm} {int(_r['Attempts'])}x ({_r['FG%']:.0f}%)")
+
+                                # Two different questions, two different lists. Ranking by FG% alone rewards a
+                                # unit that happened to go 3/3, so the accuracy list keeps the 3+ attempt floor
+                                # and the volume list answers "who actually generates this shot for us" with no
+                                # floor at all -- a coach needs both before deciding who to feature.
+                                _aw_lu_qual = _aw_lu_all[_aw_lu_all["Attempts"] >= 3]
+                                if not _aw_lu_qual.empty:
+                                    _aw_top_fg = _aw_lu_qual.sort_values(["FG%", "Attempts"], ascending=False).head(3)
+                                    _aw_lineup_txt = ("Best on this shot (3+ attempts): "
+                                                      + "; ".join(_aw_lu_line(_r) for _, _r in _aw_top_fg.iterrows()))
+                                _aw_top_vol = _aw_lu_all.sort_values(["Attempts", "FG%"], ascending=False).head(3)
+                                if not _aw_top_vol.empty:
+                                    _aw_volume_txt = ("Runs it most: "
+                                                      + "; ".join(_aw_lu_line(_r, _show_pct=False) for _, _r in _aw_top_vol.iterrows()))
 
                         if "coach_note" in _aw_match_rows.columns:
                             _aw_calls = resolve_play_calls(_aw_match_rows).dropna()
@@ -4037,8 +4055,10 @@ def render_upcoming_game():
                                 _aw_top_call = _aw_calls.value_counts().idxmax()
                                 _aw_play_txt = f'"{_aw_top_call}" generates it most often for us ({int((_aw_calls == _aw_top_call).sum())}x)'
 
-                    _aw_parts = [p for p in [_aw_lineup_txt, _aw_play_txt] if p]
-                    _aw_reason = " -- ".join(_aw_parts) if _aw_parts else "Not enough UWW lineup/play-call data linked to this shot type yet to say which lineup or play generates it most for us."
+                    # One line per angle rather than one run-on sentence -- three lineups per list is too
+                    # much to read joined by dashes.
+                    _aw_parts = [p for p in [_aw_lineup_txt, _aw_volume_txt, _aw_play_txt] if p]
+                    _aw_reason = "\n".join(_aw_parts) if _aw_parts else "Not enough UWW lineup/play-call data linked to this shot type yet to say which lineup or play generates it most for us."
                     _keys.append((
                         "\U0001f3af",
                         f"Attack their weakest look: {describe_shot_look(_aw_best_mechanic, _aw_best_contest)}",
@@ -4557,7 +4577,11 @@ def render_upcoming_game():
                 if _caption:
                     st.caption(_caption)
                 if _reason:
-                    st.markdown(f"_{_reason}_")
+                    # A reason can carry several angles (e.g. best-shooting lineups AND highest-volume
+                    # lineups); render one italic line each instead of one unreadable run-on.
+                    for _rl in str(_reason).split("\n"):
+                        if _rl.strip():
+                            st.markdown(f"_{_rl.strip()}_")
                 st.markdown("")
 
             # --- Per-category stat lines: real UWW-vs-opponent numbers for whatever this category actually
