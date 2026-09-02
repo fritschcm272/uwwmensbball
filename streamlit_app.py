@@ -982,6 +982,17 @@ def esc(val) -> str:
     return html.escape(str(val))
 
 
+def style_map(styler, func, subset=None):
+    """Styler.applymap() under pandas < 2.1, Styler.map() from 2.1 on.
+
+    applymap was deprecated in pandas 2.1 and REMOVED in 3.0, which is what raised
+    "'Styler' object has no attribute 'applymap'" on the Player Detail dialog. Routed through one helper
+    so every styled table in this file works on either pandas.
+    """
+    _fn = getattr(styler, "map", None) or getattr(styler, "applymap")
+    return _fn(func, subset=subset) if subset is not None else _fn(func)
+
+
 def safe_scalar(val):
     """Coerce a value down to a single scalar if it's actually a pandas Series.
 
@@ -6835,7 +6846,7 @@ def render_previous_games():
                     return ""
 
                 diff_cols = ["PTS +/-", "REB +/-", "AST +/-"]
-                styled = _comp_df.style.applymap(_color_diff, subset=diff_cols)
+                styled = style_map(_comp_df.style, _color_diff, subset=diff_cols)
                 st.dataframe(styled, hide_index=True, use_container_width=True)
 
                 # Biggest over/under performers
@@ -7234,7 +7245,7 @@ def render_team():
                                 return "color: #c62828; font-weight: 600;"
                         return ""
                     _diff_cols_t = ["PTS Diff", "REB Diff", "AST Diff"]
-                    _styled_t = _pa_df.style.applymap(_color_diff_team, subset=_diff_cols_t)
+                    _styled_t = style_map(_pa_df.style, _color_diff_team, subset=_diff_cols_t)
                     st.dataframe(_styled_t, hide_index=True, use_container_width=True)
     except Exception as _e:
         report_section_error("Season projection accuracy", _e)
@@ -7770,7 +7781,7 @@ def render_players():
                                 if val > 0: return "color: #2e7d32; font-weight: 600;"
                                 elif val < 0: return "color: #c62828; font-weight: 600;"
                             return ""
-                        st.dataframe(_gm_df.style.applymap(_cd_player, subset=["vs Proj"]), hide_index=True, use_container_width=True)
+                        st.dataframe(style_map(_gm_df.style, _cd_player, subset=["vs Proj"]), hide_index=True, use_container_width=True)
             except Exception as _e:
                 report_section_error("Projected vs. actual performance", _e)
 
