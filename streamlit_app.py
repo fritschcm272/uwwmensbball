@@ -8019,13 +8019,22 @@ def render_players():
 
                         _pos = _pr.get("position", "-")
                         _ht = _pr.get("height", "")
-                        _pts = f"{_pr['PTS']:.1f}" if pd.notna(_pr.get("PTS")) else "-"
-                        _reb = f"{_pr['REB']:.1f}" if pd.notna(_pr.get("REB")) else "-"
+                        # pd.notna() is True for a STRING, so a column pandas read as object dtype (one
+                        # stray "-" anywhere in it is enough) got past this check and then blew up
+                        # formatting a str with a numeric spec. safe_float()/_pct_value() exist for
+                        # exactly this -- see safe_float's own docstring.
+                        _pts_v = safe_float(_pr.get("PTS"))
+                        _reb_v = safe_float(_pr.get("REB"))
+                        _pts = f"{_pts_v:.1f}" if _pts_v is not None else "-"
+                        _reb = f"{_reb_v:.1f}" if _reb_v is not None else "-"
                         # AST is a season total in this table -- divide by this player's own games played.
                         _card_gp = safe_float(_pr.get("games_played")) or (get_opponent_games_played(opponent_choice) or 1)
                         _ast_val = safe_float(_pr.get("AST"))
                         _ast = f"{_ast_val / _card_gp:.1f}" if _ast_val is not None and _card_gp else "-"
-                        _fg = f"{_pr['FG%']:.0f}%" if pd.notna(_pr.get("FG%")) else "-"
+                        # FG% arrives as "44.8%" (or "-") in this table, so it needs the percent-aware
+                        # parser rather than a plain float() -- this is the line that raised ValueError.
+                        _fg_v = _pct_value(_pr.get("FG%"))
+                        _fg = f"{_fg_v:.0f}%" if _fg_v is not None else "-"
                         _notes = str(_pr.get("player_notes", "")) if pd.notna(_pr.get("player_notes")) else ""
                         _keys = str(_pr.get("keys_to_defending", "")) if pd.notna(_pr.get("keys_to_defending")) else ""
 
