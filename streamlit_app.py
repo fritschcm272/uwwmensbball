@@ -4281,6 +4281,14 @@ def render_upcoming_game():
             if not _ag_calls.empty:
                 _ag_calls["_mk"] = _ag_calls["result"].astype(str).str.contains("Make", case=False, na=False)
                 _ag_calls["_at"] = _ag_calls["result"].astype(str).str.contains("Make|Miss", case=False, regex=True, na=False)
+                # Same possession can appear twice (a recap note and the season play log both tagged it) --
+                # see the Analytics page's play-call table for the full reasoning. Collapse before counting.
+                if "time_remaining_seconds" in _ag_calls.columns:
+                    _ag_k = [c for c in ["opponent", "period", "time_remaining_seconds", "team", "player", "play_call"]
+                             if c in _ag_calls.columns]
+                    _ag_t = _ag_calls[_ag_calls["time_remaining_seconds"].notna()].drop_duplicates(subset=_ag_k)
+                    _ag_calls = pd.concat([_ag_t, _ag_calls[_ag_calls["time_remaining_seconds"].isna()]], ignore_index=True)
+                _card_data["plays_rows"] = _ag_calls
                 _ag_sum = _ag_calls.groupby("play_call").agg(Makes=("_mk", "sum"), Attempts=("_at", "sum")).reset_index()
                 _ag_sum = _ag_sum[_ag_sum["Attempts"] >= 2]
                 if not _ag_sum.empty:
@@ -4294,6 +4302,39 @@ def render_upcoming_game():
                         + f"Best make rate among plays with 2+ tracked attempts this season: "
                           f"{int(_ag_best['Makes'])}/{int(_ag_best['Attempts'])} ({_ag_best['FG%']:.0f}%)."))
                     _card_data["plays"] = _ag_sum
+
+                    # --- Same two lists, but only from games against teams that PLAY LIKE the upcoming
+                    # opponent. Season-wide play numbers answer "what works for us"; this answers "what
+                    # works against this kind of team", which is the question a game plan actually asks.
+                    # Reuses the same style-profile ranking the Comparable Opponents panel is built on.
+                    try:
+                        _sp_index = sorted(opponent_style_profiles().index.astype(str), key=len, reverse=True)
+                        _sp_by_short = {}
+                        for _sp_raw in _ag_calls["opponent"].dropna().unique():
+                            _sp_short = resolve_short_opponent(_sp_raw, _sp_index)
+                            if _sp_short and _sp_short != short_opponent:
+                                _sp_by_short.setdefault(_sp_short, []).append(_sp_raw)
+                        _sp_ranked, _ = comparable_opponents(short_opponent, list(_sp_by_short), k=3)
+                        if _sp_ranked is not None and not _sp_ranked.empty:
+                            _sp_names = list(_sp_ranked["opponent"])
+                            _sp_raw_names = [r for n in _sp_names for r in _sp_by_short.get(n, [])]
+                            _sp_rows = _ag_calls[_ag_calls["opponent"].isin(_sp_raw_names)]
+                            if not _sp_rows.empty:
+                                _sp_sum = _sp_rows.groupby("play_call").agg(
+                                    Makes=("_mk", "sum"), Attempts=("_at", "sum"),
+                                ).reset_index()
+                                # A 1-attempt floor here, not the season list's 2: three games is a small
+                                # sample by construction, and requiring 2 attempts would empty the card.
+                                _sp_sum = _sp_sum[_sp_sum["Attempts"] >= 1]
+                                if not _sp_sum.empty:
+                                    _sp_sum["FG%"] = 100 * _sp_sum["Makes"] / _sp_sum["Attempts"]
+                                    _card_data["plays_similar"] = {
+                                        "summary": _sp_sum,
+                                        "opponents": [(n, int(_sp_ranked.loc[_sp_ranked["opponent"] == n, "match"].iloc[0]))
+                                                      for n in _sp_names],
+                                    }
+                    except Exception:
+                        pass
         except Exception:
             pass
 
@@ -4432,26 +4473,31 @@ def render_upcoming_game():
         # what actually combines them with the rest of Keys to Victory: a coach looking at "Rebounding" sees
         # the Rebounding Edge card right alongside every other Rebounding-tagged item, not in a different
         # section of the page.
-        def _render_plays_card(_n):
-            st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">{_n}. \U0001f3c0 Plays to Lean On</span>{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
-            _fp_plays = _card_data["plays"].copy()
+        def _fp_label(_call):
+            """Play name plus where it sits in the playbook -- 'Panther-4 "P4" (Panther, Specials)'.
+            Without the family a coach reads three Panther entries as three unrelated sets."""
+            _se, _fa = play_call_series(_call)
+            _ctx = ", ".join(dict.fromkeys([x for x in [_fa, _se] if x]))
+            return f"{_call}" + (f" _({_ctx})_" if _ctx else "")
 
-            def _fp_label(_call):
-                """Play name plus where it sits in the playbook -- "Panther-4 \"P4\" (Panther, Specials)".
-                Without the family a coach reads three Panther entries as three unrelated sets."""
-                _se, _fa = play_call_series(_call)
-                _ctx = ", ".join(dict.fromkeys([x for x in [_fa, _se] if x]))
-                return f"{_call}" + (f" _({_ctx})_" if _ctx else "")
-
-            _fp_go_to = _fp_plays.nlargest(3, "FG%")
-            for _, _r in _fp_go_to.iterrows():
-                st.markdown(f"- **{_fp_label(_r['play_call'])}** -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%) this season")
-            _fp_cold = _fp_plays.nsmallest(2, "FG%")
-            _fp_cold = _fp_cold[~_fp_cold["play_call"].isin(_fp_go_to["play_call"])]
-            if not _fp_cold.empty:
-                st.markdown("**Use sparingly:**")
-                for _, _r in _fp_cold.iterrows():
+        def _fp_best_worst(_df, _n_best=3, _n_worst=2, _suffix=""):
+            """Render the Best/Worst pair off one play summary table. Worst excludes anything already named
+            as best, so a short list doesn't print the same play under both headings."""
+            _best = _df.nlargest(_n_best, "FG%")
+            st.markdown("**Best Overall Plays**" if not _suffix else f"**Best Plays {_suffix}**")
+            for _, _r in _best.iterrows():
+                st.markdown(f"- **{_fp_label(_r['play_call'])}** -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)")
+            _worst = _df.nsmallest(_n_worst, "FG%")
+            _worst = _worst[~_worst["play_call"].isin(_best["play_call"])]
+            if not _worst.empty:
+                st.markdown("**Worst Overall Plays**" if not _suffix else f"**Worst Plays {_suffix}**")
+                for _, _r in _worst.iterrows():
                     st.markdown(f"- {_fp_label(_r['play_call'])} -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)")
+
+        def _render_plays_card(_n):
+            st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">{_n}. \U0001f3c0 Play Calls -- Full Season</span>{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
+            _fp_plays = _card_data["plays"].copy()
+            _fp_best_worst(_fp_plays)
 
             # Family rollup: individual calls are thin (a handful of attempts each), so which PACKAGE is
             # working is the more reliable read -- and it's the level a coach actually game-plans at.
@@ -4467,6 +4513,23 @@ def render_upcoming_game():
                     for _, _r in _fp_fam.iterrows()
                 ))
             st.caption("Play names, series and family come from the team's playbook catalog; calls not in the catalog keep the tagger's own wording (see the Analytics page for the full breakdown).")
+            st.markdown("")
+
+        def _render_similar_plays_card(_n):
+            """The same Best/Worst pair, restricted to games against the teams whose STYLE most resembles
+            this opponent. Season numbers say what works for us in general; this says what has worked
+            against this kind of team, which is what a game plan is actually deciding."""
+            _sp = _card_data["plays_similar"]
+            _sp_names = _sp["opponents"]
+            st.markdown(
+                f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
+                f'{_n}. \U0001f501 Play Calls -- vs Similar Opponents</span>'
+                f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
+            st.caption("Style-matched from the same profile the Comparable Opponents panel uses: "
+                       + ", ".join(f"{_nm} ({_mt}% match)" for _nm, _mt in _sp_names))
+            _fp_best_worst(_sp["summary"], _suffix="vs This Style")
+            st.caption("A three-game sample by construction -- a 1-attempt floor, so read it as a pointer, "
+                       "not a verdict. The full-season card above is the larger sample.")
             st.markdown("")
 
         def _render_scoring_reliance_card(_n):
@@ -4544,6 +4607,7 @@ def render_upcoming_game():
         # so a reliable direct mapping beats hoping the wording happens to trip the right keywords.
         _CARD_CATEGORY_MAP = {
             "plays": ("Play Calls", _render_plays_card),
+            "plays_similar": ("Play Calls", _render_similar_plays_card),
             "scoring_reliance": ("Defensive Efficiency", _render_scoring_reliance_card),
             "pace_style": ("Offensive Efficiency", _render_pace_style_card),
             "rebounding": ("Rebounding", _render_rebounding_card),
