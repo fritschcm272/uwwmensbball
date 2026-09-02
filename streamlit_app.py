@@ -4368,6 +4368,36 @@ def render_upcoming_game():
                     _ag_style = "Push Tempo" if _ag_opp_allowed > _ag_opp_ppg else "Slow It Down"
                     _at_a_glance.append(("\u23f1\ufe0f Style", _ag_style, f"UWW season pace: {_ag_pace_d['Pace']:.1f} poss/game. {esc(short_opponent)}: {_ag_opp_ppg:.1f} PPG, allows {_ag_opp_allowed:.1f}."))
                     _card_data["pace_style"] = (_ag_pace_d, _ag_opp_ppg, _ag_opp_allowed, _ag_style)
+
+                    # How UWW has actually FARED playing the recommended way. The card told a coach which
+                    # tempo to choose but nothing about whether this team is any good at it -- split UWW's
+                    # own games by their per-game pace (median-split against themselves, so "fast" and
+                    # "slow" mean fast/slow FOR THIS TEAM, not against some league constant) and report the
+                    # record and efficiency on each side of it.
+                    try:
+                        _ps_keys = [c for c in ["opponent", "game_date"] if c in _ag_uww_side.columns]
+                        if _ps_keys:
+                            _ps_rows = []
+                            for _ps_k, _ps_u in _ag_uww_side.groupby(_ps_keys, dropna=False):
+                                _ps_mask = pd.Series(True, index=_ag_opp_side.index)
+                                for _c, _v in zip(_ps_keys, (_ps_k if isinstance(_ps_k, tuple) else (_ps_k,))):
+                                    _ps_mask &= (_ag_opp_side[_c] == _v)
+                                _ps_o = _ag_opp_side[_ps_mask]
+                                if _ps_o.empty:
+                                    continue
+                                _ps_d = compute_efficiency_pace(_ps_u, _ps_o, 1)
+                                _ps_rows.append({
+                                    "pace": _ps_d["Pace"], "net": _ps_d["Net Rtg"],
+                                    "ortg": _ps_d["ORtg"],
+                                    "won": (_ps_u["PTS"].sum() > _ps_o["PTS"].sum()) if "PTS" in _ps_u.columns else None,
+                                })
+                            _ps_df = pd.DataFrame(_ps_rows)
+                            if len(_ps_df) >= 4:
+                                _ps_median = _ps_df["pace"].median()
+                                _ps_df["_bucket"] = _ps_df["pace"].apply(lambda v: "fast" if v > _ps_median else "slow")
+                                _card_data["pace_style_history"] = {"games": _ps_df, "median": _ps_median}
+                    except Exception:
+                        pass
         except Exception:
             pass
 
@@ -4551,6 +4581,39 @@ def render_upcoming_game():
                 st.markdown("They give up more than they score on average -- **push tempo** and get into transition before their defense sets.")
             else:
                 st.markdown("They're stingier than their own offense -- a **half-court, execution-first** approach may serve better than trying to speed them up.")
+
+            # Does UWW actually play well that way? The recommendation is about the OPPONENT; this is the
+            # part about us, and it's the half a coach needs before committing to a tempo.
+            _fp_hist = _card_data.get("pace_style_history")
+            if _fp_hist is not None:
+                _fp_g = _fp_hist["games"]
+                _fp_want = "fast" if _fp_style == "Push Tempo" else "slow"
+                _fp_sel = _fp_g[_fp_g["_bucket"] == _fp_want]
+                _fp_oth = _fp_g[_fp_g["_bucket"] != _fp_want]
+
+                def _fp_line(_lbl, _d):
+                    if _d.empty:
+                        return None
+                    _w = int(_d["won"].fillna(False).sum())
+                    _l = len(_d) - _w
+                    return (f"**{_lbl}** ({len(_d)} games, {_fp_g.loc[_d.index, 'pace'].mean():.1f} poss/gm): "
+                            f"**{_w}-{_l}**, Net Rtg **{_d['net'].mean():+.1f}**, ORtg {_d['ortg'].mean():.1f}")
+
+                st.markdown(f"**How UWW has fared at each tempo** (own-median split at {_fp_hist['median']:.1f} poss/gm):")
+                for _lbl, _d in (("Slower games" if _fp_want == "slow" else "Faster games", _fp_sel),
+                                 ("Faster games" if _fp_want == "slow" else "Slower games", _fp_oth)):
+                    _txt = _fp_line(_lbl, _d)
+                    if _txt:
+                        st.markdown(f"- {_txt}" + (" \u2190 *the recommended approach*" if _d is _fp_sel else ""))
+                if not _fp_sel.empty and not _fp_oth.empty:
+                    _fp_gap = _fp_sel["net"].mean() - _fp_oth["net"].mean()
+                    st.caption(
+                        (f"UWW has been {abs(_fp_gap):.1f} points/100 better at this tempo -- the matchup read and "
+                         "our own record agree." if _fp_gap > 0 else
+                         f"Note: UWW has actually been {abs(_fp_gap):.1f} points/100 WORSE at this tempo. The "
+                         "matchup argues for it, our own results don't -- worth weighing both.")
+                        + " Pace is an estimate from the box score (FGA - OREB + TO + 0.44*FTA), split at UWW's own median."
+                    )
             st.markdown("")
 
         def _render_rebounding_card(_n):
