@@ -7764,11 +7764,22 @@ def render_players():
                     _pc2.metric("REB", f"{_pr['projected_REB']:.0f} → {_avg_reb:.1f}", delta=f"{_reb_d:+.1f}")
                     _pc3.metric("AST", f"{_pr['projected_AST']:.0f} → {_avg_ast:.1f}", delta=f"{_ast_d:+.1f}")
 
-                    # Per-game breakdown in expander
+                    # Per-game breakdown in expander -- ordered by the date the game was played, oldest
+                    # first, so the column reads as a season arc. The box-score table's own row order is
+                    # whatever the groupby produced (alphabetical by opponent), which made a run of good
+                    # or bad games impossible to see.
                     with st.expander(f"Game-by-game breakdown ({_n_games} games)", expanded=False):
+                        _gm_src = _p_actual_games.copy()
+                        if "game_date" in _gm_src.columns:
+                            _gm_src["_sort_date"] = pd.to_datetime(_gm_src["game_date"], errors="coerce")
+                            # Rows whose date won't parse sort last rather than silently jumping to the top.
+                            _gm_src = _gm_src.sort_values("_sort_date", na_position="last")
                         _gm_rows = []
-                        for _, _gr in _p_actual_games.iterrows():
+                        for _, _gr in _gm_src.iterrows():
+                            _gm_date = _gr.get("game_date")
                             _gm_rows.append({
+                                "Date": (pd.to_datetime(_gm_date, errors="coerce").strftime("%b %d")
+                                         if pd.notna(pd.to_datetime(_gm_date, errors="coerce")) else "-"),
                                 "Opponent": _gr.get("opponent", "-"),
                                 "PTS": int(_gr["PTS"]),
                                 "vs Proj": int(_gr["PTS"] - _pr["projected_PTS"]),
@@ -7776,6 +7787,8 @@ def render_players():
                                 "AST": int(_gr["AST"]),
                             })
                         _gm_df = pd.DataFrame(_gm_rows)
+                        if "game_date" not in _p_actual_games.columns:
+                            _gm_df = _gm_df.drop(columns=["Date"])
                         def _cd_player(val):
                             if isinstance(val, (int, float)):
                                 if val > 0: return "color: #2e7d32; font-weight: 600;"
