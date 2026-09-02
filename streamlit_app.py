@@ -9,11 +9,13 @@ efficiency/pace, shot quality, ball movement, clutch performance, schedule/rest 
 play notes; see STAT_GLOSSARY for definitions of every derived metric).
 """
 
+import hashlib
 import html
 import json
 import math
 import os
 import re
+from datetime import datetime
 
 import pandas as pd
 import streamlit as st
@@ -2221,6 +2223,61 @@ def format_ppp(row) -> str:
     _ppp = "--" if pd.isna(row.get("PPP")) else f"{row['PPP']:.2f} PPP"
     _fg = "" if pd.isna(row.get("FG%")) else f", {row['FG%']:.0f}% FG"
     return f"{_ppp}{_fg}"
+
+
+# --- Coach feedback on Keys to Victory --------------------------------------------------------------------
+# Every key on the Upcoming Opponent page can be rated by the staff in one click. Stored as an append-only
+# CSV next to the parser's own tables so it can be opened in Excel, joined against the keys themselves, or
+# read straight back into this app -- no database, no service, nothing to keep running.
+KTV_FEEDBACK_FILE = "ktv_feedback.csv"
+KTV_FEEDBACK_COLUMNS = [
+    "recorded_at", "opponent", "game_date", "section", "category", "source", "key_id", "key_text",
+    "rating", "coach", "comment",
+]
+KTV_RATINGS = ["Beneficial", "Not beneficial", "Not accurate"]
+
+
+def ktv_feedback_path() -> str:
+    return os.path.join(DATA_DIR, KTV_FEEDBACK_FILE)
+
+
+def ktv_key_id(opponent, category, key_text) -> str:
+    """Stable id for one key, so the same key rated across several weeks lines up in the CSV even though
+    the surrounding numbers change. Hashed rather than stored raw because a key's text can be long and
+    carries commas/quotes that make a CSV column awkward -- the text is stored alongside it anyway."""
+    _basis = f"{str(category).strip().lower()}|{re.sub(r'[^a-z0-9]+', ' ', str(key_text).lower()).strip()}"
+    return hashlib.md5(_basis.encode("utf-8")).hexdigest()[:12]
+
+
+def load_ktv_feedback() -> pd.DataFrame:
+    """Every rating recorded so far. Read directly (not via load_table's cache) so a rating shows up in the
+    review table the moment it's saved."""
+    _p = ktv_feedback_path()
+    if not os.path.exists(_p):
+        return pd.DataFrame(columns=KTV_FEEDBACK_COLUMNS)
+    try:
+        _df = pd.read_csv(_p)
+    except Exception:
+        return pd.DataFrame(columns=KTV_FEEDBACK_COLUMNS)
+    for _c in KTV_FEEDBACK_COLUMNS:
+        if _c not in _df.columns:
+            _df[_c] = None
+    return _df[KTV_FEEDBACK_COLUMNS]
+
+
+def save_ktv_feedback(record: dict) -> bool:
+    """Append one rating. Returns False (rather than raising) if the file can't be written, so a read-only
+    filesystem degrades to "the buttons don't stick" instead of taking the page down."""
+    _p = ktv_feedback_path()
+    _row = {_c: record.get(_c) for _c in KTV_FEEDBACK_COLUMNS}
+    _row["recorded_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    try:
+        os.makedirs(os.path.dirname(_p) or ".", exist_ok=True)
+        _write_header = not os.path.exists(_p) or os.path.getsize(_p) == 0
+        pd.DataFrame([_row])[KTV_FEEDBACK_COLUMNS].to_csv(_p, mode="a", header=_write_header, index=False)
+        return True
+    except Exception:
+        return False
 
 
 # --- Coach-note themes ------------------------------------------------------------------------------------
@@ -5835,7 +5892,41 @@ def render_upcoming_game():
             # any category nothing matched this game.
             _cat_order = [c for c in KTV_CATEGORY_REFERENCE if c in _grouped or c in _cards_by_category]
 
-            def _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source):
+            def _ktv_feedback_row(_key_text, _category, _section, _source=None, _slot=""):
+                """Three one-click ratings under a key. Kept deliberately plain -- a coach scanning the
+                page shouldn't have to open anything to say a key was wrong.
+
+                The clicked rating is written straight to the CSV and remembered in session state, so the
+                row confirms itself without a rerun round-trip and a double-click can't file two rows."""
+                _kid = ktv_key_id(short_opponent, _category, _key_text)
+                _state_key = f"ktv_fb_{_kid}_{_slot}"
+                _already = st.session_state.get(_state_key)
+                _c1, _c2, _c3, _c4 = st.columns([1, 1, 1, 3])
+                for _col, _label, _rating in (
+                    (_c1, "\U0001f44d Beneficial", "Beneficial"),
+                    (_c2, "\U0001f44e Not useful", "Not beneficial"),
+                    (_c3, "\u26a0\ufe0f Not accurate", "Not accurate"),
+                ):
+                    with _col:
+                        if st.button(_label, key=f"{_state_key}_{_rating}", use_container_width=True,
+                                     disabled=_already is not None):
+                            _ok = save_ktv_feedback({
+                                "opponent": short_opponent, "game_date": str(upcoming_game.get("date", "")),
+                                "section": _section, "category": _category, "source": _source,
+                                "key_id": _kid, "key_text": _key_text, "rating": _rating,
+                                "coach": st.session_state.get("ktv_feedback_coach", ""),
+                                "comment": "",
+                            })
+                            st.session_state[_state_key] = _rating if _ok else "__failed__"
+                            st.rerun()
+                with _c4:
+                    if _already == "__failed__":
+                        st.caption("\u26a0\ufe0f Couldn't save -- the data folder isn't writable here.")
+                    elif _already:
+                        st.caption(f"Recorded: **{_already}**")
+
+            def _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
+                                 _category=None, _section=None):
                 # No per-item category badge -- the section header above already names the category, so
                 # repeating it on every item was redundant. Side (UWW/OPP) badges removed too, per request.
                 st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">{_n}. {_icon} {html.escape(_headline)}</span>{_source_badge_html(_source)}</div>', unsafe_allow_html=True)
@@ -5847,6 +5938,8 @@ def render_upcoming_game():
                     for _rl in str(_reason).split("\n"):
                         if _rl.strip():
                             st.markdown(f"_{_rl.strip()}_")
+                if _category:
+                    _ktv_feedback_row(_headline, _category, _section or "", _source)
                 st.markdown("")
 
             # --- Per-category stat lines: real UWW-vs-opponent numbers for whatever this category actually
@@ -6106,13 +6199,19 @@ def render_upcoming_game():
                 if _cs_line and (_cs_line[0] or _cs_line[1]):
                     st.caption("  |  ".join(x for x in _cs_line if x))
                 for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_cat_items, start=1):
-                    _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source)
+                    _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
+                                     _category=_cat, _section=_sec_key)
 
                 # Full Game Plan Recommendation card(s) tagged to this same category -- continuing the
                 # SAME numbered-item formatting as the keys above (numbered header, source badge, no
                 # bordered box), instead of a separate boxed-off "card" sitting apart from the list.
                 for _ci, _renderer in enumerate(_cat_cards):
                     _renderer(len(_cat_items) + _ci + 1)
+                    # Cards are keys too as far as a coach is concerned -- rate them by the card's own
+                    # function name, which is stable across weeks even as the numbers inside change.
+                    _ktv_feedback_row(getattr(_renderer, "__name__", "card")
+                                      .replace("_render_", "").replace("_card", "").replace("_", " ").title(),
+                                      _cat, _sec_key, "Data-Driven", _slot=f"card{_ci}")
 
             # Stacked top-to-bottom (Offense, then Defense, then Personnel/Rotation & Intangibles)
             # rather than three side-by-side columns -- full width per section keeps each key readable,
@@ -6132,10 +6231,55 @@ def render_upcoming_game():
                 else:
                     st.caption("Nothing tagged yet.")
 
+            # --- Feedback review + export -----------------------------------------------------------
+            # The ratings are only worth collecting if they can be looked at, so the file that collects
+            # them is readable right here: who rated what, which categories are landing and which aren't,
+            # and a download of the raw CSV.
+            with st.expander("\U0001f4dd Key feedback \u2014 review and export", expanded=False):
+                st.text_input("Your name (saved with each rating)", key="ktv_feedback_coach",
+                              placeholder="optional")
+                _fb = load_ktv_feedback()
+                if _fb.empty:
+                    st.caption("No ratings recorded yet. Use the buttons under any key to start.")
+                else:
+                    _fb_c1, _fb_c2, _fb_c3 = st.columns(3)
+                    _fb_c1.metric("Ratings recorded", len(_fb))
+                    _fb_c2.metric("Beneficial", int((_fb["rating"] == "Beneficial").sum()))
+                    _fb_c3.metric("Flagged inaccurate", int((_fb["rating"] == "Not accurate").sum()))
+
+                    _fb_by_cat = (_fb.groupby(["category", "rating"]).size().unstack(fill_value=0)
+                                  .reindex(columns=KTV_RATINGS, fill_value=0).reset_index())
+                    _fb_by_cat["Total"] = _fb_by_cat[KTV_RATINGS].sum(axis=1)
+                    st.markdown("**By category**")
+                    st.dataframe(_fb_by_cat.rename(columns={"category": "Category"}).sort_values("Total", ascending=False),
+                                 hide_index=True, use_container_width=True)
+
+                    _fb_bad = _fb[_fb["rating"] == "Not accurate"]
+                    if not _fb_bad.empty:
+                        st.markdown("**Flagged as inaccurate** \u2014 the ones worth fixing first")
+                        st.dataframe(
+                            _fb_bad.groupby(["key_text", "category"]).size().reset_index(name="Times flagged")
+                            .sort_values("Times flagged", ascending=False).head(10),
+                            hide_index=True, use_container_width=True)
+
+                    st.markdown("**All ratings**")
+                    st.dataframe(_fb.sort_values("recorded_at", ascending=False),
+                                 hide_index=True, use_container_width=True)
+                    st.download_button(
+                        "\u2b07\ufe0f Download ktv_feedback.csv", data=_fb.to_csv(index=False).encode("utf-8"),
+                        file_name="ktv_feedback.csv", mime="text/csv", key="ktv_fb_download")
+                st.caption(
+                    f"Saved to `{KTV_FEEDBACK_FILE}` in the same folder as the parser's CSVs, appended one "
+                    "row per click (never overwritten). On a hosted Streamlit instance that folder resets "
+                    "when the app restarts -- download the CSV, or point DATA_DIR at a synced folder, if "
+                    "these need to survive a redeploy."
+                )
+
             if _ungrouped:
                 with st.expander(f"Other \u2014 {len(_ungrouped)} item{'s' if len(_ungrouped) != 1 else ''}", expanded=False):
                     for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_ungrouped, start=1):
-                        _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source)
+                        _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
+                                         _category="Other", _section="Other")
         else:
             st.info("No scouting data available yet for this opponent.")
 
