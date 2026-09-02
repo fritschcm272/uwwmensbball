@@ -2933,17 +2933,37 @@ def render_upcoming_game():
             _gd_opp_side = _gd_game_box[_gd_game_box["team"] == _team_b]
 
             st.markdown("**Team Stats**")
+            # One row per TEAM, one column per stat -- the same orientation as every box score on the page
+            # (and as the two player tables directly below), instead of a tall two-column list that read
+            # nothing like its neighbours and made the two teams hard to compare at a glance.
             _gd_stat_cols = [c for c in ["PTS", "REB", "AST", "STL", "BLK", "TO", "PF"] if c in _gd_game_box.columns]
-            _gd_rows = [{"Stat": _sc, _team_a: _gd_uww_side[_sc].sum(), _team_b: _gd_opp_side[_sc].sum()} for _sc in _gd_stat_cols]
-            if {"FGM", "FGA"} <= set(_gd_game_box.columns):
-                _u_fgm, _u_fga = _gd_uww_side["FGM"].sum(), _gd_uww_side["FGA"].sum()
-                _o_fgm, _o_fga = _gd_opp_side["FGM"].sum(), _gd_opp_side["FGA"].sum()
-                _gd_rows.append({"Stat": "FG%", _team_a: f"{100*_u_fgm/_u_fga:.1f}%" if _u_fga else "-", _team_b: f"{100*_o_fgm/_o_fga:.1f}%" if _o_fga else "-"})
-            if {"FG3M", "FG3A"} <= set(_gd_game_box.columns):
-                _u_3m, _u_3a = _gd_uww_side["FG3M"].sum(), _gd_uww_side["FG3A"].sum()
-                _o_3m, _o_3a = _gd_opp_side["FG3M"].sum(), _gd_opp_side["FG3A"].sum()
-                _gd_rows.append({"Stat": "3P%", _team_a: f"{100*_u_3m/_u_3a:.1f}%" if _u_3a else "-", _team_b: f"{100*_o_3m/_o_3a:.1f}%" if _o_3a else "-"})
-            st.dataframe(pd.DataFrame(_gd_rows), hide_index=True, use_container_width=True)
+            _gd_team_rows = []
+            for _gd_label, _gd_side in ((_team_a, _gd_uww_side), (_team_b, _gd_opp_side)):
+                _row = {"Team": _gd_label}
+                for _sc in _gd_stat_cols:
+                    _val = _gd_side[_sc].sum()
+                    _row[_sc] = int(_val) if float(_val).is_integer() else round(float(_val), 1)
+                if {"FGM", "FGA"} <= set(_gd_game_box.columns):
+                    _m, _a = _gd_side["FGM"].sum(), _gd_side["FGA"].sum()
+                    _row["FG"] = f"{int(_m)}-{int(_a)}"
+                    _row["FG%"] = round(100 * _m / _a, 1) if _a else None
+                if {"FG3M", "FG3A"} <= set(_gd_game_box.columns):
+                    _m3, _a3 = _gd_side["FG3M"].sum(), _gd_side["FG3A"].sum()
+                    _row["3P"] = f"{int(_m3)}-{int(_a3)}"
+                    _row["3P%"] = round(100 * _m3 / _a3, 1) if _a3 else None
+                if {"FTM", "FTA"} <= set(_gd_game_box.columns):
+                    _mf, _af = _gd_side["FTM"].sum(), _gd_side["FTA"].sum()
+                    _row["FT"] = f"{int(_mf)}-{int(_af)}"
+                    _row["FT%"] = round(100 * _mf / _af, 1) if _af else None
+                _gd_team_rows.append(_row)
+            _gd_team_df = pd.DataFrame(_gd_team_rows)
+            _gd_order = ["Team", "PTS", "FG", "FG%", "3P", "3P%", "FT", "FT%", "REB", "AST", "STL", "BLK", "TO", "PF"]
+            _gd_team_df = _gd_team_df[[c for c in _gd_order if c in _gd_team_df.columns]]
+            st.dataframe(
+                _gd_team_df, hide_index=True, use_container_width=True,
+                column_config={_c: st.column_config.NumberColumn(_c, format="%.1f%%")
+                               for _c in ("FG%", "3P%", "FT%") if _c in _gd_team_df.columns},
+            )
 
             st.markdown("**Box Score**")
             # BLK sits between STL and TO to match the PTS/REB/AST/STL/BLK/TO order used by the Team Stats
@@ -3066,7 +3086,7 @@ def render_upcoming_game():
                 st.markdown('<div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;margin-bottom:8px;">LAST FIVE GAMES</div>', unsafe_allow_html=True)
                 st.markdown(
                     f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;padding:0 2px;">'
-                    f'<span style="font-size:0.85rem;font-weight:700;color:#4E2A84;">UWW (click for box score)</span>'
+                    f'<span style="font-size:0.85rem;font-weight:700;color:#4E2A84;">UWW</span>'
                     f'<span style="font-size:0.85rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(opp_display))}</span>'
                     f'</div>', unsafe_allow_html=True,
                 )
