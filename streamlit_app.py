@@ -5892,24 +5892,54 @@ def render_upcoming_game():
             # any category nothing matched this game.
             _cat_order = [c for c in KTV_CATEGORY_REFERENCE if c in _grouped or c in _cards_by_category]
 
-            def _ktv_feedback_row(_key_text, _category, _section, _source=None, _slot=""):
-                """Three one-click ratings under a key. Kept deliberately plain -- a coach scanning the
-                page shouldn't have to open anything to say a key was wrong.
+            # Icon-only rating buttons, styled small enough to sit on the same line as a key's title.
+            st.markdown("""
+            <style>
+            div[class*="st-key-ktv_fb_"] button {
+                padding: 0 6px !important;
+                min-height: 28px !important;
+                height: 28px !important;
+                border: 1px solid #eaeaea !important;
+                background: #fff !important;
+                line-height: 1 !important;
+            }
+            div[class*="st-key-ktv_fb_"] button:hover { border-color: #4E2A84 !important; }
+            div[class*="st-key-ktv_fb_"] button p { font-size: 0.95rem !important; margin: 0 !important; }
+            div[class*="st-key-ktv_fb_"] button:disabled { opacity: .45 !important; }
+            </style>
+            """, unsafe_allow_html=True)
 
-                The clicked rating is written straight to the CSV and remembered in session state, so the
-                row confirms itself without a rerun round-trip and a double-click can't file two rows."""
+            def _ktv_cols(_spec, _align="center"):
+                """st.columns with vertical alignment where the installed Streamlit supports it (1.36+),
+                and without it where it doesn't -- the layout is slightly less tidy on an older version
+                rather than the page failing outright."""
+                try:
+                    return st.columns(_spec, vertical_alignment=_align)
+                except TypeError:
+                    return st.columns(_spec)
+
+            _KTV_RATING_ICONS = (
+                ("\U0001f44d", "Beneficial", "Beneficial -- worth keeping"),
+                ("\U0001f44e", "Not beneficial", "Not useful -- true, but doesn't help"),
+                ("\u26a0\ufe0f", "Not accurate", "Not accurate -- the number or the read is wrong"),
+            )
+
+            def _ktv_feedback_state(_key_text, _category, _slot=""):
                 _kid = ktv_key_id(short_opponent, _category, _key_text)
                 _state_key = f"ktv_fb_{_kid}_{_slot}"
-                _already = st.session_state.get(_state_key)
-                _c1, _c2, _c3, _c4 = st.columns([1, 1, 1, 3])
-                for _col, _label, _rating in (
-                    (_c1, "\U0001f44d Beneficial", "Beneficial"),
-                    (_c2, "\U0001f44e Not useful", "Not beneficial"),
-                    (_c3, "\u26a0\ufe0f Not accurate", "Not accurate"),
-                ):
+                return _kid, _state_key, st.session_state.get(_state_key)
+
+            def _ktv_feedback_icons(_cols, _key_text, _category, _section, _source=None, _slot=""):
+                """Three icon buttons, one per verdict, rendered into columns the caller supplies -- which
+                is what lets them sit inline with the key's own title instead of on a row of their own.
+
+                The click writes to the CSV and records the verdict in session state, so the buttons grey
+                out immediately and a double-click can't file two rows."""
+                _kid, _state_key, _already = _ktv_feedback_state(_key_text, _category, _slot)
+                for _col, (_icon, _rating, _tip) in zip(_cols, _KTV_RATING_ICONS):
                     with _col:
-                        if st.button(_label, key=f"{_state_key}_{_rating}", use_container_width=True,
-                                     disabled=_already is not None):
+                        if st.button(_icon, key=f"{_state_key}_{_rating}", help=_tip,
+                                     use_container_width=True, disabled=_already is not None):
                             _ok = save_ktv_feedback({
                                 "opponent": short_opponent, "game_date": str(upcoming_game.get("date", "")),
                                 "section": _section, "category": _category, "source": _source,
@@ -5919,17 +5949,37 @@ def render_upcoming_game():
                             })
                             st.session_state[_state_key] = _rating if _ok else "__failed__"
                             st.rerun()
-                with _c4:
-                    if _already == "__failed__":
-                        st.caption("\u26a0\ufe0f Couldn't save -- the data folder isn't writable here.")
-                    elif _already:
-                        st.caption(f"Recorded: **{_already}**")
+
+            def _ktv_recorded_badge(_already) -> str:
+                """Small inline marker appended to the title once a verdict is in."""
+                if not _already:
+                    return ""
+                if _already == "__failed__":
+                    return (' <span style="color:#c62828;font-size:0.7rem;font-weight:600;">'
+                            'not saved (folder read-only)</span>')
+                _bg = {"Beneficial": "#2e7d32", "Not beneficial": "#8d6e63", "Not accurate": "#c62828"}.get(_already, "#666")
+                return (f' <span style="background:{_bg};color:#fff;font-size:0.62rem;font-weight:700;'
+                        f'padding:2px 7px;border-radius:8px;margin-left:6px;">{html.escape(_already)}</span>')
 
             def _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
                                  _category=None, _section=None):
                 # No per-item category badge -- the section header above already names the category, so
                 # repeating it on every item was redundant. Side (UWW/OPP) badges removed too, per request.
-                st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">{_n}. {_icon} {html.escape(_headline)}</span>{_source_badge_html(_source)}</div>', unsafe_allow_html=True)
+                # The rating icons share the title's row: a coach reads a key and reacts to it in place,
+                # without a separate strip of buttons doubling the height of every item on the page.
+                _fb_ready = bool(_category)
+                if _fb_ready:
+                    _title_col, _fb1, _fb2, _fb3 = _ktv_cols([12, 1, 1, 1], "center")
+                    _, _, _already = _ktv_feedback_state(_headline, _category)
+                else:
+                    _title_col, _already = st.container(), None
+                with _title_col:
+                    st.markdown(
+                        f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
+                        f'{_n}. {_icon} {html.escape(_headline)}</span>{_source_badge_html(_source)}'
+                        f'{_ktv_recorded_badge(_already)}</div>', unsafe_allow_html=True)
+                if _fb_ready:
+                    _ktv_feedback_icons((_fb1, _fb2, _fb3), _headline, _category, _section or "", _source)
                 if _caption:
                     st.caption(_caption)
                 if _reason:
@@ -5938,8 +5988,6 @@ def render_upcoming_game():
                     for _rl in str(_reason).split("\n"):
                         if _rl.strip():
                             st.markdown(f"_{_rl.strip()}_")
-                if _category:
-                    _ktv_feedback_row(_headline, _category, _section or "", _source)
                 st.markdown("")
 
             # --- Per-category stat lines: real UWW-vs-opponent numbers for whatever this category actually
@@ -6206,12 +6254,17 @@ def render_upcoming_game():
                 # SAME numbered-item formatting as the keys above (numbered header, source badge, no
                 # bordered box), instead of a separate boxed-off "card" sitting apart from the list.
                 for _ci, _renderer in enumerate(_cat_cards):
-                    _renderer(len(_cat_items) + _ci + 1)
-                    # Cards are keys too as far as a coach is concerned -- rate them by the card's own
-                    # function name, which is stable across weeks even as the numbers inside change.
-                    _ktv_feedback_row(getattr(_renderer, "__name__", "card")
-                                      .replace("_render_", "").replace("_card", "").replace("_", " ").title(),
-                                      _cat, _sec_key, "Data-Driven", _slot=f"card{_ci}")
+                    # Cards are keys too as far as a coach is concerned. Rendering the card into the wide
+                    # column puts its own title on the same line as the icons, matching the keys above --
+                    # and the card is identified by its render function's name, which stays stable across
+                    # weeks even as every number inside it changes.
+                    _card_label = (getattr(_renderer, "__name__", "card")
+                                   .replace("_render_", "").replace("_card", "").replace("_", " ").title())
+                    _card_col, _cfb1, _cfb2, _cfb3 = _ktv_cols([12, 1, 1, 1], "top")
+                    with _card_col:
+                        _renderer(len(_cat_items) + _ci + 1)
+                    _ktv_feedback_icons((_cfb1, _cfb2, _cfb3), _card_label, _cat, _sec_key, "Data-Driven",
+                                        _slot=f"card{_ci}")
 
             # Stacked top-to-bottom (Offense, then Defense, then Personnel/Rotation & Intangibles)
             # rather than three side-by-side columns -- full width per section keeps each key readable,
