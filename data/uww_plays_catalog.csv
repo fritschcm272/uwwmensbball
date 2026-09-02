@@ -1,0 +1,28 @@
+season,team,series,play_name,base_name,play_family,aliases,match_keys
+2025-26,25-26 UWW,ELOB,"""20""",,ELOB,20,20
+2025-26,25-26 UWW,Snap,20 Snap (flip),20 Snap (flip),Snap,,20SNAPFLIP
+2025-26,25-26 UWW,Snap,30 (flip),30 (flip),Snap,,30FLIP
+2025-26,25-26 UWW,Snap,40 Snap,40 Snap,Snap,,40SNAP
+2025-26,25-26 UWW,Over,Cheetah,Cheetah,Cheetah,,CHEETAH
+2025-26,25-26 UWW,Bursts,Cobra,Cobra,Cobra,,COBRA
+2025-26,25-26 UWW,Bursts,Fox,Fox,Fox,,FOX
+2025-26,25-26 UWW,Transition,Get,Get,Get,,GET
+2025-26,25-26 UWW,Specials,Kentucky,Kentucky,Kentucky,,KENTUCKY
+2025-26,25-26 UWW,Specials,"Panther 2 ""P2""",Panther 2,Panther,P2,P2|PANTHER2|PANTHER2P2
+2025-26,25-26 UWW,Specials,"Panther-4 ""P4""",Panther-4,Panther,P4,P4|PANTHER4|PANTHER4P4
+2025-26,25-26 UWW,Specials,"Panther ""P""",Panther,Panther,P,P|PANTHER|PANTHERP
+2025-26,25-26 UWW,Over,Pin Flair,Pin Flair,Pin,,PINFLAIR
+2025-26,25-26 UWW,Entries,Pistol,Pistol,Pistol,,PISTOL
+2025-26,25-26 UWW,Transition,Pitch,Pitch,Pitch,,PITCH
+2025-26,25-26 UWW,Bursts,Rhino,Rhino,Rhino,,RHINO
+2025-26,25-26 UWW,SLOB,Snap,Snap,Snap,,SNAP
+2025-26,25-26 UWW,Over,Swirl (No Fist),Swirl (No Fist),Swirl,,SWIRLNOFIST
+2025-26,25-26 UWW,Twins,Top Smash,Top Smash,Top,,TOPSMASH
+2025-26,25-26 UWW,SLOB,Twins,Twins,Twins,,TWINS
+2025-26,25-26 UWW,Twins,Twins Pitch,Twins Pitch,Twins,,TWINSPITCH
+2025-26,25-26 UWW,Twins,Twins Pitch Keep,Twins Pitch Keep,Twins,,TWINSPITCHKEEP
+2025-26,25-26 UWW,Twins,Twins Pitch Pistol,Twins Pitch Pistol,Twins,,TWINSPITCHPISTOL
+2025-26,25-26 UWW,Twins,Twins Pitch Wrap,Twins Pitch Wrap,Twins,,TWINSPITCHWRAP
+2025-26,25-26 UWW,Twins,Twins Up,Twins Up,Twins,,TWINSUP
+2025-26,25-26 UWW,Specials,Wildcat,Wildcat,Wildcat,,WILDCAT
+2025-26,25-26 UWW,Bursts,Zebra,Zebra,Zebra,,ZEBRA

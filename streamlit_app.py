@@ -1643,7 +1643,70 @@ def resolve_play_calls(df: pd.DataFrame, coach_note_col: str = "coach_note") -> 
     if "play_call" not in df.columns:
         return _regex_fallback
     _has_real_call = df["play_call"].notna() & (df["play_call"].astype(str).str.strip() != "")
-    return df["play_call"].where(_has_real_call, _regex_fallback)
+    # Canonicalize against the playbook catalog last, so both sources agree on one name per play: the
+    # play log writes "Panther-4 \"P4\"", a coach note might say "P-4" or "P4", and without this they
+    # counted as three separate plays in every breakdown on the page.
+    return df["play_call"].where(_has_real_call, _regex_fallback).apply(canonical_play_call)
+
+
+def _play_norm(text) -> str:
+    """Normalization key for matching a play call against the playbook catalog: uppercase, letters and
+    digits only. This is what lets "P-4", "P4", "P 4" and "p4" all land on the same catalog entry -- the
+    coaches write the shorthand a different way in nearly every clip, and the catalog's own name for it
+    ("Panther-4 \"P4\"") is a third spelling again."""
+    return re.sub(r"[^A-Z0-9]", "", str(text).upper())
+
+
+def play_catalog_lookup() -> dict:
+    """{normalized key -> (play_name, series, play_family)} built from the team's own playbook index
+    (the Hudl "Plays" page, parsed by the parser into uww_plays_catalog.csv). Every spelling the catalog
+    knows about resolves to one entry: the full play name, the shorthand in quotes, and the name with the
+    shorthand stripped. Empty dict when the catalog hasn't been parsed yet, in which case every play call
+    just stays exactly as the coach typed it."""
+    cat = load_table("uww_plays_catalog")
+    if cat.empty or "play_name" not in cat.columns:
+        return {}
+    out = {}
+    for _, r in cat.iterrows():
+        _keys = [k for k in str(r.get("match_keys", "")).split("|") if k] or [_play_norm(r["play_name"])]
+        for k in _keys:
+            out.setdefault(k, (str(r["play_name"]), str(r.get("series", "")), str(r.get("play_family", ""))))
+    return out
+
+
+def canonical_play_call(name):
+    """The catalog's own name for a play call, or the raw text unchanged when the catalog doesn't know it
+    (a call that isn't in the playbook index yet, or no catalog at all). Never drops a call."""
+    if name is None or (isinstance(name, float) and name != name):
+        return name
+    hit = play_catalog_lookup().get(_play_norm(name))
+    return hit[0] if hit else name
+
+
+def play_family_lookup() -> dict:
+    """{normalized family stem -> (series, family)} -- e.g. "TWINS" -> ("Twins", "Twins"). Lets a call the
+    catalog has never seen as a whole ("TWINS SWIRL", a combination tagged in a clip but not filed as its
+    own play) still group under the right series by its leading word."""
+    out = {}
+    for _pn, _series, _family in play_catalog_lookup().values():
+        if _family:
+            out.setdefault(_play_norm(_family), (_series, _family))
+    return out
+
+
+def play_call_series(name) -> tuple:
+    """(series, family) for a play call -- e.g. Panther-4 -> ("Specials", "Panther"). Series is the
+    catalog's own grouping; family is the play-name stem, which is what actually puts P, P2 and P4
+    together as one Panther group even though the catalog files all three under Specials. A call the
+    catalog doesn't list falls back to matching its FIRST word against known families, so an ad-hoc
+    variant still lands with its series instead of alone."""
+    hit = play_catalog_lookup().get(_play_norm(name))
+    if hit:
+        return (hit[1], hit[2])
+    _first = re.match(r"[A-Za-z]+", str(name or "").strip())
+    if _first:
+        return play_family_lookup().get(_play_norm(_first.group(0)), ("", ""))
+    return ("", "")
 
 
 def note_sentiment_counts(note) -> tuple:
@@ -6601,6 +6664,13 @@ def render_analytics():
                 _pc_att = pd.to_numeric(call_summary["Attempts"], errors="coerce").replace(0, float("nan"))
                 call_summary["FG%"] = (100 * _pc_makes / _pc_att).round(1)
                 call_summary = call_summary.drop(columns=["Makes"]).sort_values("Calls", ascending=False).reset_index(drop=True)
+                # Playbook context, when the catalog has been parsed: the catalog's own SERIES plus the
+                # play-name family that actually groups the shorthand together (Panther "P" / Panther 2
+                # "P2" / Panther-4 "P4" are all filed under Specials, but a coach reads them as Panther).
+                _pc_ser = call_summary["play_call"].apply(play_call_series)
+                call_summary["Series"] = [x[0] for x in _pc_ser]
+                call_summary["Family"] = [x[1] for x in _pc_ser]
+                _pc_has_catalog = bool(call_summary["Series"].astype(str).str.strip().any())
 
                 # --- Possession-level detail behind each play call -------------------------------------
                 # The summary answers "how often, how well"; the obvious next question a coach asks is
@@ -6631,9 +6701,15 @@ def render_analytics():
                     if not _sum_row.empty:
                         _sr = _sum_row.iloc[0]
                         _fg_txt = "--" if pd.isna(_sr["FG%"]) else f"{_sr['FG%']:.1f}%"
+                        _pc_sr_series, _pc_sr_family = play_call_series(_call)
+                        _pc_ctx = " &middot; ".join(x for x in [
+                            f"{html.escape(_pc_sr_family)} series" if _pc_sr_family else "",
+                            html.escape(_pc_sr_series) if _pc_sr_series else "",
+                        ] if x)
                         st.markdown(
                             f'<div style="font-family:Montserrat,sans-serif;font-weight:800;font-size:1.5rem;color:#4E2A84;">{html.escape(str(_call))}</div>'
-                            f'<div style="color:#666;margin-bottom:10px;">{int(_sr["Calls"])} tagged clip(s) &middot; '
+                            + (f'<div style="color:#4E2A84;font-size:0.85rem;font-weight:600;">{_pc_ctx}</div>' if _pc_ctx else "")
+                            + f'<div style="color:#666;margin-bottom:10px;">{int(_sr["Calls"])} tagged clip(s) &middot; '
                             f'{int(_sr["Attempts"])} shot attempt(s) &middot; {_fg_txt} FG</div>',
                             unsafe_allow_html=True,
                         )
@@ -6675,7 +6751,10 @@ def render_analytics():
                         )
                         st.caption("These clips didn't match a play-by-play row, so no running score is available for them.")
 
-                _pc_display = call_summary.rename(columns={"play_call": "Play Call"})
+                _pc_display = call_summary[
+                    [c for c in ["play_call", "Series", "Family", "Calls", "Attempts", "FG%"] if c in call_summary.columns]
+                    if _pc_has_catalog else ["play_call", "Calls", "Attempts", "FG%"]
+                ].rename(columns={"play_call": "Play Call"})
                 _pc_picked = None
                 try:
                     _pc_event = st.dataframe(
@@ -6695,6 +6774,23 @@ def render_analytics():
                     _pc_picked = None if _pc_choice == "--" else _pc_choice
                 if _pc_picked:
                     _show_play_call_detail(_pc_picked)
+
+                if _pc_has_catalog:
+                    # Series-level rollup: individual calls are thin slices (a handful of clips each), so
+                    # the family totals are what actually say whether the Panther package is working.
+                    _pc_fam = call_summary[call_summary["Family"].astype(str).str.strip() != ""].groupby("Family").agg(
+                        Calls=("Calls", "sum"), Attempts=("Attempts", "sum"),
+                    ).reset_index()
+                    _pc_fam_makes = call_rows.copy()
+                    _pc_fam_makes["_fam"] = _pc_fam_makes["play_call"].apply(lambda c: play_call_series(c)[1])
+                    _pc_fam_makes = _pc_fam_makes[_pc_fam_makes["_fam"].astype(str).str.strip() != ""].groupby("_fam")["_is_make"].sum()
+                    _pc_fam["FG%"] = (100 * _pc_fam["Family"].map(_pc_fam_makes).astype(float)
+                                      / pd.to_numeric(_pc_fam["Attempts"], errors="coerce").replace(0, float("nan"))).round(1)
+                    if len(_pc_fam) > 1:
+                        with st.expander(f"By play series ({len(_pc_fam)} families)", expanded=False):
+                            st.dataframe(
+                                _pc_fam.sort_values("Calls", ascending=False), hide_index=True, use_container_width=True,
+                            )
 
                 st.caption("Click a row to see every tagged possession for that play call -- game, clock, score, result and the coach's note. Play call comes from the season play-call log when that game is covered by it, and otherwise from a best-effort read of the coach's own note text (a name immediately before the word \"EXECUTION\").")
             else:
