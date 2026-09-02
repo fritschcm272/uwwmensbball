@@ -4398,6 +4398,34 @@ def render_upcoming_game():
                                 _card_data["pace_style_history"] = {"games": _ps_df, "median": _ps_median}
                     except Exception:
                         pass
+
+                    # The mirror image: how the OPPONENT'S opponents fared at each tempo, from the upcoming
+                    # opponent's own prior games. UWW's split says what we're good at; this says what has
+                    # actually worked AGAINST them -- and the two can point opposite ways, which is exactly
+                    # the thing worth knowing before committing to a tempo.
+                    try:
+                        _po_box = load_table("uww_opponent_prior_games_box_score")
+                        if not _po_box.empty and {"team", "game_date"} <= set(_po_box.columns):
+                            _po_rows = []
+                            for _po_k, _po_g in _po_box.groupby([c for c in ["opponent", "game_date"] if c in _po_box.columns], dropna=False):
+                                _po_them = _po_g[_po_g["team"] == short_opponent]
+                                _po_foe = _po_g[_po_g["team"] != short_opponent]
+                                if _po_them.empty or _po_foe.empty:
+                                    continue
+                                # Rated from the OPPONENT-OF-THEIRS side, so Net Rtg reads "how the other
+                                # team did against them" without needing to be mentally flipped.
+                                _po_d = compute_efficiency_pace(_po_foe, _po_them, 1)
+                                _po_rows.append({
+                                    "pace": _po_d["Pace"], "net": _po_d["Net Rtg"], "ortg": _po_d["ORtg"],
+                                    "won": (_po_foe["PTS"].sum() > _po_them["PTS"].sum()) if "PTS" in _po_foe.columns else None,
+                                })
+                            _po_df = pd.DataFrame(_po_rows)
+                            if len(_po_df) >= 4:
+                                _po_median = _po_df["pace"].median()
+                                _po_df["_bucket"] = _po_df["pace"].apply(lambda v: "fast" if v > _po_median else "slow")
+                                _card_data["pace_style_opp_history"] = {"games": _po_df, "median": _po_median}
+                    except Exception:
+                        pass
         except Exception:
             pass
 
@@ -4607,12 +4635,43 @@ def render_upcoming_game():
                         st.markdown(f"- {_txt}" + (" \u2190 *the recommended approach*" if _d is _fp_sel else ""))
                 if not _fp_sel.empty and not _fp_oth.empty:
                     _fp_gap = _fp_sel["net"].mean() - _fp_oth["net"].mean()
+                    _fp_gap_txt = _fp_gap
                     st.caption(
                         (f"UWW has been {abs(_fp_gap):.1f} points/100 better at this tempo -- the matchup read and "
                          "our own record agree." if _fp_gap > 0 else
                          f"Note: UWW has actually been {abs(_fp_gap):.1f} points/100 WORSE at this tempo. The "
                          "matchup argues for it, our own results don't -- worth weighing both.")
                         + " Pace is an estimate from the box score (FGA - OREB + TO + 0.44*FTA), split at UWW's own median."
+                    )
+
+            _fp_ohist = _card_data.get("pace_style_opp_history")
+            if _fp_ohist is not None:
+                _fo_g = _fp_ohist["games"]
+                _fo_sel = _fo_g[_fo_g["_bucket"] == ("fast" if _fp_style == "Push Tempo" else "slow")]
+                _fo_oth = _fo_g[_fo_g["_bucket"] != ("fast" if _fp_style == "Push Tempo" else "slow")]
+
+                def _fo_line(_lbl, _d):
+                    if _d.empty:
+                        return None
+                    _w = int(_d["won"].fillna(False).sum())
+                    return (f"**{_lbl}** ({len(_d)} games, {_d['pace'].mean():.1f} poss/gm): "
+                            f"opponents went **{_w}-{len(_d) - _w}**, Net Rtg **{_d['net'].mean():+.1f}**")
+
+                st.markdown(f"**How {short_opponent}'s opponents have fared at each tempo** "
+                            f"(their median: {_fp_ohist['median']:.1f} poss/gm):")
+                for _lbl, _d in ((("Faster games" if _fp_style == "Push Tempo" else "Slower games"), _fo_sel),
+                                 (("Slower games" if _fp_style == "Push Tempo" else "Faster games"), _fo_oth)):
+                    _txt = _fo_line(_lbl, _d)
+                    if _txt:
+                        st.markdown(f"- {_txt}" + (" \u2190 *the recommended approach*" if _d is _fo_sel else ""))
+                if not _fo_sel.empty and not _fo_oth.empty:
+                    _fo_gap = _fo_sel["net"].mean() - _fo_oth["net"].mean()
+                    st.caption(
+                        f"Teams have been {abs(_fo_gap):.1f} points/100 "
+                        + ("better" if _fo_gap > 0 else "worse")
+                        + f" against {short_opponent} at this tempo. Rated from the other team's side, so a "
+                          "positive Net Rtg means they beat "
+                        + f"{short_opponent} on the scoreboard."
                     )
             st.markdown("")
 
