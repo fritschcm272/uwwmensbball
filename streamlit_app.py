@@ -1095,7 +1095,7 @@ KTV_CATEGORY_REFERENCE = {
     "Four Factors": {"keywords": "four factors, efg, efg%, true shooting, ts%, turnover rate, offensive rebound rate, ft rate, possession game", "stats": "eFG%, TOV%, ORB%, FT Rate"},
     "Play Calls": {"keywords": "play call, play calls, called set, called sets, our sets, run this set, lean on, go-to play, go to play, go-to set, playbook set, best plays, top play", "stats": "Play FG%"},
     "Transition / Pace": {"keywords": "transition, transition defense, transition offense, get back, getting back, sprint back, run the floor, push the pace, push tempo, push hard, pushing the pace, fast break, fastbreak, early offense, secondary break, pace, tempo, run in transition", "stats": "Fast break pts, Pace"},
-    "Effort / Communication": {"keywords": "effort, relentless, winning plays, connected, being connected, communication, communicate, talk, talking, toughness, tough, compete, competing, finish possessions, finish defensive possessions, late clock, both ends, multiple efforts, multiple effort, never stop, energy, all five, together", "stats": "--"},
+    "Coaching Notes": {"keywords": "effort, relentless, winning plays, connected, being connected, communication, communicate, talk, talking, toughness, tough, compete, competing, finish possessions, finish defensive possessions, late clock, both ends, multiple efforts, multiple effort, never stop, energy, all five, together", "stats": "--"},
 }
 
 # Side detection: maps scouting phrases to whether they describe UWW (proactive) or OPP (contain opponent)
@@ -3378,8 +3378,22 @@ def render_upcoming_game():
 
     # ==================== TOP 5-MAN LINEUPS SECTION ====================
     def _last_names(lineup_str):
-        """Convert 'First Last, First Last, ...' to 'Last, Last, ...' for compact display."""
-        return ", ".join(surname(n) for n in str(lineup_str).split(",") if n.strip())
+        """Convert 'First Last, First Last, ...' to 'Last, Last, ...' for compact display.
+
+        The scoring-runs table can hold TWO lineups in one field joined by " / " (the parser records every
+        unit seen across a run's event window, so a substitution mid-run produces two). Split on that first
+        and de-duplicate, otherwise the naive comma split rendered nine names with four repeated -- e.g.
+        "Marino, Madson, Verges, Quast, Marino, Madson, Verges, Quast, Bara".
+        """
+        _units = [u for u in str(lineup_str).split(" / ") if u.strip()]
+        _names, _seen = [], set()
+        for _u in _units:
+            for _n in _u.split(","):
+                _sn = surname(_n)
+                if _sn and _sn not in _seen:
+                    _seen.add(_sn)
+                    _names.append(_sn)
+        return ", ".join(_names)
 
     def _get_core_players(all_top_players_list):
         """Return list of (player, count) for players in 2+ of the 3 metric top-3 lists."""
@@ -4874,7 +4888,7 @@ def render_upcoming_game():
             "Play Calls": ("#ede7f6", "#5e35b1"),
             "Four Factors": ("#e0f2f1", "#00695c"),
             "Transition / Pace": ("#fce4ec", "#ad1457"),
-            "Effort / Communication": ("#f1f8e9", "#558b2f"),
+            "Coaching Notes": ("#f1f8e9", "#558b2f"),
         }
         _valid_cats = set(load_table("uww_ktv_splits")["category"].unique()) | set(KTV_CATEGORY_REFERENCE.keys())
 
@@ -5297,7 +5311,9 @@ def render_upcoming_game():
                 for _c in ("uww_biggest_run", "opponent_biggest_run", "uww_largest_lead", "opponent_largest_lead"):
                     if _c in _sr_r.columns:
                         _sr_r[_c] = pd.to_numeric(_sr_r[_c], errors="coerce")
-                _card_data["scoring_runs"] = _sr_r
+                # Same table, two cards -- one per side of the ball.
+                _card_data["scoring_runs_off"] = _sr_r
+                _card_data["scoring_runs_def"] = _sr_r
         except Exception:
             pass
 
@@ -5493,30 +5509,57 @@ def render_upcoming_game():
                        "their prior games, so neither is adjusted for who they played.")
             st.markdown("")
 
-        def _render_scoring_runs_card(_n):
-            _sr = _card_data["scoring_runs"]
+        # Runs cut both ways, and the two halves belong to different sections: the runs WE go on are an
+        # offensive story, the runs we give up are a defensive one. One combined card put both under
+        # Defense, where "our biggest run averages 9.4" had no business being.
+        def _render_scoring_runs_off_card(_n):
+            _sr = _card_data["scoring_runs_off"]
             st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
-                        f'{_n}. \U0001f30a Scoring Runs</span>'
+                        f'{_n}. \U0001f30a Runs We Go On</span>'
                         f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
             _ours = _sr["uww_biggest_run"].dropna()
+            if not _ours.empty:
+                _big = _sr[_sr["uww_biggest_run"] >= 10]
+                st.markdown(f"Across {len(_sr)} games our biggest run averages **{_ours.mean():.1f}** points "
+                            f"(best **{int(_ours.max())}**). We reached a 10-0 run or better in "
+                            f"**{len(_big)}** of them.")
+                if "uww_run_uww_lineup" in _sr.columns:
+                    _gl = _sr["uww_run_uww_lineup"].dropna()
+                    if not _gl.empty:
+                        st.markdown(f"On the floor for the most of our runs: **{_last_names(_gl.value_counts().idxmax())}**.")
+                if "uww_largest_lead" in _sr.columns:
+                    _lead = _sr["uww_largest_lead"].dropna()
+                    if not _lead.empty:
+                        st.markdown(f"Largest lead built: **{int(_lead.max())}** points "
+                                    f"(averaging {_lead.mean():.1f} per game).")
+            st.caption("A run is consecutive scoring by one team with no answer. Lineups are whoever was on "
+                       "the floor across the run's own event window.")
+            st.markdown("")
+
+        def _render_scoring_runs_def_card(_n):
+            _sr = _card_data["scoring_runs_def"]
+            st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
+                        f'{_n}. \U0001f6a8 Runs Against Us</span>'
+                        f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
             _theirs = _sr["opponent_biggest_run"].dropna()
-            if not _ours.empty and not _theirs.empty:
-                st.markdown(f"Across {len(_sr)} games: our biggest run averages **{_ours.mean():.1f}** points "
-                            f"(best {int(_ours.max())}); the run against us averages **{_theirs.mean():.1f}** "
-                            f"(worst {int(_theirs.max())}).")
+            if not _theirs.empty:
+                _bad = _sr[_sr["opponent_biggest_run"] >= 10]
+                st.markdown(f"Across {len(_sr)} games the biggest run against us averages **{_theirs.mean():.1f}** "
+                            f"points (worst **{int(_theirs.max())}**). We gave up a 10-0 run or better in "
+                            f"**{len(_bad)}** of them.")
                 _bled = _sr[_sr["opponent_biggest_run"] >= _sr["opponent_biggest_run"].quantile(0.75)]
                 if "opp_run_uww_lineup" in _bled.columns:
                     _bl = _bled["opp_run_uww_lineup"].dropna()
                     if not _bl.empty:
-                        _worst_unit = _bl.value_counts().idxmax()
                         st.markdown(f"On the floor for the most of their biggest runs: "
-                                    f"**{_last_names(_worst_unit)}**.")
-                if "uww_run_uww_lineup" in _sr.columns:
-                    _gl = _sr["uww_run_uww_lineup"].dropna()
-                    if not _gl.empty:
-                        st.markdown(f"On the floor for the most of ours: **{_last_names(_gl.value_counts().idxmax())}**.")
-            st.caption("A run is consecutive scoring by one team with no answer. Lineups are whoever was on "
-                       "the floor across the run's own event window.")
+                                    f"**{_last_names(_bl.value_counts().idxmax())}**.")
+                if "opponent_largest_lead" in _sr.columns:
+                    _dfc = _sr["opponent_largest_lead"].dropna()
+                    if not _dfc.empty:
+                        st.markdown(f"Largest deficit faced: **{int(_dfc.max())}** points "
+                                    f"(averaging {_dfc.mean():.1f} per game).")
+            st.caption("Their-run lineups are drawn from the games in the worst quartile, so this names the "
+                       "unit on the floor when the damage was heaviest -- not merely the most-used one.")
             st.markdown("")
 
         def _render_lineup_stints_card(_n):
@@ -5722,9 +5765,10 @@ def render_upcoming_game():
             "plays_similar": ("Play Calls", _render_similar_plays_card),
             "adj_efficiency": ("Offensive Efficiency", _render_adj_efficiency_card),
             "four_factors": ("Four Factors", _render_four_factors_card),
-            "scoring_runs": ("Defensive Efficiency", _render_scoring_runs_card),
+            "scoring_runs_off": ("Offensive Efficiency", _render_scoring_runs_off_card),
+            "scoring_runs_def": ("Defensive Efficiency", _render_scoring_runs_def_card),
             "lineup_stints": ("Personnel/Rotation", _render_lineup_stints_card),
-            "note_sentiment": ("Effort / Communication", _render_note_sentiment_card),
+            "note_sentiment": ("Coaching Notes", _render_note_sentiment_card),
             "coaching_flags": ("Personnel/Rotation", _render_coaching_flags_card),
             "scoring_reliance": ("Defensive Efficiency", _render_scoring_reliance_card),
             "pace_style": ("Offensive Efficiency", _render_pace_style_card),
