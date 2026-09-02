@@ -5941,7 +5941,7 @@ def render_upcoming_game():
                         if st.button(_icon, key=f"{_state_key}_{_rating}", help=_tip,
                                      use_container_width=True, disabled=_already is not None):
                             _ok = save_ktv_feedback({
-                                "opponent": short_opponent, "game_date": str(upcoming_game.get("date", "")),
+                                "opponent": short_opponent, "game_date": game_date,
                                 "section": _section, "category": _category, "source": _source,
                                 "key_id": _kid, "key_text": _key_text, "rating": _rating,
                                 "coach": st.session_state.get("ktv_feedback_coach", ""),
