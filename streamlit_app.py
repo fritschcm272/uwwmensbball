@@ -2941,6 +2941,35 @@ def render_upcoming_game():
         leaders_html = _build_season_leaders_html(uww_leaders, opp_leaders, opp_display)
         stats_html = _build_team_stats_html(uww_team_stats, opp_team_stats, opp_display) if uww_team_stats and opp_team_stats else ""
 
+        def _l5_button_label(_g, _short_names=None):
+            """Same information, same shape as the read-only result cards above: date on top and
+            dimmed, opponent below it, result and score last in win/loss colour.
+
+            The opponent is shown by its SCOUTING short name where one exists ("UW-La Crosse"
+            rather than "UW-La Crosse Eagles") -- these cards are half a narrow column wide, and
+            the mascot is the part a coach doesn't need. Only if no short name matches does the
+            full name get used, and then it wraps rather than being cut off."""
+            _res = str(_g.get("outcome", ""))
+            _score = (f"{int(_g['team_score'])}-{int(_g['opp_score'])}"
+                      if _g.get("team_score") is not None and _g.get("opp_score") is not None else "")
+            _loc = "@" if "away" in str(_g.get("location", "")).lower() else "vs"
+            _name = str(_g.get("opp_name", "") or "")
+            # The "short names" in the box-score tables still carry the mascot ("UW-La Crosse
+            # Eagles"), so strip it after resolving -- the school alone is what identifies the game.
+            _short = resolve_short_opponent(_name, _short_names) if _short_names else None
+            _name = strip_team_mascot(_short or _name)
+            _date = str(_g.get("date", "") or "").strip()
+            _res_md = f":green[**{_res}**]" if _res == "W" else f":red[**{_res}**]"
+            # Date first, dimmed, then the result -- reading order matches how a coach scans a
+            # schedule (when, then what happened), and the score keeps its own line at the bottom
+            # where the eye lands last.
+            _lines = []
+            if _date:
+                _lines.append(f":gray[{_date}]")
+            _lines.append(f"{_loc} {_name}")
+            _lines.append(f"{_res_md} **{_score}**")
+            return "  \n".join(_lines)
+
         @st.dialog("Game Detail", width="large")
         def _show_last5_game_dialog(_game_key, _game_label, _source_table="uww_pbp_box_score", _team_a_hint="UW-Whitewater", _game_date=None):
             """Full box score + a simple team-stats comparison for one specific past game -- triggered by
@@ -3091,25 +3120,64 @@ def render_upcoming_game():
                     f'<span style="color:{result_color};font-weight:700;">{r["outcome"]}</span> {score_str}</div>'
                     f'<div style="font-size:0.8rem;color:#888;">{loc_prefix}{html.escape(opp_short)}</div>'
                 )
-            max_games = max(len(uww_all_games), len(opp_all_games), 1)
-            rows_html = ""
-            for i in range(max_games):
-                uww_game = uww_all_games[i] if i < len(uww_all_games) else None
-                opp_game = opp_all_games[i] if i < len(opp_all_games) else None
-                rows_html += (
-                    f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 12px;margin-bottom:8px;">'
-                    f'<div style="display:flex;align-items:center;justify-content:space-between;">'
-                    f'<div style="text-align:left;flex:1;">{_game_cell_dlg(uww_game)}</div>'
-                    f'<div style="text-align:right;flex:1;">{_game_cell_dlg(opp_game)}</div>'
-                    f'</div></div>'
-                )
             header_html = (
                 f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:0 4px;">'
                 f'<span style="font-size:1.05rem;font-weight:700;color:#4E2A84;">UWW ({len(uww_all_games)} games)</span>'
                 f'<span style="font-size:1.05rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(opp_display))} ({len(opp_all_games)} games)</span>'
                 f'</div>'
             )
-            st.markdown(f'{header_html}{rows_html}', unsafe_allow_html=True)
+            st.markdown(header_html, unsafe_allow_html=True)
+            st.caption("Click any game for its box score.")
+
+            # Every game here is clickable, same as the five on the page behind this dialog. Streamlit
+            # allows only ONE dialog open at a time, so a click can't call the Game Detail dialog directly
+            # from in here -- it records what was clicked in session state and reruns, which closes this
+            # dialog; the pending request is picked up on that rerun (see the block after this function)
+            # and opens Game Detail then.
+            _ag_max = max(len(uww_all_games), len(opp_all_games), 1)
+            for _ag_i in range(_ag_max):
+                _ag_u = uww_all_games[_ag_i] if _ag_i < len(uww_all_games) else None
+                _ag_o = opp_all_games[_ag_i] if _ag_i < len(opp_all_games) else None
+                _ag_c1, _ag_c2 = st.columns(2)
+                with _ag_c1:
+                    if _ag_u is not None:
+                        if st.button(_l5_button_label(_ag_u, _l5_short_names), key=f"l5_all_uww_{_ag_i}",
+                                     use_container_width=True):
+                            st.session_state["_pending_game_detail"] = {
+                                "game_key": resolve_short_opponent(_ag_u["opp_name"], _l5_short_names),
+                                "label": f"UWW vs {_ag_u['opp_name']} \u2014 {_ag_u.get('date', '')}",
+                                "game_date": resolve_game_date(_ag_u.get("date")),
+                            }
+                            st.rerun()
+                    else:
+                        st.caption("\u2014")
+                with _ag_c2:
+                    if _ag_o is not None:
+                        if st.button(_l5_button_label(_ag_o, _l5_opp_short_names), key=f"l5_all_opp_{_ag_i}",
+                                     use_container_width=True):
+                            st.session_state["_pending_game_detail"] = {
+                                "game_key": resolve_short_opponent(_ag_o["opp_name"], _l5_opp_short_names),
+                                "label": f"{short_opponent} vs {_ag_o['opp_name']} \u2014 {_ag_o.get('date', '')}",
+                                "source_table": "uww_opponent_prior_games_box_score",
+                                "team_a_hint": short_opponent,
+                            }
+                            st.rerun()
+                    else:
+                        st.caption("\u2014")
+
+        # A game clicked inside the All Games dialog can't open Game Detail from in there (Streamlit allows
+        # one dialog at a time), so it parks the request in session state and reruns. This is that rerun:
+        # pop the request and open Game Detail for it. Popped BEFORE the call so a rerun triggered from
+        # inside Game Detail itself doesn't reopen it in a loop.
+        _pending_detail = st.session_state.pop("_pending_game_detail", None)
+        if _pending_detail:
+            _show_last5_game_dialog(
+                _pending_detail.get("game_key"),
+                _pending_detail.get("label", "Game Detail"),
+                _source_table=_pending_detail.get("source_table", "uww_pbp_box_score"),
+                _team_a_hint=_pending_detail.get("team_a_hint", "UW-Whitewater"),
+                _game_date=_pending_detail.get("game_date"),
+            )
 
         # Three columns: Season Leaders | Team Stats + All Stats button | Last Five Games
         _col_leaders, _col_stats, _col_l5 = st.columns(3)
@@ -3187,34 +3255,6 @@ def render_upcoming_game():
                 </style>
                 """, unsafe_allow_html=True)
 
-                def _l5_button_label(_g, _short_names=None):
-                    """Same information, same shape as the read-only result cards above: date on top and
-                    dimmed, opponent below it, result and score last in win/loss colour.
-
-                    The opponent is shown by its SCOUTING short name where one exists ("UW-La Crosse"
-                    rather than "UW-La Crosse Eagles") -- these cards are half a narrow column wide, and
-                    the mascot is the part a coach doesn't need. Only if no short name matches does the
-                    full name get used, and then it wraps rather than being cut off."""
-                    _res = str(_g.get("outcome", ""))
-                    _score = (f"{int(_g['team_score'])}-{int(_g['opp_score'])}"
-                              if _g.get("team_score") is not None and _g.get("opp_score") is not None else "")
-                    _loc = "@" if "away" in str(_g.get("location", "")).lower() else "vs"
-                    _name = str(_g.get("opp_name", "") or "")
-                    # The "short names" in the box-score tables still carry the mascot ("UW-La Crosse
-                    # Eagles"), so strip it after resolving -- the school alone is what identifies the game.
-                    _short = resolve_short_opponent(_name, _short_names) if _short_names else None
-                    _name = strip_team_mascot(_short or _name)
-                    _date = str(_g.get("date", "") or "").strip()
-                    _res_md = f":green[**{_res}**]" if _res == "W" else f":red[**{_res}**]"
-                    # Date first, dimmed, then the result -- reading order matches how a coach scans a
-                    # schedule (when, then what happened), and the score keeps its own line at the bottom
-                    # where the eye lands last.
-                    _lines = []
-                    if _date:
-                        _lines.append(f":gray[{_date}]")
-                    _lines.append(f"{_loc} {_name}")
-                    _lines.append(f"{_res_md} **{_score}**")
-                    return "  \n".join(_lines)
 
                 _l5_max = max(len(uww_last5), len(opp_last5), 1)
                 if _l5_max == 0 or (not uww_last5 and not opp_last5):
