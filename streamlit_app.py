@@ -2636,7 +2636,6 @@ def render_upcoming_game():
     _new_tab_stats, _new_tab_ktv, _new_tab_personnel, _new_tab_tools = st.tabs(["\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f3ae Tools"])
     with _new_tab_stats:
         _new_stats_leaders_c = st.container()
-        _new_stats_top5_c = st.container()
     with _new_tab_ktv:
         _new_ktv_container = st.container()
         _new_rec_container = st.container()
@@ -3822,30 +3821,14 @@ def render_upcoming_game():
 
     _combined_lineups_html = _build_combined_lineups_card(_uww_lu_agg, _opp_lu, _uww_3man_agg, _opp_3man_agg, opp_display)
 
-    with _new_stats_top5_c:
-        # Spacing between sections above and lineup row below
-        st.markdown('<div style="margin-top:2.5rem;"></div>', unsafe_allow_html=True)
-
-        # Render: Lineup toggle (5-Man or 3-Man), full width now that the Lineup Scouting panel is gone.
-        if "lineup_view" not in st.session_state:
-            st.session_state.lineup_view = "5-Man Lineups"
-        _current_title = "TOP 5-MAN LINEUPS" if st.session_state.lineup_view == "5-Man Lineups" else "TOP 3-MAN COMBINATIONS"
-        _other_view = "3-Man Combinations" if st.session_state.lineup_view == "5-Man Lineups" else "5-Man Lineups"
-        _active_lineup_html = _lineups_html if st.session_state.lineup_view == "5-Man Lineups" else _3man_html
-        # Strip outer card wrapper (border/padding) and title — we'll use st.container for the border
-        import re as _re
-        _active_lineup_html = _re.sub(r'<div style="font-weight:800;font-size:1\.05rem;letter-spacing:0\.5px;margin-bottom:8px;">TOP [53]-MAN [A-Z]+</div>', '', _active_lineup_html, count=1)
-        _active_lineup_html = _re.sub(r'^<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;width:100%;margin:1\.5rem 0 0\.75rem;">', '<div style="zoom:1.1;">', _active_lineup_html, count=1)
-        with st.container(border=True):
-            # Center the toggle button via CSS
-            st.markdown('<style>[data-testid="stButton"] button[kind="secondary"] { display: block; margin: 0 auto; }</style>', unsafe_allow_html=True)
-            _left_pad, _btn_col, _right_pad = st.columns([1, 2, 1])
-            with _btn_col:
-                if st.button(f"{_current_title}  ⇄", key="lineup_toggle_btn", use_container_width=True):
-                    st.session_state.lineup_view = _other_view
-                    st.rerun()
-            st.markdown(_active_lineup_html, unsafe_allow_html=True)
-
+    # The TOP 5-MAN LINEUPS / TOP 3-MAN COMBINATIONS toggle card that used to render here (Stats &
+    # Analysis tab) is gone -- per request, this page no longer needs it now that the same
+    # _uww_lu_agg/_opp_lu/_uww_3man_agg/_opp_3man_agg data is put to use as actual recommendations in
+    # the Keys to Victory tab (Lineup Scouting + 3-man combo scouting items below) instead of just being
+    # displayed as a leaderboard. UWW's season-wide version of this data also now lives on the Team page
+    # (SEASON-WIDE 5-MAN LINEUP ANALYSIS / SEASON-WIDE 3-MAN COMBINATION ANALYSIS). _lineups_html/
+    # _3man_html/_combined_lineups_html are left computed above in case a future card wants them again,
+    # but nothing renders them now.
 
     # Scouting Report header with PDF download link
     reports_dir = os.path.join(DATA_DIR, "scouting_reports")
@@ -4711,6 +4694,55 @@ def render_upcoming_game():
                         "  \n".join(_cl_caption_lines),
                         f"UWW's best lineups by net margin season-wide — **not** matchup-specific, "
                         f"because there are {_cl_why}.",
+                        "Lineup Scouting",
+                    ))
+        except Exception:
+            pass
+
+        # E-bis. 3-man combination scouting -- same idea as the 5-man Lineup Scouting above, but for
+        # the smaller units. This is the data the Stats & Analysis "TOP 3-MAN COMBINATIONS" card used to
+        # just display; it's now put to use here instead (that card no longer renders on its own).
+        # _uww_3man_agg / _opp_3man_agg only carry MIN/PTS/+/-/GP (no FG%/TO, unlike the 5-man data), so
+        # this is scoped to net-margin exploitability/production rather than shooting or turnovers.
+        try:
+            if _opp_3man_agg is not None and not _opp_3man_agg.empty:
+                _v3_qual = _opp_3man_agg[_opp_3man_agg["MIN"] >= 3.0]
+                _v3_worst = _v3_qual.nsmallest(3, "+/-")
+                if not _v3_worst.empty:
+                    _v3_wr = _v3_worst.iloc[0]
+                    _v3_lines = ["_Worst +/- 3-man combos:_"]
+                    for _, _r in _v3_worst.iterrows():
+                        _v3_lines.append(
+                            f"**{_r['+/-']:+.1f}** in {_r['MIN']:.1f} min — {_last_names(_r['lineup'])}"
+                        )
+                    _keys.append((
+                        "\U0001f512",
+                        f"Attack {short_opponent}'s {_last_names(_v3_wr['lineup'])} combo",
+                        "  \n".join(_v3_lines),
+                        f"{short_opponent}'s most exploitable 3-man combinations: their worst net-rating "
+                        f"units with real minutes this season (3+ min).",
+                        "Lineup Scouting",
+                    ))
+            if _uww_3man_agg is not None and not _uww_3man_agg.empty:
+                _c3_qual = _uww_3man_agg[_uww_3man_agg["MIN"] >= 5.0]
+                _c3_best = _c3_qual.nlargest(3, "+/-")
+                if not _c3_best.empty:
+                    _c3_rows = list(_c3_best.iterrows())
+                    _c3_top = _c3_rows[0][1]
+                    _c3_lines = []
+                    for _, _r in _c3_rows:
+                        _r_rate = _r["+/-"] / _r["MIN"] if _r["MIN"] > 0 else 0.0
+                        _c3_lines.append(
+                            f"**{_r['+/-']:+.1f}** total ({_r_rate:+.2f}/min in {_r['MIN']:.1f} min) "
+                            f"— {_last_names(_r['lineup'])}"
+                        )
+                    _keys.append((
+                        "\U0001f512",
+                        f"Feature the {_last_names(_c3_top['lineup'])} combo",
+                        "  \n".join(_c3_lines),
+                        "UWW's best 3-man combinations by net margin season-wide (5+ min) — not "
+                        "matchup-specific like the 5-man counter above, but the smaller units most worth "
+                        "leaning on regardless of opponent.",
                         "Lineup Scouting",
                     ))
         except Exception:
@@ -7467,6 +7499,70 @@ def render_team():
         )
     if not meaningful.empty:
         st.bar_chart(meaningful.sort_values("margin_per_min", ascending=False).head(15).set_index("uww_lineup")["margin_per_min"])
+
+    # --- SEASON-WIDE 3-MAN COMBINATION ANALYSIS --- (same shape as the 5-man section above, but for
+    # 3-man combos -- the UWW season-wide half of the data that used to only appear in the Upcoming
+    # Opponent page's Stats & Analysis "TOP 3-MAN COMBINATIONS" card, which no longer renders that card)
+    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">SEASON-WIDE 3-MAN COMBINATION ANALYSIS</div></div>', unsafe_allow_html=True)
+    from itertools import combinations as _team_3man_combos
+    _team_3man_records = []
+    for _, _t_stint in stints.iterrows():
+        _t_players = sorted([p.strip() for p in str(_t_stint["uww_lineup"]).split(",")])
+        for _combo in _team_3man_combos(_t_players, 3):
+            _team_3man_records.append({
+                "lineup": ", ".join(_combo),
+                "stint_minutes": _t_stint["stint_minutes"],
+                "uww_margin_change": _t_stint["uww_margin_change"],
+                "game_date": _t_stint.get("game_date"),
+            })
+    if _team_3man_records:
+        _team_3man_df = pd.DataFrame(_team_3man_records)
+        season_3man = _team_3man_df.groupby("lineup").agg(
+            total_minutes=("stint_minutes", "sum"),
+            net_margin=("uww_margin_change", "sum"),
+            games=("game_date", "nunique"),
+        ).reset_index()
+        season_3man["margin_per_min"] = (season_3man["net_margin"] / season_3man["total_minutes"]).round(2)
+        meaningful_3 = season_3man[season_3man["total_minutes"] >= 2.0]
+
+        _best_3man = meaningful_3.sort_values("margin_per_min", ascending=False).head(5)
+        _worst_3man = meaningful_3.sort_values("margin_per_min", ascending=True).head(5)
+
+        _lu3_c1, _lu3_c2 = st.columns(2)
+        with _lu3_c1:
+            st.markdown('<div style="font-weight:700;font-size:0.95rem;color:#2e7d32;margin-bottom:6px;">Best Combos (by margin/min)</div>', unsafe_allow_html=True)
+            for _, _lr in _best_3man.iterrows():
+                _ln = _last_names_card(_lr["lineup"])
+                st.markdown(
+                    f'<div style="border-left:3px solid #4caf50;padding:6px 12px;margin:4px 0;background:#f9fdf9;border-radius:4px;">'
+                    f'<div style="font-size:0.85rem;"><strong style="color:#2e7d32;">{_lr["margin_per_min"]:+.2f}</strong>/min'
+                    f' <span style="color:#888;">({_lr["total_minutes"]:.1f} min, {int(_lr["games"])} games)</span></div>'
+                    f'<div style="font-size:0.8rem;color:#333;">{html.escape(_ln)}</div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+        with _lu3_c2:
+            st.markdown('<div style="font-weight:700;font-size:0.95rem;color:#c62828;margin-bottom:6px;">Worst Combos (by margin/min)</div>', unsafe_allow_html=True)
+            for _, _lr in _worst_3man.iterrows():
+                _ln = _last_names_card(_lr["lineup"])
+                st.markdown(
+                    f'<div style="border-left:3px solid #ef5350;padding:6px 12px;margin:4px 0;background:#fffafa;border-radius:4px;">'
+                    f'<div style="font-size:0.85rem;"><strong style="color:#c62828;">{_lr["margin_per_min"]:+.2f}</strong>/min'
+                    f' <span style="color:#888;">({_lr["total_minutes"]:.1f} min, {int(_lr["games"])} games)</span></div>'
+                    f'<div style="font-size:0.8rem;color:#333;">{html.escape(_ln)}</div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+
+        with st.expander("All 3-man combinations by minutes played", expanded=False):
+            st.dataframe(
+                season_3man.sort_values("total_minutes", ascending=False).head(20),
+                hide_index=True, use_container_width=True,
+            )
+        if not meaningful_3.empty:
+            st.bar_chart(meaningful_3.sort_values("margin_per_min", ascending=False).head(15).set_index("lineup")["margin_per_min"])
+    else:
+        st.info("No 3-man combination data available yet.")
 
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">KEYS-TO-VICTORY WIN/LOSS SPLITS</div></div>', unsafe_allow_html=True)
     ktv = load_table("uww_ktv_splits")
