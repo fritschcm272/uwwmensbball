@@ -2223,6 +2223,77 @@ def format_ppp(row) -> str:
     return f"{_ppp}{_fg}"
 
 
+# --- Coach-note themes ------------------------------------------------------------------------------------
+# Grouping free-text clip notes by what they are ABOUT. The taxonomy (data/note_themes.json) was derived
+# once, offline, from this staff's own note language; classification at runtime is pure phrase matching, so
+# every new note is categorized instantly with no model call and no token cost, forever. Retuning means
+# editing that JSON -- add a phrase, reload, done.
+NOTE_THEMES_FILE = "note_themes.json"
+
+
+@st.cache_data(ttl=60)
+def load_note_themes() -> list:
+    """[{theme, side, phrases}] from data/note_themes.json, or [] when the file isn't there."""
+    path = os.path.join(DATA_DIR, NOTE_THEMES_FILE)
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            return json.load(fh).get("themes", [])
+    except Exception:
+        return []
+
+
+def strip_note_play_call(note) -> str:
+    """The coach's note minus the play call that opens it: "PANTHER EXECUTION. BIG = WALK YOUR MAN UP"
+    -> "BIG = WALK YOUR MAN UP". The play name is already its own column; leaving it in the text made
+    every Panther note look like it shared a theme with every other Panther note."""
+    if note is None or (isinstance(note, float) and note != note):
+        return ""
+    _t = str(note).strip()
+    _t = re.sub(r"^[A-Z][A-Z0-9\-&' ]{1,24}?\s+EXECUTION\b[.,:=]*\s*", "", _t)
+    _t = re.sub(r"^[A-Z0-9\-' ]{2,20}=\s*", "", _t)
+    return _t.strip(" ,.=")
+
+
+def classify_note_themes(note, max_themes: int = 3) -> list:
+    """[(theme, hits)] for one note, best first. Longer phrases score higher than single words, so
+    "missed switch" counts for more than a stray "switch"; a note matching nothing returns []."""
+    _text = " " + re.sub(r"\s+", " ", strip_note_play_call(note)).lower() + " "
+    if not _text.strip():
+        return []
+    _scores = {}
+    for _t in load_note_themes():
+        _score = 0.0
+        for _p in _t.get("phrases", []):
+            _p = str(_p).lower().strip()
+            if not _p:
+                continue
+            _pat = r"(?<!\w)" + re.escape(_p) + r"(?:s|es|ed|ing)?(?!\w)"
+            if re.search(_pat, _text):
+                _score += 1.0 + 0.5 * _p.count(" ")  # multi-word phrases are stronger evidence
+        if _score:
+            _scores[_t["theme"]] = _score
+    return sorted(_scores.items(), key=lambda kv: -kv[1])[:max_themes]
+
+
+def note_theme_table(notes_df: pd.DataFrame, note_col: str = "coach_note") -> pd.DataFrame:
+    """One row per (note, theme) -- the long form everything else groups off. Carries the note's own
+    +/- counts so a theme can be split into what went well and what didn't."""
+    if notes_df.empty or note_col not in notes_df.columns:
+        return pd.DataFrame(columns=["theme", "player", "opponent", "note", "pos", "neg", "score"])
+    _rows = []
+    for _, _r in notes_df.iterrows():
+        _note = _r.get(note_col)
+        if _note is None or (isinstance(_note, float) and _note != _note):
+            continue
+        _pos, _neg = note_sentiment_counts(_note)
+        for _theme, _score in classify_note_themes(_note):
+            _rows.append({"theme": _theme, "player": _r.get("player"), "opponent": _r.get("opponent"),
+                          "note": strip_note_play_call(_note), "pos": _pos, "neg": _neg, "score": _score})
+    return pd.DataFrame(_rows)
+
+
 def note_sentiment_counts(note) -> tuple:
     """Count "+"-prefixed (execution point that went well) vs "-"-prefixed (went wrong) clauses within one
     coach note, splitting on commas -- this team's notation consistently marks individual observations this
@@ -5265,9 +5336,17 @@ def render_upcoming_game():
                         elif _seg.startswith("-"):
                             _ns_neg[_key] = _ns_neg.get(_key, 0) + 1
                 if _ns_pos or _ns_neg:
+                    _ns_theme_rows = note_theme_table(_ns_uww)
+                    _ns_theme_top = []
+                    if not _ns_theme_rows.empty:
+                        _ns_ts = _ns_theme_rows.groupby("theme").agg(
+                            n=("note", "count"), pos=("pos", "sum"), neg=("neg", "sum")).reset_index()
+                        _ns_theme_top = [(r["theme"], r["n"], r["pos"], r["neg"])
+                                         for _, r in _ns_ts.nlargest(4, "n").iterrows()]
                     _card_data["note_sentiment"] = {
                         "pos": sorted(_ns_pos.items(), key=lambda kv: -kv[1])[:4],
                         "neg": sorted(_ns_neg.items(), key=lambda kv: -kv[1])[:4],
+                        "themes": _ns_theme_top,
                         "n_notes": int(_ns_uww["coach_note"].notna().sum()),
                     }
         except Exception:
@@ -5464,8 +5543,14 @@ def render_upcoming_game():
             st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
                         f'{_n}. \U0001f4dd What the Staff Keeps Writing Down</span>'
                         f'{_source_badge_html("Coach Notes")}</div>', unsafe_allow_html=True)
+            if _ns.get("themes"):
+                st.markdown("**By subject:**")
+                for _t, _n, _p, _g in _ns["themes"]:
+                    _mix = " &middot; ".join(x for x in [f"{int(_g)} correction(s)" if _g else "",
+                                                        f"{int(_p)} positive(s)" if _p else ""] if x)
+                    st.markdown(f"- **{_t}** -- {int(_n)} notes" + (f" ({_mix})" if _mix else ""))
             if _ns["neg"]:
-                st.markdown("**Recurring corrections:**")
+                st.markdown("**Exact phrases most repeated:**")
                 for _t, _c in _ns["neg"]:
                     st.markdown(f"- {_t} -- **{_c}x**")
             if _ns["pos"]:
@@ -8162,6 +8247,57 @@ def render_analytics():
                 st.caption("Click a row to see every tagged possession for that play call -- game, clock, score, result and the coach's note. Play call comes from the season play-call log when that game is covered by it, and otherwise from a best-effort read of the coach's own note text (a name immediately before the word \"EXECUTION\").")
             else:
                 st.caption("No named play calls detected yet (looks for a name immediately before the word \"EXECUTION\" in offensive notes).")
+
+        # --- Grouped themes: what the notes are ABOUT, not the exact words used --------------------------
+        # The flag counts below group on the coach's literal clause text, so "MISSED SWITCH" and "-BAD
+        # MISSED SWITCH" are two different themes with one mention each. This groups by subject instead,
+        # against the taxonomy in data/note_themes.json -- pure phrase matching, so classifying a new note
+        # costs nothing and happens the moment the parser writes it.
+        _nt_themes = load_note_themes()
+        st.markdown("**Note Themes**")
+        if not _nt_themes:
+            st.caption("No theme file found -- add data/note_themes.json to group notes by subject.")
+        else:
+            _nt_long = note_theme_table(coach_notes)
+            if _nt_long.empty:
+                st.caption("No notes matched a theme yet.")
+            else:
+                _nt_side = {t["theme"]: t.get("side", "") for t in _nt_themes}
+                _nt_sum = _nt_long.groupby("theme").agg(
+                    Notes=("note", "count"), Positive=("pos", "sum"), Negative=("neg", "sum"),
+                ).reset_index()
+                _nt_sum["Side"] = _nt_sum["theme"].map(_nt_side)
+                _nt_sum = _nt_sum.rename(columns={"theme": "Theme"}).sort_values("Notes", ascending=False)
+                _nt_c1, _nt_c2 = st.columns([3, 2])
+                with _nt_c1:
+                    st.dataframe(_nt_sum[["Theme", "Side", "Notes", "Positive", "Negative"]],
+                                 hide_index=True, use_container_width=True)
+                with _nt_c2:
+                    _nt_worst = _nt_sum[_nt_sum["Negative"] > 0].nlargest(3, "Negative")
+                    if not _nt_worst.empty:
+                        st.markdown("**Most-corrected subjects**")
+                        for _, _r in _nt_worst.iterrows():
+                            st.markdown(f"- **{_r['Theme']}** -- {int(_r['Negative'])} corrections "
+                                        f"across {int(_r['Notes'])} notes")
+                    _nt_best = _nt_sum[_nt_sum["Positive"] > 0].nlargest(3, "Positive")
+                    if not _nt_best.empty:
+                        st.markdown("**Most-praised subjects**")
+                        for _, _r in _nt_best.iterrows():
+                            st.markdown(f"- {_r['Theme']} -- {int(_r['Positive'])} positives")
+                _nt_pick = st.selectbox("Read the notes behind a theme",
+                                        ["--"] + _nt_sum["Theme"].tolist(), key="note_theme_pick")
+                if _nt_pick != "--":
+                    _nt_rows = _nt_long[_nt_long["theme"] == _nt_pick]
+                    _nt_cols = [c for c in ["opponent", "player", "note"] if c in _nt_rows.columns]
+                    st.dataframe(_nt_rows[_nt_cols].rename(columns={
+                        "opponent": "Game", "player": "Player", "note": "Note"}),
+                        hide_index=True, use_container_width=True)
+                st.caption(
+                    f"{len(_nt_themes)} themes, matched by phrase -- a note can belong to more than one "
+                    "(a missed switch that led to a foul is both). Classification is lexical, so new notes "
+                    "are grouped instantly at zero cost; to retune, edit the phrase lists in "
+                    "data/note_themes.json -- no re-running a model."
+                )
 
         # --- Most common flagged themes ---
         def _theme_counts(notes_df, sign):
