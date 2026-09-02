@@ -6600,9 +6600,103 @@ def render_analytics():
                 _pc_makes = pd.to_numeric(call_summary["Makes"], errors="coerce")
                 _pc_att = pd.to_numeric(call_summary["Attempts"], errors="coerce").replace(0, float("nan"))
                 call_summary["FG%"] = (100 * _pc_makes / _pc_att).round(1)
-                call_summary = call_summary.drop(columns=["Makes"]).sort_values("Calls", ascending=False)
-                st.dataframe(call_summary.rename(columns={"play_call": "Play Call"}), hide_index=True, use_container_width=True)
-                st.caption("Play call is a best-effort extraction from the coach's own note text (a name immediately before the word \"EXECUTION\") -- a note that doesn't follow that exact pattern won't show up here, but is still visible in the raw notes browser below.")
+                call_summary = call_summary.drop(columns=["Makes"]).sort_values("Calls", ascending=False).reset_index(drop=True)
+
+                # --- Possession-level detail behind each play call -------------------------------------
+                # The summary answers "how often, how well"; the obvious next question a coach asks is
+                # "show me WHICH ones" -- so a row click opens every tagged possession for that call, with
+                # the game, clock and score attached. uww_pbp_events is the richer source (the parser
+                # already merged coach_note/play_call onto it, and it alone carries game_date, running
+                # score and the on-floor lineup); the coach-notes rows themselves are the fallback for
+                # clips that never matched a play-by-play row (no usable clock, or a name spelled
+                # differently between the two exports), so a call's possessions are never silently missing.
+                def _pc_clock(_secs):
+                    _v = safe_float(_secs)
+                    if _v is None or _v != _v:
+                        return "--"
+                    _v = max(int(_v), 0)
+                    return f"{_v // 60}:{_v % 60:02d}"
+
+                _pc_events = load_table("uww_pbp_events")
+                if not _pc_events.empty and "coach_note" in _pc_events.columns:
+                    _pc_events = _pc_events.copy()
+                    _pc_events["_pc_call"] = resolve_play_calls(_pc_events)
+                    _pc_events = _pc_events[_pc_events["_pc_call"].notna()]
+                else:
+                    _pc_events = pd.DataFrame()
+
+                @st.dialog("Play Call Detail", width="large")
+                def _show_play_call_detail(_call):
+                    _sum_row = call_summary[call_summary["play_call"] == _call]
+                    if not _sum_row.empty:
+                        _sr = _sum_row.iloc[0]
+                        _fg_txt = "--" if pd.isna(_sr["FG%"]) else f"{_sr['FG%']:.1f}%"
+                        st.markdown(
+                            f'<div style="font-family:Montserrat,sans-serif;font-weight:800;font-size:1.5rem;color:#4E2A84;">{html.escape(str(_call))}</div>'
+                            f'<div style="color:#666;margin-bottom:10px;">{int(_sr["Calls"])} tagged clip(s) &middot; '
+                            f'{int(_sr["Attempts"])} shot attempt(s) &middot; {_fg_txt} FG</div>',
+                            unsafe_allow_html=True,
+                        )
+
+                    _det = _pc_events[_pc_events["_pc_call"] == _call].copy() if not _pc_events.empty else pd.DataFrame()
+                    if not _det.empty:
+                        _det["Game"] = _det.apply(
+                            lambda r: f"vs {r['opponent']}" + (f" ({r['game_date']})" if pd.notna(r.get("game_date")) else ""), axis=1
+                        )
+                        _det["Time"] = _det.apply(
+                            lambda r: f"{r.get('period', '')} {str(r.get('time_remaining', '')).split(' (')[0]}".strip(), axis=1
+                        )
+                        _det["Score"] = _det.apply(
+                            lambda r: "--" if pd.isna(r.get("uww_score")) or pd.isna(r.get("opp_score"))
+                            else f"{int(safe_float(r['uww_score']) or 0)}-{int(safe_float(r['opp_score']) or 0)}", axis=1
+                        )
+                        _det_cols = [c for c in ["Game", "Time", "Score", "player", "event_type", "shot_type",
+                                                 "coach_note", "uww_lineup"] if c in _det.columns]
+                        _det = _det.sort_values([c for c in ["game_date", "event_order"] if c in _det.columns])
+                        st.dataframe(
+                            _det[_det_cols].rename(columns={
+                                "player": "Player", "event_type": "Result", "shot_type": "Shot Type",
+                                "coach_note": "Coach Note", "uww_lineup": "Lineup On Floor",
+                            }),
+                            hide_index=True, use_container_width=True,
+                        )
+                    else:
+                        # Fallback: the clips themselves, which always exist even when nothing linked to a
+                        # play-by-play row -- no running score available for these, hence no Score column.
+                        _fb = call_rows[call_rows["play_call"] == _call].copy()
+                        _fb["Game"] = "vs " + _fb["opponent"].astype(str)
+                        _fb["Time"] = _fb.apply(
+                            lambda r: f"{r.get('period', '')} {_pc_clock(r.get('time_remaining_seconds'))}".strip(), axis=1
+                        )
+                        _fb_cols = [c for c in ["Game", "Time", "player", "result", "coach_note"] if c in _fb.columns]
+                        st.dataframe(
+                            _fb[_fb_cols].rename(columns={"player": "Player", "result": "Result", "coach_note": "Coach Note"}),
+                            hide_index=True, use_container_width=True,
+                        )
+                        st.caption("These clips didn't match a play-by-play row, so no running score is available for them.")
+
+                _pc_display = call_summary.rename(columns={"play_call": "Play Call"})
+                _pc_picked = None
+                try:
+                    _pc_event = st.dataframe(
+                        _pc_display, hide_index=True, use_container_width=True,
+                        on_select="rerun", selection_mode="single-row", key="play_calls_table",
+                    )
+                    _pc_rows = (_pc_event.selection.get("rows") if hasattr(_pc_event, "selection") else _pc_event["selection"]["rows"]) or []
+                    if _pc_rows:
+                        _pc_picked = call_summary.iloc[_pc_rows[0]]["play_call"]
+                except TypeError:
+                    # Older Streamlit without dataframe row selection -- keep the table usable and offer the
+                    # same detail through a picker instead of failing the page.
+                    st.dataframe(_pc_display, hide_index=True, use_container_width=True)
+                    _pc_choice = st.selectbox(
+                        "Play call detail", ["--"] + call_summary["play_call"].astype(str).tolist(), key="play_calls_pick",
+                    )
+                    _pc_picked = None if _pc_choice == "--" else _pc_choice
+                if _pc_picked:
+                    _show_play_call_detail(_pc_picked)
+
+                st.caption("Click a row to see every tagged possession for that play call -- game, clock, score, result and the coach's note. Play call comes from the season play-call log when that game is covered by it, and otherwise from a best-effort read of the coach's own note text (a name immediately before the word \"EXECUTION\").")
             else:
                 st.caption("No named play calls detected yet (looks for a name immediately before the word \"EXECUTION\" in offensive notes).")
 
