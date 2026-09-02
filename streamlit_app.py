@@ -3070,6 +3070,59 @@ def render_upcoming_game():
                     f'<span style="font-size:0.85rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(opp_display))}</span>'
                     f'</div>', unsafe_allow_html=True,
                 )
+                # The clickable version of this panel used bare st.buttons, which render as generic grey
+                # pills with centre-aligned, truncated text -- nothing like the bordered result cards the
+                # rest of the page uses. Streamlit tags each widget's container with an "st-key-<key>"
+                # class, so the buttons can be restyled to match those cards while staying real buttons
+                # (a styled div can't open the box-score dialog). Purely cosmetic: if a Streamlit version
+                # ever drops that class the buttons simply look default again.
+                st.markdown("""
+                <style>
+                div[class*="st-key-l5_"] button {
+                    border: 1px solid #e8e8e8 !important;
+                    border-radius: 8px !important;
+                    background: #fff !important;
+                    padding: 10px 12px !important;
+                    min-height: 0 !important;
+                    text-align: left !important;
+                    justify-content: flex-start !important;
+                    line-height: 1.35 !important;
+                    transition: border-color .12s ease, box-shadow .12s ease;
+                }
+                div[class*="st-key-l5_"] button:hover {
+                    border-color: #4E2A84 !important;
+                    box-shadow: 0 1px 4px rgba(78,42,132,.14) !important;
+                }
+                div[class*="st-key-l5_"] button p {
+                    text-align: left !important;
+                    margin: 0 !important;
+                    font-size: 0.9rem !important;
+                }
+                div[class*="st-key-all_games_btn"] button {
+                    border: 1px dashed #cfc7dd !important;
+                    border-radius: 8px !important;
+                    background: #faf8fd !important;
+                    color: #4E2A84 !important;
+                    font-weight: 700 !important;
+                }
+                </style>
+                """, unsafe_allow_html=True)
+
+                def _l5_button_label(_g):
+                    """Same information, same shape as the read-only result cards above: result and score
+                    on top in win/loss colour, then opponent, then date."""
+                    _res = str(_g.get("outcome", ""))
+                    _score = (f"{int(_g['team_score'])}-{int(_g['opp_score'])}"
+                              if _g.get("team_score") is not None and _g.get("opp_score") is not None else "")
+                    _loc = "@ " if "away" in str(_g.get("location", "")).lower() else "vs "
+                    _name = str(_g.get("opp_name", ""))
+                    if len(_name) > 24:
+                        _name = _name[:22].rstrip() + "\u2026"
+                    _date = str(_g.get("date", "") or "").strip()
+                    _res_md = f":green[**{_res}**]" if _res == "W" else f":red[**{_res}**]"
+                    _line2 = f"{_loc}{_name}" + (f" · {_date}" if _date else "")
+                    return f"{_res_md} **{_score}**  \n{_line2}"
+
                 _l5_max = max(len(uww_last5), len(opp_last5), 1)
                 if _l5_max == 0 or (not uww_last5 and not opp_last5):
                     st.caption("No games available")
@@ -3079,12 +3132,7 @@ def render_upcoming_game():
                     _l5_c1, _l5_c2 = st.columns(2)
                     with _l5_c1:
                         if _u_game is not None:
-                            _u_score = f"{int(_u_game['team_score'])}-{int(_u_game['opp_score'])}" if _u_game.get("team_score") is not None else ""
-                            _u_loc = "@ " if "away" in str(_u_game.get("location", "")).lower() else "vs "
-                            _u_opp_short_label = str(_u_game.get("opp_name", ""))
-                            if len(_u_opp_short_label) > 16:
-                                _u_opp_short_label = _u_opp_short_label[:14] + "..."
-                            if st.button(f"{_u_game['outcome']} {_u_score} {_u_loc}{_u_opp_short_label}", key=f"l5_uww_btn_{_l5_i}", use_container_width=True):
+                            if st.button(_l5_button_label(_u_game), key=f"l5_uww_btn_{_l5_i}", use_container_width=True):
                                 _u_short = resolve_short_opponent(_u_game["opp_name"], _l5_short_names)
                                 _show_last5_game_dialog(
                                     _u_short, f"UWW vs {_u_game['opp_name']} \u2014 {_u_game.get('date', '')}",
@@ -3094,17 +3142,12 @@ def render_upcoming_game():
                             st.caption("\u2014")
                     with _l5_c2:
                         if _o_game is not None:
-                            _o_score = f"{int(_o_game['team_score'])}-{int(_o_game['opp_score'])}" if _o_game.get("team_score") is not None else ""
-                            _o_loc = "@ " if "away" in str(_o_game.get("location", "")).lower() else "vs "
-                            _o_opp_label = str(_o_game.get("opp_name", ""))
-                            if len(_o_opp_label) > 16:
-                                _o_opp_label = _o_opp_label[:14] + "..."
                             # Now reconstructed from the same shot-by-shot data already collected for the
                             # shot-selection analysis (uww_opponent_prior_games_box_score), not a separate
                             # live-scrape -- so these ARE clickable now, same as UWW's own results, wherever
                             # that reconstruction actually found data for this specific game.
                             _o_third_party_short = resolve_short_opponent(_o_game["opp_name"], _l5_opp_short_names)
-                            if st.button(f"{_o_game['outcome']} {_o_score} {_o_loc}{_o_opp_label}", key=f"l5_opp_btn_{_l5_i}", use_container_width=True):
+                            if st.button(_l5_button_label(_o_game), key=f"l5_opp_btn_{_l5_i}", use_container_width=True):
                                 _show_last5_game_dialog(
                                     _o_third_party_short, f"{short_opponent} vs {_o_game['opp_name']} \u2014 {_o_game.get('date', '')}",
                                     _source_table="uww_opponent_prior_games_box_score", _team_a_hint=short_opponent,
