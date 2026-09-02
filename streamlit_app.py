@@ -815,6 +815,33 @@ def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
     return n if n > 0 else default
 
 
+def opponent_prior_games_scheduled(short_opponent: str):
+    """How many games this opponent actually PLAYED before facing UWW, straight from their own schedule --
+    or None when their schedule hasn't been parsed.
+
+    Deliberately NOT get_opponent_games_played(): for the current upcoming opponent that function returns
+    the number of games with play-by-play data (which is the point there -- it has to agree with the stat
+    numerators it divides). Those are different numbers whenever some of the opponent's games have no
+    local _pbp/_video file, and presenting the tagged-video count as their schedule is what made a key
+    read "across 15 team(s) they played before UWW" for a team that had played 28 games.
+    """
+    opp_sched = load_table("uww_opponent_schedules")
+    if opp_sched.empty or "opponent" not in opp_sched.columns:
+        return None
+    opp_games = opp_sched[opp_sched["opponent"] == short_opponent]
+    if opp_games.empty:
+        return None
+    uww_idx = None
+    for i, r in opp_games.iterrows():
+        vs = str(r.get("vs_opponent", "")).lower()
+        if "whitewater" in vs or "uww" in vs:
+            uww_idx = i
+            break
+    pre_uww = opp_games.loc[:uww_idx].iloc[:-1] if uww_idx is not None else opp_games
+    n = len(pre_uww[pre_uww["outcome"].notna()]) if "outcome" in pre_uww.columns else len(pre_uww)
+    return n or None
+
+
 def get_opponent_entering_record(short_opponent: str) -> tuple:
     """The opponent's own W-L record and current streak from the games on THEIR schedule (uww_opponent_schedules)
     that came before their matchup against UWW -- i.e. what their record looked like entering that specific
@@ -3975,6 +4002,9 @@ def render_upcoming_game():
                     _aw_n_opponents = _aw_third_party.loc[
                         (_aw_third_party["_mechanic"] == _aw_best_mechanic) & (_aw_third_party["_contest"] == _aw_best_contest), "team"
                     ].nunique()
+                    _aw_n_tagged_games = (_aw_third_party["game_date"].nunique()
+                                          if "game_date" in _aw_third_party.columns else 0)
+                    _aw_n_prior_games = opponent_prior_games_scheduled(short_opponent)
 
                     # Cross-reference against UWW's OWN season-wide shot data (all games, not scoped to
                     # having already played this opponent) for that SAME shot type, to find which lineup and
@@ -4012,7 +4042,15 @@ def render_upcoming_game():
                     _keys.append((
                         "\U0001f3af",
                         f"Attack their weakest look: {describe_shot_look(_aw_best_mechanic, _aw_best_contest)}",
-                        f"Opponents shot {int(_aw_best['Makes'])}/{int(_aw_best['Attempts'])} ({_aw_best['FG%']:.0f}%) on this vs. {short_opponent}, across {_aw_n_opponents} team(s) they played before UWW",
+                        # Say exactly what the sample IS. "across N team(s) they played before UWW" read as
+                        # their whole pre-UWW schedule, but N only ever counted the opponents that took THIS
+                        # shot type, drawn from the subset of their games that have tagged video at all.
+                        (f"Opponents shot {int(_aw_best['Makes'])}/{int(_aw_best['Attempts'])} "
+                         f"({_aw_best['FG%']:.0f}%) on this against {short_opponent}, "
+                         f"{_aw_n_opponents} different team(s) doing it"
+                         + (f" -- across {_aw_n_tagged_games} of {short_opponent}'s "
+                            + (f"{_aw_n_prior_games} " if _aw_n_prior_games else "")
+                            + "games before UWW (the ones with tagged video)" if _aw_n_tagged_games else "")),
                         _aw_reason,
                         "Data-Driven",
                     ))
