@@ -566,6 +566,52 @@ def comparable_opponents(target_opponent: str, candidate_opponents, k: int = 3):
     return ranked, profiles
 
 
+# Mascot words seen in this league's schedules, plus the adjectives that only ever appear as part of a
+# mascot ("Red Devils", "Flying Dutchmen"). Used to turn a schedule name into the school alone.
+_MASCOT_WORDS = {
+    "eagles", "titans", "spartans", "pioneers", "warhawks", "blugolds", "falcons", "pointers", "bears",
+    "celts", "kohawks", "norse", "duhawks", "bluejays", "scots", "vikings", "storm", "wolves", "dutchmen",
+    "beavers", "raiders", "knights", "lions", "tigers", "panthers", "cardinals", "yellowjackets", "devils",
+    "hawks", "redhawks", "foresters", "britons", "leopards", "comets", "thunder", "chargers", "crusaders",
+    "cobbers", "auggies", "royals", "tommies", "johnnies", "gusties", "oles", "pipers", "bulldogs",
+    "trojans", "wildcats", "flames", "phoenix", "musketeers", "green", "blue", "gold",
+}
+_MASCOT_MODIFIERS = {"red", "blue", "flying", "prairie", "fighting", "golden", "big", "little", "green",
+                     "black", "purple", "scarlet", "orange", "white", "grey", "gray"}
+# Words that are part of a SCHOOL's name, never a mascot -- stripping these would break the name.
+_SCHOOL_WORDS = {"state", "college", "university", "tech", "institute", "a&m", "saint", "st", "north",
+                 "south", "east", "west", "central", "northern", "southern", "eastern", "western"}
+
+
+def strip_team_mascot(name) -> str:
+    """"UW-La Crosse Eagles" -> "UW-La Crosse", "Hope Flying Dutchmen" -> "Hope".
+
+    Known mascot words are stripped from the end, then any modifier left dangling in front of one ("Red"
+    in "Eureka Red Devils"). If nothing matched the list, a multi-word name drops its final word as a
+    fallback -- schedule names in this data are "<School> <Mascot>" -- unless that word is part of a
+    school name ("State", "College", "Tech") or a parenthetical qualifier like "(WI)". Never returns an
+    empty string: if every token would be stripped, the original name is kept.
+    """
+    if not name or (isinstance(name, float) and pd.isna(name)):
+        return ""
+    _raw = str(name).strip()
+    _toks = _raw.split()
+    if len(_toks) < 2:
+        return _raw
+    _stripped = False
+    while len(_toks) > 1 and _toks[-1].strip(".,").lower() in _MASCOT_WORDS:
+        _toks.pop()
+        _stripped = True
+    if _stripped:
+        while len(_toks) > 1 and _toks[-1].strip(".,").lower() in _MASCOT_MODIFIERS:
+            _toks.pop()
+    elif len(_toks) > 1:
+        _last = _toks[-1].strip(".,").lower()
+        if _last not in _SCHOOL_WORDS and not _toks[-1].startswith("("):
+            _toks.pop()
+    return " ".join(_toks) or _raw
+
+
 def get_team_abbreviation(name) -> str:
     """Derive a short (2-4 letter) code for a team name, e.g. "UW-Oshkosh Titans" -> "UWO", "UW-Whitewater"
     -> "UWW", "Elmhurst" -> "ELM". For narrow paired-column UI (Season Leaders, Team Stats, lineup/last-5
@@ -3154,8 +3200,10 @@ def render_upcoming_game():
                               if _g.get("team_score") is not None and _g.get("opp_score") is not None else "")
                     _loc = "@" if "away" in str(_g.get("location", "")).lower() else "vs"
                     _name = str(_g.get("opp_name", "") or "")
+                    # The "short names" in the box-score tables still carry the mascot ("UW-La Crosse
+                    # Eagles"), so strip it after resolving -- the school alone is what identifies the game.
                     _short = resolve_short_opponent(_name, _short_names) if _short_names else None
-                    _name = _short or _name
+                    _name = strip_team_mascot(_short or _name)
                     _date = str(_g.get("date", "") or "").strip()
                     _res_md = f":green[**{_res}**]" if _res == "W" else f":red[**{_res}**]"
                     # Date first, dimmed, then the result -- reading order matches how a coach scans a
