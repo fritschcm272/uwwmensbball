@@ -1588,6 +1588,25 @@ def extract_contest(description) -> str:
     return NO_CONTEST_TAG
 
 
+def describe_shot_look(mechanic, contest=None) -> str:
+    """Plain-language name for a shot type, for use inside a sentence.
+
+    The mechanic and the contest tag used to be pasted together with a comma, which produced
+    "Putback off the offensive glass, Not tagged (contest recorded only on catch-and-shoot)" -- a caveat
+    about the TAGGING system presented as if it were part of the shot's description. The contest dimension
+    only exists for catch-and-shoot jumpers (see extract_contest), so for every other shot type the honest
+    rendering is simply to say nothing about it.
+    """
+    if mechanic is None or (isinstance(mechanic, float) and mechanic != mechanic):
+        return "untagged shots"
+    _m = str(mechanic)
+    if _m == UNCLASSIFIED_SHOT_MECHANIC:
+        _m = "shots with no mechanic tag"
+    if contest in ("Guarded", "Open"):
+        return f"{_m} ({str(contest).lower()})"
+    return _m
+
+
 def extract_distance(description) -> str:
     """Parse the shot-distance tag out of a video_description string (see parser cell 114)."""
     if pd.isna(description):
@@ -1695,24 +1714,90 @@ def _play_title_case(name) -> str:
     return "".join(_out)
 
 
+# Situation/clock tags the clip software mixes in with real play names ("End of Half", "Timeout"). They
+# come through the same "Text Overlay" field the season play log puts play names in, so without this they
+# show up in the play-call breakdown as if they were sets the staff ran -- and "End of Half" was landing
+# high in the list purely because every game has one.
+NON_PLAY_CALL_PATTERNS = (
+    r"^end\s+of\b",           # End of Half / End of Game / End of 1st / End of Period
+    r"^(half|halftime|game|period|quarter|ot\d*|overtime)$",
+    r"^(time\s*out|timeout|to)$",
+    r"^(dead\s*ball|jump\s*ball|tip\s*off|tipoff)$",
+    r"^(shot\s*clock|clock)\b",
+    r"^(free\s*throws?|ft)$",
+    r"^(n/?a|none|unknown|tbd|misc|other|untagged)$",
+)
+
+
+def is_non_play_call(name) -> bool:
+    """True for a clock/situation tag that isn't a called play."""
+    _t = re.sub(r"\s+", " ", str(name or "")).strip().lower()
+    if not _t:
+        return True
+    return any(re.search(_p, _t) for _p in NON_PLAY_CALL_PATTERNS)
+
+
+# Result/quality words the clip tagger appends to a play name ("P4 Good", "Twins Pitch Miss"). They are an
+# outcome, not part of the call, and they split one play into a row per outcome in every breakdown.
+PLAY_CALL_QUALIFIER_WORDS = {
+    "good", "bad", "great", "ok", "okay", "nice", "poor",
+    "make", "made", "makes", "miss", "missed", "misses", "score", "scored", "bucket",
+    "and1", "and-1", "foul", "fouled", "to", "turnover", "tov", "execution", "exec",
+}
+
+
+def _strip_play_qualifiers(name) -> str:
+    """Drop trailing outcome words from a play call: "P4 Good" -> "P4". Only whole trailing tokens from a
+    known list are removed, and only from the END -- a generic "longest prefix that matches the catalog"
+    rule would be worse than the problem, quietly turning the real play "Twins Swirl" into the different
+    real play "Twins"."""
+    _toks = str(name or "").strip().split()
+    while len(_toks) > 1 and _toks[-1].strip("().,+-\"'").lower() in PLAY_CALL_QUALIFIER_WORDS:
+        _toks.pop()
+    return " ".join(_toks)
+
+
 def canonical_play_call(name):
     """The catalog's own name for a play call. A call the catalog doesn't know keeps its own wording but
     gets a consistent case, so the same call typed two ways stays one play. Never drops a call."""
     if name is None or (isinstance(name, float) and name != name):
         return name
-    hit = play_catalog_lookup().get(_play_norm(name))
-    return hit[0] if hit else _play_title_case(name)
+    _lookup = play_catalog_lookup()
+    hit = _lookup.get(_play_norm(name))
+    if hit:
+        return hit[0]
+    # Retry without a trailing outcome word ("P4 Good" -> "P4" -> Panther-4 "P4").
+    _stripped = _strip_play_qualifiers(name)
+    if _stripped and _play_norm(_stripped) != _play_norm(name):
+        hit = _lookup.get(_play_norm(_stripped))
+        if hit:
+            return hit[0]
+    # Situation tags are dropped (None), not renamed -- every consumer already filters play_call.notna(),
+    # so they disappear from the breakdowns while the clip itself stays in the raw notes browser.
+    if is_non_play_call(_stripped or name):
+        return None
+    return _play_title_case(_stripped or name)
 
 
 def play_family_lookup() -> dict:
     """{normalized family stem -> (series, family)} -- e.g. "TWINS" -> ("Twins", "Twins"). Lets a call the
     catalog has never seen as a whole ("TWINS SWIRL", a combination tagged in a clip but not filed as its
     own play) still group under the right series by its leading word."""
-    out = {}
+    # A family can span series -- "Twins" is the SLOB out-of-bounds set AND the half-court Twins package --
+    # so a family only reports a series when every play in it agrees. Otherwise the series is left blank
+    # rather than reporting whichever one happened to be read first.
+    _seen = {}
     for _pn, _series, _family in play_catalog_lookup().values():
-        if _family:
-            out.setdefault(_play_norm(_family), (_series, _family))
-    return out
+        if not _family:
+            continue
+        _k = _play_norm(_family)
+        _entry = _seen.setdefault(_k, {"family": _family, "series": set()})
+        if _series:
+            _entry["series"].add(_series)
+    return {
+        _k: ((next(iter(_v["series"])) if len(_v["series"]) == 1 else ""), _v["family"])
+        for _k, _v in _seen.items()
+    }
 
 
 def play_call_series(name) -> tuple:
@@ -1721,9 +1806,31 @@ def play_call_series(name) -> tuple:
     together as one Panther group even though the catalog files all three under Specials. A call the
     catalog doesn't list falls back to matching its FIRST word against known families, so an ad-hoc
     variant still lands with its series instead of alone."""
-    hit = play_catalog_lookup().get(_play_norm(name))
+    _lookup = play_catalog_lookup()
+    hit = _lookup.get(_play_norm(name)) or _lookup.get(_play_norm(_strip_play_qualifiers(name)))
     if hit:
         return (hit[1], hit[2])
+    # A call written as "<series> <play>" ("Over Cheetah", "SLOB Twins") -- the tagger's own shorthand for
+    # which package the set came out of. Keep it as its own call (the SLOB version of Twins is not the
+    # half-court one), but read the series off the leading word so it still groups correctly.
+    # Family first: "Twins" is both a series name and a play family, and reading it as a series would file
+    # "Twins Right" under family "Right".
+    _first = re.match(r"[A-Za-z]+", str(name or "").strip())
+    if _first:
+        _fam_first = play_family_lookup().get(_play_norm(_first.group(0)))
+        if _fam_first:
+            return _fam_first
+    _toks = str(name or "").strip().split()
+    if len(_toks) > 1:
+        _series_map = {_play_norm(_se): _se for _pn, _se, _fa in play_catalog_lookup().values() if _se}
+        _se_hit = _series_map.get(_play_norm(_toks[0]))
+        if _se_hit:
+            _rest_hit = play_catalog_lookup().get(_play_norm(" ".join(_toks[1:])))
+            if _rest_hit:
+                return (_se_hit, _rest_hit[2])
+            _rest_first = re.match(r"[A-Za-z]+", _toks[1])
+            _fam_hit = play_family_lookup().get(_play_norm(_rest_first.group(0))) if _rest_first else None
+            return (_se_hit, _fam_hit[1] if _fam_hit else (_rest_first.group(0).title() if _rest_first else ""))
     _first = re.match(r"[A-Za-z]+", str(name or "").strip())
     if _first:
         return play_family_lookup().get(_play_norm(_first.group(0)), ("", ""))
@@ -3814,7 +3921,7 @@ def render_upcoming_game():
                         "\U0001f3c0",
                         ("UWW Best Offensive Shot Selection & Quality: "
                          + str(_ss_best_mechanic)
-                         + (f", {_ss_best_contest}" if _ss_best_contest != NO_CONTEST_TAG else "")),
+                         + (f" ({_ss_best_contest.lower()})" if _ss_best_contest in ("Guarded", "Open") else "")),
                         f"{int(_ss_best['Makes'])}/{int(_ss_best['Attempts'])} ({_ss_best['FG%']:.0f}%) this season",
                         _ss_reason,
                         "Data-Driven",
@@ -3904,7 +4011,7 @@ def render_upcoming_game():
                     _aw_reason = " -- ".join(_aw_parts) if _aw_parts else "Not enough UWW lineup/play-call data linked to this shot type yet to say which lineup or play generates it most for us."
                     _keys.append((
                         "\U0001f3af",
-                        f"Attack Opponent Worst Offensive Shot Selection & Quality: {_aw_best_mechanic}, {_aw_best_contest}",
+                        f"Attack their weakest look: {describe_shot_look(_aw_best_mechanic, _aw_best_contest)}",
                         f"Opponents shot {int(_aw_best['Makes'])}/{int(_aw_best['Attempts'])} ({_aw_best['FG%']:.0f}%) on this vs. {short_opponent}, across {_aw_n_opponents} team(s) they played before UWW",
                         _aw_reason,
                         "Data-Driven",
@@ -3935,7 +4042,7 @@ def render_upcoming_game():
                     _dv_top = _dv_grouped.nlargest(1, "Attempts").iloc[0]
                     _keys.append((
                         "\U0001f6e1\ufe0f",
-                        f"{short_opponent}'s high-volume look: {_dv_top['_mechanic']}, {_dv_top['_contest']}",
+                        f"What {short_opponent} goes to most: {describe_shot_look(_dv_top['_mechanic'], _dv_top['_contest'])}",
                         f"{int(_dv_top['Attempts'])} attempts, {_dv_top['FG%']:.0f}% -- across their games before UWW",
                         "What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",
                         "Data-Driven",
@@ -4374,8 +4481,8 @@ def render_upcoming_game():
             # ("what their offense goes to most often") under Offense. These titles are generated by this
             # file, so their category is known outright and doesn't need to be guessed from wording.
             _HEADLINE_FORCED_CATEGORY = (
-                (r"high-volume look", "Defensive Efficiency"),
-                (r"attack opponent worst offensive shot selection", "Offensive Efficiency"),
+                (r"high-volume look|goes to most", "Defensive Efficiency"),
+                (r"attack opponent worst offensive shot selection|attack their weakest look", "Offensive Efficiency"),
             )
             for _icon, _headline, _caption, _reason, _source in _keys:
                 # Data-Driven keys carry raw stat text in _caption/_reason ("Offensive Rebound: 87.7% on
@@ -6670,12 +6777,36 @@ def render_analytics():
         if not off_notes.empty:
             off_notes["play_call"] = resolve_play_calls(off_notes)
             call_rows = off_notes[off_notes["play_call"].notna()].copy()
+            # The SAME possession can arrive twice: once from a game recap note ("PANTHER EXECUTION...")
+            # and once from the season play-call log, and again if two play-log exports overlap. Both
+            # rows describe one call, so counting both double-counts every possession the staff tagged in
+            # more than one place. Collapse on the possession key, keeping whichever copy carries the
+            # coach's note so the detail view keeps the commentary. Rows with no clock can't be identified
+            # as the same possession, so they're left alone rather than merged on a guess.
+            _cr_key = [c for c in ["opponent", "period", "time_remaining_seconds", "team", "player", "play_call"]
+                       if c in call_rows.columns]
+            if "time_remaining_seconds" in call_rows.columns and _cr_key:
+                _cr_timed = call_rows[call_rows["time_remaining_seconds"].notna()].copy()
+                _cr_untimed = call_rows[call_rows["time_remaining_seconds"].isna()]
+                _cr_timed["_has_note"] = _cr_timed["coach_note"].notna() if "coach_note" in _cr_timed.columns else False
+                _cr_timed = (_cr_timed.sort_values("_has_note", ascending=False)
+                             .drop_duplicates(subset=_cr_key, keep="first")
+                             .drop(columns=["_has_note"]))
+                _cr_dropped = len(call_rows) - len(_cr_timed) - len(_cr_untimed)
+                call_rows = pd.concat([_cr_timed, _cr_untimed], ignore_index=True)
+            else:
+                _cr_dropped = 0
             st.markdown("**Play Calls**")
             if not call_rows.empty:
                 call_rows["_is_make"] = call_rows["result"].astype(str).str.contains("Make", case=False, na=False)
                 call_rows["_is_attempt"] = call_rows["result"].astype(str).str.contains("Make|Miss", case=False, regex=True, na=False)
+                # Calls was ("coach_note", "count") -- and count() SKIPS nulls, so it only ever counted the
+                # clips that carried a written note. Every row that came from the season play-call log has
+                # no coach_note at all, so those possessions vanished from the count while still counting
+                # toward Attempts: Kentucky showed "1 call, 5 attempts". Count rows instead.
                 call_summary = call_rows.groupby("play_call").agg(
-                    Calls=("coach_note", "count"), Makes=("_is_make", "sum"), Attempts=("_is_attempt", "sum"),
+                    Calls=("play_call", "size"), Makes=("_is_make", "sum"), Attempts=("_is_attempt", "sum"),
+                    Notes=("coach_note", "count"),
                 ).reset_index()
                 # .replace(0, pd.NA) turned Attempts into an OBJECT-dtype Series, so the division produced
                 # object values and .round(1) then called round() on a pd.NA element -> TypeError (crashed
@@ -6773,8 +6904,8 @@ def render_analytics():
                         st.caption("These clips didn't match a play-by-play row, so no running score is available for them.")
 
                 _pc_display = call_summary[
-                    [c for c in ["play_call", "Series", "Family", "Calls", "Attempts", "FG%"] if c in call_summary.columns]
-                    if _pc_has_catalog else ["play_call", "Calls", "Attempts", "FG%"]
+                    [c for c in ["play_call", "Series", "Family", "Calls", "Attempts", "FG%", "Notes"] if c in call_summary.columns]
+                    if _pc_has_catalog else ["play_call", "Calls", "Attempts", "FG%", "Notes"]
                 ].rename(columns={"play_call": "Play Call"})
                 _pc_picked = None
                 try:
@@ -6813,6 +6944,8 @@ def render_analytics():
                                 _pc_fam.sort_values("Calls", ascending=False), hide_index=True, use_container_width=True,
                             )
 
+                if _cr_dropped:
+                    st.caption(f"{_cr_dropped} duplicate possession(s) merged -- the same play tagged both in a game recap and in the season play-call log.")
                 st.caption("Click a row to see every tagged possession for that play call -- game, clock, score, result and the coach's note. Play call comes from the season play-call log when that game is covered by it, and otherwise from a best-effort read of the coach's own note text (a name immediately before the word \"EXECUTION\").")
             else:
                 st.caption("No named play calls detected yet (looks for a name immediately before the word \"EXECUTION\" in offensive notes).")
