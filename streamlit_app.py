@@ -1043,6 +1043,10 @@ KTV_CATEGORY_REFERENCE = {
     # scattered across PHRASE_SIDE with no category of its own, so keys like "TRANSITION DEFENSE!!!" and
     # "RELENTLESS EFFORT & WINNING PLAYS" fell through to the "Other" bucket. Defined LAST on purpose --
     # _grouped uses the FIRST matched category, so these only claim a key nothing more specific caught.
+    # Our own called sets. Distinct from Offensive Efficiency (shot quality/selection) -- "which plays to
+    # run" is its own decision, and the Plays to Lean On card is pinned here rather than being lumped in
+    # with efficiency keys.
+    "Play Calls": {"keywords": "play call, play calls, called set, called sets, our sets, run this set, lean on, go-to play, go to play, go-to set, playbook set, best plays, top play", "stats": "Play FG%"},
     "Transition / Pace": {"keywords": "transition, transition defense, transition offense, get back, getting back, sprint back, run the floor, push the pace, push tempo, push hard, pushing the pace, fast break, fastbreak, early offense, secondary break, pace, tempo, run in transition", "stats": "Fast break pts, Pace"},
     "Effort / Communication": {"keywords": "effort, relentless, winning plays, connected, being connected, communication, communicate, talk, talking, toughness, tough, compete, competing, finish possessions, finish defensive possessions, late clock, both ends, multiple efforts, multiple effort, never stop, energy, all five, together", "stats": "--"},
 }
@@ -4131,6 +4135,7 @@ def render_upcoming_game():
             "Defensive Efficiency": ("#eceff1", "#37474f"),
             "Offensive Efficiency": ("#fff9c4", "#f9a825"),
             "Personnel/Rotation": ("#e1f5fe", "#0277bd"),
+            "Play Calls": ("#ede7f6", "#5e35b1"),
             "Transition / Pace": ("#fce4ec", "#ad1457"),
             "Effort / Communication": ("#f1f8e9", "#558b2f"),
         }
@@ -4281,7 +4286,13 @@ def render_upcoming_game():
                 if not _ag_sum.empty:
                     _ag_sum["FG%"] = 100 * _ag_sum["Makes"] / _ag_sum["Attempts"]
                     _ag_best = _ag_sum.nlargest(1, "FG%").iloc[0]
-                    _at_a_glance.append(("\U0001f3c0 Top Play", str(_ag_best["play_call"]), f"Best make rate among plays with 2+ tracked attempts this season: {int(_ag_best['Makes'])}/{int(_ag_best['Attempts'])} ({_ag_best['FG%']:.0f}%)."))
+                    _ag_se, _ag_fa = play_call_series(_ag_best["play_call"])
+                    _ag_ctx = ", ".join(dict.fromkeys([x for x in [_ag_fa, _ag_se] if x]))
+                    _at_a_glance.append((
+                        "\U0001f3c0 Top Play", str(_ag_best["play_call"]),
+                        (f"{_ag_ctx} series. " if _ag_ctx else "")
+                        + f"Best make rate among plays with 2+ tracked attempts this season: "
+                          f"{int(_ag_best['Makes'])}/{int(_ag_best['Attempts'])} ({_ag_best['FG%']:.0f}%)."))
                     _card_data["plays"] = _ag_sum
         except Exception:
             pass
@@ -4423,17 +4434,39 @@ def render_upcoming_game():
         # section of the page.
         def _render_plays_card(_n):
             st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">{_n}. \U0001f3c0 Plays to Lean On</span>{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
-            _fp_plays = _card_data["plays"]
+            _fp_plays = _card_data["plays"].copy()
+
+            def _fp_label(_call):
+                """Play name plus where it sits in the playbook -- "Panther-4 \"P4\" (Panther, Specials)".
+                Without the family a coach reads three Panther entries as three unrelated sets."""
+                _se, _fa = play_call_series(_call)
+                _ctx = ", ".join(dict.fromkeys([x for x in [_fa, _se] if x]))
+                return f"{_call}" + (f" _({_ctx})_" if _ctx else "")
+
             _fp_go_to = _fp_plays.nlargest(3, "FG%")
             for _, _r in _fp_go_to.iterrows():
-                st.markdown(f"- **{_r['play_call']}** -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%) this season")
+                st.markdown(f"- **{_fp_label(_r['play_call'])}** -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%) this season")
             _fp_cold = _fp_plays.nsmallest(2, "FG%")
             _fp_cold = _fp_cold[~_fp_cold["play_call"].isin(_fp_go_to["play_call"])]
             if not _fp_cold.empty:
                 st.markdown("**Use sparingly:**")
                 for _, _r in _fp_cold.iterrows():
-                    st.markdown(f"- {_r['play_call']} -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)")
-            st.caption("Play call names are a best-effort extraction from coach notes (see the Analytics page for the full breakdown and how it's parsed).")
+                    st.markdown(f"- {_fp_label(_r['play_call'])} -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)")
+
+            # Family rollup: individual calls are thin (a handful of attempts each), so which PACKAGE is
+            # working is the more reliable read -- and it's the level a coach actually game-plans at.
+            _fp_plays["_family"] = _fp_plays["play_call"].apply(lambda c: play_call_series(c)[1])
+            _fp_fam = _fp_plays[_fp_plays["_family"].astype(str).str.strip() != ""].groupby("_family").agg(
+                Attempts=("Attempts", "sum"), Makes=("Makes", "sum"),
+            ).reset_index()
+            if len(_fp_fam) > 1:
+                _fp_fam["FG%"] = 100 * _fp_fam["Makes"] / _fp_fam["Attempts"].replace(0, float("nan"))
+                _fp_fam = _fp_fam.nlargest(3, "FG%")
+                st.markdown("**By series:** " + " &middot; ".join(
+                    f"{_r['_family']} {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)"
+                    for _, _r in _fp_fam.iterrows()
+                ))
+            st.caption("Play names, series and family come from the team's playbook catalog; calls not in the catalog keep the tagger's own wording (see the Analytics page for the full breakdown).")
             st.markdown("")
 
         def _render_scoring_reliance_card(_n):
@@ -4510,7 +4543,7 @@ def render_upcoming_game():
         # running each card's text through the fuzzy keyword matcher -- these are 8 fixed, known card types,
         # so a reliable direct mapping beats hoping the wording happens to trip the right keywords.
         _CARD_CATEGORY_MAP = {
-            "plays": ("Offensive Efficiency", _render_plays_card),
+            "plays": ("Play Calls", _render_plays_card),
             "scoring_reliance": ("Defensive Efficiency", _render_scoring_reliance_card),
             "pace_style": ("Offensive Efficiency", _render_pace_style_card),
             "rebounding": ("Rebounding", _render_rebounding_card),
@@ -4774,7 +4807,7 @@ def render_upcoming_game():
             # stat category) render full-width below the two columns instead of being forced into one.
             _OFFENSE_CATS = {
                 "Ball Security", "Three-Point Shooting", "Free Throws", "Ball Movement / Assists",
-                "Scoring Inside", "Field Goal Efficiency", "Offensive Efficiency",
+                "Scoring Inside", "Field Goal Efficiency", "Offensive Efficiency", "Play Calls",
             }
             _DEFENSE_CATS = {
                 "Rebounding", "Fouls / Discipline", "Paint Protection / Blocks",
