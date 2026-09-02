@@ -5893,6 +5893,10 @@ def render_upcoming_game():
             _cat_order = [c for c in KTV_CATEGORY_REFERENCE if c in _grouped or c in _cards_by_category]
 
             # Icon-only rating buttons, styled small enough to sit on the same line as a key's title.
+            # Streamlit's own `help=` tooltip is rendered in a portal that places itself ABOVE the
+            # trigger, and its position can't be steered from CSS without moving every tooltip in the app.
+            # So these buttons carry their own: a ::after bubble anchored under the icon, driven by the
+            # rating slug that is part of each button's key (hence the "__beneficial" style suffixes).
             st.markdown("""
             <style>
             div[class*="st-key-ktv_fb_"] button {
@@ -5902,10 +5906,33 @@ def render_upcoming_game():
                 border: 1px solid #eaeaea !important;
                 background: #fff !important;
                 line-height: 1 !important;
+                position: relative !important;
             }
             div[class*="st-key-ktv_fb_"] button:hover { border-color: #4E2A84 !important; }
             div[class*="st-key-ktv_fb_"] button p { font-size: 0.95rem !important; margin: 0 !important; }
             div[class*="st-key-ktv_fb_"] button:disabled { opacity: .45 !important; }
+            /* the bubble itself -- hidden until hover, and never clipped by the column it sits in */
+            div[class*="st-key-ktv_fb_"] { overflow: visible !important; }
+            div[class*="st-key-ktv_fb_"] button::after {
+                position: absolute;
+                top: calc(100% + 6px);
+                right: 0;
+                white-space: nowrap;
+                background: #222;
+                color: #fff;
+                font-size: 0.68rem;
+                font-weight: 600;
+                padding: 3px 8px;
+                border-radius: 6px;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity .12s ease;
+                z-index: 60;
+            }
+            div[class*="st-key-ktv_fb_"] button:hover::after { opacity: 1; }
+            div[class*="st-key-ktv_fb_"][class*="__beneficial"] button::after { content: "Beneficial \2014 worth keeping"; }
+            div[class*="st-key-ktv_fb_"][class*="__not-useful"] button::after { content: "Not useful \2014 true, but doesn't help"; }
+            div[class*="st-key-ktv_fb_"][class*="__not-accurate"] button::after { content: "Not accurate \2014 wrong number or read"; }
             </style>
             """, unsafe_allow_html=True)
 
@@ -5918,10 +5945,11 @@ def render_upcoming_game():
                 except TypeError:
                     return st.columns(_spec)
 
+            # (icon, rating stored in the CSV, css slug used for the button key and its tooltip rule)
             _KTV_RATING_ICONS = (
-                ("\U0001f44d", "Beneficial", "Beneficial -- worth keeping"),
-                ("\U0001f44e", "Not beneficial", "Not useful -- true, but doesn't help"),
-                ("\u26a0\ufe0f", "Not accurate", "Not accurate -- the number or the read is wrong"),
+                ("\U0001f44d", "Beneficial", "beneficial"),
+                ("\U0001f44e", "Not beneficial", "not-useful"),
+                ("\u26a0\ufe0f", "Not accurate", "not-accurate"),
             )
 
             def _ktv_feedback_state(_key_text, _category, _slot=""):
@@ -5936,9 +5964,11 @@ def render_upcoming_game():
                 The click writes to the CSV and records the verdict in session state, so the buttons grey
                 out immediately and a double-click can't file two rows."""
                 _kid, _state_key, _already = _ktv_feedback_state(_key_text, _category, _slot)
-                for _col, (_icon, _rating, _tip) in zip(_cols, _KTV_RATING_ICONS):
+                for _col, (_icon, _rating, _slug_css) in zip(_cols, _KTV_RATING_ICONS):
                     with _col:
-                        if st.button(_icon, key=f"{_state_key}_{_rating}", help=_tip,
+                        # The key ends in the slug so the CSS above can tell the three buttons apart --
+                        # and it stays free of spaces, which Streamlit would turn into separate classes.
+                        if st.button(_icon, key=f"{_state_key}__{_slug_css}",
                                      use_container_width=True, disabled=_already is not None):
                             _ok = save_ktv_feedback({
                                 "opponent": short_opponent, "game_date": game_date,
