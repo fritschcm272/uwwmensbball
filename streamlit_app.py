@@ -3116,7 +3116,20 @@ def render_upcoming_game():
                 div[class*="st-key-l5_"] button p {
                     text-align: left !important;
                     margin: 0 !important;
-                    font-size: 0.9rem !important;
+                    font-size: 0.95rem !important;
+                    /* Streamlit's default button label is a single no-wrap line with an ellipsis, which is
+                       what was cutting "UW-La Crosse Eagles" down to "UW-La Crosse Eagl...". Let it wrap
+                       and give the card room to grow instead of hiding the name. */
+                    white-space: normal !important;
+                    overflow: visible !important;
+                    text-overflow: clip !important;
+                    overflow-wrap: anywhere !important;
+                }
+                div[class*="st-key-l5_"] button > div,
+                div[class*="st-key-l5_"] button > div > div {
+                    white-space: normal !important;
+                    overflow: visible !important;
+                    text-overflow: clip !important;
                 }
                 div[class*="st-key-all_games_btn"] button {
                     border: 1px dashed #cfc7dd !important;
@@ -3128,20 +3141,32 @@ def render_upcoming_game():
                 </style>
                 """, unsafe_allow_html=True)
 
-                def _l5_button_label(_g):
-                    """Same information, same shape as the read-only result cards above: result and score
-                    on top in win/loss colour, then opponent, then date."""
+                def _l5_button_label(_g, _short_names=None):
+                    """Same information, same shape as the read-only result cards above: date on top and
+                    dimmed, opponent below it, result and score last in win/loss colour.
+
+                    The opponent is shown by its SCOUTING short name where one exists ("UW-La Crosse"
+                    rather than "UW-La Crosse Eagles") -- these cards are half a narrow column wide, and
+                    the mascot is the part a coach doesn't need. Only if no short name matches does the
+                    full name get used, and then it wraps rather than being cut off."""
                     _res = str(_g.get("outcome", ""))
                     _score = (f"{int(_g['team_score'])}-{int(_g['opp_score'])}"
                               if _g.get("team_score") is not None and _g.get("opp_score") is not None else "")
-                    _loc = "@ " if "away" in str(_g.get("location", "")).lower() else "vs "
-                    _name = str(_g.get("opp_name", ""))
-                    if len(_name) > 24:
-                        _name = _name[:22].rstrip() + "\u2026"
+                    _loc = "@" if "away" in str(_g.get("location", "")).lower() else "vs"
+                    _name = str(_g.get("opp_name", "") or "")
+                    _short = resolve_short_opponent(_name, _short_names) if _short_names else None
+                    _name = _short or _name
                     _date = str(_g.get("date", "") or "").strip()
                     _res_md = f":green[**{_res}**]" if _res == "W" else f":red[**{_res}**]"
-                    _line2 = f"{_loc}{_name}" + (f" · {_date}" if _date else "")
-                    return f"{_res_md} **{_score}**  \n{_line2}"
+                    # Date first, dimmed, then the result -- reading order matches how a coach scans a
+                    # schedule (when, then what happened), and the score keeps its own line at the bottom
+                    # where the eye lands last.
+                    _lines = []
+                    if _date:
+                        _lines.append(f":gray[{_date}]")
+                    _lines.append(f"{_loc} {_name}")
+                    _lines.append(f"{_res_md} **{_score}**")
+                    return "  \n".join(_lines)
 
                 _l5_max = max(len(uww_last5), len(opp_last5), 1)
                 if _l5_max == 0 or (not uww_last5 and not opp_last5):
@@ -3152,7 +3177,7 @@ def render_upcoming_game():
                     _l5_c1, _l5_c2 = st.columns(2)
                     with _l5_c1:
                         if _u_game is not None:
-                            if st.button(_l5_button_label(_u_game), key=f"l5_uww_btn_{_l5_i}", use_container_width=True):
+                            if st.button(_l5_button_label(_u_game, _l5_short_names), key=f"l5_uww_btn_{_l5_i}", use_container_width=True):
                                 _u_short = resolve_short_opponent(_u_game["opp_name"], _l5_short_names)
                                 _show_last5_game_dialog(
                                     _u_short, f"UWW vs {_u_game['opp_name']} \u2014 {_u_game.get('date', '')}",
@@ -3167,7 +3192,7 @@ def render_upcoming_game():
                             # live-scrape -- so these ARE clickable now, same as UWW's own results, wherever
                             # that reconstruction actually found data for this specific game.
                             _o_third_party_short = resolve_short_opponent(_o_game["opp_name"], _l5_opp_short_names)
-                            if st.button(_l5_button_label(_o_game), key=f"l5_opp_btn_{_l5_i}", use_container_width=True):
+                            if st.button(_l5_button_label(_o_game, _l5_opp_short_names), key=f"l5_opp_btn_{_l5_i}", use_container_width=True):
                                 _show_last5_game_dialog(
                                     _o_third_party_short, f"{short_opponent} vs {_o_game['opp_name']} \u2014 {_o_game.get('date', '')}",
                                     _source_table="uww_opponent_prior_games_box_score", _team_a_hint=short_opponent,
