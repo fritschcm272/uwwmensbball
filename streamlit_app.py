@@ -1674,13 +1674,34 @@ def play_catalog_lookup() -> dict:
     return out
 
 
+def _play_title_case(name) -> str:
+    """Consistent display spelling for a play call the catalog doesn't list. Coaches type the same call in
+    whatever case the moment called for -- "TWINS SWIRL" in one clip, "Twins Swirl" in the next -- and
+    those grouped as two separate plays with half the attempts each. Title case matches the catalog's own
+    style ("Twins Pitch Wrap"), except for tokens that are clearly acronyms or numbered tags (3 characters
+    or fewer, or containing a digit), which stay exactly as typed so "DHO", "ELOB" and "P-4" don't become
+    "Dho", "Elob" and "P-4"'s prettier, wronger cousins."""
+    _PLAY_ACRONYMS = {"ELOB", "SLOB", "BLOB", "ATO", "DHO", "ISO", "PNR", "OB", "UCLA", "STS"}
+    _out = []
+    for _tok in re.split(r"(\s+)", str(name).strip()):
+        if not _tok or _tok.isspace():
+            _out.append(_tok)
+        elif _tok.upper().strip("()\"'") in _PLAY_ACRONYMS:
+            _out.append(_tok.upper())
+        elif len(_tok) <= 3 or any(ch.isdigit() for ch in _tok):
+            _out.append(_tok.upper() if _tok.isupper() else _tok)
+        else:
+            _out.append(_tok[:1].upper() + _tok[1:].lower())
+    return "".join(_out)
+
+
 def canonical_play_call(name):
-    """The catalog's own name for a play call, or the raw text unchanged when the catalog doesn't know it
-    (a call that isn't in the playbook index yet, or no catalog at all). Never drops a call."""
+    """The catalog's own name for a play call. A call the catalog doesn't know keeps its own wording but
+    gets a consistent case, so the same call typed two ways stays one play. Never drops a call."""
     if name is None or (isinstance(name, float) and name != name):
         return name
     hit = play_catalog_lookup().get(_play_norm(name))
-    return hit[0] if hit else name
+    return hit[0] if hit else _play_title_case(name)
 
 
 def play_family_lookup() -> dict:
