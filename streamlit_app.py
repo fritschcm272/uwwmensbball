@@ -4042,12 +4042,18 @@ def render_upcoming_game():
                                 _aw_lu_qual = _aw_lu_all[_aw_lu_all["Attempts"] >= 3]
                                 if not _aw_lu_qual.empty:
                                     _aw_top_fg = _aw_lu_qual.sort_values(["FG%", "Attempts"], ascending=False).head(3)
-                                    _aw_lineup_txt = ("Best on this shot (3+ attempts): "
-                                                      + "; ".join(_aw_lu_line(_r) for _, _r in _aw_top_fg.iterrows()))
+                                    # One lineup per line: five last names plus a split makes each entry long
+                                    # enough that three of them joined by semicolons read as one wall of text.
+                                    _aw_lineup_txt = "\n".join(
+                                        ["Best on this shot (3+ attempts):"]
+                                        + [f"\u2022 {_aw_lu_line(_r)}" for _, _r in _aw_top_fg.iterrows()]
+                                    )
                                 _aw_top_vol = _aw_lu_all.sort_values(["Attempts", "FG%"], ascending=False).head(3)
                                 if not _aw_top_vol.empty:
-                                    _aw_volume_txt = ("Runs it most: "
-                                                      + "; ".join(_aw_lu_line(_r, _show_pct=False) for _, _r in _aw_top_vol.iterrows()))
+                                    _aw_volume_txt = "\n".join(
+                                        ["Runs it most:"]
+                                        + [f"\u2022 {_aw_lu_line(_r, _show_pct=False)}" for _, _r in _aw_top_vol.iterrows()]
+                                    )
 
                         if "coach_note" in _aw_match_rows.columns:
                             _aw_calls = resolve_play_calls(_aw_match_rows).dropna()
