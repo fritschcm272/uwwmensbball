@@ -1046,6 +1046,7 @@ KTV_CATEGORY_REFERENCE = {
     # Our own called sets. Distinct from Offensive Efficiency (shot quality/selection) -- "which plays to
     # run" is its own decision, and the Plays to Lean On card is pinned here rather than being lumped in
     # with efficiency keys.
+    "Four Factors": {"keywords": "four factors, efg, efg%, true shooting, ts%, turnover rate, offensive rebound rate, ft rate, possession game", "stats": "eFG%, TOV%, ORB%, FT Rate"},
     "Play Calls": {"keywords": "play call, play calls, called set, called sets, our sets, run this set, lean on, go-to play, go to play, go-to set, playbook set, best plays, top play", "stats": "Play FG%"},
     "Transition / Pace": {"keywords": "transition, transition defense, transition offense, get back, getting back, sprint back, run the floor, push the pace, push tempo, push hard, pushing the pace, fast break, fastbreak, early offense, secondary break, pace, tempo, run in transition", "stats": "Fast break pts, Pace"},
     "Effort / Communication": {"keywords": "effort, relentless, winning plays, connected, being connected, communication, communicate, talk, talking, toughness, tough, compete, competing, finish possessions, finish defensive possessions, late clock, both ends, multiple efforts, multiple effort, never stop, energy, all five, together", "stats": "--"},
@@ -1463,6 +1464,97 @@ def estimate_possessions(fga, oreb, to, fta) -> float:
     return fga - oreb + to + 0.44 * fta
 
 
+# Dean Oliver's own weighting of the Four Factors -- shooting matters most, free throws least. Used to turn
+# four separate gaps into one answer: which factor is most likely to decide THIS game.
+FOUR_FACTOR_WEIGHTS = {"eFG%": 0.40, "TOV%": 0.25, "ORB%": 0.20, "FT Rate": 0.15}
+# Higher is better for three of them; TOV% is the exception (a turnover is a lost possession).
+FOUR_FACTOR_HIGHER_IS_BETTER = {"eFG%": True, "TOV%": False, "ORB%": True, "FT Rate": True}
+
+
+@st.cache_data(ttl=60)
+def adjusted_efficiency() -> dict:
+    """Opponent-adjusted offensive and defensive efficiency, KenPom's method applied to what this app has.
+
+    The idea is his: a rating is only meaningful relative to who you played, so each game's raw efficiency
+    is shifted by how good that opponent is, then everyone's ratings are recomputed from the shifted
+    numbers and the whole thing is iterated until it settles.
+
+    Two honest departures from the real thing, both forced by the data available here:
+      * The league graph is only UWW's own games plus each opponent's season point totals -- there is no
+        full schedule of every team against every other, so opponent strength starts from their own
+        points scored/allowed per game rather than from a converged rating.
+      * Opponent per-game points are converted to per-100 using the average pace of UWW's games, because
+        no possession estimate exists for games UWW didn't play in.
+    So treat the adjustment as a correction for schedule strength, not as a KenPom rating. Raw numbers are
+    returned alongside and shown next to it everywhere, precisely so the adjustment can be second-guessed.
+    """
+    box = load_table("uww_pbp_box_score")
+    if box.empty or "team" not in box.columns:
+        return {}
+    uww = box[box["team"] == "UW-Whitewater"]
+    opp = box[box["team"] != "UW-Whitewater"]
+    if uww.empty or opp.empty:
+        return {}
+    keys = [c for c in ["opponent", "game_date"] if c in box.columns]
+    if not keys:
+        return {}
+
+    games = []
+    for key, u in uww.groupby(keys, dropna=False):
+        mask = pd.Series(True, index=opp.index)
+        for col, val in zip(keys, (key if isinstance(key, tuple) else (key,))):
+            mask &= (opp[col] == val)
+        o = opp[mask]
+        if o.empty:
+            continue
+        d = compute_efficiency_pace(u, o, 1)
+        games.append({"opponent": (key[0] if isinstance(key, tuple) else key),
+                      "ortg": d["ORtg"], "drtg": d["DRtg"], "pace": d["Pace"]})
+    gdf = pd.DataFrame(games)
+    if gdf.empty or gdf["pace"].mean() <= 0:
+        return {}
+    pace = gdf["pace"].mean()
+
+    # Seed every opponent from their own season scoring, converted to per-100 at UWW's average pace.
+    totals = load_table("uww_opponent_team_totals")
+    seed_off, seed_def = {}, {}
+    if not totals.empty and "opponent" in totals.columns:
+        for _, r in totals.iterrows():
+            ppg, allowed = safe_float(r.get("team_ppg")), safe_float(r.get("opp_ppg_allowed"))
+            if ppg is not None and 0 < ppg < 200:
+                seed_off[str(r["opponent"])] = 100 * ppg / pace
+            if allowed is not None and 0 < allowed < 200:
+                seed_def[str(r["opponent"])] = 100 * allowed / pace
+    league_off = (sum(seed_off.values()) / len(seed_off)) if seed_off else gdf["ortg"].mean()
+    league_def = (sum(seed_def.values()) / len(seed_def)) if seed_def else gdf["drtg"].mean()
+
+    short_names = sorted(set(seed_off) | set(seed_def), key=len, reverse=True)
+    gdf["short"] = gdf["opponent"].apply(lambda o: resolve_short_opponent(o, short_names) or str(o))
+    off_adj = dict(seed_off)
+    def_adj = dict(seed_def)
+    uww_off = gdf["ortg"].mean()
+    uww_def = gdf["drtg"].mean()
+    for _ in range(12):
+        # UWW's own rating: each game shifted by how far that opponent's defense (offense) sits from average.
+        uww_off = float((gdf["ortg"] + (league_def - gdf["short"].map(def_adj).fillna(league_def))).mean())
+        uww_def = float((gdf["drtg"] - (gdf["short"].map(off_adj).fillna(league_off) - league_off)).mean())
+        # Then each opponent, shifted by UWW's own strength in the one game they share with us.
+        for _, g in gdf.iterrows():
+            nm = g["short"]
+            if nm in def_adj:
+                def_adj[nm] = 0.5 * def_adj[nm] + 0.5 * (g["ortg"] + (uww_off - league_off) * -1 + (league_def - def_adj[nm]) * 0)
+            if nm in off_adj:
+                off_adj[nm] = 0.5 * off_adj[nm] + 0.5 * (g["drtg"] - (uww_def - league_def))
+    return {
+        "pace": pace, "league_off": league_off, "league_def": league_def,
+        "uww": {"raw_off": float(gdf["ortg"].mean()), "raw_def": float(gdf["drtg"].mean()),
+                "adj_off": uww_off, "adj_def": uww_def},
+        "opponents_adj_off": off_adj, "opponents_adj_def": def_adj,
+        "opponents_raw_off": seed_off, "opponents_raw_def": seed_def,
+        "games": len(gdf),
+    }
+
+
 def compute_four_factors(team_box: pd.DataFrame, opp_box: pd.DataFrame) -> dict:
     """Dean Oliver's "Four Factors" (eFG%, TOV%, ORB%, FT Rate) for `team_box`'s side of a game or set of
     games. `opp_box` (the other side's box-score rows over the same games) is needed for ORB%, since it
@@ -1866,6 +1958,63 @@ def play_call_series(name) -> tuple:
     if _first:
         return play_family_lookup().get(_play_norm(_first.group(0)), ("", ""))
     return ("", "")
+
+
+# --- Points per possession -------------------------------------------------------------------------------
+# FG% treats a made three and a made layup as the same event and ignores trips to the line entirely, so a
+# play that generates 38% from three ranks below one that generates 48% from two even though it produces
+# more points. Points per possession is the standard efficiency unit (roughly: 1.00 PPP is break-even for
+# a college offense), so it leads every play-call number now, with FG% kept in parentheses because it's
+# what the staff has been reading all season.
+_RESULT_POINTS = {"make 3 pts": 3, "make 2 pts": 2, "1 pts": 1, "0 pts": 0}
+
+
+def play_result_points(result):
+    """Points produced by one tagged possession, or None when the tag doesn't say.
+
+    "Foul"/"Non Shooting Foul"/"Free Throw"/"No Violation" are deliberately None rather than 0: a drawn
+    shooting foul is usually a GOOD outcome worth more than a point on average, and scoring it as zero
+    would punish exactly the plays that get to the line. Unknown outcomes are excluded from the
+    denominator instead of guessed at.
+    """
+    _t = re.sub(r"\s+", " ", str(result or "")).strip().lower()
+    if _t in _RESULT_POINTS:
+        return _RESULT_POINTS[_t]
+    if _t.startswith("miss"):
+        return 0
+    if _t == "turnover":
+        return 0
+    return None
+
+
+def summarize_play_calls(rows: pd.DataFrame, min_possessions: int = 2) -> pd.DataFrame:
+    """Per-play-call efficiency table: PPP over scoreable possessions, plus the FG% split.
+
+    `rows` is coach-note rows already carrying a resolved `play_call` and a `result`.
+    """
+    if rows.empty or "play_call" not in rows.columns:
+        return pd.DataFrame(columns=["play_call", "Poss", "Pts", "PPP", "Makes", "Attempts", "FG%"])
+    _r = rows.copy()
+    _r["_pts"] = _r["result"].apply(play_result_points)
+    _r["_is_poss"] = _r["_pts"].notna()
+    _r["_pts_f"] = pd.to_numeric(_r["_pts"], errors="coerce").fillna(0)
+    _r["_mk"] = _r["result"].astype(str).str.contains("Make", case=False, na=False)
+    _r["_at"] = _r["result"].astype(str).str.contains("Make|Miss", case=False, regex=True, na=False)
+    _out = _r.groupby("play_call").agg(
+        Poss=("_is_poss", "sum"), Pts=("_pts_f", "sum"),
+        Makes=("_mk", "sum"), Attempts=("_at", "sum"),
+    ).reset_index()
+    _out["PPP"] = _out["Pts"] / pd.to_numeric(_out["Poss"], errors="coerce").replace(0, float("nan"))
+    _out["FG%"] = 100 * _out["Makes"] / pd.to_numeric(_out["Attempts"], errors="coerce").replace(0, float("nan"))
+    _out = _out[_out["Poss"] >= min_possessions]
+    return _out.sort_values("PPP", ascending=False).reset_index(drop=True)
+
+
+def format_ppp(row) -> str:
+    """"1.24 PPP (52% FG)" -- the efficiency number leads, the familiar one stays visible."""
+    _ppp = "--" if pd.isna(row.get("PPP")) else f"{row['PPP']:.2f} PPP"
+    _fg = "" if pd.isna(row.get("FG%")) else f", {row['FG%']:.0f}% FG"
+    return f"{_ppp}{_fg}"
 
 
 def note_sentiment_counts(note) -> tuple:
@@ -4136,6 +4285,7 @@ def render_upcoming_game():
             "Offensive Efficiency": ("#fff9c4", "#f9a825"),
             "Personnel/Rotation": ("#e1f5fe", "#0277bd"),
             "Play Calls": ("#ede7f6", "#5e35b1"),
+            "Four Factors": ("#e0f2f1", "#00695c"),
             "Transition / Pace": ("#fce4ec", "#ad1457"),
             "Effort / Communication": ("#f1f8e9", "#558b2f"),
         }
@@ -4260,6 +4410,7 @@ def render_upcoming_game():
             "Keys to Victory": "#4E2A84",
             "Team Strengths": "#c62828",
             "Lineup Scouting": "#5d4037",
+            "Coach Notes": "#00695c",
         }
 
         def _source_badge_html(source):
@@ -4289,18 +4440,17 @@ def render_upcoming_game():
                     _ag_t = _ag_calls[_ag_calls["time_remaining_seconds"].notna()].drop_duplicates(subset=_ag_k)
                     _ag_calls = pd.concat([_ag_t, _ag_calls[_ag_calls["time_remaining_seconds"].isna()]], ignore_index=True)
                 _card_data["plays_rows"] = _ag_calls
-                _ag_sum = _ag_calls.groupby("play_call").agg(Makes=("_mk", "sum"), Attempts=("_at", "sum")).reset_index()
-                _ag_sum = _ag_sum[_ag_sum["Attempts"] >= 2]
+                _ag_sum = summarize_play_calls(_ag_calls, min_possessions=2)
                 if not _ag_sum.empty:
-                    _ag_sum["FG%"] = 100 * _ag_sum["Makes"] / _ag_sum["Attempts"]
-                    _ag_best = _ag_sum.nlargest(1, "FG%").iloc[0]
+                    _ag_best = _ag_sum.nlargest(1, "PPP").iloc[0]
                     _ag_se, _ag_fa = play_call_series(_ag_best["play_call"])
                     _ag_ctx = ", ".join(dict.fromkeys([x for x in [_ag_fa, _ag_se] if x]))
                     _at_a_glance.append((
                         "\U0001f3c0 Top Play", str(_ag_best["play_call"]),
                         (f"{_ag_ctx} series. " if _ag_ctx else "")
-                        + f"Best make rate among plays with 2+ tracked attempts this season: "
-                          f"{int(_ag_best['Makes'])}/{int(_ag_best['Attempts'])} ({_ag_best['FG%']:.0f}%)."))
+                        + f"Best points per possession among plays with 2+ tracked possessions this season: "
+                          f"{format_ppp(_ag_best)} over {int(_ag_best['Poss'])} possessions "
+                          f"({int(_ag_best['Makes'])}/{int(_ag_best['Attempts'])} shooting)."))
                     _card_data["plays"] = _ag_sum
 
                     # --- Same two lists, but only from games against teams that PLAY LIKE the upcoming
@@ -4320,14 +4470,10 @@ def render_upcoming_game():
                             _sp_raw_names = [r for n in _sp_names for r in _sp_by_short.get(n, [])]
                             _sp_rows = _ag_calls[_ag_calls["opponent"].isin(_sp_raw_names)]
                             if not _sp_rows.empty:
-                                _sp_sum = _sp_rows.groupby("play_call").agg(
-                                    Makes=("_mk", "sum"), Attempts=("_at", "sum"),
-                                ).reset_index()
-                                # A 1-attempt floor here, not the season list's 2: three games is a small
-                                # sample by construction, and requiring 2 attempts would empty the card.
-                                _sp_sum = _sp_sum[_sp_sum["Attempts"] >= 1]
+                                # A 1-possession floor here, not the season list's 2: three games is a
+                                # small sample by construction, and a 2-possession floor would empty it.
+                                _sp_sum = summarize_play_calls(_sp_rows, min_possessions=1)
                                 if not _sp_sum.empty:
-                                    _sp_sum["FG%"] = 100 * _sp_sum["Makes"] / _sp_sum["Attempts"]
                                     _card_data["plays_similar"] = {
                                         "summary": _sp_sum,
                                         "opponents": [(n, int(_sp_ranked.loc[_sp_ranked["opponent"] == n, "match"].iloc[0]))
@@ -4515,6 +4661,110 @@ def render_upcoming_game():
         except Exception:
             pass
 
+        # --- Opponent-adjusted efficiency (KenPom's method, see adjusted_efficiency()) ------------------
+        try:
+            _ae = adjusted_efficiency()
+            if _ae and short_opponent:
+                _card_data["adj_efficiency"] = {
+                    "core": _ae,
+                    "opp_adj": (_ae["opponents_adj_off"].get(short_opponent), _ae["opponents_adj_def"].get(short_opponent)),
+                    "opp_raw": (_ae["opponents_raw_off"].get(short_opponent), _ae["opponents_raw_def"].get(short_opponent)),
+                }
+                _at_a_glance.append((
+                    "\U0001f4c8 Adj. Net Rtg",
+                    f"{_ae['uww']['adj_off'] - _ae['uww']['adj_def']:+.1f}",
+                    f"UWW opponent-adjusted: {_ae['uww']['adj_off']:.1f} off / {_ae['uww']['adj_def']:.1f} def "
+                    f"(raw {_ae['uww']['raw_off']:.1f} / {_ae['uww']['raw_def']:.1f}) over {_ae['games']} games."))
+        except Exception:
+            pass
+
+        # --- Weighted Four Factors: which factor actually decides this game -------------------------------
+        try:
+            _ff_box = load_table("uww_pbp_box_score")
+            _ff_uww = _ff_box[_ff_box["team"] == "UW-Whitewater"] if not _ff_box.empty else pd.DataFrame()
+            _ff_opp_side = _ff_box[_ff_box["team"] != "UW-Whitewater"] if not _ff_box.empty else pd.DataFrame()
+            _ff_prior = load_table("uww_opponent_prior_games_box_score")
+            _ff_them = _ff_prior[_ff_prior["team"] == short_opponent] if not _ff_prior.empty else pd.DataFrame()
+            _ff_foes = _ff_prior[_ff_prior["team"] != short_opponent] if not _ff_prior.empty else pd.DataFrame()
+            if not _ff_uww.empty and not _ff_opp_side.empty and not _ff_them.empty and not _ff_foes.empty:
+                _ff_us = compute_four_factors(_ff_uww, _ff_opp_side)
+                _ff_they = compute_four_factors(_ff_them, _ff_foes)
+                _ff_rows = []
+                for _k, _w in FOUR_FACTOR_WEIGHTS.items():
+                    _a, _b = safe_float(_ff_us.get(_k)), safe_float(_ff_they.get(_k))
+                    if _a is None or _b is None:
+                        continue
+                    _edge = (_a - _b) if FOUR_FACTOR_HIGHER_IS_BETTER[_k] else (_b - _a)
+                    _ff_rows.append({"factor": _k, "uww": _a, "opp": _b, "edge": _edge, "weight": _w,
+                                     "weighted": _edge * _w})
+                if _ff_rows:
+                    _card_data["four_factors"] = pd.DataFrame(_ff_rows)
+        except Exception:
+            pass
+
+        # --- Scoring runs -------------------------------------------------------------------------------
+        try:
+            _sr_runs = load_table("uww_scoring_runs")
+            if not _sr_runs.empty and {"uww_biggest_run", "opponent_biggest_run"} <= set(_sr_runs.columns):
+                _sr_r = _sr_runs.copy()
+                for _c in ("uww_biggest_run", "opponent_biggest_run", "uww_largest_lead", "opponent_largest_lead"):
+                    if _c in _sr_r.columns:
+                        _sr_r[_c] = pd.to_numeric(_sr_r[_c], errors="coerce")
+                _card_data["scoring_runs"] = _sr_r
+        except Exception:
+            pass
+
+        # --- Lineup stints ------------------------------------------------------------------------------
+        try:
+            _ls = load_table("uww_lineup_stints")
+            if not _ls.empty and {"uww_lineup", "stint_minutes", "uww_margin_change"} <= set(_ls.columns):
+                _ls = _ls.copy()
+                _ls["stint_minutes"] = pd.to_numeric(_ls["stint_minutes"], errors="coerce")
+                _ls["uww_margin_change"] = pd.to_numeric(_ls["uww_margin_change"], errors="coerce")
+                _ls_g = _ls.dropna(subset=["uww_lineup"]).groupby("uww_lineup").agg(
+                    Minutes=("stint_minutes", "sum"), Margin=("uww_margin_change", "sum"),
+                    Stints=("stint_minutes", "size"),
+                ).reset_index()
+                _ls_g = _ls_g[_ls_g["Minutes"] >= 4]
+                if not _ls_g.empty:
+                    _ls_g["Per40"] = 40 * _ls_g["Margin"] / _ls_g["Minutes"].replace(0, float("nan"))
+                    _card_data["lineup_stints"] = _ls_g
+        except Exception:
+            pass
+
+        # --- Coach-note sentiment -----------------------------------------------------------------------
+        try:
+            _ns_notes = load_table("uww_coach_notes")
+            _ns_uww = _ns_notes[_ns_notes["team"] == "UW-Whitewater"] if not _ns_notes.empty and "team" in _ns_notes.columns else pd.DataFrame()
+            if not _ns_uww.empty and "coach_note" in _ns_uww.columns:
+                _ns_pos, _ns_neg = {}, {}
+                for _nt in _ns_uww["coach_note"].dropna():
+                    for _seg in str(_nt).split(","):
+                        _seg = _seg.strip()
+                        if len(_seg) < 5:
+                            continue
+                        _key = _seg.lstrip("+- ").strip().title()
+                        if _seg.startswith("+"):
+                            _ns_pos[_key] = _ns_pos.get(_key, 0) + 1
+                        elif _seg.startswith("-"):
+                            _ns_neg[_key] = _ns_neg.get(_key, 0) + 1
+                if _ns_pos or _ns_neg:
+                    _card_data["note_sentiment"] = {
+                        "pos": sorted(_ns_pos.items(), key=lambda kv: -kv[1])[:4],
+                        "neg": sorted(_ns_neg.items(), key=lambda kv: -kv[1])[:4],
+                        "n_notes": int(_ns_uww["coach_note"].notna().sum()),
+                    }
+        except Exception:
+            pass
+
+        # --- Coaching flags for UWW players --------------------------------------------------------------
+        try:
+            _cf = load_table("uww_coaching_flags")
+            if not _cf.empty and {"player", "flag", "sentiment"} <= set(_cf.columns):
+                _card_data["coaching_flags"] = _cf.copy()
+        except Exception:
+            pass
+
         # NOTE: _at_a_glance itself is no longer converted into condensed "Data-Driven" entries in _keys --
         # the Full Game Plan Recommendations grid below is the sole representation of this data now, not an
         # addition alongside a condensed duplicate of it in the Keys to Victory list.
@@ -4539,18 +4789,22 @@ def render_upcoming_game():
             return f"{_call}" + (f" _({_ctx})_" if _ctx else "")
 
         def _fp_best_worst(_df, _n_best=3, _n_worst=2, _suffix=""):
-            """Render the Best/Worst pair off one play summary table. Worst excludes anything already named
-            as best, so a short list doesn't print the same play under both headings."""
-            _best = _df.nlargest(_n_best, "FG%")
+            """Render the Best/Worst pair off one play summary table, ranked on POINTS PER POSSESSION with
+            FG% alongside. Worst excludes anything already named as best, so a short list doesn't print the
+            same play under both headings."""
+            _rank = "PPP" if "PPP" in _df.columns else "FG%"
+            _best = _df.nlargest(_n_best, _rank)
             st.markdown("**Best Overall Plays**" if not _suffix else f"**Best Plays {_suffix}**")
             for _, _r in _best.iterrows():
-                st.markdown(f"- **{_fp_label(_r['play_call'])}** -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)")
-            _worst = _df.nsmallest(_n_worst, "FG%")
+                st.markdown(f"- **{_fp_label(_r['play_call'])}** -- {format_ppp(_r)} "
+                            f"({int(_r['Makes'])}/{int(_r['Attempts'])} over {int(_r.get('Poss', 0))} poss)")
+            _worst = _df.nsmallest(_n_worst, _rank)
             _worst = _worst[~_worst["play_call"].isin(_best["play_call"])]
             if not _worst.empty:
                 st.markdown("**Worst Overall Plays**" if not _suffix else f"**Worst Plays {_suffix}**")
                 for _, _r in _worst.iterrows():
-                    st.markdown(f"- {_fp_label(_r['play_call'])} -- {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)")
+                    st.markdown(f"- {_fp_label(_r['play_call'])} -- {format_ppp(_r)} "
+                                f"({int(_r['Makes'])}/{int(_r['Attempts'])} over {int(_r.get('Poss', 0))} poss)")
 
         def _render_plays_card(_n):
             st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">{_n}. \U0001f3c0 Play Calls -- Full Season</span>{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
@@ -4562,13 +4816,14 @@ def render_upcoming_game():
             _fp_plays["_family"] = _fp_plays["play_call"].apply(lambda c: play_call_series(c)[1])
             _fp_fam = _fp_plays[_fp_plays["_family"].astype(str).str.strip() != ""].groupby("_family").agg(
                 Attempts=("Attempts", "sum"), Makes=("Makes", "sum"),
+                Poss=("Poss", "sum"), Pts=("Pts", "sum"),
             ).reset_index()
             if len(_fp_fam) > 1:
+                _fp_fam["PPP"] = _fp_fam["Pts"] / _fp_fam["Poss"].replace(0, float("nan"))
                 _fp_fam["FG%"] = 100 * _fp_fam["Makes"] / _fp_fam["Attempts"].replace(0, float("nan"))
-                _fp_fam = _fp_fam.nlargest(3, "FG%")
+                _fp_fam = _fp_fam.nlargest(3, "PPP")
                 st.markdown("**By series:** " + " &middot; ".join(
-                    f"{_r['_family']} {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)"
-                    for _, _r in _fp_fam.iterrows()
+                    f"{_r['_family']} {format_ppp(_r)}" for _, _r in _fp_fam.iterrows()
                 ))
             st.caption("Play names, series and family come from the team's playbook catalog; calls not in the catalog keep the tagger's own wording (see the Analytics page for the full breakdown).")
             st.markdown("")
@@ -4588,6 +4843,140 @@ def render_upcoming_game():
             _fp_best_worst(_sp["summary"], _suffix="vs This Style")
             st.caption("A three-game sample by construction -- a 1-attempt floor, so read it as a pointer, "
                        "not a verdict. The full-season card above is the larger sample.")
+            st.markdown("")
+
+        def _render_adj_efficiency_card(_n):
+            _ae = _card_data["adj_efficiency"]
+            _core, (_o_adj_off, _o_adj_def), (_o_raw_off, _o_raw_def) = _ae["core"], _ae["opp_adj"], _ae["opp_raw"]
+            _u = _core["uww"]
+            st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
+                        f'{_n}. \U0001f4c8 Efficiency, Opponent-Adjusted</span>'
+                        f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
+            st.markdown(
+                f"**UWW** -- adjusted **{_u['adj_off']:.1f}** off / **{_u['adj_def']:.1f}** def "
+                f"(**{_u['adj_off'] - _u['adj_def']:+.1f}** net) &nbsp;·&nbsp; raw {_u['raw_off']:.1f} / "
+                f"{_u['raw_def']:.1f} ({_u['raw_off'] - _u['raw_def']:+.1f})")
+            if _o_adj_off is not None and _o_adj_def is not None:
+                _raw_txt = (f" &nbsp;·&nbsp; raw {_o_raw_off:.1f} / {_o_raw_def:.1f}"
+                            if _o_raw_off is not None and _o_raw_def is not None else "")
+                st.markdown(
+                    f"**{short_opponent}** -- adjusted **{_o_adj_off:.1f}** off / **{_o_adj_def:.1f}** def "
+                    f"(**{_o_adj_off - _o_adj_def:+.1f}** net){_raw_txt}")
+                _edge = (_u['adj_off'] - _u['adj_def']) - (_o_adj_off - _o_adj_def)
+                st.markdown(f"Projected edge on neutral floor: **{_edge:+.1f}** points per 100 possessions.")
+            st.caption(
+                f"KenPom's method -- each game's efficiency shifted by that opponent's own strength, then "
+                f"iterated until stable -- over {_core['games']} games at {_core['pace']:.1f} poss/gm. Two "
+                f"honest limits: the only schedule this app can see is UWW's own games plus each opponent's "
+                f"season point totals, and opponent points are converted to per-100 at UWW's average pace. "
+                f"Raw numbers are shown next to every adjusted one so the adjustment can be argued with.")
+            st.markdown("")
+
+        def _render_four_factors_card(_n):
+            _ff = _card_data["four_factors"].copy()
+            st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
+                        f'{_n}. \u2696\ufe0f Four Factors -- What Decides This Game</span>'
+                        f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
+            _ff["_abs"] = _ff["weighted"].abs()
+            _top = _ff.nlargest(1, "_abs").iloc[0]
+            _verb = "our edge" if _top["edge"] > 0 else f"{short_opponent}'s edge"
+            st.markdown(f"Biggest weighted gap: **{_top['factor']}** -- {_verb} "
+                        f"(UWW {_top['uww']:.1f} vs {_top['opp']:.1f}).")
+            _ff_show = _ff.assign(
+                Factor=_ff["factor"], UWW=_ff["uww"].round(1),
+                **{short_opponent[:18]: _ff["opp"].round(1)},
+                Edge=_ff["edge"].round(1), Weight=(_ff["weight"] * 100).astype(int).astype(str) + "%",
+                Weighted=_ff["weighted"].round(2),
+            )
+            st.dataframe(
+                _ff_show[["Factor", "UWW", short_opponent[:18], "Edge", "Weight", "Weighted"]]
+                .sort_values("Weighted", key=lambda c: c.abs(), ascending=False),
+                hide_index=True, use_container_width=True)
+            st.caption("Dean Oliver's weights (shooting 40%, turnovers 25%, offensive rebounding 20%, free "
+                       "throws 15%). Edge is stated so positive always favors UWW -- for turnovers that "
+                       "means a LOWER rate. UWW's factors are from their own games; the opponent's are from "
+                       "their prior games, so neither is adjusted for who they played.")
+            st.markdown("")
+
+        def _render_scoring_runs_card(_n):
+            _sr = _card_data["scoring_runs"]
+            st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
+                        f'{_n}. \U0001f30a Scoring Runs</span>'
+                        f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
+            _ours = _sr["uww_biggest_run"].dropna()
+            _theirs = _sr["opponent_biggest_run"].dropna()
+            if not _ours.empty and not _theirs.empty:
+                st.markdown(f"Across {len(_sr)} games: our biggest run averages **{_ours.mean():.1f}** points "
+                            f"(best {int(_ours.max())}); the run against us averages **{_theirs.mean():.1f}** "
+                            f"(worst {int(_theirs.max())}).")
+                _bled = _sr[_sr["opponent_biggest_run"] >= _sr["opponent_biggest_run"].quantile(0.75)]
+                if "opp_run_uww_lineup" in _bled.columns:
+                    _bl = _bled["opp_run_uww_lineup"].dropna()
+                    if not _bl.empty:
+                        _worst_unit = _bl.value_counts().idxmax()
+                        st.markdown(f"On the floor for the most of their biggest runs: "
+                                    f"**{_last_names(_worst_unit)}**.")
+                if "uww_run_uww_lineup" in _sr.columns:
+                    _gl = _sr["uww_run_uww_lineup"].dropna()
+                    if not _gl.empty:
+                        st.markdown(f"On the floor for the most of ours: **{_last_names(_gl.value_counts().idxmax())}**.")
+            st.caption("A run is consecutive scoring by one team with no answer. Lineups are whoever was on "
+                       "the floor across the run's own event window.")
+            st.markdown("")
+
+        def _render_lineup_stints_card(_n):
+            _ls = _card_data["lineup_stints"]
+            st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
+                        f'{_n}. \u23f2\ufe0f Five-Man Units -- Minutes Won</span>'
+                        f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
+            st.markdown("**Best by margin per 40:**")
+            for _, _r in _ls.nlargest(3, "Per40").iterrows():
+                st.markdown(f"- **{_last_names(_r['uww_lineup'])}** -- {_r['Per40']:+.1f}/40 "
+                            f"({_r['Margin']:+.0f} in {_r['Minutes']:.0f} min, {int(_r['Stints'])} stints)")
+            _bad = _ls.nsmallest(2, "Per40")
+            if not _bad.empty:
+                st.markdown("**Struggling:**")
+                for _, _r in _bad.iterrows():
+                    st.markdown(f"- {_last_names(_r['uww_lineup'])} -- {_r['Per40']:+.1f}/40 "
+                                f"({_r['Margin']:+.0f} in {_r['Minutes']:.0f} min)")
+            st.caption("Units with 4+ minutes together. Small samples swing hard -- minutes are shown so a "
+                       "3-minute lineup isn't read as a rotation decision.")
+            st.markdown("")
+
+        def _render_note_sentiment_card(_n):
+            _ns = _card_data["note_sentiment"]
+            st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
+                        f'{_n}. \U0001f4dd What the Staff Keeps Writing Down</span>'
+                        f'{_source_badge_html("Coach Notes")}</div>', unsafe_allow_html=True)
+            if _ns["neg"]:
+                st.markdown("**Recurring corrections:**")
+                for _t, _c in _ns["neg"]:
+                    st.markdown(f"- {_t} -- **{_c}x**")
+            if _ns["pos"]:
+                st.markdown("**Repeatedly done well:**")
+                for _t, _c in _ns["pos"]:
+                    st.markdown(f"- {_t} -- {_c}x")
+            st.caption(f"From {_ns['n_notes']} UWW clip notes this season, counting the coach's own \"+\" and "
+                       f"\"-\" clauses. A theme repeating across games is a practice plan, not a one-off.")
+            st.markdown("")
+
+        def _render_coaching_flags_card(_n):
+            _cf = _card_data["coaching_flags"]
+            st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
+                        f'{_n}. \U0001f6a9 Player Flags to Coach This Week</span>'
+                        f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
+            _order = {"High": 0, "Medium": 1, "Low": 2}
+            _cf = _cf.assign(_rank=_cf.get("confidence", pd.Series("Medium", index=_cf.index)).map(_order).fillna(1))
+            for _lbl, _sent in (("Lean on", "Positive"), ("Clean up", "Negative")):
+                _sel = _cf[_cf["sentiment"] == _sent].sort_values("_rank").head(3)
+                if _sel.empty:
+                    continue
+                st.markdown(f"**{_lbl}:**")
+                for _, _r in _sel.iterrows():
+                    _ev = f" _{_r['evidence']}_" if "evidence" in _r.index and pd.notna(_r.get("evidence")) else ""
+                    st.markdown(f"- **{_r['player']}** -- {_r['flag']}.{_ev}")
+            st.caption("From uww_coaching_flags, the parser's own per-player reads. Highest-confidence first; "
+                       "the Team page carries the full list with recommendations.")
             st.markdown("")
 
         def _render_scoring_reliance_card(_n):
@@ -4730,6 +5119,12 @@ def render_upcoming_game():
         _CARD_CATEGORY_MAP = {
             "plays": ("Play Calls", _render_plays_card),
             "plays_similar": ("Play Calls", _render_similar_plays_card),
+            "adj_efficiency": ("Offensive Efficiency", _render_adj_efficiency_card),
+            "four_factors": ("Four Factors", _render_four_factors_card),
+            "scoring_runs": ("Defensive Efficiency", _render_scoring_runs_card),
+            "lineup_stints": ("Personnel/Rotation", _render_lineup_stints_card),
+            "note_sentiment": ("Effort / Communication", _render_note_sentiment_card),
+            "coaching_flags": ("Personnel/Rotation", _render_coaching_flags_card),
             "scoring_reliance": ("Defensive Efficiency", _render_scoring_reliance_card),
             "pace_style": ("Offensive Efficiency", _render_pace_style_card),
             "rebounding": ("Rebounding", _render_rebounding_card),
@@ -4994,6 +5389,7 @@ def render_upcoming_game():
             _OFFENSE_CATS = {
                 "Ball Security", "Three-Point Shooting", "Free Throws", "Ball Movement / Assists",
                 "Scoring Inside", "Field Goal Efficiency", "Offensive Efficiency", "Play Calls",
+                "Four Factors",
             }
             _DEFENSE_CATS = {
                 "Rebounding", "Fouls / Discipline", "Paint Protection / Blocks",
@@ -7095,6 +7491,10 @@ def render_analytics():
                     Calls=("play_call", "size"), Makes=("_is_make", "sum"), Attempts=("_is_attempt", "sum"),
                     Notes=("coach_note", "count"),
                 ).reset_index()
+                # Points per possession, the metric the play lists are now ranked on -- FG% stays as a
+                # column rather than being replaced, since it's what the staff has read all season.
+                _pc_eff = summarize_play_calls(call_rows, min_possessions=1)[["play_call", "Poss", "Pts", "PPP"]]
+                call_summary = call_summary.merge(_pc_eff, on="play_call", how="left")
                 # .replace(0, pd.NA) turned Attempts into an OBJECT-dtype Series, so the division produced
                 # object values and .round(1) then called round() on a pd.NA element -> TypeError (crashed
                 # the whole Analytics page). Coerce to float and use NaN for the divide-by-zero guard
@@ -7102,7 +7502,9 @@ def render_analytics():
                 _pc_makes = pd.to_numeric(call_summary["Makes"], errors="coerce")
                 _pc_att = pd.to_numeric(call_summary["Attempts"], errors="coerce").replace(0, float("nan"))
                 call_summary["FG%"] = (100 * _pc_makes / _pc_att).round(1)
-                call_summary = call_summary.drop(columns=["Makes"]).sort_values("Calls", ascending=False).reset_index(drop=True)
+                call_summary["PPP"] = call_summary["PPP"].round(2)
+                call_summary = call_summary.drop(columns=["Makes", "Pts"]).sort_values(
+                    ["PPP", "Calls"], ascending=False).reset_index(drop=True)
                 # Playbook context, when the catalog has been parsed: the catalog's own SERIES plus the
                 # play-name family that actually groups the shorthand together (Panther "P" / Panther 2
                 # "P2" / Panther-4 "P4" are all filed under Specials, but a coach reads them as Panther).
@@ -7140,6 +7542,7 @@ def render_analytics():
                     if not _sum_row.empty:
                         _sr = _sum_row.iloc[0]
                         _fg_txt = "--" if pd.isna(_sr["FG%"]) else f"{_sr['FG%']:.1f}%"
+                        _ppp_txt = "" if pd.isna(_sr.get("PPP")) else f"{_sr['PPP']:.2f} PPP &middot; "
                         _pc_sr_series, _pc_sr_family = play_call_series(_call)
                         _pc_ctx = " &middot; ".join(x for x in [
                             f"{html.escape(_pc_sr_family)} series" if _pc_sr_family else "",
@@ -7148,7 +7551,7 @@ def render_analytics():
                         st.markdown(
                             f'<div style="font-family:Montserrat,sans-serif;font-weight:800;font-size:1.5rem;color:#4E2A84;">{html.escape(str(_call))}</div>'
                             + (f'<div style="color:#4E2A84;font-size:0.85rem;font-weight:600;">{_pc_ctx}</div>' if _pc_ctx else "")
-                            + f'<div style="color:#666;margin-bottom:10px;">{int(_sr["Calls"])} tagged clip(s) &middot; '
+                            + f'<div style="color:#666;margin-bottom:10px;">{_ppp_txt}{int(_sr["Calls"])} tagged clip(s) &middot; '
                             f'{int(_sr["Attempts"])} shot attempt(s) &middot; {_fg_txt} FG</div>',
                             unsafe_allow_html=True,
                         )
@@ -7191,8 +7594,8 @@ def render_analytics():
                         st.caption("These clips didn't match a play-by-play row, so no running score is available for them.")
 
                 _pc_display = call_summary[
-                    [c for c in ["play_call", "Series", "Family", "Calls", "Attempts", "FG%", "Notes"] if c in call_summary.columns]
-                    if _pc_has_catalog else ["play_call", "Calls", "Attempts", "FG%", "Notes"]
+                    [c for c in ["play_call", "Series", "Family", "Calls", "Poss", "PPP", "Attempts", "FG%", "Notes"] if c in call_summary.columns]
+                    if _pc_has_catalog else ["play_call", "Calls", "Poss", "PPP", "Attempts", "FG%", "Notes"]
                 ].rename(columns={"play_call": "Play Call"})
                 _pc_picked = None
                 try:
@@ -7218,17 +7621,24 @@ def render_analytics():
                     # Series-level rollup: individual calls are thin slices (a handful of clips each), so
                     # the family totals are what actually say whether the Panther package is working.
                     _pc_fam = call_summary[call_summary["Family"].astype(str).str.strip() != ""].groupby("Family").agg(
-                        Calls=("Calls", "sum"), Attempts=("Attempts", "sum"),
+                        Calls=("Calls", "sum"), Attempts=("Attempts", "sum"), Poss=("Poss", "sum"),
                     ).reset_index()
-                    _pc_fam_makes = call_rows.copy()
-                    _pc_fam_makes["_fam"] = _pc_fam_makes["play_call"].apply(lambda c: play_call_series(c)[1])
-                    _pc_fam_makes = _pc_fam_makes[_pc_fam_makes["_fam"].astype(str).str.strip() != ""].groupby("_fam")["_is_make"].sum()
-                    _pc_fam["FG%"] = (100 * _pc_fam["Family"].map(_pc_fam_makes).astype(float)
+                    _pc_fam_src = call_rows.copy()
+                    _pc_fam_src["_fam"] = _pc_fam_src["play_call"].apply(lambda c: play_call_series(c)[1])
+                    _pc_fam_src = _pc_fam_src[_pc_fam_src["_fam"].astype(str).str.strip() != ""]
+                    _pc_fam_src["_pts"] = pd.to_numeric(_pc_fam_src["result"].apply(play_result_points), errors="coerce")
+                    _pc_fam_agg = _pc_fam_src.groupby("_fam").agg(
+                        _makes=("_is_make", "sum"), _pts=("_pts", "sum"),
+                    )
+                    _pc_fam["FG%"] = (100 * _pc_fam["Family"].map(_pc_fam_agg["_makes"]).astype(float)
                                       / pd.to_numeric(_pc_fam["Attempts"], errors="coerce").replace(0, float("nan"))).round(1)
+                    _pc_fam["PPP"] = (_pc_fam["Family"].map(_pc_fam_agg["_pts"]).astype(float)
+                                      / pd.to_numeric(_pc_fam["Poss"], errors="coerce").replace(0, float("nan"))).round(2)
                     if len(_pc_fam) > 1:
                         with st.expander(f"By play series ({len(_pc_fam)} families)", expanded=False):
                             st.dataframe(
-                                _pc_fam.sort_values("Calls", ascending=False), hide_index=True, use_container_width=True,
+                                _pc_fam[[c for c in ["Family", "Calls", "Poss", "PPP", "Attempts", "FG%"] if c in _pc_fam.columns]]
+                                .sort_values("PPP", ascending=False), hide_index=True, use_container_width=True,
                             )
 
                 if _cr_dropped:
