@@ -1831,18 +1831,19 @@ def compute_efficiency_pace(team_box: pd.DataFrame, opp_box: pd.DataFrame, n_gam
     }
 
 
-def compute_uww_pace_by_game(as_of_date=None):
+def compute_uww_pace_by_game(as_of_date=None, exclusive=False):
     """Every UWW game's Pace/Net Rtg/ORtg/result, one row per game, bucketed 'fast'/'slow' against UWW's own
     season median pace (needs 4+ qualifying games; returns (None, None) below that). Factored out of the
     Pace & Style KTV card so that card and the per-game Pace indicator on the Previous Games page use the
     exact same games and the exact same definition of "fast" and "slow" for UWW, rather than two separate
     computations that could quietly drift apart.
 
-    as_of_date: if given, only games on or before this date count toward the median -- used by the Previous
-    Games page so a past game's fast/slow read reflects only what UWW's season looked like THROUGH that
-    game, not games that hadn't been played yet. Leave as None (default) for the full-season view the Pace &
-    Style KTV card wants when deciding how to approach an UPCOMING opponent, where every game played so far
-    is fair game."""
+    as_of_date: if given, restricts which games count toward the median -- used by the Previous Games page
+    so a past game's fast/slow read reflects only what UWW's season looked like around that game, not games
+    that hadn't been played yet. Leave as None (default) for the full-season view the Pace & Style KTV card
+    wants when deciding how to approach an UPCOMING opponent, where every game played so far is fair game.
+    exclusive: when True, only games STRICTLY BEFORE as_of_date count (an "entering this game" read); when
+    False (default), games ON as_of_date count too (a "through this game, inclusive" read)."""
     box = load_table("uww_pbp_box_score")
     uww_side = box[box["team"] == "UW-Whitewater"] if not box.empty else pd.DataFrame()
     opp_side = box[box["team"] != "UW-Whitewater"] if not box.empty else pd.DataFrame()
@@ -1866,7 +1867,9 @@ def compute_uww_pace_by_game(as_of_date=None):
         })
     df = pd.DataFrame(rows)
     if as_of_date is not None and "game_date" in df.columns:
-        df = df[pd.to_datetime(df["game_date"], errors="coerce") <= pd.to_datetime(as_of_date)]
+        _dates = pd.to_datetime(df["game_date"], errors="coerce")
+        _cutoff = pd.to_datetime(as_of_date)
+        df = df[_dates < _cutoff] if exclusive else df[_dates <= _cutoff]
     if len(df) < 4:
         return None, None
     median = df["pace"].median()
@@ -1874,10 +1877,83 @@ def compute_uww_pace_by_game(as_of_date=None):
     return df, median
 
 
+def compute_uww_run_rates(as_of_date=None, exclusive=False):
+    """UWW's own share of games with a "big" run (10-0 or better, points_for and points_against) from
+    uww_scoring_runs -- the same bar the Runs We Go On / Runs Against Us KTV cards already use, so a rate
+    quoted here means the same thing as a rate quoted there.
+
+    as_of_date/exclusive: same meaning as compute_uww_pace_by_game() -- restricts which games count, so the
+    Previous Games page can describe UWW's run tendency ENTERING a specific past game rather than over the
+    whole season. Returns (off_rate, def_rate, n); both rates are None when n == 0."""
+    runs = load_table("uww_scoring_runs")
+    if runs.empty or not {"uww_biggest_run", "opponent_biggest_run"} <= set(runs.columns):
+        return None, None, 0
+    r = runs.copy()
+    for c in ("uww_biggest_run", "opponent_biggest_run"):
+        r[c] = pd.to_numeric(r[c], errors="coerce")
+    if as_of_date is not None and "game_date" in r.columns:
+        _dates = pd.to_datetime(r["game_date"], errors="coerce")
+        _cutoff = pd.to_datetime(as_of_date)
+        r = r[_dates < _cutoff] if exclusive else r[_dates <= _cutoff]
+    n = len(r)
+    if n == 0:
+        return None, None, 0
+    return (r["uww_biggest_run"] >= 10).sum() / n, (r["opponent_biggest_run"] >= 10).sum() / n, n
+
+
 def compute_true_shooting(pts, fga, fta) -> float:
     """True Shooting % -- see STAT_GLOSSARY['TS%']. Returns 0 if there were no shooting attempts of any kind."""
     denom = 2 * (fga + 0.44 * fta)
     return (pts / denom * 100) if denom > 0 else 0
+
+
+def detect_biggest_runs_by_game(pbp_df: pd.DataFrame) -> pd.DataFrame:
+    """Each game's biggest scoring run for each team that scored in it, from a PBP events table.
+
+    Deliberately mirrors parser_nb.ipynb's own run-detection cell ("Scoring runs and largest lead/deficit per
+    game") event-for-event -- same event types (made_shot/free_throw_made), same point value per event, same
+    "consecutive scoring by one team with no answer" definition of a run, same grouping by (opponent,
+    game_date) via event_order sequence -- so a run counted here means the same thing as a run in the
+    already-exported uww_scoring_runs table. uww_scoring_runs only covers UWW's OWN games, though, so this
+    exists to compute the same thing for uww_opponent_prior_games_pbp (the upcoming opponent's own prior
+    games), which has no precomputed run table of its own. Returns columns: opponent, game_date, team,
+    run_points -- one row per team that scored in a given game, with THEIR biggest run for it (a team with no
+    run at all, i.e. never got to score, has no row).
+    """
+    _req_cols = {"event_type", "shot_type", "team", "event_order", "opponent", "game_date"}
+    if pbp_df.empty or not _req_cols <= set(pbp_df.columns):
+        return pd.DataFrame(columns=["opponent", "game_date", "team", "run_points"])
+    scoring = pbp_df[pbp_df["event_type"].isin(["made_shot", "free_throw_made"])].copy()
+    if scoring.empty:
+        return pd.DataFrame(columns=["opponent", "game_date", "team", "run_points"])
+
+    def _points(row):
+        if row["event_type"] != "made_shot":
+            return 1
+        try:
+            return int(row["shot_type"])
+        except (TypeError, ValueError):
+            return 2  # unparseable shot_type -- treat as a 2 rather than drop the event entirely
+
+    scoring["points"] = scoring.apply(_points, axis=1)
+    rows = []
+    for (opp, gdate), group in scoring.groupby(["opponent", "game_date"], dropna=False):
+        cur_team, cur_pts = None, 0
+        runs = []
+        for _, row in group.sort_values("event_order").iterrows():
+            if row["team"] == cur_team:
+                cur_pts += row["points"]
+            else:
+                if cur_team is not None:
+                    runs.append({"team": cur_team, "run_points": cur_pts})
+                cur_team, cur_pts = row["team"], row["points"]
+        if cur_team is not None:
+            runs.append({"team": cur_team, "run_points": cur_pts})
+        if not runs:
+            continue
+        for team, pts in pd.DataFrame(runs).groupby("team")["run_points"].max().items():
+            rows.append({"opponent": opp, "game_date": gdate, "team": team, "run_points": pts})
+    return pd.DataFrame(rows)
 
 
 def compute_game_score(row: pd.Series) -> float:
@@ -5474,9 +5550,42 @@ def render_upcoming_game():
                 for _c in ("uww_biggest_run", "opponent_biggest_run", "uww_largest_lead", "opponent_largest_lead"):
                     if _c in _sr_r.columns:
                         _sr_r[_c] = pd.to_numeric(_sr_r[_c], errors="coerce")
-                # Same table, two cards -- one per side of the ball.
-                _card_data["scoring_runs_off"] = _sr_r
-                _card_data["scoring_runs_def"] = _sr_r
+                _sr_n = len(_sr_r)
+                _sr_off_rate = (_sr_r["uww_biggest_run"] >= 10).sum() / _sr_n if _sr_n else 0
+                _sr_def_rate = (_sr_r["opponent_biggest_run"] >= 10).sum() / _sr_n if _sr_n else 0
+
+                # CONFIRMED CHANGE (requested): built out to a full two-sided mismatch check, same shape as
+                # the Pace & Style rework -- now checks not just whether UWW does this often, but whether
+                # THIS specific opponent has shown the matching vulnerability/tendency in their own prior
+                # games. uww_opponent_prior_games_pbp has no precomputed run table of its own (unlike UWW's
+                # games, which already have uww_scoring_runs), so detect_biggest_runs_by_game() replicates
+                # the parser's own run-detection algorithm against it exactly, rather than inventing a
+                # different definition of "run" that could quietly disagree with uww_scoring_runs' own.
+                _opp_own_rate, _opp_foe_rate, _opp_n = None, None, 0
+                _opp_pbp = load_table("uww_opponent_prior_games_pbp")
+                if not _opp_pbp.empty and short_opponent:
+                    _opp_runs = detect_biggest_runs_by_game(_opp_pbp)
+                    if not _opp_runs.empty:
+                        _opp_n = _opp_runs[["opponent", "game_date"]].drop_duplicates().shape[0]
+                        if _opp_n >= 3:
+                            _opp_own = _opp_runs[_opp_runs["team"] == short_opponent]
+                            _opp_foe = _opp_runs[_opp_runs["team"] != short_opponent]
+                            _opp_own_rate = (_opp_own["run_points"] >= 10).sum() / _opp_n
+                            _opp_foe_rate = (_opp_foe["run_points"] >= 10).sum() / _opp_n
+
+                # "Runs We Go On" is only a real key if WE actually do it often AND this opponent has shown
+                # (in their own prior games, against other teams) that they give up big runs often -- i.e.
+                # they're genuinely vulnerable to it, not just a hypothetical target.
+                if _sr_off_rate >= 0.5 and _opp_foe_rate is not None and _opp_foe_rate >= 0.5:
+                    _card_data["scoring_runs_off"] = _sr_r
+                    _card_data["scoring_runs_off_opp"] = {"rate": _opp_foe_rate, "n": _opp_n}
+
+                # "Runs Against Us" is only a real key if WE actually give them up often AND this opponent has
+                # shown (in their own prior games) that they GO ON big runs against other teams often -- i.e.
+                # they're a genuinely run-prone team we need to be ready to weather.
+                if _sr_def_rate >= 0.5 and _opp_own_rate is not None and _opp_own_rate >= 0.5:
+                    _card_data["scoring_runs_def"] = _sr_r
+                    _card_data["scoring_runs_def_opp"] = {"rate": _opp_own_rate, "n": _opp_n}
         except Exception:
             pass
 
@@ -5686,6 +5795,11 @@ def render_upcoming_game():
                 st.markdown(f"Across {len(_sr)} games our biggest run averages **{_ours.mean():.1f}** points "
                             f"(best **{int(_ours.max())}**). We reached a 10-0 run or better in "
                             f"**{len(_big)}** of them.")
+                _sro = _card_data.get("scoring_runs_off_opp")
+                if _sro:
+                    st.markdown(f"{esc(short_opponent)} has given up a run that size in "
+                                f"**{100 * _sro['rate']:.0f}%** of their own games this season ({_sro['n']} "
+                                f"games) -- a real target, not just something every team is vulnerable to.")
                 if "uww_run_uww_lineup" in _sr.columns:
                     _gl = _sr["uww_run_uww_lineup"].dropna()
                     if not _gl.empty:
@@ -5710,6 +5824,11 @@ def render_upcoming_game():
                 st.markdown(f"Across {len(_sr)} games the biggest run against us averages **{_theirs.mean():.1f}** "
                             f"points (worst **{int(_theirs.max())}**). We gave up a 10-0 run or better in "
                             f"**{len(_bad)}** of them.")
+                _srd = _card_data.get("scoring_runs_def_opp")
+                if _srd:
+                    st.markdown(f"{esc(short_opponent)} has gone on a run that size against their own "
+                                f"opponents in **{100 * _srd['rate']:.0f}%** of their games this season "
+                                f"({_srd['n']} games) -- a real, run-prone team, not just bad luck.")
                 _bled = _sr[_sr["opponent_biggest_run"] >= _sr["opponent_biggest_run"].quantile(0.75)]
                 if "opp_run_uww_lineup" in _bled.columns:
                     _bl = _bled["opp_run_uww_lineup"].dropna()
@@ -6871,35 +6990,6 @@ def render_previous_games():
     # --- BOX SCORE ---
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">BOX SCORE</div></div>', unsafe_allow_html=True)
 
-    # Pace for THIS game, read against UWW's own season median AS OF THIS GAME -- same games/definition of
-    # "fast"/"slow" as the Pace & Style key on the Upcoming Game page (see compute_uww_pace_by_game()), so a
-    # coach flipping between the two pages sees a consistent read rather than two numbers computed two
-    # different ways. CONFIRMED BUG (fixed here): this originally called compute_uww_pace_by_game() with no
-    # as_of_date, so an early-season game's "season median" silently included every game played AFTER it too
-    # -- a game from November could get judged "slow" against a median that only became true in February.
-    # Passing this game's own date restricts the median to what UWW's season actually looked like through
-    # that game.
-    try:
-        if not uww_game_box.empty and not opp_game_box.empty:
-            _pg_pace_d = compute_efficiency_pace(uww_game_box, opp_game_box, 1)
-            # _pg_game_date can be None (resolve_game_date() doesn't match every display-date format) -- must
-            # NOT fall through to compute_uww_pace_by_game()'s default in that case, since the default is the
-            # full, unrestricted season and would silently reopen the exact leak this fix is for.
-            _pg_season_median = None
-            if _pg_game_date is not None:
-                _, _pg_season_median = compute_uww_pace_by_game(as_of_date=_pg_game_date)
-            if _pg_season_median is not None:
-                _pg_bucket = "Fast" if _pg_pace_d["Pace"] > _pg_season_median else "Slow"
-                st.caption(f"This game's pace: **{_pg_pace_d['Pace']:.0f}** poss/gm -- **{_pg_bucket}** for UWW "
-                           f"(season median through this game: {_pg_season_median:.1f} poss/gm). Net Rtg "
-                           f"**{_pg_pace_d['Net Rtg']:+.1f}**.")
-            else:
-                st.caption(f"This game's pace: **{_pg_pace_d['Pace']:.0f}** poss/gm. Net Rtg "
-                           f"**{_pg_pace_d['Net Rtg']:+.1f}**. (Need 4+ games with box-score data through this "
-                           f"point in the season to tell fast from slow for UWW.)")
-    except Exception:
-        pass
-
     # Precompute lineup data for the later LINEUP PERFORMANCE section (kept here since it's been computed
     # alongside the box score since before this fix -- not actually used by the box-score table below).
     if not game_stints.empty:
@@ -7117,11 +7207,55 @@ def render_previous_games():
                                 st.write(notes)
                             st.markdown("")
 
+    # --- GAME TEMPO ---
+    # CONFIRMED CHANGE (requested): previously just a single caption line under the box score showing this
+    # game's own pace. Now its own section with the same "entering this game" + "result" shape as the
+    # Scoring Runs section below and the Pace & Style KTV card on the Upcoming Game page -- what UWW's own
+    # tempo tendency looked like BEFORE this game (games strictly before it, via exclusive=True -- this is
+    # deliberately NOT the same inclusive cutoff the old caption used, since "entering the game" should mean
+    # what was known walking in, not a number this very game itself helped produce), alongside what actually
+    # happened. _pg_game_date can be None (resolve_game_date() doesn't match every display-date format) -- in
+    # that case the section still shows the result, just without a fast/slow read against nothing solid.
+    try:
+        if not uww_game_box.empty and not opp_game_box.empty:
+            _pg_pace_d = compute_efficiency_pace(uww_game_box, opp_game_box, 1)
+            _pg_pre_median = None
+            if _pg_game_date is not None:
+                _, _pg_pre_median = compute_uww_pace_by_game(as_of_date=_pg_game_date, exclusive=True)
+            st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\u23F1\uFE0F GAME TEMPO</div></div>', unsafe_allow_html=True)
+            if _pg_pre_median is not None:
+                st.markdown(f"**Entering this game:** UWW's own median pace across the games before this one "
+                            f"was **{_pg_pre_median:.1f}** poss/gm.")
+                _pg_bucket = "faster" if _pg_pace_d["Pace"] > _pg_pre_median else "slower"
+                st.markdown(f"**Result:** this game was played at **{_pg_pace_d['Pace']:.0f}** poss/gm -- "
+                            f"**{_pg_bucket}** than UWW's tempo up to that point. Net Rtg "
+                            f"**{_pg_pace_d['Net Rtg']:+.1f}**.")
+            else:
+                st.markdown(f"**Result:** this game was played at **{_pg_pace_d['Pace']:.0f}** poss/gm. "
+                            f"Net Rtg **{_pg_pace_d['Net Rtg']:+.1f}**.")
+                st.caption("Not enough games before this one yet (need 4+) to say whether this was fast or "
+                           "slow for UWW at the time.")
+    except Exception:
+        pass
+
     # --- SCORING RUNS & CLUTCH MOMENTS (this game) ---
     _pg_runs = load_table("uww_scoring_runs")
     _pg_run_row = _this_game(_pg_runs) if not _pg_runs.empty else pd.DataFrame()
     if not _pg_run_row.empty:
         st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001F4C8 SCORING RUNS &amp; LARGEST LEADS</div></div>', unsafe_allow_html=True)
+        # CONFIRMED CHANGE (requested): added this "entering this game" line, same idea as GAME TEMPO above
+        # and the Runs We Go On / Runs Against Us KTV cards -- UWW's own run tendency BEFORE this game,
+        # using the exact same >=10-point "big run" bar those cards use, from games strictly before this one.
+        if _pg_game_date is not None:
+            _pg_off_rate, _pg_def_rate, _pg_run_n = compute_uww_run_rates(as_of_date=_pg_game_date, exclusive=True)
+            if _pg_off_rate is not None:
+                st.markdown(f"**Entering this game:** across the {_pg_run_n} game(s) before this one, UWW had "
+                            f"gone on a 10-0-or-better run in **{100 * _pg_off_rate:.0f}%** of them, and given "
+                            f"one up in **{100 * _pg_def_rate:.0f}%**.")
+            else:
+                st.caption("Not enough games before this one yet (need at least 1 with run data) to describe "
+                           "UWW's run tendency at the time.")
+        st.markdown("**Result:**")
         _rr = _pg_run_row.iloc[0]
         rr_col1, rr_col2 = st.columns(2)
         rr_col1.metric("UWW biggest run", f"{int(_rr['uww_biggest_run'])} pts")
