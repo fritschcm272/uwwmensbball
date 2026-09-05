@@ -593,6 +593,12 @@ def strip_team_mascot(name) -> str:
     fallback -- schedule names in this data are "<School> <Mascot>" -- unless that word is part of a
     school name ("State", "College", "Tech") or a parenthetical qualifier like "(WI)". Never returns an
     empty string: if every token would be stripped, the original name is kept.
+
+    Only safe to call on a RAW schedule name that's known to still carry a mascot -- the "guess and drop the
+    last word" fallback above will wrongly chop a real word off a name that's already mascot-free (e.g.
+    "UW-La Crosse" -> "UW-La"). For a name that might ALREADY be short (e.g. short_opponent, which usually
+    already has no mascot but occasionally still does -- see strip_known_mascot_suffix()'s docstring), use
+    strip_known_mascot_suffix() instead, which never guesses.
     """
     if not name or (isinstance(name, float) and pd.isna(name)):
         return ""
@@ -610,6 +616,38 @@ def strip_team_mascot(name) -> str:
     elif len(_toks) > 1:
         _last = _toks[-1].strip(".,").lower()
         if _last not in _SCHOOL_WORDS and not _toks[-1].startswith("("):
+            _toks.pop()
+    return " ".join(_toks) or _raw
+
+
+def strip_known_mascot_suffix(name) -> str:
+    """Strip a trailing mascot word (and any modifier in front of it, e.g. "Red" in "Red Devils") ONLY if
+    the name ends with a word from the known _MASCOT_WORDS list. Unlike strip_team_mascot(), this never
+    guesses at an unrecognized trailing word -- so it's safe to call on something that might ALREADY be
+    mascot-free.
+
+    CONFIRMED BUG (fixed here): opp_display used to be `short_opponent or strip_team_mascot(full_opponent)`
+    -- which only stripped a mascot when short_opponent was falsy (no scouting data yet for that opponent).
+    Once an opponent HAS scouting/PBP data, short_opponent is usually already mascot-free by convention, but
+    isn't guaranteed to be -- if whichever source table resolve_short_opponent() matched against happens to
+    still carry the mascot for a given opponent (e.g. "UW-Oshkosh Titans" instead of "UW-Oshkosh"), that
+    string won a truthy `or` and the banner showed the mascot regardless of the earlier fix. Can't just run
+    short_opponent through strip_team_mascot() to cover this -- its "guess the last word" fallback would
+    mangle an already-correct multi-word short name like "UW-La Crosse" into "UW-La". This function is the
+    safe middle ground: strips a mascot if (and only if) one is actually recognized.
+    """
+    if not name or (isinstance(name, float) and pd.isna(name)):
+        return ""
+    _raw = str(name).strip()
+    _toks = _raw.split()
+    if len(_toks) < 2:
+        return _raw
+    _stripped = False
+    while len(_toks) > 1 and _toks[-1].strip(".,").lower() in _MASCOT_WORDS:
+        _toks.pop()
+        _stripped = True
+    if _stripped:
+        while len(_toks) > 1 and _toks[-1].strip(".,").lower() in _MASCOT_MODIFIERS:
             _toks.pop()
     return " ".join(_toks) or _raw
 
@@ -2744,7 +2782,7 @@ def render_upcoming_game():
     # Titans") whenever short_opponent couldn't be resolved -- i.e. whenever an opponent has no scouting/PBP
     # data yet, which is exactly when a coach is most likely to be looking at this banner for a first read.
     # strip_team_mascot() is the same mascot-stripping helper already used elsewhere in the app for this.
-    opp_display = short_opponent or strip_team_mascot(full_opponent)
+    opp_display = strip_known_mascot_suffix(short_opponent) if short_opponent else strip_team_mascot(full_opponent)
     opp_logo_b64 = find_logo_b64(short_opponent, full_opponent)
 
     uww_logo_img = f'<div style="height:64px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;"><img src="data:image/png;base64,{uww_logo_b64}" style="max-height:64px;max-width:90px;object-fit:contain;"></div>' if uww_logo_b64 else '<div style="height:64px;"></div>'
@@ -2982,7 +3020,7 @@ def render_upcoming_game():
             if uww_idx is not None:
                 opp_games = opp_games.iloc[:uww_idx]
 
-        opp_display = short_opponent or strip_team_mascot(full_opponent)
+        opp_display = strip_known_mascot_suffix(short_opponent) if short_opponent else strip_team_mascot(full_opponent)
 
         # Build UWW last 5
         uww_last5 = []
@@ -6673,7 +6711,7 @@ def render_previous_games():
 
     # --- Broadcast-style game result banner ---
     uww_logo_b64 = find_logo_b64("UW-Whitewater")
-    opp_display = short_opponent or strip_team_mascot(full_opponent)
+    opp_display = strip_known_mascot_suffix(short_opponent) if short_opponent else strip_team_mascot(full_opponent)
     opp_logo_b64 = find_logo_b64(short_opponent, full_opponent)
 
     uww_logo_img = f'<div style="height:56px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;"><img src="data:image/png;base64,{uww_logo_b64}" style="max-height:56px;max-width:80px;object-fit:contain;"></div>' if uww_logo_b64 else '<div style="height:56px;"></div>'
