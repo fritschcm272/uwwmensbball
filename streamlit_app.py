@@ -1135,7 +1135,7 @@ KTV_CATEGORY_REFERENCE = {
     "Fouls / Discipline": {"keywords": "foul, fouls, wall up, drawing fouls, discipline, reach, reaching, hand check", "stats": "PF"},
     "Ball Movement / Assists": {"keywords": "assist, assists, ball movement, share the ball, playmaking, playmaker, create, extra pass, hockey assist, swing the ball", "stats": "AST"},
     "Paint Protection / Blocks": {"keywords": "block, blocks, protect the rim, paint protection, rim protection, shot blocking, contest at the rim, pack the paint, pack & protect, pack and protect, protect the paint, paint defense, build a wall, building a wall, wall around the paint, wall off, post defense, physicality, physical defense, strong gap, gap/pack, our paint, must be our paint, no easy paint, limit their scoring, limit their scoring @ the rim, keep them out of the paint", "stats": "BLK"},
-    "Perimeter Defense / Ball Pressure/ Create Turnovers": {"keywords": "steal, steals, press capable, full court press, force turnovers, force to's, forcing turnovers, generate turnovers, turnover trigger, turnover triggers, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure, ball pressure, deny, deflection, deflections, contain, containing, squeeze, squeeze & limit, lock up", "stats": "STL"},
+    "Perimeter Defense / Ball Pressure/ Create Turnovers": {"keywords": "steal, steals, press capable, full court press, force turnovers, force to's, forcing turnovers, generate turnovers, turnover trigger, turnover triggers, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure, ball pressure, deny, deflection, deflections, contain, containing, squeeze, squeeze & limit, lock up, possession battle, win the possession battle, turnover battle, their turnovers", "stats": "STL"},
     "Scoring Inside": {"keywords": "dominate the paint, attack the paint, live in the paint, attack the basket, scoring at the rim, get to rim, attack the rim, get to the rim, post up, post-up, paint touches, drive, drives, downhill, finish at the rim, attacking the paint, attacking the rim, attacking the basket, attacking inside, attack inside, inside-out, inside out, post play, scoring in the paint, points in the paint, paint points, payback inside", "stats": "FG2M, FG2A, FG2%"},
     "Field Goal Efficiency": {"keywords": "field goal, field goal%, fg%, shooting percentage, efficient shooting, efficiency, good shots, quality shots", "stats": "FGM-A, FG%"},
     "Defensive Efficiency": {"keywords": "high-volume, high volume, funnel, funneling, take away, most efficient, shot profile, shot diet, inefficient looks, worst looks, multiple efforts, multiple effort, never stop, multiple scorers, multiple threats, multiple weapons, multiple options, scoring options, scoring threats, balanced scoring, scoring balance, scoring depth, several scorers, many scorers, deep scoring, double-digit scorers, double digit scorers, leading scorer, top scorer, primary scorer, go-to scorer, go to scorer, versatile scorers, score from anywhere, score at all three levels, three levels, three-level scorer, three level scorer, their scorers, their weapons, set play, set plays, set piece, set pieces, counters, counter action, counter actions, wrinkle, wrinkles, playbook, play call, play calls, scripted, after timeout, out of bounds play, out of bounds plays, blob, slob, baseline out of bounds, sideline out of bounds, horns, stagger, staggered screen, pin down, pindown, down screen, back screen, flare screen, flex, ram screen, ball screen, ball screens, ball screen action, ball screen actions, pick and roll, pick-and-roll, pick and pop, pick-and-pop, dribble handoff, dho, motion offense, continuity, action, actions, action sets, screening, screening action, switch all screens, switch everything, switching off ball, create advantages, creating advantages, advantage creation, advantages, capable of carrying, carrying offense, carry the offense, main scorer, primary option, focal point, go-to guy, big scoring games, capable of big games, capable of big scoring", "stats": "Opp FG% by shot type"},
@@ -1156,6 +1156,11 @@ KTV_CATEGORY_REFERENCE = {
 
 # Side detection: maps scouting phrases to whether they describe UWW (proactive) or OPP (contain opponent)
 PHRASE_SIDE = {
+    # "Win the possession battle" (and its synonyms) is inherently two-sided BY DEFINITION -- winning it
+    # means turning it over less than them (Ball Security), forcing more takeaways than them (Perimeter
+    # Defense/Ball Pressure), AND out-rebounding them at both ends (Rebounding) -- not one side of the ball.
+    # "BOTH" is a real, direct value here (handled in _detect_side()), not just a set union of two matches.
+    "possession battle": "BOTH", "win the possession battle": "BOTH", "turnover battle": "BOTH",
     # Ball Security: UWW = protect; OPP = force turnovers
     "ball security": "UWW", "turnover": "UWW", "protect the ball": "UWW",
     "take care of the ball": "UWW", "limit turnovers": "UWW", "careless": "UWW",
@@ -5249,7 +5254,10 @@ def render_upcoming_game():
                 _pe = _PHRASE_EXCLUSIONS.get(phrase)
                 _pt = re.sub(_pe, " ", text_lower) if _pe else text_lower
                 if _keyword_matches(phrase, _pt):
-                    sides_found.add(side)
+                    # A phrase can be inherently two-sided on its own ("possession battle") rather than only
+                    # becoming BOTH by coincidentally matching one UWW phrase and one OPP phrase elsewhere in
+                    # the same text -- treat it exactly like finding both, so the logic below is unchanged.
+                    sides_found.update({"UWW", "OPP"} if side == "BOTH" else {side})
             if "OPP" in sides_found and "UWW" not in sides_found:
                 return "OPP"
             if "UWW" in sides_found and "OPP" not in sides_found:
@@ -6189,8 +6197,17 @@ def render_upcoming_game():
                     # A forced defensive-prep key is about THEM by construction; the mechanic wording in
                     # the title ("Drive to the basket") otherwise reads as one of ours.
                     _side = "OPP"
+                # CONFIRMED BUG (fixed here): this used to file a key under ONLY _cats[0] -- the first
+                # matched category -- even when _match_categories() correctly found several. A key like "WIN
+                # THE POSSESSION BATTLE (TO's & Rebounds)" genuinely spans Ball Security, Rebounding, AND
+                # Perimeter Defense/Ball Pressure (forcing takeaways) -- it was only ever showing up under
+                # whichever of those three happens to be defined first in KTV_CATEGORY_REFERENCE (Ball
+                # Security), silently dropping it from the other two sections entirely. Filing it under every
+                # matched category means a coach browsing the Rebounding section, say, doesn't miss a key
+                # that's just as much about rebounding as it is about turnovers.
                 if _cats:
-                    _grouped.setdefault(_cats[0], []).append((_icon, _headline, _caption, _reason, _cats, _side, _source))
+                    for _cat in _cats:
+                        _grouped.setdefault(_cat, []).append((_icon, _headline, _caption, _reason, _cats, _side, _source))
                 else:
                     _ungrouped.append((_icon, _headline, _caption, _reason, [], _side, _source))
 
