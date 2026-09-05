@@ -1,18 +1,15 @@
 target_player,target_position,target_role,target_opponent,target_game_date,compared_opponent,compared_game_date,compared_player,compared_position,compared_role,similarity_score,shared_notes_tags,shared_keys_tags,height_diff_in,stat_similarity,target_PTS,compared_PTS,target_REB,compared_REB,target_AST,compared_AST,target_FG%,compared_FG%,target_3P%,compared_3P%
-Aiden Hawkinson,G,Bench,UW-Oshkosh Titans,"Sat, Jan 3",Elmhurst Bluejays,"Tue, Dec 2",Jack Cherry,G,Bench,12.69,three_point_shooter,deny_catch_and_shoot,1.0,0.842,5.9,4.8,1.8,2.0,10,8,44.4%,50.0%,38.1%,33.3%
-Carter Thomas,G,Starter,UW-Oshkosh Titans,"Sat, Jan 3",Aurora Spartans,"Wed, Nov 19",Juan Madrigal,G,Starter,12.39,"slasher_driver, three_point_shooter",deny_catch_and_shoot,1.0,0.74,9.4,12.6,3.5,4.2,15,9,43.1%,43.5%,37.0%,42.1%
-Oskar Kangas,F,Bench,UW-Oshkosh Titans,"Sat, Jan 3",Eureka Red Devils,"Sat, Nov 15",Jonah Lauff,F,Starter,12.22,three_point_shooter,deny_catch_and_shoot,0.0,0.74,6.0,7.8,3.7,3.5,11,0.0,44.1%,40.7%,39.5%,38.5%
-Matt Imig,G,Bench,UW-Oshkosh Titans,"Sat, Jan 3",Ripon Red Hawks,"Fri, Nov 7",Jake Thomsen,G,Bench,11.75,"catch_and_shoot, three_point_shooter",deny_catch_and_shoot,1.0,0.528,4.5,1.3,1.0,0.8,23,0.1,40.0%,38.5%,34.3%,30.0%
-Brandon Beck,F,Starter,UW-Oshkosh Titans,"Sat, Jan 3",Lawrence Vikings,"Wed, Dec 10",Nicholas Gouriotis,F,Starter,11.73,"slasher_driver, three_point_shooter",deny_catch_and_shoot,2.0,0.632,17.8,10.4,3.2,4.0,12,14,52.1%,47.6%,40.5%,46.2%
-Joey LaChapell,G,Starter,UW-Oshkosh Titans,"Sat, Jan 3",Aurora Spartans,"Wed, Nov 19",Gevon Grant,G,Bench,10.33,"slasher_driver, three_point_shooter",transition_defense,0.0,0.11,11.6,8.6,2.0,3.0,43,8,49.4%,38.7%,43.4%,23.1%
-Jonah Rindfleisch,F,Bench,UW-Oshkosh Titans,"Sat, Jan 3",Ripon Red Hawks,"Fri, Nov 7",Kolby Williams,F,Starter,10.26,rebounder,box_out_priority,1.0,0.197,3.1,9.3,3.8,5.9,18,0.6,38.5%,46.5%,9.1%,33.3%
-Nate Nazos,G,Starter,UW-Oshkosh Titans,"Sat, Jan 3",Coe Kohawks,"Tue, Dec 30",C. Reece Breitenbach,G,Starter,10.2,three_point_shooter,deny_catch_and_shoot,1.0,0.792,3.1,5.8,3.2,3.8,26,22,33.3%,32.9%,29.6%,34.2%
-Michael Metcalf-Grassman,G,Starter,UW-Oshkosh Titans,"Sat, Jan 3",Simpson Storm,"Tue, Nov 25",Spencer Holley,G,Starter,10.0,slasher_driver,,1.0,0.611,11.0,5.1,3.1,3.3,9,7,48.3%,31.6%,25.0%,28.6%
-Logan Rindfleisch,G,Bench,UW-Oshkosh Titans,"Sat, Jan 3",Simpson Storm,"Tue, Nov 25",Brogan Fuller,G,Starter,9.95,"slasher_driver, three_point_shooter",,1.0,0.761,5.2,4.3,3.2,3.0,13,9,42.0%,50.0%,35.0%,25.0%
-Max Tutas,,Bench,UW-Oshkosh Titans,"Sat, Jan 3",Eureka Red Devils,"Sat, Nov 15",Dylan Logsdon,F,Bench,3.37,,,,0.956,0.7,0.5,1.3,1.0,0,0.0,25.0%,-,50.0%,-
-Tristan Johanknecht,,Bench,UW-Oshkosh Titans,"Sat, Jan 3",Eureka Red Devils,"Sat, Nov 15",Dylan Logsdon,F,Bench,3.34,,,,0.948,0.6,0.5,1.2,1.0,1,0.0,33.3%,-,0.0%,-
-Reed Seckar,,Bench,UW-Oshkosh Titans,"Sat, Jan 3",Eureka Red Devils,"Sat, Nov 15",Colin DeLaere,G,Bench,3.26,,,,0.921,0.8,1.2,0.6,1.0,3,0.2,25.0%,25.0%,0.0%,0.0%
-AJ Ohrmundt,,Bench,UW-Oshkosh Titans,"Sat, Jan 3",Lawrence Vikings,"Wed, Dec 10",Caleb Nash,G,Bench,3.19,,,,0.896,1.6,2.1,1.0,1.8,5,7,29.2%,28.6%,0.0%,0.0%
-Adam Guyette,,Bench,UW-Oshkosh Titans,"Sat, Jan 3",Ripon Red Hawks,"Fri, Nov 7",Keenan Rahn,G,Bench,3.14,,,,0.881,0.9,0.4,0.1,0.6,1,0.0,30.0%,33.3%,0.0%,-
-Jay Dalton,,Bench,UW-Oshkosh Titans,"Sat, Jan 3",Lawrence Vikings,"Wed, Dec 10",Nolan Koch,F,Bench,3.14,,,,0.88,5.5,6.4,1.5,2.0,8,10,43.3%,42.5%,13.3%,-
-Vitorio Dante,,Bench,UW-Oshkosh Titans,"Sat, Jan 3",Alma Scots,"Sat, Dec 20",Preston Malpass,F,Bench,3.08,,,,0.86,3.6,2.8,3.3,3.1,2,3,29.5%,26.5%,20.0%,29.2%
+Jonah Lauff,F,Starter,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Michael Asman,F,Starter,9.85,three_point_shooter,deny_catch_and_shoot,2.0,0.714,7.8,5.3,3.5,2.4,0.0,0.1,40.7%,53.7%,38.5%,41.4%
+Jaxson Provost,G,Starter,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Corey Thompson,G,Starter,7.62,slasher_driver,,4.0,0.638,19.5,15.0,2.2,2.0,2.2,3.0,51.8%,40.9%,35.3%,40.0%
+Micah Bruer,G,Starter,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Seth Bunders,G,Starter,7.62,,,0.0,0.708,8.0,5.1,3.5,3.6,3.0,1.7,37.9%,35.0%,28.6%,30.3%
+Andrew Coker,F,Starter,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Reyce Allen,F,Bench,7.36,,,0.0,0.785,7.2,7.0,4.5,3.5,1.8,1.5,42.9%,50.0%,33.3%,-
+Jacob Gonzalez,G,Bench,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Omar Gayle,G,Bench,7.25,,,2.0,0.804,4.8,4.0,1.0,1.0,1.2,2.5,37.5%,36.4%,0.0%,0.0%
+Ben Carter,G/F,Starter,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Nathan Kongolo,G/F,Starter,6.97,,,0.0,0.491,6.0,6.0,6.8,3.0,2.5,1.5,41.2%,40.0%,36.4%,50.0%
+Damuzha Moore,F,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Michael Asman,F,Starter,5.46,,,4.0,0.599,2.5,5.3,0.5,2.4,0.2,0.1,33.3%,53.7%,40.0%,41.4%
+Dylan Logsdon,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Caeden Holly,G,Bench,3.35,,,,0.949,0.5,0.0,1.0,0.8,0.0,0.0,-,0.0%,-,-
+Amare Brokemond,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Keenan Rahn,G,Bench,3.29,,,,0.93,2.0,0.4,0.7,0.6,0.0,0.0,33.3%,33.3%,-,-
+Max Richardson,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Jake Thomsen,G,Bench,3.04,,,,0.847,2.8,1.3,0.8,0.8,0.2,0.1,42.9%,38.5%,40.0%,30.0%
+Colin DeLaere,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Keenan Rahn,G,Bench,2.97,,,,0.824,1.2,0.4,1.0,0.6,0.2,0.0,25.0%,33.3%,0.0%,-
+Tony Mabon,,Bench,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Brennan Webb,G,Bench,2.94,,,,0.813,2.0,4.5,2.0,2.0,0.0,0.0,20.0%,30.0%,-,28.6%
+Blake Logsdon,,Bench,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Jaden Ross,G,Bench,2.84,,,,0.779,1.2,4.0,1.2,0.0,0.0,0.0,66.7%,66.7%,100.0%,-
+Nolan Kerr,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Jake Thomsen,G,Bench,2.77,,,,0.756,2.2,1.3,1.2,0.8,0.5,0.1,40.0%,38.5%,50.0%,30.0%
