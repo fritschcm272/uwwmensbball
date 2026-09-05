@@ -7397,60 +7397,6 @@ def render_previous_games():
                 _cn_c2.metric("Positive flags", _pos_total)
                 _cn_c3.metric("Negative flags", _neg_total)
 
-    # --- COACHING FLAGS ---
-    try:
-        _coaching_flags = load_table("uww_coaching_flags")
-        if not _coaching_flags.empty and not uww_game_box.empty:
-            # Filter to players who appeared in this game
-            _game_players = set(uww_game_box["player"].str.strip().str.lower())
-            _coaching_flags["_join_key"] = _coaching_flags["player"].str.strip().str.lower()
-            _game_flags = _coaching_flags[_coaching_flags["_join_key"].isin(_game_players)].copy()
-
-            if not _game_flags.empty:
-                st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">COACHING FLAGS</div></div>', unsafe_allow_html=True)
-                st.caption("Season-long coaching observations for players who appeared in this game")
-
-                _positive = _game_flags[_game_flags["sentiment"].str.strip().str.lower() == "positive"]
-                _negative = _game_flags[_game_flags["sentiment"].str.strip().str.lower() == "negative"]
-
-                _col_pos, _col_neg = st.columns(2)
-
-                with _col_pos:
-                    st.markdown("**✅ Strengths**")
-                    if _positive.empty:
-                        st.caption("No positive flags for this game's players")
-                    else:
-                        for _, flag_row in _positive.iterrows():
-                            _cat_badge = f'<span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:0.75rem;font-weight:600;">{flag_row.get("category", "")}</span>' if pd.notna(flag_row.get("category")) else ""
-                            st.markdown(
-                                f'<div style="border-left:3px solid #4caf50;padding:8px 12px;margin:6px 0;background:#f9fdf9;border-radius:4px;">'
-                                f'<div style="font-weight:700;font-size:0.9rem;">{esc(flag_row["player"])} {_cat_badge}</div>'
-                                f'<div style="font-size:0.85rem;margin-top:4px;">{esc(flag_row["flag"])}</div>'
-                                f'<div style="font-size:0.78rem;color:#666;margin-top:3px;"><em>Evidence:</em> {esc(flag_row.get("evidence", "-"))}</div>'
-                                f'<div style="font-size:0.78rem;color:#1b5e20;margin-top:2px;"><em>Recommendation:</em> {esc(flag_row.get("recommendation", "-"))}</div>'
-                                f'</div>',
-                                unsafe_allow_html=True,
-                            )
-
-                with _col_neg:
-                    st.markdown("**⚠️ Areas to Improve**")
-                    if _negative.empty:
-                        st.caption("No negative flags for this game's players")
-                    else:
-                        for _, flag_row in _negative.iterrows():
-                            _cat_badge = f'<span style="background:#fbe9e7;color:#c62828;padding:2px 8px;border-radius:10px;font-size:0.75rem;font-weight:600;">{flag_row.get("category", "")}</span>' if pd.notna(flag_row.get("category")) else ""
-                            st.markdown(
-                                f'<div style="border-left:3px solid #ef5350;padding:8px 12px;margin:6px 0;background:#fffafa;border-radius:4px;">'
-                                f'<div style="font-weight:700;font-size:0.9rem;">{esc(flag_row["player"])} {_cat_badge}</div>'
-                                f'<div style="font-size:0.85rem;margin-top:4px;">{esc(flag_row["flag"])}</div>'
-                                f'<div style="font-size:0.78rem;color:#666;margin-top:3px;"><em>Evidence:</em> {esc(flag_row.get("evidence", "-"))}</div>'
-                                f'<div style="font-size:0.78rem;color:#b71c1c;margin-top:2px;"><em>Recommendation:</em> {esc(flag_row.get("recommendation", "-"))}</div>'
-                                f'</div>',
-                                unsafe_allow_html=True,
-                            )
-    except Exception as _e:
-        report_section_error("Coaching flags for this game", _e)
-
 # --------------------------------------------------------------------------------------------------------------
 # Section 3: Team
 # --------------------------------------------------------------------------------------------------------------
