@@ -1,87 +1,314 @@
 opponent,game_date,team,player,PTS,FGM,FGA,FG3M,FG3A,FTM,FTA,OREB,DREB,AST,STL,BLK,TO,PF,REB,FG%,3P%,FT%,MIN
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Adrian Pelszynski,14,6,13,2,6,0,1,0,8,4,2,0,2,3,8,46.2,33.3,0.0,31.8
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Antony Fernandez,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,4.2
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Braydon Murphy,9,4,13,0,0,1,3,7,7,2,1,2,4,2,14,30.8,,33.3,30.4
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Chase LeFevre,4,1,3,0,1,2,4,3,1,3,0,0,0,4,4,33.3,0.0,50.0,25.0
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Dominic Crapia,17,4,11,1,7,8,9,0,6,1,4,0,2,2,6,36.4,14.3,88.9,36.0
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Elijah Daugherty,3,1,6,1,5,0,0,1,3,2,0,0,1,1,4,16.7,20.0,,14.8
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Emmanuel Fuller,9,4,7,0,0,1,2,1,4,1,1,0,1,4,5,57.1,,50.0,18.6
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Frank Paszkowski,3,1,7,1,5,0,0,1,1,0,1,1,1,1,2,14.3,20.0,,16.9
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Ismael Ndiaye,2,1,4,0,0,0,0,0,1,1,0,0,0,3,1,25.0,,,7.9
-Dominican (IL) Stars,2025-11-07,Dominican (IL) Stars,Lucas Underwood,24,9,17,3,10,3,5,0,1,3,2,0,5,3,1,52.9,30.0,60.0,36.5
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Andrew Coker,11,5,9,1,2,0,0,2,5,0,2,0,2,4,7,55.6,50.0,,20.9
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Andrew Wells,2,0,2,0,0,2,2,0,2,0,0,2,0,1,2,0.0,,100.0,10.8
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Ben Carter,8,2,6,2,5,2,2,3,11,6,3,0,7,2,14,33.3,40.0,100.0,34.7
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Blake Logsdon,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0.0,,,2.3
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Colin DeLaere,0,0,1,0,0,0,1,0,1,0,0,0,0,2,1,0.0,,0.0,6.0
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Damuzha Moore,5,2,5,1,1,0,2,0,0,1,1,0,1,2,0,40.0,100.0,0.0,14.3
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Jacob Gonzalez,2,1,3,0,0,0,1,0,2,0,0,0,0,1,2,33.3,,0.0,12.6
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Jaxson Provost,30,9,17,3,4,9,12,1,2,3,5,0,2,2,3,52.9,75.0,75.0,32.1
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Jonah Lauff,18,7,12,2,5,2,2,1,6,0,0,0,0,1,7,58.3,40.0,100.0,27.3
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Max Richardson,3,0,2,0,1,3,4,1,1,0,0,0,3,0,2,0.0,0.0,75.0,10.3
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Micah Bruer,6,2,4,1,3,1,2,0,4,3,0,0,5,4,4,50.0,33.3,50.0,31.2
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Nolan Kerr,3,1,2,1,1,0,0,0,1,0,0,0,1,1,1,50.0,100.0,,11.3
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,Tony Mabon,2,1,5,0,0,0,0,1,1,0,0,0,0,1,2,20.0,,,8.2
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Amare Brokemond,0,0,2,0,0,0,0,0,1,0,0,0,0,0,1,0.0,,,6.4
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Andrew Coker,11,4,12,1,5,2,2,3,4,3,0,0,0,1,7,33.3,20.0,100.0,23.1
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Andrew Wells,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,3.5
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Ben Carter,0,0,3,0,2,0,2,0,4,2,0,1,2,1,4,0.0,0.0,0.0,26.0
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Blake Logsdon,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,3.9
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Colin DeLaere,1,0,0,0,0,1,2,0,1,0,1,0,0,1,1,,,50.0,2.9
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Damuzha Moore,3,1,5,1,4,0,0,0,2,0,0,2,1,4,2,20.0,25.0,,14.5
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Jacob Gonzalez,5,2,3,0,1,1,1,0,0,2,1,0,2,0,0,66.7,0.0,100.0,13.2
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Jaxson Provost,26,11,20,2,6,2,4,1,1,2,0,0,2,1,2,55.0,33.3,50.0,29.3
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Jonah Lauff,5,2,5,1,2,0,0,0,4,0,0,0,1,0,4,40.0,50.0,,19.7
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Max Richardson,3,1,1,1,1,0,0,0,0,0,0,0,0,2,0,100.0,100.0,,13.6
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Micah Bruer,16,5,11,1,3,5,5,0,3,4,1,0,0,3,3,45.5,33.3,100.0,23.8
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Nicholaus Harris-Huntley,0,0,2,0,0,0,0,0,0,0,2,0,1,2,0,0.0,,,4.9
-Monmouth (IL) Fighting Scots,2025-11-11,Eureka Red Devils,Nolan Kerr,2,1,3,0,1,0,0,3,0,1,1,0,0,1,3,33.3,0.0,,13.4
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Brock Card,0,0,1,0,1,0,0,0,0,0,0,0,1,1,0,0.0,0.0,,2.2
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Cameron Thomas,16,6,16,2,6,2,2,4,1,0,0,0,2,2,5,37.5,33.3,100.0,25.2
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Connor Watson,0,0,2,0,1,0,0,0,1,1,0,0,0,3,1,0.0,0.0,,12.0
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Jase Whiteman,8,3,5,2,4,0,0,0,1,2,1,0,0,0,1,60.0,50.0,,13.5
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Jason Huber,3,1,4,1,4,0,0,9,4,4,0,2,1,2,13,25.0,25.0,,21.8
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Jay Brown,3,1,3,0,0,1,2,2,3,1,0,0,1,0,5,33.3,,50.0,11.6
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Kamran Banks,14,4,8,1,2,5,6,1,3,0,2,0,1,1,4,50.0,50.0,83.3,18.7
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Kyle Taylor,16,4,9,2,5,6,6,0,1,4,1,0,2,3,1,44.4,40.0,100.0,27.7
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Max Maring,13,5,10,0,0,3,7,5,1,2,0,2,1,1,6,50.0,,42.9,25.8
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Payton Crims,4,2,2,0,0,0,0,2,1,1,0,0,1,1,3,100.0,,,8.2
-Monmouth (IL) Fighting Scots,2025-11-11,Monmouth (IL) Fighting Scots,Zay Brown,13,5,17,0,2,3,7,5,11,3,0,1,1,2,16,29.4,0.0,42.9,31.4
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Amare Brokemond,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.4
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Andrew Coker,0,0,3,0,1,0,0,0,2,2,0,0,3,1,2,0.0,0.0,,14.2
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Andrew Wells,4,1,4,0,1,2,2,1,0,0,1,0,1,2,1,25.0,0.0,100.0,12.5
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Ben Carter,6,2,3,2,2,0,0,0,7,2,1,0,1,1,7,66.7,100.0,,21.7
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Blake Logsdon,2,1,1,0,0,0,1,0,4,0,0,0,1,0,4,100.0,,0.0,7.0
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Caden Latta,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,1.7
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Colin DeLaere,4,2,4,0,2,0,0,0,0,0,1,0,2,1,0,50.0,0.0,,12.8
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Damuzha Moore,2,1,2,0,0,0,0,0,0,0,0,0,0,1,0,50.0,,,13.1
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Dylan Logsdon,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,1.7
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Jacob Gonzalez,6,3,9,0,0,0,1,0,1,0,1,0,1,2,1,33.3,,0.0,17.5
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Jaxson Provost,10,4,10,0,3,2,2,1,3,1,0,0,2,1,4,40.0,0.0,100.0,21.5
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Joel Ewald,1,0,0,0,0,1,2,0,0,0,0,0,0,1,0,,,50.0,4.9
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Jonah Lauff,2,0,6,0,3,2,2,0,0,0,0,0,0,1,0,0.0,0.0,100.0,12.4
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Max Richardson,0,0,1,0,1,0,0,0,0,0,0,0,0,2,0,0.0,0.0,,9.1
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Micah Bruer,10,4,9,2,4,0,0,3,3,2,0,0,4,1,6,44.4,50.0,,19.3
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Mussie Hayelom,2,1,1,0,0,0,0,0,0,0,0,0,2,1,0,100.0,,,4.9
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Nicholaus Harris-Huntley,0,0,2,0,0,0,0,0,0,0,0,0,1,1,0,0.0,,,5.1
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Nolan Kerr,2,1,3,0,0,0,0,0,0,1,0,0,1,0,0,33.3,,,10.6
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Santino Ruma,2,1,1,0,0,0,0,0,1,0,1,0,0,1,1,100.0,,,1.7
-Washington-St. Louis Bears,2025-11-14,Eureka Red Devils,Zachy Qader,0,0,1,0,0,0,0,0,1,0,0,0,1,0,1,0.0,,,3.5
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Anthony Przybilla,14,7,7,0,0,0,0,1,2,3,1,0,0,1,3,100.0,,,15.7
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Calvin Kapral,5,2,2,0,0,1,2,1,1,0,0,0,1,1,2,100.0,,50.0,10.7
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Colby Smith,4,1,7,0,6,2,2,0,2,1,1,0,0,0,2,14.3,0.0,100.0,12.3
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Connor May,8,3,5,2,3,0,0,1,2,3,2,0,0,0,3,60.0,66.7,,14.0
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,George Gale,2,1,3,0,1,0,0,1,4,1,0,2,0,1,5,33.3,0.0,,11.2
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Jack Cubbage,6,2,2,0,0,2,5,0,1,0,0,1,1,0,1,100.0,,40.0,8.6
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Jake Davis,2,1,2,0,1,0,0,1,1,0,2,0,0,0,2,50.0,0.0,,9.0
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Josh Kim,7,3,6,1,2,0,0,1,1,1,1,0,1,1,2,50.0,50.0,,13.2
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Kyle Beedon,3,1,2,1,2,0,0,0,0,0,1,0,0,1,0,50.0,50.0,,8.1
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Lleyton Thomas-Johnson,14,5,7,2,3,2,2,1,4,1,1,0,1,2,5,71.4,66.7,100.0,17.8
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Lucas Vogel,8,3,4,1,2,1,2,0,2,1,3,0,1,1,2,75.0,50.0,50.0,14.4
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Ryan Cohen,8,2,5,2,4,2,2,0,1,3,1,0,0,3,1,40.0,50.0,100.0,16.8
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Theo Rocca,8,2,7,2,5,2,4,1,4,2,1,0,0,1,5,28.6,40.0,50.0,15.4
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Will Grudzinski,8,2,7,2,6,2,4,0,3,3,1,0,1,0,3,28.6,33.3,50.0,16.3
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Yogi Oliff,2,1,1,0,0,0,0,0,3,2,0,0,1,0,3,100.0,,,6.6
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,Yusuf Cisse,1,0,0,0,0,1,2,0,1,1,2,0,0,2,1,,,50.0,7.8
-Dominican (IL) Stars,2025-11-07,Eureka Red Devils,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
-Washington-St. Louis Bears,2025-11-14,Washington-St. Louis Bears,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Augustana (IL) Vikings,2025-11-30,Augustana (IL) Vikings,Andre Klaver,11,4,7,0,2,3,4,0,3,1,0,0,4,3,3,57.1,0.0,75.0,22.8
+Augustana (IL) Vikings,2025-11-30,Augustana (IL) Vikings,Cam Atkinson,9,3,5,1,1,2,2,0,1,1,1,0,1,0,1,60.0,100.0,100.0,19.9
+Augustana (IL) Vikings,2025-11-30,Augustana (IL) Vikings,Dani Romero,10,5,5,0,0,0,2,0,1,3,1,0,2,3,1,100.0,,0.0,26.0
+Augustana (IL) Vikings,2025-11-30,Augustana (IL) Vikings,Dom Rhoden,8,3,7,0,2,2,2,0,1,2,2,0,1,4,1,42.9,0.0,100.0,27.0
+Augustana (IL) Vikings,2025-11-30,Augustana (IL) Vikings,Eli Aldana,8,2,8,2,8,2,3,0,1,1,1,0,0,1,1,25.0,25.0,66.7,18.0
+Augustana (IL) Vikings,2025-11-30,Augustana (IL) Vikings,Ethan Andre,5,2,2,1,1,0,0,0,0,0,0,0,0,0,0,100.0,100.0,,12.8
+Augustana (IL) Vikings,2025-11-30,Augustana (IL) Vikings,Jake Willems,5,2,7,1,3,0,0,1,2,0,1,0,2,2,3,28.6,33.3,,17.0
+Augustana (IL) Vikings,2025-11-30,Augustana (IL) Vikings,Marieon Anderson,11,3,7,2,2,3,4,4,1,1,2,0,1,4,5,42.9,100.0,75.0,26.8
+Augustana (IL) Vikings,2025-11-30,Augustana (IL) Vikings,Ray Maurchie,10,4,8,1,1,1,2,3,5,0,1,0,1,1,8,50.0,100.0,50.0,27.9
+Augustana (IL) Vikings,2025-11-30,UW-Oshkosh Titans,AJ Ohrmundt,0,0,1,0,1,0,0,0,0,1,0,0,1,0,0,0.0,0.0,,10.9
+Augustana (IL) Vikings,2025-11-30,UW-Oshkosh Titans,Aiden Hawkinson,8,3,4,2,3,0,0,1,0,0,1,0,0,3,1,75.0,66.7,,15.3
+Augustana (IL) Vikings,2025-11-30,UW-Oshkosh Titans,Brandon Beck,20,8,14,1,5,3,4,2,4,1,2,2,3,3,6,57.1,20.0,75.0,20.0
+Augustana (IL) Vikings,2025-11-30,UW-Oshkosh Titans,Carter Thomas,6,2,6,2,5,0,0,2,1,2,0,0,2,1,3,33.3,40.0,,21.7
+Augustana (IL) Vikings,2025-11-30,UW-Oshkosh Titans,Jay Dalton,2,1,5,0,1,0,0,1,2,2,0,1,0,0,3,20.0,0.0,,14.2
+Augustana (IL) Vikings,2025-11-30,UW-Oshkosh Titans,Joey LaChapell,15,5,9,3,7,2,3,1,2,3,2,0,1,1,3,55.6,42.9,66.7,20.0
+Augustana (IL) Vikings,2025-11-30,UW-Oshkosh Titans,Jonah Rindfleisch,4,1,1,0,0,2,2,1,4,1,0,0,3,5,5,100.0,,100.0,19.0
+Augustana (IL) Vikings,2025-11-30,UW-Oshkosh Titans,Logan Rindfleisch,8,1,1,1,1,5,6,1,3,2,1,0,3,4,4,100.0,100.0,83.3,16.6
+Augustana (IL) Vikings,2025-11-30,UW-Oshkosh Titans,Matt Imig,3,1,4,1,3,0,0,0,1,3,1,0,1,0,1,25.0,33.3,,13.1
+Augustana (IL) Vikings,2025-11-30,UW-Oshkosh Titans,Nate Nazos,6,2,2,2,2,0,0,1,0,2,0,0,3,1,1,100.0,100.0,,17.6
+Augustana (IL) Vikings,2025-11-30,UW-Oshkosh Titans,Oskar Kangas,12,5,7,2,4,0,0,1,1,0,0,0,0,0,2,71.4,50.0,,23.1
+Augustana (IL) Vikings,2025-11-30,UW-Oshkosh Titans,Tristan Johanknecht,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,6.7
+Benedictine (IL) Eagles,2025-12-03,Benedictine (IL) Eagles,Aidan Werth,4,2,5,0,1,0,0,0,10,2,1,0,1,3,10,40.0,0.0,,24.7
+Benedictine (IL) Eagles,2025-12-03,Benedictine (IL) Eagles,Brandon McCoy,17,6,11,3,7,2,2,1,2,2,3,0,3,1,3,54.5,42.9,100.0,24.7
+Benedictine (IL) Eagles,2025-12-03,Benedictine (IL) Eagles,Connor Glasgow,13,3,5,3,3,4,6,0,0,1,1,0,2,1,0,60.0,100.0,66.7,18.2
+Benedictine (IL) Eagles,2025-12-03,Benedictine (IL) Eagles,Hudson Parker,0,0,2,0,1,0,0,0,0,3,0,0,2,3,0,0.0,0.0,,8.4
+Benedictine (IL) Eagles,2025-12-03,Benedictine (IL) Eagles,Jakeem Cole,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,9.2
+Benedictine (IL) Eagles,2025-12-03,Benedictine (IL) Eagles,Nathan LaPlant,5,0,4,0,3,5,6,0,3,1,1,1,2,3,3,0.0,0.0,83.3,15.3
+Benedictine (IL) Eagles,2025-12-03,Benedictine (IL) Eagles,Noah Mason,10,4,8,0,2,2,5,1,7,1,2,0,2,2,8,50.0,0.0,40.0,23.6
+Benedictine (IL) Eagles,2025-12-03,Benedictine (IL) Eagles,Pavle Magazin,1,0,3,0,0,1,2,3,2,0,0,0,0,2,5,0.0,,50.0,10.9
+Benedictine (IL) Eagles,2025-12-03,Benedictine (IL) Eagles,Ryan Sammons,12,5,6,1,1,1,1,1,3,0,0,0,5,2,4,83.3,100.0,100.0,32.5
+Benedictine (IL) Eagles,2025-12-03,Benedictine (IL) Eagles,Ryan Tucker,9,2,7,1,4,4,4,0,2,1,1,0,2,1,2,28.6,25.0,100.0,29.7
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,AJ Ohrmundt,2,1,7,0,4,0,0,1,0,1,1,1,1,2,1,14.3,0.0,,12.2
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Adam Guyette,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,,,,0.5
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Aiden Hawkinson,0,0,2,0,2,0,0,0,2,4,2,1,3,2,2,0.0,0.0,,14.4
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Ben Grabner,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.1
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Brandon Beck,27,10,14,5,9,2,5,2,3,1,0,3,0,1,5,71.4,55.6,40.0,21.3
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Carter Thomas,21,7,12,7,12,0,1,0,2,0,1,0,1,0,2,58.3,58.3,0.0,20.2
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Jay Dalton,4,2,6,0,2,0,0,1,2,1,1,0,0,2,3,33.3,0.0,,14.8
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Joey LaChapell,14,4,11,4,11,2,2,0,2,5,0,0,3,3,2,36.4,36.4,100.0,21.3
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Jonah Rindfleisch,0,0,1,0,1,0,0,1,2,2,4,0,1,2,3,0.0,0.0,,17.8
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Logan Rindfleisch,4,2,4,0,2,0,0,2,3,1,0,0,0,2,5,50.0,0.0,,19.1
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Matt Imig,6,2,8,2,7,0,0,0,0,3,1,0,1,0,0,25.0,28.6,,13.2
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Max Tutas,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.1
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Nate Nazos,0,0,4,0,3,0,0,3,3,1,2,0,1,2,6,0.0,0.0,,20.3
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Oskar Kangas,7,2,7,1,6,2,4,4,4,1,1,1,0,0,8,28.6,16.7,50.0,20.3
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Reed Seckar,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,,,,0.4
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Riley Rindfleisch,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.1
+Benedictine (IL) Eagles,2025-12-03,UW-Oshkosh Titans,Tristan Johanknecht,2,1,1,0,0,0,1,0,0,0,0,0,0,0,0,100.0,,0.0,1.3
+Calvin Knights,2025-12-06,Calvin Knights,Ben Heagle,0,0,0,0,0,0,2,0,0,1,0,0,0,0,0,,,0.0,1.8
+Calvin Knights,2025-12-06,Calvin Knights,Brady Ewing,3,1,2,0,0,1,2,0,0,0,0,0,1,1,0,50.0,,50.0,7.9
+Calvin Knights,2025-12-06,Calvin Knights,JT McIllwain,7,2,5,0,1,3,6,1,4,0,1,0,1,1,5,40.0,0.0,50.0,14.8
+Calvin Knights,2025-12-06,Calvin Knights,Jalen Overway,14,6,10,0,2,2,2,1,10,7,3,3,0,2,11,60.0,0.0,100.0,32.4
+Calvin Knights,2025-12-06,Calvin Knights,Jaydon Keefer,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,1.8
+Calvin Knights,2025-12-06,Calvin Knights,Jordan Scott,13,3,6,2,4,5,10,0,2,1,0,0,1,4,2,50.0,50.0,50.0,20.2
+Calvin Knights,2025-12-06,Calvin Knights,Luka Ressler,3,1,4,1,3,0,0,1,4,9,1,1,3,3,5,25.0,33.3,,30.1
+Calvin Knights,2025-12-06,Calvin Knights,Luke Riebel,3,1,1,1,1,0,0,0,0,0,0,0,0,0,0,100.0,100.0,,0.4
+Calvin Knights,2025-12-06,Calvin Knights,Michael DeKuiper,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,,,,1.8
+Calvin Knights,2025-12-06,Calvin Knights,Parker Swartz,12,3,5,2,4,4,6,2,2,2,1,2,2,1,4,60.0,50.0,66.7,29.4
+Calvin Knights,2025-12-06,Calvin Knights,Quincy Winkle,3,1,1,1,1,0,0,0,0,0,1,0,0,0,0,100.0,100.0,,1.8
+Calvin Knights,2025-12-06,Calvin Knights,Trevin Winkle,15,5,9,1,3,4,4,0,12,3,1,1,3,2,12,55.6,33.3,100.0,33.5
+Calvin Knights,2025-12-06,Calvin Knights,Tyler Carlson,3,1,1,1,1,0,0,0,0,0,0,0,0,0,0,100.0,100.0,,1.4
+Calvin Knights,2025-12-06,Calvin Knights,Zion Ruckard,13,5,9,3,5,0,0,0,3,0,0,0,1,1,3,55.6,60.0,,20.4
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,AJ Ohrmundt,2,1,2,0,0,0,0,0,1,0,0,1,0,0,1,50.0,,,10.6
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Adam Guyette,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.3
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Aiden Hawkinson,6,2,5,2,4,0,0,0,0,1,1,0,1,1,0,40.0,50.0,,12.2
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Brandon Beck,8,3,11,1,6,1,1,2,2,0,0,1,1,4,4,27.3,16.7,100.0,17.7
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Carter Thomas,4,1,3,0,1,2,2,1,0,1,0,0,0,4,1,33.3,0.0,100.0,14.3
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Jay Dalton,2,1,6,0,3,0,0,0,0,0,1,0,0,0,0,16.7,0.0,,7.5
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Joey LaChapell,9,3,9,0,3,3,4,0,1,1,0,0,0,0,1,33.3,0.0,75.0,17.7
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Jonah Rindfleisch,3,1,6,0,4,1,2,1,2,2,0,0,3,2,3,16.7,0.0,50.0,16.0
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Logan Rindfleisch,9,3,8,1,3,2,4,2,2,1,0,0,1,5,4,37.5,33.3,50.0,17.6
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Matt Imig,0,0,1,0,1,0,0,0,1,1,0,0,1,1,1,0.0,0.0,,12.4
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Max Tutas,0,0,0,0,0,0,0,1,1,0,0,0,1,0,2,,,,3.6
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Michael Metcalf-Grassman,3,1,6,0,3,1,2,0,3,0,1,1,1,2,3,16.7,0.0,50.0,14.7
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Nate Nazos,0,0,0,0,0,0,1,2,7,3,1,0,1,2,9,,,0.0,17.8
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Oskar Kangas,0,0,4,0,2,0,0,2,3,0,0,0,2,0,5,0.0,0.0,,17.2
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Reed Seckar,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,3.6
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Riley Rindfleisch,3,1,1,1,1,0,0,0,0,0,0,0,0,0,0,100.0,100.0,,1.8
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Tristan Johanknecht,0,0,2,0,1,0,0,0,0,0,0,0,1,1,0,0.0,0.0,,5.9
+Calvin Knights,2025-12-06,UW-Oshkosh Titans,Vitorio Dante,3,1,3,1,3,0,0,0,1,0,0,0,1,0,1,33.3,33.3,,5.1
+Carroll (WI) Pioneers,2025-11-22,Carroll (WI) Pioneers,Andrew Hollerich,0,0,0,0,0,0,0,0,1,0,0,0,2,1,1,,,,4.3
+Carroll (WI) Pioneers,2025-11-22,Carroll (WI) Pioneers,Cai Joseph,0,0,0,0,0,0,0,0,2,0,0,0,0,1,2,,,,5.6
+Carroll (WI) Pioneers,2025-11-22,Carroll (WI) Pioneers,Dennis Estepp,11,5,12,0,2,1,2,1,4,3,6,0,1,1,5,41.7,0.0,50.0,33.2
+Carroll (WI) Pioneers,2025-11-22,Carroll (WI) Pioneers,Evan Oleson,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,,,,6.2
+Carroll (WI) Pioneers,2025-11-22,Carroll (WI) Pioneers,Greg Smith,0,0,0,0,0,0,0,0,0,1,0,0,0,2,0,,,,2.9
+Carroll (WI) Pioneers,2025-11-22,Carroll (WI) Pioneers,Jacob Naber,13,6,10,0,0,1,2,2,8,0,0,0,4,3,10,60.0,,50.0,34.4
+Carroll (WI) Pioneers,2025-11-22,Carroll (WI) Pioneers,Lamar Smith,11,5,10,0,0,1,2,2,5,1,1,0,2,5,7,50.0,,50.0,21.0
+Carroll (WI) Pioneers,2025-11-22,Carroll (WI) Pioneers,Lucas Parker,5,2,6,1,5,0,0,1,1,1,1,0,3,3,2,33.3,20.0,,23.7
+Carroll (WI) Pioneers,2025-11-22,Carroll (WI) Pioneers,Michael McNabb,23,7,18,0,2,9,9,1,1,2,1,0,7,3,2,38.9,0.0,100.0,29.6
+Carroll (WI) Pioneers,2025-11-22,Carroll (WI) Pioneers,Peyton McKenna,13,5,8,3,6,0,0,1,2,1,2,0,3,4,3,62.5,50.0,,36.7
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,AJ Ohrmundt,0,0,0,0,0,0,0,0,2,1,0,0,0,0,2,,,,6.5
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Adam Guyette,0,0,3,0,3,0,0,0,0,0,0,0,0,2,0,0.0,0.0,,6.5
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Aiden Hawkinson,11,4,6,3,4,0,0,0,1,0,2,0,0,0,1,66.7,75.0,,8.7
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Brandon Beck,16,5,9,1,4,5,6,2,1,0,2,1,1,4,3,55.6,25.0,83.3,15.0
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Carter Thomas,12,3,5,1,3,5,7,1,1,1,2,0,2,4,2,60.0,33.3,71.4,17.6
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Jay Dalton,5,2,4,0,0,1,2,1,0,1,0,0,1,1,1,50.0,,50.0,12.3
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Joey LaChapell,6,1,2,0,1,4,4,1,2,2,3,0,4,1,3,50.0,0.0,100.0,15.8
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Jonah Rindfleisch,7,2,3,1,2,2,2,1,4,1,2,0,1,1,5,66.7,50.0,100.0,17.9
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Logan Rindfleisch,11,4,5,1,2,2,2,1,1,0,1,0,0,0,2,80.0,50.0,100.0,13.6
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Matt Imig,2,1,5,0,4,0,0,0,2,0,2,0,1,0,2,20.0,0.0,,14.9
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Michael Metcalf-Grassman,8,3,5,0,2,2,4,0,3,2,1,3,4,1,3,60.0,0.0,50.0,18.5
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Nate Nazos,0,0,3,0,3,0,0,0,1,1,0,0,1,1,1,0.0,0.0,,11.4
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Oskar Kangas,0,0,2,0,2,0,0,0,0,0,0,1,0,1,0,0.0,0.0,,13.8
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Tristan Johanknecht,0,0,0,0,0,0,2,0,1,1,0,1,0,1,1,,,0.0,7.3
+Carroll (WI) Pioneers,2025-11-22,UW-Oshkosh Titans,Vitorio Dante,7,2,8,0,3,3,4,3,4,1,0,0,0,1,7,25.0,0.0,75.0,18.0
+Edgewood Eagles,2025-11-25,Edgewood Eagles,AC Strok,5,2,7,1,3,0,0,2,3,1,0,0,0,2,5,28.6,33.3,,17.0
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Avery Houden,7,3,6,1,1,0,1,2,3,0,2,0,1,0,5,50.0,100.0,0.0,11.0
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Caleb Poling,0,0,2,0,0,0,0,0,1,0,0,0,0,0,1,0.0,,,1.8
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Connor Coombs,0,0,2,0,1,0,0,0,1,1,0,0,1,0,1,0.0,0.0,,3.1
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Cyle Steffl,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,3.7
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Hunter Hardyman,0,0,4,0,1,0,0,0,0,0,0,0,1,1,0,0.0,0.0,,9.8
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Isaiah Hubanks,3,1,4,1,3,0,0,0,3,2,0,0,0,0,3,25.0,33.3,,18.6
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Jonah Anderson,0,0,0,0,0,0,0,0,0,0,0,0,3,3,0,,,,11.5
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Kaleb Walter,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0.0,,,8.3
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Logan Steffensmeier,10,5,7,0,0,0,0,4,4,1,0,1,2,0,8,71.4,,,20.0
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Matt Kirk,21,7,12,2,5,5,7,0,4,2,0,0,3,4,4,58.3,40.0,71.4,29.4
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Payton Bowser,3,1,4,1,2,0,0,0,1,0,0,0,0,0,1,25.0,50.0,,6.4
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Ryan Pavelec,0,0,0,0,0,0,0,0,1,1,0,0,2,0,1,,,,4.2
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Trent Tousana,6,3,7,0,1,0,0,1,2,3,0,0,5,3,3,42.9,0.0,,20.3
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Trey Keller,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.8
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Will Gretzinger,6,2,7,2,4,0,2,1,2,0,1,0,2,1,3,28.6,50.0,0.0,19.4
+Edgewood Eagles,2025-11-25,Edgewood Eagles,Zane Willadsen,2,1,1,0,0,0,0,1,2,0,0,0,0,0,3,100.0,,,11.2
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,AJ Ohrmundt,3,1,2,0,1,1,2,0,0,0,0,0,0,0,0,50.0,0.0,50.0,16.3
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Adam Guyette,2,1,2,0,1,0,0,0,1,0,0,0,0,0,1,50.0,0.0,,8.5
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Aiden Hawkinson,3,1,3,1,2,0,0,1,2,2,2,1,0,0,3,33.3,50.0,,9.1
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Ben Grabner,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,0.8
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Brandon Beck,26,10,15,5,8,1,1,0,2,0,1,1,2,1,2,66.7,62.5,100.0,17.9
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Carter Thomas,4,1,4,0,2,2,2,0,0,0,1,0,2,1,0,25.0,0.0,100.0,13.2
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Jay Dalton,17,7,9,1,2,2,3,0,4,0,0,0,2,3,4,77.8,50.0,66.7,11.2
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Joey LaChapell,10,4,12,2,7,0,0,0,1,5,2,0,2,1,1,33.3,28.6,,18.2
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Jonah Rindfleisch,0,0,1,0,0,0,0,2,2,2,0,0,0,1,4,0.0,,,11.7
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Logan Rindfleisch,5,2,6,1,2,0,0,3,3,3,2,1,0,2,6,33.3,50.0,,17.9
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Matt Imig,3,1,3,1,3,0,0,2,1,1,1,0,1,0,3,33.3,33.3,,12.7
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Max Tutas,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,6.1
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Michael Metcalf-Grassman,6,2,9,0,4,2,4,0,2,0,3,1,0,1,2,22.2,0.0,50.0,11.0
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Nate Nazos,7,3,3,1,1,0,0,1,2,3,2,0,0,1,3,100.0,100.0,,16.1
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Oskar Kangas,0,0,3,0,0,0,0,2,3,1,0,1,1,2,5,0.0,,,11.6
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Reed Seckar,0,0,2,0,2,0,0,0,1,1,0,0,0,0,1,0.0,0.0,,1.8
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Riley Rindfleisch,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,1.7
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Tristan Johanknecht,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,,,,8.2
+Edgewood Eagles,2025-11-25,UW-Oshkosh Titans,Vitorio Dante,2,0,1,0,1,2,2,2,0,0,0,1,0,0,2,0.0,0.0,100.0,3.7
+Illinois Wesleyan Titans,2025-11-15,Illinois Wesleyan Titans,Anthony Kemp,0,0,0,0,0,0,0,0,2,0,0,0,1,0,2,,,,8.5
+Illinois Wesleyan Titans,2025-11-15,Illinois Wesleyan Titans,Brady Kuehl,6,3,4,0,0,0,0,1,4,0,0,1,1,1,5,75.0,,,13.6
+Illinois Wesleyan Titans,2025-11-15,Illinois Wesleyan Titans,Brady Ruggles,5,2,5,1,3,0,0,0,3,2,0,0,0,3,3,40.0,33.3,,16.7
+Illinois Wesleyan Titans,2025-11-15,Illinois Wesleyan Titans,Casen Lawrence,4,1,9,1,6,1,2,0,3,1,1,0,0,3,3,11.1,16.7,50.0,29.2
+Illinois Wesleyan Titans,2025-11-15,Illinois Wesleyan Titans,David Williams,1,0,0,0,0,1,3,0,2,0,0,0,0,1,2,,,33.3,4.2
+Illinois Wesleyan Titans,2025-11-15,Illinois Wesleyan Titans,Jackson Niego,5,2,3,1,2,0,0,0,2,2,0,0,1,3,2,66.7,50.0,,12.3
+Illinois Wesleyan Titans,2025-11-15,Illinois Wesleyan Titans,Josh Fridman,15,3,8,0,2,9,9,0,1,0,0,0,4,2,1,37.5,0.0,100.0,27.5
+Illinois Wesleyan Titans,2025-11-15,Illinois Wesleyan Titans,Karlo Colak,7,2,6,0,3,3,5,1,5,6,1,1,5,1,6,33.3,0.0,60.0,29.7
+Illinois Wesleyan Titans,2025-11-15,Illinois Wesleyan Titans,Mason Funk,16,5,8,0,1,6,8,1,2,3,0,1,3,5,3,62.5,0.0,75.0,25.7
+Illinois Wesleyan Titans,2025-11-15,Illinois Wesleyan Titans,Noah Cleveland,16,6,11,0,1,4,8,3,11,1,1,4,2,3,14,54.5,0.0,50.0,31.7
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,AJ Ohrmundt,0,0,4,0,3,0,0,0,0,1,1,0,0,1,0,0.0,0.0,,9.5
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Adam Guyette,2,1,2,0,1,0,0,0,0,0,1,1,0,1,0,50.0,0.0,,6.7
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Aiden Hawkinson,2,0,3,0,3,2,2,1,4,0,0,0,0,1,5,0.0,0.0,100.0,14.8
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Brandon Beck,17,5,14,3,9,4,4,0,0,0,5,1,0,4,0,35.7,33.3,100.0,18.9
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Carter Thomas,10,2,5,0,2,6,6,3,2,1,0,1,2,2,5,40.0,0.0,100.0,18.1
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Jay Dalton,6,2,7,1,3,1,2,0,2,0,0,0,1,2,2,28.6,33.3,50.0,9.4
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Joey LaChapell,7,3,11,1,7,0,1,1,0,4,0,0,1,3,1,27.3,14.3,0.0,19.7
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Jonah Rindfleisch,2,1,4,0,3,0,0,1,2,0,0,1,1,0,3,25.0,0.0,,13.1
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Logan Rindfleisch,3,1,4,0,0,1,3,1,4,1,0,1,0,3,5,25.0,,33.3,16.2
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Matt Imig,0,0,4,0,3,0,0,1,0,2,0,0,2,0,1,0.0,0.0,,13.6
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Max Tutas,4,1,2,1,1,1,2,1,1,0,0,0,0,1,2,50.0,100.0,50.0,6.7
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Nate Nazos,3,1,2,1,1,0,0,0,1,2,1,0,0,1,1,50.0,100.0,,15.4
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Oskar Kangas,12,4,5,4,5,0,0,1,4,0,1,0,0,4,5,80.0,80.0,,16.1
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Tristan Johanknecht,0,0,2,0,0,0,1,2,3,0,0,0,1,0,5,0.0,,0.0,6.7
+Illinois Wesleyan Titans,2025-11-15,UW-Oshkosh Titans,Vitorio Dante,0,0,5,0,2,0,2,4,2,0,1,0,1,4,6,0.0,0.0,0.0,13.9
+Lawrence Vikings,2025-12-28,Lawrence Vikings,CJ Campbell,11,5,9,1,3,0,0,2,2,0,1,0,2,0,4,55.6,33.3,,20.2
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Caleb Nash,4,1,5,0,0,2,3,1,2,3,0,0,0,0,3,20.0,,66.7,22.5
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Cameron Nash,5,2,6,0,2,1,3,1,9,1,0,0,1,2,10,33.3,0.0,33.3,18.1
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Casey Schoenecker,10,4,8,0,0,2,5,0,5,0,0,0,3,0,5,50.0,,40.0,20.3
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Damian Cejka,3,0,1,0,0,3,6,0,1,1,2,0,2,1,1,0.0,,50.0,10.0
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Henry Jensen,2,0,3,0,1,2,2,0,2,0,0,1,0,1,2,0.0,0.0,100.0,9.0
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Hogan Demovsky,0,0,2,0,2,0,0,0,2,3,0,1,1,2,2,0.0,0.0,,16.9
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Jackson Weber,0,0,3,0,1,0,0,1,0,0,0,0,3,1,1,0.0,0.0,,11.6
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Joe Whitfill,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0.0,,,2.4
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Matai Edgecombe,4,1,2,0,0,2,3,0,0,0,0,0,0,1,0,50.0,,66.7,8.1
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Nathan Valentine,6,2,4,1,2,1,1,0,2,0,0,0,2,1,2,50.0,50.0,100.0,16.9
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Nicholas Gouriotis,7,3,8,1,4,0,0,0,3,0,0,0,3,1,3,37.5,25.0,,22.5
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Nicolas Manzanera,0,0,0,0,0,0,0,0,0,0,0,0,3,1,0,,,,13.3
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Noah Portalatin,0,0,1,0,0,0,0,0,3,0,0,0,0,0,3,0.0,,,3.5
+Lawrence Vikings,2025-12-28,Lawrence Vikings,Robert Olive,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,2.4
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,AJ Ohrmundt,2,1,2,0,1,0,0,0,0,0,1,1,0,0,0,50.0,0.0,,2.4
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Adam Guyette,2,1,2,0,0,0,0,0,0,0,0,0,0,0,0,50.0,,,2.4
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Aiden Hawkinson,12,4,8,3,7,1,1,0,2,0,3,0,1,0,2,50.0,42.9,100.0,17.9
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Ben Grabner,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,0.8
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Brandon Beck,15,7,14,1,7,0,0,0,1,1,1,4,1,2,1,50.0,14.3,,19.2
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Carter Thomas,5,2,5,1,4,0,0,0,6,2,2,0,1,1,6,40.0,25.0,,19.2
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Joey LaChapell,9,3,6,3,6,0,0,0,2,3,2,0,2,2,2,50.0,50.0,,19.2
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Jonah Rindfleisch,2,1,2,0,0,0,0,0,4,1,0,0,0,2,4,50.0,,,11.6
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Logan Rindfleisch,7,3,7,1,4,0,0,1,3,3,0,1,0,2,4,42.9,25.0,,17.3
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Matt Imig,2,1,3,0,1,0,0,0,0,2,0,0,0,3,0,33.3,0.0,,12.0
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Max Tutas,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,1.6
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Michael Metcalf-Grassman,10,4,9,0,1,2,4,1,3,2,3,1,1,0,4,44.4,0.0,50.0,19.2
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Nate Nazos,5,2,6,1,4,0,0,0,0,4,3,0,1,2,0,33.3,25.0,,19.2
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Oskar Kangas,10,4,8,2,5,0,0,1,3,3,3,0,0,0,4,50.0,40.0,,17.9
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Reed Seckar,4,2,3,0,1,0,0,0,2,1,1,0,0,0,2,66.7,0.0,,3.0
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Tristan Johanknecht,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,,,,3.0
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,Vitorio Dante,4,2,3,0,0,0,0,1,4,0,0,1,0,4,5,66.7,,,11.6
+Maryville (TN) Scots,2025-11-14,Maryville (TN) Scots,Chase Morgan,19,7,10,0,0,5,6,1,4,1,1,0,0,4,5,70.0,,83.3,22.6
+Maryville (TN) Scots,2025-11-14,Maryville (TN) Scots,Collin Smith,3,1,1,0,0,1,2,2,5,1,1,1,1,3,7,100.0,,50.0,16.4
+Maryville (TN) Scots,2025-11-14,Maryville (TN) Scots,Jackson Garner,13,2,11,2,9,7,7,0,2,2,2,0,5,1,2,18.2,22.2,100.0,34.0
+Maryville (TN) Scots,2025-11-14,Maryville (TN) Scots,Jamal Ware,10,4,5,1,1,1,2,0,0,1,2,0,2,1,0,80.0,100.0,50.0,13.5
+Maryville (TN) Scots,2025-11-14,Maryville (TN) Scots,Javi Rosell,14,4,7,0,0,6,6,1,0,3,1,0,1,3,1,57.1,,100.0,34.1
+Maryville (TN) Scots,2025-11-14,Maryville (TN) Scots,Jaylon Green,7,3,8,1,3,0,0,0,0,2,1,0,1,4,0,37.5,33.3,,21.6
+Maryville (TN) Scots,2025-11-14,Maryville (TN) Scots,Jett Sutton,0,0,2,0,1,0,0,0,1,0,0,0,0,1,1,0.0,0.0,,4.6
+Maryville (TN) Scots,2025-11-14,Maryville (TN) Scots,Kobe Franklin,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,6.2
+Maryville (TN) Scots,2025-11-14,Maryville (TN) Scots,Matthew Schneider,22,9,14,4,8,0,0,2,5,0,1,0,1,1,7,64.3,50.0,,34.5
+Maryville (TN) Scots,2025-11-14,Maryville (TN) Scots,R.J. Simmons,3,1,3,0,1,1,2,1,2,2,0,0,0,4,3,33.3,0.0,50.0,11.7
+Maryville (TN) Scots,2025-11-14,UW-Oshkosh Titans,AJ Ohrmundt,4,2,2,0,0,0,0,2,2,1,0,0,0,0,4,100.0,,,8.8
+Maryville (TN) Scots,2025-11-14,UW-Oshkosh Titans,Aiden Hawkinson,0,0,3,0,3,0,0,0,0,0,0,0,1,0,0,0.0,0.0,,9.8
+Maryville (TN) Scots,2025-11-14,UW-Oshkosh Titans,Brandon Beck,16,4,6,2,3,6,6,0,4,0,2,0,1,2,4,66.7,66.7,100.0,16.8
+Maryville (TN) Scots,2025-11-14,UW-Oshkosh Titans,Carter Thomas,6,2,4,1,3,1,2,1,5,0,1,0,1,2,6,50.0,33.3,50.0,20.1
+Maryville (TN) Scots,2025-11-14,UW-Oshkosh Titans,Jay Dalton,10,4,9,0,2,2,2,0,2,2,1,0,1,3,2,44.4,0.0,100.0,17.3
+Maryville (TN) Scots,2025-11-14,UW-Oshkosh Titans,Joey LaChapell,13,4,4,1,1,4,4,0,2,3,1,0,3,2,2,100.0,100.0,100.0,19.7
+Maryville (TN) Scots,2025-11-14,UW-Oshkosh Titans,Jonah Rindfleisch,8,2,3,0,1,4,6,2,3,3,1,2,2,1,5,66.7,0.0,66.7,20.8
+Maryville (TN) Scots,2025-11-14,UW-Oshkosh Titans,Logan Rindfleisch,3,1,1,0,0,1,2,1,1,1,0,0,2,4,2,100.0,,50.0,18.2
+Maryville (TN) Scots,2025-11-14,UW-Oshkosh Titans,Matt Imig,12,4,6,2,3,2,2,0,2,4,0,0,0,0,2,66.7,66.7,100.0,18.5
+Maryville (TN) Scots,2025-11-14,UW-Oshkosh Titans,Nate Nazos,3,1,7,1,4,0,0,1,1,2,3,0,2,1,2,14.3,25.0,,15.2
+Maryville (TN) Scots,2025-11-14,UW-Oshkosh Titans,Oskar Kangas,10,3,5,3,5,1,2,1,1,1,1,1,1,2,2,60.0,60.0,50.0,17.1
+Maryville (TN) Scots,2025-11-14,UW-Oshkosh Titans,Vitorio Dante,9,4,8,1,2,0,0,2,2,0,0,0,2,3,4,50.0,50.0,,16.8
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Abe Dykstra,0,0,1,0,0,0,1,1,0,0,0,0,1,0,1,0.0,,0.0,3.5
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Anton Kilde,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,5.4
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Birch Gunja,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,0.5
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,CJ Brown,2,1,4,0,1,0,0,1,0,2,0,0,0,3,1,25.0,0.0,,17.0
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Christian Wilson,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,2.6
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Houston McKenzie,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.6
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Jack Ellickson,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,2.6
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Jack Field,7,3,8,0,3,1,1,0,4,1,0,0,0,4,4,37.5,0.0,100.0,21.1
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Jackson Flowers,4,1,1,0,0,2,2,0,0,0,0,0,0,0,0,100.0,,100.0,2.6
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Joey Daun,3,1,2,1,2,0,0,0,0,0,0,0,0,1,0,50.0,50.0,,4.8
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Jose Gonzales,4,1,1,0,0,2,2,0,1,0,0,0,0,0,1,100.0,,100.0,5.5
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Keenan Rahn,4,1,1,1,1,1,2,1,5,0,3,0,2,2,6,100.0,100.0,50.0,19.2
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Kolby Williams,10,4,6,0,0,2,3,1,3,0,1,0,2,2,4,66.7,,66.7,21.7
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Landon Lee,4,2,5,0,1,0,0,0,0,3,0,0,1,0,0,40.0,0.0,,8.1
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Marshawn Robinson,11,5,11,1,5,0,0,1,1,1,0,1,2,3,2,45.5,20.0,,18.5
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Michael Asman,10,4,6,1,2,1,2,1,5,0,0,0,3,2,6,66.7,50.0,50.0,19.1
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Nick Ahlquist,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,,,,2.6
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Olin Zellmer,4,1,2,0,0,2,2,0,0,0,0,0,1,0,0,50.0,,100.0,2.6
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Sam Leoni,2,1,3,0,0,0,0,0,2,0,1,0,2,0,2,33.3,,,19.2
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,Seth Bunders,9,4,11,1,3,0,0,0,2,0,0,0,2,3,2,36.4,33.3,,19.6
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,AJ Ohrmundt,2,1,2,0,0,0,0,1,0,0,0,0,0,0,1,50.0,,,3.3
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Adam Guyette,1,0,1,0,1,1,2,0,0,0,0,0,0,0,0,0.0,0.0,50.0,4.0
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Aiden Hawkinson,15,6,7,3,4,0,0,2,0,0,2,0,1,0,2,85.7,75.0,,15.2
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Ben Grabner,3,1,2,1,1,0,0,0,0,0,0,0,0,0,0,50.0,100.0,,2.2
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Brandon Beck,21,7,13,4,9,3,4,0,6,1,1,1,3,3,6,53.8,44.4,75.0,18.7
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Carter Thomas,7,0,2,0,2,7,8,0,3,0,1,0,1,0,3,0.0,0.0,87.5,18.7
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Jay Dalton,4,2,4,0,1,0,2,0,0,2,1,0,0,3,0,50.0,0.0,0.0,8.6
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Joey LaChapell,12,3,3,2,2,4,5,0,1,3,1,0,0,2,1,100.0,100.0,80.0,18.7
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Jonah Rindfleisch,0,0,0,0,0,0,0,0,2,2,0,0,2,0,2,,,,7.8
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Logan Rindfleisch,5,1,2,0,1,3,4,0,2,1,1,0,2,3,2,50.0,0.0,75.0,16.6
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Matt Imig,3,1,2,1,2,0,0,0,0,2,0,0,1,0,0,50.0,50.0,,7.8
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Max Tutas,0,0,2,0,1,0,0,1,2,0,0,0,0,1,3,0.0,0.0,,3.8
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Michael Metcalf-Grassman,17,7,9,2,2,1,3,1,3,2,1,0,0,2,4,77.8,100.0,33.3,18.7
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Nate Nazos,2,1,4,0,2,0,0,0,0,2,3,0,0,0,0,25.0,0.0,,18.5
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Oskar Kangas,5,2,3,1,2,0,2,0,3,1,1,0,1,0,3,66.7,50.0,0.0,15.6
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Reed Seckar,0,0,3,0,1,0,0,0,0,0,2,0,0,1,0,0.0,0.0,,5.7
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Riley Rindfleisch,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,,,,1.7
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Tristan Johanknecht,3,1,1,0,0,1,2,1,1,0,0,0,0,0,2,100.0,,50.0,3.5
+Ripon Red Hawks,2025-12-17,UW-Oshkosh Titans,Vitorio Dante,0,0,3,0,2,0,0,0,1,0,0,0,0,2,1,0.0,0.0,,8.8
+Saint John's (MN) Johnnies,2025-11-08,Saint John's (MN) Johnnies,Baiden Bean,6,3,8,0,3,0,0,0,0,2,2,0,1,3,0,37.5,0.0,,20.6
+Saint John's (MN) Johnnies,2025-11-08,Saint John's (MN) Johnnies,Charlie Theis,9,3,5,1,3,2,2,0,2,2,0,0,3,1,2,60.0,33.3,100.0,14.8
+Saint John's (MN) Johnnies,2025-11-08,Saint John's (MN) Johnnies,Evan Weichert,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,5.6
+Saint John's (MN) Johnnies,2025-11-08,Saint John's (MN) Johnnies,Henry Tschetter,0,0,2,0,0,0,0,0,4,0,0,0,1,2,4,0.0,,,7.3
+Saint John's (MN) Johnnies,2025-11-08,Saint John's (MN) Johnnies,Hudson Hochstedler,12,4,9,2,6,2,2,0,5,0,1,0,1,3,5,44.4,33.3,100.0,24.8
+Saint John's (MN) Johnnies,2025-11-08,Saint John's (MN) Johnnies,Jamison Lien,10,5,7,0,1,0,2,3,4,0,1,1,3,2,7,71.4,0.0,0.0,25.5
+Saint John's (MN) Johnnies,2025-11-08,Saint John's (MN) Johnnies,Justin Johnson,7,3,5,1,2,0,0,0,1,0,1,0,1,5,1,60.0,50.0,,17.2
+Saint John's (MN) Johnnies,2025-11-08,Saint John's (MN) Johnnies,Liam Farniok,17,3,8,2,7,9,12,1,3,5,1,0,0,2,4,37.5,28.6,75.0,29.0
+Saint John's (MN) Johnnies,2025-11-08,Saint John's (MN) Johnnies,Peyton Podany,11,4,9,1,5,2,2,0,6,4,0,2,2,2,6,44.4,20.0,100.0,26.0
+Saint John's (MN) Johnnies,2025-11-08,Saint John's (MN) Johnnies,Vincent Hillesheim,14,6,7,0,0,2,4,3,3,1,0,0,1,1,6,85.7,,50.0,28.0
+Saint John's (MN) Johnnies,2025-11-08,UW-Oshkosh Titans,AJ Ohrmundt,1,0,2,0,1,1,2,1,0,0,1,1,0,0,1,0.0,0.0,50.0,13.2
+Saint John's (MN) Johnnies,2025-11-08,UW-Oshkosh Titans,Adam Guyette,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.8
+Saint John's (MN) Johnnies,2025-11-08,UW-Oshkosh Titans,Aiden Hawkinson,2,0,0,0,0,2,2,0,1,1,0,0,0,0,1,,,100.0,10.3
+Saint John's (MN) Johnnies,2025-11-08,UW-Oshkosh Titans,Brandon Beck,18,6,13,4,7,2,2,2,1,2,1,2,2,1,3,46.2,57.1,100.0,20.7
+Saint John's (MN) Johnnies,2025-11-08,UW-Oshkosh Titans,Carter Thomas,10,2,7,2,5,4,6,2,1,1,0,0,0,3,3,28.6,40.0,66.7,18.9
+Saint John's (MN) Johnnies,2025-11-08,UW-Oshkosh Titans,Jay Dalton,11,5,10,0,1,1,1,0,2,0,2,1,1,1,2,50.0,0.0,100.0,18.8
+Saint John's (MN) Johnnies,2025-11-08,UW-Oshkosh Titans,Joey LaChapell,13,2,7,1,2,8,8,1,3,5,0,0,2,2,4,28.6,50.0,100.0,21.1
+Saint John's (MN) Johnnies,2025-11-08,UW-Oshkosh Titans,Jonah Rindfleisch,0,0,1,0,0,0,0,2,4,2,0,0,0,1,6,0.0,,,10.4
+Saint John's (MN) Johnnies,2025-11-08,UW-Oshkosh Titans,Logan Rindfleisch,2,1,3,0,1,0,0,1,0,0,0,0,0,4,1,33.3,0.0,,10.6
+Saint John's (MN) Johnnies,2025-11-08,UW-Oshkosh Titans,Matt Imig,6,3,5,0,1,0,0,0,1,1,0,0,1,4,1,60.0,0.0,,18.2
+Saint John's (MN) Johnnies,2025-11-08,UW-Oshkosh Titans,Nate Nazos,6,1,2,1,2,3,4,1,5,2,1,0,1,1,6,50.0,50.0,75.0,17.4
+Saint John's (MN) Johnnies,2025-11-08,UW-Oshkosh Titans,Oskar Kangas,10,4,7,2,5,0,1,0,0,0,0,0,2,0,0,57.1,40.0,0.0,20.2
+Saint John's (MN) Johnnies,2025-11-08,UW-Oshkosh Titans,Vitorio Dante,11,4,11,2,6,1,2,1,3,1,0,0,1,4,4,36.4,33.3,50.0,18.1
+St. Norbert Green Knights,2025-12-20,St. Norbert Green Knights,Cam Lathos,14,6,12,0,1,2,2,2,2,2,0,0,0,1,4,50.0,0.0,100.0,21.4
+St. Norbert Green Knights,2025-12-20,St. Norbert Green Knights,Charlie Geske,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0.0,,,5.8
+St. Norbert Green Knights,2025-12-20,St. Norbert Green Knights,Cole Uhlenbrauck,5,2,2,1,1,0,0,0,2,1,0,0,0,2,2,100.0,100.0,,19.6
+St. Norbert Green Knights,2025-12-20,St. Norbert Green Knights,Connor Pytleski,14,5,9,3,5,1,2,1,4,4,1,0,1,4,5,55.6,60.0,50.0,23.7
+St. Norbert Green Knights,2025-12-20,St. Norbert Green Knights,Jaeden Grade,6,2,8,0,1,2,2,1,3,1,1,0,0,3,4,25.0,0.0,100.0,20.1
+St. Norbert Green Knights,2025-12-20,St. Norbert Green Knights,Mason Freiburger,1,0,1,0,0,1,7,2,0,0,0,0,1,3,2,0.0,,14.3,14.1
+St. Norbert Green Knights,2025-12-20,St. Norbert Green Knights,Ryan Brown,7,2,5,1,2,2,2,2,2,2,0,0,1,0,4,40.0,50.0,100.0,22.9
+St. Norbert Green Knights,2025-12-20,St. Norbert Green Knights,Ryan Cox,18,6,12,2,5,4,7,0,7,1,0,0,5,4,7,50.0,40.0,57.1,31.2
+St. Norbert Green Knights,2025-12-20,St. Norbert Green Knights,Thomas Meyers,4,2,2,0,0,0,0,0,1,1,0,0,1,1,1,100.0,,,5.4
+St. Norbert Green Knights,2025-12-20,St. Norbert Green Knights,Will Stuckey,12,4,10,1,3,3,4,1,3,7,2,0,0,1,4,40.0,33.3,75.0,33.1
+St. Norbert Green Knights,2025-12-20,UW-Oshkosh Titans,Aiden Hawkinson,8,3,10,2,8,0,0,0,4,0,0,0,1,3,4,30.0,25.0,,15.8
+St. Norbert Green Knights,2025-12-20,UW-Oshkosh Titans,Brandon Beck,12,4,12,2,7,2,2,1,2,3,0,1,1,4,3,33.3,28.6,100.0,23.0
+St. Norbert Green Knights,2025-12-20,UW-Oshkosh Titans,Carter Thomas,14,4,8,1,3,5,7,1,5,5,1,1,0,1,6,50.0,33.3,71.4,23.7
+St. Norbert Green Knights,2025-12-20,UW-Oshkosh Titans,Jay Dalton,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,,,,2.8
+St. Norbert Green Knights,2025-12-20,UW-Oshkosh Titans,Joey LaChapell,22,8,9,5,5,1,2,0,2,6,2,0,2,2,2,88.9,100.0,50.0,23.8
+St. Norbert Green Knights,2025-12-20,UW-Oshkosh Titans,Jonah Rindfleisch,7,2,3,0,0,3,4,1,1,2,1,2,0,1,2,66.7,,75.0,15.6
+St. Norbert Green Knights,2025-12-20,UW-Oshkosh Titans,Logan Rindfleisch,3,1,3,1,3,0,1,2,1,0,0,0,0,3,3,33.3,33.3,0.0,15.7
+St. Norbert Green Knights,2025-12-20,UW-Oshkosh Titans,Matt Imig,8,3,4,2,3,0,0,0,1,1,0,0,0,1,1,75.0,66.7,,12.6
+St. Norbert Green Knights,2025-12-20,UW-Oshkosh Titans,Michael Metcalf-Grassman,12,4,8,0,1,4,5,1,4,2,1,0,3,4,5,50.0,0.0,80.0,24.0
+St. Norbert Green Knights,2025-12-20,UW-Oshkosh Titans,Nate Nazos,2,1,5,0,4,0,0,2,3,2,2,0,0,3,5,20.0,0.0,,23.8
+St. Norbert Green Knights,2025-12-20,UW-Oshkosh Titans,Oskar Kangas,0,0,2,0,2,0,0,0,6,2,0,1,1,1,6,0.0,0.0,,14.1
+St. Norbert Green Knights,2025-12-20,UW-Oshkosh Titans,Vitorio Dante,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,2.2
+Augustana (IL) Vikings,2025-11-30,UW-Oshkosh Titans,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Benedictine (IL) Eagles,2025-12-03,Benedictine (IL) Eagles,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Calvin Knights,2025-12-06,Calvin Knights,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,
+Carroll (WI) Pioneers,2025-11-22,Carroll (WI) Pioneers,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Edgewood Eagles,2025-11-25,Edgewood Eagles,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,
+Illinois Wesleyan Titans,2025-11-15,Illinois Wesleyan Titans,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,
+Lawrence Vikings,2025-12-28,Lawrence Vikings,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,,,,
+Lawrence Vikings,2025-12-28,UW-Oshkosh Titans,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,
+Ripon Red Hawks,2025-12-17,Ripon Red Hawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,

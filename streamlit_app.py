@@ -4794,15 +4794,19 @@ def render_upcoming_game():
                         _ss_calls = resolve_play_calls(_ss_best_rows).dropna()
                         if not _ss_calls.empty:
                             _ss_top_call = _ss_calls.value_counts().idxmax()
-                            _ss_play_txt = f'"{_ss_top_call}" generates it most often ({int((_ss_calls == _ss_top_call).sum())}x)'
+                            _ss_play_txt = f"Usually comes off {_ss_top_call} ({int((_ss_calls == _ss_top_call).sum())}x this season)"
 
                     _ss_parts = [p for p in [_ss_lineup_txt, _ss_play_txt] if p]
-                    _ss_reason = " -- ".join(_ss_parts) if _ss_parts else "Not enough lineup/play-call data linked to these shots yet to say which lineup or play generates them most."
+                    _ss_reason = " -- ".join(_ss_parts) if _ss_parts else "Not enough lineup or play-call data linked to these shots yet to say who runs this most."
+                    # CONFIRMED BUG (fixed here): this title used to read "UWW Best Offensive Shot Selection &
+                    # Quality: Cut to the basket" -- a report-section label pasted in front of the shot name,
+                    # not something a coach would actually say. describe_shot_look() is the same helper the
+                    # "Attack their weakest look" card below already uses for this; reusing it here keeps the
+                    # two cards consistent AND picks up its handling of an unclassified/untagged mechanic,
+                    # which this line previously didn't have at all.
                     _keys.append((
                         "\U0001f3c0",
-                        ("UWW Best Offensive Shot Selection & Quality: "
-                         + str(_ss_best_mechanic)
-                         + (f" ({_ss_best_contest.lower()})" if _ss_best_contest in ("Guarded", "Open") else "")),
+                        "Feature our best look: " + describe_shot_look(_ss_best_mechanic, _ss_best_contest),
                         f"{int(_ss_best['Makes'])}/{int(_ss_best['Attempts'])} ({_ss_best['FG%']:.0f}%) this season",
                         _ss_reason,
                         "Data-Driven",
@@ -4913,12 +4917,12 @@ def render_upcoming_game():
                             _aw_calls = resolve_play_calls(_aw_match_rows).dropna()
                             if not _aw_calls.empty:
                                 _aw_top_call = _aw_calls.value_counts().idxmax()
-                                _aw_play_txt = f'"{_aw_top_call}" generates it most often for us ({int((_aw_calls == _aw_top_call).sum())}x)'
+                                _aw_play_txt = f"Usually comes off {_aw_top_call} for us ({int((_aw_calls == _aw_top_call).sum())}x this season)"
 
                     # One line per angle rather than one run-on sentence -- three lineups per list is too
                     # much to read joined by dashes.
                     _aw_parts = [p for p in [_aw_lineup_txt, _aw_volume_txt, _aw_play_txt] if p]
-                    _aw_reason = "\n".join(_aw_parts) if _aw_parts else "Not enough UWW lineup/play-call data linked to this shot type yet to say which lineup or play generates it most for us."
+                    _aw_reason = "\n".join(_aw_parts) if _aw_parts else "Not enough UWW lineup or play-call data linked to this shot type yet to say who runs it most for us."
                     _keys.append((
                         "\U0001f3af",
                         f"Attack their weakest look: {describe_shot_look(_aw_best_mechanic, _aw_best_contest)}",
@@ -5211,68 +5215,89 @@ def render_upcoming_game():
                 _ag_pace_d = compute_efficiency_pace(_ag_uww_side, _ag_opp_side, _ag_ng)
                 _ag_opp_ppg = safe_float(_ag_tt_row.iloc[0].get("team_ppg"))
                 _ag_opp_allowed = safe_float(_ag_tt_row.iloc[0].get("opp_ppg_allowed")) if "opp_ppg_allowed" in _ag_tt_row.columns else None
-                if _ag_opp_ppg is not None and _ag_opp_allowed is not None:
-                    _ag_style = "Push Tempo" if _ag_opp_allowed > _ag_opp_ppg else "Slow It Down"
+
+                # How UWW has actually fared at each tempo -- split UWW's own games by their per-game pace
+                # (median-split against themselves, so "fast" and "slow" mean fast/slow FOR THIS TEAM, not
+                # against some league constant).
+                _ps_df, _ps_median = None, None
+                try:
+                    _ps_keys = [c for c in ["opponent", "game_date"] if c in _ag_uww_side.columns]
+                    if _ps_keys:
+                        _ps_rows = []
+                        for _ps_k, _ps_u in _ag_uww_side.groupby(_ps_keys, dropna=False):
+                            _ps_mask = pd.Series(True, index=_ag_opp_side.index)
+                            for _c, _v in zip(_ps_keys, (_ps_k if isinstance(_ps_k, tuple) else (_ps_k,))):
+                                _ps_mask &= (_ag_opp_side[_c] == _v)
+                            _ps_o = _ag_opp_side[_ps_mask]
+                            if _ps_o.empty:
+                                continue
+                            _ps_d = compute_efficiency_pace(_ps_u, _ps_o, 1)
+                            _ps_rows.append({
+                                "pace": _ps_d["Pace"], "net": _ps_d["Net Rtg"],
+                                "ortg": _ps_d["ORtg"],
+                                "won": (_ps_u["PTS"].sum() > _ps_o["PTS"].sum()) if "PTS" in _ps_u.columns else None,
+                            })
+                        _ps_all = pd.DataFrame(_ps_rows)
+                        if len(_ps_all) >= 4:
+                            _ps_median = _ps_all["pace"].median()
+                            _ps_all["_bucket"] = _ps_all["pace"].apply(lambda v: "fast" if v > _ps_median else "slow")
+                            _ps_df = _ps_all
+                except Exception:
+                    pass
+
+                # The mirror image: how the OPPONENT'S opponents fared at each tempo, from the upcoming
+                # opponent's own prior games -- what has actually worked AGAINST them, rather than just
+                # what UWW happens to be good at.
+                _po_df, _po_median = None, None
+                try:
+                    _po_box = load_table("uww_opponent_prior_games_box_score")
+                    if not _po_box.empty and {"team", "game_date"} <= set(_po_box.columns):
+                        _po_rows = []
+                        for _po_k, _po_g in _po_box.groupby([c for c in ["opponent", "game_date"] if c in _po_box.columns], dropna=False):
+                            _po_them = _po_g[_po_g["team"] == short_opponent]
+                            _po_foe = _po_g[_po_g["team"] != short_opponent]
+                            if _po_them.empty or _po_foe.empty:
+                                continue
+                            # Rated from the OPPONENT-OF-THEIRS side, so Net Rtg reads "how the other
+                            # team did against them" without needing to be mentally flipped.
+                            _po_d = compute_efficiency_pace(_po_foe, _po_them, 1)
+                            _po_rows.append({
+                                "pace": _po_d["Pace"], "net": _po_d["Net Rtg"], "ortg": _po_d["ORtg"],
+                                "won": (_po_foe["PTS"].sum() > _po_them["PTS"].sum()) if "PTS" in _po_foe.columns else None,
+                            })
+                        _po_all = pd.DataFrame(_po_rows)
+                        if len(_po_all) >= 4:
+                            _po_median = _po_all["pace"].median()
+                            _po_all["_bucket"] = _po_all["pace"].apply(lambda v: "fast" if v > _po_median else "slow")
+                            _po_df = _po_all
+                except Exception:
+                    pass
+
+                # CONFIRMED CHANGE (requested): this card used to always show once team-total PPG data existed
+                # for the opponent, recommending "Push Tempo" purely because they give up more than they score
+                # on average -- a scoring-margin read that has nothing to do with pace specifically, and shown
+                # regardless of whether UWW is actually any good at playing that way. Now it only fires when
+                # BOTH sides of a real pace mismatch line up, using the two splits above: the opponent has
+                # genuinely struggled against that tempo in their own past games (their foes' average Net Rtg
+                # in that bucket is positive), AND UWW has actually been good playing that way itself (UWW's
+                # own average Net Rtg in that bucket is positive). Needs both splits (each already gated at 4+
+                # games) -- no card at all if either is missing, or if neither tempo clears both bars.
+                _ag_style = None
+                if _ps_df is not None and _po_df is not None:
+                    _ps_net = _ps_df.groupby("_bucket")["net"].mean()
+                    _po_net = _po_df.groupby("_bucket")["net"].mean()
+                    for _bucket, _label in (("fast", "Push Tempo"), ("slow", "Slow It Down")):
+                        if (_bucket in _ps_net.index and _bucket in _po_net.index
+                                and _ps_net[_bucket] > 0 and _po_net[_bucket] > 0):
+                            _ag_style = _label
+                            break  # "fast" checked first: if both tempos somehow clear the bar, pushing the
+                                   # pace is the more decisive, higher-ceiling call.
+
+                if _ag_style and _ag_opp_ppg is not None and _ag_opp_allowed is not None:
                     _at_a_glance.append(("\u23f1\ufe0f Style", _ag_style, f"UWW season pace: {_ag_pace_d['Pace']:.1f} poss/game. {esc(short_opponent)}: {_ag_opp_ppg:.1f} PPG, allows {_ag_opp_allowed:.1f}."))
                     _card_data["pace_style"] = (_ag_pace_d, _ag_opp_ppg, _ag_opp_allowed, _ag_style)
-
-                    # How UWW has actually FARED playing the recommended way. The card told a coach which
-                    # tempo to choose but nothing about whether this team is any good at it -- split UWW's
-                    # own games by their per-game pace (median-split against themselves, so "fast" and
-                    # "slow" mean fast/slow FOR THIS TEAM, not against some league constant) and report the
-                    # record and efficiency on each side of it.
-                    try:
-                        _ps_keys = [c for c in ["opponent", "game_date"] if c in _ag_uww_side.columns]
-                        if _ps_keys:
-                            _ps_rows = []
-                            for _ps_k, _ps_u in _ag_uww_side.groupby(_ps_keys, dropna=False):
-                                _ps_mask = pd.Series(True, index=_ag_opp_side.index)
-                                for _c, _v in zip(_ps_keys, (_ps_k if isinstance(_ps_k, tuple) else (_ps_k,))):
-                                    _ps_mask &= (_ag_opp_side[_c] == _v)
-                                _ps_o = _ag_opp_side[_ps_mask]
-                                if _ps_o.empty:
-                                    continue
-                                _ps_d = compute_efficiency_pace(_ps_u, _ps_o, 1)
-                                _ps_rows.append({
-                                    "pace": _ps_d["Pace"], "net": _ps_d["Net Rtg"],
-                                    "ortg": _ps_d["ORtg"],
-                                    "won": (_ps_u["PTS"].sum() > _ps_o["PTS"].sum()) if "PTS" in _ps_u.columns else None,
-                                })
-                            _ps_df = pd.DataFrame(_ps_rows)
-                            if len(_ps_df) >= 4:
-                                _ps_median = _ps_df["pace"].median()
-                                _ps_df["_bucket"] = _ps_df["pace"].apply(lambda v: "fast" if v > _ps_median else "slow")
-                                _card_data["pace_style_history"] = {"games": _ps_df, "median": _ps_median}
-                    except Exception:
-                        pass
-
-                    # The mirror image: how the OPPONENT'S opponents fared at each tempo, from the upcoming
-                    # opponent's own prior games. UWW's split says what we're good at; this says what has
-                    # actually worked AGAINST them -- and the two can point opposite ways, which is exactly
-                    # the thing worth knowing before committing to a tempo.
-                    try:
-                        _po_box = load_table("uww_opponent_prior_games_box_score")
-                        if not _po_box.empty and {"team", "game_date"} <= set(_po_box.columns):
-                            _po_rows = []
-                            for _po_k, _po_g in _po_box.groupby([c for c in ["opponent", "game_date"] if c in _po_box.columns], dropna=False):
-                                _po_them = _po_g[_po_g["team"] == short_opponent]
-                                _po_foe = _po_g[_po_g["team"] != short_opponent]
-                                if _po_them.empty or _po_foe.empty:
-                                    continue
-                                # Rated from the OPPONENT-OF-THEIRS side, so Net Rtg reads "how the other
-                                # team did against them" without needing to be mentally flipped.
-                                _po_d = compute_efficiency_pace(_po_foe, _po_them, 1)
-                                _po_rows.append({
-                                    "pace": _po_d["Pace"], "net": _po_d["Net Rtg"], "ortg": _po_d["ORtg"],
-                                    "won": (_po_foe["PTS"].sum() > _po_them["PTS"].sum()) if "PTS" in _po_foe.columns else None,
-                                })
-                            _po_df = pd.DataFrame(_po_rows)
-                            if len(_po_df) >= 4:
-                                _po_median = _po_df["pace"].median()
-                                _po_df["_bucket"] = _po_df["pace"].apply(lambda v: "fast" if v > _po_median else "slow")
-                                _card_data["pace_style_opp_history"] = {"games": _po_df, "median": _po_median}
-                    except Exception:
-                        pass
+                    _card_data["pace_style_history"] = {"games": _ps_df, "median": _ps_median}
+                    _card_data["pace_style_opp_history"] = {"games": _po_df, "median": _po_median}
         except Exception:
             pass
 
@@ -5739,9 +5764,9 @@ def render_upcoming_game():
             st.markdown(f"UWW season pace: **{_fp_pace_d['Pace']:.1f}** possessions/game, Net Rtg **{_fp_pace_d['Net Rtg']:+.1f}**.")
             st.markdown(f"{short_opponent}: **{_fp_opp_ppg:.1f}** PPG, allows **{_fp_opp_allowed:.1f}**.")
             if _fp_style == "Push Tempo":
-                st.markdown("They give up more than they score on average -- **push tempo** and get into transition before their defense sets.")
+                st.markdown("They've struggled against faster tempo, and UWW has been good playing that way -- **push tempo** and get into transition before their defense sets.")
             else:
-                st.markdown("They're stingier than their own offense -- a **half-court, execution-first** approach may serve better than trying to speed them up.")
+                st.markdown("They've struggled when games slow down, and UWW has been good playing that way -- a **half-court, execution-first** approach fits here.")
 
             # Does UWW actually play well that way? The recommendation is about the OPPONENT; this is the
             # part about us, and it's the half a coach needs before committing to a tempo.
@@ -5906,6 +5931,10 @@ def render_upcoming_game():
             _HEADLINE_FORCED_CATEGORY = (
                 (r"high-volume look|goes to most", "Defensive Efficiency"),
                 (r"attack opponent worst offensive shot selection|attack their weakest look", "Offensive Efficiency"),
+                # "Feature our best look" (the retitled counterpart of "attack their weakest look" above) no
+                # longer contains the "shot selection"/"shot quality" keywords the keyword matcher relies on
+                # for Offensive Efficiency, so it needs the same explicit pin.
+                (r"feature our best look", "Offensive Efficiency"),
             )
             for _icon, _headline, _caption, _reason, _source in _keys:
                 # Data-Driven keys carry raw stat text in _caption/_reason ("Offensive Rebound: 87.7% on

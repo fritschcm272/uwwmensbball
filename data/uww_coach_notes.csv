@@ -99,13 +99,13 @@ Carroll (WI) Pioneers,H1,579.0,Carroll (WI) Pioneers,Dennis Estepp,Turnover,-HUG
 Carroll (WI) Pioneers,H1,561.0,Carroll (WI) Pioneers,Cai Joseph,Make 2 Pts,-WRAP TIGHT W/ ACTIVE HANDS TO DEFLECT,,Defense
 Carroll (WI) Pioneers,H1,510.0,Carroll (WI) Pioneers,Lamar Smith,Make 2 Pts,+BASELINE CUTOFFS X2 | -FACE CUT | +WALL UP,,Defense
 Carroll (WI) Pioneers,H1,483.0,Carroll (WI) Pioneers,Lamar Smith,1 Pts,-TAKE A BETTER ANGLE TO GET THROUGH | -POST DEFENDER BE ACTIVE | BOTTOM HELP,,Defense
-Carroll (WI) Pioneers,H1,451.0,UW-Whitewater,Brock Marino,Make 2 Pts,-SKIP IT TOO SOON = LET IT CLEAR,,Offense
+Carroll (WI) Pioneers,H1,451.0,UW-Whitewater,Brock Marino,Make 2 Pts,-SKIP IT TOO SOON = LET IT CLEAR,Wildcat,Offense
 Carroll (WI) Pioneers,H1,387.0,Carroll (WI) Pioneers,Peyton McKenna,Miss 3 Pts,+BACKSIDE TAGS = NEVER STOP MOVING | CHECK & SWARM!!,,Defense
 Carroll (WI) Pioneers,H1,320.0,Carroll (WI) Pioneers,Lamar Smith,Miss 2 Pts,-WE FORCE 44 BACK TO HIS L = NEED THAT GAP DEFENDER,,Defense
 Carroll (WI) Pioneers,H1,263.0,Carroll (WI) Pioneers,Dennis Estepp,Make 2 Pts,-??? | NOT COMMUNICATING/SPRINTING BACK,,Defense
 Carroll (WI) Pioneers,H1,169.0,Carroll (WI) Pioneers,Peyton McKenna,Miss 3 Pts,Bottom man = tag | Top man = First Pass,,Defense
 Carroll (WI) Pioneers,H1,4.0,UW-Whitewater,Isaac Verges,Make 2 Pts,+EFFORT PLAY TO END THE HALF,,Offense
-Carroll (WI) Pioneers,H2,1107.0,UW-Whitewater,Richie Warren,Miss 3 Pts,NOVA ACTION = STAY SPACED IN THE FAR CORNER,,Offense
+Carroll (WI) Pioneers,H2,1107.0,UW-Whitewater,Richie Warren,Miss 3 Pts,NOVA ACTION = STAY SPACED IN THE FAR CORNER,Nova,Offense
 Carroll (WI) Pioneers,H2,1094.0,Carroll (WI) Pioneers,Michael McNabb,Miss 3 Pts,+EFFORT PLAY,,Defense
 Carroll (WI) Pioneers,H2,1091.0,Carroll (WI) Pioneers,Jacob Naber,Miss 2 Pts,-LEVERAGE UP & OVER BALL SCREEN | +WALL UP,,Defense
 Carroll (WI) Pioneers,H2,952.0,Carroll (WI) Pioneers,Dennis Estepp,Foul,+HOW WE FOUL IN TRANSITION,,Defense
@@ -113,15 +113,15 @@ Carroll (WI) Pioneers,H2,841.0,Carroll (WI) Pioneers,Michael McNabb,Make 2 Pts,-
 Carroll (WI) Pioneers,H2,848.0,Carroll (WI) Pioneers,Michael McNabb,Miss 2 Pts,+GREAT LEVERAGING UP & OVER BALL SCREEN | +GREAT TEAM DEF V MCNABB,,Defense
 Carroll (WI) Pioneers,H2,809.0,Carroll (WI) Pioneers,Dennis Estepp,Miss 2 Pts,+GOOD V. HANDOFFS | -HEAVIER IN GAP (V NON-SHOOTER) | + WALL UP,,Defense
 Carroll (WI) Pioneers,H2,781.0,UW-Whitewater,Darius Chestnut,Make 2 Pts,+EFFORT PLAY,,Offense
-Carroll (WI) Pioneers,H2,676.0,UW-Whitewater,Joey Berezowitz,Make 3 Pts,TWINS PITCH = NEED TO BE LOWER FOR A BETTER ENTRY PASS |+ POSS,,Offense
+Carroll (WI) Pioneers,H2,676.0,UW-Whitewater,Joey Berezowitz,Make 3 Pts,TWINS PITCH = NEED TO BE LOWER FOR A BETTER ENTRY PASS |+ POSS,Twins Pitch,Offense
 Carroll (WI) Pioneers,H2,641.0,Carroll (WI) Pioneers,Jacob Naber,Miss 2 Pts,-LOSE MAN ON BACK CUT | +WALL UPS & +BOX OUTS,,Defense
-Carroll (WI) Pioneers,H2,618.0,UW-Whitewater,Brock Marino,0 Pts,-BETTER STAGGERED SCREENS | +POSS,,Offense
+Carroll (WI) Pioneers,H2,618.0,UW-Whitewater,Brock Marino,0 Pts,-BETTER STAGGERED SCREENS | +POSS,Twins Pitch,Offense
 Carroll (WI) Pioneers,H2,604.0,UW-Whitewater,Joey Berezowitz,Miss 3 Pts,"+INSIDE OUT 3, +OREB EFFORT X2 | SHOT FAKE & GET TO TWO FEET",,Offense
 Carroll (WI) Pioneers,H2,593.0,UW-Whitewater,Jake Quast,Make 2 Pts,+SHOT FAKE & ATTACK TO TWO FEET,,Offense
 Carroll (WI) Pioneers,H2,572.0,Carroll (WI) Pioneers,Peyton McKenna,Turnover,+POSS +HELP THE HELPER,,Defense
 Carroll (WI) Pioneers,H2,559.0,Carroll (WI) Pioneers,Lamar Smith,0 Pts,-DON'T SPRINT BACK | DON'T SPRINT TO OUR GAP = 5 PT SWING,,Defense
 Carroll (WI) Pioneers,H2,335.0,UW-Whitewater,Joey Berezowitz,Turnover,-GET TO TWO FEET,,Offense
-Carroll (WI) Pioneers,H2,284.0,UW-Whitewater,Brock Marino,Miss 2 Pts,-PIN TO FLARE (HAVE TO WAIT FOR CUTTER) | -HAVE TIME TO SHOT FAKE,,Offense
+Carroll (WI) Pioneers,H2,284.0,UW-Whitewater,Brock Marino,Miss 2 Pts,-PIN TO FLARE (HAVE TO WAIT FOR CUTTER) | -HAVE TIME TO SHOT FAKE,Over Pin,Offense
 Carroll (WI) Pioneers,H2,205.0,Carroll (WI) Pioneers,Michael McNabb,Miss 2 Pts,-SPRINT AHEAD OF THE BALL | -FINISH THE POSSESSION,,Defense
 Carroll (WI) Pioneers,H2,170.0,Carroll (WI) Pioneers,Jacob Naber,Foul,-NOT STRAIGHT UP,,Defense
 Carroll (WI) Pioneers,H2,28.0,UW-Whitewater,Jake Quast,Make 2 Pts,+SHOT FAKE AND ATTACK OFF OF TWO FEET TO FINISH,,Offense
@@ -129,16 +129,66 @@ Carroll (WI) Pioneers,H1,977.0,UW-Whitewater,Brock Marino,Miss 2 Pts,GATHER FINI
 Carroll (WI) Pioneers,H1,960.0,Carroll (WI) Pioneers,Michael McNabb,Turnover,STAYING ACTIVE ON TOP SIDE,,Defense
 Carroll (WI) Pioneers,H1,290.0,UW-Whitewater,Brock Marino,Miss 2 Pts,TAKE ANOTHER DRIBBLE,,Offense
 Carroll (WI) Pioneers,H1,65.0,Carroll (WI) Pioneers,Peyton McKenna,Turnover,+HEDGE | -DON'T STAY,,Defense
-Carroll (WI) Pioneers,H2,1177.0,UW-Whitewater,Richie Warren,Miss 2 Pts,FLIP IT & GO DRIVE TO POST,,Offense
+Carroll (WI) Pioneers,H2,1177.0,UW-Whitewater,Richie Warren,Miss 2 Pts,FLIP IT & GO DRIVE TO POST,Nova,Offense
 Carroll (WI) Pioneers,H2,1153.0,UW-Whitewater,Richie Warren,Miss 2 Pts,"GOOD PACE ON ATTACK, PLAYING OFF OF TWO FEET",,Offense
-Carroll (WI) Pioneers,H2,1031.0,UW-Whitewater,Collin Madson,Miss 3 Pts,+GATHER FINISH,,Offense
+Carroll (WI) Pioneers,H2,1031.0,UW-Whitewater,Collin Madson,Miss 3 Pts,+GATHER FINISH,Nova,Offense
+Hope Flying Dutchmen,H1,850.0,UW-Whitewater,Brock Marino,Make 2 Pts,,"Panther ""P""",Offense
+Hope Flying Dutchmen,H2,260.0,UW-Whitewater,Brock Marino,1 Pts,,"Panther ""P""",Offense
+Elmhurst Bluejays,H2,937.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,"Panther-4 ""P4""",Offense
+Elmhurst Bluejays,H2,854.0,UW-Whitewater,Brock Marino,Foul,,"Panther 2 ""P2""",Offense
+Hope Flying Dutchmen,H2,892.0,UW-Whitewater,Richie Warren,Make 2 Pts,,"Panther 2 ""P2""",Offense
 Ripon Red Hawks,H2,444.0,UW-Whitewater,Isaac Verges,Miss 2 Pts,,"Panther 2 ""P2""",Offense
+Alma Scots,H1,678.0,UW-Whitewater,Brock Marino,Miss 2 Pts,,"Panther 2 ""P2""",Offense
+Alma Scots,H2,1133.0,UW-Whitewater,Brock Marino,Foul,,"Panther 2 ""P2""",Offense
+Elmhurst Bluejays,H2,503.0,UW-Whitewater,Jr Lukenbill,Miss 3 Pts,,Twins,Offense
+Alma Scots,H2,618.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,Twins,Offense
+Elmhurst Bluejays,H1,905.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,Twins Right,Offense
+Elmhurst Bluejays,H1,884.0,UW-Whitewater,Isaac Verges,Miss 3 Pts,,Twins Right,Offense
 Ripon Red Hawks,H1,584.0,UW-Whitewater,Collin Madson,Make 3 Pts,,Twins Right,Offense
+Carroll (WI) Pioneers,H2,426.0,UW-Whitewater,Brock Marino,Miss 2 Pts,,Twins Swirl,Offense
+Hope Flying Dutchmen,H1,167.0,UW-Whitewater,Jake Quast,Turnover,,Twins Right Swirl,Offense
+Carroll (WI) Pioneers,H1,530.0,UW-Whitewater,Brock Marino,Miss 3 Pts,,Twins Pitch,Offense
+Elmhurst Bluejays,H1,647.0,UW-Whitewater,Collin Madson,1 Pts,,Over Cheetah,Offense
+Elmhurst Bluejays,H1,583.0,UW-Whitewater,Richie Warren,Make 2 Pts,,Over Cheetah,Offense
+Carroll (WI) Pioneers,H1,648.0,UW-Whitewater,Kelton Mcewen,Miss 3 Pts,,Over Cheetah,Offense
+Hope Flying Dutchmen,H1,1152.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Over Cheetah,Offense
 Ripon Red Hawks,H1,1110.0,UW-Whitewater,Collin Madson,Turnover,,Over Cheetah,Offense
 Ripon Red Hawks,H2,692.0,UW-Whitewater,Jake Quast,Miss 2 Pts,,Over Cheetah,Offense
+Alma Scots,H2,371.0,UW-Whitewater,Tyshawn Teague-Johnson,Turnover,,Over Cheetah,Offense
+Alma Scots,H2,263.0,UW-Whitewater,Joey Berezowitz,Make 3 Pts,,Over Pin,Offense
+Elmhurst Bluejays,H1,843.0,UW-Whitewater,Richie Warren,Miss 3 Pts,,Nova,Offense
+Elmhurst Bluejays,H1,241.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,Nova,Offense
+Elmhurst Bluejays,H2,1121.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Nova,Offense
+Elmhurst Bluejays,H1,337.0,UW-Whitewater,Luke Bara,Foul,,Nova,Offense
+Elmhurst Bluejays,H2,1183.0,UW-Whitewater,Isaac Verges,Miss 3 Pts,,Nova,Offense
+Carroll (WI) Pioneers,H1,897.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,Nova,Offense
+Carroll (WI) Pioneers,H2,371.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Nova,Offense
+Hope Flying Dutchmen,H1,1064.0,UW-Whitewater,Isaac Verges,Miss 2 Pts,,Nova,Offense
+Hope Flying Dutchmen,H1,457.0,UW-Whitewater,Rashad Rogers,Make 2 Pts,,Nova,Offense
+Hope Flying Dutchmen,H1,246.0,UW-Whitewater,Kelton Mcewen,Make 3 Pts,,Nova,Offense
+Hope Flying Dutchmen,H2,484.0,UW-Whitewater,Isaac Verges,Foul,,Nova,Offense
+Hope Flying Dutchmen,H2,790.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,Nova,Offense
+Hope Flying Dutchmen,H2,746.0,UW-Whitewater,Isaac Verges,Make 2 Pts,,Nova,Offense
+Alma Scots,H1,647.0,UW-Whitewater,Jake Quast,Turnover,,Nova,Offense
+Alma Scots,H1,114.0,UW-Whitewater,Brock Marino,Foul,,Nova,Offense
+Alma Scots,H2,835.0,UW-Whitewater,Isaac Verges,Make 2 Pts,,Nova,Offense
+Alma Scots,H2,805.0,UW-Whitewater,Isaac Verges,Make 2 Pts,,Nova,Offense
+Alma Scots,H2,783.0,UW-Whitewater,Brock Marino,Turnover,,Nova,Offense
+Alma Scots,H2,735.0,UW-Whitewater,Luke Bara,Make 3 Pts,,Nova,Offense
+Hope Flying Dutchmen,H2,1129.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,Wildcat,Offense
 Ripon Red Hawks,H2,842.0,UW-Whitewater,Darius Chestnut,Turnover,,Wildcat,Offense
+Hope Flying Dutchmen,H1,699.0,UW-Whitewater,Collin Madson,Make 3 Pts,,Kentucky,Offense
+Carroll (WI) Pioneers,H2,143.0,UW-Whitewater,Brock Marino,Turnover,,Snap,Offense
+Hope Flying Dutchmen,H1,1097.0,UW-Whitewater,Collin Madson,Turnover,,Snap,Offense
+Hope Flying Dutchmen,H1,511.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,Snap,Offense
 Ripon Red Hawks,H1,1158.0,UW-Whitewater,Isaac Verges,Miss 3 Pts,,Snap,Offense
 Ripon Red Hawks,H1,447.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Snap,Offense
+Elmhurst Bluejays,H1,164.0,UW-Whitewater,Luke Bara,Make 3 Pts,,SLOB Twins,Offense
+Alma Scots,H1,283.0,UW-Whitewater,Collin Madson,Foul,,SLOB Twins,Offense
+Elmhurst Bluejays,H2,682.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,SLOB Snap,Offense
+Hope Flying Dutchmen,H2,621.0,UW-Whitewater,Collin Madson,1 Pts,,SLOB Snap,Offense
+Hope Flying Dutchmen,H1,648.0,UW-Whitewater,Tyshawn Teague-Johnson,Make 3 Pts,,Regular Entry,Offense
+Alma Scots,H1,412.0,UW-Whitewater,Joey Berezowitz,Make 3 Pts,,Transition Drag,Offense
 Ripon Red Hawks,H2,,Ripon Red Hawks,Kolby Williams,No Violation,"4 DEFENDER HAS TO BE UP & TALKING, GOOD SWITCH, NO GAP V 12 (RHD)",,Defense
 Ripon Red Hawks,H2,,Ripon Red Hawks,CJ Brown,Non Shooting Foul,BAD FOUL,,Defense
 Ripon Red Hawks,H2,,Ripon Red Hawks,Sam Leoni,No Violation,MISSED SWITCH,,Defense
@@ -156,4 +206,9 @@ Carroll (WI) Pioneers,H2,,Carroll (WI) Pioneers,Lamar Smith,Non Shooting Foul,-S
 Carroll (WI) Pioneers,H2,,Carroll (WI) Pioneers,Evan Bland,No Violation,-LET HIM THROUGH V HANDOFF | -HEAVIER GAP | +WALL UP,,Defense
 Carroll (WI) Pioneers,H1,,UW-Whitewater,Jake Quast,Non Shooting Foul,THROWBACK SMASH,,Offense
 Carroll (WI) Pioneers,H2,,Carroll (WI) Pioneers,Evan Bland,Non Shooting Foul,"SHOW HANDS, USE CHEST PUNCH",,Defense
+Elmhurst Bluejays,H1,,UW-Whitewater,Brock Marino,Non Shooting Foul,,"Panther ""P""",Offense
 Ripon Red Hawks,H2,,UW-Whitewater,Brock Marino,Non Shooting Foul,,"Panther ""P""",Offense
+Hope Flying Dutchmen,H1,,UW-Whitewater,Tyshawn Teague-Johnson,Non Shooting Foul,,"Panther-4 ""P4""",Offense
+Hope Flying Dutchmen,H1,,UW-Whitewater,Richie Warren,No Violation,,"Panther 2 ""P2""",Offense
+Elmhurst Bluejays,H2,,UW-Whitewater,Collin Madson,Non Shooting Foul,,Twins,Offense
+Elmhurst Bluejays,H1,,UW-Whitewater,Luke Bara,No Violation,,Twins Pitch Keep,Offense
