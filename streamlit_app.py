@@ -1861,7 +1861,7 @@ def compute_uww_pace_by_game():
     return df, median
 
 
-
+def compute_true_shooting(pts, fga, fta) -> float:
     """True Shooting % -- see STAT_GLOSSARY['TS%']. Returns 0 if there were no shooting attempts of any kind."""
     denom = 2 * (fga + 0.44 * fta)
     return (pts / denom * 100) if denom > 0 else 0
