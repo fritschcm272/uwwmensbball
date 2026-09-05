@@ -1826,12 +1826,18 @@ def compute_efficiency_pace(team_box: pd.DataFrame, opp_box: pd.DataFrame, n_gam
     }
 
 
-def compute_uww_pace_by_game():
+def compute_uww_pace_by_game(as_of_date=None):
     """Every UWW game's Pace/Net Rtg/ORtg/result, one row per game, bucketed 'fast'/'slow' against UWW's own
-    season median pace (needs 4+ games; returns (None, None) below that). Factored out of the Pace & Style
-    KTV card so that card and the per-game Pace indicator on the Previous Games page use the exact same
-    games and the exact same definition of "fast" and "slow" for UWW, rather than two separate computations
-    that could quietly drift apart."""
+    season median pace (needs 4+ qualifying games; returns (None, None) below that). Factored out of the
+    Pace & Style KTV card so that card and the per-game Pace indicator on the Previous Games page use the
+    exact same games and the exact same definition of "fast" and "slow" for UWW, rather than two separate
+    computations that could quietly drift apart.
+
+    as_of_date: if given, only games on or before this date count toward the median -- used by the Previous
+    Games page so a past game's fast/slow read reflects only what UWW's season looked like THROUGH that
+    game, not games that hadn't been played yet. Leave as None (default) for the full-season view the Pace &
+    Style KTV card wants when deciding how to approach an UPCOMING opponent, where every game played so far
+    is fair game."""
     box = load_table("uww_pbp_box_score")
     uww_side = box[box["team"] == "UW-Whitewater"] if not box.empty else pd.DataFrame()
     opp_side = box[box["team"] != "UW-Whitewater"] if not box.empty else pd.DataFrame()
@@ -1854,6 +1860,8 @@ def compute_uww_pace_by_game():
             "won": (u["PTS"].sum() > o["PTS"].sum()) if "PTS" in u.columns else None,
         })
     df = pd.DataFrame(rows)
+    if as_of_date is not None and "game_date" in df.columns:
+        df = df[pd.to_datetime(df["game_date"], errors="coerce") <= pd.to_datetime(as_of_date)]
     if len(df) < 4:
         return None, None
     median = df["pace"].median()
@@ -6850,21 +6858,32 @@ def render_previous_games():
     # --- BOX SCORE ---
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">BOX SCORE</div></div>', unsafe_allow_html=True)
 
-    # Pace for THIS game, read against UWW's own season median -- same games/definition of "fast"/"slow" as
-    # the Pace & Style key on the Upcoming Game page (see compute_uww_pace_by_game()), so a coach flipping
-    # between the two pages sees a consistent read rather than two numbers computed two different ways.
+    # Pace for THIS game, read against UWW's own season median AS OF THIS GAME -- same games/definition of
+    # "fast"/"slow" as the Pace & Style key on the Upcoming Game page (see compute_uww_pace_by_game()), so a
+    # coach flipping between the two pages sees a consistent read rather than two numbers computed two
+    # different ways. CONFIRMED BUG (fixed here): this originally called compute_uww_pace_by_game() with no
+    # as_of_date, so an early-season game's "season median" silently included every game played AFTER it too
+    # -- a game from November could get judged "slow" against a median that only became true in February.
+    # Passing this game's own date restricts the median to what UWW's season actually looked like through
+    # that game.
     try:
         if not uww_game_box.empty and not opp_game_box.empty:
             _pg_pace_d = compute_efficiency_pace(uww_game_box, opp_game_box, 1)
-            _, _pg_season_median = compute_uww_pace_by_game()
+            # _pg_game_date can be None (resolve_game_date() doesn't match every display-date format) -- must
+            # NOT fall through to compute_uww_pace_by_game()'s default in that case, since the default is the
+            # full, unrestricted season and would silently reopen the exact leak this fix is for.
+            _pg_season_median = None
+            if _pg_game_date is not None:
+                _, _pg_season_median = compute_uww_pace_by_game(as_of_date=_pg_game_date)
             if _pg_season_median is not None:
                 _pg_bucket = "Fast" if _pg_pace_d["Pace"] > _pg_season_median else "Slow"
-                st.caption(f"This game's pace: **{_pg_pace_d['Pace']:.1f}** poss/gm -- **{_pg_bucket}** for UWW "
-                           f"(season median: {_pg_season_median:.1f} poss/gm). Net Rtg **{_pg_pace_d['Net Rtg']:+.1f}**.")
+                st.caption(f"This game's pace: **{_pg_pace_d['Pace']:.0f}** poss/gm -- **{_pg_bucket}** for UWW "
+                           f"(season median through this game: {_pg_season_median:.1f} poss/gm). Net Rtg "
+                           f"**{_pg_pace_d['Net Rtg']:+.1f}**.")
             else:
-                st.caption(f"This game's pace: **{_pg_pace_d['Pace']:.1f}** poss/gm. Net Rtg "
-                           f"**{_pg_pace_d['Net Rtg']:+.1f}**. (Need 4+ games with box-score data to tell fast "
-                           f"from slow for UWW.)")
+                st.caption(f"This game's pace: **{_pg_pace_d['Pace']:.0f}** poss/gm. Net Rtg "
+                           f"**{_pg_pace_d['Net Rtg']:+.1f}**. (Need 4+ games with box-score data through this "
+                           f"point in the season to tell fast from slow for UWW.)")
     except Exception:
         pass
 
