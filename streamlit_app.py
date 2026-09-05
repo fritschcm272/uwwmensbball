@@ -6819,114 +6819,174 @@ def render_previous_games():
     uww_game_box = game_box[game_box["team"] == "UW-Whitewater"] if not game_box.empty else pd.DataFrame()
     opp_game_box = game_box[game_box["team"] != "UW-Whitewater"] if not game_box.empty else pd.DataFrame()
 
-    # --- TEAM STATS: EXPECTED vs ACTUAL ---
-    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">TEAM STATS: PLAN vs REALITY</div></div>', unsafe_allow_html=True)
+    # --- TEAM STATS: PLAN vs REALITY  |  BOX SCORE (side by side) ---
+    _tsb_left, _tsb_right = st.columns(2)
+    with _tsb_left:
+        # --- TEAM STATS: EXPECTED vs ACTUAL ---
+        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">TEAM STATS: PLAN vs REALITY</div></div>', unsafe_allow_html=True)
 
-    if not uww_game_box.empty:
-        # Compute actual game stats
-        _ng = 1
-        actual_stats = {
-            "Points": uww_score,
-            "Points Against": opp_score,
-            "FG%": (uww_game_box["FGM"].sum() / uww_game_box["FGA"].sum() * 100) if uww_game_box["FGA"].sum() > 0 else 0,
-            "Rebounds": uww_game_box["REB"].sum() if "REB" in uww_game_box.columns else 0,
-            "Assists": uww_game_box["AST"].sum() if "AST" in uww_game_box.columns else 0,
-            "Turnovers": uww_game_box["TO"].sum() if "TO" in uww_game_box.columns else 0,
-            "Steals": uww_game_box["STL"].sum() if "STL" in uww_game_box.columns else 0,
-            "Blocks": uww_game_box["BLK"].sum() if "BLK" in uww_game_box.columns else 0,
-        }
-        _uww_3pm = uww_game_box["FG3M"].sum() if "FG3M" in uww_game_box.columns else 0
-        _uww_3pa = uww_game_box["FG3A"].sum() if "FG3A" in uww_game_box.columns else 0
-        _uww_ftm = uww_game_box["FTM"].sum() if "FTM" in uww_game_box.columns else 0
-        _uww_fta = uww_game_box["FTA"].sum() if "FTA" in uww_game_box.columns else 0
-        actual_stats["3P%"] = (_uww_3pm / _uww_3pa * 100) if _uww_3pa > 0 else 0
-        actual_stats["FT%"] = (_uww_ftm / _uww_fta * 100) if _uww_fta > 0 else 0
-        actual_stats["A:TO Ratio"] = (actual_stats["Assists"] / actual_stats["Turnovers"]) if actual_stats["Turnovers"] > 0 else 0
-
-        # Compute season averages going INTO this game (expected)
-        _pre_box = scope_to_played(box, _orig_played.iloc[:_game_original_pos]) if _game_original_pos else box.iloc[0:0]
-        _pre_uww_box = _pre_box[_pre_box["team"] == "UW-Whitewater"] if not _pre_box.empty else pd.DataFrame()
-        # Validate using roster
-        if not _pre_uww_box.empty:
-            _sample = _pre_uww_box["player"].str.lower().tolist()[:5]
-            if sum(1 for p in _sample if p in uww_names) == 0:
-                _pre_uww_box = _pre_box[_pre_box["team"] != "UW-Whitewater"]
-
-        expected_stats = {}
-        if not _pre_uww_box.empty:
-            _n_pre = _pre_uww_box["opponent"].nunique() or 1
-            _pre_games = _orig_played.iloc[:_game_original_pos] if _game_original_pos else pd.DataFrame()
-            expected_stats = {
-                "Points": _pre_games["team_score"].mean() if not _pre_games.empty else 0,
-                "Points Against": _pre_games["opponent_score"].mean() if not _pre_games.empty else 0,
-                "FG%": (_pre_uww_box["FGM"].sum() / _pre_uww_box["FGA"].sum() * 100) if _pre_uww_box["FGA"].sum() > 0 else 0,
-                "Rebounds": _pre_uww_box["REB"].sum() / _n_pre if "REB" in _pre_uww_box.columns else 0,
-                "Assists": _pre_uww_box["AST"].sum() / _n_pre if "AST" in _pre_uww_box.columns else 0,
-                "Turnovers": _pre_uww_box["TO"].sum() / _n_pre if "TO" in _pre_uww_box.columns else 0,
-                "Steals": _pre_uww_box["STL"].sum() / _n_pre if "STL" in _pre_uww_box.columns else 0,
-                "Blocks": _pre_uww_box["BLK"].sum() / _n_pre if "BLK" in _pre_uww_box.columns else 0,
+        if not uww_game_box.empty:
+            # Compute actual game stats
+            _ng = 1
+            actual_stats = {
+                "Points": uww_score,
+                "Points Against": opp_score,
+                "FG%": (uww_game_box["FGM"].sum() / uww_game_box["FGA"].sum() * 100) if uww_game_box["FGA"].sum() > 0 else 0,
+                "Rebounds": uww_game_box["REB"].sum() if "REB" in uww_game_box.columns else 0,
+                "Assists": uww_game_box["AST"].sum() if "AST" in uww_game_box.columns else 0,
+                "Turnovers": uww_game_box["TO"].sum() if "TO" in uww_game_box.columns else 0,
+                "Steals": uww_game_box["STL"].sum() if "STL" in uww_game_box.columns else 0,
+                "Blocks": uww_game_box["BLK"].sum() if "BLK" in uww_game_box.columns else 0,
             }
-            _p3pm = _pre_uww_box["FG3M"].sum() if "FG3M" in _pre_uww_box.columns else 0
-            _p3pa = _pre_uww_box["FG3A"].sum() if "FG3A" in _pre_uww_box.columns else 0
-            _pftm = _pre_uww_box["FTM"].sum() if "FTM" in _pre_uww_box.columns else 0
-            _pfta = _pre_uww_box["FTA"].sum() if "FTA" in _pre_uww_box.columns else 0
-            expected_stats["3P%"] = (_p3pm / _p3pa * 100) if _p3pa > 0 else 0
-            expected_stats["FT%"] = (_pftm / _pfta * 100) if _pfta > 0 else 0
-            _e_ast = expected_stats["Assists"]
-            _e_to = expected_stats["Turnovers"]
-            expected_stats["A:TO Ratio"] = (_e_ast / _e_to) if _e_to > 0 else 0
+            _uww_3pm = uww_game_box["FG3M"].sum() if "FG3M" in uww_game_box.columns else 0
+            _uww_3pa = uww_game_box["FG3A"].sum() if "FG3A" in uww_game_box.columns else 0
+            _uww_ftm = uww_game_box["FTM"].sum() if "FTM" in uww_game_box.columns else 0
+            _uww_fta = uww_game_box["FTA"].sum() if "FTA" in uww_game_box.columns else 0
+            actual_stats["3P%"] = (_uww_3pm / _uww_3pa * 100) if _uww_3pa > 0 else 0
+            actual_stats["FT%"] = (_uww_ftm / _uww_fta * 100) if _uww_fta > 0 else 0
+            actual_stats["A:TO Ratio"] = (actual_stats["Assists"] / actual_stats["Turnovers"]) if actual_stats["Turnovers"] > 0 else 0
 
-        # Build comparison HTML
-        stat_order = ["Points", "Points Against", "FG%", "3P%", "FT%", "Rebounds", "Assists", "Turnovers", "A:TO Ratio", "Steals", "Blocks"]
-        lower_better = {"Points Against", "Turnovers"}
-        rows_html = ""
-        for stat in stat_order:
-            act = actual_stats.get(stat, 0)
-            exp = expected_stats.get(stat, 0)
-            if act == 0 and exp == 0:
-                continue
-            is_pct = "%" in stat or "Ratio" in stat
-            if is_pct:
-                act_fmt = f"{act:.1f}{'%' if '%' in stat else ''}"
-                exp_fmt = f"{exp:.1f}{'%' if '%' in stat else ''}"
-            elif "Ratio" in stat:
-                act_fmt = f"{act:.2f}"
-                exp_fmt = f"{exp:.2f}"
+            # Compute season averages going INTO this game (expected)
+            _pre_box = scope_to_played(box, _orig_played.iloc[:_game_original_pos]) if _game_original_pos else box.iloc[0:0]
+            _pre_uww_box = _pre_box[_pre_box["team"] == "UW-Whitewater"] if not _pre_box.empty else pd.DataFrame()
+            # Validate using roster
+            if not _pre_uww_box.empty:
+                _sample = _pre_uww_box["player"].str.lower().tolist()[:5]
+                if sum(1 for p in _sample if p in uww_names) == 0:
+                    _pre_uww_box = _pre_box[_pre_box["team"] != "UW-Whitewater"]
+
+            expected_stats = {}
+            if not _pre_uww_box.empty:
+                _n_pre = _pre_uww_box["opponent"].nunique() or 1
+                _pre_games = _orig_played.iloc[:_game_original_pos] if _game_original_pos else pd.DataFrame()
+                expected_stats = {
+                    "Points": _pre_games["team_score"].mean() if not _pre_games.empty else 0,
+                    "Points Against": _pre_games["opponent_score"].mean() if not _pre_games.empty else 0,
+                    "FG%": (_pre_uww_box["FGM"].sum() / _pre_uww_box["FGA"].sum() * 100) if _pre_uww_box["FGA"].sum() > 0 else 0,
+                    "Rebounds": _pre_uww_box["REB"].sum() / _n_pre if "REB" in _pre_uww_box.columns else 0,
+                    "Assists": _pre_uww_box["AST"].sum() / _n_pre if "AST" in _pre_uww_box.columns else 0,
+                    "Turnovers": _pre_uww_box["TO"].sum() / _n_pre if "TO" in _pre_uww_box.columns else 0,
+                    "Steals": _pre_uww_box["STL"].sum() / _n_pre if "STL" in _pre_uww_box.columns else 0,
+                    "Blocks": _pre_uww_box["BLK"].sum() / _n_pre if "BLK" in _pre_uww_box.columns else 0,
+                }
+                _p3pm = _pre_uww_box["FG3M"].sum() if "FG3M" in _pre_uww_box.columns else 0
+                _p3pa = _pre_uww_box["FG3A"].sum() if "FG3A" in _pre_uww_box.columns else 0
+                _pftm = _pre_uww_box["FTM"].sum() if "FTM" in _pre_uww_box.columns else 0
+                _pfta = _pre_uww_box["FTA"].sum() if "FTA" in _pre_uww_box.columns else 0
+                expected_stats["3P%"] = (_p3pm / _p3pa * 100) if _p3pa > 0 else 0
+                expected_stats["FT%"] = (_pftm / _pfta * 100) if _pfta > 0 else 0
+                _e_ast = expected_stats["Assists"]
+                _e_to = expected_stats["Turnovers"]
+                expected_stats["A:TO Ratio"] = (_e_ast / _e_to) if _e_to > 0 else 0
+
+            # Build comparison HTML
+            stat_order = ["Points", "Points Against", "FG%", "3P%", "FT%", "Rebounds", "Assists", "Turnovers", "A:TO Ratio", "Steals", "Blocks"]
+            lower_better = {"Points Against", "Turnovers"}
+            rows_html = ""
+            for stat in stat_order:
+                act = actual_stats.get(stat, 0)
+                exp = expected_stats.get(stat, 0)
+                if act == 0 and exp == 0:
+                    continue
+                is_pct = "%" in stat or "Ratio" in stat
+                if is_pct:
+                    act_fmt = f"{act:.1f}{'%' if '%' in stat else ''}"
+                    exp_fmt = f"{exp:.1f}{'%' if '%' in stat else ''}"
+                elif "Ratio" in stat:
+                    act_fmt = f"{act:.2f}"
+                    exp_fmt = f"{exp:.2f}"
+                else:
+                    act_fmt = f"{act:.1f}"
+                    exp_fmt = f"{exp:.1f}"
+                # Determine if actual was better/worse than expected
+                diff = act - exp
+                if stat in lower_better:
+                    better = diff < 0
+                else:
+                    better = diff > 0
+                diff_color = "#2e7d32" if better else "#c62828" if abs(diff) > 0.5 else "#666"
+                diff_fmt = f"{diff:+.1f}" if not is_pct else f"{diff:+.1f}{'%' if '%' in stat else ''}"
+                if "Ratio" in stat:
+                    diff_fmt = f"{diff:+.2f}"
+                rows_html += (
+                    f'<div style="padding:8px 0;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;">'
+                    f'<span style="font-size:1rem;width:80px;font-weight:600;">{exp_fmt}</span>'
+                    f'<span style="font-size:0.85rem;color:#666;font-weight:600;text-transform:uppercase;flex:1;text-align:center;">{stat}</span>'
+                    f'<span style="font-size:1rem;width:80px;text-align:right;font-weight:700;">{act_fmt}</span>'
+                    f'<span style="font-size:0.8rem;width:60px;text-align:right;color:{diff_color};font-weight:600;">{diff_fmt}</span>'
+                    f'</div>'
+                )
+            if rows_html:
+                stats_comparison_html = (
+                    f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:14px 18px;">'
+                    f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:0 4px;">'
+                    f'<span style="font-size:0.9rem;font-weight:700;color:#888;">Season Avg</span>'
+                    f'<span style="font-size:0.9rem;font-weight:700;color:#4E2A84;">UWW This Game</span>'
+                    f'<span style="font-size:0.8rem;font-weight:600;color:#888;">+/-</span>'
+                    f'</div>{rows_html}</div>'
+                )
+                st.markdown(stats_comparison_html, unsafe_allow_html=True)
             else:
-                act_fmt = f"{act:.1f}"
-                exp_fmt = f"{exp:.1f}"
-            # Determine if actual was better/worse than expected
-            diff = act - exp
-            if stat in lower_better:
-                better = diff < 0
-            else:
-                better = diff > 0
-            diff_color = "#2e7d32" if better else "#c62828" if abs(diff) > 0.5 else "#666"
-            diff_fmt = f"{diff:+.1f}" if not is_pct else f"{diff:+.1f}{'%' if '%' in stat else ''}"
-            if "Ratio" in stat:
-                diff_fmt = f"{diff:+.2f}"
-            rows_html += (
-                f'<div style="padding:8px 0;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;">'
-                f'<span style="font-size:1rem;width:80px;font-weight:600;">{exp_fmt}</span>'
-                f'<span style="font-size:0.85rem;color:#666;font-weight:600;text-transform:uppercase;flex:1;text-align:center;">{stat}</span>'
-                f'<span style="font-size:1rem;width:80px;text-align:right;font-weight:700;">{act_fmt}</span>'
-                f'<span style="font-size:0.8rem;width:60px;text-align:right;color:{diff_color};font-weight:600;">{diff_fmt}</span>'
-                f'</div>'
-            )
-        if rows_html:
-            stats_comparison_html = (
-                f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:14px 18px;">'
-                f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:0 4px;">'
-                f'<span style="font-size:0.9rem;font-weight:700;color:#888;">Season Avg</span>'
-                f'<span style="font-size:0.9rem;font-weight:700;color:#4E2A84;">UWW This Game</span>'
-                f'<span style="font-size:0.8rem;font-weight:600;color:#888;">+/-</span>'
-                f'</div>{rows_html}</div>'
-            )
-            st.markdown(stats_comparison_html, unsafe_allow_html=True)
+                st.caption("Not enough prior game data for comparison.")
         else:
-            st.caption("Not enough prior game data for comparison.")
-    else:
-        st.caption("No box score data available for this game.")
+            st.caption("No box score data available for this game.")
+    with _tsb_right:
+        # --- BOX SCORE ---
+        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">BOX SCORE</div></div>', unsafe_allow_html=True)
+
+        # Precompute lineup data for the later LINEUP PERFORMANCE section (kept here since it's been computed
+        # alongside the box score since before this fix -- not actually used by the box-score table below).
+        if not game_stints.empty:
+            game_stints["margin_per_min"] = (game_stints["uww_margin_change"] / game_stints["stint_minutes"]).round(2)
+            game_stints = game_stints.sort_values("stint_minutes", ascending=False)
+
+        # NOTE: this used to be gated on `game_box.empty and game_stints.empty` -- so if game_box was empty but
+        # game_stints wasn't, this whole section rendered NOTHING (no table, no warning) instead of explaining
+        # why. The box score table only ever depends on game_box, so check that alone.
+        if game_box.empty:
+            st.warning("No reconstructed box score found for this game yet.")
+        else:
+            compact_cols = [c for c in ["player", "MIN", "PTS", "REB", "AST", "STL", "BLK", "TO", "FG%"]
+                             if c in game_box.columns]
+            full_cols = [c for c in ["player", "MIN", "started", "PTS", "FGM", "FGA", "FG%", "FG3M", "FG3A", "3P%",
+                                      "FTM", "FTA", "FT%", "OREB", "DREB", "REB", "AST", "STL", "BLK", "TO", "PF"]
+                          if c in game_box.columns]
+            teams = sorted(game_box["team"].unique().tolist())
+
+            # Side-by-side box score (UWW left, Opp right)
+            if len(teams) == 2:
+                _t_uww = "UW-Whitewater" if "UW-Whitewater" in teams else teams[0]
+                _t_opp = [t for t in teams if t != _t_uww][0] if len(teams) > 1 else teams[0]
+                col_uww_box, col_opp_box = st.columns(2)
+                with col_uww_box:
+                    st.markdown(f"**UW-Whitewater**")
+                    _uww_df = game_box[game_box["team"] == _t_uww].sort_values(["started", "PTS"], ascending=[False, False])
+                    st.dataframe(_uww_df[compact_cols], hide_index=True, use_container_width=True)
+                with col_opp_box:
+                    st.markdown(f"**{_t_opp}**")
+                    _opp_df = game_box[game_box["team"] == _t_opp].sort_values(["started", "PTS"], ascending=[False, False])
+                    st.dataframe(_opp_df[compact_cols], hide_index=True, use_container_width=True)
+
+                # Full box score in expander
+                with st.expander("View full box score", expanded=False):
+                    st.markdown("**UW-Whitewater**")
+                    st.dataframe(_uww_df[full_cols], hide_index=True, use_container_width=True)
+                    st.markdown(f"**{_t_opp}**")
+                    st.dataframe(_opp_df[full_cols], hide_index=True, use_container_width=True)
+            elif len(teams) == 1:
+                # Only one team's rows made it into game_box -- still show what's there, with a heads-up that
+                # the other side is missing, rather than silently rendering half a box score with no explanation.
+                st.info(f"Box score data found for {teams[0]} only -- the other team's rows weren't reconstructed for this game.")
+                for team_name in teams:
+                    st.markdown(f"**{team_name}**")
+                    team_df = game_box[game_box["team"] == team_name].sort_values(["started", "PTS"], ascending=[False, False])
+                    st.dataframe(team_df[compact_cols], hide_index=True, use_container_width=True)
+            else:
+                st.warning(f"Box score has {len(teams)} distinct team label(s) ({teams}) instead of the expected 2 -- showing each as found.")
+                for team_name in teams:
+                    st.markdown(f"**{team_name}**")
+                    team_df = game_box[game_box["team"] == team_name].sort_values(["started", "PTS"], ascending=[False, False])
+                    st.dataframe(team_df[compact_cols], hide_index=True, use_container_width=True)
 
     # --- KEYS TO VICTORY: PLAN vs EXECUTION ---
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">KEYS TO VICTORY: PLAN vs EXECUTION</div></div>', unsafe_allow_html=True)
@@ -7024,64 +7084,6 @@ def render_previous_games():
             items = [re.sub(r"^\d+\.\s*", "", s.strip()) for s in str(str_notes).split("|") if s.strip()]
             for item in items:
                 st.markdown(f"- {item}")
-
-    # --- BOX SCORE ---
-    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">BOX SCORE</div></div>', unsafe_allow_html=True)
-
-    # Precompute lineup data for the later LINEUP PERFORMANCE section (kept here since it's been computed
-    # alongside the box score since before this fix -- not actually used by the box-score table below).
-    if not game_stints.empty:
-        game_stints["margin_per_min"] = (game_stints["uww_margin_change"] / game_stints["stint_minutes"]).round(2)
-        game_stints = game_stints.sort_values("stint_minutes", ascending=False)
-
-    # NOTE: this used to be gated on `game_box.empty and game_stints.empty` -- so if game_box was empty but
-    # game_stints wasn't, this whole section rendered NOTHING (no table, no warning) instead of explaining
-    # why. The box score table only ever depends on game_box, so check that alone.
-    if game_box.empty:
-        st.warning("No reconstructed box score found for this game yet.")
-    else:
-        compact_cols = [c for c in ["player", "MIN", "PTS", "REB", "AST", "STL", "BLK", "TO", "FG%"]
-                         if c in game_box.columns]
-        full_cols = [c for c in ["player", "MIN", "started", "PTS", "FGM", "FGA", "FG%", "FG3M", "FG3A", "3P%",
-                                  "FTM", "FTA", "FT%", "OREB", "DREB", "REB", "AST", "STL", "BLK", "TO", "PF"]
-                      if c in game_box.columns]
-        teams = sorted(game_box["team"].unique().tolist())
-
-        # Side-by-side box score (UWW left, Opp right)
-        if len(teams) == 2:
-            _t_uww = "UW-Whitewater" if "UW-Whitewater" in teams else teams[0]
-            _t_opp = [t for t in teams if t != _t_uww][0] if len(teams) > 1 else teams[0]
-            col_uww_box, col_opp_box = st.columns(2)
-            with col_uww_box:
-                st.markdown(f"**UW-Whitewater**")
-                _uww_df = game_box[game_box["team"] == _t_uww].sort_values(["started", "PTS"], ascending=[False, False])
-                st.dataframe(_uww_df[compact_cols], hide_index=True, use_container_width=True)
-            with col_opp_box:
-                st.markdown(f"**{_t_opp}**")
-                _opp_df = game_box[game_box["team"] == _t_opp].sort_values(["started", "PTS"], ascending=[False, False])
-                st.dataframe(_opp_df[compact_cols], hide_index=True, use_container_width=True)
-
-            # Full box score in expander
-            with st.expander("View full box score", expanded=False):
-                st.markdown("**UW-Whitewater**")
-                st.dataframe(_uww_df[full_cols], hide_index=True, use_container_width=True)
-                st.markdown(f"**{_t_opp}**")
-                st.dataframe(_opp_df[full_cols], hide_index=True, use_container_width=True)
-        elif len(teams) == 1:
-            # Only one team's rows made it into game_box -- still show what's there, with a heads-up that
-            # the other side is missing, rather than silently rendering half a box score with no explanation.
-            st.info(f"Box score data found for {teams[0]} only -- the other team's rows weren't reconstructed for this game.")
-            for team_name in teams:
-                st.markdown(f"**{team_name}**")
-                team_df = game_box[game_box["team"] == team_name].sort_values(["started", "PTS"], ascending=[False, False])
-                st.dataframe(team_df[compact_cols], hide_index=True, use_container_width=True)
-        else:
-            st.warning(f"Box score has {len(teams)} distinct team label(s) ({teams}) instead of the expected 2 -- showing each as found.")
-            for team_name in teams:
-                st.markdown(f"**{team_name}**")
-                team_df = game_box[game_box["team"] == team_name].sort_values(["started", "PTS"], ascending=[False, False])
-                st.dataframe(team_df[compact_cols], hide_index=True, use_container_width=True)
-
 
     # --- PROJECTED vs ACTUAL ---
     try:
