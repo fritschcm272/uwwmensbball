@@ -934,7 +934,12 @@ def get_opponent_entering_record(short_opponent: str) -> tuple:
             streak_count += 1
         else:
             break
-    streak_str = f"{streak_count}{'W' if streak_type == 'W' else 'L'} streak" if streak_count >= 1 else ""
+    # CONFIRMED BUG (fixed here): this produced "3W streak" while the UWW-side streak computed independently
+    # in render_upcoming_game() (the banner this feeds) produces "1-game loss streak" -- same banner, two
+    # different wordings for the same kind of fact. Matched to the UWW-side phrasing rather than the reverse,
+    # since "N-game win/loss streak" reads as a sentence and "3W streak" doesn't.
+    streak_label = "win" if streak_type == "W" else "loss"
+    streak_str = f"{streak_count}-game {streak_label} streak" if streak_count >= 1 else ""
     return record_str, streak_str
 
 
