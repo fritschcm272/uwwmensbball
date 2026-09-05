@@ -2664,7 +2664,11 @@ def render_upcoming_game():
 
     # Build broadcast-style HTML banner with team logos
     uww_logo_b64 = find_logo_b64("UW-Whitewater")
-    opp_display = short_opponent or full_opponent
+    # CONFIRMED BUG (fixed here): opp_display used to fall back to the RAW uww_schedule name ("UW-Oshkosh
+    # Titans") whenever short_opponent couldn't be resolved -- i.e. whenever an opponent has no scouting/PBP
+    # data yet, which is exactly when a coach is most likely to be looking at this banner for a first read.
+    # strip_team_mascot() is the same mascot-stripping helper already used elsewhere in the app for this.
+    opp_display = short_opponent or strip_team_mascot(full_opponent)
     opp_logo_b64 = find_logo_b64(short_opponent, full_opponent)
 
     uww_logo_img = f'<div style="height:64px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;"><img src="data:image/png;base64,{uww_logo_b64}" style="max-height:64px;max-width:90px;object-fit:contain;"></div>' if uww_logo_b64 else '<div style="height:64px;"></div>'
@@ -2902,7 +2906,7 @@ def render_upcoming_game():
             if uww_idx is not None:
                 opp_games = opp_games.iloc[:uww_idx]
 
-        opp_display = short_opponent or full_opponent
+        opp_display = short_opponent or strip_team_mascot(full_opponent)
 
         # Build UWW last 5
         uww_last5 = []
@@ -3216,9 +3220,13 @@ def render_upcoming_game():
                     _mf, _af = _gd_side["FTM"].sum(), _gd_side["FTA"].sum()
                     _row["FT"] = f"{int(_mf)}-{int(_af)}"
                     _row["FT%"] = round(100 * _mf / _af, 1) if _af else None
+                if {"FGA", "OREB", "TO", "FTA"} <= set(_gd_game_box.columns):
+                    _row["Poss"] = round(estimate_possessions(
+                        _gd_side["FGA"].sum(), _gd_side["OREB"].sum(), _gd_side["TO"].sum(), _gd_side["FTA"].sum()
+                    ), 1)
                 _gd_team_rows.append(_row)
             _gd_team_df = pd.DataFrame(_gd_team_rows)
-            _gd_order = ["Team", "PTS", "FG", "FG%", "3P", "3P%", "FT", "FT%", "REB", "AST", "STL", "BLK", "TO", "PF"]
+            _gd_order = ["Team", "PTS", "Poss", "FG", "FG%", "3P", "3P%", "FT", "FT%", "REB", "AST", "STL", "BLK", "TO", "PF"]
             _gd_team_df = _gd_team_df[[c for c in _gd_order if c in _gd_team_df.columns]]
             st.dataframe(
                 _gd_team_df, hide_index=True, use_container_width=True,
@@ -6546,7 +6554,7 @@ def render_previous_games():
 
     # --- Broadcast-style game result banner ---
     uww_logo_b64 = find_logo_b64("UW-Whitewater")
-    opp_display = short_opponent or full_opponent
+    opp_display = short_opponent or strip_team_mascot(full_opponent)
     opp_logo_b64 = find_logo_b64(short_opponent, full_opponent)
 
     uww_logo_img = f'<div style="height:56px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;"><img src="data:image/png;base64,{uww_logo_b64}" style="max-height:56px;max-width:80px;object-fit:contain;"></div>' if uww_logo_b64 else '<div style="height:56px;"></div>'
