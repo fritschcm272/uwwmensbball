@@ -8508,7 +8508,7 @@ def render_players():
 # Section 5: Analytics — Four Factors, efficiency/pace, shot quality, ball movement, schedule context,
 # coach-tagged play notes
 # --------------------------------------------------------------------------------------------------------------
-def render_analytics():
+def _render_analytics_content():
     st.markdown("## :bar_chart: Analytics")
     st.caption(
         "Advanced, possession-adjusted stats built entirely from data already being collected -- box scores, "
@@ -9054,6 +9054,27 @@ def render_analytics():
             )
 
 
+def render_analytics():
+    # Previous Games/Team/Players moved here from the top-level nav, as tabs -- same pattern the Upcoming
+    # Game page already uses for its own internal Stats & Analysis/Keys to Victory/Personnel/Tools split.
+    # Each tab just calls that page's own render function, unchanged -- _render_analytics_content() is the
+    # original render_analytics() body verbatim, kept as its own function (rather than inlined directly under
+    # the first tab) specifically so its own early "return" when box score data is empty only exits ITSELF,
+    # not this whole function -- otherwise the other three tabs would never get their content filled in
+    # whenever that early-return condition was hit.
+    _tab_analytics, _tab_previous, _tab_team, _tab_players = st.tabs(
+        ["\U0001f4ca Analytics", "Previous Games", "Team", "Players"]
+    )
+    with _tab_analytics:
+        _render_analytics_content()
+    with _tab_previous:
+        render_previous_games()
+    with _tab_team:
+        render_team()
+    with _tab_players:
+        render_players()
+
+
 # --------------------------------------------------------------------------------------------------------------
 CUSTOM_CSS = """
 <style>
@@ -9201,7 +9222,7 @@ def main():
     if "nav_page" not in st.session_state:
         st.session_state.nav_page = "Home"
 
-    pages = ["Home", "Upcoming Game", "Previous Games", "Team", "Players", "Analytics"]
+    pages = ["Home", "Upcoming Game", "Analytics"]
 
     # Button-based navbar: uses theme primaryColor for the active page, no internal DOM hacks
     cols = st.columns(len(pages))
@@ -9222,12 +9243,6 @@ def main():
         render_home()
     elif page == "Upcoming Game":
         render_upcoming_game()
-    elif page == "Previous Games":
-        render_previous_games()
-    elif page == "Team":
-        render_team()
-    elif page == "Players":
-        render_players()
     elif page == "Analytics":
         render_analytics()
 
