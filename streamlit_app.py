@@ -1826,7 +1826,42 @@ def compute_efficiency_pace(team_box: pd.DataFrame, opp_box: pd.DataFrame, n_gam
     }
 
 
-def compute_true_shooting(pts, fga, fta) -> float:
+def compute_uww_pace_by_game():
+    """Every UWW game's Pace/Net Rtg/ORtg/result, one row per game, bucketed 'fast'/'slow' against UWW's own
+    season median pace (needs 4+ games; returns (None, None) below that). Factored out of the Pace & Style
+    KTV card so that card and the per-game Pace indicator on the Previous Games page use the exact same
+    games and the exact same definition of "fast" and "slow" for UWW, rather than two separate computations
+    that could quietly drift apart."""
+    box = load_table("uww_pbp_box_score")
+    uww_side = box[box["team"] == "UW-Whitewater"] if not box.empty else pd.DataFrame()
+    opp_side = box[box["team"] != "UW-Whitewater"] if not box.empty else pd.DataFrame()
+    keys = [c for c in ["opponent", "game_date"] if c in uww_side.columns]
+    if not keys:
+        return None, None
+    rows = []
+    for k, u in uww_side.groupby(keys, dropna=False):
+        key_vals = k if isinstance(k, tuple) else (k,)
+        mask = pd.Series(True, index=opp_side.index)
+        for c, v in zip(keys, key_vals):
+            mask &= (opp_side[c] == v)
+        o = opp_side[mask]
+        if o.empty:
+            continue
+        d = compute_efficiency_pace(u, o, 1)
+        rows.append({
+            **dict(zip(keys, key_vals)),
+            "pace": d["Pace"], "net": d["Net Rtg"], "ortg": d["ORtg"],
+            "won": (u["PTS"].sum() > o["PTS"].sum()) if "PTS" in u.columns else None,
+        })
+    df = pd.DataFrame(rows)
+    if len(df) < 4:
+        return None, None
+    median = df["pace"].median()
+    df["_bucket"] = df["pace"].apply(lambda v: "fast" if v > median else "slow")
+    return df, median
+
+
+
     """True Shooting % -- see STAT_GLOSSARY['TS%']. Returns 0 if there were no shooting attempts of any kind."""
     denom = 2 * (fga + 0.44 * fta)
     return (pts / denom * 100) if denom > 0 else 0
@@ -5218,32 +5253,12 @@ def render_upcoming_game():
 
                 # How UWW has actually fared at each tempo -- split UWW's own games by their per-game pace
                 # (median-split against themselves, so "fast" and "slow" mean fast/slow FOR THIS TEAM, not
-                # against some league constant).
-                _ps_df, _ps_median = None, None
+                # against some league constant). Shared with the Previous Games page's per-game Pace
+                # indicator via compute_uww_pace_by_game() -- see that function's docstring for why.
                 try:
-                    _ps_keys = [c for c in ["opponent", "game_date"] if c in _ag_uww_side.columns]
-                    if _ps_keys:
-                        _ps_rows = []
-                        for _ps_k, _ps_u in _ag_uww_side.groupby(_ps_keys, dropna=False):
-                            _ps_mask = pd.Series(True, index=_ag_opp_side.index)
-                            for _c, _v in zip(_ps_keys, (_ps_k if isinstance(_ps_k, tuple) else (_ps_k,))):
-                                _ps_mask &= (_ag_opp_side[_c] == _v)
-                            _ps_o = _ag_opp_side[_ps_mask]
-                            if _ps_o.empty:
-                                continue
-                            _ps_d = compute_efficiency_pace(_ps_u, _ps_o, 1)
-                            _ps_rows.append({
-                                "pace": _ps_d["Pace"], "net": _ps_d["Net Rtg"],
-                                "ortg": _ps_d["ORtg"],
-                                "won": (_ps_u["PTS"].sum() > _ps_o["PTS"].sum()) if "PTS" in _ps_u.columns else None,
-                            })
-                        _ps_all = pd.DataFrame(_ps_rows)
-                        if len(_ps_all) >= 4:
-                            _ps_median = _ps_all["pace"].median()
-                            _ps_all["_bucket"] = _ps_all["pace"].apply(lambda v: "fast" if v > _ps_median else "slow")
-                            _ps_df = _ps_all
+                    _ps_df, _ps_median = compute_uww_pace_by_game()
                 except Exception:
-                    pass
+                    _ps_df, _ps_median = None, None
 
                 # The mirror image: how the OPPONENT'S opponents fared at each tempo, from the upcoming
                 # opponent's own prior games -- what has actually worked AGAINST them, rather than just
@@ -5262,6 +5277,8 @@ def render_upcoming_game():
                             # team did against them" without needing to be mentally flipped.
                             _po_d = compute_efficiency_pace(_po_foe, _po_them, 1)
                             _po_rows.append({
+                                "game_date": _po_g["game_date"].iloc[0] if "game_date" in _po_g.columns else None,
+                                "foe": _po_foe["team"].iloc[0],
                                 "pace": _po_d["Pace"], "net": _po_d["Net Rtg"], "ortg": _po_d["ORtg"],
                                 "won": (_po_foe["PTS"].sum() > _po_them["PTS"].sum()) if "PTS" in _po_foe.columns else None,
                             })
@@ -5831,6 +5848,45 @@ def render_upcoming_game():
                           "positive Net Rtg means they beat "
                         + f"{short_opponent} on the scoreboard."
                     )
+
+            # The two sections above only show bucket AVERAGES -- a coach who wants to sanity-check the read
+            # (or spot a single blowout skewing a bucket) needs to see which specific games landed where.
+            with st.expander("See the games behind this"):
+                if _fp_hist is not None:
+                    _ps_disp = _fp_hist["games"].copy()
+                    _ps_disp["Pace"] = _ps_disp["pace"].round(1)
+                    _ps_disp["Net Rtg"] = _ps_disp["net"].round(1)
+                    _ps_disp["Result"] = _ps_disp["won"].map({True: "W", False: "L"})
+                    _ps_disp["Bucket"] = _ps_disp["_bucket"].str.capitalize()
+                    if "game_date" in _ps_disp.columns:
+                        _ps_disp["_sort"] = pd.to_datetime(_ps_disp["game_date"], errors="coerce")
+                        _ps_disp["Date"] = _ps_disp["_sort"].dt.strftime("%b %d")
+                        _ps_disp = _ps_disp.sort_values("_sort", na_position="last")
+                    else:
+                        _ps_disp = _ps_disp.sort_values("Pace", ascending=False)
+                    _ps_disp = _ps_disp.rename(columns={"opponent": "Opponent"})
+                    _ps_cols = [c for c in ["Date", "Opponent", "Pace", "Net Rtg", "Result", "Bucket"] if c in _ps_disp.columns]
+                    st.markdown(f"**UWW's games**, split at UWW's own median pace ({_fp_hist['median']:.1f} poss/gm):")
+                    st.dataframe(_ps_disp[_ps_cols], hide_index=True, use_container_width=True)
+
+                if _fp_ohist is not None:
+                    _fo_disp = _fp_ohist["games"].copy()
+                    _fo_disp["Pace"] = _fo_disp["pace"].round(1)
+                    _fo_disp["Net Rtg"] = _fo_disp["net"].round(1)
+                    _fo_disp["Result"] = _fo_disp["won"].map({True: "W", False: "L"})
+                    _fo_disp["Bucket"] = _fo_disp["_bucket"].str.capitalize()
+                    if "game_date" in _fo_disp.columns:
+                        _fo_disp["_sort"] = pd.to_datetime(_fo_disp["game_date"], errors="coerce")
+                        _fo_disp["Date"] = _fo_disp["_sort"].dt.strftime("%b %d")
+                        _fo_disp = _fo_disp.sort_values("_sort", na_position="last")
+                    else:
+                        _fo_disp = _fo_disp.sort_values("Pace", ascending=False)
+                    _fo_disp = _fo_disp.rename(columns={"foe": "Played them"})
+                    _fo_cols = [c for c in ["Date", "Played them", "Pace", "Net Rtg", "Result", "Bucket"] if c in _fo_disp.columns]
+                    st.markdown(f"**{short_opponent}'s prior games**, split at their own median pace "
+                                f"({_fp_ohist['median']:.1f} poss/gm). Result/Net Rtg are from the challenger's "
+                                f"side, i.e. the team named in \"Played them\":")
+                    st.dataframe(_fo_disp[_fo_cols], hide_index=True, use_container_width=True)
             st.markdown("")
 
         def _render_rebounding_card(_n):
@@ -6793,6 +6849,24 @@ def render_previous_games():
 
     # --- BOX SCORE ---
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">BOX SCORE</div></div>', unsafe_allow_html=True)
+
+    # Pace for THIS game, read against UWW's own season median -- same games/definition of "fast"/"slow" as
+    # the Pace & Style key on the Upcoming Game page (see compute_uww_pace_by_game()), so a coach flipping
+    # between the two pages sees a consistent read rather than two numbers computed two different ways.
+    try:
+        if not uww_game_box.empty and not opp_game_box.empty:
+            _pg_pace_d = compute_efficiency_pace(uww_game_box, opp_game_box, 1)
+            _, _pg_season_median = compute_uww_pace_by_game()
+            if _pg_season_median is not None:
+                _pg_bucket = "Fast" if _pg_pace_d["Pace"] > _pg_season_median else "Slow"
+                st.caption(f"This game's pace: **{_pg_pace_d['Pace']:.1f}** poss/gm -- **{_pg_bucket}** for UWW "
+                           f"(season median: {_pg_season_median:.1f} poss/gm). Net Rtg **{_pg_pace_d['Net Rtg']:+.1f}**.")
+            else:
+                st.caption(f"This game's pace: **{_pg_pace_d['Pace']:.1f}** poss/gm. Net Rtg "
+                           f"**{_pg_pace_d['Net Rtg']:+.1f}**. (Need 4+ games with box-score data to tell fast "
+                           f"from slow for UWW.)")
+    except Exception:
+        pass
 
     # Precompute lineup data for the later LINEUP PERFORMANCE section (kept here since it's been computed
     # alongside the box score since before this fix -- not actually used by the box-score table below).
