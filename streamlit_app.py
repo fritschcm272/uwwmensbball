@@ -6820,7 +6820,7 @@ def render_previous_games():
     opp_game_box = game_box[game_box["team"] != "UW-Whitewater"] if not game_box.empty else pd.DataFrame()
 
     # --- TEAM STATS: PLAN vs REALITY  |  BOX SCORE (side by side) ---
-    _tsb_left, _tsb_right = st.columns(2)
+    _tsb_left, _tsb_right = st.columns([1, 2])
     with _tsb_left:
         # --- TEAM STATS: EXPECTED vs ACTUAL ---
         st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">TEAM STATS: PLAN vs REALITY</div></div>', unsafe_allow_html=True)
@@ -6967,12 +6967,17 @@ def render_previous_games():
                     _opp_df = game_box[game_box["team"] == _t_opp].sort_values(["started", "PTS"], ascending=[False, False])
                     st.dataframe(_opp_df[compact_cols], hide_index=True, use_container_width=True)
 
-                # Full box score in expander
-                with st.expander("View full box score", expanded=False):
+                # Full box score, in a dialog rather than an expander -- keeps the main box score compact
+                # (especially now that it shares a column with Team Stats) while still one click away.
+                @st.dialog("Full Box Score", width="large")
+                def _show_full_box_score_dialog():
                     st.markdown("**UW-Whitewater**")
                     st.dataframe(_uww_df[full_cols], hide_index=True, use_container_width=True)
                     st.markdown(f"**{_t_opp}**")
                     st.dataframe(_opp_df[full_cols], hide_index=True, use_container_width=True)
+
+                if st.button("View full box score", key=f"full_box_score_btn_{short_opponent}_{game.get('date')}"):
+                    _show_full_box_score_dialog()
             elif len(teams) == 1:
                 # Only one team's rows made it into game_box -- still show what's there, with a heads-up that
                 # the other side is missing, rather than silently rendering half a box score with no explanation.
