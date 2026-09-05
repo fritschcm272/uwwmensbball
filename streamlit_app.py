@@ -6315,7 +6315,7 @@ def render_upcoming_game():
                         f'padding:2px 7px;border-radius:8px;margin-left:6px;">{html.escape(_already)}</span>')
 
             def _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
-                                 _category=None, _section=None):
+                                 _category=None, _section=None, _stat_line=None):
                 # No per-item category badge -- the section header above already names the category, so
                 # repeating it on every item was redundant. Side (UWW/OPP) badges removed too, per request.
                 # The rating icons share the title's row: a coach reads a key and reacts to it in place,
@@ -6333,6 +6333,24 @@ def render_upcoming_game():
                         f'{_ktv_recorded_badge(_already)}</div>', unsafe_allow_html=True)
                 if _fb_ready:
                     _ktv_feedback_icons((_fb1, _fb2, _fb3), _headline, _category, _section or "", _source)
+                # CONFIRMED CHANGE (requested): this used to show the category's FULL stat line (both the
+                # UWW half and the opponent half) on every item filed under that category, regardless of
+                # which side that specific item is actually about. A category can hold more than one item
+                # since the multi-category fix above -- if one item is purely about OUR ball security and
+                # another is purely about FORCING turnovers, both would show the identical two-sided line,
+                # which is honest about the category but not about the item. _side (already detected per
+                # item, from the item's own wording) picks out just the relevant half; a BOTH/undetected
+                # item still gets the full line, since in that case both halves genuinely apply to it.
+                if _stat_line:
+                    _u_part, _o_part = _stat_line
+                    if _side == "UWW":
+                        _parts = [_u_part] if _u_part else []
+                    elif _side == "OPP":
+                        _parts = [_o_part] if _o_part else []
+                    else:
+                        _parts = [p for p in (_u_part, _o_part) if p]
+                    if _parts:
+                        st.caption("  |  ".join(_parts))
                 if _caption:
                     st.caption(_caption)
                 if _reason:
@@ -6597,11 +6615,9 @@ def render_upcoming_game():
                     if st.button("\U0001f4cb Game Plan", key=f"gameplan_btn_{_sec_key}_{_cat}"):
                         _show_game_plan_dialog(_cat)
                 _cs_line = _category_stat_line(_cat)
-                if _cs_line and (_cs_line[0] or _cs_line[1]):
-                    st.caption("  |  ".join(x for x in _cs_line if x))
                 for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_cat_items, start=1):
                     _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
-                                     _category=_cat, _section=_sec_key)
+                                     _category=_cat, _section=_sec_key, _stat_line=_cs_line)
 
                 # Full Game Plan Recommendation card(s) tagged to this same category -- continuing the
                 # SAME numbered-item formatting as the keys above (numbered header, source badge, no
