@@ -5719,8 +5719,8 @@ def render_upcoming_game():
                 for _, _r in _sel.iterrows():
                     _ev = f" _{_r['evidence']}_" if "evidence" in _r.index and pd.notna(_r.get("evidence")) else ""
                     st.markdown(f"- **{_r['player']}** -- {_r['flag']}.{_ev}")
-            st.caption("From uww_coaching_flags, the parser's own per-player reads. Highest-confidence first; "
-                       "the Team page carries the full list with recommendations.")
+            st.caption("Highest-confidence flags first; the Team page carries the full list with "
+                       "recommendations.")
             st.markdown("")
 
         def _render_scoring_reliance_card(_n):
@@ -7998,7 +7998,7 @@ def render_players():
                 })
             _adv_df = pd.DataFrame(_adv_rows).sort_values("Game Score", ascending=False)
             st.dataframe(_adv_df, hide_index=True, use_container_width=True)
-            st.caption("TS% and Game Score are season averages; Usage% needs a recorded MPG (from uww_season_stats) and is left blank without one.")
+            st.caption("TS% and Game Score are season averages; Usage% needs a recorded MPG and is left blank without one.")
 
         # Load season stats for card display
         _card_season_stats = load_table("uww_season_stats")
