@@ -70,7 +70,15 @@ def load_table(name: str) -> pd.DataFrame:
     path = os.path.join(DATA_DIR, f"{name}.csv")
     if not os.path.exists(path):
         return pd.DataFrame()
-    df = pd.read_csv(path)
+    # CONFIRMED BUG (fixed here): a table the parser exports from a genuinely empty, columnless DataFrame
+    # (e.g. uww_opp_lineup_season_box with no lineup data logged yet -- an early-season/thin-data state, not
+    # a real failure) writes out as a literally empty CSV file (zero bytes, no header row at all). That's a
+    # different failure mode than "file doesn't exist" above -- pd.read_csv raises EmptyDataError on it
+    # rather than returning an empty frame -- so it slipped past the check above and crashed the whole page.
+    try:
+        df = pd.read_csv(path)
+    except pd.errors.EmptyDataError:
+        return pd.DataFrame()
     if df.columns.duplicated().any():
         # A CSV with two columns sharing the same header (e.g. two "PTS" columns from an upstream parsing
         # quirk) makes pandas return a Series/DataFrame instead of a scalar for ANY df[col] or row[col] access
