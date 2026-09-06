@@ -1,3 +1,6 @@
 category,side,display_label,games,wins,losses,win_pct
-Rebounding,UWW,UWW: Crash the Boards,0,0,0,
-Scoring Inside,UWW,UWW: Attack the Paint,0,0,0,
+Ball Security / Turnovers,UWW,UWW: Protect the Ball,1,0,1,0.0
+Field Goal Efficiency,OPP,OPP: Limit Their FG Efficiency,1,0,1,0.0
+Perimeter Defense / Ball Pressure,OPP,OPP: On-Ball Defense,1,0,1,0.0
+Rebounding,UWW,UWW: Crash the Boards,3,1,2,0.333
+Scoring Inside,UWW,UWW: Attack the Paint,1,1,0,1.0

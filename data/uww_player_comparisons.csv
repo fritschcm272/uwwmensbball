@@ -1,1 +1,15 @@
-
+target_player,target_position,target_role,target_opponent,target_game_date,compared_opponent,compared_game_date,compared_player,compared_position,compared_role,similarity_score,shared_notes_tags,shared_keys_tags,height_diff_in,stat_similarity,target_PTS,compared_PTS,target_REB,compared_REB,target_AST,compared_AST,target_FG%,compared_FG%,target_3P%,compared_3P%
+Jonah Lauff,F,Starter,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Michael Asman,F,Starter,10.71,three_point_shooter,deny_catch_and_shoot,2.0,1.0,,,,,,,,,,
+Jaxson Provost,G,Starter,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Corey Thompson,G,Starter,8.71,slasher_driver,,4.0,1.0,,,,,,,,,,
+Ben Carter,G/F,Starter,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Nathan Kongolo,G/F,Starter,8.5,,,0.0,1.0,,,,,,,,,,
+Micah Bruer,G,Starter,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Seth Bunders,G,Starter,8.5,,,0.0,1.0,,,,,,,,,,
+Andrew Coker,F,Starter,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Nicholas Buffalo,F,Starter,8.17,,,1.0,1.0,,,,,,,,,,
+Jacob Gonzalez,G,Bench,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Brennan Webb,G,Bench,8.17,,,1.0,1.0,,,,,,,,,,
+Damuzha Moore,F,Bench,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Reyce Allen,F,Bench,7.83,,,2.0,1.0,,,,,,,,,,
+Amare Brokemond,,Bench,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Reyce Allen,F,Bench,3.5,,,,1.0,,,,,,,,,,
+Blake Logsdon,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Keenan Rahn,G,Bench,3.5,,,,1.0,,,,,,,,,,
+Colin DeLaere,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Caeden Holly,G,Bench,3.5,,,,1.0,,,,,,,,,,
+Dylan Logsdon,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Caeden Holly,G,Bench,3.5,,,,1.0,,,,,,,,,,
+Max Richardson,,Bench,Eureka Red Devils,"Sat, Nov 15",Ripon Red Hawks,"Fri, Nov 7",Keenan Rahn,F,Bench,3.5,,,,1.0,,,,,,,,,,
+Nolan Kerr,,Bench,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Jaden Ross,G,Bench,3.5,,,,1.0,,,,,,,,,,
+Tony Mabon,,Bench,Eureka Red Devils,"Sat, Nov 15",St. Thomas (TX) Celts,"Fri, Nov 14",Brennan Webb,G,Bench,3.5,,,,1.0,,,,,,,,,,

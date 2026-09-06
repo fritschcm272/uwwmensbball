@@ -1,20 +1,20 @@
 opponent,game_date,jersey_number,name,position,height,weight,class_year,role,player_notes,keys_to_defending,has_scouting_report
-St. Thomas (TX) Celts,,#10,Angel Johnson,G,"6'2""",,SR,Starter,"PG, looking to create most touches",Anticipate drive after closeout,True
-St. Thomas (TX) Celts,,#1,Corey Thompson,G,"6'2""",,JR,Starter,LH Shooter/Driver (Main shooting threat),Anticipate LHD & finish attempts,True
-St. Thomas (TX) Celts,,#0,Nathan Kongolo,G/F,"6'4""",,SO,Starter,RH Driver/slasher,Anticipate RHD,True
-St. Thomas (TX) Celts,,#12,Nicholas Buffalo,F,"6'6""",,JR,Starter,Scores from dump offs on drives & O-Boards,Box out!!!,True
-St. Thomas (TX) Celts,,#25,Charles Gitonga,F,"6'8""",,JR,Starter,Driver/slasher,Anticipate RHD & finish attempts,True
-St. Thomas (TX) Celts,,#33,Garret Rodgers,F,"6'6""",,FR,Bench,Scores in post and from Offensive Boards,Box Out!!!,True
-St. Thomas (TX) Celts,,#5,Reyce Allen,F,"6'5""",,SR,Bench,Driver 1st forward,Anticipate RHD & finish attempt,True
-St. Thomas (TX) Celts,,#3,Brennan Webb,G,"6'1""",,FR,Bench,LH Shooter,Locate in transition,True
-St. Thomas (TX) Celts,,#2,Omar Gayle,G,"5'10""",,SO,Bench,Quick play making guard.,Anticipate quick 1st step,True
-Eureka Red Devils,,#12,Jaxson Provost,G,"5'10""",170 lbs,JR,Starter,"Off Guard Looking to Attack (18 FGA, 8 FTA)",Keep in Front w/ Contest,True
-Eureka Red Devils,,#5,Micah Bruer,G,"6'0""",,JR,Starter,PG - Similar Style to #3 from Ripon,Pressure and Speed Up,True
-Eureka Red Devils,,#4,Ben Carter,G/F,"6'4""",185 lbs,SR,Starter,Rebounding / Defending Wing,Active Hands on Perimeter,True
-Eureka Red Devils,,#30,Jonah Lauff,F,"6'5""",,SR,Starter,Shooter!,No C&S 3's,True
-Eureka Red Devils,,#33,Andrew Coker,F,"6'5""",170 lbs,SR,Starter,Perimeter Big,Keep in Front w/ Contest,True
-Eureka Red Devils,,#7,Damuzha Moore,F,"6'3""",,SR,Bench,Back Up Wing,Keep in Front w/ Contest,True
-Eureka Red Devils,,#6,Jacob Gonzalez,G,"6'0""",,SR,Bench,Back Up PG,Be a Helper,True
+St. Thomas (TX) Celts,2025-11-14,#10,Angel Johnson,G,"6'2""",,SR,Starter,"PG, looking to create most touches",Anticipate drive after closeout,True
+St. Thomas (TX) Celts,2025-11-14,#1,Corey Thompson,G,"6'2""",,JR,Starter,LH Shooter/Driver (Main shooting threat),Anticipate LHD & finish attempts,True
+St. Thomas (TX) Celts,2025-11-14,#0,Nathan Kongolo,G/F,"6'4""",,SO,Starter,RH Driver/slasher,Anticipate RHD,True
+St. Thomas (TX) Celts,2025-11-14,#12,Nicholas Buffalo,F,"6'6""",,JR,Starter,Scores from dump offs on drives & O-Boards,Box out!!!,True
+St. Thomas (TX) Celts,2025-11-14,#25,Charles Gitonga,F,"6'8""",,JR,Starter,Driver/slasher,Anticipate RHD & finish attempts,True
+St. Thomas (TX) Celts,2025-11-14,#33,Garret Rodgers,F,"6'6""",,FR,Bench,Scores in post and from Offensive Boards,Box Out!!!,True
+St. Thomas (TX) Celts,2025-11-14,#5,Reyce Allen,F,"6'5""",,SR,Bench,Driver 1st forward,Anticipate RHD & finish attempt,True
+St. Thomas (TX) Celts,2025-11-14,#3,Brennan Webb,G,"6'1""",,FR,Bench,LH Shooter,Locate in transition,True
+St. Thomas (TX) Celts,2025-11-14,#2,Omar Gayle,G,"5'10""",,SO,Bench,Quick play making guard.,Anticipate quick 1st step,True
+Eureka Red Devils,2025-11-15,#12,Jaxson Provost,G,"5'10""",170 lbs,JR,Starter,"Off Guard Looking to Attack (18 FGA, 8 FTA)",Keep in Front w/ Contest,True
+Eureka Red Devils,2025-11-15,#5,Micah Bruer,G,"6'0""",,JR,Starter,PG - Similar Style to #3 from Ripon,Pressure and Speed Up,True
+Eureka Red Devils,2025-11-15,#4,Ben Carter,G/F,"6'4""",185 lbs,SR,Starter,Rebounding / Defending Wing,Active Hands on Perimeter,True
+Eureka Red Devils,2025-11-15,#30,Jonah Lauff,F,"6'5""",,SR,Starter,Shooter!,No C&S 3's,True
+Eureka Red Devils,2025-11-15,#33,Andrew Coker,F,"6'5""",170 lbs,SR,Starter,Perimeter Big,Keep in Front w/ Contest,True
+Eureka Red Devils,2025-11-15,#7,Damuzha Moore,F,"6'3""",,SR,Bench,Back Up Wing,Keep in Front w/ Contest,True
+Eureka Red Devils,2025-11-15,#6,Jacob Gonzalez,G,"6'0""",,SR,Bench,Back Up PG,Be a Helper,True
 Aurora Spartans,,#11,Mekhi Doby,G,"6'3""",,JR,Starter,Heavy RHD,Anticipate Crossover + RHD,True
 Aurora Spartans,,#13,Zerrick Johnson,G,"6'2""",,FR,Starter,Driver/shooter,No fouls!,True
 Aurora Spartans,,#3,Jeffery Hillmer,G,"6'4""",,JR,Starter,Driver First,Box Out!!!,True
@@ -152,12 +152,19 @@ Loras Duhawks,,#23,Jack Haynes,F,"6'7""",235 lbs,SR,Starter,"Scores in post, dri
 Loras Duhawks,,#24,Kyle Kober,G,"6'3""",195 lbs,JR,Bench,Driver/Shooter,Anticipate RHD,True
 Loras Duhawks,,#20,Connor Mosele,G,"6'3""",205 lbs,JR,Bench,Shooter,High Hand v. 3s,True
 Loras Duhawks,,#1,Deng Makeer,G,"6'6""",175 lbs,FR,Bench,Shooter (nealy 80% of shots are 3s),No C&S 3's,True
-Washington-St. Louis Bears,,#3,Josh Kim,G,"6'3""",175 lbs,FR,Starter,Driver/Shooter,Anticipate RH Finish,True
-Washington-St. Louis Bears,,#10,Yogi Oliff,G,"6'3""",175 lbs,SR,Starter,Driver/Shooter,No RHD - Keep him in FRONT!!,True
-Washington-St. Louis Bears,,#11,Ryan Cohen,G,"6'3""",180 lbs,JR,Starter,Shooter with quick release! (85% shot attempts are 3's),Locate early in transition,True
-Washington-St. Louis Bears,,#21,Connor May,F,"6'6""",210 lbs,SO,Starter,3 level scorer (high level shooter),Anticipate RHD,True
-Washington-St. Louis Bears,,#34,Calvin Kapral,C,"6'8""",225 lbs,SR,Starter,Scores in post & dump offs on drives,No LS/RH!,True
-Washington-St. Louis Bears,,#23,Anthony Przybilla,F,"6'6""",200 lbs,SO,Bench,Driver/Finisher,Keep vision of man & ball,True
-Washington-St. Louis Bears,,#32,Will Grudzinski,G,"6'6""",200 lbs,SR,Bench,Shooter/Driver,High early hand on closeouts,True
-Washington-St. Louis Bears,,#30,Theo Rocca,G,"6'3""",190 lbs,FR,Bench,Capable shooter & driver,No C&S 3's,True
-Washington-St. Louis Bears,,#33,George Gale,F,"6'6""",195 lbs,JR,Bench,LS/RH in post (5 man),No LS/RH,True
+Washington-St. Louis Bears,2025-11-14,#3,Josh Kim,G,"6'3""",175 lbs,FR,Starter,Driver/Shooter,Anticipate RH Finish,True
+Washington-St. Louis Bears,2025-11-14,#10,Yogi Oliff,G,"6'3""",175 lbs,SR,Starter,Driver/Shooter,No RHD - Keep him in FRONT!!,True
+Washington-St. Louis Bears,2025-11-14,#11,Ryan Cohen,G,"6'3""",180 lbs,JR,Starter,Shooter with quick release! (85% shot attempts are 3's),Locate early in transition,True
+Washington-St. Louis Bears,2025-11-14,#21,Connor May,F,"6'6""",210 lbs,SO,Starter,3 level scorer (high level shooter),Anticipate RHD,True
+Washington-St. Louis Bears,2025-11-14,#34,Calvin Kapral,C,"6'8""",225 lbs,SR,Starter,Scores in post & dump offs on drives,No LS/RH!,True
+Washington-St. Louis Bears,2025-11-14,#23,Anthony Przybilla,F,"6'6""",200 lbs,SO,Bench,Driver/Finisher,Keep vision of man & ball,True
+Washington-St. Louis Bears,2025-11-14,#32,Will Grudzinski,G,"6'6""",200 lbs,SR,Bench,Shooter/Driver,High early hand on closeouts,True
+Washington-St. Louis Bears,2025-11-14,#30,Theo Rocca,G,"6'3""",190 lbs,FR,Bench,Capable shooter & driver,No C&S 3's,True
+Washington-St. Louis Bears,2025-11-14,#33,George Gale,F,"6'6""",195 lbs,JR,Bench,LS/RH in post (5 man),No LS/RH,True
+Eureka Red Devils,2025-11-15,,Andrew Wells,,,,,Bench,,,False
+Eureka Red Devils,2025-11-15,,Caden Latta,,,,,Bench,,,False
+Eureka Red Devils,2025-11-15,,Joel Ewald,,,,,Bench,,,False
+Eureka Red Devils,2025-11-15,,Mussie Hayelom,,,,,Bench,,,False
+Eureka Red Devils,2025-11-15,,Nicholaus Harris-Huntley,,,,,Bench,,,False
+Eureka Red Devils,2025-11-15,,Santino Ruma,,,,,Bench,,,False
+Eureka Red Devils,2025-11-15,,Zachy Qader,,,,,Bench,,,False

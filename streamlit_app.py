@@ -11,6 +11,7 @@ play notes; see STAT_GLOSSARY for definitions of every derived metric).
 
 import hashlib
 import html
+import glob
 import json
 import math
 import os
@@ -55,9 +56,38 @@ JUNK_PLAYER_RE = r"(?i)^(?:TEAM$|Commits |Turnover|Jump Ball|Subs In|Subs Out|Ti
 st.set_page_config(page_title="UWW Basketball Scouting", page_icon="🏀", layout="wide")
 
 
+def _discover_available_seasons() -> dict:
+    """Which seasons' parsed data are available to browse. "Current Season" (data/, the folder this app has
+    always read from) is always included first and always present, so nothing changes for anyone who hasn't
+    set up a second season -- additional seasons are sibling folders named "data_<season>" (e.g.
+    "data_2024-25"), one per separate parser run for that season (see the parser's own season
+    auto-detection -- SEASON_START_YEAR is no longer a single hardcoded assumption there either). Returns
+    {display label: folder path}, in the order a selectbox should show them (current season first)."""
+    app_dir = os.path.dirname(os.path.abspath(__file__))
+    seasons = {"Current Season": os.path.join(app_dir, "data")}
+    for entry in sorted(glob.glob(os.path.join(app_dir, "data_*")), reverse=True):
+        if os.path.isdir(entry):
+            label = os.path.basename(entry)[len("data_"):].replace("_", "-")
+            seasons[label] = entry
+    return seasons
+
+
+def _current_data_dir() -> str:
+    """Which folder load_table() should read from right now -- the season picked in the selector (see
+    main()), or DATA_DIR if nothing's been picked yet (a single-season deployment with no selector shown at
+    all). Kept as its own lookup, read fresh inside load_table() on every call, rather than a module-level
+    constant -- that's what lets switching seasons actually change what the rest of the app sees without
+    needing every one of load_table()'s call sites (there are dozens throughout this file) to be touched."""
+    if "selected_season" not in st.session_state:
+        return DATA_DIR
+    seasons = _discover_available_seasons()
+    return seasons.get(st.session_state.selected_season, DATA_DIR)
+
+
 @st.cache_data(ttl=60)
 def load_table(name: str) -> pd.DataFrame:
-    """Loads a parser-exported CSV from DATA_DIR, cached for up to 60 seconds. A short TTL instead of the
+    """Loads a parser-exported CSV from the CURRENTLY SELECTED season's data folder (see
+    _current_data_dir()), cached for up to 60 seconds. A short TTL instead of the
     default no-expiry cache: with no TTL, a re-run of the parser (new CSVs on disk) has NO EFFECT on an
     already-running Streamlit process until it's manually restarted -- st.cache_data has no idea the
     underlying file changed, since it's keyed only on this function's arguments (`name`), not the file's own
@@ -66,8 +96,14 @@ def load_table(name: str) -> pd.DataFrame:
     trades a small amount of staleness (up to 60s) for the app self-correcting after any re-run without
     requiring a manual restart every single time -- a much better trade for how this app is actually used
     (frequent parser re-runs during active development/testing) than either extreme (no expiry, or no
-    caching at all, which would reload every CSV on every single interaction)."""
-    path = os.path.join(DATA_DIR, f"{name}.csv")
+    caching at all, which would reload every CSV on every single interaction).
+
+    CONFIRMED CHANGE (requested): `name` is still the only argument (and so the only thing st.cache_data
+    hashes on) -- deliberately NOT adding a season parameter here, since that would mean updating every call
+    site in this file individually. Switching seasons instead calls st.cache_data.clear() once, in the
+    selector itself (see main()), which is a coarser but far less invasive way to keep this cache from
+    serving one season's cached table after the user has switched to another."""
+    path = os.path.join(_current_data_dir(), f"{name}.csv")
     if not os.path.exists(path):
         return pd.DataFrame()
     # CONFIRMED BUG (fixed here): a table the parser exports from a genuinely empty, columnless DataFrame
@@ -9278,6 +9314,29 @@ section[data-testid="stSidebar"] * {
 
 def main():
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+
+    # CONFIRMED CHANGE (requested): season selector. Only shown at all once a second season's data folder
+    # actually exists (see _discover_available_seasons()) -- a single-season deployment looks and behaves
+    # exactly as before, nothing appears. Lives in the sidebar rather than the button navbar above so it
+    # doesn't reshuffle that row's layout for the common case where it isn't needed.
+    _seasons = _discover_available_seasons()
+    if len(_seasons) > 1:
+        if "selected_season" not in st.session_state:
+            st.session_state.selected_season = "Current Season"
+        _season_labels = list(_seasons.keys())
+        _prev_season = st.session_state.selected_season
+        _chosen_season = st.sidebar.selectbox(
+            "Season", _season_labels, index=_season_labels.index(_prev_season), key="season_selector"
+        )
+        if _chosen_season != _prev_season:
+            # load_table() only takes `name` -- switching the folder it reads from doesn't change that
+            # argument, so st.cache_data would otherwise keep serving the PREVIOUS season's cached tables
+            # after this change. Clearing the whole cache here (coarser than a per-table invalidation, but
+            # far less invasive than adding a season argument to every one of load_table()'s call sites
+            # throughout this file) forces every table to be re-read from the newly selected season's folder.
+            st.session_state.selected_season = _chosen_season
+            st.cache_data.clear()
+            st.rerun()
 
     # Navigation state
     if "nav_page" not in st.session_state:
