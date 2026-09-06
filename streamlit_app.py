@@ -1952,6 +1952,42 @@ def compute_uww_run_rates(as_of_date=None, exclusive=False):
     return (r["uww_biggest_run"] >= 10).sum() / n, (r["opponent_biggest_run"] >= 10).sum() / n, n
 
 
+def compute_uww_player_season_stats() -> pd.DataFrame:
+    """UWW's own per-player season averages (PTS/REB/AST/MIN/STL/TO/BLK/FG%/3P%/FT%), computed directly from
+    uww_pbp_box_score instead of the live uww_season_stats page.
+
+    CONFIRMED BUG (fixed by introducing this): uww_season_stats.csv is FastScout's live, CURRENT-as-of-
+    scrape-time season-stats page -- the exact same kind of leak already fixed for the Coaching Flags system
+    (see season_asof there), just never carried over to the Players page's "UWW Roster" tab, which read that
+    raw table directly in four separate places. It has no date filtering at all, so it can show real per-
+    game averages for games that, as of reference_date, haven't been played yet -- confirmed live: UWW's own
+    roster showing real PPG/RPG before their own first game of the season. uww_pbp_box_score is already
+    correctly restricted to games before reference_date (the parser's own pbp_events filter), so building the
+    same per-player averages from it instead closes this the same way season_asof did for Coaching Flags.
+
+    Returns a DataFrame with a "PLAYER" column (matching uww_season_stats' own column name, so existing
+    lookups that key off "PLAYER" don't need to change), or an empty DataFrame if there's no UWW box-score
+    data at all yet."""
+    box = load_table("uww_pbp_box_score")
+    uww = box[(box["team"] == "UW-Whitewater") & (box["player"] != "TEAM")] if not box.empty else pd.DataFrame()
+    if uww.empty:
+        return pd.DataFrame()
+    agg = uww.groupby("player").agg(
+        games=("game_date", "nunique"),
+        PTS_total=("PTS", "sum"), REB_total=("REB", "sum"), AST_total=("AST", "sum"), MIN_total=("MIN", "sum"),
+        STL_total=("STL", "sum"), TO_total=("TO", "sum"), BLK_total=("BLK", "sum"),
+        FGM=("FGM", "sum"), FGA=("FGA", "sum"), FG3M=("FG3M", "sum"), FG3A=("FG3A", "sum"),
+        FTM=("FTM", "sum"), FTA=("FTA", "sum"),
+    ).reset_index()
+    for _col, _total in [("PTS", "PTS_total"), ("REB", "REB_total"), ("AST", "AST_total"), ("MIN", "MIN_total"),
+                          ("STL", "STL_total"), ("TO", "TO_total"), ("BLK", "BLK_total")]:
+        agg[_col] = (agg[_total] / agg["games"]).round(1)
+    agg["FG%"] = (100 * agg["FGM"] / agg["FGA"]).round(1)
+    agg["3P%"] = (100 * agg["FG3M"] / agg["FG3A"]).round(1)
+    agg["FT%"] = (100 * agg["FTM"] / agg["FTA"]).round(1)
+    return agg.rename(columns={"player": "PLAYER"})
+
+
 def compute_true_shooting(pts, fga, fta) -> float:
     """True Shooting % -- see STAT_GLOSSARY['TS%']. Returns 0 if there were no shooting attempts of any kind."""
     denom = 2 * (fga + 0.44 * fta)
@@ -8124,7 +8160,7 @@ def render_players():
 
                 # Load season stats for this player
                 try:
-                    _p_season = load_table("uww_season_stats")
+                    _p_season = compute_uww_player_season_stats()
                     _p_match = _p_season[_p_season["PLAYER"].str.strip().str.lower().isin([player_name.strip().lower(), alias_key.strip().lower() if alias_key != player_name else ""])]
                     if not _p_match.empty:
                         _ps = _p_match.iloc[0]
@@ -8288,7 +8324,7 @@ def render_players():
             st.caption("Not enough box score data yet for advanced stats.")
         else:
             _team_minutes_total = None  # per-game team minutes (5 players x game minutes) for usage rate
-            _season_stats_min = load_table("uww_season_stats")
+            _season_stats_min = compute_uww_player_season_stats()
             _adv_rows = []
             for player_name, p_games in _adv_uww_box.groupby("player"):
                 totals = p_games[["PTS", "FGM", "FGA", "FTM", "FTA", "OREB", "DREB", "STL", "AST", "BLK", "PF", "TO"]].sum()
@@ -8319,7 +8355,7 @@ def render_players():
             st.caption("TS% and Game Score are season averages; Usage% needs a recorded MPG and is left blank without one.")
 
         # Load season stats for card display
-        _card_season_stats = load_table("uww_season_stats")
+        _card_season_stats = compute_uww_player_season_stats()
         _card_season_lookup = {}
         if not _card_season_stats.empty:
             for _, _cs in _card_season_stats.iterrows():
