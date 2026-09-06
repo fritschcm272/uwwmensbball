@@ -1,1 +1,11 @@
-
+target_player,target_position,target_role,target_opponent,target_game_date,compared_opponent,compared_game_date,compared_player,compared_position,compared_role,similarity_score,shared_notes_tags,shared_keys_tags,height_diff_in,stat_similarity,target_PTS,compared_PTS,target_REB,compared_REB,target_AST,compared_AST,target_FG%,compared_FG%,target_3P%,compared_3P%
+Mekhi Doby,G,Starter,Aurora Spartans,"Wed, Nov 20",Carroll (WI) Pioneers,"Tue, Nov 12",Evan Bland,G,Bench,12.0,slasher_driver,keep_in_front,3.0,1.0,,,,,,,,,,
+Noah Butler,F,Bench,Aurora Spartans,"Wed, Nov 20",Cornell College Rams,"Fri, Nov 15",Jonah Lauff,F,Starter,11.14,three_point_shooter,deny_catch_and_shoot,1.0,1.0,,,,,,,,,,
+Joevonn McCottry,G,Starter,Aurora Spartans,"Wed, Nov 20",Carroll (WI) Pioneers,"Tue, Nov 12",Kobe Simpson,G,Starter,10.83,"slasher_driver, three_point_shooter",,2.0,1.0,,,,,,,,,,
+Dwayne Jervier Jr,F,Starter,Aurora Spartans,"Wed, Nov 20",Carroll (WI) Pioneers,"Tue, Nov 12",Jacob Naber,F,Starter,10.5,post_scorer,,3.0,1.0,,,,,,,,,,
+Maxwell Marius,G,Starter,Aurora Spartans,"Wed, Nov 20",Carroll (WI) Pioneers,"Tue, Nov 12",Evan Bland,G,Bench,10.33,slasher_driver,,2.0,1.0,,,,,,,,,,
+Isaiah Davis,G,Starter,Aurora Spartans,"Wed, Nov 20",St. Olaf Oles,"Sat, Nov 16",Isaac Besh,G,Starter,9.5,three_point_shooter,,6.0,1.0,,,,,,,,,,
+Angelo Consorte,,Bench,Aurora Spartans,"Wed, Nov 20",Carroll (WI) Pioneers,"Tue, Nov 12",Evan Bland,G,Bench,3.5,,,,1.0,,,,,,,,,,
+Gevon Grant,,Bench,Aurora Spartans,"Wed, Nov 20",Cornell College Rams,"Fri, Nov 15",Dylan Logsdon,F,Bench,3.5,,,,1.0,,,,,,,,,,
+Isaac Ross,,Bench,Aurora Spartans,"Wed, Nov 20",Cornell College Rams,"Fri, Nov 15",Damuzha Moore,F,Bench,3.5,,,,1.0,,,,,,,,,,
+Jeffery Hillmer,,Bench,Aurora Spartans,"Wed, Nov 20",Cornell College Rams,"Fri, Nov 15",Max Richardson,G,Bench,3.5,,,,1.0,,,,,,,,,,
