@@ -72,25 +72,12 @@ def _discover_available_seasons() -> dict:
     return seasons
 
 
-def _current_data_dir() -> str:
-    """Which folder load_table() should read from right now -- the season picked in the selector (see
-    main()), or DATA_DIR if nothing's been picked yet (a single-season deployment with no selector shown at
-    all). Kept as its own lookup, read fresh inside load_table() on every call, rather than a module-level
-    constant -- that's what lets switching seasons actually change what the rest of the app sees without
-    needing every one of load_table()'s call sites (there are dozens throughout this file) to be touched."""
-    if "selected_season" not in st.session_state:
-        return DATA_DIR
-    seasons = _discover_available_seasons()
-    return seasons.get(st.session_state.selected_season, DATA_DIR)
-
-
 @st.cache_data(ttl=60)
-def load_table(name: str) -> pd.DataFrame:
-    """Loads a parser-exported CSV from the CURRENTLY SELECTED season's data folder (see
-    _current_data_dir()), cached for up to 60 seconds. A short TTL instead of the
-    default no-expiry cache: with no TTL, a re-run of the parser (new CSVs on disk) has NO EFFECT on an
+def load_table(name: str, season: str = None) -> pd.DataFrame:
+    """Loads a parser-exported CSV, cached for up to 60 seconds. A short TTL instead of the default
+    no-expiry cache: with no TTL, a re-run of the parser (new CSVs on disk) has NO EFFECT on an
     already-running Streamlit process until it's manually restarted -- st.cache_data has no idea the
-    underlying file changed, since it's keyed only on this function's arguments (`name`), not the file's own
+    underlying file changed, since it's keyed only on this function's arguments, not the file's own
     modification time. Confirmed as a real, live symptom, not a hypothetical: a fix that was verified correct
     against the parser's own data kept showing the old, pre-fix number in the app after a re-run. A short TTL
     trades a small amount of staleness (up to 60s) for the app self-correcting after any re-run without
@@ -98,12 +85,20 @@ def load_table(name: str) -> pd.DataFrame:
     (frequent parser re-runs during active development/testing) than either extreme (no expiry, or no
     caching at all, which would reload every CSV on every single interaction).
 
-    CONFIRMED CHANGE (requested): `name` is still the only argument (and so the only thing st.cache_data
-    hashes on) -- deliberately NOT adding a season parameter here, since that would mean updating every call
-    site in this file individually. Switching seasons instead calls st.cache_data.clear() once, in the
-    selector itself (see main()), which is a coarser but far less invasive way to keep this cache from
-    serving one season's cached table after the user has switched to another."""
-    path = os.path.join(_current_data_dir(), f"{name}.csv")
+    CONFIRMED CHANGE (requested): season selection used to be app-wide (a sidebar control affecting every
+    page, including Upcoming Game -- which makes no sense for a finished past season; there's no "upcoming
+    game" for 2024-25). Now it's scoped to wherever a caller actually wants to browse a different season
+    (currently just the Previous Games tab -- see render_previous_games()): `season` is a real, explicit
+    argument here rather than something read from session state internally, specifically so st.cache_data's
+    own argument-based cache key differentiates seasons automatically. Every OTHER page keeps calling
+    load_table(name) with no season argument at all, and always reads the current/default season -- switching
+    seasons in Previous Games has zero effect on them.
+    """
+    if season:
+        data_dir = _discover_available_seasons().get(season, DATA_DIR)
+    else:
+        data_dir = DATA_DIR
+    path = os.path.join(data_dir, f"{name}.csv")
     if not os.path.exists(path):
         return pd.DataFrame()
     # CONFIRMED BUG (fixed here): a table the parser exports from a genuinely empty, columnless DataFrame
@@ -181,13 +176,17 @@ def find_logo_b64(*candidate_names: str) -> str:
 
 
 @st.cache_data
-def load_short_opponent_names() -> list:
+def load_short_opponent_names(season=None) -> list:
     """uww_schedule uses full opponent names (e.g. "Ripon Red Hawks"), while every analytical table built from
     scouting reports / PBP / video tagging uses a shorter form (e.g. "Ripon") -- collect the union of short
-    names actually in use so schedule rows can be resolved onto them."""
+    names actually in use so schedule rows can be resolved onto them.
+
+    season: which season's tables to read (see load_table()) -- the Previous Games page passes its own
+    selected season here, since a past season's opponents (and their short-name spellings) can differ from
+    the current season's."""
     names = set()
     for t in ["uww_pbp_events", "uww_opponent_game_plans", "uww_opponent_team_totals", "uww_opponent_rosters", "uww_opponent_schedules"]:
-        df = load_table(t)
+        df = load_table(t, season)
         names.update(n for n in df["opponent"].dropna().unique())
     return sorted(names, key=len, reverse=True)
 
@@ -972,14 +971,16 @@ def opponent_prior_games_scheduled(short_opponent: str):
     return n or None
 
 
-def get_opponent_entering_record(short_opponent: str) -> tuple:
+def get_opponent_entering_record(short_opponent: str, season: str = None) -> tuple:
     """The opponent's own W-L record and current streak from the games on THEIR schedule (uww_opponent_schedules)
     that came before their matchup against UWW -- i.e. what their record looked like entering that specific
     game. Returns (record_str, streak_str), each "" if it can't be determined (e.g. no opponent-schedule data
     parsed for them yet).
 
     Shared by the Upcoming Game banner (that game hasn't happened yet, so "entering" just means "as of now")
-    and the Previous Games banner (a past game, so "entering" means their record as of THAT game).
+    and the Previous Games banner (a past game, so "entering" means their record as of THAT game) -- the
+    latter passes its own selected season here (see load_table()) so a past-season game's "entering" record
+    is read from that season's own uww_opponent_schedules, not the current season's.
 
     CAVEAT: if this opponent played UWW more than once this season (e.g. a conference home-and-home), this
     always anchors on their FIRST "vs Whitewater"-labeled row on uww_opponent_schedules -- so for a second
@@ -991,7 +992,7 @@ def get_opponent_entering_record(short_opponent: str) -> tuple:
     """
     if not short_opponent:
         return "", ""
-    opp_sched = load_table("uww_opponent_schedules")
+    opp_sched = load_table("uww_opponent_schedules", season)
     opp_games = opp_sched[opp_sched["opponent"] == short_opponent] if not opp_sched.empty else pd.DataFrame()
     if opp_games.empty:
         return "", ""
@@ -1918,7 +1919,7 @@ def compute_efficiency_pace(team_box: pd.DataFrame, opp_box: pd.DataFrame, n_gam
     }
 
 
-def compute_uww_pace_by_game(as_of_date=None, exclusive=False):
+def compute_uww_pace_by_game(as_of_date=None, exclusive=False, season=None):
     """Every UWW game's Pace/Net Rtg/ORtg/result, one row per game, bucketed 'fast'/'slow' against UWW's own
     season median pace (needs 4+ qualifying games; returns (None, None) below that). Factored out of the
     Pace & Style KTV card so that card and the per-game Pace indicator on the Previous Games page use the
@@ -1930,8 +1931,11 @@ def compute_uww_pace_by_game(as_of_date=None, exclusive=False):
     that hadn't been played yet. Leave as None (default) for the full-season view the Pace & Style KTV card
     wants when deciding how to approach an UPCOMING opponent, where every game played so far is fair game.
     exclusive: when True, only games STRICTLY BEFORE as_of_date count (an "entering this game" read); when
-    False (default), games ON as_of_date count too (a "through this game, inclusive" read)."""
-    box = load_table("uww_pbp_box_score")
+    False (default), games ON as_of_date count too (a "through this game, inclusive" read).
+    season: which season's uww_pbp_box_score to read (see load_table()) -- the Previous Games page passes
+    its own selected season here so a past-season game's pace read stays scoped to THAT season's games,
+    instead of silently mixing in the current season's box scores."""
+    box = load_table("uww_pbp_box_score", season)
     uww_side = box[box["team"] == "UW-Whitewater"] if not box.empty else pd.DataFrame()
     opp_side = box[box["team"] != "UW-Whitewater"] if not box.empty else pd.DataFrame()
     keys = [c for c in ["opponent", "game_date"] if c in uww_side.columns]
@@ -1964,15 +1968,17 @@ def compute_uww_pace_by_game(as_of_date=None, exclusive=False):
     return df, median
 
 
-def compute_uww_run_rates(as_of_date=None, exclusive=False):
+def compute_uww_run_rates(as_of_date=None, exclusive=False, season=None):
     """UWW's own share of games with a "big" run (10-0 or better, points_for and points_against) from
     uww_scoring_runs -- the same bar the Runs We Go On / Runs Against Us KTV cards already use, so a rate
     quoted here means the same thing as a rate quoted there.
 
     as_of_date/exclusive: same meaning as compute_uww_pace_by_game() -- restricts which games count, so the
     Previous Games page can describe UWW's run tendency ENTERING a specific past game rather than over the
-    whole season. Returns (off_rate, def_rate, n); both rates are None when n == 0."""
-    runs = load_table("uww_scoring_runs")
+    whole season. season: which season's uww_scoring_runs to read (see load_table()/compute_uww_pace_by_game
+    for why this matters when Previous Games is browsing a season other than the current one). Returns
+    (off_rate, def_rate, n); both rates are None when n == 0."""
+    runs = load_table("uww_scoring_runs", season)
     if runs.empty or not {"uww_biggest_run", "opponent_biggest_run"} <= set(runs.columns):
         return None, None, 0
     r = runs.copy()
@@ -6794,8 +6800,23 @@ def render_upcoming_game():
 # Section 2: Previous Games
 # --------------------------------------------------------------------------------------------------------------
 def render_previous_games():
-    schedule = load_table("uww_schedule")
-    short_names = load_short_opponent_names()
+    # CONFIRMED CHANGE (requested): season selector scoped to this tab specifically, instead of an app-wide
+    # sidebar control -- Upcoming Game and the rest of Analytics always show the current season regardless of
+    # what's picked here, since "upcoming game" and current advanced stats don't make sense for a finished
+    # past season (there's no upcoming game in a completed 2024-25). Only shown once a second season's data
+    # folder actually exists; a single-season deployment looks and behaves exactly as before. `_pg_season`
+    # stays None (rather than the literal string "Current Season") when nothing else has been picked, so this
+    # tab's load_table() calls share the exact same cache entries every other page's calls already use,
+    # instead of a redundant duplicate entry for the same underlying files.
+    _pg_seasons = _discover_available_seasons()
+    _pg_season = None
+    if len(_pg_seasons) > 1:
+        _pg_season_choice = st.selectbox("Season", list(_pg_seasons.keys()), key="previous_games_season")
+        if _pg_season_choice != "Current Season":
+            _pg_season = _pg_season_choice
+
+    schedule = load_table("uww_schedule", _pg_season)
+    short_names = load_short_opponent_names(_pg_season)
 
     # Only show games before the upcoming game (exclude future-scheduled games with results)
     if "Upcoming" in schedule.columns:
@@ -6857,7 +6878,7 @@ def render_previous_games():
 
     # Opponent's own record entering this game (see get_opponent_entering_record's docstring for the
     # multi-meeting caveat) -- previously never computed at all on this page, unlike UWW's own record above.
-    _opp_record_pg, _opp_streak_pg = get_opponent_entering_record(short_opponent) if short_opponent else ("", "")
+    _opp_record_pg, _opp_streak_pg = get_opponent_entering_record(short_opponent, _pg_season) if short_opponent else ("", "")
     _opp_entering_html = f'<div style="color:#9DAAAC;font-size:0.9rem;margin-top:2px;">{html.escape(_opp_record_pg)} entering</div>' if _opp_record_pg else ""
 
     outcome_color = "#2e7d32" if outcome == "W" else "#c62828"
@@ -6908,13 +6929,13 @@ def render_previous_games():
                 return same.copy()
         return out.copy()
 
-    box = load_table("uww_pbp_box_score")
+    box = load_table("uww_pbp_box_score", _pg_season)
     game_box = _this_game(box)
-    stints = load_table("uww_lineup_stints")
+    stints = load_table("uww_lineup_stints", _pg_season)
     game_stints = _this_game(stints)
 
     # Fix swapped team labels / lineup columns
-    _flags_df = load_table("uww_coaching_flags")
+    _flags_df = load_table("uww_coaching_flags", _pg_season)
     uww_names = set(_flags_df["player"].dropna().str.lower().tolist())
     if not game_box.empty:
         uww_labeled = game_box[game_box["team"] == "UW-Whitewater"]
@@ -7108,7 +7129,7 @@ def render_previous_games():
 
     # --- KEYS TO VICTORY: PLAN vs EXECUTION ---
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">KEYS TO VICTORY: PLAN vs EXECUTION</div></div>', unsafe_allow_html=True)
-    game_plans = load_table("uww_opponent_game_plans")
+    game_plans = load_table("uww_opponent_game_plans", _pg_season)
     ktv_plan = game_plans[(game_plans["opponent"] == short_opponent) & (game_plans["topic"] == "KEYS TO VICTORY")]
     strengths_match = game_plans[(game_plans["opponent"] == short_opponent) & (game_plans["topic"] == "TEAM STRENGTHS")]
 
@@ -7183,7 +7204,7 @@ def render_previous_games():
                 )
 
             # KTV categories + outcome
-            ktv_game_cats = load_table("uww_ktv_game_categories")
+            ktv_game_cats = load_table("uww_ktv_game_categories", _pg_season)
             opp_cats = ktv_game_cats[ktv_game_cats["opponent"] == short_opponent]
             if not opp_cats.empty:
                 cats = opp_cats["category"].tolist()
@@ -7205,7 +7226,7 @@ def render_previous_games():
 
     # --- PROJECTED vs ACTUAL ---
     try:
-        _proj_box = load_table("uww_projected_box_score")
+        _proj_box = load_table("uww_projected_box_score", _pg_season)
         if not _proj_box.empty and not uww_game_box.empty:
             # Match projected players to actual game box by player name
             _proj_box["_join_key"] = _proj_box["PLAYER"].str.strip().str.lower()
@@ -7379,7 +7400,7 @@ def render_previous_games():
             _pg_pace_d = compute_efficiency_pace(uww_game_box, opp_game_box, 1)
             _pg_pre_median = None
             if _pg_game_date is not None:
-                _, _pg_pre_median = compute_uww_pace_by_game(as_of_date=_pg_game_date, exclusive=True)
+                _, _pg_pre_median = compute_uww_pace_by_game(as_of_date=_pg_game_date, exclusive=True, season=_pg_season)
             st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\u23F1\uFE0F GAME TEMPO</div></div>', unsafe_allow_html=True)
             if _pg_pre_median is not None:
                 st.markdown(f"**Entering this game:** UWW's own median pace across the games before this one "
@@ -7397,7 +7418,7 @@ def render_previous_games():
         pass
 
     # --- SCORING RUNS & CLUTCH MOMENTS (this game) ---
-    _pg_runs = load_table("uww_scoring_runs")
+    _pg_runs = load_table("uww_scoring_runs", _pg_season)
     _pg_run_row = _this_game(_pg_runs) if not _pg_runs.empty else pd.DataFrame()
     if not _pg_run_row.empty:
         st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001F4C8 SCORING RUNS &amp; LARGEST LEADS</div></div>', unsafe_allow_html=True)
@@ -7405,7 +7426,7 @@ def render_previous_games():
         # and the Runs We Go On / Runs Against Us KTV cards -- UWW's own run tendency BEFORE this game,
         # using the exact same >=10-point "big run" bar those cards use, from games strictly before this one.
         if _pg_game_date is not None:
-            _pg_off_rate, _pg_def_rate, _pg_run_n = compute_uww_run_rates(as_of_date=_pg_game_date, exclusive=True)
+            _pg_off_rate, _pg_def_rate, _pg_run_n = compute_uww_run_rates(as_of_date=_pg_game_date, exclusive=True, season=_pg_season)
             if _pg_off_rate is not None:
                 st.markdown(f"**Entering this game:** across the {_pg_run_n} game(s) before this one, UWW had "
                             f"gone on a 10-0-or-better run in **{100 * _pg_off_rate:.0f}%** of them, and given "
@@ -7422,7 +7443,7 @@ def render_previous_games():
         rr_col2.metric(f"{short_opponent} largest lead", f"{int(_rr['opponent_largest_lead'])} pts")
         st.caption(f"During UWW's run — UWW: {_rr.get('uww_run_uww_lineup', '-')} | {short_opponent}: {_rr.get('uww_run_opp_lineup', '-')}")
 
-    _pg_clutch = load_table("uww_clutch_events")
+    _pg_clutch = load_table("uww_clutch_events", _pg_season)
     _pg_clutch_game = _this_game(_pg_clutch) if not _pg_clutch.empty else pd.DataFrame()
     if not _pg_clutch_game.empty:
         section_header("\U0001F3C0 CLUTCH MOMENTS", "Last 5 minutes of the 2nd half or any overtime, with the score within 8 points.")
@@ -7431,7 +7452,7 @@ def render_previous_games():
 
     # --- PLAY-BY-PLAY ---
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">PLAY-BY-PLAY</div></div>', unsafe_allow_html=True)
-    pbp = load_table("uww_pbp_events")
+    pbp = load_table("uww_pbp_events", _pg_season)
     game_pbp = _this_game(pbp).sort_values("event_order")
     if game_pbp.empty:
         st.warning("No play-by-play data found for this game yet.")
@@ -9314,29 +9335,6 @@ section[data-testid="stSidebar"] * {
 
 def main():
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
-
-    # CONFIRMED CHANGE (requested): season selector. Only shown at all once a second season's data folder
-    # actually exists (see _discover_available_seasons()) -- a single-season deployment looks and behaves
-    # exactly as before, nothing appears. Lives in the sidebar rather than the button navbar above so it
-    # doesn't reshuffle that row's layout for the common case where it isn't needed.
-    _seasons = _discover_available_seasons()
-    if len(_seasons) > 1:
-        if "selected_season" not in st.session_state:
-            st.session_state.selected_season = "Current Season"
-        _season_labels = list(_seasons.keys())
-        _prev_season = st.session_state.selected_season
-        _chosen_season = st.sidebar.selectbox(
-            "Season", _season_labels, index=_season_labels.index(_prev_season), key="season_selector"
-        )
-        if _chosen_season != _prev_season:
-            # load_table() only takes `name` -- switching the folder it reads from doesn't change that
-            # argument, so st.cache_data would otherwise keep serving the PREVIOUS season's cached tables
-            # after this change. Clearing the whole cache here (coarser than a per-table invalidation, but
-            # far less invasive than adding a season argument to every one of load_table()'s call sites
-            # throughout this file) forces every table to be re-read from the newly selected season's folder.
-            st.session_state.selected_season = _chosen_season
-            st.cache_data.clear()
-            st.rerun()
 
     # Navigation state
     if "nav_page" not in st.session_state:
