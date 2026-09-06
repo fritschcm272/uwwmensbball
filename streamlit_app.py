@@ -7450,6 +7450,15 @@ def render_previous_games():
 # --------------------------------------------------------------------------------------------------------------
 def render_team():
     schedule = load_table("uww_schedule")
+    # CONFIRMED BUG (fixed here): uww_schedule.csv isn't UWW-only -- the parser also appends each scouted
+    # opponent's OWN schedule (their games against third parties) into the same exported table, so it can
+    # resolve who's "upcoming" for them too. Every OTHER place in this file that reads uww_schedule happens
+    # to be protected from this by slicing relative to the "Upcoming" row's position (UWW's own block comes
+    # first in the concatenation, so that slice never reaches an opponent's rows) -- this one wasn't, and
+    # summed win/loss/scoring across every team in the table. Confirmed as the source of a real, reported
+    # case: a "1-2" season record showing up before UWW's own first game of the year had been played --
+    # that was an opponent's own real record against other teams, not UWW's.
+    schedule = schedule[schedule["team"] == "UW-Whitewater"]
     played = schedule[played_mask(schedule)]
 
     wins = int((played["outcome"] == "W").sum())
