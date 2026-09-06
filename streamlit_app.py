@@ -7720,19 +7720,27 @@ def render_team():
             split_summary[col] = 0
     split_summary["games"] = split_summary["W"] + split_summary["L"]
 
-    # Styled split cards
-    _split_cols = st.columns(len(split_summary))
-    for _si, (_, _sr) in enumerate(split_summary.iterrows()):
-        with _split_cols[_si]:
-            _loc = _sr["location"]
-            _w = int(_sr["W"])
-            _l = int(_sr["L"])
-            _g = int(_sr["games"])
-            _wp = f"{(_w/_g*100):.0f}%" if _g > 0 else "-"
-            _loc_icon = "🏠" if "home" in str(_loc).lower() else ("✈️" if "away" in str(_loc).lower() else "⚖️")
-            _margin_sub = played[played["location"] == _loc]["point_margin"].mean()
-            _margin_str = f"{_margin_sub:+.1f}" if not played[played["location"] == _loc].empty else "-"
-            st.markdown(
+    # CONFIRMED BUG (fixed here): st.columns(0) raises StreamlitInvalidColumnSpecError -- no games played yet
+    # this season (the exact "reference_date before the first game" scenario) leaves `played` empty, so
+    # split_summary has zero rows and st.columns(len(split_summary)) crashed the whole page instead of just
+    # this section. The other three st.columns(len(...)) calls elsewhere in this file already guard against
+    # their own empty case the same way; this one didn't.
+    if split_summary.empty:
+        st.info("No games played yet this season.")
+    else:
+        # Styled split cards
+        _split_cols = st.columns(len(split_summary))
+        for _si, (_, _sr) in enumerate(split_summary.iterrows()):
+            with _split_cols[_si]:
+                _loc = _sr["location"]
+                _w = int(_sr["W"])
+                _l = int(_sr["L"])
+                _g = int(_sr["games"])
+                _wp = f"{(_w/_g*100):.0f}%" if _g > 0 else "-"
+                _loc_icon = "🏠" if "home" in str(_loc).lower() else ("✈️" if "away" in str(_loc).lower() else "⚖️")
+                _margin_sub = played[played["location"] == _loc]["point_margin"].mean()
+                _margin_str = f"{_margin_sub:+.1f}" if not played[played["location"] == _loc].empty else "-"
+                st.markdown(
                 f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:16px;text-align:center;background:#faf8fc;">'
                 f'<div style="font-size:1.5rem;margin-bottom:4px;">{_loc_icon}</div>'
                 f'<div style="font-weight:700;font-size:1.0rem;color:#4E2A84;">{_loc}</div>'
