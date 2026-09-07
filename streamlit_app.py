@@ -778,53 +778,83 @@ _MONTH_ABBR = {"Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6,
                "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12}
 
 
+# CONFIRMED BUG (fixed here): date matching used to be raw string slicing -- `str(raw)[:10]` on one side and
+# `df["game_date"].astype(str).str[:10]` on the other -- which only works if a table happens to store its
+# game_date as an ISO "YYYY-MM-DD..." string. Any table the parser writes in another spelling ("1/3/2026",
+# "Jan 3, 2026", a datetime rendered as "2026-01-03 19:00:00" is fine but "01/03/26" is not) never matched,
+# and the caller's silent fall-back then handed back EVERY meeting with that opponent instead of the one
+# game. Normalising both sides through pandas' parser makes the comparison independent of spelling.
+_DATE_COL_CANDIDATES = ("game_date", "date", "gamedate", "game_dt")
+
+
+def game_date_col(df: pd.DataFrame):
+    """Name of the column holding a game's date in `df`, or None if it carries no date at all."""
+    for c in _DATE_COL_CANDIDATES:
+        if c in df.columns:
+            return c
+    return None
+
+
+def iso_dates(values) -> pd.Series:
+    """Any date spelling -> ISO 'YYYY-MM-DD' strings (NaN where unparseable)."""
+    s = pd.Series(values)
+    parsed = pd.to_datetime(s, errors="coerce")
+    if parsed.isna().all() and not s.dropna().empty:
+        # Day-first exports ("13/01/2026") come back all-NaT from the default parse.
+        parsed = pd.to_datetime(s, errors="coerce", dayfirst=True)
+    return parsed.dt.strftime("%Y-%m-%d")
+
+
 @st.cache_data(ttl=60)
-def _game_date_index() -> dict:
-    """(month, day) -> ISO 'YYYY-MM-DD', collected from every game-keyed table's own game_date column."""
+def _game_date_index(season=None) -> dict:
+    """(month, day) -> ISO 'YYYY-MM-DD', collected from every game-keyed table's own game_date column.
+
+    season: which season's tables to read. Previously this always read the CURRENT season's files, so on the
+    Previous Games page with an older season selected every display date resolved to None (or, worse, to the
+    current season's same-day game), and the per-game filters below silently degraded to opponent-only.
+    """
     index = {}
     for table in ("uww_pbp_box_score", "uww_pbp_events", "uww_lineup_stints", "uww_scoring_runs"):
-        df = load_table(table)
-        if df.empty or "game_date" not in df.columns:
+        df = load_table(table, season)
+        col = game_date_col(df) if not df.empty else None
+        if col is None:
             continue
-        for raw in df["game_date"].dropna().astype(str).unique():
-            iso = raw[:10]
-            try:
-                _, month, day = (int(part) for part in iso.split("-"))
-            except ValueError:
-                continue
+        for iso in iso_dates(df[col].dropna().unique()).dropna().unique():
+            month, day = int(iso[5:7]), int(iso[8:10])
             index.setdefault((month, day), iso)
     return index
 
 
-def resolve_game_date(display_date):
+def resolve_game_date(display_date, season=None):
     """'Sat, Jan 3' -> '2026-01-03'. Returns None when no parsed game matches that day."""
     m = re.match(r"^\w{3},\s+(\w{3})\s+(\d+)$", str(display_date).strip())
     if not m:
         return None
     month = _MONTH_ABBR.get(m.group(1))
-    return _game_date_index().get((month, int(m.group(2)))) if month else None
+    return _game_date_index(season).get((month, int(m.group(2)))) if month else None
 
 
-def played_game_dates(played: pd.DataFrame) -> set:
+def played_game_dates(played: pd.DataFrame, season=None) -> set:
     """ISO dates of the games in `played` that actually have parsed data behind them."""
     if played.empty or "date" not in played.columns:
         return set()
-    return {d for d in (resolve_game_date(v) for v in played["date"]) if d}
+    return {d for d in (resolve_game_date(v, season) for v in played["date"]) if d}
 
 
-def scope_to_played(df: pd.DataFrame, played: pd.DataFrame) -> pd.DataFrame:
+def scope_to_played(df: pd.DataFrame, played: pd.DataFrame, season=None) -> pd.DataFrame:
     """Restrict a game-keyed table to the games in `played`, matching on DATE rather than opponent name.
 
     Filtering on opponent name (what this app used to do) cannot express "the first Oshkosh game but not the
     second": both meetings share one name, so a season aggregate built before the rematch silently swallowed
     the rematch too. Falls back to returning `df` unchanged only when the table has no game_date at all.
     """
-    if df.empty or "game_date" not in df.columns:
+    col = game_date_col(df) if not df.empty else None
+    if col is None:
         return df
-    dates = played_game_dates(played)
+    dates = played_game_dates(played, season)
     if not dates:
         return df.iloc[0:0]
-    return df[df["game_date"].astype(str).str[:10].isin(dates)]
+    return df[iso_dates(df[col]).isin(dates).to_numpy()]
 
 
 def get_game_outcomes(schedule: pd.DataFrame) -> dict:
@@ -6929,22 +6959,65 @@ def render_previous_games():
     # the opponent alone stacks every meeting with that team into one "game": duplicate players in the box
     # score, lineup minutes summed across both nights, and a Plan-vs-Reality panel comparing a two-game total
     # against a one-game average.
-    _pg_game_date = resolve_game_date(game.get("date"))
+    #
+    # CONFIRMED BUG (fixed here): the date leg of that filter used to be best-effort with a SILENT fall-back
+    # -- if the date didn't match (wrong column name, a non-ISO date spelling, or a past season selected,
+    # since _game_date_index() only ever read the current season's files), `same` came back empty and the
+    # function quietly returned every meeting with that opponent instead. The box score happens to survive
+    # that (dedupe/aggregation hides it), but Play-By-Play lists raw events, so a second meeting showed up as
+    # a doubled event log for "this" game. The date is now the primary key: once we know it, a table that
+    # can't be narrowed to it is reported, never silently widened.
+    _pg_game_date = resolve_game_date(game.get("date"), _pg_season)
+    _pg_filter_warnings = []
 
-    def _this_game(df):
+    def _this_game(df, label=None):
+        """Rows for THIS ONE game -- (opponent, date), never the opponent name alone."""
         if df.empty or "opponent" not in df.columns:
             return df
-        out = df[df["opponent"] == short_opponent]
-        if _pg_game_date and "game_date" in out.columns:
-            same = out[out["game_date"].astype(str).str[:10] == _pg_game_date]
+        out = df[df["opponent"] == short_opponent].copy()
+        if out.empty:
+            return out
+
+        date_col = game_date_col(out)
+        if date_col is None:
+            # No date at all in this table: opponent-only is the best it can do. Only worth flagging if that
+            # actually spans more than one row-set, which we can't tell here -- leave it alone.
+            return out
+
+        out["_iso_game_date"] = iso_dates(out[date_col]).to_numpy()
+        n_games = out["_iso_game_date"].nunique(dropna=True)
+
+        if _pg_game_date:
+            same = out[out["_iso_game_date"] == _pg_game_date]
             if not same.empty:
-                return same.copy()
-        return out.copy()
+                return same.drop(columns=["_iso_game_date"])
+            if n_games > 1:
+                # Multiple meetings present and none carries this game's date -- returning all of them would
+                # be wrong in exactly the way this filter exists to prevent.
+                _pg_filter_warnings.append(
+                    f"{label or 'table'}: no rows dated {_pg_game_date}, but {n_games} meetings with "
+                    f"{short_opponent} are present ({', '.join(sorted(str(d) for d in out['_iso_game_date'].dropna().unique()))}). "
+                    f"Showing none rather than stacking them -- check the parser's date column for this table."
+                )
+                return out.iloc[0:0].drop(columns=["_iso_game_date"])
+            # Single meeting on file: the date just didn't resolve, and there's nothing to confuse it with.
+            return out.drop(columns=["_iso_game_date"])
+
+        if n_games > 1:
+            # Couldn't resolve the schedule's display date to an ISO date at all. Fall back to the meeting
+            # closest to it rather than all of them, and say so.
+            _pg_filter_warnings.append(
+                f"{label or 'table'}: couldn't match schedule date \"{game.get('date')}\" to a parsed game "
+                f"date, so this section shows the most recent of {n_games} meetings with {short_opponent}."
+            )
+            latest = out["_iso_game_date"].dropna().max()
+            out = out[out["_iso_game_date"] == latest]
+        return out.drop(columns=["_iso_game_date"])
 
     box = load_table("uww_pbp_box_score", _pg_season)
-    game_box = _this_game(box)
+    game_box = _this_game(box, "uww_pbp_box_score")
     stints = load_table("uww_lineup_stints", _pg_season)
-    game_stints = _this_game(stints)
+    game_stints = _this_game(stints, "uww_lineup_stints")
 
     # Fix swapped team labels / lineup columns
     _flags_df = load_table("uww_coaching_flags", _pg_season)
@@ -6993,7 +7066,7 @@ def render_previous_games():
             actual_stats["A:TO Ratio"] = (actual_stats["Assists"] / actual_stats["Turnovers"]) if actual_stats["Turnovers"] > 0 else 0
 
             # Compute season averages going INTO this game (expected)
-            _pre_box = scope_to_played(box, _orig_played.iloc[:_game_original_pos]) if _game_original_pos else box.iloc[0:0]
+            _pre_box = scope_to_played(box, _orig_played.iloc[:_game_original_pos], _pg_season) if _game_original_pos else box.iloc[0:0]
             _pre_uww_box = _pre_box[_pre_box["team"] == "UW-Whitewater"] if not _pre_box.empty else pd.DataFrame()
             # Validate using roster
             if not _pre_uww_box.empty:
@@ -7431,7 +7504,7 @@ def render_previous_games():
 
     # --- SCORING RUNS & CLUTCH MOMENTS (this game) ---
     _pg_runs = load_table("uww_scoring_runs", _pg_season)
-    _pg_run_row = _this_game(_pg_runs) if not _pg_runs.empty else pd.DataFrame()
+    _pg_run_row = _this_game(_pg_runs, "uww_scoring_runs") if not _pg_runs.empty else pd.DataFrame()
     if not _pg_run_row.empty:
         st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001F4C8 SCORING RUNS &amp; LARGEST LEADS</div></div>', unsafe_allow_html=True)
         # CONFIRMED CHANGE (requested): added this "entering this game" line, same idea as GAME TEMPO above
@@ -7456,7 +7529,7 @@ def render_previous_games():
         st.caption(f"During UWW's run — UWW: {_rr.get('uww_run_uww_lineup', '-')} | {short_opponent}: {_rr.get('uww_run_opp_lineup', '-')}")
 
     _pg_clutch = load_table("uww_clutch_events", _pg_season)
-    _pg_clutch_game = _this_game(_pg_clutch) if not _pg_clutch.empty else pd.DataFrame()
+    _pg_clutch_game = _this_game(_pg_clutch, "uww_clutch_events") if not _pg_clutch.empty else pd.DataFrame()
     if not _pg_clutch_game.empty:
         section_header("\U0001F3C0 CLUTCH MOMENTS", "Last 5 minutes of the 2nd half or any overtime, with the score within 8 points.")
         _cg_display_cols = [c for c in ["period", "time_remaining", "team", "player", "event_type", "raw_text", "uww_score", "opp_score"] if c in _pg_clutch_game.columns]
@@ -7465,7 +7538,36 @@ def render_previous_games():
     # --- PLAY-BY-PLAY ---
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">PLAY-BY-PLAY</div></div>', unsafe_allow_html=True)
     pbp = load_table("uww_pbp_events", _pg_season)
-    game_pbp = _this_game(pbp).sort_values("event_order")
+    game_pbp = _this_game(pbp, "uww_pbp_events")
+    if not game_pbp.empty:
+        game_pbp = game_pbp.sort_values("event_order")
+
+    # TEMPORARY DEBUG -- remove once the date column in uww_pbp_events is confirmed good. Shows exactly what
+    # the per-game filter had to work with, so "the PBP is showing both meetings" can be traced to its cause
+    # (missing date column vs. unparseable date spelling vs. a date the schedule row didn't resolve to)
+    # instead of guessed at.
+    with st.expander("\U0001f527 PBP filter debug", expanded=False):
+        _dbg_opp = pbp[pbp["opponent"] == short_opponent] if "opponent" in pbp.columns else pbp.iloc[0:0]
+        _dbg_col = game_date_col(_dbg_opp) if not _dbg_opp.empty else None
+        st.write({
+            "schedule display date": str(game.get("date")),
+            "resolved ISO date (_pg_game_date)": _pg_game_date,
+            "short_opponent": short_opponent,
+            "uww_pbp_events columns": list(pbp.columns),
+            "date column found": _dbg_col,
+            "raw date values for this opponent": (
+                sorted(_dbg_opp[_dbg_col].astype(str).unique().tolist())[:10] if _dbg_col else None
+            ),
+            "parsed ISO dates for this opponent": (
+                sorted(iso_dates(_dbg_opp[_dbg_col]).dropna().unique().tolist()) if _dbg_col else None
+            ),
+            "rows vs this opponent (all meetings)": len(_dbg_opp),
+            "rows after per-game filter": len(game_pbp),
+        })
+
+    for _w in _pg_filter_warnings:
+        st.warning(_w)
+
     if game_pbp.empty:
         st.warning("No play-by-play data found for this game yet.")
     else:
