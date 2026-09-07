@@ -2,15 +2,467 @@ opponent,game_date,vs_opponent,location,outcome,team_score,opponent_score,point_
 Carroll (WI) Pioneers,"Fri, Nov 8",Lakeland Muskies,Away,W,90.0,69.0,21.0
 Carroll (WI) Pioneers,"Tue, Nov 12",UW-Whitewater Warhawks,Home,L,71.0,77.0,-6.0
 Carroll (WI) Pioneers,"Fri, Nov 15",Greenville Panthers,Away,W,130.0,107.0,23.0
+Carroll (WI) Pioneers,"Wed, Nov 20",UW-Oshkosh Titans,Away,L,64.0,83.0,-19.0
+Carroll (WI) Pioneers,"Sat, Nov 23",Washington-St. Louis Bears,Home,L,66.0,81.0,-15.0
+Carroll (WI) Pioneers,"Tue, Nov 26",MSOE Raiders,Home,L,80.0,88.0,-8.0
+Carroll (WI) Pioneers,"Wed, Dec 4",North Park Vikings,Home,L,64.0,70.0,-6.0
+Carroll (WI) Pioneers,"Sat, Dec 7",Illinois Wesleyan Titans,Home,L,66.0,72.0,-6.0
+Carroll (WI) Pioneers,"Sat, Dec 14",North Central (IL) Cardinals,Away,L,66.0,68.0,-2.0
+Carroll (WI) Pioneers,"Fri, Dec 20",UMass Dartmouth Corsairs,Neutral Court,W,70.0,69.0,1.0
+Carroll (WI) Pioneers,"Sat, Dec 21",Widener Pride,Neutral Court,W,78.0,75.0,3.0
+Carroll (WI) Pioneers,"Mon, Dec 30",Beloit Buccaneers,Away,L,62.0,66.0,-4.0
+Carroll (WI) Pioneers,"Sat, Jan 4",Millikin Big Blue,Away,L,66.0,81.0,-15.0
+Carroll (WI) Pioneers,"Sat, Jan 11",Wheaton (IL) Thunder,Home,W,74.0,58.0,16.0
+Carroll (WI) Pioneers,"Wed, Jan 15",Elmhurst Bluejays,Home,W,84.0,77.0,7.0
+Carroll (WI) Pioneers,"Sat, Jan 18",Augustana (IL) Vikings,Away,L,77.0,85.0,-8.0
+Carroll (WI) Pioneers,"Wed, Jan 22",Carthage Firebirds,Away,L,68.0,88.0,-20.0
+Carroll (WI) Pioneers,"Wed, Jan 29",Illinois Wesleyan Titans,Away,L,78.0,81.0,-3.0
+Carroll (WI) Pioneers,"Sat, Feb 1",Millikin Big Blue,Home,L,62.0,64.0,-2.0
+Carroll (WI) Pioneers,"Wed, Feb 5",Carthage Firebirds,Home,L,75.0,84.0,-9.0
+Carroll (WI) Pioneers,"Sat, Feb 8",Wheaton (IL) Thunder,Away,L,81.0,91.0,-10.0
+Carroll (WI) Pioneers,"Tue, Feb 11",North Park Vikings,Away,W,90.0,84.0,6.0
+Carroll (WI) Pioneers,"Sat, Feb 15",Augustana (IL) Vikings,Home,W,81.0,71.0,10.0
+Carroll (WI) Pioneers,"Wed, Feb 19",North Central (IL) Cardinals,Home,L,76.0,80.0,-4.0
+Carroll (WI) Pioneers,"Sat, Feb 22",Elmhurst Bluejays,Away,W,83.0,68.0,15.0
 Cornell College Rams,"Fri, Nov 8",Coe Kohawks,Home,L,78.0,90.0,-12.0
 Cornell College Rams,"Wed, Nov 13",Eureka Red Devils,Home,W,78.0,72.0,6.0
 Cornell College Rams,"Fri, Nov 15",UW-Whitewater Warhawks,Neutral Court,W,75.0,73.0,2.0
 Cornell College Rams,"Sat, Nov 16",Wartburg Knights,Away,W,98.0,94.0,4.0
+Cornell College Rams,"Wed, Nov 20",Coe Kohawks,Away,W,74.0,71.0,3.0
+Cornell College Rams,"Sat, Nov 23",Central (IA) Dutch,Home,L,61.0,102.0,-41.0
+Cornell College Rams,"Wed, Dec 4",Illinois College Blueboys,Away,W,71.0,67.0,4.0
+Cornell College Rams,"Sat, Dec 7",Lake Forest Foresters,Home,W,79.0,77.0,2.0
+Cornell College Rams,"Wed, Dec 11",Grinnell Pioneers,Home,L,93.0,105.0,-12.0
+Cornell College Rams,"Sat, Dec 14",Beloit Buccaneers,Away,W,85.0,71.0,14.0
+Cornell College Rams,"Thu, Dec 19",Simpson Storm,Away,W,79.0,71.0,8.0
+Cornell College Rams,"Sat, Dec 28",North Park Vikings,Home,L,74.0,106.0,-32.0
+Cornell College Rams,"Tue, Dec 31",Wartburg Knights,Away,W,79.0,71.0,8.0
+Cornell College Rams,"Sat, Jan 11",Lake Forest Foresters,Away,L,72.0,95.0,-23.0
+Cornell College Rams,"Tue, Jan 14",Monmouth (IL) Fighting Scots,Home,W,82.0,65.0,17.0
+Cornell College Rams,"Sat, Jan 18",Lawrence Vikings,Home,W,82.0,73.0,9.0
+Cornell College Rams,"Wed, Jan 22",Knox Prairie Fire,Away,W,82.0,69.0,13.0
+Cornell College Rams,"Tue, Jan 28",Illinois College Blueboys,Home,L,70.0,73.0,-3.0
+Cornell College Rams,"Sat, Feb 1",Ripon Red Hawks,Home,W,64.0,58.0,6.0
+Cornell College Rams,"Wed, Feb 5",Grinnell Pioneers,Away,L,94.0,114.0,-20.0
+Cornell College Rams,"Sat, Feb 8",Beloit Buccaneers,Home,L,62.0,67.0,-5.0
+Cornell College Rams,"Tue, Feb 11",Ripon Red Hawks,Away,L,50.0,55.0,-5.0
+Cornell College Rams,"Sat, Feb 15",Lawrence Vikings,Away,W,84.0,78.0,6.0
+Cornell College Rams,"Wed, Feb 19",Monmouth (IL) Fighting Scots,Away,L,65.0,81.0,-16.0
+Cornell College Rams,"Sat, Feb 22",Knox Prairie Fire,Home,W,98.0,68.0,30.0
 St. Olaf Oles,"Wed, Oct 30",Southwest Minnesota St. Mustangs EXH,Away,L,40.0,91.0,-51.0
 St. Olaf Oles,"Fri, Nov 8",UW-Stout Blue Devils,Neutral Court,W,61.0,56.0,5.0
 St. Olaf Oles,"Sat, Nov 9",Wisconsin-Superior Yellowjackets,Away,L,54.0,82.0,-28.0
 St. Olaf Oles,"Fri, Nov 15",Wartburg Knights,Away,L,60.0,73.0,-13.0
 St. Olaf Oles,"Sat, Nov 16",UW-Whitewater Warhawks,Neutral Court,L,80.0,83.0,-3.0
+St. Olaf Oles,"Wed, Nov 20",UW-River Falls Falcons,Home,L,50.0,69.0,-19.0
+St. Olaf Oles,"Sat, Nov 23",Northwestern-St. Paul Eagles,Away,L,58.0,85.0,-27.0
+St. Olaf Oles,"Tue, Nov 26",UW-Eau Claire Blugolds,Home,L,56.0,66.0,-10.0
+St. Olaf Oles,"Sun, Dec 1",UW-Stevens Point Pointers,Away,L,50.0,72.0,-22.0
+St. Olaf Oles,"Wed, Dec 4",Saint John's (MN) Johnnies,Away,L,60.0,75.0,-15.0
+St. Olaf Oles,"Wed, Dec 11",Gustavus Adolphus Golden Gusties,Away,L,49.0,82.0,-33.0
+St. Olaf Oles,"Sat, Jan 4",Bethel (MN) Royals,Home,L,60.0,66.0,-6.0
+St. Olaf Oles,"Mon, Jan 6",Carleton Knights,Away,L,57.0,66.0,-9.0
+St. Olaf Oles,"Wed, Jan 8",St. Scholastica Saints,Away,L,62.0,81.0,-19.0
+St. Olaf Oles,"Sat, Jan 11",Concordia-Moorhead Cobbers,Home,L,56.0,82.0,-26.0
+St. Olaf Oles,"Wed, Jan 15",Hamline Pipers,Home,L,57.0,63.0,-6.0
+St. Olaf Oles,"Sat, Jan 18",Augsburg Auggies,Away,L,67.0,75.0,-8.0
+St. Olaf Oles,"Wed, Jan 22",Saint Mary's (MN) Cardinals,Away,W,78.0,67.0,11.0
+St. Olaf Oles,"Sat, Jan 25",Carleton Knights,Home,L,63.0,68.0,-5.0
+St. Olaf Oles,"Wed, Jan 29",Saint John's (MN) Johnnies,Home,L,54.0,78.0,-24.0
+St. Olaf Oles,"Wed, Feb 5",Concordia-Moorhead Cobbers,Away,L,56.0,81.0,-25.0
+St. Olaf Oles,"Sat, Feb 8",Augsburg Auggies,Home,L,70.0,71.0,-1.0
+St. Olaf Oles,"Wed, Feb 12",Gustavus Adolphus Golden Gusties,Home,L,55.0,83.0,-28.0
+St. Olaf Oles,"Sat, Feb 15",Macalester Scots,Away,W,75.0,58.0,17.0
+St. Olaf Oles,"Wed, Feb 19",Saint Mary's (MN) Cardinals,Home,W,77.0,74.0,3.0
+St. Olaf Oles,"Sat, Feb 22",Hamline Pipers,Away,L,64.0,87.0,-23.0
 Aurora Spartans,"Fri, Nov 8",Dubuque Spartans,Home,L,76.0,88.0,-12.0
 Aurora Spartans,"Tue, Nov 12",North Central (IL) Cardinals,Home,L,71.0,78.0,-7.0
 Aurora Spartans,"Sat, Nov 16",MSOE Raiders,Away,W,86.0,82.0,4.0
+Aurora Spartans,"Wed, Nov 20",UW-Whitewater Warhawks,Home,L,72.0,75.0,-3.0
+Aurora Spartans,"Tue, Nov 26",Millikin Big Blue,Away,L,45.0,49.0,-4.0
+Aurora Spartans,"Sat, Nov 30",UIC Flames,Away,L,76.0,91.0,-15.0
+Aurora Spartans,"Wed, Dec 4",Concordia Wisconsin Falcons,Home,W,75.0,68.0,7.0
+Aurora Spartans,"Sat, Dec 7",St. Norbert Green Knights,Away,L,63.0,74.0,-11.0
+Aurora Spartans,"Sat, Dec 14",Marian (WI) Sabres,Away,L,64.0,72.0,-8.0
+Aurora Spartans,"Tue, Dec 17",Albion Britons,Away,W,60.0,58.0,2.0
+Aurora Spartans,"Mon, Dec 30",Monmouth (IL) Fighting Scots,Home,W,74.0,71.0,3.0
+Aurora Spartans,"Sat, Jan 4",Concordia Chicago Cougars,Away,L,64.0,67.0,-3.0
+Aurora Spartans,"Wed, Jan 8",Dominican (IL) Stars,Home,W,98.0,64.0,34.0
+Aurora Spartans,"Sat, Jan 11",Marian (WI) Sabres,Home,L,67.0,68.0,-1.0
+Aurora Spartans,"Wed, Jan 15",Edgewood Eagles,Home,W,96.0,66.0,30.0
+Aurora Spartans,"Sat, Jan 18",St. Norbert Green Knights,Home,W,76.0,62.0,14.0
+Aurora Spartans,"Wed, Jan 22",Rockford Regents,Home,W,102.0,90.0,12.0
+Aurora Spartans,"Sat, Jan 25",Wisconsin Lutheran Warriors,Away,L,78.0,91.0,-13.0
+Aurora Spartans,"Wed, Jan 29",Benedictine (IL) Eagles,Away,L,73.0,75.0,-2.0
+Aurora Spartans,"Wed, Feb 5",Illinois Tech Scarlet Hawks,Away,W,96.0,54.0,42.0
+Aurora Spartans,"Sat, Feb 8",MSOE Raiders,Home,L,86.0,94.0,-8.0
+Aurora Spartans,"Thu, Feb 13",Concordia Chicago Cougars,Home,L,69.0,74.0,-5.0
+Aurora Spartans,"Sat, Feb 15",Concordia Wisconsin Falcons,Away,W,67.0,66.0,1.0
+Aurora Spartans,"Wed, Feb 19",Lakeland Muskies,Home,W,109.0,60.0,49.0
+Aurora Spartans,"Sat, Feb 22",Dominican (IL) Stars,Away,L,97.0,101.0,-4.0
+Aurora Spartans,"Wed, Feb 26",St. Norbert Green Knights,Away,L,72.0,83.0,-11.0
+Coe Kohawks,"Fri, Nov 8",Cornell College Rams,Away,W,90.0,78.0,12.0
+Coe Kohawks,"Tue, Nov 12",Augustana (IL) Vikings,Away,L,70.0,82.0,-12.0
+Coe Kohawks,"Wed, Nov 20",Cornell College Rams,Home,L,71.0,74.0,-3.0
+Coe Kohawks,"Sat, Nov 23",UW-Whitewater Warhawks,Away,W,74.0,60.0,14.0
+Coe Kohawks,"Tue, Nov 26",Loras Duhawks,Away,L,74.0,90.0,-16.0
+Coe Kohawks,"Sat, Nov 30",Edgewood Eagles,Away,W,64.0,63.0,1.0
+Coe Kohawks,"Wed, Dec 4",Simpson Storm,Home,W,79.0,51.0,28.0
+Coe Kohawks,"Sat, Dec 7",Buena Vista Beavers,Away,L,60.0,63.0,-3.0
+Coe Kohawks,"Mon, Dec 16",North Central (MN) Rams,Away,W,80.0,69.0,11.0
+Coe Kohawks,"Fri, Dec 20",Knox Prairie Fire,Home,W,83.0,70.0,13.0
+Coe Kohawks,"Sat, Dec 21",MSOE Raiders,Home,W,69.0,65.0,4.0
+Coe Kohawks,"Mon, Dec 30",Gustavus Adolphus Golden Gusties,Home,L,75.0,78.0,-3.0
+Coe Kohawks,"Sat, Jan 4",Central (IA) Dutch,Home,W,88.0,74.0,14.0
+Coe Kohawks,"Wed, Jan 8",Luther Norse,Home,W,65.0,53.0,12.0
+Coe Kohawks,"Wed, Jan 15",Dubuque Spartans,Away,L,69.0,77.0,-8.0
+Coe Kohawks,"Sat, Jan 18",Nebraska Wesleyan Prairie Wolves,Away,L,59.0,71.0,-12.0
+Coe Kohawks,"Wed, Jan 22",Wartburg Knights,Home,W,79.0,69.0,10.0
+Coe Kohawks,"Sat, Jan 25",Buena Vista Beavers,Home,W,64.0,60.0,4.0
+Coe Kohawks,"Wed, Jan 29",Loras Duhawks,Home,W,100.0,95.0,5.0
+Coe Kohawks,"Sat, Feb 1",Central (IA) Dutch,Away,L,73.0,75.0,-2.0
+Coe Kohawks,"Wed, Feb 5",Simpson Storm,Away,L,78.0,83.0,-5.0
+Coe Kohawks,"Thu, Feb 13",Luther Norse,Away,W,60.0,53.0,7.0
+Coe Kohawks,"Sat, Feb 15",Nebraska Wesleyan Prairie Wolves,Home,W,77.0,75.0,2.0
+Coe Kohawks,"Wed, Feb 19",Dubuque Spartans,Home,L,75.0,78.0,-3.0
+Coe Kohawks,"Sat, Feb 22",Wartburg Knights,Away,L,61.0,80.0,-19.0
+Coe Kohawks,"Tue, Feb 25",Central (IA) Dutch,Away,L,83.0,99.0,-16.0
+Carthage Firebirds,"Tue, Nov 12",Illinois Tech Scarlet Hawks,Away,W,82.0,56.0,26.0
+Carthage Firebirds,"Sat, Nov 16",Alma Scots,Home,W,89.0,56.0,33.0
+Carthage Firebirds,"Wed, Nov 20",UW-Platteville Pioneers,Away,L,72.0,85.0,-13.0
+Carthage Firebirds,"Sat, Nov 23",Anderson (IN) Ravens,Away,L,74.0,88.0,-14.0
+Carthage Firebirds,"Tue, Nov 26",Ripon Red Hawks,Home,W,76.0,66.0,10.0
+Carthage Firebirds,"Sat, Nov 30",UW-Whitewater Warhawks,Away,W,69.0,63.0,6.0
+Carthage Firebirds,"Wed, Dec 4",Illinois Wesleyan Titans,Away,W,77.0,68.0,9.0
+Carthage Firebirds,"Sat, Dec 7",Knox Prairie Fire,Home,W,95.0,69.0,26.0
+Carthage Firebirds,"Sat, Dec 14",Augustana (IL) Vikings,Away,W,82.0,70.0,12.0
+Carthage Firebirds,"Thu, Dec 19",Chatham Cougars,Neutral Court,L,60.0,62.0,-2.0
+Carthage Firebirds,"Fri, Dec 20",Spalding Golden Eagles,Neutral Court,W,86.0,64.0,22.0
+Carthage Firebirds,"Sat, Jan 4",North Park Vikings,Home,L,68.0,69.0,-1.0
+Carthage Firebirds,"Wed, Jan 8",Elmhurst Bluejays,Away,W,75.0,71.0,4.0
+Carthage Firebirds,"Sat, Jan 11",Millikin Big Blue,Home,W,64.0,55.0,9.0
+Carthage Firebirds,"Wed, Jan 15",North Central (IL) Cardinals,Home,W,93.0,78.0,15.0
+Carthage Firebirds,"Sat, Jan 18",Wheaton (IL) Thunder,Away,W,85.0,78.0,7.0
+Carthage Firebirds,"Wed, Jan 22",Carroll (WI) Pioneers,Home,W,88.0,68.0,20.0
+Carthage Firebirds,"Sat, Jan 25",Augustana (IL) Vikings,Home,W,77.0,69.0,8.0
+Carthage Firebirds,"Sat, Feb 1",North Park Vikings,Away,L,82.0,93.0,-11.0
+Carthage Firebirds,"Wed, Feb 5",Carroll (WI) Pioneers,Away,W,84.0,75.0,9.0
+Carthage Firebirds,"Sat, Feb 8",Illinois Wesleyan Titans,Home,W,85.0,74.0,11.0
+Carthage Firebirds,"Wed, Feb 12",North Central (IL) Cardinals,Away,W,73.0,71.0,2.0
+Carthage Firebirds,"Sat, Feb 15",Wheaton (IL) Thunder,Home,W,89.0,80.0,9.0
+Carthage Firebirds,"Wed, Feb 19",Elmhurst Bluejays,Home,W,83.0,71.0,12.0
+Carthage Firebirds,"Sat, Feb 22",Millikin Big Blue,Away,W,84.0,77.0,7.0
+Hope Flying Dutchmen,"Fri, Nov 8",Anderson (IN) Ravens,Home,L,78.0,80.0,-2.0
+Hope Flying Dutchmen,"Fri, Nov 15",Wilmington (OH) Fightin' Quakers,Away,W,74.0,64.0,10.0
+Hope Flying Dutchmen,"Sat, Nov 16",Wittenberg Tigers,Away,W,68.0,63.0,5.0
+Hope Flying Dutchmen,"Fri, Nov 22",Saint John's (MN) Johnnies,Neutral Court,L,48.0,64.0,-16.0
+Hope Flying Dutchmen,"Sat, Nov 23",Marietta Pioneers,Neutral Court,L,71.0,96.0,-25.0
+Hope Flying Dutchmen,"Tue, Nov 26",Wheaton (IL) Thunder,Away,W,73.0,46.0,27.0
+Hope Flying Dutchmen,"Fri, Dec 6",UW-Whitewater Warhawks,Away,L,83.0,90.0,-7.0
+Hope Flying Dutchmen,"Sat, Dec 7",UW-Platteville Pioneers,Away,L,64.0,71.0,-7.0
+Hope Flying Dutchmen,"Sat, Dec 14",Ohio Wesleyan Battling Bishops,Home,W,79.0,69.0,10.0
+Hope Flying Dutchmen,"Fri, Dec 20",Rose-Hulman Fightin' Engineers,Home,W,69.0,64.0,5.0
+Hope Flying Dutchmen,"Sat, Dec 21",DePauw Tigers,Home,L,71.0,75.0,-4.0
+Hope Flying Dutchmen,"Wed, Jan 8",Olivet Comets,Home,W,77.0,45.0,32.0
+Hope Flying Dutchmen,"Sat, Jan 11",Alma Scots,Home,W,95.0,46.0,49.0
+Hope Flying Dutchmen,"Wed, Jan 15",Kalamazoo Hornets,Away,W,81.0,71.0,10.0
+Hope Flying Dutchmen,"Sat, Jan 18",Adrian Bulldogs,Home,W,61.0,53.0,8.0
+Hope Flying Dutchmen,"Wed, Jan 22",Calvin Knights,Home,L,60.0,65.0,-5.0
+Hope Flying Dutchmen,"Sat, Jan 25",Trine Thunder,Away,L,54.0,77.0,-23.0
+Hope Flying Dutchmen,"Wed, Jan 29",Albion Britons,Away,L,74.0,76.0,-2.0
+Hope Flying Dutchmen,"Sat, Feb 1",Calvin Knights,Away,L,60.0,68.0,-8.0
+Hope Flying Dutchmen,"Wed, Feb 5",Trine Thunder,Home,W,79.0,71.0,8.0
+Hope Flying Dutchmen,"Sat, Feb 8",Kalamazoo Hornets,Home,W,78.0,67.0,11.0
+Hope Flying Dutchmen,"Wed, Feb 12",Adrian Bulldogs,Away,W,80.0,57.0,23.0
+Hope Flying Dutchmen,"Sat, Feb 15",Alma Scots,Away,W,77.0,54.0,23.0
+Hope Flying Dutchmen,"Wed, Feb 19",Olivet Comets,Away,L,52.0,66.0,-14.0
+Hope Flying Dutchmen,"Sat, Feb 22",Albion Britons,Home,W,81.0,56.0,25.0
+Hope Flying Dutchmen,"Wed, Feb 26",Adrian Bulldogs,Home,W,81.0,55.0,26.0
+Averett Cougars,"Sat, Nov 2",High Point Panthers EXH,Away,L,57.0,85.0,-28.0
+Averett Cougars,"Sat, Nov 9",Maryville (TN) Scots,Away,W,85.0,79.0,6.0
+Averett Cougars,"Tue, Nov 12",Southern Virginia Knights,Home,W,79.0,70.0,9.0
+Averett Cougars,"Wed, Nov 20",William Peace Pacers,Away,W,60.0,48.0,12.0
+Averett Cougars,"Sat, Nov 23",Greensboro Pride,Away,W,74.0,59.0,15.0
+Averett Cougars,"Mon, Nov 25",Christopher Newport Captains,Home,W,80.0,65.0,15.0
+Averett Cougars,"Wed, Nov 27",Winthrop Eagles EXH,Away,L,56.0,99.0,-43.0
+Averett Cougars,"Wed, Dec 4",Ferrum Panthers,Away,L,54.0,66.0,-12.0
+Averett Cougars,"Sat, Dec 7",Virginia Wesleyan Marlins,Home,L,50.0,67.0,-17.0
+Averett Cougars,"Sat, Dec 14",UW-Whitewater Warhawks,Neutral Court,L,47.0,58.0,-11.0
+Averett Cougars,"Sun, Dec 15",North Carolina Wesleyan Battling Bishops,Neutral Court,L,58.0,65.0,-7.0
+Averett Cougars,"Thu, Dec 19",Mary Washington Eagles,Away,L,44.0,78.0,-34.0
+Averett Cougars,"Tue, Dec 31",Pfeiffer Falcons,Home,L,52.0,62.0,-10.0
+Averett Cougars,"Sat, Jan 4",Randolph-Macon Yellow Jackets,Away,L,54.0,77.0,-23.0
+Averett Cougars,"Wed, Jan 8",Roanoke Maroons,Home,L,55.0,75.0,-20.0
+Averett Cougars,"Fri, Jan 10",Randolph WildCats,Away,W,89.0,82.0,7.0
+Averett Cougars,"Wed, Jan 15",Shenandoah Hornets,Home,W,85.0,60.0,25.0
+Averett Cougars,"Sat, Jan 18",Bridgewater (VA) Eagles,Away,L,53.0,72.0,-19.0
+Averett Cougars,"Wed, Jan 22",Lynchburg Hornets,Home,L,57.0,87.0,-30.0
+Averett Cougars,"Sat, Jan 25",Eastern Mennonite Royals,Home,W,86.0,66.0,20.0
+Averett Cougars,"Wed, Jan 29",Hampden-Sydney Tigers,Away,L,64.0,88.0,-24.0
+Averett Cougars,"Sat, Feb 1",Guilford Quakers,Home,L,71.0,91.0,-20.0
+Averett Cougars,"Sat, Feb 8",Ferrum Panthers,Home,L,54.0,68.0,-14.0
+Averett Cougars,"Wed, Feb 12",Virginia Wesleyan Marlins,Away,L,53.0,70.0,-17.0
+Averett Cougars,"Sat, Feb 15",Randolph WildCats,Home,L,95.0,97.0,-2.0
+Averett Cougars,"Tue, Feb 18",Washington & Lee Generals,Away,L,75.0,78.0,-3.0
+Averett Cougars,"Sat, Feb 22",Guilford Quakers,Away,L,71.0,81.0,-10.0
+Virginia Wesleyan Marlins,"Fri, Nov 8",Ripon Red Hawks,Home,W,79.0,36.0,43.0
+Virginia Wesleyan Marlins,"Sat, Nov 9",Mary Washington Eagles,Home,W,65.0,48.0,17.0
+Virginia Wesleyan Marlins,"Wed, Nov 13",Christopher Newport Captains,Home,L,72.0,74.0,-2.0
+Virginia Wesleyan Marlins,"Sat, Nov 23",Regent Royals,Home,W,98.0,67.0,31.0
+Virginia Wesleyan Marlins,"Tue, Nov 26",Salisbury Sea Gulls,Home,L,69.0,72.0,-3.0
+Virginia Wesleyan Marlins,"Wed, Dec 4",Eastern Mennonite Royals,Home,W,63.0,52.0,11.0
+Virginia Wesleyan Marlins,"Sat, Dec 7",Averett Cougars,Away,W,67.0,50.0,17.0
+Virginia Wesleyan Marlins,"Wed, Dec 11",Ferrum Panthers,Home,W,65.0,45.0,20.0
+Virginia Wesleyan Marlins,"Sat, Dec 14",North Carolina Wesleyan Battling Bishops,Home,W,88.0,74.0,14.0
+Virginia Wesleyan Marlins,"Sun, Dec 15",UW-Whitewater Warhawks,Home,W,61.0,58.0,3.0
+Virginia Wesleyan Marlins,"Sat, Dec 28",Old Dominion Monarchs EXH,Away,L,44.0,82.0,-38.0
+Virginia Wesleyan Marlins,"Mon, Dec 30",Franklin & Marshall Diplomats,Away,W,70.0,66.0,4.0
+Virginia Wesleyan Marlins,"Sat, Jan 4",Salisbury Sea Gulls,Away,W,61.0,56.0,5.0
+Virginia Wesleyan Marlins,"Wed, Jan 8",Washington & Lee Generals,Home,W,62.0,38.0,24.0
+Virginia Wesleyan Marlins,"Sat, Jan 11",Roanoke Maroons,Away,L,67.0,77.0,-10.0
+Virginia Wesleyan Marlins,"Wed, Jan 15",Guilford Quakers,Away,W,69.0,50.0,19.0
+Virginia Wesleyan Marlins,"Sat, Jan 18",Lynchburg Hornets,Home,W,97.0,59.0,38.0
+Virginia Wesleyan Marlins,"Wed, Jan 22",Shenandoah Hornets,Away,W,88.0,62.0,26.0
+Virginia Wesleyan Marlins,"Sat, Jan 25",Bridgewater (VA) Eagles,Away,W,62.0,59.0,3.0
+Virginia Wesleyan Marlins,"Wed, Jan 29",Randolph-Macon Yellow Jackets,Home,L,49.0,56.0,-7.0
+Virginia Wesleyan Marlins,"Sat, Feb 1",Randolph WildCats,Home,W,96.0,72.0,24.0
+Virginia Wesleyan Marlins,"Wed, Feb 5",Hampden-Sydney Tigers,Away,L,47.0,66.0,-19.0
+Virginia Wesleyan Marlins,"Wed, Feb 12",Averett Cougars,Home,W,70.0,53.0,17.0
+Virginia Wesleyan Marlins,"Sat, Feb 15",Bridgewater (VA) Eagles,Home,W,111.0,60.0,51.0
+Virginia Wesleyan Marlins,"Tue, Feb 18",Randolph-Macon Yellow Jackets,Away,L,59.0,80.0,-21.0
+Virginia Wesleyan Marlins,"Sat, Feb 22",Lynchburg Hornets,Away,W,75.0,66.0,9.0
+Virginia Wesleyan Marlins,"Wed, Feb 26",Guilford Quakers,Home,L,61.0,74.0,-13.0
+Simpson Storm,"Sat, Nov 9",Olivet Comets,Neutral Court,L,55.0,71.0,-16.0
+Simpson Storm,"Sun, Nov 10",St. Scholastica Saints,Neutral Court,W,87.0,85.0,2.0
+Simpson Storm,"Fri, Nov 15",Augsburg Auggies,Home,L,59.0,74.0,-15.0
+Simpson Storm,"Sat, Nov 16",Saint John's (MN) Johnnies,Home,L,52.0,75.0,-23.0
+Simpson Storm,"Sat, Nov 23",Gustavus Adolphus Golden Gusties,Away,L,66.0,77.0,-11.0
+Simpson Storm,"Tue, Nov 26",Central (IA) Dutch,Home,L,79.0,100.0,-21.0
+Simpson Storm,"Wed, Dec 4",Coe Kohawks,Away,L,51.0,79.0,-28.0
+Simpson Storm,"Sat, Dec 7",Dubuque Spartans,Home,L,67.0,81.0,-14.0
+Simpson Storm,"Sun, Dec 15",Bethany Lutheran Vikings,Away,W,95.0,89.0,6.0
+Simpson Storm,"Thu, Dec 19",Cornell College Rams,Home,L,71.0,79.0,-8.0
+Simpson Storm,"Sat, Dec 21",UW-Whitewater Warhawks,Home,W,87.0,71.0,16.0
+Simpson Storm,"Tue, Dec 31",Knox Prairie Fire,Away,L,73.0,74.0,-1.0
+Simpson Storm,"Sat, Jan 4",Wartburg Knights,Home,L,70.0,82.0,-12.0
+Simpson Storm,"Wed, Jan 8",Nebraska Wesleyan Prairie Wolves,Home,L,60.0,81.0,-21.0
+Simpson Storm,"Sat, Jan 11",Luther Norse,Away,W,61.0,57.0,4.0
+Simpson Storm,"Wed, Jan 15",Buena Vista Beavers,Away,L,75.0,98.0,-23.0
+Simpson Storm,"Sat, Jan 18",Loras Duhawks,Home,L,72.0,100.0,-28.0
+Simpson Storm,"Sat, Jan 25",Dubuque Spartans,Away,L,71.0,95.0,-24.0
+Simpson Storm,"Wed, Jan 29",Central (IA) Dutch,Away,L,60.0,85.0,-25.0
+Simpson Storm,"Sat, Feb 1",Wartburg Knights,Away,L,63.0,85.0,-22.0
+Simpson Storm,"Wed, Feb 5",Coe Kohawks,Home,W,83.0,78.0,5.0
+Simpson Storm,"Sat, Feb 8",Luther Norse,Home,L,53.0,63.0,-10.0
+Simpson Storm,"Thu, Feb 13",Nebraska Wesleyan Prairie Wolves,Away,L,54.0,82.0,-28.0
+Simpson Storm,"Sun, Feb 16",Loras Duhawks,Away,L,56.0,86.0,-30.0
+Simpson Storm,"Wed, Feb 19",Buena Vista Beavers,Home,L,57.0,77.0,-20.0
+Ripon Red Hawks,"Fri, Nov 8",Virginia Wesleyan Marlins,Away,L,36.0,79.0,-43.0
+Ripon Red Hawks,"Sat, Nov 9",Kean Cougars,Neutral Court,W,55.0,47.0,8.0
+Ripon Red Hawks,"Sat, Nov 16",Lakeland Muskies,Away,W,75.0,63.0,12.0
+Ripon Red Hawks,"Wed, Nov 20",St. Norbert Green Knights,Home,L,59.0,67.0,-8.0
+Ripon Red Hawks,"Tue, Nov 26",Carthage Firebirds,Away,L,66.0,76.0,-10.0
+Ripon Red Hawks,"Sat, Nov 30",Wisconsin-Superior Yellowjackets,Home,W,60.0,49.0,11.0
+Ripon Red Hawks,"Tue, Dec 3",UW-Oshkosh Titans,Home,L,83.0,91.0,-8.0
+Ripon Red Hawks,"Sat, Dec 7",Illinois College Blueboys,Away,L,52.0,65.0,-13.0
+Ripon Red Hawks,"Sat, Dec 14",Knox Prairie Fire,Home,W,74.0,63.0,11.0
+Ripon Red Hawks,"Sat, Dec 21",UW-La Crosse Eagles,Away,L,74.0,86.0,-12.0
+Ripon Red Hawks,"Tue, Dec 31",UW-Whitewater Warhawks,Away,L,70.0,81.0,-11.0
+Ripon Red Hawks,"Sat, Jan 4",Beloit Buccaneers,Home,L,44.0,65.0,-21.0
+Ripon Red Hawks,"Wed, Jan 8",Grinnell Pioneers,Away,L,97.0,99.0,-2.0
+Ripon Red Hawks,"Sat, Jan 11",Illinois College Blueboys,Home,W,74.0,62.0,12.0
+Ripon Red Hawks,"Tue, Jan 14",Lake Forest Foresters,Home,W,74.0,58.0,16.0
+Ripon Red Hawks,"Sat, Jan 18",Monmouth (IL) Fighting Scots,Away,L,71.0,84.0,-13.0
+Ripon Red Hawks,"Wed, Jan 22",Lawrence Vikings,Away,W,63.0,61.0,2.0
+Ripon Red Hawks,"Sat, Jan 25",Grinnell Pioneers,Home,W,102.0,85.0,17.0
+Ripon Red Hawks,"Sat, Feb 1",Cornell College Rams,Away,L,58.0,64.0,-6.0
+Ripon Red Hawks,"Wed, Feb 5",Beloit Buccaneers,Away,W,72.0,60.0,12.0
+Ripon Red Hawks,"Sat, Feb 8",Knox Prairie Fire,Away,W,78.0,55.0,23.0
+Ripon Red Hawks,"Tue, Feb 11",Cornell College Rams,Home,W,55.0,50.0,5.0
+Ripon Red Hawks,"Sat, Feb 15",Monmouth (IL) Fighting Scots,Home,L,73.0,78.0,-5.0
+Ripon Red Hawks,"Wed, Feb 19",Lake Forest Foresters,Away,L,57.0,64.0,-7.0
+Ripon Red Hawks,"Sat, Feb 22",Lawrence Vikings,Home,W,56.0,50.0,6.0
+UW-River Falls Falcons,"Wed, Oct 30",Wisconsin Badgers EXH,Away,L,62.0,78.0,-16.0
+UW-River Falls Falcons,"Wed, Nov 13",Macalester Scots,Away,L,70.0,74.0,-4.0
+UW-River Falls Falcons,"Sat, Nov 16",Crown (MN) Storm,Home,L,56.0,65.0,-9.0
+UW-River Falls Falcons,"Wed, Nov 20",St. Olaf Oles,Away,W,69.0,50.0,19.0
+UW-River Falls Falcons,"Sat, Nov 23",Saint Mary's (MN) Cardinals,Home,W,84.0,56.0,28.0
+UW-River Falls Falcons,"Tue, Nov 26",Concordia-Moorhead Cobbers,Home,W,68.0,59.0,9.0
+UW-River Falls Falcons,"Sat, Nov 30",Carleton Knights,Away,L,67.0,72.0,-5.0
+UW-River Falls Falcons,"Wed, Dec 11",North Central (MN) Rams,Away,W,72.0,61.0,11.0
+UW-River Falls Falcons,"Sat, Dec 14",Gustavus Adolphus Golden Gusties,Away,L,53.0,73.0,-20.0
+UW-River Falls Falcons,"Thu, Dec 19",Hamline Pipers,Home,L,45.0,58.0,-13.0
+UW-River Falls Falcons,"Mon, Dec 30",St. Scholastica Saints,Home,W,80.0,57.0,23.0
+UW-River Falls Falcons,"Tue, Dec 31",Wisconsin-Superior Yellowjackets,Home,W,59.0,51.0,8.0
+UW-River Falls Falcons,"Sat, Jan 4",UW-Whitewater Warhawks,Away,L,69.0,88.0,-19.0
+UW-River Falls Falcons,"Wed, Jan 8",UW-Stout Blue Devils,Home,L,64.0,66.0,-2.0
+UW-River Falls Falcons,"Sat, Jan 11",UW-Eau Claire Blugolds,Away,W,67.0,65.0,2.0
+UW-River Falls Falcons,"Wed, Jan 15",UW-Stevens Point Pointers,Home,L,53.0,55.0,-2.0
+UW-River Falls Falcons,"Sat, Jan 18",UW-Platteville Pioneers,Home,L,66.0,75.0,-9.0
+UW-River Falls Falcons,"Wed, Jan 22",UW-La Crosse Eagles,Away,L,56.0,77.0,-21.0
+UW-River Falls Falcons,"Sat, Jan 25",UW-Oshkosh Titans,Away,L,68.0,81.0,-13.0
+UW-River Falls Falcons,"Wed, Jan 29",UW-Eau Claire Blugolds,Home,L,58.0,71.0,-13.0
+UW-River Falls Falcons,"Wed, Feb 5",UW-Stevens Point Pointers,Away,L,53.0,62.0,-9.0
+UW-River Falls Falcons,"Sat, Feb 8",UW-Oshkosh Titans,Home,W,76.0,68.0,8.0
+UW-River Falls Falcons,"Wed, Feb 12",UW-Stout Blue Devils,Away,L,81.0,82.0,-1.0
+UW-River Falls Falcons,"Sat, Feb 15",UW-Whitewater Warhawks,Home,W,72.0,66.0,6.0
+UW-River Falls Falcons,"Wed, Feb 19",UW-La Crosse Eagles,Home,L,79.0,86.0,-7.0
+UW-River Falls Falcons,"Sat, Feb 22",UW-Platteville Pioneers,Away,L,44.0,85.0,-41.0
+UW-Stevens Point Pointers,"Sun, Nov 10",Lakeland Muskies,Away,W,91.0,59.0,32.0
+UW-Stevens Point Pointers,"Wed, Nov 13",MSOE Raiders,Home,W,72.0,47.0,25.0
+UW-Stevens Point Pointers,"Sat, Nov 16",Edgewood Eagles,Away,W,71.0,56.0,15.0
+UW-Stevens Point Pointers,"Fri, Nov 22",North Central (MN) Rams,Away,W,65.0,62.0,3.0
+UW-Stevens Point Pointers,"Tue, Nov 26",Northland Lumberjacks,Home,W,77.0,52.0,25.0
+UW-Stevens Point Pointers,"Sun, Dec 1",St. Olaf Oles,Home,W,72.0,50.0,22.0
+UW-Stevens Point Pointers,"Sat, Dec 7",Trine Thunder,Home,W,65.0,62.0,3.0
+UW-Stevens Point Pointers,"Sat, Dec 14",Olivet Comets,Home,W,73.0,36.0,37.0
+UW-Stevens Point Pointers,"Thu, Dec 19",Christopher Newport Captains,Neutral Court,W,70.0,68.0,2.0
+UW-Stevens Point Pointers,"Fri, Dec 20",Randolph-Macon Yellow Jackets,Neutral Court,L,50.0,51.0,-1.0
+UW-Stevens Point Pointers,"Mon, Dec 30",North Park Vikings,Home,W,90.0,73.0,17.0
+UW-Stevens Point Pointers,"Sat, Jan 4",UW-Platteville Pioneers,Home,L,64.0,79.0,-15.0
+UW-Stevens Point Pointers,"Wed, Jan 8",UW-Whitewater Warhawks,Away,W,86.0,67.0,19.0
+UW-Stevens Point Pointers,"Sat, Jan 11",UW-La Crosse Eagles,Home,L,83.0,84.0,-1.0
+UW-Stevens Point Pointers,"Wed, Jan 15",UW-River Falls Falcons,Away,W,55.0,53.0,2.0
+UW-Stevens Point Pointers,"Sat, Jan 18",UW-Stout Blue Devils,Home,W,87.0,83.0,4.0
+UW-Stevens Point Pointers,"Wed, Jan 22",UW-Oshkosh Titans,Home,L,43.0,60.0,-17.0
+UW-Stevens Point Pointers,"Sat, Jan 25",UW-Eau Claire Blugolds,Away,L,66.0,71.0,-5.0
+UW-Stevens Point Pointers,"Wed, Jan 29",UW-Whitewater Warhawks,Home,W,83.0,52.0,31.0
+UW-Stevens Point Pointers,"Wed, Feb 5",UW-River Falls Falcons,Home,W,62.0,53.0,9.0
+UW-Stevens Point Pointers,"Sat, Feb 8",UW-Platteville Pioneers,Away,L,69.0,78.0,-9.0
+UW-Stevens Point Pointers,"Wed, Feb 12",UW-Oshkosh Titans,Away,W,76.0,75.0,1.0
+UW-Stevens Point Pointers,"Sat, Feb 15",UW-Eau Claire Blugolds,Home,L,62.0,66.0,-4.0
+UW-Stevens Point Pointers,"Wed, Feb 19",UW-Stout Blue Devils,Away,W,85.0,57.0,28.0
+UW-Stevens Point Pointers,"Sat, Feb 22",UW-La Crosse Eagles,Away,L,60.0,74.0,-14.0
+UW-Stevens Point Pointers,"Mon, Feb 24",UW-Whitewater Warhawks,Home,W,81.0,79.0,2.0
+UW-Stevens Point Pointers,"Wed, Feb 26",UW-Platteville Pioneers,Away,L,73.0,83.0,-10.0
+UW-Stout Blue Devils,"Fri, Nov 8",St. Olaf Oles,Neutral Court,L,56.0,61.0,-5.0
+UW-Stout Blue Devils,"Sat, Nov 9",Marian (WI) Sabres,Neutral Court,L,67.0,78.0,-11.0
+UW-Stout Blue Devils,"Wed, Nov 13",Hamline Pipers,Home,L,70.0,90.0,-20.0
+UW-Stout Blue Devils,"Sat, Nov 16",Illinois Wesleyan Titans,Home,L,57.0,69.0,-12.0
+UW-Stout Blue Devils,"Sat, Nov 23",Concordia-Moorhead Cobbers,Away,L,61.0,71.0,-10.0
+UW-Stout Blue Devils,"Tue, Nov 26",Macalester Scots,Away,L,72.0,88.0,-16.0
+UW-Stout Blue Devils,"Mon, Dec 2",Saint Mary's (MN) Cardinals,Home,W,83.0,65.0,18.0
+UW-Stout Blue Devils,"Wed, Dec 4",North Central (MN) Rams,Away,W,69.0,65.0,4.0
+UW-Stout Blue Devils,"Wed, Dec 11",Northland Lumberjacks,Away,W,88.0,66.0,22.0
+UW-Stout Blue Devils,"Fri, Dec 13",North Dakota St. Bison EXH,Away,L,62.0,91.0,-29.0
+UW-Stout Blue Devils,"Mon, Dec 30",Wisconsin-Superior Yellowjackets,Neutral Court,W,66.0,65.0,1.0
+UW-Stout Blue Devils,"Tue, Dec 31",St. Scholastica Saints,Neutral Court,L,69.0,79.0,-10.0
+UW-Stout Blue Devils,"Sat, Jan 4",UW-Oshkosh Titans,Home,W,64.0,57.0,7.0
+UW-Stout Blue Devils,"Wed, Jan 8",UW-River Falls Falcons,Away,W,66.0,64.0,2.0
+UW-Stout Blue Devils,"Sat, Jan 11",UW-Whitewater Warhawks,Home,W,62.0,61.0,1.0
+UW-Stout Blue Devils,"Wed, Jan 15",UW-La Crosse Eagles,Home,L,77.0,84.0,-7.0
+UW-Stout Blue Devils,"Sat, Jan 18",UW-Stevens Point Pointers,Away,L,83.0,87.0,-4.0
+UW-Stout Blue Devils,"Wed, Jan 22",UW-Eau Claire Blugolds,Away,L,53.0,81.0,-28.0
+UW-Stout Blue Devils,"Sat, Jan 25",UW-Platteville Pioneers,Home,L,54.0,84.0,-30.0
+UW-Stout Blue Devils,"Wed, Jan 29",UW-La Crosse Eagles,Away,L,53.0,90.0,-37.0
+UW-Stout Blue Devils,"Wed, Feb 5",UW-Eau Claire Blugolds,Home,L,79.0,80.0,-1.0
+UW-Stout Blue Devils,"Sat, Feb 8",UW-Whitewater Warhawks,Away,L,69.0,87.0,-18.0
+UW-Stout Blue Devils,"Wed, Feb 12",UW-River Falls Falcons,Home,W,82.0,81.0,1.0
+UW-Stout Blue Devils,"Sat, Feb 15",UW-Platteville Pioneers,Away,L,58.0,76.0,-18.0
+UW-Stout Blue Devils,"Wed, Feb 19",UW-Stevens Point Pointers,Home,L,57.0,85.0,-28.0
+UW-Stout Blue Devils,"Sat, Feb 22",UW-Oshkosh Titans,Away,L,51.0,75.0,-24.0
+UW-Oshkosh Titans,"Sat, Nov 9",Saint John's (MN) Johnnies,Away,L,62.0,73.0,-11.0
+UW-Oshkosh Titans,"Fri, Nov 15",Calvin Knights,Neutral Court,W,75.0,67.0,8.0
+UW-Oshkosh Titans,"Sat, Nov 16",Manchester Spartans,Neutral Court,W,90.0,84.0,6.0
+UW-Oshkosh Titans,"Wed, Nov 20",Carroll (WI) Pioneers,Home,W,83.0,64.0,19.0
+UW-Oshkosh Titans,"Sat, Nov 23",North Park Vikings,Away,W,87.0,71.0,16.0
+UW-Oshkosh Titans,"Tue, Nov 26",Edgewood Eagles,Home,W,72.0,59.0,13.0
+UW-Oshkosh Titans,"Tue, Dec 3",Ripon Red Hawks,Away,W,91.0,83.0,8.0
+UW-Oshkosh Titans,"Thu, Dec 5",Calvin Knights,Home,W,73.0,69.0,4.0
+UW-Oshkosh Titans,"Sat, Dec 21",St. Norbert Green Knights,Away,L,69.0,85.0,-16.0
+UW-Oshkosh Titans,"Sun, Dec 29",Keene St. Owls,Home,W,105.0,76.0,29.0
+UW-Oshkosh Titans,"Mon, Dec 30",Hamline Pipers,Home,W,74.0,65.0,9.0
+UW-Oshkosh Titans,"Sat, Jan 4",UW-Stout Blue Devils,Away,L,57.0,64.0,-7.0
+UW-Oshkosh Titans,"Wed, Jan 8",UW-Eau Claire Blugolds,Home,L,56.0,69.0,-13.0
+UW-Oshkosh Titans,"Sat, Jan 11",UW-Platteville Pioneers,Away,L,64.0,79.0,-15.0
+UW-Oshkosh Titans,"Wed, Jan 15",UW-Whitewater Warhawks,Home,L,56.0,59.0,-3.0
+UW-Oshkosh Titans,"Sat, Jan 18",UW-La Crosse Eagles,Away,L,62.0,75.0,-13.0
+UW-Oshkosh Titans,"Wed, Jan 22",UW-Stevens Point Pointers,Away,W,60.0,43.0,17.0
+UW-Oshkosh Titans,"Sat, Jan 25",UW-River Falls Falcons,Home,W,81.0,68.0,13.0
+UW-Oshkosh Titans,"Wed, Jan 29",UW-Platteville Pioneers,Home,L,73.0,86.0,-13.0
+UW-Oshkosh Titans,"Wed, Feb 5",UW-Whitewater Warhawks,Away,W,54.0,49.0,5.0
+UW-Oshkosh Titans,"Sat, Feb 8",UW-River Falls Falcons,Away,L,68.0,76.0,-8.0
+UW-Oshkosh Titans,"Wed, Feb 12",UW-Stevens Point Pointers,Home,L,75.0,76.0,-1.0
+UW-Oshkosh Titans,"Sat, Feb 15",UW-La Crosse Eagles,Home,L,69.0,75.0,-6.0
+UW-Oshkosh Titans,"Wed, Feb 19",UW-Eau Claire Blugolds,Away,L,49.0,62.0,-13.0
+UW-Oshkosh Titans,"Sat, Feb 22",UW-Stout Blue Devils,Home,W,75.0,51.0,24.0
+UW-Oshkosh Titans,"Mon, Feb 24",UW-Eau Claire Blugolds,Away,L,56.0,66.0,-10.0
+UW-Eau Claire Blugolds,"Sat, Nov 9",Nebraska Wesleyan Prairie Wolves,Home,W,68.0,64.0,4.0
+UW-Eau Claire Blugolds,"Sun, Nov 10",Gustavus Adolphus Golden Gusties,Home,L,80.0,86.0,-6.0
+UW-Eau Claire Blugolds,"Fri, Nov 15",Marietta Pioneers,Away,L,62.0,64.0,-2.0
+UW-Eau Claire Blugolds,"Sat, Nov 16",Maryville (TN) Scots,Neutral Court,L,64.0,68.0,-4.0
+UW-Eau Claire Blugolds,"Sat, Nov 23",Bethel (MN) Royals,Home,W,73.0,69.0,4.0
+UW-Eau Claire Blugolds,"Tue, Nov 26",St. Olaf Oles,Away,W,66.0,56.0,10.0
+UW-Eau Claire Blugolds,"Sat, Nov 30",St. Norbert Green Knights,Away,W,84.0,75.0,9.0
+UW-Eau Claire Blugolds,"Wed, Dec 4",Crown (MN) Storm,Away,W,77.0,71.0,6.0
+UW-Eau Claire Blugolds,"Sat, Dec 7",Wisconsin-Superior Yellowjackets,Home,W,81.0,75.0,6.0
+UW-Eau Claire Blugolds,"Wed, Dec 11",Northwestern-St. Paul Eagles,Away,W,76.0,58.0,18.0
+UW-Eau Claire Blugolds,"Mon, Dec 30",Carleton Knights,Home,W,76.0,73.0,3.0
+UW-Eau Claire Blugolds,"Sat, Jan 4",UW-La Crosse Eagles,Away,L,55.0,69.0,-14.0
+UW-Eau Claire Blugolds,"Wed, Jan 8",UW-Oshkosh Titans,Away,W,69.0,56.0,13.0
+UW-Eau Claire Blugolds,"Sat, Jan 11",UW-River Falls Falcons,Home,L,65.0,67.0,-2.0
+UW-Eau Claire Blugolds,"Wed, Jan 15",UW-Platteville Pioneers,Away,L,68.0,79.0,-11.0
+UW-Eau Claire Blugolds,"Sat, Jan 18",UW-Whitewater Warhawks,Away,W,99.0,69.0,30.0
+UW-Eau Claire Blugolds,"Wed, Jan 22",UW-Stout Blue Devils,Home,W,81.0,53.0,28.0
+UW-Eau Claire Blugolds,"Sat, Jan 25",UW-Stevens Point Pointers,Home,W,71.0,66.0,5.0
+UW-Eau Claire Blugolds,"Wed, Jan 29",UW-River Falls Falcons,Away,W,71.0,58.0,13.0
+UW-Eau Claire Blugolds,"Wed, Feb 5",UW-Stout Blue Devils,Away,W,80.0,79.0,1.0
+UW-Eau Claire Blugolds,"Sat, Feb 8",UW-La Crosse Eagles,Home,L,55.0,60.0,-5.0
+UW-Eau Claire Blugolds,"Wed, Feb 12",UW-Platteville Pioneers,Home,L,50.0,72.0,-22.0
+UW-Eau Claire Blugolds,"Sat, Feb 15",UW-Stevens Point Pointers,Away,W,66.0,62.0,4.0
+UW-Eau Claire Blugolds,"Wed, Feb 19",UW-Oshkosh Titans,Home,W,62.0,49.0,13.0
+UW-Eau Claire Blugolds,"Sat, Feb 22",UW-Whitewater Warhawks,Home,L,65.0,80.0,-15.0
+UW-Eau Claire Blugolds,"Mon, Feb 24",UW-Oshkosh Titans,Home,W,66.0,56.0,10.0
+UW-Eau Claire Blugolds,"Wed, Feb 26",UW-La Crosse Eagles,Away,L,55.0,69.0,-14.0
+UW-Platteville Pioneers,"Fri, Nov 8",Calvin Knights,Neutral Court,W,82.0,81.0,1.0
+UW-Platteville Pioneers,"Sat, Nov 9",Illinois Wesleyan Titans,Away,L,66.0,86.0,-20.0
+UW-Platteville Pioneers,"Wed, Nov 20",Carthage Firebirds,Home,W,85.0,72.0,13.0
+UW-Platteville Pioneers,"Sat, Nov 23",North Central (IL) Cardinals,Home,W,76.0,69.0,7.0
+UW-Platteville Pioneers,"Tue, Nov 26",Augustana (IL) Vikings,Home,W,77.0,50.0,27.0
+UW-Platteville Pioneers,"Sat, Nov 30",Heidelberg Student Princes,Home,W,87.0,75.0,12.0
+UW-Platteville Pioneers,"Sun, Dec 1",Gustavus Adolphus Golden Gusties,Home,W,65.0,52.0,13.0
+UW-Platteville Pioneers,"Sat, Dec 7",Hope Flying Dutchmen,Home,W,71.0,64.0,7.0
+UW-Platteville Pioneers,"Sat, Dec 14",Central (IA) Dutch,Away,W,87.0,64.0,23.0
+UW-Platteville Pioneers,"Sun, Dec 29",Bethany Lutheran Vikings,Neutral Court,W,101.0,61.0,40.0
+UW-Platteville Pioneers,"Mon, Dec 30",St. Norbert Green Knights,Away,W,60.0,54.0,6.0
+UW-Platteville Pioneers,"Sat, Jan 4",UW-Stevens Point Pointers,Away,W,79.0,64.0,15.0
+UW-Platteville Pioneers,"Wed, Jan 8",UW-La Crosse Eagles,Away,W,83.0,75.0,8.0
+UW-Platteville Pioneers,"Sat, Jan 11",UW-Oshkosh Titans,Home,W,79.0,64.0,15.0
+UW-Platteville Pioneers,"Wed, Jan 15",UW-Eau Claire Blugolds,Home,W,79.0,68.0,11.0
+UW-Platteville Pioneers,"Sat, Jan 18",UW-River Falls Falcons,Away,W,75.0,66.0,9.0
+UW-Platteville Pioneers,"Wed, Jan 22",UW-Whitewater Warhawks,Home,L,68.0,74.0,-6.0
+UW-Platteville Pioneers,"Sat, Jan 25",UW-Stout Blue Devils,Away,W,84.0,54.0,30.0
+UW-Platteville Pioneers,"Wed, Jan 29",UW-Oshkosh Titans,Away,W,86.0,73.0,13.0
+UW-Platteville Pioneers,"Wed, Feb 5",UW-La Crosse Eagles,Home,W,83.0,73.0,10.0
+UW-Platteville Pioneers,"Sat, Feb 8",UW-Stevens Point Pointers,Home,W,78.0,69.0,9.0
+UW-Platteville Pioneers,"Wed, Feb 12",UW-Eau Claire Blugolds,Away,W,72.0,50.0,22.0
+UW-Platteville Pioneers,"Sat, Feb 15",UW-Stout Blue Devils,Home,W,76.0,58.0,18.0
+UW-Platteville Pioneers,"Wed, Feb 19",UW-Whitewater Warhawks,Away,W,78.0,62.0,16.0
+UW-Platteville Pioneers,"Sat, Feb 22",UW-River Falls Falcons,Home,W,85.0,44.0,41.0
+UW-Platteville Pioneers,"Wed, Feb 26",UW-Stevens Point Pointers,Home,W,83.0,73.0,10.0
+UW-La Crosse Eagles,"Sat, Nov 9",Gustavus Adolphus Golden Gusties,Neutral Court,W,81.0,77.0,4.0
+UW-La Crosse Eagles,"Sun, Nov 10",Nebraska Wesleyan Prairie Wolves,Neutral Court,L,73.0,82.0,-9.0
+UW-La Crosse Eagles,"Sat, Nov 16",North Park Vikings,Home,W,91.0,62.0,29.0
+UW-La Crosse Eagles,"Fri, Nov 22",Marietta Pioneers,Neutral Court,W,99.0,75.0,24.0
+UW-La Crosse Eagles,"Sat, Nov 23",Johns Hopkins Blue Jays,Neutral Court,W,76.0,59.0,17.0
+UW-La Crosse Eagles,"Wed, Nov 27",Saint John's (MN) Johnnies,Away,W,80.0,71.0,9.0
+UW-La Crosse Eagles,"Wed, Dec 4",Bethany Lutheran Vikings,Away,W,99.0,97.0,2.0
+UW-La Crosse Eagles,"Sat, Dec 7",Calvin Knights,Home,L,57.0,58.0,-1.0
+UW-La Crosse Eagles,"Sat, Dec 21",Ripon Red Hawks,Home,W,86.0,74.0,12.0
+UW-La Crosse Eagles,"Sun, Dec 29",Hamline Pipers,Neutral Court,W,70.0,63.0,7.0
+UW-La Crosse Eagles,"Mon, Dec 30",Keene St. Owls,Neutral Court,W,81.0,66.0,15.0
+UW-La Crosse Eagles,"Sat, Jan 4",UW-Eau Claire Blugolds,Home,W,69.0,55.0,14.0
+UW-La Crosse Eagles,"Wed, Jan 8",UW-Platteville Pioneers,Home,L,75.0,83.0,-8.0
+UW-La Crosse Eagles,"Sat, Jan 11",UW-Stevens Point Pointers,Away,W,84.0,83.0,1.0
+UW-La Crosse Eagles,"Wed, Jan 15",UW-Stout Blue Devils,Away,W,84.0,77.0,7.0
+UW-La Crosse Eagles,"Sat, Jan 18",UW-Oshkosh Titans,Home,W,75.0,62.0,13.0
+UW-La Crosse Eagles,"Wed, Jan 22",UW-River Falls Falcons,Home,W,77.0,56.0,21.0
+UW-La Crosse Eagles,"Sat, Jan 25",UW-Whitewater Warhawks,Away,W,80.0,75.0,5.0
+UW-La Crosse Eagles,"Wed, Jan 29",UW-Stout Blue Devils,Home,W,90.0,53.0,37.0
+UW-La Crosse Eagles,"Wed, Feb 5",UW-Platteville Pioneers,Away,L,73.0,83.0,-10.0
+UW-La Crosse Eagles,"Sat, Feb 8",UW-Eau Claire Blugolds,Away,W,60.0,55.0,5.0
+UW-La Crosse Eagles,"Wed, Feb 12",UW-Whitewater Warhawks,Home,W,70.0,56.0,14.0
+UW-La Crosse Eagles,"Sat, Feb 15",UW-Oshkosh Titans,Away,W,75.0,69.0,6.0
+UW-La Crosse Eagles,"Wed, Feb 19",UW-River Falls Falcons,Away,W,86.0,79.0,7.0
+UW-La Crosse Eagles,"Sat, Feb 22",UW-Stevens Point Pointers,Home,W,74.0,60.0,14.0
+UW-La Crosse Eagles,"Wed, Feb 26",UW-Eau Claire Blugolds,Home,W,69.0,55.0,14.0

@@ -1,4 +1,7 @@
 category,side,display_label,games,wins,losses,win_pct
-(no matched category),,: (no matched category),1,1,0,1.0
-Perimeter Defense / Ball Pressure,OPP,OPP: On-Ball Defense,2,1,1,0.5
-Rebounding,UWW,UWW: Crash the Boards,1,0,1,0.0
+(no matched category),,: (no matched category),5,3,2,0.6
+Ball Movement / Assists,UWW,UWW: Share the Ball,2,1,1,0.5
+Fouls / Discipline,OPP,OPP: They Draw Fouls,2,1,1,0.5
+Free Throws,UWW,UWW: Get to the FT Line,1,0,1,0.0
+Perimeter Defense / Ball Pressure,OPP,OPP: On-Ball Defense,6,2,4,0.333
+Rebounding,UWW,UWW: Crash the Boards,10,4,6,0.4
