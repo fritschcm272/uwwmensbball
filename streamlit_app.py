@@ -499,11 +499,26 @@ def opponent_style_profiles(season=None) -> pd.DataFrame:
             usable = values.notna() & (weights > 0)
             return float((values[usable] * weights[usable]).sum() / weights[usable].sum()) if usable.any() else None
 
+        # CONFIRMED BUG (fixed here): every team rate below was `col(X).sum(skipna=True) / team_games`, and
+        # pandas returns 0.0 -- not NaN -- for the sum of an absent or entirely blank column. So a season
+        # whose uww_player_profiles has no PTS/REB/AST/TO/BLK/STL columns produced a profile of REAL ZEROS
+        # rather than missing values. Zeros compare fine: two teams both at 0.0 differ by nothing, land at
+        # distance 0, and are reported as a 100/100 match on features neither team actually has. (Observed:
+        # Carroll (WI) at 100/100 with "Points/gm: 0.0 vs 0.0".) A rate is only real if something was
+        # actually summed.
+        def team_rate(values, weighted_by=None):
+            values = pd.to_numeric(values, errors="coerce")
+            if weighted_by is not None:
+                values = values * weighted_by
+            if not values.notna().any():
+                return None
+            return float(values.sum(skipna=True) / team_games)
+
         tpm, tpa = _sum_made_attempted(group["3PM-A"]) if "3PM-A" in group.columns else (0, 0)
         _, fta = _sum_made_attempted(group["FTM-A"]) if "FTM-A" in group.columns else (0, 0)
         # Those made-attempted strings are season totals for the whole roster, so divide by team games.
         record = {
-            "pts_pg": float(totals_by_opp.at[opponent, "team_ppg"]) if opponent in getattr(totals_by_opp, "index", []) and pd.notna(totals_by_opp.at[opponent, "team_ppg"]) else float(((col("PTS") * games).sum(skipna=True)) / team_games),
+            "pts_pg": float(totals_by_opp.at[opponent, "team_ppg"]) if opponent in getattr(totals_by_opp, "index", []) and pd.notna(totals_by_opp.at[opponent, "team_ppg"]) else team_rate(col("PTS"), games),
             "opp_pts_pg": float(totals_by_opp.at[opponent, "opp_ppg_allowed"]) if opponent in getattr(totals_by_opp, "index", []) and "opp_ppg_allowed" in totals_by_opp.columns and pd.notna(totals_by_opp.at[opponent, "opp_ppg_allowed"]) else None,
             "fg_pct": minute_weighted(group["FG%"].apply(_pct_value) if "FG%" in group.columns else pd.Series(dtype=float)),
             "tpa_pg": (tpa / team_games) if tpa else None,
@@ -512,14 +527,14 @@ def opponent_style_profiles(season=None) -> pd.DataFrame:
             # TEAM rate = every player's season total over the TEAM's games. Dividing each player's total by
             # his own games first and then summing answers a different question ("per game while available")
             # and overstates the team: it read 17.8 assists/gm where the play-by-play says 14.0.
-            "ast_pg": float(col("AST").sum(skipna=True) / team_games),
-            "to_pg": float(col("TO").sum(skipna=True) / team_games),
+            "ast_pg": team_rate(col("AST")),
+            "to_pg": team_rate(col("TO")),
             # PTS/REB are per-player per-game averages over each player's OWN games. Summing them straight
             # overstates a team that rotates: ten players averaging 8 points across different subsets of the
             # season don't add up to 80 team points per game. Re-weight to real totals -> team games.
-            "reb_pg": float(((col("REB") * games).sum(skipna=True)) / team_games),
-            "blk_pg": float(col("BLK").sum(skipna=True) / team_games),
-            "stl_pg": float(col("STL").sum(skipna=True) / team_games),
+            "reb_pg": team_rate(col("REB"), games),
+            "blk_pg": team_rate(col("BLK")),
+            "stl_pg": team_rate(col("STL")),
             "height_in": minute_weighted(col("height_inches")),
             "_players": int(len(group)),
             "_games": int(team_games),
@@ -556,7 +571,11 @@ def _robust_scale(frame: pd.DataFrame) -> pd.DataFrame:
         if not spread or pd.isna(spread) or spread == 0:
             spread = values.std(ddof=0)
         if not spread or pd.isna(spread) or spread == 0:
-            scaled[column] = 0.0
+            # CONFIRMED BUG (fixed here): this used to write 0.0, which makes every team IDENTICAL on that
+            # feature and counts it as perfect agreement in the distance -- a feature nobody varies on was
+            # quietly inflating match scores toward 100. NaN excludes it instead (the distance loop already
+            # skips NaN on either side), so the score only reflects features that actually discriminate.
+            scaled[column] = float("nan")
             continue
         scaled[column] = ((values - values.median()) / spread).clip(-3, 3)
     return scaled
@@ -575,6 +594,7 @@ def _robust_scale(frame: pd.DataFrame) -> pd.DataFrame:
 #   2. Anything borrowed is LABELLED as last season's, on the card itself, because a roster turns over between
 #      seasons and a 2024-25 profile is a weaker piece of evidence than a 2025-26 one, not an equal one.
 MIN_COMPARABLE_POOL = 3      # comparable-opponent candidates wanted before reaching back a season
+MIN_COMPARABLE_FEATURES = 5  # shared, discriminating features a match score needs to mean anything
 MIN_OWN_GAMES_FOR_PROFILE = 3  # UWW games needed before this season's box scores describe how UWW plays
 
 _SEASON_TAG_RE = re.compile(r"\s+\(([\d]{4}-[\d]{2})\)$")
@@ -680,7 +700,14 @@ def comparable_opponents(target_opponent: str, candidate_opponents, k: int = 3, 
                      **{f"cat::{c}": v for c, v in per_category.items()}})
     if not rows:
         return None, profiles
-    ranked = pd.DataFrame(rows).sort_values("distance").head(k).reset_index(drop=True)
+    ranked = pd.DataFrame(rows)
+    # A distance computed over one or two features is not a style comparison, and when those features are
+    # missing on both sides it reads as a perfect match (see the zero-collapse note in
+    # opponent_style_profiles). Drop candidates that don't clear the bar rather than ranking them.
+    ranked = ranked[ranked["features_used"] >= MIN_COMPARABLE_FEATURES]
+    if ranked.empty:
+        return None, profiles
+    ranked = ranked.sort_values("distance").head(k).reset_index(drop=True)
     return ranked, profiles
 
 
@@ -4470,7 +4497,17 @@ def render_upcoming_game():
             _co_ranked, _co_profiles = comparable_opponents(
                 short_opponent, list(_co_games), k=3, profiles=_co_profiles_all)
             if _co_ranked is None or _co_ranked.empty:
-                st.info("No previously-played opponent has enough profile data to compare against yet.")
+                _co_have = [_lbl for _fk, _lbl, _ in OPPONENT_FEATURE_SPEC
+                            if _fk in _co_profiles_all.columns
+                            and pd.notna(_co_profiles_all.at[short_opponent, _fk])]
+                st.info(
+                    f"No previously-played opponent shares at least {MIN_COMPARABLE_FEATURES} style features "
+                    f"with {short_opponent}, so there is nothing here worth ranking yet. "
+                    + (f"{short_opponent}'s own profile currently has: {', '.join(_co_have)}."
+                       if _co_have else
+                       f"No style features could be built for {short_opponent} at all -- check that "
+                       f"uww_player_profiles carries their per-player stat columns.")
+                )
             else:
                 _co_target = _co_profiles.loc[short_opponent]
                 _co_used_prior = any(untag_season(n)[1] for n in _co_ranked["opponent"])
@@ -4506,7 +4543,9 @@ def render_upcoming_game():
                                 f'<div style="font-weight:700;font-size:0.95rem;color:#4E2A84;">'
                                 f'{esc(_co_plain)}{_co_badge}</div>'
                                 f'<div style="font-size:1.6rem;font-weight:800;line-height:1.1;">{int(_cr["match"])}'
-                                f'<span style="font-size:0.7rem;color:#888;font-weight:600;"> / 100 match</span></div>',
+                                f'<span style="font-size:0.7rem;color:#888;font-weight:600;"> / 100 match</span></div>'
+                                f'<div style="font-size:0.68rem;color:#999;">on {int(_cr["features_used"])} of '
+                                f'{len(OPPONENT_FEATURE_SPEC)} features</div>',
                                 unsafe_allow_html=True,
                             )
                             # Every meeting, with its own result -- not one result standing in for two games.
