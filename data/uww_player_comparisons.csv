@@ -1,1 +1,13 @@
-
+target_player,target_position,target_role,target_opponent,target_game_date,compared_opponent,compared_game_date,compared_player,compared_position,compared_role,similarity_score,shared_notes_tags,shared_keys_tags,height_diff_in,stat_similarity,target_PTS,compared_PTS,target_REB,compared_REB,target_AST,compared_AST,target_FG%,compared_FG%,target_3P%,compared_3P%
+Connor Mosele,G,Bench,Loras Duhawks,"Fri, Mar 6",UW-Oshkosh Titans,"Sat, Jan 3",Aiden Hawkinson,G,Bench,13.5,three_point_shooter,deny_catch_and_shoot,0.0,1.0,,,,,,,,,,
+Kyle Kober,G,Bench,Loras Duhawks,"Fri, Mar 6",Aurora Spartans,"Wed, Nov 19",Robert Hutson,G,Bench,13.5,"slasher_driver, three_point_shooter",anticipate_move,0.0,1.0,,,,,,,,,,
+Deng Makeer,G,Bench,Loras Duhawks,"Fri, Mar 6",Elmhurst Bluejays,"Tue, Dec 2",Talen Pearson,G,Bench,13.17,three_point_shooter,deny_catch_and_shoot,1.0,1.0,,,,,,,,,,
+Nolan Berendes,F,Starter,Loras Duhawks,"Fri, Mar 6",UW-Oshkosh Titans,"Sat, Jan 3",Brandon Beck,F,Starter,13.17,"slasher_driver, three_point_shooter",deny_catch_and_shoot,1.0,1.0,,,,,,,,,,
+Damyen Jackson,G,Starter,Loras Duhawks,"Fri, Mar 6",Elmhurst Bluejays,"Tue, Dec 2",EJ Marshall,G,Bench,13.0,"slasher_driver, three_point_shooter",anticipate_move,0.0,1.0,,,,,,,,,,
+Jack Haynes,F,Starter,Loras Duhawks,"Fri, Mar 6",Alma Scots,"Sat, Dec 20",Korbin Heitzman,F,Starter,12.71,"post_scorer, slasher_driver",post_defense,0.0,1.0,,,,,,,,,,
+Johnny Semany,G,Starter,Loras Duhawks,"Fri, Mar 6",UW-Eau Claire Blugolds,"Sat, Jan 24",Andre Renta,G,Starter,11.5,"slasher_driver, three_point_shooter",,0.0,1.0,,,,,,,,,,
+Gavin Sarvis,G,Starter,Loras Duhawks,"Fri, Mar 6",Simpson Storm,"Tue, Nov 25",Marcus Haupert,F,Starter,9.83,post_scorer,post_defense,2.0,1.0,,,,,,,,,,
+Brock Massey,,Bench,Loras Duhawks,"Fri, Mar 6",St. Thomas (TX) Celts,"Fri, Nov 14",Garret Rodgers,F,Bench,3.5,,,,1.0,,,,,,,,,,
+Dylan Kurt,,Bench,Loras Duhawks,"Fri, Mar 6",Carroll (WI) Pioneers,"Sat, Dec 13",Andrew Hollerich,G,Bench,3.5,,,,1.0,,,,,,,,,,
+Patrick Coen,,Bench,Loras Duhawks,"Fri, Mar 6",UW-Oshkosh Titans,"Sat, Jan 3",Oskar Kangas,F,Bench,3.5,,,,1.0,,,,,,,,,,
+Patrick Quarnstrom,,Bench,Loras Duhawks,"Fri, Mar 6",Aurora Spartans,"Wed, Nov 19",Larry Carthan,F,Bench,3.5,,,,1.0,,,,,,,,,,
