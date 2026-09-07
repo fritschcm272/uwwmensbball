@@ -668,11 +668,12 @@ def comparable_opponents(target_opponent: str, candidate_opponents, k: int = 3, 
     target = scaled.loc[target_opponent]
     category_weight = 1.0 / len(OPPONENT_FEATURE_CATEGORIES)
 
-    rows = []
+    rows, unscored = [], []
     for opponent in pool:
         candidate = scaled.loc[opponent]
         weighted_sq = used_weight = 0.0
         per_category = {}
+        scored_keys = []
         for category, keys in OPPONENT_FEATURE_CATEGORIES.items():
             keys = [key for key in keys if key in present]
             if not keys:
@@ -685,30 +686,47 @@ def comparable_opponents(target_opponent: str, candidate_opponents, k: int = 3, 
                     continue
                 cat_sq += each * (a - b) ** 2
                 cat_weight += each
+                scored_keys.append(key)
             if cat_weight > 0:
                 per_category[category] = (cat_sq / cat_weight) ** 0.5
                 weighted_sq += cat_sq
                 used_weight += cat_weight
+        # RAW coverage (both teams have the number) vs SCORED coverage (it also survived scaling -- a
+        # feature nobody in the pool varies on scales to NaN and carries no information). These differ, and
+        # conflating them is what made the previous version reject a full 27-opponent pool without saying
+        # why: it filtered on raw coverage while the distance quietly ran on the scored set.
+        raw_used = sum(1 for key in present
+                       if not pd.isna(profiles.at[target_opponent, key])
+                       and not pd.isna(profiles.at[opponent, key]))
         if used_weight <= 0:
+            unscored.append({"opponent": opponent, "features_used": raw_used, "features_scored": 0})
             continue
         distance = (weighted_sq / used_weight) ** 0.5
         rows.append({"opponent": opponent, "distance": distance,
                      "match": int(round(100 * math.exp(-0.7 * distance))),
-                     "features_used": sum(1 for key in present
-                                          if not pd.isna(profiles.at[target_opponent, key])
-                                          and not pd.isna(profiles.at[opponent, key])),
+                     "features_used": raw_used,
+                     "features_scored": len(set(scored_keys)),
                      **{f"cat::{c}": v for c, v in per_category.items()}})
     if not rows:
+        thin = pd.DataFrame(unscored)
         return None, profiles
+
     ranked = pd.DataFrame(rows)
-    # A distance computed over one or two features is not a style comparison, and when those features are
-    # missing on both sides it reads as a perfect match (see the zero-collapse note in
-    # opponent_style_profiles). Drop candidates that don't clear the bar rather than ranking them.
-    ranked = ranked[ranked["features_used"] >= MIN_COMPARABLE_FEATURES]
-    if ranked.empty:
-        return None, profiles
-    ranked = ranked.sort_values("distance").head(k).reset_index(drop=True)
-    return ranked, profiles
+    # A thin comparison is worth showing WITH ITS FEATURE COUNT; it is not worth suppressing. The previous
+    # version returned None whenever no candidate cleared the floor, which turned a data-coverage problem
+    # into a blank panel -- wrong even at 27 opponents, and exactly the failure it was meant to prevent in
+    # reverse. Candidates that clear the floor are preferred; if none do, the best available are shown and
+    # the caller is told (attrs["thin"]) so it can say so on the panel.
+    _solid = ranked[ranked["features_scored"] >= MIN_COMPARABLE_FEATURES]
+    _chosen = (_solid if not _solid.empty else ranked).sort_values("distance").head(k).reset_index(drop=True)
+    _chosen.attrs["thin"] = bool(_solid.empty)
+    _chosen.attrs["min_features"] = MIN_COMPARABLE_FEATURES
+    _chosen.attrs["coverage"] = (
+        pd.concat([ranked[["opponent", "features_used", "features_scored"]], pd.DataFrame(unscored)],
+                  ignore_index=True)
+        .sort_values(["features_scored", "features_used"], ascending=False).reset_index(drop=True)
+    )
+    return _chosen, profiles
 
 
 # Mascot words seen in this league's schedules, plus the adjectives that only ever appear as part of a
@@ -4501,9 +4519,10 @@ def render_upcoming_game():
                             if _fk in _co_profiles_all.columns
                             and pd.notna(_co_profiles_all.at[short_opponent, _fk])]
                 st.info(
-                    f"No previously-played opponent shares at least {MIN_COMPARABLE_FEATURES} style features "
-                    f"with {short_opponent}, so there is nothing here worth ranking yet. "
-                    + (f"{short_opponent}'s own profile currently has: {', '.join(_co_have)}."
+                    f"None of the {len(_co_games)} previously-played opponent(s) shares a single usable "
+                    f"style feature with {short_opponent}. "
+                    + (f"{short_opponent}'s own profile has: {', '.join(_co_have)} -- so the gap is on the "
+                       f"other side, in those opponents' own profiles."
                        if _co_have else
                        f"No style features could be built for {short_opponent} at all -- check that "
                        f"uww_player_profiles carries their per-player stat columns.")
@@ -4517,6 +4536,14 @@ def render_upcoming_game():
                         f"{MIN_COMPARABLE_POOL} this comparison wants, so teams from {_co_prior_label} are "
                         f"included and marked. Those profiles come from that season's roster -- treat them "
                         f"as a guide to style, not a current scouting report."
+                    )
+                if _co_ranked.attrs.get("thin"):
+                    _co_best_n = int(_co_ranked["features_scored"].max())
+                    st.warning(
+                        f"Thin comparison: the best candidate shares only {_co_best_n} scoring feature(s) "
+                        f"with {short_opponent}, below the {_co_ranked.attrs.get('min_features')} this "
+                        f"ranking wants. These are shown because they are the closest available, not because "
+                        f"they are a confident match -- see the coverage table below for where the gaps are."
                     )
                 st.caption(
                     f"Ranked on a {len(OPPONENT_FEATURE_SPEC)}-feature style profile across "
@@ -4629,6 +4656,23 @@ def render_upcoming_game():
                         "scouting report, so a thinly scouted team will have fewer comparable features -- the "
                         "match score only counts features both teams actually have."
                     )
+
+                _co_cov = _co_ranked.attrs.get("coverage")
+                if _co_cov is not None and not _co_cov.empty:
+                    with st.expander("Why these three -- feature coverage per candidate", expanded=False):
+                        st.dataframe(
+                            _co_cov.rename(columns={"opponent": "Opponent",
+                                                    "features_used": "Features both have",
+                                                    "features_scored": "Features actually scored"}),
+                            hide_index=True, use_container_width=True)
+                        st.caption(
+                            f"\"Both have\" counts features present for {short_opponent} and that candidate. "
+                            f"\"Actually scored\" is the subset that also varies across the pool -- a feature "
+                            f"every team posts the same value on carries no information and is skipped, so it "
+                            f"can't inflate a match toward 100. A candidate scoring 0 was left out of the "
+                            f"ranking entirely; if many rows read 0, the gap is in the source profiles, not "
+                            f"in the ranking."
+                        )
 
 
 
