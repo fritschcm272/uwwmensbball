@@ -457,6 +457,56 @@ def format_feature(key, value) -> str:
 
 
 @st.cache_data(ttl=60)
+def box_score_style_profiles(season=None) -> pd.DataFrame:
+    """Style features for every opponent UWW has PLAYED, derived from the reconstructed box scores.
+
+    uww_player_profiles comes from each opponent's scouting-report PDF, and for a team that was scouted
+    weeks ago those per-player stat columns are frequently blank -- only the CURRENT upcoming opponent gets
+    them rebuilt from play-by-play (see the parser's player_profiles override cell). That is why a fully
+    populated upcoming opponent could face a pool of 17 played teams and share nothing with any of them.
+
+    uww_pbp_box_score has what is actually needed: every one of those games, both sides, reconstructed
+    event by event. Eleven of the fourteen features fall straight out of it. The three that don't
+    (height, shooter share, post share) describe personnel rather than production and have no box-score
+    equivalent, so they stay missing rather than being approximated.
+
+    The honest limitation, stated on the panel rather than buried: these numbers describe how that team
+    played AGAINST UWW, not their season at large. For a style comparison that is arguably the more
+    relevant sample; it is not the same claim, and it isn't presented as one.
+    """
+    box = load_table("uww_pbp_box_score", season)
+    if box.empty or "team" not in box.columns or "opponent" not in box.columns:
+        return pd.DataFrame()
+    date_col = game_date_col(box)
+    num = lambda df, c: pd.to_numeric(df[c], errors="coerce").sum() if c in df.columns else float("nan")
+
+    records = {}
+    for opponent, group in box.groupby("opponent"):
+        them = group[group["team"] != "UW-Whitewater"]
+        us = group[group["team"] == "UW-Whitewater"]
+        if them.empty:
+            continue
+        games = int(them[date_col].nunique()) if date_col else 1
+        games = games or 1
+        fga, fgm = num(them, "FGA"), num(them, "FGM")
+        tpa, tpm = num(them, "FG3A"), num(them, "FG3M")
+        fta = num(them, "FTA")
+        rate = lambda c: (num(them, c) / games) if not pd.isna(num(them, c)) else None
+        records[opponent] = {
+            "pts_pg": rate("PTS"),
+            "opp_pts_pg": (num(us, "PTS") / games) if not us.empty and not pd.isna(num(us, "PTS")) else None,
+            "fg_pct": (100.0 * fgm / fga) if fga and not pd.isna(fga) and fga > 0 else None,
+            "tpa_pg": (tpa / games) if not pd.isna(tpa) else None,
+            "tp_pct": (100.0 * tpm / tpa) if tpa and not pd.isna(tpa) and tpa > 0 else None,
+            "fta_pg": (fta / games) if not pd.isna(fta) else None,
+            "ast_pg": rate("AST"), "to_pg": rate("TO"), "reb_pg": rate("REB"),
+            "blk_pg": rate("BLK"), "stl_pg": rate("STL"),
+            "_games": games,
+        }
+    return pd.DataFrame.from_dict(records, orient="index") if records else pd.DataFrame()
+
+
+@st.cache_data(ttl=60)
 def opponent_style_profiles(season=None) -> pd.DataFrame:
     """One row per scouted opponent describing HOW they play, indexed by opponent name.
 
@@ -554,7 +604,37 @@ def opponent_style_profiles(season=None) -> pd.DataFrame:
         records[opponent] = record
 
     frame = pd.DataFrame.from_dict(records, orient="index")
-    return frame.replace([float("inf"), float("-inf")], pd.NA)
+    frame = frame.replace([float("inf"), float("-inf")], pd.NA)
+
+    # Fill scouting-report gaps from the reconstructed box scores. Scouting-report values WIN where they
+    # exist -- they describe the opponent's whole season, while the box score only covers their game(s)
+    # against UWW -- so this only ever fills a hole, never overwrites. `_from_box` records which features
+    # were filled this way so the panel can say so.
+    box_profiles = box_score_style_profiles(season)
+    if not box_profiles.empty:
+        feature_keys = [k for k, _, _ in OPPONENT_FEATURE_SPEC]
+        filled = {}
+        for opponent in set(frame.index) | set(box_profiles.index):
+            source = {}
+            if opponent in frame.index:
+                source = {k: frame.at[opponent, k] for k in feature_keys if k in frame.columns}
+            gaps = []
+            for key in feature_keys:
+                if key not in box_profiles.columns or opponent not in box_profiles.index:
+                    continue
+                if pd.isna(source.get(key)) and pd.notna(box_profiles.at[opponent, key]):
+                    source[key] = box_profiles.at[opponent, key]
+                    gaps.append(key)
+            if source:
+                if opponent in frame.index:
+                    for key, value in source.items():
+                        frame.at[opponent, key] = value
+                else:
+                    for key, value in source.items():
+                        frame.loc[opponent, key] = value
+                filled[opponent] = gaps
+        frame["_from_box"] = frame.index.map(lambda n: ", ".join(filled.get(n, [])) or None)
+    return frame
 
 
 def _robust_scale(frame: pd.DataFrame) -> pd.DataFrame:
@@ -4515,18 +4595,58 @@ def render_upcoming_game():
             _co_ranked, _co_profiles = comparable_opponents(
                 short_opponent, list(_co_games), k=3, profiles=_co_profiles_all)
             if _co_ranked is None or _co_ranked.empty:
-                _co_have = [_lbl for _fk, _lbl, _ in OPPONENT_FEATURE_SPEC
-                            if _fk in _co_profiles_all.columns
-                            and pd.notna(_co_profiles_all.at[short_opponent, _fk])]
                 st.info(
-                    f"None of the {len(_co_games)} previously-played opponent(s) shares a single usable "
-                    f"style feature with {short_opponent}. "
-                    + (f"{short_opponent}'s own profile has: {', '.join(_co_have)} -- so the gap is on the "
-                       f"other side, in those opponents' own profiles."
-                       if _co_have else
-                       f"No style features could be built for {short_opponent} at all -- check that "
-                       f"uww_player_profiles carries their per-player stat columns.")
+                    f"No usable comparison could be built against the {len(_co_games)} previously-played "
+                    f"opponent(s). The breakdown below shows exactly which feature failed and why -- read "
+                    f"it before changing anything upstream."
                 )
+                # Per-feature autopsy. A feature can fail for three DIFFERENT reasons and they need
+                # different fixes, so the table names which one applies rather than reporting one count:
+                #   - the target has no value          -> this opponent's own profile is thin
+                #   - no candidate has a value         -> the played opponents' profiles are thin
+                #   - values exist but never vary      -> nothing to discriminate on; scaling drops it
+                _co_pool_names = [n for n in _co_games if n in _co_profiles_all.index]
+                _co_rows = []
+                for _fk, _flabel, _fcat in OPPONENT_FEATURE_SPEC:
+                    if _fk not in _co_profiles_all.columns:
+                        _co_rows.append({"Feature": _flabel, "Category": _fcat,
+                                         f"{short_opponent}": "-", "Candidates with a value": 0,
+                                         "Spread": "-", "Verdict": "column absent from profiles"})
+                        continue
+                    _tv = _co_profiles_all.at[short_opponent, _fk]
+                    _cv = pd.to_numeric(
+                        pd.Series([_co_profiles_all.at[n, _fk] for n in _co_pool_names]), errors="coerce")
+                    _n_have = int(_cv.notna().sum())
+                    _spread = float(_cv.std(ddof=0)) if _n_have > 1 else 0.0
+                    if pd.isna(_tv):
+                        _verdict = f"no value for {short_opponent}"
+                    elif _n_have == 0:
+                        _verdict = "no candidate has a value"
+                    elif _spread == 0:
+                        _verdict = "identical across every candidate -- carries no information"
+                    else:
+                        _verdict = "usable"
+                    _co_rows.append({
+                        "Feature": _flabel, "Category": _fcat,
+                        f"{short_opponent}": format_feature(_fk, _tv) if pd.notna(_tv) else "-",
+                        "Candidates with a value": _n_have,
+                        "Spread": f"{_spread:.2f}" if _n_have > 1 else "-",
+                        "Verdict": _verdict,
+                    })
+                st.dataframe(pd.DataFrame(_co_rows), hide_index=True, use_container_width=True)
+
+                with st.expander("Raw profile rows for every candidate", expanded=False):
+                    _co_raw_cols = [c for c, _, _ in OPPONENT_FEATURE_SPEC if c in _co_profiles_all.columns]
+                    st.dataframe(
+                        _co_profiles_all.loc[[short_opponent] + _co_pool_names, _co_raw_cols]
+                        .reset_index().rename(columns={"index": "Opponent"}),
+                        hide_index=True, use_container_width=True)
+                    st.caption(
+                        "Straight from opponent_style_profiles(), before any scaling. An all-blank row means "
+                        "that opponent's uww_player_profiles rows carried none of the columns the profile is "
+                        "built from -- note that a missing MIN column alone blanks the minutes-weighted "
+                        "features (FG%, height, style shares) for that team."
+                    )
             else:
                 _co_target = _co_profiles.loc[short_opponent]
                 _co_used_prior = any(untag_season(n)[1] for n in _co_ranked["opponent"])
@@ -4656,6 +4776,17 @@ def render_upcoming_game():
                         "scouting report, so a thinly scouted team will have fewer comparable features -- the "
                         "match score only counts features both teams actually have."
                     )
+                    _co_boxed = [untag_season(_cn)[0] for _cn in _co_ranked["opponent"]
+                                 if "_from_box" in _co_profiles.columns
+                                 and pd.notna(_co_profiles.loc[_cn].get("_from_box"))]
+                    if _co_boxed:
+                        st.caption(
+                            f"Some features for {', '.join(_co_boxed)} were filled from UWW's own "
+                            f"reconstructed box score of that game rather than their scouting report, which "
+                            f"had them blank. Those describe how that team played AGAINST UWW, not their "
+                            f"season at large. Height and the style shares have no box-score equivalent and "
+                            f"stay blank for those teams."
+                        )
 
                 _co_cov = _co_ranked.attrs.get("coverage")
                 if _co_cov is not None and not _co_cov.empty:
