@@ -187,7 +187,13 @@ def load_short_opponent_names(season=None) -> list:
     names = set()
     for t in ["uww_pbp_events", "uww_opponent_game_plans", "uww_opponent_team_totals", "uww_opponent_rosters", "uww_opponent_schedules"]:
         df = load_table(t, season)
-        names.update(n for n in df["opponent"].dropna().unique())
+        # CONFIRMED BUG (fixed here): load_table() returns an empty, COLUMNLESS DataFrame for a table that
+        # hasn't been exported for this season yet (e.g. a partially-completed 2024-25 run with only some of
+        # the 5 tables generated so far) -- df["opponent"] on that raised KeyError, aborting this loop
+        # entirely rather than just skipping that one table, so even tables read AFTER the missing one never
+        # got unioned in either.
+        if "opponent" in df.columns:
+            names.update(n for n in df["opponent"].dropna().unique())
     return sorted(names, key=len, reverse=True)
 
 
@@ -6816,6 +6822,12 @@ def render_previous_games():
             _pg_season = _pg_season_choice
 
     schedule = load_table("uww_schedule", _pg_season)
+    # Defensive, explicit filter -- the "Upcoming"-index slicing below already happens to exclude opponent
+    # rows (UWW's own schedule is always concatenated first, so slicing up to the Upcoming row's position
+    # never reaches an opponent's appended block), but that's a positional assumption rather than a stated
+    # one. Same substring match as render_team()'s fix, for the same reason (uww_schedule's own "team" column
+    # includes the mascot, e.g. "UW-Whitewater Warhawks").
+    schedule = schedule[schedule["team"].str.contains("Whitewater", case=False, na=False)]
     short_names = load_short_opponent_names(_pg_season)
 
     # Only show games before the upcoming game (exclude future-scheduled games with results)
@@ -7551,7 +7563,16 @@ def render_team():
     # summed win/loss/scoring across every team in the table. Confirmed as the source of a real, reported
     # case: a "1-2" season record showing up before UWW's own first game of the year had been played --
     # that was an opponent's own real record against other teams, not UWW's.
-    schedule = schedule[schedule["team"] == "UW-Whitewater"]
+    #
+    # CONFIRMED BUG (fixed here, a second time): the exact-match fix above never actually matched anything.
+    # uww_schedule's own "team" column comes straight from the schedule page's own heading text, which
+    # includes the mascot ("UW-Whitewater Warhawks") -- unlike PBP-derived tables (uww_pbp_events,
+    # uww_pbp_box_score, etc.), which use a bare "UW-Whitewater" by internal convention. That first fix was
+    # verified against synthetic test data using the bare form, not a real uww_schedule.csv, so this went
+    # uncaught. Confirmed directly against a real 2024-25 uww_schedule.csv: "team" reads "UW-Whitewater
+    # Warhawks" there too, so this isn't a one-season quirk. A substring match on "Whitewater" is robust to
+    # either form.
+    schedule = schedule[schedule["team"].str.contains("Whitewater", case=False, na=False)]
     played = schedule[played_mask(schedule)]
 
     wins = int((played["outcome"] == "W").sum())
