@@ -7542,29 +7542,6 @@ def render_previous_games():
     if not game_pbp.empty:
         game_pbp = game_pbp.sort_values("event_order")
 
-    # TEMPORARY DEBUG -- remove once the date column in uww_pbp_events is confirmed good. Shows exactly what
-    # the per-game filter had to work with, so "the PBP is showing both meetings" can be traced to its cause
-    # (missing date column vs. unparseable date spelling vs. a date the schedule row didn't resolve to)
-    # instead of guessed at.
-    with st.expander("\U0001f527 PBP filter debug", expanded=False):
-        _dbg_opp = pbp[pbp["opponent"] == short_opponent] if "opponent" in pbp.columns else pbp.iloc[0:0]
-        _dbg_col = game_date_col(_dbg_opp) if not _dbg_opp.empty else None
-        st.write({
-            "schedule display date": str(game.get("date")),
-            "resolved ISO date (_pg_game_date)": _pg_game_date,
-            "short_opponent": short_opponent,
-            "uww_pbp_events columns": list(pbp.columns),
-            "date column found": _dbg_col,
-            "raw date values for this opponent": (
-                sorted(_dbg_opp[_dbg_col].astype(str).unique().tolist())[:10] if _dbg_col else None
-            ),
-            "parsed ISO dates for this opponent": (
-                sorted(iso_dates(_dbg_opp[_dbg_col]).dropna().unique().tolist()) if _dbg_col else None
-            ),
-            "rows vs this opponent (all meetings)": len(_dbg_opp),
-            "rows after per-game filter": len(game_pbp),
-        })
-
     for _w in _pg_filter_warnings:
         st.warning(_w)
 
