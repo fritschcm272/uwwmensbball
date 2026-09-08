@@ -794,6 +794,102 @@ def profiles_with_prior_season(prior_label=None) -> pd.DataFrame:
     return pd.concat([frame, prior])
 
 
+def player_game_log(player_names, source_table, team_name, season=None) -> pd.DataFrame:
+    """One row per game for a player, from a reconstructed box score. Empty frame when nothing matches.
+
+    Works for either side: UWW players out of uww_pbp_box_score, opponent players out of
+    uww_opponent_prior_games_box_score. `team_name` picks the side, `player_names` is the set of spellings
+    to accept (a player and their known alias).
+
+    The RESULT column is derived from the same rows rather than joined to a schedule -- both sides of every
+    game are already in the table, so summing them is exact and can't drift out of step with a schedule
+    that spells dates differently. Dates go through iso_dates() for the same reason they do everywhere
+    else in this file.
+    """
+    box = load_table(source_table, season)
+    if box.empty or "player" not in box.columns or "team" not in box.columns:
+        return pd.DataFrame()
+    date_col = game_date_col(box)
+    if not date_col:
+        return pd.DataFrame()
+    keys = {str(n).strip().lower() for n in player_names if n and str(n).strip()}
+    box = box.copy()
+    box["_iso"] = iso_dates(box[date_col]).to_numpy()
+    mine = box[(box["team"] == team_name) & (box["player"].astype(str).str.strip().str.lower().isin(keys))]
+    if mine.empty:
+        return pd.DataFrame()
+
+    num = lambda df, c: pd.to_numeric(df[c], errors="coerce").sum() if c in df.columns else float("nan")
+    rows = []
+    for (_iso, _opp), group in mine.groupby(["_iso", "opponent"], dropna=False):
+        game = box[(box["_iso"] == _iso) & (box["opponent"] == _opp)]
+        ours = num(game[game["team"] == team_name], "PTS")
+        theirs = num(game[game["team"] != team_name], "PTS")
+        row = {"_iso": _iso, "Date": _iso, "Opponent": _opp}
+        if pd.notna(ours) and pd.notna(theirs) and (ours or theirs):
+            # A basketball game can't end level, so equal totals mean the reconstruction is missing points
+            # on one side. Say that rather than picking a winner at random by falling through to "L".
+            outcome = "W" if ours > theirs else "L" if theirs > ours else "?"
+            row["Result"] = f"{outcome} {int(ours)}-{int(theirs)}"
+        else:
+            row["Result"] = "-"
+        for col, label in (("MIN", "MIN"), ("PTS", "PTS"), ("REB", "REB"), ("AST", "AST"),
+                           ("STL", "STL"), ("BLK", "BLK"), ("TO", "TO"), ("PF", "PF")):
+            value = num(group, col)
+            if pd.notna(value):
+                row[label] = round(float(value), 1) if label == "MIN" else int(value)
+        for made, att, label in (("FGM", "FGA", "FG"), ("FG3M", "FG3A", "3P"), ("FTM", "FTA", "FT")):
+            m, a = num(group, made), num(group, att)
+            if pd.notna(m) and pd.notna(a):
+                row[label] = f"{int(m)}-{int(a)}"
+        rows.append(row)
+    if not rows:
+        return pd.DataFrame()
+    return pd.DataFrame(rows).sort_values("_iso", ascending=False).reset_index(drop=True)
+
+
+def render_player_game_log(player_names, source_table, team_name, key_prefix, season=None):
+    """Button + game-by-game box score for one player, for use inside a dialog.
+
+    A button rather than an always-open table: the log is a drill-down, and a dialog that opens with
+    fifteen rows of numbers buries the summary a coach came for. Streamlit allows only one dialog at a
+    time, so this expands in place instead of opening a second one.
+    """
+    state_key = f"{key_prefix}_gamelog_open"
+    is_open = st.session_state.get(state_key, False)
+    if st.button("\U0001f4ca Game-by-game box scores" if not is_open else "\u2716 Hide game-by-game",
+                 key=f"{key_prefix}_gamelog_btn", use_container_width=True):
+        st.session_state[state_key] = not is_open
+        st.rerun()
+    if not st.session_state.get(state_key, False):
+        return
+
+    log = player_game_log(player_names, source_table, team_name, season)
+    if log.empty:
+        st.info("No per-game box score data on file for this player yet.")
+        return
+
+    display = log.drop(columns=["_iso"])
+    st.dataframe(display, hide_index=True, use_container_width=True)
+
+    # Averages under the table, computed from the games shown so the two can never disagree.
+    avg_cols = [c for c in ("MIN", "PTS", "REB", "AST", "STL", "BLK", "TO") if c in log.columns]
+    if avg_cols:
+        st.caption(
+            f"{len(log)} game(s) \u00b7 averages: "
+            + " \u00b7 ".join(f"{c} {pd.to_numeric(log[c], errors='coerce').mean():.1f}" for c in avg_cols)
+        )
+    highs = []
+    for c in ("PTS", "REB", "AST"):
+        if c in log.columns:
+            series = pd.to_numeric(log[c], errors="coerce")
+            if series.notna().any():
+                best = series.idxmax()
+                highs.append(f"{c} {int(series.max())} vs {log.at[best, 'Opponent']}")
+    if highs:
+        st.caption("Season highs: " + " \u00b7 ".join(highs))
+
+
 def render_style_match_card(rank_row, ranked_frame, profiles, target_row, target_label,
                             meetings, display_name=None, season_tag=None):
     """Draw ONE result card for a style comparison. Both panels call this and nothing else.
@@ -4780,6 +4876,14 @@ def render_upcoming_game():
                             st.caption("No season stats available.")
                     else:
                         st.caption("No season stats available.")
+
+                # Same drill-down as UWW's own Player Detail dialog, sourced from this opponent's prior
+                # games. The season line above is their scouting-report average; this is the night-by-night
+                # it came from, which is where a coach sees whether 14 PPG is 14 every night or 4 and 24.
+                render_player_game_log(
+                    [player_name], "uww_opponent_prior_games_box_score", short_opponent,
+                    key_prefix=f"oppplayer_{re.sub(r'[^a-z0-9]+', '_', str(player_name).strip().lower())}",
+                )
 
                 with st.container(border=True):
                     st.markdown("**Comparable Player**")
@@ -9305,6 +9409,14 @@ def render_players():
                             st.markdown(f'<div style="margin-top:4px;">{"".join(_stat_parts2)}</div>', unsafe_allow_html=True)
                 except Exception:
                     pass
+
+            # Game-by-game box scores, directly under the season line above -- the season averages say what
+            # this player usually does, the log says which nights they did it. Alias included because the
+            # box score and the roster don't always spell a name the same way.
+            render_player_game_log(
+                [player_name, alias_key], "uww_pbp_box_score", "UW-Whitewater",
+                key_prefix=f"uwwplayer_{re.sub(r'[^a-z0-9]+', '_', player_name.strip().lower())}",
+            )
 
             # --- Projected vs Actual Performance ---
             try:
