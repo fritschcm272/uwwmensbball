@@ -3964,13 +3964,10 @@ def render_willie_sidebar():
 
     # Chat input. Disabled while WILLIE_CHAT_ENABLED is False -- the box still shows so the panel reads
     # normally, but nothing can be sent. Flip the flag back on once a provider is decided.
-    prompt = st.chat_input(
-        "Willie is switched off for now" if not WILLIE_CHAT_ENABLED else "Ask Willie about UWW basketball...",
-        disabled=not WILLIE_CHAT_ENABLED,
-    )
+    prompt = st.chat_input("Ask Willie about UWW basketball...", disabled=not WILLIE_CHAT_ENABLED)
     if not WILLIE_CHAT_ENABLED:
-        st.caption("Willie is off while we settle which AI service to run him on. Nothing else in the app "
-                   "is affected.")
+        st.caption("Just like how Willie isn't available for our basketball games, he's currently not "
+                   "available for chatting.")
         return
 
     # Suggestion chips below the chat bar when no conversation yet
