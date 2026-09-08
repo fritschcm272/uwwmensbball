@@ -2,7 +2,7 @@
 
 Data is bundled directly with the app (CSV files under ./data, exported from the analysis notebook's Delta
 tables) rather than queried live from a SQL warehouse -- no Unity Catalog / warehouse permissions are needed
-at runtime. Six sections: Home (AI scouting assistant), Upcoming Game (including a "Game Plan
+at runtime. Six sections: Home ("Ask Willie Warhawk", the AI scouting assistant), Upcoming Game (including a "Game Plan
 Recommendations" panel that synthesizes coach notes, lineup, and rate-stat data into specific pre-game
 suggestions), Previous Games, Team, Players, Analytics (possession-adjusted advanced stats -- Four Factors,
 efficiency/pace, shot quality, ball movement, clutch performance, schedule/rest context, and coach-tagged
@@ -120,6 +120,51 @@ def load_table(name: str, season: str = None) -> pd.DataFrame:
         # column name and drop the rest, so every table this function returns has unique column labels.
         df = df.loc[:, ~df.columns.duplicated()]
     return df
+
+
+# --------------------------------------------------------------------------------------------------------------
+# Willie Warhawk -- the AI scouting assistant's identity
+# --------------------------------------------------------------------------------------------------------------
+# The mascot art lives in data/brand/ rather than data/logo/, because data/logo/ is scanned by name to match
+# OPPONENT logos (see find_logo_b64) -- dropping Willie in there would put him in that lookup pool.
+WILLIE_NAME = "Willie Warhawk"
+WILLIE_IMAGE_CANDIDATES = (
+    os.path.join(DATA_DIR, "brand", "willie-warhawk.png"),
+    os.path.join(DATA_DIR, "brand", "strutting-willie-warhawk.png"),
+    os.path.join(DATA_DIR, "willie-warhawk.png"),
+)
+
+
+@st.cache_data
+def willie_image_path() -> str:
+    """Path to the Willie Warhawk art, or "" if it isn't deployed. Never raises."""
+    for path in WILLIE_IMAGE_CANDIDATES:
+        if os.path.exists(path):
+            return path
+    return ""
+
+
+def willie_avatar():
+    """Avatar for st.chat_message: the mascot when present, a basketball when not.
+
+    The app has to keep working on a checkout where the image wasn't copied across, so every use of the
+    art goes through here rather than assuming the file exists.
+    """
+    return willie_image_path() or "\U0001f3c0"
+
+
+@st.cache_data
+def willie_image_b64() -> str:
+    """Base64 of the mascot art for inline HTML, or "" when unavailable."""
+    import base64 as _b64_willie
+    path = willie_image_path()
+    if not path:
+        return ""
+    try:
+        with open(path, "rb") as handle:
+            return _b64_willie.b64encode(handle.read()).decode("utf-8")
+    except OSError:
+        return ""
 
 
 @st.cache_data
@@ -3711,8 +3756,16 @@ def _build_system_prompt() -> str:
     except Exception:
         flags_str = "No coaching flags data available."
 
-    return f"""You are the UW-Whitewater Warhawks men's basketball AI scouting assistant.
+    return f"""You are Willie Warhawk, the UW-Whitewater Warhawks men's basketball scouting assistant.
 You help coaches and staff analyze the team, opponents, and game preparation.
+
+WHO YOU ARE:
+- Willie Warhawk is UW-Whitewater's mascot. You speak as the program's own scout: knowledgeable, direct,
+  and on the staff's side.
+- Keep the personality light. A coach preparing for a game wants the answer, not a mascot routine -- lean on
+  the persona for tone, never at the cost of getting to the point. Never open with a catchphrase.
+- Be honest about what the data does and doesn't show. If a number rests on two games, say so. Never invent
+  a stat to stay in character.
 
 CURRENT TEAM CONTEXT:
 - Record: {uww_wins}-{uww_losses}
@@ -3743,13 +3796,30 @@ GUIDELINES:
 
 
 def render_home():
-    """Home page with AI scouting assistant chat interface."""
-    # Welcome header
-    st.markdown("## :house: Home")
-    st.markdown(
-        "Ask the AI scouting assistant anything about UWW basketball — "
-        "team stats, opponent breakdowns, game prep, player analysis, and more."
-    )
+    """Home page: the "Ask Willie Warhawk" scouting assistant chat interface."""
+    _willie_b64 = willie_image_b64()
+    if _willie_b64:
+        _hdr_left, _hdr_right = st.columns([1, 6])
+        with _hdr_left:
+            st.markdown(
+                f'<img src="data:image/png;base64,{_willie_b64}" alt="Willie Warhawk" '
+                f'style="width:100%;max-width:110px;display:block;margin:0 auto;">',
+                unsafe_allow_html=True)
+        with _hdr_right:
+            st.markdown(
+                '<div style="font-weight:800;font-size:1.9rem;color:#4E2A84;line-height:1.15;'
+                'margin-top:0.35rem;">Ask Willie Warhawk</div>'
+                '<div style="font-size:0.95rem;color:#555;margin-top:0.25rem;">'
+                'Your scouting assistant. Ask about team stats, opponent breakdowns, game prep, '
+                'player analysis \u2014 anything in the app.</div>', unsafe_allow_html=True)
+    else:
+        # The art isn't deployed; the branding still reads correctly without it.
+        st.markdown('## \U0001f3c0 Ask Willie Warhawk')
+        st.markdown(
+            "Your scouting assistant. Ask about team stats, opponent breakdowns, game prep, "
+            "player analysis \u2014 anything in the app."
+        )
+    st.divider()
 
     # --- Chat interface ---
     if "home_messages" not in st.session_state:
@@ -3757,15 +3827,15 @@ def render_home():
 
     # Display chat history
     for msg in st.session_state.home_messages:
-        with st.chat_message(msg["role"], avatar="🏀" if msg["role"] == "assistant" else None):
+        with st.chat_message(msg["role"], avatar=willie_avatar() if msg["role"] == "assistant" else None):
             st.markdown(msg["content"])
 
     # Chat input
-    prompt = st.chat_input("Ask about UWW basketball...")
+    prompt = st.chat_input("Ask Willie about UWW basketball...")
 
     # Suggestion chips below the chat bar when no conversation yet
     if not st.session_state.home_messages and not prompt:
-        st.markdown("###### Try asking:")
+        st.markdown("###### Try asking Willie:")
         suggestions = [
             "What are our keys to victory against Elmhurst?",
             "Who is our best 3-point shooter?",
@@ -3790,8 +3860,8 @@ def render_home():
 
     if needs_response:
         # Generate AI response
-        with st.chat_message("assistant", avatar="🏀"):
-            with st.spinner("Thinking..."):
+        with st.chat_message("assistant", avatar=willie_avatar()):
+            with st.spinner("Willie is looking it up..."):
                 try:
                     client = _get_openai_client()
                     system_prompt = _build_system_prompt()
@@ -3808,7 +3878,7 @@ def render_home():
                     )
                     answer = response.choices[0].message.content
                 except Exception as e:
-                    answer = f"⚠️ AI assistant unavailable: {e}"
+                    answer = f"\u26a0\ufe0f Willie is unavailable right now: {e}"
 
                 st.markdown(answer)
         st.session_state.home_messages.append({"role": "assistant", "content": answer})
@@ -11021,6 +11091,10 @@ def main():
         st.session_state.nav_page = "Home"
 
     pages = ["Home", "Upcoming Game", "Analytics"]
+    # Display labels only. The page KEYS stay as they are -- st.session_state.nav_page and the routing at
+    # the bottom of this function both match on them, so renaming the key to brand the tab would break
+    # navigation and any bookmarked state.
+    page_labels = {"Home": "Ask Willie"}
 
     # Button-based navbar: uses theme primaryColor for the active page, no internal DOM hacks
     cols = st.columns(len(pages))
@@ -11028,7 +11102,7 @@ def main():
         with cols[i]:
             is_active = st.session_state.nav_page == p
             if st.button(
-                p,
+                page_labels.get(p, p),
                 key=f"nav_{p}",
                 use_container_width=True,
                 type="primary" if is_active else "secondary",
