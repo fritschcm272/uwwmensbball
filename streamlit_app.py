@@ -10267,7 +10267,10 @@ def _render_analytics_content():
     # entirely in whichever bucket the first meeting fell into.
     short_names = load_short_opponent_names()
     game_outcomes = get_game_outcomes(schedule)
-    _iso = lambda df: iso_dates(df["game_date"]).to_numpy()
+    # A Series carrying the FRAME'S OWN INDEX, not a bare array. iso_dates() builds a fresh Series with a
+    # default RangeIndex, so it can't be used to mask a filtered frame directly -- but callers here also
+    # need .isin(), which an ndarray doesn't have. Re-attaching the index gives both.
+    _iso = lambda df: pd.Series(iso_dates(df["game_date"]).to_numpy(), index=df.index)
     win_dates = {d for d, r in game_outcomes.items() if r == "W"}
     loss_dates = {d for d, r in game_outcomes.items() if r == "L"}
 
