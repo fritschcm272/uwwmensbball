@@ -1137,12 +1137,22 @@ def game_date_col(df: pd.DataFrame):
 
 
 def iso_dates(values) -> pd.Series:
-    """Any date spelling -> ISO 'YYYY-MM-DD' strings (NaN where unparseable)."""
+    """Any date spelling -> ISO 'YYYY-MM-DD' strings (NaN where unparseable).
+
+    Parsed per value rather than per column. pandas infers ONE format for a whole column, so a column
+    holding a mix -- "1/15/2026" alongside "2026-02-28", which happens when a table is appended to by two
+    different exports -- silently returns NaT for whichever spelling is in the minority. That NaT then
+    reads downstream as "this game has no date", which is exactly the failure this helper exists to stop.
+    """
     s = pd.Series(values)
-    parsed = pd.to_datetime(s, errors="coerce")
-    if parsed.isna().all() and not s.dropna().empty:
-        # Day-first exports ("13/01/2026") come back all-NaT from the default parse.
-        parsed = pd.to_datetime(s, errors="coerce", dayfirst=True)
+    try:
+        parsed = pd.to_datetime(s, errors="coerce", format="mixed")
+    except (ValueError, TypeError):
+        parsed = pd.to_datetime(s, errors="coerce")
+    missing = parsed.isna() & s.notna()
+    if missing.any():
+        # Whatever a mixed parse still couldn't read -- day-first exports ("13/01/2026") among them.
+        parsed = parsed.where(~missing, pd.to_datetime(s.where(missing), errors="coerce", dayfirst=True))
     return parsed.dt.strftime("%Y-%m-%d")
 
 
@@ -1874,7 +1884,7 @@ def get_data_driven_ktv(short_opponent, played: pd.DataFrame):
     # Map outcomes from the pre-upcoming games only -- passing the full schedule here would readmit the
     # future results that the box-score scoping above just excluded.
     # Per-DATE outcome: two meetings with the same opponent can have opposite results.
-    uww_per_game["outcome"] = uww_per_game["game_date"].astype(str).str[:10].map(get_game_outcomes(played))
+    uww_per_game["outcome"] = iso_dates(uww_per_game["game_date"]).map(get_game_outcomes(played)).to_numpy()
 
     wins = uww_per_game[uww_per_game["outcome"] == "W"]
     losses = uww_per_game[uww_per_game["outcome"] == "L"]
@@ -3851,6 +3861,19 @@ def render_upcoming_game():
         leaders_html = _build_season_leaders_html(uww_leaders, opp_leaders, opp_display)
         stats_html = _build_team_stats_html(uww_team_stats, opp_team_stats, opp_display) if uww_team_stats and opp_team_stats else ""
 
+        def _l5_iso_date(_value):
+            """A prior-game row's own date -> ISO, for matching against the box-score table.
+
+            The opponent's schedule stores a real date, so it only needs normalising. UWW's own games go
+            through resolve_game_date() instead, because their list carries a DISPLAY date ("Sat, Feb 28")
+            that has to be looked up. Using the wrong one of these two is what left the opponent side
+            unfiltered.
+            """
+            if _value is None or (isinstance(_value, float) and pd.isna(_value)):
+                return None
+            _iso = iso_dates([_value]).iloc[0]
+            return None if pd.isna(_iso) else _iso
+
         def _l5_button_label(_g, _short_names=None):
             """Same information, same shape as the read-only result cards above: date on top and
             dimmed, opponent below it, result and score last in win/loss colour.
@@ -3900,10 +3923,37 @@ def render_upcoming_game():
             _gd_game_box = _gd_box_all[_gd_box_all["opponent"] == _game_key] if not _gd_box_all.empty else pd.DataFrame()
             # Narrow to the one meeting that was clicked -- without this, a home-and-home shows both games'
             # rows stacked, so every player appears twice.
-            if _game_date and not _gd_game_box.empty and "game_date" in _gd_game_box.columns:
-                _gd_same_date = _gd_game_box[_gd_game_box["game_date"].astype(str).str[:10] == _game_date]
-                if not _gd_same_date.empty:
-                    _gd_game_box = _gd_same_date
+            #
+            # CONFIRMED BUG (fixed here): this had the same two defects the Previous Games play-by-play
+            # filter had. (a) It compared raw string slices against a hardcoded "game_date" column, so any
+            # other date spelling silently missed. (b) On a miss it kept the UNFILTERED rows, so instead of
+            # one game a coach got every meeting summed -- observed as Loras vs Dubuque showing 241 points
+            # on 190 FGA with Jack Haynes listed three times, which is three games stacked. Dates are now
+            # normalised on both sides, and a miss that can't be resolved is reported rather than widened.
+            _gd_date_col = game_date_col(_gd_game_box) if not _gd_game_box.empty else None
+            _gd_stacked = None
+            if _gd_date_col and not _gd_game_box.empty:
+                _gd_iso = iso_dates(_gd_game_box[_gd_date_col]).to_numpy()
+                _gd_n_games = pd.Series(_gd_iso).nunique(dropna=True)
+                if _game_date:
+                    _gd_same_date = _gd_game_box[_gd_iso == _game_date]
+                    if not _gd_same_date.empty:
+                        _gd_game_box = _gd_same_date
+                    elif _gd_n_games > 1:
+                        _gd_stacked = (
+                            f"No rows dated {_game_date} for this matchup, but {_gd_n_games} meetings are on "
+                            f"file. Showing them separately below rather than summing them into one "
+                            f"impossible box score."
+                        )
+                elif _gd_n_games > 1:
+                    _gd_stacked = (
+                        f"This matchup has {_gd_n_games} meetings on file and the click didn't carry a date. "
+                        f"Showing the most recent rather than summing them."
+                    )
+                    _gd_latest = pd.Series(_gd_iso).dropna().max()
+                    _gd_game_box = _gd_game_box[_gd_iso == _gd_latest]
+            if _gd_stacked:
+                st.warning(_gd_stacked)
             if _gd_game_box.empty:
                 st.warning("No reconstructed box score found for this game yet.")
                 return
@@ -4074,6 +4124,7 @@ def render_upcoming_game():
                                 "label": f"{short_opponent} vs {_ag_o['opp_name']} \u2014 {_ag_o.get('date', '')}",
                                 "source_table": "uww_opponent_prior_games_box_score",
                                 "team_a_hint": short_opponent,
+                                "game_date": _l5_iso_date(_ag_o.get("date")),
                             }
                             st.rerun()
                     else:
@@ -4198,6 +4249,10 @@ def render_upcoming_game():
                                 _show_last5_game_dialog(
                                     _o_third_party_short, f"{short_opponent} vs {_o_game['opp_name']} \u2014 {_o_game.get('date', '')}",
                                     _source_table="uww_opponent_prior_games_box_score", _team_a_hint=short_opponent,
+                                    # opp_all_games carries the opponent schedule's own game_date, already
+                                    # a real date -- it needs normalising, not resolving through
+                                    # resolve_game_date(), which only knows UWW's own tables.
+                                    _game_date=_l5_iso_date(_o_game.get("date")),
                                 )
                         else:
                             st.caption("\u2014")
@@ -9076,7 +9131,7 @@ def render_team():
         # with has one result per meeting, not one result overall.
         stints_split = stints.copy()
         if "game_date" in stints_split.columns:
-            stints_split["outcome"] = stints_split["game_date"].astype(str).str[:10].map(get_game_outcomes(schedule))
+            stints_split["outcome"] = iso_dates(stints_split["game_date"]).map(get_game_outcomes(schedule)).to_numpy()
         else:
             stints_split["outcome"] = stints_split["opponent"].map(get_opponent_outcomes(schedule, stints["opponent"].unique()))
 
@@ -9638,7 +9693,7 @@ def _render_analytics_content():
     # entirely in whichever bucket the first meeting fell into.
     short_names = load_short_opponent_names()
     game_outcomes = get_game_outcomes(schedule)
-    _iso = lambda df: df["game_date"].astype(str).str[:10]
+    _iso = lambda df: iso_dates(df["game_date"]).to_numpy()
     win_dates = {d for d, r in game_outcomes.items() if r == "W"}
     loss_dates = {d for d, r in game_outcomes.items() if r == "L"}
 
