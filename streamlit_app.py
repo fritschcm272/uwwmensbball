@@ -20,7 +20,10 @@ from datetime import datetime
 
 import pandas as pd
 import streamlit as st
-from openai import OpenAI
+try:
+    from openai import OpenAI
+except ImportError:      # Anthropic-only deployments don't need the openai package installed
+    OpenAI = None
 
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
@@ -3713,11 +3716,50 @@ def note_sentiment_counts(note) -> tuple:
 # --------------------------------------------------------------------------------------------------------------
 
 # LLM configuration — configure via environment variables:
-#   OPENAI_API_KEY    — your API key (OpenAI, Azure, or any compatible provider)
-#   OPENAI_BASE_URL   — (optional) custom endpoint URL, e.g. "https://api.openai.com/v1"
-#                        or a local model server like "http://localhost:11434/v1" (Ollama)
-#   AI_MODEL          — (optional) model name, defaults to "gpt-4o-mini"
-AI_MODEL = os.environ.get("AI_MODEL", "gpt-4o-mini")
+#
+#   Anthropic (Claude):
+#     ANTHROPIC_API_KEY — key from https://console.anthropic.com/settings/keys
+#     AI_MODEL          — (optional) e.g. "claude-sonnet-5" (the default), "claude-opus-5"
+#
+#   OpenAI / any OpenAI-compatible endpoint (Azure, Ollama, vLLM):
+#     OPENAI_API_KEY    — your API key
+#     OPENAI_BASE_URL   — (optional) endpoint, e.g. "http://localhost:11434/v1" for Ollama
+#     AI_MODEL          — (optional) model name, defaults to "gpt-4o-mini"
+#
+#   AI_PROVIDER — (optional) "anthropic" or "openai". Defaults to whichever key is present,
+#                 preferring Anthropic when both are.
+#
+# NOTE ON CLAUDE SUBSCRIPTIONS: a Claude Pro or Max subscription CANNOT be used to power this app.
+# Anthropic scopes subscription login to Claude Code and its own native apps, and rejects those
+# credentials elsewhere at the API layer. Billing for the key below is separate from the subscription.
+ANTHROPIC_DEFAULT_MODEL = "claude-sonnet-5"
+OPENAI_DEFAULT_MODEL = "gpt-4o-mini"
+
+
+def _ai_provider() -> str:
+    """Which LLM backend to use: "anthropic", "openai", or "" when nothing is configured."""
+    explicit = os.environ.get("AI_PROVIDER", "").strip().lower()
+    if explicit in ("anthropic", "claude"):
+        return "anthropic"
+    if explicit in ("openai", "azure", "compatible"):
+        return "openai"
+    if os.environ.get("ANTHROPIC_API_KEY", "").strip():
+        return "anthropic"
+    if os.environ.get("OPENAI_API_KEY", "").strip():
+        return "openai"
+    return ""
+
+
+def _ai_model() -> str:
+    """Model name for the active provider, honouring AI_MODEL when set."""
+    override = os.environ.get("AI_MODEL", "").strip()
+    if override:
+        return override
+    return ANTHROPIC_DEFAULT_MODEL if _ai_provider() == "anthropic" else OPENAI_DEFAULT_MODEL
+
+
+# Kept for backwards compatibility: existing code and deployments referenced AI_MODEL as a constant.
+AI_MODEL = _ai_model()
 
 
 def _get_openai_client():
@@ -3733,10 +3775,75 @@ def _get_openai_client():
             "OPENAI_API_KEY environment variable is not set. "
             "Set it to use the AI chat feature, or leave it blank to disable chat."
         )
+    if OpenAI is None:
+        raise RuntimeError(
+            "The 'openai' package isn't installed. Add `openai` to requirements.txt, or set "
+            "ANTHROPIC_API_KEY to use Claude instead."
+        )
     kwargs = {"api_key": api_key}
     if base_url:
         kwargs["base_url"] = base_url
     return OpenAI(**kwargs)
+
+
+def _get_anthropic_client():
+    """Return an Anthropic client. Imported lazily so the package is optional for OpenAI deployments."""
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError(
+            "ANTHROPIC_API_KEY is not set. Create a key at https://console.anthropic.com/settings/keys "
+            "and set it in the environment (or in .streamlit/secrets.toml on Streamlit Cloud)."
+        )
+    try:
+        import anthropic
+    except ImportError as exc:
+        raise RuntimeError(
+            "The 'anthropic' package isn't installed. Add `anthropic` to requirements.txt and redeploy."
+        ) from exc
+    return anthropic.Anthropic(api_key=api_key)
+
+
+def ai_chat(system_prompt: str, messages: list, max_tokens: int = 1024, temperature: float = 0.7) -> str:
+    """One completion from whichever provider is configured. Returns the assistant's text.
+
+    `messages` is a list of {"role": "user"|"assistant", "content": str} in OpenAI's shape; the Anthropic
+    branch adapts it. The two APIs differ in one way that matters and is easy to get wrong: Anthropic takes
+    the system prompt as its own top-level `system` argument, NOT as a message with role "system". Passing
+    it as a message raises rather than silently ignoring it, which is at least a loud failure.
+    """
+    provider = _ai_provider()
+    if not provider:
+        raise RuntimeError(
+            "No AI provider configured. Set ANTHROPIC_API_KEY (Claude) or OPENAI_API_KEY."
+        )
+
+    # Only user/assistant turns cross the wire; a stray system turn in the history would break Anthropic
+    # and confuse OpenAI.
+    turns = [{"role": m["role"], "content": m["content"]}
+             for m in messages if m.get("role") in ("user", "assistant") and m.get("content")]
+    if not turns:
+        raise RuntimeError("Nothing to send -- the conversation has no user message yet.")
+
+    if provider == "anthropic":
+        client = _get_anthropic_client()
+        response = client.messages.create(
+            model=_ai_model(),
+            max_tokens=max_tokens,
+            temperature=temperature,
+            system=system_prompt,
+            messages=turns,
+        )
+        # content is a list of blocks; join the text ones and ignore any others.
+        return "".join(block.text for block in response.content if getattr(block, "type", "") == "text")
+
+    client = _get_openai_client()
+    response = client.chat.completions.create(
+        model=_ai_model(),
+        messages=[{"role": "system", "content": system_prompt}] + turns,
+        max_tokens=max_tokens,
+        temperature=temperature,
+    )
+    return response.choices[0].message.content
 
 
 def _build_system_prompt() -> str:
@@ -3818,6 +3925,12 @@ GUIDELINES:
 """
 
 
+# Master switch for the Ask Willie chat. False = the input is disabled and no request can be sent, which
+# is where it sits until the provider question (paid API vs a free tier vs a local model) is settled.
+# Nothing else in the app reads this; turning it back to True is the only step needed to re-enable chat.
+WILLIE_CHAT_ENABLED = False
+
+
 def render_willie_sidebar():
     """The "Ask Willie Warhawk" assistant, in the sidebar, available from every page.
 
@@ -3849,8 +3962,16 @@ def render_willie_sidebar():
         with st.chat_message(msg["role"], avatar=willie_avatar() if msg["role"] == "assistant" else None):
             st.markdown(msg["content"])
 
-    # Chat input
-    prompt = st.chat_input("Ask Willie about UWW basketball...")
+    # Chat input. Disabled while WILLIE_CHAT_ENABLED is False -- the box still shows so the panel reads
+    # normally, but nothing can be sent. Flip the flag back on once a provider is decided.
+    prompt = st.chat_input(
+        "Willie is switched off for now" if not WILLIE_CHAT_ENABLED else "Ask Willie about UWW basketball...",
+        disabled=not WILLIE_CHAT_ENABLED,
+    )
+    if not WILLIE_CHAT_ENABLED:
+        st.caption("Willie is off while we settle which AI service to run him on. Nothing else in the app "
+                   "is affected.")
+        return
 
     # Suggestion chips below the chat bar when no conversation yet
     if not st.session_state.home_messages and not prompt:
@@ -3886,20 +4007,12 @@ def render_willie_sidebar():
         with st.chat_message("assistant", avatar=willie_avatar()):
             with st.spinner("Willie is looking it up..."):
                 try:
-                    client = _get_openai_client()
-                    system_prompt = _build_system_prompt()
-
-                    messages = [{"role": "system", "content": system_prompt}]
-                    for m in st.session_state.home_messages[-20:]:
-                        messages.append({"role": m["role"], "content": m["content"]})
-
-                    response = client.chat.completions.create(
-                        model=AI_MODEL,
-                        messages=messages,
+                    answer = ai_chat(
+                        _build_system_prompt(),
+                        st.session_state.home_messages[-20:],
                         max_tokens=1024,
                         temperature=0.7,
                     )
-                    answer = response.choices[0].message.content
                 except Exception as e:
                     answer = f"\u26a0\ufe0f Willie is unavailable right now: {e}"
 
