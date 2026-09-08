@@ -1153,11 +1153,21 @@ def iso_dates(values) -> pd.Series:
     if missing.any():
         # Whatever a mixed parse still couldn't read -- day-first exports ("13/01/2026") among them.
         parsed = parsed.where(~missing, pd.to_datetime(s.where(missing), errors="coerce", dayfirst=True))
+    # CONFIRMED BUG (fixed here): a display date with NO YEAR ("Sat, Feb 28", "Feb 28") parses happily,
+    # with pandas defaulting the year to 1 -- and "1-02-28" then travelled onward as though it were a real
+    # date, matching nothing and surfacing to a coach as "No rows dated 1-02-28". A string that doesn't
+    # carry a year is not a date; it needs resolving against a table that knows the season (see
+    # resolve_game_date / resolve_prior_game_date), not parsing.
+    parsed = parsed.where(parsed.isna() | (parsed.dt.year >= 1900))
     return parsed.dt.strftime("%Y-%m-%d")
 
 
+UWW_GAME_DATE_TABLES = ("uww_pbp_box_score", "uww_pbp_events", "uww_lineup_stints", "uww_scoring_runs")
+OPPONENT_GAME_DATE_TABLES = ("uww_opponent_prior_games_box_score", "uww_opponent_prior_games_pbp")
+
+
 @st.cache_data(ttl=60)
-def _game_date_index(season=None) -> dict:
+def _game_date_index(season=None, tables=UWW_GAME_DATE_TABLES) -> dict:
     """(month, day) -> ISO 'YYYY-MM-DD', collected from every game-keyed table's own game_date column.
 
     season: which season's tables to read. Previously this always read the CURRENT season's files, so on the
@@ -1165,7 +1175,7 @@ def _game_date_index(season=None) -> dict:
     current season's same-day game), and the per-game filters below silently degraded to opponent-only.
     """
     index = {}
-    for table in ("uww_pbp_box_score", "uww_pbp_events", "uww_lineup_stints", "uww_scoring_runs"):
+    for table in tables:
         df = load_table(table, season)
         col = game_date_col(df) if not df.empty else None
         if col is None:
@@ -1176,13 +1186,36 @@ def _game_date_index(season=None) -> dict:
     return index
 
 
-def resolve_game_date(display_date, season=None):
-    """'Sat, Jan 3' -> '2026-01-03'. Returns None when no parsed game matches that day."""
-    m = re.match(r"^\w{3},\s+(\w{3})\s+(\d+)$", str(display_date).strip())
+def _resolve_display_date(display_date, season, tables):
+    """Shared body: an already-real date passes through, a display date is looked up by month and day."""
+    text = str(display_date).strip()
+    if not text or text.lower() in ("nan", "none"):
+        return None
+    already = iso_dates([display_date]).iloc[0]
+    if pd.notna(already):
+        return already
+    # "Sat, Feb 28" or "Feb 28" -- no year, so the season's own tables have to supply it.
+    m = re.match(r"^(?:\w{3},\s+)?(\w{3})\w*\s+(\d{1,2})$", text)
     if not m:
         return None
     month = _MONTH_ABBR.get(m.group(1))
-    return _game_date_index(season).get((month, int(m.group(2)))) if month else None
+    return _game_date_index(season, tables).get((month, int(m.group(2)))) if month else None
+
+
+def resolve_game_date(display_date, season=None):
+    """'Sat, Jan 3' -> '2026-01-03', from UWW's OWN game tables."""
+    return _resolve_display_date(display_date, season, UWW_GAME_DATE_TABLES)
+
+
+def resolve_prior_game_date(display_date, season=None):
+    """'Sat, Feb 28' -> '2026-02-28', from the UPCOMING OPPONENT's prior-game tables.
+
+    Separate from resolve_game_date() because they read different tables. uww_opponent_schedules stores a
+    year-less display date, and the only place the real date for one of those games exists is the
+    opponent's own reconstructed box score / play-by-play. Resolving an opponent game against UWW's
+    schedule would silently return the wrong season's game, or nothing.
+    """
+    return _resolve_display_date(display_date, season, OPPONENT_GAME_DATE_TABLES)
 
 
 def played_game_dates(played: pd.DataFrame, season=None) -> set:
@@ -3861,19 +3894,6 @@ def render_upcoming_game():
         leaders_html = _build_season_leaders_html(uww_leaders, opp_leaders, opp_display)
         stats_html = _build_team_stats_html(uww_team_stats, opp_team_stats, opp_display) if uww_team_stats and opp_team_stats else ""
 
-        def _l5_iso_date(_value):
-            """A prior-game row's own date -> ISO, for matching against the box-score table.
-
-            The opponent's schedule stores a real date, so it only needs normalising. UWW's own games go
-            through resolve_game_date() instead, because their list carries a DISPLAY date ("Sat, Feb 28")
-            that has to be looked up. Using the wrong one of these two is what left the opponent side
-            unfiltered.
-            """
-            if _value is None or (isinstance(_value, float) and pd.isna(_value)):
-                return None
-            _iso = iso_dates([_value]).iloc[0]
-            return None if pd.isna(_iso) else _iso
-
         def _l5_button_label(_g, _short_names=None):
             """Same information, same shape as the read-only result cards above: date on top and
             dimmed, opponent below it, result and score last in win/loss colour.
@@ -4124,7 +4144,7 @@ def render_upcoming_game():
                                 "label": f"{short_opponent} vs {_ag_o['opp_name']} \u2014 {_ag_o.get('date', '')}",
                                 "source_table": "uww_opponent_prior_games_box_score",
                                 "team_a_hint": short_opponent,
-                                "game_date": _l5_iso_date(_ag_o.get("date")),
+                                "game_date": resolve_prior_game_date(_ag_o.get("date")),
                             }
                             st.rerun()
                     else:
@@ -4249,10 +4269,10 @@ def render_upcoming_game():
                                 _show_last5_game_dialog(
                                     _o_third_party_short, f"{short_opponent} vs {_o_game['opp_name']} \u2014 {_o_game.get('date', '')}",
                                     _source_table="uww_opponent_prior_games_box_score", _team_a_hint=short_opponent,
-                                    # opp_all_games carries the opponent schedule's own game_date, already
-                                    # a real date -- it needs normalising, not resolving through
-                                    # resolve_game_date(), which only knows UWW's own tables.
-                                    _game_date=_l5_iso_date(_o_game.get("date")),
+                                    # uww_opponent_schedules stores a YEAR-LESS display date ("Sat, Feb
+                                    # 28"), so this has to be looked up in the opponent's own prior-game
+                                    # tables -- not parsed, and not resolved against UWW's schedule.
+                                    _game_date=resolve_prior_game_date(_o_game.get("date")),
                                 )
                         else:
                             st.caption("\u2014")
