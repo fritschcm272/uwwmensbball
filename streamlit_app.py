@@ -1594,17 +1594,34 @@ def scope_to_played(df: pd.DataFrame, played: pd.DataFrame, season=None) -> pd.D
     return df[iso_dates(df[col]).isin(dates).to_numpy()]
 
 
-def get_game_outcomes(schedule: pd.DataFrame) -> dict:
+def _short_game_date(iso_date) -> str:
+    """'2026-01-03' -> 'Jan 3 26'. Compact enough for a chart axis, unambiguous about the season."""
+    if not iso_date:
+        return ""
+    try:
+        parsed = pd.to_datetime(str(iso_date)[:10])
+    except (ValueError, TypeError):
+        return str(iso_date)
+    if pd.isna(parsed):
+        return str(iso_date)
+    return f"{parsed.strftime('%b')} {parsed.day} {parsed.strftime('%y')}"
+
+
+def get_game_outcomes(schedule: pd.DataFrame, season=None) -> dict:
     """ISO game_date -> "W"/"L". The per-DATE counterpart to get_opponent_outcomes().
 
     get_opponent_outcomes() keys on the opponent's name, so for a home-and-home it can only report ONE result
     for two games -- and quietly reports the first meeting's for both. Use this wherever a per-game outcome is
     what's actually meant (win/loss splits, situational splits, trend charts).
+
+    season: which season's tables the schedule's display dates resolve against. Omitting it on a past season
+    silently returns no outcomes at all, since resolve_game_date() would be looking those dates up in the
+    CURRENT season's game tables -- the same failure the Previous Games page hit.
     """
     outcomes = {}
     for _, row in schedule.iterrows():
         if pd.notna(row.get("outcome")):
-            iso = resolve_game_date(row["date"])
+            iso = resolve_game_date(row["date"], season)
             if iso:
                 outcomes[iso] = row["outcome"]
     return outcomes
@@ -10251,12 +10268,22 @@ def _render_analytics_content():
         "play-by-play, and the schedule. No new charting or data collection required for anything on this page."
     )
 
-    schedule = load_table("uww_schedule")
-    box = load_table("uww_pbp_box_score")
-    pbp = load_table("uww_pbp_events")
+    # Season picker, same pattern and same rules as the Previous Games tab: only shown once a second
+    # season's data folder exists, and `_an_season` stays None for the current season so these load_table()
+    # calls share the cache entries every other page already uses rather than duplicating them.
+    _an_seasons = _discover_available_seasons()
+    _an_season = None
+    if len(_an_seasons) > 1:
+        _an_choice = st.selectbox("Season", list(_an_seasons.keys()), key="analytics_season")
+        if _an_choice != "Current Season":
+            _an_season = _an_choice
+
+    schedule = load_table("uww_schedule", _an_season)
+    box = load_table("uww_pbp_box_score", _an_season)
+    pbp = load_table("uww_pbp_events", _an_season)
 
     if box.empty:
-        st.info("No box score data available yet.")
+        st.info(f"No box score data available for {_an_season or 'the current season'} yet.")
         return
 
     uww_box_all = box[box["team"] == "UW-Whitewater"]
@@ -10265,8 +10292,8 @@ def _render_analytics_content():
 
     # Split by GAME date, not opponent name: a team UWW beat once and lost to once would otherwise land
     # entirely in whichever bucket the first meeting fell into.
-    short_names = load_short_opponent_names()
-    game_outcomes = get_game_outcomes(schedule)
+    short_names = load_short_opponent_names(_an_season)
+    game_outcomes = get_game_outcomes(schedule, _an_season)
     # A Series carrying the FRAME'S OWN INDEX, not a bare array. iso_dates() builds a fresh Series with a
     # default RangeIndex, so it can't be used to mask a filtered frame directly -- but callers here also
     # need .isin(), which an ndarray doesn't have. Re-attaching the index gives both.
@@ -10331,7 +10358,7 @@ def _render_analytics_content():
         trend_rows = []
         for _, srow in played_order.iterrows():
             opp_short = resolve_short_opponent(srow["opponent"], short_names)
-            g_date = resolve_game_date(srow["date"])
+            g_date = resolve_game_date(srow["date"], _an_season)
             if not opp_short or not g_date:
                 continue
             # One point per GAME. Selecting by opponent name plotted a rematch's combined totals twice.
@@ -10340,7 +10367,11 @@ def _render_analytics_content():
             if g_uww.empty:
                 continue
             g_eff = compute_efficiency_pace(g_uww, g_opp, 1)
-            name = f"{opp_short} {g_date[5:]}" if (played_order["opponent"] == srow["opponent"]).sum() > 1 else opp_short
+            # Every point carries its date, year included -- a season spans two calendar years, and with a
+            # season filter now on this page a bare "01-03" doesn't say which season you're looking at.
+            # Rematches used to be the only labels with a date at all, which made them the only ones a
+            # coach could place in time.
+            name = f"{opp_short} {_short_game_date(g_date)}"
             trend_rows.append({"_date": g_date, "_name": name,
                                "ORtg": round(g_eff["ORtg"], 1), "DRtg": round(g_eff["DRtg"], 1),
                                "Net Rtg": round(g_eff["Net Rtg"], 1)})
@@ -10349,7 +10380,8 @@ def _render_analytics_content():
             width = len(str(len(trend_df)))
             trend_df["Game"] = [f"{i + 1:0{width}d}. {n}" for i, n in enumerate(trend_df["_name"])]
             trend_df = trend_df.set_index("Game")
-            st.markdown("**Game-by-game trend** (chronological)")
+            _an_span = f"{_short_game_date(trend_df['_date'].iloc[0])} \u2013 {_short_game_date(trend_df['_date'].iloc[-1])}"
+            st.markdown(f"**Game-by-game trend** (chronological \u2014 {_an_season or 'current season'}, {_an_span})")
             st.line_chart(trend_df[["ORtg", "DRtg"]])
             st.caption("Rising ORtg / falling DRtg over the season is the clearest single trendline for whether a team is actually improving, independent of schedule strength swings.")
 
@@ -10493,7 +10525,7 @@ def _render_analytics_content():
             "matching recap file have this data; everything else on this page comes from the box score and "
             "play-by-play alone."
         ))
-    coach_notes = load_table("uww_coach_notes")
+    coach_notes = load_table("uww_coach_notes", _an_season)
     if coach_notes.empty:
         st.info("No coach-tagged play notes available yet -- add a \"<matchup>_recap.csv\" file for a game and re-run the parser.")
     else:
@@ -10577,7 +10609,7 @@ def _render_analytics_content():
                     _v = max(int(_v), 0)
                     return f"{_v // 60}:{_v % 60:02d}"
 
-                _pc_events = load_table("uww_pbp_events")
+                _pc_events = load_table("uww_pbp_events", _an_season)
                 if not _pc_events.empty and "coach_note" in _pc_events.columns:
                     _pc_events = _pc_events.copy()
                     _pc_events["_pc_call"] = resolve_play_calls(_pc_events)
