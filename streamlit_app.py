@@ -848,46 +848,42 @@ def player_game_log(player_names, source_table, team_name, season=None) -> pd.Da
     return pd.DataFrame(rows).sort_values("_iso", ascending=False).reset_index(drop=True)
 
 
-def render_player_game_log(player_names, source_table, team_name, key_prefix, season=None):
+def render_player_game_log(player_names, source_table, team_name, season=None):
     """Button + game-by-game box score for one player, for use inside a dialog.
 
-    A button rather than an always-open table: the log is a drill-down, and a dialog that opens with
-    fifteen rows of numbers buries the summary a coach came for. Streamlit allows only one dialog at a
-    time, so this expands in place instead of opening a second one.
+    Collapsed by default: the log is a drill-down, and a dialog that opens with fifteen rows of numbers
+    buries the summary a coach came for.
+
+    CONFIRMED BUG (fixed here): this was a button that flipped session state and called st.rerun(). Inside
+    a dialog, st.rerun() CLOSES the dialog -- so opening or hiding the log dismissed the whole Player
+    Detail box. A widget click already triggers its own rerun, and Streamlit keeps a dialog open across
+    that one; the explicit rerun on top of it was what tore the dialog down. An expander needs neither, so
+    there is no state to keep and nothing to rerun.
     """
-    state_key = f"{key_prefix}_gamelog_open"
-    is_open = st.session_state.get(state_key, False)
-    if st.button("\U0001f4ca Game-by-game box scores" if not is_open else "\u2716 Hide game-by-game",
-                 key=f"{key_prefix}_gamelog_btn", use_container_width=True):
-        st.session_state[state_key] = not is_open
-        st.rerun()
-    if not st.session_state.get(state_key, False):
-        return
+    with st.expander("\U0001f4ca Game-by-game box scores", expanded=False):
+        log = player_game_log(player_names, source_table, team_name, season)
+        if log.empty:
+            st.info("No per-game box score data on file for this player yet.")
+            return
 
-    log = player_game_log(player_names, source_table, team_name, season)
-    if log.empty:
-        st.info("No per-game box score data on file for this player yet.")
-        return
+        st.dataframe(log.drop(columns=["_iso"]), hide_index=True, use_container_width=True)
 
-    display = log.drop(columns=["_iso"])
-    st.dataframe(display, hide_index=True, use_container_width=True)
-
-    # Averages under the table, computed from the games shown so the two can never disagree.
-    avg_cols = [c for c in ("MIN", "PTS", "REB", "AST", "STL", "BLK", "TO") if c in log.columns]
-    if avg_cols:
-        st.caption(
-            f"{len(log)} game(s) \u00b7 averages: "
-            + " \u00b7 ".join(f"{c} {pd.to_numeric(log[c], errors='coerce').mean():.1f}" for c in avg_cols)
-        )
-    highs = []
-    for c in ("PTS", "REB", "AST"):
-        if c in log.columns:
-            series = pd.to_numeric(log[c], errors="coerce")
-            if series.notna().any():
-                best = series.idxmax()
-                highs.append(f"{c} {int(series.max())} vs {log.at[best, 'Opponent']}")
-    if highs:
-        st.caption("Season highs: " + " \u00b7 ".join(highs))
+        # Averages under the table, computed from the games shown so the two can never disagree.
+        avg_cols = [c for c in ("MIN", "PTS", "REB", "AST", "STL", "BLK", "TO") if c in log.columns]
+        if avg_cols:
+            st.caption(
+                f"{len(log)} game(s) \u00b7 averages: "
+                + " \u00b7 ".join(f"{c} {pd.to_numeric(log[c], errors='coerce').mean():.1f}" for c in avg_cols)
+            )
+        highs = []
+        for c in ("PTS", "REB", "AST"):
+            if c in log.columns:
+                series = pd.to_numeric(log[c], errors="coerce")
+                if series.notna().any():
+                    best = series.idxmax()
+                    highs.append(f"{c} {int(series.max())} vs {log.at[best, 'Opponent']}")
+        if highs:
+            st.caption("Season highs: " + " \u00b7 ".join(highs))
 
 
 def render_style_match_card(rank_row, ranked_frame, profiles, target_row, target_label,
@@ -4880,10 +4876,7 @@ def render_upcoming_game():
                 # Same drill-down as UWW's own Player Detail dialog, sourced from this opponent's prior
                 # games. The season line above is their scouting-report average; this is the night-by-night
                 # it came from, which is where a coach sees whether 14 PPG is 14 every night or 4 and 24.
-                render_player_game_log(
-                    [player_name], "uww_opponent_prior_games_box_score", short_opponent,
-                    key_prefix=f"oppplayer_{re.sub(r'[^a-z0-9]+', '_', str(player_name).strip().lower())}",
-                )
+                render_player_game_log([player_name], "uww_opponent_prior_games_box_score", short_opponent)
 
                 with st.container(border=True):
                     st.markdown("**Comparable Player**")
@@ -9413,10 +9406,7 @@ def render_players():
             # Game-by-game box scores, directly under the season line above -- the season averages say what
             # this player usually does, the log says which nights they did it. Alias included because the
             # box score and the roster don't always spell a name the same way.
-            render_player_game_log(
-                [player_name, alias_key], "uww_pbp_box_score", "UW-Whitewater",
-                key_prefix=f"uwwplayer_{re.sub(r'[^a-z0-9]+', '_', player_name.strip().lower())}",
-            )
+            render_player_game_log([player_name, alias_key], "uww_pbp_box_score", "UW-Whitewater")
 
             # --- Projected vs Actual Performance ---
             try:
