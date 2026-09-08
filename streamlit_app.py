@@ -1695,6 +1695,144 @@ PHRASE_SIDE = {
 }
 
 
+# --------------------------------------------------------------------------------------------------------------
+# Style evidence for Keys to Victory
+# --------------------------------------------------------------------------------------------------------------
+# A KTV category's stat line answers "what do we average, and what do they average". The more useful question
+# for a game plan is narrower: what happens to that stat when we play THIS KIND of team, and what happens to
+# it when a team like us plays THIS opponent. Both panels above already work that out; this feeds their
+# answers back into the keys so a coach reads them where the decision is being made rather than having to
+# hold two panels in their head and join them up.
+#
+# Two independent lines per category, from the two panels, because they answer different questions:
+#   COMPARABLE OPPONENTS -> UWW's own numbers in the games against style-alike teams, split by result. This
+#     is our history against the style, and it is the one that can say "we win when this number is X".
+#   TEAMS LIKE US        -> what teams built like us actually produced against THIS opponent, next to what
+#     the rest of their opponents produced. This is the opponent's history against our style.
+# Neither is a large sample. Both report their own n, and the code never states a split it cannot count.
+KTV_CATEGORY_TO_FEATURES = {
+    "Ball Security":                                        ["off_tov"],
+    "Rebounding":                                           ["off_orb", "def_drb"],
+    "Three-Point Shooting":                                 ["off_3par", "off_efg"],
+    "Free Throws":                                          ["off_ftr"],
+    "Fouls / Discipline":                                   ["def_ftr"],
+    "Ball Movement / Assists":                              ["off_astr"],
+    "Paint Protection / Blocks":                            ["def_efg"],
+    "Perimeter Defense / Ball Pressure/ Create Turnovers":  ["def_tov"],
+    "Scoring Inside":                                       ["off_efg"],
+    "Field Goal Efficiency":                                ["off_efg"],
+    "Defensive Efficiency":                                 ["def_efg", "def_rtg"],
+    "Offensive Efficiency":                                 ["off_efg", "off_rtg"],
+    "Four Factors":                                         ["off_efg", "off_tov", "off_orb", "off_ftr"],
+    "Transition / Pace":                                    ["pace"],
+}
+
+# Box-score columns behind each category, for the win/loss split against style-alike opponents. Mirrors the
+# cat_stat_map inside get_data_driven_ktv() deliberately -- same categories, same columns.
+KTV_CATEGORY_TO_BOX_STATS = {
+    "Ball Security": ["TO"],
+    "Rebounding": ["REB", "OREB"],
+    "Three-Point Shooting": ["FG3M", "FG3A"],
+    "Free Throws": ["FTM", "FTA"],
+    "Fouls / Discipline": ["PF"],
+    "Ball Movement / Assists": ["AST"],
+    "Paint Protection / Blocks": ["BLK"],
+    "Perimeter Defense / Ball Pressure/ Create Turnovers": ["STL"],
+    "Scoring Inside": ["FGM"],
+    "Field Goal Efficiency": ["FGM", "FGA"],
+    "Offensive Efficiency": ["PTS"],
+}
+# Four Factors, Transition/Pace and Defensive Efficiency are deliberately ABSENT above. The only box column
+# that could stand in for them is FGA or raw PTS, which says nothing about the factor being asked about --
+# a win/loss split on "field goal attempts" is noise dressed as a key. Those categories get the rate-feature
+# line only, which measures the thing itself.
+KTV_STAT_LOWER_IS_BETTER = {"TO", "PF"}
+
+
+def style_matched_ktv_lines(category, style_ctx, short_opponent) -> list:
+    """Evidence lines for one KTV category, drawn from the two style panels. [] when there is nothing solid.
+
+    Every line states its own sample size. A line is omitted rather than hedged when the numbers behind it
+    do not exist -- an empty category is honest, a line built on one game presented as a trend is not.
+    """
+    lines = []
+    if not style_ctx:
+        return lines
+
+    # --- Line 1: our own history against this style, split by result ---
+    comparable = style_ctx.get("comparable_box")          # UWW per-game totals vs style-alike teams
+    outcomes = style_ctx.get("comparable_outcomes") or {}
+    names = style_ctx.get("comparable_names") or []
+    stats = KTV_CATEGORY_TO_BOX_STATS.get(category, [])
+    if comparable is not None and not comparable.empty and stats:
+        stat = stats[0]
+        if stat in comparable.columns:
+            per_game = comparable.groupby("_game_key", as_index=False)[stat].sum()
+            per_game["outcome"] = per_game["_game_key"].map(outcomes)
+            wins = per_game[per_game["outcome"] == "W"][stat]
+            losses = per_game[per_game["outcome"] == "L"][stat]
+            if len(wins) and len(losses):
+                _gap = wins.mean() - losses.mean()
+                _scale = max(abs(wins.mean()), abs(losses.mean()), 1e-6)
+                # Only claim a direction when there is one worth claiming. A 5% relative gap on a
+                # two-or-three-game split is not a finding, and "lower in the wins" printed over two
+                # identical averages is worse than saying nothing -- it invents a key out of noise.
+                if abs(_gap) / _scale < 0.05:
+                    _tail = " \u2014 no meaningful split either way on this sample."
+                else:
+                    _helps = (_gap < 0) if stat in KTV_STAT_LOWER_IS_BETTER else (_gap > 0)
+                    _tail = (f" \u2014 {'better' if _helps else 'worse'} in the wins by "
+                             f"{abs(_gap):.1f}.")
+                lines.append(
+                    f"vs teams like {short_opponent} ({', '.join(names[:3])}): UWW averaged "
+                    f"<strong>{wins.mean():.1f} {stat}</strong> in the {len(wins)} win(s) and "
+                    f"<strong>{losses.mean():.1f}</strong> in the {len(losses)} loss(es)" + _tail
+                )
+            elif len(per_game):
+                lines.append(
+                    f"vs teams like {short_opponent} ({', '.join(names[:3])}): UWW averaged "
+                    f"<strong>{per_game[stat].mean():.1f} {stat}</strong> across {len(per_game)} game(s) "
+                    f"({'all wins' if len(wins) == len(per_game) else 'all losses' if len(losses) == len(per_game) else 'mixed results'})."
+                )
+
+    # --- Line 2: what teams built like us produced against this opponent ---
+    like_profiles = style_ctx.get("like_us_profiles")
+    like_matched = style_ctx.get("like_us_matched") or []
+    like_all = style_ctx.get("like_us_all") or []
+    features = KTV_CATEGORY_TO_FEATURES.get(category, [])
+    if like_profiles is not None and not like_profiles.empty and features and like_matched:
+        key = features[0]
+        if key in like_profiles.columns:
+            matched = pd.to_numeric(
+                pd.Series([like_profiles.at[n, key] for n in like_matched if n in like_profiles.index]),
+                errors="coerce").dropna()
+            field = pd.to_numeric(
+                pd.Series([like_profiles.at[n, key] for n in like_all if n in like_profiles.index]),
+                errors="coerce").dropna()
+            if len(matched) and len(field) > len(matched):
+                label = OPPONENT_FEATURE_LABELS.get(key, key)
+                gap = matched.mean() - field.mean()
+                scale = max(abs(matched.mean()), abs(field.mean()), 1e-6)
+                # Same rule as the split above: no direction claimed when there isn't one. Two identical
+                # numbers reported as "less than the field" is the kind of thing a coach notices once and
+                # then stops trusting the whole panel over.
+                tail = ("\u2014 in line with the field." if abs(gap) / scale < 0.05
+                        else f"\u2014 {'more' if gap > 0 else 'less'} than the field.")
+                lines.append(
+                    f"Against {short_opponent}, the {len(matched)} team(s) most like us posted "
+                    f"<strong>{format_feature(key, matched.mean())}</strong> on \"{label}\" versus "
+                    f"<strong>{format_feature(key, field.mean())}</strong> for all {len(field)} of their "
+                    f"opponents {tail}"
+                )
+            elif len(matched):
+                label = OPPONENT_FEATURE_LABELS.get(key, key)
+                lines.append(
+                    f"Against {short_opponent}, the {len(matched)} team(s) most like us posted "
+                    f"<strong>{format_feature(key, matched.mean())}</strong> on \"{label}\"."
+                )
+    return lines
+
+
 def get_data_driven_ktv(short_opponent, played: pd.DataFrame):
     """Compute data-driven Keys to Victory: win/loss stat splits for the upcoming opponent's KTV categories.
 
@@ -4701,6 +4839,10 @@ def render_upcoming_game():
         # (the opening weeks -- at Ripon, game 1, there are none at all), the pool is topped up with teams
         # UWW played LAST season, profiled from that season's own tables and labelled as such. Current-season
         # opponents are never displaced by a borrowed one; last season only fills the empty slots.
+        # Collected by the two style panels below and consumed by the Keys to Victory section further down
+        # (see style_matched_ktv_lines). Initialised here so KTV can never depend on whether a panel
+        # happened to render -- an absent key just means that evidence line is skipped.
+        _style_ctx = {}
         _co_prior_label = prior_season_label()
         _co_profiles_all = profiles_with_prior_season(_co_prior_label)
         if _co_profiles_all.empty or not short_opponent or short_opponent not in _co_profiles_all.index:
@@ -4884,6 +5026,22 @@ def render_upcoming_game():
                     f"**{_n.lower()} {100 * _w:.0f}%**" for _n, _w in FOUR_FACTOR_WEIGHTS.items()
                 ).replace("efg%", "shooting").replace("tov%", "turnovers").replace(
                     "orb%", "offensive rebounding").replace("ft rate", "free throws")
+
+                # Hand this panel's answer to Keys to Victory: which teams matched, and UWW's own per-game
+                # box totals in exactly those games, keyed so a result can be attached to each.
+                _style_ctx["comparable_names"] = [untag_season(_n)[0] for _n in _co_ranked["opponent"]]
+                _co_ktv_dates = {str(_g.get("date")) for _n in _co_ranked["opponent"]
+                                 for _g in _co_games.get(_n, [])}
+                _co_ktv_iso = {resolve_game_date(_d) for _d in _co_ktv_dates}
+                _co_ktv_iso.discard(None)
+                _co_ktv_box = box[box["team"] == "UW-Whitewater"].copy() if not box.empty else pd.DataFrame()
+                if not _co_ktv_box.empty:
+                    _co_ktv_col = game_date_col(_co_ktv_box)
+                    if _co_ktv_col and _co_ktv_iso:
+                        _co_ktv_box["_game_key"] = iso_dates(_co_ktv_box[_co_ktv_col]).to_numpy()
+                        _co_ktv_box = _co_ktv_box[_co_ktv_box["_game_key"].isin(_co_ktv_iso)]
+                        _style_ctx["comparable_box"] = _co_ktv_box
+                        _style_ctx["comparable_outcomes"] = get_game_outcomes(played)
 
                 with st.expander("\U0001f4d8 How to read this \u2014 what the numbers mean", expanded=False):
                     st.markdown(f"""
@@ -5231,6 +5389,13 @@ than the one above, which is measured over more games, and it is labelled that w
                             f"because they are the nearest available, not as a confident match."
                         )
 
+                    # Hand this panel's answer to Keys to Victory as well: the ranked teams, every team the
+                    # opponent has played, and the rate profiles behind both -- so a category can compare
+                    # "teams like us" against "the field" on its own feature.
+                    _style_ctx["like_us_matched"] = [str(_n) for _n in _tl_ranked["opponent"]]
+                    _style_ctx["like_us_all"] = [str(_n) for _n in _tl_context]
+                    _style_ctx["like_us_profiles"] = _tl_used
+
                     _tl_cols = st.columns(len(_tl_ranked))
                     _tl_me_row = _tl_used.loc["UW-Whitewater"]
                     for _i, _r in enumerate(_tl_ranked.to_dict("records")):
@@ -5538,7 +5703,13 @@ than the one above, which is measured over more games, and it is labelled that w
             "pre-computed data-driven keys, the staff's own written scouting report (Keys to Victory, "
             "Team Strengths, the full game plan), lineup scouting, and season-stat-based recommendations.\n\n"
             "Each item shows its source, the supporting numbers, and the reasoning behind it. "
-            "Categories with a Game Plan button have written game-plan notes matched to that category."
+            "Categories with a Game Plan button have written game-plan notes matched to that category.\n\n"
+            "**Style evidence** lines (purple, at the top of a category) come from the two comparison "
+            "panels higher up the page. The first is our own record in that stat against teams who play "
+            "like this opponent, split by whether we won. The second is what teams built like us actually "
+            "produced in that stat against this opponent, next to what the rest of their opponents "
+            "produced. Both state their sample size, and neither claims a direction when the numbers are "
+            "too close or the sample too small to support one."
         )
         section_header("\U0001f511 KEYS TO VICTORY", _ktv_help)
 
@@ -7444,6 +7615,17 @@ than the one above, which is measured over more games, and it is labelled that w
                     if st.button("\U0001f4cb Game Plan", key=f"gameplan_btn_{_sec_key}_{_cat}"):
                         _show_game_plan_dialog(_cat)
                 _cs_line = _category_stat_line(_cat)
+
+                # Style evidence for this category, drawn from the two comparison panels above. Rendered
+                # BEFORE the individual keys because it frames them: it says what this stat has actually
+                # looked like against this kind of team, which is the context a coach reads the keys in.
+                for _sv_line in style_matched_ktv_lines(_cat, _style_ctx, short_opponent):
+                    st.markdown(
+                        f'<div style="border-left:3px solid #4E2A84;background:#faf8fd;border-radius:3px;'
+                        f'padding:6px 10px;margin:4px 0 6px 0;font-size:0.8rem;color:#333;">'
+                        f'<span style="font-weight:700;color:#4E2A84;">Style evidence &middot; </span>'
+                        f'{_sv_line}</div>', unsafe_allow_html=True)
+
                 for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_cat_items, start=1):
                     _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
                                      _category=_cat, _section=_sec_key, _stat_line=_cs_line)
