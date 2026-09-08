@@ -10315,7 +10315,18 @@ def _render_analytics_content():
         ecol3.metric("DRtg", f"{eff['DRtg']:.1f}", help=STAT_GLOSSARY["DRtg"]["definition"])
         ecol4.metric("Net Rtg", f"{eff['Net Rtg']:+.1f}", help=STAT_GLOSSARY["Net Rtg"]["definition"])
 
-        # Per-opponent efficiency trend (chronological, in schedule order) -- the "doable now" trend-chart item.
+        # Per-opponent efficiency trend, in DATE order -- the "doable now" trend-chart item.
+        #
+        # CONFIRMED BUG (fixed here): this was labelled chronological and wasn't. Two causes, either one
+        # enough on its own. (a) Rows were emitted in whatever order uww_schedule happens to sit in on
+        # disk, which is not guaranteed to be date order. (b) More decisively, the frame was indexed by the
+        # OPPONENT NAME -- a string -- and st.line_chart hands a categorical axis to Altair, which sorts
+        # categories alphabetically. So the season read Coe, Cornell, Dubuque, Loras... and a coach looking
+        # for "are we improving" was reading the alphabet.
+        #
+        # Fixed by sorting on the resolved ISO date and numbering the labels. The number is zero-padded and
+        # leads the label, so the plotted order is correct whether the axis honours insertion order or
+        # sorts the categories.
         played_order = schedule[played_mask(schedule)].copy()
         trend_rows = []
         for _, srow in played_order.iterrows():
@@ -10329,10 +10340,15 @@ def _render_analytics_content():
             if g_uww.empty:
                 continue
             g_eff = compute_efficiency_pace(g_uww, g_opp, 1)
-            label = f"{opp_short} {g_date[5:]}" if (played_order["opponent"] == srow["opponent"]).sum() > 1 else opp_short
-            trend_rows.append({"Game": label, "ORtg": round(g_eff["ORtg"], 1), "DRtg": round(g_eff["DRtg"], 1), "Net Rtg": round(g_eff["Net Rtg"], 1)})
+            name = f"{opp_short} {g_date[5:]}" if (played_order["opponent"] == srow["opponent"]).sum() > 1 else opp_short
+            trend_rows.append({"_date": g_date, "_name": name,
+                               "ORtg": round(g_eff["ORtg"], 1), "DRtg": round(g_eff["DRtg"], 1),
+                               "Net Rtg": round(g_eff["Net Rtg"], 1)})
         if len(trend_rows) >= 2:
-            trend_df = pd.DataFrame(trend_rows).set_index("Game")
+            trend_df = pd.DataFrame(trend_rows).sort_values("_date").reset_index(drop=True)
+            width = len(str(len(trend_df)))
+            trend_df["Game"] = [f"{i + 1:0{width}d}. {n}" for i, n in enumerate(trend_df["_name"])]
+            trend_df = trend_df.set_index("Game")
             st.markdown("**Game-by-game trend** (chronological)")
             st.line_chart(trend_df[["ORtg", "DRtg"]])
             st.caption("Rising ORtg / falling DRtg over the season is the clearest single trendline for whether a team is actually improving, independent of schedule strength swings.")
