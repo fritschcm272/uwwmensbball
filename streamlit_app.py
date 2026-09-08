@@ -11250,6 +11250,24 @@ div[data-testid="stMarkdownContainer"] p {
     box-shadow: 0 0 0 2px rgba(78, 42, 132, 0.20) !important;
 }
 
+/* Active (primary) nav button in the sidebar: white label on the purple fill.
+   Needed because the sidebar text rules above force #262730 on markdown containers, and a Streamlit button
+   label is rendered inside one -- so the active page came out dark grey on purple. The label element is
+   targeted as well as the button, since the colour is set on the inner <p>.
+   Both the modern data-testid and the older kind= attribute are covered; whichever the installed Streamlit
+   uses wins and the other matches nothing. */
+.stSidebar button[kind="primary"],
+.stSidebar button[kind="primary"] p,
+.stSidebar button[kind="primary"] div,
+.stSidebar [data-testid="stBaseButton-primary"],
+.stSidebar [data-testid="stBaseButton-primary"] p,
+.stSidebar [data-testid="stBaseButton-primary"] div,
+.stSidebar [data-testid="baseButton-primary"],
+.stSidebar [data-testid="baseButton-primary"] p,
+.stSidebar [data-testid="baseButton-primary"] div {
+    color: #FFFFFF !important;
+}
+
 /* Remove all rounded corners from sidebar/nav elements */
 .stSidebar *,
 section[data-testid="stSidebar"] * {
