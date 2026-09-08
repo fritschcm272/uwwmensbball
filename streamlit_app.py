@@ -11294,38 +11294,47 @@ def _willie_launcher_css() -> str:
     """
 
 
+PAGES = ["Upcoming Game", "Analytics"]
+PAGE_LABELS = {}   # display overrides; the KEYS above are what session_state and the routing match on
+
+
+def render_sidebar_nav():
+    """Page links, at the top of the sidebar. Called inside `with st.sidebar:`.
+
+    Stacked full-width rather than side by side: the sidebar is narrow enough that two columns wrap
+    "Upcoming Game" onto two lines. Still the same button-based navbar -- the active page uses the theme's
+    primaryColor, so which page you're on is visible without any DOM inspection.
+    """
+    for page in PAGES:
+        if st.button(
+            PAGE_LABELS.get(page, page),
+            key=f"nav_{page}",
+            use_container_width=True,
+            type="primary" if st.session_state.nav_page == page else "secondary",
+        ):
+            st.session_state.nav_page = page
+            st.rerun()
+
+
 def main():
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
     st.markdown(_willie_launcher_css(), unsafe_allow_html=True)
 
-    # Ask Willie lives in the sidebar now, on every page rather than on one of them.
-    with st.sidebar:
-        render_willie_sidebar()
-
-    # Navigation state
+    # Navigation state. Resolved BEFORE the sidebar renders, because the nav buttons highlight the active
+    # page and would otherwise be drawing from a value that hasn't been validated yet.
     if "nav_page" not in st.session_state:
-        st.session_state.nav_page = "Upcoming Game"
+        st.session_state.nav_page = PAGES[0]
+    # A session open across an earlier change (or a bookmarked state) can still be holding a retired page
+    # name such as "Home". Send it somewhere real instead of rendering nothing.
+    if st.session_state.nav_page not in PAGES:
+        st.session_state.nav_page = PAGES[0]
 
-    pages = ["Upcoming Game", "Analytics"]
-    page_labels = {}
-    # A session that was open across this change (or a bookmarked state) can still be holding the retired
-    # "Home" page. Send it somewhere real instead of rendering nothing.
-    if st.session_state.nav_page not in pages:
-        st.session_state.nav_page = pages[0]
-
-    # Button-based navbar: uses theme primaryColor for the active page, no internal DOM hacks
-    cols = st.columns(len(pages))
-    for i, p in enumerate(pages):
-        with cols[i]:
-            is_active = st.session_state.nav_page == p
-            if st.button(
-                page_labels.get(p, p),
-                key=f"nav_{p}",
-                use_container_width=True,
-                type="primary" if is_active else "secondary",
-            ):
-                st.session_state.nav_page = p
-                st.rerun()
+    # Sidebar: page links first, then Ask Willie. Navigation is what a coach opens the panel for most
+    # often, so it goes above the chat rather than below it.
+    with st.sidebar:
+        render_sidebar_nav()
+        st.divider()
+        render_willie_sidebar()
 
     page = st.session_state.nav_page
     if page == "Upcoming Game":
