@@ -10279,6 +10279,17 @@ def _render_analytics_content():
             _an_season = _an_choice
 
     schedule = load_table("uww_schedule", _an_season)
+    # CONFIRMED BUG (fixed here): uww_schedule holds EVERY scouted team's own schedule, not just UWW's --
+    # render_previous_games() and render_team() both filter for that, this page never did. Two consequences,
+    # and the second is the worse one:
+    #   - the game-by-game trend plotted opponents' games against third parties as though they were ours;
+    #   - get_game_outcomes() below was built from the same unfiltered frame, so other teams' wins and
+    #     losses landed in win_dates/loss_dates and quietly contaminated every win/loss split on the page
+    #     (Four Factors in wins vs losses, situational splits) -- wrong in a way nothing on screen showed.
+    # Same substring match as the other two pages, for the same reason: the "team" column carries the
+    # mascot ("UW-Whitewater Warhawks"), so an equality test on "UW-Whitewater" would match nothing.
+    if "team" in schedule.columns:
+        schedule = schedule[schedule["team"].str.contains("Whitewater", case=False, na=False)]
     box = load_table("uww_pbp_box_score", _an_season)
     pbp = load_table("uww_pbp_events", _an_season)
 
