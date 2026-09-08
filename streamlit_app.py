@@ -990,6 +990,71 @@ def opponent_bench_tiers(short_opponent, roster_names, season=None) -> tuple:
     return tiers, meta
 
 
+# In uww_player_profiles, PTS and REB are already per game but AST/STL/BLK/TO are SEASON TOTALS. Comparing
+# a single game's assists against a season total produces a "+/-" that is off by a factor of the games
+# played, which is exactly what the comparable-player panel used to show. Named here so every caller
+# converts the same way.
+PROFILE_SEASON_TOTAL_STATS = {"AST", "STL", "BLK", "TO"}
+
+
+def profile_stat_per_game(profile_row, stat, games_played):
+    """A per-game value for `stat` from a uww_player_profiles row, or None if it can't be computed."""
+    raw = profile_row.get(stat) if hasattr(profile_row, "get") else None
+    if raw is None or (isinstance(raw, float) and pd.isna(raw)) or not str(raw).strip():
+        return None
+    value = safe_float(raw)
+    if value is None:
+        return None
+    if stat in PROFILE_SEASON_TOTAL_STATS:
+        if not games_played:
+            return None
+        return value / games_played
+    return value
+
+
+def render_comparable_vs_uww(comp_name, comp_opponent, season_row=None, games_played=None):
+    """How the comparable player actually performed against UWW: every meeting, and versus their season.
+
+    The point of naming a comparable player is that UWW has already guarded him. What he did in that game
+    is the most directly useful thing on the page, so it shows every meeting rather than the first one --
+    the previous version took .iloc[0] and silently dropped the second game of a home-and-home, which is
+    the half a coach most wants when the first one went badly.
+    """
+    log = player_game_log([comp_name], "uww_pbp_box_score", comp_opponent)
+    if log.empty:
+        st.caption(f"No reconstructed box score for {comp_name} against UWW yet.")
+        return
+
+    st.caption(f"How {comp_name} did against UWW:")
+    st.dataframe(log.drop(columns=["_iso"]), hide_index=True, use_container_width=True)
+
+    # Versus his own season rate. Only stats present on BOTH sides are compared, and season totals are
+    # converted to per game first (see PROFILE_SEASON_TOTAL_STATS).
+    if season_row is None:
+        return
+    rows = []
+    for stat in ("PTS", "REB", "AST", "STL", "BLK", "TO"):
+        if stat not in log.columns:
+            continue
+        against_uww = pd.to_numeric(log[stat], errors="coerce")
+        if not against_uww.notna().any():
+            continue
+        season_value = profile_stat_per_game(season_row, stat, games_played)
+        if season_value is None:
+            continue
+        actual = float(against_uww.mean())
+        rows.append({"Stat": stat,
+                     "vs UWW": f"{actual:.1f}",
+                     "Season": f"{season_value:.1f}",
+                     "+/-": f"{actual - season_value:+.1f}"})
+    if rows:
+        st.caption(
+            f"Per game against UWW versus his season rate"
+            + (f" (over {len(log)} meeting{'s' if len(log) > 1 else ''})" if len(log) > 1 else "") + ":"
+        )
+        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+
+
 def player_game_log(player_names, source_table, team_name, season=None) -> pd.DataFrame:
     """One row per game for a player, from a reconstructed box score. Empty frame when nothing matches.
 
@@ -5190,31 +5255,22 @@ def render_upcoming_game():
                                 shared.append(f"Defense: {comp['shared_keys_tags']}")
                             if shared:
                                 st.caption(" | ".join(shared))
-                            box_score = load_table("uww_pbp_box_score")
+                            # CONFIRMED BUG (fixed here): this took box_score...iloc[0], so only the FIRST
+                            # meeting with that opponent was shown and a home-and-home silently lost its
+                            # second game. It also compared that one game against the profile's "Avg",
+                            # which for AST/STL/BLK/TO is a SEASON TOTAL, not a per-game figure -- so the
+                            # "+/-" column was wrong by a factor of the games played on four of its six
+                            # rows. Both are handled by render_comparable_vs_uww().
                             comp_name = comp["compared_player"]
                             comp_opp = comp["compared_opponent"]
-                            game_row = box_score[(box_score["player"] == comp_name) & (box_score["team"] == comp_opp)]
-                            season_row = _comp_profiles[(_comp_profiles["name"] == comp_name) & (_comp_profiles["opponent"] == comp_opp)]
-                            if not game_row.empty and not season_row.empty:
-                                g = game_row.iloc[0]
-                                s = season_row.iloc[0]
-                                perf_cols = ["PTS", "REB", "AST", "STL", "BLK", "TO"]
-                                perf_data = []
-                                for sc in perf_cols:
-                                    gval, sval = g.get(sc), s.get(sc)
-                                    if pd.notna(gval) and pd.notna(sval):
-                                        try:
-                                            gv, sv = float(gval), float(sval)
-                                            diff = gv - sv
-                                            perf_data.append({"Stat": sc, "vs UWW": f"{gv:.0f}", "Avg": f"{sv:.1f}", "+/-": f"{diff:+.1f}" if diff != 0 else "0"})
-                                        except (ValueError, TypeError):
-                                            pass
-                                if perf_data:
-                                    st.caption(f"{comp_name} vs UWW:")
-                                    st.dataframe(pd.DataFrame(perf_data), hide_index=True, use_container_width=True)
-                            elif not season_row.empty:
-                                s = season_row.iloc[0]
-                                st.caption(f"Season avg: {s.get('PTS', '-')} PTS, {s.get('REB', '-')} REB, {s.get('AST', '-')} AST")
+                            season_match = _comp_profiles[(_comp_profiles["name"] == comp_name)
+                                                          & (_comp_profiles["opponent"] == comp_opp)]
+                            _cmp_season_row = season_match.iloc[0] if not season_match.empty else None
+                            _cmp_gp = None
+                            if _cmp_season_row is not None:
+                                _cmp_gp = safe_float(_cmp_season_row.get("games_played")) or \
+                                    (get_opponent_games_played(comp_opp) or None)
+                            render_comparable_vs_uww(comp_name, comp_opp, _cmp_season_row, _cmp_gp)
                         else:
                             _render_computed_player_comparison(player_name)
                     else:
