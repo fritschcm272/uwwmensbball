@@ -1099,31 +1099,70 @@ def render_comparable_vs_uww(comp_name, comp_opponent, season_row=None, games_pl
     st.caption(f"How {comp_name} did against UWW:")
     st.dataframe(log.drop(columns=["_iso"]), hide_index=True, use_container_width=True)
 
-    # Versus his own season rate. Only stats present on BOTH sides are compared, and season totals are
-    # converted to per game first (see PROFILE_SEASON_TOTAL_STATS).
+    # Versus his own rate in his OTHER games -- not his full-season rate.
+    #
+    # CONFIRMED CHANGE (requested): the season average in uww_player_profiles covers the whole season,
+    # which INCLUDES the game against UWW. Comparing a game to an average that contains it drags the
+    # baseline toward the game and understates the difference every time: a player who goes for 24 against
+    # his 12-point season line is really 24 against a 10.6 baseline once his own outlier is removed, and
+    # the bigger his game was, the more it hid itself. Backing the meeting(s) out of the season totals
+    # gives the rate he produced when he WASN'T playing UWW, which is the comparison a coach means.
+    #
+    # Exactly stated: this is "his other games", not "his form entering the game". Our box scores only
+    # cover his meeting with UWW, so games after it can't be separated from games before it. The column is
+    # labelled for what it actually is rather than implying a pre-game snapshot we can't compute.
     if season_row is None:
         return
-    rows = []
+    meetings = len(log)
+    gp = safe_float(games_played) if games_played is not None else None
+    # The baseline column is named ONCE for the whole table. Deciding it per row produced a table with
+    # both a "Season" and an "Other games" column, each half full of blanks, whenever a single stat fell
+    # back -- which reads as missing data rather than as two different baselines.
+    use_other_games = bool(gp and gp > meetings)
+    label = "Other games" if use_other_games else "Season"
+    rows, skipped = [], []
     for stat in ("PTS", "REB", "AST", "STL", "BLK", "TO"):
         if stat not in log.columns:
             continue
         against_uww = pd.to_numeric(log[stat], errors="coerce")
         if not against_uww.notna().any():
             continue
-        season_value = profile_stat_per_game(season_row, stat, games_played)
+        season_value = profile_stat_per_game(season_row, stat, gp)
         if season_value is None:
             continue
         actual = float(against_uww.mean())
+
+        baseline = season_value
+        if use_other_games:
+            other_total = season_value * gp - float(against_uww.sum())
+            # A negative remainder means the profile's season figures and the reconstructed box score
+            # disagree (different games on file, or a stat the PDF counts differently). Drop the stat and
+            # say so, rather than printing a baseline that can't be true or quietly swapping in a
+            # different one under the same column heading.
+            if other_total < 0:
+                skipped.append(stat)
+                continue
+            baseline = other_total / (gp - meetings)
         rows.append({"Stat": stat,
                      "vs UWW": f"{actual:.1f}",
-                     "Season": f"{season_value:.1f}",
-                     "+/-": f"{actual - season_value:+.1f}"})
+                     label: f"{baseline:.1f}",
+                     "+/-": f"{actual - baseline:+.1f}"})
     if rows:
-        st.caption(
-            f"Per game against UWW versus his season rate"
-            + (f" (over {len(log)} meeting{'s' if len(log) > 1 else ''})" if len(log) > 1 else "") + ":"
-        )
+        if use_other_games:
+            note = (f"Per game against UWW versus his rate in his other "
+                    f"{int(gp - meetings)} game(s) \u2014 the meeting(s) with UWW are backed out of the "
+                    f"season totals so they don't pull the baseline toward themselves")
+        else:
+            note = "Per game against UWW versus his full-season rate, which includes this game"
+        if meetings > 1:
+            note += f" (over {meetings} meetings)"
+        st.caption(note + ":")
         st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+        if skipped:
+            st.caption(
+                f"{', '.join(skipped)} omitted: his season total for those is lower than what the box "
+                f"score credits him with against UWW, so the two sources are counting different games."
+            )
 
 
 def player_game_log(player_names, source_table, team_name, season=None) -> pd.DataFrame:
