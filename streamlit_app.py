@@ -4674,10 +4674,18 @@ def render_upcoming_game():
             _gd_team_df = pd.DataFrame(_gd_team_rows)
             _gd_order = ["Team", "PTS", "Poss", "FG", "FG%", "3P", "3P%", "FT", "FT%", "REB", "AST", "STL", "BLK", "TO", "PF"]
             _gd_team_df = _gd_team_df[[c for c in _gd_order if c in _gd_team_df.columns]]
+            # Possessions is the one column here that isn't read straight off the box score -- it's an
+            # estimate, and the number only means something if you know the formula. The definition comes
+            # from STAT_GLOSSARY rather than being retyped, so the tooltip can't drift from the
+            # Efficiency & Pace section that documents the same stat.
+            _gd_col_config = {_c: st.column_config.NumberColumn(_c, format="%.1f%%")
+                              for _c in ("FG%", "3P%", "FT%") if _c in _gd_team_df.columns}
+            if "Poss" in _gd_team_df.columns:
+                _gd_col_config["Poss"] = st.column_config.NumberColumn(
+                    "Poss", format="%.1f", help=glossary_help_text(["Poss"]))
             st.dataframe(
                 _gd_team_df, hide_index=True, use_container_width=True,
-                column_config={_c: st.column_config.NumberColumn(_c, format="%.1f%%")
-                               for _c in ("FG%", "3P%", "FT%") if _c in _gd_team_df.columns},
+                column_config=_gd_col_config,
             )
 
             st.markdown("**Box Score**")
