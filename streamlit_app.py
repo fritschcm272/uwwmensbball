@@ -3094,6 +3094,89 @@ def extract_contest(description) -> str:
     return NO_CONTEST_TAG
 
 
+# Ranking shot looks by raw FG% has two problems, and both cards had them.
+#
+#   1. FG% treats every make as equal, so a 34% three-point look loses to a 44% two-point look even though
+#      it is worth more (1.02 points per attempt against 0.88). "Best look" and "weakest look" are decisions
+#      about POINTS, so points per attempt is the metric, with eFG% shown alongside as the familiar form.
+#
+#   2. Picking the MAXIMUM across many small buckets is biased high: with a dozen mechanic-by-contest
+#      combinations, whichever one happened to go 5/8 tops the list ahead of a 30/70 that is genuinely
+#      better. An attempt floor alone doesn't fix that -- it just sets how small the lucky bucket can be.
+#      Ranking therefore uses a shrunk estimate, pulled toward the overall rate by attempts. This is the
+#      opposite call from the comparable-opponents ranking, where shrinkage was removed: there, samples were
+#      wildly uneven and the comparison was pairwise, so shrinking invented differences. Here every bucket
+#      sits in one pool and we take the max, which is precisely when shrinking is required.
+#      The constant is in ATTEMPTS -- the number at which a bucket's own rate carries half the weight. A
+#      single shot is close to a coin flip, so the noise here is large: at 12 a lucky 5-of-8 still outranked
+#      a 24-of-70 three-point look worth more per attempt. 25 is the point where volume has to earn the top
+#      spot, and it was set by testing that case rather than picked.
+SHOT_LOOK_SHRINKAGE_ATTEMPTS = 25
+
+
+def shot_look_efficiency(shots: pd.DataFrame, min_attempts: int = 8) -> pd.DataFrame:
+    """Per mechanic-by-contest shot look: volume, FG%, eFG%, points per attempt, and a shrunk PPA to rank on.
+
+    `shots` needs _mechanic, _contest and _make columns already attached, plus shot_type where available.
+    Returns an empty frame when nothing clears `min_attempts`.
+    """
+    if shots.empty:
+        return pd.DataFrame()
+    work = shots[shots["_mechanic"].notna() & shots["_contest"].notna()].copy()
+    if work.empty:
+        return pd.DataFrame()
+
+    # Shot value: 3 where the event says so, 2 otherwise. An unparseable shot_type becomes a 2 rather than
+    # dropping the attempt, matching how scoring runs already treat it.
+    if "shot_type" in work.columns:
+        value = pd.to_numeric(work["shot_type"], errors="coerce")
+        work["_value"] = value.where(value.isin([2, 3]), 2)
+    else:
+        work["_value"] = 2
+    work["_points"] = work["_value"] * work["_make"].astype(int)
+    work["_is_three"] = work["_value"] == 3
+
+    work["_three_make"] = (work["_is_three"] & work["_make"].astype(bool)).astype(int)
+    grouped = work.groupby(["_mechanic", "_contest"]).agg(
+        Attempts=("_make", "count"), Makes=("_make", "sum"),
+        Points=("_points", "sum"), Threes=("_is_three", "sum"),
+        ThreeMakes=("_three_make", "sum"),
+    ).reset_index()
+
+    grouped = grouped[grouped["Attempts"] >= min_attempts]
+    if grouped.empty:
+        return pd.DataFrame()
+
+    total_attempts = float(work["_make"].count())
+    baseline_ppa = float(work["_points"].sum()) / total_attempts if total_attempts else 0.0
+
+    grouped["FG%"] = 100 * grouped["Makes"] / grouped["Attempts"]
+    grouped["eFG%"] = 100 * (grouped["Makes"] + 0.5 * grouped["ThreeMakes"]) / grouped["Attempts"]
+    grouped["PPA"] = grouped["Points"] / grouped["Attempts"]
+    grouped["Share"] = 100 * grouped["Attempts"] / total_attempts if total_attempts else 0.0
+    grouped["ThreeRate"] = 100 * grouped["Threes"] / grouped["Attempts"]
+    credibility = grouped["Attempts"] / (grouped["Attempts"] + SHOT_LOOK_SHRINKAGE_ATTEMPTS)
+    grouped["PPA_adj"] = grouped["PPA"] * credibility + baseline_ppa * (1 - credibility)
+    grouped["PPA_vs_all"] = grouped["PPA"] - baseline_ppa
+    grouped.attrs["baseline_ppa"] = baseline_ppa
+    grouped.attrs["total_attempts"] = int(total_attempts)
+    return grouped.sort_values("PPA_adj", ascending=False).reset_index(drop=True)
+
+
+def shot_look_stat_line(row, baseline_ppa=None) -> str:
+    """The one-line stat summary shown under a best/weakest-look key."""
+    parts = [
+        f"{int(row['Makes'])}/{int(row['Attempts'])} ({row['FG%']:.0f}% FG, {row['eFG%']:.0f}% eFG)",
+        f"{row['PPA']:.2f} pts/attempt",
+    ]
+    if baseline_ppa:
+        parts.append(f"{row['PPA'] - baseline_ppa:+.2f} vs all looks ({baseline_ppa:.2f})")
+    parts.append(f"{row['Share']:.0f}% of attempts")
+    if row.get("ThreeRate", 0) >= 1:
+        parts.append(f"{row['ThreeRate']:.0f}% from three")
+    return " \u00b7 ".join(parts)
+
+
 def describe_shot_look(mechanic, contest=None) -> str:
     """Plain-language name for a shot type, for use inside a sentence.
 
@@ -6480,16 +6563,15 @@ than the one above, which is measured over more games, and it is labelled that w
                 _ss_uww["_mechanic"] = _ss_uww["video_description"].apply(extract_shot_mechanic)
                 _ss_uww["_contest"] = _ss_uww["video_description"].apply(extract_contest)
                 _ss_uww["_make"] = _ss_uww["event_type"] == "made_shot"
-                _ss_grouped = _ss_uww[_ss_uww["_mechanic"].notna() & _ss_uww["_contest"].notna()].groupby(["_mechanic", "_contest"]).agg(
-                    Attempts=("_make", "count"), Makes=("_make", "sum"),
-                ).reset_index()
-                _ss_grouped = _ss_grouped[_ss_grouped["Attempts"] >= 8]  # need a real sample before calling it "best"
+                # Ranked on points per attempt, shrunk for sample size, rather than raw FG% -- see
+                # shot_look_efficiency() for why both of those matter here.
+                _ss_grouped = shot_look_efficiency(_ss_uww, min_attempts=8)
                 if not _ss_grouped.empty:
-                    _ss_grouped["FG%"] = 100 * _ss_grouped["Makes"] / _ss_grouped["Attempts"]
+                    _ss_baseline = _ss_grouped.attrs.get("baseline_ppa")
                     # A residual bucket is not a shot type. Prefer the best NAMED one; only fall back to the
                     # unclassified pile if nothing else clears the attempt threshold, and label it plainly.
                     _ss_named = _ss_grouped[_ss_grouped["_mechanic"] != UNCLASSIFIED_SHOT_MECHANIC]
-                    _ss_best = (_ss_named if not _ss_named.empty else _ss_grouped).nlargest(1, "FG%").iloc[0]
+                    _ss_best = (_ss_named if not _ss_named.empty else _ss_grouped).iloc[0]
                     _ss_best_mechanic, _ss_best_contest = _ss_best["_mechanic"], _ss_best["_contest"]
                     _ss_best_rows = _ss_uww[(_ss_uww["_mechanic"] == _ss_best_mechanic) & (_ss_uww["_contest"] == _ss_best_contest)]
 
@@ -6527,7 +6609,7 @@ than the one above, which is measured over more games, and it is labelled that w
                     _keys.append((
                         "\U0001f3c0",
                         "Feature our best look: " + describe_shot_look(_ss_best_mechanic, _ss_best_contest),
-                        f"{int(_ss_best['Makes'])}/{int(_ss_best['Attempts'])} ({_ss_best['FG%']:.0f}%) this season",
+                        shot_look_stat_line(_ss_best, _ss_baseline) + " this season",
                         _ss_reason,
                         "Data-Driven",
                     ))
@@ -6562,10 +6644,8 @@ than the one above, which is measured over more games, and it is labelled that w
                 _aw_third_party["_mechanic"] = _aw_third_party["video_description"].apply(extract_shot_mechanic)
                 _aw_third_party["_contest"] = _aw_third_party["video_description"].apply(extract_contest)
                 _aw_third_party["_make"] = _aw_third_party["event_type"] == "made_shot"
-                _aw_grouped = _aw_third_party[_aw_third_party["_mechanic"].notna() & _aw_third_party["_contest"].notna()].groupby(["_mechanic", "_contest"]).agg(
-                    Attempts=("_make", "count"), Makes=("_make", "sum"),
-                ).reset_index()
-                _aw_grouped = _aw_grouped[_aw_grouped["Attempts"] >= 5]  # scoped to a handful of prior games, not a full season
+                # Same metric as "Feature our best look" above, so the two cards are directly comparable.
+                _aw_grouped = shot_look_efficiency(_aw_third_party, min_attempts=5)  # a handful of prior games, not a season
                 if _aw_grouped.empty:
                     _keys.append((
                         "\U0001f3af", "Attack Opponent Worst Offensive Shot Selection & Quality", None,
@@ -6574,8 +6654,8 @@ than the one above, which is measured over more games, and it is labelled that w
                         "Data-Driven",
                     ))
                 else:
-                    _aw_grouped["FG%"] = 100 * _aw_grouped["Makes"] / _aw_grouped["Attempts"]
-                    _aw_best = _aw_grouped.nlargest(1, "FG%").iloc[0]
+                    _aw_baseline = _aw_grouped.attrs.get("baseline_ppa")
+                    _aw_best = _aw_grouped.iloc[0]
                     _aw_best_mechanic, _aw_best_contest = _aw_best["_mechanic"], _aw_best["_contest"]
                     _aw_n_opponents = _aw_third_party.loc[
                         (_aw_third_party["_mechanic"] == _aw_best_mechanic) & (_aw_third_party["_contest"] == _aw_best_contest), "team"
@@ -6649,9 +6729,8 @@ than the one above, which is measured over more games, and it is labelled that w
                         # Say exactly what the sample IS. "across N team(s) they played before UWW" read as
                         # their whole pre-UWW schedule, but N only ever counted the opponents that took THIS
                         # shot type, drawn from the subset of their games that have tagged video at all.
-                        (f"Opponents shot {int(_aw_best['Makes'])}/{int(_aw_best['Attempts'])} "
-                         f"({_aw_best['FG%']:.0f}%) on this against {short_opponent}, "
-                         f"{_aw_n_opponents} different team(s) doing it"
+                        (f"Opponents shot {shot_look_stat_line(_aw_best, _aw_baseline)} on this against "
+                         f"{short_opponent}, {_aw_n_opponents} different team(s) doing it"
                          + (f" -- across {_aw_n_tagged_games} of {short_opponent}'s "
                             + (f"{_aw_n_prior_games} " if _aw_n_prior_games else "")
                             + "games before UWW (the ones with tagged video)" if _aw_n_tagged_games else "")),
