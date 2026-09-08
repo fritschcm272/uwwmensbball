@@ -11111,6 +11111,35 @@ div[data-testid="stMarkdownContainer"] p {
     margin-bottom: 0;
 }
 
+/* "Ask Willie about UWW basketball..." -- purple border on the chat input.
+   Streamlit has moved this element's internals between releases, so the border is set on the outer
+   [data-testid="stChatInput"] AND on the BaseWeb wrapper inside it: whichever one is actually painting the
+   border in the installed version gets the colour, and the other rule is harmless. The inner wrapper is
+   also flattened to transparent so a stock grey border can't sit inside the purple one and read as a
+   double line. */
+[data-testid="stChatInput"],
+[data-testid="stChatInput"] > div,
+[data-testid="stChatInput"] [data-baseweb="textarea"],
+[data-testid="stChatInput"] [data-baseweb="base-input"] {
+    border-color: var(--warhawk-purple) !important;
+}
+
+[data-testid="stChatInput"] {
+    border: 2px solid var(--warhawk-purple) !important;
+    background-color: #FFFFFF !important;
+}
+
+[data-testid="stChatInput"] [data-baseweb="textarea"],
+[data-testid="stChatInput"] [data-baseweb="base-input"] {
+    border-width: 0 !important;
+    background-color: transparent !important;
+}
+
+[data-testid="stChatInput"]:focus-within {
+    border-color: var(--warhawk-purple) !important;
+    box-shadow: 0 0 0 2px rgba(78, 42, 132, 0.20) !important;
+}
+
 /* Remove all rounded corners from sidebar/nav elements */
 .stSidebar *,
 section[data-testid="stSidebar"] * {
