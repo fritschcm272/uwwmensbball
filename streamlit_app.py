@@ -5136,10 +5136,32 @@ than the one above, which is measured over more games, and it is labelled that w
                 _tl_rec = two_sided_rate_profile(_tl_g, _tl_them, _tl_games)
                 _tl_rec["_games"] = _tl_games
                 _tl_records[str(_tl_team)] = _tl_rec
-                _tl_pts = pd.to_numeric(_tl_g.get("PTS"), errors="coerce").sum()
-                _tl_their_pts = pd.to_numeric(_tl_them.get("PTS"), errors="coerce").sum()
-                _tl_context[str(_tl_team)] = {"pts": _tl_pts, "their_pts": _tl_their_pts,
-                                              "won": _tl_pts > _tl_their_pts, "games": _tl_games}
+
+                # CONFIRMED BUG (fixed here): the scoreline used to be the SUM of PTS on each side across
+                # every meeting, so a team that played this opponent three times displayed as "L 225-231"
+                # -- three games' points added into one impossible-looking final score. Pooling the games
+                # is right for the PROFILE (more possessions, less noise) and wrong for the RESULT, which
+                # is per game by definition. Each meeting is now scored on its own and the record is
+                # reported across them.
+                _tl_meetings = []
+                for _tl_d in (_tl_dates if len(_tl_dates) else [None]):
+                    _tl_side = _tl_g if _tl_d is None else _tl_g[_tl_g[_tl_keys[-1]] == _tl_d]
+                    _tl_opp_side = _tl_them if _tl_d is None else _tl_them[_tl_them[_tl_keys[-1]] == _tl_d]
+                    _tl_a = float(pd.to_numeric(_tl_side.get("PTS"), errors="coerce").sum())
+                    _tl_b = float(pd.to_numeric(_tl_opp_side.get("PTS"), errors="coerce").sum())
+                    if _tl_a or _tl_b:
+                        _tl_meetings.append({"pts": _tl_a, "their_pts": _tl_b, "won": _tl_a > _tl_b,
+                                             "date": _tl_d})
+                if not _tl_meetings:
+                    continue
+                _tl_context[str(_tl_team)] = {
+                    "meetings": _tl_meetings,
+                    "wins": sum(1 for _mt in _tl_meetings if _mt["won"]),
+                    "losses": sum(1 for _mt in _tl_meetings if not _mt["won"]),
+                    "pts": sum(_mt["pts"] for _mt in _tl_meetings) / len(_tl_meetings),
+                    "their_pts": sum(_mt["their_pts"] for _mt in _tl_meetings) / len(_tl_meetings),
+                    "games": len(_tl_meetings),
+                }
 
             # UWW's own profile, built by the same function from the same kind of source.
             _tl_us = _tl_uww_box[_tl_uww_box["team"] == "UW-Whitewater"]
@@ -5150,6 +5172,25 @@ than the one above, which is measured over more games, and it is labelled that w
                 _tl_me_rec = two_sided_rate_profile(_tl_us, _tl_foes, _tl_us_games)
                 _tl_me_rec["_games"] = _tl_us_games
                 _tl_records["UW-Whitewater"] = _tl_me_rec
+
+            def _tl_result_html(_ctx) -> str:
+                """One game -> 'W 78-74'. Several -> the record, then each score on its own line."""
+                _mts = _ctx.get("meetings") or []
+                if not _mts:
+                    return ""
+                if len(_mts) == 1:
+                    _m0 = _mts[0]
+                    _c = "#2e7d32" if _m0["won"] else "#c62828"
+                    return (f'<div style="margin-top:6px;font-size:1.1rem;font-weight:800;color:{_c};">'
+                            f'{"W" if _m0["won"] else "L"} {int(_m0["pts"])}-{int(_m0["their_pts"])}</div>')
+                _w, _l = _ctx.get("wins", 0), _ctx.get("losses", 0)
+                _c = "#2e7d32" if _w > _l else "#c62828" if _l > _w else "#666"
+                _lines = "".join(
+                    f'<div style="font-size:0.75rem;color:{"#2e7d32" if _m["won"] else "#c62828"};">'
+                    f'{"W" if _m["won"] else "L"} {int(_m["pts"])}-{int(_m["their_pts"])}</div>'
+                    for _m in _mts)
+                return (f'<div style="margin-top:6px;font-size:1.1rem;font-weight:800;color:{_c};">'
+                        f'{_w}-{_l} in {len(_mts)} meetings</div>{_lines}')
 
             if len(_tl_records) < 2:
                 st.info(f"Not enough reconstructed box scores from {short_opponent}'s prior games yet.")
@@ -5189,8 +5230,6 @@ than the one above, which is measured over more games, and it is labelled that w
                         _ctx = _tl_context.get(_r["opponent"], {})
                         with _tl_cols[_i]:
                             with st.container(border=True):
-                                _res = "W" if _ctx.get("won") else "L"
-                                _color = "#2e7d32" if _ctx.get("won") else "#c62828"
                                 _conf = _r.get("confidence")
                                 st.markdown(
                                     f'<div style="font-weight:700;color:#4E2A84;">{esc(str(_r["opponent"]))}</div>'
@@ -5204,21 +5243,27 @@ than the one above, which is measured over more games, and it is labelled that w
                                     + (f'<div style="font-size:0.68rem;font-weight:700;color:'
                                        f'{"#2e7d32" if _conf >= 0.6 else "#8a6d3b" if _conf >= 0.35 else "#b3261e"};">'
                                        f'confidence {100 * _conf:.0f}%</div>' if pd.notna(_conf) else "")
-                                    + f'<div style="margin-top:6px;font-size:1.1rem;font-weight:800;color:{_color};">'
-                                    f'{_res} {int(_ctx.get("pts", 0))}-{int(_ctx.get("their_pts", 0))}</div>',
+                                    + _tl_result_html(_ctx),
                                     unsafe_allow_html=True)
 
-                    _tl_w = sum(1 for _n in _tl_ranked["opponent"] if _tl_context.get(_n, {}).get("won"))
-                    _tl_pf = sum(_tl_context.get(_n, {}).get("pts", 0) for _n in _tl_ranked["opponent"]) / len(_tl_ranked)
-                    _tl_pa = sum(_tl_context.get(_n, {}).get("their_pts", 0) for _n in _tl_ranked["opponent"]) / len(_tl_ranked)
-                    _tl_field = (sum(_c.get("pts", 0) for _c in _tl_context.values()) / len(_tl_context)) if _tl_context else 0
+                    # Averaged over GAMES, not over teams -- a team met three times contributes three
+                    # games to the record and to the scoring averages, which is what "how do teams like us
+                    # do against them" actually asks.
+                    _tl_top_games = [_mt for _n in _tl_ranked["opponent"]
+                                     for _mt in _tl_context.get(_n, {}).get("meetings", [])]
+                    _tl_all_games = [_mt for _c in _tl_context.values() for _mt in _c.get("meetings", [])]
+                    _tl_w = sum(1 for _mt in _tl_top_games if _mt["won"])
+                    _tl_pf = (sum(_mt["pts"] for _mt in _tl_top_games) / len(_tl_top_games)) if _tl_top_games else 0
+                    _tl_pa = (sum(_mt["their_pts"] for _mt in _tl_top_games) / len(_tl_top_games)) if _tl_top_games else 0
+                    _tl_field = (sum(_mt["pts"] for _mt in _tl_all_games) / len(_tl_all_games)) if _tl_all_games else 0
                     st.markdown(
                         f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 12px;margin-top:8px;'
                         f'font-size:0.85rem;">Teams that played like us went '
-                        f'<strong>{_tl_w}-{len(_tl_ranked) - _tl_w}</strong> against {esc(short_opponent)}, '
-                        f'averaging <strong>{_tl_pf:.1f}</strong> scored and <strong>{_tl_pa:.1f}</strong> '
-                        f'allowed. {esc(short_opponent)} allowed <strong>{_tl_field:.1f}</strong> to the '
-                        f'field.</div>', unsafe_allow_html=True)
+                        f'<strong>{_tl_w}-{len(_tl_top_games) - _tl_w}</strong> against {esc(short_opponent)} '
+                        f'in {len(_tl_top_games)} game(s), averaging <strong>{_tl_pf:.1f}</strong> scored and '
+                        f'<strong>{_tl_pa:.1f}</strong> allowed. Across all {len(_tl_all_games)} of their '
+                        f'games, {esc(short_opponent)} allowed <strong>{_tl_field:.1f}</strong> per game.</div>',
+                        unsafe_allow_html=True)
 
                     with st.expander("Full style profile comparison", expanded=False):
                         _tl_table = []
@@ -5239,8 +5284,9 @@ than the one above, which is measured over more games, and it is labelled that w
                         _tl_cov = _tl_ranked.attrs.get("coverage")
                         _tl_show = pd.DataFrame([{
                             "Team": _n,
-                            "Result": (f"{'W' if _tl_context[_n]['won'] else 'L'} "
-                                       f"{int(_tl_context[_n]['pts'])}-{int(_tl_context[_n]['their_pts'])}"),
+                            "Result": " · ".join(
+                                f"{'W' if _mt['won'] else 'L'} {int(_mt['pts'])}-{int(_mt['their_pts'])}"
+                                for _mt in _tl_context[_n].get("meetings", [])),
                             **{_lbl: format_feature(_fk, _tl_used.loc[_n].get(_fk))
                                for _fk, _lbl, _, _ in OPPONENT_FEATURE_SPEC
                                if _fk in _tl_used.columns and pd.notna(_tl_used.loc[_n].get(_fk))},
