@@ -341,14 +341,50 @@ def build_player_comparison_artifacts(schedule, scout_reports, player_profiles,
         stat_sim = stat_similarity(p1, p2)
         if stat_sim is not None:
             score += stat_sim * stat_weight
-        return round(score, 2), shared_notes_tags, shared_keys_tags, height_diff, stat_sim
+
+        # WHAT EVIDENCE WAS ACTUALLY AVAILABLE for this pair. The score above is an absolute sum, so a
+        # comparison resting on height and position alone lands on the same scale as one backed by
+        # scouting notes and season stats -- observed directly: an un-scouted bench player with no stats
+        # scored 5.17 while a fully-scouted starter scored 5.25, and the app displayed them identically.
+        # This does not change the score (that would silently move every existing ranking); it records
+        # what the score is standing on so the app can say so.
+        evidence = 0.0
+        if p1["position_group"] == p2["position_group"] and p1["position_group"] != "Unknown":
+            evidence += position_weight
+        elif p1["position_group"] != "Unknown" and p2["position_group"] != "Unknown":
+            evidence += position_weight       # comparable either way: a mismatch is still information
+        if p1["height_inches"] and p2["height_inches"]:
+            evidence += height_weight
+        if p1["notes_tags"] or p2["notes_tags"]:
+            evidence += notes_tag_weight
+        if p1["keys_tags"] or p2["keys_tags"]:
+            evidence += keys_tag_weight
+        if p1["role"] and p2["role"]:
+            evidence += role_weight
+        if stat_sim is not None:
+            evidence += stat_weight
+        max_evidence = position_weight + height_weight + notes_tag_weight + keys_tag_weight + role_weight + stat_weight
+        coverage = round(evidence / max_evidence, 3) if max_evidence else 0.0
+
+        has_tags = bool(p1["notes_tags"] or p1["keys_tags"])
+        if has_tags and stat_sim is not None:
+            method = "scouting notes + stats"
+        elif has_tags:
+            method = "scouting notes, no stats"
+        elif stat_sim is not None:
+            method = "stats and size (no scouting notes for this player)"
+        else:
+            method = "size and position only (no scouting notes, no stats)"
+        return (round(score, 2), shared_notes_tags, shared_keys_tags, height_diff, stat_sim,
+                coverage, method)
 
 
     stat_display_cols = ["PTS", "REB", "AST", "FG%", "3P%"]
     similarity_rows = []
     for _, t in target_players.iterrows():
         for _, c in candidate_players.iterrows():
-            score, shared_notes_tags, shared_keys_tags, height_diff, stat_sim = similarity_score(t, c)
+            (score, shared_notes_tags, shared_keys_tags, height_diff, stat_sim,
+             evidence_coverage, comparison_method) = similarity_score(t, c)
             row = {
                 "target_player": t["name"], "target_position": t["position"], "target_role": t["role"],
                 "target_opponent": target_opponent, "target_game_date": scout_game_dates.get(target_opponent),
@@ -360,6 +396,9 @@ def build_player_comparison_artifacts(schedule, scout_reports, player_profiles,
                 "shared_keys_tags": ", ".join(sorted(shared_keys_tags)),
                 "height_diff_in": height_diff,
                 "stat_similarity": stat_sim,
+                "evidence_coverage": evidence_coverage,
+                "comparison_method": comparison_method,
+                "target_has_scouting_report": bool(t.get("has_scouting_report", True)),
             }
             for col in stat_display_cols:
                 row[f"target_{col}"] = t.get(col)

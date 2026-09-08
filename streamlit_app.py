@@ -802,6 +802,126 @@ ROTATION_MIN_MPG = 8.0
 RECENT_GAMES_WINDOW = 3
 
 
+# Per-player style features, all pace- and role-normalised so a 30-minute starter and a 12-minute reserve
+# can be compared on HOW they play rather than on how long they play. Minutes are kept as their own feature
+# because role is part of the likeness -- a coach preparing for a bench scorer wants the bench scorer they
+# already faced, not a starter with the same per-40 line.
+# (key, label, weight)
+PLAYER_FEATURE_SPEC = [
+    ("mpg",      "Minutes per game",   0.12),
+    ("fga40",    "FGA per 40",         0.12),
+    ("pts40",    "Points per 40",      0.13),
+    ("tp_rate",  "3PA rate",           0.12),
+    ("ft_rate",  "FT rate",            0.06),
+    ("fg_pct",   "FG%",                0.09),
+    ("tp_pct",   "3P%",                0.05),
+    ("ast40",    "Assists per 40",     0.10),
+    ("to40",     "Turnovers per 40",   0.05),
+    ("reb40",    "Rebounds per 40",    0.10),
+    ("stl40",    "Steals per 40",      0.03),
+    ("blk40",    "Blocks per 40",      0.03),
+]
+PLAYER_FEATURE_WEIGHTS = {k: w for k, _, w in PLAYER_FEATURE_SPEC}
+PLAYER_FEATURE_LABELS = {k: lbl for k, lbl, _ in PLAYER_FEATURE_SPEC}
+PLAYER_COMPARISON_MIN_MPG = 4.0   # below this a player's rates are one garbage-time stretch, not a style
+
+
+@st.cache_data(ttl=60)
+def player_rate_profiles(source_table, team=None, exclude_team=None, season=None) -> pd.DataFrame:
+    """Per-40 style profile for every player in a box-score table, indexed by "Player (Team)".
+
+    Used to compare players who have no row in uww_player_comparisons -- the parser only writes comparisons
+    for players it scouted, which leaves every bench player without one. Built the same way for both sides,
+    so a target and its pool are always measured alike.
+    """
+    box = load_table(source_table, season)
+    if box.empty or "player" not in box.columns or "team" not in box.columns:
+        return pd.DataFrame()
+    date_col = game_date_col(box)
+    box = box.copy()
+    if team is not None:
+        box = box[box["team"] == team]
+    if exclude_team is not None:
+        box = box[box["team"] != exclude_team]
+    if box.empty:
+        return pd.DataFrame()
+
+    num = lambda df, c: pd.to_numeric(df[c], errors="coerce").sum() if c in df.columns else float("nan")
+    records = {}
+    for (name, team_name), group in box.groupby(["player", "team"], dropna=True):
+        minutes = pd.to_numeric(group["MIN"], errors="coerce").sum() if "MIN" in group.columns else float("nan")
+        games = int(group[date_col].nunique()) if date_col else len(group)
+        if pd.isna(minutes) or minutes <= 0 or not games:
+            continue
+        per40 = lambda c: (40.0 * num(group, c) / minutes) if pd.notna(num(group, c)) else None
+        fga, fgm = num(group, "FGA"), num(group, "FGM")
+        tpa, tpm = num(group, "FG3A"), num(group, "FG3M")
+        fta = num(group, "FTA")
+        records[f"{name} ({team_name})"] = {
+            "player": str(name), "team": str(team_name), "_games": games,
+            "mpg": float(minutes / games),
+            "fga40": per40("FGA"), "pts40": per40("PTS"), "ast40": per40("AST"),
+            "to40": per40("TO"), "reb40": per40("REB"), "stl40": per40("STL"), "blk40": per40("BLK"),
+            "tp_rate": (100.0 * tpa / fga) if pd.notna(fga) and fga > 0 else None,
+            "ft_rate": (100.0 * fta / fga) if pd.notna(fga) and fga > 0 else None,
+            "fg_pct": (100.0 * fgm / fga) if pd.notna(fga) and fga > 0 else None,
+            "tp_pct": (100.0 * tpm / tpa) if pd.notna(tpa) and tpa > 0 else None,
+        }
+    return pd.DataFrame.from_dict(records, orient="index") if records else pd.DataFrame()
+
+
+def comparable_players(target_row, pool: pd.DataFrame, k: int = 1):
+    """Nearest players in `pool` to `target_row`, by the same method comparable_opponents() uses.
+
+    Weighted RMS of robust z-score differences, renormalised over the features both players have, scored
+    100*exp(-0.7*d). Deliberately the same maths and the same scale as the team comparison, so a 70% match
+    means a comparable thing whichever panel a coach is reading.
+    """
+    keys = [k_ for k_, _, _ in PLAYER_FEATURE_SPEC]
+    if pool.empty or target_row is None:
+        return pd.DataFrame()
+    usable = pool[pd.to_numeric(pool.get("mpg"), errors="coerce") >= PLAYER_COMPARISON_MIN_MPG]
+    if usable.empty:
+        return pd.DataFrame()
+    present = [c for c in keys if c in usable.columns]
+    frame = pd.concat([usable[present], pd.DataFrame([{c: target_row.get(c) for c in present}],
+                                                     index=["__target__"])])
+    scaled = _robust_scale(frame)
+    target = scaled.loc["__target__"]
+
+    rows = []
+    for name in usable.index:
+        if name == "__target__":
+            continue
+        candidate = scaled.loc[name]
+        sq = weight = 0.0
+        shared = []
+        for key in present:
+            a, b = target.get(key), candidate.get(key)
+            if pd.isna(a) or pd.isna(b) or pd.isna(target_row.get(key)) or pd.isna(usable.at[name, key]):
+                continue
+            w = PLAYER_FEATURE_WEIGHTS[key]
+            sq += w * (a - b) ** 2
+            weight += w
+            shared.append((abs(float(a) - float(b)), key))
+        if weight <= 0:
+            continue
+        distance = (sq / weight) ** 0.5
+        rows.append({
+            "key": name,
+            "player": usable.at[name, "player"], "team": usable.at[name, "team"],
+            "games": int(usable.at[name, "_games"]) if "_games" in usable.columns else None,
+            "match": int(round(100 * math.exp(-0.7 * distance))),
+            "distance": distance,
+            "features_scored": len(shared),
+            "weight_covered": weight / sum(PLAYER_FEATURE_WEIGHTS[c] for c in present),
+            "alike": [key for _, key in sorted(shared)[:3]],
+        })
+    if not rows:
+        return pd.DataFrame()
+    return pd.DataFrame(rows).sort_values("distance").head(k).reset_index(drop=True)
+
+
 def opponent_bench_tiers(short_opponent, roster_names, season=None) -> tuple:
     """Split a roster into rotation / low-minute / not-recently-used, from the opponent's own prior games.
 
@@ -4886,6 +5006,51 @@ def render_upcoming_game():
                             return base64.b64encode(img_f.read()).decode()
                 return None
 
+            def _render_computed_player_comparison(_pc_name):
+                """Comparable player worked out from box scores, when the parser table has no row.
+
+                CONFIRMED CHANGE (requested): uww_player_comparisons only carries the players the parser
+                scouted, so every bench player fell through to "No comparable player found" -- which reads
+                as "nobody plays like him" when it actually means "nobody wrote him up". The comparison is
+                computable: this player's own prior games give his style, and every player UWW has already
+                faced is a pool with a known result against us. Same distance maths and same 0-100 scale as
+                COMPARABLE OPPONENTS, so the numbers mean the same thing across the app.
+                """
+                _pc_own = player_rate_profiles("uww_opponent_prior_games_box_score", team=short_opponent)
+                _pc_key = f"{_pc_name} ({short_opponent})"
+                if _pc_own.empty or _pc_key not in _pc_own.index:
+                    st.caption(
+                        f"No comparable player: {_pc_name} has no scouting-report comparison and no "
+                        f"minutes in {short_opponent}'s prior games to build one from."
+                    )
+                    return
+                _pc_pool = player_rate_profiles("uww_pbp_box_score", exclude_team="UW-Whitewater")
+                _pc_ranked = comparable_players(_pc_own.loc[_pc_key], _pc_pool, k=1)
+                if _pc_ranked.empty:
+                    st.caption(
+                        "No comparable player: none of the players UWW has faced has enough box-score "
+                        "data to compare against."
+                    )
+                    return
+
+                _pc = _pc_ranked.iloc[0]
+                st.markdown(
+                    f"{esc(_pc['player'])} ({esc(_pc['team'])}) &middot; "
+                    f"<strong>{int(_pc['match'])}/100</strong> match",
+                    unsafe_allow_html=True)
+                st.caption(
+                    "Computed from box scores (no scouting-report comparison on file). Closest on: "
+                    + ", ".join(PLAYER_FEATURE_LABELS.get(_k, _k) for _k in _pc["alike"])
+                    + f" \u00b7 {int(_pc['features_scored'])}/{len(PLAYER_FEATURE_SPEC)} features"
+                    + (f" \u00b7 {int(_pc['games'])} gm vs UWW" if pd.notna(_pc.get("games")) else "")
+                )
+
+                # The reason this comparison is useful: what that player actually did against UWW.
+                _pc_log = player_game_log([_pc["player"]], "uww_pbp_box_score", _pc["team"])
+                if not _pc_log.empty:
+                    st.caption(f"{_pc['player']} vs UWW:")
+                    st.dataframe(_pc_log.drop(columns=["_iso"]), hide_index=True, use_container_width=True)
+
             @st.dialog("Player Details", width="large")
             def _show_player_dialog(player_name, player_row_dict):
                 jersey_raw = str(player_row_dict.get("jersey_number", "")).strip()
@@ -4983,8 +5148,35 @@ def render_upcoming_game():
                                 f"currently targets {', '.join(_cmp_targets)}. Re-run the parser's player "
                                 f"comparison cells with {short_opponent} as the most recently scouted game."
                             )
+                            _render_computed_player_comparison(player_name)
                         elif not comp_match.empty:
                             comp = comp_match.iloc[0]
+                            # The parser now emits two kinds of comparison. A tag-based one says these two
+                            # PLAY alike; a stat-based fallback (for roster players with no scouting-report
+                            # entry, mostly bench) only says they PRODUCE alike. Showing them identically
+                            # would overstate the second, so the method is surfaced whenever it isn't the
+                            # scouting-report one. Absent column = an older CSV, so nothing is shown.
+                            # The parser records what each comparison actually rests on. Without this every
+                            # match rendered identically, so a bench player matched on height and position
+                            # alone looked as authoritative as a fully-scouted one -- their scores sit on
+                            # the same absolute scale and differed by less than a tenth of a point.
+                            _cmp_method = str(comp.get("comparison_method", "") or "").strip()
+                            _cmp_cov = pd.to_numeric(pd.Series([comp.get("evidence_coverage")]),
+                                                     errors="coerce").iloc[0]
+                            if _cmp_method:
+                                _cmp_weak = pd.notna(_cmp_cov) and _cmp_cov < 0.7
+                                _cmp_colour = "#b3261e" if _cmp_weak else "#666"
+                                _cmp_cov_text = f" \u00b7 {_cmp_cov:.0%} of the usual evidence" if pd.notna(_cmp_cov) else ""
+                                st.markdown(
+                                    f'<div style="font-size:0.72rem;color:{_cmp_colour};">'
+                                    f'{"\u26a0\ufe0f " if _cmp_weak else ""}Based on: {esc(_cmp_method)}'
+                                    f'{_cmp_cov_text}</div>', unsafe_allow_html=True)
+                                if _cmp_weak:
+                                    st.caption(
+                                        "No scouting notes and no game stats for this player, so this is "
+                                        "the closest body type and position on file \u2014 a starting "
+                                        "point, not a scouting read."
+                                    )
                             game_date = comp.get("compared_game_date", "")
                             date_str = f" — {game_date}" if pd.notna(game_date) and str(game_date).strip() else ""
                             st.markdown(
@@ -5024,9 +5216,9 @@ def render_upcoming_game():
                                 s = season_row.iloc[0]
                                 st.caption(f"Season avg: {s.get('PTS', '-')} PTS, {s.get('REB', '-')} REB, {s.get('AST', '-')} AST")
                         else:
-                            st.caption("No comparable player found.")
+                            _render_computed_player_comparison(player_name)
                     else:
-                        st.caption("No comparison data available.")
+                        _render_computed_player_comparison(player_name)
 
             # CONFIRMED CHANGE (requested): the bench is split further, because "Bench" lumps together three
             # groups a game plan treats completely differently -- the six or seven who will actually play,
