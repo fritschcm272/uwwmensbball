@@ -53,7 +53,10 @@ KNOWN_NAME_ALIASES = _load_name_aliases()
 # play description on the Season Leaders card.
 JUNK_PLAYER_RE = r"(?i)^(?:TEAM$|Commits |Turnover|Jump Ball|Subs In|Subs Out|Timeout|Official )|(?: Commits Foul$)"
 
-st.set_page_config(page_title="UWW Basketball Scouting", page_icon="🏀", layout="wide")
+# initial_sidebar_state="collapsed": Ask Willie lives in the sidebar and starts closed, so the page opens on
+# the scouting content rather than on a chat box.
+st.set_page_config(page_title="UWW Basketball Scouting", page_icon="\U0001f3c0", layout="wide",
+                   initial_sidebar_state="collapsed")
 
 
 def _discover_available_seasons() -> dict:
@@ -154,13 +157,33 @@ def willie_avatar():
 
 
 @st.cache_data
-def willie_image_b64() -> str:
-    """Base64 of the mascot art for inline HTML, or "" when unavailable."""
+def willie_image_b64(max_width: int = 0) -> str:
+    """Base64 of the mascot art for inline HTML, or "" when unavailable.
+
+    max_width: downscale to this pixel width first. The launcher icon renders at ~54px but the source art
+    is 481px wide, and the full-size base64 is ~150 KB -- inlined into a <style> block that is re-sent on
+    every rerun, which is a real cost for something the size of a thumbnail. Downscaling first cuts that by
+    two orders of magnitude. Falls back to the full image if Pillow isn't importable, so this can never be
+    the reason the icon fails to appear.
+    """
     import base64 as _b64_willie
     path = willie_image_path()
     if not path:
         return ""
     try:
+        if max_width:
+            try:
+                import io
+                from PIL import Image
+                with Image.open(path) as img:
+                    if img.width > max_width:
+                        height = max(1, round(img.height * max_width / img.width))
+                        img = img.convert("RGBA").resize((max_width, height), Image.LANCZOS)
+                        buffer = io.BytesIO()
+                        img.save(buffer, format="PNG", optimize=True)
+                        return _b64_willie.b64encode(buffer.getvalue()).decode("utf-8")
+            except Exception:
+                pass   # Pillow missing or the resize failed -- fall through to the full-size image
         with open(path, "rb") as handle:
             return _b64_willie.b64encode(handle.read()).decode("utf-8")
     except OSError:
@@ -3795,31 +3818,27 @@ GUIDELINES:
 """
 
 
-def render_home():
-    """Home page: the "Ask Willie Warhawk" scouting assistant chat interface."""
-    _willie_b64 = willie_image_b64()
+def render_willie_sidebar():
+    """The "Ask Willie Warhawk" assistant, in the sidebar, available from every page.
+
+    Moved out of a Home page and into the sidebar so the app opens on scouting content and Willie is one
+    click away wherever a coach already is -- asking about the opponent while looking at the opponent
+    beats navigating away to a chat box. The sidebar starts collapsed (see set_page_config above).
+
+    The chat renders inside `with st.sidebar:` in main(), so every st.* call below lands in the panel.
+    """
+    _willie_b64 = willie_image_b64(max_width=192)   # displayed at 96px
     if _willie_b64:
-        _hdr_left, _hdr_right = st.columns([1, 6])
-        with _hdr_left:
-            st.markdown(
-                f'<img src="data:image/png;base64,{_willie_b64}" alt="Willie Warhawk" '
-                f'style="width:100%;max-width:110px;display:block;margin:0 auto;">',
-                unsafe_allow_html=True)
-        with _hdr_right:
-            st.markdown(
-                '<div style="font-weight:800;font-size:1.9rem;color:#4E2A84;line-height:1.15;'
-                'margin-top:0.35rem;">Ask Willie Warhawk</div>'
-                '<div style="font-size:0.95rem;color:#555;margin-top:0.25rem;">'
-                'Your scouting assistant. Ask about team stats, opponent breakdowns, game prep, '
-                'player analysis \u2014 anything in the app.</div>', unsafe_allow_html=True)
+        st.markdown(
+            f'<div style="text-align:center;margin-bottom:0.25rem;">'
+            f'<img src="data:image/png;base64,{_willie_b64}" alt="Willie Warhawk" '
+            f'style="width:96px;display:block;margin:0 auto;">'
+            f'<div style="font-weight:800;font-size:1.15rem;color:#4E2A84;line-height:1.2;">'
+            f'Ask Willie Warhawk</div></div>', unsafe_allow_html=True)
     else:
         # The art isn't deployed; the branding still reads correctly without it.
-        st.markdown('## \U0001f3c0 Ask Willie Warhawk')
-        st.markdown(
-            "Your scouting assistant. Ask about team stats, opponent breakdowns, game prep, "
-            "player analysis \u2014 anything in the app."
-        )
-    st.divider()
+        st.markdown("### \U0001f3c0 Ask Willie Warhawk")
+    st.caption("Team stats, opponent breakdowns, game prep, player analysis \u2014 anything in the app.")
 
     # --- Chat interface ---
     if "home_messages" not in st.session_state:
@@ -3842,12 +3861,16 @@ def render_home():
             "Summarize our team's biggest strengths and weaknesses.",
             "How have we performed in our last 3 games?",
         ]
-        cols = st.columns(2)
+        # One per row: the sidebar is far narrower than the old full-width Home page, and two columns
+        # there wraps every label onto three lines.
         for i, suggestion in enumerate(suggestions):
-            with cols[i % 2]:
-                if st.button(suggestion, key=f"suggest_{i}", use_container_width=True):
-                    st.session_state.home_messages.append({"role": "user", "content": suggestion})
-                    st.rerun()
+            if st.button(suggestion, key=f"suggest_{i}", use_container_width=True):
+                st.session_state.home_messages.append({"role": "user", "content": suggestion})
+                st.rerun()
+    elif st.session_state.home_messages:
+        if st.button("Clear conversation", key="willie_clear", use_container_width=True):
+            st.session_state.home_messages = []
+            st.rerun()
 
     # Determine if we need to generate a response:
     # Either the user just typed something, or a suggestion button was clicked (last msg is user with no reply)
@@ -11083,18 +11106,59 @@ section[data-testid="stSidebar"] * {
 """
 
 
+def _willie_launcher_css() -> str:
+    """CSS that turns the sidebar's collapsed open-control into the Willie Warhawk mascot.
+
+    This is the one place in the app that targets a Streamlit internal (the collapsed control's
+    data-testid), because that control is the only way back to a collapsed sidebar and Streamlit exposes no
+    API to restyle it. It is written to FAIL SAFE: if the test id changes in a future Streamlit release the
+    rules simply match nothing, the stock chevron renders, and the panel still opens. Nothing here is
+    load-bearing for behaviour -- only for the icon.
+    """
+    b64 = willie_image_b64(max_width=120)   # rendered at ~54px; see willie_image_b64's note on size
+    if not b64:
+        return ""
+    return f"""
+    <style>
+    [data-testid="stSidebarCollapsedControl"] button {{
+        background-image: url("data:image/png;base64,{b64}");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 54px !important;
+        height: 60px !important;
+        border: none !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+    }}
+    /* Hide the stock chevron sitting inside that button, not the button itself. */
+    [data-testid="stSidebarCollapsedControl"] button svg {{ display: none; }}
+    [data-testid="stSidebarCollapsedControl"] button:hover {{
+        transform: scale(1.06);
+        transition: transform 0.12s ease;
+    }}
+    </style>
+    """
+
+
 def main():
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+    st.markdown(_willie_launcher_css(), unsafe_allow_html=True)
+
+    # Ask Willie lives in the sidebar now, on every page rather than on one of them.
+    with st.sidebar:
+        render_willie_sidebar()
 
     # Navigation state
     if "nav_page" not in st.session_state:
-        st.session_state.nav_page = "Home"
+        st.session_state.nav_page = "Upcoming Game"
 
-    pages = ["Home", "Upcoming Game", "Analytics"]
-    # Display labels only. The page KEYS stay as they are -- st.session_state.nav_page and the routing at
-    # the bottom of this function both match on them, so renaming the key to brand the tab would break
-    # navigation and any bookmarked state.
-    page_labels = {"Home": "Ask Willie"}
+    pages = ["Upcoming Game", "Analytics"]
+    page_labels = {}
+    # A session that was open across this change (or a bookmarked state) can still be holding the retired
+    # "Home" page. Send it somewhere real instead of rendering nothing.
+    if st.session_state.nav_page not in pages:
+        st.session_state.nav_page = pages[0]
 
     # Button-based navbar: uses theme primaryColor for the active page, no internal DOM hacks
     cols = st.columns(len(pages))
@@ -11111,9 +11175,7 @@ def main():
                 st.rerun()
 
     page = st.session_state.nav_page
-    if page == "Home":
-        render_home()
-    elif page == "Upcoming Game":
+    if page == "Upcoming Game":
         render_upcoming_game()
     elif page == "Analytics":
         render_analytics()
