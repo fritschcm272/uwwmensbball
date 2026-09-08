@@ -794,6 +794,78 @@ def profiles_with_prior_season(prior_label=None) -> pd.DataFrame:
     return pd.concat([frame, prior])
 
 
+def render_style_match_card(rank_row, ranked_frame, profiles, target_row, target_label,
+                            meetings, display_name=None, season_tag=None):
+    """Draw ONE result card for a style comparison. Both panels call this and nothing else.
+
+    COMPARABLE OPPONENTS and TEAMS LIKE US THAT PLAYED THEM show the same kind of answer -- a team, how
+    closely it matches, how much that rests on, and what happened when the two met -- so they are drawn by
+    one function rather than two that have to be kept in step by hand. They had already drifted once (one
+    panel gained the Alike/Differs lines and the biggest-gap breakdown while the other kept a bare score),
+    which is the recurring failure in this app: two things that claim to mean the same thing, maintained
+    separately.
+
+    meetings: normalised by the CALLER, because the two panels source results from different tables --
+    a list of {"outcome": "W"/"L", "score": "78-74", "date": "Sat, Jan 3"}. `date` may be blank.
+    target_label: short label for the team being matched AGAINST, shown next to its value in the gap lines.
+    """
+    badge = (f'<span style="font-size:0.65rem;font-weight:700;color:#8a6d3b;background:#fcf3d9;'
+             f'border-radius:4px;padding:1px 5px;margin-left:5px;">{esc(season_tag)}</span>') if season_tag else ""
+    cats = {c.split("::", 1)[1]: rank_row[c] for c in ranked_frame.columns
+            if c.startswith("cat::") and pd.notna(rank_row.get(c))}
+    alike = sorted(cats, key=cats.get)[:2]
+    differs = sorted(cats, key=cats.get, reverse=True)[:1]
+    confidence = rank_row.get("confidence")
+
+    with st.container(border=True):
+        st.markdown(
+            f'<div style="font-weight:700;font-size:0.95rem;color:#4E2A84;">'
+            f'{esc(display_name or rank_row["opponent"])}{badge}</div>'
+            f'<div style="font-size:1.6rem;font-weight:800;line-height:1.1;">{int(rank_row["match"])}'
+            f'<span style="font-size:0.7rem;color:#888;font-weight:600;"> / 100 match</span></div>'
+            f'<div style="font-size:0.68rem;color:#999;">'
+            f'{int(rank_row["features_scored"])}/{len(OPPONENT_FEATURE_SPEC)} features &middot; '
+            f'{100 * rank_row["weight_covered"]:.0f}% of profile weight'
+            + (f' &middot; {int(rank_row["games"])} gm sample' if pd.notna(rank_row.get("games")) else "")
+            + f'</div>'
+            + (f'<div style="font-size:0.68rem;font-weight:700;color:'
+               f'{"#2e7d32" if confidence >= 0.6 else "#8a6d3b" if confidence >= 0.35 else "#b3261e"};">'
+               f'confidence {100 * confidence:.0f}%</div>' if pd.notna(confidence) else ""),
+            unsafe_allow_html=True)
+
+        # Every meeting on its own line -- never one result standing in for several games.
+        for meeting in meetings or []:
+            colour = "#2e7d32" if meeting.get("outcome") == "W" else "#c62828"
+            st.markdown(
+                f'<div style="font-size:0.85rem;margin-top:2px;">'
+                f'<span style="color:{colour};font-weight:700;">{esc(meeting.get("outcome", ""))}</span> '
+                f'{esc(meeting.get("score", ""))}'
+                + (f'<span style="color:#999;font-size:0.75rem;"> &middot; {esc(meeting["date"])}</span>'
+                   if meeting.get("date") else "")
+                + '</div>', unsafe_allow_html=True)
+
+        if alike:
+            st.markdown(f'<div style="font-size:0.75rem;color:#2e7d32;margin-top:6px;">Alike: '
+                        f'{esc(", ".join(alike))}</div>', unsafe_allow_html=True)
+        if differs:
+            st.markdown(f'<div style="font-size:0.75rem;color:#c62828;">Differs: '
+                        f'{esc(", ".join(differs))}</div>', unsafe_allow_html=True)
+
+        # The two features that separate them most, with both teams' actual numbers, so a coach can judge
+        # the match instead of trusting the score.
+        gaps = []
+        for key, label, _, _ in OPPONENT_FEATURE_SPEC:
+            a, b = target_row.get(key), profiles.loc[rank_row["opponent"]].get(key)
+            if pd.isna(a) or pd.isna(b):
+                continue
+            gaps.append((abs(float(a) - float(b)) / (abs(float(a)) + 1e-6), key, label, a, b))
+        for _, key, label, a, b in sorted(gaps, reverse=True)[:2]:
+            st.markdown(
+                f'<div style="font-size:0.72rem;color:#666;margin-top:2px;">{esc(label)}: '
+                f'<strong>{esc(format_feature(key, b))}</strong> vs {esc(format_feature(key, a))} '
+                f'({esc(target_label)})</div>', unsafe_allow_html=True)
+
+
 def comparable_opponents(target_opponent: str, candidate_opponents, k: int = 3, profiles=None):
     """Rank `candidate_opponents` by how closely their style resembles `target_opponent`.
 
@@ -4757,66 +4829,19 @@ def render_upcoming_game():
                 _co_cols = st.columns(len(_co_ranked))
                 for _ci, (_, _cr) in enumerate(_co_ranked.iterrows()):
                     _co_name = _cr["opponent"]
-                    _co_row = _co_profiles.loc[_co_name]
                     _co_plain, _co_season_tag = untag_season(_co_name)
-                    _co_badge = (f'<span style="font-size:0.65rem;font-weight:700;color:#8a6d3b;'
-                                 f'background:#fcf3d9;border-radius:4px;padding:1px 5px;margin-left:5px;">'
-                                 f'{esc(_co_season_tag)}</span>') if _co_season_tag else ""
-                    _cats = {c.split("::", 1)[1]: _cr[c] for c in _co_ranked.columns
-                             if c.startswith("cat::") and pd.notna(_cr[c])}
-                    _alike = sorted(_cats, key=_cats.get)[:2]
-                    _differs = sorted(_cats, key=_cats.get, reverse=True)[:1]
+                    # Normalise this panel's results (schedule rows) into the shared card's shape.
+                    _co_meetings = [{
+                        "outcome": _g.get("outcome"),
+                        "score": (f"{int(_g['team_score'])}-{int(_g['opponent_score'])}"
+                                  if pd.notna(_g.get("team_score")) and pd.notna(_g.get("opponent_score")) else ""),
+                        "date": _g.get("date", ""),
+                    } for _g in _co_games.get(_co_name, [])]
                     with _co_cols[_ci]:
-                        with st.container(border=True):
-                            st.markdown(
-                                f'<div style="font-weight:700;font-size:0.95rem;color:#4E2A84;">'
-                                f'{esc(_co_plain)}{_co_badge}</div>'
-                                f'<div style="font-size:1.6rem;font-weight:800;line-height:1.1;">{int(_cr["match"])}'
-                                f'<span style="font-size:0.7rem;color:#888;font-weight:600;"> / 100 match</span></div>'
-                                f'<div style="font-size:0.68rem;color:#999;">'
-                                f'{int(_cr["features_scored"])}/{len(OPPONENT_FEATURE_SPEC)} features &middot; '
-                                f'{100 * _cr["weight_covered"]:.0f}% of profile weight'
-                                + (f' &middot; {int(_cr["games"])} gm sample' if pd.notna(_cr.get("games")) else "")
-                                + f'</div>'
-                                + (f'<div style="font-size:0.68rem;font-weight:700;'
-                                   f'color:{"#2e7d32" if _cr["confidence"] >= 0.6 else "#8a6d3b" if _cr["confidence"] >= 0.35 else "#b3261e"};">'
-                                   f'confidence {100 * _cr["confidence"]:.0f}%</div>'
-                                   if pd.notna(_cr.get("confidence")) else ""),
-                                unsafe_allow_html=True,
-                            )
-                            # Every meeting, with its own result -- not one result standing in for two games.
-                            for _g in _co_games.get(_co_name, []):
-                                _oc = _g.get("outcome")
-                                _colr = "#2e7d32" if _oc == "W" else "#c62828"
-                                _sc = (f"{int(_g['team_score'])}-{int(_g['opponent_score'])}"
-                                       if pd.notna(_g.get("team_score")) and pd.notna(_g.get("opponent_score")) else "")
-                                st.markdown(
-                                    f'<div style="font-size:0.85rem;margin-top:2px;">'
-                                    f'<span style="color:{_colr};font-weight:700;">{esc(_oc)}</span> {esc(_sc)}'
-                                    f'<span style="color:#999;font-size:0.75rem;"> · {esc(_g.get("date", ""))}</span></div>',
-                                    unsafe_allow_html=True,
-                                )
-                            if _alike:
-                                st.markdown(
-                                    f'<div style="font-size:0.75rem;color:#2e7d32;margin-top:6px;">Alike: '
-                                    f'{esc(", ".join(_alike))}</div>', unsafe_allow_html=True)
-                            if _differs:
-                                st.markdown(
-                                    f'<div style="font-size:0.75rem;color:#c62828;">Differs: '
-                                    f'{esc(", ".join(_differs))}</div>', unsafe_allow_html=True)
-                            # The two features that separate them most, with both teams' actual numbers, so a
-                            # coach can judge the match instead of trusting the score.
-                            _gaps = []
-                            for _fk, _flabel, _fcat, _fw in OPPONENT_FEATURE_SPEC:
-                                _a, _b = _co_target.get(_fk), _co_row.get(_fk)
-                                if pd.isna(_a) or pd.isna(_b):
-                                    continue
-                                _gaps.append((abs(float(_a) - float(_b)) / (abs(float(_a)) + 1e-6), _fk, _flabel, _a, _b))
-                            for _, _fk, _flabel, _a, _b in sorted(_gaps, reverse=True)[:2]:
-                                st.markdown(
-                                    f'<div style="font-size:0.72rem;color:#666;margin-top:2px;">{esc(_flabel)}: '
-                                    f'<strong>{esc(format_feature(_fk, _b))}</strong> vs {esc(format_feature(_fk, _a))} '
-                                    f'({esc(get_team_abbreviation(short_opponent))})</div>', unsafe_allow_html=True)
+                        render_style_match_card(
+                            _cr, _co_ranked, _co_profiles, _co_target,
+                            get_team_abbreviation(short_opponent), _co_meetings,
+                            display_name=_co_plain, season_tag=_co_season_tag)
 
                 # What actually happened against this style -- the reason the panel exists.
                 _co_rows = [g for name in _co_ranked["opponent"] for g in _co_games.get(name, [])]
@@ -5173,25 +5198,6 @@ than the one above, which is measured over more games, and it is labelled that w
                 _tl_me_rec["_games"] = _tl_us_games
                 _tl_records["UW-Whitewater"] = _tl_me_rec
 
-            def _tl_result_html(_ctx) -> str:
-                """One game -> 'W 78-74'. Several -> the record, then each score on its own line."""
-                _mts = _ctx.get("meetings") or []
-                if not _mts:
-                    return ""
-                if len(_mts) == 1:
-                    _m0 = _mts[0]
-                    _c = "#2e7d32" if _m0["won"] else "#c62828"
-                    return (f'<div style="margin-top:6px;font-size:1.1rem;font-weight:800;color:{_c};">'
-                            f'{"W" if _m0["won"] else "L"} {int(_m0["pts"])}-{int(_m0["their_pts"])}</div>')
-                _w, _l = _ctx.get("wins", 0), _ctx.get("losses", 0)
-                _c = "#2e7d32" if _w > _l else "#c62828" if _l > _w else "#666"
-                _lines = "".join(
-                    f'<div style="font-size:0.75rem;color:{"#2e7d32" if _m["won"] else "#c62828"};">'
-                    f'{"W" if _m["won"] else "L"} {int(_m["pts"])}-{int(_m["their_pts"])}</div>'
-                    for _m in _mts)
-                return (f'<div style="margin-top:6px;font-size:1.1rem;font-weight:800;color:{_c};">'
-                        f'{_w}-{_l} in {len(_mts)} meetings</div>{_lines}')
-
             if len(_tl_records) < 2:
                 st.info(f"Not enough reconstructed box scores from {short_opponent}'s prior games yet.")
             else:
@@ -5226,25 +5232,19 @@ than the one above, which is measured over more games, and it is labelled that w
                         )
 
                     _tl_cols = st.columns(len(_tl_ranked))
+                    _tl_me_row = _tl_used.loc["UW-Whitewater"]
                     for _i, _r in enumerate(_tl_ranked.to_dict("records")):
                         _ctx = _tl_context.get(_r["opponent"], {})
+                        # Same card, same shape -- results normalised into the shared renderer's form. The
+                        # target here is UWW, so the gap lines read "<their value> vs <UWW's value> (UWW)".
+                        _tl_meetings = [{
+                            "outcome": "W" if _mt["won"] else "L",
+                            "score": f"{int(_mt['pts'])}-{int(_mt['their_pts'])}",
+                            "date": str(_mt.get("date") or ""),
+                        } for _mt in _ctx.get("meetings", [])]
                         with _tl_cols[_i]:
-                            with st.container(border=True):
-                                _conf = _r.get("confidence")
-                                st.markdown(
-                                    f'<div style="font-weight:700;color:#4E2A84;">{esc(str(_r["opponent"]))}</div>'
-                                    f'<div style="font-size:1.4rem;font-weight:800;line-height:1.15;">'
-                                    f'{int(_r["match"])}<span style="font-size:0.7rem;color:#888;font-weight:600;">'
-                                    f' / 100 match</span></div>'
-                                    f'<div style="font-size:0.68rem;color:#999;">'
-                                    f'{int(_r["features_scored"])}/{len(OPPONENT_FEATURE_SPEC)} features &middot; '
-                                    f'{100 * _r["weight_covered"]:.0f}% of profile weight &middot; '
-                                    f'{int(_ctx.get("games", 1))} gm sample</div>'
-                                    + (f'<div style="font-size:0.68rem;font-weight:700;color:'
-                                       f'{"#2e7d32" if _conf >= 0.6 else "#8a6d3b" if _conf >= 0.35 else "#b3261e"};">'
-                                       f'confidence {100 * _conf:.0f}%</div>' if pd.notna(_conf) else "")
-                                    + _tl_result_html(_ctx),
-                                    unsafe_allow_html=True)
+                            render_style_match_card(
+                                pd.Series(_r), _tl_ranked, _tl_used, _tl_me_row, "UWW", _tl_meetings)
 
                     # Averaged over GAMES, not over teams -- a team met three times contributes three
                     # games to the record and to the scoring averages, which is what "how do teams like us
