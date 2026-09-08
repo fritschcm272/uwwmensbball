@@ -10993,18 +10993,28 @@ h4, h5, h6 {
     font-weight: 600;
 }
 
+/* Sidebar: white panel. The text rules below have to flip WITH the background -- they were forcing
+   #FFFFFF on every heading and markdown block to sit on the old purple, which on white is invisible. */
 .stSidebar {
-    background-color: var(--warhawk-purple) !important;
+    background-color: #FFFFFF !important;
 }
 
 .stSidebar [data-testid="stSidebarContent"] {
-    background-color: var(--warhawk-purple) !important;
+    background-color: #FFFFFF !important;
 }
 
-.stSidebar h1, .stSidebar h2, .stSidebar h3,
+.stSidebar h1, .stSidebar h2, .stSidebar h3 {
+    color: var(--warhawk-purple) !important;
+}
+
 .stSidebar .stMarkdown, .stSidebar label,
 .stSidebar [data-testid="stMarkdownContainer"] {
-    color: #FFFFFF !important;
+    color: #262730 !important;
+}
+
+/* A white panel against a white page needs an edge, which the purple fill used to provide. */
+.stSidebar [data-testid="stSidebarContent"] {
+    border-right: 1px solid #e0e0e0;
 }
 
 
@@ -11053,30 +11063,34 @@ div[data-testid="stModal"] > div {
 div[data-testid="stModal"] [data-testid="stVerticalBlock"] {
     width: 100%;
 }
-/* Sidebar collapse button: gray, always visible */
+/* Sidebar collapse button: always visible. Purple now rather than the pale grey it needed against the old
+   purple panel -- #9DAAAC on white is close to invisible. */
 button[data-testid="stSidebarCollapseButton"],
 button[data-testid="baseButton-headerNoPadding"] {
-    color: #9DAAAC !important;
+    color: var(--warhawk-purple) !important;
     opacity: 1 !important;
     visibility: visible !important;
 }
 
 button[data-testid="stSidebarCollapseButton"] svg,
 button[data-testid="baseButton-headerNoPadding"] svg {
-    fill: #9DAAAC !important;
-    stroke: #9DAAAC !important;
+    fill: var(--warhawk-purple) !important;
+    stroke: var(--warhawk-purple) !important;
 }
 
-/* Remove any remaining white from sidebar/nav */
+/* Force the sidebar's inner wrappers to the panel colour too. These were hardcoded to the purple and sit
+   later and more specifically than the .stSidebar rule above, so they won that cascade -- changing only the
+   .stSidebar background left the panel purple. Kept as explicit rules rather than deleted because Streamlit
+   paints several of these wrappers with its own theme background. */
 .stSidebar > div,
 .stSidebar [data-testid="stSidebarContent"] > div,
 .stSidebar [data-testid="stSidebarUserContent"],
 .stSidebar [data-testid="stSidebarUserContent"] > div {
-    background-color: #4E2A84 !important;
+    background-color: #FFFFFF !important;
 }
 
 section[data-testid="stSidebar"] > div {
-    background-color: #4E2A84 !important;
+    background-color: #FFFFFF !important;
 }
 
 
