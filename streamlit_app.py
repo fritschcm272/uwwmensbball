@@ -664,7 +664,7 @@ def personnel_profiles(season=None) -> pd.DataFrame:
             continue
         minutes = (pd.to_numeric(group["MIN"], errors="coerce").fillna(0.0)
                    if "MIN" in group.columns else pd.Series(0.0, index=group.index))
-        rotation = minutes >= 8.0
+        rotation = minutes >= ROTATION_MIN_MPG
         if not rotation.any():
             rotation = minutes > 0
         weights = minutes.where(rotation, 0.0)
@@ -792,6 +792,82 @@ def profiles_with_prior_season(prior_label=None) -> pd.DataFrame:
     if frame.empty:
         return prior
     return pd.concat([frame, prior])
+
+
+# Minutes per game at or above which a player counts as part of the rotation. Used by the personnel style
+# profile AND by the roster's bench tiers, so the two can't disagree about who is a rotation player.
+ROTATION_MIN_MPG = 8.0
+# How many of the opponent's most recent games decide whether a player is still being used. Three is short
+# enough to catch an injury or a benching that happened this month and long enough not to react to one DNP.
+RECENT_GAMES_WINDOW = 3
+
+
+def opponent_bench_tiers(short_opponent, roster_names, season=None) -> tuple:
+    """Split a roster into rotation / low-minute / not-recently-used, from the opponent's own prior games.
+
+    Returns (tiers, meta) where tiers maps each roster name to "rotation", "deep" or "inactive", and meta
+    carries the per-player minutes and last-appearance detail the roster cards display.
+
+    A scouting report's season minutes average can't answer either question this splits on. A player who
+    tore an ACL in January still shows 24 MPG for the season, and a freshman who has climbed into the
+    rotation still shows 4. Both matter to a game plan and both need the game-by-game record, so this
+    reads uww_opponent_prior_games_box_score rather than the profile table.
+
+    When there are no prior games on file, EVERY player comes back "rotation" -- with no evidence, the
+    honest answer is not to split the bench at all rather than to invent tiers from a season average.
+    """
+    box = load_table("uww_opponent_prior_games_box_score", season)
+    tiers = {str(n): "rotation" for n in roster_names}
+    meta = {}
+    if box.empty or "team" not in box.columns or "player" not in box.columns:
+        return tiers, {"games_on_file": 0}
+    date_col = game_date_col(box)
+    if not date_col:
+        return tiers, {"games_on_file": 0}
+
+    theirs = box[box["team"] == short_opponent].copy()
+    if theirs.empty:
+        return tiers, {"games_on_file": 0}
+    theirs["_iso"] = iso_dates(theirs[date_col]).to_numpy()
+    all_games = sorted([d for d in theirs["_iso"].dropna().unique()], reverse=True)
+    if not all_games:
+        return tiers, {"games_on_file": 0}
+    recent = set(all_games[:RECENT_GAMES_WINDOW])
+
+    theirs["_key"] = theirs["player"].astype(str).str.strip().str.lower()
+    theirs["_min"] = pd.to_numeric(theirs["MIN"], errors="coerce") if "MIN" in theirs.columns else float("nan")
+    # "Played" means minutes on the floor. A player can appear in a box score with a row of zeros, and
+    # counting that as an appearance would hide exactly the players this section exists to surface.
+    played = theirs[theirs["_min"].fillna(0) > 0] if theirs["_min"].notna().any() else theirs
+
+    for name in roster_names:
+        key = str(name).strip().lower()
+        rows = played[played["_key"] == key]
+        appearances = set(rows["_iso"].dropna().unique())
+        recent_count = len(appearances & recent)
+        mpg = float(rows["_min"].mean()) if not rows.empty and rows["_min"].notna().any() else None
+        last_game = max(appearances) if appearances else None
+        # Consecutive most-recent games missed. A player can sit inside the window and still be the most
+        # important thing on this page: a starter averaging 22 minutes who has missed the last two games
+        # counts as "played in the last 3" on a strict reading, and reporting only that would leave a coach
+        # planning around someone who may not take the floor. The tier follows the stated rule; this number
+        # is surfaced alongside it so the tier is never the whole story.
+        missed_recent = 0
+        for game_date in all_games:
+            if game_date in appearances:
+                break
+            missed_recent += 1
+        meta[str(name)] = {"mpg": mpg, "games": len(appearances), "last_game": last_game,
+                           "recent_count": recent_count, "missed_recent": missed_recent}
+        if recent_count == 0:
+            tiers[str(name)] = "inactive"
+        elif mpg is not None and mpg < ROTATION_MIN_MPG:
+            tiers[str(name)] = "deep"
+        else:
+            tiers[str(name)] = "rotation"
+    meta["games_on_file"] = len(all_games)
+    meta["recent_games"] = sorted(recent, reverse=True)
+    return tiers, meta
 
 
 def player_game_log(player_names, source_table, team_name, season=None) -> pd.DataFrame:
@@ -4952,10 +5028,43 @@ def render_upcoming_game():
                     else:
                         st.caption("No comparison data available.")
 
-            for role_label in ["Starter", "Bench"]:
-                subset = opp_roster[opp_roster["role"] == role_label]
+            # CONFIRMED CHANGE (requested): the bench is split further, because "Bench" lumps together three
+            # groups a game plan treats completely differently -- the six or seven who will actually play,
+            # the end-of-bench players who appear for a couple of minutes, and the ones who haven't been
+            # used at all lately (injury, redshirt, fallen out of the rotation). Tiers come from the
+            # opponent's own game-by-game record, not their season minutes average; see
+            # opponent_bench_tiers() for why that distinction matters.
+            _bench_tiers, _bench_meta = opponent_bench_tiers(short_opponent, opp_roster["name"].tolist())
+            _bench_all = opp_roster[opp_roster["role"] == "Bench"]
+            _bench_tier_of = lambda _df, _t: _df[_df["name"].astype(str).map(
+                lambda _n: _bench_tiers.get(str(_n), "rotation")) == _t]
+
+            _roster_sections = [("Starters", opp_roster[opp_roster["role"] == "Starter"], None)]
+            if _bench_meta.get("games_on_file"):
+                _recent_n = len(_bench_meta.get("recent_games", []))
+                _roster_sections += [
+                    ("Bench \u2014 rotation", _bench_tier_of(_bench_all, "rotation"),
+                     f"Played in the last {_recent_n} game(s) and averaging "
+                     f"{ROTATION_MIN_MPG:.0f}+ minutes."),
+                    ("Bench \u2014 limited minutes", _bench_tier_of(_bench_all, "deep"),
+                     f"Playing, but under {ROTATION_MIN_MPG:.0f} minutes a game. Expect short stints; "
+                     f"worth knowing who they replace."),
+                    (f"Bench \u2014 no minutes in last {_recent_n} game(s)",
+                     _bench_tier_of(_bench_all, "inactive"),
+                     "On the roster but unused recently \u2014 injury, redshirt, or out of the rotation. "
+                     "Confirm availability before planning around their absence."),
+                ]
+            else:
+                # No prior-game box scores for this opponent yet, so there is no evidence to tier on.
+                _roster_sections.append(("Bench", _bench_all,
+                                         "No game-by-game data on file for this opponent yet, so the bench "
+                                         "isn't split by usage."))
+
+            for role_label, subset, _section_caption in _roster_sections:
                 if not subset.empty:
-                    st.markdown(f"**{role_label + 's' if role_label != 'Bench' else role_label}**")
+                    st.markdown(f"**{role_label}**")
+                    if _section_caption:
+                        st.caption(_section_caption)
                     cols_per_row = 5
                     player_rows = [subset.iloc[i:i + cols_per_row] for i in range(0, len(subset), cols_per_row)]
                     for row_chunk in player_rows:
@@ -4991,6 +5100,22 @@ def render_upcoming_game():
                                     info_parts = [str(x) for x in [pos, height] if pd.notna(x) and str(x).strip()]
                                     st.caption(" · ".join(info_parts) if info_parts else "\u00a0")
                                     st.markdown(f"**{pts_str}** PPG")
+                                    # Why this player is in this section, from the same numbers that put
+                                    # them there -- a tier with no visible basis is just an assertion.
+                                    _usage = _bench_meta.get(str(name)) or {}
+                                    if _usage.get("mpg") is not None:
+                                        st.caption(f"{_usage['mpg']:.1f} MPG \u00b7 {_usage['games']} gm")
+                                    elif _usage.get("games") == 0 and _bench_meta.get("games_on_file"):
+                                        st.caption("No minutes on file")
+                                    if _usage.get("last_game") and _usage.get("recent_count") == 0:
+                                        st.caption(f"Last played {_usage['last_game']}")
+                                    elif _usage.get("missed_recent"):
+                                        # Still inside the window, but not on the floor lately.
+                                        st.markdown(
+                                            f'<div style="font-size:0.7rem;font-weight:700;color:#c62828;">'
+                                            f'Missed last {int(_usage["missed_recent"])} game'
+                                            f'{"s" if _usage["missed_recent"] > 1 else ""}</div>',
+                                            unsafe_allow_html=True)
                                     if st.button("Details", key=f"roster_card_{short_opponent}_{name}", use_container_width=True):
                                         st.session_state["_opp_roster_detail"] = (name, player.to_dict())
 
