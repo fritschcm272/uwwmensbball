@@ -1083,13 +1083,20 @@ def profile_stat_per_game(profile_row, stat, games_played):
     return value
 
 
-def render_comparable_vs_uww(comp_name, comp_opponent, season_row=None, games_played=None):
-    """How the comparable player actually performed against UWW: every meeting, and versus their season.
+def render_comparable_vs_uww(comp_name, comp_opponent, season_row=None, games_played=None,
+                             comp_game_date=None):
+    """How the comparable player performed in the meeting this comparison was drawn from.
 
-    The point of naming a comparable player is that UWW has already guarded him. What he did in that game
-    is the most directly useful thing on the page, so it shows every meeting rather than the first one --
-    the previous version took .iloc[0] and silently dropped the second game of a home-and-home, which is
-    the half a coach most wants when the first one went badly.
+    CONFIRMED CHANGE (requested): the table shows ONE game -- the meeting named by the comparison's own
+    `compared_game_date` -- not every meeting with that opponent. The comparison is built from a specific
+    game's scouting report, and the card above it prints that date, so listing a home-and-home's other
+    meeting underneath put a row on screen that the comparison was never based on. (An earlier version of
+    this function took .iloc[0] and showed whichever game came first, which is a different thing again:
+    that dropped rows arbitrarily, this selects the named one.)
+
+    The BASELINE math still uses every meeting. "His other games" means his non-UWW games, so both halves
+    of a home-and-home have to come out of the season totals even when only one of them is displayed --
+    otherwise the second meeting would sit inside the baseline it is supposed to be measured against.
     """
     # CONFIRMED CHANGE (requested): this table is written from UWW's side, not the opponent player's. It
     # used to be captioned "How <player> did against UWW" with a Result of "L 72-88" -- HIS team's result
@@ -1104,8 +1111,27 @@ def render_comparable_vs_uww(comp_name, comp_opponent, season_row=None, games_pl
         st.caption(f"No reconstructed box score for {comp_name} against UWW yet.")
         return
 
+    # `compared_game_date` is a year-less display date ("Tue, Dec 2"), so it has to be resolved against
+    # UWW's own game tables rather than parsed -- see resolve_game_date and the year-defaulting bug its
+    # helper documents.
+    shown = log
+    # pd.notna, not a bare truth test: compared_game_date comes out of a CSV and is NaN when absent, and
+    # a float NaN is truthy -- which would send "nan" into resolve_game_date on every comparison lacking a
+    # date and get back a confident None from a lookup that was never valid.
+    _cvu_have_date = pd.notna(comp_game_date) and str(comp_game_date).strip() != ""
+    _cvu_iso = resolve_game_date(comp_game_date) if _cvu_have_date else None
+    if _cvu_iso:
+        _cvu_match = log[log["_iso"] == _cvu_iso]
+        if not _cvu_match.empty:
+            shown = _cvu_match
+        elif len(log) > 1:
+            # Don't silently pick a game. If the named meeting isn't in the box score, showing all of them
+            # with the reason stated beats showing one and implying it was the one the comparison used.
+            st.caption(f"No box score on file for the {comp_game_date} meeting this comparison was drawn "
+                       f"from, so all {len(log)} meeting(s) are shown.")
+
     st.caption(f"How UWW did against {comp_name}:")
-    st.dataframe(log.drop(columns=["_iso"]), hide_index=True, use_container_width=True)
+    st.dataframe(shown.drop(columns=["_iso"]), hide_index=True, use_container_width=True)
 
     # Versus his own rate in his OTHER games -- not his full-season rate.
     #
@@ -1121,6 +1147,8 @@ def render_comparable_vs_uww(comp_name, comp_opponent, season_row=None, games_pl
     # labelled for what it actually is rather than implying a pre-game snapshot we can't compute.
     if season_row is None:
         return
+    # Every meeting, not just the displayed one: this is what gets subtracted out of the season totals
+    # below, and leaving a meeting in the baseline would compare him against a number containing himself.
     meetings = len(log)
     gp = safe_float(games_played) if games_played is not None else None
     # The baseline column is named ONCE for the whole table. Deciding it per row produced a table with
@@ -1132,7 +1160,8 @@ def render_comparable_vs_uww(comp_name, comp_opponent, season_row=None, games_pl
     for stat in ("PTS", "REB", "AST", "STL", "BLK", "TO"):
         if stat not in log.columns:
             continue
-        against_uww = pd.to_numeric(log[stat], errors="coerce")
+        against_uww = pd.to_numeric(shown[stat], errors="coerce")     # the game(s) on screen
+        all_meetings = pd.to_numeric(log[stat], errors="coerce")       # every meeting, for the back-out
         if not against_uww.notna().any():
             continue
         season_value = profile_stat_per_game(season_row, stat, gp)
@@ -1142,7 +1171,7 @@ def render_comparable_vs_uww(comp_name, comp_opponent, season_row=None, games_pl
 
         baseline = season_value
         if use_other_games:
-            other_total = season_value * gp - float(against_uww.sum())
+            other_total = season_value * gp - float(all_meetings.sum())
             # A negative remainder means the profile's season figures and the reconstructed box score
             # disagree (different games on file, or a stat the PDF counts differently). Drop the stat and
             # say so, rather than printing a baseline that can't be true or quietly swapping in a
@@ -1162,7 +1191,9 @@ def render_comparable_vs_uww(comp_name, comp_opponent, season_row=None, games_pl
                     f"season totals so they don't pull the baseline toward themselves")
         else:
             note = "Per game against UWW versus his full-season rate, which includes this game"
-        if meetings > 1:
+        if len(shown) < meetings:
+            note += f" (this game; his {meetings} meetings with UWW are all backed out of the baseline)"
+        elif meetings > 1:
             note += f" (over {meetings} meetings)"
         st.caption(note + ":")
         st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
@@ -5676,7 +5707,8 @@ def render_upcoming_game():
                             if _cmp_season_row is not None:
                                 _cmp_gp = safe_float(_cmp_season_row.get("games_played")) or \
                                     (get_opponent_games_played(comp_opp) or None)
-                            render_comparable_vs_uww(comp_name, comp_opp, _cmp_season_row, _cmp_gp)
+                            render_comparable_vs_uww(comp_name, comp_opp, _cmp_season_row, _cmp_gp,
+                                                     comp_game_date=game_date)
                         else:
                             _render_computed_player_comparison(player_name)
                     else:
