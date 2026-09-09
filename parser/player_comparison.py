@@ -203,6 +203,15 @@ def build_player_comparison_artifacts(schedule, scout_reports, player_profiles,
     stat_cols = ["PTS", "REB", "AST"]
     pct_cols = ["FG%", "3P%"]
     all_stat_cols = stat_cols + pct_cols
+    # CONFIRMED BUG (fixed here): player_profiles does NOT store these three on one scale. PTS and REB are
+    # per-game averages; AST/STL/BLK/TO are deliberately left as SEASON TOTALS, because the app divides
+    # them by games_played at render time (see the parser's PBP override cell, which says so explicitly,
+    # and profile_stat_per_game() in the app). This function read all three straight out of the frame and
+    # z-scored them together, so the AST axis of every comparison was measuring season volume -- a player
+    # with 73 assists over 24 games sat far from one with 40 over 12 even though they are the same 3.0 and
+    # 3.3 per game, and anyone who missed time looked like a non-passer. Converted to per game here so all
+    # five features are rates before anything is z-scored.
+    total_cols = {"AST"}
 
 
     schedule_ordered = schedule.reset_index(drop=True).copy()
@@ -291,10 +300,29 @@ def build_player_comparison_artifacts(schedule, scout_reports, player_profiles,
     candidate_players = player_profiles[player_profiles["opponent"].isin(previous_opponents)]
 
 
+    def per_game(row, col):
+        """`col` as a per-game rate, whatever scale player_profiles happens to store it on.
+
+        A total with no games_played to divide by is returned as missing rather than as itself: an
+        undivided total silently compared against per-game figures is the bug this function exists to
+        stop, and stat_similarity() already handles a missing feature correctly (it drops it from the
+        pair and lowers the evidence, rather than scoring it as agreement).
+        """
+        value = pd.to_numeric(pd.Series([row.get(col)]), errors="coerce").iloc[0]
+        if pd.isna(value) or col not in total_cols:
+            return value
+        games = pd.to_numeric(pd.Series([row.get("games_played")]), errors="coerce").iloc[0]
+        if pd.isna(games) or games <= 0:
+            return float("nan")
+        return value / games
+
     pool = pd.concat([target_players, candidate_players], ignore_index=True)
-    pool_stats = pool[["opponent", "jersey_number"]].copy() if not pool.empty else pd.DataFrame(columns=["opponent", "jersey_number"])
+    # Keyed by (opponent, name) rather than (opponent, jersey_number): players added straight from the
+    # play-by-play have no jersey number at all, so several of them on one team collapsed onto the same
+    # (opponent, None) key and every one but the last silently inherited another player's z-scores.
+    pool_stats = pool[["opponent", "name"]].copy() if not pool.empty else pd.DataFrame(columns=["opponent", "name"])
     for col in stat_cols:
-        pool_stats[col] = pd.to_numeric(pool[col], errors="coerce") if not pool.empty else []
+        pool_stats[col] = [per_game(r, col) for _, r in pool.iterrows()] if not pool.empty else []
     for col in pct_cols:
         pool_stats[col] = pool[col].apply(parse_pct) if not pool.empty else []
 
@@ -307,15 +335,18 @@ def build_player_comparison_artifacts(schedule, scout_reports, player_profiles,
 
 
     zscored = pool_stats[all_stat_cols].apply(zscore_col) if not pool_stats.empty else pd.DataFrame(columns=all_stat_cols)
+    def stat_key(row):
+        return (str(row.get("opponent")).strip().casefold(), str(row.get("name")).strip().casefold())
+
     stat_z_lookup = {
-        (row["opponent"], row["jersey_number"]): {col: zscored.loc[i, col] for col in all_stat_cols}
+        stat_key(row): {col: zscored.loc[i, col] for col in all_stat_cols}
         for i, row in pool_stats.iterrows()
     }
 
 
     def stat_similarity(p1, p2):
-        z1 = stat_z_lookup.get((p1["opponent"], p1["jersey_number"]), {})
-        z2 = stat_z_lookup.get((p2["opponent"], p2["jersey_number"]), {})
+        z1 = stat_z_lookup.get(stat_key(p1), {})
+        z2 = stat_z_lookup.get(stat_key(p2), {})
         diffs = [abs(z1[col] - z2[col]) for col in all_stat_cols if pd.notna(z1.get(col)) and pd.notna(z2.get(col))]
         if not diffs:
             return None
@@ -401,8 +432,16 @@ def build_player_comparison_artifacts(schedule, scout_reports, player_profiles,
                 "target_has_scouting_report": bool(t.get("has_scouting_report", True)),
             }
             for col in stat_display_cols:
-                row[f"target_{col}"] = t.get(col)
-                row[f"compared_{col}"] = c.get(col)
+                # Written on the same per-game scale the comparison ran on. These used to be copied
+                # straight from player_profiles, so target_AST read as a season total (12) sitting beside
+                # target_PTS as a per-game average (1.1) under matching column names.
+                if col in total_cols:
+                    _t_pg, _c_pg = per_game(t, col), per_game(c, col)
+                    row[f"target_{col}"] = None if pd.isna(_t_pg) else round(float(_t_pg), 1)
+                    row[f"compared_{col}"] = None if pd.isna(_c_pg) else round(float(_c_pg), 1)
+                else:
+                    row[f"target_{col}"] = t.get(col)
+                    row[f"compared_{col}"] = c.get(col)
             similarity_rows.append(row)
 
 
