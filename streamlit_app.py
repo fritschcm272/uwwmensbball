@@ -1091,12 +1091,20 @@ def render_comparable_vs_uww(comp_name, comp_opponent, season_row=None, games_pl
     the previous version took .iloc[0] and silently dropped the second game of a home-and-home, which is
     the half a coach most wants when the first one went badly.
     """
-    log = player_game_log([comp_name], "uww_pbp_box_score", comp_opponent)
+    # CONFIRMED CHANGE (requested): this table is written from UWW's side, not the opponent player's. It
+    # used to be captioned "How <player> did against UWW" with a Result of "L 72-88" -- HIS team's result
+    # -- while the Opponent column, which comes straight from uww_pbp_box_score's `opponent` field, named
+    # his own team. Three things on one row disagreeing about whose game it was: the caption made him the
+    # subject, the Opponent column made UWW the subject, and the score belonged to him. Putting all three
+    # in UWW's frame makes them agree at once -- we beat Elmhurst 88-72, and this is the line he put up
+    # doing it -- and it is how a coach reads this panel anyway: what happened when we guarded him.
+    log = player_game_log([comp_name], "uww_pbp_box_score", comp_opponent,
+                          result_team="UW-Whitewater")
     if log.empty:
         st.caption(f"No reconstructed box score for {comp_name} against UWW yet.")
         return
 
-    st.caption(f"How {comp_name} did against UWW:")
+    st.caption(f"How UWW did against {comp_name}:")
     st.dataframe(log.drop(columns=["_iso"]), hide_index=True, use_container_width=True)
 
     # Versus his own rate in his OTHER games -- not his full-season rate.
@@ -1165,12 +1173,18 @@ def render_comparable_vs_uww(comp_name, comp_opponent, season_row=None, games_pl
             )
 
 
-def player_game_log(player_names, source_table, team_name, season=None) -> pd.DataFrame:
+def player_game_log(player_names, source_table, team_name, season=None,
+                    result_team=None) -> pd.DataFrame:
     """One row per game for a player, from a reconstructed box score. Empty frame when nothing matches.
 
     Works for either side: UWW players out of uww_pbp_box_score, opponent players out of
     uww_opponent_prior_games_box_score. `team_name` picks the side, `player_names` is the set of spellings
     to accept (a player and their known alias).
+
+    `result_team` is whose win/loss the Result column reports, and defaults to `team_name` -- a player's
+    own log should read from his own team's side. The Comparable Player panels pass UW-Whitewater instead,
+    because there the player is the OPPONENT and the question is what WE did against him. It changes only
+    which way round the Result column reads; every stat in the row is still the player's own.
 
     The RESULT column is derived from the same rows rather than joined to a schedule -- both sides of every
     game are already in the table, so summing them is exact and can't drift out of step with a schedule
@@ -1190,12 +1204,15 @@ def player_game_log(player_names, source_table, team_name, season=None) -> pd.Da
     if mine.empty:
         return pd.DataFrame()
 
+    # Whose side the Result is written from -- the player's own team unless the caller says otherwise.
+    _result_side = result_team or team_name
+
     num = lambda df, c: pd.to_numeric(df[c], errors="coerce").sum() if c in df.columns else float("nan")
     rows = []
     for (_iso, _opp), group in mine.groupby(["_iso", "opponent"], dropna=False):
         game = box[(box["_iso"] == _iso) & (box["opponent"] == _opp)]
-        ours = num(game[game["team"] == team_name], "PTS")
-        theirs = num(game[game["team"] != team_name], "PTS")
+        ours = num(game[game["team"] == _result_side], "PTS")
+        theirs = num(game[game["team"] != _result_side], "PTS")
         row = {"_iso": _iso, "Date": _iso, "Opponent": _opp}
         if pd.notna(ours) and pd.notna(theirs) and (ours or theirs):
             # A basketball game can't end level, so equal totals mean the reconstruction is missing points
@@ -5496,9 +5513,13 @@ def render_upcoming_game():
                 )
 
                 # The reason this comparison is useful: what that player actually did against UWW.
-                _pc_log = player_game_log([_pc["player"]], "uww_pbp_box_score", _pc["team"])
+                # Same frame as render_comparable_vs_uww above -- this is the same table with a different
+                # source for the comp, and having the two panels report the score from opposite sides was
+                # exactly the kind of drift that makes a number untrustworthy.
+                _pc_log = player_game_log([_pc["player"]], "uww_pbp_box_score", _pc["team"],
+                                          result_team="UW-Whitewater")
                 if not _pc_log.empty:
-                    st.caption(f"{_pc['player']} vs UWW:")
+                    st.caption(f"How UWW did against {_pc['player']}:")
                     st.dataframe(_pc_log.drop(columns=["_iso"]), hide_index=True, use_container_width=True)
 
             @st.dialog("Player Details", width="large")
