@@ -5784,6 +5784,11 @@ def render_upcoming_game():
             '<div style="font-size:0.8rem;color:#666;margin-top:2px;">'
             'One style model, asked in both directions.</div></div>', unsafe_allow_html=True)
 
+        # Filled in by the two halves below and drawn inside the "How to read this" dialog. A plain dict
+        # rather than session state: it is rebuilt every run from the ranking that just happened, so it
+        # can never show a table for an opponent the page is no longer on.
+        _sm_tables = {}
+
         # Collected by both halves and consumed by the Keys to Victory section further down (see
         # style_matched_ktv_lines). Initialised here so KTV can never depend on whether a half found
         # data -- an absent key just means that evidence line is skipped.
@@ -5887,15 +5892,33 @@ furthest apart \u2014 usually the thing to adjust for. Below those, the two feat
 gaps are spelled out with both teams' actual numbers, so you can see what "differs" means in practice
 rather than taking the label's word for it.
 
-*Close this and open "Full style profile comparison" under either half to see every feature side by side
-with its weight, or the coverage expander to see how much of the profile each candidate could be compared
-on.*
+*The full feature-by-feature tables behind both halves are below.*
             """)
 
+            # The tables themselves, not a pointer to them. They are filled in by the two halves further
+            # down; this dialog only ever runs after both have executed (see the trigger at the bottom of
+            # the section), so an empty dict here means that half genuinely produced no ranking.
+            for _sm_key in ("like_them", "like_us"):
+                _sm_t = _sm_tables.get(_sm_key)
+                st.markdown("---")
+                if not _sm_t:
+                    st.caption("No ranking was produced for this half, so there is no table to show.")
+                    continue
+                st.markdown(f"##### {_sm_t['heading']}")
+                render_style_profile_table(_sm_t["target_header"], _sm_t["target_row"],
+                                           _sm_t["candidates"], _sm_t["caption"])
+                if _sm_t.get("footnote"):
+                    st.caption(_sm_t["footnote"])
+
+        # The button sits here, at the top where a reader looks for it, but the dialog cannot OPEN here:
+        # it now draws the profile tables, and those are computed by the two halves further down. So the
+        # click sets a flag and the dialog is opened at the very bottom of the section, once both halves
+        # have filled _sm_tables. A dialog renders as an overlay regardless of where it is called from,
+        # so this is invisible to the user.
         if st.button("\U0001f4d8 How to read this", key="_sm_how_to_read_btn",
-                     help="What Match and Confidence mean, what goes into them, and where the numbers "
-                          "come from."):
-            _sm_how_to_read()
+                     help="What Match and Confidence mean, what goes into them, where the numbers come "
+                          "from, and the full feature tables behind both halves."):
+            st.session_state["_sm_show_how_to_read"] = True
 
         # CONFIRMED CHANGE (requested): the two halves are stacked full width, not set in side-by-side
         # columns. Splitting the page in two left each card about a third of the width it needs -- the
@@ -5912,10 +5935,8 @@ on.*
         with _sm_half_like_them:
             st.markdown(
                 f'<div style="font-weight:700;font-size:0.9rem;color:#4E2A84;border-bottom:2px solid '
-                f'#4E2A84;padding-bottom:3px;margin:0 0 4px;">TEAMS LIKE '
-                f'{esc(str(short_opponent).upper())} THAT WE HAVE PLAYED</div>'
-                f'<div style="font-size:0.78rem;color:#666;margin-bottom:8px;">Who have <em>we</em> played '
-                f'that resembles them? Sends you to our own film, and to what worked.</div>',
+                f'#4E2A84;padding-bottom:3px;margin:0 0 8px;">TEAMS LIKE '
+                f'{esc(str(short_opponent).upper())} THAT WE HAVE PLAYED</div>',
                 unsafe_allow_html=True)
             # Which teams UWW has ALREADY PLAYED most resemble the one being prepared for -- so the staff can look
             # at what actually worked (and didn't) against that style. Scoped to `played`, i.e. games before the
@@ -6037,15 +6058,9 @@ on.*
                             f"Thin comparison: the best candidate shares only {_co_best_n} scoring feature(s) "
                             f"with {short_opponent}, below the {_co_ranked.attrs.get('min_features')} this "
                             f"ranking wants. These are shown because they are the closest available, not because "
-                            f"they are a confident match -- see the coverage table below for where the gaps are."
+                            f"they are a confident match -- open How to read this to see which features "
+                            f"each candidate could actually be compared on."
                         )
-                    st.caption(
-                        f"Target: **{short_opponent}**. Pool: the {_co_current_count} team(s) UWW has already "
-                        f"played. Profiles for the pool come from our own reconstructed box score of that game "
-                        f"(their offense is what they did to us); {short_opponent}'s comes from their games "
-                        f"before they play us. Scoring is the shared model described in How to read this."
-                    )
-
                     # Side by side: this half spans the full page, so three cards across is comfortable
                     # and puts the ranking in reading order left to right.
                     _co_cols = st.columns(len(_co_ranked))
@@ -6110,55 +6125,37 @@ on.*
                             _style_ctx["comparable_outcomes"] = get_game_outcomes(played)
 
 
-                    with st.expander("Full style profile comparison", expanded=False):
-                        render_style_profile_table(
-                            f"{get_team_abbreviation(short_opponent)} (upcoming)", _co_target,
-                            [(get_team_abbreviation(untag_season(_cn)[0])
-                              + (f" ({untag_season(_cn)[1]})" if untag_season(_cn)[1] else ""),
-                              _co_profiles.loc[_cn]) for _cn in _co_ranked["opponent"]],
-                            "Everything except the Personnel block is computed from reconstructed box scores: "
-                            "the upcoming opponent from their own games before facing UWW, everyone else from "
-                            "their game(s) against UWW. Height and style shares are minutes-weighted across the "
-                            "rotation (8+ MPG) from the scouting reports, the one block a box score can't "
-                            "produce.")
-                        _co_thin_sample = [f"{untag_season(_cn)[0]} ({int(_cr2['games'])} gm)"
-                                           for _cn, _cr2 in zip(_co_ranked["opponent"],
-                                                                _co_ranked.to_dict("records"))
-                                           if pd.notna(_cr2.get("games")) and _cr2["games"] < 3]
-                        if _co_thin_sample:
-                            st.caption(
-                                f"Measured over a small sample: {', '.join(_co_thin_sample)}. The ranking uses "
-                                f"their observed rates rather than adjusting them, so a single unrepresentative "
-                                f"night can move these -- weigh them by the confidence figure on each card."
-                            )
-
-                    _co_cov = _co_ranked.attrs.get("coverage")
-                    if _co_cov is not None and not _co_cov.empty:
-                        with st.expander("Why these three -- feature coverage per candidate", expanded=False):
-                            st.dataframe(
-                                _co_cov.assign(**{"Profile weight covered": (100 * _co_cov["weight_covered"]).round(0).astype(int).astype(str) + "%"})
-                                .drop(columns=["weight_covered"])
-                                .rename(columns={"opponent": "Opponent",
-                                                 "features_used": "Features both have",
-                                                 "features_scored": "Features actually scored"}),
-                                hide_index=True, use_container_width=True)
-                            st.caption(
-                                f"\"Both have\" counts features present for {short_opponent} and that candidate. "
-                                f"\"Actually scored\" is the subset that also varies across the pool -- a feature "
-                                f"every team posts the same value on carries no information and is skipped, so it "
-                                f"can't inflate a match toward 100. A candidate scoring 0 was left out of the "
-                                f"ranking entirely; if many rows read 0, the gap is in the source profiles, not "
-                                f"in the ranking."
-                            )
+                    # CONFIRMED CHANGE (requested): the feature-by-feature table is no longer an expander
+                    # under the cards -- it is handed to the "How to read this" dialog, which is where a
+                    # reader asking "what is actually in this match score" already is. The data still comes
+                    # from here, where the ranking was computed; only the drawing moved.
+                    _co_thin_sample = [f"{untag_season(_cn)[0]} ({int(_cr2['games'])} gm)"
+                                       for _cn, _cr2 in zip(_co_ranked["opponent"],
+                                                            _co_ranked.to_dict("records"))
+                                       if pd.notna(_cr2.get("games")) and _cr2["games"] < 3]
+                    _sm_tables["like_them"] = {
+                        "heading": f"Teams like {short_opponent} that we have played",
+                        "target_header": f"{get_team_abbreviation(short_opponent)} (upcoming)",
+                        "target_row": _co_target,
+                        "candidates": [(get_team_abbreviation(untag_season(_cn)[0])
+                                        + (f" ({untag_season(_cn)[1]})" if untag_season(_cn)[1] else ""),
+                                        _co_profiles.loc[_cn]) for _cn in _co_ranked["opponent"]],
+                        "caption": ("Everything except the Personnel block is computed from reconstructed "
+                                    "box scores: the upcoming opponent from their own games before facing "
+                                    "UWW, everyone else from their game(s) against UWW. Height and style "
+                                    "shares are minutes-weighted across the rotation (8+ MPG) from the "
+                                    "scouting reports, the one block a box score can't produce."),
+                        "footnote": (f"Measured over a small sample: {', '.join(_co_thin_sample)}. The "
+                                     f"ranking uses their observed rates rather than adjusting them, so a "
+                                     f"single unrepresentative night can move these -- weigh them by the "
+                                     f"confidence figure on each card." if _co_thin_sample else ""),
+                    }
 
         with _sm_half_like_us:
             st.markdown(
                 f'<div style="font-weight:700;font-size:0.9rem;color:#4E2A84;border-bottom:2px solid '
-                f'#4E2A84;padding-bottom:3px;margin:1.5rem 0 4px;">TEAMS LIKE US THAT HAVE PLAYED '
-                f'{esc(str(short_opponent).upper())}</div>'
-                f'<div style="font-size:0.78rem;color:#666;margin-bottom:8px;">Who have <em>they</em> '
-                f'played that resembles <em>us</em>? Sends you to their film, and to what they will '
-                f'try.</div>', unsafe_allow_html=True)
+                f'#4E2A84;padding-bottom:3px;margin:1.5rem 0 8px;">TEAMS LIKE US THAT HAVE PLAYED '
+                f'{esc(str(short_opponent).upper())}</div>', unsafe_allow_html=True)
             # Second half of the shared style model: the SAME ranking with the question flipped --
             # target UWW, pool the teams the upcoming opponent has already played. The explanation of
             # match, confidence and weights lives in the shared dialog and is not repeated here; only what
@@ -6325,16 +6322,13 @@ on.*
                             f"usable set of features yet."
                         )
                     else:
-                        st.caption(
-                            "Target: **UWW**"
-                            + (f" as we played in {_tl_uww_season_label}" if _tl_uww_season_label else "")
-                            + f". Pool: the {len(_tl_context)} team(s) {short_opponent} has already played, "
-                            f"each profiled from the single game they played against them. Personnel features "
-                            f"are unavailable for these teams (no scouting report on file), so the match runs "
-                            f"on the box-score features both sides have -- the coverage figure on each card "
-                            f"shows how much of the profile that was. Scoring is the shared model described "
-                            f"in How to read this, so a match here means what it means above."
-                        )
+                        # CONFIRMED CHANGE (requested): the target/pool captions under both headings are
+                        # gone -- the headings already say who is matched against whom, and the model is
+                        # explained once in the dialog. The ONE thing they carried that the heading does
+                        # not is which season UWW's own profile came from, which changes what the numbers
+                        # mean, so that is kept when it is not the current season.
+                        if _tl_uww_season_label:
+                            st.caption(f"UWW's own profile here is how we played in {_tl_uww_season_label}.")
                         if _tl_ranked.attrs.get("thin"):
                             st.warning(
                                 f"Thin comparison: the closest of {short_opponent}'s opponents shares only "
@@ -6383,34 +6377,26 @@ on.*
                             f'Across all {len(_tl_all_games)} of their games, {esc(short_opponent)} allowed '
                             f'<strong>{_tl_field:.1f}</strong> per game.')
 
-                        with st.expander("Full style profile comparison", expanded=False):
-                            render_style_profile_table(
-                                "UWW (target)", _tl_used.loc["UW-Whitewater"],
-                                [(str(_cn), _tl_used.loc[_cn]) for _cn in _tl_ranked["opponent"]],
-                                "The same features and the same layout as the half above, with UWW in the "
-                                "target column. A blank row is a feature neither side could supply; it is "
-                                "excluded from the match rather than counted as agreement.")
+                        # Same as the half above: the table itself is drawn in the "How to read this"
+                        # dialog, next to the other one, so the two can be read against each other.
+                        _sm_tables["like_us"] = {
+                            "heading": f"Teams like us that have played {short_opponent}",
+                            "target_header": "UWW (target)",
+                            "target_row": _tl_used.loc["UW-Whitewater"],
+                            "candidates": [(str(_cn), _tl_used.loc[_cn]) for _cn in _tl_ranked["opponent"]],
+                            "caption": ("The same features and the same layout as the table above, with UWW "
+                                        "in the target column. A blank row is a feature neither side could "
+                                        "supply; it is excluded from the match rather than counted as "
+                                        "agreement."),
+                            "footnote": (f"These teams are profiled from the single game they played "
+                                         f"{short_opponent}, and have no scouting report, so the Personnel "
+                                         f"rows are blank for them."),
+                        }
 
-                        with st.expander("How each of their opponents compares to us", expanded=False):
-                            _tl_cov = _tl_ranked.attrs.get("coverage")
-                            _tl_show = pd.DataFrame([{
-                                "Team": _n,
-                                "Result": " · ".join(
-                                    f"{'W' if _mt['won'] else 'L'} {int(_mt['pts'])}-{int(_mt['their_pts'])}"
-                                    for _mt in _tl_context[_n].get("meetings", [])),
-                                **{_lbl: format_feature(_fk, _tl_used.loc[_n].get(_fk))
-                                   for _fk, _lbl, _, _ in OPPONENT_FEATURE_SPEC
-                                   if _fk in _tl_used.columns and pd.notna(_tl_used.loc[_n].get(_fk))},
-                            } for _n in _tl_context if _n in _tl_used.index])
-                            if _tl_cov is not None and not _tl_cov.empty:
-                                _tl_show = _tl_show.merge(
-                                    _tl_cov.rename(columns={"opponent": "Team"})[["Team", "features_scored"]],
-                                    on="Team", how="left").rename(columns={"features_scored": "Features scored"})
-                            st.dataframe(_tl_show, hide_index=True, use_container_width=True)
-                            st.caption(
-                                f"Every team {short_opponent} has played, on the features the match ran on. "
-                                f"UWW's own values are the target column in the table above."
-                            )
+        # Both halves have run, so _sm_tables is complete -- open the documentation now if the button at
+        # the top of the section was clicked this run.
+        if st.session_state.pop("_sm_show_how_to_read", False):
+            _sm_how_to_read()
 
 
     with _new_tools_proj_c:
