@@ -1329,6 +1329,41 @@ def render_style_match_card(rank_row, ranked_frame, profiles, target_row, target
                 f'({esc(target_label)})</div>', unsafe_allow_html=True)
 
 
+def render_style_strip(label, body_html):
+    """The one-line "what actually happened" summary under a set of style-match cards.
+
+    Both tabs of STYLE MATCHUPS end with the same shape of statement -- a record, a scoring average, and
+    a comparison -- so they are drawn by one function. The label is what stops the two from reading as
+    the same sentence: they answer opposite questions and now say which.
+    """
+    st.markdown(
+        f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 12px;margin-top:8px;'
+        f'font-size:0.85rem;">'
+        f'<div style="font-size:0.7rem;font-weight:700;letter-spacing:0.4px;color:#4E2A84;'
+        f'text-transform:uppercase;margin-bottom:2px;">{esc(label)}</div>{body_html}</div>',
+        unsafe_allow_html=True)
+
+
+def render_style_profile_table(target_header, target_row, candidates, caption):
+    """Feature-by-feature table behind a style match: every feature, its weight, target vs candidates.
+
+    candidates: list of (column header, profile row) in ranked order. Written once because the two tabs
+    were maintaining byte-identical copies of this loop, differing only in which column was the target --
+    which is how the two panels' captions ended up describing slightly different things.
+    """
+    rows = []
+    for key, label, category, weight in OPPONENT_FEATURE_SPEC:
+        entry = {"Category": category, "Feature": label, "Weight": f"{100 * weight:.1f}%",
+                 target_header: format_feature(key, target_row.get(key))}
+        for header, row in candidates:
+            entry[header] = format_feature(key, row.get(key))
+        rows.append(entry)
+    st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+    st.caption(
+        caption + " Weights are what each feature contributes to the distance; the match score "
+                  "renormalises over the features both teams actually have.")
+
+
 def comparable_opponents(target_opponent: str, candidate_opponents, k: int = 3, profiles=None):
     """Rank `candidate_opponents` by how closely their style resembles `target_opponent`.
 
@@ -4142,7 +4177,7 @@ def render_upcoming_game():
     # Game Plan Recommendations and the data-driven Keys to Victory render first even though their
     # underlying code still runs later, in its original order. ---
     # Stats & Analysis first (per request), then Keys to Victory as its own tab (previously always-visible
-    # at the top of the page), then Personnel, then Tools (which leads with Comparable Opponents).
+    # at the top of the page), then Personnel, then Tools (which leads with Style Matchups).
     _new_tab_stats, _new_tab_ktv, _new_tab_personnel, _new_tab_tools = st.tabs(["\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f3ae Tools"])
     with _new_tab_stats:
         _new_stats_leaders_c = st.container()
@@ -4153,9 +4188,9 @@ def render_upcoming_game():
         _new_personnel_roster_c = st.container()
         _new_personnel_scouting_c = st.container()
     with _new_tab_tools:
-        # COMPARABLE OPPONENTS sits at the TOP of Tools (it used to be the last section of Stats &
-        # Analysis). Only the slot moves -- the section's code still runs in its original place further
-        # down, because a Streamlit container renders where it was CREATED, not where it is written to.
+        # STYLE MATCHUPS (the merged Comparable Opponents / Teams Like Us section) sits at the TOP of
+        # Tools. Only the slot moves -- the section's code still runs in its original place further down,
+        # because a Streamlit container renders where it was CREATED, not where it is written to.
         _new_tools_comparable_c = st.container()
         _new_tools_proj_c = st.container()
         _new_tools_lineup_c = st.container()
@@ -5725,227 +5760,76 @@ def render_upcoming_game():
 
 
     with _new_tools_comparable_c:
-        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">COMPARABLE OPPONENTS</div></div>', unsafe_allow_html=True)
-        # Which teams UWW has ALREADY PLAYED most resemble the one being prepared for -- so the staff can look
-        # at what actually worked (and didn't) against that style. Scoped to `played`, i.e. games before the
-        # upcoming one, so a result that hasn't happened yet can never appear here.
+        # ================================ STYLE MATCHUPS ================================
+        # CONFIRMED CHANGE (requested): this used to be two stacked sections -- COMPARABLE OPPONENTS and
+        # TEAMS LIKE US THAT PLAYED THEM -- each with its own header, its own "how to read" essay, its own
+        # model caption and its own copies of the profile and coverage tables. They were never two ideas.
+        # They are ONE style model asked in two directions, and printing it twice made a reader compare the
+        # wording instead of the numbers, while giving the documentation two places to drift apart in --
+        # the exact failure this project keeps getting bitten by (see render_style_match_card, where the
+        # cards had already drifted once). One section, one explanation, two tabs:
         #
-        # CONFIRMED CHANGE (requested): when this season hasn't produced MIN_COMPARABLE_POOL opponents yet
-        # (the opening weeks -- at Ripon, game 1, there are none at all), the pool is topped up with teams
-        # UWW played LAST season, profiled from that season's own tables and labelled as such. Current-season
-        # opponents are never displaced by a borrowed one; last season only fills the empty slots.
-        # Collected by the two style panels below and consumed by the Keys to Victory section further down
-        # (see style_matched_ktv_lines). Initialised here so KTV can never depend on whether a panel
-        # happened to render -- an absent key just means that evidence line is skipped.
+        #   Tab 1 -- target = the upcoming opponent, pool = teams UWW has already played.
+        #   Tab 2 -- target = UWW,                   pool = teams the upcoming opponent has already played.
+        #
+        # Everything shared is written once, above the tabs: the header, the model, the weight table.
+        # Inside a tab is only what actually differs -- who is matched against whom, where those profiles
+        # come from, and what happened in those games. Both tabs render on every run (Streamlit executes
+        # every tab body), so Keys to Victory still gets _style_ctx from both regardless of which is open.
+        st.markdown(
+            '<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;'
+            'margin:1.5rem 0 0.75rem;">'
+            '<div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">'
+            'STYLE MATCHUPS</div>'
+            '<div style="font-size:0.8rem;color:#666;margin-top:2px;">'
+            'One style model, asked in both directions.</div></div>', unsafe_allow_html=True)
+
+        # Two sentences, not two essays: which tab answers which question, before either is opened.
+        st.markdown(
+            f'<div style="display:flex;gap:10px;margin-bottom:6px;font-size:0.82rem;color:#444;">'
+            f'<div style="flex:1;border-left:3px solid #4E2A84;padding-left:8px;">'
+            f'<strong>Teams like {esc(short_opponent)}</strong><br>Who have <em>we</em> played that '
+            f'resembles them? Sends you to our own film, and to what worked.</div>'
+            f'<div style="flex:1;border-left:3px solid #4E2A84;padding-left:8px;">'
+            f'<strong>Teams like us</strong><br>Who have <em>they</em> played that resembles <em>us</em>? '
+            f'Sends you to their film, and to what they will try.</div></div>',
+            unsafe_allow_html=True)
+
+        # Collected by both tabs and consumed by the Keys to Victory section further down (see
+        # style_matched_ktv_lines). Initialised here so KTV can never depend on whether a tab body found
+        # data -- an absent key just means that evidence line is skipped.
         _style_ctx = {}
-        _co_prior_label = prior_season_label()
-        _co_profiles_all = profiles_with_prior_season(_co_prior_label)
-        if _co_profiles_all.empty or not short_opponent or short_opponent not in _co_profiles_all.index:
-            st.info("Comparable opponent data will be available once a style profile can be built for this opponent.")
-        else:
-            # Map each played game onto the opponent name the profile table uses, keeping EVERY meeting -- a
-            # home-and-home is two separate results, and the split may be the most interesting thing about it.
-            _co_index = sorted([n for n in _co_profiles_all.index.astype(str) if untag_season(n)[1] is None],
-                               key=len, reverse=True)
-            _co_games = {}
-            for _, _g in played.iterrows():
-                _s = resolve_short_opponent(_g["opponent"], _co_index)
-                if _s and _s != short_opponent:
-                    _co_games.setdefault(_s, []).append(_g)
-            _co_current_count = len(_co_games)
 
-            # Top up from last season only when this one is short of a usable pool.
-            _co_borrowed = []
-            if _co_current_count < MIN_COMPARABLE_POOL and _co_prior_label:
-                _co_prior_index = sorted(
-                    [untag_season(n)[0] for n in _co_profiles_all.index.astype(str)
-                     if untag_season(n)[1] == _co_prior_label],
-                    key=len, reverse=True)
-                _co_prior_sched = load_table("uww_schedule", _co_prior_label)
-                if not _co_prior_sched.empty and "team" in _co_prior_sched.columns:
-                    # uww_schedule carries every team's own schedule, not just UWW's (see render_team()).
-                    _co_prior_sched = _co_prior_sched[
-                        _co_prior_sched["team"].str.contains("Whitewater", case=False, na=False)]
-                    _co_prior_played = _co_prior_sched[played_mask(_co_prior_sched)]
-                    for _, _g in _co_prior_played.iterrows():
-                        _s = resolve_short_opponent(_g["opponent"], _co_prior_index)
-                        if not _s:
-                            continue
-                        _tagged = season_tagged(_s, _co_prior_label)
-                        if _tagged == short_opponent or _s in _co_games:
-                            continue  # never displace a current-season meeting with the same team
-                        _co_games.setdefault(_tagged, []).append(_g)
-                        if _tagged not in _co_borrowed:
-                            _co_borrowed.append(_tagged)
+        # Built from OPPONENT_FEATURE_SPEC rather than written out, so the documentation cannot describe a
+        # weighting the code no longer uses.
+        _sm_weight_table = "\n".join(
+            ["| Group | Weight | What it captures |", "| --- | --- | --- |"]
+            + [f"| {_cat} | {100 * sum(OPPONENT_FEATURE_WEIGHTS[_k] for _k in _keys):.0f}% | "
+               f"{OPPONENT_FEATURE_CATEGORY_BLURBS.get(_cat, '')} |"
+               for _cat, _keys in OPPONENT_FEATURE_CATEGORIES.items()]
+        )
+        _sm_ff_text = ", ".join(
+            f"**{_n.lower()} {100 * _w:.0f}%**" for _n, _w in FOUR_FACTOR_WEIGHTS.items()
+        ).replace("efg%", "shooting").replace("tov%", "turnovers").replace(
+            "orb%", "offensive rebounding").replace("ft rate", "free throws")
 
-            _co_ranked, _co_profiles = comparable_opponents(
-                short_opponent, list(_co_games), k=3, profiles=_co_profiles_all)
-            if _co_ranked is None or _co_ranked.empty:
-                st.info(
-                    f"No usable comparison could be built against the {len(_co_games)} previously-played "
-                    f"opponent(s). The breakdown below shows exactly which feature failed and why -- read "
-                    f"it before changing anything upstream."
-                )
-                # Per-feature autopsy. A feature can fail for three DIFFERENT reasons and they need
-                # different fixes, so the table names which one applies rather than reporting one count:
-                #   - the target has no value          -> this opponent's own profile is thin
-                #   - no candidate has a value         -> the played opponents' profiles are thin
-                #   - values exist but never vary      -> nothing to discriminate on; scaling drops it
-                _co_pool_names = [n for n in _co_games if n in _co_profiles_all.index]
-                _co_rows = []
-                for _fk, _flabel, _fcat, _fw in OPPONENT_FEATURE_SPEC:
-                    if _fk not in _co_profiles_all.columns:
-                        _co_rows.append({"Feature": _flabel, "Category": _fcat,
-                                         f"{short_opponent}": "-", "Candidates with a value": 0,
-                                         "Spread": "-", "Verdict": "column absent from profiles"})
-                        continue
-                    _tv = _co_profiles_all.at[short_opponent, _fk]
-                    _cv = pd.to_numeric(
-                        pd.Series([_co_profiles_all.at[n, _fk] for n in _co_pool_names]), errors="coerce")
-                    _n_have = int(_cv.notna().sum())
-                    _spread = float(_cv.std(ddof=0)) if _n_have > 1 else 0.0
-                    if pd.isna(_tv):
-                        _verdict = f"no value for {short_opponent}"
-                    elif _n_have == 0:
-                        _verdict = "no candidate has a value"
-                    elif _spread == 0:
-                        _verdict = "identical across every candidate -- carries no information"
-                    else:
-                        _verdict = "usable"
-                    _co_rows.append({
-                        "Feature": _flabel, "Category": _fcat,
-                        f"{short_opponent}": format_feature(_fk, _tv) if pd.notna(_tv) else "-",
-                        "Candidates with a value": _n_have,
-                        "Spread": f"{_spread:.2f}" if _n_have > 1 else "-",
-                        "Verdict": _verdict,
-                    })
-                st.dataframe(pd.DataFrame(_co_rows), hide_index=True, use_container_width=True)
+        with st.expander("\U0001f4d8 How to read this \u2014 what the numbers mean", expanded=False):
+            st.markdown(f"""
+##### The two questions
 
-                with st.expander("Raw profile rows for every candidate", expanded=False):
-                    _co_raw_cols = [c for c, _, _, _ in OPPONENT_FEATURE_SPEC if c in _co_profiles_all.columns]
-                    st.dataframe(
-                        _co_profiles_all.loc[[short_opponent] + _co_pool_names, _co_raw_cols]
-                        .reset_index().rename(columns={"index": "Opponent"}),
-                        hide_index=True, use_container_width=True)
-                    st.caption(
-                        "Straight from opponent_style_profiles(), before any scaling. An all-blank row means "
-                        "that opponent's uww_player_profiles rows carried none of the columns the profile is "
-                        "built from -- note that a missing MIN column alone blanks the minutes-weighted "
-                        "features (FG%, height, style shares) for that team."
-                    )
-            else:
-                _co_target = _co_profiles.loc[short_opponent]
-                _co_used_prior = any(untag_season(n)[1] for n in _co_ranked["opponent"])
-                if _co_used_prior:
-                    st.info(
-                        f"UWW has played {_co_current_count} game opponent(s) this season, fewer than the "
-                        f"{MIN_COMPARABLE_POOL} this comparison wants, so teams from {_co_prior_label} are "
-                        f"included and marked. Those profiles come from that season's roster -- treat them "
-                        f"as a guide to style, not a current scouting report."
-                    )
-                if _co_ranked.attrs.get("thin"):
-                    _co_best_n = int(_co_ranked["features_scored"].max())
-                    st.warning(
-                        f"Thin comparison: the best candidate shares only {_co_best_n} scoring feature(s) "
-                        f"with {short_opponent}, below the {_co_ranked.attrs.get('min_features')} this "
-                        f"ranking wants. These are shown because they are the closest available, not because "
-                        f"they are a confident match -- see the coverage table below for where the gaps are."
-                    )
-                st.caption(
-                    f"Ranked on {len(OPPONENT_FEATURE_SPEC)} pace-independent rate features across "
-                    f"{len(OPPONENT_FEATURE_CATEGORIES)} groups ({', '.join(OPPONENT_FEATURE_CATEGORIES)}), "
-                    f"each carrying its own weight -- the Four Factors use Dean Oliver's weights, offense and "
-                    f"defense count equally, and tempo is its own feature rather than a contaminant of the "
-                    f"others. Every team is measured the same way, from reconstructed box scores of both "
-                    f"sides of their games. Match is 100 for an identical profile, ~50 for an average gap of "
-                    f"one standard deviation. Confidence is separate from match: it combines how much of the "
-                    f"profile the two teams could be compared on with how many games the candidate was "
-                    f"measured over, so a close match off a single game reads as exactly that."
-                )
+| | Teams like {short_opponent} | Teams like us |
+| --- | --- | --- |
+| The question | Who have *we* played that resembles them? | Who have *they* played that resembles *us*? |
+| Matched against | {short_opponent} | UWW |
+| The pool | Teams UWW has already played | Teams {short_opponent} has already played |
+| The film it sends you to | Our own past games | Their past games |
+| What it tells you | What worked for us against this style | What they do against a team built like ours |
 
-                _co_cols = st.columns(len(_co_ranked))
-                for _ci, (_, _cr) in enumerate(_co_ranked.iterrows()):
-                    _co_name = _cr["opponent"]
-                    _co_plain, _co_season_tag = untag_season(_co_name)
-                    # Normalise this panel's results (schedule rows) into the shared card's shape.
-                    _co_meetings = [{
-                        "outcome": _g.get("outcome"),
-                        "score": (f"{int(_g['team_score'])}-{int(_g['opponent_score'])}"
-                                  if pd.notna(_g.get("team_score")) and pd.notna(_g.get("opponent_score")) else ""),
-                        "date": _g.get("date", ""),
-                    } for _g in _co_games.get(_co_name, [])]
-                    with _co_cols[_ci]:
-                        render_style_match_card(
-                            _cr, _co_ranked, _co_profiles, _co_target,
-                            get_team_abbreviation(short_opponent), _co_meetings,
-                            display_name=_co_plain, season_tag=_co_season_tag)
+Use them together. The first tells you which of your own game plans to revisit; the second tells you what
+they are likely to throw at you. **Both tabs run the identical ranking, so a 78 in one means exactly what
+a 78 means in the other.**
 
-                # What actually happened against this style -- the reason the panel exists.
-                _co_rows = [g for name in _co_ranked["opponent"] for g in _co_games.get(name, [])]
-                if _co_rows:
-                    _co_played = pd.DataFrame(_co_rows)
-                    _w = int((_co_played["outcome"] == "W").sum())
-                    _l = int((_co_played["outcome"] == "L").sum())
-                    _pf, _pa = _co_played["team_score"].mean(), _co_played["opponent_score"].mean()
-                    # The "vs UWW's season average" delta needs a season average to exist. With an empty
-                    # current season it would read as +0.0 against nothing; use the season the borrowed games
-                    # actually came from instead, and say which.
-                    _season_pf = played["team_score"].mean() if not played.empty else None
-                    _season_pa = played["opponent_score"].mean() if not played.empty else None
-                    _baseline_label = "UWW's season average"
-                    if (_season_pf is None or pd.isna(_season_pf)) and _co_used_prior:
-                        _co_base = _co_played  # the borrowed games are all we have to average over
-                        _season_pf, _season_pa = _co_base["team_score"].mean(), _co_base["opponent_score"].mean()
-                        _baseline_label = None  # a set can't be compared against itself
-                    _delta = ""
-                    if _baseline_label and _season_pf is not None and pd.notna(_season_pf):
-                        _delta = (f" ({_pf - _season_pf:+.1f} pts scored, {_pa - _season_pa:+.1f} allowed "
-                                  f"vs {_baseline_label})")
-                    _co_span = (f" in {_co_prior_label}" if _co_used_prior and _co_current_count == 0 else "")
-                    st.markdown(
-                        f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 12px;margin-top:8px;'
-                        f'font-size:0.85rem;">Against these {len(_co_ranked)} teams UWW is <strong>{_w}-{_l}</strong>'
-                        f'{esc(_co_span)}, '
-                        f'averaging <strong>{_pf:.1f}</strong> scored and <strong>{_pa:.1f}</strong> allowed'
-                        f'{esc(_delta)}.</div>', unsafe_allow_html=True)
-
-                # Built from OPPONENT_FEATURE_SPEC rather than written out, so the documentation cannot
-                # describe a weighting the code no longer uses.
-                _co_weight_table = "\n".join(
-                    ["| Group | Weight | What it captures |", "| --- | --- | --- |"]
-                    + [f"| {_cat} | {100 * sum(OPPONENT_FEATURE_WEIGHTS[_k] for _k in _keys):.0f}% | "
-                       f"{OPPONENT_FEATURE_CATEGORY_BLURBS.get(_cat, '')} |"
-                       for _cat, _keys in OPPONENT_FEATURE_CATEGORIES.items()]
-                )
-                _co_ff_text = ", ".join(
-                    f"**{_n.lower()} {100 * _w:.0f}%**" for _n, _w in FOUR_FACTOR_WEIGHTS.items()
-                ).replace("efg%", "shooting").replace("tov%", "turnovers").replace(
-                    "orb%", "offensive rebounding").replace("ft rate", "free throws")
-
-                # Hand this panel's answer to Keys to Victory: which teams matched, and UWW's own per-game
-                # box totals in exactly those games, keyed so a result can be attached to each.
-                _style_ctx["comparable_names"] = [untag_season(_n)[0] for _n in _co_ranked["opponent"]]
-                _co_ktv_dates = {str(_g.get("date")) for _n in _co_ranked["opponent"]
-                                 for _g in _co_games.get(_n, [])}
-                _co_ktv_iso = {resolve_game_date(_d) for _d in _co_ktv_dates}
-                _co_ktv_iso.discard(None)
-                _co_ktv_box = box[box["team"] == "UW-Whitewater"].copy() if not box.empty else pd.DataFrame()
-                if not _co_ktv_box.empty:
-                    _co_ktv_col = game_date_col(_co_ktv_box)
-                    if _co_ktv_col and _co_ktv_iso:
-                        _co_ktv_box["_game_key"] = iso_dates(_co_ktv_box[_co_ktv_col]).to_numpy()
-                        _co_ktv_box = _co_ktv_box[_co_ktv_box["_game_key"].isin(_co_ktv_iso)]
-                        _style_ctx["comparable_box"] = _co_ktv_box
-                        _style_ctx["comparable_outcomes"] = get_game_outcomes(played)
-
-                with st.expander("\U0001f4d8 How to read this \u2014 what the numbers mean", expanded=False):
-                    st.markdown(f"""
-**What this panel answers.** Of the teams we have already played this season, which ones play the most
-like {short_opponent}? The point is to send you back to game film and practice plans that are
-actually relevant. If {short_opponent} plays like a team we handled well, look at what we ran. If
-they play like a team that beat us, that game is your warning.
-
-**What it is not.** This is a *style* match, not a *strength* match. A 90 does not mean the two teams are
+**What this is not.** A *style* match, not a *strength* match. A 90 does not mean the two teams are
 equally good \u2014 it means they play alike. A bad team and a good team can run the same system.
 
 ---
@@ -5974,10 +5858,10 @@ Every number is a **rate** \u2014 per possession, per shot attempt, or a share. 
 plays fast racks up more of everything, and counting raw totals would make two teams running the same
 system at different speeds look like opposites. Tempo is measured separately, on purpose.
 
-{_co_weight_table}
+{_sm_weight_table}
 
 Inside offense and defense, the four pieces are weighted the way basketball research says they decide
-games: {_co_ff_text}. Offense and defense count equally, because preparing for a team is equally about
+games: {_sm_ff_text}. Offense and defense count equally, because preparing for a team is equally about
 both.
 
 Scoring level is deliberately the lightest block. How *good* a team is is not how much they *resemble*
@@ -5991,376 +5875,517 @@ someone, and letting it weigh heavily would turn this into a standings table.
   offense is what they did to us, and their defense is what we managed against them.
 - **{short_opponent}** \u2014 from their own games before they play us, not from our meeting. That is a
   bigger and fairer sample.
+- **{short_opponent}'s other opponents** \u2014 from the one game they played against them. No scouting
+  report exists for these teams, so the Personnel block is blank and the match runs on the box-score
+  features. That makes the second tab the weaker of the two, and it is labelled that way on purpose.
 - **Size and rotation makeup** \u2014 from the scouting reports, the one piece a box score cannot give us.
 
-**The honest limitation:** an opponent's profile describes how they played *against us*. That is often
-the most relevant sample there is, but it is one game or two, not their season. That is exactly what the
-confidence figure is telling you.
+**The honest limitation:** most profiles here describe how a team played in one or two games, not across
+their season. That is often the most relevant sample there is, but it is not a season profile \u2014 which
+is exactly what the confidence figure is telling you.
 
 ---
 
-##### The three lines under each team
+##### The three lines under each card
 
 **Alike** names the groups where the two teams are closest. **Differs** names the group where they are
-furthest apart \u2014 that is usually the thing to adjust for. Below those, the two features with the
-biggest raw gaps are spelled out with both teams' actual numbers, so you can see what "differs" means in
-practice rather than taking the label's word for it.
+furthest apart \u2014 usually the thing to adjust for. Below those, the two features with the biggest raw
+gaps are spelled out with both teams' actual numbers, so you can see what "differs" means in practice
+rather than taking the label's word for it.
 
-*Open "Full style profile comparison" below to see every feature side by side with its weight, or
-"Why these three" to see how much of the profile each candidate could be compared on.*
-                    """)
+*Open "Full style profile comparison" in either tab to see every feature side by side with its weight, or
+the coverage expander to see how much of the profile each candidate could be compared on.*
+            """)
 
-                with st.expander("Full style profile comparison", expanded=False):
-                    _co_table = []
-                    for _fk, _flabel, _fcat, _fw in OPPONENT_FEATURE_SPEC:
-                        _entry = {"Category": _fcat, "Feature": _flabel, "Weight": f"{100 * _fw:.1f}%",
-                                  f"{get_team_abbreviation(short_opponent)} (upcoming)": format_feature(_fk, _co_target.get(_fk))}
-                        for _cn in _co_ranked["opponent"]:
-                            _cn_plain, _cn_tag = untag_season(_cn)
-                            _hdr = get_team_abbreviation(_cn_plain) + (f" ({_cn_tag})" if _cn_tag else "")
-                            _entry[_hdr] = format_feature(_fk, _co_profiles.loc[_cn].get(_fk))
-                        _co_table.append(_entry)
-                    st.dataframe(pd.DataFrame(_co_table), hide_index=True, use_container_width=True)
-                    st.caption(
-                        "Everything except the Personnel block is computed from reconstructed box scores: "
-                        "the upcoming opponent from their own games before facing UWW, everyone else from "
-                        "their game(s) against UWW. Height and style shares are minutes-weighted across the "
-                        "rotation (8+ MPG) from the scouting reports, the one block a box score can't "
-                        "produce. Weights are what each feature contributes to the distance; the match score "
-                        "renormalises over the features both teams actually have."
+        _sm_tab_like_them, _sm_tab_like_us = st.tabs(
+            [f"Teams like {short_opponent} that we have played",
+             f"Teams like us that have played {short_opponent}"])
+
+        with _sm_tab_like_them:
+            # Which teams UWW has ALREADY PLAYED most resemble the one being prepared for -- so the staff can look
+            # at what actually worked (and didn't) against that style. Scoped to `played`, i.e. games before the
+            # upcoming one, so a result that hasn't happened yet can never appear here.
+            #
+            # CONFIRMED CHANGE (requested): when this season hasn't produced MIN_COMPARABLE_POOL opponents yet
+            # (the opening weeks -- at Ripon, game 1, there are none at all), the pool is topped up with teams
+            # UWW played LAST season, profiled from that season's own tables and labelled as such. Current-season
+            # opponents are never displaced by a borrowed one; last season only fills the empty slots.
+            _co_prior_label = prior_season_label()
+            _co_profiles_all = profiles_with_prior_season(_co_prior_label)
+            if _co_profiles_all.empty or not short_opponent or short_opponent not in _co_profiles_all.index:
+                st.info(f"This comparison will be available once a style profile can be built for "
+                        f"{short_opponent or 'the upcoming opponent'}.")
+            else:
+                # Map each played game onto the opponent name the profile table uses, keeping EVERY meeting -- a
+                # home-and-home is two separate results, and the split may be the most interesting thing about it.
+                _co_index = sorted([n for n in _co_profiles_all.index.astype(str) if untag_season(n)[1] is None],
+                                   key=len, reverse=True)
+                _co_games = {}
+                for _, _g in played.iterrows():
+                    _s = resolve_short_opponent(_g["opponent"], _co_index)
+                    if _s and _s != short_opponent:
+                        _co_games.setdefault(_s, []).append(_g)
+                _co_current_count = len(_co_games)
+
+                # Top up from last season only when this one is short of a usable pool.
+                _co_borrowed = []
+                if _co_current_count < MIN_COMPARABLE_POOL and _co_prior_label:
+                    _co_prior_index = sorted(
+                        [untag_season(n)[0] for n in _co_profiles_all.index.astype(str)
+                         if untag_season(n)[1] == _co_prior_label],
+                        key=len, reverse=True)
+                    _co_prior_sched = load_table("uww_schedule", _co_prior_label)
+                    if not _co_prior_sched.empty and "team" in _co_prior_sched.columns:
+                        # uww_schedule carries every team's own schedule, not just UWW's (see render_team()).
+                        _co_prior_sched = _co_prior_sched[
+                            _co_prior_sched["team"].str.contains("Whitewater", case=False, na=False)]
+                        _co_prior_played = _co_prior_sched[played_mask(_co_prior_sched)]
+                        for _, _g in _co_prior_played.iterrows():
+                            _s = resolve_short_opponent(_g["opponent"], _co_prior_index)
+                            if not _s:
+                                continue
+                            _tagged = season_tagged(_s, _co_prior_label)
+                            if _tagged == short_opponent or _s in _co_games:
+                                continue  # never displace a current-season meeting with the same team
+                            _co_games.setdefault(_tagged, []).append(_g)
+                            if _tagged not in _co_borrowed:
+                                _co_borrowed.append(_tagged)
+
+                _co_ranked, _co_profiles = comparable_opponents(
+                    short_opponent, list(_co_games), k=3, profiles=_co_profiles_all)
+                if _co_ranked is None or _co_ranked.empty:
+                    st.info(
+                        f"No usable comparison could be built against the {len(_co_games)} previously-played "
+                        f"opponent(s). The breakdown below shows exactly which feature failed and why -- read "
+                        f"it before changing anything upstream."
                     )
-                    _co_thin_sample = [f"{untag_season(_cn)[0]} ({int(_cr2['games'])} gm)"
-                                       for _cn, _cr2 in zip(_co_ranked["opponent"],
-                                                            _co_ranked.to_dict("records"))
-                                       if pd.notna(_cr2.get("games")) and _cr2["games"] < 3]
-                    if _co_thin_sample:
-                        st.caption(
-                            f"Measured over a small sample: {', '.join(_co_thin_sample)}. The ranking uses "
-                            f"their observed rates rather than adjusting them, so a single unrepresentative "
-                            f"night can move these -- weigh them by the confidence figure on each card."
-                        )
+                    # Per-feature autopsy. A feature can fail for three DIFFERENT reasons and they need
+                    # different fixes, so the table names which one applies rather than reporting one count:
+                    #   - the target has no value          -> this opponent's own profile is thin
+                    #   - no candidate has a value         -> the played opponents' profiles are thin
+                    #   - values exist but never vary      -> nothing to discriminate on; scaling drops it
+                    _co_pool_names = [n for n in _co_games if n in _co_profiles_all.index]
+                    _co_rows = []
+                    for _fk, _flabel, _fcat, _fw in OPPONENT_FEATURE_SPEC:
+                        if _fk not in _co_profiles_all.columns:
+                            _co_rows.append({"Feature": _flabel, "Category": _fcat,
+                                             f"{short_opponent}": "-", "Candidates with a value": 0,
+                                             "Spread": "-", "Verdict": "column absent from profiles"})
+                            continue
+                        _tv = _co_profiles_all.at[short_opponent, _fk]
+                        _cv = pd.to_numeric(
+                            pd.Series([_co_profiles_all.at[n, _fk] for n in _co_pool_names]), errors="coerce")
+                        _n_have = int(_cv.notna().sum())
+                        _spread = float(_cv.std(ddof=0)) if _n_have > 1 else 0.0
+                        if pd.isna(_tv):
+                            _verdict = f"no value for {short_opponent}"
+                        elif _n_have == 0:
+                            _verdict = "no candidate has a value"
+                        elif _spread == 0:
+                            _verdict = "identical across every candidate -- carries no information"
+                        else:
+                            _verdict = "usable"
+                        _co_rows.append({
+                            "Feature": _flabel, "Category": _fcat,
+                            f"{short_opponent}": format_feature(_fk, _tv) if pd.notna(_tv) else "-",
+                            "Candidates with a value": _n_have,
+                            "Spread": f"{_spread:.2f}" if _n_have > 1 else "-",
+                            "Verdict": _verdict,
+                        })
+                    st.dataframe(pd.DataFrame(_co_rows), hide_index=True, use_container_width=True)
 
-                _co_cov = _co_ranked.attrs.get("coverage")
-                if _co_cov is not None and not _co_cov.empty:
-                    with st.expander("Why these three -- feature coverage per candidate", expanded=False):
+                    with st.expander("Raw profile rows for every candidate", expanded=False):
+                        _co_raw_cols = [c for c, _, _, _ in OPPONENT_FEATURE_SPEC if c in _co_profiles_all.columns]
                         st.dataframe(
-                            _co_cov.assign(**{"Profile weight covered": (100 * _co_cov["weight_covered"]).round(0).astype(int).astype(str) + "%"})
-                            .drop(columns=["weight_covered"])
-                            .rename(columns={"opponent": "Opponent",
-                                             "features_used": "Features both have",
-                                             "features_scored": "Features actually scored"}),
+                            _co_profiles_all.loc[[short_opponent] + _co_pool_names, _co_raw_cols]
+                            .reset_index().rename(columns={"index": "Opponent"}),
                             hide_index=True, use_container_width=True)
                         st.caption(
-                            f"\"Both have\" counts features present for {short_opponent} and that candidate. "
-                            f"\"Actually scored\" is the subset that also varies across the pool -- a feature "
-                            f"every team posts the same value on carries no information and is skipped, so it "
-                            f"can't inflate a match toward 100. A candidate scoring 0 was left out of the "
-                            f"ranking entirely; if many rows read 0, the gap is in the source profiles, not "
-                            f"in the ranking."
+                            "Straight from opponent_style_profiles(), before any scaling. An all-blank row means "
+                            "that opponent's uww_player_profiles rows carried none of the columns the profile is "
+                            "built from -- note that a missing MIN column alone blanks the minutes-weighted "
+                            "features (FG%, height, style shares) for that team."
                         )
-
-
-
-        # ============================ TEAMS LIKE US THAT PLAYED THEM ============================
-        # The mirror of the panel above. That one asks "which team WE'VE played resembles this opponent";
-        # this asks "which team THEY'VE played resembles US" -- and then shows what happened, because a
-        # team built like UWW that beat them is the closest thing to a dress rehearsal this data holds.
-        #
-        # These profiles cannot come from opponent_style_profiles(): that table is built from scouted
-        # opponents' season stats, and the upcoming opponent's other opponents were never scouted. What
-        # does exist is the reconstructed box score of each of those games, so the profile is built from
-        # the ONE game each team played against them -- which is a real limitation, not a footnote, and is
-        # stated on the panel rather than buried here.
-        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;">'
-                    '<div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">'
-                    'TEAMS LIKE US THAT PLAYED THEM</div></div>', unsafe_allow_html=True)
-
-        with st.expander("\U0001f4d8 How to read this \u2014 and how it differs from Comparable Opponents",
-                         expanded=False):
-            st.markdown(f"""
-**What this panel answers.** {short_opponent} has already played other teams this season. Which of
-those teams played the most like *we* do? Whatever happened to them is the closest thing available to a
-preview of what {short_opponent} will try against us.
-
-**How this differs from Comparable Opponents above.** They look like the same idea and they are not:
-
-| | Comparable Opponents | Teams Like Us That Played Them |
-| --- | --- | --- |
-| The question | Who have *we* played that resembles them? | Who have *they* played that resembles *us*? |
-| The film it sends you to | Our own past games | Their past games |
-| What it tells you | What worked for us against this style | What they do against a team built like ours |
-
-Use them together. The first tells you which of your own game plans to revisit; the second tells you what
-they are likely to throw at you.
-
----
-
-**How the ranking works.** Exactly the same way as Comparable Opponents above \u2014 the same
-{len(OPPONENT_FEATURE_SPEC)} rate features, the same weights, the same 0\u2013100 match and confidence
-scores. Only the question is flipped: UWW is the team being matched, and the pool is the teams
-{short_opponent} has already played. **A 78% here means the same thing as a 78% there.**
-
-One practical difference: these teams have no scouting report on file, so the Personnel features (size,
-shooter and post makeup) are blank for them and the match runs on the box-score features. Each card shows
-what share of the profile that covered, so you can see it rather than having to assume it.
-
-**The one thing to keep in mind.** Each of their opponents is usually described by a *single game*
-\u2014 the night they played {short_opponent}. That is one performance, not a season profile, and a team
-can look unlike itself for a night. The confidence figure on each card already reflects this; treat a
-high match with low confidence as a lead to check on film, not a conclusion. It is a weaker comparison
-than the one above, which is measured over more games, and it is labelled that way on purpose.
-            """)
-        _tl_prior = load_table("uww_opponent_prior_games_box_score")
-        _tl_uww_box = load_table("uww_pbp_box_score")
-        _tl_prior_label = prior_season_label()
-        _tl_notes = []
-
-        # CONFIRMED CHANGE (requested): both inputs can be empty in the season's opening weeks, which is
-        # when this panel would help most. Each falls back to last season independently, because they fail
-        # for different reasons and only one of the two is usually missing.
-        #
-        # (1) UWW's own profile. "How UWW plays" needs games; MIN_OWN_GAMES_FOR_PROFILE of them before one
-        #     season's box scores describe a team rather than a night. Below that, use last season's.
-        def _tl_game_count(_box):
-            if _box.empty or "team" not in _box.columns:
-                return 0
-            _side = _box[_box["team"] == "UW-Whitewater"]
-            _col = game_date_col(_side)
-            return int(_side[_col].nunique()) if _col else 0
-
-        _tl_uww_season_label = None
-        if _tl_game_count(_tl_uww_box) < MIN_OWN_GAMES_FOR_PROFILE and _tl_prior_label:
-            _tl_prior_uww = load_table("uww_pbp_box_score", _tl_prior_label)
-            if _tl_game_count(_tl_prior_uww) >= MIN_OWN_GAMES_FOR_PROFILE:
-                _tl_played_now = _tl_game_count(_tl_uww_box)
-                _tl_uww_box = _tl_prior_uww
-                _tl_uww_season_label = _tl_prior_label
-                _tl_notes.append(
-                    f"UWW has {_tl_played_now} reconstructed game(s) this season, so \"how we play\" is taken "
-                    f"from {_tl_prior_label}."
-                )
-
-        # (2) The opponent's own prior games. The parser only exports these for the CURRENT upcoming
-        #     opponent, so last season's copy is a different team's -- usable only on the rare occasion it
-        #     happens to be this same opponent. Checked rather than assumed.
-        if _tl_prior.empty and _tl_prior_label and short_opponent:
-            _tl_prior_alt = load_table("uww_opponent_prior_games_box_score", _tl_prior_label)
-            if not _tl_prior_alt.empty and "team" in _tl_prior_alt.columns \
-                    and (_tl_prior_alt["team"] == short_opponent).any():
-                _tl_prior = _tl_prior_alt
-                _tl_notes.append(
-                    f"{short_opponent} has no logged games yet this season, so their prior games are from "
-                    f"{_tl_prior_label}."
-                )
-
-        for _tl_n in _tl_notes:
-            st.info(_tl_n)
-
-        if _tl_prior.empty or _tl_uww_box.empty or not short_opponent:
-            st.info("Needs the upcoming opponent's prior-game box scores and UWW's own -- not available yet.")
-            # Even without the panel proper, a head-to-head from last season is real evidence about this
-            # matchup and already sits in the archive -- surface it rather than showing nothing at all.
-            _tl_h2h_shown = False
-            if _tl_prior_label and short_opponent:
-                _tl_h2h = load_table("uww_pbp_box_score", _tl_prior_label)
-                if not _tl_h2h.empty and "opponent" in _tl_h2h.columns:
-                    _tl_h2h = _tl_h2h[_tl_h2h["opponent"] == short_opponent]
-                    if not _tl_h2h.empty:
-                        _tl_h2h_col = game_date_col(_tl_h2h)
-                        _tl_h2h_keys = [c for c in ["opponent", _tl_h2h_col] if c]
-                        _tl_lines = []
-                        for _k, _gm in _tl_h2h.groupby(_tl_h2h_keys, dropna=False):
-                            _us = _gm[_gm["team"] == "UW-Whitewater"]["PTS"].sum()
-                            _them = _gm[_gm["team"] != "UW-Whitewater"]["PTS"].sum()
-                            if _us or _them:
-                                _tl_lines.append(f"{'W' if _us > _them else 'L'} {int(_us)}-{int(_them)}")
-                        if _tl_lines:
-                            _tl_h2h_shown = True
-                            st.markdown(
-                                f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 12px;'
-                                f'margin-top:8px;font-size:0.85rem;">UWW played {esc(short_opponent)} in '
-                                f'{esc(_tl_prior_label)}: <strong>{esc(" · ".join(_tl_lines))}</strong>. '
-                                f'That is UWW against them, not a comparable team -- see Previous Games with '
-                                f'{esc(_tl_prior_label)} selected for the full detail.</div>',
-                                unsafe_allow_html=True)
-        else:
-            # CONFIRMED CHANGE (requested): this panel used to run its own ad-hoc comparison -- eight
-            # per-game features, plain mean/std z-scores, unweighted, no coverage or confidence reporting --
-            # while COMPARABLE OPPONENTS above ran the seventeen-feature weighted model. Two panels sitting
-            # inches apart, both printing "% match", meaning different things by it. That is the exact
-            # drift this project keeps getting bitten by, so the ad-hoc version is gone: both panels now
-            # build profiles with two_sided_rate_profile() and rank with comparable_opponents(), and a 78%
-            # here means precisely what a 78% means there.
-            #
-            # The only difference is WHO is being compared to whom. Above, the target is the upcoming
-            # opponent and the pool is teams UWW has played. Here the target is UWW ITSELF and the pool is
-            # the teams the upcoming opponent has already played.
-            # Prefer the game date to separate meetings; fall back to the third-party column when the
-            # table carries no date, which still groups correctly (one row-set per opponent faced).
-            _tl_keys = [c for c in ["opponent", game_date_col(_tl_prior)]
-                        if c and c in _tl_prior.columns] or ["team"]
-            _tl_records, _tl_context = {}, {}
-            for _tl_team, _tl_g in _tl_prior.groupby("team", dropna=True):
-                if _tl_team == short_opponent:
-                    continue
-                # Multiple meetings with the same team pool into one profile, exactly as they do above.
-                _tl_dates = _tl_g[_tl_keys[-1]].dropna().unique() if len(_tl_keys) > 1 else []
-                _tl_them = _tl_prior[(_tl_prior["team"] == short_opponent)
-                                     & (_tl_prior[_tl_keys[-1]].isin(_tl_dates))] if len(_tl_dates) else \
-                    _tl_prior[_tl_prior["team"] == short_opponent]
-                if _tl_them.empty:
-                    continue
-                _tl_games = int(len(_tl_dates)) or 1
-                _tl_rec = two_sided_rate_profile(_tl_g, _tl_them, _tl_games)
-                _tl_rec["_games"] = _tl_games
-                _tl_records[str(_tl_team)] = _tl_rec
-
-                # CONFIRMED BUG (fixed here): the scoreline used to be the SUM of PTS on each side across
-                # every meeting, so a team that played this opponent three times displayed as "L 225-231"
-                # -- three games' points added into one impossible-looking final score. Pooling the games
-                # is right for the PROFILE (more possessions, less noise) and wrong for the RESULT, which
-                # is per game by definition. Each meeting is now scored on its own and the record is
-                # reported across them.
-                _tl_meetings = []
-                for _tl_d in (_tl_dates if len(_tl_dates) else [None]):
-                    _tl_side = _tl_g if _tl_d is None else _tl_g[_tl_g[_tl_keys[-1]] == _tl_d]
-                    _tl_opp_side = _tl_them if _tl_d is None else _tl_them[_tl_them[_tl_keys[-1]] == _tl_d]
-                    _tl_a = float(pd.to_numeric(_tl_side.get("PTS"), errors="coerce").sum())
-                    _tl_b = float(pd.to_numeric(_tl_opp_side.get("PTS"), errors="coerce").sum())
-                    if _tl_a or _tl_b:
-                        _tl_meetings.append({"pts": _tl_a, "their_pts": _tl_b, "won": _tl_a > _tl_b,
-                                             "date": _tl_d})
-                if not _tl_meetings:
-                    continue
-                _tl_context[str(_tl_team)] = {
-                    "meetings": _tl_meetings,
-                    "wins": sum(1 for _mt in _tl_meetings if _mt["won"]),
-                    "losses": sum(1 for _mt in _tl_meetings if not _mt["won"]),
-                    "pts": sum(_mt["pts"] for _mt in _tl_meetings) / len(_tl_meetings),
-                    "their_pts": sum(_mt["their_pts"] for _mt in _tl_meetings) / len(_tl_meetings),
-                    "games": len(_tl_meetings),
-                }
-
-            # UWW's own profile, built by the same function from the same kind of source.
-            _tl_us = _tl_uww_box[_tl_uww_box["team"] == "UW-Whitewater"]
-            _tl_foes = _tl_uww_box[_tl_uww_box["team"] != "UW-Whitewater"]
-            _tl_date_col = game_date_col(_tl_us)
-            _tl_us_games = int(_tl_us[_tl_date_col].nunique()) if (_tl_date_col and not _tl_us.empty) else 0
-            if _tl_records and not _tl_us.empty and _tl_us_games:
-                _tl_me_rec = two_sided_rate_profile(_tl_us, _tl_foes, _tl_us_games)
-                _tl_me_rec["_games"] = _tl_us_games
-                _tl_records["UW-Whitewater"] = _tl_me_rec
-
-            if len(_tl_records) < 2:
-                st.info(f"Not enough reconstructed box scores from {short_opponent}'s prior games yet.")
-            else:
-                _tl_profiles = pd.DataFrame.from_dict(_tl_records, orient="index")
-                for _tl_k in OPPONENT_FEATURE_WEIGHTS:
-                    if _tl_k not in _tl_profiles.columns:
-                        _tl_profiles[_tl_k] = None
-                _tl_ranked, _tl_used = comparable_opponents(
-                    "UW-Whitewater", list(_tl_context), k=3, profiles=_tl_profiles)
-
-                if _tl_ranked is None or _tl_ranked.empty:
-                    st.info(
-                        f"None of {short_opponent}'s prior opponents could be compared against UWW on a "
-                        f"usable set of features yet."
-                    )
                 else:
-                    st.caption(
-                        f"Ranked by the SAME model as Comparable Opponents above -- the same "
-                        f"{len(OPPONENT_FEATURE_SPEC)} rate features and the same weights -- so a match "
-                        f"score means the same thing in both panels. The target here is UWW"
-                        + (f" as we played in {_tl_uww_season_label}" if _tl_uww_season_label else "")
-                        + f", and the pool is the teams {short_opponent} has already played. Personnel "
-                        f"features are unavailable for these teams (no scouting report on file), so the "
-                        f"comparison runs on the box-score features both sides have -- each card shows how "
-                        f"much of the profile that covered."
-                    )
-                    if _tl_ranked.attrs.get("thin"):
-                        st.warning(
-                            f"Thin comparison: the closest of {short_opponent}'s opponents shares only "
-                            f"{int(_tl_ranked['features_scored'].max())} scoring feature(s) with UWW. Shown "
-                            f"because they are the nearest available, not as a confident match."
+                    _co_target = _co_profiles.loc[short_opponent]
+                    _co_used_prior = any(untag_season(n)[1] for n in _co_ranked["opponent"])
+                    if _co_used_prior:
+                        st.info(
+                            f"UWW has played {_co_current_count} game opponent(s) this season, fewer than the "
+                            f"{MIN_COMPARABLE_POOL} this comparison wants, so teams from {_co_prior_label} are "
+                            f"included and marked. Those profiles come from that season's roster -- treat them "
+                            f"as a guide to style, not a current scouting report."
                         )
+                    if _co_ranked.attrs.get("thin"):
+                        _co_best_n = int(_co_ranked["features_scored"].max())
+                        st.warning(
+                            f"Thin comparison: the best candidate shares only {_co_best_n} scoring feature(s) "
+                            f"with {short_opponent}, below the {_co_ranked.attrs.get('min_features')} this "
+                            f"ranking wants. These are shown because they are the closest available, not because "
+                            f"they are a confident match -- see the coverage table below for where the gaps are."
+                        )
+                    st.caption(
+                        f"Target: **{short_opponent}**. Pool: the {_co_current_count} team(s) UWW has already "
+                        f"played. Profiles for the pool come from our own reconstructed box score of that game "
+                        f"(their offense is what they did to us); {short_opponent}'s comes from their games "
+                        f"before they play us. Scoring is the shared model described above the tabs."
+                    )
 
-                    # Hand this panel's answer to Keys to Victory as well: the ranked teams, every team the
-                    # opponent has played, and the rate profiles behind both -- so a category can compare
-                    # "teams like us" against "the field" on its own feature.
-                    _style_ctx["like_us_matched"] = [str(_n) for _n in _tl_ranked["opponent"]]
-                    _style_ctx["like_us_all"] = [str(_n) for _n in _tl_context]
-                    _style_ctx["like_us_profiles"] = _tl_used
-
-                    _tl_cols = st.columns(len(_tl_ranked))
-                    _tl_me_row = _tl_used.loc["UW-Whitewater"]
-                    for _i, _r in enumerate(_tl_ranked.to_dict("records")):
-                        _ctx = _tl_context.get(_r["opponent"], {})
-                        # Same card, same shape -- results normalised into the shared renderer's form. The
-                        # target here is UWW, so the gap lines read "<their value> vs <UWW's value> (UWW)".
-                        _tl_meetings = [{
-                            "outcome": "W" if _mt["won"] else "L",
-                            "score": f"{int(_mt['pts'])}-{int(_mt['their_pts'])}",
-                            "date": str(_mt.get("date") or ""),
-                        } for _mt in _ctx.get("meetings", [])]
-                        with _tl_cols[_i]:
+                    _co_cols = st.columns(len(_co_ranked))
+                    for _ci, (_, _cr) in enumerate(_co_ranked.iterrows()):
+                        _co_name = _cr["opponent"]
+                        _co_plain, _co_season_tag = untag_season(_co_name)
+                        # Normalise this panel's results (schedule rows) into the shared card's shape.
+                        _co_meetings = [{
+                            "outcome": _g.get("outcome"),
+                            "score": (f"{int(_g['team_score'])}-{int(_g['opponent_score'])}"
+                                      if pd.notna(_g.get("team_score")) and pd.notna(_g.get("opponent_score")) else ""),
+                            "date": _g.get("date", ""),
+                        } for _g in _co_games.get(_co_name, [])]
+                        with _co_cols[_ci]:
                             render_style_match_card(
-                                pd.Series(_r), _tl_ranked, _tl_used, _tl_me_row, "UWW", _tl_meetings)
+                                _cr, _co_ranked, _co_profiles, _co_target,
+                                get_team_abbreviation(short_opponent), _co_meetings,
+                                display_name=_co_plain, season_tag=_co_season_tag)
 
-                    # Averaged over GAMES, not over teams -- a team met three times contributes three
-                    # games to the record and to the scoring averages, which is what "how do teams like us
-                    # do against them" actually asks.
-                    _tl_top_games = [_mt for _n in _tl_ranked["opponent"]
-                                     for _mt in _tl_context.get(_n, {}).get("meetings", [])]
-                    _tl_all_games = [_mt for _c in _tl_context.values() for _mt in _c.get("meetings", [])]
-                    _tl_w = sum(1 for _mt in _tl_top_games if _mt["won"])
-                    _tl_pf = (sum(_mt["pts"] for _mt in _tl_top_games) / len(_tl_top_games)) if _tl_top_games else 0
-                    _tl_pa = (sum(_mt["their_pts"] for _mt in _tl_top_games) / len(_tl_top_games)) if _tl_top_games else 0
-                    _tl_field = (sum(_mt["pts"] for _mt in _tl_all_games) / len(_tl_all_games)) if _tl_all_games else 0
-                    st.markdown(
-                        f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 12px;margin-top:8px;'
-                        f'font-size:0.85rem;">Teams that played like us went '
-                        f'<strong>{_tl_w}-{len(_tl_top_games) - _tl_w}</strong> against {esc(short_opponent)} '
-                        f'in {len(_tl_top_games)} game(s), averaging <strong>{_tl_pf:.1f}</strong> scored and '
-                        f'<strong>{_tl_pa:.1f}</strong> allowed. Across all {len(_tl_all_games)} of their '
-                        f'games, {esc(short_opponent)} allowed <strong>{_tl_field:.1f}</strong> per game.</div>',
-                        unsafe_allow_html=True)
+                    # What actually happened against this style -- the reason the panel exists.
+                    _co_rows = [g for name in _co_ranked["opponent"] for g in _co_games.get(name, [])]
+                    if _co_rows:
+                        _co_played = pd.DataFrame(_co_rows)
+                        _w = int((_co_played["outcome"] == "W").sum())
+                        _l = int((_co_played["outcome"] == "L").sum())
+                        _pf, _pa = _co_played["team_score"].mean(), _co_played["opponent_score"].mean()
+                        # The "vs UWW's season average" delta needs a season average to exist. With an empty
+                        # current season it would read as +0.0 against nothing; use the season the borrowed games
+                        # actually came from instead, and say which.
+                        _season_pf = played["team_score"].mean() if not played.empty else None
+                        _season_pa = played["opponent_score"].mean() if not played.empty else None
+                        _baseline_label = "UWW's season average"
+                        if (_season_pf is None or pd.isna(_season_pf)) and _co_used_prior:
+                            _co_base = _co_played  # the borrowed games are all we have to average over
+                            _season_pf, _season_pa = _co_base["team_score"].mean(), _co_base["opponent_score"].mean()
+                            _baseline_label = None  # a set can't be compared against itself
+                        _delta = ""
+                        if _baseline_label and _season_pf is not None and pd.notna(_season_pf):
+                            _delta = (f" ({_pf - _season_pf:+.1f} pts scored, {_pa - _season_pa:+.1f} allowed "
+                                      f"vs {_baseline_label})")
+                        _co_span = (f" in {_co_prior_label}" if _co_used_prior and _co_current_count == 0 else "")
+                        render_style_strip(
+                            "How we did against this style",
+                            f'UWW is <strong>{_w}-{_l}</strong>{esc(_co_span)} against these '
+                            f'{len(_co_ranked)} teams, averaging <strong>{_pf:.1f}</strong> scored and '
+                            f'<strong>{_pa:.1f}</strong> allowed{esc(_delta)}.')
+
+                    # Hand this panel's answer to Keys to Victory: which teams matched, and UWW's own per-game
+                    # box totals in exactly those games, keyed so a result can be attached to each.
+                    _style_ctx["comparable_names"] = [untag_season(_n)[0] for _n in _co_ranked["opponent"]]
+                    _co_ktv_dates = {str(_g.get("date")) for _n in _co_ranked["opponent"]
+                                     for _g in _co_games.get(_n, [])}
+                    _co_ktv_iso = {resolve_game_date(_d) for _d in _co_ktv_dates}
+                    _co_ktv_iso.discard(None)
+                    _co_ktv_box = box[box["team"] == "UW-Whitewater"].copy() if not box.empty else pd.DataFrame()
+                    if not _co_ktv_box.empty:
+                        _co_ktv_col = game_date_col(_co_ktv_box)
+                        if _co_ktv_col and _co_ktv_iso:
+                            _co_ktv_box["_game_key"] = iso_dates(_co_ktv_box[_co_ktv_col]).to_numpy()
+                            _co_ktv_box = _co_ktv_box[_co_ktv_box["_game_key"].isin(_co_ktv_iso)]
+                            _style_ctx["comparable_box"] = _co_ktv_box
+                            _style_ctx["comparable_outcomes"] = get_game_outcomes(played)
+
 
                     with st.expander("Full style profile comparison", expanded=False):
-                        _tl_table = []
-                        for _fk, _flabel, _fcat, _fw in OPPONENT_FEATURE_SPEC:
-                            _entry = {"Category": _fcat, "Feature": _flabel, "Weight": f"{100 * _fw:.1f}%",
-                                      "UWW": format_feature(_fk, _tl_used.loc["UW-Whitewater"].get(_fk))}
-                            for _cn in _tl_ranked["opponent"]:
-                                _entry[str(_cn)] = format_feature(_fk, _tl_used.loc[_cn].get(_fk))
-                            _tl_table.append(_entry)
-                        st.dataframe(pd.DataFrame(_tl_table), hide_index=True, use_container_width=True)
-                        st.caption(
-                            "Identical layout and identical features to the Comparable Opponents table "
-                            "above, with UWW in the target column. A blank row is a feature neither side "
-                            "could supply; it is excluded from the match rather than counted as agreement."
-                        )
+                        render_style_profile_table(
+                            f"{get_team_abbreviation(short_opponent)} (upcoming)", _co_target,
+                            [(get_team_abbreviation(untag_season(_cn)[0])
+                              + (f" ({untag_season(_cn)[1]})" if untag_season(_cn)[1] else ""),
+                              _co_profiles.loc[_cn]) for _cn in _co_ranked["opponent"]],
+                            "Everything except the Personnel block is computed from reconstructed box scores: "
+                            "the upcoming opponent from their own games before facing UWW, everyone else from "
+                            "their game(s) against UWW. Height and style shares are minutes-weighted across the "
+                            "rotation (8+ MPG) from the scouting reports, the one block a box score can't "
+                            "produce.")
+                        _co_thin_sample = [f"{untag_season(_cn)[0]} ({int(_cr2['games'])} gm)"
+                                           for _cn, _cr2 in zip(_co_ranked["opponent"],
+                                                                _co_ranked.to_dict("records"))
+                                           if pd.notna(_cr2.get("games")) and _cr2["games"] < 3]
+                        if _co_thin_sample:
+                            st.caption(
+                                f"Measured over a small sample: {', '.join(_co_thin_sample)}. The ranking uses "
+                                f"their observed rates rather than adjusting them, so a single unrepresentative "
+                                f"night can move these -- weigh them by the confidence figure on each card."
+                            )
 
-                    with st.expander("How each of their opponents compares to us", expanded=False):
-                        _tl_cov = _tl_ranked.attrs.get("coverage")
-                        _tl_show = pd.DataFrame([{
-                            "Team": _n,
-                            "Result": " · ".join(
-                                f"{'W' if _mt['won'] else 'L'} {int(_mt['pts'])}-{int(_mt['their_pts'])}"
-                                for _mt in _tl_context[_n].get("meetings", [])),
-                            **{_lbl: format_feature(_fk, _tl_used.loc[_n].get(_fk))
-                               for _fk, _lbl, _, _ in OPPONENT_FEATURE_SPEC
-                               if _fk in _tl_used.columns and pd.notna(_tl_used.loc[_n].get(_fk))},
-                        } for _n in _tl_context if _n in _tl_used.index])
-                        if _tl_cov is not None and not _tl_cov.empty:
-                            _tl_show = _tl_show.merge(
-                                _tl_cov.rename(columns={"opponent": "Team"})[["Team", "features_scored"]],
-                                on="Team", how="left").rename(columns={"features_scored": "Features scored"})
-                        st.dataframe(_tl_show, hide_index=True, use_container_width=True)
-                        st.caption(
-                            f"Every team {short_opponent} has played, on the features the match ran on. "
-                            f"UWW's own values are the target column in the table above."
-                        )
+                    _co_cov = _co_ranked.attrs.get("coverage")
+                    if _co_cov is not None and not _co_cov.empty:
+                        with st.expander("Why these three -- feature coverage per candidate", expanded=False):
+                            st.dataframe(
+                                _co_cov.assign(**{"Profile weight covered": (100 * _co_cov["weight_covered"]).round(0).astype(int).astype(str) + "%"})
+                                .drop(columns=["weight_covered"])
+                                .rename(columns={"opponent": "Opponent",
+                                                 "features_used": "Features both have",
+                                                 "features_scored": "Features actually scored"}),
+                                hide_index=True, use_container_width=True)
+                            st.caption(
+                                f"\"Both have\" counts features present for {short_opponent} and that candidate. "
+                                f"\"Actually scored\" is the subset that also varies across the pool -- a feature "
+                                f"every team posts the same value on carries no information and is skipped, so it "
+                                f"can't inflate a match toward 100. A candidate scoring 0 was left out of the "
+                                f"ranking entirely; if many rows read 0, the gap is in the source profiles, not "
+                                f"in the ranking."
+                            )
 
+        with _sm_tab_like_us:
+            # Tab 2 of the shared style model: the SAME ranking with the question flipped -- target UWW,
+            # pool the teams the upcoming opponent has already played. The explanation of match, confidence
+            # and weights is above the tabs and is not repeated here; only what is specific to this direction
+            # is stated below.
+            #
+            # These profiles cannot come from opponent_style_profiles(): that table is built from scouted
+            # opponents' season stats, and the upcoming opponent's other opponents were never scouted. What
+            # does exist is the reconstructed box score of each of those games, so the profile is built from
+            # the ONE game each team played against them -- a real limitation, stated on the panel.
+            _tl_prior = load_table("uww_opponent_prior_games_box_score")
+            _tl_uww_box = load_table("uww_pbp_box_score")
+            _tl_prior_label = prior_season_label()
+            _tl_notes = []
+
+            # CONFIRMED CHANGE (requested): both inputs can be empty in the season's opening weeks, which is
+            # when this panel would help most. Each falls back to last season independently, because they fail
+            # for different reasons and only one of the two is usually missing.
+            #
+            # (1) UWW's own profile. "How UWW plays" needs games; MIN_OWN_GAMES_FOR_PROFILE of them before one
+            #     season's box scores describe a team rather than a night. Below that, use last season's.
+            def _tl_game_count(_box):
+                if _box.empty or "team" not in _box.columns:
+                    return 0
+                _side = _box[_box["team"] == "UW-Whitewater"]
+                _col = game_date_col(_side)
+                return int(_side[_col].nunique()) if _col else 0
+
+            _tl_uww_season_label = None
+            if _tl_game_count(_tl_uww_box) < MIN_OWN_GAMES_FOR_PROFILE and _tl_prior_label:
+                _tl_prior_uww = load_table("uww_pbp_box_score", _tl_prior_label)
+                if _tl_game_count(_tl_prior_uww) >= MIN_OWN_GAMES_FOR_PROFILE:
+                    _tl_played_now = _tl_game_count(_tl_uww_box)
+                    _tl_uww_box = _tl_prior_uww
+                    _tl_uww_season_label = _tl_prior_label
+                    _tl_notes.append(
+                        f"UWW has {_tl_played_now} reconstructed game(s) this season, so \"how we play\" is taken "
+                        f"from {_tl_prior_label}."
+                    )
+
+            # (2) The opponent's own prior games. The parser only exports these for the CURRENT upcoming
+            #     opponent, so last season's copy is a different team's -- usable only on the rare occasion it
+            #     happens to be this same opponent. Checked rather than assumed.
+            if _tl_prior.empty and _tl_prior_label and short_opponent:
+                _tl_prior_alt = load_table("uww_opponent_prior_games_box_score", _tl_prior_label)
+                if not _tl_prior_alt.empty and "team" in _tl_prior_alt.columns \
+                        and (_tl_prior_alt["team"] == short_opponent).any():
+                    _tl_prior = _tl_prior_alt
+                    _tl_notes.append(
+                        f"{short_opponent} has no logged games yet this season, so their prior games are from "
+                        f"{_tl_prior_label}."
+                    )
+
+            for _tl_n in _tl_notes:
+                st.info(_tl_n)
+
+            if _tl_prior.empty or _tl_uww_box.empty or not short_opponent:
+                st.info("Needs the upcoming opponent's prior-game box scores and UWW's own -- not available yet.")
+                # Even without the panel proper, a head-to-head from last season is real evidence about this
+                # matchup and already sits in the archive -- surface it rather than showing nothing at all.
+                _tl_h2h_shown = False
+                if _tl_prior_label and short_opponent:
+                    _tl_h2h = load_table("uww_pbp_box_score", _tl_prior_label)
+                    if not _tl_h2h.empty and "opponent" in _tl_h2h.columns:
+                        _tl_h2h = _tl_h2h[_tl_h2h["opponent"] == short_opponent]
+                        if not _tl_h2h.empty:
+                            _tl_h2h_col = game_date_col(_tl_h2h)
+                            _tl_h2h_keys = [c for c in ["opponent", _tl_h2h_col] if c]
+                            _tl_lines = []
+                            for _k, _gm in _tl_h2h.groupby(_tl_h2h_keys, dropna=False):
+                                _us = _gm[_gm["team"] == "UW-Whitewater"]["PTS"].sum()
+                                _them = _gm[_gm["team"] != "UW-Whitewater"]["PTS"].sum()
+                                if _us or _them:
+                                    _tl_lines.append(f"{'W' if _us > _them else 'L'} {int(_us)}-{int(_them)}")
+                            if _tl_lines:
+                                _tl_h2h_shown = True
+                                st.markdown(
+                                    f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 12px;'
+                                    f'margin-top:8px;font-size:0.85rem;">UWW played {esc(short_opponent)} in '
+                                    f'{esc(_tl_prior_label)}: <strong>{esc(" · ".join(_tl_lines))}</strong>. '
+                                    f'That is UWW against them, not a comparable team -- see Previous Games with '
+                                    f'{esc(_tl_prior_label)} selected for the full detail.</div>',
+                                    unsafe_allow_html=True)
+            else:
+                # CONFIRMED CHANGE (requested): this panel used to run its own ad-hoc comparison -- eight
+                # per-game features, plain mean/std z-scores, unweighted, no coverage or confidence reporting --
+                # while COMPARABLE OPPONENTS above ran the seventeen-feature weighted model. Two panels sitting
+                # inches apart, both printing "% match", meaning different things by it. That is the exact
+                # drift this project keeps getting bitten by, so the ad-hoc version is gone: both panels now
+                # build profiles with two_sided_rate_profile() and rank with comparable_opponents(), and a 78%
+                # here means precisely what a 78% means there.
+                #
+                # The only difference is WHO is being compared to whom. Above, the target is the upcoming
+                # opponent and the pool is teams UWW has played. Here the target is UWW ITSELF and the pool is
+                # the teams the upcoming opponent has already played.
+                # Prefer the game date to separate meetings; fall back to the third-party column when the
+                # table carries no date, which still groups correctly (one row-set per opponent faced).
+                _tl_keys = [c for c in ["opponent", game_date_col(_tl_prior)]
+                            if c and c in _tl_prior.columns] or ["team"]
+                _tl_records, _tl_context = {}, {}
+                for _tl_team, _tl_g in _tl_prior.groupby("team", dropna=True):
+                    if _tl_team == short_opponent:
+                        continue
+                    # Multiple meetings with the same team pool into one profile, exactly as they do above.
+                    _tl_dates = _tl_g[_tl_keys[-1]].dropna().unique() if len(_tl_keys) > 1 else []
+                    _tl_them = _tl_prior[(_tl_prior["team"] == short_opponent)
+                                         & (_tl_prior[_tl_keys[-1]].isin(_tl_dates))] if len(_tl_dates) else \
+                        _tl_prior[_tl_prior["team"] == short_opponent]
+                    if _tl_them.empty:
+                        continue
+                    _tl_games = int(len(_tl_dates)) or 1
+                    _tl_rec = two_sided_rate_profile(_tl_g, _tl_them, _tl_games)
+                    _tl_rec["_games"] = _tl_games
+                    _tl_records[str(_tl_team)] = _tl_rec
+
+                    # CONFIRMED BUG (fixed here): the scoreline used to be the SUM of PTS on each side across
+                    # every meeting, so a team that played this opponent three times displayed as "L 225-231"
+                    # -- three games' points added into one impossible-looking final score. Pooling the games
+                    # is right for the PROFILE (more possessions, less noise) and wrong for the RESULT, which
+                    # is per game by definition. Each meeting is now scored on its own and the record is
+                    # reported across them.
+                    _tl_meetings = []
+                    for _tl_d in (_tl_dates if len(_tl_dates) else [None]):
+                        _tl_side = _tl_g if _tl_d is None else _tl_g[_tl_g[_tl_keys[-1]] == _tl_d]
+                        _tl_opp_side = _tl_them if _tl_d is None else _tl_them[_tl_them[_tl_keys[-1]] == _tl_d]
+                        _tl_a = float(pd.to_numeric(_tl_side.get("PTS"), errors="coerce").sum())
+                        _tl_b = float(pd.to_numeric(_tl_opp_side.get("PTS"), errors="coerce").sum())
+                        if _tl_a or _tl_b:
+                            _tl_meetings.append({"pts": _tl_a, "their_pts": _tl_b, "won": _tl_a > _tl_b,
+                                                 "date": _tl_d})
+                    if not _tl_meetings:
+                        continue
+                    _tl_context[str(_tl_team)] = {
+                        "meetings": _tl_meetings,
+                        "wins": sum(1 for _mt in _tl_meetings if _mt["won"]),
+                        "losses": sum(1 for _mt in _tl_meetings if not _mt["won"]),
+                        "pts": sum(_mt["pts"] for _mt in _tl_meetings) / len(_tl_meetings),
+                        "their_pts": sum(_mt["their_pts"] for _mt in _tl_meetings) / len(_tl_meetings),
+                        "games": len(_tl_meetings),
+                    }
+
+                # UWW's own profile, built by the same function from the same kind of source.
+                _tl_us = _tl_uww_box[_tl_uww_box["team"] == "UW-Whitewater"]
+                _tl_foes = _tl_uww_box[_tl_uww_box["team"] != "UW-Whitewater"]
+                _tl_date_col = game_date_col(_tl_us)
+                _tl_us_games = int(_tl_us[_tl_date_col].nunique()) if (_tl_date_col and not _tl_us.empty) else 0
+                if _tl_records and not _tl_us.empty and _tl_us_games:
+                    _tl_me_rec = two_sided_rate_profile(_tl_us, _tl_foes, _tl_us_games)
+                    _tl_me_rec["_games"] = _tl_us_games
+                    _tl_records["UW-Whitewater"] = _tl_me_rec
+
+                if len(_tl_records) < 2:
+                    st.info(f"Not enough reconstructed box scores from {short_opponent}'s prior games yet.")
+                else:
+                    _tl_profiles = pd.DataFrame.from_dict(_tl_records, orient="index")
+                    for _tl_k in OPPONENT_FEATURE_WEIGHTS:
+                        if _tl_k not in _tl_profiles.columns:
+                            _tl_profiles[_tl_k] = None
+                    _tl_ranked, _tl_used = comparable_opponents(
+                        "UW-Whitewater", list(_tl_context), k=3, profiles=_tl_profiles)
+
+                    if _tl_ranked is None or _tl_ranked.empty:
+                        st.info(
+                            f"None of {short_opponent}'s prior opponents could be compared against UWW on a "
+                            f"usable set of features yet."
+                        )
+                    else:
+                        st.caption(
+                            "Target: **UWW**"
+                            + (f" as we played in {_tl_uww_season_label}" if _tl_uww_season_label else "")
+                            + f". Pool: the {len(_tl_context)} team(s) {short_opponent} has already played, "
+                            f"each profiled from the single game they played against them. Personnel features "
+                            f"are unavailable for these teams (no scouting report on file), so the match runs "
+                            f"on the box-score features both sides have -- the coverage figure on each card "
+                            f"shows how much of the profile that was. Scoring is the shared model described "
+                            f"above the tabs, so a match here means what it means in the other tab."
+                        )
+                        if _tl_ranked.attrs.get("thin"):
+                            st.warning(
+                                f"Thin comparison: the closest of {short_opponent}'s opponents shares only "
+                                f"{int(_tl_ranked['features_scored'].max())} scoring feature(s) with UWW. Shown "
+                                f"because they are the nearest available, not as a confident match."
+                            )
+
+                        # Hand this panel's answer to Keys to Victory as well: the ranked teams, every team the
+                        # opponent has played, and the rate profiles behind both -- so a category can compare
+                        # "teams like us" against "the field" on its own feature.
+                        _style_ctx["like_us_matched"] = [str(_n) for _n in _tl_ranked["opponent"]]
+                        _style_ctx["like_us_all"] = [str(_n) for _n in _tl_context]
+                        _style_ctx["like_us_profiles"] = _tl_used
+
+                        _tl_cols = st.columns(len(_tl_ranked))
+                        _tl_me_row = _tl_used.loc["UW-Whitewater"]
+                        for _i, _r in enumerate(_tl_ranked.to_dict("records")):
+                            _ctx = _tl_context.get(_r["opponent"], {})
+                            # Same card, same shape -- results normalised into the shared renderer's form. The
+                            # target here is UWW, so the gap lines read "<their value> vs <UWW's value> (UWW)".
+                            _tl_meetings = [{
+                                "outcome": "W" if _mt["won"] else "L",
+                                "score": f"{int(_mt['pts'])}-{int(_mt['their_pts'])}",
+                                "date": str(_mt.get("date") or ""),
+                            } for _mt in _ctx.get("meetings", [])]
+                            with _tl_cols[_i]:
+                                render_style_match_card(
+                                    pd.Series(_r), _tl_ranked, _tl_used, _tl_me_row, "UWW", _tl_meetings)
+
+                        # Averaged over GAMES, not over teams -- a team met three times contributes three
+                        # games to the record and to the scoring averages, which is what "how do teams like us
+                        # do against them" actually asks.
+                        _tl_top_games = [_mt for _n in _tl_ranked["opponent"]
+                                         for _mt in _tl_context.get(_n, {}).get("meetings", [])]
+                        _tl_all_games = [_mt for _c in _tl_context.values() for _mt in _c.get("meetings", [])]
+                        _tl_w = sum(1 for _mt in _tl_top_games if _mt["won"])
+                        _tl_pf = (sum(_mt["pts"] for _mt in _tl_top_games) / len(_tl_top_games)) if _tl_top_games else 0
+                        _tl_pa = (sum(_mt["their_pts"] for _mt in _tl_top_games) / len(_tl_top_games)) if _tl_top_games else 0
+                        _tl_field = (sum(_mt["pts"] for _mt in _tl_all_games) / len(_tl_all_games)) if _tl_all_games else 0
+                        render_style_strip(
+                            "How teams like us did against them",
+                            f'They went <strong>{_tl_w}-{len(_tl_top_games) - _tl_w}</strong> against '
+                            f'{esc(short_opponent)} in {len(_tl_top_games)} game(s), averaging '
+                            f'<strong>{_tl_pf:.1f}</strong> scored and <strong>{_tl_pa:.1f}</strong> allowed. '
+                            f'Across all {len(_tl_all_games)} of their games, {esc(short_opponent)} allowed '
+                            f'<strong>{_tl_field:.1f}</strong> per game.')
+
+                        with st.expander("Full style profile comparison", expanded=False):
+                            render_style_profile_table(
+                                "UWW (target)", _tl_used.loc["UW-Whitewater"],
+                                [(str(_cn), _tl_used.loc[_cn]) for _cn in _tl_ranked["opponent"]],
+                                "The same features and the same layout as the other tab, with UWW in the "
+                                "target column. A blank row is a feature neither side could supply; it is "
+                                "excluded from the match rather than counted as agreement.")
+
+                        with st.expander("How each of their opponents compares to us", expanded=False):
+                            _tl_cov = _tl_ranked.attrs.get("coverage")
+                            _tl_show = pd.DataFrame([{
+                                "Team": _n,
+                                "Result": " · ".join(
+                                    f"{'W' if _mt['won'] else 'L'} {int(_mt['pts'])}-{int(_mt['their_pts'])}"
+                                    for _mt in _tl_context[_n].get("meetings", [])),
+                                **{_lbl: format_feature(_fk, _tl_used.loc[_n].get(_fk))
+                                   for _fk, _lbl, _, _ in OPPONENT_FEATURE_SPEC
+                                   if _fk in _tl_used.columns and pd.notna(_tl_used.loc[_n].get(_fk))},
+                            } for _n in _tl_context if _n in _tl_used.index])
+                            if _tl_cov is not None and not _tl_cov.empty:
+                                _tl_show = _tl_show.merge(
+                                    _tl_cov.rename(columns={"opponent": "Team"})[["Team", "features_scored"]],
+                                    on="Team", how="left").rename(columns={"features_scored": "Features scored"})
+                            st.dataframe(_tl_show, hide_index=True, use_container_width=True)
+                            st.caption(
+                                f"Every team {short_opponent} has played, on the features the match ran on. "
+                                f"UWW's own values are the target column in the table above."
+                            )
 
 
     with _new_tools_proj_c:
@@ -7658,7 +7683,7 @@ than the one above, which is measured over more games, and it is labelled that w
                 f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
                 f'{_n}. \U0001f501 Play Calls -- vs Similar Opponents</span>'
                 f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
-            st.caption("Style-matched from the same profile the Comparable Opponents panel uses: "
+            st.caption("Style-matched from the same profile the Style Matchups panel uses: "
                        + ", ".join(f"{_nm} ({_mt}% match)" for _nm, _mt in _sp_names))
             _fp_best_worst(_sp["summary"], _suffix="vs This Style")
             st.caption("A three-game sample by construction -- a 1-attempt floor, so read it as a pointer, "
