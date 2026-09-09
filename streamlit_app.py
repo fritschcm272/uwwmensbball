@@ -5767,15 +5767,16 @@ def render_upcoming_game():
         # They are ONE style model asked in two directions, and printing it twice made a reader compare the
         # wording instead of the numbers, while giving the documentation two places to drift apart in --
         # the exact failure this project keeps getting bitten by (see render_style_match_card, where the
-        # cards had already drifted once). One section, one explanation, two tabs:
+        # cards had already drifted once). One section, one explanation, two columns:
         #
-        #   Tab 1 -- target = the upcoming opponent, pool = teams UWW has already played.
-        #   Tab 2 -- target = UWW,                   pool = teams the upcoming opponent has already played.
+        #   Left  -- target = the upcoming opponent, pool = teams UWW has already played.
+        #   Right -- target = UWW,                   pool = teams the upcoming opponent has already played.
         #
-        # Everything shared is written once, above the tabs: the header, the model, the weight table.
-        # Inside a tab is only what actually differs -- who is matched against whom, where those profiles
-        # come from, and what happened in those games. Both tabs render on every run (Streamlit executes
-        # every tab body), so Keys to Victory still gets _style_ctx from both regardless of which is open.
+        # Everything shared is written once, above the columns: the header, the model, the weight table
+        # (the last two behind the "How to read this" dialog). Inside a column is only what actually
+        # differs -- who is matched against whom, where those profiles come from, and what happened in
+        # those games. Both columns render every run, so Keys to Victory always gets both _style_ctx
+        # halves.
         st.markdown(
             '<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;'
             'margin:1.5rem 0 0.75rem;">'
@@ -5784,19 +5785,8 @@ def render_upcoming_game():
             '<div style="font-size:0.8rem;color:#666;margin-top:2px;">'
             'One style model, asked in both directions.</div></div>', unsafe_allow_html=True)
 
-        # Two sentences, not two essays: which tab answers which question, before either is opened.
-        st.markdown(
-            f'<div style="display:flex;gap:10px;margin-bottom:6px;font-size:0.82rem;color:#444;">'
-            f'<div style="flex:1;border-left:3px solid #4E2A84;padding-left:8px;">'
-            f'<strong>Teams like {esc(short_opponent)}</strong><br>Who have <em>we</em> played that '
-            f'resembles them? Sends you to our own film, and to what worked.</div>'
-            f'<div style="flex:1;border-left:3px solid #4E2A84;padding-left:8px;">'
-            f'<strong>Teams like us</strong><br>Who have <em>they</em> played that resembles <em>us</em>? '
-            f'Sends you to their film, and to what they will try.</div></div>',
-            unsafe_allow_html=True)
-
-        # Collected by both tabs and consumed by the Keys to Victory section further down (see
-        # style_matched_ktv_lines). Initialised here so KTV can never depend on whether a tab body found
+        # Collected by both columns and consumed by the Keys to Victory section further down (see
+        # style_matched_ktv_lines). Initialised here so KTV can never depend on whether a column found
         # data -- an absent key just means that evidence line is skipped.
         _style_ctx = {}
 
@@ -5813,11 +5803,16 @@ def render_upcoming_game():
         ).replace("efg%", "shooting").replace("tov%", "turnovers").replace(
             "orb%", "offensive rebounding").replace("ft rate", "free throws")
 
-        with st.expander("\U0001f4d8 How to read this \u2014 what the numbers mean", expanded=False):
+        # CONFIRMED CHANGE (requested): the documentation is a DIALOG, not an inline expander. The two
+        # columns of cards below are the answer this section exists to give; ninety lines of explanation
+        # sitting above them pushed that answer off the first screen even while collapsed. One button, one
+        # click, and the same text -- nothing was cut.
+        @st.dialog("\U0001f4d8 How to read Style Matchups", width="large")
+        def _sm_how_to_read():
             st.markdown(f"""
 ##### The two questions
 
-| | Teams like {short_opponent} | Teams like us |
+| | Left column: teams like {short_opponent} | Right column: teams like us |
 | --- | --- | --- |
 | The question | Who have *we* played that resembles them? | Who have *they* played that resembles *us*? |
 | Matched against | {short_opponent} | UWW |
@@ -5826,8 +5821,8 @@ def render_upcoming_game():
 | What it tells you | What worked for us against this style | What they do against a team built like ours |
 
 Use them together. The first tells you which of your own game plans to revisit; the second tells you what
-they are likely to throw at you. **Both tabs run the identical ranking, so a 78 in one means exactly what
-a 78 means in the other.**
+they are likely to throw at you. **Both columns run the identical ranking, so a 78 on the left means
+exactly what a 78 on the right means.**
 
 **What this is not.** A *style* match, not a *strength* match. A 90 does not mean the two teams are
 equally good \u2014 it means they play alike. A bad team and a good team can run the same system.
@@ -5877,7 +5872,8 @@ someone, and letting it weigh heavily would turn this into a standings table.
   bigger and fairer sample.
 - **{short_opponent}'s other opponents** \u2014 from the one game they played against them. No scouting
   report exists for these teams, so the Personnel block is blank and the match runs on the box-score
-  features. That makes the second tab the weaker of the two, and it is labelled that way on purpose.
+  features. That makes the right-hand column the weaker of the two, and it is labelled that way on
+  purpose.
 - **Size and rotation makeup** \u2014 from the scouting reports, the one piece a box score cannot give us.
 
 **The honest limitation:** most profiles here describe how a team played in one or two games, not across
@@ -5893,15 +5889,29 @@ furthest apart \u2014 usually the thing to adjust for. Below those, the two feat
 gaps are spelled out with both teams' actual numbers, so you can see what "differs" means in practice
 rather than taking the label's word for it.
 
-*Open "Full style profile comparison" in either tab to see every feature side by side with its weight, or
-the coverage expander to see how much of the profile each candidate could be compared on.*
+*Close this and open "Full style profile comparison" under either column to see every feature side by
+side with its weight, or the coverage expander to see how much of the profile each candidate could be
+compared on.*
             """)
 
-        _sm_tab_like_them, _sm_tab_like_us = st.tabs(
-            [f"Teams like {short_opponent} that we have played",
-             f"Teams like us that have played {short_opponent}"])
+        if st.button("\U0001f4d8 How to read this", key="_sm_how_to_read_btn",
+                     help="What Match and Confidence mean, what goes into them, and where the numbers "
+                          "come from."):
+            _sm_how_to_read()
 
-        with _sm_tab_like_them:
+        # Side by side rather than stacked or tabbed: the two questions are read TOGETHER -- "who have we
+        # played that plays like them" next to "who have they played that plays like us" -- and a coach
+        # comparing the two should not have to switch views or scroll between them. Each column stacks its
+        # own three cards vertically, so the pairing stays visible on one screen.
+        _sm_col_like_them, _sm_col_like_us = st.columns(2, gap="large")
+
+        with _sm_col_like_them:
+            st.markdown(
+                f'<div style="font-weight:700;font-size:0.9rem;color:#4E2A84;border-bottom:2px solid '
+                f'#4E2A84;padding-bottom:3px;margin-bottom:8px;">TEAMS LIKE {esc(str(short_opponent).upper())} '
+                f'THAT WE HAVE PLAYED</div>'
+                f'<div style="font-size:0.75rem;color:#666;margin:-4px 0 8px;">Our film, and what worked.'
+                f'</div>', unsafe_allow_html=True)
             # Which teams UWW has ALREADY PLAYED most resemble the one being prepared for -- so the staff can look
             # at what actually worked (and didn't) against that style. Scoped to `played`, i.e. games before the
             # upcoming one, so a result that hasn't happened yet can never appear here.
@@ -6028,11 +6038,12 @@ the coverage expander to see how much of the profile each candidate could be com
                         f"Target: **{short_opponent}**. Pool: the {_co_current_count} team(s) UWW has already "
                         f"played. Profiles for the pool come from our own reconstructed box score of that game "
                         f"(their offense is what they did to us); {short_opponent}'s comes from their games "
-                        f"before they play us. Scoring is the shared model described above the tabs."
+                        f"before they play us. Scoring is the shared model described in How to read this."
                     )
 
-                    _co_cols = st.columns(len(_co_ranked))
-                    for _ci, (_, _cr) in enumerate(_co_ranked.iterrows()):
+                    # Stacked, not side by side: this panel is now itself one half of a two-column
+                    # layout, so three cards across would leave each about a hundred pixels wide.
+                    for _, _cr in _co_ranked.iterrows():
                         _co_name = _cr["opponent"]
                         _co_plain, _co_season_tag = untag_season(_co_name)
                         # Normalise this panel's results (schedule rows) into the shared card's shape.
@@ -6042,11 +6053,10 @@ the coverage expander to see how much of the profile each candidate could be com
                                       if pd.notna(_g.get("team_score")) and pd.notna(_g.get("opponent_score")) else ""),
                             "date": _g.get("date", ""),
                         } for _g in _co_games.get(_co_name, [])]
-                        with _co_cols[_ci]:
-                            render_style_match_card(
-                                _cr, _co_ranked, _co_profiles, _co_target,
-                                get_team_abbreviation(short_opponent), _co_meetings,
-                                display_name=_co_plain, season_tag=_co_season_tag)
+                        render_style_match_card(
+                            _cr, _co_ranked, _co_profiles, _co_target,
+                            get_team_abbreviation(short_opponent), _co_meetings,
+                            display_name=_co_plain, season_tag=_co_season_tag)
 
                     # What actually happened against this style -- the reason the panel exists.
                     _co_rows = [g for name in _co_ranked["opponent"] for g in _co_games.get(name, [])]
@@ -6134,11 +6144,17 @@ the coverage expander to see how much of the profile each candidate could be com
                                 f"in the ranking."
                             )
 
-        with _sm_tab_like_us:
-            # Tab 2 of the shared style model: the SAME ranking with the question flipped -- target UWW,
-            # pool the teams the upcoming opponent has already played. The explanation of match, confidence
-            # and weights is above the tabs and is not repeated here; only what is specific to this direction
-            # is stated below.
+        with _sm_col_like_us:
+            st.markdown(
+                f'<div style="font-weight:700;font-size:0.9rem;color:#4E2A84;border-bottom:2px solid '
+                f'#4E2A84;padding-bottom:3px;margin-bottom:8px;">TEAMS LIKE US THAT HAVE PLAYED '
+                f'{esc(str(short_opponent).upper())}</div>'
+                f'<div style="font-size:0.75rem;color:#666;margin:-4px 0 8px;">Their film, and what they '
+                f'will try.</div>', unsafe_allow_html=True)
+            # Right-hand column of the shared style model: the SAME ranking with the question flipped --
+            # target UWW, pool the teams the upcoming opponent has already played. The explanation of
+            # match, confidence and weights lives in the shared dialog and is not repeated here; only what
+            # is specific to this direction is stated below.
             #
             # These profiles cannot come from opponent_style_profiles(): that table is built from scouted
             # opponents' season stats, and the upcoming opponent's other opponents were never scouted. What
@@ -6309,7 +6325,7 @@ the coverage expander to see how much of the profile each candidate could be com
                             f"are unavailable for these teams (no scouting report on file), so the match runs "
                             f"on the box-score features both sides have -- the coverage figure on each card "
                             f"shows how much of the profile that was. Scoring is the shared model described "
-                            f"above the tabs, so a match here means what it means in the other tab."
+                            f"in How to read this, so a match here means what it means on the left."
                         )
                         if _tl_ranked.attrs.get("thin"):
                             st.warning(
@@ -6325,9 +6341,9 @@ the coverage expander to see how much of the profile each candidate could be com
                         _style_ctx["like_us_all"] = [str(_n) for _n in _tl_context]
                         _style_ctx["like_us_profiles"] = _tl_used
 
-                        _tl_cols = st.columns(len(_tl_ranked))
+                        # Stacked for the same reason as the left-hand column.
                         _tl_me_row = _tl_used.loc["UW-Whitewater"]
-                        for _i, _r in enumerate(_tl_ranked.to_dict("records")):
+                        for _r in _tl_ranked.to_dict("records"):
                             _ctx = _tl_context.get(_r["opponent"], {})
                             # Same card, same shape -- results normalised into the shared renderer's form. The
                             # target here is UWW, so the gap lines read "<their value> vs <UWW's value> (UWW)".
@@ -6336,9 +6352,8 @@ the coverage expander to see how much of the profile each candidate could be com
                                 "score": f"{int(_mt['pts'])}-{int(_mt['their_pts'])}",
                                 "date": str(_mt.get("date") or ""),
                             } for _mt in _ctx.get("meetings", [])]
-                            with _tl_cols[_i]:
-                                render_style_match_card(
-                                    pd.Series(_r), _tl_ranked, _tl_used, _tl_me_row, "UWW", _tl_meetings)
+                            render_style_match_card(
+                                pd.Series(_r), _tl_ranked, _tl_used, _tl_me_row, "UWW", _tl_meetings)
 
                         # Averaged over GAMES, not over teams -- a team met three times contributes three
                         # games to the record and to the scoring averages, which is what "how do teams like us
@@ -6362,7 +6377,7 @@ the coverage expander to see how much of the profile each candidate could be com
                             render_style_profile_table(
                                 "UWW (target)", _tl_used.loc["UW-Whitewater"],
                                 [(str(_cn), _tl_used.loc[_cn]) for _cn in _tl_ranked["opponent"]],
-                                "The same features and the same layout as the other tab, with UWW in the "
+                                "The same features and the same layout as the left-hand column, with UWW in the "
                                 "target column. A blank row is a feature neither side could supply; it is "
                                 "excluded from the match rather than counted as agreement.")
 
