@@ -1131,59 +1131,55 @@ def render_comparable_vs_uww(comp_name, comp_opponent, season_row=None, games_pl
             st.caption(f"No box score on file for the {comp_game_date} meeting this comparison was drawn "
                        f"from, so all {len(log)} meeting(s) are shown.")
 
-    st.caption(f"How UWW did against {comp_name}:")
-    st.dataframe(shown.drop(columns=["_iso"]), hide_index=True, use_container_width=True)
-
-    # Versus his rate in the games he played BEFORE facing UWW.
+    # CONFIRMED CHANGE (requested): the comparison to his own rate is folded into the box score as a
+    # parenthesised delta rather than printed as a second table below it. The old layout made a reader
+    # match "PTS" in a six-row table to the PTS column of the table above it before learning that 17 was
+    # four points over his norm; now the row says 17 (+4.0) where the number already is.
     #
-    # CONFIRMED BUG (fixed here): this used to subtract the UWW meeting out of the profile's season
-    # totals -- `other_total = season_value * gp - <his line vs UWW>`, divided by `gp - meetings`. That
-    # was correct when player_profiles carried a whole-season figure that INCLUDED the UWW game. It no
-    # longer does. Every stat in player_profiles is now PBP-derived from each opponent's games strictly
-    # BEFORE their UWW matchup (the parser's prior-game override for the upcoming opponent, and the
-    # back-fill cell for past opponents). The meeting was never in the total, so backing it out removed a
-    # game that was not there -- and `games_played` counts only those pre-UWW games, so it then divided
-    # by one fewer game than it should have. Both errors push the same way, and the whole column was
-    # wrong whenever a player's UWW game differed from his norm.
+    # The baseline is the same one as before -- his per-game rate in the games he had played BEFORE
+    # facing UWW.
     #
-    # Reported case: Corey Thompson, 17 PTS against UWW off a profile of 15.0 PTS over his 2 prior games.
-    # The correct baseline is 15.0 -- the profile IS his other games. The old arithmetic printed
-    # (15.0 * 2 - 17) / 1 = 13.0, which matched nothing in uww_player_comparisons.csv, which is exactly
-    # how this was spotted.
-    #
-    # So the profile figure is now used as-is. The column is named for what it actually covers: not "his
-    # other games" (it excludes anything after the meeting too) and not "season" (it stops at the
-    # matchup), but the games he had played going into it -- which is also the more useful baseline, since
-    # it is the form he was actually in when we saw him.
-    if season_row is None:
-        return
+    # CONFIRMED BUG (fixed here, kept for the record): that baseline used to be computed by subtracting
+    # the UWW meeting out of the profile's totals -- `season_value * gp - <his line vs UWW>`, over
+    # `gp - meetings`. Correct when player_profiles held a whole-season figure INCLUDING the UWW game; it
+    # no longer does. Every stat there is now PBP-derived from each opponent's games strictly BEFORE their
+    # UWW matchup (the parser's prior-game override for the upcoming opponent, the back-fill cell for past
+    # ones). The meeting was never in the total, so backing it out removed a game that was not there, and
+    # `games_played` counts only pre-UWW games, so it then divided by one game too few. Reported case:
+    # Corey Thompson, 17 PTS off a profile of 15.0 over his 2 prior games -- the correct baseline is 15.0,
+    # the old arithmetic printed (15.0 * 2 - 17) / 1 = 13.0, matching nothing in
+    # uww_player_comparisons.csv, which is how it was caught.
     gp = safe_float(games_played) if games_played is not None else None
-    label = "Before UWW"
-    rows = []
-    for stat in ("PTS", "REB", "AST", "STL", "BLK", "TO"):
-        if stat not in shown.columns:
-            continue
-        against_uww = pd.to_numeric(shown[stat], errors="coerce")
-        if not against_uww.notna().any():
-            continue
-        # profile_stat_per_game still does the AST/STL/BLK/TO season-total -> per-game division; those
-        # columns are stored as totals over `games_played` on purpose (see the parser's override cells).
-        baseline = profile_stat_per_game(season_row, stat, gp)
-        if baseline is None:
-            continue
-        actual = float(against_uww.mean())
-        rows.append({"Stat": stat,
-                     "vs UWW": f"{actual:.1f}",
-                     label: f"{baseline:.1f}",
-                     "+/-": f"{actual - baseline:+.1f}"})
-    if rows:
-        _cvu_games = f"{int(gp)} game(s)" if gp else "the games"
-        note = (f"His line in that game against his per-game rate in the {_cvu_games} he had played "
-                f"before facing UWW")
-        if len(shown) > 1:
-            note += f" (averaged over {len(shown)} meetings)"
-        st.caption(note + ":")
-        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+    _cvu_baselines = {}
+    if season_row is not None:
+        for _cvu_stat in ("PTS", "REB", "AST", "STL", "BLK", "TO"):
+            if _cvu_stat not in shown.columns:
+                continue
+            # profile_stat_per_game does the AST/STL/BLK/TO season-total -> per-game division; those
+            # columns are stored as totals over `games_played` on purpose (see the parser override cells).
+            _cvu_base = profile_stat_per_game(season_row, _cvu_stat, gp)
+            if _cvu_base is not None:
+                _cvu_baselines[_cvu_stat] = float(_cvu_base)
+
+    _cvu_display = shown.drop(columns=["_iso"]).copy()
+    for _cvu_stat, _cvu_base in _cvu_baselines.items():
+        _cvu_vals = pd.to_numeric(_cvu_display[_cvu_stat], errors="coerce")
+        # A stat with no value in that game gets the raw cell back untouched -- "(-17.0)" against a blank
+        # is a comparison to nothing, and printing it would invent a performance.
+        _cvu_display[_cvu_stat] = [
+            f"{_cvu_raw} ({_cvu_v - _cvu_base:+.1f})" if pd.notna(_cvu_v) else _cvu_raw
+            for _cvu_raw, _cvu_v in zip(_cvu_display[_cvu_stat], _cvu_vals)
+        ]
+
+    if _cvu_baselines:
+        # "his avg. before that game", not "season avg.": the baseline stops at the UWW matchup, so it
+        # covers neither his full season nor his games after it. Naming it precisely is what makes the
+        # delta checkable against uww_player_comparisons.csv -- the loose label is what made the old,
+        # genuinely wrong numbers look plausible for as long as they did.
+        st.caption(f"How UWW did against {comp_name} (compared to his avg. before that game):")
+    else:
+        st.caption(f"How UWW did against {comp_name}:")
+    st.dataframe(_cvu_display, hide_index=True, use_container_width=True)
 
 
 def player_game_log(player_names, source_table, team_name, season=None,
