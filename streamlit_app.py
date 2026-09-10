@@ -2792,6 +2792,21 @@ def estimate_possessions(fga, oreb, to, fta) -> float:
 FOUR_FACTOR_WEIGHTS = {"eFG%": 0.40, "TOV%": 0.25, "ORB%": 0.20, "FT Rate": 0.15}
 # Higher is better for three of them; TOV% is the exception (a turnover is a lost possession).
 FOUR_FACTOR_HIGHER_IS_BETTER = {"eFG%": True, "TOV%": False, "ORB%": True, "FT Rate": True}
+# CONFIRMED CHANGE (requested): "Four Factors" is no longer a KTV category of its own. A factor isn't
+# something a coach can call in a huddle -- "get to the free throw line" is. Each factor routes to the KTV
+# category that already covers it, carrying an actionable headline; the weighted table stays underneath as
+# the evidence for that key. (category, headline when the edge is ours, headline when it's theirs).
+FOUR_FACTOR_KTV = {
+    "eFG%":    ("Field Goal Efficiency", "Keep taking the better shots", "Win the shooting battle"),
+    "TOV%":    ("Ball Security", "Keep protecting the ball", "Cut down the turnovers"),
+    "ORB%":    ("Rebounding", "Keep crashing the offensive glass", "Win the offensive glass"),
+    "FT Rate": ("Free Throws", "Get to the free throw line", "Get to the line more than they do"),
+}
+# A factor that lands in a category holding no other keys has to stand on its own, so it needs to be worth
+# a key by itself. This is the weighted gap (edge x Dean Oliver's weight) required for that -- a judgment
+# call, set where the FT Rate example (7.3 x 0.15 = 1.1) clears it and a fractional gap doesn't. Below it,
+# the card only renders where there are already related keys for it to support.
+FOUR_FACTOR_STANDALONE_WEIGHTED = 1.0
 
 
 @st.cache_data(ttl=60)
@@ -7629,7 +7644,19 @@ rather than taking the label's word for it.
                     _ff_rows.append({"factor": _k, "uww": _a, "opp": _b, "edge": _edge, "weight": _w,
                                      "weighted": _edge * _w})
                 if _ff_rows:
-                    _card_data["four_factors"] = pd.DataFrame(_ff_rows)
+                    _ff_df = pd.DataFrame(_ff_rows)
+                    _card_data["four_factors"] = _ff_df
+                    # Which factor decides this game, resolved once here rather than inside the renderer,
+                    # because the answer also picks the KTV category this card is filed under.
+                    _ff_top = _ff_df.loc[_ff_df["weighted"].abs().idxmax()]
+                    _ff_cat, _ff_ours, _ff_theirs = FOUR_FACTOR_KTV.get(
+                        _ff_top["factor"], ("Offensive Efficiency", "Win the four factors", "Win the four factors"))
+                    _card_data["four_factors_top"] = {
+                        "factor": _ff_top["factor"], "category": _ff_cat,
+                        "headline": _ff_ours if _ff_top["edge"] > 0 else _ff_theirs,
+                        "ours": bool(_ff_top["edge"] > 0), "weighted": float(_ff_top["weighted"]),
+                        "uww": float(_ff_top["uww"]), "opp": float(_ff_top["opp"]),
+                    }
         except Exception:
             pass
 
@@ -7848,13 +7875,18 @@ rather than taking the label's word for it.
 
         def _render_four_factors_card(_n):
             _ff = _card_data["four_factors"].copy()
+            _fft = _card_data.get("four_factors_top") or {}
+            # The key is the ACTION the dominant factor points to ("Get to the free throw line"), not the
+            # name of the framework. The framework is what backs it up, so it moves into the line below.
+            _ff_headline = _fft.get("headline", "Four Factors -- What Decides This Game")
             st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
-                        f'{_n}. \u2696\ufe0f Four Factors -- What Decides This Game</span>'
+                        f'{_n}. \u2696\ufe0f {html.escape(_ff_headline)}</span>'
                         f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
             _ff["_abs"] = _ff["weighted"].abs()
             _top = _ff.nlargest(1, "_abs").iloc[0]
             _verb = "our edge" if _top["edge"] > 0 else f"{short_opponent}'s edge"
-            st.markdown(f"Biggest weighted gap: **{_top['factor']}** -- {_verb} "
+            st.markdown(f"Of the four factors, the biggest weighted gap in this matchup is "
+                        f"**{_top['factor']}** -- {_verb} "
                         f"(UWW {_top['uww']:.1f} vs {_top['opp']:.1f}).")
             _ff_show = _ff.assign(
                 Factor=_ff["factor"], UWW=_ff["uww"].round(1),
@@ -8176,7 +8208,9 @@ rather than taking the label's word for it.
             "plays": ("Play Calls", _render_plays_card),
             "plays_similar": ("Play Calls", _render_similar_plays_card),
             "adj_efficiency": ("Offensive Efficiency", _render_adj_efficiency_card),
-            "four_factors": ("Four Factors", _render_four_factors_card),
+            # Category here is only the fallback used when the dominant factor can't be resolved -- the real
+            # one is picked per matchup below, from FOUR_FACTOR_KTV.
+            "four_factors": ("Offensive Efficiency", _render_four_factors_card),
             "scoring_runs_off": ("Offensive Efficiency", _render_scoring_runs_off_card),
             "scoring_runs_def": ("Defensive Efficiency", _render_scoring_runs_def_card),
             "lineup_stints": ("Personnel/Rotation", _render_lineup_stints_card),
@@ -8193,6 +8227,11 @@ rather than taking the label's word for it.
         _cards_by_category = {}
         for _cd_key, (_cd_cat, _cd_renderer) in _CARD_CATEGORY_MAP.items():
             if _cd_key in _card_data:
+                # Four Factors is the one card whose category isn't fixed: it files under whichever factor
+                # actually decides this matchup, so it lands next to the keys about that same thing instead
+                # of in a "Four Factors" category of its own that no key could ever join.
+                if _cd_key == "four_factors":
+                    _cd_cat = (_card_data.get("four_factors_top") or {}).get("category", _cd_cat)
                 _cards_by_category.setdefault(_cd_cat, []).append(_cd_renderer)
 
 
@@ -8645,6 +8684,19 @@ rather than taking the label's word for it.
                     if _side == "UWW":
                         return _SEC_OFF
                 return _default_section(_cat)
+
+            # A factor that lands in a category with no keys of its own would create that category single-
+            # handedly -- which is the thing being fixed here, just under a different name. Allowed only
+            # when the weighted gap is big enough to deserve a key on its own (the FT Rate case: 7.3 x 15%
+            # = 1.1, a real edge worth calling). Otherwise the card is dropped, since there's nothing for
+            # it to support.
+            _fft = _card_data.get("four_factors_top") or {}
+            if _fft and _render_four_factors_card in _cards_by_category.get(_fft["category"], []):
+                _ff_has_keys = bool(_grouped.get(_fft["category"]))
+                if not _ff_has_keys and abs(_fft["weighted"]) < FOUR_FACTOR_STANDALONE_WEIGHTED:
+                    _cards_by_category[_fft["category"]].remove(_render_four_factors_card)
+                    if not _cards_by_category[_fft["category"]]:
+                        del _cards_by_category[_fft["category"]]
 
             # Same category can now appear in two sections with different items in each, so grouping is
             # (section -> category -> items) rather than one section per category.
