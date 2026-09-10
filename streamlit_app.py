@@ -7873,21 +7873,17 @@ rather than taking the label's word for it.
                 f"Raw numbers are shown next to every adjusted one so the adjustment can be argued with.")
             st.markdown("")
 
-        def _render_four_factors_card(_n):
+        @st.dialog("\u2696\ufe0f Four Factors", width="large")
+        def _show_four_factors_dialog():
+            """The full weighted comparison behind the key on the page. In a dialog rather than inline: on
+            the page a coach needs the call and the one number it rests on; the other three factors and the
+            methodology are what you open when you want to argue with it."""
             _ff = _card_data["four_factors"].copy()
             _fft = _card_data.get("four_factors_top") or {}
-            # The key is the ACTION the dominant factor points to ("Get to the free throw line"), not the
-            # name of the framework. The framework is what backs it up, so it moves into the line below.
-            _ff_headline = _fft.get("headline", "Four Factors -- What Decides This Game")
-            st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
-                        f'{_n}. \u2696\ufe0f {html.escape(_ff_headline)}</span>'
-                        f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
-            _ff["_abs"] = _ff["weighted"].abs()
-            _top = _ff.nlargest(1, "_abs").iloc[0]
-            _verb = "our edge" if _top["edge"] > 0 else f"{short_opponent}'s edge"
-            st.markdown(f"Of the four factors, the biggest weighted gap in this matchup is "
-                        f"**{_top['factor']}** -- {_verb} "
-                        f"(UWW {_top['uww']:.1f} vs {_top['opp']:.1f}).")
+            if _fft:
+                _verb = "our edge" if _fft["ours"] else f"{short_opponent}'s edge"
+                st.markdown(f"Biggest weighted gap: **{_fft['factor']}** -- {_verb} "
+                            f"(UWW {_fft['uww']:.1f} vs {_fft['opp']:.1f}).")
             _ff_show = _ff.assign(
                 Factor=_ff["factor"], UWW=_ff["uww"].round(1),
                 **{short_opponent[:18]: _ff["opp"].round(1)},
@@ -7902,6 +7898,22 @@ rather than taking the label's word for it.
                        "throws 15%). Edge is stated so positive always favors UWW -- for turnovers that "
                        "means a LOWER rate. UWW's factors are from their own games; the opponent's are from "
                        "their prior games, so neither is adjusted for who they played.")
+
+        def _render_four_factors_card(_n):
+            _fft = _card_data.get("four_factors_top") or {}
+            # The key is the ACTION the dominant factor points to ("Get to the free throw line"), not the
+            # name of the framework. The framework is what backs it up, so it moves into the line below.
+            _ff_headline = _fft.get("headline", "Four Factors -- What Decides This Game")
+            st.markdown(f'<div style="margin-bottom:2px;"><span style="font-size:0.95rem;font-weight:700;">'
+                        f'{_n}. \u2696\ufe0f {html.escape(_ff_headline)}</span>'
+                        f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
+            if _fft:
+                _verb = "our edge" if _fft["ours"] else f"{short_opponent}'s edge"
+                st.markdown(f"Of the four factors, the biggest weighted gap in this matchup is "
+                            f"**{_fft['factor']}** -- {_verb} "
+                            f"(UWW {_fft['uww']:.1f} vs {_fft['opp']:.1f}).")
+            if st.button("\U0001f4ca Four Factors detail", key=f"four_factors_detail_{_n}"):
+                _show_four_factors_dialog()
             st.markdown("")
 
         # Runs cut both ways, and the two halves belong to different sections: the runs WE go on are an
