@@ -2414,7 +2414,9 @@ def style_matched_ktv_lines(category, style_ctx, short_opponent) -> list:
     # --- Line 1: our own history against this style, split by result ---
     comparable = style_ctx.get("comparable_box")          # UWW per-game totals vs style-alike teams
     outcomes = style_ctx.get("comparable_outcomes") or {}
-    names = style_ctx.get("comparable_names") or []
+    # `comparable_names` (which teams made the style-alike set) is no longer spelled out in the line itself
+    # -- the wording now matches the Tools tab's "Teams like X that we have played" heading, and that tab is
+    # where the actual list of teams lives.
     stats = KTV_CATEGORY_TO_BOX_STATS.get(category, [])
     if comparable is not None and not comparable.empty and stats:
         stat = stats[0]
@@ -2437,14 +2439,14 @@ def style_matched_ktv_lines(category, style_ctx, short_opponent) -> list:
                              f"{abs(_gap):.1f}.")
                 lines.append((
                     "UWW",
-                    f"vs teams like {short_opponent} ({', '.join(names[:3])}): UWW averaged "
+                    f"Teams like {short_opponent} that we have played: UWW averaged "
                     f"<strong>{wins.mean():.1f} {stat}</strong> in the {len(wins)} win(s) and "
                     f"<strong>{losses.mean():.1f}</strong> in the {len(losses)} loss(es)" + _tail
                 ))
             elif len(per_game):
                 lines.append((
                     "UWW",
-                    f"vs teams like {short_opponent} ({', '.join(names[:3])}): UWW averaged "
+                    f"Teams like {short_opponent} that we have played: UWW averaged "
                     f"<strong>{per_game[stat].mean():.1f} {stat}</strong> across {len(per_game)} game(s) "
                     f"({'all wins' if len(wins) == len(per_game) else 'all losses' if len(losses) == len(per_game) else 'mixed results'})."
                 ))
@@ -6768,7 +6770,7 @@ rather than taking the label's word for it.
             "Team Strengths, the full game plan), lineup scouting, and season-stat-based recommendations.\n\n"
             "Each item shows its source, the supporting numbers, and the reasoning behind it. "
             "Categories with a Game Plan button have written game-plan notes matched to that category.\n\n"
-            "**Style evidence** lines (the small grey lines under the key they support) come from the two comparison "
+            "**Style evidence** (the small grey lines under the key they support) comes from the two comparison "
             "panels higher up the page. The first is our own record in that stat against teams who play "
             "like this opponent, split by whether we won. The second is what teams built like us actually "
             "produced in that stat against this opponent, next to what the rest of their opponents "
@@ -8419,7 +8421,7 @@ rather than taking the label's word for it.
                 """
                 return (
                     f'<div style="font-size:0.8rem;color:#666;margin:0 0 6px {"18px" if _inset else "0"};">'
-                    f'<span style="font-style:italic;">Style evidence &middot;</span> {_text}</div>'
+                    f'{_text}</div>'
                 )
 
             def _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
