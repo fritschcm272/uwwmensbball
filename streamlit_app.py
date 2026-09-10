@@ -7945,12 +7945,20 @@ rather than taking the label's word for it.
                 except TypeError:
                     _ff_box = None  # older Streamlit: no container keys, so no CSS hook
                 if _ff_box is not None:
+                    # The keyed class lands on the container's stVerticalBlock, which is a flex COLUMN -- so
+                    # inline-block on its children does nothing until the parent stops being flex. Three
+                    # rules are needed: block the parent, inline the two child element containers (their
+                    # width:100% has to be overridden too), and inline the markdown's own <p>, which is
+                    # still a block box inside its container and would otherwise force the break by itself.
                     st.markdown(
                         f"<style>"
-                        f'.st-key-{_ff_key} [data-testid="stElementContainer"] '
-                        f"{{display:inline-block;vertical-align:middle;width:auto;}}"
+                        f".st-key-{_ff_key}{{display:block !important;}}"
+                        f'.st-key-{_ff_key} > [data-testid="stElementContainer"] '
+                        f"{{display:inline-block !important;vertical-align:middle;width:auto !important;}}"
+                        f'.st-key-{_ff_key} [data-testid="stMarkdownContainer"] p '
+                        f"{{display:inline;margin:0;}}"
                         f".st-key-{_ff_key} button "
-                        f"{{padding:0 0 0 .1rem !important;min-height:0 !important;border:none !important;}}"
+                        f"{{padding:0 0 0 .25rem !important;min-height:0 !important;border:none !important;}}"
                         f"</style>", unsafe_allow_html=True)
                     with _ff_box:
                         st.markdown(_ff_sentence)
