@@ -7932,23 +7932,40 @@ rather than taking the label's word for it.
                         f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
             if _fft:
                 _verb = "our edge" if _fft["ours"] else f"{short_opponent}'s edge"
-                # Sentence back to plain text, with an info icon immediately after it opening the detail
-                # dialog. Two columns because Streamlit renders a button as its own block element -- this
-                # is what keeps the icon on the same row as the sentence rather than under it.
-                # Guarded the same way _ktv_cols does it further down: vertical_alignment needs Streamlit
-                # 1.36+, and an older install should lose the alignment, not the page.
-                try:
-                    _ff_txt_col, _ff_icon_col = st.columns([12, 1], vertical_alignment="center")
-                except TypeError:
-                    _ff_txt_col, _ff_icon_col = st.columns([12, 1])
-                with _ff_txt_col:
-                    st.markdown(f"Of the four factors, the biggest weighted gap in this matchup is "
+                _ff_sentence = (f"Of the four factors, the biggest weighted gap in this matchup is "
                                 f"**{_fft['factor']}** \u2014 {_verb} "
                                 f"(UWW {_fft['uww']:.1f} vs {_fft['opp']:.1f}).")
-                with _ff_icon_col:
-                    if st.button("\u2139\ufe0f", key=f"four_factors_detail_{_n}", type="tertiary",
-                                 help="All four factors, weighted"):
-                        _show_four_factors_dialog()
+                # Truly inline, not a second column: columns put the icon at the far right of the row, which
+                # drifts away from the end of a short sentence. Streamlit renders every element as its own
+                # block, so the only way to sit the icon against the last word is CSS -- a keyed container
+                # (1.43+) gets a .st-key-<key> class, and its children are flipped to inline-block.
+                _ff_key = f"ff_inline_{_n}"
+                try:
+                    _ff_box = st.container(key=_ff_key)
+                except TypeError:
+                    _ff_box = None  # older Streamlit: no container keys, so no CSS hook
+                if _ff_box is not None:
+                    st.markdown(
+                        f"<style>"
+                        f'.st-key-{_ff_key} [data-testid="stElementContainer"] '
+                        f"{{display:inline-block;vertical-align:middle;width:auto;}}"
+                        f".st-key-{_ff_key} button "
+                        f"{{padding:0 0 0 .1rem !important;min-height:0 !important;border:none !important;}}"
+                        f"</style>", unsafe_allow_html=True)
+                    with _ff_box:
+                        st.markdown(_ff_sentence)
+                        if st.button("\u2139\ufe0f", key=f"four_factors_detail_{_n}", type="tertiary",
+                                     help="All four factors, weighted"):
+                            _show_four_factors_dialog()
+                else:
+                    # Fallback: same row, icon at the right edge. Less tidy, but never stacked.
+                    _ff_txt_col, _ff_icon_col = st.columns([12, 1])
+                    with _ff_txt_col:
+                        st.markdown(_ff_sentence)
+                    with _ff_icon_col:
+                        if st.button("\u2139\ufe0f", key=f"four_factors_detail_{_n}", type="tertiary",
+                                     help="All four factors, weighted"):
+                            _show_four_factors_dialog()
             st.markdown("")
 
         # Runs cut both ways, and the two halves belong to different sections: the runs WE go on are an
