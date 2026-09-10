@@ -453,10 +453,29 @@ def build_player_comparison_artifacts(schedule, scout_reports, player_profiles,
         player_similarity = pd.DataFrame()
 
 
+    # CONFIRMED BUG (fixed here): this used .groupby("target_player").first(), and pandas' GroupBy.first()
+    # takes the first NON-NULL value COLUMN BY COLUMN -- it does not return a row. So whenever the top-ranked
+    # candidate had a null in any column, that cell was silently filled from a LOWER-ranked candidate, and
+    # the exported row became a mixture of two different players under one name.
+    #
+    # Observed: Jack Haynes' best match is Korbin Heitzman (Alma, 9.71), whose stat columns are all null
+    # because Alma has no _pbp files to back-fill from. His row in uww_player_comparisons came out carrying
+    # 11.6 PTS / 8.4 REB / 1.8 AST / 46.8 FG% / 58.3 3P% and a stat_similarity of 0.443 -- every one of those
+    # belonging to Vinnie Adjahoungbeta of Elmhurst, Haynes' THIRD-ranked candidate at 9.16, the first one
+    # down the list with numbers in it. The row's own comparison_method still read "scouting notes, no
+    # stats", which is the tell: the label was computed on the real row, the numbers were not.
+    #
+    # head(1) returns the actual top row, nulls included. A missing stat has to stay missing -- the app
+    # renders "no season stats" from it, and a borrowed number reads as a real scouting fact.
+    # kind="stable": similarity_score ties are common (Connor Mosele's top two candidates both score 12.12,
+    # Juvon Crawford's both 3.25), and pandas' default quicksort is not stable, so which of two equally-good
+    # comparables gets exported was down to sort internals and could differ between runs on the same data.
+    # A stable sort breaks ties by player_profiles' own row order instead -- arbitrary, but at least fixed.
     best_matches = (
-        player_similarity.sort_values("similarity_score", ascending=False)
-        .groupby("target_player", as_index=False).first()
-        .sort_values("similarity_score", ascending=False)
+        player_similarity.sort_values("similarity_score", ascending=False, kind="stable")
+        .groupby("target_player", as_index=False).head(1)
+        .sort_values("similarity_score", ascending=False, kind="stable")
+        .reset_index(drop=True)
     ) if not player_similarity.empty else pd.DataFrame()
 
 

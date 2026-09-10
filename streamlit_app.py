@@ -1742,6 +1742,27 @@ def resolve_prior_game_date(display_date, season=None):
     return _resolve_display_date(display_date, season, OPPONENT_GAME_DATE_TABLES)
 
 
+def previous_games_target(game_date_iso, season=None):
+    """The played uww_schedule row matching an ISO date, as (display_date, opponent), or None.
+
+    Used by the Game Detail dialog's "Open in Previous Games" button to check that the clicked game
+    actually HAS a Previous Games entry before offering to jump to it, and to carry the two fields that
+    page identifies a game by. Matching on the resolved ISO date rather than the display string means a
+    home-and-home lands on the right meeting.
+    """
+    if not game_date_iso:
+        return None
+    sched = load_table("uww_schedule", season)
+    if sched.empty or "date" not in sched.columns:
+        return None
+    sched = sched[sched["team"].str.contains("Whitewater", case=False, na=False)] if "team" in sched.columns else sched
+    played = sched[played_mask(sched)]
+    for _, row in played.iterrows():
+        if resolve_game_date(row.get("date"), season) == game_date_iso:
+            return str(row.get("date")), str(row.get("opponent"))
+    return None
+
+
 def played_game_dates(played: pd.DataFrame, season=None) -> set:
     """ISO dates of the games in `played` that actually have parsed data behind them."""
     if played.empty or "date" not in played.columns:
@@ -4729,6 +4750,21 @@ def render_upcoming_game():
             reconstructed from the same shot-by-shot video-tagged data already collected for the shot-
             selection analysis, not a separate live-scrape)."""
             st.markdown(f"#### {_game_label}")
+
+            # Jump to this same game's full write-up on the Previous Games tab. Only offered for UWW's own
+            # games: the opponent's prior games (_source_table="uww_opponent_prior_games_box_score") are
+            # games UWW wasn't in, so Previous Games has no entry for them. Also only when the date actually
+            # resolves to a played row on uww_schedule, so the button can't lead somewhere that isn't there.
+            if _source_table == "uww_pbp_box_score":
+                _gd_pg_target = previous_games_target(_game_date)
+                if _gd_pg_target:
+                    _gd_pg_date, _gd_pg_opp = _gd_pg_target
+                    if st.button("\U0001f4c4 Open in Previous Games", key="gd_open_previous_games",
+                                 use_container_width=True):
+                        st.session_state["_pg_jump"] = {"date": _gd_pg_date, "opponent": _gd_pg_opp}
+                        st.session_state["nav_page"] = "Analytics"
+                        st.session_state["_analytics_open_tab"] = "Previous Games"
+                        st.rerun()
             if not _game_key:
                 # This isn't a name-matching bug -- it means no game in _source_table matched this opponent
                 # at all, which happens when no local/live-scraped PBP data was ever collected for this
@@ -8724,6 +8760,14 @@ rather than taking the label's word for it.
 # Section 2: Previous Games
 # --------------------------------------------------------------------------------------------------------------
 def render_previous_games():
+    # A jump from the Game Detail dialog (Upcoming Game page), popped BEFORE the season selectbox is
+    # created: that page only ever reads the current season, so a target game can't be found while this tab
+    # is still browsing an older one. Writing the widget's own session_state key ahead of the widget call is
+    # what makes the change stick -- passing index= would be ignored once the key exists.
+    _pg_jump = st.session_state.pop("_pg_jump", None)
+    if _pg_jump:
+        st.session_state["previous_games_season"] = "Current Season"
+
     # CONFIRMED CHANGE (requested): season selector scoped to this tab specifically, instead of an app-wide
     # sidebar control -- Upcoming Game and the rest of Analytics always show the current season regardless of
     # what's picked here, since "upcoming game" and current advanced stats don't make sense for a finished
@@ -8768,7 +8812,18 @@ def render_previous_games():
         f"{row['date']} vs {row['opponent']} ({row['outcome']} {int(row['team_score'])}-{int(row['opponent_score'])})"
         for _, row in played.iterrows()
     ]
-    idx = st.selectbox("Select a game", options=range(len(labels)), format_func=lambda i: labels[i])
+    # Land the picker on the game the Game Detail dialog asked for. Matched on date AND opponent, so a
+    # home-and-home selects the meeting that was actually clicked. A target that isn't in this list (a game
+    # that's since fallen outside the pre-upcoming window) leaves the picker wherever it was rather than
+    # silently opening a different game.
+    if _pg_jump:
+        _pg_want = (str(_pg_jump.get("date")), str(_pg_jump.get("opponent")))
+        for _pg_i, (_, _pg_row) in enumerate(played.iterrows()):
+            if (str(_pg_row["date"]), str(_pg_row["opponent"])) == _pg_want:
+                st.session_state["previous_games_pick"] = _pg_i
+                break
+    idx = st.selectbox("Select a game", options=range(len(labels)), format_func=lambda i: labels[i],
+                       key="previous_games_pick")
     game = played.iloc[idx]
     full_opponent = game["opponent"]
     short_opponent = resolve_short_opponent(full_opponent, short_names)
@@ -11220,17 +11275,25 @@ def render_analytics():
     # the first tab) specifically so its own early "return" when box score data is empty only exits ITSELF,
     # not this whole function -- otherwise the other three tabs would never get their content filled in
     # whenever that early-return condition was hit.
-    _tab_analytics, _tab_previous, _tab_team, _tab_players = st.tabs(
-        ["\U0001f4ca Analytics", "Previous Games", "Team", "Players"]
-    )
-    with _tab_analytics:
-        _render_analytics_content()
-    with _tab_previous:
-        render_previous_games()
-    with _tab_team:
-        render_team()
-    with _tab_players:
-        render_players()
+    # Streamlit has no API for selecting a tab programmatically -- st.tabs always opens on the first tab in
+    # the list. So a jump from the Game Detail dialog pins Previous Games to the FRONT of the list, which is
+    # the only way to land the coach on it. The pin is sticky (not popped on first use) because the order
+    # would otherwise revert on the very next rerun and throw them back onto Analytics mid-read; any sidebar
+    # nav click clears it (see render_sidebar_nav).
+    _renderers = {
+        "\U0001f4ca Analytics": _render_analytics_content,
+        "Previous Games": render_previous_games,
+        "Team": render_team,
+        "Players": render_players,
+    }
+    _tab_order = list(_renderers)
+    _pinned = st.session_state.get("_analytics_open_tab")
+    if _pinned in _tab_order:
+        _tab_order.remove(_pinned)
+        _tab_order.insert(0, _pinned)
+    for _tab, _label in zip(st.tabs(_tab_order), _tab_order):
+        with _tab:
+            _renderers[_label]()
 
 
 # --------------------------------------------------------------------------------------------------------------
@@ -11488,6 +11551,9 @@ def render_sidebar_nav():
             type="primary" if st.session_state.nav_page == page else "secondary",
         ):
             st.session_state.nav_page = page
+            # Any deliberate navigation ends the Previous Games pin set by the Game Detail dialog, so the
+            # Analytics tabs go back to their normal order next time that page is opened.
+            st.session_state.pop("_analytics_open_tab", None)
             st.rerun()
 
 
