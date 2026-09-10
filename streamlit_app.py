@@ -2398,6 +2398,12 @@ KTV_STAT_LOWER_IS_BETTER = {"TO", "PF"}
 def style_matched_ktv_lines(category, style_ctx, short_opponent) -> list:
     """Evidence lines for one KTV category, drawn from the two style panels. [] when there is nothing solid.
 
+    Returns (side, html) pairs, not bare strings. CONFIRMED CHANGE (requested): these used to render as
+    standalone blocks stacked at the top of a category, separated from the keys they are evidence FOR. The
+    side tag is what lets the caller file each line under the individual key it actually speaks to -- "UWW"
+    for our own production against this style, "OPP" for what this opponent allowed teams built like us.
+    It matches the per-item _side already detected from each key's own wording.
+
     Every line states its own sample size. A line is omitted rather than hedged when the numbers behind it
     do not exist -- an empty category is honest, a line built on one game presented as a trend is not.
     """
@@ -2429,17 +2435,19 @@ def style_matched_ktv_lines(category, style_ctx, short_opponent) -> list:
                     _helps = (_gap < 0) if stat in KTV_STAT_LOWER_IS_BETTER else (_gap > 0)
                     _tail = (f" \u2014 {'better' if _helps else 'worse'} in the wins by "
                              f"{abs(_gap):.1f}.")
-                lines.append(
+                lines.append((
+                    "UWW",
                     f"vs teams like {short_opponent} ({', '.join(names[:3])}): UWW averaged "
                     f"<strong>{wins.mean():.1f} {stat}</strong> in the {len(wins)} win(s) and "
                     f"<strong>{losses.mean():.1f}</strong> in the {len(losses)} loss(es)" + _tail
-                )
+                ))
             elif len(per_game):
-                lines.append(
+                lines.append((
+                    "UWW",
                     f"vs teams like {short_opponent} ({', '.join(names[:3])}): UWW averaged "
                     f"<strong>{per_game[stat].mean():.1f} {stat}</strong> across {len(per_game)} game(s) "
                     f"({'all wins' if len(wins) == len(per_game) else 'all losses' if len(losses) == len(per_game) else 'mixed results'})."
-                )
+                ))
 
     # --- Line 2: what teams built like us produced against this opponent ---
     like_profiles = style_ctx.get("like_us_profiles")
@@ -2464,18 +2472,20 @@ def style_matched_ktv_lines(category, style_ctx, short_opponent) -> list:
                 # then stops trusting the whole panel over.
                 tail = ("\u2014 in line with the field." if abs(gap) / scale < 0.05
                         else f"\u2014 {'more' if gap > 0 else 'less'} than the field.")
-                lines.append(
+                lines.append((
+                    "OPP",
                     f"Against {short_opponent}, the {len(matched)} team(s) most like us posted "
                     f"<strong>{format_feature(key, matched.mean())}</strong> on \"{label}\" versus "
                     f"<strong>{format_feature(key, field.mean())}</strong> for all {len(field)} of their "
                     f"opponents {tail}"
-                )
+                ))
             elif len(matched):
                 label = OPPONENT_FEATURE_LABELS.get(key, key)
-                lines.append(
+                lines.append((
+                    "OPP",
                     f"Against {short_opponent}, the {len(matched)} team(s) most like us posted "
                     f"<strong>{format_feature(key, matched.mean())}</strong> on \"{label}\"."
-                )
+                ))
     return lines
 
 
@@ -6743,7 +6753,7 @@ rather than taking the label's word for it.
             "Team Strengths, the full game plan), lineup scouting, and season-stat-based recommendations.\n\n"
             "Each item shows its source, the supporting numbers, and the reasoning behind it. "
             "Categories with a Game Plan button have written game-plan notes matched to that category.\n\n"
-            "**Style evidence** lines (purple, at the top of a category) come from the two comparison "
+            "**Style evidence** lines (purple, under the key they support) come from the two comparison "
             "panels higher up the page. The first is our own record in that stat against teams who play "
             "like this opponent, split by whether we won. The second is what teams built like us actually "
             "produced in that stat against this opponent, next to what the rest of their opponents "
@@ -8349,8 +8359,18 @@ rather than taking the label's word for it.
                 return (f' <span style="background:{_bg};color:#fff;font-size:0.62rem;font-weight:700;'
                         f'padding:2px 7px;border-radius:8px;margin-left:6px;">{html.escape(_already)}</span>')
 
+            def _style_evidence_html(_text, _inset=False):
+                """One Style evidence line. `_inset` indents it under the key it belongs to."""
+                return (
+                    f'<div style="border-left:3px solid #4E2A84;background:#faf8fd;border-radius:3px;'
+                    f'padding:6px 10px;margin:4px 0 6px {"18px" if _inset else "0"};font-size:0.8rem;'
+                    f'color:#333;">'
+                    f'<span style="font-weight:700;color:#4E2A84;">Style evidence &middot; </span>'
+                    f'{_text}</div>'
+                )
+
             def _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
-                                 _category=None, _section=None, _stat_line=None):
+                                 _category=None, _section=None, _stat_line=None, _evidence=None):
                 # No per-item category badge -- the section header above already names the category, so
                 # repeating it on every item was redundant. Side (UWW/OPP) badges removed too, per request.
                 # The rating icons share the title's row: a coach reads a key and reacts to it in place,
@@ -8386,6 +8406,12 @@ rather than taking the label's word for it.
                         _parts = [p for p in (_u_part, _o_part) if p]
                     if _parts:
                         st.caption("  |  ".join(_parts))
+                # Style evidence for THIS key, filed here by the caller rather than stacked at the top of
+                # the category. It sits directly under the item's own stat line because it answers the next
+                # question that line raises: this is what we average, and this is what that number has
+                # actually looked like against this kind of team.
+                for _ev_text in (_evidence or []):
+                    st.markdown(_style_evidence_html(_ev_text, _inset=True), unsafe_allow_html=True)
                 if _caption:
                     st.caption(_caption)
                 if _reason:
@@ -8651,19 +8677,32 @@ rather than taking the label's word for it.
                         _show_game_plan_dialog(_cat)
                 _cs_line = _category_stat_line(_cat)
 
-                # Style evidence for this category, drawn from the two comparison panels above. Rendered
-                # BEFORE the individual keys because it frames them: it says what this stat has actually
-                # looked like against this kind of team, which is the context a coach reads the keys in.
-                for _sv_line in style_matched_ktv_lines(_cat, _style_ctx, short_opponent):
-                    st.markdown(
-                        f'<div style="border-left:3px solid #4E2A84;background:#faf8fd;border-radius:3px;'
-                        f'padding:6px 10px;margin:4px 0 6px 0;font-size:0.8rem;color:#333;">'
-                        f'<span style="font-weight:700;color:#4E2A84;">Style evidence &middot; </span>'
-                        f'{_sv_line}</div>', unsafe_allow_html=True)
+                # CONFIRMED CHANGE (requested): style evidence used to render as its own stack of blocks
+                # above the keys, which read as a separate feature sitting in the category rather than as
+                # support for any particular key. Each line is now filed under the key it speaks to, matched
+                # on the side the line is about (our own production vs what this opponent allowed) against
+                # the _side already detected per item. Only the FIRST matching key gets a given line -- a
+                # category with three UWW-side keys should not repeat the same sentence three times.
+                _ev_for_item, _ev_orphans = {}, []
+                for _ev_side, _ev_text in style_matched_ktv_lines(_cat, _style_ctx, short_opponent):
+                    _ev_idx = next((_i for _i, _it in enumerate(_cat_items) if _it[5] == _ev_side), None)
+                    if _ev_idx is None:
+                        # No key on that side: a BOTH/undetected key covers both halves, so it can carry it.
+                        _ev_idx = next((_i for _i, _it in enumerate(_cat_items)
+                                        if _it[5] not in ("UWW", "OPP")), None)
+                    if _ev_idx is None:
+                        # Nothing to attach to at all (a category holding only game-plan cards, or no keys
+                        # yet). Better shown loose at the top than dropped -- it's still real evidence.
+                        _ev_orphans.append(_ev_text)
+                    else:
+                        _ev_for_item.setdefault(_ev_idx, []).append(_ev_text)
+                for _sv_line in _ev_orphans:
+                    st.markdown(_style_evidence_html(_sv_line), unsafe_allow_html=True)
 
                 for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_cat_items, start=1):
                     _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
-                                     _category=_cat, _section=_sec_key, _stat_line=_cs_line)
+                                     _category=_cat, _section=_sec_key, _stat_line=_cs_line,
+                                     _evidence=_ev_for_item.get(_n - 1))
 
                 # Full Game Plan Recommendation card(s) tagged to this same category -- continuing the
                 # SAME numbered-item formatting as the keys above (numbered header, source badge, no
