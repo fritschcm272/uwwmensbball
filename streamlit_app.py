@@ -7932,15 +7932,23 @@ rather than taking the label's word for it.
                         f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
             if _fft:
                 _verb = "our edge" if _fft["ours"] else f"{short_opponent}'s edge"
-                # The sentence itself is the link into the detail dialog, instead of a separate button
-                # underneath it. type="tertiary" is Streamlit's link-styled button -- no border, no fill,
-                # reads as a hyperlink -- which is the only way to make clickable text run a callback;
-                # a real <a> in st.markdown can't open a dialog.
-                if st.button(f"Of the four factors, the biggest weighted gap in this matchup is "
-                             f"**{_fft['factor']}** \u2014 {_verb} "
-                             f"(UWW {_fft['uww']:.1f} vs {_fft['opp']:.1f}).",
-                             key=f"four_factors_detail_{_n}", type="tertiary"):
-                    _show_four_factors_dialog()
+                # Sentence back to plain text, with an info icon immediately after it opening the detail
+                # dialog. Two columns because Streamlit renders a button as its own block element -- this
+                # is what keeps the icon on the same row as the sentence rather than under it.
+                # Guarded the same way _ktv_cols does it further down: vertical_alignment needs Streamlit
+                # 1.36+, and an older install should lose the alignment, not the page.
+                try:
+                    _ff_txt_col, _ff_icon_col = st.columns([12, 1], vertical_alignment="center")
+                except TypeError:
+                    _ff_txt_col, _ff_icon_col = st.columns([12, 1])
+                with _ff_txt_col:
+                    st.markdown(f"Of the four factors, the biggest weighted gap in this matchup is "
+                                f"**{_fft['factor']}** \u2014 {_verb} "
+                                f"(UWW {_fft['uww']:.1f} vs {_fft['opp']:.1f}).")
+                with _ff_icon_col:
+                    if st.button("\u2139\ufe0f", key=f"four_factors_detail_{_n}", type="tertiary",
+                                 help="All four factors, weighted"):
+                        _show_four_factors_dialog()
             st.markdown("")
 
         # Runs cut both ways, and the two halves belong to different sections: the runs WE go on are an
