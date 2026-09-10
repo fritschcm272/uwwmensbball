@@ -2431,18 +2431,24 @@ def style_matched_ktv_lines(category, style_ctx, short_opponent) -> list:
                 # Only claim a direction when there is one worth claiming. A 5% relative gap on a
                 # two-or-three-game split is not a finding, and "lower in the wins" printed over two
                 # identical averages is worse than saying nothing -- it invents a key out of noise.
+                #
+                # CONFIRMED CHANGE (requested): a sub-threshold gap used to still print the averages with
+                # "-- no meaningful split either way on this sample" appended. That's a line that takes up
+                # space to report a non-finding, and it reads as evidence at a glance even though it says
+                # the opposite. Nothing is shown at all now; the key stands on its own.
                 if abs(_gap) / _scale < 0.05:
-                    _tail = " \u2014 no meaningful split either way on this sample."
+                    _tail = None
                 else:
                     _helps = (_gap < 0) if stat in KTV_STAT_LOWER_IS_BETTER else (_gap > 0)
                     _tail = (f" \u2014 {'better' if _helps else 'worse'} in the wins by "
                              f"{abs(_gap):.1f}.")
-                lines.append((
-                    "UWW",
-                    f"Teams like {short_opponent} that we have played: UWW averaged "
-                    f"<strong>{wins.mean():.1f} {stat}</strong> in the {len(wins)} win(s) and "
-                    f"<strong>{losses.mean():.1f}</strong> in the {len(losses)} loss(es)" + _tail
-                ))
+                if _tail:
+                    lines.append((
+                        "UWW",
+                        f"Teams like {short_opponent} that we have played: UWW averaged "
+                        f"<strong>{wins.mean():.1f} {stat}</strong> in the {len(wins)} win(s) and "
+                        f"<strong>{losses.mean():.1f}</strong> in the {len(losses)} loss(es)" + _tail
+                    ))
             elif len(per_game):
                 lines.append((
                     "UWW",
@@ -2472,15 +2478,18 @@ def style_matched_ktv_lines(category, style_ctx, short_opponent) -> list:
                 # Same rule as the split above: no direction claimed when there isn't one. Two identical
                 # numbers reported as "less than the field" is the kind of thing a coach notices once and
                 # then stops trusting the whole panel over.
-                tail = ("\u2014 in line with the field." if abs(gap) / scale < 0.05
-                        else f"\u2014 {'more' if gap > 0 else 'less'} than the field.")
-                lines.append((
-                    "OPP",
-                    f"Against {short_opponent}, the {len(matched)} team(s) most like us posted "
-                    f"<strong>{format_feature(key, matched.mean())}</strong> on \"{label}\" versus "
-                    f"<strong>{format_feature(key, field.mean())}</strong> for all {len(field)} of their "
-                    f"opponents {tail}"
-                ))
+                # Same treatment as the split above: a non-finding isn't shown at all. "In line with the
+                # field" was this line's version of "no meaningful split" -- it occupies a line to report
+                # that there's nothing here.
+                if abs(gap) / scale >= 0.05:
+                    tail = f"\u2014 {'more' if gap > 0 else 'less'} than the field."
+                    lines.append((
+                        "OPP",
+                        f"Against {short_opponent}, the {len(matched)} team(s) most like us posted "
+                        f"<strong>{format_feature(key, matched.mean())}</strong> on \"{label}\" versus "
+                        f"<strong>{format_feature(key, field.mean())}</strong> for all {len(field)} of their "
+                        f"opponents {tail}"
+                    ))
             elif len(matched):
                 label = OPPONENT_FEATURE_LABELS.get(key, key)
                 lines.append((
