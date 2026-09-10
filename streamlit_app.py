@@ -1841,7 +1841,67 @@ def prior_opponent_shortnames(box: pd.DataFrame, played: pd.DataFrame) -> set:
     return {resolve_short_opponent(_po, names) for _po in played["opponent"].dropna()} - {None}
 
 
-def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
+def _display_month_day(value):
+    """'Sat, Feb 28' | 'Feb 28' | '2026-02-28' -> (2, 28); None if the value carries no date at all.
+
+    Deliberately NOT resolve_game_date()/resolve_prior_game_date(): those turn a display date into a full ISO
+    date by looking the month/day up in a table that knows the season. Here both sides being compared are
+    display dates for the SAME game (uww_schedule's and uww_opponent_schedules'), so month/day is already
+    enough to match on and no year has to be inferred at all.
+    """
+    text = str(value).strip()
+    if not text or text.lower() in ("nan", "none"):
+        return None
+    already = iso_dates([text]).iloc[0]
+    if pd.notna(already):
+        return int(already[5:7]), int(already[8:10])
+    m = re.match(r"^(?:\w{3},\s+)?(\w{3})\w*\s+(\d{1,2})$", text)
+    if not m:
+        return None
+    month = _MONTH_ABBR.get(m.group(1))
+    return (month, int(m.group(2))) if month else None
+
+
+def _pre_uww_games(opp_games: pd.DataFrame, game_date=None) -> pd.DataFrame:
+    """The rows on one opponent's own schedule (uww_opponent_schedules, already filtered to that opponent)
+    that fall BEFORE a specific meeting with UWW. `game_date` is that meeting's display date, as spelled on
+    UWW's own schedule ("Sat, Feb 28").
+
+    CONFIRMED BUG (fixed here): all three callers below used to `break` on the FIRST "vs Whitewater" row on
+    the opponent's schedule, so for any LATER meeting they reported the numbers entering the first one.
+    Verified against real data, not inferred: UW-La Crosse play UWW three times (Jan 14 / Feb 4 / Feb 28) and
+    the Previous Games banner for Feb 28 showed "11-3 entering" -- their record on Jan 14, over 14 games.
+    Correct is 21-6 over 27. Seven WIAC opponents in the current file are multi-meeting (La Crosse and
+    Platteville three times, Eau Claire / Oshkosh / River Falls / Stevens Point / Stout twice), and the
+    undercount is large: Oshkosh anchored at 11 games instead of 18.
+
+    That mattered in two places. On Previous Games it's the "N-N entering" line under the opponent's score.
+    On Upcoming Game it's also the per-game DIVISOR (get_opponent_games_played) that turns the opponent's
+    season-cumulative AST/STL/BLK into per-game rates, so a stale anchor inflated those rates by up to ~60%.
+
+    Assumes each opponent's rows are stored in chronological order -- true for every opponent in the current
+    file, and checked before relying on it, but worth re-checking if the parser's schedule export changes,
+    since the slice below is positional rather than date-sorted.
+    """
+    target = _display_month_day(game_date)
+    date_col = game_date_col(opp_games)
+    meetings = [
+        (i, _display_month_day(r.get(date_col)) if date_col else None, r.get("outcome"))
+        for i, r in opp_games.iterrows()
+        if "whitewater" in str(r.get("vs_opponent", "")).lower() or "uww" in str(r.get("vs_opponent", "")).lower()
+    ]
+    if not meetings:
+        return opp_games
+    uww_idx = next((i for i, month_day, _ in meetings if target is not None and month_day == target), None)
+    if uww_idx is None:
+        # No usable date to match on. Prefer an unplayed meeting (that's the upcoming one); otherwise anchor
+        # on the LAST meeting rather than the first, since a caller with no date is asking "as of now," which
+        # is after every meeting already played.
+        uww_idx = next((i for i, _, outcome in meetings if pd.isna(outcome)), meetings[-1][0])
+    return opp_games.loc[:uww_idx].iloc[:-1]
+
+
+def get_opponent_games_played(short_opponent: str, default: int = 5, game_date=None) -> int:
     """Count of games played by the opponent, before their matchup against UWW -- used to convert an
     opponent's season-TOTAL stats into per-game rates.
 
@@ -1893,19 +1953,13 @@ def get_opponent_games_played(short_opponent: str, default: int = 5) -> int:
     opp_games = opp_sched[opp_sched["opponent"] == short_opponent]
     if opp_games.empty:
         return default
-    uww_idx = None
-    for i, r in opp_games.iterrows():
-        vs = str(r.get("vs_opponent", "")).lower()
-        if "whitewater" in vs or "uww" in vs:
-            uww_idx = i
-            break
-    pre_uww = opp_games.loc[:uww_idx].iloc[:-1] if uww_idx is not None else opp_games
+    pre_uww = _pre_uww_games(opp_games, game_date)
     games = pre_uww[pre_uww["outcome"].notna()]
     n = len(games)
     return n if n > 0 else default
 
 
-def opponent_prior_games_scheduled(short_opponent: str):
+def opponent_prior_games_scheduled(short_opponent: str, game_date=None):
     """How many games this opponent actually PLAYED before facing UWW, straight from their own schedule --
     or None when their schedule hasn't been parsed.
 
@@ -1921,18 +1975,12 @@ def opponent_prior_games_scheduled(short_opponent: str):
     opp_games = opp_sched[opp_sched["opponent"] == short_opponent]
     if opp_games.empty:
         return None
-    uww_idx = None
-    for i, r in opp_games.iterrows():
-        vs = str(r.get("vs_opponent", "")).lower()
-        if "whitewater" in vs or "uww" in vs:
-            uww_idx = i
-            break
-    pre_uww = opp_games.loc[:uww_idx].iloc[:-1] if uww_idx is not None else opp_games
+    pre_uww = _pre_uww_games(opp_games, game_date)
     n = len(pre_uww[pre_uww["outcome"].notna()]) if "outcome" in pre_uww.columns else len(pre_uww)
     return n or None
 
 
-def get_opponent_entering_record(short_opponent: str, season: str = None) -> tuple:
+def get_opponent_entering_record(short_opponent: str, season: str = None, game_date=None) -> tuple:
     """The opponent's own W-L record and current streak from the games on THEIR schedule (uww_opponent_schedules)
     that came before their matchup against UWW -- i.e. what their record looked like entering that specific
     game. Returns (record_str, streak_str), each "" if it can't be determined (e.g. no opponent-schedule data
@@ -1943,13 +1991,10 @@ def get_opponent_entering_record(short_opponent: str, season: str = None) -> tup
     latter passes its own selected season here (see load_table()) so a past-season game's "entering" record
     is read from that season's own uww_opponent_schedules, not the current season's.
 
-    CAVEAT: if this opponent played UWW more than once this season (e.g. a conference home-and-home), this
-    always anchors on their FIRST "vs Whitewater"-labeled row on uww_opponent_schedules -- so for a second
-    meeting, the record/streak shown here would actually be "entering the FIRST meeting," not the second.
-    True multi-meeting scheduling is rare enough in this data that a date-based match wasn't worth the added
-    fragility (uww_opponent_schedules' game_date is the same year-less "Fri, Nov 14"-style display string as
-    everywhere else in this app, which can't be safely sorted across the season's Dec->Jan boundary without
-    the same year-inference logic the parser itself uses).
+    Multi-meeting opponents (conference home-and-homes, plus WIAC tournament rematches) are handled by
+    passing `game_date` -- the meeting's display date from UWW's own schedule -- through to _pre_uww_games(),
+    which anchors on THAT meeting instead of the opponent's first one. The old caveat here said true
+    multi-meeting scheduling was rare enough not to bother with; it isn't. See _pre_uww_games' docstring.
     """
     if not short_opponent:
         return "", ""
@@ -1957,20 +2002,16 @@ def get_opponent_entering_record(short_opponent: str, season: str = None) -> tup
     opp_games = opp_sched[opp_sched["opponent"] == short_opponent] if not opp_sched.empty else pd.DataFrame()
     if opp_games.empty:
         return "", ""
-    uww_idx = None
-    for i, r in opp_games.iterrows():
-        vs = str(r.get("vs_opponent", "")).lower()
-        if "whitewater" in vs or "uww" in vs:
-            uww_idx = i
-            break
-    pre_uww = opp_games.loc[:uww_idx].iloc[:-1] if uww_idx is not None else opp_games
+    pre_uww = _pre_uww_games(opp_games, game_date)
     if pre_uww.empty:
         return "", ""
     ow = int((pre_uww["outcome"] == "W").sum())
     ol = int((pre_uww["outcome"] == "L").sum())
     record_str = f"{ow}-{ol}"
     streak_count, streak_type = 0, ""
-    for out in pre_uww["outcome"].iloc[::-1]:
+    # dropna() because a scheduled-but-unplayed row (an exhibition with no result parsed, e.g. Platteville's
+    # Oct 29 entry) would otherwise become the streak's `streak_type` and render as a "0-game loss streak".
+    for out in pre_uww["outcome"].dropna().iloc[::-1]:
         if streak_count == 0:
             streak_type = out
             streak_count = 1
@@ -4177,7 +4218,7 @@ def render_upcoming_game():
     # and only fall back to ITS record string if the schedule's own `record` field was empty.
     opp_streak_str = ""
     if short_opponent:
-        _entering_record, opp_streak_str = get_opponent_entering_record(short_opponent)
+        _entering_record, opp_streak_str = get_opponent_entering_record(short_opponent, game_date=game_date)
         if not opp_record:
             opp_record = _entering_record
 
@@ -8767,7 +8808,9 @@ def render_previous_games():
 
     # Opponent's own record entering this game (see get_opponent_entering_record's docstring for the
     # multi-meeting caveat) -- previously never computed at all on this page, unlike UWW's own record above.
-    _opp_record_pg, _opp_streak_pg = get_opponent_entering_record(short_opponent, _pg_season) if short_opponent else ("", "")
+    _opp_record_pg, _opp_streak_pg = get_opponent_entering_record(
+        short_opponent, _pg_season, game_date=game["date"]
+    ) if short_opponent else ("", "")
     _opp_entering_html = f'<div style="color:#9DAAAC;font-size:0.9rem;margin-top:2px;">{html.escape(_opp_record_pg)} entering</div>' if _opp_record_pg else ""
 
     outcome_color = "#2e7d32" if outcome == "W" else "#c62828"
