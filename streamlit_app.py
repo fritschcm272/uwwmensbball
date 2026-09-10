@@ -2203,7 +2203,7 @@ KTV_CATEGORY_REFERENCE = {
     "Fouls / Discipline": {"keywords": "foul, fouls, wall up, drawing fouls, discipline, reach, reaching, hand check", "stats": "PF"},
     "Ball Movement / Assists": {"keywords": "assist, assists, ball movement, share the ball, playmaking, playmaker, create, extra pass, hockey assist, swing the ball", "stats": "AST"},
     "Paint Protection / Blocks": {"keywords": "block, blocks, protect the rim, paint protection, rim protection, shot blocking, contest at the rim, pack the paint, pack & protect, pack and protect, protect the paint, paint defense, build a wall, building a wall, wall around the paint, wall off, post defense, physicality, physical defense, strong gap, gap/pack, our paint, must be our paint, no easy paint, limit their scoring, limit their scoring @ the rim, keep them out of the paint", "stats": "BLK"},
-    "Perimeter Defense / Ball Pressure/ Create Turnovers": {"keywords": "steal, steals, press capable, full court press, force turnovers, force to's, forcing turnovers, generate turnovers, turnover trigger, turnover triggers, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure, ball pressure, deny, deflection, deflections, contain, containing, squeeze, squeeze & limit, lock up, possession battle, win the possession battle, turnover battle, their turnovers", "stats": "STL"},
+    "Perimeter Defense / Ball Pressure/ Create Turnovers": {"keywords": "steal, steals, press capable, full court press, force turnovers, force to's, forcing turnovers, generate turnovers, turnover trigger, turnover triggers, guard your yard, keep the ball in front, guard 1 on 1, early gap, help side, active hands, physical & aggressive on ball, on ball defensively, pressure, ball pressure, deny, deflection, deflections, contain, containing, squeeze, squeeze & limit, lock up, possession battle, win the possession battle, turnover battle, their turnovers, ball screen defense, ball-screen defense, screen defense, drop coverage, drop back, hedge, hard hedge, blitz, blitzing, ice the ball screen, pick and roll defense, pnr defense, dho defense, switch everything", "stats": "STL"},
     "Scoring Inside": {"keywords": "dominate the paint, attack the paint, live in the paint, attack the basket, scoring at the rim, get to rim, attack the rim, get to the rim, post up, post-up, paint touches, drive, drives, downhill, finish at the rim, attacking the paint, attacking the rim, attacking the basket, attacking inside, attack inside, inside-out, inside out, post play, scoring in the paint, points in the paint, paint points, payback inside", "stats": "FG2M, FG2A, FG2%"},
     "Field Goal Efficiency": {"keywords": "field goal, field goal%, fg%, shooting percentage, efficient shooting, efficiency, good shots, quality shots", "stats": "FGM-A, FG%"},
     "Defensive Efficiency": {"keywords": "high-volume, high volume, funnel, funneling, take away, most efficient, shot profile, shot diet, inefficient looks, worst looks, multiple efforts, multiple effort, never stop, multiple scorers, multiple threats, multiple weapons, multiple options, scoring options, scoring threats, balanced scoring, scoring balance, scoring depth, several scorers, many scorers, deep scoring, double-digit scorers, double digit scorers, leading scorer, top scorer, primary scorer, go-to scorer, go to scorer, versatile scorers, score from anywhere, score at all three levels, three levels, three-level scorer, three level scorer, their scorers, their weapons, set play, set plays, set piece, set pieces, counters, counter action, counter actions, wrinkle, wrinkles, playbook, play call, play calls, scripted, after timeout, out of bounds play, out of bounds plays, blob, slob, baseline out of bounds, sideline out of bounds, horns, stagger, staggered screen, pin down, pindown, down screen, back screen, flare screen, flex, ram screen, ball screen, ball screens, ball screen action, ball screen actions, pick and roll, pick-and-roll, pick and pop, pick-and-pop, dribble handoff, dho, motion offense, continuity, action, actions, action sets, screening, screening action, switch all screens, switch everything, switching off ball, create advantages, creating advantages, advantage creation, advantages, capable of carrying, carrying offense, carry the offense, main scorer, primary option, focal point, go-to guy, big scoring games, capable of big games, capable of big scoring", "stats": "Opp FG% by shot type"},
@@ -7285,6 +7285,24 @@ rather than taking the label's word for it.
             "Three-Point Shooting": r"\bthree\b(?=\s+(?:double|level|scorer|scorers|players|player|guards|guard|starters|starter|bigs|kids|of\b))|\bthree\s+levels?\b|\bthree[- ]level\b",
         }
 
+        # Some phrases only become false positives in the presence of OTHER words in the same item, which a
+        # plain per-category scrub can't express: "the FT line" is a Free Throws phrase in "get to the FT
+        # line" and a spot on the floor in "Drop Coverage- Big back by FT Line". The difference isn't in the
+        # phrase, it's in the sentence around it. Each entry is (context pattern, phrase to scrub if that
+        # context is present).
+        _CATEGORY_CONTEXT_EXCLUSIONS = {
+            # CONFIRMED BUG (fixed here): 'Drop Coverage- Big back by FT Line ("Black 4")' was filed under
+            # Free Throws, because "ft line" is a Free Throws keyword. It's a ball-screen coverage
+            # instruction -- the FT line is where the big drops TO, and nothing about it concerns shooting
+            # or drawing free throws. Scrubbed only when ball-screen coverage vocabulary is present, so
+            # "get to the foul line" and "attack for and-ones" are untouched.
+            "Free Throws": [(
+                r"\b(?:drop\s+coverage|ball[- ]screen|ball\s+screen|dho|hand[- ]?off|hedge|hedging|blitz|"
+                r"blitzing|ice|icing|pick[- ]and[- ]roll|pnr|switch|switching|coverage)\b",
+                r"\b(?:ft|free[- ]throw|foul)\s+line\b",
+            )],
+        }
+
         def _match_categories(text):
             text_lower = str(text).lower()
             matched = []
@@ -7293,6 +7311,9 @@ rather than taking the label's word for it.
                     continue
                 _excl = _CATEGORY_EXCLUSIONS.get(_cat)
                 _scrubbed = re.sub(_excl, " ", text_lower) if _excl else text_lower
+                for _ctx_pat, _scrub_pat in _CATEGORY_CONTEXT_EXCLUSIONS.get(_cat, []):
+                    if re.search(_ctx_pat, _scrubbed):
+                        _scrubbed = re.sub(_scrub_pat, " ", _scrubbed)
                 for _kw in [_kw.strip() for _kw in _details["keywords"].split(",")]:
                     if _kw and _keyword_matches(_kw, _scrubbed):
                         if _cat not in matched:
@@ -7911,11 +7932,15 @@ rather than taking the label's word for it.
                         f'{_source_badge_html("Data-Driven")}</div>', unsafe_allow_html=True)
             if _fft:
                 _verb = "our edge" if _fft["ours"] else f"{short_opponent}'s edge"
-                st.markdown(f"Of the four factors, the biggest weighted gap in this matchup is "
-                            f"**{_fft['factor']}** -- {_verb} "
-                            f"(UWW {_fft['uww']:.1f} vs {_fft['opp']:.1f}).")
-            if st.button("\U0001f4ca Four Factors detail", key=f"four_factors_detail_{_n}"):
-                _show_four_factors_dialog()
+                # The sentence itself is the link into the detail dialog, instead of a separate button
+                # underneath it. type="tertiary" is Streamlit's link-styled button -- no border, no fill,
+                # reads as a hyperlink -- which is the only way to make clickable text run a callback;
+                # a real <a> in st.markdown can't open a dialog.
+                if st.button(f"Of the four factors, the biggest weighted gap in this matchup is "
+                             f"**{_fft['factor']}** \u2014 {_verb} "
+                             f"(UWW {_fft['uww']:.1f} vs {_fft['opp']:.1f}).",
+                             key=f"four_factors_detail_{_n}", type="tertiary"):
+                    _show_four_factors_dialog()
             st.markdown("")
 
         # Runs cut both ways, and the two halves belong to different sections: the runs WE go on are an
