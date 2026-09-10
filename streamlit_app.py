@@ -8527,7 +8527,20 @@ rather than taking the label's word for it.
                     else:
                         _parts = [p for p in (_u_part, _o_part) if p]
                     if _parts:
-                        st.caption("  |  ".join(_parts))
+                        # Hover explanation for whatever stat codes the line actually contains -- "UWW: 57.4
+                        # TS%" is only readable if you already know TS%, and the definition is already
+                        # written down in STAT_GLOSSARY. Scope note included because the number is UWW's own
+                        # games BEFORE the upcoming one, not a full-season or league figure.
+                        _sl_text = "  |  ".join(_parts)
+                        _sl_keys = [_k for _k in STAT_GLOSSARY if _k.lower() in _sl_text.lower()]
+                        _sl_help = glossary_help_text(_sl_keys) if _sl_keys else ""
+                        if _sl_help:
+                            _sl_help += ("\n\nUWW numbers are from our own games played before this "
+                                         "upcoming game; opponent numbers are from their prior games.")
+                        try:
+                            st.caption(_sl_text, help=_sl_help or None)
+                        except TypeError:
+                            st.caption(_sl_text)  # older Streamlit: no help on caption
                 # Style evidence for THIS key, filed here by the caller rather than stacked at the top of
                 # the category. It sits directly under the item's own stat line because it answers the next
                 # question that line raises: this is what we average, and this is what that number has
@@ -8812,6 +8825,36 @@ rather than taking the label's word for it.
                         _show_game_plan_dialog(_cat)
                 _cs_line = _category_stat_line(_cat)
 
+                # CONFIRMED CHANGE (requested): the category's stat line used to render under EVERY key in
+                # the category, so "UWW: 57.4 TS%" appeared four times in a four-key category -- the same
+                # number repeated until it reads as decoration rather than evidence. Each half of the line
+                # now goes to exactly ONE key: the one whose own wording matches the most of this
+                # category's keywords, which is the closest available proxy for "most related to this
+                # stat". Ties go to the higher-ranked key (they're already in priority order). The UWW half
+                # and the opponent half are placed independently, so they can land on different keys.
+                def _stat_relevance(_item):
+                    _sr_txt = " ".join(str(_p) for _p in (_item[1], _item[2], _item[3]) if _p).lower()
+                    _sr_kws = [_k.strip() for _k
+                               in KTV_CATEGORY_REFERENCE.get(_cat, {}).get("keywords", "").split(",")
+                               if _k.strip()]
+                    return sum(1 for _k in _sr_kws if _keyword_matches(_k, _sr_txt))
+
+                _stat_for_item = {}
+                if _cs_line and _cat_items:
+                    for _half_i, _half in enumerate(_cs_line):
+                        if not _half:
+                            continue
+                        _want = "UWW" if _half_i == 0 else "OPP"
+                        # A key on the other side can't carry this half; a BOTH/undetected key can.
+                        _cands = [_i for _i, _it in enumerate(_cat_items)
+                                  if _it[5] == _want or _it[5] not in ("UWW", "OPP")]
+                        if not _cands:
+                            continue
+                        _best = max(_cands, key=lambda _i: (_stat_relevance(_cat_items[_i]), -_i))
+                        _prev = _stat_for_item.get(_best, (None, None))
+                        _stat_for_item[_best] = ((_half, _prev[1]) if _half_i == 0
+                                                 else (_prev[0], _half))
+
                 # CONFIRMED CHANGE (requested): style evidence used to render as its own stack of blocks
                 # above the keys, which read as a separate feature sitting in the category rather than as
                 # support for any particular key. Each line is now filed under the key it speaks to, matched
@@ -8839,7 +8882,8 @@ rather than taking the label's word for it.
 
                 for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_cat_items, start=1):
                     _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
-                                     _category=_cat, _section=_sec_key, _stat_line=_cs_line,
+                                     _category=_cat, _section=_sec_key,
+                                     _stat_line=_stat_for_item.get(_n - 1),
                                      _evidence=_ev_for_item.get(_n - 1))
 
                 # Full Game Plan Recommendation card(s) tagged to this same category -- continuing the
