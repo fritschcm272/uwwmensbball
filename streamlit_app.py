@@ -10455,7 +10455,12 @@ def render_players():
                 usage = compute_usage_rate(totals, player_minutes_total, _adv_scope, team_minutes_total)
                 _adv_rows.append({
                     "Player": player_name, "GP": n_pg, "TS%": round(ts_pct, 1),
-                    "Game Score": round(avg_game_score, 1), "Usage%": round(usage, 1) if mpg else "-",
+                    # None, not "-": a string sentinel in an otherwise numeric column makes the whole column
+                    # dtype object, which Arrow can't serialize ("Could not convert '-' with type str: tried
+                    # to convert to double"). Streamlit then falls back to a coerced copy and logs a
+                    # traceback on every rerun. None renders as an empty cell, which is what the caption
+                    # below already promises, and keeps the column sortable as a number.
+                    "Game Score": round(avg_game_score, 1), "Usage%": round(usage, 1) if mpg else None,
                 })
             _adv_df = pd.DataFrame(_adv_rows).sort_values("Game Score", ascending=False)
             st.dataframe(_adv_df, hide_index=True, use_container_width=True)
@@ -10642,8 +10647,12 @@ def render_players():
                 subset["comparable_player"] = subset["name"].map(
                     lambda n: f"{comp_lookup[n]['comp_player']} ({comp_lookup[n]['comp_opponent']})" if n in comp_lookup else ""
                 )
+                # None rather than "": similarity_score is a float, and an empty-string fallback for players
+                # with no comparison mixes str and float in one column, which Arrow rejects ("Expected
+                # bytes, got a 'float' object"). The text columns below keep "" -- they're strings either
+                # way.
                 subset["similarity"] = subset["name"].map(
-                    lambda n: comp_lookup[n]["similarity"] if n in comp_lookup else ""
+                    lambda n: safe_float(comp_lookup[n]["similarity"]) if n in comp_lookup else None
                 )
                 subset["shared_style"] = subset["name"].map(
                     lambda n: comp_lookup[n]["shared_notes"] if n in comp_lookup else ""
