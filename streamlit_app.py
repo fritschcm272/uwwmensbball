@@ -6768,7 +6768,7 @@ rather than taking the label's word for it.
             "Team Strengths, the full game plan), lineup scouting, and season-stat-based recommendations.\n\n"
             "Each item shows its source, the supporting numbers, and the reasoning behind it. "
             "Categories with a Game Plan button have written game-plan notes matched to that category.\n\n"
-            "**Style evidence** lines (purple, under the key they support) come from the two comparison "
+            "**Style evidence** lines (the small grey lines under the key they support) come from the two comparison "
             "panels higher up the page. The first is our own record in that stat against teams who play "
             "like this opponent, split by whether we won. The second is what teams built like us actually "
             "produced in that stat against this opponent, next to what the rest of their opponents "
@@ -8410,14 +8410,16 @@ rather than taking the label's word for it.
                 return (f' <span style="background:{_bg};color:#fff;font-size:0.62rem;font-weight:700;'
                         f'padding:2px 7px;border-radius:8px;margin-left:6px;">{html.escape(_already)}</span>')
 
-            def _style_evidence_html(_text, _inset=False):
-                """One Style evidence line. `_inset` indents it under the key it belongs to."""
+            def _style_evidence_html(_text, _inset=True):
+                """One Style evidence line, as a plain dimmed line rather than a bordered callout.
+
+                CONFIRMED CHANGE (requested): the boxed purple treatment gave these more weight on the page
+                than the key they support, which is backwards -- they're the supporting evidence, not the
+                call. Same text, same bolded numbers, no box.
+                """
                 return (
-                    f'<div style="border-left:3px solid #4E2A84;background:#faf8fd;border-radius:3px;'
-                    f'padding:6px 10px;margin:4px 0 6px {"18px" if _inset else "0"};font-size:0.8rem;'
-                    f'color:#333;">'
-                    f'<span style="font-weight:700;color:#4E2A84;">Style evidence &middot; </span>'
-                    f'{_text}</div>'
+                    f'<div style="font-size:0.8rem;color:#666;margin:0 0 6px {"18px" if _inset else "0"};">'
+                    f'<span style="font-style:italic;">Style evidence &middot;</span> {_text}</div>'
                 )
 
             def _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
@@ -8755,13 +8757,16 @@ rather than taking the label's word for it.
                         _ev_idx = next((_i for _i, _it in enumerate(_cat_items)
                                         if _it[5] not in ("UWW", "OPP")), None)
                     if _ev_idx is None:
-                        # Nothing to attach to at all (a category holding only game-plan cards, or no keys
-                        # yet). Better shown loose at the top than dropped -- it's still real evidence.
+                        # No key items in this category at all -- it's carried by a card instead (the
+                        # rerouted Four Factors key is exactly this case). The card is the first key here,
+                        # so the evidence belongs under IT, not stacked above the category as a headline of
+                        # its own. Only a category with neither keys nor cards leaves a line loose.
                         _ev_orphans.append(_ev_text)
                     else:
                         _ev_for_item.setdefault(_ev_idx, []).append(_ev_text)
-                for _sv_line in _ev_orphans:
-                    st.markdown(_style_evidence_html(_sv_line), unsafe_allow_html=True)
+                _ev_for_card = _ev_orphans if _cat_cards else []
+                for _sv_line in ([] if _cat_cards else _ev_orphans):
+                    st.markdown(_style_evidence_html(_sv_line, _inset=False), unsafe_allow_html=True)
 
                 for _n, (_icon, _headline, _caption, _reason, _cats, _side, _source) in enumerate(_cat_items, start=1):
                     _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
@@ -8781,6 +8786,11 @@ rather than taking the label's word for it.
                     _card_col, _cfb1, _cfb2, _cfb3 = _ktv_cols([12, 1, 1, 1], "top")
                     with _card_col:
                         _renderer(len(_cat_items) + _ci + 1)
+                        # Evidence with no key item to attach to rides with the FIRST card, inside the same
+                        # column so it lines up under that card's own text rather than the page margin.
+                        if _ci == 0:
+                            for _sv_line in _ev_for_card:
+                                st.markdown(_style_evidence_html(_sv_line), unsafe_allow_html=True)
                     _ktv_feedback_icons((_cfb1, _cfb2, _cfb3), _card_label, _cat, _sec_key, "Data-Driven",
                                         _slot=f"card{_ci}")
 
