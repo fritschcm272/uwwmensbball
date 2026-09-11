@@ -10129,31 +10129,37 @@ def render_previous_games():
         with pbp_r1c4:
             period_filter = st.selectbox("Period", ["All"] + sorted(game_pbp["period"].dropna().unique().tolist()), key=f"pbp_period_{short_opponent}")
 
+        # Play call, resolved the same way every other play-call view in this app resolves it: the
+        # parser's real play_call column where the play log covers the row, the regex read of the coach's
+        # note where it doesn't, then canonicalised against the playbook catalog so "Panther-4", "P-4" and
+        # "P4" are one play rather than three. Using the raw column here instead would have made this
+        # section disagree with the play breakdowns elsewhere on the same data. Resolved BEFORE the filter
+        # row below, since the dropdown's options come out of it.
+        if "coach_note" in game_pbp.columns:
+            game_pbp["play_call"] = resolve_play_calls(game_pbp)
+        elif "play_call" in game_pbp.columns:
+            game_pbp["play_call"] = game_pbp["play_call"].apply(canonical_play_call)
+        _play_calls = (sorted(game_pbp["play_call"].dropna().astype(str).unique().tolist())
+                       if "play_call" in game_pbp.columns else [])
+
         pbp_r2c1, pbp_r2c2, pbp_r2c3 = st.columns(3)
         with pbp_r2c1:
             pbp_play_type = st.selectbox("Play type", ["All"] + sorted(game_pbp["play_type"].dropna().unique().tolist()), key=f"pbp_playtype_{short_opponent}")
         with pbp_r2c2:
             pbp_outcome = st.selectbox("Outcome", ["All"] + sorted(game_pbp["shot_outcome"].dropna().unique().tolist()), key=f"pbp_outcome_{short_opponent}")
         with pbp_r2c3:
-            pbp_video_search = st.text_input("Video description search", "", key=f"pbp_video_{short_opponent}", placeholder="e.g. P&R, Drives Left, 3pt...")
+            # Only offered when this game actually has calls on file -- an empty dropdown reads as broken
+            # rather than as a game nobody tagged calls for. The column keeps its place in the row either
+            # way, so the two selectboxes beside it don't jump width game to game.
+            pbp_play_call = "All"
+            if _play_calls:
+                pbp_play_call = st.selectbox("Play call", ["All"] + _play_calls,
+                                             key=f"pbp_playcall_{short_opponent}")
+            else:
+                st.selectbox("Play call", ["No play calls tagged"], disabled=True,
+                             key=f"pbp_playcall_none_{short_opponent}")
 
-        # Play call, resolved the same way every other play-call view in this app resolves it: the
-        # parser's real play_call column where the play log covers the row, the regex read of the coach's
-        # note where it doesn't, then canonicalised against the playbook catalog so "Panther-4", "P-4" and
-        # "P4" are one play rather than three. Using the raw column here instead would have made this
-        # section disagree with the play breakdowns elsewhere on the same data.
-        if "coach_note" in game_pbp.columns:
-            game_pbp["play_call"] = resolve_play_calls(game_pbp)
-        elif "play_call" in game_pbp.columns:
-            game_pbp["play_call"] = game_pbp["play_call"].apply(canonical_play_call)
-        # Only offered when this game actually has calls on file -- an empty dropdown reads as broken
-        # rather than as a game nobody tagged calls for.
-        _play_calls = (sorted(game_pbp["play_call"].dropna().astype(str).unique().tolist())
-                       if "play_call" in game_pbp.columns else [])
-        pbp_play_call = "All"
-        if _play_calls:
-            pbp_play_call = st.selectbox("Play call", ["All"] + _play_calls,
-                                         key=f"pbp_playcall_{short_opponent}")
+        pbp_video_search = st.text_input("Video description search", "", key=f"pbp_video_{short_opponent}", placeholder="e.g. P&R, Drives Left, 3pt...")
 
         # Clutch rows are identified by event_order (unique within a game) rather than by re-deriving the
         # definition here -- the parser already decided what counts as clutch, and re-implementing "last 5
