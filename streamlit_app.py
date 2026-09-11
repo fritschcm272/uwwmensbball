@@ -4544,6 +4544,12 @@ def render_upcoming_game():
                 "Blocks": uww_box["BLK"].sum() / num_uww_games if "BLK" in uww_box.columns else 0,
                 "Steals": uww_box["STL"].sum() / num_uww_games if "STL" in uww_box.columns else 0,
             }
+            # CONFIRMED CHANGE (requested): TS% moved here from the Keys to Victory stat line. It's a team
+            # shooting rate, not a coaching point, so it belongs in the team comparison with FG% and the
+            # rest rather than tacked under whichever key mentioned efficiency.
+            if {"PTS", "FGA", "FTA"} <= set(uww_box.columns) and uww_box["FGA"].sum() > 0:
+                uww_team_stats["TS%"] = compute_true_shooting(
+                    uww_box["PTS"].sum(), uww_box["FGA"].sum(), uww_box["FTA"].sum())
             # Expanded stats for All Stats dialog. Column is "FG3M"/"FG3A" in uww_pbp_box_score (confirmed against
             # the parser's actual box-score construction) -- "3PM"/"3PA" never existed, so this silently summed to
             # 0 for UWW's own 3P% and 3PA/game in the All Stats dialog.
@@ -4605,6 +4611,23 @@ def render_upcoming_game():
                 return made, att
             _opp_3m, _opp_3a = _parse_ma_ts(opp_prof_ts["3PM-A"]) if "3PM-A" in opp_prof_ts.columns else (0, 0)
             _opp_ftm, _opp_fta = _parse_ma_ts(opp_prof_ts["FTM-A"]) if "FTM-A" in opp_prof_ts.columns else (0, 0)
+            _opp_fgm, _opp_fga = _parse_ma_ts(opp_prof_ts["FGM-A"]) if "FGM-A" in opp_prof_ts.columns else (0, 0)
+            # Opponent TS% needs SEASON totals on both sides of the formula, so it uses the roster's summed
+            # made-attempted strings and summed points -- NOT the per-game PTS already in opp_team_stats,
+            # which would divide one side of the ratio and not the other. Omitted rather than estimated
+            # when the profile table doesn't carry FGM-A, since a partial denominator inflates the rate.
+            if _opp_fga > 0:
+                _opp_pts_total = pd.to_numeric(opp_prof_ts.get("PTS"), errors="coerce").sum() * _games_est \
+                    if "PTS" in opp_prof_ts.columns else 0
+                if _opp_pts_total > 0:
+                    _opp_ts = compute_true_shooting(_opp_pts_total, _opp_fga, _opp_fta)
+                    # Sanity gate. This figure multiplies per-game points by get_opponent_games_played() to
+                    # reach a season total, so a wrong games count scales the numerator and not the
+                    # denominator -- and that function has already been wrong once in this project (the
+                    # first-meeting anchor). A team TS% outside 35-75 isn't a real shooting rate, it's a
+                    # bad divisor, and no number is better than a confident wrong one on a comparison bar.
+                    if 35 <= _opp_ts <= 75:
+                        opp_team_stats["TS%"] = _opp_ts
             _opp_to_total = opp_prof_ts["TO"].sum() if "TO" in opp_prof_ts.columns else 0
             _opp_ast_total = opp_prof_ts["AST"].sum() if "AST" in opp_prof_ts.columns else 0
             _opp_to_pg = _opp_to_total / _games_est
@@ -4624,6 +4647,10 @@ def render_upcoming_game():
         def _build_team_stats_html(uww_s, opp_s, opp_name):
             """Build broadcast-style team stats comparison with bar charts."""
             stat_order = ["Points", "Points Against", "FG%", "Rebounds", "Assists", "Blocks", "Steals"]
+            # TS% only when BOTH sides have one. A bar chart row comparing our real rate against a zero
+            # would read as the opponent being catastrophically bad at shooting rather than as missing data.
+            if uww_s.get("TS%") and opp_s.get("TS%"):
+                stat_order.insert(3, "TS%")
             rows_html = ""
             for stat in stat_order:
                 uww_val = uww_s.get(stat, 0)
@@ -8908,9 +8935,9 @@ rather than taking the label's word for it.
                         pass  # team_totals doesn't carry a team FG% -- left out rather than guessed at
                     return (u_txt, o_txt)
                 if cat == "Offensive Efficiency":
-                    if {"PTS", "FGA", "FTA"} <= set(_cs_uww_side.columns) and _cs_uww_side["FGA"].sum() > 0:
-                        _ts = compute_true_shooting(_cs_uww_side["PTS"].sum(), _cs_uww_side["FGA"].sum(), _cs_uww_side["FTA"].sum())
-                        return (f"UWW: {_ts:.1f} TS%", None)
+                    # TS% used to render here. It now lives in the Upcoming Game TEAM STATS comparison,
+                    # where it sits beside FG% and the opponent's own rate instead of appearing as a
+                    # one-sided number under a key about something else.
                     return None
                 return None  # Defensive Efficiency and any future category with no single clean box-score stat
 
