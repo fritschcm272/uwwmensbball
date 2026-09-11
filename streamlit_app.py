@@ -9372,7 +9372,45 @@ def render_previous_games():
     _tsb_left, _tsb_right = st.columns([1, 2])
     with _tsb_left:
         # --- TEAM STATS: EXPECTED vs ACTUAL ---
-        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">TEAM STATS</div></div>', unsafe_allow_html=True)
+        _TS_HOW_TO_READ = (
+            "Each number is what that team actually did in this game. The figure in parentheses is the "
+            "difference from their baseline going into it: for UWW, our own season averages through the "
+            "prior games; for the opponent, what UWW's opponents had been averaging against us over those "
+            "same games \u2014 our defensive baseline, not their season average, which isn't computable "
+            "for a past opponent from the data on file. Green favours UWW either way, so a green number in "
+            "the opponent column means we held them below what we'd been giving up. Clutch Points covers "
+            "the last 5 minutes of the 2nd half or any overtime with the score within 8, and its baseline "
+            "averages only the earlier games that actually reached clutch time \u2014 the row is absent "
+            "entirely for a game that never got there."
+        )
+
+        @st.dialog("\U0001f4d8 How to read Team Stats", width="large")
+        def _show_team_stats_help():
+            st.markdown(_TS_HOW_TO_READ)
+
+        # Header + info icon on one line. CONFIRMED CHANGE (requested): the explanation moved off the page
+        # into this dialog -- it's a paragraph you read once to learn what the parentheses mean, not
+        # something worth sitting under the table on every game you open.
+        _ts_hdr_key = "team_stats_hdr"
+        try:
+            _ts_hdr_box = st.container(key=_ts_hdr_key)
+        except TypeError:
+            _ts_hdr_box = None
+        _ts_hdr_html = ('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;'
+                        'margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;'
+                        'letter-spacing:0.5px;color:#4E2A84;">TEAM STATS</div></div>')
+        if _ts_hdr_box is not None:
+            st.markdown(inline_icon_css(_ts_hdr_key), unsafe_allow_html=True)
+            with _ts_hdr_box:
+                st.markdown(_ts_hdr_html, unsafe_allow_html=True)
+                if st.button("\u2139\ufe0f", key="team_stats_help_btn", type="tertiary",
+                             help="How to read this table"):
+                    _show_team_stats_help()
+        else:
+            st.markdown(_ts_hdr_html, unsafe_allow_html=True)
+            if st.button("\u2139\ufe0f", key="team_stats_help_btn", type="tertiary",
+                         help="How to read this table"):
+                _show_team_stats_help()
 
         if not uww_game_box.empty:
             # Compute actual game stats
@@ -9587,18 +9625,6 @@ def render_previous_games():
                     f'</div>{rows_html}</div>'
                 )
                 st.markdown(stats_comparison_html, unsafe_allow_html=True)
-                st.caption(
-                    "Each number is what that team actually did in this game. The figure in parentheses is "
-                    "the difference from their baseline going into it: for UWW, our own season averages "
-                    "through the prior games; for the opponent, what UWW's opponents had been averaging "
-                    "against us over those same games -- our defensive baseline, not their season "
-                    "average, which isn't computable for a past opponent from the data on file. Green "
-                    "favours UWW either way, so a green number in the opponent column means we held them "
-                    "below what we'd been giving up. Clutch Points covers the last 5 minutes of the 2nd "
-                    "half or any overtime with the score within 8, and its baseline averages only the "
-                    "earlier games that actually reached clutch time -- the row is absent entirely for a "
-                    "game that never got there."
-                )
             else:
                 st.caption("Not enough prior game data for comparison.")
         else:
