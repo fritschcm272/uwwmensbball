@@ -9500,22 +9500,34 @@ def render_previous_games():
                           if c in game_box.columns]
             teams = sorted(game_box["team"].unique().tolist())
 
-            # Side-by-side box score (UWW left, Opp right)
+            # CONFIRMED CHANGE (requested): stacked rather than side by side, and only the five
+            # highest-minute players per team on the page. Two half-width tables squeezed nine columns into
+            # a shared column with Team Stats; full width fits them, and the rotation past the top five is
+            # one click away rather than always on screen.
             if len(teams) == 2:
                 _t_uww = "UW-Whitewater" if "UW-Whitewater" in teams else teams[0]
                 _t_opp = [t for t in teams if t != _t_uww][0] if len(teams) > 1 else teams[0]
-                col_uww_box, col_opp_box = st.columns(2)
-                with col_uww_box:
-                    st.markdown(f"**UW-Whitewater**")
-                    _uww_df = game_box[game_box["team"] == _t_uww].sort_values(["started", "PTS"], ascending=[False, False])
-                    st.dataframe(_uww_df[compact_cols], hide_index=True, use_container_width=True)
-                with col_opp_box:
-                    st.markdown(f"**{_t_opp}**")
-                    _opp_df = game_box[game_box["team"] == _t_opp].sort_values(["started", "PTS"], ascending=[False, False])
-                    st.dataframe(_opp_df[compact_cols], hide_index=True, use_container_width=True)
 
-                # Full box score, in a dialog rather than an expander -- keeps the main box score compact
-                # (especially now that it shares a column with Team Stats) while still one click away.
+                def _by_minutes(_df):
+                    """Sorted by minutes played, descending. MIN can arrive as a string, so it's coerced
+                    rather than sorted lexically -- "9.4" must not outrank "32.9"."""
+                    _d = _df.copy()
+                    _d["_min_num"] = pd.to_numeric(_d["MIN"], errors="coerce") if "MIN" in _d.columns else 0
+                    return _d.sort_values("_min_num", ascending=False).drop(columns=["_min_num"])
+
+                _uww_df = _by_minutes(game_box[game_box["team"] == _t_uww])
+                _opp_df = _by_minutes(game_box[game_box["team"] == _t_opp])
+
+                st.markdown("**UW-Whitewater**")
+                st.dataframe(_uww_df[compact_cols].head(5), hide_index=True, use_container_width=True)
+                st.markdown(f"**{_t_opp}**")
+                st.dataframe(_opp_df[compact_cols].head(5), hide_index=True, use_container_width=True)
+                _hidden = max(len(_uww_df) - 5, 0) + max(len(_opp_df) - 5, 0)
+                if _hidden:
+                    st.caption(f"Top five by minutes shown; {_hidden} more player(s) in the full box score.")
+
+                # Full box score, in a dialog rather than an expander -- every player, every column, one
+                # click away, without the page carrying two full tables at all times.
                 @st.dialog("Full Box Score", width="large")
                 def _show_full_box_score_dialog():
                     st.markdown("**UW-Whitewater**")
