@@ -2760,6 +2760,63 @@ def inline_icon_css(container_key: str) -> str:
     )
 
 
+def stat_benchmark_lines(key: str, season=None) -> list:
+    """Plain-language context for how good a value of `key` actually is, built from this app's OWN data
+    rather than a remembered league average.
+
+    A number like "57.4 TS%" means nothing to anyone who doesn't already carry the scale in their head, and
+    the honest comparison set here isn't some published D3 figure this app can't verify -- it's the teams
+    UWW has actually played. Both sides of every UWW game are in uww_pbp_box_score, so the opponents'
+    combined rate is a real, checkable benchmark, and UWW's own game-by-game spread says whether a figure
+    is normal for this team. Returns [] when there isn't enough data to say anything true.
+    """
+    if key not in ("TS%", "eFG%"):
+        return []
+    box = load_table("uww_pbp_box_score", season)
+    if box.empty or "team" not in box.columns:
+        return []
+    need = {"PTS", "FGA", "FTA"} if key == "TS%" else {"FGM", "FG3M", "FGA"}
+    if not need <= set(box.columns):
+        return []
+    work = box.copy()
+    for c in need:
+        work[c] = pd.to_numeric(work[c], errors="coerce")
+    _dc = game_date_col(work)
+
+    def _rate(rows):
+        if rows.empty:
+            return None
+        if key == "TS%":
+            return compute_true_shooting(rows["PTS"].sum(), rows["FGA"].sum(), rows["FTA"].sum())
+        _fga = rows["FGA"].sum()
+        return (100 * (rows["FGM"].sum() + 0.5 * rows["FG3M"].sum()) / _fga) if _fga else None
+
+    uww_rows = work[work["team"] == "UW-Whitewater"]
+    opp_rows = work[work["team"] != "UW-Whitewater"]
+    uww_rate, opp_rate = _rate(uww_rows), _rate(opp_rows)
+    lines = []
+    if uww_rate is not None and opp_rate is not None:
+        _gap = uww_rate - opp_rate
+        _word = "above" if _gap > 0 else "below"
+        lines.append(
+            f"**Scale:** across every game on file, UWW's own {key} is **{uww_rate:.1f}** and the teams "
+            f"UWW has played combine for **{opp_rate:.1f}** -- so we sit {abs(_gap):.1f} points {_word} "
+            f"the level of competition we've faced. That's the comparison set this app can actually "
+            f"verify; it isn't a national or conference average."
+        )
+    if _dc and not uww_rows.empty:
+        per_game = [r for r in (_rate(g) for _, g in uww_rows.groupby(_dc)) if r is not None]
+        if len(per_game) >= 3:
+            _lo, _hi = min(per_game), max(per_game)
+            _med = sorted(per_game)[len(per_game) // 2]
+            lines.append(
+                f"**Our own range:** over {len(per_game)} games UWW's game-by-game {key} has run from "
+                f"**{_lo:.1f}** to **{_hi:.1f}**, with a middle game around **{_med:.1f}**. A single "
+                f"game's figure is best read against that spread rather than treated as a fixed grade."
+            )
+    return lines
+
+
 def glossary_help_text(keys: list) -> str:
     """Definitions for a list of STAT_GLOSSARY stats as one block of plain text, for a hover tooltip.
 
@@ -8637,6 +8694,10 @@ rather than taking the label's word for it.
                     st.markdown(f"**{_ge['label']} ({_gk})**")
                     st.code(_ge["formula"], language=None)
                     st.markdown(_ge["definition"])
+                    # "57.4 TS%" only means something next to a scale, so the dialog carries one built
+                    # from the games on file rather than leaving the number to be read cold.
+                    for _bl in stat_benchmark_lines(_gk):
+                        st.markdown(_bl)
                     st.markdown("")
                 st.caption("UWW numbers come from our own games played before this upcoming game; opponent "
                            "numbers come from their prior games. Neither is adjusted for schedule strength.")
