@@ -9452,62 +9452,91 @@ def render_previous_games():
                 _e_to = expected_stats["Turnovers"]
                 expected_stats["A:TO Ratio"] = (_e_ast / _e_to) if _e_to > 0 else 0
 
-            # Build comparison HTML
+            # The opponent's own season baseline going into this game: what UWW's opponents had averaged
+            # in the games before it, from the other side of the same prior box scores. This is what gives
+            # the opponent column a parenthetical of its own -- "81 (+12.1)" means they beat what we'd been
+            # allowing by twelve. It is OUR defensive baseline, not their season average (which this app
+            # has no way to compute for a past opponent), and the description under the table says so.
+            _pre_opp_box = _pre_box.drop(index=_pre_uww_box.index, errors="ignore") if not _pre_box.empty else pd.DataFrame()
+            expected_opp_stats = {}
+            if not _pre_opp_box.empty:
+                _n_pre_o = _pre_opp_box["opponent"].nunique() or 1
+                def _o(_c):
+                    return _pre_opp_box[_c].sum() if _c in _pre_opp_box.columns else 0
+                _o_fga, _o_3pa, _o_fta = _o("FGA"), _o("FG3A"), _o("FTA")
+                expected_opp_stats = {
+                    "Points": _pre_games["opponent_score"].mean() if not _pre_games.empty else 0,
+                    "Points Against": _pre_games["team_score"].mean() if not _pre_games.empty else 0,
+                    "FG%": (_o("FGM") / _o_fga * 100) if _o_fga > 0 else 0,
+                    "3P%": (_o("FG3M") / _o_3pa * 100) if _o_3pa > 0 else 0,
+                    "FT%": (_o("FTM") / _o_fta * 100) if _o_fta > 0 else 0,
+                    "Rebounds": _o("REB") / _n_pre_o, "Assists": _o("AST") / _n_pre_o,
+                    "Turnovers": _o("TO") / _n_pre_o, "Steals": _o("STL") / _n_pre_o,
+                    "Blocks": _o("BLK") / _n_pre_o,
+                }
+                expected_opp_stats["A:TO Ratio"] = (
+                    expected_opp_stats["Assists"] / expected_opp_stats["Turnovers"]
+                    if expected_opp_stats["Turnovers"] > 0 else 0)
+
+            # CONFIRMED CHANGE (requested): the season-average column is gone and each side's difference
+            # from its baseline moved into parentheses beside the value, so the table is two columns of
+            # numbers instead of four and the comparison reads inline.
             stat_order = ["Points", "Points Against", "FG%", "3P%", "FT%", "Rebounds", "Assists", "Turnovers", "A:TO Ratio", "Steals", "Blocks"]
             lower_better = {"Points Against", "Turnovers"}
+
+            def _cell(_stat, _value, _baseline, _for_uww):
+                """One "value (+diff)" cell. Green when the difference favours UWW -- which inverts for the
+                opponent column, where them beating their baseline is bad news for us."""
+                if _value is None:
+                    return '<span style="font-size:1rem;width:120px;text-align:right;">--</span>'
+                _is_ratio = "Ratio" in _stat
+                _pct = "%" if "%" in _stat else ""
+                _val_fmt = f"{_value:.2f}" if _is_ratio else f"{_value:.1f}{_pct}"
+                if not _baseline:
+                    return (f'<span style="font-size:1rem;width:120px;text-align:right;font-weight:700;">'
+                            f'{_val_fmt}</span>')
+                _diff = _value - _baseline
+                _higher_good = (_stat not in lower_better) if _for_uww else (_stat in lower_better)
+                _good = (_diff > 0) if _higher_good else (_diff < 0)
+                _color = "#2e7d32" if _good else "#c62828" if abs(_diff) > 0.5 else "#666"
+                _diff_fmt = f"{_diff:+.2f}" if _is_ratio else f"{_diff:+.1f}{_pct}"
+                return (f'<span style="font-size:1rem;width:120px;text-align:right;font-weight:700;">'
+                        f'{_val_fmt} <span style="font-size:0.78rem;font-weight:600;color:{_color};">'
+                        f'({_diff_fmt})</span></span>')
+
             rows_html = ""
             for stat in stat_order:
                 act = actual_stats.get(stat, 0)
-                exp = expected_stats.get(stat, 0)
-                if act == 0 and exp == 0:
+                opp_act = opp_actual_stats.get(stat)
+                if act == 0 and not opp_act:
                     continue
-                is_pct = "%" in stat or "Ratio" in stat
-                if is_pct:
-                    act_fmt = f"{act:.1f}{'%' if '%' in stat else ''}"
-                    exp_fmt = f"{exp:.1f}{'%' if '%' in stat else ''}"
-                elif "Ratio" in stat:
-                    act_fmt = f"{act:.2f}"
-                    exp_fmt = f"{exp:.2f}"
-                else:
-                    act_fmt = f"{act:.1f}"
-                    exp_fmt = f"{exp:.1f}"
-                # Determine if actual was better/worse than expected
-                diff = act - exp
-                if stat in lower_better:
-                    better = diff < 0
-                else:
-                    better = diff > 0
-                diff_color = "#2e7d32" if better else "#c62828" if abs(diff) > 0.5 else "#666"
-                diff_fmt = f"{diff:+.1f}" if not is_pct else f"{diff:+.1f}{'%' if '%' in stat else ''}"
-                if "Ratio" in stat:
-                    diff_fmt = f"{diff:+.2f}"
-                _opp_v = opp_actual_stats.get(stat)
-                if _opp_v is None:
-                    _opp_fmt = "--"
-                elif "Ratio" in stat:
-                    _opp_fmt = f"{_opp_v:.2f}"
-                else:
-                    _opp_fmt = f"{_opp_v:.1f}{'%' if '%' in stat else ''}"
                 rows_html += (
                     f'<div style="padding:8px 0;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;">'
-                    f'<span style="font-size:0.95rem;width:62px;font-weight:600;color:#888;">{exp_fmt}</span>'
-                    f'<span style="font-size:0.8rem;color:#666;font-weight:600;text-transform:uppercase;flex:1;text-align:center;">{stat}</span>'
-                    f'<span style="font-size:0.95rem;width:62px;text-align:right;font-weight:700;">{act_fmt}</span>'
-                    f'<span style="font-size:0.78rem;width:52px;text-align:right;color:{diff_color};font-weight:600;">{diff_fmt}</span>'
-                    f'<span style="font-size:0.95rem;width:62px;text-align:right;font-weight:700;color:#222;">{_opp_fmt}</span>'
-                    f'</div>'
+                    f'<span style="font-size:0.8rem;color:#666;font-weight:600;text-transform:uppercase;flex:1;">{stat}</span>'
+                    + _cell(stat, act, expected_stats.get(stat), True)
+                    + _cell(stat, opp_act, expected_opp_stats.get(stat), False)
+                    + '</div>'
                 )
             if rows_html:
+                _opp_hdr = html.escape(get_team_abbreviation(short_opponent or str(game.get("opponent", "OPP"))))
                 stats_comparison_html = (
                     f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:14px 18px;">'
-                    f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:0 4px;">'
-                    f'<span style="font-size:0.8rem;font-weight:700;color:#888;">UWW Season Avg</span>'
-                    f'<span style="font-size:0.8rem;font-weight:700;color:#4E2A84;">UWW</span>'
-                    f'<span style="font-size:0.75rem;font-weight:600;color:#888;">+/-</span>'
-                    f'<span style="font-size:0.8rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(short_opponent or str(game.get("opponent", "OPP"))))}</span>'
+                    f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'
+                    f'<span style="flex:1;"></span>'
+                    f'<span style="font-size:0.85rem;font-weight:700;color:#4E2A84;width:120px;text-align:right;">UWW</span>'
+                    f'<span style="font-size:0.85rem;font-weight:700;color:#222;width:120px;text-align:right;">{_opp_hdr}</span>'
                     f'</div>{rows_html}</div>'
                 )
                 st.markdown(stats_comparison_html, unsafe_allow_html=True)
+                st.caption(
+                    "Each number is what that team actually did in this game. The figure in parentheses is "
+                    "the difference from their baseline going into it: for UWW, our own season averages "
+                    "through the prior games; for the opponent, what UWW's opponents had been averaging "
+                    "against us over those same games -- our defensive baseline, not their season "
+                    "average, which isn't computable for a past opponent from the data on file. Green "
+                    "favours UWW either way, so a green number in the opponent column means we held them "
+                    "below what we'd been giving up."
+                )
             else:
                 st.caption("Not enough prior game data for comparison.")
         else:
