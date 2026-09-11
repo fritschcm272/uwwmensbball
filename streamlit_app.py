@@ -7731,7 +7731,10 @@ rather than taking the label's word for it.
             _ag_box = load_table("uww_pbp_box_score")
             _ag_uww_side = _ag_box[_ag_box["team"] == "UW-Whitewater"] if not _ag_box.empty else pd.DataFrame()
             _ag_opp_side = _ag_box[_ag_box["team"] != "UW-Whitewater"] if not _ag_box.empty else pd.DataFrame()
-            _ag_ng = _ag_uww_side["opponent"].nunique() if not _ag_uww_side.empty else 0
+            # Games, not distinct opponents -- see the Rebounding Edge note below: a home-and-home makes
+            # those two different numbers and every per-game rate built on the wrong one comes out high.
+            _ag_ng = (_ag_uww_side[game_date_col(_ag_uww_side)].nunique()
+                      if not _ag_uww_side.empty and game_date_col(_ag_uww_side) else 0)
             _ag_tt = load_table("uww_opponent_team_totals")
             _ag_tt_row = _ag_tt[_ag_tt["opponent"] == short_opponent] if not _ag_tt.empty and short_opponent else pd.DataFrame()
             if _ag_ng > 0 and not _ag_tt_row.empty and "team_ppg" in _ag_tt_row.columns:
@@ -7807,11 +7810,19 @@ rather than taking the label's word for it.
             pass
 
         try:
-            _ag_box2 = load_table("uww_pbp_box_score")
+            # CONFIRMED BUG (fixed here): UWW's RPG on this card read 47.9 while the Rebounding stat line
+            # and the TEAM STATS panel both said 31.9 -- same stat, same season, two numbers on one screen.
+            # Two causes, both here. The divisor was opponent.nunique(), a count of DISTINCT OPPONENTS, not
+            # of games: a WIAC home-and-home collapses two or three meetings into one, so 27 games were
+            # divided by 18 names (31.9 x 27/18 = 47.9 exactly). And the box score wasn't scoped to games
+            # before the upcoming one, unlike every other season average on this page. Now it counts game
+            # dates on a scope_to_played() frame, which is what the other two do.
+            _ag_box2 = scope_to_played(load_table("uww_pbp_box_score"), played)
             _ag_op2 = load_table("uww_player_profiles")
             _ag_op2 = _ag_op2[_ag_op2["opponent"] == short_opponent] if not _ag_op2.empty and short_opponent else pd.DataFrame()
             _ag_uww_r = _ag_box2[_ag_box2["team"] == "UW-Whitewater"] if not _ag_box2.empty else pd.DataFrame()
-            _ag_ng2 = _ag_uww_r["opponent"].nunique() if not _ag_uww_r.empty else 0
+            _ag_dc2 = game_date_col(_ag_uww_r) if not _ag_uww_r.empty else None
+            _ag_ng2 = _ag_uww_r[_ag_dc2].nunique() if _ag_dc2 else 0
             if _ag_ng2 > 0 and not _ag_op2.empty and "REB" in _ag_uww_r.columns:
                 _ag_op2 = _ag_op2.copy()
                 _ag_op2["REB"] = pd.to_numeric(_ag_op2["REB"], errors="coerce")
@@ -7886,7 +7897,8 @@ rather than taking the label's word for it.
                     _ag_to_val = "Press / Extend" if _ag_topg >= 13 else "Standard Pressure"
                     _at_a_glance.append(("\U0001f504 TO Pressure", _ag_to_val, f"{esc(short_opponent)} averages {_ag_topg:.1f} turnovers/game (season total, not opponent-adjusted)."))
                     _ag_uww_side4 = _ag_box4[_ag_box4["team"] == "UW-Whitewater"] if not _ag_box4.empty else pd.DataFrame()
-                    _ag_ng4 = _ag_uww_side4["opponent"].nunique() if not _ag_uww_side4.empty else 0
+                    _ag_ng4 = (_ag_uww_side4[game_date_col(_ag_uww_side4)].nunique()
+                               if not _ag_uww_side4.empty and game_date_col(_ag_uww_side4) else 0)
                     _ag_uww_stl_pg = _ag_uww_side4["STL"].sum() / _ag_ng4 if _ag_ng4 > 0 and "STL" in _ag_uww_side4.columns else 0
                     _card_data["turnovers"] = (_ag_topg, _ag_uww_stl_pg, _ag_to_val)
         except Exception:
@@ -9590,7 +9602,8 @@ def render_previous_games():
 
             expected_stats = {}
             if not _pre_uww_box.empty:
-                _n_pre = _pre_uww_box["opponent"].nunique() or 1
+                _n_pre = ((_pre_uww_box[game_date_col(_pre_uww_box)].nunique()
+                           if game_date_col(_pre_uww_box) else _pre_uww_box["opponent"].nunique()) or 1)
                 _pre_games = _orig_played.iloc[:_game_original_pos] if _game_original_pos else pd.DataFrame()
                 expected_stats = {
                     "Points": _pre_games["team_score"].mean() if not _pre_games.empty else 0,
@@ -9620,7 +9633,8 @@ def render_previous_games():
             _pre_opp_box = _pre_box.drop(index=_pre_uww_box.index, errors="ignore") if not _pre_box.empty else pd.DataFrame()
             expected_opp_stats = {}
             if not _pre_opp_box.empty:
-                _n_pre_o = _pre_opp_box["opponent"].nunique() or 1
+                _n_pre_o = ((_pre_opp_box[game_date_col(_pre_opp_box)].nunique()
+                             if game_date_col(_pre_opp_box) else _pre_opp_box["opponent"].nunique()) or 1)
                 def _o(_c):
                     return _pre_opp_box[_c].sum() if _c in _pre_opp_box.columns else 0
                 _o_fga, _o_3pa, _o_fta = _o("FGA"), _o("FG3A"), _o("FTA")
