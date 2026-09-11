@@ -9400,7 +9400,20 @@ def render_previous_games():
                         'margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;'
                         'letter-spacing:0.5px;color:#4E2A84;">TEAM STATS</div></div>')
         if _ts_hdr_box is not None:
-            st.markdown(inline_icon_css(_ts_hdr_key), unsafe_allow_html=True)
+            # Not inline_icon_css here: that shrinks the element to its content, which would turn this
+            # full-width header bar into a chip and make it the odd one out among every other section
+            # header on the page. Instead the keyed container becomes the positioning context and the
+            # button is lifted into the bar's right end -- the bar keeps its normal width and the icon
+            # sits inside it. The top offset tracks the bar's own box: 1.5rem margin + 12px padding.
+            st.markdown(
+                f"<style>"
+                f".st-key-{_ts_hdr_key}{{position:relative;}}"
+                f'.st-key-{_ts_hdr_key} [data-testid="stElementContainer"]:last-child '
+                f"{{position:absolute;top:calc(1.5rem + 10px);right:14px;width:auto !important;"
+                f"margin:0 !important;z-index:1;}}"
+                f".st-key-{_ts_hdr_key} button "
+                f"{{padding:0 !important;min-height:0 !important;border:none !important;}}"
+                f"</style>", unsafe_allow_html=True)
             with _ts_hdr_box:
                 st.markdown(_ts_hdr_html, unsafe_allow_html=True)
                 if st.button("\u2139\ufe0f", key="team_stats_help_btn", type="tertiary",
@@ -10124,6 +10137,24 @@ def render_previous_games():
         with pbp_r2c3:
             pbp_video_search = st.text_input("Video description search", "", key=f"pbp_video_{short_opponent}", placeholder="e.g. P&R, Drives Left, 3pt...")
 
+        # Play call, resolved the same way every other play-call view in this app resolves it: the
+        # parser's real play_call column where the play log covers the row, the regex read of the coach's
+        # note where it doesn't, then canonicalised against the playbook catalog so "Panther-4", "P-4" and
+        # "P4" are one play rather than three. Using the raw column here instead would have made this
+        # section disagree with the play breakdowns elsewhere on the same data.
+        if "coach_note" in game_pbp.columns:
+            game_pbp["play_call"] = resolve_play_calls(game_pbp)
+        elif "play_call" in game_pbp.columns:
+            game_pbp["play_call"] = game_pbp["play_call"].apply(canonical_play_call)
+        # Only offered when this game actually has calls on file -- an empty dropdown reads as broken
+        # rather than as a game nobody tagged calls for.
+        _play_calls = (sorted(game_pbp["play_call"].dropna().astype(str).unique().tolist())
+                       if "play_call" in game_pbp.columns else [])
+        pbp_play_call = "All"
+        if _play_calls:
+            pbp_play_call = st.selectbox("Play call", ["All"] + _play_calls,
+                                         key=f"pbp_playcall_{short_opponent}")
+
         # Clutch rows are identified by event_order (unique within a game) rather than by re-deriving the
         # definition here -- the parser already decided what counts as clutch, and re-implementing "last 5
         # minutes, within 8 points" in the app would be a second definition free to drift from the first.
@@ -10158,6 +10189,8 @@ def render_previous_games():
             filtered_pbp = filtered_pbp[filtered_pbp["shot_outcome"] == pbp_outcome]
         if pbp_video_search.strip():
             filtered_pbp = filtered_pbp[filtered_pbp["video_description"].str.contains(pbp_video_search.strip(), case=False, na=False)]
+        if pbp_play_call != "All":
+            filtered_pbp = filtered_pbp[filtered_pbp["play_call"].astype(str) == pbp_play_call]
         if video_only:
             filtered_pbp = filtered_pbp[filtered_pbp["video_description"].notna()]
         if notes_only:
@@ -10178,10 +10211,12 @@ def render_previous_games():
         kpi5.metric("Players", unique_players)
 
         display_cols = [c for c in ["period", "time_remaining", "team", "player", "event_type",
-                                     "video_description", "coach_note", "uww_score", "opp_score"]
+                                     "play_call", "video_description", "coach_note", "uww_score", "opp_score"]
                          if c in filtered_pbp.columns]
         st.dataframe(
-            filtered_pbp[display_cols].rename(columns={"coach_note": "Coach Note", "video_description": "Video Tag"}),
+            filtered_pbp[display_cols].rename(columns={"coach_note": "Coach Note",
+                                                       "video_description": "Video Tag",
+                                                       "play_call": "Play Call"}),
             hide_index=True, use_container_width=True, height=400,
         )
 
