@@ -9568,13 +9568,6 @@ def render_previous_games():
                     "favours UWW either way, so a green number in the opponent column means we held them "
                     "below what we'd been giving up."
                 )
-                # The one thing worth keeping from the scoring-run section that used to sit below this
-                # table: who was on the floor while UWW's biggest run happened. The run itself is now a
-                # row above, and this says which five produced it.
-                if not _ts_run_row.empty:
-                    _rr0 = _ts_run_row.iloc[0]
-                    st.caption(f"During UWW's run — UWW: {_rr0.get('uww_run_uww_lineup', '-')} | "
-                               f"{short_opponent}: {_rr0.get('uww_run_opp_lineup', '-')}")
             else:
                 st.caption("Not enough prior game data for comparison.")
         else:
@@ -10033,14 +10026,12 @@ def render_previous_games():
     except Exception:
         pass
 
-    # --- CLUTCH MOMENTS (this game) ---
-
+    # Clutch events for this game. CONFIRMED CHANGE (requested): these no longer get a section of their
+    # own -- they're a SUBSET of the play-by-play below, so duplicating them as a separate table meant the
+    # same rows appeared twice with different filters available on each. Loaded here and applied as a
+    # checkbox filter in the Play-by-Play section instead.
     _pg_clutch = load_table("uww_clutch_events", _pg_season)
     _pg_clutch_game = _this_game(_pg_clutch, "uww_clutch_events") if not _pg_clutch.empty else pd.DataFrame()
-    if not _pg_clutch_game.empty:
-        section_header("\U0001F3C0 CLUTCH MOMENTS", "Last 5 minutes of the 2nd half or any overtime, with the score within 8 points.")
-        _cg_display_cols = [c for c in ["period", "time_remaining", "team", "player", "event_type", "raw_text", "uww_score", "opp_score"] if c in _pg_clutch_game.columns]
-        st.dataframe(_pg_clutch_game[_cg_display_cols], hide_index=True, use_container_width=True, height=250)
 
     # --- PLAY-BY-PLAY ---
     st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">PLAY-BY-PLAY</div></div>', unsafe_allow_html=True)
@@ -10076,11 +10067,24 @@ def render_previous_games():
         with pbp_r2c3:
             pbp_video_search = st.text_input("Video description search", "", key=f"pbp_video_{short_opponent}", placeholder="e.g. P&R, Drives Left, 3pt...")
 
-        pbp_r3c1, pbp_r3c2 = st.columns(2)
+        # Clutch rows are identified by event_order (unique within a game) rather than by re-deriving the
+        # definition here -- the parser already decided what counts as clutch, and re-implementing "last 5
+        # minutes, within 8 points" in the app would be a second definition free to drift from the first.
+        _clutch_orders = (set(pd.to_numeric(_pg_clutch_game["event_order"], errors="coerce").dropna())
+                          if not _pg_clutch_game.empty and "event_order" in _pg_clutch_game.columns else set())
+        pbp_r3c1, pbp_r3c2, pbp_r3c3 = st.columns(3)
         with pbp_r3c1:
             video_only = st.checkbox("Show only video-tagged plays", value=False, key=f"pbp_vidonly_{short_opponent}")
         with pbp_r3c2:
             notes_only = st.checkbox("Show only plays with a coach note", value=False, key=f"pbp_notesonly_{short_opponent}") if "coach_note" in game_pbp.columns else False
+        with pbp_r3c3:
+            clutch_only = st.checkbox(
+                "Show only clutch moments", value=False, key=f"pbp_clutch_{short_opponent}",
+                disabled=not _clutch_orders,
+                help=("Last 5 minutes of the 2nd half or any overtime, with the score within 8 points."
+                      if _clutch_orders else
+                      "No clutch events recorded for this game -- it was never within 8 points late."),
+            ) if _clutch_orders else False
 
         filtered_pbp = game_pbp.copy()
         if pbp_team_filter != "All":
@@ -10101,6 +10105,9 @@ def render_previous_games():
             filtered_pbp = filtered_pbp[filtered_pbp["video_description"].notna()]
         if notes_only:
             filtered_pbp = filtered_pbp[filtered_pbp["coach_note"].notna()]
+        if clutch_only:
+            filtered_pbp = filtered_pbp[
+                pd.to_numeric(filtered_pbp["event_order"], errors="coerce").isin(_clutch_orders)]
 
         kpi1, kpi2, kpi3, kpi4, kpi5 = st.columns(5)
         kpi1.metric("Total Events", len(filtered_pbp))
