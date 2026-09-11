@@ -10459,6 +10459,17 @@ def render_team():
                 st.markdown(f"**{r['opponent']}** — UWW's biggest run: {r['uww_biggest_run']} pts (UWW: {r.get('uww_run_uww_lineup', '-')} | Opp: {r.get('uww_run_opp_lineup', '-')})")
                 st.caption(f"{r['opponent']}'s biggest run: {r['opponent_biggest_run']} pts (UWW: {r.get('opp_run_uww_lineup', '-')} | Opp: {r.get('opp_run_opp_lineup', '-')})")
 
+    # CONFIRMED CHANGE (requested): the Analytics tab's whole content now lives at the bottom of this tab
+    # instead of in a tab of its own -- both were about the same subject (us), split only by how the numbers
+    # were derived. Called LAST so this tab still opens on the team banner and record.
+    #
+    # Called rather than inlined, deliberately: _render_analytics_content() returns early when box-score
+    # data is missing, and keeping it a separate function means that return exits only itself, not the rest
+    # of render_team(). No new widget-key collisions either -- st.tabs renders every tab's body on every
+    # run, so these two bodies already executed together in the same script run before this change.
+    st.markdown("---")
+    _render_analytics_content()
+
 
 # --------------------------------------------------------------------------------------------------------------
 # Section 4: Players
@@ -11536,18 +11547,16 @@ def _render_analytics_content():
 def render_analytics():
     # Previous Games/Team/Players moved here from the top-level nav, as tabs -- same pattern the Upcoming
     # Game page already uses for its own internal Stats & Analysis/Keys to Victory/Personnel/Tools split.
-    # Each tab just calls that page's own render function, unchanged -- _render_analytics_content() is the
-    # original render_analytics() body verbatim, kept as its own function (rather than inlined directly under
-    # the first tab) specifically so its own early "return" when box score data is empty only exits ITSELF,
-    # not this whole function -- otherwise the other three tabs would never get their content filled in
-    # whenever that early-return condition was hit.
+    # Each tab just calls that page's own render function, unchanged.
     # Streamlit has no API for selecting a tab programmatically -- st.tabs always opens on the first tab in
     # the list. So a jump from the Game Detail dialog pins Previous Games to the FRONT of the list, which is
     # the only way to land the coach on it. The pin is sticky (not popped on first use) because the order
-    # would otherwise revert on the very next rerun and throw them back onto Analytics mid-read; any sidebar
-    # nav click clears it (see render_sidebar_nav).
+    # would otherwise revert on the very next rerun and throw them back onto the first tab mid-read; any
+    # sidebar nav click clears it (see render_sidebar_nav).
+    # CONFIRMED CHANGE (requested): no separate Analytics tab -- its content is rendered at the bottom of
+    # the Team tab now (see the end of render_team). _render_analytics_content() stays its own function so
+    # its early return on missing box-score data exits only itself.
     _renderers = {
-        "\U0001f4ca Analytics": _render_analytics_content,
         "Previous Games": render_previous_games,
         "Team": render_team,
         "Players": render_players,
