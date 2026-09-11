@@ -9508,11 +9508,39 @@ def render_previous_games():
                                 if len(_po):
                                     expected_opp_stats[_lbl] = float(_po.mean())
 
+            # Clutch points for each side, same points-per-event convention the Team tab's clutch section
+            # uses (made_shot carries its own shot_type; a made free throw is 1) so the two can't disagree.
+            # The baseline averages only PRIOR GAMES THAT HAD CLUTCH TIME -- dividing by every prior game
+            # would treat a 30-point blowout as a game where both teams scored zero in the clutch, which
+            # would drag the baseline toward nothing and make every close game look like an outlier.
+            _ts_clutch = load_table("uww_clutch_events", _pg_season)
+            if not _ts_clutch.empty and {"event_type", "team"} <= set(_ts_clutch.columns):
+                _cl = _ts_clutch[_ts_clutch["event_type"].isin(["made_shot", "free_throw_made"])].copy()
+                if not _cl.empty:
+                    _cl["_pts"] = _cl.apply(
+                        lambda _r: int(_r["shot_type"]) if (_r["event_type"] == "made_shot"
+                                                            and pd.notna(_r.get("shot_type"))) else 1, axis=1)
+                    _cl_dc = game_date_col(_cl)
+                    if _cl_dc and _pg_game_date is not None:
+                        _cl["_iso"] = iso_dates(_cl[_cl_dc]).to_numpy()
+                        _cl_this = _cl[_cl["_iso"] == _pg_game_date]
+                        if not _cl_this.empty:
+                            _is_uww = _cl_this["team"] == "UW-Whitewater"
+                            actual_stats["Clutch Points"] = float(_cl_this[_is_uww]["_pts"].sum())
+                            opp_actual_stats["Clutch Points"] = float(_cl_this[~_is_uww]["_pts"].sum())
+                        _cl_prior = _cl[_cl["_iso"] < _pg_game_date]
+                        _cl_n = _cl_prior["_iso"].nunique()
+                        if _cl_n:
+                            _pu = _cl_prior["team"] == "UW-Whitewater"
+                            expected_stats["Clutch Points"] = float(_cl_prior[_pu]["_pts"].sum()) / _cl_n
+                            expected_opp_stats["Clutch Points"] = float(_cl_prior[~_pu]["_pts"].sum()) / _cl_n
+
             # CONFIRMED CHANGE (requested): the season-average column is gone and each side's difference
             # from its baseline moved into parentheses beside the value, so the table is two columns of
             # numbers instead of four and the comparison reads inline.
             stat_order = ["Points", "Points Against", "FG%", "3P%", "FT%", "Rebounds", "Assists",
-                          "Turnovers", "A:TO Ratio", "Steals", "Blocks", "Biggest Run", "Largest Lead"]
+                          "Turnovers", "A:TO Ratio", "Steals", "Blocks", "Biggest Run", "Largest Lead",
+                          "Clutch Points"]
             lower_better = {"Points Against", "Turnovers"}
 
             def _cell(_stat, _value, _baseline, _for_uww):
@@ -9566,7 +9594,10 @@ def render_previous_games():
                     "against us over those same games -- our defensive baseline, not their season "
                     "average, which isn't computable for a past opponent from the data on file. Green "
                     "favours UWW either way, so a green number in the opponent column means we held them "
-                    "below what we'd been giving up."
+                    "below what we'd been giving up. Clutch Points covers the last 5 minutes of the 2nd "
+                    "half or any overtime with the score within 8, and its baseline averages only the "
+                    "earlier games that actually reached clutch time -- the row is absent entirely for a "
+                    "game that never got there."
                 )
             else:
                 st.caption("Not enough prior game data for comparison.")
