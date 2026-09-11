@@ -10159,7 +10159,33 @@ def render_previous_games():
                 st.selectbox("Play call", ["No play calls tagged"], disabled=True,
                              key=f"pbp_playcall_none_{short_opponent}")
 
-        pbp_video_search = st.text_input("Video description search", "", key=f"pbp_video_{short_opponent}", placeholder="e.g. P&R, Drives Left, 3pt...")
+        # UWW 5-man lineup on the floor, from uww_pbp_events.uww_lineup. Options are ordered by how many
+        # events each unit was on for, so the units that actually played come first rather than whichever
+        # surname sorts earliest. Labels are surnames only -- five full names per option is unreadable in a
+        # dropdown -- and the full string is kept as the value, since that's what the column holds.
+        _lu_counts = (game_pbp["uww_lineup"].dropna().astype(str).value_counts()
+                      if "uww_lineup" in game_pbp.columns else pd.Series(dtype=int))
+        _lu_label_to_full, _lu_labels = {}, []
+        for _lu_full in _lu_counts.index:
+            _lbl = ", ".join(surname(_n) for _n in str(_lu_full).split(",") if _n.strip())
+            # Two different units can shorten to the same surnames (brothers, or a repeated surname on the
+            # roster). Fall back to the full string for the collision rather than silently merging them.
+            if _lbl in _lu_label_to_full:
+                _lbl = str(_lu_full)
+            _lu_label_to_full[_lbl] = str(_lu_full)
+            _lu_labels.append(_lbl)
+
+        _pbp_r4c1, _pbp_r4c2 = st.columns([1, 1])
+        with _pbp_r4c1:
+            if _lu_labels:
+                _lu_pick = st.selectbox("UWW lineup on floor", ["All"] + _lu_labels,
+                                        key=f"pbp_lineup_{short_opponent}")
+            else:
+                st.selectbox("UWW lineup on floor", ["No lineup data for this game"], disabled=True,
+                             key=f"pbp_lineup_none_{short_opponent}")
+                _lu_pick = "All"
+        with _pbp_r4c2:
+            pbp_video_search = st.text_input("Video description search", "", key=f"pbp_video_{short_opponent}", placeholder="e.g. P&R, Drives Left, 3pt...")
 
         # Clutch rows are identified by event_order (unique within a game) rather than by re-deriving the
         # definition here -- the parser already decided what counts as clutch, and re-implementing "last 5
@@ -10197,6 +10223,9 @@ def render_previous_games():
             filtered_pbp = filtered_pbp[filtered_pbp["video_description"].str.contains(pbp_video_search.strip(), case=False, na=False)]
         if pbp_play_call != "All":
             filtered_pbp = filtered_pbp[filtered_pbp["play_call"].astype(str) == pbp_play_call]
+        if _lu_pick != "All":
+            filtered_pbp = filtered_pbp[
+                filtered_pbp["uww_lineup"].astype(str) == _lu_label_to_full.get(_lu_pick, _lu_pick)]
         if video_only:
             filtered_pbp = filtered_pbp[filtered_pbp["video_description"].notna()]
         if notes_only:
