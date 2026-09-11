@@ -2738,6 +2738,28 @@ def glossary_span(key: str, display_text: str = None) -> str:
     return f'<span title="{tooltip}" style="cursor:help;border-bottom:1px dotted #999;">{html.escape(text)}</span>'
 
 
+def inline_icon_css(container_key: str) -> str:
+    """CSS that puts a keyed container's children on one line, so an icon button sits against the end of
+    the text before it instead of on its own row.
+
+    Streamlit renders every element as a block inside a flex COLUMN, so three things have to change: the
+    keyed container stops being flex, its child element containers become inline-block (their width:100%
+    overridden), and the markdown's own <p> goes inline -- any one left out and the icon drops to the next
+    line. Needs container keys (Streamlit 1.43+); callers fall back to a plain layout without them.
+    """
+    return (
+        f"<style>"
+        f".st-key-{container_key}{{display:block !important;}}"
+        f'.st-key-{container_key} > [data-testid="stElementContainer"] '
+        f"{{display:inline-block !important;vertical-align:middle;width:auto !important;}}"
+        f'.st-key-{container_key} [data-testid="stMarkdownContainer"] p '
+        f"{{display:inline;margin:0;}}"
+        f".st-key-{container_key} button "
+        f"{{padding:0 0 0 .25rem !important;min-height:0 !important;border:none !important;}}"
+        f"</style>"
+    )
+
+
 def glossary_help_text(keys: list) -> str:
     """Definitions for a list of STAT_GLOSSARY stats as one block of plain text, for a hover tooltip.
 
@@ -7954,21 +7976,7 @@ rather than taking the label's word for it.
                 except TypeError:
                     _ff_box = None  # older Streamlit: no container keys, so no CSS hook
                 if _ff_box is not None:
-                    # The keyed class lands on the container's stVerticalBlock, which is a flex COLUMN -- so
-                    # inline-block on its children does nothing until the parent stops being flex. Three
-                    # rules are needed: block the parent, inline the two child element containers (their
-                    # width:100% has to be overridden too), and inline the markdown's own <p>, which is
-                    # still a block box inside its container and would otherwise force the break by itself.
-                    st.markdown(
-                        f"<style>"
-                        f".st-key-{_ff_key}{{display:block !important;}}"
-                        f'.st-key-{_ff_key} > [data-testid="stElementContainer"] '
-                        f"{{display:inline-block !important;vertical-align:middle;width:auto !important;}}"
-                        f'.st-key-{_ff_key} [data-testid="stMarkdownContainer"] p '
-                        f"{{display:inline;margin:0;}}"
-                        f".st-key-{_ff_key} button "
-                        f"{{padding:0 0 0 .25rem !important;min-height:0 !important;border:none !important;}}"
-                        f"</style>", unsafe_allow_html=True)
+                    st.markdown(inline_icon_css(_ff_key), unsafe_allow_html=True)
                     with _ff_box:
                         st.markdown(_ff_sentence)
                         if st.button("\u2139\ufe0f", key=f"four_factors_detail_{_n}", type="tertiary",
@@ -8491,6 +8499,22 @@ rather than taking the label's word for it.
                     f'{_text}</div>'
                 )
 
+            @st.dialog("\U0001f4d8 What this number means", width="large")
+            def _show_stat_glossary_dialog(_keys):
+                """Definition and formula for the stat codes in a key's stat line, plus where the numbers
+                come from. The scope note matters as much as the formula: these are UWW's own games before
+                the upcoming one, not season or league figures, so they don't match published totals."""
+                for _gk in _keys:
+                    _ge = STAT_GLOSSARY.get(_gk)
+                    if not _ge:
+                        continue
+                    st.markdown(f"**{_ge['label']} ({_gk})**")
+                    st.code(_ge["formula"], language=None)
+                    st.markdown(_ge["definition"])
+                    st.markdown("")
+                st.caption("UWW numbers come from our own games played before this upcoming game; opponent "
+                           "numbers come from their prior games. Neither is adjusted for schedule strength.")
+
             def _render_key_item(_n, _icon, _headline, _caption, _reason, _cats, _side, _source,
                                  _category=None, _section=None, _stat_line=None, _evidence=None):
                 # No per-item category badge -- the section header above already names the category, so
@@ -8527,20 +8551,27 @@ rather than taking the label's word for it.
                     else:
                         _parts = [p for p in (_u_part, _o_part) if p]
                     if _parts:
-                        # Hover explanation for whatever stat codes the line actually contains -- "UWW: 57.4
-                        # TS%" is only readable if you already know TS%, and the definition is already
-                        # written down in STAT_GLOSSARY. Scope note included because the number is UWW's own
-                        # games BEFORE the upcoming one, not a full-season or league figure.
+                        # Explanation of whatever stat codes the line contains -- "UWW: 57.4 TS%" is only
+                        # readable if you already know TS%, and the definitions are already in
+                        # STAT_GLOSSARY. Same treatment as the Four Factors key: an info icon against the
+                        # end of the line, opening a dialog, rather than a hover tooltip.
                         _sl_text = "  |  ".join(_parts)
                         _sl_keys = [_k for _k in STAT_GLOSSARY if _k.lower() in _sl_text.lower()]
-                        _sl_help = glossary_help_text(_sl_keys) if _sl_keys else ""
-                        if _sl_help:
-                            _sl_help += ("\n\nUWW numbers are from our own games played before this "
-                                         "upcoming game; opponent numbers are from their prior games.")
-                        try:
-                            st.caption(_sl_text, help=_sl_help or None)
-                        except TypeError:
-                            st.caption(_sl_text)  # older Streamlit: no help on caption
+                        _sl_id = re.sub(r"\W+", "_", f"statline_{_section or ''}_{_category or ''}_{_n}")
+                        _sl_box = None
+                        if _sl_keys:
+                            try:
+                                _sl_box = st.container(key=_sl_id)
+                            except TypeError:
+                                _sl_box = None  # older Streamlit: no container keys, so no inline icon
+                        if _sl_box is not None:
+                            st.markdown(inline_icon_css(_sl_id), unsafe_allow_html=True)
+                            with _sl_box:
+                                st.caption(_sl_text)
+                                if st.button("\u2139\ufe0f", key=f"{_sl_id}_btn", type="tertiary"):
+                                    _show_stat_glossary_dialog(_sl_keys)
+                        else:
+                            st.caption(_sl_text)
                 # Style evidence for THIS key, filed here by the caller rather than stacked at the top of
                 # the category. It sits directly under the item's own stat line because it answers the next
                 # question that line raises: this is what we average, and this is what that number has
