@@ -4611,23 +4611,44 @@ def render_upcoming_game():
                 return made, att
             _opp_3m, _opp_3a = _parse_ma_ts(opp_prof_ts["3PM-A"]) if "3PM-A" in opp_prof_ts.columns else (0, 0)
             _opp_ftm, _opp_fta = _parse_ma_ts(opp_prof_ts["FTM-A"]) if "FTM-A" in opp_prof_ts.columns else (0, 0)
-            _opp_fgm, _opp_fga = _parse_ma_ts(opp_prof_ts["FGM-A"]) if "FGM-A" in opp_prof_ts.columns else (0, 0)
-            # Opponent TS% needs SEASON totals on both sides of the formula, so it uses the roster's summed
-            # made-attempted strings and summed points -- NOT the per-game PTS already in opp_team_stats,
-            # which would divide one side of the ratio and not the other. Omitted rather than estimated
-            # when the profile table doesn't carry FGM-A, since a partial denominator inflates the rate.
-            if _opp_fga > 0:
-                _opp_pts_total = pd.to_numeric(opp_prof_ts.get("PTS"), errors="coerce").sum() * _games_est \
-                    if "PTS" in opp_prof_ts.columns else 0
-                if _opp_pts_total > 0:
-                    _opp_ts = compute_true_shooting(_opp_pts_total, _opp_fga, _opp_fta)
-                    # Sanity gate. This figure multiplies per-game points by get_opponent_games_played() to
-                    # reach a season total, so a wrong games count scales the numerator and not the
-                    # denominator -- and that function has already been wrong once in this project (the
-                    # first-meeting anchor). A team TS% outside 35-75 isn't a real shooting rate, it's a
-                    # bad divisor, and no number is better than a confident wrong one on a comparison bar.
-                    if 35 <= _opp_ts <= 75:
-                        opp_team_stats["TS%"] = _opp_ts
+            # Opponent TS%. CONFIRMED BUG (fixed here): the first attempt read an "FGM-A" column, which
+            # uww_player_profiles does NOT have -- it carries FG% as a string, plus 3PM-A and FTM-A -- so
+            # the denominator was always 0 and the row never rendered at all.
+            #
+            # FGA is recoverable without it. Per player: total points = PTS (per game) x games_played;
+            # subtract the threes and free throws already known from 3PM-A and FTM-A to get two-point makes;
+            # FGM = 2PM + 3PM; FGA = FGM / FG%. Each player's OWN games_played drives this, so it never
+            # touches get_opponent_games_played() -- one less thing that can be wrong, and correct for a
+            # roster where players have appeared in different numbers of games.
+            _opp_pts_tot = _opp_fgm_tot = _opp_fga_tot = _opp_fta_tot = 0.0
+            for _, _pr in opp_prof_ts.iterrows():
+                _gp = pd.to_numeric(_pr.get("games_played"), errors="coerce")
+                _ppg = pd.to_numeric(_pr.get("PTS"), errors="coerce")
+                try:
+                    _fgp = float(str(_pr.get("FG%", "")).replace("%", "").strip()) / 100
+                except ValueError:
+                    _fgp = 0
+                # A player missing any of the three is skipped ENTIRELY -- counting their points while
+                # dropping their attempts would inflate the team rate rather than merely thin the sample.
+                if pd.isna(_gp) or pd.isna(_ppg) or _fgp <= 0:
+                    continue
+                _p3m, _ = _parse_ma_ts(pd.Series([_pr.get("3PM-A")])) if "3PM-A" in opp_prof_ts.columns else (0, 0)
+                _pftm, _pfta = _parse_ma_ts(pd.Series([_pr.get("FTM-A")])) if "FTM-A" in opp_prof_ts.columns else (0, 0)
+                _ptot = float(_ppg) * float(_gp)
+                _p2m = (_ptot - 3 * _p3m - _pftm) / 2
+                _pfgm = _p2m + _p3m
+                if _pfgm <= 0:
+                    continue
+                _opp_pts_tot += _ptot
+                _opp_fgm_tot += _pfgm
+                _opp_fga_tot += _pfgm / _fgp
+                _opp_fta_tot += _pfta
+            if _opp_fga_tot > 0:
+                _opp_ts = compute_true_shooting(_opp_pts_tot, _opp_fga_tot, _opp_fta_tot)
+                # Sanity gate: a team TS% outside 35-75 isn't a shooting rate, it's a unit mismatch
+                # somewhere upstream. Better no number than a confident wrong one on a comparison bar.
+                if 35 <= _opp_ts <= 75:
+                    opp_team_stats["TS%"] = _opp_ts
             _opp_to_total = opp_prof_ts["TO"].sum() if "TO" in opp_prof_ts.columns else 0
             _opp_ast_total = opp_prof_ts["AST"].sum() if "AST" in opp_prof_ts.columns else 0
             _opp_to_pg = _opp_to_total / _games_est
