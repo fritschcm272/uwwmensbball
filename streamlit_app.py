@@ -9478,10 +9478,41 @@ def render_previous_games():
                     expected_opp_stats["Assists"] / expected_opp_stats["Turnovers"]
                     if expected_opp_stats["Turnovers"] > 0 else 0)
 
+            # Biggest run and largest lead, moved up into this table from the section that used to sit
+            # below it -- they're team stats for this game like any other, and splitting them out meant
+            # scrolling past the box score to find out whether a 12-point night was one 12-0 burst or a
+            # steady grind. Baselines follow the same rule as every other row: UWW's own prior-game average
+            # for our column, and what UWW's opponents had been doing to us for theirs.
+            _ts_runs = load_table("uww_scoring_runs", _pg_season)
+            _ts_run_row = _this_game(_ts_runs, "uww_scoring_runs") if not _ts_runs.empty else pd.DataFrame()
+            if not _ts_run_row.empty:
+                _rr0 = _ts_run_row.iloc[0]
+                for _lbl, _u_col, _o_col in (("Biggest Run", "uww_biggest_run", "opponent_biggest_run"),
+                                             ("Largest Lead", "uww_largest_lead", "opponent_largest_lead")):
+                    _uv = pd.to_numeric(_rr0.get(_u_col), errors="coerce")
+                    _ov = pd.to_numeric(_rr0.get(_o_col), errors="coerce")
+                    if pd.notna(_uv):
+                        actual_stats[_lbl] = float(_uv)
+                    if pd.notna(_ov):
+                        opp_actual_stats[_lbl] = float(_ov)
+                    # Prior-game averages, from games strictly before this one on the same table.
+                    if _pg_game_date is not None and not _ts_runs.empty:
+                        _rd = game_date_col(_ts_runs)
+                        if _rd:
+                            _prior_runs = _ts_runs[iso_dates(_ts_runs[_rd]) < _pg_game_date]
+                            if not _prior_runs.empty:
+                                _pu = pd.to_numeric(_prior_runs.get(_u_col), errors="coerce").dropna()
+                                _po = pd.to_numeric(_prior_runs.get(_o_col), errors="coerce").dropna()
+                                if len(_pu):
+                                    expected_stats[_lbl] = float(_pu.mean())
+                                if len(_po):
+                                    expected_opp_stats[_lbl] = float(_po.mean())
+
             # CONFIRMED CHANGE (requested): the season-average column is gone and each side's difference
             # from its baseline moved into parentheses beside the value, so the table is two columns of
             # numbers instead of four and the comparison reads inline.
-            stat_order = ["Points", "Points Against", "FG%", "3P%", "FT%", "Rebounds", "Assists", "Turnovers", "A:TO Ratio", "Steals", "Blocks"]
+            stat_order = ["Points", "Points Against", "FG%", "3P%", "FT%", "Rebounds", "Assists",
+                          "Turnovers", "A:TO Ratio", "Steals", "Blocks", "Biggest Run", "Largest Lead"]
             lower_better = {"Points Against", "Turnovers"}
 
             def _cell(_stat, _value, _baseline, _for_uww):
@@ -9537,6 +9568,13 @@ def render_previous_games():
                     "favours UWW either way, so a green number in the opponent column means we held them "
                     "below what we'd been giving up."
                 )
+                # The one thing worth keeping from the scoring-run section that used to sit below this
+                # table: who was on the floor while UWW's biggest run happened. The run itself is now a
+                # row above, and this says which five produced it.
+                if not _ts_run_row.empty:
+                    _rr0 = _ts_run_row.iloc[0]
+                    st.caption(f"During UWW's run — UWW: {_rr0.get('uww_run_uww_lineup', '-')} | "
+                               f"{short_opponent}: {_rr0.get('uww_run_opp_lineup', '-')}")
             else:
                 st.caption("Not enough prior game data for comparison.")
         else:
@@ -9995,31 +10033,7 @@ def render_previous_games():
     except Exception:
         pass
 
-    # --- SCORING RUNS & CLUTCH MOMENTS (this game) ---
-    _pg_runs = load_table("uww_scoring_runs", _pg_season)
-    _pg_run_row = _this_game(_pg_runs, "uww_scoring_runs") if not _pg_runs.empty else pd.DataFrame()
-    if not _pg_run_row.empty:
-        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\U0001F4C8 SCORING RUNS &amp; LARGEST LEADS</div></div>', unsafe_allow_html=True)
-        # CONFIRMED CHANGE (requested): added this "entering this game" line, same idea as GAME TEMPO above
-        # and the Runs We Go On / Runs Against Us KTV cards -- UWW's own run tendency BEFORE this game,
-        # using the exact same >=10-point "big run" bar those cards use, from games strictly before this one.
-        if _pg_game_date is not None:
-            _pg_off_rate, _pg_def_rate, _pg_run_n = compute_uww_run_rates(as_of_date=_pg_game_date, exclusive=True, season=_pg_season)
-            if _pg_off_rate is not None:
-                st.markdown(f"**Entering this game:** across the {_pg_run_n} game(s) before this one, UWW had "
-                            f"gone on a 10-0-or-better run in **{100 * _pg_off_rate:.0f}%** of them, and given "
-                            f"one up in **{100 * _pg_def_rate:.0f}%**.")
-            else:
-                st.caption("Not enough games before this one yet (need at least 1 with run data) to describe "
-                           "UWW's run tendency at the time.")
-        st.markdown("**Result:**")
-        _rr = _pg_run_row.iloc[0]
-        rr_col1, rr_col2 = st.columns(2)
-        rr_col1.metric("UWW biggest run", f"{int(_rr['uww_biggest_run'])} pts")
-        rr_col1.metric("UWW largest lead", f"{int(_rr['uww_largest_lead'])} pts")
-        rr_col2.metric(f"{short_opponent} biggest run", f"{int(_rr['opponent_biggest_run'])} pts")
-        rr_col2.metric(f"{short_opponent} largest lead", f"{int(_rr['opponent_largest_lead'])} pts")
-        st.caption(f"During UWW's run — UWW: {_rr.get('uww_run_uww_lineup', '-')} | {short_opponent}: {_rr.get('uww_run_opp_lineup', '-')}")
+    # --- CLUTCH MOMENTS (this game) ---
 
     _pg_clutch = load_table("uww_clutch_events", _pg_season)
     _pg_clutch_game = _this_game(_pg_clutch, "uww_clutch_events") if not _pg_clutch.empty else pd.DataFrame()
