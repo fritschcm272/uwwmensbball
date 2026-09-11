@@ -10234,7 +10234,18 @@ def render_previous_games():
             filtered_pbp = filtered_pbp[
                 pd.to_numeric(filtered_pbp["event_order"], errors="coerce").isin(_clutch_orders)]
 
-        kpi1, kpi2, kpi3, kpi4, kpi5 = st.columns(5)
+        # Coach-note sentiment, folded into this KPI row from the COACH NOTES THIS GAME section that used
+        # to sit below the table. Counted over filtered_pbp like every other tile here, so it answers "how
+        # did the coach grade THIS slice" -- the flags for one lineup, one play call, or clutch time only --
+        # rather than repeating one fixed whole-game number under every filter combination.
+        _pos_flags, _neg_flags = 0, 0
+        if "coach_note" in filtered_pbp.columns:
+            for _n in filtered_pbp["coach_note"].dropna():
+                _p, _ng = note_sentiment_counts(_n)
+                _pos_flags += _p
+                _neg_flags += _ng
+
+        kpi1, kpi2, kpi3, kpi4, kpi5, kpi6, kpi7 = st.columns(7)
         kpi1.metric("Total Events", len(filtered_pbp))
         scoring_events = filtered_pbp[filtered_pbp["event_type"].str.contains("made", case=False, na=False)]
         kpi2.metric("Makes", len(scoring_events))
@@ -10244,6 +10255,8 @@ def render_previous_games():
         kpi4.metric("Turnovers", len(to_count))
         unique_players = filtered_pbp["player"].dropna().nunique()
         kpi5.metric("Players", unique_players)
+        kpi6.metric("Positive notes", _pos_flags)
+        kpi7.metric("Negative notes", _neg_flags)
 
         display_cols = [c for c in ["period", "time_remaining", "team", "player", "event_type",
                                      "play_call", "video_description", "coach_note", "uww_score", "opp_score"]
@@ -10255,20 +10268,6 @@ def render_previous_games():
             hide_index=True, use_container_width=True, height=400,
         )
 
-        # --- Coach notes summary, this game only ---
-        if "coach_note" in game_pbp.columns:
-            _game_notes = game_pbp[game_pbp["coach_note"].notna()]
-            if not _game_notes.empty:
-                _pos_total, _neg_total = 0, 0
-                for _n in _game_notes["coach_note"]:
-                    _p, _n_ct = note_sentiment_counts(_n)
-                    _pos_total += _p
-                    _neg_total += _n_ct
-                st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:0.75rem 0;"><div style="font-weight:800;font-size:0.95rem;letter-spacing:0.5px;color:#4E2A84;">COACH NOTES THIS GAME</div></div>', unsafe_allow_html=True)
-                _cn_c1, _cn_c2, _cn_c3 = st.columns(3)
-                _cn_c1.metric("Notes captured", len(_game_notes))
-                _cn_c2.metric("Positive flags", _pos_total)
-                _cn_c3.metric("Negative flags", _neg_total)
 
 # --------------------------------------------------------------------------------------------------------------
 # Section 3: Team
