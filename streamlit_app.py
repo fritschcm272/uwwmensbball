@@ -3010,73 +3010,66 @@ def project_game(short_opponent: str, location: str = None) -> dict:
     }
 
 
-@st.cache_data(ttl=60)
-def project_uww_box(short_opponent: str, team_points: float, possessions: float) -> pd.DataFrame:
-    """Per-player projection driven by MINUTES and PER-MINUTE RATES, then reconciled to the team total.
+def _project_box_core(rows: pd.DataFrame, team_points: float, possessions: float) -> pd.DataFrame:
+    """Minutes-and-rates player projection for ONE team's box-score history.
 
-    The previous version took each player's season per-game averages and multiplied every one of them by a
-    single scalar so the points column added up to the projected team total. That silently assumed the
-    rotation never changes, and it left rebounds and assists unscaled, so those columns summed to whatever
-    they summed to regardless of the projected pace.
+    Extracted from project_uww_box so the opponent can be projected by exactly the same math instead of a
+    different model -- a projection where our side and their side are built differently isn't a matchup
+    projection, it's two projections printed next to each other.
 
-    Here: minutes come from the last five games (what the rotation looks like NOW, not in November),
-    normalised to the 200 a team plays; every stat is a per-minute rate times those minutes; and each stat
-    column is reconciled to its own projected team total, so points, rebounds and assists are all
-    internally consistent with the projected tempo.
+    `rows` is one team's player rows across their games (uww_pbp_box_score for us,
+    uww_opponent_prior_games_box_score for them). Minutes come from the last five games on file, normalised
+    to the 200 a team plays; every stat is a per-minute rate times those minutes; points reconcile to
+    `team_points` and every other column to its own season rate re-paced to `possessions`.
     """
-    box = load_table("uww_pbp_box_score")
-    if box.empty:
+    if rows.empty or "player" not in rows.columns:
         return pd.DataFrame()
-    uww = box[box["team"] == "UW-Whitewater"].copy()
-    if uww.empty or "player" not in uww.columns:
-        return pd.DataFrame()
-    for c in ["MIN", "PTS", "REB", "AST", "STL", "BLK", "TO", "FGA", "FGM", "FG3A", "FG3M", "FTA", "FTM"]:
-        if c in uww.columns:
-            uww[c] = pd.to_numeric(uww[c], errors="coerce")
-    if "MIN" not in uww.columns or uww["MIN"].fillna(0).sum() <= 0:
+    rows = rows.copy()
+    for c in ["MIN", "PTS", "REB", "OREB", "DREB", "AST", "STL", "BLK", "TO",
+              "FGA", "FGM", "FG3A", "FG3M", "FTA", "FTM"]:
+        if c in rows.columns:
+            rows[c] = pd.to_numeric(rows[c], errors="coerce")
+    if "MIN" not in rows.columns or rows["MIN"].fillna(0).sum() <= 0:
         return pd.DataFrame()
 
-    # Recent-form window: the last five games this app can see, by date when there is one.
-    if "game_date" in uww.columns:
-        recent_dates = sorted(uww["game_date"].dropna().unique())[-5:]
-        recent = uww[uww["game_date"].isin(recent_dates)] if recent_dates else uww
+    _dc = game_date_col(rows)
+    if _dc:
+        recent_dates = sorted(rows[_dc].dropna().unique())[-5:]
+        recent = rows[rows[_dc].isin(recent_dates)] if len(recent_dates) else rows
+        n_recent = recent[_dc].nunique()
+        n_games = rows[_dc].nunique()
     else:
-        recent = uww
-    stats = [c for c in ["PTS", "REB", "AST", "STL", "BLK", "TO", "FGA", "FGM", "FG3A", "FG3M", "FTA", "FTM"]
-             if c in uww.columns]
-    season = uww.groupby("player")[["MIN"] + stats].sum().reset_index()
-    recent_min = recent.groupby("player")["MIN"].sum()
-    n_recent = recent["game_date"].nunique() if "game_date" in recent.columns else 1
+        recent, n_recent, n_games = rows, 1, max(len(rows) // 10, 1)
 
+    stats = [c for c in ["PTS", "REB", "OREB", "DREB", "AST", "STL", "BLK", "TO",
+                         "FGA", "FGM", "FG3A", "FG3M", "FTA", "FTM"] if c in rows.columns]
+    season = rows.groupby("player")[["MIN"] + stats].sum().reset_index()
+    recent_min = recent.groupby("player")["MIN"].sum()
     season = season[season["MIN"] > 0].copy()
     if season.empty:
         return pd.DataFrame()
     for c in stats:
         season[f"_rate_{c}"] = season[c] / season["MIN"]
-    # Projected minutes: recent per-game minutes, normalised so the five spots add to 200.
     season["proj_min"] = season["player"].map(recent_min).fillna(0) / max(n_recent, 1)
     if season["proj_min"].sum() <= 0:
-        season["proj_min"] = season["MIN"] / max(uww["game_date"].nunique() if "game_date" in uww.columns else 1, 1)
+        season["proj_min"] = season["MIN"] / max(n_games, 1)
     season["proj_min"] = 200 * season["proj_min"] / season["proj_min"].sum()
 
     out = pd.DataFrame({"player": season["player"], "MIN": season["proj_min"].round(1)})
     for c in stats:
         out[c] = season[f"_rate_{c}"] * season["proj_min"]
 
-    # Reconcile: points to the projected team total, everything else to the season rate re-paced to this
-    # game's projected possessions -- so a slow projected game lowers rebounds and assists too.
-    n_games = uww["game_date"].nunique() if "game_date" in uww.columns else max(len(uww) // 10, 1)
     if out["PTS"].sum() > 0 and team_points:
         out["PTS"] *= team_points / out["PTS"].sum()
     _season_poss = estimate_possessions(
-        uww["FGA"].sum() if "FGA" in uww.columns else 0,
-        uww["OREB"].sum() if "OREB" in uww.columns else 0,
-        uww["TO"].sum() if "TO" in uww.columns else 0,
-        uww["FTA"].sum() if "FTA" in uww.columns else 0,
+        rows["FGA"].sum() if "FGA" in rows.columns else 0,
+        rows["OREB"].sum() if "OREB" in rows.columns else 0,
+        rows["TO"].sum() if "TO" in rows.columns else 0,
+        rows["FTA"].sum() if "FTA" in rows.columns else 0,
     ) / max(n_games, 1)
     pace_factor = (possessions / _season_poss) if _season_poss and possessions else 1.0
     for c in [x for x in stats if x != "PTS"]:
-        target = (uww[c].sum() / max(n_games, 1)) * pace_factor
+        target = (rows[c].sum() / max(n_games, 1)) * pace_factor
         if out[c].sum() > 0 and target > 0:
             out[c] *= target / out[c].sum()
     out = out[out["MIN"] >= 1].sort_values("PTS", ascending=False).reset_index(drop=True)
@@ -3084,6 +3077,117 @@ def project_uww_box(short_opponent: str, team_points: float, possessions: float)
         if c != "player":
             out[c] = out[c].round(1)
     return out
+
+
+@st.cache_data(ttl=60)
+def project_uww_box(short_opponent: str, team_points: float, possessions: float) -> pd.DataFrame:
+    """UWW's per-player projection -- see _project_box_core for the method."""
+    box = load_table("uww_pbp_box_score")
+    if box.empty or "team" not in box.columns:
+        return pd.DataFrame()
+    return _project_box_core(box[box["team"] == "UW-Whitewater"], team_points, possessions)
+
+
+@st.cache_data(ttl=60)
+def project_opponent_box(short_opponent: str, team_points: float, possessions: float) -> tuple:
+    """The opponent's per-player projection, as (frame, source_label).
+
+    Preferred source is their OWN prior-game box scores, run through the same minutes-and-rates model used
+    for UWW. When those don't exist (an opponent with no _pbp files on file -- a real and common case), it
+    falls back to the parser's per-player comparables, rescaled so the points column adds to the projected
+    team total. The source is returned rather than hidden, because the two are not equally trustworthy and
+    the coach should know which one is on screen.
+    """
+    prior = load_table("uww_opponent_prior_games_box_score")
+    if not prior.empty and "team" in prior.columns and short_opponent:
+        theirs = prior[prior["team"] == short_opponent]
+        built = _project_box_core(theirs, team_points, possessions)
+        if not built.empty:
+            _n = theirs[game_date_col(theirs)].nunique() if game_date_col(theirs) else 0
+            return built, f"their own box scores ({_n} prior game(s))"
+
+    comps = load_table("uww_opponent_projected_box_score")
+    if comps.empty:
+        return pd.DataFrame(), ""
+    out = comps.copy()
+    _name_col = "name" if "name" in out.columns else ("PLAYER" if "PLAYER" in out.columns else None)
+    if _name_col is None or "projected_PTS" not in out.columns:
+        return pd.DataFrame(), ""
+    out = out.rename(columns={_name_col: "player", "projected_PTS": "PTS",
+                              "projected_REB": "REB", "projected_AST": "AST"})
+    for c in ["MIN", "PTS", "REB", "AST"]:
+        if c in out.columns:
+            out[c] = pd.to_numeric(out[c], errors="coerce")
+    if out["PTS"].sum() > 0 and team_points:
+        out["PTS"] *= team_points / out["PTS"].sum()
+    # projection_basis carries the parser's own explanation of how each comp was derived -- kept so the
+    # fallback table can still be hovered, the one thing the comps do better than the rate model.
+    keep = [c for c in ["player", "MIN", "PTS", "REB", "AST", "projection_basis"] if c in out.columns]
+    out = out[keep].sort_values("PTS", ascending=False).reset_index(drop=True)
+    for c in out.columns:
+        if c not in ("player", "projection_basis"):
+            out[c] = pd.to_numeric(out[c], errors="coerce").round(1)
+    return out, "parser per-player comparables (no prior-game box scores on file)"
+
+
+def projected_team_line(box: pd.DataFrame, opp_box: pd.DataFrame, possessions: float) -> dict:
+    """Team-level projected stat line from a projected player frame, with the four factors where the
+    columns needed for them survive. Everything here is a SUM of the per-player projection rather than a
+    separately modelled team number, so the team table and the player tables can never disagree."""
+    if box.empty:
+        return {}
+    def _s(df, c):
+        return float(df[c].sum()) if c in df.columns else None
+    line = {c: _s(box, c) for c in ["PTS", "REB", "AST", "STL", "BLK", "TO"]}
+    fgm, fga, fg3m, fg3a = _s(box, "FGM"), _s(box, "FGA"), _s(box, "FG3M"), _s(box, "FG3A")
+    ftm, fta = _s(box, "FTM"), _s(box, "FTA")
+    line["FG%"] = (100 * fgm / fga) if fgm is not None and fga else None
+    line["3P%"] = (100 * fg3m / fg3a) if fg3m is not None and fg3a else None
+    line["FT%"] = (100 * ftm / fta) if ftm is not None and fta else None
+    line["eFG%"] = (100 * (fgm + 0.5 * fg3m) / fga) if None not in (fgm, fg3m) and fga else None
+    line["TOV%"] = (100 * line["TO"] / possessions) if line.get("TO") and possessions else None
+    line["FT Rate"] = (100 * fta / fga) if fta is not None and fga else None
+    oreb, opp_dreb = _s(box, "OREB"), _s(opp_box, "DREB")
+    line["ORB%"] = (100 * oreb / (oreb + opp_dreb)) if oreb and opp_dreb else None
+    return line
+
+
+def project_matchup(short_opponent: str, location: str = None) -> dict:
+    """The single projection for the upcoming game: score and tempo, both teams' player lines, and both
+    teams' projected team stats -- all from one chain of arithmetic.
+
+    CONFIRMED CHANGE (requested): this replaces two competing models that used to sit side by side on the
+    Tools page. The possession model projected the score but only had UWW's players; the parser's
+    comparables model projected both rosters' players but worked in points per game, so it baked tempo into
+    every number and disagreed with the score above it. Here the possession model sets the score and the
+    tempo, and BOTH player projections are reconciled to it -- the comparables are kept as the opponent
+    fallback and as an independent cross-check on the total, which is the one job they're genuinely better
+    suited to than a model with no data on the opponent's individuals.
+    """
+    game = project_game(short_opponent, location)
+    if not game:
+        return {}
+    uww_box = project_uww_box(short_opponent, game["uww_pts"], game["possessions"])
+    opp_box, opp_source = project_opponent_box(short_opponent, game["opp_pts"], game["possessions"])
+
+    # Independent check: the parser's comparables totals, built from season scoring against comparable
+    # competition rather than from efficiency x pace. Agreement is evidence; a wide gap is a flag.
+    check = {}
+    _cu, _co = load_table("uww_projected_box_score"), load_table("uww_opponent_projected_box_score")
+    if not _cu.empty and not _co.empty and "projected_PTS" in _cu.columns and "projected_PTS" in _co.columns:
+        _cu_t = pd.to_numeric(_cu["projected_PTS"], errors="coerce").sum()
+        _co_t = pd.to_numeric(_co["projected_PTS"], errors="coerce").sum()
+        check = {"uww_pts": _cu_t, "opp_pts": _co_t, "margin": _cu_t - _co_t,
+                 "margin_gap": (_cu_t - _co_t) - game["margin"]}
+    return {
+        "game": game,
+        "uww_box": uww_box,
+        "opp_box": opp_box,
+        "opp_source": opp_source,
+        "uww_line": projected_team_line(uww_box, opp_box, game["possessions"]),
+        "opp_line": projected_team_line(opp_box, uww_box, game["possessions"]),
+        "check": check,
+    }
 
 
 def compute_four_factors(team_box: pd.DataFrame, opp_box: pd.DataFrame) -> dict:
@@ -6566,18 +6670,24 @@ rather than taking the label's word for it.
 
 
     with _new_tools_proj_c:
-        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">PROJECTED BOX SCORE</div></div>', unsafe_allow_html=True)
-        uww_proj = load_table("uww_projected_box_score")
-        opp_proj = load_table("uww_opponent_projected_box_score")  # was mismatched to a nonexistent "aurora_projected_box_score" file — this is the name the parser notebook actually exports (see parser cell 128)
+        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">GAME PROJECTION</div></div>', unsafe_allow_html=True)
 
-        # --- Possession-based projection (see project_game) ------------------------------------------------
-        _pg = project_game(short_opponent, location)
-        if _pg:
+        # CONFIRMED CHANGE (requested): one projection, not two. This section used to show the possession
+        # model and the parser's per-player comparables as competing projections with different totals and
+        # a caption explaining why they disagreed. project_matchup() now runs them as one chain -- the
+        # possession model sets score and tempo, both rosters are reconciled to it, and the comparables
+        # survive as the opponent fallback and as an independent check on the total.
+        _mu = project_matchup(short_opponent, location)
+        if not _mu:
+            st.info("Not enough data yet to project this game -- needs adjusted efficiency for both teams.")
+        else:
+            _pg = _mu["game"]
             _pg_lo, _pg_hi = _pg["margin"] - _pg["sd"], _pg["margin"] + _pg["sd"]
             _m1, _m2, _m3, _m4 = st.columns(4)
             _m1.metric("Projected UWW", f"{_pg['uww_pts']:.0f}")
             _m2.metric(f"Projected {short_opponent}", f"{_pg['opp_pts']:.0f}")
-            _m3.metric("Margin", f"{_pg['margin']:+.1f}", help=f"Likely range {_pg_lo:+.0f} to {_pg_hi:+.0f} (one standard deviation).")
+            _m3.metric("Margin", f"{_pg['margin']:+.1f}",
+                       help=f"Likely range {_pg_lo:+.0f} to {_pg_hi:+.0f} (one standard deviation).")
             _m4.metric("Win probability", f"{_pg['win_prob']:.0%}")
             st.markdown(
                 f"Expected tempo **{_pg['possessions']:.0f}** possessions "
@@ -6587,67 +6697,83 @@ rather than taking the label's word for it.
                 f"{short_opponent} **{_pg['opp_ortg']:.1f}**."
                 + (f" Home court applied: **{_pg['hca']:+.1f}** points." if _pg["hca"] else " Neutral floor.")
             )
+
+            # --- Projected team stats: summed from the player projections below, so the two can't disagree.
+            _tl_u, _tl_o = _mu["uww_line"], _mu["opp_line"]
+            if _tl_u:
+                _tl_rows = []
+                for _lbl, _fmt in (("PTS", "{:.0f}"), ("REB", "{:.1f}"), ("AST", "{:.1f}"),
+                                   ("STL", "{:.1f}"), ("BLK", "{:.1f}"), ("TO", "{:.1f}"),
+                                   ("FG%", "{:.1f}%"), ("3P%", "{:.1f}%"), ("FT%", "{:.1f}%"),
+                                   ("eFG%", "{:.1f}%"), ("TOV%", "{:.1f}%"), ("ORB%", "{:.1f}%"),
+                                   ("FT Rate", "{:.1f}")):
+                    _uv, _ov = _tl_u.get(_lbl), (_tl_o or {}).get(_lbl)
+                    if _uv is None and _ov is None:
+                        continue
+                    _tl_rows.append({
+                        "Stat": _lbl,
+                        "UWW": _fmt.format(_uv) if _uv is not None else "--",
+                        short_opponent[:18]: _fmt.format(_ov) if _ov is not None else "--",
+                    })
+                if _tl_rows:
+                    st.markdown("**Projected team stats**")
+                    st.dataframe(pd.DataFrame(_tl_rows), hide_index=True, use_container_width=True)
+                    st.caption(
+                        "Every figure here is the sum of the per-player projections below, not a separately "
+                        "modelled team number -- so the team line and the player lines are always the same "
+                        "projection. A dash means the source box scores don't carry the columns that stat "
+                        "needs (ORB% needs the other side's defensive rebounds; the shooting splits need "
+                        "makes and attempts)."
+                    )
+
+            # --- Both rosters, same model, side by side.
+            _pcol1, _pcol2 = st.columns(2)
+            with _pcol1:
+                st.markdown("**UW-Whitewater**")
+                if _mu["uww_box"].empty:
+                    st.info("No UWW box-score data to project from yet.")
+                else:
+                    _nb_cols = [c for c in ["player", "MIN", "PTS", "REB", "AST", "STL", "BLK", "TO"]
+                                if c in _mu["uww_box"].columns]
+                    st.dataframe(_mu["uww_box"][_nb_cols].rename(columns={"player": "Player"}),
+                                 hide_index=True, use_container_width=True)
+            with _pcol2:
+                st.markdown(f"**{short_opponent}**")
+                if _mu["opp_box"].empty:
+                    st.info("No prior-game box scores or parser comparables on file for this opponent.")
+                else:
+                    _ob_cols = [c for c in ["player", "MIN", "PTS", "REB", "AST", "STL", "BLK", "TO"]
+                                if c in _mu["opp_box"].columns]
+                    if "projection_basis" in _mu["opp_box"].columns:
+                        # Comps fallback: render with the parser's own per-row derivation on hover.
+                        render_box_score_with_tooltips(_mu["opp_box"], _ob_cols)
+                    else:
+                        st.dataframe(_mu["opp_box"][_ob_cols].rename(columns={"player": "Player"}),
+                                     hide_index=True, use_container_width=True)
+                    if _mu["opp_source"]:
+                        st.caption(f"Source: {_mu['opp_source']}.")
+
             st.caption(
-                "Efficiency x possessions, not points per game: expected tempo is the harmonic mean of the two "
-                "teams' paces, each offense is its opponent-adjusted rating shifted by how far the other "
+                "Efficiency x possessions, not points per game: expected tempo is the harmonic mean of the "
+                "two teams' paces, each offense is its opponent-adjusted rating shifted by how far the other "
                 f"defense sits from average, and the win probability is the normal CDF of the margin over a "
-                f"{GAME_MARGIN_SD:.0f}-point one-game standard deviation. The margin is a center of a "
-                "distribution, not a prediction -- the range on the margin tile is what an ordinary game looks "
-                "like around it."
+                f"{GAME_MARGIN_SD:.0f}-point one-game standard deviation. Minutes come from each team's last "
+                "five games on file, normalised to the 200 a team plays; every stat is a per-minute rate "
+                "times those minutes, with points reconciled to the projected team total and the rest "
+                "re-paced to this game's possessions. The margin is the center of a distribution, not a "
+                "prediction -- the range on the margin tile is what an ordinary game looks like around it."
             )
 
-            _new_box = project_uww_box(short_opponent, _pg["uww_pts"], _pg["possessions"])
-            if not _new_box.empty:
-                with st.expander("UWW player projection (minutes-and-rates model)", expanded=True):
-                    _nb_cols = [c for c in ["player", "MIN", "PTS", "REB", "AST", "STL", "BLK", "TO"] if c in _new_box.columns]
-                    st.dataframe(_new_box[_nb_cols].rename(columns={"player": "Player"}),
-                                 hide_index=True, use_container_width=True)
-                    st.caption(
-                        "Minutes come from the last five games (the rotation as it stands now), normalised to "
-                        "the 200 a team plays. Every stat is a per-minute rate times those minutes; points are "
-                        "reconciled to the projected team total and every other column to its own season rate "
-                        "re-paced to this game's projected possessions -- so a slow projected game lowers "
-                        "rebounds and assists too, which per-game-average scaling never did."
-                    )
-            st.markdown("---")
-
-        if uww_proj.empty or opp_proj.empty:
-            st.info("Parser-side projected box score not available yet for this opponent.")
-        else:
-            proj_uww_total = uww_proj["projected_PTS"].sum()
-            proj_opp_total = opp_proj["projected_PTS"].sum()
-            st.markdown("**Parser projection (per-player comparables)**")
-            pcol1, pcol2, pcol3 = st.columns(3)
-            pcol1.metric("Projected UWW", f"{proj_uww_total:.0f}")
-            pcol2.metric(f"Projected {short_opponent}", f"{proj_opp_total:.0f}")
-            pcol3.metric("Projected margin", f"{proj_uww_total - proj_opp_total:+.0f}")
-            if _pg:
-                _delta = (proj_uww_total - proj_opp_total) - _pg["margin"]
+            # --- Independent cross-check, not a second projection.
+            if _mu["check"]:
+                _ck = _mu["check"]
+                _agree = abs(_ck["margin_gap"]) <= 5
                 st.caption(
-                    f"This is the older model, kept because it projects the OPPONENT'S players individually "
-                    f"(via similarity comps), which the possession model above does not. It differs from the "
-                    f"possession model by {_delta:+.1f} points of margin -- when the two disagree sharply, the "
-                    f"usual cause is pace: this one works in points per game, which bakes tempo into every number."
-                )
-            else:
-                st.caption(
-                    "Team totals blend each team's season scoring rate with the ACTUAL points scored/allowed against "
-                    "comparable competition this season -- not just a season average. Hover any player row below for "
-                    "exactly how that individual projection was derived."
-                )
-
-            pbox_col1, pbox_col2 = st.columns(2)
-            with pbox_col1:
-                st.markdown("**UW-Whitewater**")
-                render_box_score_with_tooltips(
-                    uww_proj.sort_values("projected_PTS", ascending=False),
-                    ["PLAYER", "MIN", "projected_PTS", "projected_REB", "projected_AST", "FG%", "3P%", "FT%"],
-                )
-            with pbox_col2:
-                st.markdown(f"**{short_opponent}**")
-                render_box_score_with_tooltips(
-                    opp_proj.sort_values("projected_PTS", ascending=False),
-                    [c for c in ["name", "jersey_number", "role", "MIN", "projected_PTS", "projected_REB", "projected_AST"] if c in opp_proj.columns],
+                    f"Cross-check: the parser's per-player comparables -- built from season scoring against "
+                    f"comparable competition rather than efficiency x pace -- put this at "
+                    f"{_ck['uww_pts']:.0f}-{_ck['opp_pts']:.0f} ({_ck['margin']:+.0f}), "
+                    f"{'agreeing within' if _agree else 'differing by'} {abs(_ck['margin_gap']):.1f} points of "
+                    f"margin. {'' if _agree else 'When the two disagree sharply the usual cause is pace: the comparables work in points per game, which bakes tempo into every number.'}"
                 )
 
         # ==================== LINEUP SIMULATOR ====================
