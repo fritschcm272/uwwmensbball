@@ -9364,13 +9364,15 @@ def render_previous_games():
             game_stints[["uww_lineup", "opp_lineup"]] = game_stints[["opp_lineup", "uww_lineup"]].values
 
     uww_game_box = game_box[game_box["team"] == "UW-Whitewater"] if not game_box.empty else pd.DataFrame()
+    # The other side of the same game, for the opponent column in TEAM STATS below.
+    opp_game_box = game_box[game_box["team"] != "UW-Whitewater"] if not game_box.empty else pd.DataFrame()
     opp_game_box = game_box[game_box["team"] != "UW-Whitewater"] if not game_box.empty else pd.DataFrame()
 
-    # --- TEAM STATS: PLAN vs REALITY  |  BOX SCORE (side by side) ---
+    # --- TEAM STATS  |  BOX SCORE (side by side) ---
     _tsb_left, _tsb_right = st.columns([1, 2])
     with _tsb_left:
         # --- TEAM STATS: EXPECTED vs ACTUAL ---
-        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">TEAM STATS: PLAN vs REALITY</div></div>', unsafe_allow_html=True)
+        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">TEAM STATS</div></div>', unsafe_allow_html=True)
 
         if not uww_game_box.empty:
             # Compute actual game stats
@@ -9392,6 +9394,30 @@ def render_previous_games():
             actual_stats["3P%"] = (_uww_3pm / _uww_3pa * 100) if _uww_3pa > 0 else 0
             actual_stats["FT%"] = (_uww_ftm / _uww_fta * 100) if _uww_fta > 0 else 0
             actual_stats["A:TO Ratio"] = (actual_stats["Assists"] / actual_stats["Turnovers"]) if actual_stats["Turnovers"] > 0 else 0
+
+            # CONFIRMED CHANGE (requested): the opponent's line from the same game, so this section compares
+            # three things -- what we usually do, what we did, and what THEY did -- instead of only grading
+            # us against ourselves. Points/Points Against are mirrored (their points are our points against),
+            # and every other figure is summed from their own box-score rows.
+            def _side_stats(_side_box, _pts_for, _pts_against):
+                if _side_box.empty:
+                    return {}
+                def _sum(_c):
+                    return _side_box[_c].sum() if _c in _side_box.columns else 0
+                _fga, _fgm = _sum("FGA"), _sum("FGM")
+                _out = {
+                    "Points": _pts_for, "Points Against": _pts_against,
+                    "FG%": (_fgm / _fga * 100) if _fga > 0 else 0,
+                    "Rebounds": _sum("REB"), "Assists": _sum("AST"), "Turnovers": _sum("TO"),
+                    "Steals": _sum("STL"), "Blocks": _sum("BLK"),
+                }
+                _3pa, _fta = _sum("FG3A"), _sum("FTA")
+                _out["3P%"] = (_sum("FG3M") / _3pa * 100) if _3pa > 0 else 0
+                _out["FT%"] = (_sum("FTM") / _fta * 100) if _fta > 0 else 0
+                _out["A:TO Ratio"] = (_out["Assists"] / _out["Turnovers"]) if _out["Turnovers"] > 0 else 0
+                return _out
+
+            opp_actual_stats = _side_stats(opp_game_box, opp_score, uww_score)
 
             # Compute season averages going INTO this game (expected)
             _pre_box = scope_to_played(box, _orig_played.iloc[:_game_original_pos], _pg_season) if _game_original_pos else box.iloc[0:0]
@@ -9455,21 +9481,30 @@ def render_previous_games():
                 diff_fmt = f"{diff:+.1f}" if not is_pct else f"{diff:+.1f}{'%' if '%' in stat else ''}"
                 if "Ratio" in stat:
                     diff_fmt = f"{diff:+.2f}"
+                _opp_v = opp_actual_stats.get(stat)
+                if _opp_v is None:
+                    _opp_fmt = "--"
+                elif "Ratio" in stat:
+                    _opp_fmt = f"{_opp_v:.2f}"
+                else:
+                    _opp_fmt = f"{_opp_v:.1f}{'%' if '%' in stat else ''}"
                 rows_html += (
                     f'<div style="padding:8px 0;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;">'
-                    f'<span style="font-size:1rem;width:80px;font-weight:600;">{exp_fmt}</span>'
-                    f'<span style="font-size:0.85rem;color:#666;font-weight:600;text-transform:uppercase;flex:1;text-align:center;">{stat}</span>'
-                    f'<span style="font-size:1rem;width:80px;text-align:right;font-weight:700;">{act_fmt}</span>'
-                    f'<span style="font-size:0.8rem;width:60px;text-align:right;color:{diff_color};font-weight:600;">{diff_fmt}</span>'
+                    f'<span style="font-size:0.95rem;width:62px;font-weight:600;color:#888;">{exp_fmt}</span>'
+                    f'<span style="font-size:0.8rem;color:#666;font-weight:600;text-transform:uppercase;flex:1;text-align:center;">{stat}</span>'
+                    f'<span style="font-size:0.95rem;width:62px;text-align:right;font-weight:700;">{act_fmt}</span>'
+                    f'<span style="font-size:0.78rem;width:52px;text-align:right;color:{diff_color};font-weight:600;">{diff_fmt}</span>'
+                    f'<span style="font-size:0.95rem;width:62px;text-align:right;font-weight:700;color:#222;">{_opp_fmt}</span>'
                     f'</div>'
                 )
             if rows_html:
                 stats_comparison_html = (
                     f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:14px 18px;">'
                     f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:0 4px;">'
-                    f'<span style="font-size:0.9rem;font-weight:700;color:#888;">Season Avg</span>'
-                    f'<span style="font-size:0.9rem;font-weight:700;color:#4E2A84;">UWW This Game</span>'
-                    f'<span style="font-size:0.8rem;font-weight:600;color:#888;">+/-</span>'
+                    f'<span style="font-size:0.8rem;font-weight:700;color:#888;">UWW Season Avg</span>'
+                    f'<span style="font-size:0.8rem;font-weight:700;color:#4E2A84;">UWW</span>'
+                    f'<span style="font-size:0.75rem;font-weight:600;color:#888;">+/-</span>'
+                    f'<span style="font-size:0.8rem;font-weight:700;color:#222;">{html.escape(get_team_abbreviation(short_opponent or str(game.get("opponent", "OPP"))))}</span>'
                     f'</div>{rows_html}</div>'
                 )
                 st.markdown(stats_comparison_html, unsafe_allow_html=True)
@@ -9518,13 +9553,85 @@ def render_previous_games():
                 _uww_df = _by_minutes(game_box[game_box["team"] == _t_uww])
                 _opp_df = _by_minutes(game_box[game_box["team"] == _t_opp])
 
+                # --- Difference from the projection, shown in parentheses next to each value.
+                # The parser now stamps every projection with the (opponent, game_date) it was built for
+                # and appends rather than overwrites, so each past game keeps the projection that was
+                # actually made before it. Rows are selected by that stamp -- an exact match or nothing.
+                # Older CSVs written before the stamp existed have no such columns; those fall back to no
+                # parentheses rather than comparing this game against a projection for a different one.
+                def _proj_for_this_game(_tbl):
+                    if _tbl.empty or not {"opponent", "game_date"} <= set(_tbl.columns):
+                        return pd.DataFrame()
+                    _want_opp = str(game.get("opponent", "")).strip().lower()
+                    _want_date = str(game.get("date", "")).strip().lower()
+                    _m = _tbl[
+                        (_tbl["opponent"].astype(str).str.strip().str.lower() == _want_opp)
+                        & (_tbl["game_date"].astype(str).str.strip().str.lower() == _want_date)
+                    ]
+                    return _m
+
+                def _proj_lookup(_tbl, _name_col):
+                    """{lowercased player name: {stat: projected value}} from a parser projection table."""
+                    _tbl = _proj_for_this_game(_tbl)
+                    if _tbl.empty or _name_col not in _tbl.columns:
+                        return {}
+                    _out = {}
+                    for _, _r in _tbl.iterrows():
+                        _vals = {}
+                        for _stat, _src in (("PTS", "projected_PTS"), ("REB", "projected_REB"),
+                                            ("AST", "projected_AST"), ("MIN", "MIN")):
+                            _v = pd.to_numeric(_r.get(_src), errors="coerce")
+                            if pd.notna(_v):
+                                _vals[_stat] = float(_v)
+                        _out[str(_r[_name_col]).strip().lower()] = _vals
+                    return _out
+
+                def _with_diffs(_df, _lookup):
+                    """Actual value with its difference from the projection appended: 14 (+3).
+
+                    Rendered as text, so these columns stop sorting numerically in the table -- acceptable
+                    on a five-row table that's already sorted by minutes, and the full box score dialog
+                    keeps the raw numbers for anything that needs sorting.
+                    """
+                    if not _lookup:
+                        return _df
+                    _d = _df.copy()
+                    for _stat in ("MIN", "PTS", "REB", "AST"):
+                        if _stat not in _d.columns:
+                            continue
+                        _vals = []
+                        for _, _row in _d.iterrows():
+                            _act = pd.to_numeric(_row.get(_stat), errors="coerce")
+                            _proj = _lookup.get(str(_row.get("player", "")).strip().lower(), {}).get(_stat)
+                            if pd.isna(_act):
+                                _vals.append("--")
+                            elif _proj is None:
+                                # Projected for nobody: a walk-on who wasn't in the projection at all. Show
+                                # the real number without a parenthetical rather than a fake (+0).
+                                _vals.append(f"{_act:g}")
+                            else:
+                                _vals.append(f"{_act:g} ({_act - _proj:+.1f})")
+                        _d[_stat] = _vals
+                    return _d
+
+                _uww_proj = _proj_lookup(load_table("uww_projected_box_score", _pg_season), "PLAYER")
+                _opp_proj = _proj_lookup(load_table("uww_opponent_projected_box_score", _pg_season), "name")
+                _pv_applies = bool(_uww_proj or _opp_proj)
+                _uww_show = _with_diffs(_uww_df, _uww_proj)
+                _opp_show = _with_diffs(_opp_df, _opp_proj)
+
                 st.markdown("**UW-Whitewater**")
-                st.dataframe(_uww_df[compact_cols].head(5), hide_index=True, use_container_width=True)
+                st.dataframe(_uww_show[compact_cols].head(5), hide_index=True, use_container_width=True)
                 st.markdown(f"**{_t_opp}**")
-                st.dataframe(_opp_df[compact_cols].head(5), hide_index=True, use_container_width=True)
+                st.dataframe(_opp_show[compact_cols].head(5), hide_index=True, use_container_width=True)
                 _hidden = max(len(_uww_df) - 5, 0) + max(len(_opp_df) - 5, 0)
+                _notes = []
                 if _hidden:
-                    st.caption(f"Top five by minutes shown; {_hidden} more player(s) in the full box score.")
+                    _notes.append(f"Top five by minutes shown; {_hidden} more player(s) in the full box score.")
+                if _pv_applies:
+                    _notes.append("Parentheses are the difference from the projection (actual minus projected).")
+                if _notes:
+                    st.caption(" ".join(_notes))
 
                 # Full box score, in a dialog rather than an expander -- every player, every column, one
                 # click away, without the page carrying two full tables at all times.
@@ -9652,6 +9759,23 @@ def render_previous_games():
     # --- PROJECTED vs ACTUAL ---
     try:
         _proj_box = load_table("uww_projected_box_score", _pg_season)
+        # CONFIRMED BUG (fixed here): this compared the selected past game against whatever projection
+        # happened to be on disk, which was always the CURRENT upcoming game's -- so the "projection" it
+        # graded was usually for a different opponent entirely. Now that the parser stamps each projection
+        # with the game it was made for and appends across runs, the table holds MANY games and has to be
+        # filtered down to this one -- without that filter the merge below would also multiply every player
+        # row by the number of archived games they appear in.
+        if not _proj_box.empty and {"opponent", "game_date"} <= set(_proj_box.columns):
+            _proj_box = _proj_box[
+                (_proj_box["opponent"].astype(str).str.strip().str.lower()
+                 == str(game.get("opponent", "")).strip().lower())
+                & (_proj_box["game_date"].astype(str).str.strip().str.lower()
+                   == str(game.get("date", "")).strip().lower())
+            ]
+        elif not _proj_box.empty:
+            # Pre-stamp CSV: no way to tell which game it describes, so grade nothing rather than the
+            # wrong thing.
+            _proj_box = _proj_box.iloc[0:0]
         if not _proj_box.empty and not uww_game_box.empty:
             # Match projected players to actual game box by player name
             _proj_box["_join_key"] = _proj_box["PLAYER"].str.strip().str.lower()

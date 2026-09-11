@@ -1,15 +1,15 @@
-name,jersey_number,role,position,MIN,projected_PTS,projected_REB,projected_AST,comp_used,comp_from_game,similarity_score,projection_basis
-Johnny Semany,#32,Starter,G,,14.1,4.0,4.0,Andre Renta,UW-Eau Claire Blugolds,11.5,No season stats recorded for this player yet -- insufficient data to project.
-Jack Haynes,#23,Starter,F,,11.6,16.0,1.0,Korbin Heitzman,Alma Scots,12.71,No season stats recorded for this player yet -- insufficient data to project.
-Johnny Semany,#32,Starter,G,,10.8,2.0,4.0,Andre Renta,UW-Eau Claire Blugolds,11.5,No season stats recorded for this player yet -- insufficient data to project.
-Connor Mosele,#20,Bench,G,,10.0,1.0,0.0,Aiden Hawkinson,UW-Oshkosh Titans,13.5,No season stats recorded for this player yet -- insufficient data to project.
-Gavin Sarvis,#11,Starter,G,,9.1,2.0,0.0,Marcus Haupert,Simpson Storm,9.83,No season stats recorded for this player yet -- insufficient data to project.
-Damyen Jackson,#2,Starter,G,,8.3,1.0,0.0,EJ Marshall,Elmhurst Bluejays,13.0,No season stats recorded for this player yet -- insufficient data to project.
-Nolan Berendes,#12,Starter,F,,3.3,2.0,0.0,Nicholas Gouriotis,Lawrence Vikings,13.17,No season stats recorded for this player yet -- insufficient data to project.
-Connor Mosele,#20,Bench,G,,3.3,1.0,2.0,Aiden Hawkinson,UW-Oshkosh Titans,13.5,No season stats recorded for this player yet -- insufficient data to project.
-Deng Makeer,#1,Bench,G,,2.5,1.0,0.0,Talen Pearson,Elmhurst Bluejays,13.17,No season stats recorded for this player yet -- insufficient data to project.
-Kyle Kober,#24,Bench,G,,1.7,0.0,0.0,Robert Hutson,Aurora Spartans,13.5,No season stats recorded for this player yet -- insufficient data to project.
-Dylan Kurt,#35,Bench,,,,,,Garret Rodgers,St. Thomas (TX) Celts,3.5,No season stats recorded for this player yet -- insufficient data to project.
-Brock Massey,#15,Bench,,,,,,Garret Rodgers,St. Thomas (TX) Celts,3.5,No season stats recorded for this player yet -- insufficient data to project.
-Patrick Coen,#30,Bench,,,,,,Garret Rodgers,St. Thomas (TX) Celts,3.5,No season stats recorded for this player yet -- insufficient data to project.
-Patrick Quarnstrom,#22,Bench,,,,,,Garret Rodgers,St. Thomas (TX) Celts,3.5,No season stats recorded for this player yet -- insufficient data to project.
+opponent,game_date,name,jersey_number,role,position,MIN,projected_PTS,projected_REB,projected_AST,comp_used,comp_from_game,similarity_score,projection_basis
+Loras Duhawks,"Fri, Mar 6",Johnny Semany,#32,Starter,G,,14.1,4.0,4.0,Andre Renta,UW-Eau Claire Blugolds,11.5,No season stats recorded for this player yet -- insufficient data to project.
+Loras Duhawks,"Fri, Mar 6",Jack Haynes,#23,Starter,F,,11.6,16.0,1.0,Korbin Heitzman,Alma Scots,12.71,No season stats recorded for this player yet -- insufficient data to project.
+Loras Duhawks,"Fri, Mar 6",Johnny Semany,#32,Starter,G,,10.8,2.0,4.0,Andre Renta,UW-Eau Claire Blugolds,11.5,No season stats recorded for this player yet -- insufficient data to project.
+Loras Duhawks,"Fri, Mar 6",Connor Mosele,#20,Bench,G,,10.0,1.0,0.0,Aiden Hawkinson,UW-Oshkosh Titans,13.5,No season stats recorded for this player yet -- insufficient data to project.
+Loras Duhawks,"Fri, Mar 6",Gavin Sarvis,#11,Starter,G,,9.1,2.0,0.0,Marcus Haupert,Simpson Storm,9.83,No season stats recorded for this player yet -- insufficient data to project.
+Loras Duhawks,"Fri, Mar 6",Damyen Jackson,#2,Starter,G,,8.3,1.0,0.0,EJ Marshall,Elmhurst Bluejays,13.0,No season stats recorded for this player yet -- insufficient data to project.
+Loras Duhawks,"Fri, Mar 6",Nolan Berendes,#12,Starter,F,,3.3,2.0,0.0,Nicholas Gouriotis,Lawrence Vikings,13.17,No season stats recorded for this player yet -- insufficient data to project.
+Loras Duhawks,"Fri, Mar 6",Connor Mosele,#20,Bench,G,,3.3,1.0,2.0,Aiden Hawkinson,UW-Oshkosh Titans,13.5,No season stats recorded for this player yet -- insufficient data to project.
+Loras Duhawks,"Fri, Mar 6",Deng Makeer,#1,Bench,G,,2.5,1.0,0.0,Talen Pearson,Elmhurst Bluejays,13.17,No season stats recorded for this player yet -- insufficient data to project.
+Loras Duhawks,"Fri, Mar 6",Kyle Kober,#24,Bench,G,,1.7,0.0,0.0,Robert Hutson,Aurora Spartans,13.5,No season stats recorded for this player yet -- insufficient data to project.
+Loras Duhawks,"Fri, Mar 6",Dylan Kurt,#35,Bench,,,,,,Garret Rodgers,St. Thomas (TX) Celts,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Loras Duhawks,"Fri, Mar 6",Brock Massey,#15,Bench,,,,,,Garret Rodgers,St. Thomas (TX) Celts,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Loras Duhawks,"Fri, Mar 6",Patrick Coen,#30,Bench,,,,,,Garret Rodgers,St. Thomas (TX) Celts,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Loras Duhawks,"Fri, Mar 6",Patrick Quarnstrom,#22,Bench,,,,,,Garret Rodgers,St. Thomas (TX) Celts,3.5,No season stats recorded for this player yet -- insufficient data to project.
