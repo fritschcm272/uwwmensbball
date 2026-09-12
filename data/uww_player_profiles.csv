@@ -1,38 +1,51 @@
-opponent,game_date,jersey_number,name,position,height,weight,class_year,role,player_notes,keys_to_defending,has_scouting_report,height_inches,position_group,notes_tags,keys_tags,notes_tags_display,keys_tags_display,MIN,FG%,3PM-A,3P%,FTM-A,FT%,REB,AST,TO,STL,BLK,PTS,OREB,DREB,games_played
-St. Thomas (TX) Celts,2025-11-14,#10,Angel Johnson,G,"6'2""",,SR,Starter,"PG, looking to create most touches",Anticipate drive after closeout,True,74,Guard,{'playmaker'},"{'anticipate_move', 'deny_catch_and_shoot'}",playmaker,"anticipate_move, deny_catch_and_shoot",,41.2%,0-2,0.0%,7-10,70.0%,3.0,7,1,4,0,10.5,0.5,2.5,2
-St. Thomas (TX) Celts,2025-11-14,#1,Corey Thompson,G,"6'2""",,JR,Starter,LH Shooter/Driver (Main shooting threat),Anticipate LHD & finish attempts,True,74,Guard,"{'slasher_driver', 'three_point_shooter'}",{'anticipate_move'},"slasher_driver, three_point_shooter",anticipate_move,,40.9%,4-10,40.0%,8-11,72.7%,2.0,6,4,11,0,15.0,0.0,2.0,2
-St. Thomas (TX) Celts,2025-11-14,#0,Nathan Kongolo,G/F,"6'4""",,SO,Starter,RH Driver/slasher,Anticipate RHD,True,76,Wing,{'slasher_driver'},{'anticipate_move'},slasher_driver,anticipate_move,,40.0%,2-4,50.0%,2-4,50.0%,3.0,3,0,4,0,6.0,0.5,2.5,2
-St. Thomas (TX) Celts,2025-11-14,#12,Nicholas Buffalo,F,"6'6""",,JR,Starter,Scores from dump offs on drives & O-Boards,Box out!!!,True,78,Forward/Post,"{'rebounder', 'slasher_driver'}",{'box_out_priority'},"rebounder, slasher_driver",box_out_priority,,60.0%,0-0,-,5-8,62.5%,4.0,0,4,3,0,8.5,1.5,2.5,2
-St. Thomas (TX) Celts,2025-11-14,#25,Charles Gitonga,F,"6'8""",,JR,Starter,Driver/slasher,Anticipate RHD & finish attempts,True,80,Forward/Post,{'slasher_driver'},{'anticipate_move'},slasher_driver,anticipate_move,,66.7%,0-0,-,2-4,50.0%,6.0,3,0,2,0,5.0,3.0,3.0,2
-St. Thomas (TX) Celts,2025-11-14,#33,Garret Rodgers,F,"6'6""",,FR,Bench,Scores in post and from Offensive Boards,Box Out!!!,True,78,Forward/Post,"{'rebounder', 'post_scorer'}",{'box_out_priority'},"post_scorer, rebounder",box_out_priority,,85.7%,1-2,50.0%,2-2,100.0%,2.0,1,2,0,0,15.0,2.0,0.0,1
-St. Thomas (TX) Celts,2025-11-14,#5,Reyce Allen,F,"6'5""",,SR,Bench,Driver 1st forward,Anticipate RHD & finish attempt,True,77,Forward/Post,{'slasher_driver'},{'anticipate_move'},slasher_driver,anticipate_move,,50.0%,0-0,-,2-7,28.6%,3.5,3,1,2,0,7.0,2.5,1.0,2
-St. Thomas (TX) Celts,2025-11-14,#3,Brennan Webb,G,"6'1""",,FR,Bench,LH Shooter,Locate in transition,True,73,Guard,{'three_point_shooter'},{'transition_defense'},three_point_shooter,transition_defense,,30.0%,2-7,28.6%,1-2,50.0%,2.0,0,1,0,0,4.5,0.5,1.5,2
-St. Thomas (TX) Celts,2025-11-14,#2,Omar Gayle,G,"5'10""",,SO,Bench,Quick play making guard.,Anticipate quick 1st step,True,70,Guard,set(),{'anticipate_move'},,anticipate_move,,36.4%,0-3,0.0%,0-0,-,1.0,5,1,0,0,4.0,0.0,1.0,2
-Eureka Red Devils,2025-11-15,#12,Jaxson Provost,G,"5'10""",170 lbs,JR,Starter,"Off Guard Looking to Attack (18 FGA, 8 FTA)",Keep in Front w/ Contest,True,70,Guard,{'slasher_driver'},{'keep_in_front'},slasher_driver,keep_in_front,,51.1%,5-13,38.5%,13-18,72.2%,3.0,6,6,5,0,22.0,1.0,2.0,3
-Eureka Red Devils,2025-11-15,#5,Micah Bruer,G,"6'0""",,JR,Starter,PG - Similar Style to #3 from Ripon,Pressure and Speed Up,True,72,Guard,set(),{'pressure_disrupt'},,pressure_disrupt,,45.8%,4-10,40.0%,6-7,85.7%,4.3,9,9,1,0,10.7,1.0,3.3,3
-Eureka Red Devils,2025-11-15,#4,Ben Carter,G/F,"6'4""",185 lbs,SR,Starter,Rebounding / Defending Wing,Active Hands on Perimeter,True,76,Wing,{'rebounder'},{'keep_in_front'},rebounder,keep_in_front,,33.3%,4-9,44.4%,2-4,50.0%,8.3,10,10,4,1,4.7,1.0,7.3,3
-Eureka Red Devils,2025-11-15,#30,Jonah Lauff,F,"6'5""",,SR,Starter,Shooter!,No C&S 3's,True,77,Forward/Post,{'three_point_shooter'},{'deny_catch_and_shoot'},three_point_shooter,deny_catch_and_shoot,,39.1%,3-10,30.0%,4-4,100.0%,3.7,0,1,0,0,8.3,0.3,3.3,3
-Eureka Red Devils,2025-11-15,#33,Andrew Coker,F,"6'5""",170 lbs,SR,Starter,Perimeter Big,Keep in Front w/ Contest,True,77,Forward/Post,set(),{'keep_in_front'},,keep_in_front,,37.5%,2-8,25.0%,2-2,100.0%,5.3,5,5,2,0,7.3,1.7,3.7,3
-Eureka Red Devils,2025-11-15,#7,Damuzha Moore,F,"6'3""",,SR,Bench,Back Up Wing,Keep in Front w/ Contest,True,75,Forward/Post,set(),{'keep_in_front'},,keep_in_front,,33.3%,2-5,40.0%,0-2,0.0%,0.7,1,2,1,2,3.3,0.0,0.7,3
-Eureka Red Devils,2025-11-15,#6,Jacob Gonzalez,G,"6'0""",,SR,Bench,Back Up PG,Be a Helper,True,72,Guard,set(),{'help_defense'},,help_defense,,40.0%,0-1,0.0%,1-3,33.3%,1.0,2,3,2,0,4.3,0.0,1.0,3
+opponent,game_date,jersey_number,name,position,height,weight,class_year,role,player_notes,keys_to_defending,has_scouting_report,height_inches,position_group,notes_tags,keys_tags,notes_tags_display,keys_tags_display,MIN,FG%,3PM-A,3P%,FTM-A,FT%,REB,AST,TO,STL,BLK,PTS,games_played,OREB,DREB
+St. Thomas (TX) Celts,2025-11-14,#10,Angel Johnson,G,"6'2""",,SR,Starter,"PG, looking to create most touches",Anticipate drive after closeout,True,74,Guard,{'playmaker'},"{'deny_catch_and_shoot', 'anticipate_move'}",playmaker,"anticipate_move, deny_catch_and_shoot",,41.2%,0-2,0.0%,7-10,70.0%,3.0,7,1,4,0,10.5,2,0.5,2.5
+St. Thomas (TX) Celts,2025-11-14,#1,Corey Thompson,G,"6'2""",,JR,Starter,LH Shooter/Driver (Main shooting threat),Anticipate LHD & finish attempts,True,74,Guard,"{'slasher_driver', 'three_point_shooter'}",{'anticipate_move'},"slasher_driver, three_point_shooter",anticipate_move,,40.9%,4-10,40.0%,8-11,72.7%,2.0,6,4,11,0,15.0,2,0.0,2.0
+St. Thomas (TX) Celts,2025-11-14,#0,Nathan Kongolo,G/F,"6'4""",,SO,Starter,RH Driver/slasher,Anticipate RHD,True,76,Wing,{'slasher_driver'},{'anticipate_move'},slasher_driver,anticipate_move,,40.0%,2-4,50.0%,2-4,50.0%,3.0,3,0,4,0,6.0,2,0.5,2.5
+St. Thomas (TX) Celts,2025-11-14,#12,Nicholas Buffalo,F,"6'6""",,JR,Starter,Scores from dump offs on drives & O-Boards,Box out!!!,True,78,Forward/Post,"{'slasher_driver', 'rebounder'}",{'box_out_priority'},"rebounder, slasher_driver",box_out_priority,,60.0%,0-0,-,5-8,62.5%,4.0,0,4,3,0,8.5,2,1.5,2.5
+St. Thomas (TX) Celts,2025-11-14,#25,Charles Gitonga,F,"6'8""",,JR,Starter,Driver/slasher,Anticipate RHD & finish attempts,True,80,Forward/Post,{'slasher_driver'},{'anticipate_move'},slasher_driver,anticipate_move,,66.7%,0-0,-,2-4,50.0%,6.0,3,0,2,0,5.0,2,3.0,3.0
+St. Thomas (TX) Celts,2025-11-14,#33,Garret Rodgers,F,"6'6""",,FR,Bench,Scores in post and from Offensive Boards,Box Out!!!,True,78,Forward/Post,"{'post_scorer', 'rebounder'}",{'box_out_priority'},"post_scorer, rebounder",box_out_priority,,85.7%,1-2,50.0%,2-2,100.0%,2.0,1,2,0,0,15.0,1,2.0,0.0
+St. Thomas (TX) Celts,2025-11-14,#5,Reyce Allen,F,"6'5""",,SR,Bench,Driver 1st forward,Anticipate RHD & finish attempt,True,77,Forward/Post,{'slasher_driver'},{'anticipate_move'},slasher_driver,anticipate_move,,50.0%,0-0,-,2-7,28.6%,3.5,3,1,2,0,7.0,2,2.5,1.0
+St. Thomas (TX) Celts,2025-11-14,#3,Brennan Webb,G,"6'1""",,FR,Bench,LH Shooter,Locate in transition,True,73,Guard,{'three_point_shooter'},{'transition_defense'},three_point_shooter,transition_defense,,30.0%,2-7,28.6%,1-2,50.0%,2.0,0,1,0,0,4.5,2,0.5,1.5
+St. Thomas (TX) Celts,2025-11-14,#2,Omar Gayle,G,"5'10""",,SO,Bench,Quick play making guard.,Anticipate quick 1st step,True,70,Guard,set(),{'anticipate_move'},,anticipate_move,,36.4%,0-3,0.0%,0-0,-,1.0,5,1,0,0,4.0,2,0.0,1.0
+Eureka Red Devils,2025-11-15,#12,Jaxson Provost,G,"5'10""",170 lbs,JR,Starter,"Off Guard Looking to Attack (18 FGA, 8 FTA)",Keep in Front w/ Contest,True,70,Guard,{'slasher_driver'},{'keep_in_front'},slasher_driver,keep_in_front,,51.1%,5-13,38.5%,13-18,72.2%,3.0,6,6,5,0,22.0,3,1.0,2.0
+Eureka Red Devils,2025-11-15,#5,Micah Bruer,G,"6'0""",,JR,Starter,PG - Similar Style to #3 from Ripon,Pressure and Speed Up,True,72,Guard,set(),{'pressure_disrupt'},,pressure_disrupt,,45.8%,4-10,40.0%,6-7,85.7%,4.3,9,9,1,0,10.7,3,1.0,3.3
+Eureka Red Devils,2025-11-15,#4,Ben Carter,G/F,"6'4""",185 lbs,SR,Starter,Rebounding / Defending Wing,Active Hands on Perimeter,True,76,Wing,{'rebounder'},{'keep_in_front'},rebounder,keep_in_front,,33.3%,4-9,44.4%,2-4,50.0%,8.3,10,10,4,1,4.7,3,1.0,7.3
+Eureka Red Devils,2025-11-15,#30,Jonah Lauff,F,"6'5""",,SR,Starter,Shooter!,No C&S 3's,True,77,Forward/Post,{'three_point_shooter'},{'deny_catch_and_shoot'},three_point_shooter,deny_catch_and_shoot,,39.1%,3-10,30.0%,4-4,100.0%,3.7,0,1,0,0,8.3,3,0.3,3.3
+Eureka Red Devils,2025-11-15,#33,Andrew Coker,F,"6'5""",170 lbs,SR,Starter,Perimeter Big,Keep in Front w/ Contest,True,77,Forward/Post,set(),{'keep_in_front'},,keep_in_front,,37.5%,2-8,25.0%,2-2,100.0%,5.3,5,5,2,0,7.3,3,1.7,3.7
+Eureka Red Devils,2025-11-15,#7,Damuzha Moore,F,"6'3""",,SR,Bench,Back Up Wing,Keep in Front w/ Contest,True,75,Forward/Post,set(),{'keep_in_front'},,keep_in_front,,33.3%,2-5,40.0%,0-2,0.0%,0.7,1,2,1,2,3.3,3,0.0,0.7
+Eureka Red Devils,2025-11-15,#6,Jacob Gonzalez,G,"6'0""",,SR,Bench,Back Up PG,Be a Helper,True,72,Guard,set(),{'help_defense'},,help_defense,,40.0%,0-1,0.0%,1-3,33.3%,1.0,2,3,2,0,4.3,3,0.0,1.0
 Ripon Red Hawks,2025-11-07,#3,Seth Bunders,G,"6'0""",140 lbs,JR,Starter,Shooter!,NO C&S 3's!!!,True,72,Guard,{'three_point_shooter'},{'deny_catch_and_shoot'},three_point_shooter,deny_catch_and_shoot,,,,,,,,,,,,,,,
-Ripon Red Hawks,2025-11-07,#13,CJ Brown,G,"6'3""",,SR,Starter,Go To=mid range pull up (1-2 dribbles),Anticipate 1 dribble pull up,True,75,Guard,"{'pull_up_shooter', 'high_usage'}",{'anticipate_move'},"high_usage, pull_up_shooter",anticipate_move,,,,,,,,,,,,,,,
+Ripon Red Hawks,2025-11-07,#13,CJ Brown,G,"6'3""",,SR,Starter,Go To=mid range pull up (1-2 dribbles),Anticipate 1 dribble pull up,True,75,Guard,"{'high_usage', 'pull_up_shooter'}",{'anticipate_move'},"high_usage, pull_up_shooter",anticipate_move,,,,,,,,,,,,,,,
 Ripon Red Hawks,2025-11-07,#44,Marshawn Robinson,G,"6'3""",180 lbs,JR,Starter,Driver/Shooter,Anticipate pull up when he goes left,True,75,Guard,"{'slasher_driver', 'three_point_shooter'}",{'anticipate_move'},"slasher_driver, three_point_shooter",anticipate_move,,,,,,,,,,,,,,,
-Ripon Red Hawks,2025-11-07,#35,Michael Asman,F,"6'7""",,SO,Starter,C&S 3's,No C&S 3s!! (stunt v. pick & pop),True,79,Forward/Post,"{'catch_and_shoot', 'three_point_shooter'}",{'deny_catch_and_shoot'},"catch_and_shoot, three_point_shooter",deny_catch_and_shoot,,,,,,,,,,,,,,,
+Ripon Red Hawks,2025-11-07,#35,Michael Asman,F,"6'7""",,SO,Starter,C&S 3's,No C&S 3s!! (stunt v. pick & pop),True,79,Forward/Post,"{'three_point_shooter', 'catch_and_shoot'}",{'deny_catch_and_shoot'},"catch_and_shoot, three_point_shooter",deny_catch_and_shoot,,,,,,,,,,,,,,,
 Ripon Red Hawks,2025-11-07,#12,Kolby Williams,F,"6'7""",,SR,Starter,Rebounds Hard!,Boxout!!!,True,79,Forward/Post,{'rebounder'},{'box_out_priority'},rebounder,box_out_priority,,,,,,,,,,,,,,,
 Ripon Red Hawks,2025-11-07,#4,Jarton Davis,G,"6'1""",,JR,Bench,Shooter/Driver,Limit C&S 3's,True,73,Guard,"{'slasher_driver', 'three_point_shooter'}",{'deny_catch_and_shoot'},"slasher_driver, three_point_shooter",deny_catch_and_shoot,,,,,,,,,,,,,,,
-Ripon Red Hawks,2025-11-07,#5,Jake Thomsen,G,"6'2""",,JR,Bench,C&S 3's,No C&S 3's,True,74,Guard,"{'catch_and_shoot', 'three_point_shooter'}",{'deny_catch_and_shoot'},"catch_and_shoot, three_point_shooter",deny_catch_and_shoot,,,,,,,,,,,,,,,
-St. Thomas (TX) Celts,2025-11-14,#23,Jaden Ross,,,,,Bench,,,False,,Unknown,set(),set(),,,,66.7%,0-0,-,0-0,-,0.0,0,2,1,0,4.0,0.0,0.0,1
-St. Thomas (TX) Celts,2025-11-14,#11,Tamarcus Butler,,,,,Bench,,,False,,Unknown,set(),set(),,,,0.0%,0-2,0.0%,0-0,-,1.5,1,0,1,0,0.0,1.0,0.5,2
-St. Thomas (TX) Celts,2025-11-14,#13,Legborsi Mato,,,,,Bench,,,False,,Unknown,set(),set(),,,,66.7%,1-2,50.0%,0-0,-,0.0,0,1,0,0,2.5,0.0,0.0,2
-Eureka Red Devils,2025-11-15,#35,Max Richardson,,,,,Bench,,,False,,Unknown,set(),set(),,,,25.0%,1-3,33.3%,3-4,75.0%,0.7,0,3,0,0,2.0,0.3,0.3,3
-Eureka Red Devils,2025-11-15,#20,Nolan Kerr,,,,,Bench,,,False,,Unknown,set(),set(),,,,37.5%,1-2,50.0%,0-0,-,1.3,2,2,1,0,2.3,1.0,0.3,3
-Eureka Red Devils,2025-11-15,#22,Tony Mabon,,,,,Bench,,,False,,Unknown,set(),set(),,,,20.0%,0-0,-,0-0,-,2.0,0,0,0,0,2.0,1.0,1.0,1
-Eureka Red Devils,2025-11-15,#15,Amare Brokemond,,,,,Bench,,,False,,Unknown,set(),set(),,,,0.0%,0-0,-,0-0,-,0.5,0,0,0,0,0.0,0.0,0.5,2
-Eureka Red Devils,2025-11-15,#3,Blake Logsdon,,,,,Bench,,,False,,Unknown,set(),set(),,,,50.0%,0-0,-,0-1,0.0%,1.7,0,1,0,0,0.7,0.3,1.3,3
-Eureka Red Devils,2025-11-15,#0,Colin DeLaere,,,,,Bench,,,False,,Unknown,set(),set(),,,,40.0%,0-2,0.0%,1-3,33.3%,0.7,0,2,2,0,1.7,0.0,0.7,3
-Eureka Red Devils,2025-11-15,#1,Dylan Logsdon,,,,,Bench,,,False,,Unknown,set(),set(),,,,-,0-0,-,0-0,-,0.0,0,1,0,0,0.0,0.0,0.0,1
+Ripon Red Hawks,2025-11-07,#5,Jake Thomsen,G,"6'2""",,JR,Bench,C&S 3's,No C&S 3's,True,74,Guard,"{'three_point_shooter', 'catch_and_shoot'}",{'deny_catch_and_shoot'},"catch_and_shoot, three_point_shooter",deny_catch_and_shoot,,,,,,,,,,,,,,,
+St. Thomas (TX) Celts,2025-11-14,#23,Jaden Ross,,,,,Bench,,,False,,Unknown,set(),set(),,,,66.7%,0-0,-,0-0,-,0.0,0,2,1,0,4.0,1,0.0,0.0
+St. Thomas (TX) Celts,2025-11-14,#11,Tamarcus Butler,,,,,Bench,,,False,,Unknown,set(),set(),,,,0.0%,0-2,0.0%,0-0,-,1.5,1,0,1,0,0.0,2,1.0,0.5
+St. Thomas (TX) Celts,2025-11-14,#13,Legborsi Mato,,,,,Bench,,,False,,Unknown,set(),set(),,,,66.7%,1-2,50.0%,0-0,-,0.0,0,1,0,0,2.5,2,0.0,0.0
+Eureka Red Devils,2025-11-15,#35,Max Richardson,,,,,Bench,,,False,,Unknown,set(),set(),,,,25.0%,1-3,33.3%,3-4,75.0%,0.7,0,3,0,0,2.0,3,0.3,0.3
+Eureka Red Devils,2025-11-15,#20,Nolan Kerr,,,,,Bench,,,False,,Unknown,set(),set(),,,,37.5%,1-2,50.0%,0-0,-,1.3,2,2,1,0,2.3,3,1.0,0.3
+Eureka Red Devils,2025-11-15,#22,Tony Mabon,,,,,Bench,,,False,,Unknown,set(),set(),,,,20.0%,0-0,-,0-0,-,2.0,0,0,0,0,2.0,1,1.0,1.0
+Eureka Red Devils,2025-11-15,#15,Amare Brokemond,,,,,Bench,,,False,,Unknown,set(),set(),,,,0.0%,0-0,-,0-0,-,0.5,0,0,0,0,0.0,2,0.0,0.5
+Eureka Red Devils,2025-11-15,#3,Blake Logsdon,,,,,Bench,,,False,,Unknown,set(),set(),,,,50.0%,0-0,-,0-1,0.0%,1.7,0,1,0,0,0.7,3,0.3,1.3
+Eureka Red Devils,2025-11-15,#0,Colin DeLaere,,,,,Bench,,,False,,Unknown,set(),set(),,,,40.0%,0-2,0.0%,1-3,33.3%,0.7,0,2,2,0,1.7,3,0.0,0.7
+Eureka Red Devils,2025-11-15,#1,Dylan Logsdon,,,,,Bench,,,False,,Unknown,set(),set(),,,,-,0-0,-,0-0,-,0.0,0,1,0,0,0.0,1,0.0,0.0
 Ripon Red Hawks,2025-11-07,#23,Keenan Rahn,,,,,Bench,,,False,,Unknown,set(),set(),,,,,,,,,,,,,,,,,
 Ripon Red Hawks,2025-11-07,#11,Sam Leoni,,,,,Bench,,,False,,Unknown,set(),set(),,,,,,,,,,,,,,,,,
 Ripon Red Hawks,2025-11-07,#20,Anton Kilde,,,,,Bench,,,False,,Unknown,set(),set(),,,,,,,,,,,,,,,,,
 Ripon Red Hawks,2025-11-07,#2,Caeden Holly,,,,,Bench,,,False,,Unknown,set(),set(),,,,,,,,,,,,,,,,,
+Aurora Spartans,2025-11-19,,Adam Awender,,,,,Bench,,,False,,Unknown,set(),set(),,,0.5,-,0-0,-,0-0,-,0.0,0,0,0,0,0.0,1,,
+Aurora Spartans,2025-11-19,,Alex Ross,,,,,Bench,,,False,,Unknown,set(),set(),,,4.2,50.0%,2-4,50.0%,1-2,50.0%,0.0,1,0,0,0,1.8,4,,
+Aurora Spartans,2025-11-19,,Bryden Gryzmala,,,,,Bench,,,False,,Unknown,set(),set(),,,17.5,46.7%,2-6,33.3%,6-6,100.0%,1.2,5,4,2,0,5.5,4,,
+Aurora Spartans,2025-11-19,,Cullen Rauls,,,,,Bench,,,False,,Unknown,set(),set(),,,10.6,14.3%,1-5,20.0%,1-3,33.3%,1.0,1,0,4,0,2.0,2,,
+Aurora Spartans,2025-11-19,,Devon Richardson,,,,,Bench,,,False,,Unknown,set(),set(),,,25.1,64.5%,0-0,-,14-25,56.0%,6.2,2,4,1,6,13.5,4,,
+Aurora Spartans,2025-11-19,,Gevon Grant,,,,,Bench,,,False,,Unknown,set(),set(),,,23.8,38.7%,3-13,23.1%,16-28,57.1%,3.8,8,9,6,0,10.8,4,,
+Aurora Spartans,2025-11-19,,Isaiah Thompson,,,,,Bench,,,False,,Unknown,set(),set(),,,7.1,16.7%,1-5,20.0%,0-0,-,0.5,1,1,1,0,0.8,4,,
+Aurora Spartans,2025-11-19,,Jeffery Hillmer,,,,,Bench,,,False,,Unknown,set(),set(),,,30.2,44.0%,2-5,40.0%,1-1,100.0%,4.8,6,4,4,3,6.2,4,,
+Aurora Spartans,2025-11-19,,Juan Madrigal,,,,,Bench,,,False,,Unknown,set(),set(),,,29.4,46.2%,6-15,40.0%,11-13,84.6%,4.5,7,9,5,2,13.2,4,,
+Aurora Spartans,2025-11-19,,Larry Carthan,,,,,Bench,,,False,,Unknown,set(),set(),,,13.3,36.4%,0-0,-,8-12,66.7%,4.0,2,3,1,2,4.0,4,,
+Aurora Spartans,2025-11-19,,Mekhi Doby,,,,,Bench,,,False,,Unknown,set(),set(),,,28.6,30.8%,0-3,0.0%,7-13,53.8%,3.0,1,2,3,3,15.0,1,,
+Aurora Spartans,2025-11-19,,Robert Hutson,,,,,Bench,,,False,,Unknown,set(),set(),,,12.9,27.3%,1-9,11.1%,3-4,75.0%,1.5,0,3,0,1,4.0,4,,
+Aurora Spartans,2025-11-19,,Zerrick Johnson,,,,,Bench,,,False,,Unknown,set(),set(),,,21.1,50.0%,2-5,40.0%,16-18,88.9%,3.5,3,9,3,0,11.5,4,,
