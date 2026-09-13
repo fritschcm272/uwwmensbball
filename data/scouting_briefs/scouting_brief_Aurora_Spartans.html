@@ -86,6 +86,10 @@ td.ff-us { color: var(--warhawk-purple); font-weight: 700; }
 td.ff-them { color: var(--loss); font-weight: 700; }
 
 /* keys */
+.ktvcat { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase;
+          color: var(--warhawk-purple); border-bottom: 2px solid var(--warhawk-light);
+          padding-bottom: 4px; margin: 14px 0 10px; }
+.ktvcat:first-child { margin-top: 0; }
 .key { margin-bottom: 14px; }
 .key .hl { font-size: 0.95rem; font-weight: 700; }
 /* The lineup and shot-look keys carry multi-line captions ("Worst +/- lineups:" then one unit per
@@ -466,23 +470,44 @@ th.num, td.num { text-align: right; width: 2.4rem; }
 <p class="note">GP, MIN, +/- and the counting stats are totals across the games on film. The strengths and weaknesses are rates — per 40 minutes or a percentage — measured against this team's own lineup averages, so a unit is not called good simply for playing more.</p>
 <div class="sect"><div class="t">🔑 KEYS TO VICTORY</div></div>
 <div class="card">
+<div class="ktvcat">Offense</div>
 <div class="key">
-<div class="hl">1. 📊 Take away their most efficient high-volume actions <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
+<div class="hl">1. 🏀 Feature our best look: Catch-and-shoot (guarded) <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
+<div class="ev">14/28 (50% FG, 75% eFG) · 1.50 pts/attempt · +0.20 vs all looks (1.30) · 18% of attempts · 100% from three this season</div>
+<div class="why">Marino, Verges, Lukenbill, McEwen, Warren gets it best (3/3, 100%)</div>
+</div>
+<div class="key">
+<div class="hl">2. 🎯 Attack their weakest look: Cut to the basket <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
+<div class="ev">Opponents shot 6/9 (67% FG, 67% eFG) · 1.33 pts/attempt · +0.27 vs all looks (1.06) · 4% of attempts on this against Aurora Spartans</div>
+<div class="why">Runs it most:
+• Marino, Madson, Verges, Lukenbill, Bara 2x (100%)
+• Marino, Lukenbill, Quast, Berezowitz, Bara 2x (100%)
+• Chestnut, Quast, Berezowitz, Rogers, Warren 2x (50%)</div>
+</div>
+<div class="ktvcat">Defense</div>
+<div class="key">
+<div class="hl">3. 📊 Take away their most efficient high-volume actions <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
 <div class="ev">ISO: 60.0% on 20 attempts; Cut: 55.0% on 20 attempts</div>
 <div class="why">Both well above their 43.1% overall shooting clip (&gt;=15 attempts each) -- load up P&amp;R roll coverage and transition defense specifically; live with everything else.</div>
 </div>
 <div class="key">
-<div class="hl">2. 📊 Funnel them into their worst high-volume looks <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
+<div class="hl">4. 📊 Funnel them into their worst high-volume looks <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
 <div class="ev">Spot-Up: 27.8% on 79 attempts; Hand Off: 33.3% on 15 attempts</div>
 <div class="why">Both well below their 43.1% overall shooting clip -- don&#x27;t help off these actions; make them keep taking them.</div>
 </div>
 <div class="key">
-<div class="hl">3. 📊 Pressure their biggest turnover triggers <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
+<div class="hl">5. 📊 Pressure their biggest turnover triggers <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
 <div class="ev">Spot-Up: 12 of 52 turnovers (23.1%); No Play Type: 7 of 52 turnovers (13.5%)</div>
 <div class="why">Concentrate ball pressure on whichever action produces the most turnovers, rather than blanket full-court pressure.</div>
 </div>
 <div class="key">
-<div class="hl">4. 🔒 Attack Aurora Spartans&#x27;s Rauls, Richardson, Grant, Hillmer, Carthan lineup <span class="src" style="border-color:#5d4037;color:#5d4037;">Lineup Scouting</span></div>
+<div class="hl">6. 🛡️ What Aurora Spartans goes to most: Drive to the basket <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
+<div class="ev">85 attempts, 53% -- across their games before UWW</div>
+<div class="why">What their offense goes to most often, regardless of how well it&#x27;s worked -- worth a specific defensive scheme item to take away.</div>
+</div>
+<div class="ktvcat">Personnel</div>
+<div class="key">
+<div class="hl">7. 🔒 Attack Aurora Spartans&#x27;s Rauls, Richardson, Grant, Hillmer, Carthan lineup <span class="src" style="border-color:#5d4037;color:#5d4037;">Lineup Scouting</span></div>
 <div class="ev">Worst +/- lineups:
 -5.0 in 3.0 min, 25% FG — Rauls, Richardson, Grant, Hillmer, Carthan
 -4.0 in 5.0 min, 57% FG — Gryzmala, Hillmer, Madrigal, Carthan, Johnson
@@ -493,7 +518,7 @@ Highest TO rate (per 40 min):
 <div class="why">Aurora Spartans&#x27;s most exploitable units: their worst net-rating lineups with real minutes this season (3+ min), and the lineups that give the ball away most per 40 minutes. The headline names the worst of them.</div>
 </div>
 <div class="key">
-<div class="hl">5. 🔒 Attack Aurora Spartans&#x27;s Richardson, Hillmer, Doby combo <span class="src" style="border-color:#5d4037;color:#5d4037;">Lineup Scouting</span></div>
+<div class="hl">8. 🔒 Attack Aurora Spartans&#x27;s Richardson, Hillmer, Doby combo <span class="src" style="border-color:#5d4037;color:#5d4037;">Lineup Scouting</span></div>
 <div class="ev">Worst +/- 3-man combos:
 -15.0 in 9.2 min — Richardson, Hillmer, Doby
 -12.0 in 7.8 min — Ross, Madrigal, Carthan
@@ -501,29 +526,11 @@ Highest TO rate (per 40 min):
 <div class="why">Aurora Spartans&#x27;s most exploitable 3-man combinations: their worst net-rating units with real minutes this season (3+ min).</div>
 </div>
 <div class="key">
-<div class="hl">6. 🔒 Feature the Chestnut, Quast, Berezowitz combo <span class="src" style="border-color:#5d4037;color:#5d4037;">Lineup Scouting</span></div>
+<div class="hl">9. 🔒 Feature the Chestnut, Quast, Berezowitz combo <span class="src" style="border-color:#5d4037;color:#5d4037;">Lineup Scouting</span></div>
 <div class="ev">+21.0 total (+0.99/min in 21.1 min) — Chestnut, Quast, Berezowitz
 +21.0 total (+1.52/min in 13.8 min) — Chestnut, Berezowitz, Warren
 +20.0 total (+0.48/min in 41.7 min) — Marino, Verges, Lukenbill</div>
 <div class="why">UWW&#x27;s best 3-man combinations by net margin season-wide (5+ min) — not matchup-specific like the 5-man counter above, but the smaller units most worth leaning on regardless of opponent.</div>
-</div>
-<div class="key">
-<div class="hl">7. 🏀 Feature our best look: Catch-and-shoot (guarded) <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
-<div class="ev">14/28 (50% FG, 75% eFG) · 1.50 pts/attempt · +0.20 vs all looks (1.30) · 18% of attempts · 100% from three this season</div>
-<div class="why">Marino, Verges, Lukenbill, McEwen, Warren gets it best (3/3, 100%)</div>
-</div>
-<div class="key">
-<div class="hl">8. 🎯 Attack their weakest look: Cut to the basket <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
-<div class="ev">Opponents shot 6/9 (67% FG, 67% eFG) · 1.33 pts/attempt · +0.27 vs all looks (1.06) · 4% of attempts on this against Aurora Spartans, 4 different team(s) doing it -- across 4 of Aurora Spartans&#x27;s games before UWW (the ones with tagged video)</div>
-<div class="why">Runs it most:
-• Marino, Madson, Verges, Lukenbill, Bara 2x (100%)
-• Marino, Lukenbill, Quast, Berezowitz, Bara 2x (100%)
-• Chestnut, Quast, Berezowitz, Rogers, Warren 2x (50%)</div>
-</div>
-<div class="key">
-<div class="hl">9. 🛡️ What Aurora Spartans goes to most: Drive to the basket <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
-<div class="ev">85 attempts, 53% -- across their games before UWW</div>
-<div class="why">What their offense goes to most often, regardless of how well it&#x27;s worked -- worth a specific defensive scheme item to take away.</div>
 </div>
 </div>
 <p class="note">Built by the parser, not assembled here — the app's Upcoming Game page renders the same table, so the two lists cannot drift apart.</p>
@@ -614,13 +621,8 @@ Highest TO rate (per 40 min):
 <tr><td>Brock Marino</td><td class="wrap">Below-average free-throw shooter with meaningful attempt volume</td><td class="wrap">Target free-throw shooting in individual workouts -- meaningful attempt volume means this is costing points.</td></tr>
 </tbody></table>
 <p class="note">From our own season film, not theirs — the tendencies most likely to cost us this specific game.</p></div>
-<div class="sect"><div class="t">🔮 PROJECTED SCORE</div></div>
-<div class="card cmp">
-<div class="who"><span class="l">UWW</span><span class="c">Projected</span><span class="r">AURORA</span></div>
-<div class="row"><span class="us">76</span><span class="stat">Final score</span><span class="them">76</span></div>
-<p class="note">A blend of each team's scoring and what each has done against comparable opposition. A starting point for the game plan, not a prediction.</p></div>
 <div class="foot">
-<p>Generated September 13, 2026 at 04:26 PM from the scouting parser's exported data — the same tables the scouting app reads. Everything here is reconstructed from play-by-play and video-tagging exports.</p>
+<p>Generated September 13, 2026 at 05:09 PM from the scouting parser's exported data — the same tables the scouting app reads. Everything here is reconstructed from play-by-play and video-tagging exports.</p>
 <p>Prepared ahead of the staff's own scouting reports. Numbers will move as more film is tagged.</p></div>
 </div>
 </body>
