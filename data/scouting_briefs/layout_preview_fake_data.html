@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UW-Whitewater vs Aurora Spartans &mdash; scouting brief</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --warhawk-purple: #4E2A84;
+  --warhawk-gray: #9DAAAC;
+  --warhawk-light: #F0EDF5;
+  --banner: #1a1a2e;
+  --edge: #e0e0e0;
+  --body: #262730;
+  --dim: #666;
+  --win: #2e7d32;
+  --loss: #c62828;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 18px 18px 56px;
+  background: #fff; color: var(--body);
+  font-family: 'Montserrat', -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 15px; line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+.page { max-width: 1000px; margin: 0 auto; }
+p { margin: 0 0 0.65rem; }
+
+/* section_header() */
+.sect { border: 1px solid var(--edge); border-radius: 8px; padding: 12px 16px; margin: 1.5rem 0 0.75rem; }
+.sect .t { font-weight: 800; font-size: 1.05rem; letter-spacing: 0.5px; color: var(--warhawk-purple); }
+.card { border: 1px solid var(--edge); border-radius: 8px; padding: 12px 16px; margin: 0 0 0.75rem; }
+.card .hd { font-weight: 800; font-size: 1.05rem; letter-spacing: 0.5px; margin-bottom: 8px; }
+
+/* Two panels side by side, the way the app pairs Team Stats with Last Five Games. min-width:0 is
+   load-bearing: without it a flex child refuses to shrink below its content's intrinsic width, and
+   the roster table's eight columns push the pair wider than the page instead of compressing. */
+.cols { display: flex; gap: 16px; align-items: flex-start; }
+.cols > .col { flex: 1; min-width: 0; }
+.cols .sect { margin-top: 0; }
+.cols table { font-size: 0.78rem; }
+.cols th, .cols td { padding-left: 5px; padding-right: 5px; }
+.lede { font-size: 0.95rem; }
+ul.bl { margin: 0; padding-left: 1.1rem; }
+ul.bl li { font-size: 0.95rem; margin-bottom: 5px; }
+ul.bl li::marker { color: var(--warhawk-purple); }
+ul.bl li:last-child { margin-bottom: 0; }
+
+/* banner */
+.banner { background: var(--banner); border-radius: 10px; padding: 22px 32px; margin-bottom: 0.75rem;
+          display: flex; align-items: center; justify-content: space-between; }
+.banner .side { text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; }
+.banner .mid { justify-content: center; }
+.banner .crest { height: 64px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+.banner .crest img { max-height: 64px; max-width: 90px; object-fit: contain; }
+.banner .team { color: #fff; font-weight: 800; font-size: 1.4rem; letter-spacing: 0.5px; }
+.banner .rec { color: var(--warhawk-gray); font-size: 1.05rem; font-weight: 600; margin-top: 3px; }
+.banner .streak { color: #aabbcc; font-size: 0.8rem; font-style: italic; margin-top: 2px; }
+.banner .when { color: var(--warhawk-gray); font-size: 1rem; font-weight: 500; }
+.banner .vs { color: #fff; font-size: 1.6rem; font-weight: 700; margin: 4px 0; }
+.banner .where { color: var(--warhawk-gray); font-size: 0.95rem; }
+
+/* team stats: UWW left, stat centre, opponent right */
+.cmp .row { display: flex; align-items: center; justify-content: space-between;
+            padding: 7px 4px; border-bottom: 1px solid #f0f0f0; }
+.cmp .row:last-child { border-bottom: 0; }
+.cmp .us, .cmp .them { flex: 1; font-size: 0.95rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.cmp .us { color: var(--warhawk-purple); }
+.cmp .them { color: #222; text-align: right; }
+.cmp .stat { flex: 1.1; text-align: center; font-size: 0.8rem; color: var(--dim); font-weight: 600; }
+.cmp .who { display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 8px; padding: 0 4px; }
+.cmp .who .l { font-size: 0.95rem; font-weight: 700; color: var(--warhawk-purple); }
+.cmp .who .c { font-size: 0.85rem; color: #888; }
+.cmp .who .r { font-size: 0.95rem; font-weight: 700; color: #222; }
+.lead { font-size: 0.68rem; font-weight: 700; padding: 1px 6px; border-radius: 8px; margin-left: 6px;
+        vertical-align: middle; }
+.lead.us { background: var(--warhawk-light); color: var(--warhawk-purple); }
+.lead.them { background: #f1f1f1; color: #555; }
+
+.ff-lede { font-size: 0.88rem; margin: 0 0 6px; }
+td.ff-us { color: var(--warhawk-purple); font-weight: 700; }
+td.ff-them { color: var(--loss); font-weight: 700; }
+
+/* keys */
+.key { margin-bottom: 14px; }
+.key .hl { font-size: 0.95rem; font-weight: 700; }
+/* The lineup and shot-look keys carry multi-line captions ("Worst +/- lineups:" then one unit per
+   line). pre-line keeps those breaks without turning the text into a <pre> block. */
+.key .ev { font-size: 0.8rem; color: var(--dim); margin: 0 0 6px 18px; white-space: pre-line; }
+.key .why { font-size: 0.88rem; margin: 0 0 0 18px; font-style: italic; color: #333;
+            white-space: pre-line; }
+.key .src { border: 1px solid #666; background: #fff; font-size: 0.65rem; font-weight: 600;
+            padding: 1px 7px; border-radius: 8px; margin-left: 4px; white-space: nowrap; }
+
+/* tables */
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+th { text-align: right; font-weight: 700; color: var(--dim); font-size: 0.72rem; letter-spacing: 0.3px;
+     padding: 0 8px 6px; border-bottom: 1px solid var(--edge); white-space: nowrap; }
+td { text-align: right; padding: 7px 8px; border-bottom: 1px solid #f0f0f0; white-space: nowrap;
+     font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+th:first-child, td:first-child { text-align: left; white-space: normal; }
+td.wrap { text-align: left; white-space: normal; font-variant-numeric: normal; }
+th.read, td.read { text-align: left; white-space: normal; font-variant-numeric: normal; min-width: 130px; }
+.dot { display: block; font-size: 0.76rem; line-height: 1.35; padding-left: 10px; position: relative; }
+.dot::before { content: "▪"; position: absolute; left: 0; }
+.dot.good { color: #1b5e20; }
+.dot.bad { color: #8c1d2c; }
+tr.starter td { font-weight: 700; }
+td.jersey { color: var(--warhawk-purple); font-weight: 700; }
+th.num, td.num { text-align: right; width: 2.4rem; }
+.meta { color: #888; font-weight: 500; font-size: 0.78rem; margin-left: 7px; }
+
+/* player notes, mirroring the Player Details dialog */
+.player { border: 1px solid var(--edge); border-radius: 8px; padding: 12px 16px; margin-bottom: 10px; }
+.player .nm { font-weight: 700; font-size: 1rem; }
+.player .role { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase;
+                background: var(--warhawk-light); color: var(--warhawk-purple); border-radius: 8px;
+                padding: 2px 7px; margin-left: 6px; vertical-align: middle; }
+.player .statline { font-size: 0.8rem; color: var(--dim); font-variant-numeric: tabular-nums;
+                    margin-top: 2px; }
+.player .reads { margin-top: 6px; }
+.player .ln { color: #888; font-weight: 500; font-size: 0.8rem; margin-left: 8px; }
+.player .lbl { font-weight: 700; font-size: 0.85rem; }
+.player .notes { font-style: italic; color: #333; font-size: 0.88rem; margin: 4px 0 0; }
+.player .keys { font-size: 0.88rem; margin: 4px 0 0; }
+.srcblock { border-left: 3px solid var(--edge); padding: 2px 0 2px 10px; margin: 8px 0 0; }
+.srcblock.coach { border-left-color: var(--warhawk-purple); }
+.srcblock.derived { border-left-color: #37474f; }
+.srclabel { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase;
+            color: #888; margin-bottom: 2px; }
+.kd { margin-top: 4px; }
+.kd .lbl { font-weight: 700; font-size: 0.8rem; display: block; }
+.kdline { font-size: 0.85rem; padding-left: 10px; position: relative; }
+.kdline::before { content: "▪"; position: absolute; left: 0;
+                 color: var(--warhawk-purple); }
+
+/* last five */
+.five { display: flex; flex-wrap: wrap; gap: 10px; }
+.five .g { border: 1px solid var(--edge); border-radius: 8px; padding: 10px 14px; min-width: 150px; flex: 1; }
+.five .d { color: #888; font-size: 0.78rem; }
+.five .o { font-size: 0.92rem; font-weight: 600; margin: 2px 0; }
+.five .r { font-weight: 700; font-size: 0.92rem; }
+.five .r.w { color: var(--win); }
+.five .r.l { color: var(--loss); }
+
+/* style matchup cards */
+.match { border: 1px solid #eee; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; }
+.match .nm { font-weight: 700; font-size: 0.95rem; color: var(--warhawk-purple); }
+.match .score { font-size: 1.6rem; font-weight: 800; line-height: 1.1; }
+.match .score .of { font-size: 0.7rem; color: #888; font-weight: 600; }
+.match .sub { font-size: 0.68rem; color: #999; }
+.match .conf { font-size: 0.68rem; font-weight: 700; }
+.match .conf.hi { color: #2e7d32; }
+.match .conf.mid { color: #8a6d3b; }
+.match .conf.lo { color: #b3261e; }
+.match .meet { font-size: 0.85rem; margin-top: 2px; }
+.match .meet .w { color: var(--win); font-weight: 700; }
+.match .meet .l { color: var(--loss); font-weight: 700; }
+.match .alike { font-size: 0.75rem; color: #2e7d32; margin-top: 6px; }
+.match .differs { font-size: 0.75rem; color: #c62828; }
+.match .gap { font-size: 0.72rem; color: #666; margin-top: 2px; }
+.strip { border: 1px solid #eee; border-radius: 8px; padding: 10px 12px; margin-top: 8px; font-size: 0.85rem; }
+.strip .lb { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.4px; color: var(--warhawk-purple);
+             text-transform: uppercase; margin-bottom: 2px; }
+.thin { font-size: 0.78rem; color: #8a6d3b; background: #fdf6e3; border-radius: 6px; padding: 8px 10px;
+        margin: 0 0 8px; }
+
+.note { font-size: 0.78rem; color: var(--dim); margin: 8px 0 0; }
+.foot { margin-top: 1.5rem; padding-top: 12px; border-top: 1px solid var(--edge);
+        font-size: 0.75rem; color: var(--dim); }
+
+@media (max-width: 820px) {
+  .cols { display: block; }
+  .cols .col + .col .sect { margin-top: 1.5rem; }
+}
+@media (max-width: 720px) {
+  .banner { padding: 16px; }
+  .banner .team { font-size: 1rem; }
+  .banner .crest, .banner .crest img { height: 44px; max-height: 44px; }
+  .five .g { min-width: 130px; }
+}
+@media print {
+  body { padding: 0; font-size: 11pt; }
+  .banner { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .sect, .card, .player, .key, table, .five .g { break-inside: avoid; }
+  .sect { break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+<div style="background:#4E2A84;color:#fff;font-family:Montserrat,sans-serif;font-size:0.8rem;font-weight:600;padding:10px 16px;border-radius:8px;margin-bottom:12px;">Layout preview only &mdash; every name and number below is invented test data, not Aurora. Run the notebook&#39;s cells for the real one.</div>
+<div class="banner">
+<div class="side"><div class="crest"></div><div class="team">UW-WHITEWATER</div><div class="rec">2-1</div><div class="streak">1-game win streak</div></div>
+<div class="side mid"><div class="when">Wed, Nov 19</div><div class="vs">VS</div><div class="where">Home</div></div>
+<div class="side"><div class="crest"></div><div class="team">AURORA</div><div class="rec">2-0</div><div class="streak">2-game win streak</div></div>
+</div>
+<div class="sect"><div class="t">📌 THE BOTTOM LINE</div></div>
+<div class="card"><ul class="bl"><li>Scoring 109.5 a game and allowing 79.5, over 2 games of film.</li><li>Aurora come in at 2-0, on a 2-game win streak.</li><li>Aur1 carries the offense at 27.5 a night — roughly 25% of their scoring.</li><li>Aur2 is the next threat at 25.5 (3.5 reb, 2.0 ast).</li><li>They shoot 50.0% from three on 14.0 attempts a game.</li><li>We are putting up 70.0 and allowing 77.0.</li></ul></div>
+<div class="cols"><div class="col"><div class="sect"><div class="t">📊 TEAM STATS</div></div>
+<div class="card cmp">
+<div class="who"><span class="l">UWW</span><span class="c">Per game, before this matchup</span><span class="r">AURORA</span></div>
+<div class="row"><span class="us">70.0</span><span class="stat">Points</span><span class="them"><span class="lead them">edge</span>109.5</span></div>
+<div class="row"><span class="us">77.0<span class="lead us">edge</span></span><span class="stat">Points Against</span><span class="them">79.5</span></div>
+<div class="row"><span class="us">49.2</span><span class="stat">Field Goal %</span><span class="them"><span class="lead them">edge</span>74.8</span></div>
+<div class="row"><span class="us">33.3</span><span class="stat">3PT %</span><span class="them"><span class="lead them">edge</span>50.0</span></div>
+<div class="row"><span class="us">16.0</span><span class="stat">3PA</span><span class="them">14.0</span></div>
+<div class="row"><span class="us">24.3</span><span class="stat">Rebounds</span><span class="them"><span class="lead them">edge</span>27.0</span></div>
+<div class="row"><span class="us">9.3<span class="lead us">edge</span></span><span class="stat">Assists</span><span class="them">8.5</span></div>
+<div class="row"><span class="us">6.7</span><span class="stat">Turnovers</span><span class="them"><span class="lead them">edge</span>4.5</span></div>
+<div class="row"><span class="us">4.7</span><span class="stat">Steals</span><span class="them"><span class="lead them">edge</span>5.0</span></div>
+<div class="row"><span class="us">1.7</span><span class="stat">Blocks</span><span class="them"><span class="lead them">edge</span>2.5</span></div>
+</div>
+<p class="note">Both sides are built the same way, from play-by-play box scores rather than from a scouting report, so they compare like with like. Their figures cover only the games played before this matchup.</p></div><div class="col"><div class="sect"><div class="t">⚖️ FOUR FACTORS</div></div>
+<div class="card">
+<p class="ff-lede">Biggest weighted gap: <strong>eFG%</strong> — Aurora&#39;s edge (UWW 53.6 vs 80.2).</p>
+<table><thead><tr><th>Factor</th><th>UWW</th><th>AURORA</th><th>Edge</th><th>Wt</th><th>Weighted</th></tr></thead><tbody>
+<tr><td>eFG%</td><td>53.6</td><td>80.2</td><td class="ff-them">-26.6</td><td>40%</td><td class="ff-them">-10.62</td></tr>
+<tr><td>ORB%</td><td>27.0</td><td>32.3</td><td class="ff-them">-5.2</td><td>20%</td><td class="ff-them">-1.05</td></tr>
+<tr><td>TOV%</td><td>10.2</td><td>6.3</td><td class="ff-them">-3.8</td><td>25%</td><td class="ff-them">-0.96</td></tr>
+<tr><td>FT Rate</td><td>19.3</td><td>20.6</td><td class="ff-them">-1.3</td><td>15%</td><td class="ff-them">-0.19</td></tr>
+</tbody></table>
+<p class="note">Dean Oliver's weights: shooting 40%, turnovers 25%, offensive rebounding 20%, free throws 15%. Edge is stated so positive always favours UWW — for turnovers that means a lower rate. Our factors come from our own games, theirs from their prior games, so neither is adjusted for who they played.</p>
+</div></div></div>
+<div class="sect"><div class="t">👥 Aurora Spartans — PLAYER NOTES & KEYS TO DEFENDING</div></div>
+<div class="player">
+<div class="nm">Aur1</div>
+<div class="statline">2 GP &middot; 27.5 PTS &middot; 5.0 REB &middot; 2.0 AST &middot; 1.0 TO &middot; 96.0% FG &middot; 57.1% 3P</div>
+<div class="reads">
+<span class="dot good">Leading scorer (27.5 ppg)</span>
+<span class="dot good">Primary creator (2.0 apg)</span>
+<span class="dot good">Shooter — 57.1% on 7 threes</span>
+<span class="dot good">Efficient — 96.0% from the field</span>
+</div>
+<div class="srcblock derived"><div class="srclabel">Data-Driven</div>
+<p class="notes">Primary option: 27.5 ppg, 25% of their scoring on 19% of their shots. Efficient: 101.1% true shooting on 25 attempts.</p>
+<div class="kd"><span class="lbl">Keys to Defending</span>
+<div class="kdline">Top priority — no easy catches, and make a second option beat you.</div>
+</div>
+</div>
+</div>
+<div class="player">
+<div class="nm">Aur2</div>
+<div class="statline">2 GP &middot; 25.5 PTS &middot; 3.5 REB &middot; 2.0 AST &middot; 2.0 TO &middot; 89.3% FG &middot; 250.0% 3P</div>
+<div class="reads">
+<span class="dot good">Efficient — 89.3% from the field</span>
+</div>
+<div class="srcblock derived"><div class="srclabel">Data-Driven</div>
+<p class="notes">Primary option: 25.5 ppg, 23% of their scoring on 21% of their shots. Interior player: only 7% of his attempts come from three. Efficient: 91.1% true shooting on 28 attempts. Their offensive glass: 1.5 offensive rebounds a game, most on the team.</p>
+<div class="kd"><span class="lbl">Keys to Defending</span>
+<div class="kdline">Top priority — no easy catches, and make a second option beat you.</div>
+<div class="kdline">Nothing easy at the rim — wall up early rather than reaching, and make him finish over a body.</div>
+<div class="kdline">Put a body on him every shot — he is where their second chances come from.</div>
+</div>
+</div>
+</div>
+<div class="player">
+<div class="nm">Aur4</div>
+<div class="statline">2 GP &middot; 23.0 PTS &middot; 6.5 REB &middot; 2.0 AST &middot; 1.0 TO &middot; 75.0% FG &middot; 12.5% 3P</div>
+<div class="reads">
+<span class="dot good">Active hands (1.5 spg)</span>
+<span class="dot good">Efficient — 75.0% from the field</span>
+<span class="dot good">Gets to the line (5.0 FTA/gm)</span>
+<span class="dot bad">Cold from three — 12.5% on 8</span>
+<span class="dot bad">Poor at the line — 10.0%</span>
+</div>
+<div class="srcblock derived"><div class="srclabel">Data-Driven</div>
+<p class="notes">Primary option: 23.0 ppg, 21% of their scoring on 21% of their shots. Efficient: 71.0% true shooting on 28 attempts. 10% from the line on 10 attempts.</p>
+<div class="kd"><span class="lbl">Keys to Defending</span>
+<div class="kdline">Top priority — no easy catches, and make a second option beat you.</div>
+<div class="kdline">If he has to be fouled late, he is the one to foul.</div>
+</div>
+</div>
+</div>
+<div class="player">
+<div class="nm">Aur3</div>
+<div class="statline">2 GP &middot; 19.5 PTS &middot; 4.5 REB &middot; 0.5 AST &middot; 0.5 TO &middot; 77.3% FG &middot; 50.0% 3P</div>
+<div class="reads">
+<span class="dot good">Rim protection (1.0 bpg)</span>
+<span class="dot good">Efficient — 77.3% from the field</span>
+</div>
+<div class="srcblock derived"><div class="srclabel">Data-Driven</div>
+<p class="notes">Efficient: 82.1% true shooting on 22 attempts.</p>
+</div>
+</div>
+<div class="player">
+<div class="nm">Aur0</div>
+<div class="statline">2 GP &middot; 14.0 PTS &middot; 7.5 REB &middot; 2.0 AST &middot; 0.0 TO &middot; 39.3% FG &middot; 28.6% 3P</div>
+<div class="reads">
+<span class="dot good">Leads them on the glass (7.5 rpg)</span>
+<span class="dot good">Gets to the line (4.0 FTA/gm)</span>
+<span class="dot bad">Poor at the line — 50.0%</span>
+</div>
+<div class="srcblock derived"><div class="srclabel">Data-Driven</div>
+<p class="notes">Inefficient: 44.4% true shooting on 28 attempts. 50% from the line on 8 attempts. Initiates for them: 2.0 assists a game.</p>
+<div class="kd"><span class="lbl">Keys to Defending</span>
+<div class="kdline">Let him be the one who shoots it — volume without efficiency is a result we will take.</div>
+<div class="kdline">If he has to be fouled late, he is the one to foul.</div>
+<div class="kdline">Get it out of his hands — deny the first pass and make someone else start the offense.</div>
+</div>
+</div>
+</div>
+<div class="player">
+<div class="nm">Jalen Ward</div>
+<div class="srcblock coach"><div class="srclabel">Coach</div>
+<p class="notes">Downhill driver who lives at the rim in transition.</p>
+<div class="kd"><span class="lbl">Keys to Defending</span>
+<div class="kdline">Keep him in front, no middle.</div>
+</div>
+</div>
+</div>
+<div class="player">
+<div class="nm">Marcus Reed</div>
+<div class="srcblock coach"><div class="srclabel">Coach</div>
+<div class="kd"><span class="lbl">Keys to Defending</span>
+<div class="kdline">Box out early.</div>
+</div>
+</div>
+</div>
+<p class="note">Starter and bench roles come from the scouting report, which is not on file for this opponent yet, so players are ordered by production instead.</p>
+<p class="note">Per-game averages from this opponent's own film. Coach notes are passed through exactly as written on the scouting report; the data-driven lines come from those box scores and are stated against their own team rather than a league average — there is no league baseline in this data. Percentage reads carry attempt floors, so a player with nothing said about him simply has no line the numbers can support.</p>
+<div class="sect"><div class="t">🔁 TOP LINEUPS</div></div>
+<div class="card"><table><thead><tr><th>Five-man unit</th><th>GP</th><th>MIN</th><th>+/-</th><th>PTS</th><th>FG%</th><th>3P%</th><th>REB</th><th>AST</th><th>TO</th><th class="read">Strengths</th><th class="read">Weaknesses</th></tr></thead><tbody>
+<tr><td>Jalen Ward, Marcus Reed, Cole Ramsey, Aur A One, Aur A Two</td><td>2</td><td>23.1</td><td>-9</td><td>41</td><td>35.4</td><td>12.5</td><td>22</td><td>4</td><td>2</td><td class="read"><span class="dot good">Takes care of it (3.5 vs 19.2 per 40)</span></td><td class="read"><span class="dot bad">-16 per 40 min on the floor</span><span class="dot bad">Won&#x27;t make threes (12.5% on 8)</span><span class="dot bad">Stagnant — few assists (6.9 vs 16.8 per 40)</span></td></tr>
+<tr><td>Marcus Reed, Aur A One, Aur A Three, Cole Ramsey, Jalen Ward</td><td>2</td><td>20.3</td><td>12</td><td>34</td><td>34.3</td><td>6.2</td><td>17</td><td>7</td><td>13</td><td class="read"><span class="dot good">+24 per 40 min on the floor</span></td><td class="read"><span class="dot bad">Cold unit (34.3% vs 39.2%)</span><span class="dot bad">Won&#x27;t make threes (6.2% on 16)</span><span class="dot bad">Gets beaten on the glass (33.5 vs 43.2 per 40)</span><span class="dot bad">Stagnant — few assists (13.8 vs 16.8 per 40)</span><span class="dot bad">Turnover-prone (25.6 vs 19.2 per 40)</span></td></tr>
+<tr><td>Jalen Ward, Cole Ramsey, Aur A Three, Aur A Two, Marcus Reed</td><td>2</td><td>14.2</td><td>-4</td><td>53</td><td>40.7</td><td>46.2</td><td>14</td><td>8</td><td>7</td><td class="read"><span class="dot good">Hits threes (46.2% on 13)</span><span class="dot good">Moves the ball (22.5 vs 16.8 per 40)</span></td><td class="read"><span class="dot bad">-11 per 40 min on the floor</span></td></tr>
+<tr><td>Aur A One, Aur A Two, Aur A Three, Cole Ramsey, Jalen Ward</td><td>2</td><td>9.1</td><td>0</td><td>55</td><td>44.9</td><td>42.1</td><td>19</td><td>9</td><td>10</td><td class="read"><span class="dot good">Shoots it better than their norm (44.9% vs 39.2%)</span><span class="dot good">Hits threes (42.1% on 19)</span><span class="dot good">Rebounds well (83.5 vs 43.2 per 40)</span><span class="dot good">Moves the ball (39.6 vs 16.8 per 40)</span></td><td class="read"><span class="dot bad">Turnover-prone (44.0 vs 19.2 per 40)</span></td></tr>
+</tbody></table>
+<p class="note">GP, MIN, +/- and the counting stats are totals across the games on film. The reads are rates — per 40 minutes or a percentage — measured against this team's own lineup averages, so a unit is not called good simply for playing more. A unit with heavy minutes and a negative margin is the one to attack.</p></div>
+<div class="sect"><div class="t">🔑 KEYS TO VICTORY</div></div>
+<div class="card">
+<div class="key">
+<div class="hl">1. 📊 Take away their most efficient high-volume actions <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
+<div class="ev">Transition: 61.5% on 26 attempts; P&amp;R Roll Man: 55.0% on 20 attempts</div>
+<div class="why">Load up roll coverage and transition defense; live with everything else.</div>
+</div>
+<div class="key">
+<div class="hl">2. 📊 Funnel them into their worst high-volume looks <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
+<div class="ev">Spot-Up: 27.1% on 48 attempts; Isolation: 29.4% on 17 attempts</div>
+<div class="why">Don&#x27;t help off these actions; make them keep taking them.</div>
+</div>
+<div class="key">
+<div class="hl">3. 📋 Win the offensive glass <span class="src" style="border-color:#4E2A84;color:#4E2A84;">Keys to Victory</span></div>
+</div>
+<div class="key">
+<div class="hl">4. 📋 Force them left off the catch <span class="src" style="border-color:#4E2A84;color:#4E2A84;">Keys to Victory</span></div>
+</div>
+<div class="key">
+<div class="hl">5. 📋 Get back — no live-ball turnovers <span class="src" style="border-color:#4E2A84;color:#4E2A84;">Keys to Victory</span></div>
+</div>
+<div class="key">
+<div class="hl">6. ⚠️ Opponent strength: Two playmaking guards <span class="src" style="border-color:#c62828;color:#c62828;">Team Strengths</span></div>
+</div>
+<div class="key">
+<div class="hl">7. ⚠️ Opponent strength: Second-chance points <span class="src" style="border-color:#c62828;color:#c62828;">Team Strengths</span></div>
+</div>
+<div class="key">
+<div class="hl">8. 🔒 Attack Aurora Spartans&#x27;s Ward, Reed, Ramsey, One, Two lineup <span class="src" style="border-color:#5d4037;color:#5d4037;">Lineup Scouting</span></div>
+<div class="ev">Worst +/- lineups:
+-9.0 in 23.1 min, 35% FG — Ward, Reed, Ramsey, One, Two
+-4.0 in 14.2 min, 41% FG — Ward, Ramsey, Three, Two, Reed
++0.0 in 9.1 min, 45% FG — One, Two, Three, Ramsey, Ward
+Highest TO rate (per 40 min):
+44.0 TO/40 — One, Two, Three, Ramsey, Ward
+25.6 TO/40 — Reed, One, Three, Ramsey, Ward</div>
+<div class="why">Aurora Spartans&#x27;s most exploitable units: their worst net-rating lineups with real minutes this season (3+ min), and the lineups that give the ball away most per 40 minutes. The headline names the worst of them.</div>
+</div>
+<div class="key">
+<div class="hl">9. 🔒 Counter with Bunders, Kohl, Frank, Lake, Dow <span class="src" style="border-color:#5d4037;color:#5d4037;">Lineup Scouting</span></div>
+<div class="ev">+0.0 total (+0.00/min in 22.0 min) — Bunders, Kohl, Frank, Lake, Dow
+-13.0 total (-0.42/min in 31.3 min) — Bunders, Kohl, Frank, Reed, Dow</div>
+<div class="why">UWW&#x27;s best lineups by net margin season-wide — NOT matchup-specific, because there are no comparable opponent lineups on record yet.</div>
+</div>
+<div class="key">
+<div class="hl">10. 🔒 Attack Aurora Spartans&#x27;s Two, Ramsey, Ward combo <span class="src" style="border-color:#5d4037;color:#5d4037;">Lineup Scouting</span></div>
+<div class="ev">Worst +/- 3-man combos:
+-13.0 in 46.4 min — Two, Ramsey, Ward
+-13.0 in 37.3 min — Two, Ramsey, Reed
+-13.0 in 37.3 min — Two, Ward, Reed</div>
+<div class="why">Aurora Spartans&#x27;s most exploitable 3-man combinations: their worst net-rating units with real minutes this season (3+ min).</div>
+</div>
+<div class="key">
+<div class="hl">11. 🔒 Feature the Dow, Lake, Kohl combo <span class="src" style="border-color:#5d4037;color:#5d4037;">Lineup Scouting</span></div>
+<div class="ev">+0.0 total (+0.00/min in 22.0 min) — Dow, Lake, Kohl
++0.0 total (+0.00/min in 22.0 min) — Dow, Lake, Bunders
++0.0 total (+0.00/min in 22.0 min) — Dow, Lake, Frank</div>
+<div class="why">UWW&#x27;s best 3-man combinations by net margin season-wide (5+ min) — not matchup-specific like the 5-man counter above, but the smaller units most worth leaning on regardless of opponent.</div>
+</div>
+<div class="key">
+<div class="hl">12. 🏀 Feature our best look: Catch-and-shoot (guarded) <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
+<div class="ev">9/19 (47% FG, 61% eFG) · 1.21 pts/attempt · +0.16 vs all looks (1.05) · 16% of attempts · 47% from three this season</div>
+<div class="why">Bunders, Kohl, Frank, Reed, Dow gets it best (9/19, 47%) -- Usually comes off Panther-4 &quot;P4&quot; (4x this season)</div>
+</div>
+<div class="key">
+<div class="hl">13. 🎯 Attack their weakest look: Drive to the basket <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
+<div class="ev">Opponents shot 13/22 (59% FG, 77% eFG) · 1.55 pts/attempt · +0.19 vs all looks (1.36) · 18% of attempts · 55% from three on this against Aurora Spartans, 2 different team(s) doing it -- across 2 of Aurora Spartans&#x27;s games before UWW (the ones with tagged video)</div>
+<div class="why">Best on this shot (3+ attempts):
+• Bunders, Kohl, Frank, Reed, Dow 11/26 (42%)
+Runs it most:
+• Bunders, Kohl, Frank, Reed, Dow 26x (42%)
+Usually comes off Panther-4 &quot;P4&quot; for us (5x this season)</div>
+</div>
+<div class="key">
+<div class="hl">14. 🛡️ What Aurora Spartans goes to most: Putback off the offensive glass <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
+<div class="ev">14 attempts, 50% -- across their games before UWW</div>
+<div class="why">What their offense goes to most often, regardless of how well it&#x27;s worked -- worth a specific defensive scheme item to take away.</div>
+</div>
+</div>
+<p class="note">Built by the parser, not assembled here — the app's Upcoming Game page renders the same table, so the two lists cannot drift apart.</p>
+<div class="cols"><div class="col"><div class="sect"><div class="t">🧭 TEAMS LIKE AURORA SPARTANS THAT WE HAVE PLAYED</div></div>
+<div class="card">
+<div class="match">
+<div class="nm">Ripon Red Hawks</div>
+<div class="score">38<span class="of"> / 100 match</span></div>
+<div class="sub">14/17 features &middot; 87% of profile weight &middot; 1 gm sample</div>
+<div class="conf lo">confidence 29%</div>
+<div class="meet"><span class="w">W</span> 88-70 (Fri, Nov 7)</div>
+<div class="alike">Alike: Scoring level, Their defense</div>
+<div class="differs">Differs: Tempo</div>
+<div class="gap">Their TOV%: 17.4% vs 6.3% (Aurora Spartans)</div>
+<div class="gap">Their AST per made FG: 0.33 vs 0.17 (Aurora Spartans)</div>
+</div>
+<div class="match">
+<div class="nm">Eureka Red Devils</div>
+<div class="score">31<span class="of"> / 100 match</span></div>
+<div class="sub">14/17 features &middot; 87% of profile weight &middot; 1 gm sample</div>
+<div class="conf lo">confidence 29%</div>
+<div class="meet"><span class="w">W</span> 116-73 (Sat, Nov 15)</div>
+<div class="alike">Alike: Shot selection, Scoring level</div>
+<div class="differs">Differs: Tempo</div>
+<div class="gap">Their TOV%: 11.6% vs 6.3% (Aurora Spartans)</div>
+<div class="gap">TOV% they force: 13.8% vs 9.4% (Aurora Spartans)</div>
+</div>
+<div class="match">
+<div class="nm">St. Thomas (TX) Celts</div>
+<div class="score">23<span class="of"> / 100 match</span></div>
+<div class="sub">14/17 features &middot; 87% of profile weight &middot; 1 gm sample</div>
+<div class="conf lo">confidence 29%</div>
+<div class="meet"><span class="l">L</span> 73-81 (Fri, Nov 14)</div>
+<div class="alike">Alike: Tempo, Their offense</div>
+<div class="differs">Differs: Scoring level</div>
+<div class="gap">Their 3PA rate: 36.5% vs 21.4% (Aurora Spartans)</div>
+<div class="gap">3PA rate they allow: 8.2% vs 26.1% (Aurora Spartans)</div>
+</div>
+<div class="strip"><div class="lb">How we did against this style</div>UWW is 2-1 against these 3 teams, averaging 92.3 scored and 74.7 allowed (+0.0 pts scored, +0.0 allowed vs UWW&#x27;s season average).</div>
+</div></div><div class="col"><div class="sect"><div class="t">🧭 TEAMS LIKE US THAT HAVE PLAYED AURORA SPARTANS</div></div>
+<div class="card">
+<div class="match">
+<div class="nm">Bethany Lutheran</div>
+<div class="score">30<span class="of"> / 100 match</span></div>
+<div class="sub">14/17 features &middot; 87% of profile weight &middot; 1 gm sample</div>
+<div class="conf lo">confidence 29%</div>
+<div class="meet"><span class="l">L</span> 70-109 (2025-11-08)</div>
+<div class="alike">Alike: Tempo, Shot selection</div>
+<div class="differs">Differs: Their defense</div>
+<div class="gap">Their FT rate: 30.2% vs 19.3% (UWW)</div>
+<div class="gap">Their AST per made FG: 0.47 vs 0.31 (UWW)</div>
+</div>
+<div class="match">
+<div class="nm">North Central (IL)</div>
+<div class="score">23<span class="of"> / 100 match</span></div>
+<div class="sub">14/17 features &middot; 87% of profile weight &middot; 1 gm sample</div>
+<div class="conf lo">confidence 29%</div>
+<div class="meet"><span class="l">L</span> 89-110 (2025-11-12)</div>
+<div class="alike">Alike: Their defense, Shot selection</div>
+<div class="differs">Differs: Tempo</div>
+<div class="gap">Their ORB%: 6.2% vs 27.0% (UWW)</div>
+<div class="gap">Their AST per made FG: 0.11 vs 0.31 (UWW)</div>
+</div>
+<div class="strip"><div class="lb">How teams like us did against them</div>They went 0-2 against Aurora Spartans in 2 game(s), averaging 79.5 scored and 109.5 allowed. Across all 2 of their games, Aurora Spartans allowed 79.5 per game.</div>
+</div></div></div>
+<div class="sect"><div class="t">📅 AURORA LAST FIVE GAMES</div></div>
+<div class="card"><div class="five">
+<div class="g"><div class="d">Sat, Nov 8</div><div class="o">vs Bethany Lutheran</div><div class="r w">W 81-66</div></div>
+<div class="g"><div class="d">Wed, Nov 12</div><div class="o">@ North Central (IL)</div><div class="r w">W 65-55</div></div>
+</div></div>
+<div class="sect"><div class="t">⚠️ COACHING FLAGS — OUR SIDE</div></div>
+<div class="card"><table><thead><tr><th>Player</th><th>What the numbers show</th><th>What to do about it</th></tr></thead><tbody>
+<tr><td>Seth Bunders</td><td class="wrap">Half his three-point volume is guarded catch-and-shoot.</td><td class="wrap">Screen him into open looks rather than letting him rise over a closeout.</td></tr>
+<tr><td>Max Kohl</td><td class="wrap">Turnover rate climbs against pressure.</td><td class="wrap">Get the ball out of the post quickly against a doubling front.</td></tr>
+</tbody></table>
+<p class="note">From our own season film, not theirs — the tendencies most likely to cost us this specific game.</p></div>
+<div class="sect"><div class="t">🔮 PROJECTED SCORE</div></div>
+<div class="card cmp">
+<div class="who"><span class="l">UWW</span><span class="c">Projected</span><span class="r">AURORA</span></div>
+<div class="row"><span class="us">30</span><span class="stat">Final score</span><span class="them">32</span></div>
+<p class="note">A blend of each team's scoring and what each has done against comparable opposition. A starting point for the game plan, not a prediction.</p></div>
+<div class="foot">
+<p>Generated September 13, 2026 at 3:17 PM from the scouting parser's exported data — the same tables the scouting app reads. Everything here is reconstructed from play-by-play and video-tagging exports.</p>
+<p>Prepared ahead of the staff's own scouting reports. Numbers will move as more film is tagged.</p></div>
+</div>
+</body>
+</html>
