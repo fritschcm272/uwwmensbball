@@ -149,6 +149,8 @@ th.num, td.num { text-align: right; width: 2.4rem; }
 .five .r.l { color: var(--loss); }
 
 /* style matchup cards */
+.matchrow { display: flex; gap: 10px; align-items: stretch; }
+.matchrow > .match { flex: 1; min-width: 0; margin-bottom: 0; }
 .match { border: 1px solid #eee; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; }
 .match .nm { font-weight: 700; font-size: 0.95rem; color: var(--warhawk-purple); }
 .match .score { font-size: 1.6rem; font-weight: 800; line-height: 1.1; }
@@ -176,6 +178,8 @@ th.num, td.num { text-align: right; width: 2.4rem; }
 
 @media (max-width: 820px) {
   .cols { display: block; }
+  .matchrow { display: block; }
+  .matchrow > .match { margin-bottom: 8px; }
   .cols .col + .col .sect { margin-top: 1.5rem; }
 }
 @media (max-width: 720px) {
@@ -200,6 +204,11 @@ th.num, td.num { text-align: right; width: 2.4rem; }
 <div class="side mid"><div class="when">Wed, Nov 19</div><div class="vs">VS</div><div class="where">Home</div></div>
 <div class="side"><div class="crest"></div><div class="team">AURORA</div><div class="rec">2-0</div><div class="streak">2-game win streak</div></div>
 </div>
+<div class="sect"><div class="t">📅 AURORA LAST FIVE GAMES</div></div>
+<div class="card"><div class="five">
+<div class="g"><div class="d">Sat, Nov 8</div><div class="o">vs Bethany Lutheran</div><div class="r w">W 81-66</div></div>
+<div class="g"><div class="d">Wed, Nov 12</div><div class="o">@ North Central (IL)</div><div class="r w">W 65-55</div></div>
+</div></div>
 <div class="sect"><div class="t">📌 THE BOTTOM LINE</div></div>
 <div class="card"><ul class="bl"><li>Scoring 109.5 a game and allowing 79.5, over 2 games of film.</li><li>Aurora come in at 2-0, on a 2-game win streak.</li><li>Aur1 carries the offense at 27.5 a night — roughly 25% of their scoring.</li><li>Aur2 is the next threat at 25.5 (3.5 reb, 2.0 ast).</li><li>They shoot 50.0% from three on 14.0 attempts a game.</li><li>We are putting up 70.0 and allowing 77.0.</li></ul></div>
 <div class="cols"><div class="col"><div class="sect"><div class="t">📊 TEAM STATS</div></div>
@@ -233,9 +242,8 @@ th.num, td.num { text-align: right; width: 2.4rem; }
 <div class="statline">2 GP &middot; 27.5 PTS &middot; 5.0 REB &middot; 2.0 AST &middot; 1.0 TO &middot; 96.0% FG &middot; 57.1% 3P</div>
 <div class="reads">
 <span class="dot good">Leading scorer (27.5 ppg)</span>
-<span class="dot good">Primary creator (2.0 apg)</span>
-<span class="dot good">Shooter — 57.1% on 7 threes</span>
-<span class="dot good">Efficient — 96.0% from the field</span>
+<span class="dot good">Shooter — 57% on 7 threes</span>
+<span class="dot good">Efficient — 96% from the field</span>
 </div>
 <div class="srcblock derived"><div class="srclabel">Data-Driven</div>
 <p class="notes">Primary option: 27.5 ppg, 25% of their scoring on 19% of their shots. Efficient: 101.1% true shooting on 25 attempts.</p>
@@ -248,7 +256,8 @@ th.num, td.num { text-align: right; width: 2.4rem; }
 <div class="nm">Aur2</div>
 <div class="statline">2 GP &middot; 25.5 PTS &middot; 3.5 REB &middot; 2.0 AST &middot; 2.0 TO &middot; 89.3% FG &middot; 250.0% 3P</div>
 <div class="reads">
-<span class="dot good">Efficient — 89.3% from the field</span>
+<span class="dot good">Offensive glass (1.5 orpg)</span>
+<span class="dot good">Efficient — 89% from the field</span>
 </div>
 <div class="srcblock derived"><div class="srclabel">Data-Driven</div>
 <p class="notes">Primary option: 25.5 ppg, 23% of their scoring on 21% of their shots. Interior player: only 7% of his attempts come from three. Efficient: 91.1% true shooting on 28 attempts. Their offensive glass: 1.5 offensive rebounds a game, most on the team.</p>
@@ -264,10 +273,10 @@ th.num, td.num { text-align: right; width: 2.4rem; }
 <div class="statline">2 GP &middot; 23.0 PTS &middot; 6.5 REB &middot; 2.0 AST &middot; 1.0 TO &middot; 75.0% FG &middot; 12.5% 3P</div>
 <div class="reads">
 <span class="dot good">Active hands (1.5 spg)</span>
-<span class="dot good">Efficient — 75.0% from the field</span>
+<span class="dot good">Efficient — 75% from the field</span>
 <span class="dot good">Gets to the line (5.0 FTA/gm)</span>
-<span class="dot bad">Cold from three — 12.5% on 8</span>
-<span class="dot bad">Poor at the line — 10.0%</span>
+<span class="dot bad">Cold from three — 12% on 8</span>
+<span class="dot bad">Poor at the line — 10%</span>
 </div>
 <div class="srcblock derived"><div class="srclabel">Data-Driven</div>
 <p class="notes">Primary option: 23.0 ppg, 21% of their scoring on 21% of their shots. Efficient: 71.0% true shooting on 28 attempts. 10% from the line on 10 attempts.</p>
@@ -281,8 +290,9 @@ th.num, td.num { text-align: right; width: 2.4rem; }
 <div class="nm">Aur3</div>
 <div class="statline">2 GP &middot; 19.5 PTS &middot; 4.5 REB &middot; 0.5 AST &middot; 0.5 TO &middot; 77.3% FG &middot; 50.0% 3P</div>
 <div class="reads">
+<span class="dot good">Active hands (1.5 spg)</span>
 <span class="dot good">Rim protection (1.0 bpg)</span>
-<span class="dot good">Efficient — 77.3% from the field</span>
+<span class="dot good">Efficient — 77% from the field</span>
 </div>
 <div class="srcblock derived"><div class="srclabel">Data-Driven</div>
 <p class="notes">Efficient: 82.1% true shooting on 22 attempts.</p>
@@ -292,9 +302,10 @@ th.num, td.num { text-align: right; width: 2.4rem; }
 <div class="nm">Aur0</div>
 <div class="statline">2 GP &middot; 14.0 PTS &middot; 7.5 REB &middot; 2.0 AST &middot; 0.0 TO &middot; 39.3% FG &middot; 28.6% 3P</div>
 <div class="reads">
+<span class="dot good">Primary creator (2.0 apg)</span>
 <span class="dot good">Leads them on the glass (7.5 rpg)</span>
 <span class="dot good">Gets to the line (4.0 FTA/gm)</span>
-<span class="dot bad">Poor at the line — 50.0%</span>
+<span class="dot bad">Poor at the line — 50%</span>
 </div>
 <div class="srcblock derived"><div class="srclabel">Data-Driven</div>
 <p class="notes">Inefficient: 44.4% true shooting on 28 attempts. 50% from the line on 8 attempts. Initiates for them: 2.0 assists a game.</p>
@@ -323,15 +334,83 @@ th.num, td.num { text-align: right; width: 2.4rem; }
 </div>
 </div>
 <p class="note">Starter and bench roles come from the scouting report, which is not on file for this opponent yet, so players are ordered by production instead.</p>
-<p class="note">Per-game averages from this opponent's own film. Coach notes are passed through exactly as written on the scouting report; the data-driven lines come from those box scores and are stated against their own team rather than a league average — there is no league baseline in this data. Percentage reads carry attempt floors, so a player with nothing said about him simply has no line the numbers can support.</p>
+<p class="note">Per-game averages from this opponent's own film. Coach notes are passed through exactly as written on the scouting report; the data-driven lines come from those box scores and are stated against their own team rather than a league average — there is no league baseline in this data. Percentage reads carry attempt floors, so a subject with nothing said about it simply has no line the numbers can support.</p>
 <div class="sect"><div class="t">🔁 TOP LINEUPS</div></div>
-<div class="card"><table><thead><tr><th>Five-man unit</th><th>GP</th><th>MIN</th><th>+/-</th><th>PTS</th><th>FG%</th><th>3P%</th><th>REB</th><th>AST</th><th>TO</th><th class="read">Strengths</th><th class="read">Weaknesses</th></tr></thead><tbody>
-<tr><td>Jalen Ward, Marcus Reed, Cole Ramsey, Aur A One, Aur A Two</td><td>2</td><td>23.1</td><td>-9</td><td>41</td><td>35.4</td><td>12.5</td><td>22</td><td>4</td><td>2</td><td class="read"><span class="dot good">Takes care of it (3.5 vs 19.2 per 40)</span></td><td class="read"><span class="dot bad">-16 per 40 min on the floor</span><span class="dot bad">Won&#x27;t make threes (12.5% on 8)</span><span class="dot bad">Stagnant — few assists (6.9 vs 16.8 per 40)</span></td></tr>
-<tr><td>Marcus Reed, Aur A One, Aur A Three, Cole Ramsey, Jalen Ward</td><td>2</td><td>20.3</td><td>12</td><td>34</td><td>34.3</td><td>6.2</td><td>17</td><td>7</td><td>13</td><td class="read"><span class="dot good">+24 per 40 min on the floor</span></td><td class="read"><span class="dot bad">Cold unit (34.3% vs 39.2%)</span><span class="dot bad">Won&#x27;t make threes (6.2% on 16)</span><span class="dot bad">Gets beaten on the glass (33.5 vs 43.2 per 40)</span><span class="dot bad">Stagnant — few assists (13.8 vs 16.8 per 40)</span><span class="dot bad">Turnover-prone (25.6 vs 19.2 per 40)</span></td></tr>
-<tr><td>Jalen Ward, Cole Ramsey, Aur A Three, Aur A Two, Marcus Reed</td><td>2</td><td>14.2</td><td>-4</td><td>53</td><td>40.7</td><td>46.2</td><td>14</td><td>8</td><td>7</td><td class="read"><span class="dot good">Hits threes (46.2% on 13)</span><span class="dot good">Moves the ball (22.5 vs 16.8 per 40)</span></td><td class="read"><span class="dot bad">-11 per 40 min on the floor</span></td></tr>
-<tr><td>Aur A One, Aur A Two, Aur A Three, Cole Ramsey, Jalen Ward</td><td>2</td><td>9.1</td><td>0</td><td>55</td><td>44.9</td><td>42.1</td><td>19</td><td>9</td><td>10</td><td class="read"><span class="dot good">Shoots it better than their norm (44.9% vs 39.2%)</span><span class="dot good">Hits threes (42.1% on 19)</span><span class="dot good">Rebounds well (83.5 vs 43.2 per 40)</span><span class="dot good">Moves the ball (39.6 vs 16.8 per 40)</span></td><td class="read"><span class="dot bad">Turnover-prone (44.0 vs 19.2 per 40)</span></td></tr>
-</tbody></table>
-<p class="note">GP, MIN, +/- and the counting stats are totals across the games on film. The reads are rates — per 40 minutes or a percentage — measured against this team's own lineup averages, so a unit is not called good simply for playing more. A unit with heavy minutes and a negative margin is the one to attack.</p></div>
+<div class="player">
+<div class="nm">Jalen Ward, Marcus Reed, Cole Ramsey, Aur A One, Aur A Two</div>
+<div class="statline">2 GP &middot; 23.1 MIN &middot; -9 +/- &middot; 41 PTS &middot; 35.4% FG &middot; 12.5% 3P &middot; 22 REB &middot; 4 AST &middot; 2 TO</div>
+<div class="reads">
+<span class="dot good">Takes care of it (3.5 vs 19.2 per 40)</span>
+<span class="dot bad">-16 per 40 on the floor</span>
+<span class="dot bad">Won&#x27;t make threes (12.5% on 8)</span>
+<span class="dot bad">Stagnant — few assists (6.9 vs 16.8 per 40)</span>
+</div>
+<div class="srcblock derived"><div class="srclabel">Data-Driven</div>
+<p class="notes">23.1 minutes together over 2 game(s) — their most-used unit. Net -16 per 40 minutes on the floor (-9 in 23.1).</p>
+<div class="kd"><span class="lbl">Keys to Defending</span>
+<div class="kdline">Their weakest group — push tempo and hunt shots while it is on the floor.</div>
+<div class="kdline">Pack the paint against this group and live with the three.</div>
+<div class="kdline">Switch and make this group create off the dribble.</div>
+</div>
+</div>
+</div>
+<div class="player">
+<div class="nm">Marcus Reed, Aur A One, Aur A Three, Cole Ramsey, Jalen Ward</div>
+<div class="statline">2 GP &middot; 20.3 MIN &middot; 12 +/- &middot; 34 PTS &middot; 34.3% FG &middot; 6.2% 3P &middot; 17 REB &middot; 7 AST &middot; 13 TO</div>
+<div class="reads">
+<span class="dot good">+24 per 40 on the floor</span>
+<span class="dot bad">Cold unit (34.3% vs 39.2%)</span>
+<span class="dot bad">Won&#x27;t make threes (6.2% on 16)</span>
+<span class="dot bad">Gets beaten on the glass (33.5 vs 43.2 per 40)</span>
+<span class="dot bad">Stagnant — few assists (13.8 vs 16.8 per 40)</span>
+<span class="dot bad">Turnover-prone (25.6 vs 19.2 per 40)</span>
+</div>
+<div class="srcblock derived"><div class="srclabel">Data-Driven</div>
+<p class="notes">20.3 minutes together over 2 game(s). Net +24 per 40 minutes on the floor (+12 in 20.3).</p>
+<div class="kd"><span class="lbl">Keys to Defending</span>
+<div class="kdline">Their best group — make sure our own best five is out there with them.</div>
+<div class="kdline">Pack the paint against this group and live with the three.</div>
+<div class="kdline">Crash the offensive glass while this unit is in.</div>
+<div class="kdline">Switch and make this group create off the dribble.</div>
+<div class="kdline">Pressure this unit — they give it away.</div>
+</div>
+</div>
+</div>
+<div class="player">
+<div class="nm">Jalen Ward, Cole Ramsey, Aur A Three, Aur A Two, Marcus Reed</div>
+<div class="statline">2 GP &middot; 14.2 MIN &middot; -4 +/- &middot; 53 PTS &middot; 40.7% FG &middot; 46.2% 3P &middot; 14 REB &middot; 8 AST &middot; 7 TO</div>
+<div class="reads">
+<span class="dot good">Hits threes (46.2% on 13)</span>
+<span class="dot good">Moves the ball (22.5 vs 16.8 per 40)</span>
+<span class="dot bad">-11 per 40 on the floor</span>
+</div>
+<div class="srcblock derived"><div class="srclabel">Data-Driven</div>
+<p class="notes">14.2 minutes together over 2 game(s). Net -11 per 40 minutes on the floor (-4 in 14.2). Shoots 46.2% from three on 13 attempts with this group on the floor.</p>
+<div class="kd"><span class="lbl">Keys to Defending</span>
+<div class="kdline">Their weakest group — push tempo and hunt shots while it is on the floor.</div>
+<div class="kdline">Stay attached on the perimeter — no help off this group&#x27;s shooters.</div>
+</div>
+</div>
+</div>
+<div class="player">
+<div class="nm">Aur A One, Aur A Two, Aur A Three, Cole Ramsey, Jalen Ward</div>
+<div class="statline">2 GP &middot; 9.1 MIN &middot; 0 +/- &middot; 55 PTS &middot; 44.9% FG &middot; 42.1% 3P &middot; 19 REB &middot; 9 AST &middot; 10 TO</div>
+<div class="reads">
+<span class="dot good">Shoots it better than their norm (44.9% vs 39.2%)</span>
+<span class="dot good">Hits threes (42.1% on 19)</span>
+<span class="dot good">Rebounds well (83.5 vs 43.2 per 40)</span>
+<span class="dot good">Moves the ball (39.6 vs 16.8 per 40)</span>
+<span class="dot bad">Turnover-prone (44.0 vs 19.2 per 40)</span>
+</div>
+<div class="srcblock derived"><div class="srclabel">Data-Driven</div>
+<p class="notes">9.1 minutes together over 2 game(s). Shoots 42.1% from three on 19 attempts with this group on the floor.</p>
+<div class="kd"><span class="lbl">Keys to Defending</span>
+<div class="kdline">Stay attached on the perimeter — no help off this group&#x27;s shooters.</div>
+<div class="kdline">Pressure this unit — they give it away.</div>
+</div>
+</div>
+</div>
+<p class="note">GP, MIN, +/- and the counting stats are totals across the games on film. The strengths and weaknesses are rates — per 40 minutes or a percentage — measured against this team's own lineup averages, so a unit is not called good simply for playing more.</p>
 <div class="sect"><div class="t">🔑 KEYS TO VICTORY</div></div>
 <div class="card">
 <div class="key">
@@ -394,7 +473,7 @@ Highest TO rate (per 40 min):
 <div class="key">
 <div class="hl">12. 🏀 Feature our best look: Catch-and-shoot (guarded) <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
 <div class="ev">9/19 (47% FG, 61% eFG) · 1.21 pts/attempt · +0.16 vs all looks (1.05) · 16% of attempts · 47% from three this season</div>
-<div class="why">Bunders, Kohl, Frank, Reed, Dow gets it best (9/19, 47%) -- Usually comes off Panther-4 &quot;P4&quot; (4x this season)</div>
+<div class="why">Bunders, Kohl, Frank, Reed, Dow gets it best (9/19, 47%) -- Usually comes off Panther-4 &quot;P4&quot; (4 of 4 tagged possessions this season)</div>
 </div>
 <div class="key">
 <div class="hl">13. 🎯 Attack their weakest look: Drive to the basket <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
@@ -403,7 +482,7 @@ Highest TO rate (per 40 min):
 • Bunders, Kohl, Frank, Reed, Dow 11/26 (42%)
 Runs it most:
 • Bunders, Kohl, Frank, Reed, Dow 26x (42%)
-Usually comes off Panther-4 &quot;P4&quot; for us (5x this season)</div>
+Usually comes off Panther-4 &quot;P4&quot; for us (5 of 9 tagged possessions this season)</div>
 </div>
 <div class="key">
 <div class="hl">14. 🛡️ What Aurora Spartans goes to most: Putback off the offensive glass <span class="src" style="border-color:#37474f;color:#37474f;">Data-Driven</span></div>
@@ -412,8 +491,9 @@ Usually comes off Panther-4 &quot;P4&quot; for us (5x this season)</div>
 </div>
 </div>
 <p class="note">Built by the parser, not assembled here — the app's Upcoming Game page renders the same table, so the two lists cannot drift apart.</p>
-<div class="cols"><div class="col"><div class="sect"><div class="t">🧭 TEAMS LIKE AURORA SPARTANS THAT WE HAVE PLAYED</div></div>
+<div class="sect"><div class="t">🧭 TEAMS LIKE AURORA SPARTANS THAT WE HAVE PLAYED</div></div>
 <div class="card">
+<div class="matchrow">
 <div class="match">
 <div class="nm">Ripon Red Hawks</div>
 <div class="score">38<span class="of"> / 100 match</span></div>
@@ -447,9 +527,12 @@ Usually comes off Panther-4 &quot;P4&quot; for us (5x this season)</div>
 <div class="gap">Their 3PA rate: 36.5% vs 21.4% (Aurora Spartans)</div>
 <div class="gap">3PA rate they allow: 8.2% vs 26.1% (Aurora Spartans)</div>
 </div>
+</div>
 <div class="strip"><div class="lb">How we did against this style</div>UWW is 2-1 against these 3 teams, averaging 92.3 scored and 74.7 allowed (+0.0 pts scored, +0.0 allowed vs UWW&#x27;s season average).</div>
-</div></div><div class="col"><div class="sect"><div class="t">🧭 TEAMS LIKE US THAT HAVE PLAYED AURORA SPARTANS</div></div>
+</div>
+<div class="sect"><div class="t">🧭 TEAMS LIKE US THAT HAVE PLAYED AURORA SPARTANS</div></div>
 <div class="card">
+<div class="matchrow">
 <div class="match">
 <div class="nm">Bethany Lutheran</div>
 <div class="score">30<span class="of"> / 100 match</span></div>
@@ -472,13 +555,9 @@ Usually comes off Panther-4 &quot;P4&quot; for us (5x this season)</div>
 <div class="gap">Their ORB%: 6.2% vs 27.0% (UWW)</div>
 <div class="gap">Their AST per made FG: 0.11 vs 0.31 (UWW)</div>
 </div>
+</div>
 <div class="strip"><div class="lb">How teams like us did against them</div>They went 0-2 against Aurora Spartans in 2 game(s), averaging 79.5 scored and 109.5 allowed. Across all 2 of their games, Aurora Spartans allowed 79.5 per game.</div>
-</div></div></div>
-<div class="sect"><div class="t">📅 AURORA LAST FIVE GAMES</div></div>
-<div class="card"><div class="five">
-<div class="g"><div class="d">Sat, Nov 8</div><div class="o">vs Bethany Lutheran</div><div class="r w">W 81-66</div></div>
-<div class="g"><div class="d">Wed, Nov 12</div><div class="o">@ North Central (IL)</div><div class="r w">W 65-55</div></div>
-</div></div>
+</div>
 <div class="sect"><div class="t">⚠️ COACHING FLAGS — OUR SIDE</div></div>
 <div class="card"><table><thead><tr><th>Player</th><th>What the numbers show</th><th>What to do about it</th></tr></thead><tbody>
 <tr><td>Seth Bunders</td><td class="wrap">Half his three-point volume is guarded catch-and-shoot.</td><td class="wrap">Screen him into open looks rather than letting him rise over a closeout.</td></tr>
@@ -491,7 +570,7 @@ Usually comes off Panther-4 &quot;P4&quot; for us (5x this season)</div>
 <div class="row"><span class="us">30</span><span class="stat">Final score</span><span class="them">32</span></div>
 <p class="note">A blend of each team's scoring and what each has done against comparable opposition. A starting point for the game plan, not a prediction.</p></div>
 <div class="foot">
-<p>Generated September 13, 2026 at 3:17 PM from the scouting parser's exported data — the same tables the scouting app reads. Everything here is reconstructed from play-by-play and video-tagging exports.</p>
+<p>Generated September 13, 2026 at 9:01 PM from the scouting parser's exported data — the same tables the scouting app reads. Everything here is reconstructed from play-by-play and video-tagging exports.</p>
 <p>Prepared ahead of the staff's own scouting reports. Numbers will move as more film is tagged.</p></div>
 </div>
 </body>
