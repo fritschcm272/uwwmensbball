@@ -3641,12 +3641,8 @@ def shot_look_stat_line(row, baseline_ppa=None) -> str:
     if baseline_ppa:
         parts.append(f"{row['PPA'] - baseline_ppa:+.2f} vs all looks ({baseline_ppa:.2f})")
     parts.append(f"{row['Share']:.0f}% of attempts")
-    # CONFIRMED BUG (fixed here, same fix as the parser): "100% from three" read as a make rate and sat next
-    # to "50% FG" on the same line. ThreeRate is the SHARE of these attempts that were threes.
-    if row.get("ThreeRate", 0) >= 99.5:
-        parts.append("all threes")
-    elif row.get("ThreeRate", 0) >= 1:
-        parts.append(f"{row['ThreeRate']:.0f}% of them threes")
+    if row.get("ThreeRate", 0) >= 1:
+        parts.append(f"{row['ThreeRate']:.0f}% from three")
     return " \u00b7 ".join(parts)
 
 
@@ -3935,12 +3931,6 @@ def summarize_play_calls(rows: pd.DataFrame, min_possessions: int = 2) -> pd.Dat
         return pd.DataFrame(columns=["play_call", "Poss", "Pts", "PPP", "Makes", "Attempts", "FG%"])
     _r = rows.copy()
     _r["_pts"] = _r["result"].apply(play_result_points)
-    # CONFIRMED CHANGE (requested): clips from uww_plays.csv carry `points` -- what the play-by-play says was
-    # scored on that possession, free throws and and-ones included. Prefer it; the Result tag can't see a
-    # trip to the line, which is why a drawn foul used to drop out of PPP entirely.
-    if "points" in _r.columns:
-        _real = pd.to_numeric(_r["points"], errors="coerce")
-        _r["_pts"] = _real.where(_real.notna(), _r["_pts"])
     _r["_is_poss"] = _r["_pts"].notna()
     _r["_pts_f"] = pd.to_numeric(_r["_pts"], errors="coerce").fillna(0)
     _r["_mk"] = _r["result"].astype(str).str.contains("Make", case=False, na=False)
@@ -4412,614 +4402,6 @@ def render_willie_sidebar():
 # --------------------------------------------------------------------------------------------------------------
 # Section 1: Upcoming Game
 # --------------------------------------------------------------------------------------------------------------
-# --------------------------------------------------------------------------------------------------------------
-# GAME PLAN TAB -- renders the parser's game-plan tables (see the parser's "Game plan, practice plan and staff
-# inputs" cell). Nothing is computed here; every table arrives built.
-# --------------------------------------------------------------------------------------------------------------
-_GP_CSS = """
-<style>
-.gp-sample { border: 2px solid #c62828; background: #fff5f5; border-radius: 8px; padding: 10px 14px 12px;
-             margin: 0 0 0.75rem; }
-.gp-card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 10px 14px 12px; margin: 0 0 0.75rem; }
-.gp-tag { display: inline-block; background: #c62828; color: #fff; font-size: 0.66rem; font-weight: 800;
-          letter-spacing: 0.6px; text-transform: uppercase; border-radius: 6px; padding: 2px 8px;
-          margin-bottom: 6px; }
-.gp-why { font-size: 0.8rem; color: #8c1d2c; margin: 0 0 8px; }
-.gp-tbl { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-.gp-tbl th { text-align: left; font-weight: 700; color: #666; font-size: 0.72rem; padding: 0 8px 6px;
-             border-bottom: 1px solid #e0e0e0; }
-.gp-tbl td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
-.gp-sample .gp-tbl td { border-bottom-color: #f6dada; }
-.gp-tbl tr.gp-day td { background: #F0EDF5; color: #4E2A84; font-weight: 800; font-size: 0.78rem;
-                        text-transform: uppercase; letter-spacing: 0.4px; }
-.gp-sample .gp-tbl tr.gp-day td { background: #fde3e3; color: #8c1d2c; }
-.gp-foul { color: #1b5e20; font-weight: 700; }
-.gp-nofoul { color: #8c1d2c; font-weight: 700; }
-.gp-caution { background: #fdf6e3; border: 1px solid #f0dca8; border-radius: 8px; padding: 8px 14px;
-              margin: 0 0 0.75rem; font-size: 0.85rem; }
-.gp-caution div { padding: 3px 0; }
-.gp-caution b.area { color: #8a6d3b; margin-right: 6px; }
-.gp-photo { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; display: block; }
-.gp-photo-blank { background: #e0dbea; border: 1px solid #e0e0e0; }
-</style>
-"""
-
-
-def _gp_clean(value) -> str:
-    if value is None or (isinstance(value, float) and pd.isna(value)):
-        return ""
-    if isinstance(value, float) and value.is_integer():
-        return str(int(value))
-    text = str(value).strip()
-    return "" if text.lower() in ("nan", "none") else text
-
-
-def _gp_rows(table: str, short_opponent: str):
-    """(rows for this opponent, is_sample). is_sample only when EVERY row is a placeholder -- the parser never
-    mixes staff input and sample rows within a section, and a renderer shouldn't guess if it ever did."""
-    df = load_table(table)
-    if df.empty:
-        return df, False
-    if "opponent" in df.columns:
-        df = df[df["opponent"].astype(str) == str(short_opponent)]
-    is_sample = bool(not df.empty and "is_sample" in df.columns
-                     and df["is_sample"].astype(str).str.lower().isin(["true", "1"]).all())
-    return df, is_sample
-
-
-def _gp_card_open(is_sample: bool, why: str) -> str:
-    if is_sample:
-        return (f'<div class="gp-sample"><div class="gp-tag">Sample data \u2014 not from your files</div>'
-                f'<p class="gp-why">{html.escape(why)}</p>')
-    return '<div class="gp-card">'
-
-
-def _gp_table(table, short_opponent, title, columns, why_sample, help_text=None, cell_class=None, photo_col=None,
-             note=None):
-    """photo_col: column key holding an image URL, rendered as a round thumbnail (or a blank placeholder
-    circle when empty) instead of escaped text -- used for the roster photo in Personnel Details.
-    note: an optional extra line appended after the table (e.g. the "Value: ..." assessment on the
-    what-richer-tagging-would-unlock sections)."""
-    df, is_sample = _gp_rows(table, short_opponent)
-    if df.empty:
-        return False
-    section_header(title + (" \u2014 SAMPLE" if is_sample else ""), help_text)
-    body = [_gp_card_open(is_sample, why_sample), '<table class="gp-tbl"><thead><tr>']
-    body += [f"<th>{html.escape(label)}</th>" for _, label in columns]
-    body.append("</tr></thead><tbody>")
-    for _, r in df.iterrows():
-        cells = []
-        for col, _label in columns:
-            if col == photo_col:
-                _url = _gp_clean(r.get(col))
-                cells.append(f'<td><img src="{html.escape(_url)}" class="gp-photo" alt=""></td>' if _url
-                             else '<td><div class="gp-photo gp-photo-blank"></div></td>')
-            else:
-                cells.append(f'<td class="{cell_class(col, r) if cell_class else ""}">'
-                             f"{html.escape(_gp_clean(r.get(col)))}</td>")
-        body.append("<tr>" + "".join(cells) + "</tr>")
-    body.append("</tbody></table>")
-    if note:
-        body.append(f'<p class="gp-why" style="color:#666;margin-top:6px;">{html.escape(note)}</p>')
-    body.append("</div>")
-    st.markdown("".join(body), unsafe_allow_html=True)
-    return True
-def render_read_with_caution(short_opponent) -> None:
-    """Thin-sample warnings, collapsed under the banner. Real data only (never sample)."""
-    if not short_opponent:
-        return
-    df, _ = _gp_rows("uww_sample_size_warnings", short_opponent)
-    if df.empty:
-        return
-    with st.expander(f"\u26a0\ufe0f Read with caution \u2014 {len(df)} thin-sample item"
-                     f"{'s' if len(df) != 1 else ''}", expanded=False):
-        st.markdown(_GP_CSS + '<div class="gp-caution">' + "".join(
-            f'<div><b class="area">{html.escape(_gp_clean(r.get("area")))}</b>'
-            f'<b>{html.escape(_gp_clean(r.get("subject")))}</b> \u2014 {html.escape(_gp_clean(r.get("detail")))}</div>'
-            for _, r in df.iterrows()) + "</div>", unsafe_allow_html=True)
-
-
-def render_data_driven_player_notes(short_opponent, player_name) -> None:
-    """The parser's Data-Driven notes, strengths/weaknesses and keys for one opponent player."""
-    notes = load_table("uww_scouting_notes")
-    if notes.empty or not {"opponent", "subject_type", "name", "source"}.issubset(notes.columns):
-        return
-    rows = notes[(notes["opponent"].astype(str) == str(short_opponent)) & (notes["subject_type"] == "player")
-                 & (notes["name"].astype(str) == str(player_name)) & (notes["source"] == "Data-Driven")]
-    if rows.empty:
-        return
-    r = rows.iloc[0]
-    with st.container(border=True):
-        st.markdown("**Data-Driven Notes** \u00b7 from their own box scores")
-        good = [x.strip() for x in _gp_clean(r.get("strengths")).split(" | ") if x.strip()]
-        bad = [x.strip() for x in _gp_clean(r.get("weaknesses")).split(" | ") if x.strip()]
-        if good or bad:
-            st.markdown("".join(
-                f'<div style="font-size:0.8rem;color:{c};">\u25aa {html.escape(t)}</div>'
-                for c, items in (("#1b5e20", good), ("#8c1d2c", bad)) for t in items), unsafe_allow_html=True)
-        if _gp_clean(r.get("notes")):
-            st.markdown(f"_{_gp_clean(r.get('notes'))}_")
-        keys = [x.strip() for x in _gp_clean(r.get("keys_to_defending")).split(" | ") if x.strip()]
-        if keys:
-            st.markdown("**Keys to Defending:**  \n" + "  \n".join(f"\u25aa {k}" for k in keys))
-
-
-def render_play_call_section(side: str, short_opponent: str, title: str, intro: str) -> None:
-    """Play-call breakdown for one side, from the parser's uww_play_call_summary.csv (built from uww_plays.csv /
-    opponent_plays.csv). Real data -- never a sample box."""
-    sm = load_table("uww_play_call_summary")
-    if sm.empty or not {"side", "level", "name"}.issubset(sm.columns):
-        return
-    sm = sm[(sm["side"] == side) & (sm["scouted_opponent"].astype(str) == str(short_opponent))]
-    if sm.empty:
-        return
-    clips = load_table("uww_play_calls")
-    if not clips.empty:
-        clips = clips[(clips["side"] == side) & (clips["scouted_opponent"].astype(str) == str(short_opponent))]
-        if side == "Opponent":
-            clips = clips[clips["offense_team"].astype(str) == str(short_opponent)]
-    calls = sm[(sm["level"] == "Play call") & ~sm["name"].astype(str).str.contains("unspecified", na=False)]
-    team_ppp = calls["team_ppp"].dropna().iloc[0] if calls["team_ppp"].notna().any() else None
-    section_header(title, "PPP counts what the play-by-play says was scored on the possession (free throws "
-                          "included) when the clip matched an event, otherwise what its result tag implies. Clips "
-                          "tagged Rewatch/TBD or with no call are left out of the rankings.")
-    if not clips.empty:
-        _q = clips["decode_quality"].value_counts()
-        _m = int(clips["matched_event"].astype(str).str.lower().eq("true").sum())
-        st.caption(f"{intro} {len(clips)} tagged possessions"
-                   + (f" · {team_ppp:.2f} PPP overall" if team_ppp is not None else "")
-                   + f" · {_m} matched to play-by-play · {int(_q.get('Needs review', 0))} flagged for rewatch")
-
-    def _fmt(df, cols, labels):
-        out = df[[c for c in cols if c in df.columns]].rename(columns=dict(zip(cols, labels)))
-        return out
-
-    c1, c2 = st.columns([1, 1.6])
-    with c1:
-        st.markdown("**By series**")
-        st.dataframe(_fmt(sm[sm["level"] == "Series"].sort_values("uses", ascending=False),
-                          ["name", "uses", "ppp", "fg_pct", "turnovers"], ["Series", "Uses", "PPP", "FG%", "TO"]),
-                     hide_index=True, use_container_width=True)
-        st.markdown("**Primary actions**")
-        st.dataframe(_fmt(sm[sm["level"] == "Primary action"].sort_values("uses", ascending=False).head(8),
-                          ["name", "uses", "ppp", "top_player"], ["Action", "Uses", "PPP", "Finisher"]),
-                     hide_index=True, use_container_width=True)
-        _loc = sm[sm["level"] == "Location"].sort_values("uses", ascending=False)
-        if not _loc.empty:
-            st.markdown("**Where it starts**")
-            st.dataframe(_fmt(_loc, ["name", "uses", "ppp"], ["Spot", "Uses", "PPP"]),
-                         hide_index=True, use_container_width=True)
-    with c2:
-        st.markdown("**Sets** (sort any column)")
-        _sets = calls.sort_values(["uses", "ppp"], ascending=[False, False])
-        st.dataframe(_fmt(_sets, ["name", "situation", "uses", "ppp", "fg_pct", "turnovers", "fouls_drawn",
-                                  "top_player", "top_location", "example_titles", "game_codes"],
-                          ["Set", "Situation", "Uses", "PPP", "FG%", "TO", "Fouls drawn", "Finisher", "Where",
-                           "As tagged", "Games"]),
-                     hide_index=True, use_container_width=True, height=360)
-        if not clips.empty:
-            _pick = st.selectbox("Clips for a set", ["--"] + _sets["name"].astype(str).tolist(),
-                                 key=f"pc_pick_{side}_{short_opponent}")
-            if _pick != "--":
-                st.dataframe(_fmt(clips[clips["play_call"].astype(str) == _pick],
-                                  ["game_code", "period", "time_remaining_seconds", "player", "result", "points",
-                                   "play_title", "play_actions", "play_location", "synergy_play_type", "matched_by"],
-                                  ["Game", "Pd", "Clock (s)", "Player", "Result", "Pts", "Tagged as", "Actions",
-                                   "Where", "Finish type", "Matched by"]),
-                             hide_index=True, use_container_width=True)
-    if side == "UWW":
-        gl = load_table("uww_play_glossary")
-        if not gl.empty:
-            with st.expander("How the play titles were decoded"):
-                st.dataframe(gl.rename(columns={"shorthand": "Shorthand", "meaning": "Read as",
-                                                "confidence": "Confidence"}),
-                             hide_index=True, use_container_width=True)
-    if True:
-        if not clips.empty:
-            _bad = clips[clips["decode_quality"].isin(["Needs review", "No call", "Partial"])]
-            if not _bad.empty:
-                with st.expander(f"Titles to clean up in the tagging tool ({len(_bad)})"):
-                    st.dataframe(_fmt(_bad, ["game_code", "player", "play_title", "decode_quality", "decode_note"],
-                                      ["Game", "Player", "Tagged as", "Decode", "Why"]),
-                                 hide_index=True, use_container_width=True)
-
-
-def render_game_plan_tab(short_opponent: str) -> None:
-    st.markdown(_GP_CSS, unsafe_allow_html=True)
-    st.caption("Red boxes are SAMPLE DATA \u2014 placeholders generated by the parser until the staff fills in "
-               "the matching file in INPUT_DIR/staff_inputs/. Everything else comes from your play-by-play, "
-               "video and box-score exports.")
-
-    brief_slug = re.sub(r"[^\w]+", "_", str(short_opponent)).strip("_")
-    brief_path = os.path.join(DATA_DIR, "scouting_briefs", f"scouting_brief_{brief_slug}.html")
-    if os.path.exists(brief_path):
-        with open(brief_path, "rb") as f:
-            st.download_button("\U0001f4e5 Download the scouting brief (HTML)", data=f,
-                               file_name=os.path.basename(brief_path), mime="text/html",
-                               key=f"brief_download_{brief_slug}")
-
-    # --- how they play ---
-    _gp_table("uww_opp_personnel", short_opponent, "\U0001f4cf PERSONNEL DETAILS",
-              [("photo_url", ""), ("player", "Player"), ("jersey", "#"), ("position", "Pos"),
-               ("height", "Ht"), ("hand", "Hand"), ("class_year", "Yr"), ("status", "Status"),
-               ("games_on_film", "Games on film")],
-              "Jersey, position, height, hand, class and status are placeholders; games on film is real. "
-              "Replace with staff_inputs/opp_personnel.csv.",
-              photo_col="photo_url")
-    _no_min = load_table("uww_roster_no_minutes")
-    if not _no_min.empty and "opponent" in _no_min.columns:
-        _no_min = _no_min[_no_min["opponent"].astype(str) == str(short_opponent)]
-    if not _no_min.empty and int(_no_min.iloc[0].get("count") or 0):
-        st.caption(f"Also on the roster, no minutes recorded in any game we have box-score data for: "
-                   f"{_no_min.iloc[0]['names']}. Left out of the table above rather than risk showing a "
-                   f"name next to the wrong photo.")
-    _gp_table("uww_opp_sets", short_opponent, "\U0001f4cb THEIR SETS & SPECIAL SITUATIONS",
-              [("situation", "Situation"), ("set_name", "Set"), ("primary_player", "For"), ("action", "Action"),
-               ("frequency", "How often"), ("our_call", "Suggested coverage"), ("film_ref", "Film")],
-              "Set names, actions and coverages are placeholders; the player each set is for comes from their "
-              "real box score. Add opponent_plays.csv to INPUT_DIR, or staff_inputs/opp_sets.csv, to replace them.",
-              help_text="Built from opponent_plays.csv when it exists: set, finisher, action, frequency and film are "
-                        "real. Suggested coverage is generated from the set's primary action, not the staff's scheme.")
-    render_play_call_section("Opponent", short_opponent,
-                             f"\U0001f3ac {short_opponent.upper()} PLAY CALLS",
-                             f"From opponent_plays.csv -- {short_opponent}'s own offense in their games before this one.")
-    _gp_table("uww_opp_defense", short_opponent, "\U0001f6e1\ufe0f THEIR DEFENSE & HOW WE ATTACK IT",
-              [("item", "Area"), ("what_they_do", "What they do"), ("how_we_attack", "How we attack it")],
-              "The exports carry no defensive-scheme tags, so all of this is a placeholder. Replace with "
-              "staff_inputs/opp_defense.csv.")
-
-    # ---- process fix: not opponent data, so a plain note rather than a sample table -----------------------
-    section_header("\U0001f527 TAGGING PROCESS: CONTROLLED VOCABULARY")
-    st.markdown(
-        "Every title decoded correctly, but only because the decoder was built to absorb spelling variance -- "
-        "\"Blob-Box-Curl\", \"BLOB- Box- Curl\" and \"blob-box-curl\" are the same play typed three ways. That's "
-        "fragile: a new abbreviation the decoder hasn't seen reads as \"no call\" until someone updates it.\n\n"
-        "**To collect:** replace free-text Title entry with a dropdown or autocomplete built from the actual "
-        "playbook, so a tagger picks a play name instead of typing one.\n\n"
-        "**Value: Process, not new data.** Doesn't reveal anything new about an opponent -- it eliminates "
-        "spelling drift at the source, so every future season's data is clean without needing a decoder to "
-        "reverse-engineer it."
-    )
-    _gp_table("uww_opp_shot_zones", short_opponent, "\U0001f3af SHOT LOCATIONS (% OF ATTEMPTS)",
-              [("player", "Player"), ("rim", "Rim"), ("paint_non_rim", "Paint"), ("midrange", "Mid"),
-               ("corner_3", "Corner 3"), ("above_break_3", "Above-break 3")],
-              "Total three-point share is real; the zone split is a placeholder until shots are location-tagged.",
-              note="To collect: tag a zone (rim/paint/mid/corner 3/above-break 3) on every shot attempt -- "
-                   "the decoder reads a starting spot and sometimes a finish spot out of the title, but not "
-                   "systematically enough to fill this on its own. Value: High -- a standard efficiency "
-                   "split that would inform closeout aggression and help principles.")
-    _gp_table("uww_opp_tendencies", short_opponent, "\U0001f3c3 TRANSITION, GLASS & BENCH TENDENCIES",
-              [("item", "Area"), ("detail", "What they do")],
-              "Placeholders. Replace with staff_inputs/opp_tendencies.csv.",
-              note="To collect: transition isn't a situation the decoder recognizes yet (only Half court / "
-                   "BLOB / SLOB / ATO / Opening set) -- tagging it as its own value would make the "
-                   "transition line real; Shot Clock Tendencies' Early-clock bucket is a rough stand-in "
-                   "meanwhile. Glass crashers need a rebounder tag; timeouts and officiating crew aren't in "
-                   "the play-by-play at all. Value: Medium.")
-
-    # --- what richer tagging would unlock (sample only) ---
-    _gp_table("uww_defense_by_situation", short_opponent, "\U0001f6e1\ufe0f DEFENSE TYPE BY SITUATION",
-              [("situation", "Situation"), ("primary_defense", "Primary defense"), ("freq_pct", "% of poss."),
-               ("secondary_defense", "When they change it up"), ("note", "Note")],
-              "To collect: add a defense-type field (Man / 2-3 Zone / 3-2 Zone / Box-and-1 / Press) per clip.",
-              note="Value: High. Usually the first question asked about an opponent and it sets the whole "
-                   "defensive game plan; one dropdown per clip, no extra film pass required.")
-    _gp_table("uww_ball_screen_coverage", short_opponent, "\U0001f6e1\ufe0f BALL SCREEN COVERAGE",
-              [("coverage", "Coverage"), ("freq_pct", "% of screens"), ("ppp", "PPP"), ("fg_pct", "FG%"),
-               ("note", "Note")],
-              "To collect: tag coverage (drop/hedge/switch/ice/blitz) on every ball-screen clip.",
-              note="Value: High. The most-cited category across the coaching resources reviewed -- it's what "
-                   "actually sets ball-screen coverage calls in practice.")
-    _gp_table("uww_help_rotation_tendencies", short_opponent, "\U0001f504 HELP & ROTATION TENDENCIES",
-              [("trigger", "Trigger"), ("who_rotates", "Who rotates"), ("tendency", "Tendency"), ("note", "Note")],
-              "To collect: on defensive clips, note which off-ball defender rotated and whether the closeout "
-              "was on time.",
-              note="Value: High, but higher tagging cost -- a judgment call, not a clock read. Add once "
-                   "coverage and matchup tagging are routine.")
-    _gp_table("uww_personnel_grouping", short_opponent, "\U0001f465 PERSONNEL GROUPING TENDENCIES",
-              [("personnel_grouping", "Grouping"), ("minutes_pct", "% of minutes"),
-               ("primary_actions_used", "What they run"), ("note", "Note")],
-              "Still a placeholder for this opponent -- not enough tagged clips matched the play-by-play "
-              "with a known personnel type yet (4+ needed per grouping). Fills in automatically as more "
-              "clips match; no new tagging needed.",
-              note="Grouped by TYPE -- two bigs, one big, or no true big on the floor -- not the literal "
-                   "five names (already broken out, with their own keys, in Top Lineups). \"Big\" means one "
-                   "of a team's two highest-rebounding players in the play-by-play -- an approximation, not "
-                   "a roster position. % of minutes is real, from the season lineup box score, classified "
-                   "the same way.")
-    _gp_table("uww_shot_clock_tendencies", short_opponent, "\u23f3 SHOT CLOCK TENDENCIES",
-              [("clock_situation", "Clock"), ("freq_pct", "% of poss."), ("ppp", "PPP"), ("fg_pct", "FG%"),
-               ("note", "Note")],
-              "Still a placeholder for this opponent -- not enough matched clips in any bucket yet "
-              "(4+ needed). Fills in automatically; no new tagging needed.",
-              note="Estimated from the game clock using NCAA men's shot-clock rules (30 sec on a change of "
-                   "possession, 20 sec after an offensive rebound) -- not read from an actual shot-clock "
-                   "display. Only clips that matched the play-by-play carry an estimate.")
-    _gp_table("uww_matchup_history", short_opponent, "\U0001f465 MATCHUP HISTORY",
-              [("their_player", "Their player"), ("defended_by", "Defended by"), ("possessions", "Poss"),
-               ("ppp_allowed", "PPP allowed"), ("note", "Note")],
-              "To collect: add an on-ball defender field to every defensive clip.",
-              note="Value: High. The only path to real matchup data, and it would drive the Matchups "
-                   "section above directly.")
-    _gp_table("uww_play_counters", short_opponent, "\U0001f504 WHAT THEY DO WHEN WE TAKE AWAY THEIR SET",
-              [("set", "Set"), ("when_we_take_it_away", "When we deny it"), ("their_counter", "Their counter"),
-               ("our_adjustment", "Our adjustment")],
-              "To collect: tag a second clip when a denied action leads into another, linked back to the "
-              "first clip's number.",
-              note="Value: High, but hardest to tag consistently -- requires recognizing a sequence in real "
-                   "time. Reasonable as a season-two addition.")
-    _gp_table("uww_rebound_tendencies", short_opponent, "\U0001fa22 REBOUND TENDENCIES BY SHOT TYPE",
-              [("situation", "Situation"), ("crash_pct", "% crash"), ("who_crashes", "Who"), ("note", "Note")],
-              "To collect: on missed-shot clips, tag who got the rebound, or that the defense boxed out cleanly.",
-              note="Value: Medium. Team rebounding rates already exist from the box score; this adds WHO "
-                   "crashes, mainly useful against a team with one clear glass-crasher.")
-    _gp_table("uww_game_situation_splits", short_opponent, "\U0001f4c8 GAME SITUATION SPLITS",
-              [("situation", "Situation"), ("ppp", "PPP"), ("primary_actions", "What they run"), ("note", "Note")],
-              "Still a placeholder for this opponent -- not enough tagged clips matched the play-by-play "
-              "in any of these situations yet (4+ needed). Fills in automatically; no new tagging needed.",
-              note="Leading/trailing by 10+, or clutch -- the same clutch definition already used "
-                   "elsewhere in this app (last 5 min of the 2nd half or OT, margin 8 or less). A "
-                   "comfortable middle possession isn't part of any of these three buckets.")
-    _gp_table("uww_shot_quality_by_contest", short_opponent, "\U0001f3af SHOT QUALITY BY CONTEST LEVEL",
-              [("contest_level", "Contest"), ("freq_pct", "% of shots"), ("fg_pct", "FG%"), ("note", "Note")],
-              "To collect: tag contest level (wide open/open/contested/tightly contested) on every shot.",
-              note="Value: Medium. Sharpens a shooting percentage you already have into 'good shooter' vs. "
-                   "'good shooter taking bad shots'.")
-    _gp_table("uww_double_team_tendencies", short_opponent, "\U0001f465 DOUBLE-TEAM TENDENCIES",
-              [("trigger", "Trigger"), ("from_where", "Double comes from"), ("escape_read", "Their escape"),
-               ("note", "Note")],
-              "To collect: tag when a double team occurs, from where, and the read/result.",
-              note="Value: Medium, narrow scope. Only matters against a team with a player worth doubling.")
-    _gp_table("uww_offball_screen_navigation", short_opponent, "\U0001f504 OFF-BALL SCREEN NAVIGATION",
-              [("screen_type", "Screen type"), ("technique", "Technique"), ("freq_pct", "% of screens"),
-               ("note", "Note")],
-              "To collect: tag technique (over/under/switch/fight through) on down screens, pin downs and "
-              "staggers.",
-              note="Value: Medium-to-low on its own, but pairs well with Ball Screen Coverage once that's "
-                   "established. Lower priority to start.")
-
-    # --- our plan ---
-    render_play_call_section("UWW", short_opponent, "\U0001f3c0 OUR PLAY CALLS",
-                             "From uww_plays.csv -- our own offense this season.")
-    _gp_table("uww_matchups", short_opponent, "\U0001f91d MATCHUPS",
-              [("their_player", "Their player"), ("our_defender", "Our defender"), ("backup", "Backup"),
-               ("note", "Note")],
-              "Placeholder pairings by minutes played. Names are real; assignments are not a recommendation. "
-              "Replace with staff_inputs/matchups.csv.",
-              note="To collect: paired by minutes played, not by who has actually guarded whom -- the same "
-                   "on-ball-defender tag Matchup History needs would turn this into a recommendation backed "
-                   "by real head-to-head possessions. Value: High.")
-    _gp_table("uww_uww_availability", short_opponent, "\U0001fa7a OUR AVAILABILITY",
-              [("player", "Player"), ("status", "Status"), ("note", "Note")],
-              "Placeholder statuses. Replace with the trainer's report (staff_inputs/uww_availability.csv).")
-    _gp_table("uww_late_game_foul_list", short_opponent, "\u23f1\ufe0f LATE-GAME FOUL LIST",
-              [("player", "Player"), ("call", "Call"), ("ft_pct", "FT%"), ("ftm", "FTM"), ("fta", "FTA"),
-               ("games", "GP"), ("note", "Note")],
-              "",
-              help_text="From their own free-throw shooting on film, 8+ attempts. Foul at 62% or worse; avoid "
-                        "fouling at 75% or better.",
-              cell_class=lambda col, r: ({"Foul": "gp-foul", "Do not foul": "gp-nofoul"}.get(_gp_clean(r.get("call")), "")
-                                         if col == "call" else ""))
-    _gp_table("uww_scout_team", short_opponent, "\U0001f3ad SCOUT TEAM",
-              [("scout_player", "Our player"), ("plays_as", "Plays as"), ("imitate", "What to imitate")],
-              "Placeholder casting from our bench. Replace with staff_inputs/scout_team.csv.")
-    _gp_table("uww_film_clips", short_opponent, "\U0001f3ac FILM SESSION",
-              [("clip_group", "Clip group"), ("clips", "Clips"), ("who_watches", "Who")],
-              "Placeholder clip list. Replace with staff_inputs/film_clips.csv.")
-
-    # --- practice plan (grouped by day) ---
-    pp, pp_sample = _gp_rows("uww_practice_plan", short_opponent)
-    if not pp.empty:
-        section_header("\U0001f5d3\ufe0f PRACTICE PLAN" + (" \u2014 SAMPLE" if pp_sample else ""))
-        body = [_gp_card_open(pp_sample,
-                              "Days, segments and minutes are placeholders. Emphasis items tied to a Key, a "
-                              "player flag or the foul list are real; items tied to Opponent sets or Matchups "
-                              "come from the sample sections above. Replace with staff_inputs/practice_plan.csv."),
-                '<table class="gp-tbl"><thead><tr><th>Segment</th><th>Min</th><th>Emphasis</th>'
-                '<th>Ties to</th></tr></thead><tbody>']
-        for (day, date), g in pp.groupby(["day", "date"], sort=False):
-            total = int(pd.to_numeric(g["minutes"], errors="coerce").sum())
-            body.append(f'<tr class="gp-day"><td colspan="4">{html.escape(_gp_clean(day))} \u2014 '
-                        f'{html.escape(_gp_clean(date))} \u00b7 {total} min</td></tr>')
-            for _, r in g.iterrows():
-                body.append("<tr>" + "".join(f"<td>{html.escape(_gp_clean(r.get(c)))}</td>"
-                                             for c in ("segment", "minutes", "detail", "ties_to")) + "</tr>")
-        body.append("</tbody></table></div>")
-        st.markdown("".join(body), unsafe_allow_html=True)
-
-    if all(_gp_rows(t, short_opponent)[0].empty for t in
-           ("uww_opp_sets", "uww_late_game_foul_list", "uww_practice_plan")):
-        st.info("No game-plan tables on file for this opponent. They are written by the parser's \"Game plan, "
-                "practice plan and staff inputs\" cell -- re-run the parser through that cell.")
-
-
-# --------------------------------------------------------------------------------------------------------------
-# LINKS FROM THE SCOUTING BRIEF
-# --------------------------------------------------------------------------------------------------------------
-# CONFIRMED CHANGE (requested): the emailed brief was condensed, and every place it cut detail now links here
-# with query parameters -- page, tab, and optionally key / player+team / set / section (built by app_href() in
-# the parser's brief cell). Streamlit can't programmatically switch st.tabs, so instead of silently landing on
-# the first tab, the Upcoming Game page opens with a panel above the tabs showing exactly what was clicked
-# (the key's full evidence, the player's full card, the set's clips), plus which tab holds the rest.
-_KTV_SOURCE_MEANING = {
-    "Data-Driven": "Computed by the parser from play-by-play, box scores and tagged play calls -- no human judgment "
-                   "in the number itself.",
-    "Lineup Scouting": "From five-man and three-man unit stints in the play-by-play: minutes together and the scoring "
-                       "margin while on the floor.",
-    "Keys to Victory": "Written by the staff in the FastScout scouting report and passed through as written.",
-    "Team Strengths": "The staff's scouting-report description of what this opponent does well.",
-    "Coach Notes": "The staff's own notes from the scouting report.",
-}
-_KTV_EVIDENCE_GUIDE = (
-    "**Evidence** is the numbers a key rests on; **reasoning** is why it matters and what to do about it. The "
-    "scouting brief shows only each key's headline -- this tab is where the evidence lives.\n\n"
-    "**How to read the evidence line**\n"
-    "- **Makes/attempts and FG% / eFG%** -- eFG% counts a three as 1.5 makes, so it credits shooters fairly.\n"
-    "- **pts/attempt** and **PPP** (points per possession) -- what a look or a set actually produces; PPP includes "
-    "free throws when the clip matched a play-by-play event. Compare against the side's own average shown "
-    "alongside (e.g. \"+0.20 vs all looks\").\n"
-    "- **uses / attempts / games** -- the sample size. Keys only fire above volume floors (e.g. 15+ attempts for an "
-    "action, 4+ tagged uses for a set, 8+ minutes for a lineup), and \"best set\" rankings are shrunk toward the "
-    "team average so a hot small sample can't outrank a proven one.\n"
-    "- **+/- and per-40 rates** (lineups) -- the scoring margin while that unit was on the floor, and rates scaled to "
-    "40 minutes so short and long stints compare fairly.\n"
-    "- **\"Runs it most\" / \"Finished most by\"** -- who generates or finishes the look, with counts.\n\n"
-    "**Sources**\n" + "\n".join(f"- **{k}** -- {v}" for k, v in _KTV_SOURCE_MEANING.items())
-    + "\n\nOpponent numbers cover only games before this matchup and aren't adjusted for strength of schedule."
-)
-_DL_TAB_LABELS = {"keys": "\U0001f511 Keys to Victory", "personnel": "\U0001f465 Personnel",
-                  "game_plan": "\U0001f5d3\ufe0f Game Plan", "stats": "\U0001f4ca Stats & Analysis",
-                  "tools": "\U0001f3ae Tools"}
-
-
-def handle_brief_deeplink() -> None:
-    """Read query parameters once per distinct link and route to the right page. Called from main() before
-    the nav buttons render. Keyed on the full parameter set so clicking a second link from the brief in the
-    same browser session still works, while ordinary reruns don't keep re-applying the first one."""
-    try:
-        qp = {k: str(v) for k, v in st.query_params.items()}
-    except Exception:
-        return
-    if not qp:
-        return
-    sig = tuple(sorted(qp.items()))
-    if st.session_state.get("_brief_deeplink_sig") == sig:
-        return
-    st.session_state["_brief_deeplink_sig"] = sig
-    page = {"upcoming": "Upcoming Game", "analytics": "Analytics"}.get(qp.get("page", "").lower())
-    if page:
-        st.session_state.nav_page = page
-    st.session_state["_brief_deeplink"] = qp
-
-
-def render_brief_deeplink(short_opponent) -> None:
-    dl = st.session_state.get("_brief_deeplink")
-    if not dl or not short_opponent:
-        return
-    tab_label = _DL_TAB_LABELS.get(dl.get("tab", ""), "")
-    with st.container(border=True):
-        c1, c2 = st.columns([6, 1])
-        c1.markdown("**\U0001f4ce Opened from the scouting brief**"
-                    + (f" \u2014 more on the **{tab_label}** tab below." if tab_label else ""))
-        if c2.button("Dismiss", key="brief_deeplink_dismiss"):
-            st.session_state.pop("_brief_deeplink", None)
-            try:
-                st.query_params.clear()
-            except Exception:
-                pass
-            st.rerun()
-
-        if dl.get("key"):
-            ktv = load_table("uww_ktv_keys")
-            if not ktv.empty and {"opponent", "key_number"}.issubset(ktv.columns):
-                row = ktv[(ktv["opponent"].astype(str) == str(short_opponent))
-                          & (pd.to_numeric(ktv["key_number"], errors="coerce") == pd.to_numeric(dl["key"], errors="coerce"))]
-                if not row.empty:
-                    k = row.iloc[0]
-                    src = _gp_clean(k.get("source"))
-                    st.markdown(f"### {_gp_clean(k.get('key_number'))}. {_gp_clean(k.get('icon'))} {_gp_clean(k.get('headline'))}")
-                    st.caption(f"{_gp_clean(k.get('category'))} \u00b7 Source: **{src}** \u2014 "
-                               f"{_KTV_SOURCE_MEANING.get(src, 'see the guide below')}")
-                    if _gp_clean(k.get("evidence")):
-                        st.markdown("**Evidence** \u2014 the numbers this key rests on")
-                        st.markdown(_gp_clean(k.get("evidence")).replace("\n", "  \n"))
-                    if _gp_clean(k.get("reasoning")):
-                        st.markdown("**Reasoning** \u2014 why it matters and what to do")
-                        st.markdown(_gp_clean(k.get("reasoning")).replace("\n", "  \n"))
-                    with st.expander("How to read the evidence"):
-                        st.markdown(_KTV_EVIDENCE_GUIDE)
-                    return
-            st.info(f"Key {dl['key']} isn't in this opponent's Keys to Victory table any more -- the parser may have "
-                    f"re-run since the brief was generated.")
-            return
-
-        if dl.get("player"):
-            player, team = dl["player"], dl.get("team", "opponent")
-            tiers = load_table("uww_personnel_tiers")
-            tier = ""
-            if not tiers.empty and "player" in tiers.columns:
-                t = tiers[(tiers["side"] == ("UWW" if team == "uww" else "Opponent"))
-                          & (tiers["player"].astype(str).str.lower() == player.lower())]
-                if not t.empty:
-                    r = t.iloc[0]
-                    tier = (f"{r['tier']} \u00b7 {int(r['games'])} GP \u00b7 "
-                            f"{_gp_clean(r.get('mpg'))} MPG \u00b7 played {int(r['recent_count'])} of last {int(r['recent_n'])}")
-            st.markdown(f"### {player}")
-            if tier:
-                st.caption(tier)
-            if team == "uww":
-                flags = load_table("uww_coaching_flags")
-                pf = flags[flags["player"].astype(str).str.lower() == player.lower()] if not flags.empty else pd.DataFrame()
-                for _, f in pf.iterrows():
-                    st.markdown(f"**{'Lean on' if str(f.get('sentiment')).lower() == 'positive' else 'Clean up'}:** "
-                                f"{_gp_clean(f.get('flag'))} _({_gp_clean(f.get('confidence'))})_  \n"
-                                f"{_gp_clean(f.get('evidence'))}  \n{_gp_clean(f.get('recommendation'))}")
-                clips = load_table("uww_play_calls")
-                if not clips.empty and "side" in clips.columns:
-                    mine = clips[(clips["side"] == "UWW") & (clips["player"].astype(str).str.lower() == player.lower())]
-                    if not mine.empty:
-                        st.markdown("**Tagged play calls**")
-                        st.dataframe(mine[["game_code", "play_call", "play_actions", "play_location", "result", "points"]]
-                                     .rename(columns={"game_code": "Game", "play_call": "Set", "play_actions": "Actions",
-                                                      "play_location": "Where", "result": "Result", "points": "Pts"}),
-                                     hide_index=True, use_container_width=True)
-                if pf.empty:
-                    st.caption("No coaching flags for this player this week.")
-            else:
-                render_data_driven_player_notes(short_opponent, player)
-            return
-
-        section = dl.get("section", "")
-        if section.startswith("play_calls_"):
-            side = "UWW" if section.endswith("uww") else "Opponent"
-            render_play_call_section(side, short_opponent,
-                                     "\U0001f3c0 OUR PLAY CALLS" if side == "UWW" else f"\U0001f3ac {short_opponent.upper()} PLAY CALLS",
-                                     "Full breakdown, including every clip by set.")
-            return
-        if section == "lineups":
-            lu = load_table("uww_opp_lineup_season_box")
-            notes = load_table("uww_scouting_notes")
-            if not lu.empty:
-                st.markdown("**Every five-man unit on film**")
-                st.dataframe(lu.sort_values("MIN", ascending=False), hide_index=True, use_container_width=True)
-            if not notes.empty and "subject_type" in notes.columns:
-                ln = notes[(notes["opponent"].astype(str) == str(short_opponent)) & (notes["subject_type"] == "lineup")]
-                for _, r in ln.iterrows():
-                    with st.expander(_gp_clean(r.get("name"))):
-                        st.markdown(f"_{_gp_clean(r.get('notes'))}_")
-                        for k in [x.strip() for x in _gp_clean(r.get("keys_to_defending")).split("|") if x.strip()]:
-                            st.markdown(f"- {k}")
-            return
-        if section == "style_matchups":
-            sm = load_table("uww_style_matchups")
-            if not sm.empty and "opponent" in sm.columns:
-                sm = sm[sm["opponent"].astype(str) == str(short_opponent)]
-            for direction, heading in (("like_them", f"Teams like {short_opponent} we've played"),
-                                       ("like_us", f"Teams like us that played {short_opponent}")):
-                rows = sm[sm["direction"] == direction].sort_values("rank") if not sm.empty else pd.DataFrame()
-                if rows.empty:
-                    continue
-                st.markdown(f"**{heading}**")
-                st.dataframe(rows[["team", "match", "features_scored", "total_features", "weight_covered", "games",
-                                   "confidence", "meetings", "alike", "differs", "biggest_gaps"]]
-                             .rename(columns={"team": "Team", "match": "Match /100", "features_scored": "Features",
-                                              "total_features": "of", "weight_covered": "Weight covered",
-                                              "games": "Games", "confidence": "Confidence", "meetings": "Meetings",
-                                              "alike": "Alike", "differs": "Differs", "biggest_gaps": "Biggest gaps"}),
-                             hide_index=True, use_container_width=True)
-                if _gp_clean(rows.iloc[0].get("strip_text")):
-                    st.caption(_gp_clean(rows.iloc[0]["strip_text"]))
-            return
-        if section == "uww_lineups":
-            lu = load_table("uww_uww_lineup_season")
-            if not lu.empty:
-                st.markdown("**Every UWW five-man unit this season**")
-                st.dataframe(lu, hide_index=True, use_container_width=True)
-            return
-        if tab_label:
-            st.caption(f"Open the **{tab_label}** tab below.")
-
-
 def render_upcoming_game():
     """Upcoming Game page: banner, then Keys to Victory (combining pre-computed data-driven keys, the staff's
     written scouting report, lineup scouting, and season-stat-based recommendations into one grouped,
@@ -5103,20 +4485,7 @@ def render_upcoming_game():
     # underlying code still runs later, in its original order. ---
     # Stats & Analysis first (per request), then Keys to Victory as its own tab (previously always-visible
     # at the top of the page), then Personnel, then Tools (which leads with Style Matchups).
-    # CONFIRMED CHANGE (requested): a Game Plan tab renders the parser's game-plan tables (foul list, practice
-    # plan, matchups, scout team, their sets/defense, ...). Placeholders arrive with is_sample=True and are
-    # drawn in red SAMPLE DATA boxes -- the same convention as the emailed brief.
-    render_brief_deeplink(short_opponent)
-    render_read_with_caution(short_opponent)
-    _new_tab_stats, _new_tab_ktv, _new_tab_personnel, _new_tab_gameplan, _new_tab_tools = st.tabs(["\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f5d3\ufe0f Game Plan", "\U0001f3ae Tools"])
-    with _new_tab_gameplan:
-        if short_opponent:
-            try:
-                render_game_plan_tab(short_opponent)
-            except Exception as _gp_err:
-                report_section_error("Game Plan", _gp_err)
-        else:
-            st.info("Game plan tables need a resolved opponent -- no scouting or play-by-play data yet.")
+    _new_tab_stats, _new_tab_ktv, _new_tab_personnel, _new_tab_tools = st.tabs(["\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f3ae Tools"])
     with _new_tab_stats:
         _new_stats_leaders_c = st.container()
     with _new_tab_ktv:
@@ -6543,11 +5912,6 @@ def render_upcoming_game():
                     if keys and str(keys).strip() and str(keys) != "nan":
                         st.markdown(f"**Keys to Defending:** {keys}")
 
-                # CONFIRMED CHANGE (requested): the parser's data-driven notes (uww_scouting_notes.csv) were
-                # only ever shown in the emailed brief. With before_scout="yes" the coach notes above are
-                # empty, so this is usually the only read a coach gets on a player before the report exists.
-                render_data_driven_player_notes(short_opponent, player_name)
-
                 with st.container(border=True):
                     st.markdown("**Season Stats**")
                     player_prof = _comp_profiles[(_comp_profiles["name"] == player_name) & (_comp_profiles["opponent"] == short_opponent)]
@@ -7101,18 +6465,9 @@ rather than taking the label's word for it.
                         # The "vs UWW's season average" delta needs a season average to exist. With an empty
                         # current season it would read as +0.0 against nothing; use the season the borrowed games
                         # actually came from instead, and say which.
-                        # CONFIRMED BUG (fixed here, same fix as the parser): the baseline was UWW's average
-                        # over ALL played games, and the matched teams are part of that average. With three
-                        # games played and all three matched (Aurora week) it printed "+0.0 pts scored, +0.0
-                        # allowed" -- guaranteed by construction, and read as "this style makes no
-                        # difference". The baseline is now the games NOT in the matched set.
-                        _co_matched_dates = {str(_g.get("date")) for _g in _co_rows}
-                        _co_rest = (played[~played["date"].astype(str).isin(_co_matched_dates)]
-                                    if not played.empty and "date" in played.columns else pd.DataFrame())
-                        _season_pf = _co_rest["team_score"].mean() if not _co_rest.empty else None
-                        _season_pa = _co_rest["opponent_score"].mean() if not _co_rest.empty else None
-                        _baseline_label = (f"our other {len(_co_rest)} game{'s' if len(_co_rest) != 1 else ''}"
-                                           if not _co_rest.empty else None)
+                        _season_pf = played["team_score"].mean() if not played.empty else None
+                        _season_pa = played["opponent_score"].mean() if not played.empty else None
+                        _baseline_label = "UWW's season average"
                         if (_season_pf is None or pd.isna(_season_pf)) and _co_used_prior:
                             _co_base = _co_played  # the borrowed games are all we have to average over
                             _season_pf, _season_pa = _co_base["team_score"].mean(), _co_base["opponent_score"].mean()
@@ -7121,16 +6476,10 @@ rather than taking the label's word for it.
                         if _baseline_label and _season_pf is not None and pd.notna(_season_pf):
                             _delta = (f" ({_pf - _season_pf:+.1f} pts scored, {_pa - _season_pa:+.1f} allowed "
                                       f"vs {_baseline_label})")
-                        if not _baseline_label and not _co_used_prior and not played.empty:
-                            _delta = " -- that is every game we have played, so there is nothing to compare it against yet"
-                        _co_conf = pd.to_numeric(_co_ranked.get("confidence"), errors="coerce") \
-                            if "confidence" in _co_ranked.columns else pd.Series(dtype=float)
-                        _co_low = "Low confidence \u2014 every match rests on a thin profile. " \
-                            if _co_conf.notna().any() and float(_co_conf.max()) < 0.35 else ""
                         _co_span = (f" in {_co_prior_label}" if _co_used_prior and _co_current_count == 0 else "")
                         render_style_strip(
                             "How we did against this style",
-                            f'{esc(_co_low)}UWW is <strong>{_w}-{_l}</strong>{esc(_co_span)} against these '
+                            f'UWW is <strong>{_w}-{_l}</strong>{esc(_co_span)} against these '
                             f'{len(_co_ranked)} teams, averaging <strong>{_pf:.1f}</strong> scored and '
                             f'<strong>{_pa:.1f}</strong> allowed{esc(_delta)}.')
 
@@ -7691,11 +7040,6 @@ rather than taking the label's word for it.
             "too close or the sample too small to support one."
         )
         section_header("\U0001f511 KEYS TO VICTORY", _ktv_help)
-        # CONFIRMED CHANGE (requested): the emailed brief now prints only each key's headline and links here,
-        # so this tab is where a coach reads the evidence. The guide says what each number on an evidence line
-        # means, what the volume floors are, and what each source badge stands for.
-        with st.expander("\U0001f4d6 How to read the evidence behind each key", expanded=False):
-            st.markdown(_KTV_EVIDENCE_GUIDE)
 
         # Still two columns with the second left empty, so the remaining PDF button keeps the same half-width
         # placement it has always had rather than stretching to full width.
@@ -7709,49 +7053,423 @@ rather than taking the label's word for it.
                         key=f"pdf_download_{short_opponent}", use_container_width=True,
                     )
 
-        # CONFIRMED CHANGE (requested): every Key to Victory is now BUILT by the parser ("Assemble every Key to
-        # Victory into one table" cell) and only RENDERED here, from uww_ktv_keys.csv. This block used to run
-        # its own copy of all seven generators -- pbp-derived keys, the staff's written Keys to Victory and
-        # Team Strengths, attack-their-worst-lineup, counter lineup, 3-man combos, best look, weakest look,
-        # what they go to most -- which is exactly the "two tables that both claim to mean the same thing"
-        # drift this project keeps paying for. It already HAD drifted: the parser raised the lineup floors
-        # (3.0 min -> 8/12/10 min, and a unit must actually be losing its minutes to be a target), pooled
-        # contest levels for "Feature our best look", and fixed the "100% from three" wording, and none of
-        # that reached this page. The emailed brief and this tab now show the same list by construction.
-        #
-        # No silent fallback to recomputing here when the table is missing: a stale or absent CSV is a
-        # parser problem, and a page that quietly builds its own different list hides it. It says so instead.
-        # (Section F below -- the season-stat cards -- is still computed in the app; it feeds _card_data,
-        # not _keys, and has no parser equivalent yet.)
-        _keys = []  # list of (icon, headline, caption, reason, source)
-        _ktv_tbl = load_table("uww_ktv_keys")
-        _ktv_opp = pd.DataFrame()
-        if not _ktv_tbl.empty and "opponent" in _ktv_tbl.columns and short_opponent:
-            _ktv_opp = _ktv_tbl[_ktv_tbl["opponent"].astype(str) == str(short_opponent)]
-            if "key_number" in _ktv_opp.columns:
-                _ktv_opp = _ktv_opp.sort_values("key_number")
-        if _ktv_opp.empty:
-            st.warning(
-                f"No Keys to Victory on file for {short_opponent or 'this opponent'}. They are built by the "
-                f"parser's \"Assemble every Key to Victory\" cell into uww_ktv_keys.csv -- re-run the parser "
-                f"through that cell and redeploy the data folder."
-            )
+        _keys = []  # list of (icon, headline, reason) -- every source below appends here, nothing renders separately
 
-        def _ktv_text(value):
-            text = "" if value is None else str(value).strip()
-            return "" if text.lower() in ("nan", "none") else text
+        # A. Pre-computed data-driven keys (title + supporting stat + recommendation, already in
+        # exactly a "key + reason why" shape from the parser)
+        try:
+            _dk_all = load_table("uww_pbp_derived_keys")
+            _dk_opp = _dk_all[_dk_all["opponent"] == short_opponent].sort_values("key_number") if not _dk_all.empty and short_opponent else pd.DataFrame()
+            for _, _dk in _dk_opp.iterrows():
+                _keys.append(("\U0001f4ca", str(_dk["title"]), str(_dk["supporting_stats"]), str(_dk["recommendation"]), "Data-Driven"))
+        except Exception:
+            pass
 
-        for _, _k in _ktv_opp.iterrows():
-            _k_ev = _ktv_text(_k.get("evidence"))
-            _keys.append((
-                _ktv_text(_k.get("icon")) or "\U0001f4ca",
-                _ktv_text(_k.get("headline")),
-                # The parser separates caption lines with a bare "\n"; Markdown needs two trailing spaces to
-                # keep a line break inside a caption.
-                _k_ev.replace("\n", "  \n") if _k_ev else None,
-                _ktv_text(_k.get("reasoning")) or None,
-                _ktv_text(_k.get("source")) or "Data-Driven",
-            ))
+        # B/C/D. The staff's own written scouting report -- Keys to Victory, Team Strengths, and
+        # the rest of the full game plan (offensive/defensive schemes by category)
+        try:
+            _sr_game_plans = load_table("uww_opponent_game_plans")
+            _sr_opp_plan = _sr_game_plans[_sr_game_plans["opponent"] == short_opponent] if not _sr_game_plans.empty and short_opponent else pd.DataFrame()
+            if not _sr_opp_plan.empty:
+                _sr_ktv = _sr_opp_plan[_sr_opp_plan["topic"] == "KEYS TO VICTORY"]
+                if not _sr_ktv.empty:
+                    for _k in str(_sr_ktv.iloc[0]["notes"]).split("|"):
+                        _k = re.sub(r"^\d+\.\s*", "", _k.strip())
+                        if _k:
+                            _keys.append(("\U0001f4cb", _k, None, None, "Keys to Victory"))
+                _sr_strengths = _sr_opp_plan[_sr_opp_plan["topic"] == "TEAM STRENGTHS"]
+                if not _sr_strengths.empty:
+                    for _s in str(_sr_strengths.iloc[0]["notes"]).split("|"):
+                        _s = re.sub(r"^\d+\.\s*", "", _s.strip())
+                        if _s:
+                            _keys.append(("\u26a0\ufe0f", f"Opponent strength: {_s}", None, None, "Team Strengths"))
+                # The rest of the game plan (categories with "Game Plan" in the name, e.g. "Offensive Game
+                # Plan"/"Defensive Game Plan") is NOT flattened into individual keys here anymore -- it's
+                # shown in the "\U0001f4cb Game Plan" popup dialog instead (see _show_game_plan_dialog below),
+                # since listing every full-game-plan bullet out inline made the list too long.
+        except Exception:
+            pass
+
+        # E. Lineup scouting (opponent vulnerability + best UWW counter, from the same lineup data
+        # the Tools tab's simulator uses)
+        try:
+            if _opp_lu is not None and not _opp_lu.empty:
+                # The full opponent-vulnerability picture -- formerly its own card in the Lineup Scouting
+                # panel: their worst net-rating units (with shooting), plus the units that turn it over
+                # most. Both answer the same question ("when are they beatable?"), so they belong in one
+                # key rather than a side card.
+                _vl = _opp_lu.copy()
+                _vl["_pm_fg"] = pd.to_numeric(_vl["FG%"], errors="coerce").fillna(0) if "FG%" in _vl.columns else 0
+                if "TO" in _vl.columns:
+                    _vl["_to_rate"] = (_vl["TO"] / _vl["MIN"].replace(0, float("nan")) * 40).round(1)
+                _vl_qual = _vl[_vl["MIN"] >= 3.0]
+                _ls_worst = _vl_qual.nsmallest(3, "+/-")
+                if not _ls_worst.empty:
+                    _ls_wr = _ls_worst.iloc[0]
+                    _vl_lines = ["_Worst +/- lineups:_"]
+                    for _, _r in _ls_worst.iterrows():
+                        _fg = f", {_r['_pm_fg']:.0f}% FG" if _r.get("_pm_fg", 0) > 0 else ""
+                        _vl_lines.append(
+                            f"**{_r['+/-']:+.1f}** in {_r['MIN']:.1f} min{_fg} — {_last_names(_r['lineup'])}"
+                        )
+                    if "_to_rate" in _vl_qual.columns:
+                        _vl_high_to = _vl_qual.nlargest(2, "_to_rate")
+                        if not _vl_high_to.empty:
+                            _vl_lines.append("_Highest TO rate (per 40 min):_")
+                            for _, _r in _vl_high_to.iterrows():
+                                _vl_lines.append(
+                                    f"**{_r['_to_rate']:.1f}** TO/40 — {_last_names(_r['lineup'])}"
+                                )
+                    _keys.append((
+                        "\U0001f512",
+                        f"Attack {short_opponent}'s {_last_names(_ls_wr['lineup'])} lineup",
+                        "  \n".join(_vl_lines),
+                        f"{short_opponent}'s most exploitable units: their worst net-rating lineups with "
+                        f"real minutes this season (3+ min), and the lineups that give the ball away most "
+                        f"per 40 minutes. The headline names the worst of them.",
+                        "Lineup Scouting",
+                    ))
+            # The full counter-lineup recommendation -- formerly its own card in the Lineup Scouting panel.
+            # Two modes, and the key always says which one it is in:
+            #   MATCHED  -- UWW's net margin against opponent lineups that RESEMBLE the one being prepared
+            #               for (position mix, size, starters, scouted style). A genuine counter.
+            #   FALLBACK -- UWW's best net-margin lineups season-wide. Useful, but NOT opponent-specific,
+            #               and labelled as such rather than dressed up with a "vs <opponent>" heading.
+            _cl_target_lineup = None
+            if _opp_lu is not None and not _opp_lu.empty:
+                _cl_opp_top = _opp_lu.nlargest(1, "MIN")
+                if not _cl_opp_top.empty:
+                    _cl_target_lineup = _cl_opp_top.iloc[0]["lineup"]
+
+            _cl_matched, _cl_matched_min, _cl_n_similar, _cl_target_desc = (None, 0.0, 0, "")
+            if _cl_target_lineup is not None:
+                try:
+                    _cl_matched, _cl_matched_min, _cl_n_similar, _cl_target_desc = counter_lineups(
+                        short_opponent, _cl_target_lineup, _stints,
+                    )
+                except Exception as _cl_err:
+                    report_section_error("Counter-lineup profile match", _cl_err)
+
+            if _cl_matched is not None and not _cl_matched.empty:
+                _cl_rows = list(_cl_matched.head(3).iterrows())
+                _cl_best = _cl_rows[0][1]
+                # Caption: every recommended unit, best first, with the same per-minute rate and raw
+                # (net in minutes) breakdown the old card showed.
+                _cl_caption_lines = [
+                    f"**{_r['rate']:+.2f}/min** ({_r['net']:+.0f} in {_r['MIN']:.1f} min) — {_last_names(_r['uww_lineup'])}"
+                    for _, _r in _cl_rows
+                ]
+                _cl_caption = "  \n".join(_cl_caption_lines)
+                _cl_reason_parts = [
+                    f"UWW's best net margin against opponent units that resemble {short_opponent}'s "
+                    f"most-used lineup ({_last_names(_cl_target_lineup)})."
+                ]
+                if _cl_target_desc:
+                    _cl_reason_parts.append(f"Target profile: {_cl_target_desc}.")
+                _cl_reason_parts.append(
+                    f"Measured across {_cl_n_similar} comparable opponent unit(s), "
+                    f"{_cl_matched_min:.0f} min this season."
+                )
+                _keys.append((
+                    "\U0001f512",
+                    f"Counter with {_last_names(_cl_best['uww_lineup'])}",
+                    _cl_caption,
+                    " ".join(_cl_reason_parts),
+                    "Lineup Scouting",
+                ))
+            elif _uww_lu_agg is not None and not _uww_lu_agg.empty:
+                _cl_fallback = _uww_lu_agg[_uww_lu_agg["MIN"] >= 3.0].nlargest(3, "+/-")
+                if not _cl_fallback.empty:
+                    _cl_rows = list(_cl_fallback.iterrows())
+                    _cl_best = _cl_rows[0][1]
+                    _cl_caption_lines = []
+                    for _, _r in _cl_rows:
+                        _r_rate = _r["+/-"] / _r["MIN"] if _r["MIN"] > 0 else 0.0
+                        _cl_caption_lines.append(
+                            f"**{_r['+/-']:+.1f}** total ({_r_rate:+.2f}/min in {_r['MIN']:.1f} min) "
+                            f"— {_last_names(_r['lineup'])}"
+                        )
+                    _cl_why = ("no comparable opponent lineups on record yet"
+                               if _cl_target_lineup is not None else "no opponent lineup data yet")
+                    _keys.append((
+                        "\U0001f512",
+                        f"Counter with {_last_names(_cl_best['lineup'])}",
+                        "  \n".join(_cl_caption_lines),
+                        f"UWW's best lineups by net margin season-wide — **not** matchup-specific, "
+                        f"because there are {_cl_why}.",
+                        "Lineup Scouting",
+                    ))
+        except Exception:
+            pass
+
+        # E-bis. 3-man combination scouting -- same idea as the 5-man Lineup Scouting above, but for
+        # the smaller units. This is the data the Stats & Analysis "TOP 3-MAN COMBINATIONS" card used to
+        # just display; it's now put to use here instead (that card no longer renders on its own).
+        # _uww_3man_agg / _opp_3man_agg only carry MIN/PTS/+/-/GP (no FG%/TO, unlike the 5-man data), so
+        # this is scoped to net-margin exploitability/production rather than shooting or turnovers.
+        try:
+            if _opp_3man_agg is not None and not _opp_3man_agg.empty:
+                _v3_qual = _opp_3man_agg[_opp_3man_agg["MIN"] >= 3.0]
+                _v3_worst = _v3_qual.nsmallest(3, "+/-")
+                if not _v3_worst.empty:
+                    _v3_wr = _v3_worst.iloc[0]
+                    _v3_lines = ["_Worst +/- 3-man combos:_"]
+                    for _, _r in _v3_worst.iterrows():
+                        _v3_lines.append(
+                            f"**{_r['+/-']:+.1f}** in {_r['MIN']:.1f} min — {_last_names(_r['lineup'])}"
+                        )
+                    _keys.append((
+                        "\U0001f512",
+                        f"Attack {short_opponent}'s {_last_names(_v3_wr['lineup'])} combo",
+                        "  \n".join(_v3_lines),
+                        f"{short_opponent}'s most exploitable 3-man combinations: their worst net-rating "
+                        f"units with real minutes this season (3+ min).",
+                        "Lineup Scouting",
+                    ))
+            if _uww_3man_agg is not None and not _uww_3man_agg.empty:
+                _c3_qual = _uww_3man_agg[_uww_3man_agg["MIN"] >= 5.0]
+                _c3_best = _c3_qual.nlargest(3, "+/-")
+                if not _c3_best.empty:
+                    _c3_rows = list(_c3_best.iterrows())
+                    _c3_top = _c3_rows[0][1]
+                    _c3_lines = []
+                    for _, _r in _c3_rows:
+                        _r_rate = _r["+/-"] / _r["MIN"] if _r["MIN"] > 0 else 0.0
+                        _c3_lines.append(
+                            f"**{_r['+/-']:+.1f}** total ({_r_rate:+.2f}/min in {_r['MIN']:.1f} min) "
+                            f"— {_last_names(_r['lineup'])}"
+                        )
+                    _keys.append((
+                        "\U0001f512",
+                        f"Feature the {_last_names(_c3_top['lineup'])} combo",
+                        "  \n".join(_c3_lines),
+                        "UWW's best 3-man combinations by net margin season-wide (5+ min) — not "
+                        "matchup-specific like the 5-man counter above, but the smaller units most worth "
+                        "leaning on regardless of opponent.",
+                        "Lineup Scouting",
+                    ))
+        except Exception:
+            pass
+
+        # E2. Best shot type: what UWW is most efficient at as a team (shot mechanic + contest level, from
+        # the same video-tagging the Analytics page's Shot Selection & Quality section already uses), which
+        # 5-man lineup gets that shot type most efficiently, and which offensive play call generates it most
+        # often. All three combined into one Offensive Efficiency key.
+        try:
+            _ss_pbp = load_table("uww_pbp_events")
+            _ss_uww = _ss_pbp[(_ss_pbp["team"] == "UW-Whitewater") & (_ss_pbp["event_type"].isin(["made_shot", "missed_shot"]))].copy()
+            _ss_uww = _ss_uww[_ss_uww["video_description"].notna()]
+            if not _ss_uww.empty:
+                _ss_uww["_mechanic"] = _ss_uww["video_description"].apply(extract_shot_mechanic)
+                _ss_uww["_contest"] = _ss_uww["video_description"].apply(extract_contest)
+                _ss_uww["_make"] = _ss_uww["event_type"] == "made_shot"
+                # Ranked on points per attempt, shrunk for sample size, rather than raw FG% -- see
+                # shot_look_efficiency() for why both of those matter here.
+                _ss_grouped = shot_look_efficiency(_ss_uww, min_attempts=8)
+                if not _ss_grouped.empty:
+                    _ss_baseline = _ss_grouped.attrs.get("baseline_ppa")
+                    # A residual bucket is not a shot type. Prefer the best NAMED one; only fall back to the
+                    # unclassified pile if nothing else clears the attempt threshold, and label it plainly.
+                    _ss_named = _ss_grouped[_ss_grouped["_mechanic"] != UNCLASSIFIED_SHOT_MECHANIC]
+                    _ss_best = (_ss_named if not _ss_named.empty else _ss_grouped).iloc[0]
+                    _ss_best_mechanic, _ss_best_contest = _ss_best["_mechanic"], _ss_best["_contest"]
+                    _ss_best_rows = _ss_uww[(_ss_uww["_mechanic"] == _ss_best_mechanic) & (_ss_uww["_contest"] == _ss_best_contest)]
+
+                    # Which 5-man lineup gets this specific shot type most efficiently (needs uww_lineup on
+                    # pbp_events -- only present after re-running the parser with the export fix; gracefully
+                    # omitted rather than guessed at if it's not there yet).
+                    _ss_lineup_txt = None
+                    if "uww_lineup" in _ss_best_rows.columns:
+                        _ss_lu_rows = _ss_best_rows[_ss_best_rows["uww_lineup"].notna()]
+                        if not _ss_lu_rows.empty:
+                            _ss_lu_grouped = _ss_lu_rows.groupby("uww_lineup").agg(Attempts=("_make", "count"), Makes=("_make", "sum")).reset_index()
+                            _ss_lu_grouped = _ss_lu_grouped[_ss_lu_grouped["Attempts"] >= 3]
+                            if not _ss_lu_grouped.empty:
+                                _ss_lu_grouped["FG%"] = 100 * _ss_lu_grouped["Makes"] / _ss_lu_grouped["Attempts"]
+                                _ss_best_lu = _ss_lu_grouped.nlargest(1, "FG%").iloc[0]
+                                _ss_lineup_txt = f"{_last_names(_ss_best_lu['uww_lineup'])} gets it best ({int(_ss_best_lu['Makes'])}/{int(_ss_best_lu['Attempts'])}, {_ss_best_lu['FG%']:.0f}%)"
+
+                    # Which offensive play call generates this shot type most often (needs a coach_note with
+                    # an extractable play call on the same event -- only present for games with a recap CSV).
+                    _ss_play_txt = None
+                    if "coach_note" in _ss_best_rows.columns:
+                        _ss_calls = resolve_play_calls(_ss_best_rows).dropna()
+                        if not _ss_calls.empty:
+                            _ss_top_call = _ss_calls.value_counts().idxmax()
+                            _ss_play_txt = f"Usually comes off {_ss_top_call} ({int((_ss_calls == _ss_top_call).sum())}x this season)"
+
+                    _ss_parts = [p for p in [_ss_lineup_txt, _ss_play_txt] if p]
+                    _ss_reason = " -- ".join(_ss_parts) if _ss_parts else "Not enough lineup or play-call data linked to these shots yet to say who runs this most."
+                    # CONFIRMED BUG (fixed here): this title used to read "UWW Best Offensive Shot Selection &
+                    # Quality: Cut to the basket" -- a report-section label pasted in front of the shot name,
+                    # not something a coach would actually say. describe_shot_look() is the same helper the
+                    # "Attack their weakest look" card below already uses for this; reusing it here keeps the
+                    # two cards consistent AND picks up its handling of an unclassified/untagged mechanic,
+                    # which this line previously didn't have at all.
+                    _keys.append((
+                        "\U0001f3c0",
+                        "Feature our best look: " + describe_shot_look(_ss_best_mechanic, _ss_best_contest),
+                        shot_look_stat_line(_ss_best, _ss_baseline) + " this season",
+                        _ss_reason,
+                        "Data-Driven",
+                    ))
+        except Exception:
+            pass
+
+        # E3. Attack the opponent's worst-defended shot type -- using REAL third-party data now: shots taken
+        # by whoever the upcoming opponent played in each of their games BEFORE facing UWW (uww_opponent_
+        #_prior_games_pbp, exported from the parser's pbp_events_upcoming -- previously computed for
+        # print/diagnostic output only inside the notebook, never exported, so this was genuinely impossible
+        # from the app until now). The shot type where THOSE opponents were most efficient is this opponent's
+        # worst-defended type. Once identified, cross-referenced against UWW\'s own SEASON-WIDE shot data
+        # (not scoped to a prior UWW-vs-this-opponent meeting -- none may exist) to find which UWW lineup and
+        # play call already generates that same shot type most often, i.e. who/what to feature to attack it.
+        try:
+            _aw_prior = load_table("uww_opponent_prior_games_pbp")
+            _aw_third_party = _aw_prior[
+                _aw_prior["team"].notna() & (_aw_prior["team"] != short_opponent)
+                & (_aw_prior["event_type"].isin(["made_shot", "missed_shot"]))
+            ].copy() if not _aw_prior.empty else pd.DataFrame()
+            _aw_third_party = _aw_third_party[_aw_third_party["video_description"].notna()] if not _aw_third_party.empty else _aw_third_party
+
+            if _aw_third_party.empty:
+                _keys.append((
+                    "\U0001f3af", "Attack Opponent Worst Offensive Shot Selection & Quality", None,
+                    f"No video-tagged data yet for teams {short_opponent} played before facing UWW this "
+                    f"season -- needs a local/live-scraped _pbp and _video file for each of those games (see "
+                    f"the parser's \'opponent's games before facing Whitewater\' section).",
+                    "Data-Driven",
+                ))
+            else:
+                _aw_third_party["_mechanic"] = _aw_third_party["video_description"].apply(extract_shot_mechanic)
+                _aw_third_party["_contest"] = _aw_third_party["video_description"].apply(extract_contest)
+                _aw_third_party["_make"] = _aw_third_party["event_type"] == "made_shot"
+                # Same metric as "Feature our best look" above, so the two cards are directly comparable.
+                _aw_grouped = shot_look_efficiency(_aw_third_party, min_attempts=5)  # a handful of prior games, not a season
+                if _aw_grouped.empty:
+                    _keys.append((
+                        "\U0001f3af", "Attack Opponent Worst Offensive Shot Selection & Quality", None,
+                        f"Some video-tagged data exists for teams {short_opponent} played before UWW, but not "
+                        f"enough attempts yet of any one shot type (need 5+) to call one a clear weakness.",
+                        "Data-Driven",
+                    ))
+                else:
+                    _aw_baseline = _aw_grouped.attrs.get("baseline_ppa")
+                    _aw_best = _aw_grouped.iloc[0]
+                    _aw_best_mechanic, _aw_best_contest = _aw_best["_mechanic"], _aw_best["_contest"]
+                    _aw_n_opponents = _aw_third_party.loc[
+                        (_aw_third_party["_mechanic"] == _aw_best_mechanic) & (_aw_third_party["_contest"] == _aw_best_contest), "team"
+                    ].nunique()
+                    _aw_n_tagged_games = (_aw_third_party["game_date"].nunique()
+                                          if "game_date" in _aw_third_party.columns else 0)
+                    _aw_n_prior_games = opponent_prior_games_scheduled(short_opponent)
+
+                    # Cross-reference against UWW's OWN season-wide shot data (all games, not scoped to
+                    # having already played this opponent) for that SAME shot type, to find which lineup and
+                    # play call already generates it most for UWW.
+                    _aw_uww_all = load_table("uww_pbp_events")
+                    _aw_uww_shots = _aw_uww_all[
+                        (_aw_uww_all["team"] == "UW-Whitewater") & (_aw_uww_all["event_type"].isin(["made_shot", "missed_shot"]))
+                    ].copy() if not _aw_uww_all.empty else pd.DataFrame()
+                    _aw_uww_shots = _aw_uww_shots[_aw_uww_shots["video_description"].notna()] if not _aw_uww_shots.empty else _aw_uww_shots
+                    _aw_lineup_txt, _aw_play_txt, _aw_volume_txt = None, None, None
+                    if not _aw_uww_shots.empty:
+                        _aw_uww_shots["_mechanic"] = _aw_uww_shots["video_description"].apply(extract_shot_mechanic)
+                        _aw_uww_shots["_contest"] = _aw_uww_shots["video_description"].apply(extract_contest)
+                        _aw_uww_shots["_make"] = _aw_uww_shots["event_type"] == "made_shot"
+                        _aw_match_rows = _aw_uww_shots[(_aw_uww_shots["_mechanic"] == _aw_best_mechanic) & (_aw_uww_shots["_contest"] == _aw_best_contest)]
+
+                        if "uww_lineup" in _aw_match_rows.columns:
+                            _aw_lu_rows = _aw_match_rows[_aw_match_rows["uww_lineup"].notna()]
+                            if not _aw_lu_rows.empty:
+                                _aw_lu_all = _aw_lu_rows.groupby("uww_lineup").agg(
+                                    Attempts=("_make", "count"), Makes=("_make", "sum"),
+                                ).reset_index()
+                                _aw_lu_all["FG%"] = 100 * _aw_lu_all["Makes"] / _aw_lu_all["Attempts"]
+
+                                def _aw_lu_line(_r, _show_pct=True):
+                                    _nm = _last_names(_r["uww_lineup"])
+                                    return (f"{_nm} {int(_r['Makes'])}/{int(_r['Attempts'])} ({_r['FG%']:.0f}%)"
+                                            if _show_pct else
+                                            f"{_nm} {int(_r['Attempts'])}x ({_r['FG%']:.0f}%)")
+
+                                # Two different questions, two different lists. Ranking by FG% alone rewards a
+                                # unit that happened to go 3/3, so the accuracy list keeps the 3+ attempt floor
+                                # and the volume list answers "who actually generates this shot for us" with no
+                                # floor at all -- a coach needs both before deciding who to feature.
+                                _aw_lu_qual = _aw_lu_all[_aw_lu_all["Attempts"] >= 3]
+                                if not _aw_lu_qual.empty:
+                                    _aw_top_fg = _aw_lu_qual.sort_values(["FG%", "Attempts"], ascending=False).head(3)
+                                    # One lineup per line: five last names plus a split makes each entry long
+                                    # enough that three of them joined by semicolons read as one wall of text.
+                                    _aw_lineup_txt = "\n".join(
+                                        ["Best on this shot (3+ attempts):"]
+                                        + [f"\u2022 {_aw_lu_line(_r)}" for _, _r in _aw_top_fg.iterrows()]
+                                    )
+                                _aw_top_vol = _aw_lu_all.sort_values(["Attempts", "FG%"], ascending=False).head(3)
+                                if not _aw_top_vol.empty:
+                                    _aw_volume_txt = "\n".join(
+                                        ["Runs it most:"]
+                                        + [f"\u2022 {_aw_lu_line(_r, _show_pct=False)}" for _, _r in _aw_top_vol.iterrows()]
+                                    )
+
+                        if "coach_note" in _aw_match_rows.columns:
+                            _aw_calls = resolve_play_calls(_aw_match_rows).dropna()
+                            if not _aw_calls.empty:
+                                _aw_top_call = _aw_calls.value_counts().idxmax()
+                                _aw_play_txt = f"Usually comes off {_aw_top_call} for us ({int((_aw_calls == _aw_top_call).sum())}x this season)"
+
+                    # One line per angle rather than one run-on sentence -- three lineups per list is too
+                    # much to read joined by dashes.
+                    _aw_parts = [p for p in [_aw_lineup_txt, _aw_volume_txt, _aw_play_txt] if p]
+                    _aw_reason = "\n".join(_aw_parts) if _aw_parts else "Not enough UWW lineup or play-call data linked to this shot type yet to say who runs it most for us."
+                    _keys.append((
+                        "\U0001f3af",
+                        f"Attack their weakest look: {describe_shot_look(_aw_best_mechanic, _aw_best_contest)}",
+                        # Say exactly what the sample IS. "across N team(s) they played before UWW" read as
+                        # their whole pre-UWW schedule, but N only ever counted the opponents that took THIS
+                        # shot type, drawn from the subset of their games that have tagged video at all.
+                        (f"Opponents shot {shot_look_stat_line(_aw_best, _aw_baseline)} on this against "
+                         f"{short_opponent}, {_aw_n_opponents} different team(s) doing it"
+                         + (f" -- across {_aw_n_tagged_games} of {short_opponent}'s "
+                            + (f"{_aw_n_prior_games} " if _aw_n_prior_games else "")
+                            + "games before UWW (the ones with tagged video)" if _aw_n_tagged_games else "")),
+                        _aw_reason,
+                        "Data-Driven",
+                    ))
+        except Exception:
+            pass
+
+        # E4. Extra, from the same new data source: what the opponent's OWN offense actually leans on most
+        # (by volume, not efficiency) in their games before UWW -- the natural complement to E3, useful for
+        # UWW's defensive prep rather than its offensive attack. Tagged into Defensive Efficiency (which
+        # already keys on "high-volume" language from earlier work) rather than Offensive Efficiency.
+        try:
+            _dv_prior = load_table("uww_opponent_prior_games_pbp")
+            _dv_own = _dv_prior[
+                (_dv_prior["team"] == short_opponent) & (_dv_prior["event_type"].isin(["made_shot", "missed_shot"]))
+            ].copy() if not _dv_prior.empty else pd.DataFrame()
+            _dv_own = _dv_own[_dv_own["video_description"].notna()] if not _dv_own.empty else _dv_own
+            if not _dv_own.empty:
+                _dv_own["_mechanic"] = _dv_own["video_description"].apply(extract_shot_mechanic)
+                _dv_own["_contest"] = _dv_own["video_description"].apply(extract_contest)
+                _dv_own["_make"] = _dv_own["event_type"] == "made_shot"
+                _dv_grouped = _dv_own[_dv_own["_mechanic"].notna() & _dv_own["_contest"].notna()].groupby(["_mechanic", "_contest"]).agg(
+                    Attempts=("_make", "count"), Makes=("_make", "sum"),
+                ).reset_index()
+                _dv_grouped = _dv_grouped[_dv_grouped["Attempts"] >= 5]
+                if not _dv_grouped.empty:
+                    _dv_grouped["FG%"] = 100 * _dv_grouped["Makes"] / _dv_grouped["Attempts"]
+                    _dv_top = _dv_grouped.nlargest(1, "Attempts").iloc[0]
+                    _keys.append((
+                        "\U0001f6e1\ufe0f",
+                        f"What {short_opponent} goes to most: {describe_shot_look(_dv_top['_mechanic'], _dv_top['_contest'])}",
+                        f"{int(_dv_top['Attempts'])} attempts, {_dv_top['FG%']:.0f}% -- across their games before UWW",
+                        "What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",
+                        "Data-Driven",
+                    ))
+        except Exception:
+            pass
 
         # F. Season-stat-based recommendations (pace/style, rebounding, bench trust, clutch, turnovers,
         # closing lineup, top play call) -- same computations as before, now feeding the same list
@@ -8875,13 +8593,6 @@ rather than taking the label's word for it.
                 # longer contains the "shot selection"/"shot quality" keywords the keyword matcher relies on
                 # for Offensive Efficiency, so it needs the same explicit pin.
                 (r"feature our best look", "Offensive Efficiency"),
-                # The parser's turnover key was retitled from "Pressure their biggest turnover triggers" to
-                # "Pressure the actions they turn it over on" (it now ranks by turnover RATE per use). The new
-                # title trips Ball Security -- OUR turnovers -- so pin it where it belongs.
-                (r"pressure the actions they turn it over|turnover triggers",
-                 "Perimeter Defense / Ball Pressure/ Create Turnovers"),
-                # Play-call keys built from uww_plays.csv / opponent_plays.csv.
-                (r"go-to set|best set", "Play Calls"),
             )
             for _icon, _headline, _caption, _reason, _source in _keys:
                 # Data-Driven keys carry raw stat text in _caption/_reason ("Offensive Rebound: 87.7% on
@@ -10671,16 +10382,12 @@ def render_previous_games():
         kpi7.metric("Negative notes", _neg_flags)
 
         display_cols = [c for c in ["period", "time_remaining", "team", "player", "event_type",
-                                     "play_call", "play_actions", "play_location", "play_title",
-                                     "video_description", "coach_note", "uww_score", "opp_score"]
+                                     "play_call", "video_description", "coach_note", "uww_score", "opp_score"]
                          if c in filtered_pbp.columns]
         st.dataframe(
             filtered_pbp[display_cols].rename(columns={"coach_note": "Coach Note",
                                                        "video_description": "Video Tag",
-                                                       "play_call": "Play Call",
-                                                       "play_actions": "Actions",
-                                                       "play_location": "Where",
-                                                       "play_title": "Tagged As"}),
+                                                       "play_call": "Play Call"}),
             hide_index=True, use_container_width=True, height=400,
         )
 
@@ -12694,8 +12401,6 @@ def main():
     # page and would otherwise be drawing from a value that hasn't been validated yet.
     if "nav_page" not in st.session_state:
         st.session_state.nav_page = PAGES[0]
-    # Links from the emailed scouting brief carry ?page=...&tab=... -- route them before anything renders.
-    handle_brief_deeplink()
     # A session open across an earlier change (or a bookmarked state) can still be holding a retired page
     # name such as "Home". Send it somewhere real instead of rendering nothing.
     if st.session_state.nav_page not in PAGES:

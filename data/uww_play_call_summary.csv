@@ -1,0 +1,275 @@
+side,scouted_opponent,level,name,uses,games,poss_with_points,points,ppp,team_ppp,fgm,fga,fg_pct,fg3m,fg3a,turnovers,fouls_drawn,top_player,top_player_uses,top_action,top_location,situation,example_titles,game_codes
+UWW,Aurora Spartans,Play call,5 Out,5,3,5,8.0,1.6,1.12,3,5,60.0,2,3,0,0,Brock Marino,2,Stand,Top,Half court,5out | 5 out- top key 3 | 5 out-stand,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Play call,5 Out Backcut,1,1,1,2.0,2.0,1.12,0,0,,0,0,0,1,Isaac Verges,1,Backcut,,Half court,5 out- pass- BC Cut,WWW@STC
+UWW,Aurora Spartans,Play call,5 Out Ball Screen,4,3,4,9.0,2.25,1.12,4,4,100.0,1,1,0,0,Darius Chestnut,1,Ball Screen,,Half court,5 out-bs | 5 out- bs,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Play call,5 Out Big-on-Big,1,1,1,2.0,2.0,1.12,0,0,,0,0,0,1,Richie Warren,1,Big-on-Big,,Half court,5 out- big on big - HIlo,WWW@STC
+UWW,Aurora Spartans,Play call,5 Out DHO,2,1,2,0.0,0.0,1.12,0,2,0.0,0,1,0,0,Luke Bara,1,DHO,,Half court,5 out-dho | 5 out-pass-dho,WWW@STC
+UWW,Aurora Spartans,Play call,5 Out Down Screen,11,3,9,12.0,1.33,1.12,4,8,50.0,2,3,1,2,Isaac Verges,3,Down Screen,,Half court,5 out- down screens | 5 Out- DS- Reject | 5 out- pass 5- down screen,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Play call,5 Out Exchange,1,1,1,0.0,0.0,1.12,0,1,0.0,0,1,0,0,Darius Chestnut,1,Exchange,,Half court,5 out- pass 5- exhacnge,EC@WWW
+UWW,Aurora Spartans,Play call,5 Out Flare,5,1,5,9.0,1.8,1.12,2,2,100.0,1,1,1,1,Collin Madson,2,Flare,,Half court,5 out- pass 5 -flair | 5 out-flairs | 5 out-flair,WWW@STC
+UWW,Aurora Spartans,Play call,5 Out Motion,2,1,2,3.0,1.5,1.12,1,2,50.0,1,1,0,0,Jr Lukenbill,1,Motion,,Half court,5 out motion | 5 out-motion,WWW@STC
+UWW,Aurora Spartans,Play call,5 Out Post Touch,1,1,1,0.0,0.0,1.12,0,0,,0,0,1,0,Collin Madson,1,Post Touch,,Half court,5 out- pass-cut- PT BROCK,EC@WWW
+UWW,Aurora Spartans,Play call,5 Out Ricky,1,1,1,2.0,2.0,1.12,1,1,100.0,0,0,0,0,Brock Marino,1,Ricky,,Half court,5 out- bs- ricky,EC@WWW
+UWW,Aurora Spartans,Play call,5 Out Rip,2,1,1,3.0,3.0,1.12,0,0,,0,0,0,1,Jake Quast,1,Rip,,Half court,5 out- pass 5 -cut rip | 5 out- swing-swing- rip,EC@WWW
+UWW,Aurora Spartans,Play call,5 Out Stagger,6,2,6,7.0,1.17,1.12,2,3,66.7,1,2,2,1,Collin Madson,1,Stagger,,Half court,5 out- stagger- bs | 5 out-stagger-curl-curl | 5 out-swing-swing-stagger,WWW@RIP WWW@STC
+UWW,Aurora Spartans,Play call,5 Out Twirl,1,1,1,0.0,0.0,1.12,0,1,0.0,0,0,0,0,Jake Quast,1,Twirl,,Half court,5 out-twirl,WWW@STC
+UWW,Aurora Spartans,Play call,5 Out Zoom,9,2,7,9.0,1.29,1.12,3,5,60.0,0,1,1,3,Jr Lukenbill,2,Zoom,,Half court,5 out-zoom | 5 Out-DHO-ZOOM | 5 out zoom,EC@WWW WWW@RIP
+UWW,Aurora Spartans,Play call,ATO (unspecified),2,2,2,3.0,1.5,1.12,1,2,50.0,0,0,0,0,Brock Marino,1,,,ATO,ATO- | ATO,WWW@RIP WWW@STC
+UWW,Aurora Spartans,Play call,BLOB Line,21,3,21,18.0,0.86,1.12,7,15,46.7,4,8,5,1,Luke Bara,5,,,BLOB,blob-line | Blob-line | blob- line,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Play call,BLOB Line Ricky,1,1,1,3.0,3.0,1.12,1,1,100.0,1,1,0,0,Luke Bara,1,Ricky,,BLOB,blob-line-ricky,WWW@STC
+UWW,Aurora Spartans,Play call,Cheetah,7,3,7,6.0,0.86,1.12,2,4,50.0,0,1,2,1,Collin Madson,2,Slip,,Half court,5 out-cheetah | Cheetah | cheetah,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Play call,DHO,1,1,1,0.0,0.0,1.12,0,0,,0,0,1,0,Isaac Verges,1,DHO,,Half court,Dho-pass 5- flair,WWW@RIP
+UWW,Aurora Spartans,Play call,Down Screen,1,1,1,3.0,3.0,1.12,1,1,100.0,1,1,0,0,Joey Berezowitz,1,Down Screen,,Half court,pass 5-ds- get-pass BS,EC@WWW
+UWW,Aurora Spartans,Play call,Flop Ricky,1,1,1,2.0,2.0,1.12,1,1,100.0,0,0,0,0,Isaac Verges,1,Ricky,Top,Half court,Flop- pass top-follow-ricky- spain,WWW@RIP
+UWW,Aurora Spartans,Play call,Opening set (unspecified),1,1,1,2.0,2.0,1.12,0,0,,0,0,0,1,Collin Madson,1,,,Opening set,Opener- madson play,WWW@STC
+UWW,Aurora Spartans,Play call,Panther,12,3,11,9.0,0.82,1.12,4,9,44.4,0,2,0,3,Brock Marino,7,,,Half court,Panther | panther,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Play call,Pass,1,1,1,0.0,0.0,1.12,0,1,0.0,0,1,0,0,Collin Madson,1,Pass,,Half court,pass-swing-collin,WWW@RIP
+UWW,Aurora Spartans,Play call,Ricky,3,1,3,0.0,0.0,1.12,0,2,0.0,0,2,1,0,Collin Madson,2,Ricky,Right Side,Half court,DHO RS-Madson RICKY | Dho-pass 5- ric | Pass- follow- give-ricky,WWW@RIP
+UWW,Aurora Spartans,Play call,SLOB,3,2,2,3.0,1.5,1.12,1,2,50.0,1,2,1,0,Brock Marino,1,,,SLOB,slob | SLob,WWW@RIP WWW@STC
+UWW,Aurora Spartans,Play call,SLOB Down Screen,1,1,1,0.0,0.0,1.12,0,1,0.0,0,0,0,0,Rashad Rogers,1,Down Screen,,SLOB,slob-ds-bs,EC@WWW
+UWW,Aurora Spartans,Play call,SLOB Stagger,1,1,1,0.0,0.0,1.12,0,1,0.0,0,0,0,0,Brock Marino,1,Stagger,,SLOB,slob-stagger,WWW@STC
+UWW,Aurora Spartans,Play call,Stagger,2,2,2,0.0,0.0,1.12,0,2,0.0,0,1,0,0,Richie Warren,1,Stagger,,Half court,swing-swing-stagger | Stagger,EC@WWW WWW@RIP
+UWW,Aurora Spartans,Series,5 Out,52,3,47,66.0,1.4,1.12,20,34,58.8,8,14,6,10,Isaac Verges,7,Down Screen,Top,Half court,5 out- down screens | 5 out-bs | 5 out- pass 5 -flair,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Series,ATO,2,2,2,3.0,1.5,1.12,1,2,50.0,0,0,0,0,Brock Marino,1,,,ATO,ATO- | ATO,WWW@RIP WWW@STC
+UWW,Aurora Spartans,Series,BLOB,22,3,22,21.0,0.95,1.12,8,16,50.0,5,9,5,1,Luke Bara,6,Ricky,,BLOB,blob-line | Blob-line | blob- line,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Series,Cheetah,7,3,7,6.0,0.86,1.12,2,4,50.0,0,1,2,1,Collin Madson,2,Slip,,Half court,5 out-cheetah | Cheetah | cheetah,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Series,Flop,1,1,1,2.0,2.0,1.12,1,1,100.0,0,0,0,0,Isaac Verges,1,Ricky,Top,Half court,Flop- pass top-follow-ricky- spain,WWW@RIP
+UWW,Aurora Spartans,Series,Motion / no set,8,2,8,3.0,0.38,1.12,1,6,16.7,1,5,2,0,Collin Madson,3,Ricky,Right Side,Half court,DHO RS-Madson RICKY | Dho-pass 5- ric | Dho-pass 5- flair,EC@WWW WWW@RIP
+UWW,Aurora Spartans,Series,Opening set,1,1,1,2.0,2.0,1.12,0,0,,0,0,0,1,Collin Madson,1,,,Opening set,Opener- madson play,WWW@STC
+UWW,Aurora Spartans,Series,Panther,12,3,11,9.0,0.82,1.12,4,9,44.4,0,2,0,3,Brock Marino,7,,,Half court,Panther | panther,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Series,SLOB,5,3,4,3.0,0.75,1.12,1,4,25.0,1,2,1,0,Brock Marino,2,Stagger,,SLOB,slob | SLob | slob-stagger,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Primary action,Backcut,1,1,1,2.0,2.0,1.12,0,0,,0,0,0,1,Isaac Verges,1,,,Half court,5 out- pass- BC Cut,WWW@STC
+UWW,Aurora Spartans,Primary action,Ball Screen,4,3,4,9.0,2.25,1.12,4,4,100.0,1,1,0,0,Darius Chestnut,1,,,Half court,5 out-bs | 5 out- bs,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Primary action,Big-on-Big,1,1,1,2.0,2.0,1.12,0,0,,0,0,0,1,Richie Warren,1,,,Half court,5 out- big on big - HIlo,WWW@STC
+UWW,Aurora Spartans,Primary action,DHO,3,2,3,0.0,0.0,1.12,0,2,0.0,0,1,1,0,Isaac Verges,1,,,Half court,Dho-pass 5- flair | 5 out-dho | 5 out-pass-dho,WWW@RIP WWW@STC
+UWW,Aurora Spartans,Primary action,Down Screen,13,3,11,15.0,1.36,1.12,5,10,50.0,3,4,1,2,Isaac Verges,3,,,Half court,5 out- down screens | 5 Out- DS- Reject | 5 out- pass 5- down screen,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Primary action,Exchange,1,1,1,0.0,0.0,1.12,0,1,0.0,0,1,0,0,Darius Chestnut,1,,,Half court,5 out- pass 5- exhacnge,EC@WWW
+UWW,Aurora Spartans,Primary action,Flare,5,1,5,9.0,1.8,1.12,2,2,100.0,1,1,1,1,Collin Madson,2,,,Half court,5 out- pass 5 -flair | 5 out-flairs | 5 out-flair,WWW@STC
+UWW,Aurora Spartans,Primary action,Motion,2,1,2,3.0,1.5,1.12,1,2,50.0,1,1,0,0,Jr Lukenbill,1,,,Half court,5 out motion | 5 out-motion,WWW@STC
+UWW,Aurora Spartans,Primary action,Pass,2,2,2,0.0,0.0,1.12,0,2,0.0,0,1,0,0,Collin Madson,1,,,Half court,pass-swing-collin | 5 out-pass- cut,WWW@RIP WWW@STC
+UWW,Aurora Spartans,Primary action,Post Touch,1,1,1,0.0,0.0,1.12,0,0,,0,0,1,0,Collin Madson,1,,,Half court,5 out- pass-cut- PT BROCK,EC@WWW
+UWW,Aurora Spartans,Primary action,Ricky,6,3,6,7.0,1.17,1.12,3,5,60.0,1,3,1,0,Isaac Verges,2,,Right Side,Half court,DHO RS-Madson RICKY | Dho-pass 5- ric | Flop- pass top-follow-ricky- spain,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Primary action,Rip,2,1,1,3.0,3.0,1.12,0,0,,0,0,0,1,Jake Quast,1,,,Half court,5 out- pass 5 -cut rip | 5 out- swing-swing- rip,EC@WWW
+UWW,Aurora Spartans,Primary action,Slip,1,1,1,0.0,0.0,1.12,0,0,,0,0,1,0,Jr Lukenbill,1,,,Half court,5 out-cheetah- slip,WWW@STC
+UWW,Aurora Spartans,Primary action,Stagger,9,3,9,7.0,0.78,1.12,2,6,33.3,1,3,2,1,Brock Marino,2,,,Half court,5 out- stagger- bs | swing-swing-stagger | 5 out-stagger-curl-curl,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Primary action,Stand,1,1,1,3.0,3.0,1.12,1,1,100.0,1,1,0,0,Brock Marino,1,,,Half court,5 out-stand,WWW@STC
+UWW,Aurora Spartans,Primary action,Twirl,1,1,1,0.0,0.0,1.12,0,1,0.0,0,0,0,0,Jake Quast,1,,,Half court,5 out-twirl,WWW@STC
+UWW,Aurora Spartans,Primary action,Zoom,9,2,7,9.0,1.29,1.12,3,5,60.0,0,1,1,3,Jr Lukenbill,2,,,Half court,5 out-zoom | 5 Out-DHO-ZOOM | 5 out zoom,EC@WWW WWW@RIP
+UWW,Aurora Spartans,Situation,ATO,2,2,2,3.0,1.5,1.12,1,2,50.0,0,0,0,0,Brock Marino,1,,,ATO,ATO- | ATO,WWW@RIP WWW@STC
+UWW,Aurora Spartans,Situation,BLOB,22,3,22,21.0,0.95,1.12,8,16,50.0,5,9,5,1,Luke Bara,6,Ricky,,BLOB,blob-line | Blob-line | blob- line,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Situation,Half court,81,3,74,86.0,1.16,1.12,28,54,51.9,9,22,10,14,Brock Marino,15,Down Screen,Top,Half court,Panther | panther | 5 out-bs,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Situation,Opening set,1,1,1,2.0,2.0,1.12,0,0,,0,0,0,1,Collin Madson,1,,,Opening set,Opener- madson play,WWW@STC
+UWW,Aurora Spartans,Situation,SLOB,5,3,4,3.0,0.75,1.12,1,4,25.0,1,2,1,0,Brock Marino,2,Stagger,,SLOB,slob | SLob | slob-stagger,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Location,Right Side,1,1,1,0.0,0.0,1.12,0,1,0.0,0,1,0,0,Isaac Verges,1,Ricky,,Half court,DHO RS-Madson RICKY,WWW@RIP
+UWW,Aurora Spartans,Location,Top,2,2,2,5.0,2.5,1.12,2,2,100.0,1,1,0,0,Isaac Verges,1,Ricky,,Half court,Flop- pass top-follow-ricky- spain | 5 out- top key 3,WWW@RIP WWW@STC
+UWW,Aurora Spartans,Finish type,Cut,7,3,7,12.0,1.71,1.12,5,5,100.0,0,0,1,0,Richie Warren,2,Flare,,Half court,blob-line | 5 out-stagger-curl-curl | 5 out- pass 5 -flair,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Finish type,Hand Off,7,3,7,5.0,0.71,1.12,2,4,50.0,0,0,1,2,Jake Quast,2,Zoom,,Half court,Blob-line | 5 out zoom | 5 out-ds-reject,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Finish type,ISO,10,3,10,19.0,1.9,1.12,5,8,62.5,2,3,0,1,Brock Marino,3,Down Screen,Top,Half court,ATO- | CHeetah | 5 out- top key 3,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Finish type,No Play Type,6,3,6,0.0,0.0,1.12,0,2,0.0,0,1,4,0,Isaac Verges,2,Stagger,,BLOB,Blob- Line | 5 out-stagger | 5 out stagger,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Finish type,Non Possession,8,3,1,0.0,0.0,1.12,0,0,,0,0,3,5,Isaac Verges,2,Down Screen,,Half court,blob-line | slob | Panther,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Finish type,Off Screen,8,3,8,8.0,1.0,1.12,2,5,40.0,2,5,2,1,Collin Madson,5,Ricky,,BLOB,blob-line | Blob- LIne | Dho-pass 5- ric,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Finish type,Offensive Rebound,1,1,0,0.0,,1.12,0,0,,0,0,0,0,Brock Marino,1,,,Half court,Brock Marino,WWW@RIP
+UWW,Aurora Spartans,Finish type,P&R Ball Handler,32,3,32,32.0,1.0,1.12,12,29,41.4,5,13,2,1,Isaac Verges,7,Stagger,Right Side,Half court,blob-line | 5 out-bs | DHO RS-Madson RICKY,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Finish type,Post-Up,14,3,14,13.0,0.93,1.12,5,10,50.0,0,1,1,3,Brock Marino,8,Zoom,,Half court,Panther | panther | Blob-line,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Finish type,Spot-Up,18,3,18,26.0,1.44,1.12,7,13,53.8,6,10,2,3,Collin Madson,4,Down Screen,,Half court,5 out- down screens | blob-line | Cheetah,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Austin Ambrose, Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz",2,1,2,3.0,1.5,1.12,1,1,100.0,1,1,1,0,Jake Quast,1,Ricky,,SLOB,slob | Pass- follow- give-ricky,WWW@RIP
+UWW,Aurora Spartans,Personnel grouping,"Austin Ambrose, Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren",1,1,1,3.0,3.0,1.12,1,1,100.0,1,1,0,0,Collin Madson,1,Stagger,,Half court,5 out- stagger- bs,WWW@RIP
+UWW,Aurora Spartans,Personnel grouping,"Austin Ambrose, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz",3,1,3,2.0,0.67,1.12,1,2,50.0,0,1,1,0,Jr Lukenbill,2,Zoom,,Half court,Blob- Line | 5 out zoom- BS Scree | 5 out zoom-Up screen,WWW@RIP
+UWW,Aurora Spartans,Personnel grouping,"Austin Ambrose, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren",1,1,1,0.0,0.0,1.12,0,1,0.0,0,0,0,0,Jake Quast,1,,,Half court,cheetah,WWW@RIP
+UWW,Aurora Spartans,Personnel grouping,"Austin Ambrose, Isaiah Robinson, Kelton McEwen, Trent Grunewald, Tristian Lynch",2,1,2,0.0,0.0,1.12,0,2,0.0,0,1,0,0,Austin Ambrose,2,Stagger,,Half court,panther | Stagger,EC@WWW
+UWW,Aurora Spartans,Personnel grouping,"Austin Ambrose, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren",3,1,3,4.0,1.33,1.12,0,1,0.0,0,0,0,2,Jake Quast,2,Flare,,Half court,5 out- pass 5 -flair | 5 out-motion | 5 out- big on big - HIlo,WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, JR Lukenbill",6,1,6,4.0,0.67,1.12,2,6,33.3,0,2,0,0,Isaac Verges,2,Pass,,Half court,pass-swing-collin | panther | 5 out-bs,WWW@RIP
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, Richie Warren",2,1,2,2.0,1.0,1.12,1,2,50.0,0,1,0,0,Collin Madson,2,Ricky,,BLOB,Blob-line | Dho-pass 5- ric,WWW@RIP
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Collin Madson, Darius Chestnut, JR Lukenbill, Joey Berezowitz",2,1,2,0.0,0.0,1.12,0,2,0.0,0,2,0,0,Jr Lukenbill,1,Stagger,,BLOB,blob-lline | 5 out stagger- pass- bs,WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz",1,1,1,1.0,1.0,1.12,0,0,,0,0,0,1,Jake Quast,1,Zoom,,Half court,5 out zoom,WWW@RIP
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz",1,1,1,0.0,0.0,1.12,0,1,0.0,0,1,0,0,Isaac Verges,1,,,Half court,5out,WWW@RIP
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara",31,3,31,35.0,1.13,1.12,13,23,56.5,6,12,6,2,Luke Bara,9,Stagger,Top,Half court,Panther | blob- line | blob-line,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Luke Bara",5,2,5,0.0,0.0,1.12,0,4,0.0,0,2,1,0,Brock Marino,2,DHO,,Half court,blob-line | 5 out-dho | 5 out-twirl,EC@WWW WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren",6,1,6,7.0,1.17,1.12,3,4,75.0,1,1,1,1,Collin Madson,2,DHO,,Half court,Panther | Blob-line | blob-line,WWW@RIP
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Collin Madson, Jake Quast, Kelton McEwen, Richie Warren",1,1,1,1.0,1.0,1.12,0,1,0.0,0,0,0,0,Collin Madson,1,,,ATO,ATO,WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Collin Madson, Kelton McEwen, Mauryon Turner, Richie Warren",3,1,3,2.0,0.67,1.12,0,2,0.0,0,0,0,1,Mauryon Turner,1,Zoom,,BLOB,blob-line | 5 out-zoom,EC@WWW
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Kelton McEwen",1,1,1,0.0,0.0,1.12,0,0,,0,0,0,1,Brock Marino,1,,,Half court,panther,EC@WWW
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Luke Bara",2,1,2,4.0,2.0,1.12,2,2,100.0,0,0,0,0,Luke Bara,1,Down Screen,,Half court,5 out-cheetah | 5 out- down screens,EC@WWW
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Darius Chestnut, Isaac Verges, Luke Bara, Mauryon Turner",1,1,1,2.0,2.0,1.12,1,1,100.0,0,0,0,0,Luke Bara,1,,,Half court,5 out- cheetah,EC@WWW
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren",1,1,1,2.0,2.0,1.12,0,0,,0,0,0,1,Jake Quast,1,Stagger,,Half court,5 out-swing-swing-stagger,WWW@RIP
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Darius Chestnut, Kelton McEwen, Mauryon Turner, Richie Warren",1,1,1,2.0,2.0,1.12,1,1,100.0,0,0,0,0,Brock Marino,1,Down Screen,,Half court,5 out- pass 5- ds,EC@WWW
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, Isaac Verges, JR Lukenbill, Kelton McEwen, Richie Warren",2,1,2,3.0,1.5,1.12,1,2,50.0,1,1,0,0,Jr Lukenbill,1,Down Screen,,Half court,5 out- down screens | 5 out-stand,WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Brock Marino, JR Lukenbill, Jake Quast, Joey Berezowitz, Luke Bara",4,1,4,9.0,2.25,1.12,4,4,100.0,1,1,0,0,Jr Lukenbill,1,Ricky,,BLOB,blob-line | 5 out- bs- ricky,EC@WWW
+UWW,Aurora Spartans,Personnel grouping,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Richie Warren",2,1,2,4.0,2.0,1.12,1,2,50.0,0,0,0,0,Richie Warren,1,Down Screen,,Half court,5 out-DS | 5 out-bs,WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz, Rashad Rogers",1,1,1,0.0,0.0,1.12,0,1,0.0,0,1,0,0,Rashad Rogers,1,Down Screen,,Half court,5 out-ds,EC@WWW
+UWW,Aurora Spartans,Personnel grouping,"Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren",2,1,2,5.0,2.5,1.12,1,1,100.0,1,1,0,0,Collin Madson,1,Flare,,BLOB,blob-L | 5 out-flairs,WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara, Richie Warren",4,1,4,3.0,0.75,1.12,1,3,33.3,1,1,1,0,Jr Lukenbill,2,Ricky,,Half court,blob-line-ricky | 5 out-pass- cut | 5 out-cheetah- slip,WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Collin Madson, Isaac Verges, Jake Quast, Luke Bara, Richie Warren",2,1,2,2.0,1.0,1.12,0,0,,0,0,1,1,Jake Quast,1,Down Screen,,Half court,5 out-ds-reject | 5 out- pass- BC Cut,WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Collin Madson, JR Lukenbill, Kelton McEwen, Luke Bara, Richie Warren",1,1,1,2.0,2.0,1.12,1,1,100.0,0,0,0,0,Collin Madson,1,Ball Screen,,Half court,5 out-bs,WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",2,1,2,5.0,2.5,1.12,1,1,100.0,1,1,0,1,Collin Madson,2,Flare,,Half court,5 out-flair | 5 out-cheetah,WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",1,1,1,0.0,0.0,1.12,0,0,,0,0,1,0,Luke Bara,1,Flare,,Half court,5 out-pass 5-flair,WWW@STC
+UWW,Aurora Spartans,Personnel grouping,"Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz, Rashad Rogers",2,1,2,6.0,3.0,1.12,1,1,100.0,1,1,0,0,Joey Berezowitz,1,Down Screen,,Half court,pass 5-ds- get-pass BS | 5 out- pass 5 -cut rip,EC@WWW
+UWW,Aurora Spartans,Personnel grouping,"Darius Chestnut, Jake Quast, Joey Berezowitz, Rashad Rogers, Richie Warren",2,1,2,2.0,1.0,1.12,1,2,50.0,0,1,0,0,Richie Warren,1,Exchange,,Half court,5 out- SET | 5 out- pass 5- exhacnge,EC@WWW
+UWW,Aurora Spartans,Personnel grouping type,Base five (one big),70,3,70,74.0,1.06,1.12,28,55,50.9,9,23,8,7,Brock Marino,19,Stagger,Top,Half court,blob-line | Panther | Blob-line,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Personnel grouping type,Small / shooting five (no true big),31,3,31,41.0,1.32,1.12,10,20,50.0,6,10,5,4,Jake Quast,7,Flare,,Half court,5 out-bs | Blob- Line | 5 out zoom- BS Scree,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Game situation,Leading by 10+,25,3,25,34.0,1.36,1.12,14,22,63.6,4,8,1,2,Brock Marino,6,Ball Screen,,Half court,blob-line | blob- line | panther,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Game situation,Trailing by 10+,3,2,3,3.0,1.0,1.12,0,3,0.0,0,0,0,0,Brock Marino,1,Down Screen,,Half court,Panther | ATO | 5 out-DS,WWW@RIP WWW@STC
+UWW,Aurora Spartans,Shot clock,Early clock (0-9 sec used),78,3,78,93.0,1.19,1.12,31,55,56.4,11,23,11,10,Brock Marino,15,Stagger,Top,Half court,blob-line | Panther | Blob-line,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Shot clock,Late clock (20+ sec used),5,3,5,3.0,0.6,1.12,1,5,20.0,1,3,0,0,Jr Lukenbill,3,Down Screen,,Half court,5 out- down screens | CHeetah | panther,EC@WWW WWW@RIP WWW@STC
+UWW,Aurora Spartans,Shot clock,Organized offense (10-19 sec used),18,3,18,19.0,1.06,1.12,6,15,40.0,3,7,2,1,Collin Madson,4,Ricky,,Half court,blob-line | blob-line-ricky | blob- line,EC@WWW WWW@RIP WWW@STC
+Opponent,Aurora Spartans,Play call,2-3 DHO,1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Gevon Grant,1,DHO,,Half court,23- Dho-ISO,AU@NCC
+Opponent,Aurora Spartans,Play call,2-3 Post Touch,3,3,2,0.0,0.0,0.85,0,1,0.0,0,0,2,0,Zerrick Johnson,1,Post Touch,Left Corner,Half court,23- Post | 23- PT | 23- Dribble LC out- PT,AU@BEN AU@NCC BLC@AU
+Opponent,Aurora Spartans,Play call,2-3 Xavier Screen,1,1,1,0.0,0.0,0.85,0,0,,0,0,1,0,Juan Madrigal,1,Xavier Screen,,Half court,23- Xaiver Screen- BS,AU@BEN
+Opponent,Aurora Spartans,Play call,3-2 DHO,1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Gevon Grant,1,DHO,Right Side,Half court,32- DHO RS- STS,AU@NCC
+Opponent,Aurora Spartans,Play call,3-2 Shoulder Screen,1,1,1,3.0,3.0,0.85,1,1,100.0,1,1,0,0,Juan Madrigal,1,Shoulder Screen,Left Wing,Half court,3-2- Shoulder Screen-Stagger- BS- LW 3,AU@BEN
+Opponent,Aurora Spartans,Play call,33 Ball Screen,3,2,3,4.0,1.33,0.85,2,3,66.7,0,0,0,0,Robert Hutson,1,Ball Screen,Left Wing,Half court,33- Pass wing- 5 BS- reject | 33- 5 BS LW- Flair | 33- BS LW,AU@BEN AU@NCC
+Opponent,Aurora Spartans,Play call,33 Hammer,3,2,3,1.0,0.33,0.85,0,1,0.0,0,0,1,1,Larry Carthan,1,Hammer,Right Wing,Half court,33- Pass Rw- BS-HAMMER | 33- pass left-bs- hammer | 33- Pass LW- Follow-BS-Hammer,BLC@AU GUS@AU
+Opponent,Aurora Spartans,Play call,4-1 Ball Screen,10,4,10,5.0,0.5,0.85,2,9,22.2,1,5,1,0,Robert Hutson,2,Ball Screen,Left Side,Half court,4-1- BS left side | 4-1- BS RS- LC | 4-1- LW BS,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Play call,4-1 DHO,3,2,3,4.0,1.33,0.85,1,2,50.0,1,1,0,1,Gevon Grant,1,DHO,Right Wing,Half court,41- DHO- BS RW- GL | 41-dho-bs | 41-DHO-BS,AU@BEN BLC@AU
+Opponent,Aurora Spartans,Play call,4-1 Double Drag,1,1,1,0.0,0.0,0.85,0,1,0.0,0,1,0,0,Juan Madrigal,1,Double Drag,Right Wing,Half court,4-1- DD- DHO- RW,AU@BEN
+Opponent,Aurora Spartans,Play call,4-1 Post Touch,1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Devon Richardson,1,Post Touch,Left Side,Opening set,Opener- 41- Dribble left push thru-PT,GUS@AU
+Opponent,Aurora Spartans,Play call,4-1 Screen,1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Juan Madrigal,1,Screen,Right Side,Half court,41- Pass RS- 1 screen 5,AU@NCC
+Opponent,Aurora Spartans,Play call,5 Out Ball Screen,1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Jeffery Hillmer,1,Ball Screen,Right Wing,Half court,5 Out- BS RW- GL-,AU@BEN
+Opponent,Aurora Spartans,Play call,5 Out DHO,1,1,0,0.0,,0.85,0,0,,0,0,1,0,Juan Madrigal,1,DHO,Left Wing,Half court,5 out- pass LW- flash pass- handoff,BLC@AU
+Opponent,Aurora Spartans,Play call,5 Out Grenade,1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Cullen Rauls,1,Grenade,Left Wing,Half court,5 out- Pass LW- Follow- GRENADE,AU@BEN
+Opponent,Aurora Spartans,Play call,5 Out Twirl,5,3,5,4.0,0.8,0.85,2,5,40.0,0,1,0,0,Devon Richardson,3,Twirl,Right Side,Half court,5 Out- Pass 5- Twirl-DHO | Half- 5 out ttwirl | 5 out- Pass RS- Twirl,AU@BEN AU@NCC BLC@AU
+Opponent,Aurora Spartans,Play call,5 Out Zoom,1,1,1,2.0,2.0,0.85,0,0,,0,0,0,1,Zerrick Johnson,1,Zoom,,Half court,5 Out- Zoom,GUS@AU
+Opponent,Aurora Spartans,Play call,BLOB 2-1-1,3,2,3,2.0,0.67,0.85,1,3,33.3,0,1,0,0,Jeffery Hillmer,1,,,BLOB,Blob- 2-1-1 | Blob-2-1-1,BLC@AU GUS@AU
+Opponent,Aurora Spartans,Play call,BLOB 2-1-1 Screen the Screener,1,1,1,0.0,0.0,0.85,0,0,,0,0,0,1,Larry Carthan,1,Screen the Screener,Right Block,BLOB,BLOB- 2-1-1- STS- RB,AU@BEN
+Opponent,Aurora Spartans,Play call,BLOB Box Breddy,4,3,3,2.0,0.67,0.85,1,3,33.3,0,0,1,0,Isaiah Thompson,1,Breddy,,BLOB,Blob-Box-Breddy | BLOB-BOX-Breddy | Blob-box-breddy,AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Play call,BLOB Box Curl,12,4,10,7.0,0.7,0.85,3,7,42.9,0,1,3,2,Devon Richardson,8,Curl,,BLOB,Blob-Box-Curl | Blob-Box- Curl around 5- Give | Blob- Box Curl,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Play call,BLOB Box Screen the Screener,1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Jeffery Hillmer,1,Screen the Screener,,BLOB,BLOB- Box- STS,AU@BEN
+Opponent,Aurora Spartans,Play call,BLOB Breddy,1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Juan Madrigal,1,Breddy,,BLOB,BLOB- Breddy,AU@BEN
+Opponent,Aurora Spartans,Play call,BLOB Lob,1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Larry Carthan,1,Lob,,BLOB,Blob- LOB,AU@BEN
+Opponent,Aurora Spartans,Play call,BLOB Stairs,3,1,3,2.0,0.67,0.85,0,1,0.0,0,1,1,1,Gevon Grant,1,,,BLOB,BLOB- Stairs | blob- stairs | Blob-Stairs,AU@BEN
+Opponent,Aurora Spartans,Play call,BLOB Stairs Lob,1,1,1,0.0,0.0,0.85,0,0,,0,0,1,0,Bryden Gryzmala,1,Lob,,BLOB,Blob-Stairs-lob,GUS@AU
+Opponent,Aurora Spartans,Play call,Diamond,1,1,0,0.0,,0.85,0,0,,0,0,1,0,Robert Hutson,1,,,Half court,Diamond- HiLo,AU@NCC
+Opponent,Aurora Spartans,Play call,Diamond Down Screen,1,1,1,0.0,0.0,0.85,0,0,,0,0,1,0,Gevon Grant,1,Down Screen,,Half court,Diamond- DS- HiLO,AU@NCC
+Opponent,Aurora Spartans,Play call,Double Drag,1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Devon Richardson,1,Double Drag,,Half court,DD,BLC@AU
+Opponent,Aurora Spartans,Play call,Hi-Lo,4,3,4,3.0,0.75,0.85,0,2,0.0,0,1,1,0,Devon Richardson,2,Pass,Left Side,Half court,hi-low- pass-follow-follow | HiLo- Pass 5- Follow LS- Follow 4 | HiLo-Pass 5 follow- 4 follow- pass 4,AU@BEN AU@NCC BLC@AU
+Opponent,Aurora Spartans,Play call,Hi-Lo Ball Screen,1,1,1,3.0,3.0,0.85,1,1,100.0,1,1,0,0,Zerrick Johnson,1,Ball Screen,Left Side,Half court,hi-low- Pass LS-Follow- BS,AU@NCC
+Opponent,Aurora Spartans,Play call,Hi-Lo DHO,8,4,6,10.0,1.67,0.85,3,4,75.0,2,2,3,1,Juan Madrigal,5,DHO,Right Side,Half court,HiLO- RS DHO- STS- Stagger- RW 3 | HiLo- DHO-DHO-BS- LC | HiLo-Pass 5- Clear - DHO 4- LS,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Play call,Hi-Lo Hammer,1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Gevon Grant,1,Hammer,Left Side,ATO,ATO- Hi low- Bs LS- Hammer,AU@NCC
+Opponent,Aurora Spartans,Play call,Highway,3,2,3,5.0,1.67,0.85,1,1,100.0,0,0,0,2,Gevon Grant,2,,,Half court,Highway,AU@NCC BLC@AU
+Opponent,Aurora Spartans,Play call,Horns DHO,4,3,4,4.0,1.0,0.85,0,1,0.0,0,0,1,1,Bryden Gryzmala,1,DHO,Left Side,Half court,Horns- DHO LS- DHO RS- BIG SCI | Horns-DHO- DHO- SCI | Horns-DHO Left- Sci,AU@BEN AU@NCC BLC@AU
+Opponent,Aurora Spartans,Play call,Horns Grenade,1,1,1,3.0,3.0,0.85,1,1,100.0,1,1,0,0,Bryden Gryzmala,1,Grenade,Left Side,Half court,Horns- Pass LS- Follow- Grendae,AU@NCC
+Opponent,Aurora Spartans,Play call,Horns IVO,4,3,4,4.0,1.0,0.85,2,3,66.7,0,1,1,0,Juan Madrigal,2,IVO,Left Corner,Half court,Horns- IVO- 4 Pop- Pass- RIC- LC | Horns-Ivo-Pass RS- RIC | Horns-IVO-pass-RIC,AU@BEN AU@NCC BLC@AU
+Opponent,Aurora Spartans,Play call,Horns Zoom,1,1,1,0.0,0.0,0.85,0,0,,0,0,1,0,Zerrick Johnson,1,Zoom,,Half court,Horns-Zoom,GUS@AU
+Opponent,Aurora Spartans,Play call,OK State,2,1,2,0.0,0.0,0.85,0,2,0.0,0,1,0,0,Mekhi Doby,1,DHO,Right Side,Half court,OK State- DHO RS- Sci Sc- STS -RE,AU@BEN
+Opponent,Aurora Spartans,Play call,OK State Pat Miller,9,3,9,3.0,0.33,0.85,0,2,0.0,0,1,5,1,Gevon Grant,3,Pat Miller,Right Side,Half court,OK State- Pass RS- Follow- Pat Miller | OK St- DHO RS- Pat Miller | Ok St- Pass RS - Follow-Pat Miller,AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Play call,Pistol,1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Mekhi Doby,1,,,Half court,4-1- pistol,AU@BEN
+Opponent,Aurora Spartans,Play call,SLOB Ball Screen,1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Bryden Gryzmala,1,Ball Screen,,SLOB,slob- ball screen,BLC@AU
+Opponent,Aurora Spartans,Play call,SLOB Box Ricky,1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Mekhi Doby,1,Ricky,,SLOB,Slob- Box- DS- Flair- RIC,AU@BEN
+Opponent,Aurora Spartans,Play call,SLOB Down Screen,1,1,1,2.0,2.0,0.85,0,0,,0,0,0,1,Gevon Grant,1,Down Screen,,SLOB,Slob-DS-BS,AU@NCC
+Opponent,Aurora Spartans,Play call,SLOB Horns IVO,2,2,2,5.0,2.5,0.85,1,1,100.0,0,0,0,1,Devon Richardson,1,IVO,Right Side,SLOB,Slob- Horns- IVO-pass RS-RIC | Slob-Horns- IVO,BLC@AU GUS@AU
+Opponent,Aurora Spartans,Play call,SLOB ISO,1,1,1,1.0,1.0,0.85,0,0,,0,0,0,1,Gevon Grant,1,ISO,,SLOB,slob-ISO,BLC@AU
+Opponent,Aurora Spartans,Play call,SLOB Monty,1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Jeffery Hillmer,1,,,SLOB,Slob-Monty,GUS@AU
+Opponent,Aurora Spartans,Play call,SLOB Ricky,2,2,2,2.0,1.0,0.85,1,2,50.0,0,0,0,0,Jeffery Hillmer,1,Ricky,Opposite Side,SLOB,SLOB- Other side- DS- Flair- RIC- BS | ATO- Slob-DS-Flair- RIC,AU@BEN GUS@AU
+Opponent,Aurora Spartans,Series,2-3,5,3,4,0.0,0.0,0.85,0,2,0.0,0,0,3,0,Juan Madrigal,2,Post Touch,Left Corner,Half court,23- Post | 23- Xaiver Screen- BS | 23- PT,AU@BEN AU@NCC BLC@AU
+Opponent,Aurora Spartans,Series,3-2,2,2,2,3.0,1.5,0.85,1,2,50.0,1,1,0,0,Juan Madrigal,1,Shoulder Screen,Left Wing,Half court,3-2- Shoulder Screen-Stagger- BS- LW 3 | 32- DHO RS- STS,AU@BEN AU@NCC
+Opponent,Aurora Spartans,Series,33,6,4,6,5.0,0.83,0.85,2,4,50.0,0,0,1,1,Zerrick Johnson,2,Ball Screen,Left Wing,Half court,33- Pass wing- 5 BS- reject | 33- 5 BS LW- Flair | 33- BS LW,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Series,4-1,16,4,16,13.0,0.81,0.85,5,14,35.7,2,7,1,1,Robert Hutson,3,Ball Screen,Left Side,Half court,4-1- BS left side | 4-1- BS RS- LC | 4-1- DD- DHO- RW,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Series,5 Out,9,4,8,6.0,0.75,0.85,2,7,28.6,0,1,1,1,Devon Richardson,3,Twirl,Left Wing,Half court,5 out- Pass LW- Follow- GRENADE | 5 Out- Pass 5- Twirl-DHO | 5 Out- BS RW- GL-,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Series,BLOB,27,4,24,13.0,0.54,0.85,5,17,29.4,0,3,6,4,Devon Richardson,10,Curl,Right Block,BLOB,Blob-Box-Curl | Blob- 2-1-1 | Blob-Box-Breddy,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Series,Diamond,2,1,1,0.0,0.0,0.85,0,0,,0,0,2,0,Gevon Grant,1,Down Screen,,Half court,Diamond- DS- HiLO | Diamond- HiLo,AU@NCC
+Opponent,Aurora Spartans,Series,Hi-Lo,14,4,12,18.0,1.5,0.85,5,8,62.5,3,4,4,1,Juan Madrigal,6,DHO,Right Side,Half court,HiLO- RS DHO- STS- Stagger- RW 3 | HiLo- DHO-DHO-BS- LC | HiLo-Pass 5- Clear - DHO 4- LS,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Series,Highway,3,2,3,5.0,1.67,0.85,1,1,100.0,0,0,0,2,Gevon Grant,2,,,Half court,Highway,AU@NCC BLC@AU
+Opponent,Aurora Spartans,Series,Horns,10,4,10,11.0,1.1,0.85,3,5,60.0,1,2,3,1,Bryden Gryzmala,3,IVO,Left Side,Half court,Horns- IVO- 4 Pop- Pass- RIC- LC | Horns- DHO LS- DHO RS- BIG SCI | Horns-DHO- DHO- SCI,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Series,Motion / no set,1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Devon Richardson,1,Double Drag,,Half court,DD,BLC@AU
+Opponent,Aurora Spartans,Series,OK State,11,4,11,3.0,0.27,0.85,0,4,0.0,0,2,5,1,Gevon Grant,3,Pat Miller,Right Side,Half court,OK State- DHO RS- Sci Sc- STS -RE | OK State- Pass RS- Follow- Pat Miller | OK St- DHO RS- Pat Miller,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Series,Pistol,1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Mekhi Doby,1,,,Half court,4-1- pistol,AU@BEN
+Opponent,Aurora Spartans,Series,SLOB,9,4,9,12.0,1.33,0.85,3,6,50.0,0,0,0,3,Jeffery Hillmer,2,Ricky,Opposite Side,SLOB,Slob- Box- DS- Flair- RIC | SLOB- Other side- DS- Flair- RIC- BS | Slob-DS-BS,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Primary action,Ball Screen,16,4,16,12.0,0.75,0.85,5,15,33.3,2,6,1,0,Robert Hutson,3,,Left Side,Half court,4-1- BS left side | 4-1- BS RS- LC | 4-1- LW BS,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Primary action,Breddy,5,4,4,2.0,0.5,0.85,1,4,25.0,0,0,1,0,Juan Madrigal,2,,,BLOB,Blob-Box-Breddy | BLOB- Breddy | BLOB-BOX-Breddy,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Primary action,Curl,12,4,10,7.0,0.7,0.85,3,7,42.9,0,1,3,2,Devon Richardson,8,,,BLOB,Blob-Box-Curl | Blob-Box- Curl around 5- Give | Blob- Box Curl,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Primary action,DHO,20,4,17,18.0,1.06,0.85,4,11,36.4,3,4,5,3,Juan Madrigal,6,,Right Side,Half court,OK State- DHO RS- Sci Sc- STS -RE | HiLO- RS DHO- STS- Stagger- RW 3 | 23- Dho-ISO,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Primary action,Double Drag,2,2,2,2.0,1.0,0.85,1,2,50.0,0,1,0,0,Juan Madrigal,1,,Right Wing,Half court,4-1- DD- DHO- RW | DD,AU@BEN BLC@AU
+Opponent,Aurora Spartans,Primary action,Down Screen,2,1,2,2.0,1.0,0.85,0,0,,0,0,1,1,Gevon Grant,2,,,Half court,Diamond- DS- HiLO | Slob-DS-BS,AU@NCC
+Opponent,Aurora Spartans,Primary action,Follow,1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Robert Hutson,1,,,Half court,HiLo- Follow-Follow,BLC@AU
+Opponent,Aurora Spartans,Primary action,Grenade,2,2,2,3.0,1.5,0.85,1,2,50.0,1,1,0,0,Cullen Rauls,1,,Left Wing,Half court,5 out- Pass LW- Follow- GRENADE | Horns- Pass LS- Follow- Grendae,AU@BEN AU@NCC
+Opponent,Aurora Spartans,Primary action,Hammer,4,3,4,3.0,0.75,0.85,1,2,50.0,0,0,1,1,Gevon Grant,1,,Left Side,Half court,ATO- Hi low- Bs LS- Hammer | 33- Pass Rw- BS-HAMMER | 33- pass left-bs- hammer,AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Primary action,ISO,1,1,1,1.0,1.0,0.85,0,0,,0,0,0,1,Gevon Grant,1,,,SLOB,slob-ISO,BLC@AU
+Opponent,Aurora Spartans,Primary action,IVO,6,4,6,9.0,1.5,0.85,3,4,75.0,0,1,1,1,Juan Madrigal,3,,Right Side,Half court,Horns- IVO- 4 Pop- Pass- RIC- LC | Horns-Ivo-Pass RS- RIC | Horns-IVO-pass-RIC,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Primary action,Lob,2,2,2,0.0,0.0,0.85,0,1,0.0,0,0,1,0,Larry Carthan,1,,,BLOB,Blob- LOB | Blob-Stairs-lob,AU@BEN GUS@AU
+Opponent,Aurora Spartans,Primary action,Pass,3,2,3,3.0,1.0,0.85,0,1,0.0,0,1,1,0,Devon Richardson,2,,Left Side,Half court,hi-low- pass-follow-follow | HiLo- Pass 5- Follow LS- Follow 4 | HiLo-Pass 5 follow- 4 follow- pass 4,AU@BEN AU@NCC
+Opponent,Aurora Spartans,Primary action,Pat Miller,9,3,9,3.0,0.33,0.85,0,2,0.0,0,1,5,1,Gevon Grant,3,,Right Side,Half court,OK State- Pass RS- Follow- Pat Miller | OK St- DHO RS- Pat Miller | Ok St- Pass RS - Follow-Pat Miller,AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Primary action,Post Touch,4,4,3,2.0,0.67,0.85,1,2,50.0,0,0,2,0,Zerrick Johnson,1,,Left Corner,Half court,23- Post | 23- PT | 23- Dribble LC out- PT,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Primary action,Ricky,3,2,3,4.0,1.33,0.85,2,3,66.7,0,0,0,0,Mekhi Doby,1,,Opposite Side,SLOB,Slob- Box- DS- Flair- RIC | SLOB- Other side- DS- Flair- RIC- BS | ATO- Slob-DS-Flair- RIC,AU@BEN GUS@AU
+Opponent,Aurora Spartans,Primary action,Screen,1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Juan Madrigal,1,,Right Side,Half court,41- Pass RS- 1 screen 5,AU@NCC
+Opponent,Aurora Spartans,Primary action,Screen the Screener,2,1,2,0.0,0.0,0.85,0,1,0.0,0,0,0,1,Larry Carthan,1,,Right Block,BLOB,BLOB- 2-1-1- STS- RB | BLOB- Box- STS,AU@BEN
+Opponent,Aurora Spartans,Primary action,Shoulder Screen,1,1,1,3.0,3.0,0.85,1,1,100.0,1,1,0,0,Juan Madrigal,1,,Left Wing,Half court,3-2- Shoulder Screen-Stagger- BS- LW 3,AU@BEN
+Opponent,Aurora Spartans,Primary action,Twirl,5,3,5,4.0,0.8,0.85,2,5,40.0,0,1,0,0,Devon Richardson,3,,Right Side,Half court,5 Out- Pass 5- Twirl-DHO | Half- 5 out ttwirl | 5 out- Pass RS- Twirl,AU@BEN AU@NCC BLC@AU
+Opponent,Aurora Spartans,Primary action,Xavier Screen,1,1,1,0.0,0.0,0.85,0,0,,0,0,1,0,Juan Madrigal,1,,,Half court,23- Xaiver Screen- BS,AU@BEN
+Opponent,Aurora Spartans,Primary action,Zoom,2,1,2,2.0,1.0,0.85,0,0,,0,0,1,1,Zerrick Johnson,2,,,Half court,5 Out- Zoom | Horns-Zoom,GUS@AU
+Opponent,Aurora Spartans,Situation,ATO,1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Gevon Grant,1,Hammer,Left Side,ATO,ATO- Hi low- Bs LS- Hammer,AU@NCC
+Opponent,Aurora Spartans,Situation,BLOB,27,4,24,13.0,0.54,0.85,5,17,29.4,0,3,6,4,Devon Richardson,10,Curl,Right Block,BLOB,Blob-Box-Curl | Blob- 2-1-1 | Blob-Box-Breddy,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Situation,Half court,79,4,74,64.0,0.86,0.85,19,47,40.4,7,17,21,8,Juan Madrigal,17,DHO,Right Side,Half court,Highway | OK State- DHO RS- Sci Sc- STS -RE | 3-2- Shoulder Screen-Stagger- BS- LW 3,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Situation,Opening set,1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Devon Richardson,1,Post Touch,Left Side,Opening set,Opener- 41- Dribble left push thru-PT,GUS@AU
+Opponent,Aurora Spartans,Situation,SLOB,8,4,8,12.0,1.5,0.85,3,5,60.0,0,0,0,3,Jeffery Hillmer,2,Ricky,Opposite Side,SLOB,Slob- Box- DS- Flair- RIC | SLOB- Other side- DS- Flair- RIC- BS | Slob-DS-BS,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Situation,SLOB (ATO),1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Juan Madrigal,1,Ricky,,SLOB (ATO),ATO- Slob-DS-Flair- RIC,GUS@AU
+Opponent,Aurora Spartans,Location,Left Corner,3,2,3,3.0,1.0,0.85,1,2,50.0,1,2,1,0,Cullen Rauls,1,DHO,,Half court,HiLo- DHO-DHO-BS- LC | Horns- IVO- 4 Pop- Pass- RIC- LC | 23- Dribble LC out- PT,AU@BEN BLC@AU
+Opponent,Aurora Spartans,Location,Left Side,15,4,14,13.0,0.93,0.85,4,10,40.0,2,4,4,0,Bryden Gryzmala,3,Ball Screen,,Half court,4-1- BS left side | HiLo-Pass 5- Clear - DHO 4- LS | Horns- DHO LS- DHO RS- BIG SCI,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Location,Left Wing,8,4,7,5.0,0.71,0.85,2,6,33.3,1,3,2,0,Juan Madrigal,3,Ball Screen,,Half court,3-2- Shoulder Screen-Stagger- BS- LW 3 | 5 out- Pass LW- Follow- GRENADE | 4-1- LW BS,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Location,Opposite Side,1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Jeffery Hillmer,1,Ricky,,SLOB,SLOB- Other side- DS- Flair- RIC- BS,AU@BEN
+Opponent,Aurora Spartans,Location,Right Block,1,1,1,0.0,0.0,0.85,0,0,,0,0,0,1,Larry Carthan,1,Screen the Screener,,BLOB,BLOB- 2-1-1- STS- RB,AU@BEN
+Opponent,Aurora Spartans,Location,Right Side,21,4,21,24.0,1.14,0.85,7,13,53.8,2,4,4,2,Devon Richardson,6,DHO,,Half court,OK State- DHO RS- Sci Sc- STS -RE | HiLO- RS DHO- STS- Stagger- RW 3 | Ok ST-DHO RS- PAT MILLER,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Location,Right Wing,5,2,5,6.0,1.2,0.85,2,4,50.0,1,2,0,1,Juan Madrigal,1,Ball Screen,,Half court,4-1- DD- DHO- RW | 5 Out- BS RW- GL- | 41- DHO- BS RW- GL,AU@BEN BLC@AU
+Opponent,Aurora Spartans,Location,Top,1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Devon Richardson,1,Twirl,,Half court,5 out- pass top-twirl-zoom,BLC@AU
+Opponent,Aurora Spartans,Location,Wing,1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Robert Hutson,1,Ball Screen,,Half court,33- Pass wing- 5 BS- reject,AU@BEN
+Opponent,Aurora Spartans,Finish type,Cut,11,3,11,11.0,1.0,0.85,3,8,37.5,0,0,0,2,Devon Richardson,4,Ball Screen,Left Side,Half court,4-1- BS left side | BLOB- 2-1-1- STS- RB | 5 Out- BS RW- GL-,AU@BEN BLC@AU GUS@AU
+Opponent,Aurora Spartans,Finish type,Hand Off,9,4,9,5.0,0.56,0.85,1,5,20.0,0,1,2,2,Gevon Grant,3,DHO,Left Side,Half court,5 out- Pass LW- Follow- GRENADE | Blob-Stairs | OK State- Pass RS- Follow- Pat Miller,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Finish type,ISO,11,3,11,13.0,1.18,0.85,4,7,57.1,1,1,2,1,Devon Richardson,4,Pass,Left Side,Half court,hi-low- pass-follow-follow | 33- 5 BS LW- Flair | BLOB-BOX-Breddy,AU@BEN AU@NCC BLC@AU
+Opponent,Aurora Spartans,Finish type,No Play Type,5,4,5,3.0,0.6,0.85,1,1,100.0,0,0,3,1,Bryden Gryzmala,2,Curl,Right Side,Half court,Blob-Box- Curl around 5- Give | 5 out- Pass RS- Twirl | 23- Dribble LC out- PT,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Finish type,Non Possession,9,4,1,0.0,0.0,0.85,0,0,,0,0,9,0,Devon Richardson,4,DHO,Left Side,Half court,HiLo-Pass 5- Clear - DHO 4- LS | Diamond- HiLo | 23- PT,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Finish type,Off Screen,4,3,4,5.0,1.25,0.85,2,4,50.0,1,1,0,0,Juan Madrigal,3,DHO,Right Side,Half court,BLOB- Breddy | 32- DHO RS- STS | HiLo-DH RS-DS-STS,AU@BEN AU@NCC BLC@AU
+Opponent,Aurora Spartans,Finish type,Offensive Rebound,1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Larry Carthan,1,Ball Screen,Left Side,Half court,41- BS LS- Reject,GUS@AU
+Opponent,Aurora Spartans,Finish type,P&R Ball Handler,31,4,31,32.0,1.03,0.85,9,20,45.0,3,7,5,5,Gevon Grant,7,Ball Screen,Right Side,Half court,Highway | OK State- DHO RS- Sci Sc- STS -RE | Ok ST-Dho LS- Pat Miller,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Finish type,Post-Up,17,4,17,10.0,0.59,0.85,5,14,35.7,0,2,1,2,Devon Richardson,9,Curl,Right Side,Half court,Blob-Box-Curl | Slob- Box- DS- Flair- RIC | 23- Post,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Finish type,Spot-Up,19,4,19,14.0,0.74,0.85,4,12,33.3,2,8,5,2,Juan Madrigal,6,IVO,Left Wing,Half court,3-2- Shoulder Screen-Stagger- BS- LW 3 | 41-BS LS | Ok St-DHO RS-DS-Pat Miller,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Adam Awender, Alex Ross, Bryden Gryzmala, Gevon Grant, Jeffery Hillmer",1,1,1,0.0,0.0,0.85,0,0,,0,0,1,0,Gevon Grant,1,Pat Miller,Left Side,Half court,Ok ST-Dho LS- Pat Miller,GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Alex Ross, Bryden Gryzmala, Jeffery Hillmer, Juan Madrigal, Larry Carthan",1,1,1,0.0,0.0,0.85,0,0,,0,0,1,0,Juan Madrigal,1,IVO,,Half court,Horns-IVO-pass-RIC,BLC@AU
+Opponent,Aurora Spartans,Personnel grouping,"Alex Ross, Devon Richardson, Gevon Grant, Jeffery Hillmer, Zerrick Johnson",1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Zerrick Johnson,1,Ball Screen,Left Wing,Half court,33- 5 BS LW- Flair,AU@NCC
+Opponent,Aurora Spartans,Personnel grouping,"Alex Ross, Devon Richardson, Gevon Grant, Robert Hutson, Zerrick Johnson",2,1,2,3.0,1.5,0.85,1,1,100.0,1,1,1,0,Zerrick Johnson,1,Ball Screen,Left Side,Half court,hi-low- Pass LS-Follow- BS | Diamond- DS- HiLO,AU@NCC
+Opponent,Aurora Spartans,Personnel grouping,"Alex Ross, Juan Madrigal, Larry Carthan, Robert Hutson, Zerrick Johnson",1,1,1,1.0,1.0,0.85,0,0,,0,0,0,1,Zerrick Johnson,1,DHO,,Half court,Horns-DHO- DHO- SCI,AU@BEN
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Devon Richardson, Gevon Grant, Isaiah Thompson, Juan Madrigal",1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Devon Richardson,1,,,BLOB,Blob-2-1-1,GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Devon Richardson, Gevon Grant, Jeffery Hillmer, Juan Madrigal",3,1,3,5.0,1.67,0.85,2,2,100.0,0,0,0,1,Devon Richardson,2,IVO,Right Side,Half court,Highway | Horns-Ivo-Pass RS- RIC | 5 out- Pass RS- Twirl,AU@NCC
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Devon Richardson, Gevon Grant, Jeffery Hillmer, Robert Hutson",1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Devon Richardson,1,Twirl,Top,Half court,5 out- pass top-twirl-zoom,BLC@AU
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Devon Richardson, Gevon Grant, Juan Madrigal, Robert Hutson",2,2,2,2.0,1.0,0.85,1,2,50.0,0,1,0,0,Juan Madrigal,1,Double Drag,Right Wing,Half court,4-1- DD- DHO- RW | Horns-Ivo-pass-RIC,AU@BEN BLC@AU
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Devon Richardson, Gevon Grant, Robert Hutson, Zerrick Johnson",2,1,2,0.0,0.0,0.85,0,0,,0,0,2,0,Devon Richardson,1,Curl,Left Side,BLOB,Blob-box-curl | Horns-DHO Left- Sci,AU@NCC
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Devon Richardson, Isaiah Thompson, Jeffery Hillmer, Juan Madrigal",3,2,3,4.0,1.33,0.85,2,3,66.7,0,0,0,0,Devon Richardson,2,Twirl,,BLOB,Blob- 2-1-1 | 5 out- twirl-zoom | Blob-Box-Curl,BLC@AU GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Devon Richardson, Isaiah Thompson, Jeffery Hillmer, Zerrick Johnson",5,2,5,2.0,0.4,0.85,1,2,50.0,0,0,3,0,Devon Richardson,2,Pat Miller,Right Side,Half court,Blob-Box-Curl | Ok St-DHO Rs- Pat Miller | 41- BS RW,BLC@AU GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Devon Richardson, Isaiah Thompson, Juan Madrigal, Zerrick Johnson",1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Devon Richardson,1,Ball Screen,,Half court,41- BS,AU@NCC
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Devon Richardson, Jeffery Hillmer, Juan Madrigal, Zerrick Johnson",15,3,15,14.0,0.93,0.85,2,10,20.0,1,6,1,1,Juan Madrigal,4,DHO,Right Side,Half court,3-2- Shoulder Screen-Stagger- BS- LW 3 | HiLO- RS DHO- STS- Stagger- RW 3 | SLOB- Other side- DS- Flair- RIC- BS,AU@BEN AU@NCC BLC@AU
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Devon Richardson, Jeffery Hillmer, Robert Hutson, Zerrick Johnson",2,1,2,5.0,2.5,0.85,1,1,100.0,1,1,0,1,Bryden Gryzmala,2,Grenade,Left Side,Half court,Horns- Pass LS- Follow- Grendae | Highway,AU@NCC
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Devon Richardson, Juan Madrigal, Robert Hutson, Zerrick Johnson",1,1,1,0.0,0.0,0.85,0,1,0.0,0,1,0,0,Juan Madrigal,1,Pass,,Half court,HiLo-Pass 5 follow- 4 follow- pass 4,AU@NCC
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Gevon Grant, Juan Madrigal, Larry Carthan, Robert Hutson",3,1,3,1.0,0.33,0.85,0,1,0.0,0,0,1,1,Bryden Gryzmala,2,DHO,Left Side,Half court,41-dho-bs | 41- BS LS | 41-DHO-BS,BLC@AU
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Isaiah Thompson, Jeffery Hillmer, Juan Madrigal, Larry Carthan",1,1,1,2.0,2.0,0.85,0,0,,0,0,0,1,Larry Carthan,1,DHO,Right Side,Half court,Hi Lo- DHO RS-DS-STS,GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Isaiah Thompson, Jeffery Hillmer, Mekhi Doby, Zerrick Johnson",1,1,1,0.0,0.0,0.85,0,1,0.0,0,1,0,0,Isaiah Thompson,1,Curl,,BLOB,Blob- Box Curl,AU@BEN
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Jeffery Hillmer, Juan Madrigal, Larry Carthan, Robert Hutson",1,1,1,0.0,0.0,0.85,0,0,,0,0,1,0,Bryden Gryzmala,1,Lob,,BLOB,Blob-Stairs-lob,GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Jeffery Hillmer, Juan Madrigal, Larry Carthan, Zerrick Johnson",2,2,2,0.0,0.0,0.85,0,1,0.0,0,0,1,0,Bryden Gryzmala,1,Ball Screen,Left Wing,SLOB,slob- ball screen | 33- Pass LW- Follow-BS-Hammer,BLC@AU GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Jeffery Hillmer, Larry Carthan, Robert Hutson, Zerrick Johnson",1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Larry Carthan,1,Ball Screen,Left Side,Half court,41- BS LS- Reject,GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Bryden Gryzmala, Juan Madrigal, Larry Carthan, Mekhi Doby, Robert Hutson",4,1,4,4.0,1.0,0.85,2,4,50.0,0,2,0,0,Robert Hutson,2,Ball Screen,Left Wing,Half court,4-1- LW BS | 33- Pass wing- 5 BS- reject | Horns- IVO- 4 Pop- Pass- RIC- LC,AU@BEN
+Opponent,Aurora Spartans,Personnel grouping,"Cullen Rauls, Devon Richardson, Gevon Grant, Jeffery Hillmer, Juan Madrigal",1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Gevon Grant,1,Pat Miller,Right Side,Half court,OK State- Pass RS- Follow- Pat Miller,AU@NCC
+Opponent,Aurora Spartans,Personnel grouping,"Cullen Rauls, Devon Richardson, Gevon Grant, Jeffery Hillmer, Larry Carthan",1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Gevon Grant,1,DHO,Right Side,Half court,32- DHO RS- STS,AU@NCC
+Opponent,Aurora Spartans,Personnel grouping,"Cullen Rauls, Devon Richardson, Gevon Grant, Jeffery Hillmer, Mekhi Doby",1,1,1,3.0,3.0,0.85,1,1,100.0,1,1,0,0,Cullen Rauls,1,DHO,Left Corner,Half court,HiLo- DHO-DHO-BS- LC,AU@BEN
+Opponent,Aurora Spartans,Personnel grouping,"Cullen Rauls, Devon Richardson, Gevon Grant, Jeffery Hillmer, Robert Hutson",2,1,2,2.0,1.0,0.85,1,2,50.0,0,0,0,0,Devon Richardson,1,Curl,,BLOB,Blob- Box -Curl | Blob-Box-Breddy,AU@NCC
+Opponent,Aurora Spartans,Personnel grouping,"Cullen Rauls, Devon Richardson, Jeffery Hillmer, Juan Madrigal, Mekhi Doby",1,1,1,0.0,0.0,0.85,0,0,,0,0,1,0,Juan Madrigal,1,Xavier Screen,,Half court,23- Xaiver Screen- BS,AU@BEN
+Opponent,Aurora Spartans,Personnel grouping,"Cullen Rauls, Devon Richardson, Jeffery Hillmer, Mekhi Doby, Zerrick Johnson",1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Cullen Rauls,1,Grenade,Left Wing,Half court,5 out- Pass LW- Follow- GRENADE,AU@BEN
+Opponent,Aurora Spartans,Personnel grouping,"Cullen Rauls, Gevon Grant, Larry Carthan, Mekhi Doby, Robert Hutson",6,1,6,5.0,0.83,0.85,1,4,25.0,1,1,0,2,Mekhi Doby,2,Ball Screen,Right Side,Half court,OK State- DHO RS- Sci Sc- STS -RE | 4-1- BS left side | BLOB- 2-1-1- STS- RB,AU@BEN
+Opponent,Aurora Spartans,Personnel grouping,"Cullen Rauls, Isaiah Thompson, Jeffery Hillmer, Juan Madrigal, Larry Carthan",1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Juan Madrigal,1,DHO,Right Side,Half court,HiLo-DH RS-DS-STS,AU@NCC
+Opponent,Aurora Spartans,Personnel grouping,"Cullen Rauls, Isaiah Thompson, Juan Madrigal, Larry Carthan, Zerrick Johnson",2,1,2,0.0,0.0,0.85,0,2,0.0,0,0,0,0,Larry Carthan,1,Curl,,BLOB,BLOB- BOX- CURL | BLOB-BOX-Breddy,AU@NCC
+Opponent,Aurora Spartans,Personnel grouping,"Cullen Rauls, Jeffery Hillmer, Larry Carthan, Mekhi Doby, Zerrick Johnson",1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Jeffery Hillmer,1,Screen the Screener,,BLOB,BLOB- Box- STS,AU@BEN
+Opponent,Aurora Spartans,Personnel grouping,"Devon Richardson, Gevon Grant, Isaiah Thompson, Jeffery Hillmer, Juan Madrigal",4,2,4,3.0,0.75,0.85,0,1,0.0,0,0,1,2,Juan Madrigal,2,Ball Screen,Left Wing,Half court,33- BS LW | Slob-Horns- IVO | Blob-Box-curl,AU@NCC GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Devon Richardson, Gevon Grant, Isaiah Thompson, Juan Madrigal, Zerrick Johnson",2,1,2,0.0,0.0,0.85,0,1,0.0,0,0,1,0,Zerrick Johnson,1,Hammer,Left Side,Half court,33- pass left-bs- hammer | OK ST-DHO RS- Pat Miller,BLC@AU
+Opponent,Aurora Spartans,Personnel grouping,"Devon Richardson, Gevon Grant, Jeffery Hillmer, Juan Madrigal, Mekhi Doby",2,1,2,0.0,0.0,0.85,0,0,,0,0,2,0,Gevon Grant,1,Pass,,BLOB,BLOB- Stairs | hi-low- pass-follow-follow,AU@BEN
+Opponent,Aurora Spartans,Personnel grouping,"Devon Richardson, Gevon Grant, Jeffery Hillmer, Juan Madrigal, Robert Hutson",2,2,2,0.0,0.0,0.85,0,2,0.0,0,1,0,0,Gevon Grant,1,Pat Miller,Right Side,Half court,Ok St- Pass RS - Follow-Pat Miller | Slob-Monty,AU@NCC GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Devon Richardson, Gevon Grant, Jeffery Hillmer, Juan Madrigal, Zerrick Johnson",12,4,12,20.0,1.67,0.85,9,12,75.0,2,2,0,0,Gevon Grant,4,DHO,Right Side,Half court,23- Post | 41- DHO- BS RW- GL | 41- Pass RS- 1 screen 5,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Devon Richardson, Gevon Grant, Jeffery Hillmer, Mekhi Doby, Robert Hutson",3,1,3,3.0,1.0,0.85,1,2,50.0,0,0,0,1,Mekhi Doby,2,Curl,Right Wing,Half court,Blob-Box- Curl around 5- Give | 5 Out- BS RW- GL- | 4-1- pistol,AU@BEN
+Opponent,Aurora Spartans,Personnel grouping,"Devon Richardson, Gevon Grant, Juan Madrigal, Mekhi Doby, Robert Hutson",1,1,1,2.0,2.0,0.85,1,1,100.0,0,0,0,0,Mekhi Doby,1,Ricky,,SLOB,Slob- Box- DS- Flair- RIC,AU@BEN
+Opponent,Aurora Spartans,Personnel grouping,"Devon Richardson, Isaiah Thompson, Juan Madrigal, Robert Hutson, Zerrick Johnson",2,1,2,2.0,1.0,0.85,0,1,0.0,0,1,0,1,Zerrick Johnson,1,Zoom,,Half court,5 Out- Zoom | Blob- 2-1-1,GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Gevon Grant, Isaiah Thompson, Jeffery Hillmer, Juan Madrigal, Larry Carthan",3,2,3,5.0,1.67,0.85,1,1,100.0,0,0,0,2,Larry Carthan,2,Curl,Right Wing,BLOB,Blob-Box-Curl | Slob-DS-BS | 33- Pass Rw- BS-HAMMER,AU@NCC BLC@AU
+Opponent,Aurora Spartans,Personnel grouping,"Gevon Grant, Jeffery Hillmer, Juan Madrigal, Larry Carthan, Robert Hutson",1,1,1,0.0,0.0,0.85,0,0,,0,0,1,0,Robert Hutson,1,Pat Miller,Right Side,Half court,Ok St-DHO RS-DS-Pat Miller,GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Gevon Grant, Jeffery Hillmer, Juan Madrigal, Larry Carthan, Zerrick Johnson",2,2,2,1.0,0.5,0.85,0,1,0.0,0,1,0,1,Gevon Grant,2,ISO,Left Wing,SLOB,slob-ISO | 41- BS LW-RJ,BLC@AU GUS@AU
+Opponent,Aurora Spartans,Personnel grouping,"Gevon Grant, Jeffery Hillmer, Larry Carthan, Robert Hutson, Zerrick Johnson",1,1,1,0.0,0.0,0.85,0,1,0.0,0,0,0,0,Robert Hutson,1,Follow,,Half court,HiLo- Follow-Follow,BLC@AU
+Opponent,Aurora Spartans,Personnel grouping type,Base five (one big),74,4,74,72.0,0.97,0.85,24,52,46.2,6,15,12,7,Devon Richardson,20,DHO,Right Side,Half court,Highway | Blob-Box-Curl | Blob- 2-1-1,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Personnel grouping type,Small / shooting five (no true big),33,4,33,21.0,0.64,0.85,5,19,26.3,1,5,6,8,Larry Carthan,7,Ball Screen,Right Side,Half court,OK State- DHO RS- Sci Sc- STS -RE | Slob-DS-BS | Blob-Stairs-lob,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Game situation,"Clutch (last 5 min, margin ≤ 8)",9,3,9,9.0,1.0,0.85,4,6,66.7,0,0,2,1,Juan Madrigal,3,DHO,Left Side,Half court,41- Pass RS- 1 screen 5 | ATO- Hi low- Bs LS- Hammer | 23- Dho-ISO,AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Game situation,Trailing by 10+,7,1,7,3.0,0.43,0.85,0,4,0.0,0,3,1,2,Zerrick Johnson,2,DHO,Right Side,BLOB,OK State- DHO RS- Sci Sc- STS -RE | blob- stairs | 23- Xaiver Screen- BS,AU@BEN
+Opponent,Aurora Spartans,Shot clock,Early clock (0-9 sec used),78,4,78,62.0,0.79,0.85,21,52,40.4,5,14,14,11,Devon Richardson,16,DHO,Right Side,Half court,Blob-Box-Curl | Highway | Blob- 2-1-1,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Shot clock,Late clock (20+ sec used),11,4,11,12.0,1.09,0.85,3,6,50.0,0,2,2,3,Gevon Grant,5,Pat Miller,Right Side,Half court,SLOB- Other side- DS- Flair- RIC- BS | blob- stairs | 33- BS LW,AU@BEN AU@NCC BLC@AU GUS@AU
+Opponent,Aurora Spartans,Shot clock,Organized offense (10-19 sec used),18,4,18,19.0,1.06,0.85,5,13,38.5,2,4,2,1,Juan Madrigal,4,Ball Screen,Right Side,Half court,4-1- BS RS- LC | Slob- Box- DS- Flair- RIC | 41-dho-bs,AU@BEN AU@NCC BLC@AU GUS@AU

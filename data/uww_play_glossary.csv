@@ -1,0 +1,26 @@
+shorthand,meaning,confidence
+BLOB / SLOB,Baseline / sideline out-of-bounds play,Standard
+ATO,After-timeout play,Standard
+Opener,First set of a half,Inferred
+5 Out / 4-1 (41) / 3-2 (32) / 2-3 (23),Floor alignment: perimeter-post split,Standard
+33,Named set (alignment not stated),Inferred
+HiLo / Hi-Low,High-low post alignment,Standard
+Horns,Two bigs at the elbows,Standard
+Box / Line / Stairs / 2-1-1,Inbounds alignments,Standard
+"OK State, Panther, Cheetah, Flop, Highway, Pistol, Monty",Named sets from the staff's playbook,Standard
+DHO / DH / handoff,Dribble handoff,Standard
+BS,Ball screen,Standard
+DS,Down screen,Standard
+STS,Screen the screener,Standard
+Sci / Sci Sc,Scissors cut off the post,Inferred
+Flair / Flare,Flare screen,Standard
+RJ / Reject,Ball handler rejects the screen,Standard
+DD,Double drag ball screen,Inferred
+IVO,Iverson cut,Inferred
+RIC / Ricky,Named action (ricochet screen) -- confirm with staff,Inferred
+Zoom / Twirl / Grenade / Hammer / Pat Miller / Breddy / Rip / Spain,Named actions,Standard
+PT,Post touch -- confirm with staff,Inferred
+BC Cut,Backdoor cut,Inferred
+LW RW LC RC LS RS LB RB LE RE Top,"Left/right wing, corner, side, block, elbow; top of the key",Standard
+LW 3 / top key 3,Where the three-point shot came from,Standard
+Rewatch / TBD / ? / mess up,Tagger flagged the clip for review -- excluded from set rankings,Standard
