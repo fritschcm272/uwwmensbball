@@ -4504,6 +4504,124 @@ def _gp_table(table, short_opponent, title, columns, why_sample, help_text=None,
     body.append("</div>")
     st.markdown("".join(body), unsafe_allow_html=True)
     return True
+def render_head_to_head(short_opponent) -> None:
+    """Previous meetings with this opponent -- this season's earlier games plus the last two seasons, built by
+    the parser's head-to-head cell (uww_head_to_head.csv). Shown above the tabs because "how did it go last
+    time" is the first thing asked about a repeat opponent."""
+    if not short_opponent:
+        return
+    h2h = load_table("uww_head_to_head")
+    if h2h.empty:
+        return
+    wins = int((h2h["outcome"].astype(str).str.upper() == "W").sum())
+    with st.expander(f"\U0001f501 When we've played {short_opponent} \u2014 {wins}-{len(h2h) - wins} in "
+                     f"{len(h2h)} previous meeting{'s' if len(h2h) != 1 else ''}", expanded=True):
+        show = h2h.copy()
+        show["Result"] = show.apply(
+            lambda r: f"{_gp_clean(r.get('outcome')).upper()} "
+                      f"{_gp_clean(r.get('team_score'))}-{_gp_clean(r.get('opponent_score'))}", axis=1)
+        cols = [c for c in ["season", "date", "home_away", "Result", "margin", "uww_leader", "opp_leader"]
+                if c in show.columns]
+        st.dataframe(show[cols].rename(columns={"season": "Season", "date": "Date", "home_away": "Site",
+                                                "margin": "Margin", "uww_leader": "Our leader",
+                                                "opp_leader": "Their leader"}),
+                     hide_index=True, use_container_width=True)
+        box = load_table("uww_head_to_head_box")
+        change = load_table("uww_head_to_head_roster_change")
+        if not change.empty and "opponent" in change.columns:
+            change = change[change["opponent"].astype(str) == str(short_opponent)]
+        c1, c2 = st.columns(2)
+        with c1:
+            if not box.empty:
+                st.markdown("**Who did the damage**")
+                last = (box[box["meeting_date"] == box["meeting_date"].iloc[0]]
+                        if "meeting_date" in box.columns else box)
+                st.dataframe(last[["team", "player", "PTS", "REB", "AST"]]
+                             .sort_values("PTS", ascending=False)
+                             .rename(columns={"team": "Team", "player": "Player"}),
+                             hide_index=True, use_container_width=True)
+            else:
+                st.caption("No play-by-play cached for these meetings yet, so only the scoreline is available. "
+                           "The parser pulls each meeting's box score from its own game link on the next run.")
+        with c2:
+            if not change.empty:
+                ret = change[change["status"] == "Returning"]
+                gone = change[change["status"] == "Gone"]
+                new = change[change["status"] == "New since then"]
+                ret_pts = pd.to_numeric(ret["prev_pts"], errors="coerce").sum()
+                gone_pts = pd.to_numeric(gone["prev_pts"], errors="coerce").sum()
+                st.markdown("**How this team is different now**")
+                st.markdown(f"{len(ret)} of the {len(ret) + len(gone)} players who faced us are back "
+                            f"({ret_pts:.0f} of the {ret_pts + gone_pts:.0f} points they scored on us); "
+                            f"{len(gone)} gone, {len(new)} new since.")
+                st.dataframe(change[["player", "status", "prev_pts", "prev_reb", "prev_ast"]]
+                             .rename(columns={"player": "Player", "status": "Status", "prev_pts": "PTS vs us",
+                                              "prev_reb": "REB", "prev_ast": "AST"}),
+                             hide_index=True, use_container_width=True)
+        st.caption("Points in the roster table are what that player scored AGAINST US in the previous meeting, "
+                   "not a season average.")
+
+        # What we ran in each meeting, what defense, and whether it worked -- same computation as the brief:
+        # tagged clips joined on the meeting's real date (head_to_head.game_date), judged against our own
+        # season average rather than a fixed number.
+        clips = load_table("uww_play_calls")
+        if "game_date" not in h2h.columns or clips.empty or "game_date" not in clips.columns:
+            return
+        c = clips[(clips["side"] == "UWW") & (clips["decode_quality"] != "Needs review")].copy()
+        if c.empty:
+            return
+        c["_d"] = pd.to_datetime(c["game_date"], errors="coerce").dt.strftime("%Y-%m-%d")
+        c["_pts"] = pd.to_numeric(c.get("points"), errors="coerce")
+        c["_off"] = (c["possession_side"].astype(str) != "Defense") if "possession_side" in c.columns else True
+
+        def _ppp(g):
+            k = g["_pts"].notna().sum()
+            return (g["_pts"].sum() / k) if k else None
+
+        base_off, base_def = _ppp(c[c["_off"]]), _ppp(c[~c["_off"]])
+
+        def _verdict(v, base, lower_is_better=False):
+            if v is None or base is None:
+                return "--"
+            d = v - base
+            good = d <= -0.10 if lower_is_better else d >= 0.10
+            bad = d >= 0.10 if lower_is_better else d <= -0.10
+            return f"{'worked' if good else ('did not work' if bad else 'about normal')} ({v:.2f} vs usual {base:.2f})"
+
+        def _calls(g):
+            g = g[g["play_call"].notna() & ~g["play_call"].astype(str).str.contains("unspecified", na=False)] \
+                if "play_call" in g.columns else g.iloc[0:0]
+            out = [(n, len(x), _ppp(x)) for n, x in g.groupby(g["play_call"].astype(str))] if not g.empty else []
+            out.sort(key=lambda t: -t[1])
+            return ", ".join(f"{n} {k}x" + (f" ({p:.2f})" if p is not None else "") for n, k, p in out[:3])
+
+        def _mix(g, col):
+            if col not in g.columns or g[col].isna().all():
+                return ""
+            vc = g[col].dropna().astype(str).value_counts()
+            return ", ".join(f"{k} {round(100 * v / vc.sum())}%" for k, v in vc.head(2).items())
+
+        rows = []
+        for _, g in h2h.iterrows():
+            m = c[c["_d"] == _gp_clean(g.get("game_date"))]
+            if m.empty:
+                continue
+            off, de = m[m["_off"]], m[~m["_off"]]
+            rows.append({"Meeting": f"{_gp_clean(g.get('date'))} ({_gp_clean(g.get('season'))})",
+                         "Our offense": _verdict(_ppp(off), base_off) if len(off) else "not tagged",
+                         "We ran most": _calls(off), "They played": _mix(off, "defense_faced"),
+                         "Our defense": _verdict(_ppp(de), base_def, True) if len(de) else "not tagged",
+                         "We played": _mix(de, "defense_played"), "They ran": _calls(de)})
+        st.markdown("**What we ran, and did it work**")
+        if rows:
+            st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+            st.caption("'Worked' = 0.10+ PPP better than our season average (on defense, 0.10+ fewer allowed). "
+                       "Numbers in brackets are PPP.")
+        else:
+            st.caption(f"None of our previous meetings with {short_opponent} have tagged play calls yet. Tag the "
+                       "meeting in uww_plays.csv (offense and defense) and this fills in.")
+
+
 def render_read_with_caution(short_opponent) -> None:
     """Thin-sample warnings, collapsed under the banner. Real data only (never sample)."""
     if not short_opponent:
@@ -4639,6 +4757,7 @@ def render_game_plan_tab(short_opponent: str) -> None:
                                key=f"brief_download_{brief_slug}")
 
     # --- how they play ---
+    render_tempo(short_opponent)
     _gp_table("uww_opp_personnel", short_opponent, "\U0001f4cf PERSONNEL DETAILS",
               [("photo_url", ""), ("player", "Player"), ("jersey", "#"), ("position", "Pos"),
                ("height", "Ht"), ("hand", "Hand"), ("class_year", "Yr"), ("status", "Status"),
@@ -4688,6 +4807,23 @@ def render_game_plan_tab(short_opponent: str) -> None:
                    "the decoder reads a starting spot and sometimes a finish spot out of the title, but not "
                    "systematically enough to fill this on its own. Value: High -- a standard efficiency "
                    "split that would inform closeout aggression and help principles.")
+    # The real version, from the play-by-play text (layup/dunk vs jumper vs three) -- coarser than five zones
+    # but every number is real. This is what the brief's stacked roster shows per player.
+    _sp = load_table("uww_player_shot_profile")
+    if not _sp.empty and "side" in _sp.columns:
+        _sp = _sp[(_sp["side"] == "Opponent") & (_sp["opponent"].astype(str) == str(short_opponent))]
+        _sp = _sp[pd.to_numeric(_sp["fga"], errors="coerce") >= 5].sort_values("fga", ascending=False)
+        if not _sp.empty:
+            section_header("\U0001f3af WHERE THEY SHOOT (FROM THE PLAY-BY-PLAY)",
+                           "At the rim = layups, dunks, tips and putbacks; other 2s = every other two; threes from "
+                           "the shot type. Share is % of that player's attempts, FG% is within each band. Players "
+                           "with fewer than 5 attempts are left out.")
+            _show = pd.DataFrame({
+                "Player": _sp["player"].map(_title_name), "FGA": _sp["fga"],
+                "Rim %": _sp["rim_share"], "Rim FG%": _sp["rim_fg"],
+                "Other 2 %": _sp["other2_share"], "Other 2 FG%": _sp["other2_fg"],
+                "Three %": _sp["three_share"], "Three FG%": _sp["three_fg"]})
+            st.dataframe(_show, hide_index=True, use_container_width=True)
     _gp_table("uww_opp_tendencies", short_opponent, "\U0001f3c3 TRANSITION, GLASS & BENCH TENDENCIES",
               [("item", "Area"), ("detail", "What they do")],
               "Placeholders. Replace with staff_inputs/opp_tendencies.csv.",
@@ -4832,6 +4968,11 @@ def render_game_plan_tab(short_opponent: str) -> None:
         st.info("No game-plan tables on file for this opponent. They are written by the parser's \"Game plan, "
                 "practice plan and staff inputs\" cell -- re-run the parser through that cell.")
 
+    # --- brief notes & glossary ---
+    # The emailed brief no longer prints these; its numbered markers link here. Also reachable directly.
+    with st.expander("\U0001f4dd Brief notes \u2014 how every number in the scouting brief was built"):
+        render_brief_notes(short_opponent)
+
 
 # --------------------------------------------------------------------------------------------------------------
 # LINKS FROM THE SCOUTING BRIEF
@@ -4869,7 +5010,191 @@ _KTV_EVIDENCE_GUIDE = (
 )
 _DL_TAB_LABELS = {"keys": "\U0001f511 Keys to Victory", "personnel": "\U0001f465 Personnel",
                   "game_plan": "\U0001f5d3\ufe0f Game Plan", "stats": "\U0001f4ca Stats & Analysis",
-                  "tools": "\U0001f3ae Tools"}
+                  "tools": "\U0001f3ae Tools", "notes": "\U0001f4dd Brief notes"}
+
+
+# ---------------------------------------------------------------------------------------------------------
+# Support for the scouting brief's links. The emailed brief was condensed and now POINTS here for detail it
+# no longer prints -- methodology notes, the play-title glossary, every roster player, 3-man combos, shot
+# profiles, tempo. Each helper below is the app-side end of one of those links; without them the brief's
+# links would land on a page that doesn't show what the brief promised.
+# ---------------------------------------------------------------------------------------------------------
+
+
+def _norm_name(n) -> str:
+    return re.sub(r"\s+", " ", str(n)).strip().lower()
+
+
+def _title_name(n) -> str:
+    """Rosters arrive in ALL CAPS from some sources; leave mixed-case names (McEwen, Mur Martin) alone."""
+    n = re.sub(r"\s+", " ", str(n)).strip()
+    return n if n != n.upper() else " ".join(w[:1].upper() + w[1:].lower() for w in n.split(" "))
+
+
+def render_brief_notes(short_opponent, focus=None, section=None) -> None:
+    """The brief's methodology notes (uww_brief_notes.csv) and the play-title glossary. Each numbered marker
+    in the brief links to ?tab=notes&note=N; that note is shown first and highlighted, the rest below it."""
+    if section == "glossary":
+        gl = load_table("uww_play_glossary")
+        st.markdown("### How the play titles were decoded")
+        if gl.empty:
+            st.info("The glossary hasn't been generated yet -- re-run the parser.")
+        else:
+            st.caption("How each tagging shorthand in the video Titles is read, and how confident that read is. "
+                       "Offense comes before the colon, the defense faced after it.")
+            st.dataframe(gl.rename(columns={"shorthand": "Shorthand", "meaning": "Read as",
+                                            "confidence": "Confidence"}),
+                         hide_index=True, use_container_width=True)
+        return
+    notes = load_table("uww_brief_notes")
+    if not notes.empty and "opponent" in notes.columns:
+        notes = notes[notes["opponent"].astype(str) == str(short_opponent)]
+    st.markdown("### Brief notes \u2014 how every number was built")
+    if notes.empty:
+        st.info("No notes on file for this opponent. They're written when the parser builds the brief -- re-run "
+                "the brief cell.")
+        return
+    notes = notes.assign(_n=pd.to_numeric(notes["note"], errors="coerce")).sort_values("_n")
+    fnum = pd.to_numeric(focus, errors="coerce") if focus else None
+    if fnum is not None and pd.notna(fnum):
+        hit = notes[notes["_n"] == fnum]
+        if not hit.empty:
+            with st.container(border=True):
+                st.markdown(f"**\u24d8{int(fnum)}** \u2014 the note you opened")
+                st.markdown(_gp_clean(hit.iloc[0]["text"]))
+        else:
+            st.warning(f"Note {int(fnum)} isn't in the current notes -- the brief was probably built from an "
+                       "earlier parser run. All current notes are below.")
+    for _, r in notes.iterrows():
+        if fnum is not None and pd.notna(fnum) and r["_n"] == fnum:
+            continue
+        st.markdown(f"**\u24d8{int(r['_n'])}** {_gp_clean(r['text'])}")
+    gl = load_table("uww_play_glossary")
+    if not gl.empty:
+        with st.expander(f"How the play titles were decoded ({len(gl)} shorthand terms)"):
+            st.dataframe(gl.rename(columns={"shorthand": "Shorthand", "meaning": "Read as",
+                                            "confidence": "Confidence"}),
+                         hide_index=True, use_container_width=True)
+
+
+def render_three_man_combos(side, short_opponent, n=None) -> None:
+    """3-man combos from uww_three_man_combos.csv -- the same table the Keys to Victory combo keys are built
+    from, so a combo named in a key and the combo shown here always agree. The brief prints the top three;
+    this shows them all. Per-40 is +/- scaled to 40 minutes, because a trio's minutes vary far more than a
+    five's and raw +/- mostly measures playing time."""
+    df = load_table("uww_three_man_combos")
+    if df.empty or "side" not in df.columns:
+        return
+    df = df[df["side"] == side]
+    if "scouted_opponent" in df.columns:
+        df = df[df["scouted_opponent"].astype(str) == str(short_opponent)]
+    if df.empty:
+        return
+    df = df.assign(MIN=pd.to_numeric(df["MIN"], errors="coerce"), PM=pd.to_numeric(df["+/-"], errors="coerce"))
+    df["Per 40"] = (df["PM"] / df["MIN"] * 40).round(1)
+    df = df.sort_values("MIN", ascending=False)
+    if n:
+        df = df.head(n)
+    gp_exact = bool(df.get("gp_exact", pd.Series([True])).astype(str).str.lower().eq("true").all())
+    df["Combo"] = df["lineup"].astype(str).map(lambda s: ", ".join(_title_name(x) for x in s.split(",")))
+    cols = ["Combo"] + (["GP"] if gp_exact and "GP" in df.columns else []) + ["MIN", "+/-", "Per 40"]
+    st.markdown("**Every 3-man combo on film**" if not n else f"**Top {n} 3-man combos**")
+    st.dataframe(df[cols].round({"MIN": 1}), hide_index=True, use_container_width=True)
+    if not gp_exact:
+        st.caption("GP isn't shown: their lineup data has no game dates, so games played can't be counted exactly "
+                   "for a combo.")
+
+
+def render_player_shot_profile(player, side, short_opponent) -> None:
+    """Where one player shoots from, from the play-by-play text: at the rim / other twos / threes. Replaces
+    the placeholder zone split -- every number here is real."""
+    sp = load_table("uww_player_shot_profile")
+    if sp.empty or "player" not in sp.columns:
+        return
+    sp = sp[(sp["side"] == side) & (sp["player"].map(_norm_name) == _norm_name(player))]
+    if side == "Opponent" and "opponent" in sp.columns:
+        sp = sp[sp["opponent"].astype(str) == str(short_opponent)]
+    if sp.empty:
+        return
+    r = sp.iloc[0]
+    st.markdown(f"**Where he shoots** \u2014 {int(r['fga'])} FGA, from the play-by-play")
+    cols = st.columns(3)
+    for col, (key, label) in zip(cols, (("rim", "At the rim"), ("other2", "Other 2s"), ("three", "Threes"))):
+        share = pd.to_numeric(r.get(f"{key}_share"), errors="coerce")
+        fg = pd.to_numeric(r.get(f"{key}_fg"), errors="coerce")
+        att = int(pd.to_numeric(r.get(f"{key}_att"), errors="coerce") or 0)
+        col.metric(label, f"{int(share) if pd.notna(share) else 0}% of shots",
+                   f"{fg:.0f}% FG on {att}" if pd.notna(fg) else "no attempts", delta_color="off")
+
+
+def render_full_roster(side, short_opponent) -> None:
+    """Every player, including the ones the brief no longer prints (under 8 minutes, or no recent minutes).
+    The brief's roster ends with "N more player(s) ... not listed here" and links here."""
+    tiers = load_table("uww_personnel_tiers")
+    if tiers.empty or "side" not in tiers.columns:
+        st.info("No personnel tiers on file yet.")
+        return
+    t = tiers[tiers["side"] == side].copy()
+    if side == "Opponent" and "team" in t.columns:
+        t = t[t["team"].astype(str) == str(short_opponent)]
+    if t.empty:
+        st.info("No roster rows for this team.")
+        return
+    # The parser's own tier_order, so this page and the brief order tiers identically.
+    t["_o"] = pd.to_numeric(t["tier_order"], errors="coerce") if "tier_order" in t.columns else 0
+    t["_mpg"] = pd.to_numeric(t["mpg"], errors="coerce") if "mpg" in t.columns else 0
+    t = t.sort_values(["_o", "_mpg"], ascending=[True, False])
+    st.markdown(f"**Full roster \u2014 {'UW-Whitewater' if side == 'UWW' else short_opponent}**")
+    st.caption("Every player, including those the emailed brief leaves out (under 8 minutes a game, or no "
+               "minutes recently). Open a player below for his full card.")
+    show = t.assign(Player=t["player"].map(_title_name))
+    cols = [c for c in ["Player", "tier", "games", "mpg", "recent_count", "recent_n"] if c in show.columns]
+    st.dataframe(show[cols].rename(columns={"tier": "Tier", "games": "GP", "mpg": "MPG",
+                                            "recent_count": "Played recently", "recent_n": "of last"}),
+                 hide_index=True, use_container_width=True)
+    for _, r in t.iterrows():
+        if not str(r["tier"]).startswith(("Bench \u2014 limited", "Bench \u2014 no minutes")):
+            continue
+        with st.expander(f"{_title_name(r['player'])} \u2014 {r['tier']}"):
+            render_player_shot_profile(r["player"], side, short_opponent)
+            if side == "Opponent":
+                render_data_driven_player_notes(short_opponent, r["player"])
+
+
+def render_tempo(short_opponent) -> None:
+    """Pace and what's changed lately. The brief keeps only a one-line Tempo sentence in THE BOTTOM LINE when
+    the gap is big enough to matter, and says the full numbers are here."""
+    tp = load_table("uww_tempo_profile")
+    tr = load_table("uww_trend_profile")
+    if tp.empty and tr.empty:
+        return
+    section_header("\u23f1\ufe0f TEMPO & WHAT'S CHANGED",
+                   "Possessions are estimated as FGA - OREB + TO + 0.475*FTA from the box score, summed over every "
+                   "row including the team row. Early-offense share is the share of tagged possessions shooting "
+                   "inside 10 seconds. 'What's changed' splits their tagged games into an earlier and a recent "
+                   "half and lists only splits that moved 10+ points.")
+    c1, c2 = st.columns(2)
+    if not tp.empty and {"opponent", "metric", "value"}.issubset(tp.columns):
+        rows = tp[tp["opponent"].astype(str).isin([str(short_opponent), "UW-Whitewater"])]
+        with c1:
+            st.markdown("**How fast they play**")
+            if bool(rows.get("is_sample", pd.Series([False])).astype(str).str.lower().eq("true").all()):
+                st.caption("SAMPLE DATA \u2014 not from your files.")
+            st.dataframe(rows[["opponent", "metric", "value", "note"]].rename(
+                columns={"opponent": "Team", "metric": "Metric", "value": "Value", "note": "Basis"}),
+                hide_index=True, use_container_width=True)
+    if not tr.empty and "split" in tr.columns:
+        rows = tr[tr["opponent"].astype(str) == str(short_opponent)] if "opponent" in tr.columns else tr
+        with c2:
+            st.markdown("**What's changed lately**")
+            if bool(rows.get("is_sample", pd.Series([False])).astype(str).str.lower().eq("true").all()):
+                st.caption("SAMPLE DATA \u2014 needs 4+ tagged games before an earlier-vs-recent split means "
+                           "anything.")
+            st.dataframe(rows[[c for c in ["split", "earlier", "recent", "change", "note"] if c in rows.columns]]
+                         .rename(columns={"split": "Split", "earlier": "Earlier", "recent": "Recent",
+                                          "change": "Change", "note": "Basis"}),
+                         hide_index=True, use_container_width=True)
+
 
 
 def handle_brief_deeplink() -> None:
@@ -4908,6 +5233,12 @@ def render_brief_deeplink(short_opponent) -> None:
             except Exception:
                 pass
             st.rerun()
+
+        # ?tab=notes -- the brief's numbered markers and its Methodology links (the notes and glossary are no
+        # longer printed in the brief, only linked).
+        if dl.get("tab") == "notes":
+            render_brief_notes(short_opponent, focus=dl.get("note"), section=dl.get("section"))
+            return
 
         if dl.get("key"):
             ktv = load_table("uww_ktv_keys")
@@ -4954,9 +5285,14 @@ def render_brief_deeplink(short_opponent) -> None:
                     st.markdown(f"**{'Lean on' if str(f.get('sentiment')).lower() == 'positive' else 'Clean up'}:** "
                                 f"{_gp_clean(f.get('flag'))} _({_gp_clean(f.get('confidence'))})_  \n"
                                 f"{_gp_clean(f.get('evidence'))}  \n{_gp_clean(f.get('recommendation'))}")
+                render_player_shot_profile(player, "UWW", short_opponent)
                 clips = load_table("uww_play_calls")
                 if not clips.empty and "side" in clips.columns:
                     mine = clips[(clips["side"] == "UWW") & (clips["player"].astype(str).str.lower() == player.lower())]
+                    # uww_plays.csv now carries defensive possessions too; the "player" on those is whoever
+                    # finished for the OTHER team, so only our offensive possessions belong on his card.
+                    if "possession_side" in mine.columns:
+                        mine = mine[mine["possession_side"].astype(str) != "Defense"]
                     if not mine.empty:
                         st.markdown("**Tagged play calls**")
                         st.dataframe(mine[["game_code", "play_call", "play_actions", "play_location", "result", "points"]]
@@ -4966,6 +5302,7 @@ def render_brief_deeplink(short_opponent) -> None:
                 if pf.empty:
                     st.caption("No coaching flags for this player this week.")
             else:
+                render_player_shot_profile(player, "Opponent", short_opponent)
                 render_data_driven_player_notes(short_opponent, player)
             return
 
@@ -4982,6 +5319,7 @@ def render_brief_deeplink(short_opponent) -> None:
             if not lu.empty:
                 st.markdown("**Every five-man unit on film**")
                 st.dataframe(lu.sort_values("MIN", ascending=False), hide_index=True, use_container_width=True)
+            render_three_man_combos("Opponent", short_opponent)
             if not notes.empty and "subject_type" in notes.columns:
                 ln = notes[(notes["opponent"].astype(str) == str(short_opponent)) & (notes["subject_type"] == "lineup")]
                 for _, r in ln.iterrows():
@@ -5015,6 +5353,12 @@ def render_brief_deeplink(short_opponent) -> None:
             if not lu.empty:
                 st.markdown("**Every UWW five-man unit this season**")
                 st.dataframe(lu, hide_index=True, use_container_width=True)
+            render_three_man_combos("UWW", short_opponent)
+            return
+        # The brief's roster link ("N more player(s) ... not listed here. Full card for any player") carries a
+        # team but no player: show every player on that roster, including the ones the brief leaves out.
+        if dl.get("tab") == "personnel" and dl.get("team") and not dl.get("player"):
+            render_full_roster("UWW" if dl["team"] == "uww" else "Opponent", short_opponent)
             return
         if tab_label:
             st.caption(f"Open the **{tab_label}** tab below.")
@@ -5107,6 +5451,7 @@ def render_upcoming_game():
     # plan, matchups, scout team, their sets/defense, ...). Placeholders arrive with is_sample=True and are
     # drawn in red SAMPLE DATA boxes -- the same convention as the emailed brief.
     render_brief_deeplink(short_opponent)
+    render_head_to_head(short_opponent)
     render_read_with_caution(short_opponent)
     _new_tab_stats, _new_tab_ktv, _new_tab_personnel, _new_tab_gameplan, _new_tab_tools = st.tabs(["\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f5d3\ufe0f Game Plan", "\U0001f3ae Tools"])
     with _new_tab_gameplan:

@@ -24,3 +24,8 @@ BC Cut,Backdoor cut,Inferred
 LW RW LC RC LS RS LB RB LE RE Top,"Left/right wing, corner, side, block, elbow; top of the key",Standard
 LW 3 / top key 3,Where the three-point shot came from,Standard
 Rewatch / TBD / ? / mess up,Tagger flagged the clip for review -- excluded from set rankings,Standard
+M2M,Man-to-man defense,Standard
+2-3 / 3-2 / 1-3-1 Zone / Zone,"Zone defense, with subtype when stated",Standard
+Press / 1-2-1-1 / 1-2-2 / 1-2,"Full-court press, with formation when named",Standard
+Switch / Hedge / Soft Hedge / Ice / Drop,Ball-screen coverage call,Standard
+Deny / Jam,On-ball or off-ball denial call,Inferred

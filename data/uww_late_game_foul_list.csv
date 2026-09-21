@@ -1,7 +1,8 @@
-opponent,player,call,ft_pct,ftm,fta,games,note,is_sample
-Aurora Spartans,Mekhi Doby,Foul,53.8,7,13,1,Only 1 of 4 games on film,False
-Aurora Spartans,Devon Richardson,Foul,56.0,14,25,4,,False
-Aurora Spartans,Gevon Grant,Foul,57.1,16,28,4,,False
-Aurora Spartans,Larry Carthan,Neutral,66.7,8,12,4,,False
-Aurora Spartans,Juan Madrigal,Do not foul,84.6,11,13,4,,False
-Aurora Spartans,Zerrick Johnson,Do not foul,88.9,16,18,4,,False
+opponent,player,call,ft_pct,ft_pct_adj,ftm,fta,games,note,is_sample
+Aurora Spartans,Devon Richardson,Foul,56.0,58.7,14,25,4,,False
+Aurora Spartans,Mekhi Doby,Foul,53.8,58.9,7,13,1,Only 1 of 4 games on film,False
+Aurora Spartans,Gevon Grant,Foul,57.1,59.4,16,28,4,,False
+Aurora Spartans,Larry Carthan,Neutral,66.7,67.8,8,12,4,,False
+Aurora Spartans,Juan Madrigal,Do not foul,84.6,80.0,11,13,4,,False
+Aurora Spartans,Zerrick Johnson,Do not foul,88.9,84.2,16,18,4,,False
+Aurora Spartans,Bryden Gryzmala,Do not foul,100.0,85.0,6,6,4,"6-for-6 -- small sample, but no reason to put him on the line",False

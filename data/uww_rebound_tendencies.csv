@@ -1,4 +1,9 @@
 opponent,situation,crash_pct,who_crashes,note,is_sample
-Aurora Spartans,Miss by a non-shooter (paint attempt),65,Devon Richardson + ball-side wing,Second-chance points mostly come from this situation,True
-Aurora Spartans,Miss by their primary shooter (three),20,Devon Richardson only,Everyone else gets back -- transition D opportunity for us,True
-Aurora Spartans,Missed free throw,40,Devon Richardson,"Lines up early, boxes out inconsistently",True
+Aurora Spartans,Their missed layup / dunk,49,"Devon Richardson (8), Jeffery Hillmer (4), Larry Carthan (3)",49% offensive rebound on 51 of 51 misses (0 unpaired),False
+Aurora Spartans,Their missed two-point jumper,37,"Juan Madrigal (5), Devon Richardson (4), Jeffery Hillmer (4)",37% offensive rebound on 81 of 81 misses (0 unpaired),False
+Aurora Spartans,Their missed free throw,58,"Aurora (18), Jeffery Hillmer (1), Larry Carthan (1)",58% offensive rebound on 38 of 41 misses (3 unpaired),False
+Aurora Spartans,All their misses,45,"Aurora (19), Devon Richardson (12), Jeffery Hillmer (9)",45% offensive rebound on 170 of 173 misses (3 unpaired),False
+Aurora Spartans,Opponent missed layup / dunk,67,"Jeffery Hillmer (6), Larry Carthan (3), Juan Madrigal (3)",They secure 67% of 42 opponent misses (0 unpaired),False
+Aurora Spartans,Opponent missed two-point jumper,62,"Gevon Grant (9), Juan Madrigal (8), Devon Richardson (7)",They secure 62% of 79 opponent misses (0 unpaired),False
+Aurora Spartans,Opponent missed free throw,42,"Zerrick Johnson (4), Devon Richardson (3), Larry Carthan (2)",They secure 42% of 26 opponent misses (0 unpaired),False
+Aurora Spartans,All opponent misses,60,"Zerrick Johnson (13), Devon Richardson (13), Gevon Grant (12)",They secure 60% of 147 opponent misses (0 unpaired),False

@@ -1,3 +1,11 @@
 opponent,personnel_grouping,minutes_pct,primary_actions_used,note,is_sample
-Aurora Spartans,Base five (one big),34.0,"BLOB Box Curl (7x), OK State Pat Miller (7x), Highway (4x)","74 tagged possessions, 0.97 PPP (their overall 0.85)",False
-Aurora Spartans,Small / shooting five (no true big),13.0,"4-1 Ball Screen (6x), BLOB Box Curl (3x), Hi-Lo DHO (2x)","33 tagged possessions, 0.64 PPP (their overall 0.85)",False
+Aurora Spartans,4G-1B,50.0,"Reject (7x), Ball Screen (5x), BLOB (4x)","169 tagged possessions, 0.91 PPP (their overall 0.94)",False
+Aurora Spartans,4G-1B,50.0,"Reject (7x), Ball Screen (5x), BLOB (4x)","168 tagged possessions, 0.94 PPP (their overall 0.92)",False
+Aurora Spartans,4G-1W,28.0,"Ball Screen (6x), Reject (4x), BLOB (2x)","120 tagged possessions, 0.90 PPP (their overall 0.92)",False
+Aurora Spartans,4G-1W,28.0,"Ball Screen (6x), Reject (4x), BLOB (2x)","94 tagged possessions, 0.94 PPP (their overall 0.94)",False
+Aurora Spartans,3G-1W-1B,13.0,"Reject (5x), BLOB (2x), Ball Screen (2x)","39 tagged possessions, 0.87 PPP (their overall 0.92)",False
+Aurora Spartans,3G-1W-1B,13.0,"Reject (5x), BLOB (2x), Ball Screen (2x)","37 tagged possessions, 1.16 PPP (their overall 0.94)",False
+Aurora Spartans,3G-2W,5.0,"Reject (2x), 2-3 DHO (1x)","21 tagged possessions, 1.10 PPP (their overall 0.92)",False
+Aurora Spartans,3G-2W,5.0,"Reject (2x), 2-3 DHO (1x)","17 tagged possessions, 0.65 PPP (their overall 0.94)",False
+Aurora Spartans,5G,3.0,SLOB Ball Screen (1x),"21 tagged possessions, 0.95 PPP (their overall 0.92)",False
+Aurora Spartans,5G,3.0,SLOB Ball Screen (1x),"19 tagged possessions, 1.11 PPP (their overall 0.94)",False

@@ -1,15 +1,7 @@
 opponent,situation,set_name,primary_player,action,frequency,our_call,film_ref,is_sample
-Aurora Spartans,Half court,4-1 Ball Screen,Robert Hutson,Ball Screen -- Left Side,"10 uses in 4 games, 0.50 PPP",Pick one ball-screen coverage and stay in it; no middle,AU@BEN AU@NCC BLC@AU GUS@AU,False
-Aurora Spartans,Half court,OK State Pat Miller,Gevon Grant,Pat Miller -- Right Side,"9 uses in 3 games, 0.33 PPP",Walk through it Monday -- their signature action,AU@NCC BLC@AU GUS@AU,False
-Aurora Spartans,Half court,Hi-Lo DHO,Juan Madrigal,DHO -- Right Side,"8 uses in 4 games, 1.67 PPP",Get into the handoff; force it away from the middle,AU@BEN AU@NCC BLC@AU GUS@AU,False
-Aurora Spartans,Half court,5 Out Twirl,Devon Richardson,Twirl -- Right Side,"5 uses in 3 games, 0.80 PPP",Trail the twirl cut; big stays connected,AU@BEN AU@NCC BLC@AU,False
-Aurora Spartans,Half court,Horns DHO,Bryden Gryzmala,DHO -- Left Side,"4 uses in 3 games, 1.00 PPP",Get into the handoff; force it away from the middle,AU@BEN AU@NCC BLC@AU,False
-Aurora Spartans,Half court,Horns IVO,Juan Madrigal,IVO -- Left Corner,"4 uses in 3 games, 1.00 PPP",Deny the Iverson cut across the elbows,AU@BEN AU@NCC BLC@AU,False
-Aurora Spartans,Half court,Hi-Lo,Devon Richardson,Pass -- Left Side,"4 uses in 3 games, 0.75 PPP",,AU@BEN AU@NCC BLC@AU,False
-Aurora Spartans,Half court,Highway,Gevon Grant,nan,"3 uses in 2 games, 1.67 PPP",,AU@NCC BLC@AU,False
-Aurora Spartans,BLOB,BLOB Box Curl,Devon Richardson,Curl,"12 uses in 4 games, 0.70 PPP",Trail tight and have the big wall the curl,AU@BEN AU@NCC BLC@AU GUS@AU,False
-Aurora Spartans,BLOB,BLOB Box Breddy,Isaiah Thompson,Breddy,"4 uses in 3 games, 0.67 PPP",Walk through the inbounds alignment and assignments,AU@NCC BLC@AU GUS@AU,False
-Aurora Spartans,BLOB,BLOB 2-1-1,Jeffery Hillmer,nan,"3 uses in 2 games, 0.67 PPP",,BLC@AU GUS@AU,False
-Aurora Spartans,BLOB,BLOB Stairs,Gevon Grant,nan,"3 uses in 1 games, 0.67 PPP",,AU@BEN,False
-Aurora Spartans,SLOB,SLOB Horns IVO,Devon Richardson,IVO -- Right Side,"2 uses in 2 games, 2.50 PPP",Deny the Iverson cut across the elbows,BLC@AU GUS@AU,False
-Aurora Spartans,SLOB,SLOB Ricky,Jeffery Hillmer,Ricky -- Opposite Side,"2 uses in 2 games, 1.00 PPP",,AU@BEN GUS@AU,False
+Aurora Spartans,Half court,Reject,Jake Schmitt,Reject,"21 uses in 1 games, 1.06 PPP",,GUS@AU,False
+Aurora Spartans,Half court,Ball Screen,Gevon Grant,Ball Screen -- Right Side,"13 uses in 1 games, 0.92 PPP",Pick one ball-screen coverage and stay in it; no middle,GUS@AU,False
+Aurora Spartans,Half court,2-3 DHO,Larry Carthan,DHO,"3 uses in 1 games, 1.00 PPP",Get into the handoff; force it away from the middle,GUS@AU,False
+Aurora Spartans,BLOB,BLOB,Andrew Quam,nan,"7 uses in 1 games, 1.29 PPP",,GUS@AU,False
+Aurora Spartans,BLOB,BLOB Box Curl,Devon Richardson,Curl,"5 uses in 1 games, 0.00 PPP",Trail tight and have the big wall the curl,GUS@AU,False
+Aurora Spartans,SLOB,SLOB Ball Screen,Gevon Grant,Ball Screen -- Right Side,"2 uses in 1 games, 0.00 PPP",Pick one ball-screen coverage and stay in it; no middle,GUS@AU,False

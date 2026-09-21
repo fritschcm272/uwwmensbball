@@ -1,20 +1,22 @@
 opponent,day,date,segment,minutes,detail,ties_to,schedule_is_sample,is_sample
-Aurora Spartans,Recovery + film,"Sun, Nov 16",Film,40,"Scout film: 4-1 Ball Screen, OK State Pat Miller, Hi-Lo DHO",Opponent sets,True,True
+Aurora Spartans,Recovery + film,"Sun, Nov 16",Film,40,"Scout film: Reject, Ball Screen, 2-3 DHO",Opponent sets,True,True
 Aurora Spartans,Recovery + film,"Sun, Nov 16",Shooting,20,"Form and free throws, no contact","Brock Marino, Collin Madson, Isaac Verges",True,True
 Aurora Spartans,Practice 1,"Mon, Nov 17",Warm-up / dynamic,10,,,True,True
 Aurora Spartans,Practice 1,"Mon, Nov 17",Individual,12,Catch-and-shoot and free-throw reps,"Player flags: Marino, Madson, Verges",True,True
-Aurora Spartans,Practice 1,"Mon, Nov 17",Defensive install,12,Take away their most efficient high-volume actions,Key 4,True,True
-Aurora Spartans,Practice 1,"Mon, Nov 17",Defensive install,12,Funnel them into their worst high-volume looks,Key 5,True,True
-Aurora Spartans,Practice 1,"Mon, Nov 17",Defensive install,12,Pressure the actions they turn it over on,Key 6,True,True
-Aurora Spartans,Practice 1,"Mon, Nov 17",Scout team,15,"Scout team runs 4-1 Ball Screen, OK State Pat Miller, Hi-Lo DHO",Opponent sets,True,True
+Aurora Spartans,Practice 1,"Mon, Nov 17",Defensive install,12,Take away their most efficient high-volume actions,Key 5,True,True
+Aurora Spartans,Practice 1,"Mon, Nov 17",Defensive install,12,Funnel them into their worst high-volume looks,Key 6,True,True
+Aurora Spartans,Practice 1,"Mon, Nov 17",Defensive install,12,Pressure the actions they turn it over on,Key 7,True,True
+Aurora Spartans,Practice 1,"Mon, Nov 17",Scout team,15,"Scout team runs Reject, Ball Screen, 2-3 DHO",Opponent sets,True,True
+Aurora Spartans,Practice 1,"Mon, Nov 17",Defensive emphasis,10,"Reps in man -- they scored 0.68 PPP against it on 27 tagged possessions, their lowest",What to play them in,True,True
+Aurora Spartans,Practice 1,"Mon, Nov 17",Press reps,8,Press reps -- pressure moved their turnover rate +18.7 points (15% to 33%) over 30 pressed possessions,Pressure response,True,True
 Aurora Spartans,Practice 1,"Mon, Nov 17",Offensive emphasis,10,Feature our best look: Cut to the basket,Key 1,True,True
 Aurora Spartans,Practice 1,"Mon, Nov 17",Offensive emphasis,10,Attack their weakest look: Cut to the basket,Key 2,True,True
-Aurora Spartans,Practice 1,"Mon, Nov 17",Special situations,8,"Defend BLOB Box Curl, BLOB Box Breddy, BLOB 2-1-1",Opponent sets,True,True
-Aurora Spartans,Practice 1,"Mon, Nov 17",Late game,8,"Foul-list reps -- foul: Doby, Richardson, Grant",Late-game foul list,True,True
-Aurora Spartans,Practice 1,"Mon, Nov 17",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- attack Aurora Spartans's Gryzmala, Hillmer, Carthan combo",Key 10,True,True
+Aurora Spartans,Practice 1,"Mon, Nov 17",Special situations,8,"Defend BLOB, BLOB Box Curl, SLOB Ball Screen",Opponent sets,True,True
+Aurora Spartans,Practice 1,"Mon, Nov 17",Late game,8,"Foul-list reps -- foul: Richardson, Doby, Grant",Late-game foul list,True,True
+Aurora Spartans,Practice 1,"Mon, Nov 17",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- attack Aurora Spartans's Gryzmala, Hillmer, Carthan combo",Key 12,True,True
 Aurora Spartans,Practice 2 (light),"Tue, Nov 18",Warm-up / dynamic,10,,,True,True
-Aurora Spartans,Practice 2 (light),"Tue, Nov 18",Defensive walkthrough,10,Take away their most efficient high-volume actions,Key 4,True,True
-Aurora Spartans,Practice 2 (light),"Tue, Nov 18",Scout team,15,"Scout team runs 4-1 Ball Screen, OK State Pat Miller, Hi-Lo DHO",Opponent sets,True,True
+Aurora Spartans,Practice 2 (light),"Tue, Nov 18",Defensive walkthrough,10,Take away their most efficient high-volume actions,Key 5,True,True
+Aurora Spartans,Practice 2 (light),"Tue, Nov 18",Scout team,15,"Scout team runs Reject, Ball Screen, 2-3 DHO",Opponent sets,True,True
 Aurora Spartans,Practice 2 (light),"Tue, Nov 18",Offensive emphasis,10,Feature our best look: Cut to the basket,Key 1,True,True
-Aurora Spartans,Practice 2 (light),"Tue, Nov 18",Special situations,8,"Defend BLOB Box Curl, BLOB Box Breddy, BLOB 2-1-1",Opponent sets,True,True
+Aurora Spartans,Practice 2 (light),"Tue, Nov 18",Special situations,8,"Defend BLOB, BLOB Box Curl, SLOB Ball Screen",Opponent sets,True,True
 Aurora Spartans,Game day,"Wed, Nov 19",Shootaround,45,"Walk their sets, matchups and the foul list; 50 game-speed shots each",Matchups,True,True

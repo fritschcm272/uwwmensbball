@@ -1,0 +1,29 @@
+
+
+You have a KTV to "Feature the Chestnut, Quast, Berezowitz combo".  Do you believe this is actually a good combo to use?
+- How can we factor in the score; so lineups like berz, chestnut, quast aren’t featured 
+
+
+
+
+
+
+
+
+- Can we click on the Film emoji to watch the clips 
+ - Unknown.  Might be hard.
+
+- When it’s writing; can we tweak the keys like cut where; cuts off of what 
+ - Yes.  Talk to Jake about how it's coded first.
+
+- Fitz- can we work towards a real opponent in some capacity? 
+ - Stevens Point?
+
+- Can we simplify the data presentation; like certain things in a certain order
+ - Yes.  Tell me what to change.
+
+Scout team guys cant be starters
+ - Currently fake sample data.  Does Andy want this?
+
+ricky= re-screen for the coder
+ - Need to ask Jake what we want to do with this
