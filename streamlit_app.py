@@ -6501,9 +6501,10 @@ def render_upcoming_game():
     _stints = load_table("uww_lineup_stints")
     _uww_lu_agg = None
     if not _stints.empty:
-        # Only include games before the upcoming game (by date), and exclude Aurora (lineup columns swapped)
-        _stints = scope_to_played(_stints, played)
-        _stints = _stints[_stints["opponent"] != "Aurora"].copy()
+        # Only include games before the upcoming game (by date). The Aurora game used to be excluded here
+        # because its lineup columns were swapped; the parser now corrects that at the source, so excluding
+        # it would throw away a good game -- and, with Aurora up next, the most relevant one.
+        _stints = scope_to_played(_stints, played).copy()
         _stints["uww_pts"] = _stints["end_uww_score"] - _stints["start_prev_uww_score"]
         _uww_lu_agg = _stints.groupby("uww_lineup").agg(
             MIN=("stint_minutes", "sum"),
