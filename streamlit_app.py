@@ -7024,6 +7024,26 @@ def render_upcoming_game():
             # used at all lately (injury, redshirt, fallen out of the rotation). Tiers come from the
             # opponent's own game-by-game record, not their season minutes average; see
             # opponent_bench_tiers() for why that distinction matters.
+            # Starters come from the parser's personnel tiers when they exist -- the same table the brief uses,
+            # so the two can't disagree. Those tiers already honour the scouting report's roles first; without
+            # a report they come from starts and minutes, including RETURNING STARTERS (a starter back from
+            # injury who led the team in minutes on his return). Without a report, every roster row
+            # defaults to role "Bench", so this is what lets the app show starters at all.
+            _tiers_df = load_table("uww_personnel_tiers")
+            _tier_notes = []
+            if not _tiers_df.empty and {"side", "team", "player", "tier"}.issubset(_tiers_df.columns):
+                _tt = _tiers_df[(_tiers_df["side"] == "Opponent")
+                                & (_tiers_df["team"].astype(str) == str(short_opponent))]
+                _tier_starters = {_norm_name(p) for p in _tt[_tt["tier"] == "Starter"]["player"]}
+                if _tier_starters:
+                    opp_roster = opp_roster.copy()
+                    opp_roster["role"] = opp_roster["name"].map(
+                        lambda _n: "Starter" if _norm_name(_n) in _tier_starters else "Bench")
+                if "tier_note" in _tt.columns:
+                    _tier_notes = [f"**{_title_name(r['player'])}** \u2014 {r['tier_note']}"
+                                   for _, r in _tt.iterrows() if _gp_clean(r.get("tier_note"))]
+            for _tnote in _tier_notes:
+                st.caption(_tnote)
             _bench_tiers, _bench_meta = opponent_bench_tiers(short_opponent, opp_roster["name"].tolist())
             _bench_all = opp_roster[opp_roster["role"] == "Bench"]
             _bench_tier_of = lambda _df, _t: _df[_df["name"].astype(str).map(
