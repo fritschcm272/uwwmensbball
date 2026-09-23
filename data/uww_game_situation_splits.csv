@@ -1,4 +1,7 @@
 opponent,situation,ppp,primary_actions,note,is_sample
-Aurora Spartans,Leading by 10+,0.85,"Slows down, more Hi-Lo DHO",Stops running in transition,True
-Aurora Spartans,Trailing by 10+,1.15,"More ball screens, faster pace",Gevon Grant takes over possessions,True
-Aurora Spartans,"Clutch (last 5 min, margin ≤ 8)",0.97,Isolation for Gevon Grant,Goes away from their sets late,True
+UW-Stevens Point Pointers,Leading by 10+,1.17,"Flow (11x), 4-1 Guards Cross (7x)",156 tagged possessions (their overall 1.02 PPP),False
+UW-Stevens Point Pointers,Leading by 10+,0.89,"Flow (11x), 4-1 Guards Cross (7x)",117 tagged possessions (their overall 0.94 PPP),False
+UW-Stevens Point Pointers,Trailing by 10+,1.04,"SLOB (7x), Chin (6x)",138 tagged possessions (their overall 1.02 PPP),False
+UW-Stevens Point Pointers,Trailing by 10+,0.78,"SLOB (7x), Chin (6x)",114 tagged possessions (their overall 0.94 PPP),False
+UW-Stevens Point Pointers,"Clutch (last 5 min, margin ≤ 8)",1.15,Chin (1x),98 tagged possessions (their overall 1.02 PPP),False
+UW-Stevens Point Pointers,"Clutch (last 5 min, margin ≤ 8)",1.07,Chin (1x),82 tagged possessions (their overall 0.94 PPP),False

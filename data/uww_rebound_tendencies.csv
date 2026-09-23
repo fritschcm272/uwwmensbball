@@ -1,9 +1,9 @@
 opponent,situation,crash_pct,who_crashes,note,is_sample
-Aurora Spartans,Their missed layup / dunk,49,"Devon Richardson (8), Jeffery Hillmer (4), Larry Carthan (3)",49% offensive rebound on 51 of 51 misses (0 unpaired),False
-Aurora Spartans,Their missed two-point jumper,37,"Juan Madrigal (5), Devon Richardson (4), Jeffery Hillmer (4)",37% offensive rebound on 81 of 81 misses (0 unpaired),False
-Aurora Spartans,Their missed free throw,58,"Aurora (18), Jeffery Hillmer (1), Larry Carthan (1)",58% offensive rebound on 38 of 41 misses (3 unpaired),False
-Aurora Spartans,All their misses,45,"Aurora (19), Devon Richardson (12), Jeffery Hillmer (9)",45% offensive rebound on 170 of 173 misses (3 unpaired),False
-Aurora Spartans,Opponent missed layup / dunk,67,"Jeffery Hillmer (6), Larry Carthan (3), Juan Madrigal (3)",They secure 67% of 42 opponent misses (0 unpaired),False
-Aurora Spartans,Opponent missed two-point jumper,62,"Gevon Grant (9), Juan Madrigal (8), Devon Richardson (7)",They secure 62% of 79 opponent misses (0 unpaired),False
-Aurora Spartans,Opponent missed free throw,42,"Zerrick Johnson (4), Devon Richardson (3), Larry Carthan (2)",They secure 42% of 26 opponent misses (0 unpaired),False
-Aurora Spartans,All opponent misses,60,"Zerrick Johnson (13), Devon Richardson (13), Gevon Grant (12)",They secure 60% of 147 opponent misses (0 unpaired),False
+UW-Stevens Point Pointers,Their missed layup / dunk,44,"Seth Miron (6), Josh Bocher (6), Logan Baumgartner (5)",44% offensive rebound on 105 of 105 misses (0 unpaired),False
+UW-Stevens Point Pointers,Their missed two-point jumper,30,"Seth Miron (23), Carter Combs (9), Cal Krohn (8)",30% offensive rebound on 274 of 277 misses (3 unpaired),False
+UW-Stevens Point Pointers,Their missed free throw,58,"Wis.-Stevens Point (42), Seth Miron (4), Logan Baumgartner (2)",58% offensive rebound on 86 of 98 misses (12 unpaired),False
+UW-Stevens Point Pointers,All their misses,38,"Wis.-Stevens Point (48), Seth Miron (33), Logan Baumgartner (12)",38% offensive rebound on 465 of 480 misses (15 unpaired),False
+UW-Stevens Point Pointers,Opponent missed layup / dunk,75,"Josiah Butler (13), Logan Baumgartner (10), Seth Miron (10)",They secure 75% of 93 opponent misses (0 unpaired),False
+UW-Stevens Point Pointers,Opponent missed two-point jumper,75,"Carter Combs (49), Cal Krohn (30), Josiah Butler (21)",They secure 75% of 274 opponent misses (4 unpaired),False
+UW-Stevens Point Pointers,Opponent missed free throw,54,"Isaiah Moore (8), Seth Miron (7), Logan Baumgartner (4)",They secure 54% of 69 opponent misses (2 unpaired),False
+UW-Stevens Point Pointers,All opponent misses,72,"Carter Combs (57), Cal Krohn (43), Josiah Butler (35)",They secure 72% of 436 opponent misses (6 unpaired),False

@@ -1,4 +1,4 @@
 opponent,clock_situation,freq_pct,ppp,fg_pct,note,is_sample
-Aurora Spartans,Early clock (0-9 sec used),22,1.18,54,Mostly transition and early ball screens,True
-Aurora Spartans,Organized offense (10-19 sec used),55,0.94,41,"Their half-court sets, Juan Madrigal runs off screens here",True
-Aurora Spartans,Late clock (20+ sec used),23,0.71,33,Gevon Grant isolation when the set breaks down,True
+UW-Stevens Point Pointers,Early clock (0-9 sec used),41,1.03,45.6,705 tagged possessions -- most often ISO (Seth Miron),False
+UW-Stevens Point Pointers,Organized offense (10-19 sec used),8,1.04,52.7,139 tagged possessions -- most often ISO (Cal Krohn),False
+UW-Stevens Point Pointers,Late clock (20+ sec used),4,0.99,42.6,75 tagged possessions -- most often Stagger (Cal Krohn),False

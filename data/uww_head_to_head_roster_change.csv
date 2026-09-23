@@ -1,33 +1,56 @@
 opponent,player,status,prev_pts,prev_reb,prev_ast
-Aurora Spartans,Dwayne Jervier Jr.,Gone,19.0,5.0,1.0
-Aurora Spartans,Joevonn McCottry,Gone,18.0,4.0,2.0
-Aurora Spartans,Mekhi Doby,Returning,13.0,4.0,5.0
-Aurora Spartans,Isaiah Davis,Gone,7.0,9.0,0.0
-Aurora Spartans,Noah Butler,Gone,6.0,3.0,1.0
-Aurora Spartans,Maxwell Marius,Gone,5.0,2.0,0.0
-Aurora Spartans,Jeffery Hillmer,Returning,4.0,4.0,0.0
-Aurora Spartans,Isaac Ross,Returning,0.0,0.0,1.0
-Aurora Spartans,ADAM AWENDER,New since then,,,
-Aurora Spartans,ALEX ROSS,New since then,,,
-Aurora Spartans,ARAMIS CURRIN,New since then,,,
-Aurora Spartans,BRYCE MOORE,New since then,,,
-Aurora Spartans,BRYDEN GRYZMALA,New since then,,,
-Aurora Spartans,CALEB BURGINS,New since then,,,
-Aurora Spartans,CONNOR FITZGERALD,New since then,,,
-Aurora Spartans,CULLEN RAULS,New since then,,,
-Aurora Spartans,DEVON RICHARDSON,New since then,,,
-Aurora Spartans,DEVON WHITE,New since then,,,
-Aurora Spartans,GAVIN ESCOBEDO,New since then,,,
-Aurora Spartans,GEVON GRANT,New since then,,,
-Aurora Spartans,ISAIAH THOMPSON,New since then,,,
-Aurora Spartans,JORDAN SCHROEDER,New since then,,,
-Aurora Spartans,JOSH TINNEY,New since then,,,
-Aurora Spartans,JUAN MADRIGAL,New since then,,,
-Aurora Spartans,KENNY ROSARIO,New since then,,,
-Aurora Spartans,LARRY CARTHAN,New since then,,,
-Aurora Spartans,LUIS MUR MARTIN,New since then,,,
-Aurora Spartans,MATT ANDERSON,New since then,,,
-Aurora Spartans,ROBERT HUTSON,New since then,,,
-Aurora Spartans,SEBASTIAN DEERING,New since then,,,
-Aurora Spartans,WIFI CHIN,New since then,,,
-Aurora Spartans,ZERRICK JOHNSON,New since then,,,
+UW-Stevens Point Pointers,Malik Abdul-Wahid,Gone,64.0,23.0,10.0
+UW-Stevens Point Pointers,Josiah Butler,Returning,60.0,7.0,16.0
+UW-Stevens Point Pointers,Darrius Bolden,Gone,43.0,20.0,14.0
+UW-Stevens Point Pointers,Seth Miron,Returning,38.0,5.0,6.0
+UW-Stevens Point Pointers,Cal Krohn,Returning,35.0,8.0,5.0
+UW-Stevens Point Pointers,Trevon Chislom,Gone,25.0,3.0,0.0
+UW-Stevens Point Pointers,Jameer Barker,Gone,23.0,5.0,10.0
+UW-Stevens Point Pointers,Josiah Gillie,Gone,18.0,3.0,2.0
+UW-Stevens Point Pointers,Carter Combs,Returning,16.0,4.0,4.0
+UW-Stevens Point Pointers,Luke Bara,Gone,15.0,2.0,0.0
+UW-Stevens Point Pointers,Logan Baumgartner,Returning,15.0,5.0,2.0
+UW-Stevens Point Pointers,Collin Madson,Gone,14.0,2.0,0.0
+UW-Stevens Point Pointers,Carter Capstran,Gone,14.0,2.0,2.0
+UW-Stevens Point Pointers,Tyshawn Teague-Johnson,Gone,14.0,4.0,4.0
+UW-Stevens Point Pointers,Ryan Genrich,Gone,14.0,7.0,4.0
+UW-Stevens Point Pointers,Delvin Barnstable,Gone,13.0,5.0,1.0
+UW-Stevens Point Pointers,Miles Barnstable,Gone,9.0,4.0,3.0
+UW-Stevens Point Pointers,Richie Warren,Gone,8.0,5.0,0.0
+UW-Stevens Point Pointers,Elijah Lambert,Gone,6.0,2.0,0.0
+UW-Stevens Point Pointers,JT Hoytink,Gone,6.0,0.0,0.0
+UW-Stevens Point Pointers,Jake Buchanan,Gone,6.0,3.0,2.0
+UW-Stevens Point Pointers,Blake Kortz,Gone,5.0,1.0,0.0
+UW-Stevens Point Pointers,Myles Coleman,Gone,4.0,2.0,0.0
+UW-Stevens Point Pointers,Will Pytleski,Gone,4.0,1.0,0.0
+UW-Stevens Point Pointers,Isaac Verges,Gone,4.0,4.0,1.0
+UW-Stevens Point Pointers,Kelton McEwen,Gone,3.0,1.0,0.0
+UW-Stevens Point Pointers,Joey Berezowitz,Gone,2.0,3.0,2.0
+UW-Stevens Point Pointers,Ethan Hoelzel,Gone,2.0,0.0,0.0
+UW-Stevens Point Pointers,James Jacobs,Returning,2.0,0.0,1.0
+UW-Stevens Point Pointers,Grant Manz,Returning,2.0,0.0,1.0
+UW-Stevens Point Pointers,Austin Schaumburg,Returning,2.0,0.0,0.0
+UW-Stevens Point Pointers,Austin Ambrose,Gone,2.0,0.0,0.0
+UW-Stevens Point Pointers,JR Lukenbill,Gone,0.0,5.0,2.0
+UW-Stevens Point Pointers,Jack Hutchinson,Gone,0.0,1.0,1.0
+UW-Stevens Point Pointers,Peytan Clarey,Gone,0.0,3.0,0.0
+UW-Stevens Point Pointers,Jake Quast,Gone,0.0,4.0,1.0
+UW-Stevens Point Pointers,Ryan Peterson,Gone,0.0,0.0,0.0
+UW-Stevens Point Pointers,Dylan Taylor,Returning,0.0,0.0,0.0
+UW-Stevens Point Pointers,Shane Tarjan,Returning,0.0,0.0,0.0
+UW-Stevens Point Pointers,Darius Chestnut,Gone,0.0,4.0,2.0
+UW-Stevens Point Pointers,Tristian Lynch,Gone,0.0,0.0,0.0
+UW-Stevens Point Pointers,Brock Marino,Gone,0.0,6.0,0.0
+UW-Stevens Point Pointers,Will Gardner,Gone,0.0,0.0,0.0
+UW-Stevens Point Pointers,BOBBY GRGANTO,New since then,,,
+UW-Stevens Point Pointers,BRANDON SPRAY,New since then,,,
+UW-Stevens Point Pointers,Brandon Tilley,New since then,,,
+UW-Stevens Point Pointers,DREW DAOUST,New since then,,,
+UW-Stevens Point Pointers,EMMITT HUHN,New since then,,,
+UW-Stevens Point Pointers,ISAIAH MOORE,New since then,,,
+UW-Stevens Point Pointers,Josh Bocher,New since then,,,
+UW-Stevens Point Pointers,JOSHUA BOCHER,New since then,,,
+UW-Stevens Point Pointers,MAX RAIMER,New since then,,,
+UW-Stevens Point Pointers,NICK FOX,New since then,,,
+UW-Stevens Point Pointers,TYLER ORR,New since then,,,
+UW-Stevens Point Pointers,ZACH ORR,New since then,,,

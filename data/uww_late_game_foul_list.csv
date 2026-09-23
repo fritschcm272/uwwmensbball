@@ -1,8 +1,9 @@
 opponent,player,call,ft_pct,ft_pct_adj,ftm,fta,games,note,is_sample
-Aurora Spartans,Devon Richardson,Foul,56.0,58.7,14,25,4,,False
-Aurora Spartans,Mekhi Doby,Foul,53.8,58.9,7,13,1,Only 1 of 4 games on film,False
-Aurora Spartans,Gevon Grant,Foul,57.1,59.4,16,28,4,,False
-Aurora Spartans,Larry Carthan,Neutral,66.7,67.8,8,12,4,,False
-Aurora Spartans,Juan Madrigal,Do not foul,84.6,80.0,11,13,4,,False
-Aurora Spartans,Zerrick Johnson,Do not foul,88.9,84.2,16,18,4,,False
-Aurora Spartans,Bryden Gryzmala,Do not foul,100.0,85.0,6,6,4,"6-for-6 -- small sample, but no reason to put him on the line",False
+UW-Stevens Point Pointers,Grant Manz,Foul,40.0,51.2,4,10,13,,False
+UW-Stevens Point Pointers,Josh Bocher,Foul,50.0,55.0,9,18,6,Only 6 of 13 games on film,False
+UW-Stevens Point Pointers,Max Raimer,Foul,55.2,57.7,16,29,13,,False
+UW-Stevens Point Pointers,Cal Krohn,Neutral,61.6,62.3,45,73,13,,False
+UW-Stevens Point Pointers,Seth Miron,Neutral,69.2,69.3,36,52,13,,False
+UW-Stevens Point Pointers,Carter Combs,Neutral,70.6,70.4,12,17,13,,False
+UW-Stevens Point Pointers,Logan Baumgartner,Do not foul,81.1,79.5,30,37,13,,False
+UW-Stevens Point Pointers,Josiah Butler,Do not foul,88.0,86.7,66,75,13,,False

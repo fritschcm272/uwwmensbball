@@ -1,5 +1,5 @@
 opponent,situation,primary_defense,freq_pct,secondary_defense,note,is_sample
-Aurora Spartans,Half court,Man-to-man,78,2-3 zone (after a timeout or a long defensive stretch),"Switches 1-4, doesn't switch Devon Richardson's matchup",True
-Aurora Spartans,BLOB,Man-to-man,60,Box-and-1 on our best shooter,Denies the first pass hard,True
-Aurora Spartans,SLOB,Man-to-man,85,,"Same coverage as half court, no separate call seen",True
-Aurora Spartans,After a made basket (press),1-2-1-1 full-court,30,Man-to-man (no press),Presses more in the 4th when trailing,True
+UW-Stevens Point Pointers,BLOB,Man-to-Man,100,,14 tagged possessions,False
+UW-Stevens Point Pointers,Half court,Man-to-Man,100,,160 tagged possessions; press seen on 23,False
+UW-Stevens Point Pointers,SLOB,Man-to-Man,100,,6 tagged possessions,False
+UW-Stevens Point Pointers,Transition,Man-to-Man,100,,5 tagged possessions,False

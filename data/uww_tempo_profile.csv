@@ -1,4 +1,5 @@
 opponent,metric,value,note,is_sample
-Aurora Spartans,Possessions per game,74.6,Estimated over 4 game(s): FGA - OREB + TO + 0.475*FTA,False
-Aurora Spartans,Points per possession,1.02,Their scoring over 4 game(s) of film,False
-UW-Whitewater,Possessions per game,70.1,Our own pace over 3 game(s),False
+UW-Stevens Point Pointers,Possessions per game,70.4,Estimated over 13 game(s): FGA - OREB + TO + 0.475*FTA,False
+UW-Stevens Point Pointers,Points per possession,1.12,Their scoring over 13 game(s) of film,False
+UW-Whitewater,Possessions per game,71.7,Our own pace over 12 game(s),False
+UW-Stevens Point Pointers,Early-offense share,77.0,% of 920 tagged possessions shooting inside 10 seconds,False
