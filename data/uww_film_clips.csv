@@ -1,7 +1,6 @@
 opponent,clip_group,clips,who_watches,is_sample
-Aurora Spartans,Reject (Half court),21,Whole team -- scout team runs it,False
-Aurora Spartans,Ball Screen (Half court),13,Whole team -- scout team runs it,False
-Aurora Spartans,2-3 DHO (Half court),3,Whole team -- scout team runs it,False
-Aurora Spartans,33 Ball Screen (Half court),1,Whole team -- scout team runs it,False
-Aurora Spartans,BLOB (BLOB),7,Whole team,False
-Aurora Spartans,BLOB Box Curl (BLOB),5,Whole team,False
+Aurora Spartans,Their base offense (5-Out Motion),6,Whole team,True
+Aurora Spartans,Devon Richardson post touches and offensive rebounds,5,Bigs,True
+Aurora Spartans,BLOB / SLOB / ATO,8,Whole team,True
+Aurora Spartans,Their ball-screen coverage vs us-type guards,5,Guards,True
+Aurora Spartans,Press break and 1-2-1-1,4,Whole team,True

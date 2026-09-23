@@ -1,59 +1,42 @@
 scouted_opponent,side,lineup,top_calls,tagged_possessions,ppp,grouping
-Aurora Spartans,Opponent,"Adam Awender, Alex Ross, Bryden Gryzmala, Gevon Grant, Jeffery Hillmer",SLOB Ball Screen (1x),1,0.0,5G
-Aurora Spartans,Opponent,"Alex Ross, Bryden Gryzmala, Devon Richardson, Juan Madrigal, Robert Hutson","BLOB (2x), 5 Out Twirl (1x), Ball Screen (1x)",4,0.5,4G-1B
-Aurora Spartans,Opponent,"Bryden Gryzmala, Devon Richardson, Gevon Grant, Isaiah Thompson, Juan Madrigal","Screen the Screener (1x), Reject (1x)",2,0.0,3G-1W-1B
-Aurora Spartans,Opponent,"Bryden Gryzmala, Devon Richardson, Gevon Grant, Jeffery Hillmer, Juan Madrigal",Reject (1x),1,0.0,4G-1B
-Aurora Spartans,Opponent,"Bryden Gryzmala, Devon Richardson, Isaiah Thompson, Jeffery Hillmer, Juan Madrigal","SLOB Box Down Screen (1x), BLOB Curl (1x)",2,2.0,3G-1W-1B
-Aurora Spartans,Opponent,"Bryden Gryzmala, Devon Richardson, Isaiah Thompson, Jeffery Hillmer, Zerrick Johnson","Reject (1x), Horns Zoom (1x)",2,0.0,3G-1W-1B
-Aurora Spartans,Opponent,"Bryden Gryzmala, Devon Richardson, Isaiah Thompson, Juan Madrigal, Robert Hutson",Ball Screen (1x),1,3.0,3G-1W-1B
-Aurora Spartans,Opponent,"Bryden Gryzmala, Devon Richardson, Jeffery Hillmer, Juan Madrigal, Robert Hutson","Reject (2x), Ball Screen (1x)",3,2.0,4G-1B
-Aurora Spartans,Opponent,"Bryden Gryzmala, Gevon Grant, Isaiah Thompson, Juan Madrigal, Larry Carthan",Reject (1x),1,0.0,3G-2W
-Aurora Spartans,Opponent,"Bryden Gryzmala, Isaiah Thompson, Jeffery Hillmer, Juan Madrigal, Larry Carthan","2-3 DHO (1x), Reject (1x)",2,1.0,3G-2W
-Aurora Spartans,Opponent,"Bryden Gryzmala, Jeffery Hillmer, Juan Madrigal, Larry Carthan, Robert Hutson","Reject (2x), BLOB Box Lob (1x), Ball Screen (1x)",4,0.75,4G-1W
-Aurora Spartans,Opponent,"Bryden Gryzmala, Jeffery Hillmer, Juan Madrigal, Larry Carthan, Zerrick Johnson","Hi-Lo (1x), 33 Ball Screen (1x), Reject (1x)",4,0.5,4G-1W
-Aurora Spartans,Opponent,"Bryden Gryzmala, Jeffery Hillmer, Larry Carthan, Robert Hutson, Zerrick Johnson","Ball Screen (2x), BLOB (1x)",3,0.0,4G-1W
-Aurora Spartans,Opponent,"Devon Richardson, Gevon Grant, Isaiah Thompson, Jeffery Hillmer, Juan Madrigal","Reject (3x), BLOB (2x), SLOB Horns (1x)",10,1.3,3G-1W-1B
-Aurora Spartans,Opponent,"Devon Richardson, Gevon Grant, Jeffery Hillmer, Juan Madrigal, Robert Hutson","SLOB Ball Screen (1x), Reject (1x)",2,1.0,4G-1B
-Aurora Spartans,Opponent,"Devon Richardson, Gevon Grant, Jeffery Hillmer, Juan Madrigal, Zerrick Johnson","Ball Screen (3x), BLOB (2x), Reject (2x)",8,0.75,4G-1B
-Aurora Spartans,Opponent,"Devon Richardson, Isaiah Thompson, Juan Madrigal, Robert Hutson, Zerrick Johnson",BLOB Box Curl (1x),1,0.0,3G-1W-1B
-Aurora Spartans,Opponent,"Devon Richardson, Jeffery Hillmer, Juan Madrigal, Robert Hutson, Zerrick Johnson",Reject (1x),1,0.0,4G-1B
-Aurora Spartans,Opponent,"Gevon Grant, Jeffery Hillmer, Juan Madrigal, Larry Carthan, Robert Hutson","Ball Screen (2x), SLOB (1x), Reject (1x)",5,1.0,4G-1W
-Aurora Spartans,Opponent,"Gevon Grant, Jeffery Hillmer, Juan Madrigal, Larry Carthan, Zerrick Johnson","BLOB (1x), Ball Screen (1x)",2,1.5,4G-1W
 Aurora Spartans,UWW,"Agape Keyes Jr., Isaiah Robinson, Kelton McEwen, Mauryon Turner, Rashad Rogers",5 Out (1x),1,0.0,
-Aurora Spartans,UWW,"Agape Keyes Jr., Isaiah Robinson, Mikey Wildes, Rashad Rogers, Trent Grunewald",5 Out DHO (1x),1,3.0,
+Aurora Spartans,UWW,"Agape Keyes Jr., Isaiah Robinson, Mikey Wildes, Rashad Rogers, Trent Grunewald","Twins (1x), 5 Out DHO (1x)",2,3.0,
 Aurora Spartans,UWW,"Agape Keyes Jr., Isaiah Robinson, Rashad Rogers, Trent Grunewald, Tristian Lynch","5 Out Flare (1x), 5 Out Down Screen (1x)",2,1.0,
 Aurora Spartans,UWW,"Austin Ambrose, Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz",SLOB (1x),1,3.0,
-Aurora Spartans,UWW,"Austin Ambrose, Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren",BLOB (1x),1,0.0,
+Aurora Spartans,UWW,"Austin Ambrose, Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren","BLOB (1x), Snap (1x)",2,1.5,
 Aurora Spartans,UWW,"Austin Ambrose, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz","BLOB Line Reject (1x), 5 Out Ricky (1x), Panther (1x)",3,0.67,
 Aurora Spartans,UWW,"Austin Ambrose, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren","SLOB (4x), Cheetah (1x), 5 Out Down Screen (1x)",7,0.86,
-Aurora Spartans,UWW,"Austin Ambrose, Isaiah Robinson, Kelton McEwen, Trent Grunewald, Tristian Lynch",BLOB (3x),3,0.67,
-Aurora Spartans,UWW,"Austin Ambrose, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren","5 Out Flare (1x), 5 Out Ball Screen (1x), Big-on-Big (1x)",3,1.33,
-Aurora Spartans,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, JR Lukenbill","Cheetah (2x), BLOB (1x), 5 Out Ball Screen (1x)",5,0.8,
+Aurora Spartans,UWW,"Austin Ambrose, Isaiah Robinson, Kelton McEwen, Trent Grunewald, Tristian Lynch","BLOB (3x), Twins (1x)",4,0.5,
+Aurora Spartans,UWW,"Austin Ambrose, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren","5 Out Flare (1x), 5 Out Ball Screen (1x), Big-on-Big (1x)",4,1.0,
+Aurora Spartans,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, JR Lukenbill","Cheetah (2x), Snap (1x), BLOB (1x)",6,0.67,
 Aurora Spartans,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, Jake Quast",Rip (1x),1,0.0,
-Aurora Spartans,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, Richie Warren","BLOB (1x), BLOB Line Curl (1x)",2,1.0,
-Aurora Spartans,UWW,"Brock Marino, Collin Madson, Darius Chestnut, JR Lukenbill, Joey Berezowitz","BLOB Line Reject (1x), Ball Screen (1x)",2,0.0,
-Aurora Spartans,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz",Zoom (1x),1,1.0,
-Aurora Spartans,UWW,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz",5 Out (1x),1,0.0,
-Aurora Spartans,UWW,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara","BLOB Line Curl (4x), Panther (4x), BLOB (3x)",24,1.04,
-Aurora Spartans,UWW,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Luke Bara","BLOB (1x), 5 Out Ball Screen (1x), Panther (1x)",5,0.0,
+Aurora Spartans,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, Richie Warren","BLOB (1x), BLOB Line Curl (1x), Snap (1x)",3,0.67,
+Aurora Spartans,UWW,"Brock Marino, Collin Madson, Darius Chestnut, JR Lukenbill, Joey Berezowitz","BLOB Line Reject (1x), Twins Ball Screen (1x)",2,0.0,
+Aurora Spartans,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz",Flow Zoom (1x),1,1.0,
+Aurora Spartans,UWW,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz","Flow (2x), 5 Out (1x)",3,1.33,
+Aurora Spartans,UWW,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara","Flow (4x), BLOB Line Curl (4x), Panther (4x)",34,1.12,
+Aurora Spartans,UWW,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Luke Bara","BLOB (1x), Flow (1x), 5 Out Ball Screen (1x)",6,0.0,
 Aurora Spartans,UWW,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren","BLOB Line (1x), BLOB Line Curl (1x), 5 Out DHO (1x)",4,0.75,
 Aurora Spartans,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Richie Warren",BLOB (1x),1,0.0,
-Aurora Spartans,UWW,"Brock Marino, Collin Madson, Jake Quast, Kelton McEwen, Richie Warren","SLOB (1x), Ball Screen (1x)",2,0.5,
+Aurora Spartans,UWW,"Brock Marino, Collin Madson, Jake Quast, Kelton McEwen, Richie Warren","Flow (2x), SLOB (1x), Flow Ball Screen (1x)",4,1.25,
 Aurora Spartans,UWW,"Brock Marino, Collin Madson, Kelton McEwen, Mauryon Turner, Richie Warren","BLOB Line (2x), SLOB (1x)",3,0.0,
 Aurora Spartans,UWW,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Kelton McEwen",Panther (1x),1,0.0,
-Aurora Spartans,UWW,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Luke Bara","Cheetah (1x), 5 Out Ball Screen (1x)",2,2.0,
-Aurora Spartans,UWW,"Brock Marino, Darius Chestnut, Isaac Verges, Luke Bara, Mauryon Turner","BLOB (1x), Cheetah (1x)",2,1.0,
+Aurora Spartans,UWW,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Luke Bara","Flow (2x), Cheetah (1x), 5 Out Ball Screen (1x)",4,2.5,
+Aurora Spartans,UWW,"Brock Marino, Darius Chestnut, Isaac Verges, Luke Bara, Mauryon Turner","Flow (1x), BLOB (1x), Cheetah (1x)",3,0.67,
 Aurora Spartans,UWW,"Brock Marino, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren","5 Out Down Screen (1x), 5 Out DHO (1x)",2,1.5,
 Aurora Spartans,UWW,"Brock Marino, Darius Chestnut, Kelton McEwen, Mauryon Turner, Richie Warren",5 Out Down Screen (1x),1,2.0,
-Aurora Spartans,UWW,"Brock Marino, Isaac Verges, JR Lukenbill, Kelton McEwen, Richie Warren","5 Out (1x), BLOB (1x)",2,0.0,
-Aurora Spartans,UWW,"Brock Marino, JR Lukenbill, Jake Quast, Joey Berezowitz, Luke Bara","BLOB Line (3x), SLOB (1x), Ricky (1x)",5,2.2,
-Aurora Spartans,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Richie Warren",5 Out (1x),1,2.0,
+Aurora Spartans,UWW,"Brock Marino, Isaac Verges, JR Lukenbill, Kelton McEwen, Richie Warren","Flow (4x), 5 Out (1x), BLOB (1x)",6,1.17,
+Aurora Spartans,UWW,"Brock Marino, JR Lukenbill, Jake Quast, Joey Berezowitz, Luke Bara","BLOB Line (3x), SLOB (1x), Flow Ricky (1x)",5,2.2,
+Aurora Spartans,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Richie Warren","Flow (3x), 5 Out (1x)",4,1.5,
 Aurora Spartans,UWW,"Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz, Rashad Rogers","BLOB (1x), 5 Out Down Screen (1x)",2,1.0,
 Aurora Spartans,UWW,"Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren","BLOB Line (1x), 5 Out Flare (1x), BLOB Line Curl (1x)",3,1.67,
 Aurora Spartans,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara, Richie Warren","5 Out (2x), BLOB Line Ricky (1x), BLOB (1x)",4,0.75,
 Aurora Spartans,UWW,"Collin Madson, Isaac Verges, Jake Quast, Luke Bara, Richie Warren","5 Out Down Screen (1x), 5 Out (1x)",2,1.0,
-Aurora Spartans,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",5 Out (2x),2,1.5,
+Aurora Spartans,UWW,"Collin Madson, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren",Flow (3x),3,0.0,
+Aurora Spartans,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Luke Bara, Richie Warren",Flow (3x),3,2.67,
+Aurora Spartans,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren","5 Out (2x), Twins (1x)",3,1.67,
 Aurora Spartans,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",5 Out Flare (1x),1,0.0,
-Aurora Spartans,UWW,"Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz, Rashad Rogers",Panther (1x),1,3.0,
-Aurora Spartans,UWW,"Darius Chestnut, Jake Quast, Joey Berezowitz, Rashad Rogers, Richie Warren","BLOB (3x), Panther (1x)",4,1.0,
+Aurora Spartans,UWW,"Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz, Rashad Rogers","Flow (1x), Panther (1x)",2,3.0,
+Aurora Spartans,UWW,"Darius Chestnut, Jake Quast, Joey Berezowitz, Rashad Rogers, Richie Warren","BLOB (3x), Flow (3x), Panther (1x)",7,1.29,
 Aurora Spartans,UWW,"Isaiah Robinson, Kelton McEwen, Rashad Rogers, Richie Warren, Trent Grunewald",5 Out Down Screen (1x),1,0.0,
+Aurora Spartans,UWW,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",Flow (2x),2,1.0,

@@ -1,5 +1,4 @@
 opponent,situation,ppp,primary_actions,note,is_sample
-Aurora Spartans,Trailing by 10+,0.81,,70 tagged possessions (their overall 0.92 PPP),False
-Aurora Spartans,Trailing by 10+,1.05,,59 tagged possessions (their overall 0.94 PPP),False
-Aurora Spartans,"Clutch (last 5 min, margin ≤ 8)",1.07,"Reject (4x), BLOB (2x)",28 tagged possessions (their overall 0.92 PPP),False
-Aurora Spartans,"Clutch (last 5 min, margin ≤ 8)",1.22,"Reject (4x), BLOB (2x)",27 tagged possessions (their overall 0.94 PPP),False
+Aurora Spartans,Leading by 10+,0.85,"Slows down, more Hi-Lo DHO",Stops running in transition,True
+Aurora Spartans,Trailing by 10+,1.15,"More ball screens, faster pace",Gevon Grant takes over possessions,True
+Aurora Spartans,"Clutch (last 5 min, margin ≤ 8)",0.97,Isolation for Gevon Grant,Goes away from their sets late,True

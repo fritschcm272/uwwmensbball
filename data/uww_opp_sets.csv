@@ -1,7 +1,10 @@
 opponent,situation,set_name,primary_player,action,frequency,our_call,film_ref,is_sample
-Aurora Spartans,Half court,Reject,Jake Schmitt,Reject,"21 uses in 1 games, 1.06 PPP",,GUS@AU,False
-Aurora Spartans,Half court,Ball Screen,Gevon Grant,Ball Screen -- Right Side,"13 uses in 1 games, 0.92 PPP",Pick one ball-screen coverage and stay in it; no middle,GUS@AU,False
-Aurora Spartans,Half court,2-3 DHO,Larry Carthan,DHO,"3 uses in 1 games, 1.00 PPP",Get into the handoff; force it away from the middle,GUS@AU,False
-Aurora Spartans,BLOB,BLOB,Andrew Quam,nan,"7 uses in 1 games, 1.29 PPP",,GUS@AU,False
-Aurora Spartans,BLOB,BLOB Box Curl,Devon Richardson,Curl,"5 uses in 1 games, 0.00 PPP",Trail tight and have the big wall the curl,GUS@AU,False
-Aurora Spartans,SLOB,SLOB Ball Screen,Gevon Grant,Ball Screen -- Right Side,"2 uses in 1 games, 0.00 PPP",Pick one ball-screen coverage and stay in it; no middle,GUS@AU,False
+Aurora Spartans,Half court,5-Out Motion,Gevon Grant,Drive-and-kick off a dribble handoff at the top,Base offense (~40%),"Gap help, no middle drives, close out short","Gm 2, 1st half",True
+Aurora Spartans,Half court,Horns Flare,Juan Madrigal,"Elbow ball screen, weak-side flare for the shooter",3-4x a half,Top-lock the flare; switch 4-5 on the elbow screen,"Gm 1, 2nd half",True
+Aurora Spartans,Half court,Post Split,Devon Richardson,"Entry to the block, split cut above it",2-3x a half,Three-quarter front; dig from the passer,"Gm 3, 1st half",True
+Aurora Spartans,Half court,Spain PnR,Gevon Grant,Ball screen with a back-screen on the roller's man,Late clock,Ice the ball screen; talk the back-screen early,"Gm 4, 2nd half",True
+Aurora Spartans,BLOB,Box Up,Juan Madrigal,"Stagger to the corner, big seals the rim",Most BLOBs,Switch everything on the box; bump the sealer,Gm 2,True
+Aurora Spartans,SLOB,Stack Lob,Devon Richardson,"Stack at the elbow, back-screen lob to the rim",Under 5:00,Help side sits on the rim; no top-side denial,Gm 1,True
+Aurora Spartans,ATO,Elevator,Juan Madrigal,Elevator doors at the top of the key for a catch-and-shoot,Out of timeouts,Chase over the top; the screener's man sits in the doors,Gm 3,True
+Aurora Spartans,Press break,4-Across,Gevon Grant,"Four across the free-throw line, inbounder runs baseline",vs full-court pressure,Deny the first pass to the handler; trap the catch,Gm 4,True
+Aurora Spartans,End of game,Iso-High Ball Screen,Gevon Grant,"Clear-out, late high ball screen with 8 on the clock",Last possession,Show and recover; no fouling on the drive,Gm 2,True

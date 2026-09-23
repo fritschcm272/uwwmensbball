@@ -4567,12 +4567,27 @@ def render_head_to_head(short_opponent) -> None:
         clips = load_table("uww_play_calls")
         if "game_date" not in h2h.columns or clips.empty or "game_date" not in clips.columns:
             return
-        c = clips[(clips["side"] == "UWW") & (clips["decode_quality"] != "Needs review")].copy()
+        # CONFIRMED BUG (fixed here, matching the brief): side == "UWW" missed meetings tagged into the
+        # OTHER team's file (whichever team's season the file belongs to, not who had the ball) -- e.g. our
+        # 2/24/2025 game vs Stevens Point lives entirely inside opponent_plays.csv. Every clip on the
+        # meeting's date matters, from either file.
+        c = clips[clips["decode_quality"] != "Needs review"].copy()
         if c.empty:
             return
         c["_d"] = pd.to_datetime(c["game_date"], errors="coerce").dt.strftime("%Y-%m-%d")
         c["_pts"] = pd.to_numeric(c.get("points"), errors="coerce")
-        c["_off"] = (c["possession_side"].astype(str) != "Defense") if "possession_side" in c.columns else True
+        # possession_side is file-relative (computed against whichever team owns the file the clip came
+        # from), so it is not reliable across a mixed-file meeting -- offense_team already resolves that
+        # ambiguity once, downstream, so it is what decides whether WE had the ball.
+        c["_off"] = c.get("offense_team", pd.Series("UW-Whitewater", index=c.index)).astype(str).str.contains(
+            "whitewater", case=False, na=False)
+        # defense_faced / defense_played are the same file-relative split -- on any one clip only one of the
+        # pair is populated, and whichever one it is always describes the D of whoever did NOT have the
+        # ball, so coalescing them recovers that value regardless of which file it came from.
+        if {"defense_faced", "defense_played"}.issubset(c.columns):
+            c["_def_tag"] = c["defense_faced"].combine_first(c["defense_played"])
+        else:
+            c["_def_tag"] = pd.Series(pd.NA, index=c.index)
 
         def _ppp(g):
             k = g["_pts"].notna().sum()
@@ -4609,9 +4624,9 @@ def render_head_to_head(short_opponent) -> None:
             off, de = m[m["_off"]], m[~m["_off"]]
             rows.append({"Meeting": f"{_gp_clean(g.get('date'))} ({_gp_clean(g.get('season'))})",
                          "Our offense": _verdict(_ppp(off), base_off) if len(off) else "not tagged",
-                         "We ran most": _calls(off), "They played": _mix(off, "defense_faced"),
+                         "We ran most": _calls(off), "They played": _mix(off, "_def_tag"),
                          "Our defense": _verdict(_ppp(de), base_def, True) if len(de) else "not tagged",
-                         "We played": _mix(de, "defense_played"), "They ran": _calls(de)})
+                         "We played": _mix(de, "_def_tag"), "They ran": _calls(de)})
         st.markdown("**What we ran, and did it work**")
         if rows:
             st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)

@@ -1,4 +1,7 @@
 opponent,item,what_they_do,how_we_attack,is_sample
-Aurora Spartans,Base defense,Man-to-Man on 100% of 69 tagged possessions,,False
-Aurora Spartans,Ball-screen coverage,nan (69x),,False
-Aurora Spartans,Pressure,Pressed on 40 of 69 tagged possessions,,False
+Aurora Spartans,Base defense,Man-to-man about 80% of possessions; 2-3 zone out of timeouts,Have a zone offense called from the bench on every dead ball,True
+Aurora Spartans,Ball-screen coverage,Hard hedge and recover,Short roll to the free-throw line; slip early,True
+Aurora Spartans,Handoffs,Switch,Keep the ball and attack the slower defender; re-screen,True
+Aurora Spartans,Post defense,"Play behind, dig from the passer",Swing it after the dig; shooter relocates,True
+Aurora Spartans,Help rules,Strong-side low man helps on drives,Corner stays filled; baseline drift,True
+Aurora Spartans,Pressure,"1-2-1-1 after made free throws, late halves","Middle flash, ball reversal, attack 4-on-3",True

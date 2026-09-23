@@ -29,3 +29,8 @@ M2M,Man-to-man defense,Standard
 Press / 1-2-1-1 / 1-2-2 / 1-2,"Full-court press, with formation when named",Standard
 Switch / Hedge / Soft Hedge / Ice / Drop,Ball-screen coverage call,Standard
 Deny / Jam,On-ball or off-ball denial call,Inferred
+Show / Under / Fight / Blitz,"More ball-screen coverage calls -- show and recover, go under, fight over the top, or trap it",Standard
+Token,A named ball-screen coverage call -- confirm the read with staff,Inferred
+Tran / Transition,"Live-ball offense before the defense is set, as its own situation (not folded into Half court)",Standard
+Flow / Chin / Twins / Snap / Black / Bulldog / Pinch / Blocker-Mover,Named sets or formations,Standard
+Guards Cross / UCLA,Named actions -- two guards exchange; a screen off a UCLA cut,Standard
