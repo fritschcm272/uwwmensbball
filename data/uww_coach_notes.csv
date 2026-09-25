@@ -113,6 +113,7 @@ Ripon Red Hawks,H1,476.0,UW-Whitewater,Collin Madson,Make 2 Pts,,BLOB Line Curl,
 Ripon Red Hawks,H1,463.0,UW-Whitewater,Michael Asman,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN: UWW M2M,,,Transition
 Ripon Red Hawks,H1,447.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Snap,Offense,2025-11-07,0,Snap,SNAP- M2M D,,,Half court
 Ripon Red Hawks,H1,440.0,UW-Whitewater,Seth Bunders,Foul,,Transition (unspecified),Offense,2025-11-07,1,Transition,TRAN,,,Transition
+Ripon Red Hawks,H1,413.0,UW-Whitewater,Collin Madson,Make 2 Pts,,P4,Offense,2025-11-07,2,P4,P4: M2M D,,,Half court
 Ripon Red Hawks,H1,390.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN: M2M,,,Transition
 Ripon Red Hawks,H1,370.0,UW-Whitewater,Brock Marino,Foul,,BLOB Line,Offense,2025-11-07,0,BLOB,BLOB-LINE- BOT: M2M D,,,BLOB
 Ripon Red Hawks,H1,361.0,UW-Whitewater,Collin Madson,Make 3 Pts,,BLOB Line Curl,Offense,2025-11-07,3,BLOB,BLOB-LINE-CURL- M2M,Curl,,BLOB
@@ -129,7 +130,7 @@ Ripon Red Hawks,H1,126.0,UW-Whitewater,Isaac Verges,Foul,,Transition (unspecifie
 Ripon Red Hawks,H1,99.0,UW-Whitewater,Luke Bara,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN,,,Transition
 Ripon Red Hawks,H1,,UW-Whitewater,Isaac Verges,Kicked Ball,,BLOB Line Curl,Offense,2025-11-07,0,BLOB,BLOB- LINE-CURL: M2M D,Curl,,BLOB
 Ripon Red Hawks,H1,,UW-Whitewater,Brock Marino,No Violation,,SLOB Ball Screen,Offense,2025-11-07,,SLOB,SLOB- BS- DROP: M2M D,Ball Screen,,SLOB
-Ripon Red Hawks,H1,72.0,UW-Whitewater,Luke Bara,Turnover,,BLOB Line,Offense,2025-11-07,0,BLOB,BLOB- LINE-DOUBLE : M2M D,,,BLOB
+Ripon Red Hawks,H1,72.0,UW-Whitewater,Luke Bara,Turnover,,BLOB Line Double/Stagger Screen,Offense,2025-11-07,0,BLOB,BLOB- LINE-DOUBLE : M2M D,Double/Stagger Screen,,BLOB
 Ripon Red Hawks,H1,46.0,UW-Whitewater,Brock Marino,Turnover,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN,,,Transition
 Ripon Red Hawks,H1,2.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Snap,Offense,2025-11-07,0,Snap,SNAP : M2M D,,,Half court
 Ripon Red Hawks,H2,1172.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Panther,Offense,2025-11-07,2,Panther,PANTHER: M2M D,,,Half court
@@ -175,6 +176,7 @@ Ripon Red Hawks,H2,15.0,UW-Whitewater,Mauryon Turner,Turnover,,5 Out,Offense,202
 Eureka Red Devils,H1,1184.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Twins,Offense,2025-11-15,2,Twins,TWINS: M2M D,,,Half court
 Eureka Red Devils,H1,1163.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
 Eureka Red Devils,H1,1116.0,UW-Whitewater,Isaac Verges,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
+Eureka Red Devils,H1,1076.0,UW-Whitewater,Collin Madson,Turnover,,P4,Offense,2025-11-15,0,P4,P4: M2M PRESS,,,Half court
 Eureka Red Devils,H1,1067.0,UW-Whitewater,Andrew Coker,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN- UWW M2M D,,,Transition
 Eureka Red Devils,H1,1053.0,UW-Whitewater,Isaac Verges,Make 3 Pts,,5 Out Curl,Offense,2025-11-15,3,5 Out,5 OUT-PASS-CURL- BS: M2M D- JAM,Pass | Curl | Ball Screen,,Half court
 Eureka Red Devils,H1,1021.0,UW-Whitewater,Brock Marino,Turnover,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
@@ -226,7 +228,7 @@ Eureka Red Devils,H1,49.0,UW-Whitewater,Darius Chestnut,Make 2 Pts,,Transition (
 Eureka Red Devils,H1,23.0,UW-Whitewater,Jacob Gonzalez,Miss 2 Pts,,BLOB,Offense,2025-11-15,0,BLOB,UWW M2M D- BLOB,,,BLOB
 Eureka Red Devils,H1,3.0,UW-Whitewater,Luke Bara,Make 2 Pts,,Cheetah,Offense,2025-11-15,2,Cheetah,OVER- CHEETAH: M2M D- DROP,,,Half court
 Eureka Red Devils,H2,,UW-Whitewater,Brock Marino,No Violation,,Transition (unspecified),Offense,2025-11-15,,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,1175.0,UW-Whitewater,Luke Bara,Make 3 Pts,,BLOB Line Curl,Offense,2025-11-15,3,BLOB,BLOB-LINE-DOUBLE CURL,Curl,,BLOB
+Eureka Red Devils,H2,1175.0,UW-Whitewater,Luke Bara,Make 3 Pts,,BLOB Line Double/Stagger Screen,Offense,2025-11-15,3,BLOB,BLOB-LINE-DOUBLE CURL,Double/Stagger Screen | Curl,,BLOB
 Eureka Red Devils,H2,,UW-Whitewater,Isaac Verges,Non Shooting Foul,,5 Out Zoom,Offense,2025-11-15,,5 Out,5 OUT- PASS 5 -ZOOM-: M2M D - DROP,Pass | Zoom,,Half court
 Eureka Red Devils,H2,1127.0,UW-Whitewater,Isaac Verges,Turnover,,BLOB Line,Offense,2025-11-15,0,BLOB,BLOB-LINE-M2M D,,,BLOB
 Eureka Red Devils,H2,1120.0,UW-Whitewater,Jaxson Provost,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,UWW M2M D: TRAN,,,Transition
@@ -241,7 +243,7 @@ Eureka Red Devils,H2,1013.0,UW-Whitewater,Luke Bara,Make 3 Pts,,BLOB Line,Offens
 Eureka Red Devils,H2,993.0,UW-Whitewater,Andrew Coker,Make 2 Pts,,SLOB,Offense,2025-11-15,2,SLOB,UWW M2M- SLOB,,,SLOB
 Eureka Red Devils,H2,982.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Flow Ricky,Offense,2025-11-15,2,Flow,FLOW-RICKY:M2M DROP,Ricky,,Half court
 Eureka Red Devils,H2,,UW-Whitewater,Brock Marino,Non Shooting Foul,,Transition (unspecified),Offense,2025-11-15,,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,956.0,UW-Whitewater,Joey Berezowitz,Make 2 Pts,,BLOB Line,Offense,2025-11-15,2,BLOB,BLOB-LINE-DOUBLE,,,BLOB
+Eureka Red Devils,H2,956.0,UW-Whitewater,Joey Berezowitz,Make 2 Pts,,BLOB Line Double/Stagger Screen,Offense,2025-11-15,2,BLOB,BLOB-LINE-DOUBLE,Double/Stagger Screen,,BLOB
 Eureka Red Devils,H2,926.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
 Eureka Red Devils,H2,900.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
 Eureka Red Devils,H2,874.0,UW-Whitewater,Brock Marino,Turnover,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition

@@ -1,6 +1,8 @@
 opponent,metric,value,paired,player,count
-UW-Stevens Point Pointers,their_oreb_pct,38.3,465,,178
-UW-Stevens Point Pointers,their_oreb_player,27.0,465,Wis.-Stevens Point,48
-UW-Stevens Point Pointers,their_oreb_player,18.5,465,Seth Miron,33
-UW-Stevens Point Pointers,their_oreb_player,6.7,465,Logan Baumgartner,12
-UW-Stevens Point Pointers,their_dreb_pct,71.8,436,,313
+UW-Stevens Point Pointers,their_oreb_pct,38.3,465,,178.0
+UW-Stevens Point Pointers,our_dreb_allowed_base,35.3,405,,
+UW-Stevens Point Pointers,their_oreb_player,27.0,465,Wis.-Stevens Point,48.0
+UW-Stevens Point Pointers,their_oreb_player,18.5,465,Seth Miron,33.0
+UW-Stevens Point Pointers,their_oreb_player,6.7,465,Logan Baumgartner,12.0
+UW-Stevens Point Pointers,their_dreb_pct,71.8,436,,313.0
+UW-Stevens Point Pointers,our_oreb_base,44.9,454,,
