@@ -1,4 +1,7 @@
 opponent,item,what_they_do,how_we_attack,is_sample
-UW-Stevens Point Pointers,Base defense,Man-to-Man on 100% of 188 tagged possessions,,False
-UW-Stevens Point Pointers,Ball-screen coverage,"Switch (26x), Show (12x), Switch | Show (6x)",,False
-UW-Stevens Point Pointers,Pressure,Pressed on 23 of 188 tagged possessions,,False
+UW-Stevens Point Pointers,Base defense,Man-to-man about 80% of possessions; 2-3 zone out of timeouts,Have a zone offense called from the bench on every dead ball,True
+UW-Stevens Point Pointers,Ball-screen coverage,Hard hedge and recover,Short roll to the free-throw line; slip early,True
+UW-Stevens Point Pointers,Handoffs,Switch,Keep the ball and attack the slower defender; re-screen,True
+UW-Stevens Point Pointers,Post defense,"Play behind, dig from the passer",Swing it after the dig; shooter relocates,True
+UW-Stevens Point Pointers,Help rules,Strong-side low man helps on drives,Corner stays filled; baseline drift,True
+UW-Stevens Point Pointers,Pressure,"1-2-1-1 after made free throws, late halves","Middle flash, ball reversal, attack 4-on-3",True

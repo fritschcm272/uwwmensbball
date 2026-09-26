@@ -1,0 +1,18 @@
+offense_team,defender,role,screen_type,coverage,coverage_source,times,planned,followed_pct,ppp,plan_file
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,9,,,0.89,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,9,,,0.56,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,8,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,7,,,1.25,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,Jake Quast,guarding the player screened,Off-ball screen,unclear,tracking estimate,5,,,0.6,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,rj,coach tag,5,,,1.67,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,Top Lock,coach tag,3,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,rj,coach tag,2,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,Jake Quast,guarding the player screened,Off-ball screen,m2m,coach tag,1,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,Jake Quast,guarding the player screened,Off-ball screen,stay,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,12,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,Over,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,Top Lock,coach tag,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,m2m,coach tag,1,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,stay,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv

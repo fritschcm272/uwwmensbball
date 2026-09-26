@@ -1,0 +1,84 @@
+side,scouted_opponent,perspective,possession_side,offense_team,defense_team,game_date,game_code,period,player,play_call,play_title,screen_type,screen_family,coverage,defender_jersey,defender_name,result,points,decode_quality
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Luke Bara,,::Press(RJ),Screen,Off-ball screen,rj,,,Foul,1.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Luke Bara,,::press(rj),Screen,Off-ball screen,rj,,,Turnover,0.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Brock Marino,5 Out Motion,5out:m2m(rj),Screen,Off-ball screen,rj,,,Non Shooting Foul,,Partial
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H1,Oskar Kangas,5 Out Motion,5out(bs):m2m(switch),Ball Screen,Ball screen,Switch,,,Miss 3 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Collin Madson,,::press(rj),Screen,Off-ball screen,rj,,,Make 2 Pts,2.0,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H1,Matt Imig,SLOB Motion,slob(bs):m2m (Stay),Ball Screen,Ball screen,stay,,,Miss 3 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Luke Bara,,:;press(rj),Screen,Off-ball screen,rj,,,No Violation,,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H1,Matt Imig,Ball Screen,bs:m2m(switch),Screen,Off-ball screen,Switch,,,Make 3 Pts,3.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Collin Madson,5 Out Motion,5out(ds):press(rj),Down Screen,Off-ball screen,rj,,,Miss 2 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Luke Bara,,:press(rj),Screen,Off-ball screen,rj,,,Turnover,0.0,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H1,Brandon Beck,Double Bs,double bs:(under),Ball Screen,Ball screen,Under,,,Make 3 Pts,3.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Richie Warren,,:press(rj),Screen,Off-ball screen,rj,,,No Violation,,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Darius Chestnut,5 Out Motion,5out(stagger-bs):press(rj)(switch),Screen,Off-ball screen,rj,,,Miss 3 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Collin Madson,,::press(rj),Screen,Off-ball screen,rj,,,Miss 2 Pts,0.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Darius Chestnut,5 Out Motion,5out(ds):m2m(rj),Down Screen,Off-ball screen,rj,,,Make 3 Pts,3.0,Partial
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H1,Michael Metcalf-Grassman,Ball Screen,bs:m2m (drop),Ball Screen,Ball screen,Drop,,,Miss 3 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Collin Madson,5 Out Motion,5out(bs):m2m(switch),Ball Screen,Ball screen,Switch,,,No Violation,,Partial
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H1,Logan Rindfleisch,Ball Screen,bs(stay):m2m(over),Off-ball screen,Off-ball screen,Over,,,Turnover,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Jake Quast,,::press(rj),Screen,Off-ball screen,rj,,,Miss 3 Pts,0.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Jr Lukenbill,,::m2m(double madz),Screen,Off-ball screen,double madz,,,Miss 3 Pts,0.0,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H1,Brandon Beck,Spain,spain:m2m(switch),Screen,Off-ball screen,Switch,,,Miss 2 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Collin Madson,Cheetah,cheetah:m2m(rj),Screen,Off-ball screen,rj,,,Make 3 Pts,3.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Collin Madson,,::press(rj),Screen,Off-ball screen,rj,,,Miss 3 Pts,0.0,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H1,Joey LaChapell,5 Out Motion,ATO-5out(bs):m2m (drop),Ball Screen,Ball screen,Drop,,,Turnover,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Richie Warren,5 Out Motion,5out(over):m2m(rj),Screen,Off-ball screen,rj,,,Make 2 Pts,2.0,Partial
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H1,Matt Imig,5 Out Motion,5out(bs):m2m(under),Ball Screen,Ball screen,Under,,,Miss 2 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Richie Warren,,::press(rj),Screen,Off-ball screen,rj,,,Make 2 Pts,2.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Richie Warren,Cheetah,cheetah:press(rj)(switch),Screen,Off-ball screen,rj,,,Turnover,0.0,Partial
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H1,Carter Thomas,Spain,spain:m2m (stay),Screen,Off-ball screen,stay,,,Miss 3 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Jr Lukenbill,,:press(rj),Screen,Off-ball screen,rj,,,Miss 3 Pts,0.0,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H1,Oskar Kangas,5 Out Motion,5out(p-wing-over-zoom):m2m(tl),Off-ball screen,Off-ball screen,Top Lock,,,No Violation,,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Brock Marino,,:press(rj),Screen,Off-ball screen,rj,,,Make 2 Pts,2.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Tyshawn Teague-Johnson,,:press(rj),Screen,Off-ball screen,rj,,,No Violation,,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H1,Brandon Beck,5 Out Motion,5out(ghost):m2m(tl),Off-ball screen,Off-ball screen,Top Lock,,,Miss 3 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H1,Collin Madson,5 Out Motion,5OUT(BS):press(RJ)(SWITCH),Ball Screen,Ball screen,rj,,,Miss 3 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H1,Joey LaChapell,5 Out Motion,5OUT(BS):M2M(SWITCH),Ball Screen,Ball screen,Switch,,,Miss 2 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Luke Bara,,::PRESS(RJ),Screen,Off-ball screen,rj,,,No Violation,,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Brock Marino,5 Out Motion,5OUT(DS):PRESS(RJ)(SWITCH)(DENYmadz),Down Screen,Off-ball screen,rj,,,Turnover,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Jr Lukenbill,,:press(rj),Screen,Off-ball screen,rj,,,No Violation,,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Matt Imig,5 Out Motion,5out(bs):m2m(switch),Ball Screen,Ball screen,Switch,,,Turnover,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Collin Madson,Cheetah,cheetah:presss(rj),Screen,Off-ball screen,rj,,,Miss 2 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Collin Madson,Ball Screen,BS(reject):press(rj),Screen,Off-ball screen,rj,,,Make 2 Pts,2.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Richie Warren,,::press(rj),Screen,Off-ball screen,rj,,,Turnover,0.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Luke Bara,,::press(RJ),Screen,Off-ball screen,rj,,,Non Shooting Foul,,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Richie Warren,,::press(rj),Screen,Off-ball screen,rj,,,Turnover,0.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Jr Lukenbill,,::press(rj),Screen,Off-ball screen,rj,,,Turnover,0.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Richie Warren,,:Press(rj),Screen,Off-ball screen,rj,,,No Violation,,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Collin Madson,Twins Motion,twin:press(rj),Screen,Off-ball screen,rj,,,Foul,2.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Luke Bara,,:press(rj),Screen,Off-ball screen,rj,,,Foul,2.0,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Nate Nazos,Spain,spain:m2m(stay),Screen,Off-ball screen,stay,,,Make 3 Pts,3.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Brock Marino,Panther,panther:press(rj),Screen,Off-ball screen,rj,,,Non Shooting Foul,,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Richie Warren,,::press(rj),Screen,Off-ball screen,rj,,,Out of Bound 5 Sec Violation,,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Joey LaChapell,Ball Screen,Bs:press(token)(siwtch),Ball Screen,Ball screen,Token,,,Make 3 Pts,3.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Luke Bara,Ball Screen,bs:press(rj)(switch),Screen,Off-ball screen,rj,,,Miss 2 Pts,2.0,Partial
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Brandon Beck,5 Out Motion,5out(bs):m2m(tl),Ball Screen,Ball screen,Top Lock,,,Turnover,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Jr Lukenbill,,:press(rj),Screen,Off-ball screen,rj,,,Miss 2 Pts,0.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Collin Madson,,:press(rj),Screen,Off-ball screen,rj,,,Miss 2 Pts,0.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Collin Madson,,:press(rj),Screen,Off-ball screen,rj,,,Miss 2 Pts,0.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Brock Marino,5 Out Motion,5out(ds):press(rj)(switch),Down Screen,Off-ball screen,rj,,,Foul,1.0,Partial
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Carter Thomas,Ball Screen,bs:switch(stay),Screen,Off-ball screen,stay,,,Turnover,0.0,Partial
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Michael Metcalf-Grassman,,:press(m2m),Screen,Off-ball screen,m2m,,,Foul,1.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Jake Quast,Ball Screen,bs:press(rj)(switch),Screen,Off-ball screen,rj,,,Miss 2 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Joey Berezowitz,Ball Screen,bs:press(rj)(switch),Screen,Off-ball screen,rj,,,Miss 3 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Michael Metcalf-Grassman,,:press(m2m),Screen,Off-ball screen,m2m,,,Miss 2 Pts,0.0,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Brandon Beck,Ball Screen,bs:Press(token)(tl),Ball Screen,Ball screen,Token,,,Make 3 Pts,3.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Joey Berezowitz,,:press(rj),Screen,Off-ball screen,rj,,,Miss 2 Pts,0.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Brock Marino,,:m2m(rj),Screen,Off-ball screen,rj,,,Foul,1.0,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Brandon Beck,,:press(12),Screen,Off-ball screen,12,,,Miss 3 Pts,0.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Richie Warren,,:press(rj),Screen,Off-ball screen,rj,,,Make 3 Pts,3.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Richie Warren,,:press(rj),Screen,Off-ball screen,rj,,,Miss 2 Pts,0.0,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Vitorio Dante,Ball Screen,bs:m2m(tl),Off-ball screen,Off-ball screen,Top Lock,,,Miss 2 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Richie Warren,,:press(rj),Screen,Off-ball screen,rj,,,1 Pts,3.0,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Aiden Hawkinson,,:press(12),Screen,Off-ball screen,12,,,Turnover,0.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Collin Madson,DHO,dho:press(rj)(switch),Screen,Off-ball screen,rj,,,Miss 2 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Oskar Kangas,Ball Screen,bs:m2m(tl),Off-ball screen,Off-ball screen,Top Lock,,,Make 3 Pts,3.0,Partial
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Collin Madson,,:press(rj),Screen,Off-ball screen,rj,,,Make 2 Pts,2.0,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Michael Metcalf-Grassman,,:press(Rj),Screen,Off-ball screen,rj,,,Foul,2.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Darius Chestnut,DHO,dho:press(rj)(switch),Screen,Off-ball screen,rj,,,Miss 2 Pts,0.0,Partial
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Michael Metcalf-Grassman,,:press(rj),Screen,Off-ball screen,rj,,,No Violation,,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Brandon Beck,,:press(rj),Screen,Off-ball screen,rj,,,Foul,1.0,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Joey LaChapell,,:press(rj),Screen,Off-ball screen,rj,,,No Violation,,No call
+UWW,UW-Stevens Point Pointers,UWW defense,Defense,UW-Oshkosh Titans,UW-Whitewater,2026-01-03,WOS@WWW,H2,Joey LaChapell,,:press(rj),Screen,Off-ball screen,rj,,,Foul,2.0,No call
+UWW,UW-Stevens Point Pointers,Defenses UWW faced,Offense,UW-Whitewater,UW-Oshkosh Titans,2026-01-03,WOS@WWW,H2,Luke Bara,,:press(rj),Screen,Off-ball screen,rj,,,Miss 3 Pts,0.0,No call

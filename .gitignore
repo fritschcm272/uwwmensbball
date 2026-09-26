@@ -1,6 +1,7 @@
 parser/.env
-parser/_tag_model/*
-parser/_tracking/*
-parser/_vision_frames/*
-parser/court_calibration/*
+parser/inputs/_tag_model/*
+parser/inputs/_tracking/*
+parser/inputs/_vision_frames/*
+parser/inputs/court_calibration/*
 data/tracking_checks/*
+/parser/inputs/_tag_model

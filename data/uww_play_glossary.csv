@@ -34,3 +34,12 @@ Token,A named ball-screen coverage call -- confirm the read with staff,Inferred
 Tran / Transition,"Live-ball offense before the defense is set, as its own situation (not folded into Half court)",Standard
 Flow / Chin / Twins / Snap / Black / Bulldog / Pinch / Blocker-Mover,Named sets or formations,Standard
 Guards Cross / UCLA,Named actions -- two guards exchange; a screen off a UCLA cut,Standard
+Formation-Call(details): [Press] Defense (details),"Structured tag: formation, play call (Motion if blank), ordered offensive details; press (None if blank), defensive formation, coverage details",Standard
+pass 5 / 5 bs,"Number inside the OFFENSE parentheses = position (1-5), not jersey",Standard
+tl,Top lock on an off-ball screen,Standard
+trail / chase / cheat / over / through / bump,Off-ball (down/flare/pin) screen coverages,Standard
+drop / hedge / show / ice / blitz / under / fight / switch,Ball-screen coverages,Standard
+R+J,Run-and-jump press,Standard
+122 - m2m,"Press slot before the dash: 1-2-2 press, falling back to man-to-man (1211, 221, 12 likewise)",Standard
+5tl,DEFENDER #5 top-locked the screen (the number is the defender's jersey),Standard
+m2m (alone),Defense-only tag on a possession where only the defense is being charted,Standard

@@ -1,82 +1,16 @@
 scouted_opponent,side,lineup,top_calls,tagged_possessions,ppp,grouping
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Carter Combs, Drew Daoust, Josh Bocher, Max Raimer","SLOB (1x), 3-2 (1x), 5 Out ISO (1x)",3,1.33,Base five (one big)
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Carter Combs, Grant Manz, Isaiah Moore, Josiah Butler","Flow (3x), Offensive Rebound (2x), BLOB Box ISO (1x)",11,0.64,3G-2W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Carter Combs, Grant Manz, Josh Bocher, Max Raimer",3-2 (1x),1,2.0,Base five (one big)
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Carter Combs, Grant Manz, Josiah Butler, Seth Miron","4-1 Guards Cross (2x), 4-1 DHO (1x)",3,1.0,3G-2W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Carter Combs, Grant Manz, Max Raimer, Seth Miron","SLOB (1x), Chin Ball Screen (1x), Guards Cross (1x)",4,0.0,3G-2W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Max Raimer","Get (1x), BLOB Box Up Screen (1x), Ball Screen (1x)",4,0.75,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Seth Miron","Ball Screen (1x), 3-2 (1x), Chin ISO (1x)",5,0.4,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Shane Tarjan",Stagger (1x),1,0.0,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Tyler Orr","BLOB Box ISO (1x), Flow Post Touch (1x), BLOB Box Up Screen (1x)",3,0.67,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Carter Combs, Josh Bocher, Josiah Butler, Seth Miron","SLOB (1x), Chin (1x), Flow (1x)",4,1.75,Two-big lineup
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Carter Combs, Josiah Butler, Logan Baumgartner, Seth Miron","Chin (7x), Flow (5x), Offensive Rebound (5x)",52,0.92,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Carter Combs, Josiah Butler, Max Raimer, Seth Miron","BLOB (1x), Flow (1x), 3-2 (1x)",5,1.4,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Carter Combs, Logan Baumgartner, Max Raimer, Seth Miron","Flow (4x), Stagger (2x), SLOB (2x)",13,0.54,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Drew Daoust, Josh Bocher, Josiah Butler, Max Raimer","BLOB Box ISO (1x), Chin (1x)",2,0.0,Small / shooting five (no true big)
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Drew Daoust, Josh Bocher, Max Raimer, Seth Miron","SLOB (2x), 3-2 Flare (1x), BLOB (1x)",9,1.0,Base five (one big)
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Drew Daoust, Josiah Butler, Logan Baumgartner, Tyler Orr",BLOB ISO (1x),1,0.0,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Drew Daoust, Josiah Butler, Seth Miron, Tyler Orr","SLOB (2x), 4-1 Ball Screen (1x)",3,1.0,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Grant Manz, Isaiah Moore, Josiah Butler, Seth Miron","Chin Slip (1x), Flow (1x), Blocker-Mover (1x)",5,1.8,3G-2W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Grant Manz, Isaiah Moore, Logan Baumgartner, Tyler Orr","BLOB Box ISO (1x), Get (1x), 3-2 (1x)",3,0.67,3G-2W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Grant Manz, Isaiah Moore, Seth Miron, Tyler Orr","BLOB (1x), Flow (1x), Get (1x)",3,0.0,3G-2W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Isaiah Moore, Josiah Butler, Logan Baumgartner, Seth Miron","4-1 Guards Cross (3x), 3-2 (2x), Flow (2x)",12,1.5,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Isaiah Moore, Josiah Butler, Logan Baumgartner, Tyler Orr","Chin Ball Screen (1x), Flow (1x), 3-2 (1x)",4,0.0,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Isaiah Moore, Josiah Butler, Max Raimer, Seth Miron","Flow (1x), BLOB Box ISO (1x), SLOB (1x)",4,0.5,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Isaiah Moore, Josiah Butler, Seth Miron, Shane Tarjan",Chin Reject (1x),1,0.0,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Isaiah Moore, Logan Baumgartner, Seth Miron, Tyler Orr","BLOB (2x), SLOB (1x), Blocker-Mover (1x)",5,1.0,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Josh Bocher, Josiah Butler, Max Raimer, Seth Miron",Offensive Rebound (1x),1,2.0,Base five (one big)
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Josiah Butler, Logan Baumgartner, Max Raimer, Shane Tarjan",Chin (2x),2,2.5,4G-1W
-UW-Stevens Point Pointers,Opponent,"Cal Krohn, Josiah Butler, Max Raimer, Seth Miron, Tyler Orr",Chin (1x),1,2.0,4G-1W
-UW-Stevens Point Pointers,Opponent,"Carter Combs, Drew Daoust, Josh Bocher, Logan Baumgartner, Seth Miron","Flare (1x), Get (1x)",2,1.0,Two-big lineup
-UW-Stevens Point Pointers,Opponent,"Carter Combs, Grant Manz, Isaiah Moore, Josiah Butler, Logan Baumgartner","5 Out ISO (1x), Flow (1x)",2,2.5,4G-1W
-UW-Stevens Point Pointers,Opponent,"Carter Combs, Grant Manz, Isaiah Moore, Josiah Butler, Seth Miron","Flow (3x), BLOB Box ISO (1x), Chin (1x)",9,0.56,4G-1W
-UW-Stevens Point Pointers,Opponent,"Carter Combs, Grant Manz, Josiah Butler, Logan Baumgartner, Seth Miron","Blocker-Mover (1x), Chin Flare (1x)",2,3.0,4G-1W
-UW-Stevens Point Pointers,Opponent,"Carter Combs, Grant Manz, Logan Baumgartner, Max Raimer, Seth Miron","Offensive Rebound (2x), Pinch (1x), BLOB (1x)",4,0.5,4G-1W
-UW-Stevens Point Pointers,Opponent,"Carter Combs, Isaiah Moore, Josiah Butler, Logan Baumgartner, Seth Miron","4-1 Stagger (1x), DHO (1x), Stagger (1x)",5,1.2,5G
-UW-Stevens Point Pointers,Opponent,"Carter Combs, Josh Bocher, Logan Baumgartner, Max Raimer, Seth Miron","Stagger (1x), BLOB (1x)",2,1.5,Two-big lineup
-UW-Stevens Point Pointers,Opponent,"Drew Daoust, Grant Manz, James Jacobs, Logan Baumgartner, Max Raimer",Chin (1x),1,0.0,4G-1W
-UW-Stevens Point Pointers,Opponent,"Drew Daoust, James Jacobs, Logan Baumgartner, Max Raimer, Tyler Orr",Chin Flare (1x),1,0.0,5G
-UW-Stevens Point Pointers,Opponent,"Grant Manz, Isaiah Moore, Josiah Butler, Logan Baumgartner, Seth Miron","Flow (1x), 4-1 Guards Cross (1x)",2,1.5,4G-1W
-UW-Stevens Point Pointers,Opponent,"Grant Manz, Isaiah Moore, Josiah Butler, Logan Baumgartner, Tyler Orr",Chin ISO (1x),1,0.0,4G-1W
-UW-Stevens Point Pointers,Opponent,"Grant Manz, Josh Bocher, Josiah Butler, Max Raimer, Seth Miron","SLOB (1x), BLOB Box (1x), Offensive Rebound (1x)",3,0.0,Base five (one big)
-UW-Stevens Point Pointers,UWW,"Agape Keyes Jr., Isaiah Robinson, Kelton McEwen, Mauryon Turner, Rashad Rogers",5 Out (1x),1,0.0,
-UW-Stevens Point Pointers,UWW,"Agape Keyes Jr., Isaiah Robinson, Mikey Wildes, Rashad Rogers, Trent Grunewald","Twins (1x), 5 Out DHO (1x)",2,3.0,
-UW-Stevens Point Pointers,UWW,"Agape Keyes Jr., Isaiah Robinson, Rashad Rogers, Trent Grunewald, Tristian Lynch","5 Out Flare (1x), 5 Out Down Screen (1x)",2,1.0,
-UW-Stevens Point Pointers,UWW,"Austin Ambrose, Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz",SLOB (1x),1,3.0,
-UW-Stevens Point Pointers,UWW,"Austin Ambrose, Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren","BLOB (1x), Snap (1x)",2,1.5,
-UW-Stevens Point Pointers,UWW,"Austin Ambrose, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz","BLOB Line Reject (1x), 5 Out Ricky (1x), Panther (1x)",3,0.67,
-UW-Stevens Point Pointers,UWW,"Austin Ambrose, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren","SLOB (4x), Cheetah (1x), 5 Out Down Screen (1x)",7,0.86,
-UW-Stevens Point Pointers,UWW,"Austin Ambrose, Isaiah Robinson, Kelton McEwen, Trent Grunewald, Tristian Lynch","BLOB (3x), Twins (1x)",4,0.5,
-UW-Stevens Point Pointers,UWW,"Austin Ambrose, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren","5 Out Flare (1x), 5 Out Ball Screen (1x), Big-on-Big (1x)",4,1.0,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, JR Lukenbill","Cheetah (2x), Snap (1x), BLOB (1x)",6,0.67,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, Jake Quast",Rip (1x),1,0.0,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, Richie Warren","BLOB (1x), BLOB Line Curl (1x), Snap (1x)",3,0.67,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Darius Chestnut, JR Lukenbill, Joey Berezowitz","BLOB Line Reject (1x), Twins Ball Screen (1x)",2,0.0,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz",Flow Zoom (1x),1,1.0,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz","Flow (2x), 5 Out (1x)",3,1.33,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara","Flow (4x), Panther (4x), Twins (3x)",35,1.09,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Luke Bara","BLOB (1x), Flow (1x), 5 Out Ball Screen (1x)",6,0.0,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren","P4 (1x), BLOB Line (1x), BLOB Line Curl (1x)",5,1.0,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Richie Warren",BLOB (1x),1,0.0,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Jake Quast, Kelton McEwen, Richie Warren","Flow (2x), SLOB (1x), Flow Ball Screen (1x)",4,1.25,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Kelton McEwen, Mauryon Turner, Richie Warren","BLOB Line (2x), SLOB (1x)",3,0.0,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Kelton McEwen",Panther (1x),1,0.0,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Luke Bara","Flow (2x), Cheetah (1x), 5 Out Ball Screen (1x)",4,2.5,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Darius Chestnut, Isaac Verges, Luke Bara, Mauryon Turner","Flow (1x), BLOB (1x), Cheetah (1x)",3,0.67,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren","5 Out Down Screen (1x), 5 Out DHO (1x)",2,1.5,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Darius Chestnut, Kelton McEwen, Mauryon Turner, Richie Warren",5 Out Down Screen (1x),1,2.0,
-UW-Stevens Point Pointers,UWW,"Brock Marino, Isaac Verges, JR Lukenbill, Kelton McEwen, Richie Warren","Flow (4x), 5 Out (1x), BLOB (1x)",6,1.17,
-UW-Stevens Point Pointers,UWW,"Brock Marino, JR Lukenbill, Jake Quast, Joey Berezowitz, Luke Bara","BLOB Line (2x), SLOB (1x), Flow Ricky (1x)",5,2.2,
-UW-Stevens Point Pointers,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Richie Warren","Flow (3x), 5 Out (1x)",4,1.5,
-UW-Stevens Point Pointers,UWW,"Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz, Rashad Rogers","BLOB (1x), 5 Out Down Screen (1x)",2,1.0,
-UW-Stevens Point Pointers,UWW,"Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren","BLOB Line (1x), 5 Out Flare (1x), BLOB Line Curl (1x)",3,1.67,
-UW-Stevens Point Pointers,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara, Richie Warren","5 Out (2x), BLOB Line Ricky (1x), BLOB (1x)",4,0.75,
-UW-Stevens Point Pointers,UWW,"Collin Madson, Isaac Verges, Jake Quast, Luke Bara, Richie Warren","5 Out Down Screen (1x), 5 Out (1x)",2,1.0,
-UW-Stevens Point Pointers,UWW,"Collin Madson, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren",Flow (3x),3,0.0,
-UW-Stevens Point Pointers,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Luke Bara, Richie Warren",Flow (3x),3,2.67,
-UW-Stevens Point Pointers,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren","5 Out (2x), Twins (1x)",3,1.67,
-UW-Stevens Point Pointers,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",5 Out Flare (1x),1,0.0,
-UW-Stevens Point Pointers,UWW,"Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz, Rashad Rogers","Flow (1x), Panther (1x)",2,3.0,
-UW-Stevens Point Pointers,UWW,"Darius Chestnut, Jake Quast, Joey Berezowitz, Rashad Rogers, Richie Warren","BLOB (3x), Flow (3x), Panther (1x)",7,1.29,
-UW-Stevens Point Pointers,UWW,"Isaiah Robinson, Kelton McEwen, Rashad Rogers, Richie Warren, Trent Grunewald",5 Out Down Screen (1x),1,0.0,
-UW-Stevens Point Pointers,UWW,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",Flow (2x),2,1.0,
+UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren","SLOB Motion (1x), BLOB (1x), Ball Screen (1x)",5,1.2,
+UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Jake Quast, Luke Bara","5 Out Motion (3x), BLOB Motion (1x)",4,0.5,
+UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren","5 Out Motion (12x), BLOB (3x), BLOB Motion (2x)",24,0.96,
+UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson","BLOB Motion (2x), Spain (1x), BLOB Line (1x)",4,0.5,
+UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen","Ball Screen (3x), Offensive Rebound (1x), BLOB (1x)",6,0.33,
+UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Richie Warren","BLOB (1x), Scissors (1x)",2,1.0,
+UW-Stevens Point Pointers,UWW,"Brock Marino, Collin Madson, Jake Quast, Luke Bara, Richie Warren","BLOB Motion (3x), Ball Screen (2x), Spain (1x)",9,1.56,
+UW-Stevens Point Pointers,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz","Ball Screen (2x), Double Bs (1x), BLOB Motion (1x)",9,1.22,
+UW-Stevens Point Pointers,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Luke Bara, Richie Warren","DHO (1x), Offensive Rebound (1x)",2,1.0,
+UW-Stevens Point Pointers,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren, Tyshawn Teague-Johnson",5 Out Motion (4x),4,1.0,
+UW-Stevens Point Pointers,UWW,"Collin Madson, JR Lukenbill, Jake Quast, Luke Bara, Richie Warren","Twins Motion (1x), 5 Out Motion (1x)",2,1.0,
+UW-Stevens Point Pointers,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren","DHO (1x), Ball Screen (1x)",2,1.5,
+UW-Stevens Point Pointers,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren","Ball Screen (1x), Offensive Rebound (1x)",2,1.5,
+UW-Stevens Point Pointers,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren","Ball Screen (2x), Offensive Rebound (1x)",3,0.0,
+UW-Stevens Point Pointers,UWW,"Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson","BLOB Motion (1x), Cheetah (1x)",2,1.0,

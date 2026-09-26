@@ -1,0 +1,902 @@
+team,player,side,cell_hy,cell_hx,frames
+UW-Whitewater,TEAM,defense,30,40,49
+UW-Whitewater,TEAM,defense,25,35,88
+UW-Whitewater,TEAM,defense,20,30,166
+UW-Whitewater,TEAM,defense,20,25,101
+UW-Oshkosh Titans,TEAM,offense,25,35,48
+UW-Oshkosh Titans,TEAM,offense,25,30,77
+UW-Oshkosh Titans,TEAM,offense,30,25,71
+UW-Oshkosh Titans,TEAM,offense,30,30,85
+UW-Oshkosh Titans,TEAM,offense,20,20,75
+UW-Whitewater,TEAM,defense,10,35,35
+UW-Whitewater,TEAM,defense,15,40,37
+UW-Whitewater,TEAM,defense,20,35,84
+UW-Whitewater,TEAM,defense,15,35,45
+UW-Whitewater,TEAM,defense,45,40,18
+UW-Whitewater,TEAM,defense,25,30,160
+UW-Oshkosh Titans,TEAM,offense,45,30,204
+UW-Oshkosh Titans,TEAM,offense,35,30,86
+UW-Oshkosh Titans,TEAM,offense,35,40,44
+UW-Oshkosh Titans,TEAM,offense,15,40,51
+UW-Oshkosh Titans,TEAM,offense,25,45,12
+UW-Oshkosh Titans,TEAM,offense,30,40,52
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,30,15,8
+UW-Oshkosh Titans,TEAM,offense,30,15,36
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,40,25,2
+UW-Oshkosh Titans,TEAM,offense,40,25,78
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,45,30,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,45,0,3
+UW-Oshkosh Titans,TEAM,offense,45,0,3
+UW-Oshkosh Titans,Brandon Beck,offense,30,20,1
+UW-Oshkosh Titans,TEAM,offense,30,20,42
+UW-Oshkosh Titans,Brandon Beck,offense,40,25,6
+UW-Oshkosh Titans,TEAM,offense,40,35,79
+UW-Oshkosh Titans,TEAM,offense,40,30,72
+UW-Oshkosh Titans,TEAM,offense,45,25,368
+UW-Oshkosh Titans,TEAM,offense,0,0,3
+UW-Oshkosh Titans,TEAM,offense,5,5,4
+UW-Oshkosh Titans,TEAM,offense,20,25,78
+UW-Oshkosh Titans,TEAM,offense,20,30,102
+UW-Oshkosh Titans,TEAM,offense,20,35,73
+UW-Oshkosh Titans,TEAM,offense,15,35,67
+UW-Oshkosh Titans,Brandon Beck,offense,40,20,2
+UW-Oshkosh Titans,TEAM,offense,40,20,25
+UW-Oshkosh Titans,Brandon Beck,offense,35,25,7
+UW-Oshkosh Titans,TEAM,offense,35,25,80
+UW-Oshkosh Titans,Brandon Beck,offense,35,30,20
+UW-Whitewater,TEAM,defense,10,10,38
+UW-Whitewater,TEAM,defense,30,25,111
+UW-Whitewater,TEAM,defense,20,20,124
+UW-Whitewater,TEAM,defense,20,0,4
+UW-Whitewater,TEAM,defense,25,25,157
+UW-Whitewater,TEAM,defense,25,20,109
+UW-Whitewater,TEAM,defense,15,10,165
+UW-Whitewater,TEAM,defense,20,15,66
+UW-Whitewater,TEAM,defense,25,5,51
+UW-Whitewater,TEAM,defense,15,5,196
+UW-Whitewater,TEAM,defense,10,15,40
+UW-Whitewater,TEAM,defense,30,35,50
+UW-Whitewater,TEAM,defense,15,15,168
+UW-Whitewater,TEAM,defense,30,15,93
+UW-Whitewater,TEAM,defense,40,20,110
+UW-Whitewater,TEAM,defense,40,25,63
+UW-Whitewater,TEAM,defense,35,25,118
+UW-Whitewater,TEAM,defense,40,15,34
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,40,35,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,20,25,11
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,15,25,5
+UW-Oshkosh Titans,TEAM,offense,15,25,56
+UW-Whitewater,TEAM,defense,25,45,22
+UW-Whitewater,TEAM,defense,30,45,17
+UW-Oshkosh Titans,TEAM,defense,5,40,51
+UW-Oshkosh Titans,TEAM,defense,5,35,96
+UW-Whitewater,TEAM,offense,15,40,58
+UW-Whitewater,TEAM,offense,15,35,56
+UW-Whitewater,TEAM,offense,20,30,235
+UW-Whitewater,TEAM,offense,20,25,156
+UW-Whitewater,TEAM,offense,25,30,176
+UW-Whitewater,TEAM,offense,10,25,141
+UW-Whitewater,TEAM,offense,10,15,151
+UW-Whitewater,TEAM,offense,0,5,20
+UW-Whitewater,TEAM,offense,0,10,23
+UW-Oshkosh Titans,TEAM,defense,10,25,83
+UW-Oshkosh Titans,TEAM,defense,15,10,97
+UW-Oshkosh Titans,TEAM,defense,15,15,81
+UW-Oshkosh Titans,TEAM,defense,15,5,71
+UW-Oshkosh Titans,TEAM,defense,5,10,37
+UW-Oshkosh Titans,TEAM,defense,30,30,49
+UW-Oshkosh Titans,TEAM,defense,20,25,110
+UW-Oshkosh Titans,TEAM,defense,25,25,141
+UW-Oshkosh Titans,TEAM,defense,15,20,67
+UW-Oshkosh Titans,TEAM,defense,10,20,61
+UW-Oshkosh Titans,TEAM,defense,35,15,52
+UW-Oshkosh Titans,TEAM,defense,30,15,75
+UW-Oshkosh Titans,TEAM,defense,25,15,49
+UW-Oshkosh Titans,TEAM,defense,20,20,113
+UW-Oshkosh Titans,TEAM,defense,25,20,75
+UW-Oshkosh Titans,TEAM,defense,15,25,57
+UW-Oshkosh Titans,TEAM,defense,10,30,61
+UW-Oshkosh Titans,TEAM,defense,5,30,78
+UW-Oshkosh Titans,TEAM,defense,0,30,212
+UW-Oshkosh Titans,TEAM,defense,0,25,120
+UW-Oshkosh Titans,TEAM,defense,45,20,44
+UW-Oshkosh Titans,TEAM,defense,40,15,20
+UW-Oshkosh Titans,TEAM,defense,30,25,56
+UW-Oshkosh Titans,TEAM,defense,30,20,55
+UW-Whitewater,TEAM,offense,45,25,54
+UW-Whitewater,TEAM,offense,15,15,210
+UW-Whitewater,TEAM,offense,5,15,118
+UW-Whitewater,TEAM,offense,15,20,140
+UW-Whitewater,TEAM,offense,20,15,101
+UW-Whitewater,TEAM,offense,0,15,39
+UW-Whitewater,TEAM,offense,15,10,204
+UW-Whitewater,TEAM,offense,30,0,19
+UW-Whitewater,TEAM,offense,25,5,53
+UW-Whitewater,TEAM,offense,30,5,56
+UW-Whitewater,TEAM,offense,35,5,53
+UW-Whitewater,TEAM,offense,35,0,17
+UW-Whitewater,TEAM,offense,10,10,110
+UW-Whitewater,TEAM,offense,5,10,141
+UW-Whitewater,TEAM,offense,25,15,128
+UW-Whitewater,TEAM,offense,25,20,226
+UW-Whitewater,TEAM,offense,30,15,155
+UW-Whitewater,TEAM,offense,40,20,62
+UW-Whitewater,TEAM,offense,0,25,25
+UW-Whitewater,TEAM,offense,45,20,74
+UW-Oshkosh Titans,TEAM,defense,5,5,25
+UW-Oshkosh Titans,TEAM,defense,15,0,26
+UW-Whitewater,TEAM,offense,20,10,86
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,15,15,4
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,45,20,11
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,25,10,2
+UW-Oshkosh Titans,TEAM,defense,25,10,26
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,30,15,6
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,35,20,12
+UW-Oshkosh Titans,TEAM,defense,35,20,62
+UW-Whitewater,TEAM,offense,35,20,89
+UW-Whitewater,TEAM,offense,30,20,86
+UW-Whitewater,TEAM,offense,15,30,109
+UW-Oshkosh Titans,Brandon Beck,defense,15,5,12
+UW-Oshkosh Titans,Brandon Beck,defense,10,5,13
+UW-Oshkosh Titans,TEAM,defense,10,5,49
+UW-Oshkosh Titans,Brandon Beck,defense,5,5,7
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,45,15,3
+UW-Oshkosh Titans,TEAM,defense,45,15,29
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,40,15,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,15,10,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,5,15,1
+UW-Oshkosh Titans,TEAM,defense,5,15,42
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,0,20,5
+UW-Oshkosh Titans,TEAM,defense,0,20,85
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,0,30,5
+UW-Whitewater,TEAM,offense,10,20,127
+UW-Whitewater,TEAM,offense,20,20,182
+UW-Whitewater,TEAM,defense,10,30,32
+UW-Whitewater,TEAM,defense,15,20,76
+UW-Whitewater,TEAM,defense,30,30,81
+UW-Whitewater,TEAM,defense,35,20,88
+UW-Whitewater,TEAM,defense,30,20,103
+UW-Whitewater,TEAM,defense,35,15,44
+UW-Whitewater,TEAM,defense,25,15,59
+UW-Whitewater,TEAM,defense,30,10,59
+UW-Oshkosh Titans,TEAM,offense,45,10,79
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,0,40,3
+UW-Oshkosh Titans,TEAM,offense,0,40,34
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,20,30,13
+UW-Oshkosh Titans,Brandon Beck,offense,35,40,9
+UW-Oshkosh Titans,Brandon Beck,offense,45,45,2
+UW-Oshkosh Titans,TEAM,offense,45,45,7
+UW-Oshkosh Titans,Brandon Beck,offense,40,40,7
+UW-Oshkosh Titans,TEAM,offense,40,40,76
+UW-Oshkosh Titans,Brandon Beck,offense,40,35,9
+UW-Oshkosh Titans,Brandon Beck,offense,45,30,49
+UW-Oshkosh Titans,Brandon Beck,offense,45,25,71
+UW-Oshkosh Titans,Brandon Beck,offense,45,35,10
+UW-Oshkosh Titans,TEAM,offense,45,35,60
+UW-Oshkosh Titans,Brandon Beck,offense,45,40,3
+UW-Oshkosh Titans,TEAM,offense,45,40,24
+UW-Whitewater,TEAM,defense,40,10,24
+UW-Whitewater,TEAM,defense,40,5,31
+UW-Oshkosh Titans,TEAM,offense,25,25,90
+UW-Oshkosh Titans,TEAM,offense,5,20,32
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,40,10,3
+UW-Oshkosh Titans,TEAM,offense,40,10,14
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,45,10,7
+UW-Whitewater,TEAM,defense,20,5,42
+UW-Whitewater,TEAM,defense,0,15,11
+UW-Whitewater,TEAM,defense,0,20,53
+UW-Whitewater,TEAM,defense,35,5,59
+UW-Whitewater,TEAM,defense,30,5,52
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,20,20,16
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,25,15,6
+UW-Oshkosh Titans,TEAM,offense,25,15,28
+UW-Whitewater,TEAM,defense,20,40,36
+UW-Whitewater,TEAM,offense,25,35,99
+UW-Whitewater,TEAM,offense,30,35,66
+UW-Oshkosh Titans,TEAM,defense,15,45,76
+UW-Oshkosh Titans,TEAM,defense,25,40,39
+UW-Whitewater,TEAM,offense,10,40,70
+UW-Whitewater,TEAM,offense,10,35,49
+UW-Whitewater,TEAM,offense,5,35,37
+UW-Oshkosh Titans,Brandon Beck,defense,30,40,6
+UW-Oshkosh Titans,TEAM,defense,30,40,37
+UW-Oshkosh Titans,Brandon Beck,defense,30,35,2
+UW-Oshkosh Titans,TEAM,defense,30,35,45
+UW-Oshkosh Titans,Brandon Beck,defense,25,35,6
+UW-Oshkosh Titans,TEAM,defense,25,35,38
+UW-Oshkosh Titans,Brandon Beck,defense,10,35,11
+UW-Oshkosh Titans,TEAM,defense,10,35,51
+UW-Oshkosh Titans,Brandon Beck,defense,15,35,3
+UW-Oshkosh Titans,TEAM,defense,15,35,38
+UW-Whitewater,TEAM,offense,5,45,15
+UW-Whitewater,TEAM,offense,5,30,66
+UW-Whitewater,TEAM,offense,5,25,118
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,0,45,1
+UW-Oshkosh Titans,TEAM,defense,0,45,6
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,10,35,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,10,30,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,20,20,9
+UW-Whitewater,TEAM,offense,20,45,29
+UW-Whitewater,TEAM,offense,5,40,36
+UW-Whitewater,TEAM,offense,35,40,62
+UW-Whitewater,TEAM,offense,25,25,153
+UW-Whitewater,TEAM,offense,30,25,102
+UW-Whitewater,TEAM,offense,35,25,110
+UW-Whitewater,TEAM,offense,15,45,21
+UW-Whitewater,TEAM,offense,20,5,61
+UW-Whitewater,TEAM,offense,0,0,4
+UW-Whitewater,TEAM,offense,5,5,124
+UW-Whitewater,TEAM,offense,10,5,127
+UW-Whitewater,TEAM,offense,5,20,89
+UW-Oshkosh Titans,TEAM,defense,20,40,21
+UW-Oshkosh Titans,TEAM,defense,0,35,149
+UW-Oshkosh Titans,TEAM,defense,5,20,54
+UW-Oshkosh Titans,TEAM,defense,10,40,56
+UW-Whitewater,TEAM,offense,35,15,63
+UW-Whitewater,TEAM,offense,15,5,99
+UW-Whitewater,TEAM,offense,40,15,27
+UW-Oshkosh Titans,TEAM,defense,20,10,53
+UW-Oshkosh Titans,TEAM,defense,20,5,37
+UW-Oshkosh Titans,TEAM,defense,10,10,73
+UW-Oshkosh Titans,TEAM,defense,10,15,93
+UW-Oshkosh Titans,Brandon Beck,defense,5,25,4
+UW-Oshkosh Titans,TEAM,defense,5,25,48
+UW-Oshkosh Titans,Brandon Beck,defense,5,30,20
+UW-Oshkosh Titans,Brandon Beck,defense,10,30,11
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,15,20,5
+UW-Whitewater,TEAM,offense,0,20,85
+UW-Oshkosh Titans,Brandon Beck,defense,25,15,4
+UW-Oshkosh Titans,Brandon Beck,defense,30,15,3
+UW-Oshkosh Titans,Brandon Beck,defense,15,30,3
+UW-Oshkosh Titans,TEAM,defense,15,30,52
+UW-Oshkosh Titans,TEAM,offense,35,0,14
+UW-Oshkosh Titans,TEAM,offense,45,20,115
+UW-Whitewater,TEAM,defense,40,45,9
+UW-Whitewater,TEAM,defense,40,40,21
+UW-Oshkosh Titans,TEAM,offense,35,45,9
+UW-Oshkosh Titans,TEAM,offense,40,15,21
+UW-Oshkosh Titans,TEAM,offense,35,20,33
+UW-Whitewater,TEAM,defense,40,30,25
+UW-Whitewater,TEAM,defense,45,20,66
+UW-Oshkosh Titans,TEAM,offense,15,30,71
+UW-Whitewater,TEAM,defense,10,5,36
+UW-Oshkosh Titans,TEAM,offense,25,10,13
+UW-Oshkosh Titans,TEAM,offense,20,5,14
+UW-Oshkosh Titans,TEAM,offense,15,5,21
+UW-Oshkosh Titans,TEAM,offense,10,25,81
+UW-Whitewater,TEAM,defense,35,10,79
+UW-Oshkosh Titans,TEAM,offense,10,35,32
+UW-Oshkosh Titans,TEAM,offense,10,30,49
+UW-Whitewater,TEAM,offense,40,45,10
+UW-Whitewater,TEAM,offense,30,45,26
+UW-Whitewater,TEAM,offense,30,40,75
+UW-Whitewater,TEAM,offense,40,40,27
+UW-Oshkosh Titans,TEAM,defense,15,40,34
+UW-Whitewater,TEAM,offense,45,40,33
+UW-Oshkosh Titans,TEAM,defense,30,45,31
+UW-Oshkosh Titans,TEAM,defense,40,40,74
+UW-Whitewater,TEAM,offense,15,25,181
+UW-Oshkosh Titans,TEAM,defense,35,25,59
+UW-Oshkosh Titans,TEAM,defense,20,15,35
+UW-Whitewater,TEAM,offense,10,45,14
+UW-Whitewater,TEAM,offense,10,30,115
+UW-Oshkosh Titans,TEAM,defense,35,40,49
+UW-Oshkosh Titans,TEAM,defense,35,35,50
+UW-Oshkosh Titans,TEAM,defense,40,45,24
+UW-Whitewater,TEAM,offense,40,10,60
+UW-Whitewater,TEAM,offense,35,10,128
+UW-Whitewater,TEAM,offense,30,10,145
+UW-Whitewater,TEAM,offense,0,30,44
+UW-Whitewater,TEAM,offense,0,35,18
+UW-Oshkosh Titans,TEAM,defense,30,10,43
+UW-Oshkosh Titans,TEAM,defense,0,10,41
+UW-Whitewater,TEAM,offense,20,40,46
+UW-Oshkosh Titans,TEAM,defense,25,0,7
+UW-Oshkosh Titans,TEAM,defense,30,0,16
+UW-Oshkosh Titans,TEAM,defense,35,0,27
+UW-Oshkosh Titans,TEAM,offense,10,40,33
+UW-Oshkosh Titans,TEAM,offense,5,30,50
+UW-Whitewater,TEAM,defense,10,20,31
+UW-Oshkosh Titans,TEAM,offense,15,10,40
+UW-Oshkosh Titans,TEAM,offense,35,5,31
+UW-Oshkosh Titans,TEAM,offense,30,5,32
+UW-Oshkosh Titans,TEAM,offense,40,45,27
+UW-Oshkosh Titans,TEAM,offense,5,25,37
+UW-Oshkosh Titans,TEAM,offense,25,40,46
+UW-Oshkosh Titans,TEAM,offense,30,45,18
+UW-Oshkosh Titans,TEAM,offense,10,45,35
+UW-Oshkosh Titans,TEAM,offense,15,45,53
+UW-Whitewater,TEAM,defense,35,35,40
+UW-Whitewater,TEAM,defense,20,45,17
+UW-Whitewater,TEAM,defense,35,40,28
+UW-Whitewater,TEAM,defense,35,45,7
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,40,40,10
+UW-Oshkosh Titans,Brandon Beck,defense,5,35,19
+UW-Oshkosh Titans,Brandon Beck,defense,10,45,2
+UW-Oshkosh Titans,TEAM,defense,10,45,23
+UW-Oshkosh Titans,Brandon Beck,defense,10,40,3
+UW-Oshkosh Titans,Brandon Beck,defense,10,25,11
+UW-Oshkosh Titans,Brandon Beck,defense,10,15,4
+UW-Oshkosh Titans,Brandon Beck,defense,0,15,10
+UW-Oshkosh Titans,TEAM,defense,0,15,81
+UW-Oshkosh Titans,Brandon Beck,defense,0,25,25
+UW-Oshkosh Titans,Brandon Beck,defense,5,15,6
+UW-Whitewater,TEAM,offense,45,15,44
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,40,35,11
+UW-Oshkosh Titans,TEAM,defense,40,35,75
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,30,40,8
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,30,35,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,40,20,29
+UW-Oshkosh Titans,TEAM,defense,40,20,105
+UW-Whitewater,TEAM,offense,20,35,101
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,35,10,11
+UW-Oshkosh Titans,TEAM,defense,35,10,51
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,40,10,4
+UW-Oshkosh Titans,TEAM,defense,40,10,15
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,35,15,4
+UW-Oshkosh Titans,Brandon Beck,defense,0,30,32
+UW-Oshkosh Titans,Brandon Beck,defense,0,35,22
+UW-Oshkosh Titans,Brandon Beck,defense,0,40,7
+UW-Oshkosh Titans,TEAM,defense,0,40,51
+UW-Oshkosh Titans,TEAM,offense,35,15,21
+UW-Whitewater,TEAM,defense,10,40,34
+UW-Whitewater,TEAM,defense,25,10,22
+UW-Whitewater,TEAM,defense,25,40,33
+UW-Whitewater,TEAM,defense,35,30,64
+UW-Whitewater,TEAM,defense,15,30,67
+UW-Oshkosh Titans,Brandon Beck,offense,40,45,2
+UW-Oshkosh Titans,Brandon Beck,offense,40,30,14
+UW-Oshkosh Titans,Brandon Beck,offense,35,35,8
+UW-Oshkosh Titans,TEAM,offense,35,35,57
+UW-Oshkosh Titans,Brandon Beck,offense,10,25,17
+UW-Oshkosh Titans,Brandon Beck,offense,15,30,4
+UW-Oshkosh Titans,Brandon Beck,offense,30,30,2
+UW-Oshkosh Titans,Brandon Beck,offense,30,35,9
+UW-Oshkosh Titans,TEAM,offense,30,35,45
+UW-Oshkosh Titans,Brandon Beck,offense,25,40,11
+UW-Oshkosh Titans,Brandon Beck,offense,30,40,20
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,10,40,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,30,40,4
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,30,35,2
+UW-Oshkosh Titans,Brandon Beck,offense,25,45,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,0,25,4
+UW-Oshkosh Titans,TEAM,offense,0,25,36
+UW-Whitewater,TEAM,offense,35,30,85
+UW-Whitewater,TEAM,offense,25,45,25
+UW-Whitewater,TEAM,offense,25,40,79
+UW-Oshkosh Titans,TEAM,defense,40,25,45
+UW-Whitewater,TEAM,offense,45,10,13
+UW-Oshkosh Titans,TEAM,defense,20,30,67
+UW-Oshkosh Titans,TEAM,defense,25,30,94
+UW-Whitewater,TEAM,offense,40,25,39
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,0,25,13
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,30,10,9
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,25,20,4
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,25,15,5
+UW-Whitewater,TEAM,offense,30,30,115
+UW-Oshkosh Titans,Brandon Beck,defense,20,45,2
+UW-Oshkosh Titans,TEAM,defense,20,45,18
+UW-Oshkosh Titans,TEAM,defense,30,5,53
+UW-Oshkosh Titans,TEAM,defense,45,5,3
+UW-Oshkosh Titans,Brandon Beck,defense,15,20,7
+UW-Oshkosh Titans,Brandon Beck,defense,15,10,10
+UW-Oshkosh Titans,Brandon Beck,defense,15,15,4
+UW-Oshkosh Titans,Brandon Beck,defense,20,15,4
+UW-Oshkosh Titans,Brandon Beck,defense,10,10,9
+UW-Oshkosh Titans,Brandon Beck,defense,35,10,2
+UW-Oshkosh Titans,Brandon Beck,defense,30,5,1
+UW-Whitewater,TEAM,offense,25,10,65
+UW-Whitewater,TEAM,defense,20,10,64
+UW-Oshkosh Titans,TEAM,offense,10,10,20
+UW-Oshkosh Titans,TEAM,offense,30,10,30
+UW-Oshkosh Titans,TEAM,offense,40,5,14
+UW-Oshkosh Titans,TEAM,offense,45,15,72
+UW-Oshkosh Titans,TEAM,offense,20,15,60
+UW-Oshkosh Titans,TEAM,offense,15,15,57
+UW-Oshkosh Titans,TEAM,offense,0,20,45
+UW-Whitewater,TEAM,defense,45,10,13
+UW-Whitewater,TEAM,defense,45,30,14
+UW-Whitewater,TEAM,defense,40,35,21
+UW-Whitewater,TEAM,defense,45,15,34
+UW-Whitewater,TEAM,defense,5,40,24
+UW-Oshkosh Titans,TEAM,offense,35,10,48
+UW-Whitewater,TEAM,defense,45,25,47
+UW-Oshkosh Titans,TEAM,offense,10,5,11
+UW-Whitewater,TEAM,defense,40,0,12
+UW-Oshkosh Titans,TEAM,defense,20,35,33
+UW-Oshkosh Titans,TEAM,defense,0,5,8
+UW-Oshkosh Titans,TEAM,defense,20,0,5
+UW-Oshkosh Titans,TEAM,defense,25,5,33
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,30,5,8
+UW-Whitewater,TEAM,offense,40,5,20
+UW-Oshkosh Titans,TEAM,defense,5,0,21
+UW-Oshkosh Titans,Brandon Beck,defense,5,10,1
+UW-Oshkosh Titans,Brandon Beck,defense,25,5,2
+UW-Oshkosh Titans,Brandon Beck,defense,5,40,12
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,10,5,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,10,10,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,5,10,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,25,25,13
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,35,30,5
+UW-Oshkosh Titans,TEAM,defense,35,30,50
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,30,45,3
+UW-Whitewater,TEAM,offense,0,40,16
+UW-Oshkosh Titans,TEAM,defense,0,0,20
+UW-Oshkosh Titans,TEAM,offense,25,5,17
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,20,35,7
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,15,30,9
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,35,35,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,10,30,8
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,10,25,9
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,5,25,2
+UW-Oshkosh Titans,Brandon Beck,offense,45,20,23
+UW-Whitewater,TEAM,defense,15,25,67
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,0,15,3
+UW-Oshkosh Titans,TEAM,offense,0,15,22
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,5,20,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,10,15,13
+UW-Oshkosh Titans,TEAM,offense,10,15,53
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,15,15,8
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,30,10,6
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,30,5,14
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,35,0,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,35,10,4
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,30,20,4
+UW-Oshkosh Titans,TEAM,offense,25,20,61
+UW-Whitewater,TEAM,defense,15,45,14
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,25,40,6
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,35,35,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,35,25,8
+UW-Oshkosh Titans,Brandon Beck,defense,25,20,13
+UW-Oshkosh Titans,Brandon Beck,defense,25,25,7
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,30,20,5
+UW-Oshkosh Titans,TEAM,offense,15,20,58
+UW-Whitewater,TEAM,defense,5,20,35
+UW-Whitewater,TEAM,defense,5,15,26
+UW-Oshkosh Titans,TEAM,offense,5,15,12
+UW-Whitewater,TEAM,defense,30,0,13
+UW-Oshkosh Titans,TEAM,offense,15,0,17
+UW-Whitewater,TEAM,defense,10,0,3
+UW-Whitewater,TEAM,defense,5,30,25
+UW-Whitewater,TEAM,defense,5,35,22
+UW-Oshkosh Titans,TEAM,offense,5,35,32
+UW-Oshkosh Titans,TEAM,offense,5,40,25
+UW-Oshkosh Titans,TEAM,offense,20,40,36
+UW-Whitewater,TEAM,defense,10,25,41
+UW-Oshkosh Titans,TEAM,defense,45,35,28
+UW-Whitewater,TEAM,offense,10,0,11
+UW-Whitewater,TEAM,offense,5,0,8
+UW-Oshkosh Titans,TEAM,defense,40,30,117
+UW-Whitewater,TEAM,defense,35,0,12
+UW-Whitewater,TEAM,offense,35,35,62
+UW-Oshkosh Titans,TEAM,offense,20,45,14
+UW-Whitewater,TEAM,offense,40,30,65
+UW-Whitewater,TEAM,offense,40,35,72
+UW-Oshkosh Titans,TEAM,defense,45,10,8
+UW-Oshkosh Titans,TEAM,defense,45,30,54
+UW-Oshkosh Titans,TEAM,defense,45,25,68
+UW-Oshkosh Titans,Brandon Beck,offense,30,25,5
+UW-Oshkosh Titans,Brandon Beck,offense,20,30,2
+UW-Oshkosh Titans,Brandon Beck,offense,20,35,9
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,25,40,8
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,20,40,4
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,15,35,8
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,25,30,8
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,0,20,7
+UW-Oshkosh Titans,TEAM,defense,5,45,28
+UW-Oshkosh Titans,TEAM,offense,0,35,66
+UW-Oshkosh Titans,TEAM,offense,5,45,5
+UW-Whitewater,Jake Quast,defense,15,10,17
+UW-Whitewater,Jake Quast,defense,20,5,6
+UW-Whitewater,Jake Quast,defense,10,15,16
+UW-Whitewater,Jake Quast,defense,35,20,13
+UW-Whitewater,Jake Quast,defense,30,25,8
+UW-Whitewater,Jake Quast,defense,35,10,12
+UW-Whitewater,Jake Quast,defense,35,5,8
+UW-Whitewater,TEAM,defense,5,25,30
+UW-Oshkosh Titans,TEAM,defense,45,45,13
+UW-Whitewater,Jake Quast,offense,5,40,2
+UW-Whitewater,TEAM,offense,25,0,20
+UW-Oshkosh Titans,TEAM,defense,45,40,21
+UW-Whitewater,Jake Quast,offense,15,35,3
+UW-Whitewater,Jake Quast,offense,10,30,19
+UW-Whitewater,Jake Quast,offense,15,20,10
+UW-Whitewater,Jake Quast,offense,40,20,7
+UW-Whitewater,Jake Quast,offense,35,15,3
+UW-Whitewater,Jake Quast,offense,30,15,11
+UW-Whitewater,Jake Quast,offense,10,15,3
+UW-Whitewater,Jake Quast,offense,5,15,15
+UW-Whitewater,Jake Quast,offense,5,20,10
+UW-Whitewater,Jake Quast,offense,15,15,15
+UW-Whitewater,TEAM,offense,45,30,15
+UW-Whitewater,Jake Quast,offense,30,10,16
+UW-Whitewater,Jake Quast,offense,0,15,2
+UW-Whitewater,Jake Quast,offense,10,20,11
+UW-Whitewater,Jake Quast,offense,10,25,9
+UW-Whitewater,Jake Quast,offense,15,30,10
+UW-Whitewater,Jake Quast,offense,25,40,2
+UW-Whitewater,Jake Quast,defense,35,15,2
+UW-Whitewater,Jake Quast,defense,30,20,14
+UW-Whitewater,Jake Quast,defense,15,15,13
+UW-Whitewater,Jake Quast,defense,10,20,4
+UW-Oshkosh Titans,Brandon Beck,offense,35,20,5
+UW-Oshkosh Titans,TEAM,offense,10,0,3
+UW-Oshkosh Titans,TEAM,offense,0,30,62
+UW-Whitewater,Jake Quast,offense,10,45,1
+UW-Oshkosh Titans,Brandon Beck,defense,10,20,11
+UW-Oshkosh Titans,Brandon Beck,defense,5,20,5
+UW-Oshkosh Titans,Brandon Beck,defense,0,20,10
+UW-Oshkosh Titans,Brandon Beck,defense,0,10,11
+UW-Oshkosh Titans,Brandon Beck,defense,0,0,2
+UW-Oshkosh Titans,Brandon Beck,defense,5,0,6
+UW-Oshkosh Titans,Brandon Beck,defense,45,5,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,15,25,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,10,25,2
+UW-Oshkosh Titans,TEAM,defense,10,0,19
+UW-Whitewater,Jake Quast,offense,20,25,6
+UW-Whitewater,Jake Quast,offense,40,15,4
+UW-Whitewater,Jake Quast,offense,20,30,19
+UW-Whitewater,Jake Quast,offense,20,20,20
+UW-Whitewater,Jake Quast,offense,25,20,29
+UW-Whitewater,Jake Quast,offense,35,10,10
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,20,15,5
+UW-Whitewater,Jake Quast,offense,30,25,7
+UW-Oshkosh Titans,Brandon Beck,offense,45,15,3
+UW-Whitewater,Jake Quast,defense,20,40,2
+UW-Whitewater,Jake Quast,defense,20,30,16
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,40,40,4
+UW-Whitewater,Jake Quast,defense,30,10,13
+UW-Whitewater,Jake Quast,defense,25,15,16
+UW-Whitewater,Jake Quast,defense,35,30,8
+UW-Whitewater,Jake Quast,defense,30,30,5
+UW-Whitewater,Jake Quast,defense,20,10,6
+UW-Whitewater,Jake Quast,defense,15,5,10
+UW-Whitewater,Jake Quast,defense,30,15,17
+UW-Oshkosh Titans,Brandon Beck,offense,20,20,8
+UW-Whitewater,Jake Quast,defense,30,35,7
+UW-Whitewater,TEAM,offense,40,0,8
+UW-Whitewater,TEAM,offense,45,45,7
+UW-Whitewater,Jake Quast,offense,25,35,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,45,25,4
+UW-Oshkosh Titans,Brandon Beck,offense,5,15,1
+UW-Oshkosh Titans,Brandon Beck,offense,5,25,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,25,10,1
+UW-Whitewater,TEAM,defense,5,45,10
+UW-Whitewater,Jake Quast,defense,5,40,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,35,25,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,35,20,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,25,25,18
+UW-Oshkosh Titans,TEAM,offense,45,5,13
+UW-Whitewater,Jake Quast,defense,5,15,8
+UW-Whitewater,Jake Quast,defense,5,10,6
+UW-Whitewater,TEAM,defense,5,10,21
+UW-Whitewater,Jake Quast,defense,0,10,2
+UW-Whitewater,TEAM,defense,0,10,10
+UW-Whitewater,TEAM,offense,45,5,9
+UW-Whitewater,Jake Quast,offense,0,10,3
+UW-Whitewater,Jake Quast,offense,5,10,10
+UW-Whitewater,Jake Quast,offense,10,10,2
+UW-Whitewater,Jake Quast,offense,15,10,21
+UW-Whitewater,Jake Quast,offense,10,5,6
+UW-Whitewater,Jake Quast,offense,15,5,5
+UW-Whitewater,Jake Quast,offense,15,40,6
+UW-Whitewater,Jake Quast,defense,40,15,3
+UW-Whitewater,Jake Quast,defense,40,5,5
+UW-Oshkosh Titans,TEAM,offense,40,0,12
+UW-Whitewater,Jake Quast,defense,45,20,21
+UW-Whitewater,Jake Quast,defense,35,25,9
+UW-Whitewater,Jake Quast,defense,30,40,9
+UW-Whitewater,Jake Quast,offense,30,30,10
+UW-Whitewater,Jake Quast,offense,35,25,14
+UW-Whitewater,Jake Quast,offense,30,20,2
+UW-Whitewater,Jake Quast,offense,25,15,5
+UW-Whitewater,Jake Quast,offense,5,25,13
+UW-Whitewater,Jake Quast,offense,45,45,1
+UW-Whitewater,Jake Quast,offense,45,40,4
+UW-Whitewater,Jake Quast,offense,45,35,2
+UW-Whitewater,TEAM,offense,45,35,30
+UW-Whitewater,Jake Quast,offense,35,40,4
+UW-Whitewater,Jake Quast,offense,30,40,4
+UW-Whitewater,TEAM,offense,0,45,7
+UW-Whitewater,Jake Quast,offense,40,25,6
+UW-Whitewater,Jake Quast,offense,45,25,5
+UW-Whitewater,Jake Quast,defense,40,20,8
+UW-Whitewater,Jake Quast,defense,40,10,4
+UW-Whitewater,Jake Quast,defense,40,0,4
+UW-Whitewater,Jake Quast,defense,25,20,13
+UW-Whitewater,Jake Quast,defense,20,15,6
+UW-Whitewater,Jake Quast,offense,25,25,10
+UW-Oshkosh Titans,Brandon Beck,defense,20,25,12
+UW-Whitewater,Jake Quast,offense,45,20,16
+UW-Whitewater,Jake Quast,offense,45,15,4
+UW-Whitewater,Jake Quast,offense,35,20,6
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,20,10,1
+UW-Whitewater,Jake Quast,defense,25,25,14
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,25,35,11
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,45,35,4
+UW-Whitewater,Jake Quast,defense,20,0,1
+UW-Whitewater,Jake Quast,defense,0,20,5
+UW-Oshkosh Titans,Brandon Beck,defense,15,40,1
+UW-Oshkosh Titans,Brandon Beck,defense,20,35,1
+UW-Oshkosh Titans,Brandon Beck,defense,25,30,12
+UW-Oshkosh Titans,Brandon Beck,defense,15,25,2
+UW-Oshkosh Titans,TEAM,defense,35,5,42
+UW-Oshkosh Titans,Brandon Beck,defense,35,15,1
+UW-Oshkosh Titans,Brandon Beck,defense,20,5,5
+UW-Oshkosh Titans,Brandon Beck,defense,40,10,2
+UW-Whitewater,Jake Quast,offense,20,15,10
+UW-Oshkosh Titans,Brandon Beck,defense,30,25,3
+UW-Whitewater,Jake Quast,offense,40,30,4
+UW-Whitewater,Jake Quast,offense,35,35,4
+UW-Whitewater,TEAM,defense,0,25,19
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,25,45,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,5,35,4
+UW-Whitewater,TEAM,defense,45,5,6
+UW-Whitewater,TEAM,defense,45,0,4
+UW-Oshkosh Titans,TEAM,offense,20,10,31
+UW-Oshkosh Titans,TEAM,offense,10,20,43
+UW-Oshkosh Titans,TEAM,offense,0,10,9
+UW-Whitewater,TEAM,defense,0,30,28
+UW-Whitewater,TEAM,defense,5,5,8
+UW-Oshkosh Titans,TEAM,offense,30,0,10
+UW-Whitewater,TEAM,defense,45,35,20
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,15,35,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,25,35,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,25,5,7
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,20,5,6
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,40,25,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,45,45,1
+UW-Oshkosh Titans,Brandon Beck,offense,35,0,1
+UW-Oshkosh Titans,Brandon Beck,offense,40,0,1
+UW-Oshkosh Titans,Brandon Beck,offense,35,45,6
+UW-Oshkosh Titans,Brandon Beck,offense,10,20,5
+UW-Whitewater,TEAM,offense,15,0,4
+UW-Oshkosh Titans,Brandon Beck,offense,25,35,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,20,15,5
+UW-Whitewater,TEAM,offense,20,0,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,0,40,3
+UW-Oshkosh Titans,TEAM,defense,25,45,11
+UW-Whitewater,TEAM,offense,35,45,15
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,45,5,7
+UW-Oshkosh Titans,TEAM,offense,5,10,7
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,35,5,4
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,20,10,4
+UW-Oshkosh Titans,Brandon Beck,defense,40,40,19
+UW-Oshkosh Titans,Brandon Beck,defense,25,40,4
+UW-Oshkosh Titans,Brandon Beck,defense,30,30,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,45,40,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,40,30,7
+UW-Oshkosh Titans,Brandon Beck,defense,45,35,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,15,0,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,35,5,3
+UW-Oshkosh Titans,Brandon Beck,offense,0,40,12
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,45,15,13
+UW-Oshkosh Titans,TEAM,defense,35,45,18
+UW-Whitewater,Jake Quast,offense,0,20,6
+UW-Whitewater,Jake Quast,offense,15,25,9
+UW-Whitewater,Jake Quast,offense,35,30,6
+UW-Whitewater,Jake Quast,offense,30,5,9
+UW-Whitewater,Jake Quast,offense,0,30,1
+UW-Whitewater,Jake Quast,defense,15,35,5
+UW-Whitewater,Jake Quast,defense,10,35,2
+UW-Whitewater,Jake Quast,defense,15,30,4
+UW-Oshkosh Titans,TEAM,offense,25,0,7
+UW-Whitewater,Jake Quast,defense,25,30,20
+UW-Whitewater,Jake Quast,defense,20,25,10
+UW-Whitewater,Jake Quast,defense,30,5,7
+UW-Whitewater,TEAM,defense,0,45,8
+UW-Whitewater,TEAM,defense,0,40,18
+UW-Whitewater,Jake Quast,defense,40,40,4
+UW-Whitewater,Jake Quast,defense,40,35,3
+UW-Whitewater,Jake Quast,defense,40,25,3
+UW-Oshkosh Titans,Brandon Beck,offense,0,45,4
+UW-Oshkosh Titans,TEAM,offense,0,45,7
+UW-Whitewater,Jake Quast,defense,10,30,2
+UW-Whitewater,Jake Quast,defense,5,30,1
+UW-Whitewater,TEAM,defense,0,0,2
+UW-Whitewater,TEAM,defense,0,5,5
+UW-Whitewater,TEAM,defense,5,0,3
+UW-Oshkosh Titans,Brandon Beck,offense,35,10,13
+UW-Oshkosh Titans,Brandon Beck,offense,25,15,4
+UW-Oshkosh Titans,Brandon Beck,offense,20,15,12
+UW-Oshkosh Titans,Brandon Beck,offense,0,30,11
+UW-Oshkosh Titans,Brandon Beck,offense,0,25,7
+UW-Oshkosh Titans,Brandon Beck,offense,5,30,1
+UW-Oshkosh Titans,Brandon Beck,offense,5,35,5
+UW-Oshkosh Titans,Brandon Beck,offense,0,35,16
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,15,5,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,20,5,1
+UW-Whitewater,Jake Quast,defense,10,25,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,35,15,2
+UW-Whitewater,Jake Quast,defense,0,35,2
+UW-Whitewater,TEAM,defense,0,35,13
+UW-Whitewater,Jake Quast,defense,25,40,1
+UW-Whitewater,Jake Quast,defense,35,40,5
+UW-Whitewater,Jake Quast,offense,20,40,3
+UW-Whitewater,Jake Quast,offense,20,35,7
+UW-Oshkosh Titans,Brandon Beck,defense,45,40,3
+UW-Oshkosh Titans,Brandon Beck,defense,45,30,15
+UW-Whitewater,Jake Quast,offense,40,10,2
+UW-Whitewater,Jake Quast,offense,45,10,7
+UW-Oshkosh Titans,Brandon Beck,defense,20,30,9
+UW-Whitewater,TEAM,offense,45,0,1
+UW-Whitewater,Jake Quast,offense,35,0,4
+UW-Whitewater,Jake Quast,defense,30,45,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,15,45,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,15,40,4
+UW-Whitewater,Jake Quast,defense,5,25,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,10,35,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,45,25,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,10,10,1
+UW-Oshkosh Titans,TEAM,defense,45,0,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,15,30,2
+UW-Oshkosh Titans,Brandon Beck,defense,5,45,17
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,5,0,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,0,0,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,10,0,1
+UW-Oshkosh Titans,Brandon Beck,defense,40,30,15
+UW-Oshkosh Titans,Brandon Beck,defense,40,35,9
+UW-Oshkosh Titans,Brandon Beck,defense,40,45,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,35,0,16
+UW-Oshkosh Titans,Brandon Beck,defense,45,25,1
+UW-Oshkosh Titans,Brandon Beck,defense,45,20,2
+UW-Oshkosh Titans,TEAM,defense,40,5,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,20,25,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,15,40,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,20,45,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,25,30,5
+UW-Oshkosh Titans,Brandon Beck,defense,35,35,3
+UW-Oshkosh Titans,Brandon Beck,defense,25,45,3
+UW-Oshkosh Titans,Brandon Beck,offense,20,25,1
+UW-Oshkosh Titans,Brandon Beck,offense,10,30,4
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,0,35,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,30,25,4
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,30,30,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,20,30,4
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,5,35,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,5,40,3
+UW-Oshkosh Titans,Brandon Beck,offense,30,45,4
+UW-Oshkosh Titans,Brandon Beck,offense,15,40,3
+UW-Oshkosh Titans,Brandon Beck,offense,15,35,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,30,25,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,5,5,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,15,5,4
+UW-Oshkosh Titans,Brandon Beck,defense,15,45,10
+UW-Oshkosh Titans,Brandon Beck,offense,0,20,1
+UW-Oshkosh Titans,Brandon Beck,offense,25,20,1
+UW-Oshkosh Titans,Brandon Beck,offense,15,45,5
+UW-Oshkosh Titans,Brandon Beck,offense,15,25,6
+UW-Oshkosh Titans,Brandon Beck,offense,25,30,3
+UW-Whitewater,Jake Quast,offense,25,30,14
+UW-Oshkosh Titans,Brandon Beck,defense,20,40,1
+UW-Oshkosh Titans,Brandon Beck,defense,30,45,2
+UW-Oshkosh Titans,Brandon Beck,offense,15,15,4
+UW-Whitewater,Jake Quast,defense,25,35,1
+UW-Oshkosh Titans,Brandon Beck,defense,35,25,2
+UW-Oshkosh Titans,Brandon Beck,defense,30,20,5
+UW-Whitewater,Jake Quast,offense,25,10,6
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,30,30,3
+UW-Oshkosh Titans,Brandon Beck,offense,15,0,9
+UW-Oshkosh Titans,Brandon Beck,offense,25,25,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,25,0,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,30,0,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,40,0,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,40,5,2
+UW-Whitewater,Jake Quast,defense,10,45,3
+UW-Whitewater,TEAM,defense,10,45,15
+UW-Whitewater,Jake Quast,offense,40,35,4
+UW-Whitewater,Jake Quast,offense,35,5,6
+UW-Oshkosh Titans,Brandon Beck,defense,20,20,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,0,10,1
+UW-Whitewater,Jake Quast,offense,20,10,10
+UW-Whitewater,Jake Quast,offense,20,5,8
+UW-Whitewater,TEAM,defense,15,0,9
+UW-Oshkosh Titans,TEAM,offense,5,0,4
+UW-Whitewater,TEAM,defense,45,45,6
+UW-Whitewater,Jake Quast,defense,25,10,3
+UW-Whitewater,Jake Quast,defense,25,5,7
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,25,5,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,45,45,1
+UW-Whitewater,Jake Quast,offense,10,40,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,5,25,3
+UW-Oshkosh Titans,Brandon Beck,defense,15,0,3
+UW-Oshkosh Titans,Brandon Beck,offense,10,35,2
+UW-Whitewater,Jake Quast,defense,20,35,8
+UW-Whitewater,Jake Quast,defense,45,40,3
+UW-Whitewater,Jake Quast,defense,20,20,2
+UW-Whitewater,Jake Quast,offense,30,35,5
+UW-Whitewater,Jake Quast,defense,35,45,1
+UW-Whitewater,Jake Quast,defense,35,35,3
+UW-Whitewater,Jake Quast,defense,15,40,5
+UW-Whitewater,Jake Quast,defense,45,15,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,5,10,4
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,40,20,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,40,15,1
+UW-Oshkosh Titans,Brandon Beck,defense,40,20,2
+UW-Oshkosh Titans,Brandon Beck,defense,40,25,1
+UW-Oshkosh Titans,Brandon Beck,defense,35,30,1
+UW-Oshkosh Titans,Brandon Beck,defense,30,10,1
+UW-Oshkosh Titans,Brandon Beck,defense,35,40,12
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,45,30,3
+UW-Whitewater,Jake Quast,defense,25,45,1
+UW-Whitewater,Jake Quast,defense,10,40,6
+UW-Whitewater,Jake Quast,defense,15,25,3
+UW-Whitewater,Jake Quast,defense,10,5,3
+UW-Whitewater,Jake Quast,defense,45,35,1
+UW-Oshkosh Titans,Brandon Beck,defense,25,10,1
+UW-Whitewater,Jake Quast,offense,10,35,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,0,15,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,25,20,2
+UW-Oshkosh Titans,Brandon Beck,offense,0,10,2
+UW-Oshkosh Titans,Brandon Beck,offense,10,0,1
+UW-Oshkosh Titans,Brandon Beck,offense,0,5,3
+UW-Oshkosh Titans,TEAM,offense,0,5,5
+UW-Oshkosh Titans,Brandon Beck,offense,15,20,1
+UW-Whitewater,Jake Quast,defense,45,30,2
+UW-Oshkosh Titans,Brandon Beck,offense,15,10,4
+UW-Oshkosh Titans,Brandon Beck,offense,10,5,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,0,10,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,15,0,1
+UW-Oshkosh Titans,Brandon Beck,offense,5,40,1
+UW-Oshkosh Titans,Brandon Beck,offense,20,40,2
+UW-Whitewater,Jake Quast,defense,0,30,1
+UW-Whitewater,TEAM,defense,25,0,5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,5,30,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,15,10,4
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,5,0,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,5,5,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,5,15,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,10,45,1
+UW-Whitewater,Jake Quast,offense,0,5,1
+UW-Whitewater,Jake Quast,offense,5,5,10
+UW-Whitewater,Jake Quast,defense,0,5,1
+UW-Whitewater,Jake Quast,offense,25,0,1
+UW-Whitewater,Jake Quast,offense,25,5,4
+UW-Whitewater,Jake Quast,defense,30,0,3
+UW-Whitewater,Jake Quast,defense,25,0,3
+UW-Whitewater,Jake Quast,defense,0,15,4
+UW-Whitewater,Jake Quast,defense,35,0,1
+UW-Whitewater,Jake Quast,offense,35,45,4
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,45,20,1
+UW-Oshkosh Titans,Brandon Beck,offense,35,15,2
+UW-Oshkosh Titans,Brandon Beck,offense,40,15,2
+UW-Whitewater,Jake Quast,offense,20,45,1
+UW-Whitewater,Jake Quast,offense,45,30,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,25,0,3
+UW-Oshkosh Titans,Brandon Beck,defense,0,5,2
+UW-Whitewater,Jake Quast,defense,0,40,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,10,20,2
+UW-Whitewater,Jake Quast,defense,5,20,8
+UW-Oshkosh Titans,Brandon Beck,defense,35,20,1
+UW-Oshkosh Titans,TEAM,defense,40,0,2
+UW-Whitewater,Jake Quast,offense,5,30,6
+UW-Whitewater,Jake Quast,offense,40,40,1
+UW-Whitewater,Jake Quast,offense,5,35,1
+UW-Whitewater,Jake Quast,defense,45,0,1
+UW-Whitewater,Jake Quast,defense,5,5,1
+UW-Whitewater,Jake Quast,defense,10,10,3
+UW-Whitewater,Jake Quast,defense,45,25,5
+UW-Oshkosh Titans,Brandon Beck,offense,35,5,3
+UW-Oshkosh Titans,Brandon Beck,offense,40,5,1
+UW-Oshkosh Titans,Brandon Beck,offense,10,45,7
+UW-Whitewater,Jake Quast,defense,40,45,1
+UW-Whitewater,Jake Quast,offense,5,45,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,15,20,5
+UW-Oshkosh Titans,Brandon Beck,defense,40,15,2
+UW-Oshkosh Titans,Brandon Beck,defense,20,10,1
+UW-Whitewater,Jake Quast,defense,15,20,1
+UW-Oshkosh Titans,Brandon Beck,offense,5,5,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,0,30,2
+UW-Oshkosh Titans,TEAM,offense,20,0,3
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,20,35,4
+UW-Whitewater,Jake Quast,offense,20,0,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,45,40,1
+UW-Whitewater,Jake Quast,defense,15,45,1
+UW-Oshkosh Titans,Brandon Beck,defense,35,45,2
+UW-Oshkosh Titans,Michael Metcalf-Grassman,offense,35,30,1
+UW-Oshkosh Titans,Brandon Beck,offense,15,5,2
+UW-Oshkosh Titans,Brandon Beck,offense,20,0,2
+UW-Oshkosh Titans,Brandon Beck,offense,10,40,1
+UW-Oshkosh Titans,Brandon Beck,offense,20,10,1
+UW-Oshkosh Titans,Michael Metcalf-Grassman,defense,25,45,1
+UW-Oshkosh Titans,Brandon Beck,defense,25,0,1

@@ -1,7 +1,6 @@
 opponent,clip_group,clips,who_watches,is_sample
-UW-Stevens Point Pointers,Flow (Half court),36,Whole team -- scout team runs it,False
-UW-Stevens Point Pointers,Chin (Half court),24,Whole team -- scout team runs it,False
-UW-Stevens Point Pointers,3-2 (Half court),16,Whole team -- scout team runs it,False
-UW-Stevens Point Pointers,Get (Half court),15,Whole team -- scout team runs it,False
-UW-Stevens Point Pointers,BLOB (BLOB),20,Whole team,False
-UW-Stevens Point Pointers,SLOB (SLOB (ATO)),12,Whole team,False
+UW-Stevens Point Pointers,Their base offense (5-Out Motion),6,Whole team,True
+UW-Stevens Point Pointers,Carter Combs post touches and offensive rebounds,5,Bigs,True
+UW-Stevens Point Pointers,BLOB / SLOB / ATO,8,Whole team,True
+UW-Stevens Point Pointers,Their ball-screen coverage vs us-type guards,5,Guards,True
+UW-Stevens Point Pointers,Press break and 1-2-1-1,4,Whole team,True

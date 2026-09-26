@@ -1,0 +1,49 @@
+offense_team,defense_team,screen_type,zone,coverage,screens,ppp
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Backcourt,Top Lock,1,0.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Backcourt,rj,1,
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Backcourt,separated (under / behind),1,0.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Backcourt,unclear,3,2.33
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left baseline,rj,1,2.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left baseline,separated (under / behind),1,0.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left elbow,Top Lock,1,3.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left wing,Top Lock,1,0.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left wing,rj,1,
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left wing,unclear,2,0.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Mid-court,Over,1,0.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Mid-court,unclear,2,0.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right baseline,stayed attached (lock / trail),1,2.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right elbow,m2m,1,1.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right elbow,unclear,3,1.33
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right wing,12,1,0.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right wing,separated (under / behind),3,3.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right wing,stay,1,0.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right wing,stayed attached (lock / trail),1,0.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right wing,unclear,2,0.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Top of key,rj,2,1.5
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Top of key,separated (under / behind),3,1.0
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Top of key,unclear,2,0.0
+UW-Whitewater,UW-Oshkosh Titans,Ball screen,Right wing,unclear,2,1.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Backcourt,double madz,1,0.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Backcourt,rj,7,0.83
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Backcourt,unclear,1,0.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left baseline,rj,1,0.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left baseline,unclear,2,2.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left elbow,rj,4,0.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left elbow,separated (under / behind),1,0.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left elbow,unclear,2,0.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left wing,rj,5,1.25
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left wing,separated (under / behind),2,0.5
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left wing,unclear,1,0.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Mid-court,rj,3,1.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Mid-court,separated (under / behind),1,0.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Mid-court,unclear,1,
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Paint / post,rj,1,2.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Paint / post,separated (under / behind),1,0.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right baseline,rj,1,
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right baseline,unclear,1,0.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right wing,rj,5,1.8
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right wing,separated (under / behind),1,0.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Top of key,rj,7,0.4
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Top of key,separated (under / behind),6,1.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Top of key,stayed attached (lock / trail),1,2.0
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Top of key,unclear,3,0.67

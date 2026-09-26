@@ -1,279 +1,120 @@
 opponent,period,time_remaining_seconds,team,player,result,coach_note,play_call,clip_side,game_date,points,play_series,play_title,play_actions,play_location,play_situation
-St. Thomas (TX) Celts,H1,1162.0,UW-Whitewater,Isaac Verges,Turnover,,Twins,Offense,2025-11-14,0,Twins,Twins-: M2M,,,Half court
-St. Thomas (TX) Celts,H1,1156.0,UW-Whitewater,Nathan Kongolo,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-14,0,Transition,Tran,,,Transition
-St. Thomas (TX) Celts,H1,1149.0,UW-Whitewater,Isaac Verges,Turnover,,Transition (unspecified),Offense,2025-11-14,0,Transition,Tran,,,Transition
-St. Thomas (TX) Celts,H1,1145.0,UW-Whitewater,Angel Johnson,Make 2 Pts,,Transition (unspecified),Offense,2025-11-14,2,Transition,Tran,,,Transition
-St. Thomas (TX) Celts,H1,1114.0,UW-Whitewater,Isaac Verges,Miss 2 Pts,,Flow,Offense,2025-11-14,0,Flow,Flow: R + J,,,Half court
-St. Thomas (TX) Celts,H1,1084.0,UW-Whitewater,Collin Madson,Make 2 Pts,,5 Out Flare,Offense,2025-11-14,2,5 Out,5 Out Flair: M2M,Flare,,Half court
-St. Thomas (TX) Celts,H1,1039.0,UW-Whitewater,Jr Lukenbill,Make 3 Pts,,Flow,Offense,2025-11-14,3,Flow,Flow: M2M Press,,,Half court
-St. Thomas (TX) Celts,H1,1015.0,UW-Whitewater,Angel Johnson,Make 2 Pts,,BLOB,Offense,2025-11-14,2,BLOB,UWW:M2M: BLOB,,,BLOB
-St. Thomas (TX) Celts,H1,,UW-Whitewater,Isaac Verges,No Violation,,Flow,Offense,2025-11-14,,Flow,Flow: R+J,,,Half court
-St. Thomas (TX) Celts,H1,997.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,SLOB,Offense,2025-11-14,0,SLOB,Slob: M2M,,,SLOB
-St. Thomas (TX) Celts,H1,962.0,UW-Whitewater,Brock Marino,Make 3 Pts,,Flow,Offense,2025-11-14,3,Flow,Flow: M2M: Deny,,,Half court
-St. Thomas (TX) Celts,H1,,UW-Whitewater,Luke Bara,Non Shooting Foul,,5 Out,Offense,2025-11-14,,5 Out,5 Out: M2M: Drop+Press,,,Half court
-St. Thomas (TX) Celts,H1,904.0,UW-Whitewater,Brock Marino,Miss 2 Pts,,SLOB,Offense,2025-11-14,0,SLOB,Slob: M2M: Drop,,,SLOB
-St. Thomas (TX) Celts,H1,879.0,UW-Whitewater,Isaac Verges,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-14,0,Transition,Tran,,,Transition
-St. Thomas (TX) Celts,H1,866.0,UW-Whitewater,Corey Thompson,Turnover,,Transition (unspecified),Offense,2025-11-14,0,Transition,Tran,,,Transition
-St. Thomas (TX) Celts,H1,840.0,UW-Whitewater,Jr Lukenbill,Make 3 Pts,,5 Out,Offense,2025-11-14,3,5 Out,5 Out- M2M: Drop+Press,,,Half court
-St. Thomas (TX) Celts,H1,,UW-Whitewater,Luke Bara,Non Shooting Foul,,Transition (unspecified),Offense,2025-11-14,,Transition,Tran,,,Transition
-St. Thomas (TX) Celts,H1,809.0,UW-Whitewater,Jr Lukenbill,Miss 3 Pts,,BLOB Line Reject,Offense,2025-11-14,0,BLOB,Blob-Line- reject: M2M,Reject,,BLOB
-St. Thomas (TX) Celts,H1,768.0,UW-Whitewater,Darius Chestnut,Miss 3 Pts,,Twins Ball Screen,Offense,2025-11-14,0,Twins,Twins: Press: Hedge BS,Ball Screen,,Half court
-St. Thomas (TX) Celts,H1,759.0,UW-Whitewater,Collin Madson,Make 3 Pts,,BLOB Line,Offense,2025-11-14,3,BLOB,Blob: L : M2M,,,BLOB
-St. Thomas (TX) Celts,H1,735.0,UW-Whitewater,Jake Quast,Make 2 Pts,,Transition (unspecified),Offense,2025-11-14,2,Transition,Tran,,,Transition
-St. Thomas (TX) Celts,H1,701.0,UW-Whitewater,Richie Warren,0 Pts,,5 Out Flare,Offense,2025-11-14,2,5 Out,5 Out-flairs- M2M,Flare,,Half court
-St. Thomas (TX) Celts,H1,685.0,UW-Whitewater,Darius Chestnut,Turnover,,BLOB Line Curl,Offense,2025-11-14,0,BLOB,Blob-Line-Curl- M2M,Curl,,BLOB
-St. Thomas (TX) Celts,H1,660.0,UW-Whitewater,Richie Warren,Turnover,,5 Out,Offense,2025-11-14,0,5 Out,5 Out- M2M- Press,,,Half court
-St. Thomas (TX) Celts,H1,625.0,UW-Whitewater,Collin Madson,Make 3 Pts,,5 Out,Offense,2025-11-14,3,5 Out,5 Out- M2M: Press,,,Half court
-St. Thomas (TX) Celts,H1,586.0,UW-Whitewater,Joey Berezowitz,Turnover,,Transition (unspecified),Offense,2025-11-14,0,Transition,Tran,,,Transition
-St. Thomas (TX) Celts,H1,546.0,UW-Whitewater,Collin Madson,Foul,,Twins,Offense,2025-11-14,2,Twins,Twins Swirl: M2M Press,,,Half court
-St. Thomas (TX) Celts,H1,512.0,UW-Whitewater,Joey Berezowitz,Turnover,,Flow,Offense,2025-11-14,0,Flow,FLow- M2M Press,,,Half court
-St. Thomas (TX) Celts,H1,470.0,UW-Whitewater,Jake Quast,Make 2 Pts,,Flow,Offense,2025-11-14,2,Flow,Tran: Flow: M2M: Drop,,,Transition
-St. Thomas (TX) Celts,H1,455.0,UW-Whitewater,Richie Warren,Make 2 Pts,,Transition (unspecified),Offense,2025-11-14,2,Transition,Tran,,,Transition
-St. Thomas (TX) Celts,H1,449.0,UW-Whitewater,Angel Johnson,0 Pts,,ATO (unspecified),Offense,2025-11-14,2,ATO,UWW M2M: ATO,,,ATO
-St. Thomas (TX) Celts,H1,422.0,UW-Whitewater,Jr Lukenbill,Miss 2 Pts,,5 Out,Offense,2025-11-14,0,5 Out,5 Out- M2M,,,Half court
-St. Thomas (TX) Celts,H1,410.0,UW-Whitewater,Tamarcus Butler,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-14,0,Transition,Tran,,,Transition
-St. Thomas (TX) Celts,H1,398.0,UW-Whitewater,Brock Marino,Foul,,Flow,Offense,2025-11-14,0,Flow,Flow: M2M Press,,,Half court
-St. Thomas (TX) Celts,H1,354.0,UW-Whitewater,Charles Gitonga,Miss 2 Pts,,BLOB,Offense,2025-11-14,0,BLOB,UWW M2M-BLOB,,,BLOB
-St. Thomas (TX) Celts,H1,336.0,UW-Whitewater,Brock Marino,Make 3 Pts,,Flow,Offense,2025-11-14,3,Flow,Flow: M2M Press,,,Half court
-St. Thomas (TX) Celts,H1,307.0,UW-Whitewater,Brock Marino,Make 3 Pts,,Flow,Offense,2025-11-14,3,Flow,Flow: M2M PRESS,,,Half court
-St. Thomas (TX) Celts,H1,268.0,UW-Whitewater,Isaac Verges,Foul,,Flow,Offense,2025-11-14,1,Flow,Flow: M2M Press,,,Half court
-St. Thomas (TX) Celts,H1,238.0,UW-Whitewater,Angel Johnson,Turnover,,BLOB,Offense,2025-11-14,0,BLOB,UWW M2M: Blob,,,BLOB
-St. Thomas (TX) Celts,H1,234.0,UW-Whitewater,Isaac Verges,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-14,0,Transition,Tran,,,Transition
-St. Thomas (TX) Celts,H1,223.0,UW-Whitewater,Angel Johnson,Make 3 Pts,,Transition (unspecified),Offense,2025-11-14,3,Transition,Tran,,,Transition
-St. Thomas (TX) Celts,H1,203.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,Flow,Offense,2025-11-14,0,Flow,Flow: M2M Press,,,Half court
-St. Thomas (TX) Celts,H1,156.0,UW-Whitewater,Jake Quast,Miss 2 Pts,,5 Out Ball Screen,Offense,2025-11-14,0,5 Out,5 Out- BS : M2M Press,Ball Screen,,Half court
-St. Thomas (TX) Celts,H1,105.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Panther,Offense,2025-11-14,0,Panther,Panther: M2M,,,Half court
-St. Thomas (TX) Celts,H1,90.0,UW-Whitewater,Brock Marino,Turnover,,BLOB Line Curl,Offense,2025-11-14,0,BLOB,Blob- Line- Curl : M2m,Curl,,BLOB
-St. Thomas (TX) Celts,H1,46.0,UW-Whitewater,Jake Quast,Turnover,,5 Out Down Screen,Offense,2025-11-14,0,5 Out,5 OUT- DS: M2M PRES,Down Screen,,Half court
-St. Thomas (TX) Celts,H1,41.0,UW-Whitewater,Corey Thompson,Make 2 Pts,,Transition (unspecified),Offense,2025-11-14,2,Transition,TRAN,,,Transition
-St. Thomas (TX) Celts,H1,25.0,UW-Whitewater,Isaac Verges,Foul,,5 Out,Offense,2025-11-14,2,5 Out,5 OUT : M2M PRESS,,,Half court
-St. Thomas (TX) Celts,H1,5.0,UW-Whitewater,Corey Thompson,Miss 3 Pts,,ATO (unspecified),Offense,2025-11-14,0,ATO,UWW M2M: ATO,,,ATO
-St. Thomas (TX) Celts,H2,1188.0,UW-Whitewater,Collin Madson,Foul,,Snap,Offense,2025-11-14,2,Snap,SNAP: M2M SWITCH,,,Half court
-St. Thomas (TX) Celts,H2,,UW-Whitewater,Collin Madson,Non Shooting Foul,,Transition (unspecified),Offense,2025-11-14,,Transition,TRAN,,,Transition
-St. Thomas (TX) Celts,H2,1148.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,BLOB Line Curl,Offense,2025-11-14,0,BLOB,BLOB-LINE- CURL: M2M,Curl,,BLOB
-St. Thomas (TX) Celts,H2,1109.0,UW-Whitewater,Isaac Verges,Miss 2 Pts,,5 Out,Offense,2025-11-14,0,5 Out,5 OUT: M2M-SWITCH,,,Half court
-St. Thomas (TX) Celts,H2,1088.0,UW-Whitewater,Luke Bara,Turnover,,Twins,Offense,2025-11-14,0,Twins,TWINS: M2M PRESS,,,Half court
-St. Thomas (TX) Celts,H2,,UW-Whitewater,Collin Madson,Non Shooting Foul,,Twins,Offense,2025-11-14,,Twins,TWINS: M2M PRESS,,,Half court
-St. Thomas (TX) Celts,H2,1042.0,UW-Whitewater,Luke Bara,Make 3 Pts,,BLOB Line Ricky,Offense,2025-11-14,3,BLOB,BLOB-LINE-RICKY: M2M,Ricky,,BLOB
-St. Thomas (TX) Celts,H2,1012.0,UW-Whitewater,Nathan Kongolo,Miss 2 Pts,,BLOB,Offense,2025-11-14,0,BLOB,UWW M2M-BLOB,,,BLOB
-St. Thomas (TX) Celts,H2,987.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,5 Out,Offense,2025-11-14,0,5 Out,5 OUT- M2M PRESS,,,Half court
-St. Thomas (TX) Celts,H2,944.0,UW-Whitewater,Jr Lukenbill,Miss 2 Pts,,5 Out,Offense,2025-11-14,0,5 Out,5 OUT: M2M PRESS- SWITCH,,,Half court
-St. Thomas (TX) Celts,H2,917.0,UW-Whitewater,Corey Thompson,Make 2 Pts,,Transition (unspecified),Offense,2025-11-14,2,Transition,TRAN,,,Transition
-St. Thomas (TX) Celts,H2,889.0,UW-Whitewater,Luke Bara,Turnover,,5 Out Flare,Offense,2025-11-14,0,5 Out,5 OUT FLAIR; M2M SWITCH,Flare,,Half court
-St. Thomas (TX) Celts,H2,855.0,UW-Whitewater,Angel Johnson,Turnover,,BLOB,Offense,2025-11-14,0,BLOB,UWW M2M- BLOB,,,BLOB
-St. Thomas (TX) Celts,H2,850.0,UW-Whitewater,Brock Marino,Foul,,Transition (unspecified),Offense,2025-11-14,1,Transition,TRAN,,,Transition
-St. Thomas (TX) Celts,H2,810.0,UW-Whitewater,Collin Madson,Turnover,,Flow,Offense,2025-11-14,0,Flow,FLOW: M2M 1-2 PRESS,,,Half court
-St. Thomas (TX) Celts,H2,804.0,UW-Whitewater,Corey Thompson,Make 3 Pts,,Transition (unspecified),Offense,2025-11-14,3,Transition,TRAN,,,Transition
-St. Thomas (TX) Celts,H2,776.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,Flow,Offense,2025-11-14,0,Flow,Flow: 1-2-2 M2M,,,Half court
-St. Thomas (TX) Celts,H2,739.0,UW-Whitewater,Jake Quast,Foul,,5 Out Flare,Offense,2025-11-14,2,5 Out,5 OUT-FLAIR-BS: M2M HEDGE,Flare | Ball Screen,,Half court
-St. Thomas (TX) Celts,H2,696.0,UW-Whitewater,Jake Quast,Miss 2 Pts,,5 Out Ball Screen,Offense,2025-11-14,0,5 Out,5 OUT-BS: M2M SWITCH,Ball Screen,,Half court
-St. Thomas (TX) Celts,H2,680.0,UW-Whitewater,Richie Warren,Foul,,Big-on-Big,Offense,2025-11-14,2,Motion / no set,BIG ON BIG : M2M,Big-on-Big,,Half court
-St. Thomas (TX) Celts,H2,636.0,UW-Whitewater,Jake Quast,Miss 2 Pts,,Snap,Offense,2025-11-14,0,Snap,SNAP: M2M PRESS,,,Half court
-St. Thomas (TX) Celts,H2,606.0,UW-Whitewater,Richie Warren,Miss 3 Pts,,Flow,Offense,2025-11-14,0,Flow,FLOW: M2M PRESS,,,Half court
-St. Thomas (TX) Celts,H2,586.0,UW-Whitewater,Garret Rodgers,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-14,0,Transition,TRAN,,,Transition
-St. Thomas (TX) Celts,H2,521.0,UW-Whitewater,Jake Quast,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-14,0,Transition,TRAN,,,Transition
-St. Thomas (TX) Celts,H2,476.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,SLOB,Offense,2025-11-14,1,SLOB,ATO SLOB: M2M,,,SLOB (ATO)
-St. Thomas (TX) Celts,H2,438.0,UW-Whitewater,Kelton Mcewen,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-14,0,Transition,TRAN:M2M PRESS,,,Transition
-St. Thomas (TX) Celts,H2,385.0,UW-Whitewater,Kelton Mcewen,Miss 3 Pts,,Flow Ball Screen,Offense,2025-11-14,0,Flow,FLOW: BS- SWITCH- ICE:M2M PRES,Ball Screen,,Half court
-St. Thomas (TX) Celts,H2,332.0,UW-Whitewater,Richie Warren,Make 2 Pts,,Flow,Offense,2025-11-14,2,Flow,FLOW: M2M PRESS,,,Half court
-St. Thomas (TX) Celts,H2,295.0,UW-Whitewater,Collin Madson,Foul,,Flow,Offense,2025-11-14,2,Flow,FLOW; M2M PRESS,,,Half court
-St. Thomas (TX) Celts,H2,272.0,UW-Whitewater,Jr Lukenbill,Foul,,Flow,Offense,2025-11-14,1,Flow,FLOW:M2M PRESS,,,Half court
-St. Thomas (TX) Celts,H2,247.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,5 Out,Offense,2025-11-14,2,5 Out,5 OUT: M2M,,,Half court
-St. Thomas (TX) Celts,H2,197.0,UW-Whitewater,Kelton Mcewen,Make 2 Pts,,Flow,Offense,2025-11-14,2,Flow,FLOW: M2M PRESS- SWITCH,,,Half court
-St. Thomas (TX) Celts,H2,132.0,UW-Whitewater,Kelton Mcewen,Foul,,Flow,Offense,2025-11-14,1,Flow,FLOW:M2M PRESS,,,Half court
-St. Thomas (TX) Celts,H2,115.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Flow,Offense,2025-11-14,2,Flow,FLOW: M2M PRESS- SWITCH,,,Half court
-St. Thomas (TX) Celts,H2,72.0,UW-Whitewater,Collin Madson,Make 3 Pts,,Flow,Offense,2025-11-14,3,Flow,FLOW: M2M PRESS- ICE,,,Half court
-St. Thomas (TX) Celts,H2,19.0,UW-Whitewater,Luke Bara,Make 3 Pts,,Flow,Offense,2025-11-14,3,Flow,FLOW: M2M,,,Half court
-Ripon Red Hawks,H1,1158.0,UW-Whitewater,Isaac Verges,Miss 3 Pts,,Snap,Offense,2025-11-07,0,Snap,SNAP- M2M DROP,,,Half court
-Ripon Red Hawks,H1,1128.0,UW-Whitewater,Kolby Williams,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,UWW M2M: TRAN,,,Transition
-Ripon Red Hawks,H1,1110.0,UW-Whitewater,Collin Madson,Turnover,,Cheetah,Offense,2025-11-07,0,Cheetah,OVER-CHEETAH: M2M SWITCH,,,Half court
-Ripon Red Hawks,H1,1088.0,UW-Whitewater,Michael Asman,Make 3 Pts,,Transition (unspecified),Offense,2025-11-07,3,Transition,UWW M2M:TRAN,,,Transition
-Ripon Red Hawks,H1,1071.0,UW-Whitewater,Isaac Verges,Miss 2 Pts,,5 Out Down Screen,Offense,2025-11-07,0,5 Out,5 OUT- DS- M2M,Down Screen,,Half court
-Ripon Red Hawks,H1,1044.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,BLOB Line Curl,Offense,2025-11-07,0,BLOB,BLOB- LINE- CURL- M2M,Curl,,BLOB
-Ripon Red Hawks,H1,1034.0,UW-Whitewater,Seth Bunders,Make 3 Pts,,Transition (unspecified),Offense,2025-11-07,3,Transition,UWW M2M: TRAN,,,Transition
-Ripon Red Hawks,H1,1032.0,UW-Whitewater,Luke Bara,Miss 2 Pts,,5 Out DHO,Offense,2025-11-07,0,5 Out,5 OUT-DHO : M2M- SOFT HEDGE,DHO,,Half court
-Ripon Red Hawks,H1,1024.0,UW-Whitewater,Kolby Williams,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,UWW M2M : TRAN,,,Transition
-Ripon Red Hawks,H1,1002.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN; M2M,,,Transition
-Ripon Red Hawks,H1,952.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Panther,Offense,2025-11-07,2,Panther,PANTHER- M2M,,,Half court
-Ripon Red Hawks,H1,903.0,UW-Whitewater,Brock Marino,Miss 2 Pts,,Panther,Offense,2025-11-07,0,Panther,PANTHER-: M2M DROP,,,Half court
-Ripon Red Hawks,H1,881.0,UW-Whitewater,Isaac Verges,Make 2 Pts,,Transition (unspecified),Offense,2025-11-07,2,Transition,TRAN: M2M,,,Transition
-Ripon Red Hawks,H1,842.0,UW-Whitewater,Collin Madson,1 Pts,,Flow,Offense,2025-11-07,0,Flow,FLOW- M2M D,,,Half court
-Ripon Red Hawks,H1,810.0,UW-Whitewater,Jake Quast,Foul,,Flow Zoom,Offense,2025-11-07,1,Flow,FLOW (ZOOM) - M2M D,Zoom,,Half court
-Ripon Red Hawks,H1,766.0,UW-Whitewater,Darius Chestnut,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN,,,Transition
-Ripon Red Hawks,H1,751.0,UW-Whitewater,Jake Quast,Turnover,,BLOB Line Reject,Offense,2025-11-07,0,BLOB,BLOB-LINE- REJECT-M2M,Reject,,BLOB
-Ripon Red Hawks,H1,718.0,UW-Whitewater,Austin Ambrose,Turnover,,5 Out Ricky,Offense,2025-11-07,0,5 Out,5 OUT BS- RICKY- M2M D SOFT HEDGE,Ball Screen | Ricky,,Half court
-Ripon Red Hawks,H1,685.0,UW-Whitewater,Jr Lukenbill,Make 2 Pts,,Panther,Offense,2025-11-07,2,Panther,PANTHER- M2M D,,,Half court
-Ripon Red Hawks,H1,662.0,UW-Whitewater,Darius Chestnut,Foul,,Transition (unspecified),Offense,2025-11-07,1,Transition,TRAN: M2M,,,Transition
-Ripon Red Hawks,H1,600.0,UW-Whitewater,Seth Bunders,Turnover,,BLOB,Offense,2025-11-07,0,BLOB,UWW M2M: BLOB,,,BLOB
-Ripon Red Hawks,H1,584.0,UW-Whitewater,Collin Madson,Make 3 Pts,,Snap,Offense,2025-11-07,3,Snap,SNAP: M2M D- DROP,,,Half court
-Ripon Red Hawks,H1,553.0,UW-Whitewater,Richie Warren,Turnover,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN: M2M,,,Transition
-Ripon Red Hawks,H1,,UW-Whitewater,Kolby Williams,Non Shooting Foul,,BLOB,Offense,2025-11-07,,BLOB,UWW M2M D: BLOB,,,BLOB
-Ripon Red Hawks,H1,513.0,UW-Whitewater,Kolby Williams,Miss 2 Pts,,BLOB,Offense,2025-11-07,0,BLOB,UWW M2M D: BLOB,,,BLOB
-Ripon Red Hawks,H1,476.0,UW-Whitewater,Collin Madson,Make 2 Pts,,BLOB Line Curl,Offense,2025-11-07,2,BLOB,BLOB-LINE- CURL- M2M,Curl,,BLOB
-Ripon Red Hawks,H1,463.0,UW-Whitewater,Michael Asman,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN: UWW M2M,,,Transition
-Ripon Red Hawks,H1,447.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Snap,Offense,2025-11-07,0,Snap,SNAP- M2M D,,,Half court
-Ripon Red Hawks,H1,440.0,UW-Whitewater,Seth Bunders,Foul,,Transition (unspecified),Offense,2025-11-07,1,Transition,TRAN,,,Transition
-Ripon Red Hawks,H1,413.0,UW-Whitewater,Collin Madson,Make 2 Pts,,P4,Offense,2025-11-07,2,P4,P4: M2M D,,,Half court
-Ripon Red Hawks,H1,390.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN: M2M,,,Transition
-Ripon Red Hawks,H1,370.0,UW-Whitewater,Brock Marino,Foul,,BLOB Line,Offense,2025-11-07,0,BLOB,BLOB-LINE- BOT: M2M D,,,BLOB
-Ripon Red Hawks,H1,361.0,UW-Whitewater,Collin Madson,Make 3 Pts,,BLOB Line Curl,Offense,2025-11-07,3,BLOB,BLOB-LINE-CURL- M2M,Curl,,BLOB
-Ripon Red Hawks,H1,333.0,UW-Whitewater,Isaac Verges,Make 2 Pts,,Transition (unspecified),Offense,2025-11-07,2,Transition,TRAN:M2M,,,Transition
-Ripon Red Hawks,H1,307.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN: M2M D,,,Transition
-Ripon Red Hawks,H1,300.0,UW-Whitewater,Michael Asman,Make 2 Pts,,Transition (unspecified),Offense,2025-11-07,2,Transition,UWW M2M: TRAN,,,Transition
-Ripon Red Hawks,H1,231.0,UW-Whitewater,Isaac Verges,Turnover,,5 Out DHO,Offense,2025-11-07,0,5 Out,5 OUT- DHO- PASS-FLAIR- RS BS: M2M D SOFT HEDGE,DHO | Pass | Flare | Ball Screen,Right Side,Half court
-Ripon Red Hawks,H1,223.0,UW-Whitewater,Michael Asman,Make 3 Pts,,Transition (unspecified),Offense,2025-11-07,3,Transition,UWW M2M D: TRAN,,,Transition
-Ripon Red Hawks,H1,191.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,Twins Ball Screen,Offense,2025-11-07,0,Twins,TWINS- BS RS: M2M D- SWITCH,Ball Screen,Right Side,Half court
-Ripon Red Hawks,H1,169.0,UW-Whitewater,Seth Bunders,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,UWW M2M- TRAN,,,Transition
-Ripon Red Hawks,H1,157.0,UW-Whitewater,Luke Bara,Make 2 Pts,,Transition (unspecified),Offense,2025-11-07,2,Transition,TRAN,,,Transition
-Ripon Red Hawks,H1,126.0,UW-Whitewater,Jarton Davis,Turnover,,ATO (unspecified),Offense,2025-11-07,0,ATO,UWW D- M2M- ATO,,,ATO
-Ripon Red Hawks,H1,126.0,UW-Whitewater,Isaac Verges,Foul,,Transition (unspecified),Offense,2025-11-07,2,Transition,TRAN,,,Transition
-Ripon Red Hawks,H1,99.0,UW-Whitewater,Luke Bara,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN,,,Transition
-Ripon Red Hawks,H1,,UW-Whitewater,Isaac Verges,Kicked Ball,,BLOB Line Curl,Offense,2025-11-07,0,BLOB,BLOB- LINE-CURL: M2M D,Curl,,BLOB
-Ripon Red Hawks,H1,,UW-Whitewater,Brock Marino,No Violation,,SLOB Ball Screen,Offense,2025-11-07,,SLOB,SLOB- BS- DROP: M2M D,Ball Screen,,SLOB
-Ripon Red Hawks,H1,72.0,UW-Whitewater,Luke Bara,Turnover,,BLOB Line Double/Stagger Screen,Offense,2025-11-07,0,BLOB,BLOB- LINE-DOUBLE : M2M D,Double/Stagger Screen,,BLOB
-Ripon Red Hawks,H1,46.0,UW-Whitewater,Brock Marino,Turnover,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN,,,Transition
-Ripon Red Hawks,H1,2.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Snap,Offense,2025-11-07,0,Snap,SNAP : M2M D,,,Half court
-Ripon Red Hawks,H2,1172.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Panther,Offense,2025-11-07,2,Panther,PANTHER: M2M D,,,Half court
-Ripon Red Hawks,H2,1137.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Twins Curl,Offense,2025-11-07,2,Twins,TWINS- CURL: M2M D,Curl,,Half court
-Ripon Red Hawks,H2,1116.0,UW-Whitewater,Seth Bunders,Miss 3 Pts,,BLOB,Offense,2025-11-07,0,BLOB,UWW M2M- BLOB,,,BLOB
-Ripon Red Hawks,H2,1105.0,UW-Whitewater,Isaac Verges,Make 2 Pts,,Get,Offense,2025-11-07,2,Motion / no set,GET PLAY? : M2M- DROP,Get,,Half court
-Ripon Red Hawks,H2,1088.0,UW-Whitewater,Luke Bara,Turnover,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN,,,Transition
-Ripon Red Hawks,H2,,UW-Whitewater,Seth Bunders,No Violation,,Transition (unspecified),Offense,2025-11-07,,Transition,TRAN,,,Transition
-Ripon Red Hawks,H2,1079.0,UW-Whitewater,CJ Brown,Make 3 Pts,,SLOB,Offense,2025-11-07,3,SLOB,UWW M2M- SLOB,,,SLOB
-Ripon Red Hawks,H2,,UW-Whitewater,Brock Marino,Non Shooting Foul,,Panther,Offense,2025-11-07,,Panther,PANTHER : M2M D,,,Half court
-Ripon Red Hawks,H2,1053.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,BLOB Line Curl,Offense,2025-11-07,0,BLOB,BLOB-LINE-CURL: M2M D,Curl,,BLOB
-Ripon Red Hawks,H2,1022.0,UW-Whitewater,Michael Asman,Foul,,BLOB,Offense,2025-11-07,2,BLOB,UWW M2M- BLOB,,,BLOB
-Ripon Red Hawks,H2,965.0,UW-Whitewater,Brock Marino,Foul,,Panther,Offense,2025-11-07,1,Panther,PANTHER: M2M D,,,Half court
-Ripon Red Hawks,H2,935.0,UW-Whitewater,Isaac Verges,Make 2 Pts,,Transition (unspecified),Offense,2025-11-07,2,Transition,TRAN,,,Transition
-Ripon Red Hawks,H2,897.0,UW-Whitewater,Seth Bunders,Miss 3 Pts,,BLOB,Offense,2025-11-07,0,BLOB,UWW M2M BLOB,,,BLOB
-Ripon Red Hawks,H2,897.0,UW-Whitewater,Darius Chestnut,Foul,,Transition (unspecified),Offense,2025-11-07,1,Transition,TRAN,,,Transition
-Ripon Red Hawks,H2,842.0,UW-Whitewater,Darius Chestnut,Turnover,,Rip,Offense,2025-11-07,0,Motion / no set,TRAN: RIP SCREEN: M2M D,Rip,,Transition
-Ripon Red Hawks,H2,812.0,UW-Whitewater,Jake Quast,Make 3 Pts,,SLOB,Offense,2025-11-07,3,SLOB,SLOB: M2M D,,,SLOB
-Ripon Red Hawks,H2,736.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN: M2M D,,,Transition
-Ripon Red Hawks,H2,714.0,UW-Whitewater,CJ Brown,Turnover,,SLOB,Offense,2025-11-07,0,SLOB,SLOB: UWW M2MD,,,SLOB
-Ripon Red Hawks,H2,692.0,UW-Whitewater,Jake Quast,Miss 2 Pts,,Cheetah,Offense,2025-11-07,0,Cheetah,OVER- CHEETAH: M2M D,,,Half court
-Ripon Red Hawks,H2,664.0,UW-Whitewater,Jake Thomsen,Miss 3 Pts,,SLOB,Offense,2025-11-07,0,SLOB,UWW M2M D: SLOB,,,SLOB
-Ripon Red Hawks,H2,646.0,UW-Whitewater,Austin Ambrose,Make 3 Pts,,5 Out Down Screen,Offense,2025-11-07,3,5 Out,5 OUT- PASS- DS- CURL: M2M SOFT HEDGE,Pass | Down Screen | Curl,,Half court
-Ripon Red Hawks,H2,611.0,UW-Whitewater,Jack Field,Turnover,,SLOB,Offense,2025-11-07,0,SLOB,UWW M2M SLOB,,,SLOB
-Ripon Red Hawks,H2,603.0,UW-Whitewater,Darius Chestnut,Turnover,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN: M2M,,,Transition
-Ripon Red Hawks,H2,578.0,UW-Whitewater,Seth Bunders,Make 2 Pts,,SLOB,Offense,2025-11-07,2,SLOB,UWW M2M D- SLOB,,,SLOB
-Ripon Red Hawks,H2,548.0,UW-Whitewater,Jake Quast,Foul,,Panther,Offense,2025-11-07,1,Panther,PANTHER: M2M D,,,Half court
-Ripon Red Hawks,H2,521.0,UW-Whitewater,Jake Quast,Foul,,5 Out Down Screen,Offense,2025-11-07,1,5 Out,5 OUT- DS- CURL,Down Screen | Curl,,Half court
-Ripon Red Hawks,H2,477.0,UW-Whitewater,Jake Quast,Foul,,5 Out DHO,Offense,2025-11-07,2,5 Out,5 OUT- DHO-PASS 5- DS- M2M D,DHO | Pass | Down Screen,,Half court
-Ripon Red Hawks,H2,444.0,UW-Whitewater,Isaac Verges,Miss 2 Pts,,Panther,Offense,2025-11-07,0,Panther,PANTHER 2?- M2M,,,Half court
-Ripon Red Hawks,H2,415.0,UW-Whitewater,Darius Chestnut,Foul,,Transition (unspecified),Offense,2025-11-07,2,Transition,TRAN,,,Transition
-Ripon Red Hawks,H2,374.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Transition (unspecified),Offense,2025-11-07,2,Transition,TRAN: UWW M2M D,,,Transition
-Ripon Red Hawks,H2,324.0,UW-Whitewater,Darius Chestnut,Make 2 Pts,,5 Out Ball Screen,Offense,2025-11-07,2,5 Out,5 OUT- CUT- BS: M2M D SOFT HEDGE,Cut | Ball Screen,,Half court
-Ripon Red Hawks,H2,245.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Cheetah,Offense,2025-11-07,2,Cheetah,ATO-CHEETAH: M2M D,,,ATO
-Ripon Red Hawks,H2,208.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-07,0,Transition,TRAN- M2M D,,,Transition
-Ripon Red Hawks,H2,167.0,UW-Whitewater,Jr Lukenbill,Miss 3 Pts,,Cheetah,Offense,2025-11-07,0,Cheetah,OVER-CHEETAH: M2M D,,,Half court
-Ripon Red Hawks,H2,159.0,UW-Whitewater,Isaac Verges,Miss 2 Pts,,BLOB Line,Offense,2025-11-07,0,BLOB,BLOB-LINE- RJECJT,,,BLOB
-Ripon Red Hawks,H2,114.0,UW-Whitewater,Collin Madson,Foul,,Flow,Offense,2025-11-07,2,Flow,FLOW: M2M PRESS,,,Half court
-Ripon Red Hawks,H2,80.0,UW-Whitewater,Isaac Verges,Miss 3 Pts,,5 Out,Offense,2025-11-07,0,5 Out,5 OUT- M2M D,,,Half court
-Ripon Red Hawks,H2,56.0,UW-Whitewater,Isaac Verges,Foul,,Flow,Offense,2025-11-07,2,Flow,FLOW: M2M 1-2-1-1,,,Half court
-Ripon Red Hawks,H2,43.0,UW-Whitewater,Mauryon Turner,Make 2 Pts,,Transition (unspecified),Offense,2025-11-07,2,Transition,TRAN,,,Transition
-Ripon Red Hawks,H2,15.0,UW-Whitewater,Mauryon Turner,Turnover,,5 Out,Offense,2025-11-07,0,5 Out,5 OUT : M2M D,,,Half court
-Eureka Red Devils,H1,1184.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Twins,Offense,2025-11-15,2,Twins,TWINS: M2M D,,,Half court
-Eureka Red Devils,H1,1163.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,1116.0,UW-Whitewater,Isaac Verges,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,1076.0,UW-Whitewater,Collin Madson,Turnover,,P4,Offense,2025-11-15,0,P4,P4: M2M PRESS,,,Half court
-Eureka Red Devils,H1,1067.0,UW-Whitewater,Andrew Coker,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN- UWW M2M D,,,Transition
-Eureka Red Devils,H1,1053.0,UW-Whitewater,Isaac Verges,Make 3 Pts,,5 Out Curl,Offense,2025-11-15,3,5 Out,5 OUT-PASS-CURL- BS: M2M D- JAM,Pass | Curl | Ball Screen,,Half court
-Eureka Red Devils,H1,1021.0,UW-Whitewater,Brock Marino,Turnover,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,1015.0,UW-Whitewater,Micah Bruer,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,UWW M2M D: TRAN,,,Transition
-Eureka Red Devils,H1,1007.0,UW-Whitewater,Isaac Verges,1 Pts,,Transition (unspecified),Offense,2025-11-15,3,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,,UW-Whitewater,Luke Bara,No Violation,,Transition (unspecified),Offense,2025-11-15,,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,972.0,UW-Whitewater,Brock Marino,Miss 2 Pts,,BLOB Line,Offense,2025-11-15,0,BLOB,BLOB-LINE: 2-3 ZONE,,,BLOB
-Eureka Red Devils,H1,967.0,UW-Whitewater,Colin Delaere,Turnover,,Transition (unspecified),Offense,2025-11-15,0,Transition,UWW M2M D TRAN,,,Transition
-Eureka Red Devils,H1,967.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,953.0,UW-Whitewater,Ben Carter,Make 2 Pts,,BLOB,Offense,2025-11-15,2,BLOB,UWW M2M D- BLOB,,,BLOB
-Eureka Red Devils,H1,,UW-Whitewater,Darius Chestnut,Non Shooting Foul,,5 Out Down Screen,Offense,2025-11-15,,5 Out,5OUT-DS-BS: M2M D- DROP,Down Screen | Ball Screen,,Half court
-Eureka Red Devils,H1,,UW-Whitewater,Rashad Rogers,Miss 2 Pts,,SLOB,Offense,2025-11-15,0,SLOB,SLOB: M2M D,,,SLOB
-Eureka Red Devils,H1,904.0,UW-Whitewater,Jake Quast,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,880.0,UW-Whitewater,Jaxson Provost,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,UWW M2M: TRAN,,,Transition
-Eureka Red Devils,H1,863.0,UW-Whitewater,Rashad Rogers,Miss 3 Pts,,5 Out Down Screen,Offense,2025-11-15,0,5 Out,5 OUT- PASS 5-DS-PASS WING-BS: M2M D- ICE,Pass | Down Screen | Ball Screen,Wing,Half court
-Eureka Red Devils,H1,856.0,UW-Whitewater,Ben Carter,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,847.0,UW-Whitewater,Jake Quast,Make 3 Pts,,Flow,Offense,2025-11-15,3,Flow,FLOW: M2M D,,,Half court
-Eureka Red Devils,H1,821.0,UW-Whitewater,Jr Lukenbill,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN: M2M D,,,Transition
-Eureka Red Devils,H1,814.0,UW-Whitewater,Jacob Gonzalez,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,775.0,UW-Whitewater,Jake Quast,1 Pts,,Panther,Offense,2025-11-15,3,Panther,PANTHER: M2M PRESS,,,Half court
-Eureka Red Devils,H1,729.0,UW-Whitewater,Jacob Gonzalez,Miss 2 Pts,,BLOB,Offense,2025-11-15,0,BLOB,UWW M2M D: BLOB,,,BLOB
-Eureka Red Devils,H1,723.0,UW-Whitewater,Joey Berezowitz,Make 3 Pts,,Transition (unspecified),Offense,2025-11-15,3,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,705.0,UW-Whitewater,Richie Warren,Make 2 Pts,,Panther,Offense,2025-11-15,2,Panther,PANTHER: M2M,,,Half court
-Eureka Red Devils,H1,649.0,UW-Whitewater,Richie Warren,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,621.0,UW-Whitewater,Andrew Wells,Miss 2 Pts,,BLOB,Offense,2025-11-15,0,BLOB,UWW M2M D: BLOB,,,BLOB
-Eureka Red Devils,H1,603.0,UW-Whitewater,Darius Chestnut,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,563.0,UW-Whitewater,Brock Marino,Make 2 Pts,,5 Out Down Screen,Offense,2025-11-15,2,5 Out,5 OUT- DS: M2M,Down Screen,,Half court
-Eureka Red Devils,H1,494.0,UW-Whitewater,Mauryon Turner,Miss 2 Pts,,BLOB Line,Offense,2025-11-15,0,BLOB,BLOB-LINE: 2-3 ZONE,,,BLOB
-Eureka Red Devils,H1,489.0,UW-Whitewater,Jaxson Provost,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,UWW M2M D TRAN,,,Transition
-Eureka Red Devils,H1,478.0,UW-Whitewater,Richie Warren,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,441.0,UW-Whitewater,Collin Madson,Foul,,5 Out DHO,Offense,2025-11-15,2,5 Out,5 OUT- DHO: 2-1-2?,DHO,,Half court
-Eureka Red Devils,H1,,UW-Whitewater,Trent Grunewald,No Violation,,5 Out Zoom,Offense,2025-11-15,,5 Out,5 OUT-DHO-ZOOM: M2M D,DHO | Zoom,,Half court
-Eureka Red Devils,H1,408.0,UW-Whitewater,Brock Marino,Miss 2 Pts,,BLOB Line,Offense,2025-11-15,0,BLOB,BLOB-LINE:2-3,,,BLOB
-Eureka Red Devils,H1,393.0,UW-Whitewater,Collin Madson,1 Pts,,Transition (unspecified),Offense,2025-11-15,3,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,,UW-Whitewater,Micah Bruer,No Violation,,BLOB,Offense,2025-11-15,,BLOB,UWW M2M: BLOB,,,BLOB
-Eureka Red Devils,H1,359.0,UW-Whitewater,Andrew Coker,Miss 2 Pts,,SLOB,Offense,2025-11-15,0,SLOB,UWW M2M: SLOB,,,SLOB
-Eureka Red Devils,H1,356.0,UW-Whitewater,Jaxson Provost,Miss 3 Pts,,BLOB,Offense,2025-11-15,0,BLOB,UWW M2M: BLOB,,,BLOB
-Eureka Red Devils,H1,351.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,323.0,UW-Whitewater,Brock Marino,Foul,,Transition (unspecified),Offense,2025-11-15,1,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,286.0,UW-Whitewater,Brock Marino,Foul,,Panther,Offense,2025-11-15,0,Panther,PANTHER: M2M PRESS,,,Half court
-Eureka Red Devils,H1,,UW-Whitewater,Jr Lukenbill,Run Offense,,Transition (unspecified),Offense,2025-11-15,,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,237.0,UW-Whitewater,Luke Bara,Make 3 Pts,,Flow,Offense,2025-11-15,3,Flow,FLOW: M2M D,,,Half court
-Eureka Red Devils,H1,207.0,UW-Whitewater,Luke Bara,Turnover,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,178.0,UW-Whitewater,Luke Bara,Make 2 Pts,,Cheetah,Offense,2025-11-15,2,Cheetah,OVER CHEETAH: M2M,,,Half court
-Eureka Red Devils,H1,137.0,UW-Whitewater,Luke Bara,Make 3 Pts,,Flow,Offense,2025-11-15,3,Flow,FLOW: M2M D,,,Half court
-Eureka Red Devils,H1,98.0,UW-Whitewater,Isaac Verges,Make 2 Pts,,5 Out Ball Screen,Offense,2025-11-15,2,5 Out,5 OUT- PASS 5- PASS WING- BS: M2M- ICE,Pass | Ball Screen,Wing,Half court
-Eureka Red Devils,H1,75.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,Flow,Offense,2025-11-15,0,Flow,FLOW: M2M D,,,Half court
-Eureka Red Devils,H1,49.0,UW-Whitewater,Darius Chestnut,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
-Eureka Red Devils,H1,23.0,UW-Whitewater,Jacob Gonzalez,Miss 2 Pts,,BLOB,Offense,2025-11-15,0,BLOB,UWW M2M D- BLOB,,,BLOB
-Eureka Red Devils,H1,3.0,UW-Whitewater,Luke Bara,Make 2 Pts,,Cheetah,Offense,2025-11-15,2,Cheetah,OVER- CHEETAH: M2M D- DROP,,,Half court
-Eureka Red Devils,H2,,UW-Whitewater,Brock Marino,No Violation,,Transition (unspecified),Offense,2025-11-15,,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,1175.0,UW-Whitewater,Luke Bara,Make 3 Pts,,BLOB Line Double/Stagger Screen,Offense,2025-11-15,3,BLOB,BLOB-LINE-DOUBLE CURL,Double/Stagger Screen | Curl,,BLOB
-Eureka Red Devils,H2,,UW-Whitewater,Isaac Verges,Non Shooting Foul,,5 Out Zoom,Offense,2025-11-15,,5 Out,5 OUT- PASS 5 -ZOOM-: M2M D - DROP,Pass | Zoom,,Half court
-Eureka Red Devils,H2,1127.0,UW-Whitewater,Isaac Verges,Turnover,,BLOB Line,Offense,2025-11-15,0,BLOB,BLOB-LINE-M2M D,,,BLOB
-Eureka Red Devils,H2,1120.0,UW-Whitewater,Jaxson Provost,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,UWW M2M D: TRAN,,,Transition
-Eureka Red Devils,H2,1116.0,UW-Whitewater,Collin Madson,Turnover,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,1112.0,UW-Whitewater,Jaxson Provost,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,UWW M2M D: TRAN,,,Transition
-Eureka Red Devils,H2,1090.0,UW-Whitewater,Luke Bara,Make 3 Pts,,Snap,Offense,2025-11-15,3,Snap,SNAP: M2M DROP,,,Half court
-Eureka Red Devils,H2,1072.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,,UW-Whitewater,Luke Bara,No Violation,,Transition (unspecified),Offense,2025-11-15,,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,1046.0,UW-Whitewater,Jr Lukenbill,Make 2 Pts,,BLOB Line,Offense,2025-11-15,2,BLOB,BLOB-LINE: M2M D,,,BLOB
-Eureka Red Devils,H2,,UW-Whitewater,Brock Marino,No Violation,,Flow,Offense,2025-11-15,,Flow,FLOW: M2M D,,,Half court
-Eureka Red Devils,H2,1013.0,UW-Whitewater,Luke Bara,Make 3 Pts,,BLOB Line,Offense,2025-11-15,3,BLOB,BLOB-LINE: 2-3 ZONE,,,BLOB
-Eureka Red Devils,H2,993.0,UW-Whitewater,Andrew Coker,Make 2 Pts,,SLOB,Offense,2025-11-15,2,SLOB,UWW M2M- SLOB,,,SLOB
-Eureka Red Devils,H2,982.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Flow Ricky,Offense,2025-11-15,2,Flow,FLOW-RICKY:M2M DROP,Ricky,,Half court
-Eureka Red Devils,H2,,UW-Whitewater,Brock Marino,Non Shooting Foul,,Transition (unspecified),Offense,2025-11-15,,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,956.0,UW-Whitewater,Joey Berezowitz,Make 2 Pts,,BLOB Line Double/Stagger Screen,Offense,2025-11-15,2,BLOB,BLOB-LINE-DOUBLE,Double/Stagger Screen,,BLOB
-Eureka Red Devils,H2,926.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,900.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,874.0,UW-Whitewater,Brock Marino,Turnover,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,852.0,UW-Whitewater,Darius Chestnut,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,809.0,UW-Whitewater,Jake Quast,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,779.0,UW-Whitewater,Jacob Gonzalez,Make 2 Pts,,BLOB,Offense,2025-11-15,2,BLOB,UWW M2M D: BLOB,,,BLOB
-Eureka Red Devils,H2,756.0,UW-Whitewater,Darius Chestnut,Make 3 Pts,,Flow,Offense,2025-11-15,3,Flow,FLOW:2-3 ZONE,,,Half court
-Eureka Red Devils,H2,726.0,UW-Whitewater,Darius Chestnut,Turnover,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,721.0,UW-Whitewater,Blake Logsdon,Make 3 Pts,,Transition (unspecified),Offense,2025-11-15,3,Transition,UWW M2M: TRAN,,,Transition
-Eureka Red Devils,H2,701.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,Flow,Offense,2025-11-15,0,Flow,FLOW: 2-3 ZONE,,,Half court
-Eureka Red Devils,H2,668.0,UW-Whitewater,Darius Chestnut,Make 3 Pts,,Transition (unspecified),Offense,2025-11-15,3,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,618.0,UW-Whitewater,Rashad Rogers,Make 2 Pts,,Flow,Offense,2025-11-15,2,Flow,FLOW: 2-3 ZONE,,,Half court
-Eureka Red Devils,H2,597.0,UW-Whitewater,Isaiah Robinson,Miss 3 Pts,,5 Out Down Screen,Offense,2025-11-15,0,5 Out,5 OUT- PASS 5- DS: M2M,Pass | Down Screen,,Half court
-Eureka Red Devils,H2,545.0,UW-Whitewater,Nicholaus Harris-Huntley,Miss 2 Pts,,BLOB,Offense,2025-11-15,0,BLOB,UWW M2M D- BLOB,,,BLOB
-Eureka Red Devils,H2,538.0,UW-Whitewater,Kelton Mcewen,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,,UW-Whitewater,Max Richardson,No Violation,,Transition (unspecified),Offense,2025-11-15,,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,517.0,UW-Whitewater,Blake Logsdon,Turnover,,BLOB,Offense,2025-11-15,0,BLOB,UWW M2M D-BLOB,,,BLOB
-Eureka Red Devils,H2,514.0,UW-Whitewater,Isaiah Robinson,Turnover,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,442.0,UW-Whitewater,Zachy Qader,Make 2 Pts,,BLOB,Offense,2025-11-15,2,BLOB,UWW M2M- BLOB,,,BLOB
-Eureka Red Devils,H2,420.0,UW-Whitewater,Austin Ambrose,Miss 3 Pts,,Twins,Offense,2025-11-15,0,Twins,TWINS: M2M D,,,Half court
-Eureka Red Devils,H2,395.0,UW-Whitewater,Isaiah Robinson,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,352.0,UW-Whitewater,Isaiah Robinson,Make 3 Pts,,Transition (unspecified),Offense,2025-11-15,3,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,306.0,UW-Whitewater,Tristian Lynch,Miss 3 Pts,,5 Out Flare,Offense,2025-11-15,0,5 Out,5 OUT- FLAIR-BS: M2M D ICE,Flare | Ball Screen,,Half court
-Eureka Red Devils,H2,299.0,UW-Whitewater,Zachy Qader,Foul,,Transition (unspecified),Offense,2025-11-15,1,Transition,UWW M2M: TRAN,,,Transition
-Eureka Red Devils,H2,283.0,UW-Whitewater,Tristian Lynch,Make 2 Pts,,5 Out Down Screen,Offense,2025-11-15,2,5 Out,5 OUT- PASS 5 - DS: M2M D,Pass | Down Screen,,Half court
-Eureka Red Devils,H2,248.0,UW-Whitewater,Trent Grunewald,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,228.0,UW-Whitewater,Andrew Wells,Foul,,Transition (unspecified),Offense,2025-11-15,1,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,216.0,UW-Whitewater,Isaiah Robinson,Make 3 Pts,,Twins,Offense,2025-11-15,3,Twins,TWINS: M2M D,,,Half court
-Eureka Red Devils,H2,186.0,UW-Whitewater,Agape Keyes Jr.,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,171.0,UW-Whitewater,Amare Brokemond,Miss 2 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,UWW M2M D-TRAN,,,Transition
-Eureka Red Devils,H2,153.0,UW-Whitewater,Isaiah Robinson,Make 3 Pts,,5 Out DHO,Offense,2025-11-15,3,5 Out,5 OUT-DHO: M2M PRES,DHO,,Half court
-Eureka Red Devils,H2,135.0,UW-Whitewater,Agape Keyes Jr.,Miss 3 Pts,,Transition (unspecified),Offense,2025-11-15,0,Transition,TRAN,,,Transition
-Eureka Red Devils,H2,125.0,UW-Whitewater,Amare Brokemond,Make 2 Pts,,Transition (unspecified),Offense,2025-11-15,2,Transition,TRAN,,,Transition
+UW-Oshkosh Titans,H1,1182.0,UW-Whitewater,Carter Thomas,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,5 out(HI BS): m2m D(over-switch),,,Half court
+UW-Oshkosh Titans,H1,,UW-Whitewater,Collin Madson,Non Shooting Foul,,5 Out Motion,Offense,2026-01-03,,Motion,5 out(Over): m2m d,,,Half court
+UW-Oshkosh Titans,H1,1166.0,UW-Whitewater,Richie Warren,Make 2 Pts,,BLOB Line,Offense,2026-01-03,2,BLOB,blob(line)-m2m,,,BLOB
+UW-Oshkosh Titans,H1,1150.0,UW-Whitewater,Brandon Beck,Make 3 Pts,,5 Out Motion,Offense,2026-01-03,3,Motion,5 out(bs):m2m,Ball Screen,,Half court
+UW-Oshkosh Titans,H1,1107.0,UW-Whitewater,Oskar Kangas,Make 3 Pts,,5 Out Motion,Offense,2026-01-03,3,Motion,5 out(over-swing-ricky):m2m,,,Half court
+UW-Oshkosh Titans,H1,1077.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(pass-cut-bs):m2m,,,Half court
+UW-Oshkosh Titans,H1,1061.0,UW-Whitewater,Brock Marino,Make 2 Pts,,5 Out Motion,Offense,2026-01-03,2,Motion,5out(pass corner-):m2m,,,Half court
+UW-Oshkosh Titans,H1,1053.0,UW-Whitewater,Nate Nazos,Turnover,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
+UW-Oshkosh Titans,H1,,UW-Whitewater,Brock Marino,Non Shooting Foul,,5 Out Motion,Offense,2026-01-03,,Motion,5out:m2m(rj),,,Half court
+UW-Oshkosh Titans,H1,1027.0,UW-Whitewater,Brock Marino,Miss 2 Pts,,SLOB,Offense,2026-01-03,0,SLOB,slob:m2m,,,SLOB
+UW-Oshkosh Titans,H1,,UW-Whitewater,Aiden Hawkinson,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(doubleclear):m2m,,,Half court
+UW-Oshkosh Titans,H1,982.0,UW-Whitewater,Luke Bara,Make 3 Pts,,5 Out Motion,Offense,2026-01-03,3,Motion,5out(ds):m2m,Down Screen,,Half court
+UW-Oshkosh Titans,H1,962.0,UW-Whitewater,Oskar Kangas,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs):m2m(switch),Ball Screen,,Half court
+UW-Oshkosh Titans,H1,,UW-Whitewater,Collin Madson,Non Shooting Foul,,5 Out Motion,Offense,2026-01-03,,Motion,5out(bs-slip):Press(m2m),,,Half court
+UW-Oshkosh Titans,H1,929.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,BLOB Motion,Offense,2026-01-03,0,BLOB,blob(line):m2m,,,BLOB
+UW-Oshkosh Titans,H1,911.0,UW-Whitewater,Brandon Beck,Turnover,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran:m2m,,,Transition
+UW-Oshkosh Titans,H1,,UW-Whitewater,Matt Imig,No Violation,,BLOB Motion,Offense,2026-01-03,,BLOB,blob(box-cornercut-flash):m2m,,,BLOB
+UW-Oshkosh Titans,H1,881.0,UW-Whitewater,Matt Imig,Miss 3 Pts,,SLOB Motion,Offense,2026-01-03,0,SLOB,slob(bs):m2m (Stay),Ball Screen,,SLOB
+UW-Oshkosh Titans,H1,859.0,UW-Whitewater,Brock Marino,Miss 2 Pts,,BLOB,Offense,2026-01-03,0,BLOB,blob: m2m,,,BLOB
+UW-Oshkosh Titans,H1,841.0,UW-Whitewater,Matt Imig,Make 3 Pts,,Ball Screen,Offense,2026-01-03,3,Ball Screen,bs:m2m(switch),,,Half court
+UW-Oshkosh Titans,H1,803.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(ds):press(rj),Down Screen,,Half court
+UW-Oshkosh Titans,H1,796.0,UW-Whitewater,Matt Imig,Make 3 Pts,,Transition (unspecified),Offense,2026-01-03,3,Transition,tran,,,Transition
+UW-Oshkosh Titans,H1,778.0,UW-Whitewater,Brandon Beck,Make 3 Pts,,Double Bs,Offense,2026-01-03,3,Double Bs,double bs:(under),,,Half court
+UW-Oshkosh Titans,H1,,UW-Whitewater,Darius Chestnut,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(stagger-bs):press(rj)(switch),,,Half court
+UW-Oshkosh Titans,H1,722.0,UW-Whitewater,Logan Rindfleisch,Make 3 Pts,,Double Bs,Offense,2026-01-03,3,Double Bs,double bs:m2m(show&GB),,,Half court
+UW-Oshkosh Titans,H1,703.0,UW-Whitewater,Jake Quast,Miss 2 Pts,,BLOB Motion,Offense,2026-01-03,0,BLOB,blob(line):m2m,,,BLOB
+UW-Oshkosh Titans,H1,689.0,UW-Whitewater,Carter Thomas,Make 3 Pts,,Transition (unspecified),Offense,2026-01-03,3,Transition,tran,,,Transition
+UW-Oshkosh Titans,H1,663.0,UW-Whitewater,Darius Chestnut,Make 3 Pts,,5 Out Motion,Offense,2026-01-03,3,Motion,5out(ds):m2m(rj),Down Screen,,Half court
+UW-Oshkosh Titans,H1,641.0,UW-Whitewater,Michael Metcalf-Grassman,Miss 3 Pts,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs:m2m (drop),,,Half court
+UW-Oshkosh Titans,H1,633.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
+UW-Oshkosh Titans,H1,,UW-Whitewater,Collin Madson,No Violation,,5 Out Motion,Offense,2026-01-03,,Motion,5out(bs):m2m(switch),Ball Screen,,Half court
+UW-Oshkosh Titans,H1,584.0,UW-Whitewater,Darius Chestnut,Miss 2 Pts,,SLOB,Offense,2026-01-03,0,SLOB,slob:m2m,,,SLOB
+UW-Oshkosh Titans,H1,571.0,UW-Whitewater,Logan Rindfleisch,Turnover,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs(stay):m2m(over),,,Half court
+UW-Oshkosh Titans,H1,531.0,UW-Whitewater,Brandon Beck,Miss 2 Pts,,Spain,Offense,2026-01-03,0,Spain,spain:m2m(switch),,,Half court
+UW-Oshkosh Titans,H1,531.0,UW-Whitewater,Brandon Beck,Make 2 Pts,,Offensive Rebound,Offense,2026-01-03,2,Motion / no set,oreb,Offensive Rebound,,Half court
+UW-Oshkosh Titans,H1,505.0,UW-Whitewater,Collin Madson,Make 3 Pts,,Cheetah,Offense,2026-01-03,3,Cheetah,cheetah:m2m(rj),,,Half court
+UW-Oshkosh Titans,H1,454.0,UW-Whitewater,Joey LaChapell,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,ATO-5out(bs):m2m (drop),Ball Screen,,ATO
+UW-Oshkosh Titans,H1,439.0,UW-Whitewater,Richie Warren,Make 2 Pts,,5 Out Motion,Offense,2026-01-03,2,Motion,5out(over):m2m(rj),,,Half court
+UW-Oshkosh Titans,H1,,UW-Whitewater,Vitorio Dante,No Violation,,5 Out,Offense,2026-01-03,,5 Out,5out:m2m,,,Half court
+UW-Oshkosh Titans,H1,386.0,UW-Whitewater,Richie Warren,Make 2 Pts,,5 Out Motion,Offense,2026-01-03,2,Motion,5out(ds)::m2m,Down Screen,,Half court
+UW-Oshkosh Titans,H1,371.0,UW-Whitewater,Matt Imig,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs):m2m(under),Ball Screen,,Half court
+UW-Oshkosh Titans,H1,365.0,UW-Whitewater,Joey LaChapell,Make 2 Pts,,BLOB Motion,Offense,2026-01-03,2,BLOB,blob(box-cut corner-pop):m2m,,,BLOB
+UW-Oshkosh Titans,H1,298.0,UW-Whitewater,Richie Warren,Turnover,,Cheetah,Offense,2026-01-03,0,Cheetah,cheetah:press(rj)(switch),,,Half court
+UW-Oshkosh Titans,H1,292.0,UW-Whitewater,Michael Metcalf-Grassman,Make 2 Pts,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
+UW-Oshkosh Titans,H1,266.0,UW-Whitewater,Luke Bara,Miss 2 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
+UW-Oshkosh Titans,H1,257.0,UW-Whitewater,Luke Bara,Make 3 Pts,,BLOB Motion,Offense,2026-01-03,3,BLOB,blob(line): m2m,,,BLOB
+UW-Oshkosh Titans,H1,250.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
+UW-Oshkosh Titans,H1,234.0,UW-Whitewater,Richie Warren,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs-reject):m2m,,,Half court
+UW-Oshkosh Titans,H1,225.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,Offensive Rebound,Offense,2026-01-03,0,Motion / no set,oreb,Offensive Rebound,,Half court
+UW-Oshkosh Titans,H1,212.0,UW-Whitewater,Carter Thomas,Miss 3 Pts,,Spain,Offense,2026-01-03,0,Spain,spain:m2m (stay),,,ATO
+UW-Oshkosh Titans,H1,190.0,UW-Whitewater,Luke Bara,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs-ghost):press(m2m),,,Half court
+UW-Oshkosh Titans,H1,182.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,BLOB Line,Offense,2026-01-03,0,BLOB,blob(line);m2m,,,BLOB
+UW-Oshkosh Titans,H1,,UW-Whitewater,Michael Metcalf-Grassman,No Violation,,Transition (unspecified),Offense,2026-01-03,,Transition,tran,,,Transition
+UW-Oshkosh Titans,H1,168.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,BLOB Motion,Offense,2026-01-03,0,BLOB,blob(box-sts):m2m,,,BLOB
+UW-Oshkosh Titans,H1,,UW-Whitewater,Oskar Kangas,No Violation,,5 Out Motion,Offense,2026-01-03,,Motion,5out(p-wing-over-zoom):m2m(tl),,,Half court
+UW-Oshkosh Titans,H1,129.0,UW-Whitewater,Brandon Beck,Make 2 Pts,,BLOB Motion,Offense,2026-01-03,2,BLOB,blob(box-cutcorner-flash-iso):m2m,,,BLOB
+UW-Oshkosh Titans,H1,101.0,UW-Whitewater,Michael Metcalf-Grassman,Make 3 Pts,,Transition (unspecified),Offense,2026-01-03,3,Transition,tran,,,Transition
+UW-Oshkosh Titans,H1,77.0,UW-Whitewater,Jake Quast,Make 2 Pts,,BLOB Motion,Offense,2026-01-03,2,BLOB,blob(line):m2m,,,BLOB
+UW-Oshkosh Titans,H1,44.0,UW-Whitewater,Brandon Beck,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(ghost):m2m(tl),Ghost,,Half court
+UW-Oshkosh Titans,H1,17.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5OUT(BS):press(RJ)(SWITCH),Ball Screen,,Half court
+UW-Oshkosh Titans,H1,,UW-Whitewater,Joey LaChapell,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5OUT(BS):M2M(SWITCH),Ball Screen,,Half court
+UW-Oshkosh Titans,H2,1191.0,UW-Whitewater,Joey LaChapell,Turnover,,5 Out,Offense,2026-01-03,0,5 Out,2NDH-5OUT(DOUBLECUT):M2M,,,Half court
+UW-Oshkosh Titans,H2,,UW-Whitewater,Luke Bara,Non Shooting Foul,,SLOB,Offense,2026-01-03,,SLOB,SLOB:,,,SLOB
+UW-Oshkosh Titans,H2,1175.0,UW-Whitewater,Brock Marino,Make 2 Pts,,BLOB,Offense,2026-01-03,2,BLOB,BLOB:M2M,,,BLOB
+UW-Oshkosh Titans,H2,1139.0,UW-Whitewater,Brock Marino,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,5OUT(DS):PRESS(RJ)(SWITCH)(DENYmadz),Down Screen,,Half court
+UW-Oshkosh Titans,H2,1134.0,UW-Whitewater,Michael Metcalf-Grassman,Miss 2 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,,UW-Whitewater,Nate Nazos,Run Offense,,Transition (unspecified),Offense,2026-01-03,,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,1130.0,UW-Whitewater,Carter Thomas,Make 3 Pts,,Transition (unspecified),Offense,2026-01-03,3,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,1104.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,BLOB,Offense,2026-01-03,0,BLOB,blob: m2m,,,BLOB
+UW-Oshkosh Titans,H2,1087.0,UW-Whitewater,Matt Imig,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs):m2m(switch),Ball Screen,,Half court
+UW-Oshkosh Titans,H2,1067.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,Cheetah,Offense,2026-01-03,0,Cheetah,cheetah:presss(rj),,,Half court
+UW-Oshkosh Titans,H2,1065.0,UW-Whitewater,Luke Bara,Turnover,,BLOB,Offense,2026-01-03,0,BLOB,blob:m2m,,,BLOB
+UW-Oshkosh Titans,H2,1015.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Ball Screen,Offense,2026-01-03,2,Ball Screen,BS(reject):press(rj),Reject,,Half court
+UW-Oshkosh Titans,H2,969.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(DD):m2m,Double Drag,,Half court
+UW-Oshkosh Titans,H2,953.0,UW-Whitewater,Michael Metcalf-Grassman,Make 2 Pts,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,948.0,UW-Whitewater,Carter Thomas,Foul,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,924.0,UW-Whitewater,Collin Madson,Foul,,Twins Motion,Offense,2026-01-03,2,Motion,twin:press(rj),,,Half court
+UW-Oshkosh Titans,H2,899.0,UW-Whitewater,Oskar Kangas,Miss 2 Pts,,BLOB Motion,Offense,2026-01-03,0,BLOB,blob(box-sts):m2m,,,BLOB
+UW-Oshkosh Titans,H2,869.0,UW-Whitewater,Nate Nazos,Make 3 Pts,,Spain,Offense,2026-01-03,3,Spain,spain:m2m(stay),,,Half court
+UW-Oshkosh Titans,H2,,UW-Whitewater,Brock Marino,Non Shooting Foul,,Panther,Offense,2026-01-03,,Panther,panther:press(rj),,,Half court
+UW-Oshkosh Titans,H2,845.0,UW-Whitewater,Jake Quast,Foul,,BLOB,Offense,2026-01-03,0,BLOB,blob:m2m,,,BLOB
+UW-Oshkosh Titans,H2,829.0,UW-Whitewater,Brandon Beck,Make 2 Pts,,BLOB Motion,Offense,2026-01-03,2,BLOB,blob(iso):m2m,ISO,,BLOB
+UW-Oshkosh Titans,H2,803.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,BLOB Motion,Offense,2026-01-03,0,BLOB,blob(box):m2m,,,BLOB
+UW-Oshkosh Titans,H2,803.0,UW-Whitewater,Luke Bara,Foul,,Reject,Offense,2026-01-03,2,Motion / no set,press(rj),Reject,,Half court
+UW-Oshkosh Titans,H2,791.0,UW-Whitewater,Joey LaChapell,Make 3 Pts,,Ball Screen,Offense,2026-01-03,3,Ball Screen,Bs:press(token)(siwtch),,,Half court
+UW-Oshkosh Titans,H2,775.0,UW-Whitewater,Luke Bara,Miss 2 Pts,,Ball Screen,Offense,2026-01-03,2,Ball Screen,bs:press(rj)(switch),,,Half court
+UW-Oshkosh Titans,H2,775.0,UW-Whitewater,Brock Marino,Foul,,Offensive Rebound,Offense,2026-01-03,2,Motion / no set,oreb,Offensive Rebound,,Half court
+UW-Oshkosh Titans,H2,764.0,UW-Whitewater,Brandon Beck,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs):m2m(tl),Ball Screen,,Half court
+UW-Oshkosh Titans,H2,740.0,UW-Whitewater,Carter Thomas,Foul,,Transition (unspecified),Offense,2026-01-03,1,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,713.0,UW-Whitewater,Jonah Rindfleisch,Foul,,5 Out,Offense,2026-01-03,2,5 Out,5out:m2m,,,ATO
+UW-Oshkosh Titans,H2,685.0,UW-Whitewater,Vitorio Dante,Miss 3 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,674.0,UW-Whitewater,Luke Bara,Turnover,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,668.0,UW-Whitewater,Aiden Hawkinson,Make 2 Pts,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,645.0,UW-Whitewater,Brock Marino,Foul,,5 Out Motion,Offense,2026-01-03,1,Motion,5out(ds):press(rj)(switch),Down Screen,,Half court
+UW-Oshkosh Titans,H2,628.0,UW-Whitewater,Carter Thomas,Turnover,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs:switch(stay),,,Half court
+UW-Oshkosh Titans,H2,624.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,598.0,UW-Whitewater,Jake Quast,Make 2 Pts,,Offensive Rebound,Offense,2026-01-03,2,Motion / no set,oreb,Offensive Rebound,,Half court
+UW-Oshkosh Titans,H2,566.0,UW-Whitewater,Jake Quast,Miss 2 Pts,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs:press(rj)(switch),,,ATO
+UW-Oshkosh Titans,H2,552.0,UW-Whitewater,Kelton Mcewen,Miss 2 Pts,,BLOB,Offense,2026-01-03,0,BLOB,blob:m2m,,,BLOB
+UW-Oshkosh Titans,H2,535.0,UW-Whitewater,Oskar Kangas,Miss 3 Pts,,Spain,Offense,2026-01-03,0,Spain,spain:m2m(switch2nd),,,Half court
+UW-Oshkosh Titans,H2,533.0,UW-Whitewater,Jonah Rindfleisch,Foul,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,521.0,UW-Whitewater,Joey Berezowitz,Miss 3 Pts,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs:press(rj)(switch),,,Half court
+UW-Oshkosh Titans,H2,501.0,UW-Whitewater,Joey Berezowitz,Foul,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,477.0,UW-Whitewater,Brandon Beck,Make 3 Pts,,Ball Screen,Offense,2026-01-03,3,Ball Screen,bs:Press(token)(tl),,,Half court
+UW-Oshkosh Titans,H2,448.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,Offensive Rebound,Offense,2026-01-03,0,Motion / no set,oreb,Offensive Rebound,,Half court
+UW-Oshkosh Titans,H2,424.0,UW-Whitewater,Joey Berezowitz,Make 2 Pts,,BLOB,Offense,2026-01-03,2,BLOB,blob:m2m,,,BLOB
+UW-Oshkosh Titans,H2,405.0,UW-Whitewater,Jonah Rindfleisch,Miss 2 Pts,,Scissors,Offense,2026-01-03,0,Motion / no set,sci:m2m,Scissors,,Half court
+UW-Oshkosh Titans,H2,339.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,,UW-Whitewater,Michael Metcalf-Grassman,No Violation,,Transition (unspecified),Offense,2026-01-03,,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,265.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,Offensive Rebound,Offense,2026-01-03,0,Motion / no set,oreb,Offensive Rebound,,Half court
+UW-Oshkosh Titans,H2,236.0,UW-Whitewater,Vitorio Dante,Miss 2 Pts,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs:m2m(tl),,,Half court
+UW-Oshkosh Titans,H2,227.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,193.0,UW-Whitewater,Michael Metcalf-Grassman,Miss 2 Pts,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs:press(12)((switch)),,,Half court
+UW-Oshkosh Titans,H2,183.0,UW-Whitewater,Collin Madson,Foul,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,171.0,UW-Whitewater,Joey Berezowitz,Miss 2 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,147.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,DHO,Offense,2026-01-03,0,DHO,dho:press(rj)(switch),,,Half court
+UW-Oshkosh Titans,H2,117.0,UW-Whitewater,Oskar Kangas,Make 3 Pts,,Ball Screen,Offense,2026-01-03,3,Ball Screen,bs:m2m(tl),,,Half court
+UW-Oshkosh Titans,H2,78.0,UW-Whitewater,Darius Chestnut,Miss 2 Pts,,DHO,Offense,2026-01-03,0,DHO,dho:press(rj)(switch),,,Half court
+UW-Oshkosh Titans,H2,42.0,UW-Whitewater,Carter Thomas,Foul,,Offensive Rebound,Offense,2026-01-03,2,Motion / no set,oreb,Offensive Rebound,,Half court

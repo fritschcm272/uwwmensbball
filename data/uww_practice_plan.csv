@@ -1,22 +1,20 @@
 opponent,day,date,segment,minutes,detail,ties_to,schedule_is_sample,is_sample
-UW-Stevens Point Pointers,Recovery + film,"Sun, Jan 4",Film,40,"Scout film: Flow, Chin, 3-2",Opponent sets,True,True
+UW-Stevens Point Pointers,Recovery + film,"Sun, Jan 4",Film,40,"Scout film: 5-Out Motion, Horns Flare, Post Split",Opponent sets,True,True
 UW-Stevens Point Pointers,Recovery + film,"Sun, Jan 4",Shooting,20,"Form and free throws, no contact","Brock Marino, Isaac Verges, JR Lukenbill",True,True
 UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Warm-up / dynamic,10,,,True,True
 UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Individual,12,Catch-and-shoot and free-throw reps,"Player flags: Marino, Verges, Lukenbill",True,True
-UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Defensive install,12,Take away their most efficient high-volume actions,Key 4,True,True
-UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Defensive install,12,Funnel them into their worst high-volume looks,Key 5,True,True
-UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Defensive install,12,Pressure the actions they turn it over on,Key 6,True,True
-UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Scout team,15,"Scout team runs Flow, Chin, 3-2",Opponent sets,True,True
-UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Defensive emphasis,10,"Reps in man -- they scored 0.93 PPP against it on 192 tagged possessions, their lowest",What to play them in,True,True
-UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Press reps,8,Press reps -- pressure moved their turnover rate +22.4 points (13% to 35%) over 54 pressed possessions,Pressure response,True,True
-UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Offensive emphasis,10,Feature our best look: Transition,Key 1,True,True
-UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Offensive emphasis,10,Attack their weakest look: Cut to the basket,Key 2,True,True
-UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Special situations,8,"Defend BLOB, SLOB, BLOB Box ISO",Opponent sets,True,True
+UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Defensive install,12,Take away their most efficient high-volume actions,Key 3,True,True
+UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Defensive install,12,Funnel them into their worst high-volume looks,Key 4,True,True
+UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Defensive install,12,Pressure the actions they turn it over on,Key 5,True,True
+UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Scout team,15,"Scout team runs 5-Out Motion, Horns Flare, Post Split",Opponent sets,True,True
+UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Offensive emphasis,10,Attack their weakest look: Cut to the basket,Key 1,True,True
+UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Offensive emphasis,10,Call our best set: Ball Screen,Key 2,True,True
+UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Special situations,8,"Defend Box Up, Stack Lob, Elevator",Opponent sets,True,True
 UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Late game,8,"Foul-list reps -- foul: Manz, Bocher, Raimer",Late-game foul list,True,True
-UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- attack UW-Stevens Point Pointers's Krohn, Combs, Butler, Baumgartner, Miron lineup",Key 11,True,True
+UW-Stevens Point Pointers,Practice 1,"Mon, Jan 5",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- attack UW-Stevens Point Pointers's Krohn, Combs, Butler, Baumgartner, Miron lineup",Key 8,True,True
 UW-Stevens Point Pointers,Practice 2 (light),"Tue, Jan 6",Warm-up / dynamic,10,,,True,True
-UW-Stevens Point Pointers,Practice 2 (light),"Tue, Jan 6",Defensive walkthrough,10,Take away their most efficient high-volume actions,Key 4,True,True
-UW-Stevens Point Pointers,Practice 2 (light),"Tue, Jan 6",Scout team,15,"Scout team runs Flow, Chin, 3-2",Opponent sets,True,True
-UW-Stevens Point Pointers,Practice 2 (light),"Tue, Jan 6",Offensive emphasis,10,Feature our best look: Transition,Key 1,True,True
-UW-Stevens Point Pointers,Practice 2 (light),"Tue, Jan 6",Special situations,8,"Defend BLOB, SLOB, BLOB Box ISO",Opponent sets,True,True
+UW-Stevens Point Pointers,Practice 2 (light),"Tue, Jan 6",Defensive walkthrough,10,Take away their most efficient high-volume actions,Key 3,True,True
+UW-Stevens Point Pointers,Practice 2 (light),"Tue, Jan 6",Scout team,15,"Scout team runs 5-Out Motion, Horns Flare, Post Split",Opponent sets,True,True
+UW-Stevens Point Pointers,Practice 2 (light),"Tue, Jan 6",Offensive emphasis,10,Attack their weakest look: Cut to the basket,Key 1,True,True
+UW-Stevens Point Pointers,Practice 2 (light),"Tue, Jan 6",Special situations,8,"Defend Box Up, Stack Lob, Elevator",Opponent sets,True,True
 UW-Stevens Point Pointers,Game day,"Wed, Jan 7",Shootaround,45,"Walk their sets, matchups and the foul list; 50 game-speed shots each",Matchups,True,True

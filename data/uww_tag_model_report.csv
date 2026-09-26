@@ -1,0 +1,11 @@
+field,label_column,tagged_clips,answers_learned,scored_how,clips_scored,accuracy_pct,baseline_pct,using,features,model_c,confident_pct,confident_accuracy_pct,not_learned_yet,trained_at
+formation,play_formation,36,1,only one answer tagged so far (5 Out): predicted for every clip at 89%,,,,only answer,,,,,Line (2) | 2Ndh (1) | Twins (1),2026-09-26T11:39:06
+play_call,play_set,69,2,ONE game only: 5 splits inside it (optimistic -- tag another game for a real test),56.0,79.0,77.0,model,context+frames,0.2,93.0,81.0,Spain (4) | Cheetah (3) | Double Bs (2) | DHO (2) | 5 Out (1) | Panther (1),2026-09-26T11:39:06
+defense,defense_formation,80,1,only one answer tagged so far (Man-to-Man): predicted for every clip at 100%,,,,only answer,,,,,,2026-09-26T11:39:06
+press,label_press,142,2,ONE game only: 5 splits inside it (optimistic -- tag another game for a real test),142.0,79.0,56.0,model,context+frames,1.0,90.0,80.0,,2026-09-26T11:39:06
+situation,label_situation,178,3,ONE game only: 5 splits inside it (optimistic -- tag another game for a real test),173.0,77.0,73.0,model,context+frames,0.05,86.0,79.0,SLOB (4) | ATO (1),2026-09-26T11:39:06
+primary_action,primary_action,29,3,not trained: needs 30+ tagged clips over 2+ answers (has 23 over 3),,,,,,,,,Reject (2) | Ghost (1) | Double Drag (1) | ISO (1) | Scissors (1),2026-09-26T11:39:06
+ball_screen_coverage,label_ball_screen_coverage,13,0,not trained: needs 30+ tagged clips over 2+ answers (has 0 over 0),,,,,,,,,Switch (4) | Under (2) | Drop (2) | Token (2) | stay (1) | rj (1) | Top Lock (1),2026-09-26T11:39:06
+offball_coverage,label_offball_coverage,70,1,only one answer tagged so far (rj): predicted for every clip at 79%,,,,only answer,,,,,Top Lock (4) | stay (3) | Switch (2) | m2m (2) | 12 (2) | Over (1) | double madz (1),2026-09-26T11:39:06
+screener,label_screener,5,0,not trained: needs 30+ tagged clips over 2+ answers (has 0 over 0),,,,,,,,,Luke Bara (2) | Joey LaChapell (2) | Matt Imig (1),2026-09-26T11:39:06
+screen_defender,label_screen_defender,0,0,not trained: needs 30+ tagged clips over 2+ answers (has 0 over 0),,,,,,,,,,2026-09-26T11:39:06

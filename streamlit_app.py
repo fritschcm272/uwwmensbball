@@ -4763,6 +4763,74 @@ def render_play_call_section(side: str, short_opponent: str, title: str, intro: 
                                  hide_index=True, use_container_width=True)
 
 
+def render_screen_coverage(short_opponent: str, default_view: str = "Opponent defense", key_suffix: str = "") -> None:
+    """How each defense guards each screen, from the coaches' structured coverage tags ("5tl" = defender #5
+    top-locked the down screen). Renders uww_screen_coverage_summary / uww_screen_coverage exactly as the
+    parser built them -- nothing is computed here beyond filtering (requested: derived content lives in the
+    parser so the brief and the app always show the same numbers)."""
+    summ = load_table("uww_screen_coverage_summary")
+    if summ.empty or "perspective" not in summ.columns:
+        return
+    summ = summ[summ["scouted_opponent"].astype(str) == str(short_opponent)]
+    if summ.empty:
+        return
+    views = {"Opponent defense": f"How {short_opponent} guards screens",
+             "UWW defense": "How we guard screens",
+             "Defenses UWW faced": "How teams have guarded our screens",
+             "Defenses opponent faced": f"How teams have guarded {short_opponent}'s screens"}
+    have = [v for v in views if v in set(summ["perspective"])]
+    if not have:
+        return
+    section_header("\U0001f6e1\ufe0f SCREEN COVERAGE",
+                   "From the coverage tags in each clip's Title (\"m2m (5tl,12drop)\"): the number is the DEFENDER's "
+                   "jersey, the letters are how he played the screen, and each tag is paired with the screen it "
+                   "answered. % is the share of that screen type. PPP is points on the possessions where that "
+                   "coverage was used -- what happened after, not proof it caused it. Thin = under 5 tagged "
+                   "screens of that type; confirm on film.")
+    view = st.radio("Whose defense", have, index=have.index(default_view) if default_view in have else 0,
+                    format_func=lambda v: views[v], horizontal=True, key=f"scv_view_{short_opponent}{key_suffix}")
+    part = summ[summ["perspective"] == view]
+    team = part[part["level"] == "Screen x coverage"].copy()
+    if team.empty:
+        st.caption("No tagged screen coverages for this view yet.")
+        return
+    order = team.groupby("screen_type")["uses"].sum().sort_values(ascending=False).index.tolist()
+    team["_o"] = team["screen_type"].map({s: i for i, s in enumerate(order)})
+    team = team.sort_values(["_o", "uses"], ascending=[True, False])
+    st.dataframe(pd.DataFrame({
+        "Screen": team["screen_type"], "Of type": team["screens_of_type"], "Coverage": team["coverage"],
+        "Times": team["uses"], "% of screen": team["share_pct"], "PPP": team["ppp"], "FG%": team["fg_pct"],
+        "TO": team["turnovers"], "Usually by": team["top_defender"],
+        "Thin": team["thin_sample"].astype(str).str.lower().map({"true": "yes", "false": ""}),
+    }), hide_index=True, use_container_width=True)
+
+    dfd = part[part["level"] == "Defender x screen x coverage"].copy()
+    if not dfd.empty:
+        with st.expander("By defender", expanded=view == "Opponent defense"):
+            screens = ["All screens"] + order
+            pick = st.selectbox("Screen", screens, key=f"scv_screen_{short_opponent}_{view}{key_suffix}")
+            if pick != "All screens":
+                dfd = dfd[dfd["screen_type"] == pick]
+            dfd = dfd.sort_values(["defender", "screen_type", "uses"], ascending=[True, True, False])
+            st.dataframe(pd.DataFrame({
+                "Defender": dfd["defender"], "Screen": dfd["screen_type"], "Coverage": dfd["coverage"],
+                "Times": dfd["uses"], "Of his": dfd["screens_of_type"], "% of his": dfd["share_pct"],
+                "PPP": dfd["ppp"]}), hide_index=True, use_container_width=True)
+
+    clips = load_table("uww_screen_coverage")
+    if not clips.empty and "perspective" in clips.columns:
+        clips = clips[(clips["perspective"] == view) & (clips["scouted_opponent"].astype(str) == str(short_opponent))]
+        if not clips.empty:
+            with st.expander(f"Every tagged screen ({len(clips)})"):
+                st.dataframe(clips[["game_code", "period", "play_title", "screen_type", "coverage", "defender_jersey",
+                                    "defender_name", "result", "points"]]
+                             .rename(columns={"game_code": "Game", "period": "Pd", "play_title": "Title",
+                                              "screen_type": "Screen", "coverage": "Coverage",
+                                              "defender_jersey": "#", "defender_name": "Defender",
+                                              "result": "Result", "points": "Pts"}),
+                             hide_index=True, use_container_width=True)
+
+
 def render_game_plan_tab(short_opponent: str) -> None:
     st.markdown(_GP_CSS, unsafe_allow_html=True)
     st.caption("Red boxes are SAMPLE DATA \u2014 placeholders generated by the parser until the staff fills in "
@@ -4807,6 +4875,7 @@ def render_game_plan_tab(short_opponent: str) -> None:
               [("item", "Area"), ("what_they_do", "What they do"), ("how_we_attack", "How we attack it")],
               "The exports carry no defensive-scheme tags, so all of this is a placeholder. Replace with "
               "staff_inputs/opp_defense.csv.")
+    render_screen_coverage(short_opponent)
 
     # ---- process fix: not opponent data, so a plain note rather than a sample table -----------------------
     section_header("\U0001f527 TAGGING PROCESS: CONTROLLED VOCABULARY")
@@ -5335,6 +5404,12 @@ def render_brief_deeplink(short_opponent) -> None:
                                      "\U0001f3c0 OUR PLAY CALLS" if side == "UWW" else f"\U0001f3ac {short_opponent.upper()} PLAY CALLS",
                                      "Full breakdown, including every clip by set.")
             return
+        if section == "film_tracking":
+            render_film_tracking(short_opponent, key_suffix="_brief")  # separate widget keys: the tab renders it too
+            return
+        if section == "screen_coverage":
+            render_screen_coverage(short_opponent, key_suffix="_brief")  # separate keys: the tab renders it too
+            return
         if section == "lineups":
             lu = load_table("uww_opp_lineup_season_box")
             notes = load_table("uww_scouting_notes")
@@ -5384,6 +5459,525 @@ def render_brief_deeplink(short_opponent) -> None:
             return
         if tab_label:
             st.caption(f"Open the **{tab_label}** tab below.")
+
+
+# ==============================================================================================================
+# FILM TRACKING (requested: every tracking section, visible with the real Oshkosh data even on a small sample).
+# Renders the parser's tracking tables (uww_trk_*, uww_player_tracks, uww_tracking_report) -- nothing is
+# computed here beyond filtering and drawing. Diagrams are plain SVG; the possession replay is a small
+# self-contained HTML canvas animation, so no new libraries are needed.
+# Positions are in the camera's view (pan removed), not a true court diagram -- court mapping isn't built yet.
+# ==============================================================================================================
+_FT_FEET = 6.5     # must match TI_FEET_PER_PLAYER in the parser
+_FT_DEPTH = 1.8    # must match TI_DEPTH_SQUASH in the parser
+
+
+def _ft_team_pick(short_opponent):
+    clips = load_table("uww_trk_clips")
+    if clips.empty:
+        return None, clips, ""
+    teams = pd.concat([clips["offense_team"], clips["defense_team"]]).astype(str)
+    teams = teams[~teams.str.lower().str.contains("whitewater")]
+    words = {w for w in re.split(r"[\s\-@()]+", str(short_opponent or "").lower()) if len(w) > 3 and w not in ("titans", "warhawks")}
+    counts = teams.value_counts()
+    match = next((t for t in counts.index if any(w in t.lower() for w in words)), None)
+    note = ""
+    if match is None and len(counts):
+        match = counts.index[0]
+        note = f"No tracked film of {short_opponent} yet -- showing {match}, the most-tracked opponent."
+    return match, clips, note
+
+
+def _ft_svg_layout(layout, color="#4E2A84", w=300, h=170, title=""):
+    """[(x_ft, depth_ft, name)] around the group's center -> a small SVG dot diagram (camera view)."""
+    if isinstance(layout, str):
+        try:
+            layout = json.loads(layout)
+        except Exception:
+            return ""
+    if not layout:
+        return ""
+    sx = lambda x: w / 2 + max(-44.0, min(44.0, float(x))) * (w / 2 - 14) / 44
+    sy = lambda y: h / 2 + max(-24.0, min(24.0, float(y))) * (h / 2 - 16) / 24
+    dots = "".join(
+        f'<circle cx="{sx(x):.1f}" cy="{sy(y):.1f}" r="7" fill="{color}" opacity="0.85"/>'
+        f'<text x="{sx(x):.1f}" y="{sy(y) - 10:.1f}" font-size="9" text-anchor="middle" fill="#333">'
+        f'{html.escape(str(n).split(" ")[-1] if n and not str(n).startswith("unnamed") else "?")}</text>'
+        for x, y, n in layout)
+    return (f'<svg width="{w}" height="{h}" style="background:#f6f3ea;border:1px solid #ddd;border-radius:6px;margin:4px">'
+            f'<text x="6" y="12" font-size="10" fill="#666">{html.escape(title)}</text>{dots}</svg>')
+
+
+def _ft_df(df, cols, rename, n=None):
+    if df.empty:
+        st.caption("None found in the tracked clips yet.")
+        return
+    show = df[[c for c in cols if c in df.columns]].rename(columns=rename)
+    st.dataframe(show.head(n) if n else show, hide_index=True, use_container_width=True)
+
+
+def _ft_replay(clip_key, key_suffix="", view="camera"):
+    """Animated replay of one tracked possession: every tracked player as a dot, named where tracking named him,
+    offense gold / defense blue, ball holder ringed red, the screen moment flagged."""
+    tracks = load_table("uww_player_tracks")
+    clips = load_table("uww_trk_clips")
+    if tracks.empty or clips.empty:
+        st.caption("No tracks yet.")
+        return
+    t = tracks[tracks["clip_key"] == clip_key]
+    c = clips[clips["clip_key"] == clip_key]
+    if t.empty or c.empty:
+        st.caption("No tracks for this clip.")
+        return
+    c = c.iloc[0]
+    players = []
+    court = view == "court" and "court_path" in t.columns and t["court_path"].notna().any()
+    for _, r in t.iterrows():
+        try:
+            if court:
+                if not isinstance(r.get("court_path"), str):
+                    continue
+                # court view: x across the floor (offense's left -> right), y down from the attacked baseline
+                pts = [[int(p[0]), float(p[2]), float(p[1])] for p in json.loads(r["court_path"])]
+            else:
+                path = json.loads(r["path"])
+                pts = [[int(p[0]), float(p[1]) / max(float(p[3]) if len(p) > 3 else 0.1, 1e-3) * _FT_FEET,
+                        float(p[2]) * _FT_DEPTH / max(float(p[3]) if len(p) > 3 else 0.1, 1e-3) * _FT_FEET] for p in path]
+        except Exception:
+            continue
+        players.append({"id": int(r["track"]), "side": r["side"] if isinstance(r["side"], str) else "",
+                        "name": r["name"] if isinstance(r["name"], str) else "", "pts": pts})
+    try:
+        holders = json.loads(c["holders"]) if isinstance(c.get("holders"), str) else {}
+    except Exception:
+        holders = {}
+    try:
+        screen = json.loads(c["screen"]) if isinstance(c.get("screen"), str) else None
+    except Exception:
+        screen = None
+    data = json.dumps({"players": players, "holders": holders, "screen": screen, "court": bool(court),
+                       "frames": int(c.get("frames") or 0), "fps": float(c.get("fps") or 2)})
+    import streamlit.components.v1 as components
+    components.html("""
+<div style="font-family:Montserrat,Arial,sans-serif">
+  <canvas id="cv" width="760" height="330" style="background:#f6f3ea;border:1px solid #ccc;border-radius:8px;max-width:100%"></canvas>
+  <div style="margin-top:6px">
+    <button id="pl">Play</button> <input id="sl" type="range" min="0" value="0" style="width:60%">
+    <span id="lb" style="font-size:12px;color:#555"></span>
+  </div>
+  <div style="font-size:11px;color:#777">Gold = offense, blue = defense, grey = team unknown. Red ring = has the ball.
+  Last names shown where tracking named the player. Court view = mapped onto the real court, basket at the top.</div>
+</div>
+<script>
+const D = __DATA__;
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const sl = document.getElementById('sl'), lb = document.getElementById('lb'), pl = document.getElementById('pl');
+const N = Math.max(D.frames, 1); sl.max = N - 1;
+let xs = [], ys = [];
+D.players.forEach(p => p.pts.forEach(q => { xs.push(q[1]); ys.push(q[2]); }));
+let minx = Math.min(...xs), maxx = Math.max(...xs), miny = Math.min(...ys), maxy = Math.max(...ys);
+if (D.court) { minx = 0; maxx = 50; miny = 0; maxy = Math.max(47, maxy); cv.height = 20 + 50 * (cv.width - 40) / 50 * (maxy / 50); }
+const sc = Math.min((cv.width - 40) / Math.max(maxx - minx, 1), (cv.height - 40) / Math.max(maxy - miny, 1));
+const X = x => 20 + (x - minx) * sc, Y = y => 20 + (y - miny) * sc;
+function courtLines() {
+  if (!D.court) return;
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+  ctx.strokeRect(X(0), Y(0), 50 * sc, 47 * sc); ctx.strokeRect(X(19), Y(0), 12 * sc, 19 * sc);
+  ctx.beginPath(); ctx.arc(X(25), Y(19), 6 * sc, 0, 6.3); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(X(3.33), Y(0)); ctx.lineTo(X(3.33), Y(9.83)); ctx.moveTo(X(46.67), Y(0)); ctx.lineTo(X(46.67), Y(9.83)); ctx.stroke();
+  ctx.beginPath(); ctx.arc(X(25), Y(5.25), 22.146 * sc, 0.22, Math.PI - 0.22); ctx.stroke();
+  ctx.strokeStyle = '#c83c1e'; ctx.beginPath(); ctx.arc(X(25), Y(5.25), 0.75 * sc, 0, 6.3); ctx.stroke();
+}
+function posAt(p, t) {
+  let a = null, b = null;
+  for (const q of p.pts) { if (q[0] <= t) a = q; if (q[0] >= t && b === null) b = q; }
+  if (!a || !b) return null;
+  if (a[0] === b[0]) return [a[1], a[2]];
+  const f = (t - a[0]) / (b[0] - a[0]);
+  if (b[0] - a[0] > 2) return null;
+  return [a[1] + f * (b[1] - a[1]), a[2] + f * (b[2] - a[2])];
+}
+function draw(t) {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  courtLines();
+  const ft = Math.floor(t);
+  const holder = D.holders[String(ft)];
+  const scr = D.screen && Math.abs(D.screen.t - t) < 1.01;
+  D.players.forEach(p => {
+    const q = posAt(p, t); if (!q) return;
+    const col = p.side === 'offense' ? '#D4A017' : (p.side === 'defense' ? '#1f77b4' : '#999');
+    ctx.beginPath(); ctx.arc(X(q[0]), Y(q[1]), 9, 0, 6.3); ctx.fillStyle = col; ctx.fill();
+    if (holder !== undefined && holder === p.id) { ctx.lineWidth = 3; ctx.strokeStyle = '#d62728'; ctx.stroke(); }
+    if (scr && D.screen.screener === p.id) { ctx.fillStyle = '#d62728'; ctx.font = 'bold 11px Arial'; ctx.fillText('SCREEN', X(q[0]) - 20, Y(q[1]) + 22); }
+    ctx.fillStyle = '#222'; ctx.font = '11px Arial';
+    const nm = p.name ? p.name.split(' ').slice(-1)[0] : '#' + p.id;
+    ctx.fillText(nm, X(q[0]) - 14, Y(q[1]) - 12);
+  });
+  lb.textContent = 'frame ' + ft + ' / ' + (N - 1) + '  (' + (t / D.fps).toFixed(1) + ' s)' + (scr ? '  - screen' : '');
+}
+let t = 0, run = null;
+sl.oninput = () => { t = +sl.value; draw(t); };
+pl.onclick = () => {
+  if (run) { clearInterval(run); run = null; pl.textContent = 'Play'; return; }
+  pl.textContent = 'Pause';
+  run = setInterval(() => { t += 0.25; if (t > N - 1) t = 0; sl.value = Math.floor(t); draw(t); }, 1000 / (4 * D.fps));
+};
+draw(0);
+</script>""".replace("__DATA__", data), height=800 if court else 420)
+
+
+# ==============================================================================================================
+# COURT VIEW (requested: court-mapped information in the app). Renders the parser's court tables
+# (uww_court_*): shot chart, heat maps, screen spots, paint help, zone shapes and trap spots, corners/paint
+# spacing, and FastDraw-style play diagrams. Half court drawn with the basket at the top and the offense's
+# left on the left (hx = feet from the attacked baseline, hy = feet from the offense's left sideline).
+# ==============================================================================================================
+_CT_S = 7   # pixels per foot
+
+
+def _ct_svg(inner, title="", w=50, h=47):
+    S = _CT_S
+    P = lambda hx, hy: (hy * S, hx * S + 6)
+    arc = " ".join(f"{P(5.25 + 22.146 * math.cos(a), 25 + 22.146 * math.sin(a))[0]:.1f},{P(5.25 + 22.146 * math.cos(a), 25 + 22.146 * math.sin(a))[1]:.1f}"
+                   for a in [(-1.35 + 2.7 * i / 50) for i in range(51)])
+    court = (f'<rect x="0" y="6" width="{w * S}" height="{h * S}" fill="#ecd6aa" stroke="#fff" stroke-width="2"/>'
+             f'<rect x="{19 * S}" y="6" width="{12 * S}" height="{19 * S}" fill="none" stroke="#fff" stroke-width="2"/>'
+             f'<circle cx="{25 * S}" cy="{19 * S + 6}" r="{6 * S}" fill="none" stroke="#fff" stroke-width="2"/>'
+             f'<line x1="{3.33 * S}" y1="6" x2="{3.33 * S}" y2="{9.83 * S + 6}" stroke="#fff" stroke-width="2"/>'
+             f'<line x1="{46.67 * S}" y1="6" x2="{46.67 * S}" y2="{9.83 * S + 6}" stroke="#fff" stroke-width="2"/>'
+             f'<polyline points="{arc}" fill="none" stroke="#fff" stroke-width="2"/>'
+             f'<line x1="{22 * S}" y1="{4 * S + 6}" x2="{28 * S}" y2="{4 * S + 6}" stroke="#333" stroke-width="3"/>'
+             f'<circle cx="{25 * S}" cy="{5.25 * S + 6}" r="{0.75 * S}" fill="none" stroke="#c83c1e" stroke-width="2"/>')
+    return (f'<svg width="{w * S}" height="{h * S + 24}" style="margin:4px"><defs><marker id="ah" markerWidth="8" markerHeight="8" '
+            f'refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#222"/></marker></defs>{court}{inner}'
+            f'<text x="4" y="{h * S + 20}" font-size="11" fill="#333">{html.escape(title)}</text></svg>')
+
+
+def _ct_xy(hx, hy):
+    return float(hy) * _CT_S, float(hx) * _CT_S + 6
+
+
+def _ct_diagram_svg(diagram, title=""):
+    """FastDraw-style: numbered offense with movement arrows, dribble zigzags, dashed passes, the screen T,
+    defenders as X at their starting spots."""
+    dg = json.loads(diagram) if isinstance(diagram, str) else diagram
+    inner, pos = "", {}
+    drib = {d["num"]: (d["from_t"], d["to_t"]) for d in dg.get("dribbles", [])}
+    for p in dg.get("players", []):
+        pts = [(t, *_ct_xy(hx, hy)) for t, hx, hy in p["path"]]
+        if not pts:
+            continue
+        if p["side"] == "defense":
+            x, y = pts[0][1:]
+            inner += (f'<text x="{x - 5:.1f}" y="{y + 5:.1f}" font-size="15" fill="#1f77b4" font-weight="bold">X</text>')
+            continue
+        if not p.get("num"):
+            continue
+        pos[p["num"]] = {t: (x, y) for t, x, y in pts}
+        if len(pts) > 1:
+            d0, d1 = drib.get(p["num"], (None, None))
+            coords = []
+            for i, (t, x, y) in enumerate(pts):
+                if d0 is not None and d0 <= t <= d1 and 0 < i < len(pts) - 1:
+                    coords.append((x + (4 if i % 2 else -4), y))   # zigzag = dribble
+                else:
+                    coords.append((x, y))
+            inner += (f'<polyline points="{" ".join(f"{x:.1f},{y:.1f}" for x, y in coords)}" fill="none" stroke="#222" '
+                      f'stroke-width="2" marker-end="url(#ah)"/>')
+        x0, y0 = pts[0][1:]
+        inner += (f'<circle cx="{x0:.1f}" cy="{y0:.1f}" r="10" fill="#fff" stroke="#222" stroke-width="2"/>'
+                  f'<text x="{x0 - 4:.1f}" y="{y0 + 5:.1f}" font-size="13" font-weight="bold">{p["num"]}</text>')
+    for ps in dg.get("passes", []):
+        a, b = pos.get(ps["from"]), pos.get(ps["to"])
+        if a and b:
+            pa = a[min(a, key=lambda t: abs(t - ps["t"]))]
+            pb = b[min(b, key=lambda t: abs(t - ps["t"]))]
+            inner += (f'<line x1="{pa[0]:.1f}" y1="{pa[1]:.1f}" x2="{pb[0]:.1f}" y2="{pb[1]:.1f}" stroke="#222" '
+                      f'stroke-width="2" stroke-dasharray="6,4" marker-end="url(#ah)"/>')
+    sc = dg.get("screen")
+    if sc:
+        x, y = _ct_xy(sc["hx"], sc["hy"])
+        inner += (f'<line x1="{x - 9:.1f}" y1="{y:.1f}" x2="{x + 9:.1f}" y2="{y:.1f}" stroke="#d62728" stroke-width="4"/>'
+                  f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{x:.1f}" y2="{y - 9:.1f}" stroke="#d62728" stroke-width="4"/>')
+    return _ct_svg(inner, title)
+
+
+def render_court_view(team, key_suffix=""):
+    rep = load_table("uww_court_report")
+    st.markdown("**Court mapping status**")
+    if rep.empty:
+        st.caption("No court mapping yet -- run the parser's court-mapping cell.")
+    else:
+        for r in rep.to_dict("records"):
+            if str(r.get("calibrated")) == "False":
+                st.warning(f"{r['game']}: gym not calibrated. Open `{r.get('calibration_page')}` in a browser, click 4+ "
+                           "landmarks on a few frames (one at each basket), press Save, rerun the parser.")
+            else:
+                chk = (f", {int(r['shots_zone_agrees_with_2_or_3_pct'])}% of {int(r['shots_checked'])} shots on the right "
+                       "side of the 3-pt line" if pd.notna(r.get("shots_zone_agrees_with_2_or_3_pct")) else "")
+                st.caption(f"{r['game']}: {r.get('mapped_pct')}% of frames on the court, calibration error "
+                           f"{r.get('calibration_error_ft')} ft, {r.get('players_on_court_pct')}% of players land on the court{chk}.")
+    D = lambda name, col, who=team: (lambda d: d[d[col].astype(str) == str(who)] if not d.empty and col in d.columns else pd.DataFrame())(load_table(name))
+    uww = next((t for t in pd.concat([load_table("uww_trk_clips").get("offense_team", pd.Series(dtype=str))]).astype(str).unique()
+                if "whitewater" in t.lower()), "UW-Whitewater")
+    whose = st.radio("Whose offense", [team, uww], horizontal=True, key=f"ct_whose{key_suffix}")
+    dfn = uww if whose == team else team
+
+    st.markdown(f"**Shot chart: {whose}** (green = made, red = missed)")
+    sh = D("uww_court_shots", "offense_team", whose)
+    if sh.empty:
+        st.caption("No tracked shots on the court yet.")
+    else:
+        shooters = ["Everyone"] + sorted(sh["shooter"].dropna().astype(str).unique())
+        who = st.selectbox("Shooter", shooters, key=f"ct_shooter{key_suffix}")
+        s2 = sh if who == "Everyone" else sh[sh["shooter"] == who]
+        dots = "".join(f'<circle cx="{_ct_xy(r.hx, r.hy)[0]:.1f}" cy="{_ct_xy(r.hx, r.hy)[1]:.1f}" r="5" '
+                       f'fill="{"#2e9e45" if str(r.made) == "True" else "#d62728"}" stroke="#222"/>' for r in s2.itertuples())
+        cols = st.columns([1, 1])
+        with cols[0]:
+            st.markdown(_ct_svg(dots, f"{len(s2)} shots"), unsafe_allow_html=True)
+        with cols[1]:
+            z = D("uww_court_shot_zones", "offense_team", whose)
+            z = z[z["shooter"] == ("TEAM" if who == "Everyone" else who)]
+            _ft_df(z.sort_values("attempts", ascending=False), ["zone", "attempts", "makes", "fg_pct", "pts_per_shot"],
+                   {"zone": "Zone", "attempts": "Att", "makes": "Made", "fg_pct": "FG%", "pts_per_shot": "Pts/shot"})
+
+    st.markdown("**Heat map: where players spend their time**")
+    hm = load_table("uww_court_heat")
+    if hm.empty:
+        st.caption("No heat map data yet.")
+    else:
+        side = st.radio("Side of the ball", ["offense", "defense"], horizontal=True, key=f"ct_side{key_suffix}")
+        teamsel = whose if side == "offense" else dfn
+        hm = hm[(hm["team"].astype(str) == str(teamsel)) & (hm["side"] == side)]
+        names = ["TEAM"] + sorted(n for n in hm["player"].astype(str).unique() if n != "TEAM")
+        pl = st.selectbox("Player", names, key=f"ct_heat_pl{key_suffix}")
+        h2 = hm[hm["player"] == pl]
+        mx = float(h2["frames"].max()) if len(h2) else 1.0
+        cells = "".join(f'<rect x="{r.cell_hy * _CT_S}" y="{r.cell_hx * _CT_S + 6}" width="{5 * _CT_S}" height="{5 * _CT_S}" '
+                        f'fill="#d62728" opacity="{0.08 + 0.7 * r.frames / mx:.2f}"/>' for r in h2.itertuples())
+        st.markdown(_ct_svg(cells, f"{pl} on {side} ({teamsel})"), unsafe_allow_html=True)
+
+    st.markdown(f"**Where {whose} set screens, and how they were guarded**")
+    sc = D("uww_court_screens", "offense_team", whose)
+    if sc.empty:
+        st.caption("No screens on the court yet.")
+    else:
+        pal = {}
+        palette = ["#d62728", "#1f77b4", "#2e9e45", "#9467bd", "#ff7f0e", "#8c564b", "#17becf"]
+        for c in sc["coverage"].fillna("unknown").astype(str).unique():
+            pal[c] = palette[len(pal) % len(palette)]
+        dots = "".join(f'<circle cx="{_ct_xy(r.hx, r.hy)[0]:.1f}" cy="{_ct_xy(r.hx, r.hy)[1]:.1f}" r="6" '
+                       f'fill="{pal[str(r.coverage) if isinstance(r.coverage, str) else "unknown"]}" stroke="#222">'
+                       f'<title>{html.escape(str(r.zone))}: {html.escape(str(r.coverage))}</title></circle>' for r in sc.itertuples())
+        legend = " ".join(f'<span style="color:{c}">&#9679;</span> {html.escape(k)}' for k, c in pal.items())
+        cols = st.columns([1, 1])
+        with cols[0]:
+            st.markdown(_ct_svg(dots, f"{len(sc)} screens"), unsafe_allow_html=True)
+            st.markdown(legend, unsafe_allow_html=True)
+        with cols[1]:
+            _ft_df(D("uww_court_screen_zones", "offense_team", whose).sort_values("screens", ascending=False),
+                   ["zone", "screen_type", "coverage", "screens", "ppp"],
+                   {"zone": "Spot", "screen_type": "Screen", "coverage": "Coverage", "screens": "Screens", "ppp": "PPP"})
+
+    st.markdown(f"**{dfn}'s help on the court** (weak side = his man is 18+ ft from the ball)")
+    _ft_df(D("uww_court_help", "defense_team", dfn),
+           ["defender", "weak_side_in_paint_pct", "weak_side_ft_off_man", "on_ball_ft", "clips"],
+           {"defender": "Defender", "weak_side_in_paint_pct": "Weak side in paint %", "weak_side_ft_off_man": "Weak side ft off man",
+            "on_ball_ft": "On-ball ft", "clips": "Clips"})
+
+    st.markdown(f"**{dfn}'s zone alignments and trap spots**")
+    zp = D("uww_court_zone_press", "defense_team", dfn)
+    if zp.empty:
+        st.caption("No zone or press possessions on the court yet.")
+    else:
+        pics = ""
+        for r in zp.itertuples():
+            if isinstance(getattr(r, "court_layout", None), str):
+                dots = "".join(f'<text x="{hy * _CT_S - 5:.1f}" y="{hx * _CT_S + 11:.1f}" font-size="15" fill="#1f77b4" '
+                               f'font-weight="bold">X</text>' for hy, hx in json.loads(r.court_layout))
+                pics += _ct_svg(dots, f"zone {getattr(r, 'alignment', '')}")
+            if isinstance(getattr(r, "trap_spot", None), str) and pd.notna(getattr(r, "trap_hx", None)) and r.trap_hx <= 47:
+                x, y = _ct_xy(r.trap_hx, r.trap_hy)
+                pics += _ct_svg(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="9" fill="none" stroke="#d62728" stroke-width="3"/>',
+                                f"trap: {r.trap_spot}")
+        st.markdown(pics[:60000] or "No layouts to draw.", unsafe_allow_html=True)
+        cols = [c for c in ("alignment", "trap_spot", "points") if c in zp.columns]
+        _ft_df(zp, cols, {"alignment": "Zone alignment", "trap_spot": "Trap spot", "points": "Pts"})
+
+    st.markdown("**Our spacing on the court, by lineup**")
+    _ft_df(load_table("uww_court_spacing"), ["lineup", "possessions", "both_corners_pct", "paint_crowded_pct", "spacing_ft", "ppp"],
+           {"lineup": "Lineup", "possessions": "Poss.", "both_corners_pct": "Both corners filled %",
+            "paint_crowded_pct": "Paint crowded %", "spacing_ft": "Nearest teammate ft", "ppp": "PPP"})
+
+    st.markdown("**Play diagrams (FastDraw style)** -- numbers = offense (1 = first ball handler), X = defense, "
+                "zigzag = dribble, dashed = pass, red T = screen")
+    dg = D("uww_court_diagrams", "offense_team", whose)
+    if dg.empty:
+        st.caption("No possessions on the court yet.")
+    else:
+        sets = load_table("uww_trk_set_clips")
+        if not sets.empty:
+            dg = dg.merge(sets[["clip_key", "set_id"]], on="clip_key", how="left")
+        dg["label"] = (dg["game_date"].astype(str) + "  " + dg.get("set_id", pd.Series(index=dg.index, dtype=object)).fillna("").astype(str)
+                       + "  " + dg["play_title"].fillna(dg["synergy_string"]).astype(str).str[:60] + "  (" + dg["result"].astype(str) + ")")
+        picks = st.multiselect("Possessions", dg["label"].tolist(), default=dg["label"].tolist()[:3], key=f"ct_dg{key_suffix}")
+        st.markdown("".join(_ct_diagram_svg(dg[dg["label"] == p].iloc[0]["diagram"], p[:55]) for p in picks), unsafe_allow_html=True)
+
+
+def render_film_tracking(short_opponent, key_suffix=""):
+    team, clips, note = _ft_team_pick(short_opponent)
+    section_header("\U0001f3a5 FILM TRACKING",
+                   "Built from player tracking in the parser: players found in every tracking frame, followed through "
+                   "the clip, split into teams by jersey color, and named (Synergy's named player + the ball, then "
+                   "appearance matched to the five on the floor). Coverage marked * is tracking's own estimate. Feet are "
+                   "approximate. Small sample -- every number here is a lead to check on film.")
+    if team is None:
+        st.info("No tracked film yet. In the parser: frame capture with VISION_TRACK_FPS > 0, then player tracking.")
+        return
+    if note:
+        st.warning(note)
+    rep = load_table("uww_tracking_report")
+    if not rep.empty:
+        hits = rep["anchor_name_check"].astype(str).str.extract(r"(\d+)/(\d+)").dropna().astype(int)
+        if len(hits):
+            st.caption(f"Name check: tracking named {hits[0].sum()} of {hits[1].sum()} known players correctly "
+                       f"({round(100 * hits[0].sum() / max(hits[1].sum(), 1))}%). Tracked clips: {len(clips)}.")
+    sub = st.tabs(["Their defense", "Their offense", "Self-scout", "Court view", "Possession replay", "Search by player",
+                   "Tracking quality"])
+    D = lambda name, col: (lambda d: d[d[col].astype(str) == str(team)] if not d.empty and col in d.columns else pd.DataFrame())(load_table(name))
+
+    with sub[0]:
+        st.markdown(f"**How {team}'s defenders play screens**")
+        c = D("uww_trk_screen_coverage", "defense_team")
+        if not c.empty:
+            c = c.assign(coverage=c["coverage"].astype(str) + c["coverage_source"].map(lambda s: " *" if s == "tracking estimate" else ""))
+        _ft_df(c, ["defender", "role", "screen_type", "coverage", "times", "share_pct", "ppp"],
+               {"defender": "Defender", "role": "Role", "screen_type": "Screen", "coverage": "Coverage", "times": "Times",
+                "share_pct": "% of his", "ppp": "PPP"})
+        st.markdown("**Who guards whom**")
+        _ft_df(D("uww_trk_matchups", "defense_team"),
+               ["defender", "guards", "offense_team", "possessions", "share_of_his_possessions", "ppp"],
+               {"defender": "Their defender", "guards": "Guards", "offense_team": "Team", "possessions": "Poss.",
+                "share_of_his_possessions": "% of his", "ppp": "PPP"})
+        st.markdown("**Help: how far each defender plays off his man (approx ft)**")
+        _ft_df(D("uww_trk_help", "defense_team"),
+               ["defender", "approx_ft_off_man_weak side", "approx_ft_off_man_ball side", "approx_ft_off_man_on ball",
+                "tendency", "clips"],
+               {"defender": "Defender", "approx_ft_off_man_weak side": "Weak side", "approx_ft_off_man_ball side": "Ball side",
+                "approx_ft_off_man_on ball": "On ball", "tendency": "Tendency", "clips": "Clips"})
+        st.markdown("**Zone layouts and press traps**")
+        zp = D("uww_trk_zone_press", "defense_team")
+        if zp.empty:
+            st.caption("No zone or press clips tracked for this team yet.")
+        else:
+            z = zp[zp["zone"].astype(str) == "True"]
+            p = zp[zp["press"].astype(str) == "True"]
+            st.caption(f"Zone: {len(z)} clip(s). Press: {len(p)} clip(s), trapped on "
+                       f"{int((pd.to_numeric(p.get('trap_frames'), errors='coerce').fillna(0) > 0).sum()) if len(p) else 0}.")
+            svgs = "".join(_ft_svg_layout(r["zone_layout"], "#1f77b4", title=f"zone, {r['points']:.0f} pts" if pd.notna(r["points"]) else "zone")
+                           for _, r in z.iterrows() if isinstance(r.get("zone_layout"), str))[:40000]
+            if svgs:
+                st.markdown(svgs, unsafe_allow_html=True)
+            if len(p):
+                _ft_df(p, ["press_type", "trap_frames", "first_trap_seconds_into_clip", "points"],
+                       {"press_type": "Press", "trap_frames": "Trap frames", "first_trap_seconds_into_clip": "First trap (s)",
+                        "points": "Pts"})
+
+    with sub[1]:
+        st.markdown(f"**Who screens for whom ({team})**")
+        _ft_df(D("uww_trk_screen_pairs", "offense_team"), ["screener", "screened", "screen_type", "times", "ppp", "rolls", "pops", "slips"],
+               {"screener": "Screener", "screened": "For", "screen_type": "Screen", "times": "Times", "ppp": "PPP",
+                "rolls": "Rolls", "pops": "Pops", "slips": "Slips"})
+        st.markdown("**Recurring alignments found in the film** (the offense at its stillest moment, grouped)")
+        sets = D("uww_trk_sets", "offense_team")
+        if sets.empty:
+            st.caption("Not enough tracked clips to find recurring alignments yet (6+ per team).")
+        else:
+            for _, r in sets.iterrows():
+                cols = st.columns([1, 2])
+                with cols[0]:
+                    st.markdown(_ft_svg_layout(r.get("layout"), "#D4A017", title=r["set_id"]), unsafe_allow_html=True)
+                with cols[1]:
+                    st.markdown(f"**{r['set_id']}** -- {int(r['clips'])} clips, {r['ppp'] if pd.notna(r['ppp']) else '--'} PPP  \n"
+                                f"Most common tagged call: {r['most_common_call']} ({int(r['call_share_pct'] or 0)}%)  \n"
+                                f"Situations: {r.get('situations')}  \nExamples: {r.get('example_titles')}")
+        st.markdown("**Inbounds alignments**")
+        ib = D("uww_trk_inbounds", "offense_team")
+        if ib.empty:
+            st.caption("No BLOB/SLOB clips tracked for this team yet.")
+        else:
+            st.markdown("".join(_ft_svg_layout(r["layout"], "#D4A017", title=f"{r['situation']}: {r['alignment']}")
+                                for _, r in ib.iterrows()), unsafe_allow_html=True)
+
+    with sub[2]:
+        st.markdown("**Our screen coverage vs the plan** (plan: `staff_inputs/uww_coverage_plan.csv`)")
+        ce = load_table("uww_trk_coverage_execution")
+        if not ce.empty:
+            ce = ce.assign(coverage=ce["coverage"].astype(str) + ce["coverage_source"].map(lambda s: " *" if s == "tracking estimate" else ""))
+        _ft_df(ce, ["offense_team", "defender", "role", "screen_type", "coverage", "times", "planned", "followed_pct", "ppp"],
+               {"offense_team": "Vs", "defender": "Our defender", "role": "Role", "screen_type": "Screen",
+                "coverage": "Coverage", "times": "Times", "planned": "Planned", "followed_pct": "Followed %", "ppp": "PPP"})
+        st.markdown("**Our spacing by lineup** (approx ft; crowded = two teammates not screening within 6 ft)")
+        _ft_df(load_table("uww_trk_spacing"), ["lineup", "possessions", "spacing_ft_approx", "width_ft_approx", "crowded_pct", "ppp"],
+               {"lineup": "Lineup", "possessions": "Poss.", "spacing_ft_approx": "Nearest teammate (ft)",
+                "width_ft_approx": "Width (ft)", "crowded_pct": "Crowded %", "ppp": "PPP"})
+
+    with sub[3]:
+        try:
+            render_court_view(team, key_suffix)
+        except Exception as _ct_err:
+            report_section_error("Court view", _ct_err)
+
+    with sub[4]:
+        cl = clips.copy()
+        cl["label"] = (cl["game_date"].astype(str) + "  #" + cl["clip_number"].astype(str) + "  " +
+                       cl["offense_team"].astype(str) + " -- " + cl["play_title"].fillna(cl["synergy_string"]).astype(str).str[:60] +
+                       cl["screen_type"].map(lambda s: f"  [{s}]" if isinstance(s, str) else ""))
+        only_scr = st.checkbox("Only clips with a screen found", value=True, key=f"ft_only_scr{key_suffix}")
+        if only_scr:
+            cl = cl[cl["screen_type"].notna()]
+        if cl.empty:
+            st.caption("No clips to replay.")
+        else:
+            pick = st.selectbox("Possession", cl["label"].tolist(), key=f"ft_replay{key_suffix}")
+            row = cl[cl["label"] == pick].iloc[0]
+            st.caption(f"Synergy: {row['synergy_string']}  |  Coach Title: {row['play_title']}  |  "
+                       f"Suggested: {row['suggested_title']}  |  {row['result']}")
+            view = st.radio("View", ["Court view", "Camera view"], horizontal=True, key=f"ft_view{key_suffix}")
+            _ft_replay(row["clip_key"], key_suffix, view="court" if view == "Court view" else "camera")
+            if view == "Court view":
+                st.caption("Court view needs the gym calibrated (Court view tab); until then it falls back to the camera view.")
+
+    with sub[5]:
+        roles = load_table("uww_trk_roles")
+        if roles.empty:
+            st.caption("No tracked roles yet.")
+        else:
+            names = sorted(n for n in roles["player"].dropna().astype(str).unique() if not n.startswith("unnamed"))
+            who = st.selectbox("Player", names, key=f"ft_who{key_suffix}")
+            rl = sorted(roles["role"].dropna().unique())
+            pick_roles = st.multiselect("Roles", rl, default=rl, key=f"ft_roles{key_suffix}")
+            hit = roles[(roles["player"] == who) & roles["role"].isin(pick_roles)]
+            st.caption(f"{len(hit)} tracked possession role(s) for {who}.")
+            _ft_df(hit.sort_values(["game_date", "clip_key"]),
+                   ["game_date", "offense_team", "defense_team", "role", "with", "result", "points", "play_title", "synergy_string"],
+                   {"game_date": "Date", "offense_team": "Offense", "defense_team": "Defense", "role": "Role", "with": "With",
+                    "result": "Result", "points": "Pts", "play_title": "Coach Title", "synergy_string": "Synergy"})
+
+    with sub[6]:
+        st.markdown("**How far to trust the tracking, game by game**")
+        _ft_df(rep, ["game", "clips", "tracks", "anchors", "teams_by_color", "tracks_named", "anchor_name_check"],
+               {"game": "Game", "clips": "Clips", "tracks": "Tracks", "anchors": "Named by Synergy + ball",
+                "teams_by_color": "Teams by color", "tracks_named": "Tracks named", "anchor_name_check": "Name check"})
+        st.caption("Name check = hide each Synergy-named player and see whether tracking names him from appearance alone.")
+        chk_dir = os.path.join(DATA_DIR, "tracking_checks")
+        if os.path.isdir(chk_dir):
+            imgs = sorted(glob.glob(os.path.join(chk_dir, "*.jpg")))[:8]
+            for im in imgs:
+                st.image(im, caption=os.path.basename(im))
+        else:
+            st.caption("Check images appear here after the parser's player-tracking cell runs.")
 
 
 def render_upcoming_game():
@@ -5475,7 +6069,14 @@ def render_upcoming_game():
     render_brief_deeplink(short_opponent)
     render_head_to_head(short_opponent)
     render_read_with_caution(short_opponent)
-    _new_tab_stats, _new_tab_ktv, _new_tab_personnel, _new_tab_gameplan, _new_tab_tools = st.tabs(["\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f5d3\ufe0f Game Plan", "\U0001f3ae Tools"])
+    # CONFIRMED CHANGE (requested): a Film Tracking tab -- every tracking-built section (their defense, their
+    # offense, self-scout, possession replay, search by player, tracking quality).
+    _new_tab_stats, _new_tab_ktv, _new_tab_personnel, _new_tab_gameplan, _new_tab_film, _new_tab_tools = st.tabs(["\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f5d3\ufe0f Game Plan", "\U0001f3a5 Film Tracking", "\U0001f3ae Tools"])
+    with _new_tab_film:
+        try:
+            render_film_tracking(short_opponent)
+        except Exception as _ft_err:
+            report_section_error("Film Tracking", _ft_err)
     with _new_tab_gameplan:
         if short_opponent:
             try:
@@ -12787,578 +13388,6 @@ def _render_analytics_content():
 
 
 
-# ---------------------------------------------------------------------------
-# CONSTANTS
-# ---------------------------------------------------------------------------
-
-OLLAMA_URL = "http://localhost:11434/api/chat"
-DEFAULT_MODEL = "moondream"          # swap to "llava" on 16 GB machines
-FRAMES_PER_CLIP = 5                  # frames extracted per possession clip
-FRAME_MAX_WIDTH = 960                # pixel width sent to the model
-
-# ---------------------------------------------------------------------------
-# CODING SYSTEM — injected as the system prompt for every classification
-# ---------------------------------------------------------------------------
-
-CODING_SYSTEM_PROMPT = """You are an expert basketball play coder. Analyze the video frames
-of a single basketball possession and assign the correct code using the system below.
-
-## OUTPUT — respond ONLY with this JSON, no other text:
-{"title": "<coded title>", "confidence": "high|medium|low", "reasoning": "<one sentence>"}
-
-## CODING FORMAT
-Offensive formation - Offensive Play(Offensive Play Information) : Press(Press Type) - Defensive Type(Defensive Play Information)
-- No press → use ": -" before defensive type
-- No offensive play name → all info in parentheses: Formation - (info-details)
-
-## OFFENSIVE FORMATIONS
-5 out | Horns | Twins | Blob | Slob | Tran | Flow/Motion | 41 | Pinch | Stagger | Guards Cross
-
-## OFFENSIVE PLAYS (capitalized = named play)
-- BS / Ball Screen : ALWAYS include BS as first item in details → BS(BS, detail, ...)
-- Pass, UCLA, Back Screen, Flair, Zoom (no play name → all goes into parentheses)
-
-## OFFENSIVE PLAY INFORMATION (details inside parentheses)
-ds | bs | reject | curl | flair | slip | post | b | zoom | pass 5 | pass wing | stagger
-
-## DEFENSIVE TYPES
-m2m | zone | hybrid
-
-## PRESS TYPES
-Press(M2M) | Press(R+J) | Press(Zone)
-
-## DEFENSIVE DETAILS
-drop | switch | hedge | hard hedge | under | H and D | Deny | BLOB
-
-## NOTES
-- Drop single-letter modifiers (D, H, etc.) and team designators (UWW) from defensive codes
-- "UWW m2m D" → "m2m"
-- Flow and Motion are offensive plays, not formations
-"""
-
-# ---------------------------------------------------------------------------
-# FEW-SHOT EXAMPLES — loaded from already-coded clips
-# ---------------------------------------------------------------------------
-
-def _load_few_shot_examples(coded_csv_path: str, max_examples: int = 8) -> str:
-    """Read already-coded rows from a CSV and format them as few-shot context."""
-    if not coded_csv_path or not os.path.exists(coded_csv_path):
-        return ""
-    try:
-        df = pd.read_csv(coded_csv_path)
-        # Only rows that have a non-empty Title
-        df = df[df["Title"].notna() & (df["Title"].str.strip() != "")]
-        if df.empty:
-            return ""
-        # Sample a spread of examples
-        sample = df.sample(min(max_examples, len(df)), random_state=42)
-        lines = ["## EXAMPLE CODINGS FROM YOUR EXISTING LIBRARY\n"]
-        for _, row in sample.iterrows():
-            lines.append(f"Result: {row.get('Result', '')} | Player: {row.get('Player', '')} | "
-                         f"Synergy: {row.get('Synergy String', '')}")
-            lines.append(f"→ Title: {row['Title']}\n")
-        return "\n".join(lines)
-    except Exception:
-        return ""
-
-
-# ---------------------------------------------------------------------------
-# FRAME EXTRACTION (local, ffmpeg)
-# ---------------------------------------------------------------------------
-
-def _extract_frames(video_path: str, n_frames: int = FRAMES_PER_CLIP,
-                    max_width: int = FRAME_MAX_WIDTH) -> list[str]:
-    """
-    Extract n_frames evenly-spaced frames from video_path into a temp directory.
-    Returns list of absolute paths to JPEG files.
-    """
-    tmp_dir = tempfile.mkdtemp(prefix="uww_coder_")
-
-    # Get duration
-    probe = subprocess.run(
-        ["ffprobe", "-v", "quiet", "-print_format", "json", "-show_format", video_path],
-        capture_output=True, text=True, check=True,
-    )
-    duration = float(json.loads(probe.stdout)["format"]["duration"])
-
-    start = min(1.0, duration * 0.1)
-    end = max(0.0, duration - 1.0)
-    if end <= start:
-        start, end = 0.0, duration
-
-    timestamps = [start + (end - start) * i / (n_frames - 1) for i in range(n_frames)]
-
-    paths = []
-    for idx, ts in enumerate(timestamps):
-        out = os.path.join(tmp_dir, f"frame_{idx+1:02d}.jpg")
-        subprocess.run(
-            ["ffmpeg", "-y", "-loglevel", "quiet",
-             "-ss", str(ts), "-i", video_path,
-             "-frames:v", "1", "-vf", f"scale={max_width}:-1",
-             "-q:v", "3", out],
-            check=True,
-        )
-        paths.append(out)
-    return paths
-
-
-def _encode_image(path: str) -> str:
-    with open(path, "rb") as f:
-        return base64.b64encode(f.read()).decode("utf-8")
-
-
-# ---------------------------------------------------------------------------
-# OLLAMA CALL (local)
-# ---------------------------------------------------------------------------
-
-def _call_ollama(model: str, frame_paths: list[str], metadata: dict,
-                 few_shot: str = "") -> dict:
-    """
-    Send frames + metadata to a locally running Ollama vision model.
-    Returns {"title": ..., "confidence": ..., "reasoning": ...}
-    """
-    system = CODING_SYSTEM_PROMPT
-    if few_shot:
-        system += "\n\n" + few_shot
-
-    # Build the user message: images first, then text
-    images_b64 = [_encode_image(p) for p in frame_paths]
-
-    user_text = f"""Analyze these {len(frame_paths)} frames (start → end of the possession) and code the play.
-
-METADATA:
-- Game: {metadata.get('Game', '')}
-- Team (offense): {metadata.get('Team', '')}
-- Player: {metadata.get('Player', '')}
-- Result: {metadata.get('Result', '')}
-- Duration: {metadata.get('Duration', '')}s
-- Period: {metadata.get('Pd.', '')}, Clock: {metadata.get('Clock', '')}
-- Synergy auto-tag: {metadata.get('Synergy String', '')}
-
-Return ONLY the JSON object described in the system prompt."""
-
-    payload = {
-        "model": model,
-        "stream": False,
-        "messages": [
-            {"role": "system", "content": system},
-            {"role": "user", "content": user_text, "images": images_b64},
-        ],
-    }
-
-    req_data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(
-        OLLAMA_URL, data=req_data,
-        headers={"Content-Type": "application/json"}, method="POST",
-    )
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        body = json.loads(resp.read().decode("utf-8"))
-
-    raw = body.get("message", {}).get("content", "").strip()
-
-    # Strip markdown fences if present
-    if raw.startswith("```"):
-        raw = raw.split("```")[1]
-        if raw.startswith("json"):
-            raw = raw[4:]
-    raw = raw.strip()
-
-    try:
-        return json.loads(raw)
-    except json.JSONDecodeError:
-        return {"title": raw, "confidence": "low", "reasoning": "JSON parse error"}
-
-
-# ---------------------------------------------------------------------------
-# OLLAMA HEALTH CHECK
-# ---------------------------------------------------------------------------
-
-def _ollama_running() -> bool:
-    try:
-        urllib.request.urlopen("http://localhost:11434", timeout=2)
-        return True
-    except Exception:
-        return False
-
-
-def _available_ollama_models() -> list[str]:
-    try:
-        with urllib.request.urlopen("http://localhost:11434/api/tags", timeout=3) as r:
-            data = json.loads(r.read())
-        return [m["name"] for m in data.get("models", [])]
-    except Exception:
-        return []
-
-
-# ---------------------------------------------------------------------------
-# MAIN RENDER FUNCTION
-# ---------------------------------------------------------------------------
-
-def render_video_coder():
-    """Video Coder tab — fully local play classification using Ollama vision models."""
-
-    st.markdown("### 🎬 Video Coder")
-    st.caption(
-        "Automatically code basketball possessions from Synergy export CSV + video clips. "
-        "100% local — no data leaves this machine."
-    )
-
-    # --- Ollama status banner ---
-    ollama_ok = _ollama_running()
-    if ollama_ok:
-        available_models = _available_ollama_models()
-        vision_models = [m for m in available_models
-                         if any(v in m.lower() for v in ["llava", "moondream", "bakllava", "vision"])]
-        if vision_models:
-            st.success(f"✅ Ollama running · Vision models available: {', '.join(vision_models)}")
-        else:
-            st.warning(
-                "⚠️ Ollama is running but no vision models are installed. "
-                "Run `ollama pull moondream` in a terminal, then refresh."
-            )
-    else:
-        st.error(
-            "❌ Ollama is not running. "
-            "Start it with `ollama serve` in a terminal, then refresh this page."
-        )
-        with st.expander("📦 First-time setup instructions"):
-            st.markdown("""
-**1. Install Ollama**
-Download from [ollama.com](https://ollama.com) and run the installer.
-
-**2. Start Ollama**
-```
-ollama serve
-```
-
-**3. Pull a vision model**
-
-For 8 GB RAM machines:
-```
-ollama pull moondream
-```
-For 16 GB RAM machines (better accuracy):
-```
-ollama pull llava
-```
-
-**4. Refresh this page.**
-""")
-        return   # Nothing else to show until Ollama is up
-
-    st.divider()
-
-    # --- Configuration ---
-    with st.expander("⚙️ Configuration", expanded=not st.session_state.get("vc_configured")):
-        col1, col2 = st.columns(2)
-        with col1:
-            model_options = vision_models if vision_models else [DEFAULT_MODEL]
-            selected_model = st.selectbox(
-                "Vision model",
-                model_options,
-                index=0,
-                key="vc_model",
-                help="moondream = faster, less RAM. llava = slower, more accurate.",
-            )
-            n_frames = st.slider(
-                "Frames per clip", min_value=3, max_value=8, value=FRAMES_PER_CLIP,
-                key="vc_n_frames",
-                help="More frames = more accurate but slower. 5 works well for most possessions.",
-            )
-        with col2:
-            clips_dir = st.text_input(
-                "Clips folder path",
-                placeholder=r"C:\Users\You\Desktop\clips",
-                key="vc_clips_dir",
-                help="Folder containing video files named by their # from the CSV (e.g. 1.mp4, 2.mp4).",
-            )
-            coded_csv_path = st.text_input(
-                "Already-coded CSV (optional, improves accuracy)",
-                placeholder=r"C:\Users\You\Desktop\coded_plays.csv",
-                key="vc_coded_csv",
-                help="A CSV with correct Titles already filled in. Used as few-shot examples.",
-            )
-
-        if clips_dir and os.path.isdir(clips_dir):
-            st.success(f"✅ Clips folder found")
-            st.session_state["vc_configured"] = True
-        elif clips_dir:
-            st.error(f"❌ Folder not found: {clips_dir}")
-
-    st.divider()
-
-    # --- File upload ---
-    st.markdown("#### 1. Upload Synergy Export CSV")
-    uploaded_csv = st.file_uploader(
-        "Drop your Synergy export here",
-        type=["csv"],
-        key="vc_upload",
-        help="The CSV exported from Synergy with columns: #, Title, Notes, Result, Player, etc.",
-    )
-
-    if not uploaded_csv:
-        st.info("Upload a Synergy export CSV to get started.")
-        return
-
-    # Parse the CSV
-    try:
-        df = pd.read_csv(uploaded_csv)
-        df["#"] = df["#"].astype(str).str.strip()
-    except Exception as e:
-        st.error(f"Could not read CSV: {e}")
-        return
-
-    st.success(f"✅ {len(df)} possessions loaded")
-
-    # Preview
-    with st.expander("Preview CSV", expanded=False):
-        st.dataframe(df[["#", "Title", "Player", "Result", "Duration", "Synergy String"]].head(10),
-                     use_container_width=True)
-
-    clips_dir = st.session_state.get("vc_clips_dir", "").strip()
-    if not clips_dir or not os.path.isdir(clips_dir):
-        st.warning("Set the clips folder path in Configuration above before running.")
-        return
-
-    st.divider()
-    st.markdown("#### 2. Run Classification")
-
-    col_run, col_skip = st.columns([2, 3])
-    with col_run:
-        only_empty = st.checkbox(
-            "Only code rows with empty Title",
-            value=True,
-            key="vc_only_empty",
-            help="Skip rows that already have a coded title.",
-        )
-    with col_skip:
-        st.caption(
-            f"Clips folder: `{clips_dir}`  ·  "
-            f"Model: `{st.session_state.get('vc_model', DEFAULT_MODEL)}`  ·  "
-            f"Frames: `{st.session_state.get('vc_n_frames', FRAMES_PER_CLIP)}`"
-        )
-
-    rows_to_code = df.copy()
-    if only_empty:
-        rows_to_code = rows_to_code[
-            rows_to_code["Title"].isna() | (rows_to_code["Title"].str.strip() == "")
-        ]
-
-    st.info(f"{len(rows_to_code)} possession(s) to code.")
-
-    if st.button("▶️ Start Coding", type="primary", key="vc_run",
-                 disabled=not ollama_ok or len(rows_to_code) == 0):
-
-        model = st.session_state.get("vc_model", DEFAULT_MODEL)
-        n_frames = st.session_state.get("vc_n_frames", FRAMES_PER_CLIP)
-        coded_csv = st.session_state.get("vc_coded_csv", "").strip()
-        few_shot = _load_few_shot_examples(coded_csv, max_examples=8)
-
-        progress_bar = st.progress(0)
-        status_text = st.empty()
-        results_placeholder = st.empty()
-
-        results = []   # list of dicts, one per coded row
-
-        for i, (_, row) in enumerate(rows_to_code.iterrows()):
-            clip_num = row["#"]
-            status_text.markdown(
-                f"**Coding clip #{clip_num}** ({i+1}/{len(rows_to_code)}) — "
-                f"{row.get('Player', '')} · {row.get('Result', '')}"
-            )
-
-            # Find clip file
-            clip_path = None
-            for ext in [".mp4", ".mov", ".avi", ".mkv"]:
-                candidate = os.path.join(clips_dir, f"{clip_num}{ext}")
-                if os.path.exists(candidate):
-                    clip_path = candidate
-                    break
-
-            if not clip_path:
-                results.append({
-                    "row_index": row.name,
-                    "clip": clip_num,
-                    "suggested_title": "",
-                    "confidence": "no_video",
-                    "reasoning": f"No video file found for #{clip_num}",
-                    "original_title": row.get("Title", ""),
-                    "player": row.get("Player", ""),
-                    "result": row.get("Result", ""),
-                })
-                progress_bar.progress((i + 1) / len(rows_to_code))
-                continue
-
-            # Extract frames
-            try:
-                frame_paths = _extract_frames(clip_path, n_frames=n_frames)
-            except Exception as e:
-                results.append({
-                    "row_index": row.name,
-                    "clip": clip_num,
-                    "suggested_title": "",
-                    "confidence": "error",
-                    "reasoning": f"Frame extraction failed: {e}",
-                    "original_title": row.get("Title", ""),
-                    "player": row.get("Player", ""),
-                    "result": row.get("Result", ""),
-                })
-                progress_bar.progress((i + 1) / len(rows_to_code))
-                continue
-
-            # Call Ollama
-            try:
-                response = _call_ollama(model, frame_paths, dict(row), few_shot=few_shot)
-                results.append({
-                    "row_index": row.name,
-                    "clip": clip_num,
-                    "suggested_title": response.get("title", ""),
-                    "confidence": response.get("confidence", "unknown"),
-                    "reasoning": response.get("reasoning", ""),
-                    "original_title": row.get("Title", ""),
-                    "player": row.get("Player", ""),
-                    "result": row.get("Result", ""),
-                    "frame_paths": frame_paths,
-                })
-            except Exception as e:
-                results.append({
-                    "row_index": row.name,
-                    "clip": clip_num,
-                    "suggested_title": "",
-                    "confidence": "error",
-                    "reasoning": f"Ollama error: {e}",
-                    "original_title": row.get("Title", ""),
-                    "player": row.get("Player", ""),
-                    "result": row.get("Result", ""),
-                })
-
-            progress_bar.progress((i + 1) / len(rows_to_code))
-            time.sleep(0.2)
-
-        status_text.markdown("✅ **Classification complete!** Review suggestions below.")
-        st.session_state["vc_results"] = results
-        st.session_state["vc_df"] = df
-
-    # --- REVIEW UI ---
-    if "vc_results" not in st.session_state or not st.session_state["vc_results"]:
-        return
-
-    results = st.session_state["vc_results"]
-    df = st.session_state["vc_df"]
-
-    st.divider()
-    st.markdown("#### 3. Review & Approve")
-
-    # Summary metrics
-    total = len(results)
-    high_conf = sum(1 for r in results if r["confidence"] == "high")
-    med_conf = sum(1 for r in results if r["confidence"] == "medium")
-    errors = sum(1 for r in results if r["confidence"] in ("error", "no_video"))
-
-    m1, m2, m3, m4 = st.columns(4)
-    m1.metric("Total coded", total)
-    m2.metric("High confidence", high_conf)
-    m3.metric("Medium confidence", med_conf)
-    m4.metric("Errors / missing", errors)
-
-    st.caption("Edit any title below, then click **Accept** to apply it to the output CSV.")
-
-    # Per-result review cards
-    accepted_titles = {}   # row_index -> final title
-
-    for r in results:
-        conf = r["confidence"]
-        conf_color = {"high": "#2e7d32", "medium": "#e65100", "low": "#c62828"}.get(conf, "#888")
-        conf_icon = {"high": "🟢", "medium": "🟡", "low": "🔴"}.get(conf, "⚪")
-
-        with st.container():
-            # Card header
-            st.markdown(
-                f'<div style="background:#1a1a2e;border-radius:8px;padding:10px 16px;margin-bottom:4px;">'
-                f'<span style="color:#fff;font-weight:700;">Clip #{r["clip"]}</span>'
-                f'&nbsp;&nbsp;<span style="color:#9DAAAC;font-size:0.9rem;">{r["player"]} · {r["result"]}</span>'
-                f'&nbsp;&nbsp;<span style="color:{conf_color};font-size:0.85rem;">{conf_icon} {conf.upper()}</span>'
-                f'</div>',
-                unsafe_allow_html=True,
-            )
-
-            col_frames, col_review = st.columns([3, 2])
-
-            with col_frames:
-                # Show extracted frames
-                frame_paths = r.get("frame_paths", [])
-                if frame_paths:
-                    n = len(frame_paths)
-                    frame_cols = st.columns(n)
-                    for fi, (fc, fp) in enumerate(zip(frame_cols, frame_paths)):
-                        if os.path.exists(fp):
-                            fc.image(fp, caption=f"Frame {fi+1}", use_container_width=True)
-                else:
-                    st.caption(f"⚠️ {r['reasoning']}")
-
-            with col_review:
-                st.markdown(f"**Reasoning:** *{r['reasoning']}*")
-                st.markdown(f"**Original title:** `{r['original_title'] or '(empty)'}`")
-
-                # Editable suggested title
-                edited = st.text_input(
-                    "Suggested title (edit if needed)",
-                    value=r["suggested_title"],
-                    key=f"vc_edit_{r['row_index']}",
-                )
-
-                accept_key = f"vc_accept_{r['row_index']}"
-                if st.button("✅ Accept", key=accept_key, type="primary"):
-                    accepted_titles[r["row_index"]] = edited
-                    st.success("Accepted!")
-
-            st.divider()
-
-    # Accept All button
-    st.markdown("---")
-    col_all, col_dl = st.columns(2)
-    with col_all:
-        if st.button("✅ Accept All Suggestions", key="vc_accept_all"):
-            for r in results:
-                accepted_titles[r["row_index"]] = st.session_state.get(
-                    f"vc_edit_{r['row_index']}", r["suggested_title"]
-                )
-            st.session_state["vc_accepted"] = accepted_titles
-            st.success(f"Accepted {len(accepted_titles)} titles!")
-
-    # Persist individual accepts into session state
-    if accepted_titles:
-        existing = st.session_state.get("vc_accepted", {})
-        existing.update(accepted_titles)
-        st.session_state["vc_accepted"] = existing
-
-    # --- Export ---
-    accepted = st.session_state.get("vc_accepted", {})
-    if accepted:
-        # Apply accepted titles back to the dataframe
-        output_df = df.copy()
-        for row_idx, title in accepted.items():
-            output_df.at[row_idx, "Title"] = title
-
-        csv_buffer = io.StringIO()
-        output_df.to_csv(csv_buffer, index=False)
-        csv_bytes = csv_buffer.getvalue().encode("utf-8")
-
-        with col_dl:
-            st.download_button(
-                label=f"⬇️ Download Updated CSV ({len(accepted)} titles applied)",
-                data=csv_bytes,
-                file_name="coded_output.csv",
-                mime="text/csv",
-                type="primary",
-                key="vc_download",
-            )
-        st.caption(
-            f"{len(accepted)}/{len(results)} titles accepted · "
-            "Download the CSV and re-import to Synergy."
-        )
-
-
 def render_analytics():
     # Previous Games/Team/Players moved here from the top-level nav, as tabs -- same pattern the Upcoming
     # Game page already uses for its own internal Stats & Analysis/Keys to Victory/Personnel/Tools split.
@@ -13371,11 +13400,13 @@ def render_analytics():
     # CONFIRMED CHANGE (requested): no separate Analytics tab -- its content is rendered at the bottom of
     # the Team tab now (see the end of render_team). _render_analytics_content() stays its own function so
     # its early return on missing box-score data exits only itself.
+    # CONFIRMED CHANGE (requested): the "Video Coder" tab (local vision model) was removed from the app -- vision
+    # tagging now runs in the parser (vision-tagging cell) straight off the live Synergy player, and its
+    # Suggested Titles reach the app through uww_play_calls.csv like every other derived field.
     _renderers = {
         "Previous Games": render_previous_games,
         "Team": render_team,
         "Players": render_players,
-        "Video Coder": render_video_coder,
     }
     _tab_order = list(_renderers)
     _pinned = st.session_state.get("_analytics_open_tab")
