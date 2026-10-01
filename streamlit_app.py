@@ -4857,7 +4857,7 @@ def render_game_plan_tab(short_opponent: str) -> None:
     _no_min = load_table("uww_roster_no_minutes")
     if not _no_min.empty and "opponent" in _no_min.columns:
         _no_min = _no_min[_no_min["opponent"].astype(str) == str(short_opponent)]
-    if not _no_min.empty and int(_no_min.iloc[0].get("count") or 0):
+    if not _no_min.empty and _ft_int(_no_min.iloc[0].get("count")):
         st.caption(f"Also on the roster, no minutes recorded in any game we have box-score data for: "
                    f"{_no_min.iloc[0]['names']}. Left out of the table above rather than risk showing a "
                    f"name next to the wrong photo.")
@@ -5491,6 +5491,18 @@ _FT_FEET = 6.5     # must match TI_FEET_PER_PLAYER in the parser
 _FT_DEPTH = 1.8    # must match TI_DEPTH_SQUASH in the parser
 
 
+def _ft_int(v, default=0):
+    """A whole number for display, or `default` when the value is blank. CONFIRMED BUG (fixed; the Film Tracking tab
+    showed "unavailable right now (ValueError: cannot convert float NaN to integer)"): int(x or 0) is NOT safe for a
+    blank pandas value -- NaN is "truthy", so `NaN or 0` is still NaN and int() fails. A game with nothing to report
+    yet (e.g. a newly captured gym with no shots checked or no tagged call) left blanks like that."""
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        return default
+    return default if f != f else int(f)          # f != f only for NaN
+
+
 def _ft_team_pick(short_opponent):
     clips = load_table("uww_trk_clips")
     if clips.empty:
@@ -5564,7 +5576,7 @@ def _ft_replay(clip_key, key_suffix="", view="camera"):
                         float(p[2]) * _FT_DEPTH / max(float(p[3]) if len(p) > 3 else 0.1, 1e-3) * _FT_FEET] for p in path]
         except Exception:
             continue
-        players.append({"id": int(r["track"]), "side": r["side"] if isinstance(r["side"], str) else "",
+        players.append({"id": _ft_int(r["track"], -1), "side": r["side"] if isinstance(r["side"], str) else "",
                         "name": r["name"] if isinstance(r["name"], str) else "", "pts": pts})
     try:
         holders = json.loads(c["holders"]) if isinstance(c.get("holders"), str) else {}
@@ -5575,7 +5587,7 @@ def _ft_replay(clip_key, key_suffix="", view="camera"):
     except Exception:
         screen = None
     data = json.dumps({"players": players, "holders": holders, "screen": screen, "court": bool(court),
-                       "frames": int(c.get("frames") or 0), "fps": float(c.get("fps") or 2)})
+                       "frames": _ft_int(c.get("frames")), "fps": float(c.get("fps")) if pd.notna(c.get("fps")) and c.get("fps") else 2.0})
     import streamlit.components.v1 as components
     components.html("""
 <div style="font-family:Montserrat,Arial,sans-serif">
@@ -5732,8 +5744,9 @@ def render_court_view(team, key_suffix=""):
                 st.warning(f"{r['game']}: gym not calibrated. Open `{r.get('calibration_page')}` in a browser, click 4+ "
                            "landmarks on a few frames (one at each basket), press Save, rerun the parser.")
             else:
-                chk = (f", {int(r['shots_zone_agrees_with_2_or_3_pct'])}% of {int(r['shots_checked'])} shots on the right "
-                       "side of the 3-pt line" if pd.notna(r.get("shots_zone_agrees_with_2_or_3_pct")) else "")
+                chk = (f", {_ft_int(r['shots_zone_agrees_with_2_or_3_pct'])}% of {_ft_int(r.get('shots_checked'))} shots on "
+                       "the right side of the 3-pt line"
+                       if pd.notna(r.get("shots_zone_agrees_with_2_or_3_pct")) and pd.notna(r.get("shots_checked")) else "")
                 st.caption(f"{r['game']}: {r.get('mapped_pct')}% of frames on the court, calibration error "
                            f"{r.get('calibration_error_ft')} ft, {r.get('players_on_court_pct')}% of players land on the court{chk}.")
     D = lambda name, col, who=team: (lambda d: d[d[col].astype(str) == str(who)] if not d.empty and col in d.columns else pd.DataFrame())(load_table(name))
@@ -5928,8 +5941,9 @@ def render_film_tracking(short_opponent, key_suffix=""):
                 with cols[0]:
                     st.markdown(_ft_svg_layout(r.get("layout"), "#D4A017", title=r["set_id"]), unsafe_allow_html=True)
                 with cols[1]:
-                    st.markdown(f"**{r['set_id']}** -- {int(r['clips'])} clips, {r['ppp'] if pd.notna(r['ppp']) else '--'} PPP  \n"
-                                f"Most common tagged call: {r['most_common_call']} ({int(r['call_share_pct'] or 0)}%)  \n"
+                    st.markdown(f"**{r['set_id']}** -- {_ft_int(r['clips'])} clips, {r['ppp'] if pd.notna(r['ppp']) else '--'} PPP  \n"
+                                f"Most common tagged call: {r['most_common_call'] if pd.notna(r['most_common_call']) else '--'} "
+                                f"({_ft_int(r['call_share_pct'])}%)  \n"
                                 f"Situations: {r.get('situations')}  \nExamples: {r.get('example_titles')}")
         st.markdown("**Inbounds alignments**")
         ib = D("uww_trk_inbounds", "offense_team")
