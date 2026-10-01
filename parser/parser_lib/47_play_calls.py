@@ -1572,8 +1572,12 @@ def _play_review_file_saves():
                 return d_
         return None
 
+    # reviews saved from the Streamlit app are committed to the repo's data/play_review_saves (APP_DATA_DIR) and
+    # arrive with a git pull -- filed the same way (any name; recognized by contents)
+    _app_saves = os.path.join(globals().get("APP_DATA_DIR") or globals().get("OUTPUT_DIR") or ".", "play_review_saves")
     for f in (glob.glob(os.path.join(home, "Downloads", "play_review_*.json"))
-              + glob.glob(os.path.join(home, "OneDrive", "Downloads", "play_review_*.json"))):
+              + glob.glob(os.path.join(home, "OneDrive", "Downloads", "play_review_*.json"))
+              + [f for f in glob.glob(os.path.join(_app_saves, "*.json")) if _review_doc(f) is not None]):
         dst = os.path.join(run_dir_for(f) or prdir, os.path.basename(f))
         if not os.path.exists(dst) or os.path.getmtime(f) > os.path.getmtime(dst):
             shutil.copy2(f, dst)

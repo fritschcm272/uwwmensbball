@@ -5424,7 +5424,7 @@ def render_brief_deeplink(short_opponent) -> None:
                                      "Full breakdown, including every clip by set.")
             return
         if section == "film_tracking":
-            render_film_tracking(short_opponent, key_suffix="_brief")  # separate widget keys: the tab renders it too
+            render_film_tracking(short_opponent, key_suffix="_brief")  # the brief's film link: all of this opponent's tracked games
             return
         if section == "screen_coverage":
             render_screen_coverage(short_opponent, key_suffix="_brief")  # separate keys: the tab renders it too
@@ -5489,6 +5489,26 @@ def render_brief_deeplink(short_opponent) -> None:
 # ==============================================================================================================
 _FT_FEET = 6.5     # must match TI_FEET_PER_PLAYER in the parser
 _FT_DEPTH = 1.8    # must match TI_DEPTH_SQUASH in the parser
+
+
+# CONFIRMED CHANGE (requested: "Film Tracking should be tied to the associated game in Previous Games, not a part of the
+# Upcoming Opponent"). Film Tracking now lives on Previous Games, for the selected game. While it draws, _FT_GAME holds
+# (that game's ISO date, its opponent); every Film Tracking table is read through _ft_load(), which then uses the
+# parser's per-game copy ("<name>_by_game") when there is one and keeps only that game's rows.
+_FT_GAME = None
+
+
+def _ft_load(name):
+    df = load_table(name)
+    if not _FT_GAME:
+        return df
+    iso = _FT_GAME[0]
+    byg = load_table(name + "_by_game")
+    if isinstance(byg, pd.DataFrame) and not byg.empty:
+        df = byg
+    if isinstance(df, pd.DataFrame) and not df.empty and "game_date" in df.columns and iso:
+        df = df[iso_dates(df["game_date"]).astype(str).to_numpy() == str(iso)]
+    return df
 
 
 def _ft_int(v, default=0):
@@ -5572,7 +5592,7 @@ def _ft_replay_filters(cl, team, key_suffix=""):
 
 
 def _ft_team_pick(short_opponent):
-    clips = load_table("uww_trk_clips")
+    clips = _ft_load("uww_trk_clips")
     if clips.empty:
         return None, clips, ""
     teams = pd.concat([clips["offense_team"], clips["defense_team"]]).astype(str)
@@ -5581,6 +5601,8 @@ def _ft_team_pick(short_opponent):
     counts = teams.value_counts()
     match = next((t for t in counts.index if any(w in t.lower() for w in words)), None)
     note = ""
+    if match is None and _FT_GAME:
+        return None, clips, ""                      # one game: no fallback to another team's film
     if match is None and len(counts):
         match = counts.index[0]
         note = f"No tracked film of {short_opponent} yet -- showing {match}, the most-tracked opponent."
@@ -5618,8 +5640,8 @@ def _ft_df(df, cols, rename, n=None):
 def _ft_replay(clip_key, key_suffix="", view="camera"):
     """Animated replay of one tracked possession: every tracked player as a dot, named where tracking named him,
     offense gold / defense blue, ball holder ringed red, the screen moment flagged."""
-    tracks = load_table("uww_player_tracks")
-    clips = load_table("uww_trk_clips")
+    tracks = _ft_load("uww_player_tracks")
+    clips = _ft_load("uww_trk_clips")
     if tracks.empty or clips.empty:
         st.caption("No tracks yet.")
         return
@@ -5802,7 +5824,7 @@ def _ct_diagram_svg(diagram, title=""):
 
 
 def render_court_view(team, key_suffix=""):
-    rep = load_table("uww_court_report")
+    rep = _ft_load("uww_court_report")
     st.markdown("**Court mapping status**")
     if rep.empty:
         st.caption("No court mapping yet -- run the parser's court-mapping cell.")
@@ -5818,7 +5840,7 @@ def render_court_view(team, key_suffix=""):
                 st.caption(f"{r['game']}: {r.get('mapped_pct')}% of frames on the court, calibration error "
                            f"{r.get('calibration_error_ft')} ft, {r.get('players_on_court_pct')}% of players land on the court{chk}.")
     D = lambda name, col, who=team: (lambda d: d[d[col].astype(str) == str(who)] if not d.empty and col in d.columns else pd.DataFrame())(load_table(name))
-    uww = next((t for t in pd.concat([load_table("uww_trk_clips").get("offense_team", pd.Series(dtype=str))]).astype(str).unique()
+    uww = next((t for t in pd.concat([_ft_load("uww_trk_clips").get("offense_team", pd.Series(dtype=str))]).astype(str).unique()
                 if "whitewater" in t.lower()), "UW-Whitewater")
     whose = st.radio("Whose offense", [team, uww], horizontal=True, key=f"ct_whose{key_suffix}")
     dfn = uww if whose == team else team
@@ -5853,7 +5875,7 @@ def render_court_view(team, key_suffix=""):
                    {"zone": "Zone", "attempts": "Att", "makes": "Made", "fg_pct": "FG%", "pts_per_shot": "Pts/shot"})
 
     st.markdown("**Heat map: where players spend their time**")
-    hm = load_table("uww_court_heat")
+    hm = _ft_load("uww_court_heat")
     if hm.empty:
         st.caption("No heat map data yet.")
     else:
@@ -5916,7 +5938,7 @@ def render_court_view(team, key_suffix=""):
         _ft_df(zp, cols, {"alignment": "Zone alignment", "trap_spot": "Trap spot", "points": "Pts"})
 
     st.markdown("**Our spacing on the court, by lineup**")
-    _ft_df(load_table("uww_court_spacing"), ["lineup", "possessions", "both_corners_pct", "paint_crowded_pct", "spacing_ft", "ppp"],
+    _ft_df(_ft_load("uww_court_spacing"), ["lineup", "possessions", "both_corners_pct", "paint_crowded_pct", "spacing_ft", "ppp"],
            {"lineup": "Lineup", "possessions": "Poss.", "both_corners_pct": "Both corners filled %",
             "paint_crowded_pct": "Paint crowded %", "spacing_ft": "Nearest teammate ft", "ppp": "PPP"})
 
@@ -5926,7 +5948,7 @@ def render_court_view(team, key_suffix=""):
     if dg.empty:
         st.caption("No possessions on the court yet.")
     else:
-        sets = load_table("uww_trk_set_clips")
+        sets = _ft_load("uww_trk_set_clips")
         if not sets.empty:
             dg = dg.merge(sets[["clip_key", "set_id"]], on="clip_key", how="left")
         dg["label"] = (dg["game_date"].astype(str) + "  " + dg.get("set_id", pd.Series(index=dg.index, dtype=object)).fillna("").astype(str)
@@ -5943,11 +5965,13 @@ def render_film_tracking(short_opponent, key_suffix=""):
                    "appearance matched to the five on the floor). Coverage marked * is tracking's own estimate. Feet are "
                    "approximate. Small sample -- every number here is a lead to check on film.")
     if team is None:
-        st.info("No tracked film yet. In the parser: frame capture with VISION_TRACK_FPS > 0, then player tracking.")
+        st.info("No tracked film for this game yet. In the parser: Frame capture for this game (VISION_ONLY_GAME), then "
+                "player tracking." if _FT_GAME else
+                "No tracked film yet. In the parser: frame capture with VISION_TRACK_FPS > 0, then player tracking.")
         return
     if note:
         st.warning(note)
-    rep = load_table("uww_tracking_report")
+    rep = _ft_load("uww_tracking_report")
     if not rep.empty:
         hits = rep["anchor_name_check"].astype(str).str.extract(r"(\d+)/(\d+)").dropna().astype(int)
         if len(hits):
@@ -5955,7 +5979,7 @@ def render_film_tracking(short_opponent, key_suffix=""):
                        f"({round(100 * hits[0].sum() / max(hits[1].sum(), 1))}%). Tracked clips: {len(clips)}.")
     sub = st.tabs(["Their defense", "Their offense", "Self-scout", "Court view", "Possession replay", "Search by player",
                    "Tracking quality"])
-    D = lambda name, col: (lambda d: d[d[col].astype(str) == str(team)] if not d.empty and col in d.columns else pd.DataFrame())(load_table(name))
+    D = lambda name, col: (lambda d: d[d[col].astype(str) == str(team)] if not d.empty and col in d.columns else pd.DataFrame())(_ft_load(name))
 
     with sub[0]:
         st.markdown(f"**How {team}'s defenders play screens**")
@@ -6023,14 +6047,14 @@ def render_film_tracking(short_opponent, key_suffix=""):
 
     with sub[2]:
         st.markdown("**Our screen coverage vs the plan** (plan: `staff_inputs/uww_coverage_plan.csv`)")
-        ce = load_table("uww_trk_coverage_execution")
+        ce = _ft_load("uww_trk_coverage_execution")
         if not ce.empty:
             ce = ce.assign(coverage=ce["coverage"].astype(str) + ce["coverage_source"].map(lambda s: " *" if s == "tracking estimate" else ""))
         _ft_df(ce, ["offense_team", "defender", "role", "screen_type", "coverage", "times", "planned", "followed_pct", "ppp"],
                {"offense_team": "Vs", "defender": "Our defender", "role": "Role", "screen_type": "Screen",
                 "coverage": "Coverage", "times": "Times", "planned": "Planned", "followed_pct": "Followed %", "ppp": "PPP"})
         st.markdown("**Our spacing by lineup** (approx ft; crowded = two teammates not screening within 6 ft)")
-        _ft_df(load_table("uww_trk_spacing"), ["lineup", "possessions", "spacing_ft_approx", "width_ft_approx", "crowded_pct", "ppp"],
+        _ft_df(_ft_load("uww_trk_spacing"), ["lineup", "possessions", "spacing_ft_approx", "width_ft_approx", "crowded_pct", "ppp"],
                {"lineup": "Lineup", "possessions": "Poss.", "spacing_ft_approx": "Nearest teammate (ft)",
                 "width_ft_approx": "Width (ft)", "crowded_pct": "Crowded %", "ppp": "PPP"})
 
@@ -6059,7 +6083,7 @@ def render_film_tracking(short_opponent, key_suffix=""):
                 st.caption("Court view needs the gym calibrated (Court view tab); until then it falls back to the camera view.")
 
     with sub[5]:
-        roles = load_table("uww_trk_roles")
+        roles = _ft_load("uww_trk_roles")
         if roles.empty:
             st.caption("No tracked roles yet.")
         else:
@@ -6180,12 +6204,7 @@ def render_upcoming_game():
     render_read_with_caution(short_opponent)
     # CONFIRMED CHANGE (requested): a Film Tracking tab -- every tracking-built section (their defense, their
     # offense, self-scout, possession replay, search by player, tracking quality).
-    _new_tab_stats, _new_tab_ktv, _new_tab_personnel, _new_tab_gameplan, _new_tab_film, _new_tab_tools = st.tabs(["\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f5d3\ufe0f Game Plan", "\U0001f3a5 Film Tracking", "\U0001f3ae Tools"])
-    with _new_tab_film:
-        try:
-            render_film_tracking(short_opponent)
-        except Exception as _ft_err:
-            report_section_error("Film Tracking", _ft_err)
+    _new_tab_stats, _new_tab_ktv, _new_tab_personnel, _new_tab_gameplan, _new_tab_tools = st.tabs(["\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f5d3\ufe0f Game Plan", "\U0001f3ae Tools"])
     with _new_tab_gameplan:
         if short_opponent:
             try:
@@ -11800,6 +11819,207 @@ def render_previous_games():
                                                        "play_title": "Tagged As"}),
             hide_index=True, use_container_width=True, height=400,
         )
+
+
+    # ---- Film Tracking for THIS game (moved here from the Upcoming Opponent page -- requested) ----------------
+    global _FT_GAME
+    _FT_GAME = (_pg_game_date, short_opponent)
+    try:
+        render_film_tracking(short_opponent, key_suffix="_pg")
+    except Exception as _ft_err:
+        report_section_error("Film Tracking", _ft_err)
+    finally:
+        _FT_GAME = None
+    # ---- Play review for THIS game, answered in the app and saved to GitHub (requested) ----------------------
+    try:
+        render_app_play_review(_pg_game_date, short_opponent)
+    except Exception as _pr_err:
+        report_section_error("Play review", _pr_err)
+
+# --------------------------------------------------------------------------------------------------------------
+# Play review inside the app (Previous Games)
+# --------------------------------------------------------------------------------------------------------------
+# CONFIRMED CHANGE (requested: the play reviews on Previous Games, so coaches give feedback right in the app, saved back
+# to the GitHub repository). The parser exports each game's OPEN review to data/play_review/<game>/ (review.json + each
+# play's video, cover image and pictures). Here a coach answers the same 20 plays; "Save" commits the answers as a new
+# file in data/play_review_saves/ through the GitHub API (token in the app's secrets). After a git pull the parser
+# files it into its run folder and uses it like any review saved from the local page.
+_PR_NOT_CHECKED = "-- not checked --"
+
+
+def _pr_app_packages():
+    out = []
+    for f in glob.glob(os.path.join(DATA_DIR, "play_review", "*", "review.json")):
+        try:
+            with open(f, encoding="utf-8") as fh:
+                d = json.load(fh)
+            d["_dir"] = os.path.dirname(f)
+            out.append(d)
+        except Exception:
+            continue
+    return out
+
+
+def _pr_app_saves_for(run):
+    """Reviews already saved (in the repo) for this run: [(coach, saved)]."""
+    out = []
+    for f in glob.glob(os.path.join(DATA_DIR, "play_review_saves", "*.json")):
+        try:
+            with open(f, encoding="utf-8") as fh:
+                d = json.load(fh)
+            if str(d.get("run")) == str(run):
+                out.append((d.get("coach") or "someone", str(d.get("saved", ""))[:16].replace("T", " ")))
+        except Exception:
+            continue
+    return out
+
+
+def _pr_github_save(filename, payload):
+    """Commit one new file to the repo (data/play_review_saves/<filename>). Returns (ok, message)."""
+    import base64
+    import requests
+    try:
+        cfg = dict(st.secrets.get("github", {}))
+    except Exception:                                   # no secrets set up at all
+        cfg = {}
+    token, repo = cfg.get("token"), cfg.get("repo")
+    if not token or not repo:
+        return False, "GitHub isn't set up in the app's secrets yet"
+    path = f"{cfg.get('reviews_path', 'data/play_review_saves').strip('/')}/{filename}"
+    try:
+        r = requests.put(f"https://api.github.com/repos/{repo}/contents/{path}",
+                         headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"},
+                         json={"message": f"Play review: {payload.get('game')} by {payload.get('coach')}",
+                               "content": base64.b64encode(json.dumps(payload, indent=1).encode()).decode(),
+                               "branch": cfg.get("branch", "main")}, timeout=30)
+    except Exception as e:
+        return False, f"{type(e).__name__}: {e}"
+    return (r.status_code in (200, 201)), (f"saved to {repo}/{path}" if r.status_code in (200, 201)
+                                           else f"GitHub said {r.status_code}: {r.text[:200]}")
+
+
+def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
+    section_header("\U0001f4dd PLAY REVIEW",
+                   "Check the players and the automatic Title on this game's review plays. Rows where the coach's value "
+                   "and the automatic value differ start as wrong with the coach's value -- change any where the coach's "
+                   "tag was the miss. Save sends your answers to the parser (after its next git pull).")
+    # this UWW game's review: same date, and UW-Whitewater (WWW) in the game code -- another game the same day (two
+    # opponents playing each other) never matches
+    pk = [d for d in _pr_app_packages() if str(d.get("game", "")).startswith(str(game_iso))
+          and "WWW" in str(d.get("game", "")).split("|")[-1]]
+    if not pk:
+        st.info("No open play review for this game. The parser makes one (20 random plays) when the game is tracked and "
+                "the last review of it was saved -- commit and push the data folder afterwards.")
+        return
+    d = pk[0]
+    saved = _pr_app_saves_for(d.get("run"))
+    if saved:
+        st.success("Already saved for this review: " + "; ".join(f"{c} ({t})" for c, t in saved)
+                   + ". More coaches can add theirs.")
+    coach = st.text_input("Your name (required to save)", key=f"pr_coach{key_suffix}")
+    norm = lambda x: re.sub(r"[^a-z0-9#]+", "", str(x).lower())
+    vocab = d.get("vocab", {})
+    with st.form(f"pr_form_{d.get('run')}{key_suffix}"):
+        sel = {}
+        for pi, p in enumerate(d.get("plays", [])):
+            st.markdown(f"**Clip {p.get('clip_number')}** &nbsp; {p.get('clock', '')} &nbsp; {p.get('synergy', '')}"
+                        + ("  \u2014 *validation play*" if p.get("validation") else ""))
+            left, right = st.columns([3, 4])
+            with left:
+                if p.get("clip") and os.path.exists(os.path.join(d["_dir"], p["clip"])):
+                    st.video(os.path.join(d["_dir"], p["clip"]))
+                if p.get("synergy_url"):
+                    st.caption(f"[Open the game on Synergy]({p['synergy_url']}) -- clip #{p.get('clip_number')}"
+                               + (f", starts {p['video_at']} into the game video" if p.get("video_at") else ""))
+            with right:
+                st.markdown(f"Coach's Title: `{p.get('coach_title') or 'not tagged'}`  \n"
+                            f"Automatic Title: `{p.get('auto_title') or 'nothing confident enough yet'}`")
+                if p.get("film"):
+                    st.caption("Seen on the film: " + p["film"])
+                for fi, f in enumerate(p.get("fields", [])):
+                    pre = f.get("coach") is not None and f.get("auto") is not None and norm(f["coach"]) != norm(f["auto"])
+                    auto = (f"{f['auto']} ({round(100 * (f.get('conf') or 0))}%)" if f.get("auto") is not None
+                            else (f.get("note") or "no answer"))
+                    c1, c2, c3 = st.columns([3, 2, 3])
+                    c1.markdown(f"**{f.get('label')}**  \nCoach: {f.get('coach') if f.get('coach') is not None else '--'}  \n"
+                                f"Automatic: {auto}")
+                    v = c2.selectbox("Your answer", ["--", "right", "wrong", "can't tell"], index=2 if pre else 0,
+                                     key=f"pr_v_{pi}_{fi}{key_suffix}")
+                    opts = [""] + list(vocab.get(f.get("field"), []))
+                    dflt = f.get("coach") if pre and f.get("coach") in opts else ""
+                    pick = c3.selectbox("Right answer", opts, index=opts.index(dflt) if dflt in opts else 0,
+                                        key=f"pr_a_{pi}_{fi}{key_suffix}")
+                    typed = c3.text_input("or type a new one", value=(f.get("coach") if pre and not dflt else ""),
+                                          key=f"pr_t_{pi}_{fi}{key_suffix}")
+                    sel[("ti", pi, fi)] = (v, (typed.strip() or pick), pre)
+            for ki, pic in enumerate(p.get("pictures", [])):
+                l2, r2 = st.columns([3, 4])
+                with l2:
+                    path = os.path.join(d["_dir"], pic.get("image", ""))
+                    if os.path.exists(path):
+                        st.image(path, caption="START of the play" if pic.get("which") == "start" else "END of the play")
+                with r2:
+                    for bi, b in enumerate(pic.get("boxes", [])):
+                        mine = p.get("five", {}).get(b.get("side"), []) or []
+                        other = p.get("five", {}).get("defense" if b.get("side") == "offense" else "offense", []) or []
+                        opts = ([_PR_NOT_CHECKED, "correct"] + [f"really {n}" for n in mine if n != b.get("name")]
+                                + [f"really {n} (other team)" for n in other] + ["wrong team (don't know who)", "not a player"])
+                        lab = (f"Box {b.get('id')} -- {b.get('side')} -- "
+                               + (f"{b.get('label')} ({b.get('how')})" if b.get("label") else "not named"))
+                        sel[("pl", pi, ki, bi)] = st.selectbox(lab, opts, key=f"pr_b_{pi}_{ki}_{bi}{key_suffix}")
+            st.divider()
+        submitted = st.form_submit_button("Save my review")
+    if not submitted:
+        return
+    if not coach.strip():
+        st.error("Add your name above, then save again.")
+        return
+    out = {"game": d.get("game"), "run": d.get("run"), "coach": coach.strip(),
+           "saved": pd.Timestamp.now(tz="UTC").isoformat(timespec="seconds"), "checks": [], "answers": [],
+           "source": "streamlit app"}
+    plays = d.get("plays", [])
+    for key, val in sel.items():
+        if key[0] == "ti":
+            _, pi, fi = key
+            v, ans, pre = val
+            if v == "--":
+                continue
+            p, f = plays[pi], plays[pi]["fields"][fi]
+            out["answers"].append({"clip_key": p["clip_key"], "clip_number": p.get("clip_number"), "field": f.get("field"),
+                                   "coach": f.get("coach"), "auto": f.get("auto"), "auto_conf": f.get("conf"),
+                                   "verdict": v, "correct": (ans or None) if v == "wrong" else None,
+                                   "prefilled": bool(pre and v == "wrong" and norm(ans) == norm(f.get("coach")))})
+        else:
+            _, pi, ki, bi = key
+            if val == _PR_NOT_CHECKED:
+                continue
+            p = plays[pi]
+            pic = p["pictures"][ki]
+            b = pic["boxes"][bi]
+            if val == "correct":
+                verdict, name = "correct", b.get("name")
+            elif val == "not a player":
+                verdict, name = "not a player", None
+            elif val.startswith("wrong team"):
+                verdict, name = "wrong team", None
+            elif val.endswith("(other team)"):
+                verdict, name = "wrong team", val[len("really "):-len(" (other team)")]
+            else:
+                verdict, name = "wrong", val[len("really "):]
+            out["checks"].append({"clip_key": p["clip_key"], "clip_number": p.get("clip_number"), "frame_file": pic.get("frame_file"),
+                                  "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"), "side": b.get("side"),
+                                  "assigned": b.get("name"), "assigned_how": b.get("how"), "verdict": verdict, "true_name": name})
+    fname = (f"play_review_{d.get('slug')}_{d.get('run')}_{re.sub(r'[^A-Za-z0-9]+', '_', coach.strip()).strip('_')}_"
+             f"{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
+    ok, msg = _pr_github_save(fname, out)
+    if ok:
+        st.success(f"Saved -- {len(out['checks'])} player check(s) and {len(out['answers'])} Title answer(s) ({msg}). "
+                   "The app restarts briefly when GitHub gets the file; the parser uses it after its next git pull.")
+    else:
+        st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in your Downloads folder -- "
+                   "the parser picks it up from there.")
+        st.download_button("Download my review", json.dumps(out, indent=1), file_name=fname, mime="application/json",
+                           key=f"pr_dl{key_suffix}")
 
 
 # --------------------------------------------------------------------------------------------------------------

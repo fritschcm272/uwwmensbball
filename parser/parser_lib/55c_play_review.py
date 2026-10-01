@@ -18,6 +18,7 @@
 # Title answers -> scored, and labels for the Tag model on untagged plays).
 import os
 import re
+import shutil
 import glob
 import sys
 import json
@@ -293,6 +294,33 @@ def _pr_embed(rdir, name, kind):
     return f"data:{mime};base64," + base64.b64encode(data).decode("ascii")
 
 
+def _export_play_review_to_app(rdir, slug, game, run, plays, vocab):
+    """Copy this run's review into the app's data folder: APP_DATA_DIR/play_review/<slug>/ (replacing the last one)."""
+    from PIL import Image
+    dest = os.path.join(APP_DATA_DIR, "play_review", slug)
+    shutil.rmtree(dest, ignore_errors=True)
+    os.makedirs(dest, exist_ok=True)
+    out = []
+    for p in plays:
+        q = json.loads(json.dumps(p, default=str))
+        for key in ("clip", "poster"):
+            if q.get(key) and os.path.exists(os.path.join(rdir, q[key])):
+                shutil.copy2(os.path.join(rdir, q[key]), os.path.join(dest, q[key]))
+        for pic in q.get("pictures", []):
+            src = os.path.join(rdir, pic["image"])
+            if os.path.exists(src):
+                im = Image.open(src).convert("RGB")
+                if im.size[0] > 1100:
+                    im = im.resize((1100, int(im.size[1] * 1100 / im.size[0])), Image.LANCZOS)
+                im.save(os.path.join(dest, pic["image"]), "JPEG", quality=72, optimize=True)
+        out.append(q)
+    with open(os.path.join(dest, "review.json"), "w", encoding="utf-8") as fh:
+        json.dump({"game": game, "slug": slug, "run": run, "plays": out, "vocab": vocab,
+                   "built": _pr_dt.datetime.now().isoformat(timespec="seconds")}, fh, indent=1)
+    size = sum(os.path.getsize(os.path.join(dest, f)) for f in os.listdir(dest)) / 1e6
+    print(f"  [play review] copied to the app: {dest} ({size:.0f} MB) -- commit and push it with the data", flush=True)
+
+
 def _pr_synergy(r):
     """(Synergy page link, clip position on that page) from the capture log."""
     cf = globals().get("clip_frames")
@@ -359,6 +387,19 @@ def play_review():
     if "_play_review_file_saves" in globals():
         _play_review_file_saves()                     # saved reviews into their run folders first
     for (gd, gc), g in pc.groupby(["game_date", "game_code"], dropna=False):
+        _slug_app = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
+        _pkg = os.path.join(APP_DATA_DIR, "play_review", _slug_app)
+        # the app's copy of this game's review goes once its run has a saved review (a new run replaces it below)
+        if os.path.exists(os.path.join(_pkg, "review.json")):
+            try:
+                with open(os.path.join(_pkg, "review.json"), encoding="utf-8") as fh:
+                    _pkg_run = json.load(fh).get("run")
+                _run_dir = os.path.join(INPUT_DIR, "play_review", _slug_app, f"run_{_pkg_run}")
+                if any(_review_doc(f) is not None for f in glob.glob(os.path.join(_run_dir, "*.json"))):
+                    shutil.rmtree(_pkg, ignore_errors=True)
+                    print(f"Play review: {gd} {gc} -- review run {_pkg_run} is saved; its copy in the app is removed", flush=True)
+            except Exception:
+                pass
         # CONFIRMED CHANGE (requested): a new run for a game only when EVERY earlier run folder of that game has its
         # saved review (.json) in it -- otherwise reviews pile up unfinished. PLAY_REVIEW_REQUIRE_SAVED = False skips this.
         _slug_chk = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
@@ -438,6 +479,25 @@ def play_review():
                           "video_at": (f"{int(vs // 60)}:{int(vs % 60):02d}" if pd.notna(vs) else None),
                           "pictures": pics, "fields": fields,
                           "five": {"offense": _trk_five(r.get("offense_lineup")), "defense": _trk_five(r.get("defense_lineup"))}})
+        # every answer already known for each field (coaches' Titles and the model's answers, all games) -- offered as
+        # suggestions for a typed answer, so it matches an existing spelling (page and app)
+        vocab = {}
+        for f, _lab in _TR_FIELDS:
+            vals = set()
+            for c in (f"coach_{f}", f"pred_{f}"):
+                if c in play_calls.columns:
+                    vals |= {str(v) for v in play_calls[c].dropna() if str(v).strip() and str(v) != "nan"}
+            vocab[f] = sorted(vals)
+        # CONFIRMED CHANGE (requested: the play reviews inside the Streamlit app, on Previous Games, saved to GitHub).
+        # The open review goes to the app's data folder (APP_DATA_DIR/play_review/<game>/): review.json + each play's
+        # video, cover image and pictures (1100 px). Commit / push it with the rest of the data; the app saves each
+        # coach's answers to data/play_review_saves, which the parser picks up after a git pull. One package per game:
+        # a new run replaces it, and it's removed once its run has a saved review.
+        if globals().get("PLAY_REVIEW_TO_APP", True):
+            try:
+                _export_play_review_to_app(rdir, slug, f"{gd}|{gc}", stamp, plays, vocab)
+            except Exception as _ae:
+                print(f"  [play review] not exported to the app: {type(_ae).__name__}: {_ae}", flush=True)
         # CONFIRMED CHANGE (requested: "embed the plays right into the html"). Every play's video and pictures go INSIDE
         # review.html, so the page is one self-contained file (open it anywhere, share it on its own). About 1 MB per play.
         if PLAY_REVIEW_EMBED:
@@ -458,15 +518,6 @@ def play_review():
                         os.remove(os.path.join(rdir, f))
                     except OSError:
                         pass
-        # every answer already known for each field (coaches' Titles and the model's answers, all games) -- offered as
-        # suggestions in the "right answer" box so a typed answer matches an existing spelling
-        vocab = {}
-        for f, _lab in _TR_FIELDS:
-            vals = set()
-            for c in (f"coach_{f}", f"pred_{f}"):
-                if c in play_calls.columns:
-                    vals |= {str(v) for v in play_calls[c].dropna() if str(v).strip() and str(v) != "nan"}
-            vocab[f] = sorted(vals)
         page = os.path.join(rdir, "review.html")
         with open(page, "w", encoding="utf-8") as fh:
             fh.write(_PR_PAGE.replace("__DATA__", json.dumps({"game": f"{gd}|{gc}", "slug": slug, "run": stamp,
