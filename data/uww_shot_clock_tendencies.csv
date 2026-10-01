@@ -1,4 +1,4 @@
 opponent,clock_situation,freq_pct,ppp,fg_pct,note,is_sample
-UW-Stevens Point Pointers,Early clock (0-9 sec used),22,1.18,54,Mostly transition and early ball screens,True
-UW-Stevens Point Pointers,Organized offense (10-19 sec used),55,0.94,41,"Their half-court sets, Carter Combs runs off screens here",True
-UW-Stevens Point Pointers,Late clock (20+ sec used),23,0.71,33,Josiah Butler isolation when the set breaks down,True
+UW-Stevens Point Pointers,Early clock (0-9 sec used),12,1.2,60.0,15 tagged possessions -- most often Offensive Rebound (Cal Krohn),False
+UW-Stevens Point Pointers,Organized offense (10-19 sec used),19,1.21,57.1,24 tagged possessions -- most often Flare (Seth Miron),False
+UW-Stevens Point Pointers,Late clock (20+ sec used),20,0.88,40.0,25 tagged possessions -- most often Flare (Josiah Butler),False

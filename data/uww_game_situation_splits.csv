@@ -1,4 +1,3 @@
 opponent,situation,ppp,primary_actions,note,is_sample
-UW-Stevens Point Pointers,Leading by 10+,0.85,"Slows down, more Hi-Lo DHO",Stops running in transition,True
-UW-Stevens Point Pointers,Trailing by 10+,1.15,"More ball screens, faster pace",Josiah Butler takes over possessions,True
-UW-Stevens Point Pointers,"Clutch (last 5 min, margin ≤ 8)",0.97,Isolation for Josiah Butler,Goes away from their sets late,True
+UW-Stevens Point Pointers,"Clutch (last 5 min, margin ≤ 8)",0.86,"Ball Screen (3x), BLOB Box Motion (1x)",7 tagged possessions (their overall 1.06 PPP),False
+UW-Stevens Point Pointers,"Clutch (last 5 min, margin ≤ 8)",1.14,"Ball Screen (3x), BLOB Box Motion (1x)",7 tagged possessions (their overall 1.00 PPP),False

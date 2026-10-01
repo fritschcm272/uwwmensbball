@@ -1,7 +1,10 @@
 opponent,personnel_grouping,minutes_pct,primary_actions_used,note,is_sample
-UW-Stevens Point Pointers,4G-1W,72.0,--,No tagged clips matched this grouping yet,False
-UW-Stevens Point Pointers,Two-big lineup,13.0,--,No tagged clips matched this grouping yet,False
-UW-Stevens Point Pointers,Base five (one big),7.0,--,No tagged clips matched this grouping yet,False
+UW-Stevens Point Pointers,4G-1W,72.0,"Chin (6x), Set (5x), BLOB Box Motion (2x)","16 tagged possessions, 1.38 PPP (their overall 1.06)",False
+UW-Stevens Point Pointers,4G-1W,72.0,"Chin (6x), Set (5x), BLOB Box Motion (2x)","15 tagged possessions, 1.33 PPP (their overall 1.00)",False
+UW-Stevens Point Pointers,Two-big lineup,13.0,"Set (10x), Ball Screen (4x), Chin (4x)","31 tagged possessions, 1.06 PPP (their overall 1.06)",False
+UW-Stevens Point Pointers,Two-big lineup,13.0,"Set (10x), Ball Screen (4x), Chin (4x)","28 tagged possessions, 0.82 PPP (their overall 1.00)",False
+UW-Stevens Point Pointers,Base five (one big),7.0,"5 Out Motion (6x), Set (6x), 4-1 Motion (3x)","17 tagged possessions, 0.82 PPP (their overall 1.06)",False
+UW-Stevens Point Pointers,Base five (one big),7.0,"5 Out Motion (6x), Set (6x), 4-1 Motion (3x)","17 tagged possessions, 0.94 PPP (their overall 1.00)",False
 UW-Stevens Point Pointers,3G-2W,4.0,--,No tagged clips matched this grouping yet,False
 UW-Stevens Point Pointers,5G,3.0,--,No tagged clips matched this grouping yet,False
 UW-Stevens Point Pointers,3G-1W,1.0,--,No tagged clips matched this grouping yet,False

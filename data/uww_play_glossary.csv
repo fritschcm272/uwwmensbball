@@ -43,3 +43,28 @@ R+J,Run-and-jump press,Standard
 122 - m2m,"Press slot before the dash: 1-2-2 press, falling back to man-to-man (1211, 221, 12 likewise)",Standard
 5tl,DEFENDER #5 top-locked the screen (the number is the defender's jersey),Standard
 m2m (alone),Defense-only tag on a possession where only the defense is being charted,Standard
+HI BS,High (center) ball screen,Standard
+Over (offense),5-out play call: go over the 5 man after the pass to him,Standard
+Swing,Pass across the middle of the court,Standard
+Swing Screen,Screen set on the low block,Standard
+Ricky,A screen followed by an immediate rescreen,Standard
+Doubleclear / Doublecut,Two players clear / cut out to open an iso,Standard
+Slip,Screener slips to the basket before/without setting the screen,Standard
+Ghost,"Run up like a screen, then run through it without setting it",Standard
+Stagger,Two players set down screens in a row for one player,Standard
+Zoom,Dribble handoff with a screen from a player in between,Standard
+DD,Dribble drive,Standard
+Flash / Pop / Iso,Flash to the ball / screener pops out for 3 / one player on his own,Standard
+P-wing / Pass corner,Pass to the wing / pass to the corner,Standard
+Line / Box (inbounds),"Line: two in the corners, two on the blocks. Box: one on each elbow and each block",Standard
+Over (coverage),On-ball defender goes over the screen and stays with his man,Standard
+Under (coverage),Defender goes under the screen and stays on his man,Standard
+Switch,The two defenders trade men on the screen,Standard
+Stay,Ball handler rejects the screen; the defender stays with him,Standard
+Show & GB,"Show (soft or hard hedge), then get back to the screener",Standard
+Switch2nd,"Stayed on the first screen, switched the second",Standard
+TL,Top lock,Standard
+RJ / press(rj),Run-and-jump press (falls back into man),Standard
+press(12),1-2-2 press (falls back into man),Standard
+Token,Token press: pressure without going for steals,Standard
+deny / double + player,"Denied a player the ball / double-teamed him (e.g. denymadz, deny15)",Standard

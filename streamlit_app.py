@@ -5239,10 +5239,25 @@ def render_full_roster(side, short_opponent) -> None:
     st.caption("Every player, including those the emailed brief leaves out (under 8 minutes a game, or no "
                "minutes recently). Open a player below for his full card.")
     show = t.assign(Player=t["player"].map(_title_name))
-    cols = [c for c in ["Player", "tier", "games", "mpg", "recent_count", "recent_n"] if c in show.columns]
+    # CONFIRMED CHANGE (requested): each player's offensive role (BBall Index's 12), computed in the parser
+    # (offensive_roles) and carried on uww_personnel_tiers -- displayed here, never recomputed.
+    if "offensive_role" in show.columns:
+        _b = show.get("offensive_role_basis", pd.Series("", index=show.index)).astype(str)
+        show["Role"] = show["offensive_role"].fillna("").astype(str) + _b.map(
+            lambda x: " (low sample)" if "low sample" in x else (" (position only)" if x == "position only" else ""))
+    if "defensive_role" in show.columns:
+        _db = show.get("defensive_role_basis", pd.Series("", index=show.index)).astype(str)
+        show["Def role"] = show["defensive_role"].fillna("").astype(str) + _db.map(
+            lambda x: " (low sample)" if "low sample" in x else (" (position only)" if x == "position only" else ""))
+    cols = [c for c in ["Player", "Role", "Def role", "tier", "games", "mpg", "recent_count", "recent_n"] if c in show.columns]
     st.dataframe(show[cols].rename(columns={"tier": "Tier", "games": "GP", "mpg": "MPG",
                                             "recent_count": "Played recently", "recent_n": "of last"}),
                  hide_index=True, use_container_width=True)
+    if "offensive_role" in show.columns:
+        st.caption("Role: his offensive role (BBall Index's 12 -- https://www.bball-index.com/offensive-archetypes/) "
+                   "from his play types across every game on file; 'low sample' under 20 scoring possessions. "
+                   "Def role: his defensive role (BBall Index's 7 -- https://www.bball-index.com/defensive-roles/) from "
+                   "coverage tags with his number, film tracking where he was identified for sure, and steals/blocks.")
     for _, r in t.iterrows():
         if not str(r["tier"]).startswith(("Bench \u2014 limited", "Bench \u2014 no minutes")):
             continue
@@ -5366,6 +5381,10 @@ def render_brief_deeplink(short_opponent) -> None:
                     r = t.iloc[0]
                     tier = (f"{r['tier']} \u00b7 {int(r['games'])} GP \u00b7 "
                             f"{_gp_clean(r.get('mpg'))} MPG \u00b7 played {int(r['recent_count'])} of last {int(r['recent_n'])}")
+                    if _gp_clean(r.get("defensive_role")):
+                        tier = f"Def: {_gp_clean(r.get('defensive_role'))} \u00b7 " + tier
+                    if _gp_clean(r.get("offensive_role")):
+                        tier = f"Off: {_gp_clean(r.get('offensive_role'))} \u00b7 " + tier
             st.markdown(f"### {player}")
             if tier:
                 st.caption(tier)
@@ -5725,6 +5744,16 @@ def render_court_view(team, key_suffix=""):
 
     st.markdown(f"**Shot chart: {whose}** (green = made, red = missed)")
     sh = D("uww_court_shots", "offense_team", whose)
+    # CONFIRMED BUG (fixed in the parser): tracked shot spots that don't match the play-by-play (a 3 inside the arc,
+    # a 2 outside it, a layup far from the rim) are kept in the table but never drawn -- see _cz_shots.
+    _sh_aside = 0
+    if not sh.empty and "location_ok" in sh.columns:
+        _ok = sh["location_ok"].astype(str).str.lower() == "true"
+        _sh_aside = int((~_ok).sum())
+        sh = sh[_ok]
+    if _sh_aside:
+        st.caption(f"{_sh_aside} tracked shot(s) left off: the shooter's spot on film didn't match the shot in the "
+                   "play-by-play.")
     if sh.empty:
         st.caption("No tracked shots on the court yet.")
     else:
@@ -7482,7 +7511,17 @@ def render_upcoming_game():
                 pos = player_row_dict.get("position", "")
                 height = player_row_dict.get("height", "")
                 class_yr = player_row_dict.get("class_year", "")
-                info_parts = [str(x) for x in [pos, height, class_yr] if x and str(x).strip() and str(x) != "nan"]
+                _dlg_role = player_row_dict.get("offensive_role", "")
+                _dlg_rb = str(player_row_dict.get("offensive_role_basis") or "")
+                if isinstance(_dlg_role, str) and _dlg_role.strip():
+                    _dlg_role = _dlg_role + (" (low sample)" if "low sample" in _dlg_rb else
+                                             " (position only)" if _dlg_rb == "position only" else "")
+                _dlg_drole = player_row_dict.get("defensive_role", "")
+                if isinstance(_dlg_drole, str) and _dlg_drole.strip():
+                    _dlg_drole = "Def: " + _dlg_drole
+                    _dlg_role = ("Off: " + _dlg_role) if isinstance(_dlg_role, str) and _dlg_role.strip() else _dlg_role
+                info_parts = [str(x) for x in [pos, height, class_yr, _dlg_role, _dlg_drole]
+                              if x and str(x).strip() and str(x) != "nan"]
                 # Optional availability/injury status (see the roster-card comment above for how to populate it).
                 _dlg_status_raw = str(player_row_dict.get("status", "")).strip()
                 if _dlg_status_raw and _dlg_status_raw.lower() not in ("nan", "active", "available"):
@@ -7732,6 +7771,15 @@ def render_upcoming_game():
                                     )
                                     info_parts = [str(x) for x in [pos, height] if pd.notna(x) and str(x).strip()]
                                     st.caption(" · ".join(info_parts) if info_parts else "\u00a0")
+                                    # offensive role from the parser (uww_opponent_rosters.offensive_role)
+                                    for _rk, _bk, _pre in (("offensive_role", "offensive_role_basis", "Off"),
+                                                           ("defensive_role", "defensive_role_basis", "Def")):
+                                        _role = player.get(_rk)
+                                        if isinstance(_role, str) and _role.strip():
+                                            _rb = str(player.get(_bk) or "")
+                                            _rq = " *" if ("low sample" in _rb or _rb == "position only") else ""
+                                            st.markdown(f'<div style="font-size:0.72rem;font-weight:700;color:#4E2A84;">'
+                                                        f'{_pre}: {esc(_role)}{_rq}</div>', unsafe_allow_html=True)
                                     st.markdown(f"**{pts_str}** PPG")
                                     # Why this player is in this section, from the same numbers that put
                                     # them there -- a tier with no visible basis is just an assertion.

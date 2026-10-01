@@ -1,10 +1,13 @@
 opponent,situation,set_name,primary_player,action,frequency,our_call,film_ref,is_sample
-UW-Stevens Point Pointers,Half court,5-Out Motion,Josiah Butler,Drive-and-kick off a dribble handoff at the top,Base offense (~40%),"Gap help, no middle drives, close out short","Gm 2, 1st half",True
-UW-Stevens Point Pointers,Half court,Horns Flare,Carter Combs,"Elbow ball screen, weak-side flare for the shooter",3-4x a half,Top-lock the flare; switch 4-5 on the elbow screen,"Gm 1, 2nd half",True
-UW-Stevens Point Pointers,Half court,Post Split,Carter Combs,"Entry to the block, split cut above it",2-3x a half,Three-quarter front; dig from the passer,"Gm 3, 1st half",True
-UW-Stevens Point Pointers,Half court,Spain PnR,Seth Miron,Ball screen with a back-screen on the roller's man,Late clock,Ice the ball screen; talk the back-screen early,"Gm 4, 2nd half",True
-UW-Stevens Point Pointers,BLOB,Box Up,Carter Combs,"Stagger to the corner, big seals the rim",Most BLOBs,Switch everything on the box; bump the sealer,Gm 2,True
-UW-Stevens Point Pointers,SLOB,Stack Lob,Carter Combs,"Stack at the elbow, back-screen lob to the rim",Under 5:00,Help side sits on the rim; no top-side denial,Gm 1,True
-UW-Stevens Point Pointers,ATO,Elevator,Carter Combs,Elevator doors at the top of the key for a catch-and-shoot,Out of timeouts,Chase over the top; the screener's man sits in the doors,Gm 3,True
-UW-Stevens Point Pointers,Press break,4-Across,Seth Miron,"Four across the free-throw line, inbounder runs baseline",vs full-court pressure,Deny the first pass to the handler; trap the catch,Gm 4,True
-UW-Stevens Point Pointers,End of game,Iso-High Ball Screen,Josiah Butler,"Clear-out, late high ball screen with 8 on the clock",Last possession,Show and recover; no fouling on the drive,Gm 2,True
+UW-Stevens Point Pointers,Half court,Chin,Seth Miron,Flare,"14 uses in 1 games, 1.17 PPP",Top-lock the flare; screener's man shows,WEC@WSP,False
+UW-Stevens Point Pointers,Half court,Set,Carter Lichtsinn,DHO -- Wing,"13 uses in 1 games, 0.77 PPP",Get into the handoff; force it away from the middle,WEC@WSP,False
+UW-Stevens Point Pointers,Half court,Set,Josh Bocher,Flash,"8 uses in 1 games, 1.00 PPP",,WEC@WSP,False
+UW-Stevens Point Pointers,Half court,Pistol,Carter Lichtsinn,Flare,"6 uses in 1 games, 2.17 PPP",Top-lock the flare; screener's man shows,WEC@WSP,False
+UW-Stevens Point Pointers,Half court,Ball Screen,Andre Renta,nan,"6 uses in 1 games, 1.00 PPP",,WEC@WSP,False
+UW-Stevens Point Pointers,Half court,5 Out Motion,Luke Reder,Ball Screen,"6 uses in 1 games, 0.50 PPP",Pick one ball-screen coverage and stay in it; no middle,WEC@WSP,False
+UW-Stevens Point Pointers,Half court,5 Out Stagger,Kenji Scales,Ball Screen,"4 uses in 1 games, 0.67 PPP",Pick one ball-screen coverage and stay in it; no middle,WEC@WSP,False
+UW-Stevens Point Pointers,Half court,Spread,Seth Miron,Ricky (rescreen),"4 uses in 1 games, 0.33 PPP",,WEC@WSP,False
+UW-Stevens Point Pointers,BLOB,BLOB Box Motion,Josiah Butler,Iso,"6 uses in 1 games, 1.50 PPP",,WEC@WSP,False
+UW-Stevens Point Pointers,SLOB,SLOB,Carter Lichtsinn,nan,"4 uses in 1 games, 0.00 PPP",,WEC@WSP,False
+UW-Stevens Point Pointers,BLOB,BLOB,Kenji Scales,nan,"3 uses in 1 games, 2.00 PPP",,WEC@WSP,False
+UW-Stevens Point Pointers,SLOB,SLOB,Seth Miron,nan,"2 uses in 1 games, 0.00 PPP",,WEC@WSP,False

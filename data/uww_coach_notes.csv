@@ -1,120 +1,85 @@
 opponent,period,time_remaining_seconds,team,player,result,coach_note,play_call,clip_side,game_date,points,play_series,play_title,play_actions,play_location,play_situation
-UW-Oshkosh Titans,H1,1182.0,UW-Whitewater,Carter Thomas,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,5 out(HI BS): m2m D(over-switch),,,Half court
-UW-Oshkosh Titans,H1,,UW-Whitewater,Collin Madson,Non Shooting Foul,,5 Out Motion,Offense,2026-01-03,,Motion,5 out(Over): m2m d,,,Half court
-UW-Oshkosh Titans,H1,1166.0,UW-Whitewater,Richie Warren,Make 2 Pts,,BLOB Line,Offense,2026-01-03,2,BLOB,blob(line)-m2m,,,BLOB
+UW-Oshkosh Titans,H1,1182.0,UW-Whitewater,Carter Thomas,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,5 out(HI BS): m2m D(over-switch),High Ball Screen,,Half court
+UW-Oshkosh Titans,H1,,UW-Whitewater,Collin Madson,Non Shooting Foul,,Over,Offense,2026-01-03,,Over,5 out(Over): m2m d,,,Half court
+UW-Oshkosh Titans,H1,1166.0,UW-Whitewater,Richie Warren,Make 2 Pts,,BLOB Line Motion,Offense,2026-01-03,2,BLOB,blob(line)-m2m,,,BLOB
 UW-Oshkosh Titans,H1,1150.0,UW-Whitewater,Brandon Beck,Make 3 Pts,,5 Out Motion,Offense,2026-01-03,3,Motion,5 out(bs):m2m,Ball Screen,,Half court
-UW-Oshkosh Titans,H1,1107.0,UW-Whitewater,Oskar Kangas,Make 3 Pts,,5 Out Motion,Offense,2026-01-03,3,Motion,5 out(over-swing-ricky):m2m,,,Half court
-UW-Oshkosh Titans,H1,1077.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(pass-cut-bs):m2m,,,Half court
-UW-Oshkosh Titans,H1,1061.0,UW-Whitewater,Brock Marino,Make 2 Pts,,5 Out Motion,Offense,2026-01-03,2,Motion,5out(pass corner-):m2m,,,Half court
-UW-Oshkosh Titans,H1,1053.0,UW-Whitewater,Nate Nazos,Turnover,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
+UW-Oshkosh Titans,H1,1107.0,UW-Whitewater,Oskar Kangas,Make 3 Pts,,Over,Offense,2026-01-03,3,Over,5 out(over-swing-ricky):m2m,Swing (pass across) | Ricky (rescreen),,Half court
+UW-Oshkosh Titans,H1,1077.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(pass-cut-bs):m2m,Pass | Cut | Ball Screen,,Half court
+UW-Oshkosh Titans,H1,1061.0,UW-Whitewater,Brock Marino,Make 2 Pts,,5 Out Motion,Offense,2026-01-03,2,Motion,5out(pass corner-):m2m,Pass to Corner,,Half court
 UW-Oshkosh Titans,H1,,UW-Whitewater,Brock Marino,Non Shooting Foul,,5 Out Motion,Offense,2026-01-03,,Motion,5out:m2m(rj),,,Half court
 UW-Oshkosh Titans,H1,1027.0,UW-Whitewater,Brock Marino,Miss 2 Pts,,SLOB,Offense,2026-01-03,0,SLOB,slob:m2m,,,SLOB
-UW-Oshkosh Titans,H1,,UW-Whitewater,Aiden Hawkinson,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(doubleclear):m2m,,,Half court
+UW-Oshkosh Titans,H1,,UW-Whitewater,Aiden Hawkinson,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(doubleclear):m2m,Double Clear,,Half court
 UW-Oshkosh Titans,H1,982.0,UW-Whitewater,Luke Bara,Make 3 Pts,,5 Out Motion,Offense,2026-01-03,3,Motion,5out(ds):m2m,Down Screen,,Half court
 UW-Oshkosh Titans,H1,962.0,UW-Whitewater,Oskar Kangas,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs):m2m(switch),Ball Screen,,Half court
-UW-Oshkosh Titans,H1,,UW-Whitewater,Collin Madson,Non Shooting Foul,,5 Out Motion,Offense,2026-01-03,,Motion,5out(bs-slip):Press(m2m),,,Half court
-UW-Oshkosh Titans,H1,929.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,BLOB Motion,Offense,2026-01-03,0,BLOB,blob(line):m2m,,,BLOB
-UW-Oshkosh Titans,H1,911.0,UW-Whitewater,Brandon Beck,Turnover,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran:m2m,,,Transition
-UW-Oshkosh Titans,H1,,UW-Whitewater,Matt Imig,No Violation,,BLOB Motion,Offense,2026-01-03,,BLOB,blob(box-cornercut-flash):m2m,,,BLOB
+UW-Oshkosh Titans,H1,,UW-Whitewater,Collin Madson,Non Shooting Foul,,5 Out Motion,Offense,2026-01-03,,Motion,5out(bs-slip):Press(m2m),Ball Screen | Slip,,Half court
+UW-Oshkosh Titans,H1,929.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,BLOB Line Motion,Offense,2026-01-03,0,BLOB,blob(line):m2m,,,BLOB
+UW-Oshkosh Titans,H1,,UW-Whitewater,Matt Imig,No Violation,,BLOB Box Motion,Offense,2026-01-03,,BLOB,blob(box-cornercut-flash):m2m,Corner Cut | Flash,,BLOB
 UW-Oshkosh Titans,H1,881.0,UW-Whitewater,Matt Imig,Miss 3 Pts,,SLOB Motion,Offense,2026-01-03,0,SLOB,slob(bs):m2m (Stay),Ball Screen,,SLOB
 UW-Oshkosh Titans,H1,859.0,UW-Whitewater,Brock Marino,Miss 2 Pts,,BLOB,Offense,2026-01-03,0,BLOB,blob: m2m,,,BLOB
 UW-Oshkosh Titans,H1,841.0,UW-Whitewater,Matt Imig,Make 3 Pts,,Ball Screen,Offense,2026-01-03,3,Ball Screen,bs:m2m(switch),,,Half court
 UW-Oshkosh Titans,H1,803.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(ds):press(rj),Down Screen,,Half court
-UW-Oshkosh Titans,H1,796.0,UW-Whitewater,Matt Imig,Make 3 Pts,,Transition (unspecified),Offense,2026-01-03,3,Transition,tran,,,Transition
-UW-Oshkosh Titans,H1,778.0,UW-Whitewater,Brandon Beck,Make 3 Pts,,Double Bs,Offense,2026-01-03,3,Double Bs,double bs:(under),,,Half court
-UW-Oshkosh Titans,H1,,UW-Whitewater,Darius Chestnut,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(stagger-bs):press(rj)(switch),,,Half court
-UW-Oshkosh Titans,H1,722.0,UW-Whitewater,Logan Rindfleisch,Make 3 Pts,,Double Bs,Offense,2026-01-03,3,Double Bs,double bs:m2m(show&GB),,,Half court
-UW-Oshkosh Titans,H1,703.0,UW-Whitewater,Jake Quast,Miss 2 Pts,,BLOB Motion,Offense,2026-01-03,0,BLOB,blob(line):m2m,,,BLOB
-UW-Oshkosh Titans,H1,689.0,UW-Whitewater,Carter Thomas,Make 3 Pts,,Transition (unspecified),Offense,2026-01-03,3,Transition,tran,,,Transition
+UW-Oshkosh Titans,H1,778.0,UW-Whitewater,Brandon Beck,Make 3 Pts,,Double Ball Screen,Offense,2026-01-03,3,Double Ball Screen,double bs:(under),,,Half court
+UW-Oshkosh Titans,H1,,UW-Whitewater,Darius Chestnut,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(stagger-bs):press(rj)(switch),Stagger | Ball Screen,,Half court
+UW-Oshkosh Titans,H1,722.0,UW-Whitewater,Logan Rindfleisch,Make 3 Pts,,Double Ball Screen,Offense,2026-01-03,3,Double Ball Screen,double bs:m2m(show&GB),,,Half court
+UW-Oshkosh Titans,H1,703.0,UW-Whitewater,Jake Quast,Miss 2 Pts,,BLOB Line Motion,Offense,2026-01-03,0,BLOB,blob(line):m2m,,,BLOB
 UW-Oshkosh Titans,H1,663.0,UW-Whitewater,Darius Chestnut,Make 3 Pts,,5 Out Motion,Offense,2026-01-03,3,Motion,5out(ds):m2m(rj),Down Screen,,Half court
 UW-Oshkosh Titans,H1,641.0,UW-Whitewater,Michael Metcalf-Grassman,Miss 3 Pts,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs:m2m (drop),,,Half court
-UW-Oshkosh Titans,H1,633.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
 UW-Oshkosh Titans,H1,,UW-Whitewater,Collin Madson,No Violation,,5 Out Motion,Offense,2026-01-03,,Motion,5out(bs):m2m(switch),Ball Screen,,Half court
 UW-Oshkosh Titans,H1,584.0,UW-Whitewater,Darius Chestnut,Miss 2 Pts,,SLOB,Offense,2026-01-03,0,SLOB,slob:m2m,,,SLOB
 UW-Oshkosh Titans,H1,571.0,UW-Whitewater,Logan Rindfleisch,Turnover,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs(stay):m2m(over),,,Half court
 UW-Oshkosh Titans,H1,531.0,UW-Whitewater,Brandon Beck,Miss 2 Pts,,Spain,Offense,2026-01-03,0,Spain,spain:m2m(switch),,,Half court
-UW-Oshkosh Titans,H1,531.0,UW-Whitewater,Brandon Beck,Make 2 Pts,,Offensive Rebound,Offense,2026-01-03,2,Motion / no set,oreb,Offensive Rebound,,Half court
 UW-Oshkosh Titans,H1,505.0,UW-Whitewater,Collin Madson,Make 3 Pts,,Cheetah,Offense,2026-01-03,3,Cheetah,cheetah:m2m(rj),,,Half court
 UW-Oshkosh Titans,H1,454.0,UW-Whitewater,Joey LaChapell,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,ATO-5out(bs):m2m (drop),Ball Screen,,ATO
-UW-Oshkosh Titans,H1,439.0,UW-Whitewater,Richie Warren,Make 2 Pts,,5 Out Motion,Offense,2026-01-03,2,Motion,5out(over):m2m(rj),,,Half court
+UW-Oshkosh Titans,H1,439.0,UW-Whitewater,Richie Warren,Make 2 Pts,,Over,Offense,2026-01-03,2,Over,5out(over):m2m(rj),,,Half court
 UW-Oshkosh Titans,H1,,UW-Whitewater,Vitorio Dante,No Violation,,5 Out,Offense,2026-01-03,,5 Out,5out:m2m,,,Half court
 UW-Oshkosh Titans,H1,386.0,UW-Whitewater,Richie Warren,Make 2 Pts,,5 Out Motion,Offense,2026-01-03,2,Motion,5out(ds)::m2m,Down Screen,,Half court
 UW-Oshkosh Titans,H1,371.0,UW-Whitewater,Matt Imig,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs):m2m(under),Ball Screen,,Half court
-UW-Oshkosh Titans,H1,365.0,UW-Whitewater,Joey LaChapell,Make 2 Pts,,BLOB Motion,Offense,2026-01-03,2,BLOB,blob(box-cut corner-pop):m2m,,,BLOB
+UW-Oshkosh Titans,H1,365.0,UW-Whitewater,Joey LaChapell,Make 2 Pts,,BLOB Box Motion,Offense,2026-01-03,2,BLOB,blob(box-cut corner-pop):m2m,Corner Cut | Pop,,BLOB
 UW-Oshkosh Titans,H1,298.0,UW-Whitewater,Richie Warren,Turnover,,Cheetah,Offense,2026-01-03,0,Cheetah,cheetah:press(rj)(switch),,,Half court
-UW-Oshkosh Titans,H1,292.0,UW-Whitewater,Michael Metcalf-Grassman,Make 2 Pts,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
-UW-Oshkosh Titans,H1,266.0,UW-Whitewater,Luke Bara,Miss 2 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
-UW-Oshkosh Titans,H1,257.0,UW-Whitewater,Luke Bara,Make 3 Pts,,BLOB Motion,Offense,2026-01-03,3,BLOB,blob(line): m2m,,,BLOB
-UW-Oshkosh Titans,H1,250.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
-UW-Oshkosh Titans,H1,234.0,UW-Whitewater,Richie Warren,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs-reject):m2m,,,Half court
-UW-Oshkosh Titans,H1,225.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,Offensive Rebound,Offense,2026-01-03,0,Motion / no set,oreb,Offensive Rebound,,Half court
+UW-Oshkosh Titans,H1,257.0,UW-Whitewater,Luke Bara,Make 3 Pts,,BLOB Line Motion,Offense,2026-01-03,3,BLOB,blob(line): m2m,,,BLOB
+UW-Oshkosh Titans,H1,234.0,UW-Whitewater,Richie Warren,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs-reject):m2m,Ball Screen | Reject,,Half court
 UW-Oshkosh Titans,H1,212.0,UW-Whitewater,Carter Thomas,Miss 3 Pts,,Spain,Offense,2026-01-03,0,Spain,spain:m2m (stay),,,ATO
-UW-Oshkosh Titans,H1,190.0,UW-Whitewater,Luke Bara,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs-ghost):press(m2m),,,Half court
-UW-Oshkosh Titans,H1,182.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,BLOB Line,Offense,2026-01-03,0,BLOB,blob(line);m2m,,,BLOB
-UW-Oshkosh Titans,H1,,UW-Whitewater,Michael Metcalf-Grassman,No Violation,,Transition (unspecified),Offense,2026-01-03,,Transition,tran,,,Transition
-UW-Oshkosh Titans,H1,168.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,BLOB Motion,Offense,2026-01-03,0,BLOB,blob(box-sts):m2m,,,BLOB
-UW-Oshkosh Titans,H1,,UW-Whitewater,Oskar Kangas,No Violation,,5 Out Motion,Offense,2026-01-03,,Motion,5out(p-wing-over-zoom):m2m(tl),,,Half court
-UW-Oshkosh Titans,H1,129.0,UW-Whitewater,Brandon Beck,Make 2 Pts,,BLOB Motion,Offense,2026-01-03,2,BLOB,blob(box-cutcorner-flash-iso):m2m,,,BLOB
-UW-Oshkosh Titans,H1,101.0,UW-Whitewater,Michael Metcalf-Grassman,Make 3 Pts,,Transition (unspecified),Offense,2026-01-03,3,Transition,tran,,,Transition
-UW-Oshkosh Titans,H1,77.0,UW-Whitewater,Jake Quast,Make 2 Pts,,BLOB Motion,Offense,2026-01-03,2,BLOB,blob(line):m2m,,,BLOB
+UW-Oshkosh Titans,H1,190.0,UW-Whitewater,Luke Bara,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs-ghost):press(m2m),Ball Screen | Ghost,,Half court
+UW-Oshkosh Titans,H1,182.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,BLOB Line Motion,Offense,2026-01-03,0,BLOB,blob(line);m2m,,,BLOB
+UW-Oshkosh Titans,H1,168.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,BLOB Box Motion,Offense,2026-01-03,0,BLOB,blob(box-sts):m2m,Screen the Screener,,BLOB
+UW-Oshkosh Titans,H1,,UW-Whitewater,Oskar Kangas,No Violation,,Over,Offense,2026-01-03,,Over,5out(p-wing-over-zoom):m2m(tl),Pass to Wing | Zoom,,Half court
+UW-Oshkosh Titans,H1,129.0,UW-Whitewater,Brandon Beck,Make 2 Pts,,BLOB Box Motion,Offense,2026-01-03,2,BLOB,blob(box-cutcorner-flash-iso):m2m,Corner Cut | Flash | Iso,,BLOB
+UW-Oshkosh Titans,H1,77.0,UW-Whitewater,Jake Quast,Make 2 Pts,,BLOB Line Motion,Offense,2026-01-03,2,BLOB,blob(line):m2m,,,BLOB
 UW-Oshkosh Titans,H1,44.0,UW-Whitewater,Brandon Beck,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(ghost):m2m(tl),Ghost,,Half court
 UW-Oshkosh Titans,H1,17.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5OUT(BS):press(RJ)(SWITCH),Ball Screen,,Half court
 UW-Oshkosh Titans,H1,,UW-Whitewater,Joey LaChapell,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5OUT(BS):M2M(SWITCH),Ball Screen,,Half court
-UW-Oshkosh Titans,H2,1191.0,UW-Whitewater,Joey LaChapell,Turnover,,5 Out,Offense,2026-01-03,0,5 Out,2NDH-5OUT(DOUBLECUT):M2M,,,Half court
+UW-Oshkosh Titans,H2,1191.0,UW-Whitewater,Joey LaChapell,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,2NDH-5OUT(DOUBLECUT):M2M,Double Cut,,Half court
 UW-Oshkosh Titans,H2,,UW-Whitewater,Luke Bara,Non Shooting Foul,,SLOB,Offense,2026-01-03,,SLOB,SLOB:,,,SLOB
 UW-Oshkosh Titans,H2,1175.0,UW-Whitewater,Brock Marino,Make 2 Pts,,BLOB,Offense,2026-01-03,2,BLOB,BLOB:M2M,,,BLOB
 UW-Oshkosh Titans,H2,1139.0,UW-Whitewater,Brock Marino,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,5OUT(DS):PRESS(RJ)(SWITCH)(DENYmadz),Down Screen,,Half court
-UW-Oshkosh Titans,H2,1134.0,UW-Whitewater,Michael Metcalf-Grassman,Miss 2 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
-UW-Oshkosh Titans,H2,,UW-Whitewater,Nate Nazos,Run Offense,,Transition (unspecified),Offense,2026-01-03,,Transition,tran,,,Transition
-UW-Oshkosh Titans,H2,1130.0,UW-Whitewater,Carter Thomas,Make 3 Pts,,Transition (unspecified),Offense,2026-01-03,3,Transition,tran,,,Transition
 UW-Oshkosh Titans,H2,1104.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,BLOB,Offense,2026-01-03,0,BLOB,blob: m2m,,,BLOB
 UW-Oshkosh Titans,H2,1087.0,UW-Whitewater,Matt Imig,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs):m2m(switch),Ball Screen,,Half court
 UW-Oshkosh Titans,H2,1067.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,Cheetah,Offense,2026-01-03,0,Cheetah,cheetah:presss(rj),,,Half court
 UW-Oshkosh Titans,H2,1065.0,UW-Whitewater,Luke Bara,Turnover,,BLOB,Offense,2026-01-03,0,BLOB,blob:m2m,,,BLOB
 UW-Oshkosh Titans,H2,1015.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Ball Screen,Offense,2026-01-03,2,Ball Screen,BS(reject):press(rj),Reject,,Half court
-UW-Oshkosh Titans,H2,969.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(DD):m2m,Double Drag,,Half court
-UW-Oshkosh Titans,H2,953.0,UW-Whitewater,Michael Metcalf-Grassman,Make 2 Pts,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
-UW-Oshkosh Titans,H2,948.0,UW-Whitewater,Carter Thomas,Foul,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
+UW-Oshkosh Titans,H2,969.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(DD):m2m,Dribble Drive,,Half court
 UW-Oshkosh Titans,H2,924.0,UW-Whitewater,Collin Madson,Foul,,Twins Motion,Offense,2026-01-03,2,Motion,twin:press(rj),,,Half court
-UW-Oshkosh Titans,H2,899.0,UW-Whitewater,Oskar Kangas,Miss 2 Pts,,BLOB Motion,Offense,2026-01-03,0,BLOB,blob(box-sts):m2m,,,BLOB
+UW-Oshkosh Titans,H2,899.0,UW-Whitewater,Oskar Kangas,Miss 2 Pts,,BLOB Box Motion,Offense,2026-01-03,0,BLOB,blob(box-sts):m2m,Screen the Screener,,BLOB
 UW-Oshkosh Titans,H2,869.0,UW-Whitewater,Nate Nazos,Make 3 Pts,,Spain,Offense,2026-01-03,3,Spain,spain:m2m(stay),,,Half court
 UW-Oshkosh Titans,H2,,UW-Whitewater,Brock Marino,Non Shooting Foul,,Panther,Offense,2026-01-03,,Panther,panther:press(rj),,,Half court
 UW-Oshkosh Titans,H2,845.0,UW-Whitewater,Jake Quast,Foul,,BLOB,Offense,2026-01-03,0,BLOB,blob:m2m,,,BLOB
-UW-Oshkosh Titans,H2,829.0,UW-Whitewater,Brandon Beck,Make 2 Pts,,BLOB Motion,Offense,2026-01-03,2,BLOB,blob(iso):m2m,ISO,,BLOB
-UW-Oshkosh Titans,H2,803.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,BLOB Motion,Offense,2026-01-03,0,BLOB,blob(box):m2m,,,BLOB
-UW-Oshkosh Titans,H2,803.0,UW-Whitewater,Luke Bara,Foul,,Reject,Offense,2026-01-03,2,Motion / no set,press(rj),Reject,,Half court
+UW-Oshkosh Titans,H2,829.0,UW-Whitewater,Brandon Beck,Make 2 Pts,,BLOB Motion,Offense,2026-01-03,2,BLOB,blob(iso):m2m,Iso,,BLOB
+UW-Oshkosh Titans,H2,803.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,BLOB Box Motion,Offense,2026-01-03,0,BLOB,blob(box):m2m,,,BLOB
 UW-Oshkosh Titans,H2,791.0,UW-Whitewater,Joey LaChapell,Make 3 Pts,,Ball Screen,Offense,2026-01-03,3,Ball Screen,Bs:press(token)(siwtch),,,Half court
 UW-Oshkosh Titans,H2,775.0,UW-Whitewater,Luke Bara,Miss 2 Pts,,Ball Screen,Offense,2026-01-03,2,Ball Screen,bs:press(rj)(switch),,,Half court
-UW-Oshkosh Titans,H2,775.0,UW-Whitewater,Brock Marino,Foul,,Offensive Rebound,Offense,2026-01-03,2,Motion / no set,oreb,Offensive Rebound,,Half court
 UW-Oshkosh Titans,H2,764.0,UW-Whitewater,Brandon Beck,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs):m2m(tl),Ball Screen,,Half court
-UW-Oshkosh Titans,H2,740.0,UW-Whitewater,Carter Thomas,Foul,,Transition (unspecified),Offense,2026-01-03,1,Transition,tran,,,Transition
 UW-Oshkosh Titans,H2,713.0,UW-Whitewater,Jonah Rindfleisch,Foul,,5 Out,Offense,2026-01-03,2,5 Out,5out:m2m,,,ATO
-UW-Oshkosh Titans,H2,685.0,UW-Whitewater,Vitorio Dante,Miss 3 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
-UW-Oshkosh Titans,H2,674.0,UW-Whitewater,Luke Bara,Turnover,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
-UW-Oshkosh Titans,H2,668.0,UW-Whitewater,Aiden Hawkinson,Make 2 Pts,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
 UW-Oshkosh Titans,H2,645.0,UW-Whitewater,Brock Marino,Foul,,5 Out Motion,Offense,2026-01-03,1,Motion,5out(ds):press(rj)(switch),Down Screen,,Half court
 UW-Oshkosh Titans,H2,628.0,UW-Whitewater,Carter Thomas,Turnover,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs:switch(stay),,,Half court
-UW-Oshkosh Titans,H2,624.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
-UW-Oshkosh Titans,H2,598.0,UW-Whitewater,Jake Quast,Make 2 Pts,,Offensive Rebound,Offense,2026-01-03,2,Motion / no set,oreb,Offensive Rebound,,Half court
 UW-Oshkosh Titans,H2,566.0,UW-Whitewater,Jake Quast,Miss 2 Pts,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs:press(rj)(switch),,,ATO
 UW-Oshkosh Titans,H2,552.0,UW-Whitewater,Kelton Mcewen,Miss 2 Pts,,BLOB,Offense,2026-01-03,0,BLOB,blob:m2m,,,BLOB
 UW-Oshkosh Titans,H2,535.0,UW-Whitewater,Oskar Kangas,Miss 3 Pts,,Spain,Offense,2026-01-03,0,Spain,spain:m2m(switch2nd),,,Half court
-UW-Oshkosh Titans,H2,533.0,UW-Whitewater,Jonah Rindfleisch,Foul,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
 UW-Oshkosh Titans,H2,521.0,UW-Whitewater,Joey Berezowitz,Miss 3 Pts,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs:press(rj)(switch),,,Half court
-UW-Oshkosh Titans,H2,501.0,UW-Whitewater,Joey Berezowitz,Foul,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
 UW-Oshkosh Titans,H2,477.0,UW-Whitewater,Brandon Beck,Make 3 Pts,,Ball Screen,Offense,2026-01-03,3,Ball Screen,bs:Press(token)(tl),,,Half court
-UW-Oshkosh Titans,H2,448.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,Offensive Rebound,Offense,2026-01-03,0,Motion / no set,oreb,Offensive Rebound,,Half court
 UW-Oshkosh Titans,H2,424.0,UW-Whitewater,Joey Berezowitz,Make 2 Pts,,BLOB,Offense,2026-01-03,2,BLOB,blob:m2m,,,BLOB
 UW-Oshkosh Titans,H2,405.0,UW-Whitewater,Jonah Rindfleisch,Miss 2 Pts,,Scissors,Offense,2026-01-03,0,Motion / no set,sci:m2m,Scissors,,Half court
-UW-Oshkosh Titans,H2,339.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
-UW-Oshkosh Titans,H2,,UW-Whitewater,Michael Metcalf-Grassman,No Violation,,Transition (unspecified),Offense,2026-01-03,,Transition,tran,,,Transition
-UW-Oshkosh Titans,H2,265.0,UW-Whitewater,Luke Bara,Miss 3 Pts,,Offensive Rebound,Offense,2026-01-03,0,Motion / no set,oreb,Offensive Rebound,,Half court
 UW-Oshkosh Titans,H2,236.0,UW-Whitewater,Vitorio Dante,Miss 2 Pts,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs:m2m(tl),,,Half court
-UW-Oshkosh Titans,H2,227.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
 UW-Oshkosh Titans,H2,193.0,UW-Whitewater,Michael Metcalf-Grassman,Miss 2 Pts,,Ball Screen,Offense,2026-01-03,0,Ball Screen,bs:press(12)((switch)),,,Half court
-UW-Oshkosh Titans,H2,183.0,UW-Whitewater,Collin Madson,Foul,,Transition (unspecified),Offense,2026-01-03,2,Transition,tran,,,Transition
-UW-Oshkosh Titans,H2,171.0,UW-Whitewater,Joey Berezowitz,Miss 2 Pts,,Transition (unspecified),Offense,2026-01-03,0,Transition,tran,,,Transition
 UW-Oshkosh Titans,H2,147.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,DHO,Offense,2026-01-03,0,DHO,dho:press(rj)(switch),,,Half court
 UW-Oshkosh Titans,H2,117.0,UW-Whitewater,Oskar Kangas,Make 3 Pts,,Ball Screen,Offense,2026-01-03,3,Ball Screen,bs:m2m(tl),,,Half court
 UW-Oshkosh Titans,H2,78.0,UW-Whitewater,Darius Chestnut,Miss 2 Pts,,DHO,Offense,2026-01-03,0,DHO,dho:press(rj)(switch),,,Half court
-UW-Oshkosh Titans,H2,42.0,UW-Whitewater,Carter Thomas,Foul,,Offensive Rebound,Offense,2026-01-03,2,Motion / no set,oreb,Offensive Rebound,,Half court
