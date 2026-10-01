@@ -1,3 +1,4 @@
+import re
 # 54_tracking_insights.py -- code for the notebook section "Tracking insights: every scouting table built from the player tracking -------------------"
 # Runs inside the notebook via run_section("54_tracking_insights"); its settings are in that notebook cell.
 
@@ -347,6 +348,27 @@ def _ti_sets(clips):
     return sets, pd.DataFrame(clip_rows)
 
 
+def _ti_result_type(result):
+    """Synergy's result -> made 2 / made 3 / missed 2 / missed 3 / turnover / fouled / other (replay filter)."""
+    t = str(result or "")
+    m = re.search(r"\b(Make|Miss)\w*\s+([23])\s*Pts", t, re.I)
+    if m:
+        return f"{'made' if m.group(1).lower() == 'make' else 'missed'} {m.group(2)}"
+    if re.search(r"turnover", t, re.I):
+        return "turnover"
+    if re.search(r"foul|free throw", t, re.I):
+        return "fouled"
+    return "other" if t else None
+
+
+def _ti_shot_clock_bucket(used):
+    """Seconds used on the shot clock -> early (0-9) / organized (10-19) / late (20+) (replay filter)."""
+    v = pd.to_numeric(used, errors="coerce")
+    if pd.isna(v):
+        return None
+    return "early (0-9 s)" if v < 10 else "organized (10-19 s)" if v < 20 else "late (20+ s)"
+
+
 def _ti_shape(layout):
     P = np.array([[x, y] for x, y, _ in layout])
     if len(P) < 3:
@@ -555,7 +577,18 @@ if isinstance(globals().get("player_tracks"), pd.DataFrame) and not player_track
             "points": _c["row"].get("points"), "frames": _c["n"],
             "fps": VISION_TRACK_FPS if "VISION_TRACK_FPS" in globals() and VISION_TRACK_FPS else 2,
             "holders": _c["row"].get("track_holders"), "screen": _c["row"].get("track_screen_ids"),
-            "screen_type": _c["row"].get("track_screen_type"), "set_id": None} for _k, _c in _ti_clips.items()])
+            "screen_type": _c["row"].get("track_screen_type"), "set_id": None,
+            # CONFIRMED CHANGE (requested: filters on the Possession Replay for each game and different types of data).
+            # Everything the replay can be filtered by, worked out here so the app only filters.
+            "game_code": _c["row"].get("game_code"), "period": _c["row"].get("period"),
+            "time_remaining_seconds": _c["row"].get("time_remaining_seconds"), "player": _c["row"].get("player"),
+            "situation": _c["row"].get("play_situation"), "formation": _c["row"].get("play_formation"),
+            "play_call": _c["row"].get("play_set"), "primary_action": _c["row"].get("primary_action"),
+            "defense": _c["row"].get("defense_formation"),
+            "press": bool(_c["row"].get("defense_press")) if pd.notna(_c["row"].get("defense_press")) else None,
+            "coverage": _c["row"].get("coverage_detail"),
+            "result_type": _ti_result_type(_c["row"].get("result")),
+            "shot_clock": _ti_shot_clock_bucket(_c["row"].get("shot_clock_used"))} for _k, _c in _ti_clips.items()])
         if not _set_clips.empty:
             _ti_tables["uww_trk_clips"] = _ti_tables["uww_trk_clips"].drop(columns="set_id").merge(
                 _set_clips[["clip_key", "set_id"]], on="clip_key", how="left")

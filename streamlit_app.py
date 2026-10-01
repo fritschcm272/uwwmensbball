@@ -5503,6 +5503,74 @@ def _ft_int(v, default=0):
     return default if f != f else int(f)          # f != f only for NaN
 
 
+def _ft_replay_filters(cl, team, key_suffix=""):
+    """Filters for the Possession Replay. CONFIRMED CHANGE (requested: filters for each game and different types of
+    data). Every value is computed in the parser (uww_trk_clips); the app only filters. A filter shows only when its
+    column exists and has values, so older data still works. Returns the filtered clips."""
+    total = len(cl)
+    k = lambda name: f"ft_rf_{name}{key_suffix}"
+    if st.button("Clear filters", key=k("clear")):
+        for name in ("game", "off", "half", "result", "situation", "formation", "call", "action", "defense", "press",
+                     "screen", "clock", "player", "search"):
+            st.session_state.pop(k(name), None)
+    opts = lambda col: sorted({str(v) for v in cl[col].dropna() if str(v).strip() and str(v) != "nan"}) if col in cl.columns else []
+    with st.expander("Filters", expanded=True):
+        c1, c2, c3 = st.columns(3)
+        if "game_code" in cl.columns:
+            cl = cl.assign(_game=cl["game_date"].astype(str) + " " + cl["game_code"].fillna("").astype(str))
+        else:
+            cl = cl.assign(_game=cl["game_date"].astype(str))
+        with c1:
+            g = st.multiselect("Game", opts("_game"), key=k("game"))
+            off = st.radio("Offense", ["Both", f"{team} on offense", f"{team} on defense"], horizontal=False, key=k("off"))
+            h = st.multiselect("Half", opts("period"), key=k("half")) if opts("period") else []
+            res = st.multiselect("Result", opts("result_type"), key=k("result")) if opts("result_type") else []
+            clock = st.multiselect("Shot clock", opts("shot_clock"), key=k("clock")) if opts("shot_clock") else []
+        with c2:
+            sit = st.multiselect("Situation", opts("situation"), key=k("situation")) if opts("situation") else []
+            frm = st.multiselect("Formation", opts("formation"), key=k("formation")) if opts("formation") else []
+            call = st.multiselect("Play call", opts("play_call"), key=k("call")) if opts("play_call") else []
+            act = st.multiselect("Main action", opts("primary_action"), key=k("action")) if opts("primary_action") else []
+        with c3:
+            dfn = st.multiselect("Defense", opts("defense"), key=k("defense")) if opts("defense") else []
+            prs = st.radio("Press", ["Any", "Press", "No press"], horizontal=True, key=k("press")) if "press" in cl.columns else "Any"
+            scr = st.selectbox("Screen", ["Any", "Any screen found", "No screen found"] + opts("screen_type"), key=k("screen"))
+            ply = st.multiselect("Player (Synergy)", opts("player"), key=k("player")) if opts("player") else []
+            q = st.text_input("Search the Title / Synergy description", key=k("search"))
+    m = pd.Series(True, index=cl.index)
+    pick = lambda col, vals: cl[col].astype(str).isin(vals) if vals and col in cl.columns else True
+    m &= pick("_game", g)
+    if off.endswith("on offense"):
+        m &= cl["offense_team"].astype(str) == str(team)
+    elif off.endswith("on defense"):
+        m &= cl["defense_team"].astype(str) == str(team)
+    m &= pick("period", h)
+    m &= pick("result_type", res)
+    m &= pick("shot_clock", clock)
+    m &= pick("situation", sit)
+    m &= pick("formation", frm)
+    m &= pick("play_call", call)
+    m &= pick("primary_action", act)
+    m &= pick("defense", dfn)
+    m &= pick("player", ply)
+    if prs != "Any" and "press" in cl.columns:
+        _p = cl["press"].astype(str).str.lower().isin(["true", "1", "yes"])
+        m &= _p if prs == "Press" else ~_p
+    if scr == "Any screen found":
+        m &= cl["screen_type"].notna()
+    elif scr == "No screen found":
+        m &= cl["screen_type"].isna()
+    elif scr != "Any":
+        m &= cl["screen_type"].astype(str) == scr
+    if q and q.strip():
+        text = (cl["play_title"].fillna("").astype(str) + " " + cl["synergy_string"].fillna("").astype(str)
+                + " " + cl.get("suggested_title", pd.Series("", index=cl.index)).fillna("").astype(str))
+        m &= text.str.contains(q.strip(), case=False, regex=False)
+    out = cl[m].drop(columns="_game")
+    st.caption(f"{len(out)} of {total} possessions match.")
+    return out
+
+
 def _ft_team_pick(short_opponent):
     clips = load_table("uww_trk_clips")
     if clips.empty:
@@ -5977,11 +6045,9 @@ def render_film_tracking(short_opponent, key_suffix=""):
         cl["label"] = (cl["game_date"].astype(str) + "  #" + cl["clip_number"].astype(str) + "  " +
                        cl["offense_team"].astype(str) + " -- " + cl["play_title"].fillna(cl["synergy_string"]).astype(str).str[:60] +
                        cl["screen_type"].map(lambda s: f"  [{s}]" if isinstance(s, str) else ""))
-        only_scr = st.checkbox("Only clips with a screen found", value=True, key=f"ft_only_scr{key_suffix}")
-        if only_scr:
-            cl = cl[cl["screen_type"].notna()]
+        cl = _ft_replay_filters(cl, team, key_suffix)
         if cl.empty:
-            st.caption("No clips to replay.")
+            st.caption("No possessions match these filters.")
         else:
             pick = st.selectbox("Possession", cl["label"].tolist(), key=f"ft_replay{key_suffix}")
             row = cl[cl["label"] == pick].iloc[0]
