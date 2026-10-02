@@ -294,25 +294,63 @@ def _pr_embed(rdir, name, kind):
     return f"data:{mime};base64," + base64.b64encode(data).decode("ascii")
 
 
+def _pr_app_dir():
+    """The app's data folder. CONFIRMED BUG (fixed): APP_DATA_DIR is first set in a LATER section (cell ~174), so in a
+    fresh session the Play review (cell ~126) failed to copy reviews to the app. OUTPUT_DIR is the same folder (../data)."""
+    return globals().get("APP_DATA_DIR") or OUTPUT_DIR
+
+
 def _export_play_review_to_app(rdir, slug, game, run, plays, vocab):
-    """Copy this run's review into the app's data folder: APP_DATA_DIR/play_review/<slug>/ (replacing the last one)."""
+    """Copy this run's review into the app's data folder: _pr_app_dir()/play_review/<slug>/ (replacing the last one)."""
     from PIL import Image
-    dest = os.path.join(APP_DATA_DIR, "play_review", slug)
+    dest = os.path.join(_pr_app_dir(), "play_review", slug)
     shutil.rmtree(dest, ignore_errors=True)
     os.makedirs(dest, exist_ok=True)
+    import base64
+    import io
+
+    def _media(value, name):
+        """A separate file in the run folder, or one built into review.html (a data: URI) -> written to dest as name."""
+        if not value:
+            return None
+        if str(value).startswith("data:"):
+            head, b64 = str(value).split(",", 1)
+            with open(os.path.join(dest, name), "wb") as fh:
+                fh.write(base64.b64decode(b64))
+            return name
+        if os.path.exists(os.path.join(rdir, value)):
+            shutil.copy2(os.path.join(rdir, value), os.path.join(dest, os.path.basename(value)))
+            return os.path.basename(value)
+        return None
+
     out = []
     for p in plays:
         q = json.loads(json.dumps(p, default=str))
-        for key in ("clip", "poster"):
-            if q.get(key) and os.path.exists(os.path.join(rdir, q[key])):
-                shutil.copy2(os.path.join(rdir, q[key]), os.path.join(dest, q[key]))
+        cn = int(q.get("clip_number") or 0)
+        clip = q.get("clip") or q.get("gif")                  # older pages called it "gif"
+        is_mp4 = str(clip or "").startswith("data:video") or str(clip or "").endswith(".mp4")
+        q["clip"] = _media(clip, f"clip_{cn:03d}.{'mp4' if is_mp4 else 'gif'}")
+        q["clip_kind"] = "video" if is_mp4 else "image"
+        q["poster"] = _media(q.get("poster"), f"clip_{cn:03d}_poster.jpg")
         for pic in q.get("pictures", []):
-            src = os.path.join(rdir, pic["image"])
-            if os.path.exists(src):
-                im = Image.open(src).convert("RGB")
+            name = f"clip_{cn:03d}_{'a_start' if pic.get('which') == 'start' else 'b_end'}.jpg"
+            v = pic.get("image")
+            try:
+                if str(v or "").startswith("data:"):
+                    im = Image.open(io.BytesIO(base64.b64decode(str(v).split(",", 1)[1]))).convert("RGB")
+                elif v and os.path.exists(os.path.join(rdir, v)):
+                    im = Image.open(os.path.join(rdir, v)).convert("RGB")
+                else:
+                    im = None
+            except Exception:
+                im = None
+            if im is not None:
                 if im.size[0] > 1100:
                     im = im.resize((1100, int(im.size[1] * 1100 / im.size[0])), Image.LANCZOS)
-                im.save(os.path.join(dest, pic["image"]), "JPEG", quality=72, optimize=True)
+                im.save(os.path.join(dest, name), "JPEG", quality=72, optimize=True)
+                pic["image"] = name
+            else:
+                pic["image"] = None
         out.append(q)
     with open(os.path.join(dest, "review.json"), "w", encoding="utf-8") as fh:
         json.dump({"game": game, "slug": slug, "run": run, "plays": out, "vocab": vocab,
@@ -388,7 +426,7 @@ def play_review():
         _play_review_file_saves()                     # saved reviews into their run folders first
     for (gd, gc), g in pc.groupby(["game_date", "game_code"], dropna=False):
         _slug_app = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
-        _pkg = os.path.join(APP_DATA_DIR, "play_review", _slug_app)
+        _pkg = os.path.join(_pr_app_dir(), "play_review", _slug_app)
         # the app's copy of this game's review goes once its run has a saved review (a new run replaces it below)
         if os.path.exists(os.path.join(_pkg, "review.json")):
             try:
@@ -406,6 +444,34 @@ def play_review():
         _open = [d for d in sorted(glob.glob(os.path.join(INPUT_DIR, "play_review", _slug_chk, "run_*")))
                  if os.path.isdir(d) and not any(_review_doc(f) is not None
                                                  for f in glob.glob(os.path.join(d, "*.json")))]   # any name
+        if _open and globals().get("PLAY_REVIEW_REQUIRE_SAVED", True) and globals().get("PLAY_REVIEW_TO_APP", True):
+            # CONFIRMED BUG (fixed; coach: "the review documents aren't being put in /data"). Only a NEW run was copied to
+            # the app, and a game with an open unsaved run never gets a new one -- so its review never reached the app.
+            # Now the open run itself is copied (its plays, videos and pictures read back out of its review.html).
+            _newest = _open[-1]
+            _cur_run = None
+            if os.path.exists(os.path.join(_pkg, "review.json")):
+                try:
+                    with open(os.path.join(_pkg, "review.json"), encoding="utf-8") as fh:
+                        _cur_run = json.load(fh).get("run")
+                except Exception:
+                    pass
+            _open_run = os.path.basename(_newest).replace("run_", "", 1)
+            if _cur_run == _open_run:
+                print(f"Play review: {gd} {gc} -- its open review (run {_open_run}) is already in the app", flush=True)
+            else:
+                try:
+                    _page = os.path.join(_newest, "review.html")
+                    with open(_page, encoding="utf-8") as fh:
+                        _html = fh.read()
+                    _m = re.search(r"const D = (\{.*?\});\s*const marks", _html, re.S)
+                    if not _m:
+                        raise ValueError("couldn't read the plays from its review.html")
+                    _D = json.loads(_m.group(1))
+                    _export_play_review_to_app(_newest, _slug_app, _D.get("game") or f"{gd}|{gc}",
+                                               _D.get("run") or _open_run, _D.get("plays", []), _D.get("vocab") or {})
+                except Exception as _ae:
+                    print(f"  [play review] {gd} {gc}: open review not copied to the app ({type(_ae).__name__}: {_ae})", flush=True)
         if _open and globals().get("PLAY_REVIEW_REQUIRE_SAVED", True):
             print(f"Play review: {gd} {gc} -- no new run: {len(_open)} earlier run(s) not saved yet: "
                   + "; ".join(os.path.join(d, "review.html") for d in _open)
@@ -489,7 +555,7 @@ def play_review():
                     vals |= {str(v) for v in play_calls[c].dropna() if str(v).strip() and str(v) != "nan"}
             vocab[f] = sorted(vals)
         # CONFIRMED CHANGE (requested: the play reviews inside the Streamlit app, on Previous Games, saved to GitHub).
-        # The open review goes to the app's data folder (APP_DATA_DIR/play_review/<game>/): review.json + each play's
+        # The open review goes to the app's data folder (_pr_app_dir()/play_review/<game>/): review.json + each play's
         # video, cover image and pictures (1100 px). Commit / push it with the rest of the data; the app saves each
         # coach's answers to data/play_review_saves, which the parser picks up after a git pull. One package per game:
         # a new run replaces it, and it's removed once its run has a saved review.

@@ -1,0 +1,7970 @@
+{
+ "game": "2025-12-30|WWW@COE",
+ "slug": "2025_12_30_WWW_COE",
+ "run": "20261001_130211",
+ "plays": [
+  {
+   "clip_key": "2025-12-30|335|32 Luke Bara > Transition > Ballhandler > To Basket > Foul",
+   "clip_number": 335,
+   "clock": "H1 17:25",
+   "synergy": "32 Luke Bara > Transition > Ballhandler > To Basket > Foul",
+   "coach_title": "Luke Bara",
+   "auto_title": "tran",
+   "film": "Ball screen: Brock Marino screened for Luke Bara; defended by Jackson Bowman (on the player screened) and C. Reece Breitenbach (on the screener); coverage from the players' movement: back (drop) (screen confidence 14%)",
+   "validation": false,
+   "clip": "clip_335.mp4",
+   "clip_kind": "video",
+   "poster": "clip_335_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 10,
+   "video_at": "31:22",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_335_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/10_4832eb1d_t031.jpg",
+     "t": 31,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 19,
+       "side": "defense",
+       "box": [
+        439.22416,
+        245.29600000000002,
+        488.57583999999997,
+        362.8
+       ],
+       "px": 463.9,
+       "py": 362.8,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 37,
+       "side": "defense",
+       "box": [
+        348.24464,
+        284.984,
+        382.35536,
+        366.2
+       ],
+       "px": 365.3,
+       "py": 366.2,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        223.84208,
+        330.14799999999997,
+        278.75792,
+        460.9
+       ],
+       "px": 251.3,
+       "py": 460.9,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 33,
+       "side": "defense",
+       "box": [
+        578.4188800000001,
+        246.828,
+        613.98112,
+        331.5
+       ],
+       "px": 596.2,
+       "py": 331.5,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 31,
+       "side": "defense",
+       "box": [
+        538.42592,
+        297.952,
+        592.3740799999999,
+        426.4
+       ],
+       "px": 565.4,
+       "py": 426.4,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 34,
+       "side": "offense",
+       "box": [
+        498.99136000000004,
+        164.016,
+        531.40864,
+        241.2
+       ],
+       "px": 515.2,
+       "py": 241.2,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 23,
+       "side": "offense",
+       "box": [
+        568.1180800000001,
+        349.648,
+        629.08192,
+        494.8
+       ],
+       "px": 598.6,
+       "py": 494.8,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 35,
+       "side": "offense",
+       "box": [
+        805.25728,
+        231.26799999999997,
+        831.14272,
+        292.9
+       ],
+       "px": 818.2,
+       "py": 292.9,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 38,
+       "side": "offense",
+       "box": [
+        298.27088000000003,
+        239.62800000000001,
+        345.92912,
+        353.1
+       ],
+       "px": 322.1,
+       "py": 353.1,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_335_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/10_4832eb1d_t078.jpg",
+     "t": 78,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 19,
+       "side": "defense",
+       "box": [
+        535.9145599999999,
+        311.936,
+        587.68544,
+        435.2
+       ],
+       "px": 561.8,
+       "py": 435.2,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 37,
+       "side": "defense",
+       "box": [
+        413.80496,
+        282.276,
+        467.99503999999996,
+        411.3
+       ],
+       "px": 440.9,
+       "py": 411.3,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        512.61632,
+        235.69199999999998,
+        568.9836799999999,
+        369.9
+       ],
+       "px": 540.8,
+       "py": 369.9,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 33,
+       "side": "defense",
+       "box": [
+        642.26432,
+        255.79199999999997,
+        686.53568,
+        361.2
+       ],
+       "px": 664.4,
+       "py": 361.2,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 31,
+       "side": "defense",
+       "box": [
+        695.38048,
+        279.588,
+        740.61952,
+        387.3
+       ],
+       "px": 718.0,
+       "py": 387.3,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 34,
+       "side": "offense",
+       "box": [
+        527.23328,
+        165.06799999999998,
+        559.16672,
+        241.1
+       ],
+       "px": 543.2,
+       "py": 241.1,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 45,
+       "side": "offense",
+       "box": [
+        814.0524800000001,
+        229.688,
+        841.14752,
+        294.2
+       ],
+       "px": 827.6,
+       "py": 294.2,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 47,
+       "side": "offense",
+       "box": [
+        391.86432,
+        254.692,
+        436.13568,
+        360.1
+       ],
+       "px": 414.0,
+       "py": 360.1,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Transition",
+     "conf": 0.84,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Kenji Scales",
+     "conf": 0.37,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Joey Berezowitz",
+     "Luke Bara",
+     "Richie Warren"
+    ],
+    "defense": [
+     "C. Reece Breitenbach",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Bowman",
+     "Kanyon Bryte"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|340|32 Luke Bara > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Make 3 Pts",
+   "clip_number": 340,
+   "clock": "H1 16:39",
+   "synergy": "32 Luke Bara > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Make 3 Pts",
+   "coach_title": "Luke Bara",
+   "auto_title": "(bs): m2m (over)",
+   "film": null,
+   "validation": false,
+   "clip": "clip_340.mp4",
+   "clip_kind": "video",
+   "poster": "clip_340_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 15,
+   "video_at": "33:13",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_340_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/15_e4c92837_t002.jpg",
+     "t": 2,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 17,
+       "side": "defense",
+       "box": [
+        3.340320000000002,
+        254.692,
+        53.659679999999994,
+        374.5
+       ],
+       "px": 28.5,
+       "py": 374.5,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 1,
+       "side": "defense",
+       "box": [
+        80.08752000000001,
+        303.612,
+        143.71248,
+        455.1
+       ],
+       "px": 111.9,
+       "py": 455.1,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        198.19712,
+        271.872,
+        259.40288,
+        417.6
+       ],
+       "px": 228.8,
+       "py": 417.6,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        424.27263999999997,
+        334.884,
+        476.52736,
+        459.3
+       ],
+       "px": 450.4,
+       "py": 459.3,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 5,
+       "side": "offense",
+       "box": [
+        687.44992,
+        222.952,
+        735.3500799999999,
+        337.0
+       ],
+       "px": 711.4,
+       "py": 337.0,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        390.88352000000003,
+        212.31199999999998,
+        430.31648,
+        306.2
+       ],
+       "px": 410.6,
+       "py": 306.2,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 16,
+       "side": "offense",
+       "box": [
+        351.64816,
+        192.89600000000002,
+        394.95184,
+        296.0
+       ],
+       "px": 373.3,
+       "py": 296.0,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_340_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/15_e4c92837_t015.jpg",
+     "t": 15,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 19,
+       "side": "defense",
+       "box": [
+        -17.03216,
+        384.704,
+        36.432159999999996,
+        512.0
+       ],
+       "px": 9.7,
+       "py": 512.0,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        254.98704,
+        286.62399999999997,
+        303.61296,
+        402.4
+       ],
+       "px": 279.3,
+       "py": 402.4,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 25,
+       "side": "offense",
+       "box": [
+        218.18784000000002,
+        260.004,
+        241.41216,
+        315.3
+       ],
+       "px": 229.8,
+       "py": 315.3,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 21,
+       "side": "offense",
+       "box": [
+        828.8216,
+        351.36,
+        898.9784,
+        518.4
+       ],
+       "px": 863.9,
+       "py": 518.4,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 26,
+       "side": "offense",
+       "box": [
+        5.472160000000002,
+        271.796,
+        42.72784,
+        360.5
+       ],
+       "px": 24.1,
+       "py": 360.5,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        528.70448,
+        248.988,
+        567.8955199999999,
+        342.3
+       ],
+       "px": 548.3,
+       "py": 342.3,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 16,
+       "side": "offense",
+       "box": [
+        134.35344,
+        321.86400000000003,
+        191.44656,
+        457.8
+       ],
+       "px": 162.9,
+       "py": 457.8,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.81,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Kenji Scales",
+     "conf": 0.37,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Joey Berezowitz",
+     "Luke Bara",
+     "Richie Warren"
+    ],
+    "defense": [
+     "C. Reece Breitenbach",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Bowman",
+     "Kanyon Bryte"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|344|32 Luke Bara > P&R Ball Handler > High P&R > Go Away from Pick > Defense Commits > Ball Delivered > 22 Joey Berezowitz > Cut > Basket > Make 2 Pts",
+   "clip_number": 344,
+   "clock": "H1 15:37",
+   "synergy": "32 Luke Bara > P&R Ball Handler > High P&R > Go Away from Pick > Defense Commits > Ball Delivered > 22 Joey Berezowitz > Cut > Basket > Make 2 Pts",
+   "coach_title": "Joey Berezowitz",
+   "auto_title": "blob(bs,reject,cut): m2m (over)",
+   "film": "Off-ball screen: Brock Marino screened for Joey Berezowitz; defended by Cooper Nailor (on the player screened) and Deuce Walters (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 9%)",
+   "validation": false,
+   "clip": "clip_344.mp4",
+   "clip_kind": "video",
+   "poster": "clip_344_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 19,
+   "video_at": "34:08",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_344_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/19_24d1250d_t000.jpg",
+     "t": 0,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        306.31584,
+        231.804,
+        347.68416,
+        330.3
+       ],
+       "px": 327.0,
+       "py": 330.3,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 3,
+       "side": "defense",
+       "box": [
+        800.41328,
+        378.36799999999994,
+        862.58672,
+        526.4
+       ],
+       "px": 831.5,
+       "py": 526.4,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 1,
+       "side": "defense",
+       "box": [
+        195.92767999999998,
+        303.608,
+        254.47232,
+        443.0
+       ],
+       "px": 225.2,
+       "py": 443.0,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        394.49055999999996,
+        329.136,
+        452.30944,
+        466.8
+       ],
+       "px": 423.4,
+       "py": 466.8,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        91.3888,
+        287.67999999999995,
+        144.6112,
+        414.4
+       ],
+       "px": 118.0,
+       "py": 414.4,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 8,
+       "side": "offense",
+       "box": [
+        4.5883199999999995,
+        226.09200000000004,
+        42.811679999999996,
+        317.1
+       ],
+       "px": 23.7,
+       "py": 317.1,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 2,
+       "side": "offense",
+       "box": [
+        308.31632,
+        349.89200000000005,
+        364.68368,
+        484.1
+       ],
+       "px": 336.5,
+       "py": 484.1,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        445.24464,
+        207.38400000000001,
+        479.35536,
+        288.6
+       ],
+       "px": 462.3,
+       "py": 288.6,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        591.37088,
+        262.928,
+        639.02912,
+        376.4
+       ],
+       "px": 615.2,
+       "py": 376.4,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_344_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/19_24d1250d_t055.jpg",
+     "t": 55,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        624.66256,
+        202.736,
+        664.33744,
+        297.2
+       ],
+       "px": 644.5,
+       "py": 297.2,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 30,
+       "side": "defense",
+       "box": [
+        486.04992,
+        264.552,
+        533.95008,
+        378.6
+       ],
+       "px": 510.0,
+       "py": 378.6,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 29,
+       "side": "defense",
+       "box": [
+        562.2931199999999,
+        215.47200000000004,
+        599.30688,
+        303.6
+       ],
+       "px": 580.8,
+       "py": 303.6,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        439.3272,
+        224.51999999999998,
+        482.87280000000004,
+        328.2
+       ],
+       "px": 461.1,
+       "py": 328.2,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        487.90272,
+        221.93200000000002,
+        522.4972799999999,
+        304.3
+       ],
+       "px": 505.2,
+       "py": 304.3,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 32,
+       "side": "offense",
+       "box": [
+        402.35472,
+        232.73199999999997,
+        449.04528,
+        343.9
+       ],
+       "px": 425.7,
+       "py": 343.9,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 21,
+       "side": "offense",
+       "box": [
+        536.94032,
+        299.79200000000003,
+        587.25968,
+        419.6
+       ],
+       "px": 562.1,
+       "py": 419.6,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "BLOB",
+     "conf": 0.65,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Cal Krohn",
+     "conf": 0.48,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Joey Berezowitz",
+     "Luke Bara",
+     "Richie Warren"
+    ],
+    "defense": [
+     "C. Reece Breitenbach",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Bowman",
+     "Kanyon Bryte"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|359|12 C. Reece Breitenbach > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Turnover",
+   "clip_number": 359,
+   "clock": "H1 12:11",
+   "synergy": "12 C. Reece Breitenbach > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Turnover",
+   "coach_title": "C. Reece Breitenbach",
+   "auto_title": "(post): m2m (over)",
+   "film": "Off-ball screen: C. Reece Breitenbach screened for Cooper Nailor; defended by Jake Quast (on the player screened) and JR Lukenbill (on the screener); coverage from the players' movement: unclear (screen confidence 11%)",
+   "validation": false,
+   "clip": "clip_359.mp4",
+   "clip_kind": "video",
+   "poster": "clip_359_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 34,
+   "video_at": "41:19",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_359_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/34_b437d7ef_t011.jpg",
+     "t": 11,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        504.25296,
+        221.976,
+        546.34704,
+        322.2
+       ],
+       "px": 525.3,
+       "py": 322.2,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        555.28,
+        183.0,
+        585.52,
+        255.0
+       ],
+       "px": 570.4,
+       "py": 255.0,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 14,
+       "side": "defense",
+       "box": [
+        543.13424,
+        387.34399999999994,
+        605.0657600000001,
+        534.8
+       ],
+       "px": 574.1,
+       "py": 534.8,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 8,
+       "side": "offense",
+       "box": [
+        471.91584,
+        200.604,
+        513.28416,
+        299.1
+       ],
+       "px": 492.6,
+       "py": 299.1,
+       "name": "Aaron Foote",
+       "how": "best guess",
+       "label": "#20 Foote?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 5,
+       "side": "offense",
+       "box": [
+        531.60144,
+        231.46400000000003,
+        576.59856,
+        338.6
+       ],
+       "px": 554.1,
+       "py": 338.6,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        530.21232,
+        171.09199999999998,
+        562.3876799999999,
+        247.7
+       ],
+       "px": 546.3,
+       "py": 247.7,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 12,
+       "side": "offense",
+       "box": [
+        585.2211199999999,
+        283.572,
+        640.37888,
+        414.9
+       ],
+       "px": 612.8,
+       "py": 414.9,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        385.2608,
+        201.08000000000004,
+        420.3392,
+        284.6
+       ],
+       "px": 402.8,
+       "py": 284.6,
+       "name": "Ryan Dolphin",
+       "how": "best guess",
+       "label": "#2 Dolphin?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_359_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/34_b437d7ef_t023.jpg",
+     "t": 23,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 19,
+       "side": "defense",
+       "box": [
+        750.85872,
+        294.23199999999997,
+        821.74128,
+        463.0
+       ],
+       "px": 786.3,
+       "py": 463.0,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        721.52896,
+        191.87599999999998,
+        769.6710400000001,
+        306.5
+       ],
+       "px": 745.6,
+       "py": 306.5,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 16,
+       "side": "defense",
+       "box": [
+        478.22416,
+        201.896,
+        527.57584,
+        319.4
+       ],
+       "px": 502.9,
+       "py": 319.4,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 14,
+       "side": "defense",
+       "box": [
+        925.93248,
+        255.688,
+        983.26752,
+        392.2
+       ],
+       "px": 954.6,
+       "py": 392.2,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 8,
+       "side": "offense",
+       "box": [
+        355.9792,
+        215.21999999999997,
+        411.62080000000003,
+        347.7
+       ],
+       "px": 383.8,
+       "py": 347.7,
+       "name": "Aaron Foote",
+       "how": "best guess",
+       "label": "#20 Foote?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 5,
+       "side": "offense",
+       "box": [
+        720.6329599999999,
+        288.676,
+        792.96704,
+        460.9
+       ],
+       "px": 756.8,
+       "py": 460.9,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        748.70016,
+        157.096,
+        804.09984,
+        289.0
+       ],
+       "px": 776.4,
+       "py": 289.0,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 12,
+       "side": "offense",
+       "box": [
+        377.7408,
+        298.17999999999995,
+        443.0592,
+        453.7
+       ],
+       "px": 410.4,
+       "py": 453.7,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.89,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Carter Combs",
+     "conf": 0.43,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Aaron Foote",
+     "C. Reece Breitenbach",
+     "Cooper Nailor",
+     "Jackson Bowman",
+     "Ryan Dolphin"
+    ],
+    "defense": [
+     "JR Lukenbill",
+     "Jake Quast",
+     "Joey Berezowitz",
+     "Kelton McEwen",
+     "Tyshawn Teague-Johnson"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|374|15 Collin Madson > Spot-Up > Drives Right > To Basket > Foul",
+   "clip_number": 374,
+   "clock": "H1 8:18",
+   "synergy": "15 Collin Madson > Spot-Up > Drives Right > To Basket > Foul",
+   "coach_title": "Collin Madson",
+   "auto_title": ": rj - m2m (over)",
+   "film": "Off-ball screen: Collin Madson screened for Joey Berezowitz; defended by Ryan Dolphin (on the player screened) and Jackson Bowman (on the screener); coverage from the players' movement: unclear (screen confidence 8%)",
+   "validation": false,
+   "clip": "clip_374.mp4",
+   "clip_kind": "video",
+   "poster": "clip_374_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 49,
+   "video_at": "48:27",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_374_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/49_7d1d1a44_t025.jpg",
+     "t": 25,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 12,
+       "side": "defense",
+       "box": [
+        562.54992,
+        283.552,
+        610.45008,
+        397.6
+       ],
+       "px": 586.5,
+       "py": 397.6,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 13,
+       "side": "defense",
+       "box": [
+        599.06128,
+        228.468,
+        649.13872,
+        347.7
+       ],
+       "px": 624.1,
+       "py": 347.7,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 14,
+       "side": "defense",
+       "box": [
+        383.76912000000004,
+        241.77200000000002,
+        426.83088,
+        344.3
+       ],
+       "px": 405.3,
+       "py": 344.3,
+       "name": "Jackson Newell",
+       "how": "best guess",
+       "label": "#35 Newell?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 15,
+       "side": "defense",
+       "box": [
+        423.62544,
+        262.764,
+        462.57456,
+        355.5
+       ],
+       "px": 443.1,
+       "py": 355.5,
+       "name": "Jay Akin",
+       "how": "best guess",
+       "label": "#23 Akin?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        710.39312,
+        280.872,
+        747.40688,
+        369.0
+       ],
+       "px": 728.9,
+       "py": 369.0,
+       "name": "Ryan Dolphin",
+       "how": "best guess",
+       "label": "#2 Dolphin?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        657.06608,
+        279.24800000000005,
+        705.93392,
+        395.6
+       ],
+       "px": 681.5,
+       "py": 395.6,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 17,
+       "side": "offense",
+       "box": [
+        763.45296,
+        264.076,
+        805.54704,
+        364.3
+       ],
+       "px": 784.5,
+       "py": 364.3,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_374_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/49_7d1d1a44_t090.jpg",
+     "t": 90,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 12,
+       "side": "defense",
+       "box": [
+        468.09008,
+        191.44799999999998,
+        510.90992,
+        293.4
+       ],
+       "px": 489.5,
+       "py": 293.4,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 13,
+       "side": "defense",
+       "box": [
+        391.95824,
+        267.044,
+        447.84175999999997,
+        400.1
+       ],
+       "px": 419.9,
+       "py": 400.1,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 14,
+       "side": "defense",
+       "box": [
+        499.10272,
+        113.03200000000001,
+        533.69728,
+        195.4
+       ],
+       "px": 516.4,
+       "py": 195.4,
+       "name": "Jackson Newell",
+       "how": "best guess",
+       "label": "#35 Newell?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 15,
+       "side": "defense",
+       "box": [
+        708.25168,
+        246.808,
+        760.74832,
+        371.8
+       ],
+       "px": 734.5,
+       "py": 371.8,
+       "name": "Jay Akin",
+       "how": "best guess",
+       "label": "#23 Akin?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 36,
+       "side": "defense",
+       "box": [
+        609.9032000000001,
+        168.32,
+        659.4968,
+        286.4
+       ],
+       "px": 634.7,
+       "py": 286.4,
+       "name": "Ryan Dolphin",
+       "how": "best guess",
+       "label": "#2 Dolphin?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 45,
+       "side": "offense",
+       "box": [
+        565.74112,
+        163.572,
+        590.6588800000001,
+        222.9
+       ],
+       "px": 578.2,
+       "py": 222.9,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 30,
+       "side": "offense",
+       "box": [
+        872.77344,
+        198.864,
+        899.62656,
+        262.8
+       ],
+       "px": 886.2,
+       "py": 262.8,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 42,
+       "side": "offense",
+       "box": [
+        848.27344,
+        195.064,
+        875.12656,
+        259.0
+       ],
+       "px": 861.7,
+       "py": 259.0,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 28,
+       "side": "offense",
+       "box": [
+        598.05728,
+        163.868,
+        623.94272,
+        225.5
+       ],
+       "px": 611.0,
+       "py": 225.5,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.99,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": "Run & Jump",
+     "conf": 0.85,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Will Boser",
+     "conf": 0.34,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Collin Madson",
+     "Joey Berezowitz",
+     "Luke Bara",
+     "Richie Warren",
+     "Tyshawn Teague-Johnson"
+    ],
+    "defense": [
+     "Cooper Nailor",
+     "Jackson Bowman",
+     "Jackson Newell",
+     "Jay Akin",
+     "Ryan Dolphin"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|414|10 Darius Chestnut > Non Possession > No Violation",
+   "clip_number": 414,
+   "clock": "(no clock)",
+   "synergy": "10 Darius Chestnut > Non Possession > No Violation",
+   "coach_title": "Darius Chestnut",
+   "auto_title": ": rj - m2m (over)",
+   "film": "Off-ball screen: Collin Madson screened for JR Lukenbill; defended by Kanyon Bryte (on the player screened) and Austin Beeson (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 8%)",
+   "validation": false,
+   "clip": "clip_414.mp4",
+   "clip_kind": "video",
+   "poster": "clip_414_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 89,
+   "video_at": "62:01",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_414_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/89_8a6cbc6d_t031.jpg",
+     "t": 31,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 20,
+       "side": "defense",
+       "box": [
+        458.21056,
+        255.13600000000002,
+        485.78944,
+        320.8
+       ],
+       "px": 472.0,
+       "py": 320.8,
+       "name": "Austin Beeson",
+       "how": "best guess",
+       "label": "#25 Beeson?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 21,
+       "side": "defense",
+       "box": [
+        195.90672,
+        374.03200000000004,
+        254.69328000000002,
+        514.0
+       ],
+       "px": 225.3,
+       "py": 514.0,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 25,
+       "side": "defense",
+       "box": [
+        15.753440000000001,
+        316.464,
+        72.84656,
+        452.4
+       ],
+       "px": 44.3,
+       "py": 452.4,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 26,
+       "side": "defense",
+       "box": [
+        59.4896,
+        226.45999999999998,
+        87.3104,
+        292.7
+       ],
+       "px": 73.4,
+       "py": 292.7,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 22,
+       "side": "defense",
+       "box": [
+        383.45296,
+        246.276,
+        425.54704,
+        346.5
+       ],
+       "px": 404.5,
+       "py": 346.5,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        691.01584,
+        255.20399999999998,
+        732.3841600000001,
+        353.7
+       ],
+       "px": 711.7,
+       "py": 353.7,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 13,
+       "side": "offense",
+       "box": [
+        564.32544,
+        228.664,
+        603.27456,
+        321.4
+       ],
+       "px": 583.8,
+       "py": 321.4,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 23,
+       "side": "offense",
+       "box": [
+        73.04688,
+        316.02799999999996,
+        126.75312000000001,
+        443.9
+       ],
+       "px": 99.9,
+       "py": 443.9,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_414_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/89_8a6cbc6d_t053.jpg",
+     "t": 53,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 20,
+       "side": "defense",
+       "box": [
+        624.94816,
+        276.296,
+        668.25184,
+        379.4
+       ],
+       "px": 646.6,
+       "py": 379.4,
+       "name": "Austin Beeson",
+       "how": "best guess",
+       "label": "#25 Beeson?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 25,
+       "side": "defense",
+       "box": [
+        695.22944,
+        364.06399999999996,
+        758.37056,
+        514.4
+       ],
+       "px": 726.8,
+       "py": 514.4,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 26,
+       "side": "defense",
+       "box": [
+        314.38448000000005,
+        382.48799999999994,
+        383.81552,
+        547.8
+       ],
+       "px": 349.1,
+       "py": 547.8,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 22,
+       "side": "defense",
+       "box": [
+        487.02288,
+        345.82800000000003,
+        546.77712,
+        488.1
+       ],
+       "px": 516.9,
+       "py": 488.1,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        821.94992,
+        306.352,
+        869.8500799999999,
+        420.4
+       ],
+       "px": 845.9,
+       "py": 420.4,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 29,
+       "side": "offense",
+       "box": [
+        945.8983999999999,
+        311.64000000000004,
+        996.7016,
+        432.6
+       ],
+       "px": 971.3,
+       "py": 432.6,
+       "name": "Darius Chestnut",
+       "how": "Synergy",
+       "label": "#10 Chestnut",
+       "guess": false
+      },
+      {
+       "id": "G",
+       "track": 23,
+       "side": "offense",
+       "box": [
+        455.00847999999996,
+        374.288,
+        518.39152,
+        525.2
+       ],
+       "px": 486.7,
+       "py": 525.2,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 30,
+       "side": "offense",
+       "box": [
+        34.22592,
+        346.25199999999995,
+        88.17408,
+        474.7
+       ],
+       "px": 61.2,
+       "py": 474.7,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 31,
+       "side": "offense",
+       "box": [
+        740.08528,
+        253.46800000000002,
+        784.11472,
+        358.3
+       ],
+       "px": 762.1,
+       "py": 358.3,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.97,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": "Run & Jump",
+     "conf": 0.89,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Kenji Scales",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Collin Madson",
+     "Darius Chestnut",
+     "JR Lukenbill",
+     "Jake Quast",
+     "Luke Bara"
+    ],
+    "defense": [
+     "Austin Beeson",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Bowman",
+     "Kanyon Bryte"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|436|15 Collin Madson > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts",
+   "clip_number": 436,
+   "clock": "H1 0:02",
+   "synergy": "15 Collin Madson > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts",
+   "coach_title": "Collin Madson",
+   "auto_title": "(bs): m2m (over)",
+   "film": null,
+   "validation": false,
+   "clip": "clip_436.mp4",
+   "clip_kind": "video",
+   "poster": "clip_436_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 111,
+   "video_at": "69:02",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_436_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/111_2334e82f_t001.jpg",
+     "t": 1,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        180.03248,
+        384.588,
+        237.36751999999998,
+        521.1
+       ],
+       "px": 208.7,
+       "py": 521.1,
+       "name": "Austin Beeson",
+       "how": "best guess",
+       "label": "#25 Beeson?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 9,
+       "side": "defense",
+       "box": [
+        116.10320000000002,
+        283.92,
+        165.6968,
+        402.0
+       ],
+       "px": 140.9,
+       "py": 402.0,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        295.4128,
+        353.08,
+        342.5872,
+        465.4
+       ],
+       "px": 319.0,
+       "py": 465.4,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        537.756,
+        249.8,
+        574.044,
+        336.2
+       ],
+       "px": 555.9,
+       "py": 336.2,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 15,
+       "side": "offense",
+       "box": [
+        557.73024,
+        232.344,
+        595.4697600000001,
+        322.2
+       ],
+       "px": 576.6,
+       "py": 322.2,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        267.34816,
+        290.296,
+        310.65184,
+        393.4
+       ],
+       "px": 289.0,
+       "py": 393.4,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 12,
+       "side": "offense",
+       "box": [
+        623.2097600000001,
+        289.356,
+        676.19024,
+        415.5
+       ],
+       "px": 649.7,
+       "py": 415.5,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_436_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/111_2334e82f_t004.jpg",
+     "t": 4,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        15.385280000000002,
+        446.668,
+        59.414719999999996,
+        551.5
+       ],
+       "px": 37.4,
+       "py": 551.5,
+       "name": "Austin Beeson",
+       "how": "best guess",
+       "label": "#25 Beeson?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 16,
+       "side": "defense",
+       "box": [
+        49.367839999999994,
+        379.504,
+        102.83215999999999,
+        506.8
+       ],
+       "px": 76.1,
+       "py": 506.8,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        575.95776,
+        247.25600000000003,
+        616.84224,
+        344.6
+       ],
+       "px": 596.4,
+       "py": 344.6,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 17,
+       "side": "offense",
+       "box": [
+        122.17743999999999,
+        323.364,
+        173.22256,
+        444.9
+       ],
+       "px": 147.7,
+       "py": 444.9,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        802.732,
+        253.5,
+        845.068,
+        354.3
+       ],
+       "px": 823.9,
+       "py": 354.3,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 12,
+       "side": "offense",
+       "box": [
+        590.4744,
+        311.53999999999996,
+        647.3256,
+        446.9
+       ],
+       "px": 618.9,
+       "py": 446.9,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.96,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": "Run & Jump",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Kenji Scales",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Collin Madson",
+     "Darius Chestnut",
+     "JR Lukenbill",
+     "Luke Bara",
+     "Tyshawn Teague-Johnson"
+    ],
+    "defense": [
+     "Austin Beeson",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Bowman",
+     "Kanyon Bryte"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|451|22 Joey Berezowitz > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts",
+   "clip_number": 451,
+   "clock": "H2 16:31",
+   "synergy": "22 Joey Berezowitz > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts",
+   "coach_title": "Joey Berezowitz",
+   "auto_title": "tran",
+   "film": "Off-ball screen: Luke Bara screened for Collin Madson; defended by Jackson Bowman (on the player screened) and Deuce Walters (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 3%)",
+   "validation": false,
+   "clip": "clip_451.mp4",
+   "clip_kind": "video",
+   "poster": "clip_451_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 126,
+   "video_at": "89:05",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_451_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/126_33966e52_t006.jpg",
+     "t": 6,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 14,
+       "side": "defense",
+       "box": [
+        861.3433600000001,
+        277.916,
+        905.85664,
+        383.9
+       ],
+       "px": 883.6,
+       "py": 383.9,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        423.9416,
+        274.06,
+        463.85839999999996,
+        369.1
+       ],
+       "px": 443.9,
+       "py": 369.1,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        4.1006399999999985,
+        379.98400000000004,
+        74.49936,
+        547.6
+       ],
+       "px": 39.3,
+       "py": 547.6,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 16,
+       "side": "defense",
+       "box": [
+        621.0355199999999,
+        327.512,
+        672.56448,
+        450.2
+       ],
+       "px": 646.8,
+       "py": 450.2,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        682.71056,
+        210.43600000000004,
+        710.28944,
+        276.1
+       ],
+       "px": 696.5,
+       "py": 276.1,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 15,
+       "side": "offense",
+       "box": [
+        225.09663999999998,
+        256.18399999999997,
+        271.30336,
+        366.2
+       ],
+       "px": 248.2,
+       "py": 366.2,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_451_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/126_33966e52_t023.jpg",
+     "t": 23,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        464.78047999999995,
+        340.588,
+        510.01952,
+        448.3
+       ],
+       "px": 487.4,
+       "py": 448.3,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 1,
+       "side": "defense",
+       "box": [
+        268.98224,
+        375.444,
+        318.81775999999996,
+        494.1
+       ],
+       "px": 293.9,
+       "py": 494.1,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        362.53376000000003,
+        334.856,
+        409.46623999999997,
+        446.6
+       ],
+       "px": 386.0,
+       "py": 446.6,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 16,
+       "side": "defense",
+       "box": [
+        591.44384,
+        394.6039999999999,
+        650.9561600000001,
+        536.3
+       ],
+       "px": 621.2,
+       "py": 536.3,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        296.68656,
+        297.036,
+        330.31344,
+        377.1
+       ],
+       "px": 313.5,
+       "py": 377.1,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 13,
+       "side": "offense",
+       "box": [
+        673.84992,
+        328.752,
+        721.7500799999999,
+        442.8
+       ],
+       "px": 697.8,
+       "py": 442.8,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 15,
+       "side": "offense",
+       "box": [
+        403.29968,
+        333.20799999999997,
+        443.70032,
+        429.4
+       ],
+       "px": 423.5,
+       "py": 429.4,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Transition",
+     "conf": 0.76,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Kenji Scales",
+     "conf": 0.37,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Joey Berezowitz",
+     "Luke Bara",
+     "Richie Warren"
+    ],
+    "defense": [
+     "C. Reece Breitenbach",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Bowman",
+     "Kanyon Bryte"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul",
+   "clip_number": 453,
+   "clock": "(no clock)",
+   "synergy": "22 Joey Berezowitz > Non Possession > Non Shooting Foul",
+   "coach_title": "Joey Berezowitz",
+   "auto_title": ": rj - m2m (over)",
+   "film": "Ball screen: unnamed offense screened for unnamed offense; defended by Deuce Walters (on the player screened) and Cooper Nailor (on the screener); coverage from the players' movement: back (drop) (screen confidence 23%)",
+   "validation": false,
+   "clip": "clip_453.mp4",
+   "clip_kind": "video",
+   "poster": "clip_453_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 128,
+   "video_at": "89:42",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_453_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/128_691ab90d_t018.jpg",
+     "t": 18,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 16,
+       "side": "defense",
+       "box": [
+        710.9822399999999,
+        342.544,
+        760.81776,
+        461.2
+       ],
+       "px": 735.9,
+       "py": 461.2,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        594.408,
+        340.5,
+        642.792,
+        455.7
+       ],
+       "px": 618.6,
+       "py": 455.7,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 12,
+       "side": "defense",
+       "box": [
+        347.64992,
+        342.952,
+        395.55008000000004,
+        457.0
+       ],
+       "px": 371.6,
+       "py": 457.0,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 13,
+       "side": "defense",
+       "box": [
+        692.47568,
+        397.108,
+        738.9243200000001,
+        507.7
+       ],
+       "px": 715.7,
+       "py": 507.7,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 10,
+       "side": "defense",
+       "box": [
+        726.2769599999999,
+        300.276,
+        762.32304,
+        386.1
+       ],
+       "px": 744.3,
+       "py": 386.1,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        303.09888,
+        278.328,
+        368.90112,
+        435.0
+       ],
+       "px": 336.0,
+       "py": 435.0,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "G",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        637.00144,
+        314.764,
+        681.99856,
+        421.9
+       ],
+       "px": 659.5,
+       "py": 421.9,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "H",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        317.54639999999995,
+        341.74,
+        356.2536,
+        433.9
+       ],
+       "px": 336.9,
+       "py": 433.9,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_453_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/128_691ab90d_t066.jpg",
+     "t": 66,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 16,
+       "side": "defense",
+       "box": [
+        596.40144,
+        269.56399999999996,
+        641.39856,
+        376.7
+       ],
+       "px": 618.9,
+       "py": 376.7,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        460.38704,
+        273.324,
+        509.01295999999996,
+        389.1
+       ],
+       "px": 484.7,
+       "py": 389.1,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 31,
+       "side": "defense",
+       "box": [
+        616.61888,
+        272.328,
+        652.18112,
+        357.0
+       ],
+       "px": 634.4,
+       "py": 357.0,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 13,
+       "side": "defense",
+       "box": [
+        524.0996799999999,
+        292.008,
+        564.50032,
+        388.2
+       ],
+       "px": 544.3,
+       "py": 388.2,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 10,
+       "side": "defense",
+       "box": [
+        397.2512,
+        269.22,
+        434.7488,
+        358.5
+       ],
+       "px": 416.0,
+       "py": 358.5,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 23,
+       "side": "offense",
+       "box": [
+        228.15120000000002,
+        253.72,
+        265.6488,
+        343.0
+       ],
+       "px": 246.9,
+       "py": 343.0,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "G",
+       "track": 26,
+       "side": "offense",
+       "box": [
+        565.59488,
+        268.928,
+        607.20512,
+        368.0
+       ],
+       "px": 586.4,
+       "py": 368.0,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "H",
+       "track": 32,
+       "side": "offense",
+       "box": [
+        365.74816,
+        287.196,
+        409.05183999999997,
+        390.3
+       ],
+       "px": 387.4,
+       "py": 390.3,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.94,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": "Run & Jump",
+     "conf": 0.91,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Kenji Scales",
+     "conf": 0.48,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [],
+    "defense": [
+     "C. Reece Breitenbach",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Bowman",
+     "Kanyon Bryte"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|462|22 Jackson Bowman > Transition > Leak Outs > To Basket > Make 2 Pts",
+   "clip_number": 462,
+   "clock": "H2 14:24",
+   "synergy": "22 Jackson Bowman > Transition > Leak Outs > To Basket > Make 2 Pts",
+   "coach_title": "Jackson Bowman",
+   "auto_title": "tran",
+   "film": null,
+   "validation": false,
+   "clip": "clip_462.mp4",
+   "clip_kind": "video",
+   "poster": "clip_462_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 137,
+   "video_at": "94:22",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_462_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/137_9b8fd7b6_t004.jpg",
+     "t": 4,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        449.3368,
+        316.38,
+        490.4632,
+        414.3
+       ],
+       "px": 469.9,
+       "py": 414.3,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 17,
+       "side": "defense",
+       "box": [
+        66.80367999999999,
+        367.0079999999999,
+        131.39632,
+        520.8
+       ],
+       "px": 99.1,
+       "py": 520.8,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 10,
+       "side": "offense",
+       "box": [
+        703.72416,
+        296.89599999999996,
+        753.07584,
+        414.4
+       ],
+       "px": 728.4,
+       "py": 414.4,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 14,
+       "side": "offense",
+       "box": [
+        217.45344,
+        301.064,
+        274.54656,
+        437.0
+       ],
+       "px": 246.0,
+       "py": 437.0,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 13,
+       "side": "offense",
+       "box": [
+        355.59056,
+        367.036,
+        413.40944,
+        504.7
+       ],
+       "px": 384.5,
+       "py": 504.7,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 16,
+       "side": "offense",
+       "box": [
+        80.66432,
+        270.692,
+        124.93567999999999,
+        376.1
+       ],
+       "px": 102.8,
+       "py": 376.1,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        913.50496,
+        346.276,
+        967.6950400000001,
+        475.3
+       ],
+       "px": 940.6,
+       "py": 475.3,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_462_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/137_9b8fd7b6_t008.jpg",
+     "t": 8,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 22,
+       "side": "defense",
+       "box": [
+        447.30752,
+        299.812,
+        480.69248,
+        379.3
+       ],
+       "px": 464.0,
+       "py": 379.3,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 17,
+       "side": "defense",
+       "box": [
+        438.44032000000004,
+        314.492,
+        488.75968,
+        434.3
+       ],
+       "px": 463.6,
+       "py": 434.3,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 19,
+       "side": "defense",
+       "box": [
+        490.83808,
+        222.248,
+        521.56192,
+        295.4
+       ],
+       "px": 506.2,
+       "py": 295.4,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 10,
+       "side": "offense",
+       "box": [
+        974.9582399999999,
+        317.744,
+        1030.84176,
+        450.8
+       ],
+       "px": 1002.9,
+       "py": 450.8,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 14,
+       "side": "offense",
+       "box": [
+        566.26784,
+        333.30400000000003,
+        619.73216,
+        460.6
+       ],
+       "px": 593.0,
+       "py": 460.6,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 20,
+       "side": "offense",
+       "box": [
+        270.62064,
+        274.98400000000004,
+        310.77936,
+        370.6
+       ],
+       "px": 290.7,
+       "py": 370.6,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Transition",
+     "conf": 0.71,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Cal Krohn",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "C. Reece Breitenbach",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Bowman",
+     "Kanyon Bryte"
+    ],
+    "defense": [
+     "Darius Chestnut",
+     "JR Lukenbill",
+     "Jake Quast",
+     "Kelton McEwen",
+     "Tyshawn Teague-Johnson"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|466|4 Deuce Walters > No Play Type > To Basket > Miss 2 Pts",
+   "clip_number": 466,
+   "clock": "H2 13:30",
+   "synergy": "4 Deuce Walters > No Play Type > To Basket > Miss 2 Pts",
+   "coach_title": "Deuce Walters",
+   "auto_title": ": m2m (over)",
+   "film": "Off-ball screen: Cooper Nailor screened for Kanyon Bryte; defended by Jake Quast (on the player screened) and JR Lukenbill (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 12%)",
+   "validation": false,
+   "clip": "clip_466.mp4",
+   "clip_kind": "video",
+   "poster": "clip_466_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 141,
+   "video_at": "95:34",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_466_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/141_d2e225a0_t000.jpg",
+     "t": 0,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        676.68304,
+        195.024,
+        701.11696,
+        253.2
+       ],
+       "px": 688.9,
+       "py": 253.2,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 8,
+       "side": "defense",
+       "box": [
+        905.6524800000001,
+        220.08800000000002,
+        932.74752,
+        284.6
+       ],
+       "px": 919.2,
+       "py": 284.6,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        479.17088,
+        241.328,
+        526.82912,
+        354.8
+       ],
+       "px": 503.0,
+       "py": 354.8,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        647.30016,
+        253.69600000000003,
+        702.69984,
+        385.6
+       ],
+       "px": 675.0,
+       "py": 385.6,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        880.1992,
+        221.42,
+        905.6007999999999,
+        281.9
+       ],
+       "px": 892.9,
+       "py": 281.9,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        543.91408,
+        267.648,
+        580.6859199999999,
+        355.2
+       ],
+       "px": 562.3,
+       "py": 355.2,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        573.44032,
+        254.692,
+        623.75968,
+        374.5
+       ],
+       "px": 598.6,
+       "py": 374.5,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 10,
+       "side": "offense",
+       "box": [
+        953.75248,
+        226.288,
+        980.8475199999999,
+        290.8
+       ],
+       "px": 967.3,
+       "py": 290.8,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_466_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/141_d2e225a0_t009.jpg",
+     "t": 9,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 15,
+       "side": "defense",
+       "box": [
+        426.7888,
+        236.28,
+        480.0112,
+        363.0
+       ],
+       "px": 453.4,
+       "py": 363.0,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        691.9992000000001,
+        182.92000000000002,
+        717.4008,
+        243.4
+       ],
+       "px": 704.7,
+       "py": 243.4,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 8,
+       "side": "defense",
+       "box": [
+        916.81056,
+        210.236,
+        944.38944,
+        275.9
+       ],
+       "px": 930.6,
+       "py": 275.9,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        515.7224,
+        215.14,
+        560.4776,
+        321.7
+       ],
+       "px": 538.1,
+       "py": 321.7,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        519.0276799999999,
+        315.908,
+        577.57232,
+        455.3
+       ],
+       "px": 548.3,
+       "py": 455.3,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        893.02016,
+        211.69600000000003,
+        918.17984,
+        271.6
+       ],
+       "px": 905.6,
+       "py": 271.6,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        723.75952,
+        278.812,
+        769.24048,
+        387.1
+       ],
+       "px": 746.5,
+       "py": 387.1,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        461.45952,
+        252.512,
+        506.94048,
+        360.8
+       ],
+       "px": 484.2,
+       "py": 360.8,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 10,
+       "side": "offense",
+       "box": [
+        965.6524800000001,
+        217.488,
+        992.74752,
+        282.0
+       ],
+       "px": 979.2,
+       "py": 282.0,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "J",
+       "track": 12,
+       "side": "offense",
+       "box": [
+        729.1552,
+        350.52,
+        790.8448,
+        497.4
+       ],
+       "px": 760.0,
+       "py": 497.4,
+       "name": "Ryan Dolphin",
+       "how": "best guess",
+       "label": "#2 Dolphin?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.8,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Josh Bocher",
+     "conf": 0.37,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Bowman",
+     "Kanyon Bryte",
+     "Ryan Dolphin"
+    ],
+    "defense": [
+     "Darius Chestnut",
+     "JR Lukenbill",
+     "Jake Quast",
+     "Kelton McEwen",
+     "Tyshawn Teague-Johnson"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|470|4 Deuce Walters > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Medium/17' to <3p > Make 2 Pts",
+   "clip_number": 470,
+   "clock": "H2 11:50",
+   "synergy": "4 Deuce Walters > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Medium/17' to <3p > Make 2 Pts",
+   "coach_title": "Deuce Walters",
+   "auto_title": "(bs): m2m (5over)",
+   "film": "Off-ball screen: Cooper Nailor screened for Ryan Dolphin; defended by Jake Quast (on the player screened) and Tyshawn Teague-Johnson (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 12%)",
+   "validation": false,
+   "clip": "clip_470.mp4",
+   "clip_kind": "video",
+   "poster": "clip_470_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 145,
+   "video_at": "96:46",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_470_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/145_9f2c4993_t000.jpg",
+     "t": 0,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        394.884,
+        302.20000000000005,
+        449.31600000000003,
+        431.8
+       ],
+       "px": 422.1,
+       "py": 431.8,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 12,
+       "side": "defense",
+       "box": [
+        110.07344,
+        252.364,
+        136.92656,
+        316.3
+       ],
+       "px": 123.5,
+       "py": 316.3,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 3,
+       "side": "defense",
+       "box": [
+        59.36608,
+        310.648,
+        108.23392,
+        427.0
+       ],
+       "px": 83.8,
+       "py": 427.0,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        487.8032,
+        295.02000000000004,
+        537.3968,
+        413.1
+       ],
+       "px": 512.6,
+       "py": 413.1,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        340.63024,
+        287.744,
+        378.36976,
+        377.6
+       ],
+       "px": 359.5,
+       "py": 377.6,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 5,
+       "side": "offense",
+       "box": [
+        772.2032,
+        316.22,
+        821.7968,
+        434.3
+       ],
+       "px": 797.0,
+       "py": 434.3,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 2,
+       "side": "offense",
+       "box": [
+        551.77216,
+        251.69599999999997,
+        589.02784,
+        340.4
+       ],
+       "px": 570.4,
+       "py": 340.4,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        595.59056,
+        370.136,
+        653.40944,
+        507.8
+       ],
+       "px": 624.5,
+       "py": 507.8,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_470_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/145_9f2c4993_t128.jpg",
+     "t": 128,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 46,
+       "side": "defense",
+       "box": [
+        789.30928,
+        211.26799999999997,
+        827.29072,
+        301.7
+       ],
+       "px": 808.3,
+       "py": 301.7,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 59,
+       "side": "defense",
+       "box": [
+        586.5062399999999,
+        243.34400000000002,
+        630.29376,
+        347.6
+       ],
+       "px": 608.4,
+       "py": 347.6,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 30,
+       "side": "defense",
+       "box": [
+        896.2529599999999,
+        265.87600000000003,
+        938.34704,
+        366.1
+       ],
+       "px": 917.3,
+       "py": 366.1,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 21,
+       "side": "offense",
+       "box": [
+        498.94464,
+        154.48399999999998,
+        533.05536,
+        235.7
+       ],
+       "px": 516.0,
+       "py": 235.7,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 61,
+       "side": "offense",
+       "box": [
+        615.5564800000001,
+        260.38800000000003,
+        666.84352,
+        382.5
+       ],
+       "px": 641.2,
+       "py": 382.5,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 65,
+       "side": "offense",
+       "box": [
+        551.13024,
+        216.74400000000003,
+        588.86976,
+        306.6
+       ],
+       "px": 570.0,
+       "py": 306.6,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 56,
+       "side": "offense",
+       "box": [
+        454.65119999999996,
+        229.11999999999998,
+        492.1488,
+        318.4
+       ],
+       "px": 473.4,
+       "py": 318.4,
+       "name": "Ryan Dolphin",
+       "how": "best guess",
+       "label": "#2 Dolphin?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.77,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Carter Combs",
+     "conf": 0.6,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Bowman",
+     "Kanyon Bryte",
+     "Ryan Dolphin"
+    ],
+    "defense": [
+     "Darius Chestnut",
+     "JR Lukenbill",
+     "Jake Quast",
+     "Kelton McEwen",
+     "Tyshawn Teague-Johnson"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|476|12 Jake Quast > Spot-Up > Drives Left > Turnover",
+   "clip_number": 476,
+   "clock": "H2 11:10",
+   "synergy": "12 Jake Quast > Spot-Up > Drives Left > Turnover",
+   "coach_title": "Jake Quast",
+   "auto_title": ": m2m (over)",
+   "film": null,
+   "validation": false,
+   "clip": "clip_476.mp4",
+   "clip_kind": "video",
+   "poster": "clip_476_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 151,
+   "video_at": "98:32",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_476_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/151_63df022b_t004.jpg",
+     "t": 4,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        611.45952,
+        295.212,
+        656.9404800000001,
+        403.5
+       ],
+       "px": 634.2,
+       "py": 403.5,
+       "name": "Aleks Jajic",
+       "how": "best guess",
+       "label": "#1 Jajic?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        652.43072,
+        334.732,
+        705.16928,
+        460.3
+       ],
+       "px": 678.8,
+       "py": 460.3,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        352.01936,
+        334.51599999999996,
+        402.58064,
+        454.9
+       ],
+       "px": 377.3,
+       "py": 454.9,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        701.42544,
+        314.264,
+        740.37456,
+        407.0
+       ],
+       "px": 720.9,
+       "py": 407.0,
+       "name": "Jackson Newell",
+       "how": "best guess",
+       "label": "#35 Newell?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        471.76432,
+        324.99199999999996,
+        516.03568,
+        430.4
+       ],
+       "px": 493.9,
+       "py": 430.4,
+       "name": "Ryan Dolphin",
+       "how": "best guess",
+       "label": "#2 Dolphin?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 14,
+       "side": "offense",
+       "box": [
+        238.24384,
+        401.6039999999999,
+        297.75616,
+        543.3
+       ],
+       "px": 268.0,
+       "py": 543.3,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        36.4888,
+        353.48,
+        89.7112,
+        480.2
+       ],
+       "px": 63.1,
+       "py": 480.2,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 13,
+       "side": "offense",
+       "box": [
+        555.1176,
+        284.16,
+        601.0824,
+        393.6
+       ],
+       "px": 578.1,
+       "py": 393.6,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        121.12015999999998,
+        290.296,
+        146.27983999999998,
+        350.2
+       ],
+       "px": 133.7,
+       "py": 350.2,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.72,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": "Run & Jump",
+     "conf": 0.56,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Cal Krohn",
+     "conf": 0.49,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Darius Chestnut",
+     "JR Lukenbill",
+     "Jake Quast",
+     "Kelton McEwen",
+     "Tyshawn Teague-Johnson"
+    ],
+    "defense": [
+     "Aleks Jajic",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Newell",
+     "Ryan Dolphin"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|480|2 Ryan Dolphin > Transition > Trailer > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 480,
+   "clock": "H2 10:27",
+   "synergy": "2 Ryan Dolphin > Transition > Trailer > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "coach_title": "Ryan Dolphin",
+   "auto_title": ": m2m (over)",
+   "film": "Ball screen: Aleks Jajic screened for Jackson Newell; defended by Darius Chestnut (on the player screened) and Kelton McEwen (on the screener); coverage from the players' movement: up (hedge / show) (screen confidence 20%)",
+   "validation": false,
+   "clip": "clip_480.mp4",
+   "clip_kind": "video",
+   "poster": "clip_480_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 155,
+   "video_at": "99:37",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_480_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/155_53599365_t025.jpg",
+     "t": 25,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 3,
+       "side": "defense",
+       "box": [
+        390.55344,
+        228.764,
+        447.64656,
+        364.7
+       ],
+       "px": 419.1,
+       "py": 364.7,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 13,
+       "side": "defense",
+       "box": [
+        575.99536,
+        267.91599999999994,
+        632.6046399999999,
+        402.7
+       ],
+       "px": 604.3,
+       "py": 402.7,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 15,
+       "side": "defense",
+       "box": [
+        648.65728,
+        186.968,
+        674.54272,
+        248.6
+       ],
+       "px": 661.6,
+       "py": 248.6,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        297.82944,
+        243.464,
+        360.97056,
+        393.8
+       ],
+       "px": 329.4,
+       "py": 393.8,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 8,
+       "side": "defense",
+       "box": [
+        458.99616000000003,
+        157.796,
+        490.20384,
+        232.1
+       ],
+       "px": 474.6,
+       "py": 232.1,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 21,
+       "side": "offense",
+       "box": [
+        792.66832,
+        269.992,
+        861.13168,
+        433.0
+       ],
+       "px": 826.9,
+       "py": 433.0,
+       "name": "Aleks Jajic",
+       "how": "best guess",
+       "label": "#1 Jajic?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 22,
+       "side": "offense",
+       "box": [
+        778.54336,
+        255.31600000000003,
+        823.0566399999999,
+        361.3
+       ],
+       "px": 800.8,
+       "py": 361.3,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 18,
+       "side": "offense",
+       "box": [
+        376.53424,
+        303.344,
+        438.46576,
+        450.8
+       ],
+       "px": 407.5,
+       "py": 450.8,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 19,
+       "side": "offense",
+       "box": [
+        555.67088,
+        209.42799999999997,
+        603.32912,
+        322.9
+       ],
+       "px": 579.5,
+       "py": 322.9,
+       "name": "Jackson Newell",
+       "how": "best guess",
+       "label": "#35 Newell?",
+       "guess": true
+      },
+      {
+       "id": "J",
+       "track": 28,
+       "side": "offense",
+       "box": [
+        717.52192,
+        189.252,
+        747.2780799999999,
+        260.1
+       ],
+       "px": 732.4,
+       "py": 260.1,
+       "name": "Ryan Dolphin",
+       "how": "Synergy",
+       "label": "#2 Dolphin",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_480_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/155_53599365_t079.jpg",
+     "t": 79,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 51,
+       "side": "defense",
+       "box": [
+        376.59664,
+        336.584,
+        422.80336,
+        446.6
+       ],
+       "px": 399.7,
+       "py": 446.6,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 36,
+       "side": "defense",
+       "box": [
+        550.0368,
+        343.28,
+        591.1632000000001,
+        441.2
+       ],
+       "px": 570.6,
+       "py": 441.2,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 15,
+       "side": "defense",
+       "box": [
+        759.1355199999999,
+        351.312,
+        810.66448,
+        474.0
+       ],
+       "px": 784.9,
+       "py": 474.0,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 39,
+       "side": "defense",
+       "box": [
+        572.5115199999999,
+        344.812,
+        630.08848,
+        481.9
+       ],
+       "px": 601.3,
+       "py": 481.9,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 32,
+       "side": "defense",
+       "box": [
+        855.53328,
+        244.968,
+        887.46672,
+        321.0
+       ],
+       "px": 871.5,
+       "py": 321.0,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 35,
+       "side": "offense",
+       "box": [
+        505.80447999999996,
+        433.48799999999994,
+        544.9955199999999,
+        526.8
+       ],
+       "px": 525.4,
+       "py": 526.8,
+       "name": "Aleks Jajic",
+       "how": "best guess",
+       "label": "#1 Jajic?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 45,
+       "side": "offense",
+       "box": [
+        554.06608,
+        417.048,
+        602.93392,
+        533.4
+       ],
+       "px": 578.5,
+       "py": 533.4,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 52,
+       "side": "offense",
+       "box": [
+        890.4368,
+        278.08,
+        931.5632,
+        376.0
+       ],
+       "px": 911.0,
+       "py": 376.0,
+       "name": "Jackson Newell",
+       "how": "best guess",
+       "label": "#35 Newell?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 28,
+       "side": "offense",
+       "box": [
+        902.82416,
+        285.79600000000005,
+        952.17584,
+        403.3
+       ],
+       "px": 927.5,
+       "py": 403.3,
+       "name": "Ryan Dolphin",
+       "how": "Synergy",
+       "label": "#2 Dolphin",
+       "guess": false
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Transition",
+     "conf": 0.59,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Josh Bocher",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Aleks Jajic",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Newell",
+     "Ryan Dolphin"
+    ],
+    "defense": [
+     "Darius Chestnut",
+     "JR Lukenbill",
+     "Jake Quast",
+     "Kelton McEwen",
+     "Tyshawn Teague-Johnson"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|483|2 Ryan Dolphin > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover",
+   "clip_number": 483,
+   "clock": "H2 9:39",
+   "synergy": "2 Ryan Dolphin > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover",
+   "coach_title": "Ryan Dolphin",
+   "auto_title": "(bs): m2m (over)",
+   "film": "Off-ball screen: Deuce Walters screened for Jackson Newell; defended by Darius Chestnut (on the player screened) and Kelton McEwen (on the screener); coverage from the players' movement: unclear (screen confidence 7%)",
+   "validation": false,
+   "clip": "clip_483.mp4",
+   "clip_kind": "video",
+   "poster": "clip_483_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 158,
+   "video_at": "101:01",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_483_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/158_49787709_t006.jpg",
+     "t": 6,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        147.41232,
+        300.392,
+        179.58768,
+        377.0
+       ],
+       "px": 163.5,
+       "py": 377.0,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        37.27696,
+        303.176,
+        73.32303999999999,
+        389.0
+       ],
+       "px": 55.3,
+       "py": 389.0,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 2,
+       "side": "offense",
+       "box": [
+        601.0032,
+        375.82,
+        650.5967999999999,
+        493.9
+       ],
+       "px": 625.8,
+       "py": 493.9,
+       "name": "Aleks Jajic",
+       "how": "best guess",
+       "label": "#1 Jajic?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 8,
+       "side": "offense",
+       "box": [
+        443.20928,
+        299.568,
+        481.19072,
+        390.0
+       ],
+       "px": 462.2,
+       "py": 390.0,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        183.74159999999998,
+        272.76,
+        223.6584,
+        367.8
+       ],
+       "px": 203.7,
+       "py": 367.8,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        34.66080000000001,
+        343.58000000000004,
+        69.7392,
+        427.1
+       ],
+       "px": 52.2,
+       "py": 427.1,
+       "name": "Jackson Newell",
+       "how": "best guess",
+       "label": "#35 Newell?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 13,
+       "side": "offense",
+       "box": [
+        331.2984,
+        346.64000000000004,
+        382.10159999999996,
+        467.6
+       ],
+       "px": 356.7,
+       "py": 467.6,
+       "name": "Ryan Dolphin",
+       "how": "Synergy",
+       "label": "#2 Dolphin",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_483_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/158_49787709_t046.jpg",
+     "t": 46,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        770.304,
+        208.9,
+        794.496,
+        266.5
+       ],
+       "px": 782.4,
+       "py": 266.5,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 34,
+       "side": "defense",
+       "box": [
+        427.7128,
+        234.68,
+        474.8872,
+        347.0
+       ],
+       "px": 451.3,
+       "py": 347.0,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 17,
+       "side": "defense",
+       "box": [
+        529.1236799999999,
+        212.108,
+        563.47632,
+        293.9
+       ],
+       "px": 546.3,
+       "py": 293.9,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 28,
+       "side": "defense",
+       "box": [
+        747.55728,
+        201.46800000000002,
+        773.44272,
+        263.1
+       ],
+       "px": 760.5,
+       "py": 263.1,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 24,
+       "side": "defense",
+       "box": [
+        535.51936,
+        298.416,
+        586.0806399999999,
+        418.8
+       ],
+       "px": 560.8,
+       "py": 418.8,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 36,
+       "side": "offense",
+       "box": [
+        289.12288,
+        258.528,
+        348.87712,
+        400.8
+       ],
+       "px": 319.0,
+       "py": 400.8,
+       "name": "Aleks Jajic",
+       "how": "best guess",
+       "label": "#1 Jajic?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 8,
+       "side": "offense",
+       "box": [
+        912.71984,
+        399.504,
+        978.28016,
+        555.6
+       ],
+       "px": 945.5,
+       "py": 555.6,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 33,
+       "side": "offense",
+       "box": [
+        895.2416000000001,
+        221.06,
+        935.1584,
+        316.1
+       ],
+       "px": 915.2,
+       "py": 316.1,
+       "name": "Jackson Newell",
+       "how": "best guess",
+       "label": "#35 Newell?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.96,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Cal Krohn",
+     "conf": 0.41,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Aleks Jajic",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Newell",
+     "Ryan Dolphin"
+    ],
+    "defense": [
+     "Darius Chestnut",
+     "JR Lukenbill",
+     "Jake Quast",
+     "Kelton McEwen",
+     "Tyshawn Teague-Johnson"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul",
+   "clip_number": 505,
+   "clock": "(no clock)",
+   "synergy": "5 Cooper Nailor > Non Possession > Non Shooting Foul",
+   "coach_title": "Cooper Nailor",
+   "auto_title": ": m2m (over)",
+   "film": null,
+   "validation": false,
+   "clip": "clip_505.mp4",
+   "clip_kind": "video",
+   "poster": "clip_505_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 180,
+   "video_at": "108:43",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_505_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/180_28dc36fd_t003.jpg",
+     "t": 3,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        633.80848,
+        359.188,
+        697.19152,
+        510.1
+       ],
+       "px": 665.5,
+       "py": 510.1,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        783.108,
+        304.3,
+        831.492,
+        419.5
+       ],
+       "px": 807.3,
+       "py": 419.5,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 16,
+       "side": "defense",
+       "box": [
+        521.9966400000001,
+        380.18399999999997,
+        568.20336,
+        490.2
+       ],
+       "px": 545.1,
+       "py": 490.2,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 21,
+       "side": "defense",
+       "box": [
+        243.34688,
+        286.52799999999996,
+        297.05312,
+        414.4
+       ],
+       "px": 270.2,
+       "py": 414.4,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 5,
+       "side": "offense",
+       "box": [
+        503.51584,
+        249.20399999999998,
+        544.8841600000001,
+        347.7
+       ],
+       "px": 524.2,
+       "py": 347.7,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 22,
+       "side": "offense",
+       "box": [
+        823.45776,
+        281.75600000000003,
+        864.34224,
+        379.1
+       ],
+       "px": 843.9,
+       "py": 379.1,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 6,
+       "side": "offense",
+       "box": [
+        547.4433600000001,
+        303.016,
+        591.95664,
+        409.0
+       ],
+       "px": 569.7,
+       "py": 409.0,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 23,
+       "side": "offense",
+       "box": [
+        356.12239999999997,
+        303.14,
+        400.87760000000003,
+        409.7
+       ],
+       "px": 378.5,
+       "py": 409.7,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 19,
+       "side": "offense",
+       "box": [
+        475.99616000000003,
+        274.29600000000005,
+        507.20384,
+        348.6
+       ],
+       "px": 491.6,
+       "py": 348.6,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.95,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Carter Combs",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "C. Reece Breitenbach",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Bowman",
+     "Kanyon Bryte"
+    ],
+    "defense": [
+     "Darius Chestnut",
+     "JR Lukenbill",
+     "Jake Quast",
+     "Kelton McEwen",
+     "Tyshawn Teague-Johnson"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|506|4 Deuce Walters > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts",
+   "clip_number": 506,
+   "clock": "H2 5:08",
+   "synergy": "4 Deuce Walters > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts",
+   "coach_title": "Deuce Walters",
+   "auto_title": "(bs,reject): m2m (over)",
+   "film": "Off-ball screen: Jackson Bowman screened for C. Reece Breitenbach; defended by JR Lukenbill (on the player screened) and Darius Chestnut (on the screener); coverage from the players' movement: unclear (screen confidence 14%)",
+   "validation": false,
+   "clip": "clip_506.mp4",
+   "clip_kind": "video",
+   "poster": "clip_506_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 181,
+   "video_at": "110:38",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_506_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/181_29c5c125_t000.jpg",
+     "t": 0,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 3,
+       "side": "defense",
+       "box": [
+        468.85040000000004,
+        239.64,
+        531.7496,
+        389.4
+       ],
+       "px": 500.3,
+       "py": 389.4,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 7,
+       "side": "defense",
+       "box": [
+        247.39407999999997,
+        241.048,
+        314.40592,
+        400.6
+       ],
+       "px": 280.9,
+       "py": 400.6,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 14,
+       "side": "defense",
+       "box": [
+        334.84288000000004,
+        168.928,
+        364.35712,
+        239.2
+       ],
+       "px": 349.6,
+       "py": 239.2,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 9,
+       "side": "defense",
+       "box": [
+        120.0608,
+        143.07999999999998,
+        155.1392,
+        226.6
+       ],
+       "px": 137.6,
+       "py": 226.6,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        162.25696,
+        226.87599999999998,
+        228.54304000000002,
+        384.7
+       ],
+       "px": 195.4,
+       "py": 384.7,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        321.49104,
+        238.22400000000002,
+        394.30895999999996,
+        411.6
+       ],
+       "px": 357.9,
+       "py": 411.6,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        672.17744,
+        156.964,
+        723.22256,
+        278.5
+       ],
+       "px": 697.7,
+       "py": 278.5,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 2,
+       "side": "offense",
+       "box": [
+        617.6036799999999,
+        254.508,
+        682.19632,
+        408.3
+       ],
+       "px": 649.9,
+       "py": 408.3,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 6,
+       "side": "offense",
+       "box": [
+        25.490560000000002,
+        201.63600000000002,
+        83.30944,
+        339.3
+       ],
+       "px": 54.4,
+       "py": 339.3,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_506_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/181_29c5c125_t069.jpg",
+     "t": 69,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 40,
+       "side": "defense",
+       "box": [
+        458.41024,
+        186.34399999999997,
+        526.38976,
+        348.2
+       ],
+       "px": 492.4,
+       "py": 348.2,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 26,
+       "side": "defense",
+       "box": [
+        302.56528,
+        228.368,
+        376.83472,
+        405.2
+       ],
+       "px": 339.7,
+       "py": 405.2,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 22,
+       "side": "defense",
+       "box": [
+        667.28,
+        65.1,
+        697.52,
+        137.1
+       ],
+       "px": 682.4,
+       "py": 137.1,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 35,
+       "side": "defense",
+       "box": [
+        525.3168000000001,
+        158.48,
+        596.6831999999999,
+        328.4
+       ],
+       "px": 561.0,
+       "py": 328.4,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 37,
+       "side": "defense",
+       "box": [
+        847.83328,
+        84.06799999999998,
+        879.76672,
+        160.1
+       ],
+       "px": 863.8,
+       "py": 160.1,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 30,
+       "side": "offense",
+       "box": [
+        603.9744,
+        110.74000000000001,
+        660.8256,
+        246.1
+       ],
+       "px": 632.4,
+       "py": 246.1,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 36,
+       "side": "offense",
+       "box": [
+        124.28016,
+        281.996,
+        209.91984,
+        485.9
+       ],
+       "px": 167.1,
+       "py": 485.9,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 19,
+       "side": "offense",
+       "box": [
+        770.7704,
+        69.74,
+        803.4296,
+        147.5
+       ],
+       "px": 787.1,
+       "py": 147.5,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 29,
+       "side": "offense",
+       "box": [
+        413.5408,
+        200.37999999999997,
+        478.8592,
+        355.9
+       ],
+       "px": 446.2,
+       "py": 355.9,
+       "name": "Kanyon Bryte",
+       "how": "best guess",
+       "label": "#34 Bryte?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.87,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Cal Krohn",
+     "conf": 0.41,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "C. Reece Breitenbach",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Bowman",
+     "Kanyon Bryte"
+    ],
+    "defense": [
+     "Darius Chestnut",
+     "JR Lukenbill",
+     "Jake Quast",
+     "Kelton McEwen",
+     "Tyshawn Teague-Johnson"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul",
+   "clip_number": 512,
+   "clock": "(no clock)",
+   "synergy": "34 Kanyon Bryte > Non Possession > Non Shooting Foul",
+   "coach_title": "Kanyon Bryte",
+   "auto_title": ": m2m (over)",
+   "film": "Off-ball screen: Jackson Bowman screened for Deuce Walters; defended by Tyshawn Teague-Johnson (on the player screened) and Kelton McEwen (on the screener); coverage from the players' movement: unclear (screen confidence 10%)",
+   "validation": false,
+   "clip": "clip_512.mp4",
+   "clip_kind": "video",
+   "poster": "clip_512_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 187,
+   "video_at": "111:56",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_512_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/187_4300ded3_t007.jpg",
+     "t": 7,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 20,
+       "side": "defense",
+       "box": [
+        928.00576,
+        247.25600000000003,
+        956.79424,
+        315.8
+       ],
+       "px": 942.4,
+       "py": 315.8,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        328.03424,
+        362.94399999999996,
+        389.96576,
+        510.4
+       ],
+       "px": 359.0,
+       "py": 510.4,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 17,
+       "side": "defense",
+       "box": [
+        391.66608,
+        280.648,
+        440.53392,
+        397.0
+       ],
+       "px": 416.1,
+       "py": 397.0,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        730.30624,
+        284.144,
+        774.0937600000001,
+        388.4
+       ],
+       "px": 752.2,
+       "py": 388.4,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        500.67215999999996,
+        221.796,
+        537.92784,
+        310.5
+       ],
+       "px": 519.3,
+       "py": 310.5,
+       "name": "Cooper Nailor",
+       "how": "best guess",
+       "label": "#5 Nailor?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        564.1128,
+        314.38,
+        611.2872000000001,
+        426.7
+       ],
+       "px": 587.7,
+       "py": 426.7,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 6,
+       "side": "offense",
+       "box": [
+        709.89232,
+        344.592,
+        772.30768,
+        493.2
+       ],
+       "px": 741.1,
+       "py": 493.2,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_512_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/187_4300ded3_t084.jpg",
+     "t": 84,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 52,
+       "side": "defense",
+       "box": [
+        574.0403200000001,
+        256.392,
+        624.35968,
+        376.2
+       ],
+       "px": 599.2,
+       "py": 376.2,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 48,
+       "side": "defense",
+       "box": [
+        328.20624000000004,
+        229.944,
+        371.99376,
+        334.2
+       ],
+       "px": 350.1,
+       "py": 334.2,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 54,
+       "side": "defense",
+       "box": [
+        657.88832,
+        205.49200000000002,
+        696.11168,
+        296.5
+       ],
+       "px": 677.0,
+       "py": 296.5,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 49,
+       "side": "defense",
+       "box": [
+        366.25072,
+        166.03199999999998,
+        388.74928,
+        219.6
+       ],
+       "px": 377.5,
+       "py": 219.6,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 46,
+       "side": "defense",
+       "box": [
+        624.0992,
+        185.22,
+        649.5007999999999,
+        245.7
+       ],
+       "px": 636.8,
+       "py": 245.7,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 53,
+       "side": "offense",
+       "box": [
+        262.76432,
+        231.99199999999996,
+        307.03567999999996,
+        337.4
+       ],
+       "px": 284.9,
+       "py": 337.4,
+       "name": "C. Reece Breitenbach",
+       "how": "best guess",
+       "label": "#12 Breitenbach?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 42,
+       "side": "offense",
+       "box": [
+        640.49056,
+        257.43600000000004,
+        698.30944,
+        395.1
+       ],
+       "px": 669.4,
+       "py": 395.1,
+       "name": "Deuce Walters",
+       "how": "best guess",
+       "label": "#4 Walters?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 41,
+       "side": "offense",
+       "box": [
+        243.22944,
+        347.364,
+        306.37056,
+        497.7
+       ],
+       "px": 274.8,
+       "py": 497.7,
+       "name": "Jackson Bowman",
+       "how": "best guess",
+       "label": "#22 Bowman?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 44,
+       "side": "offense",
+       "box": [
+        728.33504,
+        201.42399999999998,
+        764.86496,
+        288.4
+       ],
+       "px": 746.6,
+       "py": 288.4,
+       "name": "Kanyon Bryte",
+       "how": "Synergy",
+       "label": "#34 Bryte",
+       "guess": false
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.88,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Carter Combs",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "C. Reece Breitenbach",
+     "Cooper Nailor",
+     "Deuce Walters",
+     "Jackson Bowman",
+     "Kanyon Bryte"
+    ],
+    "defense": [
+     "Darius Chestnut",
+     "JR Lukenbill",
+     "Jake Quast",
+     "Kelton McEwen",
+     "Tyshawn Teague-Johnson"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|530|25 Austin Beeson > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 530,
+   "clock": "H2 0:45",
+   "synergy": "25 Austin Beeson > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "coach_title": "Austin Beeson",
+   "auto_title": ": m2m (over)",
+   "film": "Off-ball screen: Zach Strauss screened for Austin Beeson; defended by Isaiah Robinson (on the player screened) and Trent Grunewald (on the screener); coverage from the players' movement: unclear (screen confidence 5%)",
+   "validation": false,
+   "clip": "clip_530.mp4",
+   "clip_kind": "video",
+   "poster": "clip_530_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 205,
+   "video_at": "120:36",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_530_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/205_2872a414_t006.jpg",
+     "t": 6,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        475.60624,
+        330.44399999999996,
+        519.39376,
+        434.7
+       ],
+       "px": 497.5,
+       "py": 434.7,
+       "name": "Agape Keyes Jr.",
+       "how": "best guess",
+       "label": "#1 Jr.?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 20,
+       "side": "defense",
+       "box": [
+        20.996160000000003,
+        274.39599999999996,
+        52.20384,
+        348.7
+       ],
+       "px": 36.6,
+       "py": 348.7,
+       "name": "Isaiah Robinson",
+       "how": "best guess",
+       "label": "#5 Robinson?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        639.9176,
+        278.36,
+        685.8824,
+        387.8
+       ],
+       "px": 662.9,
+       "py": 387.8,
+       "name": "Matthew McKay",
+       "how": "best guess",
+       "label": "#30 McKay?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 8,
+       "side": "defense",
+       "box": [
+        115.31584,
+        248.304,
+        156.68416,
+        346.8
+       ],
+       "px": 136.0,
+       "py": 346.8,
+       "name": "Mikey Wildes",
+       "how": "best guess",
+       "label": "#14 Wildes?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        340.07344,
+        241.76399999999998,
+        366.92656,
+        305.7
+       ],
+       "px": 353.5,
+       "py": 305.7,
+       "name": "Trent Grunewald",
+       "how": "best guess",
+       "label": "#33 Grunewald?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        662.15648,
+        304.98800000000006,
+        713.4435199999999,
+        427.1
+       ],
+       "px": 687.8,
+       "py": 427.1,
+       "name": "Austin Beeson",
+       "how": "best guess",
+       "label": "#25 Beeson?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        588.63728,
+        349.468,
+        644.7627200000001,
+        483.1
+       ],
+       "px": 616.7,
+       "py": 483.1,
+       "name": "Jackson Newell",
+       "how": "best guess",
+       "label": "#35 Newell?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 13,
+       "side": "offense",
+       "box": [
+        293.68576,
+        321.956,
+        352.71423999999996,
+        462.5
+       ],
+       "px": 323.2,
+       "py": 462.5,
+       "name": "Jay Akin",
+       "how": "best guess",
+       "label": "#23 Akin?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_530_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/205_2872a414_t098.jpg",
+     "t": 98,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 53,
+       "side": "defense",
+       "box": [
+        542.1315199999999,
+        235.012,
+        569.46848,
+        300.1
+       ],
+       "px": 555.8,
+       "py": 300.1,
+       "name": "Agape Keyes Jr.",
+       "how": "best guess",
+       "label": "#1 Jr.?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 38,
+       "side": "defense",
+       "box": [
+        251.07568,
+        335.408,
+        297.52432,
+        446.0
+       ],
+       "px": 274.3,
+       "py": 446.0,
+       "name": "Isaiah Robinson",
+       "how": "best guess",
+       "label": "#5 Robinson?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        391.74288,
+        216.128,
+        421.25712,
+        286.4
+       ],
+       "px": 406.5,
+       "py": 286.4,
+       "name": "Matthew McKay",
+       "how": "best guess",
+       "label": "#30 McKay?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 62,
+       "side": "defense",
+       "box": [
+        523.02192,
+        228.252,
+        552.7780799999999,
+        299.1
+       ],
+       "px": 537.9,
+       "py": 299.1,
+       "name": "Trent Grunewald",
+       "how": "best guess",
+       "label": "#33 Grunewald?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 26,
+       "side": "offense",
+       "box": [
+        360.03983999999997,
+        270.204,
+        395.36016,
+        354.3
+       ],
+       "px": 377.7,
+       "py": 354.3,
+       "name": "Aleks Jajic",
+       "how": "best guess",
+       "label": "#1 Jajic?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 43,
+       "side": "offense",
+       "box": [
+        626.61328,
+        397.568,
+        688.7867200000001,
+        545.6
+       ],
+       "px": 657.7,
+       "py": 545.6,
+       "name": "Austin Beeson",
+       "how": "best guess",
+       "label": "#25 Beeson?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 24,
+       "side": "offense",
+       "box": [
+        318.51632,
+        416.692,
+        374.88367999999997,
+        550.9
+       ],
+       "px": 346.7,
+       "py": 550.9,
+       "name": "Jay Akin",
+       "how": "best guess",
+       "label": "#23 Akin?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "BLOB",
+     "conf": 0.58,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Carter Combs",
+     "conf": 0.34,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Aleks Jajic",
+     "Austin Beeson",
+     "Jackson Newell",
+     "Jay Akin",
+     "Zach Strauss"
+    ],
+    "defense": [
+     "Agape Keyes Jr.",
+     "Isaiah Robinson",
+     "Matthew McKay",
+     "Mikey Wildes",
+     "Trent Grunewald"
+    ]
+   }
+  },
+  {
+   "clip_key": "2025-12-30|536|23 Jay Akin > Non Possession > No Violation",
+   "clip_number": 536,
+   "clock": "(no clock)",
+   "synergy": "23 Jay Akin > Non Possession > No Violation",
+   "coach_title": "Jay Akin",
+   "auto_title": ": m2m (over)",
+   "film": "Off-ball screen: Austin Beeson screened for Zach Strauss; defended by Agape Keyes Jr. (on the player screened) and Isaiah Robinson (on the screener); coverage from the players' movement: unclear (screen confidence 6%)",
+   "validation": false,
+   "clip": "clip_536.mp4",
+   "clip_kind": "video",
+   "poster": "clip_536_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d6d0b0553130e1b8877883%2ffullgamevideo%2fclips",
+   "synergy_pos": 211,
+   "video_at": "122:25",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_536_a_start.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/211_9d2df545_t000.jpg",
+     "t": 0,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        537.708,
+        147.10000000000002,
+        586.092,
+        262.3
+       ],
+       "px": 561.9,
+       "py": 262.3,
+       "name": "Agape Keyes Jr.",
+       "how": "best guess",
+       "label": "#1 Jr.?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 17,
+       "side": "defense",
+       "box": [
+        88.4464,
+        151.94,
+        127.1536,
+        244.1
+       ],
+       "px": 107.8,
+       "py": 244.1,
+       "name": "Matthew McKay",
+       "how": "best guess",
+       "label": "#30 McKay?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 13,
+       "side": "defense",
+       "box": [
+        5.739840000000001,
+        188.50400000000002,
+        41.060159999999996,
+        272.6
+       ],
+       "px": 23.4,
+       "py": 272.6,
+       "name": "Mikey Wildes",
+       "how": "best guess",
+       "label": "#14 Wildes?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 18,
+       "side": "defense",
+       "box": [
+        71.75904,
+        187.124,
+        102.24096,
+        259.7
+       ],
+       "px": 87.0,
+       "py": 259.7,
+       "name": "Trent Grunewald",
+       "how": "best guess",
+       "label": "#33 Grunewald?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        421.50672,
+        211.932,
+        480.29328,
+        351.9
+       ],
+       "px": 450.9,
+       "py": 351.9,
+       "name": "Aleks Jajic",
+       "how": "best guess",
+       "label": "#1 Jajic?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        490.54735999999997,
+        303.616,
+        559.2526399999999,
+        467.2
+       ],
+       "px": 524.9,
+       "py": 467.2,
+       "name": "Austin Beeson",
+       "how": "best guess",
+       "label": "#25 Beeson?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 15,
+       "side": "offense",
+       "box": [
+        489.73199999999997,
+        250.5,
+        532.068,
+        351.3
+       ],
+       "px": 510.9,
+       "py": 351.3,
+       "name": "Jackson Newell",
+       "how": "best guess",
+       "label": "#35 Newell?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        159.56304,
+        190.32399999999998,
+        214.23696,
+        320.5
+       ],
+       "px": 186.9,
+       "py": 320.5,
+       "name": "Jay Akin",
+       "how": "best guess",
+       "label": "#23 Akin?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        621.2097600000001,
+        187.55599999999998,
+        674.19024,
+        313.7
+       ],
+       "px": 647.7,
+       "py": 313.7,
+       "name": "Zach Strauss",
+       "how": "best guess",
+       "label": "#30 Strauss?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_536_b_end.jpg",
+     "frame_file": "Dec_29_2025_UWWhitewater@CoeCollege/track1024v2/211_9d2df545_t015.jpg",
+     "t": 15,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 20,
+       "side": "defense",
+       "box": [
+        647.27216,
+        243.99599999999998,
+        684.52784,
+        332.7
+       ],
+       "px": 665.9,
+       "py": 332.7,
+       "name": "Isaiah Robinson",
+       "how": "best guess",
+       "label": "#5 Robinson?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 13,
+       "side": "defense",
+       "box": [
+        338.39664,
+        267.88399999999996,
+        384.60336,
+        377.9
+       ],
+       "px": 361.5,
+       "py": 377.9,
+       "name": "Mikey Wildes",
+       "how": "best guess",
+       "label": "#14 Wildes?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 18,
+       "side": "defense",
+       "box": [
+        320.8704,
+        204.54000000000002,
+        353.52959999999996,
+        282.3
+       ],
+       "px": 337.2,
+       "py": 282.3,
+       "name": "Trent Grunewald",
+       "how": "best guess",
+       "label": "#33 Grunewald?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        708.72368,
+        228.608,
+        743.07632,
+        310.4
+       ],
+       "px": 725.9,
+       "py": 310.4,
+       "name": "Aleks Jajic",
+       "how": "best guess",
+       "label": "#1 Jajic?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        889.51584,
+        275.804,
+        930.8841600000001,
+        374.3
+       ],
+       "px": 910.2,
+       "py": 374.3,
+       "name": "Austin Beeson",
+       "how": "best guess",
+       "label": "#25 Beeson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 15,
+       "side": "offense",
+       "box": [
+        399.50976,
+        281.656,
+        452.49024,
+        407.8
+       ],
+       "px": 426.0,
+       "py": 407.8,
+       "name": "Jackson Newell",
+       "how": "best guess",
+       "label": "#35 Newell?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        532.88176,
+        204.85600000000002,
+        567.7182399999999,
+        287.8
+       ],
+       "px": 550.3,
+       "py": 287.8,
+       "name": "Jay Akin",
+       "how": "best guess",
+       "label": "#23 Akin?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        786.5966400000001,
+        260.88399999999996,
+        832.80336,
+        370.9
+       ],
+       "px": 809.7,
+       "py": 370.9,
+       "name": "Zach Strauss",
+       "how": "best guess",
+       "label": "#30 Strauss?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.86,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "Cal Krohn",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Aleks Jajic",
+     "Austin Beeson",
+     "Jackson Newell",
+     "Jay Akin",
+     "Zach Strauss"
+    ],
+    "defense": [
+     "Agape Keyes Jr.",
+     "Isaiah Robinson",
+     "Matthew McKay",
+     "Mikey Wildes",
+     "Trent Grunewald"
+    ]
+   }
+  }
+ ],
+ "vocab": {
+  "situation": [
+   "ATO",
+   "BLOB",
+   "Half court",
+   "Offensive rebound",
+   "SLOB",
+   "Transition"
+  ],
+  "formation": [
+   "21",
+   "3-2",
+   "33",
+   "4-1",
+   "41S",
+   "5 Out",
+   "Box",
+   "Chin",
+   "Horns",
+   "Iform",
+   "Knicks",
+   "Line",
+   "Motion",
+   "Set",
+   "Spread",
+   "Twins"
+  ],
+  "play_call": [
+   "3Man",
+   "77Double",
+   "Ball Screen",
+   "Bulldog",
+   "Cheetah",
+   "Chin",
+   "DHO",
+   "Double Ball Screen",
+   "Dribble Drive",
+   "Flare",
+   "Flash",
+   "Gc",
+   "High Ball Screen",
+   "Jungle",
+   "Knicks",
+   "Low",
+   "Lwing",
+   "M2M",
+   "Motion",
+   "Over",
+   "Panther",
+   "Peja",
+   "Pistol",
+   "Set",
+   "Set ,Bs)",
+   "Spain",
+   "Spread",
+   "Stagger",
+   "Swing (pass across)"
+  ],
+  "primary_action": [
+   "Ball Screen",
+   "Corner Cut",
+   "Cross Screen",
+   "Curl",
+   "DHO",
+   "Double Clear",
+   "Double Cut",
+   "Down Screen",
+   "Dribble Drive",
+   "Flare",
+   "Flash",
+   "Follow",
+   "Ghost",
+   "Give",
+   "High Ball Screen",
+   "ISO",
+   "IVO",
+   "Iso",
+   "Offensive Rebound",
+   "Pass to Corner",
+   "Pat Miller",
+   "Reject",
+   "Ricky (rescreen)",
+   "Scissors",
+   "Screen the Screener",
+   "Spain",
+   "Stagger",
+   "Swing (pass across)",
+   "UCLA",
+   "Up Screen",
+   "Zoom"
+  ],
+  "defense": [
+   "Man-to-Man"
+  ],
+  "press": [
+   "1-2-2 Press",
+   "Full-court M2M Press",
+   "None",
+   "Press",
+   "Run & Jump",
+   "Token Press"
+  ],
+  "ball_screen_coverage": [
+   "Drop",
+   "Hedge",
+   "Over",
+   "Stay",
+   "Stay, then Switch 2nd",
+   "Switch",
+   "Top Lock",
+   "Under",
+   "stay12",
+   "under1"
+  ],
+  "offball_coverage": [
+   "2",
+   "Drop",
+   "Over",
+   "Stay",
+   "Switch",
+   "Top Lock",
+   "Under",
+   "over23",
+   "over3drop23",
+   "stay12",
+   "stay2",
+   "stay3",
+   "stay5",
+   "there motion jacob",
+   "under4"
+  ],
+  "screener": [
+   "Andre Renta",
+   "Cooper Nailor",
+   "Joey LaChapell",
+   "Luke Bara",
+   "Matt Imig",
+   "Roan Demovsky",
+   "Seth Miron",
+   "Will Boser"
+  ],
+  "screen_defender": [
+   "Andre Renta",
+   "Cal Krohn",
+   "Carter Combs",
+   "Carter Lichtsinn",
+   "DREW DAOUST",
+   "GRANT MANZ",
+   "Isaiah Moore",
+   "Josh Bocher",
+   "Josiah Butler",
+   "Kenji Scales",
+   "Logan Baumgartner",
+   "Max Raimer",
+   "Roan Demovsky",
+   "Seth Miron",
+   "Will Boser",
+   "Xavier Lewis"
+  ]
+ },
+ "built": "2026-10-01T20:31:24"
+}
