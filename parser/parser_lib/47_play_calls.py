@@ -1540,6 +1540,25 @@ def _review_doc(path):
     return None
 
 
+def _review_parts(doc):
+    """Which parts of a review a saved file holds: "titles" (Title answers), "players" (player checks). CONFIRMED CHANGE
+    (requested: the player checks done separately from the Title checks). The app saves each part as its own file with
+    "part"; files from the local review page (and older app saves) hold both."""
+    if not isinstance(doc, dict):
+        return set()
+    if doc.get("part") in ("titles", "players"):
+        return {doc["part"]}
+    return ({"titles"} if isinstance(doc.get("answers"), list) else set()) | ({"players"} if isinstance(doc.get("checks"), list) else set())
+
+
+def _run_complete(run_dir):
+    """A review run is done only when BOTH parts are saved (in one file or two)."""
+    parts = set()
+    for f in glob.glob(os.path.join(run_dir, "*.json")):
+        parts |= _review_parts(_review_doc(f))
+    return {"titles", "players"} <= parts
+
+
 def _review_files(folder):
     """Every review .json anywhere under a folder (recognized by its contents)."""
     return sorted({os.path.abspath(f) for f in glob.glob(os.path.join(folder, "**", "*.json"), recursive=True)
