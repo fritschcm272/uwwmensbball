@@ -5676,6 +5676,49 @@ def _pr_save_bar(d, store, kp, key_suffix):
 
 
 
+def render_video_tracking():
+    """Analytics > Video Tracking: all the player tracking in one place. CONFIRMED CHANGE (requested: a fourth Analytics
+    tab, "Video Tracking", with all the player tracking instead of the Previous Games play-by-play). Pick one tracked
+    game (that game's Film Tracking: their defense / offense, self-scout, court view, possession replay, search by
+    player, tracking quality) or all tracked games (the combined view of one team across them)."""
+    global _FT_GAME
+    section_header("\U0001f3a5 VIDEO TRACKING", "Everything the parser tracked on the film: player positions, screens and "
+                   "coverages, matchups, the court view, possession replays and tracking quality.")
+    cl = load_table("uww_trk_clips")
+    if cl.empty:
+        st.info("No tracked film yet. In the parser: Frame capture for a game (VISION_ONLY_GAME), then Player tracking.")
+        return
+    cl = cl.assign(_iso=iso_dates(cl["game_date"]).astype(str),
+                   _code=cl["game_code"].astype(str) if "game_code" in cl.columns else "")
+    games = (cl.groupby(["_iso", "_code"]).size().reset_index(name="n").sort_values("_iso", ascending=False))
+    team_names = lambda d: sorted(set(d["offense_team"].dropna().astype(str)) | set(d["defense_team"].dropna().astype(str)))
+    label_of = {}
+    for _, g in games.iterrows():
+        d = cl[(cl["_iso"] == g["_iso"]) & (cl["_code"] == g["_code"])]
+        label_of[f"{g['_iso']} \u00b7 {' vs '.join(team_names(d))} ({int(g['n'])} tracked possessions)"] = (g["_iso"], g["_code"])
+    c1, c2 = st.columns([3, 2])
+    pick = c1.selectbox("Game", ["All tracked games"] + list(label_of), key="vt_game")
+    if pick == "All tracked games":
+        d = cl
+    else:
+        iso, code = label_of[pick]
+        d = cl[(cl["_iso"] == iso) & (cl["_code"] == code)]
+    teams = team_names(d)
+    by_n = {t: int(((d["offense_team"] == t) | (d["defense_team"] == t)).sum()) for t in teams}
+    others = sorted([t for t in teams if "whitewater" not in t.lower()], key=lambda t: -by_n[t])
+    team = c2.selectbox("Team to scout", others + [t for t in teams if t not in others], key="vt_team") if teams else None
+    if not team:
+        st.caption("No teams in the tracked film.")
+        return
+    _FT_GAME = None if pick == "All tracked games" else (label_of[pick][0], team)
+    try:
+        render_film_tracking(team, key_suffix="_vt")
+    except Exception as _vt_err:
+        report_section_error("Video Tracking", _vt_err)
+    finally:
+        _FT_GAME = None
+
+
 def _pbp_group_plays(df):
     """Play-by-play events -> POSSESSIONS (one row each). CONFIRMED CHANGE (coach: the half's start, the jump ball and
     the turnover that followed "are also the same play"). A possession runs from getting the ball until giving it up:
@@ -6318,10 +6361,7 @@ def render_film_tracking(short_opponent, key_suffix=""):
             report_section_error("Court view", _ct_err)
 
     with sub[4]:
-      if _FT_GAME:
-        st.info("For this game, each play's possession replay is in the PLAY-BY-PLAY above -- open any play marked "
-                "\U0001f3a5 and switch on \"Show the possession replay\".")
-      else:
+      if True:              # (game mode used to point to the play-by-play; the replay lives here again -- requested)
         cl = clips.copy()
         cl["label"] = (cl["game_date"].astype(str) + "  #" + cl["clip_number"].astype(str) + "  " +
                        cl["offense_team"].astype(str) + " -- " + cl["play_title"].fillna(cl["synergy_string"]).astype(str).str[:60] +
@@ -11175,9 +11215,10 @@ def render_previous_games():
     # The result banner stays on top; the sections below are grouped into tabs. Each section is unchanged and in the
     # same order (every tab runs on each load, so values one section sets up for another still flow through).
     _pg_review_open = bool(_pr_open_package(_pg_game_date))
-    _pgt_stats, _pgt_ktv, _pgt_people, _pgt_plan, _pgt_pbp, _pgt_film = st.tabs([
+    # (the player tracking -- Film Tracking and the possession replays -- is on Analytics > Video Tracking; requested)
+    _pgt_stats, _pgt_ktv, _pgt_people, _pgt_plan, _pgt_pbp = st.tabs([
         "\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f4c5 Game Plan",
-        "\U0001f3ac Play-by-Play" + (" \U0001f4dd" if _pg_review_open else ""), "\U0001f3a5 Film Tracking"])
+        "\U0001f3ac Play-by-Play" + (" \U0001f4dd" if _pg_review_open else "")])
     with _pgt_stats:
         # --- TEAM STATS  |  BOX SCORE (side by side) ---
         _tsb_left, _tsb_right = st.columns([1, 2])
@@ -12086,7 +12127,7 @@ def render_previous_games():
             # replay). Each play is an expander; plays with a tracked possession are marked with a camera and build their
             # replay only when "Show the possession replay" is switched on (hundreds of replays at once would be slow).
             # The link is the parser's pbp_event_order on each tracked clip. "Plain table view" keeps the old table.
-            _rep_of = _pbp_replay_clips(_pg_game_date)
+            _rep_of = {}          # possession replays moved to Analytics > Video Tracking (requested)
             if "event_order" in filtered_pbp.columns:
                 _eo = pd.to_numeric(filtered_pbp["event_order"], errors="coerce")
                 filtered_pbp = filtered_pbp.assign(_replay=_eo.map(lambda o: _rep_of.get(float(o)) if pd.notna(o) else None))
@@ -12105,10 +12146,9 @@ def render_previous_games():
             _store = _pr_store(_prd.get("run")) if _prd else {}
             if _prd:
                 _pr_save_bar(_prd, _store, _kp, f"_{short_opponent}")
-            _v1, _v2, _v5, _v3, _v4 = st.columns([2, 2, 2, 1, 1])
+            _v1, _v5, _v3, _v4 = st.columns([2, 2, 1, 1])
             _plain = _v1.checkbox("Plain table view", value=False, key=f"pbp_plain_{short_opponent}")
-            _only_rep = _v2.checkbox("Only plays with a possession replay \U0001f3a5", value=False,
-                                     key=f"pbp_onlyrep_{short_opponent}", disabled=not _rep_of)
+            _only_rep = False
             _only_rev = _v5.checkbox("Only plays that need review \U0001f4dd", value=False, key=f"pbp_onlyrev_{short_opponent}",
                                      disabled=not _pr_rows,
                                      help=("Plays in this game's open review." + ("" if _pr_need else
@@ -12137,38 +12177,18 @@ def render_previous_games():
                 _per = _v3.selectbox("Per page", [25, 50, 100], index=1, key=f"pbp_per_{short_opponent}")
                 _pages = max(1, -(-len(_plays) // _per))
                 _page = _v4.number_input("Page", min_value=1, max_value=_pages, value=1, step=1, key=f"pbp_page_{short_opponent}")
-                st.caption(f"{len(_plays)} play(s), {sum(1 for g in _plays if g['replay'])} with a possession replay "
-                           f"(\U0001f3a5) -- page {_page} of {_pages}. Open a play for its details"
-                           + (" and replay." if _rep_of else ". No tracked film for this game yet."))
+                st.caption(f"{len(_plays)} possession(s) -- page {_page} of {_pages}. Open one for its events and details. "
+                           "Possession replays and the rest of the player tracking: Analytics \u2192 Video Tracking.")
                 for _g in _plays[(_page - 1) * _per: _page * _per]:
                     _rep, _rv = _g["replay"], _g["review"]
-                    with st.expander(("\U0001f4dd " if _rv is not None else "") + ("\U0001f3a5 " if _rep else "") + _g["label"]):
+                    with st.expander(("\U0001f4dd " if _rv is not None else "") + _g["label"]):
                         if len(_g["events"]) > 1:
                             st.markdown("  \n".join(f"\u2022 {e}" for e in _g["events"]))
                         st.markdown("  \n".join(f"**{lbl}:** {v}" for lbl, v in _g["details"]) or "_No details for this play._")
-                        if _rep:
-                            _key = f"{short_opponent}_{_g['key']}"
-                            if st.toggle("Show the possession replay", key=f"pbp_rep_{_key}"):
-                                _view = st.radio("View", ["Camera view", "Court view"], horizontal=True, key=f"pbp_view_{_key}")
-                                _ft_replay(_rep, f"_pbp_{_key}", view="court" if _view == "Court view" else "camera")
-                        else:
-                            st.caption("No tracked possession for this play.")
                         if _rv is not None and _prd:
                             st.markdown("---\n**\U0001f4dd Play review**")
                             _pr_play_widgets(_prd, _rv, _store, _kp)
 
-
-    with _pgt_film:
-        # ---- Film Tracking for THIS game (moved here from the Upcoming Opponent page -- requested) ----------------
-        global _FT_GAME
-        _FT_GAME = (_pg_game_date, short_opponent)
-        try:
-            render_film_tracking(short_opponent, key_suffix="_pg")
-        except Exception as _ft_err:
-            report_section_error("Film Tracking", _ft_err)
-        finally:
-            _FT_GAME = None
-        # ---- Play review for THIS game, answered in the app and saved to GitHub (requested) ----------------------
 
 # --------------------------------------------------------------------------------------------------------------
 # Play review inside the app (Previous Games)
@@ -14089,6 +14109,7 @@ def render_analytics():
         "Previous Games": render_previous_games,
         "Team": render_team,
         "Players": render_players,
+        "Video Tracking": render_video_tracking,
     }
     _tab_order = list(_renderers)
     _pinned = st.session_state.get("_analytics_open_tab")
