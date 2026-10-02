@@ -1,17 +1,17 @@
 clip_key,offense_team,defense_team,screen_type,hx,hy,zone,screener,coverage,coverage_source,points
 2026-01-03|1|21 Carter Thomas > No Play Type > Turnover,UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,34.7,17.6,Top of key,Joey LaChapell,Over,coach tag,0.0
-2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,9.8,46.3,Right corner,JR Lukenbill,unclear,tracking estimate,
+2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,9.8,46.3,Right corner,JR Lukenbill,unclear,tracking estimate,0.0
 2026-01-03|3|24 Richie Warren > Cut > Basket > Make 2 Pts,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,19.1,30.2,Right elbow,Collin Madson,unclear,tracking estimate,2.0
 2026-01-03|4|0 Brandon Beck > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,31.2,18.4,Top of key,Carter Thomas,unclear,tracking estimate,3.0
 2026-01-03|5|24 Richie Warren > P&R Ball Handler > Right P&R > Side > Go Away from Pick > Defense Commits > Ball Delivered > 32 Luke Bara > Spot-Up > Drives Left > To Basket > Foul,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,78.9,27.2,Backcourt,Collin Madson,unclear,tracking estimate,1.0
 2026-01-03|6|23 Oskar Kangas > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,34.0,32.5,Top of key,Matt Imig,stayed attached (lock / trail),tracking estimate,3.0
 2026-01-03|7|32 Luke Bara > Transition > Ballhandler > Turnover,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,16.9,38.1,Right wing,Collin Madson,unclear,tracking estimate,0.0
 2026-01-03|9|21 Brock Marino > Post-Up > Right Block > Post Pin > No Dribble Move > To Basket > Make 2 Pts,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,23.9,12.6,Left wing,JR Lukenbill,separated (under / behind),tracking estimate,2.0
-2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,72.1,16.6,Backcourt,Collin Madson,unclear,tracking estimate,
+2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,72.1,16.6,Backcourt,Collin Madson,unclear,tracking estimate,0.0
 2026-01-03|12|21 Brock Marino > Post-Up > Right Block > Left Shoulder > Dribble Move > To Drop Step > Miss 2 Pts,UW-Whitewater,UW-Oshkosh Titans,Ball screen,25.5,22.1,Top of key,Richie Warren,back (drop),tracking estimate,0.0
 2026-01-03|14|32 Luke Bara > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,20.8,25.1,Right elbow,Richie Warren,stayed attached (lock / trail),tracking estimate,3.0
 2026-01-03|15|11 Jay Dalton > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 23 Oskar Kangas > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,21.4,43.4,Right wing,Aiden Hawkinson,separated (under / behind),tracking estimate,0.0
-2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Oshkosh Titans,Ball screen,13.2,49.0,Right wing,JR Lukenbill,unclear,tracking estimate,
+2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Oshkosh Titans,Ball screen,13.2,49.0,Right wing,JR Lukenbill,unclear,tracking estimate,0.0
 2026-01-03|17|24 Richie Warren > Spot-Up > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,7.3,40.5,Right baseline,Collin Madson,unclear,tracking estimate,0.0
 2026-01-03|19|15 Collin Madson > Transition > Ballhandler > To Basket > Make 2 Pts,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,21.2,20.3,Left elbow,JR Lukenbill,separated (under / behind),tracking estimate,2.0
 2026-01-03|21|5 Matt Imig > Non Possession > No Violation,UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,15.8,25.0,Paint / post,unnamed offense,separated (under / behind),tracking estimate,
@@ -64,7 +64,7 @@ clip_key,offense_team,defense_team,screen_type,hx,hy,zone,screener,coverage,cove
 2026-01-03|83|32 Luke Bara > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 15 Collin Madson > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Oshkosh Titans,Ball screen,20.6,22.0,Left elbow,Brock Marino,Switch,coach tag,0.0
 2026-01-03|84|2 Joey LaChapell > ISO > Top > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts,UW-Oshkosh Titans,UW-Whitewater,Ball screen,41.1,27.6,Top of key,Brandon Beck,Switch,coach tag,0.0
 2026-01-03|86|32 Luke Bara > Non Possession > No Violation,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,28.2,26.7,Top of key,Collin Madson,separated (under / behind),tracking estimate,
-2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Oshkosh Titans,Ball screen,19.1,23.2,Left elbow,JR Lukenbill,unclear,tracking estimate,
+2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Oshkosh Titans,Ball screen,19.1,23.2,Left elbow,JR Lukenbill,unclear,tracking estimate,0.0
 2026-01-03|88|21 Brock Marino > Cut > Basket > Make 2 Pts,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,18.6,20.7,Paint / post,Luke Bara,unclear,tracking estimate,2.0
 2026-01-03|89|4 Michael Metcalf-Grassman > Spot-Up > Drives Right > To Basket > Make 2 Pts,UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,32.9,43.2,Right wing,Brandon Beck,unclear,tracking estimate,2.0
 2026-01-03|90|21 Brock Marino > No Play Type > Turnover,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,14.9,24.3,Paint / post,Luke Bara,Switch,coach tag,0.0
@@ -77,10 +77,10 @@ clip_key,offense_team,defense_team,screen_type,hx,hy,zone,screener,coverage,cove
 2026-01-03|102|15 Collin Madson > P&R Ball Handler > Right P&R > Side > Go Away from Pick > Dribble Jumper > Short to < 17' > Make 2 Pts,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,70.0,26.2,Backcourt,Luke Bara,separated (under / behind),tracking estimate,2.0
 2026-01-03|104|24 Richie Warren > No Play Type > Turnover,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,13.5,26.0,Paint / post,Collin Madson,unclear,tracking estimate,0.0
 2026-01-03|105|13 Logan Rindfleisch > P&R Ball Handler > Left P&R > Side > Go Away from Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts,UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,5.5,26.5,Paint / post,Jonah Rindfleisch,separated (under / behind),tracking estimate,0.0
-2026-01-03|106|32 Luke Bara > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,23.6,27.0,Top of key,unnamed offense,unclear,tracking estimate,
+2026-01-03|106|32 Luke Bara > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,21.6,21.8,Left elbow,JR Lukenbill,unclear,tracking estimate,0.0
 2026-01-03|111|24 Richie Warren > Non Possession > No Violation,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,20.8,22.6,Left elbow,JR Lukenbill,unclear,tracking estimate,
 2026-01-03|112|15 Collin Madson > ISO > Right > Drives Right > To Basket > Foul,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,73.3,31.3,Backcourt,Luke Bara,separated (under / behind),tracking estimate,2.0
-2026-01-03|113|0 Brandon Beck > Non Possession > Non Shooting Foul,UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,11.9,25.5,Paint / post,unnamed offense,unclear,tracking estimate,
+2026-01-03|113|0 Brandon Beck > Non Possession > Non Shooting Foul,UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,11.9,25.5,Paint / post,Nate Nazos,unclear,tracking estimate,0.0
 2026-01-03|114|5 Matt Imig > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 23 Oskar Kangas > P&R Roll Man > Rolls to Basket > Miss 2 Pts,UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,7.5,28.5,Paint / post,Jonah Rindfleisch,stayed attached (lock / trail),tracking estimate,0.0
 2026-01-03|115|32 Luke Bara > ISO > Right > Drives Left > To Basket > Foul,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,27.6,34.3,Right wing,Luke Bara,separated (under / behind),tracking estimate,2.0
 2026-01-03|117|21 Brock Marino > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,30.8,27.8,Top of key,Collin Madson,separated (under / behind),tracking estimate,
@@ -151,6 +151,7 @@ clip_key,offense_team,defense_team,screen_type,hx,hy,zone,screener,coverage,cove
 2025-12-30|348|22 Joey Berezowitz > Spot-Up > Drives Left > Turnover,UW-Whitewater,Coe Kohawks,Off-ball screen,22.0,50.9,Right wing,Collin Madson,unclear,tracking estimate,0.0
 2025-12-30|353|12 Jake Quast > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,UW-Whitewater,Coe Kohawks,Ball screen,20.9,23.5,Left elbow,Luke Bara,unclear,tracking estimate,2.0
 2025-12-30|356|34 Kanyon Bryte > Post-Up > Right Block > Right Shoulder > Dribble Move > To Up and Under > Miss 2 Pts,Coe Kohawks,UW-Whitewater,Off-ball screen,11.3,27.1,Paint / post,Deuce Walters,unclear,tracking estimate,0.0
+2025-12-30|358|2 Ryan Dolphin > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,Off-ball screen,20.0,8.8,Left wing,Deuce Walters,unclear,tracking estimate,0.0
 2025-12-30|359|12 C. Reece Breitenbach > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Turnover,Coe Kohawks,UW-Whitewater,Off-ball screen,13.2,31.6,Right elbow,C. Reece Breitenbach,unclear,tracking estimate,0.0
 2025-12-30|360|11 Jr Lukenbill > Spot-Up > Drives Right > To Basket > Make 2 Pts,UW-Whitewater,Coe Kohawks,Off-ball screen,21.6,51.1,Right wing,Tyshawn Teague-Johnson,unclear,tracking estimate,2.0
 2025-12-30|361|2 Ryan Dolphin > Non Possession > No Violation,Coe Kohawks,UW-Whitewater,Ball screen,12.4,46.9,Right wing,unnamed offense,blitz / trap,tracking estimate,
@@ -197,7 +198,7 @@ clip_key,offense_team,defense_team,screen_type,hx,hy,zone,screener,coverage,cove
 2025-12-30|450|22 Jackson Bowman > Spot-Up > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts,Coe Kohawks,UW-Whitewater,Off-ball screen,8.1,40.4,Right baseline,Kanyon Bryte,separated (under / behind),tracking estimate,0.0
 2025-12-30|451|22 Joey Berezowitz > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,UW-Whitewater,Coe Kohawks,Off-ball screen,32.8,24.5,Top of key,Richie Warren,separated (under / behind),tracking estimate,3.0
 2025-12-30|452|5 Cooper Nailor > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,Coe Kohawks,UW-Whitewater,Ball screen,26.0,26.5,Top of key,Deuce Walters,unclear,tracking estimate,0.0
-2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,UW-Whitewater,Coe Kohawks,Ball screen,47.7,16.8,Backcourt,unnamed offense,back (drop),tracking estimate,
+2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,UW-Whitewater,Coe Kohawks,Ball screen,47.7,16.8,Backcourt,Brock Marino,back (drop),tracking estimate,0.0
 2025-12-30|454|10 Darius Chestnut > Spot-Up > No Dribble Jumper > Open > Medium/17' to <3p > Miss 2 Pts,UW-Whitewater,Coe Kohawks,Off-ball screen,10.0,29.0,Paint / post,Kelton McEwen,stayed attached (lock / trail),tracking estimate,0.0
 2025-12-30|458|4 Deuce Walters > Transition > Ballhandler > To Basket > Miss 2 Pts,Coe Kohawks,UW-Whitewater,Off-ball screen,9.6,29.5,Paint / post,C. Reece Breitenbach,separated (under / behind),tracking estimate,0.0
 2025-12-30|459|34 Kanyon Bryte > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,Coe Kohawks,UW-Whitewater,Off-ball screen,12.3,17.7,Left elbow,C. Reece Breitenbach,unclear,tracking estimate,2.0
@@ -209,7 +210,7 @@ clip_key,offense_team,defense_team,screen_type,hx,hy,zone,screener,coverage,cove
 2025-12-30|468|2 Ryan Dolphin > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 5 Cooper Nailor > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,Coe Kohawks,UW-Whitewater,Off-ball screen,12.8,16.5,Left elbow,Kanyon Bryte,unclear,tracking estimate,0.0
 2025-12-30|472|2 Kelton Mcewen > P&R Ball Handler > Left P&R > Baseline > Takes Early Jump Shot > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,Coe Kohawks,Off-ball screen,31.5,15.2,Left wing,Darius Chestnut,separated (under / behind),tracking estimate,0.0
 2025-12-30|473|12 Jake Quast > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts Foul > 0 Pts,UW-Whitewater,Coe Kohawks,Off-ball screen,18.6,27.4,Paint / post,Darius Chestnut,separated (under / behind),tracking estimate,2.0
-2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,Off-ball screen,67.6,32.3,Backcourt,Aleks Jajic,unclear,tracking estimate,
+2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,Off-ball screen,67.6,32.3,Backcourt,Aleks Jajic,unclear,tracking estimate,0.0
 2025-12-30|479|12 Jake Quast > Post-Up > Right Block > Left Shoulder > Dribble Move > Defense Commits > Turnover,UW-Whitewater,Coe Kohawks,Off-ball screen,6.9,34.4,Right baseline,JR Lukenbill,separated (under / behind),tracking estimate,0.0
 2025-12-30|480|2 Ryan Dolphin > Transition > Trailer > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,Coe Kohawks,UW-Whitewater,Ball screen,56.3,38.6,Backcourt,Aleks Jajic,up (hedge / show),tracking estimate,0.0
 2025-12-30|481|4 Deuce Walters > Off Screen > To Shooter's Left > Straight > Dribble Jumper > Medium/17' to <3p > Miss 2 Pts,Coe Kohawks,UW-Whitewater,Off-ball screen,8.8,39.3,Right baseline,Aleks Jajic,separated (under / behind),tracking estimate,0.0
@@ -228,7 +229,7 @@ clip_key,offense_team,defense_team,screen_type,hx,hy,zone,screener,coverage,cove
 2025-12-30|503|12 Jake Quast > Non Possession > No Violation,UW-Whitewater,Coe Kohawks,Ball screen,16.9,44.5,Right wing,Darius Chestnut,unclear,tracking estimate,
 2025-12-30|504|40 Tyshawn Teague-Johnson > ISO > Left > Drives Right > To Basket > Make 2 Pts,UW-Whitewater,Coe Kohawks,Off-ball screen,16.8,17.2,Left elbow,Darius Chestnut,separated (under / behind),tracking estimate,2.0
 2025-12-30|507|10 Darius Chestnut > Cut > Basket > Foul,UW-Whitewater,Coe Kohawks,Off-ball screen,22.6,35.0,Right wing,Tyshawn Teague-Johnson,unclear,tracking estimate,1.0
-2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,Off-ball screen,29.7,45.5,Right wing,Kanyon Bryte,separated (under / behind),tracking estimate,
+2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,Off-ball screen,29.7,45.5,Right wing,Kanyon Bryte,separated (under / behind),tracking estimate,0.0
 2025-12-30|513|5 Cooper Nailor > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 34 Kanyon Bryte > P&R Roll Man > Rolls to Basket > Make 2 Pts,Coe Kohawks,UW-Whitewater,Off-ball screen,6.7,31.9,Right baseline,Jackson Bowman,separated (under / behind),tracking estimate,2.0
 2025-12-30|517|11 Jr Lukenbill > No Play Type > No Dribble Jumper > Open > Short to < 17' > Miss 2 Pts,UW-Whitewater,Coe Kohawks,Ball screen,20.8,22.5,Left elbow,Jake Quast,unclear,tracking estimate,0.0
 2025-12-30|518|12 Jake Quast > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts Foul > 1 Pts,UW-Whitewater,Coe Kohawks,Off-ball screen,8.1,21.0,Paint / post,Darius Chestnut,separated (under / behind),tracking estimate,3.0

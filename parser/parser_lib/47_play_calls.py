@@ -978,6 +978,8 @@ def _pl_compatible(result, event_type):
         return event_type == "made_shot"
     if t.startswith("miss"):
         return event_type == "missed_shot"
+    if "no violation" in t:
+        return False                     # Synergy's "No Violation": nothing happened -- no play-by-play event to match
     if "turnover" in t or "violation" in t:
         return event_type == "turnover"
     if "foul" in t or re.match(r"^\d pts$", t):
@@ -1116,13 +1118,21 @@ def _pl_match(clips, events, offense_label_for):
                 cand = cand[cand["event_order"] >= lo_o]
             if hi_o is not None:
                 cand = cand[cand["event_order"] <= hi_o]
-            cand = cand[(cand["player"].str.lower() == c["player"].strip().lower())
-                        & cand["event_type"].apply(lambda e: _pl_compatible(c["result"], e))]
+            window = cand
+            cand = window[(window["player"].str.lower() == c["player"].strip().lower())
+                          & window["event_type"].apply(lambda e: _pl_compatible(c["result"], e))]
+            how_ = "clip order + player"
+            if cand.empty and "foul" in str(c.get("result") or "").lower():
+                # Synergy names the player who DREW the foul; the play-by-play names who COMMITTED it (the other team) --
+                # coach: clip 22, Metcalf-Grassman's "Non Shooting Foul" is Brock Marino's foul at 14:56
+                _them = c.get("team")
+                cand = window[(window["event_type"] == "foul") & (window["team"] != _them)] if _them else window.iloc[0:0]
+                how_ = "clip order + foul by the defense"
             if len(cand) == 1:
                 best = cand.index[0]
                 used.add(best)
                 clips.at[i, "event_index"] = best
-                clips.at[i, "matched_by"] = "clip order + player"
+                clips.at[i, "matched_by"] = how_
                 e = ev.loc[best]
                 for col in ("period", "time_remaining_seconds", "time_remaining"):
                     if col in clips.columns and col in e.index and (pd.isna(c.get(col)) or c.get(col) in (None, "")):

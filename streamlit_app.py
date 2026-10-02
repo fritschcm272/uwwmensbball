@@ -5811,7 +5811,36 @@ def render_video_tracking():
         _FT_GAME = None
 
 
-def _pbp_group_plays(df):
+def _pbp_game_clips(game_iso):
+    """{play-by-play event_order: [clips]} for this UWW game. CONFIRMED CHANGE (coach: "still missing some play-by-play
+    information that were in the play clips"). Every tagged clip, not just one per possession: matched clips under their
+    event; a clip with no play-by-play event at all (Synergy's "No Violation", say) goes, by clip order, with the next
+    matched clip's event -- the possession it happened in."""
+    pc = load_table("uww_play_calls")
+    if pc.empty or "clip_number" not in pc.columns or not game_iso:
+        return {}
+    pc = pc[iso_dates(pc["game_date"]).astype(str).to_numpy() == str(game_iso)]
+    if "game_code" in pc.columns:
+        pc = pc[pc["game_code"].astype(str).str.contains("WWW", na=False)]
+    if pc.empty:
+        return {}
+    pc = pc.assign(_cn=pd.to_numeric(pc["clip_number"], errors="coerce"),
+                   _eo=pd.to_numeric(pc.get("pbp_event_order", pd.Series(index=pc.index, dtype=float)), errors="coerce"))
+    pc = pc.sort_values("_cn")
+    eos = list(pc["_eo"])
+    out = {}
+    for k, (_, r) in enumerate(pc.iterrows()):
+        eo = r["_eo"]
+        if pd.isna(eo):
+            eo = next((x for x in eos[k + 1:] if pd.notna(x)), None)
+            if eo is None:
+                eo = next((x for x in reversed(eos[:k]) if pd.notna(x)), None)
+        if eo is not None:
+            out.setdefault(float(eo), []).append(r)
+    return out
+
+
+def _pbp_group_plays(df, clip_map=None):
     """Play-by-play events -> POSSESSIONS (one row each). CONFIRMED CHANGE (coach: the half's start, the jump ball and
     the turnover that followed "are also the same play"). A possession runs from getting the ball until giving it up:
     it ends with a made basket, a turnover, a defensive rebound or the last free throw of a trip; events at that same
@@ -5891,11 +5920,33 @@ def _pbp_group_plays(df):
                 events.append(" \u00b7 ".join(x for x in [txt(r.get("time_remaining")), txt(r.get("team")), txt(r.get("player")), ev(r)] if x))
                 i_ += 1
         details = []
-        for col, lbl in (("play_call", "Play call"), ("play_actions", "Actions"), ("play_location", "Where"),
-                         ("play_title", "Tagged as"), ("video_description", "Synergy"), ("coach_note", "Coach note")):
-            v = next((txt(r.get(col)) for r in [main] + others if txt(r.get(col))), "")
-            if v:
-                details.append((lbl, v))
+        _clips = []
+        if clip_map:
+            for r in g:
+                eo = pd.to_numeric(r.get("event_order"), errors="coerce")
+                if pd.notna(eo):
+                    _clips += clip_map.get(float(eo), [])
+        if _clips:
+            # every clip of this possession, in clip order: its Synergy description, the coach's Title, play call / actions
+            seen = set()
+            for c in sorted(_clips, key=lambda c: c["_cn"] if pd.notna(c["_cn"]) else 1e9):
+                if c["_cn"] in seen:
+                    continue
+                seen.add(c["_cn"])
+                bits = [txt(c.get("synergy_string")) or txt(c.get("result"))]
+                if txt(c.get("play_title")):
+                    bits.append(f"Tagged as: {txt(c.get('play_title'))}")
+                if txt(c.get("play_call")):
+                    bits.append(f"Play call: {txt(c.get('play_call'))}")
+                if txt(c.get("play_actions")):
+                    bits.append(f"Actions: {txt(c.get('play_actions'))}")
+                details.append((f"Clip {int(c['_cn']) if pd.notna(c['_cn']) else '?'}", " \u00b7 ".join(b for b in bits if b)))
+        else:
+            for col, lbl in (("play_call", "Play call"), ("play_actions", "Actions"), ("play_location", "Where"),
+                             ("play_title", "Tagged as"), ("video_description", "Synergy"), ("coach_note", "Coach note")):
+                v = next((txt(r.get(col)) for r in [main] + others if txt(r.get(col))), "")
+                if v:
+                    details.append((lbl, v))
         rep = next((r.get("_replay") for r in [main] + others if isinstance(r.get("_replay"), str) and r.get("_replay")), None)
         rv = next((int(pd.to_numeric(r.get("_review"), errors="coerce")) for r in [main] + others
                    if pd.notna(pd.to_numeric(r.get("_review"), errors="coerce"))), None)
@@ -12278,7 +12329,7 @@ def render_previous_games():
                 # events in the same half at the same clock are ONE play: the label leads with the main event (shot / free
                 # throw / turnover, then foul, rebound ...) and lists the rest ("+ assist Carter Thomas"); the replay and
                 # Play review come from whichever event has them. Paging and the replay / review filters count plays.
-                _plays = _pbp_group_plays(filtered_pbp)
+                _plays = _pbp_group_plays(filtered_pbp, _pbp_game_clips(_pg_game_date))
                 if _only_rep:
                     _plays = [g for g in _plays if g["replay"]]
                 if _only_rev:

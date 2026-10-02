@@ -9,16 +9,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-01-03|1|21 Carter Thomas > No Play Type > Turnover,1,2026-01-03,UW-Whitewater,defense,JR Lukenbill,play-by-play,True,1;26;28,13.2,best guess;coach checked,0.99
 2026-01-03|1|21 Carter Thomas > No Play Type > Turnover,1,2026-01-03,UW-Whitewater,defense,Luke Bara,play-by-play,True,5;25;38,14.5,best guess;coach checked,0.99
 2026-01-03|1|21 Carter Thomas > No Play Type > Turnover,1,2026-01-03,UW-Whitewater,defense,Richie Warren,play-by-play,True,13;33,10.2,best guess;coach checked,0.99
-2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Whitewater,offense,Brock Marino,clips before/after (no clock),True,7;16;28,20.2,best guess,0.3
-2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Whitewater,offense,Collin Madson,clips before/after (no clock),True,18;20,32.8,coach checked;linked possession,0.99
-2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Whitewater,offense,JR Lukenbill,clips before/after (no clock),True,0;25;29,23.5,best guess;linked possession,0.95
-2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Whitewater,offense,Luke Bara,clips before/after (no clock),True,23;37,8.2,best guess,0.3
-2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Whitewater,offense,Richie Warren,clips before/after (no clock),True,13;36,6.8,best guess;coach checked,0.99
-2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Oshkosh Titans,defense,Brandon Beck,clips before/after (no clock),True,14;24;33;39,17.2,best guess;coach checked,0.99
-2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Oshkosh Titans,defense,Carter Thomas,clips before/after (no clock),True,2;22,19.5,best guess,0.3
-2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Oshkosh Titans,defense,Joey LaChapell,clips before/after (no clock),True,11;34,12.8,best guess;coach checked,0.99
-2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Oshkosh Titans,defense,Michael Metcalf-Grassman,clips before/after (no clock),True,15;32,13.2,best guess,0.3
-2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Oshkosh Titans,defense,Nate Nazos,clips before/after (no clock),True,4;19;30,16.8,best guess;coach checked,0.99
+2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Whitewater,offense,Brock Marino,play-by-play,True,7;16;28,20.2,best guess,0.3
+2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Whitewater,offense,Collin Madson,play-by-play,True,18;20,32.8,coach checked;linked possession,0.99
+2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,0;25;29,23.5,best guess;linked possession,0.95
+2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Whitewater,offense,Luke Bara,play-by-play,True,23;37,8.2,best guess,0.3
+2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Whitewater,offense,Richie Warren,play-by-play,True,13;36,6.8,best guess;coach checked,0.99
+2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Oshkosh Titans,defense,Brandon Beck,play-by-play,True,14;24;33;39,17.2,best guess;coach checked,0.99
+2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Oshkosh Titans,defense,Carter Thomas,play-by-play,True,2;22,19.5,best guess,0.3
+2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Oshkosh Titans,defense,Joey LaChapell,play-by-play,True,11;34,12.8,best guess;coach checked,0.99
+2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Oshkosh Titans,defense,Michael Metcalf-Grassman,play-by-play,True,15;32,13.2,best guess,0.3
+2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,2,2026-01-03,UW-Oshkosh Titans,defense,Nate Nazos,play-by-play,True,4;19;30,16.8,best guess;coach checked,0.99
 2026-01-03|3|24 Richie Warren > Cut > Basket > Make 2 Pts,3,2026-01-03,UW-Whitewater,offense,Brock Marino,play-by-play,True,1,7.2,best guess,0.3
 2026-01-03|3|24 Richie Warren > Cut > Basket > Make 2 Pts,3,2026-01-03,UW-Whitewater,offense,Collin Madson,play-by-play,True,4,8.5,coach checked,0.95
 2026-01-03|3|24 Richie Warren > Cut > Basket > Make 2 Pts,3,2026-01-03,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,0,9.0,coach checked,0.95
@@ -99,16 +99,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-01-03|10|10 Nate Nazos > Transition > Left Wing > Turnover,10,2026-01-03,UW-Whitewater,defense,JR Lukenbill,play-by-play,True,8;30,9.2,best guess;coach checked,0.99
 2026-01-03|10|10 Nate Nazos > Transition > Left Wing > Turnover,10,2026-01-03,UW-Whitewater,defense,Luke Bara,play-by-play,True,7;21,3.5,best guess;coach checked,0.99
 2026-01-03|10|10 Nate Nazos > Transition > Left Wing > Turnover,10,2026-01-03,UW-Whitewater,defense,Richie Warren,play-by-play,True,3;23,7.8,best guess;coach checked,0.95
-2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Whitewater,offense,Brock Marino,clips before/after (no clock),True,11;39;46,9.8,best guess,0.3
-2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Whitewater,offense,Collin Madson,clips before/after (no clock),True,9;17;34,9.5,best guess;coach checked,0.99
-2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Whitewater,offense,JR Lukenbill,clips before/after (no clock),True,20;43,12.0,best guess,0.3
-2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Whitewater,offense,Luke Bara,clips before/after (no clock),True,8;16,15.2,best guess;coach checked,0.99
-2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Whitewater,offense,Richie Warren,clips before/after (no clock),True,1;29;49,18.0,best guess,0.3
-2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Oshkosh Titans,defense,Brandon Beck,clips before/after (no clock),True,5;13;30,18.0,best guess;coach checked,0.99
-2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Oshkosh Titans,defense,Carter Thomas,clips before/after (no clock),True,14;27;33;48,10.0,best guess,0.3
-2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Oshkosh Titans,defense,Joey LaChapell,clips before/after (no clock),True,4;18;32;47,10.0,best guess;coach checked,0.99
-2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Oshkosh Titans,defense,Michael Metcalf-Grassman,clips before/after (no clock),True,6;24;35;41;45,10.2,best guess;coach checked,0.99
-2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Oshkosh Titans,defense,Nate Nazos,clips before/after (no clock),True,15;25;37,14.0,best guess,0.3
+2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Whitewater,offense,Brock Marino,play-by-play,True,11;39;46,9.8,best guess,0.3
+2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Whitewater,offense,Collin Madson,play-by-play,True,9;17;34,9.5,best guess;coach checked,0.99
+2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,20;43,12.0,best guess,0.3
+2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Whitewater,offense,Luke Bara,play-by-play,True,8;16,15.2,best guess;coach checked,0.99
+2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Whitewater,offense,Richie Warren,play-by-play,True,1;29;49,18.0,best guess,0.3
+2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Oshkosh Titans,defense,Brandon Beck,play-by-play,True,5;13;30,18.0,best guess;coach checked,0.99
+2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Oshkosh Titans,defense,Carter Thomas,play-by-play,True,14;27;33;48,10.0,best guess,0.3
+2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Oshkosh Titans,defense,Joey LaChapell,play-by-play,True,4;18;32;47,10.0,best guess;coach checked,0.99
+2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Oshkosh Titans,defense,Michael Metcalf-Grassman,play-by-play,True,6;24;35;41;45,10.2,best guess;coach checked,0.99
+2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,11,2026-01-03,UW-Oshkosh Titans,defense,Nate Nazos,play-by-play,True,15;25;37,14.0,best guess,0.3
 2026-01-03|12|21 Brock Marino > Post-Up > Right Block > Left Shoulder > Dribble Move > To Drop Step > Miss 2 Pts,12,2026-01-03,UW-Whitewater,offense,Brock Marino,play-by-play,True,3;56,29.0,best guess;linked possession,0.95
 2026-01-03|12|21 Brock Marino > Post-Up > Right Block > Left Shoulder > Dribble Move > To Drop Step > Miss 2 Pts,12,2026-01-03,UW-Whitewater,offense,Collin Madson,play-by-play,True,1;16;36;40;57;74,27.0,best guess;linked possession,0.95
 2026-01-03|12|21 Brock Marino > Post-Up > Right Block > Left Shoulder > Dribble Move > To Drop Step > Miss 2 Pts,12,2026-01-03,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,12;30;43,24.8,best guess,0.3
@@ -144,11 +144,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-01-03|15|11 Jay Dalton > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 23 Oskar Kangas > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,15,2026-01-03,UW-Whitewater,defense,JR Lukenbill,play-by-play,True,2;14;33;44,14.2,best guess;coach checked,0.99
 2026-01-03|15|11 Jay Dalton > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 23 Oskar Kangas > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,15,2026-01-03,UW-Whitewater,defense,Luke Bara,play-by-play,True,1;13;43,14.5,best guess,0.3
 2026-01-03|15|11 Jay Dalton > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 23 Oskar Kangas > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,15,2026-01-03,UW-Whitewater,defense,Richie Warren,play-by-play,True,0;29;47,11.2,best guess;coach checked,0.99
-2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Whitewater,offense,Brock Marino,clips before/after (no clock),True,5;26,16.0,best guess,0.3
-2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Whitewater,offense,Collin Madson,clips before/after (no clock),True,20,15.8,best guess,0.3
-2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Whitewater,offense,JR Lukenbill,clips before/after (no clock),True,6;14;22;43,13.5,best guess,0.3
-2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Whitewater,offense,Luke Bara,clips before/after (no clock),True,3;28;32,9.8,best guess,0.3
-2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Whitewater,offense,Richie Warren,clips before/after (no clock),True,19;21,16.0,best guess,0.3
+2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Whitewater,offense,Brock Marino,play-by-play,True,5;26,16.0,best guess,0.3
+2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Whitewater,offense,Collin Madson,play-by-play,True,20,15.8,best guess,0.3
+2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,6;14;22;43,13.5,best guess,0.3
+2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Whitewater,offense,Luke Bara,play-by-play,True,3;28;32,9.8,best guess,0.3
+2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Whitewater,offense,Richie Warren,play-by-play,True,19;21,16.0,best guess,0.3
+2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Oshkosh Titans,defense,Aiden Hawkinson,play-by-play,True,4;11;23;27,12.8,best guess,0.3
+2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Oshkosh Titans,defense,Jay Dalton,play-by-play,True,13;25,11.2,best guess,0.3
+2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Oshkosh Titans,defense,Logan Rindfleisch,play-by-play,True,12;18,13.2,best guess,0.3
+2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Oshkosh Titans,defense,Oskar Kangas,play-by-play,True,2;8;24;30,14.0,best guess,0.3
+2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,16,2026-01-03,UW-Oshkosh Titans,defense,Vitorio Dante,play-by-play,True,7;16;37,17.0,best guess,0.3
 2026-01-03|17|24 Richie Warren > Spot-Up > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,17,2026-01-03,UW-Whitewater,offense,Brock Marino,play-by-play,True,4;19,12.0,best guess,0.3
 2026-01-03|17|24 Richie Warren > Spot-Up > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,17,2026-01-03,UW-Whitewater,offense,Collin Madson,play-by-play,True,3;16;20,7.0,best guess,0.3
 2026-01-03|17|24 Richie Warren > Spot-Up > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,17,2026-01-03,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,6;23,12.2,best guess,0.3
@@ -179,6 +184,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-01-03|19|15 Collin Madson > Transition > Ballhandler > To Basket > Make 2 Pts,19,2026-01-03,UW-Oshkosh Titans,defense,Joey LaChapell,play-by-play,True,0,7.8,best guess,0.3
 2026-01-03|19|15 Collin Madson > Transition > Ballhandler > To Basket > Make 2 Pts,19,2026-01-03,UW-Oshkosh Titans,defense,Michael Metcalf-Grassman,play-by-play,True,9;17;26,6.2,best guess,0.3
 2026-01-03|19|15 Collin Madson > Transition > Ballhandler > To Basket > Make 2 Pts,19,2026-01-03,UW-Oshkosh Titans,defense,Nate Nazos,play-by-play,True,1;16;24,8.5,best guess,0.3
+2026-01-03|20|4 Michael Metcalf-Grassman > Non Possession > Non Shooting Foul,20,2026-01-03,UW-Oshkosh Titans,offense,Brandon Beck,play-by-play,True,32;48,8.8,best guess,0.3
+2026-01-03|20|4 Michael Metcalf-Grassman > Non Possession > Non Shooting Foul,20,2026-01-03,UW-Oshkosh Titans,offense,Carter Thomas,play-by-play,True,36;50,9.5,best guess,0.3
+2026-01-03|20|4 Michael Metcalf-Grassman > Non Possession > Non Shooting Foul,20,2026-01-03,UW-Oshkosh Titans,offense,Joey LaChapell,play-by-play,True,30;42,8.2,best guess,0.3
+2026-01-03|20|4 Michael Metcalf-Grassman > Non Possession > Non Shooting Foul,20,2026-01-03,UW-Oshkosh Titans,offense,Michael Metcalf-Grassman,play-by-play,True,6;37,13.2,best guess,0.3
+2026-01-03|20|4 Michael Metcalf-Grassman > Non Possession > Non Shooting Foul,20,2026-01-03,UW-Oshkosh Titans,offense,Nate Nazos,play-by-play,True,5;31;49,12.0,best guess,0.3
+2026-01-03|20|4 Michael Metcalf-Grassman > Non Possession > Non Shooting Foul,20,2026-01-03,UW-Whitewater,defense,Brock Marino,play-by-play,True,14;33,11.8,best guess,0.3
+2026-01-03|20|4 Michael Metcalf-Grassman > Non Possession > Non Shooting Foul,20,2026-01-03,UW-Whitewater,defense,Collin Madson,play-by-play,True,41,2.5,best guess,0.3
+2026-01-03|20|4 Michael Metcalf-Grassman > Non Possession > Non Shooting Foul,20,2026-01-03,UW-Whitewater,defense,JR Lukenbill,play-by-play,True,2;39,8.8,best guess,0.3
+2026-01-03|20|4 Michael Metcalf-Grassman > Non Possession > Non Shooting Foul,20,2026-01-03,UW-Whitewater,defense,Luke Bara,play-by-play,True,43;47,3.5,best guess,0.3
+2026-01-03|20|4 Michael Metcalf-Grassman > Non Possession > Non Shooting Foul,20,2026-01-03,UW-Whitewater,defense,Richie Warren,play-by-play,True,4;10,2.5,best guess,0.3
 2026-01-03|22|5 Matt Imig > Spot-Up > Drives Straight > Dribble Jumper > Long/3pt > Miss 3 Pts,22,2026-01-03,UW-Oshkosh Titans,offense,Aiden Hawkinson,play-by-play,True,9;16;21;27;32,9.8,best guess,0.3
 2026-01-03|22|5 Matt Imig > Spot-Up > Drives Straight > Dribble Jumper > Long/3pt > Miss 3 Pts,22,2026-01-03,UW-Oshkosh Titans,offense,Jonah Rindfleisch,play-by-play,True,5;30;47,13.0,best guess,0.3
 2026-01-03|22|5 Matt Imig > Spot-Up > Drives Straight > Dribble Jumper > Long/3pt > Miss 3 Pts,22,2026-01-03,UW-Oshkosh Titans,offense,Matt Imig,play-by-play,True,8;12;35,11.8,best guess,0.3
@@ -779,16 +794,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-01-03|86|32 Luke Bara > Non Possession > No Violation,86,2026-01-03,UW-Oshkosh Titans,defense,Joey LaChapell,clips before/after (no clock),True,1;26,7.8,best guess,0.3
 2026-01-03|86|32 Luke Bara > Non Possession > No Violation,86,2026-01-03,UW-Oshkosh Titans,defense,Michael Metcalf-Grassman,clips before/after (no clock),True,9,4.8,best guess,0.3
 2026-01-03|86|32 Luke Bara > Non Possession > No Violation,86,2026-01-03,UW-Oshkosh Titans,defense,Nate Nazos,clips before/after (no clock),True,4;22,8.0,best guess,0.3
-2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Whitewater,offense,Brock Marino,clips before/after (no clock),True,2;22,6.0,best guess,0.3
-2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Whitewater,offense,Collin Madson,clips before/after (no clock),True,9;16,11.8,best guess,0.3
-2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Whitewater,offense,JR Lukenbill,clips before/after (no clock),True,11,18.2,best guess,0.3
-2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Whitewater,offense,Luke Bara,clips before/after (no clock),True,0;13,17.0,best guess,0.3
-2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Whitewater,offense,Richie Warren,clips before/after (no clock),True,5,18.0,best guess,0.3
-2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Oshkosh Titans,defense,Brandon Beck,clips before/after (no clock),True,23;26,4.2,best guess,0.3
-2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Oshkosh Titans,defense,Carter Thomas,clips before/after (no clock),True,14,2.2,best guess,0.3
-2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Oshkosh Titans,defense,Joey LaChapell,clips before/after (no clock),True,8,12.8,best guess,0.3
-2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Oshkosh Titans,defense,Michael Metcalf-Grassman,clips before/after (no clock),True,3,4.2,best guess,0.3
-2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Oshkosh Titans,defense,Nate Nazos,clips before/after (no clock),True,7;25,13.0,best guess,0.3
+2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Whitewater,offense,Brock Marino,play-by-play,True,2;22,6.0,best guess,0.3
+2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Whitewater,offense,Collin Madson,play-by-play,True,9;16,11.8,best guess,0.3
+2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,11,18.2,best guess,0.3
+2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Whitewater,offense,Luke Bara,play-by-play,True,0;13,17.0,best guess,0.3
+2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Whitewater,offense,Richie Warren,play-by-play,True,5,18.0,best guess,0.3
+2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Oshkosh Titans,defense,Brandon Beck,play-by-play,True,23;26,4.2,best guess,0.3
+2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Oshkosh Titans,defense,Carter Thomas,play-by-play,True,14,2.2,best guess,0.3
+2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Oshkosh Titans,defense,Joey LaChapell,play-by-play,True,8,12.8,best guess,0.3
+2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Oshkosh Titans,defense,Michael Metcalf-Grassman,play-by-play,True,3,4.2,best guess,0.3
+2026-01-03|87|32 Luke Bara > Non Possession > Non Shooting Foul,87,2026-01-03,UW-Oshkosh Titans,defense,Nate Nazos,play-by-play,True,7;25,13.0,best guess,0.3
 2026-01-03|88|21 Brock Marino > Cut > Basket > Make 2 Pts,88,2026-01-03,UW-Whitewater,offense,Brock Marino,play-by-play,True,12,5.0,best guess,0.3
 2026-01-03|88|21 Brock Marino > Cut > Basket > Make 2 Pts,88,2026-01-03,UW-Whitewater,offense,Collin Madson,play-by-play,True,22,0.8,best guess,0.3
 2026-01-03|88|21 Brock Marino > Cut > Basket > Make 2 Pts,88,2026-01-03,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,11;21,2.8,best guess,0.3
@@ -964,6 +979,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-01-03|105|13 Logan Rindfleisch > P&R Ball Handler > Left P&R > Side > Go Away from Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts,105,2026-01-03,UW-Whitewater,defense,JR Lukenbill,play-by-play,True,0,26.2,best guess,0.3
 2026-01-03|105|13 Logan Rindfleisch > P&R Ball Handler > Left P&R > Side > Go Away from Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts,105,2026-01-03,UW-Whitewater,defense,Luke Bara,play-by-play,True,11;35,28.2,best guess,0.3
 2026-01-03|105|13 Logan Rindfleisch > P&R Ball Handler > Left P&R > Side > Go Away from Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts,105,2026-01-03,UW-Whitewater,defense,Richie Warren,play-by-play,True,7;14;18,21.0,best guess,0.3
+2026-01-03|106|32 Luke Bara > Non Possession > Non Shooting Foul,106,2026-01-03,UW-Whitewater,offense,Brock Marino,play-by-play,True,1;20,20.5,best guess,0.3
+2026-01-03|106|32 Luke Bara > Non Possession > Non Shooting Foul,106,2026-01-03,UW-Whitewater,offense,Collin Madson,play-by-play,True,10;28,23.2,best guess,0.3
+2026-01-03|106|32 Luke Bara > Non Possession > Non Shooting Foul,106,2026-01-03,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,14;29,18.2,best guess,0.3
+2026-01-03|106|32 Luke Bara > Non Possession > Non Shooting Foul,106,2026-01-03,UW-Whitewater,offense,Luke Bara,play-by-play,True,15;42,23.0,best guess,0.3
+2026-01-03|106|32 Luke Bara > Non Possession > Non Shooting Foul,106,2026-01-03,UW-Whitewater,offense,Richie Warren,play-by-play,True,19;26;44,13.0,best guess,0.3
+2026-01-03|106|32 Luke Bara > Non Possession > Non Shooting Foul,106,2026-01-03,UW-Oshkosh Titans,defense,Aiden Hawkinson,play-by-play,True,3;30;34,16.5,best guess,0.3
+2026-01-03|106|32 Luke Bara > Non Possession > Non Shooting Foul,106,2026-01-03,UW-Oshkosh Titans,defense,Jay Dalton,play-by-play,True,6;13;52,21.5,best guess,0.3
+2026-01-03|106|32 Luke Bara > Non Possession > Non Shooting Foul,106,2026-01-03,UW-Oshkosh Titans,defense,Jonah Rindfleisch,play-by-play,True,4,21.2,best guess,0.3
+2026-01-03|106|32 Luke Bara > Non Possession > Non Shooting Foul,106,2026-01-03,UW-Oshkosh Titans,defense,Logan Rindfleisch,play-by-play,True,11;24;53,16.8,best guess,0.3
+2026-01-03|106|32 Luke Bara > Non Possession > Non Shooting Foul,106,2026-01-03,UW-Oshkosh Titans,defense,Oskar Kangas,play-by-play,True,0;22;36,18.0,best guess,0.3
 2026-01-03|107|24 Richie Warren > No Play Type > Turnover,107,2026-01-03,UW-Whitewater,offense,Collin Madson,play-by-play,True,17,1.5,best guess,0.3
 2026-01-03|107|24 Richie Warren > No Play Type > Turnover,107,2026-01-03,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,9,4.5,best guess,0.3
 2026-01-03|107|24 Richie Warren > No Play Type > Turnover,107,2026-01-03,UW-Whitewater,offense,Jake Quast,play-by-play,True,11,4.8,best guess,0.3
@@ -1024,6 +1049,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-01-03|112|15 Collin Madson > ISO > Right > Drives Right > To Basket > Foul,112,2026-01-03,UW-Oshkosh Titans,defense,Joey LaChapell,play-by-play,True,7;18;40;57,25.8,best guess,0.3
 2026-01-03|112|15 Collin Madson > ISO > Right > Drives Right > To Basket > Foul,112,2026-01-03,UW-Oshkosh Titans,defense,Michael Metcalf-Grassman,play-by-play,True,4;15;22;35;66,28.5,best guess,0.3
 2026-01-03|112|15 Collin Madson > ISO > Right > Drives Right > To Basket > Foul,112,2026-01-03,UW-Oshkosh Titans,defense,Nate Nazos,play-by-play,True,3;19;20;33;49;52;54;65,30.8,best guess,0.3
+2026-01-03|113|0 Brandon Beck > Non Possession > Non Shooting Foul,113,2026-01-03,UW-Oshkosh Titans,offense,Brandon Beck,play-by-play,True,3;22,20.0,best guess,0.3
+2026-01-03|113|0 Brandon Beck > Non Possession > Non Shooting Foul,113,2026-01-03,UW-Oshkosh Titans,offense,Carter Thomas,play-by-play,True,1;27;55,13.8,best guess,0.3
+2026-01-03|113|0 Brandon Beck > Non Possession > Non Shooting Foul,113,2026-01-03,UW-Oshkosh Titans,offense,Joey LaChapell,play-by-play,True,23,19.0,best guess,0.3
+2026-01-03|113|0 Brandon Beck > Non Possession > Non Shooting Foul,113,2026-01-03,UW-Oshkosh Titans,offense,Michael Metcalf-Grassman,play-by-play,True,9;12;38;51;54,22.0,best guess,0.3
+2026-01-03|113|0 Brandon Beck > Non Possession > Non Shooting Foul,113,2026-01-03,UW-Oshkosh Titans,offense,Nate Nazos,play-by-play,True,11;18;41,19.5,best guess,0.3
+2026-01-03|113|0 Brandon Beck > Non Possession > Non Shooting Foul,113,2026-01-03,UW-Whitewater,defense,Collin Madson,play-by-play,True,10;21;57,25.5,best guess,0.3
+2026-01-03|113|0 Brandon Beck > Non Possession > Non Shooting Foul,113,2026-01-03,UW-Whitewater,defense,JR Lukenbill,play-by-play,True,7;30;53;62,18.0,best guess,0.3
+2026-01-03|113|0 Brandon Beck > Non Possession > Non Shooting Foul,113,2026-01-03,UW-Whitewater,defense,Jake Quast,play-by-play,True,8;20;31;50,16.2,best guess,0.3
+2026-01-03|113|0 Brandon Beck > Non Possession > Non Shooting Foul,113,2026-01-03,UW-Whitewater,defense,Luke Bara,play-by-play,True,6;60,18.5,best guess,0.3
+2026-01-03|113|0 Brandon Beck > Non Possession > Non Shooting Foul,113,2026-01-03,UW-Whitewater,defense,Richie Warren,play-by-play,True,5;17;58,28.0,best guess,0.3
 2026-01-03|114|5 Matt Imig > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 23 Oskar Kangas > P&R Roll Man > Rolls to Basket > Miss 2 Pts,114,2026-01-03,UW-Oshkosh Titans,offense,Aiden Hawkinson,play-by-play,True,0;46,16.5,best guess,0.3
 2026-01-03|114|5 Matt Imig > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 23 Oskar Kangas > P&R Roll Man > Rolls to Basket > Miss 2 Pts,114,2026-01-03,UW-Oshkosh Titans,offense,Jonah Rindfleisch,play-by-play,True,4;21,16.0,best guess,0.3
 2026-01-03|114|5 Matt Imig > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 23 Oskar Kangas > P&R Roll Man > Rolls to Basket > Miss 2 Pts,114,2026-01-03,UW-Oshkosh Titans,offense,Matt Imig,play-by-play,True,2;20;31;37,10.0,best guess,0.3
@@ -1979,6 +2014,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2025-12-30|357|12 Jake Quast > ISO > Right > Drives Left > To Basket > Miss 2 Pts,357,2025-12-30,Coe Kohawks,defense,Deuce Walters,play-by-play,True,4,17.0,best guess,0.3
 2025-12-30|357|12 Jake Quast > ISO > Right > Drives Left > To Basket > Miss 2 Pts,357,2025-12-30,Coe Kohawks,defense,Kanyon Bryte,play-by-play,True,2;30,14.5,best guess,0.3
 2025-12-30|357|12 Jake Quast > ISO > Right > Drives Left > To Basket > Miss 2 Pts,357,2025-12-30,Coe Kohawks,defense,Ryan Dolphin,play-by-play,True,17;48,13.8,best guess,0.3
+2025-12-30|358|2 Ryan Dolphin > Non Possession > Non Shooting Foul,358,2025-12-30,Coe Kohawks,offense,Aaron Foote,play-by-play,True,8;51,27.8,best guess,0.3
+2025-12-30|358|2 Ryan Dolphin > Non Possession > Non Shooting Foul,358,2025-12-30,Coe Kohawks,offense,Cooper Nailor,play-by-play,True,5;20,26.5,best guess,0.3
+2025-12-30|358|2 Ryan Dolphin > Non Possession > Non Shooting Foul,358,2025-12-30,Coe Kohawks,offense,Deuce Walters,play-by-play,True,0;18;26,24.0,best guess,0.3
+2025-12-30|358|2 Ryan Dolphin > Non Possession > Non Shooting Foul,358,2025-12-30,Coe Kohawks,offense,Kanyon Bryte,play-by-play,True,4;31;42;57,30.5,best guess,0.3
+2025-12-30|358|2 Ryan Dolphin > Non Possession > Non Shooting Foul,358,2025-12-30,Coe Kohawks,offense,Ryan Dolphin,play-by-play,True,1;15;24;29;36,26.2,Synergy;best guess,0.95
+2025-12-30|358|2 Ryan Dolphin > Non Possession > Non Shooting Foul,358,2025-12-30,UW-Whitewater,defense,Collin Madson,play-by-play,True,11;19;23;27;45;61,15.2,best guess,0.3
+2025-12-30|358|2 Ryan Dolphin > Non Possession > Non Shooting Foul,358,2025-12-30,UW-Whitewater,defense,Jake Quast,play-by-play,True,7;37;67,12.2,best guess,0.3
+2025-12-30|358|2 Ryan Dolphin > Non Possession > Non Shooting Foul,358,2025-12-30,UW-Whitewater,defense,Kelton McEwen,play-by-play,True,10;14;32;46;64,20.2,best guess,0.3
+2025-12-30|358|2 Ryan Dolphin > Non Possession > Non Shooting Foul,358,2025-12-30,UW-Whitewater,defense,Luke Bara,play-by-play,True,6;13;34;44;59,13.0,best guess,0.3
+2025-12-30|358|2 Ryan Dolphin > Non Possession > Non Shooting Foul,358,2025-12-30,UW-Whitewater,defense,Tyshawn Teague-Johnson,play-by-play,True,21;48;65,11.8,best guess,0.3
 2025-12-30|359|12 C. Reece Breitenbach > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Turnover,359,2025-12-30,Coe Kohawks,offense,Aaron Foote,play-by-play,True,8;42;46,15.2,best guess,0.3
 2025-12-30|359|12 C. Reece Breitenbach > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Turnover,359,2025-12-30,Coe Kohawks,offense,C. Reece Breitenbach,play-by-play,True,5,20.5,best guess,0.3
 2025-12-30|359|12 C. Reece Breitenbach > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Turnover,359,2025-12-30,Coe Kohawks,offense,Cooper Nailor,play-by-play,True,9;35,16.0,best guess,0.3
@@ -2064,11 +2109,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2025-12-30|367|12 Jake Quast > P&R Ball Handler > Left P&R > Side > Go Away from Pick > To Basket > Miss 2 Pts,367,2025-12-30,Coe Kohawks,defense,Jackson Bowman,play-by-play,True,5,12.0,best guess,0.3
 2025-12-30|367|12 Jake Quast > P&R Ball Handler > Left P&R > Side > Go Away from Pick > To Basket > Miss 2 Pts,367,2025-12-30,Coe Kohawks,defense,Jackson Newell,play-by-play,True,8,13.2,best guess,0.3
 2025-12-30|367|12 Jake Quast > P&R Ball Handler > Left P&R > Side > Go Away from Pick > To Basket > Miss 2 Pts,367,2025-12-30,Coe Kohawks,defense,Ryan Dolphin,play-by-play,True,3,13.5,best guess,0.3
-2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,Coe Kohawks,offense,C. Reece Breitenbach,clips before/after (no clock),True,6,37.8,best guess,0.3
-2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,Coe Kohawks,offense,Cooper Nailor,clips before/after (no clock),True,9;52,32.5,best guess,0.3
-2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,Coe Kohawks,offense,Jackson Bowman,clips before/after (no clock),True,13,35.0,best guess,0.3
-2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,Coe Kohawks,offense,Jackson Newell,clips before/after (no clock),True,1;50;76,28.8,best guess,0.3
-2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,Coe Kohawks,offense,Ryan Dolphin,clips before/after (no clock),True,7;21;36,33.8,best guess,0.3
+2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,Coe Kohawks,offense,C. Reece Breitenbach,play-by-play,True,6,37.8,best guess,0.3
+2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,Coe Kohawks,offense,Cooper Nailor,play-by-play,True,9;52,32.5,best guess,0.3
+2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,Coe Kohawks,offense,Jackson Bowman,play-by-play,True,13,35.0,best guess,0.3
+2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,Coe Kohawks,offense,Jackson Newell,play-by-play,True,1;50;76,28.8,best guess,0.3
+2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,Coe Kohawks,offense,Ryan Dolphin,play-by-play,True,7;21;36,33.8,best guess,0.3
+2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,UW-Whitewater,defense,JR Lukenbill,play-by-play,True,8;23;43;51;54,31.0,best guess,0.3
+2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,UW-Whitewater,defense,Jake Quast,play-by-play,True,19;59,25.2,best guess,0.3
+2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,UW-Whitewater,defense,Joey Berezowitz,play-by-play,True,16;41;58;72,19.0,best guess,0.3
+2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,UW-Whitewater,defense,Kelton McEwen,play-by-play,True,5;20;30;45;69,27.5,best guess,0.3
+2025-12-30|368|35 Jackson Newell > Non Possession > Non Shooting Foul,368,2025-12-30,UW-Whitewater,defense,Tyshawn Teague-Johnson,play-by-play,True,3;32;74,28.8,best guess,0.3
 2025-12-30|369|35 Jackson Newell > Cut > Basket > Make 2 Pts,369,2025-12-30,Coe Kohawks,offense,C. Reece Breitenbach,play-by-play,True,4;43,14.5,best guess,0.3
 2025-12-30|369|35 Jackson Newell > Cut > Basket > Make 2 Pts,369,2025-12-30,Coe Kohawks,offense,Cooper Nailor,play-by-play,True,8;27;50,13.2,best guess,0.3
 2025-12-30|369|35 Jackson Newell > Cut > Basket > Make 2 Pts,369,2025-12-30,Coe Kohawks,offense,Jackson Bowman,play-by-play,True,3;19;41,14.2,best guess,0.3
@@ -2089,11 +2139,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2025-12-30|370|15 Collin Madson > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts,370,2025-12-30,Coe Kohawks,defense,Jackson Bowman,play-by-play,True,21,13.0,best guess,0.3
 2025-12-30|370|15 Collin Madson > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts,370,2025-12-30,Coe Kohawks,defense,Jackson Newell,play-by-play,True,2,12.2,best guess,0.3
 2025-12-30|370|15 Collin Madson > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts,370,2025-12-30,Coe Kohawks,defense,Ryan Dolphin,play-by-play,True,0;25,13.5,best guess,0.3
-2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,Coe Kohawks,offense,C. Reece Breitenbach,clips before/after (no clock),True,7;22;46,18.0,best guess,0.3
-2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,Coe Kohawks,offense,Cooper Nailor,clips before/after (no clock),True,8;45,19.5,Synergy;best guess,0.95
-2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,Coe Kohawks,offense,Jackson Bowman,clips before/after (no clock),True,1;24,23.8,best guess,0.3
-2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,Coe Kohawks,offense,Jackson Newell,clips before/after (no clock),True,0;29;34,25.2,best guess,0.3
-2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,Coe Kohawks,offense,Ryan Dolphin,clips before/after (no clock),True,13;27,19.2,best guess,0.3
+2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,Coe Kohawks,offense,C. Reece Breitenbach,play-by-play,True,7;22;46,18.0,best guess,0.3
+2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,Coe Kohawks,offense,Cooper Nailor,play-by-play,True,8;45,19.5,Synergy;best guess,0.95
+2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,Coe Kohawks,offense,Jackson Bowman,play-by-play,True,1;24,23.8,best guess,0.3
+2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,Coe Kohawks,offense,Jackson Newell,play-by-play,True,0;29;34,25.2,best guess,0.3
+2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,Coe Kohawks,offense,Ryan Dolphin,play-by-play,True,13;27,19.2,best guess,0.3
+2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,UW-Whitewater,defense,Collin Madson,play-by-play,True,3,15.0,best guess,0.3
+2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,UW-Whitewater,defense,Joey Berezowitz,play-by-play,True,20;58,16.0,best guess,0.3
+2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,UW-Whitewater,defense,Kelton McEwen,play-by-play,True,11;26;38;44,19.5,best guess,0.3
+2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,UW-Whitewater,defense,Richie Warren,play-by-play,True,14;31;53,13.5,best guess,0.3
+2025-12-30|371|5 Cooper Nailor > Non Possession > Non Shooting Foul,371,2025-12-30,UW-Whitewater,defense,Tyshawn Teague-Johnson,play-by-play,True,9;28,17.5,best guess,0.3
 2025-12-30|372|2 Ryan Dolphin > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,372,2025-12-30,Coe Kohawks,offense,C. Reece Breitenbach,play-by-play,True,22,8.5,best guess,0.3
 2025-12-30|372|2 Ryan Dolphin > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,372,2025-12-30,Coe Kohawks,offense,Cooper Nailor,play-by-play,True,3,11.5,best guess,0.3
 2025-12-30|372|2 Ryan Dolphin > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,372,2025-12-30,Coe Kohawks,offense,Jackson Bowman,play-by-play,True,5,9.2,best guess,0.3
@@ -2149,11 +2204,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2025-12-30|379|2 Ryan Dolphin > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,379,2025-12-30,UW-Whitewater,defense,Luke Bara,play-by-play,True,17,8.0,best guess,0.3
 2025-12-30|379|2 Ryan Dolphin > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,379,2025-12-30,UW-Whitewater,defense,Richie Warren,play-by-play,True,11;24,9.8,best guess,0.3
 2025-12-30|379|2 Ryan Dolphin > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,379,2025-12-30,UW-Whitewater,defense,Tyshawn Teague-Johnson,play-by-play,True,8,7.2,best guess,0.3
-2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,UW-Whitewater,offense,Collin Madson,clips before/after (no clock),True,0;25;40;47;68,25.8,best guess,0.3
-2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,UW-Whitewater,offense,Joey Berezowitz,clips before/after (no clock),True,2;12;60,36.5,best guess,0.3
-2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,UW-Whitewater,offense,Luke Bara,clips before/after (no clock),True,14;58;69,29.2,best guess,0.3
-2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,UW-Whitewater,offense,Richie Warren,clips before/after (no clock),True,4;18;34;38;43;66;77,15.2,best guess,0.3
-2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,UW-Whitewater,offense,Tyshawn Teague-Johnson,clips before/after (no clock),True,21;26;76,10.2,best guess,0.3
+2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,UW-Whitewater,offense,Collin Madson,play-by-play,True,0;25;40;47;68,25.8,best guess,0.3
+2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,UW-Whitewater,offense,Joey Berezowitz,play-by-play,True,2;12;60,36.5,best guess,0.3
+2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,UW-Whitewater,offense,Luke Bara,play-by-play,True,14;58;69,29.2,best guess,0.3
+2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,UW-Whitewater,offense,Richie Warren,play-by-play,True,4;18;34;38;43;66;77,15.2,best guess,0.3
+2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,UW-Whitewater,offense,Tyshawn Teague-Johnson,play-by-play,True,21;26;76,10.2,best guess,0.3
+2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,Coe Kohawks,defense,Cooper Nailor,play-by-play,True,7;24;42,38.0,best guess,0.3
+2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,Coe Kohawks,defense,Jackson Bowman,play-by-play,True,17;27,47.5,best guess,0.3
+2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,Coe Kohawks,defense,Jackson Newell,play-by-play,True,9;28;39,40.2,best guess,0.3
+2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,Coe Kohawks,defense,Jay Akin,play-by-play,True,8;16;29;32;72,45.2,best guess,0.3
+2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,380,2025-12-30,Coe Kohawks,defense,Ryan Dolphin,play-by-play,True,1;20;57,41.8,best guess,0.3
 2025-12-30|381|32 Luke Bara > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,381,2025-12-30,UW-Whitewater,offense,Collin Madson,play-by-play,True,16,5.8,best guess,0.3
 2025-12-30|381|32 Luke Bara > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,381,2025-12-30,UW-Whitewater,offense,Joey Berezowitz,play-by-play,True,13,6.2,best guess,0.3
 2025-12-30|381|32 Luke Bara > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,381,2025-12-30,UW-Whitewater,offense,Luke Bara,play-by-play,True,5,7.0,Synergy,0.95
@@ -2659,11 +2719,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2025-12-30|452|5 Cooper Nailor > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,452,2025-12-30,UW-Whitewater,defense,Joey Berezowitz,play-by-play,True,1;22;35,17.0,best guess,0.3
 2025-12-30|452|5 Cooper Nailor > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,452,2025-12-30,UW-Whitewater,defense,Luke Bara,play-by-play,True,9;14;50,16.5,best guess,0.3
 2025-12-30|452|5 Cooper Nailor > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,452,2025-12-30,UW-Whitewater,defense,Richie Warren,play-by-play,True,17;44,15.8,best guess,0.3
-2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,Coe Kohawks,defense,C. Reece Breitenbach,clips before/after (no clock),True,1;16,16.2,best guess,0.3
-2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,Coe Kohawks,defense,Cooper Nailor,clips before/after (no clock),True,0,20.2,best guess,0.3
-2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,Coe Kohawks,defense,Deuce Walters,clips before/after (no clock),True,12;31,15.5,best guess,0.3
-2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,Coe Kohawks,defense,Jackson Bowman,clips before/after (no clock),True,13,16.2,best guess,0.3
-2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,Coe Kohawks,defense,Kanyon Bryte,clips before/after (no clock),True,10,14.0,best guess,0.3
+2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,UW-Whitewater,offense,Brock Marino,play-by-play,True,7;24,11.5,best guess,0.3
+2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,UW-Whitewater,offense,Collin Madson,play-by-play,True,23,8.0,best guess,0.3
+2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,UW-Whitewater,offense,Joey Berezowitz,play-by-play,True,18;32,8.0,best guess,0.3
+2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,UW-Whitewater,offense,Luke Bara,play-by-play,True,3;35;36,10.5,best guess,0.3
+2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,UW-Whitewater,offense,Richie Warren,play-by-play,True,4;26,11.0,best guess,0.3
+2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,Coe Kohawks,defense,C. Reece Breitenbach,play-by-play,True,1;16,16.2,best guess,0.3
+2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,Coe Kohawks,defense,Cooper Nailor,play-by-play,True,0,20.2,best guess,0.3
+2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,Coe Kohawks,defense,Deuce Walters,play-by-play,True,12;31,15.5,best guess,0.3
+2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,Coe Kohawks,defense,Jackson Bowman,play-by-play,True,13,16.2,best guess,0.3
+2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,453,2025-12-30,Coe Kohawks,defense,Kanyon Bryte,play-by-play,True,10,14.0,best guess,0.3
 2025-12-30|454|10 Darius Chestnut > Spot-Up > No Dribble Jumper > Open > Medium/17' to <3p > Miss 2 Pts,454,2025-12-30,UW-Whitewater,offense,Darius Chestnut,play-by-play,True,19;25;40,11.8,best guess,0.3
 2025-12-30|454|10 Darius Chestnut > Spot-Up > No Dribble Jumper > Open > Medium/17' to <3p > Miss 2 Pts,454,2025-12-30,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,24,8.8,best guess,0.3
 2025-12-30|454|10 Darius Chestnut > Spot-Up > No Dribble Jumper > Open > Medium/17' to <3p > Miss 2 Pts,454,2025-12-30,UW-Whitewater,offense,Kelton McEwen,play-by-play,True,13;17;23;31,14.0,best guess,0.3
@@ -2824,11 +2889,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2025-12-30|470|4 Deuce Walters > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Medium/17' to <3p > Make 2 Pts,470,2025-12-30,UW-Whitewater,defense,Jake Quast,play-by-play,True,12;28;59,23.0,best guess,0.3
 2025-12-30|470|4 Deuce Walters > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Medium/17' to <3p > Make 2 Pts,470,2025-12-30,UW-Whitewater,defense,Kelton McEwen,play-by-play,True,3;19;25;51;68,21.2,best guess,0.3
 2025-12-30|470|4 Deuce Walters > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Medium/17' to <3p > Make 2 Pts,470,2025-12-30,UW-Whitewater,defense,Tyshawn Teague-Johnson,play-by-play,True,0;24;30,26.8,best guess,0.3
-2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,UW-Whitewater,offense,Darius Chestnut,clips before/after (no clock),True,20;41;53,17.0,best guess,0.3
-2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,UW-Whitewater,offense,JR Lukenbill,clips before/after (no clock),True,10;29;35,17.0,best guess,0.3
-2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,UW-Whitewater,offense,Jake Quast,clips before/after (no clock),True,18;26;37,19.0,best guess,0.3
-2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,UW-Whitewater,offense,Kelton McEwen,clips before/after (no clock),True,12;33;42,14.8,best guess,0.3
-2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,UW-Whitewater,offense,Tyshawn Teague-Johnson,clips before/after (no clock),True,6;23;27;36,22.2,best guess,0.3
+2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,UW-Whitewater,offense,Darius Chestnut,play-by-play,True,20;41;53,17.0,best guess,0.3
+2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,10;29;35,17.0,best guess,0.3
+2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,UW-Whitewater,offense,Jake Quast,play-by-play,True,18;26;37,19.0,best guess,0.3
+2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,UW-Whitewater,offense,Kelton McEwen,play-by-play,True,12;33;42,14.8,best guess,0.3
+2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,UW-Whitewater,offense,Tyshawn Teague-Johnson,play-by-play,True,6;23;27;36,22.2,best guess,0.3
+2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,Coe Kohawks,defense,Cooper Nailor,play-by-play,True,4;24;30,27.0,best guess,0.3
+2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,Coe Kohawks,defense,Deuce Walters,play-by-play,True,2;34,26.2,best guess,0.3
+2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,Coe Kohawks,defense,Jackson Bowman,play-by-play,True,21,22.2,best guess,0.3
+2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,Coe Kohawks,defense,Kanyon Bryte,play-by-play,True,14;46;50;52;57,21.8,best guess,0.3
+2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,471,2025-12-30,Coe Kohawks,defense,Ryan Dolphin,play-by-play,True,0;31;44,22.5,best guess,0.3
 2025-12-30|472|2 Kelton Mcewen > P&R Ball Handler > Left P&R > Baseline > Takes Early Jump Shot > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,472,2025-12-30,UW-Whitewater,offense,Darius Chestnut,play-by-play,True,12;28,9.2,best guess,0.3
 2025-12-30|472|2 Kelton Mcewen > P&R Ball Handler > Left P&R > Baseline > Takes Early Jump Shot > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,472,2025-12-30,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,6,15.5,best guess,0.3
 2025-12-30|472|2 Kelton Mcewen > P&R Ball Handler > Left P&R > Baseline > Takes Early Jump Shot > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,472,2025-12-30,UW-Whitewater,offense,Jake Quast,play-by-play,True,11,10.2,best guess,0.3
@@ -2869,16 +2939,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2025-12-30|476|12 Jake Quast > Spot-Up > Drives Left > Turnover,476,2025-12-30,Coe Kohawks,defense,Deuce Walters,play-by-play,True,5;33,4.2,best guess,0.3
 2025-12-30|476|12 Jake Quast > Spot-Up > Drives Left > Turnover,476,2025-12-30,Coe Kohawks,defense,Jackson Newell,play-by-play,True,4,7.0,best guess,0.3
 2025-12-30|476|12 Jake Quast > Spot-Up > Drives Left > Turnover,476,2025-12-30,Coe Kohawks,defense,Ryan Dolphin,play-by-play,True,6,8.8,best guess,0.3
-2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,Coe Kohawks,offense,Aleks Jajic,clips before/after (no clock),True,1;25;49,12.2,best guess,0.3
-2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,Coe Kohawks,offense,Cooper Nailor,clips before/after (no clock),True,18;35,9.8,best guess,0.3
-2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,Coe Kohawks,offense,Deuce Walters,clips before/after (no clock),True,5;37,11.0,best guess,0.3
-2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,Coe Kohawks,offense,Jackson Newell,clips before/after (no clock),True,7;14;19,7.0,best guess,0.3
-2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,Coe Kohawks,offense,Ryan Dolphin,clips before/after (no clock),True,4,20.0,best guess,0.3
-2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,UW-Whitewater,defense,Darius Chestnut,clips before/after (no clock),True,0,14.2,best guess,0.3
-2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,UW-Whitewater,defense,JR Lukenbill,clips before/after (no clock),True,17;31,12.5,best guess,0.3
-2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,UW-Whitewater,defense,Jake Quast,clips before/after (no clock),True,11;38;43,11.5,best guess,0.3
-2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,UW-Whitewater,defense,Kelton McEwen,clips before/after (no clock),True,12;26,11.0,best guess,0.3
-2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,UW-Whitewater,defense,Tyshawn Teague-Johnson,clips before/after (no clock),True,15;36,14.2,best guess,0.3
+2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,Coe Kohawks,offense,Aleks Jajic,play-by-play,True,1;25;49,12.2,best guess,0.3
+2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,Coe Kohawks,offense,Cooper Nailor,play-by-play,True,18;35,9.8,best guess,0.3
+2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,Coe Kohawks,offense,Deuce Walters,play-by-play,True,5;37,11.0,best guess,0.3
+2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,Coe Kohawks,offense,Jackson Newell,play-by-play,True,7;14;19,7.0,best guess,0.3
+2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,Coe Kohawks,offense,Ryan Dolphin,play-by-play,True,4,20.0,best guess,0.3
+2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,UW-Whitewater,defense,Darius Chestnut,play-by-play,True,0,14.2,best guess,0.3
+2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,UW-Whitewater,defense,JR Lukenbill,play-by-play,True,17;31,12.5,best guess,0.3
+2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,UW-Whitewater,defense,Jake Quast,play-by-play,True,11;38;43,11.5,best guess,0.3
+2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,UW-Whitewater,defense,Kelton McEwen,play-by-play,True,12;26,11.0,best guess,0.3
+2025-12-30|477|5 Cooper Nailor > Non Possession > Non Shooting Foul,477,2025-12-30,UW-Whitewater,defense,Tyshawn Teague-Johnson,play-by-play,True,15;36,14.2,best guess,0.3
 2025-12-30|478|35 Jackson Newell > Post-Up > Right Block > Left Shoulder > Dribble Move > To Drop Step > Make 2 Pts,478,2025-12-30,Coe Kohawks,offense,Aleks Jajic,play-by-play,True,11;23;37,7.2,best guess,0.3
 2025-12-30|478|35 Jackson Newell > Post-Up > Right Block > Left Shoulder > Dribble Move > To Drop Step > Make 2 Pts,478,2025-12-30,Coe Kohawks,offense,Cooper Nailor,play-by-play,True,9,6.0,best guess,0.3
 2025-12-30|478|35 Jackson Newell > Post-Up > Right Block > Left Shoulder > Dribble Move > To Drop Step > Make 2 Pts,478,2025-12-30,Coe Kohawks,offense,Deuce Walters,play-by-play,True,2,14.2,best guess,0.3
@@ -3119,16 +3189,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2025-12-30|504|40 Tyshawn Teague-Johnson > ISO > Left > Drives Right > To Basket > Make 2 Pts,504,2025-12-30,Coe Kohawks,defense,Deuce Walters,play-by-play,True,10,12.8,best guess,0.3
 2025-12-30|504|40 Tyshawn Teague-Johnson > ISO > Left > Drives Right > To Basket > Make 2 Pts,504,2025-12-30,Coe Kohawks,defense,Jackson Bowman,play-by-play,True,7,11.5,best guess,0.3
 2025-12-30|504|40 Tyshawn Teague-Johnson > ISO > Left > Drives Right > To Basket > Make 2 Pts,504,2025-12-30,Coe Kohawks,defense,Kanyon Bryte,play-by-play,True,5,11.5,best guess,0.3
-2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,Coe Kohawks,offense,C. Reece Breitenbach,clips before/after (no clock),True,5,4.0,best guess,0.3
-2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,Coe Kohawks,offense,Cooper Nailor,clips before/after (no clock),True,22,1.8,best guess,0.3
-2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,Coe Kohawks,offense,Deuce Walters,clips before/after (no clock),True,6;39,3.8,best guess,0.3
-2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,Coe Kohawks,offense,Jackson Bowman,clips before/after (no clock),True,23;28,6.0,best guess,0.3
-2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,Coe Kohawks,offense,Kanyon Bryte,clips before/after (no clock),True,19;33,9.5,best guess,0.3
-2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,UW-Whitewater,defense,Darius Chestnut,clips before/after (no clock),True,16;26;40,5.8,best guess,0.3
-2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,UW-Whitewater,defense,JR Lukenbill,clips before/after (no clock),True,2;31,6.5,best guess,0.3
-2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,UW-Whitewater,defense,Jake Quast,clips before/after (no clock),True,10;36,3.8,best guess,0.3
-2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,UW-Whitewater,defense,Kelton McEwen,clips before/after (no clock),True,0;25,5.8,best guess,0.3
-2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,UW-Whitewater,defense,Tyshawn Teague-Johnson,clips before/after (no clock),True,21,8.8,best guess,0.3
+2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,Coe Kohawks,offense,C. Reece Breitenbach,play-by-play,True,5,4.0,best guess,0.3
+2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,Coe Kohawks,offense,Cooper Nailor,play-by-play,True,22,1.8,best guess,0.3
+2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,Coe Kohawks,offense,Deuce Walters,play-by-play,True,6;39,3.8,best guess,0.3
+2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,Coe Kohawks,offense,Jackson Bowman,play-by-play,True,23;28,6.0,best guess,0.3
+2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,Coe Kohawks,offense,Kanyon Bryte,play-by-play,True,19;33,9.5,best guess,0.3
+2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,UW-Whitewater,defense,Darius Chestnut,play-by-play,True,16;26;40,5.8,best guess,0.3
+2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,UW-Whitewater,defense,JR Lukenbill,play-by-play,True,2;31,6.5,best guess,0.3
+2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,UW-Whitewater,defense,Jake Quast,play-by-play,True,10;36,3.8,best guess,0.3
+2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,UW-Whitewater,defense,Kelton McEwen,play-by-play,True,0;25,5.8,best guess,0.3
+2025-12-30|505|5 Cooper Nailor > Non Possession > Non Shooting Foul,505,2025-12-30,UW-Whitewater,defense,Tyshawn Teague-Johnson,play-by-play,True,21,8.8,best guess,0.3
 2025-12-30|506|4 Deuce Walters > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,506,2025-12-30,Coe Kohawks,offense,C. Reece Breitenbach,play-by-play,True,1;30,17.0,best guess,0.3
 2025-12-30|506|4 Deuce Walters > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,506,2025-12-30,Coe Kohawks,offense,Cooper Nailor,play-by-play,True,4;36,16.0,best guess,0.3
 2025-12-30|506|4 Deuce Walters > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,506,2025-12-30,Coe Kohawks,offense,Deuce Walters,play-by-play,True,2;25;48,13.5,Synergy;best guess,0.95
@@ -3169,16 +3239,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2025-12-30|511|11 Jr Lukenbill > Transition > Ballhandler > To Basket > Make 2 Pts,511,2025-12-30,Coe Kohawks,defense,Deuce Walters,play-by-play,True,11,1.8,best guess,0.3
 2025-12-30|511|11 Jr Lukenbill > Transition > Ballhandler > To Basket > Make 2 Pts,511,2025-12-30,Coe Kohawks,defense,Jackson Bowman,play-by-play,True,5,2.2,best guess,0.3
 2025-12-30|511|11 Jr Lukenbill > Transition > Ballhandler > To Basket > Make 2 Pts,511,2025-12-30,Coe Kohawks,defense,Kanyon Bryte,play-by-play,True,3,2.5,best guess,0.3
-2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,Coe Kohawks,offense,C. Reece Breitenbach,clips before/after (no clock),True,9;25;53,27.8,best guess,0.3
-2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,Coe Kohawks,offense,Cooper Nailor,clips before/after (no clock),True,3;33;62,27.2,best guess,0.3
-2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,Coe Kohawks,offense,Deuce Walters,clips before/after (no clock),True,1;36;42,30.0,best guess,0.3
-2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,Coe Kohawks,offense,Jackson Bowman,clips before/after (no clock),True,6;41;77;79,19.8,best guess,0.3
-2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,Coe Kohawks,offense,Kanyon Bryte,clips before/after (no clock),True,19;44;63,29.8,Synergy;best guess,0.95
-2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,UW-Whitewater,defense,Darius Chestnut,clips before/after (no clock),True,17;45;52,16.5,best guess,0.3
-2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,UW-Whitewater,defense,JR Lukenbill,clips before/after (no clock),True,2;38;43;66;75,16.8,best guess,0.3
-2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,UW-Whitewater,defense,Jake Quast,clips before/after (no clock),True,22;48,20.0,best guess,0.3
-2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,UW-Whitewater,defense,Kelton McEwen,clips before/after (no clock),True,20;37;49;74,18.0,best guess,0.3
-2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,UW-Whitewater,defense,Tyshawn Teague-Johnson,clips before/after (no clock),True,18;32;54;76,17.2,best guess,0.3
+2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,Coe Kohawks,offense,C. Reece Breitenbach,play-by-play,True,9;25;53,27.8,best guess,0.3
+2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,Coe Kohawks,offense,Cooper Nailor,play-by-play,True,3;33;62,27.2,best guess,0.3
+2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,Coe Kohawks,offense,Deuce Walters,play-by-play,True,1;36;42,30.0,best guess,0.3
+2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,Coe Kohawks,offense,Jackson Bowman,play-by-play,True,6;41;77;79,19.8,best guess,0.3
+2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,Coe Kohawks,offense,Kanyon Bryte,play-by-play,True,19;44;63,29.8,Synergy;best guess,0.95
+2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,UW-Whitewater,defense,Darius Chestnut,play-by-play,True,17;45;52,16.5,best guess,0.3
+2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,UW-Whitewater,defense,JR Lukenbill,play-by-play,True,2;38;43;66;75,16.8,best guess,0.3
+2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,UW-Whitewater,defense,Jake Quast,play-by-play,True,22;48,20.0,best guess,0.3
+2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,UW-Whitewater,defense,Kelton McEwen,play-by-play,True,20;37;49;74,18.0,best guess,0.3
+2025-12-30|512|34 Kanyon Bryte > Non Possession > Non Shooting Foul,512,2025-12-30,UW-Whitewater,defense,Tyshawn Teague-Johnson,play-by-play,True,18;32;54;76,17.2,best guess,0.3
 2025-12-30|513|5 Cooper Nailor > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 34 Kanyon Bryte > P&R Roll Man > Rolls to Basket > Make 2 Pts,513,2025-12-30,Coe Kohawks,offense,C. Reece Breitenbach,play-by-play,True,2,14.8,best guess,0.3
 2025-12-30|513|5 Cooper Nailor > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 34 Kanyon Bryte > P&R Roll Man > Rolls to Basket > Make 2 Pts,513,2025-12-30,Coe Kohawks,offense,Cooper Nailor,play-by-play,True,1,16.0,best guess,0.3
 2025-12-30|513|5 Cooper Nailor > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 34 Kanyon Bryte > P&R Roll Man > Rolls to Basket > Make 2 Pts,513,2025-12-30,Coe Kohawks,offense,Deuce Walters,play-by-play,True,24,9.0,best guess,0.3
@@ -3209,16 +3279,16 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2025-12-30|515|22 Jackson Bowman > Transition > Leak Outs > To Basket > Miss 2 Pts,515,2025-12-30,UW-Whitewater,defense,Jake Quast,play-by-play,True,4,7.2,best guess,0.3
 2025-12-30|515|22 Jackson Bowman > Transition > Leak Outs > To Basket > Miss 2 Pts,515,2025-12-30,UW-Whitewater,defense,Kelton McEwen,play-by-play,True,9,6.5,best guess,0.3
 2025-12-30|515|22 Jackson Bowman > Transition > Leak Outs > To Basket > Miss 2 Pts,515,2025-12-30,UW-Whitewater,defense,Tyshawn Teague-Johnson,play-by-play,True,1,6.5,best guess,0.3
-2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,UW-Whitewater,offense,Darius Chestnut,clips before/after (no clock),True,4;36,20.8,best guess,0.3
-2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,UW-Whitewater,offense,JR Lukenbill,clips before/after (no clock),True,21;52;53,16.0,best guess,0.3
-2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,UW-Whitewater,offense,Jake Quast,clips before/after (no clock),True,13;40,19.0,best guess,0.3
-2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,UW-Whitewater,offense,Kelton McEwen,clips before/after (no clock),True,9;35;48,17.8,best guess,0.3
-2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,UW-Whitewater,offense,Tyshawn Teague-Johnson,clips before/after (no clock),True,1,17.2,best guess,0.3
-2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,Coe Kohawks,defense,C. Reece Breitenbach,clips before/after (no clock),True,34,14.0,best guess,0.3
-2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,Coe Kohawks,defense,Cooper Nailor,clips before/after (no clock),True,37,14.8,best guess,0.3
-2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,Coe Kohawks,defense,Deuce Walters,clips before/after (no clock),True,10;22;31;54,14.0,best guess,0.3
-2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,Coe Kohawks,defense,Jackson Bowman,clips before/after (no clock),True,7,23.5,best guess,0.3
-2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,Coe Kohawks,defense,Kanyon Bryte,clips before/after (no clock),True,0;38,14.2,best guess,0.3
+2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,UW-Whitewater,offense,Darius Chestnut,play-by-play,True,4;36,20.8,best guess,0.3
+2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,21;52;53,16.0,best guess,0.3
+2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,UW-Whitewater,offense,Jake Quast,play-by-play,True,13;40,19.0,best guess,0.3
+2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,UW-Whitewater,offense,Kelton McEwen,play-by-play,True,9;35;48,17.8,best guess,0.3
+2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,UW-Whitewater,offense,Tyshawn Teague-Johnson,play-by-play,True,1,17.2,best guess,0.3
+2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,Coe Kohawks,defense,C. Reece Breitenbach,play-by-play,True,34,14.0,best guess,0.3
+2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,Coe Kohawks,defense,Cooper Nailor,play-by-play,True,37,14.8,best guess,0.3
+2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,Coe Kohawks,defense,Deuce Walters,play-by-play,True,10;22;31;54,14.0,best guess,0.3
+2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,Coe Kohawks,defense,Jackson Bowman,play-by-play,True,7,23.5,best guess,0.3
+2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,516,2025-12-30,Coe Kohawks,defense,Kanyon Bryte,play-by-play,True,0;38,14.2,best guess,0.3
 2025-12-30|517|11 Jr Lukenbill > No Play Type > No Dribble Jumper > Open > Short to < 17' > Miss 2 Pts,517,2025-12-30,UW-Whitewater,offense,Darius Chestnut,play-by-play,True,12;22,7.2,best guess,0.3
 2025-12-30|517|11 Jr Lukenbill > No Play Type > No Dribble Jumper > Open > Short to < 17' > Miss 2 Pts,517,2025-12-30,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,4;19;25,8.0,best guess,0.3
 2025-12-30|517|11 Jr Lukenbill > No Play Type > No Dribble Jumper > Open > Short to < 17' > Miss 2 Pts,517,2025-12-30,UW-Whitewater,offense,Jake Quast,play-by-play,True,2;28,5.2,best guess,0.3

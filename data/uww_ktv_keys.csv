@@ -1,8 +1,8 @@
 opponent,game_date,category,key_number,icon,headline,evidence,reasoning,source,impact,confidence,brief_eligible,priority_score
-UW-Stevens Point Pointers,2026-01-07,Offense,1,🏀,Feature our best look: Ball Screen,"Us: 1.33 PPP on 9 tagged possessions this season (team average 0.97)
-Them: opponents scored 1.00 PPP running this against UW-Stevens Point Pointers on 6 tagged possessions
+UW-Stevens Point Pointers,2026-01-07,Offense,1,🏀,Feature our best look: Ball Screen,"Us: 1.33 PPP on 9 tagged possessions this season (team average 0.92)
+Them: opponents scored 0.83 PPP running this against UW-Stevens Point Pointers on 6 tagged possessions
 Runs it most: Marino, Madson, Quast, Berezowitz, McEwen (2x)
-Usually comes off Ball Screen (4 of 4 tagged possessions this season)",We score 1.33 a possession on it and UW-Stevens Point Pointers gives up 1.00 defending it -- go to it early.,Data-Driven,1.0,0.3,True,79.5
+Usually comes off Ball Screen (4 of 4 tagged possessions this season)",We score 1.33 a possession on it and UW-Stevens Point Pointers gives up 0.83 defending it -- go to it early.,Data-Driven,1.0,0.3,True,79.5
 UW-Stevens Point Pointers,2026-01-07,Offense,2,🎯,Attack their weakest look: Cut to the basket,"Opponents shot 27/33 (82% FG, 82% eFG) · 1.64 pts/attempt · +0.59 vs all looks (1.05) · 5% of attempts on this against UW-Stevens Point Pointers
 Best on this shot (5+ attempts):
 • Marino, Madson, Verges, Bara, Warren 3/12 (25%)
@@ -11,19 +11,19 @@ Runs it most:
 • Madson, Verges, Lukenbill, Quast, Bara 3x (100%)
 • Chestnut, Lukenbill, Quast, McEwen, Teague-Johnson 3x (100%)
 Usually comes off BLOB Line Motion for us (3 of 5 tagged possessions this season)",Teams have shot 82% on it against UW-Stevens Point Pointers -- hunt it; we usually get it out of BLOB Line Motion.,Data-Driven,0.6,1.0,True,74.0
-UW-Stevens Point Pointers,2026-01-07,Offense,3,📋,Call our best set: Ball Screen,"1.33 PPP on 9 uses vs our 1.16 overall · 4/7 FG
-Finished most by Michael Metcalf-Grassman (2x)","Our most productive set this season -- go to it when we need a good look, with Michael Metcalf-Grassman finishing.",Data-Driven,0.18352941176470638,0.45,True,49.1
+UW-Stevens Point Pointers,2026-01-07,Offense,3,📋,Call our best set: Ball Screen,"1.33 PPP on 9 uses vs our 1.10 overall · 4/7 FG
+Finished most by Michael Metcalf-Grassman (2x)","Our most productive set this season -- go to it when we need a good look, with Michael Metcalf-Grassman finishing.",Data-Driven,0.24705882352941178,0.45,True,51.6
 UW-Stevens Point Pointers,2026-01-07,Defense,4,📊,Take away their most efficient high-volume actions,Offensive Rebound: 77.8% on 18 attempts; Cut: 62.3% on 106 attempts,Each is 5+ points above their 48.5% overall clip on 15+ attempts. Offensive Rebound: hit a body on every shot before going to the ball. Cut: jump to the ball on every pass and see man and ball -- no back-cuts behind ball-watchers.,Data-Driven,,,True,62.5
 UW-Stevens Point Pointers,2026-01-07,Defense,5,📊,Funnel them into their worst high-volume looks,Spot-Up: 33.2% on 223 attempts; Off Screen: 36.7% on 30 attempts,Each is 5+ points below their 48.5% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
 UW-Stevens Point Pointers,2026-01-07,Defense,6,📊,Pressure the actions they turn it over on,Hand Off: 5 TO in 28 uses (17.9% vs 8.6% across all actions); Post-Up: 19 TO in 118 uses (16.1% vs 8.6% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
 UW-Stevens Point Pointers,2026-01-07,Defense,7,🛡️,What UW-Stevens Point Pointers goes to most: Drive to the basket,"187 attempts, 64% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
-UW-Stevens Point Pointers,2026-01-07,Defense,8,📋,Take away their go-to set: Chin,"14 uses in 1 games · 1.17 PPP (their overall 1.06) · 5/11 FG
+UW-Stevens Point Pointers,2026-01-07,Defense,8,📋,Take away their go-to set: Chin,"14 uses in 1 games · 1.00 PPP (their overall 0.99) · 5/11 FG
 Finished most by Seth Miron (6x)
 Built on: Flare
 Next most-called: Set (13 uses)
 Busiest inbounds set: BLOB Box Motion (6 uses, 1.50 PPP)
 Tagged as: 41-Chin(backscreen,flair,dho,bs):m2m(5over,12drop) | 41-chin(up,ds):m2m(stay5,stay20)((stay2,stay5)) | 41-chin(US,GHST,flair):m2m(stay1,stay20)((stay1,stay20))(((over5,stay3)))","Their most-called half-court set (14 times in 1 games). Seth Miron finishes it most, usually off the flare -- take away the flare and make someone else beat us.",Data-Driven,1.0,0.7,True,85.5
-UW-Stevens Point Pointers,2026-01-07,Defense,9,📋,Know their best set: Pistol,"2.17 PPP on 6 uses vs 1.00 overall
+UW-Stevens Point Pointers,2026-01-07,Defense,9,📋,Know their best set: Pistol,"2.17 PPP on 6 uses vs 0.95 overall
 Finished most by Carter Lichtsinn (2x)",Their most productive set -- recognize the alignment and call it out before the action starts; Carter Lichtsinn is usually the one finishing it.,Data-Driven,1.0,0.3,True,72.5
 UW-Stevens Point Pointers,2026-01-07,Defense,10,,Finish every defensive possession with a box-out,"They grab 38% of their own misses (178 of 465 paired misses in their play-by-play) -- we usually allow 35%, so this is above our norm; most by Wis.-Stevens Point (48), Seth Miron (33).",They get 38% of their own misses back -- a stop isn't a stop until we secure the rebound; find Wis.-Stevens Point on every shot.,Data-Driven,0.6186379928315413,1.0,True,74.7
 UW-Stevens Point Pointers,2026-01-07,Personnel,11,🔒,"Attack UW-Stevens Point Pointers's Krohn, Combs, Butler, Baumgartner, Miron lineup","Worst +/- lineups:
