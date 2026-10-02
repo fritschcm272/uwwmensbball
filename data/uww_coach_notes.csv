@@ -1,17 +1,17 @@
 opponent,period,time_remaining_seconds,team,player,result,coach_note,play_call,clip_side,game_date,points,play_series,play_title,play_actions,play_location,play_situation
 UW-Oshkosh Titans,H1,1182.0,UW-Whitewater,Carter Thomas,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,5 out(HI BS): m2m D(over-switch),High Ball Screen,,Half court
-UW-Oshkosh Titans,H1,,UW-Whitewater,Collin Madson,Non Shooting Foul,,Over,Offense,2026-01-03,,Over,5 out(Over): m2m d,,,Half court
+UW-Oshkosh Titans,H1,1169.0,UW-Whitewater,Collin Madson,Non Shooting Foul,,Over,Offense,2026-01-03,0,Over,5 out(Over): m2m d,,,Half court
 UW-Oshkosh Titans,H1,1166.0,UW-Whitewater,Richie Warren,Make 2 Pts,,BLOB Line Motion,Offense,2026-01-03,2,BLOB,blob(line)-m2m,,,BLOB
 UW-Oshkosh Titans,H1,1150.0,UW-Whitewater,Brandon Beck,Make 3 Pts,,5 Out Motion,Offense,2026-01-03,3,Motion,5 out(bs):m2m,Ball Screen,,Half court
 UW-Oshkosh Titans,H1,1107.0,UW-Whitewater,Oskar Kangas,Make 3 Pts,,Over,Offense,2026-01-03,3,Over,5 out(over-swing-ricky):m2m,Swing (pass across) | Ricky (rescreen),,Half court
 UW-Oshkosh Titans,H1,1077.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(pass-cut-bs):m2m,Pass | Cut | Ball Screen,,Half court
 UW-Oshkosh Titans,H1,1061.0,UW-Whitewater,Brock Marino,Make 2 Pts,,5 Out Motion,Offense,2026-01-03,2,Motion,5out(pass corner-):m2m,Pass to Corner,,Half court
-UW-Oshkosh Titans,H1,,UW-Whitewater,Brock Marino,Non Shooting Foul,,5 Out Motion,Offense,2026-01-03,,Motion,5out:m2m(rj),,,Half court
+UW-Oshkosh Titans,H1,1044.0,UW-Whitewater,Brock Marino,Non Shooting Foul,,5 Out Motion,Offense,2026-01-03,0,Motion,5out:m2m(rj),,,Half court
 UW-Oshkosh Titans,H1,1027.0,UW-Whitewater,Brock Marino,Miss 2 Pts,,SLOB,Offense,2026-01-03,0,SLOB,slob:m2m,,,SLOB
 UW-Oshkosh Titans,H1,,UW-Whitewater,Aiden Hawkinson,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(doubleclear):m2m,Double Clear,,Half court
 UW-Oshkosh Titans,H1,982.0,UW-Whitewater,Luke Bara,Make 3 Pts,,5 Out Motion,Offense,2026-01-03,3,Motion,5out(ds):m2m,Down Screen,,Half court
 UW-Oshkosh Titans,H1,962.0,UW-Whitewater,Oskar Kangas,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs):m2m(switch),Ball Screen,,Half court
-UW-Oshkosh Titans,H1,,UW-Whitewater,Collin Madson,Non Shooting Foul,,5 Out Motion,Offense,2026-01-03,,Motion,5out(bs-slip):Press(m2m),Ball Screen | Slip,,Half court
+UW-Oshkosh Titans,H1,942.0,UW-Whitewater,Collin Madson,Non Shooting Foul,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(bs-slip):Press(m2m),Ball Screen | Slip,,Half court
 UW-Oshkosh Titans,H1,929.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,BLOB Line Motion,Offense,2026-01-03,0,BLOB,blob(line):m2m,,,BLOB
 UW-Oshkosh Titans,H1,,UW-Whitewater,Matt Imig,No Violation,,BLOB Box Motion,Offense,2026-01-03,,BLOB,blob(box-cornercut-flash):m2m,Corner Cut | Flash,,BLOB
 UW-Oshkosh Titans,H1,881.0,UW-Whitewater,Matt Imig,Miss 3 Pts,,SLOB Motion,Offense,2026-01-03,0,SLOB,slob(bs):m2m (Stay),Ball Screen,,SLOB
@@ -49,7 +49,7 @@ UW-Oshkosh Titans,H1,44.0,UW-Whitewater,Brandon Beck,Miss 3 Pts,,5 Out Motion,Of
 UW-Oshkosh Titans,H1,17.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5OUT(BS):press(RJ)(SWITCH),Ball Screen,,Half court
 UW-Oshkosh Titans,H1,,UW-Whitewater,Joey LaChapell,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5OUT(BS):M2M(SWITCH),Ball Screen,,Half court
 UW-Oshkosh Titans,H2,1191.0,UW-Whitewater,Joey LaChapell,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,2NDH-5OUT(DOUBLECUT):M2M,Double Cut,,Half court
-UW-Oshkosh Titans,H2,,UW-Whitewater,Luke Bara,Non Shooting Foul,,SLOB,Offense,2026-01-03,,SLOB,SLOB:,,,SLOB
+UW-Oshkosh Titans,H2,1177.0,UW-Whitewater,Luke Bara,Non Shooting Foul,,SLOB,Offense,2026-01-03,0,SLOB,SLOB:,,,SLOB
 UW-Oshkosh Titans,H2,1175.0,UW-Whitewater,Brock Marino,Make 2 Pts,,BLOB,Offense,2026-01-03,2,BLOB,BLOB:M2M,,,BLOB
 UW-Oshkosh Titans,H2,1139.0,UW-Whitewater,Brock Marino,Turnover,,5 Out Motion,Offense,2026-01-03,0,Motion,5OUT(DS):PRESS(RJ)(SWITCH)(DENYmadz),Down Screen,,Half court
 UW-Oshkosh Titans,H2,1104.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,BLOB,Offense,2026-01-03,0,BLOB,blob: m2m,,,BLOB

@@ -1,4 +1,5 @@
 clip_key,clip_number,track,name,event,game_date
+,2,21,Nate Nazos,foul,2026-01-03
 ,15,1,JR Lukenbill,rebound_defensive,2026-01-03
 ,17,5,Brandon Beck,rebound_defensive,2026-01-03
 ,22,28,Oskar Kangas,rebound_offensive,2026-01-03
@@ -48,7 +49,9 @@ clip_key,clip_number,track,name,event,game_date
 ,357,4,Cooper Nailor,rebound_defensive,2025-12-30
 ,365,17,Jackson Bowman,rebound_defensive,2025-12-30
 ,367,18,JR Lukenbill,rebound_offensive,2025-12-30
+,371,20,Richie Warren,foul,2025-12-30
 ,379,17,Tyshawn Teague-Johnson,steal,2025-12-30
+,380,27,Ryan Dolphin,rebound_defensive,2025-12-30
 ,392,31,Jay Akin,rebound_defensive,2025-12-30
 ,399,21,Luke Bara,foul,2025-12-30
 ,404,17,Jay Akin,foul,2025-12-30
@@ -60,6 +63,7 @@ clip_key,clip_number,track,name,event,game_date
 ,443,21,Kanyon Bryte,rebound_offensive,2025-12-30
 ,446,17,Deuce Walters,rebound_offensive,2025-12-30
 ,447,1,Deuce Walters,rebound_offensive,2025-12-30
+,453,26,Richie Warren,rebound_defensive,2025-12-30
 ,462,20,Kanyon Bryte,rebound_defensive,2025-12-30
 ,465,39,Jackson Bowman,rebound_offensive,2025-12-30
 ,468,42,Kanyon Bryte,rebound_offensive,2025-12-30
@@ -75,7 +79,9 @@ clip_key,clip_number,track,name,event,game_date
 ,485,15,Darius Chestnut,rebound_offensive,2025-12-30
 ,501,20,Ryan Dolphin,steal,2025-12-30
 ,506,51,Jake Quast,rebound_defensive,2025-12-30
+,512,54,Tyshawn Teague-Johnson,foul,2025-12-30
 ,514,38,Kanyon Bryte,rebound_defensive,2025-12-30
+,516,36,Jake Quast,rebound_defensive,2025-12-30
 ,517,8,Jake Quast,rebound_offensive,2025-12-30
 ,518,26,Jake Quast,rebound_offensive,2025-12-30
 ,534,19,Agape Keyes Jr.,rebound_offensive,2025-12-30

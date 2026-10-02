@@ -1,5 +1,5 @@
 lineup,possessions,spacing_ft_approx,width_ft_approx,crowded_pct,ppp,game_date,game_code
-"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren",29,10.1,29.5,47.0,0.91,2026-01-03,WOS@WWW
+"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren",30,10.3,30.1,46.0,0.75,2026-01-03,WOS@WWW
 "Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz",10,10.3,28.8,42.0,0.89,2026-01-03,WOS@WWW
 "Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",7,11.6,37.3,36.0,0.71,2026-01-03,WOS@WWW
 "Brock Marino, Collin Madson, Jake Quast, Luke Bara, Richie Warren",7,9.0,27.0,60.0,1.6,2026-01-03,WOS@WWW
@@ -8,8 +8,8 @@ lineup,possessions,spacing_ft_approx,width_ft_approx,crowded_pct,ppp,game_date,g
 "Collin Madson, JR Lukenbill, Jake Quast, Luke Bara, Richie Warren",5,13.3,40.4,21.0,0.5,2026-01-03,WOS@WWW
 "Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren",4,8.8,21.7,50.0,0.0,2026-01-03,WOS@WWW
 "Collin Madson, Darius Chestnut, Joey Berezowitz, Luke Bara, Richie Warren",4,12.7,37.0,38.0,0.75,2026-01-03,WOS@WWW
-,4,9.4,30.1,57.0,0.0,2026-01-03,WOS@WWW
 "Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren",3,12.2,34.2,25.0,0.67,2026-01-03,WOS@WWW
+,3,8.1,25.9,68.0,0.0,2026-01-03,WOS@WWW
 "Brock Marino, Collin Madson, JR Lukenbill, Jake Quast, Luke Bara",2,11.2,27.9,36.0,1.0,2026-01-03,WOS@WWW
 "Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren, Tyshawn Teague-Johnson",2,10.7,27.6,44.0,2.0,2026-01-03,WOS@WWW
 "Collin Madson, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren",2,13.7,39.0,7.0,1.5,2026-01-03,WOS@WWW
@@ -17,15 +17,15 @@ lineup,possessions,spacing_ft_approx,width_ft_approx,crowded_pct,ppp,game_date,g
 "Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Richie Warren",2,8.3,27.1,67.0,1.5,2026-01-03,WOS@WWW
 "Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",2,11.9,29.9,40.0,1.0,2026-01-03,WOS@WWW
 "Brock Marino, Collin Madson, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",1,7.0,21.3,85.0,0.0,2026-01-03,WOS@WWW
-"Darius Chestnut, JR Lukenbill, Jake Quast, Kelton McEwen, Tyshawn Teague-Johnson",27,12.7,34.6,38.0,1.09,2025-12-30,WWW@COE
-"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren",13,12.9,29.2,27.0,1.08,2025-12-30,WWW@COE
+"Darius Chestnut, JR Lukenbill, Jake Quast, Kelton McEwen, Tyshawn Teague-Johnson",27,12.7,34.6,38.0,1.0,2025-12-30,WWW@COE
+"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren",14,12.9,29.0,27.0,1.0,2025-12-30,WWW@COE
 "Agape Keyes Jr., Isaiah Robinson, Matthew McKay, Mikey Wildes, Trent Grunewald",6,9.8,31.8,70.0,0.4,2025-12-30,WWW@COE
 "Brock Marino, Collin Madson, Darius Chestnut, Jake Quast, Luke Bara",6,10.5,31.1,61.0,1.2,2025-12-30,WWW@COE
-"Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",5,10.2,26.4,52.0,1.25,2025-12-30,WWW@COE
+"Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",5,10.2,26.4,52.0,1.0,2025-12-30,WWW@COE
 "Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Luke Bara",4,8.6,26.8,44.0,0.0,2025-12-30,WWW@COE
 "JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",4,11.3,29.0,36.0,0.5,2025-12-30,WWW@COE
-,4,10.3,26.6,49.0,,2025-12-30,WWW@COE
 "Collin Madson, Darius Chestnut, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson",3,12.2,32.7,44.0,0.67,2025-12-30,WWW@COE
+,3,9.5,26.9,55.0,,2025-12-30,WWW@COE
 "Collin Madson, Jake Quast, Kelton McEwen, Luke Bara, Tyshawn Teague-Johnson",2,8.6,25.2,57.0,1.0,2025-12-30,WWW@COE
 "Darius Chestnut, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",2,13.1,34.0,39.0,0.0,2025-12-30,WWW@COE
 "Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara",1,13.6,48.0,18.0,0.0,2025-12-30,WWW@COE
