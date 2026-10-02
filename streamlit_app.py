@@ -5567,28 +5567,85 @@ def _pr_title_default(f):
 
 
 def _pr_title_widgets(d, pi, store, kp):
-    """The Titles part of one play's review (its video + the Title checks) -- inside its play-by-play row."""
+    """The Titles part of one play's review, laid out like the local review page (requested): the video on the left; on
+    the right "Title" -- the coach's and automatic Titles, then ONE table: Field | Coach | Automatic | Your answer | Right
+    answer, rows green where coach and automatic agree, low-confidence answers as "unsure: ...". An editable table
+    (st.data_editor) puts the dropdown and the text box inside the table. Only answers that differ from a row's
+    starting value are kept in `store`, so an untouched prefilled row is still saved as prefilled."""
     pl = d["plays"][pi]
     run = d.get("run")
-    vocab = d.get("vocab", {})
-    if pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
-        st.video(os.path.join(d["_dir"], pl["clip"]))
-    st.markdown(f"Coach's Title: `{pl.get('coach_title') or 'not tagged'}`  \n"
-                f"Automatic Title: `{pl.get('auto_title') or 'nothing confident enough yet'}`")
-    for fi, f in enumerate(pl.get("fields", [])):
-        pre, dv, da = _pr_title_default(f)
-        kv, ka, kt = f"{kp}_v_{run}_{pi}_{fi}", f"{kp}_a_{run}_{pi}_{fi}", f"{kp}_t_{run}_{pi}_{fi}"
-        auto = (f"{f['auto']} ({round(100 * (f.get('conf') or 0))}%)" if f.get("auto") is not None else (f.get("note") or "no answer"))
-        c1, c2, c3 = st.columns([3, 2, 3])
-        c1.markdown(f"**{f.get('label')}**  \nCoach: {f.get('coach') if f.get('coach') is not None else '--'}  \nAutomatic: {auto}")
-        v = store.get(kv, dv)
-        c2.selectbox("Your answer", _PR_VERDICTS, index=_PR_VERDICTS.index(v) if v in _PR_VERDICTS else 0, key=kv,
-                     on_change=_pr_keep, args=(store, kv))
-        opts = [""] + list(vocab.get(f.get("field"), []))
-        a_ = store.get(ka, da if da in opts else "")
-        c3.selectbox("Right answer", opts, index=opts.index(a_) if a_ in opts else 0, key=ka, on_change=_pr_keep, args=(store, ka))
-        c3.text_input("or type a new one", value=store.get(kt, da if da and da not in opts else ""), key=kt,
-                      on_change=_pr_keep, args=(store, kt))
+    left, right = st.columns([5, 6])
+    with left:
+        if pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
+            st.video(os.path.join(d["_dir"], pl["clip"]))
+    with right:
+        esc_ = lambda x: html.escape(str(x))
+        st.markdown("#### Title")
+        st.markdown('<table style="border-collapse:collapse;font-size:0.95rem;margin-bottom:0.6rem">'
+                    '<tr><td style="border:1px solid #ddd;padding:3px 8px"><b>Coach\'s Title</b></td>'
+                    f'<td style="border:1px solid #ddd;padding:3px 8px;font-family:monospace">{esc_(pl.get("coach_title") or "not tagged")}</td></tr>'
+                    '<tr><td style="border:1px solid #ddd;padding:3px 8px"><b>Automatic Title</b></td>'
+                    f'<td style="border:1px solid #ddd;padding:3px 8px;font-family:monospace">{esc_(pl.get("auto_title") or "nothing confident enough yet")}</td></tr>'
+                    '</table>', unsafe_allow_html=True)
+        fields = pl.get("fields", [])
+        if not fields:
+            st.caption("No Title fields for this play.")
+            return
+        rows, defaults, same = [], [], []
+        for fi, f in enumerate(fields):
+            pre, dv, da = _pr_title_default(f)
+            kv, kt = f"{kp}_v_{run}_{pi}_{fi}", f"{kp}_t_{run}_{pi}_{fi}"
+            if f.get("auto") is None:
+                auto = f.get("note") or "no answer"
+            elif f.get("sure"):
+                auto = f"{f['auto']} ({round(100 * (f.get('conf') or 0))}%)"
+            else:
+                auto = f"unsure: {f['auto']} ({round(100 * (f.get('conf') or 0))}%)"
+            rows.append({"Field": f.get("label"), "Coach": f.get("coach") if f.get("coach") is not None else "",
+                         "Automatic": auto, "Your answer": store.get(kv, dv),
+                         "Right answer": store.get(kt, store.get(f"{kp}_a_{run}_{pi}_{fi}", da)) or ""})
+            defaults.append((kv, dv, kt, da))
+            same.append(f.get("same") is True)
+        df = pd.DataFrame(rows)
+        known = sorted({v for f in fields for v in d.get("vocab", {}).get(f.get("field"), [])})
+
+        def _shade(r):
+            ok = same[r.name]
+            return ["background-color:#e3f4e3" if ok else "" for _ in r]
+
+        def _unsure(v):
+            return "color:#888" if str(v).startswith("unsure:") else ""
+
+        try:
+            _sty = df.style.apply(_shade, axis=1)
+            data = (getattr(_sty, "map", None) or _sty.applymap)(_unsure, subset=["Automatic"])   # pandas >= 2.1 / older
+        except Exception:
+            data = df
+        cfg = {"Field": st.column_config.TextColumn(disabled=True),
+               "Coach": st.column_config.TextColumn(disabled=True),
+               "Automatic": st.column_config.TextColumn(disabled=True),
+               "Your answer": st.column_config.SelectboxColumn(options=_PR_VERDICTS, required=True),
+               "Right answer": st.column_config.TextColumn(
+                   help=("Type the right answer when you mark it wrong. Known answers: " + ", ".join(known[:40]))
+                   if known else "Type the right answer when you mark it wrong.")}
+        try:
+            edited = st.data_editor(data, column_config=cfg, hide_index=True, use_container_width=True,
+                                    key=f"{kp}_tbl_{run}_{pi}", num_rows="fixed")
+        except Exception:
+            edited = st.data_editor(df, column_config=cfg, hide_index=True, use_container_width=True,
+                                    key=f"{kp}_tbl_{run}_{pi}", num_rows="fixed")
+        # keep only what differs from each row's starting value (so an untouched prefilled row stays "prefilled")
+        for i, (kv, dv, kt, da) in enumerate(defaults):
+            v = edited.iloc[i]["Your answer"] if i < len(edited) else dv
+            t = str(edited.iloc[i]["Right answer"] or "").strip() if i < len(edited) else da
+            if v != dv:
+                store[kv] = v
+            else:
+                store.pop(kv, None)
+            if t != (da or ""):
+                store[kt] = t
+            else:
+                store.pop(kt, None)
 
 
 def _pr_player_widgets(d, pi, store, kp, with_video=True):
@@ -5634,7 +5691,7 @@ def _pr_payload(d, store, coach, kp, part=None):
             v = store.get(kv, dv)
             if v == "--":
                 continue
-            ans = (str(store.get(kt, "") or "").strip() or str(store.get(ka, da) or "")).strip()
+            ans = str(store[kt]).strip() if kt in store else str(store.get(ka, da) or "").strip()   # a cleared cell stays cleared
             touched = any(k in store for k in (kv, ka, kt))
             out["answers"].append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"), "field": f.get("field"),
                                    "coach": f.get("coach"), "auto": f.get("auto"), "auto_conf": f.get("conf"),
