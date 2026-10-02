@@ -5676,6 +5676,60 @@ def _pr_save_bar(d, store, kp, key_suffix):
 
 
 
+def _pbp_group_plays(df):
+    """Play-by-play events -> plays: consecutive events in the same half at the same clock are one play (a made shot and
+    its assist, a miss and the rebound, a foul and its free throws). Returns [{label, events, details, replay, review,
+    key}] in order."""
+    def txt(v):
+        return "" if v is None or (isinstance(v, float) and pd.isna(v)) or str(v) in ("nan", "None", "<NA>") else str(v)
+
+    def num(v):
+        v = pd.to_numeric(v, errors="coerce")
+        return "" if pd.isna(v) else str(int(v))
+
+    rank = {"made_shot": 1, "missed_shot": 1, "free_throw_made": 2, "free_throw_missed": 2, "turnover": 3, "foul": 4,
+            "rebound_offensive": 5, "rebound_defensive": 5, "block": 6, "steal": 6, "assist": 7, "jump_ball": 8,
+            "timeout": 10, "sub_in": 11, "sub_out": 11}
+    clock_col = "time_remaining_seconds" if "time_remaining_seconds" in df.columns else "time_remaining"
+    groups, cur, cur_key = [], [], None
+    for _, r in df.iterrows():
+        k = (txt(r.get("period")), txt(r.get(clock_col)))
+        if cur and k != cur_key:
+            groups.append(cur)
+            cur = []
+        cur.append(r)
+        cur_key = k
+    if cur:
+        groups.append(cur)
+    out = []
+    for g in groups:
+        main = min(g, key=lambda r: rank.get(txt(r.get("event_type")), 9))
+        ev = lambda r: txt(r.get("event_type")).replace("_", " ")
+        tm = txt(main.get("time_remaining"))
+        when = tm if "(" in tm else f"{txt(main.get('period'))} {tm}".strip()
+        others = [r for r in g if r is not main]
+        subs = sum(1 for r in others if txt(r.get("event_type")) in ("sub_in", "sub_out"))
+        extras = [f"{ev(r)} {txt(r.get('player'))}".strip() for r in others
+                  if txt(r.get("event_type")) not in ("sub_in", "sub_out")][:3]
+        extra_txt = ("+ " + ", ".join(extras) if extras else "") + (f"{' ' if extras else '+ '}({subs} sub{'s' if subs != 1 else ''})" if subs else "")
+        last = g[-1]
+        score = f"{num(last.get('uww_score'))}-{num(last.get('opp_score'))}" if num(last.get("uww_score")) and num(last.get("opp_score")) else ""
+        label = " \u00b7 ".join(x for x in [when, txt(main.get("team")), txt(main.get("player")), ev(main), extra_txt, score] if x)
+        events = [" \u00b7 ".join(x for x in [txt(r.get("team")), txt(r.get("player")), ev(r)] if x) for r in g]
+        details = []
+        for col, lbl in (("play_call", "Play call"), ("play_actions", "Actions"), ("play_location", "Where"),
+                         ("play_title", "Tagged as"), ("video_description", "Synergy"), ("coach_note", "Coach note")):
+            v = next((txt(r.get(col)) for r in [main] + others if txt(r.get(col))), "")
+            if v:
+                details.append((lbl, v))
+        rep = next((r.get("_replay") for r in [main] + others if isinstance(r.get("_replay"), str) and r.get("_replay")), None)
+        rv = next((int(pd.to_numeric(r.get("_review"), errors="coerce")) for r in [main] + others
+                   if pd.notna(pd.to_numeric(r.get("_review"), errors="coerce"))), None)
+        out.append({"label": label, "events": events, "details": details, "replay": rep, "review": rv,
+                    "key": txt(main.get("event_order")) or str(len(out))})
+    return out
+
+
 def _pbp_replay_clips(game_iso):
     """{play-by-play event_order: clip_key} for this UWW game's tracked possessions (uww_trk_clips.pbp_event_order)."""
     cl = load_table("uww_trk_clips")
@@ -12049,33 +12103,29 @@ def render_previous_games():
                     hide_index=True, use_container_width=True, height=400,
                 )
             else:
-                _rows = filtered_pbp[filtered_pbp["_replay"].notna()] if _only_rep else filtered_pbp
+                # CONFIRMED CHANGE (requested: a made shot and its assist "need to be grouped together"). Consecutive
+                # events in the same half at the same clock are ONE play: the label leads with the main event (shot / free
+                # throw / turnover, then foul, rebound ...) and lists the rest ("+ assist Carter Thomas"); the replay and
+                # Play review come from whichever event has them. Paging and the replay / review filters count plays.
+                _plays = _pbp_group_plays(filtered_pbp)
+                if _only_rep:
+                    _plays = [g for g in _plays if g["replay"]]
                 if _only_rev:
-                    _rows = _rows[pd.to_numeric(_rows["_review"], errors="coerce").notna()]
+                    _plays = [g for g in _plays if g["review"] is not None]
                 _per = _v3.selectbox("Per page", [25, 50, 100], index=1, key=f"pbp_per_{short_opponent}")
-                _pages = max(1, -(-len(_rows) // _per))
+                _pages = max(1, -(-len(_plays) // _per))
                 _page = _v4.number_input("Page", min_value=1, max_value=_pages, value=1, step=1, key=f"pbp_page_{short_opponent}")
-                st.caption(f"{len(_rows)} play(s), {int(filtered_pbp['_replay'].notna().sum())} with a possession replay "
+                st.caption(f"{len(_plays)} play(s), {sum(1 for g in _plays if g['replay'])} with a possession replay "
                            f"(\U0001f3a5) -- page {_page} of {_pages}. Open a play for its details"
                            + (" and replay." if _rep_of else ". No tracked film for this game yet."))
-                _txt = lambda v: "" if v is None or (isinstance(v, float) and pd.isna(v)) or str(v) in ("nan", "None") else str(v)
-                for _ix, _r in _rows.iloc[(_page - 1) * _per: _page * _per].iterrows():
-                    _rep = _r.get("_replay")
-                    _rep = _rep if isinstance(_rep, str) and _rep else None    # a blank (NaN) is "truthy" -- not a replay
-                    _score = (f"{_txt(_r.get('uww_score'))}-{_txt(_r.get('opp_score'))}"
-                              if _txt(_r.get("uww_score")) and _txt(_r.get("opp_score")) else "")
-                    _lab = " \u00b7 ".join(x for x in [f"{_txt(_r.get('period'))} {_txt(_r.get('time_remaining'))}".strip(),
-                                                        _txt(_r.get("team")), _txt(_r.get("player")),
-                                                        _txt(_r.get("event_type")).replace("_", " "), _score] if x)
-                    _rv = pd.to_numeric(_r.get("_review"), errors="coerce")
-                    _rv = int(_rv) if pd.notna(_rv) else None
-                    with st.expander(("\U0001f4dd " if _rv is not None else "") + ("\U0001f3a5 " if _rep else "") + _lab):
-                        _det = [(lbl, _txt(_r.get(col))) for col, lbl in (("play_call", "Play call"), ("play_actions", "Actions"),
-                                                                          ("play_location", "Where"), ("play_title", "Tagged as"),
-                                                                          ("video_description", "Synergy"), ("coach_note", "Coach note"))]
-                        st.markdown("  \n".join(f"**{lbl}:** {v}" for lbl, v in _det if v) or "_No details for this play._")
+                for _g in _plays[(_page - 1) * _per: _page * _per]:
+                    _rep, _rv = _g["replay"], _g["review"]
+                    with st.expander(("\U0001f4dd " if _rv is not None else "") + ("\U0001f3a5 " if _rep else "") + _g["label"]):
+                        if len(_g["events"]) > 1:
+                            st.markdown("  \n".join(f"\u2022 {e}" for e in _g["events"]))
+                        st.markdown("  \n".join(f"**{lbl}:** {v}" for lbl, v in _g["details"]) or "_No details for this play._")
                         if _rep:
-                            _key = f"{short_opponent}_{_txt(_r.get('event_order'))}"
+                            _key = f"{short_opponent}_{_g['key']}"
                             if st.toggle("Show the possession replay", key=f"pbp_rep_{_key}"):
                                 _view = st.radio("View", ["Camera view", "Court view"], horizontal=True, key=f"pbp_view_{_key}")
                                 _ft_replay(_rep, f"_pbp_{_key}", view="court" if _view == "Court view" else "camera")
