@@ -5580,7 +5580,6 @@ def _pr_title_widgets(d, pi, store, kp):
             st.video(os.path.join(d["_dir"], pl["clip"]))
     with right:
         esc_ = lambda x: html.escape(str(x))
-        st.markdown("#### Title")
         st.markdown('<table style="border-collapse:collapse;font-size:0.95rem;margin-bottom:0.6rem">'
                     '<tr><td style="border:1px solid #ddd;padding:3px 8px"><b>Coach\'s Title</b></td>'
                     f'<td style="border:1px solid #ddd;padding:3px 8px;font-family:monospace">{esc_(pl.get("coach_title") or "not tagged")}</td></tr>'
@@ -5858,7 +5857,7 @@ def _pbp_group_plays(df):
         others = [r for r in g if r is not main]
         tm = txt(main.get("time_remaining"))
         when = tm if "(" in tm else f"{txt(main.get('period'))} {tm}".strip()
-        subs = sum(1 for r in others if txt(r.get("event_type")) in ("sub_in", "sub_out"))
+        subs = sum(1 for r in others if txt(r.get("event_type")) == "sub_in")       # players coming in
         rest = [f"{ev(r)} {txt(r.get('player'))}".strip() for r in others
                 if txt(r.get("event_type")) not in ("sub_in", "sub_out", "period_marker", "timeout")]
         extra = ("+ " + ", ".join(rest[:3]) + (f" +{len(rest) - 3} more" if len(rest) > 3 else "")) if rest else ""
@@ -5872,8 +5871,25 @@ def _pbp_group_plays(df):
                                                  else ev(main), score] if x)
         else:
             label = " \u00b7 ".join(x for x in [when, txt(main.get("team")), txt(main.get("player")), ev(main), extra, score] if x)
-        events = [" \u00b7 ".join(x for x in [txt(r.get("time_remaining")), txt(r.get("team")), txt(r.get("player")), ev(r)] if x)
-                  for r in g]
+        # CONFIRMED CHANGE (requested): a team's substitutions at the same moment are ONE line -- who went out, who came in
+        events, i_ = [], 0
+        while i_ < len(g):
+            r = g[i_]
+            if txt(r.get("event_type")) in ("sub_in", "sub_out"):
+                j_ = i_
+                while (j_ < len(g) and txt(g[j_].get("event_type")) in ("sub_in", "sub_out")
+                       and txt(g[j_].get("team")) == txt(r.get("team"))
+                       and txt(g[j_].get("time_remaining")) == txt(r.get("time_remaining"))):
+                    j_ += 1
+                outs = [txt(x.get("player")) for x in g[i_:j_] if txt(x.get("event_type")) == "sub_out" and txt(x.get("player"))]
+                ins = [txt(x.get("player")) for x in g[i_:j_] if txt(x.get("event_type")) == "sub_in" and txt(x.get("player"))]
+                events.append(" \u00b7 ".join(x for x in [txt(r.get("time_remaining")), txt(r.get("team")), "substitution"] if x)
+                              + " \u2014 " + " \u00b7 ".join(x for x in [("out: " + ", ".join(outs)) if outs else "",
+                                                                       ("in: " + ", ".join(ins)) if ins else ""] if x))
+                i_ = j_
+            else:
+                events.append(" \u00b7 ".join(x for x in [txt(r.get("time_remaining")), txt(r.get("team")), txt(r.get("player")), ev(r)] if x))
+                i_ += 1
         details = []
         for col, lbl in (("play_call", "Play call"), ("play_actions", "Actions"), ("play_location", "Where"),
                          ("play_title", "Tagged as"), ("video_description", "Synergy"), ("coach_note", "Coach note")):
@@ -12279,7 +12295,7 @@ def render_previous_games():
                             st.markdown("  \n".join(f"\u2022 {e}" for e in _g["events"]))
                         st.markdown("  \n".join(f"**{lbl}:** {v}" for lbl, v in _g["details"]) or "_No details for this play._")
                         if _rv is not None and _prd:
-                            st.markdown("---\n**\U0001f4dd Title checks** (the player checks are on Analytics \u2192 Video Tracking)")
+                            st.markdown("---")
                             _pr_title_widgets(_prd, _rv, _store, _kp)
 
 
