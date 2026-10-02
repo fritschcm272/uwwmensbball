@@ -1,0 +1,7127 @@
+{
+ "game": "2026-01-03|WOS@WWW",
+ "slug": "2026_01_03_WOS_WWW",
+ "run": "20261001_163018",
+ "plays": [
+  {
+   "clip_key": "2026-01-03|8|5 Matt Imig > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 13 Logan Rindfleisch > Spot-Up > Drives Left > To Basket > Miss 2 Pts",
+   "clip_number": 8,
+   "clock": "H1 17:57",
+   "synergy": "5 Matt Imig > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 13 Logan Rindfleisch > Spot-Up > Drives Left > To Basket > Miss 2 Pts",
+   "coach_title": "5out(pass-cut-bs):m2m",
+   "auto_title": "(bs): m2m (over)",
+   "film": null,
+   "validation": false,
+   "clip": "clip_008.mp4",
+   "clip_kind": "video",
+   "poster": "clip_008_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 10,
+   "video_at": "3:14",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_008_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/10_c9ff6a81_t004.jpg",
+     "t": 4,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        389.28832,
+        371.692,
+        427.51167999999996,
+        462.7
+       ],
+       "px": 408.4,
+       "py": 462.7,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        545.88,
+        322.3,
+        576.12,
+        394.3
+       ],
+       "px": 561.0,
+       "py": 394.3,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 10,
+       "side": "defense",
+       "box": [
+        503.4848,
+        346.38,
+        532.5152,
+        415.5
+       ],
+       "px": 518.0,
+       "py": 415.5,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        662.6603200000001,
+        324.392,
+        682.73968,
+        372.2
+       ],
+       "px": 672.7,
+       "py": 372.2,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 9,
+       "side": "defense",
+       "box": [
+        789.456,
+        359.90000000000003,
+        825.744,
+        446.3
+       ],
+       "px": 807.6,
+       "py": 446.3,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        222.89968,
+        382.008,
+        263.30032,
+        478.2
+       ],
+       "px": 243.1,
+       "py": 478.2,
+       "name": "Aiden Hawkinson",
+       "how": "best guess",
+       "label": "#1 Hawkinson?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 11,
+       "side": "offense",
+       "box": [
+        616.9782399999999,
+        300.04400000000004,
+        642.62176,
+        361.1
+       ],
+       "px": 629.8,
+       "py": 361.1,
+       "name": "Jonah Rindfleisch",
+       "how": "best guess",
+       "label": "#12 Rindfleisch?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        421.83328,
+        300.168,
+        453.76672,
+        376.2
+       ],
+       "px": 437.8,
+       "py": 376.2,
+       "name": "Logan Rindfleisch",
+       "how": "best guess",
+       "label": "#13 Rindfleisch?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        284.53152,
+        353.012,
+        311.86848,
+        418.1
+       ],
+       "px": 298.2,
+       "py": 418.1,
+       "name": "Oskar Kangas",
+       "how": "best guess",
+       "label": "#23 Kangas?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_008_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/10_c9ff6a81_t052.jpg",
+     "t": 52,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 26,
+       "side": "defense",
+       "box": [
+        542.09136,
+        326.116,
+        574.5086399999999,
+        403.3
+       ],
+       "px": 558.3,
+       "py": 403.3,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        604.1236799999999,
+        334.80800000000005,
+        638.47632,
+        416.6
+       ],
+       "px": 621.3,
+       "py": 416.6,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 22,
+       "side": "defense",
+       "box": [
+        402.54112,
+        335.572,
+        427.45888,
+        394.9
+       ],
+       "px": 415.0,
+       "py": 394.9,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 19,
+       "side": "defense",
+       "box": [
+        484.50272,
+        342.232,
+        519.09728,
+        424.6
+       ],
+       "px": 501.8,
+       "py": 424.6,
+       "name": "Luke Bara",
+       "how": "jersey number",
+       "label": "#32 Bara",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 21,
+       "side": "offense",
+       "box": [
+        425.29008,
+        359.448,
+        468.10992,
+        461.4
+       ],
+       "px": 446.7,
+       "py": 461.4,
+       "name": "Oskar Kangas",
+       "how": "jersey number",
+       "label": "#23 Kangas",
+       "guess": false
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Half court",
+     "auto": "Half court",
+     "conf": 0.88,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": "5 Out",
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": "Motion",
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": "Ball Screen",
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Aiden Hawkinson",
+     "Jonah Rindfleisch",
+     "Logan Rindfleisch",
+     "Matt Imig",
+     "Oskar Kangas"
+    ],
+    "defense": [
+     "Brock Marino",
+     "Collin Madson",
+     "JR Lukenbill",
+     "Luke Bara",
+     "Richie Warren"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|17|24 Richie Warren > Spot-Up > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts",
+   "clip_number": 17,
+   "clock": "H1 15:29",
+   "synergy": "24 Richie Warren > Spot-Up > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts",
+   "coach_title": "blob(line):m2m",
+   "auto_title": ": m2m (over)",
+   "film": "Off-ball screen: Luke Bara screened for Brock Marino; defended by Brandon Beck (on the player screened) and Joey LaChapell (on the screener); coverage from the players' movement: unclear (screen confidence 10%)",
+   "validation": false,
+   "clip": "clip_017.mp4",
+   "clip_kind": "video",
+   "poster": "clip_017_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 19,
+   "video_at": "7:21",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_017_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/19_792c7968_t001.jpg",
+     "t": 1,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 8,
+       "side": "defense",
+       "box": [
+        256.54944,
+        327.764,
+        289.45056,
+        406.1
+       ],
+       "px": 273.0,
+       "py": 406.1,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 10,
+       "side": "defense",
+       "box": [
+        120.53024,
+        343.744,
+        158.26976000000002,
+        433.6
+       ],
+       "px": 139.4,
+       "py": 433.6,
+       "name": "Carter Thomas",
+       "how": "best guess",
+       "label": "#21 Thomas?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 9,
+       "side": "defense",
+       "box": [
+        299.50752,
+        351.412,
+        332.89248,
+        430.9
+       ],
+       "px": 316.2,
+       "py": 430.9,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 2,
+       "side": "offense",
+       "box": [
+        336.86560000000003,
+        321.36,
+        370.7344,
+        402.0
+       ],
+       "px": 353.8,
+       "py": 402.0,
+       "name": "Brock Marino",
+       "how": "jersey number",
+       "label": "#21 Marino",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 6,
+       "side": "offense",
+       "box": [
+        361.29792,
+        338.952,
+        397.10208,
+        424.2
+       ],
+       "px": 379.2,
+       "py": 424.2,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        398.47040000000004,
+        323.04,
+        431.1296,
+        400.8
+       ],
+       "px": 414.8,
+       "py": 400.8,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_017_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/19_792c7968_t021.jpg",
+     "t": 21,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 14,
+       "side": "defense",
+       "box": [
+        475.72672,
+        330.73199999999997,
+        504.27328,
+        398.7
+       ],
+       "px": 490.0,
+       "py": 398.7,
+       "name": "Carter Thomas",
+       "how": "jersey number",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "B",
+       "track": 9,
+       "side": "defense",
+       "box": [
+        351.05904000000004,
+        342.32399999999996,
+        381.54096,
+        414.9
+       ],
+       "px": 366.3,
+       "py": 414.9,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 13,
+       "side": "defense",
+       "box": [
+        188.97392000000002,
+        340.852,
+        230.82608,
+        440.5
+       ],
+       "px": 209.9,
+       "py": 440.5,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 2,
+       "side": "offense",
+       "box": [
+        376.04464,
+        334.68399999999997,
+        410.15536000000003,
+        415.9
+       ],
+       "px": 393.1,
+       "py": 415.9,
+       "name": "Brock Marino",
+       "how": "jersey number",
+       "label": "#21 Marino",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 6,
+       "side": "offense",
+       "box": [
+        559.05904,
+        313.82399999999996,
+        589.5409599999999,
+        386.4
+       ],
+       "px": 574.3,
+       "py": 386.4,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 16,
+       "side": "offense",
+       "box": [
+        404.42672,
+        304.63200000000006,
+        432.97328,
+        372.6
+       ],
+       "px": 418.7,
+       "py": 372.6,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "BLOB",
+     "auto": "Half court",
+     "conf": 0.54,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": "Line",
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": "Motion",
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brock Marino",
+     "Collin Madson",
+     "JR Lukenbill",
+     "Luke Bara",
+     "Richie Warren"
+    ],
+    "defense": [
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|28|5 Matt Imig > Transition > Left Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 28,
+   "clock": "H1 13:16",
+   "synergy": "5 Matt Imig > Transition > Left Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "coach_title": "tran",
+   "auto_title": ": m2m (over)",
+   "film": null,
+   "validation": false,
+   "clip": "clip_028.mp4",
+   "clip_kind": "video",
+   "poster": "clip_028_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 30,
+   "video_at": "11:45",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_028_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/30_41506611_t001.jpg",
+     "t": 1,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        182.87872,
+        390.932,
+        223.52128,
+        487.7
+       ],
+       "px": 203.2,
+       "py": 487.7,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 3,
+       "side": "defense",
+       "box": [
+        296.38176,
+        344.956,
+        331.21824000000004,
+        427.9
+       ],
+       "px": 313.8,
+       "py": 427.9,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        593.90448,
+        358.788,
+        633.09552,
+        452.1
+       ],
+       "px": 613.5,
+       "py": 452.1,
+       "name": "Darius Chestnut",
+       "how": "jersey number",
+       "label": "#10 Chestnut",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        490.4608,
+        361.18,
+        525.5392,
+        444.7
+       ],
+       "px": 508.0,
+       "py": 444.7,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 10,
+       "side": "offense",
+       "box": [
+        133.04592,
+        336.15200000000004,
+        156.75408000000002,
+        392.6
+       ],
+       "px": 144.9,
+       "py": 392.6,
+       "name": "Jonah Rindfleisch",
+       "how": "best guess",
+       "label": "#12 Rindfleisch?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 6,
+       "side": "offense",
+       "box": [
+        186.88128,
+        325.068,
+        206.71872000000002,
+        372.3
+       ],
+       "px": 196.8,
+       "py": 372.3,
+       "name": "Matt Imig",
+       "how": "best guess",
+       "label": "#5 Imig?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        236.51408,
+        409.548,
+        273.28592000000003,
+        497.1
+       ],
+       "px": 254.9,
+       "py": 497.1,
+       "name": "Oskar Kangas",
+       "how": "jersey number",
+       "label": "#23 Kangas",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_028_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/30_41506611_t014.jpg",
+     "t": 14,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 3,
+       "side": "defense",
+       "box": [
+        399.68960000000004,
+        335.96,
+        427.5104,
+        402.2
+       ],
+       "px": 413.6,
+       "py": 402.2,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "B",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        524.5704,
+        347.74,
+        557.2296,
+        425.5
+       ],
+       "px": 540.9,
+       "py": 425.5,
+       "name": "Darius Chestnut",
+       "how": "jersey number",
+       "label": "#10 Chestnut",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        366.9752,
+        345.42,
+        398.4248,
+        420.3
+       ],
+       "px": 382.7,
+       "py": 420.3,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 18,
+       "side": "defense",
+       "box": [
+        263.75472,
+        368.432,
+        310.44528,
+        479.6
+       ],
+       "px": 287.1,
+       "py": 479.6,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 11,
+       "side": "offense",
+       "box": [
+        251.09616,
+        359.89599999999996,
+        282.30384,
+        434.2
+       ],
+       "px": 266.7,
+       "py": 434.2,
+       "name": "Aiden Hawkinson",
+       "how": "best guess",
+       "label": "#1 Hawkinson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 19,
+       "side": "offense",
+       "box": [
+        210.51888000000002,
+        314.828,
+        246.08112,
+        399.5
+       ],
+       "px": 228.3,
+       "py": 399.5,
+       "name": "Jonah Rindfleisch",
+       "how": "linked possession",
+       "label": "#12 Rindfleisch",
+       "guess": false
+      },
+      {
+       "id": "G",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        557.90928,
+        372.268,
+        595.89072,
+        462.7
+       ],
+       "px": 576.9,
+       "py": 462.7,
+       "name": "Oskar Kangas",
+       "how": "jersey number",
+       "label": "#23 Kangas",
+       "guess": false
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Transition",
+     "auto": "Transition",
+     "conf": 0.5,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Aiden Hawkinson",
+     "Jonah Rindfleisch",
+     "Matt Imig",
+     "Oskar Kangas",
+     "Vitorio Dante"
+    ],
+    "defense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Darius Chestnut",
+     "Luke Bara",
+     "Richie Warren"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|30|2 Joey LaChapell > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 0 Brandon Beck > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 30,
+   "clock": "H1 12:58",
+   "synergy": "2 Joey LaChapell > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 0 Brandon Beck > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "coach_title": "double bs:(under)",
+   "auto_title": "(bs): m2m (over)",
+   "film": "Off-ball screen: Michael Metcalf-Grassman screened for Joey LaChapell; defended by Brock Marino (on the player screened) and Darius Chestnut (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 13%)",
+   "validation": false,
+   "clip": "clip_030.mp4",
+   "clip_kind": "video",
+   "poster": "clip_030_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 32,
+   "video_at": "12:18",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_030_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/32_e430b0b3_t003.jpg",
+     "t": 3,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        367.3752,
+        326.72,
+        398.82480000000004,
+        401.6
+       ],
+       "px": 383.1,
+       "py": 401.6,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 1,
+       "side": "defense",
+       "box": [
+        355.7608,
+        336.08000000000004,
+        390.8392,
+        419.6
+       ],
+       "px": 373.3,
+       "py": 419.6,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 10,
+       "side": "defense",
+       "box": [
+        466.1608,
+        358.78000000000003,
+        501.2392,
+        442.3
+       ],
+       "px": 483.7,
+       "py": 442.3,
+       "name": "Darius Chestnut",
+       "how": "jersey number",
+       "label": "#10 Chestnut",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 7,
+       "side": "defense",
+       "box": [
+        390.556,
+        344.70000000000005,
+        426.844,
+        431.1
+       ],
+       "px": 408.7,
+       "py": 431.1,
+       "name": "Richie Warren",
+       "how": "linked possession",
+       "label": "#24 Warren",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        252.24464,
+        328.384,
+        286.35536,
+        409.6
+       ],
+       "px": 269.3,
+       "py": 409.6,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        311.77872,
+        342.432,
+        352.42128,
+        439.2
+       ],
+       "px": 332.1,
+       "py": 439.2,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 6,
+       "side": "offense",
+       "box": [
+        267.2656,
+        343.05999999999995,
+        301.13439999999997,
+        423.7
+       ],
+       "px": 284.2,
+       "py": 423.7,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 5,
+       "side": "offense",
+       "box": [
+        294.90752000000003,
+        337.212,
+        328.29248,
+        416.7
+       ],
+       "px": 311.6,
+       "py": 416.7,
+       "name": "Nate Nazos",
+       "how": "jersey number",
+       "label": "#10 Nazos",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_030_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/32_e430b0b3_t046.jpg",
+     "t": 46,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 17,
+       "side": "defense",
+       "box": [
+        492.02191999999997,
+        318.652,
+        521.7780799999999,
+        389.5
+       ],
+       "px": 506.9,
+       "py": 389.5,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 10,
+       "side": "defense",
+       "box": [
+        618.38656,
+        360.33599999999996,
+        652.0134400000001,
+        440.4
+       ],
+       "px": 635.2,
+       "py": 440.4,
+       "name": "Darius Chestnut",
+       "how": "jersey number",
+       "label": "#10 Chestnut",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 16,
+       "side": "defense",
+       "box": [
+        407.93152000000003,
+        316.81199999999995,
+        435.26848,
+        381.9
+       ],
+       "px": 421.6,
+       "py": 381.9,
+       "name": "Luke Bara",
+       "how": "lineup matching",
+       "label": "#32 Bara",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 7,
+       "side": "defense",
+       "box": [
+        275.04639999999995,
+        333.03999999999996,
+        313.7536,
+        425.2
+       ],
+       "px": 294.4,
+       "py": 425.2,
+       "name": "Richie Warren",
+       "how": "linked possession",
+       "label": "#24 Warren",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 15,
+       "side": "offense",
+       "box": [
+        444.67216,
+        361.096,
+        481.92784,
+        449.8
+       ],
+       "px": 463.3,
+       "py": 449.8,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Half court",
+     "auto": "Half court",
+     "conf": 0.92,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": "Double Ball Screen",
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ],
+    "defense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Darius Chestnut",
+     "Luke Bara",
+     "Richie Warren"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|35|12 Jake Quast > Cut > Basket > Miss 2 Pts",
+   "clip_number": 35,
+   "clock": "H1 11:43",
+   "synergy": "12 Jake Quast > Cut > Basket > Miss 2 Pts",
+   "coach_title": "blob(line):m2m",
+   "auto_title": "(cut): m2m (over)",
+   "film": "Off-ball screen: Darius Chestnut screened for JR Lukenbill; defended by Brandon Beck (on the player screened) and Carter Thomas (on the screener); coverage from the players' movement: unclear (screen confidence 25%)",
+   "validation": false,
+   "clip": "clip_035.mp4",
+   "clip_kind": "video",
+   "poster": "clip_035_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 37,
+   "video_at": "14:22",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_035_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/37_3cdcfd99_t003.jpg",
+     "t": 3,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        434.3608,
+        351.58000000000004,
+        469.43919999999997,
+        435.1
+       ],
+       "px": 451.9,
+       "py": 435.1,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 6,
+       "side": "offense",
+       "box": [
+        488.80272,
+        320.432,
+        523.39728,
+        402.8
+       ],
+       "px": 506.1,
+       "py": 402.8,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        476.96256,
+        343.236,
+        516.63744,
+        437.7
+       ],
+       "px": 496.8,
+       "py": 437.7,
+       "name": "Darius Chestnut",
+       "how": "jersey number",
+       "label": "#10 Chestnut",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        391.25472,
+        370.23199999999997,
+        437.94528,
+        481.4
+       ],
+       "px": 414.6,
+       "py": 481.4,
+       "name": "JR Lukenbill",
+       "how": "jersey number",
+       "label": "#11 Lukenbill",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_035_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/37_3cdcfd99_t023.jpg",
+     "t": 23,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        378.35247999999996,
+        354.188,
+        405.44752,
+        418.7
+       ],
+       "px": 391.9,
+       "py": 418.7,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 9,
+       "side": "defense",
+       "box": [
+        243.46559999999997,
+        362.26,
+        277.33439999999996,
+        442.9
+       ],
+       "px": 260.4,
+       "py": 442.9,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 6,
+       "side": "offense",
+       "box": [
+        315.01232000000005,
+        352.292,
+        347.18768,
+        428.9
+       ],
+       "px": 331.1,
+       "py": 428.9,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 10,
+       "side": "offense",
+       "box": [
+        164.23504,
+        386.624,
+        200.76496,
+        473.6
+       ],
+       "px": 182.5,
+       "py": 473.6,
+       "name": "Darius Chestnut",
+       "how": "jersey number",
+       "label": "#10 Chestnut",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        559.77872,
+        359.63199999999995,
+        600.42128,
+        456.4
+       ],
+       "px": 580.1,
+       "py": 456.4,
+       "name": "JR Lukenbill",
+       "how": "jersey number",
+       "label": "#11 Lukenbill",
+       "guess": false
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "BLOB",
+     "auto": "Half court",
+     "conf": 0.86,
+     "sure": true,
+     "same": false,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": "Line",
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": "Motion",
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Collin Madson",
+     "Darius Chestnut",
+     "JR Lukenbill",
+     "Jake Quast",
+     "Joey Berezowitz"
+    ],
+    "defense": [
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|40|21 Carter Thomas > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 40,
+   "clock": "H1 10:15",
+   "synergy": "21 Carter Thomas > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "coach_title": "::m2m",
+   "auto_title": ": m2m (over)",
+   "film": null,
+   "validation": false,
+   "clip": "clip_040.mp4",
+   "clip_kind": "video",
+   "poster": "clip_040_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 42,
+   "video_at": "15:40",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_040_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/42_013bd540_t016.jpg",
+     "t": 16,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 17,
+       "side": "defense",
+       "box": [
+        710.5835199999999,
+        350.51199999999994,
+        750.01648,
+        444.4
+       ],
+       "px": 730.3,
+       "py": 444.4,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "B",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        397.83328,
+        348.36799999999994,
+        429.76672,
+        424.4
+       ],
+       "px": 413.8,
+       "py": 424.4,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 18,
+       "side": "defense",
+       "box": [
+        883.47568,
+        367.608,
+        929.9243200000001,
+        478.2
+       ],
+       "px": 906.7,
+       "py": 478.2,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 10,
+       "side": "defense",
+       "box": [
+        694.4416,
+        360.06,
+        734.3584,
+        455.1
+       ],
+       "px": 714.4,
+       "py": 455.1,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 20,
+       "side": "offense",
+       "box": [
+        647.99968,
+        428.10799999999995,
+        688.4003200000001,
+        524.3
+       ],
+       "px": 668.2,
+       "py": 524.3,
+       "name": "Carter Thomas",
+       "how": "jersey number",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "F",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        149.02591999999999,
+        384.052,
+        202.97408000000001,
+        512.5
+       ],
+       "px": 176.0,
+       "py": 512.5,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 13,
+       "side": "offense",
+       "box": [
+        636.3087999999999,
+        325.28,
+        659.2912,
+        380.0
+       ],
+       "px": 647.8,
+       "py": 380.0,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 16,
+       "side": "offense",
+       "box": [
+        272.59488,
+        347.728,
+        314.20511999999997,
+        446.8
+       ],
+       "px": 293.4,
+       "py": 446.8,
+       "name": "Nate Nazos",
+       "how": "lineup matching",
+       "label": "#10 Nazos",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_040_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/42_013bd540_t051.jpg",
+     "t": 51,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        509.43327999999997,
+        361.36799999999994,
+        541.36672,
+        437.4
+       ],
+       "px": 525.4,
+       "py": 437.4,
+       "name": "Darius Chestnut",
+       "how": "best guess",
+       "label": "#10 Chestnut?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 33,
+       "side": "defense",
+       "box": [
+        458.2088,
+        335.98,
+        481.1912,
+        390.7
+       ],
+       "px": 469.7,
+       "py": 390.7,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 32,
+       "side": "defense",
+       "box": [
+        355.41711999999995,
+        338.572,
+        386.38288,
+        412.3
+       ],
+       "px": 370.9,
+       "py": 412.3,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 34,
+       "side": "offense",
+       "box": [
+        456.92368000000005,
+        383.708,
+        491.27632,
+        465.5
+       ],
+       "px": 474.1,
+       "py": 465.5,
+       "name": "Carter Thomas",
+       "how": "lineup matching",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 35,
+       "side": "offense",
+       "box": [
+        347.28128,
+        314.168,
+        367.11872,
+        361.4
+       ],
+       "px": 357.2,
+       "py": 361.4,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 13,
+       "side": "offense",
+       "box": [
+        212.04944,
+        338.464,
+        244.95056,
+        416.8
+       ],
+       "px": 228.5,
+       "py": 416.8,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Half court",
+     "auto": "Half court",
+     "conf": 0.91,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ],
+    "defense": [
+     "Collin Madson",
+     "Darius Chestnut",
+     "JR Lukenbill",
+     "Jake Quast",
+     "Joey Berezowitz"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|58|2 Joey LaChapell > Hand Off > From Dribble > Top > To Basket > Make 2 Pts",
+   "clip_number": 58,
+   "clock": "H1 6:05",
+   "synergy": "2 Joey LaChapell > Hand Off > From Dribble > Top > To Basket > Make 2 Pts",
+   "coach_title": "blob(box-cut corner-pop):m2m",
+   "auto_title": "(dho): m2m (over)",
+   "film": "Off-ball screen: Joey LaChapell screened for Carter Thomas; defended by Richie Warren (on the player screened) and Joey Berezowitz (on the screener); coverage from the players' movement: unclear (screen confidence 7%)",
+   "validation": false,
+   "clip": "clip_058.mp4",
+   "clip_kind": "video",
+   "poster": "clip_058_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 61,
+   "video_at": "22:26",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_058_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/61_128632c3_t002.jpg",
+     "t": 2,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 10,
+       "side": "defense",
+       "box": [
+        602.1284800000001,
+        334.188,
+        635.27152,
+        413.1
+       ],
+       "px": 618.7,
+       "py": 413.1,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 1,
+       "side": "defense",
+       "box": [
+        584.68,
+        429.3,
+        614.92,
+        501.3
+       ],
+       "px": 599.8,
+       "py": 501.3,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 9,
+       "side": "defense",
+       "box": [
+        544.94112,
+        324.172,
+        569.85888,
+        383.5
+       ],
+       "px": 557.4,
+       "py": 383.5,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        493.40752000000003,
+        344.112,
+        526.7924800000001,
+        423.6
+       ],
+       "px": 510.1,
+       "py": 423.6,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        655.44944,
+        339.464,
+        688.35056,
+        417.8
+       ],
+       "px": 671.9,
+       "py": 417.8,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 11,
+       "side": "offense",
+       "box": [
+        587.22368,
+        333.908,
+        621.57632,
+        415.7
+       ],
+       "px": 604.4,
+       "py": 415.7,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        393.0896,
+        326.86,
+        420.9104,
+        393.1
+       ],
+       "px": 407.0,
+       "py": 393.1,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        457.88656,
+        349.736,
+        491.51344,
+        429.8
+       ],
+       "px": 474.7,
+       "py": 429.8,
+       "name": "Nate Nazos",
+       "how": "jersey number",
+       "label": "#10 Nazos",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_058_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/61_128632c3_t012.jpg",
+     "t": 12,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 9,
+       "side": "defense",
+       "box": [
+        530.4620799999999,
+        321.448,
+        555.13792,
+        380.2
+       ],
+       "px": 542.8,
+       "py": 380.2,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        435.92976,
+        323.356,
+        458.67024000000004,
+        377.5
+       ],
+       "px": 447.3,
+       "py": 377.5,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        639.84944,
+        369.764,
+        672.75056,
+        448.1
+       ],
+       "px": 656.3,
+       "py": 448.1,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 11,
+       "side": "offense",
+       "box": [
+        592.5153600000001,
+        350.216,
+        618.88464,
+        413.0
+       ],
+       "px": 605.7,
+       "py": 413.0,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 13,
+       "side": "offense",
+       "box": [
+        472.7944,
+        309.03999999999996,
+        499.40560000000005,
+        372.4
+       ],
+       "px": 486.1,
+       "py": 372.4,
+       "name": "Carter Thomas",
+       "how": "best guess",
+       "label": "#21 Thomas?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        398.34592,
+        314.552,
+        422.05408,
+        371.0
+       ],
+       "px": 410.2,
+       "py": 371.0,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "BLOB",
+     "auto": "Half court",
+     "conf": 0.62,
+     "sure": true,
+     "same": false,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": "Box",
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": "Motion",
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": "Corner Cut",
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ],
+    "defense": [
+     "Collin Madson",
+     "Joey Berezowitz",
+     "Luke Bara",
+     "Richie Warren",
+     "Tyshawn Teague-Johnson"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|61|24 Richie Warren > Spot-Up > Drives Right > Turnover",
+   "clip_number": 61,
+   "clock": "H1 4:58",
+   "synergy": "24 Richie Warren > Spot-Up > Drives Right > Turnover",
+   "coach_title": "cheetah:press(rj)(switch)",
+   "auto_title": ": m2m (over)",
+   "film": "Off-ball screen: Collin Madson screened for Joey Berezowitz; defended by Brandon Beck (on the player screened) and Michael Metcalf-Grassman (on the screener); coverage from the players' movement: unclear (screen confidence 22%)",
+   "validation": false,
+   "clip": "clip_061.mp4",
+   "clip_kind": "video",
+   "poster": "clip_061_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 66,
+   "video_at": "24:07",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_061_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/66_981a6075_t004.jpg",
+     "t": 4,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 1,
+       "side": "defense",
+       "box": [
+        124.99792000000001,
+        352.752,
+        160.80208,
+        438.0
+       ],
+       "px": 142.9,
+       "py": 438.0,
+       "name": "Carter Thomas",
+       "how": "jersey number",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "B",
+       "track": 10,
+       "side": "defense",
+       "box": [
+        514.00752,
+        331.112,
+        547.3924800000001,
+        410.6
+       ],
+       "px": 530.7,
+       "py": 410.6,
+       "name": "Carter Thomas",
+       "how": "lineup matching",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 3,
+       "side": "defense",
+       "box": [
+        352.88,
+        336.8,
+        383.12,
+        408.8
+       ],
+       "px": 368.0,
+       "py": 408.8,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 7,
+       "side": "defense",
+       "box": [
+        313.62192,
+        322.452,
+        343.37808,
+        393.3
+       ],
+       "px": 328.5,
+       "py": 393.3,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 13,
+       "side": "defense",
+       "box": [
+        412.11055999999996,
+        355.93600000000004,
+        439.68944,
+        421.6
+       ],
+       "px": 425.9,
+       "py": 421.6,
+       "name": "Nate Nazos",
+       "how": "best guess",
+       "label": "#10 Nazos?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 2,
+       "side": "offense",
+       "box": [
+        287.556,
+        324.70000000000005,
+        323.844,
+        411.1
+       ],
+       "px": 305.7,
+       "py": 411.1,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "G",
+       "track": 6,
+       "side": "offense",
+       "box": [
+        465.43808,
+        343.148,
+        496.16192,
+        416.3
+       ],
+       "px": 480.8,
+       "py": 416.3,
+       "name": "Joey Berezowitz",
+       "how": "jersey number",
+       "label": "#22 Berezowitz",
+       "guess": false
+      },
+      {
+       "id": "H",
+       "track": 5,
+       "side": "offense",
+       "box": [
+        488.1848,
+        329.88,
+        517.2152,
+        399.0
+       ],
+       "px": 502.7,
+       "py": 399.0,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        35.05776,
+        352.956,
+        75.94224,
+        450.3
+       ],
+       "px": 55.5,
+       "py": 450.3,
+       "name": "Richie Warren",
+       "how": "jersey number",
+       "label": "#24 Warren",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_061_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/66_981a6075_t017.jpg",
+     "t": 17,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 1,
+       "side": "defense",
+       "box": [
+        54.89488000000001,
+        371.828,
+        96.50512,
+        470.9
+       ],
+       "px": 75.7,
+       "py": 470.9,
+       "name": "Carter Thomas",
+       "how": "jersey number",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "B",
+       "track": 7,
+       "side": "defense",
+       "box": [
+        308.58783999999997,
+        314.004,
+        331.81216,
+        369.3
+       ],
+       "px": 320.2,
+       "py": 369.3,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 13,
+       "side": "defense",
+       "box": [
+        353.09088,
+        348.228,
+        370.50912,
+        389.7
+       ],
+       "px": 361.8,
+       "py": 389.7,
+       "name": "Nate Nazos",
+       "how": "best guess",
+       "label": "#10 Nazos?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 2,
+       "side": "offense",
+       "box": [
+        403.42192,
+        354.852,
+        433.17808,
+        425.7
+       ],
+       "px": 418.3,
+       "py": 425.7,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        381.3512,
+        355.02,
+        418.84880000000004,
+        444.3
+       ],
+       "px": 400.1,
+       "py": 444.3,
+       "name": "Richie Warren",
+       "how": "jersey number",
+       "label": "#24 Warren",
+       "guess": false
+      },
+      {
+       "id": "F",
+       "track": 15,
+       "side": "offense",
+       "box": [
+        285.10880000000003,
+        329.88,
+        308.0912,
+        384.6
+       ],
+       "px": 296.6,
+       "py": 384.6,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Half court",
+     "auto": "Half court",
+     "conf": 0.87,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": "Cheetah",
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": "Run & Jump",
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": "held-out answer not available until the Tag model retrains"
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": "Switch",
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": false,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Collin Madson",
+     "Joey Berezowitz",
+     "Luke Bara",
+     "Richie Warren",
+     "Tyshawn Teague-Johnson"
+    ],
+    "defense": [
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|62|4 Michael Metcalf-Grassman > Transition > Right Wing > To Basket > Make 2 Pts",
+   "clip_number": 62,
+   "clock": "H1 4:52",
+   "synergy": "4 Michael Metcalf-Grassman > Transition > Right Wing > To Basket > Make 2 Pts",
+   "coach_title": "tran",
+   "auto_title": ": m2m (over)",
+   "film": null,
+   "validation": false,
+   "clip": "clip_062.mp4",
+   "clip_kind": "video",
+   "poster": "clip_062_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 67,
+   "video_at": "24:31",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_062_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/67_53057b31_t001.jpg",
+     "t": 1,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        397.69616,
+        340.996,
+        428.90384,
+        415.3
+       ],
+       "px": 413.3,
+       "py": 415.3,
+       "name": "Richie Warren",
+       "how": "jersey number",
+       "label": "#24 Warren",
+       "guess": false
+      },
+      {
+       "id": "B",
+       "track": 9,
+       "side": "defense",
+       "box": [
+        42.54464,
+        325.584,
+        76.65536,
+        406.8
+       ],
+       "px": 59.6,
+       "py": 406.8,
+       "name": "Richie Warren",
+       "how": "linked possession",
+       "label": "#24 Warren",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        497.86256000000003,
+        374.136,
+        537.5374400000001,
+        468.6
+       ],
+       "px": 517.7,
+       "py": 468.6,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 10,
+       "side": "offense",
+       "box": [
+        244.08528,
+        386.668,
+        288.11472000000003,
+        491.5
+       ],
+       "px": 266.1,
+       "py": 491.5,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 12,
+       "side": "offense",
+       "box": [
+        515.36208,
+        349.748,
+        540.0379200000001,
+        408.5
+       ],
+       "px": 527.7,
+       "py": 408.5,
+       "name": "Carter Thomas",
+       "how": "best guess",
+       "label": "#21 Thomas?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        670.72368,
+        358.608,
+        705.07632,
+        440.4
+       ],
+       "px": 687.9,
+       "py": 440.4,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        289.8704,
+        328.74,
+        322.52959999999996,
+        406.5
+       ],
+       "px": 306.2,
+       "py": 406.5,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        514.23984,
+        349.804,
+        549.56016,
+        433.9
+       ],
+       "px": 531.9,
+       "py": 433.9,
+       "name": "Nate Nazos",
+       "how": "jersey number",
+       "label": "#10 Nazos",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_062_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/67_53057b31_t013.jpg",
+     "t": 13,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 16,
+       "side": "defense",
+       "box": [
+        429.99312,
+        347.47200000000004,
+        467.00688,
+        435.6
+       ],
+       "px": 448.5,
+       "py": 435.6,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 15,
+       "side": "defense",
+       "box": [
+        592.21712,
+        337.972,
+        623.1828800000001,
+        411.7
+       ],
+       "px": 607.7,
+       "py": 411.7,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        412.52191999999997,
+        328.452,
+        442.27808,
+        399.3
+       ],
+       "px": 427.4,
+       "py": 399.3,
+       "name": "Richie Warren",
+       "how": "jersey number",
+       "label": "#24 Warren",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        384.60576,
+        329.25600000000003,
+        413.39424,
+        397.8
+       ],
+       "px": 399.0,
+       "py": 397.8,
+       "name": "Nate Nazos",
+       "how": "jersey number",
+       "label": "#10 Nazos",
+       "guess": false
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Transition",
+     "auto": "Half court",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ],
+    "defense": [
+     "Collin Madson",
+     "Joey Berezowitz",
+     "Luke Bara",
+     "Richie Warren",
+     "Tyshawn Teague-Johnson"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|70|15 Collin Madson > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 70,
+   "clock": "H1 3:02",
+   "synergy": "15 Collin Madson > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "coach_title": "blob(line);m2m",
+   "auto_title": "(ds): m2m (over)",
+   "film": "Off-ball screen: JR Lukenbill screened for Brock Marino; defended by Brandon Beck (on the player screened) and Joey LaChapell (on the screener); coverage from the players' movement: unclear (screen confidence 15%)",
+   "validation": false,
+   "clip": "clip_070.mp4",
+   "clip_kind": "video",
+   "poster": "clip_070_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 78,
+   "video_at": "28:01",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_070_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/78_62a6a431_t012.jpg",
+     "t": 12,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        346.30752,
+        320.512,
+        379.69248,
+        400.0
+       ],
+       "px": 363.0,
+       "py": 400.0,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        220.39968,
+        351.008,
+        260.80032,
+        447.2
+       ],
+       "px": 240.6,
+       "py": 447.2,
+       "name": "Carter Thomas",
+       "how": "jersey number",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 7,
+       "side": "defense",
+       "box": [
+        294.96864,
+        323.98400000000004,
+        323.03136,
+        390.8
+       ],
+       "px": 309.0,
+       "py": 390.8,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        408.2896,
+        335.06,
+        436.11039999999997,
+        401.3
+       ],
+       "px": 422.2,
+       "py": 401.3,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        371.75424000000004,
+        305.144,
+        403.44576,
+        380.6
+       ],
+       "px": 387.6,
+       "py": 380.6,
+       "name": "JR Lukenbill",
+       "how": "jersey number",
+       "label": "#11 Lukenbill",
+       "guess": false
+      },
+      {
+       "id": "F",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        305.65648,
+        372.688,
+        356.94352000000003,
+        494.8
+       ],
+       "px": 331.3,
+       "py": 494.8,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "jersey number",
+       "label": "#40 Teague-Johnson",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_070_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/78_62a6a431_t021.jpg",
+     "t": 21,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 7,
+       "side": "defense",
+       "box": [
+        186.98832,
+        331.09200000000004,
+        225.21168,
+        422.1
+       ],
+       "px": 206.1,
+       "py": 422.1,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 8,
+       "side": "defense",
+       "box": [
+        233.9848,
+        315.98,
+        263.0152,
+        385.1
+       ],
+       "px": 248.5,
+       "py": 385.1,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        318.5032,
+        320.62,
+        368.09680000000003,
+        438.7
+       ],
+       "px": 343.3,
+       "py": 438.7,
+       "name": "JR Lukenbill",
+       "how": "jersey number",
+       "label": "#11 Lukenbill",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 10,
+       "side": "offense",
+       "box": [
+        114.7464,
+        361.34000000000003,
+        153.4536,
+        453.5
+       ],
+       "px": 134.1,
+       "py": 453.5,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        482.80624,
+        354.94399999999996,
+        526.59376,
+        459.2
+       ],
+       "px": 504.7,
+       "py": 459.2,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "jersey number",
+       "label": "#40 Teague-Johnson",
+       "guess": false
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "BLOB",
+     "auto": "Half court",
+     "conf": 0.54,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": "Line",
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": "Motion",
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brock Marino",
+     "Collin Madson",
+     "JR Lukenbill",
+     "Luke Bara",
+     "Tyshawn Teague-Johnson"
+    ],
+    "defense": [
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|71|4 Michael Metcalf-Grassman > Non Possession > No Violation",
+   "clip_number": 71,
+   "clock": "(no clock)",
+   "synergy": "4 Michael Metcalf-Grassman > Non Possession > No Violation",
+   "coach_title": "tran",
+   "auto_title": ": m2m (over)",
+   "film": "Off-ball screen: unnamed offense screened for unnamed offense; defended by Collin Madson (on the player screened) and JR Lukenbill (on the screener); coverage from the players' movement: unclear (screen confidence 11%)",
+   "validation": false,
+   "clip": "clip_071.mp4",
+   "clip_kind": "video",
+   "poster": "clip_071_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 79,
+   "video_at": "28:13",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_071_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/79_57a7681d_t017.jpg",
+     "t": 17,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 8,
+       "side": "defense",
+       "box": [
+        481.39439999999996,
+        331.24,
+        508.0056,
+        394.6
+       ],
+       "px": 494.7,
+       "py": 394.6,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 3,
+       "side": "defense",
+       "box": [
+        686.4703999999999,
+        344.84000000000003,
+        719.1296,
+        422.6
+       ],
+       "px": 702.8,
+       "py": 422.6,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        580.14592,
+        327.052,
+        603.85408,
+        383.5
+       ],
+       "px": 592.0,
+       "py": 383.5,
+       "name": "Tyshawn Teague-Johnson",
+       "how": "best guess",
+       "label": "#40 Teague-Johnson?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 9,
+       "side": "offense",
+       "box": [
+        334.62016,
+        342.396,
+        359.77984,
+        402.3
+       ],
+       "px": 347.2,
+       "py": 402.3,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 10,
+       "side": "offense",
+       "box": [
+        522.08304,
+        339.224,
+        546.5169599999999,
+        397.4
+       ],
+       "px": 534.3,
+       "py": 397.4,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "F",
+       "track": 11,
+       "side": "offense",
+       "box": [
+        589.99184,
+        358.604,
+        637.4081600000001,
+        471.5
+       ],
+       "px": 613.7,
+       "py": 471.5,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "G",
+       "track": 15,
+       "side": "offense",
+       "box": [
+        767.3171199999999,
+        353.472,
+        798.28288,
+        427.2
+       ],
+       "px": 782.8,
+       "py": 427.2,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "H",
+       "track": 17,
+       "side": "offense",
+       "box": [
+        451.36688000000004,
+        308.328,
+        474.83312,
+        364.2
+       ],
+       "px": 463.1,
+       "py": 364.2,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_071_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/79_57a7681d_t086.jpg",
+     "t": 86,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 7,
+       "side": "defense",
+       "box": [
+        500.61888,
+        346.828,
+        536.18112,
+        431.5
+       ],
+       "px": 518.4,
+       "py": 431.5,
+       "name": "Brock Marino",
+       "how": "lineup matching",
+       "label": "#21 Marino",
+       "guess": false
+      },
+      {
+       "id": "B",
+       "track": 31,
+       "side": "defense",
+       "box": [
+        590.78,
+        335.8,
+        621.02,
+        407.8
+       ],
+       "px": 605.9,
+       "py": 407.8,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 34,
+       "side": "defense",
+       "box": [
+        654.3752000000001,
+        345.82,
+        685.8248,
+        420.7
+       ],
+       "px": 670.1,
+       "py": 420.7,
+       "name": "Luke Bara",
+       "how": "jersey number",
+       "label": "#32 Bara",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 19,
+       "side": "offense",
+       "box": [
+        464.5752,
+        333.82,
+        496.0248,
+        408.7
+       ],
+       "px": 480.3,
+       "py": 408.7,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 20,
+       "side": "offense",
+       "box": [
+        409.31888000000004,
+        344.22799999999995,
+        444.88112,
+        428.9
+       ],
+       "px": 427.1,
+       "py": 428.9,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "F",
+       "track": 36,
+       "side": "offense",
+       "box": [
+        568.74112,
+        348.27200000000005,
+        593.6588800000001,
+        407.6
+       ],
+       "px": 581.2,
+       "py": 407.6,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "G",
+       "track": 37,
+       "side": "offense",
+       "box": [
+        705.13328,
+        348.068,
+        737.06672,
+        424.1
+       ],
+       "px": 721.1,
+       "py": 424.1,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "H",
+       "track": 38,
+       "side": "offense",
+       "box": [
+        753.3171199999999,
+        345.67199999999997,
+        784.28288,
+        419.4
+       ],
+       "px": 768.8,
+       "py": 419.4,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Transition",
+     "auto": "Half court",
+     "conf": 0.95,
+     "sure": true,
+     "same": false,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [],
+    "defense": [
+     "Brock Marino",
+     "Collin Madson",
+     "JR Lukenbill",
+     "Luke Bara",
+     "Tyshawn Teague-Johnson"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|90|21 Brock Marino > No Play Type > Turnover",
+   "clip_number": 90,
+   "clock": "H2 18:59",
+   "synergy": "21 Brock Marino > No Play Type > Turnover",
+   "coach_title": "5OUT(DS):PRESS(RJ)(SWITCH)(DENYmadz)",
+   "auto_title": ": m2m (over)",
+   "film": "Off-ball screen: Richie Warren screened for Collin Madson; defended by Nate Nazos (on the player screened) and Joey LaChapell (on the screener); coverage from the players' movement: unclear (screen confidence 23%)",
+   "validation": false,
+   "clip": "clip_090.mp4",
+   "clip_kind": "video",
+   "poster": "clip_090_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 103,
+   "video_at": "35:30",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_090_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/103_ee24304c_t004.jpg",
+     "t": 4,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        802.82064,
+        313.98400000000004,
+        842.9793599999999,
+        409.6
+       ],
+       "px": 822.9,
+       "py": 409.6,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        696.14336,
+        367.216,
+        740.6566399999999,
+        473.2
+       ],
+       "px": 718.4,
+       "py": 473.2,
+       "name": "Carter Thomas",
+       "how": "best guess",
+       "label": "#21 Thomas?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 12,
+       "side": "defense",
+       "box": [
+        520.24768,
+        325.108,
+        548.55232,
+        392.5
+       ],
+       "px": 534.4,
+       "py": 392.5,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        275.54464,
+        326.384,
+        309.65536000000003,
+        407.6
+       ],
+       "px": 292.6,
+       "py": 407.6,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 10,
+       "side": "defense",
+       "box": [
+        366.65119999999996,
+        345.82000000000005,
+        404.1488,
+        435.1
+       ],
+       "px": 385.4,
+       "py": 435.1,
+       "name": "Nate Nazos",
+       "how": "jersey number",
+       "label": "#10 Nazos",
+       "guess": false
+      },
+      {
+       "id": "F",
+       "track": 5,
+       "side": "offense",
+       "box": [
+        396.3224,
+        327.74,
+        441.07759999999996,
+        434.3
+       ],
+       "px": 418.7,
+       "py": 434.3,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        731.2792000000001,
+        386.12,
+        786.9208,
+        518.6
+       ],
+       "px": 759.1,
+       "py": 518.6,
+       "name": "JR Lukenbill",
+       "how": "jersey number",
+       "label": "#11 Lukenbill",
+       "guess": false
+      },
+      {
+       "id": "H",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        541.45728,
+        325.268,
+        567.34272,
+        386.9
+       ],
+       "px": 554.4,
+       "py": 386.9,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        550.93152,
+        321.012,
+        578.2684800000001,
+        386.1
+       ],
+       "px": 564.6,
+       "py": 386.1,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_090_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/103_ee24304c_t012.jpg",
+     "t": 12,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        766.82064,
+        319.884,
+        806.9793599999999,
+        415.5
+       ],
+       "px": 786.9,
+       "py": 415.5,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 15,
+       "side": "defense",
+       "box": [
+        951.8822399999999,
+        374.144,
+        1001.71776,
+        492.8
+       ],
+       "px": 976.8,
+       "py": 492.8,
+       "name": "Carter Thomas",
+       "how": "jersey number",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 12,
+       "side": "defense",
+       "box": [
+        393.16208,
+        332.14799999999997,
+        417.83792,
+        390.9
+       ],
+       "px": 405.5,
+       "py": 390.9,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        289.74464,
+        320.984,
+        323.85536,
+        402.2
+       ],
+       "px": 306.8,
+       "py": 402.2,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 5,
+       "side": "offense",
+       "box": [
+        459.08176000000003,
+        335.65600000000006,
+        493.91823999999997,
+        418.6
+       ],
+       "px": 476.5,
+       "py": 418.6,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        981.0438399999999,
+        385.404,
+        1040.5561599999999,
+        527.1
+       ],
+       "px": 1010.8,
+       "py": 527.1,
+       "name": "JR Lukenbill",
+       "how": "jersey number",
+       "label": "#11 Lukenbill",
+       "guess": false
+      },
+      {
+       "id": "G",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        582.2656000000001,
+        318.96000000000004,
+        616.1344,
+        399.6
+       ],
+       "px": 599.2,
+       "py": 399.6,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 13,
+       "side": "offense",
+       "box": [
+        427.55904000000004,
+        340.32399999999996,
+        458.04096,
+        412.9
+       ],
+       "px": 442.8,
+       "py": 412.9,
+       "name": "Richie Warren",
+       "how": "jersey number",
+       "label": "#24 Warren",
+       "guess": false
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Half court",
+     "auto": "Half court",
+     "conf": 0.99,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": "5 Out",
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": "Motion",
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": "Down Screen",
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": "Run & Jump",
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": "held-out answer not available until the Tag model retrains"
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": "Switch",
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": false,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brock Marino",
+     "Collin Madson",
+     "JR Lukenbill",
+     "Luke Bara",
+     "Richie Warren"
+    ],
+    "defense": [
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|92|10 Nate Nazos > Offensive Rebound > Long > Run Offense",
+   "clip_number": 92,
+   "clock": "(no clock)",
+   "synergy": "10 Nate Nazos > Offensive Rebound > Long > Run Offense",
+   "coach_title": "tran",
+   "auto_title": ": m2m (over)",
+   "film": null,
+   "validation": false,
+   "clip": "clip_092.mp4",
+   "clip_kind": "video",
+   "poster": "clip_092_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 105,
+   "video_at": "35:53",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_092_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/105_9ca90568_t000.jpg",
+     "t": 0,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        474.86512,
+        371.472,
+        493.73488000000003,
+        416.4
+       ],
+       "px": 484.3,
+       "py": 416.4,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 3,
+       "side": "defense",
+       "box": [
+        641.0345599999999,
+        318.536,
+        662.56544,
+        369.8
+       ],
+       "px": 651.8,
+       "py": 369.8,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        740.93328,
+        368.96799999999996,
+        772.86672,
+        445.0
+       ],
+       "px": 756.9,
+       "py": 445.0,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        508.88784,
+        359.80400000000003,
+        532.11216,
+        415.1
+       ],
+       "px": 520.5,
+       "py": 415.1,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        770.4865599999999,
+        333.536,
+        804.11344,
+        413.6
+       ],
+       "px": 787.3,
+       "py": 413.6,
+       "name": "Carter Thomas",
+       "how": "best guess",
+       "label": "#21 Thomas?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 6,
+       "side": "offense",
+       "box": [
+        501.86256000000003,
+        322.436,
+        541.5374400000001,
+        416.9
+       ],
+       "px": 521.7,
+       "py": 416.9,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_092_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/105_9ca90568_t002.jpg",
+     "t": 2,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        390.57168,
+        371.308,
+        412.82831999999996,
+        424.3
+       ],
+       "px": 401.7,
+       "py": 424.3,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 3,
+       "side": "defense",
+       "box": [
+        662.49744,
+        322.464,
+        683.30256,
+        372.0
+       ],
+       "px": 672.9,
+       "py": 372.0,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        657.82848,
+        368.688,
+        690.9715199999999,
+        447.6
+       ],
+       "px": 674.4,
+       "py": 447.6,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        453.82016,
+        361.896,
+        478.97983999999997,
+        421.8
+       ],
+       "px": 466.4,
+       "py": 421.8,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        770.85424,
+        334.94399999999996,
+        802.5457600000001,
+        410.4
+       ],
+       "px": 786.7,
+       "py": 410.4,
+       "name": "Carter Thomas",
+       "how": "best guess",
+       "label": "#21 Thomas?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 8,
+       "side": "offense",
+       "box": [
+        772.89744,
+        335.264,
+        793.70256,
+        384.8
+       ],
+       "px": 783.3,
+       "py": 384.8,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Transition",
+     "auto": "Half court",
+     "conf": 0.87,
+     "sure": true,
+     "same": false,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ],
+    "defense": [
+     "Brock Marino",
+     "Collin Madson",
+     "JR Lukenbill",
+     "Luke Bara",
+     "Richie Warren"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|94|11 Jr Lukenbill > Non Possession > No Violation",
+   "clip_number": 94,
+   "clock": "(no clock)",
+   "synergy": "11 Jr Lukenbill > Non Possession > No Violation",
+   "coach_title": ":press(rj)",
+   "auto_title": ": m2m (over)",
+   "film": "Off-ball screen: Luke Bara screened for JR Lukenbill; defended by unnamed defense (on the player screened) and unnamed defense (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 27%)",
+   "validation": false,
+   "clip": "clip_094.mp4",
+   "clip_kind": "video",
+   "poster": "clip_094_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 107,
+   "video_at": "36:03",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_094_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/107_4ede87a6_t006.jpg",
+     "t": 6,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        674.97088,
+        427.22800000000007,
+        722.62912,
+        540.7
+       ],
+       "px": 698.8,
+       "py": 540.7,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "B",
+       "track": 3,
+       "side": "defense",
+       "box": [
+        528.12496,
+        333.076,
+        552.0750400000001,
+        390.1
+       ],
+       "px": 540.1,
+       "py": 390.1,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 8,
+       "side": "defense",
+       "box": [
+        654.43632,
+        319.692,
+        680.56368,
+        381.9
+       ],
+       "px": 667.5,
+       "py": 381.9,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 10,
+       "side": "defense",
+       "box": [
+        363.16736,
+        341.316,
+        401.63264,
+        432.9
+       ],
+       "px": 382.4,
+       "py": 432.9,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 12,
+       "side": "offense",
+       "box": [
+        560.8913600000001,
+        337.41600000000005,
+        593.30864,
+        414.6
+       ],
+       "px": 577.1,
+       "py": 414.6,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        394.2368,
+        355.47999999999996,
+        435.3632,
+        453.4
+       ],
+       "px": 414.8,
+       "py": 453.4,
+       "name": "Collin Madson",
+       "how": "lineup matching",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "G",
+       "track": 15,
+       "side": "offense",
+       "box": [
+        591.82016,
+        310.996,
+        616.97984,
+        370.9
+       ],
+       "px": 604.4,
+       "py": 370.9,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_094_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/107_4ede87a6_t075.jpg",
+     "t": 75,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        627.5835199999999,
+        346.712,
+        667.01648,
+        440.6
+       ],
+       "px": 647.3,
+       "py": 440.6,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "B",
+       "track": 43,
+       "side": "defense",
+       "box": [
+        586.9673600000001,
+        339.916,
+        625.43264,
+        431.5
+       ],
+       "px": 606.2,
+       "py": 431.5,
+       "name": null,
+       "how": null,
+       "label": "",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        704.6656,
+        337.05999999999995,
+        738.5344,
+        417.7
+       ],
+       "px": 721.6,
+       "py": 417.7,
+       "name": "Collin Madson",
+       "how": "lineup matching",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 33,
+       "side": "offense",
+       "box": [
+        681.03328,
+        345.46799999999996,
+        712.96672,
+        421.5
+       ],
+       "px": 697.0,
+       "py": 421.5,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 35,
+       "side": "offense",
+       "box": [
+        656.99792,
+        337.452,
+        692.8020799999999,
+        422.7
+       ],
+       "px": 674.9,
+       "py": 422.7,
+       "name": "Luke Bara",
+       "how": "jersey number",
+       "label": "#32 Bara",
+       "guess": false
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Half court",
+     "auto": "Half court",
+     "conf": 0.99,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": "Run & Jump",
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": "held-out answer not available until the Tag model retrains"
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brock Marino",
+     "Collin Madson",
+     "JR Lukenbill",
+     "Luke Bara",
+     "Richie Warren"
+    ],
+    "defense": []
+   }
+  },
+  {
+   "clip_key": "2026-01-03|96|23 Oskar Kangas > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 5 Matt Imig > Cut > Basket > Turnover",
+   "clip_number": 96,
+   "clock": "H2 18:07",
+   "synergy": "23 Oskar Kangas > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 5 Matt Imig > Cut > Basket > Turnover",
+   "coach_title": "5out(bs):m2m(switch)",
+   "auto_title": "(bs,cut): m2m (over)",
+   "film": "Off-ball screen: Aiden Hawkinson screened for Vitorio Dante; defended by Brock Marino (on the player screened) and Collin Madson (on the screener); coverage from the players' movement: unclear (screen confidence 10%)",
+   "validation": false,
+   "clip": "clip_096.mp4",
+   "clip_kind": "video",
+   "poster": "clip_096_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 109,
+   "video_at": "37:00",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_096_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/109_e996d326_t007.jpg",
+     "t": 7,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 3,
+       "side": "defense",
+       "box": [
+        343.36736,
+        341.716,
+        381.83264,
+        433.3
+       ],
+       "px": 362.6,
+       "py": 433.3,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        146.48048,
+        373.88800000000003,
+        191.71952,
+        481.6
+       ],
+       "px": 169.1,
+       "py": 481.6,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        393.17519999999996,
+        326.32,
+        424.6248,
+        401.2
+       ],
+       "px": 408.9,
+       "py": 401.2,
+       "name": "Luke Bara",
+       "how": "jersey number",
+       "label": "#32 Bara",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 9,
+       "side": "defense",
+       "box": [
+        565.93328,
+        343.568,
+        597.86672,
+        419.6
+       ],
+       "px": 581.9,
+       "py": 419.6,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 12,
+       "side": "offense",
+       "box": [
+        767.3983999999999,
+        358.94,
+        818.2016,
+        479.9
+       ],
+       "px": 792.8,
+       "py": 479.9,
+       "name": "Jonah Rindfleisch",
+       "how": "best guess",
+       "label": "#12 Rindfleisch?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 2,
+       "side": "offense",
+       "box": [
+        605.2931199999999,
+        304.772,
+        642.30688,
+        392.9
+       ],
+       "px": 623.8,
+       "py": 392.9,
+       "name": "Oskar Kangas",
+       "how": "best guess",
+       "label": "#23 Kangas?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        71.66912,
+        395.37199999999996,
+        114.73088,
+        497.9
+       ],
+       "px": 93.2,
+       "py": 497.9,
+       "name": "Vitorio Dante",
+       "how": "best guess",
+       "label": "#20 Dante?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_096_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/109_e996d326_t026.jpg",
+     "t": 26,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 13,
+       "side": "defense",
+       "box": [
+        365.43808,
+        302.548,
+        396.16192,
+        375.7
+       ],
+       "px": 380.8,
+       "py": 375.7,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 14,
+       "side": "defense",
+       "box": [
+        302.61888,
+        361.928,
+        338.18111999999996,
+        446.6
+       ],
+       "px": 320.4,
+       "py": 446.6,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        162.74816,
+        371.99600000000004,
+        206.05184,
+        475.1
+       ],
+       "px": 184.4,
+       "py": 475.1,
+       "name": "JR Lukenbill",
+       "how": "best guess",
+       "label": "#11 Lukenbill?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 9,
+       "side": "defense",
+       "box": [
+        505.36256000000003,
+        336.736,
+        545.0374400000001,
+        431.2
+       ],
+       "px": 525.2,
+       "py": 431.2,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 17,
+       "side": "offense",
+       "box": [
+        349.24111999999997,
+        301.77200000000005,
+        374.15888,
+        361.1
+       ],
+       "px": 361.7,
+       "py": 361.1,
+       "name": "Aiden Hawkinson",
+       "how": "best guess",
+       "label": "#1 Hawkinson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 6,
+       "side": "offense",
+       "box": [
+        561.6446400000001,
+        331.084,
+        595.75536,
+        412.3
+       ],
+       "px": 578.7,
+       "py": 412.3,
+       "name": "Jonah Rindfleisch",
+       "how": "jersey number",
+       "label": "#12 Rindfleisch",
+       "guess": false
+      },
+      {
+       "id": "G",
+       "track": 16,
+       "side": "offense",
+       "box": [
+        238.35776,
+        364.156,
+        279.24224000000004,
+        461.5
+       ],
+       "px": 258.8,
+       "py": 461.5,
+       "name": "Vitorio Dante",
+       "how": "best guess",
+       "label": "#20 Dante?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Half court",
+     "auto": "Half court",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": "5 Out",
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": "Motion",
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": "Ball Screen",
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": "Switch",
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Aiden Hawkinson",
+     "Jonah Rindfleisch",
+     "Matt Imig",
+     "Oskar Kangas",
+     "Vitorio Dante"
+    ],
+    "defense": [
+     "Brock Marino",
+     "Collin Madson",
+     "JR Lukenbill",
+     "Luke Bara",
+     "Richie Warren"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|117|21 Brock Marino > Non Possession > Non Shooting Foul",
+   "clip_number": 117,
+   "clock": "(no clock)",
+   "synergy": "21 Brock Marino > Non Possession > Non Shooting Foul",
+   "coach_title": "panther:press(rj)",
+   "auto_title": ": m2m (over)",
+   "film": "Off-ball screen: Luke Bara screened for Jake Quast; defended by Michael Metcalf-Grassman (on the player screened) and Joey LaChapell (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 17%)",
+   "validation": false,
+   "clip": "clip_117.mp4",
+   "clip_kind": "video",
+   "poster": "clip_117_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 140,
+   "video_at": "47:18",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_117_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/140_5c03e8f3_t033.jpg",
+     "t": 33,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 20,
+       "side": "defense",
+       "box": [
+        876.30272,
+        327.832,
+        910.89728,
+        410.2
+       ],
+       "px": 893.6,
+       "py": 410.2,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 4,
+       "side": "defense",
+       "box": [
+        905.28224,
+        394.64399999999995,
+        955.1177600000001,
+        513.3
+       ],
+       "px": 930.2,
+       "py": 513.3,
+       "name": "Carter Thomas",
+       "how": "lineup matching",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 16,
+       "side": "defense",
+       "box": [
+        782.44816,
+        347.596,
+        825.75184,
+        450.7
+       ],
+       "px": 804.1,
+       "py": 450.7,
+       "name": "Carter Thomas",
+       "how": "jersey number",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 22,
+       "side": "defense",
+       "box": [
+        444.75552,
+        327.612,
+        466.04447999999996,
+        378.3
+       ],
+       "px": 455.4,
+       "py": 378.3,
+       "name": "Nate Nazos",
+       "how": "jersey number",
+       "label": "#10 Nazos",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 15,
+       "side": "offense",
+       "box": [
+        240.13456000000002,
+        336.536,
+        261.66544,
+        387.8
+       ],
+       "px": 250.9,
+       "py": 387.8,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 6,
+       "side": "offense",
+       "box": [
+        227.84512,
+        373.172,
+        276.95488,
+        490.1
+       ],
+       "px": 252.4,
+       "py": 490.1,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 14,
+       "side": "offense",
+       "box": [
+        809.7512,
+        328.52,
+        847.2488,
+        417.8
+       ],
+       "px": 828.5,
+       "py": 417.8,
+       "name": "Luke Bara",
+       "how": "jersey number",
+       "label": "#32 Bara",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_117_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/140_5c03e8f3_t123.jpg",
+     "t": 123,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 59,
+       "side": "defense",
+       "box": [
+        665.36864,
+        311.784,
+        693.4313599999999,
+        378.6
+       ],
+       "px": 679.4,
+       "py": 378.6,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 16,
+       "side": "defense",
+       "box": [
+        641.6315199999999,
+        311.61199999999997,
+        668.96848,
+        376.7
+       ],
+       "px": 655.3,
+       "py": 376.7,
+       "name": "Carter Thomas",
+       "how": "jersey number",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 58,
+       "side": "defense",
+       "box": [
+        687.3009599999999,
+        311.576,
+        717.29904,
+        383.0
+       ],
+       "px": 702.3,
+       "py": 383.0,
+       "name": "Carter Thomas",
+       "how": "lineup matching",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 54,
+       "side": "offense",
+       "box": [
+        909.6166400000001,
+        441.784,
+        925.58336,
+        479.8
+       ],
+       "px": 917.6,
+       "py": 479.8,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 35,
+       "side": "offense",
+       "box": [
+        609.8913600000001,
+        319.01599999999996,
+        642.30864,
+        396.2
+       ],
+       "px": 626.1,
+       "py": 396.2,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "F",
+       "track": 50,
+       "side": "offense",
+       "box": [
+        724.4188800000001,
+        332.328,
+        759.98112,
+        417.0
+       ],
+       "px": 742.2,
+       "py": 417.0,
+       "name": "Richie Warren",
+       "how": "lineup matching",
+       "label": "#24 Warren",
+       "guess": false
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Half court",
+     "auto": "Half court",
+     "conf": 0.97,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": "Panther",
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": "Run & Jump",
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": "held-out answer not available until the Tag model retrains"
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Jake Quast",
+     "Luke Bara",
+     "Richie Warren"
+    ],
+    "defense": [
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|125|21 Brock Marino > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul",
+   "clip_number": 125,
+   "clock": "H2 12:55",
+   "synergy": "21 Brock Marino > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul",
+   "coach_title": "oreb",
+   "auto_title": ": m2m (over)",
+   "film": null,
+   "validation": false,
+   "clip": "clip_125.mp4",
+   "clip_kind": "video",
+   "poster": "clip_125_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 152,
+   "video_at": "52:56",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_125_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/152_be751d6c_t002.jpg",
+     "t": 2,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        517.0992,
+        326.52,
+        542.5007999999999,
+        387.0
+       ],
+       "px": 529.8,
+       "py": 387.0,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 9,
+       "side": "defense",
+       "box": [
+        494.5992,
+        337.32,
+        520.0008,
+        397.8
+       ],
+       "px": 507.3,
+       "py": 397.8,
+       "name": "Nate Nazos",
+       "how": "lineup matching",
+       "label": "#10 Nazos",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        592.24768,
+        396.108,
+        620.55232,
+        463.5
+       ],
+       "px": 606.4,
+       "py": 463.5,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        461.04288,
+        330.728,
+        490.55712,
+        401.0
+       ],
+       "px": 475.8,
+       "py": 401.0,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        365.22192,
+        323.952,
+        394.97808000000003,
+        394.8
+       ],
+       "px": 380.1,
+       "py": 394.8,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 8,
+       "side": "offense",
+       "box": [
+        420.2704,
+        324.44,
+        452.92960000000005,
+        402.2
+       ],
+       "px": 436.6,
+       "py": 402.2,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_125_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/152_be751d6c_t015.jpg",
+     "t": 15,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 10,
+       "side": "defense",
+       "box": [
+        437.68656,
+        322.33599999999996,
+        471.31344,
+        402.4
+       ],
+       "px": 454.5,
+       "py": 402.4,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 9,
+       "side": "defense",
+       "box": [
+        468.72672,
+        331.63200000000006,
+        497.27328,
+        399.6
+       ],
+       "px": 483.0,
+       "py": 399.6,
+       "name": "Nate Nazos",
+       "how": "lineup matching",
+       "label": "#10 Nazos",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 7,
+       "side": "offense",
+       "box": [
+        371.6608,
+        334.98,
+        406.7392,
+        418.5
+       ],
+       "px": 389.2,
+       "py": 418.5,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 1,
+       "side": "offense",
+       "box": [
+        349.61055999999996,
+        330.236,
+        377.18944,
+        395.9
+       ],
+       "px": 363.4,
+       "py": 395.9,
+       "name": "Luke Bara",
+       "how": "best guess",
+       "label": "#32 Bara?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 8,
+       "side": "offense",
+       "box": [
+        320.17696,
+        331.07599999999996,
+        356.22303999999997,
+        416.9
+       ],
+       "px": 338.2,
+       "py": 416.9,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Offensive rebound",
+     "auto": "Half court",
+     "conf": 0.91,
+     "sure": true,
+     "same": false,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": "Offensive Rebound",
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Jake Quast",
+     "Luke Bara",
+     "Richie Warren"
+    ],
+    "defense": [
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|136|21 Carter Thomas > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover",
+   "clip_number": 136,
+   "clock": "H2 10:28",
+   "synergy": "21 Carter Thomas > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover",
+   "coach_title": "bs:switch(stay)",
+   "auto_title": "(bs): m2m (over)",
+   "film": null,
+   "validation": false,
+   "clip": "clip_136.mp4",
+   "clip_kind": "video",
+   "poster": "clip_136_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 171,
+   "video_at": "59:11",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_136_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/171_f0550285_t003.jpg",
+     "t": 3,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 6,
+       "side": "defense",
+       "box": [
+        426.15424,
+        325.24399999999997,
+        457.84576,
+        400.7
+       ],
+       "px": 442.0,
+       "py": 400.7,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 13,
+       "side": "defense",
+       "box": [
+        516.9943999999999,
+        346.24,
+        543.6056,
+        409.6
+       ],
+       "px": 530.3,
+       "py": 409.6,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 15,
+       "side": "defense",
+       "box": [
+        342.37392,
+        333.852,
+        384.22608,
+        433.5
+       ],
+       "px": 363.3,
+       "py": 433.5,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 14,
+       "side": "defense",
+       "box": [
+        305.91711999999995,
+        389.772,
+        336.88288,
+        463.5
+       ],
+       "px": 321.4,
+       "py": 463.5,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 5,
+       "side": "offense",
+       "box": [
+        626.856,
+        324.70000000000005,
+        663.144,
+        411.1
+       ],
+       "px": 645.0,
+       "py": 411.1,
+       "name": "Carter Thomas",
+       "how": "best guess",
+       "label": "#21 Thomas?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 10,
+       "side": "offense",
+       "box": [
+        640.61536,
+        349.616,
+        666.9846399999999,
+        412.4
+       ],
+       "px": 653.8,
+       "py": 412.4,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        714.33024,
+        353.344,
+        752.0697600000001,
+        443.2
+       ],
+       "px": 733.2,
+       "py": 443.2,
+       "name": "Logan Rindfleisch",
+       "how": "best guess",
+       "label": "#13 Rindfleisch?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        455.57744,
+        408.464,
+        506.62256,
+        530.0
+       ],
+       "px": 481.1,
+       "py": 530.0,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      },
+      {
+       "id": "I",
+       "track": 16,
+       "side": "offense",
+       "box": [
+        261.9656,
+        369.55999999999995,
+        295.83439999999996,
+        450.2
+       ],
+       "px": 278.9,
+       "py": 450.2,
+       "name": "Nate Nazos",
+       "how": "lineup matching",
+       "label": "#10 Nazos",
+       "guess": false
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_136_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/171_f0550285_t040.jpg",
+     "t": 40,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 32,
+       "side": "defense",
+       "box": [
+        487.71888,
+        342.328,
+        523.28112,
+        427.0
+       ],
+       "px": 505.5,
+       "py": 427.0,
+       "name": "Brock Marino",
+       "how": "best guess",
+       "label": "#21 Marino?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 20,
+       "side": "defense",
+       "box": [
+        257.932,
+        386.4,
+        300.26800000000003,
+        487.2
+       ],
+       "px": 279.1,
+       "py": 487.2,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 23,
+       "side": "defense",
+       "box": [
+        338.01888,
+        308.72799999999995,
+        373.58112,
+        393.4
+       ],
+       "px": 355.8,
+       "py": 393.4,
+       "name": "Jake Quast",
+       "how": "best guess",
+       "label": "#12 Quast?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 30,
+       "side": "defense",
+       "box": [
+        538.08176,
+        370.15600000000006,
+        572.91824,
+        453.1
+       ],
+       "px": 555.5,
+       "py": 453.1,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 14,
+       "side": "defense",
+       "box": [
+        415.35728,
+        316.368,
+        441.24272,
+        378.0
+       ],
+       "px": 428.3,
+       "py": 378.0,
+       "name": "Kelton McEwen",
+       "how": "best guess",
+       "label": "#2 McEwen?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 28,
+       "side": "offense",
+       "box": [
+        512.18656,
+        346.83599999999996,
+        545.81344,
+        426.9
+       ],
+       "px": 529.0,
+       "py": 426.9,
+       "name": "Carter Thomas",
+       "how": "jersey number",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "G",
+       "track": 10,
+       "side": "offense",
+       "box": [
+        593.056,
+        369.40000000000003,
+        629.344,
+        455.8
+       ],
+       "px": 611.2,
+       "py": 455.8,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 27,
+       "side": "offense",
+       "box": [
+        151.42192,
+        412.55199999999996,
+        181.17808000000002,
+        483.4
+       ],
+       "px": 166.3,
+       "py": 483.4,
+       "name": "Nate Nazos",
+       "how": "best guess",
+       "label": "#10 Nazos?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Half court",
+     "auto": "Half court",
+     "conf": 0.98,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": "Ball Screen",
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": "Stay",
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Logan Rindfleisch",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ],
+    "defense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Jake Quast",
+     "Joey Berezowitz",
+     "Kelton McEwen"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|167|4 Michael Metcalf-Grassman > No Play Type > To Basket > Miss 2 Pts",
+   "clip_number": 167,
+   "clock": "H2 3:13",
+   "synergy": "4 Michael Metcalf-Grassman > No Play Type > To Basket > Miss 2 Pts",
+   "coach_title": "bs:press(12)((switch))",
+   "auto_title": ": m2m (over)",
+   "film": "Ball screen: Brandon Beck screened for Michael Metcalf-Grassman; defended by Jake Quast (on the player screened) and Joey Berezowitz (on the screener); coverage from the players' movement: unclear (screen confidence 18%)",
+   "validation": false,
+   "clip": "clip_167.mp4",
+   "clip_kind": "video",
+   "poster": "clip_167_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 218,
+   "video_at": "74:24",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_167_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/218_5aa2d6cc_t025.jpg",
+     "t": 25,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 25,
+       "side": "defense",
+       "box": [
+        91.03856,
+        381.836,
+        136.76144,
+        490.7
+       ],
+       "px": 113.9,
+       "py": 490.7,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "B",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        236.98656,
+        335.736,
+        270.61344,
+        415.8
+       ],
+       "px": 253.8,
+       "py": 415.8,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 0,
+       "side": "defense",
+       "box": [
+        408.0656,
+        350.05999999999995,
+        441.9344,
+        430.7
+       ],
+       "px": 425.0,
+       "py": 430.7,
+       "name": "Luke Bara",
+       "how": "jersey number",
+       "label": "#32 Bara",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 11,
+       "side": "defense",
+       "box": [
+        551.92016,
+        326.296,
+        577.07984,
+        386.2
+       ],
+       "px": 564.5,
+       "py": 386.2,
+       "name": "Richie Warren",
+       "how": "lineup matching",
+       "label": "#24 Warren",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        528.47744,
+        385.664,
+        579.52256,
+        507.2
+       ],
+       "px": 554.0,
+       "py": 507.2,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "F",
+       "track": 28,
+       "side": "offense",
+       "box": [
+        388.90272,
+        322.432,
+        423.49728,
+        404.8
+       ],
+       "px": 406.2,
+       "py": 404.8,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      },
+      {
+       "id": "G",
+       "track": 14,
+       "side": "offense",
+       "box": [
+        725.48,
+        343.0,
+        755.72,
+        415.0
+       ],
+       "px": 740.6,
+       "py": 415.0,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      },
+      {
+       "id": "H",
+       "track": 10,
+       "side": "offense",
+       "box": [
+        536.3992000000001,
+        314.12,
+        561.8008,
+        374.6
+       ],
+       "px": 549.1,
+       "py": 374.6,
+       "name": "Nate Nazos",
+       "how": "best guess",
+       "label": "#10 Nazos?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_167_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/218_5aa2d6cc_t082.jpg",
+     "t": 82,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 25,
+       "side": "defense",
+       "box": [
+        314.55472,
+        324.832,
+        361.24528,
+        436.0
+       ],
+       "px": 337.9,
+       "py": 436.0,
+       "name": "Collin Madson",
+       "how": "jersey number",
+       "label": "#15 Madson",
+       "guess": false
+      },
+      {
+       "id": "B",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        226.10399999999998,
+        305.59999999999997,
+        250.296,
+        363.2
+       ],
+       "px": 238.2,
+       "py": 363.2,
+       "name": "Joey Berezowitz",
+       "how": "best guess",
+       "label": "#22 Berezowitz?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 42,
+       "side": "defense",
+       "box": [
+        166.91712,
+        341.17199999999997,
+        197.88288,
+        414.9
+       ],
+       "px": 182.4,
+       "py": 414.9,
+       "name": "Luke Bara",
+       "how": "jersey number",
+       "label": "#32 Bara",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 4,
+       "side": "offense",
+       "box": [
+        494.2608,
+        355.78000000000003,
+        529.3392,
+        439.3
+       ],
+       "px": 511.8,
+       "py": 439.3,
+       "name": "Brandon Beck",
+       "how": "best guess",
+       "label": "#0 Beck?",
+       "guess": true
+      },
+      {
+       "id": "E",
+       "track": 32,
+       "side": "offense",
+       "box": [
+        245.03807999999998,
+        338.548,
+        275.76192,
+        411.7
+       ],
+       "px": 260.4,
+       "py": 411.7,
+       "name": "Carter Thomas",
+       "how": "jersey number",
+       "label": "#21 Thomas",
+       "guess": false
+      },
+      {
+       "id": "F",
+       "track": 37,
+       "side": "offense",
+       "box": [
+        468.06208,
+        319.848,
+        492.73792,
+        378.6
+       ],
+       "px": 480.4,
+       "py": 378.6,
+       "name": "Michael Metcalf-Grassman",
+       "how": "best guess",
+       "label": "#4 Metcalf-Grassman?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Half court",
+     "auto": "Half court",
+     "conf": 0.93,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": "Ball Screen",
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": "1-2-2 Press",
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": "Switch",
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman",
+     "Nate Nazos"
+    ],
+    "defense": [
+     "Collin Madson",
+     "Jake Quast",
+     "Joey Berezowitz",
+     "Luke Bara",
+     "Richie Warren"
+    ]
+   }
+  },
+  {
+   "clip_key": "2026-01-03|182|2 Joey LaChapell > No Play Type > Foul",
+   "clip_number": 182,
+   "clock": "H2 0:54",
+   "synergy": "2 Joey LaChapell > No Play Type > Foul",
+   "coach_title": ":press(rj)",
+   "auto_title": ": rj - m2m (over)",
+   "film": "Off-ball screen: Brandon Beck screened for Michael Metcalf-Grassman; defended by Darius Chestnut (on the player screened) and Joey Berezowitz (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 14%)",
+   "validation": false,
+   "clip": "clip_182.mp4",
+   "clip_kind": "video",
+   "poster": "clip_182_poster.jpg",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a58b%2ffullgamevideo%2fclips",
+   "synergy_pos": 245,
+   "video_at": "82:58",
+   "pictures": [
+    {
+     "which": "start",
+     "image": "clip_182_a_start.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/245_865bba4f_t001.jpg",
+     "t": 1,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 1,
+       "side": "defense",
+       "box": [
+        309.19792,
+        331.452,
+        345.00208000000003,
+        416.7
+       ],
+       "px": 327.1,
+       "py": 416.7,
+       "name": "Darius Chestnut",
+       "how": "jersey number",
+       "label": "#10 Chestnut",
+       "guess": false
+      },
+      {
+       "id": "B",
+       "track": 2,
+       "side": "defense",
+       "box": [
+        26.48176,
+        363.456,
+        61.318239999999996,
+        446.4
+       ],
+       "px": 43.9,
+       "py": 446.4,
+       "name": "Joey Berezowitz",
+       "how": "jersey number",
+       "label": "#22 Berezowitz",
+       "guess": false
+      },
+      {
+       "id": "C",
+       "track": 5,
+       "side": "defense",
+       "box": [
+        498.65728,
+        316.468,
+        524.54272,
+        378.1
+       ],
+       "px": 511.6,
+       "py": 378.1,
+       "name": "Richie Warren",
+       "how": "jersey number",
+       "label": "#24 Warren",
+       "guess": false
+      },
+      {
+       "id": "D",
+       "track": 0,
+       "side": "offense",
+       "box": [
+        48.22464000000001,
+        398.384,
+        112.57536,
+        551.6
+       ],
+       "px": 80.4,
+       "py": 551.6,
+       "name": "Brandon Beck",
+       "how": "jersey number",
+       "label": "#0 Beck",
+       "guess": false
+      },
+      {
+       "id": "E",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        296.08176000000003,
+        336.256,
+        330.91823999999997,
+        419.2
+       ],
+       "px": 313.5,
+       "py": 419.2,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      }
+     ]
+    },
+    {
+     "which": "end",
+     "image": "clip_182_b_end.jpg",
+     "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/245_865bba4f_t027.jpg",
+     "t": 27,
+     "boxes": [
+      {
+       "id": "A",
+       "track": 8,
+       "side": "defense",
+       "box": [
+        230.2944,
+        320.24,
+        256.9056,
+        383.6
+       ],
+       "px": 243.6,
+       "py": 383.6,
+       "name": "Collin Madson",
+       "how": "best guess",
+       "label": "#15 Madson?",
+       "guess": true
+      },
+      {
+       "id": "B",
+       "track": 12,
+       "side": "defense",
+       "box": [
+        113.40096,
+        355.876,
+        143.39904,
+        427.3
+       ],
+       "px": 128.4,
+       "py": 427.3,
+       "name": "Richie Warren",
+       "how": "best guess",
+       "label": "#24 Warren?",
+       "guess": true
+      },
+      {
+       "id": "C",
+       "track": 14,
+       "side": "offense",
+       "box": [
+        307.05904000000004,
+        341.924,
+        337.54096,
+        414.5
+       ],
+       "px": 322.3,
+       "py": 414.5,
+       "name": "Carter Thomas",
+       "how": "best guess",
+       "label": "#21 Thomas?",
+       "guess": true
+      },
+      {
+       "id": "D",
+       "track": 3,
+       "side": "offense",
+       "box": [
+        281.19792,
+        363.052,
+        317.00208000000003,
+        448.3
+       ],
+       "px": 299.1,
+       "py": 448.3,
+       "name": "Joey LaChapell",
+       "how": "best guess",
+       "label": "#2 LaChapell?",
+       "guess": true
+      }
+     ]
+    }
+   ],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": "Half court",
+     "auto": "Half court",
+     "conf": 0.96,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": "Man-to-Man",
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": "Run & Jump",
+     "auto": "Run & Jump",
+     "conf": 0.81,
+     "sure": true,
+     "same": true,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Aiden Hawkinson",
+     "Brandon Beck",
+     "Carter Thomas",
+     "Joey LaChapell",
+     "Michael Metcalf-Grassman"
+    ],
+    "defense": [
+     "Collin Madson",
+     "Darius Chestnut",
+     "Joey Berezowitz",
+     "Luke Bara",
+     "Richie Warren"
+    ]
+   }
+  }
+ ],
+ "vocab": {
+  "situation": [
+   "ATO",
+   "BLOB",
+   "Half court",
+   "Offensive rebound",
+   "SLOB",
+   "Transition"
+  ],
+  "formation": [
+   "21",
+   "3-2",
+   "33",
+   "4-1",
+   "41S",
+   "5 Out",
+   "Box",
+   "Chin",
+   "Horns",
+   "Iform",
+   "Knicks",
+   "Line",
+   "Motion",
+   "Set",
+   "Spread",
+   "Twins"
+  ],
+  "play_call": [
+   "3Man",
+   "77Double",
+   "Ball Screen",
+   "Bulldog",
+   "Cheetah",
+   "Chin",
+   "DHO",
+   "Double Ball Screen",
+   "Dribble Drive",
+   "Flare",
+   "Flash",
+   "Gc",
+   "High Ball Screen",
+   "Jungle",
+   "Knicks",
+   "Low",
+   "Lwing",
+   "M2M",
+   "Motion",
+   "Over",
+   "Panther",
+   "Peja",
+   "Pistol",
+   "Set",
+   "Set ,Bs)",
+   "Spain",
+   "Spread",
+   "Stagger",
+   "Swing (pass across)"
+  ],
+  "primary_action": [
+   "Ball Screen",
+   "Corner Cut",
+   "Cross Screen",
+   "Curl",
+   "DHO",
+   "Double Clear",
+   "Double Cut",
+   "Down Screen",
+   "Dribble Drive",
+   "Flare",
+   "Flash",
+   "Follow",
+   "Ghost",
+   "Give",
+   "High Ball Screen",
+   "ISO",
+   "IVO",
+   "Iso",
+   "Offensive Rebound",
+   "Pass to Corner",
+   "Pat Miller",
+   "Reject",
+   "Ricky (rescreen)",
+   "Scissors",
+   "Screen the Screener",
+   "Spain",
+   "Stagger",
+   "Swing (pass across)",
+   "UCLA",
+   "Up Screen",
+   "Zoom"
+  ],
+  "defense": [
+   "Man-to-Man"
+  ],
+  "press": [
+   "1-2-2 Press",
+   "Full-court M2M Press",
+   "None",
+   "Press",
+   "Run & Jump",
+   "Token Press"
+  ],
+  "ball_screen_coverage": [
+   "Drop",
+   "Hedge",
+   "Over",
+   "Stay",
+   "Stay, then Switch 2nd",
+   "Switch",
+   "Top Lock",
+   "Under",
+   "stay12",
+   "under1"
+  ],
+  "offball_coverage": [
+   "2",
+   "Drop",
+   "Over",
+   "Stay",
+   "Switch",
+   "Top Lock",
+   "Under",
+   "over23",
+   "over3drop23",
+   "stay12",
+   "stay2",
+   "stay3",
+   "stay5",
+   "there motion jacob",
+   "under4"
+  ],
+  "screener": [
+   "Andre Renta",
+   "Cooper Nailor",
+   "Joey LaChapell",
+   "Luke Bara",
+   "Matt Imig",
+   "Roan Demovsky",
+   "Seth Miron",
+   "Will Boser"
+  ],
+  "screen_defender": [
+   "Andre Renta",
+   "CAL KROHN",
+   "CARTER COMBS",
+   "Carter Lichtsinn",
+   "DREW DAOUST",
+   "GRANT MANZ",
+   "ISAIAH MOORE",
+   "JOSHUA BOCHER",
+   "JOSIAH BUTLER",
+   "Kenji Scales",
+   "LOGAN BAUMGARTNER",
+   "MAX RAIMER",
+   "Roan Demovsky",
+   "SETH MIRON",
+   "Will Boser",
+   "Xavier Lewis"
+  ]
+ },
+ "built": "2026-10-01T20:31:30"
+}
