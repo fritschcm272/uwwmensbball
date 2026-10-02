@@ -12297,6 +12297,18 @@ def render_previous_games():
                         if _rv is not None and _prd:
                             st.markdown("---")
                             _pr_title_widgets(_prd, _rv, _store, _kp)
+                # review plays the parser couldn't match to a play-by-play event (usually: no game clock on the clip) --
+                # listed here so their Title checks are never out of reach (requested)
+                _linked = set(_pr_rows.values())
+                _unlinked = [i for i in range(len(_prd.get("plays", []))) if i not in _linked] if _prd else []
+                if _unlinked:
+                    st.markdown(f"**\U0001f4dd Review plays not in the play-by-play** ({len(_unlinked)}) -- the parser couldn't "
+                                "match these clips to a play-by-play event (usually because Synergy left the clip's clock blank).")
+                    for _pi in _unlinked:
+                        _pl = _prd["plays"][_pi]
+                        with st.expander(f"\U0001f4dd Clip {_pl.get('clip_number')} \u00b7 {_pl.get('clock', '')} \u00b7 "
+                                         f"{str(_pl.get('synergy', ''))[:80]}"):
+                            _pr_title_widgets(_prd, _pi, _store, _kp)
 
 
 # --------------------------------------------------------------------------------------------------------------
