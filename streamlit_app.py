@@ -5677,9 +5677,12 @@ def _pr_save_bar(d, store, kp, key_suffix):
 
 
 def _pbp_group_plays(df):
-    """Play-by-play events -> plays: consecutive events in the same half at the same clock are one play (a made shot and
-    its assist, a miss and the rebound, a foul and its free throws). Returns [{label, events, details, replay, review,
-    key}] in order."""
+    """Play-by-play events -> POSSESSIONS (one row each). CONFIRMED CHANGE (coach: the half's start, the jump ball and
+    the turnover that followed "are also the same play"). A possession runs from getting the ball until giving it up:
+    it ends with a made basket, a turnover, a defensive rebound or the last free throw of a trip; events at that same
+    moment stay in it (the assist, the steal, an and-one foul and free throw, subs); the start of a half and a jump ball
+    join the possession that follows; misses and offensive rebounds keep it going. Returns [{label, events, details,
+    replay, review, key}] in order."""
     def txt(v):
         return "" if v is None or (isinstance(v, float) and pd.isna(v)) or str(v) in ("nan", "None", "<NA>") else str(v)
 
@@ -5687,35 +5690,54 @@ def _pbp_group_plays(df):
         v = pd.to_numeric(v, errors="coerce")
         return "" if pd.isna(v) else str(int(v))
 
-    rank = {"made_shot": 1, "missed_shot": 1, "free_throw_made": 2, "free_throw_missed": 2, "turnover": 3, "foul": 4,
-            "rebound_offensive": 5, "rebound_defensive": 5, "block": 6, "steal": 6, "assist": 7, "jump_ball": 8,
-            "timeout": 10, "sub_in": 11, "sub_out": 11}
     clock_col = "time_remaining_seconds" if "time_remaining_seconds" in df.columns else "time_remaining"
-    groups, cur, cur_key = [], [], None
+    closes = lambda et: (et in ("made_shot", "turnover", "free_throw_made") or et.startswith("rebound_defensive")
+                         or ("defensive" in et and "rebound" in et))
+    same_moment = {"assist", "steal", "block", "foul", "free_throw_made", "free_throw_missed", "sub_in", "sub_out", "timeout"}
+    lead_in = {"period_marker", "jump_ball", "jump_ball_won", "jump_ball_lost", "sub_in", "sub_out", "timeout"}
+    groups, cur, pending = [], [], None             # pending = (period, clock) at which the current possession ended
     for _, r in df.iterrows():
+        et = txt(r.get("event_type"))
         k = (txt(r.get("period")), txt(r.get(clock_col)))
-        if cur and k != cur_key:
-            groups.append(cur)
-            cur = []
+        substantive = [x for x in cur if txt(x.get("event_type")) not in lead_in]
+        if pending is not None and not (k == pending and et in same_moment):
+            groups.append(cur)                      # the possession ended; this event starts the next one
+            cur, pending = [], None
+        elif et == "period_marker" and substantive:
+            groups.append(cur)                      # a half ended mid-possession
+            cur, pending = [], None
         cur.append(r)
-        cur_key = k
+        if closes(et):
+            pending = k
     if cur:
         groups.append(cur)
+    rank = {"made_shot": 1, "missed_shot": 1, "free_throw_made": 2, "free_throw_missed": 2, "turnover": 3, "foul": 4,
+            "rebound_offensive": 5, "rebound_defensive": 5, "block": 6, "steal": 6, "assist": 7}
     out = []
     for g in groups:
-        main = min(g, key=lambda r: rank.get(txt(r.get("event_type")), 9))
         ev = lambda r: txt(r.get("event_type")).replace("_", " ")
+        # the outcome: the best-ranked event, the LAST one on a tie (miss -> rebound -> putback: the putback)
+        best = min(rank.get(txt(r.get("event_type")), 9) for r in g)
+        main = [r for r in g if rank.get(txt(r.get("event_type")), 9) == best][-1]
+        others = [r for r in g if r is not main]
         tm = txt(main.get("time_remaining"))
         when = tm if "(" in tm else f"{txt(main.get('period'))} {tm}".strip()
-        others = [r for r in g if r is not main]
         subs = sum(1 for r in others if txt(r.get("event_type")) in ("sub_in", "sub_out"))
-        extras = [f"{ev(r)} {txt(r.get('player'))}".strip() for r in others
-                  if txt(r.get("event_type")) not in ("sub_in", "sub_out")][:3]
-        extra_txt = ("+ " + ", ".join(extras) if extras else "") + (f"{' ' if extras else '+ '}({subs} sub{'s' if subs != 1 else ''})" if subs else "")
+        rest = [f"{ev(r)} {txt(r.get('player'))}".strip() for r in others
+                if txt(r.get("event_type")) not in ("sub_in", "sub_out", "period_marker", "timeout")]
+        extra = ("+ " + ", ".join(rest[:3]) + (f" +{len(rest) - 3} more" if len(rest) > 3 else "")) if rest else ""
+        if subs:
+            extra = (extra + " " if extra else "+ ") + f"({subs} sub{'s' if subs != 1 else ''})"
         last = g[-1]
-        score = f"{num(last.get('uww_score'))}-{num(last.get('opp_score'))}" if num(last.get("uww_score")) and num(last.get("opp_score")) else ""
-        label = " \u00b7 ".join(x for x in [when, txt(main.get("team")), txt(main.get("player")), ev(main), extra_txt, score] if x)
-        events = [" \u00b7 ".join(x for x in [txt(r.get("team")), txt(r.get("player")), ev(r)] if x) for r in g]
+        score = (f"{num(last.get('uww_score'))}-{num(last.get('opp_score'))}"
+                 if num(last.get("uww_score")) and num(last.get("opp_score")) else "")
+        if best == 9 and all(txt(r.get("event_type")) in lead_in for r in g):
+            label = " \u00b7 ".join(x for x in [when, "start / end of a half" if any(txt(r.get("event_type")) == "period_marker" for r in g)
+                                                 else ev(main), score] if x)
+        else:
+            label = " \u00b7 ".join(x for x in [when, txt(main.get("team")), txt(main.get("player")), ev(main), extra, score] if x)
+        events = [" \u00b7 ".join(x for x in [txt(r.get("time_remaining")), txt(r.get("team")), txt(r.get("player")), ev(r)] if x)
+                  for r in g]
         details = []
         for col, lbl in (("play_call", "Play call"), ("play_actions", "Actions"), ("play_location", "Where"),
                          ("play_title", "Tagged as"), ("video_description", "Synergy"), ("coach_note", "Coach note")):
