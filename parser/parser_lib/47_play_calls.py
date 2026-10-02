@@ -1090,6 +1090,43 @@ def _pl_match(clips, events, offense_label_for):
             used.add(best)
             clips.at[i, "event_index"] = best
             clips.at[i, "matched_by"] = how
+    # CONFIRMED CHANGE (coach: "why is this play not in the play-by-play?" -- Clip 20, "(no clock)", a Non Possession >
+    # Non Shooting Foul). Synergy leaves the clock blank on some clips (non-possession fouls, violations), so they
+    # never matched. Clips are numbered in game order, so the matched clips before and after one bracket its clock:
+    # inside that window, the one event of the same kind by the same player (EITHER team -- a non-possession foul is
+    # the fouling team's) is its match. Its period / clock are filled in from that event.
+    for gd, gclips in clips.groupby("game_date"):
+        grp = by_game.get(gd)
+        if grp is None or "clip_number" not in gclips.columns:
+            continue
+        order = gclips.assign(_cn=pd.to_numeric(gclips["clip_number"], errors="coerce")).sort_values("_cn")
+        idx = list(order.index)
+        for pos, i in enumerate(idx):
+            c = clips.loc[i]
+            if pd.notna(c["event_index"]) or not isinstance(c.get("player"), str) or not c["player"].strip():
+                continue
+            prev_ev = next((clips.at[j, "event_index"] for j in reversed(idx[:pos]) if pd.notna(clips.at[j, "event_index"])), None)
+            next_ev = next((clips.at[j, "event_index"] for j in idx[pos + 1:] if pd.notna(clips.at[j, "event_index"])), None)
+            if prev_ev is None and next_ev is None:
+                continue
+            lo_o = ev.at[prev_ev, "event_order"] if prev_ev is not None and "event_order" in ev.columns else None
+            hi_o = ev.at[next_ev, "event_order"] if next_ev is not None and "event_order" in ev.columns else None
+            cand = grp[~grp.index.isin(used)]
+            if lo_o is not None:
+                cand = cand[cand["event_order"] >= lo_o]
+            if hi_o is not None:
+                cand = cand[cand["event_order"] <= hi_o]
+            cand = cand[(cand["player"].str.lower() == c["player"].strip().lower())
+                        & cand["event_type"].apply(lambda e: _pl_compatible(c["result"], e))]
+            if len(cand) == 1:
+                best = cand.index[0]
+                used.add(best)
+                clips.at[i, "event_index"] = best
+                clips.at[i, "matched_by"] = "clip order + player"
+                e = ev.loc[best]
+                for col in ("period", "time_remaining_seconds", "time_remaining"):
+                    if col in clips.columns and col in e.index and (pd.isna(c.get(col)) or c.get(col) in (None, "")):
+                        clips.at[i, col] = e[col]
     # Points from the play-by-play: everything the offense scored at the matched event's clock stamp.
     scoring = ev[ev["event_type"].isin(["made_shot", "free_throw_made"])].copy() if not ev.empty else pd.DataFrame()
     pts_at = {}
