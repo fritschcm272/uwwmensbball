@@ -1098,9 +1098,13 @@ def _pl_match(clips, events, offense_label_for):
             lambda r: 1 if r["event_type"] == "free_throw_made"
             else int(pd.to_numeric(pd.Series([r.get("shot_type")]), errors="coerce").fillna(2).iloc[0]), axis=1)
         pts_at = scoring.groupby(["game_date", "team", "period", "time_remaining_seconds"])["_pts"].sum().to_dict()
+    # the matched event's event_order -- a stable link from a clip to its play-by-play row (the app's play-by-play
+    # opens each play's possession replay with it; requested)
+    clips["pbp_event_order"] = pd.NA
     for i, c in clips.iterrows():
         if pd.notna(c["event_index"]):
             e = ev.loc[c["event_index"]]
+            clips.at[i, "pbp_event_order"] = e.get("event_order")
             clips.at[i, "points"] = int(pts_at.get((e["game_date"], e["team"], e["period"], e["time_remaining_seconds"]), 0))
             clips.at[i, "points_source"] = "play-by-play"
         else:
@@ -1949,6 +1953,8 @@ PLAY_CALL_COLS = [
     # NEW: where play_situation came from (Tag / Play-by-play (timeout) / Synergy / Default) and the coverage
     # detail with defender names filled in from the jersey numbers.
     "situation_source", "coverage_defenders",
+    # NEW: the matched play-by-play event's event_order (links a clip to its play-by-play row)
+    "pbp_event_order",
     # NEW: where this clip's captured frames are (frame-capture cell) and its place in the export -- the tag
     # model cell after this one adds its predictions (pred_*) and the Suggested Title.
     "frame_files", "clip_number",
