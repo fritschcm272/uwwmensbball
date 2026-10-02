@@ -5566,8 +5566,8 @@ def _pr_title_default(f):
     return pre, ("wrong" if pre else "--"), (f.get("coach") if pre else "")
 
 
-def _pr_play_widgets(d, pi, store, kp):
-    """The review of one play, inside its play-by-play row."""
+def _pr_title_widgets(d, pi, store, kp):
+    """The Titles part of one play's review (its video + the Title checks) -- inside its play-by-play row."""
     pl = d["plays"][pi]
     run = d.get("run")
     vocab = d.get("vocab", {})
@@ -5585,10 +5585,19 @@ def _pr_play_widgets(d, pi, store, kp):
         c2.selectbox("Your answer", _PR_VERDICTS, index=_PR_VERDICTS.index(v) if v in _PR_VERDICTS else 0, key=kv,
                      on_change=_pr_keep, args=(store, kv))
         opts = [""] + list(vocab.get(f.get("field"), []))
-        a = store.get(ka, da if da in opts else "")
-        c3.selectbox("Right answer", opts, index=opts.index(a) if a in opts else 0, key=ka, on_change=_pr_keep, args=(store, ka))
+        a_ = store.get(ka, da if da in opts else "")
+        c3.selectbox("Right answer", opts, index=opts.index(a_) if a_ in opts else 0, key=ka, on_change=_pr_keep, args=(store, ka))
         c3.text_input("or type a new one", value=store.get(kt, da if da and da not in opts else ""), key=kt,
                       on_change=_pr_keep, args=(store, kt))
+
+
+def _pr_player_widgets(d, pi, store, kp, with_video=True):
+    """The player-checks part of one play's review (its pictures with a check per box) -- on Analytics > Video Tracking.
+    CONFIRMED CHANGE (requested: the player checks done on the Film Tracking tab, separately from the Title checks)."""
+    pl = d["plays"][pi]
+    run = d.get("run")
+    if with_video and pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
+        st.video(os.path.join(d["_dir"], pl["clip"]))
     for ki, pic in enumerate(pl.get("pictures", [])):
         l2, r2 = st.columns([3, 4])
         path = os.path.join(d["_dir"], pic.get("image") or "")
@@ -5607,14 +5616,19 @@ def _pr_play_widgets(d, pi, store, kp):
                              opts, index=opts.index(cur) if cur in opts else 0, key=kb, on_change=_pr_keep, args=(store, kb))
 
 
-def _pr_payload(d, store, coach, kp):
-    """Every answer for this review -- the ones changed (kept in `store`) and the prefilled defaults."""
+def _pr_play_widgets(d, pi, store, kp):
+    _pr_title_widgets(d, pi, store, kp)
+    _pr_player_widgets(d, pi, store, kp, with_video=False)
+
+def _pr_payload(d, store, coach, kp, part=None):
+    """Every answer for this review -- the ones changed (kept in `store`) and the prefilled defaults. part = "titles" or
+    "players" saves only that part (each is its own file; the parser counts a review done when both are saved)."""
     out = {"game": d.get("game"), "run": d.get("run"), "coach": coach.strip(),
            "saved": pd.Timestamp.now(tz="UTC").isoformat(timespec="seconds"), "checks": [], "answers": [],
-           "source": "streamlit app (play-by-play)"}
+           "source": "streamlit app", "part": part}
     run = d.get("run")
     for pi, pl in enumerate(d.get("plays", [])):
-        for fi, f in enumerate(pl.get("fields", [])):
+        for fi, f in enumerate(pl.get("fields", []) if part != "players" else []):
             pre, dv, da = _pr_title_default(f)
             kv, ka, kt = f"{kp}_v_{run}_{pi}_{fi}", f"{kp}_a_{run}_{pi}_{fi}", f"{kp}_t_{run}_{pi}_{fi}"
             v = store.get(kv, dv)
@@ -5626,7 +5640,7 @@ def _pr_payload(d, store, coach, kp):
                                    "coach": f.get("coach"), "auto": f.get("auto"), "auto_conf": f.get("conf"),
                                    "verdict": v, "correct": (ans or None) if v == "wrong" else None,
                                    "prefilled": bool(pre and not touched)})
-        for ki, pic in enumerate(pl.get("pictures", [])):
+        for ki, pic in enumerate(pl.get("pictures", []) if part != "titles" else []):
             for bi, b in enumerate(pic.get("boxes", [])):
                 val = store.get(f"{kp}_b_{run}_{pi}_{ki}_{bi}", _PR_NOT_CHECKED)
                 if val == _PR_NOT_CHECKED:
@@ -5645,35 +5659,44 @@ def _pr_payload(d, store, coach, kp):
                                       "frame_file": pic.get("frame_file"), "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"),
                                       "side": b.get("side"), "assigned": b.get("name"), "assigned_how": b.get("how"),
                                       "verdict": verdict, "true_name": name})
+    if part == "titles":
+        out.pop("checks")
+    elif part == "players":
+        out.pop("answers")
     return out
 
 
-def _pr_save_bar(d, store, kp, key_suffix):
-    """Name + one Save for every answer in this review (top of the play-by-play)."""
-    saved = _pr_app_saves_for(d.get("run"))
-    n_changed = len([k for k in store if k.startswith(kp)])
-    st.markdown(f"**\U0001f4dd Play review** -- {len(d.get('plays', []))} plays in this game's open review are marked "
-                "\U0001f4dd below; open one to review it. Rows where the coach's value and the automatic value differ start "
-                "as wrong with the coach's value." + (f"  \nAlready saved: " + "; ".join(f"{c} ({t})" for c, t in saved) if saved else ""))
+def _pr_save_bar(d, store, kp, key_suffix, part="titles"):
+    """Name + one Save for this part of the review: "titles" (play-by-play) or "players" (Video Tracking)."""
+    saved = [x for x in _pr_app_saves_for(d.get("run")) if part in x[2]]
+    what = "Title checks" if part == "titles" else "player checks"
+    where = ("open each play marked \U0001f4dd below" if part == "titles" else "open each play below")
+    n_changed = len([k for k in store if k.startswith(kp) and (("_b_" in k) == (part == "players"))])
+    st.markdown(f"**\U0001f4dd {what.capitalize()}** -- {len(d.get('plays', []))} plays in this game's open review; {where}."
+                + (" Rows where the coach's value and the automatic value differ start as wrong with the coach's value."
+                   if part == "titles" else "")
+                + (f"  \nAlready saved: " + "; ".join(f"{c} ({t})" for c, t, _p in saved) if saved else ""))
     c1, c2 = st.columns([3, 2])
-    coach = c1.text_input("Your name (required to save)", key=f"pr_coach_pbp{key_suffix}")
-    if c2.button(f"Save my review ({n_changed} answer(s) changed)", key=f"pr_save_pbp{key_suffix}"):
+    coach = c1.text_input("Your name (required to save)", key=f"pr_coach_{part}{key_suffix}")
+    if c2.button(f"Save my {what} ({n_changed} changed)", key=f"pr_save_{part}{key_suffix}"):
         if not coach.strip():
             st.error("Add your name, then save again.")
             return
-        out = _pr_payload(d, store, coach, kp)
-        fname = (f"play_review_{d.get('slug')}_{d.get('run')}_{re.sub(r'[^A-Za-z0-9]+', '_', coach.strip()).strip('_')}_"
+        out = _pr_payload(d, store, coach, kp, part=part)
+        fname = (f"play_review_{d.get('slug')}_{d.get('run')}_{part}_{re.sub(r'[^A-Za-z0-9]+', '_', coach.strip()).strip('_')}_"
                  f"{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
         ok, msg = _pr_github_save(fname, out)
+        n = len(out.get("answers", [])) if part == "titles" else len(out.get("checks", []))
         if ok:
-            st.success(f"Saved -- {len(out['checks'])} player check(s) and {len(out['answers'])} Title answer(s) ({msg}). "
-                       "The app restarts briefly when GitHub gets the file; the parser uses it after its next git pull.")
-            st.session_state.get("pr_answers", {}).pop(str(d.get("run")), None)
+            st.success(f"Saved {n} {what} ({msg}). The app restarts briefly when GitHub gets the file; the parser uses it "
+                       "after its next git pull. The review is finished once its Title checks AND player checks are saved.")
+            _st = st.session_state.get("pr_answers", {}).get(str(d.get("run")), {})
+            for k in [k for k in _st if k.startswith(kp) and (("_b_" in k) == (part == "players"))]:
+                _st.pop(k, None)
         else:
             st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in your Downloads folder.")
-            st.download_button("Download my review", json.dumps(out, indent=1), file_name=fname, mime="application/json",
-                               key=f"pr_dl_pbp{key_suffix}")
-
+            st.download_button("Download", json.dumps(out, indent=1), file_name=fname, mime="application/json",
+                               key=f"pr_dl_{part}{key_suffix}")
 
 
 def render_video_tracking():
@@ -5711,6 +5734,19 @@ def render_video_tracking():
         st.caption("No teams in the tracked film.")
         return
     _FT_GAME = None if pick == "All tracked games" else (label_of[pick][0], team)
+    # this game's open review: the PLAYER CHECKS part (the Title checks are in Previous Games > Play-by-Play)
+    if pick != "All tracked games" and "WWW" in str(label_of[pick][1]):
+        _prd = _pr_open_package(label_of[pick][0])
+        if _prd:
+            with st.container():                       # (not an expander: Streamlit can't nest the plays' expanders in one)
+                st.markdown(f"#### \U0001f4dd Player checks for this game's review ({len(_prd.get('plays', []))} plays)")
+                _store = _pr_store(_prd.get("run"))
+                _pr_save_bar(_prd, _store, "prxvt", "_vt", part="players")
+                for _pi, _pl in enumerate(_prd.get("plays", [])):
+                    _done = sum(1 for k in _store if k.startswith(f"prxvt_b_{_prd.get('run')}_{_pi}_"))
+                    with st.expander(f"Clip {_pl.get('clip_number')} \u00b7 {_pl.get('clock', '')} \u00b7 "
+                                     f"{str(_pl.get('synergy', ''))[:70]}" + (f" \u00b7 {_done} checked" if _done else "")):
+                        _pr_player_widgets(_prd, _pi, _store, "prxvt")
     try:
         render_film_tracking(team, key_suffix="_vt")
     except Exception as _vt_err:
@@ -12136,7 +12172,7 @@ def render_previous_games():
             # this game's open Play review: which play-by-play rows it covers
             _prd = _pr_open_package(_pg_game_date)
             _pr_rows = _pr_event_map(_prd, _pg_game_date) if _prd else {}
-            _pr_need = bool(_prd) and not _pr_app_saves_for(_prd.get("run"))
+            _pr_need = bool(_prd) and not any("titles" in x[2] for x in _pr_app_saves_for(_prd.get("run")))
             if "event_order" in filtered_pbp.columns:
                 _eo2 = pd.to_numeric(filtered_pbp["event_order"], errors="coerce")
                 filtered_pbp = filtered_pbp.assign(_review=_eo2.map(lambda o: _pr_rows.get(float(o)) if pd.notna(o) else None))
@@ -12145,7 +12181,7 @@ def render_previous_games():
             _kp = f"prx{short_opponent}"
             _store = _pr_store(_prd.get("run")) if _prd else {}
             if _prd:
-                _pr_save_bar(_prd, _store, _kp, f"_{short_opponent}")
+                _pr_save_bar(_prd, _store, _kp, f"_{short_opponent}", part="titles")
             _v1, _v5, _v3, _v4 = st.columns([2, 2, 1, 1])
             _plain = _v1.checkbox("Plain table view", value=False, key=f"pbp_plain_{short_opponent}")
             _only_rep = False
@@ -12186,8 +12222,8 @@ def render_previous_games():
                             st.markdown("  \n".join(f"\u2022 {e}" for e in _g["events"]))
                         st.markdown("  \n".join(f"**{lbl}:** {v}" for lbl, v in _g["details"]) or "_No details for this play._")
                         if _rv is not None and _prd:
-                            st.markdown("---\n**\U0001f4dd Play review**")
-                            _pr_play_widgets(_prd, _rv, _store, _kp)
+                            st.markdown("---\n**\U0001f4dd Title checks** (the player checks are on Analytics \u2192 Video Tracking)")
+                            _pr_title_widgets(_prd, _rv, _store, _kp)
 
 
 # --------------------------------------------------------------------------------------------------------------
@@ -12222,7 +12258,10 @@ def _pr_app_saves_for(run):
             with open(f, encoding="utf-8") as fh:
                 d = json.load(fh)
             if str(d.get("run")) == str(run):
-                out.append((d.get("coach") or "someone", str(d.get("saved", ""))[:16].replace("T", " ")))
+                parts = ({d["part"]} if d.get("part") in ("titles", "players") else
+                         ({"titles"} if isinstance(d.get("answers"), list) else set())
+                         | ({"players"} if isinstance(d.get("checks"), list) else set()))
+                out.append((d.get("coach") or "someone", str(d.get("saved", ""))[:16].replace("T", " "), parts))
         except Exception:
             continue
     return out
@@ -12268,7 +12307,7 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
     d = pk[0]
     saved = _pr_app_saves_for(d.get("run"))
     if saved:
-        st.success("Already saved for this review: " + "; ".join(f"{c} ({t})" for c, t in saved)
+        st.success("Already saved for this review: " + "; ".join(f"{c} ({t})" for c, t, *_ in saved)
                    + ". More coaches can add theirs.")
     coach = st.text_input("Your name (required to save)", key=f"pr_coach{key_suffix}")
     norm = lambda x: re.sub(r"[^a-z0-9#]+", "", str(x).lower())

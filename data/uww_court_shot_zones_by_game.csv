@@ -1,61 +1,63 @@
 offense_team,shooter,zone,attempts,makes,points,fg_pct,pts_per_shot,game_date,game_code
-UW-Oshkosh Titans,Aiden Hawkinson,Mid-range,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Brandon Beck,Mid-range,1,1,2.0,100.0,2.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Brandon Beck,Mid-range,2,2,5.0,100.0,2.5,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Carter Thomas,Above-break 3,2,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Carter Thomas,Mid-range,1,1,3.0,100.0,3.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Joey LaChapell,Corner 3,1,1,3.0,100.0,3.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Joey LaChapell,Mid-range,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Logan Rindfleisch,Mid-range,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Logan Rindfleisch,Paint,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Logan Rindfleisch,Rim,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Matt Imig,Above-break 3,1,1,3.0,100.0,3.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Matt Imig,Mid-range,2,1,3.0,50.0,1.5,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Michael Metcalf-Grassman,Above-break 3,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Michael Metcalf-Grassman,Rim,1,1,2.0,100.0,2.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Oskar Kangas,Above-break 3,1,1,3.0,100.0,3.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,TEAM,Above-break 3,3,2,6.0,67.0,2.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,TEAM,Mid-range,7,3,8.0,43.0,1.14,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,TEAM,Paint,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Matt Imig,Mid-range,1,1,3.0,100.0,3.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Michael Metcalf-Grassman,Corner 3,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Michael Metcalf-Grassman,Rim,2,1,2.0,50.0,1.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Oskar Kangas,Above-break 3,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,TEAM,Above-break 3,3,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,TEAM,Corner 3,2,1,3.0,50.0,1.5,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,TEAM,Mid-range,6,4,11.0,67.0,1.83,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,TEAM,Rim,2,1,2.0,50.0,1.0,2026-01-03,WOS@WWW
-UW-Whitewater,Brock Marino,Paint,1,1,2.0,100.0,2.0,2026-01-03,WOS@WWW
-UW-Whitewater,Collin Madson,Above-break 3,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,Collin Madson,Mid-range,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,Brock Marino,Mid-range,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,Brock Marino,Rim,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,Collin Madson,Above-break 3,4,1,3.0,25.0,0.75,2026-01-03,WOS@WWW
+UW-Whitewater,Collin Madson,Corner 3,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
 UW-Whitewater,Darius Chestnut,Mid-range,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,Richie Warren,Above-break 3,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,Joey Berezowitz,Rim,1,1,2.0,100.0,2.0,2026-01-03,WOS@WWW
+UW-Whitewater,Luke Bara,Above-break 3,1,1,3.0,100.0,3.0,2026-01-03,WOS@WWW
+UW-Whitewater,Luke Bara,Rim,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,Richie Warren,Above-break 3,2,1,3.0,50.0,1.5,2026-01-03,WOS@WWW
 UW-Whitewater,Richie Warren,Mid-range,4,1,2.0,25.0,0.5,2026-01-03,WOS@WWW
-UW-Whitewater,Richie Warren,Rim,1,1,2.0,100.0,2.0,2026-01-03,WOS@WWW
-UW-Whitewater,TEAM,Above-break 3,2,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,Richie Warren,Paint,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,TEAM,Above-break 3,7,3,9.0,43.0,1.29,2026-01-03,WOS@WWW
+UW-Whitewater,TEAM,Corner 3,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
 UW-Whitewater,TEAM,Mid-range,6,1,2.0,17.0,0.33,2026-01-03,WOS@WWW
-UW-Whitewater,TEAM,Paint,1,1,2.0,100.0,2.0,2026-01-03,WOS@WWW
-UW-Whitewater,TEAM,Rim,1,1,2.0,100.0,2.0,2026-01-03,WOS@WWW
+UW-Whitewater,TEAM,Paint,1,0,0.0,0.0,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,TEAM,Rim,3,1,2.0,33.0,0.67,2026-01-03,WOS@WWW
 Coe Kohawks,C. Reece Breitenbach,Above-break 3,1,1,3.0,100.0,3.0,2025-12-30,WWW@COE
-Coe Kohawks,Cooper Nailor,Above-break 3,1,1,3.0,100.0,3.0,2025-12-30,WWW@COE
+Coe Kohawks,Cooper Nailor,Above-break 3,2,2,6.0,100.0,3.0,2025-12-30,WWW@COE
 Coe Kohawks,Cooper Nailor,Mid-range,2,1,2.0,50.0,1.0,2025-12-30,WWW@COE
 Coe Kohawks,Cooper Nailor,Paint,1,0,0.0,0.0,0.0,2025-12-30,WWW@COE
 Coe Kohawks,Deuce Walters,Above-break 3,2,0,0.0,0.0,0.0,2025-12-30,WWW@COE
 Coe Kohawks,Deuce Walters,Mid-range,4,3,6.0,75.0,1.5,2025-12-30,WWW@COE
-Coe Kohawks,Deuce Walters,Rim,1,1,2.0,100.0,2.0,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Bowman,Above-break 3,1,0,0.0,0.0,0.0,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Bowman,Mid-range,2,1,3.0,50.0,1.5,2025-12-30,WWW@COE
+Coe Kohawks,Deuce Walters,Rim,2,1,2.0,50.0,1.0,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Bowman,Mid-range,1,1,3.0,100.0,3.0,2025-12-30,WWW@COE
 Coe Kohawks,Jackson Newell,Above-break 3,1,1,2.0,100.0,2.0,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Newell,Paint,1,1,2.0,100.0,2.0,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Newell,Rim,1,1,2.0,100.0,2.0,2025-12-30,WWW@COE
 Coe Kohawks,Kanyon Bryte,Above-break 3,1,0,0.0,0.0,0.0,2025-12-30,WWW@COE
-Coe Kohawks,Kanyon Bryte,Paint,2,1,2.0,50.0,1.0,2025-12-30,WWW@COE
-Coe Kohawks,Ryan Dolphin,Above-break 3,3,2,6.0,67.0,2.0,2025-12-30,WWW@COE
+Coe Kohawks,Kanyon Bryte,Mid-range,1,1,3.0,100.0,3.0,2025-12-30,WWW@COE
+Coe Kohawks,Kanyon Bryte,Paint,1,1,2.0,100.0,2.0,2025-12-30,WWW@COE
+Coe Kohawks,Kanyon Bryte,Rim,1,1,2.0,100.0,2.0,2025-12-30,WWW@COE
+Coe Kohawks,Ryan Dolphin,Above-break 3,3,1,3.0,33.0,1.0,2025-12-30,WWW@COE
+Coe Kohawks,Ryan Dolphin,Corner 3,1,1,3.0,100.0,3.0,2025-12-30,WWW@COE
 Coe Kohawks,TEAM,Above-break 3,10,5,14.0,50.0,1.4,2025-12-30,WWW@COE
-Coe Kohawks,TEAM,Mid-range,8,5,11.0,62.0,1.38,2025-12-30,WWW@COE
-Coe Kohawks,TEAM,Paint,4,2,4.0,50.0,1.0,2025-12-30,WWW@COE
-Coe Kohawks,TEAM,Rim,1,1,2.0,100.0,2.0,2025-12-30,WWW@COE
+Coe Kohawks,TEAM,Corner 3,1,1,3.0,100.0,3.0,2025-12-30,WWW@COE
+Coe Kohawks,TEAM,Mid-range,8,6,14.0,75.0,1.75,2025-12-30,WWW@COE
+Coe Kohawks,TEAM,Paint,2,1,2.0,50.0,1.0,2025-12-30,WWW@COE
+Coe Kohawks,TEAM,Rim,4,3,6.0,75.0,1.5,2025-12-30,WWW@COE
 UW-Whitewater,Agape Keyes Jr.,Above-break 3,1,0,0.0,0.0,0.0,2025-12-30,WWW@COE
-UW-Whitewater,Collin Madson,Above-break 3,1,0,0.0,0.0,0.0,2025-12-30,WWW@COE
-UW-Whitewater,Collin Madson,Rim,1,1,2.0,100.0,2.0,2025-12-30,WWW@COE
+UW-Whitewater,Collin Madson,Rim,2,1,2.0,50.0,1.0,2025-12-30,WWW@COE
 UW-Whitewater,Darius Chestnut,Above-break 3,1,0,0.0,0.0,0.0,2025-12-30,WWW@COE
-UW-Whitewater,Darius Chestnut,Paint,1,0,0.0,0.0,0.0,2025-12-30,WWW@COE
-UW-Whitewater,Jake Quast,Above-break 3,1,0,0.0,0.0,0.0,2025-12-30,WWW@COE
+UW-Whitewater,Joey Berezowitz,Above-break 3,1,1,3.0,100.0,3.0,2025-12-30,WWW@COE
 UW-Whitewater,Jr Lukenbill,Mid-range,1,0,0.0,0.0,0.0,2025-12-30,WWW@COE
 UW-Whitewater,Kelton Mcewen,Above-break 3,1,0,0.0,0.0,0.0,2025-12-30,WWW@COE
+UW-Whitewater,Luke Bara,Above-break 3,1,0,0.0,0.0,0.0,2025-12-30,WWW@COE
 UW-Whitewater,Richie Warren,Mid-range,1,1,2.0,100.0,2.0,2025-12-30,WWW@COE
-UW-Whitewater,Richie Warren,Paint,1,0,0.0,0.0,0.0,2025-12-30,WWW@COE
-UW-Whitewater,TEAM,Above-break 3,7,0,0.0,0.0,0.0,2025-12-30,WWW@COE
+UW-Whitewater,TEAM,Above-break 3,5,1,3.0,20.0,0.6,2025-12-30,WWW@COE
 UW-Whitewater,TEAM,Mid-range,2,1,2.0,50.0,1.0,2025-12-30,WWW@COE
-UW-Whitewater,TEAM,Paint,2,0,0.0,0.0,0.0,2025-12-30,WWW@COE
-UW-Whitewater,TEAM,Rim,1,1,2.0,100.0,2.0,2025-12-30,WWW@COE
-UW-Whitewater,Tyshawn Teague-Johnson,Above-break 3,2,0,0.0,0.0,0.0,2025-12-30,WWW@COE
+UW-Whitewater,TEAM,Rim,2,1,2.0,50.0,1.0,2025-12-30,WWW@COE

@@ -433,7 +433,7 @@ def play_review():
                 with open(os.path.join(_pkg, "review.json"), encoding="utf-8") as fh:
                     _pkg_run = json.load(fh).get("run")
                 _run_dir = os.path.join(INPUT_DIR, "play_review", _slug_app, f"run_{_pkg_run}")
-                if any(_review_doc(f) is not None for f in glob.glob(os.path.join(_run_dir, "*.json"))):
+                if _run_complete(_run_dir):                 # both parts saved (Titles and player checks)
                     shutil.rmtree(_pkg, ignore_errors=True)
                     print(f"Play review: {gd} {gc} -- review run {_pkg_run} is saved; its copy in the app is removed", flush=True)
             except Exception:
@@ -442,8 +442,7 @@ def play_review():
         # saved review (.json) in it -- otherwise reviews pile up unfinished. PLAY_REVIEW_REQUIRE_SAVED = False skips this.
         _slug_chk = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
         _open = [d for d in sorted(glob.glob(os.path.join(INPUT_DIR, "play_review", _slug_chk, "run_*")))
-                 if os.path.isdir(d) and not any(_review_doc(f) is not None
-                                                 for f in glob.glob(os.path.join(d, "*.json")))]   # any name
+                 if os.path.isdir(d) and not _run_complete(d)]       # done = Titles AND player checks saved
         if _open and globals().get("PLAY_REVIEW_REQUIRE_SAVED", True) and globals().get("PLAY_REVIEW_TO_APP", True):
             # CONFIRMED BUG (fixed; coach: "the review documents aren't being put in /data"). Only a NEW run was copied to
             # the app, and a game with an open unsaved run never gets a new one -- so its review never reached the app.
@@ -473,7 +472,8 @@ def play_review():
                 except Exception as _ae:
                     print(f"  [play review] {gd} {gc}: open review not copied to the app ({type(_ae).__name__}: {_ae})", flush=True)
         if _open and globals().get("PLAY_REVIEW_REQUIRE_SAVED", True):
-            print(f"Play review: {gd} {gc} -- no new run: {len(_open)} earlier run(s) not saved yet: "
+            print(f"Play review: {gd} {gc} -- no new run: {len(_open)} earlier run(s) not finished yet (its Title checks "
+                  f"and its player checks both need saving): "
                   + "; ".join(os.path.join(d, "review.html") for d in _open)
                   + ". Open it, review, press Save (the file is picked up from Downloads), or delete that run folder "
                     "if you're not doing it.", flush=True)
