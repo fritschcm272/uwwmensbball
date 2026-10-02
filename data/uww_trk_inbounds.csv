@@ -1,5 +1,5 @@
 clip_key,offense_team,situation,alignment,layout,points,play_title
-2026-01-03|3|24 Richie Warren > Cut > Basket > Make 2 Pts,UW-Whitewater,BLOB,line,"[[-10.9, 7.4, ""JR Lukenbill""], [-0.8, 3.5, ""Collin Madson""], [4.2, -2.7, ""Collin Madson""], [7.5, -8.3, ""Brock Marino""]]",2.0,blob(line)-m2m
+2026-01-03|3|24 Richie Warren > Cut > Basket > Make 2 Pts,UW-Whitewater,BLOB,line,"[[-8.7, 4.8, ""JR Lukenbill""], [3.0, -0.9, ""Collin Madson""], [5.8, -3.0, ""Collin Madson""], [-0.2, -0.9, ""Brock Marino""]]",2.0,blob(line)-m2m
 2026-01-03|12|21 Brock Marino > Post-Up > Right Block > Left Shoulder > Dribble Move > To Drop Step > Miss 2 Pts,UW-Whitewater,SLOB,box,"[[-10.2, -7.5, ""JR Lukenbill""], [1.5, 10.3, ""Richie Warren""], [-1.2, -1.3, ""Brock Marino""], [10.0, -1.5, ""Luke Bara""]]",0.0,slob:m2m
 2026-01-03|17|24 Richie Warren > Spot-Up > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,UW-Whitewater,BLOB,line,"[[0.3, -2.5, ""Brock Marino""], [5.7, -3.5, ""Luke Bara""], [-10.2, 6.1, ""Collin Madson""], [4.1, -0.2, ""JR Lukenbill""]]",0.0,blob(line):m2m
 2026-01-03|21|5 Matt Imig > Non Possession > No Violation,UW-Oshkosh Titans,BLOB,line,"[[-3.4, 2.1, ""unnamed offense""], [-6.9, -1.0, ""unnamed offense""], [2.1, -1.8, ""unnamed offense""], [8.2, 0.7, ""unnamed offense""]]",,blob(box-cornercut-flash):m2m

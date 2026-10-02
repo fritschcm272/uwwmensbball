@@ -5511,6 +5511,183 @@ def _ft_load(name):
     return df
 
 
+# ---- Play review inside the PLAY-BY-PLAY rows (requested) ------------------------------------------------------
+# CONFIRMED CHANGE (requested: the Play review inside each play of the combined play-by-play, with a filter for the
+# plays that need review). A play in this game's open review is marked with a memo in its row and opens to the review
+# (video, Title check, pictures with player checks). Answers are kept in st.session_state["pr_answers"][run] as they
+# change -- widgets on other pages / closed rows aren't drawn, so their own state would be lost -- and ONE "Save my
+# review" at the top of the play-by-play commits them all (same file and GitHub save as before).
+_PR_VERDICTS = ["--", "right", "wrong", "can't tell"]
+
+
+def _pr_norm(x):
+    return re.sub(r"[^a-z0-9#]+", "", str(x).lower())
+
+
+def _pr_open_package(game_iso):
+    """This UWW game's open review package (data/play_review/<game>/review.json), or None."""
+    pk = [d for d in _pr_app_packages() if str(d.get("game", "")).startswith(str(game_iso))
+          and "WWW" in str(d.get("game", "")).split("|")[-1]]
+    return pk[0] if pk else None
+
+
+def _pr_event_map(d, game_iso):
+    """{play-by-play event_order: index of the review play} -- from the play itself, else via its clip number."""
+    out = {}
+    by_clip = {}
+    cl = load_table("uww_trk_clips")
+    if not cl.empty and {"clip_number", "pbp_event_order"} <= set(cl.columns):
+        cl = cl[iso_dates(cl["game_date"]).astype(str).to_numpy() == str(game_iso)]
+        if "game_code" in cl.columns:
+            cl = cl[cl["game_code"].astype(str).str.contains("WWW", na=False)]
+        for cn, eo in zip(pd.to_numeric(cl["clip_number"], errors="coerce"), pd.to_numeric(cl["pbp_event_order"], errors="coerce")):
+            if pd.notna(cn) and pd.notna(eo):
+                by_clip[int(cn)] = float(eo)
+    for i, pl in enumerate(d.get("plays", [])):
+        eo = pd.to_numeric(pl.get("pbp_event_order"), errors="coerce")
+        if pd.isna(eo):
+            eo = by_clip.get(int(pl.get("clip_number") or -1))
+        if eo is not None and pd.notna(eo):
+            out[float(eo)] = i
+    return out
+
+
+def _pr_store(run):
+    return st.session_state.setdefault("pr_answers", {}).setdefault(str(run), {})
+
+
+def _pr_keep(store, key):
+    """on_change: remember this widget's value for the review (it survives paging / closing the row)."""
+    store[key] = st.session_state.get(key)
+
+
+def _pr_title_default(f):
+    pre = f.get("coach") is not None and f.get("auto") is not None and _pr_norm(f["coach"]) != _pr_norm(f["auto"])
+    return pre, ("wrong" if pre else "--"), (f.get("coach") if pre else "")
+
+
+def _pr_play_widgets(d, pi, store, kp):
+    """The review of one play, inside its play-by-play row."""
+    pl = d["plays"][pi]
+    run = d.get("run")
+    vocab = d.get("vocab", {})
+    if pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
+        st.video(os.path.join(d["_dir"], pl["clip"]))
+    st.markdown(f"Coach's Title: `{pl.get('coach_title') or 'not tagged'}`  \n"
+                f"Automatic Title: `{pl.get('auto_title') or 'nothing confident enough yet'}`")
+    for fi, f in enumerate(pl.get("fields", [])):
+        pre, dv, da = _pr_title_default(f)
+        kv, ka, kt = f"{kp}_v_{run}_{pi}_{fi}", f"{kp}_a_{run}_{pi}_{fi}", f"{kp}_t_{run}_{pi}_{fi}"
+        auto = (f"{f['auto']} ({round(100 * (f.get('conf') or 0))}%)" if f.get("auto") is not None else (f.get("note") or "no answer"))
+        c1, c2, c3 = st.columns([3, 2, 3])
+        c1.markdown(f"**{f.get('label')}**  \nCoach: {f.get('coach') if f.get('coach') is not None else '--'}  \nAutomatic: {auto}")
+        v = store.get(kv, dv)
+        c2.selectbox("Your answer", _PR_VERDICTS, index=_PR_VERDICTS.index(v) if v in _PR_VERDICTS else 0, key=kv,
+                     on_change=_pr_keep, args=(store, kv))
+        opts = [""] + list(vocab.get(f.get("field"), []))
+        a = store.get(ka, da if da in opts else "")
+        c3.selectbox("Right answer", opts, index=opts.index(a) if a in opts else 0, key=ka, on_change=_pr_keep, args=(store, ka))
+        c3.text_input("or type a new one", value=store.get(kt, da if da and da not in opts else ""), key=kt,
+                      on_change=_pr_keep, args=(store, kt))
+    for ki, pic in enumerate(pl.get("pictures", [])):
+        l2, r2 = st.columns([3, 4])
+        path = os.path.join(d["_dir"], pic.get("image") or "")
+        if pic.get("image") and os.path.exists(path):
+            l2.image(path, caption="START of the play" if pic.get("which") == "start" else "END of the play")
+        with r2:
+            for bi, b in enumerate(pic.get("boxes", [])):
+                mine = pl.get("five", {}).get(b.get("side"), []) or []
+                other = pl.get("five", {}).get("defense" if b.get("side") == "offense" else "offense", []) or []
+                opts = ([_PR_NOT_CHECKED, "correct"] + [f"really {n}" for n in mine if n != b.get("name")]
+                        + [f"really {n} (other team)" for n in other] + ["wrong team (don't know who)", "not a player"])
+                kb = f"{kp}_b_{run}_{pi}_{ki}_{bi}"
+                cur = store.get(kb, _PR_NOT_CHECKED)
+                st.selectbox(f"Box {b.get('id')} -- {b.get('side')} -- "
+                             + (f"{b.get('label')} ({b.get('how')})" if b.get("label") else "not named"),
+                             opts, index=opts.index(cur) if cur in opts else 0, key=kb, on_change=_pr_keep, args=(store, kb))
+
+
+def _pr_payload(d, store, coach, kp):
+    """Every answer for this review -- the ones changed (kept in `store`) and the prefilled defaults."""
+    out = {"game": d.get("game"), "run": d.get("run"), "coach": coach.strip(),
+           "saved": pd.Timestamp.now(tz="UTC").isoformat(timespec="seconds"), "checks": [], "answers": [],
+           "source": "streamlit app (play-by-play)"}
+    run = d.get("run")
+    for pi, pl in enumerate(d.get("plays", [])):
+        for fi, f in enumerate(pl.get("fields", [])):
+            pre, dv, da = _pr_title_default(f)
+            kv, ka, kt = f"{kp}_v_{run}_{pi}_{fi}", f"{kp}_a_{run}_{pi}_{fi}", f"{kp}_t_{run}_{pi}_{fi}"
+            v = store.get(kv, dv)
+            if v == "--":
+                continue
+            ans = (str(store.get(kt, "") or "").strip() or str(store.get(ka, da) or "")).strip()
+            touched = any(k in store for k in (kv, ka, kt))
+            out["answers"].append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"), "field": f.get("field"),
+                                   "coach": f.get("coach"), "auto": f.get("auto"), "auto_conf": f.get("conf"),
+                                   "verdict": v, "correct": (ans or None) if v == "wrong" else None,
+                                   "prefilled": bool(pre and not touched)})
+        for ki, pic in enumerate(pl.get("pictures", [])):
+            for bi, b in enumerate(pic.get("boxes", [])):
+                val = store.get(f"{kp}_b_{run}_{pi}_{ki}_{bi}", _PR_NOT_CHECKED)
+                if val == _PR_NOT_CHECKED:
+                    continue
+                if val == "correct":
+                    verdict, name = "correct", b.get("name")
+                elif val == "not a player":
+                    verdict, name = "not a player", None
+                elif val.startswith("wrong team"):
+                    verdict, name = "wrong team", None
+                elif val.endswith("(other team)"):
+                    verdict, name = "wrong team", val[len("really "):-len(" (other team)")]
+                else:
+                    verdict, name = "wrong", val[len("really "):]
+                out["checks"].append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
+                                      "frame_file": pic.get("frame_file"), "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"),
+                                      "side": b.get("side"), "assigned": b.get("name"), "assigned_how": b.get("how"),
+                                      "verdict": verdict, "true_name": name})
+    return out
+
+
+def _pr_save_bar(d, store, kp, key_suffix):
+    """Name + one Save for every answer in this review (top of the play-by-play)."""
+    saved = _pr_app_saves_for(d.get("run"))
+    n_changed = len([k for k in store if k.startswith(kp)])
+    st.markdown(f"**\U0001f4dd Play review** -- {len(d.get('plays', []))} plays in this game's open review are marked "
+                "\U0001f4dd below; open one to review it. Rows where the coach's value and the automatic value differ start "
+                "as wrong with the coach's value." + (f"  \nAlready saved: " + "; ".join(f"{c} ({t})" for c, t in saved) if saved else ""))
+    c1, c2 = st.columns([3, 2])
+    coach = c1.text_input("Your name (required to save)", key=f"pr_coach_pbp{key_suffix}")
+    if c2.button(f"Save my review ({n_changed} answer(s) changed)", key=f"pr_save_pbp{key_suffix}"):
+        if not coach.strip():
+            st.error("Add your name, then save again.")
+            return
+        out = _pr_payload(d, store, coach, kp)
+        fname = (f"play_review_{d.get('slug')}_{d.get('run')}_{re.sub(r'[^A-Za-z0-9]+', '_', coach.strip()).strip('_')}_"
+                 f"{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
+        ok, msg = _pr_github_save(fname, out)
+        if ok:
+            st.success(f"Saved -- {len(out['checks'])} player check(s) and {len(out['answers'])} Title answer(s) ({msg}). "
+                       "The app restarts briefly when GitHub gets the file; the parser uses it after its next git pull.")
+            st.session_state.get("pr_answers", {}).pop(str(d.get("run")), None)
+        else:
+            st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in your Downloads folder.")
+            st.download_button("Download my review", json.dumps(out, indent=1), file_name=fname, mime="application/json",
+                               key=f"pr_dl_pbp{key_suffix}")
+
+
+
+def _pbp_replay_clips(game_iso):
+    """{play-by-play event_order: clip_key} for this UWW game's tracked possessions (uww_trk_clips.pbp_event_order)."""
+    cl = load_table("uww_trk_clips")
+    if cl.empty or "pbp_event_order" not in cl.columns or not game_iso:
+        return {}
+    cl = cl[iso_dates(cl["game_date"]).astype(str).to_numpy() == str(game_iso)]
+    if "game_code" in cl.columns:
+        cl = cl[cl["game_code"].astype(str).str.contains("WWW", na=False)]   # not another game on the same day
+    eo = pd.to_numeric(cl["pbp_event_order"], errors="coerce")
+    return {float(o): k for o, k in zip(eo, cl["clip_key"]) if pd.notna(o)}
+
+
 def _ft_int(v, default=0):
     """A whole number for display, or `default` when the value is blank. CONFIRMED BUG (fixed; the Film Tracking tab
     showed "unavailable right now (ValueError: cannot convert float NaN to integer)"): int(x or 0) is NOT safe for a
@@ -6065,6 +6242,10 @@ def render_film_tracking(short_opponent, key_suffix=""):
             report_section_error("Court view", _ct_err)
 
     with sub[4]:
+      if _FT_GAME:
+        st.info("For this game, each play's possession replay is in the PLAY-BY-PLAY above -- open any play marked "
+                "\U0001f3a5 and switch on \"Show the possession replay\".")
+      else:
         cl = clips.copy()
         cl["label"] = (cl["game_date"].astype(str) + "  #" + cl["clip_number"].astype(str) + "  " +
                        cl["offense_team"].astype(str) + " -- " + cl["play_title"].fillna(cl["synergy_string"]).astype(str).str[:60] +
@@ -10914,927 +11095,1008 @@ def render_previous_games():
     opp_game_box = game_box[game_box["team"] != "UW-Whitewater"] if not game_box.empty else pd.DataFrame()
     opp_game_box = game_box[game_box["team"] != "UW-Whitewater"] if not game_box.empty else pd.DataFrame()
 
-    # --- TEAM STATS  |  BOX SCORE (side by side) ---
-    _tsb_left, _tsb_right = st.columns([1, 2])
-    with _tsb_left:
-        # --- TEAM STATS: EXPECTED vs ACTUAL ---
-        _TS_HOW_TO_READ = (
-            "Each number is what that team actually did in this game. The figure in parentheses is the "
-            "difference from their baseline going into it: for UWW, our own season averages through the "
-            "prior games; for the opponent, what UWW's opponents had been averaging against us over those "
-            "same games \u2014 our defensive baseline, not their season average, which isn't computable "
-            "for a past opponent from the data on file. Green favours UWW either way, so a green number in "
-            "the opponent column means we held them below what we'd been giving up. Clutch Points covers "
-            "the last 5 minutes of the 2nd half or any overtime with the score within 8, and its baseline "
-            "averages only the earlier games that actually reached clutch time \u2014 the row is absent "
-            "entirely for a game that never got there."
-        )
+    # CONFIRMED CHANGE (requested: "the Previous Game pages should also have the tabs like Upcoming Opponent does").
+    # The result banner stays on top; the sections below are grouped into tabs. Each section is unchanged and in the
+    # same order (every tab runs on each load, so values one section sets up for another still flow through).
+    _pg_review_open = bool(_pr_open_package(_pg_game_date))
+    _pgt_stats, _pgt_ktv, _pgt_people, _pgt_plan, _pgt_pbp, _pgt_film = st.tabs([
+        "\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f4c5 Game Plan",
+        "\U0001f3ac Play-by-Play" + (" \U0001f4dd" if _pg_review_open else ""), "\U0001f3a5 Film Tracking"])
+    with _pgt_stats:
+        # --- TEAM STATS  |  BOX SCORE (side by side) ---
+        _tsb_left, _tsb_right = st.columns([1, 2])
+        with _tsb_left:
+            # --- TEAM STATS: EXPECTED vs ACTUAL ---
+            _TS_HOW_TO_READ = (
+                "Each number is what that team actually did in this game. The figure in parentheses is the "
+                "difference from their baseline going into it: for UWW, our own season averages through the "
+                "prior games; for the opponent, what UWW's opponents had been averaging against us over those "
+                "same games \u2014 our defensive baseline, not their season average, which isn't computable "
+                "for a past opponent from the data on file. Green favours UWW either way, so a green number in "
+                "the opponent column means we held them below what we'd been giving up. Clutch Points covers "
+                "the last 5 minutes of the 2nd half or any overtime with the score within 8, and its baseline "
+                "averages only the earlier games that actually reached clutch time \u2014 the row is absent "
+                "entirely for a game that never got there."
+            )
 
-        @st.dialog("\U0001f4d8 How to read Team Stats", width="large")
-        def _show_team_stats_help():
-            st.markdown(_TS_HOW_TO_READ)
+            @st.dialog("\U0001f4d8 How to read Team Stats", width="large")
+            def _show_team_stats_help():
+                st.markdown(_TS_HOW_TO_READ)
 
-        # Header + info icon on one line. CONFIRMED CHANGE (requested): the explanation moved off the page
-        # into this dialog -- it's a paragraph you read once to learn what the parentheses mean, not
-        # something worth sitting under the table on every game you open.
-        _ts_hdr_key = "team_stats_hdr"
-        try:
-            _ts_hdr_box = st.container(key=_ts_hdr_key)
-        except TypeError:
-            _ts_hdr_box = None
-        _ts_hdr_html = ('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;'
-                        'margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;'
-                        'letter-spacing:0.5px;color:#4E2A84;">TEAM STATS</div></div>')
-        if _ts_hdr_box is not None:
-            # Not inline_icon_css here: that shrinks the element to its content, which would turn this
-            # full-width header bar into a chip and make it the odd one out among every other section
-            # header on the page. Instead the keyed container becomes the positioning context and the
-            # button is lifted into the bar's right end -- the bar keeps its normal width and the icon
-            # sits inside it. The top offset tracks the bar's own box: 1.5rem margin + 12px padding.
-            st.markdown(
-                f"<style>"
-                f".st-key-{_ts_hdr_key}{{position:relative;}}"
-                f'.st-key-{_ts_hdr_key} [data-testid="stElementContainer"]:last-child '
-                f"{{position:absolute;top:calc(1.5rem + 10px);right:14px;width:auto !important;"
-                f"margin:0 !important;z-index:1;}}"
-                f".st-key-{_ts_hdr_key} button "
-                f"{{padding:0 !important;min-height:0 !important;border:none !important;}}"
-                f"</style>", unsafe_allow_html=True)
-            with _ts_hdr_box:
+            # Header + info icon on one line. CONFIRMED CHANGE (requested): the explanation moved off the page
+            # into this dialog -- it's a paragraph you read once to learn what the parentheses mean, not
+            # something worth sitting under the table on every game you open.
+            _ts_hdr_key = "team_stats_hdr"
+            try:
+                _ts_hdr_box = st.container(key=_ts_hdr_key)
+            except TypeError:
+                _ts_hdr_box = None
+            _ts_hdr_html = ('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;'
+                            'margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;'
+                            'letter-spacing:0.5px;color:#4E2A84;">TEAM STATS</div></div>')
+            if _ts_hdr_box is not None:
+                # Not inline_icon_css here: that shrinks the element to its content, which would turn this
+                # full-width header bar into a chip and make it the odd one out among every other section
+                # header on the page. Instead the keyed container becomes the positioning context and the
+                # button is lifted into the bar's right end -- the bar keeps its normal width and the icon
+                # sits inside it. The top offset tracks the bar's own box: 1.5rem margin + 12px padding.
+                st.markdown(
+                    f"<style>"
+                    f".st-key-{_ts_hdr_key}{{position:relative;}}"
+                    f'.st-key-{_ts_hdr_key} [data-testid="stElementContainer"]:last-child '
+                    f"{{position:absolute;top:calc(1.5rem + 10px);right:14px;width:auto !important;"
+                    f"margin:0 !important;z-index:1;}}"
+                    f".st-key-{_ts_hdr_key} button "
+                    f"{{padding:0 !important;min-height:0 !important;border:none !important;}}"
+                    f"</style>", unsafe_allow_html=True)
+                with _ts_hdr_box:
+                    st.markdown(_ts_hdr_html, unsafe_allow_html=True)
+                    if st.button("\u2139\ufe0f", key="team_stats_help_btn", type="tertiary",
+                                 help="How to read this table"):
+                        _show_team_stats_help()
+            else:
                 st.markdown(_ts_hdr_html, unsafe_allow_html=True)
                 if st.button("\u2139\ufe0f", key="team_stats_help_btn", type="tertiary",
                              help="How to read this table"):
                     _show_team_stats_help()
-        else:
-            st.markdown(_ts_hdr_html, unsafe_allow_html=True)
-            if st.button("\u2139\ufe0f", key="team_stats_help_btn", type="tertiary",
-                         help="How to read this table"):
-                _show_team_stats_help()
 
-        if not uww_game_box.empty:
-            # Compute actual game stats
-            _ng = 1
-            actual_stats = {
-                "Points": uww_score,
-                "Points Against": opp_score,
-                "FG%": (uww_game_box["FGM"].sum() / uww_game_box["FGA"].sum() * 100) if uww_game_box["FGA"].sum() > 0 else 0,
-                "Rebounds": uww_game_box["REB"].sum() if "REB" in uww_game_box.columns else 0,
-                "Assists": uww_game_box["AST"].sum() if "AST" in uww_game_box.columns else 0,
-                "Turnovers": uww_game_box["TO"].sum() if "TO" in uww_game_box.columns else 0,
-                "Steals": uww_game_box["STL"].sum() if "STL" in uww_game_box.columns else 0,
-                "Blocks": uww_game_box["BLK"].sum() if "BLK" in uww_game_box.columns else 0,
-            }
-            _uww_3pm = uww_game_box["FG3M"].sum() if "FG3M" in uww_game_box.columns else 0
-            _uww_3pa = uww_game_box["FG3A"].sum() if "FG3A" in uww_game_box.columns else 0
-            _uww_ftm = uww_game_box["FTM"].sum() if "FTM" in uww_game_box.columns else 0
-            _uww_fta = uww_game_box["FTA"].sum() if "FTA" in uww_game_box.columns else 0
-            actual_stats["3P%"] = (_uww_3pm / _uww_3pa * 100) if _uww_3pa > 0 else 0
-            actual_stats["FT%"] = (_uww_ftm / _uww_fta * 100) if _uww_fta > 0 else 0
-            actual_stats["A:TO Ratio"] = (actual_stats["Assists"] / actual_stats["Turnovers"]) if actual_stats["Turnovers"] > 0 else 0
-
-            # CONFIRMED CHANGE (requested): the opponent's line from the same game, so this section compares
-            # three things -- what we usually do, what we did, and what THEY did -- instead of only grading
-            # us against ourselves. Points/Points Against are mirrored (their points are our points against),
-            # and every other figure is summed from their own box-score rows.
-            def _side_stats(_side_box, _pts_for, _pts_against):
-                if _side_box.empty:
-                    return {}
-                def _sum(_c):
-                    return _side_box[_c].sum() if _c in _side_box.columns else 0
-                _fga, _fgm = _sum("FGA"), _sum("FGM")
-                _out = {
-                    "Points": _pts_for, "Points Against": _pts_against,
-                    "FG%": (_fgm / _fga * 100) if _fga > 0 else 0,
-                    "Rebounds": _sum("REB"), "Assists": _sum("AST"), "Turnovers": _sum("TO"),
-                    "Steals": _sum("STL"), "Blocks": _sum("BLK"),
+            if not uww_game_box.empty:
+                # Compute actual game stats
+                _ng = 1
+                actual_stats = {
+                    "Points": uww_score,
+                    "Points Against": opp_score,
+                    "FG%": (uww_game_box["FGM"].sum() / uww_game_box["FGA"].sum() * 100) if uww_game_box["FGA"].sum() > 0 else 0,
+                    "Rebounds": uww_game_box["REB"].sum() if "REB" in uww_game_box.columns else 0,
+                    "Assists": uww_game_box["AST"].sum() if "AST" in uww_game_box.columns else 0,
+                    "Turnovers": uww_game_box["TO"].sum() if "TO" in uww_game_box.columns else 0,
+                    "Steals": uww_game_box["STL"].sum() if "STL" in uww_game_box.columns else 0,
+                    "Blocks": uww_game_box["BLK"].sum() if "BLK" in uww_game_box.columns else 0,
                 }
-                _3pa, _fta = _sum("FG3A"), _sum("FTA")
-                _out["3P%"] = (_sum("FG3M") / _3pa * 100) if _3pa > 0 else 0
-                _out["FT%"] = (_sum("FTM") / _fta * 100) if _fta > 0 else 0
-                _out["A:TO Ratio"] = (_out["Assists"] / _out["Turnovers"]) if _out["Turnovers"] > 0 else 0
-                return _out
+                _uww_3pm = uww_game_box["FG3M"].sum() if "FG3M" in uww_game_box.columns else 0
+                _uww_3pa = uww_game_box["FG3A"].sum() if "FG3A" in uww_game_box.columns else 0
+                _uww_ftm = uww_game_box["FTM"].sum() if "FTM" in uww_game_box.columns else 0
+                _uww_fta = uww_game_box["FTA"].sum() if "FTA" in uww_game_box.columns else 0
+                actual_stats["3P%"] = (_uww_3pm / _uww_3pa * 100) if _uww_3pa > 0 else 0
+                actual_stats["FT%"] = (_uww_ftm / _uww_fta * 100) if _uww_fta > 0 else 0
+                actual_stats["A:TO Ratio"] = (actual_stats["Assists"] / actual_stats["Turnovers"]) if actual_stats["Turnovers"] > 0 else 0
 
-            opp_actual_stats = _side_stats(opp_game_box, opp_score, uww_score)
-
-            # Compute season averages going INTO this game (expected)
-            _pre_box = scope_to_played(box, _orig_played.iloc[:_game_original_pos], _pg_season) if _game_original_pos else box.iloc[0:0]
-            _pre_uww_box = _pre_box[_pre_box["team"] == "UW-Whitewater"] if not _pre_box.empty else pd.DataFrame()
-            # Validate using roster
-            if not _pre_uww_box.empty:
-                _sample = _pre_uww_box["player"].str.lower().tolist()[:5]
-                if sum(1 for p in _sample if p in uww_names) == 0:
-                    _pre_uww_box = _pre_box[_pre_box["team"] != "UW-Whitewater"]
-
-            expected_stats = {}
-            if not _pre_uww_box.empty:
-                _n_pre = ((_pre_uww_box[game_date_col(_pre_uww_box)].nunique()
-                           if game_date_col(_pre_uww_box) else _pre_uww_box["opponent"].nunique()) or 1)
-                _pre_games = _orig_played.iloc[:_game_original_pos] if _game_original_pos else pd.DataFrame()
-                expected_stats = {
-                    "Points": _pre_games["team_score"].mean() if not _pre_games.empty else 0,
-                    "Points Against": _pre_games["opponent_score"].mean() if not _pre_games.empty else 0,
-                    "FG%": (_pre_uww_box["FGM"].sum() / _pre_uww_box["FGA"].sum() * 100) if _pre_uww_box["FGA"].sum() > 0 else 0,
-                    "Rebounds": _pre_uww_box["REB"].sum() / _n_pre if "REB" in _pre_uww_box.columns else 0,
-                    "Assists": _pre_uww_box["AST"].sum() / _n_pre if "AST" in _pre_uww_box.columns else 0,
-                    "Turnovers": _pre_uww_box["TO"].sum() / _n_pre if "TO" in _pre_uww_box.columns else 0,
-                    "Steals": _pre_uww_box["STL"].sum() / _n_pre if "STL" in _pre_uww_box.columns else 0,
-                    "Blocks": _pre_uww_box["BLK"].sum() / _n_pre if "BLK" in _pre_uww_box.columns else 0,
-                }
-                _p3pm = _pre_uww_box["FG3M"].sum() if "FG3M" in _pre_uww_box.columns else 0
-                _p3pa = _pre_uww_box["FG3A"].sum() if "FG3A" in _pre_uww_box.columns else 0
-                _pftm = _pre_uww_box["FTM"].sum() if "FTM" in _pre_uww_box.columns else 0
-                _pfta = _pre_uww_box["FTA"].sum() if "FTA" in _pre_uww_box.columns else 0
-                expected_stats["3P%"] = (_p3pm / _p3pa * 100) if _p3pa > 0 else 0
-                expected_stats["FT%"] = (_pftm / _pfta * 100) if _pfta > 0 else 0
-                _e_ast = expected_stats["Assists"]
-                _e_to = expected_stats["Turnovers"]
-                expected_stats["A:TO Ratio"] = (_e_ast / _e_to) if _e_to > 0 else 0
-
-            # The opponent's own season baseline going into this game: what UWW's opponents had averaged
-            # in the games before it, from the other side of the same prior box scores. This is what gives
-            # the opponent column a parenthetical of its own -- "81 (+12.1)" means they beat what we'd been
-            # allowing by twelve. It is OUR defensive baseline, not their season average (which this app
-            # has no way to compute for a past opponent), and the description under the table says so.
-            _pre_opp_box = _pre_box.drop(index=_pre_uww_box.index, errors="ignore") if not _pre_box.empty else pd.DataFrame()
-            expected_opp_stats = {}
-            if not _pre_opp_box.empty:
-                _n_pre_o = ((_pre_opp_box[game_date_col(_pre_opp_box)].nunique()
-                             if game_date_col(_pre_opp_box) else _pre_opp_box["opponent"].nunique()) or 1)
-                def _o(_c):
-                    return _pre_opp_box[_c].sum() if _c in _pre_opp_box.columns else 0
-                _o_fga, _o_3pa, _o_fta = _o("FGA"), _o("FG3A"), _o("FTA")
-                expected_opp_stats = {
-                    "Points": _pre_games["opponent_score"].mean() if not _pre_games.empty else 0,
-                    "Points Against": _pre_games["team_score"].mean() if not _pre_games.empty else 0,
-                    "FG%": (_o("FGM") / _o_fga * 100) if _o_fga > 0 else 0,
-                    "3P%": (_o("FG3M") / _o_3pa * 100) if _o_3pa > 0 else 0,
-                    "FT%": (_o("FTM") / _o_fta * 100) if _o_fta > 0 else 0,
-                    "Rebounds": _o("REB") / _n_pre_o, "Assists": _o("AST") / _n_pre_o,
-                    "Turnovers": _o("TO") / _n_pre_o, "Steals": _o("STL") / _n_pre_o,
-                    "Blocks": _o("BLK") / _n_pre_o,
-                }
-                expected_opp_stats["A:TO Ratio"] = (
-                    expected_opp_stats["Assists"] / expected_opp_stats["Turnovers"]
-                    if expected_opp_stats["Turnovers"] > 0 else 0)
-
-            # Biggest run and largest lead, moved up into this table from the section that used to sit
-            # below it -- they're team stats for this game like any other, and splitting them out meant
-            # scrolling past the box score to find out whether a 12-point night was one 12-0 burst or a
-            # steady grind. Baselines follow the same rule as every other row: UWW's own prior-game average
-            # for our column, and what UWW's opponents had been doing to us for theirs.
-            _ts_runs = load_table("uww_scoring_runs", _pg_season)
-            _ts_run_row = _this_game(_ts_runs, "uww_scoring_runs") if not _ts_runs.empty else pd.DataFrame()
-            if not _ts_run_row.empty:
-                _rr0 = _ts_run_row.iloc[0]
-                for _lbl, _u_col, _o_col in (("Biggest Run", "uww_biggest_run", "opponent_biggest_run"),
-                                             ("Largest Lead", "uww_largest_lead", "opponent_largest_lead")):
-                    _uv = pd.to_numeric(_rr0.get(_u_col), errors="coerce")
-                    _ov = pd.to_numeric(_rr0.get(_o_col), errors="coerce")
-                    if pd.notna(_uv):
-                        actual_stats[_lbl] = float(_uv)
-                    if pd.notna(_ov):
-                        opp_actual_stats[_lbl] = float(_ov)
-                    # Prior-game averages, from games strictly before this one on the same table.
-                    if _pg_game_date is not None and not _ts_runs.empty:
-                        _rd = game_date_col(_ts_runs)
-                        if _rd:
-                            _prior_runs = _ts_runs[iso_dates(_ts_runs[_rd]) < _pg_game_date]
-                            if not _prior_runs.empty:
-                                _pu = pd.to_numeric(_prior_runs.get(_u_col), errors="coerce").dropna()
-                                _po = pd.to_numeric(_prior_runs.get(_o_col), errors="coerce").dropna()
-                                if len(_pu):
-                                    expected_stats[_lbl] = float(_pu.mean())
-                                if len(_po):
-                                    expected_opp_stats[_lbl] = float(_po.mean())
-
-            # Clutch points for each side, same points-per-event convention the Team tab's clutch section
-            # uses (made_shot carries its own shot_type; a made free throw is 1) so the two can't disagree.
-            # The baseline averages only PRIOR GAMES THAT HAD CLUTCH TIME -- dividing by every prior game
-            # would treat a 30-point blowout as a game where both teams scored zero in the clutch, which
-            # would drag the baseline toward nothing and make every close game look like an outlier.
-            _ts_clutch = load_table("uww_clutch_events", _pg_season)
-            if not _ts_clutch.empty and {"event_type", "team"} <= set(_ts_clutch.columns):
-                _cl = _ts_clutch[_ts_clutch["event_type"].isin(["made_shot", "free_throw_made"])].copy()
-                if not _cl.empty:
-                    _cl["_pts"] = _cl.apply(
-                        lambda _r: int(_r["shot_type"]) if (_r["event_type"] == "made_shot"
-                                                            and pd.notna(_r.get("shot_type"))) else 1, axis=1)
-                    _cl_dc = game_date_col(_cl)
-                    if _cl_dc and _pg_game_date is not None:
-                        _cl["_iso"] = iso_dates(_cl[_cl_dc]).to_numpy()
-                        _cl_this = _cl[_cl["_iso"] == _pg_game_date]
-                        if not _cl_this.empty:
-                            _is_uww = _cl_this["team"] == "UW-Whitewater"
-                            actual_stats["Clutch Points"] = float(_cl_this[_is_uww]["_pts"].sum())
-                            opp_actual_stats["Clutch Points"] = float(_cl_this[~_is_uww]["_pts"].sum())
-                        _cl_prior = _cl[_cl["_iso"] < _pg_game_date]
-                        _cl_n = _cl_prior["_iso"].nunique()
-                        if _cl_n:
-                            _pu = _cl_prior["team"] == "UW-Whitewater"
-                            expected_stats["Clutch Points"] = float(_cl_prior[_pu]["_pts"].sum()) / _cl_n
-                            expected_opp_stats["Clutch Points"] = float(_cl_prior[~_pu]["_pts"].sum()) / _cl_n
-
-            # CONFIRMED CHANGE (requested): the season-average column is gone and each side's difference
-            # from its baseline moved into parentheses beside the value, so the table is two columns of
-            # numbers instead of four and the comparison reads inline.
-            stat_order = ["Points", "Points Against", "FG%", "3P%", "FT%", "Rebounds", "Assists",
-                          "Turnovers", "A:TO Ratio", "Steals", "Blocks", "Biggest Run", "Largest Lead",
-                          "Clutch Points"]
-            lower_better = {"Points Against", "Turnovers"}
-
-            def _cell(_stat, _value, _baseline, _for_uww):
-                """One "value (+diff)" cell. Green when the difference favours UWW -- which inverts for the
-                opponent column, where them beating their baseline is bad news for us."""
-                if _value is None:
-                    return '<span style="font-size:1rem;width:120px;text-align:right;">--</span>'
-                _is_ratio = "Ratio" in _stat
-                _pct = "%" if "%" in _stat else ""
-                _val_fmt = f"{_value:.2f}" if _is_ratio else f"{_value:.1f}{_pct}"
-                if not _baseline:
-                    return (f'<span style="font-size:1rem;width:120px;text-align:right;font-weight:700;">'
-                            f'{_val_fmt}</span>')
-                _diff = _value - _baseline
-                _higher_good = (_stat not in lower_better) if _for_uww else (_stat in lower_better)
-                _good = (_diff > 0) if _higher_good else (_diff < 0)
-                _color = "#2e7d32" if _good else "#c62828" if abs(_diff) > 0.5 else "#666"
-                _diff_fmt = f"{_diff:+.2f}" if _is_ratio else f"{_diff:+.1f}{_pct}"
-                return (f'<span style="font-size:1rem;width:120px;text-align:right;font-weight:700;">'
-                        f'{_val_fmt} <span style="font-size:0.78rem;font-weight:600;color:{_color};">'
-                        f'({_diff_fmt})</span></span>')
-
-            rows_html = ""
-            for stat in stat_order:
-                act = actual_stats.get(stat, 0)
-                opp_act = opp_actual_stats.get(stat)
-                if act == 0 and not opp_act:
-                    continue
-                rows_html += (
-                    f'<div style="padding:8px 0;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;">'
-                    f'<span style="font-size:0.8rem;color:#666;font-weight:600;text-transform:uppercase;flex:1;">{stat}</span>'
-                    + _cell(stat, act, expected_stats.get(stat), True)
-                    + _cell(stat, opp_act, expected_opp_stats.get(stat), False)
-                    + '</div>'
-                )
-            if rows_html:
-                _opp_hdr = html.escape(get_team_abbreviation(short_opponent or str(game.get("opponent", "OPP"))))
-                stats_comparison_html = (
-                    f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:14px 18px;">'
-                    f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'
-                    f'<span style="flex:1;"></span>'
-                    f'<span style="font-size:0.85rem;font-weight:700;color:#4E2A84;width:120px;text-align:right;">UWW</span>'
-                    f'<span style="font-size:0.85rem;font-weight:700;color:#222;width:120px;text-align:right;">{_opp_hdr}</span>'
-                    f'</div>{rows_html}</div>'
-                )
-                st.markdown(stats_comparison_html, unsafe_allow_html=True)
-            else:
-                st.caption("Not enough prior game data for comparison.")
-        else:
-            st.caption("No box score data available for this game.")
-    with _tsb_right:
-        # --- BOX SCORE ---
-        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">BOX SCORE</div></div>', unsafe_allow_html=True)
-
-        # Precompute lineup data for the later LINEUP PERFORMANCE section (kept here since it's been computed
-        # alongside the box score since before this fix -- not actually used by the box-score table below).
-        if not game_stints.empty:
-            game_stints["margin_per_min"] = (game_stints["uww_margin_change"] / game_stints["stint_minutes"]).round(2)
-            game_stints = game_stints.sort_values("stint_minutes", ascending=False)
-
-        # NOTE: this used to be gated on `game_box.empty and game_stints.empty` -- so if game_box was empty but
-        # game_stints wasn't, this whole section rendered NOTHING (no table, no warning) instead of explaining
-        # why. The box score table only ever depends on game_box, so check that alone.
-        if game_box.empty:
-            st.warning("No reconstructed box score found for this game yet.")
-        else:
-            compact_cols = [c for c in ["player", "MIN", "PTS", "REB", "AST", "STL", "BLK", "TO", "FG%"]
-                             if c in game_box.columns]
-            full_cols = [c for c in ["player", "MIN", "started", "PTS", "FGM", "FGA", "FG%", "FG3M", "FG3A", "3P%",
-                                      "FTM", "FTA", "FT%", "OREB", "DREB", "REB", "AST", "STL", "BLK", "TO", "PF"]
-                          if c in game_box.columns]
-            teams = sorted(game_box["team"].unique().tolist())
-
-            # CONFIRMED CHANGE (requested): stacked rather than side by side, and only the five
-            # highest-minute players per team on the page. Two half-width tables squeezed nine columns into
-            # a shared column with Team Stats; full width fits them, and the rotation past the top five is
-            # one click away rather than always on screen.
-            if len(teams) == 2:
-                _t_uww = "UW-Whitewater" if "UW-Whitewater" in teams else teams[0]
-                _t_opp = [t for t in teams if t != _t_uww][0] if len(teams) > 1 else teams[0]
-
-                def _by_minutes(_df):
-                    """Sorted by minutes played, descending. MIN can arrive as a string, so it's coerced
-                    rather than sorted lexically -- "9.4" must not outrank "32.9"."""
-                    _d = _df.copy()
-                    _d["_min_num"] = pd.to_numeric(_d["MIN"], errors="coerce") if "MIN" in _d.columns else 0
-                    return _d.sort_values("_min_num", ascending=False).drop(columns=["_min_num"])
-
-                _uww_df = _by_minutes(game_box[game_box["team"] == _t_uww])
-                _opp_df = _by_minutes(game_box[game_box["team"] == _t_opp])
-
-                # --- Difference from the projection, shown in parentheses next to each value.
-                # The parser now stamps every projection with the (opponent, game_date) it was built for
-                # and appends rather than overwrites, so each past game keeps the projection that was
-                # actually made before it. Rows are selected by that stamp -- an exact match or nothing.
-                # Older CSVs written before the stamp existed have no such columns; those fall back to no
-                # parentheses rather than comparing this game against a projection for a different one.
-                def _proj_for_this_game(_tbl):
-                    if _tbl.empty or not {"opponent", "game_date"} <= set(_tbl.columns):
-                        return pd.DataFrame()
-                    _want_opp = str(game.get("opponent", "")).strip().lower()
-                    _want_date = str(game.get("date", "")).strip().lower()
-                    _m = _tbl[
-                        (_tbl["opponent"].astype(str).str.strip().str.lower() == _want_opp)
-                        & (_tbl["game_date"].astype(str).str.strip().str.lower() == _want_date)
-                    ]
-                    return _m
-
-                def _proj_lookup(_tbl, _name_col):
-                    """{lowercased player name: {stat: projected value}} from a parser projection table."""
-                    _tbl = _proj_for_this_game(_tbl)
-                    if _tbl.empty or _name_col not in _tbl.columns:
+                # CONFIRMED CHANGE (requested): the opponent's line from the same game, so this section compares
+                # three things -- what we usually do, what we did, and what THEY did -- instead of only grading
+                # us against ourselves. Points/Points Against are mirrored (their points are our points against),
+                # and every other figure is summed from their own box-score rows.
+                def _side_stats(_side_box, _pts_for, _pts_against):
+                    if _side_box.empty:
                         return {}
-                    _out = {}
-                    for _, _r in _tbl.iterrows():
-                        _vals = {}
-                        for _stat, _src in (("PTS", "projected_PTS"), ("REB", "projected_REB"),
-                                            ("AST", "projected_AST"), ("MIN", "MIN")):
-                            _v = pd.to_numeric(_r.get(_src), errors="coerce")
-                            if pd.notna(_v):
-                                _vals[_stat] = float(_v)
-                        _out[str(_r[_name_col]).strip().lower()] = _vals
+                    def _sum(_c):
+                        return _side_box[_c].sum() if _c in _side_box.columns else 0
+                    _fga, _fgm = _sum("FGA"), _sum("FGM")
+                    _out = {
+                        "Points": _pts_for, "Points Against": _pts_against,
+                        "FG%": (_fgm / _fga * 100) if _fga > 0 else 0,
+                        "Rebounds": _sum("REB"), "Assists": _sum("AST"), "Turnovers": _sum("TO"),
+                        "Steals": _sum("STL"), "Blocks": _sum("BLK"),
+                    }
+                    _3pa, _fta = _sum("FG3A"), _sum("FTA")
+                    _out["3P%"] = (_sum("FG3M") / _3pa * 100) if _3pa > 0 else 0
+                    _out["FT%"] = (_sum("FTM") / _fta * 100) if _fta > 0 else 0
+                    _out["A:TO Ratio"] = (_out["Assists"] / _out["Turnovers"]) if _out["Turnovers"] > 0 else 0
                     return _out
 
-                def _with_diffs(_df, _lookup):
-                    """Actual value with its difference from the projection appended: 14 (+3).
+                opp_actual_stats = _side_stats(opp_game_box, opp_score, uww_score)
+
+                # Compute season averages going INTO this game (expected)
+                _pre_box = scope_to_played(box, _orig_played.iloc[:_game_original_pos], _pg_season) if _game_original_pos else box.iloc[0:0]
+                _pre_uww_box = _pre_box[_pre_box["team"] == "UW-Whitewater"] if not _pre_box.empty else pd.DataFrame()
+                # Validate using roster
+                if not _pre_uww_box.empty:
+                    _sample = _pre_uww_box["player"].str.lower().tolist()[:5]
+                    if sum(1 for p in _sample if p in uww_names) == 0:
+                        _pre_uww_box = _pre_box[_pre_box["team"] != "UW-Whitewater"]
+
+                expected_stats = {}
+                if not _pre_uww_box.empty:
+                    _n_pre = ((_pre_uww_box[game_date_col(_pre_uww_box)].nunique()
+                               if game_date_col(_pre_uww_box) else _pre_uww_box["opponent"].nunique()) or 1)
+                    _pre_games = _orig_played.iloc[:_game_original_pos] if _game_original_pos else pd.DataFrame()
+                    expected_stats = {
+                        "Points": _pre_games["team_score"].mean() if not _pre_games.empty else 0,
+                        "Points Against": _pre_games["opponent_score"].mean() if not _pre_games.empty else 0,
+                        "FG%": (_pre_uww_box["FGM"].sum() / _pre_uww_box["FGA"].sum() * 100) if _pre_uww_box["FGA"].sum() > 0 else 0,
+                        "Rebounds": _pre_uww_box["REB"].sum() / _n_pre if "REB" in _pre_uww_box.columns else 0,
+                        "Assists": _pre_uww_box["AST"].sum() / _n_pre if "AST" in _pre_uww_box.columns else 0,
+                        "Turnovers": _pre_uww_box["TO"].sum() / _n_pre if "TO" in _pre_uww_box.columns else 0,
+                        "Steals": _pre_uww_box["STL"].sum() / _n_pre if "STL" in _pre_uww_box.columns else 0,
+                        "Blocks": _pre_uww_box["BLK"].sum() / _n_pre if "BLK" in _pre_uww_box.columns else 0,
+                    }
+                    _p3pm = _pre_uww_box["FG3M"].sum() if "FG3M" in _pre_uww_box.columns else 0
+                    _p3pa = _pre_uww_box["FG3A"].sum() if "FG3A" in _pre_uww_box.columns else 0
+                    _pftm = _pre_uww_box["FTM"].sum() if "FTM" in _pre_uww_box.columns else 0
+                    _pfta = _pre_uww_box["FTA"].sum() if "FTA" in _pre_uww_box.columns else 0
+                    expected_stats["3P%"] = (_p3pm / _p3pa * 100) if _p3pa > 0 else 0
+                    expected_stats["FT%"] = (_pftm / _pfta * 100) if _pfta > 0 else 0
+                    _e_ast = expected_stats["Assists"]
+                    _e_to = expected_stats["Turnovers"]
+                    expected_stats["A:TO Ratio"] = (_e_ast / _e_to) if _e_to > 0 else 0
+
+                # The opponent's own season baseline going into this game: what UWW's opponents had averaged
+                # in the games before it, from the other side of the same prior box scores. This is what gives
+                # the opponent column a parenthetical of its own -- "81 (+12.1)" means they beat what we'd been
+                # allowing by twelve. It is OUR defensive baseline, not their season average (which this app
+                # has no way to compute for a past opponent), and the description under the table says so.
+                _pre_opp_box = _pre_box.drop(index=_pre_uww_box.index, errors="ignore") if not _pre_box.empty else pd.DataFrame()
+                expected_opp_stats = {}
+                if not _pre_opp_box.empty:
+                    _n_pre_o = ((_pre_opp_box[game_date_col(_pre_opp_box)].nunique()
+                                 if game_date_col(_pre_opp_box) else _pre_opp_box["opponent"].nunique()) or 1)
+                    def _o(_c):
+                        return _pre_opp_box[_c].sum() if _c in _pre_opp_box.columns else 0
+                    _o_fga, _o_3pa, _o_fta = _o("FGA"), _o("FG3A"), _o("FTA")
+                    expected_opp_stats = {
+                        "Points": _pre_games["opponent_score"].mean() if not _pre_games.empty else 0,
+                        "Points Against": _pre_games["team_score"].mean() if not _pre_games.empty else 0,
+                        "FG%": (_o("FGM") / _o_fga * 100) if _o_fga > 0 else 0,
+                        "3P%": (_o("FG3M") / _o_3pa * 100) if _o_3pa > 0 else 0,
+                        "FT%": (_o("FTM") / _o_fta * 100) if _o_fta > 0 else 0,
+                        "Rebounds": _o("REB") / _n_pre_o, "Assists": _o("AST") / _n_pre_o,
+                        "Turnovers": _o("TO") / _n_pre_o, "Steals": _o("STL") / _n_pre_o,
+                        "Blocks": _o("BLK") / _n_pre_o,
+                    }
+                    expected_opp_stats["A:TO Ratio"] = (
+                        expected_opp_stats["Assists"] / expected_opp_stats["Turnovers"]
+                        if expected_opp_stats["Turnovers"] > 0 else 0)
+
+                # Biggest run and largest lead, moved up into this table from the section that used to sit
+                # below it -- they're team stats for this game like any other, and splitting them out meant
+                # scrolling past the box score to find out whether a 12-point night was one 12-0 burst or a
+                # steady grind. Baselines follow the same rule as every other row: UWW's own prior-game average
+                # for our column, and what UWW's opponents had been doing to us for theirs.
+                _ts_runs = load_table("uww_scoring_runs", _pg_season)
+                _ts_run_row = _this_game(_ts_runs, "uww_scoring_runs") if not _ts_runs.empty else pd.DataFrame()
+                if not _ts_run_row.empty:
+                    _rr0 = _ts_run_row.iloc[0]
+                    for _lbl, _u_col, _o_col in (("Biggest Run", "uww_biggest_run", "opponent_biggest_run"),
+                                                 ("Largest Lead", "uww_largest_lead", "opponent_largest_lead")):
+                        _uv = pd.to_numeric(_rr0.get(_u_col), errors="coerce")
+                        _ov = pd.to_numeric(_rr0.get(_o_col), errors="coerce")
+                        if pd.notna(_uv):
+                            actual_stats[_lbl] = float(_uv)
+                        if pd.notna(_ov):
+                            opp_actual_stats[_lbl] = float(_ov)
+                        # Prior-game averages, from games strictly before this one on the same table.
+                        if _pg_game_date is not None and not _ts_runs.empty:
+                            _rd = game_date_col(_ts_runs)
+                            if _rd:
+                                _prior_runs = _ts_runs[iso_dates(_ts_runs[_rd]) < _pg_game_date]
+                                if not _prior_runs.empty:
+                                    _pu = pd.to_numeric(_prior_runs.get(_u_col), errors="coerce").dropna()
+                                    _po = pd.to_numeric(_prior_runs.get(_o_col), errors="coerce").dropna()
+                                    if len(_pu):
+                                        expected_stats[_lbl] = float(_pu.mean())
+                                    if len(_po):
+                                        expected_opp_stats[_lbl] = float(_po.mean())
+
+                # Clutch points for each side, same points-per-event convention the Team tab's clutch section
+                # uses (made_shot carries its own shot_type; a made free throw is 1) so the two can't disagree.
+                # The baseline averages only PRIOR GAMES THAT HAD CLUTCH TIME -- dividing by every prior game
+                # would treat a 30-point blowout as a game where both teams scored zero in the clutch, which
+                # would drag the baseline toward nothing and make every close game look like an outlier.
+                _ts_clutch = load_table("uww_clutch_events", _pg_season)
+                if not _ts_clutch.empty and {"event_type", "team"} <= set(_ts_clutch.columns):
+                    _cl = _ts_clutch[_ts_clutch["event_type"].isin(["made_shot", "free_throw_made"])].copy()
+                    if not _cl.empty:
+                        _cl["_pts"] = _cl.apply(
+                            lambda _r: int(_r["shot_type"]) if (_r["event_type"] == "made_shot"
+                                                                and pd.notna(_r.get("shot_type"))) else 1, axis=1)
+                        _cl_dc = game_date_col(_cl)
+                        if _cl_dc and _pg_game_date is not None:
+                            _cl["_iso"] = iso_dates(_cl[_cl_dc]).to_numpy()
+                            _cl_this = _cl[_cl["_iso"] == _pg_game_date]
+                            if not _cl_this.empty:
+                                _is_uww = _cl_this["team"] == "UW-Whitewater"
+                                actual_stats["Clutch Points"] = float(_cl_this[_is_uww]["_pts"].sum())
+                                opp_actual_stats["Clutch Points"] = float(_cl_this[~_is_uww]["_pts"].sum())
+                            _cl_prior = _cl[_cl["_iso"] < _pg_game_date]
+                            _cl_n = _cl_prior["_iso"].nunique()
+                            if _cl_n:
+                                _pu = _cl_prior["team"] == "UW-Whitewater"
+                                expected_stats["Clutch Points"] = float(_cl_prior[_pu]["_pts"].sum()) / _cl_n
+                                expected_opp_stats["Clutch Points"] = float(_cl_prior[~_pu]["_pts"].sum()) / _cl_n
+
+                # CONFIRMED CHANGE (requested): the season-average column is gone and each side's difference
+                # from its baseline moved into parentheses beside the value, so the table is two columns of
+                # numbers instead of four and the comparison reads inline.
+                stat_order = ["Points", "Points Against", "FG%", "3P%", "FT%", "Rebounds", "Assists",
+                              "Turnovers", "A:TO Ratio", "Steals", "Blocks", "Biggest Run", "Largest Lead",
+                              "Clutch Points"]
+                lower_better = {"Points Against", "Turnovers"}
+
+                def _cell(_stat, _value, _baseline, _for_uww):
+                    """One "value (+diff)" cell. Green when the difference favours UWW -- which inverts for the
+                opponent column, where them beating their baseline is bad news for us."""
+                    if _value is None:
+                        return '<span style="font-size:1rem;width:120px;text-align:right;">--</span>'
+                    _is_ratio = "Ratio" in _stat
+                    _pct = "%" if "%" in _stat else ""
+                    _val_fmt = f"{_value:.2f}" if _is_ratio else f"{_value:.1f}{_pct}"
+                    if not _baseline:
+                        return (f'<span style="font-size:1rem;width:120px;text-align:right;font-weight:700;">'
+                                f'{_val_fmt}</span>')
+                    _diff = _value - _baseline
+                    _higher_good = (_stat not in lower_better) if _for_uww else (_stat in lower_better)
+                    _good = (_diff > 0) if _higher_good else (_diff < 0)
+                    _color = "#2e7d32" if _good else "#c62828" if abs(_diff) > 0.5 else "#666"
+                    _diff_fmt = f"{_diff:+.2f}" if _is_ratio else f"{_diff:+.1f}{_pct}"
+                    return (f'<span style="font-size:1rem;width:120px;text-align:right;font-weight:700;">'
+                            f'{_val_fmt} <span style="font-size:0.78rem;font-weight:600;color:{_color};">'
+                            f'({_diff_fmt})</span></span>')
+
+                rows_html = ""
+                for stat in stat_order:
+                    act = actual_stats.get(stat, 0)
+                    opp_act = opp_actual_stats.get(stat)
+                    if act == 0 and not opp_act:
+                        continue
+                    rows_html += (
+                        f'<div style="padding:8px 0;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;">'
+                        f'<span style="font-size:0.8rem;color:#666;font-weight:600;text-transform:uppercase;flex:1;">{stat}</span>'
+                        + _cell(stat, act, expected_stats.get(stat), True)
+                        + _cell(stat, opp_act, expected_opp_stats.get(stat), False)
+                        + '</div>'
+                    )
+                if rows_html:
+                    _opp_hdr = html.escape(get_team_abbreviation(short_opponent or str(game.get("opponent", "OPP"))))
+                    stats_comparison_html = (
+                        f'<div style="border:1px solid #e0e0e0;border-radius:8px;padding:14px 18px;">'
+                        f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'
+                        f'<span style="flex:1;"></span>'
+                        f'<span style="font-size:0.85rem;font-weight:700;color:#4E2A84;width:120px;text-align:right;">UWW</span>'
+                        f'<span style="font-size:0.85rem;font-weight:700;color:#222;width:120px;text-align:right;">{_opp_hdr}</span>'
+                        f'</div>{rows_html}</div>'
+                    )
+                    st.markdown(stats_comparison_html, unsafe_allow_html=True)
+                else:
+                    st.caption("Not enough prior game data for comparison.")
+            else:
+                st.caption("No box score data available for this game.")
+        with _tsb_right:
+            # --- BOX SCORE ---
+            st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">BOX SCORE</div></div>', unsafe_allow_html=True)
+
+            # Precompute lineup data for the later LINEUP PERFORMANCE section (kept here since it's been computed
+            # alongside the box score since before this fix -- not actually used by the box-score table below).
+            if not game_stints.empty:
+                game_stints["margin_per_min"] = (game_stints["uww_margin_change"] / game_stints["stint_minutes"]).round(2)
+                game_stints = game_stints.sort_values("stint_minutes", ascending=False)
+
+            # NOTE: this used to be gated on `game_box.empty and game_stints.empty` -- so if game_box was empty but
+            # game_stints wasn't, this whole section rendered NOTHING (no table, no warning) instead of explaining
+            # why. The box score table only ever depends on game_box, so check that alone.
+            if game_box.empty:
+                st.warning("No reconstructed box score found for this game yet.")
+            else:
+                compact_cols = [c for c in ["player", "MIN", "PTS", "REB", "AST", "STL", "BLK", "TO", "FG%"]
+                                 if c in game_box.columns]
+                full_cols = [c for c in ["player", "MIN", "started", "PTS", "FGM", "FGA", "FG%", "FG3M", "FG3A", "3P%",
+                                          "FTM", "FTA", "FT%", "OREB", "DREB", "REB", "AST", "STL", "BLK", "TO", "PF"]
+                              if c in game_box.columns]
+                teams = sorted(game_box["team"].unique().tolist())
+
+                # CONFIRMED CHANGE (requested): stacked rather than side by side, and only the five
+                # highest-minute players per team on the page. Two half-width tables squeezed nine columns into
+                # a shared column with Team Stats; full width fits them, and the rotation past the top five is
+                # one click away rather than always on screen.
+                if len(teams) == 2:
+                    _t_uww = "UW-Whitewater" if "UW-Whitewater" in teams else teams[0]
+                    _t_opp = [t for t in teams if t != _t_uww][0] if len(teams) > 1 else teams[0]
+
+                    def _by_minutes(_df):
+                        """Sorted by minutes played, descending. MIN can arrive as a string, so it's coerced
+                    rather than sorted lexically -- "9.4" must not outrank "32.9"."""
+                        _d = _df.copy()
+                        _d["_min_num"] = pd.to_numeric(_d["MIN"], errors="coerce") if "MIN" in _d.columns else 0
+                        return _d.sort_values("_min_num", ascending=False).drop(columns=["_min_num"])
+
+                    _uww_df = _by_minutes(game_box[game_box["team"] == _t_uww])
+                    _opp_df = _by_minutes(game_box[game_box["team"] == _t_opp])
+
+                    # --- Difference from the projection, shown in parentheses next to each value.
+                    # The parser now stamps every projection with the (opponent, game_date) it was built for
+                    # and appends rather than overwrites, so each past game keeps the projection that was
+                    # actually made before it. Rows are selected by that stamp -- an exact match or nothing.
+                    # Older CSVs written before the stamp existed have no such columns; those fall back to no
+                    # parentheses rather than comparing this game against a projection for a different one.
+                    def _proj_for_this_game(_tbl):
+                        if _tbl.empty or not {"opponent", "game_date"} <= set(_tbl.columns):
+                            return pd.DataFrame()
+                        _want_opp = str(game.get("opponent", "")).strip().lower()
+                        _want_date = str(game.get("date", "")).strip().lower()
+                        _m = _tbl[
+                            (_tbl["opponent"].astype(str).str.strip().str.lower() == _want_opp)
+                            & (_tbl["game_date"].astype(str).str.strip().str.lower() == _want_date)
+                        ]
+                        return _m
+
+                    def _proj_lookup(_tbl, _name_col):
+                        """{lowercased player name: {stat: projected value}} from a parser projection table."""
+                        _tbl = _proj_for_this_game(_tbl)
+                        if _tbl.empty or _name_col not in _tbl.columns:
+                            return {}
+                        _out = {}
+                        for _, _r in _tbl.iterrows():
+                            _vals = {}
+                            for _stat, _src in (("PTS", "projected_PTS"), ("REB", "projected_REB"),
+                                                ("AST", "projected_AST"), ("MIN", "MIN")):
+                                _v = pd.to_numeric(_r.get(_src), errors="coerce")
+                                if pd.notna(_v):
+                                    _vals[_stat] = float(_v)
+                            _out[str(_r[_name_col]).strip().lower()] = _vals
+                        return _out
+
+                    def _with_diffs(_df, _lookup):
+                        """Actual value with its difference from the projection appended: 14 (+3).
 
                     Rendered as text, so these columns stop sorting numerically in the table -- acceptable
                     on a five-row table that's already sorted by minutes, and the full box score dialog
                     keeps the raw numbers for anything that needs sorting.
                     """
-                    if not _lookup:
-                        return _df
-                    _d = _df.copy()
-                    for _stat in ("MIN", "PTS", "REB", "AST"):
-                        if _stat not in _d.columns:
-                            continue
-                        _vals = []
-                        for _, _row in _d.iterrows():
-                            _act = pd.to_numeric(_row.get(_stat), errors="coerce")
-                            _proj = _lookup.get(str(_row.get("player", "")).strip().lower(), {}).get(_stat)
-                            if pd.isna(_act):
-                                _vals.append("--")
-                            elif _proj is None:
-                                # Projected for nobody: a walk-on who wasn't in the projection at all. Show
-                                # the real number without a parenthetical rather than a fake (+0).
-                                _vals.append(f"{_act:g}")
-                            else:
-                                _vals.append(f"{_act:g} ({_act - _proj:+.1f})")
-                        _d[_stat] = _vals
-                    return _d
+                        if not _lookup:
+                            return _df
+                        _d = _df.copy()
+                        for _stat in ("MIN", "PTS", "REB", "AST"):
+                            if _stat not in _d.columns:
+                                continue
+                            _vals = []
+                            for _, _row in _d.iterrows():
+                                _act = pd.to_numeric(_row.get(_stat), errors="coerce")
+                                _proj = _lookup.get(str(_row.get("player", "")).strip().lower(), {}).get(_stat)
+                                if pd.isna(_act):
+                                    _vals.append("--")
+                                elif _proj is None:
+                                    # Projected for nobody: a walk-on who wasn't in the projection at all. Show
+                                    # the real number without a parenthetical rather than a fake (+0).
+                                    _vals.append(f"{_act:g}")
+                                else:
+                                    _vals.append(f"{_act:g} ({_act - _proj:+.1f})")
+                            _d[_stat] = _vals
+                        return _d
 
-                _uww_proj = _proj_lookup(load_table("uww_projected_box_score", _pg_season), "PLAYER")
-                _opp_proj = _proj_lookup(load_table("uww_opponent_projected_box_score", _pg_season), "name")
-                _pv_applies = bool(_uww_proj or _opp_proj)
-                _uww_show = _with_diffs(_uww_df, _uww_proj)
-                _opp_show = _with_diffs(_opp_df, _opp_proj)
+                    _uww_proj = _proj_lookup(load_table("uww_projected_box_score", _pg_season), "PLAYER")
+                    _opp_proj = _proj_lookup(load_table("uww_opponent_projected_box_score", _pg_season), "name")
+                    _pv_applies = bool(_uww_proj or _opp_proj)
+                    _uww_show = _with_diffs(_uww_df, _uww_proj)
+                    _opp_show = _with_diffs(_opp_df, _opp_proj)
 
-                st.markdown("**UW-Whitewater**")
-                st.dataframe(_uww_show[compact_cols].head(5), hide_index=True, use_container_width=True)
-                st.markdown(f"**{_t_opp}**")
-                st.dataframe(_opp_show[compact_cols].head(5), hide_index=True, use_container_width=True)
-                _hidden = max(len(_uww_df) - 5, 0) + max(len(_opp_df) - 5, 0)
-                _notes = []
-                if _hidden:
-                    _notes.append(f"Top five by minutes shown; {_hidden} more player(s) in the full box score.")
-                if _pv_applies:
-                    _notes.append("Parentheses are the difference from the projection (actual minus projected).")
-                if _notes:
-                    st.caption(" ".join(_notes))
-
-                # Full box score, in a dialog rather than an expander -- every player, every column, one
-                # click away, without the page carrying two full tables at all times.
-                @st.dialog("Full Box Score", width="large")
-                def _show_full_box_score_dialog():
                     st.markdown("**UW-Whitewater**")
-                    st.dataframe(_uww_df[full_cols], hide_index=True, use_container_width=True)
+                    st.dataframe(_uww_show[compact_cols].head(5), hide_index=True, use_container_width=True)
                     st.markdown(f"**{_t_opp}**")
-                    st.dataframe(_opp_df[full_cols], hide_index=True, use_container_width=True)
+                    st.dataframe(_opp_show[compact_cols].head(5), hide_index=True, use_container_width=True)
+                    _hidden = max(len(_uww_df) - 5, 0) + max(len(_opp_df) - 5, 0)
+                    _notes = []
+                    if _hidden:
+                        _notes.append(f"Top five by minutes shown; {_hidden} more player(s) in the full box score.")
+                    if _pv_applies:
+                        _notes.append("Parentheses are the difference from the projection (actual minus projected).")
+                    if _notes:
+                        st.caption(" ".join(_notes))
 
-                if st.button("View full box score", key=f"full_box_score_btn_{short_opponent}_{game.get('date')}"):
-                    _show_full_box_score_dialog()
-            elif len(teams) == 1:
-                # Only one team's rows made it into game_box -- still show what's there, with a heads-up that
-                # the other side is missing, rather than silently rendering half a box score with no explanation.
-                st.info(f"Box score data found for {teams[0]} only -- the other team's rows weren't reconstructed for this game.")
-                for team_name in teams:
-                    st.markdown(f"**{team_name}**")
-                    team_df = game_box[game_box["team"] == team_name].sort_values(["started", "PTS"], ascending=[False, False])
-                    st.dataframe(team_df[compact_cols], hide_index=True, use_container_width=True)
+                    # Full box score, in a dialog rather than an expander -- every player, every column, one
+                    # click away, without the page carrying two full tables at all times.
+                    @st.dialog("Full Box Score", width="large")
+                    def _show_full_box_score_dialog():
+                        st.markdown("**UW-Whitewater**")
+                        st.dataframe(_uww_df[full_cols], hide_index=True, use_container_width=True)
+                        st.markdown(f"**{_t_opp}**")
+                        st.dataframe(_opp_df[full_cols], hide_index=True, use_container_width=True)
+
+                    if st.button("View full box score", key=f"full_box_score_btn_{short_opponent}_{game.get('date')}"):
+                        _show_full_box_score_dialog()
+                elif len(teams) == 1:
+                    # Only one team's rows made it into game_box -- still show what's there, with a heads-up that
+                    # the other side is missing, rather than silently rendering half a box score with no explanation.
+                    st.info(f"Box score data found for {teams[0]} only -- the other team's rows weren't reconstructed for this game.")
+                    for team_name in teams:
+                        st.markdown(f"**{team_name}**")
+                        team_df = game_box[game_box["team"] == team_name].sort_values(["started", "PTS"], ascending=[False, False])
+                        st.dataframe(team_df[compact_cols], hide_index=True, use_container_width=True)
+                else:
+                    st.warning(f"Box score has {len(teams)} distinct team label(s) ({teams}) instead of the expected 2 -- showing each as found.")
+                    for team_name in teams:
+                        st.markdown(f"**{team_name}**")
+                        team_df = game_box[game_box["team"] == team_name].sort_values(["started", "PTS"], ascending=[False, False])
+                        st.dataframe(team_df[compact_cols], hide_index=True, use_container_width=True)
+
+    with _pgt_ktv:
+        # --- KEYS TO VICTORY: PLAN vs EXECUTION ---
+        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">KEYS TO VICTORY: PLAN vs EXECUTION</div></div>', unsafe_allow_html=True)
+        game_plans = load_table("uww_opponent_game_plans", _pg_season)
+        ktv_plan = game_plans[(game_plans["opponent"] == short_opponent) & (game_plans["topic"] == "KEYS TO VICTORY")]
+        strengths_match = game_plans[(game_plans["opponent"] == short_opponent) & (game_plans["topic"] == "TEAM STRENGTHS")]
+
+        if ktv_plan.empty:
+            st.info("No keys to victory were defined for this game.")
+        else:
+            ktv_notes = str(ktv_plan.iloc[0]["notes"])
+            keys = [_normalize_case(re.sub(r"^\d+\.\s*", "", k.strip())) for k in ktv_notes.split("|") if k.strip()]
+
+            # Get actual game stats for grading
+            if not uww_game_box.empty:
+                _act_pts = int(uww_game_box["PTS"].sum())
+                _act_reb = int(uww_game_box["REB"].sum()) if "REB" in uww_game_box.columns else 0
+                _act_ast = int(uww_game_box["AST"].sum()) if "AST" in uww_game_box.columns else 0
+                _act_to = int(uww_game_box["TO"].sum()) if "TO" in uww_game_box.columns else 0
+                _act_stl = int(uww_game_box["STL"].sum()) if "STL" in uww_game_box.columns else 0
+                _act_blk = int(uww_game_box["BLK"].sum()) if "BLK" in uww_game_box.columns else 0
+                _act_pf = int(uww_game_box["PF"].sum()) if "PF" in uww_game_box.columns else 0
+                _fgm_t = int(uww_game_box["FGM"].sum()) if "FGM" in uww_game_box.columns else 0
+                _fg3m_t = int(uww_game_box["FG3M"].sum()) if "FG3M" in uww_game_box.columns else 0
+                _fga_t = int(uww_game_box["FGA"].sum()) if "FGA" in uww_game_box.columns else 0
+                _fg3a_t = int(uww_game_box["FG3A"].sum()) if "FG3A" in uww_game_box.columns else 0
+                _ftm_t = int(uww_game_box["FTM"].sum()) if "FTM" in uww_game_box.columns else 0
+                _fta_t = int(uww_game_box["FTA"].sum()) if "FTA" in uww_game_box.columns else 0
+
+                actual_map = {"PTS": _act_pts, "REB": _act_reb, "AST": _act_ast,
+                              "TO": _act_to, "STL": _act_stl, "BLK": _act_blk, "PF": _act_pf}
+                if "OREB" in uww_game_box.columns:
+                    actual_map["ORB"] = int(uww_game_box["OREB"].sum())
+                if "DREB" in uww_game_box.columns:
+                    actual_map["DRB"] = int(uww_game_box["DREB"].sum())
+                actual_map["FG2M"] = _fgm_t - _fg3m_t
+                actual_map["FG2A"] = _fga_t - _fg3a_t
+                actual_map["FG2%"] = round(actual_map["FG2M"] / actual_map["FG2A"] * 100, 1) if actual_map["FG2A"] > 0 else 0
+                actual_map["3PM-A"] = f"{_fg3m_t}-{_fg3a_t}"
+                actual_map["3P%"] = round(_fg3m_t / _fg3a_t * 100, 1) if _fg3a_t > 0 else 0
+                actual_map["FGM-A"] = f"{_fgm_t}-{_fga_t}"
+                actual_map["FG%"] = round(_fgm_t / _fga_t * 100, 1) if _fga_t > 0 else 0
+                actual_map["FTM-A"] = f"{_ftm_t}-{_fta_t}"
+                actual_map["FT%"] = round(_ftm_t / _fta_t * 100, 1) if _fta_t > 0 else 0
+
+                # Show each key with relevant actual stats
+                for ki, k in enumerate(keys):
+                    ktv_text_lower = k.lower()
+                    relevant_stats = []
+                    for phrase, stat_cols in KEYS_TO_VICTORY_STAT_MAP.items():
+                        if phrase in ktv_text_lower:
+                            for sc in stat_cols:
+                                if sc not in relevant_stats:
+                                    relevant_stats.append(sc)
+                    # Build stat string for this key
+                    stat_parts = []
+                    for rs in relevant_stats:
+                        val = actual_map.get(rs)
+                        if val is not None:
+                            label = STAT_LABELS.get(rs, rs)
+                            if isinstance(val, str):
+                                stat_parts.append(f"{label}: {val}")
+                            elif isinstance(val, float):
+                                stat_parts.append(f"{label}: {val:.1f}")
+                            else:
+                                stat_parts.append(f"{label}: {val}")
+                    stat_str = " | ".join(stat_parts) if stat_parts else ""
+                    # Outcome badge
+                    outcome_badge = f' <span style="background:{outcome_color};color:#fff;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:8px;margin-left:6px;">{outcome}</span>'
+                    stat_html = f' <span style="font-size:0.8rem;color:#555;margin-left:8px;">{stat_str}</span>' if stat_str else ""
+                    st.markdown(
+                        f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 14px;margin-bottom:6px;">'
+                        f'<span style="font-size:0.95rem;font-weight:600;">{ki+1}. {html.escape(k)}</span>'
+                        f'{stat_html}</div>',
+                        unsafe_allow_html=True
+                    )
+
+                # KTV categories + outcome
+                ktv_game_cats = load_table("uww_ktv_game_categories", _pg_season)
+                opp_cats = ktv_game_cats[ktv_game_cats["opponent"] == short_opponent]
+                if not opp_cats.empty:
+                    cats = opp_cats["category"].tolist()
+                    cat_outcome = opp_cats.iloc[0].get("outcome", "")
+                    _cat_out_str = f" — {cat_outcome}" if pd.notna(cat_outcome) and str(cat_outcome).strip() else ""
+                    st.caption(f"Categories: {', '.join(cats)}{_cat_out_str}")
             else:
-                st.warning(f"Box score has {len(teams)} distinct team label(s) ({teams}) instead of the expected 2 -- showing each as found.")
-                for team_name in teams:
-                    st.markdown(f"**{team_name}**")
-                    team_df = game_box[game_box["team"] == team_name].sort_values(["started", "PTS"], ascending=[False, False])
-                    st.dataframe(team_df[compact_cols], hide_index=True, use_container_width=True)
+                for k in keys:
+                    st.markdown(f"- {k}")
+                st.caption("No box score data to evaluate performance.")
 
-    # --- KEYS TO VICTORY: PLAN vs EXECUTION ---
-    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">KEYS TO VICTORY: PLAN vs EXECUTION</div></div>', unsafe_allow_html=True)
-    game_plans = load_table("uww_opponent_game_plans", _pg_season)
-    ktv_plan = game_plans[(game_plans["opponent"] == short_opponent) & (game_plans["topic"] == "KEYS TO VICTORY")]
-    strengths_match = game_plans[(game_plans["opponent"] == short_opponent) & (game_plans["topic"] == "TEAM STRENGTHS")]
+    with _pgt_plan:
+        # --- TEAM STRENGTHS (scouting notes) ---
+        if not strengths_match.empty:
+            with st.expander("📋 **OPPONENT STRENGTHS** (pre-game scouting notes)", expanded=False):
+                str_notes = strengths_match.iloc[0]["notes"]
+                items = [re.sub(r"^\d+\.\s*", "", s.strip()) for s in str(str_notes).split("|") if s.strip()]
+                for item in items:
+                    st.markdown(f"- {item}")
 
-    if ktv_plan.empty:
-        st.info("No keys to victory were defined for this game.")
-    else:
-        ktv_notes = str(ktv_plan.iloc[0]["notes"])
-        keys = [_normalize_case(re.sub(r"^\d+\.\s*", "", k.strip())) for k in ktv_notes.split("|") if k.strip()]
+    with _pgt_stats:
+        # --- PROJECTED vs ACTUAL ---
+        try:
+            _proj_box = load_table("uww_projected_box_score", _pg_season)
+            # CONFIRMED BUG (fixed here): this compared the selected past game against whatever projection
+            # happened to be on disk, which was always the CURRENT upcoming game's -- so the "projection" it
+            # graded was usually for a different opponent entirely. Now that the parser stamps each projection
+            # with the game it was made for and appends across runs, the table holds MANY games and has to be
+            # filtered down to this one -- without that filter the merge below would also multiply every player
+            # row by the number of archived games they appear in.
+            if not _proj_box.empty and {"opponent", "game_date"} <= set(_proj_box.columns):
+                _proj_box = _proj_box[
+                    (_proj_box["opponent"].astype(str).str.strip().str.lower()
+                     == str(game.get("opponent", "")).strip().lower())
+                    & (_proj_box["game_date"].astype(str).str.strip().str.lower()
+                       == str(game.get("date", "")).strip().lower())
+                ]
+            elif not _proj_box.empty:
+                # Pre-stamp CSV: no way to tell which game it describes, so grade nothing rather than the
+                # wrong thing.
+                _proj_box = _proj_box.iloc[0:0]
+            if not _proj_box.empty and not uww_game_box.empty:
+                # Match projected players to actual game box by player name
+                _proj_box["_join_key"] = _proj_box["PLAYER"].str.strip().str.lower()
+                _actual = uww_game_box.copy()
+                _actual["_join_key"] = _actual["player"].str.strip().str.lower()
 
-        # Get actual game stats for grading
-        if not uww_game_box.empty:
-            _act_pts = int(uww_game_box["PTS"].sum())
-            _act_reb = int(uww_game_box["REB"].sum()) if "REB" in uww_game_box.columns else 0
-            _act_ast = int(uww_game_box["AST"].sum()) if "AST" in uww_game_box.columns else 0
-            _act_to = int(uww_game_box["TO"].sum()) if "TO" in uww_game_box.columns else 0
-            _act_stl = int(uww_game_box["STL"].sum()) if "STL" in uww_game_box.columns else 0
-            _act_blk = int(uww_game_box["BLK"].sum()) if "BLK" in uww_game_box.columns else 0
-            _act_pf = int(uww_game_box["PF"].sum()) if "PF" in uww_game_box.columns else 0
-            _fgm_t = int(uww_game_box["FGM"].sum()) if "FGM" in uww_game_box.columns else 0
-            _fg3m_t = int(uww_game_box["FG3M"].sum()) if "FG3M" in uww_game_box.columns else 0
-            _fga_t = int(uww_game_box["FGA"].sum()) if "FGA" in uww_game_box.columns else 0
-            _fg3a_t = int(uww_game_box["FG3A"].sum()) if "FG3A" in uww_game_box.columns else 0
-            _ftm_t = int(uww_game_box["FTM"].sum()) if "FTM" in uww_game_box.columns else 0
-            _fta_t = int(uww_game_box["FTA"].sum()) if "FTA" in uww_game_box.columns else 0
+                _merged = _proj_box.merge(_actual[["_join_key", "PTS", "REB", "AST", "MIN"]], on="_join_key", how="inner", suffixes=("_proj", "_act"))
 
-            actual_map = {"PTS": _act_pts, "REB": _act_reb, "AST": _act_ast,
-                          "TO": _act_to, "STL": _act_stl, "BLK": _act_blk, "PF": _act_pf}
-            if "OREB" in uww_game_box.columns:
-                actual_map["ORB"] = int(uww_game_box["OREB"].sum())
-            if "DREB" in uww_game_box.columns:
-                actual_map["DRB"] = int(uww_game_box["DREB"].sum())
-            actual_map["FG2M"] = _fgm_t - _fg3m_t
-            actual_map["FG2A"] = _fga_t - _fg3a_t
-            actual_map["FG2%"] = round(actual_map["FG2M"] / actual_map["FG2A"] * 100, 1) if actual_map["FG2A"] > 0 else 0
-            actual_map["3PM-A"] = f"{_fg3m_t}-{_fg3a_t}"
-            actual_map["3P%"] = round(_fg3m_t / _fg3a_t * 100, 1) if _fg3a_t > 0 else 0
-            actual_map["FGM-A"] = f"{_fgm_t}-{_fga_t}"
-            actual_map["FG%"] = round(_fgm_t / _fga_t * 100, 1) if _fga_t > 0 else 0
-            actual_map["FTM-A"] = f"{_ftm_t}-{_fta_t}"
-            actual_map["FT%"] = round(_ftm_t / _fta_t * 100, 1) if _fta_t > 0 else 0
+                if not _merged.empty:
+                    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">PROJECTED vs ACTUAL PERFORMANCE</div></div>', unsafe_allow_html=True)
 
-            # Show each key with relevant actual stats
-            for ki, k in enumerate(keys):
-                ktv_text_lower = k.lower()
-                relevant_stats = []
-                for phrase, stat_cols in KEYS_TO_VICTORY_STAT_MAP.items():
-                    if phrase in ktv_text_lower:
-                        for sc in stat_cols:
-                            if sc not in relevant_stats:
-                                relevant_stats.append(sc)
-                # Build stat string for this key
-                stat_parts = []
-                for rs in relevant_stats:
-                    val = actual_map.get(rs)
-                    if val is not None:
-                        label = STAT_LABELS.get(rs, rs)
-                        if isinstance(val, str):
-                            stat_parts.append(f"{label}: {val}")
-                        elif isinstance(val, float):
-                            stat_parts.append(f"{label}: {val:.1f}")
-                        else:
-                            stat_parts.append(f"{label}: {val}")
-                stat_str = " | ".join(stat_parts) if stat_parts else ""
-                # Outcome badge
-                outcome_badge = f' <span style="background:{outcome_color};color:#fff;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:8px;margin-left:6px;">{outcome}</span>'
-                stat_html = f' <span style="font-size:0.8rem;color:#555;margin-left:8px;">{stat_str}</span>' if stat_str else ""
-                st.markdown(
-                    f'<div style="border:1px solid #eee;border-radius:8px;padding:10px 14px;margin-bottom:6px;">'
-                    f'<span style="font-size:0.95rem;font-weight:600;">{ki+1}. {html.escape(k)}</span>'
-                    f'{stat_html}</div>',
-                    unsafe_allow_html=True
+                    # Team totals comparison
+                    proj_pts_total = _merged["projected_PTS"].sum()
+                    act_pts_total = _merged["PTS"].sum()
+                    proj_reb_total = _merged["projected_REB"].sum()
+                    act_reb_total = _merged["REB"].sum()
+                    proj_ast_total = _merged["projected_AST"].sum()
+                    act_ast_total = _merged["AST"].sum()
+
+                    _m1, _m2, _m3 = st.columns(3)
+                    _pts_diff = act_pts_total - proj_pts_total
+                    _reb_diff = act_reb_total - proj_reb_total
+                    _ast_diff = act_ast_total - proj_ast_total
+                    _m1.metric("Team PTS (Proj → Act)", f"{int(proj_pts_total)} → {int(act_pts_total)}", delta=f"{_pts_diff:+.0f}")
+                    _m2.metric("Team REB (Proj → Act)", f"{int(proj_reb_total)} → {int(act_reb_total)}", delta=f"{_reb_diff:+.0f}")
+                    _m3.metric("Team AST (Proj → Act)", f"{int(proj_ast_total)} → {int(act_ast_total)}", delta=f"{_ast_diff:+.0f}")
+
+                    # Player-level comparison table
+                    _comp_rows = []
+                    for _, r in _merged.iterrows():
+                        _comp_rows.append({
+                            "Player": r["PLAYER"],
+                            "Proj MIN": round(r.get("MIN_proj", r.get("MIN", 0)), 1) if "MIN_proj" in r.index or "MIN" in r.index else "-",
+                            "Act MIN": round(r.get("MIN_act", r.get("MIN", 0)), 1) if "MIN_act" in r.index else "-",
+                            "Proj PTS": int(r["projected_PTS"]),
+                            "Act PTS": int(r["PTS"]),
+                            "PTS +/-": int(r["PTS"] - r["projected_PTS"]),
+                            "Proj REB": int(r["projected_REB"]),
+                            "Act REB": int(r["REB"]),
+                            "REB +/-": int(r["REB"] - r["projected_REB"]),
+                            "Proj AST": int(r["projected_AST"]),
+                            "Act AST": int(r["AST"]),
+                            "AST +/-": int(r["AST"] - r["projected_AST"]),
+                        })
+                    _comp_df = pd.DataFrame(_comp_rows)
+
+                    def _color_diff(val):
+                        if isinstance(val, (int, float)):
+                            if val > 0:
+                                return "color: #2e7d32; font-weight: 600;"
+                            elif val < 0:
+                                return "color: #c62828; font-weight: 600;"
+                        return ""
+
+                    diff_cols = ["PTS +/-", "REB +/-", "AST +/-"]
+                    styled = style_map(_comp_df.style, _color_diff, subset=diff_cols)
+                    st.dataframe(styled, hide_index=True, use_container_width=True)
+
+                    # Biggest over/under performers
+                    _comp_df["total_diff"] = _comp_df["PTS +/-"] + _comp_df["REB +/-"] + _comp_df["AST +/-"]
+                    _over = _comp_df.nlargest(1, "total_diff")
+                    _under = _comp_df.nsmallest(1, "total_diff")
+                    _oc, _uc = st.columns(2)
+                    if not _over.empty:
+                        _op = _over.iloc[0]
+                        _oc.success(f"🔥 **Exceeded Projection**: {_op['Player']} (+{int(_op['total_diff'])} combined PTS/REB/AST)")
+                    if not _under.empty:
+                        _up = _under.iloc[0]
+                        if _up["total_diff"] < 0:
+                            _uc.warning(f"📉 **Below Projection**: {_up['Player']} ({int(_up['total_diff'])} combined PTS/REB/AST)")
+        except Exception as _e:
+            report_section_error("Projected vs. Actual performance", _e)
+
+    with _pgt_people:
+        # --- LINEUP PERFORMANCE ---
+        if not game_stints.empty:
+            st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">LINEUP PERFORMANCE</div></div>', unsafe_allow_html=True)
+            lineup_agg = (
+                game_stints.groupby("uww_lineup")
+                .agg(minutes=("stint_minutes", "sum"), actual_margin=("uww_margin_change", "sum"))
+                .reset_index()
+                .rename(columns={"uww_lineup": "lineup"})
+            )
+            lineup_agg["margin_per_min"] = (lineup_agg["actual_margin"] / lineup_agg["minutes"]).round(2)
+            lineup_agg = lineup_agg.sort_values("minutes", ascending=False)
+
+            # Show best and worst lineups side by side
+            # Minimum 1 minute played this game -- keeps a lineup that barely saw the floor from topping the
+            # list off a small, noisy sample (e.g. a 20-second stretch with a lucky run).
+            _best_lu = lineup_agg[lineup_agg["minutes"] >= 1.0].nlargest(3, "margin_per_min")
+            _worst_lu = lineup_agg[lineup_agg["minutes"] >= 1.0].nsmallest(3, "margin_per_min")
+
+            def _last_names_pg(lineup_str):
+                return ", ".join(surname(n) for n in str(lineup_str).split(",") if n.strip())
+
+            _lu_col1, _lu_col2 = st.columns(2)
+            with _lu_col1:
+                st.markdown("**Best Lineups**")
+                for _, r in _best_lu.iterrows():
+                    ln = _last_names_pg(r["lineup"])
+                    st.markdown(f'<div style="font-size:0.85rem;margin:4px 0;"><strong style="color:#2e7d32;">{r["margin_per_min"]:+.2f}</strong>/min ({r["minutes"]:.1f} min) — {html.escape(ln)}</div>', unsafe_allow_html=True)
+            with _lu_col2:
+                st.markdown("**Worst Lineups**")
+                for _, r in _worst_lu.iterrows():
+                    ln = _last_names_pg(r["lineup"])
+                    st.markdown(f'<div style="font-size:0.85rem;margin:4px 0;"><strong style="color:#c62828;">{r["margin_per_min"]:+.2f}</strong>/min ({r["minutes"]:.1f} min) — {html.escape(ln)}</div>', unsafe_allow_html=True)
+            st.caption("Best/Worst Lineups require a minimum of 1 minute played this game, so a lineup that was on the floor for a few seconds can't top the list on a fluke run.")
+
+            with st.expander("All lineups", expanded=False):
+                st.dataframe(
+                    lineup_agg[["lineup", "minutes", "actual_margin", "margin_per_min"]],
+                    hide_index=True, use_container_width=True,
                 )
 
-            # KTV categories + outcome
-            ktv_game_cats = load_table("uww_ktv_game_categories", _pg_season)
-            opp_cats = ktv_game_cats[ktv_game_cats["opponent"] == short_opponent]
-            if not opp_cats.empty:
-                cats = opp_cats["category"].tolist()
-                cat_outcome = opp_cats.iloc[0].get("outcome", "")
-                _cat_out_str = f" — {cat_outcome}" if pd.notna(cat_outcome) and str(cat_outcome).strip() else ""
-                st.caption(f"Categories: {', '.join(cats)}{_cat_out_str}")
+        # --- LINEUP MATCHUP HISTORY ---
+        if not game_stints.empty:
+            matchup_agg = game_stints.groupby(["uww_lineup", "opp_lineup"]).agg(
+                mins=("stint_minutes", "sum"), margin=("uww_margin_change", "sum")
+            ).reset_index()
+            matchup_agg = matchup_agg[matchup_agg["mins"] >= 2.0]
+            if not matchup_agg.empty:
+                matchup_agg["rate"] = (matchup_agg["margin"] / matchup_agg["mins"]).round(2)
+                st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\u2694\uFE0F LINEUP MATCHUPS (min 2 min)</div></div>', unsafe_allow_html=True)
+                best = matchup_agg.nlargest(3, "rate")
+                matchup_html = '<div style="font-size:0.85rem;font-weight:600;margin-bottom:4px;">Best:</div>'
+                for _, r in best.iterrows():
+                    uww_ln = _last_names_pg(r["uww_lineup"])
+                    opp_ln = _last_names_pg(r["opp_lineup"])
+                    matchup_html += f'<div style="font-size:0.85rem;margin:3px 0;"><strong>{r["rate"]:+.2f}</strong>/min \u2014 <span style="color:#4E2A84;">{html.escape(uww_ln)}</span> vs <span style="color:#c62828;">{html.escape(opp_ln)}</span> <span style="color:#888;">[{r["mins"]:.1f} min]</span></div>'
+                worst = matchup_agg.nsmallest(3, "rate")
+                matchup_html += '<div style="font-size:0.85rem;font-weight:600;margin:8px 0 4px;">Worst:</div>'
+                for _, r in worst.iterrows():
+                    uww_ln = _last_names_pg(r["uww_lineup"])
+                    opp_ln = _last_names_pg(r["opp_lineup"])
+                    matchup_html += f'<div style="font-size:0.85rem;margin:3px 0;"><strong>{r["rate"]:+.2f}</strong>/min \u2014 <span style="color:#4E2A84;">{html.escape(uww_ln)}</span> vs <span style="color:#c62828;">{html.escape(opp_ln)}</span> <span style="color:#888;">[{r["mins"]:.1f} min]</span></div>'
+                st.markdown(matchup_html, unsafe_allow_html=True)
+
+    with _pgt_plan:
+        # --- FULL GAME PLAN (expander) ---
+        other_plans = game_plans[(game_plans["opponent"] == short_opponent) & (~game_plans["topic"].isin(["KEYS TO VICTORY", "TEAM STRENGTHS"]))]
+        if not other_plans.empty:
+            with st.expander("\U0001f4cb **FULL GAME PLAN** — Offensive & Defensive Schemes", expanded=False):
+                categories = list(other_plans["category"].unique())
+                gp_left, gp_right = st.columns(2)
+                for idx_c, category in enumerate(categories):
+                    group = other_plans[other_plans["category"] == category]
+                    col = gp_left if idx_c % 2 == 0 else gp_right
+                    with col:
+                        with st.container(border=True):
+                            st.markdown(f"#### {category}")
+                            for _, r in group.iterrows():
+                                st.markdown(f"**{r['topic']}**")
+                                notes = str(r["notes"])
+                                if "|" in notes:
+                                    items = [item.strip() for item in notes.split("|") if item.strip()]
+                                    for item in items:
+                                        st.markdown(f"- {item}")
+                                else:
+                                    st.write(notes)
+                                st.markdown("")
+
+    with _pgt_stats:
+        # --- GAME TEMPO ---
+        # CONFIRMED CHANGE (requested): previously just a single caption line under the box score showing this
+        # game's own pace. Now its own section with the same "entering this game" + "result" shape as the
+        # Scoring Runs section below and the Pace & Style KTV card on the Upcoming Game page -- what UWW's own
+        # tempo tendency looked like BEFORE this game (games strictly before it, via exclusive=True -- this is
+        # deliberately NOT the same inclusive cutoff the old caption used, since "entering the game" should mean
+        # what was known walking in, not a number this very game itself helped produce), alongside what actually
+        # happened. _pg_game_date can be None (resolve_game_date() doesn't match every display-date format) -- in
+        # that case the section still shows the result, just without a fast/slow read against nothing solid.
+        try:
+            if not uww_game_box.empty and not opp_game_box.empty:
+                _pg_pace_d = compute_efficiency_pace(uww_game_box, opp_game_box, 1)
+                _pg_pre_median = None
+                if _pg_game_date is not None:
+                    _, _pg_pre_median = compute_uww_pace_by_game(as_of_date=_pg_game_date, exclusive=True, season=_pg_season)
+                st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\u23F1\uFE0F GAME TEMPO</div></div>', unsafe_allow_html=True)
+                if _pg_pre_median is not None:
+                    st.markdown(f"**Entering this game:** UWW's own median pace across the games before this one "
+                                f"was **{_pg_pre_median:.1f}** poss/gm.")
+                    _pg_bucket = "faster" if _pg_pace_d["Pace"] > _pg_pre_median else "slower"
+                    st.markdown(f"**Result:** this game was played at **{_pg_pace_d['Pace']:.0f}** poss/gm -- "
+                                f"**{_pg_bucket}** than UWW's tempo up to that point. Net Rtg "
+                                f"**{_pg_pace_d['Net Rtg']:+.1f}**.")
+                else:
+                    st.markdown(f"**Result:** this game was played at **{_pg_pace_d['Pace']:.0f}** poss/gm. "
+                                f"Net Rtg **{_pg_pace_d['Net Rtg']:+.1f}**.")
+                    st.caption("Not enough games before this one yet (need 4+) to say whether this was fast or "
+                               "slow for UWW at the time.")
+        except Exception:
+            pass
+
+        # Clutch events for this game. CONFIRMED CHANGE (requested): these no longer get a section of their
+        # own -- they're a SUBSET of the play-by-play below, so duplicating them as a separate table meant the
+        # same rows appeared twice with different filters available on each. Loaded here and applied as a
+        # checkbox filter in the Play-by-Play section instead.
+        _pg_clutch = load_table("uww_clutch_events", _pg_season)
+        _pg_clutch_game = _this_game(_pg_clutch, "uww_clutch_events") if not _pg_clutch.empty else pd.DataFrame()
+
+    with _pgt_pbp:
+        # --- PLAY-BY-PLAY ---
+        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">PLAY-BY-PLAY</div></div>', unsafe_allow_html=True)
+        pbp = load_table("uww_pbp_events", _pg_season)
+        game_pbp = _this_game(pbp, "uww_pbp_events")
+        if not game_pbp.empty:
+            game_pbp = game_pbp.sort_values("event_order")
+
+        for _w in _pg_filter_warnings:
+            st.warning(_w)
+
+        if game_pbp.empty:
+            st.warning("No play-by-play data found for this game yet.")
         else:
-            for k in keys:
-                st.markdown(f"- {k}")
-            st.caption("No box score data to evaluate performance.")
+            game_pbp["play_type"] = game_pbp["video_description"].str.split(">").str[1].str.strip()
+            game_pbp["shot_outcome"] = game_pbp["video_description"].str.extract(r"(Make \d+ Pts|Miss \d+ Pts|Turnover|Foul)", expand=False)
 
-    # --- TEAM STRENGTHS (scouting notes) ---
-    if not strengths_match.empty:
-        with st.expander("📋 **OPPONENT STRENGTHS** (pre-game scouting notes)", expanded=False):
-            str_notes = strengths_match.iloc[0]["notes"]
-            items = [re.sub(r"^\d+\.\s*", "", s.strip()) for s in str(str_notes).split("|") if s.strip()]
-            for item in items:
-                st.markdown(f"- {item}")
+            pbp_r1c1, pbp_r1c2, pbp_r1c3, pbp_r1c4 = st.columns(4)
+            with pbp_r1c1:
+                pbp_team_filter = st.selectbox("Team", ["All"] + sorted(game_pbp["team"].dropna().unique().tolist()), key=f"pbp_team_{short_opponent}")
+            with pbp_r1c2:
+                pbp_event_filter = st.selectbox("Event type", ["All"] + sorted(game_pbp["event_type"].dropna().unique().tolist()), key=f"pbp_event_{short_opponent}")
+            with pbp_r1c3:
+                pbp_player_search = st.text_input("Player", "", key=f"pbp_player_{short_opponent}", placeholder="Filter by player...")
+            with pbp_r1c4:
+                period_filter = st.selectbox("Period", ["All"] + sorted(game_pbp["period"].dropna().unique().tolist()), key=f"pbp_period_{short_opponent}")
 
-    # --- PROJECTED vs ACTUAL ---
-    try:
-        _proj_box = load_table("uww_projected_box_score", _pg_season)
-        # CONFIRMED BUG (fixed here): this compared the selected past game against whatever projection
-        # happened to be on disk, which was always the CURRENT upcoming game's -- so the "projection" it
-        # graded was usually for a different opponent entirely. Now that the parser stamps each projection
-        # with the game it was made for and appends across runs, the table holds MANY games and has to be
-        # filtered down to this one -- without that filter the merge below would also multiply every player
-        # row by the number of archived games they appear in.
-        if not _proj_box.empty and {"opponent", "game_date"} <= set(_proj_box.columns):
-            _proj_box = _proj_box[
-                (_proj_box["opponent"].astype(str).str.strip().str.lower()
-                 == str(game.get("opponent", "")).strip().lower())
-                & (_proj_box["game_date"].astype(str).str.strip().str.lower()
-                   == str(game.get("date", "")).strip().lower())
-            ]
-        elif not _proj_box.empty:
-            # Pre-stamp CSV: no way to tell which game it describes, so grade nothing rather than the
-            # wrong thing.
-            _proj_box = _proj_box.iloc[0:0]
-        if not _proj_box.empty and not uww_game_box.empty:
-            # Match projected players to actual game box by player name
-            _proj_box["_join_key"] = _proj_box["PLAYER"].str.strip().str.lower()
-            _actual = uww_game_box.copy()
-            _actual["_join_key"] = _actual["player"].str.strip().str.lower()
+            # Play call, resolved the same way every other play-call view in this app resolves it: the
+            # parser's real play_call column where the play log covers the row, the regex read of the coach's
+            # note where it doesn't, then canonicalised against the playbook catalog so "Panther-4", "P-4" and
+            # "P4" are one play rather than three. Using the raw column here instead would have made this
+            # section disagree with the play breakdowns elsewhere on the same data. Resolved BEFORE the filter
+            # row below, since the dropdown's options come out of it.
+            if "coach_note" in game_pbp.columns:
+                game_pbp["play_call"] = resolve_play_calls(game_pbp)
+            elif "play_call" in game_pbp.columns:
+                game_pbp["play_call"] = game_pbp["play_call"].apply(canonical_play_call)
+            _play_calls = (sorted(game_pbp["play_call"].dropna().astype(str).unique().tolist())
+                           if "play_call" in game_pbp.columns else [])
 
-            _merged = _proj_box.merge(_actual[["_join_key", "PTS", "REB", "AST", "MIN"]], on="_join_key", how="inner", suffixes=("_proj", "_act"))
+            pbp_r2c1, pbp_r2c2, pbp_r2c3 = st.columns(3)
+            with pbp_r2c1:
+                pbp_play_type = st.selectbox("Play type", ["All"] + sorted(game_pbp["play_type"].dropna().unique().tolist()), key=f"pbp_playtype_{short_opponent}")
+            with pbp_r2c2:
+                pbp_outcome = st.selectbox("Outcome", ["All"] + sorted(game_pbp["shot_outcome"].dropna().unique().tolist()), key=f"pbp_outcome_{short_opponent}")
+            with pbp_r2c3:
+                # Only offered when this game actually has calls on file -- an empty dropdown reads as broken
+                # rather than as a game nobody tagged calls for. The column keeps its place in the row either
+                # way, so the two selectboxes beside it don't jump width game to game.
+                pbp_play_call = "All"
+                if _play_calls:
+                    pbp_play_call = st.selectbox("Play call", ["All"] + _play_calls,
+                                                 key=f"pbp_playcall_{short_opponent}")
+                else:
+                    st.selectbox("Play call", ["No play calls tagged"], disabled=True,
+                                 key=f"pbp_playcall_none_{short_opponent}")
 
-            if not _merged.empty:
-                st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">PROJECTED vs ACTUAL PERFORMANCE</div></div>', unsafe_allow_html=True)
+            # UWW 5-man lineup on the floor, from uww_pbp_events.uww_lineup. Options are ordered by how many
+            # events each unit was on for, so the units that actually played come first rather than whichever
+            # surname sorts earliest. Labels are surnames only -- five full names per option is unreadable in a
+            # dropdown -- and the full string is kept as the value, since that's what the column holds.
+            _lu_counts = (game_pbp["uww_lineup"].dropna().astype(str).value_counts()
+                          if "uww_lineup" in game_pbp.columns else pd.Series(dtype=int))
+            _lu_label_to_full, _lu_labels = {}, []
+            for _lu_full in _lu_counts.index:
+                _lbl = ", ".join(surname(_n) for _n in str(_lu_full).split(",") if _n.strip())
+                # Two different units can shorten to the same surnames (brothers, or a repeated surname on the
+                # roster). Fall back to the full string for the collision rather than silently merging them.
+                if _lbl in _lu_label_to_full:
+                    _lbl = str(_lu_full)
+                _lu_label_to_full[_lbl] = str(_lu_full)
+                _lu_labels.append(_lbl)
 
-                # Team totals comparison
-                proj_pts_total = _merged["projected_PTS"].sum()
-                act_pts_total = _merged["PTS"].sum()
-                proj_reb_total = _merged["projected_REB"].sum()
-                act_reb_total = _merged["REB"].sum()
-                proj_ast_total = _merged["projected_AST"].sum()
-                act_ast_total = _merged["AST"].sum()
+            _pbp_r4c1, _pbp_r4c2 = st.columns([1, 1])
+            with _pbp_r4c1:
+                if _lu_labels:
+                    _lu_pick = st.selectbox("UWW lineup on floor", ["All"] + _lu_labels,
+                                            key=f"pbp_lineup_{short_opponent}")
+                else:
+                    st.selectbox("UWW lineup on floor", ["No lineup data for this game"], disabled=True,
+                                 key=f"pbp_lineup_none_{short_opponent}")
+                    _lu_pick = "All"
+            with _pbp_r4c2:
+                pbp_video_search = st.text_input("Video description search", "", key=f"pbp_video_{short_opponent}", placeholder="e.g. P&R, Drives Left, 3pt...")
 
-                _m1, _m2, _m3 = st.columns(3)
-                _pts_diff = act_pts_total - proj_pts_total
-                _reb_diff = act_reb_total - proj_reb_total
-                _ast_diff = act_ast_total - proj_ast_total
-                _m1.metric("Team PTS (Proj → Act)", f"{int(proj_pts_total)} → {int(act_pts_total)}", delta=f"{_pts_diff:+.0f}")
-                _m2.metric("Team REB (Proj → Act)", f"{int(proj_reb_total)} → {int(act_reb_total)}", delta=f"{_reb_diff:+.0f}")
-                _m3.metric("Team AST (Proj → Act)", f"{int(proj_ast_total)} → {int(act_ast_total)}", delta=f"{_ast_diff:+.0f}")
+            # Clutch rows are identified by event_order (unique within a game) rather than by re-deriving the
+            # definition here -- the parser already decided what counts as clutch, and re-implementing "last 5
+            # minutes, within 8 points" in the app would be a second definition free to drift from the first.
+            _clutch_orders = (set(pd.to_numeric(_pg_clutch_game["event_order"], errors="coerce").dropna())
+                              if not _pg_clutch_game.empty and "event_order" in _pg_clutch_game.columns else set())
+            pbp_r3c1, pbp_r3c2, pbp_r3c3 = st.columns(3)
+            with pbp_r3c1:
+                video_only = st.checkbox("Show only video-tagged plays", value=False, key=f"pbp_vidonly_{short_opponent}")
+            with pbp_r3c2:
+                notes_only = st.checkbox("Show only plays with a coach note", value=False, key=f"pbp_notesonly_{short_opponent}") if "coach_note" in game_pbp.columns else False
+            with pbp_r3c3:
+                clutch_only = st.checkbox(
+                    "Show only clutch moments", value=False, key=f"pbp_clutch_{short_opponent}",
+                    disabled=not _clutch_orders,
+                    help=("Last 5 minutes of the 2nd half or any overtime, with the score within 8 points."
+                          if _clutch_orders else
+                          "No clutch events recorded for this game -- it was never within 8 points late."),
+                ) if _clutch_orders else False
 
-                # Player-level comparison table
-                _comp_rows = []
-                for _, r in _merged.iterrows():
-                    _comp_rows.append({
-                        "Player": r["PLAYER"],
-                        "Proj MIN": round(r.get("MIN_proj", r.get("MIN", 0)), 1) if "MIN_proj" in r.index or "MIN" in r.index else "-",
-                        "Act MIN": round(r.get("MIN_act", r.get("MIN", 0)), 1) if "MIN_act" in r.index else "-",
-                        "Proj PTS": int(r["projected_PTS"]),
-                        "Act PTS": int(r["PTS"]),
-                        "PTS +/-": int(r["PTS"] - r["projected_PTS"]),
-                        "Proj REB": int(r["projected_REB"]),
-                        "Act REB": int(r["REB"]),
-                        "REB +/-": int(r["REB"] - r["projected_REB"]),
-                        "Proj AST": int(r["projected_AST"]),
-                        "Act AST": int(r["AST"]),
-                        "AST +/-": int(r["AST"] - r["projected_AST"]),
-                    })
-                _comp_df = pd.DataFrame(_comp_rows)
+            filtered_pbp = game_pbp.copy()
+            if pbp_team_filter != "All":
+                filtered_pbp = filtered_pbp[filtered_pbp["team"] == pbp_team_filter]
+            if pbp_event_filter != "All":
+                filtered_pbp = filtered_pbp[filtered_pbp["event_type"] == pbp_event_filter]
+            if pbp_player_search.strip():
+                filtered_pbp = filtered_pbp[filtered_pbp["player"].str.contains(pbp_player_search.strip(), case=False, na=False)]
+            if period_filter != "All":
+                filtered_pbp = filtered_pbp[filtered_pbp["period"] == period_filter]
+            if pbp_play_type != "All":
+                filtered_pbp = filtered_pbp[filtered_pbp["play_type"] == pbp_play_type]
+            if pbp_outcome != "All":
+                filtered_pbp = filtered_pbp[filtered_pbp["shot_outcome"] == pbp_outcome]
+            if pbp_video_search.strip():
+                filtered_pbp = filtered_pbp[filtered_pbp["video_description"].str.contains(pbp_video_search.strip(), case=False, na=False)]
+            if pbp_play_call != "All":
+                filtered_pbp = filtered_pbp[filtered_pbp["play_call"].astype(str) == pbp_play_call]
+            if _lu_pick != "All":
+                filtered_pbp = filtered_pbp[
+                    filtered_pbp["uww_lineup"].astype(str) == _lu_label_to_full.get(_lu_pick, _lu_pick)]
+            if video_only:
+                filtered_pbp = filtered_pbp[filtered_pbp["video_description"].notna()]
+            if notes_only:
+                filtered_pbp = filtered_pbp[filtered_pbp["coach_note"].notna()]
+            if clutch_only:
+                filtered_pbp = filtered_pbp[
+                    pd.to_numeric(filtered_pbp["event_order"], errors="coerce").isin(_clutch_orders)]
 
-                def _color_diff(val):
-                    if isinstance(val, (int, float)):
-                        if val > 0:
-                            return "color: #2e7d32; font-weight: 600;"
-                        elif val < 0:
-                            return "color: #c62828; font-weight: 600;"
-                    return ""
+            # Coach-note sentiment, folded into this KPI row from the COACH NOTES THIS GAME section that used
+            # to sit below the table. Counted over filtered_pbp like every other tile here, so it answers "how
+            # did the coach grade THIS slice" -- the flags for one lineup, one play call, or clutch time only --
+            # rather than repeating one fixed whole-game number under every filter combination.
+            _pos_flags, _neg_flags = 0, 0
+            if "coach_note" in filtered_pbp.columns:
+                for _n in filtered_pbp["coach_note"].dropna():
+                    _p, _ng = note_sentiment_counts(_n)
+                    _pos_flags += _p
+                    _neg_flags += _ng
 
-                diff_cols = ["PTS +/-", "REB +/-", "AST +/-"]
-                styled = style_map(_comp_df.style, _color_diff, subset=diff_cols)
-                st.dataframe(styled, hide_index=True, use_container_width=True)
+            kpi1, kpi2, kpi3, kpi4, kpi5, kpi6, kpi7 = st.columns(7)
+            kpi1.metric("Total Events", len(filtered_pbp))
+            scoring_events = filtered_pbp[filtered_pbp["event_type"].str.contains("made", case=False, na=False)]
+            kpi2.metric("Makes", len(scoring_events))
+            misses = filtered_pbp[filtered_pbp["event_type"].str.contains("missed", case=False, na=False)]
+            kpi3.metric("Misses", len(misses))
+            to_count = filtered_pbp[filtered_pbp["event_type"].str.contains("turnover", case=False, na=False)]
+            kpi4.metric("Turnovers", len(to_count))
+            unique_players = filtered_pbp["player"].dropna().nunique()
+            kpi5.metric("Players", unique_players)
+            kpi6.metric("Positive notes", _pos_flags)
+            kpi7.metric("Negative notes", _neg_flags)
 
-                # Biggest over/under performers
-                _comp_df["total_diff"] = _comp_df["PTS +/-"] + _comp_df["REB +/-"] + _comp_df["AST +/-"]
-                _over = _comp_df.nlargest(1, "total_diff")
-                _under = _comp_df.nsmallest(1, "total_diff")
-                _oc, _uc = st.columns(2)
-                if not _over.empty:
-                    _op = _over.iloc[0]
-                    _oc.success(f"🔥 **Exceeded Projection**: {_op['Player']} (+{int(_op['total_diff'])} combined PTS/REB/AST)")
-                if not _under.empty:
-                    _up = _under.iloc[0]
-                    if _up["total_diff"] < 0:
-                        _uc.warning(f"📉 **Below Projection**: {_up['Player']} ({int(_up['total_diff'])} combined PTS/REB/AST)")
-    except Exception as _e:
-        report_section_error("Projected vs. Actual performance", _e)
-
-    # --- LINEUP PERFORMANCE ---
-    if not game_stints.empty:
-        st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">LINEUP PERFORMANCE</div></div>', unsafe_allow_html=True)
-        lineup_agg = (
-            game_stints.groupby("uww_lineup")
-            .agg(minutes=("stint_minutes", "sum"), actual_margin=("uww_margin_change", "sum"))
-            .reset_index()
-            .rename(columns={"uww_lineup": "lineup"})
-        )
-        lineup_agg["margin_per_min"] = (lineup_agg["actual_margin"] / lineup_agg["minutes"]).round(2)
-        lineup_agg = lineup_agg.sort_values("minutes", ascending=False)
-
-        # Show best and worst lineups side by side
-        # Minimum 1 minute played this game -- keeps a lineup that barely saw the floor from topping the
-        # list off a small, noisy sample (e.g. a 20-second stretch with a lucky run).
-        _best_lu = lineup_agg[lineup_agg["minutes"] >= 1.0].nlargest(3, "margin_per_min")
-        _worst_lu = lineup_agg[lineup_agg["minutes"] >= 1.0].nsmallest(3, "margin_per_min")
-
-        def _last_names_pg(lineup_str):
-            return ", ".join(surname(n) for n in str(lineup_str).split(",") if n.strip())
-
-        _lu_col1, _lu_col2 = st.columns(2)
-        with _lu_col1:
-            st.markdown("**Best Lineups**")
-            for _, r in _best_lu.iterrows():
-                ln = _last_names_pg(r["lineup"])
-                st.markdown(f'<div style="font-size:0.85rem;margin:4px 0;"><strong style="color:#2e7d32;">{r["margin_per_min"]:+.2f}</strong>/min ({r["minutes"]:.1f} min) — {html.escape(ln)}</div>', unsafe_allow_html=True)
-        with _lu_col2:
-            st.markdown("**Worst Lineups**")
-            for _, r in _worst_lu.iterrows():
-                ln = _last_names_pg(r["lineup"])
-                st.markdown(f'<div style="font-size:0.85rem;margin:4px 0;"><strong style="color:#c62828;">{r["margin_per_min"]:+.2f}</strong>/min ({r["minutes"]:.1f} min) — {html.escape(ln)}</div>', unsafe_allow_html=True)
-        st.caption("Best/Worst Lineups require a minimum of 1 minute played this game, so a lineup that was on the floor for a few seconds can't top the list on a fluke run.")
-
-        with st.expander("All lineups", expanded=False):
-            st.dataframe(
-                lineup_agg[["lineup", "minutes", "actual_margin", "margin_per_min"]],
-                hide_index=True, use_container_width=True,
-            )
-
-    # --- LINEUP MATCHUP HISTORY ---
-    if not game_stints.empty:
-        matchup_agg = game_stints.groupby(["uww_lineup", "opp_lineup"]).agg(
-            mins=("stint_minutes", "sum"), margin=("uww_margin_change", "sum")
-        ).reset_index()
-        matchup_agg = matchup_agg[matchup_agg["mins"] >= 2.0]
-        if not matchup_agg.empty:
-            matchup_agg["rate"] = (matchup_agg["margin"] / matchup_agg["mins"]).round(2)
-            st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\u2694\uFE0F LINEUP MATCHUPS (min 2 min)</div></div>', unsafe_allow_html=True)
-            best = matchup_agg.nlargest(3, "rate")
-            matchup_html = '<div style="font-size:0.85rem;font-weight:600;margin-bottom:4px;">Best:</div>'
-            for _, r in best.iterrows():
-                uww_ln = _last_names_pg(r["uww_lineup"])
-                opp_ln = _last_names_pg(r["opp_lineup"])
-                matchup_html += f'<div style="font-size:0.85rem;margin:3px 0;"><strong>{r["rate"]:+.2f}</strong>/min \u2014 <span style="color:#4E2A84;">{html.escape(uww_ln)}</span> vs <span style="color:#c62828;">{html.escape(opp_ln)}</span> <span style="color:#888;">[{r["mins"]:.1f} min]</span></div>'
-            worst = matchup_agg.nsmallest(3, "rate")
-            matchup_html += '<div style="font-size:0.85rem;font-weight:600;margin:8px 0 4px;">Worst:</div>'
-            for _, r in worst.iterrows():
-                uww_ln = _last_names_pg(r["uww_lineup"])
-                opp_ln = _last_names_pg(r["opp_lineup"])
-                matchup_html += f'<div style="font-size:0.85rem;margin:3px 0;"><strong>{r["rate"]:+.2f}</strong>/min \u2014 <span style="color:#4E2A84;">{html.escape(uww_ln)}</span> vs <span style="color:#c62828;">{html.escape(opp_ln)}</span> <span style="color:#888;">[{r["mins"]:.1f} min]</span></div>'
-            st.markdown(matchup_html, unsafe_allow_html=True)
-
-    # --- FULL GAME PLAN (expander) ---
-    other_plans = game_plans[(game_plans["opponent"] == short_opponent) & (~game_plans["topic"].isin(["KEYS TO VICTORY", "TEAM STRENGTHS"]))]
-    if not other_plans.empty:
-        with st.expander("\U0001f4cb **FULL GAME PLAN** — Offensive & Defensive Schemes", expanded=False):
-            categories = list(other_plans["category"].unique())
-            gp_left, gp_right = st.columns(2)
-            for idx_c, category in enumerate(categories):
-                group = other_plans[other_plans["category"] == category]
-                col = gp_left if idx_c % 2 == 0 else gp_right
-                with col:
-                    with st.container(border=True):
-                        st.markdown(f"#### {category}")
-                        for _, r in group.iterrows():
-                            st.markdown(f"**{r['topic']}**")
-                            notes = str(r["notes"])
-                            if "|" in notes:
-                                items = [item.strip() for item in notes.split("|") if item.strip()]
-                                for item in items:
-                                    st.markdown(f"- {item}")
-                            else:
-                                st.write(notes)
-                            st.markdown("")
-
-    # --- GAME TEMPO ---
-    # CONFIRMED CHANGE (requested): previously just a single caption line under the box score showing this
-    # game's own pace. Now its own section with the same "entering this game" + "result" shape as the
-    # Scoring Runs section below and the Pace & Style KTV card on the Upcoming Game page -- what UWW's own
-    # tempo tendency looked like BEFORE this game (games strictly before it, via exclusive=True -- this is
-    # deliberately NOT the same inclusive cutoff the old caption used, since "entering the game" should mean
-    # what was known walking in, not a number this very game itself helped produce), alongside what actually
-    # happened. _pg_game_date can be None (resolve_game_date() doesn't match every display-date format) -- in
-    # that case the section still shows the result, just without a fast/slow read against nothing solid.
-    try:
-        if not uww_game_box.empty and not opp_game_box.empty:
-            _pg_pace_d = compute_efficiency_pace(uww_game_box, opp_game_box, 1)
-            _pg_pre_median = None
-            if _pg_game_date is not None:
-                _, _pg_pre_median = compute_uww_pace_by_game(as_of_date=_pg_game_date, exclusive=True, season=_pg_season)
-            st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">\u23F1\uFE0F GAME TEMPO</div></div>', unsafe_allow_html=True)
-            if _pg_pre_median is not None:
-                st.markdown(f"**Entering this game:** UWW's own median pace across the games before this one "
-                            f"was **{_pg_pre_median:.1f}** poss/gm.")
-                _pg_bucket = "faster" if _pg_pace_d["Pace"] > _pg_pre_median else "slower"
-                st.markdown(f"**Result:** this game was played at **{_pg_pace_d['Pace']:.0f}** poss/gm -- "
-                            f"**{_pg_bucket}** than UWW's tempo up to that point. Net Rtg "
-                            f"**{_pg_pace_d['Net Rtg']:+.1f}**.")
+            display_cols = [c for c in ["period", "time_remaining", "team", "player", "event_type",
+                                         "play_call", "play_actions", "play_location", "play_title",
+                                         "video_description", "coach_note", "uww_score", "opp_score"]
+                             if c in filtered_pbp.columns]
+            # CONFIRMED CHANGE (requested: combine the PLAY-BY-PLAY and the Possession Replay -- every play opens to its
+            # replay). Each play is an expander; plays with a tracked possession are marked with a camera and build their
+            # replay only when "Show the possession replay" is switched on (hundreds of replays at once would be slow).
+            # The link is the parser's pbp_event_order on each tracked clip. "Plain table view" keeps the old table.
+            _rep_of = _pbp_replay_clips(_pg_game_date)
+            if "event_order" in filtered_pbp.columns:
+                _eo = pd.to_numeric(filtered_pbp["event_order"], errors="coerce")
+                filtered_pbp = filtered_pbp.assign(_replay=_eo.map(lambda o: _rep_of.get(float(o)) if pd.notna(o) else None))
             else:
-                st.markdown(f"**Result:** this game was played at **{_pg_pace_d['Pace']:.0f}** poss/gm. "
-                            f"Net Rtg **{_pg_pace_d['Net Rtg']:+.1f}**.")
-                st.caption("Not enough games before this one yet (need 4+) to say whether this was fast or "
-                           "slow for UWW at the time.")
-    except Exception:
-        pass
-
-    # Clutch events for this game. CONFIRMED CHANGE (requested): these no longer get a section of their
-    # own -- they're a SUBSET of the play-by-play below, so duplicating them as a separate table meant the
-    # same rows appeared twice with different filters available on each. Loaded here and applied as a
-    # checkbox filter in the Play-by-Play section instead.
-    _pg_clutch = load_table("uww_clutch_events", _pg_season)
-    _pg_clutch_game = _this_game(_pg_clutch, "uww_clutch_events") if not _pg_clutch.empty else pd.DataFrame()
-
-    # --- PLAY-BY-PLAY ---
-    st.markdown('<div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin:1.5rem 0 0.75rem;"><div style="font-weight:800;font-size:1.05rem;letter-spacing:0.5px;color:#4E2A84;">PLAY-BY-PLAY</div></div>', unsafe_allow_html=True)
-    pbp = load_table("uww_pbp_events", _pg_season)
-    game_pbp = _this_game(pbp, "uww_pbp_events")
-    if not game_pbp.empty:
-        game_pbp = game_pbp.sort_values("event_order")
-
-    for _w in _pg_filter_warnings:
-        st.warning(_w)
-
-    if game_pbp.empty:
-        st.warning("No play-by-play data found for this game yet.")
-    else:
-        game_pbp["play_type"] = game_pbp["video_description"].str.split(">").str[1].str.strip()
-        game_pbp["shot_outcome"] = game_pbp["video_description"].str.extract(r"(Make \d+ Pts|Miss \d+ Pts|Turnover|Foul)", expand=False)
-
-        pbp_r1c1, pbp_r1c2, pbp_r1c3, pbp_r1c4 = st.columns(4)
-        with pbp_r1c1:
-            pbp_team_filter = st.selectbox("Team", ["All"] + sorted(game_pbp["team"].dropna().unique().tolist()), key=f"pbp_team_{short_opponent}")
-        with pbp_r1c2:
-            pbp_event_filter = st.selectbox("Event type", ["All"] + sorted(game_pbp["event_type"].dropna().unique().tolist()), key=f"pbp_event_{short_opponent}")
-        with pbp_r1c3:
-            pbp_player_search = st.text_input("Player", "", key=f"pbp_player_{short_opponent}", placeholder="Filter by player...")
-        with pbp_r1c4:
-            period_filter = st.selectbox("Period", ["All"] + sorted(game_pbp["period"].dropna().unique().tolist()), key=f"pbp_period_{short_opponent}")
-
-        # Play call, resolved the same way every other play-call view in this app resolves it: the
-        # parser's real play_call column where the play log covers the row, the regex read of the coach's
-        # note where it doesn't, then canonicalised against the playbook catalog so "Panther-4", "P-4" and
-        # "P4" are one play rather than three. Using the raw column here instead would have made this
-        # section disagree with the play breakdowns elsewhere on the same data. Resolved BEFORE the filter
-        # row below, since the dropdown's options come out of it.
-        if "coach_note" in game_pbp.columns:
-            game_pbp["play_call"] = resolve_play_calls(game_pbp)
-        elif "play_call" in game_pbp.columns:
-            game_pbp["play_call"] = game_pbp["play_call"].apply(canonical_play_call)
-        _play_calls = (sorted(game_pbp["play_call"].dropna().astype(str).unique().tolist())
-                       if "play_call" in game_pbp.columns else [])
-
-        pbp_r2c1, pbp_r2c2, pbp_r2c3 = st.columns(3)
-        with pbp_r2c1:
-            pbp_play_type = st.selectbox("Play type", ["All"] + sorted(game_pbp["play_type"].dropna().unique().tolist()), key=f"pbp_playtype_{short_opponent}")
-        with pbp_r2c2:
-            pbp_outcome = st.selectbox("Outcome", ["All"] + sorted(game_pbp["shot_outcome"].dropna().unique().tolist()), key=f"pbp_outcome_{short_opponent}")
-        with pbp_r2c3:
-            # Only offered when this game actually has calls on file -- an empty dropdown reads as broken
-            # rather than as a game nobody tagged calls for. The column keeps its place in the row either
-            # way, so the two selectboxes beside it don't jump width game to game.
-            pbp_play_call = "All"
-            if _play_calls:
-                pbp_play_call = st.selectbox("Play call", ["All"] + _play_calls,
-                                             key=f"pbp_playcall_{short_opponent}")
+                filtered_pbp = filtered_pbp.assign(_replay=None)
+            # this game's open Play review: which play-by-play rows it covers
+            _prd = _pr_open_package(_pg_game_date)
+            _pr_rows = _pr_event_map(_prd, _pg_game_date) if _prd else {}
+            _pr_need = bool(_prd) and not _pr_app_saves_for(_prd.get("run"))
+            if "event_order" in filtered_pbp.columns:
+                _eo2 = pd.to_numeric(filtered_pbp["event_order"], errors="coerce")
+                filtered_pbp = filtered_pbp.assign(_review=_eo2.map(lambda o: _pr_rows.get(float(o)) if pd.notna(o) else None))
             else:
-                st.selectbox("Play call", ["No play calls tagged"], disabled=True,
-                             key=f"pbp_playcall_none_{short_opponent}")
-
-        # UWW 5-man lineup on the floor, from uww_pbp_events.uww_lineup. Options are ordered by how many
-        # events each unit was on for, so the units that actually played come first rather than whichever
-        # surname sorts earliest. Labels are surnames only -- five full names per option is unreadable in a
-        # dropdown -- and the full string is kept as the value, since that's what the column holds.
-        _lu_counts = (game_pbp["uww_lineup"].dropna().astype(str).value_counts()
-                      if "uww_lineup" in game_pbp.columns else pd.Series(dtype=int))
-        _lu_label_to_full, _lu_labels = {}, []
-        for _lu_full in _lu_counts.index:
-            _lbl = ", ".join(surname(_n) for _n in str(_lu_full).split(",") if _n.strip())
-            # Two different units can shorten to the same surnames (brothers, or a repeated surname on the
-            # roster). Fall back to the full string for the collision rather than silently merging them.
-            if _lbl in _lu_label_to_full:
-                _lbl = str(_lu_full)
-            _lu_label_to_full[_lbl] = str(_lu_full)
-            _lu_labels.append(_lbl)
-
-        _pbp_r4c1, _pbp_r4c2 = st.columns([1, 1])
-        with _pbp_r4c1:
-            if _lu_labels:
-                _lu_pick = st.selectbox("UWW lineup on floor", ["All"] + _lu_labels,
-                                        key=f"pbp_lineup_{short_opponent}")
+                filtered_pbp = filtered_pbp.assign(_review=None)
+            _kp = f"prx{short_opponent}"
+            _store = _pr_store(_prd.get("run")) if _prd else {}
+            if _prd:
+                _pr_save_bar(_prd, _store, _kp, f"_{short_opponent}")
+            _v1, _v2, _v5, _v3, _v4 = st.columns([2, 2, 2, 1, 1])
+            _plain = _v1.checkbox("Plain table view", value=False, key=f"pbp_plain_{short_opponent}")
+            _only_rep = _v2.checkbox("Only plays with a possession replay \U0001f3a5", value=False,
+                                     key=f"pbp_onlyrep_{short_opponent}", disabled=not _rep_of)
+            _only_rev = _v5.checkbox("Only plays that need review \U0001f4dd", value=False, key=f"pbp_onlyrev_{short_opponent}",
+                                     disabled=not _pr_rows,
+                                     help=("Plays in this game's open review." + ("" if _pr_need else
+                                           " (This review has been saved already -- more coaches can still add theirs.)"))
+                                     if _pr_rows else "No open play review for this game.")
+            if _plain:
+                st.dataframe(
+                    filtered_pbp[display_cols].rename(columns={"coach_note": "Coach Note",
+                                                               "video_description": "Video Tag",
+                                                               "play_call": "Play Call",
+                                                               "play_actions": "Actions",
+                                                               "play_location": "Where",
+                                                               "play_title": "Tagged As"}),
+                    hide_index=True, use_container_width=True, height=400,
+                )
             else:
-                st.selectbox("UWW lineup on floor", ["No lineup data for this game"], disabled=True,
-                             key=f"pbp_lineup_none_{short_opponent}")
-                _lu_pick = "All"
-        with _pbp_r4c2:
-            pbp_video_search = st.text_input("Video description search", "", key=f"pbp_video_{short_opponent}", placeholder="e.g. P&R, Drives Left, 3pt...")
-
-        # Clutch rows are identified by event_order (unique within a game) rather than by re-deriving the
-        # definition here -- the parser already decided what counts as clutch, and re-implementing "last 5
-        # minutes, within 8 points" in the app would be a second definition free to drift from the first.
-        _clutch_orders = (set(pd.to_numeric(_pg_clutch_game["event_order"], errors="coerce").dropna())
-                          if not _pg_clutch_game.empty and "event_order" in _pg_clutch_game.columns else set())
-        pbp_r3c1, pbp_r3c2, pbp_r3c3 = st.columns(3)
-        with pbp_r3c1:
-            video_only = st.checkbox("Show only video-tagged plays", value=False, key=f"pbp_vidonly_{short_opponent}")
-        with pbp_r3c2:
-            notes_only = st.checkbox("Show only plays with a coach note", value=False, key=f"pbp_notesonly_{short_opponent}") if "coach_note" in game_pbp.columns else False
-        with pbp_r3c3:
-            clutch_only = st.checkbox(
-                "Show only clutch moments", value=False, key=f"pbp_clutch_{short_opponent}",
-                disabled=not _clutch_orders,
-                help=("Last 5 minutes of the 2nd half or any overtime, with the score within 8 points."
-                      if _clutch_orders else
-                      "No clutch events recorded for this game -- it was never within 8 points late."),
-            ) if _clutch_orders else False
-
-        filtered_pbp = game_pbp.copy()
-        if pbp_team_filter != "All":
-            filtered_pbp = filtered_pbp[filtered_pbp["team"] == pbp_team_filter]
-        if pbp_event_filter != "All":
-            filtered_pbp = filtered_pbp[filtered_pbp["event_type"] == pbp_event_filter]
-        if pbp_player_search.strip():
-            filtered_pbp = filtered_pbp[filtered_pbp["player"].str.contains(pbp_player_search.strip(), case=False, na=False)]
-        if period_filter != "All":
-            filtered_pbp = filtered_pbp[filtered_pbp["period"] == period_filter]
-        if pbp_play_type != "All":
-            filtered_pbp = filtered_pbp[filtered_pbp["play_type"] == pbp_play_type]
-        if pbp_outcome != "All":
-            filtered_pbp = filtered_pbp[filtered_pbp["shot_outcome"] == pbp_outcome]
-        if pbp_video_search.strip():
-            filtered_pbp = filtered_pbp[filtered_pbp["video_description"].str.contains(pbp_video_search.strip(), case=False, na=False)]
-        if pbp_play_call != "All":
-            filtered_pbp = filtered_pbp[filtered_pbp["play_call"].astype(str) == pbp_play_call]
-        if _lu_pick != "All":
-            filtered_pbp = filtered_pbp[
-                filtered_pbp["uww_lineup"].astype(str) == _lu_label_to_full.get(_lu_pick, _lu_pick)]
-        if video_only:
-            filtered_pbp = filtered_pbp[filtered_pbp["video_description"].notna()]
-        if notes_only:
-            filtered_pbp = filtered_pbp[filtered_pbp["coach_note"].notna()]
-        if clutch_only:
-            filtered_pbp = filtered_pbp[
-                pd.to_numeric(filtered_pbp["event_order"], errors="coerce").isin(_clutch_orders)]
-
-        # Coach-note sentiment, folded into this KPI row from the COACH NOTES THIS GAME section that used
-        # to sit below the table. Counted over filtered_pbp like every other tile here, so it answers "how
-        # did the coach grade THIS slice" -- the flags for one lineup, one play call, or clutch time only --
-        # rather than repeating one fixed whole-game number under every filter combination.
-        _pos_flags, _neg_flags = 0, 0
-        if "coach_note" in filtered_pbp.columns:
-            for _n in filtered_pbp["coach_note"].dropna():
-                _p, _ng = note_sentiment_counts(_n)
-                _pos_flags += _p
-                _neg_flags += _ng
-
-        kpi1, kpi2, kpi3, kpi4, kpi5, kpi6, kpi7 = st.columns(7)
-        kpi1.metric("Total Events", len(filtered_pbp))
-        scoring_events = filtered_pbp[filtered_pbp["event_type"].str.contains("made", case=False, na=False)]
-        kpi2.metric("Makes", len(scoring_events))
-        misses = filtered_pbp[filtered_pbp["event_type"].str.contains("missed", case=False, na=False)]
-        kpi3.metric("Misses", len(misses))
-        to_count = filtered_pbp[filtered_pbp["event_type"].str.contains("turnover", case=False, na=False)]
-        kpi4.metric("Turnovers", len(to_count))
-        unique_players = filtered_pbp["player"].dropna().nunique()
-        kpi5.metric("Players", unique_players)
-        kpi6.metric("Positive notes", _pos_flags)
-        kpi7.metric("Negative notes", _neg_flags)
-
-        display_cols = [c for c in ["period", "time_remaining", "team", "player", "event_type",
-                                     "play_call", "play_actions", "play_location", "play_title",
-                                     "video_description", "coach_note", "uww_score", "opp_score"]
-                         if c in filtered_pbp.columns]
-        st.dataframe(
-            filtered_pbp[display_cols].rename(columns={"coach_note": "Coach Note",
-                                                       "video_description": "Video Tag",
-                                                       "play_call": "Play Call",
-                                                       "play_actions": "Actions",
-                                                       "play_location": "Where",
-                                                       "play_title": "Tagged As"}),
-            hide_index=True, use_container_width=True, height=400,
-        )
+                _rows = filtered_pbp[filtered_pbp["_replay"].notna()] if _only_rep else filtered_pbp
+                if _only_rev:
+                    _rows = _rows[pd.to_numeric(_rows["_review"], errors="coerce").notna()]
+                _per = _v3.selectbox("Per page", [25, 50, 100], index=1, key=f"pbp_per_{short_opponent}")
+                _pages = max(1, -(-len(_rows) // _per))
+                _page = _v4.number_input("Page", min_value=1, max_value=_pages, value=1, step=1, key=f"pbp_page_{short_opponent}")
+                st.caption(f"{len(_rows)} play(s), {int(filtered_pbp['_replay'].notna().sum())} with a possession replay "
+                           f"(\U0001f3a5) -- page {_page} of {_pages}. Open a play for its details"
+                           + (" and replay." if _rep_of else ". No tracked film for this game yet."))
+                _txt = lambda v: "" if v is None or (isinstance(v, float) and pd.isna(v)) or str(v) in ("nan", "None") else str(v)
+                for _ix, _r in _rows.iloc[(_page - 1) * _per: _page * _per].iterrows():
+                    _rep = _r.get("_replay")
+                    _rep = _rep if isinstance(_rep, str) and _rep else None    # a blank (NaN) is "truthy" -- not a replay
+                    _score = (f"{_txt(_r.get('uww_score'))}-{_txt(_r.get('opp_score'))}"
+                              if _txt(_r.get("uww_score")) and _txt(_r.get("opp_score")) else "")
+                    _lab = " \u00b7 ".join(x for x in [f"{_txt(_r.get('period'))} {_txt(_r.get('time_remaining'))}".strip(),
+                                                        _txt(_r.get("team")), _txt(_r.get("player")),
+                                                        _txt(_r.get("event_type")).replace("_", " "), _score] if x)
+                    _rv = pd.to_numeric(_r.get("_review"), errors="coerce")
+                    _rv = int(_rv) if pd.notna(_rv) else None
+                    with st.expander(("\U0001f4dd " if _rv is not None else "") + ("\U0001f3a5 " if _rep else "") + _lab):
+                        _det = [(lbl, _txt(_r.get(col))) for col, lbl in (("play_call", "Play call"), ("play_actions", "Actions"),
+                                                                          ("play_location", "Where"), ("play_title", "Tagged as"),
+                                                                          ("video_description", "Synergy"), ("coach_note", "Coach note"))]
+                        st.markdown("  \n".join(f"**{lbl}:** {v}" for lbl, v in _det if v) or "_No details for this play._")
+                        if _rep:
+                            _key = f"{short_opponent}_{_txt(_r.get('event_order'))}"
+                            if st.toggle("Show the possession replay", key=f"pbp_rep_{_key}"):
+                                _view = st.radio("View", ["Camera view", "Court view"], horizontal=True, key=f"pbp_view_{_key}")
+                                _ft_replay(_rep, f"_pbp_{_key}", view="court" if _view == "Court view" else "camera")
+                        else:
+                            st.caption("No tracked possession for this play.")
+                        if _rv is not None and _prd:
+                            st.markdown("---\n**\U0001f4dd Play review**")
+                            _pr_play_widgets(_prd, _rv, _store, _kp)
 
 
-    # ---- Film Tracking for THIS game (moved here from the Upcoming Opponent page -- requested) ----------------
-    global _FT_GAME
-    _FT_GAME = (_pg_game_date, short_opponent)
-    try:
-        render_film_tracking(short_opponent, key_suffix="_pg")
-    except Exception as _ft_err:
-        report_section_error("Film Tracking", _ft_err)
-    finally:
-        _FT_GAME = None
-    # ---- Play review for THIS game, answered in the app and saved to GitHub (requested) ----------------------
-    try:
-        render_app_play_review(_pg_game_date, short_opponent)
-    except Exception as _pr_err:
-        report_section_error("Play review", _pr_err)
+    with _pgt_film:
+        # ---- Film Tracking for THIS game (moved here from the Upcoming Opponent page -- requested) ----------------
+        global _FT_GAME
+        _FT_GAME = (_pg_game_date, short_opponent)
+        try:
+            render_film_tracking(short_opponent, key_suffix="_pg")
+        except Exception as _ft_err:
+            report_section_error("Film Tracking", _ft_err)
+        finally:
+            _FT_GAME = None
+        # ---- Play review for THIS game, answered in the app and saved to GitHub (requested) ----------------------
 
 # --------------------------------------------------------------------------------------------------------------
 # Play review inside the app (Previous Games)

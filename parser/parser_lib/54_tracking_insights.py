@@ -569,6 +569,38 @@ if isinstance(globals().get("player_tracks"), pd.DataFrame) and not player_track
                                    "with": None, "result": _r.get("result"), "points": _r.get("points"),
                                    "play_title": _r.get("play_title"), "synergy_string": _r.get("synergy_string")})
         _ti_tables["uww_trk_roles"] = pd.DataFrame(_role_rows)
+        # CONFIRMED CHANGE (requested: the app's Film Tracking belongs to each game on Previous Games, not to the
+        # upcoming opponent). The combined tables above stay as they are (the brief uses them); each is ALSO built
+        # game by game into "<name>_by_game" (with game_date / game_code) for the app's per-game view. The builders
+        # print and one saves per-play rows for the defensive roles, so prints are silenced and those rows restored.
+        import contextlib as _ctx
+        import io as _io
+        _keep_raw = {k: _ti_tables.get(k) for k in ("uww_trk_matchups_raw", "uww_trk_help_raw")}
+        _ti_games = {}
+        for _k, _c in _ti_clips.items():
+            _ti_games.setdefault((str(_c["row"].get("game_date")), str(_c["row"].get("game_code"))), {})[_k] = _c
+        _by = {n: [] for n in ("uww_trk_matchups", "uww_trk_help", "uww_trk_screen_coverage", "uww_trk_screen_pairs",
+                               "uww_trk_sets", "uww_trk_inbounds", "uww_trk_zone_press", "uww_trk_coverage_execution",
+                               "uww_trk_spacing")}
+        for (_gd, _gc), _sub in _ti_games.items():
+            try:
+                with _ctx.redirect_stdout(_io.StringIO()):
+                    _gm, _gh, _ = _ti_matchups_and_help(_sub)
+                    _gscr, _gcov, _gpairs, _ = _ti_screens(_sub)
+                    _gsets, _ = _ti_sets(_sub)
+                    _gsp, _ = _ti_spacing(_sub)
+                    _parts = {"uww_trk_matchups": _gm, "uww_trk_help": _gh, "uww_trk_screen_coverage": _gcov,
+                              "uww_trk_screen_pairs": _gpairs, "uww_trk_sets": _gsets, "uww_trk_inbounds": _ti_inbounds(_sub),
+                              "uww_trk_zone_press": _ti_zone_press(_sub), "uww_trk_coverage_execution": _ti_coverage_execution(_gscr),
+                              "uww_trk_spacing": _gsp}
+                for _n, _t in _parts.items():
+                    if isinstance(_t, pd.DataFrame) and not _t.empty:
+                        _by[_n].append(_t.assign(game_date=_gd, game_code=_gc))
+            except Exception as _ge:
+                print(f"  [tracking insights] per-game tables skipped for {_gd} {_gc}: {type(_ge).__name__}: {_ge}")
+        _ti_tables.update(_keep_raw)
+        for _n, _lst in _by.items():
+            _ti_tables[_n + "_by_game"] = pd.concat(_lst, ignore_index=True) if _lst else pd.DataFrame()
         _ti_tables["uww_trk_clips"] = pd.DataFrame([{
             "clip_key": _k, "game_date": _c["row"].get("game_date"), "clip_number": _c["row"].get("clip_number"),
             "offense_team": _c["row"].get("offense_team"), "defense_team": _c["row"].get("defense_team"),
@@ -588,7 +620,9 @@ if isinstance(globals().get("player_tracks"), pd.DataFrame) and not player_track
             "press": bool(_c["row"].get("defense_press")) if pd.notna(_c["row"].get("defense_press")) else None,
             "coverage": _c["row"].get("coverage_detail"),
             "result_type": _ti_result_type(_c["row"].get("result")),
-            "shot_clock": _ti_shot_clock_bucket(_c["row"].get("shot_clock_used"))} for _k, _c in _ti_clips.items()])
+            "shot_clock": _ti_shot_clock_bucket(_c["row"].get("shot_clock_used")),
+            # the play-by-play row this possession is (the app's play-by-play opens its replay)
+            "pbp_event_order": _c["row"].get("pbp_event_order")} for _k, _c in _ti_clips.items()])
         if not _set_clips.empty:
             _ti_tables["uww_trk_clips"] = _ti_tables["uww_trk_clips"].drop(columns="set_id").merge(
                 _set_clips[["clip_key", "set_id"]], on="clip_key", how="left")

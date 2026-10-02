@@ -92,12 +92,11 @@ clip_key,defense_team,offense_team,zone,press,points,trap_spot,trap_hx,trap_hy
 2025-12-30|388|32 Luke Bara > No Play Type > Turnover,Coe Kohawks,UW-Whitewater,False,True,0.0,"frontcourt, middle",17.0,23.9
 2025-12-30|398|32 Luke Bara > Transition > Left Wing > Dribble Jumper > Long/3pt > Miss 3 Pts,Coe Kohawks,UW-Whitewater,False,True,0.0,,,
 2025-12-30|400|34 Kanyon Bryte > No Play Type > Foul,UW-Whitewater,Coe Kohawks,False,True,2.0,"frontcourt, middle",22.1,23.4
+2025-12-30|403|32 Luke Bara > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,False,True,,,,
 2025-12-30|408|32 Luke Bara > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 15 Collin Madson > Spot-Up > Drives Left > To Basket > Foul,Coe Kohawks,UW-Whitewater,False,True,2.0,,,
 2025-12-30|414|10 Darius Chestnut > Non Possession > No Violation,Coe Kohawks,UW-Whitewater,False,True,,,,
 2025-12-30|418|15 Collin Madson > Post-Up > Right Block > Right Shoulder > Dribble Move > To Jumper > Foul,Coe Kohawks,UW-Whitewater,False,True,,,,
 2025-12-30|426|15 Collin Madson > No Play Type > Foul,Coe Kohawks,UW-Whitewater,False,True,2.0,,,
-2025-12-30|432|32 Luke Bara > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 10 Darius Chestnut > Spot-Up > Drives Left > To Basket > Miss 2 Pts,Coe Kohawks,UW-Whitewater,False,True,0.0,,,
-2025-12-30|433|5 Cooper Nailor > No Play Type > Foul,UW-Whitewater,Coe Kohawks,False,True,2.0,,,
 2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,False,True,,,,
 2025-12-30|460|10 Darius Chestnut > Non Possession > No Violation,Coe Kohawks,UW-Whitewater,False,True,,"frontcourt, middle",39.2,33.0
 2025-12-30|469|10 Darius Chestnut > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > To Basket > Make 2 Pts,Coe Kohawks,UW-Whitewater,False,True,2.0,,,
@@ -110,6 +109,7 @@ clip_key,defense_team,offense_team,zone,press,points,trap_spot,trap_hx,trap_hy
 2025-12-30|504|40 Tyshawn Teague-Johnson > ISO > Left > Drives Right > To Basket > Make 2 Pts,Coe Kohawks,UW-Whitewater,False,True,2.0,,,
 2025-12-30|507|10 Darius Chestnut > Cut > Basket > Foul,Coe Kohawks,UW-Whitewater,False,True,1.0,,,
 2025-12-30|511|11 Jr Lukenbill > Transition > Ballhandler > To Basket > Make 2 Pts,Coe Kohawks,UW-Whitewater,False,True,2.0,,,
+2025-12-30|514|40 Tyshawn Teague-Johnson > Spot-Up > Drives Straight > Dribble Jumper > Long/3pt > Miss 3 Pts,Coe Kohawks,UW-Whitewater,False,True,0.0,,,
 2025-12-30|516|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,False,True,,"frontcourt, middle",13.9,28.9
 2025-12-30|517|11 Jr Lukenbill > No Play Type > No Dribble Jumper > Open > Short to < 17' > Miss 2 Pts,Coe Kohawks,UW-Whitewater,False,True,0.0,"frontcourt, middle",4.2,24.4
 2025-12-30|518|12 Jake Quast > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts Foul > 1 Pts,Coe Kohawks,UW-Whitewater,False,True,3.0,,,

@@ -533,6 +533,9 @@ def play_review():
             url, pos = _pr_synergy(r)
             vs = pd.to_numeric(r.get("video_start_s"), errors="coerce")
             plays.append({"clip_key": r["_key"], "clip_number": cn, "clock": clock_txt,
+                          # its play-by-play row (the app shows the review inside that row of the play-by-play)
+                          "pbp_event_order": (float(r["pbp_event_order"]) if pd.notna(pd.to_numeric(r.get("pbp_event_order"), errors="coerce"))
+                                              else None),
                           "synergy": str(r.get("synergy_string") or ""), "coach_title": _tr_val(r.get("play_title")),
                           "auto_title": _tr_title(r, tagged),
                           "film": _tr_film(r.get("track_clip_key")),

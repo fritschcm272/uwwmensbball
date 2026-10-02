@@ -363,6 +363,30 @@ if isinstance(globals().get("player_tracks"), pd.DataFrame) and "court_path" in 
                            "uww_court_screens": _scr, "uww_court_screen_zones": _scr_z, "uww_court_help": _cz_help(_cz_c),
                            "uww_court_zone_press": _cz_zone_press(_cz_c), "uww_court_spacing": _cz_spacing(_cz_c),
                            "uww_court_diagrams": _cz_diagrams(_cz_c)})
+        # the same, game by game ("<name>_by_game", with game_date / game_code) for the app's per-game Film Tracking;
+        # per-play tables (shots, screens, diagrams) already carry their game
+        import contextlib as _ctx
+        import io as _io
+        _cz_games = {}
+        for _k, _c in _cz_c.items():
+            _cz_games.setdefault((str(_c["row"].get("game_date")), str(_c["row"].get("game_code"))), {})[_k] = _c
+        _cby = {n: [] for n in ("uww_court_shot_zones", "uww_court_heat", "uww_court_screen_zones", "uww_court_help",
+                                "uww_court_zone_press", "uww_court_spacing")}
+        for (_gd, _gc), _sub in _cz_games.items():
+            try:
+                with _ctx.redirect_stdout(_io.StringIO()):
+                    _gsh, _gz = _cz_shots(_sub)
+                    _gs, _gsz = _cz_screens(_sub)
+                    _parts = {"uww_court_shot_zones": _gz, "uww_court_heat": _cz_heat(_sub), "uww_court_screen_zones": _gsz,
+                              "uww_court_help": _cz_help(_sub), "uww_court_zone_press": _cz_zone_press(_sub),
+                              "uww_court_spacing": _cz_spacing(_sub)}
+                for _n, _t in _parts.items():
+                    if isinstance(_t, pd.DataFrame) and not _t.empty:
+                        _cby[_n].append(_t.assign(game_date=_gd, game_code=_gc))
+            except Exception as _ge:
+                print(f"  [court] per-game tables skipped for {_gd} {_gc}: {type(_ge).__name__}: {_ge}")
+        for _n, _lst in _cby.items():
+            _cz_tables[_n + "_by_game"] = pd.concat(_lst, ignore_index=True) if _lst else pd.DataFrame()
         _rep = court_report.copy()
         if not _shots.empty and not _rep.empty:
             _rep["shots_zone_agrees_with_2_or_3_pct"] = round(100 * _shots["zone_agrees_with_result"].mean())
