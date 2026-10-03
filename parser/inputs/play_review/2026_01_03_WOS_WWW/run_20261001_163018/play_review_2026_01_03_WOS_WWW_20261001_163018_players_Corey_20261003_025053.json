@@ -1,0 +1,36 @@
+{
+ "game": "2026-01-03|WOS@WWW",
+ "run": "20261001_163018",
+ "coach": "Corey",
+ "saved": "2026-10-03T02:50:53+00:00",
+ "checks": [
+  {
+   "clip_key": "2026-01-03|8|5 Matt Imig > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 13 Logan Rindfleisch > Spot-Up > Drives Left > To Basket > Miss 2 Pts",
+   "clip_number": 8,
+   "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/10_c9ff6a81_t004.jpg",
+   "t": 4,
+   "px": 807.6,
+   "py": 446.3,
+   "side": "defense",
+   "assigned": "Richie Warren",
+   "assigned_how": "best guess",
+   "verdict": "wrong",
+   "true_name": "Richie Warren"
+  },
+  {
+   "clip_key": "2026-01-03|8|5 Matt Imig > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 13 Logan Rindfleisch > Spot-Up > Drives Left > To Basket > Miss 2 Pts",
+   "clip_number": 8,
+   "frame_file": "Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/10_c9ff6a81_t004.jpg",
+   "t": 4,
+   "px": 243.1,
+   "py": 478.2,
+   "side": "offense",
+   "assigned": "Aiden Hawkinson",
+   "assigned_how": "best guess",
+   "verdict": "correct",
+   "true_name": "Aiden Hawkinson"
+  }
+ ],
+ "source": "streamlit app",
+ "part": "players"
+}

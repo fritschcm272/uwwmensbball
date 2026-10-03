@@ -5647,11 +5647,26 @@ def _pr_title_widgets(d, pi, store, kp):
                 store.pop(kt, None)
 
 
+def _pr_lab(pl, n):
+    """A player's dropdown label with his jersey number ("#12 Marino"); the parser writes `five_labels` per play
+    (CONFIRMED CHANGE, requested: numbers in the "Your check" dropdown). Older review files have none -> plain name."""
+    return (pl.get("five_labels") or {}).get(n, n)
+
+
+def _pr_name_of(pl, text):
+    """Back from a dropdown label ("#12 Marino") to the player's name as stored in `five`."""
+    text = str(text).strip()
+    for n, lab in (pl.get("five_labels") or {}).items():
+        if text == lab:
+            return n
+    return text
+
+
 def _pr_box_choices(pl, b):
     mine = pl.get("five", {}).get(b.get("side"), []) or []
     other = pl.get("five", {}).get("defense" if b.get("side") == "offense" else "offense", []) or []
-    return ([_PR_NOT_CHECKED, "correct"] + [f"really {n}" for n in mine if n != b.get("name")]
-            + [f"really {n} (other team)" for n in other] + ["wrong team (don't know who)", "not a player"])
+    return ([_PR_NOT_CHECKED, "correct"] + [f"really {_pr_lab(pl, n)}" for n in mine if n != b.get("name")]
+            + [f"really {_pr_lab(pl, n)} (other team)" for n in other] + ["wrong team (don't know who)", "not a player"])
 
 
 def _pr_nbox(b, w, h):
@@ -5675,7 +5690,7 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
     run = d.get("run")
     five = pl.get("five", {}) or {}
     names = [n for side in ("offense", "defense") for n in (five.get(side) or [])]
-    choices = [_PR_NOT_CHECKED, "correct"] + [f"really {n}" for n in names] + ["wrong team (don't know who)", "not a player"]
+    choices = [_PR_NOT_CHECKED, "correct"] + [f"really {_pr_lab(pl, n)}" for n in names] + ["wrong team (don't know who)", "not a player"]
     for ki, pic in enumerate(pl.get("pictures", [])):
         path = os.path.join(d["_dir"], pic.get("image") or "")
         boxes = pic.get("boxes", [])
@@ -5753,9 +5768,9 @@ def _pr_payload(d, store, coach, kp, part=None):
                 elif val.startswith("wrong team"):
                     verdict, name = "wrong team", None
                 elif val.endswith("(other team)"):
-                    verdict, name = "wrong team", val[len("really "):-len(" (other team)")]
+                    verdict, name = "wrong team", _pr_name_of(pl, val[len("really "):-len(" (other team)")])
                 else:
-                    name = val[len("really "):]
+                    name = _pr_name_of(pl, val[len("really "):])
                     _other5 = pl.get("five", {}).get("defense" if b.get("side") == "offense" else "offense", []) or []
                     verdict = "wrong team" if name in _other5 else "wrong"    # a name from the other team's five
                 out["checks"].append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
@@ -5857,35 +5872,158 @@ def render_video_tracking():
         st.caption("No teams in the tracked film.")
         return
     _FT_GAME = None if pick == "All tracked games" else (label_of[pick][0], team)
-    # this game's open review: the PLAYER CHECKS part (the Title checks are in Previous Games > Play-by-Play)
-    if pick != "All tracked games" and "WWW" in str(label_of[pick][1]):
-        _prd = _pr_open_package(label_of[pick][0])
-        if _prd:
-            with st.container():                       # (not an expander: Streamlit can't nest the plays' expanders in one)
-                st.markdown(f"#### \U0001f4dd Player checks for this game's review ({len(_prd.get('plays', []))} plays)")
-                _store = _pr_store(_prd.get("run"))
-                _saved = [x for x in _pr_app_saves_for(_prd.get("run")) if "players" in x[2]]
-                st.caption("Choose a check for each box in the Players tables -- nothing reloads while you choose. "
-                           "Press \"Save my player checks\" at the bottom when you're done (answers aren't kept until then)."
-                           + ("  Already saved: " + "; ".join(f"{c} ({t})" for c, t, _p in _saved) if _saved else ""))
-                with st.form(f"prx_players_form_{_prd.get('run')}"):
-                    _coach = st.text_input("Your name (required to save)", key="pr_coach_players_vt")
-                    for _pi, _pl in enumerate(_prd.get("plays", [])):
-                        with st.expander(f"Clip {_pl.get('clip_number')} \u00b7 {_pl.get('clock', '')} \u00b7 "
-                                         f"{str(_pl.get('synergy', ''))[:70]}"):
-                            _pr_player_widgets(_prd, _pi, _store, "prxvt", with_video=False)
-                    _go = st.form_submit_button("Save my player checks")
-                if _go:
-                    if not str(_coach).strip():
-                        st.error("Add your name at the top of the form, then save again.")
-                    else:
-                        _pr_commit(_prd, _store, _coach, "prxvt", "players", "_vt")
+    # CONFIRMED CHANGE (requested): the player checks for each game's review and their accuracy metrics moved to
+    # Analytics > Player Number Tracking (the Title checks stay in Previous Games > Play-by-Play).
     try:
         render_film_tracking(team, key_suffix="_vt")
     except Exception as _vt_err:
         report_section_error("Video Tracking", _vt_err)
     finally:
         _FT_GAME = None
+
+
+def _pnt_game_label(game):
+    return str(game).replace("|", " \u00b7 ")
+
+
+def _pnt_load_checks():
+    """Every saved player check (data/play_review_saves/*.json -> "checks"), one row per box a coach judged. If the
+    same box was judged more than once (two coaches, or a re-save) only the LATEST save counts."""
+    rows = []
+    for f in glob.glob(os.path.join(DATA_DIR, "play_review_saves", "*.json")):
+        try:
+            with open(f, encoding="utf-8") as fh:
+                d = json.load(fh)
+        except Exception:
+            continue
+        if not isinstance(d.get("checks"), list):
+            continue
+        for c in d["checks"]:
+            rows.append({"game": d.get("game"), "run": str(d.get("run")), "coach": d.get("coach"),
+                         "saved": str(d.get("saved", "")), "clip_key": c.get("clip_key"),
+                         "frame": c.get("frame_file") or c.get("t"),
+                         "px": round(float(c.get("px") or 0)), "py": round(float(c.get("py") or 0)),
+                         "side": c.get("side"), "assigned": c.get("assigned"),
+                         "how": c.get("assigned_how") or ("not named" if not c.get("assigned") else "unknown"),
+                         "verdict": c.get("verdict"), "true_name": c.get("true_name")})
+    if not rows:
+        return pd.DataFrame()
+    df = pd.DataFrame(rows).sort_values("saved")
+    return df.drop_duplicates(["run", "clip_key", "frame", "px", "py"], keep="last").reset_index(drop=True)
+
+
+def _pnt_summary(df, by):
+    """Per `by` value: boxes checked, how many were correct / wrong player / wrong team / not a player, and % correct."""
+    g = df.assign(correct=df["verdict"].eq("correct"), wrong=df["verdict"].eq("wrong"),
+                  wrong_team=df["verdict"].eq("wrong team"), not_player=df["verdict"].eq("not a player"))
+    out = g.groupby(by).agg(Checked=("verdict", "size"), Correct=("correct", "sum"), Wrong_player=("wrong", "sum"),
+                            Wrong_team=("wrong_team", "sum"), Not_a_player=("not_player", "sum")).reset_index()
+    out["% correct"] = (100 * out["Correct"] / out["Checked"]).round(1)
+    out.columns = [c.replace("_", " ") for c in out.columns]
+    return out.sort_values("Checked", ascending=False)
+
+
+def _pnt_metrics(df):
+    st.markdown("#### \U0001f4ca How well did the player-number tracking do?")
+    if df.empty:
+        st.info("No saved player checks yet for this selection. Answer a game's checks above and press Save -- the "
+                "metrics build from every saved check (the latest answer per box).")
+        return
+    n = len(df)
+    ok = int(df["verdict"].eq("correct").sum())
+    named = df[df["assigned"].notna()]
+    c = st.columns(4)
+    c[0].metric("Boxes checked", f"{n:,}")
+    c[1].metric("Correct (all boxes)", f"{100 * ok / n:.1f}%", f"{ok:,} of {n:,}", delta_color="off")
+    c[2].metric("Correct (named boxes)", f"{100 * ok / max(len(named), 1):.1f}%" if len(named) else "--",
+                f"{ok:,} of {len(named):,}", delta_color="off")
+    c[3].metric("Games / reviewers", f"{df['run'].nunique()} / {df['coach'].nunique()}")
+    st.caption("Correct = the coach left the assigned name as right. Wrong player = right team, wrong name. Wrong team = the "
+               "box was on the other team. Not a player = referee, bench, etc. 'Named boxes' leaves out boxes the model "
+               "gave no name at all.")
+    st.markdown("**By how the model assigned the name** -- which part of the model is doing well and which needs adjusting")
+    st.dataframe(_pnt_summary(df, "how"), hide_index=True, use_container_width=True)
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown("**By side**")
+        st.dataframe(_pnt_summary(df, "side"), hide_index=True, use_container_width=True)
+    with c2:
+        st.markdown("**By side and how assigned**")
+        st.dataframe(_pnt_summary(df, ["side", "how"]), hide_index=True, use_container_width=True)
+    st.markdown("**By assigned player** -- whose number is hardest for the model")
+    pl = df[df["assigned"].notna()]
+    if len(pl):
+        st.dataframe(_pnt_summary(pl, "assigned").sort_values(["% correct", "Checked"]), hide_index=True,
+                     use_container_width=True)
+    wr = df[df["verdict"].eq("wrong") & df["true_name"].notna()]
+    st.markdown("**Most common mix-ups** (model said -> coach said)")
+    if len(wr):
+        mix = (wr.assign(assigned=wr["assigned"].fillna("(no name)")).groupby(["assigned", "true_name", "how"]).size()
+               .reset_index(name="Times").sort_values("Times", ascending=False).head(25)
+               .rename(columns={"assigned": "Model said", "true_name": "Coach said", "how": "How assigned"}))
+        st.dataframe(mix, hide_index=True, use_container_width=True)
+    else:
+        st.caption("No wrong-player answers with a named true player yet.")
+    if df["run"].nunique() > 1:
+        st.markdown("**By game**")
+        gm = _pnt_summary(df.assign(game=df["game"].map(_pnt_game_label)), "game")
+        st.dataframe(gm, hide_index=True, use_container_width=True)
+
+
+def _pnt_check_form(prd):
+    """One game's player checks (the 20-play review) in one form, nothing reloads until Save."""
+    run = prd.get("run")
+    sfx = f"_pnt_{prd.get('slug')}_{run}"
+    st.markdown(f"#### \U0001f4dd Player checks for this game's review ({len(prd.get('plays', []))} plays)")
+    store = _pr_store(run)
+    saved = [x for x in _pr_app_saves_for(run) if "players" in x[2]]
+    st.caption("Choose a check for each box in the Players tables -- nothing reloads while you choose. "
+               "Press \"Save my player checks\" at the bottom when you're done (answers aren't kept until then)."
+               + ("  Already saved: " + "; ".join(f"{c} ({t})" for c, t, _p in saved) if saved else ""))
+    with st.form(f"prx_players_form{sfx}"):
+        coach = st.text_input("Your name (required to save)", key=f"pr_coach_players{sfx}")
+        for pi, pl in enumerate(prd.get("plays", [])):
+            with st.expander(f"Clip {pl.get('clip_number')} \u00b7 {pl.get('clock', '')} \u00b7 "
+                             f"{str(pl.get('synergy', ''))[:70]}"):
+                _pr_player_widgets(prd, pi, store, "prxpnt", with_video=False)
+        go = st.form_submit_button("Save my player checks")
+    if go:
+        if not str(coach).strip():
+            st.error("Add your name at the top of the form, then save again.")
+        else:
+            _pr_commit(prd, store, coach, "prxpnt", "players", sfx)
+
+
+def render_player_number_tracking():
+    """Analytics > Player Number Tracking (requested): each available game's player checks (moved here from Video
+    Tracking) plus how accurate the model's player numbers have been, grouped by how it assigned them."""
+    section_header("\U0001f522 PLAYER NUMBER TRACKING", "Check who the model named on each tracked box, and see which parts of "
+                   "the player-number tracking are working.")
+    pkgs = sorted(_pr_app_packages(), key=lambda d: str(d.get("game", "")), reverse=True)
+    saves = _pnt_load_checks()
+    games = {_pnt_game_label(d.get("game")): d for d in pkgs}
+    for g in (saves["game"].dropna().unique() if not saves.empty else []):
+        games.setdefault(_pnt_game_label(g), None)
+    if not games:
+        st.info("No player-check reviews yet. In the parser, run the play review for a game; its review package lands in "
+                "data/play_review/.")
+        return
+    pick = st.selectbox("Game", ["All Games"] + list(games), key="pnt_game")
+    chosen = [(k, v) for k, v in games.items() if pick == "All Games" or k == pick]
+    open_pk = [(k, v) for k, v in chosen if v is not None]
+    if not open_pk:
+        st.caption("This game has saved checks (metrics below) but no open review package in the app.")
+    for k, v in open_pk:
+        if pick == "All Games":
+            st.markdown(f"### {k}")
+        try:
+            _pnt_check_form(v)
+        except Exception as e:
+            report_section_error("Player Number Tracking", e)
+        st.divider()
+    if not saves.empty and pick != "All Games":
+        saves = saves[saves["game"].map(_pnt_game_label) == pick]
+    _pnt_metrics(saves)
 
 
 def _pbp_txt(v):
@@ -12724,8 +12862,7 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
                     for bi, b in enumerate(pic.get("boxes", [])):
                         mine = p.get("five", {}).get(b.get("side"), []) or []
                         other = p.get("five", {}).get("defense" if b.get("side") == "offense" else "offense", []) or []
-                        opts = ([_PR_NOT_CHECKED, "correct"] + [f"really {n}" for n in mine if n != b.get("name")]
-                                + [f"really {n} (other team)" for n in other] + ["wrong team (don't know who)", "not a player"])
+                        opts = _pr_box_choices(p, b)
                         lab = (f"Box {b.get('id')} -- {b.get('side')} -- "
                                + (f"{b.get('label')} ({b.get('how')})" if b.get("label") else "not named"))
                         sel[("pl", pi, ki, bi)] = st.selectbox(lab, opts, key=f"pr_b_{pi}_{ki}_{bi}{key_suffix}")
@@ -12765,9 +12902,9 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
             elif val.startswith("wrong team"):
                 verdict, name = "wrong team", None
             elif val.endswith("(other team)"):
-                verdict, name = "wrong team", val[len("really "):-len(" (other team)")]
+                verdict, name = "wrong team", _pr_name_of(p, val[len("really "):-len(" (other team)")])
             else:
-                verdict, name = "wrong", val[len("really "):]
+                verdict, name = "wrong", _pr_name_of(p, val[len("really "):])
             out["checks"].append({"clip_key": p["clip_key"], "clip_number": p.get("clip_number"), "frame_file": pic.get("frame_file"),
                                   "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"), "side": b.get("side"),
                                   "assigned": b.get("name"), "assigned_how": b.get("how"), "verdict": verdict, "true_name": name})
@@ -14518,6 +14655,7 @@ def render_analytics():
         "Team": render_team,
         "Players": render_players,
         "Video Tracking": render_video_tracking,
+        "Player Number Tracking": render_player_number_tracking,
     }
     _tab_order = list(_renderers)
     _pinned = st.session_state.get("_analytics_open_tab")
