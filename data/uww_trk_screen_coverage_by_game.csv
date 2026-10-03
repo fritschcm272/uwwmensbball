@@ -1,76 +1,74 @@
 defense_team,defender,role,screen_type,coverage,coverage_source,times,ppp,share_pct,game_date,game_code
-UW-Oshkosh Titans,Aiden Hawkinson,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,0.0,67.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Aiden Hawkinson,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Aiden Hawkinson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,17.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Aiden Hawkinson,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,17.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Aiden Hawkinson,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.0,60.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Aiden Hawkinson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,20.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Aiden Hawkinson,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,20.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Aiden Hawkinson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,0.0,38.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Aiden Hawkinson,guarding the screener,Off-ball screen,unclear,tracking estimate,3,0.67,38.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Aiden Hawkinson,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,0.5,25.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Aiden Hawkinson,guarding the screener,Off-ball screen,unclear,tracking estimate,2,1.0,25.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Aiden Hawkinson,guarding the screener,Off-ball screen,Switch,coach tag,1,1.0,12.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Aiden Hawkinson,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,1.0,12.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Brandon Beck,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,50.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Brandon Beck,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,2.0,50.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Brandon Beck,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,2.0,50.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Brandon Beck,guarding the screener,Off-ball screen,unclear,tracking estimate,2,1.0,50.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Brandon Beck,guarding the player screened,Ball screen,unclear,tracking estimate,1,3.0,100.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Brandon Beck,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,2.0,100.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Brandon Beck,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Carter Thomas,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,2.0,75.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Brandon Beck,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,50.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Brandon Beck,guarding the screener,Off-ball screen,unclear,tracking estimate,1,2.0,50.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Carter Thomas,guarding the player screened,Off-ball screen,unclear,tracking estimate,5,1.5,71.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Carter Thomas,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,2.0,29.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Carter Thomas,guarding the player screened,Ball screen,Switch,coach tag,1,0.0,100.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Carter Thomas,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,25.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Carter Thomas,guarding the screener,Off-ball screen,unclear,tracking estimate,5,1.0,71.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Carter Thomas,guarding the screener,Off-ball screen,Switch,coach tag,1,0.0,14.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Carter Thomas,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,14.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Carter Thomas,guarding the screener,Off-ball screen,unclear,tracking estimate,5,1.0,62.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Carter Thomas,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,25.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Carter Thomas,guarding the screener,Off-ball screen,Switch,coach tag,1,0.0,12.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Jay Dalton,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,2.0,100.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jay Dalton,guarding the screener,Off-ball screen,unclear,tracking estimate,2,0.0,67.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Jay Dalton,guarding the screener,Off-ball screen,unclear,tracking estimate,3,0.0,75.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Jay Dalton,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jay Dalton,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,33.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,0.0,50.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.0,38.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Jay Dalton,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,25.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,0.0,57.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,29.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,100.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,12.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.33,60.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Off-ball screen,unclear,tracking estimate,2,2.0,40.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Ball screen,Switch,coach tag,1,0.0,50.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,50.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jonah Rindfleisch,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,0.5,57.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jonah Rindfleisch,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,1.0,29.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jonah Rindfleisch,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,14.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jonah Rindfleisch,guarding the screener,Off-ball screen,unclear,tracking estimate,3,1.67,60.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jonah Rindfleisch,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jonah Rindfleisch,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,20.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jonah Rindfleisch,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,20.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,14.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.33,50.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Off-ball screen,unclear,tracking estimate,3,2.0,50.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Ball screen,unclear,tracking estimate,2,1.5,67.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Ball screen,Switch,coach tag,1,0.0,33.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Jonah Rindfleisch,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,0.4,50.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Jonah Rindfleisch,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,0.75,40.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Jonah Rindfleisch,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,10.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Jonah Rindfleisch,guarding the screener,Off-ball screen,unclear,tracking estimate,3,1.67,75.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Jonah Rindfleisch,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,25.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Logan Rindfleisch,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,67.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Logan Rindfleisch,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,33.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Logan Rindfleisch,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,50.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Logan Rindfleisch,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,25.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Logan Rindfleisch,guarding the screener,Off-ball screen,unclear,tracking estimate,1,2.0,25.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Logan Rindfleisch,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,67.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Logan Rindfleisch,guarding the screener,Off-ball screen,unclear,tracking estimate,1,2.0,33.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Matt Imig,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,1.33,60.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Matt Imig,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,20.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Matt Imig,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,1.0,20.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Matt Imig,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Matt Imig,guarding the screener,Off-ball screen,unclear,tracking estimate,1,2.0,100.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,2.0,67.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Matt Imig,guarding the screener,Off-ball screen,unclear,tracking estimate,3,0.67,100.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Matt Imig,guarding the screener,Ball screen,unclear,tracking estimate,2,0.0,100.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,2.0,60.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the player screened,Off-ball screen,Switch,coach tag,1,0.0,17.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,17.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Off-ball screen,unclear,tracking estimate,3,1.33,50.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Ball screen,unclear,tracking estimate,2,1.5,67.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,33.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,33.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,17.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,1.5,44.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the player screened,Off-ball screen,Switch,coach tag,1,0.0,20.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,20.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,40.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Off-ball screen,unclear,tracking estimate,2,1.0,40.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,50.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,50.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,20.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,1.33,44.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,0.75,44.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Ball screen,unclear,tracking estimate,3,1.0,100.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Ball screen,unclear,tracking estimate,2,0.0,100.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Off-ball screen,Switch,coach tag,1,0.0,11.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Nate Nazos,guarding the screener,Off-ball screen,unclear,tracking estimate,4,0.67,50.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Nate Nazos,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.33,38.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Nate Nazos,guarding the screener,Off-ball screen,Switch,coach tag,1,0.0,12.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Oskar Kangas,guarding the player screened,Off-ball screen,unclear,tracking estimate,7,0.86,88.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Oskar Kangas,guarding the player screened,Off-ball screen,Switch,coach tag,1,1.0,12.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Oskar Kangas,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,0.67,50.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Oskar Kangas,guarding the screener,Off-ball screen,unclear,tracking estimate,4,0.5,50.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Vitorio Dante,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,0.67,50.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Vitorio Dante,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,0.0,50.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Nate Nazos,guarding the screener,Off-ball screen,unclear,tracking estimate,5,0.5,56.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Nate Nazos,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.33,33.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Nate Nazos,guarding the screener,Off-ball screen,Switch,coach tag,1,0.0,11.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Oskar Kangas,guarding the player screened,Off-ball screen,unclear,tracking estimate,8,0.62,89.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Oskar Kangas,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Oskar Kangas,guarding the player screened,Off-ball screen,Switch,coach tag,1,1.0,11.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Oskar Kangas,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,0.67,57.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Oskar Kangas,guarding the screener,Off-ball screen,unclear,tracking estimate,3,0.67,43.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Vitorio Dante,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,1.0,60.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Vitorio Dante,guarding the player screened,Ball screen,unclear,tracking estimate,2,0.0,100.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Vitorio Dante,guarding the screener,Off-ball screen,unclear,tracking estimate,4,0.25,80.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Vitorio Dante,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,40.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Vitorio Dante,guarding the screener,Off-ball screen,unclear,tracking estimate,3,0.33,60.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Vitorio Dante,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,20.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Vitorio Dante,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,20.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,,75.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,2,0.0,100.0,2026-01-03,WOS@WWW
@@ -85,19 +83,18 @@ UW-Whitewater,Brock Marino,guarding the screener,Off-ball screen,unclear,trackin
 UW-Whitewater,Brock Marino,guarding the screener,Ball screen,Stay,coach tag,1,0.0,100.0,2026-01-03,WOS@WWW
 UW-Whitewater,Brock Marino,guarding the screener,Off-ball screen,Top Lock,coach tag,1,,17.0,2026-01-03,WOS@WWW
 UW-Whitewater,Brock Marino,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,17.0,2026-01-03,WOS@WWW
-UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,unclear,tracking estimate,5,2.0,45.0,2026-01-03,WOS@WWW
-UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,1.25,36.0,2026-01-03,WOS@WWW
+UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,1.4,42.0,2026-01-03,WOS@WWW
+UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,unclear,tracking estimate,5,2.0,42.0,2026-01-03,WOS@WWW
 UW-Whitewater,Collin Madson,guarding the player screened,Ball screen,back (drop),tracking estimate,1,2.0,100.0,2026-01-03,WOS@WWW
-UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,Over,coach tag,1,0.0,9.0,2026-01-03,WOS@WWW
-UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,Under,coach tag,1,3.0,9.0,2026-01-03,WOS@WWW
+UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,Over,coach tag,1,0.0,8.0,2026-01-03,WOS@WWW
+UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,Under,coach tag,1,3.0,8.0,2026-01-03,WOS@WWW
 UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.33,50.0,2026-01-03,WOS@WWW
 UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,unclear,tracking estimate,2,0.0,33.0,2026-01-03,WOS@WWW
 UW-Whitewater,Collin Madson,guarding the screener,Ball screen,Switch,coach tag,1,0.0,100.0,2026-01-03,WOS@WWW
 UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,1.0,17.0,2026-01-03,WOS@WWW
-UW-Whitewater,Darius Chestnut,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,2.0,67.0,2026-01-03,WOS@WWW
-UW-Whitewater,Darius Chestnut,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,33.0,2026-01-03,WOS@WWW
-UW-Whitewater,Darius Chestnut,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,50.0,2026-01-03,WOS@WWW
-UW-Whitewater,Darius Chestnut,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,50.0,2026-01-03,WOS@WWW
+UW-Whitewater,Darius Chestnut,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,1.0,75.0,2026-01-03,WOS@WWW
+UW-Whitewater,Darius Chestnut,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,25.0,2026-01-03,WOS@WWW
+UW-Whitewater,Darius Chestnut,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,100.0,2026-01-03,WOS@WWW
 UW-Whitewater,JR Lukenbill,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,0.67,75.0,2026-01-03,WOS@WWW
 UW-Whitewater,JR Lukenbill,guarding the player screened,Ball screen,Stay,coach tag,1,0.0,100.0,2026-01-03,WOS@WWW
 UW-Whitewater,JR Lukenbill,guarding the player screened,Off-ball screen,Top Lock,coach tag,1,,25.0,2026-01-03,WOS@WWW
@@ -109,87 +106,86 @@ UW-Whitewater,Jake Quast,guarding the player screened,Ball screen,Switch,coach t
 UW-Whitewater,Jake Quast,guarding the player screened,Ball screen,unclear,tracking estimate,1,3.0,50.0,2026-01-03,WOS@WWW
 UW-Whitewater,Jake Quast,guarding the screener,Off-ball screen,unclear,tracking estimate,2,0.5,100.0,2026-01-03,WOS@WWW
 UW-Whitewater,Jake Quast,guarding the screener,Ball screen,unclear,tracking estimate,1,2.0,100.0,2026-01-03,WOS@WWW
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,1.33,50.0,2026-01-03,WOS@WWW
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,33.0,2026-01-03,WOS@WWW
+UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,40.0,2026-01-03,WOS@WWW
+UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,40.0,2026-01-03,WOS@WWW
 UW-Whitewater,Joey Berezowitz,guarding the player screened,Ball screen,Switch,coach tag,1,0.0,50.0,2026-01-03,WOS@WWW
 UW-Whitewater,Joey Berezowitz,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,1.0,50.0,2026-01-03,WOS@WWW
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,1.0,17.0,2026-01-03,WOS@WWW
+UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,1.0,20.0,2026-01-03,WOS@WWW
+UW-Whitewater,Joey Berezowitz,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.0,75.0,2026-01-03,WOS@WWW
 UW-Whitewater,Joey Berezowitz,guarding the screener,Ball screen,unclear,tracking estimate,2,2.5,100.0,2026-01-03,WOS@WWW
-UW-Whitewater,Joey Berezowitz,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,67.0,2026-01-03,WOS@WWW
-UW-Whitewater,Joey Berezowitz,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,33.0,2026-01-03,WOS@WWW
+UW-Whitewater,Joey Berezowitz,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,25.0,2026-01-03,WOS@WWW
 UW-Whitewater,Kelton McEwen,guarding the player screened,Ball screen,unclear,tracking estimate,1,2.0,100.0,2026-01-03,WOS@WWW
 UW-Whitewater,Kelton McEwen,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,100.0,2026-01-03,WOS@WWW
 UW-Whitewater,Luke Bara,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,1.0,67.0,2026-01-03,WOS@WWW
 UW-Whitewater,Luke Bara,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,33.0,2026-01-03,WOS@WWW
-UW-Whitewater,Luke Bara,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.0,60.0,2026-01-03,WOS@WWW
-UW-Whitewater,Luke Bara,guarding the screener,Off-ball screen,unclear,tracking estimate,2,2.0,40.0,2026-01-03,WOS@WWW
+UW-Whitewater,Luke Bara,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,1.5,50.0,2026-01-03,WOS@WWW
+UW-Whitewater,Luke Bara,guarding the screener,Off-ball screen,unclear,tracking estimate,2,2.0,50.0,2026-01-03,WOS@WWW
 UW-Whitewater,Luke Bara,guarding the screener,Ball screen,back (drop),tracking estimate,1,2.0,100.0,2026-01-03,WOS@WWW
 UW-Whitewater,Oskar Kangas,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,100.0,2026-01-03,WOS@WWW
-UW-Whitewater,Richie Warren,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,0.67,67.0,2026-01-03,WOS@WWW
-UW-Whitewater,Richie Warren,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,17.0,2026-01-03,WOS@WWW
-UW-Whitewater,Richie Warren,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,17.0,2026-01-03,WOS@WWW
-UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,unclear,tracking estimate,7,0.4,64.0,2026-01-03,WOS@WWW
-UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,18.0,2026-01-03,WOS@WWW
+UW-Whitewater,Richie Warren,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,1.0,60.0,2026-01-03,WOS@WWW
+UW-Whitewater,Richie Warren,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,20.0,2026-01-03,WOS@WWW
+UW-Whitewater,Richie Warren,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,20.0,2026-01-03,WOS@WWW
+UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,unclear,tracking estimate,8,0.33,67.0,2026-01-03,WOS@WWW
+UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,17.0,2026-01-03,WOS@WWW
 UW-Whitewater,Richie Warren,guarding the screener,Ball screen,Switch,coach tag,1,0.0,50.0,2026-01-03,WOS@WWW
 UW-Whitewater,Richie Warren,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,50.0,2026-01-03,WOS@WWW
-UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,Under,coach tag,1,3.0,9.0,2026-01-03,WOS@WWW
-UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,9.0,2026-01-03,WOS@WWW
+UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,Under,coach tag,1,3.0,8.0,2026-01-03,WOS@WWW
+UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,8.0,2026-01-03,WOS@WWW
 UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,2.0,100.0,2026-01-03,WOS@WWW
 UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0,2026-01-03,WOS@WWW
 UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,100.0,2026-01-03,WOS@WWW
 UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,100.0,2026-01-03,WOS@WWW
-Coe Kohawks,Aleks Jajic,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,33.0,2025-12-30,WWW@COE
-Coe Kohawks,Aleks Jajic,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,33.0,2025-12-30,WWW@COE
-Coe Kohawks,Aleks Jajic,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,33.0,2025-12-30,WWW@COE
-Coe Kohawks,Aleks Jajic,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
+Coe Kohawks,Aleks Jajic,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
+Coe Kohawks,Aleks Jajic,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,100.0,2025-12-30,WWW@COE
 Coe Kohawks,Austin Beeson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
-Coe Kohawks,Austin Beeson,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,100.0,2025-12-30,WWW@COE
+Coe Kohawks,Austin Beeson,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
 Coe Kohawks,C. Reece Breitenbach,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,100.0,2025-12-30,WWW@COE
-Coe Kohawks,C. Reece Breitenbach,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
 Coe Kohawks,C. Reece Breitenbach,guarding the screener,Ball screen,back (drop),tracking estimate,1,2.0,100.0,2025-12-30,WWW@COE
-Coe Kohawks,C. Reece Breitenbach,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
-Coe Kohawks,Cooper Nailor,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,6,1.2,55.0,2025-12-30,WWW@COE
-Coe Kohawks,Cooper Nailor,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,1.0,36.0,2025-12-30,WWW@COE
-Coe Kohawks,Cooper Nailor,guarding the player screened,Ball screen,unclear,tracking estimate,1,3.0,100.0,2025-12-30,WWW@COE
-Coe Kohawks,Cooper Nailor,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,9.0,2025-12-30,WWW@COE
-Coe Kohawks,Cooper Nailor,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,0.75,56.0,2025-12-30,WWW@COE
-Coe Kohawks,Cooper Nailor,guarding the screener,Off-ball screen,unclear,tracking estimate,4,1.0,44.0,2025-12-30,WWW@COE
-Coe Kohawks,Cooper Nailor,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
-Coe Kohawks,Cooper Nailor,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
-Coe Kohawks,Deuce Walters,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
-Coe Kohawks,Deuce Walters,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
-Coe Kohawks,Deuce Walters,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
-Coe Kohawks,Deuce Walters,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,2.0,50.0,2025-12-30,WWW@COE
-Coe Kohawks,Deuce Walters,guarding the screener,Off-ball screen,unclear,tracking estimate,7,1.14,50.0,2025-12-30,WWW@COE
-Coe Kohawks,Deuce Walters,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,6,1.83,43.0,2025-12-30,WWW@COE
-Coe Kohawks,Deuce Walters,guarding the screener,Ball screen,unclear,tracking estimate,1,2.0,100.0,2025-12-30,WWW@COE
-Coe Kohawks,Deuce Walters,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,7.0,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Bowman,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,1.5,56.0,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Bowman,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.67,33.0,2025-12-30,WWW@COE
+Coe Kohawks,C. Reece Breitenbach,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,3.0,50.0,2025-12-30,WWW@COE
+Coe Kohawks,C. Reece Breitenbach,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
+Coe Kohawks,Cooper Nailor,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,1.0,44.0,2025-12-30,WWW@COE
+Coe Kohawks,Cooper Nailor,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,1.0,44.0,2025-12-30,WWW@COE
+Coe Kohawks,Cooper Nailor,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
+Coe Kohawks,Cooper Nailor,guarding the player screened,Ball screen,unclear,tracking estimate,1,3.0,50.0,2025-12-30,WWW@COE
+Coe Kohawks,Cooper Nailor,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,11.0,2025-12-30,WWW@COE
+Coe Kohawks,Cooper Nailor,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,6,0.75,60.0,2025-12-30,WWW@COE
+Coe Kohawks,Cooper Nailor,guarding the screener,Off-ball screen,unclear,tracking estimate,4,1.0,40.0,2025-12-30,WWW@COE
+Coe Kohawks,Cooper Nailor,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
+Coe Kohawks,Deuce Walters,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,0.0,40.0,2025-12-30,WWW@COE
+Coe Kohawks,Deuce Walters,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,2.0,40.0,2025-12-30,WWW@COE
+Coe Kohawks,Deuce Walters,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
+Coe Kohawks,Deuce Walters,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,3.0,20.0,2025-12-30,WWW@COE
+Coe Kohawks,Deuce Walters,guarding the screener,Off-ball screen,unclear,tracking estimate,4,1.0,50.0,2025-12-30,WWW@COE
+Coe Kohawks,Deuce Walters,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.33,38.0,2025-12-30,WWW@COE
+Coe Kohawks,Deuce Walters,guarding the screener,Ball screen,unclear,tracking estimate,2,1.0,100.0,2025-12-30,WWW@COE
+Coe Kohawks,Deuce Walters,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,12.0,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Bowman,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,1.0,50.0,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Bowman,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.67,38.0,2025-12-30,WWW@COE
 Coe Kohawks,Jackson Bowman,guarding the player screened,Ball screen,back (drop),tracking estimate,1,2.0,50.0,2025-12-30,WWW@COE
 Coe Kohawks,Jackson Bowman,guarding the player screened,Ball screen,unclear,tracking estimate,1,2.0,50.0,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Bowman,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,11.0,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Bowman,guarding the screener,Ball screen,unclear,tracking estimate,2,2.5,100.0,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Bowman,guarding the screener,Off-ball screen,unclear,tracking estimate,2,0.5,67.0,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Bowman,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,33.0,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Newell,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,1.0,100.0,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Bowman,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,12.0,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Bowman,guarding the screener,Ball screen,unclear,tracking estimate,2,2.5,67.0,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Bowman,guarding the screener,Off-ball screen,unclear,tracking estimate,2,0.5,100.0,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Bowman,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,33.0,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Newell,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,0.67,75.0,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Newell,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,25.0,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Newell,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,1.5,67.0,2025-12-30,WWW@COE
 Coe Kohawks,Jackson Newell,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Newell,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Newell,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,50.0,2025-12-30,WWW@COE
-Coe Kohawks,Jay Akin,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,1.33,75.0,2025-12-30,WWW@COE
-Coe Kohawks,Jay Akin,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,25.0,2025-12-30,WWW@COE
-Coe Kohawks,Jay Akin,guarding the screener,Off-ball screen,unclear,tracking estimate,2,1.0,100.0,2025-12-30,WWW@COE
-Coe Kohawks,Kanyon Bryte,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,0.67,50.0,2025-12-30,WWW@COE
-Coe Kohawks,Kanyon Bryte,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.5,33.0,2025-12-30,WWW@COE
-Coe Kohawks,Kanyon Bryte,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,17.0,2025-12-30,WWW@COE
-Coe Kohawks,Kanyon Bryte,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,7,0.0,78.0,2025-12-30,WWW@COE
-Coe Kohawks,Kanyon Bryte,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,11.0,2025-12-30,WWW@COE
-Coe Kohawks,Kanyon Bryte,guarding the screener,Off-ball screen,unclear,tracking estimate,1,1.0,11.0,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Newell,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,33.0,2025-12-30,WWW@COE
+Coe Kohawks,Jay Akin,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,1.0,67.0,2025-12-30,WWW@COE
+Coe Kohawks,Jay Akin,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
+Coe Kohawks,Jay Akin,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,33.0,2025-12-30,WWW@COE
+Coe Kohawks,Jay Akin,guarding the screener,Off-ball screen,unclear,tracking estimate,4,1.33,100.0,2025-12-30,WWW@COE
+Coe Kohawks,Kanyon Bryte,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,1.0,56.0,2025-12-30,WWW@COE
+Coe Kohawks,Kanyon Bryte,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,1.0,33.0,2025-12-30,WWW@COE
+Coe Kohawks,Kanyon Bryte,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,11.0,2025-12-30,WWW@COE
+Coe Kohawks,Kanyon Bryte,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,6,0.0,75.0,2025-12-30,WWW@COE
+Coe Kohawks,Kanyon Bryte,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,12.0,2025-12-30,WWW@COE
+Coe Kohawks,Kanyon Bryte,guarding the screener,Off-ball screen,unclear,tracking estimate,1,1.0,12.0,2025-12-30,WWW@COE
 Coe Kohawks,Ryan Dolphin,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,0.67,50.0,2025-12-30,WWW@COE
 Coe Kohawks,Ryan Dolphin,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,1.0,50.0,2025-12-30,WWW@COE
-Coe Kohawks,Ryan Dolphin,guarding the player screened,Ball screen,unclear,tracking estimate,1,2.0,100.0,2025-12-30,WWW@COE
-Coe Kohawks,Ryan Dolphin,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,1.0,80.0,2025-12-30,WWW@COE
-Coe Kohawks,Ryan Dolphin,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,20.0,2025-12-30,WWW@COE
+Coe Kohawks,Ryan Dolphin,guarding the player screened,Ball screen,unclear,tracking estimate,2,1.0,100.0,2025-12-30,WWW@COE
+Coe Kohawks,Ryan Dolphin,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,1.2,100.0,2025-12-30,WWW@COE
 Coe Kohawks,Zach Strauss,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
 Coe Kohawks,Zach Strauss,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
 Coe Kohawks,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,1,,100.0,2025-12-30,WWW@COE
@@ -197,56 +193,56 @@ Coe Kohawks,unnamed defense,guarding the player screened,Off-ball screen,stayed 
 Coe Kohawks,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,1,,100.0,2025-12-30,WWW@COE
 Coe Kohawks,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,100.0,2025-12-30,WWW@COE
 UW-Whitewater,Agape Keyes Jr.,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,100.0,2025-12-30,WWW@COE
-UW-Whitewater,Brock Marino,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,2.33,80.0,2025-12-30,WWW@COE
-UW-Whitewater,Brock Marino,guarding the player screened,Ball screen,unclear,tracking estimate,2,0.0,100.0,2025-12-30,WWW@COE
-UW-Whitewater,Brock Marino,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,20.0,2025-12-30,WWW@COE
-UW-Whitewater,Brock Marino,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,0.67,100.0,2025-12-30,WWW@COE
-UW-Whitewater,Brock Marino,guarding the screener,Ball screen,unclear,tracking estimate,1,2.0,100.0,2025-12-30,WWW@COE
-UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,1.4,50.0,2025-12-30,WWW@COE
-UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,unclear,tracking estimate,5,1.6,50.0,2025-12-30,WWW@COE
-UW-Whitewater,Collin Madson,guarding the player screened,Ball screen,back (drop),tracking estimate,1,1.0,100.0,2025-12-30,WWW@COE
-UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,unclear,tracking estimate,2,0.0,50.0,2025-12-30,WWW@COE
-UW-Whitewater,Collin Madson,guarding the screener,Ball screen,back (drop),tracking estimate,1,3.0,100.0,2025-12-30,WWW@COE
-UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,25.0,2025-12-30,WWW@COE
-UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,25.0,2025-12-30,WWW@COE
+UW-Whitewater,Brock Marino,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,1.4,83.0,2025-12-30,WWW@COE
+UW-Whitewater,Brock Marino,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
+UW-Whitewater,Brock Marino,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,17.0,2025-12-30,WWW@COE
+UW-Whitewater,Brock Marino,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.0,100.0,2025-12-30,WWW@COE
+UW-Whitewater,Brock Marino,guarding the screener,Ball screen,unclear,tracking estimate,2,1.0,100.0,2025-12-30,WWW@COE
+UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,unclear,tracking estimate,6,1.67,67.0,2025-12-30,WWW@COE
+UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,1.33,33.0,2025-12-30,WWW@COE
+UW-Whitewater,Collin Madson,guarding the screener,Ball screen,back (drop),tracking estimate,2,2.0,100.0,2025-12-30,WWW@COE
+UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,33.0,2025-12-30,WWW@COE
+UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,33.0,2025-12-30,WWW@COE
+UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,33.0,2025-12-30,WWW@COE
 UW-Whitewater,Darius Chestnut,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,0.67,67.0,2025-12-30,WWW@COE
+UW-Whitewater,Darius Chestnut,guarding the player screened,Ball screen,back (drop),tracking estimate,2,1.5,50.0,2025-12-30,WWW@COE
 UW-Whitewater,Darius Chestnut,guarding the player screened,Ball screen,unclear,tracking estimate,2,1.0,50.0,2025-12-30,WWW@COE
 UW-Whitewater,Darius Chestnut,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,33.0,2025-12-30,WWW@COE
-UW-Whitewater,Darius Chestnut,guarding the player screened,Ball screen,back (drop),tracking estimate,1,3.0,25.0,2025-12-30,WWW@COE
-UW-Whitewater,Darius Chestnut,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,0.0,25.0,2025-12-30,WWW@COE
-UW-Whitewater,Darius Chestnut,guarding the screener,Off-ball screen,unclear,tracking estimate,3,1.67,60.0,2025-12-30,WWW@COE
-UW-Whitewater,Darius Chestnut,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,40.0,2025-12-30,WWW@COE
+UW-Whitewater,Darius Chestnut,guarding the screener,Off-ball screen,unclear,tracking estimate,2,1.5,67.0,2025-12-30,WWW@COE
+UW-Whitewater,Darius Chestnut,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,33.0,2025-12-30,WWW@COE
 UW-Whitewater,Isaiah Robinson,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,100.0,2025-12-30,WWW@COE
 UW-Whitewater,Isaiah Robinson,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,100.0,2025-12-30,WWW@COE
 UW-Whitewater,JR Lukenbill,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
-UW-Whitewater,JR Lukenbill,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
-UW-Whitewater,JR Lukenbill,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,0.0,50.0,2025-12-30,WWW@COE
-UW-Whitewater,JR Lukenbill,guarding the screener,Off-ball screen,unclear,tracking estimate,3,1.67,50.0,2025-12-30,WWW@COE
+UW-Whitewater,JR Lukenbill,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,3.0,50.0,2025-12-30,WWW@COE
+UW-Whitewater,JR Lukenbill,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
+UW-Whitewater,JR Lukenbill,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,0.0,43.0,2025-12-30,WWW@COE
+UW-Whitewater,JR Lukenbill,guarding the screener,Off-ball screen,unclear,tracking estimate,3,1.67,43.0,2025-12-30,WWW@COE
 UW-Whitewater,JR Lukenbill,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
 UW-Whitewater,JR Lukenbill,guarding the screener,Ball screen,blitz / trap,tracking estimate,1,,50.0,2025-12-30,WWW@COE
-UW-Whitewater,Jake Quast,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,0.5,71.0,2025-12-30,WWW@COE
-UW-Whitewater,Jake Quast,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,29.0,2025-12-30,WWW@COE
-UW-Whitewater,Jake Quast,guarding the screener,Ball screen,back (drop),tracking estimate,2,0.5,100.0,2025-12-30,WWW@COE
-UW-Whitewater,Jake Quast,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,2.0,50.0,2025-12-30,WWW@COE
-UW-Whitewater,Jake Quast,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,25.0,2025-12-30,WWW@COE
+UW-Whitewater,JR Lukenbill,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,14.0,2025-12-30,WWW@COE
+UW-Whitewater,Jake Quast,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,0.5,62.0,2025-12-30,WWW@COE
+UW-Whitewater,Jake Quast,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.0,38.0,2025-12-30,WWW@COE
+UW-Whitewater,Jake Quast,guarding the player screened,Ball screen,blitz / trap,tracking estimate,1,,100.0,2025-12-30,WWW@COE
+UW-Whitewater,Jake Quast,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,2.0,75.0,2025-12-30,WWW@COE
+UW-Whitewater,Jake Quast,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
 UW-Whitewater,Jake Quast,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,25.0,2025-12-30,WWW@COE
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,0.5,80.0,2025-12-30,WWW@COE
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,2.0,20.0,2025-12-30,WWW@COE
-UW-Whitewater,Joey Berezowitz,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,2.67,100.0,2025-12-30,WWW@COE
+UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,0.67,67.0,2025-12-30,WWW@COE
+UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,2.5,33.0,2025-12-30,WWW@COE
+UW-Whitewater,Joey Berezowitz,guarding the player screened,Ball screen,back (drop),tracking estimate,1,1.0,50.0,2025-12-30,WWW@COE
+UW-Whitewater,Joey Berezowitz,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
+UW-Whitewater,Joey Berezowitz,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,1.25,100.0,2025-12-30,WWW@COE
 UW-Whitewater,Joey Berezowitz,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
-UW-Whitewater,Kelton McEwen,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,1.75,80.0,2025-12-30,WWW@COE
+UW-Whitewater,Kelton McEwen,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,1.67,100.0,2025-12-30,WWW@COE
 UW-Whitewater,Kelton McEwen,guarding the player screened,Ball screen,back (drop),tracking estimate,2,0.0,100.0,2025-12-30,WWW@COE
-UW-Whitewater,Kelton McEwen,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,20.0,2025-12-30,WWW@COE
-UW-Whitewater,Kelton McEwen,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,67.0,2025-12-30,WWW@COE
-UW-Whitewater,Kelton McEwen,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
-UW-Whitewater,Kelton McEwen,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
-UW-Whitewater,Kelton McEwen,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,33.0,2025-12-30,WWW@COE
-UW-Whitewater,Luke Bara,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,1.25,67.0,2025-12-30,WWW@COE
-UW-Whitewater,Luke Bara,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,33.0,2025-12-30,WWW@COE
-UW-Whitewater,Luke Bara,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,6,0.8,75.0,2025-12-30,WWW@COE
-UW-Whitewater,Luke Bara,guarding the screener,Ball screen,unclear,tracking estimate,2,0.0,100.0,2025-12-30,WWW@COE
+UW-Whitewater,Kelton McEwen,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,1.67,57.0,2025-12-30,WWW@COE
+UW-Whitewater,Kelton McEwen,guarding the screener,Off-ball screen,unclear,tracking estimate,3,0.67,43.0,2025-12-30,WWW@COE
+UW-Whitewater,Kelton McEwen,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
+UW-Whitewater,Luke Bara,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,1.25,80.0,2025-12-30,WWW@COE
+UW-Whitewater,Luke Bara,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
+UW-Whitewater,Luke Bara,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,20.0,2025-12-30,WWW@COE
+UW-Whitewater,Luke Bara,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,6,0.67,75.0,2025-12-30,WWW@COE
 UW-Whitewater,Luke Bara,guarding the screener,Off-ball screen,unclear,tracking estimate,2,1.5,25.0,2025-12-30,WWW@COE
+UW-Whitewater,Luke Bara,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
 UW-Whitewater,Matthew McKay,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,50.0,2025-12-30,WWW@COE
 UW-Whitewater,Matthew McKay,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
 UW-Whitewater,Mikey Wildes,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,67.0,2025-12-30,WWW@COE
@@ -254,16 +250,17 @@ UW-Whitewater,Mikey Wildes,guarding the player screened,Off-ball screen,stayed a
 UW-Whitewater,Mikey Wildes,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,100.0,2025-12-30,WWW@COE
 UW-Whitewater,Richie Warren,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,100.0,2025-12-30,WWW@COE
 UW-Whitewater,Richie Warren,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
-UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,100.0,2025-12-30,WWW@COE
+UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,1.5,67.0,2025-12-30,WWW@COE
 UW-Whitewater,Richie Warren,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
+UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,unclear,tracking estimate,1,3.0,33.0,2025-12-30,WWW@COE
 UW-Whitewater,Trent Grunewald,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,1.5,100.0,2025-12-30,WWW@COE
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Ball screen,blitz / trap,tracking estimate,1,,50.0,2025-12-30,WWW@COE
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Off-ball screen,unclear,tracking estimate,5,1.0,56.0,2025-12-30,WWW@COE
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,2.33,44.0,2025-12-30,WWW@COE
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,50.0,2025-12-30,WWW@COE
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,6,1.8,86.0,2025-12-30,WWW@COE
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,0.0,100.0,2025-12-30,WWW@COE
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,14.0,2025-12-30,WWW@COE
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Off-ball screen,unclear,tracking estimate,5,1.0,62.0,2025-12-30,WWW@COE
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,2.33,38.0,2025-12-30,WWW@COE
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Ball screen,back (drop),tracking estimate,2,0.0,67.0,2025-12-30,WWW@COE
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,33.0,2025-12-30,WWW@COE
 UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,50.0,2025-12-30,WWW@COE
 UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,50.0,2025-12-30,WWW@COE
 UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,50.0,2025-12-30,WWW@COE

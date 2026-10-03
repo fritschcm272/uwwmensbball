@@ -555,7 +555,11 @@ def play_review():
                           "synergy_pos": int(pos) if pd.notna(pos) else None,
                           "video_at": (f"{int(vs // 60)}:{int(vs % 60):02d}" if pd.notna(vs) else None),
                           "pictures": pics, "fields": fields,
-                          "five": {"offense": _trk_five(r.get("offense_lineup")), "defense": _trk_five(r.get("defense_lineup"))}})
+                          "five": {"offense": _trk_five(r.get("offense_lineup")), "defense": _trk_five(r.get("defense_lineup"))},
+                          # CONFIRMED CHANGE (requested): the "Your check" dropdown shows jersey numbers ("really #12 Marino"),
+                          # so each name in the five carries its number label (same numtxt as the box labels)
+                          "five_labels": {nm: numtxt(nm) for side in ("offense", "defense")
+                                          for nm in _trk_five(r.get(f"{side}_lineup"))}})
         # every answer already known for each field (coaches' Titles and the model's answers, all games) -- offered as
         # suggestions for a typed answer, so it matches an existing spelling (page and app)
         vocab = {}
@@ -674,9 +678,10 @@ D.plays.forEach((p, pi) => {
          '<div class="side"><h4 style="margin-top:0">Players</h4><table><tr><th>Box</th><th>Side</th><th>Assigned</th><th>Your check</th></tr>';
     pic.boxes.forEach((b, bi) => {
       const mine = (p.five[b.side] || []), other = (p.five[b.side === 'offense' ? 'defense' : 'offense'] || []);
+      const lab = n => ((p.five_labels || {})[n] || n);
       const opts = ['<option value="">-- not checked --</option>', '<option value="correct">correct</option>']
-        .concat(mine.filter(n => n !== b.name).map(n => `<option value="same:${esc(n)}">really ${esc(n)}</option>`))
-        .concat(other.map(n => `<option value="other:${esc(n)}">really ${esc(n)} (other team)</option>`))
+        .concat(mine.filter(n => n !== b.name).map(n => `<option value="same:${esc(n)}">really ${esc(lab(n))}</option>`))
+        .concat(other.map(n => `<option value="other:${esc(n)}">really ${esc(lab(n))} (other team)</option>`))
         .concat(['<option value="__wrong_team__">wrong team (don\'t know who)</option>', '<option value="__not_a_player__">not a player</option>']);
       h += `<tr><td>${b.id}</td><td class="${b.side === 'offense' ? 'off' : 'def'}">${b.side}</td>` +
            `<td>${b.label ? esc(b.label) + ' <small>(' + esc(b.how || '') + ')</small>' : '<i>not named</i>'}</td>` +
