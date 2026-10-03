@@ -30,6 +30,7 @@ import datetime as _pr_dt     # NOT "import datetime": the notebook's datetime i
 import html as _pr_html
 import pandas as pd
 import numpy as np
+from PIL import Image
 
 
 # ---- helpers moved here from the retired "Validation pictures" and "Auto-Title review" sections ------------------
@@ -190,6 +191,30 @@ def _pr_reviewed_keys():
     return keys
 
 
+def _pr_box_crop(src, box, target_h=None):
+    """Close-up of one player's head and chest (top ~65% of his box, padded) from the original frame, enlarged to
+    PLAY_REVIEW_CROP_HEIGHT px tall -> a JPEG data URI (or None)."""
+    import io
+    import base64
+    target_h = int(target_h or globals().get("PLAY_REVIEW_CROP_HEIGHT", 220))
+    x1, y1, x2, y2 = [float(v) for v in box]
+    w, h = x2 - x1, y2 - y1
+    if w <= 2 or h <= 2:
+        return None
+    cx1, cx2 = x1 - 0.30 * w, x2 + 0.30 * w
+    cy1, cy2 = y1 - 0.06 * h, y1 + 0.68 * h
+    W, H = src.size
+    cx1, cy1, cx2, cy2 = max(0, int(cx1)), max(0, int(cy1)), min(W, int(cx2) + 1), min(H, int(cy2) + 1)
+    if cx2 - cx1 < 4 or cy2 - cy1 < 4:
+        return None
+    im = src.crop((cx1, cy1, cx2, cy2))
+    sc = target_h / im.size[1]
+    im = im.resize((max(1, int(im.size[0] * sc)), target_h), Image.LANCZOS)
+    buf = io.BytesIO()
+    im.save(buf, "JPEG", quality=90)
+    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
+
+
 def _pr_boxes(rows, t, Hpx, numtxt):
     boxes = []
     for rr in sorted(rows, key=lambda x: (str(x.get("side")), str(x.get("name")))):
@@ -347,9 +372,15 @@ def _export_play_review_to_app(rdir, slug, game, run, plays, vocab):
             except Exception:
                 im = None
             if im is not None:
-                if im.size[0] > 1100:
-                    im = im.resize((1100, int(im.size[1] * 1100 / im.size[0])), Image.LANCZOS)
-                im.save(os.path.join(dest, name), "JPEG", quality=72, optimize=True)
+                # CONFIRMED CHANGE (requested: much clearer pictures for the player-number checks). The pictures were drawn
+                # 1.6x (1638 px wide, quality 90) and then SHRUNK to 1100 px and re-saved at quality 72 for the app -- a second
+                # round of compression that smeared the numbers. Now kept at their drawn size by default (width / quality in
+                # the notebook cell: PLAY_REVIEW_PICTURE_WIDTH / PLAY_REVIEW_PICTURE_QUALITY).
+                _maxw = int(globals().get("PLAY_REVIEW_PICTURE_WIDTH", 1640))
+                if im.size[0] > _maxw:
+                    im = im.resize((_maxw, int(im.size[1] * _maxw / im.size[0])), Image.LANCZOS)
+                im.save(os.path.join(dest, name), "JPEG", quality=int(globals().get("PLAY_REVIEW_PICTURE_QUALITY", 92)),
+                        optimize=True, subsampling=0)
                 pic["image"] = name
             else:
                 pic["image"] = None
@@ -494,6 +525,17 @@ def play_review():
                     x1, y1, x2, y2 = b["box"]
                     b["nbox"] = [round(x1 / _fw, 4), round((y1 * 1.6 + _hh) / (_fh * 1.6 + _hh), 4),
                                  round(x2 / _fw, 4), round((y2 * 1.6 + _hh) / (_fh * 1.6 + _hh), 4)]
+                # CONFIRMED CHANGE (requested: much clearer pictures for the player-number checks). A zoomed close-up of every
+                # box (head and chest, where the number is) cut from the ORIGINAL captured frame -- not the picture with
+                # boxes drawn on it -- enlarged with Lanczos and shown beside the box's row in the app. Stored in the box
+                # as a small JPEG data URI (box["crop"]).
+                if globals().get("PLAY_REVIEW_CROPS", True):
+                    try:
+                        _src = Image.open(img_path).convert("RGB")
+                        for b in boxes:
+                            b["crop"] = _pr_box_crop(_src, b["box"])
+                    except Exception as _ce:
+                        print(f"  [play review] close-ups not made ({type(_ce).__name__}: {_ce})", flush=True)
                 pics.append({"which": which, "image": fname, "frame_file": files[t], "t": int(t), "boxes": boxes})
             clip_file = _pr_clip(files, rows, numtxt, os.path.join(rdir, f"clip_{cn:03d}")) if PLAY_REVIEW_VIDEO else None
             # the Title review part (same logic as the Auto-Title review)
