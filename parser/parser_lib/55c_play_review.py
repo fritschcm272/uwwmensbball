@@ -6,15 +6,16 @@
 # same time; only 20 plays per game, a random set -- a different 20 when I run it again; a 'wrong team' option; and a
 # gif of the play, the clip, or a link to Synergy").
 #
-# One page per game and run: INPUT_DIR/play_review/<game>/run_<date_time>/review.html. For each of the 20 plays:
+# One review per game and run, in the Streamlit app (package: <data>/play_review/<game>/review.json + media; no review.html
+# any more). For each of the 20 plays:
 #   * an animated GIF of the play -- the tracking frames at real speed, every player's box and assigned number drawn on;
 #   * a link to the game on Synergy with the clip's number and where it starts in the game video;
 #   * the START and END pictures with a row per box: correct / really <player on his team> / really <player on the OTHER
 #     team> / wrong team (don't know who) / not a player;
 #   * the Title review: the coach's Title, the automatic Title (held-out for tagged plays) and right / wrong / can't tell
 #     per field, with a box for the right answer.
-# ONE "Save" downloads play_review_<game>_<run>.json holding both the player checks and the Title answers; the parser
-# picks it up from Downloads next run (player checks -> certain names, "wrong team" moves the player to the other team;
+# The app's Save commits the answers as <data>/play_review_saves/*.json (Titles and player checks are saved separately);
+# the parser reads that folder next run (player checks -> certain names, "wrong team" moves the player to the other team;
 # Title answers -> scored, and labels for the Tag model on untagged plays).
 import os
 import re
@@ -24,6 +25,7 @@ import sys
 import json
 import random
 import subprocess
+import tempfile
 import datetime as _pr_dt     # NOT "import datetime": the notebook's datetime is the class (section 01)
 import html as _pr_html
 import pandas as pd
@@ -423,68 +425,35 @@ def play_review():
     fps = float(globals().get("VISION_TRACK_FPS") or 2.0)
     min_c = float(globals().get("TAG_MODEL_MIN_CONFIDENCE", 0.6))
     if "_play_review_file_saves" in globals():
-        _play_review_file_saves()                     # saved reviews into their run folders first
+        _play_review_file_saves()                     # the saved reviews live in <data>/play_review_saves (one-time copy from the old folders)
     for (gd, gc), g in pc.groupby(["game_date", "game_code"], dropna=False):
         _slug_app = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
         _pkg = os.path.join(_pr_app_dir(), "play_review", _slug_app)
-        # the app's copy of this game's review goes once its run has a saved review (a new run replaces it below)
+        # CONFIRMED CHANGE (requested: everything in the data folder; the Title and player-number checks are done in the
+        # Streamlit app, not review.html pages). A game's open review is its package in <data>/play_review/<game>/; it goes
+        # once its run has BOTH parts saved in <data>/play_review_saves (a new run replaces it below). A game with an open,
+        # unfinished review gets no new run (PLAY_REVIEW_REQUIRE_SAVED = False skips that).
         if os.path.exists(os.path.join(_pkg, "review.json")):
             try:
                 with open(os.path.join(_pkg, "review.json"), encoding="utf-8") as fh:
                     _pkg_run = json.load(fh).get("run")
-                _run_dir = os.path.join(INPUT_DIR, "play_review", _slug_app, f"run_{_pkg_run}")
-                if _run_complete(_run_dir):                 # both parts saved (Titles and player checks)
+                if _run_complete(_slug_app, _pkg_run):          # both parts saved (Titles and player checks)
                     shutil.rmtree(_pkg, ignore_errors=True)
                     print(f"Play review: {gd} {gc} -- review run {_pkg_run} is saved; its copy in the app is removed", flush=True)
+                elif globals().get("PLAY_REVIEW_REQUIRE_SAVED", True):
+                    print(f"Play review: {gd} {gc} -- no new run: its open review (run {_pkg_run}) isn't finished yet "
+                          "(its Title checks and its player checks both need saving in the app, on Previous Games and "
+                          "Analytics > Player Number Tracking).", flush=True)
+                    continue
             except Exception:
                 pass
-        # CONFIRMED CHANGE (requested): a new run for a game only when EVERY earlier run folder of that game has its
-        # saved review (.json) in it -- otherwise reviews pile up unfinished. PLAY_REVIEW_REQUIRE_SAVED = False skips this.
-        _slug_chk = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
-        _open = [d for d in sorted(glob.glob(os.path.join(INPUT_DIR, "play_review", _slug_chk, "run_*")))
-                 if os.path.isdir(d) and not _run_complete(d)]       # done = Titles AND player checks saved
-        if _open and globals().get("PLAY_REVIEW_REQUIRE_SAVED", True) and globals().get("PLAY_REVIEW_TO_APP", True):
-            # CONFIRMED BUG (fixed; coach: "the review documents aren't being put in /data"). Only a NEW run was copied to
-            # the app, and a game with an open unsaved run never gets a new one -- so its review never reached the app.
-            # Now the open run itself is copied (its plays, videos and pictures read back out of its review.html).
-            _newest = _open[-1]
-            _cur_run = None
-            if os.path.exists(os.path.join(_pkg, "review.json")):
-                try:
-                    with open(os.path.join(_pkg, "review.json"), encoding="utf-8") as fh:
-                        _cur_run = json.load(fh).get("run")
-                except Exception:
-                    pass
-            _open_run = os.path.basename(_newest).replace("run_", "", 1)
-            if _cur_run == _open_run:
-                print(f"Play review: {gd} {gc} -- its open review (run {_open_run}) is already in the app", flush=True)
-            else:
-                try:
-                    _page = os.path.join(_newest, "review.html")
-                    with open(_page, encoding="utf-8") as fh:
-                        _html = fh.read()
-                    _m = re.search(r"const D = (\{.*?\});\s*const marks", _html, re.S)
-                    if not _m:
-                        raise ValueError("couldn't read the plays from its review.html")
-                    _D = json.loads(_m.group(1))
-                    _export_play_review_to_app(_newest, _slug_app, _D.get("game") or f"{gd}|{gc}",
-                                               _D.get("run") or _open_run, _D.get("plays", []), _D.get("vocab") or {})
-                except Exception as _ae:
-                    print(f"  [play review] {gd} {gc}: open review not copied to the app ({type(_ae).__name__}: {_ae})", flush=True)
-        if _open and globals().get("PLAY_REVIEW_REQUIRE_SAVED", True):
-            print(f"Play review: {gd} {gc} -- no new run: {len(_open)} earlier run(s) not finished yet (its Title checks "
-                  f"and its player checks both need saving): "
-                  + "; ".join(os.path.join(d, "review.html") for d in _open)
-                  + ". Open it, review, press Save (the file is picked up from Downloads), or delete that run folder "
-                    "if you're not doing it.", flush=True)
-            continue
         g = g.assign(_key=[f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}" for _, r in g.iterrows()])
         fresh = g[~g["_key"].isin(done)]
         pool = fresh if len(fresh) else g
         pick = pool.loc[rng.sample(list(pool.index), min(PLAY_REVIEW_PLAYS_PER_GAME, len(pool)))].sort_values("clip_number")
         slug = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
-        rdir = os.path.join(INPUT_DIR, "play_review", slug, f"run_{stamp}")
-        os.makedirs(rdir, exist_ok=True)
+        # scratch folder for this game's pictures / clips while they're built; the finished review goes to <data>/play_review
+        rdir = tempfile.mkdtemp(prefix=f"play_review_{slug}_")
         gnums = _trk_numbers_for_game(gd, gc)
         numtxt = lambda n: f"#{gnums.get(str(n).lower(), '?')} {str(n).split()[-1]}"
         plays = []
@@ -569,158 +538,19 @@ def play_review():
                 if c in play_calls.columns:
                     vals |= {str(v) for v in play_calls[c].dropna() if str(v).strip() and str(v) != "nan"}
             vocab[f] = sorted(vals)
-        # CONFIRMED CHANGE (requested: the play reviews inside the Streamlit app, on Previous Games, saved to GitHub).
+        # CONFIRMED CHANGE (requested: the play reviews inside the Streamlit app, saved to GitHub; no more review.html).
         # The open review goes to the app's data folder (_pr_app_dir()/play_review/<game>/): review.json + each play's
         # video, cover image and pictures (1100 px). Commit / push it with the rest of the data; the app saves each
-        # coach's answers to data/play_review_saves, which the parser picks up after a git pull. One package per game:
+        # coach's answers to data/play_review_saves, which the parser reads after a git pull. One package per game:
         # a new run replaces it, and it's removed once its run has a saved review.
-        if globals().get("PLAY_REVIEW_TO_APP", True):
-            try:
-                _export_play_review_to_app(rdir, slug, f"{gd}|{gc}", stamp, plays, vocab)
-            except Exception as _ae:
-                print(f"  [play review] not exported to the app: {type(_ae).__name__}: {_ae}", flush=True)
-        # CONFIRMED CHANGE (requested: "embed the plays right into the html"). Every play's video and pictures go INSIDE
-        # review.html, so the page is one self-contained file (open it anywhere, share it on its own). About 1 MB per play.
-        if PLAY_REVIEW_EMBED:
-            used = []
-            for p in plays:
-                if p["clip"]:
-                    used.append(p["clip"])
-                    p["clip"] = _pr_embed(rdir, p["clip"], "clip")
-                for pic in p["pictures"]:
-                    used.append(pic["image"])
-                    pic["image"] = _pr_embed(rdir, pic["image"], "image")
-                if p.get("poster"):
-                    used.append(p["poster"])
-                    p["poster"] = _pr_embed(rdir, p["poster"], "image")
-            if not PLAY_REVIEW_KEEP_FILES:
-                for f in used:
-                    try:
-                        os.remove(os.path.join(rdir, f))
-                    except OSError:
-                        pass
-        page = os.path.join(rdir, "review.html")
-        with open(page, "w", encoding="utf-8") as fh:
-            fh.write(_PR_PAGE.replace("__DATA__", json.dumps({"game": f"{gd}|{gc}", "slug": slug, "run": stamp,
-                                                             "plays": plays, "vocab": vocab}, default=str))
-                     .replace("__TITLE__", _pr_html.escape(f"{gd} {gc}")))
+        try:
+            _export_play_review_to_app(rdir, slug, f"{gd}|{gc}", stamp, plays, vocab)
+            shutil.rmtree(rdir, ignore_errors=True)
+        except Exception as _ae:
+            print(f"  [play review] not exported to the app: {type(_ae).__name__}: {_ae} (scratch files kept in {rdir})", flush=True)
         print(f"Play review: {gd} {gc}: {len(plays)} random play(s) ({len(g) - len(fresh)} already reviewed, left out) "
-              f"-- open {page} ({os.path.getsize(page) / 1e6:.0f} MB{', everything inside it' if PLAY_REVIEW_EMBED else ''})",
-              flush=True)
+              f"-- in the app: Previous Games (Title checks) and Analytics > Player Number Tracking (player checks)", flush=True)
 
-
-_PR_PAGE = r"""<!doctype html><html><head><meta charset="utf-8"><title>Play review -- __TITLE__</title>
-<style>body{font-family:Arial,sans-serif;margin:14px;background:#f4f4f4}.play{background:#fff;margin:16px 0;padding:10px;
-border:1px solid #ccc}img{max-width:100%;border:1px solid #999}table{border-collapse:collapse;font-size:13px;margin-top:6px}
-td,th{border:1px solid #ddd;padding:3px 6px;vertical-align:top}.off{color:#c66a00;font-weight:bold}.def{color:#1e7fc8;font-weight:bold}
-.t{font-family:Consolas,monospace;font-size:14px}.ok{background:#e3f4e3}.no{background:#fbe3e3}.uns{color:#888}
-#bar{position:sticky;top:0;background:#4E2A84;color:#fff;padding:8px;z-index:5}button{padding:6px 12px}
-.film{background:#eef3fb;padding:4px 6px;margin-top:4px;font-size:13px}h4{margin:12px 0 2px 0}
-.nav a{margin-right:8px}
-.mini{font-size:12px;color:#555;margin-top:4px}
-.pair{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin:8px 0}
-.pair>.media{flex:0 0 auto;max-width:560px;width:100%}
-.pair>.side{flex:1 1 380px;min-width:320px}
-.pic{width:560px;max-width:100%;cursor:zoom-in}
-.pic.big{width:1300px;max-width:none;cursor:zoom-out}</style></head><body>
-<div id="bar">Play review -- __TITLE__ &nbsp; <button id="save">Save my review</button> <span id="cnt"></span></div>
-<p>20 random plays. For each: watch the video (or open it on Synergy) and check the automatic Title beside it, then
-check the players in the pictures below (click a picture to enlarge it). Title rows where the coach's value and the
-automatic value differ start as <b>wrong</b> with the coach's value filled in -- change any where the coach's tag was the
-miss. You don't have to finish -- save any time; everything you marked counts.</p>
-<div class="nav" id="nav"></div><div id="plays"></div>
-<script>
-const D = __DATA__; const marks = {}, fixes = {}; const prefilled = new Set();
-const norm = x => String(x).toLowerCase().replace(/[^a-z0-9#]+/g, '');   // same comparison as the red / green shading
-const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-document.getElementById('nav').innerHTML = 'Plays: ' + D.plays.map((p, i) => `<a href="#p${i}">#${p.clip_number}</a>`).join('');
-const root = document.getElementById('plays');
-// suggestions for the "right answer" boxes: every answer already known for that field
-document.body.insertAdjacentHTML('beforeend', Object.entries(D.vocab || {}).map(([f, vals]) =>
-  `<datalist id="dl_${esc(f)}">` + vals.map(v => `<option value="${esc(v)}">`).join('') + '</datalist>').join(''));
-D.plays.forEach((p, pi) => {
-  let h = `<div class="play" id="p${pi}"${p.validation ? ' style="border:3px solid #4E2A84"' : ''}><h3>Clip ${p.clip_number} &nbsp; <small>${esc(p.clock)} &nbsp; ${esc(p.synergy)}</small>` +
-          (p.validation ? ' <span style="background:#4E2A84;color:#fff;padding:2px 6px;font-size:12px">VALIDATION PLAY</span>' : '') + '</h3>';
-  // top: the video on the left, the Title check on the right
-  h += '<div class="pair"><div class="media">';
-  if (p.clip && p.clip_kind === 'video') h += `<video src="${esc(p.clip)}"${p.poster ? ` poster="${esc(p.poster)}"` : ''} controls loop muted playsinline preload="metadata" style="width:100%"></video>`;
-  else if (p.clip) h += `<img src="${esc(p.clip)}" style="width:100%">`;
-  if (p.synergy_url) h += `<div class="mini"><a href="${esc(p.synergy_url)}" target="_blank">Open the game on Synergy</a> -- clip #${p.clip_number}` +
-                          (p.synergy_pos ? ` (row ${p.synergy_pos} of the clip list)` : '') + (p.video_at ? `, starts ${esc(p.video_at)} into the game video` : '') + '</div>';
-  h += '</div><div class="side"><h4 style="margin-top:0">Title</h4>' +
-       `<table><tr><td><b>Coach's Title</b></td><td class="t">${p.coach_title ? esc(p.coach_title) : '<i>not tagged</i>'}</td></tr>` +
-       `<tr><td><b>Automatic Title</b></td><td class="t">${p.auto_title ? esc(p.auto_title) : '<i>nothing confident enough yet</i>'}</td></tr></table>`;
-  if (p.film) h += `<div class="film"><b>Seen on the film:</b> ${esc(p.film)}</div>`;
-  if (p.fields.length) {
-    h += '<table><tr><th>Field</th><th>Coach</th><th>Automatic</th><th>Your answer</th></tr>';
-    p.fields.forEach((f, fi) => {
-      const cls = f.same === true ? 'ok' : (f.same === false ? 'no' : '');
-      const auto = f.auto == null ? `<i class="uns">${esc(f.note || 'no answer')}</i>` :
-                   (f.sure ? `${esc(f.auto)} <small>(${Math.round(100*f.conf)}%)</small>` : `<span class="uns">unsure: ${esc(f.auto)} (${Math.round(100*(f.conf||0))}%)</span>`);
-      // CONFIRMED CHANGE (requested): when the coach's value and the automatic value differ, the row starts as
-      // "wrong" with the coach's value filled in. Left untouched it's saved with prefilled: true (the accuracy figures
-      // skip those -- the "coach Titles" comparison already counts them); changed or re-picked, it's a real review.
-      const k = `ti_${pi}_${fi}`;
-      const pre = f.coach != null && f.auto != null && norm(f.coach) !== norm(f.auto);
-      if (pre) { marks[k] = 'wrong'; fixes[k] = f.coach; prefilled.add(k); }
-      h += `<tr class="${cls}"><td>${esc(f.label)}</td><td>${f.coach == null ? '' : esc(f.coach)}</td><td>${auto}</td>` +
-           `<td><select data-k="${k}"><option value="">--</option><option value="right">right</option>` +
-           `<option value="wrong"${pre ? ' selected' : ''}>wrong</option><option value="cant">can't tell</option></select> ` +
-           `<input size="16" placeholder="right answer" list="dl_${esc(f.field)}" data-k="${k}"${pre ? ` value="${esc(f.coach)}"` : ''}></td></tr>`;
-    });
-    h += '</table>';
-  }
-  h += '</div></div>';
-  // below: each still picture on the left, its player checks on the right (click a picture to enlarge it)
-  p.pictures.forEach((pic, ki) => {
-    h += `<div class="pair"><div class="media"><b>${pic.which === 'start' ? 'START of the play' : 'END of the play'}</b><br>` +
-         `<img class="pic" src="${esc(pic.image)}" onclick="this.classList.toggle('big')" title="click to enlarge / shrink"></div>` +
-         '<div class="side"><h4 style="margin-top:0">Players</h4><table><tr><th>Box</th><th>Side</th><th>Assigned</th><th>Your check</th></tr>';
-    pic.boxes.forEach((b, bi) => {
-      const mine = (p.five[b.side] || []), other = (p.five[b.side === 'offense' ? 'defense' : 'offense'] || []);
-      const lab = n => ((p.five_labels || {})[n] || n);
-      const opts = ['<option value="">-- not checked --</option>', '<option value="correct">correct</option>']
-        .concat(mine.filter(n => n !== b.name).map(n => `<option value="same:${esc(n)}">really ${esc(lab(n))}</option>`))
-        .concat(other.map(n => `<option value="other:${esc(n)}">really ${esc(lab(n))} (other team)</option>`))
-        .concat(['<option value="__wrong_team__">wrong team (don\'t know who)</option>', '<option value="__not_a_player__">not a player</option>']);
-      h += `<tr><td>${b.id}</td><td class="${b.side === 'offense' ? 'off' : 'def'}">${b.side}</td>` +
-           `<td>${b.label ? esc(b.label) + ' <small>(' + esc(b.how || '') + ')</small>' : '<i>not named</i>'}</td>` +
-           `<td><select data-k="pl_${pi}_${ki}_${bi}">${opts.join('')}</select></td></tr>`;
-    });
-    h += '</table></div></div>';
-  });
-  root.insertAdjacentHTML('beforeend', h + '</div>');
-});
-const upd = () => document.getElementById('cnt').textContent = Object.keys(marks).length + ' answer(s) marked';
-document.querySelectorAll('select').forEach(s => s.onchange = () => { prefilled.delete(s.dataset.k); if (s.value) marks[s.dataset.k] = s.value; else delete marks[s.dataset.k]; upd(); });
-document.querySelectorAll('input').forEach(i => i.oninput = () => { prefilled.delete(i.dataset.k); fixes[i.dataset.k] = i.value; });
-upd();
-document.getElementById('save').onclick = () => {
-  const out = {game: D.game, run: D.run, saved: new Date().toISOString(), checks: [], answers: []};
-  for (const [k, v] of Object.entries(marks)) {
-    const parts = k.split('_');
-    if (parts[0] === 'pl') {
-      const [pi, ki, bi] = parts.slice(1).map(Number); const p = D.plays[pi], pic = p.pictures[ki], b = pic.boxes[bi];
-      let verdict, name = null;
-      if (v === 'correct') { verdict = 'correct'; name = b.name; }
-      else if (v === '__not_a_player__') verdict = 'not a player';
-      else if (v === '__wrong_team__') verdict = 'wrong team';
-      else if (v.startsWith('same:')) { verdict = 'wrong'; name = v.slice(5); }
-      else if (v.startsWith('other:')) { verdict = 'wrong team'; name = v.slice(6); }
-      out.checks.push({clip_key: p.clip_key, clip_number: p.clip_number, frame_file: pic.frame_file, t: pic.t, px: b.px, py: b.py,
-                       side: b.side, assigned: b.name, assigned_how: b.how, verdict: verdict, true_name: name});
-    } else {
-      const [pi, fi] = parts.slice(1).map(Number); const p = D.plays[pi], f = p.fields[fi];
-      out.answers.push({clip_key: p.clip_key, clip_number: p.clip_number, field: f.field, coach: f.coach, auto: f.auto,
-                        auto_conf: f.conf, verdict: v === 'cant' ? "can't tell" : v, correct: fixes[k] || null,
-                        prefilled: prefilled.has(k)});
-    }
-  }
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 1)], {type: 'application/json'}));
-  a.download = 'play_review_' + D.slug + '_' + D.run + '.json'; a.click();
-};
-</script></body></html>"""
 
 if RUN_PLAY_REVIEW:
     try:

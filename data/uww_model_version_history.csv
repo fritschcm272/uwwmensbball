@@ -1,0 +1,18 @@
+model,version,version_date,kind,signature,detail,recorded
+Tag model: ball_screen_coverage,v2026.10.03,2026-10-03,trained,2026-10-03T11:20:47,"86 tagged clips, 5 answers learned, one answer only",2026-10-03T11:23:17
+Tag model: defense,v2026.10.03,2026-10-03,trained,2026-10-03T11:20:47,"254 tagged clips, 1 answers learned, one answer only",2026-10-03T11:23:17
+Tag model: formation,v2026.10.03,2026-10-03,trained,2026-10-03T11:20:47,"129 tagged clips, 5 answers learned, one answer only",2026-10-03T11:23:17
+Tag model: offball_coverage,v2026.10.03,2026-10-03,trained,2026-10-03T11:20:47,"58 tagged clips, 2 answers learned, one answer only",2026-10-03T11:23:17
+Tag model: play_call,v2026.10.03,2026-10-03,trained,2026-10-03T11:20:47,"160 tagged clips, 7 answers learned, one answer only",2026-10-03T11:23:17
+Tag model: press,v2026.10.03,2026-10-03,trained,2026-10-03T11:20:47,"252 tagged clips, 3 answers learned",2026-10-03T11:23:17
+Tag model: primary_action,v2026.10.03,2026-10-03,trained,2026-10-03T11:20:47,"124 tagged clips, 6 answers learned, one answer only",2026-10-03T11:23:17
+Tag model: screen_defender,v2026.10.03,2026-10-03,trained,2026-10-03T11:20:47,"56 tagged clips, 6 answers learned",2026-10-03T11:23:17
+Tag model: situation,v2026.10.03,2026-10-03,trained,2026-10-03T11:20:47,"298 tagged clips, 5 answers learned",2026-10-03T11:23:17
+Tag model (overall),v2026.10.03,2026-10-03,trained,2026-10-03T11:20:47,newest of 9 field model(s); last retrained field: situation,2026-10-03T11:23:17
+Jersey-number recognizer,v2026.10.03,2026-10-03,trained,2026-10-03T11:16:53,"7446 training crops; 75% of held-back crops right; sources {'reads': 4989, 'extra': 3615, 'coach': 155}",2026-10-03T11:23:17
+Player tracking,v2026.10.02,2026-10-02,pretrained + code,c83069a257fc,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-03T11:23:17
+Jersey-number reader test,v2026.10.03,2026-10-03,pretrained + code,a4e5a83653a7,scores the OCR readers; none retrained here,2026-10-03T11:23:17
+Court mapping,v2026.10.02,2026-10-02,rules + code,001d2b282c11,2 calibration file(s),2026-10-03T11:23:17
+Offensive roles,v2026.10.02,2026-10-02,rules + code,4fe5d5f99a0b,"12 BBall Index-style roles, Division III cut-offs",2026-10-03T11:23:17
+Defensive roles,v2026.10.02,2026-10-02,rules + code,6693b910acf2,"7 BBall Index-style roles, Division III cut-offs",2026-10-03T11:23:17
+Player comparison,v2026.10.02,2026-10-02,rules + code,3edde95be8a3,tag-based similarity; LLM blend off,2026-10-03T11:23:17

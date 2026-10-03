@@ -541,7 +541,7 @@ if RUN_JERSEY_READER_TEST:
         if "coach_checks_all" not in globals() or "_trk_numbers_for_game" not in globals():
             raise RuntimeError("run the notebook from the Play calls cell (or the whole notebook) first")
         _checks, _vf = coach_checks_all()
-        _places = [os.path.join(INPUT_DIR, "track_validation")]
+        _places = [_play_review_file_saves()]
         _st = {"files": len(_vf), "checks": 0, "numbered": 0, "on_disk": 0, "detected": 0}
         _dets = sorted(glob.glob(os.path.join(INPUT_DIR, "_tracking", "detections_*tiles*.pkl")), key=os.path.getmtime)
         _dets = [d_ for d_ in _dets if "jersey" not in d_]
