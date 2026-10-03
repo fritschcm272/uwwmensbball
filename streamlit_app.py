@@ -9,6 +9,7 @@ efficiency/pace, shot quality, ball movement, clutch performance, schedule/rest 
 play notes; see STAT_GLOSSARY for definitions of every derived metric).
 """
 
+import base64
 import hashlib
 import html
 import glob
@@ -5704,6 +5705,15 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
             if not boxes:
                 st.caption("No player boxes in this picture.")
                 continue
+            # CONFIRMED CHANGE (requested: much clearer images for the player-number checks): a zoomed head-and-chest
+            # close-up of every box (cut from the original frame by the parser), so the number can be read.
+            _crops = [(b.get("id"), b.get("label"), b.get("crop")) for b in boxes if b.get("crop")]
+            if _crops:
+                try:
+                    st.image([base64.b64decode(c[2].split(",", 1)[1]) for c in _crops],
+                             caption=[f"{c[0]} \u00b7 {c[1] or 'not named'}" for c in _crops], width=110)
+                except Exception:
+                    pass
             keys = [f"{kp}_b_{run}_{pi}_{ki}_{bi}" for bi in range(len(boxes))]
             df = pd.DataFrame([{"Box": b.get("id"), "Side": b.get("side"),
                                 "Assigned": (f"{b.get('label')} ({b.get('how')})" if b.get("label") else "not named"),
@@ -5936,8 +5946,11 @@ def _pnt_metrics(df):
     c = st.columns(4)
     c[0].metric("Boxes checked", f"{n:,}")
     c[1].metric("Correct (all boxes)", f"{100 * ok / n:.1f}%", f"{ok:,} of {n:,}", delta_color="off")
-    c[2].metric("Correct (named boxes)", f"{100 * ok / max(len(named), 1):.1f}%" if len(named) else "--",
-                f"{ok:,} of {len(named):,}", delta_color="off")
+    # CONFIRMED BUG (fixed): the numerator counted "correct" on boxes the model never named (a coach marking an unnamed
+    # box "correct" = leaving it unnamed, e.g. a referee), so named accuracy was overstated (125 of 343 instead of 107).
+    ok_named = int(named["verdict"].eq("correct").sum())
+    c[2].metric("Correct (named boxes)", f"{100 * ok_named / max(len(named), 1):.1f}%" if len(named) else "--",
+                f"{ok_named:,} of {len(named):,}", delta_color="off")
     c[3].metric("Games / reviewers", f"{df['run'].nunique()} / {df['coach'].nunique()}")
     st.caption("Correct = the coach left the assigned name as right. Wrong player = right team, wrong name. Wrong team = the "
                "box was on the other team. Not a player = referee, bench, etc. 'Named boxes' leaves out boxes the model "

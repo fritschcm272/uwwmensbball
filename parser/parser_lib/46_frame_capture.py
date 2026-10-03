@@ -165,7 +165,11 @@ def _vision_capture(page, row_index, clip_seconds, mode="key"):
     if mode == "track":
         n = _vision_track_count(clip_seconds)
         times = [info["start"] + min(length, k / VISION_TRACK_FPS) for k in range(n)]
-        max_w, q = VISION_TRACK_WIDTH, 0.7
+        # CONFIRMED CHANGE (requested: much clearer images for the player-number tracking). Tracking frames were saved at JPEG
+        # quality 0.70 -- blocky compression right on the small jersey digits the readers have to read. Now
+        # VISION_TRACK_JPEG_QUALITY (default 0.95) for frames captured from now on; frames already on disk are reused as
+        # they are (delete a game's track folder under _vision_frames to recapture it at the new quality).
+        max_w, q = VISION_TRACK_WIDTH, float(globals().get("VISION_TRACK_JPEG_QUALITY", 0.95))
     else:
         n = VISION_FRAMES_PER_CLIP
         times = [info["start"] + length * (0.5 if n == 1 else 0.05 + 0.9 * k / (n - 1)) for k in range(n)]

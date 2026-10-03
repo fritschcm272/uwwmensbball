@@ -16,3 +16,13 @@ Court mapping,v2026.10.02,2026-10-02,rules + code,001d2b282c11,2 calibration fil
 Offensive roles,v2026.10.02,2026-10-02,rules + code,4fe5d5f99a0b,"12 BBall Index-style roles, Division III cut-offs",2026-10-03T11:23:17
 Defensive roles,v2026.10.02,2026-10-02,rules + code,6693b910acf2,"7 BBall Index-style roles, Division III cut-offs",2026-10-03T11:23:17
 Player comparison,v2026.10.02,2026-10-02,rules + code,3edde95be8a3,tag-based similarity; LLM blend off,2026-10-03T11:23:17
+Tag model: ball_screen_coverage,v2026.10.03.2,2026-10-03,trained,2026-10-03T15:28:40,"86 tagged clips, 5 answers learned, one answer only",2026-10-03T15:31:46
+Tag model: defense,v2026.10.03.2,2026-10-03,trained,2026-10-03T15:28:40,"254 tagged clips, 1 answers learned, one answer only",2026-10-03T15:31:46
+Tag model: formation,v2026.10.03.2,2026-10-03,trained,2026-10-03T15:28:40,"129 tagged clips, 5 answers learned, one answer only",2026-10-03T15:31:46
+Tag model: offball_coverage,v2026.10.03.2,2026-10-03,trained,2026-10-03T15:28:40,"58 tagged clips, 2 answers learned, one answer only",2026-10-03T15:31:46
+Tag model: play_call,v2026.10.03.2,2026-10-03,trained,2026-10-03T15:28:40,"160 tagged clips, 7 answers learned, one answer only",2026-10-03T15:31:46
+Tag model: press,v2026.10.03.2,2026-10-03,trained,2026-10-03T15:28:40,"252 tagged clips, 3 answers learned",2026-10-03T15:31:46
+Tag model: primary_action,v2026.10.03.2,2026-10-03,trained,2026-10-03T15:28:40,"124 tagged clips, 6 answers learned, one answer only",2026-10-03T15:31:46
+Tag model: screen_defender,v2026.10.03.2,2026-10-03,trained,2026-10-03T15:28:40,"56 tagged clips, 6 answers learned",2026-10-03T15:31:46
+Tag model: situation,v2026.10.03.2,2026-10-03,trained,2026-10-03T15:28:40,"298 tagged clips, 5 answers learned",2026-10-03T15:31:46
+Tag model (overall),v2026.10.03.2,2026-10-03,trained,2026-10-03T15:28:40,newest of 9 field model(s); last retrained field: situation,2026-10-03T15:31:46
