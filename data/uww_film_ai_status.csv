@@ -8,7 +8,7 @@ Players,Right name -- named by coach checked,11 of 14 (79%) -- 3 really someone 
 Players,Right name -- named by lineup matching,"1 of 7 (14%) -- 4 really someone else, 2 not a player",,3,545,3,536,2,359,31906,361,47,160,31,20,329,3450,78
 Players,Right name -- named by Synergy,"0 of 5 (0%) -- 2 not a player, 2 really someone else, 1 wrong team",,3,545,3,536,2,359,31906,361,47,160,31,20,329,3450,78
 Players,Right name -- named by linked possession,0 of 5 (0%) -- 5 really someone else,,3,545,3,536,2,359,31906,361,47,160,31,20,329,3450,78
-Jersey numbers,Number read by the 'trained' reader (in use),66 of 149 (44%) of its answers; no answer on 0 of 149,coach-checked players it never trained on,3,545,3,536,2,359,31906,361,47,160,31,20,329,3450,78
+Jersey numbers,Number read by the 'trained' reader (in use),65 of 149 (44%) of its answers; no answer on 0 of 149,coach-checked players it never trained on,3,545,3,536,2,359,31906,361,47,160,31,20,329,3450,78
 Automatic Title,Situation,"coach reviews 13 of 17 (76%)
 coach Titles, validation plays 13 of 20 (65%)
 coach Titles, held-out plays 75% of 296 (always guessing the usual answer: 75%)","plays the model never trained on, or coaches' right/wrong marks",3,545,3,536,2,359,31906,361,47,160,31,20,329,3450,78

@@ -67,6 +67,7 @@ clip_key,defense_team,offense_team,zone,press,press_type,points,trap_frames,firs
 2026-01-03|162|24 Richie Warren > Spot-Up > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,0,,2026-01-03,WOS@WWW
 2026-01-03|166|24 Richie Warren > Spot-Up > Drives Left > To Basket > Make 2 Pts Foul > 1 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,3.0,0,,2026-01-03,WOS@WWW
 2026-01-03|167|4 Michael Metcalf-Grassman > No Play Type > To Basket > Miss 2 Pts,UW-Whitewater,UW-Oshkosh Titans,False,True,1-2-2 Press,0.0,0,,2026-01-03,WOS@WWW
+2026-01-03|168|0 Collin Madson > Spot-Up > Drives Right > To Basket > Foul,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,2.0,0,,2026-01-03,WOS@WWW
 2026-01-03|169|1 Aiden Hawkinson > No Play Type > Turnover,UW-Whitewater,UW-Oshkosh Titans,False,True,1-2-2 Press,0.0,0,,2026-01-03,WOS@WWW
 2026-01-03|170|22 Joey Berezowitz > Transition > Ballhandler > To Basket > Miss 2 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,0,,2026-01-03,WOS@WWW
 2026-01-03|171|12 Jake Quast > Offensive Rebound > Short > Scoring Attempt > At Basket > Miss 2 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,0,,2026-01-03,WOS@WWW
@@ -98,6 +99,7 @@ clip_key,defense_team,offense_team,zone,press,press_type,points,trap_frames,firs
 2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,0,,2025-12-30,WWW@COE
 2025-12-30|382|22 Jackson Bowman > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Make 2 Pts,UW-Whitewater,Coe Kohawks,False,True,Run & Jump,2.0,1,7.2,2025-12-30,WWW@COE
 2025-12-30|384|22 Jackson Bowman > Non Possession > No Violation,UW-Whitewater,Coe Kohawks,False,True,Run & Jump,,0,,2025-12-30,WWW@COE
+2025-12-30|388|32 Luke Bara > No Play Type > Turnover,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,1,14.2,2025-12-30,WWW@COE
 2025-12-30|400|34 Kanyon Bryte > No Play Type > Foul,UW-Whitewater,Coe Kohawks,False,True,Run & Jump,2.0,0,,2025-12-30,WWW@COE
 2025-12-30|404|21 Brock Marino > Cut > Basket > Foul,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,2.0,0,,2025-12-30,WWW@COE
 2025-12-30|407|4 Deuce Walters > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 22 Jackson Bowman > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,UW-Whitewater,Coe Kohawks,False,True,Run & Jump,3.0,0,,2025-12-30,WWW@COE
@@ -109,8 +111,6 @@ clip_key,defense_team,offense_team,zone,press,press_type,points,trap_frames,firs
 2025-12-30|425|4 Deuce Walters > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,Coe Kohawks,False,True,Run & Jump,0.0,0,,2025-12-30,WWW@COE
 2025-12-30|430|40 Tyshawn Teague-Johnson > Spot-Up > Drives Right > To Basket > Miss 2 Pts,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,0,,2025-12-30,WWW@COE
 2025-12-30|431|5 Cooper Nailor > Hand Off > From Dribble > Right > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,UW-Whitewater,Coe Kohawks,False,True,Run & Jump,3.0,0,,2025-12-30,WWW@COE
-2025-12-30|436|15 Collin Madson > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,0,,2025-12-30,WWW@COE
-2025-12-30|438|15 Collin Madson > Spot-Up > Drives Right > To Basket > Miss 2 Pts,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,0,,2025-12-30,WWW@COE
 2025-12-30|445|21 Brock Marino > Spot-Up > Drives Right > To Basket > Make 2 Pts,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,2.0,0,,2025-12-30,WWW@COE
 2025-12-30|448|32 Luke Bara > ISO > Top > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,0,,2025-12-30,WWW@COE
 2025-12-30|449|21 Brock Marino > Offensive Rebound > Short > Scoring Attempt > Short to < 17' > Make 2 Pts,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,2.0,0,,2025-12-30,WWW@COE
@@ -118,7 +118,6 @@ clip_key,defense_team,offense_team,zone,press,press_type,points,trap_frames,firs
 2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,2,18.0,2025-12-30,WWW@COE
 2025-12-30|454|10 Darius Chestnut > Spot-Up > No Dribble Jumper > Open > Medium/17' to <3p > Miss 2 Pts,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,0,,2025-12-30,WWW@COE
 2025-12-30|461|2 Kelton Mcewen > Hand Off > From Dribble > Left > Dribble Jumper > Long/3pt > Miss 3 Pts,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,0,,2025-12-30,WWW@COE
-2025-12-30|462|22 Jackson Bowman > Transition > Leak Outs > To Basket > Make 2 Pts,UW-Whitewater,Coe Kohawks,False,True,Run & Jump,2.0,0,,2025-12-30,WWW@COE
 2025-12-30|467|40 Tyshawn Teague-Johnson > Cut > Basket > Make 2 Pts,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,2.0,0,,2025-12-30,WWW@COE
 2025-12-30|469|10 Darius Chestnut > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > To Basket > Make 2 Pts,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,2.0,0,,2025-12-30,WWW@COE
 2025-12-30|471|12 Jake Quast > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,0,,2025-12-30,WWW@COE

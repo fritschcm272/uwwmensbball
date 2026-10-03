@@ -5739,7 +5739,7 @@ def _pr_play_widgets(d, pi, store, kp):
 def _pr_payload(d, store, coach, kp, part=None):
     """Every answer for this review -- the ones changed (kept in `store`) and the prefilled defaults. part = "titles" or
     "players" saves only that part (each is its own file; the parser counts a review done when both are saved)."""
-    out = {"game": d.get("game"), "run": d.get("run"), "coach": coach.strip(),
+    out = {"game": d.get("game"), "run": d.get("run_real", d.get("run")), "coach": coach.strip(),
            "saved": pd.Timestamp.now(tz="UTC").isoformat(timespec="seconds"), "checks": [], "answers": [],
            "source": "streamlit app", "part": part}
     run = d.get("run")
@@ -5799,7 +5799,7 @@ def _pr_commit(d, store, coach, kp, part, key_suffix):
         for k in [k for k in _st if k.startswith(kp) and (("_b_" in k) == (part == "players"))]:
             _st.pop(k, None)
     else:
-        st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in your Downloads folder.")
+        st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in the repo's data/play_review_saves folder.")
         st.download_button("Download", json.dumps(out, indent=1), file_name=fname, mime="application/json",
                            key=f"pr_dl_{part}{key_suffix}")
 
@@ -5832,7 +5832,7 @@ def _pr_save_bar(d, store, kp, key_suffix, part="titles"):
             for k in [k for k in _st if k.startswith(kp) and (("_b_" in k) == (part == "players"))]:
                 _st.pop(k, None)
         else:
-            st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in your Downloads folder.")
+            st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in the repo's data/play_review_saves folder.")
             st.download_button("Download", json.dumps(out, indent=1), file_name=fname, mime="application/json",
                                key=f"pr_dl_{part}{key_suffix}")
 
@@ -5899,7 +5899,8 @@ def _pnt_load_checks():
         if not isinstance(d.get("checks"), list):
             continue
         for c in d["checks"]:
-            rows.append({"game": d.get("game"), "run": str(d.get("run")), "coach": d.get("coach"),
+            rows.append({"game": d.get("game"),
+                         "run": re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game", ""))).strip("_") + "_" + str(d.get("run")), "coach": d.get("coach"),
                          "saved": str(d.get("saved", "")), "clip_key": c.get("clip_key"),
                          "frame": c.get("frame_file") or c.get("t"),
                          "px": round(float(c.get("px") or 0)), "py": round(float(c.get("py") or 0)),
@@ -5994,6 +5995,28 @@ def _pnt_check_form(prd):
             _pr_commit(prd, store, coach, "prxpnt", "players", sfx)
 
 
+def _pnt_model_versions():
+    """Which version of each parser model is in use (parser section "Model versions"): version = the date it was trained
+    (models that don't learn: the date their code / settings last changed)."""
+    mv = load_table("uww_model_versions")
+    if mv.empty:
+        return
+    with st.expander(f"\U0001f9ea Model versions ({len(mv)} models)", expanded=False):
+        st.caption("A version is the date the model was trained, e.g. v2026.10.03 (a second training that day ends .2). Models that "
+                   "don't learn -- tracking, court mapping, roles, comparison -- are versioned by the date their code or model "
+                   "settings last changed. Compare these dates with the accuracy below to see whether a retrain helped.")
+        show = mv[[c for c in ("model", "kind", "version", "version_date", "detail") if c in mv.columns]].rename(
+            columns={"model": "Model", "kind": "Kind", "version": "Version", "version_date": "Date", "detail": "Details"})
+        st.dataframe(show, hide_index=True, use_container_width=True)
+        hist = load_table("uww_model_version_history")
+        if not hist.empty:
+            h = hist[[c for c in ("version_date", "model", "version", "detail") if c in hist.columns]]
+            st.markdown("**Version history**")
+            st.dataframe(h.sort_values("version_date", ascending=False).rename(
+                columns={"version_date": "Date", "model": "Model", "version": "Version", "detail": "Details"}),
+                hide_index=True, use_container_width=True)
+
+
 def render_player_number_tracking():
     """Analytics > Player Number Tracking (requested): each available game's player checks (moved here from Video
     Tracking) plus how accurate the model's player numbers have been, grouped by how it assigned them."""
@@ -6008,11 +6031,17 @@ def render_player_number_tracking():
         st.info("No player-check reviews yet. In the parser, run the play review for a game; its review package lands in "
                 "data/play_review/.")
         return
+    _pnt_model_versions()
     pick = st.selectbox("Game", ["All Games"] + list(games), key="pnt_game")
     chosen = [(k, v) for k, v in games.items() if pick == "All Games" or k == pick]
     open_pk = [(k, v) for k, v in chosen if v is not None]
+    # CONFIRMED CHANGE (requested): the metrics sit ABOVE the player checks
+    if not saves.empty and pick != "All Games":
+        saves = saves[saves["game"].map(_pnt_game_label) == pick]
+    _pnt_metrics(saves)
+    st.divider()
     if not open_pk:
-        st.caption("This game has saved checks (metrics below) but no open review package in the app.")
+        st.caption("This game has saved checks (metrics above) but no open review package in the app.")
     for k, v in open_pk:
         if pick == "All Games":
             st.markdown(f"### {k}")
@@ -6021,9 +6050,6 @@ def render_player_number_tracking():
         except Exception as e:
             report_section_error("Player Number Tracking", e)
         st.divider()
-    if not saves.empty and pick != "All Games":
-        saves = saves[saves["game"].map(_pnt_game_label) == pick]
-    _pnt_metrics(saves)
 
 
 def _pbp_txt(v):
@@ -12709,6 +12735,12 @@ def _pr_app_packages():
             with open(f, encoding="utf-8") as fh:
                 d = json.load(fh)
             d["_dir"] = os.path.dirname(f)
+            # CONFIRMED BUG (fixed): the parser stamps ONE run id on every game it reviews in a pass, so two games shared
+            # widget keys, answer stores and "already saved" status. `run` is now unique per game (slug + run); the
+            # parser's own id is kept in `run_real` and is what gets written into saved files.
+            d["slug"] = d.get("slug") or re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game", ""))).strip("_")
+            d["run_real"] = d.get("run")
+            d["run"] = f"{d['slug']}_{d.get('run')}"
             out.append(d)
         except Exception:
             continue
@@ -12722,7 +12754,8 @@ def _pr_app_saves_for(run):
         try:
             with open(f, encoding="utf-8") as fh:
                 d = json.load(fh)
-            if str(d.get("run")) == str(run):
+            _slug = re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game", ""))).strip("_")
+            if str(run) in (str(d.get("run")), f"{_slug}_{d.get('run')}"):
                 parts = ({d["part"]} if d.get("part") in ("titles", "players") else
                          ({"titles"} if isinstance(d.get("answers"), list) else set())
                          | ({"players"} if isinstance(d.get("checks"), list) else set()))
@@ -12873,7 +12906,7 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
     if not coach.strip():
         st.error("Add your name above, then save again.")
         return
-    out = {"game": d.get("game"), "run": d.get("run"), "coach": coach.strip(),
+    out = {"game": d.get("game"), "run": d.get("run_real", d.get("run")), "coach": coach.strip(),
            "saved": pd.Timestamp.now(tz="UTC").isoformat(timespec="seconds"), "checks": [], "answers": [],
            "source": "streamlit app"}
     plays = d.get("plays", [])
@@ -12915,7 +12948,7 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
         st.success(f"Saved -- {len(out['checks'])} player check(s) and {len(out['answers'])} Title answer(s) ({msg}). "
                    "The app restarts briefly when GitHub gets the file; the parser uses it after its next git pull.")
     else:
-        st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in your Downloads folder -- "
+        st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in the repo's data/play_review_saves folder --  "
                    "the parser picks it up from there.")
         st.download_button("Download my review", json.dumps(out, indent=1), file_name=fname, mime="application/json",
                            key=f"pr_dl{key_suffix}")

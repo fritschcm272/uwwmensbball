@@ -1598,11 +1598,26 @@ def _review_parts(doc):
     return ({"titles"} if isinstance(doc.get("answers"), list) else set()) | ({"players"} if isinstance(doc.get("checks"), list) else set())
 
 
-def _run_complete(run_dir):
-    """A review run is done only when BOTH parts are saved (in one file or two)."""
+def _review_saves_dir():
+    """THE one place every saved review lives: <data>/play_review_saves (the Streamlit app commits each coach's Title and
+    player checks there). CONFIRMED CHANGE (requested: everything in the data folder -- the Title and player-number
+    validations are done in the Streamlit app now, not in review.html pages)."""
+    d = os.path.join(globals().get("APP_DATA_DIR") or globals().get("OUTPUT_DIR") or ".", "play_review_saves")
+    os.makedirs(d, exist_ok=True)
+    return d
+
+
+def _run_complete(slug, run):
+    """A game's review run is done only when BOTH parts are saved (in one file or two). Saves are matched on the game
+    (its slug) AND the run id -- one parser pass stamps the same run id on every game it reviews."""
     parts = set()
-    for f in glob.glob(os.path.join(run_dir, "*.json")):
-        parts |= _review_parts(_review_doc(f))
+    for f in glob.glob(os.path.join(_review_saves_dir(), "*.json")):
+        d = _review_doc(f)
+        if d is None or str(d.get("run")) != str(run):
+            continue
+        if re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game"))).strip("_") != slug:
+            continue
+        parts |= _review_parts(d)
     return {"titles", "players"} <= parts
 
 
@@ -1613,76 +1628,57 @@ def _review_files(folder):
 
 
 def _play_review_file_saves():
-    """File every saved Play review (play_review_*.json) into the RUN FOLDER it came from:
-    INPUT_DIR/play_review/<game>/run_<date_time>/. CONFIRMED CHANGE (requested: a new review run for a game only when
-    every earlier run folder has its saved .json). The file says its game and run; copies come from Downloads /
-    OneDrive's Downloads, and files left at the top of play_review by earlier versions are moved in. A file whose run
-    folder no longer exists stays at the top of play_review (it's still read)."""
+    """The folder every saved review is read from: <data>/play_review_saves. CONFIRMED CHANGE (requested: everything in the
+    data folder). Reviews no longer go through run folders or Downloads. ONE TIME, any review .json found in the old
+    places (INPUT_DIR/play_review, track_validation, title_review, the top of INPUT_DIR, Downloads / OneDrive's Downloads)
+    is COPIED into the data folder (originals left alone; the parser doesn't read them any more). A marker file in the
+    folder records that this was done; delete it to migrate again."""
     import shutil
-    prdir = os.path.join(INPUT_DIR, "play_review")
-    os.makedirs(prdir, exist_ok=True)
+    import hashlib
+    saves = _review_saves_dir()
+    marker = os.path.join(saves, ".migrated_from_input_dir")
+    if os.path.exists(marker):
+        return saves
     home = os.path.expanduser("~")
-
-    def run_dir_for(f):
-        game = run = None
-        try:
-            with open(f, encoding="utf-8") as fh:
-                d = json.load(fh)
-            game, run = d.get("game"), d.get("run")
-        except Exception:
-            pass
-        slug = re.sub(r"[^A-Za-z0-9]+", "_", str(game)).strip("_") if game else None
-        if not (slug and run):
-            m = re.match(r"play_review_(.+?)_(\d{8}_\d{4,6})", os.path.basename(f))
-            if m:
-                slug, run = slug or m.group(1), run or m.group(2)
-        if slug and run:
-            d_ = os.path.join(prdir, slug, f"run_{run}")
-            if os.path.isdir(d_):
-                return d_
-        return None
-
-    # reviews saved from the Streamlit app are committed to the repo's data/play_review_saves (APP_DATA_DIR) and
-    # arrive with a git pull -- filed the same way (any name; recognized by contents)
-    _app_saves = os.path.join(globals().get("APP_DATA_DIR") or globals().get("OUTPUT_DIR") or ".", "play_review_saves")
-    for f in (glob.glob(os.path.join(home, "Downloads", "play_review_*.json"))
-              + glob.glob(os.path.join(home, "OneDrive", "Downloads", "play_review_*.json"))
-              + [f for f in glob.glob(os.path.join(_app_saves, "*.json")) if _review_doc(f) is not None]):
-        dst = os.path.join(run_dir_for(f) or prdir, os.path.basename(f))
-        if not os.path.exists(dst) or os.path.getmtime(f) > os.path.getmtime(dst):
-            shutil.copy2(f, dst)
-    for f in [f for f in glob.glob(os.path.join(prdir, "*.json")) if _review_doc(f) is not None]:   # left at the top
-        d_ = run_dir_for(f)
-        if d_:
-            dst = os.path.join(d_, os.path.basename(f))
-            if not os.path.exists(dst) or os.path.getmtime(f) > os.path.getmtime(dst):
-                shutil.move(f, dst)
-            else:
-                os.remove(f)
-    return prdir
+    srcs = []
+    for sub in ("play_review", "track_validation", "title_review"):
+        srcs += _review_files(os.path.join(INPUT_DIR, sub)) if os.path.isdir(os.path.join(INPUT_DIR, sub)) else []
+    for pat in ("track_validation_*.json", "play_review_*.json", "title_review_*.json"):
+        for base in (INPUT_DIR, os.path.join(home, "Downloads"), os.path.join(home, "OneDrive", "Downloads")):
+            srcs += [f for f in glob.glob(os.path.join(base, pat)) if _review_doc(f) is not None]
+    moved = 0
+    for f in sorted(set(os.path.abspath(x) for x in srcs)):
+        with open(f, "rb") as fh:
+            blob = fh.read()
+        h8 = hashlib.md5(blob).hexdigest()[:8]
+        dst = os.path.join(saves, os.path.basename(f))
+        if os.path.exists(dst):
+            with open(dst, "rb") as fh:
+                if fh.read() == blob:
+                    continue                                   # already there, same content
+            root, ext = os.path.splitext(os.path.basename(f))
+            dst = os.path.join(saves, f"{root}_{h8}{ext}")     # same name, different content: keep both
+            if os.path.exists(dst):
+                continue
+        shutil.copy2(f, dst)
+        moved += 1
+    with open(marker, "w", encoding="utf-8") as fh:
+        fh.write(f"migrated {moved} review file(s) from the old folders on {pd.Timestamp.now().isoformat(timespec='seconds')}\n")
+    print(f"Reviews: copied {moved} saved review file(s) from the old input / Downloads folders into {saves} -- "
+          "from now on reviews are read from there only (commit and push that folder with the rest of the data).", flush=True)
+    return saves
 
 
 def coach_checks_all():
-    """Every coach check from the validation pages, merged -> (checks, files).
-    Reads every track_validation_*.json in INPUT_DIR/track_validation and all its game folders (copying in any found in
-    Downloads, OneDrive's Downloads or INPUT_DIR first). Files are merged in the order they were SAVED: if the same box
+    """Every coach check, merged -> (checks, files).
+    Reads every review .json in <data>/play_review_saves (saved from the Streamlit app). Files are merged in the order they were SAVED: if the same box
     (same frame, same spot) was checked more than once, the latest check wins. Each check carries its "game".
     CONFIRMED CHANGE (coach: three checks files in one game folder -- are they all used?). Player tracking, the jersey
     reader test and the recognizer's training set all use this ONE merge now (the reader test used to keep the FIRST
     file's answer for a re-checked box, and the recognizer saved a crop from every file)."""
-    import shutil
-    vdir = os.path.join(INPUT_DIR, "track_validation")
-    os.makedirs(vdir, exist_ok=True)
-    home = os.path.expanduser("~")
-    for f in (glob.glob(os.path.join(home, "Downloads", "track_validation_*.json"))
-              + glob.glob(os.path.join(home, "OneDrive", "Downloads", "track_validation_*.json"))
-              + glob.glob(os.path.join(INPUT_DIR, "track_validation_*.json"))):
-        dst = os.path.join(vdir, os.path.basename(f))
-        if not os.path.exists(dst) or os.path.getmtime(f) > os.path.getmtime(dst):
-            shutil.copy2(f, dst)
-    # the combined Play review (play_review_*.json) holds player checks too -- filed into their run folders
+    # CONFIRMED CHANGE (requested: everything in the data folder): one folder, <data>/play_review_saves
     prdir = _play_review_file_saves()
-    files = sorted(set(_review_files(vdir)) | set(_review_files(prdir)))     # any review .json, whatever its name
+    files = sorted(set(_review_files(prdir)))                 # any review .json, whatever its name
     docs = []
     for f in files:
         try:
@@ -1702,20 +1698,11 @@ def coach_checks_all():
 def title_review_answers():
     """Answers from the Auto-Title review pages (title_review_*.json) -> {(clip_key, field): value}.
     'right' = the automatic answer shown was right; 'wrong' + a typed answer = that answer. Every file under
-    INPUT_DIR/title_review (and any in Downloads / OneDrive's Downloads, copied in) is merged in the order saved --
+    <data>/play_review_saves is merged in the order saved --
     the latest answer for a clip's field wins. Used by the Tag model (as labels for untagged clips) and the review."""
-    import shutil
-    rdir = os.path.join(INPUT_DIR, "title_review")
-    os.makedirs(rdir, exist_ok=True)
-    home = os.path.expanduser("~")
-    for f in (glob.glob(os.path.join(home, "Downloads", "title_review_*.json"))
-              + glob.glob(os.path.join(home, "OneDrive", "Downloads", "title_review_*.json"))):
-        dst = os.path.join(rdir, os.path.basename(f))
-        if not os.path.exists(dst) or os.path.getmtime(f) > os.path.getmtime(dst):
-            shutil.copy2(f, dst)
     prdir = _play_review_file_saves()
     docs = []
-    for f in _review_files(rdir) + _review_files(prdir):                      # any review .json, whatever its name
+    for f in _review_files(prdir):                                            # any review .json, whatever its name
         try:
             with open(f, encoding="utf-8") as fh:
                 d = json.load(fh)

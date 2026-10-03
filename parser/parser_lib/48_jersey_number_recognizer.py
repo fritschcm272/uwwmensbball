@@ -367,18 +367,11 @@ def _jr_inputs_fingerprint():
     validation files, in INPUT_DIR or Downloads), extra-data folders, Roboflow's set, crops added or deleted by hand in
     the training folder, or changed settings -- not from tracking runs (the recognizer never learns from its own
     readings, and the other readers are off; if they're switched back on, their readings count too)."""
-    home = os.path.expanduser("~")
     parts = []
-    places = [os.path.join(INPUT_DIR, "track_validation"), os.path.join(INPUT_DIR, "play_review"), INPUT_DIR,
-              os.path.join(home, "Downloads"), os.path.join(home, "OneDrive", "Downloads")]
-    for pl in places:
-        # inside the review folders any .json counts (a review is recognized by its contents, whatever its name);
-        # Downloads and the top of INPUT_DIR only by the browser's own names
-        review_folder = pl.endswith(("track_validation", "play_review"))
-        pats = ("*.json",) if review_folder else ("track_validation_*.json", "play_review_*.json")
-        for pat in pats:
-            for f in (glob.glob(os.path.join(pl, "**", pat), recursive=True) if review_folder else glob.glob(os.path.join(pl, pat))):
-                parts.append((os.path.basename(f), os.path.getsize(f), int(os.path.getmtime(f))))
+    # CONFIRMED CHANGE (requested: everything in the data folder): coach checks are the saved reviews in
+    # <data>/play_review_saves (any .json there is a review, whatever its name)
+    for f in glob.glob(os.path.join(_play_review_file_saves(), "*.json")):
+        parts.append((os.path.basename(f), os.path.getsize(f), int(os.path.getmtime(f))))
     def _dir_state(d):
         n, latest = 0, 0
         for root, _ds, fs in os.walk(d):
