@@ -5667,87 +5667,55 @@ def _pr_nbox(b, w, h):
 
 
 def _pr_player_widgets(d, pi, store, kp, with_video=True):
-    """The player-checks part of one play's review -- on Analytics > Video Tracking. CONFIRMED CHANGE (requested:
-    click the box in the picture instead of dropdowns beside it). Click a player's box: his choices appear below the
-    picture as one-click buttons; the picture marks every answer on its box (green = correct, red = anything else).
-    Needs the streamlit-image-coordinates package; without it, the dropdowns are used."""
+    """The player-checks part of one play's review, laid out like the local review page (requested; the click-the-box
+    version was too slow -- every click reran the page twice): each picture on the left, a "Players" table on the right
+    (Box | Side | Assigned | Your check). Drawn inside ONE form on Video Tracking, so choosing doesn't rerun the page;
+    the table's values are kept in `store` on each run (only what differs from "-- not checked --")."""
     pl = d["plays"][pi]
     run = d.get("run")
-    try:
-        from streamlit_image_coordinates import streamlit_image_coordinates as _click_img
-    except Exception:
-        _click_img = None
-    if with_video and pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
-        st.video(os.path.join(d["_dir"], pl["clip"]))
+    five = pl.get("five", {}) or {}
+    names = [n for side in ("offense", "defense") for n in (five.get(side) or [])]
+    choices = [_PR_NOT_CHECKED, "correct"] + [f"really {n}" for n in names] + ["wrong team (don't know who)", "not a player"]
     for ki, pic in enumerate(pl.get("pictures", [])):
         path = os.path.join(d["_dir"], pic.get("image") or "")
         boxes = pic.get("boxes", [])
-        cap = "START of the play" if pic.get("which") == "start" else "END of the play"
-        if not (pic.get("image") and os.path.exists(path)):
-            continue
-        if _click_img is None:                  # fallback: the dropdowns beside the picture
-            l2, r2 = st.columns([3, 4])
-            l2.image(path, caption=cap)
-            with r2:
-                for bi, b in enumerate(boxes):
-                    kb = f"{kp}_b_{run}_{pi}_{ki}_{bi}"
-                    opts = _pr_box_choices(pl, b)
-                    cur = store.get(kb, _PR_NOT_CHECKED)
-                    st.selectbox(f"Box {b.get('id')} -- {b.get('side')} -- "
-                                 + (f"{b.get('label')} ({b.get('how')})" if b.get("label") else "not named"),
-                                 opts, index=opts.index(cur) if cur in opts else 0, key=kb, on_change=_pr_keep, args=(store, kb))
-            continue
-        from PIL import Image, ImageDraw
-        im = Image.open(path).convert("RGB")
-        W, H = im.size
-        dr = ImageDraw.Draw(im)
-        sel_key = f"{kp}_sel_{run}_{pi}_{ki}"
-        sel = st.session_state.get(sel_key)
-        for bi, b in enumerate(boxes):
-            v = store.get(f"{kp}_b_{run}_{pi}_{ki}_{bi}", _PR_NOT_CHECKED)
-            x1, y1, x2, y2 = _pr_nbox(b, W, H)
-            r_ = [x1 * W, y1 * H, x2 * W, y2 * H]
-            if v != _PR_NOT_CHECKED:
-                col = (40, 200, 70) if v == "correct" else (230, 50, 50)
-                dr.rectangle(r_, outline=col, width=5)
-                mark = "OK" if v == "correct" else ("X " + v.replace("really ", "").replace(" (other team)", "*")[:18])
-                dr.rectangle([r_[0], r_[3] + 2, r_[0] + 8 + 7 * len(mark), r_[3] + 20], fill=col)
-                dr.text((r_[0] + 4, r_[3] + 4), mark, fill=(255, 255, 255))
-            if sel == bi:
-                dr.rectangle([r_[0] - 4, r_[1] - 4, r_[2] + 4, r_[3] + 4], outline=(255, 235, 0), width=4)
-        st.caption(cap + " -- click a player's box to check him")
-        click = _click_img(im, key=f"{kp}_img_{run}_{pi}_{ki}", use_column_width="always")
-        last_key = f"{kp}_lastclick_{run}_{pi}_{ki}"
-        if click and click != st.session_state.get(last_key):
-            st.session_state[last_key] = click
-            fx = click["x"] / max(click.get("width") or W, 1)
-            fy = click["y"] / max(click.get("height") or H, 1)
-            hits = []
-            for bi, b in enumerate(boxes):
-                x1, y1, x2, y2 = _pr_nbox(b, W, H)
-                if x1 - 0.01 <= fx <= x2 + 0.01 and y1 - 0.01 <= fy <= y2 + 0.01:
-                    hits.append(((x2 - x1) * (y2 - y1), bi))            # the smallest box under the click
-            if hits:
-                st.session_state[sel_key] = min(hits)[1]
-                st.rerun()
-        sel = st.session_state.get(sel_key)
-        if sel is not None and sel < len(boxes):
-            b = boxes[sel]
-            kb = f"{kp}_b_{run}_{pi}_{ki}_{sel}"
-            opts = _pr_box_choices(pl, b)
-            cur = store.get(kb, _PR_NOT_CHECKED)
-            st.markdown(f"**Box {b.get('id')}** -- {b.get('side')} -- "
-                        + (f"{b.get('label')} ({b.get('how')})" if b.get("label") else "not named"))
-            cols = st.columns(min(4, len(opts)))
-            for oi, o in enumerate(opts):
-                if cols[oi % len(cols)].button(("\u25cf " if o == cur else "") + o, key=f"{kb}_btn_{oi}"):
-                    if o == _PR_NOT_CHECKED:
-                        store.pop(kb, None)
-                    else:
-                        store[kb] = o
-                    st.rerun()
-        n_done = sum(1 for bi in range(len(boxes)) if f"{kp}_b_{run}_{pi}_{ki}_{bi}" in store)
-        st.caption(f"{n_done} of {len(boxes)} boxes checked in this picture.")
+        left, right = st.columns([3, 2])
+        with left:
+            st.markdown(f"**{'START' if pic.get('which') == 'start' else 'END'} of the play**")
+            if pic.get("image") and os.path.exists(path):
+                st.image(path)
+        with right:
+            st.markdown("**Players**")
+            if not boxes:
+                st.caption("No player boxes in this picture.")
+                continue
+            keys = [f"{kp}_b_{run}_{pi}_{ki}_{bi}" for bi in range(len(boxes))]
+            df = pd.DataFrame([{"Box": b.get("id"), "Side": b.get("side"),
+                                "Assigned": (f"{b.get('label')} ({b.get('how')})" if b.get("label") else "not named"),
+                                "Your check": (store.get(k, _PR_NOT_CHECKED) if store.get(k, _PR_NOT_CHECKED) in choices
+                                               else _PR_NOT_CHECKED)} for b, k in zip(boxes, keys)])
+            try:
+                data = df.style.apply(lambda c: ["color:#1e7fc8;font-weight:700" if v == "defense" else
+                                                 "color:#c66a00;font-weight:700" if v == "offense" else "" for v in c],
+                                      subset=["Side"])
+            except Exception:
+                data = df
+            cfg = {"Box": st.column_config.TextColumn(disabled=True, width="small"),
+                   "Side": st.column_config.TextColumn(disabled=True, width="small"),
+                   "Assigned": st.column_config.TextColumn(disabled=True),
+                   "Your check": st.column_config.SelectboxColumn(options=choices, required=True)}
+            try:
+                edited = st.data_editor(data, column_config=cfg, hide_index=True, use_container_width=True,
+                                        key=f"{kp}_ptbl_{run}_{pi}_{ki}", num_rows="fixed")
+            except Exception:
+                edited = st.data_editor(df, column_config=cfg, hide_index=True, use_container_width=True,
+                                        key=f"{kp}_ptbl_{run}_{pi}_{ki}", num_rows="fixed")
+            for i, k in enumerate(keys):
+                v = edited.iloc[i]["Your check"] if i < len(edited) else _PR_NOT_CHECKED
+                if v and v != _PR_NOT_CHECKED:
+                    store[k] = v
+                else:
+                    store.pop(k, None)
 
 def _pr_play_widgets(d, pi, store, kp):
     _pr_title_widgets(d, pi, store, kp)
@@ -5787,7 +5755,9 @@ def _pr_payload(d, store, coach, kp, part=None):
                 elif val.endswith("(other team)"):
                     verdict, name = "wrong team", val[len("really "):-len(" (other team)")]
                 else:
-                    verdict, name = "wrong", val[len("really "):]
+                    name = val[len("really "):]
+                    _other5 = pl.get("five", {}).get("defense" if b.get("side") == "offense" else "offense", []) or []
+                    verdict = "wrong team" if name in _other5 else "wrong"    # a name from the other team's five
                 out["checks"].append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
                                       "frame_file": pic.get("frame_file"), "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"),
                                       "side": b.get("side"), "assigned": b.get("name"), "assigned_how": b.get("how"),
@@ -5797,6 +5767,26 @@ def _pr_payload(d, store, coach, kp, part=None):
     elif part == "players":
         out.pop("answers")
     return out
+
+
+def _pr_commit(d, store, coach, kp, part, key_suffix):
+    """Save one part of the review to GitHub (or offer the file)."""
+    what = "Title checks" if part == "titles" else "player checks"
+    out = _pr_payload(d, store, coach, kp, part=part)
+    fname = (f"play_review_{d.get('slug')}_{d.get('run')}_{part}_{re.sub(r'[^A-Za-z0-9]+', '_', coach.strip()).strip('_')}_"
+             f"{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
+    ok, msg = _pr_github_save(fname, out)
+    n = len(out.get("answers", [])) if part == "titles" else len(out.get("checks", []))
+    if ok:
+        st.success(f"Saved {n} {what} ({msg}). The app restarts briefly when GitHub gets the file; the parser uses it "
+                   "after its next git pull. The review is finished once its Title checks AND player checks are saved.")
+        _st = st.session_state.get("pr_answers", {}).get(str(d.get("run")), {})
+        for k in [k for k in _st if k.startswith(kp) and (("_b_" in k) == (part == "players"))]:
+            _st.pop(k, None)
+    else:
+        st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in your Downloads folder.")
+        st.download_button("Download", json.dumps(out, indent=1), file_name=fname, mime="application/json",
+                           key=f"pr_dl_{part}{key_suffix}")
 
 
 def _pr_save_bar(d, store, kp, key_suffix, part="titles"):
@@ -5874,12 +5864,22 @@ def render_video_tracking():
             with st.container():                       # (not an expander: Streamlit can't nest the plays' expanders in one)
                 st.markdown(f"#### \U0001f4dd Player checks for this game's review ({len(_prd.get('plays', []))} plays)")
                 _store = _pr_store(_prd.get("run"))
-                _pr_save_bar(_prd, _store, "prxvt", "_vt", part="players")
-                for _pi, _pl in enumerate(_prd.get("plays", [])):
-                    _done = sum(1 for k in _store if k.startswith(f"prxvt_b_{_prd.get('run')}_{_pi}_"))
-                    with st.expander(f"Clip {_pl.get('clip_number')} \u00b7 {_pl.get('clock', '')} \u00b7 "
-                                     f"{str(_pl.get('synergy', ''))[:70]}" + (f" \u00b7 {_done} checked" if _done else "")):
-                        _pr_player_widgets(_prd, _pi, _store, "prxvt")
+                _saved = [x for x in _pr_app_saves_for(_prd.get("run")) if "players" in x[2]]
+                st.caption("Choose a check for each box in the Players tables -- nothing reloads while you choose. "
+                           "Press \"Save my player checks\" at the bottom when you're done (answers aren't kept until then)."
+                           + ("  Already saved: " + "; ".join(f"{c} ({t})" for c, t, _p in _saved) if _saved else ""))
+                with st.form(f"prx_players_form_{_prd.get('run')}"):
+                    _coach = st.text_input("Your name (required to save)", key="pr_coach_players_vt")
+                    for _pi, _pl in enumerate(_prd.get("plays", [])):
+                        with st.expander(f"Clip {_pl.get('clip_number')} \u00b7 {_pl.get('clock', '')} \u00b7 "
+                                         f"{str(_pl.get('synergy', ''))[:70]}"):
+                            _pr_player_widgets(_prd, _pi, _store, "prxvt", with_video=False)
+                    _go = st.form_submit_button("Save my player checks")
+                if _go:
+                    if not str(_coach).strip():
+                        st.error("Add your name at the top of the form, then save again.")
+                    else:
+                        _pr_commit(_prd, _store, _coach, "prxvt", "players", "_vt")
     try:
         render_film_tracking(team, key_suffix="_vt")
     except Exception as _vt_err:
