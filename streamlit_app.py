@@ -5811,6 +5811,88 @@ def render_video_tracking():
         _FT_GAME = None
 
 
+def _pbp_txt(v):
+    return "" if v is None or (isinstance(v, float) and pd.isna(v)) or str(v) in ("nan", "None", "<NA>") else str(v)
+
+
+def _pbp_event_lines(rows):
+    """Play-by-play events -> one text line each; a team's substitutions at the same moment are one line."""
+    t = _pbp_txt
+    ev = lambda r: t(r.get("event_type")).replace("_", " ")
+    out, i = [], 0
+    while i < len(rows):
+        r = rows[i]
+        if t(r.get("event_type")) in ("sub_in", "sub_out"):
+            j = i
+            while (j < len(rows) and t(rows[j].get("event_type")) in ("sub_in", "sub_out")
+                   and t(rows[j].get("team")) == t(r.get("team")) and t(rows[j].get("time_remaining")) == t(r.get("time_remaining"))):
+                j += 1
+            outs = [t(x.get("player")) for x in rows[i:j] if t(x.get("event_type")) == "sub_out" and t(x.get("player"))]
+            ins = [t(x.get("player")) for x in rows[i:j] if t(x.get("event_type")) == "sub_in" and t(x.get("player"))]
+            out.append(" \u00b7 ".join(x for x in [t(r.get("time_remaining")), t(r.get("team")), "substitution"] if x)
+                       + " \u2014 " + " \u00b7 ".join(x for x in [("out: " + ", ".join(outs)) if outs else "",
+                                                                ("in: " + ", ".join(ins)) if ins else ""] if x))
+            i = j
+        else:
+            out.append(" \u00b7 ".join(x for x in [t(r.get("time_remaining")), t(r.get("team")), t(r.get("player")), ev(r)] if x))
+            i += 1
+    return out
+
+
+def _pbp_clip_rows(game_pbp, game_iso):
+    """The play-by-play, ONE ROW PER SYNERGY CLIP, in clip order. CONFIRMED CHANGE (coach: "each clip should be
+    different -- combining loses too much information about how the game is flowing"). A clip owns its matched
+    play-by-play event and every event after it until the next clip's event (the block, the rebound, the subs that
+    followed); a clip with no event (Synergy's "No Violation", say) still gets its own row; events before the first
+    clip get a short row. Returns [{label, info, events, clip_number, eos}] -- [] when this game has no tagged clips."""
+    t = _pbp_txt
+    pc = load_table("uww_play_calls")
+    if pc.empty or "clip_number" not in pc.columns or not game_iso or game_pbp.empty or "event_order" not in game_pbp.columns:
+        return []
+    pc = pc[iso_dates(pc["game_date"]).astype(str).to_numpy() == str(game_iso)]
+    if "game_code" in pc.columns:
+        pc = pc[pc["game_code"].astype(str).str.contains("WWW", na=False)]
+    if pc.empty:
+        return []
+    pc = pc.assign(_cn=pd.to_numeric(pc["clip_number"], errors="coerce"),
+                   _eo=pd.to_numeric(pc.get("pbp_event_order", pd.Series(index=pc.index, dtype=float)), errors="coerce"))
+    pc = pc.sort_values("_cn").drop_duplicates("_cn")
+    ev = game_pbp.assign(_o=pd.to_numeric(game_pbp["event_order"], errors="coerce")).sort_values("_o")
+    starts = sorted({float(x) for x in pc["_eo"].dropna()})
+    import bisect
+    by_start = {}
+    for _, r in ev.iterrows():
+        if pd.notna(r["_o"]):
+            k = bisect.bisect_right(starts, float(r["_o"])) - 1      # the last clip event at or before this event
+            by_start.setdefault(starts[k] if k >= 0 else None, []).append(r)
+    rows = []
+    pre = by_start.get(None, [])
+    if pre:
+        rows.append({"label": "Before the first clip \u00b7 " + t(pre[0].get("time_remaining")), "info": [],
+                     "events": _pbp_event_lines(pre), "clip_number": None, "eos": {float(r["_o"]) for r in pre}})
+    last_score = ""
+    for _, c in pc.iterrows():
+        evs = by_start.get(float(c["_eo"]), []) if pd.notna(c["_eo"]) else []
+        main = evs[0] if evs else None
+        when = t(main.get("time_remaining")) if main is not None else ""
+        if not when and pd.notna(pd.to_numeric(c.get("time_remaining_seconds"), errors="coerce")):
+            secs = int(pd.to_numeric(c.get("time_remaining_seconds"), errors="coerce"))
+            when = f"{secs // 60}:{secs % 60:02d}" + (f" ({t(c.get('period'))})" if t(c.get("period")) else "")
+        if evs:
+            lastr = evs[-1]
+            u, o_ = pd.to_numeric(lastr.get("uww_score"), errors="coerce"), pd.to_numeric(lastr.get("opp_score"), errors="coerce")
+            if pd.notna(u) and pd.notna(o_):
+                last_score = f"{int(u)}-{int(o_)}"
+        team = t(c.get("offense_team")) or (t(main.get("team")) if main is not None else "")
+        label = " \u00b7 ".join(x for x in [f"Clip {int(c['_cn'])}" if pd.notna(c["_cn"]) else "Clip ?", when, team,
+                                            t(c.get("player")), t(c.get("result")), last_score] if x)
+        info = [("Synergy", t(c.get("synergy_string"))), ("Tagged as", t(c.get("play_title"))),
+                ("Play call", t(c.get("play_call"))), ("Actions", t(c.get("play_actions")))]
+        rows.append({"label": label, "info": [(a, b) for a, b in info if b], "events": _pbp_event_lines(evs),
+                     "clip_number": int(c["_cn"]) if pd.notna(c["_cn"]) else None, "eos": {float(r["_o"]) for r in evs}})
+    return rows
+
+
 def _pbp_game_clips(game_iso):
     """{play-by-play event_order: [clips]} for this UWW game. CONFIRMED CHANGE (coach: "still missing some play-by-play
     information that were in the play clips"). Every tagged clip, not just one per possession: matched clips under their
@@ -12329,29 +12411,61 @@ def render_previous_games():
                 # events in the same half at the same clock are ONE play: the label leads with the main event (shot / free
                 # throw / turnover, then foul, rebound ...) and lists the rest ("+ assist Carter Thomas"); the replay and
                 # Play review come from whichever event has them. Paging and the replay / review filters count plays.
-                _plays = _pbp_group_plays(filtered_pbp, _pbp_game_clips(_pg_game_date))
-                if _only_rep:
-                    _plays = [g for g in _plays if g["replay"]]
-                if _only_rev:
-                    _plays = [g for g in _plays if g["review"] is not None]
-                _per = _v3.selectbox("Per page", [25, 50, 100], index=1, key=f"pbp_per_{short_opponent}")
-                _pages = max(1, -(-len(_plays) // _per))
-                _page = _v4.number_input("Page", min_value=1, max_value=_pages, value=1, step=1, key=f"pbp_page_{short_opponent}")
-                st.caption(f"{len(_plays)} possession(s) -- page {_page} of {_pages}. Open one for its events and details. "
-                           "Possession replays and the rest of the player tracking: Analytics \u2192 Video Tracking.")
-                for _g in _plays[(_page - 1) * _per: _page * _per]:
-                    _rep, _rv = _g["replay"], _g["review"]
-                    with st.expander(("\U0001f4dd " if _rv is not None else "") + _g["label"]):
-                        if len(_g["events"]) > 1:
-                            st.markdown("  \n".join(f"\u2022 {e}" for e in _g["events"]))
-                        st.markdown("  \n".join(f"**{lbl}:** {v}" for lbl, v in _g["details"]) or "_No details for this play._")
-                        if _rv is not None and _prd:
-                            st.markdown("---")
-                            _pr_title_widgets(_prd, _rv, _store, _kp)
+                _crows = _pbp_clip_rows(game_pbp, _pg_game_date)
+                _plays = None
+                if _crows:
+                    # one row per clip (requested); event filters keep the clips that have a matching event
+                    _vis = {float(x) for x in pd.to_numeric(filtered_pbp["event_order"], errors="coerce").dropna()}
+                    _filtering = len(filtered_pbp) < len(game_pbp)
+                    _crows = [r for r in _crows if (r["eos"] & _vis) or (not r["eos"] and not _filtering)]
+                    _rev_of = ({int(pl.get("clip_number")): i for i, pl in enumerate(_prd.get("plays", []))
+                                if pd.notna(pd.to_numeric(pl.get("clip_number"), errors="coerce"))} if _prd else {})
+                    if _only_rev:
+                        _crows = [r for r in _crows if r["clip_number"] in _rev_of]
+                    _per = _v3.selectbox("Per page", [25, 50, 100], index=1, key=f"pbp_per_{short_opponent}")
+                    _pages = max(1, -(-len(_crows) // _per))
+                    _page = _v4.number_input("Page", min_value=1, max_value=_pages, value=1, step=1, key=f"pbp_page_{short_opponent}")
+                    st.caption(f"{len(_crows)} clip(s) in game order -- page {_page} of {_pages}. Open a clip for what was "
+                               "tagged and the play-by-play events during it. Possession replays and the rest of the player "
+                               "tracking: Analytics \u2192 Video Tracking.")
+                    for _cr in _crows[(_page - 1) * _per: _page * _per]:
+                        _rv = _rev_of.get(_cr["clip_number"])
+                        with st.expander(("\U0001f4dd " if _rv is not None else "") + _cr["label"]):
+                            if _cr["info"]:
+                                st.markdown("  \n".join(f"**{a}:** {b}" for a, b in _cr["info"]))
+                            if _cr["events"]:
+                                st.markdown("**Play-by-play during this clip**  \n" + "  \n".join(f"\u2022 {e}" for e in _cr["events"]))
+                            elif _cr["clip_number"] is not None:
+                                st.caption("No play-by-play event for this clip.")
+                            if _rv is not None and _prd:
+                                st.markdown("---")
+                                _pr_title_widgets(_prd, _rv, _store, _kp)
+                else:
+                    # no tagged clips for this game: the possession view
+                    _plays = _pbp_group_plays(filtered_pbp, _pbp_game_clips(_pg_game_date))
+                    if _only_rep:
+                        _plays = [g for g in _plays if g["replay"]]
+                    if _only_rev:
+                        _plays = [g for g in _plays if g["review"] is not None]
+                    _per = _v3.selectbox("Per page", [25, 50, 100], index=1, key=f"pbp_per_{short_opponent}")
+                    _pages = max(1, -(-len(_plays) // _per))
+                    _page = _v4.number_input("Page", min_value=1, max_value=_pages, value=1, step=1, key=f"pbp_page_{short_opponent}")
+                    st.caption(f"{len(_plays)} possession(s) -- page {_page} of {_pages}. Open one for its events and details. "
+                               "Possession replays and the rest of the player tracking: Analytics \u2192 Video Tracking.")
+                    for _g in _plays[(_page - 1) * _per: _page * _per]:
+                        _rep, _rv = _g["replay"], _g["review"]
+                        with st.expander(("\U0001f4dd " if _rv is not None else "") + _g["label"]):
+                            if len(_g["events"]) > 1:
+                                st.markdown("  \n".join(f"\u2022 {e}" for e in _g["events"]))
+                            st.markdown("  \n".join(f"**{lbl}:** {v}" for lbl, v in _g["details"]) or "_No details for this play._")
+                            if _rv is not None and _prd:
+                                st.markdown("---")
+                                _pr_title_widgets(_prd, _rv, _store, _kp)
                 # review plays the parser couldn't match to a play-by-play event (usually: no game clock on the clip) --
                 # listed here so their Title checks are never out of reach (requested)
                 _linked = set(_pr_rows.values())
-                _unlinked = [i for i in range(len(_prd.get("plays", []))) if i not in _linked] if _prd else []
+                _unlinked = ([i for i in range(len(_prd.get("plays", []))) if i not in _linked]
+                             if _prd and not _crows else [])                  # (clip view: every review play is a clip row)
                 if _unlinked:
                     st.markdown(f"**\U0001f4dd Review plays not in the play-by-play** ({len(_unlinked)}) -- the parser couldn't "
                                 "match these clips to a play-by-play event (usually because Synergy left the clip's clock blank).")
