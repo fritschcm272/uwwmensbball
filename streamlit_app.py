@@ -5647,30 +5647,107 @@ def _pr_title_widgets(d, pi, store, kp):
                 store.pop(kt, None)
 
 
+def _pr_box_choices(pl, b):
+    mine = pl.get("five", {}).get(b.get("side"), []) or []
+    other = pl.get("five", {}).get("defense" if b.get("side") == "offense" else "offense", []) or []
+    return ([_PR_NOT_CHECKED, "correct"] + [f"really {n}" for n in mine if n != b.get("name")]
+            + [f"really {n} (other team)" for n in other] + ["wrong team (don't know who)", "not a player"])
+
+
+def _pr_nbox(b, w, h):
+    """A box's place on the picture as fractions (parser: "nbox"); older reviews: worked out from the picture's size
+    (1024-wide frame, 16:9, enlarged under a header)."""
+    if b.get("nbox"):
+        return b["nbox"]
+    fw, fh = 1024.0, 576.0
+    frame_h = w * fh / fw                       # the frame's height on this picture
+    head = max(0.0, h - frame_h)
+    x1, y1, x2, y2 = b.get("box", [0, 0, 0, 0])
+    return [x1 / fw, (head + y1 / fh * frame_h) / h, x2 / fw, (head + y2 / fh * frame_h) / h]
+
+
 def _pr_player_widgets(d, pi, store, kp, with_video=True):
-    """The player-checks part of one play's review (its pictures with a check per box) -- on Analytics > Video Tracking.
-    CONFIRMED CHANGE (requested: the player checks done on the Film Tracking tab, separately from the Title checks)."""
+    """The player-checks part of one play's review -- on Analytics > Video Tracking. CONFIRMED CHANGE (requested:
+    click the box in the picture instead of dropdowns beside it). Click a player's box: his choices appear below the
+    picture as one-click buttons; the picture marks every answer on its box (green = correct, red = anything else).
+    Needs the streamlit-image-coordinates package; without it, the dropdowns are used."""
     pl = d["plays"][pi]
     run = d.get("run")
+    try:
+        from streamlit_image_coordinates import streamlit_image_coordinates as _click_img
+    except Exception:
+        _click_img = None
     if with_video and pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
         st.video(os.path.join(d["_dir"], pl["clip"]))
     for ki, pic in enumerate(pl.get("pictures", [])):
-        l2, r2 = st.columns([3, 4])
         path = os.path.join(d["_dir"], pic.get("image") or "")
-        if pic.get("image") and os.path.exists(path):
-            l2.image(path, caption="START of the play" if pic.get("which") == "start" else "END of the play")
-        with r2:
-            for bi, b in enumerate(pic.get("boxes", [])):
-                mine = pl.get("five", {}).get(b.get("side"), []) or []
-                other = pl.get("five", {}).get("defense" if b.get("side") == "offense" else "offense", []) or []
-                opts = ([_PR_NOT_CHECKED, "correct"] + [f"really {n}" for n in mine if n != b.get("name")]
-                        + [f"really {n} (other team)" for n in other] + ["wrong team (don't know who)", "not a player"])
-                kb = f"{kp}_b_{run}_{pi}_{ki}_{bi}"
-                cur = store.get(kb, _PR_NOT_CHECKED)
-                st.selectbox(f"Box {b.get('id')} -- {b.get('side')} -- "
-                             + (f"{b.get('label')} ({b.get('how')})" if b.get("label") else "not named"),
-                             opts, index=opts.index(cur) if cur in opts else 0, key=kb, on_change=_pr_keep, args=(store, kb))
-
+        boxes = pic.get("boxes", [])
+        cap = "START of the play" if pic.get("which") == "start" else "END of the play"
+        if not (pic.get("image") and os.path.exists(path)):
+            continue
+        if _click_img is None:                  # fallback: the dropdowns beside the picture
+            l2, r2 = st.columns([3, 4])
+            l2.image(path, caption=cap)
+            with r2:
+                for bi, b in enumerate(boxes):
+                    kb = f"{kp}_b_{run}_{pi}_{ki}_{bi}"
+                    opts = _pr_box_choices(pl, b)
+                    cur = store.get(kb, _PR_NOT_CHECKED)
+                    st.selectbox(f"Box {b.get('id')} -- {b.get('side')} -- "
+                                 + (f"{b.get('label')} ({b.get('how')})" if b.get("label") else "not named"),
+                                 opts, index=opts.index(cur) if cur in opts else 0, key=kb, on_change=_pr_keep, args=(store, kb))
+            continue
+        from PIL import Image, ImageDraw
+        im = Image.open(path).convert("RGB")
+        W, H = im.size
+        dr = ImageDraw.Draw(im)
+        sel_key = f"{kp}_sel_{run}_{pi}_{ki}"
+        sel = st.session_state.get(sel_key)
+        for bi, b in enumerate(boxes):
+            v = store.get(f"{kp}_b_{run}_{pi}_{ki}_{bi}", _PR_NOT_CHECKED)
+            x1, y1, x2, y2 = _pr_nbox(b, W, H)
+            r_ = [x1 * W, y1 * H, x2 * W, y2 * H]
+            if v != _PR_NOT_CHECKED:
+                col = (40, 200, 70) if v == "correct" else (230, 50, 50)
+                dr.rectangle(r_, outline=col, width=5)
+                mark = "OK" if v == "correct" else ("X " + v.replace("really ", "").replace(" (other team)", "*")[:18])
+                dr.rectangle([r_[0], r_[3] + 2, r_[0] + 8 + 7 * len(mark), r_[3] + 20], fill=col)
+                dr.text((r_[0] + 4, r_[3] + 4), mark, fill=(255, 255, 255))
+            if sel == bi:
+                dr.rectangle([r_[0] - 4, r_[1] - 4, r_[2] + 4, r_[3] + 4], outline=(255, 235, 0), width=4)
+        st.caption(cap + " -- click a player's box to check him")
+        click = _click_img(im, key=f"{kp}_img_{run}_{pi}_{ki}", use_column_width="always")
+        last_key = f"{kp}_lastclick_{run}_{pi}_{ki}"
+        if click and click != st.session_state.get(last_key):
+            st.session_state[last_key] = click
+            fx = click["x"] / max(click.get("width") or W, 1)
+            fy = click["y"] / max(click.get("height") or H, 1)
+            hits = []
+            for bi, b in enumerate(boxes):
+                x1, y1, x2, y2 = _pr_nbox(b, W, H)
+                if x1 - 0.01 <= fx <= x2 + 0.01 and y1 - 0.01 <= fy <= y2 + 0.01:
+                    hits.append(((x2 - x1) * (y2 - y1), bi))            # the smallest box under the click
+            if hits:
+                st.session_state[sel_key] = min(hits)[1]
+                st.rerun()
+        sel = st.session_state.get(sel_key)
+        if sel is not None and sel < len(boxes):
+            b = boxes[sel]
+            kb = f"{kp}_b_{run}_{pi}_{ki}_{sel}"
+            opts = _pr_box_choices(pl, b)
+            cur = store.get(kb, _PR_NOT_CHECKED)
+            st.markdown(f"**Box {b.get('id')}** -- {b.get('side')} -- "
+                        + (f"{b.get('label')} ({b.get('how')})" if b.get("label") else "not named"))
+            cols = st.columns(min(4, len(opts)))
+            for oi, o in enumerate(opts):
+                if cols[oi % len(cols)].button(("\u25cf " if o == cur else "") + o, key=f"{kb}_btn_{oi}"):
+                    if o == _PR_NOT_CHECKED:
+                        store.pop(kb, None)
+                    else:
+                        store[kb] = o
+                    st.rerun()
+        n_done = sum(1 for bi in range(len(boxes)) if f"{kp}_b_{run}_{pi}_{ki}_{bi}" in store)
+        st.caption(f"{n_done} of {len(boxes)} boxes checked in this picture.")
 
 def _pr_play_widgets(d, pi, store, kp):
     _pr_title_widgets(d, pi, store, kp)
