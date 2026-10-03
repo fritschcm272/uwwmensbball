@@ -12594,6 +12594,42 @@ def _pr_app_saves_for(run):
     return out
 
 
+def _pr_github_diagnose(token, repo, branch):
+    """Why a save failed: check the token, the repository and the branch with the same token (it's never shown).
+    CONFIRMED CHANGE (coach's save failed with "GitHub said 404: Not Found" -- GitHub answers 404, not "forbidden",
+    when a token can't see a private repository, so the plain message didn't say what to fix)."""
+    import requests
+    h = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"}
+    try:
+        u = requests.get("https://api.github.com/user", headers=h, timeout=20)
+        if u.status_code == 401:
+            return ("the token in the app's secrets isn't valid (expired, revoked, or copied wrong) -- make a new one "
+                    "and paste it into the secrets")
+        who = u.json().get("login", "?") if u.status_code == 200 else "?"
+        if "/" not in repo:
+            return (f"the repo setting is \"{repo}\" -- it must be OWNER/NAME, e.g. \"{who}/{repo}\" "
+                    "(copy it from the repository's GitHub address)")
+        r = requests.get(f"https://api.github.com/repos/{repo}", headers=h, timeout=20)
+        if r.status_code == 404:
+            return (f"the token (account {who}) can't see the repository \"{repo}\": either the name isn't exactly right "
+                    "(copy OWNER/NAME from the repository's GitHub address), or the token wasn't given access to it -- "
+                    "edit the token on GitHub: Repository access must include this repository, with Contents: Read and "
+                    "write (an organization's repository also needs the organization as the token's owner)")
+        if r.status_code == 200:
+            perms = r.json().get("permissions") or {}
+            if perms and not perms.get("push"):
+                return (f"the token can see \"{repo}\" but can't write to it -- give it Contents: Read and write")
+            br = requests.get(f"https://api.github.com/repos/{repo}/branches/{branch}", headers=h, timeout=20)
+            if br.status_code == 404:
+                default = r.json().get("default_branch", "?")
+                return (f"there's no branch \"{branch}\" in {repo} -- set branch = \"{default}\" in the secrets "
+                        f"(that's the repository's main branch)")
+            return f"the token, repository and branch all check out (GitHub may have had a hiccup -- try again)"
+        return f"GitHub answered {r.status_code} when looking up the repository"
+    except Exception as e:
+        return f"couldn't reach GitHub to check ({type(e).__name__})"
+
+
 def _pr_github_save(filename, payload):
     """Commit one new file to the repo (data/play_review_saves/<filename>). Returns (ok, message)."""
     import base64
@@ -12602,20 +12638,26 @@ def _pr_github_save(filename, payload):
         cfg = dict(st.secrets.get("github", {}))
     except Exception:                                   # no secrets set up at all
         cfg = {}
-    token, repo = cfg.get("token"), cfg.get("repo")
+    token, repo = str(cfg.get("token") or "").strip(), str(cfg.get("repo") or "").strip().strip("/")
+    branch = str(cfg.get("branch") or "main").strip()
+    if repo.lower().startswith(("https://github.com/", "http://github.com/", "github.com/")):
+        repo = repo.split("github.com/", 1)[1].removesuffix(".git").strip("/")     # a pasted web address works too
     if not token or not repo:
-        return False, "GitHub isn't set up in the app's secrets yet"
-    path = f"{cfg.get('reviews_path', 'data/play_review_saves').strip('/')}/{filename}"
+        return False, "GitHub isn't set up in the app's secrets yet ([github] token and repo)"
+    path = f"{str(cfg.get('reviews_path', 'data/play_review_saves')).strip('/')}/{filename}"
     try:
         r = requests.put(f"https://api.github.com/repos/{repo}/contents/{path}",
                          headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"},
                          json={"message": f"Play review: {payload.get('game')} by {payload.get('coach')}",
                                "content": base64.b64encode(json.dumps(payload, indent=1).encode()).decode(),
-                               "branch": cfg.get("branch", "main")}, timeout=30)
+                               "branch": branch}, timeout=30)
     except Exception as e:
         return False, f"{type(e).__name__}: {e}"
-    return (r.status_code in (200, 201)), (f"saved to {repo}/{path}" if r.status_code in (200, 201)
-                                           else f"GitHub said {r.status_code}: {r.text[:200]}")
+    if r.status_code in (200, 201):
+        return True, f"saved to {repo}/{path}"
+    if r.status_code in (401, 403, 404, 422):
+        return False, f"GitHub said {r.status_code}. What's wrong: " + _pr_github_diagnose(token, repo, branch)
+    return False, f"GitHub said {r.status_code}: {r.text[:200]}"
 
 
 def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
