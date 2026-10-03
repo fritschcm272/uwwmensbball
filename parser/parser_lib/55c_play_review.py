@@ -517,6 +517,14 @@ def play_review():
                           "Solid box = identified from evidence; DASHED box with ? = best guess; grey = not named"]
                 fname = f"clip_{cn:03d}_{'a_start' if which == 'start' else 'b_end'}.jpg"
                 _val_draw(img_path, boxes, header, os.path.join(rdir, fname))
+                # where each box sits on the PICTURE, as fractions of its width / height (the frame is enlarged 1.6x under
+                # a header) -- the app lets a coach click a box in the picture (requested)
+                _fw, _fh = Image.open(img_path).size
+                _hh = 24 * len(header) + 10
+                for b in boxes:
+                    x1, y1, x2, y2 = b["box"]
+                    b["nbox"] = [round(x1 / _fw, 4), round((y1 * 1.6 + _hh) / (_fh * 1.6 + _hh), 4),
+                                 round(x2 / _fw, 4), round((y2 * 1.6 + _hh) / (_fh * 1.6 + _hh), 4)]
                 pics.append({"which": which, "image": fname, "frame_file": files[t], "t": int(t), "boxes": boxes})
             clip_file = _pr_clip(files, rows, numtxt, os.path.join(rdir, f"clip_{cn:03d}")) if PLAY_REVIEW_VIDEO else None
             # the Title review part (same logic as the Auto-Title review)
