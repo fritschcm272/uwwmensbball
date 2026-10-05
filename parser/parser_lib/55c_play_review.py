@@ -569,7 +569,7 @@ def play_review():
                           "five": {"offense": _trk_five(r.get("offense_lineup")), "defense": _trk_five(r.get("defense_lineup"))},
                           # CONFIRMED CHANGE (requested): the "Your check" dropdown shows jersey numbers ("really #12 Marino"),
                           # so each name in the five carries its number label (same numtxt as the box labels)
-                          "five_labels": {nm: numtxt(nm) for side in ("offense", "defense")
+                          "five_labels": {nm: f"{numtxt(nm).split(' ')[0]} {nm}" for side in ("offense", "defense")
                                           for nm in _trk_five(r.get(f"{side}_lineup"))}})
         # every answer already known for each field (coaches' Titles and the model's answers, all games) -- offered as
         # suggestions for a typed answer, so it matches an existing spelling (page and app)

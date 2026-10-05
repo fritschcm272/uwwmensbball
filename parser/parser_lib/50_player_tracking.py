@@ -197,7 +197,7 @@ def _trk_court_band(H, W, Hpx):
     c = np.asarray(H, np.float64) @ np.array([W / 2, 0.8 * Hpx, 1.0])
     front = np.sign((Hi @ (c / c[2]))[2]) or 1.0
     ys = []
-    for X in np.linspace(-3, 97, 21):
+    for X in np.linspace(-12, 106, 25):             # CONFIRMED CHANGE: room behind the baselines too (an inbounder stands out there)
         for Y in (-3, 25, 53):
             v = Hi @ np.array([X, Y, 1.0])
             if np.sign(v[2]) != front or abs(v[2]) < 1e-9:
@@ -753,7 +753,7 @@ def _trk_link_possessions(clips, todo, pc, game_of):
     return group, n_links, n_pairs
 
 
-def _trk_players(d, H=None, feats=None):
+def _trk_players(d, H=None, feats=None, opening=False):
     """Kept player boxes for one frame -> rows [x, y, h, r, g, b, x1, y1, x2, y2, X, Y, sat, stripes, chest L,
     chest warmth, shorts L, shorts warmth, chest variation, group] with x, y the feet point
     measured in picture-HEIGHT units (so left-right and up-down distances are comparable), h the box height,
@@ -778,7 +778,17 @@ def _trk_players(d, H=None, feats=None):
         v = Hm @ np.vstack([(p[:, 0] + p[:, 2]) / 2, p[:, 3], np.ones(len(p))])
         X, Y = v[0] / v[2], v[1] / v[2]
         m = TRACK_COURT_MARGIN_FT
-        keep &= (X > -m) & (X < 94 + m) & (Y > -TRACK_NEAR_MARGIN_FT) & (Y < 50 + m)
+        court_ok = (X > -m) & (X < 94 + m) & (Y > -TRACK_NEAR_MARGIN_FT) & (Y < 50 + m)
+        # CONFIRMED CHANGE (coach: "the model normally misses the player throwing the ball in on BLOB plays"). The inbounder
+        # stands BEHIND the baseline -- farther out than TRACK_COURT_MARGIN_FT -- so he was dropped with the fans and the
+        # bench. In a clip's opening seconds (TRACK_INBOUND_OPEN_S) a standing person up to TRACK_INBOUND_MARGIN_FT behind
+        # either baseline, within TRACK_INBOUND_Y_FT across the court, is kept (0 = off). Referees and anyone else back
+        # there fall into the third color group ("everyone else"); the seated / wide-box checks below still apply.
+        _im = float(globals().get("TRACK_INBOUND_MARGIN_FT", 10.0))
+        if opening and _im > 0:
+            _y0, _y1 = globals().get("TRACK_INBOUND_Y_FT", (8.0, 42.0))
+            court_ok |= (((X <= -m) & (X > -_im)) | ((X >= 94 + m) & (X < 94 + _im))) & (Y >= _y0) & (Y <= _y1)
+        keep &= court_ok
         edge = (X < TRACK_EDGE_ZONE_FT) | (X > 94 - TRACK_EDGE_ZONE_FT) | (Y < TRACK_EDGE_ZONE_FT) | (Y > 50 - TRACK_EDGE_ZONE_FT)
         keep &= ~edge | (wid < 0.8)          # wide boxes: seated people -- only along the edges
     else:
@@ -1107,7 +1117,9 @@ def player_tracking(pc):
     # --- per clip: players; then team groups for the whole game; then tracks ---
     print(f"  [tracking] step 2: finding the players in {len(todo)} clip(s) and sorting them into teams...", flush=True)
     jfeat = _trk_jersey_feats([f for i in todo for f in lists[i]], det, base)
-    frames_of = {i: [_trk_players(det.get(f), court_H.get(f), jfeat.get(f)) for f in lists[i]] for i in todo}
+    _n_open = int(round(float(globals().get("TRACK_INBOUND_OPEN_S", 2.0)) * float(globals().get("VISION_TRACK_FPS") or 2.0)))
+    frames_of = {i: [_trk_players(det.get(f), court_H.get(f), jfeat.get(f), opening=(t_ < _n_open))
+                     for t_, f in enumerate(lists[i])] for i in todo}
     # seated / partly hidden people: shorter than a standing player at the same picture row
     _n_seated = 0
     for g_ in set(f"{pc.at[i, 'game_date']}|{pc.at[i, 'game_code']}" for i in todo):
@@ -1719,18 +1731,25 @@ def player_tracking(pc):
             by_group = {}
             for node, gid in group.items():
                 by_group.setdefault(gid, []).append(node)
-            # what each linked player is called anywhere: Synergy / rim / pose anchors, and jersey numbers
+            # what each linked player is called anywhere. CONFIRMED CHANGE (requested, from the player-check results: names
+            # carried along linked possessions were right 0 of 5 times, and one wrong name spreads across every clip in the
+            # link). With TRACK_LINK_EVIDENCE = "numbers+coach" (the default) ONLY a jersey number or a coach check starts a
+            # carried name -- Synergy / rim / pose / play-by-play anchors no longer do. "all" = the old behavior.
+            _link_all = str(globals().get("TRACK_LINK_EVIDENCE", "numbers+coach")).lower() == "all"
             for gid, nodes in by_group.items():
                 votes = {}
                 for (i, k) in nodes:
-                    for a in (clips[i]["anchor"], clips[i].get("anchor_first")):
-                        if a and a[0] == k:
-                            votes[a[1]] = votes.get(a[1], 0) + 1
-                    for kk, nn, _et in clips[i].get("anchors_pbp", []):
-                        if kk == k:
-                            votes[nn] = votes.get(nn, 0) + 1
+                    if _link_all:
+                        for a in (clips[i]["anchor"], clips[i].get("anchor_first")):
+                            if a and a[0] == k:
+                                votes[a[1]] = votes.get(a[1], 0) + 1
+                        for kk, nn, _et in clips[i].get("anchors_pbp", []):
+                            if kk == k:
+                                votes[nn] = votes.get(nn, 0) + 1
                     if (i, k) in number_names:
                         votes[number_names[(i, k)][0]] = votes.get(number_names[(i, k)][0], 0) + 1
+                    if coach.get((i, k)):                           # a name the coaches checked is certain: it counts double
+                        votes[coach[(i, k)]] = votes.get(coach[(i, k)], 0) + 2
                 if not votes:
                     continue
                 name, sup = max(votes.items(), key=lambda kv: kv[1])

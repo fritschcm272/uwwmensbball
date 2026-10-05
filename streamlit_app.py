@@ -12741,6 +12741,62 @@ def render_previous_games():
 _PR_NOT_CHECKED = "-- not checked --"
 
 
+def _pr_fill_labels(d):
+    """Give every play's `five_labels` (name -> "#15 Collin Madson") for the "Your check" dropdowns. CONFIRMED CHANGE
+    (requested: the dropdown names need the player numbers beside them). Reviews built before the parser wrote
+    `five_labels` have none, so the numbers are worked out here, most trusted first (the same order the parser uses):
+      1. this game's Synergy descriptions inside the review ("15 Collin Madson > ..."), majority number per name
+      2. the number on a named box of the review's pictures ("#15 Madson", paired with that box's full name)
+      3. the opponent roster table (uww_opponent_rosters) -- only for a name no game-specific source covers
+    A name with no number anywhere stays plain."""
+    try:
+        votes = {}
+
+        def _vote(name, num):
+            if name and num and str(num).isdigit():
+                votes.setdefault(str(name).strip().lower(), {}).setdefault(str(int(num)), 0)
+                votes[str(name).strip().lower()][str(int(num))] += 1
+        for pl in d.get("plays", []):
+            for num, nm in re.findall(r"(?:^|>)\s*(\d{1,2})\s+([A-Za-z][^>]*?)\s*(?=>|$)", str(pl.get("synergy") or "")):
+                _vote(nm, num)
+        best = {n: max(v, key=v.get) for n, v in votes.items()}
+        for pl in d.get("plays", []):
+            for pic in pl.get("pictures", []):
+                for b in pic.get("boxes", []):
+                    m = re.match(r"#(\d{1,2})\b", str(b.get("label") or ""))
+                    if m and b.get("name") and str(b["name"]).strip().lower() not in best:
+                        best.setdefault(str(b["name"]).strip().lower(), str(int(m.group(1))))
+        ros_map = None
+        for pl in d.get("plays", []):
+            labels = {}
+            for side in ("offense", "defense"):
+                for n in (pl.get("five", {}).get(side) or []):
+                    key = str(n).strip().lower()
+                    num = best.get(key)
+                    if num is None:
+                        if ros_map is None:
+                            ros_map = {}
+                            try:
+                                ros = load_table("uww_opponent_rosters")
+                                ncol = next((c for c in ("player", "name") if c in ros.columns), None)
+                                if ncol and "jersey_number" in ros.columns:
+                                    for rn, rj in zip(ros[ncol], ros["jersey_number"]):
+                                        rj = re.sub(r"\D", "", str(rj))
+                                        if rj:
+                                            ros_map.setdefault(str(rn).strip().lower(), str(int(rj)))
+                            except Exception:
+                                pass
+                        num = ros_map.get(key)
+                    if num is not None:
+                        labels[n] = f"#{num} {n}"
+            if labels and not pl.get("five_labels"):
+                pl["five_labels"] = labels
+            elif labels:
+                pl["five_labels"] = {**labels, **pl["five_labels"]}
+    except Exception:
+        pass
+
+
 def _pr_app_packages():
     out = []
     for f in glob.glob(os.path.join(DATA_DIR, "play_review", "*", "review.json")):
@@ -12754,6 +12810,7 @@ def _pr_app_packages():
             d["slug"] = d.get("slug") or re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game", ""))).strip("_")
             d["run_real"] = d.get("run")
             d["run"] = f"{d['slug']}_{d.get('run')}"
+            _pr_fill_labels(d)
             out.append(d)
         except Exception:
             continue
