@@ -37,3 +37,15 @@ Tag model: screen_defender,v2026.10.04,2026-10-04,trained,2026-10-04T20:44:06,"5
 Tag model: situation,v2026.10.04,2026-10-04,trained,2026-10-04T20:44:06,"298 tagged clips, 5 answers learned",2026-10-04T20:46:30
 Tag model (overall),v2026.10.04,2026-10-04,trained,2026-10-04T20:44:06,newest of 9 field model(s); last retrained field: situation,2026-10-04T20:46:30
 Player tracking,v2026.10.05,2026-10-05,pretrained + code,7605a5484208,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-04T20:46:30
+Tag model: ball_screen_coverage,v2026.10.04.2,2026-10-04,trained,2026-10-04T22:39:32,"86 tagged clips, 5 answers learned, one answer only",2026-10-04T22:42:33
+Tag model: defense,v2026.10.04.2,2026-10-04,trained,2026-10-04T22:39:32,"254 tagged clips, 1 answers learned, one answer only",2026-10-04T22:42:33
+Tag model: formation,v2026.10.04.2,2026-10-04,trained,2026-10-04T22:39:32,"129 tagged clips, 5 answers learned, one answer only",2026-10-04T22:42:33
+Tag model: offball_coverage,v2026.10.04.2,2026-10-04,trained,2026-10-04T22:39:32,"58 tagged clips, 2 answers learned, one answer only",2026-10-04T22:42:33
+Tag model: play_call,v2026.10.04.2,2026-10-04,trained,2026-10-04T22:39:32,"160 tagged clips, 7 answers learned, one answer only",2026-10-04T22:42:33
+Tag model: press,v2026.10.04.2,2026-10-04,trained,2026-10-04T22:39:32,"252 tagged clips, 3 answers learned",2026-10-04T22:42:33
+Tag model: primary_action,v2026.10.04.2,2026-10-04,trained,2026-10-04T22:39:32,"124 tagged clips, 6 answers learned, one answer only",2026-10-04T22:42:33
+Tag model: screen_defender,v2026.10.04.2,2026-10-04,trained,2026-10-04T22:39:32,"56 tagged clips, 6 answers learned",2026-10-04T22:42:33
+Tag model: situation,v2026.10.04.2,2026-10-04,trained,2026-10-04T22:39:32,"298 tagged clips, 5 answers learned",2026-10-04T22:42:33
+Tag model (overall),v2026.10.04.2,2026-10-04,trained,2026-10-04T22:39:32,newest of 9 field model(s); last retrained field: situation,2026-10-04T22:42:33
+Jersey-number recognizer,v2026.10.04,2026-10-04,trained,2026-10-04T22:34:23,"7463 training crops; 77% of held-back crops right; sources {'reads': 4989, 'extra': 3615, 'coach': 176}",2026-10-04T22:42:33
+Player tracking,v2026.10.05.2,2026-10-05,pretrained + code,1de0da478c70,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-04T22:42:33
