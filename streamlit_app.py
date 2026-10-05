@@ -5737,7 +5737,8 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
                                         key=f"{kp}_ptbl_{run}_{pi}_{ki}", num_rows="fixed")
             for i, k in enumerate(keys):
                 v = edited.iloc[i]["Your check"] if i < len(edited) else _PR_NOT_CHECKED
-                if v and v != _PR_NOT_CHECKED:
+                # only a real choice from the list counts as checked; a blank / NaN / unknown cell is "not checked"
+                if isinstance(v, str) and v in choices and v != _PR_NOT_CHECKED:
                     store[k] = v
                 else:
                     store.pop(k, None)
@@ -5769,8 +5770,10 @@ def _pr_payload(d, store, coach, kp, part=None):
         for ki, pic in enumerate(pl.get("pictures", []) if part != "titles" else []):
             for bi, b in enumerate(pic.get("boxes", [])):
                 val = store.get(f"{kp}_b_{run}_{pi}_{ki}_{bi}", _PR_NOT_CHECKED)
-                if val == _PR_NOT_CHECKED:
+                if not isinstance(val, str) or val == _PR_NOT_CHECKED:
                     continue
+                if not (val in ("correct", "not a player") or val.startswith(("wrong team", "really "))):
+                    continue                        # anything that isn't one of the choices is NOT a check
                 if val == "correct":
                     verdict, name = "correct", b.get("name")
                 elif val == "not a player":
@@ -5995,7 +5998,8 @@ def _pnt_check_form(prd):
     store = _pr_store(run)
     saved = [x for x in _pr_app_saves_for(run) if "players" in x[2]]
     st.caption("Choose a check for each box in the Players tables -- nothing reloads while you choose. "
-               "Press \"Save my player checks\" at the bottom when you're done (answers aren't kept until then)."
+               "Press \"Save my player checks\" at the bottom when you're done (answers aren't kept until then). "
+               "Boxes left on \"-- not checked --\" are not saved and never count in the accuracy numbers."
                + ("  Already saved: " + "; ".join(f"{c} ({t})" for c, t, _p in saved)
                   + ".  To get new clips for the number checks, run the play tracking in the parser first "
                     "(Player tracking, then the Play review) -- new clips only appear after that."
@@ -13000,7 +13004,8 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
                                    "prefilled": bool(pre and v == "wrong" and norm(ans) == norm(f.get("coach")))})
         else:
             _, pi, ki, bi = key
-            if val == _PR_NOT_CHECKED:
+            if not isinstance(val, str) or val == _PR_NOT_CHECKED or not (
+                    val in ("correct", "not a player") or val.startswith(("wrong team", "really "))):
                 continue
             p = plays[pi]
             pic = p["pictures"][ki]
