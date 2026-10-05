@@ -1,5 +1,6 @@
 clip_key,defense_team,offense_team,zone,press,press_type,points,trap_frames,first_trap_seconds_into_clip
-2026-01-03|5|24 Richie Warren > P&R Ball Handler > Right P&R > Side > Go Away from Pick > Defense Commits > Ball Delivered > 32 Luke Bara > Spot-Up > Drives Left > To Basket > Foul,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,1.0,5,1.2
+2026-01-03|2|15 Collin Madson > Non Possession > Non Shooting Foul,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,0,
+2026-01-03|5|24 Richie Warren > P&R Ball Handler > Right P&R > Side > Go Away from Pick > Defense Commits > Ball Delivered > 32 Luke Bara > Spot-Up > Drives Left > To Basket > Foul,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,1.0,4,40.2
 2026-01-03|7|32 Luke Bara > Transition > Ballhandler > Turnover,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,0,
 2026-01-03|11|21 Brock Marino > Non Possession > Non Shooting Foul,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,1,20.0
 2026-01-03|16|15 Collin Madson > Non Possession > Non Shooting Foul,UW-Oshkosh Titans,UW-Whitewater,False,True,Full-court M2M Press,0.0,0,
@@ -19,7 +20,6 @@ clip_key,defense_team,offense_team,zone,press,press_type,points,trap_frames,firs
 2026-01-03|59|24 Richie Warren > ISO > Top > Drives Right > To Basket > Make 2 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,2.0,0,
 2026-01-03|61|24 Richie Warren > Spot-Up > Drives Right > Turnover,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,1,2.5
 2026-01-03|63|32 Luke Bara > Transition > Ballhandler > To Basket > Miss 2 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,0,
-2026-01-03|66|32 Luke Bara > P&R Ball Handler > High P&R > Go Away from Pick > Defense Commits > Ball Delivered > 24 Richie Warren > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,0,
 2026-01-03|67|32 Luke Bara > Spot-Up > Drives Left > Dribble Jumper > Long/3pt > Miss 3 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,0,
 2026-01-03|69|32 Luke Bara > ISO > Right > Drives Left > To Basket > Miss 2 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Full-court M2M Press,0.0,0,
 2026-01-03|73|11 Jr Lukenbill > Transition > Left Wing > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,0,
@@ -57,6 +57,7 @@ clip_key,defense_team,offense_team,zone,press,press_type,points,trap_frames,firs
 2026-01-03|138|4 Michael Metcalf-Grassman > Spot-Up > Drives Left > To Basket > Foul,UW-Whitewater,UW-Oshkosh Titans,False,True,Full-court M2M Press,1.0,0,
 2026-01-03|140|12 Jake Quast > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,2.0,0,
 2026-01-03|142|22 Joey Berezowitz > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 12 Jake Quast > Spot-Up > Drives Right > To Basket > Miss 2 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,0,
+2026-01-03|143|2 Kelton Mcewen > P&R Ball Handler > Left P&R > Baseline > Go Away from Pick > To Basket > Miss 2 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,0,
 2026-01-03|146|22 Joey Berezowitz > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,1,16.0
 2026-01-03|147|4 Michael Metcalf-Grassman > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts,UW-Whitewater,UW-Oshkosh Titans,False,True,Full-court M2M Press,0.0,0,
 2026-01-03|148|22 Joey Berezowitz > Transition > Ballhandler > To Basket > Foul,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,2.0,0,
@@ -91,16 +92,16 @@ clip_key,defense_team,offense_team,zone,press,press_type,points,trap_frames,firs
 2026-01-03|185|0 Collin Madson > Transition > Ballhandler > Dribble Jumper > Long/3pt > Miss 3 Pts,UW-Oshkosh Titans,UW-Whitewater,False,True,Run & Jump,0.0,0,
 2025-12-30|335|32 Luke Bara > Transition > Ballhandler > To Basket > Foul,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,2.0,2,20.5
 2025-12-30|353|12 Jake Quast > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,2.0,0,
-2025-12-30|374|15 Collin Madson > Spot-Up > Drives Right > To Basket > Foul,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,1.0,1,17.8
+2025-12-30|373|15 Collin Madson > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,,0,
 2025-12-30|380|40 Tyshawn Teague-Johnson > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,0,
 2025-12-30|388|32 Luke Bara > No Play Type > Turnover,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,1,14.2
 2025-12-30|396|21 Brock Marino > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,2.0,0,
 2025-12-30|398|32 Luke Bara > Transition > Left Wing > Dribble Jumper > Long/3pt > Miss 3 Pts,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,0,
 2025-12-30|408|32 Luke Bara > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 15 Collin Madson > Spot-Up > Drives Left > To Basket > Foul,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,2.0,1,24.5
-2025-12-30|414|10 Darius Chestnut > Non Possession > No Violation,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,,0,
 2025-12-30|418|15 Collin Madson > Post-Up > Right Block > Right Shoulder > Dribble Move > To Jumper > Foul,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,,0,
 2025-12-30|426|15 Collin Madson > No Play Type > Foul,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,2.0,0,
 2025-12-30|453|22 Joey Berezowitz > Non Possession > Non Shooting Foul,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,2,18.0
+2025-12-30|476|12 Jake Quast > Spot-Up > Drives Left > Turnover,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,2.0,0,
 2025-12-30|501|10 Darius Chestnut > Transition > Ballhandler > Turnover,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,1,6.2
 2025-12-30|503|12 Jake Quast > Non Possession > No Violation,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,,2,21.8
 2025-12-30|517|11 Jr Lukenbill > No Play Type > No Dribble Jumper > Open > Short to < 17' > Miss 2 Pts,Coe Kohawks,UW-Whitewater,False,True,Run & Jump,0.0,1,8.5

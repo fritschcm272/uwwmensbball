@@ -1755,8 +1755,24 @@ def player_tracking(pc):
                 name, sup = max(votes.items(), key=lambda kv: kv[1])
                 if sup <= sum(votes.values()) / 2:
                     continue                                     # the evidence disagrees -- don't carry it
+                # CONFIRMED BUG (fixed; coach: "the same player is assigned to multiple boxes"). A linked group can merge
+                # two DIFFERENT players, so two tracks of one group can be on the floor at the same moment in a clip (e.g.
+                # "#24 Warren" on one box by jersey number and on another as "linked possession"). In such a clip only a
+                # track with its OWN evidence for the name keeps it; the others get no carried name.
+                _by_clip = {}
                 for (i, k) in nodes:
-                    link_names[(i, k)] = (name, sup)
+                    _by_clip.setdefault(i, []).append(k)
+                for i, ks_ in _by_clip.items():
+                    fr_ = {k: {t_ for t_, _ in clips[i]["tracks"][k]} for k in ks_}
+                    for k in ks_:
+                        clash = any(k2 != k and fr_[k] & fr_[k2] for k2 in ks_)
+                        own = ((i, k) in number_names and number_names[(i, k)][0] == name) or coach.get((i, k)) == name
+                        if _link_all and not own:
+                            own = any(a and a[0] == k and a[1] == name for a in (clips[i]["anchor"], clips[i].get("anchor_first"))) \
+                                or any(kk == k and nn == name for kk, nn, _et in clips[i].get("anchors_pbp", []))
+                        if clash and not own:
+                            continue
+                        link_names[(i, k)] = (name, sup)
             n_carried = sum(1 for (i, k) in link_names if not (clips[i]["anchor"] and clips[i]["anchor"][0] == k))
             print(f"  [tracking]   {n_pairs:,} pairs of clips meet or overlap in the game video "
                   f"({globals().get('_trk_n_boundaries', 0):,} back-to-back play boundaries); {n_links:,} track links made; "
@@ -1939,6 +1955,54 @@ def player_tracking(pc):
                        "tracks_named_by_elimination": sum(1 for (i, k), h in solve_how.items() if h == "elimination" and game_of.get(i) == g),
                        "lineup_vs_anchor_check": lineup_check,
                        "numbers_used": bool(_use_numbers)})
+
+    # --- one name per player at any moment ---------------------------------------------------------------------------
+    # CONFIRMED BUG (fixed; coach: "we're still getting the same player assigned to multiple boxes" -- #24 Warren on two
+    # defenders in one picture, one by jersey number, one as "linked possession"). The names come from several sources
+    # (jersey reads, anchors, the lineup solver, appearance, links) that were each unique on their own but never checked
+    # against EACH OTHER. Now, in every clip, two tracks that are on the floor at the same moment can't share a name: the
+    # one with the stronger evidence keeps it (coach check > jersey number > Synergy anchor > play-by-play event > lineup
+    # evidence > elimination > appearance > carried from a linked possession), the other is left unnamed here and the
+    # best guess below can give it one of the names still free.
+    def _name_rank(i, k, n, c):
+        if coach.get((i, k)) == n:
+            r = 100
+        elif (i, k) in number_names and number_names[(i, k)][0] == n:
+            r = 90
+        elif any(a and a[0] == k and a[1] == n for a in (clips[i]["anchor"], clips[i].get("anchor_first"))):
+            r = 80
+        elif any(kk == k and nn == n for kk, nn, _e in clips[i].get("anchors_pbp", [])):
+            r = 70
+        elif solve_how.get((i, k)) == "evidence":
+            r = 60
+        elif solve_how.get((i, k)) == "elimination":
+            r = 50
+        elif link_names.get((i, k), (None,))[0] == n:
+            r = 30
+        else:
+            r = 40
+        return r + float(c or 0.0)
+    n_dup = 0
+    for i in todo:
+        clip = clips[i]
+        by_name = {}
+        for k in range(len(clip["tracks"])):
+            v = names_all.get((i, k))
+            if v and v[0]:
+                by_name.setdefault(v[0], []).append(k)
+        for n, ks_ in by_name.items():
+            if len(ks_) < 2:
+                continue
+            fr_ = {k: {t_ for t_, _ in clip["tracks"][k]} for k in ks_}
+            kept = []
+            for k in sorted(ks_, key=lambda k: (_name_rank(i, k, n, names_all[(i, k)][1]), len(fr_[k])), reverse=True):
+                if any(fr_[k] & fr_[k2] for k2 in kept):
+                    names_all.pop((i, k), None)
+                    n_dup += 1
+                else:
+                    kept.append(k)
+    print(f"  [tracking]   {n_dup:,} track(s) lost a name they shared with another track on the floor at the same moment "
+          f"(the track with the stronger evidence keeps it)", flush=True)
 
     # --- best guess: every one of the five on the floor gets a track (the lineup is known; clues pick who is who) ---
     guessed = set()
