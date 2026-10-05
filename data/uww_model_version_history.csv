@@ -50,3 +50,15 @@ Tag model (overall),v2026.10.04.2,2026-10-04,trained,2026-10-04T22:39:32,newest 
 Jersey-number recognizer,v2026.10.04,2026-10-04,trained,2026-10-04T22:34:23,"7463 training crops; 77% of held-back crops right; sources {'reads': 4989, 'extra': 3615, 'coach': 176}",2026-10-04T22:42:33
 Player tracking,v2026.10.05.2,2026-10-05,pretrained + code,1de0da478c70,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-04T22:42:33
 Player tracking,v2026.10.05.3,2026-10-05,pretrained + code,6346ef748abc,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-05T07:43:04
+Tag model: ball_screen_coverage,v2026.10.05,2026-10-05,trained,2026-10-05T12:08:46,"86 tagged clips, 5 answers learned, one answer only",2026-10-05T12:11:00
+Tag model: defense,v2026.10.05,2026-10-05,trained,2026-10-05T12:08:46,"254 tagged clips, 1 answers learned, one answer only",2026-10-05T12:11:00
+Tag model: formation,v2026.10.05,2026-10-05,trained,2026-10-05T12:08:46,"129 tagged clips, 5 answers learned, one answer only",2026-10-05T12:11:00
+Tag model: offball_coverage,v2026.10.05,2026-10-05,trained,2026-10-05T12:08:46,"58 tagged clips, 2 answers learned, one answer only",2026-10-05T12:11:00
+Tag model: play_call,v2026.10.05,2026-10-05,trained,2026-10-05T12:08:46,"160 tagged clips, 7 answers learned, one answer only",2026-10-05T12:11:00
+Tag model: press,v2026.10.05,2026-10-05,trained,2026-10-05T12:08:46,"252 tagged clips, 3 answers learned",2026-10-05T12:11:00
+Tag model: primary_action,v2026.10.05,2026-10-05,trained,2026-10-05T12:08:46,"124 tagged clips, 6 answers learned",2026-10-05T12:11:00
+Tag model: screen_defender,v2026.10.05,2026-10-05,trained,2026-10-05T12:08:46,"56 tagged clips, 6 answers learned",2026-10-05T12:11:00
+Tag model: situation,v2026.10.05,2026-10-05,trained,2026-10-05T12:08:46,"298 tagged clips, 5 answers learned",2026-10-05T12:11:00
+Tag model (overall),v2026.10.05,2026-10-05,trained,2026-10-05T12:08:46,newest of 9 field model(s); last retrained field: situation,2026-10-05T12:11:00
+Jersey-number recognizer,v2026.10.05,2026-10-05,trained,2026-10-05T10:31:52,"7510 training crops; 76% of held-back crops right; sources {'reads': 4989, 'extra': 3615, 'coach': 231}",2026-10-05T12:11:00
+Player tracking,v2026.10.05.4,2026-10-05,pretrained + code,0ce5d6be08b0,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-05T12:11:00
