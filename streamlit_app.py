@@ -5853,6 +5853,87 @@ def _pr_save_bar(d, store, kp, key_suffix, part="titles"):
                                key=f"pr_dl_{part}{key_suffix}")
 
 
+def _tt_load_answers():
+    """Every saved Title answer (data/play_review_saves/*.json -> "answers"), one row per field a coach judged. If the same
+    field of the same play was judged more than once only the LATEST save counts. Rows that were only PREFILLED (coach and
+    automatic Title differ and the coach never touched the row) are left out: nobody judged them."""
+    rows = []
+    for f in glob.glob(os.path.join(DATA_DIR, "play_review_saves", "*.json")):
+        try:
+            with open(f, encoding="utf-8") as fh:
+                d = json.load(fh)
+        except Exception:
+            continue
+        if not isinstance(d.get("answers"), list):
+            continue
+        for a in d["answers"]:
+            rows.append({"game": d.get("game"),
+                         "run": re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game", ""))).strip("_") + "_" + str(d.get("run")),
+                         "coach_name": d.get("coach"), "saved": str(d.get("saved", "")), "clip_key": a.get("clip_key"),
+                         "clip_number": a.get("clip_number"), "field": a.get("field"), "coach_title": a.get("coach"),
+                         "auto": a.get("auto"), "conf": a.get("auto_conf"), "verdict": a.get("verdict"),
+                         "correct": a.get("correct"), "prefilled": bool(a.get("prefilled"))})
+    if not rows:
+        return pd.DataFrame()
+    df = pd.DataFrame(rows).sort_values("saved")
+    df = df.drop_duplicates(["run", "clip_key", "field"], keep="last").reset_index(drop=True)
+    return df[~df["prefilled"] & df["verdict"].isin(["right", "wrong", "can't tell"])].reset_index(drop=True)
+
+
+def _tt_summary(df, by):
+    """Per `by` value: answers judged, how many were right / wrong / can't tell, and % right (of right + wrong)."""
+    g = df.assign(right=df["verdict"].eq("right"), wrong=df["verdict"].eq("wrong"), cant=df["verdict"].eq("can't tell"))
+    out = g.groupby(by).agg(Checked=("verdict", "size"), Right=("right", "sum"), Wrong=("wrong", "sum"),
+                            Cant_tell=("cant", "sum")).reset_index()
+    out["% right"] = (100 * out["Right"] / (out["Right"] + out["Wrong"]).clip(lower=1)).round(1)
+    out.columns = [c.replace("_", " ") for c in out.columns]
+    return out.sort_values("Checked", ascending=False)
+
+
+def _tt_metrics(df):
+    st.markdown("#### \U0001f4ca How well did the automatic Title do?")
+    if df.empty:
+        st.info("No saved Title checks yet for this selection. Answer a game's Title checks in Previous Games > Play-by-Play "
+                "and press Save -- the metrics build from every saved check (the latest answer per play and field).")
+        return
+    df = df.assign(field=df["field"].fillna("").astype(str).str.replace("_", " ").str.capitalize(),
+                   how=df["conf"].map(lambda c: "no confidence" if pd.isna(c) else
+                                      ("under 50%" if c < .5 else "50-60%" if c < .6 else "60-70%" if c < .7 else
+                                       "70-80%" if c < .8 else "80-90%" if c < .9 else "90%+")))
+    n = len(df)
+    ok = int(df["verdict"].eq("right").sum())
+    jd = int(df["verdict"].isin(["right", "wrong"]).sum())
+    c = st.columns(4)
+    c[0].metric("Title answers checked", f"{n:,}")
+    c[1].metric("Right (of right + wrong)", f"{100 * ok / max(jd, 1):.1f}%", f"{ok:,} of {jd:,}", delta_color="off")
+    c[2].metric("Plays", f"{df['clip_key'].nunique():,}")
+    c[3].metric("Games / reviewers", f"{df['run'].nunique()} / {df['coach_name'].nunique()}")
+    st.caption("Right = the coach left the automatic answer as right. Wrong = the coach gave a different answer. Can't tell = "
+               "the coach couldn't judge it from the film (not counted in the percentage). Rows the coach never touched are left out.")
+    st.markdown("**By Title field** -- which part of the automatic Title is doing well and which needs adjusting")
+    st.dataframe(_tt_summary(df, "field"), hide_index=True, use_container_width=True)
+    st.markdown("**By how sure the model was** -- does a higher confidence mean a better answer?")
+    order = {"under 50%": 0, "50-60%": 1, "60-70%": 2, "70-80%": 3, "80-90%": 4, "90%+": 5, "no confidence": 6}
+    st.dataframe(_tt_summary(df, "how").sort_values("how", key=lambda x: x.map(order)).rename(columns={"how": "Model confidence"}),
+                 hide_index=True, use_container_width=True)
+    st.markdown("**By field and confidence**")
+    st.dataframe(_tt_summary(df, ["field", "how"]).sort_values(["field", "how"], key=lambda x: x.map(order) if x.name == "how" else x)
+                 .rename(columns={"how": "Model confidence"}), hide_index=True, use_container_width=True)
+    wr = df[df["verdict"].eq("wrong") & df["correct"].notna()]
+    st.markdown("**Most common mix-ups** (automatic said -> coach said)")
+    if len(wr):
+        mix = (wr.assign(auto=wr["auto"].fillna("(nothing)")).groupby(["field", "auto", "correct"]).size()
+               .reset_index(name="Times").sort_values("Times", ascending=False).head(25)
+               .rename(columns={"field": "Field", "auto": "Automatic said", "correct": "Coach said"}))
+        st.dataframe(mix, hide_index=True, use_container_width=True)
+    else:
+        st.caption("No wrong answers with a corrected value yet.")
+    if df["run"].nunique() > 1:
+        st.markdown("**By game**")
+        st.dataframe(_tt_summary(df.assign(game=df["game"].map(_pnt_game_label)), "game"), hide_index=True,
+                     use_container_width=True)
+
+
 def render_video_tracking():
     """Analytics > Video Tracking: all the player tracking in one place. CONFIRMED CHANGE (requested: a fourth Analytics
     tab, "Video Tracking", with all the player tracking instead of the Previous Games play-by-play). Pick one tracked
@@ -5889,7 +5970,16 @@ def render_video_tracking():
         return
     _FT_GAME = None if pick == "All tracked games" else (label_of[pick][0], team)
     # CONFIRMED CHANGE (requested): the player checks for each game's review and their accuracy metrics moved to
-    # Analytics > Player Number Tracking (the Title checks stay in Previous Games > Play-by-Play).
+    # Analytics > Player Number Tracking (the Title checks stay in Previous Games > Play-by-Play). Accuracy metrics for the
+    # Title / Play columns sit at the top of this tab, built exactly like the player-number metrics, for the game picked above.
+    try:
+        _tt = _tt_load_answers()
+        if pick != "All tracked games" and not _tt.empty:
+            _code_n = re.sub(r"[^A-Za-z0-9]+", "", str(label_of[pick][1])).lower()
+            _tt = _tt[_tt["game"].map(lambda g: _code_n in re.sub(r"[^A-Za-z0-9]+", "", str(g)).lower())] if _code_n else _tt
+        _tt_metrics(_tt)
+    except Exception as _tt_err:
+        report_section_error("Title accuracy metrics", _tt_err)
     try:
         render_film_tracking(team, key_suffix="_vt")
     except Exception as _vt_err:
