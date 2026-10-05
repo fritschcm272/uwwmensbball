@@ -3,17 +3,17 @@ clip_key,clip_number,track,name,event,game_date
 ,15,1,JR Lukenbill,rebound_defensive,2026-01-03
 ,17,5,Brandon Beck,rebound_defensive,2026-01-03
 ,22,28,Oskar Kangas,rebound_offensive,2026-01-03
-,27,44,Aiden Hawkinson,rebound_defensive,2026-01-03
-,35,7,Nate Nazos,rebound_defensive,2026-01-03
+,27,45,Aiden Hawkinson,rebound_defensive,2026-01-03
+,35,8,Nate Nazos,rebound_defensive,2026-01-03
 ,40,5,Jake Quast,rebound_defensive,2026-01-03
 ,42,29,Oskar Kangas,rebound_defensive,2026-01-03
 ,46,29,Brandon Beck,rebound_offensive,2026-01-03
-,50,33,Joey LaChapell,rebound_defensive,2026-01-03
+,50,35,Joey LaChapell,rebound_defensive,2026-01-03
 ,55,11,Tyshawn Teague-Johnson,rebound_defensive,2026-01-03
 ,61,1,Nate Nazos,steal,2026-01-03
 ,63,11,Richie Warren,rebound_defensive,2026-01-03
 ,70,13,Nate Nazos,rebound_defensive,2026-01-03
-,72,30,Brock Marino,rebound_defensive,2026-01-03
+,72,31,Brock Marino,rebound_defensive,2026-01-03
 ,74,9,Collin Madson,rebound_offensive,2026-01-03
 ,74,9,Brock Marino,rebound_offensive,2026-01-03
 ,82,30,Luke Bara,rebound_defensive,2026-01-03
@@ -23,22 +23,21 @@ clip_key,clip_number,track,name,event,game_date
 ,99,23,Brock Marino,rebound_defensive,2026-01-03
 ,105,18,Brock Marino,rebound_defensive,2026-01-03
 ,121,18,Richie Warren,block,2026-01-03
-,125,1,Brock Marino,rebound_offensive,2026-01-03
-,131,51,Richie Warren,rebound_offensive,2026-01-03
+,125,11,Brock Marino,rebound_offensive,2026-01-03
+,131,52,Richie Warren,rebound_offensive,2026-01-03
 ,138,18,Brock Marino,rebound_defensive,2026-01-03
-,142,30,Jonah Rindfleisch,block,2026-01-03
+,142,31,Jonah Rindfleisch,block,2026-01-03
 ,144,21,Joey Berezowitz,rebound_defensive,2026-01-03
 ,145,37,Joey Berezowitz,rebound_defensive,2026-01-03
-,148,9,Brock Marino,rebound_defensive,2026-01-03
 ,153,26,Vitorio Dante,rebound_offensive,2026-01-03
 ,162,46,Jake Quast,rebound_offensive,2026-01-03
 ,163,14,Jonah Rindfleisch,rebound_defensive,2026-01-03
 ,164,24,Luke Bara,rebound_defensive,2026-01-03
-,167,31,Richie Warren,rebound_defensive,2026-01-03
+,167,30,Richie Warren,rebound_defensive,2026-01-03
 ,172,20,Richie Warren,rebound_offensive,2026-01-03
 ,177,23,Richie Warren,rebound_offensive,2026-01-03
-,179,46,Darius Chestnut,rebound_defensive,2026-01-03
-,182,20,Joey Berezowitz,foul,2026-01-03
+,179,47,Darius Chestnut,rebound_defensive,2026-01-03
+,182,21,Joey Berezowitz,foul,2026-01-03
 ,183,26,Carter Thomas,rebound_defensive,2026-01-03
 ,184,35,Carter Thomas,rebound_defensive,2026-01-03
 ,326,80,Kanyon Bryte,rebound_defensive,2025-12-30
@@ -46,7 +45,7 @@ clip_key,clip_number,track,name,event,game_date
 ,331,40,Jackson Bowman,rebound_offensive,2025-12-30
 ,341,1,C. Reece Breitenbach,rebound_offensive,2025-12-30
 ,342,0,C. Reece Breitenbach,rebound_offensive,2025-12-30
-,343,21,C. Reece Breitenbach,rebound_offensive,2025-12-30
+,343,20,C. Reece Breitenbach,rebound_offensive,2025-12-30
 ,357,4,Cooper Nailor,rebound_defensive,2025-12-30
 ,365,17,Jackson Bowman,rebound_defensive,2025-12-30
 ,367,18,JR Lukenbill,rebound_offensive,2025-12-30
@@ -71,18 +70,18 @@ clip_key,clip_number,track,name,event,game_date
 ,473,19,Jake Quast,rebound_offensive,2025-12-30
 ,473,26,Aleks Jajic,rebound_defensive,2025-12-30
 ,475,1,Aleks Jajic,rebound_defensive,2025-12-30
-,481,11,Tyshawn Teague-Johnson,rebound_defensive,2025-12-30
+,481,12,Tyshawn Teague-Johnson,rebound_defensive,2025-12-30
 ,484,3,Darius Chestnut,rebound_offensive,2025-12-30
 ,484,3,Jake Quast,rebound_offensive,2025-12-30
 ,484,3,Darius Chestnut,rebound_offensive,2025-12-30
-,485,15,Darius Chestnut,rebound_offensive,2025-12-30
-,485,15,Jake Quast,rebound_offensive,2025-12-30
-,485,15,Darius Chestnut,rebound_offensive,2025-12-30
+,485,16,Darius Chestnut,rebound_offensive,2025-12-30
+,485,16,Jake Quast,rebound_offensive,2025-12-30
+,485,16,Darius Chestnut,rebound_offensive,2025-12-30
 ,501,20,Ryan Dolphin,steal,2025-12-30
 ,506,51,Jake Quast,rebound_defensive,2025-12-30
 ,512,54,Tyshawn Teague-Johnson,foul,2025-12-30
 ,514,38,Kanyon Bryte,rebound_defensive,2025-12-30
-,516,36,Jake Quast,rebound_defensive,2025-12-30
-,517,8,Jake Quast,rebound_offensive,2025-12-30
+,516,37,Jake Quast,rebound_defensive,2025-12-30
+,517,19,Jake Quast,rebound_offensive,2025-12-30
 ,518,26,Jake Quast,rebound_offensive,2025-12-30
-,534,19,Agape Keyes Jr.,rebound_offensive,2025-12-30
+,534,21,Agape Keyes Jr.,rebound_offensive,2025-12-30
