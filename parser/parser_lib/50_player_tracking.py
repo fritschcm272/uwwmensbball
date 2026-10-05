@@ -753,7 +753,20 @@ def _trk_link_possessions(clips, todo, pc, game_of):
     return group, n_links, n_pairs
 
 
-def _trk_players(d, H=None, feats=None, opening=False):
+# CONFIRMED CHANGE (requested: a diagnostic of WHERE players are lost). Every stage that can throw a person away counts
+# what it dropped and why (counts), and keeps the dropped boxes per frame (boxes) so the check pictures can draw them.
+_trk_drop = {"counts": {}, "boxes": {}}
+
+
+def _trk_note_drop(reason, n=1, file=None, boxes=None):
+    c = _trk_drop["counts"]
+    c[reason] = c.get(reason, 0) + int(n)
+    if file is not None and boxes is not None:
+        for b in boxes:
+            _trk_drop["boxes"].setdefault(file, []).append((float(b[0]), float(b[1]), float(b[2]), float(b[3]), reason))
+
+
+def _trk_players(d, H=None, feats=None, opening=False, file=None):
     """Kept player boxes for one frame -> rows [x, y, h, r, g, b, x1, y1, x2, y2, X, Y, sat, stripes, chest L,
     chest warmth, shorts L, shorts warmth, chest variation, group] with x, y the feet point
     measured in picture-HEIGHT units (so left-right and up-down distances are comparable), h the box height,
@@ -770,7 +783,11 @@ def _trk_players(d, H=None, feats=None, opening=False):
     # the picture) was being kept as "players". Anyone whose feet run off the bottom edge can't be put on the
     # court, and a player's box is tall and narrow -- wide, squat boxes are seated people.
     wid = (p[:, 2] - p[:, 0]) / np.maximum(p[:, 3] - p[:, 1], 1e-6)
-    keep = (h > 0.03) & (h < 0.45) & (fy > 0.15) & (fy < 0.975) & (fx > 0.005) & (fx < 0.995)
+    m_size = ~((h > 0.03) & (h < 0.45))
+    m_edge = ~((fy > 0.15) & (fy < 0.975) & (fx > 0.005) & (fx < 0.995))
+    keep = ~m_size & ~m_edge
+    m_court = np.zeros(len(p), bool)
+    m_wide = np.zeros(len(p), bool)
     X = np.full(len(p), np.nan)
     Y = np.full(len(p), np.nan)
     if H is not None and len(p):
@@ -788,11 +805,20 @@ def _trk_players(d, H=None, feats=None, opening=False):
         if opening and _im > 0:
             _y0, _y1 = globals().get("TRACK_INBOUND_Y_FT", (8.0, 42.0))
             court_ok |= (((X <= -m) & (X > -_im)) | ((X >= 94 + m) & (X < 94 + _im))) & (Y >= _y0) & (Y <= _y1)
-        keep &= court_ok
+        m_court = ~court_ok
         edge = (X < TRACK_EDGE_ZONE_FT) | (X > 94 - TRACK_EDGE_ZONE_FT) | (Y < TRACK_EDGE_ZONE_FT) | (Y > 50 - TRACK_EDGE_ZONE_FT)
-        keep &= ~edge | (wid < 0.8)          # wide boxes: seated people -- only along the edges
+        m_wide = edge & ~(wid < 0.8)         # wide boxes: seated people -- only along the edges
     else:
-        keep &= wid < 0.8                     # no court position: the old rule everywhere
+        m_wide = ~(wid < 0.8)                 # no court position: the old rule everywhere
+    keep &= ~m_court & ~m_wide
+    _why = np.full(len(p), "", dtype=object)
+    for _m, _r in ((m_size, "too small or too large for a player"), (m_edge, "cut off at the edge of the picture"),
+                   (m_court, "off the court (fans, bench, table)"), (m_wide, "wide box (seated person)")):
+        _why[(_why == "") & _m] = _r
+    _trk_note_drop("people detected", len(p))
+    for _r in set(_why[~keep]):
+        _sel = ~keep & (_why == _r)
+        _trk_note_drop(_r, int(_sel.sum()), file, p[_sel][:, 0:4])
     rgb = p[:, 5:8]
     sat = p[:, 8] if p.shape[1] > 8 else rgb.max(1) - rgb.min(1)
     stripes = p[:, 9] if p.shape[1] > 9 else np.zeros(len(p))
@@ -906,6 +932,10 @@ def _trk_link(frames, fps_=2.0):
                 tracks.append([(t, b)])
                 new_active.append(len(tracks) - 1)
         active = new_active
+    _short = sum(1 for tr in tracks if len(tr) < TRACK_MIN_FRAMES)
+    if _short:
+        _trk_note_drop("[tracks] followed for fewer than TRACK_MIN_FRAMES frames (thrown away)", _short)
+    _trk_note_drop("[tracks] tracks built", len(tracks))
     return [tr for tr in tracks if len(tr) >= TRACK_MIN_FRAMES], shifts
 
 
@@ -1118,7 +1148,9 @@ def player_tracking(pc):
     print(f"  [tracking] step 2: finding the players in {len(todo)} clip(s) and sorting them into teams...", flush=True)
     jfeat = _trk_jersey_feats([f for i in todo for f in lists[i]], det, base)
     _n_open = int(round(float(globals().get("TRACK_INBOUND_OPEN_S", 2.0)) * float(globals().get("VISION_TRACK_FPS") or 2.0)))
-    frames_of = {i: [_trk_players(det.get(f), court_H.get(f), jfeat.get(f), opening=(t_ < _n_open))
+    _trk_drop["counts"].clear()
+    _trk_drop["boxes"].clear()
+    frames_of = {i: [_trk_players(det.get(f), court_H.get(f), jfeat.get(f), opening=(t_ < _n_open), file=f)
                      for t_, f in enumerate(lists[i])] for i in todo}
     # seated / partly hidden people: shorter than a standing player at the same picture row
     _n_seated = 0
@@ -1144,6 +1176,9 @@ def player_tracking(pc):
                         & (Y_ >= TRACK_EDGE_ZONE_FT) & (Y_ <= 50 - TRACK_EDGE_ZONE_FT)
                     keep_ |= inside                   # out on the floor nobody is seated
                     _n_seated += int((~keep_).sum())
+                    if (~keep_).any():
+                        _trk_note_drop("short for its spot in the picture (seated / partly hidden)", int((~keep_).sum()),
+                                       lists[i][t_], f[~keep_][:, 6:10])
                     frames_of[i][t_] = f[keep_]
     print(f"  [tracking]   set aside {_n_seated:,} seated or partly hidden people (shorter than a standing player there)", flush=True)
     from sklearn.cluster import KMeans
@@ -2061,8 +2096,28 @@ def player_tracking(pc):
                     if clip["side"].get(k) == sd and (i, k) not in names_all:
                         clip["side"][k] = None
                         n_set_aside += 1
+        _trk_note_drop("[tracks] beyond the five on the floor (set aside as not players)", n_set_aside)
         print(f"  [tracking]   {n_set_aside:,} track(s) beyond the five on the floor set aside as not players "
               f"(referees, coaches, sideline) -- no unnamed players remain where the lineup is known", flush=True)
+
+    # --- diagnostic: where were people lost? ---------------------------------------------------------------------
+    _dc = dict(_trk_drop["counts"])
+    _det = _dc.get("people detected", 0)
+    if _det:
+        _lost = sorted(((r, n) for r, n in _dc.items() if not r.startswith(("people", "[tracks]"))), key=lambda x: -x[1])
+        _kept = _det - sum(n for _, n in _lost)
+        print("  [tracking] where people were lost (diagnostic):", flush=True)
+        print(f"    {_det:,} people detected in the frames used; {_kept:,} ({100 * _kept / _det:.0f}%) passed every filter", flush=True)
+        for r, n in _lost:
+            print(f"      - {n:>9,} ({100 * n / _det:5.1f}%)  {r}", flush=True)
+        for r, n in sorted(((r, n) for r, n in _dc.items() if r.startswith("[tracks]")), key=lambda x: x[0]):
+            print(f"    {n:>9,}  {r[len('[tracks] '):]}", flush=True)
+        print("    (grey boxes marked with the reason are drawn on the check pictures in _tracking/checks/)", flush=True)
+        try:
+            pd.DataFrame([{"stage": r, "count": n, "share_of_detected": round(n / _det, 4)} for r, n in sorted(_dc.items())]
+                         ).to_csv(os.path.join(TRACK_DIR, "tracking_drop_report.csv"), index=False)
+        except Exception:
+            pass
 
     # --- screens + per-clip columns ---
     out = pd.DataFrame(index=pc.index, columns=_TRACK_COLS, dtype=object)
@@ -2196,6 +2251,10 @@ def _trk_draw_checks(pc, clips, names_all, base, todo):
                     label = "SCREEN " + label
                 dr.rectangle([x1, y1, x2, y2], outline=col.get(sd, (150, 150, 150)), width=2)
                 dr.text((x1, max(0, y1 - 11)), label, fill=col.get(sd, (150, 150, 150)))
+            # people the filters threw away on this frame, in magenta with the reason (diagnostic)
+            for (x1, y1, x2, y2, why) in _trk_drop["boxes"].get(clip["files"][t], []):
+                dr.rectangle([x1, y1, x2, y2], outline=(255, 0, 255), width=1)
+                dr.text((x1, min(im.height - 11, y2 + 1)), why.split(" (")[0][:22], fill=(255, 0, 255))
             if clip["holder"].get(t) is not None:
                 dr.text((6, 6), "ball: track #" + str(clip["holder"][t]), fill=(255, 80, 80))
             tiles.append(im)

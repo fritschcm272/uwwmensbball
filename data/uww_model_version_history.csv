@@ -49,3 +49,4 @@ Tag model: situation,v2026.10.04.2,2026-10-04,trained,2026-10-04T22:39:32,"298 t
 Tag model (overall),v2026.10.04.2,2026-10-04,trained,2026-10-04T22:39:32,newest of 9 field model(s); last retrained field: situation,2026-10-04T22:42:33
 Jersey-number recognizer,v2026.10.04,2026-10-04,trained,2026-10-04T22:34:23,"7463 training crops; 77% of held-back crops right; sources {'reads': 4989, 'extra': 3615, 'coach': 176}",2026-10-04T22:42:33
 Player tracking,v2026.10.05.2,2026-10-05,pretrained + code,1de0da478c70,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-04T22:42:33
+Player tracking,v2026.10.05.3,2026-10-05,pretrained + code,6346ef748abc,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-05T07:43:04
