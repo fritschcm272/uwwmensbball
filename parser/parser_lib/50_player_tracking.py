@@ -753,6 +753,107 @@ def _trk_link_possessions(clips, todo, pc, game_of):
     return group, n_links, n_pairs
 
 
+# CONFIRMED CHANGE (requested: "when a player's number is extremely clear in one frame, use that name for all previous and
+# future frames -- watch where the player has been and where they go"). A track that is broken in pieces (a player hidden
+# behind a screen, a missed detection, a swapped box) is several tracks of ONE person. When one piece is LOCKED to a name
+# (a clear jersey number or a coach check), the pieces before and after it that pick up exactly where it left off -- same
+# team, no overlap in time, reachable at running speed, and clearly the nearest -- get the same name. Careful on purpose:
+# an ambiguous join (two pieces equally close, or another named player closer to the join) is skipped.
+def _trk_follow_names(clips, i, seeds, fps_=None):
+    """seeds: {track: name} locked in clip i. -> {track: (name, from_track)} for the OTHER pieces of those players."""
+    clip = clips[i]
+    fps_ = float(fps_ or clip.get("fps", 2.0))
+    max_gap = float(globals().get("TRACK_LOCK_MAX_GAP_S", 3.0))
+    max_cost = float(globals().get("TRACK_LOCK_MAX_COST", 0.6))
+    speed = float(globals().get("TRACK_MAX_SPEED_FTS", 24.0))
+    shifts = np.array(clip["shifts"]) if len(clip.get("shifts", [])) else None
+    cum = np.cumsum(shifts, axis=0) if shifts is not None else None
+    tracks = clip["tracks"]
+    span = {k: (tr[0][0], tr[-1][0], {t for t, _ in tr}) for k, tr in enumerate(tracks) if tr}
+
+    def point(k, first):
+        t, j = tracks[k][0 if first else -1]
+        row = clip["frames"][t][j]
+        if len(row) >= 12 and np.isfinite(row[10]) and np.isfinite(row[11]):
+            return ("court", float(row[10]), float(row[11]))
+        h = float(row[2]) if float(row[2]) > 1e-6 else 0.1
+        dx, dy = (cum[t] if cum is not None else (0.0, 0.0))
+        return ("pic", float((row[0] - dx) / h * 6.2), float((row[1] - dy) / h * 6.2))
+
+    def cost(p, q):
+        """cost of q being the same person as p, p before q (None = can't be: overlap, wrong order, too far apart in time)"""
+        if span[p][2] & span[q][2]:
+            return None
+        if span[p][1] >= span[q][0]:
+            return None
+        gap = (span[q][0] - span[p][1]) / fps_
+        if gap > max_gap:
+            return None
+        a, b = point(p, False), point(q, True)
+        if a[0] != b[0]:
+            return None
+        d = float(np.hypot(a[1] - b[1], a[2] - b[2]))
+        return d / (speed * max(gap, 1.0 / fps_) + 3.0)
+
+    def pair_cost(p, q):                                      # whichever comes first
+        if span[p][0] <= span[q][0]:
+            return cost(p, q)
+        return cost(q, p)
+
+    holders = {}
+    for k, n in seeds.items():
+        if k in span:
+            holders.setdefault(n, set()).add(k)
+    owner = {k: n for n, ks in holders.items() for k in ks}
+    out = {}
+    for _round in range(6):
+        cands = {}                                            # track -> (cost, name, from)
+        for n, ks in holders.items():
+            for b in span:
+                if b in owner or clip["side"].get(b) is None:
+                    continue
+                if any(clip["side"].get(b) != clip["side"].get(k) for k in ks):
+                    continue
+                if any(span[b][2] & span[k][2] for k in ks):
+                    continue                                  # on the floor at the same moment as him: another person
+                best = None
+                for k in ks:
+                    c = pair_cost(k, b)
+                    if c is not None and (best is None or c < best[0]):
+                        best = (c, k)
+                if best and best[0] <= max_cost and (b not in cands or best[0] < cands[b][0]):
+                    cands[b] = (best[0], n, best[1])
+        added = {}
+        for b, (c, n, frm) in sorted(cands.items(), key=lambda kv: kv[1][0]):
+            # a rival piece that overlaps this one in time and is nearly as close: ambiguous, skip
+            if any(b2 != b and span[b][2] & span[b2][2] and c2 < 1.5 * max(c, 0.05) and n2 == n
+                   for b2, (c2, n2, _f2) in cands.items()):
+                continue
+            # another player already placed (a different name) who could just as well be this piece
+            rival = False
+            for n2, ks2 in holders.items():
+                if n2 == n:
+                    continue
+                for k2 in ks2:
+                    if clip["side"].get(k2) != clip["side"].get(b):
+                        continue
+                    c2 = pair_cost(k2, b)
+                    if c2 is not None and c2 < 1.2 * max(c, 0.05):
+                        rival = True
+            if rival:
+                continue
+            if any(span[b][2] & span[x][2] for x in added if added[x][0] == n):
+                continue
+            added[b] = (n, frm)
+        if not added:
+            break
+        for b, (n, frm) in added.items():
+            holders[n].add(b)
+            owner[b] = n
+            out[b] = (n, frm)
+    return out
+
+
 # CONFIRMED CHANGE (requested: a diagnostic of WHERE players are lost). Every stage that can throw a person away counts
 # what it dropped and why (counts), and keeps the dropped boxes per frame (boxes) so the check pictures can draw them.
 _trk_drop = {"counts": {}, "boxes": {}}
@@ -1331,6 +1432,7 @@ def player_tracking(pc):
             k = max(set(late), key=late.count)
             if late.count(k) >= 2:
                 clip["anchor"] = (k, name)
+                clip["anchor_votes"] = (late.count(k), len(late))
 
     # Finish at the rim, no anchor yet -> the offensive player closest to the attacked basket at the end.
     anchors_rim = 0
@@ -1488,6 +1590,54 @@ def player_tracking(pc):
             if coach_flip:
                 print(f"  [tracking]   coach checks: {len(coach_flip)} player(s) moved to the other team (\"wrong team\")",
                       flush=True)
+
+            # --- audit of Synergy's anchors against the coaches' checks (requested: "Synergy is 0/5 -- is it working?") ---
+            # For every anchor (the ball holder late in the clip = the player Synergy names) whose track a coach also
+            # checked: right, or WHY wrong -- the coach says it is a teammate, a defender / other team, or not a player.
+            # Also: how many late frames the ball sat with the winning track (right vs wrong), so a vote threshold can be chosen.
+            try:
+                _au, _rows = {"right": 0, "teammate": 0, "defender / other team": 0, "not a player": 0, "found elsewhere": 0}, []
+                for i in todo:
+                    for kind, a_ in (("late ball holder", clips[i].get("anchor")), ("first named", clips[i].get("anchor_first"))):
+                        if not a_:
+                            continue
+                        k, name = a_
+                        if (i, k) in coach_flip:
+                            res = "defender / other team"
+                        elif (i, k) in coach:
+                            tn = coach[(i, k)]
+                            if tn is None:
+                                res = "not a player"
+                            elif tn == name:
+                                res = "right"
+                            else:
+                                dfive = _trk_five(pc.at[i, "defense_lineup"])
+                                res = "defender / other team" if tn in dfive else "teammate"
+                        else:
+                            continue
+                        _au[res] += 1
+                        v_ = clips[i].get("anchor_votes") if kind == "late ball holder" else None
+                        _rows.append({"clip_key": _trk_clip_key(pc.loc[i]), "kind": kind, "anchor_name": name,
+                                      "coach_says": coach.get((i, k)), "result": res,
+                                      "ball_frames_won": v_[0] if v_ else None, "ball_frames_total": v_[1] if v_ else None,
+                                      "ball_seen_frames": len(clips[i]["ball"]), "anchor_by": clips[i].get("anchor_by") or "ball"})
+                _n_au = sum(_au.values())
+                if _n_au:
+                    print(f"  [tracking]   Synergy anchor audit: {_n_au} anchor(s) sit on a track a coach checked -- right "
+                          f"{_au['right']}; wrong because it was a teammate {_au['teammate']}, a defender / other team "
+                          f"{_au['defender / other team']}, not a player {_au['not a player']}", flush=True)
+                    _by = {}
+                    for r_ in _rows:
+                        if r_["ball_frames_won"] is not None:
+                            _by.setdefault(r_["ball_frames_won"], [0, 0])
+                            _by[r_["ball_frames_won"]][1] += 1
+                            _by[r_["ball_frames_won"]][0] += int(r_["result"] == "right")
+                    if _by:
+                        print("  [tracking]     right by number of late frames the ball was at that track: "
+                              + "; ".join(f"{k_} frame(s): {r_}/{n_}" for k_, (r_, n_) in sorted(_by.items())), flush=True)
+                    pd.DataFrame(_rows).to_csv(os.path.join(TRACK_DIR, "tracking_anchor_audit.csv"), index=False)
+            except Exception as _e:
+                print(f"  [tracking]   Synergy anchor audit skipped ({type(_e).__name__}: {_e})", flush=True)
 
     # --- fingerprints for every track on a known side ---
     # CONFIRMED CHANGE (requested: the run sat on "fingerprinting 16858 player crop(s)" with no sign of life).
@@ -1757,6 +1907,31 @@ def player_tracking(pc):
         except Exception as _e:
             print(f"  [tracking]   play-by-play events not used this run ({type(_e).__name__}: {_e})", flush=True)
 
+    # --- locked names: a very clear jersey number (or a coach check) names the player's other pieces in the clip ---
+    followed, locked_set = {}, {}
+    if globals().get("TRACK_LOCK_NAMES", True):
+        try:
+            _lock_min = float(globals().get("TRACK_LOCK_MIN_CONF", 0.9))
+            for i in todo:
+                seeds_ = {k: v[0] for (ii, k), v in number_names.items() if ii == i and v[1] >= _lock_min}
+                for (ii, k), n in coach.items():
+                    if ii == i and n:
+                        seeds_[k] = n
+                if not seeds_:
+                    continue
+                for k, n in seeds_.items():
+                    locked_set[(i, k)] = n
+                for k2, (n, frm) in _trk_follow_names(clips, i, seeds_).items():
+                    own = number_names.get((i, k2))
+                    if (own and own[0] != n) or (coach.get((i, k2)) and coach.get((i, k2)) != n):
+                        continue                                 # that piece has its own, different evidence
+                    followed[(i, k2)] = (n, frm)
+            print(f"  [tracking] step 5e: {len(locked_set):,} track(s) locked to a name by a clear jersey number or a coach "
+                  f"check; following those players through the clip named {len(followed):,} more piece(s) of their paths",
+                  flush=True)
+        except Exception as _e:
+            print(f"  [tracking]   locked-name following not used this run ({type(_e).__name__}: {_e})", flush=True)
+
     # --- link possessions: the same player across overlapping clips; names travel along the links ---
     link_names = {}
     if TRACK_LINK_POSSESSIONS:
@@ -1785,6 +1960,10 @@ def player_tracking(pc):
                         votes[number_names[(i, k)][0]] = votes.get(number_names[(i, k)][0], 0) + 1
                     if coach.get((i, k)):                           # a name the coaches checked is certain: it counts double
                         votes[coach[(i, k)]] = votes.get(coach[(i, k)], 0) + 2
+                    if (i, k) in locked_set and (i, k) in number_names:     # a very clear number counts extra
+                        votes[locked_set[(i, k)]] = votes.get(locked_set[(i, k)], 0) + 1
+                    if (i, k) in followed:                                  # a piece of a locked player's path
+                        votes[followed[(i, k)][0]] = votes.get(followed[(i, k)][0], 0) + 1
                 if not votes:
                     continue
                 name, sup = max(votes.items(), key=lambda kv: kv[1])
@@ -1808,6 +1987,28 @@ def player_tracking(pc):
                         if clash and not own:
                             continue
                         link_names[(i, k)] = (name, sup)
+            # a locked player's name traveled along a link into another clip: follow him through THAT clip too
+            if globals().get("TRACK_LOCK_NAMES", True) and (locked_set or followed):
+                _strong = {}
+                for gid, nodes in by_group.items():
+                    if any(nd in locked_set or nd in followed for nd in nodes):
+                        for nd in nodes:
+                            if nd in link_names and nd not in locked_set and nd not in followed:
+                                _strong.setdefault(nd[0], {})[nd[1]] = link_names[nd][0]
+                _more = 0
+                for i, sd_ in _strong.items():
+                    seeds_ = dict(sd_)
+                    seeds_.update({k: n for (ii, k), n in locked_set.items() if ii == i})
+                    seeds_.update({k: v[0] for (ii, k), v in followed.items() if ii == i})
+                    for k2, (n, frm) in _trk_follow_names(clips, i, seeds_).items():
+                        own = number_names.get((i, k2))
+                        if (i, k2) in followed or (own and own[0] != n) or (coach.get((i, k2)) and coach.get((i, k2)) != n):
+                            continue
+                        followed[(i, k2)] = (n, frm)
+                        _more += 1
+                if _more:
+                    print(f"  [tracking]   following linked players through their other clips named {_more:,} more piece(s)",
+                          flush=True)
             n_carried = sum(1 for (i, k) in link_names if not (clips[i]["anchor"] and clips[i]["anchor"][0] == k))
             print(f"  [tracking]   {n_pairs:,} pairs of clips meet or overlap in the game video "
                   f"({globals().get('_trk_n_boundaries', 0):,} back-to-back play boundaries); {n_links:,} track links made; "
@@ -1846,6 +2047,10 @@ def player_tracking(pc):
                 ln = link_names.get((i, k))
                 if ln and ln[0] in score[k] and not (not use_anchor and clip["anchor"] and clip["anchor"][0] == k):
                     score[k][ln[0]] += TRACK_LINK_WEIGHT * min(ln[1], 3)
+            for k in ks:                                          # a piece of a locked player's path
+                fo = followed.get((i, k))
+                if fo and fo[0] in score[k]:
+                    score[k][fo[0]] += float(globals().get("TRACK_LOCK_WEIGHT", 3.0))
             got = _trk_solve_team(clip["tracks"], ks, score)
             # weak or tied evidence doesn't name anyone by itself (elimination below can still place him)
             def _clear(k, n):
@@ -2006,6 +2211,8 @@ def player_tracking(pc):
             r = 90
         elif any(a and a[0] == k and a[1] == n for a in (clips[i]["anchor"], clips[i].get("anchor_first"))):
             r = 80
+        elif followed.get((i, k), (None,))[0] == n:
+            r = 75
         elif any(kk == k and nn == n for kk, nn, _e in clips[i].get("anchors_pbp", [])):
             r = 70
         elif solve_how.get((i, k)) == "evidence":
@@ -2139,6 +2346,8 @@ def player_tracking(pc):
             return "Synergy"
         if any(kk == k and nn == n for kk, nn, _e in clips[i].get("anchors_pbp", [])):
             return "play-by-play event"
+        if followed.get((i, k), (None,))[0] == n:
+            return "followed player"
         if solve_how.get((i, k)) == "elimination":
             return "elimination"
         if link_names.get((i, k), (None,))[0] == n:
