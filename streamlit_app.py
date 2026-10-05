@@ -5823,7 +5823,10 @@ def _pr_save_bar(d, store, kp, key_suffix, part="titles"):
     st.markdown(f"**\U0001f4dd {what.capitalize()}** -- {len(d.get('plays', []))} plays in this game's open review; {where}."
                 + (" Rows where the coach's value and the automatic value differ start as wrong with the coach's value."
                    if part == "titles" else "")
-                + (f"  \nAlready saved: " + "; ".join(f"{c} ({t})" for c, t, _p in saved) if saved else ""))
+                + (f"  \nAlready saved: " + "; ".join(f"{c} ({t})" for c, t, _p in saved) + "."
+                   + ("  To get new plays for the Title checks, run the play tracking in the parser first "
+                      "(Player tracking, then the Play review) -- new plays only appear after that."
+                      if part == "titles" else "") if saved else ""))
     c1, c2 = st.columns([3, 2])
     coach = c1.text_input("Your name (required to save)", key=f"pr_coach_{part}{key_suffix}")
     if c2.button(f"Save my {what} ({n_changed} changed)", key=f"pr_save_{part}{key_suffix}"):
@@ -5993,7 +5996,10 @@ def _pnt_check_form(prd):
     saved = [x for x in _pr_app_saves_for(run) if "players" in x[2]]
     st.caption("Choose a check for each box in the Players tables -- nothing reloads while you choose. "
                "Press \"Save my player checks\" at the bottom when you're done (answers aren't kept until then)."
-               + ("  Already saved: " + "; ".join(f"{c} ({t})" for c, t, _p in saved) if saved else ""))
+               + ("  Already saved: " + "; ".join(f"{c} ({t})" for c, t, _p in saved)
+                  + ".  To get new clips for the number checks, run the play tracking in the parser first "
+                    "(Player tracking, then the Play review) -- new clips only appear after that."
+                  if saved else ""))
     with st.form(f"prx_players_form{sfx}"):
         coach = st.text_input("Your name (required to save)", key=f"pr_coach_players{sfx}")
         for pi, pl in enumerate(prd.get("plays", [])):
@@ -12918,7 +12924,8 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
     saved = _pr_app_saves_for(d.get("run"))
     if saved:
         st.success("Already saved for this review: " + "; ".join(f"{c} ({t})" for c, t, *_ in saved)
-                   + ". More coaches can add theirs.")
+                   + ". More coaches can add theirs. To get new plays for the Title checks, run the play tracking "
+                   "in the parser first (Player tracking, then the Play review) -- new plays only appear after that.")
     coach = st.text_input("Your name (required to save)", key=f"pr_coach{key_suffix}")
     norm = lambda x: re.sub(r"[^a-z0-9#]+", "", str(x).lower())
     vocab = d.get("vocab", {})
