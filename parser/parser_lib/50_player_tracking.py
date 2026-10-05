@@ -285,7 +285,15 @@ def _trk_detect(rels, base):
         n_band = sum(1 for r in todo if H_of(os.path.join(base, r)) is not None)
         print(f"  [tracking] finding players and the ball in {len(todo)} new frame(s) "
               f"({TRACK_DETECT_TILES} enlarged court-strip tiles per frame; court strip known for {n_band:,})...", flush=True)
+        try:
+            import torch
+            _dev = f"GPU ({torch.cuda.get_device_name(0)})" if torch.cuda.is_available() else "CPU -- this will be SLOW"
+        except Exception:
+            _dev = "unknown"
+        print(f"  [tracking]   detector {TRACK_DETECTOR} at size {TRACK_DETECT_SIZE} runs on: {_dev}. Every finished frame is "
+              f"saved in batches, so you can stop (Interrupt) and rerun -- it continues where it stopped.", flush=True)
         _t0 = time.time()
+        _last_say = _t0
         for i in range(0, len(todo), 8):
             chunk = todo[i:i + 8]
             res = _trk_tiled_predict(model, [os.path.join(base, r) for r in chunk], H_of, [0, 32],
@@ -316,6 +324,14 @@ def _trk_detect(rels, base):
                             "b": np.array(balls, dtype=np.float32).reshape(-1, 3), "W": W, "H": H}
             if (i // 8) % 40 == 39:
                 pd.to_pickle(cache, cpath)
+            # a status line at least every 2 minutes (the percentage lines below can be hours apart on a slow machine)
+            _now = time.time()
+            if _now - _last_say >= 120 or i == 24:
+                _last_say = _now
+                _done = min(i + 8, len(todo))
+                _rate = (_now - _t0) / max(_done, 1)
+                print(f"  [tracking]   ...{_done:,} of {len(todo):,} frames done ({_rate:.2f} s per frame; about "
+                      f"{_rate * (len(todo) - _done) / 3600:.1f} hours left)", flush=True)
             _trk_progress("frames checked for players", min(i + 8, len(todo)), len(todo), _t0,
                           every=max(8, (len(todo) // 20) // 8 * 8))
         pd.to_pickle(cache, cpath)
