@@ -912,7 +912,11 @@ def _trk_players(d, H=None, feats=None, opening=False, file=None):
         v = Hm @ np.vstack([(p[:, 0] + p[:, 2]) / 2, p[:, 3], np.ones(len(p))])
         X, Y = v[0] / v[2], v[1] / v[2]
         m = TRACK_COURT_MARGIN_FT
-        court_ok = (X > -m) & (X < 94 + m) & (Y > -TRACK_NEAR_MARGIN_FT) & (Y < 50 + m)
+        # Bench players and coaches stand right behind the far sideline with their legs hidden by the ad boards, so
+        # their boxes end at the board and map to Y = 49..52 ft (compare pictures). TRACK_FAR_MARGIN_FT is how far past the
+        # far sideline (Y = 50) a person may be: negative pulls the cutoff inside the line (default -1.5 -> Y < 48.5).
+        _fm = float(globals().get("TRACK_FAR_MARGIN_FT", -1.5))
+        court_ok = (X > -m) & (X < 94 + m) & (Y > -TRACK_NEAR_MARGIN_FT) & (Y < 50 + _fm)
         # CONFIRMED CHANGE (coach: "the model normally misses the player throwing the ball in on BLOB plays"). The inbounder
         # stands BEHIND the baseline -- farther out than TRACK_COURT_MARGIN_FT -- so he was dropped with the fans and the
         # bench. In a clip's opening seconds (TRACK_INBOUND_OPEN_S) a standing person up to TRACK_INBOUND_MARGIN_FT behind
@@ -1554,6 +1558,7 @@ def player_tracking(pc):
     print(f"  [tracking]   anchors from the FIRST player Synergy names (the early ball handler): {n_first}", flush=True)
 
     # --- coach checks -> the tracks they point at (same frame, same spot on the picture) ---
+    _bg_acc = None                                    # how often best guesses were right on the coach-checked boxes
     coach, coach_flip = {}, set()
     if TRACK_USE_COACH_CHECKS:
         checks = _trk_coach_checks()
@@ -1589,6 +1594,8 @@ def player_tracking(pc):
                             coach[(i, best[1])] = ch["true_name"]
                         continue
                     coach[(i, best[1])] = ch.get("true_name") if ch.get("verdict") != "not a player" else None
+            if rep.get("best guess", [0, 0])[1] >= 30:
+                _bg_acc = rep["best guess"][0] / rep["best guess"][1]
             print(f"  [tracking]   coach checks: {len(checks)} saved, {len(set(coach) | coach_flip)} matched to this run's tracks. How often each "
                   f"naming method was RIGHT on the boxes checked: " + "; ".join(
                       f"{h} {r}/{n} ({100 * r / max(n, 1):.0f}%)" for h, (r, n) in sorted(rep.items(), key=lambda x: -x[1][1])),
@@ -2264,6 +2271,7 @@ def player_tracking(pc):
 
     # --- best guess: every one of the five on the floor gets a track (the lineup is known; clues pick who is who) ---
     guessed = set()
+    _raw_p = {}
     if TRACK_BEST_GUESS:
         for i in todo:
             clip = clips[i]
@@ -2304,10 +2312,23 @@ def player_tracking(pc):
                         score[k][n] = sc * len(clip["tracks"][k])
                 got = _trk_solve_team(clip["tracks"], free, score)
                 for k, n in got.items():
-                    names_all[(i, k)] = (n, TRACK_BEST_GUESS_CONF)
+                    # CONFIRMED CHANGE (requested: "for the Best Guess, give a probability of it being this player"). The guess's
+                    # chance of being him = his share of the evidence among the names still possible for that track.
+                    _poss = {m: v for m, v in score[k].items() if v > -1e5}
+                    _tot = sum(_poss.values()) or 1.0
+                    _raw_p[(i, k)] = (n, float(_poss.get(n, 0.0)) / _tot)
                     guessed.add((i, k))
+        # Calibrate: the shares are RELATIVE (they always add to 1 over the possible names); scale them so the average stated
+        # probability equals how often best guesses were actually right on the coach-checked boxes (when there are 30+ checks).
+        _mean_raw = float(np.mean([p_ for _n, p_ in _raw_p.values()])) if _raw_p else 0.0
+        _f = (_bg_acc / _mean_raw) if (_bg_acc is not None and _mean_raw > 0) else 1.0
+        for (i, k), (n, p_) in _raw_p.items():
+            names_all[(i, k)] = (n, round(float(min(0.95, max(0.02, p_ * _f))), 2))
         print(f"  [tracking] step 6b: best guesses from the lineup for {len(guessed):,} more track(s) "
-              f"(marked \"best guess\" -- confidence {TRACK_BEST_GUESS_CONF})", flush=True)
+              f"(marked \"best guess\"; each carries its probability of being that player -- average "
+              f"{(np.mean([names_all[o][1] for o in _raw_p]) if _raw_p else 0):.0%}"
+              + (f", calibrated to the {_bg_acc:.0%} the coach checks measured" if _bg_acc is not None else
+                 ", not calibrated yet -- needs 30+ coach-checked best guesses") + ")", flush=True)
         # every track still without a name, in a clip whose five are known, can't be a 6th player: not a player
         n_set_aside = 0
         for i in todo:

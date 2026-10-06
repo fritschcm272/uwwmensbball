@@ -5697,10 +5697,9 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
         boxes = pic.get("boxes", [])
         left, right = st.columns([3, 2])
         with left:
-            st.markdown(f"**{'START' if pic.get('which') == 'start' else 'END'} of the play**")
-            if pic.get("image") and os.path.exists(path):
-                st.image(path)
-            # CONFIRMED CHANGE (requested): the zoomed close-ups sit UNDER the large picture, not beside it.
+            st.markdown("**FRAME for the player check**" if pic.get("which") == "frame" else
+                        f"**{'START' if pic.get('which') == 'start' else 'END'} of the play**")
+            # CONFIRMED CHANGE (requested): the zoomed close-ups sit ABOVE the large picture, not beside it or under it.
             # CONFIRMED CHANGE (requested: much clearer images for the player-number checks): a zoomed head-and-chest
             # close-up of every box (cut from the original frame by the parser), so the number can be read.
             _crops = [(b.get("id"), b.get("label"), b.get("crop")) for b in boxes if b.get("crop")]
@@ -5710,6 +5709,8 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
                              caption=[f"{c[0]} \u00b7 {c[1] or 'not named'}" for c in _crops], width=130)
                 except Exception:
                     pass
+            if pic.get("image") and os.path.exists(path):
+                st.image(path)
         with right:
             st.markdown("**Players**")
             if not boxes:
@@ -5790,7 +5791,7 @@ def _pr_payload(d, store, coach, kp, part=None):
                 out["checks"].append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
                                       "frame_file": pic.get("frame_file"), "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"),
                                       "side": b.get("side"), "assigned": b.get("name"), "assigned_how": b.get("how"),
-                                      "verdict": verdict, "true_name": name})
+                                      "assigned_conf": b.get("conf"), "verdict": verdict, "true_name": name})
     if part == "titles":
         out.pop("checks")
     elif part == "players":
@@ -6013,6 +6014,7 @@ def _pnt_load_checks():
                          "px": round(float(c.get("px") or 0)), "py": round(float(c.get("py") or 0)),
                          "side": c.get("side"), "assigned": c.get("assigned"),
                          "how": c.get("assigned_how") or ("not named" if not c.get("assigned") else "unknown"),
+                         "conf": c.get("assigned_conf"),
                          "verdict": c.get("verdict"), "true_name": c.get("true_name")})
     if not rows:
         return pd.DataFrame()
@@ -6054,6 +6056,16 @@ def _pnt_metrics(df):
                "gave no name at all.")
     st.markdown("**By how the model assigned the name** -- which part of the model is doing well and which needs adjusting")
     st.dataframe(_pnt_summary(df, "how"), hide_index=True, use_container_width=True)
+    # CONFIRMED CHANGE (requested: a probability for every best guess): does the stated chance match how often guesses were right?
+    bg = df[df["how"].eq("best guess") & pd.to_numeric(df["conf"], errors="coerce").notna()].copy()
+    if len(bg):
+        bg["conf"] = pd.to_numeric(bg["conf"])
+        bg["Stated probability"] = pd.cut(bg["conf"], [0, .2, .3, .4, .6, 1.01], right=False,
+                                          labels=["under 20%", "20-30%", "30-40%", "40-60%", "60%+"]).astype(str)
+        cal = _pnt_summary(bg, "Stated probability")
+        cal["Avg stated"] = cal["Stated probability"].map(bg.groupby("Stated probability")["conf"].mean().mul(100).round(1))
+        st.markdown("**Best guesses: the probability the model gave vs how often it was right** -- the two should be close")
+        st.dataframe(cal, hide_index=True, use_container_width=True)
     c1, c2 = st.columns(2)
     with c1:
         st.markdown("**By side**")
@@ -13062,7 +13074,7 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
                 with l2:
                     path = os.path.join(d["_dir"], pic.get("image", ""))
                     if os.path.exists(path):
-                        st.image(path, caption="START of the play" if pic.get("which") == "start" else "END of the play")
+                        st.image(path, caption=("START of the play" if pic.get("which") == "start" else "FRAME for the player check" if pic.get("which") == "frame" else "END of the play"))
                 with r2:
                     for bi, b in enumerate(pic.get("boxes", [])):
                         mine = p.get("five", {}).get(b.get("side"), []) or []
@@ -13113,7 +13125,8 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
                 verdict, name = "wrong", _pr_name_of(p, val[len("really "):])
             out["checks"].append({"clip_key": p["clip_key"], "clip_number": p.get("clip_number"), "frame_file": pic.get("frame_file"),
                                   "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"), "side": b.get("side"),
-                                  "assigned": b.get("name"), "assigned_how": b.get("how"), "verdict": verdict, "true_name": name})
+                                  "assigned": b.get("name"), "assigned_how": b.get("how"), "assigned_conf": b.get("conf"),
+                                  "verdict": verdict, "true_name": name})
     fname = (f"play_review_{d.get('slug')}_{d.get('run')}_{re.sub(r'[^A-Za-z0-9]+', '_', coach.strip()).strip('_')}_"
              f"{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
     ok, msg = _pr_github_save(fname, out)
