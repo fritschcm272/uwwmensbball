@@ -1,55 +1,80 @@
 defense_team,defender,clips,frames,weak_side_ft_off_man,weak_side_in_paint_pct,weak_frames,on_ball_ft,game_date,game_code
-UW-Oshkosh Titans,Vitorio Dante,14,44,11.4,29.0,24,11.8,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Brandon Beck,34,130,9.6,20.0,61,13.4,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jay Dalton,9,24,10.2,20.0,10,12.8,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Aiden Hawkinson,15,42,12.9,18.0,17,10.6,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jonah Rindfleisch,17,41,10.6,15.0,20,7.8,2026-01-03,WOS@WWW
+Alma Scots,Logan St. Martin,35,138,18.1,25.0,60,16.1,2025-12-20,WWW@AC
+Alma Scots,Joss Bradley,34,166,14.0,18.0,67,10.6,2025-12-20,WWW@AC
+Alma Scots,Preston Malpass,19,66,14.9,16.0,31,10.8,2025-12-20,WWW@AC
+Alma Scots,Donovan Collins,55,249,13.3,15.0,119,15.1,2025-12-20,WWW@AC
+Alma Scots,Elijah Sykes,25,110,15.9,14.0,42,13.3,2025-12-20,WWW@AC
+Alma Scots,Raine Rodich,31,134,15.0,12.0,60,12.6,2025-12-20,WWW@AC
+Alma Scots,Korbin Heitzman,49,224,15.9,11.0,114,14.2,2025-12-20,WWW@AC
+Alma Scots,Josh Elliott,49,233,12.9,9.0,118,12.3,2025-12-20,WWW@AC
+Alma Scots,Luciano Guerrazzi,28,139,15.3,9.0,81,12.6,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,2,58,12.7,0.0,25,13.8,2025-12-20,WWW@AC
+UW-Whitewater,Trent Grunewald,7,38,14.2,38.0,8,5.2,2025-12-20,WWW@AC
+UW-Whitewater,Agape Keyes Jr.,7,41,12.4,20.0,10,10.2,2025-12-20,WWW@AC
+UW-Whitewater,Jake Quast,23,255,15.7,15.0,142,14.2,2025-12-20,WWW@AC
+UW-Whitewater,Isaiah Robinson,8,55,12.4,9.0,34,10.7,2025-12-20,WWW@AC
+UW-Whitewater,Kelton McEwen,17,199,15.0,8.0,117,20.9,2025-12-20,WWW@AC
+UW-Whitewater,Mauryon Turner,7,44,14.8,5.0,19,9.0,2025-12-20,WWW@AC
+UW-Whitewater,Joey Berezowitz,38,413,17.6,3.0,255,24.9,2025-12-20,WWW@AC
+UW-Whitewater,Collin Madson,52,770,15.8,2.0,430,17.3,2025-12-20,WWW@AC
+UW-Whitewater,Darius Chestnut,26,389,16.9,2.0,213,16.9,2025-12-20,WWW@AC
+UW-Whitewater,Isaac Verges,25,337,18.1,2.0,184,18.6,2025-12-20,WWW@AC
+UW-Whitewater,Luke Bara,49,726,16.3,2.0,394,19.5,2025-12-20,WWW@AC
+UW-Whitewater,Rashad Rogers,11,95,16.1,2.0,54,23.8,2025-12-20,WWW@AC
+UW-Whitewater,Richie Warren,46,608,20.9,2.0,380,17.3,2025-12-20,WWW@AC
+UW-Whitewater,Tyshawn Teague-Johnson,26,319,18.6,2.0,157,16.3,2025-12-20,WWW@AC
+UW-Whitewater,Brock Marino,36,499,16.5,1.0,273,17.3,2025-12-20,WWW@AC
+UW-Oshkosh Titans,Aiden Hawkinson,19,51,12.6,29.0,17,11.7,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Logan Rindfleisch,5,18,7.3,25.0,4,13.9,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Matt Imig,8,16,9.6,25.0,4,8.4,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Joey LaChapell,29,105,10.6,18.0,44,7.8,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Jonah Rindfleisch,14,35,9.5,18.0,17,17.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Oskar Kangas,17,45,9.8,18.0,17,10.4,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Carter Thomas,35,125,9.0,17.0,59,11.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Brandon Beck,30,126,11.8,15.0,52,11.5,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,unnamed defense,5,100,10.5,15.0,52,11.8,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Carter Thomas,34,135,10.0,12.0,51,11.7,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Matt Imig,9,20,9.5,12.0,8,10.3,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Michael Metcalf-Grassman,36,147,10.7,12.0,40,10.4,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey LaChapell,30,114,10.9,10.0,52,11.3,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Nate Nazos,31,134,10.3,8.0,40,9.6,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Oskar Kangas,16,44,10.9,6.0,17,8.1,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Logan Rindfleisch,6,21,16.3,0.0,8,10.6,2026-01-03,WOS@WWW
-UW-Whitewater,Richie Warren,35,143,10.6,22.0,55,14.1,2026-01-03,WOS@WWW
-UW-Whitewater,Jake Quast,28,116,15.3,19.0,31,14.4,2026-01-03,WOS@WWW
-UW-Whitewater,Luke Bara,36,134,12.2,15.0,46,14.1,2026-01-03,WOS@WWW
-UW-Whitewater,JR Lukenbill,31,107,12.5,14.0,37,14.7,2026-01-03,WOS@WWW
-UW-Whitewater,Darius Chestnut,16,60,8.2,11.0,19,10.9,2026-01-03,WOS@WWW
-UW-Whitewater,Collin Madson,55,195,13.8,9.0,68,14.2,2026-01-03,WOS@WWW
-UW-Whitewater,unnamed defense,1,57,13.7,9.0,22,11.3,2026-01-03,WOS@WWW
-UW-Whitewater,Brock Marino,28,105,10.7,7.0,43,10.9,2026-01-03,WOS@WWW
-UW-Whitewater,Joey Berezowitz,28,115,10.3,7.0,30,11.6,2026-01-03,WOS@WWW
-UW-Whitewater,Kelton McEwen,7,25,13.7,0.0,6,8.8,2026-01-03,WOS@WWW
-UW-Whitewater,Tyshawn Teague-Johnson,10,15,19.8,0.0,1,17.7,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Jay Dalton,7,28,9.3,9.0,11,13.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Nate Nazos,33,125,11.5,8.0,51,12.2,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Vitorio Dante,14,39,10.4,6.0,16,11.5,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Michael Metcalf-Grassman,35,150,10.8,2.0,44,8.8,2026-01-03,WOS@WWW
+UW-Whitewater,Darius Chestnut,15,51,11.4,62.0,16,13.0,2026-01-03,WOS@WWW
+UW-Whitewater,Brock Marino,29,96,13.6,20.0,30,11.6,2026-01-03,WOS@WWW
+UW-Whitewater,Jake Quast,26,113,13.2,19.0,48,13.5,2026-01-03,WOS@WWW
+UW-Whitewater,Richie Warren,34,114,10.5,18.0,40,15.2,2026-01-03,WOS@WWW
+UW-Whitewater,unnamed defense,1,57,13.8,15.0,20,12.6,2026-01-03,WOS@WWW
+UW-Whitewater,JR Lukenbill,34,114,13.0,13.0,38,13.0,2026-01-03,WOS@WWW
+UW-Whitewater,Joey Berezowitz,28,107,11.1,10.0,31,13.2,2026-01-03,WOS@WWW
+UW-Whitewater,Luke Bara,37,118,12.4,10.0,40,13.6,2026-01-03,WOS@WWW
+UW-Whitewater,Collin Madson,57,214,12.8,4.0,71,11.4,2026-01-03,WOS@WWW
+UW-Whitewater,Kelton McEwen,7,36,11.9,0.0,16,16.6,2026-01-03,WOS@WWW
+UW-Whitewater,Tyshawn Teague-Johnson,8,17,19.8,0.0,3,11.6,2026-01-03,WOS@WWW
+Coe Kohawks,Aaron Foote,4,21,12.1,50.0,4,12.5,2025-12-30,WWW@COE
 Coe Kohawks,unnamed defense,1,57,8.8,47.0,30,7.7,2025-12-30,WWW@COE
 Coe Kohawks,Aleks Jajic,9,18,15.0,44.0,9,10.5,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Newell,17,35,12.7,44.0,9,13.0,2025-12-30,WWW@COE
-Coe Kohawks,Aaron Foote,4,17,11.2,40.0,5,12.5,2025-12-30,WWW@COE
-Coe Kohawks,Kanyon Bryte,47,170,11.7,23.0,44,12.7,2025-12-30,WWW@COE
-Coe Kohawks,Jay Akin,12,31,8.8,20.0,5,11.0,2025-12-30,WWW@COE
-Coe Kohawks,Deuce Walters,48,169,13.1,14.0,50,9.2,2025-12-30,WWW@COE
-Coe Kohawks,Jackson Bowman,54,190,10.9,14.0,57,11.1,2025-12-30,WWW@COE
-Coe Kohawks,Cooper Nailor,62,190,11.3,13.0,62,10.6,2025-12-30,WWW@COE
-Coe Kohawks,Ryan Dolphin,25,86,11.3,11.0,27,12.2,2025-12-30,WWW@COE
-Coe Kohawks,C. Reece Breitenbach,30,112,11.7,10.0,42,13.0,2025-12-30,WWW@COE
-Coe Kohawks,Austin Beeson,10,30,12.6,0.0,4,11.1,2025-12-30,WWW@COE
+Coe Kohawks,Austin Beeson,9,29,13.8,40.0,5,11.1,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Newell,16,39,15.8,29.0,14,13.9,2025-12-30,WWW@COE
+Coe Kohawks,Kanyon Bryte,46,169,12.8,24.0,50,13.0,2025-12-30,WWW@COE
+Coe Kohawks,Jay Akin,14,31,5.4,20.0,5,11.4,2025-12-30,WWW@COE
+Coe Kohawks,C. Reece Breitenbach,30,99,11.5,18.0,39,11.1,2025-12-30,WWW@COE
+Coe Kohawks,Ryan Dolphin,26,75,9.1,15.0,26,11.7,2025-12-30,WWW@COE
+Coe Kohawks,Jackson Bowman,53,182,10.7,14.0,58,10.7,2025-12-30,WWW@COE
+Coe Kohawks,Cooper Nailor,61,215,13.2,10.0,61,11.0,2025-12-30,WWW@COE
+Coe Kohawks,Deuce Walters,50,160,11.6,2.0,45,10.7,2025-12-30,WWW@COE
 Coe Kohawks,Zach Strauss,3,9,12.3,0.0,1,8.4,2025-12-30,WWW@COE
-UW-Whitewater,Tyshawn Teague-Johnson,40,167,9.8,24.0,62,10.5,2025-12-30,WWW@COE
-UW-Whitewater,Luke Bara,34,141,13.0,23.0,52,12.6,2025-12-30,WWW@COE
-UW-Whitewater,Collin Madson,38,142,11.1,21.0,56,10.5,2025-12-30,WWW@COE
-UW-Whitewater,Kelton McEwen,31,121,9.3,21.0,58,11.8,2025-12-30,WWW@COE
-UW-Whitewater,Richie Warren,21,115,10.6,20.0,54,14.2,2025-12-30,WWW@COE
-UW-Whitewater,Joey Berezowitz,29,145,12.8,15.0,39,11.5,2025-12-30,WWW@COE
-UW-Whitewater,Darius Chestnut,30,119,11.8,11.0,64,13.9,2025-12-30,WWW@COE
-UW-Whitewater,Brock Marino,21,114,9.9,10.0,39,10.6,2025-12-30,WWW@COE
-UW-Whitewater,Isaiah Robinson,4,28,11.7,10.0,10,17.8,2025-12-30,WWW@COE
-UW-Whitewater,JR Lukenbill,33,152,12.0,8.0,61,10.3,2025-12-30,WWW@COE
+UW-Whitewater,Luke Bara,33,152,11.1,25.0,59,11.7,2025-12-30,WWW@COE
+UW-Whitewater,Tyshawn Teague-Johnson,41,163,12.3,23.0,56,10.7,2025-12-30,WWW@COE
+UW-Whitewater,Trent Grunewald,4,22,6.1,20.0,5,18.8,2025-12-30,WWW@COE
+UW-Whitewater,Collin Madson,36,138,10.3,18.0,44,10.7,2025-12-30,WWW@COE
+UW-Whitewater,Joey Berezowitz,30,146,13.7,17.0,46,11.5,2025-12-30,WWW@COE
+UW-Whitewater,Kelton McEwen,30,130,9.8,17.0,65,13.7,2025-12-30,WWW@COE
+UW-Whitewater,Darius Chestnut,31,123,10.1,14.0,58,12.3,2025-12-30,WWW@COE
+UW-Whitewater,Jake Quast,36,134,12.2,12.0,58,11.9,2025-12-30,WWW@COE
+UW-Whitewater,Richie Warren,22,118,10.2,11.0,44,12.4,2025-12-30,WWW@COE
+UW-Whitewater,JR Lukenbill,34,141,10.6,10.0,62,11.4,2025-12-30,WWW@COE
+UW-Whitewater,Brock Marino,22,110,11.6,9.0,45,10.4,2025-12-30,WWW@COE
 UW-Whitewater,unnamed defense,2,82,13.1,4.0,27,17.6,2025-12-30,WWW@COE
-UW-Whitewater,Jake Quast,37,141,12.2,2.0,58,12.4,2025-12-30,WWW@COE
-UW-Whitewater,Agape Keyes Jr.,5,35,13.2,0.0,9,14.1,2025-12-30,WWW@COE
-UW-Whitewater,Matthew McKay,4,32,12.2,0.0,3,9.9,2025-12-30,WWW@COE
-UW-Whitewater,Mikey Wildes,5,36,11.3,0.0,24,14.7,2025-12-30,WWW@COE
+UW-Whitewater,Agape Keyes Jr.,5,39,11.2,0.0,8,9.8,2025-12-30,WWW@COE
+UW-Whitewater,Isaiah Robinson,4,21,8.7,0.0,12,28.0,2025-12-30,WWW@COE
+UW-Whitewater,Matthew McKay,4,32,12.9,0.0,20,8.8,2025-12-30,WWW@COE
+UW-Whitewater,Mikey Wildes,5,34,12.0,0.0,10,11.8,2025-12-30,WWW@COE
 UW-Whitewater,Rashad Rogers,1,4,5.5,0.0,2,4.8,2025-12-30,WWW@COE
-UW-Whitewater,Trent Grunewald,4,17,6.6,0.0,9,20.8,2025-12-30,WWW@COE

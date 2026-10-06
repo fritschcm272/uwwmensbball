@@ -1,8 +1,8 @@
 opponent,game_date,category,key_number,icon,headline,evidence,reasoning,source,impact,confidence,brief_eligible,priority_score
-UW-Stevens Point Pointers,2026-01-07,Offense,1,🏀,Feature our best look: Ball Screen,"Us: 1.33 PPP on 9 tagged possessions this season (team average 0.92)
+UW-Stevens Point Pointers,2026-01-07,Offense,1,🏀,Feature our best look: Ball Screen,"Us: 1.33 PPP on 9 tagged possessions this season (team average 0.99)
 Them: opponents scored 0.83 PPP running this against UW-Stevens Point Pointers on 6 tagged possessions
 Runs it most: Marino, Madson, Quast, Berezowitz, McEwen (2x)
-Usually comes off Ball Screen (4 of 4 tagged possessions this season)",We score 1.33 a possession on it and UW-Stevens Point Pointers gives up 0.83 defending it -- go to it early.,Data-Driven,1.0,0.3,True,79.5
+Usually comes off Ball Screen (4 of 4 tagged possessions this season)",We score 1.33 a possession on it and UW-Stevens Point Pointers gives up 0.83 defending it -- go to it early.,Data-Driven,0.9800000000000002,0.3,True,78.7
 UW-Stevens Point Pointers,2026-01-07,Offense,2,🎯,Attack their weakest look: Cut to the basket,"Opponents shot 27/33 (82% FG, 82% eFG) · 1.64 pts/attempt · +0.59 vs all looks (1.05) · 5% of attempts on this against UW-Stevens Point Pointers
 Best on this shot (5+ attempts):
 • Marino, Madson, Verges, Bara, Warren 3/12 (25%)
@@ -11,8 +11,8 @@ Runs it most:
 • Madson, Verges, Lukenbill, Quast, Bara 3x (100%)
 • Chestnut, Lukenbill, Quast, McEwen, Teague-Johnson 3x (100%)
 Usually comes off BLOB Line Motion for us (3 of 5 tagged possessions this season)",Teams have shot 82% on it against UW-Stevens Point Pointers -- hunt it; we usually get it out of BLOB Line Motion.,Data-Driven,0.6,1.0,True,74.0
-UW-Stevens Point Pointers,2026-01-07,Offense,3,📋,Call our best set: Ball Screen,"1.33 PPP on 9 uses vs our 1.10 overall · 4/7 FG
-Finished most by Michael Metcalf-Grassman (2x)","Our most productive set this season -- go to it when we need a good look, with Michael Metcalf-Grassman finishing.",Data-Driven,0.24705882352941178,0.45,True,51.6
+UW-Stevens Point Pointers,2026-01-07,Offense,3,📋,Call our best set: Ball Screen,"1.33 PPP on 9 uses vs our 1.01 overall · 4/7 FG
+Finished most by Michael Metcalf-Grassman (2x)","Our most productive set this season -- go to it when we need a good look, with Michael Metcalf-Grassman finishing.",Data-Driven,0.3423529411764705,0.45,True,55.4
 UW-Stevens Point Pointers,2026-01-07,Defense,4,📊,Take away their most efficient high-volume actions,Offensive Rebound: 77.8% on 18 attempts; Cut: 62.3% on 106 attempts,Each is 5+ points above their 48.5% overall clip on 15+ attempts. Offensive Rebound: hit a body on every shot before going to the ball. Cut: jump to the ball on every pass and see man and ball -- no back-cuts behind ball-watchers.,Data-Driven,,,True,62.5
 UW-Stevens Point Pointers,2026-01-07,Defense,5,📊,Funnel them into their worst high-volume looks,Spot-Up: 33.2% on 223 attempts; Off Screen: 36.7% on 30 attempts,Each is 5+ points below their 48.5% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
 UW-Stevens Point Pointers,2026-01-07,Defense,6,📊,Pressure the actions they turn it over on,Hand Off: 5 TO in 28 uses (17.9% vs 8.6% across all actions); Post-Up: 19 TO in 118 uses (16.1% vs 8.6% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
