@@ -356,11 +356,12 @@ def _export_play_review_to_app(rdir, slug, game, run, plays, vocab):
         cn = int(q.get("clip_number") or 0)
         clip = q.get("clip") or q.get("gif")                  # older pages called it "gif"
         is_mp4 = str(clip or "").startswith("data:video") or str(clip or "").endswith(".mp4")
-        q["clip"] = _media(clip, f"clip_{cn:03d}.{'mp4' if is_mp4 else 'gif'}")
+        fid = q.get("fid") or f"{cn:03d}"                      # file id: unique per play even when every clip number is 0
+        q["clip"] = _media(clip, f"clip_{fid}.{'mp4' if is_mp4 else 'gif'}")
         q["clip_kind"] = "video" if is_mp4 else "image"
-        q["poster"] = _media(q.get("poster"), f"clip_{cn:03d}_poster.jpg")
+        q["poster"] = _media(q.get("poster"), f"clip_{fid}_poster.jpg")
         for pic in q.get("pictures", []):
-            name = f"clip_{cn:03d}_{'a_start' if pic.get('which') == 'start' else 'b_end'}.jpg"
+            name = f"clip_{fid}_{'a_start' if pic.get('which') == 'start' else 'b_end'}.jpg"
             v = pic.get("image")
             try:
                 if str(v or "").startswith("data:"):
@@ -493,6 +494,10 @@ def play_review():
             rows = pt[pt["clip_key"] == r["track_clip_key"]].to_dict("records")
             n = len(files)
             cn = int(r["clip_number"])
+            # CONFIRMED BUG (fixed; the review showed the SAME picture for different plays): picture / clip files were named from
+            # the clip number, and a game exported with every clip number = 0 (WWW@AC) wrote all 20 plays to clip_000_*.jpg, so
+            # the last play's picture overwrote the others. Files now carry the play's position in the review as well.
+            fid = f"{cn:03d}_{len(plays):02d}"
             # pictures: the start and the end of the play, most players visible
             t_end = pd.to_numeric(r.get("track_finish_frame"), errors="coerce")
             end_hi = int(min(n - 1, t_end)) if pd.notna(t_end) else n - 1
@@ -515,7 +520,7 @@ def play_review():
                           f"OFFENSE (orange) {r.get('offense_team')}: {lu('offense')}",
                           f"DEFENSE (blue)  {r.get('defense_team')}: {lu('defense')}",
                           "Solid box = identified from evidence; DASHED box with ? = best guess; grey = not named"]
-                fname = f"clip_{cn:03d}_{'a_start' if which == 'start' else 'b_end'}.jpg"
+                fname = f"clip_{fid}_{'a_start' if which == 'start' else 'b_end'}.jpg"
                 _val_draw(img_path, boxes, header, os.path.join(rdir, fname))
                 # where each box sits on the PICTURE, as fractions of its width / height (the frame is enlarged 1.6x under
                 # a header) -- the app lets a coach click a box in the picture (requested)
@@ -537,7 +542,7 @@ def play_review():
                     except Exception as _ce:
                         print(f"  [play review] close-ups not made ({type(_ce).__name__}: {_ce})", flush=True)
                 pics.append({"which": which, "image": fname, "frame_file": files[t], "t": int(t), "boxes": boxes})
-            clip_file = _pr_clip(files, rows, numtxt, os.path.join(rdir, f"clip_{cn:03d}")) if PLAY_REVIEW_VIDEO else None
+            clip_file = _pr_clip(files, rows, numtxt, os.path.join(rdir, f"clip_{fid}")) if PLAY_REVIEW_VIDEO else None
             # the Title review part (same logic as the Auto-Title review)
             tagged = any(_tr_val(r.get(f"coach_{f}")) is not None for f, _ in _TR_FIELDS)
             fields = []
@@ -560,8 +565,9 @@ def play_review():
                           "film": _tr_film(r.get("track_clip_key")),
                           "validation": bool(r.get("tag_validation")) if pd.notna(r.get("tag_validation")) else False,
                           "clip": clip_file, "clip_kind": ("video" if str(clip_file).endswith(".mp4") else "image"),
-                          "poster": (f"clip_{cn:03d}_poster.jpg"
-                                     if clip_file and os.path.exists(os.path.join(rdir, f"clip_{cn:03d}_poster.jpg")) else None),
+                          "poster": (f"clip_{fid}_poster.jpg"
+                                     if clip_file and os.path.exists(os.path.join(rdir, f"clip_{fid}_poster.jpg")) else None),
+                          "fid": fid,
                           "synergy_url": url,
                           "synergy_pos": int(pos) if pd.notna(pos) else None,
                           "video_at": (f"{int(vs // 60)}:{int(vs % 60):02d}" if pd.notna(vs) else None),
