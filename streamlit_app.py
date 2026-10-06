@@ -5700,20 +5700,21 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
             st.markdown(f"**{'START' if pic.get('which') == 'start' else 'END'} of the play**")
             if pic.get("image") and os.path.exists(path):
                 st.image(path)
-        with right:
-            st.markdown("**Players**")
-            if not boxes:
-                st.caption("No player boxes in this picture.")
-                continue
+            # CONFIRMED CHANGE (requested): the zoomed close-ups sit UNDER the large picture, not beside it.
             # CONFIRMED CHANGE (requested: much clearer images for the player-number checks): a zoomed head-and-chest
             # close-up of every box (cut from the original frame by the parser), so the number can be read.
             _crops = [(b.get("id"), b.get("label"), b.get("crop")) for b in boxes if b.get("crop")]
             if _crops:
                 try:
                     st.image([base64.b64decode(c[2].split(",", 1)[1]) for c in _crops],
-                             caption=[f"{c[0]} \u00b7 {c[1] or 'not named'}" for c in _crops], width=110)
+                             caption=[f"{c[0]} \u00b7 {c[1] or 'not named'}" for c in _crops], width=130)
                 except Exception:
                     pass
+        with right:
+            st.markdown("**Players**")
+            if not boxes:
+                st.caption("No player boxes in this picture.")
+                continue
             keys = [f"{kp}_b_{run}_{pi}_{ki}_{bi}" for bi in range(len(boxes))]
             df = pd.DataFrame([{"Box": b.get("id"), "Side": b.get("side"),
                                 "Assigned": (f"{b.get('label')} ({b.get('how')})" if b.get("label") else "not named"),
