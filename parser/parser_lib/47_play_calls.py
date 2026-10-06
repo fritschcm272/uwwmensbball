@@ -1001,6 +1001,26 @@ def _pl_load(path, label):
         _pl_problems.append(f"{os.path.basename(path)}: missing column(s) {sorted(need - set(df.columns))}")
         return pd.DataFrame()
     df = df[df["Player"].notna() & df["Title"].notna()].copy()
+    # CONFIRMED BUG (fixed; found in the real uww_plays.csv): the 2025-12-20 WWW@AC game was in the file TWICE (rows 1-208 and
+    # 209-416, all with clip number 0). Every play was counted double in the scouting numbers, and the second copy could never get
+    # frames, so the frame check stopped the run. When a game's rows are two copies of each other (the second half repeats the
+    # first), the second copy is dropped here. Legit repeats inside one game (two identical free throws) are not touched.
+    _dk = [c for c in ("Pd.", "Clock", "Player", "Result", "Synergy String") if c in df.columns]
+    if "Game" in df.columns and len(_dk) >= 4:
+        _drop = []
+        for _gm, _g in df.groupby(["Game", "Date"], dropna=False):
+            _n = len(_g) // 2
+            if len(_g) < 20 or len(_g) % 2:
+                continue
+            _a = pd.Series(list(map(tuple, _g.iloc[:_n][_dk].astype(str).values))).value_counts()
+            _b = pd.Series(list(map(tuple, _g.iloc[_n:][_dk].astype(str).values))).value_counts()
+            _shared = sum(min(int(_a.get(k_, 0)), int(c_)) for k_, c_ in _b.items())
+            if _shared >= 0.9 * _n:
+                _drop += list(_g.index[_n:])
+                print(f"  {os.path.basename(path)}: {_gm[0]} {_gm[1]} is in the file twice ({len(_g)} rows = 2 x {_n}) -- "
+                      f"dropped the second copy ({_n} rows) so nothing is counted double. Remove it from the file when you can.")
+        if _drop:
+            df = df.drop(index=_drop)
     df["game_date"] = pd.to_datetime(df["Date"], errors="coerce").dt.date
     _future = df["game_date"].notna() & (df["game_date"] >= reference_date.date())
     if int(_future.sum()):
@@ -1973,7 +1993,14 @@ def _pl_attach_frames(clips):
         best = min(cands, key=lambda d: abs((d - gd).days), default=None)
         return best if best is not None and abs((best - gd).days) <= 1 else None
     c["_vdate"] = c.apply(_near, axis=1)
-    c = c.sort_values(["_key", "_vdate", "_ord"])
+    # CONFIRMED BUG (fixed; the clip-order check flagged 4 WWW@AC clips): a game exported with every clip number = 0 left the
+    # order of identical plays (same Synergy String + player) to chance, so the 2nd "Brock Marino post-up" could get the 1st one's
+    # frames. Ties on the clip number now fall back to game order (period, then clock counting down), with a stable sort.
+    _pd_rank = c["period"].astype(str).map(lambda x: {"H1": 1, "H2": 2}.get(x, 3 if x.startswith("OT") else 9)) \
+        if "period" in c.columns else 0
+    c["_pd_o"] = _pd_rank
+    c["_clk_o"] = -pd.to_numeric(c.get("time_remaining_seconds"), errors="coerce").fillna(-1) if "time_remaining_seconds" in c.columns else 0
+    c = c.sort_values(["_key", "_vdate", "_ord", "_pd_o", "_clk_o"], kind="mergesort")
     c["_occ"] = c.groupby(["_key", "_vdate"], dropna=False).cumcount()
     m = c.reset_index().merge(v[["_key", "_date", "_occ"] + _PL_FRAME_COLS],
                               left_on=["_key", "_vdate", "_occ"], right_on=["_key", "_date", "_occ"],
@@ -2079,6 +2106,28 @@ if isinstance(globals().get("clip_frames"), pd.DataFrame) and not clip_frames.em
         if _ignored(f"{_gd} {_gc}", _gc, _gd):
             continue
         _miss = _g[_g["frame_files"].isna()]
+        # CONFIRMED CHANGE (the 2025-12-20 / 12-30 stops listed 242 + 36 "missing" plays that were almost all "Non Possession >
+        # Free Throw" rows): free-throw lines in the tagged file are not possessions and Synergy's clip page doesn't list them, so
+        # no capture can ever fill them. They don't count toward the gap check (FRAMES_COUNT_FREE_THROWS = True counts them again).
+        if not globals().get("FRAMES_COUNT_FREE_THROWS", False) and len(_miss) < len(_g):
+            _ft = _miss["synergy_string"].fillna("").astype(str).str.contains(r"Non Possession", case=False, regex=True)
+            if _ft.any():
+                print(f"  (frame check: {int(_ft.sum())} non-possession line(s) (free throws, no violation) in {_gd} {_gc} have no clip on Synergy's page and are not counted)")
+            _miss = _miss[~_ft]
+        # A tagged play with NO frames that is an exact copy (same period, clock, player, result and Synergy String) of another
+        # row of the game that DOES have frames is a duplicate row in uww_plays.csv (e.g. the game exported twice, the copy with
+        # clip number 0) -- no capture can fill it. It is counted and named, and doesn't stop the run
+        # (FRAMES_COUNT_DUPLICATES = True counts them as gaps again).
+        if len(_miss) and len(_miss) < len(_g) and not globals().get("FRAMES_COUNT_DUPLICATES", False):
+            _k = ["period", "time_remaining_seconds", "player", "result", "synergy_string"]
+            if all(c in _g.columns for c in _k):
+                _have = set(map(tuple, _g[_g["frame_files"].notna()][_k].astype(str).values))
+                _dup = _miss[_k].astype(str).apply(tuple, axis=1).isin(_have)
+                if _dup.any():
+                    print(f"  (frame check: {int(_dup.sum())} play(s) in {_gd} {_gc} without frames are exact copies of plays "
+                          f"that have frames -- duplicate rows in uww_plays.csv, e.g. clip number 0 -- not counted; "
+                          f"remove the duplicates from the file when you can)")
+                    _miss = _miss[~_dup]
         if len(_miss) == len(_g):
             _gaps_tag.append(f"    - {_gd} {_gc}: {len(_g)} tagged play(s), NO frames")
         elif len(_miss) > _allow:

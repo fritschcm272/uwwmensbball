@@ -62,3 +62,14 @@ Tag model: situation,v2026.10.05,2026-10-05,trained,2026-10-05T12:08:46,"298 tag
 Tag model (overall),v2026.10.05,2026-10-05,trained,2026-10-05T12:08:46,newest of 9 field model(s); last retrained field: situation,2026-10-05T12:11:00
 Jersey-number recognizer,v2026.10.05,2026-10-05,trained,2026-10-05T10:31:52,"7510 training crops; 76% of held-back crops right; sources {'reads': 4989, 'extra': 3615, 'coach': 231}",2026-10-05T12:11:00
 Player tracking,v2026.10.05.4,2026-10-05,pretrained + code,0ce5d6be08b0,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-05T12:11:00
+Tag model: ball_screen_coverage,v2026.10.06,2026-10-06,trained,2026-10-06T07:41:44,"86 tagged clips, 5 answers learned, one answer only",2026-10-06T07:45:01
+Tag model: defense,v2026.10.06,2026-10-06,trained,2026-10-06T07:41:44,"254 tagged clips, 1 answers learned, one answer only",2026-10-06T07:45:01
+Tag model: formation,v2026.10.06,2026-10-06,trained,2026-10-06T07:41:44,"129 tagged clips, 5 answers learned, one answer only",2026-10-06T07:45:01
+Tag model: offball_coverage,v2026.10.06,2026-10-06,trained,2026-10-06T07:41:44,"58 tagged clips, 2 answers learned, one answer only",2026-10-06T07:45:01
+Tag model: play_call,v2026.10.06,2026-10-06,trained,2026-10-06T07:41:44,"160 tagged clips, 7 answers learned, one answer only",2026-10-06T07:45:01
+Tag model: press,v2026.10.06,2026-10-06,trained,2026-10-06T07:41:44,"252 tagged clips, 3 answers learned",2026-10-06T07:45:01
+Tag model: primary_action,v2026.10.06,2026-10-06,trained,2026-10-06T07:41:44,"124 tagged clips, 6 answers learned",2026-10-06T07:45:01
+Tag model: screen_defender,v2026.10.06,2026-10-06,trained,2026-10-06T07:41:44,"56 tagged clips, 6 answers learned",2026-10-06T07:45:01
+Tag model: situation,v2026.10.06,2026-10-06,trained,2026-10-06T07:41:44,"298 tagged clips, 5 answers learned",2026-10-06T07:45:01
+Tag model (overall),v2026.10.06,2026-10-06,trained,2026-10-06T07:41:44,newest of 9 field model(s); last retrained field: situation,2026-10-06T07:45:01
+Court mapping,v2026.10.02.2,2026-10-02,rules + code,6234fd810510,3 calibration file(s),2026-10-06T07:45:01

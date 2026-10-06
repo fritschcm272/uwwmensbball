@@ -1,234 +1,310 @@
 defense_team,defender,role,screen_type,coverage,coverage_source,times,ppp,share_pct
+Alma Scots,Donovan Collins,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,0.67,100.0
+Alma Scots,Donovan Collins,guarding the player screened,Ball screen,back (drop),tracking estimate,1,2.0,50.0
+Alma Scots,Donovan Collins,guarding the player screened,Ball screen,unclear,tracking estimate,1,3.0,50.0
+Alma Scots,Donovan Collins,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,7,1.0,78.0
+Alma Scots,Donovan Collins,guarding the screener,Ball screen,back (drop),tracking estimate,1,2.0,100.0
+Alma Scots,Donovan Collins,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,11.0
+Alma Scots,Donovan Collins,guarding the screener,Off-ball screen,unclear,tracking estimate,1,3.0,11.0
+Alma Scots,Elijah Sykes,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,0.0,80.0
+Alma Scots,Elijah Sykes,guarding the player screened,Ball screen,unclear,tracking estimate,1,2.0,100.0
+Alma Scots,Elijah Sykes,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,20.0
+Alma Scots,Elijah Sykes,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,50.0
+Alma Scots,Elijah Sykes,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,50.0
+Alma Scots,Josh Elliott,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,8,1.12,67.0
+Alma Scots,Josh Elliott,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,0.0,25.0
+Alma Scots,Josh Elliott,guarding the player screened,Ball screen,unclear,tracking estimate,1,3.0,100.0
+Alma Scots,Josh Elliott,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,3.0,8.0
+Alma Scots,Josh Elliott,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.33,100.0
+Alma Scots,Joss Bradley,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,0.0,83.0
+Alma Scots,Joss Bradley,guarding the player screened,Ball screen,back (drop),tracking estimate,1,2.0,100.0
+Alma Scots,Joss Bradley,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,3.0,17.0
+Alma Scots,Joss Bradley,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,0.75,100.0
+Alma Scots,Joss Bradley,guarding the screener,Ball screen,back (drop),tracking estimate,1,2.0,50.0
+Alma Scots,Joss Bradley,guarding the screener,Ball screen,unclear,tracking estimate,1,2.0,50.0
+Alma Scots,Korbin Heitzman,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,1.4,100.0
+Alma Scots,Korbin Heitzman,guarding the screener,Ball screen,back (drop),tracking estimate,1,1.0,100.0
+Alma Scots,Korbin Heitzman,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0
+Alma Scots,Logan St. Martin,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,2.5,100.0
+Alma Scots,Logan St. Martin,guarding the player screened,Ball screen,back (drop),tracking estimate,1,2.0,100.0
+Alma Scots,Logan St. Martin,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,0.5,100.0
+Alma Scots,Logan St. Martin,guarding the screener,Ball screen,back (drop),tracking estimate,1,2.0,100.0
+Alma Scots,Luciano Guerrazzi,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,1.5,80.0
+Alma Scots,Luciano Guerrazzi,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,20.0
+Alma Scots,Luciano Guerrazzi,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,0.0,60.0
+Alma Scots,Luciano Guerrazzi,guarding the screener,Off-ball screen,unclear,tracking estimate,2,1.5,40.0
+Alma Scots,Preston Malpass,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,67.0
+Alma Scots,Preston Malpass,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,33.0
+Alma Scots,Preston Malpass,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,100.0
+Alma Scots,Raine Rodich,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,0.75,83.0
+Alma Scots,Raine Rodich,guarding the player screened,Ball screen,back (drop),tracking estimate,1,1.0,100.0
+Alma Scots,Raine Rodich,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,17.0
+Alma Scots,Raine Rodich,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,100.0
+Alma Scots,Raine Rodich,guarding the screener,Ball screen,unclear,tracking estimate,1,3.0,100.0
+Alma Scots,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,,100.0
+Alma Scots,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,100.0
 Coe Kohawks,Aaron Foote,guarding the player screened,Ball screen,unclear,tracking estimate,1,2.0,100.0
 Coe Kohawks,Aleks Jajic,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,50.0
 Coe Kohawks,Aleks Jajic,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,50.0
 Coe Kohawks,Aleks Jajic,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0
-Coe Kohawks,Austin Beeson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,67.0
-Coe Kohawks,Austin Beeson,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,33.0
+Coe Kohawks,Austin Beeson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,0.0,75.0
+Coe Kohawks,Austin Beeson,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,25.0
 Coe Kohawks,Austin Beeson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,50.0
 Coe Kohawks,Austin Beeson,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,50.0
-Coe Kohawks,C. Reece Breitenbach,guarding the player screened,Ball screen,unclear,tracking estimate,2,0.0,100.0
-Coe Kohawks,C. Reece Breitenbach,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.5,100.0
-Coe Kohawks,C. Reece Breitenbach,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,67.0
-Coe Kohawks,C. Reece Breitenbach,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,33.0
-Coe Kohawks,Cooper Nailor,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,6,1.2,55.0
-Coe Kohawks,Cooper Nailor,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,1.33,27.0
-Coe Kohawks,Cooper Nailor,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,1.5,18.0
+Coe Kohawks,C. Reece Breitenbach,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,67.0
+Coe Kohawks,C. Reece Breitenbach,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,3.0,33.0
+Coe Kohawks,C. Reece Breitenbach,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.0,100.0
+Coe Kohawks,Cooper Nailor,guarding the player screened,Off-ball screen,unclear,tracking estimate,5,1.2,50.0
+Coe Kohawks,Cooper Nailor,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,1.67,30.0
+Coe Kohawks,Cooper Nailor,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,1.5,20.0
 Coe Kohawks,Cooper Nailor,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,33.0
 Coe Kohawks,Cooper Nailor,guarding the player screened,Ball screen,switch,tracking estimate,1,2.0,33.0
-Coe Kohawks,Cooper Nailor,guarding the player screened,Ball screen,unclear,tracking estimate,1,3.0,33.0
-Coe Kohawks,Cooper Nailor,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,0.0,50.0
-Coe Kohawks,Cooper Nailor,guarding the screener,Off-ball screen,unclear,tracking estimate,5,1.4,50.0
-Coe Kohawks,Deuce Walters,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,33.0
-Coe Kohawks,Deuce Walters,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,33.0
-Coe Kohawks,Deuce Walters,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,2.0,33.0
-Coe Kohawks,Deuce Walters,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,1.2,42.0
-Coe Kohawks,Deuce Walters,guarding the screener,Off-ball screen,unclear,tracking estimate,5,1.2,42.0
+Coe Kohawks,Cooper Nailor,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,33.0
+Coe Kohawks,Cooper Nailor,guarding the screener,Off-ball screen,unclear,tracking estimate,5,1.2,56.0
+Coe Kohawks,Cooper Nailor,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,0.0,33.0
+Coe Kohawks,Cooper Nailor,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,11.0
+Coe Kohawks,Deuce Walters,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,0.0,50.0
+Coe Kohawks,Deuce Walters,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,0.0,33.0
+Coe Kohawks,Deuce Walters,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,2.0,17.0
+Coe Kohawks,Deuce Walters,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,0.8,42.0
+Coe Kohawks,Deuce Walters,guarding the screener,Off-ball screen,unclear,tracking estimate,5,1.4,42.0
 Coe Kohawks,Deuce Walters,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,0.0,17.0
 Coe Kohawks,Deuce Walters,guarding the screener,Ball screen,switch,tracking estimate,1,2.0,50.0
 Coe Kohawks,Deuce Walters,guarding the screener,Ball screen,unclear,tracking estimate,1,2.0,50.0
-Coe Kohawks,Jackson Bowman,guarding the player screened,Off-ball screen,unclear,tracking estimate,5,1.0,62.0
-Coe Kohawks,Jackson Bowman,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,25.0
-Coe Kohawks,Jackson Bowman,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,12.0
-Coe Kohawks,Jackson Bowman,guarding the screener,Ball screen,unclear,tracking estimate,3,1.0,75.0
-Coe Kohawks,Jackson Bowman,guarding the screener,Off-ball screen,unclear,tracking estimate,3,1.0,60.0
-Coe Kohawks,Jackson Bowman,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,2.5,40.0
-Coe Kohawks,Jackson Bowman,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,25.0
-Coe Kohawks,Jackson Newell,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,1.0,100.0
+Coe Kohawks,Jackson Bowman,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,0.8,56.0
+Coe Kohawks,Jackson Bowman,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,1.0,44.0
+Coe Kohawks,Jackson Bowman,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,1.75,50.0
+Coe Kohawks,Jackson Bowman,guarding the screener,Off-ball screen,unclear,tracking estimate,5,1.0,50.0
+Coe Kohawks,Jackson Bowman,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,50.0
+Coe Kohawks,Jackson Bowman,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,50.0
+Coe Kohawks,Jackson Newell,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,1.33,100.0
 Coe Kohawks,Jackson Newell,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0
-Coe Kohawks,Jackson Newell,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,50.0
-Coe Kohawks,Jackson Newell,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,50.0
+Coe Kohawks,Jackson Newell,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,33.0
+Coe Kohawks,Jackson Newell,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,33.0
+Coe Kohawks,Jackson Newell,guarding the screener,Off-ball screen,unclear,tracking estimate,1,2.0,33.0
 Coe Kohawks,Jay Akin,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0
 Coe Kohawks,Jay Akin,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,50.0
 Coe Kohawks,Jay Akin,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,2.0,50.0
-Coe Kohawks,Jay Akin,guarding the screener,Off-ball screen,unclear,tracking estimate,2,1.0,100.0
-Coe Kohawks,Kanyon Bryte,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,0.67,50.0
-Coe Kohawks,Kanyon Bryte,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.5,33.0
-Coe Kohawks,Kanyon Bryte,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,17.0
-Coe Kohawks,Kanyon Bryte,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,6,0.4,75.0
-Coe Kohawks,Kanyon Bryte,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,12.0
-Coe Kohawks,Kanyon Bryte,guarding the screener,Off-ball screen,unclear,tracking estimate,1,1.0,12.0
-Coe Kohawks,Ryan Dolphin,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,0.8,56.0
-Coe Kohawks,Ryan Dolphin,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,1.25,44.0
-Coe Kohawks,Ryan Dolphin,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.33,100.0
+Coe Kohawks,Jay Akin,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,50.0
+Coe Kohawks,Jay Akin,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,50.0
+Coe Kohawks,Kanyon Bryte,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,50.0
+Coe Kohawks,Kanyon Bryte,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,25.0
+Coe Kohawks,Kanyon Bryte,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,25.0
+Coe Kohawks,Kanyon Bryte,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,0.0,75.0
+Coe Kohawks,Kanyon Bryte,guarding the screener,Off-ball screen,unclear,tracking estimate,1,2.0,25.0
+Coe Kohawks,Ryan Dolphin,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,6,0.67,60.0
+Coe Kohawks,Ryan Dolphin,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,1.25,40.0
+Coe Kohawks,Ryan Dolphin,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,1.2,100.0
 Coe Kohawks,Zach Strauss,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,100.0
 Coe Kohawks,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,1,,100.0
 Coe Kohawks,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,100.0
 Coe Kohawks,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,1,,100.0
 Coe Kohawks,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,100.0
-UW-Oshkosh Titans,Aiden Hawkinson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,0.0,50.0
-UW-Oshkosh Titans,Aiden Hawkinson,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.0,50.0
-UW-Oshkosh Titans,Aiden Hawkinson,guarding the screener,Off-ball screen,unclear,tracking estimate,5,0.8,56.0
-UW-Oshkosh Titans,Aiden Hawkinson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,22.0
-UW-Oshkosh Titans,Aiden Hawkinson,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,0.5,22.0
-UW-Oshkosh Titans,Brandon Beck,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,1.33,100.0
-UW-Oshkosh Titans,Brandon Beck,guarding the player screened,Ball screen,unclear,tracking estimate,1,3.0,100.0
-UW-Oshkosh Titans,Brandon Beck,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,67.0
-UW-Oshkosh Titans,Brandon Beck,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0
-UW-Oshkosh Titans,Brandon Beck,guarding the screener,Off-ball screen,unclear,tracking estimate,1,3.0,33.0
-UW-Oshkosh Titans,Carter Thomas,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,2.5,100.0
-UW-Oshkosh Titans,Carter Thomas,guarding the player screened,Ball screen,Switch,coach tag,1,0.0,100.0
-UW-Oshkosh Titans,Carter Thomas,guarding the screener,Off-ball screen,unclear,tracking estimate,5,0.8,62.0
-UW-Oshkosh Titans,Carter Thomas,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,25.0
-UW-Oshkosh Titans,Carter Thomas,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,100.0
-UW-Oshkosh Titans,Carter Thomas,guarding the screener,Off-ball screen,Switch,coach tag,1,0.0,12.0
-UW-Oshkosh Titans,Jay Dalton,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,2.0,100.0
-UW-Oshkosh Titans,Jay Dalton,guarding the screener,Off-ball screen,unclear,tracking estimate,4,0.5,80.0
-UW-Oshkosh Titans,Jay Dalton,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0
-UW-Oshkosh Titans,Jay Dalton,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,20.0
-UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,0.67,44.0
-UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.0,33.0
-UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,100.0
-UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Off-ball screen,Switch,coach tag,1,0.0,11.0
-UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,11.0
-UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,1.2,62.0
-UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Off-ball screen,unclear,tracking estimate,3,2.0,38.0
-UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Ball screen,unclear,tracking estimate,2,1.5,67.0
-UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Ball screen,Switch,coach tag,1,0.0,33.0
-UW-Oshkosh Titans,Jonah Rindfleisch,guarding the player screened,Off-ball screen,unclear,tracking estimate,6,0.67,60.0
-UW-Oshkosh Titans,Jonah Rindfleisch,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,0.0,30.0
-UW-Oshkosh Titans,Jonah Rindfleisch,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,10.0
-UW-Oshkosh Titans,Jonah Rindfleisch,guarding the screener,Off-ball screen,unclear,tracking estimate,3,1.67,75.0
-UW-Oshkosh Titans,Jonah Rindfleisch,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,25.0
-UW-Oshkosh Titans,Logan Rindfleisch,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,67.0
-UW-Oshkosh Titans,Logan Rindfleisch,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,33.0
-UW-Oshkosh Titans,Logan Rindfleisch,guarding the screener,Off-ball screen,unclear,tracking estimate,1,2.0,100.0
-UW-Oshkosh Titans,Matt Imig,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,1.33,75.0
-UW-Oshkosh Titans,Matt Imig,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,1.0,25.0
-UW-Oshkosh Titans,Matt Imig,guarding the screener,Ball screen,unclear,tracking estimate,2,0.0,100.0
-UW-Oshkosh Titans,Matt Imig,guarding the screener,Off-ball screen,unclear,tracking estimate,2,0.0,100.0
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,2.0,50.0
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,2.0,33.0
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the player screened,Off-ball screen,Switch,coach tag,1,0.0,17.0
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,40.0
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Off-ball screen,unclear,tracking estimate,2,1.0,40.0
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0
-UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,20.0
-UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,6,0.8,67.0
-UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,1.33,33.0
-UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Ball screen,unclear,tracking estimate,2,0.0,100.0
-UW-Oshkosh Titans,Nate Nazos,guarding the screener,Off-ball screen,unclear,tracking estimate,4,0.67,50.0
-UW-Oshkosh Titans,Nate Nazos,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.33,38.0
-UW-Oshkosh Titans,Nate Nazos,guarding the screener,Off-ball screen,Switch,coach tag,1,0.0,12.0
-UW-Oshkosh Titans,Oskar Kangas,guarding the player screened,Off-ball screen,unclear,tracking estimate,9,0.56,90.0
-UW-Oshkosh Titans,Oskar Kangas,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0
-UW-Oshkosh Titans,Oskar Kangas,guarding the player screened,Off-ball screen,Switch,coach tag,1,1.0,10.0
-UW-Oshkosh Titans,Oskar Kangas,guarding the screener,Off-ball screen,unclear,tracking estimate,5,0.6,62.0
-UW-Oshkosh Titans,Oskar Kangas,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.0,38.0
-UW-Oshkosh Titans,Vitorio Dante,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.33,60.0
-UW-Oshkosh Titans,Vitorio Dante,guarding the player screened,Ball screen,unclear,tracking estimate,2,0.0,100.0
-UW-Oshkosh Titans,Vitorio Dante,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,40.0
-UW-Oshkosh Titans,Vitorio Dante,guarding the screener,Off-ball screen,unclear,tracking estimate,2,0.0,40.0
-UW-Oshkosh Titans,Vitorio Dante,guarding the screener,Off-ball screen,Switch,coach tag,1,1.0,20.0
-UW-Oshkosh Titans,Vitorio Dante,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,20.0
-UW-Oshkosh Titans,Vitorio Dante,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,20.0
+UW-Oshkosh Titans,Aiden Hawkinson,guarding the player screened,Off-ball screen,unclear,tracking estimate,7,0.43,58.0
+UW-Oshkosh Titans,Aiden Hawkinson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,0.0,33.0
+UW-Oshkosh Titans,Aiden Hawkinson,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,100.0
+UW-Oshkosh Titans,Aiden Hawkinson,guarding the player screened,Off-ball screen,Switch,coach tag,1,1.0,8.0
+UW-Oshkosh Titans,Aiden Hawkinson,guarding the screener,Off-ball screen,unclear,tracking estimate,5,0.4,71.0
+UW-Oshkosh Titans,Aiden Hawkinson,guarding the screener,Ball screen,unclear,tracking estimate,2,1.0,100.0
+UW-Oshkosh Titans,Aiden Hawkinson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,29.0
+UW-Oshkosh Titans,Brandon Beck,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,1.33,75.0
+UW-Oshkosh Titans,Brandon Beck,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0
+UW-Oshkosh Titans,Brandon Beck,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,25.0
+UW-Oshkosh Titans,Brandon Beck,guarding the screener,Off-ball screen,unclear,tracking estimate,2,0.0,67.0
+UW-Oshkosh Titans,Brandon Beck,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,33.0
+UW-Oshkosh Titans,Carter Thomas,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,6,0.83,60.0
+UW-Oshkosh Titans,Carter Thomas,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.67,30.0
+UW-Oshkosh Titans,Carter Thomas,guarding the player screened,Off-ball screen,Switch,coach tag,1,0.0,10.0
+UW-Oshkosh Titans,Carter Thomas,guarding the screener,Off-ball screen,unclear,tracking estimate,5,1.8,50.0
+UW-Oshkosh Titans,Carter Thomas,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,1.5,40.0
+UW-Oshkosh Titans,Carter Thomas,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0
+UW-Oshkosh Titans,Carter Thomas,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,10.0
+UW-Oshkosh Titans,Jay Dalton,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,100.0
+UW-Oshkosh Titans,Jay Dalton,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,50.0
+UW-Oshkosh Titans,Jay Dalton,guarding the screener,Off-ball screen,unclear,tracking estimate,1,2.0,50.0
+UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Off-ball screen,unclear,tracking estimate,5,0.0,50.0
+UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,2.0,40.0
+UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Ball screen,Switch,coach tag,1,0.0,50.0
+UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Ball screen,unclear,tracking estimate,1,1.0,50.0
+UW-Oshkosh Titans,Joey LaChapell,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,10.0
+UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.67,43.0
+UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Off-ball screen,Switch,coach tag,2,0.0,29.0
+UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Off-ball screen,unclear,tracking estimate,2,0.0,29.0
+UW-Oshkosh Titans,Joey LaChapell,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,100.0
+UW-Oshkosh Titans,Jonah Rindfleisch,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.67,100.0
+UW-Oshkosh Titans,Jonah Rindfleisch,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0
+UW-Oshkosh Titans,Jonah Rindfleisch,guarding the screener,Off-ball screen,unclear,tracking estimate,3,0.0,60.0
+UW-Oshkosh Titans,Jonah Rindfleisch,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,40.0
+UW-Oshkosh Titans,Logan Rindfleisch,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,50.0
+UW-Oshkosh Titans,Logan Rindfleisch,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,0.5,50.0
+UW-Oshkosh Titans,Logan Rindfleisch,guarding the screener,Off-ball screen,unclear,tracking estimate,2,1.5,67.0
+UW-Oshkosh Titans,Logan Rindfleisch,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,33.0
+UW-Oshkosh Titans,Matt Imig,guarding the player screened,Ball screen,unclear,tracking estimate,1,2.0,100.0
+UW-Oshkosh Titans,Matt Imig,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,100.0
+UW-Oshkosh Titans,Matt Imig,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,50.0
+UW-Oshkosh Titans,Matt Imig,guarding the screener,Off-ball screen,unclear,tracking estimate,1,2.0,50.0
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,2.5,60.0
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,2.0,40.0
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Ball screen,unclear,tracking estimate,2,0.5,67.0
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,67.0
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Ball screen,Switch,coach tag,1,0.0,33.0
+UW-Oshkosh Titans,Michael Metcalf-Grassman,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,33.0
+UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,1.67,60.0
+UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,50.0
+UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,50.0
+UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Off-ball screen,Switch,coach tag,1,0.0,20.0
+UW-Oshkosh Titans,Nate Nazos,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,2.0,20.0
+UW-Oshkosh Titans,Nate Nazos,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,1.25,57.0
+UW-Oshkosh Titans,Nate Nazos,guarding the screener,Off-ball screen,unclear,tracking estimate,3,1.33,43.0
+UW-Oshkosh Titans,Oskar Kangas,guarding the player screened,Off-ball screen,unclear,tracking estimate,7,0.57,70.0
+UW-Oshkosh Titans,Oskar Kangas,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,20.0
+UW-Oshkosh Titans,Oskar Kangas,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,10.0
+UW-Oshkosh Titans,Oskar Kangas,guarding the screener,Off-ball screen,unclear,tracking estimate,5,0.2,71.0
+UW-Oshkosh Titans,Oskar Kangas,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,100.0
+UW-Oshkosh Titans,Oskar Kangas,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,14.0
+UW-Oshkosh Titans,Oskar Kangas,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,1.0,14.0
+UW-Oshkosh Titans,Vitorio Dante,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.33,100.0
+UW-Oshkosh Titans,Vitorio Dante,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,0.67,44.0
+UW-Oshkosh Titans,Vitorio Dante,guarding the screener,Off-ball screen,unclear,tracking estimate,4,0.0,44.0
+UW-Oshkosh Titans,Vitorio Dante,guarding the screener,Off-ball screen,Switch,coach tag,1,1.0,11.0
 UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,,75.0
 UW-Oshkosh Titans,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,2,0.0,100.0
 UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,25.0
 UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,3,,75.0
 UW-Oshkosh Titans,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,2,0.0,100.0
 UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,25.0
-UW-Whitewater,Brock Marino,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,1.5,44.0
-UW-Whitewater,Brock Marino,guarding the player screened,Ball screen,unclear,tracking estimate,3,0.67,75.0
-UW-Whitewater,Brock Marino,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,2.33,33.0
-UW-Whitewater,Brock Marino,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,0.0,22.0
-UW-Whitewater,Brock Marino,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,25.0
-UW-Whitewater,Brock Marino,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,33.0
-UW-Whitewater,Brock Marino,guarding the screener,Off-ball screen,unclear,tracking estimate,2,2.5,33.0
-UW-Whitewater,Brock Marino,guarding the screener,Ball screen,Stay,coach tag,1,0.0,50.0
-UW-Whitewater,Brock Marino,guarding the screener,Ball screen,unclear,tracking estimate,1,2.0,50.0
-UW-Whitewater,Brock Marino,guarding the screener,Off-ball screen,Top Lock,coach tag,1,,17.0
-UW-Whitewater,Brock Marino,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,17.0
-UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,12,1.45,57.0
-UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,unclear,tracking estimate,7,1.83,33.0
-UW-Whitewater,Collin Madson,guarding the player screened,Ball screen,back (drop),tracking estimate,1,3.0,50.0
-UW-Whitewater,Collin Madson,guarding the player screened,Ball screen,unclear,tracking estimate,1,2.0,50.0
-UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,Over,coach tag,1,0.0,5.0
-UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,Under,coach tag,1,3.0,5.0
-UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,2.0,50.0
-UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,unclear,tracking estimate,3,0.0,30.0
-UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,0.5,20.0
-UW-Whitewater,Collin Madson,guarding the screener,Ball screen,Switch,coach tag,1,0.0,33.0
-UW-Whitewater,Collin Madson,guarding the screener,Ball screen,back (drop),tracking estimate,1,1.0,33.0
-UW-Whitewater,Collin Madson,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,33.0
-UW-Whitewater,Darius Chestnut,guarding the player screened,Off-ball screen,unclear,tracking estimate,6,1.0,60.0
-UW-Whitewater,Darius Chestnut,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,1.0,40.0
-UW-Whitewater,Darius Chestnut,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0
-UW-Whitewater,Darius Chestnut,guarding the screener,Off-ball screen,unclear,tracking estimate,4,2.0,67.0
-UW-Whitewater,Darius Chestnut,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,17.0
-UW-Whitewater,Darius Chestnut,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,17.0
-UW-Whitewater,Isaiah Robinson,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,100.0
-UW-Whitewater,JR Lukenbill,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,0.67,43.0
-UW-Whitewater,JR Lukenbill,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.0,43.0
-UW-Whitewater,JR Lukenbill,guarding the player screened,Ball screen,Stay,coach tag,1,0.0,50.0
+UW-Whitewater,Agape Keyes Jr.,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,1.0,100.0
+UW-Whitewater,Agape Keyes Jr.,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0
+UW-Whitewater,Agape Keyes Jr.,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,100.0
+UW-Whitewater,Brock Marino,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,9,0.56,56.0
+UW-Whitewater,Brock Marino,guarding the player screened,Off-ball screen,unclear,tracking estimate,6,0.83,38.0
+UW-Whitewater,Brock Marino,guarding the player screened,Ball screen,unclear,tracking estimate,2,0.0,40.0
+UW-Whitewater,Brock Marino,guarding the player screened,Ball screen,back (drop),tracking estimate,1,1.0,20.0
+UW-Whitewater,Brock Marino,guarding the player screened,Ball screen,blitz / trap,tracking estimate,1,,20.0
+UW-Whitewater,Brock Marino,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,0.0,20.0
+UW-Whitewater,Brock Marino,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,6.0
+UW-Whitewater,Brock Marino,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,0.5,44.0
+UW-Whitewater,Brock Marino,guarding the screener,Off-ball screen,unclear,tracking estimate,4,1.5,44.0
+UW-Whitewater,Brock Marino,guarding the screener,Ball screen,unclear,tracking estimate,2,2.0,50.0
+UW-Whitewater,Brock Marino,guarding the screener,Ball screen,Stay,coach tag,1,0.0,25.0
+UW-Whitewater,Brock Marino,guarding the screener,Ball screen,back (drop),tracking estimate,1,1.0,25.0
+UW-Whitewater,Brock Marino,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,11.0
+UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,9,0.86,39.0
+UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,unclear,tracking estimate,8,1.83,35.0
+UW-Whitewater,Collin Madson,guarding the player screened,Ball screen,unclear,tracking estimate,4,0.5,57.0
+UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,0.33,13.0
+UW-Whitewater,Collin Madson,guarding the player screened,Ball screen,back (drop),tracking estimate,2,3.0,29.0
+UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,Over,coach tag,2,0.0,9.0
+UW-Whitewater,Collin Madson,guarding the player screened,Ball screen,Stay,coach tag,1,0.0,14.0
+UW-Whitewater,Collin Madson,guarding the player screened,Off-ball screen,Under,coach tag,1,3.0,4.0
+UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,11,1.1,65.0
+UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,unclear,tracking estimate,4,0.0,24.0
+UW-Whitewater,Collin Madson,guarding the screener,Ball screen,back (drop),tracking estimate,2,1.5,100.0
+UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,Top Lock,coach tag,1,,6.0
+UW-Whitewater,Collin Madson,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,6.0
+UW-Whitewater,Darius Chestnut,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,0.4,50.0
+UW-Whitewater,Darius Chestnut,guarding the player screened,Off-ball screen,unclear,tracking estimate,5,0.67,50.0
+UW-Whitewater,Darius Chestnut,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,100.0
+UW-Whitewater,Darius Chestnut,guarding the screener,Off-ball screen,unclear,tracking estimate,5,1.25,50.0
+UW-Whitewater,Darius Chestnut,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,0.5,40.0
+UW-Whitewater,Darius Chestnut,guarding the screener,Ball screen,back (drop),tracking estimate,1,1.0,50.0
+UW-Whitewater,Darius Chestnut,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,50.0
+UW-Whitewater,Darius Chestnut,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,10.0
+UW-Whitewater,Isaac Verges,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,0.67,100.0
+UW-Whitewater,Isaac Verges,guarding the player screened,Ball screen,back (drop),tracking estimate,1,1.0,50.0
+UW-Whitewater,Isaac Verges,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,50.0
+UW-Whitewater,Isaac Verges,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0
+UW-Whitewater,Isaac Verges,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,50.0
+UW-Whitewater,Isaac Verges,guarding the screener,Off-ball screen,unclear,tracking estimate,1,3.0,50.0
+UW-Whitewater,Isaiah Robinson,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0
+UW-Whitewater,Isaiah Robinson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0
+UW-Whitewater,Isaiah Robinson,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,100.0
+UW-Whitewater,JR Lukenbill,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,6,1.2,60.0
+UW-Whitewater,JR Lukenbill,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.67,30.0
+UW-Whitewater,JR Lukenbill,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,50.0
 UW-Whitewater,JR Lukenbill,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,0.0,50.0
-UW-Whitewater,JR Lukenbill,guarding the player screened,Off-ball screen,Top Lock,coach tag,1,,14.0
-UW-Whitewater,JR Lukenbill,guarding the screener,Off-ball screen,unclear,tracking estimate,7,1.67,50.0
-UW-Whitewater,JR Lukenbill,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,6,1.0,43.0
-UW-Whitewater,JR Lukenbill,guarding the screener,Ball screen,back (drop),tracking estimate,2,1.5,50.0
+UW-Whitewater,JR Lukenbill,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,10.0
+UW-Whitewater,JR Lukenbill,guarding the screener,Off-ball screen,unclear,tracking estimate,5,1.25,56.0
+UW-Whitewater,JR Lukenbill,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.5,33.0
+UW-Whitewater,JR Lukenbill,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,25.0
 UW-Whitewater,JR Lukenbill,guarding the screener,Ball screen,blitz / trap,tracking estimate,1,,25.0
+UW-Whitewater,JR Lukenbill,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,25.0
 UW-Whitewater,JR Lukenbill,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,1.0,25.0
-UW-Whitewater,JR Lukenbill,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,7.0
-UW-Whitewater,Jake Quast,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,1.0,57.0
-UW-Whitewater,Jake Quast,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.0,43.0
-UW-Whitewater,Jake Quast,guarding the player screened,Ball screen,Switch,coach tag,1,0.0,25.0
-UW-Whitewater,Jake Quast,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,25.0
-UW-Whitewater,Jake Quast,guarding the player screened,Ball screen,blitz / trap,tracking estimate,1,,25.0
-UW-Whitewater,Jake Quast,guarding the player screened,Ball screen,unclear,tracking estimate,1,3.0,25.0
-UW-Whitewater,Jake Quast,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,1.0,57.0
-UW-Whitewater,Jake Quast,guarding the screener,Off-ball screen,unclear,tracking estimate,3,0.33,43.0
-UW-Whitewater,Jake Quast,guarding the screener,Ball screen,unclear,tracking estimate,2,1.0,67.0
-UW-Whitewater,Jake Quast,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,33.0
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,0.5,57.0
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Ball screen,back (drop),tracking estimate,2,0.5,40.0
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,29.0
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Ball screen,Switch,coach tag,1,0.0,20.0
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,20.0
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,1.0,20.0
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,1.0,14.0
-UW-Whitewater,Joey Berezowitz,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,1.75,62.0
-UW-Whitewater,Joey Berezowitz,guarding the screener,Off-ball screen,unclear,tracking estimate,3,0.0,38.0
-UW-Whitewater,Joey Berezowitz,guarding the screener,Ball screen,unclear,tracking estimate,2,2.5,100.0
-UW-Whitewater,Kelton McEwen,guarding the player screened,Off-ball screen,unclear,tracking estimate,5,1.4,83.0
-UW-Whitewater,Kelton McEwen,guarding the player screened,Ball screen,unclear,tracking estimate,1,2.0,100.0
-UW-Whitewater,Kelton McEwen,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,17.0
-UW-Whitewater,Kelton McEwen,guarding the screener,Off-ball screen,unclear,tracking estimate,2,0.0,67.0
+UW-Whitewater,JR Lukenbill,guarding the screener,Off-ball screen,Over,coach tag,1,0.0,11.0
+UW-Whitewater,Jake Quast,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,7,0.67,54.0
+UW-Whitewater,Jake Quast,guarding the player screened,Off-ball screen,unclear,tracking estimate,6,1.5,46.0
+UW-Whitewater,Jake Quast,guarding the player screened,Ball screen,unclear,tracking estimate,2,1.5,33.0
+UW-Whitewater,Jake Quast,guarding the player screened,Ball screen,Switch,coach tag,1,0.0,17.0
+UW-Whitewater,Jake Quast,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,17.0
+UW-Whitewater,Jake Quast,guarding the player screened,Ball screen,blitz / trap,tracking estimate,1,,17.0
+UW-Whitewater,Jake Quast,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,1.0,17.0
+UW-Whitewater,Jake Quast,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,8,1.14,62.0
+UW-Whitewater,Jake Quast,guarding the screener,Off-ball screen,unclear,tracking estimate,4,0.5,31.0
+UW-Whitewater,Jake Quast,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,100.0
+UW-Whitewater,Jake Quast,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,8.0
+UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,9,1.22,69.0
+UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.67,23.0
+UW-Whitewater,Joey Berezowitz,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,50.0
+UW-Whitewater,Joey Berezowitz,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,50.0
+UW-Whitewater,Joey Berezowitz,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,8.0
+UW-Whitewater,Joey Berezowitz,guarding the screener,Ball screen,back (drop),tracking estimate,3,1.0,50.0
+UW-Whitewater,Joey Berezowitz,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,1.33,60.0
+UW-Whitewater,Joey Berezowitz,guarding the screener,Ball screen,unclear,tracking estimate,2,2.5,33.0
+UW-Whitewater,Joey Berezowitz,guarding the screener,Off-ball screen,unclear,tracking estimate,2,0.5,40.0
+UW-Whitewater,Joey Berezowitz,guarding the screener,Ball screen,Switch,coach tag,1,0.0,17.0
+UW-Whitewater,Kelton McEwen,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,0.5,100.0
+UW-Whitewater,Kelton McEwen,guarding the player screened,Ball screen,unclear,tracking estimate,2,1.0,67.0
+UW-Whitewater,Kelton McEwen,guarding the player screened,Ball screen,back (drop),tracking estimate,1,2.0,33.0
+UW-Whitewater,Kelton McEwen,guarding the screener,Off-ball screen,unclear,tracking estimate,3,0.0,60.0
 UW-Whitewater,Kelton McEwen,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,50.0
 UW-Whitewater,Kelton McEwen,guarding the screener,Ball screen,unclear,tracking estimate,1,2.0,50.0
-UW-Whitewater,Kelton McEwen,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,33.0
-UW-Whitewater,Luke Bara,guarding the player screened,Off-ball screen,unclear,tracking estimate,7,1.29,50.0
-UW-Whitewater,Luke Bara,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,6,1.5,43.0
-UW-Whitewater,Luke Bara,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,7.0
-UW-Whitewater,Luke Bara,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,9,1.25,82.0
-UW-Whitewater,Luke Bara,guarding the screener,Off-ball screen,unclear,tracking estimate,2,2.0,18.0
-UW-Whitewater,Luke Bara,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0
-UW-Whitewater,Matthew McKay,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,100.0
-UW-Whitewater,Mikey Wildes,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,50.0
-UW-Whitewater,Mikey Wildes,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,50.0
+UW-Whitewater,Kelton McEwen,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,20.0
+UW-Whitewater,Kelton McEwen,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,20.0
+UW-Whitewater,Luke Bara,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,9,1.5,53.0
+UW-Whitewater,Luke Bara,guarding the player screened,Off-ball screen,unclear,tracking estimate,7,1.0,41.0
+UW-Whitewater,Luke Bara,guarding the player screened,Ball screen,back (drop),tracking estimate,3,1.0,75.0
+UW-Whitewater,Luke Bara,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,25.0
+UW-Whitewater,Luke Bara,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,3.0,6.0
+UW-Whitewater,Luke Bara,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,8,1.67,53.0
+UW-Whitewater,Luke Bara,guarding the screener,Off-ball screen,unclear,tracking estimate,6,1.4,40.0
+UW-Whitewater,Luke Bara,guarding the screener,Ball screen,unclear,tracking estimate,3,0.67,75.0
+UW-Whitewater,Luke Bara,guarding the screener,Ball screen,back (drop),tracking estimate,1,3.0,25.0
+UW-Whitewater,Luke Bara,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,7.0
+UW-Whitewater,Matthew McKay,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,50.0
+UW-Whitewater,Matthew McKay,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,50.0
+UW-Whitewater,Mauryon Turner,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,1.0,100.0
+UW-Whitewater,Mikey Wildes,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0
 UW-Whitewater,Mikey Wildes,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,100.0
 UW-Whitewater,Oskar Kangas,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,100.0
-UW-Whitewater,Richie Warren,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,0.5,71.0
-UW-Whitewater,Richie Warren,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,14.0
-UW-Whitewater,Richie Warren,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,14.0
-UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,unclear,tracking estimate,8,0.33,53.0
-UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,0.4,33.0
-UW-Whitewater,Richie Warren,guarding the screener,Ball screen,unclear,tracking estimate,2,0.0,50.0
-UW-Whitewater,Richie Warren,guarding the screener,Ball screen,Switch,coach tag,1,0.0,25.0
-UW-Whitewater,Richie Warren,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,25.0
-UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,Under,coach tag,1,3.0,7.0
-UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,7.0
-UW-Whitewater,Trent Grunewald,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0
-UW-Whitewater,Trent Grunewald,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,50.0
-UW-Whitewater,Trent Grunewald,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,50.0
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Ball screen,unclear,tracking estimate,3,0.67,75.0
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,50.0
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,50.0
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,25.0
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Off-ball screen,unclear,tracking estimate,4,1.33,67.0
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,2.5,33.0
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,50.0
-UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,0.0,50.0
+UW-Whitewater,Rashad Rogers,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,0.0,100.0
+UW-Whitewater,Rashad Rogers,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,100.0
+UW-Whitewater,Richie Warren,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,6,1.4,67.0
+UW-Whitewater,Richie Warren,guarding the player screened,Ball screen,unclear,tracking estimate,3,1.33,60.0
+UW-Whitewater,Richie Warren,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,1.5,33.0
+UW-Whitewater,Richie Warren,guarding the player screened,Ball screen,back (drop),tracking estimate,2,0.5,40.0
+UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,1.0,42.0
+UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,unclear,tracking estimate,5,1.0,42.0
+UW-Whitewater,Richie Warren,guarding the screener,Ball screen,back (drop),tracking estimate,1,1.0,33.0
+UW-Whitewater,Richie Warren,guarding the screener,Ball screen,blitz / trap,tracking estimate,1,,33.0
+UW-Whitewater,Richie Warren,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,0.0,33.0
+UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,Under,coach tag,1,3.0,8.0
+UW-Whitewater,Richie Warren,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,1.0,8.0
+UW-Whitewater,Trent Grunewald,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,67.0
+UW-Whitewater,Trent Grunewald,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,33.0
+UW-Whitewater,Trent Grunewald,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,0.67,100.0
+UW-Whitewater,Trent Grunewald,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Ball screen,back (drop),tracking estimate,2,0.5,67.0
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,2.0,33.0
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,33.0
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Ball screen,unclear,tracking estimate,1,2.0,33.0
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,Top Lock,coach tag,1,,17.0
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,17.0
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,6,1.0,46.0
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Off-ball screen,unclear,tracking estimate,6,1.4,46.0
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Ball screen,back (drop),tracking estimate,3,1.0,50.0
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Ball screen,unclear,tracking estimate,2,0.0,33.0
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,0.0,17.0
+UW-Whitewater,Tyshawn Teague-Johnson,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,8.0
 UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,,67.0
 UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,33.0
 UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,,67.0

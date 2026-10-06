@@ -1,69 +1,79 @@
 offense_team,shooter,zone,attempts,makes,points,fg_pct,pts_per_shot
-Coe Kohawks,C. Reece Breitenbach,Above-break 3,1,1,3.0,100.0,3.0
-Coe Kohawks,Cooper Nailor,Above-break 3,1,1,3.0,100.0,3.0
+Alma Scots,Donovan Collins,Mid-range,1,0,0.0,0.0,0.0
+Alma Scots,Elijah Sykes,Above-break 3,2,1,2.0,50.0,1.0
+Alma Scots,Elijah Sykes,Corner 3,1,0,0.0,0.0,0.0
+Alma Scots,Elijah Sykes,Mid-range,1,0,0.0,0.0,0.0
+Alma Scots,Elijah Sykes,Paint,1,0,0.0,0.0,0.0
+Alma Scots,Korbin Heitzman,Above-break 3,1,0,0.0,0.0,0.0
+Alma Scots,Korbin Heitzman,Rim,1,1,2.0,100.0,2.0
+Alma Scots,Logan St. Martin,Above-break 3,1,0,0.0,0.0,0.0
+Alma Scots,Luciano Guerrazzi,Corner 3,1,1,3.0,100.0,3.0
+Alma Scots,Luciano Guerrazzi,Rim,1,1,2.0,100.0,2.0
+Alma Scots,TEAM,Above-break 3,4,1,2.0,25.0,0.5
+Alma Scots,TEAM,Corner 3,2,1,3.0,50.0,1.5
+Alma Scots,TEAM,Mid-range,2,0,0.0,0.0,0.0
+Alma Scots,TEAM,Paint,1,0,0.0,0.0,0.0
+Alma Scots,TEAM,Rim,2,2,4.0,100.0,2.0
+Coe Kohawks,C. Reece Breitenbach,Above-break 3,2,2,6.0,100.0,3.0
+Coe Kohawks,Cooper Nailor,Above-break 3,3,3,9.0,100.0,3.0
 Coe Kohawks,Cooper Nailor,Mid-range,2,1,2.0,50.0,1.0
 Coe Kohawks,Cooper Nailor,Paint,1,0,0.0,0.0,0.0
 Coe Kohawks,Deuce Walters,Above-break 3,1,0,0.0,0.0,0.0
-Coe Kohawks,Deuce Walters,Mid-range,4,2,4.0,50.0,1.0
-Coe Kohawks,Deuce Walters,Rim,2,1,2.0,50.0,1.0
-Coe Kohawks,Jackson Bowman,Mid-range,1,1,3.0,100.0,3.0
+Coe Kohawks,Deuce Walters,Mid-range,5,2,4.0,40.0,0.8
+Coe Kohawks,Deuce Walters,Rim,1,1,2.0,100.0,2.0
+Coe Kohawks,Jackson Bowman,Above-break 3,1,0,0.0,0.0,0.0
+Coe Kohawks,Jackson Bowman,Mid-range,2,1,3.0,50.0,1.5
 Coe Kohawks,Jackson Newell,Above-break 3,1,1,2.0,100.0,2.0
-Coe Kohawks,Jackson Newell,Rim,1,1,2.0,100.0,2.0
-Coe Kohawks,Kanyon Bryte,Mid-range,2,1,3.0,50.0,1.5
-Coe Kohawks,Kanyon Bryte,Paint,2,2,4.0,100.0,2.0
-Coe Kohawks,Kanyon Bryte,Rim,1,1,2.0,100.0,2.0
-Coe Kohawks,Ryan Dolphin,Above-break 3,2,1,3.0,50.0,1.5
-Coe Kohawks,Ryan Dolphin,Corner 3,1,1,3.0,100.0,3.0
-Coe Kohawks,TEAM,Above-break 3,6,4,11.0,67.0,1.83
-Coe Kohawks,TEAM,Corner 3,1,1,3.0,100.0,3.0
-Coe Kohawks,TEAM,Mid-range,9,5,12.0,56.0,1.33
-Coe Kohawks,TEAM,Paint,3,2,4.0,67.0,1.33
-Coe Kohawks,TEAM,Rim,4,3,6.0,75.0,1.5
+Coe Kohawks,Jackson Newell,Paint,1,1,2.0,100.0,2.0
+Coe Kohawks,Kanyon Bryte,Above-break 3,1,0,0.0,0.0,0.0
+Coe Kohawks,Kanyon Bryte,Mid-range,1,1,3.0,100.0,3.0
+Coe Kohawks,Kanyon Bryte,Paint,2,1,2.0,50.0,1.0
+Coe Kohawks,Ryan Dolphin,Above-break 3,3,2,6.0,67.0,2.0
+Coe Kohawks,TEAM,Above-break 3,12,8,23.0,67.0,1.92
+Coe Kohawks,TEAM,Mid-range,10,5,12.0,50.0,1.2
+Coe Kohawks,TEAM,Paint,4,2,4.0,50.0,1.0
+Coe Kohawks,TEAM,Rim,1,1,2.0,100.0,2.0
+UW-Oshkosh Titans,Aiden Hawkinson,Mid-range,1,0,0.0,0.0,0.0
 UW-Oshkosh Titans,Brandon Beck,Above-break 3,1,1,3.0,100.0,3.0
-UW-Oshkosh Titans,Brandon Beck,Mid-range,1,1,2.0,100.0,2.0
-UW-Oshkosh Titans,Carter Thomas,Above-break 3,1,0,0.0,0.0,0.0
+UW-Oshkosh Titans,Brandon Beck,Mid-range,2,2,4.0,100.0,2.0
 UW-Oshkosh Titans,Carter Thomas,Mid-range,1,1,3.0,100.0,3.0
-UW-Oshkosh Titans,Joey LaChapell,Corner 3,1,1,3.0,100.0,3.0
+UW-Oshkosh Titans,Joey LaChapell,Above-break 3,1,1,3.0,100.0,3.0
 UW-Oshkosh Titans,Joey LaChapell,Mid-range,1,0,0.0,0.0,0.0
 UW-Oshkosh Titans,Logan Rindfleisch,Mid-range,1,0,0.0,0.0,0.0
-UW-Oshkosh Titans,Logan Rindfleisch,Paint,1,0,0.0,0.0,0.0
+UW-Oshkosh Titans,Logan Rindfleisch,Rim,1,0,0.0,0.0,0.0
 UW-Oshkosh Titans,Matt Imig,Above-break 3,1,1,3.0,100.0,3.0
-UW-Oshkosh Titans,Matt Imig,Mid-range,1,1,3.0,100.0,3.0
-UW-Oshkosh Titans,Michael Metcalf-Grassman,Corner 3,1,0,0.0,0.0,0.0
-UW-Oshkosh Titans,Michael Metcalf-Grassman,Mid-range,1,1,2.0,100.0,2.0
-UW-Oshkosh Titans,Michael Metcalf-Grassman,Rim,2,1,2.0,50.0,1.0
+UW-Oshkosh Titans,Matt Imig,Mid-range,2,1,3.0,50.0,1.5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,Mid-range,2,2,5.0,100.0,2.5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,Rim,1,1,2.0,100.0,2.0
 UW-Oshkosh Titans,Oskar Kangas,Above-break 3,1,1,3.0,100.0,3.0
 UW-Oshkosh Titans,Oskar Kangas,Corner 3,1,0,0.0,0.0,0.0
-UW-Oshkosh Titans,TEAM,Above-break 3,5,3,9.0,60.0,1.8
-UW-Oshkosh Titans,TEAM,Corner 3,3,1,3.0,33.0,1.0
-UW-Oshkosh Titans,TEAM,Mid-range,6,4,10.0,67.0,1.67
-UW-Oshkosh Titans,TEAM,Paint,1,0,0.0,0.0,0.0
+UW-Oshkosh Titans,Oskar Kangas,Mid-range,1,1,3.0,100.0,3.0
+UW-Oshkosh Titans,TEAM,Above-break 3,4,4,12.0,100.0,3.0
+UW-Oshkosh Titans,TEAM,Corner 3,1,0,0.0,0.0,0.0
+UW-Oshkosh Titans,TEAM,Mid-range,11,7,18.0,64.0,1.64
 UW-Oshkosh Titans,TEAM,Rim,2,1,2.0,50.0,1.0
-UW-Oshkosh Titans,Vitorio Dante,Above-break 3,1,0,0.0,0.0,0.0
-UW-Whitewater,Agape Keyes Jr.,Above-break 3,1,0,0.0,0.0,0.0
+UW-Whitewater,Agape Keyes Jr.,Above-break 3,2,1,3.0,50.0,1.5
 UW-Whitewater,Agape Keyes Jr.,Mid-range,1,0,0.0,0.0,0.0
-UW-Whitewater,Brock Marino,Mid-range,1,0,0.0,0.0,0.0
-UW-Whitewater,Collin Madson,Above-break 3,2,0,0.0,0.0,0.0
-UW-Whitewater,Collin Madson,Corner 3,1,0,0.0,0.0,0.0
-UW-Whitewater,Collin Madson,Paint,1,1,2.0,100.0,2.0
+UW-Whitewater,Brock Marino,Paint,1,1,2.0,100.0,2.0
 UW-Whitewater,Collin Madson,Rim,1,1,2.0,100.0,2.0
 UW-Whitewater,Darius Chestnut,Above-break 3,1,0,0.0,0.0,0.0
 UW-Whitewater,Darius Chestnut,Mid-range,1,0,0.0,0.0,0.0
 UW-Whitewater,Darius Chestnut,Paint,1,0,0.0,0.0,0.0
-UW-Whitewater,Joey Berezowitz,Above-break 3,1,1,3.0,100.0,3.0
+UW-Whitewater,Isaiah Robinson,Corner 3,1,0,0.0,0.0,0.0
+UW-Whitewater,Jake Quast,Above-break 3,1,1,3.0,100.0,3.0
+UW-Whitewater,Jake Quast,Paint,1,0,0.0,0.0,0.0
+UW-Whitewater,Joey Berezowitz,Above-break 3,2,2,6.0,100.0,3.0
 UW-Whitewater,Joey Berezowitz,Rim,1,1,2.0,100.0,2.0
+UW-Whitewater,Jr Lukenbill,Above-break 3,1,0,0.0,0.0,0.0
 UW-Whitewater,Jr Lukenbill,Mid-range,1,0,0.0,0.0,0.0
-UW-Whitewater,Kelton Mcewen,Above-break 3,1,0,0.0,0.0,0.0
-UW-Whitewater,Luke Bara,Above-break 3,2,1,3.0,50.0,1.5
-UW-Whitewater,Luke Bara,Mid-range,1,1,3.0,100.0,3.0
-UW-Whitewater,Luke Bara,Rim,1,0,0.0,0.0,0.0
-UW-Whitewater,Richie Warren,Above-break 3,2,1,3.0,50.0,1.5
+UW-Whitewater,Kelton Mcewen,Above-break 3,2,0,0.0,0.0,0.0
+UW-Whitewater,Luke Bara,Above-break 3,1,0,0.0,0.0,0.0
+UW-Whitewater,Luke Bara,Corner 3,2,0,0.0,0.0,0.0
+UW-Whitewater,Richie Warren,Above-break 3,3,1,3.0,33.0,1.0
 UW-Whitewater,Richie Warren,Mid-range,5,2,4.0,40.0,0.8
-UW-Whitewater,Richie Warren,Paint,1,0,0.0,0.0,0.0
-UW-Whitewater,TEAM,Above-break 3,11,3,9.0,27.0,0.82
-UW-Whitewater,TEAM,Corner 3,1,0,0.0,0.0,0.0
-UW-Whitewater,TEAM,Mid-range,12,5,11.0,42.0,0.92
+UW-Whitewater,TEAM,Above-break 3,13,5,15.0,38.0,1.15
+UW-Whitewater,TEAM,Corner 3,3,0,0.0,0.0,0.0
+UW-Whitewater,TEAM,Mid-range,9,3,6.0,33.0,0.67
 UW-Whitewater,TEAM,Paint,3,1,2.0,33.0,0.67
-UW-Whitewater,TEAM,Rim,3,2,4.0,67.0,1.33
-UW-Whitewater,Tyshawn Teague-Johnson,Above-break 3,1,0,0.0,0.0,0.0
-UW-Whitewater,Tyshawn Teague-Johnson,Mid-range,2,2,4.0,100.0,2.0
+UW-Whitewater,TEAM,Rim,2,2,4.0,100.0,2.0
+UW-Whitewater,Tyshawn Teague-Johnson,Mid-range,1,1,2.0,100.0,2.0
