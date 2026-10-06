@@ -228,7 +228,9 @@ def _pr_boxes(rows, t, Hpx, numtxt):
                       "track": int(rr["track"]), "side": rr["side"],
                       "box": [x - 0.21 * hh, y - hh, x + 0.21 * hh, y], "px": round(x, 1), "py": round(y, 1),
                       "name": rr.get("name") if named else None, "how": rr.get("name_how") if named else None,
-                      "label": (numtxt(rr["name"]) + ("?" if rr.get("name_how") == "best guess" else "")) if named else "",
+                      "label": (numtxt(rr["name"]) + ((f"? {round(100 * float(rr['name_conf']))}%" if pd.notna(pd.to_numeric(rr.get("name_conf"), errors="coerce")) else "?")
+                                                if rr.get("name_how") == "best guess" else "")) if named else "",
+                      "conf": (float(rr["name_conf"]) if named and pd.notna(pd.to_numeric(rr.get("name_conf"), errors="coerce")) else None),
                       "guess": named and rr.get("name_how") == "best guess"})
     return boxes
 
@@ -361,7 +363,7 @@ def _export_play_review_to_app(rdir, slug, game, run, plays, vocab):
         q["clip_kind"] = "video" if is_mp4 else "image"
         q["poster"] = _media(q.get("poster"), f"clip_{fid}_poster.jpg")
         for pic in q.get("pictures", []):
-            name = f"clip_{fid}_{'a_start' if pic.get('which') == 'start' else 'b_end'}.jpg"
+            name = f"clip_{fid}_{'a_start' if pic.get('which') == 'start' else 'c_frame' if pic.get('which') == 'frame' else 'b_end'}.jpg"
             v = pic.get("image")
             try:
                 if str(v or "").startswith("data:"):
@@ -501,8 +503,13 @@ def play_review():
             # pictures: the start and the end of the play, most players visible
             t_end = pd.to_numeric(r.get("track_finish_frame"), errors="coerce")
             end_hi = int(min(n - 1, t_end)) if pd.notna(t_end) else n - 1
-            picks_ = [("start", _val_frame_pick(rows, 0, max(1, int(0.25 * n)))),
-                      ("end", _val_frame_pick(rows, int(max(0, end_hi - 2 * fps)), end_hi, prefer_late=True))]
+            # CONFIRMED CHANGE (requested: "1 frame for player number tracking per play"): ONE picture per play -- the frame of the
+            # whole clip where the most players are visible (PLAY_REVIEW_PICTURES = 2 brings back the start + end pair).
+            if int(globals().get("PLAY_REVIEW_PICTURES", 1)) >= 2:
+                picks_ = [("start", _val_frame_pick(rows, 0, max(1, int(0.25 * n)))),
+                          ("end", _val_frame_pick(rows, int(max(0, end_hi - 2 * fps)), end_hi, prefer_late=True))]
+            else:
+                picks_ = [("frame", _val_frame_pick(rows, 0, max(0, n - 1)))]
             clock = r.get("time_remaining_seconds")
             clock_txt = f"{r.get('period', '')} {int(clock // 60)}:{int(clock % 60):02d}" if pd.notna(clock) else "(no clock)"
             lu = lambda side: ", ".join(numtxt(nm) for nm in _trk_five(r.get(f"{side}_lineup"))) or "(lineup unknown)"
@@ -516,11 +523,12 @@ def play_review():
                 from PIL import Image
                 boxes = _pr_boxes(rows, t, Image.open(img_path).size[1], numtxt)
                 header = [f"Clip {cn}  {clock_txt}  {str(r.get('synergy_string'))[:100]}",
-                          f"{'START' if which == 'start' else 'END'} of the play -- {t / fps:.1f} s into the clip",
+                          (f"{'START' if which == 'start' else 'END'} of the play -- {t / fps:.1f} s into the clip" if which != "frame"
+                           else f"Frame for the player check -- {t / fps:.1f} s into the clip, most players visible"),
                           f"OFFENSE (orange) {r.get('offense_team')}: {lu('offense')}",
                           f"DEFENSE (blue)  {r.get('defense_team')}: {lu('defense')}",
                           "Solid box = identified from evidence; DASHED box with ? = best guess; grey = not named"]
-                fname = f"clip_{fid}_{'a_start' if which == 'start' else 'b_end'}.jpg"
+                fname = f"clip_{fid}_{'a_start' if which == 'start' else 'c_frame' if which == 'frame' else 'b_end'}.jpg"
                 _val_draw(img_path, boxes, header, os.path.join(rdir, fname))
                 # where each box sits on the PICTURE, as fractions of its width / height (the frame is enlarged 1.6x under
                 # a header) -- the app lets a coach click a box in the picture (requested)
