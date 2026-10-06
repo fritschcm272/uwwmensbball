@@ -1037,6 +1037,16 @@ def _pl_load(path, label):
     # Handler, ...). Different from the play call, which is what was drawn up.
     df["synergy_play_type"] = ss.astype(str).str.extract(r"^\s*\d*\s*[^>]+>\s*([^>]+?)\s*(?:>|$)")[0]
     df["clip_number"] = df.get("#")
+    # CONFIRMED CHANGE (requested): a game whose clips all have number 0 (or none) -- e.g. WWW@AC -- gets clip numbers 1, 2, 3 ... in
+    # the order its rows sit in uww_plays.csv (which is the game's order). Every clip then has its own number: the review's
+    # picture files, the clip-order check and the matching of repeated plays no longer depend on a number that is the same for all.
+    if "Game" in df.columns:
+        _cn = pd.to_numeric(df["clip_number"], errors="coerce")
+        for _gm, _idx in df.groupby(["Game", "Date"], dropna=False).groups.items():
+            if (_cn.loc[_idx].fillna(0) == 0).all():
+                df.loc[_idx, "clip_number"] = range(1, len(_idx) + 1)
+                print(f"  {os.path.basename(path)}: {_gm[0]} {_gm[1]} had no clip numbers (all 0) -- numbered its {len(_idx)} "
+                      f"rows 1-{len(_idx)} in file order.")
     return df.reset_index(drop=True)
 
 

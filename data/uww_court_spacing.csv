@@ -1,40 +1,40 @@
 lineup,possessions,both_corners_pct,paint_crowded_pct,spacing_ft,ppp
-"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren",27,0.0,9.0,12.0,0.64
-"Darius Chestnut, JR Lukenbill, Jake Quast, Kelton McEwen, Tyshawn Teague-Johnson",25,0.0,13.0,11.9,1.04
-"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren",19,0.0,7.0,17.7,0.89
-"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen",13,2.0,5.0,14.4,1.0
-"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren",11,4.0,12.0,12.2,1.36
-"Collin Madson, Darius Chestnut, Joey Berezowitz, Luke Bara, Richie Warren",10,2.0,5.0,14.1,1.22
-"Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",9,4.0,12.0,11.2,1.0
-"Darius Chestnut, Jake Quast, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",8,0.0,4.0,17.3,1.57
-"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",8,4.0,4.0,14.1,0.62
-"Agape Keyes Jr., Isaiah Robinson, Mauryon Turner, Rashad Rogers, Trent Grunewald",7,0.0,0.0,17.5,0.83
-"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren",7,4.0,15.0,12.4,0.33
-"Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz",7,0.0,15.0,13.2,0.83
-"Brock Marino, Collin Madson, Jake Quast, Luke Bara, Richie Warren",7,0.0,16.0,11.6,1.6
+"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren",28,2.0,9.0,12.3,0.62
+"Darius Chestnut, JR Lukenbill, Jake Quast, Kelton McEwen, Tyshawn Teague-Johnson",25,0.0,13.0,11.7,1.04
+"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren",23,4.0,13.0,13.3,0.86
+"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen",13,6.0,12.0,12.3,1.0
+"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren",12,0.0,9.0,12.2,1.25
+"Collin Madson, Darius Chestnut, Joey Berezowitz, Luke Bara, Richie Warren",10,2.0,9.0,12.7,1.22
+"Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",10,4.0,13.0,13.5,1.2
+"Agape Keyes Jr., Isaiah Robinson, Mauryon Turner, Rashad Rogers, Trent Grunewald",8,1.0,12.0,13.8,1.0
+"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",8,4.0,6.0,14.2,0.62
+"Darius Chestnut, Jake Quast, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",7,3.0,19.0,13.4,1.57
+"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren",7,4.0,24.0,11.7,0.33
+"Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz",7,0.0,15.0,12.8,0.83
+"Brock Marino, Collin Madson, Jake Quast, Luke Bara, Richie Warren",7,0.0,15.0,10.6,1.6
 "Agape Keyes Jr., Isaiah Robinson, Matthew McKay, Mikey Wildes, Trent Grunewald",6,0.0,6.0,7.7,0.4
-,6,14.0,7.0,11.8,0.0
-"Darius Chestnut, Jake Quast, Joey Berezowitz, Luke Bara, Tyshawn Teague-Johnson",6,1.0,0.0,18.5,0.67
-"Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",6,0.0,6.0,16.0,0.4
-"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson",5,6.0,37.0,11.7,0.6
-"Darius Chestnut, Isaiah Robinson, Jake Quast, Kelton McEwen, Tyshawn Teague-Johnson",3,0.0,4.0,13.3,0.0
+,6,12.0,7.0,11.3,0.0
+"Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",6,1.0,14.0,12.0,0.33
+"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson",5,0.0,24.0,11.8,0.6
+"Darius Chestnut, Jake Quast, Joey Berezowitz, Luke Bara, Tyshawn Teague-Johnson",5,3.0,7.0,14.1,0.8
+"Darius Chestnut, Isaiah Robinson, Jake Quast, Kelton McEwen, Tyshawn Teague-Johnson",3,0.0,7.0,14.7,0.0
 "Collin Madson, JR Lukenbill, Jake Quast, Luke Bara, Richie Warren",3,0.0,4.0,14.2,1.0
 "JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",3,0.0,0.0,11.2,0.67
 "Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren",3,0.0,0.0,15.0,0.67
 "Collin Madson, Darius Chestnut, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson",3,0.0,4.0,11.9,0.67
 "Brock Marino, Collin Madson, Darius Chestnut, Jake Quast, Luke Bara",3,0.0,4.0,11.7,1.33
 "Collin Madson, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren",2,0.0,0.0,16.8,1.5
-"Collin Madson, Darius Chestnut, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",2,0.0,0.0,18.3,1.5
-"Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren, Tyshawn Teague-Johnson",2,0.0,33.0,13.6,2.0
-"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",2,0.0,11.0,14.0,0.0
+"Collin Madson, Darius Chestnut, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",2,3.0,29.0,12.8,1.5
+"Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren, Tyshawn Teague-Johnson",2,0.0,30.0,14.0,2.0
+"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",2,0.0,15.0,13.7,0.0
 "Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Luke Bara",2,0.0,0.0,8.7,0.0
-"Collin Madson, Jake Quast, Kelton McEwen, Luke Bara, Tyshawn Teague-Johnson",2,0.0,16.0,10.7,1.0
-"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Richie Warren",2,0.0,11.0,10.4,1.5
-"Brock Marino, Collin Madson, JR Lukenbill, Jake Quast, Luke Bara",2,10.0,8.0,16.3,1.0
-"Isaac Verges, Jake Quast, Joey Berezowitz, Rashad Rogers, Tyshawn Teague-Johnson",2,0.0,9.0,19.0,0.0
+"Collin Madson, Jake Quast, Kelton McEwen, Luke Bara, Tyshawn Teague-Johnson",2,0.0,37.0,9.6,1.0
+"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Richie Warren",2,0.0,10.0,10.6,1.5
+"Brock Marino, Collin Madson, JR Lukenbill, Jake Quast, Luke Bara",2,10.0,8.0,15.9,1.0
+"Isaac Verges, Jake Quast, Joey Berezowitz, Rashad Rogers, Tyshawn Teague-Johnson",2,0.0,1.0,11.3,0.0
 "Brock Marino, Collin Madson, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",1,0.0,69.0,8.5,0.0
-"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Tyshawn Teague-Johnson",1,0.0,0.0,9.8,0.0
+"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Tyshawn Teague-Johnson",1,0.0,0.0,10.0,0.0
 "Darius Chestnut, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",1,0.0,0.0,16.6,0.0
 "Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara",1,0.0,0.0,13.9,0.0
-"Agape Keyes Jr., Isaiah Robinson, Rashad Rogers, Trent Grunewald, Tyshawn Teague-Johnson",1,0.0,0.0,17.6,3.0
-"Agape Keyes Jr., Darius Chestnut, Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson",1,21.0,5.0,18.1,2.0
+"Agape Keyes Jr., Isaiah Robinson, Rashad Rogers, Trent Grunewald, Tyshawn Teague-Johnson",1,0.0,0.0,15.9,3.0
+"Agape Keyes Jr., Darius Chestnut, Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson",1,0.0,14.0,11.0,2.0
