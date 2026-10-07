@@ -380,7 +380,7 @@ for _team_label, _ in _ros_targets:
         print(f"  {_team_label}: NO roster rows -- check the saved '{_team_label} - Roster.html' in "
               f"{schedules_dir} to see what the page actually returned.")
 if not live_rosters.empty:
-    print(live_rosters.groupby("team").size().to_string())
+    _show(live_rosters.groupby("team").size())
 if _ros_problems:
     print("\nRoster problems:")
     for _p in _ros_problems:

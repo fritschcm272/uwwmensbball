@@ -458,7 +458,7 @@ else:
     _w = int((head_to_head["outcome"].astype(str).str.upper() == "W").sum())
     print(f"Head-to-head vs {upcoming_opponent_short}: {len(head_to_head)} previous meeting(s), "
           f"{_w}-{len(head_to_head) - _w}.")
-    print(head_to_head[["season", "date", "home_away", "outcome", "team_score", "opponent_score"]].to_string(index=False))
+    _show(head_to_head[["season", "date", "home_away", "outcome", "team_score", "opponent_score"]])
 if _h2h_problems:
     print("Head-to-head problems:")
     for _p in _h2h_problems:

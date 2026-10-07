@@ -173,7 +173,7 @@ if not video_status.empty:
     _n_ok = int((video_status["matched"] > 0).sum())
     print(f"\nTagged-video coverage for {upcoming_opponent_short}: {_n_ok} of {len(prev_games)} game(s) "
           f"before facing UWW contributed tagged shots.")
-    print(video_status.to_string(index=False))
+    _show(video_status)
     _gaps = video_status[video_status["why"] != ""]
     if not _gaps.empty:
         print(f"\n{len(_gaps)} game(s) contributed nothing -- reasons above. The most common cause is a "
@@ -184,6 +184,6 @@ if not video_status.empty:
 print(f"\nGames with a video-tagging file: {games_with_video}")
 print(f"pbp_events_upcoming rows with a matched video description: {pbp_events_upcoming['video_description'].notna().sum()} of {len(pbp_events_upcoming)}")
 if not pbp_events_upcoming.empty:
-    print(pbp_events_upcoming[pbp_events_upcoming["video_description"].notna()].head(20))
+    _show(pbp_events_upcoming[pbp_events_upcoming["video_description"].notna()], rows=20)
 else:
     print("WARNING: No opponent prior-game events to display (opponent schedule file not loaded).")

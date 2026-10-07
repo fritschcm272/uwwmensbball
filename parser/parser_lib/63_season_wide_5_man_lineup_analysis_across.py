@@ -20,13 +20,13 @@ n_games_with_pbp = pbp_events.dropna(subset=["opponent"])[GAME_KEYS].drop_duplic
 print(f"Season-wide UWW 5-man lineups across {n_games_with_pbp} game(s) with play-by-play data "
       f"({season_uww_lineups.shape[0]} distinct lineups used):\n")
 print("Most-used lineups overall (by total minutes on the floor):")
-print(season_uww_lineups.head(10))
+_show(season_uww_lineups, rows=10)
 
 meaningful = season_uww_lineups[season_uww_lineups["total_minutes"] >= MEANINGFUL_MIN_MINUTES]
 print(f"\nBest net-margin-per-minute UWW lineups season-wide (min {MEANINGFUL_MIN_MINUTES} minutes played):")
-print(meaningful.sort_values("margin_per_min", ascending=False).head(10))
+_show(meaningful.sort_values("margin_per_min", ascending=False), rows=10)
 print(f"\nWorst net-margin-per-minute UWW lineups season-wide (min {MEANINGFUL_MIN_MINUTES} minutes played):")
-print(meaningful.sort_values("margin_per_min", ascending=True).head(10))
+_show(meaningful.sort_values("margin_per_min", ascending=True), rows=10)
 
 recurring = season_uww_lineups[season_uww_lineups["games"] > 1].sort_values("games", ascending=False)
 if recurring.empty:

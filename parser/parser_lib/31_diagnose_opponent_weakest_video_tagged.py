@@ -2,7 +2,7 @@
 # Runs inside the notebook via run_section("31_diagnose_opponent_weakest_video_tagged"); its settings are in that notebook cell.
 
 # --- Diagnose the upcoming opponent's weakest video-tagged play type, same method as UWW's own diagnosis -------
-_safe_display = lambda df: print(df) if not df.empty else print("  (no data)")
+_safe_display = lambda df: _show(df)
 # Play type is whatever chained segment comes right after the LAST "<jersey#> <player name>" token in
 # video_description that matches the shooter -- an earlier segment may belong to a DIFFERENT player (e.g. the
 # screener/passer who set up the shot), so anchoring on the shooter's own name-token avoids misattributing

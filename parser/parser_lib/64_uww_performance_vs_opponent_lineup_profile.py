@@ -104,7 +104,7 @@ play_type_by_player = (
 play_type_by_player["fg_pct"] = (100 * play_type_by_player["makes"] / play_type_by_player["attempts"]).round(1)
 print("\nUWW's video-tagged play-type efficiency by individual player, season-wide (every player/play-type "
       "combination with at least one attempt):\n")
-print(play_type_by_player.sort_values(["player", "attempts"], ascending=[True, False]))
+_show(play_type_by_player.sort_values(["player", "attempts"], ascending=[True, False]))
 
 player_top_play_type = (
     play_type_by_player.sort_values("attempts", ascending=False)

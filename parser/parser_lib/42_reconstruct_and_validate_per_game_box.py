@@ -94,7 +94,7 @@ _dupes = _dupes[_dupes > 1]
 if len(_dupes):
     print(f"WARNING: {len(_dupes)} duplicated (opponent, game_date, team, player) key(s) -- two files for one game?")
 
-print(pbp_box_score.sort_values(["opponent", "PTS"], ascending=[True, False])[[
+_show(pbp_box_score.sort_values(["opponent", "PTS"], ascending=[True, False])[[
     "opponent", "game_date", "team", "player", "started", "PTS", "FGM", "FGA", "FG3M", "FG3A", "FTM", "FTA",
     "OREB", "DREB", "REB", "AST", "STL", "BLK", "TO", "PF", "FG%", "3P%", "FT%",
 ]])

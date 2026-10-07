@@ -2468,7 +2468,7 @@ for _label, _f in (("UWW games", _pl_uww), ("upcoming-opponent games", _pl_opp))
     _unm = _f[_f["event_index"].isna()]
     if not _unm.empty:
         print("  First unmatched clips (date, period, clock, player, result):")
-        print(_unm[["game_date", "period", "Clock", "player", "result"]].head(6).to_string(index=False))
+        _show(_unm[["game_date", "period", "Clock", "player", "result"]], rows=6)
     _top = _f[_f["decode_quality"] != "Needs review"]["play_call"].value_counts().head(6)
     print(f"  Most-called: {_top.to_dict()}")
     _sc_cov = _f["shot_clock_used"].notna().sum()
@@ -2541,5 +2541,5 @@ if "video_start_s" in play_calls.columns and play_calls["video_start_s"].notna()
         print("  " + "!" * 100)
         print(f"  CLIP ORDER CHECK: {len(_order_bad)} clip(s) sit at a spot in the game video that doesn't match their game clock "
               f"(captured at the wrong place?):")
-        print(_order_bad.head(15).to_string(index=False))
+        _show(_order_bad, rows=15)
         print("  " + "!" * 100)

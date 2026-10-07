@@ -134,8 +134,8 @@ if not pbp_events.empty and (pbp_events["event_type"] == "unclassified").any():
     _unc = pbp_events.loc[pbp_events["event_type"] == "unclassified", "raw_text"].value_counts()
     print(f"\n{int(_unc.sum())} unclassified event(s) across {len(_unc)} distinct string(s) -- "
           f"add a pattern to EVENT_PATTERNS for any of these that should be counted:")
-    print(_unc.head(20).to_string())
+    _show(_unc, rows=20)
 else:
     print("\nEvery play-by-play line was classified.")
 
-print(pbp_events.head(20))
+_show(pbp_events, rows=20)

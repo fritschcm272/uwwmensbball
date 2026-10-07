@@ -82,7 +82,7 @@ if _pc_frames:
     plays_catalog = plays_catalog[PLAYS_CATALOG_COLS]
     print(f"\nParsed {len(plays_catalog)} play(s) across {plays_catalog['series'].nunique()} series "
           f"and {plays_catalog['play_family'].nunique()} family/families.")
-    print(plays_catalog[["series", "play_family", "play_name", "aliases"]].to_string(index=False))
+    _show(plays_catalog[["series", "play_family", "play_name", "aliases"]])
 else:
     plays_catalog = pd.DataFrame(columns=PLAYS_CATALOG_COLS)
     print("No playbook catalog parsed -- play calls will be used exactly as they appear in the source data.")

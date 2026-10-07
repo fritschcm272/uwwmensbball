@@ -15,12 +15,12 @@ by_play_type_mechanic = (
 )
 by_play_type_mechanic["fg_pct"] = (100 * by_play_type_mechanic["makes"] / by_play_type_mechanic["attempts"]).round(1)
 print("Which play types produce catch-and-shoot jumpers, and their efficiency:")
-print(by_play_type_mechanic.sort_values("attempts", ascending=False))
+_show(by_play_type_mechanic.sort_values("attempts", ascending=False))
 
 contest_all = catch_and_shoot_all.groupby("contest").agg(attempts=("made", "count"), makes=("made", "sum")).reset_index()
 contest_all["fg_pct"] = (100 * contest_all["makes"] / contest_all["attempts"]).round(1)
 print("\nGuarded vs. Open, ALL catch-and-shoot jumpers (every play type combined), season-wide:")
-print(contest_all.sort_values("attempts", ascending=False))
+_show(contest_all.sort_values("attempts", ascending=False))
 
 guarded_all = (
     catch_and_shoot_all[catch_and_shoot_all["contest"] == "Guarded"].groupby("player")
@@ -51,4 +51,4 @@ non_jumper_summary = (
 )
 non_jumper_summary["fg_pct"] = (100 * non_jumper_summary["makes"] / non_jumper_summary["attempts"]).round(1)
 print("\nNon-catch-and-shoot attempts (drives, pull-ups, post moves, etc.), by play type and mechanic:")
-print(non_jumper_summary.sort_values("attempts", ascending=False))
+_show(non_jumper_summary.sort_values("attempts", ascending=False))

@@ -48,7 +48,7 @@ else:
     print("Previous scouted opponents to compare against:", previous_opponents)
 
 print("\nplayer_notes-derived tag frequency and rarity-based importance weight (rarer tags count more toward similarity):")
-print(notes_tag_importance_df)
+_show(notes_tag_importance_df)
 
 print("\nkeys_to_defending-derived tag frequency and rarity-based importance weight:")
-print(keys_tag_importance_df)
+_show(keys_tag_importance_df)

@@ -2,7 +2,7 @@
 # Runs inside the notebook via run_section("29_scout_upcoming_opponent_own_tendencies"); its settings are in that notebook cell.
 
 # --- Scout the upcoming opponent's own tendencies from their games before facing Whitewater -------------------
-_safe_display = lambda df: print(df) if not df.empty else print("  (no data)")
+_safe_display = lambda df: _show(df)
 
 elmhurst_events = pbp_events_upcoming[pbp_events_upcoming["team"] == upcoming_opponent_short].copy()
 opponent_events = pbp_events_upcoming[

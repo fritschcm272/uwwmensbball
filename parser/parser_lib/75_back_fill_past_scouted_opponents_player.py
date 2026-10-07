@@ -187,7 +187,7 @@ else:
     print(f"\nBack-filled PBP-derived stats for {_pp_filled_rows} player_profiles row(s) across "
           f"{len(_pp_summary)} past opponent(s).")
     if _pp_summary:
-        print(pd.DataFrame(_pp_summary).to_string(index=False))
+        _show(pd.DataFrame(_pp_summary))
     if _pp_skipped:
         print("\nSkipped (no data, not an error -- these keep blank stats and their comparisons stay "
               "notes-only):")
@@ -198,4 +198,4 @@ else:
     _pp_check = player_profiles[player_profiles["opponent"].astype(str).str.contains("Elmhurst", case=False, na=False)]
     if not _pp_check.empty:
         print("\nElmhurst spot-check (season stats BEFORE they played UWW on their matchup date):")
-        print(_pp_check[["name", "games_played", "PTS", "REB", "AST", "FG%", "3P%"]].to_string(index=False))
+        _show(_pp_check[["name", "games_played", "PTS", "REB", "AST", "FG%", "3P%"]])
