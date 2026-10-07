@@ -5563,8 +5563,15 @@ def _pr_keep(store, key):
 
 
 def _pr_title_default(f):
-    pre = f.get("coach") is not None and f.get("auto") is not None and _pr_norm(f["coach"]) != _pr_norm(f["auto"])
-    return pre, ("wrong" if pre else "--"), (f.get("coach") if pre else "")
+    # CONFIRMED CHANGE (requested: "it isn't defaulting Your answer and Right answer like it should"): when the coach tagged
+    # the field AND the automatic Title has an answer, the row starts filled in -- "right" if the two agree, "wrong" if they
+    # differ -- and "Right answer" starts as the coach's tag (the coach's Title is the truth). A field the coach left empty
+    # stays "--" / blank, because there is nothing to compare against. Untouched rows are saved with prefilled = True.
+    has = f.get("coach") not in (None, "") and f.get("auto") is not None
+    if not has:
+        return False, "--", ""
+    agree = _pr_norm(f["coach"]) == _pr_norm(f["auto"])
+    return True, ("right" if agree else "wrong"), f.get("coach")
 
 
 def _pr_title_widgets(d, pi, store, kp):
