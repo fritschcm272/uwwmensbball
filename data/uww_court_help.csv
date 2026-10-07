@@ -1,64 +1,62 @@
 defense_team,defender,clips,frames,weak_side_ft_off_man,weak_side_in_paint_pct,weak_frames,on_ball_ft
-Alma Scots,Logan St. Martin,36,203,9.8,27.0,75.0,9.8
-Alma Scots,Preston Malpass,23,125,10.8,26.0,53.0,7.6
-Alma Scots,Luciano Guerrazzi,31,185,11.7,24.0,75.0,11.5
-Alma Scots,Raine Rodich,36,203,11.1,18.0,73.0,9.4
-Alma Scots,Donovan Collins,60,353,10.5,16.0,154.0,12.5
-Alma Scots,Elijah Sykes,28,165,9.8,16.0,63.0,9.6
-Alma Scots,Josh Elliott,55,316,10.6,15.0,121.0,11.1
-Alma Scots,Korbin Heitzman,59,325,10.8,14.0,148.0,10.3
-Alma Scots,Joss Bradley,37,208,12.1,8.0,77.0,12.3
-Alma Scots,unnamed defense,2,93,12.5,3.0,61.0,9.0
-Coe Kohawks,unnamed defense,1,100,7.5,52.0,56.0,7.7
-Coe Kohawks,Austin Beeson,11,39,9.7,40.0,5.0,9.9
-Coe Kohawks,Ryan Dolphin,27,100,13.0,26.0,43.0,9.8
-Coe Kohawks,Kanyon Bryte,49,218,11.7,19.0,62.0,11.6
-Coe Kohawks,Aleks Jajic,10,21,13.2,18.0,11.0,15.0
-Coe Kohawks,C. Reece Breitenbach,32,133,15.0,15.0,39.0,12.3
-Coe Kohawks,Cooper Nailor,63,263,12.7,12.0,82.0,11.4
-Coe Kohawks,Jackson Bowman,52,227,11.1,11.0,79.0,11.3
-Coe Kohawks,Deuce Walters,56,235,10.6,10.0,72.0,12.6
-Coe Kohawks,Jackson Newell,18,53,14.0,6.0,17.0,15.1
-Coe Kohawks,Aaron Foote,5,22,18.7,0.0,8.0,9.6
+Alma Scots,Preston Malpass,25,126,9.7,23.0,52.0,10.0
+Alma Scots,Donovan Collins,61,340,10.3,18.0,130.0,10.5
+Alma Scots,Joss Bradley,37,198,12.2,17.0,72.0,12.8
+Alma Scots,Elijah Sykes,28,161,10.1,16.0,68.0,9.5
+Alma Scots,Josh Elliott,55,290,10.6,15.0,118.0,12.0
+Alma Scots,Korbin Heitzman,56,329,10.9,15.0,119.0,10.8
+Alma Scots,Luciano Guerrazzi,30,178,11.3,14.0,76.0,11.5
+Alma Scots,Logan St. Martin,35,194,10.4,13.0,78.0,11.5
+Alma Scots,Raine Rodich,35,206,9.4,12.0,90.0,8.8
+Alma Scots,unnamed defense,2,71,12.4,5.0,55.0,10.3
+Coe Kohawks,unnamed defense,1,100,7.6,51.0,53.0,8.2
+Coe Kohawks,Austin Beeson,11,32,9.3,25.0,4.0,10.5
+Coe Kohawks,Kanyon Bryte,50,207,13.3,23.0,66.0,12.4
+Coe Kohawks,Jackson Bowman,52,221,12.7,20.0,74.0,12.7
+Coe Kohawks,C. Reece Breitenbach,32,135,13.1,18.0,40.0,12.0
+Coe Kohawks,Ryan Dolphin,28,94,9.7,14.0,42.0,11.8
+Coe Kohawks,Cooper Nailor,63,265,12.1,13.0,94.0,11.8
+Coe Kohawks,Deuce Walters,55,212,12.3,11.0,55.0,11.3
+Coe Kohawks,Jackson Newell,16,53,13.6,10.0,20.0,12.6
+Coe Kohawks,Aleks Jajic,12,28,13.5,7.0,14.0,13.7
+Coe Kohawks,Aaron Foote,5,20,15.2,0.0,6.0,7.8
 Coe Kohawks,Brock Marino,1,2,9.0,0.0,1.0,
 Coe Kohawks,Darius Chestnut,1,1,24.8,0.0,1.0,
-Coe Kohawks,Jay Akin,10,28,10.7,0.0,5.0,14.0
-Coe Kohawks,Joey Berezowitz,1,3,20.4,0.0,2.0,
+Coe Kohawks,Jay Akin,10,27,7.6,0.0,6.0,11.8
 Coe Kohawks,Richie Warren,1,1,21.7,0.0,1.0,
 Coe Kohawks,Zach Strauss,3,9,2.5,0.0,1.0,7.7
 Coe Kohawks,Jake Quast,1,1,,,,11.6
-UW-Oshkosh Titans,Brandon Beck,42,323,10.3,24.0,131.0,10.3
-UW-Oshkosh Titans,Jay Dalton,11,64,10.9,24.0,34.0,17.3
-UW-Oshkosh Titans,Michael Metcalf-Grassman,42,313,11.0,21.0,116.0,9.8
-UW-Oshkosh Titans,Oskar Kangas,35,169,10.2,19.0,64.0,7.6
-UW-Oshkosh Titans,Logan Rindfleisch,16,109,8.8,18.0,39.0,5.7
-UW-Oshkosh Titans,Jonah Rindfleisch,33,118,10.6,17.0,54.0,11.5
-UW-Oshkosh Titans,Joey LaChapell,37,283,11.4,14.0,123.0,11.2
-UW-Oshkosh Titans,Nate Nazos,42,292,10.7,13.0,113.0,8.9
-UW-Oshkosh Titans,Vitorio Dante,26,147,9.0,13.0,53.0,9.6
-UW-Oshkosh Titans,Aiden Hawkinson,40,192,12.2,12.0,65.0,8.7
-UW-Oshkosh Titans,Matt Imig,22,119,12.3,12.0,32.0,11.7
-UW-Oshkosh Titans,unnamed defense,6,268,10.5,8.0,99.0,10.0
-UW-Oshkosh Titans,Carter Thomas,46,328,10.4,6.0,116.0,9.4
-UW-Whitewater,Isaac Verges,26,214,8.7,23.0,93.0,9.3
-UW-Whitewater,Darius Chestnut,79,587,11.2,22.0,244.0,10.5
-UW-Whitewater,Richie Warren,112,987,11.0,19.0,366.0,10.8
-UW-Whitewater,Luke Bara,125,1043,11.2,18.0,439.0,10.7
-UW-Whitewater,Collin Madson,153,1226,10.5,17.0,438.0,9.7
-UW-Whitewater,Jake Quast,93,700,11.5,15.0,289.0,11.0
-UW-Whitewater,JR Lukenbill,74,480,10.5,14.0,176.0,10.0
-UW-Whitewater,Kelton McEwen,54,320,10.7,14.0,131.0,8.8
-UW-Whitewater,Brock Marino,97,728,10.7,13.0,330.0,12.4
-UW-Whitewater,Joey Berezowitz,101,809,11.1,13.0,302.0,9.6
-UW-Whitewater,Rashad Rogers,14,51,10.1,11.0,19.0,7.2
-UW-Whitewater,Tyshawn Teague-Johnson,79,480,11.7,9.0,175.0,10.5
-UW-Whitewater,Mauryon Turner,7,44,9.8,6.0,16.0,4.3
-UW-Whitewater,Trent Grunewald,11,61,11.0,6.0,31.0,10.5
-UW-Whitewater,unnamed defense,4,241,14.1,6.0,110.0,12.4
-UW-Whitewater,Isaiah Robinson,12,67,9.1,4.0,25.0,9.0
-UW-Whitewater,Agape Keyes Jr.,10,56,13.6,0.0,20.0,6.2
-UW-Whitewater,Matthew McKay,4,18,10.2,0.0,6.0,16.6
-UW-Whitewater,Mikey Wildes,4,16,11.5,0.0,8.0,10.4
+UW-Oshkosh Titans,Jay Dalton,11,63,9.1,27.0,26.0,12.6
+UW-Oshkosh Titans,Joey LaChapell,39,270,11.1,26.0,124.0,10.3
+UW-Oshkosh Titans,Oskar Kangas,32,165,10.5,21.0,67.0,12.3
+UW-Oshkosh Titans,Brandon Beck,42,313,11.4,20.0,110.0,11.4
+UW-Oshkosh Titans,Vitorio Dante,26,137,9.9,20.0,44.0,6.5
+UW-Oshkosh Titans,Michael Metcalf-Grassman,41,308,11.2,17.0,114.0,10.7
+UW-Oshkosh Titans,Aiden Hawkinson,40,177,10.3,15.0,72.0,8.4
+UW-Oshkosh Titans,Matt Imig,25,124,12.7,13.0,52.0,12.0
+UW-Oshkosh Titans,Jonah Rindfleisch,31,106,13.0,11.0,35.0,10.8
+UW-Oshkosh Titans,Logan Rindfleisch,15,110,14.7,11.0,28.0,8.3
+UW-Oshkosh Titans,Nate Nazos,43,292,10.6,10.0,99.0,10.3
+UW-Oshkosh Titans,unnamed defense,6,260,11.4,10.0,103.0,10.0
+UW-Oshkosh Titans,Carter Thomas,45,309,10.8,6.0,127.0,11.0
+UW-Whitewater,Darius Chestnut,72,509,11.2,26.0,195.0,9.1
+UW-Whitewater,Isaac Verges,28,201,10.0,25.0,97.0,8.9
+UW-Whitewater,Brock Marino,95,690,10.7,22.0,257.0,10.0
+UW-Whitewater,JR Lukenbill,74,433,11.8,18.0,141.0,10.3
+UW-Whitewater,Jake Quast,93,612,11.5,18.0,215.0,10.3
+UW-Whitewater,Collin Madson,151,1183,11.4,17.0,437.0,10.1
+UW-Whitewater,Joey Berezowitz,101,813,12.1,15.0,319.0,12.1
+UW-Whitewater,Richie Warren,114,948,11.2,15.0,372.0,9.9
+UW-Whitewater,Luke Bara,129,963,10.8,12.0,402.0,10.4
+UW-Whitewater,Rashad Rogers,15,49,10.8,12.0,17.0,8.1
+UW-Whitewater,Tyshawn Teague-Johnson,81,489,11.0,11.0,207.0,11.3
+UW-Whitewater,Mauryon Turner,7,40,8.9,10.0,10.0,4.2
+UW-Whitewater,Trent Grunewald,11,63,10.9,10.0,29.0,13.9
+UW-Whitewater,Kelton McEwen,53,327,11.1,9.0,154.0,13.5
+UW-Whitewater,unnamed defense,4,238,13.9,7.0,106.0,12.7
+UW-Whitewater,Agape Keyes Jr.,10,57,13.8,0.0,20.0,7.4
+UW-Whitewater,Isaiah Robinson,12,57,9.5,0.0,30.0,9.6
+UW-Whitewater,Matthew McKay,4,28,12.8,0.0,14.0,16.6
+UW-Whitewater,Mikey Wildes,4,20,9.4,0.0,9.0,6.4
 UW-Whitewater,Ryan Dolphin,1,6,10.5,0.0,4.0,
 UW-Whitewater,Jonah Rindfleisch,1,4,,,,5.2
-UW-Whitewater,Oskar Kangas,1,1,,,,2.2
