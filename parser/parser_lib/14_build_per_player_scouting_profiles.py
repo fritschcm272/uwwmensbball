@@ -114,7 +114,7 @@ if not box_only.empty:
     box_only["keys_tags_display"] = ""
     box_only["has_scouting_report"] = False
     print(f"Adding {len(box_only)} box-score-only player(s) with no scouting writeup (defaulted to role=Bench):")
-    print(box_only[["opponent", "jersey_number", "name"]].to_string(index=False))
+    _show(box_only[["opponent", "jersey_number", "name"]])
     player_profiles = pd.concat([player_profiles, box_only[player_profiles.columns.tolist()]], ignore_index=True)
 else:
     print("No box-score-only players found -- every player in the season boxscore already has a roster/notes entry.")

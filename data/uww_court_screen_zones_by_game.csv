@@ -1,174 +1,200 @@
 offense_team,defense_team,screen_type,zone,coverage,screens,ppp,game_date,game_code
-Alma Scots,UW-Whitewater,Ball screen,Left elbow,back (drop),1,,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Ball screen,Left elbow,switch,1,0.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Ball screen,Paint / post,back (drop),7,0.86,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Ball screen,Paint / post,unclear,4,1.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Ball screen,Right baseline,unclear,1,0.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Ball screen,Right elbow,unclear,1,0.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Ball screen,Top of key,back (drop),1,2.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Ball screen,Top of key,switch,3,0.67,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Ball screen,Top of key,unclear,5,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Left baseline,unclear,1,2.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Left elbow,back (drop),1,2.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Left elbow,unclear,2,0.5,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Left wing,unclear,1,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Paint / post,back (drop),3,1.33,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Paint / post,switch,1,,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Paint / post,unclear,1,2.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Paint / post,up (hedge / show),1,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Right baseline,switch,1,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Right baseline,unclear,2,1.5,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Right elbow,back (drop),5,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Right elbow,unclear,3,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Right wing,back (drop),1,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Right wing,unclear,2,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Right wing,up (hedge / show),1,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Top of key,back (drop),2,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Top of key,blitz / trap,1,3.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Top of key,switch,2,1.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Ball screen,Top of key,unclear,1,2.0,2025-12-20,WWW@AC
 Alma Scots,UW-Whitewater,Off-ball screen,Backcourt,separated (under / behind),1,0.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Backcourt,unclear,2,0.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Left baseline,separated (under / behind),1,3.0,2025-12-20,WWW@AC
 Alma Scots,UW-Whitewater,Off-ball screen,Left baseline,unclear,1,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Off-ball screen,Left corner,separated (under / behind),2,1.5,2025-12-20,WWW@AC
 Alma Scots,UW-Whitewater,Off-ball screen,Left elbow,separated (under / behind),1,0.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Left elbow,unclear,2,1.5,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Left wing,separated (under / behind),2,1.5,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Off-ball screen,Left wing,separated (under / behind),2,0.0,2025-12-20,WWW@AC
 Alma Scots,UW-Whitewater,Off-ball screen,Left wing,unclear,2,0.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Paint / post,separated (under / behind),7,1.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Paint / post,stayed attached (lock / trail),1,0.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Paint / post,unclear,9,1.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Right elbow,separated (under / behind),3,1.33,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Right elbow,unclear,3,1.33,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Right wing,separated (under / behind),3,0.33,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Right wing,unclear,2,1.5,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Top of key,separated (under / behind),6,0.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Top of key,stayed attached (lock / trail),1,0.0,2025-12-20,WWW@AC
-Alma Scots,UW-Whitewater,Off-ball screen,Top of key,unclear,3,1.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Ball screen,Backcourt,unclear,1,,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Ball screen,Left baseline,unclear,1,2.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Ball screen,Left corner,unclear,1,1.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Ball screen,Left wing,back (drop),2,2.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Ball screen,Paint / post,unclear,2,2.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Ball screen,Paint / post,up (hedge / show),1,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Off-ball screen,Paint / post,separated (under / behind),8,1.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Off-ball screen,Paint / post,unclear,6,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Off-ball screen,Right baseline,unclear,2,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Off-ball screen,Right elbow,separated (under / behind),2,2.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Off-ball screen,Right elbow,unclear,2,0.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Off-ball screen,Right wing,separated (under / behind),3,1.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Off-ball screen,Right wing,unclear,2,2.5,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Off-ball screen,Top of key,separated (under / behind),3,1.0,2025-12-20,WWW@AC
+Alma Scots,UW-Whitewater,Off-ball screen,Top of key,unclear,2,0.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Ball screen,Left baseline,unclear,1,0.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Ball screen,Left corner,up (hedge / show),1,0.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Ball screen,Left wing,back (drop),1,,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Ball screen,Left wing,unclear,1,0.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Ball screen,Paint / post,back (drop),2,1.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Ball screen,Paint / post,unclear,5,1.2,2025-12-20,WWW@AC
 UW-Whitewater,Alma Scots,Ball screen,Right elbow,back (drop),1,0.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Ball screen,Right elbow,up (hedge / show),1,2.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Ball screen,Right wing,back (drop),1,0.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Ball screen,Right wing,switch,1,0.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Ball screen,Right wing,unclear,1,,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Ball screen,Top of key,back (drop),1,2.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Backcourt,separated (under / behind),3,1.67,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Backcourt,unclear,1,0.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Left baseline,separated (under / behind),3,0.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Ball screen,Right elbow,unclear,1,2.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Ball screen,Right wing,back (drop),3,0.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Ball screen,Right wing,unclear,1,0.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Backcourt,separated (under / behind),1,0.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Backcourt,unclear,1,3.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Left baseline,separated (under / behind),3,1.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Left baseline,stayed attached (lock / trail),1,0.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Left baseline,unclear,1,2.0,2025-12-20,WWW@AC
 UW-Whitewater,Alma Scots,Off-ball screen,Left corner,separated (under / behind),1,0.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Left elbow,separated (under / behind),1,2.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Left wing,separated (under / behind),5,1.2,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Left wing,unclear,1,0.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Paint / post,separated (under / behind),11,0.5,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Paint / post,stayed attached (lock / trail),1,0.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Paint / post,unclear,2,1.5,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Right baseline,separated (under / behind),3,0.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Right baseline,stayed attached (lock / trail),1,3.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Right corner,stayed attached (lock / trail),1,3.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Right elbow,separated (under / behind),1,0.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Right wing,separated (under / behind),6,1.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Right wing,unclear,2,1.0,2025-12-20,WWW@AC
-UW-Whitewater,Alma Scots,Off-ball screen,Top of key,separated (under / behind),2,3.0,2025-12-20,WWW@AC
-UW-Oshkosh Titans,UW-Whitewater,Ball screen,Left baseline,up (hedge / show),1,1.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Ball screen,Left wing,unclear,2,2.5,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Ball screen,Paint / post,unclear,1,2.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Ball screen,Top of key,Stay,1,0.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Ball screen,Top of key,Switch,2,0.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Ball screen,Top of key,unclear,1,0.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Backcourt,separated (under / behind),1,2.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Backcourt,stayed attached (lock / trail),1,1.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left corner,unclear,1,3.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left elbow,separated (under / behind),3,1.33,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Paint / post,separated (under / behind),3,0.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Paint / post,stayed attached (lock / trail),1,0.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Paint / post,unclear,4,1.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right baseline,separated (under / behind),3,1.33,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right baseline,unclear,1,2.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right corner,separated (under / behind),1,2.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right corner,unclear,1,0.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right elbow,separated (under / behind),1,2.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right elbow,unclear,4,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,Alma Scots,Off-ball screen,Left elbow,separated (under / behind),7,1.71,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Left elbow,unclear,2,2.5,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Left wing,separated (under / behind),3,1.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Left wing,unclear,3,0.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Paint / post,separated (under / behind),5,1.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Paint / post,unclear,1,1.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Right baseline,separated (under / behind),4,0.5,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Right baseline,unclear,3,1.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Right elbow,stayed attached (lock / trail),1,2.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Right elbow,unclear,1,3.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Right wing,separated (under / behind),4,0.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Right wing,unclear,1,3.0,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Top of key,separated (under / behind),2,1.5,2025-12-20,WWW@AC
+UW-Whitewater,Alma Scots,Off-ball screen,Top of key,unclear,5,1.0,2025-12-20,WWW@AC
+UW-Oshkosh Titans,UW-Whitewater,Ball screen,Left baseline,back (drop),1,2.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Ball screen,Left elbow,back (drop),1,2.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Ball screen,Left elbow,unclear,1,1.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Ball screen,Left wing,Switch,1,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Ball screen,Paint / post,back (drop),1,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Ball screen,Paint / post,unclear,4,0.75,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Ball screen,Right corner,unclear,1,1.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Ball screen,Right elbow,back (drop),1,2.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Ball screen,Top of key,Switch,1,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Ball screen,Top of key,Top Lock,2,1.5,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Ball screen,Top of key,Under,1,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Ball screen,Top of key,back (drop),1,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Ball screen,Top of key,unclear,2,1.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left baseline,Switch,1,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left baseline,separated (under / behind),2,3.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left baseline,stayed attached (lock / trail),1,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left baseline,unclear,1,3.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left corner,Show & Get Back,1,3.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left corner,separated (under / behind),5,0.5,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left corner,unclear,2,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left elbow,separated (under / behind),1,2.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left elbow,unclear,2,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left wing,separated (under / behind),1,3.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Left wing,unclear,2,3.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Mid-court,separated (under / behind),1,2.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Paint / post,Under,1,3.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Paint / post,separated (under / behind),1,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Paint / post,unclear,3,0.5,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right baseline,unclear,2,1.5,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right corner,separated (under / behind),1,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right corner,stayed attached (lock / trail),1,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right corner,unclear,1,2.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right elbow,stayed attached (lock / trail),1,,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right elbow,unclear,1,3.0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right wing,Top Lock,1,,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right wing,separated (under / behind),2,0.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Right wing,unclear,4,0.67,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Top of key,Over,1,0.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Top of key,Under,1,3.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Top of key,separated (under / behind),2,2.0,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Top of key,stayed attached (lock / trail),2,1.5,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Top of key,unclear,6,0.83,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Top of key,separated (under / behind),4,1.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Top of key,stayed attached (lock / trail),2,0.0,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,UW-Whitewater,Off-ball screen,Top of key,unclear,3,0.5,2026-01-03,WOS@WWW
 UW-Whitewater,UW-Oshkosh Titans,Ball screen,Backcourt,unclear,1,,2026-01-03,WOS@WWW
 UW-Whitewater,UW-Oshkosh Titans,Ball screen,Left baseline,unclear,1,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Ball screen,Left elbow,Switch,1,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Ball screen,Left elbow,unclear,1,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Ball screen,Left elbow,unclear,3,1.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Ball screen,Left wing,back (drop),2,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Ball screen,Left wing,switch,1,2.0,2026-01-03,WOS@WWW
 UW-Whitewater,UW-Oshkosh Titans,Ball screen,Left wing,unclear,1,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Ball screen,Paint / post,unclear,1,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Ball screen,Paint / post,back (drop),1,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Ball screen,Right baseline,Switch,1,,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Ball screen,Right elbow,Switch,1,2.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Ball screen,Right elbow,back (drop),1,,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Ball screen,Right elbow,switch,1,,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Ball screen,Right elbow,unclear,1,2.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Ball screen,Right elbow,up (hedge / show),1,2.0,2026-01-03,WOS@WWW
 UW-Whitewater,UW-Oshkosh Titans,Ball screen,Right wing,unclear,2,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Ball screen,Top of key,back (drop),1,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Ball screen,Top of key,unclear,2,1.5,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Backcourt,separated (under / behind),5,1.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Backcourt,stayed attached (lock / trail),1,3.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Backcourt,unclear,1,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left baseline,separated (under / behind),1,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left baseline,unclear,1,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left corner,separated (under / behind),2,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left elbow,Switch,1,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left elbow,separated (under / behind),3,1.33,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left elbow,unclear,4,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left wing,Switch,1,1.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left wing,separated (under / behind),1,2.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left wing,unclear,5,0.4,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Ball screen,Top of key,back (drop),1,,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Ball screen,Top of key,unclear,2,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Backcourt,separated (under / behind),5,0.4,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Backcourt,unclear,4,0.5,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left baseline,Switch,1,1.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left baseline,separated (under / behind),3,0.67,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left baseline,unclear,2,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left elbow,stayed attached (lock / trail),2,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left elbow,unclear,1,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left wing,separated (under / behind),4,1.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Left wing,stayed attached (lock / trail),1,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Mid-court,separated (under / behind),1,0.0,2026-01-03,WOS@WWW
 UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Paint / post,Switch,1,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Paint / post,separated (under / behind),1,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Paint / post,unclear,10,0.88,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right baseline,unclear,3,0.67,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right corner,stayed attached (lock / trail),1,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right corner,unclear,1,3.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Paint / post,separated (under / behind),5,1.4,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Paint / post,stayed attached (lock / trail),2,1.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Paint / post,unclear,13,0.75,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right baseline,separated (under / behind),1,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right baseline,unclear,1,2.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right corner,Switch,1,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right corner,separated (under / behind),1,2.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right corner,unclear,3,0.0,2026-01-03,WOS@WWW
 UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right elbow,separated (under / behind),2,0.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right elbow,stayed attached (lock / trail),2,2.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right elbow,unclear,6,1.0,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right wing,separated (under / behind),3,1.33,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right wing,unclear,7,1.17,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Top of key,separated (under / behind),6,0.5,2026-01-03,WOS@WWW
-UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Top of key,unclear,4,1.5,2026-01-03,WOS@WWW
-Coe Kohawks,UW-Whitewater,Ball screen,Backcourt,up (hedge / show),1,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Ball screen,Left corner,unclear,1,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Ball screen,Left elbow,unclear,1,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Ball screen,Paint / post,back (drop),1,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Ball screen,Paint / post,unclear,1,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Ball screen,Right wing,back (drop),1,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Ball screen,Right wing,blitz / trap,1,,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Ball screen,Right wing,unclear,1,2.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Ball screen,Top of key,back (drop),1,3.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Ball screen,Top of key,unclear,2,1.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Backcourt,separated (under / behind),2,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Backcourt,unclear,1,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Left baseline,separated (under / behind),3,0.67,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Left corner,unclear,1,3.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Left elbow,separated (under / behind),1,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Left elbow,unclear,3,0.67,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Left wing,unclear,2,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Mid-court,unclear,1,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Paint / post,separated (under / behind),5,0.5,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Paint / post,unclear,2,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Right baseline,separated (under / behind),3,0.67,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Right corner,separated (under / behind),2,3.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Right corner,stayed attached (lock / trail),1,,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Right elbow,separated (under / behind),2,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Right elbow,stayed attached (lock / trail),1,2.0,2025-12-30,WWW@COE
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right elbow,stayed attached (lock / trail),2,3.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right elbow,unclear,2,0.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Right wing,unclear,2,2.5,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Top of key,separated (under / behind),2,1.5,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Top of key,stayed attached (lock / trail),2,2.0,2026-01-03,WOS@WWW
+UW-Whitewater,UW-Oshkosh Titans,Off-ball screen,Top of key,unclear,1,2.0,2026-01-03,WOS@WWW
+Coe Kohawks,UW-Whitewater,Ball screen,Left wing,unclear,1,2.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Ball screen,Paint / post,back (drop),2,1.5,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Ball screen,Right baseline,up (hedge / show),1,0.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Ball screen,Right elbow,unclear,2,0.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Ball screen,Right wing,switch,1,0.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Ball screen,Right wing,unclear,2,3.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Ball screen,Top of key,back (drop),2,1.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Ball screen,Top of key,unclear,1,2.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Backcourt,separated (under / behind),1,2.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Backcourt,unclear,3,0.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Left baseline,separated (under / behind),6,1.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Left baseline,unclear,1,2.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Left corner,separated (under / behind),1,3.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Left elbow,separated (under / behind),5,1.2,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Left elbow,unclear,1,0.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Left wing,separated (under / behind),2,0.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Left wing,unclear,1,3.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Paint / post,separated (under / behind),5,0.67,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Paint / post,unclear,4,0.67,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Right baseline,separated (under / behind),3,1.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Right corner,separated (under / behind),1,3.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Right elbow,separated (under / behind),2,1.0,2025-12-30,WWW@COE
 Coe Kohawks,UW-Whitewater,Off-ball screen,Right elbow,unclear,1,0.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Right wing,separated (under / behind),3,0.67,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Right wing,stayed attached (lock / trail),2,0.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Right wing,separated (under / behind),2,0.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Right wing,stayed attached (lock / trail),1,,2025-12-30,WWW@COE
 Coe Kohawks,UW-Whitewater,Off-ball screen,Right wing,unclear,2,3.0,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Top of key,separated (under / behind),8,1.86,2025-12-30,WWW@COE
-Coe Kohawks,UW-Whitewater,Off-ball screen,Top of key,unclear,5,1.5,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Ball screen,Backcourt,back (drop),1,0.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Ball screen,Left elbow,back (drop),1,2.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Ball screen,Left elbow,unclear,2,1.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Ball screen,Right wing,unclear,2,3.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Top of key,separated (under / behind),6,0.67,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Top of key,stayed attached (lock / trail),1,0.0,2025-12-30,WWW@COE
+Coe Kohawks,UW-Whitewater,Off-ball screen,Top of key,unclear,4,0.0,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Ball screen,Backcourt,unclear,1,0.0,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Ball screen,Left corner,back (drop),1,0.0,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Ball screen,Left wing,back (drop),1,2.0,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Ball screen,Left wing,unclear,1,0.0,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Ball screen,Paint / post,unclear,3,0.67,2025-12-30,WWW@COE
 UW-Whitewater,Coe Kohawks,Ball screen,Top of key,unclear,1,0.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Backcourt,separated (under / behind),2,2.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Left baseline,separated (under / behind),3,0.67,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Left corner,separated (under / behind),1,0.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Left elbow,separated (under / behind),1,2.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Left elbow,unclear,3,0.67,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Ball screen,Top of key,up (hedge / show),1,0.0,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Backcourt,stayed attached (lock / trail),1,2.0,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Backcourt,unclear,1,2.0,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Left baseline,separated (under / behind),1,2.0,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Left baseline,stayed attached (lock / trail),2,0.5,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Left elbow,separated (under / behind),4,1.33,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Left elbow,unclear,1,2.0,2025-12-30,WWW@COE
 UW-Whitewater,Coe Kohawks,Off-ball screen,Left wing,separated (under / behind),2,0.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Left wing,unclear,2,0.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Mid-court,separated (under / behind),1,,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Paint / post,separated (under / behind),5,1.4,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Paint / post,stayed attached (lock / trail),4,0.75,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Paint / post,unclear,3,1.33,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Right baseline,separated (under / behind),3,0.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Right corner,separated (under / behind),1,0.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Right corner,unclear,2,1.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Right elbow,unclear,2,3.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Right wing,separated (under / behind),3,0.67,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Right wing,stayed attached (lock / trail),1,,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Paint / post,separated (under / behind),3,1.33,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Paint / post,stayed attached (lock / trail),1,3.0,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Paint / post,unclear,3,2.5,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Right baseline,separated (under / behind),1,3.0,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Right baseline,unclear,2,1.5,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Right elbow,separated (under / behind),4,0.5,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Right elbow,unclear,1,,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Right wing,separated (under / behind),2,0.0,2025-12-30,WWW@COE
 UW-Whitewater,Coe Kohawks,Off-ball screen,Right wing,unclear,3,1.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Top of key,separated (under / behind),2,1.0,2025-12-30,WWW@COE
-UW-Whitewater,Coe Kohawks,Off-ball screen,Top of key,unclear,1,1.0,2025-12-30,WWW@COE
+UW-Whitewater,Coe Kohawks,Off-ball screen,Top of key,separated (under / behind),3,2.0,2025-12-30,WWW@COE

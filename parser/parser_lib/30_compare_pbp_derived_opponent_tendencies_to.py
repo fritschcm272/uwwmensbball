@@ -2,7 +2,7 @@
 # Runs inside the notebook via run_section("30_compare_pbp_derived_opponent_tendencies_to"); its settings are in that notebook cell.
 
 # --- Compare our PBP-derived findings to UWW's own scouting keys for the upcoming opponent ---------------------
-_safe_display = lambda df: print(df) if not df.empty else print("  (no data)")
+_safe_display = lambda df: _show(df)
 
 elmhurst_plan = all_game_plans[
     (all_game_plans["opponent"] == upcoming_opponent_short) & (all_game_plans["topic"].isin(["TEAM STRENGTHS", "KEYS TO VICTORY"]))

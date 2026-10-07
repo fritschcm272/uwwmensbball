@@ -439,4 +439,4 @@ print(f"All season-stat rules (FG%/3P%/FT%/PPG/MPG/GP-GS) are now built from pbp
       f"reference_date and fall back to the 'no data yet' flag rather than a leaked full-season number.\n")
 print("Name reconciliation applied via KNOWN_NAME_ALIASES where the play-by-play spelling and the "
       "official season-stats spelling of a player's name differ.\n")
-print(coaching_flags_df)
+_show(coaching_flags_df)

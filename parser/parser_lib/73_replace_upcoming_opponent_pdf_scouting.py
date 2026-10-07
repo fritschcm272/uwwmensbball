@@ -173,4 +173,4 @@ else:
         print(f"\n  Roster names for {upcoming_opponent_short} ({len(_pu_roster_names)}): {sorted(_pu_roster_names)}")
         print(f"  PBP-derived names found ({len(_pu_pbp_names)}): {sorted(_pu_pbp_names)}")
         print("  Per-player PTS after this override (spot-check against what the app is showing):")
-        print(player_profiles.loc[_pu_upcoming_mask, ["name", "PTS"]].sort_values("PTS", ascending=False).to_string(index=False))
+        _show(player_profiles.loc[_pu_upcoming_mask, ["name", "PTS"]].sort_values("PTS", ascending=False))

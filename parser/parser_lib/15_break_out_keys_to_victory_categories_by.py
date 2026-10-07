@@ -65,6 +65,6 @@ if not count_stat_rows.empty:
     pivot["starter_share"] = (pivot["Starter"] / (pivot["Starter"] + pivot["Bench"]).replace(0, pd.NA)).round(3)
     print("\nStarter vs Bench totals for count-type stats, side-by-side (starter_share near 1 = concentrated among "
           "starters; near 0 = bench-driven):")
-    print(pivot.sort_values(["opponent", "category", "stat"]))
+    _show(pivot.sort_values(["opponent", "category", "stat"]))
 else:
     print("No count-type stats available yet to compare Starter vs Bench totals for the matched categories.")

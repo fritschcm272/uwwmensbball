@@ -296,11 +296,11 @@ if not coach_notes.empty and not pbp_events.empty:
         _unmatched = _unmatched[_unmatched["_merge"] == "left_only"]
         if not _unmatched.empty:
             print(f"\n{len(_unmatched)} note(s) did NOT find a matching pbp_events row. First few unmatched note keys:")
-            print(_unmatched[_join_keys].head(8).to_string(index=False))
+            _show(_unmatched[_join_keys], rows=8)
             _sample_opp = _unmatched["opponent"].iloc[0]
             print(f"\nFor comparison, actual pbp_events keys for opponent \'{_sample_opp}\' (first 8 rows with a player):")
             _sample_pbp = pbp_events[(pbp_events["opponent"] == _sample_opp) & pbp_events["player"].notna()]
-            print(_sample_pbp[_join_keys].head(8).to_string(index=False))
+            _show(_sample_pbp[_join_keys], rows=8)
             print(
                 "\nCompare the two tables above column-by-column -- the mismatch (differently-spelled player "
                 "name, a period token that doesn\'t match, an opponent string that isn\'t identical) should be "

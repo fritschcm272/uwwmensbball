@@ -156,4 +156,4 @@ for name, df in csv_tables.items():
     df.to_csv(path, index=False)
     csv_export_status.append((name, len(df), os.path.getsize(path)))
 
-print(pd.DataFrame(csv_export_status, columns=["table", "rows", "csv_bytes"]))
+_show(pd.DataFrame(csv_export_status, columns=["table", "rows", "csv_bytes"]))

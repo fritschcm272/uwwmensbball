@@ -27,6 +27,36 @@ from io import StringIO
 import pandas as pd
 from bs4 import BeautifulSoup
 
+# --- _show(): readable tables ---------------------------------------------------------------------------------------
+# Sections that used to print() a whole table now call _show(table, rows=N): in Jupyter it draws a normal table
+# (display), capped at N rows with a "... M more rows" line; outside Jupyter it falls back to a trimmed print.
+# Set SHOW_ROWS in a settings cell to see more rows; the full tables stay in memory and in the saved CSVs.
+SHOW_ROWS = globals().get("SHOW_ROWS", 15)
+
+
+def _show(obj, title=None, rows=None):
+    rows = int(rows or globals().get("SHOW_ROWS", 15))
+    if title:
+        print(title)
+    if isinstance(obj, pd.Series):
+        obj = obj.to_frame() if obj.name is not None else obj.rename("value").to_frame()
+    if not isinstance(obj, pd.DataFrame):
+        print(obj)
+        return
+    if obj.empty:
+        print("  (no data)")
+        return
+    shown = obj.head(rows)
+    try:
+        from IPython.display import display as _ipy_display
+        with pd.option_context("display.max_columns", 40, "display.width", 220, "display.max_colwidth", 70):
+            _ipy_display(shown)
+    except Exception:
+        print(shown.to_string(max_colwidth=50))
+    if len(obj) > rows:
+        print(f"  ... {len(obj) - rows:,} more row(s) of {len(obj):,} (SHOW_ROWS = {rows})")
+
+
 reference_date_str = "2026-1-7"   # games on/after this date are treated as not yet played; the first
                                      # scouted UWW game on/after it is flagged as the upcoming game
 reference_date = datetime.strptime(reference_date_str, "%Y-%m-%d")

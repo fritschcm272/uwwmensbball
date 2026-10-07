@@ -75,23 +75,23 @@ print(f"Spot-Up shot-quality breakdown, season-wide ({len(spotup)} video-matched
 mechanic_summary = spotup.groupby("shot_mechanic").agg(attempts=("made", "count"), makes=("made", "sum")).reset_index()
 mechanic_summary["fg_pct"] = (100 * mechanic_summary["makes"] / mechanic_summary["attempts"]).round(1)
 print("By shot mechanic:")
-print(mechanic_summary.sort_values("attempts", ascending=False))
+_show(mechanic_summary.sort_values("attempts", ascending=False))
 
 contest_summary = spotup.groupby("contest").agg(attempts=("made", "count"), makes=("made", "sum")).reset_index()
 contest_summary["fg_pct"] = (100 * contest_summary["makes"] / contest_summary["attempts"]).round(1)
 print("\nBy contest level:")
-print(contest_summary.sort_values("attempts", ascending=False))
+_show(contest_summary.sort_values("attempts", ascending=False))
 
 distance_summary = spotup.groupby("distance").agg(attempts=("made", "count"), makes=("made", "sum")).reset_index()
 distance_summary["fg_pct"] = (100 * distance_summary["makes"] / distance_summary["attempts"]).round(1)
 print("\nBy shot distance:")
-print(distance_summary.sort_values("attempts", ascending=False))
+_show(distance_summary.sort_values("attempts", ascending=False))
 
 catch_shoot = spotup[spotup["shot_mechanic"] == "Catch-and-shoot"]
 cs_combo = catch_shoot.groupby(["contest", "distance"]).agg(attempts=("made", "count"), makes=("made", "sum")).reset_index()
 cs_combo["fg_pct"] = (100 * cs_combo["makes"] / cs_combo["attempts"]).round(1)
 print(f"\nCatch-and-shoot Spot-Up jumpers only ({len(catch_shoot)} attempts) -- contest x distance:")
-print(cs_combo.sort_values("attempts", ascending=False))
+_show(cs_combo.sort_values("attempts", ascending=False))
 
 player_spotup = spotup.groupby("player").agg(
     attempts=("made", "count"), makes=("made", "sum"),

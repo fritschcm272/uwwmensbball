@@ -47,4 +47,4 @@ else:
     )
     if not pbp_events_list:
         print(f"  No PBP data found/scraped for any of {upcoming_opponent_short}'s {len(prev_games)} game(s) before UWW -- pbp_events_upcoming is empty but well-formed.")
-    print(pbp_events_upcoming.head(20))
+    _show(pbp_events_upcoming, rows=20)

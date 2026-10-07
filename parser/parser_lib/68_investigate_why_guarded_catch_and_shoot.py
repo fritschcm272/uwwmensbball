@@ -41,7 +41,7 @@ by_game = (
 )
 by_game["fg_pct"] = (100 * by_game["makes"] / by_game["attempts"]).round(1)
 print("Guarded vs. Open catch-and-shoot FG%, broken out by game:\n")
-print(by_game.sort_values(["opponent", "contest"]))
+_show(by_game.sort_values(["opponent", "contest"]))
 
 # CONFIRMED BUG (fixed here): normalize_player_name below was actually relying on the SAME-NAMED
 # function accidentally left in the global namespace by the `for` loop in the earlier video-tagging

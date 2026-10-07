@@ -89,7 +89,7 @@ for _gk, _g in pbp_events.groupby(GAME_KEYS, dropna=False):
 print(f"Lineup column check: {len(_swapped_games)} game(s) had our lineup in the opponent's column and were "
       f"corrected{': ' + str(_swapped_games) if _swapped_games else '.'}")
 
-print(pbp_events[["opponent", "period", "time_remaining", "team", "event_type", "raw_text", "uww_lineup", "opp_lineup"]].head(30))
+_show(pbp_events[["opponent", "period", "time_remaining", "team", "event_type", "raw_text", "uww_lineup", "opp_lineup"]], rows=30)
 
 print("\nLineup size check (every non-null value should be exactly 5 players):")
 print(" uww_lineup sizes:", pbp_events["uww_lineup"].dropna().apply(lambda s: len(s.split(", "))).value_counts().to_dict())

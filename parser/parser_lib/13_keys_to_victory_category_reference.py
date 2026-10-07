@@ -88,4 +88,4 @@ KTV_CATEGORY_REFERENCE = [
 ]
 
 pd.set_option("display.max_colwidth", 300)
-print(pd.DataFrame(KTV_CATEGORY_REFERENCE))
+_show(pd.DataFrame(KTV_CATEGORY_REFERENCE))

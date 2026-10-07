@@ -101,7 +101,7 @@ for (opponent, game_date) in pbp_events[GAME_KEYS].dropna(subset=["opponent"]).d
     status = "OK" if (uww_val, opp_val) == (sched_row["team_score"], sched_row["opponent_score"]) else "MISMATCH -- check lineup attribution for this game"
     print(f"  {opponent} {game_date}: lineup box score {uww_val}-{opp_val} vs. schedule {sched_row['team_score']}-{sched_row['opponent_score']} [{status}]")
 
-print(lineup_box_score.sort_values(["opponent", "team", "PTS"], ascending=[True, True, False])[[
+_show(lineup_box_score.sort_values(["opponent", "team", "PTS"], ascending=[True, True, False])[[
     "opponent", "game_date", "team", "lineup", "MIN", "+/-", "PTS", "FGM", "FGA", "FG3M", "FG3A", "FTM", "FTA",
     "OREB", "DREB", "REB", "AST", "STL", "BLK", "TO", "PF", "FG%", "3P%", "FT%",
 ]])
