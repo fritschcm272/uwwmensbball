@@ -95,3 +95,14 @@ Tag model: situation,v2026.10.07,2026-10-07,trained,2026-10-07T10:02:05,"298 tag
 Tag model (overall),v2026.10.07,2026-10-07,trained,2026-10-07T10:02:05,newest of 9 field model(s); last retrained field: situation,2026-10-07T10:06:17
 Player tracking,v2026.10.06,2026-10-06,pretrained + code,2534dcfa79b5,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-07T10:06:17
 Player comparison,v2026.10.07,2026-10-07,rules + code,3c16f7881c90,tag-based similarity; LLM blend off,2026-10-07T10:06:17
+Tag model: ball_screen_coverage,v2026.10.07.2,2026-10-07,trained,2026-10-07T16:09:17,"86 tagged clips, 5 answers learned, one answer only",2026-10-07T16:12:42
+Tag model: defense,v2026.10.07.2,2026-10-07,trained,2026-10-07T16:09:17,"254 tagged clips, 1 answers learned, one answer only",2026-10-07T16:12:42
+Tag model: formation,v2026.10.07.2,2026-10-07,trained,2026-10-07T16:09:17,"129 tagged clips, 5 answers learned, one answer only",2026-10-07T16:12:42
+Tag model: offball_coverage,v2026.10.07.2,2026-10-07,trained,2026-10-07T16:09:17,"58 tagged clips, 2 answers learned, one answer only",2026-10-07T16:12:42
+Tag model: play_call,v2026.10.07.2,2026-10-07,trained,2026-10-07T16:09:17,"160 tagged clips, 7 answers learned, one answer only",2026-10-07T16:12:42
+Tag model: press,v2026.10.07.2,2026-10-07,trained,2026-10-07T16:09:17,"252 tagged clips, 3 answers learned",2026-10-07T16:12:42
+Tag model: primary_action,v2026.10.07.2,2026-10-07,trained,2026-10-07T16:09:17,"124 tagged clips, 6 answers learned",2026-10-07T16:12:42
+Tag model: screen_defender,v2026.10.07.2,2026-10-07,trained,2026-10-07T16:09:17,"56 tagged clips, 6 answers learned",2026-10-07T16:12:42
+Tag model: situation,v2026.10.07.2,2026-10-07,trained,2026-10-07T16:09:17,"298 tagged clips, 5 answers learned",2026-10-07T16:12:42
+Tag model (overall),v2026.10.07.2,2026-10-07,trained,2026-10-07T16:09:17,newest of 9 field model(s); last retrained field: situation,2026-10-07T16:12:42
+Jersey-number recognizer,v2026.10.07,2026-10-07,trained,2026-10-07T15:25:29,"7680 training crops; 76% of held-back crops right; sources {'reads': 4989, 'extra': 3615, 'coach': 431}",2026-10-07T16:12:42
