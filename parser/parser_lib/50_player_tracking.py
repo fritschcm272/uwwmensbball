@@ -1448,7 +1448,17 @@ def player_tracking(pc):
         name = pc.at[i, "player"].strip() if isinstance(pc.at[i, "player"], str) else ""
         five = _trk_five(pc.at[i, "offense_lineup"])
         clip["anchor"] = None
-        if late and name and (not five or name in five):
+        # CONFIRMED CHANGE (audit of 16 coach-checked anchors, tracking_anchor_audit.csv): the late ball holder was the Synergy-named
+        # player only 3 times in 14 (21% -- the same as picking one of five at random). Every shot ending (Make / Miss: 0 of 8) and
+        # "Non Possession" clip was wrong: after a shot the ball is in the air or in someone else's hands, so the player holding it
+        # late is NOT the shooter. Where the named player still has the ball when the clip ends (a turnover, a foul: 3 of 6) the
+        # ball is a usable clue. TRACK_ANCHOR_BALL_EVENTS is a regex over the Synergy string + result; "" = use the ball on every
+        # clip (the old behavior). The shot clips fall through to the rim / shooting-pose anchors below.
+        _bev = str(globals().get("TRACK_ANCHOR_BALL_EVENTS", r"Turnover|Foul"))
+        _txt = f"{pc.at[i, 'synergy_string']} {pc.at[i, 'result']}"
+        _ball_ok = (not _bev) or (bool(re.search(_bev, _txt, re.I)) and not re.search(r"(Make|Miss)\w*\s+[23]\s*Pts", _txt, re.I)
+                                  and not re.search(r"Non[ -]Possession", _txt, re.I))
+        if late and name and (not five or name in five) and _ball_ok:
             k = max(set(late), key=late.count)
             if late.count(k) >= 2:
                 clip["anchor"] = (k, name)
@@ -1799,6 +1809,7 @@ def player_tracking(pc):
               f"{TRACK_READER_MIN_PRECISION:.0%}. Players are named only where Synergy names them.", flush=True)
     elif TRACK_READ_NUMBERS and _acc is None:
         print(f"  [tracking]   (the Jersey-number reader test didn't run, so {_engine} is used untested)", flush=True)
+    _reads_dbg = {}                                   # what the reader returned per track (for the audit below)
     if _use_numbers:
         print(f"  [tracking] step 5b: reading jersey numbers with {_engine}"
               + (f" (right {_prec:.0%} of the time it answers on the answer key; using reads at confidence >= "
@@ -1815,6 +1826,7 @@ def player_tracking(pc):
                 reads = _trk_read_numbers(clips, todo, base, _engine)
                 # only reads at or above the confidence where the reader tested >= 85% right
                 reads = {o: [(tx, cf) for tx, cf in rd if cf >= _min_conf] for o, rd in reads.items()}
+            _reads_dbg = reads
             num_of = {}                                   # player name (lower case) -> jersey number
             book = _pl_jersey_book() if "_pl_jersey_book" in globals() else {}
             for team_book in book.values():
@@ -1835,7 +1847,13 @@ def player_tracking(pc):
                 # #2 LaChapell). A single-digit read is AMBIGUOUS when another number on the floor for that team contains
                 # it; it never names a track by itself (the lineup matching still weighs it as a shared hint).
                 _two = [num for num in cand if len(num) == 2]
-                sure = [(txt, cf) for txt, cf in sure if not (len(txt) == 1 and any(txt in num for num in _two))]
+                # CONFIRMED CHANGE (requested: three clearly readable numbers -- #0, #2, #4 -- were not read as numbers; "2" and "4"
+                # were dropped as "ambiguous" because #21 / #14 etc. were also on the floor). The ambiguity is real for an OCR
+                # reader that can miss a digit, but the TRAINED recognizer classifies the WHOLE number (0-99) -- when it answers "2"
+                # it means #2, not "2 of 21" -- so its single-digit answers are kept (TRACK_TRAINED_WHOLE_NUMBER = False -> old rule).
+                _whole = (_engine == "trained") and bool(globals().get("TRACK_TRAINED_WHOLE_NUMBER", True))
+                if not _whole:
+                    sure = [(txt, cf) for txt, cf in sure if not (len(txt) == 1 and any(txt in num for num in _two))]
                 if not sure:
                     continue
                 allv = {}
@@ -1873,6 +1891,43 @@ def player_tracking(pc):
                   flush=True)
         except Exception as _e:
             print(f"  [tracking]   jersey numbers not read this run ({type(_e).__name__}: {_e})", flush=True)
+
+    # --- audit (requested: "these three are extremely clear and only one got classified correctly"): for every track a coach
+    # checked, WHY it did or did not get its name from the jersey number. Saved to tracking_number_audit.csv. ---
+    try:
+        _aud, _why_n = [], {}
+        for (i, k), n_true in coach.items():
+            if not n_true:
+                continue
+            true_num = None
+            try:
+                true_num = str(_numfor(i, n_true)) if _numfor(i, n_true) else None
+            except Exception:
+                pass
+            rd = [(tx, round(float(cf), 2)) for tx, cf in (_reads_dbg.get((i, k)) or [])]
+            got = number_names.get((i, k))
+            if not _use_numbers:
+                why = "jersey numbers were not used this run (reader not chosen / below the precision bar)"
+            elif got and got[0] == n_true:
+                why = "named correctly by jersey number"
+            elif got:
+                why = f"named WRONG by jersey number ({got[0]})"
+            elif not rd:
+                why = "reader gave no answer above its confidence bar on this track's chest crops (or the track was too short)"
+            elif true_num and any(tx == true_num for tx, _c in rd):
+                why = "the right number WAS read but not enough votes / not the majority / a one-digit read held back"
+            else:
+                why = "reader read a different number: " + ", ".join(sorted({tx for tx, _c in rd}))
+            _why_n[why] = _why_n.get(why, 0) + 1
+            _aud.append({"clip": _trk_clip_key(pc.loc[i]), "track": k, "true_name": n_true, "true_number": true_num,
+                         "reads": "; ".join(f"{tx} ({cf})" for tx, cf in rd), "named_by_number": got[0] if got else None, "why": why})
+        if _aud:
+            pd.DataFrame(_aud).to_csv(os.path.join(TRACK_DIR, "tracking_number_audit.csv"), index=False)
+            print(f"  [tracking]   jersey-number audit on {len(_aud)} coach-checked track(s) (tracking_number_audit.csv):", flush=True)
+            for w_, c_ in sorted(_why_n.items(), key=lambda x: -x[1]):
+                print(f"      {c_:>4}  {w_}", flush=True)
+    except Exception as _e:
+        print(f"  [tracking]   jersey-number audit skipped ({type(_e).__name__}: {_e})", flush=True)
 
     # coach-checked names are certain: they replace any number name on that track, and no other track of that clip
     # may carry the same name at the same moment
@@ -2322,11 +2377,24 @@ def player_tracking(pc):
         # probability equals how often best guesses were actually right on the coach-checked boxes (when there are 30+ checks).
         _mean_raw = float(np.mean([p_ for _n, p_ in _raw_p.values()])) if _raw_p else 0.0
         _f = (_bg_acc / _mean_raw) if (_bg_acc is not None and _mean_raw > 0) else 1.0
+        # CONFIRMED CHANGE (requested: item 3, best guesses were right ~23% of the time -- chance among five is 20%): a best guess whose
+        # stated probability is below TRACK_BEST_GUESS_MIN_P is NOT used -- the track stays an unnamed PLAYER (not set aside as a
+        # non-player, so screens and positions still see him) and a wrong name can't spread through links and the lineup solver.
+        # The probability table in the app (Player Number Tracking tab) shows where a good cutoff is. 0 = name every track.
+        _min_p = float(globals().get("TRACK_BEST_GUESS_MIN_P", 0.30))
+        low_guess = {}
         for (i, k), (n, p_) in _raw_p.items():
-            names_all[(i, k)] = (n, round(float(min(0.95, max(0.02, p_ * _f))), 2))
+            pp_ = round(float(min(0.95, max(0.02, p_ * _f))), 2)
+            if pp_ < _min_p:
+                low_guess[(i, k)] = (n, pp_)
+                guessed.discard((i, k))
+                continue
+            names_all[(i, k)] = (n, pp_)
         print(f"  [tracking] step 6b: best guesses from the lineup for {len(guessed):,} more track(s) "
-              f"(marked \"best guess\"; each carries its probability of being that player -- average "
-              f"{(np.mean([names_all[o][1] for o in _raw_p]) if _raw_p else 0):.0%}"
+              + (f"({len(low_guess):,} more left UNNAMED: probability under {_min_p:.0%}, TRACK_BEST_GUESS_MIN_P) "
+                 if low_guess else "")
+              + f"(marked \"best guess\"; each carries its probability of being that player -- average "
+              f"{(np.mean([names_all[o][1] for o in guessed]) if guessed else 0):.0%}"
               + (f", calibrated to the {_bg_acc:.0%} the coach checks measured" if _bg_acc is not None else
                  ", not calibrated yet -- needs 30+ coach-checked best guesses") + ")", flush=True)
         # every track still without a name, in a clip whose five are known, can't be a 6th player: not a player
@@ -2337,7 +2405,7 @@ def player_tracking(pc):
                 if not _trk_five(pc.at[i, f"{sd}_lineup"]):
                     continue
                 for k in range(len(clip["tracks"])):
-                    if clip["side"].get(k) == sd and (i, k) not in names_all:
+                    if clip["side"].get(k) == sd and (i, k) not in names_all and (i, k) not in low_guess:
                         clip["side"][k] = None
                         n_set_aside += 1
         _trk_note_drop("[tracks] beyond the five on the floor (set aside as not players)", n_set_aside)

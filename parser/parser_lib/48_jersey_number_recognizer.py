@@ -215,8 +215,11 @@ def jersey_import_extra():
                         os.makedirs(os.path.dirname(dst), exist_ok=True)
                         shutil.copy2(src, dst)
                         n += 1
-        # <number>/ image folders
-        for sub in glob.glob(os.path.join(d, "*")):
+        # <number>/ image folders (skipped when the folder IS the training set's own extra/ folder, e.g. JERSEY_TRAIN_EXTRA_DIRS
+        # pointing at inputs/jersey_training/extra: its number folders are already the result of the import -- copying them
+        # into themselves would add every image again, with a longer name, on every run)
+        _in_place = os.path.abspath(d).startswith(os.path.abspath(os.path.join(JERSEY_TRAIN_DIR, "extra")))
+        for sub in ([] if _in_place else glob.glob(os.path.join(d, "*"))):
             num = os.path.basename(sub)
             if not (os.path.isdir(sub) and re.fullmatch(r"\d{1,2}", num)):
                 continue
@@ -245,6 +248,10 @@ def _jr_samples(sources):
     for s in sources:
         for f in glob.glob(os.path.join(JERSEY_TRAIN_DIR, s, "*", "*")):
             if not f.lower().endswith((".jpg", ".jpeg", ".png")):
+                continue
+            # only <number>/ folders are labels: a Roboflow download unzipped in place has train/, valid/ and test/ folders beside
+            # the number folders, and their images (labels are in annotations.jsonl) must never be read as a class called "train"
+            if not re.fullmatch(r"\d{1,2}", os.path.basename(os.path.dirname(f))):
                 continue
             # CONFIRMED CHANGE (requested: trained recognizer only -- EasyOCR / PaddleOCR removed, so the coach checks
             # are its main training data). JERSEY_TRAIN_USE_COACH = "half": half the checked players train it, the other

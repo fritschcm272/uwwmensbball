@@ -1634,7 +1634,82 @@ def _review_saves_dir():
     validations are done in the Streamlit app now, not in review.html pages)."""
     d = os.path.join(globals().get("APP_DATA_DIR") or globals().get("OUTPUT_DIR") or ".", "play_review_saves")
     os.makedirs(d, exist_ok=True)
+    _sync_saves_branch(d)
     return d
+
+
+_saves_synced = {"done": False}
+
+
+def _find_git():
+    """Path to git.exe / git. CONFIRMED BUG (fixed): "[saves] saves branch not fetched (FileNotFoundError: [WinError 2])" -- the
+    notebook's Python couldn't find git because it isn't on the PATH (GitHub Desktop keeps its own copy). Looks on the PATH first,
+    then GitHub Desktop's bundled git and the usual Git for Windows folders. GIT_EXE (a setting) overrides everything."""
+    import shutil
+    import glob as _g
+    forced = str(globals().get("GIT_EXE", "") or "").strip()
+    if forced and os.path.exists(forced):
+        return forced
+    found = shutil.which("git")
+    if found:
+        return found
+    pats = []
+    for base in (os.environ.get("LOCALAPPDATA"), os.path.join(os.path.expanduser("~"), "AppData", "Local")):
+        if base:
+            pats += [os.path.join(base, "GitHubDesktop", "app-*", "resources", "app", "git", "cmd", "git.exe"),
+                     os.path.join(base, "Programs", "Git", "cmd", "git.exe")]
+    for base in (os.environ.get("ProgramFiles"), os.environ.get("ProgramFiles(x86)"), r"C:\Program Files", r"C:\Program Files (x86)"):
+        if base:
+            pats.append(os.path.join(base, "Git", "cmd", "git.exe"))
+    for pat in pats:
+        hits = sorted(_g.glob(pat))
+        if hits:
+            return hits[-1]
+    return None
+
+
+def _sync_saves_branch(d):
+    """CONFIRMED CHANGE (the app's Save used to commit to the branch Streamlit Cloud deploys from, restarting the app on every
+    save): the app now commits saves to their own branch (REVIEW_SAVES_BRANCH, default "saves"). Once per run, fetch that branch
+    and copy any save file this folder doesn't have yet into it -- no checkout, no merge, your working branch is untouched
+    (the copied files are new files you can commit with your next push, or leave alone). REVIEW_SAVES_BRANCH = "" turns it off."""
+    if _saves_synced["done"]:
+        return
+    _saves_synced["done"] = True
+    br = str(globals().get("REVIEW_SAVES_BRANCH", "saves") or "").strip()
+    if not br:
+        return
+    try:
+        import subprocess as _sp
+        git_ = _find_git()
+        if not git_:
+            print("  [saves] git not found (not on the PATH, no GitHub Desktop / Git for Windows install) -- saves on the app's saves "
+                  "branch were not fetched. Set GIT_EXE = r\"C:\\path\\to\\git.exe\" to point at it.", flush=True)
+            return
+        run_ = lambda *a: _sp.run([git_, "-C", d, *a], capture_output=True, text=True, timeout=90)
+        top = run_("rev-parse", "--show-toplevel")
+        if top.returncode != 0:
+            print("  [saves] not inside a git repository -- saves on the app's saves branch were not fetched", flush=True)
+            return
+        top_dir = top.stdout.strip()
+        if run_("fetch", "origin", br).returncode != 0:
+            print(f"  [saves] couldn't fetch branch '{br}' from GitHub (none yet, or offline) -- using the saves already here", flush=True)
+            return
+        rel = os.path.relpath(d, top_dir).replace(os.sep, "/")
+        ls = _sp.run([git_, "-C", top_dir, "ls-tree", "-r", "--name-only", f"origin/{br}", "--", rel], capture_output=True, text=True, timeout=90)
+        n_new = 0
+        for path in [x for x in ls.stdout.splitlines() if x.endswith(".json")]:
+            dst = os.path.join(d, os.path.basename(path))
+            if os.path.exists(dst):
+                continue
+            blob = _sp.run([git_, "-C", d, "show", f"origin/{br}:{path}"], capture_output=True, timeout=60)
+            if blob.returncode == 0:
+                with open(dst, "wb") as fh:
+                    fh.write(blob.stdout)
+                n_new += 1
+        print(f"  [saves] fetched branch '{br}': {n_new} new saved review file(s) copied into {rel}", flush=True)
+    except Exception as e:
+        print(f"  [saves] saves branch not fetched ({type(e).__name__}: {e})", flush=True)
 
 
 def _run_complete(slug, run):

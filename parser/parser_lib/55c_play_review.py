@@ -201,18 +201,83 @@ def _pr_box_crop(src, box, target_h=None):
     w, h = x2 - x1, y2 - y1
     if w <= 2 or h <= 2:
         return None
-    cx1, cx2 = x1 - 0.30 * w, x2 + 0.30 * w
-    cy1, cy2 = y1 - 0.06 * h, y1 + 0.68 * h
+    cx1, cx2 = x1 - 0.12 * w, x2 + 0.12 * w          # tighter sides: every pixel of the crop is the player (was 0.30)
+    cy1, cy2 = y1 - 0.04 * h, y1 + 0.62 * h
     W, H = src.size
     cx1, cy1, cx2, cy2 = max(0, int(cx1)), max(0, int(cy1)), min(W, int(cx2) + 1), min(H, int(cy2) + 1)
     if cx2 - cx1 < 4 or cy2 - cy1 < 4:
         return None
     im = src.crop((cx1, cy1, cx2, cy2))
     sc = target_h / im.size[1]
-    im = im.resize((max(1, int(im.size[0] * sc)), target_h), Image.LANCZOS)
+    im = im.resize((max(1, int(im.size[0] * sc)), target_h), Image.BICUBIC if sc > 4 else Image.LANCZOS)
+    try:                                                # a light sharpen so the edges of numbers read better when enlarged
+        from PIL import ImageFilter
+        im = im.filter(ImageFilter.UnsharpMask(radius=2, percent=int(globals().get("PLAY_REVIEW_CROP_SHARPEN", 120)), threshold=2))
+    except Exception:
+        pass
     buf = io.BytesIO()
-    im.save(buf, "JPEG", quality=90)
+    im.save(buf, "JPEG", quality=95)
     return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
+
+
+def _pr_best_instance(rows, track, t0, files, fps, cache):
+    """CONFIRMED CHANGE (requested: the close-ups are blurry when blown up). The pictures come from a 1024-px-wide video, so a
+    player is only ~40 px wide in any one frame -- the pixels can't be recovered. What CAN be done: a player is the same track
+    in every frame of the clip, so cut his close-up from the frame where he is SHARPEST, biggest (closest to the camera) and
+    least hidden behind another player, not from the one frame chosen for the big picture. -> (box, t) or None."""
+    try:
+        import cv2
+        import numpy as np
+        from PIL import Image
+        rr = next((r for r in rows if int(r["track"]) == int(track)), None)
+        if rr is None:
+            return None
+        path = [q for q in _trk_json.loads(rr["path"]) if len(q) >= 6]
+        if len(path) < 2:
+            return None
+        others = {}
+        for r2 in rows:
+            if int(r2["track"]) == int(track) or r2.get("side") not in ("offense", "defense"):
+                continue
+            for q in _trk_json.loads(r2["path"]):
+                if len(q) >= 6:
+                    others.setdefault(int(q[0]), []).append(q)
+        hmax = max(float(q[3]) for q in path)
+        cand = [q for q in path if float(q[3]) >= 0.6 * hmax and int(q[0]) < len(files)]
+        if len(cand) > 24:
+            cand = cand[::max(1, len(cand) // 24)]
+        best = None
+        for q in cand:
+            t = int(q[0])
+            fp = os.path.join(VISION_FRAMES_DIR, files[t])
+            if fp not in cache:
+                cache[fp] = np.asarray(Image.open(fp).convert("RGB")) if os.path.exists(fp) else None
+            fr = cache[fp]
+            if fr is None:
+                continue
+            Hpx, Wpx = fr.shape[:2]
+            hh = float(q[3]) * Hpx
+            x, y = float(q[4]), float(q[5])
+            bx = [x - 0.21 * hh, y - hh, x + 0.21 * hh, y]
+            if bx[0] < 2 or bx[1] < 2 or bx[2] > Wpx - 2 or bx[3] > Hpx - 2:
+                continue                                    # cut off by the edge of the picture
+            ov = 0.0                                        # share of his box covered by another player's box
+            for o in others.get(t, []):
+                oh = float(o[3]) * Hpx
+                ox, oy = float(o[4]), float(o[5])
+                ix = max(0.0, min(bx[2], ox + 0.21 * oh) - max(bx[0], ox - 0.21 * oh))
+                iy = max(0.0, min(bx[3], oy) - max(bx[1], oy - oh))
+                ov = max(ov, ix * iy / max(1.0, (bx[2] - bx[0]) * (bx[3] - bx[1])))
+            gy = cv2.cvtColor(fr[int(bx[1]):int(bx[1] + 0.62 * hh) + 1, int(bx[0]):int(bx[2]) + 1], cv2.COLOR_RGB2GRAY)
+            if gy.shape[0] < 6 or gy.shape[1] < 4:
+                continue
+            gy = cv2.resize(gy, (48, 96), interpolation=cv2.INTER_AREA)       # same size for every candidate: fair sharpness
+            score = float(cv2.Laplacian(gy, cv2.CV_64F).var()) * (hh / max(hmax, 1.0)) ** 0.5 * max(0.05, 1.0 - 2.5 * ov)
+            if best is None or score > best[0]:
+                best = (score, bx, t)
+        return (best[1], best[2]) if best else None
+    except Exception:
+        return None
 
 
 def _pr_boxes(rows, t, Hpx, numtxt):
@@ -545,8 +610,16 @@ def play_review():
                 if globals().get("PLAY_REVIEW_CROPS", True):
                     try:
                         _src = Image.open(img_path).convert("RGB")
+                        _fcache = {}
                         for b in boxes:
                             b["crop"] = _pr_box_crop(_src, b["box"])
+                            if globals().get("PLAY_REVIEW_CROP_BEST_FRAME", True):
+                                _bi = _pr_best_instance(rows, b["track"], t, files, fps, _fcache)
+                                if _bi is not None and _bi[1] != t:
+                                    _fp2 = os.path.join(VISION_FRAMES_DIR, files[_bi[1]])
+                                    _c2 = _pr_box_crop(Image.fromarray(_fcache[_fp2]), _bi[0])
+                                    if _c2:
+                                        b["crop"], b["crop_s"] = _c2, round(_bi[1] / fps, 1)
                     except Exception as _ce:
                         print(f"  [play review] close-ups not made ({type(_ce).__name__}: {_ce})", flush=True)
                 pics.append({"which": which, "image": fname, "frame_file": files[t], "t": int(t), "boxes": boxes})

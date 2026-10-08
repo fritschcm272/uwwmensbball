@@ -5709,11 +5709,12 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
             # CONFIRMED CHANGE (requested): the zoomed close-ups sit ABOVE the large picture, not beside it or under it.
             # CONFIRMED CHANGE (requested: much clearer images for the player-number checks): a zoomed head-and-chest
             # close-up of every box (cut from the original frame by the parser), so the number can be read.
-            _crops = [(b.get("id"), b.get("label"), b.get("crop")) for b in boxes if b.get("crop")]
+            _crops = [(b.get("id"), b.get("label"), b.get("crop"), b.get("crop_s")) for b in boxes if b.get("crop")]
             if _crops:
                 try:
                     st.image([base64.b64decode(c[2].split(",", 1)[1]) for c in _crops],
-                             caption=[f"{c[0]} \u00b7 {c[1] or 'not named'}" for c in _crops], width=130)
+                             caption=[f"{c[0]} \u00b7 {c[1] or 'not named'}" + (f" ({c[3]} s)" if c[3] is not None else "") for c in _crops],
+                             width=130)
                 except Exception:
                     pass
             if pic.get("image") and os.path.exists(path):
@@ -5815,8 +5816,7 @@ def _pr_commit(d, store, coach, kp, part, key_suffix):
     ok, msg = _pr_github_save(fname, out)
     n = len(out.get("answers", [])) if part == "titles" else len(out.get("checks", []))
     if ok:
-        st.success(f"Saved {n} {what} ({msg}). The app restarts briefly when GitHub gets the file; the parser uses it "
-                   "after its next git pull. The review is finished once its Title checks AND player checks are saved.")
+        st.success(f"Saved {n} {what} ({msg}). The app does not restart; the parser picks it up when it runs (it fetches the saves branch). The review is finished once its Title checks AND player checks are saved.")
         _st = st.session_state.get("pr_answers", {}).get(str(d.get("run")), {})
         for k in [k for k in _st if k.startswith(kp) and (("_b_" in k) == (part == "players"))]:
             _st.pop(k, None)
@@ -5851,8 +5851,7 @@ def _pr_save_bar(d, store, kp, key_suffix, part="titles"):
         ok, msg = _pr_github_save(fname, out)
         n = len(out.get("answers", [])) if part == "titles" else len(out.get("checks", []))
         if ok:
-            st.success(f"Saved {n} {what} ({msg}). The app restarts briefly when GitHub gets the file; the parser uses it "
-                       "after its next git pull. The review is finished once its Title checks AND player checks are saved.")
+            st.success(f"Saved {n} {what} ({msg}). The app does not restart; the parser picks it up when it runs (it fetches the saves branch). The review is finished once its Title checks AND player checks are saved.")
             _st = st.session_state.get("pr_answers", {}).get(str(d.get("run")), {})
             for k in [k for k in _st if k.startswith(kp) and (("_b_" in k) == (part == "players"))]:
                 _st.pop(k, None)
@@ -5862,17 +5861,81 @@ def _pr_save_bar(d, store, kp, key_suffix, part="titles"):
                                key=f"pr_dl_{part}{key_suffix}")
 
 
+def _gh_cfg():
+    """(token, repo, main branch, saves branch, saves folder) from the app's secrets ([github])."""
+    try:
+        cfg = dict(st.secrets.get("github", {}))
+    except Exception:
+        cfg = {}
+    token, repo = str(cfg.get("token") or "").strip(), str(cfg.get("repo") or "").strip().strip("/")
+    if repo.lower().startswith(("https://github.com/", "http://github.com/", "github.com/")):
+        repo = repo.split("github.com/", 1)[1].removesuffix(".git").strip("/")
+    branch = str(cfg.get("branch") or "main").strip()
+    # CONFIRMED BUG (fixed; the app kept reloading to the home page on Save and the answers still being typed were lost): every
+    # save was committed to the SAME branch Streamlit Cloud deploys from, so each save made Cloud pull and RESTART the app
+    # ("Pulling code changes from Github... Updated app!" in the logs, once per save). Saves now go to their own branch
+    # (secret `saves_branch`, default "saves"), which Cloud does not watch, so nothing restarts. Set saves_branch = "" (or
+    # the same name as `branch`) to go back to the old behavior.
+    sb = cfg.get("saves_branch", "saves")
+    sb = str(sb if sb is not None else "saves").strip()
+    if sb == branch:
+        sb = ""
+    return token, repo, branch, sb, str(cfg.get("reviews_path", "data/play_review_saves")).strip("/")
+
+
+@st.cache_data(ttl=120, show_spinner=False)
+def _pr_remote_save_docs(token, repo, sb, folder):
+    """Every review .json on the saves branch -> {file name: document}. Cached for two minutes (a save clears it)."""
+    import requests
+    out = {}
+    if not (token and repo and sb):
+        return out
+    h = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"}
+    try:
+        r = requests.get(f"https://api.github.com/repos/{repo}/contents/{folder}", params={"ref": sb}, headers=h, timeout=20)
+        if r.status_code != 200 or not isinstance(r.json(), list):
+            return out
+        for it in r.json():
+            if not str(it.get("name", "")).endswith(".json"):
+                continue
+            try:
+                rr = requests.get(it["url"], headers=h, timeout=20)
+                if rr.status_code == 200:
+                    out[it["name"]] = json.loads(base64.b64decode(rr.json()["content"]).decode("utf-8"))
+            except Exception:
+                continue
+    except Exception:
+        pass
+    return out
+
+
+def _pr_save_docs():
+    """Every saved review, as a list of documents: the files in data/play_review_saves (the deployed copy of the repo) PLUS the
+    ones on the saves branch that the deployed copy doesn't have yet. Same file name = same save (counted once)."""
+    docs, seen = [], set()
+    for f in glob.glob(os.path.join(DATA_DIR, "play_review_saves", "*.json")):
+        try:
+            with open(f, encoding="utf-8") as fh:
+                docs.append(json.load(fh))
+            seen.add(os.path.basename(f))
+        except Exception:
+            continue
+    try:
+        token, repo, _br, sb, folder = _gh_cfg()
+        for name, d in _pr_remote_save_docs(token, repo, sb, folder).items():
+            if name not in seen and isinstance(d, dict):
+                docs.append(d)
+    except Exception:
+        pass
+    return docs
+
+
 def _tt_load_answers():
     """Every saved Title answer (data/play_review_saves/*.json -> "answers"), one row per field a coach judged. If the same
     field of the same play was judged more than once only the LATEST save counts. Rows that were only PREFILLED (coach and
     automatic Title differ and the coach never touched the row) are left out: nobody judged them."""
     rows = []
-    for f in glob.glob(os.path.join(DATA_DIR, "play_review_saves", "*.json")):
-        try:
-            with open(f, encoding="utf-8") as fh:
-                d = json.load(fh)
-        except Exception:
-            continue
+    for d in _pr_save_docs():
         if not isinstance(d.get("answers"), list):
             continue
         for a in d["answers"]:
@@ -6005,12 +6068,7 @@ def _pnt_load_checks():
     """Every saved player check (data/play_review_saves/*.json -> "checks"), one row per box a coach judged. If the
     same box was judged more than once (two coaches, or a re-save) only the LATEST save counts."""
     rows = []
-    for f in glob.glob(os.path.join(DATA_DIR, "play_review_saves", "*.json")):
-        try:
-            with open(f, encoding="utf-8") as fh:
-                d = json.load(fh)
-        except Exception:
-            continue
+    for d in _pr_save_docs():
         if not isinstance(d.get("checks"), list):
             continue
         for c in d["checks"]:
@@ -12940,10 +12998,8 @@ def _pr_app_packages():
 def _pr_app_saves_for(run):
     """Reviews already saved (in the repo) for this run: [(coach, saved)]."""
     out = []
-    for f in glob.glob(os.path.join(DATA_DIR, "play_review_saves", "*.json")):
+    for d in _pr_save_docs():
         try:
-            with open(f, encoding="utf-8") as fh:
-                d = json.load(fh)
             _slug = re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game", ""))).strip("_")
             if str(run) in (str(d.get("run")), f"{_slug}_{d.get('run')}"):
                 parts = ({d["part"]} if d.get("part") in ("titles", "players") else
@@ -12992,30 +13048,33 @@ def _pr_github_diagnose(token, repo, branch):
 
 
 def _pr_github_save(filename, payload):
-    """Commit one new file to the repo (data/play_review_saves/<filename>). Returns (ok, message)."""
-    import base64
+    """Commit one new file to the repo (data/play_review_saves/<filename>) on the saves branch. Returns (ok, message)."""
     import requests
-    try:
-        cfg = dict(st.secrets.get("github", {}))
-    except Exception:                                   # no secrets set up at all
-        cfg = {}
-    token, repo = str(cfg.get("token") or "").strip(), str(cfg.get("repo") or "").strip().strip("/")
-    branch = str(cfg.get("branch") or "main").strip()
-    if repo.lower().startswith(("https://github.com/", "http://github.com/", "github.com/")):
-        repo = repo.split("github.com/", 1)[1].removesuffix(".git").strip("/")     # a pasted web address works too
+    token, repo, branch, sb, folder = _gh_cfg()
     if not token or not repo:
         return False, "GitHub isn't set up in the app's secrets yet ([github] token and repo)"
-    path = f"{str(cfg.get('reviews_path', 'data/play_review_saves')).strip('/')}/{filename}"
+    h = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"}
+    target = sb or branch
+    path = f"{folder}/{filename}"
     try:
-        r = requests.put(f"https://api.github.com/repos/{repo}/contents/{path}",
-                         headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"},
+        if sb:                                           # make the saves branch (from the main branch) the first time
+            if requests.get(f"https://api.github.com/repos/{repo}/git/ref/heads/{sb}", headers=h, timeout=20).status_code == 404:
+                m = requests.get(f"https://api.github.com/repos/{repo}/git/ref/heads/{branch}", headers=h, timeout=20)
+                if m.status_code == 200:
+                    requests.post(f"https://api.github.com/repos/{repo}/git/refs", headers=h, timeout=20,
+                                  json={"ref": f"refs/heads/{sb}", "sha": m.json()["object"]["sha"]})
+        r = requests.put(f"https://api.github.com/repos/{repo}/contents/{path}", headers=h,
                          json={"message": f"Play review: {payload.get('game')} by {payload.get('coach')}",
                                "content": base64.b64encode(json.dumps(payload, indent=1).encode()).decode(),
-                               "branch": branch}, timeout=30)
+                               "branch": target}, timeout=30)
     except Exception as e:
         return False, f"{type(e).__name__}: {e}"
     if r.status_code in (200, 201):
-        return True, f"saved to {repo}/{path}"
+        try:
+            _pr_remote_save_docs.clear()                 # so "Already saved" and the metrics see it right away
+        except Exception:
+            pass
+        return True, f"saved to {repo}/{path} on branch {target}"
     if r.status_code in (401, 403, 404, 422):
         return False, f"GitHub said {r.status_code}. What's wrong: " + _pr_github_diagnose(token, repo, branch)
     return False, f"GitHub said {r.status_code}: {r.text[:200]}"
@@ -13139,7 +13198,7 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
     ok, msg = _pr_github_save(fname, out)
     if ok:
         st.success(f"Saved -- {len(out['checks'])} player check(s) and {len(out['answers'])} Title answer(s) ({msg}). "
-                   "The app restarts briefly when GitHub gets the file; the parser uses it after its next git pull.")
+                   "The app does not restart; the parser picks it up when it runs (it fetches the saves branch).")
     else:
         st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in the repo's data/play_review_saves folder --  "
                    "the parser picks it up from there.")
