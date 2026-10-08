@@ -1,237 +1,87 @@
 offense_team,defender,role,screen_type,coverage,coverage_source,times,planned,followed_pct,ppp,plan_file,game_date,game_code
-Alma Scots,Brock Marino,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,,,0.6,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Brock Marino,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,,,1.2,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Collin Madson,guarding the player screened,Off-ball screen,unclear,tracking estimate,5,,,0.4,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Richie Warren,guarding the screener,Off-ball screen,unclear,tracking estimate,5,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Tyshawn Teague-Johnson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Collin Madson,guarding the player screened,Ball screen,back (drop),tracking estimate,4,,,0.75,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Collin Madson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,,,0.33,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Isaac Verges,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,,,1.25,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Joey Berezowitz,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,,,1.25,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Joey Berezowitz,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,,,0.75,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Richie Warren,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Brock Marino,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Collin Madson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Darius Chestnut,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Isaac Verges,guarding the player screened,Ball screen,unclear,tracking estimate,3,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Isaiah Robinson,guarding the player screened,Ball screen,unclear,tracking estimate,3,,,0.67,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Jake Quast,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Luke Bara,guarding the screener,Off-ball screen,unclear,tracking estimate,3,,,0.67,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Richie Warren,guarding the screener,Ball screen,unclear,tracking estimate,3,,,0.33,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Brock Marino,guarding the player screened,Ball screen,unclear,tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Collin Madson,guarding the player screened,Ball screen,unclear,tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Collin Madson,guarding the screener,Off-ball screen,unclear,tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Isaac Verges,guarding the screener,Ball screen,back (drop),tracking estimate,2,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Jake Quast,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Jake Quast,guarding the screener,Ball screen,back (drop),tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Joey Berezowitz,guarding the screener,Ball screen,back (drop),tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Joey Berezowitz,guarding the screener,Off-ball screen,unclear,tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Luke Bara,guarding the player screened,Ball screen,unclear,tracking estimate,2,,,0.5,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Luke Bara,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Luke Bara,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Luke Bara,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,,,2.5,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Richie Warren,guarding the screener,Ball screen,back (drop),tracking estimate,2,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Trent Grunewald,guarding the screener,Ball screen,unclear,tracking estimate,2,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Tyshawn Teague-Johnson,guarding the screener,Ball screen,unclear,tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Tyshawn Teague-Johnson,guarding the screener,Off-ball screen,unclear,tracking estimate,2,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Agape Keyes Jr.,guarding the screener,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Agape Keyes Jr.,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Brock Marino,guarding the player screened,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Brock Marino,guarding the screener,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Brock Marino,guarding the screener,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Brock Marino,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Collin Madson,guarding the screener,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Darius Chestnut,guarding the player screened,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Darius Chestnut,guarding the player screened,Ball screen,blitz / trap,tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Darius Chestnut,guarding the player screened,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Darius Chestnut,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Darius Chestnut,guarding the screener,Ball screen,unclear,tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Darius Chestnut,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Isaac Verges,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Isaac Verges,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Isaac Verges,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Isaiah Robinson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Jake Quast,guarding the player screened,Ball screen,switch,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Jake Quast,guarding the player screened,Ball screen,unclear,tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Jake Quast,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Jake Quast,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Jake Quast,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Joey Berezowitz,guarding the player screened,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Joey Berezowitz,guarding the player screened,Ball screen,unclear,tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Joey Berezowitz,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Joey Berezowitz,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Joey Berezowitz,guarding the screener,Ball screen,blitz / trap,tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Joey Berezowitz,guarding the screener,Ball screen,switch,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Joey Berezowitz,guarding the screener,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Kelton McEwen,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Kelton McEwen,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Kelton McEwen,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Luke Bara,guarding the player screened,Ball screen,back (drop),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Luke Bara,guarding the screener,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Luke Bara,guarding the screener,Ball screen,unclear,tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Mauryon Turner,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Mauryon Turner,guarding the screener,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Rashad Rogers,guarding the player screened,Ball screen,unclear,tracking estimate,1,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Richie Warren,guarding the player screened,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Richie Warren,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Trent Grunewald,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Tyshawn Teague-Johnson,guarding the player screened,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-Alma Scots,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
-UW-Oshkosh Titans,Collin Madson,guarding the player screened,Off-ball screen,unclear,tracking estimate,6,,,1.2,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Brock Marino,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Brock Marino,guarding the screener,Off-ball screen,unclear,tracking estimate,3,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Collin Madson,guarding the screener,Off-ball screen,unclear,tracking estimate,3,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Darius Chestnut,guarding the screener,Off-ball screen,unclear,tracking estimate,3,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,JR Lukenbill,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,JR Lukenbill,guarding the screener,Off-ball screen,unclear,tracking estimate,3,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jake Quast,guarding the screener,Off-ball screen,unclear,tracking estimate,3,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Luke Bara,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,,,1.67,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Collin Madson,guarding the player screened,Ball screen,back (drop),tracking estimate,2,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Collin Madson,guarding the player screened,Ball screen,unclear,tracking estimate,2,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Collin Madson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Collin Madson,guarding the screener,Ball screen,Switch,coach tag,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Collin Madson,guarding the screener,Ball screen,up (hedge / show),tracking estimate,2,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+Alma Scots,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,28,,,0.96,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,27,,,0.92,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,18,,,0.44,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,17,,,0.47,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,13,,,0.62,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,12,,,0.67,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the player screened,Ball screen,back (drop),tracking estimate,10,,,0.6,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the screener,Ball screen,back (drop),tracking estimate,10,,,0.6,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the player screened,Ball screen,switch,tracking estimate,3,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the screener,Ball screen,switch,tracking estimate,3,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the player screened,Ball screen,blitz / trap,tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the screener,Ball screen,blitz / trap,tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+Alma Scots,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-20,WWW@AC
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,14,,,1.23,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,12,,,1.27,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,11,,,0.88,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,11,,,0.88,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,9,,,0.78,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,9,,,0.78,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,5,,,0.75,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,5,,,0.75,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Ball screen,back (drop),tracking estimate,4,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Ball screen,back (drop),tracking estimate,4,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Collin Madson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Collin Madson,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Darius Chestnut,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,JR Lukenbill,guarding the player screened,Ball screen,unclear,tracking estimate,2,,,0.5,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,JR Lukenbill,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,JR Lukenbill,guarding the screener,Ball screen,unclear,tracking estimate,2,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jake Quast,guarding the screener,Ball screen,unclear,tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jake Quast,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Luke Bara,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Luke Bara,guarding the screener,Off-ball screen,unclear,tracking estimate,2,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Tyshawn Teague-Johnson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,,,2.5,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Brock Marino,guarding the player screened,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Brock Marino,guarding the player screened,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Brock Marino,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Brock Marino,guarding the screener,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Brock Marino,guarding the screener,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,JR Lukenbill,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Brock Marino,guarding the player screened,Ball screen,back (drop),tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Brock Marino,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Brock Marino,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Brock Marino,guarding the screener,Ball screen,back (drop),tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,Brock Marino,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Collin Madson,guarding the player screened,Off-ball screen,Over,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Collin Madson,guarding the player screened,Off-ball screen,Under,coach tag,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Collin Madson,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Collin Madson,guarding the screener,Ball screen,Top Lock,coach tag,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Collin Madson,guarding the screener,Ball screen,Under,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Collin Madson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Collin Madson,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Darius Chestnut,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Darius Chestnut,guarding the screener,Ball screen,back (drop),tracking estimate,1,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Darius Chestnut,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Brock Marino,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Collin Madson,guarding the screener,Ball screen,Switch,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Collin Madson,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Darius Chestnut,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,JR Lukenbill,guarding the player screened,Ball screen,Switch,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,JR Lukenbill,guarding the player screened,Ball screen,Top Lock,coach tag,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,JR Lukenbill,guarding the player screened,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,JR Lukenbill,guarding the player screened,Off-ball screen,Switch,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,JR Lukenbill,guarding the player screened,Off-ball screen,Top Lock,coach tag,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,JR Lukenbill,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,JR Lukenbill,guarding the screener,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,JR Lukenbill,guarding the screener,Off-ball screen,Over,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jake Quast,guarding the player screened,Ball screen,Top Lock,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jake Quast,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Jake Quast,guarding the screener,Off-ball screen,Switch,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey Berezowitz,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey Berezowitz,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey Berezowitz,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey Berezowitz,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey Berezowitz,guarding the screener,Ball screen,Top Lock,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey Berezowitz,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Joey Berezowitz,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Kelton McEwen,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Kelton McEwen,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Luke Bara,guarding the player screened,Ball screen,Switch,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Luke Bara,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Luke Bara,guarding the screener,Ball screen,Switch,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Luke Bara,guarding the screener,Ball screen,back (drop),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Luke Bara,guarding the screener,Ball screen,unclear,tracking estimate,1,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Luke Bara,guarding the screener,Off-ball screen,Top Lock,coach tag,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Richie Warren,guarding the player screened,Ball screen,Switch,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Richie Warren,guarding the player screened,Ball screen,Under,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Richie Warren,guarding the player screened,Ball screen,back (drop),tracking estimate,1,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Richie Warren,guarding the player screened,Ball screen,unclear,tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Richie Warren,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Richie Warren,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Richie Warren,guarding the screener,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Richie Warren,guarding the screener,Off-ball screen,Under,coach tag,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Richie Warren,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Richie Warren,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
-Coe Kohawks,Luke Bara,guarding the screener,Off-ball screen,unclear,tracking estimate,6,,,0.4,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Darius Chestnut,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,,,1.4,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Joey Berezowitz,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,,,1.4,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Kelton McEwen,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,5,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Kelton McEwen,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,5,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Brock Marino,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,,,0.5,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Tyshawn Teague-Johnson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Collin Madson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,,,2.33,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Collin Madson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,,,0.33,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,JR Lukenbill,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,JR Lukenbill,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Jake Quast,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Joey Berezowitz,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Luke Bara,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,,,0.67,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Trent Grunewald,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Darius Chestnut,guarding the player screened,Ball screen,unclear,tracking estimate,2,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Isaiah Robinson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Jake Quast,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Jake Quast,guarding the screener,Ball screen,unclear,tracking estimate,2,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Jake Quast,guarding the screener,Off-ball screen,unclear,tracking estimate,2,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Joey Berezowitz,guarding the screener,Off-ball screen,unclear,tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Kelton McEwen,guarding the player screened,Ball screen,back (drop),tracking estimate,2,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Luke Bara,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Luke Bara,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Richie Warren,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Tyshawn Teague-Johnson,guarding the screener,Ball screen,back (drop),tracking estimate,2,,,1.5,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,2,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Agape Keyes Jr.,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Brock Marino,guarding the player screened,Ball screen,unclear,tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Brock Marino,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Brock Marino,guarding the screener,Ball screen,switch,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Brock Marino,guarding the screener,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Brock Marino,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Brock Marino,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Collin Madson,guarding the player screened,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Collin Madson,guarding the player screened,Ball screen,switch,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Collin Madson,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Collin Madson,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Collin Madson,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+UW-Oshkosh Titans,JR Lukenbill,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Joey Berezowitz,guarding the screener,Ball screen,Top Lock,coach tag,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Joey Berezowitz,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Luke Bara,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Luke Bara,guarding the screener,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Luke Bara,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Oskar Kangas,guarding the player screened,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Richie Warren,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Ball screen,Switch,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Ball screen,Top Lock,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Ball screen,Under,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,Over,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,Show & Get Back,coach tag,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,Switch,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the player screened,Off-ball screen,Top Lock,coach tag,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Ball screen,Switch,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Ball screen,Top Lock,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Ball screen,Under,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,Over,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,Show & Get Back,coach tag,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,Switch,coach tag,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+UW-Oshkosh Titans,unnamed defense,guarding the screener,Off-ball screen,Top Lock,coach tag,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2026-01-03,WOS@WWW
+Coe Kohawks,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,33,,,0.86,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,31,,,0.85,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,17,,,0.77,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,17,,,0.77,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,6,,,1.67,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,unnamed defense,guarding the player screened,Ball screen,back (drop),tracking estimate,5,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,unnamed defense,guarding the screener,Ball screen,back (drop),tracking estimate,5,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,5,,,1.6,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,Darius Chestnut,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
 Coe Kohawks,Darius Chestnut,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Isaiah Robinson,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,JR Lukenbill,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,JR Lukenbill,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,JR Lukenbill,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Jake Quast,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Jake Quast,guarding the screener,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,JR Lukenbill,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
 Coe Kohawks,Jake Quast,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Jake Quast,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Joey Berezowitz,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Joey Berezowitz,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Joey Berezowitz,guarding the screener,Ball screen,unclear,tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Joey Berezowitz,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Kelton McEwen,guarding the player screened,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Kelton McEwen,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Kelton McEwen,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Luke Bara,guarding the player screened,Ball screen,back (drop),tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Luke Bara,guarding the player screened,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Luke Bara,guarding the screener,Ball screen,unclear,tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Matthew McKay,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Matthew McKay,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Matthew McKay,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Mikey Wildes,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Mikey Wildes,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Rashad Rogers,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Rashad Rogers,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Richie Warren,guarding the player screened,Ball screen,unclear,tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Richie Warren,guarding the screener,Ball screen,back (drop),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Richie Warren,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Richie Warren,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Richie Warren,guarding the screener,Off-ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Tyshawn Teague-Johnson,guarding the player screened,Ball screen,unclear,tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,,3.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Tyshawn Teague-Johnson,guarding the screener,Ball screen,unclear,tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
-Coe Kohawks,Tyshawn Teague-Johnson,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,Kelton McEwen,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,Luke Bara,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,,,2.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,Tyshawn Teague-Johnson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,unnamed defense,guarding the player screened,Ball screen,switch,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,unnamed defense,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,unnamed defense,guarding the screener,Ball screen,switch,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
+Coe Kohawks,unnamed defense,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv,2025-12-30,WWW@COE
