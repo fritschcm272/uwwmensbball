@@ -5554,7 +5554,7 @@ def _pr_event_map(d, game_iso):
 
 
 PR_VIDEO_SPEED = 1.5          # play-review videos start at this speed (change here)
-PR_VIDEO_WIDTH_SHARE = 0.6    # share of the section width the review video takes (1.0 = full width)
+PR_VIDEO_WIDTH_SHARE = 0.8    # share of the section width the review video takes (1.0 = full width); it is centered
 
 
 def _pr_video(path, rate=None, width_share=None):
@@ -5565,7 +5565,11 @@ def _pr_video(path, rate=None, width_share=None):
     rate = float(rate if rate is not None else PR_VIDEO_SPEED)
     share = float(width_share if width_share is not None else PR_VIDEO_WIDTH_SHARE)
     share = min(max(share, 0.3), 1.0)
-    cols = st.columns([share, max(1.0 - share, 0.001)]) if share < 1.0 else [st.container()]
+    if share < 1.0:
+        _side = (1.0 - share) / 2.0
+        cols = st.columns([_side, share, _side])[1:2]          # centered: equal empty space on both sides
+    else:
+        cols = [st.container()]
     with cols[0]:
         st.video(path)
     try:
