@@ -5553,6 +5553,31 @@ def _pr_event_map(d, game_iso):
     return out
 
 
+PR_VIDEO_SPEED = 1.5          # play-review videos start at this speed (change here)
+PR_VIDEO_WIDTH_SHARE = 0.6    # share of the section width the review video takes (1.0 = full width)
+
+
+def _pr_video(path, rate=None, width_share=None):
+    """A play-review video, smaller than the full section and starting at PR_VIDEO_SPEED (1.5x).
+    CONFIRMED CHANGE (requested: "default the play back speed to 1.5 ... and make the video player a little smaller"):
+    st.video has no speed option, so a tiny script (in a zero-height frame) sets playbackRate on each review video the first
+    time it appears; a speed the viewer picks afterwards in the player's own menu is left alone."""
+    rate = float(rate if rate is not None else PR_VIDEO_SPEED)
+    share = float(width_share if width_share is not None else PR_VIDEO_WIDTH_SHARE)
+    share = min(max(share, 0.3), 1.0)
+    cols = st.columns([share, max(1.0 - share, 0.001)]) if share < 1.0 else [st.container()]
+    with cols[0]:
+        st.video(path)
+    try:
+        import streamlit.components.v1 as _cv1
+        _cv1.html("<script>(function(){var r=%s;function go(){try{var vs=window.parent.document.querySelectorAll('video');"
+                  "vs.forEach(function(v){if(!v.dataset.speedSet){v.playbackRate=r;v.dataset.speedSet='1';"
+                  "v.addEventListener('loadedmetadata',function(){if(!v.dataset.speedUser){v.playbackRate=r;}});}});}catch(e){}}"
+                  "go();var n=0;var t=setInterval(function(){go();if(++n>20)clearInterval(t);},300);})();</script>" % rate, height=0)
+    except Exception:
+        pass
+
+
 def _pr_store(run):
     return st.session_state.setdefault("pr_answers", {}).setdefault(str(run), {})
 
@@ -5595,7 +5620,7 @@ def _pr_title_widgets(d, pi, store, kp):
                 f'<td style="border:1px solid #ddd;padding:3px 8px;font-family:monospace">{esc_(pl.get("auto_title") or "nothing confident enough yet")}</td></tr>'
                 '</table>', unsafe_allow_html=True)
     if pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
-        st.video(os.path.join(d["_dir"], pl["clip"]))
+        _pr_video(os.path.join(d["_dir"], pl["clip"]))
     fields = pl.get("fields", [])
     if not fields:
         st.caption("No Title fields for this play.")
@@ -13103,7 +13128,7 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
             left, right = st.columns([3, 4])
             with left:
                 if p.get("clip") and os.path.exists(os.path.join(d["_dir"], p["clip"])):
-                    st.video(os.path.join(d["_dir"], p["clip"]))
+                    _pr_video(os.path.join(d["_dir"], p["clip"]), width_share=1.0)
                 if p.get("synergy_url"):
                     st.caption(f"[Open the game on Synergy]({p['synergy_url']}) -- clip #{p.get('clip_number')}"
                                + (f", starts {p['video_at']} into the game video" if p.get("video_at") else ""))
