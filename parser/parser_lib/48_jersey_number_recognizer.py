@@ -233,10 +233,18 @@ def jersey_import_extra():
     return n
 
 
+def _jr_play_key(fname):
+    """The PLAY a crop came from: its file name without the frame number and box position. CONFIRMED CHANGE (requested: the
+    test half must not share plays with the training half). The same player a fraction of a second apart in the same play
+    used to land in both halves, which flatters the score; now a whole play is on one side."""
+    return re.sub(r"_(?:t)?\d+_jpg_\d+_\d+\.jpg$", "", os.path.basename(fname))
+
+
 def _jr_coach_half(fname):
-    """Which half of the coach checks a crop belongs to -- 'train' or 'test' -- fixed by its file name, so a crop
-    never switches halves between runs."""
-    return "train" if int(hashlib.md5(os.path.basename(fname).encode()).hexdigest(), 16) % 2 == 0 else "test"
+    """Which half of the coach checks a crop belongs to -- 'train' or 'test' -- fixed by its PLAY (JERSEY_TRAIN_SPLIT_BY =
+    "play"; "crop" = the old split by file name), so a crop never switches halves between runs."""
+    key = _jr_play_key(fname) if str(globals().get("JERSEY_TRAIN_SPLIT_BY", "play")).lower() == "play" else os.path.basename(fname)
+    return "train" if int(hashlib.md5(key.encode()).hexdigest(), 16) % 2 == 0 else "test"
 
 
 def _jr_train_sources():
@@ -297,7 +305,19 @@ def jersey_train():
     except Exception:
         net = torchvision.models.resnet18(pretrained=True)
     net.fc = torch.nn.Linear(net.fc.in_features, len(classes))
-    dl = torch.utils.data.DataLoader(_DS(tr, t_train), batch_size=32, shuffle=True, num_workers=0)
+    # CONFIRMED CHANGE (requested; the 45% test showed 32 and 15 as the answer to many other numbers): the model leaned toward
+    # the numbers most common in the training pictures. Each draw is now weighted so every NUMBER counts about equally
+    # (JERSEY_TRAIN_BALANCE: 1 = fully equal, 0 = off, 0.75 = mostly), and a crop from your own checks counts
+    # JERSEY_TRAIN_COACH_WEIGHT times as much as a generic one (they are the only crops from your gym and camera).
+    _bal = float(globals().get("JERSEY_TRAIN_BALANCE", 0.75))
+    _cw = float(globals().get("JERSEY_TRAIN_COACH_WEIGHT", 3.0))
+    _cnt_c = {}
+    for _f, _l in tr:
+        _cnt_c[_l] = _cnt_c.get(_l, 0) + 1
+    _w = [(1.0 / (_cnt_c[_l] ** _bal)) * (_cw if (os.sep + "coach" + os.sep) in _f else 1.0) for _f, _l in tr]
+    _sampler = torch.utils.data.WeightedRandomSampler(_w, num_samples=len(tr), replacement=True,
+                                                      generator=torch.Generator().manual_seed(0))
+    dl = torch.utils.data.DataLoader(_DS(tr, t_train), batch_size=32, sampler=_sampler, num_workers=0)
     dv = torch.utils.data.DataLoader(_DS(val, t_eval), batch_size=64, shuffle=False, num_workers=0)
     opt = torch.optim.AdamW(net.parameters(), lr=1e-3, weight_decay=1e-4)
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=max(1, JERSEY_TRAIN_EPOCHS))
@@ -326,14 +346,20 @@ def jersey_train():
     net.load_state_dict(best[1])
     torch.save({"state_dict": net.state_dict(), "classes": classes, "n_train": len(tr), "val_acc": best[0],
                 "sources": {s: sum(1 for f, _ in samples if os.sep + s + os.sep in f) for s in train_src},
-                "signature": _jr_signature(), "trained_at": pd.Timestamp.now().isoformat(timespec="seconds")},
+                "signature": _jr_signature(), "n_samples": len(samples),
+                "settings": _jr_settings_str(), "trained_at": pd.Timestamp.now().isoformat(timespec="seconds")},
                JERSEY_MODEL_PATH)
     print(f"  [recognizer] saved -> {JERSEY_MODEL_PATH} (best: {best[0]:.0%} of held-back crops right)", flush=True)
 
 
+def _jr_settings_str():
+    return repr((JERSEY_TRAIN_EPOCHS, str(JERSEY_TRAIN_USE_COACH), str(globals().get("JERSEY_TRAIN_SPLIT_BY", "play")),
+                 float(globals().get("JERSEY_TRAIN_BALANCE", 0.75)), float(globals().get("JERSEY_TRAIN_COACH_WEIGHT", 3.0))))
+
+
 def _jr_signature():
     files = [os.path.relpath(f, JERSEY_TRAIN_DIR) for f, _ in _jr_samples(_jr_train_sources())]
-    return hashlib.md5((repr(files) + repr((JERSEY_TRAIN_EPOCHS, JERSEY_TRAIN_USE_COACH))).encode()).hexdigest()
+    return hashlib.md5((repr(files) + repr((JERSEY_TRAIN_EPOCHS, JERSEY_TRAIN_USE_COACH, globals().get("JERSEY_TRAIN_SPLIT_BY", "play"), globals().get("JERSEY_TRAIN_BALANCE", 0.75), globals().get("JERSEY_TRAIN_COACH_WEIGHT", 3.0)))).encode()).hexdigest()
 
 
 def jersey_recognizer_read(crops_bgr):
@@ -396,7 +422,8 @@ def _jr_inputs_fingerprint():
     parts.append(("model", int(os.path.getmtime(JERSEY_MODEL_PATH)) if os.path.exists(JERSEY_MODEL_PATH) else 0))
     parts.append(("settings", JERSEY_TRAIN_ADD_FRAMES, JERSEY_TRAIN_CROPS_PER_TRACK, JERSEY_TRAIN_NEAR_READ_S,
                   JERSEY_TRAIN_MIN_SHARPNESS, str(JERSEY_TRAIN_USE_COACH), JERSEY_TRAIN_FROM_OWN_READS, JERSEY_TRAIN_EPOCHS,
-                  JERSEY_TRAIN_MIN_IMAGES))
+                  JERSEY_TRAIN_MIN_IMAGES, str(globals().get("JERSEY_TRAIN_SPLIT_BY", "play")),
+                  float(globals().get("JERSEY_TRAIN_BALANCE", 0.75)), float(globals().get("JERSEY_TRAIN_COACH_WEIGHT", 3.0))))
     return hashlib.md5(repr(sorted(map(repr, parts))).encode()).hexdigest()
 
 
@@ -431,14 +458,32 @@ if RUN_JERSEY_RECOGNIZER:
               f"checks ({_how})  -- {JERSEY_TRAIN_DIR}", flush=True)
         _n_coach_train = len(_jr_samples(["coach"])) if JERSEY_TRAIN_USE_COACH else 0
         _n_train = _cnt["reads"] + _cnt["extra"] + _n_coach_train
-        _saved_sig = None
+        _saved_sig, _saved_n, _saved_set = None, None, None
         if os.path.exists(JERSEY_MODEL_PATH):
             try:
                 import torch
-                _saved_sig = torch.load(JERSEY_MODEL_PATH, map_location="cpu").get("signature")
+                _ck_ = torch.load(JERSEY_MODEL_PATH, map_location="cpu")
+                _saved_sig, _saved_set = _ck_.get("signature"), _ck_.get("settings")
+                _saved_n = _ck_.get("n_samples") or _ck_.get("n_train")
             except Exception:
                 _saved_sig = None
-        _want = JERSEY_TRAIN_NOW is True or (JERSEY_TRAIN_NOW == "auto" and _saved_sig != _jr_signature())
+        # CONFIRMED CHANGE (requested: "is it really necessary to retrain every time I add pictures from the player checks?").
+        # "auto" now retrains only when the training set has GROWN enough since the saved model: at least JERSEY_TRAIN_MIN_NEW
+        # new crops or JERSEY_TRAIN_MIN_GROWTH (a share, 0.15 = 15%) more than it was trained on -- or when the epochs / coach
+        # setting changed, or there is no model yet. JERSEY_TRAIN_MIN_NEW = 0 retrains on any change (the old behaviour).
+        _want = JERSEY_TRAIN_NOW is True
+        if not _want and JERSEY_TRAIN_NOW == "auto" and _saved_sig != _jr_signature():
+            _now_n = len(_jr_samples(_jr_train_sources()))
+            _min_new = int(globals().get("JERSEY_TRAIN_MIN_NEW", 150))
+            _min_gr = float(globals().get("JERSEY_TRAIN_MIN_GROWTH", 0.15))
+            _new_n = (_now_n - int(_saved_n)) if _saved_n else None
+            if (not os.path.exists(JERSEY_MODEL_PATH) or _saved_n is None or _saved_set != _jr_settings_str()
+                    or _min_new <= 0 or abs(_new_n) >= _min_new or abs(_new_n) >= _min_gr * max(int(_saved_n), 1)):
+                _want = True
+            else:
+                print(f"  training set changed by {_new_n:+,} crop(s) since the saved model ({int(_saved_n):,} then, {_now_n:,} now) -- "
+                      f"under the retrain bar of {_min_new} crops or {_min_gr:.0%}, so the saved recognizer is kept "
+                      f"(JERSEY_TRAIN_NOW = True forces a retrain).", flush=True)
         if _want and _n_train < JERSEY_TRAIN_MIN_IMAGES:
             print(f"  not trained yet: {_n_train} training crop(s), needs {JERSEY_TRAIN_MIN_IMAGES} (check more players, "
                   f"run tracking with jersey numbers on, or add extra data)", flush=True)
