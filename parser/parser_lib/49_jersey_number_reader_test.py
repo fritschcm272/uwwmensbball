@@ -665,6 +665,28 @@ if RUN_JERSEY_READER_TEST:
             print(f"  {_eng:12}: [{len(_have)} crops] answered {len(_ans)}/{len(_have)}; right when it answers "
                   f"{JERSEY_READER_PRECISION[_eng]:.0%} ({sum(r_[0] == v for v, r_ in _a)}/{len(_a)} at confidence >= {_c_use:.1f}); "
                   f"wrong answers: {', '.join(f'{a} x{b}' for a, b in _wrong.items()) or 'none'}", flush=True)
+            # CONFIRMED CHANGE (requested): right / wrong per jersey number on YOUR checked players, with what each wrong answer
+            # was mistaken for -- shows which numbers fail and whether the biases (one number soaking up the answers) are gone.
+            try:
+                _pn = {}
+                for _k_, _r_ in _ck_ans:
+                    _t_ = _have[_k_]
+                    _d_ = _pn.setdefault(_t_, [0, 0, {}])
+                    _d_[1] += 1
+                    if _r_[0] == _t_:
+                        _d_[0] += 1
+                    else:
+                        _d_[2][_r_[0]] = _d_[2].get(_r_[0], 0) + 1
+                if _pn:
+                    _tab = pd.DataFrame([{"number": t_, "checked": d_[1], "right": d_[0], "right_pct": round(100 * d_[0] / d_[1]),
+                                          "mistaken_for": ", ".join(f"{a} x{b}" for a, b in sorted(d_[2].items(), key=lambda kv: -kv[1])[:3])}
+                                         for t_, d_ in sorted(_pn.items(), key=lambda kv: (-kv[1][1], kv[0]))])
+                    _given = pd.Series([r_[0] for _k_, r_ in _ck_ans]).value_counts().head(3)
+                    print(f"  {_eng:12}: right / wrong per jersey number on your checked players "
+                          f"(answers given most often: {', '.join(f'{a} x{b}' for a, b in _given.items())}):", flush=True)
+                    (_show if "_show" in globals() else print)(_tab)
+            except Exception as _e2:
+                print(f"  (per-number table skipped: {type(_e2).__name__}: {_e2})", flush=True)
         except Exception as _e:
             if "RESTART THE KERNEL" in str(_e):
                 raise                                  # an install needs a restart: stop the run and say so

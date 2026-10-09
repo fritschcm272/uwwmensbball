@@ -51,6 +51,9 @@ _PD_SITUATIONS = [
     # opponent_plays.csv (42 clips) -- without this, every one of them silently fell back to the "Half
     # court" default, which is a real miscategorization, not just an unrecognized word.
     (r"\btran(?:s(?:ition)?)?\b", "Transition"),
+    # CONFIRMED CHANGE (requested): "BO" (Bad Offense -- no real setup, just a quick shot) is a situation option, like BLOB / ATO.
+    # It is NOT filtered out of anything.
+    (r"\bbo\b|\bbad\s*offen[cs]e\b", "BO"),
 ]
 # Named sets / formations. kind "formation" is an alignment ("5 Out", "4-1"); kind "set" is a named play
 # ("Panther", "OK State") and outranks a formation when naming the call.
@@ -312,7 +315,9 @@ def _decode_play_title_legacy(title, known_players=()):
     dedupe = lambda xs: list(dict.fromkeys(xs))  # noqa: E731
     situations, formations, sets = dedupe(situations), dedupe(formations), dedupe(sets)
     oob = next((s for s in situations if s in ("BLOB", "SLOB")), None)
-    if oob:
+    if "BO" in situations:
+        out["play_situation"] = "BO"                  # bad offense wins over every other situation word
+    elif oob:
         out["play_situation"] = oob + (" (ATO)" if "ATO" in situations else "")
     elif "ATO" in situations:
         out["play_situation"] = "ATO"
@@ -795,7 +800,9 @@ def decode_structured_title(title, known_players=()):
     # ---- Situation / call naming, same conventions as the legacy decoder so summaries line up ----
     situations = list(dict.fromkeys(situations))
     oob = next((s for s in situations if s in ("BLOB", "SLOB")), None)
-    if oob:
+    if "BO" in situations:
+        out["play_situation"] = "BO"                  # bad offense wins over every other situation word
+    elif oob:
         out["play_situation"] = oob + (" (ATO)" if "ATO" in situations else "")
     elif "ATO" in situations:
         out["play_situation"] = "ATO"
@@ -859,7 +866,7 @@ def decode_play_title(title, known_players=()):
     out["play_title"] = re.sub(r"\s+", " ", str(raw_title or "")).strip() or out.get("play_title")
     # Situation-only titles ('tran', 'tran:m2m', 'oreb') -- coaches: fine as is, a possession with no play call
     off_part = str(title or "").split(":", 1)[0].strip().lower()
-    sit_only = {"tran": "Transition", "transition": "Transition", "oreb": "Offensive rebound",
+    sit_only = {"bo": "BO", "bad offense": "BO", "bad offence": "BO", "tran": "Transition", "transition": "Transition", "oreb": "Offensive rebound",
                 "o-reb": "Offensive rebound", "putback": "Offensive rebound"}
     if off_part in sit_only:
         out.update(play_situation=sit_only[off_part], situation_source="Tag", play_set=None, play_call=None,
@@ -873,6 +880,7 @@ def decode_play_title(title, known_players=()):
 PLAY_GLOSSARY = pd.DataFrame([
     ("BLOB / SLOB", "Baseline / sideline out-of-bounds play", "Standard"),
     ("ATO", "After-timeout play", "Standard"),
+    ("BO", "Bad offense: no real setup, a quick shot (a situation, like ATO)", "Standard"),
     ("Opener", "First set of a half", "Inferred"),
     ("5 Out / 4-1 (41) / 3-2 (32) / 2-3 (23)", "Floor alignment: perimeter-post split", "Standard"),
     ("33", "Named set (alignment not stated)", "Inferred"),

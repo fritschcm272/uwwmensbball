@@ -775,6 +775,26 @@ def _trk_link_possessions(clips, todo, pc, game_of):
 # (a clear jersey number or a coach check), the pieces before and after it that pick up exactly where it left off -- same
 # team, no overlap in time, reachable at running speed, and clearly the nearest -- get the same name. Careful on purpose:
 # an ambiguous join (two pieces equally close, or another named player closer to the join) is skipped.
+def _trk_track_overlap(clip, a, b):
+    """How much two tracks of one clip sit on top of each other: (median IoU of their boxes over the frames both have, number of
+    shared frames, shared frames as a share of the SHORTER track). CONFIRMED CHANGE (a #12 on two boxes in one picture, one named,
+    one "not named"): one player doubled by the detector -- two tracks for one person."""
+    def box(k):
+        return {t: np.asarray(clip["frames"][t][j][6:10], float) for t, j in clip["tracks"][k]}
+    ba, bb = box(a), box(b)
+    sh = sorted(set(ba) & set(bb))
+    if not sh:
+        return 0.0, 0, 0.0
+    ious = []
+    for t in sh:
+        x1, y1 = np.maximum(ba[t][:2], bb[t][:2])
+        x2, y2 = np.minimum(ba[t][2:], bb[t][2:])
+        inter = max(0.0, x2 - x1) * max(0.0, y2 - y1)
+        ua = (ba[t][2] - ba[t][0]) * (ba[t][3] - ba[t][1]) + (bb[t][2] - bb[t][0]) * (bb[t][3] - bb[t][1]) - inter
+        ious.append(inter / ua if ua > 0 else 0.0)
+    return float(np.median(ious)), len(sh), len(sh) / max(1, min(len(ba), len(bb)))
+
+
 def _trk_follow_names(clips, i, seeds, fps_=None):
     """seeds: {track: name} locked in clip i. -> {track: (name, from_track)} for the OTHER pieces of those players."""
     clip = clips[i]
@@ -1434,6 +1454,27 @@ def player_tracking(pc):
         clip["side"] = {k: ("offense" if lab == oc else "defense") if lab in ("A", "B") and oc else None
                         for k, lab in clip.get("team", {}).items()}
 
+    # --- one person on two tracks: the detector sometimes boxes the same player twice (a second box on the same man in the same
+    # frames). The shorter track is dropped as a duplicate (not a player), so it can't take a name from the five or split the
+    # evidence. TRACK_DUP_IOU = how much the boxes overlap (median IoU, over frames both tracks have); 0 = off.
+    _dup_iou = float(globals().get("TRACK_DUP_IOU", 0.55))
+    n_dup_tr = 0
+    if _dup_iou > 0:
+        for i in todo:
+            clip = clips[i]
+            ks = [k for k in range(len(clip["tracks"])) if clip["side"].get(k) in ("offense", "defense")]
+            for x_, a in enumerate(ks):
+                for b in ks[x_ + 1:]:
+                    if clip["side"].get(a) is None or clip["side"].get(b) is None:
+                        continue
+                    iou_, n_sh, frac = _trk_track_overlap(clip, a, b)
+                    if n_sh >= 2 and iou_ >= _dup_iou and frac >= 0.5:
+                        drop = a if len(clip["tracks"][a]) < len(clip["tracks"][b]) else b
+                        clip["side"][drop] = None
+                        n_dup_tr += 1
+    _trk_note_drop("[tracks] duplicate box on the same player (dropped)", n_dup_tr)
+    print(f"  [tracking]   {n_dup_tr:,} track(s) were a second box on a player already tracked (boxes overlap >= {_dup_iou:.0%}) -- dropped", flush=True)
+
     # Now that the offense is known: the ball holder is looked for among the OFFENSE only, and each clip's
     # anchor is re-picked from that -- a defender hugging the ball can't become the named player.
     for i in todo:
@@ -1870,7 +1911,7 @@ def player_tracking(pc):
             # CONFIRMED BUG (fixed; found by the best-guess check): two tracks seen at the SAME moment both read "21" --
             # two different players 20+ ft apart -- and both were named #21. One player can't be on two tracks at once:
             # keep the one with more agreeing reads (then the longer one); the other goes back to the lineup matching.
-            _dropped = 0
+            _dropped, _dropped_dup = 0, 0
             for i in {i for (i, _k) in number_names}:
                 by_name = {}
                 for (ii, k), (n, cf) in number_names.items():
@@ -1883,11 +1924,58 @@ def player_tracking(pc):
                         if any(fk & {t for t, _ in clips[i]["tracks"][o]} for o in kept):
                             number_names.pop((i, k), None)
                             _dropped += 1
+                            # the same number on two tracks at the same moment whose boxes sit on each other: ONE player boxed
+                            # twice, not a second player -- drop the second box instead of leaving him to the best guess
+                            try:
+                                if _dup_iou > 0 and any(
+                                        (lambda r_: r_[1] >= 1 and r_[0] >= 0.3)(_trk_track_overlap(clips[i], k, o)) for o in kept):
+                                    clips[i]["side"][k] = None
+                                    _dropped_dup += 1
+                            except Exception:
+                                pass
                         else:
                             kept.append(k)
+            # CONFIRMED CHANGE (requested: the same #24 on two boxes, one named and one "not named"): a player split into
+            # pieces. A piece that has only a FEW reads of a number (fewer than the votes normally needed) is still that
+            # number's player when the same name is on the floor in that clip and the piece is never on the floor at the
+            # same moment as the track already carrying the name (one man can't be in two places). Setting
+            # TRACK_FRAGMENT_NUMBER_JOIN = False turns this off.
+            _n_frag = 0
+            if bool(globals().get("TRACK_FRAGMENT_NUMBER_JOIN", True)):
+                try:
+                    for (i, k), rd in reads.items():
+                        if (i, k) in number_names or clips[i]["side"].get(k) is None:
+                            continue
+                        sd = clips[i]["side"].get(k)
+                        five = _trk_five(pc.at[i, "offense_lineup" if sd == "offense" else "defense_lineup"])
+                        cand = {_numfor(i, n): n for n in five if _numfor(i, n)}
+                        sure = [(txt, cf) for txt, cf in rd if cf >= TRACK_OCR_MIN_CONF]
+                        if not _whole:
+                            _two = [num for num in cand if len(num) == 2]
+                            sure = [(txt, cf) for txt, cf in sure if not (len(txt) == 1 and any(txt in num for num in _two))]
+                        if not sure:
+                            continue
+                        allv = {}
+                        for txt, cf in sure:
+                            allv.setdefault(txt, []).append(cf)
+                        top, cfs = max(allv.items(), key=lambda kv: (len(kv[1]), max(kv[1])))
+                        if top not in cand or len(cfs) <= len(sure) / 2 or max(cfs) < max(_min_conf, 0.6):
+                            continue
+                        nm = cand[top]
+                        mine = {t for t, _ in clips[i]["tracks"][k]}
+                        holders_ = [o for (ii, o), (n_, _c) in number_names.items() if ii == i and n_ == nm]
+                        if any(mine & {t for t, _ in clips[i]["tracks"][o]} for o in holders_):
+                            continue                          # on the floor at the same moment as the named one: another man
+                        number_names[(i, k)] = (nm, 0.55)
+                        _n_frag += 1
+                except Exception as _e:
+                    print(f"  [tracking]   fragment number join skipped ({type(_e).__name__}: {_e})", flush=True)
             print(f"  [tracking]   a jersey number was read on {n_read_tracks:,} track(s); "
-                  f"{len(number_names):,} named by number"
-                  + (f" ({_dropped} dropped: the same number read on two players at the same moment)" if _dropped else ""),
+                  + (f"{_n_frag} more piece(s) of an already-named player named from a few reads; " if _n_frag else "")
+                  + f"{len(number_names):,} named by number"
+                  + (f" ({_dropped} dropped: the same number read on two players at the same moment"
+                     + (f"; {_dropped_dup} of those were a second box on the same player and are now dropped as duplicates" if _dropped_dup else "")
+                     + ")" if _dropped else ""),
                   flush=True)
         except Exception as _e:
             print(f"  [tracking]   jersey numbers not read this run ({type(_e).__name__}: {_e})", flush=True)

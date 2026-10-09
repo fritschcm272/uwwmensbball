@@ -1,7 +1,7 @@
 # 55c_play_review.py -- code for the notebook section "Play review"
 # Runs inside the notebook via run_section("55c_play_review"); its settings are in that notebook cell.
 
-# --- Play review: the player checks and the Title review together, on 20 random plays per game ------------------------
+# --- Play review: the player checks and the Title review together, on the next 5 unreviewed plays per game ------------------------
 # CONFIRMED CHANGE (requested: "combine the player-number review and the Title review into one file and do both at the
 # same time; only 20 plays per game, a random set -- a different 20 when I run it again; a 'wrong team' option; and a
 # gif of the play, the clip, or a link to Synergy").
@@ -243,7 +243,12 @@ def _pr_best_instance(rows, track, t0, files, fps, cache):
                 if len(q) >= 6:
                     others.setdefault(int(q[0]), []).append(q)
         hmax = max(float(q[3]) for q in path)
-        cand = [q for q in path if float(q[3]) >= 0.6 * hmax and int(q[0]) < len(files)]
+        # only frames within PLAY_REVIEW_CROP_WINDOW_S seconds of the big picture's frame: a track can jump from one player to
+        # another (a lost-and-refound player), and a close-up cut from far away in the clip could then show a DIFFERENT man than
+        # the box being checked. 0 = anywhere in the clip.
+        _win = float(globals().get("PLAY_REVIEW_CROP_WINDOW_S", 3.0))
+        cand = [q for q in path if float(q[3]) >= 0.6 * hmax and int(q[0]) < len(files)
+                and (_win <= 0 or abs(int(q[0]) - int(t0)) <= _win * fps)]
         if len(cand) > 24:
             cand = cand[::max(1, len(cand) // 24)]
         best = None
@@ -548,8 +553,18 @@ def play_review():
                 pass
         g = g.assign(_key=[f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}" for _, r in g.iterrows()])
         fresh = g[~g["_key"].isin(done)]
-        pool = fresh if len(fresh) else g
-        pick = pool.loc[rng.sample(list(pool.index), min(PLAY_REVIEW_PLAYS_PER_GAME, len(pool)))].sort_values("clip_number")
+        # CONFIRMED CHANGE (requested: "the first 5 clips, then groups of 5 after that that haven't had a check run on them"):
+        # PLAY_REVIEW_PICK = "next" takes the first PLAY_REVIEW_PLAYS_PER_GAME plays, in game order, that have no saved check yet;
+        # "random" is the old behaviour (a random set).
+        _mode = str(globals().get("PLAY_REVIEW_PICK", "next")).lower()
+        if _mode == "random":
+            pool = fresh if len(fresh) else g
+            pick = pool.loc[rng.sample(list(pool.index), min(PLAY_REVIEW_PLAYS_PER_GAME, len(pool)))].sort_values("clip_number")
+        else:
+            if not len(fresh):
+                print(f"Play review: {gd} {gc} -- every play already has a check; nothing new to review", flush=True)
+                continue
+            pick = fresh.sort_values("clip_number", kind="stable").head(PLAY_REVIEW_PLAYS_PER_GAME)
         slug = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
         # scratch folder for this game's pictures / clips while they're built; the finished review goes to <data>/play_review
         rdir = tempfile.mkdtemp(prefix=f"play_review_{slug}_")
@@ -677,7 +692,7 @@ def play_review():
             shutil.rmtree(rdir, ignore_errors=True)
         except Exception as _ae:
             print(f"  [play review] not exported to the app: {type(_ae).__name__}: {_ae} (scratch files kept in {rdir})", flush=True)
-        print(f"Play review: {gd} {gc}: {len(plays)} random play(s) ({len(g) - len(fresh)} already reviewed, left out) "
+        print(f"Play review: {gd} {gc}: {len(plays)} play(s) ({"next unreviewed, in game order" if _mode != "random" else "random"}) ({len(g) - len(fresh)} already reviewed, left out) "
               f"-- in the app: Previous Games (Title checks) and Analytics > Player Number Tracking (player checks)", flush=True)
 
 
