@@ -1,45 +1,54 @@
 defense_team,defender,approx_ft_off_man_ball side,approx_ft_off_man_on ball,approx_ft_off_man_weak side,frames_ball side,frames_on ball,frames_weak side,clips,tendency
-Alma Scots,unnamed defense,9.2,11.1,11.7,711.0,726.0,1079.0,80,in between
-Coe Kohawks,Aleks Jajic,16.2,18.0,10.8,3.0,1.0,3.0,2,in between
+Alma Scots,Donovan Collins,7.5,11.8,15.2,13.0,20.0,19.0,10,helps / sags off
+Alma Scots,Elijah Sykes,8.5,8.9,7.5,2.0,23.0,23.0,5,in between
+Alma Scots,Josh Elliott,9.5,13.6,13.3,40.0,29.0,62.0,21,helps / sags off
+Alma Scots,Joss Bradley,6.7,11.5,11.8,42.0,27.0,43.0,15,in between
+Alma Scots,Korbin Heitzman,8.6,11.0,12.5,99.0,124.0,161.0,57,helps / sags off
+Alma Scots,Logan St. Martin,6.0,10.7,10.3,13.0,16.0,24.0,13,in between
+Alma Scots,Luciano Guerrazzi,13.0,8.7,12.4,25.0,28.0,36.0,16,helps / sags off
+Alma Scots,Preston Malpass,9.5,11.5,9.4,35.0,29.0,47.0,20,in between
+Alma Scots,Raine Rodich,,4.4,4.8,,1.0,2.0,2,stays attached
+Alma Scots,unnamed defense,9.7,11.4,11.6,450.0,450.0,691.0,75,in between
+Coe Kohawks,Aaron Foote,19.0,8.7,7.7,1.0,6.0,5.0,2,in between
 Coe Kohawks,Austin Beeson,,11.8,,,1.0,,1,
 Coe Kohawks,Brock Marino,17.9,,,2.0,,,1,
-Coe Kohawks,C. Reece Breitenbach,8.2,10.9,12.5,5.0,6.0,5.0,3,helps / sags off
-Coe Kohawks,Cooper Nailor,8.0,8.0,7.8,15.0,11.0,4.0,5,in between
+Coe Kohawks,C. Reece Breitenbach,9.9,11.3,12.0,35.0,47.0,40.0,23,helps / sags off
+Coe Kohawks,Cooper Nailor,8.7,10.9,11.0,29.0,24.0,15.0,12,in between
 Coe Kohawks,Darius Chestnut,24.6,,,1.0,,,1,
-Coe Kohawks,Deuce Walters,10.1,11.7,14.6,21.0,15.0,8.0,6,helps / sags off
-Coe Kohawks,Jackson Bowman,9.9,7.5,11.8,15.0,18.0,4.0,4,in between
-Coe Kohawks,Jackson Newell,11.6,9.6,3.8,4.0,4.0,1.0,2,stays attached
+Coe Kohawks,Deuce Walters,8.9,10.4,13.4,34.0,39.0,27.0,20,helps / sags off
+Coe Kohawks,Jackson Bowman,10.5,7.7,9.0,23.0,23.0,10.0,9,in between
 Coe Kohawks,Jake Quast,,,10.5,,,1.0,1,in between
-Coe Kohawks,Jay Akin,6.1,2.3,10.2,6.0,1.0,1.0,1,in between
-Coe Kohawks,Joey Berezowitz,5.0,,26.3,2.0,,1.0,1,helps / sags off
-Coe Kohawks,Kanyon Bryte,13.5,9.0,16.8,3.0,13.0,1.0,3,helps / sags off
+Coe Kohawks,Jay Akin,7.4,9.0,,2.0,1.0,,1,
+Coe Kohawks,Kanyon Bryte,9.5,11.4,12.6,39.0,52.0,39.0,30,helps / sags off
 Coe Kohawks,Richie Warren,,,20.2,,,1.0,1,helps / sags off
-Coe Kohawks,Ryan Dolphin,19.0,7.0,13.0,6.0,1.0,4.0,3,helps / sags off
-Coe Kohawks,unnamed defense,9.7,11.0,10.8,692.0,660.0,807.0,78,in between
-UW-Oshkosh Titans,Aiden Hawkinson,5.7,6.4,12.4,9.0,13.0,4.0,6,helps / sags off
-UW-Oshkosh Titans,Brandon Beck,8.9,8.3,7.9,17.0,31.0,25.0,10,in between
-UW-Oshkosh Titans,Carter Thomas,3.9,8.0,7.1,29.0,21.0,10.0,7,in between
-UW-Oshkosh Titans,Jay Dalton,7.7,12.1,9.3,3.0,2.0,3.0,2,in between
-UW-Oshkosh Titans,Joey LaChapell,6.6,8.6,8.8,18.0,11.0,25.0,10,in between
-UW-Oshkosh Titans,Jonah Rindfleisch,6.1,9.3,,6.0,4.0,,3,
-UW-Oshkosh Titans,Logan Rindfleisch,3.1,7.4,6.2,1.0,1.0,3.0,3,stays attached
-UW-Oshkosh Titans,Matt Imig,6.9,9.2,5.7,7.0,6.0,3.0,2,stays attached
-UW-Oshkosh Titans,Michael Metcalf-Grassman,7.2,5.9,8.9,26.0,22.0,15.0,8,in between
-UW-Oshkosh Titans,Nate Nazos,6.0,7.0,12.2,14.0,20.0,22.0,8,helps / sags off
-UW-Oshkosh Titans,Oskar Kangas,14.5,25.6,13.9,9.0,5.0,5.0,5,helps / sags off
-UW-Oshkosh Titans,Vitorio Dante,6.6,8.3,6.8,9.0,4.0,9.0,4,stays attached
-UW-Oshkosh Titans,unnamed defense,8.1,8.1,8.8,930.0,772.0,693.0,87,in between
-UW-Whitewater,Brock Marino,7.7,13.7,10.4,26.0,20.0,17.0,13,in between
-UW-Whitewater,Collin Madson,6.6,8.7,10.0,35.0,29.0,23.0,21,in between
-UW-Whitewater,Darius Chestnut,11.2,14.4,9.6,19.0,15.0,19.0,15,in between
-UW-Whitewater,JR Lukenbill,7.5,10.1,11.3,55.0,51.0,37.0,22,in between
-UW-Whitewater,Jake Quast,10.6,15.9,12.0,19.0,25.0,34.0,12,helps / sags off
-UW-Whitewater,Joey Berezowitz,11.0,15.7,11.2,18.0,19.0,14.0,8,in between
+Coe Kohawks,Ryan Dolphin,13.7,9.2,12.4,8.0,4.0,8.0,9,helps / sags off
+Coe Kohawks,unnamed defense,10.2,11.2,10.6,497.0,521.0,642.0,77,in between
+UW-Oshkosh Titans,Aiden Hawkinson,9.4,6.0,9.4,38.0,64.0,35.0,27,in between
+UW-Oshkosh Titans,Brandon Beck,7.0,7.1,9.1,78.0,54.0,30.0,25,in between
+UW-Oshkosh Titans,Carter Thomas,6.8,7.8,8.4,107.0,65.0,70.0,43,in between
+UW-Oshkosh Titans,Jay Dalton,7.5,9.5,6.3,25.0,8.0,23.0,9,stays attached
+UW-Oshkosh Titans,Joey LaChapell,7.1,7.6,10.4,49.0,23.0,40.0,21,in between
+UW-Oshkosh Titans,Jonah Rindfleisch,8.8,8.7,14.3,33.0,20.0,25.0,25,helps / sags off
+UW-Oshkosh Titans,Logan Rindfleisch,6.5,6.9,12.9,70.0,9.0,12.0,13,helps / sags off
+UW-Oshkosh Titans,Matt Imig,7.6,10.5,8.4,56.0,15.0,31.0,17,in between
+UW-Oshkosh Titans,Michael Metcalf-Grassman,6.7,6.8,8.7,55.0,40.0,50.0,23,in between
+UW-Oshkosh Titans,Nate Nazos,7.8,9.3,8.5,99.0,86.0,49.0,34,in between
+UW-Oshkosh Titans,Oskar Kangas,11.1,7.8,7.5,42.0,53.0,51.0,29,in between
+UW-Oshkosh Titans,Vitorio Dante,9.0,5.3,8.0,27.0,58.0,25.0,21,in between
+UW-Oshkosh Titans,unnamed defense,8.7,9.6,9.8,405.0,326.0,328.0,73,in between
+UW-Whitewater,Brock Marino,8.9,8.7,11.5,191.0,117.0,117.0,61,in between
+UW-Whitewater,Collin Madson,8.5,8.7,10.7,362.0,222.0,241.0,104,in between
+UW-Whitewater,Darius Chestnut,8.5,8.8,11.8,121.0,97.0,125.0,49,in between
+UW-Whitewater,Isaac Verges,4.9,9.2,9.4,30.0,3.0,11.0,5,in between
+UW-Whitewater,Isaiah Robinson,5.8,,,5.0,,,1,
+UW-Whitewater,JR Lukenbill,6.6,8.6,9.5,173.0,107.0,95.0,52,in between
+UW-Whitewater,Jake Quast,8.6,9.8,10.4,219.0,146.0,165.0,68,in between
+UW-Whitewater,Joey Berezowitz,11.9,16.0,11.4,143.0,77.0,122.0,35,in between
 UW-Whitewater,Jonah Rindfleisch,,6.3,,,4.0,,1,
-UW-Whitewater,Kelton McEwen,11.4,17.7,8.8,14.0,15.0,27.0,8,in between
-UW-Whitewater,Luke Bara,5.5,12.3,9.9,21.0,21.0,18.0,14,in between
-UW-Whitewater,Oskar Kangas,,2.3,,,1.0,,1,
-UW-Whitewater,Richie Warren,11.5,12.3,12.4,28.0,23.0,20.0,18,helps / sags off
+UW-Whitewater,Kelton McEwen,11.5,10.3,11.6,69.0,31.0,80.0,23,in between
+UW-Whitewater,Luke Bara,9.3,10.6,10.8,209.0,135.0,182.0,76,in between
+UW-Whitewater,Mikey Wildes,6.4,,7.9,9.0,,5.0,2,in between
+UW-Whitewater,Richie Warren,7.9,9.2,9.7,229.0,151.0,142.0,63,in between
 UW-Whitewater,Ryan Dolphin,5.4,,9.5,3.0,,3.0,1,in between
-UW-Whitewater,Tyshawn Teague-Johnson,15.0,20.5,13.9,17.0,15.0,18.0,10,helps / sags off
-UW-Whitewater,unnamed defense,9.3,10.2,10.8,3745.0,2179.0,3564.0,221,in between
+UW-Whitewater,Tyshawn Teague-Johnson,9.5,14.2,12.1,71.0,36.0,51.0,30,helps / sags off
+UW-Whitewater,unnamed defense,10.0,11.6,11.2,2017.0,1098.0,2387.0,190,in between
