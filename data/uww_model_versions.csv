@@ -1,18 +1,18 @@
 model,kind,version,version_date,signature,detail,scripts,last_checked
-Tag model (overall),trained,v2026.10.07.3,2026-10-07,2026-10-07T21:29:30,newest of 9 field model(s); last retrained field: situation,53_tag_model.py,2026-10-07T21:33:20
-Jersey-number recognizer,trained,v2026.10.07.2,2026-10-07,2026-10-07T21:20:43,"8075 training crops; 82% of held-back crops right; sources {'reads': 5454, 'extra': 3615, 'coach': 431}",48_jersey_number_recognizer.py,2026-10-07T21:33:20
-Tag model: ball_screen_coverage,trained,v2026.10.07.3,2026-10-07,2026-10-07T21:29:30,"86 tagged clips, 5 answers learned, one answer only",53_tag_model.py,2026-10-07T21:33:20
-Tag model: defense,trained,v2026.10.07.3,2026-10-07,2026-10-07T21:29:30,"254 tagged clips, 1 answers learned, one answer only",53_tag_model.py,2026-10-07T21:33:20
-Tag model: formation,trained,v2026.10.07.3,2026-10-07,2026-10-07T21:29:30,"129 tagged clips, 5 answers learned, one answer only",53_tag_model.py,2026-10-07T21:33:20
-Tag model: offball_coverage,trained,v2026.10.07.3,2026-10-07,2026-10-07T21:29:30,"58 tagged clips, 2 answers learned, one answer only",53_tag_model.py,2026-10-07T21:33:20
-Tag model: play_call,trained,v2026.10.07.3,2026-10-07,2026-10-07T21:29:30,"160 tagged clips, 7 answers learned, one answer only",53_tag_model.py,2026-10-07T21:33:20
-Tag model: press,trained,v2026.10.07.3,2026-10-07,2026-10-07T21:29:30,"252 tagged clips, 3 answers learned",53_tag_model.py,2026-10-07T21:33:20
-Tag model: primary_action,trained,v2026.10.07.3,2026-10-07,2026-10-07T21:29:30,"124 tagged clips, 6 answers learned",53_tag_model.py,2026-10-07T21:33:20
-Tag model: screen_defender,trained,v2026.10.07.3,2026-10-07,2026-10-07T21:29:30,"56 tagged clips, 6 answers learned",53_tag_model.py,2026-10-07T21:33:20
-Tag model: situation,trained,v2026.10.07.3,2026-10-07,2026-10-07T21:29:30,"298 tagged clips, 5 answers learned",53_tag_model.py,2026-10-07T21:33:20
-Jersey-number reader test,pretrained + code,v2026.10.03,2026-10-03,a4e5a83653a7,scores the OCR readers; none retrained here,49_jersey_number_reader_test.py,2026-10-07T21:33:20
-Player tracking,pretrained + code,v2026.10.08,2026-10-08,80a1b621dd0a,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",50_player_tracking.py,2026-10-07T21:33:20
-Court mapping,rules + code,v2026.10.02.2,2026-10-02,6234fd810510,3 calibration file(s),51_court_mapping.py,2026-10-07T21:33:20
-Defensive roles,rules + code,v2026.10.02,2026-10-02,6693b910acf2,"7 BBall Index-style roles, Division III cut-offs",55d_defensive_roles.py,2026-10-07T21:33:20
-Offensive roles,rules + code,v2026.10.02,2026-10-02,4fe5d5f99a0b,"12 BBall Index-style roles, Division III cut-offs",41b_offensive_roles.py,2026-10-07T21:33:20
-Player comparison,rules + code,v2026.10.07,2026-10-07,3c16f7881c90,tag-based similarity; LLM blend off,"32_load_player_comparison_algorithms_and.py, 33_surface_tag_based_best_match_per_target.py, 34_surface_llm_best_match_per_player.py, 35_blend_tag_based_and_llm_similarity_scores.py, 76_rebuild_player_comparisons_with_pbp.py",2026-10-07T21:33:20
+Tag model (overall),trained,v2026.10.08,2026-10-08,2026-10-08T21:07:52,newest of 9 field model(s); last retrained field: situation,53_tag_model.py,2026-10-08T21:13:17
+Jersey-number recognizer,trained,v2026.10.08,2026-10-08,2026-10-08T20:58:30,"8106 training crops; 82% of held-back crops right; sources {'reads': 5454, 'extra': 3615, 'coach': 467}",48_jersey_number_recognizer.py,2026-10-08T21:13:17
+Tag model: ball_screen_coverage,trained,v2026.10.08,2026-10-08,2026-10-08T21:07:52,"86 tagged clips, 5 answers learned, one answer only",53_tag_model.py,2026-10-08T21:13:17
+Tag model: defense,trained,v2026.10.08,2026-10-08,2026-10-08T21:07:52,"254 tagged clips, 1 answers learned, one answer only",53_tag_model.py,2026-10-08T21:13:17
+Tag model: formation,trained,v2026.10.08,2026-10-08,2026-10-08T21:07:52,"129 tagged clips, 5 answers learned, one answer only",53_tag_model.py,2026-10-08T21:13:17
+Tag model: offball_coverage,trained,v2026.10.08,2026-10-08,2026-10-08T21:07:52,"58 tagged clips, 2 answers learned, one answer only",53_tag_model.py,2026-10-08T21:13:17
+Tag model: play_call,trained,v2026.10.08,2026-10-08,2026-10-08T21:07:52,"160 tagged clips, 7 answers learned, one answer only",53_tag_model.py,2026-10-08T21:13:17
+Tag model: press,trained,v2026.10.08,2026-10-08,2026-10-08T21:07:52,"252 tagged clips, 3 answers learned",53_tag_model.py,2026-10-08T21:13:17
+Tag model: primary_action,trained,v2026.10.08,2026-10-08,2026-10-08T21:07:52,"124 tagged clips, 6 answers learned",53_tag_model.py,2026-10-08T21:13:17
+Tag model: screen_defender,trained,v2026.10.08,2026-10-08,2026-10-08T21:07:52,"56 tagged clips, 6 answers learned",53_tag_model.py,2026-10-08T21:13:17
+Tag model: situation,trained,v2026.10.08,2026-10-08,2026-10-08T21:07:52,"298 tagged clips, 5 answers learned, one answer only",53_tag_model.py,2026-10-08T21:13:17
+Jersey-number reader test,pretrained + code,v2026.10.03,2026-10-03,a4e5a83653a7,scores the OCR readers; none retrained here,49_jersey_number_reader_test.py,2026-10-08T21:13:17
+Player tracking,pretrained + code,v2026.10.08,2026-10-08,80a1b621dd0a,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",50_player_tracking.py,2026-10-08T21:13:17
+Court mapping,rules + code,v2026.10.02.2,2026-10-02,6234fd810510,3 calibration file(s),51_court_mapping.py,2026-10-08T21:13:17
+Defensive roles,rules + code,v2026.10.02,2026-10-02,6693b910acf2,"7 BBall Index-style roles, Division III cut-offs",55d_defensive_roles.py,2026-10-08T21:13:17
+Offensive roles,rules + code,v2026.10.02,2026-10-02,4fe5d5f99a0b,"12 BBall Index-style roles, Division III cut-offs",41b_offensive_roles.py,2026-10-08T21:13:17
+Player comparison,rules + code,v2026.10.07,2026-10-07,3c16f7881c90,tag-based similarity; LLM blend off,"32_load_player_comparison_algorithms_and.py, 33_surface_tag_based_best_match_per_target.py, 34_surface_llm_best_match_per_player.py, 35_blend_tag_based_and_llm_similarity_scores.py, 76_rebuild_player_comparisons_with_pbp.py",2026-10-08T21:13:17

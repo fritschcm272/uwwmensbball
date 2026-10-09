@@ -1,4 +1,4 @@
 game,clips,tracks,anchors,anchors_by_pose,anchors_by_rim,teams_by_color,clips_ball_seen,clips_with_lineups,synergy_player_in_lineup,tracks_named,anchor_name_check,tracks_named_by_number,tracks_number_read,anchor_vs_number_check,tracks_named_by_evidence,tracks_named_by_elimination,lineup_vs_anchor_check,numbers_used
-2025-12-20|WWW@AC,174,8789,0,0,0,home team wears light (Alma Scots),173,173,171,39,--,0,0,--,39,0,--,False
-2025-12-30|WWW@COE,175,12743,0,0,0,home team wears light (Coe Kohawks),171,168,159,144,--,98,0,--,65,0,--,False
-2026-01-03|WOS@WWW,184,9663,0,0,0,home team wears light (UW-Whitewater),181,175,169,447,--,252,0,--,255,1,--,False
+2025-12-20|WWW@AC,174,8789,0,0,0,home team wears light (Alma Scots),173,173,171,725,--,450,7207,--,655,2,2/11,True
+2025-12-30|WWW@COE,175,12743,0,0,0,home team wears light (Coe Kohawks),171,168,159,717,--,531,7207,--,531,3,2/11,True
+2026-01-03|WOS@WWW,184,9663,0,0,0,home team wears light (UW-Whitewater),181,175,169,2116,--,1409,7207,--,1702,58,2/11,True
