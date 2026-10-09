@@ -5587,8 +5587,6 @@ def _pr_title_widgets(d, pi, store, kp):
     # (Situation, Formation, Play call ...) and a row each for Coach / Automatic / Your answer / Right answer. The grid is
     # built from st.columns so the dropdown and the text box sit in each field's own column (a data_editor can't give one
     # row a dropdown and another a text box).
-    if pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
-        st.video(os.path.join(d["_dir"], pl["clip"]))
     esc_ = lambda x: html.escape(str(x))
     st.markdown('<table style="border-collapse:collapse;font-size:0.95rem;margin:0.4rem 0 0.6rem">'
                 '<tr><td style="border:1px solid #ddd;padding:3px 8px"><b>Coach\'s Title</b></td>'
@@ -5596,6 +5594,8 @@ def _pr_title_widgets(d, pi, store, kp):
                 '<tr><td style="border:1px solid #ddd;padding:3px 8px"><b>Automatic Title</b></td>'
                 f'<td style="border:1px solid #ddd;padding:3px 8px;font-family:monospace">{esc_(pl.get("auto_title") or "nothing confident enough yet")}</td></tr>'
                 '</table>', unsafe_allow_html=True)
+    if pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
+        st.video(os.path.join(d["_dir"], pl["clip"]))
     fields = pl.get("fields", [])
     if not fields:
         st.caption("No Title fields for this play.")
