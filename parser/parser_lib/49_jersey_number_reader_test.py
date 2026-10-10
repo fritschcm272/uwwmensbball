@@ -565,6 +565,8 @@ if RUN_JERSEY_READER_TEST:
                 _st["detected"] += 1
                 _p = _dd["p"]
                 _j = int(np.argmin(np.hypot((_p[:, 0] + _p[:, 2]) / 2 - _ch["px"], _p[:, 3] - _ch["py"])))
+                if "_jr_hidden" in globals() and _jr_hidden(_p, _j):
+                    continue                           # partly hidden behind someone in front: not a fair answer-key crop
                 _x1, _y1, _x2, _y2 = [int(v) for v in _p[_j, :4]]
                 _k = f"{_ch['frame_file']}|{_x1}|{_y1}|{_x2}|{_y2}"
                 # checks the recognizer TRAINS on can't also grade it

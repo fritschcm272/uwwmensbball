@@ -55,7 +55,32 @@ def _jr_box_at(det, frame, px, py):
     j = int(np.argmin(np.hypot((p[:, 0] + p[:, 2]) / 2 - px, p[:, 3] - py)))
     if np.hypot((p[j, 0] + p[j, 2]) / 2 - px, p[j, 3] - py) > 25:
         return None
+    if _jr_hidden(p, j):
+        return None                  # partly hidden behind someone in front: the chest crop may show the other person
     return [float(v) for v in p[j, :4]]
+
+
+def _jr_hidden(p, j):
+    """CONFIRMED CHANGE (requested; clip 1 t048: Luke Bara's box was 42% covered by the box of a coach standing IN FRONT of him,
+    so Bara's chest crop showed part of the coach). True when a box whose feet are lower on the picture (closer to the camera)
+    covers more than JERSEY_MAX_HIDDEN of box j. Such a box never becomes a training or test crop (on the saved checks this
+    skips about 15% of the checked boxes)."""
+    try:
+        lim = float(globals().get("JERSEY_MAX_HIDDEN", 0.3))
+        if lim <= 0:
+            return False
+        a = p[j]
+        area = max(float(a[2] - a[0]) * float(a[3] - a[1]), 1e-6)
+        for k in range(len(p)):
+            if k == j or float(p[k, 3]) <= float(a[3]):
+                continue                               # only someone in FRONT (feet lower) can hide him
+            ix = max(0.0, min(float(a[2]), float(p[k, 2])) - max(float(a[0]), float(p[k, 0])))
+            iy = max(0.0, min(float(a[3]), float(p[k, 3])) - max(float(a[1]), float(p[k, 1])))
+            if ix * iy / area > lim:
+                return True
+        return False
+    except Exception:
+        return False
 
 
 def _jr_save(img, box, path):

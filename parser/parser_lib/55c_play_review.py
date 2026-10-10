@@ -301,7 +301,10 @@ def _pr_boxes(rows, t, Hpx, numtxt):
                       "label": (numtxt(rr["name"]) + ((f"? {round(100 * float(rr['name_conf']))}%" if pd.notna(pd.to_numeric(rr.get("name_conf"), errors="coerce")) else "?")
                                                 if rr.get("name_how") == "best guess" else "")) if named else "",
                       "conf": (float(rr["name_conf"]) if named and pd.notna(pd.to_numeric(rr.get("name_conf"), errors="coerce")) else None),
-                      "guess": named and rr.get("name_how") == "best guess"})
+                      "guess": named and rr.get("name_how") == "best guess",
+                      # the best guess NOT shown (under the cutoff) -- never displayed, saved with the check so it keeps being measured
+                      "hidden_guess": (rr.get("guess_name") if not named and isinstance(rr.get("guess_name"), str) else None),
+                      "hidden_guess_p": (float(rr["guess_p"]) if not named and pd.notna(pd.to_numeric(rr.get("guess_p"), errors="coerce")) else None)})
     return boxes
 
 

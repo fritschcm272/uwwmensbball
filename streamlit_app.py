@@ -5821,7 +5821,8 @@ def _pr_payload(d, store, coach, kp, part=None):
                 out["checks"].append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
                                       "frame_file": pic.get("frame_file"), "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"),
                                       "side": b.get("side"), "assigned": b.get("name"), "assigned_how": b.get("how"),
-                                      "assigned_conf": b.get("conf"), "verdict": verdict, "true_name": name})
+                                      "assigned_conf": b.get("conf"), "verdict": verdict, "true_name": name,
+                                      "hidden_guess": b.get("hidden_guess"), "hidden_guess_p": b.get("hidden_guess_p")})
     if part == "titles":
         out.pop("checks")
     elif part == "players":
@@ -6106,6 +6107,10 @@ def _pnt_load_checks():
     if not rows:
         return pd.DataFrame()
     df = pd.DataFrame(rows).sort_values("saved")
+    # CONFIRMED BUG (fixed; found in the saved checks): 4 checks say "wrong" but name the same player that was assigned (a slip
+    # in the review) -- the assigned name was right, so they count as correct (the parser reads them the same way).
+    _same = df["verdict"].eq("wrong") & df["true_name"].notna() & df["true_name"].eq(df["assigned"])
+    df.loc[_same, "verdict"] = "correct"
     return df.drop_duplicates(["run", "clip_key", "frame", "px", "py"], keep="last").reset_index(drop=True)
 
 
@@ -6178,6 +6183,22 @@ def _pnt_metrics(df):
         st.markdown("**By game**")
         gm = _pnt_summary(df.assign(game=df["game"].map(_pnt_game_label)), "game")
         st.dataframe(gm, hide_index=True, use_container_width=True)
+    # CONFIRMED CHANGE (requested: a "By game possession" table next to "By game"): one row per checked possession (clip) --
+    # which plays the model gets right and which it struggles with. clip_key = "date|clip number|Synergy description".
+    _ck = df["clip_key"].astype(str).str.split("|", n=2, expand=True).reindex(columns=[0, 1, 2])
+    gp = df.assign(Game=df["game"].map(_pnt_game_label),
+                   Clip=pd.to_numeric(_ck[1], errors="coerce"),
+                   Play=_ck[2].fillna("").str.slice(0, 90))
+    if len(gp):
+        st.markdown("**By game possession** -- one row per checked play, in game order")
+        tb = _pnt_summary(gp, ["Game", "Clip", "Play"])
+        tb["Named right"] = tb.apply(lambda r: int(((gp["Game"] == r["Game"]) & (gp["Clip"] == r["Clip"])
+                                                    & gp["assigned"].notna() & gp["verdict"].eq("correct")).sum()), axis=1)
+        tb["Named"] = tb.apply(lambda r: int(((gp["Game"] == r["Game"]) & (gp["Clip"] == r["Clip"])
+                                              & gp["assigned"].notna()).sum()), axis=1)
+        tb = tb.sort_values(["Game", "Clip"]).reset_index(drop=True)
+        st.dataframe(tb, hide_index=True, use_container_width=True, height=min(420, 38 + 35 * len(tb)),
+                     column_config={"Clip": st.column_config.NumberColumn(format="%d")})
 
 
 def _pnt_check_form(prd):
@@ -13214,6 +13235,7 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
             out["checks"].append({"clip_key": p["clip_key"], "clip_number": p.get("clip_number"), "frame_file": pic.get("frame_file"),
                                   "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"), "side": b.get("side"),
                                   "assigned": b.get("name"), "assigned_how": b.get("how"), "assigned_conf": b.get("conf"),
+                                  "hidden_guess": b.get("hidden_guess"), "hidden_guess_p": b.get("hidden_guess_p"),
                                   "verdict": verdict, "true_name": name})
     fname = (f"play_review_{d.get('slug')}_{d.get('run')}_{re.sub(r'[^A-Za-z0-9]+', '_', coach.strip()).strip('_')}_"
              f"{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
