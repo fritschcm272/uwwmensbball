@@ -200,7 +200,10 @@ def willie_image_b64(max_width: int = 0) -> str:
         return ""
 
 
-@st.cache_data
+# CONFIRMED BUG (fixed; MSOE showed "No scouting report, roster, or game-plan data has been parsed yet" and no logo
+# after a new run was pushed): cached with no expiry, so the list was built once and never re-read new data.
+# Same 60-second expiry as load_table().
+@st.cache_data(ttl=60)
 def _get_logo_filenames() -> list:
     """Return list of logo file stems (without extension) available in data/logo/."""
     logo_dir = os.path.join(DATA_DIR, "logo")
@@ -253,7 +256,10 @@ def find_logo_b64(*candidate_names: str) -> str:
     return ""
 
 
-@st.cache_data
+# CONFIRMED BUG (fixed; MSOE showed "No scouting report, roster, or game-plan data has been parsed yet" and no logo
+# after a new run was pushed): cached with no expiry, so the list was built once and never re-read new data.
+# Same 60-second expiry as load_table().
+@st.cache_data(ttl=60)
 def load_short_opponent_names(season=None) -> list:
     """uww_schedule uses full opponent names (e.g. "Ripon Red Hawks"), while every analytical table built from
     scouting reports / PBP / video tagging uses a shorter form (e.g. "Ripon") -- collect the union of short
