@@ -49,6 +49,74 @@ import numpy as np          # this cell runs before any other cell that imports 
 # tiktoken installed"). Installed here, at the top of this cell, before any reader runs. transformers only notices
 # it after a restart, so the cell stops and asks for ONE kernel restart right after installing it.
 import importlib
+
+# ---- cache files that survive a full disk (shared helper; the same copy is in every section that uses them) ---------
+# CONFIRMED BUG (fixed; "Jersey-number recognizer skipped: EOFError: Ran out of input", and tracking's "jersey numbers not
+# read this run (EOFError ...)"): a run that filled the disk left a cache file empty / cut short, and loading it stopped the
+# section. A damaged cache is now set aside as "<name>.broken" (it's rebuilt), and caches are written to a temporary file
+# first and swapped in only when complete, so a full disk can no longer leave a half-written cache behind.
+def _safe_read_pickle(path, default=None):
+    try:
+        return pd.read_pickle(path)
+    except Exception as _e:
+        try:
+            if os.path.isfile(path):
+                os.replace(path, path + ".broken")
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} was damaged ({type(_e).__name__}) -- set aside as .broken and "
+              f"rebuilt (a disk that filled up mid-save does this)", flush=True)
+        return {} if default is None else default
+
+
+def _safe_read_latest(paths, default=None):
+    """The newest readable file of several (e.g. detections_*.pkl), newest first; damaged ones are set aside."""
+    for p_ in sorted(paths, key=lambda q: os.path.getmtime(q) if os.path.exists(q) else 0, reverse=True):
+        d_ = _safe_read_pickle(p_, default=False)
+        if d_ is not False:
+            return d_
+    return {} if default is None else default
+
+
+def _safe_to_pickle(obj, path):
+    if not isinstance(path, (str, bytes, os.PathLike)):
+        return pd.to_pickle(obj, path)                    # an in-memory buffer
+    root, ext = os.path.splitext(str(path))
+    tmp = f"{root}.tmp{ext}"
+    try:
+        pd.to_pickle(obj, tmp)
+    except OSError as _e:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved ({type(_e).__name__}: {_e}) -- free disk space; the "
+              f"previous copy is kept", flush=True)
+        return
+    # CONFIRMED BUG (fixed; "PermissionError: [WinError 5] Access is denied: ...jersey_numbers.tmp.pkl -> jersey_numbers.pkl"):
+    # on Windows, OneDrive or antivirus holds a file open for a moment while it syncs / scans it, and swapping the new copy in
+    # fails then. It's retried for a few seconds; if the file stays locked, it's written in place instead.
+    import time as _sp_time
+    for _try in range(8):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:
+            _sp_time.sleep(0.25 * (_try + 1))
+        except OSError:
+            break
+    try:
+        pd.to_pickle(obj, path)
+    except OSError as _e:
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved -- the file is locked by another program (OneDrive sync or "
+              f"antivirus?) ({type(_e).__name__}); the previous copy is kept and it's saved again on the next save", flush=True)
+    finally:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+
+
 def _jn_paddle_fix_or_skip(e):
     """PaddleOCR's known Anaconda problem ("cannot import name 'tarfile' from 'backports'") can appear at import OR when
     its reader starts -- fix it wherever it shows (install + one restart); anything else: show once, skip this run."""
@@ -557,7 +625,7 @@ if RUN_JERSEY_READER_TEST:
         _st = {"files": len(_vf), "checks": 0, "numbered": 0, "on_disk": 0, "detected": 0}
         _dets = sorted(glob.glob(os.path.join(INPUT_DIR, "_tracking", "detections_*tiles*.pkl")), key=os.path.getmtime)
         _dets = [d_ for d_ in _dets if "jersey" not in d_]
-        _det = pd.read_pickle(_dets[-1]) if _dets else {}
+        _det = _safe_read_latest(_dets) if _dets else {}
         _nums_by_game = {}
         for _ch in _checks:
             _gd, _gc = str(_ch.get("game") or "|").split("|", 1)
@@ -597,7 +665,7 @@ if RUN_JERSEY_READER_TEST:
     except Exception as _e:
         print(f"  (coach checks not added to the answer key: {type(_e).__name__}: {_e})")
     _cp = os.path.join(INPUT_DIR, "_tracking", "jersey_reader_test.pkl")
-    _saved = pd.read_pickle(_cp) if os.path.exists(_cp) else {}
+    _saved = _safe_read_pickle(_cp) if os.path.exists(_cp) else {}
     # CONFIRMED BUG (fixed): the answer-key crops live on the frames they were cut from, and when those frames were
     # deleted (the old track1024 folder) the test found 0 crops and switched jersey numbers off -- although every
     # reader's answers on them were already saved. A crop now counts if its frame is on disk OR every reader's
@@ -659,7 +727,7 @@ if RUN_JERSEY_READER_TEST:
                 if _eng == "trained_pose" and "_jr_torso_save" in globals():
                     _jr_torso_save()
                 os.makedirs(os.path.dirname(_cp), exist_ok=True)
-                pd.to_pickle(_saved, _cp)
+                _safe_to_pickle(_saved, _cp)
             _right = sum(1 for k, v in _have.items() if _saved.get((_eng, k), ("", 0))[0] == v)
             JERSEY_READER_ACCURACY[_eng] = _right / max(len(_have), 1)
             # CONFIRMED CHANGE (1024 test: easyocr_find read 11/48 and its misses were almost all "nothing", not wrong

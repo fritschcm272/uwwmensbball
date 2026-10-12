@@ -33,6 +33,74 @@ import re
 
 import numpy as np
 
+# ---- cache files that survive a full disk (shared helper; the same copy is in every section that uses them) ---------
+# CONFIRMED BUG (fixed; "Jersey-number recognizer skipped: EOFError: Ran out of input", and tracking's "jersey numbers not
+# read this run (EOFError ...)"): a run that filled the disk left a cache file empty / cut short, and loading it stopped the
+# section. A damaged cache is now set aside as "<name>.broken" (it's rebuilt), and caches are written to a temporary file
+# first and swapped in only when complete, so a full disk can no longer leave a half-written cache behind.
+def _safe_read_pickle(path, default=None):
+    try:
+        return pd.read_pickle(path)
+    except Exception as _e:
+        try:
+            if os.path.isfile(path):
+                os.replace(path, path + ".broken")
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} was damaged ({type(_e).__name__}) -- set aside as .broken and "
+              f"rebuilt (a disk that filled up mid-save does this)", flush=True)
+        return {} if default is None else default
+
+
+def _safe_read_latest(paths, default=None):
+    """The newest readable file of several (e.g. detections_*.pkl), newest first; damaged ones are set aside."""
+    for p_ in sorted(paths, key=lambda q: os.path.getmtime(q) if os.path.exists(q) else 0, reverse=True):
+        d_ = _safe_read_pickle(p_, default=False)
+        if d_ is not False:
+            return d_
+    return {} if default is None else default
+
+
+def _safe_to_pickle(obj, path):
+    if not isinstance(path, (str, bytes, os.PathLike)):
+        return pd.to_pickle(obj, path)                    # an in-memory buffer
+    root, ext = os.path.splitext(str(path))
+    tmp = f"{root}.tmp{ext}"
+    try:
+        pd.to_pickle(obj, tmp)
+    except OSError as _e:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved ({type(_e).__name__}: {_e}) -- free disk space; the "
+              f"previous copy is kept", flush=True)
+        return
+    # CONFIRMED BUG (fixed; "PermissionError: [WinError 5] Access is denied: ...jersey_numbers.tmp.pkl -> jersey_numbers.pkl"):
+    # on Windows, OneDrive or antivirus holds a file open for a moment while it syncs / scans it, and swapping the new copy in
+    # fails then. It's retried for a few seconds; if the file stays locked, it's written in place instead.
+    import time as _sp_time
+    for _try in range(8):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:
+            _sp_time.sleep(0.25 * (_try + 1))
+        except OSError:
+            break
+    try:
+        pd.to_pickle(obj, path)
+    except OSError as _e:
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved -- the file is locked by another program (OneDrive sync or "
+              f"antivirus?) ({type(_e).__name__}); the previous copy is kept and it's saved again on the next save", flush=True)
+    finally:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+
+
+
 
 # field -> column holding the coach's answer. Columns starting "label_" are built below from the decoded Title.
 TAG_MODEL_TARGETS = {
@@ -205,14 +273,14 @@ def _tm_frame_matrix(pc):
         return None
     cache_path = os.path.join(TAG_MODEL_DIR, f"frame_vectors_{re.sub(r'[^A-Za-z0-9]+', '_', TAG_MODEL_FRAME_ENCODER)}"
                                             f"_{TAG_MODEL_FRAME_SIZE[0]}x{TAG_MODEL_FRAME_SIZE[1]}_clsmean.pkl")
-    cache = pd.read_pickle(cache_path) if os.path.exists(cache_path) else {}
+    cache = _safe_read_pickle(cache_path) if os.path.exists(cache_path) else {}
     todo = sorted({f for fl in lists[ok] for f in fl if f not in cache and os.path.exists(os.path.join(base, f))})
     if todo:
         print(f"  [tag model] encoding {len(todo)} new frame(s)...")
         for f, v in zip(todo, _tm_encode_images([os.path.join(base, f) for f in todo])):
             cache[f] = np.asarray(v, dtype=np.float16)
         os.makedirs(TAG_MODEL_DIR, exist_ok=True)
-        pd.to_pickle(cache, cache_path)
+        _safe_to_pickle(cache, cache_path)
     ok = ok & lists.map(lambda fl: all(f in cache for f in fl))
     _tm_frame_diag["encoded"] = int(ok.sum())
     if ok.sum() < 3:
@@ -355,7 +423,7 @@ def _tm_position_matrix(pc):
         return None
     cache_path = os.path.join(TAG_MODEL_DIR, f"player_boxes_{re.sub(r'[^A-Za-z0-9]+', '_', TAG_MODEL_DETECTOR)}"
                                             f"_{TAG_MODEL_DETECT_SIZE}_{TAG_MODEL_DETECT_CONF}.pkl")
-    cache = pd.read_pickle(cache_path) if os.path.exists(cache_path) else {}
+    cache = _safe_read_pickle(cache_path) if os.path.exists(cache_path) else {}
     todo = sorted({f for fl in lists[ok] for f in fl if f not in cache})
     if todo:
         print(f"  [positions] finding players in {len(todo)} new frame(s)...")
@@ -363,7 +431,7 @@ def _tm_position_matrix(pc):
         for f in todo:
             cache[f] = found.get(os.path.join(base, f), np.zeros((0, 8), dtype=np.float32))
         os.makedirs(TAG_MODEL_DIR, exist_ok=True)
-        pd.to_pickle(cache, cache_path)
+        _safe_to_pickle(cache, cache_path)
     from PIL import Image
     cols = [f"pos_f{k + 1}_{name}" for k in range(n) for name in _TM_POS_PER_FRAME]
     pm = pd.DataFrame(np.nan, index=pc.index, columns=cols)

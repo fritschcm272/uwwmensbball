@@ -829,6 +829,51 @@ def tag_queue():
         print("Film Tagging -- tagging progress by game (Titles + app tags):\n  " + "\n  ".join(summary), flush=True)
 
 
+def _pr_retire_redated():
+    """CONFIRMED BUG (fixed with the Play calls date fix): the WashU game (3/7) had been filed one day early, as
+    "2026-03-06 UWWhitewater@Wash(StLouis)", and its Play review / Film Tagging batch went to the app under that date.
+    Now that it's dated right, a review or batch whose game is no longer among the play calls -- but the same game code
+    is, a day away -- is the old copy: it's removed from the app's data folder so the app doesn't show it twice."""
+    pc = globals().get("play_calls")
+    if not isinstance(pc, pd.DataFrame) or pc.empty or not {"game_date", "game_code"} <= set(pc.columns):
+        return
+    have = set()
+    by_code = {}
+    for gd_, gc_ in pc[["game_date", "game_code"]].dropna().drop_duplicates().itertuples(index=False):
+        try:
+            d_ = pd.Timestamp(gd_).date()
+        except Exception:
+            continue
+        have.add((d_, str(gc_)))
+        by_code.setdefault(str(gc_), set()).add(d_)
+    for kind in ("play_review", "play_tag"):
+        base = os.path.join(_pr_app_dir(), kind)
+        if not os.path.isdir(base):
+            continue
+        for sub in sorted(os.listdir(base)):
+            rj = os.path.join(base, sub, "review.json")
+            if not os.path.isfile(rj):
+                continue
+            try:
+                with open(rj, encoding="utf-8") as fh:
+                    game = str(json.load(fh).get("game") or "")
+                gd_, gc_ = game.split("|", 1)
+                d_ = pd.Timestamp(gd_).date()
+            except Exception:
+                continue
+            if (d_, gc_) in have:
+                continue
+            if any(abs((x - d_).days) <= 1 for x in by_code.get(gc_, ())):
+                shutil.rmtree(os.path.join(base, sub), ignore_errors=True)
+                print(f"  [{'play review' if kind == 'play_review' else 'film tagging'}] removed the old copy of {gc_} "
+                      f"filed under {d_} (the game is dated right now; a new one is made under the right date)", flush=True)
+
+
+try:
+    _pr_retire_redated()
+except Exception as _e:
+    print(f"  (old re-dated reviews not checked: {type(_e).__name__}: {_e})")
+
 if RUN_PLAY_REVIEW:
     try:
         play_review()

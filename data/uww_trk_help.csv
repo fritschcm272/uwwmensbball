@@ -1,8 +1,8 @@
 defense_team,defender,approx_ft_off_man_ball side,approx_ft_off_man_on ball,approx_ft_off_man_weak side,frames_ball side,frames_on ball,frames_weak side,clips,tendency
-Alma Scots,unnamed defense,9.1,11.1,11.3,694.0,730.0,1218.0,79,in between
+Alma Scots,unnamed defense,9.2,11.0,11.1,731.0,744.0,1274.0,79,in between
 Coe Kohawks,Austin Beeson,,11.8,,,1.0,,1,
 Coe Kohawks,Brock Marino,,17.2,,,1.0,,1,
-Coe Kohawks,C. Reece Breitenbach,10.6,13.8,13.0,2.0,4.0,3.0,3,helps / sags off
+Coe Kohawks,C. Reece Breitenbach,11.3,13.6,13.0,3.0,3.0,3.0,3,helps / sags off
 Coe Kohawks,Cooper Nailor,7.0,7.7,10.4,5.0,7.0,1.0,3,in between
 Coe Kohawks,Darius Chestnut,24.6,,,1.0,,,1,
 Coe Kohawks,Deuce Walters,8.9,9.1,10.4,4.0,11.0,2.0,3,in between
@@ -10,15 +10,14 @@ Coe Kohawks,Jackson Bowman,5.1,7.3,,1.0,1.0,,1,
 Coe Kohawks,Joey Berezowitz,,16.1,,,1.0,,1,
 Coe Kohawks,Kanyon Bryte,,6.2,,,4.0,,2,
 Coe Kohawks,Ryan Dolphin,14.2,7.0,13.5,5.0,1.0,3.0,2,helps / sags off
-Coe Kohawks,unnamed defense,9.5,11.2,10.3,721.0,743.0,735.0,81,in between
-Loras Duhawks,unnamed defense,14.2,14.0,14.5,1857.0,1082.0,8249.0,90,helps / sags off
+Coe Kohawks,unnamed defense,9.4,11.4,10.4,754.0,726.0,771.0,81,in between
 Marian (WI) Sabres,unnamed defense,12.6,16.3,13.1,256.0,57.0,96.0,18,helps / sags off
 UW-Oshkosh Titans,Aiden Hawkinson,,6.8,3.9,,4.0,1.0,4,stays attached
 UW-Oshkosh Titans,Brandon Beck,6.0,6.0,8.2,10.0,14.0,7.0,7,in between
 UW-Oshkosh Titans,Carter Thomas,4.6,10.0,5.2,4.0,6.0,1.0,2,stays attached
 UW-Oshkosh Titans,Darius Chestnut,,,8.0,,,1.0,1,in between
 UW-Oshkosh Titans,Jay Dalton,11.4,12.1,,1.0,2.0,,1,
-UW-Oshkosh Titans,Joey LaChapell,7.6,8.8,8.5,12.0,5.0,18.0,8,in between
+UW-Oshkosh Titans,Joey LaChapell,8.0,8.8,8.5,13.0,5.0,18.0,8,in between
 UW-Oshkosh Titans,Jonah Rindfleisch,4.3,9.4,,1.0,1.0,,1,
 UW-Oshkosh Titans,Logan Rindfleisch,,7.4,,,1.0,,1,
 UW-Oshkosh Titans,Luke Bara,8.7,11.8,,2.0,3.0,,1,
@@ -27,17 +26,24 @@ UW-Oshkosh Titans,Michael Metcalf-Grassman,7.5,2.5,,2.0,4.0,,2,
 UW-Oshkosh Titans,Nate Nazos,4.9,7.6,4.3,2.0,8.0,2.0,4,stays attached
 UW-Oshkosh Titans,Oskar Kangas,13.0,,1.3,2.0,,1.0,2,stays attached
 UW-Oshkosh Titans,Vitorio Dante,4.2,8.1,5.9,3.0,4.0,2.0,3,stays attached
-UW-Oshkosh Titans,unnamed defense,7.5,8.0,8.7,1087.0,878.0,727.0,90,in between
+UW-Oshkosh Titans,unnamed defense,7.5,8.0,8.8,1097.0,857.0,734.0,90,in between
 UW-Whitewater,Brock Marino,5.3,28.9,11.5,5.0,5.0,5.0,5,in between
 UW-Whitewater,Collin Madson,9.4,9.7,11.5,22.0,12.0,1.0,11,in between
 UW-Whitewater,Darius Chestnut,8.8,14.5,10.3,21.0,13.0,9.0,9,in between
-UW-Whitewater,JR Lukenbill,6.3,8.6,14.9,23.0,24.0,6.0,15,helps / sags off
-UW-Whitewater,Jake Quast,10.3,4.4,9.7,13.0,12.0,12.0,7,in between
+UW-Whitewater,JR Lukenbill,6.8,8.0,14.9,20.0,27.0,6.0,15,helps / sags off
+UW-Whitewater,Jake Quast,10.0,3.9,10.3,14.0,11.0,11.0,7,in between
 UW-Whitewater,Joey Berezowitz,8.2,6.7,5.3,23.0,4.0,16.0,7,stays attached
 UW-Whitewater,Kelton McEwen,10.1,6.5,7.0,4.0,1.0,4.0,3,stays attached
-UW-Whitewater,Luke Bara,5.5,17.1,7.4,19.0,8.0,15.0,13,in between
+UW-Whitewater,Luke Bara,5.1,17.1,8.3,21.0,8.0,13.0,13,in between
 UW-Whitewater,Richie Warren,7.2,11.3,6.6,33.0,21.0,13.0,17,stays attached
 UW-Whitewater,Ryan Dolphin,4.3,,11.2,1.0,,2.0,1,in between
 UW-Whitewater,Tyshawn Teague-Johnson,7.6,13.1,20.6,8.0,4.0,6.0,6,helps / sags off
 UW-Whitewater,Vitorio Dante,2.9,,,1.0,,,1,
-UW-Whitewater,unnamed defense,9.0,10.4,10.4,3633.0,2343.0,3687.0,240,in between
+UW-Whitewater,unnamed defense,9.0,10.4,10.4,3661.0,2386.0,3674.0,240,in between
+Washington-St. Louis Bears,Anthony Przybilla,11.2,13.7,14.7,5.0,1.0,13.0,1,helps / sags off
+Washington-St. Louis Bears,Calvin Kapral,12.5,15.2,11.1,9.0,2.0,14.0,4,in between
+Washington-St. Louis Bears,Connor May,15.0,16.5,17.6,171.0,70.0,457.0,49,helps / sags off
+Washington-St. Louis Bears,Ryan Cohen,15.5,15.0,18.2,213.0,134.0,406.0,56,helps / sags off
+Washington-St. Louis Bears,Will Grudzinski,21.4,16.9,16.7,6.0,12.0,24.0,6,helps / sags off
+Washington-St. Louis Bears,Yogi Oliff,20.8,16.3,18.4,84.0,53.0,315.0,38,helps / sags off
+Washington-St. Louis Bears,unnamed defense,14.3,14.9,14.6,1417.0,825.0,5979.0,90,helps / sags off

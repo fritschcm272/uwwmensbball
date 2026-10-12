@@ -32,6 +32,74 @@ import shutil
 import time
 import json as _trk_json
 
+# ---- cache files that survive a full disk (shared helper; the same copy is in every section that uses them) ---------
+# CONFIRMED BUG (fixed; "Jersey-number recognizer skipped: EOFError: Ran out of input", and tracking's "jersey numbers not
+# read this run (EOFError ...)"): a run that filled the disk left a cache file empty / cut short, and loading it stopped the
+# section. A damaged cache is now set aside as "<name>.broken" (it's rebuilt), and caches are written to a temporary file
+# first and swapped in only when complete, so a full disk can no longer leave a half-written cache behind.
+def _safe_read_pickle(path, default=None):
+    try:
+        return pd.read_pickle(path)
+    except Exception as _e:
+        try:
+            if os.path.isfile(path):
+                os.replace(path, path + ".broken")
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} was damaged ({type(_e).__name__}) -- set aside as .broken and "
+              f"rebuilt (a disk that filled up mid-save does this)", flush=True)
+        return {} if default is None else default
+
+
+def _safe_read_latest(paths, default=None):
+    """The newest readable file of several (e.g. detections_*.pkl), newest first; damaged ones are set aside."""
+    for p_ in sorted(paths, key=lambda q: os.path.getmtime(q) if os.path.exists(q) else 0, reverse=True):
+        d_ = _safe_read_pickle(p_, default=False)
+        if d_ is not False:
+            return d_
+    return {} if default is None else default
+
+
+def _safe_to_pickle(obj, path):
+    if not isinstance(path, (str, bytes, os.PathLike)):
+        return pd.to_pickle(obj, path)                    # an in-memory buffer
+    root, ext = os.path.splitext(str(path))
+    tmp = f"{root}.tmp{ext}"
+    try:
+        pd.to_pickle(obj, tmp)
+    except OSError as _e:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved ({type(_e).__name__}: {_e}) -- free disk space; the "
+              f"previous copy is kept", flush=True)
+        return
+    # CONFIRMED BUG (fixed; "PermissionError: [WinError 5] Access is denied: ...jersey_numbers.tmp.pkl -> jersey_numbers.pkl"):
+    # on Windows, OneDrive or antivirus holds a file open for a moment while it syncs / scans it, and swapping the new copy in
+    # fails then. It's retried for a few seconds; if the file stays locked, it's written in place instead.
+    import time as _sp_time
+    for _try in range(8):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:
+            _sp_time.sleep(0.25 * (_try + 1))
+        except OSError:
+            break
+    try:
+        pd.to_pickle(obj, path)
+    except OSError as _e:
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved -- the file is locked by another program (OneDrive sync or "
+              f"antivirus?) ({type(_e).__name__}); the previous copy is kept and it's saved again on the next save", flush=True)
+    finally:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+
+
+
 
 _CM_BASKET_X, _CM_ARC, _CM_CORNER = 5.25, 22.146, 21.667
 # Landmarks (x, y) in court feet -- left end; the right end mirrors x -> 94 - x. "near" = the camera's sideline.
@@ -169,7 +237,7 @@ def _cm_detection_boxes(rel):
         # the newest detections file (tiled or not) -- only used to mask players out of the floor features
         cands = sorted(glob.glob(os.path.join(TRACK_DIR, "detections_*.pkl")), key=os.path.getmtime)
         p = _trk_det_cache_path() if os.path.exists(_trk_det_cache_path()) else (cands[-1] if cands else "")
-        det = globals()["_cm_det_cache"] = pd.read_pickle(p) if p and os.path.exists(p) else {}
+        det = globals()["_cm_det_cache"] = _safe_read_pickle(p) if p and os.path.exists(p) else {}
     d = det.get(rel)
     return d["p"][:, :4] if d is not None and len(d["p"]) else np.zeros((0, 4))
 
@@ -268,7 +336,7 @@ def court_mapping(pc, tracks):
               f"{np.mean([r['err'] for r in rs]):.2f} ft", flush=True)
     sig = _cm_slug(_trk_json.dumps(sorted((a, r["file"], round(r["err"], 3)) for a, rs in refs_by_arena.items() for r in rs)))[:120]
     cache_path = os.path.join(TRACK_DIR, "court_homographies.pkl")
-    cache = pd.read_pickle(cache_path) if os.path.exists(cache_path) else {}
+    cache = _safe_read_pickle(cache_path) if os.path.exists(cache_path) else {}
     # CONFIRMED BUG (fixed; coach: "only the Coe game needed a calibration -- why is it re-placing the Oshkosh @
     # Whitewater frames?"). One fingerprint covered EVERY gym's calibration, so adding Coe's threw away all saved
     # frames, including Whitewater's 16,500 whose calibration hadn't changed. Now each gym has its own fingerprint:
@@ -325,7 +393,7 @@ def court_mapping(pc, tracks):
                     n_new += 1
                     _cm_progress(f"frames matched ({n_map:,} on the court so far)", n_new, total - n_cached, _t0)
                     if n_new % 300 == 0:
-                        pd.to_pickle(cache, cache_path)   # save progress: an interrupted run keeps its work
+                        _safe_to_pickle(cache, cache_path)   # save progress: an interrupted run keeps its work
                 if rel in cache:
                     if cache[rel] is not None:
                         n_map += 1
@@ -365,7 +433,7 @@ def court_mapping(pc, tracks):
                        "mapped_pct": round(100 * n_map / max(n_all, 1)), "mapped_by_chaining": n_chain,
                        "calibration_frames": len(refs), "calibration_error_ft": round(float(np.mean(errs)), 2),
                        "calibration_page": None})
-    pd.to_pickle(cache, cache_path)
+    _safe_to_pickle(cache, cache_path)
 
     # ---- every track point onto the court, then turned so the offense attacks the same basket ----
     files_of = {r["track_clip_key"]: [f for f in r["track_files"].split(";") if f] for _, r in rows.iterrows()}

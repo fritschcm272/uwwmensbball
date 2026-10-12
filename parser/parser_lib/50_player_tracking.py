@@ -142,6 +142,74 @@
 # linked. At every play boundary the players at the end of one play are now matched, spot for spot, with the players
 # at the start of the next -- names carry across in both directions, play after play, until a substitution.
 
+
+# ---- cache files that survive a full disk (shared helper; the same copy is in every section that uses them) ---------
+# CONFIRMED BUG (fixed; "Jersey-number recognizer skipped: EOFError: Ran out of input", and tracking's "jersey numbers not
+# read this run (EOFError ...)"): a run that filled the disk left a cache file empty / cut short, and loading it stopped the
+# section. A damaged cache is now set aside as "<name>.broken" (it's rebuilt), and caches are written to a temporary file
+# first and swapped in only when complete, so a full disk can no longer leave a half-written cache behind.
+def _safe_read_pickle(path, default=None):
+    try:
+        return pd.read_pickle(path)
+    except Exception as _e:
+        try:
+            if os.path.isfile(path):
+                os.replace(path, path + ".broken")
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} was damaged ({type(_e).__name__}) -- set aside as .broken and "
+              f"rebuilt (a disk that filled up mid-save does this)", flush=True)
+        return {} if default is None else default
+
+
+def _safe_read_latest(paths, default=None):
+    """The newest readable file of several (e.g. detections_*.pkl), newest first; damaged ones are set aside."""
+    for p_ in sorted(paths, key=lambda q: os.path.getmtime(q) if os.path.exists(q) else 0, reverse=True):
+        d_ = _safe_read_pickle(p_, default=False)
+        if d_ is not False:
+            return d_
+    return {} if default is None else default
+
+
+def _safe_to_pickle(obj, path):
+    if not isinstance(path, (str, bytes, os.PathLike)):
+        return pd.to_pickle(obj, path)                    # an in-memory buffer
+    root, ext = os.path.splitext(str(path))
+    tmp = f"{root}.tmp{ext}"
+    try:
+        pd.to_pickle(obj, tmp)
+    except OSError as _e:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved ({type(_e).__name__}: {_e}) -- free disk space; the "
+              f"previous copy is kept", flush=True)
+        return
+    # CONFIRMED BUG (fixed; "PermissionError: [WinError 5] Access is denied: ...jersey_numbers.tmp.pkl -> jersey_numbers.pkl"):
+    # on Windows, OneDrive or antivirus holds a file open for a moment while it syncs / scans it, and swapping the new copy in
+    # fails then. It's retried for a few seconds; if the file stays locked, it's written in place instead.
+    import time as _sp_time
+    for _try in range(8):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:
+            _sp_time.sleep(0.25 * (_try + 1))
+        except OSError:
+            break
+    try:
+        pd.to_pickle(obj, path)
+    except OSError as _e:
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved -- the file is locked by another program (OneDrive sync or "
+              f"antivirus?) ({type(_e).__name__}); the previous copy is kept and it's saved again on the next save", flush=True)
+    finally:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+
+
 import json as _trk_json
 import time
 import glob
@@ -268,7 +336,7 @@ def _trk_iou(a, b):
 
 def _trk_court_H_lookup(base):
     cp = os.path.join(TRACK_DIR, "court_homographies.pkl")
-    cache = {k: v for k, v in pd.read_pickle(cp).items() if not str(k).startswith("_")} if os.path.exists(cp) else {}
+    cache = {k: v for k, v in _safe_read_pickle(cp).items() if not str(k).startswith("_")} if os.path.exists(cp) else {}
     return lambda p: cache.get(os.path.relpath(p, base).replace(os.sep, "/"))
 
 
@@ -276,7 +344,7 @@ def _trk_detect(rels, base):
     """rel path -> {"p": [x1,y1,x2,y2,conf,r,g,b] people, "b": [cx,cy,conf] balls, "W", "H"}; cached."""
     os.makedirs(TRACK_DIR, exist_ok=True)
     cpath = _trk_det_cache_path()
-    cache = pd.read_pickle(cpath) if os.path.exists(cpath) else {}
+    cache = _safe_read_pickle(cpath) if os.path.exists(cpath) else {}
     todo = [r for r in dict.fromkeys(rels) if r not in cache and os.path.exists(os.path.join(base, r))]
     if todo:
         from PIL import Image
@@ -323,7 +391,7 @@ def _trk_detect(rels, base):
                 cache[r] = {"p": np.array(people, dtype=np.float32).reshape(-1, 10),
                             "b": np.array(balls, dtype=np.float32).reshape(-1, 3), "W": W, "H": H}
             if (i // 8) % 40 == 39:
-                pd.to_pickle(cache, cpath)
+                _safe_to_pickle(cache, cpath)
             # a status line at least every 2 minutes (the percentage lines below can be hours apart on a slow machine)
             _now = time.time()
             if _now - _last_say >= 120 or i == 24:
@@ -334,7 +402,7 @@ def _trk_detect(rels, base):
                       f"{_rate * (len(todo) - _done) / 3600:.1f} hours left)", flush=True)
             _trk_progress("frames checked for players", min(i + 8, len(todo)), len(todo), _t0,
                           every=max(8, (len(todo) // 20) // 8 * 8))
-        pd.to_pickle(cache, cpath)
+        _safe_to_pickle(cache, cpath)
     return cache
 
 
@@ -342,7 +410,7 @@ def _trk_jersey_feats(rels, det, base):
     """rel -> array (one row per detection in det[rel]["p"]): chest lightness, chest warmth (red - blue),
     shorts lightness, shorts warmth, chest light/dark variation. Read from the frames once and saved."""
     cp = _trk_det_cache_path().replace(".pkl", "_jersey.pkl")
-    cache = pd.read_pickle(cp) if os.path.exists(cp) else {}
+    cache = _safe_read_pickle(cp) if os.path.exists(cp) else {}
     todo = [r for r in dict.fromkeys(rels) if r not in cache and det.get(r) is not None]
     if todo:
         from PIL import Image
@@ -370,7 +438,7 @@ def _trk_jersey_feats(rels, det, base):
                 tm, sm = t_.mean(0), s_.mean(0)
                 rows.append([tm.mean(), tm[0] - tm[2], sm.mean(), sm[0] - sm[2], float(np.std(t_.mean(1)))])
             cache[r] = np.array(rows, np.float32)
-        pd.to_pickle(cache, cp)
+        _safe_to_pickle(cache, cp)
     return cache
 
 
@@ -384,7 +452,7 @@ def _trk_read_numbers(clips, todo, base, engine):
     reader chosen by the Jersey-number reader test. Every read is saved, so each crop is read once per reader."""
     import cv2
     cp = os.path.join(TRACK_DIR, "jersey_numbers.pkl")
-    cache = pd.read_pickle(cp) if os.path.exists(cp) else {}
+    cache = _safe_read_pickle(cp) if os.path.exists(cp) else {}
     jobs = []
     for i in todo:
         clip = clips[i]
@@ -432,7 +500,7 @@ def _trk_read_numbers(clips, todo, base, engine):
                 crops.append(_jn_prep_for(engine)(imgs[rel], box) if imgs[rel] is not None else None)
             for (_o, key, _rel, _box, _pol), (txt, cf) in zip(chunk, _jn_read(engine, crops, [jb[4] for jb in chunk])):
                 cache[key] = [(txt, cf)] if txt else []
-            pd.to_pickle(cache, cp)
+            _safe_to_pickle(cache, cp)
             _trk_progress("chest crops read", min(s0 + 100, len(new)), len(new), _t0, every=max(100, (len(new) // 10) // 100 * 100))
         if "_jr_torso_save" in globals():
             _jr_torso_save()                          # the pose-based crops found this run (JERSEY_CROP_STYLE = "pose")
@@ -1197,7 +1265,7 @@ def _trk_pose(rels, base):
     """rel path -> list of (box xyxy, keypoints [17 x (x, y, conf)]); cached like the detections."""
     cpath = _trk_det_cache_path().replace("detections_" + re.sub(r"[^A-Za-z0-9]+", "_", TRACK_DETECTOR),
                                           "pose_" + re.sub(r"[^A-Za-z0-9]+", "_", TRACK_POSE_MODEL))
-    cache = pd.read_pickle(cpath) if os.path.exists(cpath) else {}
+    cache = _safe_read_pickle(cpath) if os.path.exists(cpath) else {}
     todo = [r for r in dict.fromkeys(rels) if r not in cache and os.path.exists(os.path.join(base, r))]
     if todo:
         from ultralytics import YOLO
@@ -1217,7 +1285,7 @@ def _trk_pose(rels, base):
             for r, found in zip(chunk, res):
                 cache[r] = [(box, kk) for box, _c, _cl, kk in found if kk is not None]
         os.makedirs(TRACK_DIR, exist_ok=True)
-        pd.to_pickle(cache, cpath)
+        _safe_to_pickle(cache, cpath)
     return cache
 
 
@@ -1334,7 +1402,7 @@ def player_tracking(pc):
     if TRACK_USE_COURT:
         _cp = os.path.join(TRACK_DIR, "court_homographies.pkl")
         if os.path.exists(_cp):
-            court_H = {k: v for k, v in pd.read_pickle(_cp).items() if not str(k).startswith("_") and v is not None}
+            court_H = {k: v for k, v in _safe_read_pickle(_cp).items() if not str(k).startswith("_") and v is not None}
         n_cf = sum(1 for i in todo for f in lists[i] if f in court_H)
         globals()["_trk_court_frames_used"] = n_cf
         n_all_f = sum(len(lists[i]) for i in todo)
@@ -1353,7 +1421,7 @@ def player_tracking(pc):
                 # CONFIRMED CHANGE (frame archive): the measured pan between two frames is saved, so a rerun doesn't open
                 # (or unpack) the pictures again
                 _pc_path = os.path.join(TRACK_DIR, "court_pan_shifts.pkl")
-                _pc_cache = pd.read_pickle(_pc_path) if os.path.exists(_pc_path) else {}
+                _pc_cache = _safe_read_pickle(_pc_path) if os.path.exists(_pc_path) else {}
                 _pc_new = 0
                 for i in todo:
                     fl = lists[i]
@@ -1393,7 +1461,7 @@ def player_tracking(pc):
                         court_H[f] = np.asarray(court_H[fl[u]], np.float64) @ T_
                         n_borrow += 1
                 if _pc_new:
-                    pd.to_pickle(_pc_cache, _pc_path)
+                    _safe_to_pickle(_pc_cache, _pc_path)
                 print(f"  [tracking]   court mapping borrowed from a nearby frame (pan-corrected, up to {_nb} frames away) for "
                       f"{n_borrow:,} more frame(s)", flush=True)
             except Exception as _e:
@@ -1955,7 +2023,7 @@ def player_tracking(pc):
     else:
         print("  [tracking] step 5: cutting out each player for his appearance fingerprint...", flush=True)
         fp_path = os.path.join(TRACK_DIR, f"fingerprints_{re.sub(r'[^A-Za-z0-9]+', '_', TRACK_EMBED_MODEL)}.pkl")
-        fp_cache = pd.read_pickle(fp_path) if os.path.exists(fp_path) else {}
+        fp_cache = _safe_read_pickle(fp_path) if os.path.exists(fp_path) else {}
         crops, owners, keys = [], [], []
         fps = {}
         img_cache = {}
@@ -1992,7 +2060,7 @@ def player_tracking(pc):
                 fps.setdefault(o, []).append(v)
                 fp_cache[ck] = np.asarray(v, dtype=np.float16)
             os.makedirs(TRACK_DIR, exist_ok=True)
-            pd.to_pickle(fp_cache, fp_path)
+            _safe_to_pickle(fp_cache, fp_path)
         else:
             print(f"  [tracking]   all {n_reused:,} fingerprints reused from earlier runs", flush=True)
         fp = {o: (np.mean(v, 0) / (np.linalg.norm(np.mean(v, 0)) + 1e-8)) for o, v in fps.items()}

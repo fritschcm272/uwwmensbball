@@ -30,6 +30,74 @@ import subprocess
 import numpy as np
 import pandas as pd
 
+# ---- cache files that survive a full disk (shared helper; the same copy is in every section that uses them) ---------
+# CONFIRMED BUG (fixed; "Jersey-number recognizer skipped: EOFError: Ran out of input", and tracking's "jersey numbers not
+# read this run (EOFError ...)"): a run that filled the disk left a cache file empty / cut short, and loading it stopped the
+# section. A damaged cache is now set aside as "<name>.broken" (it's rebuilt), and caches are written to a temporary file
+# first and swapped in only when complete, so a full disk can no longer leave a half-written cache behind.
+def _safe_read_pickle(path, default=None):
+    try:
+        return pd.read_pickle(path)
+    except Exception as _e:
+        try:
+            if os.path.isfile(path):
+                os.replace(path, path + ".broken")
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} was damaged ({type(_e).__name__}) -- set aside as .broken and "
+              f"rebuilt (a disk that filled up mid-save does this)", flush=True)
+        return {} if default is None else default
+
+
+def _safe_read_latest(paths, default=None):
+    """The newest readable file of several (e.g. detections_*.pkl), newest first; damaged ones are set aside."""
+    for p_ in sorted(paths, key=lambda q: os.path.getmtime(q) if os.path.exists(q) else 0, reverse=True):
+        d_ = _safe_read_pickle(p_, default=False)
+        if d_ is not False:
+            return d_
+    return {} if default is None else default
+
+
+def _safe_to_pickle(obj, path):
+    if not isinstance(path, (str, bytes, os.PathLike)):
+        return pd.to_pickle(obj, path)                    # an in-memory buffer
+    root, ext = os.path.splitext(str(path))
+    tmp = f"{root}.tmp{ext}"
+    try:
+        pd.to_pickle(obj, tmp)
+    except OSError as _e:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved ({type(_e).__name__}: {_e}) -- free disk space; the "
+              f"previous copy is kept", flush=True)
+        return
+    # CONFIRMED BUG (fixed; "PermissionError: [WinError 5] Access is denied: ...jersey_numbers.tmp.pkl -> jersey_numbers.pkl"):
+    # on Windows, OneDrive or antivirus holds a file open for a moment while it syncs / scans it, and swapping the new copy in
+    # fails then. It's retried for a few seconds; if the file stays locked, it's written in place instead.
+    import time as _sp_time
+    for _try in range(8):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:
+            _sp_time.sleep(0.25 * (_try + 1))
+        except OSError:
+            break
+    try:
+        pd.to_pickle(obj, path)
+    except OSError as _e:
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved -- the file is locked by another program (OneDrive sync or "
+              f"antivirus?) ({type(_e).__name__}); the previous copy is kept and it's saved again on the next save", flush=True)
+    finally:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+
+
+
 
 
 # CONFIRMED CHANGE (requested: "do #1" -- from the TrackID3x3 jersey-number pipeline). The recognizer's crop can be cut from
@@ -109,7 +177,7 @@ def _jr_torso_box(img, box):
 def _jr_torso_load():
     try:
         p_ = os.path.join(INPUT_DIR, "_tracking", "jersey_torso_boxes.pkl")
-        return pd.read_pickle(p_) if os.path.exists(p_) else {}
+        return _safe_read_pickle(p_) if os.path.exists(p_) else {}
     except Exception:
         return {}
 
@@ -117,7 +185,7 @@ def _jr_torso_load():
 def _jr_torso_save():
     try:
         os.makedirs(os.path.join(INPUT_DIR, "_tracking"), exist_ok=True)
-        pd.to_pickle(globals().get("_jr_torso_cache", {}), os.path.join(INPUT_DIR, "_tracking", "jersey_torso_boxes.pkl"))
+        _safe_to_pickle(globals().get("_jr_torso_cache", {}), os.path.join(INPUT_DIR, "_tracking", "jersey_torso_boxes.pkl"))
     except Exception:
         pass
 
@@ -142,7 +210,7 @@ def _jr_chest(img, box, style=None):
 def _jr_det_cache():
     dets = sorted([d for d in glob.glob(os.path.join(INPUT_DIR, "_tracking", "detections_*tiles*.pkl")) if "jersey" not in d],
                   key=os.path.getmtime)
-    return pd.read_pickle(dets[-1]) if dets else {}
+    return _safe_read_latest(dets) if dets else {}
 
 
 def _jr_box_at(det, frame, px, py):
@@ -244,7 +312,7 @@ def jersey_collect():
     _reads_by_spot = {}
     _jp = os.path.join(INPUT_DIR, "_tracking", "jersey_numbers.pkl")
     if os.path.exists(_jp):
-        for key_, v in pd.read_pickle(_jp).items():
+        for key_, v in _safe_read_pickle(_jp).items():
             parts = str(key_).split("|")
             # its OWN readings never become its training labels (it would learn its own mistakes) unless asked
             if len(parts) >= 6 and parts[5].startswith("trained") and not JERSEY_TRAIN_FROM_OWN_READS:
@@ -494,7 +562,17 @@ def jersey_train():
                 "crop_style": _jr_style(),
                 "signature": _jr_signature(), "n_samples": len(samples),
                 "settings": _jr_settings_str(), "trained_at": pd.Timestamp.now().isoformat(timespec="seconds")},
-               JERSEY_MODEL_PATH)
+               JERSEY_MODEL_PATH + ".tmp")
+    for _try in range(8):                                         # swapped in only once fully written (full-disk safe);
+        try:                                                      # retried while OneDrive / antivirus holds the file
+            os.replace(JERSEY_MODEL_PATH + ".tmp", JERSEY_MODEL_PATH)
+            break
+        except PermissionError:
+            time.sleep(0.25 * (_try + 1))
+    else:
+        import shutil
+        shutil.copyfile(JERSEY_MODEL_PATH + ".tmp", JERSEY_MODEL_PATH)
+        os.remove(JERSEY_MODEL_PATH + ".tmp")
     print(f"  [recognizer] saved -> {JERSEY_MODEL_PATH} (kept round: {best[0]:.0%} right on our own film, "
           f"{best[2]:.0%} on all held-back crops)", flush=True)
 
@@ -521,7 +599,17 @@ def jersey_recognizer_read(crops_bgr, style="fixed"):
         _mp = _jr_path_for(style)
         if not os.path.exists(_mp):
             return None
-        ck = torch.load(_mp, map_location="cpu")
+        try:
+            ck = torch.load(_mp, map_location="cpu")
+        except Exception as _le:                       # an empty / cut-short model file (a full disk mid-save)
+            try:
+                os.replace(_mp, _mp + ".broken")
+            except Exception:
+                pass
+            print(f"  [jersey] saved model {os.path.basename(_mp)} was damaged ({type(_le).__name__}) -- set aside as "
+                  f".broken; numbers aren't read until the recognizer is trained again (Jersey-number recognizer cell)",
+                  flush=True)
+            return None
         net = torchvision.models.resnet18(weights=None)
         net.fc = torch.nn.Linear(net.fc.in_features, len(ck["classes"]))
         net.load_state_dict(ck["state_dict"])

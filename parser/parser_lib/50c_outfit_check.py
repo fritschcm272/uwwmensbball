@@ -15,6 +15,74 @@ import os
 import json
 import time as _oc_time
 
+# ---- cache files that survive a full disk (shared helper; the same copy is in every section that uses them) ---------
+# CONFIRMED BUG (fixed; "Jersey-number recognizer skipped: EOFError: Ran out of input", and tracking's "jersey numbers not
+# read this run (EOFError ...)"): a run that filled the disk left a cache file empty / cut short, and loading it stopped the
+# section. A damaged cache is now set aside as "<name>.broken" (it's rebuilt), and caches are written to a temporary file
+# first and swapped in only when complete, so a full disk can no longer leave a half-written cache behind.
+def _safe_read_pickle(path, default=None):
+    try:
+        return pd.read_pickle(path)
+    except Exception as _e:
+        try:
+            if os.path.isfile(path):
+                os.replace(path, path + ".broken")
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} was damaged ({type(_e).__name__}) -- set aside as .broken and "
+              f"rebuilt (a disk that filled up mid-save does this)", flush=True)
+        return {} if default is None else default
+
+
+def _safe_read_latest(paths, default=None):
+    """The newest readable file of several (e.g. detections_*.pkl), newest first; damaged ones are set aside."""
+    for p_ in sorted(paths, key=lambda q: os.path.getmtime(q) if os.path.exists(q) else 0, reverse=True):
+        d_ = _safe_read_pickle(p_, default=False)
+        if d_ is not False:
+            return d_
+    return {} if default is None else default
+
+
+def _safe_to_pickle(obj, path):
+    if not isinstance(path, (str, bytes, os.PathLike)):
+        return pd.to_pickle(obj, path)                    # an in-memory buffer
+    root, ext = os.path.splitext(str(path))
+    tmp = f"{root}.tmp{ext}"
+    try:
+        pd.to_pickle(obj, tmp)
+    except OSError as _e:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved ({type(_e).__name__}: {_e}) -- free disk space; the "
+              f"previous copy is kept", flush=True)
+        return
+    # CONFIRMED BUG (fixed; "PermissionError: [WinError 5] Access is denied: ...jersey_numbers.tmp.pkl -> jersey_numbers.pkl"):
+    # on Windows, OneDrive or antivirus holds a file open for a moment while it syncs / scans it, and swapping the new copy in
+    # fails then. It's retried for a few seconds; if the file stays locked, it's written in place instead.
+    import time as _sp_time
+    for _try in range(8):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:
+            _sp_time.sleep(0.25 * (_try + 1))
+        except OSError:
+            break
+    try:
+        pd.to_pickle(obj, path)
+    except OSError as _e:
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved -- the file is locked by another program (OneDrive sync or "
+              f"antivirus?) ({type(_e).__name__}); the previous copy is kept and it's saved again on the next save", flush=True)
+    finally:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+
+
+
 for _k, _v in (("OUTFIT_MODEL", "patrickjohncyh/fashion-clip"), ("OUTFIT_MIN_PRECISION", 0.9), ("OUTFIT_MIN_RECALL", 0.25),
                ("OUTFIT_MIN_NONPLAYERS", 20), ("RUN_OUTFIT_CHECK_TEST", True)):
     globals().setdefault(_k, _v)
@@ -57,10 +125,28 @@ def _oc_model():
     proc = CLIPProcessor.from_pretrained(OUTFIT_MODEL)
     with torch.no_grad():
         t = proc(text=OUTFIT_PLAYER_WORDS + OUTFIT_OTHER_WORDS, return_tensors="pt", padding=True)
-        tf = model.get_text_features(**t)
+        tf = _oc_text_feats(model, t)
         tf = tf / tf.norm(dim=-1, keepdim=True)
     globals()["_oc_loaded"] = (model, proc, tf)
     return globals()["_oc_loaded"]
+
+
+# CONFIRMED BUG (fixed; "AttributeError: 'BaseModelOutputWithPooling' object has no attribute 'norm'"): newer transformers
+# versions return a results object from get_image_features / get_text_features instead of the feature numbers. The
+# features are now worked out the same way those functions always did it -- the model's pooled output passed through its
+# projection layer -- which gives the same numbers on every transformers version.
+def _oc_pooled(out):
+    return out.pooler_output if hasattr(out, "pooler_output") else out[1]
+
+
+def _oc_text_feats(model, t):
+    out = model.text_model(input_ids=t["input_ids"], attention_mask=t.get("attention_mask"))
+    return model.text_projection(_oc_pooled(out))
+
+
+def _oc_image_feats(model, px):
+    out = model.vision_model(pixel_values=px["pixel_values"])
+    return model.visual_projection(_oc_pooled(out))
 
 
 def _oc_crop(img, box):
@@ -79,13 +165,13 @@ def _oc_scores(crops_bgr, batch=32):
     out = [None] * len(crops_bgr)
     idx = [k for k, c in enumerate(crops_bgr) if c is not None]
     n_pl = len(OUTFIT_PLAYER_WORDS)
-    scale = float(model.logit_scale.exp())
+    scale = float(model.logit_scale.detach().exp())
     for s in range(0, len(idx), batch):
         part = idx[s:s + batch]
         ims = [Image.fromarray(crops_bgr[k][:, :, ::-1].copy()) for k in part]
         with torch.no_grad():
             px = proc(images=ims, return_tensors="pt")
-            f = model.get_image_features(**px)
+            f = _oc_image_feats(model, px)
             f = f / f.norm(dim=-1, keepdim=True)
             pr = (scale * f @ tf.T).softmax(dim=-1)
         for k, row in zip(part, pr):
@@ -97,7 +183,7 @@ def _oc_cache():
     c = globals().get("_oc_cache_d")
     if c is None:
         try:
-            c = pd.read_pickle(_OC_CACHE_PATH) if os.path.exists(_OC_CACHE_PATH) else {}
+            c = _safe_read_pickle(_OC_CACHE_PATH) if os.path.exists(_OC_CACHE_PATH) else {}
             if c.get("_words") != (OUTFIT_MODEL, tuple(OUTFIT_PLAYER_WORDS), tuple(OUTFIT_OTHER_WORDS)):
                 c = {}
         except Exception:
@@ -109,7 +195,7 @@ def _oc_cache():
 
 def _oc_save_cache():
     try:
-        pd.to_pickle(globals().get("_oc_cache_d", {}), _OC_CACHE_PATH)
+        _safe_to_pickle(globals().get("_oc_cache_d", {}), _OC_CACHE_PATH)
     except Exception:
         pass
 
@@ -138,8 +224,20 @@ def outfit_scores_for(items, base):
         if crops:
             for n, s_ in zip(where, _oc_scores(crops)):
                 cache[keys[n]] = s_
+        # CONFIRMED BUG (fixed): a box whose picture wasn't on disk was cached as "no score" for good, so it stayed unscored
+        # even after the picture came back. Only real scores are kept.
+        for k in [k for k in keys if k in cache and cache[k] is None]:
+            del cache[k]
         _oc_save_cache()
     return [cache.get(k) for k in keys]
+
+
+# Frames packed by the frame archive are read through its file hooks -- loaded here too, so archived games' pictures count
+# even when this cell runs on its own in a fresh session.
+if "vision_frame_archived" not in globals() and "PARSER_LIB" in globals() \
+        and os.path.exists(os.path.join(PARSER_LIB, "46a_frame_archive.py")):
+    FRAME_ARCHIVE_STEP = "hooks"
+    run_section("46a_frame_archive")
 
 
 def outfit_check_test():
@@ -183,6 +281,22 @@ def outfit_check_test():
     s = np.array([sc[k] for k in ok], float)
     y = np.array([truth[k] for k in ok], int)
     print(f"  scored {len(ok)} box(es) in {_oc_time.time() - t0:.0f} s", flush=True)
+    # CONFIRMED BUG (fixed; "scored 0 box(es)" then "TypeError: unsupported format string passed to NoneType"): when the
+    # checked boxes' pictures aren't on disk (game folders deleted to free space), nothing can be scored -- say so and which
+    # games, instead of failing on an empty result.
+    _miss = [items[k][0] for k in range(len(items)) if sc[k] is None]
+    if _miss:
+        _lean = globals().get("vision_frame_leaned")
+        _why = ["thinned by lean mode" if (_lean and _lean(os.path.join(base, f))) else "not on disk" for f in _miss]
+        _by_game = pd.DataFrame({"g": [str(f).replace("\\", "/").split("/")[0] for f in _miss], "w": _why}).value_counts()
+        print(f"  {len(_miss)} checked box(es) have no picture, by game folder: "
+              + ", ".join(f"{g} {n} ({w})" for (g, w), n in _by_game.items()), flush=True)
+    if int(y.sum()) < 5 or int((y == 0).sum()) < 5:
+        print(f"  NOT TESTED: only {int(y.sum())} not-a-player and {int((y == 0).sum())} real-player box(es) could be scored "
+              f"(needs 5+ of each). The pictures of the checked boxes are missing -- they come back when those games are "
+              f"captured again; until then Player tracking does not use the outfit check (TRACK_OUTFIT_CHECK = \"auto\").",
+              flush=True)
+        return None
     # how well the score separates the two (AUC: 0.5 = no better than chance, 1.0 = perfect)
     pos, neg = s[y == 1], s[y == 0]
     auc = float(np.mean([(p_ > neg).mean() + 0.5 * (p_ == neg).mean() for p_ in pos])) if len(pos) and len(neg) else None
@@ -211,7 +325,8 @@ def outfit_check_test():
             "score", ascending=False).to_csv(os.path.join(TRACK_DIR, "outfit_check_scores.csv"), index=False)
     except Exception as _e:
         print(f"  (not saved: {type(_e).__name__}: {_e})", flush=True)
-    print(f"  how well the score tells them apart (AUC; 0.5 = coin flip, 1.0 = perfect): {auc:.2f}", flush=True)
+    if auc is not None:
+        print(f"  how well the score tells them apart (AUC; 0.5 = coin flip, 1.0 = perfect): {auc:.2f}", flush=True)
     show = [r for r in table if r[2] >= 0.5][-8:] or table[:8]
     print("  score cutoff | boxes flagged | really not players | non-players caught | real players lost", flush=True)
     for t, nf, prec, rec, lost in show:
