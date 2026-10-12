@@ -1,13 +1,13 @@
 offense_team,screener,screened,screen_type,times,ppp,rolls,pops,slips
-Alma Scots,unnamed offense,unnamed offense,Off-ball screen,48,0.79,2,0,0
-Alma Scots,unnamed offense,unnamed offense,Ball screen,26,0.67,0,0,0
-Coe Kohawks,unnamed offense,unnamed offense,Off-ball screen,57,0.92,1,0,0
+Alma Scots,unnamed offense,unnamed offense,Off-ball screen,46,0.8,2,0,0
+Alma Scots,unnamed offense,unnamed offense,Ball screen,27,0.68,0,0,0
+Coe Kohawks,unnamed offense,unnamed offense,Off-ball screen,58,0.9,1,0,0
 Coe Kohawks,unnamed offense,unnamed offense,Ball screen,11,1.0,1,0,0
 Coe Kohawks,unnamed offense,Darius Chestnut,Off-ball screen,1,0.0,0,0,0
 Coe Kohawks,unnamed offense,Jake Quast,Off-ball screen,1,0.0,0,0,0
 None,unnamed offense,unnamed offense,Off-ball screen,12,1.0,1,0,0
 None,unnamed offense,unnamed offense,Ball screen,1,2.0,1,0,0
-UW-Oshkosh Titans,unnamed offense,unnamed offense,Off-ball screen,38,0.87,0,1,0
+UW-Oshkosh Titans,unnamed offense,unnamed offense,Off-ball screen,38,0.97,0,1,0
 UW-Oshkosh Titans,unnamed offense,unnamed offense,Ball screen,15,0.79,2,0,0
 UW-Oshkosh Titans,unnamed offense,Joey LaChapell,Off-ball screen,3,1.67,0,0,0
 UW-Oshkosh Titans,unnamed offense,Brandon Beck,Off-ball screen,2,1.5,0,0,0
@@ -15,20 +15,36 @@ UW-Oshkosh Titans,Brandon Beck,Michael Metcalf-Grassman,Ball screen,1,1.0,0,0,0
 UW-Oshkosh Titans,Carter Thomas,unnamed offense,Ball screen,1,0.0,0,0,0
 UW-Oshkosh Titans,Logan Rindfleisch,Vitorio Dante,Ball screen,1,0.0,0,0,0
 UW-Oshkosh Titans,Matt Imig,Jonah Rindfleisch,Off-ball screen,1,3.0,0,0,0
+UW-Oshkosh Titans,Matt Imig,unnamed offense,Ball screen,1,0.0,0,0,0
 UW-Oshkosh Titans,Oskar Kangas,unnamed offense,Off-ball screen,1,3.0,0,0,0
 UW-Oshkosh Titans,unnamed offense,Michael Metcalf-Grassman,Ball screen,1,2.0,0,0,0
 UW-Oshkosh Titans,unnamed offense,Oskar Kangas,Off-ball screen,1,0.0,0,0,0
-UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,213,0.9,9,0,1
-UW-Whitewater,unnamed offense,unnamed offense,Ball screen,50,0.78,1,0,0
-UW-Whitewater,unnamed offense,Collin Madson,Off-ball screen,2,0.0,0,0,0
-UW-Whitewater,Brock Marino,unnamed offense,Off-ball screen,1,1.0,0,0,0
+UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,186,0.91,6,0,1
+UW-Whitewater,unnamed offense,unnamed offense,Ball screen,42,0.7,0,0,0
+UW-Whitewater,Brock Marino,unnamed offense,Off-ball screen,5,1.4,0,0,0
+UW-Whitewater,unnamed offense,Richie Warren,Off-ball screen,4,1.0,0,0,0
+UW-Whitewater,unnamed offense,Collin Madson,Off-ball screen,3,0.0,0,0,0
+UW-Whitewater,Collin Madson,Brock Marino,Off-ball screen,2,0.0,0,0,0
+UW-Whitewater,Collin Madson,unnamed offense,Off-ball screen,2,1.0,0,0,0
+UW-Whitewater,Joey Berezowitz,unnamed offense,Off-ball screen,2,1.5,0,0,0
+UW-Whitewater,unnamed offense,Isaac Verges,Off-ball screen,2,1.0,0,0,0
+UW-Whitewater,Brock Marino,Isaac Verges,Ball screen,1,0.0,0,0,0
+UW-Whitewater,Brock Marino,Isaac Verges,Off-ball screen,1,2.0,0,0,0
+UW-Whitewater,Brock Marino,unnamed offense,Ball screen,1,3.0,1,0,0
 UW-Whitewater,Collin Madson,Brock Marino,Ball screen,1,2.0,0,0,0
-UW-Whitewater,Collin Madson,Brock Marino,Off-ball screen,1,0.0,0,0,0
 UW-Whitewater,Collin Madson,JR Lukenbill,Off-ball screen,1,0.0,0,0,0
 UW-Whitewater,Collin Madson,Joey Berezowitz,Off-ball screen,1,2.0,0,0,0
 UW-Whitewater,Collin Madson,Luke Bara,Off-ball screen,1,0.0,0,0,0
 UW-Whitewater,Darius Chestnut,unnamed offense,Off-ball screen,1,2.0,0,0,0
+UW-Whitewater,Isaac Verges,Collin Madson,Ball screen,1,0.0,1,0,0
+UW-Whitewater,Isaac Verges,unnamed offense,Off-ball screen,1,0.0,0,0,0
+UW-Whitewater,JR Lukenbill,Joey Berezowitz,Off-ball screen,1,,0,0,0
 UW-Whitewater,Luke Bara,unnamed offense,Off-ball screen,1,,0,0,0
+UW-Whitewater,Richie Warren,Brock Marino,Off-ball screen,1,0.0,0,0,0
 UW-Whitewater,Richie Warren,unnamed offense,Off-ball screen,1,2.0,0,0,0
+UW-Whitewater,unnamed offense,Brock Marino,Ball screen,1,0.0,0,0,0
+UW-Whitewater,unnamed offense,Brock Marino,Off-ball screen,1,0.0,0,0,0
+UW-Whitewater,unnamed offense,JR Lukenbill,Off-ball screen,1,0.0,0,0,0
 UW-Whitewater,unnamed offense,Joey Berezowitz,Ball screen,1,2.0,0,0,0
-UW-Whitewater,unnamed offense,Richie Warren,Off-ball screen,1,0.0,0,0,0
+UW-Whitewater,unnamed offense,Joey Berezowitz,Off-ball screen,1,0.0,0,0,0
+UW-Whitewater,unnamed offense,Rashad Rogers,Off-ball screen,1,0.0,0,0,0

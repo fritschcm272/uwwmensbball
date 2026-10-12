@@ -4,6 +4,74 @@
 # --- Tracking review export (requested: a permanent version of the review export, instead of pasting code) ------
 import zipfile, io
 
+# ---- cache files that survive a full disk (shared helper; the same copy is in every section that uses them) ---------
+# CONFIRMED BUG (fixed; "Jersey-number recognizer skipped: EOFError: Ran out of input", and tracking's "jersey numbers not
+# read this run (EOFError ...)"): a run that filled the disk left a cache file empty / cut short, and loading it stopped the
+# section. A damaged cache is now set aside as "<name>.broken" (it's rebuilt), and caches are written to a temporary file
+# first and swapped in only when complete, so a full disk can no longer leave a half-written cache behind.
+def _safe_read_pickle(path, default=None):
+    try:
+        return pd.read_pickle(path)
+    except Exception as _e:
+        try:
+            if os.path.isfile(path):
+                os.replace(path, path + ".broken")
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} was damaged ({type(_e).__name__}) -- set aside as .broken and "
+              f"rebuilt (a disk that filled up mid-save does this)", flush=True)
+        return {} if default is None else default
+
+
+def _safe_read_latest(paths, default=None):
+    """The newest readable file of several (e.g. detections_*.pkl), newest first; damaged ones are set aside."""
+    for p_ in sorted(paths, key=lambda q: os.path.getmtime(q) if os.path.exists(q) else 0, reverse=True):
+        d_ = _safe_read_pickle(p_, default=False)
+        if d_ is not False:
+            return d_
+    return {} if default is None else default
+
+
+def _safe_to_pickle(obj, path):
+    if not isinstance(path, (str, bytes, os.PathLike)):
+        return pd.to_pickle(obj, path)                    # an in-memory buffer
+    root, ext = os.path.splitext(str(path))
+    tmp = f"{root}.tmp{ext}"
+    try:
+        pd.to_pickle(obj, tmp)
+    except OSError as _e:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved ({type(_e).__name__}: {_e}) -- free disk space; the "
+              f"previous copy is kept", flush=True)
+        return
+    # CONFIRMED BUG (fixed; "PermissionError: [WinError 5] Access is denied: ...jersey_numbers.tmp.pkl -> jersey_numbers.pkl"):
+    # on Windows, OneDrive or antivirus holds a file open for a moment while it syncs / scans it, and swapping the new copy in
+    # fails then. It's retried for a few seconds; if the file stays locked, it's written in place instead.
+    import time as _sp_time
+    for _try in range(8):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:
+            _sp_time.sleep(0.25 * (_try + 1))
+        except OSError:
+            break
+    try:
+        pd.to_pickle(obj, path)
+    except OSError as _e:
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved -- the file is locked by another program (OneDrive sync or "
+              f"antivirus?) ({type(_e).__name__}); the previous copy is kept and it's saved again on the next save", flush=True)
+    finally:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+
+
+
 if EXPORT_TRACKING_REVIEW:
     try:
         for _c in ("track_files", "frame_files", "clip_number", "game_code", "track_clip_key"):
@@ -18,9 +86,9 @@ if EXPORT_TRACKING_REVIEW:
 
         def _subset_pickle(pattern, keep):
             for p in glob.glob(os.path.join(TRACK_DIR, pattern)):
-                d = pd.read_pickle(p)
+                d = _safe_read_pickle(p)
                 buf = io.BytesIO()
-                pd.to_pickle({k: v for k, v in d.items() if k in keep or k == "_sig"
+                _safe_to_pickle({k: v for k, v in d.items() if k in keep or k == "_sig"
                               or (isinstance(k, str) and k.split("|")[0] in keep)}, buf)
                 yield os.path.basename(p), buf.getvalue()
 
@@ -61,7 +129,7 @@ if EXPORT_TRACKING_REVIEW:
                 from PIL import Image as _Im
                 z.writestr("event_candidates.csv", _ec.to_csv(index=False))
                 _detp = _trk_det_cache_path()
-                _det = pd.read_pickle(_detp) if os.path.exists(_detp) else {}
+                _det = _safe_read_pickle(_detp) if os.path.exists(_detp) else {}
                 _files_of = dict(zip(play_calls["track_clip_key"], play_calls["track_files"]))
                 for _n, _r in _ec.reset_index(drop=True).iterrows():
                     _row = _pt[(_pt["clip_key"] == _r["clip_key"]) & (_pt["track"] == _r["track"])]

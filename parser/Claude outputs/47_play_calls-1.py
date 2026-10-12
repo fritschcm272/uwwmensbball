@@ -2178,12 +2178,25 @@ def _pl_untagged_from_frames(tagged):
     # CONFIRMED BUG (fixed; first run: all 386 untagged clips landed in "Other" and the run crashed). Which side a captured
     # game is on now comes from WHERE its clip page was found -- UWW's schedule or the upcoming opponent's prior games --
     # and from the play-by-play it was matched to, not only from the clip page's Team column (often blank).
-    _urls = {}
+    _urls, _url_dates = {}, {}
     for _sn, _side in (("uww_team_schedule", "UWW"), ("prev_games", "Opponent")):
         _sd = globals().get(_sn)
         if isinstance(_sd, pd.DataFrame) and "video_url" in _sd.columns:
-            for _u in _sd["video_url"].dropna():
-                _urls.setdefault(str(_u), _side)
+            for _, _sr in _sd[_sd["video_url"].notna()].iterrows():
+                _u = str(_sr["video_url"])
+                _urls.setdefault(_u, _side)
+                # the game's real date, from the schedule the clip page was found on
+                _sgd = _sr.get("game_date")
+                if _sgd is None or (not isinstance(_sgd, str) and pd.isna(_sgd)):
+                    try:
+                        _sgd = parse_schedule_date(_sr.get("date"), globals().get("uww_season_start_year"))
+                    except Exception:
+                        _sgd = None
+                if _sgd is not None and not (not isinstance(_sgd, str) and pd.isna(_sgd)):
+                    try:
+                        _url_dates.setdefault(_u, pd.Timestamp(_sgd).date())
+                    except Exception:
+                        pass
     rows, n_games, n_timed = [], 0, 0
     for _url, g in cf.groupby(cf.get("source_url", pd.Series("", index=cf.index)), dropna=False):
         d = g["_d"].dropna().min()
@@ -2202,14 +2215,20 @@ def _pl_untagged_from_frames(tagged):
         if g.empty:
             continue                                       # every clip of this game is in uww_plays.csv
         n_games += 1
-        e_ = ev[[abs((x - d).days) <= 1 for x in ev["game_date"]]] if not ev.empty else pd.DataFrame()
-        e_by_n = {}
-        if not e_.empty:
-            gd0 = min(e_["game_date"].unique(), key=lambda x: abs((x - d).days))
-            e_ = e_[e_["game_date"] == gd0]
-            e_by_n = {int(r["_n"]): r for _, r in e_.iterrows()}
+        # CONFIRMED BUG (fixed; the WashU game (3/7) was filed as "2026-03-06 UWWhitewater@Wash(StLouis)" and matched to
+        # the LORAS play-by-play, so the app showed no plays for WashU): Synergy's clip page dates a game a day early, and
+        # the nearest play-by-play within a day was the game the day before. The game's date now comes from the schedule
+        # the clip page was found on; the old "nearest within a day" guess is only the fallback for hand-listed pages.
+        _sd0 = _url_dates.get(str(_url))
+        if _sd0 is not None:
+            gd0 = _sd0
+            e_ = ev[ev["game_date"] == gd0] if not ev.empty else pd.DataFrame()
         else:
-            gd0 = d
+            e_ = ev[[abs((x - d).days) <= 1 for x in ev["game_date"]]] if not ev.empty else pd.DataFrame()
+            gd0 = min(e_["game_date"].unique(), key=lambda x: abs((x - d).days)) if not e_.empty else d
+            if not e_.empty:
+                e_ = e_[e_["game_date"] == gd0]
+        e_by_n = {int(r["_n"]): r for _, r in e_.iterrows()} if not e_.empty else {}
         hint = _urls.get(str(_url))
         if hint is None and not e_.empty and "_src" in e_.columns:
             hint = "UWW" if (e_["_src"] == "pbp_events").mean() >= 0.5 else "Opponent"
