@@ -281,6 +281,29 @@ def load_short_opponent_names(season=None) -> list:
     return sorted(names, key=len, reverse=True)
 
 
+def _photo_name_key(name) -> str:
+    return re.sub(r"[^a-z0-9 ]+", "", re.sub(r"\s+", " ", str(name or "")).strip().lower())
+
+
+@st.cache_data(ttl=60)
+def _opponent_photo_urls(short_opponent) -> dict:
+    """{player name key: headshot URL} from the opponent's FastScout roster page (uww_live_rosters) and the game-plan
+    personnel table (uww_opp_personnel) -- the same photos the scouting brief shows."""
+    out = {}
+    if not short_opponent:
+        return out
+    for _t, _team_col, _name_col in (("uww_live_rosters", "team", "name"), ("uww_opp_personnel", "opponent", "player")):
+        _df = load_table(_t)
+        if _df.empty or not {_team_col, _name_col, "photo_url"} <= set(_df.columns):
+            continue
+        _df = _df[_df[_team_col].astype(str).str.strip().str.lower() == str(short_opponent).strip().lower()]
+        for _, _r in _df.iterrows():
+            _u = str(_r.get("photo_url") or "").strip()
+            if _u.lower().startswith(("http://", "https://")):
+                out.setdefault(_photo_name_key(_r[_name_col]), _u)
+    return out
+
+
 def resolve_short_opponent(full_name, short_names: list):
     """Map a uww_schedule opponent name (e.g. "St. Thomas (TX) Celts") onto the shorter name used by the
     scouting-report / PBP tables (e.g. "St. Thomas (TX)"), by prefix match. Returns None if no scouting/PBP
@@ -8701,6 +8724,19 @@ def render_upcoming_game():
                             return base64.b64encode(img_f.read()).decode()
                 return None
 
+            # CONFIRMED BUG (fixed; MSOE's player pictures showed in the scouting brief but not here): the app only
+            # looked in data/player_images, which is filled from scouting-report PDFs -- an opponent with no report
+            # (MSOE) has none there. The brief also uses the headshot address from their FastScout roster page
+            # (uww_live_rosters / uww_opp_personnel "photo_url"); the app now falls back to it the same way.
+            _roster_photo_urls = _opponent_photo_urls(short_opponent)
+
+            def _get_player_img_src(player_name):
+                """<img src> for a player's headshot: the saved picture, else the FastScout roster photo, else None."""
+                _b64 = _get_player_img_b64(player_name)
+                if _b64:
+                    return f"data:image/png;base64,{_b64}"
+                return _roster_photo_urls.get(_photo_name_key(player_name))
+
             def _render_computed_player_comparison(_pc_name):
                 """Comparable player worked out from box scores, when the parser table has no row.
 
@@ -8772,11 +8808,11 @@ def render_upcoming_game():
                 _dlg_status_raw = str(player_row_dict.get("status", "")).strip()
                 if _dlg_status_raw and _dlg_status_raw.lower() not in ("nan", "active", "available"):
                     st.warning(f"Status: {_dlg_status_raw}")
-                _dlg_img = _get_player_img_b64(player_name)
+                _dlg_img = _get_player_img_src(player_name)
                 if _dlg_img:
                     _dlg_col_img, _dlg_col_info = st.columns([1, 3])
                     with _dlg_col_img:
-                        st.markdown(f'<img src="data:image/png;base64,{_dlg_img}" style="width:100px;height:125px;object-fit:cover;border-radius:8px;">', unsafe_allow_html=True)
+                        st.markdown(f'<img src="{html.escape(_dlg_img)}" style="width:100px;height:125px;object-fit:cover;border-radius:8px;">', unsafe_allow_html=True)
                     with _dlg_col_info:
                         st.markdown(f"### {jersey_str}{player_name}")
                         if info_parts:
@@ -9008,9 +9044,9 @@ def render_upcoming_game():
                                     _status_badge = f'<span style="background:{_status_color};color:#fff;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:8px;margin-left:4px;">{esc(_status_raw).upper()}</span>'
 
                                 with st.container(border=True):
-                                    _p_img = _get_player_img_b64(name)
+                                    _p_img = _get_player_img_src(name)
                                     if _p_img:
-                                        st.markdown(f'<div style="text-align:center;margin-bottom:6px;"><img src="data:image/png;base64,{_p_img}" style="width:60px;height:75px;object-fit:cover;border-radius:6px;"></div>', unsafe_allow_html=True)
+                                        st.markdown(f'<div style="text-align:center;margin-bottom:6px;"><img src="{html.escape(_p_img)}" style="width:60px;height:75px;object-fit:cover;border-radius:6px;"></div>', unsafe_allow_html=True)
                                     st.markdown(
                                         f"<div style='min-height:2.8em;line-height:1.4em;'>"
                                         f"<strong>{jersey_str} {esc(name)}</strong>{_status_badge}</div>",
