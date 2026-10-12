@@ -128,6 +128,9 @@ def validation_pictures():
         clips_out = []
         for _, r in g.iterrows():
             files = [f for f in str(r["track_files"]).split(";") if f]
+            # (frame archive) a finished game's packed clips aren't unpacked just for validation pictures
+            if files and globals().get("vision_frame_archived") and vision_frame_archived(os.path.join(VISION_FRAMES_DIR, files[0])):
+                continue
             rows = pt[pt["clip_key"] == r["track_clip_key"]].to_dict("records")
             n = len(files)
             fps = float(globals().get("VISION_TRACK_FPS") or 2.0)

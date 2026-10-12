@@ -1235,6 +1235,102 @@ except (ValueError, IndexError):
 # opponent_from_scout_filename() above.
 scouted_opponents = scouted_opponents_for(uww_team_schedule["team"].iloc[0], scout_pdf_files) if not uww_team_schedule.empty else []
 
+# --- Extra game (a scrimmage / exhibition that isn't on UWW's FastScout schedule) -----------------------------------
+# CONFIRMED CHANGE (requested: "We have a scrimmage coming up ... not on a season schedule for 2026-2027 ... treat it as an
+# additional game after both of our last games in 2025-2026" / "I really just want a scouting brief set up for them prior
+# to the game"). EXTRA_GAMES adds the game to UWW's 2025-26 schedule as the UPCOMING game, dated on reference_date (which
+# must come after UWW's last 2025-26 game), so the normal pre-game pipeline builds the brief on that opponent from their
+# own 2025-26 FastScout pages: their schedule, their games' play-by-play, season leaders, lineups, keys. Nothing about
+# the scrimmage itself is added as a result (no score, no stats). Its real date is kept in the "note" column.
+# The opponent's FastScout team page is found automatically in the schedule pages already saved (any UWW opponent that
+# played them in 2025-26 links to it); if it isn't found, paste the address of their FastScout team page into
+# "opponent_url".
+def _extra_find_team_url(name):
+    words = [w for w in re.split(r"[^a-z0-9]+", str(name).lower()) if len(w) > 2]
+    if not words:
+        return None, None
+    hits = {}
+    for path in glob.glob(f"{schedules_dir}/*.mhtml") + glob.glob(f"{schedules_dir}/*.html"):
+        if not re.search(r"schedule", os.path.basename(path), re.I):
+            continue
+        try:
+            soup_ = BeautifulSoup(load_html_snapshot(path), "lxml")
+        except Exception:
+            continue
+        for a in soup_.find_all("a", href=True):
+            h = a["href"]
+            if "/teams/" not in h or "/games/" in h or "identity.hudl.com" in h:
+                continue
+            txt = re.sub(r"\s*\d+-\d+\s*$", "", a.get_text(" ", strip=True)).strip()
+            low = txt.lower()
+            if txt and (all(w in low for w in words) or (len(low) > 3 and low in str(name).lower())):
+                url = _resolve_team_link(h)
+                hits.setdefault(url, [txt, 0])[1] += 1
+    if not hits:
+        return None, None
+    url, (txt, _n) = max(hits.items(), key=lambda kv: kv[1][1])
+    return url, txt
+
+
+def _add_extra_games(uww_sched):
+    games = [g for g in (globals().get("EXTRA_GAMES") or []) if g and g.get("opponent")]
+    if not games:
+        return uww_sched
+    if len(games) > 1:
+        print(f"  EXTRA_GAMES: {len(games)} listed -- only the first is used (one upcoming game at a time).")
+    g = games[0]
+    played = uww_sched[uww_sched.get("Upcoming", pd.Series("No", index=uww_sched.index)) != "Yes"]
+    last = max((d for d in (parse_schedule_date(x, uww_season_start_year) for x in played["date"]) if d), default=None)
+    slot = reference_date
+    if last is not None and slot <= last:
+        print(f"  !! EXTRA_GAMES: the run's date ({reference_date_str}) must come AFTER UWW's last 2025-26 game "
+              f"({last:%Y-%m-%d}) -- the date is set from UWW's dated game files in INPUT_DIR, and that game's files "
+              f"aren't there. Add them (or its _pbp file) and run again -- the extra game was NOT added.")
+        return uww_sched
+    date_txt = slot.strftime("%a, %b %d")
+    if parse_schedule_date(date_txt, uww_season_start_year) != slot.replace(hour=0, minute=0, second=0, microsecond=0):
+        print(f"  !! EXTRA_GAMES: {slot:%Y-%m-%d} doesn't fall inside the {uww_season_start_year}-{str(uww_season_start_year + 1)[-2:]} "
+              f"season's calendar (August to July). Use a reference_date_str between UWW's last game and July 31, "
+              f"{uww_season_start_year + 1} -- the extra game was NOT added.")
+        return uww_sched
+    url, found_as = (g.get("opponent_url") or None), None
+    # CONFIRMED CHANGE (the MSOE link was their Analytics > Dashboard page): any page of a team on FastScout is turned into
+    # that team's own page ("/teams/<id>?league=...&season=..."), the one its schedule and documents are read from
+    if url:
+        _m = re.match(r"^(https?://[^/]+)?/?(?:.*?/)?teams/([^/?#]+)[^?#]*(\?[^#]*)?", str(url).strip())
+        if _m:
+            _q = _m.group(3) or f"?league={FASTSCOUT_DOCS_LEAGUE}&season={FASTSCOUT_DOCS_SEASON}"
+            url = f"{_m.group(1) or FASTSCOUT_ORIGIN}/teams/{_m.group(2)}{_q}"
+    if not url:
+        url, found_as = _extra_find_team_url(g["opponent"])
+    if url:
+        print(f"  EXTRA_GAMES: {g['opponent']} -- FastScout team page "
+              + (f"found on a saved schedule as '{found_as}': {url}" if found_as else f"from opponent_url: {url}"))
+    else:
+        print(f"  !! EXTRA_GAMES: no FastScout team page found for '{g['opponent']}' on any saved schedule. Open their team "
+              f"page on FastScout (2025-26 season) and paste its address into EXTRA_GAMES' \"opponent_url\". The game is "
+              f"still added, but their schedule and games can't be loaded without it.")
+    row = {c: None for c in uww_sched.columns}
+    row.update({"date": date_txt, "opponent": g["opponent"], "team": uww_sched["team"].iloc[0] if len(uww_sched) else "UW-Whitewater",
+                "location": g.get("location") or "Neutral", "opponent_url": url, "game_url": None, "video_url": None,
+                "season": f"{uww_season_start_year}-{str(uww_season_start_year + 1)[-2:]}", "Upcoming": "Yes",
+                "game_type": g.get("type") or "scrimmage", "note": g.get("note") or (
+                    f"{g.get('type') or 'scrimmage'}" + (f", real date {g['real_date']}" if g.get("real_date") else ""))})
+    # a real game that would have been "upcoming" at reference_date isn't played yet -- it's dropped, the extra game is next
+    out = uww_sched[uww_sched["Upcoming"] != "Yes"].copy() if "Upcoming" in uww_sched.columns else uww_sched.copy()
+    out["Upcoming"] = "No"
+    for c in ("game_type", "note"):
+        if c not in out.columns:
+            out[c] = None
+    out = pd.concat([out, pd.DataFrame([row])], ignore_index=True)
+    print(f"  EXTRA_GAMES: added {g['opponent']} as the UPCOMING game ({row['note']}), placed on {date_txt}, "
+          f"{(slot - last).days if last is not None else '?'} day(s) after UWW's last 2025-26 game")
+    return out
+
+
+uww_team_schedule = _add_extra_games(uww_team_schedule)
+team_schedules[0] = uww_team_schedule
+
 # 2) For every opponent that shows up in UWW's own (scouted, date-capped) schedule, scrape their live
 #    FastScout team page via opponent_url -- falling back to a local " - Schedule.mhtml" backup on failure.
 opponents = (

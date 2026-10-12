@@ -1024,7 +1024,7 @@ try:
         # Possessions where THEY were defending (someone else had the ball) -- the offense's series is what
         # was run AGAINST their defense, so its PPP here is how well THEY defend that series.
         _d = _clips[(_clips["side"] == "Opponent") & (_clips["possession_side"] == "Defense")
-                    & (_clips["decode_quality"] != "Needs review") & _clips["play_series"].notna()].copy()
+                    & (~_clips["decode_quality"].isin(["Needs review", "Untagged"])) & _clips["play_series"].notna()].copy()
         if not _d.empty:
             _d["_pts"] = pd.to_numeric(_d["points"], errors="coerce")
             _agg = _d.groupby("play_series").agg(

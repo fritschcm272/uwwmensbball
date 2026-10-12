@@ -350,7 +350,7 @@ _OPPD_MIN = 5
 if not _gp_pc.empty and "defense_played" in _gp_pc.columns:
     _od = _gp_pc[(_gp_pc["side"] == "Opponent")
                  & (_gp_pc["scouted_opponent"].astype(str) == str(_gp_short))
-                 & (_gp_pc["decode_quality"] != "Needs review")
+                 & (~_gp_pc["decode_quality"].isin(["Needs review", "Untagged"]))
                  & _gp_pc["defense_played"].notna()]
     if len(_od) >= _OPPD_MIN:
         _base = _od["defense_played"].astype(str).value_counts()
@@ -571,7 +571,7 @@ _def_type_real = []
 # so reading it here reported the wrong team's scheme under this opponent's name.
 if not _gp_pc.empty and {"side", "scouted_opponent", "play_situation", "defense_played", "decode_quality"}.issubset(_gp_pc.columns):
     _dpc = _gp_pc[(_gp_pc["side"] == "Opponent") & (_gp_pc["scouted_opponent"].astype(str) == str(_gp_short))
-                  & _gp_pc["defense_played"].notna() & (_gp_pc["decode_quality"] != "Needs review")]
+                  & _gp_pc["defense_played"].notna() & (~_gp_pc["decode_quality"].isin(["Needs review", "Untagged"]))]
     for _situ, _grp in (_dpc.groupby("play_situation") if not _dpc.empty else []):
         _counts = _grp["defense_played"].value_counts()
         if _counts.empty or int(_counts.sum()) < _DEF_MIN_USES:
@@ -945,7 +945,7 @@ _lu_calls_rows = []
 if not _gp_pc.empty and "on_court_lineup" in _gp_pc.columns:
     _named_calls = _gp_pc[_gp_pc["play_call"].notna()
                           & ~_gp_pc["play_call"].astype(str).str.contains("unspecified", na=False)
-                          & (_gp_pc["decode_quality"] != "Needs review")]
+                          & (~_gp_pc["decode_quality"].isin(["Needs review", "Untagged"]))]
     for (_side_val, _lu), _grp in _named_calls.groupby(["side", "on_court_lineup"]):
         _vc = _grp["play_call"].value_counts().head(3)
         _pts = pd.to_numeric(_grp["points"], errors="coerce")
@@ -1188,7 +1188,7 @@ _REC_MIN = 6
 if not _gp_pc.empty and "defense_faced" in _gp_pc.columns:
     _rc = _gp_pc[(_gp_pc["side"] == "Opponent")
                  & (_gp_pc["offense_team"].astype(str) == str(_gp_short))
-                 & (_gp_pc["decode_quality"] != "Needs review")].copy()
+                 & (~_gp_pc["decode_quality"].isin(["Needs review", "Untagged"]))].copy()
     if not _rc.empty:
         _rc["_pts"] = pd.to_numeric(_rc.get("points"), errors="coerce")
 

@@ -1,3 +1,4 @@
 opponent,situation,ppp,primary_actions,note,is_sample
-UW-Stevens Point Pointers,"Clutch (last 5 min, margin ≤ 8)",0.67,"Ball Screen (4x), BLOB Box Motion (1x)",9 tagged possessions (their overall 0.99 PPP),False
-UW-Stevens Point Pointers,"Clutch (last 5 min, margin ≤ 8)",1.0,"Ball Screen (4x), BLOB Box Motion (1x)",8 tagged possessions (their overall 0.95 PPP),False
+MSOE Raiders,Leading by 10+,0.85,"Slows down, more Hi-Lo DHO",Stops running in transition,True
+MSOE Raiders,Trailing by 10+,1.15,"More ball screens, faster pace",Mason Dopirak takes over possessions,True
+MSOE Raiders,"Clutch (last 5 min, margin ≤ 8)",0.97,Isolation for Mason Dopirak,Goes away from their sets late,True

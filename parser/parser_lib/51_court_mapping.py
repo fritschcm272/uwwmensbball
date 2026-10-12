@@ -180,14 +180,25 @@ def _cm_features(rel, base):
     img = cv2.imread(os.path.join(base, rel), cv2.IMREAD_GRAYSCALE)
     if img is None:
         return None, None, None
+    shape0 = img.shape
+    # CONFIRMED CHANGE (new games are captured 1280 wide; the gym calibrations and last season's frames are 1024 wide).
+    # Features are always found on the picture at COURT_FEATURE_WIDTH (1024), so a 1280 frame matches a 1024
+    # calibration frame exactly like two 1024 frames do; the points are scaled back to the frame's own pixels, so every
+    # homography still works in that frame's pixels. A 1024 frame is unchanged.
+    fw_ = int(globals().get("COURT_FEATURE_WIDTH", 1024) or 0)
+    sc = fw_ / shape0[1] if fw_ and shape0[1] != fw_ else 1.0
+    if sc != 1.0:
+        img = cv2.resize(img, (fw_, int(round(shape0[0] * sc))), interpolation=cv2.INTER_AREA)
     h, w = img.shape
     mask = np.full((h, w), 255, np.uint8)
     mask[: int(0.12 * h)] = 0
     for x1, y1, x2, y2 in _cm_detection_boxes(rel):
+        x1, y1, x2, y2 = x1 * sc, y1 * sc, x2 * sc, y2 * sc
         mask[max(int(y1) - 6, 0):int(y2) + 6, max(int(x1) - 6, 0):int(x2) + 6] = 0
     orb = cv2.ORB_create(COURT_ORB_FEATURES)
     kp, des = orb.detectAndCompute(img, mask)
-    return img.shape, np.float32([k.pt for k in kp]) if kp else np.zeros((0, 2), np.float32), des
+    pts = np.float32([k.pt for k in kp]) / sc if kp else np.zeros((0, 2), np.float32)
+    return shape0, pts, des
 
 
 def _cm_match(fa, fb):

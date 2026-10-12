@@ -6931,6 +6931,27 @@ def render_court_view(team, key_suffix=""):
            {"defender": "Defender", "weak_side_in_paint_pct": "Weak side in paint %", "weak_side_ft_off_man": "Weak side ft off man",
             "on_ball_ft": "On-ball ft", "clips": "Clips"})
 
+    # CONFIRMED CHANGE (requested: the "Five Back" transition-defense measure). For every transition shot: how many defenders
+    # were back (their own half) one second before the shot, and how often the shot came at the rim by that count. Built by the
+    # parser's court insights (uww_transition_five_back_summary); only shots with all five defenders on film are counted.
+    st.markdown("**Transition defense: bodies back** -- defenders in their own half 1 second before a transition shot")
+    _fb = _ft_load("uww_transition_five_back_summary")
+    if _fb.empty:
+        st.caption("No transition shots with all five defenders on film yet.")
+    else:
+        _ft_df(_fb, ["defense_team", "transition_shots", "measurable", "five_back_pct", "rim_pct_five_back", "rim_pct_fewer",
+                     "pts_per_shot_five_back", "pts_per_shot_fewer"],
+               {"defense_team": "Defense", "transition_shots": "Transition shots", "measurable": "All 5 D on film",
+                "five_back_pct": "Five back %", "rim_pct_five_back": "Rim att % (5 back)", "rim_pct_fewer": "Rim att % (<5 back)",
+                "pts_per_shot_five_back": "Pts/shot (5 back)", "pts_per_shot_fewer": "Pts/shot (<5 back)"})
+        _ft_df(_fb, ["defense_team", "shots_5_back", "rim_pct_5_back", "shots_4_back", "rim_pct_4_back", "shots_3_back",
+                     "rim_pct_3_back", "shots_2_or_fewer_back", "rim_pct_2_or_fewer_back"],
+               {"defense_team": "Defense", "shots_5_back": "Shots: 5 back", "rim_pct_5_back": "Rim %: 5",
+                "shots_4_back": "Shots: 4", "rim_pct_4_back": "Rim %: 4", "shots_3_back": "Shots: 3", "rim_pct_3_back": "Rim %: 3",
+                "shots_2_or_fewer_back": "Shots: 2 or fewer", "rim_pct_2_or_fewer_back": "Rim %: 2 or fewer"})
+        st.caption("Counts are small: read them as what happened on the tracked film, not as proof. NBA reference "
+                   "(2015-16 tracking data): with five back, rim attempts were 17 points less likely than with fewer.")
+
     st.markdown(f"**{dfn}'s zone alignments and trap spots**")
     zp = D("uww_court_zone_press", "defense_team", dfn)
     if zp.empty:
@@ -12049,10 +12070,12 @@ def render_previous_games():
                         _pre_uww_box = _pre_box[_pre_box["team"] != "UW-Whitewater"]
 
                 expected_stats = {}
+                # CONFIRMED BUG (fixed; found by the Pyright check): _pre_games was only set inside the UWW-box branch, but the
+                # opponent block below uses it too -- a game with an opponent box and no UWW box crashed with a NameError.
+                _pre_games = _orig_played.iloc[:_game_original_pos] if _game_original_pos else pd.DataFrame()
                 if not _pre_uww_box.empty:
                     _n_pre = ((_pre_uww_box[game_date_col(_pre_uww_box)].nunique()
                                if game_date_col(_pre_uww_box) else _pre_uww_box["opponent"].nunique()) or 1)
-                    _pre_games = _orig_played.iloc[:_game_original_pos] if _game_original_pos else pd.DataFrame()
                     expected_stats = {
                         "Points": _pre_games["team_score"].mean() if not _pre_games.empty else 0,
                         "Points Against": _pre_games["opponent_score"].mean() if not _pre_games.empty else 0,

@@ -1,144 +1,203 @@
 lineup,GP,MIN,+/-,PTS,FGM,FGA,FG3M,FG3A,FTM,FTA,OREB,DREB,REB,AST,STL,BLK,TO,PF,FG%,3P%,FT%
-"Cal Krohn, Carter Combs, Josiah Butler, Logan Baumgartner, Seth Miron",13,130.9,-17.0,296,102,198,22,73,70,98,50,68,118,52,17,3,30,51,51.5,30.1,71.4
-"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Seth Miron",7,40.0,-8.0,72,27,53,1,15,17,25,13,26,39,12,10,0,7,24,50.9,6.7,68.0
-"Cal Krohn, Carter Combs, Josh Bocher, Josiah Butler, Seth Miron",4,31.8,-14.0,45,16,39,1,10,12,15,10,15,25,4,6,4,8,21,41.0,10.0,80.0
-"Cal Krohn, Carter Combs, Josiah Butler, Max Raimer, Seth Miron",5,15.2,-10.0,37,12,17,1,4,12,19,3,13,16,7,2,1,4,3,70.6,25.0,63.2
-"Cal Krohn, Isaiah Moore, Josiah Butler, Logan Baumgartner, Seth Miron",5,15.1,11.0,32,11,20,3,6,7,9,2,5,7,4,7,1,2,12,55.0,50.0,77.8
-"Cal Krohn, Carter Combs, Logan Baumgartner, Max Raimer, Seth Miron",3,9.5,0.0,12,4,10,2,4,2,7,4,9,13,2,2,0,8,3,40.0,50.0,28.6
-"Carter Combs, Grant Manz, Isaiah Moore, Josiah Butler, Seth Miron",2,8.4,1.0,5,2,10,1,4,0,0,2,4,6,2,2,0,2,1,20.0,25.0,
-"Cal Krohn, Isaiah Moore, Josiah Butler, Max Raimer, Seth Miron",2,8.2,6.0,19,7,12,2,6,3,6,4,5,9,5,0,0,1,4,58.3,33.3,50.0
-"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Max Raimer",3,7.7,2.0,25,5,10,3,4,12,13,3,7,10,4,0,0,1,3,50.0,75.0,92.3
-"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Logan Baumgartner",5,7.0,-4.0,18,5,12,3,6,5,6,4,4,8,2,1,0,2,4,41.7,50.0,83.3
-"Cal Krohn, Carter Combs, Josiah Butler, Logan Baumgartner, Max Raimer",4,6.6,3.0,12,3,8,1,6,5,5,1,2,3,1,1,0,1,3,37.5,16.7,100.0
-"Carter Combs, Grant Manz, Josiah Butler, Max Raimer, Seth Miron",4,6.3,-3.0,5,2,10,0,6,1,2,3,4,7,0,1,0,1,7,20.0,0.0,50.0
-"Carter Combs, Grant Manz, Josiah Butler, Logan Baumgartner, Seth Miron",2,6.1,5.0,17,6,10,3,6,2,2,4,6,10,5,1,0,2,2,60.0,50.0,100.0
-"Carter Combs, Isaiah Moore, Josh Bocher, Josiah Butler, Seth Miron",3,5.5,10.0,14,6,11,2,2,0,0,3,7,10,2,0,0,2,1,54.5,100.0,
-"Cal Krohn, Carter Combs, Drew Daoust, Josiah Butler, Logan Baumgartner",2,5.0,3.0,4,2,6,0,2,0,0,1,1,2,1,2,0,3,2,33.3,0.0,
-"Cal Krohn, Carter Combs, James Jacobs, Josiah Butler, Seth Miron",1,5.0,-1.0,12,2,5,0,2,8,10,5,4,9,2,0,0,2,3,40.0,0.0,80.0
-"Carter Combs, Josh Bocher, Josiah Butler, Logan Baumgartner, Seth Miron",3,4.9,-5.0,6,2,5,1,1,1,3,2,3,5,0,1,0,2,3,40.0,100.0,33.3
-"Grant Manz, Isaiah Moore, Josiah Butler, Logan Baumgartner, Seth Miron",3,4.9,-1.0,9,3,9,1,5,2,2,2,4,6,2,1,0,1,4,33.3,20.0,100.0
-"Cal Krohn, Carter Combs, Josiah Butler, Logan Baumgartner",1,4.9,0.0,11,4,6,2,3,1,2,2,2,4,2,0,0,2,2,66.7,66.7,50.0
-"Cal Krohn, Carter Combs, Grant Manz, Isaiah Moore, Josiah Butler",2,4.9,-1.0,7,3,7,0,2,1,1,2,4,6,1,1,1,3,2,42.9,0.0,100.0
-"Cal Krohn, Drew Daoust, Josiah Butler, Max Raimer, Seth Miron",2,4.8,-7.0,14,6,12,1,5,1,2,7,2,9,4,1,1,0,0,50.0,20.0,50.0
-"Cal Krohn, Isaiah Moore, Josiah Butler, Logan Baumgartner, Tyler Orr",1,4.6,-1.0,7,2,6,0,3,3,4,3,2,5,1,0,0,1,1,33.3,0.0,75.0
-"Cal Krohn, Josiah Butler, Max Raimer, Seth Miron, Tyler Orr",2,4.4,10.0,4,1,5,0,4,2,2,0,3,3,0,0,1,1,2,20.0,0.0,100.0
-"Cal Krohn, Drew Daoust, Josh Bocher, Max Raimer, Seth Miron",1,4.2,-2.0,9,4,8,1,3,0,0,1,0,1,2,2,0,1,1,50.0,33.3,
-"Cal Krohn, Isaiah Moore, Josiah Butler, Logan Baumgartner, Max Raimer",2,4.1,-4.0,9,3,5,1,3,2,5,3,3,6,1,2,0,1,4,60.0,33.3,40.0
-"Cal Krohn, Carter Combs, Isaiah Moore, Logan Baumgartner, Max Raimer",1,4.0,2.0,4,2,4,0,0,0,1,0,3,3,0,1,0,0,2,50.0,,0.0
-"Cal Krohn, Carter Combs, Josiah Butler, Seth Miron, Shane Tarjan",2,4.0,0.0,9,3,3,1,1,2,2,0,3,3,2,1,0,2,2,100.0,100.0,100.0
-"Grant Manz, Isaiah Moore, James Jacobs, Max Raimer, Tyler Orr",1,3.9,6.0,10,4,8,1,3,1,2,2,2,4,3,2,0,1,4,50.0,33.3,50.0
-"Cal Krohn, Carter Combs, Josh Bocher, Max Raimer, Seth Miron",2,3.9,3.0,6,2,5,0,0,2,2,2,3,5,0,1,0,1,2,40.0,,100.0
-"Grant Manz, Isaiah Moore, Josiah Butler, Max Raimer, Seth Miron",2,3.9,-8.0,12,5,7,2,2,0,1,2,5,7,4,0,0,0,1,71.4,100.0,0.0
-"Drew Daoust, Grant Manz, Isaiah Moore, Max Raimer, Zach Orr",1,3.8,-9.0,2,0,4,0,2,2,6,6,3,9,0,0,0,3,3,0.0,0.0,33.3
-"Cal Krohn, Drew Daoust, Josiah Butler, Seth Miron, Tyler Orr",2,3.6,4.0,8,2,3,1,1,3,4,1,3,4,1,0,0,2,1,66.7,100.0,75.0
-"Cal Krohn, Carter Combs, Isaiah Moore, Max Raimer, Seth Miron",2,3.6,0.0,5,2,6,1,2,0,0,1,4,5,2,1,0,1,2,33.3,50.0,
-"Cal Krohn, Josh Bocher, Max Raimer, Seth Miron, Tyler Orr",1,3.5,1.0,4,2,6,0,2,0,0,2,2,4,1,0,0,0,0,33.3,0.0,
-"Cal Krohn, Grant Manz, Isaiah Moore, Josiah Butler, Seth Miron",1,3.5,5.0,9,4,5,1,2,0,0,0,2,2,3,0,0,0,2,80.0,50.0,
-"Carter Combs, Josh Bocher, Logan Baumgartner, Max Raimer, Seth Miron",3,3.4,-8.0,8,3,5,1,2,1,2,1,0,1,2,1,1,2,2,60.0,50.0,50.0
-"Cal Krohn, Carter Combs, Josh Bocher, Seth Miron, Tyler Orr",2,3.2,8.0,2,1,5,0,0,0,0,0,2,2,1,0,0,1,3,20.0,,
-"Cal Krohn, Josiah Butler, Max Raimer, Seth Miron, Shane Tarjan",2,3.2,0.0,4,2,4,0,2,0,0,1,1,2,1,0,0,1,1,50.0,0.0,
-"Carter Combs, Isaiah Moore, Josiah Butler, Logan Baumgartner, Seth Miron",4,3.1,0.0,7,2,5,0,2,3,3,1,2,3,0,0,0,1,2,40.0,0.0,100.0
-"Carter Combs, Josh Bocher, Josiah Butler, Max Raimer, Seth Miron",1,3.0,-1.0,6,3,6,0,1,0,0,1,1,2,2,2,1,0,1,50.0,0.0,
-"Carter Combs, Grant Manz, Josh Bocher, Josiah Butler, Seth Miron",2,3.0,7.0,9,4,6,1,2,0,2,3,4,7,1,2,0,0,1,66.7,50.0,0.0
-"Cal Krohn, Carter Combs, Josiah Butler, Seth Miron, Tyler Orr",2,3.0,-2.0,5,2,5,1,2,0,0,0,0,0,1,0,0,0,2,40.0,50.0,
-"Grant Manz, Isaiah Moore, Josh Bocher, Josiah Butler, Max Raimer",1,2.8,3.0,7,3,5,1,2,0,0,0,1,1,1,0,0,0,0,60.0,50.0,
-"Carter Combs, Grant Manz, Isaiah Moore, Seth Miron, Tyler Orr",1,2.8,2.0,5,2,3,1,2,0,0,0,1,1,2,1,0,2,2,66.7,50.0,
-"Cal Krohn, Carter Combs, Isaiah Moore, Josh Bocher, Seth Miron",1,2.7,2.0,2,1,3,0,0,0,0,0,3,3,0,0,0,1,1,33.3,,
-"Grant Manz, Josh Bocher, Josiah Butler, Seth Miron, Tyler Orr",1,2.6,-3.0,3,1,3,0,0,1,2,1,1,2,1,0,0,0,1,33.3,,50.0
-"Cal Krohn, Grant Manz, Isaiah Moore, Logan Baumgartner, Tyler Orr",1,2.5,2.0,4,2,5,0,1,0,0,1,2,3,1,1,0,0,0,40.0,0.0,
-"Carter Combs, Josh Bocher, Josiah Butler, Logan Baumgartner, Max Raimer",2,2.4,1.0,3,1,3,0,1,1,2,0,1,1,0,1,0,1,0,33.3,0.0,50.0
-"Carter Combs, Drew Daoust, Josh Bocher, Josiah Butler, Seth Miron",1,2.4,7.0,8,3,4,2,2,0,0,0,2,2,1,1,0,0,0,75.0,100.0,
-"Cal Krohn, James Jacobs, Josh Bocher, Max Raimer, Seth Miron",1,2.4,-2.0,2,1,5,0,1,0,0,1,2,3,1,0,1,0,0,20.0,0.0,
-"Carter Combs, Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron",1,2.2,-5.0,7,2,2,0,0,3,3,0,3,3,1,0,0,0,0,100.0,,100.0
-"Cal Krohn, Carter Combs, Max Raimer, Seth Miron, Shane Tarjan",1,2.2,2.0,5,2,2,0,0,1,2,1,2,3,2,0,0,0,1,100.0,,50.0
-"Cal Krohn, Carter Combs, Logan Baumgartner, Max Raimer, Shane Tarjan",1,2.2,1.0,2,0,2,0,1,2,2,1,2,3,0,0,0,0,0,0.0,0.0,100.0
-"Carter Combs, Grant Manz, Isaiah Moore, Max Raimer, Seth Miron",1,2.2,0.0,7,3,4,1,1,0,0,1,1,2,2,0,0,1,1,75.0,100.0,
-"Cal Krohn, Isaiah Moore, Josiah Butler, Seth Miron, Shane Tarjan",2,2.1,-5.0,2,1,3,0,1,0,0,0,3,3,1,0,0,1,0,33.3,0.0,
-"Cal Krohn, Isaiah Moore, Logan Baumgartner, Max Raimer, Tyler Orr",1,2.1,-2.0,7,3,4,1,1,0,0,0,0,0,2,1,0,0,1,75.0,100.0,
-"Isaiah Moore, Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron",1,2.0,2.0,4,2,2,0,0,0,3,2,1,3,2,1,0,1,1,100.0,,0.0
-"Cal Krohn, Carter Combs, Drew Daoust, Max Raimer, Seth Miron",1,2.0,-1.0,1,0,2,0,2,1,2,0,2,2,0,0,1,1,1,0.0,0.0,50.0
-"Carter Combs, Isaiah Moore, Josh Bocher, Josiah Butler, Logan Baumgartner",1,1.9,3.0,3,1,3,1,2,0,0,0,0,0,1,2,0,0,1,33.3,50.0,
-"Carter Combs, Drew Daoust, Grant Manz, Max Raimer, Seth Miron",1,1.9,2.0,2,1,3,0,1,0,0,0,2,2,0,0,0,0,0,33.3,0.0,
-"Cal Krohn, Josh Bocher, Josiah Butler, Max Raimer, Seth Miron",2,1.9,-4.0,4,1,1,0,0,2,5,1,3,4,0,1,0,1,0,100.0,,40.0
-"Grant Manz, Isaiah Moore, Josiah Butler, Logan Baumgartner, Max Raimer",1,1.8,-1.0,4,2,3,0,1,0,0,0,0,0,0,2,0,2,2,66.7,0.0,
-"Carter Combs, Josh Bocher, Josiah Butler, Logan Baumgartner, Tyler Orr",1,1.8,-1.0,4,2,3,0,0,0,0,0,1,1,0,0,0,0,0,66.7,,
-"Carter Combs, Drew Daoust, Josh Bocher, Logan Baumgartner, Seth Miron",1,1.8,1.0,2,1,4,0,3,0,0,0,0,0,1,2,0,0,1,25.0,0.0,
-"Carter Combs, Grant Manz, Isaiah Moore, Josiah Butler, Logan Baumgartner",1,1.8,2.0,5,2,2,1,1,0,0,0,1,1,1,0,0,0,0,100.0,100.0,
-"Cal Krohn, Carter Combs, Drew Daoust, Josh Bocher, Max Raimer",1,1.8,-1.0,4,1,2,0,0,2,2,0,1,1,0,1,0,1,0,50.0,,100.0
-"Cal Krohn, Carter Combs, Grant Manz, Max Raimer, Seth Miron",2,1.8,5.0,3,1,3,0,0,1,1,0,2,2,1,0,0,0,0,33.3,,100.0
-"Cal Krohn, Isaiah Moore, Josh Bocher, Josiah Butler, Seth Miron",1,1.6,4.0,6,3,4,0,0,0,0,1,0,1,1,2,0,0,0,75.0,,
-"Isaiah Moore, Josh Bocher, Josiah Butler, Logan Baumgartner, Seth Miron",1,1.6,2.0,5,2,3,1,2,0,0,0,0,0,2,1,0,0,0,66.7,50.0,
-"Cal Krohn, Carter Combs, Drew Daoust, Seth Miron, Shane Tarjan",1,1.6,1.0,4,1,2,0,1,2,2,0,1,1,0,0,0,1,1,50.0,0.0,100.0
-"Carter Combs, Grant Manz, Josiah Butler, Logan Baumgartner, Max Raimer",2,1.6,3.0,3,1,1,1,1,0,0,0,0,0,1,0,0,1,1,100.0,100.0,
-"Grant Manz, James Jacobs, Josh Bocher, Max Raimer, Seth Miron",1,1.6,-1.0,4,2,3,0,0,0,0,0,1,1,1,0,0,0,2,66.7,,
-"Carter Combs, Isaiah Moore, Josiah Butler, Max Raimer, Seth Miron",1,1.6,-4.0,5,1,1,1,1,2,2,0,2,2,1,0,0,0,1,100.0,100.0,100.0
-"Cal Krohn, Josiah Butler, Logan Baumgartner, Max Raimer, Shane Tarjan",1,1.6,1.0,5,2,2,1,1,0,0,0,0,0,1,0,0,0,0,100.0,100.0,
-"Carter Combs, Grant Manz, Logan Baumgartner, Max Raimer, Seth Miron",1,1.6,-2.0,2,1,2,0,1,0,0,1,1,2,0,1,0,1,1,50.0,0.0,
-"Cal Krohn, Carter Combs, James Jacobs, Josiah Butler, Logan Baumgartner",1,1.6,0.0,4,1,2,0,0,2,2,0,1,1,0,1,0,1,0,50.0,,100.0
-"Cal Krohn, Isaiah Moore, Josiah Butler, Seth Miron, Tyler Orr",2,1.6,-2.0,3,1,3,0,0,1,1,0,1,1,0,0,0,0,2,33.3,,100.0
-"Cal Krohn, Drew Daoust, Logan Baumgartner, Max Raimer, Seth Miron",1,1.6,0.0,2,1,3,0,2,0,0,0,2,2,0,0,0,0,1,33.3,0.0,
-"Drew Daoust, Grant Manz, James Jacobs, Logan Baumgartner, Max Raimer",1,1.6,-2.0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,,,
-"Cal Krohn, Carter Combs, Josh Bocher, Logan Baumgartner, Seth Miron",2,1.5,5.0,3,1,1,0,0,1,3,0,1,1,0,2,0,1,1,100.0,,33.3
-"Cal Krohn, Carter Combs, Logan Baumgartner, Seth Miron, Shane Tarjan",2,1.5,1.0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,1,0.0,,
-"Cal Krohn, Carter Combs, Grant Manz, Josiah Butler, Seth Miron",2,1.4,-1.0,3,0,1,0,1,3,4,0,1,1,0,0,0,0,0,0.0,0.0,75.0
-"Cal Krohn, Isaiah Moore, Max Raimer, Seth Miron, Tyler Orr",1,1.4,0.0,2,1,2,0,1,0,0,0,1,1,1,0,1,1,1,50.0,0.0,
-"Austin Schaumburg, Drew Daoust, Grant Manz, Max Raimer, Zach Orr",1,1.4,-2.0,0,0,3,0,0,0,0,2,0,2,0,0,0,0,0,0.0,,
-"Grant Manz, Isaiah Moore, Josh Bocher, Josiah Butler, Seth Miron",1,1.3,-2.0,2,1,2,0,0,0,0,0,0,0,1,1,0,0,1,50.0,,
-"Carter Combs, Grant Manz, Isaiah Moore, Logan Baumgartner, Seth Miron",1,1.3,-2.0,2,1,2,0,0,0,0,1,2,3,1,0,0,0,0,50.0,,
-"Grant Manz, Josh Bocher, Josiah Butler, Max Raimer, Seth Miron",1,1.2,0.0,2,1,3,0,2,0,0,2,0,2,0,1,0,1,0,33.3,0.0,
-"Josh Bocher, Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron",1,1.2,0.0,0,0,1,0,0,0,2,1,0,1,0,2,0,0,1,0.0,,0.0
-"Austin Schaumburg, Brandon Tilley, Dylan Taylor, Emmitt Huhn, Nick Fox",1,1.2,0.0,2,1,4,0,0,0,0,1,0,1,0,0,0,0,0,25.0,,
-"Cal Krohn, Grant Manz, Josiah Butler, Logan Baumgartner, Max Raimer",1,1.2,2.0,2,1,1,0,0,0,0,0,1,1,0,0,0,0,1,100.0,,
-"Cal Krohn, Isaiah Moore, Logan Baumgartner, Seth Miron, Tyler Orr",1,1.2,1.0,3,1,1,1,1,0,0,0,0,0,1,0,0,1,1,100.0,100.0,
-"Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron, Tyler Orr",1,1.1,-2.0,4,1,1,0,0,2,2,0,2,2,0,0,0,1,0,100.0,,100.0
-"Grant Manz, Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron",1,1.1,0.0,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,
-"Carter Combs, Drew Daoust, Grant Manz, Seth Miron, Shane Tarjan",1,1.1,1.0,3,1,1,1,1,0,0,0,0,0,1,0,0,1,1,100.0,100.0,
-"Austin Schaumburg, Drew Daoust, Grant Manz, Max Raimer, Shane Tarjan",1,1.0,0.0,5,1,1,0,0,3,5,2,0,2,1,0,0,0,2,100.0,,60.0
-"Drew Daoust, Dylan Taylor, Grant Manz, James Jacobs, Shane Tarjan",1,1.0,5.0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,
-"Carter Combs, Grant Manz, Isaiah Moore, Josh Bocher, Josiah Butler",1,1.0,-1.0,1,0,0,0,0,1,2,1,0,1,0,0,0,0,0,,,50.0
-"Cal Krohn, Drew Daoust, Josh Bocher, Josiah Butler, Max Raimer",1,1.0,0.0,0,0,2,0,2,0,0,0,1,1,0,0,0,0,1,0.0,0.0,
-"Cal Krohn, Grant Manz, Isaiah Moore, Seth Miron, Tyler Orr",1,1.0,0.0,0,0,1,0,0,0,0,0,2,2,0,0,0,0,0,0.0,,
-"Carter Combs, Drew Daoust, Josiah Butler, Logan Baumgartner, Seth Miron",1,1.0,0.0,0,0,0,0,0,0,0,0,1,1,0,0,0,2,1,,,
-"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Shane Tarjan",1,1.0,-1.0,0,0,1,0,0,0,0,0,1,1,0,1,0,1,1,0.0,,
-"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Tyler Orr",1,0.9,0.0,2,0,2,0,1,2,2,1,1,2,0,0,0,0,2,0.0,0.0,100.0
-"Cal Krohn, Drew Daoust, Josiah Butler, Logan Baumgartner, Tyler Orr",1,0.9,0.0,0,0,1,0,1,0,0,0,1,1,0,0,0,1,0,0.0,0.0,
-"Grant Manz, Isaiah Moore, James Jacobs, Max Raimer, Shane Tarjan",1,0.8,-2.0,2,1,1,0,0,0,0,0,0,0,0,0,0,0,1,100.0,,
-"Josh Bocher, Logan Baumgartner, Max Raimer, Seth Miron, Tyler Orr",1,0.8,2.0,0,0,1,0,0,0,0,0,1,1,0,1,0,0,1,0.0,,
-"Cal Krohn, Grant Manz, Isaiah Moore, Josiah Butler, Max Raimer",1,0.8,-2.0,0,0,3,0,2,0,0,1,0,1,0,0,0,0,1,0.0,0.0,
-"Drew Daoust, Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron",1,0.8,2.0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,2,0.0,0.0,
-"Drew Daoust, Grant Manz, Isaiah Moore, James Jacobs, Shane Tarjan",1,0.8,1.0,1,0,1,0,0,1,1,1,0,1,0,0,0,0,1,0.0,,100.0
-"Carter Combs, Isaiah Moore, Logan Baumgartner, Seth Miron, Shane Tarjan",1,0.8,2.0,2,1,1,0,0,0,0,0,1,1,0,0,0,0,0,100.0,,
-"Cal Krohn, Grant Manz, Josiah Butler, Max Raimer, Seth Miron",2,0.8,0.0,0,0,1,0,1,0,0,1,0,1,0,0,0,0,0,0.0,0.0,
-"Carter Combs, Josh Bocher, Josiah Butler, Seth Miron, Tyler Orr",1,0.7,-2.0,0,0,0,0,0,0,0,0,1,1,0,0,0,2,0,,,
-"Cal Krohn, Drew Daoust, Josiah Butler, Logan Baumgartner, Seth Miron",1,0.7,2.0,2,1,2,0,0,0,0,0,2,2,0,0,0,0,0,50.0,,
-"Isaiah Moore, Josh Bocher, Josiah Butler, Logan Baumgartner, Max Raimer",1,0.7,3.0,3,1,1,1,1,0,0,0,2,2,1,0,0,0,0,100.0,100.0,
-"Cal Krohn, Carter Combs, Grant Manz, Josh Bocher, Max Raimer",1,0.7,1.0,2,1,1,0,0,0,0,0,0,0,0,0,0,0,1,100.0,,
-"Cal Krohn, Carter Combs, Isaiah Moore, Logan Baumgartner, Seth Miron",1,0.7,-5.0,0,0,1,0,1,0,0,1,0,1,0,0,0,0,0,0.0,0.0,
-"Grant Manz, Isaiah Moore, Josh Bocher, Max Raimer, Seth Miron",1,0.7,1.0,2,1,1,0,0,0,0,0,0,0,0,0,1,0,1,100.0,,
-"Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron, Shane Tarjan",1,0.6,3.0,3,1,1,0,0,1,1,0,1,1,0,0,0,0,0,100.0,,100.0
-"Carter Combs, Dylan Taylor, Josiah Butler, Logan Baumgartner, Seth Miron",1,0.6,2.0,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,
-"Austin Schaumburg, Drew Daoust, Isaiah Moore, Logan Baumgartner, Shane Tarjan",1,0.6,0.0,0,0,1,0,1,0,0,1,0,1,0,1,0,1,1,0.0,0.0,
-"Cal Krohn, Carter Combs, Grant Manz, Josiah Butler, Max Raimer",1,0.6,-2.0,2,0,0,0,0,2,2,0,1,1,0,0,0,0,0,,,100.0
-"Carter Combs, Drew Daoust, Isaiah Moore, Logan Baumgartner, Seth Miron",1,0.6,-1.0,0,0,1,0,1,0,0,0,1,1,0,0,0,0,1,0.0,0.0,
-"Grant Manz, Isaiah Moore, Josiah Butler, Logan Baumgartner, Tyler Orr",1,0.6,-5.0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,2,0.0,0.0,
-"Carter Combs, Grant Manz, Isaiah Moore, James Jacobs, Shane Tarjan",1,0.6,-3.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
-"Cal Krohn, Josiah Butler, Logan Baumgartner, Seth Miron, Shane Tarjan",2,0.5,-2.0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,,,
-"Carter Combs, Drew Daoust, Grant Manz, Josiah Butler, Seth Miron",1,0.5,-3.0,3,1,1,1,1,0,0,0,0,0,1,0,0,0,1,100.0,100.0,
-"Cal Krohn, Logan Baumgartner, Max Raimer, Seth Miron, Tyler Orr",1,0.5,-2.0,2,0,0,0,0,2,2,0,1,1,0,0,0,0,0,,,100.0
-"Grant Manz, Josh Bocher, Josiah Butler, Logan Baumgartner, Seth Miron",1,0.5,0.0,0,0,2,0,0,0,0,1,0,1,0,1,0,0,0,0.0,,
-"Cal Krohn, Drew Daoust, Max Raimer, Seth Miron, Tyler Orr",1,0.5,3.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,,,
-"Drew Daoust, James Jacobs, Logan Baumgartner, Max Raimer, Tyler Orr",1,0.4,0.0,0,0,1,0,1,0,0,0,1,1,0,0,0,0,0,0.0,0.0,
-"Carter Combs, Grant Manz, Isaiah Moore, Logan Baumgartner, Max Raimer",1,0.4,0.0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,,,
-"Cal Krohn, Carter Combs, Josh Bocher, Seth Miron, Shane Tarjan",1,0.4,2.0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,,,
-"Drew Daoust, Grant Manz, Josiah Butler, Max Raimer, Seth Miron",1,0.3,4.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,,,
-"Cal Krohn, Drew Daoust, Grant Manz, Josiah Butler, Tyler Orr",1,0.3,-2.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,,,
-"Cal Krohn, Carter Combs, Drew Daoust, Logan Baumgartner, Max Raimer",1,0.3,0.0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,
-"Austin Schaumburg, Drew Daoust, James Jacobs, Max Raimer, Tyler Orr",1,0.3,0.0,2,1,1,0,0,0,0,0,1,1,1,0,0,1,0,100.0,,
-"Cal Krohn, Josiah Butler, Logan Baumgartner, Max Raimer, Tyler Orr",1,0.2,-2.0,2,0,0,0,0,2,2,0,0,0,0,0,0,0,0,,,100.0
-"Cal Krohn, Carter Combs, Isaiah Moore, Seth Miron, Shane Tarjan",1,0.1,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,,,
-"Carter Combs, Isaiah Moore, Josiah Butler, Logan Baumgartner, Max Raimer",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
-"Cal Krohn, Isaiah Moore, Josiah Butler, Max Raimer, Shane Tarjan",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
-"Cal Krohn, Drew Daoust, Grant Manz, Josiah Butler, Max Raimer",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
-"Cal Krohn, Josh Bocher, Josiah Butler, Seth Miron, Tyler Orr",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
-"Carter Combs, Drew Daoust, Josiah Butler, Max Raimer, Seth Miron",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
-"Cal Krohn, Carter Combs, Josh Bocher, Max Raimer, Tyler Orr",1,0.0,0.0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,,,
+"Carson Cordelli, Chase Cummings, Ethan Johnson, Jonathan Burroughs, Mason Dopirak",18,214.2,-109.0,491,192,339,40,91,67,81,44,174,218,97,24,21,56,55,56.6,44.0,82.7
+"Carson Cordelli, Chase Cummings, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",12,52.9,-8.0,111,42,91,16,36,11,11,15,35,50,30,9,3,8,9,46.2,44.4,100.0
+"Carson Cordelli, Chase Cummings, Ethan Johnson, Isaac Wit, Mason Dopirak",8,50.3,5.0,98,38,75,7,21,15,18,13,38,51,16,10,5,16,17,50.7,33.3,83.3
+"Carson Cordelli, Chase Cummings, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",12,47.8,8.0,123,41,86,6,27,35,43,22,35,57,16,9,3,7,29,47.7,22.2,81.4
+"Carson Cordelli, Chase Cummings, Ethan Johnson, Joey Jendusa, Mason Dopirak",11,40.0,-6.0,75,24,57,9,18,18,22,8,28,36,12,5,2,13,18,42.1,50.0,81.8
+"CJ Valente, Carson Cordelli, Chase Cummings, Jonathan Burroughs, Mason Dopirak",7,29.2,-10.0,59,19,42,3,11,18,20,10,19,29,9,5,3,6,9,45.2,27.3,90.0
+"Carson Cordelli, Chase Cummings, Isaac Wit, Jonathan Burroughs, Mason Dopirak",5,29.2,18.0,69,27,39,4,7,11,12,5,19,24,9,6,3,14,11,69.2,57.1,91.7
+"Chase Cummings, Ethan Johnson, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",7,23.4,18.0,47,18,34,5,8,6,10,9,24,33,9,2,5,8,10,52.9,62.5,60.0
+"CJ Valente, Chase Cummings, Isaac Wit, Joey Jendusa, Matus Dopirak",8,22.3,14.0,30,13,28,3,14,1,4,5,15,20,5,1,2,9,8,46.4,21.4,25.0
+"Carson Cordelli, Chase Cummings, Joey Jendusa, Mason Dopirak, Matus Dopirak",10,16.6,-11.0,41,14,25,7,13,6,9,3,12,15,2,2,1,7,7,56.0,53.8,66.7
+"Chase Cummings, Joey Jendusa, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",11,16.2,-3.0,40,12,31,6,14,10,11,8,14,22,9,2,0,4,8,38.7,42.9,90.9
+"CJ Valente, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Matus Dopirak",5,16.0,-11.0,32,13,23,4,9,2,2,2,8,10,9,2,0,4,7,56.5,44.4,100.0
+"Carson Cordelli, Chase Cummings, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",6,14.8,-2.0,28,11,25,5,9,1,3,7,11,18,7,4,0,6,7,44.0,55.6,33.3
+"Carson Cordelli, Joey Jendusa, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",10,13.4,3.0,29,11,18,0,2,7,8,2,9,11,2,6,0,5,4,61.1,0.0,87.5
+"CJ Valente, Isaac Wit, Joey Jendusa, Mason Dopirak, Matus Dopirak",8,12.7,1.0,25,9,24,2,10,5,5,5,10,15,6,1,1,4,6,37.5,20.0,100.0
+"CJ Valente, Chase Cummings, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",5,11.9,-10.0,31,10,15,5,6,6,6,0,13,13,7,1,1,4,1,66.7,83.3,100.0
+"Carson Cordelli, Chase Cummings, Isaac Wit, Mason Dopirak, Matus Dopirak",4,11.1,-5.0,13,4,13,1,6,4,5,1,11,12,2,1,0,4,7,30.8,16.7,80.0
+"Carson Cordelli, Chase Cummings, Isaac Wit, Joey Jendusa, Mason Dopirak",4,11.1,4.0,36,8,13,4,7,16,16,4,10,14,5,1,1,6,7,61.5,57.1,100.0
+"Carson Cordelli, Ethan Johnson, Isaac Wit, Joey Jendusa, Mason Dopirak",2,11.0,4.0,21,8,14,3,4,2,2,2,13,15,4,0,0,7,3,57.1,75.0,100.0
+"CJ Valente, Chase Cummings, Isaac Wit, Joey Jendusa, Jonathan Burroughs",3,10.5,-3.0,15,6,13,2,4,1,1,1,4,5,2,0,0,4,2,46.2,50.0,100.0
+"CJ Valente, Carson Cordelli, Chase Cummings, Joey Jendusa, Mason Dopirak",7,10.3,-1.0,17,7,13,1,4,2,2,2,5,7,2,0,0,4,6,53.8,25.0,100.0
+"CJ Valente, Carson Cordelli, Chase Cummings, Joey Jendusa, Jonathan Burroughs",3,10.2,-13.0,18,7,13,3,5,1,2,2,4,6,3,2,0,2,2,53.8,60.0,50.0
+"CJ Valente, Chase Cummings, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",6,10.1,5.0,22,8,15,2,5,4,4,3,7,10,3,0,2,4,2,53.3,40.0,100.0
+"Carson Cordelli, Isaac Wit, Joey Jendusa, Mason Dopirak, Matus Dopirak",6,9.9,-11.0,28,12,15,2,2,2,2,0,11,11,5,2,1,1,3,80.0,100.0,100.0
+"CJ Valente, Chase Cummings, Isaac Wit, Joey Jendusa, Mason Dopirak",6,9.4,-8.0,29,11,16,5,9,2,2,3,4,7,7,2,1,1,4,68.8,55.6,100.0
+"Chase Cummings, Ethan Johnson, Isaac Wit, Jonathan Burroughs, Mason Dopirak",2,8.8,7.0,14,6,14,0,6,2,2,2,8,10,4,3,2,5,3,42.9,0.0,100.0
+"Carson Cordelli, Daniel Franklin IV, Ethan Johnson, Jonathan Burroughs, Mason Dopirak",3,8.4,-14.0,27,11,15,3,4,2,2,1,7,8,5,0,0,1,4,73.3,75.0,100.0
+"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Ethan Johnson, Mason Dopirak",2,8.0,-1.0,12,5,9,0,2,2,2,0,8,8,2,2,1,3,2,55.6,0.0,100.0
+"CJ Valente, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",4,8.0,-6.0,14,5,14,2,4,2,2,5,7,12,1,2,0,2,4,35.7,50.0,100.0
+"Carson Cordelli, Chase Cummings, Ethan Johnson, Joey Jendusa, Jonathan Burroughs",4,7.8,-9.0,24,8,14,5,8,3,3,2,3,5,5,1,0,3,2,57.1,62.5,100.0
+"CJ Valente, Carson Cordelli, Chase Cummings, Ethan Johnson, Mason Dopirak",3,7.7,7.0,7,3,12,1,4,0,0,2,5,7,2,0,0,3,3,25.0,25.0,
+"CJ Valente, Ethan Johnson, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",2,7.2,3.0,14,6,15,0,2,2,2,3,7,10,1,2,0,0,0,40.0,0.0,100.0
+"Carson Cordelli, Ethan Johnson, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",5,7.1,-7.0,17,5,7,3,3,4,5,1,5,6,4,2,2,3,2,71.4,100.0,80.0
+"Carson Cordelli, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Mason Dopirak",1,6.8,9.0,23,4,8,2,4,13,14,3,8,11,3,3,2,2,2,50.0,50.0,92.9
+"CJ Valente, Daniel Franklin IV, Joey Jendusa, Mason Dopirak, Matus Dopirak",4,6.6,-4.0,22,8,9,4,5,2,3,1,2,3,6,1,0,3,1,88.9,80.0,66.7
+"CJ Valente, Chase Cummings, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",6,6.5,12.0,5,2,10,0,6,1,2,2,3,5,1,1,1,2,4,20.0,0.0,50.0
+"Carson Cordelli, Chase Cummings, Ethan Johnson, Isaac Wit, Joey Jendusa",3,6.4,6.0,13,6,11,0,1,1,2,5,4,9,2,1,0,3,0,54.5,0.0,50.0
+"Chase Cummings, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",3,6.3,-6.0,13,3,9,1,4,6,6,2,5,7,1,1,0,0,1,33.3,25.0,100.0
+"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs, Mason Dopirak",2,6.2,-4.0,15,3,7,2,2,7,10,2,6,8,1,1,1,2,1,42.9,100.0,70.0
+"Carson Cordelli, Daniel Franklin IV, Joey Jendusa, Mason Dopirak, Matus Dopirak",3,6.0,12.0,12,4,9,1,3,3,4,3,4,7,2,1,0,2,4,44.4,33.3,75.0
+"CJ Valente, Joey Jendusa, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",4,5.9,6.0,9,4,8,1,4,0,0,1,5,6,3,1,0,4,2,50.0,25.0,
+"Chase Cummings, Isaac Wit, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",2,5.8,-7.0,8,2,8,0,2,4,6,4,3,7,0,1,0,1,0,25.0,0.0,66.7
+"CJ Valente, Chase Cummings, Joey Jendusa, Mason Dopirak, Matus Dopirak",4,5.7,3.0,18,4,5,1,2,9,9,0,5,5,2,0,0,2,1,80.0,50.0,100.0
+"CJ Valente, Carson Cordelli, Chase Cummings, Joey Jendusa, Matus Dopirak",3,5.7,-6.0,9,4,7,0,0,1,2,3,1,4,1,1,0,1,0,57.1,,50.0
+"CJ Valente, Chase Cummings, Daniel Franklin IV, Mason Dopirak, Matus Dopirak",2,5.4,-2.0,8,3,7,1,1,1,2,2,2,4,2,1,1,0,3,42.9,100.0,50.0
+"CJ Valente, Carson Cordelli, Isaac Wit, Mason Dopirak",1,5.0,0.0,10,1,3,0,1,8,10,1,1,2,0,1,0,0,5,33.3,0.0,80.0
+"Carson Cordelli, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",1,5.0,4.0,10,3,4,0,0,4,6,1,4,5,0,1,0,1,1,75.0,,66.7
+"Carson Cordelli, Chase Cummings, Isaac Wit, Joey Jendusa, Matus Dopirak",5,4.8,3.0,12,5,6,1,1,1,2,0,2,2,3,0,0,0,3,83.3,100.0,50.0
+"Chase Cummings, Isaac Wit, Joey Jendusa, Mason Dopirak, Matus Dopirak",5,4.7,4.0,13,3,7,0,2,7,8,0,3,3,3,0,0,1,3,42.9,0.0,87.5
+"CJ Valente, Chase Cummings, Isaac Wit, Mason Dopirak, Matus Dopirak",4,4.7,1.0,12,5,7,2,3,0,0,0,5,5,3,0,0,1,0,71.4,66.7,
+"Isaac Wit, Joey Jendusa, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",4,4.7,1.0,4,2,6,0,2,0,0,2,3,5,0,0,1,0,1,33.3,0.0,
+"CJ Valente, Chase Cummings, Ethan Johnson, Joey Jendusa, Mason Dopirak",2,4.4,-8.0,7,3,4,0,0,1,3,0,3,3,2,0,0,1,1,75.0,,33.3
+"CJ Valente, Chase Cummings, Daniel Franklin IV, Joey Jendusa, Matus Dopirak",3,4.3,-2.0,5,1,5,0,1,3,4,0,4,4,0,0,0,2,2,20.0,0.0,75.0
+"CJ Valente, Chase Cummings, Daniel Franklin IV, Ethan Johnson, Mason Dopirak",3,4.1,1.0,16,5,9,3,5,3,3,4,2,6,3,1,0,0,2,55.6,60.0,100.0
+"CJ Valente, Ethan Johnson, Isaac Wit, Joey Jendusa, Mason Dopirak",2,4.1,-1.0,6,3,7,0,1,0,0,1,2,3,1,0,0,0,1,42.9,0.0,
+"CJ Valente, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Mason Dopirak",2,4.0,-6.0,10,4,6,1,1,1,2,1,4,5,3,0,0,0,3,66.7,100.0,50.0
+"Brock Adams, CJ Valente, Daniel Franklin IV, Isaac Wit, Joey Jendusa",1,3.9,-4.0,9,3,6,2,4,1,2,1,3,4,2,0,1,1,3,50.0,50.0,50.0
+"Carson Cordelli, Chase Cummings, Isaac Wit, Joey Jendusa, Jonathan Burroughs",2,3.8,5.0,2,1,5,0,3,0,0,0,4,4,0,0,1,2,1,20.0,0.0,
+"CJ Valente, Chase Cummings, Ethan Johnson, Jonathan Burroughs, Mason Dopirak",2,3.8,7.0,6,2,5,0,0,2,2,0,1,1,0,1,0,0,1,40.0,,100.0
+"Carson Cordelli, Daniel Franklin IV, Isaac Wit, Mason Dopirak, Matus Dopirak",1,3.7,-3.0,4,1,6,0,2,2,4,3,2,5,1,0,0,0,1,16.7,0.0,50.0
+"Chase Cummings, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Matus Dopirak",2,3.6,4.0,4,1,6,1,3,1,2,3,3,6,0,1,0,0,0,16.7,33.3,50.0
+"Chase Cummings, Ethan Johnson, Isaac Wit, Joey Jendusa, Mason Dopirak",2,3.5,-3.0,4,2,6,0,2,0,0,1,2,3,1,0,0,1,1,33.3,0.0,
+"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Ethan Johnson, Jonathan Burroughs",2,3.5,0.0,12,4,7,1,2,3,3,2,2,4,2,0,0,1,1,57.1,50.0,100.0
+"CJ Valente, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs, Mason Dopirak",1,3.5,-4.0,4,1,5,0,3,2,2,0,1,1,0,2,0,0,0,20.0,0.0,100.0
+"Chase Cummings, Daniel Franklin IV, Joey Jendusa, Mason Dopirak, Matus Dopirak",2,3.5,1.0,11,4,5,1,1,2,2,1,3,4,2,1,0,1,3,80.0,100.0,100.0
+"CJ Valente, Carson Cordelli, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs",3,3.3,-1.0,5,2,7,1,4,0,0,2,1,3,0,0,0,1,1,28.6,25.0,
+"CJ Valente, Carson Cordelli, Chad Coplin, Daniel Franklin IV, Mason Dopirak",1,3.1,1.0,6,2,4,1,2,1,2,2,0,2,1,2,0,0,1,50.0,50.0,50.0
+"CJ Valente, Carson Cordelli, Chase Cummings, Isaac Wit, Joey Jendusa",2,3.0,-2.0,4,2,4,0,1,0,0,1,3,4,1,0,0,1,2,50.0,0.0,
+"Ethan Johnson, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",3,2.8,-3.0,4,2,5,0,1,0,0,0,3,3,1,1,1,3,4,40.0,0.0,
+"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Ethan Johnson, Joey Jendusa",2,2.8,0.0,11,4,5,1,2,2,2,3,2,5,1,1,0,1,0,80.0,50.0,100.0
+"CJ Valente, Chad Coplin, Daniel Franklin IV, Joey Jendusa, Matus Dopirak",1,2.8,1.0,4,2,4,0,1,0,0,1,2,3,1,1,0,1,0,50.0,0.0,
+"Carson Cordelli, Chase Cummings, Ethan Johnson, Isaac Wit, Jonathan Burroughs",1,2.7,-12.0,2,1,4,0,0,0,0,0,0,0,0,0,0,1,1,25.0,,
+"Brady Gregg, Jace Paul, Kolby Henderlong, Mason Accidentale, Quinn Rosenberg",1,2.7,0.0,2,0,3,0,3,2,4,1,5,6,0,1,0,2,0,0.0,0.0,50.0
+"Brock Adams, Dubem Igwilo, Jace Paul, Kolby Henderlong, Quinn Rosenberg",2,2.6,-1.0,6,2,4,2,3,0,0,0,3,3,2,0,1,2,2,50.0,66.7,
+"Brock Adams, CJ Valente, Chase Cummings, Jace Paul, Mason Dopirak",1,2.6,-4.0,8,2,3,2,3,2,3,0,2,2,1,1,0,0,0,66.7,66.7,66.7
+"Brady Gregg, Chad Coplin, Dubem Igwilo, Jace Paul, Mason Accidentale",1,2.6,-5.0,5,2,4,0,2,1,3,1,2,3,0,0,0,0,0,50.0,0.0,33.3
+"Carson Cordelli, Chad Coplin, Daniel Franklin IV, Ethan Johnson, Mason Dopirak",1,2.5,-1.0,7,3,4,1,2,0,0,1,2,3,1,1,0,3,0,75.0,50.0,
+"Carson Cordelli, Daniel Franklin IV, Dubem Igwilo, Isaac Wit, Mason Dopirak",1,2.5,1.0,3,1,3,1,2,0,0,0,5,5,1,0,1,1,2,33.3,50.0,
+"CJ Valente, Chase Cummings, Daniel Franklin IV, Isaac Wit, Joey Jendusa",1,2.4,5.0,3,1,4,1,1,0,0,0,1,1,0,0,0,0,1,25.0,100.0,
+"Daniel Franklin IV, Isaac Wit, Joey Jendusa, Mason Dopirak, Matus Dopirak",1,2.4,7.0,7,3,4,1,1,0,0,0,4,4,1,0,0,1,0,75.0,100.0,
+"Brady Gregg, Chad Coplin, Jace Paul, Kolby Henderlong, Mason Accidentale",1,2.3,-4.0,6,3,4,0,1,0,0,0,3,3,2,1,0,1,2,75.0,0.0,
+"Carson Cordelli, Daniel Franklin IV, Dubem Igwilo, Joey Jendusa, Mason Dopirak",1,2.2,-6.0,1,0,3,0,2,1,4,3,1,4,0,0,0,0,0,0.0,0.0,25.0
+"Chase Cummings, Isaac Wit, Joey Jendusa, Matus Dopirak, Quinn Rosenberg",1,2.2,4.0,4,2,4,0,1,0,0,1,0,1,2,0,0,0,1,50.0,0.0,
+"Chase Cummings, Daniel Franklin IV, Ethan Johnson, Jonathan Burroughs, Mason Dopirak",2,2.2,2.0,2,0,3,0,2,2,2,2,0,2,0,1,1,2,1,0.0,0.0,100.0
+"Brock Adams, Chase Cummings, Ethan Johnson, Isaac Wit, Joey Jendusa",1,2.1,-8.0,2,1,3,0,1,0,0,0,0,0,0,0,0,1,1,33.3,0.0,
+"Brock Adams, Dubem Igwilo, Kolby Henderlong, Mason Accidentale, Quinn Rosenberg",1,2.1,0.0,3,1,4,1,2,0,0,1,2,3,1,0,0,0,1,25.0,50.0,
+"CJ Valente, Carson Cordelli, Daniel Franklin IV, Jonathan Burroughs, Mason Dopirak",1,2.1,0.0,7,3,4,0,0,1,1,0,0,0,1,0,0,0,1,75.0,,100.0
+"Chad Coplin, Chase Cummings, Dubem Igwilo, Mason Dopirak, Matus Dopirak",1,2.1,1.0,4,2,6,0,2,0,0,1,2,3,1,0,0,0,1,33.3,0.0,
+"CJ Valente, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Jonathan Burroughs",2,2.0,0.0,4,2,2,0,0,0,2,1,1,2,2,0,0,2,3,100.0,,0.0
+"Carson Cordelli, Chase Cummings, Isaac Wit, Jonathan Burroughs, Matus Dopirak",1,2.0,-2.0,5,2,6,1,5,0,0,0,1,1,1,0,0,0,3,33.3,20.0,
+"Chase Cummings, Dubem Igwilo, Joey Jendusa, Matus Dopirak, Quinn Rosenberg",1,2.0,-2.0,8,3,4,0,0,2,2,1,1,2,1,0,0,0,1,75.0,,100.0
+"Carson Cordelli, Chase Cummings, Dubem Igwilo, Ethan Johnson, Mason Dopirak",1,1.9,-1.0,4,2,2,0,0,0,0,0,1,1,1,0,0,1,1,100.0,,
+"Brock Adams, Carson Cordelli, Ethan Johnson, Joey Jendusa, Mason Dopirak",2,1.9,-3.0,7,2,3,1,1,2,2,1,0,1,2,1,0,0,1,66.7,100.0,100.0
+"CJ Valente, Joey Jendusa, Mason Dopirak, Matus Dopirak, Quinn Rosenberg",1,1.9,-1.0,4,2,2,0,0,0,0,0,0,0,0,0,0,1,1,100.0,,
+"Carson Cordelli, Ethan Johnson, Isaac Wit, Kolby Henderlong, Mason Dopirak",1,1.8,-4.0,2,1,4,0,2,0,0,1,0,1,0,1,0,0,1,25.0,0.0,
+"CJ Valente, Chase Cummings, Isaac Wit, Jonathan Burroughs, Matus Dopirak",1,1.8,3.0,0,0,1,0,1,0,0,0,1,1,0,0,0,1,2,0.0,0.0,
+"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs, Matus Dopirak",2,1.8,-6.0,6,2,2,1,1,1,2,0,1,1,1,1,0,0,0,100.0,100.0,50.0
+"Carson Cordelli, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",1,1.8,2.0,7,2,3,1,1,2,2,0,1,1,1,0,2,0,2,66.7,100.0,100.0
+"Brock Adams, Chad Coplin, Daniel Franklin IV, Dubem Igwilo, Quinn Rosenberg",1,1.7,3.0,2,1,3,0,2,0,0,1,1,2,0,1,0,1,0,33.3,0.0,
+"CJ Valente, Daniel Franklin IV, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",1,1.7,3.0,4,1,2,0,0,2,2,0,0,0,0,0,0,2,0,50.0,,100.0
+"CJ Valente, Chad Coplin, Daniel Franklin IV, Dubem Igwilo, Joey Jendusa",1,1.7,1.0,2,1,4,0,2,0,0,2,1,3,0,1,0,1,1,25.0,0.0,
+"Carson Cordelli, Chase Cummings, Ethan Johnson, Kolby Henderlong, Mason Dopirak",1,1.6,-2.0,5,2,3,1,1,0,0,0,2,2,1,0,0,0,0,66.7,100.0,
+"Carson Cordelli, Chase Cummings, Jonathan Burroughs, Matus Dopirak, Quinn Rosenberg",1,1.6,0.0,2,1,2,0,0,0,0,0,1,1,1,0,0,0,0,50.0,,
+"Chase Cummings, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",1,1.6,-6.0,8,2,2,2,2,2,3,0,2,2,2,0,0,0,0,100.0,100.0,66.7
+"Brock Adams, Carson Cordelli, Daniel Franklin IV, Ethan Johnson, Joey Jendusa",1,1.6,-1.0,4,2,3,0,0,0,0,1,2,3,1,0,0,1,0,66.7,,
+"Brock Adams, Carson Cordelli, Chase Cummings, Mason Dopirak, Matus Dopirak",1,1.6,-4.0,4,2,3,0,0,0,0,0,3,3,2,0,0,0,0,66.7,,
+"CJ Valente, Carson Cordelli, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",2,1.6,2.0,0,0,2,0,2,0,0,0,1,1,0,0,0,2,1,0.0,0.0,
+"CJ Valente, Chase Cummings, Ethan Johnson, Isaac Wit, Joey Jendusa",1,1.6,-1.0,3,1,3,0,0,1,2,1,2,3,0,0,0,0,0,33.3,,50.0
+"CJ Valente, Carson Cordelli, Joey Jendusa, Mason Dopirak, Matus Dopirak",1,1.6,-1.0,6,1,1,0,0,4,4,0,0,0,0,1,0,1,3,100.0,,100.0
+"Chad Coplin, Dubem Igwilo, Joey Jendusa, Mason Accidentale, Matus Dopirak",1,1.6,4.0,5,2,3,1,1,0,0,0,1,1,1,0,0,0,0,66.7,100.0,
+"CJ Valente, Carson Cordelli, Isaac Wit, Joey Jendusa, Mason Dopirak",2,1.5,2.0,2,0,0,0,0,2,4,1,3,4,0,0,0,1,2,,,50.0
+"CJ Valente, Chad Coplin, Daniel Franklin IV, Joey Jendusa, Mason Dopirak",1,1.5,-1.0,6,2,4,1,3,1,1,1,0,1,1,1,0,1,1,50.0,33.3,100.0
+"Carson Cordelli, Daniel Franklin IV, Dubem Igwilo, Jonathan Burroughs, Mason Dopirak",1,1.5,2.0,2,0,1,0,1,2,2,0,0,0,0,0,0,0,2,0.0,0.0,100.0
+"Chase Cummings, Daniel Franklin IV, Isaac Wit, Matus Dopirak, Quinn Rosenberg",1,1.5,3.0,0,0,2,0,2,0,0,2,2,4,0,0,0,2,0,0.0,0.0,
+"Chad Coplin, Daniel Franklin IV, Jace Paul, Kolby Henderlong, Quinn Rosenberg",1,1.5,3.0,2,1,2,0,0,0,1,0,0,0,1,1,0,1,0,50.0,,0.0
+"Brock Adams, Chad Coplin, Dubem Igwilo, Kolby Henderlong, Quinn Rosenberg",2,1.4,7.0,3,1,2,1,2,0,0,0,1,1,1,1,0,2,1,50.0,50.0,
+"CJ Valente, Carson Cordelli, Daniel Franklin IV, Mason Dopirak, Matus Dopirak",1,1.4,2.0,3,1,1,1,1,0,0,1,1,2,1,0,0,2,0,100.0,100.0,
+"Brock Adams, Chad Coplin, Daniel Franklin IV, Joey Jendusa, Kolby Henderlong",1,1.4,1.0,3,1,3,1,1,0,0,1,2,3,1,0,0,1,0,33.3,100.0,
+"CJ Valente, Chase Cummings, Ethan Johnson, Jace Paul, Mason Dopirak",1,1.4,3.0,2,1,3,0,1,0,0,1,0,1,1,0,0,0,0,33.3,0.0,
+"Chase Cummings, Daniel Franklin IV, Ethan Johnson, Isaac Wit, Mason Dopirak",1,1.4,7.0,0,0,2,0,0,0,0,1,0,1,0,0,1,1,0,0.0,,
+"Chase Cummings, Dubem Igwilo, Ethan Johnson, Isaac Wit, Mason Dopirak",1,1.3,4.0,4,1,1,0,0,2,2,0,0,0,1,0,0,2,2,100.0,,100.0
+"Brady Gregg, Brock Adams, Dubem Igwilo, Kolby Henderlong, Mason Accidentale",1,1.3,1.0,3,1,4,0,2,1,2,2,2,4,0,0,0,2,0,25.0,0.0,50.0
+"Carson Cordelli, Chad Coplin, Joey Jendusa, Kolby Henderlong, Matus Dopirak",1,1.3,-2.0,2,1,2,0,0,0,0,0,0,0,1,0,0,0,0,50.0,,
+"Brock Adams, Dubem Igwilo, Joey Jendusa, Mason Dopirak, Matus Dopirak",1,1.3,2.0,2,1,2,0,0,0,0,1,0,1,1,0,0,0,0,50.0,,
+"Chase Cummings, Ethan Johnson, Isaac Wit, Joey Jendusa, Jonathan Burroughs",1,1.3,-1.0,2,1,2,0,1,0,0,1,1,2,0,0,1,1,1,50.0,0.0,
+"Carson Cordelli, Chad Coplin, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs",1,1.2,-4.0,2,1,3,0,0,0,0,1,0,1,0,0,0,0,1,33.3,,
+"Carson Cordelli, Ethan Johnson, Isaac Wit, Jonathan Burroughs, Mason Dopirak",1,1.2,4.0,0,0,1,0,0,0,0,0,1,1,0,1,0,2,2,0.0,,
+"CJ Valente, Chad Coplin, Jace Paul, Mason Accidentale, Quinn Rosenberg",1,1.2,5.0,0,0,2,0,0,0,0,0,1,1,0,0,0,0,0,0.0,,
+"CJ Valente, Chase Cummings, Daniel Franklin IV, Joey Jendusa, Mason Dopirak",1,1.2,0.0,2,1,1,0,0,0,1,0,1,1,0,0,1,1,0,100.0,,0.0
+"Carson Cordelli, Chad Coplin, Daniel Franklin IV, Mason Dopirak, Matus Dopirak",1,1.2,-1.0,2,0,0,0,0,2,2,0,1,1,0,0,0,1,0,,,100.0
+"Carson Cordelli, Chad Coplin, Chase Cummings, Ethan Johnson, Quinn Rosenberg",1,1.1,-1.0,2,1,2,0,0,0,0,0,1,1,0,0,0,0,0,50.0,,
+"CJ Valente, Joey Jendusa, Kolby Henderlong, Mason Dopirak, Matus Dopirak",1,1.1,-1.0,2,1,1,0,0,0,0,0,1,1,0,0,0,0,1,100.0,,
+"Brock Adams, Chad Coplin, Dubem Igwilo, Mason Accidentale, Quinn Rosenberg",1,1.1,1.0,3,1,3,1,3,0,0,0,1,1,1,0,0,0,0,33.3,33.3,
+"Carson Cordelli, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",1,1.1,3.0,2,1,2,0,0,0,0,0,0,0,1,0,0,1,0,50.0,,
+"CJ Valente, Chase Cummings, Ethan Johnson, Isaac Wit, Mason Dopirak",1,1.1,-2.0,2,1,3,0,1,0,0,2,0,2,0,2,0,0,0,33.3,0.0,
+"Carson Cordelli, Dubem Igwilo, Isaac Wit, Joey Jendusa, Mason Dopirak",1,1.1,2.0,2,1,2,0,1,0,0,1,1,2,1,0,0,0,0,50.0,0.0,
+"CJ Valente, Carson Cordelli, Chase Cummings, Isaac Wit, Jonathan Burroughs",1,1.1,-2.0,2,1,3,0,2,0,0,1,2,3,0,0,0,0,0,33.3,0.0,
+"Brock Adams, Dubem Igwilo, Jace Paul, Kolby Henderlong, Mason Accidentale",1,1.1,-1.0,5,2,3,1,2,0,1,1,0,1,1,0,0,0,0,66.7,50.0,0.0
+"Brock Adams, Chase Cummings, Ethan Johnson, Jace Paul, Mason Dopirak",1,1.0,3.0,2,1,1,0,0,0,0,0,1,1,1,0,0,1,1,100.0,,
+"Chad Coplin, Jace Paul, Kolby Henderlong, Mason Accidentale, Quinn Rosenberg",1,1.0,3.0,1,0,1,0,0,1,1,1,0,1,0,0,0,1,1,0.0,,100.0
+"CJ Valente, Carson Cordelli, Chase Cummings, Isaac Wit, Mason Dopirak",2,1.0,2.0,0,0,1,0,1,0,1,0,1,1,0,0,0,0,1,0.0,0.0,0.0
+"CJ Valente, Chase Cummings, Isaac Wit, Joey Jendusa, Quinn Rosenberg",1,1.0,2.0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,
+"CJ Valente, Carson Cordelli, Daniel Franklin IV, Jace Paul, Quinn Rosenberg",1,1.0,-1.0,1,0,0,0,0,1,1,0,0,0,0,1,0,0,0,,,100.0
+"Chad Coplin, Chase Cummings, Jace Paul, Mason Dopirak, Matus Dopirak",1,0.9,0.0,0,0,1,0,0,0,0,0,1,1,0,1,0,2,1,0.0,,
+"Chad Coplin, Dubem Igwilo, Ethan Johnson, Joey Jendusa, Mason Dopirak",1,0.9,-2.0,0,0,2,0,1,0,0,0,1,1,0,0,0,0,1,0.0,0.0,
+"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Mason Dopirak, Matus Dopirak",1,0.9,-3.0,2,1,1,0,0,0,0,0,1,1,1,0,1,1,2,100.0,,
+"Chase Cummings, Daniel Franklin IV, Dubem Igwilo, Isaac Wit, Matus Dopirak",1,0.9,0.0,0,0,3,0,0,0,0,3,1,4,0,0,0,0,0,0.0,,
+"Chase Cummings, Daniel Franklin IV, Dubem Igwilo, Mason Dopirak, Matus Dopirak",1,0.9,5.0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,
+"Brock Adams, Daniel Franklin IV, Dubem Igwilo, Matus Dopirak, Quinn Rosenberg",1,0.9,2.0,4,1,1,0,0,2,2,0,0,0,1,0,0,0,0,100.0,,100.0
+"Chad Coplin, Jace Paul, Mason Accidentale, Matus Dopirak, Quinn Rosenberg",1,0.8,-1.0,3,0,0,0,0,3,4,0,1,1,0,0,0,0,0,,,75.0
+"CJ Valente, Chase Cummings, Joey Jendusa, Jonathan Burroughs, Quinn Rosenberg",1,0.8,2.0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,
+"CJ Valente, Chase Cummings, Ethan Johnson, Joey Jendusa, Jonathan Burroughs",1,0.8,0.0,2,0,0,0,0,2,2,0,0,0,0,0,0,0,0,,,100.0
+"Daniel Franklin IV, Dubem Igwilo, Isaac Wit, Mason Dopirak, Matus Dopirak",1,0.8,2.0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0.0,,
+"Brock Adams, Daniel Franklin IV, Dubem Igwilo, Joey Jendusa, Quinn Rosenberg",1,0.8,6.0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,
+"CJ Valente, Daniel Franklin IV, Ethan Johnson, Joey Jendusa, Mason Dopirak",1,0.8,0.0,3,1,1,1,1,0,0,0,0,0,1,0,0,0,2,100.0,100.0,
+"Daniel Franklin IV, Ethan Johnson, Isaac Wit, Joey Jendusa, Mason Dopirak",1,0.7,-3.0,0,0,2,0,0,0,0,1,0,1,0,0,0,0,1,0.0,,
+"CJ Valente, Carson Cordelli, Daniel Franklin IV, Ethan Johnson, Mason Dopirak",1,0.7,-2.0,2,0,1,0,0,2,2,0,1,1,0,0,0,0,0,0.0,,100.0
+"Brady Gregg, Chad Coplin, Daniel Franklin IV, Dubem Igwilo, Mason Accidentale",1,0.7,0.0,2,1,1,0,0,0,0,0,0,0,0,0,0,0,1,100.0,,
+"Carson Cordelli, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Jonathan Burroughs",1,0.7,-3.0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0.0,,
+"Carson Cordelli, Daniel Franklin IV, Ethan Johnson, Joey Jendusa, Mason Dopirak",3,0.7,1.0,3,0,1,0,0,3,5,1,1,2,0,0,0,0,0,0.0,,60.0
+"Brock Adams, Chad Coplin, Dubem Igwilo, Kolby Henderlong, Mason Accidentale",1,0.7,-5.0,5,1,1,1,1,2,2,0,0,0,1,1,0,0,0,100.0,100.0,100.0
+"Chad Coplin, Dubem Igwilo, Jace Paul, Mason Accidentale, Matus Dopirak",1,0.6,0.0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,,,
+"CJ Valente, Carson Cordelli, Isaac Wit, Joey Jendusa, Jonathan Burroughs",1,0.6,0.0,2,1,1,0,0,0,1,0,0,0,1,0,0,0,2,100.0,,0.0
+"Brady Gregg, Brock Adams, Chad Coplin, Dubem Igwilo, Mason Accidentale",1,0.6,0.0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0.0,,
+"Carson Cordelli, Chad Coplin, Chase Cummings, Daniel Franklin IV, Ethan Johnson",1,0.6,1.0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0.0,,
+"Carson Cordelli, Daniel Franklin IV, Ethan Johnson, Kolby Henderlong, Mason Dopirak",1,0.6,0.0,2,0,1,0,1,2,2,0,0,0,0,0,0,0,0,0.0,0.0,100.0
+"CJ Valente, Ethan Johnson, Isaac Wit, Joey Jendusa, Kolby Henderlong",1,0.6,0.0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,
+"CJ Valente, Chase Cummings, Jace Paul, Mason Dopirak, Matus Dopirak",1,0.6,2.0,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0.0,0.0,
+"CJ Valente, Chase Cummings, Daniel Franklin IV, Joey Jendusa, Jonathan Burroughs",1,0.6,-2.0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,
+"Carson Cordelli, Daniel Franklin IV, Jace Paul, Kolby Henderlong, Quinn Rosenberg",1,0.6,-1.0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,,,100.0
+"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Joey Jendusa, Jonathan Burroughs",1,0.5,-1.0,1,0,0,0,0,1,2,0,0,0,0,0,0,0,0,,,50.0
+"CJ Valente, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs, Matus Dopirak",1,0.5,3.0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,,,
+"Brock Adams, Carson Cordelli, Chase Cummings, Jonathan Burroughs, Matus Dopirak",1,0.4,-2.0,2,0,0,0,0,2,2,0,1,1,0,0,0,0,0,,,100.0
+"Brock Adams, Daniel Franklin IV, Jace Paul, Kolby Henderlong, Quinn Rosenberg",1,0.4,0.0,0,0,1,0,1,0,0,0,1,1,0,0,0,0,0,0.0,0.0,
+"Chase Cummings, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Jonathan Burroughs",1,0.4,-2.0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0.0,,
+"Brock Adams, Carson Cordelli, Chase Cummings, Ethan Johnson, Jonathan Burroughs",1,0.4,2.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
+"CJ Valente, Carson Cordelli, Ethan Johnson, Isaac Wit, Mason Dopirak",1,0.4,1.0,1,0,2,0,0,1,2,3,0,3,0,0,0,0,1,0.0,,50.0
+"Brock Adams, Chase Cummings, Jonathan Burroughs, Mason Accidentale, Mason Dopirak",1,0.4,0.0,0,0,1,0,1,0,0,0,1,1,0,0,0,0,0,0.0,0.0,
+"Brock Adams, Carson Cordelli, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs",1,0.3,-2.0,2,0,0,0,0,2,2,0,0,0,0,0,0,0,0,,,100.0
+"Brady Gregg, Chad Coplin, Dubem Igwilo, Kolby Henderlong, Mason Accidentale",1,0.3,2.0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,
+"Daniel Franklin IV, Dubem Igwilo, Joey Jendusa, Mason Accidentale, Matus Dopirak",1,0.3,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,,,
+"CJ Valente, Carson Cordelli, Chase Cummings, Daniel Franklin IV, Joey Jendusa",1,0.3,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
+"CJ Valente, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",1,0.3,0.0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,,,
+"Carson Cordelli, Chad Coplin, Chase Cummings, Ethan Johnson, Mason Dopirak",1,0.3,1.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,,,
+"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Isaac Wit, Jonathan Burroughs",1,0.3,3.0,3,1,1,0,0,1,1,0,0,0,0,0,0,0,0,100.0,,100.0
+"CJ Valente, Chase Cummings, Isaac Wit, Jace Paul, Matus Dopirak",1,0.2,1.0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,,,
+"CJ Valente, Daniel Franklin IV, Isaac Wit, Mason Dopirak, Matus Dopirak",1,0.2,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
+"Chase Cummings, Isaac Wit, Jace Paul, Mason Dopirak, Matus Dopirak",1,0.2,3.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,,,
+"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Joey Jendusa, Mason Dopirak",2,0.1,1.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,,,
+"Brock Adams, Chase Cummings, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",1,0.1,-3.0,3,1,1,1,1,0,0,0,0,0,1,0,0,0,0,100.0,100.0,
+"CJ Valente, Chase Cummings, Daniel Franklin IV, Isaac Wit, Matus Dopirak",1,0.1,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
+"Brock Adams, Chad Coplin, Dubem Igwilo, Joey Jendusa, Mason Accidentale",1,0.1,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
+"Carson Cordelli, Daniel Franklin IV, Dubem Igwilo, Mason Accidentale, Mason Dopirak",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
+"Chad Coplin, Daniel Franklin IV, Dubem Igwilo, Mason Accidentale, Mason Dopirak",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
+"CJ Valente, Chad Coplin, Joey Jendusa, Mason Accidentale, Quinn Rosenberg",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
+"Carson Cordelli, Daniel Franklin IV, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
+"Carson Cordelli, Chad Coplin, Daniel Franklin IV, Joey Jendusa, Matus Dopirak",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
+"Brady Gregg, Brock Adams, Jace Paul, Kolby Henderlong, Mason Accidentale",1,0.0,-2.0,2,1,1,0,0,0,0,0,0,0,0,1,0,0,0,100.0,,
+"Chase Cummings, Daniel Franklin IV, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
+"CJ Valente, Carson Cordelli, Daniel Franklin IV, Isaac Wit, Joey Jendusa",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
+"Chase Cummings, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Mason Dopirak",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,
+"Brock Adams, Carson Cordelli, Chad Coplin, Daniel Franklin IV, Dubem Igwilo",1,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,

@@ -64,12 +64,21 @@ for (opponent, game_date), group in scoring_events.groupby(GAME_KEYS, dropna=Fal
         "opp_lead_opp_lineup": opp_lead_row["opp_lineup"] if opp_lead_row is not None else None,
     })
 scoring_runs = pd.DataFrame(run_rows)
-print(scoring_runs)
 
-print("Scoring run & lead summary, with the 5-man lineups on the floor for each:\n")
-for _, row in scoring_runs.iterrows():
-    print(f"{row['opponent']}: UWW's biggest run = {row['uww_biggest_run']} pts, {row['opponent']}'s biggest run = {row['opponent_biggest_run']} pts")
-    print(f"    During UWW's run -- UWW: {row['uww_run_uww_lineup']} | {row['opponent']}: {row['uww_run_opp_lineup']}")
-    print(f"    During {row['opponent']}'s run -- UWW: {row['opp_run_uww_lineup']} | {row['opponent']}: {row['opp_run_opp_lineup']}")
-    print(f"    Largest UWW lead: {row['uww_largest_lead']} pts (UWW: {row['uww_lead_uww_lineup']} | {row['opponent']}: {row['uww_lead_opp_lineup']})")
-    print(f"    Largest {row['opponent']} lead: {row['opponent_largest_lead']} pts (UWW: {row['opp_lead_uww_lineup']} | {row['opponent']}: {row['opp_lead_opp_lineup']})\n")
+# CONFIRMED CHANGE (requested: "printing way too much stuff"). One short table -- each game's biggest runs and largest leads --
+# capped at SHOW_ROWS rows. The lineups on the floor for each are still in scoring_runs (and the CSV export); set
+# SCORING_RUNS_VERBOSE = True to print them per game like before.
+_sr_cols = [c for c in ("game_date", "opponent", "uww_biggest_run", "opponent_biggest_run", "uww_largest_lead",
+                        "opponent_largest_lead") if c in scoring_runs.columns]
+print(f"Scoring runs and largest leads: {len(scoring_runs)} game(s) (lineups for each are in scoring_runs)")
+if not scoring_runs.empty:
+    (_show if "_show" in globals() else print)(scoring_runs[_sr_cols].rename(columns={
+        "game_date": "date", "uww_biggest_run": "UWW run", "opponent_biggest_run": "opp run",
+        "uww_largest_lead": "UWW lead", "opponent_largest_lead": "opp lead"}))
+if globals().get("SCORING_RUNS_VERBOSE", False):
+    for _, row in scoring_runs.iterrows():
+        print(f"{row['opponent']}: UWW's biggest run = {row['uww_biggest_run']} pts, {row['opponent']}'s biggest run = {row['opponent_biggest_run']} pts")
+        print(f"    During UWW's run -- UWW: {row['uww_run_uww_lineup']} | {row['opponent']}: {row['uww_run_opp_lineup']}")
+        print(f"    During {row['opponent']}'s run -- UWW: {row['opp_run_uww_lineup']} | {row['opponent']}: {row['opp_run_opp_lineup']}")
+        print(f"    Largest UWW lead: {row['uww_largest_lead']} pts (UWW: {row['uww_lead_uww_lineup']} | {row['opponent']}: {row['uww_lead_opp_lineup']})")
+        print(f"    Largest {row['opponent']} lead: {row['opponent_largest_lead']} pts (UWW: {row['opp_lead_uww_lineup']} | {row['opponent']}: {row['opp_lead_opp_lineup']})\n")

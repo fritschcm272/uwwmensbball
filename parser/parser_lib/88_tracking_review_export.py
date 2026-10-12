@@ -24,6 +24,8 @@ if EXPORT_TRACKING_REVIEW:
                               or (isinstance(k, str) and k.split("|")[0] in keep)}, buf)
                 yield os.path.basename(p), buf.getvalue()
 
+        if "vision_frames_ensure" in globals():
+            vision_frames_ensure([os.path.join(VISION_FRAMES_DIR, f) for f in _files])     # archived clips -> JPEGs
         with zipfile.ZipFile(_out, "w", zipfile.ZIP_DEFLATED) as z:
             for f in _files:
                 if os.path.exists(os.path.join(VISION_FRAMES_DIR, f)):

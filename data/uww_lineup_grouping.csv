@@ -1,307 +1,492 @@
 side,team,lineup,grouping,shape,scouted_opponent
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, JR Lukenbill, Joey Berezowitz",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Isaac Verges, JR Lukenbill, Jake Quast, Kelton McEwen, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Isaac Verges, JR Lukenbill, Kelton McEwen, Richie Warren",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Luke Bara",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Luke Bara, Richie Warren",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Isaac Verges, JR Lukenbill, Jake Quast, Rashad Rogers, Richie Warren",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Austin Ambrose, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Jake Quast, Kelton McEwen, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, JR Lukenbill, Kelton McEwen, Richie Warren",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Kelton McEwen, Luke Bara, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz, Rashad Rogers",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz, Rashad Rogers",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, Jake Quast, Joey Berezowitz, Rashad Rogers, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, Kelton McEwen, Mauryon Turner, Rashad Rogers, Richie Warren",Small / shooting five (no true big),,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Kelton McEwen, Mauryon Turner, Richie Warren",Small / shooting five (no true big),,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Kelton McEwen, Mauryon Turner, Richie Warren",Base five (one big),,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Kelton McEwen",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Kelton McEwen",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Luke Bara",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Isaac Verges, Luke Bara, Mauryon Turner",Small / shooting five (no true big),,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, JR Lukenbill, Jake Quast, Joey Berezowitz, Luke Bara",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Isaiah Robinson, Kelton McEwen, Rashad Rogers, Richie Warren, Trent Grunewald",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Austin Ambrose, Isaiah Robinson, Kelton McEwen, Trent Grunewald, Tristian Lynch",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Rashad Rogers, Trent Grunewald, Tristian Lynch",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Mikey Wildes, Rashad Rogers, Trent Grunewald",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Mikey Wildes, Rashad Rogers, Trent Grunewald, Zay Howard",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Joey Berezowitz, Luke Bara, Rashad Rogers, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Jake Quast, Joey Berezowitz, Luke Bara, Rashad Rogers, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Jake Quast, Luke Bara, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, JR Lukenbill, Joey Berezowitz, Kelton McEwen",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Joey Berezowitz, Kelton McEwen, Rashad Rogers",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Kelton McEwen, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Kelton McEwen, Rashad Rogers, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Joey Berezowitz, Kelton McEwen, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Joey Berezowitz",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Isaac Verges, JR Lukenbill, Jake Quast, Luke Bara",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Luke Bara",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Luke Bara, Rashad Rogers, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Luke Bara, Rashad Rogers, Richie Warren",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, JR Lukenbill, Joey Berezowitz, Richie Warren",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"JR Lukenbill, Jake Quast, Joey Berezowitz, Rashad Rogers, Richie Warren",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaac Verges, Jake Quast, Rashad Rogers",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Darius Chestnut, Isaac Verges, Jake Quast",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Darius Chestnut, Isaac Verges, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Luke Bara, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaac Verges, JR Lukenbill, Luke Bara",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaac Verges, Rashad Rogers, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Austin Ambrose, Darius Chestnut, Isaac Verges, Kelton McEwen, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Austin Ambrose, Darius Chestnut, Joey Berezowitz, Kelton McEwen, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"JR Lukenbill, Joey Berezowitz, Kelton McEwen, Luke Bara, Rashad Rogers",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Isaiah Robinson, JR Lukenbill, Kelton McEwen, Luke Bara, Rashad Rogers",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Matthew McKay, Rashad Rogers, Trent Grunewald",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Matthew McKay, Trent Grunewald, Tristian Lynch",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Mikey Wildes, Trent Grunewald, Tristian Lynch",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Mikey Wildes, Trent Grunewald, Zay Howard",5G,5G,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Austin Ambrose, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Darius Chestnut, JR Lukenbill, Joey Berezowitz",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, JR Lukenbill",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, Jake Quast",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Austin Ambrose, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Jake Quast",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Isaac Verges, Kelton McEwen, Mauryon Turner, Rashad Rogers",Small / shooting five (no true big),,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Kelton McEwen, Mauryon Turner, Rashad Rogers",Small / shooting five (no true big),,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"JR Lukenbill, Jake Quast, Joey Berezowitz, Luke Bara, Rashad Rogers",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Rashad Rogers, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Rashad Rogers",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Joey Berezowitz",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Isaiah Robinson, JR Lukenbill, Jake Quast, Kelton McEwen",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Isaiah Robinson, Jake Quast, Kelton McEwen, Trent Grunewald",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Brock Marino, Darius Chestnut, Isaiah Robinson, Trent Grunewald",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Darius Chestnut, Isaiah Robinson, Rashad Rogers, Trent Grunewald",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Austin Ambrose, Darius Chestnut, Isaiah Robinson, Trent Grunewald",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Luke Bara, Rashad Rogers",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Kelton McEwen",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaac Verges, JR Lukenbill, Rashad Rogers",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, Isaac Verges, JR Lukenbill, Luke Bara, Rashad Rogers",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, Isaac Verges, Jake Quast, Luke Bara, Rashad Rogers",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, Isaac Verges, Jake Quast, Joey Berezowitz, Rashad Rogers",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, Isaac Verges, Jake Quast, Kelton McEwen, Rashad Rogers",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Jake Quast, Joey Berezowitz, Kelton McEwen",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Isaac Verges, Jake Quast, Kelton McEwen",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaac Verges, Jake Quast, Richie Warren",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Kelton McEwen, Richie Warren",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Kelton McEwen, Luke Bara, Rashad Rogers, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Luke Bara, Rashad Rogers, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Kelton McEwen, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Jake Quast, Kelton McEwen, Luke Bara",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Jake Quast, Kelton McEwen, Luke Bara, Rashad Rogers",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Kelton McEwen, Luke Bara, Rashad Rogers",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Kelton McEwen, Rashad Rogers",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Isaac Verges, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Joey Berezowitz, Kelton McEwen, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Kelton McEwen, Luke Bara",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Isaac Verges, Jake Quast, Joey Berezowitz, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Joey Berezowitz, Luke Bara, Richie Warren",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, Jake Quast, Joey Berezowitz, Luke Bara, Tyshawn Teague-Johnson",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, Jake Quast, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, Isaiah Robinson, Jake Quast, Kelton McEwen, Tyshawn Teague-Johnson",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Darius Chestnut, Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Rashad Rogers, Trent Grunewald, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Mauryon Turner, Rashad Rogers, Trent Grunewald",Small / shooting five (no true big),,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"JR Lukenbill, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Jake Quast, Kelton McEwen, Luke Bara, Tyshawn Teague-Johnson",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Joey Berezowitz, Kelton McEwen, Richie Warren, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Jake Quast, Luke Bara",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Luke Bara",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Darius Chestnut, JR Lukenbill, Jake Quast, Kelton McEwen, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Matthew McKay, Mikey Wildes, Trent Grunewald",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz",4G-1W,4G-1W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren, Tyshawn Teague-Johnson",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson",2G-3W,2G-3W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, JR Lukenbill, Jake Quast, Luke Bara",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Jake Quast, Luke Bara, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Brock Marino, Collin Madson, Jake Quast, Luke Bara, Richie Warren",3G-2W,3G-2W,UW-Stevens Point Pointers
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Joey Berezowitz, Luke Bara",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Josiah Butler, Logan Baumgartner, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Josh Bocher, Josiah Butler, Seth Miron",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Josiah Butler, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Isaiah Moore, Josiah Butler, Logan Baumgartner, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Logan Baumgartner, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Grant Manz, Isaiah Moore, Josiah Butler, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Isaiah Moore, Josiah Butler, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Max Raimer",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Logan Baumgartner",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Josiah Butler, Logan Baumgartner, Max Raimer",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Grant Manz, Josiah Butler, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Grant Manz, Josiah Butler, Logan Baumgartner, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Isaiah Moore, Josh Bocher, Josiah Butler, Seth Miron",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Drew Daoust, Josiah Butler, Logan Baumgartner",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, James Jacobs, Josiah Butler, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Josh Bocher, Josiah Butler, Logan Baumgartner, Seth Miron",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, Isaiah Moore, Josiah Butler, Logan Baumgartner, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Josiah Butler, Logan Baumgartner",3G-1W,3G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Grant Manz, Isaiah Moore, Josiah Butler",3G-2W,3G-2W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Drew Daoust, Josiah Butler, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Isaiah Moore, Josiah Butler, Logan Baumgartner, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Josiah Butler, Max Raimer, Seth Miron, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Drew Daoust, Josh Bocher, Max Raimer, Seth Miron",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Isaiah Moore, Josiah Butler, Logan Baumgartner, Max Raimer",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Isaiah Moore, Logan Baumgartner, Max Raimer",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Josiah Butler, Seth Miron, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, Isaiah Moore, James Jacobs, Max Raimer, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Josh Bocher, Max Raimer, Seth Miron",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, Isaiah Moore, Josiah Butler, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Drew Daoust, Grant Manz, Isaiah Moore, Max Raimer, Zach Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Drew Daoust, Josiah Butler, Seth Miron, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Isaiah Moore, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Josh Bocher, Max Raimer, Seth Miron, Tyler Orr",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Grant Manz, Isaiah Moore, Josiah Butler, Seth Miron",3G-2W,3G-2W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Josh Bocher, Logan Baumgartner, Max Raimer, Seth Miron",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Josh Bocher, Seth Miron, Tyler Orr",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Josiah Butler, Max Raimer, Seth Miron, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Isaiah Moore, Josiah Butler, Logan Baumgartner, Seth Miron",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Josh Bocher, Josiah Butler, Max Raimer, Seth Miron",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Grant Manz, Josh Bocher, Josiah Butler, Seth Miron",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Josiah Butler, Seth Miron, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, Isaiah Moore, Josh Bocher, Josiah Butler, Max Raimer",Small / shooting five (no true big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Grant Manz, Isaiah Moore, Seth Miron, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Isaiah Moore, Josh Bocher, Seth Miron",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, Josh Bocher, Josiah Butler, Seth Miron, Tyler Orr",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Grant Manz, Isaiah Moore, Logan Baumgartner, Tyler Orr",3G-2W,3G-2W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Josh Bocher, Josiah Butler, Logan Baumgartner, Max Raimer",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Drew Daoust, Josh Bocher, Josiah Butler, Seth Miron",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, James Jacobs, Josh Bocher, Max Raimer, Seth Miron",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Max Raimer, Seth Miron, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Logan Baumgartner, Max Raimer, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Grant Manz, Isaiah Moore, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Isaiah Moore, Josiah Butler, Seth Miron, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Isaiah Moore, Logan Baumgartner, Max Raimer, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Isaiah Moore, Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Drew Daoust, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Isaiah Moore, Josh Bocher, Josiah Butler, Logan Baumgartner",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Drew Daoust, Grant Manz, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Josh Bocher, Josiah Butler, Max Raimer, Seth Miron",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, Isaiah Moore, Josiah Butler, Logan Baumgartner, Max Raimer",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Josh Bocher, Josiah Butler, Logan Baumgartner, Tyler Orr",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Drew Daoust, Josh Bocher, Logan Baumgartner, Seth Miron",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Grant Manz, Isaiah Moore, Josiah Butler, Logan Baumgartner",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Drew Daoust, Josh Bocher, Max Raimer",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Grant Manz, Max Raimer, Seth Miron",3G-2W,3G-2W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Isaiah Moore, Josh Bocher, Josiah Butler, Seth Miron",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Isaiah Moore, Josh Bocher, Josiah Butler, Logan Baumgartner, Seth Miron",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Drew Daoust, Seth Miron, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Grant Manz, Josiah Butler, Logan Baumgartner, Max Raimer",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, James Jacobs, Josh Bocher, Max Raimer, Seth Miron",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Isaiah Moore, Josiah Butler, Max Raimer, Seth Miron",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Josiah Butler, Logan Baumgartner, Max Raimer, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Grant Manz, Logan Baumgartner, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, James Jacobs, Josiah Butler, Logan Baumgartner",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Isaiah Moore, Josiah Butler, Seth Miron, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Drew Daoust, Logan Baumgartner, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Drew Daoust, Grant Manz, James Jacobs, Logan Baumgartner, Max Raimer",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Josh Bocher, Logan Baumgartner, Seth Miron",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Logan Baumgartner, Seth Miron, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Grant Manz, Josiah Butler, Seth Miron",3G-2W,3G-2W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Isaiah Moore, Max Raimer, Seth Miron, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Austin Schaumburg, Drew Daoust, Grant Manz, Max Raimer, Zach Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, Isaiah Moore, Josh Bocher, Josiah Butler, Seth Miron",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Grant Manz, Isaiah Moore, Logan Baumgartner, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, Josh Bocher, Josiah Butler, Max Raimer, Seth Miron",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Josh Bocher, Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Austin Schaumburg, Brandon Tilley, Dylan Taylor, Emmitt Huhn, Nick Fox",Small / shooting five (no true big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Grant Manz, Josiah Butler, Logan Baumgartner, Max Raimer",3G-2W,3G-2W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Isaiah Moore, Logan Baumgartner, Seth Miron, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron, Tyler Orr",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Drew Daoust, Grant Manz, Seth Miron, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Austin Schaumburg, Drew Daoust, Grant Manz, Max Raimer, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Drew Daoust, Dylan Taylor, Grant Manz, James Jacobs, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Grant Manz, Isaiah Moore, Josh Bocher, Josiah Butler",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Drew Daoust, Josh Bocher, Josiah Butler, Max Raimer",Small / shooting five (no true big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Grant Manz, Isaiah Moore, Seth Miron, Tyler Orr",3G-2W,3G-2W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Drew Daoust, Josiah Butler, Logan Baumgartner, Seth Miron",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Isaiah Moore, Josiah Butler, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Drew Daoust, Josiah Butler, Logan Baumgartner, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, Isaiah Moore, James Jacobs, Max Raimer, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Josh Bocher, Logan Baumgartner, Max Raimer, Seth Miron, Tyler Orr",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Grant Manz, Isaiah Moore, Josiah Butler, Max Raimer",3G-2W,3G-2W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Drew Daoust, Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Drew Daoust, Grant Manz, Isaiah Moore, James Jacobs, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Isaiah Moore, Logan Baumgartner, Seth Miron, Shane Tarjan",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Grant Manz, Josiah Butler, Max Raimer, Seth Miron",3G-2W,3G-2W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Josh Bocher, Josiah Butler, Seth Miron, Tyler Orr",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Drew Daoust, Josiah Butler, Logan Baumgartner, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Isaiah Moore, Josh Bocher, Josiah Butler, Logan Baumgartner, Max Raimer",Small / shooting five (no true big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Grant Manz, Josh Bocher, Max Raimer",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Isaiah Moore, Logan Baumgartner, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, Isaiah Moore, Josh Bocher, Max Raimer, Seth Miron",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Josiah Butler, Logan Baumgartner, Max Raimer, Seth Miron, Shane Tarjan",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Dylan Taylor, Josiah Butler, Logan Baumgartner, Seth Miron",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Austin Schaumburg, Drew Daoust, Isaiah Moore, Logan Baumgartner, Shane Tarjan",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Grant Manz, Josiah Butler, Max Raimer",3G-2W,3G-2W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Drew Daoust, Isaiah Moore, Logan Baumgartner, Seth Miron",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, Isaiah Moore, Josiah Butler, Logan Baumgartner, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Grant Manz, Isaiah Moore, James Jacobs, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Josiah Butler, Logan Baumgartner, Seth Miron, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Drew Daoust, Grant Manz, Josiah Butler, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Logan Baumgartner, Max Raimer, Seth Miron, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Grant Manz, Josh Bocher, Josiah Butler, Logan Baumgartner, Seth Miron",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Drew Daoust, Max Raimer, Seth Miron, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Drew Daoust, James Jacobs, Logan Baumgartner, Max Raimer, Tyler Orr",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Grant Manz, Isaiah Moore, Logan Baumgartner, Max Raimer",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Josh Bocher, Seth Miron, Shane Tarjan",Two-big lineup,,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Drew Daoust, Grant Manz, Josiah Butler, Max Raimer, Seth Miron",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Drew Daoust, Grant Manz, Josiah Butler, Tyler Orr",3G-2W,3G-2W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Drew Daoust, Logan Baumgartner, Max Raimer",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Austin Schaumburg, Drew Daoust, James Jacobs, Max Raimer, Tyler Orr",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Josiah Butler, Logan Baumgartner, Max Raimer, Tyler Orr",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Isaiah Moore, Seth Miron, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Isaiah Moore, Josiah Butler, Logan Baumgartner, Max Raimer",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Isaiah Moore, Josiah Butler, Max Raimer, Shane Tarjan",4G-1W,4G-1W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Drew Daoust, Grant Manz, Josiah Butler, Max Raimer",3G-2W,3G-2W,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Josh Bocher, Josiah Butler, Seth Miron, Tyler Orr",Base five (one big),,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Carter Combs, Drew Daoust, Josiah Butler, Max Raimer, Seth Miron",5G,5G,UW-Stevens Point Pointers
-Opponent,UW-Stevens Point Pointers,"Cal Krohn, Carter Combs, Josh Bocher, Max Raimer, Tyler Orr",Base five (one big),,UW-Stevens Point Pointers
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, JR Lukenbill, Joey Berezowitz",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Isaac Verges, JR Lukenbill, Jake Quast, Kelton McEwen, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaac Verges, JR Lukenbill, Kelton McEwen, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Luke Bara, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Isaac Verges, JR Lukenbill, Jake Quast, Rashad Rogers, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Jake Quast, Kelton McEwen, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, JR Lukenbill, Kelton McEwen, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Kelton McEwen, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz, Rashad Rogers",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, Jake Quast, Joey Berezowitz, Rashad Rogers, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, Kelton McEwen, Mauryon Turner, Rashad Rogers, Richie Warren",Small / shooting five (no true big),,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Kelton McEwen, Mauryon Turner, Richie Warren",Base five (one big),,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Kelton McEwen, Mauryon Turner, Richie Warren",Two-big lineup,,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Kelton McEwen",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Kelton McEwen",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Luke Bara",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Isaac Verges, Luke Bara, Mauryon Turner",Base five (one big),,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, JR Lukenbill, Jake Quast, Joey Berezowitz, Luke Bara",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Isaiah Robinson, Kelton McEwen, Rashad Rogers, Richie Warren, Trent Grunewald",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Isaiah Robinson, Kelton McEwen, Trent Grunewald, Tristian Lynch",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Rashad Rogers, Trent Grunewald, Tristian Lynch",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Mikey Wildes, Rashad Rogers, Trent Grunewald",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Mikey Wildes, Rashad Rogers, Trent Grunewald, Zay Howard",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Joey Berezowitz, Luke Bara, Rashad Rogers, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Jake Quast, Joey Berezowitz, Luke Bara, Rashad Rogers, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Jake Quast, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, JR Lukenbill, Joey Berezowitz, Kelton McEwen",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Joey Berezowitz, Kelton McEwen, Rashad Rogers",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Kelton McEwen, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Kelton McEwen, Rashad Rogers, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Joey Berezowitz, Kelton McEwen, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Joey Berezowitz",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaac Verges, JR Lukenbill, Jake Quast, Luke Bara",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Luke Bara, Rashad Rogers, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Luke Bara, Rashad Rogers, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, JR Lukenbill, Joey Berezowitz, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"JR Lukenbill, Jake Quast, Joey Berezowitz, Rashad Rogers, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaac Verges, Jake Quast, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Darius Chestnut, Isaac Verges, Jake Quast",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Darius Chestnut, Isaac Verges, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaac Verges, JR Lukenbill, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaac Verges, Rashad Rogers, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Darius Chestnut, Isaac Verges, Kelton McEwen, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Darius Chestnut, Joey Berezowitz, Kelton McEwen, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"JR Lukenbill, Joey Berezowitz, Kelton McEwen, Luke Bara, Rashad Rogers",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Isaiah Robinson, JR Lukenbill, Kelton McEwen, Luke Bara, Rashad Rogers",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Matthew McKay, Rashad Rogers, Trent Grunewald",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Matthew McKay, Trent Grunewald, Tristian Lynch",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Mikey Wildes, Trent Grunewald, Tristian Lynch",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Mikey Wildes, Trent Grunewald, Zay Howard",5G,5G,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Darius Chestnut, JR Lukenbill, Joey Berezowitz",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, JR Lukenbill",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, Jake Quast",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Jake Quast",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Isaac Verges, Kelton McEwen, Mauryon Turner, Rashad Rogers",Small / shooting five (no true big),,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Kelton McEwen, Mauryon Turner, Rashad Rogers",Small / shooting five (no true big),,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"JR Lukenbill, Jake Quast, Joey Berezowitz, Luke Bara, Rashad Rogers",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Rashad Rogers, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Rashad Rogers",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Joey Berezowitz",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaiah Robinson, JR Lukenbill, Jake Quast, Kelton McEwen",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaiah Robinson, Jake Quast, Kelton McEwen, Trent Grunewald",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Brock Marino, Darius Chestnut, Isaiah Robinson, Trent Grunewald",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Darius Chestnut, Isaiah Robinson, Rashad Rogers, Trent Grunewald",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Austin Ambrose, Darius Chestnut, Isaiah Robinson, Trent Grunewald",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Luke Bara, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaac Verges, JR Lukenbill, Rashad Rogers",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, Isaac Verges, JR Lukenbill, Luke Bara, Rashad Rogers",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, Isaac Verges, Jake Quast, Luke Bara, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, Isaac Verges, Jake Quast, Joey Berezowitz, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, Isaac Verges, Jake Quast, Kelton McEwen, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Jake Quast, Joey Berezowitz, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Isaac Verges, Jake Quast, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaac Verges, Jake Quast, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Kelton McEwen, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Kelton McEwen, Luke Bara, Rashad Rogers, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Luke Bara, Rashad Rogers, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Kelton McEwen, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Jake Quast, Kelton McEwen, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Jake Quast, Kelton McEwen, Luke Bara, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Kelton McEwen, Luke Bara, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Kelton McEwen, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaac Verges, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Joey Berezowitz, Kelton McEwen, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Kelton McEwen, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Isaac Verges, Jake Quast, Joey Berezowitz, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Joey Berezowitz, Luke Bara, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, Jake Quast, Joey Berezowitz, Luke Bara, Tyshawn Teague-Johnson",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, Jake Quast, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, Isaiah Robinson, Jake Quast, Kelton McEwen, Tyshawn Teague-Johnson",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Darius Chestnut, Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Rashad Rogers, Trent Grunewald, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Mauryon Turner, Rashad Rogers, Trent Grunewald",Small / shooting five (no true big),,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"JR Lukenbill, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Jake Quast, Kelton McEwen, Luke Bara, Tyshawn Teague-Johnson",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Joey Berezowitz, Kelton McEwen, Richie Warren, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Jake Quast, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, JR Lukenbill, Jake Quast, Kelton McEwen, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Agape Keyes Jr., Isaiah Robinson, Matthew McKay, Mikey Wildes, Trent Grunewald",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Darius Chestnut, Joey Berezowitz, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Darius Chestnut, Isaiah Robinson, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Isaac Verges, Isaiah Robinson, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaac Verges, Isaiah Robinson, JR Lukenbill, Kelton McEwen",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaac Verges, JR Lukenbill, Kelton McEwen, Luke Bara",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, JR Lukenbill, Joey Berezowitz, Kelton McEwen, Luke Bara",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Richie Warren, Tyshawn Teague-Johnson",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Isaac Verges, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Isaiah Robinson, JR Lukenbill, Joey Berezowitz",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaiah Robinson, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Isaiah Robinson, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Isaiah Robinson, Richie Warren, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Isaiah Robinson, Luke Bara, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Jake Quast, Joey Berezowitz, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Jake Quast, Joey Berezowitz, Tyshawn Teague-Johnson",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaiah Robinson, Jake Quast, Joey Berezowitz, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Isaiah Robinson, JR Lukenbill, Jake Quast, Joey Berezowitz, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Isaac Verges, Isaiah Robinson, JR Lukenbill, Jake Quast, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaiah Robinson, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Jake Quast, Luke Bara, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Jake Quast, Luke Bara, Tyshawn Teague-Johnson",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Luke Bara, Tyshawn Teague-Johnson",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, JR Lukenbill, Jake Quast, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaac Verges, JR Lukenbill, Jake Quast",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaac Verges, Jake Quast, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaiah Robinson, Jake Quast, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Joey Berezowitz, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Jake Quast, Joey Berezowitz, Kelton McEwen",5G,5G,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaac Verges, JR Lukenbill, Jake Quast, Kelton McEwen",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Matthew McKay, Mikey Wildes, Trent Grunewald, Zay Howard",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, Matthew McKay, Mikey Wildes, Trent Grunewald, Zay Howard",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, JR Lukenbill, Joey Berezowitz, Kelton McEwen, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Isaac Verges, Isaiah Robinson, JR Lukenbill, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Isaac Verges, Isaiah Robinson, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Isaiah Robinson, Jake Quast, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Isaac Verges, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Isaac Verges, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Joey Berezowitz, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Isaiah Robinson, JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Isaiah Robinson, Jake Quast, Joey Berezowitz, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Isaiah Robinson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Joey Berezowitz, Kelton McEwen, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Jake Quast, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaiah Robinson, Jake Quast, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaiah Robinson, Kelton McEwen, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaiah Robinson, Jake Quast, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Jake Quast, Kelton McEwen, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Jake Quast, Kelton McEwen, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Kelton McEwen, Richie Warren, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Jake Quast, Joey Berezowitz, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, Isaac Verges, Jake Quast, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Luke Bara, Rashad Rogers, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Jake Quast, Luke Bara, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Joey Berezowitz, Tyshawn Teague-Johnson",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Isaiah Robinson, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Joey Berezowitz, Luke Bara, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Joey Berezowitz, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, JR Lukenbill, Jake Quast, Luke Bara",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Jake Quast, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Jake Quast, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Joey Berezowitz, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Jake Quast, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, JR Lukenbill, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Joey Berezowitz, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Kelton McEwen, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Darius Chestnut, JR Lukenbill, Kelton McEwen, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Jake Quast, Luke Bara, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Jake Quast, Luke Bara, Tyshawn Teague-Johnson",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Darius Chestnut, JR Lukenbill, Jake Quast, Luke Bara",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Isaac Verges, Isaiah Robinson, Joey Berezowitz, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaac Verges, Isaiah Robinson, Joey Berezowitz, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Kelton McEwen, Rashad Rogers",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Kelton McEwen, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaiah Robinson, Jake Quast, Joey Berezowitz",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaiah Robinson, JR Lukenbill, Joey Berezowitz, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaac Verges, JR Lukenbill, Joey Berezowitz, Tyshawn Teague-Johnson",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Isaac Verges, JR Lukenbill, Joey Berezowitz, Rashad Rogers, Tyshawn Teague-Johnson",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Isaac Verges, JR Lukenbill, Luke Bara, Rashad Rogers, Tyshawn Teague-Johnson",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Luke Bara, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Luke Bara, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Jake Quast, Luke Bara, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, JR Lukenbill, Luke Bara, Rashad Rogers",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Isaac Verges, JR Lukenbill, Jake Quast, Luke Bara, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Joey Berezowitz, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Jake Quast, Kelton McEwen, Tyshawn Teague-Johnson",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Kelton McEwen, Luke Bara",5G,5G,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Tyshawn Teague-Johnson",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, JR Lukenbill, Joey Berezowitz, Kelton McEwen, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Isaac Verges, JR Lukenbill, Luke Bara, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaiah Robinson, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Joey Berezowitz, Luke Bara",5G,5G,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Isaiah Robinson, JR Lukenbill, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Isaac Verges, Isaiah Robinson, Luke Bara, Rashad Rogers, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Kelton McEwen, Richie Warren, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Jake Quast, Joey Berezowitz, Kelton McEwen, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Kelton McEwen, Luke Bara, Richie Warren, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Kelton McEwen, Luke Bara, Tyshawn Teague-Johnson",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Isaiah Robinson, Jake Quast, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Isaac Verges, Jake Quast, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaiah Robinson, JR Lukenbill, Luke Bara",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Austin Ambrose, Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Jake Quast, Joey Berezowitz, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, Isaiah Robinson, Kelton McEwen",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaiah Robinson, Kelton McEwen, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Kelton McEwen, Luke Bara, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Joey Berezowitz, Luke Bara, Rashad Rogers",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Isaac Verges, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Isaac Verges, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",4G-1W,4G-1W,MSOE Raiders
+UWW,UW-Whitewater,"Isaac Verges, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, Joey Berezowitz, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"JR Lukenbill, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Joey Berezowitz, Rashad Rogers, Richie Warren",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Richie Warren, Tyshawn Teague-Johnson",2G-3W,2G-3W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Richie Warren",3G-2W,3G-2W,MSOE Raiders
+UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Luke Bara",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Ethan Johnson, Jonathan Burroughs, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Ethan Johnson, Isaac Wit, Mason Dopirak",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Ethan Johnson, Joey Jendusa, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Chase Cummings, Jonathan Burroughs, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Isaac Wit, Jonathan Burroughs, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Ethan Johnson, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",4G-1B,4G-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Isaac Wit, Joey Jendusa, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Joey Jendusa, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Joey Jendusa, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Joey Jendusa, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Isaac Wit, Joey Jendusa, Mason Dopirak, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Isaac Wit, Mason Dopirak, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Isaac Wit, Joey Jendusa, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Ethan Johnson, Isaac Wit, Joey Jendusa, Mason Dopirak",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Isaac Wit, Joey Jendusa, Jonathan Burroughs",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Chase Cummings, Joey Jendusa, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Chase Cummings, Joey Jendusa, Jonathan Burroughs",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Isaac Wit, Joey Jendusa, Mason Dopirak, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Isaac Wit, Joey Jendusa, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Ethan Johnson, Isaac Wit, Jonathan Burroughs, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Daniel Franklin IV, Ethan Johnson, Jonathan Burroughs, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Ethan Johnson, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Ethan Johnson, Joey Jendusa, Jonathan Burroughs",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Chase Cummings, Ethan Johnson, Mason Dopirak",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Ethan Johnson, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Ethan Johnson, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Daniel Franklin IV, Joey Jendusa, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Ethan Johnson, Isaac Wit, Joey Jendusa",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs, Mason Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Daniel Franklin IV, Joey Jendusa, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Joey Jendusa, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Isaac Wit, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Joey Jendusa, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Chase Cummings, Joey Jendusa, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Daniel Franklin IV, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Isaac Wit, Mason Dopirak",1G-3W,1G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",2G-2W,2G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Isaac Wit, Joey Jendusa, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Isaac Wit, Joey Jendusa, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Isaac Wit, Mason Dopirak, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Isaac Wit, Joey Jendusa, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Ethan Johnson, Joey Jendusa, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Daniel Franklin IV, Joey Jendusa, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Daniel Franklin IV, Ethan Johnson, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Ethan Johnson, Isaac Wit, Joey Jendusa, Mason Dopirak",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, CJ Valente, Daniel Franklin IV, Isaac Wit, Joey Jendusa",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Isaac Wit, Joey Jendusa, Jonathan Burroughs",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Ethan Johnson, Jonathan Burroughs, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Daniel Franklin IV, Isaac Wit, Mason Dopirak, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Ethan Johnson, Isaac Wit, Joey Jendusa, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Ethan Johnson, Jonathan Burroughs",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs, Mason Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Daniel Franklin IV, Joey Jendusa, Mason Dopirak, Matus Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Chad Coplin, Daniel Franklin IV, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Chase Cummings, Isaac Wit, Joey Jendusa",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Ethan Johnson, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Ethan Johnson, Joey Jendusa",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chad Coplin, Daniel Franklin IV, Joey Jendusa, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Ethan Johnson, Isaac Wit, Jonathan Burroughs",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Brady Gregg, Jace Paul, Kolby Henderlong, Mason Accidentale, Quinn Rosenberg",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Dubem Igwilo, Jace Paul, Kolby Henderlong, Quinn Rosenberg",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, CJ Valente, Chase Cummings, Jace Paul, Mason Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Brady Gregg, Chad Coplin, Dubem Igwilo, Jace Paul, Mason Accidentale",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chad Coplin, Daniel Franklin IV, Ethan Johnson, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Daniel Franklin IV, Dubem Igwilo, Isaac Wit, Mason Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Daniel Franklin IV, Isaac Wit, Joey Jendusa",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Daniel Franklin IV, Isaac Wit, Joey Jendusa, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Brady Gregg, Chad Coplin, Jace Paul, Kolby Henderlong, Mason Accidentale",5G,5G,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Daniel Franklin IV, Dubem Igwilo, Joey Jendusa, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Isaac Wit, Joey Jendusa, Matus Dopirak, Quinn Rosenberg",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Daniel Franklin IV, Ethan Johnson, Jonathan Burroughs, Mason Dopirak",4G-1B,4G-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Chase Cummings, Ethan Johnson, Isaac Wit, Joey Jendusa",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Dubem Igwilo, Kolby Henderlong, Mason Accidentale, Quinn Rosenberg",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Daniel Franklin IV, Jonathan Burroughs, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Chad Coplin, Chase Cummings, Dubem Igwilo, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Jonathan Burroughs",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Isaac Wit, Jonathan Burroughs, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Dubem Igwilo, Joey Jendusa, Matus Dopirak, Quinn Rosenberg",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Dubem Igwilo, Ethan Johnson, Mason Dopirak",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Carson Cordelli, Ethan Johnson, Joey Jendusa, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Joey Jendusa, Mason Dopirak, Matus Dopirak, Quinn Rosenberg",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Ethan Johnson, Isaac Wit, Kolby Henderlong, Mason Dopirak",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Isaac Wit, Jonathan Burroughs, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Chad Coplin, Daniel Franklin IV, Dubem Igwilo, Quinn Rosenberg",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Daniel Franklin IV, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chad Coplin, Daniel Franklin IV, Dubem Igwilo, Joey Jendusa",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Ethan Johnson, Kolby Henderlong, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Jonathan Burroughs, Matus Dopirak, Quinn Rosenberg",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Carson Cordelli, Daniel Franklin IV, Ethan Johnson, Joey Jendusa",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Carson Cordelli, Chase Cummings, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Ethan Johnson, Isaac Wit, Joey Jendusa",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Joey Jendusa, Mason Dopirak, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Chad Coplin, Dubem Igwilo, Joey Jendusa, Mason Accidentale, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Isaac Wit, Joey Jendusa, Mason Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chad Coplin, Daniel Franklin IV, Joey Jendusa, Mason Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Daniel Franklin IV, Dubem Igwilo, Jonathan Burroughs, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Daniel Franklin IV, Isaac Wit, Matus Dopirak, Quinn Rosenberg",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Chad Coplin, Daniel Franklin IV, Jace Paul, Kolby Henderlong, Quinn Rosenberg",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Chad Coplin, Dubem Igwilo, Kolby Henderlong, Quinn Rosenberg",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Daniel Franklin IV, Mason Dopirak, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Chad Coplin, Daniel Franklin IV, Joey Jendusa, Kolby Henderlong",5G,5G,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Ethan Johnson, Jace Paul, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Daniel Franklin IV, Ethan Johnson, Isaac Wit, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Dubem Igwilo, Ethan Johnson, Isaac Wit, Mason Dopirak",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Brady Gregg, Brock Adams, Dubem Igwilo, Kolby Henderlong, Mason Accidentale",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chad Coplin, Joey Jendusa, Kolby Henderlong, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Dubem Igwilo, Joey Jendusa, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Ethan Johnson, Isaac Wit, Joey Jendusa, Jonathan Burroughs",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chad Coplin, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Ethan Johnson, Isaac Wit, Jonathan Burroughs, Mason Dopirak",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chad Coplin, Jace Paul, Mason Accidentale, Quinn Rosenberg",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Daniel Franklin IV, Joey Jendusa, Mason Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chad Coplin, Daniel Franklin IV, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chad Coplin, Chase Cummings, Ethan Johnson, Quinn Rosenberg",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Joey Jendusa, Kolby Henderlong, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Chad Coplin, Dubem Igwilo, Mason Accidentale, Quinn Rosenberg",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Ethan Johnson, Isaac Wit, Mason Dopirak",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Dubem Igwilo, Isaac Wit, Joey Jendusa, Mason Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Chase Cummings, Isaac Wit, Jonathan Burroughs",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Dubem Igwilo, Jace Paul, Kolby Henderlong, Mason Accidentale",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Chase Cummings, Ethan Johnson, Jace Paul, Mason Dopirak",4G-1B,4G-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Chad Coplin, Jace Paul, Kolby Henderlong, Mason Accidentale, Quinn Rosenberg",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Chase Cummings, Isaac Wit, Mason Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Isaac Wit, Joey Jendusa, Quinn Rosenberg",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Daniel Franklin IV, Jace Paul, Quinn Rosenberg",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Chad Coplin, Chase Cummings, Jace Paul, Mason Dopirak, Matus Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Chad Coplin, Dubem Igwilo, Ethan Johnson, Joey Jendusa, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Daniel Franklin IV, Dubem Igwilo, Isaac Wit, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Daniel Franklin IV, Dubem Igwilo, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Daniel Franklin IV, Dubem Igwilo, Matus Dopirak, Quinn Rosenberg",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Chad Coplin, Jace Paul, Mason Accidentale, Matus Dopirak, Quinn Rosenberg",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Joey Jendusa, Jonathan Burroughs, Quinn Rosenberg",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Ethan Johnson, Joey Jendusa, Jonathan Burroughs",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Daniel Franklin IV, Dubem Igwilo, Isaac Wit, Mason Dopirak, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Daniel Franklin IV, Dubem Igwilo, Joey Jendusa, Quinn Rosenberg",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Daniel Franklin IV, Ethan Johnson, Joey Jendusa, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Daniel Franklin IV, Ethan Johnson, Isaac Wit, Joey Jendusa, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Daniel Franklin IV, Ethan Johnson, Mason Dopirak",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Brady Gregg, Chad Coplin, Daniel Franklin IV, Dubem Igwilo, Mason Accidentale",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Jonathan Burroughs",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Daniel Franklin IV, Ethan Johnson, Joey Jendusa, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Chad Coplin, Dubem Igwilo, Kolby Henderlong, Mason Accidentale",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Chad Coplin, Dubem Igwilo, Jace Paul, Mason Accidentale, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Isaac Wit, Joey Jendusa, Jonathan Burroughs",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Brady Gregg, Brock Adams, Chad Coplin, Dubem Igwilo, Mason Accidentale",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chad Coplin, Chase Cummings, Daniel Franklin IV, Ethan Johnson",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Daniel Franklin IV, Ethan Johnson, Kolby Henderlong, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Ethan Johnson, Isaac Wit, Joey Jendusa, Kolby Henderlong",2G-2W-1B,2G-2W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Jace Paul, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Daniel Franklin IV, Joey Jendusa, Jonathan Burroughs",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Daniel Franklin IV, Jace Paul, Kolby Henderlong, Quinn Rosenberg",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Joey Jendusa, Jonathan Burroughs",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Carson Cordelli, Chase Cummings, Jonathan Burroughs, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Daniel Franklin IV, Jace Paul, Kolby Henderlong, Quinn Rosenberg",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Jonathan Burroughs",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Carson Cordelli, Chase Cummings, Ethan Johnson, Jonathan Burroughs",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Ethan Johnson, Isaac Wit, Mason Dopirak",1G-3W-1B,1G-3W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Chase Cummings, Jonathan Burroughs, Mason Accidentale, Mason Dopirak",5G,5G,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Carson Cordelli, Chase Cummings, Daniel Franklin IV, Jonathan Burroughs",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Brady Gregg, Chad Coplin, Dubem Igwilo, Kolby Henderlong, Mason Accidentale",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Daniel Franklin IV, Dubem Igwilo, Joey Jendusa, Mason Accidentale, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Chase Cummings, Daniel Franklin IV, Joey Jendusa",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Isaac Wit, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chad Coplin, Chase Cummings, Ethan Johnson, Mason Dopirak",3G-1W-1B,3G-1W-1B,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Isaac Wit, Jonathan Burroughs",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Isaac Wit, Jace Paul, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Daniel Franklin IV, Isaac Wit, Mason Dopirak, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Isaac Wit, Jace Paul, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chase Cummings, Daniel Franklin IV, Joey Jendusa, Mason Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Chase Cummings, Joey Jendusa, Jonathan Burroughs, Mason Dopirak",5G,5G,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chase Cummings, Daniel Franklin IV, Isaac Wit, Matus Dopirak",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Chad Coplin, Dubem Igwilo, Joey Jendusa, Mason Accidentale",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Daniel Franklin IV, Dubem Igwilo, Mason Accidentale, Mason Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Chad Coplin, Daniel Franklin IV, Dubem Igwilo, Mason Accidentale, Mason Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Chad Coplin, Joey Jendusa, Mason Accidentale, Quinn Rosenberg",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Daniel Franklin IV, Jonathan Burroughs, Mason Dopirak, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Carson Cordelli, Chad Coplin, Daniel Franklin IV, Joey Jendusa, Matus Dopirak",3G-2W,3G-2W,MSOE Raiders
+Opponent,MSOE Raiders,"Brady Gregg, Brock Adams, Jace Paul, Kolby Henderlong, Mason Accidentale",5G,5G,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Daniel Franklin IV, Joey Jendusa, Jonathan Burroughs, Matus Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"CJ Valente, Carson Cordelli, Daniel Franklin IV, Isaac Wit, Joey Jendusa",2G-3W,2G-3W,MSOE Raiders
+Opponent,MSOE Raiders,"Chase Cummings, Daniel Franklin IV, Isaac Wit, Joey Jendusa, Mason Dopirak",4G-1W,4G-1W,MSOE Raiders
+Opponent,MSOE Raiders,"Brock Adams, Carson Cordelli, Chad Coplin, Daniel Franklin IV, Dubem Igwilo",3G-2W,3G-2W,MSOE Raiders

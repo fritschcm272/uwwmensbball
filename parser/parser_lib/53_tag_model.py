@@ -69,7 +69,7 @@ def _tm_labels(pc):
     # A clip counts as coach-tagged if its Title decoded into the tag format at all -- not blank, not a bare player
     # name (the Eau Claire clips' Titles were just names), not flagged "Needs review" by the tagger.
     is_name = title.str.lower() == pc["player"].fillna("").astype(str).str.strip().str.lower()
-    lab["tagged"] = (title != "") & pc["tag_format"].notna() & ~is_name & (pc["decode_quality"] != "Needs review")
+    lab["tagged"] = (title != "") & pc["tag_format"].notna() & ~is_name & (~pc["decode_quality"].isin(["Needs review", "Untagged"]))
     def_tagged = pc["defense_formation"].notna() | pc["defense_press"].astype(str).str.lower().eq("true")
     press_type = pc["defense_press_formation"].where(pc["defense_press_formation"].notna(),
                                                      pc["defense_press"].map(lambda x: "Press" if str(x).lower() == "true" else "None"))
@@ -446,7 +446,11 @@ def _tm_features(pc, frames, positions=None):
 
 def _tm_split_steps(s):
     # A named function, not a lambda, so the saved model can be written to disk and loaded back.
-    return [t for t in s.split("|") if t]
+    # CONFIRMED BUG (fixed; "ValueError: empty vocabulary" in the tag model's scoring): when every clip a fold trains on has
+    # no play steps / lineup (e.g. the untagged captured clips, which have no Title), the word list came out empty and
+    # scikit-learn stops. Every clip now also carries one constant word, so the list is never empty; it adds nothing to
+    # the prediction (it's the same for every clip).
+    return [t for t in str(s).split("|") if t] + ["(any)"]
 
 
 def _tm_pipeline(X):
@@ -464,7 +468,9 @@ def _tm_pipeline(X):
         ("cats", OneHotEncoder(handle_unknown="ignore"), _TM_CATS),
     ] + ([("lineups", CountVectorizer(tokenizer=_tm_split_steps, lowercase=False, token_pattern=None, binary=True),
            "lineups")] if "lineups" in X.columns and X["lineups"].str.len().gt(0).any() else []) + [
-        ("nums", make_pipeline(SimpleImputer(strategy="median"), StandardScaler()), _TM_NUMS),
+        # keep_empty_features: a number column with no values in the clips a round trains on (shot_clock_used on other
+        # teams' games, which have no play-by-play) is filled with 0 instead of dropped with a warning for every round.
+        ("nums", make_pipeline(SimpleImputer(strategy="median", keep_empty_features=True), StandardScaler()), _TM_NUMS),
     ] + ([("frames", StandardScaler(), frame_cols)] if frame_cols else [])
       + ([("positions", make_pipeline(SimpleImputer(strategy="constant", fill_value=0.0), StandardScaler()),
            pos_cols)] if pos_cols else []))
