@@ -4578,7 +4578,7 @@ def render_head_to_head(short_opponent) -> None:
         # OTHER team's file (whichever team's season the file belongs to, not who had the ball) -- e.g. our
         # 2/24/2025 game vs Stevens Point lives entirely inside opponent_plays.csv. Every clip on the
         # meeting's date matters, from either file.
-        c = clips[clips["decode_quality"] != "Needs review"].copy()
+        c = clips[~clips["decode_quality"].isin(["Needs review", "Untagged"])].copy()
         if c.empty:
             return
         c["_d"] = pd.to_datetime(c["game_date"], errors="coerce").dt.strftime("%Y-%m-%d")
@@ -5791,9 +5791,13 @@ def _pr_payload(d, store, coach, kp, part=None):
             pre, dv, da = _pr_title_default(f)
             kv, ka, kt = f"{kp}_v_{run}_{pi}_{fi}", f"{kp}_a_{run}_{pi}_{fi}", f"{kp}_t_{run}_{pi}_{fi}"
             v = store.get(kv, dv)
+            ans = str(store[kt]).strip() if kt in store else str(store.get(ka, da) or "").strip()   # a cleared cell stays cleared
+            # CONFIRMED CHANGE (coaches tag in the app now): a typed "Right answer" with no verdict picked IS the tag
+            # (a clip with no automatic answer has nothing to mark right / wrong)
+            if v == "--" and ans:
+                v = "wrong"
             if v == "--":
                 continue
-            ans = str(store[kt]).strip() if kt in store else str(store.get(ka, da) or "").strip()   # a cleared cell stays cleared
             touched = any(k in store for k in (kv, ka, kt))
             out["answers"].append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"), "field": f.get("field"),
                                    "coach": f.get("coach"), "auto": f.get("auto"), "auto_conf": f.get("conf"),
@@ -5874,7 +5878,10 @@ def _pr_save_bar(d, store, kp, key_suffix, part="titles"):
         ok, msg = _pr_github_save(fname, out)
         n = len(out.get("answers", [])) if part == "titles" else len(out.get("checks", []))
         if ok:
-            st.success(f"Saved {n} {what} ({msg}). The app does not restart; the parser picks it up when it runs (it fetches the saves branch). The review is finished once its Title checks AND player checks are saved.")
+            _is_tag = "/play_tag/" in str(d.get("_dir", "")).replace(os.sep, "/")
+            st.success(f"Saved {n} {what} ({msg}). The app does not restart; the parser picks it up when it runs (it fetches the saves branch). "
+                       + ("These tags count in the scouting tables after the next parser run, which also brings this game's next batch."
+                          if _is_tag else "The review is finished once its Title checks AND player checks are saved."))
             _st = st.session_state.get("pr_answers", {}).get(str(d.get("run")), {})
             for k in [k for k in _st if k.startswith(kp) and (("_b_" in k) == (part == "players"))]:
                 _st.pop(k, None)
@@ -6249,6 +6256,101 @@ def _pnt_model_versions():
             st.dataframe(h.sort_values("version_date", ascending=False).rename(
                 columns={"version_date": "Date", "model": "Model", "version": "Version", "detail": "Details"}),
                 hide_index=True, use_container_width=True)
+
+
+_FT_OTHER = "other (type it)"
+
+
+def _ft_field_widgets(d, pi, store, kp):
+    """Film Tagging: one row of pick-lists, one per Title field. Each list offers the automatic answer first, then every
+    answer already in use for that field, then "other (type it)". Stored with the same keys as the Play review grid, so
+    the save is the same: the automatic answer = "right", anything else = "wrong" + that answer (the tag)."""
+    pl = d["plays"][pi]
+    run = d.get("run")
+    fields = pl.get("fields", [])
+    cols = st.columns(max(1, len(fields)))
+    for fi, f in enumerate(fields):
+        kv, kt = f"{kp}_v_{run}_{pi}_{fi}", f"{kp}_t_{run}_{pi}_{fi}"
+        auto = f.get("auto")
+        known = [v for v in d.get("vocab", {}).get(f.get("field"), []) if v != auto]
+        auto_opt = (f"\u2713 {auto}" + ("" if f.get("sure") else " (unsure)")) if auto else None
+        opts = ["--"] + ([auto_opt] if auto_opt else []) + known + [_FT_OTHER]
+        cur_v, cur_t = store.get(kv), store.get(kt)
+        if cur_v == "right" and auto_opt:
+            idx = 1
+        elif cur_v == "wrong" and cur_t in known:
+            idx = opts.index(cur_t)
+        elif cur_v == "wrong" and cur_t:
+            idx = len(opts) - 1
+        else:
+            idx = 0
+        with cols[fi]:
+            ch = st.selectbox(f.get("label") or f.get("field"), opts, index=idx, key=f"{kv}_ft")
+            typed = ""
+            if ch == _FT_OTHER:
+                typed = st.text_input("type it", value=(cur_t if cur_t and cur_t not in known else ""), key=f"{kt}_ft",
+                                      label_visibility="collapsed", placeholder=f"{f.get('label')}...")
+        if ch == "--":
+            store.pop(kv, None)
+            store.pop(kt, None)
+        elif auto_opt and ch == auto_opt:
+            store[kv] = "right"
+            store.pop(kt, None)
+        else:
+            val = typed.strip() if ch == _FT_OTHER else ch
+            if val:
+                store[kv] = "wrong" if not (auto and _pr_norm(val) == _pr_norm(auto)) else "right"
+                if store[kv] == "wrong":
+                    store[kt] = val
+                else:
+                    store.pop(kt, None)
+            else:
+                store.pop(kv, None)
+                store.pop(kt, None)
+
+
+def render_film_tagging():
+    """Analytics > Film Tagging (requested: coaches tag games in the app, not in Synergy's Title field). Every captured
+    clip with no tag yet, a batch per game (ours and the upcoming opponent's), in game order: watch the play, pick or type
+    each Title field, save. The parser uses the saved answers as the clip's tags in every play-call table, and they teach
+    the Tag model; the next batch for a game appears after the parser runs again."""
+    section_header("\U0001f3f7\ufe0f FILM TAGGING", "Tag each play here instead of in Synergy's Title field. Pick the automatic "
+                   "answer when it's right, another answer when it isn't. Saved tags go into every scouting table on the next "
+                   "parser run, and teach the automatic Title.")
+    pkgs = sorted(_pr_app_packages("play_tag"), key=lambda d: str(d.get("game", "")), reverse=True)
+    # the Title part of an open Play review for a game that isn't ours (opponent games have no Previous Games page)
+    pkgs += [d for d in sorted(_pr_app_packages("play_review"), key=lambda d: str(d.get("game", "")), reverse=True)
+             if "WWW" not in str(d.get("game", "")).split("|")[-1]]
+    if not pkgs:
+        st.info("Nothing to tag right now. The parser's Play review cell builds a batch of untagged clips for every captured "
+                "game (Film Tagging queue); commit and push the data folder, then come back here.")
+        return
+    label = lambda d: f"{_pnt_game_label(d.get('game'))}" + ("" if "/play_tag/" in d.get("_dir", "").replace(os.sep, "/") else " (play review)")
+    names = [label(d) for d in pkgs]
+    pick = st.selectbox("Game", names, key="ft_game")
+    d = pkgs[names.index(pick)]
+    store = _pr_store(d.get("run"))
+    kp = f"ft{d.get('slug')}"
+    _pr_save_bar(d, store, kp, f"_ft_{d.get('slug')}", part="titles")
+    st.caption("For each play: \u2713 = the automatic answer; leave a field at -- if you can't tell. Only the fields you set "
+               "are saved.")
+    for pi, pl in enumerate(d.get("plays", [])):
+        n_set = len([k for k in store if k.startswith(f"{kp}_v_{d.get('run')}_{pi}_")])
+        head = (f"Clip {pl.get('clip_number')} \u00b7 {pl.get('clock') or ''} \u00b7 {str(pl.get('synergy') or '')[:90]}"
+                + (f"  \u2014 {n_set} set" if n_set else ""))
+        with st.expander(head, expanded=(pi == 0)):
+            if pl.get("auto_title"):
+                st.markdown(f"Automatic Title: `{pl['auto_title']}`")
+            if pl.get("film"):
+                st.caption(pl["film"])
+            if pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
+                if pl.get("clip_kind") == "video":
+                    _pr_video(os.path.join(d["_dir"], pl["clip"]))
+                else:
+                    st.image(os.path.join(d["_dir"], pl["clip"]))
+            if pl.get("synergy_url"):
+                st.markdown(f"[Open in Synergy]({pl['synergy_url']})" + (f" (clip {pl['synergy_pos']})" if pl.get("synergy_pos") else ""))
+            _ft_field_widgets(d, pi, store, kp)
 
 
 def render_player_number_tracking():
@@ -6931,6 +7033,27 @@ def render_court_view(team, key_suffix=""):
            {"defender": "Defender", "weak_side_in_paint_pct": "Weak side in paint %", "weak_side_ft_off_man": "Weak side ft off man",
             "on_ball_ft": "On-ball ft", "clips": "Clips"})
 
+    # CONFIRMED CHANGE (requested: the "Five Back" transition-defense measure). For every transition shot: how many defenders
+    # were back (their own half) one second before the shot, and how often the shot came at the rim by that count. Built by the
+    # parser's court insights (uww_transition_five_back_summary); only shots with all five defenders on film are counted.
+    st.markdown("**Transition defense: bodies back** -- defenders in their own half 1 second before a transition shot")
+    _fb = _ft_load("uww_transition_five_back_summary")
+    if _fb.empty:
+        st.caption("No transition shots with all five defenders on film yet.")
+    else:
+        _ft_df(_fb, ["defense_team", "transition_shots", "measurable", "five_back_pct", "rim_pct_five_back", "rim_pct_fewer",
+                     "pts_per_shot_five_back", "pts_per_shot_fewer"],
+               {"defense_team": "Defense", "transition_shots": "Transition shots", "measurable": "All 5 D on film",
+                "five_back_pct": "Five back %", "rim_pct_five_back": "Rim att % (5 back)", "rim_pct_fewer": "Rim att % (<5 back)",
+                "pts_per_shot_five_back": "Pts/shot (5 back)", "pts_per_shot_fewer": "Pts/shot (<5 back)"})
+        _ft_df(_fb, ["defense_team", "shots_5_back", "rim_pct_5_back", "shots_4_back", "rim_pct_4_back", "shots_3_back",
+                     "rim_pct_3_back", "shots_2_or_fewer_back", "rim_pct_2_or_fewer_back"],
+               {"defense_team": "Defense", "shots_5_back": "Shots: 5 back", "rim_pct_5_back": "Rim %: 5",
+                "shots_4_back": "Shots: 4", "rim_pct_4_back": "Rim %: 4", "shots_3_back": "Shots: 3", "rim_pct_3_back": "Rim %: 3",
+                "shots_2_or_fewer_back": "Shots: 2 or fewer", "rim_pct_2_or_fewer_back": "Rim %: 2 or fewer"})
+        st.caption("Counts are small: read them as what happened on the tracked film, not as proof. NBA reference "
+                   "(2015-16 tracking data): with five back, rim attempts were 17 points less likely than with fewer.")
+
     st.markdown(f"**{dfn}'s zone alignments and trap spots**")
     zp = D("uww_court_zone_press", "defense_team", dfn)
     if zp.empty:
@@ -7154,6 +7277,10 @@ def render_upcoming_game():
     # --- Game header (broadcast-style matchup banner) ---
     game_date = str(next_game.get("date", "-"))
     location = str(next_game.get("location", "-"))
+    # CONFIRMED CHANGE (scrimmage set up as an extra upcoming game): show its note ("scrimmage, real date ...") instead of
+    # the placeholder date it was placed on in the 2025-26 schedule
+    _gd_note = next_game.get("note") if "note" in getattr(next_game, "index", []) else None
+    _gd_disp = html.escape(str(_gd_note)) if isinstance(_gd_note, str) and _gd_note.strip() else game_date
     record = next_game.get("opponent_season_record", "")
     # Compute UWW record and streak from games BEFORE the upcoming game (by schedule order)
     next_game_idx = next_game.name  # row index of the upcoming game
@@ -7201,7 +7328,7 @@ def render_upcoming_game():
 
     _uww_streak_html = f'<div style="color:#aabbcc;font-size:0.8rem;font-style:italic;margin-top:2px;">{streak_str}</div>' if streak_str else ''
     _opp_streak_html = f'<div style="color:#aabbcc;font-size:0.8rem;font-style:italic;margin-top:2px;">{opp_streak_str}</div>' if opp_streak_str else ''
-    banner_html = f'<div style="background:#1a1a2e;border-radius:10px;padding:22px 32px;margin-bottom:0.75rem;display:flex;align-items:center;justify-content:space-between;"><div style="text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;">{uww_logo_img}<div style="color:#ffffff;font-family:Montserrat,sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:0.5px;">UW-WHITEWATER</div><div style="color:#9DAAAC;font-size:1.05rem;font-weight:600;margin-top:3px;">{uww_wins}-{uww_losses}</div>{_uww_streak_html}</div><div style="text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;"><div style="color:#9DAAAC;font-size:1rem;font-weight:500;">{game_date}</div><div style="color:#ffffff;font-size:1.6rem;font-weight:700;margin:4px 0;">VS</div><div style="color:#9DAAAC;font-size:0.95rem;">{location}</div></div><div style="text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;">{opp_logo_img}<div style="color:#ffffff;font-family:Montserrat,sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:0.5px;">{html.escape(opp_display.upper())}</div><div style="color:#9DAAAC;font-size:1.05rem;font-weight:600;margin-top:3px;">{opp_record if opp_record else ""}</div>{_opp_streak_html}</div></div>'
+    banner_html = f'<div style="background:#1a1a2e;border-radius:10px;padding:22px 32px;margin-bottom:0.75rem;display:flex;align-items:center;justify-content:space-between;"><div style="text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;">{uww_logo_img}<div style="color:#ffffff;font-family:Montserrat,sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:0.5px;">UW-WHITEWATER</div><div style="color:#9DAAAC;font-size:1.05rem;font-weight:600;margin-top:3px;">{uww_wins}-{uww_losses}</div>{_uww_streak_html}</div><div style="text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;"><div style="color:#9DAAAC;font-size:1rem;font-weight:500;">{_gd_disp}</div><div style="color:#ffffff;font-size:1.6rem;font-weight:700;margin:4px 0;">VS</div><div style="color:#9DAAAC;font-size:0.95rem;">{location}</div></div><div style="text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;">{opp_logo_img}<div style="color:#ffffff;font-family:Montserrat,sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:0.5px;">{html.escape(opp_display.upper())}</div><div style="color:#9DAAAC;font-size:1.05rem;font-weight:600;margin-top:3px;">{opp_record if opp_record else ""}</div>{_opp_streak_html}</div></div>'
     st.markdown(banner_html, unsafe_allow_html=True)
 
     # --- Reserve layout slots up front (Streamlit fills a container wherever it was CREATED in the
@@ -8748,9 +8875,10 @@ def render_upcoming_game():
                                 _cmp_weak = pd.notna(_cmp_cov) and _cmp_cov < 0.7
                                 _cmp_colour = "#b3261e" if _cmp_weak else "#666"
                                 _cmp_cov_text = f" \u00b7 {_cmp_cov:.0%} of the usual evidence" if pd.notna(_cmp_cov) else ""
+                                _cmp_warn = "\u26a0\ufe0f " if _cmp_weak else ""
                                 st.markdown(
                                     f'<div style="font-size:0.72rem;color:{_cmp_colour};">'
-                                    f'{"\u26a0\ufe0f " if _cmp_weak else ""}Based on: {esc(_cmp_method)}'
+                                    f'{_cmp_warn}Based on: {esc(_cmp_method)}'
                                     f'{_cmp_cov_text}</div>', unsafe_allow_html=True)
                                 if _cmp_weak:
                                     st.caption(
@@ -12049,10 +12177,12 @@ def render_previous_games():
                         _pre_uww_box = _pre_box[_pre_box["team"] != "UW-Whitewater"]
 
                 expected_stats = {}
+                # CONFIRMED BUG (fixed; found by the Pyright check): _pre_games was only set inside the UWW-box branch, but the
+                # opponent block below uses it too -- a game with an opponent box and no UWW box crashed with a NameError.
+                _pre_games = _orig_played.iloc[:_game_original_pos] if _game_original_pos else pd.DataFrame()
                 if not _pre_uww_box.empty:
                     _n_pre = ((_pre_uww_box[game_date_col(_pre_uww_box)].nunique()
                                if game_date_col(_pre_uww_box) else _pre_uww_box["opponent"].nunique()) or 1)
-                    _pre_games = _orig_played.iloc[:_game_original_pos] if _game_original_pos else pd.DataFrame()
                     expected_stats = {
                         "Points": _pre_games["team_score"].mean() if not _pre_games.empty else 0,
                         "Points Against": _pre_games["opponent_score"].mean() if not _pre_games.empty else 0,
@@ -13018,9 +13148,9 @@ def _pr_fill_labels(d):
         pass
 
 
-def _pr_app_packages():
+def _pr_app_packages(folder="play_review"):
     out = []
-    for f in glob.glob(os.path.join(DATA_DIR, "play_review", "*", "review.json")):
+    for f in glob.glob(os.path.join(DATA_DIR, folder, "*", "review.json")):
         try:
             with open(f, encoding="utf-8") as fh:
                 d = json.load(fh)
@@ -14985,6 +15115,7 @@ def render_analytics():
         "Players": render_players,
         "Video Tracking": render_video_tracking,
         "Player Number Tracking": render_player_number_tracking,
+        "Film Tagging": render_film_tagging,
     }
     _tab_order = list(_renderers)
     _pinned = st.session_state.get("_analytics_open_tab")

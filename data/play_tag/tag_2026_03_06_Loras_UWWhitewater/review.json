@@ -1,0 +1,257 @@
+{
+ "game": "2026-03-06|Loras@UWWhitewater",
+ "slug": "tag_2026_03_06_Loras_UWWhitewater",
+ "run": "20261012_072016_tag",
+ "plays": [
+  {
+   "clip_key": "2026-03-06|1|32 Johnny Semany > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Short to < 17' > Make 2 Pts",
+   "clip_number": 1,
+   "clock": "H1 19:40",
+   "synergy": "32 Johnny Semany > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Short to < 17' > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "(bs): m2m (over)",
+   "film": null,
+   "offense": "UW-Whitewater",
+   "defense": "Loras Duhawks",
+   "player": "Johnny Semany",
+   "result": "Make 2 Pts",
+   "clip": null,
+   "clip_kind": "image",
+   "poster": null,
+   "fid": "001_00",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69a628c5ad0b409308d52306%2ffullgamevideo%2fclips",
+   "synergy_pos": 1,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.74,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.5,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.48,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.41,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.9,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Stay",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.68,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#23",
+     "conf": 0.24,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Isaac Verges",
+     "Luke Bara",
+     "Richie Warren"
+    ],
+    "defense": [
+     "Damyen Jackson",
+     "Gavin Sarvis",
+     "Jack Haynes",
+     "Johnny Semany",
+     "Nolan Berendes"
+    ]
+   }
+  }
+ ],
+ "vocab": {
+  "situation": [
+   "ATO",
+   "BLOB",
+   "Half court",
+   "Offensive rebound",
+   "SLOB",
+   "Transition"
+  ],
+  "formation": [
+   "5 Out",
+   "Box",
+   "Line",
+   "There's not really one",
+   "Twins"
+  ],
+  "play_call": [
+   "Ball Screen",
+   "Cheetah",
+   "DHO",
+   "Double Ball Screen",
+   "How we went over the screen",
+   "Motion",
+   "Over",
+   "Panther",
+   "Spain",
+   "in trnasntion random movement"
+  ],
+  "primary_action": [
+   "Ball Screen",
+   "Corner Cut",
+   "Down Screen",
+   "Dribble Drive",
+   "Ghost",
+   "High Ball Screen",
+   "Iso",
+   "No Ball Screen",
+   "No screens",
+   "Offensive Rebound",
+   "Pass to Corner",
+   "Reject",
+   "Ricky",
+   "Scissors",
+   "Screen the Screener",
+   "Stagger",
+   "Zoom",
+   "none"
+  ],
+  "defense": [
+   "Man-to-Man"
+  ],
+  "press": [
+   "1-2-2 Press",
+   "Full-court M2M Press",
+   "None",
+   "Press",
+   "Run & Jump",
+   "Token Press"
+  ],
+  "ball_screen_coverage": [
+   "Drop",
+   "NO ball screens",
+   "No Screens",
+   "No ball",
+   "None",
+   "Over",
+   "Stay",
+   "Stay, then Switch 2nd",
+   "Switch",
+   "Switch at the end",
+   "They went over",
+   "Top Lock",
+   "Under",
+   "none"
+  ],
+  "offball_coverage": [
+   "No Off ball coded",
+   "No Screens",
+   "No screens",
+   "None",
+   "Over",
+   "Switch",
+   "This is the ball screen coverage",
+   "Top Lock",
+   "Under",
+   "no off ball coverage",
+   "none",
+   "under"
+  ],
+  "screener": [
+   "Asanjai Hunter",
+   "Carson Cordelli",
+   "Chase Cummings",
+   "Collin Madson",
+   "Connor May",
+   "Cooper Nailor",
+   "Cullen Rauls",
+   "Harper Krolak",
+   "Jaxson Dillon",
+   "Joey Jendusa",
+   "Joey LaChapell",
+   "Jonathan Burroughs",
+   "Josh Kim",
+   "Joss Bradley",
+   "Juan Madrigal",
+   "Luke Bara",
+   "Mason Dopirak",
+   "Matt Imig",
+   "Peyton Mrotek",
+   "Raine Rodich",
+   "Richie Warren"
+  ],
+  "screen_defender": [
+   "#12",
+   "#14",
+   "#2",
+   "#23",
+   "#3",
+   "#5"
+  ]
+ },
+ "built": "2026-10-12T07:20:50"
+}

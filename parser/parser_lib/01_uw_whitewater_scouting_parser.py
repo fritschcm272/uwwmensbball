@@ -20,7 +20,7 @@ import os
 import re
 import sys
 from collections import Counter
-from datetime import datetime
+from datetime import datetime, timedelta
 from email import policy
 from io import StringIO
 
@@ -57,8 +57,40 @@ def _show(obj, title=None, rows=None):
         print(f"  ... {len(obj) - rows:,} more row(s) of {len(obj):,} (SHOW_ROWS = {rows})")
 
 
-reference_date_str = "2026-1-7"   # games on/after this date are treated as not yet played; the first
-                                     # scouted UWW game on/after it is flagged as the upcoming game
+# "Today's date" for the run: games on/after it are treated as not yet played; the first UWW game on/after it is the
+# upcoming game. CONFIRMED CHANGE (requested: "Where is the today's date to change"): set in the notebook's first settings
+# cell (REFERENCE_DATE), no longer only here. With EXTRA_GAMES set (a scrimmage scouted as the next game), it is set
+# AUTOMATICALLY to the day after UWW's last game on file -- found from the dated UWW game files in INPUT_DIR
+# ("3_7_26 UW-Whitewater @ ..._pbp / _scout / _video") -- so every 2025-26 game counts as played and the scrimmage is next.
+def _auto_reference_after_last_game():
+    last = None
+    for f in glob.glob(os.path.join(INPUT_DIR, "*")):
+        b = os.path.basename(f)
+        if "whitewater" not in b.lower() or not re.search(r"_(pbp|scout|video)", b, re.I):
+            continue
+        m = re.match(r"^(\d{1,2})_(\d{1,2})_(\d{2,4})\s", b)
+        if not m:
+            continue
+        y = int(m.group(3)) + (2000 if len(m.group(3)) == 2 else 0)
+        try:
+            d = datetime(y, int(m.group(1)), int(m.group(2)))
+        except ValueError:
+            continue
+        last = d if last is None or d > last else last
+    return last
+
+
+reference_date_str = str(globals().get("REFERENCE_DATE") or "2026-1-7")
+if [g for g in (globals().get("EXTRA_GAMES") or []) if g and g.get("opponent")]:
+    _last_game = _auto_reference_after_last_game()
+    if _last_game is not None:
+        _ref = _last_game + timedelta(days=1)
+        reference_date_str = f"{_ref.year}-{_ref.month}-{_ref.day}"
+        print(f"EXTRA_GAMES is set: the run's date is {reference_date_str}, the day after UWW's last game on file "
+              f"({_last_game:%m/%d/%y}) -- every game on file counts as played, the extra game is next. "
+              f"(REFERENCE_DATE is ignored while EXTRA_GAMES is set.)")
+    else:
+        print("EXTRA_GAMES is set but no dated UWW game files were found in INPUT_DIR -- using REFERENCE_DATE.")
 reference_date = datetime.strptime(reference_date_str, "%Y-%m-%d")
 before_scout = "yes"      # "yes" = run as if the UPCOMING opponent's own scouting report does not exist yet,
                          # even when a "*_scout.html"/"*_scout.pdf" file for that game IS sitting in
@@ -148,6 +180,20 @@ print(f"Before scout: {before_scout} -- "
 # spots", "All of our lineups", all of it. The staff gets a brief that says "(in the app)" 17+ times with no
 # way to get there. Put the deployed URL in the string below (it wins over the environment variable), or
 # export UWW_APP_URL before running.
+
+# The notebook cell reads UWW_APP_URL before anything has loaded the .env file (section 02 loads it later for the
+# FastScout login), so load .env here -- next to the notebook or one folder up -- and pick the URL up from it.
+if not str(APP_BASE_URL or "").strip():
+    try:
+        from dotenv import load_dotenv
+        for _envp in (os.path.join(os.getcwd(), ".env"), os.path.join(os.path.dirname(os.getcwd()), ".env")):
+            if os.path.isfile(_envp):
+                load_dotenv(_envp, override=False)
+    except ImportError:
+        pass
+    APP_BASE_URL = os.environ.get("UWW_APP_URL", "") or ""
+    if APP_BASE_URL:
+        print("APP_BASE_URL taken from UWW_APP_URL in .env")
 
 if APP_BASE_URL:
     # A bare host is a RELATIVE href once it lands in the brief -- the browser resolves it against

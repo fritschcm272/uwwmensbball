@@ -1158,7 +1158,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         f'<div class="rec">{_sb_esc(uww_record)}</div>'
         + (f'<div class="streak">{_sb_esc(uww_streak)}</div>' if uww_streak else "")
         + "</div>")
-    add(f'<div class="side mid"><div class="when">{_sb_esc(game.get("date", "-"))}</div>'
+    _note = game.get("note") if hasattr(game, "get") else None      # a scrimmage: "scrimmage, real date ..."
+    _when = _note if isinstance(_note, str) and _note.strip() else game.get("date", "-")
+    add(f'<div class="side mid"><div class="when">{_sb_esc(_when)}</div>'
         f'<div class="vs">VS</div>'
         f'<div class="where">{_sb_esc(game.get("location", "-"))}</div></div>')
     add(f'<div class="side">{crest(opp_logo)}'
@@ -1497,7 +1499,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         if _pcc_all.empty or "side" not in _pcc_all.columns:
             return ""
         c = _pcc_all[(_pcc_all["side"] == "UWW") & (_pcc_all["player"].astype(str).map(_norm) == _norm(name))
-                     & (_pcc_all["decode_quality"] != "Needs review")]
+                     & (~_pcc_all["decode_quality"].isin(["Needs review", "Untagged"]))]
         named = c[c["play_call"].notna() & ~c["play_call"].astype(str).str.contains("unspecified", na=False)]
         vc = named["play_call"].value_counts()
         vc = vc[vc >= 3]
@@ -1590,7 +1592,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             return pd.DataFrame()
         # OFFENSIVE possessions only. On a mixed file a defensive clip's defense tag is what this team
         # PLAYED, which would silently invert every row in this section.
-        d = _pcc_all[(_pcc_all["side"] == side_val) & (_pcc_all["decode_quality"] != "Needs review")].copy()
+        d = _pcc_all[(_pcc_all["side"] == side_val) & (~_pcc_all["decode_quality"].isin(["Needs review", "Untagged"]))].copy()
         if "possession_side" in d.columns:
             d = d[d["possession_side"].astype(str) != "Defense"]
         if team_val is not None and "offense_team" in d.columns:
@@ -2030,7 +2032,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         # normalised names so "Jake Quast" and "JAKE QUAST" count as the same player.
         _clips = pd.DataFrame()
         if not _pcc_all.empty and "on_court_lineup" in _pcc_all.columns:
-            _clips = _pcc_all[(_pcc_all["side"] == side) & (_pcc_all["decode_quality"] != "Needs review")
+            _clips = _pcc_all[(_pcc_all["side"] == side) & (~_pcc_all["decode_quality"].isin(["Needs review", "Untagged"]))
                               & _pcc_all["on_court_lineup"].notna()].copy()
             if "possession_side" in _clips.columns:
                 _clips = _clips[_clips["possession_side"].astype(str) != "Defense"]
@@ -2481,7 +2483,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             # so it is what decides whether WE had the ball here.
             if _pcc_all.empty or "game_date" not in _h2h.columns or "game_date" not in _pcc_all.columns:
                 return []
-            _c = _pcc_all[_pcc_all["decode_quality"] != "Needs review"].copy()
+            _c = _pcc_all[~_pcc_all["decode_quality"].isin(["Needs review", "Untagged"])].copy()
             if _c.empty:
                 return []
             _c["_d"] = pd.to_datetime(_c["game_date"], errors="coerce").dt.strftime("%Y-%m-%d")
@@ -3173,7 +3175,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _ours = pd.DataFrame()
             if not _pcc_all.empty and "defense_played" in _pcc_all.columns:
                 _ours = _pcc_all[(_pcc_all["side"] == "UWW")
-                                 & (_pcc_all["decode_quality"] != "Needs review")
+                                 & (~_pcc_all["decode_quality"].isin(["Needs review", "Untagged"]))
                                  & _pcc_all["defense_played"].notna()].copy()
                 if not _ours.empty:
                     _ours["_pts"] = pd.to_numeric(_ours.get("points"), errors="coerce")
@@ -3552,7 +3554,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 return blank
             d = _pcc_all[(_pcc_all["side"] == side)
                         & (_pcc_all["play_call"].astype(str) == str(set_name))
-                        & (_pcc_all["decode_quality"] != "Needs review")].copy()
+                        & (~_pcc_all["decode_quality"].isin(["Needs review", "Untagged"]))].copy()
             if "possession_side" in d.columns:
                 d = d[d["possession_side"].astype(str) != "Defense"]
             if d.empty:
@@ -3677,7 +3679,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             d = _pcc_all[(_pcc_all["side"] == side)
                         & (_pcc_all["play_call"].astype(str) == str(set_name))
                         & _pcc_all["defense_faced"].notna()
-                        & (_pcc_all["decode_quality"] != "Needs review")].copy()
+                        & (~_pcc_all["decode_quality"].isin(["Needs review", "Untagged"]))].copy()
             if "possession_side" in d.columns:
                 d = d[d["possession_side"].astype(str) != "Defense"]
             if d.empty:
@@ -3720,7 +3722,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         _td = pd.DataFrame()
         if not _pcc_all.empty and "defense_played" in _pcc_all.columns:
             _td = _pcc_all[(_pcc_all["side"] == "Opponent")
-                           & (_pcc_all["decode_quality"] != "Needs review")
+                           & (~_pcc_all["decode_quality"].isin(["Needs review", "Untagged"]))
                            & _pcc_all["defense_played"].notna()].copy()
             if "possession_side" in _td.columns:
                 _td = _td[_td["possession_side"].astype(str) == "Defense"]

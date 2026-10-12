@@ -255,11 +255,22 @@ def _jn_prep_wide_color(img_bgr, box):
 
 
 def _jn_needs_color(engine):
-    return str(engine).startswith("paddle_color") or engine == "trained"
+    return str(engine).startswith("paddle_color") or str(engine).startswith("trained")
+
+
+def _jn_prep_pose_color(img_bgr, box):
+    """The shoulders-to-hips crop (pose model) in COLOR, enlarged 3x -- for the "trained_pose" recognizer (fixed crop if no pose)."""
+    import cv2
+    crop = _jr_chest(img_bgr, box, "pose") if "_jr_chest" in globals() else None
+    if crop is None:
+        return None
+    return cv2.resize(crop, (max(8, crop.shape[1] * 3), max(8, crop.shape[0] * 3)), interpolation=cv2.INTER_CUBIC)
 
 
 def _jn_prep_for(engine):
     """Which crop each reader gets (the same choice in the test and in tracking)."""
+    if engine == "trained_pose":
+        return _jn_prep_pose_color
     if _jn_needs_color(engine):
         return _jn_prep_wide_color
     if str(engine).endswith("_find"):
@@ -391,8 +402,9 @@ def _jn_read(engine, crops, polarity=None):
                         pass
             out.append(best)
         return out
-    if engine == "trained":
-        res = jersey_recognizer_read(crops) if "jersey_recognizer_read" in globals() else None
+    if str(engine).startswith("trained"):
+        res = (jersey_recognizer_read(crops, style="pose" if engine == "trained_pose" else "fixed")
+               if "jersey_recognizer_read" in globals() else None)
         if res is None:
             globals()["_jn_trained_missing"] = True
             return [("", 0.0)] * len(crops)
@@ -599,6 +611,13 @@ if RUN_JERSEY_READER_TEST:
     print(f"Jersey-number reader test: {len(_have)} answer-key crop(s) ({_on_disk} with their frame on disk, "
           f"{len(_have) - _on_disk} from saved answers; {_n_coach} added from coach checks)", flush=True)
     _have_all = _have
+    # CONFIRMED CHANGE (requested: compare the pose-based jersey crop with the fixed one on your checked players): with
+    # JERSEY_CROP_STYLE = "compare" both recognizers are tested here on the SAME answer-key boxes ("trained" = fixed crop,
+    # "trained_pose" = shoulders-to-hips crop); the better one wins like any other reader. "pose" tests only the pose one.
+    _jcs = str(globals().get("JERSEY_CROP_STYLE", "fixed")).lower()
+    if _jcs in ("compare", "pose") and "trained" in JERSEY_READER_ENGINES:
+        JERSEY_READER_ENGINES = ([e for e in JERSEY_READER_ENGINES if e != "trained"] if _jcs == "pose" else list(JERSEY_READER_ENGINES)) \
+            + (["trained_pose"] if "trained_pose" not in JERSEY_READER_ENGINES else [])
     for _eng in JERSEY_READER_ENGINES:
         # a run where PaddleOCR failed to load saved "no answer" for every crop: once it loads, read those again
         if _eng.startswith("paddle") and globals().get("_jn_paddle_ok") and not globals().get(f"_jn_reread_{_eng}"):
@@ -608,16 +627,17 @@ if RUN_JERSEY_READER_TEST:
         if _eng.startswith("paddle") and globals().get("_jn_paddle_ok") is False:
             print(f"  {_eng:12}: not tested (PaddleOCR didn't start)", flush=True)
             continue
-        if _eng == "trained":
-            _mp = globals().get("JERSEY_MODEL_PATH", "")
+        if _eng.startswith("trained"):
+            _mp = (_jr_path_for("pose" if _eng == "trained_pose" else "fixed") if "_jr_path_for" in globals()
+                   else globals().get("JERSEY_MODEL_PATH", ""))
             if not (_mp and os.path.exists(_mp)):
                 print(f"  {_eng:12}: not tested (no trained recognizer yet -- see the Jersey-number recognizer cell)", flush=True)
                 continue
             _mt = os.path.getmtime(_mp)
-            if _saved.get(("__trained_model__", "")) != _mt:          # retrained: its old answers don't count
-                for _kk in [kk for kk in list(_saved) if kk[0] == "trained"]:
+            if _saved.get((f"__{_eng}_model__", "")) != _mt:          # retrained: its old answers don't count
+                for _kk in [kk for kk in list(_saved) if kk[0] == _eng]:
                     del _saved[_kk]
-                _saved[("__trained_model__", "")] = _mt
+                _saved[(f"__{_eng}_model__", "")] = _mt
             if globals().get("JERSEY_TRAIN_USE_COACH") is True:
                 print("  trained     : (trained ON your checked players -- its score on them is optimistic)", flush=True)
         _have = {k: v for k, v in _have_all.items() if _on(k) or (_eng, k) in _saved}   # what THIS reader can be scored on
@@ -635,6 +655,8 @@ if RUN_JERSEY_READER_TEST:
                     continue
                 for k, r_ in zip(_todo, _rs):
                     _saved[(_eng, k)] = r_
+                if _eng == "trained_pose" and "_jr_torso_save" in globals():
+                    _jr_torso_save()
                 os.makedirs(os.path.dirname(_cp), exist_ok=True)
                 pd.to_pickle(_saved, _cp)
             _right = sum(1 for k, v in _have.items() if _saved.get((_eng, k), ("", 0))[0] == v)

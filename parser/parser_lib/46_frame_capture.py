@@ -23,6 +23,12 @@
 import base64 as _vis_b64
 import hashlib
 
+# CONFIRMED CHANGE (frame archive): finished games' tracking frames may be packed into clip videos -- load the archive index
+# and its hooks FIRST, so archived frames count as captured (never recaptured) and unpack themselves when read.
+if globals().get("FRAME_ARCHIVE_HOOKS", True) and os.path.exists(os.path.join(PARSER_LIB, "46a_frame_archive.py")):
+    FRAME_ARCHIVE_STEP = "hooks"
+    run_section("46a_frame_archive")
+
 # Tracking frames (requested: follow players through the clip and put names on them). A second, denser set of
 # smaller frames, VISION_TRACK_FPS per second through the whole clip, used only by the player-tracking cell.
 # Cost: ~10 s more per clip to capture (~35 min a game) and ~200 MB of .jpg per game. 0 = don't capture them.
@@ -159,6 +165,16 @@ def _vision_capture(page, row_index, clip_seconds, mode="key"):
             print(f"    [capture] clip {row_index + 1}: start not confirmed -- {info.get('diag', '')}", flush=True)
         return [], ("clip start not confirmed (the video never moved to the clicked clip) -- retried next run; "
                     + str(info.get("diag", "")))
+    if not globals().get("_vision_size_shown") and info.get("w"):
+        globals()["_vision_size_shown"] = True
+        # CONFIRMED CHANGE (user asked "is this what we want?" -- the old line only described the 5 tag-model frames, which
+        # stay 1024 on purpose): says what happens to BOTH kinds of frames.
+        _tw = int(globals().get("_vision_cur_width") or VISION_TRACK_WIDTH)
+        _kw = int(VISION_FRAME_MAX_WIDTH)
+        print(f"    [quality] video stream: {info['w']}x{info.get('h')} -- tracking frames (players, jersey numbers) saved "
+              f"{min(info['w'], _tw)} wide; the 5 tag-model frames per clip stay {min(info['w'], _kw)} wide (what that model was "
+              f"trained on)" + (f" -- NOTE: the stream is smaller than {_tw}, so the High setting probably didn't take"
+                                if info['w'] < _tw else ""), flush=True)
     length = clip_seconds or 10.0
     if info.get("duration") and info["duration"] == info["duration"]:  # finite, not NaN
         length = max(1.0, min(length, info["duration"] - info["start"]))
@@ -169,7 +185,7 @@ def _vision_capture(page, row_index, clip_seconds, mode="key"):
         # quality 0.70 -- blocky compression right on the small jersey digits the readers have to read. Now
         # VISION_TRACK_JPEG_QUALITY (default 0.95) for frames captured from now on; frames already on disk are reused as
         # they are (delete a game's track folder under _vision_frames to recapture it at the new quality).
-        max_w, q = VISION_TRACK_WIDTH, float(globals().get("VISION_TRACK_JPEG_QUALITY", 0.95))
+        max_w, q = int(globals().get("_vision_cur_width") or VISION_TRACK_WIDTH), float(globals().get("VISION_TRACK_JPEG_QUALITY", 0.95))
     else:
         n = VISION_FRAMES_PER_CLIP
         times = [info["start"] + length * (0.5 if n == 1 else 0.05 + 0.9 * k / (n - 1)) for k in range(n)]
@@ -185,6 +201,186 @@ def _vision_capture(page, row_index, clip_seconds, mode="key"):
         else:
             frames.append(got["frame"])
     return frames, None
+
+
+_VIS_JS_SIZE = """() => { const v = document.querySelector('sn-video-player video') || document.querySelector('video');
+  return v ? {w: v.videoWidth, h: v.videoHeight, src: (v.currentSrc || '').slice(-80)} : null; }"""
+_VIS_JS_CONTROLS = """() => [...document.querySelectorAll('sn-video-player button, sn-video-player [role=button], sn-video-player mat-select,'
+  + ' sn-video-player select, sn-video-player [aria-label], button[aria-label], [mattooltip]')]
+  .filter(e => e.offsetParent !== null).slice(0, 60)
+  .map(e => (e.getAttribute('aria-label') || e.getAttribute('mattooltip') || e.getAttribute('title') || e.innerText || e.tagName)
+  .replace(/\\s+/g, ' ').trim().slice(0, 40)).filter(Boolean)"""
+
+
+_VIS_JS_UI = r"""() => {
+  if (window.__visUI) return true;
+  const vis = e => !!e && e.offsetParent !== null && getComputedStyle(e).visibility !== 'hidden';
+  const outside = e => !e.closest('table.video-playlist');
+  const press = e => {                       // a full pointer/mouse sequence: Angular / CDK widgets listen to different ones
+    for (const t of ['pointerdown', 'mousedown', 'pointerup', 'mouseup'])
+      e.dispatchEvent(new (t.startsWith('pointer') ? PointerEvent : MouseEvent)(t, {bubbles: true, cancelable: true, view: window}));
+    e.click();
+  };
+  const clickable = e => e.closest('button, [role=menuitem], [role=menuitemradio], [role=tab], [role=option], [role=radio], a, label, li') || e;
+  window.__visUI = {
+    clickText(src, overlayOnly) {             // the smallest visible element whose own text matches, outside the clip list
+      const rx = new RegExp(src, 'i');
+      const root = overlayOnly ? '.cdk-overlay-container *, [role=dialog] *, .modal *, sn-dialog *' : 'body *';
+      const hits = [...document.querySelectorAll(root)].filter(e => vis(e) && outside(e) && rx.test((e.innerText || '').trim()))
+        .sort((a, b) => a.querySelectorAll('*').length - b.querySelectorAll('*').length);
+      if (!hits.length) return null;
+      press(clickable(hits[0]));
+      return (hits[0].innerText || '').trim().slice(0, 40);
+    },
+    gear() {
+      const bs = [...document.querySelectorAll('sn-video-player button')].filter(vis);
+      const g = bs.find(b => /settings/i.test(b.getAttribute('sntooltip') || '') || /fa-cog|fa-gear/.test(b.innerHTML));
+      if (!g) return false;
+      press(g);
+      return true;
+    },
+    selectNative(src) {
+      const rx = new RegExp(src, 'i');
+      for (const s of [...document.querySelectorAll('select')].filter(vis)) {
+        const o = [...s.options].find(o => rx.test(o.text.trim()));
+        if (o) { s.value = o.value; s.dispatchEvent(new Event('input', {bubbles: true}));
+                 s.dispatchEvent(new Event('change', {bubbles: true})); return o.text.trim(); }
+      }
+      return null;
+    },
+    openDropdown(otherSrc) {                  // a dropdown showing the current value: open it
+      const rx = new RegExp(otherSrc, 'i');
+      const c = [...document.querySelectorAll('mat-select, ng-select, sn-select, [role=combobox], [aria-haspopup=listbox], .dropdown-toggle')]
+        .filter(e => vis(e) && outside(e));
+      const e = c.find(x => rx.test(x.innerText || '')) || c[0];
+      if (!e) return false;
+      press(e);
+      return true;
+    },
+    overlays() {
+      return [...document.querySelectorAll('.cdk-overlay-backdrop, [role=dialog], [role=menu], .modal.show, sn-dialog')].filter(vis).length;
+    },
+    texts() {
+      return [...document.querySelectorAll('.cdk-overlay-container *, [role=dialog] *, [role=menu] *, .modal *')]
+        .filter(e => vis(e) && e.children.length === 0)
+        .map(e => (e.innerText || e.value || '').trim()).filter(Boolean).slice(0, 40);
+    },
+  };
+  return true;
+}"""
+
+
+def _vision_close_overlays(page):
+    """Close any menu / settings window left open -- an open one sits over the clip list and blocks every row click."""
+    for _ in range(5):
+        try:
+            if not page.evaluate("() => window.__visUI ? window.__visUI.overlays() : 0"):
+                return
+        except Exception:
+            return
+        page.keyboard.press("Escape")
+        page.wait_for_timeout(300)
+    try:
+        page.evaluate("() => { const b = document.querySelector('.cdk-overlay-backdrop'); if (b) b.click(); }")
+    except Exception:
+        pass
+
+
+def _vision_set_quality(page, want):
+    """CONFIRMED CHANGE (requested: the Synergy player has a playback-quality setting, Standard / High, defaulting to
+    Standard). CONFIRMED (user): it lives at the player's gear (Settings) -> Options -> General. Picks `want`
+    (VISION_PLAYBACK_QUALITY) once per page before any frames are taken, closes the settings window, then reports the
+    video's size. CONFIRMED BUG (fixed; quality test): Playwright's own click on the gear timed out, and a settings
+    window left open blocked every clip-row click afterwards -- the clicks are now plain page events, and every menu or
+    window is closed before capturing. If it can't pick it and the window is visible, waits VISION_QUALITY_MANUAL_WAIT
+    seconds so you can pick it by hand."""
+    if not want:
+        return
+    want = str(want)
+    want_src = rf"^\s*{re.escape(want)}\b"
+    other = "Standard" if want.lower().startswith("h") else "High"
+    page.evaluate(_VIS_JS_UI)
+    before = page.evaluate(_VIS_JS_SIZE) or {}
+    _ls = "() => { const o = {}; try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); o[k] = String(localStorage.getItem(k)).slice(0, 300); } } catch (e) {} return o; }"
+    ls_before = page.evaluate(_ls) or {}
+    steps, done = [], False
+    try:
+        page.hover("sn-video-player", timeout=3000)          # the control bar shows on hover
+    except Exception:
+        pass
+    if page.evaluate("() => window.__visUI.gear()"):
+        steps.append("gear")
+        page.wait_for_timeout(700)
+        if page.evaluate("s => window.__visUI.clickText(s)", r"^\s*Options\s*$"):
+            steps.append("Options")
+            page.wait_for_timeout(900)
+            if page.evaluate("s => window.__visUI.clickText(s)", r"^\s*General\s*$"):
+                steps.append("General")
+                page.wait_for_timeout(900)
+            hit = page.evaluate("s => window.__visUI.selectNative(s)", want_src)
+            if not hit:
+                hit = page.evaluate("s => window.__visUI.clickText(s)", want_src)
+            if not hit and page.evaluate("s => window.__visUI.openDropdown(s)", rf"{other}|quality"):
+                page.wait_for_timeout(500)
+                hit = page.evaluate("s => window.__visUI.clickText(s)", want_src)
+            if hit:
+                steps.append(f"'{hit}'")
+                done = True
+            else:
+                print(f"    [quality] gear > Options > General opened but '{want}' wasn't found; the window shows: "
+                      + (" | ".join(page.evaluate("() => window.__visUI.texts()")) or "(nothing)"), flush=True)
+            page.wait_for_timeout(500)
+            for btn in (r"^\s*(Save|Apply)\s*$", r"^\s*(OK|Done|Close)\s*$"):
+                if page.evaluate("s => window.__visUI.clickText(s, true)", btn):
+                    steps.append("saved/closed")
+                    break
+        else:
+            print("    [quality] gear menu opened but no 'Options' in it; it shows: "
+                  + (" | ".join(page.evaluate("() => window.__visUI.texts()")) or "(nothing)"), flush=True)
+    else:
+        print("    [quality] the player's gear (Settings) button wasn't found", flush=True)
+    page.wait_for_timeout(600)
+    _vision_close_overlays(page)
+    wait_s = int(globals().get("VISION_QUALITY_MANUAL_WAIT", 20))
+    if not done and not VISION_HEADLESS and wait_s > 0:
+        print(f"    [quality] pick '{want}' by hand in the Synergy window now (gear > Options > General), then close that "
+              f"window -- waiting {wait_s} s", flush=True)
+        page.wait_for_timeout(wait_s * 1000)
+        _vision_close_overlays(page)
+    # CONFIRMED BUG (fixed; quality test: Standard and High gave identical frames). The setting says "* requires app
+    # reload" -- it's saved, but the player keeps its current stream until the page is loaded again. So after picking it the
+    # page is reloaded (same browser window, so the choice is kept) before any frame is taken.
+    if done or not VISION_HEADLESS:
+        try:
+            ls_after = page.evaluate(_ls) or {}
+            changed = {k: v for k, v in ls_after.items() if ls_before.get(k) != v}
+            if changed:
+                print("    [quality] saved in the browser as: " + "; ".join(f"{k} = {v[:120]}" for k, v in list(changed.items())[:4]),
+                      flush=True)
+            _url = page.url
+            page.reload(wait_until="domcontentloaded", timeout=45000)
+            try:
+                page.wait_for_selector("table.video-playlist tr.playlist-item", timeout=45000)
+            except Exception:
+                _vision_open(page, _url)
+            steps.append("page reloaded")
+            # CONFIRMED BUG (fixed; quality test: clip 1 after the reload was skipped -- "start not confirmed", the video sat at
+            # the end of the game video). Right after a reload the game video isn't loaded yet, so the click on the first clip
+            # was "armed" before the player could jump. Wait until the video has loaded (up to 20 s) before the first click.
+            page.evaluate("""async () => { const t0 = Date.now();
+              while (Date.now() - t0 < 20000) { const v = document.querySelector('sn-video-player video') || document.querySelector('video');
+                if (v && v.readyState >= 2 && isFinite(v.duration) && v.duration > 10) break;
+                await new Promise(r => setTimeout(r, 200)); } }""")
+            page.wait_for_timeout(1000)
+            globals()["_vision_row_start"] = {}
+        except Exception as _re:
+            print(f"    [quality] reload after the setting failed ({type(_re).__name__}: {_re})", flush=True)
+    page.wait_for_timeout(1000)
+    after = page.evaluate(_VIS_JS_SIZE) or {}
+    globals()["_vision_quality_set"] = done
+    print(f"    [quality] playback quality '{want}': {'selected (' + ' > '.join(steps) + ')' if done else 'NOT picked automatically'}; "
+          f"video {before.get('w')}x{before.get('h')} before -> {after.get('w')}x{after.get('h')} now "
+          f"(the size can update only when the next clip loads)", flush=True)
 
 
 def _vision_open(page, url, timeout_ms=45000):
@@ -225,9 +421,36 @@ def _vision_frame_name(row, k):
     return f"{row.get('position')}_{fp}{v}_{k + 1}.jpg"
 
 
-def _vision_track_folder():
-    base = "track" if int(VISION_TRACK_WIDTH) == 768 else f"track{int(VISION_TRACK_WIDTH)}"
+# CONFIRMED CHANGE (requested after the Standard vs High test: High at 1280 wide gave ~6% more sure jersey reads on the
+# same players; shrunk to 1024 it gave nothing). New games are captured at VISION_TRACK_WIDTH (1280) from the High stream;
+# games ALREADY captured at a width in VISION_TRACK_KEEP_WIDTHS (1024) keep those frames and are never recaptured -- and a
+# game that already has frames at a kept width stays at that width for its remaining clips, so one game is never mixed.
+def _vision_track_widths():
+    out = [int(VISION_TRACK_WIDTH)]
+    for w in globals().get("VISION_TRACK_KEEP_WIDTHS", []) or []:
+        if int(w) not in out:
+            out.append(int(w))
+    return out
+
+
+def _vision_track_folder(width=None):
+    w = int(width or globals().get("_vision_cur_width") or VISION_TRACK_WIDTH)
+    base = "track" if w == 768 else f"track{w}"
     return base + (f"v{VISION_CAPTURE_VERSION}" if VISION_CAPTURE_VERSION >= 2 else "")
+
+
+def _vision_track_folders():
+    """Every tracking-frame folder name that counts: the current width's and each kept width's."""
+    return [_vision_track_folder(w) for w in _vision_track_widths()]
+
+
+def _vision_width_for_game(row):
+    """The width this game's tracking frames are captured at: a kept (older) width if the game already has frames there."""
+    gdir = _vision_frame_dir(row)
+    for w in _vision_track_widths()[1:]:
+        if glob.glob(os.path.join(gdir, _vision_track_folder(w), "*.jpg")):
+            return w
+    return int(VISION_TRACK_WIDTH)
 
 
 def _vision_track_name(row, k):
@@ -242,10 +465,18 @@ def _vision_times_path(row):
     return os.path.join(_vision_frame_dir(row), _vision_track_folder(), f"{row.get('position')}_{fp}_times.json")
 
 
+def _vis_present(p):
+    """A tracking frame counts as captured when it's on disk (or packed by the frame archive) -- or when lean mode deleted it
+    on purpose after the game was tracked (that game is never recaptured)."""
+    if os.path.exists(p) and os.path.getsize(p) > 0:
+        return True
+    return bool(globals().get("vision_frame_leaned") and vision_frame_leaned(p))
+
+
 def _vision_saved_track(row, clip_seconds):
     """Paths of this clip's tracking frames if they're all on disk already, else []."""
     paths = [os.path.join(_vision_frame_dir(row), _vision_track_name(row, k)) for k in range(_vision_track_count(clip_seconds))]
-    return paths if all(os.path.exists(p) and os.path.getsize(p) > 0 for p in paths) else []
+    return paths if all(_vis_present(p) for p in paths) else []
 
 
 def _vision_saved_frames(label, row):
@@ -317,6 +548,11 @@ def _vision_tag_pages(fastscout_page, sources, cache):
                 continue
             rows = page.evaluate(_VIS_JS_ROWS)
             todo = [r for r in rows if not re.search(VISION_SKIP_DESCRIPTION, r["description"] or "")]
+            globals()["_vision_size_shown"] = False
+            try:
+                _vision_set_quality(page, globals().get("VISION_PLAYBACK_QUALITY", "High"))
+            except Exception as _qe:
+                print(f"    [quality] not set ({type(_qe).__name__}: {_qe})", flush=True)
             # CONFIRMED BUG (fixed earlier): a page can hold more than one game, so with VISION_ONLY_GAME set every
             # row is checked against the named game by its OWN Game and Date cells, before VISION_TEST_CLIPS.
             _before = len(todo)
@@ -328,7 +564,20 @@ def _vision_tag_pages(fastscout_page, sources, cache):
                 todo = todo[:VISION_TEST_CLIPS]
             print(f"    {len(rows)} clips on the page, capturing {len(todo)}")
             t_start, n_reused = time.time(), 0
+            # CONFIRMED CHANGE (a run filled the disk: "No space left on device" on 15 clips). Stop capturing while there's
+            # still room for the rest of the run (VISION_MIN_FREE_GB); finished clips are kept and the rest wait for a later run.
+            _min_gb = float(globals().get("VISION_MIN_FREE_GB", 2))
             for n_done, r in enumerate(todo, 1):
+                try:
+                    import shutil as _sh_
+                    _free = _sh_.disk_usage(VISION_FRAMES_DIR).free / 1e9
+                except Exception:
+                    _free = None
+                if _free is not None and _free < _min_gb:
+                    print(f"    !! only {_free:.1f} GB free on the disk (VISION_MIN_FREE_GB = {_min_gb:g}) -- capture stopped at clip "
+                          f"{n_done} of {len(todo)}. Free space (Frame archive cell: lean mode), then run this cell again; "
+                          f"it continues where it stopped.", flush=True)
+                    break
                 rec = {"source_label": label, "source_url": url, "position": r["position"],
                        "clip_game": r["game"], "clip_date": r["date"], "team": r["team"], "player": r["player"],
                        "result": r["result"], "description": r["description"],
@@ -353,6 +602,7 @@ def _vision_tag_pages(fastscout_page, sources, cache):
                     rec["frames_captured"] = len(paths)
                     rec["frame_files"] = ";".join(_vision_rel(p) for p in paths)
                     if VISION_TRACK_FPS:
+                        globals()["_vision_cur_width"] = _vision_width_for_game(r)
                         tpaths = _vision_saved_track(r, rec["duration_s"])
                         if not tpaths:
                             tframes, err = _vision_capture(page, r["index"], rec["duration_s"], mode="track")
@@ -385,8 +635,13 @@ def _vision_tag_pages(fastscout_page, sources, cache):
                     cache = pd.concat([cache, pd.DataFrame(new_rows, columns=VISION_COLS)], ignore_index=True)
                     new_rows = []
                     cache.to_csv(VISION_CACHE, index=False)
+            if new_rows:                                   # (stopped early, e.g. low disk space): keep what was captured
+                cache = pd.concat([cache, pd.DataFrame(new_rows, columns=VISION_COLS)], ignore_index=True)
+                new_rows = []
+                cache.to_csv(VISION_CACHE, index=False)
         return cache
     finally:
+        globals()["_vision_cur_width"] = None
         browser.close()
 
 
@@ -397,10 +652,21 @@ if RUN_FRAME_CAPTURE:
     # Every played game with a clip page: UWW's own games and the upcoming opponent's prior games,
     # plus any page listed by hand in VISION_PLAYLIST_URLS.
     _vis_sources = [(lab, url, pd.Timestamp.max) for lab, url in VISION_PLAYLIST_URLS]  # hand-listed go first
-    for _sched_name in ("uww_team_schedule", "prev_games"):
+    # CONFIRMED CHANGE (requested: "why is it only capturing our games and not the opponent's games? I need it to do both").
+    # Both were always in the list, but newest-first across everything, 2 a run -- so our own late-season games came first.
+    # VISION_CAPTURE_FIRST = "opponent" now captures the UPCOMING OPPONENT's games (prev_games: theirs before facing us)
+    # first, then UWW's; VISION_CAPTURE_WHICH limits it to one side ("both" / "opponent" / "uww").
+    _vis_kind = {}
+    _vis_recent_idx = {}                                   # page -> 0 = that side's most recent game, 1 = the one before ...
+    _which = str(globals().get("VISION_CAPTURE_WHICH", "both")).lower()
+    for _sched_name in [n for n, k in (("uww_team_schedule", "uww"), ("prev_games", "opponent")) if _which in ("both", k)]:
         _sched = globals().get(_sched_name)
         if not isinstance(_sched, pd.DataFrame) or _sched.empty or "video_url" not in _sched.columns:
             continue
+        # CONFIRMED CHANGE (requested: "Why did it try to capture the MSOE game on 2-21-2026 when that is the third previous
+        # game"). Only each side's VISION_RECENT_GAMES most recent PLAYED games are captured -- ours before the run's date, and
+        # the upcoming opponent's before facing us -- not every game of the season. None = every game (the old behaviour).
+        _cand = []
         for _, _g in _sched[_sched["video_url"].notna()].iterrows():
             _gd = _g.get("game_date")
             if _gd is None or pd.isna(_gd):
@@ -410,9 +676,20 @@ if RUN_FRAME_CAPTURE:
                     _gd = None
             if _gd is not None and pd.Timestamp(_gd) >= reference_date and not VISION_ONLY_GAME:
                 continue  # not played yet as of reference_date (a named test game is allowed through)
-            _vis_sources.append((f"{pd.Timestamp(_gd).date() if _gd is not None else ''} "
-                                 f"{_g.get('opponent', '')}".strip(), _g["video_url"],
-                                 pd.Timestamp(_gd) if _gd is not None else pd.Timestamp.min))
+            _cand.append((pd.Timestamp(_gd) if _gd is not None else pd.Timestamp.min, _g))
+        _nrec = globals().get("VISION_RECENT_GAMES", 2)
+        _cand.sort(key=lambda x: x[0], reverse=True)
+        if _nrec and not VISION_ONLY_GAME:
+            _cand = _cand[:int(_nrec)]
+        for _ri, (_gts, _g) in enumerate(_cand):
+            _vis_recent_idx[_g["video_url"]] = _ri
+            _gd = None if _gts == pd.Timestamp.min else _gts
+            _opp_side = _sched_name == "prev_games"
+            _lab_ = (f"{pd.Timestamp(_gd).date() if _gd is not None else ''} "
+                     + (f"{globals().get('upcoming_opponent_short') or 'opponent'} vs {_g.get('opponent', '')}" if _opp_side
+                        else f"{_g.get('opponent', '')}")).strip()
+            _vis_kind[_g["video_url"]] = "opponent" if _opp_side else "uww"
+            _vis_sources.append((_lab_, _g["video_url"], pd.Timestamp(_gd) if _gd is not None else pd.Timestamp.min))
     # VISION_ONLY_GAME (requested: test on one named game). Matched by the date in the name (within a day:
     # Synergy's clip page dates the Oshkosh game Jan 2, the export and files say 1/3) AND the opponent's
     # name. Pages listed by hand in VISION_PLAYLIST_URLS are always kept.
@@ -440,24 +717,80 @@ if RUN_FRAME_CAPTURE:
         # missing file is visited again; clips whose frames are still on disk are reused, so only the missing
         # ones are recaptured.
         def _vis_files_ok(ff):
-            return isinstance(ff, str) and ff and all(os.path.exists(os.path.join(VISION_FRAMES_DIR, f))
+            return isinstance(ff, str) and ff and all(_vis_present(os.path.join(VISION_FRAMES_DIR, f))
                                                         for f in ff.split(";") if f)
         _bad = ~_full["frame_files"].map(_vis_files_ok)
         if VISION_CAPTURE_VERSION >= 2:   # frames from before the capture fix show the wrong play too often
             _bad |= ~_full["frame_files"].map(lambda ff: f"_v{VISION_CAPTURE_VERSION}_" in str(ff))
         if VISION_TRACK_FPS:   # turning tracking on later revisits captured games for just the tracking frames
             # ...and so does a new VISION_TRACK_WIDTH: frames from the old width (another folder) don't count
-            _cur = f"/{_vision_track_folder()}/"
+            # (CONFIRMED CHANGE: frames at a width in VISION_TRACK_KEEP_WIDTHS count too -- not recaptured)
+            _curs = [f"/{f_}/" for f_ in _vision_track_folders()]
             _bad |= ~_full.get("track_files", pd.Series(index=_full.index, dtype=object)).map(
-                lambda ff: _vis_files_ok(ff) and _cur in str(ff).replace(os.sep, "/"))
+                lambda ff: _vis_files_ok(ff) and any(c_ in str(ff).replace(os.sep, "/") for c_ in _curs))
         _missing = _full[_bad]["source_url"].dropna().unique()
         if len(_missing):
             print(f"Frame capture: {len(_missing)} page(s) have clips with frame or tracking files missing on disk -- "
                   f"revisiting them to capture just what's missing.")
         _done = set(_full["source_url"].dropna()) - set(_missing)
         _vis_sources = [s for s in _vis_sources if s[1] not in _done]
-    # Newest first, one entry per page, capped per run.
-    _vis_sources = sorted({u: (l, u, d) for l, u, d in _vis_sources}.values(), key=lambda x: x[2], reverse=True)
+    # CONFIRMED CHANGE (requested: "only capture one game at a time since I need the coaches to analyze those games before
+    # doing the 2nd most recent game"). Order: each side's MOST RECENT game first (the opponent's, then ours -- VISION_CAPTURE_FIRST),
+    # then each side's second most recent, and so on. With VISION_WAIT_FOR_COACHES, a NEW game is only captured once every
+    # captured game in the window has been worked through by the coaches: its clips are play calls and no more than
+    # VISION_WAIT_MAX_UNTAGGED of them are still untagged (from the last run's uww_play_calls.csv). Pages of captured games with
+    # missing frames are always finished first.
+    _first = str(globals().get("VISION_CAPTURE_FIRST", "opponent")).lower()
+    _rank = lambda u: 0 if u not in _vis_kind else (1 if _vis_kind[u] == _first else 2)   # hand-listed, chosen side, other
+    _vis_sources = sorted({u: (l, u, d) for l, u, d in _vis_sources}.values(),
+                          key=lambda x: (0 if x[1] not in _vis_kind else 1, _vis_recent_idx.get(x[1], 0), _rank(x[1]), -x[2].value))
+    _captured_urls = set(clip_frames["source_url"].dropna()) if not clip_frames.empty and "source_url" in clip_frames.columns else set()
+    # CONFIRMED CHANGE (requested: "it should be the most previous unfinished UWW game and most previous unfinished opponent's
+    # game"). Each side works on ONE game at a time: its most recent game that the coaches haven't finished. That game is
+    # captured (or its missing frames filled in); the side's next game only comes once it's finished -- its clips are play
+    # calls and no more than VISION_WAIT_MAX_UNTAGGED are still untagged (from the last run's uww_play_calls.csv).
+    if globals().get("VISION_WAIT_FOR_COACHES", True) and not VISION_ONLY_GAME and not VISION_RETAG:
+        _pcp = os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, "uww_play_calls.csv")
+        _pc_last = pd.read_csv(_pcp, low_memory=False) if os.path.exists(_pcp) else pd.DataFrame()
+        _max_u = int(globals().get("VISION_WAIT_MAX_UNTAGGED", 10))
+
+        def _game_state(_u):
+            """(finished?, note) for a captured page."""
+            _ff = set(f for x in clip_frames.loc[clip_frames["source_url"] == _u, "frame_files"].dropna().astype(str)
+                      for f in x.split(";") if f)
+            if _pc_last.empty or "frame_files" not in _pc_last.columns:
+                return False, "no play calls from it yet -- run the notebook through the Play review"
+            _mine = _pc_last[_pc_last["frame_files"].astype(str).map(lambda x: any(f in _ff for f in x.split(";") if f))]
+            if _mine.empty:
+                return False, "no play calls from it yet -- run the notebook through the Play review"
+            _nu = int((_mine.get("decode_quality", pd.Series(dtype=object)) == "Untagged").sum())
+            if _nu > _max_u:
+                return False, f"{_nu} of {len(_mine)} clips still untagged -- Analytics > Film Tagging"
+            return True, ""
+
+        _pending = {x[1]: x for x in _vis_sources}         # pages that need capturing (new, or frames missing)
+        _keep = [x for x in _vis_sources if x[1] not in _vis_kind]           # hand-listed pages always go
+        for _side in ("opponent", "uww"):
+            _pages = sorted([u for u, k in _vis_kind.items() if k == _side], key=lambda u: _vis_recent_idx.get(u, 0))
+            for _u in _pages:
+                _lab_u = next((x[0] for x in _vis_sources if x[1] == _u), None)
+                if _lab_u is None and not clip_frames.empty:
+                    _l = clip_frames.loc[clip_frames["source_url"] == _u, "source_label"].dropna()
+                    _lab_u = str(_l.iloc[0]) if len(_l) else _u
+                if _u in _pending:                         # this side's current game: capture it / fill it in
+                    _keep.append(_pending[_u])
+                    break
+                _fin, _note = _game_state(_u)
+                if not _fin:
+                    print(f"Frame capture: {'opponent' if _side == 'opponent' else 'UWW'} -- working on {_lab_u} ({_note}); "
+                          f"its next game waits until the coaches finish it.", flush=True)
+                    break
+        _vis_sources = sorted(_keep, key=lambda x: (0 if x[1] not in _vis_kind else 1, _vis_recent_idx.get(x[1], 0),
+                                                    _rank(x[1]), -x[2].value))
+    _n_by = {k: sum(1 for x in _vis_sources if _vis_kind.get(x[1]) == k) for k in ("opponent", "uww")}
+    print(f"Frame capture: game pages still to capture -- {_n_by['opponent']} of the upcoming opponent's "
+          f"({globals().get('upcoming_opponent_short') or '?'}), {_n_by['uww']} of UWW's; "
+          f"{'opponent' if _first == 'opponent' else 'UWW'} games first (VISION_CAPTURE_FIRST), newest first.")
     _vis_left = max(0, len(_vis_sources) - VISION_MAX_GAMES_PER_RUN)
     _vis_sources = [(l, u) for l, u, _d in _vis_sources[:VISION_MAX_GAMES_PER_RUN]]
     if not clip_frames.empty:  # anything left for these pages is a test run or a retag -- replace it

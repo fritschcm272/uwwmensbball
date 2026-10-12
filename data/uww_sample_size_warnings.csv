@@ -1,5 +1,3 @@
 opponent,area,subject,detail,is_sample
-UW-Stevens Point Pointers,Opponent lineups,135 of 143 units,under 8 minutes together -- no reads or keys are drawn from them.,False
-UW-Stevens Point Pointers,Style matchups,Teams like them we've played,"best match confidence is 29% -- context, not evidence.",False
-UW-Stevens Point Pointers,Style matchups,Teams like us,"best match confidence is 29% -- context, not evidence.",False
-UW-Stevens Point Pointers,Our player flags,24 flag(s),"rest on fewer than 10 attempts -- use for film review, not rotation calls.",False
+MSOE Raiders,Opponent lineups,173 of 202 units,under 8 minutes together -- no reads or keys are drawn from them.,False
+MSOE Raiders,Our player flags,16 flag(s),"rest on fewer than 10 attempts -- use for film review, not rotation calls.",False

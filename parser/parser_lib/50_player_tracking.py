@@ -354,6 +354,8 @@ def _trk_jersey_feats(rels, det, base):
             if not len(p):
                 cache[r] = np.zeros((0, 5), np.float32)
                 continue
+            if not os.path.exists(os.path.join(base, r)):      # (lean mode) this frame was deleted after tracking
+                continue
             img = np.asarray(Image.open(os.path.join(base, r)).convert("RGB")).astype(np.float32)
             rows = []
             for x1, y1, x2, y2 in p[:, :4]:
@@ -389,7 +391,7 @@ def _trk_read_numbers(clips, todo, base, engine):
         for k, tr in enumerate(clip["tracks"]):
             if clip["side"].get(k) not in ("offense", "defense"):
                 continue
-            n_crops = (TRACK_OCR_CROPS_TRAINED if engine == "trained" else TRACK_OCR_CROPS_PADDLE if str(engine).startswith("paddle")
+            n_crops = (TRACK_OCR_CROPS_TRAINED if str(engine).startswith("trained") else TRACK_OCR_CROPS_PADDLE if str(engine).startswith("paddle")
                        else TRACK_OCR_CROPS_FIND if str(engine).endswith(("_find", "_local", "_rec")) else TRACK_OCR_CROPS)
             fps_ = float(clip.get("fps", 2.0))
             if len(tr) < TRACK_OCR_MIN_TRACK_S * fps_:
@@ -432,6 +434,8 @@ def _trk_read_numbers(clips, todo, base, engine):
                 cache[key] = [(txt, cf)] if txt else []
             pd.to_pickle(cache, cp)
             _trk_progress("chest crops read", min(s0 + 100, len(new)), len(new), _t0, every=max(100, (len(new) // 10) // 100 * 100))
+        if "_jr_torso_save" in globals():
+            _jr_torso_save()                          # the pose-based crops found this run (JERSEY_CROP_STYLE = "pose")
     out = {}
     for owner, key, _rel, _box, _pol in jobs:
         out.setdefault(owner, []).extend(cache.get(key, []))
@@ -1346,6 +1350,11 @@ def player_tracking(pc):
             try:
                 import cv2 as _cv2h
                 n_borrow = 0
+                # CONFIRMED CHANGE (frame archive): the measured pan between two frames is saved, so a rerun doesn't open
+                # (or unpack) the pictures again
+                _pc_path = os.path.join(TRACK_DIR, "court_pan_shifts.pkl")
+                _pc_cache = pd.read_pickle(_pc_path) if os.path.exists(_pc_path) else {}
+                _pc_new = 0
                 for i in todo:
                     fl = lists[i]
                     have = [t for t, f in enumerate(fl) if f in court_H]
@@ -1366,15 +1375,25 @@ def player_tracking(pc):
                         if not near_:
                             continue
                         u = min(near_, key=lambda u: abs(u - t))
-                        a_, b_ = _gray(f), _gray(fl[u])
-                        if a_ is None or b_ is None or a_.shape != b_.shape:
+                        _pk = f"{f}|{fl[u]}"
+                        if _pk not in _pc_cache:
+                            a_, b_ = _gray(f), _gray(fl[u])
+                            if a_ is None or b_ is None or a_.shape != b_.shape:
+                                _pc_cache[_pk] = None
+                            else:
+                                (dx_, dy_), resp_ = _cv2h.phaseCorrelate(a_, b_)   # a point at p here sits at p + (dx, dy) there
+                                _pc_cache[_pk] = (float(dx_), float(dy_), float(resp_), int(a_.shape[1]), int(a_.shape[0]))
+                            _pc_new += 1
+                        if _pc_cache[_pk] is None:
                             continue
-                        (dx, dy), resp = _cv2h.phaseCorrelate(a_, b_)    # a point at p in this frame sits at p + (dx, dy) there
-                        if resp < 0.05 or abs(dx) > 0.25 * a_.shape[1] or abs(dy) > 0.15 * a_.shape[0]:
+                        dx, dy, resp, _w2, _h2 = _pc_cache[_pk]
+                        if resp < 0.05 or abs(dx) > 0.25 * _w2 or abs(dy) > 0.15 * _h2:
                             continue
                         T_ = np.array([[1.0, 0.0, 2.0 * dx], [0.0, 1.0, 2.0 * dy], [0.0, 0.0, 1.0]])
                         court_H[f] = np.asarray(court_H[fl[u]], np.float64) @ T_
                         n_borrow += 1
+                if _pc_new:
+                    pd.to_pickle(_pc_cache, _pc_path)
                 print(f"  [tracking]   court mapping borrowed from a nearby frame (pan-corrected, up to {_nb} frames away) for "
                       f"{n_borrow:,} more frame(s)", flush=True)
             except Exception as _e:
@@ -1588,6 +1607,7 @@ def player_tracking(pc):
     # TRACK_SIDELINE_STILL_FT = 0 turns this off.
     _still = float(globals().get("TRACK_SIDELINE_STILL_FT", 4.0))
     n_still = 0
+    _set_aside_prev = {}                 # (clip, track) -> side before a rule below set it aside (a coach naming him restores it)
     if _still > 0:
         _strip = float(globals().get("TRACK_SIDELINE_STRIP_FT", 3.0))
         _min_t = max(3, int(round(3.0 * _fps)))
@@ -1606,11 +1626,66 @@ def player_tracking(pc):
                     continue
                 edge_ = (pts[:, 1] < _strip) | (pts[:, 1] > 50 - _strip)
                 if edge_.mean() >= 0.7 and max(np.ptp(pts[:, 0]), np.ptp(pts[:, 1])) < _still:
+                    _set_aside_prev[(i, k)] = clip["side"][k]
                     clip["side"][k] = None
                     n_still += 1
         _trk_note_drop("[tracks] standing still along a sideline (coach / bench / table -- set aside)", n_still)
         print(f"  [tracking]   {n_still:,} track(s) stood still along a sideline the whole time (coaches, bench, table) -- "
               f"set aside as not players", flush=True)
+
+    # CONFIRMED CHANGE (requested: "do #1 and if it performs well, add it"): the outfit check (Fashion-CLIP, section 50c) scores
+    # each track's clothes: player uniform vs referee stripes, suit, polo, hoodie, warm-up, fan. Used only when its test on your
+    # checked boxes PASSED (TRACK_OUTFIT_CHECK = "auto"; True = always, False = never): a track whose average score is at or above
+    # the tested cutoff is set aside as not a player. TRACK_OUTFIT_CROPS pictures per track (its largest boxes) are scored.
+    _oc_mode = globals().get("TRACK_OUTFIT_CHECK", "auto")
+    if _oc_mode:
+        try:
+            _oc_res = {}
+            if os.path.exists(os.path.join(TRACK_DIR, "outfit_check_test.json")):
+                with open(os.path.join(TRACK_DIR, "outfit_check_test.json")) as _fh:
+                    _oc_res = _trk_json.load(_fh)
+            _oc_cut = _oc_res.get("threshold")
+            if "outfit_scores_for" not in globals():
+                print("  [tracking]   outfit check not used: run the Outfit check cell (50c) first", flush=True)
+            elif _oc_mode == "auto" and not _oc_res.get("passed"):
+                print("  [tracking]   outfit check not used: its test on your checked boxes did not pass"
+                      + (" (no test yet -- run the Outfit check cell)" if not _oc_res else ""), flush=True)
+            elif _oc_cut is None:
+                print("  [tracking]   outfit check not used: no tested cutoff", flush=True)
+            else:
+                _ncrop = int(globals().get("TRACK_OUTFIT_CROPS", 2))
+                items, owner = [], []
+                for i in todo:
+                    clip = clips[i]
+                    for k, tr in enumerate(clip["tracks"]):
+                        if clip["side"].get(k) not in ("offense", "defense"):
+                            continue
+                        big = sorted(tr, key=lambda tj: -float(clip["frames"][tj[0]][tj[1]][2]))[:_ncrop]
+                        for t, j in big:
+                            items.append((clip["files"][t], clip["frames"][t][j][6:10]))
+                            owner.append((i, k))
+                _t0o = time.time()
+                print(f"  [tracking]   outfit check: scoring {len(items):,} picture(s) of {len(set(owner)):,} track(s) "
+                      f"(saved scores are reused)...", flush=True)
+                _sc = outfit_scores_for(items, base)
+                _acc = {}
+                for o_, v_ in zip(owner, _sc):
+                    if v_ is not None:
+                        _acc.setdefault(o_, []).append(v_)
+                n_out = 0
+                for (i, k), vs in _acc.items():
+                    if float(np.mean(vs)) >= float(_oc_cut):
+                        _set_aside_prev[(i, k)] = clips[i]["side"][k]
+                        clips[i]["side"][k] = None
+                        n_out += 1
+                _trk_note_drop("[tracks] outfit says referee / coach / bench / fan (set aside)", n_out)
+                print(f"  [tracking]   outfit check: {n_out:,} track(s) dressed like a referee, coach, bench player or fan "
+                      f"(score >= {float(_oc_cut):.2f}, tested {_oc_res.get('precision', 0):.0%} right) -- set aside as not "
+                      f"players ({time.time() - _t0o:.0f} s)", flush=True)
+        except Exception as _e:
+            if "RESTART THE KERNEL" in str(_e):
+                raise
+            print(f"  [tracking]   outfit check not used this run ({type(_e).__name__}: {_e})", flush=True)
 
     # Now that the offense is known: the ball holder is looked for among the OFFENSE only, and each clip's
     # anchor is re-picked from that -- a defender hugging the ball can't become the named player.
@@ -1806,6 +1881,8 @@ def player_tracking(pc):
             for (i, k), n in coach.items():
                 if n is None:
                     clips[i]["side"][k] = None                    # coach: not a player -> never named
+                elif clips[i]["side"].get(k) is None and (i, k) in _set_aside_prev:
+                    clips[i]["side"][k] = _set_aside_prev[(i, k)]  # set aside by the sideline / outfit rule, but a coach named him
             _other_team = {"A": "B", "B": "A"}
             for (i, k) in coach_flip:
                 sd = clips[i]["side"].get(k)
@@ -1892,15 +1969,18 @@ def player_tracking(pc):
                 pick = [tr[int(x)] for x in np.linspace(0, len(tr) - 1, min(TRACK_EMBED_CROPS, len(tr)))]
                 for t, j in pick:
                     f = clip["files"][t]
-                    if f not in img_cache:
-                        if len(img_cache) > 200:
-                            img_cache.clear()
-                        img_cache[f] = Image.open(os.path.join(base, f)).convert("RGB")
                     x1, y1, x2, y2 = clip["frames"][t][j][6:10]
                     ck = f"{f}|{int(x1)}|{int(y1)}|{int(x2)}|{int(y2)}"
                     if ck in fp_cache:
                         fps.setdefault((i, k), []).append(fp_cache[ck])
                         continue
+                    # (frame archive) the picture is opened only when its fingerprint isn't saved yet
+                    if f not in img_cache and not os.path.exists(os.path.join(base, f)):
+                        continue                           # (lean mode) frame deleted after tracking: no new crop from it
+                    if f not in img_cache:
+                        if len(img_cache) > 200:
+                            img_cache.clear()
+                        img_cache[f] = Image.open(os.path.join(base, f)).convert("RGB")
                     crops.append(img_cache[f].crop((int(x1), int(y1), int(x2), int(y2))))
                     owners.append((i, k))
                     keys.append(ck)
@@ -2006,7 +2086,7 @@ def player_tracking(pc):
     if _use_numbers:
         print(f"  [tracking] step 5b: reading jersey numbers with {_engine}"
               + (f" (right {_prec:.0%} of the time it answers on the answer key; using reads at confidence >= "
-                 f"{_min_conf:.1f})" if _prec is not None else (f" (scored {_acc:.0%} on the answer key)" if _acc is not None else ""))
+                 f"{_min_conf:.2f})" if _prec is not None else (f" (scored {_acc:.0%} on the answer key)" if _acc is not None else ""))
               + "...", flush=True)
         try:
             if _engine == "combined":
@@ -2044,7 +2124,7 @@ def player_tracking(pc):
                 # were dropped as "ambiguous" because #21 / #14 etc. were also on the floor). The ambiguity is real for an OCR
                 # reader that can miss a digit, but the TRAINED recognizer classifies the WHOLE number (0-99) -- when it answers "2"
                 # it means #2, not "2 of 21" -- so its single-digit answers are kept (TRACK_TRAINED_WHOLE_NUMBER = False -> old rule).
-                _whole = (_engine == "trained") and bool(globals().get("TRACK_TRAINED_WHOLE_NUMBER", True))
+                _whole = str(_engine).startswith("trained") and bool(globals().get("TRACK_TRAINED_WHOLE_NUMBER", True))
                 if not _whole:
                     sure = [(txt, cf) for txt, cf in sure if not (len(txt) == 1 and any(txt in num for num in _two))]
                 if not sure:
@@ -2572,6 +2652,74 @@ def player_tracking(pc):
     print(f"  [tracking]   {n_dup:,} track(s) lost a name they shared with another track on the floor at the same moment "
           f"(the track with the stronger evidence keeps it)", flush=True)
 
+    # --- re-ID names: an unnamed track that clearly looks like a player you checked in this game ---------------------------
+    # CONFIRMED CHANGE (requested; section 50d). Used only when the Re-ID check test PASSED (TRACK_REID_NAMES = "auto"; True =
+    # use the tested model anyway, False = off). Reference pictures = the tracks your checks named in this game; an unnamed
+    # track gets the name of the player (among the five on the floor, not already on the floor at the same moment) whose
+    # pictures look most like his -- only when he beats the second best by the tested margin. Marked "re-id match".
+    reid_named = {}
+    _rm = globals().get("TRACK_REID_NAMES", "auto")
+    if _rm:
+        try:
+            _rr = {}
+            if os.path.exists(os.path.join(TRACK_DIR, "reid_check_test.json")):
+                with open(os.path.join(TRACK_DIR, "reid_check_test.json")) as _fh:
+                    _rr = _trk_json.load(_fh)
+            _rmod = _rr.get("chosen") or (next((m for m, v in _rr.get("models", {}).items() if v.get("margin_cutoff") is not None), None)
+                                          if _rm is True else None)
+            _rinfo = _rr.get("models", {}).get(_rmod, {}) if _rmod else {}
+            if "reid_fingerprints" not in globals():
+                print("  [tracking]   re-ID names not used: run the Re-ID check cell (50d) first", flush=True)
+            elif not _rmod or _rinfo.get("margin_cutoff") is None:
+                print("  [tracking]   re-ID names not used: its test on your checked boxes did not pass"
+                      + (" (no test yet -- run the Re-ID check cell)" if not _rr else ""), flush=True)
+            else:
+                _rcut, _rprec = float(_rinfo["margin_cutoff"]), float(_rinfo.get("precision") or 0.8)
+                _nc = int(globals().get("TRACK_REID_CROPS", 3))
+                items, owner = [], []
+                for i in todo:
+                    clip = clips[i]
+                    for k, tr in enumerate(clip["tracks"]):
+                        if clip["side"].get(k) not in ("offense", "defense"):
+                            continue
+                        if (i, k) in names_all and coach.get((i, k)) is None:
+                            continue                          # already named (coach-named tracks are needed as references)
+                        for t, j in sorted(tr, key=lambda tj: -float(clip["frames"][tj[0]][tj[1]][2]))[:_nc]:
+                            items.append((clip["files"][t], clip["frames"][t][j][6:10]))
+                            owner.append((i, k))
+                print(f"  [tracking]   re-ID ({_rmod}): fingerprinting {len(items):,} picture(s) (saved ones are reused)...", flush=True)
+                _vs = {}
+                for o_, v_ in zip(owner, reid_fingerprints(items, base, _rmod)):
+                    if v_ is not None:
+                        _vs.setdefault(o_, []).append(np.asarray(v_, np.float32))
+                gal = {}
+                for (i, k), n_ in coach.items():
+                    if n_ and (i, k) in _vs:
+                        gal.setdefault(game_of.get(i), {}).setdefault(n_, []).extend(_vs[(i, k)])
+                for i in todo:
+                    clip = clips[i]
+                    g_gal = gal.get(game_of.get(i))
+                    if not g_gal:
+                        continue
+                    for sd in ("offense", "defense"):
+                        five = _trk_five(pc.at[i, f"{sd}_lineup"])
+                        for k in range(len(clip["tracks"])):
+                            if clip["side"].get(k) != sd or (i, k) in names_all or (i, k) not in _vs:
+                                continue
+                            fr_k = {t_ for t_, _ in clip["tracks"][k]}
+                            taken = {names_all[(i, kk)][0] for kk in range(len(clip["tracks"]))
+                                     if (i, kk) in names_all and fr_k & {t_ for t_, _ in clip["tracks"][kk]}}
+                            q = np.mean(_vs[(i, k)], 0)
+                            q = q / (np.linalg.norm(q) + 1e-8)
+                            pick, margin, _sc = reid_match(q, g_gal, [n_ for n_ in five if n_ not in taken])
+                            if pick and margin >= _rcut:
+                                names_all[(i, k)] = (pick, round(_rprec, 2))
+                                reid_named[(i, k)] = pick
+                print(f"  [tracking]   re-ID names: {len(reid_named):,} more track(s) named by looking like a player you checked "
+                      f"(margin >= {_rcut:.3f}; tested right {_rprec:.0%})", flush=True)
+        except Exception as _e:
+            print(f"  [tracking]   re-ID names not used this run ({type(_e).__name__}: {_e})", flush=True)
+
     # --- best guess: every one of the five on the floor gets a track (the lineup is known; clues pick who is who) ---
     guessed = set()
     _raw_p = {}
@@ -2727,6 +2875,8 @@ def player_tracking(pc):
             return "best guess"
         if (i, k) in number_names and number_names[(i, k)][0] == n:
             return "jersey number"
+        if reid_named.get((i, k)) == n:
+            return "re-id match"
         a, af = clips[i]["anchor"], clips[i].get("anchor_first")
         if (a and a[0] == k and a[1] == n) or (af and af[0] == k and af[1] == n):
             return "Synergy"
@@ -2833,6 +2983,10 @@ def _trk_draw_checks(pc, clips, names_all, base, todo):
     from PIL import Image, ImageDraw
     cdir = os.path.join(TRACK_DIR, "checks")
     os.makedirs(cdir, exist_ok=True)
+    # (frame archive) pictures come from clips whose frames are on disk -- an archived game isn't unpacked just for these
+    _arch = globals().get("vision_frame_archived")
+    todo = [i for i in todo if not (_arch and clips[i]["files"] and _arch(os.path.join(base, clips[i]["files"][0])))]
+    todo = [i for i in todo if clips[i]["files"] and all(os.path.exists(os.path.join(base, f)) for f in clips[i]["files"])]
     shown = [i for i in todo if clips[i].get("screen")][:TRACK_CHECKS] or todo[:TRACK_CHECKS]
     col = {"offense": (255, 215, 0), "defense": (0, 200, 255), None: (150, 150, 150)}
     for i in shown:

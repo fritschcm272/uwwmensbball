@@ -1219,7 +1219,196 @@ def _pl_decode_all(clips, roster_names):
     if clips.empty:
         return clips
     decoded = pd.DataFrame([decode_play_title(t, roster_names) for t in clips["Title"]], index=clips.index)
-    return pd.concat([clips, decoded], axis=1)
+    out = pd.concat([clips, decoded], axis=1)
+    # captured clips with no Title (see _pl_untagged_from_frames): nothing was decoded -- say so plainly
+    if "_untagged" in out.columns:
+        u = out["_untagged"].fillna(False).astype(bool)
+        if u.any():
+            for c in decoded.columns:
+                out[c] = out[c].astype(object)
+                out.loc[u, c] = None
+            out.loc[u, "decode_quality"] = "Untagged"
+            out.loc[u, "decode_note"] = "no Title yet -- clip captured from the film; tag it in the app's Play review"
+    return _pl_apply_app_tags(out)
+
+
+# ---- Tags typed in the app (Play review / Film Tagging) are the clip's tags ----------------------------------------------
+# CONFIRMED CHANGE (requested: coaches tag games in the app only, not in Synergy's Title field; "build that and everything
+# else that you need to make this work better"). Every Title answer saved from the app (data/play_review_saves: "right" =
+# the automatic answer shown, "wrong" + a typed answer = that answer) is written onto its clip HERE, before the possession
+# split, lineups and every scouting table -- so a clip tagged in the app counts in the play-call, defense, situation and
+# game-plan tables exactly like a coach Title:
+#   * a clip with no Title gets its fields from the app (tag_format "App"; decode_quality "App tag", or "No call" when only
+#     defense was tagged -- the same rule as a defense-only Title)
+#   * a clip WITH a coach Title keeps it, except fields a coach corrected in the app (TAG_MODEL_REVIEW_OVERRIDES_TITLE,
+#     not prefilled rows -- the same rule the Tag model uses)
+# A typed answer is stored in the spelling already in use when it matches one apart from capitals / spaces / punctuation.
+# PLAY_CALLS_USE_APP_TAGS = False turns this off.
+_PL_APP_FIELDS = ("situation", "formation", "play_call", "primary_action", "defense", "press",
+                  "ball_screen_coverage", "offball_coverage", "screen_defender")
+_PL_BALL_FAMILY = r"(?:Ball Screen|DHO|Get|Double Drag)"
+_PL_NO_PRESS = {"none", "nopress", "no", "nopressure"}
+
+
+def _pl_ckey_norm(k):
+    """Clip key "<date>|<clip number>|<Synergy string>" with the clip number written as a whole number (3, not 3.0)."""
+    parts = str(k).split("|", 2)
+    if len(parts) < 3:
+        return str(k)
+    gd, cn, ss = parts
+    try:
+        f_ = float(cn)
+        cn = str(int(f_)) if f_.is_integer() else cn
+    except (TypeError, ValueError):
+        pass
+    return f"{gd}|{cn}|{ss.strip()}"
+
+
+def _pl_app_answers():
+    """{normalized clip key: {field: (answer, prefilled)}} from every saved review, read once per run."""
+    cached = globals().get("_pl_app_answers_cache")
+    if cached is not None:
+        return cached
+    by = {}
+    try:
+        ans = title_review_answers()
+        marks = globals().get("_title_review_marks") or {}
+        for (ck, f), v in ans.items():
+            if f in _PL_APP_FIELDS and str(v or "").strip():
+                by.setdefault(_pl_ckey_norm(ck), {})[f] = (str(v).strip(), bool((marks.get((ck, f)) or {}).get("prefilled")))
+    except Exception as e:
+        print(f"  (app tags not read: {type(e).__name__}: {e})", flush=True)
+    globals()["_pl_app_answers_cache"] = by
+    return by
+
+
+def _pl_cov_entries(detail):
+    if detail is None or (isinstance(detail, float) and pd.isna(detail)):
+        return []
+    return [x.strip() for x in str(detail).split("|") if x.strip() and x.strip().lower() not in ("nan", "none")]
+
+
+def _pl_apply_app_tags(out):
+    if out.empty or not globals().get("PLAY_CALLS_USE_APP_TAGS", True):
+        return out
+    by = _pl_app_answers()
+    if not by:
+        return out
+    out = out.copy()
+    norm = lambda x: re.sub(r"[^a-z0-9#]+", "", str(x).lower())
+    blank = lambda v: v is None or (isinstance(v, float) and pd.isna(v)) or str(v).strip() in ("", "None", "nan")
+    col_of = {"situation": "play_situation", "formation": "play_formation", "play_call": "play_set",
+              "primary_action": "primary_action", "defense": "defense_formation", "press": "defense_press_formation"}
+    vocab = {f: {} for f in col_of}
+    for f, c in col_of.items():
+        if c in out.columns:
+            for v in out[c].dropna().astype(str):
+                vocab[f].setdefault(norm(v), v)
+    canon = lambda f, v: vocab.get(f, {}).get(norm(v), v)
+    for c in ("situation_source", "play_actions", "coverage_detail", "defense_coverage", "tag_format", "play_title",
+              "decode_note", "defense_type", "defense_press", "play_call", "play_series"):
+        if c not in out.columns:
+            out[c] = None
+    override = globals().get("TAG_MODEL_REVIEW_OVERRIDES_TITLE", True)
+    n_new = n_fix = 0
+    for idx, r in out.iterrows():
+        a = by.get(_pl_ckey_norm(f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}"))
+        if not a:
+            continue
+        untagged = r.get("decode_quality") == "Untagged" or blank(r.get("play_title"))
+        use = {f: canon(f, v) for f, (v, pre) in a.items() if untagged or (override and not pre)}
+        if not untagged:
+            # a coach-Titled clip: only fields the app answer actually changes
+            cur = {"situation": r.get("play_situation"), "formation": r.get("play_formation"), "play_call": r.get("play_set"),
+                   "primary_action": r.get("primary_action"), "defense": r.get("defense_formation"),
+                   "press": r.get("defense_press_formation") if r.get("defense_press") in (True, "True", "true") else "None"}
+            use = {f: v for f, v in use.items() if f not in cur or norm(cur[f]) != norm(v)}
+        if not use:
+            continue
+        def put(c, v, _i=idx):
+            out.at[_i, c] = v
+        if "situation" in use:
+            put("play_situation", use["situation"])
+            put("situation_source", "Tag")
+        if "formation" in use:
+            put("play_formation", use["formation"])
+        if "play_call" in use:
+            put("play_set", use["play_call"])
+        if "primary_action" in use:
+            put("primary_action", use["primary_action"])
+            if blank(out.at[idx, "play_actions"]):
+                put("play_actions", use["primary_action"])
+        if "defense" in use:
+            put("defense_formation", use["defense"])
+            put("defense_type", use["defense"])
+        if "press" in use:
+            if norm(use["press"]) in _PL_NO_PRESS:
+                put("defense_press", False)
+                put("defense_press_formation", None)
+            else:
+                put("defense_press", True)
+                put("defense_press_formation", None if norm(use["press"]) == "press" else use["press"])
+                if blank(out.at[idx, "defense_formation"]):
+                    put("defense_formation", "Man-to-Man")      # coaches: presses fall back into man
+                    put("defense_type", "Man-to-Man")
+        elif untagged and blank(out.at[idx, "defense_press"]) and ("defense" in use):
+            put("defense_press", False)
+        if any(f in use for f in ("ball_screen_coverage", "offball_coverage", "screen_defender")):
+            ent = _pl_cov_entries(out.at[idx, "coverage_detail"])
+            for f, fam_rx, label in (("ball_screen_coverage", _PL_BALL_FAMILY, "Ball Screen"),
+                                     ("offball_coverage", r"(?!" + _PL_BALL_FAMILY + r")[^:]+", "Off-ball screen")):
+                if f not in use:
+                    continue
+                i_ = next((i for i, e in enumerate(ent) if re.match(fam_rx + r"\s*:", e)), None)
+                if i_ is None:
+                    ent.append(f"{label}: {use[f]}")
+                else:
+                    scr, rest = ent[i_].split(":", 1)
+                    jer = re.search(r"\(def #\d{1,2}\)", rest)
+                    ent[i_] = f"{scr}: {use[f]}" + (f" {jer.group(0)}" if jer else "")
+            m_ = re.search(r"#?\s*(\d{1,2})", str(use.get("screen_defender") or ""))
+            if m_ and ent:
+                ent[0] = re.sub(r"\s*\(def #\d{1,2}\)", "", ent[0]) + f" (def #{m_.group(1)})"
+            put("coverage_detail", " | ".join(ent))
+            put("defense_coverage", " | ".join(dict.fromkeys(re.sub(r"\s*\(def #\d{1,2}\)", "", e.split(":", 1)[1]).strip()
+                                                               for e in ent if ":" in e)))
+        # the play call and series, named the way the Title decoder names them
+        offense = any(f in use for f in ("formation", "play_call", "primary_action")) or not untagged
+        sit = out.at[idx, "play_situation"]
+        if offense and blank(sit):
+            put("play_situation", "Half court")
+            sit = "Half court"
+        oob = next((w for w in ("BLOB", "SLOB") if str(sit or "").upper().startswith(w)), None)
+        call = out.at[idx, "play_set"]
+        if blank(call) and offense:
+            call = "Motion"                               # staff default when no play call is tagged
+            put("play_set", call)
+        form = out.at[idx, "play_formation"]
+        if not blank(call):
+            base = f"{form} {call}" if not blank(form) and call == "Motion" else call
+            put("play_call", f"{oob} {base}" if oob else base)
+            put("play_series", oob or call)
+        flds = ", ".join(sorted(use))
+        if untagged:
+            n_new += 1
+            put("tag_format", "App")
+            put("decode_quality", "App tag" if any(f in use for f in ("formation", "play_call", "primary_action")) else "No call")
+            put("decode_note", f"tagged in the app ({flds})")
+            off_txt = " ".join(str(x) for x in (None if blank(sit) or str(sit) == "Half court" else sit,
+                                                  None if blank(form) else form, None if blank(call) else call) if x)
+            dpress = out.at[idx, "defense_press_formation"] if out.at[idx, "defense_press"] is True else None
+            def_txt = " - ".join(str(x) for x in (dpress, out.at[idx, "defense_formation"]) if not blank(x))
+            cov_txt = out.at[idx, "defense_coverage"]
+            put("play_title", "[app] " + (off_txt or "defense") + (f": {def_txt}" if def_txt else "")
+                + (f" ({cov_txt})" if not blank(cov_txt) else ""))
+        else:
+            n_fix += 1
+            note = str(out.at[idx, "decode_note"] or "")
+            put("decode_note", (note + "; " if note else "") + f"corrected in the app ({flds})")
+    if n_new or n_fix:
+        print(f"  App tags: {n_new} clip(s) tagged in the app (no Title) and {n_fix} coach Title(s) corrected in the app "
+              f"-- used in every play-call table like a Title", flush=True)
+    return out
 
 
 def _pl_attach(events, clips):
@@ -1923,7 +2112,10 @@ def _pl_route(df):
         d = df.loc[idx[0], "game_date"]
         has_uww = any(_pl_team_label(t, {_PL_UWW}) for t in teams)
         has_opp = bool(upcoming_opponent_short) and any(_pl_team_label(t, {upcoming_opponent_short}) for t in teams)
-        if has_uww and d in uww_dates:
+        _hint = df.loc[idx, "_route_hint"].dropna() if "_route_hint" in df.columns else pd.Series(dtype=object)
+        if len(_hint):
+            r = str(_hint.iloc[0])                         # a captured game: the side its clip page came from
+        elif has_uww and d in uww_dates:
             r = "UWW"
         elif has_opp and d in opp_dates:
             r = "Opponent"
@@ -1937,7 +2129,127 @@ def _pl_route(df):
     return route
 
 
+# ---- Captured clips with NO Title (requested) ----------------------------------------------------------------
+# CONFIRMED CHANGE (requested: "Yes let's do it this way ... moving forward we are going to have coaches only tag games within
+# the application and not in the Synergy Title field ... We may not need to use that file at all"). Every clip captured
+# from Synergy's clip page (frame-capture cell) becomes a play-call row even when its game is NOT in uww_plays.csv:
+# Synergy's own description, player, team and result from the clip page, and its half + clock from the play-by-play
+# event the same clip number was aligned to by the video-tagging cells (video_clip_number). Those rows have no coach
+# Title -- they get tracked, named, mapped on the court and reviewed like any clip, the tag model writes an automatic
+# Title for them, and the coaches' answers in the app's Play review are their tags. Games that ARE in uww_plays.csv
+# keep their coach Titles exactly as before. PLAY_CALLS_FROM_FRAMES = False turns this off.
+def _pl_words(t):
+    return {w for w in re.findall(r"[a-z]+", str(t).lower()) if len(w) > 2 and w not in ("university", "college", "the")}
+
+
+def _pl_untagged_from_frames(tagged):
+    cf = globals().get("clip_frames")
+    if not globals().get("PLAY_CALLS_FROM_FRAMES", True) or not isinstance(cf, pd.DataFrame) or cf.empty \
+            or "frame_files" not in cf.columns:
+        return pd.DataFrame()
+    cf = cf[cf["frame_files"].notna() & cf["description"].notna()].copy()
+    if cf.empty:
+        return pd.DataFrame()
+    cf["_d"] = pd.to_datetime(cf["clip_date"], errors="coerce").dt.date
+    # CONFIRMED BUG (fixed; second run: the 386 "untagged" clips were the SAME clips as games already in uww_plays.csv --
+    # counted twice). Tagged games were spotted by date + Team, but the clip page's Team is usually blank. Now it's done
+    # CLIP BY CLIP, the same way frames are joined to tagged clips: same Synergy description + player within a day = the
+    # clip is already in uww_plays.csv. Only captured clips with no tagged counterpart are added.
+    from collections import Counter as _Ctr
+    _nrm = lambda x: re.sub(r"\s+", " ", str(x if x is not None else "")).strip().lower()
+    tagged_left = _Ctr()
+    if isinstance(tagged, pd.DataFrame) and not tagged.empty and "synergy_string" in tagged.columns:
+        for _, t_ in tagged.iterrows():
+            gd_ = t_.get("game_date")
+            if gd_ is not None and not (isinstance(gd_, float) and pd.isna(gd_)):
+                tagged_left[(_nrm(t_.get("synergy_string")), _nrm(t_.get("player")), gd_)] += 1
+    # the play-by-play events each clip number was aligned to (video-tagging cells), by date
+    evs = []
+    for _src in ("pbp_events", "pbp_events_upcoming"):
+        _e = globals().get(_src)
+        if isinstance(_e, pd.DataFrame) and not _e.empty and "video_clip_number" in _e.columns:
+            _cols = [c for c in ("game_date", "video_clip_number", "period", "time_remaining_seconds", "team") if c in _e.columns]
+            evs.append(_e[_e["video_clip_number"].notna()][_cols].assign(_src=_src))
+    ev = pd.concat(evs, ignore_index=True) if evs else pd.DataFrame()
+    if not ev.empty:
+        ev["_n"] = pd.to_numeric(ev["video_clip_number"], errors="coerce")
+        ev["game_date"] = pd.to_datetime(ev["game_date"], errors="coerce").dt.date
+        ev = ev.dropna(subset=["_n", "game_date"]).drop_duplicates(["game_date", "_n"])
+    # CONFIRMED BUG (fixed; first run: all 386 untagged clips landed in "Other" and the run crashed). Which side a captured
+    # game is on now comes from WHERE its clip page was found -- UWW's schedule or the upcoming opponent's prior games --
+    # and from the play-by-play it was matched to, not only from the clip page's Team column (often blank).
+    _urls = {}
+    for _sn, _side in (("uww_team_schedule", "UWW"), ("prev_games", "Opponent")):
+        _sd = globals().get(_sn)
+        if isinstance(_sd, pd.DataFrame) and "video_url" in _sd.columns:
+            for _u in _sd["video_url"].dropna():
+                _urls.setdefault(str(_u), _side)
+    rows, n_games, n_timed = [], 0, 0
+    for _url, g in cf.groupby(cf.get("source_url", pd.Series("", index=cf.index)), dropna=False):
+        d = g["_d"].dropna().min()
+        teams = set().union(*[_pl_words(t) for t in g["team"].dropna().unique()]) if "team" in g.columns else set()
+        if d is None or pd.isna(d):
+            continue
+        def _is_tagged(r_):
+            k_ = (_nrm(r_.get("description")), _nrm(r_.get("player")))
+            for dd in (0, -1, 1):
+                kk = (*k_, d + pd.Timedelta(days=dd).to_pytimedelta())
+                if tagged_left.get(kk, 0) > 0:
+                    tagged_left[kk] -= 1
+                    return True
+            return False
+        g = g[[not _is_tagged(r_) for _, r_ in g.iterrows()]]
+        if g.empty:
+            continue                                       # every clip of this game is in uww_plays.csv
+        n_games += 1
+        e_ = ev[[abs((x - d).days) <= 1 for x in ev["game_date"]]] if not ev.empty else pd.DataFrame()
+        e_by_n = {}
+        if not e_.empty:
+            gd0 = min(e_["game_date"].unique(), key=lambda x: abs((x - d).days))
+            e_ = e_[e_["game_date"] == gd0]
+            e_by_n = {int(r["_n"]): r for _, r in e_.iterrows()}
+        else:
+            gd0 = d
+        hint = _urls.get(str(_url))
+        if hint is None and not e_.empty and "_src" in e_.columns:
+            hint = "UWW" if (e_["_src"] == "pbp_events").mean() >= 0.5 else "Opponent"
+        if hint is None and any("WWW" in str(x).upper() for x in g.get("clip_game", pd.Series(dtype=object)).dropna()):
+            hint = "UWW"
+        for _, r in g.iterrows():
+            n = pd.to_numeric(pd.Series([r.get("position")]), errors="coerce").iloc[0]
+            if pd.isna(n):
+                continue
+            m = e_by_n.get(int(n))
+            n_timed += m is not None
+            desc = str(r["description"])
+            _team = r.get("team")
+            if (_team is None or (isinstance(_team, float) and pd.isna(_team)) or not str(_team).strip()) and m is not None:
+                _team = m.get("team")                      # the clip page had no Team: the matched play's team
+            rows.append({"Title": "", "Result": r.get("result"), "Date": str(gd0), "Pd.": None, "Clock": None,
+                         "Player": r.get("player"), "Team": _team, "Game": r.get("clip_game"),
+                         "Synergy String": desc, "#": int(n), "_route_hint": hint,
+                         "game_date": gd0, "period": m["period"] if m is not None else None,
+                         "time_remaining_seconds": m["time_remaining_seconds"] if m is not None else None,
+                         "player": str(r.get("player") or "").strip(), "result": str(r.get("result") or "").strip(),
+                         "game_code": r.get("clip_game"), "synergy_string": desc,
+                         "synergy_play_type": (re.findall(r"^\s*\d*\s*[^>]+>\s*([^>]+?)\s*(?:>|$)", desc) or [None])[0],
+                         "clip_number": int(n), "_file": "(captured clips, no Title)", "_untagged": True})
+    out = pd.DataFrame(rows)
+    if not out.empty:
+        _fut = out["game_date"].notna() & (pd.to_datetime(out["game_date"]).dt.date >= reference_date.date())
+        out = out[~_fut].reset_index(drop=True)
+        print(f"  Captured clips with no Title: {len(out)} clip(s) from {n_games} game(s) not in uww_plays.csv added as "
+              f"play calls ({n_timed} placed on the play-by-play clock through the video-tagging match; the rest have no "
+              f"half / clock, so no lineups). The app's Play review is where they get tagged.", flush=True)
+    return out
+
+
+globals().pop("_pl_app_answers_cache", None)        # app tags are re-read every run (new saves since the last run)
 _pl_all_raw = _pl_load_all()
+_pl_untagged = _pl_untagged_from_frames(_pl_all_raw)
+if not _pl_untagged.empty:
+    _pl_all_raw = pd.concat([_pl_all_raw, _pl_untagged], ignore_index=True)
+    _pl_problems[:] = [p_ for p_ in _pl_problems if "not found in INPUT_DIR" not in p_]   # the file is optional now
 _pl_all_raw["_route"] = _pl_route(_pl_all_raw) if not _pl_all_raw.empty else None
 _pl_split = {r: (_pl_all_raw[_pl_all_raw["_route"] == r].drop(columns="_route").reset_index(drop=True)
                  if not _pl_all_raw.empty else pd.DataFrame()) for r in ("UWW", "Opponent", "Other")}
@@ -1985,8 +2297,13 @@ _pl_opp = _pl_decode_all(_pl_opp_raw, _pl_opp_roster | set(_pl_opp_raw.get("play
 if not _pl_opp.empty:
     # The file is supposed to be THIS week's opponent. If none of its Team values overlap the upcoming
     # opponent's name, it is last week's file -- say so rather than scouting the wrong team.
-    _pl_teams = _pl_opp["Team"].dropna().unique()
-    if upcoming_opponent_short and not any(_pl_team_label(t, {upcoming_opponent_short}) for t in _pl_teams):
+    # CONFIRMED BUG (fixed; MSOE scrimmage run: the opponent's captured games never became play calls). Only the coach-tagged
+    # rows are checked here -- clips captured from the upcoming opponent's own game pages are their games by where they came
+    # from, and their Team is often blank (Synergy's clip page), which made this check throw every one of them away.
+    _pl_tagged_opp = _pl_opp[_pl_opp["_untagged"].isna() | ~_pl_opp["_untagged"].fillna(False).astype(bool)] \
+        if "_untagged" in _pl_opp.columns else _pl_opp
+    _pl_teams = _pl_tagged_opp["Team"].dropna().unique()
+    if upcoming_opponent_short and len(_pl_teams) and not any(_pl_team_label(t, {upcoming_opponent_short}) for t in _pl_teams):
         _pl_problems.append(f"Upcoming-opponent clips are for {list(_pl_teams)}, not {upcoming_opponent_short} -- "
                             f"check the Team column. Opponent play calls skipped.")
         _pl_opp = pd.DataFrame()
@@ -2147,7 +2464,8 @@ for _f in (_pl_uww, _pl_opp, _pl_other):
     # Bucketed for the "Shot clock tendencies" breakdown. Boundaries are seconds USED (not remaining),
     # scaled to the standard 30-second clock -- an offensive-rebound putback (20-second max) can only ever
     # land in Early or Organized, which is correct: it genuinely can't have used more than 20 seconds.
-    _sc_used = pd.to_numeric(_f.get("shot_clock_used"), errors="coerce")
+    _sc_used = pd.to_numeric(_f["shot_clock_used"], errors="coerce") if "shot_clock_used" in _f.columns \
+        else pd.Series(float("nan"), index=_f.index)
     _f["shot_clock_situation"] = pd.cut(
         _sc_used, bins=[-0.01, 9, 19, 100],
         labels=["Early clock (0-9 sec used)", "Organized offense (10-19 sec used)", "Late clock (20+ sec used)"],
@@ -2172,6 +2490,10 @@ if isinstance(globals().get("clip_frames"), pd.DataFrame) and not clip_frames.em
         print(f"    captured page {str(_lab)[:45]!r}: {len(_cfp)} clip(s), {_n_m} matched to tagged clips{_note}")
     for (_gd, _gc), _g in play_calls.groupby(["game_date", "game_code"], dropna=False):
         if _g["frame_files"].isna().all():
+            if (_g["side"] == "Other").all():
+                print(f"    tagged game {_gd} {_gc}: {len(_g)} clip(s), no frames -- a game between two other teams (not UWW or the "
+                      f"upcoming opponent), which Frame capture doesn't capture; used from its Titles only")
+                continue
             print(f"    tagged game {_gd} {_gc}: {len(_g)} clip(s), NO frames -- capture it (Frame capture, "
                   f"VISION_ONLY_GAME = that game)")
 
@@ -2197,6 +2519,11 @@ if isinstance(globals().get("clip_frames"), pd.DataFrame) and not clip_frames.em
             _gaps_capt.append(f"    - {_lab}: {len(_cfp)} clip(s) captured, none in uww_plays.csv")
     for (_gd, _gc), _g in play_calls.groupby(["game_date", "game_code"], dropna=False):
         if _ignored(f"{_gd} {_gc}", _gc, _gd):
+            continue
+        # CONFIRMED BUG (fixed; the run stopped on "2026-01-03 WEC@WSP: 140 tagged play(s), NO frames"): games between two
+        # other teams ("Other" -- not UWW, not the upcoming opponent) are never captured by Frame capture, so they can never
+        # get frames. They don't stop the run; their Titles still feed the tag model.
+        if "side" in _g.columns and (_g["side"] == "Other").all():
             continue
         _miss = _g[_g["frame_files"].isna()]
         # CONFIRMED CHANGE (the 2025-12-20 / 12-30 stops listed 242 + 36 "missing" plays that were almost all "Non Possession >
@@ -2287,6 +2614,9 @@ _PL_LEVELS = [("play_call", "Play call"), ("play_series", "Series"), ("primary_a
 
 def _pl_summarize(df, side):
     rows = []
+    # clips with no tag yet have no play call / situation -- the play-call summaries are about tagged clips
+    if not df.empty and "decode_quality" in df.columns:
+        df = df[df["decode_quality"] != "Untagged"]
     if df.empty:
         return rows
     df = df.copy()
@@ -2332,7 +2662,8 @@ def _pl_summarize(df, side):
                 # every use of the set started there.
                 "top_location_uses": (int(grp["play_location"].dropna().value_counts().iloc[0])
                                       if col != "play_location" and grp["play_location"].notna().any() else 0),
-                "situation": (grp["play_situation"].value_counts().index[0] if col != "play_situation" else name),
+                "situation": ((grp["play_situation"].value_counts().index[0] if grp["play_situation"].notna().any() else None)
+                          if col != "play_situation" else name),
                 # Same mode-attachment pattern as "situation" above, for the three other splits (requested):
                 # lets a "Play call" or "Series" row also be grouped under whichever personnel/shot-clock/
                 # game-situation bucket it most often ran in, so those splits can nest sets the same way

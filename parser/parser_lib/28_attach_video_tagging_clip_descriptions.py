@@ -85,6 +85,13 @@ for _, row in prev_games.iterrows():
         _vs_row["why"] = "no _video file found and no live scrape"
         video_status_rows.append(_vs_row)
         continue
+    if clips is None or len(clips) == 0:
+        _vs_row["why"] = ("_video file has no clip table (saved before the page loaded, a login page, or an empty "
+                          "playlist) -- save it again from Synergy" if video_matches else "live scrape found no clips")
+        print(f"  {row['game_date']} vs {actual_opponent}: {_vs_row['why']}"
+              + (f" ({os.path.basename(video_matches[0])})" if video_matches else ""), flush=True)
+        video_status_rows.append(_vs_row)
+        continue
     if _vs_row["pbp_rows"] == 0:
         # Clips exist but there are no play-by-play rows to hang them on: the _pbp file is missing for this
         # game, or its opponent string doesn't match this schedule row's spelling.

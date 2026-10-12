@@ -344,6 +344,15 @@ def _pr_clip(files, rows, numtxt, out_base):
     fraction of that and plays with a scrubber. GIF stays as the fallback (PLAY_REVIEW_VIDEO = "gif")."""
     fps = float(globals().get("VISION_TRACK_FPS") or 2.0)
     kind = PLAY_REVIEW_VIDEO
+    # CONFIRMED CHANGE (lean mode): a game in lean mode keeps each clip's play video ready-made (<game>/media/<clip>.mp4)
+    # instead of all its frames -- use it as is
+    _pre = vision_clip_media(files) if "vision_clip_media" in globals() else None
+    if _pre and kind == "mp4":
+        shutil.copy2(_pre, out_base + ".mp4")
+        _pp = _pre[:-4] + "_poster.jpg"
+        if os.path.exists(_pp):
+            shutil.copy2(_pp, out_base + "_poster.jpg")
+        return os.path.basename(out_base + ".mp4")
     if kind == "mp4" and not globals().setdefault("_pr_mp4_ready", _pr_mp4_ok()):
         kind = "gif"
     if kind == "mp4":
@@ -402,10 +411,11 @@ def _pr_app_dir():
     return globals().get("APP_DATA_DIR") or OUTPUT_DIR
 
 
-def _export_play_review_to_app(rdir, slug, game, run, plays, vocab):
-    """Copy this run's review into the app's data folder: _pr_app_dir()/play_review/<slug>/ (replacing the last one)."""
+def _export_play_review_to_app(rdir, slug, game, run, plays, vocab, kind="play_review"):
+    """Copy this run's review into the app's data folder: _pr_app_dir()/<kind>/<slug>/ (replacing the last one).
+    kind "play_review" = the Play review (Titles + player checks); "play_tag" = the Film Tagging queue (Titles only)."""
     from PIL import Image
-    dest = os.path.join(_pr_app_dir(), "play_review", slug)
+    dest = os.path.join(_pr_app_dir(), kind, slug)
     shutil.rmtree(dest, ignore_errors=True)
     os.makedirs(dest, exist_ok=True)
     import base64
@@ -648,7 +658,9 @@ def play_review():
             for f, label in _TR_FIELDS:
                 cv = _tr_val(r.get(f"coach_{f}"))
                 av, ac, note = _tr_auto(r, f, tagged)
-                if cv is None and av is None:
+                # CONFIRMED CHANGE (coaches tag in the app now): a clip with no Title shows EVERY field (except the
+                # Synergy-named screener), so it can be tagged even where the automatic Title has no answer yet
+                if cv is None and av is None and (tagged or f == "screener"):
                     continue
                 sure = av is not None and ac is not None and ac >= min_c
                 fields.append({"field": f, "label": label, "coach": cv, "auto": av, "conf": round(ac, 2) if ac is not None else None,
@@ -695,8 +707,126 @@ def play_review():
             shutil.rmtree(rdir, ignore_errors=True)
         except Exception as _ae:
             print(f"  [play review] not exported to the app: {type(_ae).__name__}: {_ae} (scratch files kept in {rdir})", flush=True)
-        print(f"Play review: {gd} {gc}: {len(plays)} play(s) ({"next unreviewed, in game order" if _mode != "random" else "random"}) ({len(g) - len(fresh)} already reviewed, left out) "
+        print(f"Play review: {gd} {gc}: {len(plays)} play(s) ({'next unreviewed, in game order' if _mode != 'random' else 'random'}) ({len(g) - len(fresh)} already reviewed, left out) "
               f"-- in the app: Previous Games (Title checks) and Analytics > Player Number Tracking (player checks)", flush=True)
+
+
+# ---- Film Tagging queue: the clips with no tag yet, in game order, Titles only -------------------------------------------
+# CONFIRMED CHANGE (requested: coaches tag games in the app only, not in Synergy's Title field). The Play review only takes
+# 5 tracked plays a game at a time (it's built for the player checks). Tagging a game needs more: every captured clip of
+# every game (ours and the upcoming opponent's) that has no tag yet goes, PLAY_TAG_PER_GAME at a time in game order, into a
+# Titles-only package in <data>/play_tag/<game>/ -- the play as a short video, the automatic Title and one column per
+# field. The app shows it on Analytics > Film Tagging; what a coach saves there is the clip's tag (play-calls cell:
+# _pl_apply_app_tags). A game gets its next batch once the open one is saved (PLAY_TAG_REQUIRE_SAVED).
+def _tag_titles_saved(slug_game, run):
+    for f in glob.glob(os.path.join(_review_saves_dir(), "*.json")):
+        d = _review_doc(f)
+        if d is None or str(d.get("run")) != str(run):
+            continue
+        if re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game"))).strip("_") != slug_game:
+            continue
+        if "titles" in _review_parts(d):
+            return True
+    return False
+
+
+def tag_queue():
+    pc = play_calls.copy() if isinstance(globals().get("play_calls"), pd.DataFrame) else pd.DataFrame()
+    if pc.empty:
+        print("Film Tagging: no play calls yet.")
+        return
+    if "side" in pc.columns:
+        pc = pc[pc["side"].isin(["UWW", "Opponent"])]
+    has = lambda c: pc[c].notna() if c in pc.columns else pd.Series(False, index=pc.index)
+    pc = pc[has("track_files") | has("frame_files")]
+    if PLAY_REVIEW_ONLY_GAME:
+        pc = pc[pc["game_code"].astype(str).str.contains(PLAY_REVIEW_ONLY_GAME, regex=False)]
+    if pc.empty:
+        print("Film Tagging: no captured clips to tag.")
+        return
+    title_review_answers()
+    answered = {_pl_ckey_norm(ck) for (ck, _f) in (globals().get("_title_review_marks") or {})}
+    n_per = int(globals().get("PLAY_TAG_PER_GAME", 20))
+    stamp = _pr_dt.datetime.now().strftime("%Y%m%d_%H%M%S") + "_tag"
+    min_c = float(globals().get("TAG_MODEL_MIN_CONFIDENCE", 0.6))
+    if "_play_review_file_saves" in globals():
+        _play_review_file_saves()
+    vocab = {}
+    for f, _lab in _TR_FIELDS:
+        vals = set()
+        for c in (f"coach_{f}", f"pred_{f}"):
+            if c in play_calls.columns:
+                vals |= {str(v) for v in play_calls[c].dropna() if str(v).strip() and str(v) != "nan"}
+        vocab[f] = sorted(vals)
+    summary = []
+    for (gd, gc), g in pc.groupby(["game_date", "game_code"], dropna=False):
+        slug_game = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
+        slug = "tag_" + slug_game
+        pkg = os.path.join(_pr_app_dir(), "play_tag", slug)
+        g = g.assign(_key=[_pl_ckey_norm(f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}")
+                           for _, r in g.iterrows()])
+        untagged = g["decode_quality"].eq("Untagged") if "decode_quality" in g.columns else pd.Series(True, index=g.index)
+        todo = g[untagged & ~g["_key"].isin(answered)]
+        n_tagged = int((~untagged).sum())
+        summary.append(f"{gd} {gc}: {n_tagged} of {len(g)} clip(s) tagged, {len(todo)} to go")
+        if os.path.exists(os.path.join(pkg, "review.json")):
+            try:
+                with open(os.path.join(pkg, "review.json"), encoding="utf-8") as fh:
+                    old_run = json.load(fh).get("run")
+                if _tag_titles_saved(slug_game, old_run):
+                    shutil.rmtree(pkg, ignore_errors=True)
+                elif globals().get("PLAY_TAG_REQUIRE_SAVED", True):
+                    continue                                   # its open batch isn't saved yet
+            except Exception:
+                pass
+        if todo.empty:
+            shutil.rmtree(pkg, ignore_errors=True)
+            continue
+        pick = todo.assign(_cn=pd.to_numeric(todo["clip_number"], errors="coerce")).sort_values("_cn", kind="stable").head(n_per)
+        rdir = tempfile.mkdtemp(prefix=f"play_tag_{slug_game}_")
+        plays = []
+        for _, r in pick.iterrows():
+            files = [f for f in str(r.get("track_files") or "").split(";") if f] or \
+                    [f for f in str(r.get("frame_files") or "").split(";") if f]
+            cn = int(r["_cn"]) if pd.notna(r["_cn"]) else 0
+            fid = f"{cn:03d}_{len(plays):02d}"
+            clip_file = None
+            if PLAY_REVIEW_VIDEO and files:
+                try:
+                    clip_file = _pr_clip(files, [], None, os.path.join(rdir, f"clip_{fid}"))
+                except Exception as _ce:
+                    print(f"  [film tagging] clip video not made ({type(_ce).__name__}: {_ce})", flush=True)
+            fields = []
+            for f, label in _TR_FIELDS:
+                if f == "screener":
+                    continue
+                av, ac, note = _tr_auto(r, f, False)
+                sure = av is not None and ac is not None and ac >= min_c
+                fields.append({"field": f, "label": label, "coach": None, "auto": av,
+                               "conf": round(ac, 2) if ac is not None else None, "sure": sure, "same": None, "note": note})
+            clock = r.get("time_remaining_seconds")
+            url, pos = _pr_synergy(r)
+            plays.append({"clip_key": f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}",
+                          "clip_number": cn,
+                          "clock": (f"{r.get('period', '')} {int(clock // 60)}:{int(clock % 60):02d}" if pd.notna(clock) else "(no clock)"),
+                          "synergy": str(r.get("synergy_string") or ""), "coach_title": None,
+                          "auto_title": _tr_title(r, False), "film": _tr_film(r.get("track_clip_key")),
+                          "offense": r.get("offense_team"), "defense": r.get("defense_team"), "player": r.get("player"),
+                          "result": r.get("result"), "clip": clip_file,
+                          "clip_kind": ("video" if str(clip_file).endswith(".mp4") else "image"),
+                          "poster": (f"clip_{fid}_poster.jpg" if clip_file and os.path.exists(os.path.join(rdir, f"clip_{fid}_poster.jpg")) else None),
+                          "fid": fid, "synergy_url": url, "synergy_pos": int(pos) if pd.notna(pos) else None,
+                          "pictures": [], "fields": fields,
+                          "five": {"offense": _trk_five(r.get("offense_lineup")), "defense": _trk_five(r.get("defense_lineup"))}})
+        try:
+            _export_play_review_to_app(rdir, slug, f"{gd}|{gc}", stamp, plays, vocab, kind="play_tag")
+            shutil.rmtree(rdir, ignore_errors=True)
+            print(f"Film Tagging: {gd} {gc}: {len(plays)} clip(s) to tag (of {len(todo)} untagged) -- in the app: "
+                  f"Analytics > Film Tagging", flush=True)
+        except Exception as _ae:
+            print(f"  [film tagging] not exported to the app: {type(_ae).__name__}: {_ae}", flush=True)
+    if summary:
+        print("Film Tagging -- tagging progress by game (Titles + app tags):\n  " + "\n  ".join(summary), flush=True)
 
 
 if RUN_PLAY_REVIEW:
@@ -704,3 +834,8 @@ if RUN_PLAY_REVIEW:
         play_review()
     except Exception as _e:
         print(f"Play review skipped: {type(_e).__name__}: {_e}")
+if globals().get("RUN_TAG_QUEUE", True):
+    try:
+        tag_queue()
+    except Exception as _e:
+        print(f"Film Tagging skipped: {type(_e).__name__}: {_e}")

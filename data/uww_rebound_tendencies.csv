@@ -1,9 +1,9 @@
 opponent,situation,crash_pct,who_crashes,note,is_sample
-UW-Stevens Point Pointers,Their missed layup / dunk,44,"Seth Miron (6), Josh Bocher (6), Logan Baumgartner (5)",44% offensive rebound on 105 of 105 misses (0 unpaired),False
-UW-Stevens Point Pointers,Their missed two-point jumper,30,"Seth Miron (23), Carter Combs (9), Cal Krohn (8)",30% offensive rebound on 274 of 277 misses (3 unpaired),False
-UW-Stevens Point Pointers,Their missed free throw,58,"Wis.-Stevens Point (42), Seth Miron (4), Logan Baumgartner (2)",58% offensive rebound on 86 of 98 misses (12 unpaired),False
-UW-Stevens Point Pointers,All their misses,38,"Wis.-Stevens Point (48), Seth Miron (33), Logan Baumgartner (12)",38% offensive rebound on 465 of 480 misses (15 unpaired),False
-UW-Stevens Point Pointers,Opponent missed layup / dunk,75,"Josiah Butler (13), Logan Baumgartner (10), Seth Miron (10)",They secure 75% of 93 opponent misses (0 unpaired),False
-UW-Stevens Point Pointers,Opponent missed two-point jumper,75,"Carter Combs (49), Cal Krohn (30), Josiah Butler (21)",They secure 75% of 274 opponent misses (4 unpaired),False
-UW-Stevens Point Pointers,Opponent missed free throw,54,"Isaiah Moore (8), Seth Miron (7), Logan Baumgartner (4)",They secure 54% of 69 opponent misses (2 unpaired),False
-UW-Stevens Point Pointers,All opponent misses,72,"Carter Combs (57), Cal Krohn (43), Josiah Butler (35)",They secure 72% of 436 opponent misses (6 unpaired),False
+MSOE Raiders,Their missed layup / dunk,35,"Ethan Johnson (9), Carson Cordelli (8), Chase Cummings (8)",35% offensive rebound on 179 of 180 misses (1 unpaired),False
+MSOE Raiders,Their missed two-point jumper,29,"Carson Cordelli (22), Chase Cummings (19), Jonathan Burroughs (19)",29% offensive rebound on 632 of 637 misses (5 unpaired),False
+MSOE Raiders,Their missed free throw,46,"MSOE (38), Joey Jendusa (1), Chad Coplin (1)",46% offensive rebound on 94 of 102 misses (8 unpaired),False
+MSOE Raiders,All their misses,32,"MSOE (48), Carson Cordelli (31), Ethan Johnson (27)",32% offensive rebound on 905 of 919 misses (14 unpaired),False
+MSOE Raiders,Opponent missed layup / dunk,71,"Ethan Johnson (38), Carson Cordelli (26), Jonathan Burroughs (21)",They secure 71% of 238 opponent misses (3 unpaired),False
+MSOE Raiders,Opponent missed two-point jumper,75,"Mason Dopirak (118), Chase Cummings (72), Carson Cordelli (68)",They secure 75% of 740 opponent misses (2 unpaired),False
+MSOE Raiders,Opponent missed free throw,53,"Carson Cordelli (12), Chase Cummings (7), Mason Dopirak (7)",They secure 53% of 89 opponent misses (18 unpaired),False
+MSOE Raiders,All opponent misses,72,"Mason Dopirak (142), Carson Cordelli (106), Ethan Johnson (105)",They secure 72% of 1067 opponent misses (23 unpaired),False

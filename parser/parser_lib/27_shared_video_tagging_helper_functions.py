@@ -82,9 +82,19 @@ def parse_video_mhtml_html(html):
     manual "_video.mhtml" export/upload step. See scrape_video_clips_live() below for the live-scrape path.
     """
     soup = BeautifulSoup(html, "lxml")
-    parsed_tables = [pd.read_html(StringIO(str(t)))[0] for t in soup.find_all("table")]
+    parsed_tables = []
+    for t in soup.find_all("table"):
+        try:
+            parsed_tables.append(pd.read_html(StringIO(str(t)))[0])
+        except Exception:
+            continue                          # an empty / layout table
     # The file also contains a saved "Edit"/playlist metadata table with no "Description" column -- skip it.
-    clips = next(t for t in parsed_tables if "Description" in t.columns)
+    # CONFIRMED BUG (fixed; scrimmage-opponent run: StopIteration in the video-tagging cell). A _video file with NO clip
+    # table at all -- a page saved before it finished loading, a login page, or an empty playlist -- crashed the whole run.
+    # It now gives an empty clip list (with the usual columns); the caller reports which file it was.
+    clips = next((t for t in parsed_tables if "Description" in t.columns), None)
+    if clips is None:
+        return pd.DataFrame(columns=["No.", "Result", "Description", "player", "Team", "Duration"])
     clips = clips.copy()
     clips["player"] = clips["Player"].astype(str).str.strip()
     return clips[["No.", "Result", "Description", "player", "Team", "Duration"]]
@@ -218,9 +228,15 @@ def scrape_video_clips_live(page, video_url, timeout_ms=30000, save_path=None):
         print(f"    [video] Media-blocked scrape failed ({type(block_error).__name__}: {block_error}) -- retrying without blocking media.")
         html = _attempt(block_media=False)
 
+    clips = parse_video_mhtml_html(html)
+    # CONFIRMED BUG (fixed): a page saved before its clip table had filled in became a _video file with no clips, which
+    # then counted as "already have this game's video" on every later run. Only a page WITH clips is saved; an empty
+    # one raises, so it's logged as a failed scrape and tried again later.
+    if clips.empty:
+        raise RuntimeError("the clip page loaded but had no clip table (not finished loading, or no clips tagged yet)")
     if save_path:
         _save_scraped_html(html, save_path, "scraped video-tagging clips")
-    return parse_video_mhtml_html(html)
+    return clips
 
 
 # ---- Speed-ups shared by both "Attach video-tagging clip descriptions" cells ---------------------------------

@@ -1,0 +1,11 @@
+quality,selected,clip,position,description,stream_w,stream_h,frames,kb_full,kb_1024,sharp_full,sharp_1024,folder,error
+Standard,True,1,1,21 Carter Thomas > No Play Type > Turnover,1024,576,89,230.3,243.4,2520.5,2520.5,./inputs\_quality_test\Standard\clip01_1_1450ff05,
+Standard,True,2,2,15 Collin Madson > Non Possession > Non Shooting Foul,1024,576,117,223.7,236.1,2366.1,2366.1,./inputs\_quality_test\Standard\clip02_2_b16e643f,
+Standard,True,3,3,24 Richie Warren > Cut > Basket > Make 2 Pts,1024,576,41,232.1,244.9,2674.0,2674.0,./inputs\_quality_test\Standard\clip03_3_171c3181,
+Standard,True,4,4,0 Brandon Beck > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,1024,576,65,220.3,232.7,2008.8,2008.8,./inputs\_quality_test\Standard\clip04_4_bc50ccda,
+Standard,True,5,5,24 Richie Warren > P&R Ball Handler > Right P&R > Side > Go Away from Pick > Defense Commits > Ball Delivered > 32 Luke Bara > Spot-Up > Drives Left > To Basket > Foul,1024,576,189,225.8,238.3,2273.7,2273.7,./inputs\_quality_test\Standard\clip05_5_dd7b5498,
+High,True,1,1,21 Carter Thomas > No Play Type > Turnover,1280,720,89,327.7,232.6,1841.9,1714.9,./inputs\_quality_test\High\clip01_1_1450ff05,
+High,True,2,2,15 Collin Madson > Non Possession > Non Shooting Foul,1280,720,117,318.4,226.0,1764.8,1619.4,./inputs\_quality_test\High\clip02_2_b16e643f,
+High,True,3,3,24 Richie Warren > Cut > Basket > Make 2 Pts,1280,720,41,330.0,233.5,2002.9,1809.2,./inputs\_quality_test\High\clip03_3_171c3181,
+High,True,4,4,0 Brandon Beck > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,1280,720,65,313.1,223.5,1451.2,1409.4,./inputs\_quality_test\High\clip04_4_bc50ccda,
+High,True,5,5,24 Richie Warren > P&R Ball Handler > Right P&R > Side > Go Away from Pick > Defense Commits > Ball Delivered > 32 Luke Bara > Spot-Up > Drives Left > To Basket > Foul,1280,720,189,320.0,227.7,1663.6,1557.5,./inputs\_quality_test\High\clip05_5_dd7b5498,

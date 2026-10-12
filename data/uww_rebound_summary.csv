@@ -1,8 +1,8 @@
 opponent,metric,value,paired,player,count
-UW-Stevens Point Pointers,their_oreb_pct,38.3,465,,178.0
-UW-Stevens Point Pointers,our_dreb_allowed_base,35.3,405,,
-UW-Stevens Point Pointers,their_oreb_player,27.0,465,Wis.-Stevens Point,48.0
-UW-Stevens Point Pointers,their_oreb_player,18.5,465,Seth Miron,33.0
-UW-Stevens Point Pointers,their_oreb_player,6.7,465,Logan Baumgartner,12.0
-UW-Stevens Point Pointers,their_dreb_pct,71.8,436,,313.0
-UW-Stevens Point Pointers,our_oreb_base,44.9,454,,
+MSOE Raiders,their_oreb_pct,32.2,905,,291.0
+MSOE Raiders,our_dreb_allowed_base,35.1,1010,,
+MSOE Raiders,their_oreb_player,16.5,905,MSOE,48.0
+MSOE Raiders,their_oreb_player,10.7,905,Carson Cordelli,31.0
+MSOE Raiders,their_oreb_player,9.3,905,Ethan Johnson,27.0
+MSOE Raiders,their_dreb_pct,72.3,1067,,771.0
+MSOE Raiders,our_oreb_base,39.6,1075,,

@@ -255,11 +255,22 @@ def _jn_prep_wide_color(img_bgr, box):
 
 
 def _jn_needs_color(engine):
-    return str(engine).startswith("paddle_color") or engine == "trained"
+    return str(engine).startswith("paddle_color") or str(engine).startswith("trained")
+
+
+def _jn_prep_pose_color(img_bgr, box):
+    """The shoulders-to-hips crop (pose model) in COLOR, enlarged 3x -- for the "trained_pose" recognizer (fixed crop if no pose)."""
+    import cv2
+    crop = _jr_chest(img_bgr, box, "pose") if "_jr_chest" in globals() else None
+    if crop is None:
+        return None
+    return cv2.resize(crop, (max(8, crop.shape[1] * 3), max(8, crop.shape[0] * 3)), interpolation=cv2.INTER_CUBIC)
 
 
 def _jn_prep_for(engine):
     """Which crop each reader gets (the same choice in the test and in tracking)."""
+    if engine == "trained_pose":
+        return _jn_prep_pose_color
     if _jn_needs_color(engine):
         return _jn_prep_wide_color
     if str(engine).endswith("_find"):
@@ -391,8 +402,9 @@ def _jn_read(engine, crops, polarity=None):
                         pass
             out.append(best)
         return out
-    if engine == "trained":
-        res = jersey_recognizer_read(crops) if "jersey_recognizer_read" in globals() else None
+    if str(engine).startswith("trained"):
+        res = (jersey_recognizer_read(crops, style="pose" if engine == "trained_pose" else "fixed")
+               if "jersey_recognizer_read" in globals() else None)
         if res is None:
             globals()["_jn_trained_missing"] = True
             return [("", 0.0)] * len(crops)
@@ -599,6 +611,14 @@ if RUN_JERSEY_READER_TEST:
     print(f"Jersey-number reader test: {len(_have)} answer-key crop(s) ({_on_disk} with their frame on disk, "
           f"{len(_have) - _on_disk} from saved answers; {_n_coach} added from coach checks)", flush=True)
     _have_all = _have
+    # CONFIRMED CHANGE (requested: compare the pose-based jersey crop with the fixed one on your checked players): with
+    # JERSEY_CROP_STYLE = "compare" both recognizers are tested here on the SAME answer-key boxes ("trained" = fixed crop,
+    # "trained_pose" = shoulders-to-hips crop); the better one wins like any other reader. "pose" tests only the pose one.
+    _jcs = str(globals().get("JERSEY_CROP_STYLE", "fixed")).lower()
+    if _jcs in ("compare", "pose") and "trained" in JERSEY_READER_ENGINES:
+        JERSEY_READER_ENGINES = ([e for e in JERSEY_READER_ENGINES if e != "trained"] if _jcs == "pose" else list(JERSEY_READER_ENGINES)) \
+            + (["trained_pose"] if "trained_pose" not in JERSEY_READER_ENGINES else [])
+    print(f"  readers tested (JERSEY_CROP_STYLE = {_jcs!r}): {', '.join(JERSEY_READER_ENGINES)}", flush=True)
     for _eng in JERSEY_READER_ENGINES:
         # a run where PaddleOCR failed to load saved "no answer" for every crop: once it loads, read those again
         if _eng.startswith("paddle") and globals().get("_jn_paddle_ok") and not globals().get(f"_jn_reread_{_eng}"):
@@ -608,16 +628,17 @@ if RUN_JERSEY_READER_TEST:
         if _eng.startswith("paddle") and globals().get("_jn_paddle_ok") is False:
             print(f"  {_eng:12}: not tested (PaddleOCR didn't start)", flush=True)
             continue
-        if _eng == "trained":
-            _mp = globals().get("JERSEY_MODEL_PATH", "")
+        if _eng.startswith("trained"):
+            _mp = (_jr_path_for("pose" if _eng == "trained_pose" else "fixed") if "_jr_path_for" in globals()
+                   else globals().get("JERSEY_MODEL_PATH", ""))
             if not (_mp and os.path.exists(_mp)):
                 print(f"  {_eng:12}: not tested (no trained recognizer yet -- see the Jersey-number recognizer cell)", flush=True)
                 continue
             _mt = os.path.getmtime(_mp)
-            if _saved.get(("__trained_model__", "")) != _mt:          # retrained: its old answers don't count
-                for _kk in [kk for kk in list(_saved) if kk[0] == "trained"]:
+            if _saved.get((f"__{_eng}_model__", "")) != _mt:          # retrained: its old answers don't count
+                for _kk in [kk for kk in list(_saved) if kk[0] == _eng]:
                     del _saved[_kk]
-                _saved[("__trained_model__", "")] = _mt
+                _saved[(f"__{_eng}_model__", "")] = _mt
             if globals().get("JERSEY_TRAIN_USE_COACH") is True:
                 print("  trained     : (trained ON your checked players -- its score on them is optimistic)", flush=True)
         _have = {k: v for k, v in _have_all.items() if _on(k) or (_eng, k) in _saved}   # what THIS reader can be scored on
@@ -635,6 +656,8 @@ if RUN_JERSEY_READER_TEST:
                     continue
                 for k, r_ in zip(_todo, _rs):
                     _saved[(_eng, k)] = r_
+                if _eng == "trained_pose" and "_jr_torso_save" in globals():
+                    _jr_torso_save()
                 os.makedirs(os.path.dirname(_cp), exist_ok=True)
                 pd.to_pickle(_saved, _cp)
             _right = sum(1 for k, v in _have.items() if _saved.get((_eng, k), ("", 0))[0] == v)
@@ -645,7 +668,7 @@ if RUN_JERSEY_READER_TEST:
             # here, together with the lowest confidence at which it stays >= JERSEY_READER_TARGET_PRECISION.
             _ans = [(k, v, _saved.get((_eng, k), ("", 0))) for k, v in _have.items() if _saved.get((_eng, k), ("", 0))[0]]
             _best_c = None
-            for _c in (0.0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8):
+            for _c in (0.0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95):
                 _a = [(v, r_) for _k, v, r_ in _ans if r_[1] >= _c]
                 if len(_a) >= JERSEY_READER_MIN_ANSWERS and sum(r_[0] == v for v, r_ in _a) / len(_a) >= JERSEY_READER_TARGET_PRECISION:
                     _best_c = _c
@@ -656,16 +679,28 @@ if RUN_JERSEY_READER_TEST:
             JERSEY_READER_ANSWERS[_eng] = len(_a)
             JERSEY_READER_CONF[_eng] = _c_use
             _wrong = pd.Series([f"{v}->{r_[0]}" for v, r_ in _a if r_[0] != v]).value_counts().head(4)
+            # how often it's right at each confidence level -- shows whether its SURE answers could be trusted on their own
+            _bands = []
+            for _c in (0.5, 0.7, 0.8, 0.9, 0.95):
+                _b = [(v, r_) for _k, v, r_ in _ans if r_[1] >= _c]
+                if _b:
+                    _bands.append(f">= {_c:.2f}: {sum(r_[0] == v for v, r_ in _b)}/{len(_b)} right")
+            if _bands:
+                print(f"  {_eng:12}: by confidence -- {'; '.join(_bands)} (needs {JERSEY_READER_TARGET_PRECISION:.0%} "
+                      f"on >= {JERSEY_READER_MIN_ANSWERS} answers to be trusted)", flush=True)
             _ck = [k for k in _have if k in _coach_keys]
             _ck_ans = [(k, _saved.get((_eng, k), ("", 0))) for k in _ck if _saved.get((_eng, k), ("", 0))[0]]
             _ck_right = sum(1 for k, r_ in _ck_ans if r_[0] == _have[k])
-            JERSEY_READER_COACH_RIGHT[_eng] = _ck_right
+            # CONFIRMED BUG (fixed): the best reader was picked by right answers at ANY confidence (113 vs 90), but tracking only
+            # uses answers at or above its cutoff -- and "combined" was counted only where it is used. Now every reader is
+            # compared on the right answers tracking would actually use.
+            JERSEY_READER_COACH_RIGHT[_eng] = sum(1 for k, r_ in _ck_ans if r_[0] == _have[k] and r_[1] >= _c_use)
             # right / wrong / checked players -- for the brief's METHODOLOGY metrics
             globals().setdefault("JERSEY_READER_COACH_SCORE", {})[_eng] = (_ck_right, len(_ck_ans) - _ck_right, len(_ck))
             print(f"  {_eng:12}: on YOUR {len(_ck)} checked players: {_ck_right} right, "
                   f"{len(_ck_ans) - _ck_right} wrong, {len(_ck) - len(_ck_ans)} no answer", flush=True)
             print(f"  {_eng:12}: [{len(_have)} crops] answered {len(_ans)}/{len(_have)}; right when it answers "
-                  f"{JERSEY_READER_PRECISION[_eng]:.0%} ({sum(r_[0] == v for v, r_ in _a)}/{len(_a)} at confidence >= {_c_use:.1f}); "
+                  f"{JERSEY_READER_PRECISION[_eng]:.0%} ({sum(r_[0] == v for v, r_ in _a)}/{len(_a)} at confidence >= {_c_use:.2f}); "
                   f"wrong answers: {', '.join(f'{a} x{b}' for a, b in _wrong.items()) or 'none'}", flush=True)
             # CONFIRMED CHANGE (requested): right / wrong per jersey number on YOUR checked players, with what each wrong answer
             # was mistaken for -- shows which numbers fail and whether the biases (one number soaking up the answers) are gone.
@@ -732,7 +767,7 @@ if RUN_JERSEY_READER_TEST:
         JERSEY_READER_BEST = max(_pool, key=lambda e: (JERSEY_READER_COACH_RIGHT.get(e, 0), round(JERSEY_READER_PRECISION[e], 2),
                                                        JERSEY_READER_ACCURACY.get(e, 0)))
         print(f"  best reader: {JERSEY_READER_BEST} -- {JERSEY_READER_COACH_RIGHT.get(JERSEY_READER_BEST, 0)} of your checked "
-              f"players read right; right {JERSEY_READER_PRECISION[JERSEY_READER_BEST]:.0%} of the time "
+              f"players read right at its cutoff; right {JERSEY_READER_PRECISION[JERSEY_READER_BEST]:.0%} of the time "
               f"it answers ({JERSEY_READER_ANSWERS[JERSEY_READER_BEST]} answers at confidence >= "
-              f"{JERSEY_READER_CONF[JERSEY_READER_BEST]:.1f}); answers {JERSEY_READER_ACCURACY[JERSEY_READER_BEST]:.0%} of all crops "
+              f"{JERSEY_READER_CONF[JERSEY_READER_BEST]:.2f}); answers {JERSEY_READER_ACCURACY[JERSEY_READER_BEST]:.0%} of all crops "
               f"correctly", flush=True)

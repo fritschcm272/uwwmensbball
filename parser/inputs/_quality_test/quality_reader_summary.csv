@@ -1,0 +1,4 @@
+version,frames,players found,chests read,sure >= 0.90,sure >= 0.95,players per frame,sure reads per 100 chests,avg confidence
+Standard (1024 wide),253,3636,3460,411,273,14.37,11.9,0.514
+High (1280 wide),253,5389,5011,506,340,21.3,10.1,0.499
+High (shrunk to 1024),253,3584,3419,428,279,14.17,12.5,0.517

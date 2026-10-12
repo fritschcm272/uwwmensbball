@@ -1,200 +1,79 @@
-# UWW Basketball Scouting — Portable (No Databricks)
+# parser_lib
 
-This is a self-contained version of the UW-Whitewater men's basketball scouting system
-that runs entirely outside Databricks. No Spark, no Unity Catalog, no Databricks SDK.
+The code of `parser_nb.ipynb`, one file per notebook section (numbered in notebook order).
 
-## Project Structure
+* Keep this folder **next to `parser_nb.ipynb`** (the notebook runs from its own folder).
+* Each notebook section cell holds only its **settings**, then runs its file with `run_section("<file>")`.
+  The file runs inside the notebook, exactly as if its code were still in the cell: every function and table it
+  creates is available to the cells after it.
+* To change a **setting**: edit it in the notebook cell. To change **how something works**: edit the `.py` file here,
+  then rerun that notebook cell (no restart needed -- the file is read fresh every time).
+* Errors point to the file and line in here (e.g. `parser_lib\50_player_tracking.py, line 812`).
 
-```
-uww-basketball-scouting-portable/
-├── README.md                    # This file
-├── requirements.txt             # Streamlit app dependencies
-├── streamlit_app.py             # Main app (portable — reads from ./data/)
-├── .streamlit/
-│   └── config.toml              # (copy from original)
-├── data/                        # CSV data files (copy from original app)
-│   ├── uww_schedule.csv
-│   ├── uww_season_stats.csv
-│   ├── uww_pbp_events.csv
-│   ├── uww_pbp_box_score.csv
-│   ├── uww_lineup_stints.csv
-│   ├── uww_coaching_flags.csv
-│   ├── uww_opponent_rosters.csv
-│   ├── uww_player_profiles.csv
-│   ├── uww_opponent_game_plans.csv
-│   ├── uww_ktv_splits.csv
-│   ├── uww_ktv_game_categories.csv
-│   ├── uww_opponent_team_totals.csv
-│   ├── uww_projected_box_score.csv
-│   ├── uww_opponent_projected_box_score.csv
-│   ├── uww_player_comparisons.csv
-│   ├── uww_opp_lineup_season_box.csv
-│   ├── uww_opponent_schedules.csv
-│   ├── uww_pbp_derived_keys.csv
-│   ├── uww_clutch_events.csv    # Last-5-min/OT, score within 8 -- powers the Analytics, Team, and Previous
-│   │                             # Games pages' clutch-performance sections
-│   ├── uww_scoring_runs.csv     # Each game's biggest run + largest lead/deficit, with lineups on the floor
-│   ├── uww_coach_notes.csv      # Per-clip coach notes (play calls, execution grades) from "*_recap.csv"
-│   │                             # inputs -- also merged onto uww_pbp_events.coach_note where a clock/player
-│   │                             # match is found, so notes show up inline on the play-by-play tables too
-│   ├── name_aliases.json        # Known player-name spelling mismatches between data sources —
-│   │                             # shared by streamlit_app.py and the parser, so a fix only has to be made once
-│   └── logo/                    # Team logos (PNG)
-│       ├── UW-Whitewater.png
-│       └── <opponent>.png
-├── parser/
-│   ├── requirements.txt         # Parser script dependencies
-│   ├── player_comparison.py     # Portable comparison algorithms module
-│   └── parser_nb.ipynb          # Parser notebook — already portable; convert to parser.py, see below
-└── inputs/                      # Raw scouting data (you provide)
-    ├── UW-Whitewater - Schedule.mhtml
-    ├── <Opponent>_schedule.mhtml
-    ├── <date>_<opponent>_scout.pdf
-    ├── <date>_<opponent>_pbp.mhtml
-    ├── <date>_<opponent>_video.mhtml
-    └── <matchup>_recap.csv          # Optional per-game coach-note export (see "Coach Notes" below)
-```
+## Tests to send back
 
-## What Was Replaced
+Some features are **tested on your own player checks first** and only switch on in Player tracking if the test passes.
+Each test cell prints a short report and saves files in `inputs\_tracking\`. To show Claude the results, send:
+**(1)** the printed lines (copy the cell output), and **(2)** the files listed below.
 
-| Databricks Feature | Original Usage | Portable Replacement |
-|---|---|---|
-| `databricks-sdk` (WorkspaceClient) | OAuth token for Foundation Model API | Standard `OPENAI_API_KEY` env var |
-| Foundation Model endpoint | `{host}/serving-endpoints` with `databricks-meta-llama-3-3-70b-instruct` | Any OpenAI-compatible API (OpenAI, Azure, Ollama, vLLM) |
-| Unity Catalog Volumes | `/Volumes/ads-predictive-analytics/.../inputs/` | Local `./inputs/` directory |
-| `spark.createDataFrame` + `spark.sql` with `ai_query()` | LLM player comparison in notebook | Direct OpenAI client calls in `player_comparison.py` |
-| `%run` notebook magic | Imports comparison algorithms notebook | Normal `from parser.player_comparison import ...` |
-| `display()` | Renders DataFrames in Databricks UI | `print(df)` or Jupyter `display()` |
-| `dbutils.library.restartPython()` | Restart after pip install | Not needed (install deps beforehand) |
-| Delta table export (`saveAsTable`) | Persists to Unity Catalog | Skipped — CSV export is the only output needed |
-| `app.yaml` | Databricks Apps deployment config | Direct `streamlit run` command |
+| Notebook cell | Code | What it tests | Send these files | Turns on in tracking when |
+|---|---|---|---|---|
+| Outfit check (test) | `50c_outfit_check.py` | Can Fashion-CLIP tell players from referees / coaches / bench / fans by their clothes? | `outfit_check_test.json`, `outfit_check_scores.csv` | flagged boxes are really non-players >= `OUTFIT_MIN_PRECISION` (90%) of the time and it catches >= `OUTFIT_MIN_RECALL` (25%) of them (`TRACK_OUTFIT_CHECK = "auto"`) |
+| Re-ID check (test) | `50d_reid_check.py` | Does an unnamed player look like the player you checked in the same game? (OSNet vs DINOv2) | `reid_check_test.json`, `reid_check_results.csv` | its picks are right >= `REID_MIN_PRECISION` (80%) of the time on >= `REID_MIN_COVERAGE` (15%) of the question boxes (`TRACK_REID_NAMES = "auto"`) |
+| Jersey-number reader test (with `JERSEY_CROP_STYLE = "compare"`) | `48_...`, `49_...` | Fixed chest crop (`trained`) vs shoulders-to-hips crop (`trained_pose`) | the printed lines, including both per-number tables | the better reader wins automatically |
 
-## Quick Start — Streamlit App
+### How to read the printed reports
 
-```bash
-# 1. Install dependencies
-pip install -r requirements.txt
+**Outfit check.** `AUC` = how well the score separates non-players from players (0.5 = coin flip, 1.0 = perfect).
+The table lists score cutoffs: *boxes flagged* at that cutoff, how many of them *really are not players*, the share
+of all non-players *caught*, and *real players lost*. `PASSED` / `NOT PASSED` says whether tracking will use it.
 
-# 2. (Optional) Set up AI chat — any OpenAI-compatible provider
-export OPENAI_API_KEY="sk-..."          # Your API key
-export AI_MODEL="gpt-4o-mini"            # Model name (default)
-# export OPENAI_BASE_URL="http://localhost:11434/v1"  # For Ollama/local models
+**Re-ID check.** One line per model: `right X% overall` (vs `guessing at random among the candidates`), then the
+smallest *margin* (how much the best-matching player beat the second best) at which its picks were right >= 80%, and
+on how many boxes. `CHOSEN: osnet` (or `dinov2`) = tracking will use it; names it gives show as **re-id match** in the
+app's Player Number Tracking metrics, so your later checks measure it like every other naming method.
 
-# 3. Run the app
-streamlit run streamlit_app.py
-```
+`reid_check_results.csv` has one row per question box: `model, game, clip_key, frame_file, side, true_name, picked,
+right, margin, true_has_references, candidates` -- `true_has_references = False` means you hadn't checked that player in
+the reference half of that game, so the model couldn't have known him.
 
-The app will start at http://localhost:8501. All data is read from `./data/*.csv`.
-If `OPENAI_API_KEY` is not set, the Home page chat feature shows a friendly error
-but all other pages (Upcoming Game, Previous Games, Team, Players) work normally.
+### If a test can't run
+* `transformers was installed. RESTART THE KERNEL` -> restart the kernel (Kernel > Restart) and run again.
+* `boxmot is not installed` -> run `%pip install boxmot` in a new cell, restart the kernel, run again
+  (or set `REID_MODELS = ["dinov2"]` to test only the model you already have).
+* Any other error -> send the printed lines; nothing in tracking changes when a test fails.
 
-## Quick Start — Parser Script
+## Tagging in the app (instead of Synergy's Title field)
 
-The parser converts raw MHTML/PDF scouting files into the CSV data the app needs.
+1. **Frame capture** captures every game's clips (the upcoming opponent's first: `VISION_CAPTURE_FIRST`).
+2. **Play calls** turns every captured clip into a play, even when its game isn't in `uww_plays.csv` (`PLAY_CALLS_FROM_FRAMES`).
+   Clips with no tag are marked `Untagged` and stay out of the Title-based tables until they're tagged.
+3. **Play review** cell builds a **Film Tagging** batch per game (`PLAY_TAG_PER_GAME` clips, in game order).
+   Commit and push the data folder.
+4. In the app, **Analytics > Film Tagging**: pick the game, watch each play, pick each field
+   (✓ = the automatic answer), type a new answer with "other", add your name, **Save**.
+5. Next parser run: the saved answers are the clips' tags in every play-call / defense / situation / game-plan table
+   (`PLAY_CALLS_USE_APP_TAGS`), they train the Tag model, and the game's next batch appears.
 
-```bash
-cd parser/
-pip install -r requirements.txt
-playwright install chromium   # one-time browser download, only needed for live opponent scraping
+The run prints `App tags: N clip(s) tagged in the app ...` (play-calls cell) and a per-game progress list
+(`Film Tagging -- tagging progress by game`). Games still in `uww_plays.csv` keep their coach Titles; a field a coach
+corrects in the app overrides that Title's field.
 
-# Set up for LLM-based player comparisons (optional)
-export OPENAI_API_KEY="sk-..."
-export AI_MODEL="gpt-4o-mini"
+## Frame archive (disk space)
 
-# Set up for live opponent-schedule scraping (optional) -- FastScout login, via Hudl's identity provider.
-# Without these, every opponent falls back to its local backup "<Opponent> - Schedule.mhtml" file instead.
-export FASTSCOUT_USERNAME="you@example.com"
-export FASTSCOUT_PASSWORD="your-password"
-# Or drop a ".env" file (git-ignored!) in this directory with the same two variables instead of exporting
-# them every session -- picked up automatically via python-dotenv.
+`_vision_frames` holds ~3 GB of tracking pictures per game. The **Frame archive** cell (before Cleanup) packs a FINISHED game's
+tracking frames into one small video per clip (~10-20x smaller) and deletes the pictures, except frames with a coach check and
+court-calibration frames. A game is finished when it isn't part of the current run (`FRAME_ARCHIVE_OUTSIDE_RUN`: not one of the upcoming opponent's
+games or an earlier meeting with them, and not our most recent `FRAME_ARCHIVE_KEEP_RECENT` played game) -- or when it's
+tracked, has no open Play review / Film Tagging batch in the app, and is tagged (up to `FRAME_ARCHIVE_MAX_UNTAGGED`
+untagged clips allowed). Run it with `FRAME_ARCHIVE_DRY_RUN = True` first.
 
-# Run the parser (you need to convert the notebook to a .py script first — see below)
-python parser.py --input-dir ../inputs --output-dir ../data
-```
+Nothing else changes: archived frames count as captured (never recaptured), and any step that reads one -- a tracking rerun,
+a new review or tagging batch, the export -- unpacks that clip automatically. `FRAME_RESTORE_GAMES` unpacks whole games for good.
 
-UWW's own schedule always comes from `UW-Whitewater - Schedule.mhtml` in `--input-dir`. Every opponent that
-appears in UWW's schedule is scraped live from its FastScout `opponent_url` (requires the credentials
-above); if that fails for any reason, the parser falls back to a local `"<Opponent> - Schedule.mhtml"`
-backup file in `--input-dir` if one exists, or skips that opponent otherwise.
-
-## Coach Notes (optional per-game recap CSVs)
-
-Drop a `"<matchup>_recap.csv"` file in `--input-dir` for any game to bring in coach-written notes on
-individual plays — an offensive play call and how it was executed, or a defensive breakdown of what went
-right/wrong on a given possession. This is a per-clip export from the video-tagging tool: one row per
-tagged clip, with a `Text Overlay` column holding the note, plus `Pd.` / `Clock` / `Player` / `Team` /
-`Result` columns the parser uses to match each note back to its corresponding play-by-play event.
-
-Not every game needs one of these — an opponent with no recap CSV just has no notes, same as any other
-optional input. The parser attaches a matched note directly onto that play in `uww_pbp_events.coach_note`
-(visible inline on the Previous Games / Team play-by-play tables), and also keeps every note — matched or
-not — in its own `uww_coach_notes.csv`, which powers the Analytics page's "Coach-Tagged Play Notes" section
-(play-call frequency and make/miss rate, and the most common `+`/`-` flagged themes across all notes).
-
-## Converting the Parser Notebook to a Script
-
-The notebook (`parser_nb.ipynb`, 137 cells) is already fully portable — no Databricks-only APIs
-(`dbutils`, `display()`, Spark DataFrames, Unity Catalog Volume paths) remain anywhere in it, and
-`INPUT_DIR`/`OUTPUT_DIR`/`USE_LLM`/`reference_date_str` are already plain configurable variables set near the
-top of the notebook. The remaining step is mechanical, not a rewrite:
-
-```bash
-cd parser/
-jupyter nbconvert --to script parser_nb.ipynb --output parser
-```
-
-This produces `parser.py`. Open it afterward and:
-
-1. Confirm `INPUT_DIR` / `OUTPUT_DIR` / `USE_LLM` / `reference_date_str` (set near the top of the file) are
-   correct for your environment, or wire them up to CLI args / environment variables if you want to run the
-   parser non-interactively (e.g. via `argparse` around those four values) instead of editing the script
-   before each run.
-2. Remove any leftover diagnostic/inspection cells you don't need in production runs — a handful of cells in
-   the notebook exist purely to preview intermediate DataFrames while developing (`print(df)` or similar);
-   harmless to keep, but noisy in a scheduled/non-interactive run.
-3. Run it: `python parser.py --input-dir ../inputs --output-dir ../data`.
-
-No manual cell-by-cell rewriting is needed beyond that.
-
-## Hosting Options
-
-| Option | Cost | Setup |
-|---|---|---|
-| **Local machine** | Free | Just `streamlit run streamlit_app.py` |
-| **Streamlit Community Cloud** | Free | Push to GitHub, connect at share.streamlit.io |
-| **Railway / Render** | ~$5/mo | Docker or buildpack deploy |
-| **Docker** | Free (local) | See Dockerfile example below |
-| **AWS/GCP/Azure VM** | ~$5-20/mo | Install Python, pip, run Streamlit |
-
-### Dockerfile (optional)
-
-```dockerfile
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-EXPOSE 8501
-CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
-```
-
-## LLM Provider Options
-
-The AI chat feature (Home page) and player comparison LLM work with any OpenAI-compatible API:
-
-| Provider | OPENAI_BASE_URL | AI_MODEL | Notes |
-|---|---|---|---|
-| OpenAI | (leave unset) | `gpt-4o-mini` | Default, easiest |
-| Azure OpenAI | `https://<resource>.openai.azure.com/openai/deployments/<deploy>/` | Your deployment name | Need Azure SDK or API key |
-| Ollama (local) | `http://localhost:11434/v1` | `llama3.1` | Free, runs on your machine |
-| vLLM (local) | `http://localhost:8000/v1` | Your model name | High-performance local inference |
-| Together AI | `https://api.together.xyz/v1` | `meta-llama/Llama-3-70b-chat-hf` | Pay-per-token cloud |
-
-## Notes
-
-- The app is already 95% portable — it reads all data from local CSV files, not from a database
-- The only Databricks dependency in the app was the LLM authentication (WorkspaceClient OAuth)
-- The parser's only Spark usage was for Delta table export (redundant with CSV export)
-  and `ai_query()` SQL function (replaced with direct OpenAI client calls)
-- If you don't need the AI chat or LLM player comparisons, you can skip `openai` entirely
-"# uwwmensbball" 
+### Lean mode (biggest saving)
+`FRAME_LEAN = True` (Frame archive cell, end of the notebook): as soon as every clip of a game is tracked, each clip keeps only
+its check frame (the player-check picture), coach-check and calibration frames, and a small play video (`<game>/media/`);
+the other tracking frames are deleted (~3 GB -> ~150-250 MB a game). Tracking, jersey, court and appearance results are
+already saved, so reruns, reviews and Film Tagging keep working; a lean game is never recaptured. To rebuild a game in full,
+delete its `_lean.json` and `media/` folder and run Frame capture for it. Dry run first (`FRAME_ARCHIVE_DRY_RUN`).

@@ -19,6 +19,13 @@ import shutil
 
 
 
+# CONFIRMED CHANGE (frame archive): archived frames count as present here, so their saved results are never dropped as
+# "pointing at frames no longer on disk" -- even when this cell runs on its own in a fresh session.
+if "vision_frame_archived" not in globals() and os.path.exists(os.path.join(PARSER_LIB, "46a_frame_archive.py")):
+    FRAME_ARCHIVE_STEP = "hooks"
+    run_section("46a_frame_archive")
+
+
 def _cl_size(path):
     if os.path.isfile(path):
         return os.path.getsize(path)
@@ -48,12 +55,15 @@ def cleanup(dry_run=True):
         except Exception:
             pass
     cur_track = _vision_track_folder() if "_vision_track_folder" in globals() else None
+    # CONFIRMED CHANGE (1280 for new games): every folder still in use -- the current width's AND each kept width's
+    # (VISION_TRACK_KEEP_WIDTHS, e.g. last season's track1024v2) -- is never deleted
+    keep_tracks = set(_vision_track_folders()) if "_vision_track_folders" in globals() else ({cur_track} if cur_track else set())
     ver = int(globals().get("VISION_CAPTURE_VERSION", 1))
     plan = []                                       # (what, path, bytes)
     gone = set()                                    # frame files that will no longer exist
     for gdir in [d for d in glob.glob(os.path.join(vfd, "*")) if os.path.isdir(d)]:
         for sub in [d for d in glob.glob(os.path.join(gdir, "track*")) if os.path.isdir(d)]:
-            if cur_track and os.path.basename(sub) != cur_track:
+            if cur_track and os.path.basename(sub) not in keep_tracks:
                 files = [os.path.normpath(p) for p in glob.glob(os.path.join(sub, "*"))]
                 if any(p in keep for p in files):   # calibration uses some: delete only the others
                     for p in files:

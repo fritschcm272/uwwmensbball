@@ -244,7 +244,7 @@ try:
                 (_pn_calls_all["side"] == "Opponent")
                 & (_pn_calls_all["scouted_opponent"].astype(str) == str(_pn_short))
                 & (_pn_calls_all["offense_team"].astype(str) == str(_pn_short))
-                & (_pn_calls_all["decode_quality"] != "Needs review")
+                & (~_pn_calls_all["decode_quality"].isin(["Needs review", "Untagged"]))
             ]
         else:
             _pn_calls_ok_df = pd.DataFrame()

@@ -129,3 +129,17 @@ Tag model: screen_defender,v2026.10.08,2026-10-08,trained,2026-10-08T21:07:52,"5
 Tag model: situation,v2026.10.08,2026-10-08,trained,2026-10-08T21:07:52,"298 tagged clips, 5 answers learned, one answer only",2026-10-08T21:13:17
 Tag model (overall),v2026.10.08,2026-10-08,trained,2026-10-08T21:07:52,newest of 9 field model(s); last retrained field: situation,2026-10-08T21:13:17
 Jersey-number recognizer,v2026.10.08,2026-10-08,trained,2026-10-08T20:58:30,"8106 training crops; 82% of held-back crops right; sources {'reads': 5454, 'extra': 3615, 'coach': 467}",2026-10-08T21:13:17
+Tag model: ball_screen_coverage,v2026.10.12,2026-10-12,trained,2026-10-12T07:09:17,"86 tagged clips, 5 answers learned, one answer only",2026-10-12T07:25:16
+Tag model: defense,v2026.10.12,2026-10-12,trained,2026-10-12T07:09:17,"254 tagged clips, 1 answers learned, one answer only",2026-10-12T07:25:16
+Tag model: formation,v2026.10.12,2026-10-12,trained,2026-10-12T07:09:17,"130 tagged clips, 5 answers learned, one answer only",2026-10-12T07:25:16
+Tag model: offball_coverage,v2026.10.12,2026-10-12,trained,2026-10-12T07:09:17,"58 tagged clips, 2 answers learned, one answer only",2026-10-12T07:25:16
+Tag model: play_call,v2026.10.12,2026-10-12,trained,2026-10-12T07:09:17,"165 tagged clips, 7 answers learned, one answer only",2026-10-12T07:25:16
+Tag model: press,v2026.10.12,2026-10-12,trained,2026-10-12T07:09:17,"254 tagged clips, 2 answers learned",2026-10-12T07:25:16
+Tag model: primary_action,v2026.10.12,2026-10-12,trained,2026-10-12T07:09:17,"123 tagged clips, 6 answers learned, one answer only",2026-10-12T07:25:16
+Tag model: screen_defender,v2026.10.12,2026-10-12,trained,2026-10-12T07:09:17,"60 tagged clips, 6 answers learned",2026-10-12T07:25:16
+Tag model: situation,v2026.10.12,2026-10-12,trained,2026-10-12T07:09:17,"298 tagged clips, 5 answers learned, one answer only",2026-10-12T07:25:16
+Tag model (overall),v2026.10.12,2026-10-12,trained,2026-10-12T07:09:17,newest of 9 field model(s); last retrained field: situation,2026-10-12T07:25:16
+Jersey-number recognizer,v2026.10.09,2026-10-09,trained,2026-10-09T22:25:03,"8158 training crops; 81% of held-back crops right; sources {'reads': 5525, 'extra': 3615, 'coach': 457}",2026-10-12T07:25:16
+Player tracking,v2026.10.11,2026-10-11,pretrained + code,ac2a94f153b1,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-12T07:25:16
+Jersey-number reader test,v2026.10.10,2026-10-10,pretrained + code,cf4127da600b,scores the OCR readers; none retrained here,2026-10-12T07:25:16
+Court mapping,v2026.10.10,2026-10-10,rules + code,4dce27c05ea9,3 calibration file(s),2026-10-12T07:25:16

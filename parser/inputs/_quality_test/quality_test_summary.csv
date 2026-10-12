@@ -1,0 +1,3 @@
+quality,setting picked,stream size,clips,frames,KB per frame (full),KB per frame (1024),sharpness (full),sharpness (1024)
+Standard,True,1024x576,5,501,226.4,239.1,2369.0,2369.0
+High,True,1280x720,5,501,321.8,228.7,1745.0,1622.0

@@ -1,0 +1,8 @@
+"same person, same frame (confidence >= 0.90 = sure)",High at 1280,High shrunk to 1024
+people matched,3322,3174
+Standard sure,395,396
+High sure,418,397
+"both sure, same number",338,344
+"both sure, DIFFERENT number",0,0
+only Standard sure,57,52
+only High sure,80,53

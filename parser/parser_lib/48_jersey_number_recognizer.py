@@ -32,12 +32,110 @@ import pandas as pd
 
 
 
-def _jr_chest(img, box):
-    """The chest region the recognizer sees (same region the PaddleOCR color reader gets, before enlarging)."""
-    x1, y1, x2, y2 = box
+# CONFIRMED CHANGE (requested: "do #1" -- from the TrackID3x3 jersey-number pipeline). The recognizer's crop can be cut from
+# the player's BODY instead of a fixed slice of his box: a small pose model finds his shoulders and hips, and the crop runs from
+# just above the shoulders to the hips, a little wider than the shoulders. A fixed slice (10-62% of the box height) misses the
+# number when a player leans, turns, has his arms up or is partly hidden. JERSEY_CROP_STYLE: "fixed" (the old crop), "pose", or
+# "compare" (train BOTH and let the Jersey-number reader test pick the better on your checked players: "trained" vs
+# "trained_pose"). Each style has its own training crops (reads/ + coach/ vs reads_pose/ + coach_pose/; extra/ is shared --
+# those are ready-made crops) and its own model file (jersey_recognizer.pt / jersey_recognizer_pose.pt).
+def _jr_style():
+    return globals().get("_JR_STYLE", "fixed")
+
+
+def _jr_dir(src):
+    """Training-set folder for a source in the current crop style."""
+    return src + "_pose" if _jr_style() == "pose" and src in ("reads", "coach") else src
+
+
+def _jr_path_for(style):
+    base = globals().get("_JR_BASE_MODEL_PATH") or JERSEY_MODEL_PATH
+    return base[:-3] + "_pose.pt" if style == "pose" and base.endswith(".pt") else base
+
+
+def _jr_fixed_box(box):
+    x1, y1, x2, y2 = [float(v) for v in box[:4]]
     w, h = x2 - x1, y2 - y1
-    c = img[max(int(y1 + 0.10 * h), 0):max(int(y1 + 0.62 * h), int(y1 + 0.10 * h) + 1),
-            max(int(x1 - 0.05 * w), 0):max(int(x2 + 0.05 * w), int(x1) + 1)]
+    return (x1 - 0.05 * w, y1 + 0.10 * h, x2 + 0.05 * w, y1 + 0.62 * h)
+
+
+def _jr_torso_box(img, box):
+    """Shoulders-to-hips box from a pose model run on the person's own crop (None = pose not found: use the fixed crop)."""
+    x1, y1, x2, y2 = [float(v) for v in box[:4]]
+    w, h = x2 - x1, y2 - y1
+    if h < 20:
+        return None
+    X1, Y1 = max(int(x1 - 0.15 * w), 0), max(int(y1 - 0.05 * h), 0)
+    X2, Y2 = min(int(x2 + 0.15 * w), img.shape[1]), min(int(y2 + 0.02 * h), img.shape[0])
+    person = img[Y1:Y2, X1:X2]
+    if person.size == 0:
+        return None
+    key = (img.shape[0], img.shape[1], int(x1), int(y1), int(x2), int(y2), int(person.mean() * 1000))
+    cache = globals().setdefault("_jr_torso_cache", _jr_torso_load())
+    if key in cache:
+        return cache[key]
+    out = None
+    try:
+        m = globals().get("_jr_pose_m")
+        if m is None:
+            from ultralytics import YOLO
+            m = globals()["_jr_pose_m"] = YOLO(globals().get("TRACK_POSE_MODEL", "yolo11n-pose.pt"))
+        r = m.predict(person, imgsz=256, conf=0.2, verbose=False)[0]
+        if r.keypoints is not None and len(r.keypoints.data):
+            bx = r.boxes.xyxy.cpu().numpy()
+            cx, cy = person.shape[1] / 2, person.shape[0] / 2
+            # the person the box is about: biggest, centered
+            k = int(np.argmax([(b[2] - b[0]) * (b[3] - b[1]) - 2.0 * abs((b[0] + b[2]) / 2 - cx) * (b[3] - b[1]) for b in bx]))
+            kp = r.keypoints.data[k].cpu().numpy()
+            sh = [kp[i] for i in (5, 6) if kp[i][2] > 0.3]
+            hp = [kp[i] for i in (11, 12) if kp[i][2] > 0.3]
+            if len(sh) == 2:
+                sx1, sx2 = sorted([float(sh[0][0]), float(sh[1][0])])
+                sy = float(np.mean([q[1] for q in sh]))
+                hy = float(np.mean([q[1] for q in hp])) if hp else sy + 0.30 * h
+                tw = max(sx2 - sx1, 0.25 * w)
+                th = hy - sy
+                if th > 0.12 * h:
+                    out = (X1 + sx1 - 0.25 * tw, Y1 + sy - 0.12 * th, X1 + sx2 + 0.25 * tw, Y1 + hy + 0.02 * th)
+    except Exception:
+        out = None
+    cache[key] = out
+    globals()["_jr_torso_new"] = globals().get("_jr_torso_new", 0) + 1
+    if globals()["_jr_torso_new"] % 300 == 0:
+        _jr_torso_save()
+    return out
+
+
+def _jr_torso_load():
+    try:
+        p_ = os.path.join(INPUT_DIR, "_tracking", "jersey_torso_boxes.pkl")
+        return pd.read_pickle(p_) if os.path.exists(p_) else {}
+    except Exception:
+        return {}
+
+
+def _jr_torso_save():
+    try:
+        os.makedirs(os.path.join(INPUT_DIR, "_tracking"), exist_ok=True)
+        pd.to_pickle(globals().get("_jr_torso_cache", {}), os.path.join(INPUT_DIR, "_tracking", "jersey_torso_boxes.pkl"))
+    except Exception:
+        pass
+
+
+def _jr_crop_box(img, box, style=None):
+    """The region the recognizer sees, in the given (or current) crop style."""
+    style = style or _jr_style()
+    if style == "pose":
+        tb = _jr_torso_box(img, box)
+        if tb is not None:
+            return tb
+    return _jr_fixed_box(box)
+
+
+def _jr_chest(img, box, style=None):
+    """The chest region the recognizer sees (fixed slice of the box, or shoulders-to-hips with JERSEY_CROP_STYLE = "pose")."""
+    a, b, c_, d = _jr_crop_box(img, box, style)
+    c = img[max(int(b), 0):max(int(d), int(b) + 1), max(int(a), 0):max(int(c_), int(a) + 1)]
     return c if c.size else None
 
 
@@ -128,13 +226,13 @@ def jersey_collect():
         fname = _jr_name(ch["frame_file"], box)
         coach_spots.add((ch["frame_file"], int(box[0]), int(box[1])))
         # a box re-checked as someone else (or "not a player"): its crop must not stay under the old number
-        for old_ in glob.glob(os.path.join(JERSEY_TRAIN_DIR, "coach", "*", fname)):
+        for old_ in glob.glob(os.path.join(JERSEY_TRAIN_DIR, _jr_dir("coach"), "*", fname)):
             if os.path.basename(os.path.dirname(old_)) != num:
                 os.remove(old_)
         if not num:
             continue
         im = _img(ch["frame_file"])
-        if im is not None and _jr_save(im, box, os.path.join(JERSEY_TRAIN_DIR, "coach", num, fname)):
+        if im is not None and _jr_save(im, box, os.path.join(JERSEY_TRAIN_DIR, _jr_dir("coach"), num, fname)):
             added["coach"] += 1
     # players named by jersey number in the last tracking run: crops from across each track
     pt = globals().get("player_tracks")
@@ -187,11 +285,14 @@ def jersey_collect():
                 f, box = files[tt], boxes[tt]
                 if (f, int(box[0]), int(box[1])) in coach_spots:     # never train on a test crop
                     continue
+                # (frame archive) a crop already in the training set needs no picture (an archived clip stays packed)
+                if os.path.exists(os.path.join(JERSEY_TRAIN_DIR, _jr_dir("reads"), num, _jr_name(f, box))):
+                    continue
                 im = _img(f)
                 c = _jr_chest(im, box) if im is not None else None
                 if c is None or cv2.Laplacian(cv2.cvtColor(c, cv2.COLOR_BGR2GRAY), cv2.CV_64F).var() < JERSEY_TRAIN_MIN_SHARPNESS:
                     continue
-                if _jr_save(im, box, os.path.join(JERSEY_TRAIN_DIR, "reads", num, _jr_name(f, box))):
+                if _jr_save(im, box, os.path.join(JERSEY_TRAIN_DIR, _jr_dir("reads"), num, _jr_name(f, box))):
                     added["reads"] += 1
     added["_tracks"] = (_n_jt, _n_jt_read)
     return added
@@ -279,7 +380,7 @@ def _jr_train_sources():
 def _jr_samples(sources):
     out = []
     for s in sources:
-        for f in glob.glob(os.path.join(JERSEY_TRAIN_DIR, s, "*", "*")):
+        for f in glob.glob(os.path.join(JERSEY_TRAIN_DIR, _jr_dir(s), "*", "*")):
             if not f.lower().endswith((".jpg", ".jpeg", ".png")):
                 continue
             # only <number>/ folders are labels: a Roboflow download unzipped in place has train/, valid/ and test/ folders beside
@@ -305,11 +406,22 @@ def jersey_train():
     samples = _jr_samples(train_src)
     classes = sorted({lab for _, lab in samples}, key=lambda x: (len(x), x))
     idx = {c: i for i, c in enumerate(classes)}
-    rs = np.random.RandomState(0)
-    order = rs.permutation(len(samples))
-    n_val = max(1, int(0.15 * len(samples)))
-    val = [samples[i] for i in order[:n_val]]
-    tr = [samples[i] for i in order[n_val:]]
+    # CONFIRMED CHANGE (requested: compare fixed vs pose fairly). The held-back 15% is now picked by PLAY for crops from our
+    # own film (jersey-number tracks and coach checks), so crops of the same player a moment apart are never on both sides
+    # (that flattered the round-by-round %). Extra (ready-made) crops are still picked at random.
+    def _src_of(f):
+        for s in ("coach", "reads"):
+            if os.sep + _jr_dir(s) + os.sep in f:
+                return s
+        return "extra"
+
+    def _is_val(f):
+        key = os.path.basename(f) if _src_of(f) == "extra" else _jr_play_key(f)
+        return int(hashlib.md5(("val|" + key).encode()).hexdigest(), 16) % 100 < 15
+
+    val = [s_ for s_ in samples if _is_val(s_[0])] or samples[:1]
+    tr = [s_ for s_ in samples if not _is_val(s_[0])]
+    _val_src = [_src_of(f) for f, _ in val]
     norm = transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     t_train = transforms.Compose([transforms.RandomResizedCrop(128, scale=(0.7, 1.0), ratio=(0.6, 1.4)),
                                   transforms.ColorJitter(0.3, 0.3, 0.3, 0.05), transforms.RandomRotation(8),
@@ -339,7 +451,7 @@ def jersey_train():
     _cnt_c = {}
     for _f, _l in tr:
         _cnt_c[_l] = _cnt_c.get(_l, 0) + 1
-    _w = [(1.0 / (_cnt_c[_l] ** _bal)) * (_cw if (os.sep + "coach" + os.sep) in _f else 1.0) for _f, _l in tr]
+    _w = [(1.0 / (_cnt_c[_l] ** _bal)) * (_cw if (os.sep + _jr_dir("coach") + os.sep) in _f else 1.0) for _f, _l in tr]
     _sampler = torch.utils.data.WeightedRandomSampler(_w, num_samples=len(tr), replacement=True,
                                                       generator=torch.Generator().manual_seed(0))
     dl = torch.utils.data.DataLoader(_DS(tr, t_train), batch_size=32, sampler=_sampler, num_workers=0)
@@ -349,7 +461,7 @@ def jersey_train():
     loss_fn = torch.nn.CrossEntropyLoss(label_smoothing=0.05)
     print(f"  [recognizer] training on {len(tr):,} crops ({len(classes)} numbers), checking on {len(val):,}...", flush=True)
     t0 = time.time()
-    best = (-1.0, None)
+    best = (-1.0, None, 0.0)
     for ep in range(JERSEY_TRAIN_EPOCHS):
         net.train()
         for xb, yb in dl:
@@ -358,23 +470,33 @@ def jersey_train():
             opt.step()
         sched.step()
         net.eval()
-        right = tot = 0
+        hits = []
         with torch.no_grad():
             for xb, yb in dv:
-                right += int((net(xb).argmax(1) == yb).sum())
-                tot += len(yb)
-        acc = right / max(tot, 1)
-        if acc >= best[0]:
-            best = (acc, {k: v.clone() for k, v in net.state_dict().items()})
-        print(f"  [recognizer]   round {ep + 1}/{JERSEY_TRAIN_EPOCHS}: {acc:.0%} of held-back crops right "
+                hits += (net(xb).argmax(1) == yb).tolist()
+        _by = {}
+        for h_, s_ in zip(hits, _val_src):
+            _by.setdefault(s_, []).append(h_)
+        acc = sum(hits) / max(len(hits), 1)
+        # "our film" = jersey-number tracks + coach checks: the crops that look like what the reader sees in our games.
+        # The model kept is the best round on OUR FILM when there are enough of those crops (else on everything).
+        _own = _by.get("reads", []) + _by.get("coach", [])
+        score = (sum(_own) / len(_own)) if len(_own) >= 50 else acc
+        if score >= best[0]:
+            best = (score, {k: v.clone() for k, v in net.state_dict().items()}, acc)
+        _parts = ", ".join(f"{n_} {sum(_by[k_]) / len(_by[k_]):.0%} of {len(_by[k_])}"
+                           for k_, n_ in (("reads", "number tracks"), ("coach", "coach checks"), ("extra", "extra")) if _by.get(k_))
+        print(f"  [recognizer]   round {ep + 1}/{JERSEY_TRAIN_EPOCHS}: {acc:.0%} of held-back crops right ({_parts}) "
               f"({(time.time() - t0) / 60:.1f} min so far)", flush=True)
     net.load_state_dict(best[1])
     torch.save({"state_dict": net.state_dict(), "classes": classes, "n_train": len(tr), "val_acc": best[0],
-                "sources": {s: sum(1 for f, _ in samples if os.sep + s + os.sep in f) for s in train_src},
+                "sources": {s: sum(1 for f, _ in samples if os.sep + _jr_dir(s) + os.sep in f) for s in train_src},
+                "crop_style": _jr_style(),
                 "signature": _jr_signature(), "n_samples": len(samples),
                 "settings": _jr_settings_str(), "trained_at": pd.Timestamp.now().isoformat(timespec="seconds")},
                JERSEY_MODEL_PATH)
-    print(f"  [recognizer] saved -> {JERSEY_MODEL_PATH} (best: {best[0]:.0%} of held-back crops right)", flush=True)
+    print(f"  [recognizer] saved -> {JERSEY_MODEL_PATH} (kept round: {best[0]:.0%} right on our own film, "
+          f"{best[2]:.0%} on all held-back crops)", flush=True)
 
 
 def _jr_settings_str():
@@ -387,24 +509,26 @@ def _jr_signature():
     return hashlib.md5((repr(files) + repr((JERSEY_TRAIN_EPOCHS, JERSEY_TRAIN_USE_COACH, globals().get("JERSEY_TRAIN_SPLIT_BY", "play"), globals().get("JERSEY_TRAIN_BALANCE", 0.75), globals().get("JERSEY_TRAIN_COACH_WEIGHT", 3.0)))).encode()).hexdigest()
 
 
-def jersey_recognizer_read(crops_bgr):
-    """Color chest crops -> [(number, probability)] with the saved recognizer (None if there is no model)."""
+def jersey_recognizer_read(crops_bgr, style="fixed"):
+    """Color chest crops -> [(number, probability)] with the saved recognizer for that crop style (None if there is no model)."""
     import torch
     import torchvision
     from torchvision import transforms
     from PIL import Image
-    m = globals().get("_jr_model")
+    _mk = "_jr_model" if style != "pose" else "_jr_model_pose"
+    m = globals().get(_mk)
     if m is None:
-        if not os.path.exists(JERSEY_MODEL_PATH):
+        _mp = _jr_path_for(style)
+        if not os.path.exists(_mp):
             return None
-        ck = torch.load(JERSEY_MODEL_PATH, map_location="cpu")
+        ck = torch.load(_mp, map_location="cpu")
         net = torchvision.models.resnet18(weights=None)
         net.fc = torch.nn.Linear(net.fc.in_features, len(ck["classes"]))
         net.load_state_dict(ck["state_dict"])
         net.eval()
         tf = transforms.Compose([transforms.Resize((128, 128)), transforms.ToTensor(),
                                  transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
-        m = globals()["_jr_model"] = (net, ck["classes"], tf)
+        m = globals()[_mk] = (net, ck["classes"], tf)
     net, classes, tf = m
     out = []
     with torch.no_grad():
@@ -452,75 +576,86 @@ def _jr_inputs_fingerprint():
     return hashlib.md5(repr(sorted(map(repr, parts))).encode()).hexdigest()
 
 
-_JR_LAST_INPUTS = os.path.join(JERSEY_TRAIN_DIR, "_last_inputs.json")
+_JR_BASE_MODEL_PATH = globals().get("_JR_BASE_MODEL_PATH") or JERSEY_MODEL_PATH
+_jr_cs = str(globals().get("JERSEY_CROP_STYLE", "fixed")).lower()
+_jr_styles = ["fixed", "pose"] if _jr_cs == "compare" else (["pose"] if _jr_cs == "pose" else ["fixed"])
 
 if RUN_JERSEY_RECOGNIZER:
-    try:
-        os.makedirs(JERSEY_TRAIN_DIR, exist_ok=True)
-        _jr_fp = _jr_inputs_fingerprint()
-        _jr_last = None
-        if os.path.exists(_JR_LAST_INPUTS):
-            try:
-                with open(_JR_LAST_INPUTS) as _fh:
-                    _jr_last = json.load(_fh).get("fingerprint")
-            except Exception:
-                _jr_last = None
-        if JERSEY_TRAIN_NOW is not True and _jr_last == _jr_fp and os.path.exists(JERSEY_MODEL_PATH):
-            print("Jersey-number recognizer: nothing new since the last run (no new checks, extra data or settings) "
-                  "-- skipped. JERSEY_TRAIN_NOW = True forces a run.", flush=True)
-            raise StopIteration
-        if JERSEY_TRAIN_ADD_FRAMES:
-            _added = jersey_collect()
-            _added["extra"] = jersey_import_extra()
-            print(f"Jersey-number recognizer: added {_added['reads']} crop(s) from players named by jersey number "
-                  f"({_added['_tracks'][0]} such track(s) in the last run, {_added['_tracks'][1]} with a confirmed reading to "
-                  f"take crops around), {_added['coach']} from coach checks, {_added['extra']} from extra data", flush=True)
-        _cnt = {s: len(_jr_samples([s])) for s in ("reads", "coach", "extra")}
-        _cn = len(glob.glob(os.path.join(JERSEY_TRAIN_DIR, "coach", "*", "*")))
-        _how = ("half trained on, half kept as the TEST set" if JERSEY_TRAIN_USE_COACH == "half"
-                else "trained on" if JERSEY_TRAIN_USE_COACH else "kept as the TEST set")
-        print(f"  training set: {_cnt['reads']:,} from jersey-number tracks, {_cnt['extra']:,} extra, {_cn:,} coach "
-              f"checks ({_how})  -- {JERSEY_TRAIN_DIR}", flush=True)
-        _n_coach_train = len(_jr_samples(["coach"])) if JERSEY_TRAIN_USE_COACH else 0
-        _n_train = _cnt["reads"] + _cnt["extra"] + _n_coach_train
-        _saved_sig, _saved_n, _saved_set = None, None, None
-        if os.path.exists(JERSEY_MODEL_PATH):
-            try:
-                import torch
-                _ck_ = torch.load(JERSEY_MODEL_PATH, map_location="cpu")
-                _saved_sig, _saved_set = _ck_.get("signature"), _ck_.get("settings")
-                _saved_n = _ck_.get("n_samples") or _ck_.get("n_train")
-            except Exception:
-                _saved_sig = None
-        # CONFIRMED CHANGE (requested: "is it really necessary to retrain every time I add pictures from the player checks?").
-        # "auto" now retrains only when the training set has GROWN enough since the saved model: at least JERSEY_TRAIN_MIN_NEW
-        # new crops or JERSEY_TRAIN_MIN_GROWTH (a share, 0.15 = 15%) more than it was trained on -- or when the epochs / coach
-        # setting changed, or there is no model yet. JERSEY_TRAIN_MIN_NEW = 0 retrains on any change (the old behaviour).
-        _want = JERSEY_TRAIN_NOW is True
-        if not _want and JERSEY_TRAIN_NOW == "auto" and _saved_sig != _jr_signature():
-            _now_n = len(_jr_samples(_jr_train_sources()))
-            _min_new = int(globals().get("JERSEY_TRAIN_MIN_NEW", 150))
-            _min_gr = float(globals().get("JERSEY_TRAIN_MIN_GROWTH", 0.15))
-            _new_n = (_now_n - int(_saved_n)) if _saved_n else None
-            if (not os.path.exists(JERSEY_MODEL_PATH) or _saved_n is None or _saved_set != _jr_settings_str()
-                    or _min_new <= 0 or abs(_new_n) >= _min_new or abs(_new_n) >= _min_gr * max(int(_saved_n), 1)):
-                _want = True
-            else:
-                print(f"  training set changed by {_new_n:+,} crop(s) since the saved model ({int(_saved_n):,} then, {_now_n:,} now) -- "
-                      f"under the retrain bar of {_min_new} crops or {_min_gr:.0%}, so the saved recognizer is kept "
-                      f"(JERSEY_TRAIN_NOW = True forces a retrain).", flush=True)
-        if _want and _n_train < JERSEY_TRAIN_MIN_IMAGES:
-            print(f"  not trained yet: {_n_train} training crop(s), needs {JERSEY_TRAIN_MIN_IMAGES} (check more players, "
-                  f"run tracking with jersey numbers on, or add extra data)", flush=True)
-        elif _want:
-            globals().pop("_jr_model", None)
-            jersey_train()
-        elif os.path.exists(JERSEY_MODEL_PATH):
-            print("  saved recognizer is up to date with the training set -- not retrained", flush=True)
-        # remember what this run saw (after training: the model file is part of it)
-        with open(_JR_LAST_INPUTS, "w") as _fh:
-            json.dump({"fingerprint": _jr_inputs_fingerprint(), "saved": pd.Timestamp.now().isoformat(timespec="seconds")}, _fh)
-    except StopIteration:
-        pass
-    except Exception as _e:
-        print(f"Jersey-number recognizer skipped: {type(_e).__name__}: {_e}")
+    for _JR_STYLE in _jr_styles:
+        JERSEY_MODEL_PATH = _jr_path_for(_JR_STYLE)
+        _JR_LAST_INPUTS = os.path.join(JERSEY_TRAIN_DIR, "_last_inputs.json" if _JR_STYLE == "fixed" else "_last_inputs_pose.json")
+        if len(_jr_styles) > 1:
+            print(f"--- jersey crop style: {_JR_STYLE} ---", flush=True)
+        try:
+            os.makedirs(JERSEY_TRAIN_DIR, exist_ok=True)
+            _jr_fp = _jr_inputs_fingerprint()
+            _jr_last = None
+            if os.path.exists(_JR_LAST_INPUTS):
+                try:
+                    with open(_JR_LAST_INPUTS) as _fh:
+                        _jr_last = json.load(_fh).get("fingerprint")
+                except Exception:
+                    _jr_last = None
+            if JERSEY_TRAIN_NOW is not True and _jr_last == _jr_fp and os.path.exists(JERSEY_MODEL_PATH):
+                print("Jersey-number recognizer: nothing new since the last run (no new checks, extra data or settings) "
+                      "-- skipped. JERSEY_TRAIN_NOW = True forces a run.", flush=True)
+                raise StopIteration
+            if JERSEY_TRAIN_ADD_FRAMES:
+                _added = jersey_collect()
+                _added["extra"] = jersey_import_extra()
+                print(f"Jersey-number recognizer: added {_added['reads']} crop(s) from players named by jersey number "
+                      f"({_added['_tracks'][0]} such track(s) in the last run, {_added['_tracks'][1]} with a confirmed reading to "
+                      f"take crops around), {_added['coach']} from coach checks, {_added['extra']} from extra data", flush=True)
+            _cnt = {s: len(_jr_samples([s])) for s in ("reads", "coach", "extra")}
+            _cn = len(glob.glob(os.path.join(JERSEY_TRAIN_DIR, _jr_dir("coach"), "*", "*")))
+            _how = ("half trained on, half kept as the TEST set" if JERSEY_TRAIN_USE_COACH == "half"
+                    else "trained on" if JERSEY_TRAIN_USE_COACH else "kept as the TEST set")
+            print(f"  [{_jr_style()} crop] training set: {_cnt['reads']:,} from jersey-number tracks, {_cnt['extra']:,} extra, {_cn:,} coach "
+                  f"checks ({_how})  -- {JERSEY_TRAIN_DIR}", flush=True)
+            _n_coach_train = len(_jr_samples(["coach"])) if JERSEY_TRAIN_USE_COACH else 0
+            _n_train = _cnt["reads"] + _cnt["extra"] + _n_coach_train
+            _saved_sig, _saved_n, _saved_set = None, None, None
+            if os.path.exists(JERSEY_MODEL_PATH):
+                try:
+                    import torch
+                    _ck_ = torch.load(JERSEY_MODEL_PATH, map_location="cpu")
+                    _saved_sig, _saved_set = _ck_.get("signature"), _ck_.get("settings")
+                    _saved_n = _ck_.get("n_samples") or _ck_.get("n_train")
+                except Exception:
+                    _saved_sig = None
+            # CONFIRMED CHANGE (requested: "is it really necessary to retrain every time I add pictures from the player checks?").
+            # "auto" now retrains only when the training set has GROWN enough since the saved model: at least JERSEY_TRAIN_MIN_NEW
+            # new crops or JERSEY_TRAIN_MIN_GROWTH (a share, 0.15 = 15%) more than it was trained on -- or when the epochs / coach
+            # setting changed, or there is no model yet. JERSEY_TRAIN_MIN_NEW = 0 retrains on any change (the old behaviour).
+            _want = JERSEY_TRAIN_NOW is True
+            if not _want and JERSEY_TRAIN_NOW == "auto" and _saved_sig != _jr_signature():
+                _now_n = len(_jr_samples(_jr_train_sources()))
+                _min_new = int(globals().get("JERSEY_TRAIN_MIN_NEW", 150))
+                _min_gr = float(globals().get("JERSEY_TRAIN_MIN_GROWTH", 0.15))
+                _new_n = (_now_n - int(_saved_n)) if _saved_n else None
+                if (not os.path.exists(JERSEY_MODEL_PATH) or _saved_n is None or _saved_set != _jr_settings_str()
+                        or _min_new <= 0 or abs(_new_n) >= _min_new or abs(_new_n) >= _min_gr * max(int(_saved_n), 1)):
+                    _want = True
+                else:
+                    print(f"  training set changed by {_new_n:+,} crop(s) since the saved model ({int(_saved_n):,} then, {_now_n:,} now) -- "
+                          f"under the retrain bar of {_min_new} crops or {_min_gr:.0%}, so the saved recognizer is kept "
+                          f"(JERSEY_TRAIN_NOW = True forces a retrain).", flush=True)
+            if _want and _n_train < JERSEY_TRAIN_MIN_IMAGES:
+                print(f"  not trained yet: {_n_train} training crop(s), needs {JERSEY_TRAIN_MIN_IMAGES} (check more players, "
+                      f"run tracking with jersey numbers on, or add extra data)", flush=True)
+            elif _want:
+                globals().pop("_jr_model" if _jr_style() != "pose" else "_jr_model_pose", None)
+                jersey_train()
+            elif os.path.exists(JERSEY_MODEL_PATH):
+                print("  saved recognizer is up to date with the training set -- not retrained", flush=True)
+            # remember what this run saw (after training: the model file is part of it)
+            with open(_JR_LAST_INPUTS, "w") as _fh:
+                json.dump({"fingerprint": _jr_inputs_fingerprint(), "saved": pd.Timestamp.now().isoformat(timespec="seconds")}, _fh)
+        except StopIteration:
+            pass
+        except Exception as _e:
+            print(f"Jersey-number recognizer skipped: {type(_e).__name__}: {_e}")
+    _JR_STYLE = "fixed"
+    JERSEY_MODEL_PATH = _JR_BASE_MODEL_PATH
+    _jr_torso_save()
+

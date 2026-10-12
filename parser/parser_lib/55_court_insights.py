@@ -18,12 +18,14 @@
 #   uww_court_spacing      UWW offense by lineup: both corners filled %, paint crowded %, true spacing
 #   uww_court_diagrams     one FastDraw-style diagram per tracked possession (numbered players, their paths,
 #                          dribbles, passes, screens) -- the app draws them; the future FastDraw export uses them
+#   uww_transition_five_back(_summary)  transition shots: defenders back 1 s before the shot, and rim attempts by count
 #   uww_court_report       mapping quality per game (from the court mapping cell) + the 2-vs-3 shot check
 
 _CZ_BASKET = (5.25, 25.0)
 _cz_tables = {n: pd.DataFrame() for n in (
     "uww_court_shots", "uww_court_shot_zones", "uww_court_heat", "uww_court_screens", "uww_court_screen_zones",
-    "uww_court_help", "uww_court_zone_press", "uww_court_spacing", "uww_court_diagrams", "uww_court_report")}
+    "uww_court_help", "uww_court_zone_press", "uww_court_spacing", "uww_court_diagrams", "uww_court_report",
+    "uww_transition_five_back", "uww_transition_five_back_summary")}
 
 
 def _cz_in_paint(hx, hy):
@@ -353,6 +355,68 @@ def _cz_diagrams(clips):
     return pd.DataFrame(rows)
 
 
+# CONFIRMED CHANGE (requested: "build that" -- the "Five Back" idea from github.com/fl397/five-back-transition: on 32,153 NBA
+# transition shots, shooting with all five defenders back went with a 17-point LOWER chance of a rim attempt; 4 back +8, 3 back
+# +15, 2 or fewer +29 vs five back). For every TRANSITION possession that ends in a shot: how many of the five defenders were in
+# their own half one second before the shot (court spot hx < 47 = between half court and the basket being attacked).
+# Counted only when all five defenders are on the film at that moment (a defender the tracker missed would look "not back");
+# a defender set aside as not a player doesn't count. Rim attempt = Synergy says At/To Basket, Put Back, Dunk or Layup.
+def _cz_five_back(clips):
+    rows = []
+    rim_re = re.compile(r"\b(At|To) Basket\b|Put Back|Dunk|Layup", re.I)
+    for key, c in clips.items():
+        r = c["row"]
+        sit = str(r.get("play_situation") or "")
+        trans = (sit == "Transition" or str(r.get("synergy_play_type") or "").lower() == "transition"
+                 or bool(re.search(r"\bTransition\b", str(r.get("synergy_string") or ""))))
+        if not trans:
+            continue
+        m = re.search(r"\b(Make|Miss)\w*\s+([23])\s*Pts", str(r.get("result") or ""), re.I)
+        if not m:
+            continue
+        t_fin = pd.to_numeric(r.get("track_finish_frame"), errors="coerce")
+        if pd.isna(t_fin):
+            continue
+        fps = float(c.get("fps") or 2.0)
+        t_q = max(0, int(round(float(t_fin) - fps)))          # one second before the shot
+        dfn = [k for k in _ti_side(c, "defense")]
+        spots = [_cz_near(c["tr"][k]["court"], t_q, span=1) for k in dfn]
+        seen = [s_ for s_ in spots if s_ is not None]
+        back = sum(1 for hx, _hy in seen if hx < 47)
+        measurable = len(seen) >= 5 or back >= 5
+        n_back = min(back, 5) if measurable else None
+        rows.append({"clip_key": key, "game_date": r.get("game_date"), "game_code": r.get("game_code"),
+                     "offense_team": r.get("offense_team"), "defense_team": r.get("defense_team"),
+                     "shooter": r.get("player"), "result": r.get("result"),
+                     "rim_attempt": bool(rim_re.search(str(r.get("synergy_string") or r.get("result") or ""))),
+                     "made": m.group(1).lower() == "make", "points": _ti_points(r),
+                     "defenders_seen": len(seen), "defenders_back": back,
+                     "measurable": measurable, "n_back": n_back, "five_back": (n_back == 5) if measurable else None,
+                     "seconds_before_shot": round((float(t_fin) - t_q) / fps, 1)})
+    det = pd.DataFrame(rows)
+    summ = []
+    if not det.empty:
+        for team, g in det.groupby("defense_team"):
+            mm = g[g["measurable"]]
+            def _rate(x, col):
+                return round(100 * float(x[col].mean())) if len(x) else None
+            fb, nfb = mm[mm["n_back"] == 5], mm[mm["n_back"] < 5]
+            row = {"defense_team": team, "transition_shots": len(g), "measurable": len(mm),
+                   "five_back_pct": _rate(mm, "five_back"),
+                   "rim_pct_five_back": _rate(fb, "rim_attempt"), "rim_pct_fewer": _rate(nfb, "rim_attempt"),
+                   "pts_per_shot_five_back": round(float(fb["points"].mean()), 2) if len(fb) and fb["points"].notna().any() else None,
+                   "pts_per_shot_fewer": round(float(nfb["points"].mean()), 2) if len(nfb) and nfb["points"].notna().any() else None,
+                   "shots_five_back": len(fb), "shots_fewer": len(nfb)}
+            for lab, sel in (("5", mm["n_back"] == 5), ("4", mm["n_back"] == 4), ("3", mm["n_back"] == 3), ("2_or_fewer", mm["n_back"] <= 2)):
+                x = mm[sel]
+                row[f"shots_{lab}_back"] = len(x)
+                row[f"rim_pct_{lab}_back"] = _rate(x, "rim_attempt")
+            summ.append(row)
+        print(f"  [court] five back: {len(det)} transition shot(s); {int(det['measurable'].sum())} with all five defenders on "
+              f"film one second before the shot", flush=True)
+    return det, pd.DataFrame(summ)
+
+
 if isinstance(globals().get("player_tracks"), pd.DataFrame) and "court_path" in player_tracks.columns \
         and player_tracks["court_path"].notna().any():
     try:
@@ -363,6 +427,11 @@ if isinstance(globals().get("player_tracks"), pd.DataFrame) and "court_path" in 
                            "uww_court_screens": _scr, "uww_court_screen_zones": _scr_z, "uww_court_help": _cz_help(_cz_c),
                            "uww_court_zone_press": _cz_zone_press(_cz_c), "uww_court_spacing": _cz_spacing(_cz_c),
                            "uww_court_diagrams": _cz_diagrams(_cz_c)})
+        try:
+            _fb_d, _fb_s = _cz_five_back(_cz_c)
+            _cz_tables.update({"uww_transition_five_back": _fb_d, "uww_transition_five_back_summary": _fb_s})
+        except Exception as _fbe:
+            print(f"  [court] five back not built: {type(_fbe).__name__}: {_fbe}", flush=True)
         # the same, game by game ("<name>_by_game", with game_date / game_code) for the app's per-game Film Tracking;
         # per-play tables (shots, screens, diagrams) already carry their game
         import contextlib as _ctx
@@ -371,7 +440,7 @@ if isinstance(globals().get("player_tracks"), pd.DataFrame) and "court_path" in 
         for _k, _c in _cz_c.items():
             _cz_games.setdefault((str(_c["row"].get("game_date")), str(_c["row"].get("game_code"))), {})[_k] = _c
         _cby = {n: [] for n in ("uww_court_shot_zones", "uww_court_heat", "uww_court_screen_zones", "uww_court_help",
-                                "uww_court_zone_press", "uww_court_spacing")}
+                                "uww_court_zone_press", "uww_court_spacing", "uww_transition_five_back_summary")}
         for (_gd, _gc), _sub in _cz_games.items():
             try:
                 with _ctx.redirect_stdout(_io.StringIO()):
@@ -379,7 +448,8 @@ if isinstance(globals().get("player_tracks"), pd.DataFrame) and "court_path" in 
                     _gs, _gsz = _cz_screens(_sub)
                     _parts = {"uww_court_shot_zones": _gz, "uww_court_heat": _cz_heat(_sub), "uww_court_screen_zones": _gsz,
                               "uww_court_help": _cz_help(_sub), "uww_court_zone_press": _cz_zone_press(_sub),
-                              "uww_court_spacing": _cz_spacing(_sub)}
+                              "uww_court_spacing": _cz_spacing(_sub),
+                              "uww_transition_five_back_summary": _cz_five_back(_sub)[1]}
                 for _n, _t in _parts.items():
                     if isinstance(_t, pd.DataFrame) and not _t.empty:
                         _cby[_n].append(_t.assign(game_date=_gd, game_code=_gc))
