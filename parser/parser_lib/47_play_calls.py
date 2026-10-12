@@ -2232,7 +2232,7 @@ def _pl_untagged_from_frames(tagged):
         hint = _urls.get(str(_url))
         if hint is None and not e_.empty and "_src" in e_.columns:
             hint = "UWW" if (e_["_src"] == "pbp_events").mean() >= 0.5 else "Opponent"
-        if hint is None and any("WWW" in str(x).upper() for x in g.get("clip_game", pd.Series(dtype=object)).dropna()):
+        if hint is None and any(("WWW" in str(x).upper() or "WHITEWATER" in str(x).upper()) for x in g.get("clip_game", pd.Series(dtype=object)).dropna()):
             hint = "UWW"
         for _, r in g.iterrows():
             n = pd.to_numeric(pd.Series([r.get("position")]), errors="coerce").iloc[0]

@@ -5550,6 +5550,17 @@ def _ft_load(name):
 _PR_VERDICTS = ["--", "right", "wrong", "can't tell"]
 
 
+# CONFIRMED BUG (fixed; no open Play review showed for the WashU game): a UWW game was recognized only by "WWW" in its game
+# code -- UW-Whitewater's code in the coaches' Synergy export ("WOS@WWW"). Games whose clips come from a captured clip page
+# have Synergy's long code instead ("UWWhitewater@Wash(StLouis)"), so their review, Film Tagging batch and play links never
+# showed. Either form counts now.
+_UWW_CODE_RE = r"WWW|Whitewater"
+
+
+def _is_uww_code(code) -> bool:
+    return bool(re.search(_UWW_CODE_RE, str(code or ""), re.I))
+
+
 def _pr_norm(x):
     return re.sub(r"[^a-z0-9#]+", "", str(x).lower())
 
@@ -5557,7 +5568,7 @@ def _pr_norm(x):
 def _pr_open_package(game_iso):
     """This UWW game's open review package (data/play_review/<game>/review.json), or None."""
     pk = [d for d in _pr_app_packages() if str(d.get("game", "")).startswith(str(game_iso))
-          and "WWW" in str(d.get("game", "")).split("|")[-1]]
+          and _is_uww_code(str(d.get("game", "")).split("|")[-1])]
     return pk[0] if pk else None
 
 
@@ -5569,7 +5580,7 @@ def _pr_event_map(d, game_iso):
     if not cl.empty and {"clip_number", "pbp_event_order"} <= set(cl.columns):
         cl = cl[iso_dates(cl["game_date"]).astype(str).to_numpy() == str(game_iso)]
         if "game_code" in cl.columns:
-            cl = cl[cl["game_code"].astype(str).str.contains("WWW", na=False)]
+            cl = cl[cl["game_code"].astype(str).str.contains(_UWW_CODE_RE, case=False, regex=True, na=False)]
         for cn, eo in zip(pd.to_numeric(cl["clip_number"], errors="coerce"), pd.to_numeric(cl["pbp_event_order"], errors="coerce")):
             if pd.notna(cn) and pd.notna(eo):
                 by_clip[int(cn)] = float(eo)
@@ -6349,7 +6360,7 @@ def render_film_tagging():
     pkgs = sorted(_pr_app_packages("play_tag"), key=lambda d: str(d.get("game", "")), reverse=True)
     # the Title part of an open Play review for a game that isn't ours (opponent games have no Previous Games page)
     pkgs += [d for d in sorted(_pr_app_packages("play_review"), key=lambda d: str(d.get("game", "")), reverse=True)
-             if "WWW" not in str(d.get("game", "")).split("|")[-1]]
+             if not _is_uww_code(str(d.get("game", "")).split("|")[-1])]
     if not pkgs:
         st.info("Nothing to tag right now. The parser's Play review cell builds a batch of untagged clips for every captured "
                 "game (Film Tagging queue); commit and push the data folder, then come back here.")
@@ -6457,7 +6468,7 @@ def _pbp_clip_rows(game_pbp, game_iso):
         return []
     pc = pc[iso_dates(pc["game_date"]).astype(str).to_numpy() == str(game_iso)]
     if "game_code" in pc.columns:
-        pc = pc[pc["game_code"].astype(str).str.contains("WWW", na=False)]
+        pc = pc[pc["game_code"].astype(str).str.contains(_UWW_CODE_RE, case=False, regex=True, na=False)]
     if pc.empty:
         return []
     pc = pc.assign(_cn=pd.to_numeric(pc["clip_number"], errors="coerce"),
@@ -6509,7 +6520,7 @@ def _pbp_game_clips(game_iso):
         return {}
     pc = pc[iso_dates(pc["game_date"]).astype(str).to_numpy() == str(game_iso)]
     if "game_code" in pc.columns:
-        pc = pc[pc["game_code"].astype(str).str.contains("WWW", na=False)]
+        pc = pc[pc["game_code"].astype(str).str.contains(_UWW_CODE_RE, case=False, regex=True, na=False)]
     if pc.empty:
         return {}
     pc = pc.assign(_cn=pd.to_numeric(pc["clip_number"], errors="coerce"),
@@ -6650,7 +6661,7 @@ def _pbp_replay_clips(game_iso):
         return {}
     cl = cl[iso_dates(cl["game_date"]).astype(str).to_numpy() == str(game_iso)]
     if "game_code" in cl.columns:
-        cl = cl[cl["game_code"].astype(str).str.contains("WWW", na=False)]   # not another game on the same day
+        cl = cl[cl["game_code"].astype(str).str.contains(_UWW_CODE_RE, case=False, regex=True, na=False)]   # not another game on the same day
     eo = pd.to_numeric(cl["pbp_event_order"], errors="coerce")
     return {float(o): k for o, k in zip(eo, cl["clip_key"]) if pd.notna(o)}
 
@@ -13303,7 +13314,7 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
     # this UWW game's review: same date, and UW-Whitewater (WWW) in the game code -- another game the same day (two
     # opponents playing each other) never matches
     pk = [d for d in _pr_app_packages() if str(d.get("game", "")).startswith(str(game_iso))
-          and "WWW" in str(d.get("game", "")).split("|")[-1]]
+          and _is_uww_code(str(d.get("game", "")).split("|")[-1])]
     if not pk:
         st.info("No open play review for this game. The parser makes one (20 random plays) when the game is tracked and "
                 "the last review of it was saved -- commit and push the data folder afterwards.")
