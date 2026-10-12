@@ -1627,7 +1627,9 @@ def player_tracking(pc):
             code = str(next((pc.at[i, "game_code"] for i in todo if game_of[i] == g), ""))
             uww = next((t for t in teams if "whitewater" in t.lower()), None)
             if uww and "@" in code:
-                home_is_uww = code.split("@")[-1].strip().upper() == TRACK_UWW_GAME_CODE.upper()
+                # "WOS@WWW" (coaches' export) or "Loras@UWWhitewater" (a captured clip page): either names UWW as home
+                _home = code.split("@")[-1].strip()
+                home_is_uww = _home.upper() == TRACK_UWW_GAME_CODE.upper() or "whitewater" in _home.lower()
                 light_team = uww if home_is_uww else next(t for t in teams if t != uww)
                 src = f"home team wears light ({light_team})"
         if light_team:
