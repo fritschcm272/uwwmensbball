@@ -6512,13 +6512,78 @@ def _ft_unlab(v):
     return re.sub(r"^#\S*\s+", "", _ft_clean(v))
 
 
-def _ft_initial_actions(pl):
-    """The starting row of a play's Actions table: the coach's answers (a Title check) or the automatic ones."""
+# what the Synergy play type says about the action / what the screener did (the automatic Title reads the same words:
+# "P&R Ball Handler" -> "(bs)")
+_FT_SYN_ACTION = [(r"\bP&R Ball Handler\b|\bP&R Roll Man\b|\bPick and Pops?\b", "Ball Screen"), (r"\bHand Off\b", "DHO"),
+                  (r"\bFlare\b", "Flare"), (r"\bOff Screen\b", "Down Screen")]
+_FT_SYN_SCREENER = [(r"\bPick and Pops?\b", "Pop"), (r"\bSlips?\b", "Slip"), (r"\bP&R Roll Man\b", "Roll")]
+
+
+def _ft_auto_parts(pl):
+    """CONFIRMED CHANGE (requested: "I'm not sure it is defaulting the correct things in the action dropdowns based on the
+    automatic title"). Row 1 now follows the automatic Title: a field is filled only when the model was sure enough to put
+    it in the Title (the same confidence bar), the coverage is the one the Title shows (it used to take the unsure
+    ball-screen coverage ahead of a sure off-ball one), and what Synergy's play type says ("P&R Ball Handler" = a ball
+    screen, "Pick and Pop" = the screener popped) fills the Action / Screener action when the model has nothing sure.
+    Returns (row, unsure) -- unsure = [(column, guess, confidence)] the model wasn't sure of, listed above the table."""
     by = {f.get("field"): f for f in pl.get("fields", [])}
-    val = lambda k: _ft_clean((by.get(k) or {}).get("coach")) or _ft_clean((by.get(k) or {}).get("auto"))
-    row = {"Action": val("primary_action"), "Screener": _ft_lab(pl, val("screener")), "Screener action": "",
-           "Coverage": val("ball_screen_coverage") or val("offball_coverage"),
-           "Screen defender": _ft_lab(pl, val("screen_defender")), "At (s)": None}
+    unsure = []
+
+    def val(k, col):
+        f = by.get(k) or {}
+        c = _ft_clean(f.get("coach"))
+        if c:
+            return c
+        a = _ft_clean(f.get("auto"))
+        if a and f.get("sure", True) is False:            # below the Title's confidence bar: offered, not filled
+            unsure.append((col, a, f.get("conf")))
+            return ""
+        return a
+
+    syn = str(pl.get("synergy") or "")
+    action = val("primary_action", "Action") or next((nm for rx, nm in _FT_SYN_ACTION if re.search(rx, syn)), "")
+    ball = val("ball_screen_coverage", "Coverage")
+    off = val("offball_coverage", "Coverage")
+    is_ball = bool(_FT_BALL_RX.search(action or ""))
+    cov = (ball or off) if is_ball else (off or ball)
+    # a coverage that was filled drops its own "unsure" twin (e.g. sure Over, unsure Stay -> Stay still listed)
+    unsure = [u for u in unsure if not (u[0] == "Coverage" and u[1] == cov)]
+    row = {"Action": action, "Screener": "", "Screener action": next((nm for rx, nm in _FT_SYN_SCREENER if re.search(rx, syn)), ""),
+           "Coverage": cov, "Screen defender": "", "At (s)": None}
+    # the screener: the coach's / the model's, else the Synergy player when Synergy says he was the roll / pop man
+    scr = val("screener", "Screener")
+    if not scr and re.search(r"\bP&R Roll Man\b|\bPick and Pops?\b", syn) and pl.get("player"):
+        scr = _ft_player_label(pl, pl.get("player"), "offense")
+    row["Screener"] = _ft_player_label(pl, scr, "offense") if scr else ""
+    sd = val("screen_defender", "Screen defender")
+    row["Screen defender"] = _ft_player_label(pl, sd, "defense") if sd else ""
+    unsure = [(c, (_ft_player_label(pl, g, "defense") if c == "Screen defender" else g), cf) for c, g, cf in unsure]
+    return row, unsure
+
+
+def _ft_player_label(pl, who, side):
+    """A name or "#12" -> the lineup's "#12 Collin Madson" when the player is in that side's five, else as given."""
+    who = _ft_clean(who)
+    if not who:
+        return ""
+    labs = pl.get("five_labels") or {}
+    if who in labs and not str(labs[who]).startswith("#?"):
+        return labs[who]
+    names = (pl.get("five") or {}).get(side) or list(labs)
+    m = re.match(r"^#?\s*(\d{1,2})\b", who)
+    for nm in names:
+        lab = str(labs.get(nm) or "")
+        if m and re.match(rf"^#{m.group(1)}\b", lab):
+            return lab
+        if not m and nm and (nm.lower() in who.lower() or who.lower() in nm.lower()) and not lab.startswith("#?"):
+            return lab or nm
+    return who
+
+
+def _ft_initial_actions(pl):
+    """The starting row of a play's Actions table: the coach's answers (a Title check) or the automatic ones (as the
+    automatic Title has them -- see _ft_auto_parts)."""
+    row, _u = _ft_auto_parts(pl)
     return [row] if any(_ft_clean(row[c]) for c in _FT_ACT_TEXT) else []
 
 
@@ -6567,9 +6632,13 @@ def _ft_actions_editor(d, pi, store, kp):
                else opt(voc.get("screen_defender"), cur_vals("Screen defender")))),
            "At (s)": st.column_config.NumberColumn("At (s)", min_value=0.0, step=0.5, format="%.1f",
                                                    help="Optional: the second of the clip this action happens at")}
+    _auto_row = init and not any(_ft_clean(f.get("coach")) for f in pl.get("fields", []) if f.get("field") in _FT_ACTION_FIELDS)
     st.markdown("**Actions in this play** (in order; \u2795 at the bottom adds another, e.g. a 2nd ball screen)"
-                + (" \u2014 row 1 starts on the automatic answers \u2757" if init and not any(
-                    _ft_clean(f.get("coach")) for f in pl.get("fields", []) if f.get("field") in _FT_ACTION_FIELDS) else ""))
+                + (" \u2014 row 1 starts on the automatic Title's answers \u2757" if _auto_row else ""))
+    _uns = _ft_auto_parts(pl)[1]
+    if _uns:
+        st.caption("Not sure enough to fill in (pick it if it's right): " + "; ".join(
+            f"{c} {g}" + (f" ({float(cf):.0%})" if cf is not None else "") for c, g, cf in _uns))
     edited = st.data_editor(pd.DataFrame(cur or [], columns=_FT_ACT_COLS), column_config=cfg, num_rows="dynamic",
                             hide_index=True, use_container_width=True, key=f"{kp}_acted_{run}_{pi}")
     rows = _ft_rows(edited)
