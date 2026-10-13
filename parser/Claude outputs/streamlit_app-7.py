@@ -6394,7 +6394,7 @@ def _pnt_check_form(prd):
     with st.form(f"prx_players_form{sfx}"):
         for pi, pl in enumerate(prd.get("plays", [])):
             with st.expander(f"Clip {pl.get('clip_number')} \u00b7 {pl.get('clock', '')} \u00b7 "
-                             f"{str(pl.get('synergy', ''))[:70]}"):
+                             f"{str(pl.get('synergy', ''))[:70]}", expanded=True):     # requested: open by default
                 _pr_player_widgets(prd, pi, store, "prxpnt", with_video=False)
         # requested: the name box right next to the Save button (it was at the top of the form, far from Save)
         _nc, _sc = st.columns([3, 2], vertical_alignment="bottom")
@@ -6653,7 +6653,7 @@ def render_film_tagging():
         n_set = len([k for k in store if k.startswith(f"{kp}_v_{d.get('run')}_{pi}_")])
         head = (f"Clip {pl.get('clip_number')} \u00b7 {pl.get('clock') or ''} \u00b7 {str(pl.get('synergy') or '')[:90]}"
                 + (f"  \u2014 {n_set} changed" if n_set else ""))
-        with _form.expander(head, expanded=(pi == 0)):
+        with _form.expander(head, expanded=True):        # requested: every play open by default
             if pl.get("coach_title"):
                 st.markdown(f"Coach's Title (Synergy): `{pl['coach_title']}`")
             if pl.get("auto_title"):
