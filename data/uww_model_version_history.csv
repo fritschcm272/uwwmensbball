@@ -167,3 +167,15 @@ Tag model: screen_defender,v2026.10.12.3,2026-10-12,trained,2026-10-12T20:14:03,
 Tag model: situation,v2026.10.12.3,2026-10-12,trained,2026-10-12T20:14:03,"298 tagged clips, 5 answers learned, one answer only",2026-10-12T20:19:16
 Tag model (overall),v2026.10.12.3,2026-10-12,trained,2026-10-12T20:14:03,newest of 9 field model(s); last retrained field: situation,2026-10-12T20:19:16
 Player tracking,v2026.10.12.2,2026-10-12,pretrained + code,442bc7b7102b,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-12T20:19:16
+Tag model: ball_screen_coverage,v2026.10.13,2026-10-13,trained,2026-10-13T09:54:46,"86 tagged clips, 5 answers learned, one answer only",2026-10-13T09:57:13
+Tag model: defense,v2026.10.13,2026-10-13,trained,2026-10-13T09:54:46,"254 tagged clips, 1 answers learned, one answer only",2026-10-13T09:57:13
+Tag model: formation,v2026.10.13,2026-10-13,trained,2026-10-13T09:54:46,"130 tagged clips, 5 answers learned, one answer only",2026-10-13T09:57:13
+Tag model: offball_coverage,v2026.10.13,2026-10-13,trained,2026-10-13T09:54:46,"58 tagged clips, 2 answers learned, one answer only",2026-10-13T09:57:13
+Tag model: play_call,v2026.10.13,2026-10-13,trained,2026-10-13T09:54:46,"165 tagged clips, 7 answers learned, one answer only",2026-10-13T09:57:13
+Tag model: press,v2026.10.13,2026-10-13,trained,2026-10-13T09:54:46,"254 tagged clips, 2 answers learned",2026-10-13T09:57:13
+Tag model: primary_action,v2026.10.13,2026-10-13,trained,2026-10-13T09:54:46,"123 tagged clips, 6 answers learned, one answer only",2026-10-13T09:57:13
+Tag model: screen_defender,v2026.10.13,2026-10-13,trained,2026-10-13T09:54:46,"60 tagged clips, 6 answers learned",2026-10-13T09:57:13
+Tag model: situation,v2026.10.13,2026-10-13,trained,2026-10-13T09:54:46,"298 tagged clips, 5 answers learned, one answer only",2026-10-13T09:57:13
+Tag model (overall),v2026.10.13,2026-10-13,trained,2026-10-13T09:54:46,newest of 9 field model(s); last retrained field: situation,2026-10-13T09:57:13
+Player tracking,v2026.10.13,2026-10-13,pretrained + code,e070f79e0483,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-13T09:57:13
+Jersey-number reader test,v2026.10.13,2026-10-13,pretrained + code,453ed5662118,scores the OCR readers; none retrained here,2026-10-13T09:57:13

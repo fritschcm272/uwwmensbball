@@ -25,8 +25,8 @@ coach Titles, held-out plays 36% of 74 (always guessing the usual answer: 41%)",
 Automatic Title,Defense,"coach reviews 19 of 19 (100%)
 coach Titles, validation plays 20 of 20 (100%)","plays the model never trained on, or coaches' right/wrong marks",8,1024,9,1081,8,1009,84729,697,99,327,88,20,700,6150
 Automatic Title,Press,"coach reviews 6 of 7 (86%)
-coach Titles, validation plays 12 of 20 (60%)
-coach Titles, held-out plays 74% of 245 (always guessing the usual answer: 76%)","plays the model never trained on, or coaches' right/wrong marks",8,1024,9,1081,8,1009,84729,697,99,327,88,20,700,6150
+coach Titles, validation plays 14 of 20 (70%)
+coach Titles, held-out plays 77% of 245 (always guessing the usual answer: 76%)","plays the model never trained on, or coaches' right/wrong marks",8,1024,9,1081,8,1009,84729,697,99,327,88,20,700,6150
 Automatic Title,Ball screen coverage,"coach reviews 1 of 15 (7%)
 coach Titles, validation plays 0 of 10 (0%)
 coach Titles, held-out plays 26% of 72 (always guessing the usual answer: 32%)","plays the model never trained on, or coaches' right/wrong marks",8,1024,9,1081,8,1009,84729,697,99,327,88,20,700,6150

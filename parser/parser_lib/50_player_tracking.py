@@ -453,6 +453,33 @@ def _trk_read_numbers(clips, todo, base, engine):
     import cv2
     cp = os.path.join(TRACK_DIR, "jersey_numbers.pkl")
     cache = _safe_read_pickle(cp) if os.path.exists(cp) else {}
+    # CONFIRMED BUG (fixed): reads were saved per crop + reader name only, so after the recognizer was RETRAINED (new coach
+    # checks, the new "no number" examples) tracking kept using the OLD model's reads. The trained reader's saved reads now
+    # carry the model file's version; a retrained model reads its crops again (once) and the old model's reads are dropped.
+    _tag = f"{engine}2"
+    if str(engine).startswith("trained"):
+        try:
+            _mp_ = _jr_path_for("pose" if str(engine) == "trained_pose" else "fixed") if "_jr_path_for" in globals() \
+                else JERSEY_MODEL_PATH
+            if os.path.exists(_mp_):
+                _tag = f"{engine}2@{int(os.path.getmtime(_mp_))}"
+        except Exception:
+            pass
+        _stale = [k_ for k_ in cache if str(k_).rsplit("|", 1)[-1].split("@")[0] == f"{engine}2"
+                  and str(k_).rsplit("|", 1)[-1] != _tag]
+        _n_redo = _n_keep = 0
+        for k_ in _stale:
+            # a crop whose frame is gone (game folder deleted) can't be read again: its old read is kept
+            if os.path.exists(os.path.join(base, str(k_).split("|", 1)[0])):
+                del cache[k_]
+                _n_redo += 1
+            else:
+                cache[str(k_).rsplit("|", 1)[0] + "|" + _tag] = cache.pop(k_)
+                _n_keep += 1
+        if _stale:
+            print(f"  [tracking]   jersey reader {engine}: the model changed since these crops were read -- {_n_redo:,} read "
+                  f"again with the new model" + (f"; {_n_keep:,} kept as they were (their frames aren't on disk any more)"
+                                                 if _n_keep else ""), flush=True)
     jobs = []
     for i in todo:
         clip = clips[i]
@@ -480,7 +507,7 @@ def _trk_read_numbers(clips, todo, base, engine):
             light = np.nanmean([clip["frames"][tt][jj][14] for tt, jj in tr]) > 130
             for t, j in tallest:
                 x1, y1, x2, y2 = [float(v) for v in clip["frames"][t][j][6:10]]
-                jobs.append(((i, k), f"{clip['files'][t]}|{int(x1)}|{int(y1)}|{int(x2)}|{int(y2)}|{engine}2",
+                jobs.append(((i, k), f"{clip['files'][t]}|{int(x1)}|{int(y1)}|{int(x2)}|{int(y2)}|{_tag}",
                              clip["files"][t], (x1, y1, x2, y2), "as_is" if light else "invert"))
     new = [jb for jb in jobs if jb[1] not in cache]
     if new:
@@ -1385,6 +1412,94 @@ def _trk_clip_key(r):
     return f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}"
 
 
+# ---- coach labels beyond the boxes: players with NO box ("missed"), and a learned player / not-a-player model ----------
+# CONFIRMED CHANGE (requested: "there should always be 10 players in the clip ... I'm getting quite a bit fewer. How can we
+# get better training data of what is and is not a player on the court?"). Two kinds of coach labels now teach it:
+#   * every checked box: "not a player" = a referee / coach / fan; a name (or "wrong team") = a real player;
+#   * NEW: players with no box at all, marked in the app by the grid square at their feet ("missed" in the saved checks).
+# The missed marks say which filter threw a real player out (or that the detector never saw him) -- printed and saved to
+# _tracking/missed_players_report.csv -- and, with the checked boxes, train a small player / not-a-player model on what's
+# already saved for every detection (shirt and shorts color, stripes, where on the court, how much it moves, how long it's
+# seen). The model tests itself on games it didn't learn from and is only used when it passes (TRACK_PLAYER_MODEL = "auto").
+def _trk_missed_points():
+    out = []
+    d_ = _review_saves_dir() if "_review_saves_dir" in globals() else None
+    if not d_ or not os.path.isdir(d_):
+        return out
+    for f in glob.glob(os.path.join(d_, "*.json")):
+        try:
+            with open(f, encoding="utf-8") as fh:
+                doc = _trk_json.load(fh)
+        except Exception:
+            continue
+        for m in doc.get("missed", []) or []:
+            if m.get("frame_file") and m.get("cell") and m.get("W") and m.get("H"):
+                out.append(dict(m, game=doc.get("game"), coach=doc.get("coach")))
+    return out
+
+
+def _trk_cell_rect(m):
+    """Grid square ("C4" = 3rd column, 4th row) -> its rectangle on the frame (pixels), a little enlarged."""
+    mm = re.fullmatch(r"([A-Z])(\d{1,2})", str(m.get("cell", "")).strip().upper())
+    if not mm:
+        return None
+    cols, rows = (m.get("grid") or [12, 8])[:2]
+    W, H = float(m["W"]), float(m["H"])
+    c, r = ord(mm.group(1)) - 65, int(mm.group(2)) - 1
+    cw, rh = W / cols, H / rows
+    pad = 0.15
+    return (c * cw - pad * cw, r * rh - pad * rh, (c + 1) * cw + pad * cw, (r + 1) * rh + pad * rh)
+
+
+_TRK_PM_FEATS = ["r", "g", "b", "sat", "stripes", "chest_l", "chest_warm", "shorts_l", "shorts_warm", "chest_var",
+                 "frac_other_group", "frac_unsure", "frac_on_court", "edge_ft", "speed_ft_s", "speed_pic_s", "seen_share",
+                 "rel_height", "aspect", "feet_y", "color_gap_teams"]
+
+
+def _trk_pm_feats(clip, k, team_means, fps_):
+    """One track -> the numbers the player / not-a-player model uses (all from the saved detections; no pictures needed)."""
+    tr = clip["tracks"][k]
+    R = np.array([clip["frames"][t][j] for t, j in tr], dtype=np.float64)
+    med = lambda c: float(np.nanmedian(R[:, c])) if np.isfinite(R[:, c]).any() else np.nan
+    X, Y = R[:, 10], R[:, 11]
+    onc = np.isfinite(X) & np.isfinite(Y)
+    edge = np.minimum.reduce([X, 94 - X, Y, 50 - Y]) if onc.any() else np.array([np.nan])
+    secs = max((tr[-1][0] - tr[0][0]) / max(fps_, 1e-6), 1e-6)
+    if onc.sum() >= 2:
+        xy = np.column_stack([X[onc], Y[onc]])
+        spd_ft = float(np.linalg.norm(np.diff(xy, axis=0), axis=1).sum()) / secs
+    else:
+        spd_ft = np.nan
+    spd_pic = float(np.linalg.norm(np.diff(R[:, 0:2], axis=0), axis=1).sum()) / secs if len(R) >= 2 else np.nan
+    rel = []
+    for t, j in tr:
+        hs = [row[2] for row in clip["frames"][t]]
+        if hs:
+            rel.append(clip["frames"][t][j][2] / max(float(np.median(hs)), 1e-6))
+    w_h = (R[:, 8] - R[:, 6]) / np.maximum(R[:, 9] - R[:, 7], 1e-6)
+    rgb = np.array([med(3), med(4), med(5)])
+    gap = np.nan
+    if team_means and np.isfinite(rgb).all():
+        gap = float(min(np.linalg.norm(rgb - m_) for m_ in team_means))
+    grp = R[:, 19]
+    return [med(3), med(4), med(5), med(12), med(13), med(14), med(15), med(16), med(17), med(18),
+            float(np.mean(grp == 2)), float(np.mean(grp == -1)), float(np.mean(onc)),
+            float(np.nanmedian(edge)) if np.isfinite(edge).any() else np.nan, spd_ft, spd_pic,
+            len(tr) / max(len(clip["frames"]), 1), float(np.median(rel)) if rel else np.nan,
+            float(np.median(w_h)), float(np.median(R[:, 9] / max(float(np.nanmax(R[:, 9])), 1.0))), gap]
+
+
+def _trk_team_means(clip):
+    """Mean shirt color of each team's tracks in the clip (to measure how far a track's colors are from BOTH teams)."""
+    by = {}
+    for k, tr in enumerate(clip["tracks"]):
+        tm = clip.get("team", {}).get(k)
+        if tm in ("A", "B") and tr:
+            R = np.array([clip["frames"][t][j][3:6] for t, j in tr], dtype=np.float64)
+            by.setdefault(tm, []).append(np.nanmedian(R, 0))
+    return [np.nanmean(v, 0) for v in by.values() if v]
+
+
 def player_tracking(pc):
     """Runs everything on the clips in pc that have tracking frames. Returns (per-clip columns, tracks table,
     report rows)."""
@@ -2012,6 +2127,134 @@ def player_tracking(pc):
             except Exception as _e:
                 print(f"  [tracking]   Synergy anchor audit skipped ({type(_e).__name__}: {_e})", flush=True)
 
+    # --- coach labels -> a learned player / not-a-player model (see _trk_missed_points above) -------------------------
+    _pm_p, _pm_cut = {}, None
+    _missed = _trk_missed_points() if TRACK_USE_COACH_CHECKS else []
+    _missed_tracks = {}                              # missed mark -> the (clip, track) at its grid square, if any
+    _key_to_i_all = {_trk_clip_key(pc.loc[i]): i for i in todo}
+    for _mi, _m in enumerate(_missed):
+        _i = _key_to_i_all.get(_m.get("clip_key"))
+        _rect = _trk_cell_rect(_m)
+        if _i is None or _rect is None:
+            continue
+        _t = int(_m.get("t", -1))
+        if not 0 <= _t < len(clips[_i]["frames"]):
+            continue
+        _cx, _cy = (_rect[0] + _rect[2]) / 2, (_rect[1] + _rect[3]) / 2
+        _best = None
+        for k, tr in enumerate(clips[_i]["tracks"]):
+            if (_i, k) in coach:                     # a box the coach checked in that picture is someone else
+                continue
+            for tt, j in tr:
+                if tt == _t:
+                    row = clips[_i]["frames"][_t][j]
+                    fx, fy = (row[6] + row[8]) / 2, row[9]
+                    if _rect[0] <= fx <= _rect[2] and _rect[1] <= fy <= _rect[3]:
+                        dd = float(np.hypot(fx - _cx, fy - _cy))
+                        if _best is None or dd < _best[0]:
+                            _best = (dd, k)
+        if _best is not None:
+            _missed_tracks[_mi] = (_i, _best[1])
+    _pm_mode = globals().get("TRACK_PLAYER_MODEL", "auto")
+    if _pm_mode and TRACK_USE_COACH_CHECKS:
+        _lab = {ik: (1 if n is None else 0) for ik, n in coach.items()}
+        _lab.update({ik: 0 for ik in coach_flip})
+        for ik in _missed_tracks.values():
+            _lab.setdefault(ik, 0)
+        _tm_cache, _fcache = {}, {}
+
+        def _pm_feat(ik):
+            if ik not in _fcache:
+                i_, k_ = ik
+                if i_ not in _tm_cache:
+                    _tm_cache[i_] = _trk_team_means(clips[i_])
+                import warnings as _pm_w
+                with _pm_w.catch_warnings():
+                    _pm_w.simplefilter("ignore")
+                    _fcache[ik] = _trk_pm_feats(clips[i_], k_, _tm_cache[i_], float(clips[i_].get("fps", _fps)))
+            return _fcache[ik]
+        _lk = [ik for ik in _lab if clips[ik[0]]["tracks"][ik[1]]]
+        _yl = np.array([_lab[ik] for ik in _lk], int)
+        _n1, _n0 = int(_yl.sum()), int(len(_yl) - _yl.sum())
+        _min_each = int(globals().get("TRACK_PLAYER_MODEL_MIN_EACH", 15))
+        if _n1 < _min_each or _n0 < _min_each:
+            print(f"  [tracking]   player / not-a-player model: {_n1} not-a-player and {_n0} player label(s) from the coach checks "
+                  f"(needs {_min_each}+ of each) -- not trained yet", flush=True)
+        else:
+            from sklearn.impute import SimpleImputer
+            from sklearn.linear_model import LogisticRegression
+            from sklearn.pipeline import make_pipeline
+            from sklearn.preprocessing import StandardScaler
+            _Xl = np.array([_pm_feat(ik) for ik in _lk], float)
+            _gl = np.array([game_of[ik[0]] for ik in _lk])
+            _mk = lambda: make_pipeline(SimpleImputer(strategy="median", keep_empty_features=True), StandardScaler(),
+                                        LogisticRegression(C=0.5, class_weight="balanced", max_iter=3000))
+            # held-out test: each GAME predicted by a model that never saw it (one game only: 5 groups of clips)
+            if len(set(_gl)) >= 2:
+                _folds = [(_gl != g_, _gl == g_) for g_ in sorted(set(_gl))]
+                _how = "each game predicted by a model trained on the other games"
+            else:
+                _ci = np.array([ik[0] for ik in _lk])
+                _grp = np.array([hash(int(c)) % 5 for c in _ci])
+                _folds = [(_grp != q, _grp == q) for q in range(5)]
+                _how = "5 groups of clips, each predicted by a model trained on the rest"
+            _oof = np.full(len(_yl), np.nan)
+            for _tr_m, _te_m in _folds:
+                if _te_m.any() and len(set(_yl[_tr_m])) == 2:
+                    _oof[_te_m] = _mk().fit(_Xl[_tr_m], _yl[_tr_m]).predict_proba(_Xl[_te_m])[:, 1]
+            _ok = np.isfinite(_oof)
+            _s, _y = _oof[_ok], _yl[_ok]
+            _pos, _neg = _s[_y == 1], _s[_y == 0]
+            _auc = float(np.mean([(p_ > _neg).mean() + 0.5 * (p_ == _neg).mean() for p_ in _pos])) if len(_pos) and len(_neg) else None
+            _min_prec = float(globals().get("TRACK_PLAYER_MODEL_MIN_PRECISION", 0.9))
+            _min_rec = float(globals().get("TRACK_PLAYER_MODEL_MIN_RECALL", 0.25))
+            _best = None
+            for _c in sorted(set(np.round(_s, 3)), reverse=True):
+                _fl = _s >= _c
+                if _fl.sum() >= 10 and _y[_fl].mean() >= _min_prec:
+                    _best = (float(_c), float(_y[_fl].mean()), float(_y[_fl].sum() / max(_y.sum(), 1)), int((_fl & (_y == 0)).sum()))
+            _passed = bool(_best and _best[2] >= _min_rec)
+            print(f"  [tracking]   player / not-a-player model: {_n1} not-a-player and {_n0} player label(s) from the coach checks"
+                  f" ({len(_missed_tracks)} of {len(_missed)} missed-player mark(s) found on a track); tested with {_how}: "
+                  + (f"AUC {_auc:.2f} (0.5 = coin flip, 1.0 = perfect); " if _auc is not None else "")
+                  + (f"at {_best[0]:.2f}+ it was right {_best[1]:.0%} of the time and caught {_best[2]:.0%} of the non-players "
+                     f"(costing {_best[3]} real player(s))" if _best else f"no cutoff reached {_min_prec:.0%} right")
+                  + (" -- PASSED, used this run" if _passed else " -- not passed, NOT used (it keeps learning from new checks)"),
+                  flush=True)
+            try:
+                pd.DataFrame([dict(zip(_TRK_PM_FEATS, _Xl[n_]), clip_key=_trk_clip_key(pc.loc[ik[0]]), track=ik[1],
+                                   not_a_player=int(_yl[n_]), held_out_score=_oof[n_]) for n_, ik in enumerate(_lk)]
+                             ).to_csv(os.path.join(TRACK_DIR, "player_model_labels.csv"), index=False)
+            except Exception:
+                pass
+            if _passed or _pm_mode is True:
+                # never below 50% sure it's not a player (TRACK_PLAYER_MODEL_MIN_CUT), even when the test allows lower
+                _pm_cut = max(_best[0] if _best else 0.8, float(globals().get("TRACK_PLAYER_MODEL_MIN_CUT", 0.5)))
+                _model = _mk().fit(_Xl, _yl)
+                _cand = [(i, k) for i in todo for k in range(len(clips[i]["tracks"]))
+                         if clips[i]["side"].get(k) in ("offense", "defense") and (i, k) not in coach and (i, k) not in coach_flip]
+                if _cand:
+                    _P = _model.predict_proba(np.array([_pm_feat(ik) for ik in _cand], float))[:, 1]
+                    _n_pm = _n_kept_min = 0
+                    for (i, k), p_ in zip(_cand, _P):
+                        _pm_p[(i, k)] = float(p_)
+                    # safety: a team always keeps at least 5 tracks in a clip -- the least player-like go first
+                    for i in todo:
+                        for sd in ("offense", "defense"):
+                            ks = [k for k, v in clips[i]["side"].items() if v == sd]
+                            flag = sorted([k for k in ks if _pm_p.get((i, k), 0.0) >= _pm_cut], key=lambda k: -_pm_p[(i, k)])
+                            room = max(0, len(ks) - 5)
+                            for k in flag[:room]:
+                                _set_aside_prev[(i, k)] = clips[i]["side"][k]
+                                clips[i]["side"][k] = None
+                                _n_pm += 1
+                            _n_kept_min += max(0, len(flag) - room)
+                    _trk_note_drop("[tracks] player model says referee / coach / fan (set aside)", _n_pm)
+                    print(f"  [tracking]   player model: {_n_pm:,} track(s) set aside as not players (score >= {_pm_cut:.2f}) -- they "
+                          f"can't take a jersey number or one of the five"
+                          + (f"; {_n_kept_min:,} more flagged but kept so each team still has 5 tracks in its clip"
+                             if _n_kept_min else ""), flush=True)
+
     # --- fingerprints for every track on a known side ---
     # CONFIRMED CHANGE (requested: the run sat on "fingerprinting 16858 player crop(s)" with no sign of life).
     # Progress is printed, and every crop's fingerprint is SAVED (_tracking/fingerprints_<model>.pkl, keyed by
@@ -2030,8 +2273,25 @@ def player_tracking(pc):
         fps = {}
         img_cache = {}
         _t0 = time.time()
+        # CONFIRMED CHANGE (requested: carry names from checked plays into the next ones by how each player LOOKS).
+        # TRACK_USE_APPEARANCE = "checked": fingerprints only for games with TRACK_APPEARANCE_MIN_COACH+ coach-named boxes --
+        # those are the games where appearance has trustworthy examples to learn each player's look from (and it keeps the
+        # first, slow fingerprinting run to those games). True = every game.
+        _app_games = None
+        if str(TRACK_USE_APPEARANCE).lower() == "checked":
+            _cn = {}
+            for (i_, _k), n_ in coach.items():
+                if n_:
+                    _cn[game_of[i_]] = _cn.get(game_of[i_], 0) + 1
+            _min_c = int(globals().get("TRACK_APPEARANCE_MIN_COACH", 10))
+            _app_games = {g_ for g_, c_ in _cn.items() if c_ >= _min_c}
+            print(f"  [tracking]   appearance: {len(_app_games)} game(s) with {_min_c}+ coach-named boxes get fingerprints"
+                  + (": " + ", ".join(sorted(_app_games)) if _app_games else " (none yet -- save player checks in the app)"),
+                  flush=True)
         for _n_clip, i in enumerate(todo, 1):
             _trk_progress("clips cut into player crops", _n_clip, len(todo), _t0)
+            if _app_games is not None and game_of[i] not in _app_games:
+                continue
             clip = clips[i]
             for k, tr in enumerate(clip["tracks"]):
                 if not clip["side"].get(k):
@@ -2583,10 +2843,32 @@ def player_tracking(pc):
         seeds += [(i, k, n) for (i, k), (n, _c) in number_names.items() if game_of.get(i) == g and (i, k) in fp]
         seeds += [(i, k, n) for i in ids for k, n, _et in clips[i].get("anchors_pbp", []) if (i, k) in fp]
         seeds = list(dict.fromkeys(seeds))
+        norm = lambda vs: (np.mean(vs, 0) / (np.linalg.norm(np.mean(vs, 0)) + 1e-8))
+        # CONFIRMED CHANGE (requested: coach checks as the reference). Jersey-number names were right only ~64% of the time on the
+        # checked boxes (a referee's shirt read as #10, ...), and every wrong one taught the wrong look. A player's look now comes
+        # FIRST from his coach-checked boxes; a jersey-number / play-by-play seed that looks more like another of the five than
+        # like the coach-checked player it's named as is left out of the reference.
+        _coach_seeds = [(i, k, n) for (i, k, n) in seeds if coach.get((i, k)) == n]
+        _cp_raw = {}
+        for i, k, n in _coach_seeds:
+            _cp_raw.setdefault(n, []).append(fp[(i, k)])
+        _cp = {n: norm(v) for n, v in _cp_raw.items() if len(v) >= 2}
+        _n_out = 0
+        if _cp:
+            _kept_seeds = []
+            for i, k, n in seeds:
+                if coach.get((i, k)) != n and n in _cp:
+                    sd = clips[i]["side"].get(k)
+                    five = _trk_five(pc.at[i, "offense_lineup" if sd == "offense" else "defense_lineup"])
+                    own = float(fp[(i, k)] @ _cp[n])
+                    if any(float(fp[(i, k)] @ _cp[m]) > own for m in five if m != n and m in _cp):
+                        _n_out += 1
+                        continue
+                _kept_seeds.append((i, k, n))
+            seeds = _kept_seeds
         protos_raw = {}
         for i, k, n in seeds:
             protos_raw.setdefault(n, []).append((i, fp[(i, k)]))
-        norm = lambda vs: (np.mean(vs, 0) / (np.linalg.norm(np.mean(vs, 0)) + 1e-8))
         protos = {n: norm([v for _, v in vs]) for n, vs in protos_raw.items()}
         # how alike the same player looks vs two teammates, from the seeds -> the "looks like none of them" line
         _same, _other = [], []
@@ -2607,11 +2889,18 @@ def player_tracking(pc):
         protos2 = {n: norm([v for _, v in protos_raw.get(n, [])] + grow.get(n, [])) for n in set(protos_raw) | set(grow)}
         _looks_by_game[g] = protos2
         names = assign(ids, protos2)
+        _check_on = [x for x in seeds if coach.get((x[0], x[1])) == x[2]]
+        _check_coach = len(_check_on) >= TRACK_APPEARANCE_MIN_TRIES
+        if not _check_coach:
+            _check_on = seeds
         print(f"  [tracking]   {g}: {sum(1 for (i, _k) in names if i in ids):,} track(s) named; checking appearance "
-              f"against {len(seeds)} trusted name(s)...", flush=True)
+              f"against {len(_check_on)} trusted name(s)" + (" (coach-checked boxes only)" if _check_coach else "")
+              + (f"; {_n_out} jersey-number seed(s) left out (look like a different player than the coach-checked one)"
+                 if _n_out else "") + "...", flush=True)
         # Honest check: hide each trusted name (and everything its clip taught), let appearance name that track, compare.
         hits = tries = 0
-        for i, k, n in seeds:
+        _ch = _ct = 0                                    # the same check on the coach-checked boxes only (the fair number)
+        for i, k, n in _check_on:
             pr = {m: norm([v for j, v in vs if j != i]) for m, vs in protos_raw.items() if any(j != i for j, _ in vs)}
             sd = clips[i]["side"].get(k)
             five = _trk_five(pc.at[i, "offense_lineup" if sd == "offense" else "defense_lineup"])
@@ -2624,6 +2913,13 @@ def player_tracking(pc):
                 best = unknown[0]
             tries += 1
             hits += int(best == n)
+            if coach.get((i, k)) == n:
+                _ct += 1
+                _ch += int(best == n)
+        if _ct and not _check_coach:
+            print(f"  [tracking]   appearance on the {_ct} coach-checked box(es) alone: {_ch}/{_ct} right "
+                  f"({_ch / _ct:.0%}; chance is ~20%) -- the check switches to coach-checked boxes only once there are "
+                  f"{TRACK_APPEARANCE_MIN_TRIES}", flush=True)
         # appearance names only when the check had enough trusted names to test against AND passed
         appearance_on = tries >= TRACK_APPEARANCE_MIN_TRIES and hits / tries >= TRACK_APPEARANCE_MIN_CHECK
         if appearance_on:
@@ -2910,6 +3206,53 @@ def player_tracking(pc):
         _trk_note_drop("[tracks] beyond the five on the floor (set aside as not players)", n_set_aside)
         print(f"  [tracking]   {n_set_aside:,} track(s) beyond the five on the floor set aside as not players "
               f"(referees, coaches, sideline) -- no unnamed players remain where the lineup is known", flush=True)
+
+    # --- missed players the coaches marked: why didn't they get a box? (requested) ---------------------------------------
+    if _missed:
+        _mrows = []
+        for _mi, _m in enumerate(_missed):
+            _i = _key_to_i_all.get(_m.get("clip_key"))
+            _rect = _trk_cell_rect(_m)
+            _t = int(_m.get("t", -1))
+            if _i is None or _rect is None or not 0 <= _t < len(clips[_i]["frames"]):
+                _why = "clip not in this run"
+            else:
+                _f = clips[_i]["files"][_t]
+                _inr = lambda bx: _rect[0] <= (bx[0] + bx[2]) / 2 <= _rect[2] and _rect[1] <= bx[3] <= _rect[3]
+                _d = det.get(_f)
+                _raw = [] if _d is None or not len(_d.get("p", [])) else [b for b in _d["p"][:, 0:4] if _inr(b)]
+                _drops = [r_ for r_ in _trk_drop["boxes"].get(_f, []) if _inr(r_[:4])]
+                _ik = _missed_tracks.get(_mi)
+                if not _raw:
+                    _why = "not detected (the person detector never found him in that frame)"
+                elif _ik is not None:
+                    _i2, _k2 = _ik
+                    _sd = clips[_i2]["side"].get(_k2)
+                    if _sd in ("offense", "defense"):
+                        _why = "has a box this run"
+                    elif clips[_i2].get("team", {}).get(_k2) not in ("A", "B"):
+                        _why = "sorted in with the referees / everyone else by shirt color"
+                    elif (_i2, _k2) in _pm_p and _pm_cut is not None and _pm_p[(_i2, _k2)] >= _pm_cut:
+                        _why = "player model said not a player"
+                    elif (_i2, _k2) in _set_aside_prev:
+                        _why = "set aside by the sideline / outfit / duplicate-box rule"
+                    else:
+                        _why = "set aside as beyond the five (no name, less player-like than the five kept)"
+                elif _drops:
+                    _why = "filtered out before tracking: " + _drops[0][4]
+                else:
+                    _why = "detected, but lost while following players (a short piece, or a track cut where players overlapped)"
+            _mrows.append({"game": _m.get("game"), "clip_key": _m.get("clip_key"), "t": _m.get("t"), "cell": _m.get("cell"),
+                           "frame_file": _m.get("frame_file"), "coach": _m.get("coach"), "why_no_box": _why})
+        _mr = pd.DataFrame(_mrows)
+        try:
+            _mr.to_csv(os.path.join(TRACK_DIR, "missed_players_report.csv"), index=False)
+        except Exception:
+            pass
+        print(f"  [tracking] players with NO box that coaches marked ({len(_mr)}) -- why each was missed "
+              f"(_tracking/missed_players_report.csv):", flush=True)
+        for _w, _n in _mr["why_no_box"].value_counts().items():
+            print(f"      {_n:>4}  {_w}", flush=True)
 
     # --- diagnostic: where were people lost? ---------------------------------------------------------------------
     _dc = dict(_trk_drop["counts"])
