@@ -6284,11 +6284,57 @@ def _pnt_metrics(df):
                      column_config={"Clip": st.column_config.NumberColumn(format="%d")})
 
 
+def _pr_save_history(game, part):
+    """Every save coaches made for this game (all runs / batches), newest first: one row per saved file. part = "players"
+    (player-number checks) or "titles" (Title checks and Film Tagging tags)."""
+    rows = []
+    for d in _pr_save_docs():
+        try:
+            if str(d.get("game")) != str(game):
+                continue
+            parts = ({d["part"]} if d.get("part") in ("titles", "players") else
+                     ({"titles"} if isinstance(d.get("answers"), list) else set())
+                     | ({"players"} if isinstance(d.get("checks"), list) else set()))
+            if part not in parts:
+                continue
+            if part == "players":
+                ch = d.get("checks") or []
+                n_plays = len({c.get("clip_key") for c in ch})
+                what = f"{len(ch)} box check(s) on {n_plays} play(s)"
+                if d.get("missed"):
+                    what += f", {len(d['missed'])} player(s) with no box marked"
+            else:
+                an = [a for a in (d.get("answers") or []) if not a.get("prefilled")]
+                what = f"{len(an)} field(s) on {len({a.get('clip_key') for a in an})} play(s)"
+            run = str(d.get("run") or "")
+            rows.append({"Saved": str(d.get("saved", ""))[:16].replace("T", " "), "Coach": d.get("coach") or "someone",
+                         "What": what, "Where": "Film Tagging" if run.endswith("_tag") else
+                         ("Player Number Tracking" if part == "players" else "Previous Games (Title checks)"),
+                         "Batch": run})
+        except Exception:
+            continue
+    return sorted(rows, key=lambda r: r["Saved"], reverse=True)
+
+
+def _pr_show_save_history(game, part):
+    """CONFIRMED CHANGE (requested: Player Number Tracking and Film Tagging list earlier saves by coaches)."""
+    rows = _pr_save_history(game, part)
+    if not rows:
+        st.caption("\U0001f5c2\ufe0f No coach has saved " + ("player checks" if part == "players" else "tags / Title checks")
+                   + " for this game yet.")
+        return
+    coaches = sorted({r["Coach"] for r in rows})
+    with st.expander(f"\U0001f5c2\ufe0f Previous saves for this game: {len(rows)} by {', '.join(coaches)} "
+                     f"(latest {rows[0]['Coach']}, {rows[0]['Saved']} UTC)", expanded=False):
+        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+
+
 def _pnt_check_form(prd):
     """One game's player checks (the 20-play review) in one form, nothing reloads until Save."""
     run = prd.get("run")
     sfx = f"_pnt_{prd.get('slug')}_{run}"
     st.markdown(f"#### \U0001f4dd Player checks for this game's review ({len(prd.get('plays', []))} plays)")
+    _pr_show_save_history(prd.get("game"), "players")
     store = _pr_store(run)
     saved = [x for x in _pr_app_saves_for(run) if "players" in x[2]]
     st.caption("Choose a check for each box in the Players tables -- nothing reloads while you choose. "
@@ -6408,6 +6454,7 @@ def render_film_tagging():
     names = [label(d) for d in pkgs]
     pick = st.selectbox("Game", names, key="ft_game")
     d = pkgs[names.index(pick)]
+    _pr_show_save_history(d.get("game"), "titles")
     store = _pr_store(d.get("run"))
     kp = f"ft{d.get('slug')}"
     _pr_save_bar(d, store, kp, f"_ft_{d.get('slug')}", part="titles")
