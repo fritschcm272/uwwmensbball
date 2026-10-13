@@ -5916,12 +5916,13 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
             _ak = f"{kp}_act_{run}_{pi}"
             _touched_a = _ak in store
             _rows = store.get(_ak) if _touched_a else _ft_rows(_ft_initial_actions(pl))
+            _rows = [{c: _ft_unmark(v) if isinstance(v, str) else v for c, v in r_.items()} for r_ in (_rows or [])]
             for _n, _r in enumerate(_rows or [], 1):
                 out.setdefault("actions", []).append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
-                                                      "order": _n, "action": _r.get("Action") or None,
+                                                      "order": _n, "action": _ft_unmark(_r.get("Action")) or None,
                                                       "screener": _ft_unlab(_r.get("Screener")) or None,
-                                                      "screener_action": _r.get("Screener action") or None,
-                                                      "coverage": _r.get("Coverage") or None,
+                                                      "screener_action": _ft_unmark(_r.get("Screener action")) or None,
+                                                      "coverage": _ft_unmark(_r.get("Coverage")) or None,
                                                       "screen_defender": _ft_unlab(_r.get("Screen defender")) or None,
                                                       "prefilled": not _touched_a})
             if _touched_a and not _rows:
@@ -6507,9 +6508,14 @@ def _ft_lab(pl, name):
     return lab if not str(lab).startswith("#?") else name
 
 
+def _ft_unmark(v):
+    """"\u2757 Ball Screen" / "\u2713 Ball Screen" (an automatic answer in the Actions table) -> "Ball Screen"."""
+    return re.sub(r"^[\u2757\u2713]\ufe0f?\s*", "", _ft_clean(v))
+
+
 def _ft_unlab(v):
     """"#24 Richie Warren" -> "Richie Warren" (what's saved)."""
-    return re.sub(r"^#\S*\s+", "", _ft_clean(v))
+    return re.sub(r"^#\S*\s+", "", _ft_unmark(v))
 
 
 # what the Synergy play type says about the action / what the screener did (the automatic Title reads the same words:
@@ -6528,11 +6534,13 @@ def _ft_auto_parts(pl):
     Returns (row, unsure) -- unsure = [(column, guess, confidence)] the model wasn't sure of, listed above the table."""
     by = {f.get("field"): f for f in pl.get("fields", [])}
     unsure = []
+    coach_fields = set()
 
     def val(k, col):
         f = by.get(k) or {}
         c = _ft_clean(f.get("coach"))
         if c:
+            coach_fields.add(k)
             return c
         a = _ft_clean(f.get("auto"))
         if a and f.get("sure", True) is False:            # below the Title's confidence bar: offered, not filled
@@ -6558,6 +6566,11 @@ def _ft_auto_parts(pl):
     sd = val("screen_defender", "Screen defender")
     row["Screen defender"] = _ft_player_label(pl, sd, "defense") if sd else ""
     unsure = [(c, (_ft_player_label(pl, g, "defense") if c == "Screen defender" else g), cf) for c, g, cf in unsure]
+    # the cells that are the model's / Synergy's answer, not a coach's (they get the "\u2757" mark in the table)
+    _cov_field = ("ball_screen_coverage" if cov and cov == ball else "offball_coverage")
+    _src = {"Action": "primary_action", "Screener": "screener", "Screener action": None, "Coverage": _cov_field,
+            "Screen defender": "screen_defender"}
+    row["_auto"] = {c for c in _FT_ACT_TEXT if row.get(c) and _src.get(c) not in coach_fields}
     return row, unsure
 
 
@@ -6580,10 +6593,14 @@ def _ft_player_label(pl, who, side):
     return who
 
 
-def _ft_initial_actions(pl):
+def _ft_initial_actions(pl, mark=None):
     """The starting row of a play's Actions table: the coach's answers (a Title check) or the automatic ones (as the
-    automatic Title has them -- see _ft_auto_parts)."""
+    automatic Title has them -- see _ft_auto_parts). With `mark`, each automatic cell starts with it (requested: the
+    default actions get the same "\u2757" as the dropdowns above them); _ft_unmark takes it off when saving."""
     row, _u = _ft_auto_parts(pl)
+    auto = row.pop("_auto", set())
+    if mark:
+        row = {c: (f"{mark} {v}" if c in auto and v else v) for c, v in row.items()}
     return [row] if any(_ft_clean(row[c]) for c in _FT_ACT_TEXT) else []
 
 
@@ -6606,7 +6623,9 @@ def _ft_actions_editor(d, pi, store, kp):
     pl = d["plays"][pi]
     run = d.get("run")
     voc = d.get("vocab", {}) or {}
-    init = _ft_initial_actions(pl)
+    # same mark as the dropdowns: "\u2757" on a Tag batch (the model's guess), "\u2713" on a Title check
+    _mark = "\u2757" if "/play_tag/" in str(d.get("_dir", "")).replace(os.sep, "/") else "\u2713"
+    init = _ft_initial_actions(pl, _mark)
     key = f"{kp}_act_{run}_{pi}"
     cur = store.get(key, init)
     five = pl.get("five", {}) or {}
@@ -6628,9 +6647,9 @@ def _ft_actions_editor(d, pi, store, kp):
            "Screen defender": st.column_config.SelectboxColumn("Screen defender", options=(
                opt([_ft_lab(pl, n) for n in five.get("defense") or []], cur_vals("Screen defender")) if five.get("defense")
                else opt(voc.get("screen_defender"), cur_vals("Screen defender"))))}
-    _auto_row = init and not any(_ft_clean(f.get("coach")) for f in pl.get("fields", []) if f.get("field") in _FT_ACTION_FIELDS)
     st.markdown("**Actions in this play** (in order; \u2795 at the bottom adds another, e.g. a 2nd ball screen)"
-                + (" \u2014 row 1 starts on the automatic Title's answers \u2757" if _auto_row else ""))
+                + (f" \u2014 {_mark} = the automatic Title's answer" if any(
+                    str(v).startswith(_mark) for r_ in init for v in r_.values()) else ""))
     _uns = _ft_auto_parts(pl)[1]
     if _uns:
         st.caption("Not sure enough to fill in (pick it if it's right): " + "; ".join(
