@@ -5928,7 +5928,10 @@ def _pr_commit(d, store, coach, kp, part, key_suffix):
     ok, msg = _pr_github_save(fname, out)
     n = len(out.get("answers", [])) if part == "titles" else len(out.get("checks", []))
     if ok:
-        st.success(f"Saved {n} {what} ({msg}). The app does not restart; the parser picks it up when it runs (it fetches the saves branch). The review is finished once its player checks are saved (the Title checks on these plays are optional).")
+        _is_tag = "/play_tag/" in str(d.get("_dir", "")).replace(os.sep, "/")
+        st.success(f"Saved {n} {'tag field(s)' if part == 'titles' else what} ({msg}). The app does not restart; the parser picks "
+                   f"it up when it runs (it fetches the saves branch) and brings this game's next batch."
+                   + ("" if part == "titles" else " The review is finished once its player checks are saved."))
         _st = st.session_state.get("pr_answers", {}).get(str(d.get("run")), {})
         for k in [k for k in _st if k.startswith(kp) and (("_b_" in k) == (part == "players"))]:
             _st.pop(k, None)
@@ -6413,7 +6416,9 @@ def _ft_field_widgets(d, pi, store, kp):
         coach_v = f.get("coach") if f.get("coach") not in (None, "") else None
         if coach_v and coach_v not in known and not (auto and _pr_norm(coach_v) == _pr_norm(auto)):
             known = [coach_v] + known
-        opts = ["--"] + ([auto_opt] if auto_opt else []) + known + [_FT_OTHER]
+        # CONFIRMED CHANGE (requested: picking "other" took a long time -- the whole page reran just to show the text box).
+        # The batch is now ONE form (nothing reruns until Save), and every field has its own "or type" box under the list.
+        opts = ["--"] + ([auto_opt] if auto_opt else []) + known
         # CONFIRMED CHANGE (requested: the dropdowns start on what the automatic tagging decided -- or, on a Title check, on
         # the coach's answer). The starting choice isn't stored: an untouched field is saved as "pre-filled".
         if coach_v and auto_opt and _pr_norm(coach_v) == _pr_norm(auto):
@@ -6429,19 +6434,22 @@ def _ft_field_widgets(d, pi, store, kp):
             idx = 1
         elif cur_v == "wrong" and cur_t in known:
             idx = opts.index(cur_t)
-        elif cur_v == "wrong" and cur_t:
-            idx = len(opts) - 1
         else:
             idx = opts.index(default_opt) if default_opt in opts else 0
         with cols[fi]:
             # a Title check (a clip the coach tagged in Synergy): his answer is shown with the field, so it can be compared
             _lab = (f.get("label") or f.get("field")) + (f" \u00b7 coach: {f['coach']}" if f.get("coach") else "")
             ch = st.selectbox(_lab, opts, index=idx, key=f"{kv}_ft")
-            typed = ""
-            if ch == _FT_OTHER:
-                typed = st.text_input("type it", value=(cur_t if cur_t and cur_t not in known else ""), key=f"{kt}_ft",
-                                      label_visibility="collapsed", placeholder=f"{f.get('label')}...")
-        if ch == default_opt and default_opt is not None and kv not in store:
+            typed = st.text_input("or type", value=(cur_t if cur_t and cur_t not in known else ""), key=f"{kt}_ft",
+                                  label_visibility="collapsed", placeholder="or type another answer")
+        typed = (typed or "").strip()
+        if typed:                                      # a typed answer wins over the list
+            store[kv] = "wrong" if not (auto and _pr_norm(typed) == _pr_norm(auto)) else "right"
+            if store[kv] == "wrong":
+                store[kt] = typed
+            else:
+                store.pop(kt, None)
+        elif ch == default_opt and default_opt is not None and kv not in store:
             pass                                       # still on the starting answer: saved as pre-filled
         elif ch == default_opt and default_opt is not None and store.get(kv) == "cleared":
             store.pop(kv, None)                        # back to the starting answer
@@ -6456,7 +6464,7 @@ def _ft_field_widgets(d, pi, store, kp):
             store[kv] = "right"
             store.pop(kt, None)
         else:
-            val = typed.strip() if ch == _FT_OTHER else ch
+            val = ch
             if val:
                 store[kv] = "wrong" if not (auto and _pr_norm(val) == _pr_norm(auto)) else "right"
                 if store[kv] == "wrong":
@@ -6509,16 +6517,20 @@ def render_film_tagging():
     _pr_show_save_history(d.get("game"), "titles")
     store = _pr_store(d.get("run"))
     kp = f"ft{d.get('slug')}"
-    _pr_save_bar(d, store, kp, f"_ft_{d.get('slug')}", part="titles")
+    _saved_ = [x for x in _pr_app_saves_for(d.get("run")) if "titles" in x[2]]
+    if _saved_:
+        st.success("Already saved for this batch: " + "; ".join(f"{c} ({t})" for c, t, *_ in _saved_))
     st.caption(("Each field starts on the automatic answer (\u2757 = the model's guess). " if "/play_tag/" in
                 str(d.get("_dir", "")).replace(os.sep, "/") else
                 "Each field starts on the coach's answer (\u2713 = the automatic answer). ")
                + "Change only what's wrong; set a field to -- if you can't tell. Saving accepts the rest as they are.")
+    _sfx = f"_ft_{d.get('slug')}"
+    _form = st.form(f"ft_form_{d.get('slug')}_{d.get('run')}")
     for pi, pl in enumerate(d.get("plays", [])):
         n_set = len([k for k in store if k.startswith(f"{kp}_v_{d.get('run')}_{pi}_")])
         head = (f"Clip {pl.get('clip_number')} \u00b7 {pl.get('clock') or ''} \u00b7 {str(pl.get('synergy') or '')[:90]}"
-                + (f"  \u2014 {n_set} set" if n_set else ""))
-        with st.expander(head, expanded=(pi == 0)):
+                + (f"  \u2014 {n_set} changed" if n_set else ""))
+        with _form.expander(head, expanded=(pi == 0)):
             if pl.get("coach_title"):
                 st.markdown(f"Coach's Title (Synergy): `{pl['coach_title']}`")
             if pl.get("auto_title"):
@@ -6533,6 +6545,15 @@ def render_film_tagging():
             if pl.get("synergy_url"):
                 st.markdown(f"[Open in Synergy]({pl['synergy_url']})" + (f" (clip {pl['synergy_pos']})" if pl.get("synergy_pos") else ""))
             _ft_field_widgets(d, pi, store, kp)
+    with _form:
+        _nc, _sc = st.columns([3, 2], vertical_alignment="bottom")
+        _coach = _nc.text_input("Your name (required to save)", key=f"pr_coach_titles{_sfx}")
+        _go = _sc.form_submit_button("Save my tags", use_container_width=True)
+    if _go:
+        if not str(_coach).strip():
+            st.error("Add your name next to the Save button, then save again.")
+        else:
+            _pr_commit(d, store, _coach, kp, "titles", _sfx)
 
 
 def render_player_number_tracking():
