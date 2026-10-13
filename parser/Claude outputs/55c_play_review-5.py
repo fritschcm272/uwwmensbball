@@ -875,6 +875,10 @@ def tag_queue():
         pick = todo.assign(_cn=pd.to_numeric(todo["clip_number"], errors="coerce")).sort_values("_cn", kind="stable").head(n_per)
         rdir = tempfile.mkdtemp(prefix=f"play_tag_{slug_game}_")
         plays = []
+        try:
+            _gn = _trk_numbers_for_game(gd, gc) if "_trk_numbers_for_game" in globals() else {}
+        except Exception:
+            _gn = {}
         for _, r in pick.iterrows():
             files = [f for f in str(r.get("track_files") or "").split(";") if f] or \
                     [f for f in str(r.get("frame_files") or "").split(";") if f]
@@ -907,7 +911,11 @@ def tag_queue():
                           "poster": (f"clip_{fid}_poster.jpg" if clip_file and os.path.exists(os.path.join(rdir, f"clip_{fid}_poster.jpg")) else None),
                           "fid": fid, "synergy_url": url, "synergy_pos": int(pos) if pd.notna(pos) else None,
                           "pictures": [], "fields": fields,
-                          "five": {"offense": _trk_five(r.get("offense_lineup")), "defense": _trk_five(r.get("defense_lineup"))}})
+                          "five": {"offense": _trk_five(r.get("offense_lineup")), "defense": _trk_five(r.get("defense_lineup"))},
+                          # requested: the Screener / Screen defender lists show each player's jersey number
+                          "five_labels": {nm: (f"#{_gn[str(nm).lower()]} {nm}" if _gn.get(str(nm).lower()) else nm)
+                                          for side_ in ("offense", "defense")
+                                          for nm in _trk_five(r.get(f"{side_}_lineup"))}})
         try:
             _export_play_review_to_app(rdir, slug, f"{gd}|{gc}", stamp, plays, vocab, kind="play_tag")
             shutil.rmtree(rdir, ignore_errors=True)

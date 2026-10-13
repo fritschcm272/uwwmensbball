@@ -5872,17 +5872,17 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
             for _n, _r in enumerate(_rows or [], 1):
                 out.setdefault("actions", []).append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
                                                       "order": _n, "action": _r.get("Action") or None,
-                                                      "screener": _r.get("Screener") or None,
+                                                      "screener": _ft_unlab(_r.get("Screener")) or None,
                                                       "coverage": _r.get("Coverage") or None,
-                                                      "screen_defender": _r.get("Screen defender") or None,
+                                                      "screen_defender": _ft_unlab(_r.get("Screen defender")) or None,
                                                       "at_s": _r.get("At (s)"), "prefilled": not _touched_a})
             if _touched_a and not _rows:
                 out.setdefault("actions_cleared", []).append(pl["clip_key"])
             _first = (_rows or [{}])[0]
             _ball = next((r_ for r_ in _rows or [] if _FT_BALL_RX.search(r_.get("Action") or "") and r_.get("Coverage")), None)
             _off = next((r_ for r_ in _rows or [] if not _FT_BALL_RX.search(r_.get("Action") or "") and r_.get("Coverage")), None)
-            _derived = ({"primary_action": _first.get("Action"), "screener": _first.get("Screener"),
-                         "screen_defender": _first.get("Screen defender"),
+            _derived = ({"primary_action": _first.get("Action"), "screener": _ft_unlab(_first.get("Screener")),
+                         "screen_defender": _ft_unlab(_first.get("Screen defender")),
                          "ball_screen_coverage": (_ball or {}).get("Coverage"),
                          "offball_coverage": (_off or {}).get("Coverage")}, _touched_a)
         for fi, f in enumerate(pl.get("fields", []) if part != "players" else []):
@@ -6444,13 +6444,27 @@ def _ft_clean(v):
     return "" if v.lower() in ("nan", "none", "<na>") else v
 
 
+def _ft_lab(pl, name):
+    """A player's name as the lists show it -- "#24 Richie Warren" (the jersey number from the play's lineup)."""
+    name = _ft_clean(name)
+    if not name:
+        return ""
+    lab = (pl.get("five_labels") or {}).get(name) or name
+    return lab if not str(lab).startswith("#?") else name
+
+
+def _ft_unlab(v):
+    """"#24 Richie Warren" -> "Richie Warren" (what's saved)."""
+    return re.sub(r"^#\S*\s+", "", _ft_clean(v))
+
+
 def _ft_initial_actions(pl):
     """The starting row of a play's Actions table: the coach's answers (a Title check) or the automatic ones."""
     by = {f.get("field"): f for f in pl.get("fields", [])}
     val = lambda k: _ft_clean((by.get(k) or {}).get("coach")) or _ft_clean((by.get(k) or {}).get("auto"))
-    row = {"Action": val("primary_action"), "Screener": val("screener"),
+    row = {"Action": val("primary_action"), "Screener": _ft_lab(pl, val("screener")),
            "Coverage": val("ball_screen_coverage") or val("offball_coverage"),
-           "Screen defender": val("screen_defender"), "At (s)": None}
+           "Screen defender": _ft_lab(pl, val("screen_defender")), "At (s)": None}
     return [row] if any(_ft_clean(row[c]) for c in _FT_ACT_COLS[:4]) else []
 
 
@@ -6483,12 +6497,15 @@ def _ft_actions_editor(d, pi, store, kp):
     cur_vals = lambda c: [r.get(c) for r in (cur or []) + init]
     cfg = {"Action": st.column_config.SelectboxColumn("Action", options=opt(voc.get("primary_action"), cur_vals("Action")),
                                                        width="medium"),
-           "Screener": st.column_config.SelectboxColumn("Screener", options=opt(five.get("offense"), voc.get("screener"),
-                                                                                 cur_vals("Screener"))),
+           # requested: the Screener list is only the five on OFFENSE, each with his jersey number ("#24 Richie Warren")
+           "Screener": st.column_config.SelectboxColumn("Screener", options=(
+               opt([_ft_lab(pl, n) for n in five.get("offense") or []], cur_vals("Screener")) if five.get("offense")
+               else opt(voc.get("screener"), cur_vals("Screener")))),
            "Coverage": st.column_config.SelectboxColumn("Coverage", options=opt(voc.get("ball_screen_coverage"),
                                                                                  voc.get("offball_coverage"), cur_vals("Coverage"))),
-           "Screen defender": st.column_config.SelectboxColumn("Screen defender", options=opt(
-               five.get("defense"), voc.get("screen_defender"), cur_vals("Screen defender"))),
+           "Screen defender": st.column_config.SelectboxColumn("Screen defender", options=(
+               opt([_ft_lab(pl, n) for n in five.get("defense") or []], cur_vals("Screen defender")) if five.get("defense")
+               else opt(voc.get("screen_defender"), cur_vals("Screen defender")))),
            "At (s)": st.column_config.NumberColumn("At (s)", min_value=0.0, step=0.5, format="%.1f",
                                                    help="Optional: the second of the clip this action happens at")}
     st.markdown("**Actions in this play** (in order; \u2795 at the bottom adds another, e.g. a 2nd ball screen)"
