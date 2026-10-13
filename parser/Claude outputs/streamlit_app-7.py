@@ -5873,6 +5873,7 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
                 out.setdefault("actions", []).append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
                                                       "order": _n, "action": _r.get("Action") or None,
                                                       "screener": _ft_unlab(_r.get("Screener")) or None,
+                                                      "screener_action": _r.get("Screener action") or None,
                                                       "coverage": _r.get("Coverage") or None,
                                                       "screen_defender": _ft_unlab(_r.get("Screen defender")) or None,
                                                       "at_s": _r.get("At (s)"), "prefilled": not _touched_a})
@@ -6433,7 +6434,13 @@ _FT_OTHER = "other (type it)"
 
 
 _FT_ACTION_FIELDS = ("primary_action", "screener", "ball_screen_coverage", "offball_coverage", "screen_defender")
-_FT_ACT_COLS = ["Action", "Screener", "Coverage", "Screen defender", "At (s)"]
+_FT_ACT_COLS = ["Action", "Screener", "Screener action", "Coverage", "Screen defender", "At (s)"]
+_FT_ACT_TEXT = [c for c in _FT_ACT_COLS if c != "At (s)"]
+# requested: actions offered in the Action list even before any clip has been tagged with them
+_FT_EXTRA_ACTIONS = ["Pass to the 5 and downscreen", "Rhino", "Cobra", "Fox"]
+# requested: "a column for what the screener did -- Pop, Roll, etc." (answers already typed are offered too)
+_FT_SCREENER_ACTIONS = ["Roll", "Pop", "Short roll", "Slip", "Ghost", "Re-screen", "Flare / fade", "Replace",
+                        "Seal", "Cut to basket"]
 _FT_BALL_RX = re.compile(r"ball screen|p&r|pick|dho|hand ?off|\bget\b|drag", re.I)
 
 
@@ -6462,20 +6469,20 @@ def _ft_initial_actions(pl):
     """The starting row of a play's Actions table: the coach's answers (a Title check) or the automatic ones."""
     by = {f.get("field"): f for f in pl.get("fields", [])}
     val = lambda k: _ft_clean((by.get(k) or {}).get("coach")) or _ft_clean((by.get(k) or {}).get("auto"))
-    row = {"Action": val("primary_action"), "Screener": _ft_lab(pl, val("screener")),
+    row = {"Action": val("primary_action"), "Screener": _ft_lab(pl, val("screener")), "Screener action": "",
            "Coverage": val("ball_screen_coverage") or val("offball_coverage"),
            "Screen defender": _ft_lab(pl, val("screen_defender")), "At (s)": None}
-    return [row] if any(_ft_clean(row[c]) for c in _FT_ACT_COLS[:4]) else []
+    return [row] if any(_ft_clean(row[c]) for c in _FT_ACT_TEXT) else []
 
 
 def _ft_rows(df):
     """Edited Actions table -> list of row dicts (empty rows dropped, values cleaned)."""
     out = []
     for _, r in (df if isinstance(df, pd.DataFrame) else pd.DataFrame(df or [], columns=_FT_ACT_COLS)).iterrows():
-        row = {c: _ft_clean(r.get(c)) for c in _FT_ACT_COLS[:4]}
+        row = {c: _ft_clean(r.get(c)) for c in _FT_ACT_TEXT}
         at = pd.to_numeric(pd.Series([r.get("At (s)")]), errors="coerce").iloc[0]
         row["At (s)"] = None if pd.isna(at) else round(float(at), 1)
-        if any(row[c] for c in _FT_ACT_COLS[:4]):
+        if any(row[c] for c in _FT_ACT_TEXT):
             out.append(row)
     return out
 
@@ -6495,12 +6502,17 @@ def _ft_actions_editor(d, pi, store, kp):
     five = pl.get("five", {}) or {}
     opt = lambda *lists: sorted({_ft_clean(x) for lst in lists for x in (lst or []) if _ft_clean(x)})
     cur_vals = lambda c: [r.get(c) for r in (cur or []) + init]
-    cfg = {"Action": st.column_config.SelectboxColumn("Action", options=opt(voc.get("primary_action"), cur_vals("Action")),
+    cfg = {"Action": st.column_config.SelectboxColumn("Action", options=opt(voc.get("primary_action"), _FT_EXTRA_ACTIONS,
+                                                                                     cur_vals("Action")),
                                                        width="medium"),
            # requested: the Screener list is only the five on OFFENSE, each with his jersey number ("#24 Richie Warren")
            "Screener": st.column_config.SelectboxColumn("Screener", options=(
                opt([_ft_lab(pl, n) for n in five.get("offense") or []], cur_vals("Screener")) if five.get("offense")
                else opt(voc.get("screener"), cur_vals("Screener")))),
+           "Screener action": st.column_config.SelectboxColumn(
+               "Screener action", help="What the screener did after the screen: Roll, Pop, Slip, ...",
+               options=_FT_SCREENER_ACTIONS + [v for v in opt(voc.get("screener_action"), cur_vals("Screener action"))
+                                               if v not in _FT_SCREENER_ACTIONS]),
            "Coverage": st.column_config.SelectboxColumn("Coverage", options=opt(voc.get("ball_screen_coverage"),
                                                                                  voc.get("offball_coverage"), cur_vals("Coverage"))),
            "Screen defender": st.column_config.SelectboxColumn("Screen defender", options=(
