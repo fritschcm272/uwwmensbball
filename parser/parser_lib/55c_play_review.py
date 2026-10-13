@@ -175,19 +175,25 @@ def _tr_film(key):
     return txt
 
 
-def _pr_reviewed_keys():
-    """Clip keys already reviewed (any player check or Title answer saved)."""
+def _pr_ck(k):
+    return _pl_ckey_norm(k) if "_pl_ckey_norm" in globals() else str(k)
+
+
+def _pr_reviewed_keys(part=None):
+    """Clip keys already reviewed: part "players" = a player check saved, "titles" = a Title answer saved, None = either."""
     keys = set()
-    try:
-        for ch in coach_checks_all()[0]:
-            keys.add(ch.get("clip_key"))
-    except Exception:
-        pass
-    try:
-        title_review_answers()
-        keys |= {ck for (ck, _f) in (globals().get("_title_review_marks") or {})}
-    except Exception:
-        pass
+    if part in (None, "players"):
+        try:
+            for ch in coach_checks_all()[0]:
+                keys.add(_pr_ck(ch.get("clip_key")))
+        except Exception:
+            pass
+    if part in (None, "titles"):
+        try:
+            title_review_answers()
+            keys |= {_pr_ck(ck) for (ck, _f) in (globals().get("_title_review_marks") or {})}
+        except Exception:
+            pass
     return keys
 
 
@@ -524,7 +530,16 @@ def play_review():
     if PLAY_REVIEW_ONLY_GAME:
         pc = pc[pc["game_code"].astype(str).str.contains(PLAY_REVIEW_ONLY_GAME, regex=False)]
     pc = pc[pc["track_clip_key"].isin(tracked_keys)]
-    done = _pr_reviewed_keys() if PLAY_REVIEW_SKIP_REVIEWED else set()
+    # CONFIRMED CHANGE (requested: the player checks move on once saved, while the Title checks stay on the same plays until
+    # THEY are saved). PLAY_REVIEW_QUEUES = "separate": each part is its own queue -- the next PLAY_REVIEW_PLAYS_PER_GAME plays
+    # in game order with no saved player check, and the next ones with no saved Title answer. One package holds both; each
+    # play says which part(s) it's open for, and the app shows it only there. "together" = the old way (the same plays for
+    # both, and a new batch only once BOTH parts are saved).
+    _sep = str(globals().get("PLAY_REVIEW_QUEUES", "separate")).lower() != "together"
+    _skip = PLAY_REVIEW_SKIP_REVIEWED
+    done = _pr_reviewed_keys() if _skip else set()
+    done_p = _pr_reviewed_keys("players") if _skip else set()
+    done_t = _pr_reviewed_keys("titles") if _skip else set()
     # how the automatic Title did on everything reviewed so far
     marks = globals().get("_title_review_marks") or {}
     rep = {}
@@ -547,25 +562,34 @@ def play_review():
         _slug_app = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
         _pkg = os.path.join(_pr_app_dir(), "play_review", _slug_app)
         # CONFIRMED CHANGE (requested: everything in the data folder; the Title and player-number checks are done in the
-        # Streamlit app, not review.html pages). A game's open review is its package in <data>/play_review/<game>/; it goes
-        # once its run has BOTH parts saved in <data>/play_review_saves (a new run replaces it below). A game with an open,
-        # unfinished review gets no new run (PLAY_REVIEW_REQUIRE_SAVED = False skips that).
+        # Streamlit app, not review.html pages). A game's open review is its package in <data>/play_review/<game>/. With
+        # PLAY_REVIEW_QUEUES = "separate" it's rebuilt once EITHER part is saved (the saved part moves on to its next plays,
+        # the other keeps its plays); "together" = only once BOTH are saved. Nothing saved = no new run
+        # (PLAY_REVIEW_REQUIRE_SAVED = False skips that).
         if os.path.exists(os.path.join(_pkg, "review.json")):
             try:
                 with open(os.path.join(_pkg, "review.json"), encoding="utf-8") as fh:
-                    _pkg_run = json.load(fh).get("run")
-                if _run_complete(_slug_app, _pkg_run):          # both parts saved (Titles and player checks)
+                    _pkg_doc = json.load(fh)
+                _pkg_run = _pkg_doc.get("run")
+                _open = set()
+                for _pl_ in _pkg_doc.get("plays", []):
+                    _open |= set(_pl_.get("parts") or ["titles", "players"])
+                _saved = _run_parts_saved(_slug_app, _pkg_run)
+                _done_now = (bool(_saved & _open) if _sep else {"titles", "players"} <= _saved)
+                if _done_now:
                     shutil.rmtree(_pkg, ignore_errors=True)
-                    print(f"Play review: {gd} {gc} -- review run {_pkg_run} is saved; its copy in the app is removed", flush=True)
+                    _what = " and ".join({"titles": "Title checks", "players": "player checks"}[x] for x in sorted(_saved & _open))
+                    print(f"Play review: {gd} {gc} -- {_what} of review run {_pkg_run} saved; a new batch is built"
+                          + ("" if _open <= _saved else " (the part not saved yet keeps its plays)"), flush=True)
                 elif globals().get("PLAY_REVIEW_REQUIRE_SAVED", True):
-                    print(f"Play review: {gd} {gc} -- no new run: its open review (run {_pkg_run}) isn't finished yet "
-                          "(its Title checks and its player checks both need saving in the app, on Previous Games and "
-                          "Analytics > Player Number Tracking).", flush=True)
+                    print(f"Play review: {gd} {gc} -- no new run: nothing in its open review (run {_pkg_run}) is saved yet "
+                          f"(Title checks: Previous Games; player checks: Analytics > Player Number Tracking).", flush=True)
                     continue
             except Exception:
                 pass
         g = g.assign(_key=[f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}" for _, r in g.iterrows()])
-        fresh = g[~g["_key"].isin(done)]
+        _kn = g["_key"].map(_pr_ck)
+        fresh = g[~_kn.isin(done)]
         # CONFIRMED CHANGE (requested: "the first 5 clips, then groups of 5 after that that haven't had a check run on them"):
         # PLAY_REVIEW_PICK = "next" takes the first PLAY_REVIEW_PLAYS_PER_GAME plays, in game order, that have no saved check yet;
         # "random" is the old behaviour (a random set).
@@ -573,18 +597,34 @@ def play_review():
         if _mode == "random":
             pool = fresh if len(fresh) else g
             pick = pool.loc[rng.sample(list(pool.index), min(PLAY_REVIEW_PLAYS_PER_GAME, len(pool)))].sort_values("clip_number")
+        elif _sep:
+            _n = PLAY_REVIEW_PLAYS_PER_GAME
+            _pp = g[~_kn.isin(done_p)].sort_values("clip_number", kind="stable").head(_n)
+            _pt = g[~_kn.isin(done_t)].sort_values("clip_number", kind="stable").head(_n)
+            if not len(_pp) and not len(_pt):
+                print(f"Play review: {gd} {gc} -- every play already has its checks; nothing new to review", flush=True)
+                continue
+            pick = g.loc[sorted(set(_pp.index) | set(_pt.index), key=lambda i: list(g.index).index(i))]
+            pick = pick.sort_values("clip_number", kind="stable")
         else:
             if not len(fresh):
                 print(f"Play review: {gd} {gc} -- every play already has a check; nothing new to review", flush=True)
                 continue
             pick = fresh.sort_values("clip_number", kind="stable").head(PLAY_REVIEW_PLAYS_PER_GAME)
+        _parts_of = {}
+        for _i in pick.index:
+            if _sep and _mode != "random":
+                _parts_of[_i] = [x for x, sub in (("titles", _pt), ("players", _pp)) if _i in sub.index]
+            else:
+                _parts_of[_i] = ["titles", "players"]
         slug = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
         # scratch folder for this game's pictures / clips while they're built; the finished review goes to <data>/play_review
         rdir = tempfile.mkdtemp(prefix=f"play_review_{slug}_")
         gnums = _trk_numbers_for_game(gd, gc)
         numtxt = lambda n: f"#{gnums.get(str(n).lower(), '?')} {str(n).split()[-1]}"
         plays = []
-        for _, r in pick.iterrows():
+        for _ri, r in pick.iterrows():
+            _parts = _parts_of.get(_ri, ["titles", "players"])
             files = [f for f in str(r["track_files"]).split(";") if f]
             rows = pt[pt["clip_key"] == r["track_clip_key"]].to_dict("records")
             n = len(files)
@@ -607,6 +647,8 @@ def play_review():
             clock_txt = f"{r.get('period', '')} {int(clock // 60)}:{int(clock % 60):02d}" if pd.notna(clock) else "(no clock)"
             lu = lambda side: ", ".join(numtxt(nm) for nm in _trk_five(r.get(f"{side}_lineup"))) or "(lineup unknown)"
             pics = []
+            if "players" not in _parts:
+                picks_ = []                    # a Title-check-only play: no player pictures / close-ups to build
             for which, t in picks_:
                 if t is None or t >= n or any(p_["t"] == t for p_ in pics):
                     continue
@@ -667,7 +709,7 @@ def play_review():
                                "sure": sure, "same": (_tr_same(cv, av) if cv is not None and sure else None), "note": note})
             url, pos = _pr_synergy(r)
             vs = pd.to_numeric(r.get("video_start_s"), errors="coerce")
-            plays.append({"clip_key": r["_key"], "clip_number": cn, "clock": clock_txt,
+            plays.append({"clip_key": r["_key"], "clip_number": cn, "clock": clock_txt, "parts": _parts,
                           # its play-by-play row (the app shows the review inside that row of the play-by-play)
                           "pbp_event_order": (float(r["pbp_event_order"]) if pd.notna(pd.to_numeric(r.get("pbp_event_order"), errors="coerce"))
                                               else None),
@@ -707,8 +749,13 @@ def play_review():
             shutil.rmtree(rdir, ignore_errors=True)
         except Exception as _ae:
             print(f"  [play review] not exported to the app: {type(_ae).__name__}: {_ae} (scratch files kept in {rdir})", flush=True)
-        print(f"Play review: {gd} {gc}: {len(plays)} play(s) ({'next unreviewed, in game order' if _mode != 'random' else 'random'}) ({len(g) - len(fresh)} already reviewed, left out) "
-              f"-- in the app: Previous Games (Title checks) and Analytics > Player Number Tracking (player checks)", flush=True)
+        _nt = sum("titles" in p_.get("parts", []) for p_ in plays)
+        _np = sum("players" in p_.get("parts", []) for p_ in plays)
+        _rng = lambda part: (lambda cs: f"clips {min(cs)}-{max(cs)}" if cs else "none")(
+            [p_["clip_number"] for p_ in plays if part in p_.get("parts", [])])
+        print(f"Play review: {gd} {gc}: {_nt} Title check(s) ({_rng('titles')}) -- Previous Games; {_np} player check(s) "
+              f"({_rng('players')}) -- Analytics > Player Number Tracking "
+              f"({'next unreviewed, in game order' if _mode != 'random' else 'random'})", flush=True)
 
 
 # ---- Film Tagging queue: the clips with no tag yet, in game order, Titles only -------------------------------------------

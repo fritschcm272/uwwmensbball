@@ -1,9 +1,9 @@
 offense_team,screener,screened,screen_type,times,ppp,rolls,pops,slips,game_date,game_code
-Alma Scots,unnamed offense,unnamed offense,Off-ball screen,46,0.8,2,0,0,2025-12-20,WWW@AC
-Alma Scots,unnamed offense,unnamed offense,Ball screen,27,0.68,0,0,0,2025-12-20,WWW@AC
-UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,55,0.98,4,0,0,2025-12-20,WWW@AC
-UW-Whitewater,unnamed offense,unnamed offense,Ball screen,15,1.08,0,0,0,2025-12-20,WWW@AC
-UW-Oshkosh Titans,unnamed offense,unnamed offense,Off-ball screen,38,0.97,0,1,0,2026-01-03,WOS@WWW
+Alma Scots,unnamed offense,unnamed offense,Off-ball screen,48,0.68,2,0,0,2025-12-20,WWW@AC
+Alma Scots,unnamed offense,unnamed offense,Ball screen,27,0.96,0,0,0,2025-12-20,WWW@AC
+UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,55,1.02,4,0,0,2025-12-20,WWW@AC
+UW-Whitewater,unnamed offense,unnamed offense,Ball screen,14,1.0,0,0,0,2025-12-20,WWW@AC
+UW-Oshkosh Titans,unnamed offense,unnamed offense,Off-ball screen,37,1.0,0,1,0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,unnamed offense,unnamed offense,Ball screen,15,0.79,2,0,0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,unnamed offense,Joey LaChapell,Off-ball screen,3,1.67,0,0,0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,unnamed offense,Brandon Beck,Off-ball screen,2,1.5,0,0,0,2026-01-03,WOS@WWW
@@ -15,8 +15,8 @@ UW-Oshkosh Titans,Matt Imig,unnamed offense,Ball screen,1,0.0,0,0,0,2026-01-03,W
 UW-Oshkosh Titans,Oskar Kangas,unnamed offense,Off-ball screen,1,3.0,0,0,0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,unnamed offense,Michael Metcalf-Grassman,Ball screen,1,2.0,0,0,0,2026-01-03,WOS@WWW
 UW-Oshkosh Titans,unnamed offense,Oskar Kangas,Off-ball screen,1,0.0,0,0,0,2026-01-03,WOS@WWW
-UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,60,0.68,1,0,1,2026-01-03,WOS@WWW
-UW-Whitewater,unnamed offense,unnamed offense,Ball screen,15,0.9,0,0,0,2026-01-03,WOS@WWW
+UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,61,0.72,1,0,1,2026-01-03,WOS@WWW
+UW-Whitewater,unnamed offense,unnamed offense,Ball screen,14,0.67,0,0,0,2026-01-03,WOS@WWW
 UW-Whitewater,unnamed offense,Collin Madson,Off-ball screen,2,0.0,0,0,0,2026-01-03,WOS@WWW
 UW-Whitewater,Brock Marino,unnamed offense,Off-ball screen,1,1.0,0,0,0,2026-01-03,WOS@WWW
 UW-Whitewater,Collin Madson,Brock Marino,Ball screen,1,2.0,0,0,0,2026-01-03,WOS@WWW
@@ -27,20 +27,19 @@ UW-Whitewater,Collin Madson,Luke Bara,Off-ball screen,1,0.0,0,0,0,2026-01-03,WOS
 UW-Whitewater,Darius Chestnut,unnamed offense,Off-ball screen,1,2.0,0,0,0,2026-01-03,WOS@WWW
 UW-Whitewater,Richie Warren,unnamed offense,Off-ball screen,1,2.0,0,0,0,2026-01-03,WOS@WWW
 UW-Whitewater,unnamed offense,Richie Warren,Off-ball screen,1,0.0,0,0,0,2026-01-03,WOS@WWW
-Coe Kohawks,unnamed offense,unnamed offense,Off-ball screen,58,0.9,1,0,0,2025-12-30,WWW@COE
-Coe Kohawks,unnamed offense,unnamed offense,Ball screen,11,1.0,1,0,0,2025-12-30,WWW@COE
+Coe Kohawks,unnamed offense,unnamed offense,Off-ball screen,56,0.9,1,0,0,2025-12-30,WWW@COE
+Coe Kohawks,unnamed offense,unnamed offense,Ball screen,13,0.91,1,0,0,2025-12-30,WWW@COE
 Coe Kohawks,unnamed offense,Darius Chestnut,Off-ball screen,1,0.0,0,0,0,2025-12-30,WWW@COE
 Coe Kohawks,unnamed offense,Jake Quast,Off-ball screen,1,0.0,0,0,0,2025-12-30,WWW@COE
-UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,49,1.1,0,0,0,2025-12-30,WWW@COE
+UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,48,1.1,0,0,0,2025-12-30,WWW@COE
 UW-Whitewater,unnamed offense,unnamed offense,Ball screen,8,0.0,0,0,0,2025-12-30,WWW@COE
 UW-Whitewater,Luke Bara,unnamed offense,Off-ball screen,1,,0,0,0,2025-12-30,WWW@COE
 UW-Whitewater,unnamed offense,Joey Berezowitz,Ball screen,1,2.0,0,0,0,2025-12-30,WWW@COE
-UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,22,1.0,1,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,24,1.25,1,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,Brock Marino,unnamed offense,Off-ball screen,4,1.5,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,unnamed offense,unnamed offense,Ball screen,4,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,unnamed offense,Richie Warren,Off-ball screen,3,1.33,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,Collin Madson,unnamed offense,Off-ball screen,2,1.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-UW-Whitewater,Joey Berezowitz,unnamed offense,Off-ball screen,2,1.5,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,unnamed offense,Isaac Verges,Off-ball screen,2,1.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,Brock Marino,Isaac Verges,Ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,Brock Marino,Isaac Verges,Off-ball screen,1,2.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
@@ -49,10 +48,10 @@ UW-Whitewater,Collin Madson,Brock Marino,Off-ball screen,1,0.0,0,0,0,2026-03-07,
 UW-Whitewater,Isaac Verges,Collin Madson,Ball screen,1,0.0,1,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,Isaac Verges,unnamed offense,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,JR Lukenbill,Joey Berezowitz,Off-ball screen,1,,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+UW-Whitewater,Joey Berezowitz,unnamed offense,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,Richie Warren,Brock Marino,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,unnamed offense,Brock Marino,Ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,unnamed offense,Brock Marino,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-UW-Whitewater,unnamed offense,Collin Madson,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,unnamed offense,JR Lukenbill,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,unnamed offense,Joey Berezowitz,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,unnamed offense,Rashad Rogers,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
