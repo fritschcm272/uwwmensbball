@@ -6406,7 +6406,10 @@ def _ft_field_widgets(d, pi, store, kp):
         kv, kt = f"{kp}_v_{run}_{pi}_{fi}", f"{kp}_t_{run}_{pi}_{fi}"
         auto = f.get("auto")
         known = [v for v in d.get("vocab", {}).get(f.get("field"), []) if v != auto]
-        auto_opt = (f"\u2713 {auto}" + ("" if f.get("sure") else " (unsure)")) if auto else None
+        # requested: on a Tag batch (clips nobody has tagged) the automatic answer is marked "!" -- it's the model's guess,
+        # not something a coach has confirmed; on a Title check it stays "\u2713"
+        _mark = "\u2757" if "/play_tag/" in str(d.get("_dir", "")).replace(os.sep, "/") else "\u2713"
+        auto_opt = (f"{_mark} {auto}" + ("" if f.get("sure") else " (unsure)")) if auto else None
         coach_v = f.get("coach") if f.get("coach") not in (None, "") else None
         if coach_v and coach_v not in known and not (auto and _pr_norm(coach_v) == _pr_norm(auto)):
             known = [coach_v] + known
@@ -6507,8 +6510,10 @@ def render_film_tagging():
     store = _pr_store(d.get("run"))
     kp = f"ft{d.get('slug')}"
     _pr_save_bar(d, store, kp, f"_ft_{d.get('slug')}", part="titles")
-    st.caption("Each field starts on the automatic answer (\u2713) -- or, on a Title check, on the coach's answer. Change only "
-               "what's wrong; set a field to -- if you can't tell. Saving accepts the rest as they are.")
+    st.caption(("Each field starts on the automatic answer (\u2757 = the model's guess). " if "/play_tag/" in
+                str(d.get("_dir", "")).replace(os.sep, "/") else
+                "Each field starts on the coach's answer (\u2713 = the automatic answer). ")
+               + "Change only what's wrong; set a field to -- if you can't tell. Saving accepts the rest as they are.")
     for pi, pl in enumerate(d.get("plays", [])):
         n_set = len([k for k in store if k.startswith(f"{kp}_v_{d.get('run')}_{pi}_")])
         head = (f"Clip {pl.get('clip_number')} \u00b7 {pl.get('clock') or ''} \u00b7 {str(pl.get('synergy') or '')[:90]}"
