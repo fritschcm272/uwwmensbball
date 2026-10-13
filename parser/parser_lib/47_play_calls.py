@@ -1282,6 +1282,34 @@ def _pl_app_answers():
     return by
 
 
+def _pl_app_actions():
+    """{normalized clip key: [action rows in order]} from Film Tagging's Actions tables (saves' "actions"), latest save of a
+    clip wins (a save that emptied a clip's table clears it). Each row: action, screener, coverage, screen_defender, at_s,
+    prefilled. CONFIRMED CHANGE (requested: several actions in one play -- e.g. two ball screens -- recorded separately)."""
+    cached = globals().get("_pl_app_actions_cache")
+    if cached is not None:
+        return cached
+    docs = []
+    try:
+        for f in _review_files(_play_review_file_saves()):
+            d = _review_doc(f)
+            if d is not None and (d.get("actions") or d.get("actions_cleared")):
+                docs.append((str(d.get("saved", "")), os.path.getmtime(f), d))
+    except Exception as e:
+        print(f"  (app actions not read: {type(e).__name__}: {e})", flush=True)
+    by = {}
+    for _s, _m, d in sorted(docs, key=lambda x: (x[0], x[1])):
+        this = {}
+        for a in d.get("actions") or []:
+            this.setdefault(_pl_ckey_norm(a.get("clip_key")), []).append(a)
+        for ck, rows in this.items():
+            by[ck] = sorted(rows, key=lambda a: int(a.get("order") or 0))
+        for ck in d.get("actions_cleared") or []:
+            by.pop(_pl_ckey_norm(ck), None)
+    globals()["_pl_app_actions_cache"] = by
+    return by
+
+
 def _pl_cov_entries(detail):
     if detail is None or (isinstance(detail, float) and pd.isna(detail)):
         return []
@@ -1292,7 +1320,7 @@ def _pl_apply_app_tags(out):
     if out.empty or not globals().get("PLAY_CALLS_USE_APP_TAGS", True):
         return out
     by = _pl_app_answers()
-    if not by:
+    if not by and not _pl_app_actions():
         return out
     out = out.copy()
     norm = lambda x: re.sub(r"[^a-z0-9#]+", "", str(x).lower())
@@ -1311,11 +1339,23 @@ def _pl_apply_app_tags(out):
             out[c] = None
     override = globals().get("TAG_MODEL_REVIEW_OVERRIDES_TITLE", True)
     n_new = n_fix = 0
+    acts_by = _pl_app_actions()
+    _num_of = {}
+    for _team, _bk in (_pl_jersey_book() if "_pl_jersey_book" in globals() else {}).items():
+        for _j, _nm in _bk.items():
+            _num_of.setdefault(norm(_nm), _j)
+    n_multi = 0
     for idx, r in out.iterrows():
-        a = by.get(_pl_ckey_norm(f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}"))
-        if not a:
-            continue
+        _ck = _pl_ckey_norm(f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}")
+        a = by.get(_ck) or {}
         untagged = r.get("decode_quality") == "Untagged" or blank(r.get("play_title"))
+        # the play's Actions table (Film Tagging): used like the answers -- always on an untagged clip, on a coach-Titled
+        # clip only when a coach changed it
+        _acts = [x for x in (acts_by.get(_ck) or []) if x.get("action") or x.get("coverage")]
+        if _acts and not untagged and (not override or all(x.get("prefilled") for x in _acts)):
+            _acts = []
+        if not a and not _acts:
+            continue
         use = {f: canon(f, v) for f, (v, pre) in a.items() if untagged or (override and not pre)}
         if not untagged:
             # a coach-Titled clip: only fields the app answer actually changes
@@ -1323,7 +1363,7 @@ def _pl_apply_app_tags(out):
                    "primary_action": r.get("primary_action"), "defense": r.get("defense_formation"),
                    "press": r.get("defense_press_formation") if r.get("defense_press") in (True, "True", "true") else "None"}
             use = {f: v for f, v in use.items() if f not in cur or norm(cur[f]) != norm(v)}
-        if not use:
+        if not use and not _acts:
             continue
         def put(c, v, _i=idx):
             out.at[_i, c] = v
@@ -1372,6 +1412,27 @@ def _pl_apply_app_tags(out):
             put("coverage_detail", " | ".join(ent))
             put("defense_coverage", " | ".join(dict.fromkeys(re.sub(r"\s*\(def #\d{1,2}\)", "", e.split(":", 1)[1]).strip()
                                                                for e in ent if ":" in e)))
+        if _acts:
+            # every action, in order: play_actions lists them all, and each one the defense covered is its own coverage
+            # entry ("Ball Screen (#24): Drop (def #3)") -- so two ball screens count twice in the screen-coverage tables
+            _names = [canon("primary_action", x["action"]) for x in _acts if x.get("action")]
+            if _names:
+                put("play_actions", " | ".join(_names))
+                put("primary_action", _names[0])
+            _ent = []
+            for x in _acts:
+                if not x.get("coverage"):
+                    continue
+                _lab = x.get("action") or ("Ball Screen" if "ball" in str(x.get("coverage")).lower() else "Screen")
+                _sn = _num_of.get(norm(x.get("screener") or ""))
+                _dn = _num_of.get(norm(x.get("screen_defender") or ""))
+                _ent.append(f"{_lab}" + (f" (#{_sn})" if _sn else "") + f": {x['coverage']}" + (f" (def #{_dn})" if _dn else ""))
+            if _ent:
+                put("coverage_detail", " | ".join(_ent))
+                put("defense_coverage", " | ".join(dict.fromkeys(str(x["coverage"]) for x in _acts if x.get("coverage"))))
+            if len(_acts) > 1:
+                n_multi += 1
+            use = dict(use) or ({"primary_action": _names[0]} if _names else {"ball_screen_coverage": _acts[0].get("coverage")})
         # the play call and series, named the way the Title decoder names them
         offense = any(f in use for f in ("formation", "play_call", "primary_action")) or not untagged
         sit = out.at[idx, "play_situation"]
@@ -1407,7 +1468,8 @@ def _pl_apply_app_tags(out):
             put("decode_note", (note + "; " if note else "") + f"corrected in the app ({flds})")
     if n_new or n_fix:
         print(f"  App tags: {n_new} clip(s) tagged in the app (no Title) and {n_fix} coach Title(s) corrected in the app "
-              f"-- used in every play-call table like a Title", flush=True)
+              f"-- used in every play-call table like a Title"
+              + (f"; {n_multi} play(s) with more than one action recorded" if n_multi else ""), flush=True)
     return out
 
 
@@ -2269,6 +2331,7 @@ def _pl_untagged_from_frames(tagged):
 
 
 globals().pop("_pl_app_answers_cache", None)        # app tags are re-read every run (new saves since the last run)
+globals().pop("_pl_app_actions_cache", None)        # ...and the Actions tables
 _pl_all_raw = _pl_load_all()
 _pl_untagged = _pl_untagged_from_frames(_pl_all_raw)
 if not _pl_untagged.empty:
