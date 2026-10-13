@@ -5794,8 +5794,27 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
                 st.image(path)
         with right:
             st.markdown("**Players**")
+            def _missed_picker():
+                # CONFIRMED CHANGE (requested: "there should always be 10 players ... I'm getting quite a bit fewer"). A player on
+                # the floor with NO box: pick the grid square at his feet (the faint grid on the picture). Saved with the player
+                # checks; the parser reports why each one was missed and learns what a player looks like from them.
+                _grid = pic.get("grid")
+                if _grid:
+                    _cells = [f"{chr(65 + c_)}{r_ + 1}" for r_ in range(int(_grid[1])) for c_ in range(int(_grid[0]))]
+                    _mk = f"{kp}_b_{run}_{pi}_{ki}_missed"
+                    _prev = [c_ for c_ in (store.get(_mk) or []) if c_ in _cells]
+                    _sel = st.multiselect("Players with NO box -- the grid square at each one's feet (one square per player)",
+                                          _cells, default=_prev, key=f"{kp}_mpk_{run}_{pi}_{ki}",
+                                          help="Real players on the floor that have no box in the picture. Leave empty when all "
+                                               "ten have a box (or the others are off the screen).")
+                    if _sel:
+                        store[_mk] = list(_sel)
+                    else:
+                        store.pop(_mk, None)
+
             if not boxes:
                 st.caption("No player boxes in this picture.")
+                _missed_picker()
                 continue
             keys = [f"{kp}_b_{run}_{pi}_{ki}_{bi}" for bi in range(len(boxes))]
             df = pd.DataFrame([{"Box": b.get("id"), "Side": b.get("side"),
@@ -5825,6 +5844,7 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
                     store[k] = v
                 else:
                     store.pop(k, None)
+            _missed_picker()
 
 def _pr_play_widgets(d, pi, store, kp):
     _pr_title_widgets(d, pi, store, kp)
@@ -5855,6 +5875,10 @@ def _pr_payload(d, store, coach, kp, part=None):
                                    "verdict": v, "correct": (ans or None) if v == "wrong" else None,
                                    "prefilled": bool(pre and not touched)})
         for ki, pic in enumerate(pl.get("pictures", []) if part != "titles" else []):
+            for cell in (store.get(f"{kp}_b_{run}_{pi}_{ki}_missed") or []):
+                out.setdefault("missed", []).append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
+                                                     "frame_file": pic.get("frame_file"), "t": pic.get("t"), "cell": cell,
+                                                     "grid": pic.get("grid"), "W": pic.get("W"), "H": pic.get("H")})
             for bi, b in enumerate(pic.get("boxes", [])):
                 val = store.get(f"{kp}_b_{run}_{pi}_{ki}_{bi}", _PR_NOT_CHECKED)
                 if not isinstance(val, str) or val == _PR_NOT_CHECKED:
@@ -5880,6 +5904,7 @@ def _pr_payload(d, store, coach, kp, part=None):
                                       "hidden_guess": b.get("hidden_guess"), "hidden_guess_p": b.get("hidden_guess_p")})
     if part == "titles":
         out.pop("checks")
+        out.pop("missed", None)
     elif part == "players":
         out.pop("answers")
     return out

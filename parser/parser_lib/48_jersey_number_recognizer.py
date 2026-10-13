@@ -288,6 +288,11 @@ def jersey_collect():
         if (gd, gc) not in _nums_by_game:
             _nums_by_game[(gd, gc)] = _trk_numbers_for_game(gd, gc)
         num = _nums_by_game[(gd, gc)].get(str(ch.get("true_name") or "").lower())
+        # CONFIRMED CHANGE (requested: the reader kept reading a referee's striped shirt as #10). A box the coach marked "not a
+        # player" (referee, coach, fan) is now a training example of a shirt with NO number -- class "nn" -- so the reader
+        # learns to answer "no number" there instead of the nearest number (JERSEY_TRAIN_NO_NUMBER = False turns it off).
+        if ch.get("verdict") == "not a player" and globals().get("JERSEY_TRAIN_NO_NUMBER", True):
+            num = "nn"
         box = _jr_box_at(det, ch.get("frame_file"), ch.get("px", -1e9), ch.get("py", -1e9))
         if box is None:
             continue
@@ -453,7 +458,7 @@ def _jr_samples(sources):
                 continue
             # only <number>/ folders are labels: a Roboflow download unzipped in place has train/, valid/ and test/ folders beside
             # the number folders, and their images (labels are in annotations.jsonl) must never be read as a class called "train"
-            if not re.fullmatch(r"\d{1,2}", os.path.basename(os.path.dirname(f))):
+            if not re.fullmatch(r"\d{1,2}|nn", os.path.basename(os.path.dirname(f))):
                 continue
             # CONFIRMED CHANGE (requested: trained recognizer only -- EasyOCR / PaddleOCR removed, so the coach checks
             # are its main training data). JERSEY_TRAIN_USE_COACH = "half": half the checked players train it, the other

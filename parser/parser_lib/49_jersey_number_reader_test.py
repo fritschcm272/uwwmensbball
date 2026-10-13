@@ -723,7 +723,9 @@ if RUN_JERSEY_READER_TEST:
                     print(f"  {_eng:12}: not tested (PaddleOCR didn't load)", flush=True)
                     continue
                 for k, r_ in zip(_todo, _rs):
-                    _saved[(_eng, k)] = r_
+                    # the recognizer's "no number" answer (class "nn", taught by "not a player" checks) is NOT an answer here:
+                    # the answer key is numbered players, so it counts like any other "no read"
+                    _saved[(_eng, k)] = ("", 0.0) if r_ and str(r_[0]) == "nn" else r_
                 if _eng == "trained_pose" and "_jr_torso_save" in globals():
                     _jr_torso_save()
                 os.makedirs(os.path.dirname(_cp), exist_ok=True)

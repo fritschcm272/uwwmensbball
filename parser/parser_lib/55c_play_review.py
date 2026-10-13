@@ -65,8 +65,10 @@ def _val_font(size):
         return ImageFont.load_default()
 
 
-def _val_draw(img_path, boxes, header_lines, out_path, scale=1.6):
-    """Picture enlarged (scale), bigger font, labels that would overlap stacked upward with a line to their box."""
+def _val_draw(img_path, boxes, header_lines, out_path, scale=1.6, grid=None):
+    """Picture enlarged (scale), bigger font, labels that would overlap stacked upward with a line to their box.
+    grid = (columns, rows): faint lines with letters across the top and numbers down the left, so a coach can name the
+    square at the feet of a player who has NO box (the app's "Players with no box")."""
     from PIL import Image, ImageDraw
     im = Image.open(img_path).convert("RGB")
     W, H = im.size
@@ -78,6 +80,22 @@ def _val_draw(img_path, boxes, header_lines, out_path, scale=1.6):
     d = ImageDraw.Draw(canvas)
     for n_, line in enumerate(header_lines):
         d.text((8, 5 + 24 * n_), line, fill=(255, 255, 255), font=fh)
+    if grid:
+        _gc, _gr = int(grid[0]), int(grid[1])
+        _cw, _rh = im.size[0] / _gc, im.size[1] / _gr
+        _gcol = (255, 255, 120)
+        for c_ in range(1, _gc):
+            for yy in range(head_h, canvas.size[1], 14):                # dotted, so it doesn't hide anyone
+                d.line([(c_ * _cw, yy), (c_ * _cw, min(yy + 5, canvas.size[1]))], fill=_gcol, width=1)
+        for r_ in range(1, _gr):
+            for xx in range(0, canvas.size[0], 14):
+                d.line([(xx, head_h + r_ * _rh), (min(xx + 5, canvas.size[0]), head_h + r_ * _rh)], fill=_gcol, width=1)
+        _fg = _val_font(15)
+        for c_ in range(_gc):
+            for r_ in range(_gr):
+                tag_ = f"{chr(65 + c_)}{r_ + 1}"
+                d.rectangle([c_ * _cw + 2, head_h + r_ * _rh + 2, c_ * _cw + 30, head_h + r_ * _rh + 20], fill=(0, 0, 0))
+                d.text((c_ * _cw + 4, head_h + r_ * _rh + 3), tag_, fill=_gcol, font=_fg)
     placed = []                                            # label rectangles already drawn
     for b in sorted(boxes, key=lambda b: b["box"][1]):     # top-most players first
         x1, y1, x2, y2 = [c * scale for c in b["box"]]
@@ -530,6 +548,22 @@ def play_review():
     if PLAY_REVIEW_ONLY_GAME:
         pc = pc[pc["game_code"].astype(str).str.contains(PLAY_REVIEW_ONLY_GAME, regex=False)]
     pc = pc[pc["track_clip_key"].isin(tracked_keys)]
+    # CONFIRMED BUG (fixed; the Coe and Oshkosh reviews came out "0 MB" -- plays with no video and no pictures): their frame
+    # folders were deleted to free space, so nothing can be drawn. A game whose tracking frames aren't on disk (or packed by
+    # the frame archive / kept as lean-mode videos) is left out of the Play review until it's captured again.
+    def _pr_frames_here(ff):
+        f0 = next((f for f in str(ff).split(";") if f), None)
+        if not f0:
+            return False
+        p0 = os.path.join(VISION_FRAMES_DIR, f0)
+        return os.path.exists(p0) or bool(globals().get("vision_frame_leaned") and vision_frame_leaned(p0)) \
+            or bool(globals().get("vision_clip_media") and vision_clip_media([f0]))
+    _here = pc["track_files"].map(_pr_frames_here)
+    for (gd, gc), g_ in pc[~_here].groupby(["game_date", "game_code"], dropna=False):
+        if not _here[g_.index].any():
+            print(f"Play review: {gd} {gc} left out -- its frames aren't on disk any more (folder deleted); recapture it "
+                  f"(Frame capture, VISION_ONLY_GAME) to review it again", flush=True)
+    pc = pc[_here]
     # CONFIRMED CHANGE (requested: the player checks move on once saved, while the Title checks stay on the same plays until
     # THEY are saved). PLAY_REVIEW_QUEUES = "separate": each part is its own queue -- the next PLAY_REVIEW_PLAYS_PER_GAME plays
     # in game order with no saved player check, and the next ones with no saved Title answer. One package holds both; each
@@ -620,6 +654,9 @@ def play_review():
         slug = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
         # scratch folder for this game's pictures / clips while they're built; the finished review goes to <data>/play_review
         rdir = tempfile.mkdtemp(prefix=f"play_review_{slug}_")
+        # CONFIRMED CHANGE (requested: every clip has 10 players, but many pictures show fewer boxes -- coaches can now mark
+        # players with NO box). The player-check picture gets a faint grid (PLAY_REVIEW_GRID = (columns, rows); None = off).
+        _grid = globals().get("PLAY_REVIEW_GRID", (12, 8))
         gnums = _trk_numbers_for_game(gd, gc)
         numtxt = lambda n: f"#{gnums.get(str(n).lower(), '?')} {str(n).split()[-1]}"
         plays = []
@@ -662,9 +699,10 @@ def play_review():
                            else f"Frame for the player check -- {t / fps:.1f} s into the clip, most players visible"),
                           f"OFFENSE (orange) {r.get('offense_team')}: {lu('offense')}",
                           f"DEFENSE (blue)  {r.get('defense_team')}: {lu('defense')}",
-                          "Solid box = identified from evidence; DASHED box with ? = best guess; grey = not named"]
+                          "Solid box = identified from evidence; DASHED box with ? = best guess; grey = not named"
+                          + ("   |   A player with NO box? Pick the grid square at his feet in the app" if _grid else "")]
                 fname = f"clip_{fid}_{'a_start' if which == 'start' else 'c_frame' if which == 'frame' else 'b_end'}.jpg"
-                _val_draw(img_path, boxes, header, os.path.join(rdir, fname))
+                _val_draw(img_path, boxes, header, os.path.join(rdir, fname), grid=_grid)
                 # where each box sits on the PICTURE, as fractions of its width / height (the frame is enlarged 1.6x under
                 # a header) -- the app lets a coach click a box in the picture (requested)
                 _fw, _fh = Image.open(img_path).size
@@ -692,7 +730,8 @@ def play_review():
                                         b["crop"], b["crop_s"] = _c2, round(_bi[1] / fps, 1)
                     except Exception as _ce:
                         print(f"  [play review] close-ups not made ({type(_ce).__name__}: {_ce})", flush=True)
-                pics.append({"which": which, "image": fname, "frame_file": files[t], "t": int(t), "boxes": boxes})
+                pics.append({"which": which, "image": fname, "frame_file": files[t], "t": int(t), "boxes": boxes,
+                             "grid": list(_grid) if _grid else None, "W": int(_fw), "H": int(_fh)})
             clip_file = _pr_clip(files, rows, numtxt, os.path.join(rdir, f"clip_{fid}")) if PLAY_REVIEW_VIDEO else None
             # the Title review part (same logic as the Auto-Title review)
             tagged = any(_tr_val(r.get(f"coach_{f}")) is not None for f, _ in _TR_FIELDS)
