@@ -708,12 +708,14 @@ if RUN_JERSEY_RECOGNIZER:
             _n_coach_train = len(_jr_samples(["coach"])) if JERSEY_TRAIN_USE_COACH else 0
             _n_train = _cnt["reads"] + _cnt["extra"] + _n_coach_train
             _saved_sig, _saved_n, _saved_set = None, None, None
+            _saved_classes = set()
             if os.path.exists(JERSEY_MODEL_PATH):
                 try:
                     import torch
                     _ck_ = torch.load(JERSEY_MODEL_PATH, map_location="cpu")
                     _saved_sig, _saved_set = _ck_.get("signature"), _ck_.get("settings")
                     _saved_n = _ck_.get("n_samples") or _ck_.get("n_train")
+                    _saved_classes = set(_ck_.get("classes") or [])
                 except Exception:
                     _saved_sig = None
             # CONFIRMED CHANGE (requested: "is it really necessary to retrain every time I add pictures from the player checks?").
@@ -721,6 +723,14 @@ if RUN_JERSEY_RECOGNIZER:
             # new crops or JERSEY_TRAIN_MIN_GROWTH (a share, 0.15 = 15%) more than it was trained on -- or when the epochs / coach
             # setting changed, or there is no model yet. JERSEY_TRAIN_MIN_NEW = 0 retrains on any change (the old behaviour).
             _want = JERSEY_TRAIN_NOW is True
+            # CONFIRMED CHANGE (the new "no number" examples sat unused under the retrain bar): an answer the saved model doesn't
+            # know yet -- a new jersey number, or "nn" (no number) -- always retrains it, however few crops were added.
+            if not _want and JERSEY_TRAIN_NOW == "auto" and os.path.exists(JERSEY_MODEL_PATH) and _saved_sig is not None:
+                _new_cls = {lab for _f, lab in _jr_samples(_jr_train_sources())} - _saved_classes
+                if _new_cls:
+                    _want = True
+                    print(f"  the training set has answer(s) the saved recognizer doesn't know: {', '.join(sorted(_new_cls))} "
+                          f"(\"nn\" = no number) -- retraining", flush=True)
             if not _want and JERSEY_TRAIN_NOW == "auto" and _saved_sig != _jr_signature():
                 _now_n = len(_jr_samples(_jr_train_sources()))
                 _min_new = int(globals().get("JERSEY_TRAIN_MIN_NEW", 150))
