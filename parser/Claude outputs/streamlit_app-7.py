@@ -5606,6 +5606,50 @@ def _pr_event_map(d, game_iso):
 
 PR_VIDEO_SPEED = 1.5          # play-review videos start at this speed (change here)
 PR_VIDEO_WIDTH_SHARE = 0.8    # share of the section width the review video takes (1.0 = full width); it is centered
+PR_VIDEO_RESIZABLE = True     # drag the bottom-right corner of a review video to make it smaller (remembered per browser)
+
+# CONFIRMED CHANGE (requested: "allow for dragging the video to make it smaller"). Every review video's box gets a drag
+# corner (bottom right). Dragging it resizes that video, then every other review video on the page to the same width, and
+# the width is remembered in this browser (localStorage) for the next play / visit. It can't grow past the space the
+# section gives it. The script is put into the app page itself once, so it keeps working as plays open, page and rerun.
+_PR_VIDEO_RESIZE_JS = r"""
+(function(){
+  var W = window, D = document;
+  if (W.__uwwVidResize) return; W.__uwwVidResize = 1;
+  var KEY = 'uwwReviewVideoWidth';
+  function saved(){ try { return parseInt(W.localStorage.getItem(KEY), 10) || 0; } catch(e) { return 0; } }
+  function save(w){ try { W.localStorage.setItem(KEY, String(w)); } catch(e) {} }
+  function prep(box, v){
+    v.style.width = '100%'; v.style.height = 'auto'; v.style.display = 'block';
+    if (box.getAttribute('data-uww-rs')) return;
+    box.setAttribute('data-uww-rs', '1');
+    box.style.resize = 'horizontal'; box.style.overflow = 'hidden';
+    box.style.minWidth = '220px'; box.style.maxWidth = '100%'; box.style.marginLeft = 'auto'; box.style.marginRight = 'auto';
+    box.style.paddingBottom = '6px';
+    box.title = 'Drag the bottom-right corner to make the video smaller or larger';
+    var w = saved(); if (w) box.style.width = w + 'px';
+    box.addEventListener('mousedown', function(){ box.setAttribute('data-uww-w0', box.offsetWidth); W.__uwwVidActive = box; });
+  }
+  D.addEventListener('mouseup', function(){
+    var b = W.__uwwVidActive; W.__uwwVidActive = null;
+    if (!b) return;
+    var w = b.offsetWidth;
+    if (String(w) === b.getAttribute('data-uww-w0')) return;     // a click on the player, not a drag
+    save(w);
+    D.querySelectorAll('[data-uww-rs]').forEach(function(o){ o.style.width = w + 'px'; });
+  });
+  function scan(){
+    D.querySelectorAll('video').forEach(function(v){
+      var box = v.closest('[data-testid="stElementContainer"]') || v.closest('.element-container') || v.parentElement;
+      if (box) prep(box, v);
+    });
+  }
+  var queued = false;
+  new MutationObserver(function(){ if (queued) return; queued = true;
+    requestAnimationFrame(function(){ queued = false; scan(); }); }).observe(D.body, {childList: true, subtree: true});
+  scan();
+})();
+"""
 
 
 def _pr_video(path, rate=None, width_share=None):
@@ -5628,7 +5672,10 @@ def _pr_video(path, rate=None, width_share=None):
         _cv1.html("<script>(function(){var r=%s;function go(){try{var vs=window.parent.document.querySelectorAll('video');"
                   "vs.forEach(function(v){if(!v.dataset.speedSet){v.playbackRate=r;v.dataset.speedSet='1';"
                   "v.addEventListener('loadedmetadata',function(){if(!v.dataset.speedUser){v.playbackRate=r;}});}});}catch(e){}}"
-                  "go();var n=0;var t=setInterval(function(){go();if(++n>20)clearInterval(t);},300);})();</script>" % rate, height=0)
+                  "go();var n=0;var t=setInterval(function(){go();if(++n>20)clearInterval(t);},300);})();</script>" % rate
+                  + ("<script>(function(){try{var P=window.parent.document;if(window.parent.__uwwVidResize)return;"
+                     "var s=P.createElement('script');s.textContent=%s;P.head.appendChild(s);}catch(e){}})();</script>"
+                     % json.dumps(_PR_VIDEO_RESIZE_JS) if PR_VIDEO_RESIZABLE else ""), height=0)
     except Exception:
         pass
 
