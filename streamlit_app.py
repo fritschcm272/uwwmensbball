@@ -6309,7 +6309,7 @@ def _pr_save_history(game, part):
             run = str(d.get("run") or "")
             rows.append({"Saved": str(d.get("saved", ""))[:16].replace("T", " "), "Coach": d.get("coach") or "someone",
                          "What": what, "Where": "Film Tagging" if run.endswith("_tag") else
-                         ("Player Number Tracking" if part == "players" else "Previous Games (Title checks)"),
+                         ("Player Number Tracking" if part == "players" else "Title checks"),
                          "Batch": run})
         except Exception:
             continue
@@ -6409,7 +6409,9 @@ def _ft_field_widgets(d, pi, store, kp):
         else:
             idx = 0
         with cols[fi]:
-            ch = st.selectbox(f.get("label") or f.get("field"), opts, index=idx, key=f"{kv}_ft")
+            # a Title check (a clip the coach tagged in Synergy): his answer is shown with the field, so it can be compared
+            _lab = (f.get("label") or f.get("field")) + (f" \u00b7 coach: {f['coach']}" if f.get("coach") else "")
+            ch = st.selectbox(_lab, opts, index=idx, key=f"{kv}_ft")
             typed = ""
             if ch == _FT_OTHER:
                 typed = st.text_input("type it", value=(cur_t if cur_t and cur_t not in known else ""), key=f"{kt}_ft",
@@ -6441,16 +6443,33 @@ def render_film_tagging():
     section_header("\U0001f3f7\ufe0f FILM TAGGING", "Tag each play here instead of in Synergy's Title field. Pick the automatic "
                    "answer when it's right, another answer when it isn't. Saved tags go into every scouting table on the next "
                    "parser run, and teach the automatic Title.")
-    pkgs = sorted(_pr_app_packages("play_tag"), key=lambda d: str(d.get("game", "")), reverse=True)
-    # the Title part of an open Play review for a game that isn't ours (opponent games have no Previous Games page)
-    pkgs += [v for v in (_pr_part_view(d, "titles") for d in sorted(_pr_app_packages("play_review"),
-                                                                      key=lambda d: str(d.get("game", "")), reverse=True)
-                         if not _is_uww_code(str(d.get("game", "")).split("|")[-1])) if v]
+    # CONFIRMED CHANGE (requested: tagging ONLY here, and only games that have plays to tag right now). Two kinds of batch:
+    #   * "Tag" -- untagged clips, a batch per game (Film Tagging queue)
+    #   * "Title check" -- the Title part of a game's Play review (every game, ours too -- Previous Games no longer shows it),
+    #     minus any play already in that game's Tag batch
+    # A batch whose tags are already saved is waiting for the next parser run (which brings the next one), so it isn't listed.
+    tag_pk = sorted(_pr_app_packages("play_tag"), key=lambda d: str(d.get("game", "")), reverse=True)
+    in_tag = {(str(d.get("game")), str(p.get("clip_key"))) for d in tag_pk for p in d.get("plays", [])}
+    rev_pk = []
+    for d in sorted(_pr_app_packages("play_review"), key=lambda d: str(d.get("game", "")), reverse=True):
+        v = _pr_part_view(d, "titles")
+        if v:
+            v = {**v, "plays": [p for p in v["plays"] if (str(v.get("game")), str(p.get("clip_key"))) not in in_tag]}
+            if v["plays"]:
+                rev_pk.append(v)
+    _saved = lambda d: any("titles" in x[2] for x in _pr_app_saves_for(d.get("run")))
+    waiting = [d for d in tag_pk + rev_pk if _saved(d)]
+    pkgs = [d for d in tag_pk + rev_pk if not _saved(d)]
+    if waiting:
+        st.caption("Saved and waiting for the next parser run (it brings the next batch): "
+                   + "; ".join(sorted({_pnt_game_label(d.get("game")) for d in waiting})))
     if not pkgs:
-        st.info("Nothing to tag right now. The parser's Play review cell builds a batch of untagged clips for every captured "
-                "game (Film Tagging queue); commit and push the data folder, then come back here.")
+        st.info("Nothing to tag right now. The parser's Play review cell builds a batch for every captured game that has plays "
+                "to tag; commit and push the data folder after it runs, then come back here.")
         return
-    label = lambda d: f"{_pnt_game_label(d.get('game'))}" + ("" if "/play_tag/" in d.get("_dir", "").replace(os.sep, "/") else " (play review)")
+    _is_tag = lambda d: "/play_tag/" in d.get("_dir", "").replace(os.sep, "/")
+    label = lambda d: (f"{_pnt_game_label(d.get('game'))} \u2014 "
+                       + (f"tag {len(d.get('plays', []))} play(s)" if _is_tag(d) else f"check {len(d.get('plays', []))} Title(s)"))
     names = [label(d) for d in pkgs]
     pick = st.selectbox("Game", names, key="ft_game")
     d = pkgs[names.index(pick)]
@@ -6465,6 +6484,8 @@ def render_film_tagging():
         head = (f"Clip {pl.get('clip_number')} \u00b7 {pl.get('clock') or ''} \u00b7 {str(pl.get('synergy') or '')[:90]}"
                 + (f"  \u2014 {n_set} set" if n_set else ""))
         with st.expander(head, expanded=(pi == 0)):
+            if pl.get("coach_title"):
+                st.markdown(f"Coach's Title (Synergy): `{pl['coach_title']}`")
             if pl.get("auto_title"):
                 st.markdown(f"Automatic Title: `{pl['auto_title']}`")
             if pl.get("film"):
@@ -12199,7 +12220,9 @@ def render_previous_games():
     # CONFIRMED CHANGE (requested: "the Previous Game pages should also have the tabs like Upcoming Opponent does").
     # The result banner stays on top; the sections below are grouped into tabs. Each section is unchanged and in the
     # same order (every tab runs on each load, so values one section sets up for another still flow through).
-    _pg_review_open = bool(_pr_open_package(_pg_game_date))
+    # CONFIRMED CHANGE (requested: play tagging ONLY on Analytics > Film Tagging). Previous Games no longer shows the Title
+    # checks in its play-by-play; they're a batch on Film Tagging.
+    _pg_review_open = False
     # (the player tracking -- Film Tracking and the possession replays -- is on Analytics > Video Tracking; requested)
     _pgt_stats, _pgt_ktv, _pgt_people, _pgt_plan, _pgt_pbp = st.tabs([
         "\U0001f4ca Stats & Analysis", "\U0001f511 Keys to Victory", "\U0001f465 Personnel", "\U0001f4c5 Game Plan",
@@ -13121,7 +13144,7 @@ def render_previous_games():
             else:
                 filtered_pbp = filtered_pbp.assign(_replay=None)
             # this game's open Play review: which play-by-play rows it covers
-            _prd = _pr_open_package(_pg_game_date)
+            _prd = None                     # Title checks moved to Analytics > Film Tagging (requested)
             _pr_rows = _pr_event_map(_prd, _pg_game_date) if _prd else {}
             _pr_need = bool(_prd) and not any("titles" in x[2] for x in _pr_app_saves_for(_prd.get("run")))
             if "event_order" in filtered_pbp.columns:
