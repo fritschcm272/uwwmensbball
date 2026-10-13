@@ -36,9 +36,17 @@ lineup_stints["uww_margin_change"] = (
     - (lineup_stints["end_opp_score"] - lineup_stints["start_prev_opp_score"])
 )
 lineup_stints["stint_minutes"] = (lineup_stints["stint_seconds"] / 60).round(2)
-print(lineup_stints[[
-    "opponent", "stint_num", "uww_lineup", "opp_lineup", "stint_minutes", "uww_margin_change", "n_events",
-]].sort_values(["opponent", "stint_num"]))
+# CONFIRMED CHANGE (requested: "printout is too long"): a short summary by default -- the stint count, the clock check and the
+# best / worst 5 lineups each way. LINEUP_MARGIN_VERBOSE = True brings back every stint and every lineup, one by one. The full
+# tables are still in memory (lineup_stints, uww_lineup_summary, opp_lineup_summary) and exported.
+_lm_verbose = bool(globals().get("LINEUP_MARGIN_VERBOSE", False))
+_lm_show = globals().get("_show") or (lambda obj, title=None, rows=None: (print(title) if title else None, print(obj)))
+if _lm_verbose:
+    print(lineup_stints[[
+        "opponent", "stint_num", "uww_lineup", "opp_lineup", "stint_minutes", "uww_margin_change", "n_events",
+    ]].sort_values(["opponent", "stint_num"]))
+else:
+    print(f"Lineup stints: {len(lineup_stints)} across {lineup_stints.groupby(GAME_KEYS).ngroups} game(s).")
 
 # Per-game sanity check: five players x 40 minutes means each game must total about 200 minutes.
 _clock_check = lineup_stints.groupby(GAME_KEYS)["stint_minutes"].sum().round(1)
@@ -47,7 +55,7 @@ if len(_clock_bad):
     print(f"WARNING: {len(_clock_bad)} game(s) have an implausible total elapsed clock "
           f"(expected ~40 min per game):\n{_clock_bad.to_string()}\n")
 else:
-    print(f"Clock check: all {len(_clock_check)} game(s) between 35 and 65 elapsed minutes.\n")
+    print(f"Clock check: all {len(_clock_check)} game(s) between 35 and 65 elapsed minutes.")
 
 uww_lineup_summary = (
     lineup_stints.groupby(["opponent", "uww_lineup"])
@@ -65,16 +73,25 @@ opp_lineup_summary = (
 opp_lineup_summary["margin_per_min_for_uww"] = (opp_lineup_summary["net_margin_for_uww"] / opp_lineup_summary["total_minutes"]).round(2)
 opp_lineup_summary = opp_lineup_summary.sort_values("net_margin_for_uww", ascending=True)
 
-print("UWW's 5-man lineups, ranked by net scoring margin while on the floor:\n")
-for _, row in uww_lineup_summary.iterrows():
-    print(f"[{row['opponent']}] {row['uww_lineup']}")
-    print(f"    {row['total_minutes']:.1f} min over {row['stints']} stint(s), net margin {row['net_margin']:+.0f} "
-          f"({row['margin_per_min']:+.2f}/min)\n")
-print(uww_lineup_summary)
-
-print(f"\n{pbp_events['opponent'].dropna().unique().tolist()} lineups, ranked by how they fared AGAINST UWW (most negative net_margin_for_uww = best for them):\n")
-for _, row in opp_lineup_summary.iterrows():
-    print(f"[{row['opponent']}] {row['opp_lineup']}")
-    print(f"    {row['total_minutes']:.1f} min over {row['stints']} stint(s), UWW's net margin vs. this lineup "
-          f"{row['net_margin_for_uww']:+.0f} ({row['margin_per_min_for_uww']:+.2f}/min)\n")
-print(opp_lineup_summary)
+if _lm_verbose:
+    print("UWW's 5-man lineups, ranked by net scoring margin while on the floor:\n")
+    for _, row in uww_lineup_summary.iterrows():
+        print(f"[{row['opponent']}] {row['uww_lineup']}")
+        print(f"    {row['total_minutes']:.1f} min over {row['stints']} stint(s), net margin {row['net_margin']:+.0f} "
+              f"({row['margin_per_min']:+.2f}/min)\n")
+    print(uww_lineup_summary)
+    print(f"\n{pbp_events['opponent'].dropna().unique().tolist()} lineups, ranked by how they fared AGAINST UWW (most negative net_margin_for_uww = best for them):\n")
+    for _, row in opp_lineup_summary.iterrows():
+        print(f"[{row['opponent']}] {row['opp_lineup']}")
+        print(f"    {row['total_minutes']:.1f} min over {row['stints']} stint(s), UWW's net margin vs. this lineup "
+              f"{row['net_margin_for_uww']:+.0f} ({row['margin_per_min_for_uww']:+.2f}/min)\n")
+    print(opp_lineup_summary)
+else:
+    _lm_cols_u = ["opponent", "uww_lineup", "total_minutes", "stints", "net_margin", "margin_per_min"]
+    _lm_cols_o = ["opponent", "opp_lineup", "total_minutes", "stints", "net_margin_for_uww", "margin_per_min_for_uww"]
+    _lm_show(uww_lineup_summary[_lm_cols_u].head(5).round(1),
+             f"UWW's best 5-man lineups by net margin (of {len(uww_lineup_summary)}):", rows=5)
+    _lm_show(uww_lineup_summary[_lm_cols_u].tail(5).iloc[::-1].round(1), "UWW's worst 5:", rows=5)
+    _lm_show(opp_lineup_summary[_lm_cols_o].head(5).round(1),
+             f"Opponent lineups that did best against UWW (of {len(opp_lineup_summary)}):", rows=5)
+    print("  (LINEUP_MARGIN_VERBOSE = True prints every stint and every lineup.)")

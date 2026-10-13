@@ -5565,11 +5565,22 @@ def _pr_norm(x):
     return re.sub(r"[^a-z0-9#]+", "", str(x).lower())
 
 
+def _pr_part_view(d, part):
+    """The review package with only the plays open for one part -- "titles" (Previous Games play-by-play, Film Tagging) or
+    "players" (Player Number Tracking). CONFIRMED CHANGE (requested): the two parts are separate queues -- the player checks
+    move on to the next plays once saved while the Title checks stay on theirs until THEY are saved -- so one package can
+    hold different plays for each. A play with no "parts" (older packages) is open for both. None if no play is open."""
+    if not d:
+        return None
+    plays = [p for p in d.get("plays", []) if part in (p.get("parts") or ["titles", "players"])]
+    return {**d, "plays": plays} if plays else None
+
+
 def _pr_open_package(game_iso):
-    """This UWW game's open review package (data/play_review/<game>/review.json), or None."""
+    """This UWW game's open review package (data/play_review/<game>/review.json) -- its Title-check plays -- or None."""
     pk = [d for d in _pr_app_packages() if str(d.get("game", "")).startswith(str(game_iso))
           and _is_uww_code(str(d.get("game", "")).split("|")[-1])]
-    return pk[0] if pk else None
+    return _pr_part_view(pk[0], "titles") if pk else None
 
 
 def _pr_event_map(d, game_iso):
@@ -5883,7 +5894,7 @@ def _pr_commit(d, store, coach, kp, part, key_suffix):
     ok, msg = _pr_github_save(fname, out)
     n = len(out.get("answers", [])) if part == "titles" else len(out.get("checks", []))
     if ok:
-        st.success(f"Saved {n} {what} ({msg}). The app does not restart; the parser picks it up when it runs (it fetches the saves branch). The review is finished once its Title checks AND player checks are saved.")
+        st.success(f"Saved {n} {what} ({msg}). The app does not restart; the parser picks it up when it runs (it fetches the saves branch). The review is finished once its player checks are saved (the Title checks on these plays are optional).")
         _st = st.session_state.get("pr_answers", {}).get(str(d.get("run")), {})
         for k in [k for k in _st if k.startswith(kp) and (("_b_" in k) == (part == "players"))]:
             _st.pop(k, None)
@@ -5906,9 +5917,9 @@ def _pr_save_bar(d, store, kp, key_suffix, part="titles"):
                    + ("  To get new plays for the Title checks, run the play tracking in the parser first "
                       "(Player tracking, then the Play review) -- new plays only appear after that."
                       if part == "titles" else "") if saved else ""))
-    c1, c2 = st.columns([3, 2])
+    c1, c2 = st.columns([3, 2], vertical_alignment="bottom")      # name box level with the Save button
     coach = c1.text_input("Your name (required to save)", key=f"pr_coach_{part}{key_suffix}")
-    if c2.button(f"Save my {what} ({n_changed} changed)", key=f"pr_save_{part}{key_suffix}"):
+    if c2.button(f"Save my {what} ({n_changed} changed)", key=f"pr_save_{part}{key_suffix}", use_container_width=True):
         if not coach.strip():
             st.error("Add your name, then save again.")
             return
@@ -5921,7 +5932,7 @@ def _pr_save_bar(d, store, kp, key_suffix, part="titles"):
             _is_tag = "/play_tag/" in str(d.get("_dir", "")).replace(os.sep, "/")
             st.success(f"Saved {n} {what} ({msg}). The app does not restart; the parser picks it up when it runs (it fetches the saves branch). "
                        + ("These tags count in the scouting tables after the next parser run, which also brings this game's next batch."
-                          if _is_tag else "The review is finished once its Title checks AND player checks are saved."))
+                          if _is_tag else "The review is finished once its player checks are saved (the Title checks on these plays are optional)."))
             _st = st.session_state.get("pr_answers", {}).get(str(d.get("run")), {})
             for k in [k for k in _st if k.startswith(kp) and (("_b_" in k) == (part == "players"))]:
                 _st.pop(k, None)
@@ -6263,15 +6274,17 @@ def _pnt_check_form(prd):
                     "(Player tracking, then the Play review) -- new clips only appear after that."
                   if saved else ""))
     with st.form(f"prx_players_form{sfx}"):
-        coach = st.text_input("Your name (required to save)", key=f"pr_coach_players{sfx}")
         for pi, pl in enumerate(prd.get("plays", [])):
             with st.expander(f"Clip {pl.get('clip_number')} \u00b7 {pl.get('clock', '')} \u00b7 "
                              f"{str(pl.get('synergy', ''))[:70]}"):
                 _pr_player_widgets(prd, pi, store, "prxpnt", with_video=False)
-        go = st.form_submit_button("Save my player checks")
+        # requested: the name box right next to the Save button (it was at the top of the form, far from Save)
+        _nc, _sc = st.columns([3, 2], vertical_alignment="bottom")
+        coach = _nc.text_input("Your name (required to save)", key=f"pr_coach_players{sfx}")
+        go = _sc.form_submit_button("Save my player checks", use_container_width=True)
     if go:
         if not str(coach).strip():
-            st.error("Add your name at the top of the form, then save again.")
+            st.error("Add your name next to the Save button, then save again.")
         else:
             _pr_commit(prd, store, coach, "prxpnt", "players", sfx)
 
@@ -6359,8 +6372,9 @@ def render_film_tagging():
                    "parser run, and teach the automatic Title.")
     pkgs = sorted(_pr_app_packages("play_tag"), key=lambda d: str(d.get("game", "")), reverse=True)
     # the Title part of an open Play review for a game that isn't ours (opponent games have no Previous Games page)
-    pkgs += [d for d in sorted(_pr_app_packages("play_review"), key=lambda d: str(d.get("game", "")), reverse=True)
-             if not _is_uww_code(str(d.get("game", "")).split("|")[-1])]
+    pkgs += [v for v in (_pr_part_view(d, "titles") for d in sorted(_pr_app_packages("play_review"),
+                                                                      key=lambda d: str(d.get("game", "")), reverse=True)
+                         if not _is_uww_code(str(d.get("game", "")).split("|")[-1])) if v]
     if not pkgs:
         st.info("Nothing to tag right now. The parser's Play review cell builds a batch of untagged clips for every captured "
                 "game (Film Tagging queue); commit and push the data folder, then come back here.")
@@ -6398,7 +6412,8 @@ def render_player_number_tracking():
     Tracking) plus how accurate the model's player numbers have been, grouped by how it assigned them."""
     section_header("\U0001f522 PLAYER NUMBER TRACKING", "Check who the model named on each tracked box, and see which parts of "
                    "the player-number tracking are working.")
-    pkgs = sorted(_pr_app_packages(), key=lambda d: str(d.get("game", "")), reverse=True)
+    pkgs = [v for v in (_pr_part_view(d, "players") for d in sorted(_pr_app_packages(), key=lambda d: str(d.get("game", "")),
+                                                                     reverse=True)) if v]
     saves = _pnt_load_checks()
     games = {_pnt_game_label(d.get("game")): d for d in pkgs}
     for g in (saves["game"].dropna().unique() if not saves.empty else []):

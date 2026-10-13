@@ -1909,9 +1909,9 @@ def _sync_saves_branch(d):
         print(f"  [saves] saves branch not fetched ({type(e).__name__}: {e})", flush=True)
 
 
-def _run_complete(slug, run):
-    """A game's review run is done only when BOTH parts are saved (in one file or two). Saves are matched on the game
-    (its slug) AND the run id -- one parser pass stamps the same run id on every game it reviews."""
+def _run_parts_saved(slug, run):
+    """Which parts of a game's review run are saved: a subset of {"titles", "players"}. Saves are matched on the game (its
+    slug) AND the run id -- one parser pass stamps the same run id on every game it reviews."""
     parts = set()
     for f in glob.glob(os.path.join(_review_saves_dir(), "*.json")):
         d = _review_doc(f)
@@ -1920,7 +1920,12 @@ def _run_complete(slug, run):
         if re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game"))).strip("_") != slug:
             continue
         parts |= _review_parts(d)
-    return {"titles", "players"} <= parts
+    return parts
+
+
+def _run_complete(slug, run):
+    """A game's review run is done when BOTH parts are saved (in one file or two)."""
+    return {"titles", "players"} <= _run_parts_saved(slug, run)
 
 
 def _review_files(folder):
