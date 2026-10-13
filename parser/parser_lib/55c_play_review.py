@@ -617,7 +617,7 @@ def play_review():
                           + ("" if _open <= _saved else " (the part not saved yet keeps its plays)"), flush=True)
                 elif globals().get("PLAY_REVIEW_REQUIRE_SAVED", True):
                     print(f"Play review: {gd} {gc} -- no new run: nothing in its open review (run {_pkg_run}) is saved yet "
-                          f"(Title checks: Previous Games; player checks: Analytics > Player Number Tracking).", flush=True)
+                          f"(Title checks: Analytics > Film Tagging; player checks: Analytics > Player Number Tracking).", flush=True)
                     continue
             except Exception:
                 pass
@@ -634,7 +634,11 @@ def play_review():
         elif _sep:
             _n = PLAY_REVIEW_PLAYS_PER_GAME
             _pp = g[~_kn.isin(done_p)].sort_values("clip_number", kind="stable").head(_n)
-            _pt = g[~_kn.isin(done_t)].sort_values("clip_number", kind="stable").head(_n)
+            # Title checks: only clips a coach already tagged (a Synergy Title) -- untagged clips are tagged in their own
+            # Film Tagging batch (requested: tagging only on Analytics > Film Tagging, no duplicate plays)
+            _tagged = g["decode_quality"].astype(str).ne("Untagged") if "decode_quality" in g.columns \
+                else pd.Series(True, index=g.index)
+            _pt = g[~_kn.isin(done_t) & _tagged].sort_values("clip_number", kind="stable").head(_n)
             if not len(_pp) and not len(_pt):
                 print(f"Play review: {gd} {gc} -- every play already has its checks; nothing new to review", flush=True)
                 continue
@@ -792,7 +796,7 @@ def play_review():
         _np = sum("players" in p_.get("parts", []) for p_ in plays)
         _rng = lambda part: (lambda cs: f"clips {min(cs)}-{max(cs)}" if cs else "none")(
             [p_["clip_number"] for p_ in plays if part in p_.get("parts", [])])
-        print(f"Play review: {gd} {gc}: {_nt} Title check(s) ({_rng('titles')}) -- Previous Games; {_np} player check(s) "
+        print(f"Play review: {gd} {gc}: {_nt} Title check(s) ({_rng('titles')}) -- Analytics > Film Tagging; {_np} player check(s) "
               f"({_rng('players')}) -- Analytics > Player Number Tracking "
               f"({'next unreviewed, in game order' if _mode != 'random' else 'random'})", flush=True)
 
