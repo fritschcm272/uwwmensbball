@@ -5648,6 +5648,10 @@ def _pr_title_default(f):
     # differ -- and "Right answer" starts as the coach's tag (the coach's Title is the truth). A field the coach left empty
     # stays "--" / blank, because there is nothing to compare against. Untouched rows are saved with prefilled = True.
     has = f.get("coach") not in (None, "") and f.get("auto") is not None
+    # CONFIRMED CHANGE (requested: Film Tagging's dropdowns start on what the automatic tagging decided). A field with no
+    # coach answer but an automatic one starts as "right" (the automatic answer); left untouched it's saved as accepted.
+    if f.get("coach") in (None, "") and f.get("auto") not in (None, ""):
+        return True, "right", ""
     if not has:
         return False, "--", ""
     agree = _pr_norm(f["coach"]) == _pr_norm(f["auto"])
@@ -5865,6 +5869,8 @@ def _pr_payload(d, store, coach, kp, part=None):
             ans = str(store[kt]).strip() if kt in store else str(store.get(ka, da) or "").strip()   # a cleared cell stays cleared
             # CONFIRMED CHANGE (coaches tag in the app now): a typed "Right answer" with no verdict picked IS the tag
             # (a clip with no automatic answer has nothing to mark right / wrong)
+            if v == "cleared":                  # the coach set a pre-filled field back to "--" on purpose
+                continue
             if v == "--" and ans:
                 v = "wrong"
             if v == "--":
@@ -5873,7 +5879,10 @@ def _pr_payload(d, store, coach, kp, part=None):
             out["answers"].append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"), "field": f.get("field"),
                                    "coach": f.get("coach"), "auto": f.get("auto"), "auto_conf": f.get("conf"),
                                    "verdict": v, "correct": (ans or None) if v == "wrong" else None,
-                                   "prefilled": bool(pre and not touched)})
+                                   "prefilled": bool(pre and not touched),
+                                   # untouched automatic answer on a clip with no coach tag: it's the clip's tag, but the
+                                   # tag model doesn't learn from it (it would only be learning its own guess)
+                                   "accepted_default": bool(pre and not touched and f.get("coach") in (None, ""))})
         for ki, pic in enumerate(pl.get("pictures", []) if part != "titles" else []):
             for cell in (store.get(f"{kp}_b_{run}_{pi}_{ki}_missed") or []):
                 out.setdefault("missed", []).append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
@@ -6398,16 +6407,29 @@ def _ft_field_widgets(d, pi, store, kp):
         auto = f.get("auto")
         known = [v for v in d.get("vocab", {}).get(f.get("field"), []) if v != auto]
         auto_opt = (f"\u2713 {auto}" + ("" if f.get("sure") else " (unsure)")) if auto else None
+        coach_v = f.get("coach") if f.get("coach") not in (None, "") else None
+        if coach_v and coach_v not in known and not (auto and _pr_norm(coach_v) == _pr_norm(auto)):
+            known = [coach_v] + known
         opts = ["--"] + ([auto_opt] if auto_opt else []) + known + [_FT_OTHER]
+        # CONFIRMED CHANGE (requested: the dropdowns start on what the automatic tagging decided -- or, on a Title check, on
+        # the coach's answer). The starting choice isn't stored: an untouched field is saved as "pre-filled".
+        if coach_v and auto_opt and _pr_norm(coach_v) == _pr_norm(auto):
+            default_opt = auto_opt
+        elif coach_v:
+            default_opt = coach_v
+        else:
+            default_opt = auto_opt
         cur_v, cur_t = store.get(kv), store.get(kt)
-        if cur_v == "right" and auto_opt:
+        if cur_v == "cleared":
+            idx = 0
+        elif cur_v == "right" and auto_opt:
             idx = 1
         elif cur_v == "wrong" and cur_t in known:
             idx = opts.index(cur_t)
         elif cur_v == "wrong" and cur_t:
             idx = len(opts) - 1
         else:
-            idx = 0
+            idx = opts.index(default_opt) if default_opt in opts else 0
         with cols[fi]:
             # a Title check (a clip the coach tagged in Synergy): his answer is shown with the field, so it can be compared
             _lab = (f.get("label") or f.get("field")) + (f" \u00b7 coach: {f['coach']}" if f.get("coach") else "")
@@ -6416,9 +6438,17 @@ def _ft_field_widgets(d, pi, store, kp):
             if ch == _FT_OTHER:
                 typed = st.text_input("type it", value=(cur_t if cur_t and cur_t not in known else ""), key=f"{kt}_ft",
                                       label_visibility="collapsed", placeholder=f"{f.get('label')}...")
-        if ch == "--":
-            store.pop(kv, None)
+        if ch == default_opt and default_opt is not None and kv not in store:
+            pass                                       # still on the starting answer: saved as pre-filled
+        elif ch == default_opt and default_opt is not None and store.get(kv) == "cleared":
+            store.pop(kv, None)                        # back to the starting answer
             store.pop(kt, None)
+        elif ch == "--":
+            store.pop(kt, None)
+            if default_opt is not None:
+                store[kv] = "cleared"                  # cleared on purpose -- not saved
+            else:
+                store.pop(kv, None)
         elif auto_opt and ch == auto_opt:
             store[kv] = "right"
             store.pop(kt, None)
@@ -6477,8 +6507,8 @@ def render_film_tagging():
     store = _pr_store(d.get("run"))
     kp = f"ft{d.get('slug')}"
     _pr_save_bar(d, store, kp, f"_ft_{d.get('slug')}", part="titles")
-    st.caption("For each play: \u2713 = the automatic answer; leave a field at -- if you can't tell. Only the fields you set "
-               "are saved.")
+    st.caption("Each field starts on the automatic answer (\u2713) -- or, on a Title check, on the coach's answer. Change only "
+               "what's wrong; set a field to -- if you can't tell. Saving accepts the rest as they are.")
     for pi, pl in enumerate(d.get("plays", [])):
         n_set = len([k for k in store if k.startswith(f"{kp}_v_{d.get('run')}_{pi}_")])
         head = (f"Clip {pl.get('clip_number')} \u00b7 {pl.get('clock') or ''} \u00b7 {str(pl.get('synergy') or '')[:90]}"

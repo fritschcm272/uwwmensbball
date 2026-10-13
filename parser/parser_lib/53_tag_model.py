@@ -645,6 +645,10 @@ if RUN_TAG_MODEL and not _tm_src.empty:
             _tm_new_answers.append(f"{_fld}: '{_val}'")
             _canon = str(_val)
         _pre = bool((_marks_.get((_ck, _fld)) or {}).get("prefilled"))
+        # an automatic answer a coach left as it was in Film Tagging (it started pre-selected) is the clip's tag, but not a
+        # training label -- the model would only be learning its own guess
+        if (_marks_.get((_ck, _fld)) or {}).get("accepted_default"):
+            continue
         for i in _rows_of.get(_ck, []):
             _cur = _tm_lab.iloc[i][_col]
             _empty = pd.isna(_cur) or _cur in (None, "")
