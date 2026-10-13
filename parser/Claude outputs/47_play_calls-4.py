@@ -1284,8 +1284,8 @@ def _pl_app_answers():
 
 def _pl_app_actions():
     """{normalized clip key: [action rows in order]} from Film Tagging's Actions tables (saves' "actions"), latest save of a
-    clip wins (a save that emptied a clip's table clears it). Each row: action, screener, coverage, screen_defender, at_s,
-    prefilled. CONFIRMED CHANGE (requested: several actions in one play -- e.g. two ball screens -- recorded separately)."""
+    clip wins (a save that emptied a clip's table clears it). Each row: action, screener, screener_action (Roll, Pop, ...),
+    coverage, screen_defender, at_s, prefilled. CONFIRMED CHANGE (requested: several actions in one play -- e.g. two ball screens -- recorded separately)."""
     cached = globals().get("_pl_app_actions_cache")
     if cached is not None:
         return cached
@@ -1333,7 +1333,7 @@ def _pl_apply_app_tags(out):
             for v in out[c].dropna().astype(str):
                 vocab[f].setdefault(norm(v), v)
     canon = lambda f, v: vocab.get(f, {}).get(norm(v), v)
-    for c in ("situation_source", "play_actions", "coverage_detail", "defense_coverage", "tag_format", "play_title",
+    for c in ("situation_source", "play_actions", "screener_actions", "coverage_detail", "defense_coverage", "tag_format", "play_title",
               "decode_note", "defense_type", "defense_press", "play_call", "play_series"):
         if c not in out.columns:
             out[c] = None
@@ -1351,7 +1351,7 @@ def _pl_apply_app_tags(out):
         untagged = r.get("decode_quality") == "Untagged" or blank(r.get("play_title"))
         # the play's Actions table (Film Tagging): used like the answers -- always on an untagged clip, on a coach-Titled
         # clip only when a coach changed it
-        _acts = [x for x in (acts_by.get(_ck) or []) if x.get("action") or x.get("coverage")]
+        _acts = [x for x in (acts_by.get(_ck) or []) if x.get("action") or x.get("coverage") or x.get("screener_action")]
         if _acts and not untagged and (not override or all(x.get("prefilled") for x in _acts)):
             _acts = []
         if not a and not _acts:
@@ -1419,6 +1419,15 @@ def _pl_apply_app_tags(out):
             if _names:
                 put("play_actions", " | ".join(_names))
                 put("primary_action", _names[0])
+            # requested: what the screener did (Roll, Pop, Slip, ...) -- one entry per action that has one, in order:
+            # "Ball Screen (#32): Roll | Ball Screen (#4): Pop"
+            _sa = []
+            for x in _acts:
+                if x.get("screener_action"):
+                    _sn = _num_of.get(norm(x.get("screener") or ""))
+                    _sa.append(f"{x.get('action') or 'Screen'}" + (f" (#{_sn})" if _sn else "") + f": {x['screener_action']}")
+            if _sa:
+                put("screener_actions", " | ".join(_sa))
             _ent = []
             for x in _acts:
                 if not x.get("coverage"):
