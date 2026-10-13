@@ -5923,7 +5923,7 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
                                                       "screener_action": _r.get("Screener action") or None,
                                                       "coverage": _r.get("Coverage") or None,
                                                       "screen_defender": _ft_unlab(_r.get("Screen defender")) or None,
-                                                      "at_s": _r.get("At (s)"), "prefilled": not _touched_a})
+                                                      "prefilled": not _touched_a})
             if _touched_a and not _rows:
                 out.setdefault("actions_cleared", []).append(pl["clip_key"])
             _first = (_rows or [{}])[0]
@@ -6481,8 +6481,8 @@ _FT_OTHER = "other (type it)"
 
 
 _FT_ACTION_FIELDS = ("primary_action", "screener", "ball_screen_coverage", "offball_coverage", "screen_defender")
-_FT_ACT_COLS = ["Action", "Screener", "Screener action", "Coverage", "Screen defender", "At (s)"]
-_FT_ACT_TEXT = [c for c in _FT_ACT_COLS if c != "At (s)"]
+_FT_ACT_COLS = ["Action", "Screener", "Screener action", "Coverage", "Screen defender"]   # "At (s)" removed (requested)
+_FT_ACT_TEXT = list(_FT_ACT_COLS)
 # requested: actions offered in the Action list even before any clip has been tagged with them
 _FT_EXTRA_ACTIONS = ["Pass to the 5 and downscreen", "Rhino", "Cobra", "Fox"]
 # requested: "a column for what the screener did -- Pop, Roll, etc." (answers already typed are offered too)
@@ -6549,7 +6549,7 @@ def _ft_auto_parts(pl):
     # a coverage that was filled drops its own "unsure" twin (e.g. sure Over, unsure Stay -> Stay still listed)
     unsure = [u for u in unsure if not (u[0] == "Coverage" and u[1] == cov)]
     row = {"Action": action, "Screener": "", "Screener action": next((nm for rx, nm in _FT_SYN_SCREENER if re.search(rx, syn)), ""),
-           "Coverage": cov, "Screen defender": "", "At (s)": None}
+           "Coverage": cov, "Screen defender": ""}
     # the screener: the coach's / the model's, else the Synergy player when Synergy says he was the roll / pop man
     scr = val("screener", "Screener")
     if not scr and re.search(r"\bP&R Roll Man\b|\bPick and Pops?\b", syn) and pl.get("player"):
@@ -6592,8 +6592,6 @@ def _ft_rows(df):
     out = []
     for _, r in (df if isinstance(df, pd.DataFrame) else pd.DataFrame(df or [], columns=_FT_ACT_COLS)).iterrows():
         row = {c: _ft_clean(r.get(c)) for c in _FT_ACT_TEXT}
-        at = pd.to_numeric(pd.Series([r.get("At (s)")]), errors="coerce").iloc[0]
-        row["At (s)"] = None if pd.isna(at) else round(float(at), 1)
         if any(row[c] for c in _FT_ACT_TEXT):
             out.append(row)
     return out
@@ -6629,9 +6627,7 @@ def _ft_actions_editor(d, pi, store, kp):
                                                                                  voc.get("offball_coverage"), cur_vals("Coverage"))),
            "Screen defender": st.column_config.SelectboxColumn("Screen defender", options=(
                opt([_ft_lab(pl, n) for n in five.get("defense") or []], cur_vals("Screen defender")) if five.get("defense")
-               else opt(voc.get("screen_defender"), cur_vals("Screen defender")))),
-           "At (s)": st.column_config.NumberColumn("At (s)", min_value=0.0, step=0.5, format="%.1f",
-                                                   help="Optional: the second of the clip this action happens at")}
+               else opt(voc.get("screen_defender"), cur_vals("Screen defender"))))}
     _auto_row = init and not any(_ft_clean(f.get("coach")) for f in pl.get("fields", []) if f.get("field") in _FT_ACTION_FIELDS)
     st.markdown("**Actions in this play** (in order; \u2795 at the bottom adds another, e.g. a 2nd ball screen)"
                 + (" \u2014 row 1 starts on the automatic Title's answers \u2757" if _auto_row else ""))
