@@ -5854,7 +5854,7 @@ def _pr_play_widgets(d, pi, store, kp):
     _pr_title_widgets(d, pi, store, kp)
     _pr_player_widgets(d, pi, store, kp, with_video=False)
 
-def _pr_payload(d, store, coach, kp, part=None):
+def _pr_payload(d, store, coach, kp, part=None, actions=False):
     """Every answer for this review -- the ones changed (kept in `store`) and the prefilled defaults. part = "titles" or
     "players" saves only that part (each is its own file; the parser counts a review done when both are saved)."""
     out = {"game": d.get("game"), "run": d.get("run_real", d.get("run")), "coach": coach.strip(),
@@ -5862,7 +5862,42 @@ def _pr_payload(d, store, coach, kp, part=None):
            "source": "streamlit app", "part": part}
     run = d.get("run")
     for pi, pl in enumerate(d.get("plays", [])):
+        # Film Tagging's Actions table (one row per action): saved as "actions", and its FIRST row (first ball-screen /
+        # off-ball row for the coverages) also answers the single action fields below, so everything reading them still works
+        _derived = None
+        if actions and part != "players":
+            _ak = f"{kp}_act_{run}_{pi}"
+            _touched_a = _ak in store
+            _rows = store.get(_ak) if _touched_a else _ft_rows(_ft_initial_actions(pl))
+            for _n, _r in enumerate(_rows or [], 1):
+                out.setdefault("actions", []).append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
+                                                      "order": _n, "action": _r.get("Action") or None,
+                                                      "screener": _r.get("Screener") or None,
+                                                      "coverage": _r.get("Coverage") or None,
+                                                      "screen_defender": _r.get("Screen defender") or None,
+                                                      "at_s": _r.get("At (s)"), "prefilled": not _touched_a})
+            if _touched_a and not _rows:
+                out.setdefault("actions_cleared", []).append(pl["clip_key"])
+            _first = (_rows or [{}])[0]
+            _ball = next((r_ for r_ in _rows or [] if _FT_BALL_RX.search(r_.get("Action") or "") and r_.get("Coverage")), None)
+            _off = next((r_ for r_ in _rows or [] if not _FT_BALL_RX.search(r_.get("Action") or "") and r_.get("Coverage")), None)
+            _derived = ({"primary_action": _first.get("Action"), "screener": _first.get("Screener"),
+                         "screen_defender": _first.get("Screen defender"),
+                         "ball_screen_coverage": (_ball or {}).get("Coverage"),
+                         "offball_coverage": (_off or {}).get("Coverage")}, _touched_a)
         for fi, f in enumerate(pl.get("fields", []) if part != "players" else []):
+            if _derived is not None and f.get("field") in _FT_ACTION_FIELDS:
+                _v = _ft_clean(_derived[0].get(f.get("field")))
+                if not _v:
+                    continue
+                _auto = _ft_clean(f.get("auto"))
+                _right = bool(_auto) and _pr_norm(_v) == _pr_norm(_auto)
+                out["answers"].append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"), "field": f.get("field"),
+                                       "coach": f.get("coach"), "auto": f.get("auto"), "auto_conf": f.get("conf"),
+                                       "verdict": "right" if _right else "wrong", "correct": None if _right else _v,
+                                       "prefilled": not _derived[1],
+                                       "accepted_default": bool(not _derived[1] and not _ft_clean(f.get("coach")))})
+                continue
             pre, dv, da = _pr_title_default(f)
             kv, ka, kt = f"{kp}_v_{run}_{pi}_{fi}", f"{kp}_a_{run}_{pi}_{fi}", f"{kp}_t_{run}_{pi}_{fi}"
             v = store.get(kv, dv)
@@ -5919,10 +5954,10 @@ def _pr_payload(d, store, coach, kp, part=None):
     return out
 
 
-def _pr_commit(d, store, coach, kp, part, key_suffix):
+def _pr_commit(d, store, coach, kp, part, key_suffix, actions=False):
     """Save one part of the review to GitHub (or offer the file)."""
     what = "Title checks" if part == "titles" else "player checks"
-    out = _pr_payload(d, store, coach, kp, part=part)
+    out = _pr_payload(d, store, coach, kp, part=part, actions=actions)
     fname = (f"play_review_{d.get('slug')}_{d.get('run')}_{part}_{re.sub(r'[^A-Za-z0-9]+', '_', coach.strip()).strip('_')}_"
              f"{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
     ok, msg = _pr_github_save(fname, out)
@@ -6397,6 +6432,76 @@ def _pnt_model_versions():
 _FT_OTHER = "other (type it)"
 
 
+_FT_ACTION_FIELDS = ("primary_action", "screener", "ball_screen_coverage", "offball_coverage", "screen_defender")
+_FT_ACT_COLS = ["Action", "Screener", "Coverage", "Screen defender", "At (s)"]
+_FT_BALL_RX = re.compile(r"ball screen|p&r|pick|dho|hand ?off|\bget\b|drag", re.I)
+
+
+def _ft_clean(v):
+    if v is None or (isinstance(v, float) and pd.isna(v)):
+        return ""
+    v = str(v).strip()
+    return "" if v.lower() in ("nan", "none", "<na>") else v
+
+
+def _ft_initial_actions(pl):
+    """The starting row of a play's Actions table: the coach's answers (a Title check) or the automatic ones."""
+    by = {f.get("field"): f for f in pl.get("fields", [])}
+    val = lambda k: _ft_clean((by.get(k) or {}).get("coach")) or _ft_clean((by.get(k) or {}).get("auto"))
+    row = {"Action": val("primary_action"), "Screener": val("screener"),
+           "Coverage": val("ball_screen_coverage") or val("offball_coverage"),
+           "Screen defender": val("screen_defender"), "At (s)": None}
+    return [row] if any(_ft_clean(row[c]) for c in _FT_ACT_COLS[:4]) else []
+
+
+def _ft_rows(df):
+    """Edited Actions table -> list of row dicts (empty rows dropped, values cleaned)."""
+    out = []
+    for _, r in (df if isinstance(df, pd.DataFrame) else pd.DataFrame(df or [], columns=_FT_ACT_COLS)).iterrows():
+        row = {c: _ft_clean(r.get(c)) for c in _FT_ACT_COLS[:4]}
+        at = pd.to_numeric(pd.Series([r.get("At (s)")]), errors="coerce").iloc[0]
+        row["At (s)"] = None if pd.isna(at) else round(float(at), 1)
+        if any(row[c] for c in _FT_ACT_COLS[:4]):
+            out.append(row)
+    return out
+
+
+def _ft_actions_editor(d, pi, store, kp):
+    """CONFIRMED CHANGE (requested: "on some plays there are multiple actions -- 2 ball screens at different times -- I want
+    to record these as different actions ... multiple rows within each play"). Each play has an ACTIONS table, one row per
+    action in the order it happened: the action, who screened, the defense's coverage of it, who guarded the screen, and
+    (optional) the second of the clip it happens at. Row 1 starts on the automatic answers (or the coach's); "+" adds a row.
+    The first row also fills the single Main action / coverage fields, so nothing that reads those changes."""
+    pl = d["plays"][pi]
+    run = d.get("run")
+    voc = d.get("vocab", {}) or {}
+    init = _ft_initial_actions(pl)
+    key = f"{kp}_act_{run}_{pi}"
+    cur = store.get(key, init)
+    five = pl.get("five", {}) or {}
+    opt = lambda *lists: sorted({_ft_clean(x) for lst in lists for x in (lst or []) if _ft_clean(x)})
+    cur_vals = lambda c: [r.get(c) for r in (cur or []) + init]
+    cfg = {"Action": st.column_config.SelectboxColumn("Action", options=opt(voc.get("primary_action"), cur_vals("Action")),
+                                                       width="medium"),
+           "Screener": st.column_config.SelectboxColumn("Screener", options=opt(five.get("offense"), voc.get("screener"),
+                                                                                 cur_vals("Screener"))),
+           "Coverage": st.column_config.SelectboxColumn("Coverage", options=opt(voc.get("ball_screen_coverage"),
+                                                                                 voc.get("offball_coverage"), cur_vals("Coverage"))),
+           "Screen defender": st.column_config.SelectboxColumn("Screen defender", options=opt(
+               five.get("defense"), voc.get("screen_defender"), cur_vals("Screen defender"))),
+           "At (s)": st.column_config.NumberColumn("At (s)", min_value=0.0, step=0.5, format="%.1f",
+                                                   help="Optional: the second of the clip this action happens at")}
+    st.markdown("**Actions in this play** (in order; \u2795 at the bottom adds another, e.g. a 2nd ball screen)"
+                + (" \u2014 row 1 starts on the automatic answers \u2757" if init and not any(
+                    _ft_clean(f.get("coach")) for f in pl.get("fields", []) if f.get("field") in _FT_ACTION_FIELDS) else ""))
+    edited = st.data_editor(pd.DataFrame(cur or [], columns=_FT_ACT_COLS), column_config=cfg, num_rows="dynamic",
+                            hide_index=True, use_container_width=True, key=f"{kp}_acted_{run}_{pi}")
+    rows = _ft_rows(edited)
+    if key not in store and rows == _ft_rows(init):
+        return                                          # untouched: saved as the pre-filled starting row
+    store[key] = rows
+
+
 def _ft_field_widgets(d, pi, store, kp):
     """Film Tagging: one row of pick-lists, one per Title field. Each list offers the automatic answer first, then every
     answer already in use for that field, then "other (type it)". Stored with the same keys as the Play review grid, so
@@ -6404,8 +6509,9 @@ def _ft_field_widgets(d, pi, store, kp):
     pl = d["plays"][pi]
     run = d.get("run")
     fields = pl.get("fields", [])
-    cols = st.columns(max(1, len(fields)))
-    for fi, f in enumerate(fields):
+    _play_level = [(fi, f) for fi, f in enumerate(fields) if f.get("field") not in _FT_ACTION_FIELDS]
+    cols = st.columns(max(1, len(_play_level)))
+    for ci, (fi, f) in enumerate(_play_level):
         kv, kt = f"{kp}_v_{run}_{pi}_{fi}", f"{kp}_t_{run}_{pi}_{fi}"
         auto = f.get("auto")
         known = [v for v in d.get("vocab", {}).get(f.get("field"), []) if v != auto]
@@ -6436,7 +6542,7 @@ def _ft_field_widgets(d, pi, store, kp):
             idx = opts.index(cur_t)
         else:
             idx = opts.index(default_opt) if default_opt in opts else 0
-        with cols[fi]:
+        with cols[ci]:
             # a Title check (a clip the coach tagged in Synergy): his answer is shown with the field, so it can be compared
             _lab = (f.get("label") or f.get("field")) + (f" \u00b7 coach: {f['coach']}" if f.get("coach") else "")
             ch = st.selectbox(_lab, opts, index=idx, key=f"{kv}_ft")
@@ -6545,6 +6651,7 @@ def render_film_tagging():
             if pl.get("synergy_url"):
                 st.markdown(f"[Open in Synergy]({pl['synergy_url']})" + (f" (clip {pl['synergy_pos']})" if pl.get("synergy_pos") else ""))
             _ft_field_widgets(d, pi, store, kp)
+            _ft_actions_editor(d, pi, store, kp)
     with _form:
         _nc, _sc = st.columns([3, 2], vertical_alignment="bottom")
         _coach = _nc.text_input("Your name (required to save)", key=f"pr_coach_titles{_sfx}")
@@ -6553,7 +6660,7 @@ def render_film_tagging():
         if not str(_coach).strip():
             st.error("Add your name next to the Save button, then save again.")
         else:
-            _pr_commit(d, store, _coach, kp, "titles", _sfx)
+            _pr_commit(d, store, _coach, kp, "titles", _sfx, actions=True)
 
 
 def render_player_number_tracking():
