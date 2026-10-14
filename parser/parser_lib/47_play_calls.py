@@ -1975,8 +1975,46 @@ def _review_saves_dir():
     validations are done in the Streamlit app now, not in review.html pages)."""
     d = os.path.join(globals().get("APP_DATA_DIR") or globals().get("OUTPUT_DIR") or ".", "play_review_saves")
     os.makedirs(d, exist_ok=True)
+    first = not _saves_synced["done"]
     _sync_saves_branch(d)
+    if first:
+        _saves_summary(d)
     return d
+
+
+def _saves_summary(d):
+    """CONFIRMED CHANGE (question: "does this show that 7 save files were used?" -- it didn't). Once per run: every saved
+    review file the parser reads, per game -- how many, which coaches, the latest save, and the plays they cover."""
+    try:
+        per, bad = {}, []
+        for f in glob.glob(os.path.join(d, "*.json")):
+            try:
+                with open(f, encoding="utf-8") as fh:
+                    doc = json.load(fh)
+            except Exception as e:
+                bad.append(f"{os.path.basename(f)} ({os.path.getsize(f)} bytes, {type(e).__name__})")
+                continue
+            g = per.setdefault(str(doc.get("game") or "?"), {"n": 0, "coaches": set(), "latest": "", "plays": set(),
+                                                                "changed": 0})
+            g["n"] += 1
+            g["coaches"].add(str(doc.get("coach") or "someone"))
+            g["latest"] = max(g["latest"], str(doc.get("saved") or "")[:16].replace("T", " "))
+            ch = [a for a in doc.get("answers") or [] if not a.get("prefilled")]
+            ch += [a for a in doc.get("actions") or [] if not a.get("prefilled")]
+            ch += [a for a in doc.get("checks") or []]
+            g["changed"] += len(ch)
+            g["plays"] |= {str(a.get("clip_key")) for a in ch}
+        if not per:
+            print(f"  [saves] no saved review files in {d}", flush=True)
+            return
+        print(f"  [saves] {sum(g['n'] for g in per.values())} saved review file(s) read from play_review_saves:", flush=True)
+        for game, g in sorted(per.items()):
+            print(f"    {game}: {g['n']} file(s) by {', '.join(sorted(g['coaches']))} (latest {g['latest']} UTC) -- "
+                  f"{len(g['plays'])} play(s) with coach answers", flush=True)
+        if bad:
+            print(f"  [saves] {len(bad)} save file(s) can't be read (NOT used): " + "; ".join(bad[:10]), flush=True)
+    except Exception as e:
+        print(f"  [saves] summary not made ({type(e).__name__}: {e})", flush=True)
 
 
 _saves_synced = {"done": False}
@@ -2022,6 +2060,7 @@ def _sync_saves_branch(d):
         return
     try:
         import subprocess as _sp
+        import types
         git_ = _find_git()
         if not git_:
             print("  [saves] git not found (not on the PATH, no GitHub Desktop / Git for Windows install) -- saves on the app's saves "
@@ -2033,22 +2072,57 @@ def _sync_saves_branch(d):
             print("  [saves] not inside a git repository -- saves on the app's saves branch were not fetched", flush=True)
             return
         top_dir = top.stdout.strip()
-        if run_("fetch", "origin", br).returncode != 0:
+        # CONFIRMED BUG (fixed; a coach's 7 saves from the app never reached the parser -- "0 new"): a plain "git fetch origin
+        # saves" only moves origin/saves when the clone's fetch settings cover that branch, so origin/saves could stay on
+        # an old commit and the newest saves were never seen. The branch is now fetched straight into origin/saves.
+        if run_("fetch", "origin", f"+refs/heads/{br}:refs/remotes/origin/{br}").returncode != 0:
             print(f"  [saves] couldn't fetch branch '{br}' from GitHub (none yet, or offline) -- using the saves already here", flush=True)
             return
         rel = os.path.relpath(d, top_dir).replace(os.sep, "/")
-        ls = _sp.run([git_, "-C", top_dir, "ls-tree", "-r", "--name-only", f"origin/{br}", "--", rel], capture_output=True, text=True, timeout=90)
-        n_new = 0
+        ls = _sp.run([git_, "-C", top_dir, "ls-tree", "-r", f"origin/{br}", "--", rel], capture_output=True, text=True, timeout=90)
+        # "<mode> blob <sha>\t<path>" -> {path: sha}. CONFIRMED BUG (fixed; a coach's 7 saves on the branch were never copied,
+        # silently): reading each file by "branch:path" failed on Windows for those names and the failure wasn't reported.
+        # Files are now read by their blob id (no path involved) and any failure is printed.
+        _blobs = {}
+        for _ln in ls.stdout.splitlines():
+            _meta, _, _pth = _ln.partition("\t")
+            if _pth.endswith(".json") and len(_meta.split()) == 3:
+                _blobs[_pth.strip('"')] = _meta.split()[2]
+        ls = types.SimpleNamespace(stdout="\n".join(_blobs))
+        # CONFIRMED BUG (fixed; 23 saves on the branch, 16 read, "0 new"): a file already in the folder was skipped by NAME, so
+        # a copy that was empty or cut short (e.g. OneDrive out of space when it was written) was never replaced and the
+        # coach's save was silently unreadable. Every branch file is now compared with the copy here and rewritten if
+        # it differs.
+        n_new = n_fixed = 0
         for path in [x for x in ls.stdout.splitlines() if x.endswith(".json")]:
             dst = os.path.join(d, os.path.basename(path))
-            if os.path.exists(dst):
+            blob = _sp.run([git_, "-C", top_dir, "cat-file", "blob", _blobs[path]], capture_output=True, timeout=60)
+            if blob.returncode != 0:
+                print(f"  [saves] couldn't read {os.path.basename(path)} from the branch: "
+                      f"{blob.stderr.decode(errors='replace').strip()[:200]}", flush=True)
                 continue
-            blob = _sp.run([git_, "-C", d, "show", f"origin/{br}:{path}"], capture_output=True, timeout=60)
-            if blob.returncode == 0:
+            had = os.path.exists(dst)
+            if had:
+                try:
+                    with open(dst, "rb") as fh:
+                        if fh.read() == blob.stdout:
+                            continue
+                except Exception:
+                    pass
+            try:
                 with open(dst, "wb") as fh:
                     fh.write(blob.stdout)
-                n_new += 1
-        print(f"  [saves] fetched branch '{br}': {n_new} new saved review file(s) copied into {rel}", flush=True)
+                n_fixed += had
+                n_new += not had
+            except Exception as we:
+                print(f"  [saves] couldn't write {os.path.basename(path)} ({type(we).__name__}: {we}) -- is the disk / "
+                      f"OneDrive full?", flush=True)
+        if n_fixed:
+            print(f"  [saves] {n_fixed} saved review file(s) here were damaged or out of date -- replaced from the branch", flush=True)
+        _tip = run_("log", "-1", "--format=%ci  %s", f"origin/{br}").stdout.strip()
+        _n_br = len([x for x in ls.stdout.splitlines() if x.endswith(".json")])
+        print(f"  [saves] fetched branch '{br}': {n_new} new saved review file(s) copied into {rel} "
+              f"({_n_br} on the branch; its newest commit: {_tip or '?'})", flush=True)
     except Exception as e:
         print(f"  [saves] saves branch not fetched ({type(e).__name__}: {e})", flush=True)
 
