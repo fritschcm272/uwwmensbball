@@ -5605,6 +5605,7 @@ def _pr_event_map(d, game_iso):
 
 
 PR_VIDEO_SPEED = 1.5          # play-review videos start at this speed (change here)
+FT_VIDEO_SPEED = 1.0          # Film Tagging videos (the real clip from the Synergy export) start at normal speed (requested)
 PR_VIDEO_WIDTH_SHARE = 0.8    # share of the section width the review video takes (1.0 = full width); it is centered
 PR_VIDEO_RESIZABLE = True     # drag the bottom-right corner of a review video to make it smaller (remembered per browser)
 
@@ -5669,9 +5670,14 @@ def _pr_video(path, rate=None, width_share=None):
         st.video(path)
     try:
         import streamlit.components.v1 as _cv1
-        _cv1.html("<script>(function(){var r=%s;function go(){try{var vs=window.parent.document.querySelectorAll('video');"
-                  "vs.forEach(function(v){if(!v.dataset.speedSet){v.playbackRate=r;v.dataset.speedSet='1';"
-                  "v.addEventListener('loadedmetadata',function(){if(!v.dataset.speedUser){v.playbackRate=r;}});}});}catch(e){}}"
+        # CONFIRMED CHANGE (requested: Film Tagging videos back to 1.0 speed now that they're the real clip). Each video can
+        # have its own speed, so the script sets only ITS video -- the last <video> before this script on the page (st.video
+        # is drawn right before it) -- instead of every video on the page (other tabs' videos are on the same page).
+        _cv1.html("<script>(function(){var r=%s;function mine(){var P=window.parent.document,fe=window.frameElement,"
+                  "vs=P.querySelectorAll('video'),m=null;if(!fe)return null;for(var i=0;i<vs.length;i++){"
+                  "if(vs[i].compareDocumentPosition(fe)&4)m=vs[i];}return m;}"
+                  "function go(){try{var v=mine();if(v&&!v.dataset.speedSet){v.playbackRate=r;v.dataset.speedSet='1';"
+                  "v.addEventListener('loadedmetadata',function(){v.playbackRate=r;});}}catch(e){}}"
                   "go();var n=0;var t=setInterval(function(){go();if(++n>20)clearInterval(t);},300);})();</script>" % rate
                   + ("<script>(function(){try{var P=window.parent.document;if(window.parent.__uwwVidResize)return;"
                      "var s=P.createElement('script');s.textContent=%s;P.head.appendChild(s);}catch(e){}})();</script>"
@@ -6755,13 +6761,21 @@ def render_film_tagging():
     #   * "Title check" -- the Title part of a game's Play review (every game, ours too -- Previous Games no longer shows it),
     #     minus any play already in that game's Tag batch
     # A batch whose tags are already saved is waiting for the next parser run (which brings the next one), so it isn't listed.
-    tag_pk = sorted(_pr_app_packages("play_tag"), key=lambda d: str(d.get("game", "")), reverse=True)
+    # CONFIRMED BUG (fixed; "2026-03-06 Loras@UWWhitewater -- tag 1 play(s)" was listed with no video of the play): only plays
+    # whose video is in the batch are shown, and a batch with none isn't listed (the parser also stops making them)
+    _has_vid = lambda d, p: bool(p.get("clip")) and os.path.exists(os.path.join(d.get("_dir", ""), str(p.get("clip"))))
+    tag_pk = []
+    for d in sorted(_pr_app_packages("play_tag"), key=lambda d: str(d.get("game", "")), reverse=True):
+        _pl = [p for p in d.get("plays", []) if _has_vid(d, p)]
+        if _pl:
+            tag_pk.append({**d, "plays": _pl})
     in_tag = {(str(d.get("game")), str(p.get("clip_key"))) for d in tag_pk for p in d.get("plays", [])}
     rev_pk = []
     for d in sorted(_pr_app_packages("play_review"), key=lambda d: str(d.get("game", "")), reverse=True):
         v = _pr_part_view(d, "titles")
         if v:
-            v = {**v, "plays": [p for p in v["plays"] if (str(v.get("game")), str(p.get("clip_key"))) not in in_tag]}
+            v = {**v, "plays": [p for p in v["plays"] if (str(v.get("game")), str(p.get("clip_key"))) not in in_tag
+                                and _has_vid(v, p)]}
             if v["plays"]:
                 rev_pk.append(v)
     _saved = lambda d: any("titles" in x[2] for x in _pr_app_saves_for(d.get("run")))
@@ -6805,7 +6819,7 @@ def render_film_tagging():
                 st.caption(pl["film"])
             if pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
                 if pl.get("clip_kind") == "video":
-                    _pr_video(os.path.join(d["_dir"], pl["clip"]))
+                    _pr_video(os.path.join(d["_dir"], pl["clip"]), rate=FT_VIDEO_SPEED)
                 else:
                     st.image(os.path.join(d["_dir"], pl["clip"]))
             if pl.get("synergy_url"):
