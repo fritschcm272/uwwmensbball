@@ -875,6 +875,18 @@ def _tag_titles_saved(slug_game, run):
     return False
 
 
+def _pr_film_here(r):
+    """True when a clip's film is on disk: its tracking frames (or, without them, its 5 frames) exist -- as JPEGs, inside a
+    Synergy export or a frame archive (the frame hooks make those count), or as a lean-mode play video."""
+    for col in ("track_files", "frame_files"):
+        f0 = next((f for f in str(r.get(col) or "").split(";") if f and f != "nan"), None)
+        if not f0:
+            continue
+        p0 = os.path.join(VISION_FRAMES_DIR, f0)
+        return os.path.exists(p0) or bool(globals().get("vision_clip_media") and vision_clip_media([f0]))
+    return False
+
+
 def tag_queue():
     pc = play_calls.copy() if isinstance(globals().get("play_calls"), pd.DataFrame) else pd.DataFrame()
     if pc.empty:
@@ -884,6 +896,25 @@ def tag_queue():
         pc = pc[pc["side"].isin(["UWW", "Opponent"])]
     has = lambda c: pc[c].notna() if c in pc.columns else pd.Series(False, index=pc.index)
     pc = pc[has("track_files") | has("frame_files")]
+    # CONFIRMED BUG (fixed; Film Tagging listed "2026-03-06 Loras@UWWhitewater -- tag 1 play(s)" with no video: its frames were
+    # deleted at the restart on the Synergy exports). A clip is only offered for tagging when its film is on disk, and a batch
+    # already in the app for a game with no film left is removed -- it comes back once the game is exported.
+    pc = pc[[_pr_film_here(r) for _, r in pc.iterrows()]] if not pc.empty else pc
+    if not PLAY_REVIEW_ONLY_GAME:
+        _filmed = {f"{gd}|{gc}" for gd, gc in pc[["game_date", "game_code"]].drop_duplicates().itertuples(index=False)} \
+            if not pc.empty else set()
+        _tbase = os.path.join(_pr_app_dir(), "play_tag")
+        for _sub in (sorted(os.listdir(_tbase)) if os.path.isdir(_tbase) else []):
+            _rj = os.path.join(_tbase, _sub, "review.json")
+            try:
+                with open(_rj, encoding="utf-8") as fh:
+                    _gm = str(json.load(fh).get("game") or "")
+            except Exception:
+                continue
+            if _gm and _gm not in _filmed:
+                shutil.rmtree(os.path.join(_tbase, _sub), ignore_errors=True)
+                print(f"Film Tagging: removed the batch for {_gm} from the app -- the game has no film on disk "
+                      f"(it comes back once the game is exported)", flush=True)
     if PLAY_REVIEW_ONLY_GAME:
         pc = pc[pc["game_code"].astype(str).str.contains(PLAY_REVIEW_ONLY_GAME, regex=False)]
     if pc.empty:
@@ -945,6 +976,8 @@ def tag_queue():
                     clip_file = _pr_clip(files, [], None, os.path.join(rdir, f"clip_{fid}"))
                 except Exception as _ce:
                     print(f"  [film tagging] clip video not made ({type(_ce).__name__}: {_ce})", flush=True)
+            if PLAY_REVIEW_VIDEO and not clip_file:
+                continue                                   # no video of the play: nothing for a coach to tag from
             fields = []
             for f, label in _TR_FIELDS:
                 if f == "screener":
@@ -971,6 +1004,11 @@ def tag_queue():
                           "five_labels": {nm: (f"#{_gn[str(nm).lower()]} {nm}" if _gn.get(str(nm).lower()) else nm)
                                           for side_ in ("offense", "defense")
                                           for nm in _trk_five(r.get(f"{side_}_lineup"))}})
+        if not plays:
+            shutil.rmtree(rdir, ignore_errors=True)
+            shutil.rmtree(pkg, ignore_errors=True)
+            print(f"Film Tagging: {gd} {gc}: no play videos could be made -- no batch", flush=True)
+            continue
         try:
             _export_play_review_to_app(rdir, slug, f"{gd}|{gc}", stamp, plays, vocab, kind="play_tag")
             shutil.rmtree(rdir, ignore_errors=True)
