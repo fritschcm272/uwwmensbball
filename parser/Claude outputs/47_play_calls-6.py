@@ -1301,12 +1301,17 @@ def _pl_app_actions():
                 docs.append((str(d.get("saved", "")), os.path.getmtime(f), d))
     except Exception as e:
         print(f"  (app actions not read: {type(e).__name__}: {e})", flush=True)
-    by = {}
+    by, coach_edited = {}, set()
     for _s, _m, d in sorted(docs, key=lambda x: (x[0], x[1])):
         this = {}
         for a in d.get("actions") or []:
             this.setdefault(_pl_ckey_norm(a.get("clip_key")), []).append(a)
         for ck, rows in this.items():
+            # an untouched (prefilled) table never replaces one a coach edited in an earlier save (see title_review_answers)
+            if all(a.get("prefilled") for a in rows) and ck in coach_edited:
+                continue
+            if not all(a.get("prefilled") for a in rows):
+                coach_edited.add(ck)
             by[ck] = sorted(rows, key=lambda a: int(a.get("order") or 0))
         for ck in d.get("actions_cleared") or []:
             by.pop(_pl_ckey_norm(ck), None)
@@ -2192,9 +2197,18 @@ def title_review_answers():
         except Exception:
             continue
     out, marks = {}, {}
+    # CONFIRMED CHANGE (question: a coach saved the same batch 7 times): every save carries EVERY field of every play --
+    # the ones he changed AND the untouched defaults (prefilled). A later save made from a fresh page (the app reloaded, so
+    # his earlier changes weren't on screen) used to put the defaults back over his earlier answers. Now an untouched
+    # default never replaces an answer a coach actually gave; only a later real answer does.
+    coach_given = set()
     for _s, _m, d in sorted(docs, key=lambda x: (x[0], x[1])):
         for a in d.get("answers", []):
             key = (a.get("clip_key"), a.get("field"))
+            if a.get("prefilled") and key in coach_given:
+                continue
+            if not a.get("prefilled"):
+                coach_given.add(key)
             marks[key] = a
             if a.get("verdict") == "right" and a.get("auto") not in (None, ""):
                 out[key] = a["auto"]

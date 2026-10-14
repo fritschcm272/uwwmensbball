@@ -6025,8 +6025,14 @@ def _pr_commit(d, store, coach, kp, part, key_suffix, actions=False):
                    f"it up when it runs (it fetches the saves branch) and brings this game's next batch."
                    + ("" if part == "titles" else " The review is finished once its player checks are saved."))
         _st = st.session_state.get("pr_answers", {}).get(str(d.get("run")), {})
-        for k in [k for k in _st if k.startswith(kp) and (("_b_" in k) == (part == "players"))]:
+        # the Actions tables stay as saved: the table is drawn from this store, so dropping it would redraw the table on the
+        # automatic answers under the coach's edits (and his next save would send the defaults)
+        for k in [k for k in _st if k.startswith(kp) and (("_b_" in k) == (part == "players")) and "_act_" not in k]:
             _st.pop(k, None)
+        try:
+            _pr_remote_save_docs.clear()                 # the next page load sees this save (form reload, history)
+        except Exception:
+            pass
     else:
         st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in the repo's data/play_review_saves folder.")
         st.download_button("Download", json.dumps(out, indent=1), file_name=fname, mime="application/json",
@@ -6504,6 +6510,9 @@ _FT_TRIGGER_ACTIONS = ["Cobra", "Fox", "Rhino", "Snake", "Swirl", "Straight", "U
                        "Split Ball Screen"]
 # requested: coverages offered in the Coverage list even before any clip has been tagged with them
 _FT_EXTRA_COVERAGES = ["Flat Hedge"]
+# requested: an answer a coach already saved for this clip (reloaded into the form) is marked with a check, the way the
+# automatic Title's answer is marked "\u2757" -- a different check from the "\u2713" a Title check uses for the automatic answer
+_FT_SAVED_MARK = "\u2705"
 # requested: "a column for what the screener did -- Pop, Roll, etc." (answers already typed are offered too)
 _FT_SCREENER_ACTIONS = ["Roll", "Pop", "Short roll", "Slip", "Ghost", "Re-screen", "Flare / fade", "Replace",
                         "Seal", "Cut to basket"]
@@ -6585,7 +6594,7 @@ def _ft_lab(pl, name):
 
 def _ft_unmark(v):
     """"\u2757 Ball Screen" / "\u2713 Ball Screen" (an automatic answer in the Actions table) -> "Ball Screen"."""
-    parts = [re.sub(r"^[\u2757\u2713]\ufe0f?\s*", "", x.strip()) for x in _ft_clean(v).split(" / ")]
+    parts = [re.sub(r"^[\u2757\u2713\u2705]\ufe0f?\s*", "", x.strip()) for x in _ft_clean(v).split(" / ")]
     return " / ".join(x for x in parts if x)
 
 
@@ -6735,7 +6744,9 @@ def _ft_actions_editor(d, pi, store, kp):
                                              else opt(voc.get("screen_defender"), cur_vals("Screen defender")))}
     st.markdown("**Actions in this play** (in order; \u2795 at the bottom adds another, e.g. a 2nd ball screen)"
                 + (f" \u2014 {_mark} = the automatic Title's answer" if any(
-                    str(v).startswith(_mark) for r_ in init for v in r_.values()) else ""))
+                    str(v).startswith(_mark) for r_ in init for v in r_.values()) else "")
+                + (f" \u2014 {_FT_SAVED_MARK} = saved by a coach" if any(
+                    _FT_SAVED_MARK in str(v) for r_ in (cur or []) for v in r_.values()) else ""))
     _uns = _ft_auto_parts(pl)[1]
     if _uns:
         st.caption("Not sure enough to fill in (pick it if it's right): " + "; ".join(
@@ -6771,9 +6782,18 @@ def _ft_field_widgets(d, pi, store, kp):
         coach_v = f.get("coach") if f.get("coach") not in (None, "") else None
         if coach_v and coach_v not in known and not (auto and _pr_norm(coach_v) == _pr_norm(auto)):
             known = [coach_v] + known
+        # requested: the answer a coach already saved for this field (reloaded from his earlier save) carries the check
+        saved = (st.session_state.get(f"_ft_savedvals_{run}") or {}).get((pi, fi))
+        saved_opt = None
+        if saved:
+            if auto and _pr_norm(saved) == _pr_norm(auto):
+                auto_opt = f"{_FT_SAVED_MARK} {auto}"           # he confirmed the automatic answer
+            else:
+                known = [v for v in known if _pr_norm(v) != _pr_norm(saved)]
+                saved_opt = f"{_FT_SAVED_MARK} {saved}"
         # CONFIRMED CHANGE (requested: picking "other" took a long time -- the whole page reran just to show the text box).
         # The batch is now ONE form (nothing reruns until Save), and every field has its own "or type" box under the list.
-        opts = ["--"] + ([auto_opt] if auto_opt else []) + known
+        opts = ["--"] + ([auto_opt] if auto_opt else []) + ([saved_opt] if saved_opt else []) + known
         # CONFIRMED CHANGE (requested: the dropdowns start on what the automatic tagging decided -- or, on a Title check, on
         # the coach's answer). The starting choice isn't stored: an untouched field is saved as "pre-filled".
         if coach_v and auto_opt and _pr_norm(coach_v) == _pr_norm(auto):
@@ -6782,11 +6802,15 @@ def _ft_field_widgets(d, pi, store, kp):
             default_opt = coach_v
         else:
             default_opt = auto_opt
+        if saved:
+            default_opt = saved_opt or auto_opt
         cur_v, cur_t = store.get(kv), store.get(kt)
         if cur_v == "cleared":
             idx = 0
         elif cur_v == "right" and auto_opt:
             idx = 1
+        elif cur_v == "wrong" and saved_opt and _pr_norm(cur_t) == _pr_norm(saved):
+            idx = opts.index(saved_opt)
         elif cur_v == "wrong" and cur_t in known:
             idx = opts.index(cur_t)
         else:
@@ -6795,7 +6819,9 @@ def _ft_field_widgets(d, pi, store, kp):
             # a Title check (a clip the coach tagged in Synergy): his answer is shown with the field, so it can be compared
             _lab = (f.get("label") or f.get("field")) + (f" \u00b7 coach: {f['coach']}" if f.get("coach") else "")
             ch = st.selectbox(_lab, opts, index=idx, key=f"{kv}_ft")
-            typed = st.text_input("or type", value=(cur_t if cur_t and cur_t not in known else ""), key=f"{kt}_ft",
+            typed = st.text_input("or type", value=(cur_t if cur_t and cur_t not in known
+                                                    and not (saved and _pr_norm(cur_t) == _pr_norm(saved)) else ""),
+                                  key=f"{kt}_ft",
                                   label_visibility="collapsed", placeholder="or type another answer")
         typed = (typed or "").strip()
         if typed:                                      # a typed answer wins over the list
@@ -6804,6 +6830,8 @@ def _ft_field_widgets(d, pi, store, kp):
                 store[kt] = typed
             else:
                 store.pop(kt, None)
+        elif saved_opt and ch == saved_opt:
+            store[kv], store[kt] = "wrong", saved      # the coach's saved answer (kept as his answer on every save)
         elif ch == default_opt and default_opt is not None and kv not in store:
             pass                                       # still on the starting answer: saved as pre-filled
         elif ch == default_opt and default_opt is not None and store.get(kv) == "cleared":
@@ -6839,6 +6867,83 @@ def _form_no_enter(key):
         return st.form(key, enter_to_submit=False)
     except TypeError:
         return st.form(key)
+
+
+def _ft_seed_from_saves(d, store, kp):
+    """CONFIRMED CHANGE (requested: "make the form reload them"). When a coach opens a Film Tagging batch that already has
+    saves (a reload or a new app version used to show only the automatic answers again), the form starts on the answers
+    already saved for this batch -- every coach's, the latest save winning, same rule as the parser. Untouched defaults
+    (prefilled) are not loaded: they're just the automatic answer, which the form shows anyway. Done once per session per
+    batch, before the widgets exist, and never over something changed in this session. Returns (n plays, latest save)."""
+    flag = f"_ft_seeded_{d.get('run')}"
+    if st.session_state.get(flag):
+        return st.session_state[flag]
+    run, game = d.get("run"), str(d.get("game"))
+    real = {str(d.get("run_real", run)), str(run)}
+    plays = d.get("plays", []) or []
+    pi_of = {str(pl.get("clip_key")): pi for pi, pl in enumerate(plays)}
+    docs = []
+    try:
+        for doc in _pr_save_docs():
+            if str(doc.get("game")) == game and str(doc.get("run")) in real and (doc.get("answers") or doc.get("actions")
+                                                                                 or doc.get("actions_cleared")):
+                docs.append(doc)
+    except Exception:
+        docs = []
+    docs.sort(key=lambda x: str(x.get("saved", "")))
+    fields_of = {pi: {f.get("field"): fi for fi, f in enumerate(pl.get("fields", []))} for pi, pl in enumerate(plays)}
+    ans, acts = {}, {}
+    for doc in docs:
+        for a in doc.get("answers") or []:
+            pi = pi_of.get(str(a.get("clip_key")))
+            if pi is None or a.get("prefilled") or a.get("field") in _FT_ACTION_FIELDS:
+                continue
+            fi = fields_of.get(pi, {}).get(a.get("field"))
+            if fi is not None and a.get("verdict") in ("right", "wrong"):
+                ans[(pi, fi)] = a
+        by = {}
+        for a in doc.get("actions") or []:
+            pi = pi_of.get(str(a.get("clip_key")))
+            if pi is not None:
+                by.setdefault(pi, []).append(a)
+        for pi, rows in by.items():
+            if not all(r.get("prefilled") for r in rows):
+                acts[pi] = sorted(rows, key=lambda r: int(r.get("order") or 0))
+        for ck in doc.get("actions_cleared") or []:
+            if pi_of.get(str(ck)) is not None:
+                acts[pi_of[str(ck)]] = []
+    seeded = set()
+    savedvals = {}
+    for (pi, fi), a in ans.items():
+        savedvals[(pi, fi)] = (_ft_clean(a.get("correct")) if a.get("verdict") == "wrong" else _ft_clean(a.get("auto")))
+        kv, kt = f"{kp}_v_{run}_{pi}_{fi}", f"{kp}_t_{run}_{pi}_{fi}"
+        if kv in store:
+            continue
+        if a.get("verdict") == "wrong" and _ft_clean(a.get("correct")):
+            store[kv], store[kt] = "wrong", _ft_clean(a.get("correct"))
+        elif a.get("verdict") == "right":
+            store[kv] = "right"
+            store.pop(kt, None)
+        else:
+            continue
+        seeded.add(pi)
+    st.session_state[f"_ft_savedvals_{run}"] = {k: v for k, v in savedvals.items() if v}
+    _mk = lambda v: " / ".join(f"{_FT_SAVED_MARK} {x.strip()}" for x in _ft_clean(v).split(" / ") if x.strip())
+    _labs = lambda pl, v, side: _mk(" / ".join(_ft_player_label(pl, x, side) for x in _ft_clean(v).split(" / ") if x.strip()))
+    for pi, rows in acts.items():
+        key = f"{kp}_act_{run}_{pi}"
+        if key in store:
+            continue
+        pl = plays[pi]
+        store[key] = [{"Action": _mk(r.get("action")), "Trigger": _labs(pl, r.get("trigger"), "offense"),
+                       "Trigger action": _mk(r.get("trigger_action")),
+                       "Screener": _labs(pl, r.get("screener"), "offense"),
+                       "Screener action": _mk(r.get("screener_action")), "Coverage": _mk(r.get("coverage")),
+                       "Screen defender": _labs(pl, r.get("screen_defender"), "defense")} for r in rows]
+        seeded.add(pi)
+    res = (len(seeded), str(docs[-1].get("saved", ""))[:16].replace("T", " ") if docs else "")
+    st.session_state[flag] = res
+    return res
 
 
 def render_film_tagging():
@@ -6890,6 +6995,10 @@ def render_film_tagging():
     _pr_show_save_history(d.get("game"), "titles")
     store = _pr_store(d.get("run"))
     kp = f"ft{d.get('slug')}"
+    _n_seed, _seed_when = _ft_seed_from_saves(d, store, kp)
+    if _n_seed:
+        st.info(f"Loaded the answers already saved for {_n_seed} play(s) in this batch (latest save {_seed_when} UTC). "
+                f"They're marked {_FT_SAVED_MARK}. Keep going from there -- saving again keeps them.")
     _saved_ = [x for x in _pr_app_saves_for(d.get("run")) if "titles" in x[2]]
     if _saved_:
         st.success("Already saved for this batch: " + "; ".join(f"{c} ({t})" for c, t, *_ in _saved_))
