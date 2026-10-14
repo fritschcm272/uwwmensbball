@@ -1286,8 +1286,10 @@ def _pl_app_answers():
 
 def _pl_app_actions():
     """{normalized clip key: [action rows in order]} from Film Tagging's Actions tables (saves' "actions"), latest save of a
-    clip wins (a save that emptied a clip's table clears it). Each row: action, screener, screener_action (Roll, Pop, ...),
-    coverage, screen_defender, at_s, prefilled. CONFIRMED CHANGE (requested: several actions in one play -- e.g. two ball screens -- recorded separately)."""
+    clip wins (a save that emptied a clip's table clears it). Each row: action (DHO, PC5, Pistol, Over, PC2, 77, Ram or
+    typed), trigger (the offensive player who starts it), trigger_action (Cobra, Fox, ..., Use / Reject / Split Ball Screen),
+    screener, screener_action (Roll, Pop, ...), coverage, screen_defender, prefilled. A cell can hold several answers
+    joined with " / " (the app lets a coach pick more than one or type their own). CONFIRMED CHANGE (requested: several actions in one play -- e.g. two ball screens -- recorded separately)."""
     cached = globals().get("_pl_app_actions_cache")
     if cached is not None:
         return cached
@@ -1318,6 +1320,48 @@ def _pl_cov_entries(detail):
     return [x.strip() for x in str(detail).split("|") if x.strip() and x.strip().lower() not in ("nan", "none")]
 
 
+# Film Tagging action names -> the screen family the coverage tables read ("Ball Screen: Drop (def #3)"). The family
+# name sits right before the colon -- 53's labels, 54's screen check and the screen-coverage table all read it there.
+_PL_APP_BALL_RX = re.compile(r"ball screen|p&r|pick|\bget\b|drag|pistol|\b77\b|\bram\b|zoom|ricky", re.I)
+_PL_APP_DHO_RX = re.compile(r"\bdho\b|hand ?-?off", re.I)
+_PL_APP_DOWN_RX = re.compile(r"\bpc5\b|down ?screen", re.I)
+_PL_APP_OFFBALL_NAMES = ("Down Screen", "Flare", "Stagger", "Up Screen", "Pin Down", "Back Screen", "Cross Screen", "UCLA",
+                         "Screen the Screener", "Double/Stagger Screen")
+
+
+def _pl_app_cov_family(coverage):
+    """'Drop' -> 'ball', 'Top Lock' -> 'offball', 'Switch' -> 'either', unknown -> None (by coverage NAME)."""
+    key = re.sub(r"[^a-z0-9]+", "", str(coverage or "").lower())
+    for table, fam in ((globals().get("_PT_OFFBALL_COVERAGE") or {}, "offball"), (globals().get("_PT_BALL_COVERAGE") or {}, "ball"),
+                       (globals().get("_PT_EITHER_COVERAGE") or {}, "either")):
+        for code, val in table.items():
+            if key and (key == re.sub(r"[^a-z0-9]+", "", str(val[0]).lower()) or key == re.sub(r"[^a-z0-9]+", "", code)):
+                return fam
+    return None
+
+
+def _pl_app_screen_label(x):
+    """The screen a Film Tagging action row's coverage answered, named the way the Title decoder names it."""
+    act, trg = str(x.get("action") or ""), str(x.get("trigger_action") or "")
+    fam = _pl_app_cov_family(x.get("coverage"))
+    ball = fam == "ball" or (fam != "offball" and bool(_PL_APP_BALL_RX.search(f"{act} {trg}") or _PL_APP_DHO_RX.search(act)))
+    if ball:
+        if _PL_APP_DHO_RX.search(act):
+            return "DHO"
+        for nm in ("Get", "Double Drag"):
+            if act.strip().lower() == nm.lower():
+                return nm
+        return "Ball Screen"
+    for nm in _PL_APP_OFFBALL_NAMES:
+        if act.strip().lower() == nm.lower():
+            return nm
+    if _PL_APP_DOWN_RX.search(act):
+        return "Down Screen"
+    if fam == "offball" or re.search(r"\bover\b|screen ?away", act, re.I):   # Over = pass to the 5, screen away
+        return "Off-ball screen"
+    return "Screen"
+
+
 def _pl_apply_app_tags(out):
     if out.empty or not globals().get("PLAY_CALLS_USE_APP_TAGS", True):
         return out
@@ -1335,7 +1379,7 @@ def _pl_apply_app_tags(out):
             for v in out[c].dropna().astype(str):
                 vocab[f].setdefault(norm(v), v)
     canon = lambda f, v: vocab.get(f, {}).get(norm(v), v)
-    for c in ("situation_source", "play_actions", "screener_actions", "coverage_detail", "defense_coverage", "tag_format", "play_title",
+    for c in ("situation_source", "play_actions", "trigger_actions", "screener_actions", "coverage_detail", "defense_coverage", "tag_format", "play_title",
               "decode_note", "defense_type", "defense_press", "play_call", "play_series"):
         if c not in out.columns:
             out[c] = None
@@ -1346,6 +1390,11 @@ def _pl_apply_app_tags(out):
     for _team, _bk in (_pl_jersey_book() if "_pl_jersey_book" in globals() else {}).items():
         for _j, _nm in _bk.items():
             _num_of.setdefault(norm(_nm), _j)
+
+    def _jer(v, first=False):
+        # player name(s) -> jersey(s); a cell can name several players ("Smith / Jones" -> "3/24")
+        js = [j for j in (_num_of.get(norm(p_)) for p_ in re.split(r"\s*/\s*", str(v or "")) if p_.strip()) if j]
+        return (js[0] if js else None) if first else ("/".join(js) or None)
     n_multi = 0
     for idx, r in out.iterrows():
         _ck = _pl_ckey_norm(f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}")
@@ -1353,7 +1402,8 @@ def _pl_apply_app_tags(out):
         untagged = r.get("decode_quality") == "Untagged" or blank(r.get("play_title"))
         # the play's Actions table (Film Tagging): used like the answers -- always on an untagged clip, on a coach-Titled
         # clip only when a coach changed it
-        _acts = [x for x in (acts_by.get(_ck) or []) if x.get("action") or x.get("coverage") or x.get("screener_action")]
+        _acts = [x for x in (acts_by.get(_ck) or []) if x.get("action") or x.get("coverage") or x.get("screener_action")
+                 or x.get("trigger") or x.get("trigger_action")]
         if _acts and not untagged and (not override or all(x.get("prefilled") for x in _acts)):
             _acts = []
         if not a and not _acts:
@@ -1416,36 +1466,52 @@ def _pl_apply_app_tags(out):
                                                                for e in ent if ":" in e)))
         if _acts:
             # every action, in order: play_actions lists them all, and each one the defense covered is its own coverage
-            # entry ("Ball Screen (#24): Drop (def #3)") -- so two ball screens count twice in the screen-coverage tables
+            # entry ("Ball Screen: Drop (def #3)") -- so two ball screens count twice in the screen-coverage tables
             _names = [canon("primary_action", x["action"]) for x in _acts if x.get("action")]
             if _names:
                 put("play_actions", " | ".join(_names))
                 put("primary_action", _names[0])
+            # requested: what started each action -- the trigger player and what he did (Cobra, Fox, Use Ball Screen, ...),
+            # one entry per action that has one, in order: "Pistol (#3): Use Ball Screen | DHO (#5): Snake"
+            _ta = []
+            for x in _acts:
+                if x.get("trigger_action") or x.get("trigger"):
+                    _tn = _jer(x.get("trigger"))
+                    _ta.append(f"{x.get('action') or 'Action'}" + (f" (#{_tn})" if _tn else "")
+                               + f": {x.get('trigger_action') or 'Trigger'}")
+            if _ta:
+                put("trigger_actions", " | ".join(_ta))
             # requested: what the screener did (Roll, Pop, Slip, ...) -- one entry per action that has one, in order:
             # "Ball Screen (#32): Roll | Ball Screen (#4): Pop"
             _sa = []
             for x in _acts:
                 if x.get("screener_action"):
-                    _sn = _num_of.get(norm(x.get("screener") or ""))
+                    _sn = _jer(x.get("screener"))
                     _sa.append(f"{x.get('action') or 'Screen'}" + (f" (#{_sn})" if _sn else "") + f": {x['screener_action']}")
             if _sa:
                 put("screener_actions", " | ".join(_sa))
+            # each coverage as its own entry, named by screen family the way the Title decoder writes it
+            # ("Ball Screen: Drop (def #3)") so the coverage tables and the tag model read app tags like Titles
             _ent = []
             for x in _acts:
                 if not x.get("coverage"):
                     continue
-                _lab = x.get("action") or ("Ball Screen" if "ball" in str(x.get("coverage")).lower() else "Screen")
-                _sn = _num_of.get(norm(x.get("screener") or ""))
-                _dn = _num_of.get(norm(x.get("screen_defender") or ""))
-                _ent.append(f"{_lab}" + (f" (#{_sn})" if _sn else "") + f": {x['coverage']}" + (f" (def #{_dn})" if _dn else ""))
+                _dn = _jer(x.get("screen_defender"), first=True)
+                _ent.append(f"{_pl_app_screen_label(x)}: {x['coverage']}" + (f" (def #{_dn})" if _dn else ""))
             if _ent:
                 put("coverage_detail", " | ".join(_ent))
                 put("defense_coverage", " | ".join(dict.fromkeys(str(x["coverage"]) for x in _acts if x.get("coverage"))))
             if len(_acts) > 1:
                 n_multi += 1
-            use = dict(use) or ({"primary_action": _names[0]} if _names else {"ball_screen_coverage": _acts[0].get("coverage")})
+            if not use:
+                if _names:
+                    use = {"primary_action": _names[0]}
+                elif any(x.get("trigger_action") or x.get("trigger") or x.get("screener_action") for x in _acts):
+                    use = {"offense_action": True}
+                else:
+                    use = {"ball_screen_coverage": _acts[0].get("coverage")}
         # the play call and series, named the way the Title decoder names them
-        offense = any(f in use for f in ("formation", "play_call", "primary_action")) or not untagged
+        offense = any(f in use for f in ("formation", "play_call", "primary_action", "offense_action")) or not untagged
         sit = out.at[idx, "play_situation"]
         if offense and blank(sit):
             put("play_situation", "Half court")
@@ -2576,6 +2642,8 @@ PLAY_CALL_COLS = [
     "time_remaining_seconds", "player", "result", "points", "points_source", "matched_event", "matched_by",
     "play_title", "play_call", "play_series", "play_situation", "play_formation", "play_set", "play_actions",
     "primary_action", "play_location", "finish_spot", "featured_player", "decode_quality", "decode_note",
+    # Film Tagging's Actions table (requested): what started each action and what each screener did
+    "trigger_actions", "screener_actions",
     "synergy_play_type", "synergy_string", "on_court_lineup", "personnel_grouping_type", "game_situation",
     "shot_clock_used", "shot_clock_max", "shot_clock_situation",
     # NEW: the defense this offense faced on the clip, from the coaches' updated Title tagging (see

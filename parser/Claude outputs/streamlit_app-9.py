@@ -5926,6 +5926,8 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
             for _n, _r in enumerate(_rows or [], 1):
                 out.setdefault("actions", []).append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
                                                       "order": _n, "action": _ft_unmark(_r.get("Action")) or None,
+                                                      "trigger": _ft_unlab(_r.get("Trigger")) or None,
+                                                      "trigger_action": _ft_unmark(_r.get("Trigger action")) or None,
                                                       "screener": _ft_unlab(_r.get("Screener")) or None,
                                                       "screener_action": _ft_unmark(_r.get("Screener action")) or None,
                                                       "coverage": _ft_unmark(_r.get("Coverage")) or None,
@@ -5934,8 +5936,8 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
             if _touched_a and not _rows:
                 out.setdefault("actions_cleared", []).append(pl["clip_key"])
             _first = (_rows or [{}])[0]
-            _ball = next((r_ for r_ in _rows or [] if _FT_BALL_RX.search(r_.get("Action") or "") and r_.get("Coverage")), None)
-            _off = next((r_ for r_ in _rows or [] if not _FT_BALL_RX.search(r_.get("Action") or "") and r_.get("Coverage")), None)
+            _ball = next((r_ for r_ in _rows or [] if _ft_is_ball(r_, d.get("vocab")) and r_.get("Coverage")), None)
+            _off = next((r_ for r_ in _rows or [] if not _ft_is_ball(r_, d.get("vocab")) and r_.get("Coverage")), None)
             _derived = ({"primary_action": _first.get("Action"), "screener": _ft_unlab(_first.get("Screener")),
                          "screen_defender": _ft_unlab(_first.get("Screen defender")),
                          "ball_screen_coverage": (_ball or {}).get("Coverage"),
@@ -6488,16 +6490,81 @@ _FT_OTHER = "other (type it)"
 
 
 _FT_ACTION_FIELDS = ("primary_action", "screener", "ball_screen_coverage", "offball_coverage", "screen_defender")
-_FT_ACT_COLS = ["Action", "Screener", "Screener action", "Coverage", "Screen defender"]   # "At (s)" removed (requested)
+# CONFIRMED CHANGE (requested: "2 more fields in between Action and Screener called Trigger and Trigger action").
+_FT_ACT_COLS = ["Action", "Trigger", "Trigger action", "Screener", "Screener action", "Coverage", "Screen defender"]
 _FT_ACT_TEXT = list(_FT_ACT_COLS)
-# requested: actions offered in the Action list even before any clip has been tagged with them
-_FT_EXTRA_ACTIONS = ["Pass to the 5 and downscreen", "Rhino", "Cobra", "Fox"]
+# requested: the Action list is the staff's own play actions (what each means is in the column's help)
+_FT_ACTIONS = ["DHO", "PC5", "Pistol", "Over", "PC2", "77", "Ram"]
+_FT_ACTION_HELP = ("DHO = dribble hand-off to the corner · PC5 = pass to the 5 and down screen · Pistol = ball screen "
+                   "from the corner, happens at the wing · Over = ball handler passes to the 5 and screens away from the 5 "
+                   "· PC2 = pass to the corner · 77 = double ball screen · Ram = ball screen action. Not listed? "
+                   "Type it.")
+# requested: what the trigger did
+_FT_TRIGGER_ACTIONS = ["Cobra", "Fox", "Rhino", "Snake", "Swirl", "Straight", "Use Ball Screen", "Reject Ball Screen",
+                       "Split Ball Screen"]
 # requested: coverages offered in the Coverage list even before any clip has been tagged with them
 _FT_EXTRA_COVERAGES = ["Flat Hedge"]
 # requested: "a column for what the screener did -- Pop, Roll, etc." (answers already typed are offered too)
 _FT_SCREENER_ACTIONS = ["Roll", "Pop", "Short roll", "Slip", "Ghost", "Re-screen", "Flare / fade", "Replace",
                         "Seal", "Cut to basket"]
-_FT_BALL_RX = re.compile(r"ball screen|p&r|pick|dho|hand ?off|\bget\b|drag", re.I)
+_FT_BALL_RX = re.compile(r"ball screen|p&r|pick|dho|hand ?off|\bget\b|drag|pistol|\b77\b|\bram\b", re.I)
+
+
+def _ft_is_ball(row, voc=None):
+    """An Actions row about a ball screen: by its Coverage when that's only ever a ball-screen (Drop, Hedge, ...) or only
+    an off-ball coverage (Trail, ...), else by its Action ("Pistol", "77", "Ram", "DHO" ...) or Trigger action
+    ("Use / Reject / Split Ball Screen")."""
+    voc = voc or {}
+    _n = lambda v: re.sub(r"[^a-z0-9]+", "", str(v or "").lower())
+    cov = _n(row.get("Coverage"))
+    ball = {_n(x) for x in list(voc.get("ball_screen_coverage") or []) + _FT_EXTRA_COVERAGES}
+    off = {_n(x) for x in voc.get("offball_coverage") or []}
+    if cov and cov in ball and cov not in off:
+        return True
+    if cov and cov in off and cov not in ball:
+        return False
+    return bool(_FT_BALL_RX.search(str(row.get("Action") or "")) or _FT_BALL_RX.search(str(row.get("Trigger action") or "")))
+
+
+# CONFIRMED CHANGE (requested: "the fields in Actions in this play need to allow for free text"). Streamlit's dropdown cell
+# can't take typed text; its multi-select cell can (accept_new_options). Each cell is a dropdown of the usual answers AND a
+# box to type a new one (Enter adds it). A cell can hold more than one answer; they're saved joined with " / ". Streamlit
+# versions without that cell get the plain dropdown.
+def _ft_multi_ok():
+    _m = getattr(st.column_config, "MultiselectColumn", None)
+    if _m is None:
+        return False
+    try:
+        _m("x", options=["a"], accept_new_options=True)
+        return True
+    except Exception:
+        return False
+
+
+_FT_MULTI = _ft_multi_ok()
+
+
+def _ft_choice_col(label, options, help=None, width=None):
+    if _FT_MULTI:
+        return st.column_config.MultiselectColumn(label, options=list(options), accept_new_options=True, help=help,
+                                                  width=width)
+    return st.column_config.SelectboxColumn(label, options=list(options), help=help, width=width)
+
+
+def _ft_to_cell(v):
+    """A saved answer -> what the table cell holds (a list for the multi-select cell)."""
+    v = "" if v is None or (isinstance(v, float) and pd.isna(v)) else str(v)
+    if not _FT_MULTI:
+        return v or None
+    return [x.strip() for x in v.split(" / ") if x.strip()]
+
+
+def _ft_from_cell(v):
+    """What a table cell holds -> one answer string ("A / B" when a cell holds more than one)."""
+    if isinstance(v, (list, tuple, set)) or type(v).__name__ == "ndarray":
+        parts = [_ft_clean(x) for x in list(v)]
+        return " / ".join(x for x in parts if x)
+    return _ft_clean(v)
 
 
 def _ft_clean(v):
@@ -6518,12 +6585,14 @@ def _ft_lab(pl, name):
 
 def _ft_unmark(v):
     """"\u2757 Ball Screen" / "\u2713 Ball Screen" (an automatic answer in the Actions table) -> "Ball Screen"."""
-    return re.sub(r"^[\u2757\u2713]\ufe0f?\s*", "", _ft_clean(v))
+    parts = [re.sub(r"^[\u2757\u2713]\ufe0f?\s*", "", x.strip()) for x in _ft_clean(v).split(" / ")]
+    return " / ".join(x for x in parts if x)
 
 
 def _ft_unlab(v):
-    """"#24 Richie Warren" -> "Richie Warren" (what's saved)."""
-    return re.sub(r"^#\S*\s+", "", _ft_unmark(v))
+    """"#24 Richie Warren" -> "Richie Warren" (what's saved). Several in one cell ("#24 A / #3 B") -> "A / B"."""
+    parts = [re.sub(r"^#\S*\s+", "", _ft_unmark(x)) for x in _ft_clean(v).split(" / ")]
+    return " / ".join(x for x in parts if x)
 
 
 # what the Synergy play type says about the action / what the screener did (the automatic Title reads the same words:
@@ -6564,7 +6633,8 @@ def _ft_auto_parts(pl):
     cov = (ball or off) if is_ball else (off or ball)
     # a coverage that was filled drops its own "unsure" twin (e.g. sure Over, unsure Stay -> Stay still listed)
     unsure = [u for u in unsure if not (u[0] == "Coverage" and u[1] == cov)]
-    row = {"Action": action, "Screener": "", "Screener action": next((nm for rx, nm in _FT_SYN_SCREENER if re.search(rx, syn)), ""),
+    row = {"Action": action, "Trigger": "", "Trigger action": "", "Screener": "",
+           "Screener action": next((nm for rx, nm in _FT_SYN_SCREENER if re.search(rx, syn)), ""),
            "Coverage": cov, "Screen defender": ""}
     # the screener: the coach's / the model's, else the Synergy player when Synergy says he was the roll / pop man
     scr = val("screener", "Screener")
@@ -6576,8 +6646,8 @@ def _ft_auto_parts(pl):
     unsure = [(c, (_ft_player_label(pl, g, "defense") if c == "Screen defender" else g), cf) for c, g, cf in unsure]
     # the cells that are the model's / Synergy's answer, not a coach's (they get the "\u2757" mark in the table)
     _cov_field = ("ball_screen_coverage" if cov and cov == ball else "offball_coverage")
-    _src = {"Action": "primary_action", "Screener": "screener", "Screener action": None, "Coverage": _cov_field,
-            "Screen defender": "screen_defender"}
+    _src = {"Action": "primary_action", "Trigger": None, "Trigger action": None, "Screener": "screener",
+            "Screener action": None, "Coverage": _cov_field, "Screen defender": "screen_defender"}
     row["_auto"] = {c for c in _FT_ACT_TEXT if row.get(c) and _src.get(c) not in coach_fields}
     return row, unsure
 
@@ -6616,7 +6686,7 @@ def _ft_rows(df):
     """Edited Actions table -> list of row dicts (empty rows dropped, values cleaned)."""
     out = []
     for _, r in (df if isinstance(df, pd.DataFrame) else pd.DataFrame(df or [], columns=_FT_ACT_COLS)).iterrows():
-        row = {c: _ft_clean(r.get(c)) for c in _FT_ACT_TEXT}
+        row = {c: _ft_from_cell(r.get(c)) for c in _FT_ACT_TEXT}
         if any(row[c] for c in _FT_ACT_TEXT):
             out.append(row)
     return out
@@ -6638,24 +6708,31 @@ def _ft_actions_editor(d, pi, store, kp):
     cur = store.get(key, init)
     five = pl.get("five", {}) or {}
     opt = lambda *lists: sorted({_ft_clean(x) for lst in lists for x in (lst or []) if _ft_clean(x)})
-    cur_vals = lambda c: [r.get(c) for r in (cur or []) + init]
-    cfg = {"Action": st.column_config.SelectboxColumn("Action", options=opt(voc.get("primary_action"), _FT_EXTRA_ACTIONS,
-                                                                                     cur_vals("Action")),
-                                                       width="medium"),
+    # answers already in the cells (incl. typed ones and the automatic answer) stay in the lists
+    cur_vals = lambda c: [x for r in (cur or []) + init for x in str(r.get(c) or "").split(" / ")]
+    keep_first = lambda first, *rest: list(first) + [v for v in opt(*rest) if v not in first]
+    off5 = [_ft_lab(pl, n) for n in five.get("offense") or []]
+    def5 = [_ft_lab(pl, n) for n in five.get("defense") or []]
+    cfg = {"Action": _ft_choice_col("Action", keep_first(_FT_ACTIONS, cur_vals("Action")), help=_FT_ACTION_HELP,
+                                    width="medium"),
+           # requested: Trigger = the five on OFFENSE (jersey number + name), like the Screener list
+           "Trigger": _ft_choice_col("Trigger", opt(off5, cur_vals("Trigger")) if off5
+                                     else opt(voc.get("screener"), cur_vals("Trigger")),
+                                     help="The offensive player who starts the action"),
+           "Trigger action": _ft_choice_col("Trigger action", keep_first(_FT_TRIGGER_ACTIONS, cur_vals("Trigger action")),
+                                            help="What the trigger did: Cobra, Fox, Rhino, Snake, Swirl, Straight, or "
+                                                 "Use / Reject / Split the ball screen"),
            # requested: the Screener list is only the five on OFFENSE, each with his jersey number ("#24 Richie Warren")
-           "Screener": st.column_config.SelectboxColumn("Screener", options=(
-               opt([_ft_lab(pl, n) for n in five.get("offense") or []], cur_vals("Screener")) if five.get("offense")
-               else opt(voc.get("screener"), cur_vals("Screener")))),
-           "Screener action": st.column_config.SelectboxColumn(
-               "Screener action", help="What the screener did after the screen: Roll, Pop, Slip, ...",
-               options=_FT_SCREENER_ACTIONS + [v for v in opt(voc.get("screener_action"), cur_vals("Screener action"))
-                                               if v not in _FT_SCREENER_ACTIONS]),
-           "Coverage": st.column_config.SelectboxColumn("Coverage", options=opt(voc.get("ball_screen_coverage"),
-                                                                                 voc.get("offball_coverage"), _FT_EXTRA_COVERAGES,
-                                                                                 cur_vals("Coverage"))),
-           "Screen defender": st.column_config.SelectboxColumn("Screen defender", options=(
-               opt([_ft_lab(pl, n) for n in five.get("defense") or []], cur_vals("Screen defender")) if five.get("defense")
-               else opt(voc.get("screen_defender"), cur_vals("Screen defender"))))}
+           "Screener": _ft_choice_col("Screener", opt(off5, cur_vals("Screener")) if off5
+                                      else opt(voc.get("screener"), cur_vals("Screener"))),
+           "Screener action": _ft_choice_col("Screener action",
+                                             keep_first(_FT_SCREENER_ACTIONS, voc.get("screener_action"),
+                                                        cur_vals("Screener action")),
+                                             help="What the screener did after the screen: Roll, Pop, Slip, ..."),
+           "Coverage": _ft_choice_col("Coverage", opt(voc.get("ball_screen_coverage"), voc.get("offball_coverage"),
+                                                      _FT_EXTRA_COVERAGES, cur_vals("Coverage"))),
+           "Screen defender": _ft_choice_col("Screen defender", opt(def5, cur_vals("Screen defender")) if def5
+                                             else opt(voc.get("screen_defender"), cur_vals("Screen defender")))}
     st.markdown("**Actions in this play** (in order; \u2795 at the bottom adds another, e.g. a 2nd ball screen)"
                 + (f" \u2014 {_mark} = the automatic Title's answer" if any(
                     str(v).startswith(_mark) for r_ in init for v in r_.values()) else ""))
@@ -6663,7 +6740,10 @@ def _ft_actions_editor(d, pi, store, kp):
     if _uns:
         st.caption("Not sure enough to fill in (pick it if it's right): " + "; ".join(
             f"{c} {g}" + (f" ({float(cf):.0%})" if cf is not None else "") for c, g, cf in _uns))
-    edited = st.data_editor(pd.DataFrame(cur or [], columns=_FT_ACT_COLS), column_config=cfg, num_rows="dynamic",
+    if _FT_MULTI:
+        st.caption("Pick from a list or type your own answer in any cell (press Enter to add it).")
+    _df = pd.DataFrame([{c: _ft_to_cell(r.get(c)) for c in _FT_ACT_COLS} for r in (cur or [])], columns=_FT_ACT_COLS)
+    edited = st.data_editor(_df, column_config=cfg, num_rows="dynamic",
                             hide_index=True, use_container_width=True, key=f"{kp}_acted_{run}_{pi}")
     rows = _ft_rows(edited)
     if key not in store and rows == _ft_rows(init):
