@@ -2047,6 +2047,29 @@ def _play_review_file_saves():
     return saves
 
 
+def tracking_reset_time():
+    """When player tracking was last started over (TRACKING_RESET_ID, frame-capture section), else None."""
+    try:
+        with open(os.path.join(INPUT_DIR, "_tracking", "_reset.json"), encoding="utf-8") as fh:
+            return pd.Timestamp(json.load(fh)["at"]).tz_convert("UTC")
+    except Exception:
+        return None
+
+
+def _saved_before_reset(saved, mtime, reset_at):
+    """True when a saved review was made before the tracking reset (its "saved" time, else the file's time)."""
+    if reset_at is None:
+        return False
+    try:
+        t = pd.Timestamp(saved)
+        if pd.isna(t):
+            raise ValueError("no saved time")
+        t = t.tz_localize("UTC") if t.tzinfo is None else t.tz_convert("UTC")
+    except Exception:
+        t = pd.Timestamp(mtime or 0, unit="s", tz="UTC")
+    return t < reset_at
+
+
 def coach_checks_all():
     """Every coach check, merged -> (checks, files).
     Reads every review .json in <data>/play_review_saves (saved from the Streamlit app). Files are merged in the order they were SAVED: if the same box
@@ -2066,10 +2089,23 @@ def coach_checks_all():
         except Exception:
             continue
     merged = {}
+    # CONFIRMED CHANGE (requested: start player tracking over on the 1920-wide Synergy exports). Player checks saved before
+    # the reset were made on the old web frames (deleted; another size and other moments of the play): set aside -- tracking,
+    # the reader test and the review queues use only checks made on the new frames. (Their jersey crops stay in the reader's
+    # training set; Film Tagging answers are not affected.)
+    reset_at = tracking_reset_time()
+    n_old = 0
     for _saved, _mt, d in sorted(docs, key=lambda x: (x[0], x[1])):
+        if d.get("checks") and _saved_before_reset(_saved, _mt, reset_at):
+            n_old += len(d.get("checks") or [])
+            continue
         for c in d.get("checks", []):
             key = (c.get("frame_file"), round(float(c.get("px", 0))), round(float(c.get("py", 0))))
             merged[key] = dict(c, game=d.get("game"))
+    if n_old and not globals().get("_cc_reset_said"):
+        globals()["_cc_reset_said"] = True
+        print(f"  Player checks: {n_old} made before the tracking reset ({reset_at:%Y-%m-%d %H:%M} UTC) set aside -- they "
+              f"were on the old frames. Only checks on the new 1920-wide frames are used.", flush=True)
     return list(merged.values()), files
 
 

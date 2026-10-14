@@ -142,6 +142,8 @@ else:
                 secs = 0.0
                 if todo_:
                     from ultralytics import YOLO
+                    if "vision_hooks_ensure" in globals():
+                        vision_hooks_ensure()          # ultralytics replaces cv2.imread on Windows
                     model = YOLO(cfg[0])
                     t0 = _dc_time.time()
                     res = _trk_tiled_predict(model, [os.path.join(_dc_base, f) for f in todo_], _dc_H, [0], TRACK_PERSON_CONF)

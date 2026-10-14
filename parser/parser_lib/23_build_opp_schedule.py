@@ -15,6 +15,9 @@ if opp_team_schedule is not None:
     # Carry it through here (dropped in the manual column selection above) so prev_games below exposes a
     # clickable video link per prior game even when no separately-exported/tagged "_video.mhtml" file exists.
     opp_schedule["video_url"] = opp_team_schedule["video_url"]
+    for _c in ("synergy_game_id", "synergy_boxscore_url"):      # the game's Synergy ID / box-score page (section 02)
+        if _c in opp_team_schedule.columns:
+            opp_schedule[_c] = opp_team_schedule[_c]
     opp_schedule["game_url"] = opp_team_schedule["game_url"]
     # Needed to build an accurate "<Away> @ <Home>" matchup string for live-scrape cache filenames below
     # (mirrors the same location-based matchup naming already used for scout-report downloads in Cell 4).

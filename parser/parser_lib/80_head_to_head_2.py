@@ -12,7 +12,8 @@ os.makedirs(APP_DATA_DIR, exist_ok=True)
 opponent_schedules = (
     schedule[schedule["team"] != "UW-Whitewater Warhawks"]
     .rename(columns={"team": "opponent", "date": "game_date", "opponent": "vs_opponent"})
-    [["opponent", "game_date", "vs_opponent", "location", "outcome", "team_score", "opponent_score", "point_margin"]]
+    [["opponent", "game_date", "vs_opponent", "location", "outcome", "team_score", "opponent_score", "point_margin"]
+     + [c for c in ("synergy_game_id", "synergy_boxscore_url") if c in schedule.columns]]
     .reset_index(drop=True)
 )
 

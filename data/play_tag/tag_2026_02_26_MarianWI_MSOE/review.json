@@ -1,26 +1,26 @@
 {
  "game": "2026-02-26|MarianWI@MSOE",
  "slug": "tag_2026_02_26_MarianWI_MSOE",
- "run": "20261012_072016_tag",
+ "run": "20261014_092920_tag",
  "plays": [
   {
-   "clip_key": "2026-02-26|1|11 Marvin Haslett > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
-   "clip_number": 1,
-   "clock": "H1 19:37",
-   "synergy": "11 Marvin Haslett > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_key": "2026-02-26|21|2 Andrew Ayeni > Spot-Up > Drives Right > To Basket > Make 2 Pts",
+   "clip_number": 21,
+   "clock": "H1 14:49",
+   "synergy": "2 Andrew Ayeni > Spot-Up > Drives Right > To Basket > Make 2 Pts",
    "coach_title": null,
-   "auto_title": ": m2m (over)",
+   "auto_title": "5 out: m2m (over)",
    "film": null,
    "offense": null,
    "defense": "Marian (WI) Sabres",
-   "player": "Marvin Haslett",
-   "result": "Miss 3 Pts",
-   "clip": "clip_001_00.mp4",
-   "clip_kind": "video",
-   "poster": "clip_001_00_poster.jpg",
-   "fid": "001_00",
+   "player": "Andrew Ayeni",
+   "result": "Make 2 Pts",
+   "clip": null,
+   "clip_kind": "image",
+   "poster": null,
+   "fid": "021_00",
    "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 1,
+   "synergy_pos": 21,
    "pictures": [],
    "fields": [
     {
@@ -28,7 +28,7 @@
      "label": "Situation",
      "coach": null,
      "auto": "Half court",
-     "conf": 0.74,
+     "conf": 0.76,
      "sure": true,
      "same": null,
      "note": ""
@@ -38,8 +38,8 @@
      "label": "Formation",
      "coach": null,
      "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
+     "conf": 0.61,
+     "sure": true,
      "same": null,
      "note": ""
     },
@@ -48,7 +48,7 @@
      "label": "Play call",
      "coach": null,
      "auto": "Motion",
-     "conf": 0.48,
+     "conf": 0.54,
      "sure": false,
      "same": null,
      "note": ""
@@ -58,7 +58,241 @@
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.41,
+     "conf": 0.43,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.96,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.34,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.92,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#3",
+     "conf": 0.3,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [],
+    "defense": []
+   },
+   "five_labels": {}
+  },
+  {
+   "clip_key": "2026-02-26|22|25 Chase Cummings > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 22,
+   "clock": "H1 14:44",
+   "synergy": "25 Chase Cummings > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": "5 out: m2m (over)",
+   "film": null,
+   "offense": null,
+   "defense": "Marian (WI) Sabres",
+   "player": "Chase Cummings",
+   "result": "Miss 3 Pts",
+   "clip": null,
+   "clip_kind": "image",
+   "poster": null,
+   "fid": "022_01",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
+   "synergy_pos": 22,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.76,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.61,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.54,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.43,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.99,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.34,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.88,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.44,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [],
+    "defense": []
+   },
+   "five_labels": {}
+  },
+  {
+   "clip_key": "2026-02-26|23|4 Mason Dopirak > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
+   "clip_number": 23,
+   "clock": "H1 14:22",
+   "synergy": "4 Mason Dopirak > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "5 out: m2m (over)",
+   "film": null,
+   "offense": null,
+   "defense": "Marian (WI) Sabres",
+   "player": "Mason Dopirak",
+   "result": "Make 2 Pts",
+   "clip": null,
+   "clip_kind": "image",
+   "poster": null,
+   "fid": "023_02",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
+   "synergy_pos": 23,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.76,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.61,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.54,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.43,
      "sure": false,
      "same": null,
      "note": ""
@@ -87,8 +321,8 @@
      "field": "ball_screen_coverage",
      "label": "Ball-screen coverage",
      "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
+     "auto": "Over",
+     "conf": 0.34,
      "sure": false,
      "same": null,
      "note": ""
@@ -98,7 +332,7 @@
      "label": "Off-ball coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.68,
+     "conf": 0.95,
      "sure": true,
      "same": null,
      "note": ""
@@ -108,7 +342,7 @@
      "label": "Screen defender",
      "coach": null,
      "auto": "#5",
-     "conf": 0.46,
+     "conf": 0.26,
      "sure": false,
      "same": null,
      "note": ""
@@ -117,26 +351,27 @@
    "five": {
     "offense": [],
     "defense": []
-   }
+   },
+   "five_labels": {}
   },
   {
-   "clip_key": "2026-02-26|2|42 Carson Cordelli > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 5 Jonathan Burroughs > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
-   "clip_number": 2,
-   "clock": "H1 19:30",
-   "synergy": "42 Carson Cordelli > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 5 Jonathan Burroughs > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_key": "2026-02-26|24|23 Derek Lindert > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 24,
+   "clock": "H1 14:08",
+   "synergy": "23 Derek Lindert > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
    "coach_title": null,
-   "auto_title": "(bs): m2m (over)",
+   "auto_title": "5 out(ds): m2m (5over)",
    "film": null,
    "offense": null,
    "defense": "Marian (WI) Sabres",
-   "player": "Jonathan Burroughs",
+   "player": "Derek Lindert",
    "result": "Miss 3 Pts",
-   "clip": "clip_002_01.mp4",
-   "clip_kind": "video",
-   "poster": "clip_002_01_poster.jpg",
-   "fid": "002_01",
+   "clip": null,
+   "clip_kind": "image",
+   "poster": null,
+   "fid": "024_03",
    "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 2,
+   "synergy_pos": 24,
    "pictures": [],
    "fields": [
     {
@@ -144,7 +379,7 @@
      "label": "Situation",
      "coach": null,
      "auto": "Half court",
-     "conf": 0.74,
+     "conf": 0.76,
      "sure": true,
      "same": null,
      "note": ""
@@ -154,8 +389,8 @@
      "label": "Formation",
      "coach": null,
      "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
+     "conf": 0.61,
+     "sure": true,
      "same": null,
      "note": ""
     },
@@ -164,7 +399,7 @@
      "label": "Play call",
      "coach": null,
      "auto": "Motion",
-     "conf": 0.48,
+     "conf": 0.54,
      "sure": false,
      "same": null,
      "note": ""
@@ -174,7 +409,124 @@
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.41,
+     "conf": 0.43,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.34,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.92,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.62,
+     "sure": true,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [],
+    "defense": []
+   },
+   "five_labels": {}
+  },
+  {
+   "clip_key": "2026-02-26|25|5 Jonathan Burroughs > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 50 Ethan Johnson > P&R Roll Man > Rolls to Basket > Make 2 Pts",
+   "clip_number": 25,
+   "clock": "H1 13:24",
+   "synergy": "5 Jonathan Burroughs > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 50 Ethan Johnson > P&R Roll Man > Rolls to Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "5 out(bs): m2m (over)",
+   "film": null,
+   "offense": null,
+   "defense": "Marian (WI) Sabres",
+   "player": "Ethan Johnson",
+   "result": "Make 2 Pts",
+   "clip": null,
+   "clip_kind": "image",
+   "poster": null,
+   "fid": "025_04",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
+   "synergy_pos": 25,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.76,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.61,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.54,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.43,
      "sure": false,
      "same": null,
      "note": ""
@@ -203,8 +555,8 @@
      "field": "ball_screen_coverage",
      "label": "Ball-screen coverage",
      "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
+     "auto": "Over",
+     "conf": 0.34,
      "sure": false,
      "same": null,
      "note": ""
@@ -214,7 +566,7 @@
      "label": "Off-ball coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.68,
+     "conf": 0.84,
      "sure": true,
      "same": null,
      "note": ""
@@ -224,76 +576,77 @@
      "label": "Screen defender",
      "coach": null,
      "auto": "#12",
+     "conf": 0.45,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [],
+    "defense": []
+   },
+   "five_labels": {}
+  },
+  {
+   "clip_key": "2026-02-26|26|24 Harper Krolak > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 2 Andrew Ayeni > P&R Roll Man > Pick and Pops > Drives Right > To Basket > Make 2 Pts",
+   "clip_number": 26,
+   "clock": "H1 13:49",
+   "synergy": "24 Harper Krolak > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 2 Andrew Ayeni > P&R Roll Man > Pick and Pops > Drives Right > To Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "5 out(bs,pop): m2m (over)",
+   "film": null,
+   "offense": null,
+   "defense": "Marian (WI) Sabres",
+   "player": "Andrew Ayeni",
+   "result": "Make 2 Pts",
+   "clip": null,
+   "clip_kind": "image",
+   "poster": null,
+   "fid": "026_05",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
+   "synergy_pos": 26,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.76,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.61,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.54,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
      "conf": 0.43,
      "sure": false,
      "same": null,
      "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|3|24 Harper Krolak > P&R Ball Handler > High P&R > Dribble Off Pick > Turnover",
-   "clip_number": 3,
-   "clock": "H1 19:06",
-   "synergy": "24 Harper Krolak > P&R Ball Handler > High P&R > Dribble Off Pick > Turnover",
-   "coach_title": null,
-   "auto_title": "(bs): m2m (over)",
-   "film": null,
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Harper Krolak",
-   "result": "Turnover",
-   "clip": "clip_003_02.mp4",
-   "clip_kind": "video",
-   "poster": "clip_003_02_poster.jpg",
-   "fid": "003_02",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 3,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
     },
     {
      "field": "defense",
@@ -310,7 +663,7 @@
      "label": "Press",
      "coach": null,
      "auto": null,
-     "conf": 0.95,
+     "conf": 0.98,
      "sure": false,
      "same": null,
      "note": ""
@@ -319,8 +672,8 @@
      "field": "ball_screen_coverage",
      "label": "Ball-screen coverage",
      "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
+     "auto": "Over",
+     "conf": 0.34,
      "sure": false,
      "same": null,
      "note": ""
@@ -330,1515 +683,7 @@
      "label": "Off-ball coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#12",
-     "conf": 0.33,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|4|5 Jonathan Burroughs > P&R Ball Handler > High P&R > Turnover",
-   "clip_number": 4,
-   "clock": "H1 18:56",
-   "synergy": "5 Jonathan Burroughs > P&R Ball Handler > High P&R > Turnover",
-   "coach_title": null,
-   "auto_title": "(bs): m2m (over)",
-   "film": null,
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Jonathan Burroughs",
-   "result": "Turnover",
-   "clip": "clip_004_03.mp4",
-   "clip_kind": "video",
-   "poster": "clip_004_03_poster.jpg",
-   "fid": "004_03",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 4,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.95,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#12",
-     "conf": 0.3,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|5|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Marvin Haslett > Spot-Up > Drives Left > To Basket > Make 2 Pts",
-   "clip_number": 5,
-   "clock": "H1 18:43",
-   "synergy": "2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Marvin Haslett > Spot-Up > Drives Left > To Basket > Make 2 Pts",
-   "coach_title": null,
-   "auto_title": "(bs): m2m (over)",
-   "film": null,
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Marvin Haslett",
-   "result": "Make 2 Pts",
-   "clip": "clip_005_04.mp4",
-   "clip_kind": "video",
-   "poster": "clip_005_04_poster.jpg",
-   "fid": "005_04",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 5,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.97,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#12",
-     "conf": 0.57,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|6|4 Mason Dopirak > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Make 2 Pts",
-   "clip_number": 6,
-   "clock": "H1 18:18",
-   "synergy": "4 Mason Dopirak > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Make 2 Pts",
-   "coach_title": null,
-   "auto_title": "(post): m2m (over)",
-   "film": null,
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Mason Dopirak",
-   "result": "Make 2 Pts",
-   "clip": "clip_006_05.mp4",
-   "clip_kind": "video",
-   "poster": "clip_006_05_poster.jpg",
-   "fid": "006_05",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 6,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.96,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#3",
-     "conf": 0.36,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|7|23 Derek Lindert > Hand Off > From Dribble > Right > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
-   "clip_number": 7,
-   "clock": "H1 18:18",
-   "synergy": "23 Derek Lindert > Hand Off > From Dribble > Right > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
-   "coach_title": null,
-   "auto_title": "(dho): m2m (5over)",
-   "film": "Off-ball screen: unnamed offense screened for unnamed offense; defended by unnamed defense (on the player screened) and unnamed defense (on the screener); coverage from the players' movement: unclear (screen confidence 0%)",
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Derek Lindert",
-   "result": "Miss 3 Pts",
-   "clip": "clip_007_06.mp4",
-   "clip_kind": "video",
-   "poster": "clip_007_06_poster.jpg",
-   "fid": "007_06",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 7,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.89,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.6,
-     "sure": true,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|8|2 Andrew Ayeni > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
-   "clip_number": 8,
-   "clock": "H1 18:18",
-   "synergy": "2 Andrew Ayeni > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
-   "coach_title": null,
-   "auto_title": ": m2m (over)",
-   "film": null,
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Andrew Ayeni",
-   "result": "Miss 3 Pts",
-   "clip": "clip_008_07.mp4",
-   "clip_kind": "video",
-   "poster": "clip_008_07_poster.jpg",
-   "fid": "008_07",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 8,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.97,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.45,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|9|50 Ethan Johnson > Cut > Basket > Make 2 Pts",
-   "clip_number": 9,
-   "clock": "H1 17:52",
-   "synergy": "50 Ethan Johnson > Cut > Basket > Make 2 Pts",
-   "coach_title": null,
-   "auto_title": "(cut): m2m (over)",
-   "film": null,
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Ethan Johnson",
-   "result": "Make 2 Pts",
-   "clip": "clip_009_08.mp4",
-   "clip_kind": "video",
-   "poster": "clip_009_08_poster.jpg",
-   "fid": "009_08",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 9,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.96,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.23,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|10|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Marvin Haslett > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts",
-   "clip_number": 10,
-   "clock": "H1 17:38",
-   "synergy": "2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Marvin Haslett > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts",
-   "coach_title": null,
-   "auto_title": "(bs): m2m (over)",
-   "film": "Off-ball screen: unnamed offense screened for unnamed offense; defended by unnamed defense (on the player screened) and unnamed defense (on the screener); coverage from the players' movement: unclear (screen confidence 0%)",
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Marvin Haslett",
-   "result": "Make 3 Pts",
-   "clip": "clip_010_09.mp4",
-   "clip_kind": "video",
-   "poster": "clip_010_09_poster.jpg",
-   "fid": "010_09",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 10,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.94,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#12",
-     "conf": 0.38,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|11|50 Ethan Johnson > Hand Off > From Dribble > Top > No Dribble Jumper > Guarded > Medium/17' to <3p > Make 2 Pts",
-   "clip_number": 11,
-   "clock": "H1 17:34",
-   "synergy": "50 Ethan Johnson > Hand Off > From Dribble > Top > No Dribble Jumper > Guarded > Medium/17' to <3p > Make 2 Pts",
-   "coach_title": null,
-   "auto_title": "(dho): m2m (over)",
-   "film": null,
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Ethan Johnson",
-   "result": "Make 2 Pts",
-   "clip": "clip_011_10.mp4",
-   "clip_kind": "video",
-   "poster": "clip_011_10_poster.jpg",
-   "fid": "011_10",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 11,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.96,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|12|15 Alex Vassilakis > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
-   "clip_number": 12,
-   "clock": "H1 17:21",
-   "synergy": "15 Alex Vassilakis > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
-   "coach_title": null,
-   "auto_title": ": m2m (over)",
-   "film": "Off-ball screen: unnamed offense screened for unnamed offense; defended by unnamed defense (on the player screened) and unnamed defense (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 0%)",
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Alex Vassilakis",
-   "result": "Make 3 Pts",
-   "clip": "clip_012_11.mp4",
-   "clip_kind": "video",
-   "poster": "clip_012_11_poster.jpg",
-   "fid": "012_11",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 12,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.9,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.46,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|13|42 Carson Cordelli > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 50 Ethan Johnson > P&R Roll Man > Slips the Pick > No Dribble Jumper > Open > Medium/17' to <3p > Make 2 Pts",
-   "clip_number": 13,
-   "clock": "H1 17:06",
-   "synergy": "42 Carson Cordelli > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 50 Ethan Johnson > P&R Roll Man > Slips the Pick > No Dribble Jumper > Open > Medium/17' to <3p > Make 2 Pts",
-   "coach_title": null,
-   "auto_title": "(bs,slip): m2m (over)",
-   "film": null,
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Ethan Johnson",
-   "result": "Make 2 Pts",
-   "clip": "clip_013_12.mp4",
-   "clip_kind": "video",
-   "poster": "clip_013_12_poster.jpg",
-   "fid": "013_12",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 13,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.97,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.36,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|14|23 Derek Lindert > Cut > Basket > Miss 2 Pts",
-   "clip_number": 14,
-   "clock": "H1 16:48",
-   "synergy": "23 Derek Lindert > Cut > Basket > Miss 2 Pts",
-   "coach_title": null,
-   "auto_title": "(cut): m2m (over)",
-   "film": "Off-ball screen: unnamed offense screened for unnamed offense; defended by unnamed defense (on the player screened) and unnamed defense (on the screener); coverage from the players' movement: unclear (screen confidence 0%)",
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Derek Lindert",
-   "result": "Miss 2 Pts",
-   "clip": "clip_014_13.mp4",
-   "clip_kind": "video",
-   "poster": "clip_014_13_poster.jpg",
-   "fid": "014_13",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 14,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.88,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|15|42 Carson Cordelli > ISO > Left > Drives Right > Defense Commits > Ball Delivered > 5 Jonathan Burroughs > Spot-Up > Drives Right > To Basket > Miss 2 Pts",
-   "clip_number": 15,
-   "clock": "H1 16:30",
-   "synergy": "42 Carson Cordelli > ISO > Left > Drives Right > Defense Commits > Ball Delivered > 5 Jonathan Burroughs > Spot-Up > Drives Right > To Basket > Miss 2 Pts",
-   "coach_title": null,
-   "auto_title": "(iso): m2m (over)",
-   "film": null,
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Jonathan Burroughs",
-   "result": "Miss 2 Pts",
-   "clip": "clip_015_14.mp4",
-   "clip_kind": "video",
-   "poster": "clip_015_14_poster.jpg",
-   "fid": "015_14",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 15,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.95,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.24,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|16|2 Andrew Ayeni > Spot-Up > Drives Left > To Basket > Make 2 Pts",
-   "clip_number": 16,
-   "clock": "H1 16:11",
-   "synergy": "2 Andrew Ayeni > Spot-Up > Drives Left > To Basket > Make 2 Pts",
-   "coach_title": null,
-   "auto_title": ": m2m (over)",
-   "film": "Off-ball screen: unnamed offense screened for unnamed offense; defended by unnamed defense (on the player screened) and unnamed defense (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 0%)",
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Andrew Ayeni",
-   "result": "Make 2 Pts",
-   "clip": "clip_016_15.mp4",
-   "clip_kind": "video",
-   "poster": "clip_016_15_poster.jpg",
-   "fid": "016_15",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 16,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
      "conf": 0.86,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
      "sure": true,
      "same": null,
      "note": ""
@@ -1847,8 +692,8 @@
      "field": "screen_defender",
      "label": "Screen defender",
      "coach": null,
-     "auto": "#3",
-     "conf": 0.31,
+     "auto": "#12",
+     "conf": 0.26,
      "sure": false,
      "same": null,
      "note": ""
@@ -1857,26 +702,27 @@
    "five": {
     "offense": [],
     "defense": []
-   }
+   },
+   "five_labels": {}
   },
   {
-   "clip_key": "2026-02-26|17|42 Carson Cordelli > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
-   "clip_number": 17,
-   "clock": "H1 15:48",
-   "synergy": "42 Carson Cordelli > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_key": "2026-02-26|27|25 Chase Cummings > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 27,
+   "clock": "H1 13:36",
+   "synergy": "25 Chase Cummings > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
    "coach_title": null,
-   "auto_title": ": m2m (over)",
+   "auto_title": "5 out: m2m (over)",
    "film": null,
    "offense": null,
    "defense": "Marian (WI) Sabres",
-   "player": "Carson Cordelli",
+   "player": "Chase Cummings",
    "result": "Miss 3 Pts",
-   "clip": "clip_017_16.mp4",
-   "clip_kind": "video",
-   "poster": "clip_017_16_poster.jpg",
-   "fid": "017_16",
+   "clip": null,
+   "clip_kind": "image",
+   "poster": null,
+   "fid": "027_06",
    "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 17,
+   "synergy_pos": 27,
    "pictures": [],
    "fields": [
     {
@@ -1884,7 +730,7 @@
      "label": "Situation",
      "coach": null,
      "auto": "Half court",
-     "conf": 0.74,
+     "conf": 0.76,
      "sure": true,
      "same": null,
      "note": ""
@@ -1894,8 +740,8 @@
      "label": "Formation",
      "coach": null,
      "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
+     "conf": 0.61,
+     "sure": true,
      "same": null,
      "note": ""
     },
@@ -1904,7 +750,7 @@
      "label": "Play call",
      "coach": null,
      "auto": "Motion",
-     "conf": 0.48,
+     "conf": 0.54,
      "sure": false,
      "same": null,
      "note": ""
@@ -1914,7 +760,7 @@
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.41,
+     "conf": 0.43,
      "sure": false,
      "same": null,
      "note": ""
@@ -1934,7 +780,7 @@
      "label": "Press",
      "coach": null,
      "auto": null,
-     "conf": 0.96,
+     "conf": 0.99,
      "sure": false,
      "same": null,
      "note": ""
@@ -1943,8 +789,8 @@
      "field": "ball_screen_coverage",
      "label": "Ball-screen coverage",
      "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
+     "auto": "Over",
+     "conf": 0.34,
      "sure": false,
      "same": null,
      "note": ""
@@ -1954,239 +800,7 @@
      "label": "Off-ball coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.45,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|18|15 Alex Vassilakis > Spot-Up > Drives Right > To Basket > Miss 2 Pts",
-   "clip_number": 18,
-   "clock": "H1 15:19",
-   "synergy": "15 Alex Vassilakis > Spot-Up > Drives Right > To Basket > Miss 2 Pts",
-   "coach_title": null,
-   "auto_title": ": m2m (over)",
-   "film": "Off-ball screen: unnamed offense screened for unnamed offense; defended by unnamed defense (on the player screened) and unnamed defense (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 0%)",
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Alex Vassilakis",
-   "result": "Miss 2 Pts",
-   "clip": "clip_018_17.mp4",
-   "clip_kind": "video",
-   "poster": "clip_018_17_poster.jpg",
-   "fid": "018_17",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 18,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.85,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.24,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [],
-    "defense": []
-   }
-  },
-  {
-   "clip_key": "2026-02-26|19|15 Alex Vassilakis > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
-   "clip_number": 19,
-   "clock": "H1 15:08",
-   "synergy": "15 Alex Vassilakis > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
-   "coach_title": null,
-   "auto_title": ": m2m (over)",
-   "film": "Off-ball screen: unnamed offense screened for unnamed offense; defended by unnamed defense (on the player screened) and unnamed defense (on the screener); coverage from the players' movement: unclear (screen confidence 0%)",
-   "offense": null,
-   "defense": "Marian (WI) Sabres",
-   "player": "Alex Vassilakis",
-   "result": "Miss 3 Pts",
-   "clip": "clip_019_18.mp4",
-   "clip_kind": "video",
-   "poster": "clip_019_18_poster.jpg",
-   "fid": "019_18",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 19,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.74,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.48,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.41,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.89,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
+     "conf": 0.87,
      "sure": true,
      "same": null,
      "note": ""
@@ -2205,26 +819,27 @@
    "five": {
     "offense": [],
     "defense": []
-   }
+   },
+   "five_labels": {}
   },
   {
-   "clip_key": "2026-02-26|20|42 Carson Cordelli > Spot-Up > Drives Right > To Basket > Make 2 Pts",
-   "clip_number": 20,
-   "clock": "H1 15:02",
-   "synergy": "42 Carson Cordelli > Spot-Up > Drives Right > To Basket > Make 2 Pts",
+   "clip_key": "2026-02-26|28|15 Alex Vassilakis > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Turnover",
+   "clip_number": 28,
+   "clock": "H1 12:13",
+   "synergy": "15 Alex Vassilakis > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Turnover",
    "coach_title": null,
-   "auto_title": ": m2m (over)",
+   "auto_title": "5 out(bs): m2m (over)",
    "film": null,
    "offense": null,
    "defense": "Marian (WI) Sabres",
-   "player": "Carson Cordelli",
-   "result": "Make 2 Pts",
-   "clip": "clip_020_19.mp4",
-   "clip_kind": "video",
-   "poster": "clip_020_19_poster.jpg",
-   "fid": "020_19",
+   "player": "Alex Vassilakis",
+   "result": "Turnover",
+   "clip": null,
+   "clip_kind": "image",
+   "poster": null,
+   "fid": "028_07",
    "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
-   "synergy_pos": 20,
+   "synergy_pos": 28,
    "pictures": [],
    "fields": [
     {
@@ -2232,7 +847,7 @@
      "label": "Situation",
      "coach": null,
      "auto": "Half court",
-     "conf": 0.74,
+     "conf": 0.76,
      "sure": true,
      "same": null,
      "note": ""
@@ -2242,8 +857,8 @@
      "label": "Formation",
      "coach": null,
      "auto": "5 Out",
-     "conf": 0.5,
-     "sure": false,
+     "conf": 0.61,
+     "sure": true,
      "same": null,
      "note": ""
     },
@@ -2252,7 +867,7 @@
      "label": "Play call",
      "coach": null,
      "auto": "Motion",
-     "conf": 0.48,
+     "conf": 0.54,
      "sure": false,
      "same": null,
      "note": ""
@@ -2262,7 +877,7 @@
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.41,
+     "conf": 0.43,
      "sure": false,
      "same": null,
      "note": ""
@@ -2282,7 +897,7 @@
      "label": "Press",
      "coach": null,
      "auto": null,
-     "conf": 0.94,
+     "conf": 0.96,
      "sure": false,
      "same": null,
      "note": ""
@@ -2291,8 +906,8 @@
      "field": "ball_screen_coverage",
      "label": "Ball-screen coverage",
      "coach": null,
-     "auto": "Stay",
-     "conf": 0.32,
+     "auto": "Over",
+     "conf": 0.34,
      "sure": false,
      "same": null,
      "note": ""
@@ -2302,7 +917,7 @@
      "label": "Off-ball coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.68,
+     "conf": 0.82,
      "sure": true,
      "same": null,
      "note": ""
@@ -2311,7 +926,241 @@
      "field": "screen_defender",
      "label": "Screen defender",
      "coach": null,
-     "auto": "#3",
+     "auto": "#12",
+     "conf": 0.26,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [],
+    "defense": []
+   },
+   "five_labels": {}
+  },
+  {
+   "clip_key": "2026-02-26|29|4 Mason Dopirak > Transition > Ballhandler > Dribble Jumper > Short to < 17' > Make 2 Pts",
+   "clip_number": 29,
+   "clock": "H1 13:27",
+   "synergy": "4 Mason Dopirak > Transition > Ballhandler > Dribble Jumper > Short to < 17' > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "5 out: m2m (over)",
+   "film": null,
+   "offense": null,
+   "defense": "Marian (WI) Sabres",
+   "player": "Mason Dopirak",
+   "result": "Make 2 Pts",
+   "clip": null,
+   "clip_kind": "image",
+   "poster": null,
+   "fid": "029_08",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
+   "synergy_pos": 29,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.76,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.61,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.54,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.43,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.93,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.34,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.93,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.27,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [],
+    "defense": []
+   },
+   "five_labels": {}
+  },
+  {
+   "clip_key": "2026-02-26|30|2 Andrew Ayeni > Spot-Up > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts",
+   "clip_number": 30,
+   "clock": "H1 13:12",
+   "synergy": "2 Andrew Ayeni > Spot-Up > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "5 out: m2m (over)",
+   "film": null,
+   "offense": null,
+   "defense": "Marian (WI) Sabres",
+   "player": "Andrew Ayeni",
+   "result": "Miss 2 Pts",
+   "clip": null,
+   "clip_kind": "image",
+   "poster": null,
+   "fid": "030_09",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dd64e1561437791e69c85%2ffullgamevideo%2fclips",
+   "synergy_pos": 30,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.76,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.61,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.54,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.43,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.96,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.34,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.86,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
      "conf": 0.3,
      "sure": false,
      "same": null,
@@ -2321,7 +1170,8 @@
    "five": {
     "offense": [],
     "defense": []
-   }
+   },
+   "five_labels": {}
   }
  ],
  "vocab": {
@@ -2355,6 +1205,7 @@
   "primary_action": [
    "Ball Screen",
    "Corner Cut",
+   "DHO",
    "Down Screen",
    "Dribble Drive",
    "Ghost",
@@ -2428,6 +1279,7 @@
    "Jonathan Burroughs",
    "Josh Kim",
    "Joss Bradley",
+   "Jr Lukenbill",
    "Juan Madrigal",
    "Luke Bara",
    "Mason Dopirak",
@@ -2445,5 +1297,5 @@
    "#5"
   ]
  },
- "built": "2026-10-12T07:20:50"
+ "built": "2026-10-14T09:29:20"
 }

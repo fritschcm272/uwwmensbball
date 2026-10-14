@@ -147,6 +147,8 @@ def _jr_torso_box(img, box):
         m = globals().get("_jr_pose_m")
         if m is None:
             from ultralytics import YOLO
+            if "vision_hooks_ensure" in globals():
+                vision_hooks_ensure()          # ultralytics replaces cv2.imread on Windows
             m = globals()["_jr_pose_m"] = YOLO(globals().get("TRACK_POSE_MODEL", "yolo11n-pose.pt"))
         r = m.predict(person, imgsz=256, conf=0.2, verbose=False)[0]
         if r.keypoints is not None and len(r.keypoints.data):

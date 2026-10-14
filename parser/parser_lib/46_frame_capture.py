@@ -25,9 +25,76 @@ import hashlib
 
 # CONFIRMED CHANGE (frame archive): finished games' tracking frames may be packed into clip videos -- load the archive index
 # and its hooks FIRST, so archived frames count as captured (never recaptured) and unpack themselves when read.
-if globals().get("FRAME_ARCHIVE_HOOKS", True) and os.path.exists(os.path.join(PARSER_LIB, "46a_frame_archive.py")):
+# (always on with VISION_SOURCE = "export": an exported game's tracking frames are read from its clip videos through these hooks)
+if (globals().get("FRAME_ARCHIVE_HOOKS", True) or str(globals().get("VISION_SOURCE", "export")).lower() == "export") \
+        and os.path.exists(os.path.join(PARSER_LIB, "46a_frame_archive.py")):
     FRAME_ARCHIVE_STEP = "hooks"
     run_section("46a_frame_archive")
+
+# ---- Starting player and play tracking over (TRACKING_RESET_ID) -----------------------------------------------------------
+# CONFIRMED CHANGE (requested: "fully start over with player and play tracking using the new videos at the 1920 wide").
+# Runs ONCE per TRACKING_RESET_ID (it writes inputs/_tracking/_reset.json; leaving the setting on doesn't redo it):
+#   * deletes everything tracking learned from the old web frames: inputs/_tracking (detections, tracks, jersey reads,
+#     fingerprints, court positions, check pictures), the trained play models and their frame caches in inputs/_tag_model
+#     (history.csv -- the model-version log the app shows -- is kept), and the jersey reader's model files and its own
+#     reads (jersey_training/reads*). The reader retrains from the crops that are KEPT: jersey_training/coach* (cut from
+#     the coaches' player checks) and extra/ (requested: keep them -- they still show what each number looks like).
+#   * court calibrations were clicked on the old frames (another size): moved to court_calibration/_before_reset, not used.
+#   * player checks saved in the app BEFORE the reset were made on the old frames: from now on tracking, the reader test and
+#     the review queues ignore them (coach_checks_all, Play calls section). Their crops stay in the training set. Film Tagging
+#     answers (Titles) are about plays, not frames -- they all stay.
+#   * every game is redone from its Synergy export at VISION_EXPORT_TRACK_WIDTH (VISION_EXPORT_REPLACE_CAPTURED).
+def _tracking_reset():
+    import shutil as _sh
+    rid = globals().get("TRACKING_RESET_ID")
+    if not rid:
+        return
+    tdir = os.path.join(INPUT_DIR, "_tracking")
+    marker = os.path.join(tdir, "_reset.json")
+    try:
+        with open(marker, encoding="utf-8") as fh:
+            if json.load(fh).get("id") == rid:
+                return
+    except Exception:
+        pass
+    print(f"Tracking reset ({rid}): starting player and play tracking over on the Synergy exports...", flush=True)
+    gone = {"tracking": 0, "play models": 0, "jersey reader": 0}
+
+    def _rm(p, kind):
+        try:
+            _sh.rmtree(p) if os.path.isdir(p) else os.remove(p)
+            gone[kind] += 1
+        except Exception as e:
+            print(f"  [reset] couldn't delete {p}: {type(e).__name__}: {e}", flush=True)
+    for p in glob.glob(os.path.join(tdir, "*")):
+        if os.path.basename(p) != "_reset.json":
+            _rm(p, "tracking")
+    tm = globals().get("TAG_MODEL_DIR") or os.path.join(INPUT_DIR, "_tag_model")
+    for p in glob.glob(os.path.join(tm, "*")):
+        if os.path.basename(p) != "history.csv":
+            _rm(p, "play models")
+    jd = globals().get("JERSEY_TRAIN_DIR") or os.path.join(INPUT_DIR, "jersey_training")
+    for p in [os.path.join(jd, "reads"), os.path.join(jd, "reads_pose")] + glob.glob(os.path.join(jd, "*.pt")) \
+            + glob.glob(os.path.join(jd, "_last_inputs*.json")):
+        if os.path.exists(p):
+            _rm(p, "jersey reader")
+    cal = globals().get("COURT_CAL_DIR") or os.path.join(INPUT_DIR, "court_calibration")
+    n_cal = 0
+    for f in glob.glob(os.path.join(cal, "court_calibration_*.json")) + glob.glob(os.path.join(cal, "calibrate_*.html")):
+        os.makedirs(os.path.join(cal, "_before_reset"), exist_ok=True)
+        _sh.move(f, os.path.join(cal, "_before_reset", os.path.basename(f)))
+        n_cal += 1
+    os.makedirs(tdir, exist_ok=True)
+    with open(marker, "w", encoding="utf-8") as fh:
+        json.dump({"id": rid, "at": pd.Timestamp.now(tz="UTC").isoformat(timespec="seconds")}, fh)
+    _kept = len(glob.glob(os.path.join(jd, "coach*", "*", "*"))) + len(glob.glob(os.path.join(jd, "extra", "*", "*")))
+    print(f"  [reset] deleted: {gone['tracking']} tracking file(s)/folder(s), {gone['play models']} play-model file(s), "
+          f"{gone['jersey reader']} jersey-reader file(s); kept {_kept:,} jersey crops for retraining"
+          + (f"; {n_cal} court calibration file(s) moved to court_calibration/_before_reset" if n_cal else "")
+          + ". Player checks saved before now are set aside (made on the old frames).", flush=True)
+
+
+_tracking_reset()
 
 # Tracking frames (requested: follow players through the clip and put names on them). A second, denser set of
 # smaller frames, VISION_TRACK_FPS per second through the whole clip, used only by the player-tracking cell.
@@ -427,8 +494,8 @@ def _vision_frame_name(row, k):
 # game that already has frames at a kept width stays at that width for its remaining clips, so one game is never mixed.
 def _vision_track_widths():
     out = [int(VISION_TRACK_WIDTH)]
-    for w in globals().get("VISION_TRACK_KEEP_WIDTHS", []) or []:
-        if int(w) not in out:
+    for w in list(globals().get("VISION_TRACK_KEEP_WIDTHS", []) or []) + [globals().get("VISION_EXPORT_TRACK_WIDTH", 1920)]:
+        if w and int(w) not in out:
             out.append(int(w))
     return out
 
@@ -488,7 +555,7 @@ def _vision_saved_frames(label, row):
         candidates.append([os.path.join(VISION_FRAMES_DIR, re.sub(r"[^\w@.-]+", "_", label), f"{row.get('position')}_{k + 1}.jpg")
                            for k in range(n)])
     for paths in candidates:
-        if all(os.path.exists(p) and os.path.getsize(p) > 0 for p in paths):
+        if all(_vis_present(p) for p in paths):
             return paths
     return []
 
@@ -582,6 +649,7 @@ def _vision_tag_pages(fastscout_page, sources, cache):
                        "clip_game": r["game"], "clip_date": r["date"], "team": r["team"], "player": r["player"],
                        "result": r["result"], "description": r["description"],
                        "duration_s": _vis_seconds(r["duration"]), "test_run": bool(VISION_TEST_CLIPS),
+                       "page_clips": len(todo),
                        "captured_at": pd.Timestamp.now().isoformat(timespec="seconds")}
                 try:
                     paths = _vision_saved_frames(label, r)
@@ -638,7 +706,8 @@ def _vision_tag_pages(fastscout_page, sources, cache):
             if new_rows:                                   # (stopped early, e.g. low disk space): keep what was captured
                 cache = pd.concat([cache, pd.DataFrame(new_rows, columns=VISION_COLS)], ignore_index=True)
                 new_rows = []
-                cache.to_csv(VISION_CACHE, index=False)
+            cache = _vis_dedupe(cache)                     # a revisit replaces the clips it reached; the rest are kept
+            cache.to_csv(VISION_CACHE, index=False)
         return cache
     finally:
         globals()["_vision_cur_width"] = None
@@ -646,9 +715,838 @@ def _vision_tag_pages(fastscout_page, sources, cache):
 
 
 # ---- Run (or just load) -------------------------------------------------------------------------------
-clip_frames = (pd.read_csv(VISION_CACHE) if os.path.exists(VISION_CACHE)
+# CONFIRMED BUG (fixed; WashU stopped at clip 91 of 159 for low disk space, and the next run said "every game ... is already
+# in the cache" and never captured the other 68). Each row now records how many clips its page had (page_clips), so a page
+# that stopped partway is visited again and only the clips it's missing are captured. A revisit no longer throws away the
+# page's earlier rows first: rows are replaced clip by clip (same page + clip number), so stopping again loses nothing.
+if "page_clips" not in VISION_COLS:
+    VISION_COLS = list(VISION_COLS) + ["page_clips"]
+
+
+def _vis_dedupe(df):
+    if df is None or df.empty or "source_url" not in df.columns or "position" not in df.columns:
+        return df
+    _k = df["source_url"].astype(str) + "|" + pd.to_numeric(df["position"], errors="coerce").astype("Int64").astype(str)
+    return df[~_k.duplicated(keep="last")].reset_index(drop=True)
+
+
+# ---- Synergy Editor test: open a game's FULL GAME VIDEO in the Synergy Editor app ---------------------------------------
+# CONFIRMED CHANGE (requested: test sending a game to the Synergy Editor Basketball app from the frame-capture cell -- the
+# first step toward exporting a game's clips as real 1080p video). What Synergy's own FULL GAME VIDEO button does with
+# Playback = "Editor" (read from the page's code, Oct 2026):
+#   1. PUT https://basketball.synergysportstech.com/api/games/<game id>/fullgamevideo/playlist  ->  {"result": {"id": <playlist id>}}
+#   2. opens  sst-editor://OpenEdit?playlistId=<playlist id>&maxclips=500&bFullGame=1&title=<game title>
+#      -- a link Windows hands to the Synergy Editor app (the browser pane in Claude can't open it, so the click there did nothing).
+# This does the same from the notebook: signs in to Synergy, makes the playlist, and opens that link with Windows
+# (os.startfile), so Synergy Editor opens on the game. SYNERGY_EDITOR_TEST = the game, in the _pbp/_video file-name format
+# ("3_7_26 UW-Whitewater @ Washington-St. Louis Bears") or its 24-character Synergy game ID.
+_SST_API = "https://basketball.synergysportstech.com/api"
+_SST_BOXSCORE = "https://apps.synergysports.com/basketball/games/{gid}/boxscore"
+
+
+def _sst_game_id_of(url):
+    if "synergy_game_id" in globals():
+        return synergy_game_id(url)
+    m = re.search(r"games(?:/|%2f)([0-9a-f]{24})(?![0-9a-f])", str(url or ""), re.I)
+    return m.group(1).lower() if m else None
+
+
+def _sst_find_game(spec):
+    """SYNERGY_EDITOR_TEST -> (game id, label). A 24-character ID is used as is; a file-name style game name is looked up
+    in the schedules (date within a day + a word of the opponent's name) and its ID taken from the game's video link."""
+    spec = str(spec or "").strip()
+    if re.fullmatch(r"[0-9a-fA-F]{24}", spec):
+        return spec.lower(), spec
+    m = re.match(r"^\s*(\d{1,2})_(\d{1,2})_(\d{2,4})\s+(.*)$", spec)
+    if not m:
+        raise ValueError(f"SYNERGY_EDITOR_TEST should be a Synergy game ID or look like "
+                         f"'3_7_26 UW-Whitewater @ Washington-St. Louis Bears', got {spec!r}")
+    when = pd.Timestamp(int(m.group(3)) + (2000 if len(m.group(3)) == 2 else 0), int(m.group(1)), int(m.group(2)))
+    words = {w for w in re.split(r"[\s@\-().]+", m.group(4).lower()) if len(w) > 2
+             and w not in {"uww", "whitewater", "warhawks", "the", "st."}}
+    best = None
+    for name in ("schedule", "uww_team_schedule", "prev_games"):
+        df = globals().get(name)
+        if not isinstance(df, pd.DataFrame) or df.empty or "video_url" not in df.columns:
+            continue
+        for _, r in df[df["video_url"].notna()].iterrows():
+            gd = r.get("game_date")
+            if gd is None or pd.isna(gd):
+                try:
+                    gd = parse_schedule_date(r.get("date"), uww_season_start_year)
+                except Exception:
+                    gd = None
+            if gd is None or pd.isna(pd.Timestamp(gd)) or abs((pd.Timestamp(gd).normalize() - when).days) > 1:
+                continue
+            who = f"{r.get('opponent', '')} {r.get('team', '')}".lower()
+            if not any(w in who for w in words):
+                continue
+            gid = _sst_game_id_of(r.get("video_url"))
+            if gid:
+                days = abs((pd.Timestamp(gd).normalize() - when).days)
+                if best is None or days < best[0]:
+                    best = (days, gid, f"{pd.Timestamp(gd).date()} {r.get('team', '')} vs {r.get('opponent', '')}")
+    if best is None:
+        raise LookupError(f"no game in the schedules matches {spec!r} (or it has no Synergy video link). Use its Synergy "
+                          f"game ID instead -- the 24 characters after /games/ in its Synergy address.")
+    return best[1], best[2]
+
+
+def _sst_editor_handler():
+    """Which program Windows opens sst-editor:// links with (None = no program registered for them)."""
+    if sys.platform != "win32":
+        return None
+    try:
+        import winreg
+        with winreg.OpenKey(winreg.HKEY_CLASSES_ROOT, r"sst-editor\shell\open\command") as k:
+            return str(winreg.QueryValueEx(k, "")[0])
+    except Exception:
+        return None
+
+
+def _sst_editor_open(page, game_id, label="", launch=True):
+    """Synergy's FULL GAME VIDEO > Editor, from the notebook. Returns the sst-editor:// link (None if it failed)."""
+    from urllib.parse import urlparse, parse_qs, quote
+    box = _SST_BOXSCORE.format(gid=game_id)
+    api_reqs = []
+    on_req = lambda r: api_reqs.append(r) if "synergysportstech.com/api/" in r.url else None
+    page.on("request", on_req)
+    try:
+        link = page.locator("a.ts-playlist-link", has_text=re.compile(r"full\s*game\s*video", re.I)).first
+        page.goto(box, wait_until="domcontentloaded", timeout=60000)
+        for _try in range(2):                      # the page sends a signed-out visitor to Synergy's login a moment later
+            t0 = time.time()
+            while time.time() - t0 < 30 and "auth.synergysportstech.com" not in page.url and not link.count():
+                page.wait_for_timeout(500)
+            if "auth.synergysportstech.com" not in page.url:
+                break
+            print("  [editor] signing in to Synergy...", flush=True)
+            login_to_synergy(page, synergy_username, synergy_password, timeout_ms=60000)
+            page.goto(box, wait_until="domcontentloaded", timeout=60000)
+        link.wait_for(state="attached", timeout=60000)
+        page.wait_for_timeout(1500)
+        href = link.get_attribute("href") or ""
+    finally:
+        try:
+            page.remove_listener("request", on_req)
+        except Exception:
+            pass
+    title = (parse_qs(urlparse(href).query).get("title") or [label or game_id])[0]
+    print(f"  [editor] box score open: {page.url}\n  [editor] game title on Synergy: {title}", flush=True)
+    playlist_id, how = None, ""
+    # (1) the same request the page makes, with the page's own sign-in header
+    auth = None
+    for r in api_reqs:
+        try:
+            h = r.all_headers()
+        except Exception:
+            continue
+        if h.get("authorization"):
+            auth = {k: v for k, v in h.items() if k == "authorization" or k.startswith("x-")}
+            break
+    if auth:
+        try:
+            resp = page.request.put(f"{_SST_API}/games/{game_id}/fullgamevideo/playlist",
+                                    headers={**auth, "content-type": "application/json"}, data="{}", timeout=60000)
+            if resp.ok:
+                j = resp.json()
+                playlist_id = ((j.get("result") or {}).get("id") if isinstance(j, dict) else None) or (j.get("id") if isinstance(j, dict) else None)
+                how = "made directly"
+            else:
+                print(f"  [editor] playlist request answered {resp.status} -- trying the page's own buttons", flush=True)
+        except Exception as e:
+            print(f"  [editor] playlist request failed ({type(e).__name__}: {e}) -- trying the page's own buttons", flush=True)
+    else:
+        print("  [editor] couldn't read the page's sign-in header -- using the page's own buttons", flush=True)
+    # (2) fallback: click FULL GAME VIDEO, pick Editor, OK -- and read the playlist id from the page's own request
+    if not playlist_id:
+        try:
+            with page.expect_response(lambda r: "/fullgamevideo/playlist" in r.url and r.request.method == "PUT",
+                                      timeout=60000) as ri:
+                link.click()
+                page.get_by_text("Video playback parameters").first.wait_for(timeout=20000)
+                page.get_by_text("In Browser Player", exact=True).first.click()
+                opt = page.locator("[role=option]", has_text=re.compile(r"^\s*Editor\s*$"))
+                (opt.first if opt.count() else page.get_by_text("Editor", exact=True).last).click()
+                page.get_by_role("button", name=re.compile(r"^\s*OK\s*$", re.I)).first.click()
+            j = ri.value.json()
+            playlist_id = (j.get("result") or {}).get("id") if isinstance(j, dict) else None
+            how = "made by the page's FULL GAME VIDEO > Editor > OK"
+        except Exception as e:
+            print(f"  [editor] the page's buttons didn't work either ({type(e).__name__}: {e})", flush=True)
+    if not playlist_id:
+        print("  [editor] NO playlist id -- Synergy Editor can't be opened. Send this printout.", flush=True)
+        return None
+    _q = lambda v: quote(str(v), safe="@:$,;=?/()!*'~")
+    params = [("playlistId", playlist_id), ("maxclips", int(globals().get("SYNERGY_EDITOR_MAX_CLIPS", 500))),
+              ("bFullGame", "1"), ("title", title)]
+    url = "sst-editor://OpenEdit?" + "&".join(f"{k}={_q(v)}" for k, v in params)
+    print(f"  [editor] full-game playlist {playlist_id} ({how})\n  [editor] link: {url}", flush=True)
+    if launch:
+        handler = _sst_editor_handler()
+        if sys.platform == "win32":
+            print(f"  [editor] Windows opens sst-editor:// links with: {handler or '(no program registered -- is Synergy Editor installed?)'}",
+                  flush=True)
+            try:
+                os.startfile(url)
+                print("  [editor] sent to Synergy Editor -- it should open on this game in a few seconds.", flush=True)
+            except OSError as e:
+                print(f"  [editor] Windows couldn't open the link ({e}). Press Win+R, paste the link above, and press Enter.", flush=True)
+        else:
+            print("  [editor] not on Windows -- open the link above on the laptop that has Synergy Editor.", flush=True)
+    return url
+
+
+# ---- Synergy Editor: export the opened game (Ctrl+E > Location > OK) ------------------------------------------------------
+# CONFIRMED CHANGE (requested: after the game opens in Synergy Editor, press Ctrl+E to open the export window, change Location to
+# the _vision_frames folder and press OK). Synergy Editor is a Windows program, not a web page, so this drives it through Windows
+# UI Automation with the "uiautomation" package (installed automatically the first time).
+# CONFIRMED BUG (fixed; first test: "ImportError: DLL load failed while importing win32api"). The first version used pywinauto,
+# which needs pywin32 -- and pywin32 doesn't load in this Anaconda kernel. uiautomation only needs comtypes (no pywin32).
+# Steps: find the Editor's window (by its program, Synergy.Editor.Basketball.exe), wait for the game to load, bring it to the
+# front, Ctrl+E, find the Location box, put the folder in it and read it back, then OK. OK is only pressed when the Location box
+# really shows the folder AND the disk has room for the export (an estimate from this game's clip lengths) -- an export into the
+# wrong place, or one that fills the disk, is worse than none. Every control in the export window is written to
+# inputs/_synergy_export_window.txt, so a box or button with an unexpected name can be fixed from that file.
+SYNERGY_EXPORT_MB_PER_S = 1.06       # Synergy's 1080p export: ~1.06 MB per second of video (the 18-s sample clip was 18.8 MB)
+
+
+def _sst_uia():
+    import importlib.util as _ilu
+    if _ilu.find_spec("uiautomation") is None:
+        print("  [export] installing uiautomation (one time)...", flush=True)
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "uiautomation"])
+    import uiautomation as auto
+    auto.SetGlobalSearchTimeout(5)
+    return auto
+
+
+def _sst_editor_pids(exe_name):
+    pids = set()
+    try:
+        import psutil
+        for pr in psutil.process_iter(["name"]):
+            if (pr.info.get("name") or "").lower() == exe_name.lower():
+                pids.add(pr.pid)
+    except Exception:
+        try:
+            out = subprocess.run(["tasklist", "/FI", f"IMAGENAME eq {exe_name}", "/FO", "CSV", "/NH"],
+                                 capture_output=True, text=True, timeout=20).stdout
+            for line in out.splitlines():
+                parts = [x.strip('"') for x in line.split('","')]
+                if len(parts) > 1 and parts[1].isdigit():
+                    pids.add(int(parts[1]))
+        except Exception:
+            pass
+    return pids
+
+
+def _sst_editor_windows(auto, pids):
+    out = []
+    for w in auto.GetRootControl().GetChildren():
+        try:
+            if (pids and w.ProcessId in pids) or (not pids and re.search(r"(?i)synergy", w.Name or "")):
+                out.append(w)
+        except Exception:
+            continue
+    return out
+
+
+def _sst_bring_to_front(auto, w):
+    try:
+        w.SetActive()
+    except Exception:
+        pass
+    try:
+        if auto.GetForegroundControl().ProcessId != w.ProcessId:
+            import ctypes
+            auto.SendKey(auto.Keys.VK_MENU)                  # an Alt press lets a background program take the foreground
+            ctypes.windll.user32.SetForegroundWindow(w.NativeWindowHandle)
+            time.sleep(0.5)
+    except Exception:
+        pass
+    try:
+        w.SetFocus()
+    except Exception:
+        pass
+    try:
+        return auto.GetForegroundControl().ProcessId == w.ProcessId
+    except Exception:
+        return False
+
+
+def _sst_walk(auto, ctrl, depth=40):
+    try:
+        return [c for c, _d in auto.WalkControl(ctrl, includeTop=False, maxDepth=depth)]
+    except Exception:
+        return []
+
+
+def _sst_value(c):
+    try:
+        return str(c.GetValuePattern().Value)
+    except Exception:
+        return str(getattr(c, "Name", "") or "")
+
+
+def _sst_dump(auto, dlg, path):
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(f"Export window: {dlg.ControlTypeName} name={dlg.Name!r} class={dlg.ClassName!r}\n")
+            for c, d in auto.WalkControl(dlg, includeTop=False, maxDepth=40):
+                r = c.BoundingRectangle
+                extra = f" value={_sst_value(c)!r}" if c.ControlTypeName in ("EditControl", "ComboBoxControl") else ""
+                f.write(f"{'  ' * d}{c.ControlTypeName} name={c.Name!r} id={c.AutomationId!r} class={c.ClassName!r} "
+                        f"rect=({r.left},{r.top},{r.right},{r.bottom}){extra}\n")
+    except Exception as e:
+        print(f"  [export] (control list not written: {type(e).__name__}: {e})", flush=True)
+
+
+def _sst_find_location_box(auto, dlg):
+    """The export window's Location text box: a box named Location, else the box beside/below the "Location" label."""
+    ctrls = _sst_walk(auto, dlg)
+    for c in ctrls:
+        if c.ControlTypeName in ("EditControl", "ComboBoxControl") and re.match(r"(?i)^\s*location", c.Name or ""):
+            if c.ControlTypeName == "ComboBoxControl":
+                ed = [x for x in _sst_walk(auto, c, 3) if x.ControlTypeName == "EditControl"]
+                return ed[0] if ed else c
+            return c
+    labels = [c for c in ctrls if c.ControlTypeName in ("TextControl", "GroupControl")
+              and re.match(r"(?i)^\s*location\b", c.Name or "")]
+    edits = [c for c in ctrls if c.ControlTypeName == "EditControl"]
+    if not labels or not edits:
+        return None
+    lr = labels[0].BoundingRectangle
+
+    def score(e):
+        r = e.BoundingRectangle
+        same_row = r.top < lr.bottom and r.bottom > lr.top and r.left >= lr.left
+        below = r.top >= lr.top - 5
+        return (0 if same_row else 1 if below else 2, abs(r.top - lr.top) + abs(r.left - lr.right))
+    return sorted(edits, key=score)[0]
+
+
+def _sst_export_estimate_gb(game_id):
+    """Rough size of the game's export: its clips' lengths (from uww_clip_frames.csv) x SYNERGY_EXPORT_MB_PER_S. None = unknown."""
+    try:
+        cf = pd.read_csv(VISION_CACHE, low_memory=False)
+        g = cf[cf["source_url"].astype(str).str.contains(str(game_id), regex=False)]
+        dur = pd.to_numeric(g.get("duration_s"), errors="coerce").dropna()
+        if dur.empty:
+            return None
+        n_page = pd.to_numeric(g.get("page_clips", pd.Series(dtype=float)), errors="coerce").max()
+        n = int(n_page) if pd.notna(n_page) and n_page > len(dur) else len(dur)
+        secs = float(dur.clip(upper=120).sum()) + max(0, n - len(dur)) * float(dur.median())
+        est = secs * float(globals().get("SYNERGY_EXPORT_MB_PER_S", 1.06)) / 1024.0
+        # CONFIRMED BUG (fixed; WashU: estimated 1.8 GB from the 90 clips captured so far, the export was ~3 GB for 185 clips):
+        # a short clip list on file means a partial capture -- a whole game exports to about 3-3.5 GB
+        return est if n >= 150 else max(est, 3.5)
+    except Exception:
+        return None
+
+
+def _sst_editor_export(link, export_dir, game_id=None):
+    from urllib.parse import urlparse, parse_qs
+    import shutil as _sh
+    auto = _sst_uia()
+    export_dir = os.path.abspath(export_dir)
+    os.makedirs(export_dir, exist_ok=True)
+    # room on the disk for the export?
+    free_gb = _sh.disk_usage(export_dir).free / 1024 ** 3
+    est = _sst_export_estimate_gb(game_id) if game_id else None
+    keep = float(globals().get("SYNERGY_EXPORT_MIN_FREE_GB", globals().get("VISION_MIN_FREE_GB", 2)))
+    need = (est if est is not None else 3.5) + keep
+    print(f"  [export] disk: {free_gb:.1f} GB free; this game's export is about "
+          f"{f'{est:.1f} GB' if est is not None else '? GB (no clip lengths on file -- assuming 3.5 GB, a whole game)'}, "
+          f"+ {keep:.0f} GB kept free = {need:.1f} GB needed", flush=True)
+    if free_gb < need:
+        print("  [export] NOT enough room -- export not started. Free up space or export to another drive "
+              "(SYNERGY_EXPORT_DIR).", flush=True)
+        return False
+    title = (parse_qs(urlparse(link).query).get("title") or [""])[0]
+    cmd = _sst_editor_handler() or ""
+    m = re.match(r'^\s*"([^"]+)"|^\s*(\S+)', cmd)
+    exe_name = os.path.basename((m.group(1) or m.group(2)) if m else "Synergy.Editor.Basketball.exe")
+    # the Editor's window (its title is just "Synergy Editor" -- the game's name only shows in the export window), then give the
+    # game SYNERGY_EDITOR_LOAD_WAIT seconds to load. The export window's title is checked below, so a game that loaded slowly
+    # (still the previous edit on screen) is caught there.
+    wait_max = float(globals().get("SYNERGY_EDITOR_LOAD_WAIT", 20))
+    main, wins, pids, t0 = None, [], set(), time.time()
+    while time.time() - t0 < 30 and not wins:
+        pids = _sst_editor_pids(exe_name)
+        wins = _sst_editor_windows(auto, pids)
+        if not wins:
+            time.sleep(1)
+    if not wins:
+        print(f"  [export] Synergy Editor ({exe_name}) has no open window -- is it running?", flush=True)
+        return False
+    main = max(wins, key=lambda w: (w.BoundingRectangle.width() * w.BoundingRectangle.height()))
+    left = wait_max - (time.time() - t0)
+    print(f"  [export] Synergy Editor window: {main.Name.strip()!r} -- giving the game {max(0, left):.0f} s more to load", flush=True)
+    if left > 0:
+        time.sleep(left)
+    wins = _sst_editor_windows(auto, pids)
+    before = {w.NativeWindowHandle for w in wins}
+    ident = lambda c: (c.ControlTypeName, c.Name, c.AutomationId, tuple((c.BoundingRectangle.left, c.BoundingRectangle.top)))
+    before_inner = {ident(c) for c in _sst_walk(auto, main, 6) if c.ControlTypeName == "WindowControl"}
+    dlg = None
+    for attempt in range(2):
+        front = _sst_bring_to_front(auto, main)
+        if not front:
+            print("  [export] (couldn't bring Synergy Editor to the front -- Ctrl+E may go to another window)", flush=True)
+        time.sleep(0.5)
+        auto.SendKeys("{Ctrl}e", waitTime=0.5)
+        t1 = time.time()
+        while time.time() - t1 < 15 and dlg is None:
+            time.sleep(0.5)
+            for w in _sst_editor_windows(auto, pids):              # a new top-level window (the export window) ...
+                if w.NativeWindowHandle not in before or re.search(r"(?i)export", w.Name or ""):
+                    dlg = w
+                    break
+            if dlg is None:                                        # ... or a new dialog inside the main window
+                inner = [c for c in _sst_walk(auto, main, 6) if c.ControlTypeName == "WindowControl"
+                         and ident(c) not in before_inner]
+                dlg = inner[0] if inner else None
+        if dlg is not None:
+            break
+        print("  [export] Ctrl+E didn't open a window -- trying once more", flush=True)
+    if dlg is None:
+        print("  [export] the export window never opened. Click once inside Synergy Editor's clip list and run the cell again.",
+              flush=True)
+        return False
+    print(f"  [export] export window open: {dlg.Name!r}", flush=True)
+    dump = os.path.join(INPUT_DIR, "_synergy_export_window.txt")
+    _sst_dump(auto, dlg, dump)
+    # the export window names the edit it exports ("Export - Edit - UWWhitewater@Wash(StLouis) - Mar 7, 2026"): it must be this game
+    _norm = lambda x: re.sub(r"\s+", " ", str(x or "")).strip().lower()
+    if title and _norm(title) not in _norm(dlg.Name):
+        print(f"  [export] the export window is for {dlg.Name!r}, not this game ({title!r}) -- the game may still be loading. "
+              f"OK NOT pressed; raise SYNERGY_EDITOR_LOAD_WAIT and run again.", flush=True)
+        return False
+    box = _sst_find_location_box(auto, dlg)
+    if box is None:
+        print(f"  [export] couldn't find the Location box -- OK NOT pressed. Send {dump}.", flush=True)
+        return False
+    print(f"  [export] Location was: {_sst_value(box)!r}", flush=True)
+    try:
+        box.GetValuePattern().SetValue(export_dir)
+    except Exception:
+        try:
+            box.Click(simulateMove=False)
+            auto.SendKeys("{Ctrl}a{Delete}", waitTime=0.2)
+            auto.SendKeys(export_dir.replace("{", "{{}").replace("}", "{}}"), interval=0.01, waitTime=0.3)
+        except Exception as e:
+            print(f"  [export] couldn't type into the Location box ({type(e).__name__}: {e}) -- OK NOT pressed. Send {dump}.",
+                  flush=True)
+            return False
+    time.sleep(0.5)
+    now = _sst_value(box)
+    if os.path.normcase(now.strip().rstrip("\\/")) != os.path.normcase(export_dir.rstrip("\\/")):
+        print(f"  [export] the Location box shows {now!r}, not {export_dir!r} -- OK NOT pressed. Send {dump}.", flush=True)
+        return False
+    print(f"  [export] Location set: {now}", flush=True)
+    # the export window's other choices (first test, Oct 2026: MP4 + CSV / CSV only / Copy of Edit, Include Text Overlay,
+    # Combine into single file). One .mp4 per clip plus Synergy's CSV of the clips, no text drawn on the video.
+    ctrls = _sst_walk(auto, dlg)
+    want_type = str(globals().get("SYNERGY_EXPORT_TYPE", "MP4 + CSV"))
+    for c in ctrls:
+        if c.ControlTypeName == "RadioButtonControl" and _norm(c.Name) == _norm(want_type):
+            try:
+                sp = c.GetSelectionItemPattern()
+                if not sp.IsSelected:
+                    sp.Select()
+            except Exception:
+                c.Click(simulateMove=False)
+    for pat, key, dflt in ((r"text overlay", "SYNERGY_EXPORT_TEXT_OVERLAY", False),
+                           (r"combine into single file", "SYNERGY_EXPORT_COMBINE", False)):
+        want = bool(globals().get(key, dflt))
+        for c in ctrls:
+            if c.ControlTypeName == "CheckBoxControl" and re.search(pat, c.Name or "", re.I):
+                try:
+                    tp = c.GetTogglePattern()
+                    if bool(tp.ToggleState) != want:
+                        tp.Toggle()
+                except Exception:
+                    pass
+    time.sleep(0.3)
+    ctrls = _sst_walk(auto, dlg)
+
+    def _state(c):
+        try:
+            return "on" if (c.GetSelectionItemPattern().IsSelected if c.ControlTypeName == "RadioButtonControl"
+                            else c.GetTogglePattern().ToggleState) else "off"
+        except Exception:
+            return "?"
+    opts = [f"{c.Name}: {_state(c)}" for c in ctrls if c.ControlTypeName in ("RadioButtonControl", "CheckBoxControl")]
+    clips = next((_sst_value(c) for c in ctrls if c.ControlTypeName == "ComboBoxControl"), "?")
+    print(f"  [export] options: {'; '.join(opts)}; clips: {clips}", flush=True)
+    sel = next((c for c in ctrls if c.ControlTypeName == "RadioButtonControl" and _norm(c.Name) == _norm(want_type)), None)
+    if sel is None or _state(sel) != "on":
+        print(f"  [export] couldn't select {want_type!r} -- OK NOT pressed. Send {dump}.", flush=True)
+        return False
+    # OK sits deep inside the window's button bar (an ItemsControl); a button's text can be its own name or its child's
+    def _btn_text(c):
+        if (c.Name or "").strip():
+            return c.Name.strip()
+        for x in _sst_walk(auto, c, 6):
+            if x.ControlTypeName == "TextControl" and (x.Name or "").strip():
+                return x.Name.strip()
+        return ""
+    buttons = [(c, _btn_text(c)) for c in ctrls if c.ControlTypeName in ("ButtonControl", "ListItemControl")]
+    ok = (next((c for c, t in buttons if re.match(r"^\s*OK\s*$", t, re.I)), None)
+          or next((c for c, t in buttons if re.match(r"(?i)^\s*(export|save)\s*$", t)), None))
+    if ok is None:
+        _sst_dump(auto, dlg, dump)
+        print(f"  [export] couldn't find the OK button (buttons: {[t for _c, t in buttons]}) -- not pressed. Send {dump}.",
+              flush=True)
+        return False
+    before_files = set(os.listdir(export_dir))
+    try:
+        ok.GetInvokePattern().Invoke()
+    except Exception:
+        ok.Click(simulateMove=False)
+    print(f"  [export] OK pressed -- Synergy Editor is exporting the clips to {export_dir}", flush=True)
+    t2 = time.time()
+    new = []
+    while time.time() - t2 < float(globals().get("SYNERGY_EXPORT_WATCH", 30)) and not new:
+        time.sleep(2)
+        new = sorted(set(os.listdir(export_dir)) - before_files)
+    print(f"  [export] new in the folder after {time.time() - t2:.0f} s: {new[:5] if new else 'nothing yet'}"
+          + (" (the export keeps going in Synergy Editor)" if new else
+             " -- check Synergy Editor for an export progress window"), flush=True)
+    return True
+
+
+# =====================================================================================================================
+# FRAMES FROM SYNERGY EXPORTS (VISION_SOURCE = "export", the default)
+# CONFIRMED CHANGE (requested: "build everything to use these [Synergy Editor exports] instead of the web scraping"). For each
+# game the frame-capture cell picks (same choice as before: each side's most recent game the coaches haven't finished), this:
+#   1. finds the game's Synergy export -- a folder under SYNERGY_EXPORT_DIR made by Synergy Editor, named after the game
+#      ("UWWhitewater@Wash(StLouis) - Mar 7, 2026"), with Export.csv (one row per clip) and video/<#>.mp4 (one 1080p clip each);
+#   2. if there isn't one: signs in to Synergy, sends the game to Synergy Editor (FULL GAME VIDEO > Editor), and exports it
+#      (Ctrl+E > Location > OK), then waits until every clip video is written (VISION_EXPORT_WAIT_MIN);
+#   3. registers every clip in uww_clip_frames.csv exactly like a captured clip -- same columns, same clip numbers (Export.csv's
+#      "#" is the clip page's position), same frame names -- so play calls, the tag model, tracking, the jersey reader, Play
+#      review and Film Tagging work as before. The 5 tag-model frames are written as small JPEGs (1024 wide, what that model
+#      learned from); the tracking frames (VISION_TRACK_FPS a second, VISION_EXPORT_TRACK_WIDTH wide) are read straight from
+#      the clip videos when a step needs them (section 46a), so they take no disk space of their own. Times come from Synergy's
+#      own in/out points, so every frame is inside its play (the web capture's clip starts were off by ~2 s, up to 9 s).
+# A game that was already partly captured from the web keeps those clips as they are (their player checks stay lined up) and
+# gets its missing clips from the export at the SAME width; VISION_EXPORT_REPLACE_CAPTURED = True redoes the whole game from
+# the export instead. VISION_SOURCE = "web" brings back the old live-player capture.
+_VX_REGISTRY = "_synergy_exports.json"
+
+
+def _vx_root():
+    return os.path.abspath(globals().get("SYNERGY_EXPORT_DIR") or VISION_FRAMES_DIR)
+
+
+def _vx_registry(update=None):
+    p = os.path.join(_vx_root(), _VX_REGISTRY)
+    try:
+        with open(p, encoding="utf-8") as fh:
+            reg = json.load(fh)
+    except Exception:
+        reg = {}
+    if update:
+        reg.update(update)
+        os.makedirs(_vx_root(), exist_ok=True)
+        with open(p, "w", encoding="utf-8") as fh:
+            json.dump(reg, fh, indent=1)
+    return reg
+
+
+def _vx_secs(t):
+    try:
+        return sum(float(x) * 60 ** i for i, x in enumerate(reversed(str(t).strip().split(":"))))
+    except Exception:
+        return None
+
+
+def _vx_date_txt(d):
+    """2026-03-07 -> 'Mar 7, 2026' (how Synergy writes dates in clip pages and export names)."""
+    d = pd.Timestamp(d)
+    return f"{d:%b} {d.day}, {d.year}"
+
+
+def _vx_find_export(game_id, label, url, cache):
+    """The game's export folder (with Export.csv), or None. The registry first; else a folder named for the game's date whose
+    game part matches the clip page's Game cell (exports made before the registry, e.g. by the Synergy Editor test)."""
+    root = _vx_root()
+    reg = _vx_registry()
+    hit = reg.get(game_id)
+    if hit and os.path.isfile(os.path.join(root, hit.get("folder", ""), "Export.csv")):
+        return os.path.join(root, hit["folder"])
+    m = re.match(r"^\s*(\d{4}-\d{2}-\d{2})", str(label))
+    if not m:
+        return None
+    dates = {_vx_date_txt(pd.Timestamp(m.group(1)) + pd.Timedelta(days=dd)) for dd in (0, -1, 1)}
+    games = set()
+    if isinstance(cache, pd.DataFrame) and not cache.empty and "clip_game" in cache.columns:
+        games = {str(x) for x in cache.loc[cache["source_url"] == url, "clip_game"].dropna().unique()}
+    cands = []
+    for d in glob.glob(os.path.join(root, "*", "Export.csv")):
+        name = os.path.basename(os.path.dirname(d))
+        if " - " not in name:
+            continue
+        g, dt = name.rsplit(" - ", 1)
+        if dt.strip() in dates and (not games or g.strip() in games):
+            cands.append(os.path.dirname(d))
+    if len(cands) == 1 or (cands and games):
+        _vx_registry({game_id: {"folder": os.path.basename(cands[0]), "found": pd.Timestamp.now().isoformat(timespec="seconds")}})
+        return cands[0]
+    return None
+
+
+def _vx_make_export(game_id, label):
+    """Synergy Editor: open the game and export it. -> the export folder, or None."""
+    from urllib.parse import urlparse, parse_qs
+    print(f"  [export] {label}: no Synergy export yet -- exporting it with Synergy Editor", flush=True)
+    link = run_in_fastscout_session(lambda p: _sst_editor_open(p, game_id, label))
+    if not link:
+        return None
+    title = (parse_qs(urlparse(link).query).get("title") or [""])[0]
+    t0 = time.time()
+    if not _sst_editor_export(link, _vx_root(), game_id):
+        return None
+    folder = None
+    while time.time() - t0 < 180 and folder is None:          # the folder Synergy Editor made (named after the game)
+        exact = os.path.join(_vx_root(), title)
+        if title and os.path.isfile(os.path.join(exact, "Export.csv")):
+            folder = exact
+            break
+        new = [os.path.dirname(f) for f in glob.glob(os.path.join(_vx_root(), "*", "Export.csv"))
+               if os.path.getmtime(f) >= t0 - 5]
+        folder = max(new, key=os.path.getmtime) if new else None
+        if folder is None:
+            time.sleep(3)
+    if folder is None:
+        print("  [export] Synergy Editor never wrote an Export.csv -- check the export in Synergy Editor.", flush=True)
+        return None
+    _vx_registry({game_id: {"folder": os.path.basename(folder), "title": title, "label": label,
+                            "exported": pd.Timestamp.now().isoformat(timespec="seconds")}})
+    return folder
+
+
+def _vx_wait_done(folder):
+    """Wait until every clip in Export.csv has its video, and the newest video stopped growing. -> True when complete."""
+    wait_s = float(globals().get("VISION_EXPORT_WAIT_MIN", 90)) * 60
+    t0, last_say = time.time(), 0
+    while True:
+        try:
+            n_rows = len(pd.read_csv(os.path.join(folder, "Export.csv"), dtype=str))
+        except Exception:
+            n_rows = None
+        vids = glob.glob(os.path.join(folder, "video", "*.mp4"))
+        newest = max((os.path.getmtime(v) for v in vids), default=0)
+        if n_rows and len(vids) >= n_rows and time.time() - newest > 20:
+            return True
+        if time.time() - t0 > wait_s:
+            print(f"  [export] {os.path.basename(folder)}: still {len(vids)} of {n_rows} clip videos after "
+                  f"{wait_s / 60:.0f} min -- using what's there; the rest are picked up on the next run.", flush=True)
+            return False
+        if time.time() - last_say > 60:
+            print(f"  [export] {os.path.basename(folder)}: {len(vids)} of {n_rows or '?'} clip videos written...", flush=True)
+            last_say = time.time()
+        time.sleep(10)
+
+
+def _vx_game_width(cache, url, gdir):
+    """The tracking width a game uses: the width of frames it already has (web capture or export), else
+    VISION_EXPORT_TRACK_WIDTH -- one game is never mixed."""
+    if isinstance(cache, pd.DataFrame) and not cache.empty and "track_files" in cache.columns:
+        tf = cache.loc[cache["source_url"] == url, "track_files"].dropna().astype(str)
+        for x in tf:
+            m = re.search(r"/track(\d+)?(?:v\d+)?/", "/" + x.split(";")[0].replace("\\", "/"))
+            if m:
+                return int(m.group(1) or 768)
+    for w in _vision_track_widths():
+        f = os.path.join(gdir, _vision_track_folder(w))
+        if os.path.isdir(f) and (glob.glob(os.path.join(f, "*.jpg")) or glob.glob(os.path.join(f, "_*.json"))):
+            return int(w)
+    return int(globals().get("VISION_EXPORT_TRACK_WIDTH", 1920))
+
+
+def _vx_ingest(label, url, folder, cache):
+    """Register every clip of one export in the clip-frames table. -> the updated table."""
+    import cv2
+    ex = pd.read_csv(os.path.join(folder, "Export.csv"), dtype=str)
+    name = os.path.basename(folder)
+    game_part = name.rsplit(" - ", 1)[0].strip() if " - " in name else name
+    mine = cache[cache["source_url"] == url] if not cache.empty else cache
+    have = {}
+    for _, r in mine.iterrows():
+        pos = pd.to_numeric(r.get("position"), errors="coerce")
+        if pd.notna(pos):
+            have[int(pos)] = r
+    replace = bool(globals().get("VISION_EXPORT_REPLACE_CAPTURED", True))
+    # the game's date as the clip page wrote it (keeps an already-captured game in its folder); else the export's own date
+    if not replace and not mine.empty and mine["clip_date"].notna().any():
+        clip_date = str(mine["clip_date"].dropna().mode().iloc[0])
+    else:
+        clip_date = _vx_date_txt(pd.to_datetime(ex["Date"].dropna().iloc[0]))
+    todo = ex[~ex["Synergy String"].fillna("").str.contains(VISION_SKIP_DESCRIPTION, regex=True)]
+    if VISION_TEST_CLIPS:
+        todo = todo.head(int(VISION_TEST_CLIPS))
+    row0 = {"date": clip_date, "game": game_part}
+    gdir = _vision_frame_dir(row0)
+    width = int(globals().get("VISION_EXPORT_TRACK_WIDTH", 1920)) if replace else _vx_game_width(cache, url, gdir)
+    globals()["_vision_cur_width"] = width
+    tdir = os.path.join(gdir, _vision_track_folder(width))
+    os.makedirs(tdir, exist_ok=True)
+    man = os.path.join(tdir, "_export.json")
+    try:
+        with open(man, encoding="utf-8") as fh:
+            index = json.load(fh)
+    except Exception:
+        index = {"clips": {}}
+    index["export"] = os.path.abspath(folder)
+    fps = float(VISION_TRACK_FPS or 4)
+    n_new = n_kept = n_err = 0
+    rows = []
+    t0 = time.time()
+    print(f"  [export] {label}: {len(ex)} clips in the export ({len(todo)} after skipping free throws); tracking frames "
+          f"{width} wide, {fps:g} a second", flush=True)
+    for _, e in todo.iterrows():
+        pos = int(pd.to_numeric(e["#"], errors="coerce"))
+        desc = str(e.get("Synergy String") or "")
+        codes = str(e.get("Game") or "").split("@")
+        team = (next((c for c in codes if c.upper() == "WWW"), "WWW") if re.search(r"(?i)whitewater", str(e.get("Team") or ""))
+                else next((c for c in codes if c.upper() != "WWW"), str(e.get("Team") or "")))
+        rec = {"source_label": label, "source_url": url, "position": pos, "clip_game": game_part, "clip_date": clip_date,
+               "team": team, "player": str(e.get("Title") or "").strip(), "result": e.get("Result"), "description": desc,
+               "duration_s": _vx_secs(e.get("Duration")), "test_run": bool(VISION_TEST_CLIPS), "page_clips": len(todo),
+               "captured_at": pd.Timestamp.now().isoformat(timespec="seconds"), "frame_source": "synergy export"}
+        old = have.get(pos)
+        if old is not None and not replace and isinstance(old.get("frame_files"), str) and old.get("frame_files") \
+                and isinstance(old.get("track_files"), str) and old.get("track_files") \
+                and not (isinstance(old.get("error"), str) and old.get("error")):
+            n_kept += 1                                    # captured from the web already: kept (its checks stay lined up)
+            continue
+        vid = os.path.join(folder, "video", f"{pos}.mp4")
+        if not os.path.exists(vid):
+            rec["error"] = "clip video missing from the export (still being written?)"
+            rows.append(rec)
+            n_err += 1
+            continue
+        try:
+            cap = cv2.VideoCapture(vid)
+            vfps = float(cap.get(cv2.CAP_PROP_FPS) or 30.0)
+            nfr = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+            cap.release()
+            length = (nfr / vfps) if nfr else (rec["duration_s"] or 10.0)
+            rec["duration_s"] = round(length, 2)
+            r = {"date": clip_date, "game": game_part, "position": pos, "description": desc}
+            fdir = _vision_frame_dir(r)
+            os.makedirs(fdir, exist_ok=True)
+            # the 5 tag-model frames: real JPEGs, 1024 wide (what the tag model learned from)
+            n = VISION_FRAMES_PER_CLIP
+            kt = [length * (0.5 if n == 1 else 0.05 + 0.9 * k / (n - 1)) for k in range(n)]
+            kpaths = []
+            for k, t in enumerate(kt):
+                pth = os.path.join(fdir, _vision_frame_name(r, k))
+                if not (os.path.exists(pth) and os.path.getsize(pth) > 1):
+                    fr = _fx_decode(vid, min(max(nfr - 1, 0), int(round(t * vfps))), int(VISION_FRAME_MAX_WIDTH))
+                    if fr is None:
+                        raise RuntimeError(f"couldn't read frame {k} of {os.path.basename(vid)}")
+                    _FA_ORIG["imwrite"](pth, fr, [cv2.IMWRITE_JPEG_QUALITY, 85])
+                kpaths.append(pth)
+            # the tracking frames: listed in _export.json, read from the clip video when needed
+            nt = _vision_track_count(length)
+            tt = [min(max(length - 1.0 / vfps, 0), k / fps) for k in range(nt)]
+            tnames = [_vision_track_name(r, k) for k in range(nt)]
+            stem = re.sub(r"_t\d{3,}\.jpg$", "", os.path.basename(tnames[0]))
+            try:
+                vrel = os.path.relpath(vid, tdir)
+            except ValueError:                             # the export is on another drive
+                vrel = os.path.abspath(vid)
+            index["clips"][stem] = {"video": vrel, "frames": [os.path.basename(x) for x in tnames],
+                                    "src": [min(max(nfr - 1, 0), int(round(t * vfps))) for t in tt], "w": width, "fps": fps}
+            t_in = _vx_secs(e.get("Media In Point")) or 0.0
+            full_t = [round(t_in + t, 3) for t in tt]
+            with open(_vision_times_path(r), "w") as fh:
+                json.dump(full_t, fh)
+            rec.update(frames_captured=len(kpaths), frame_files=";".join(_vision_rel(x) for x in kpaths),
+                       track_files=";".join(_vision_rel(os.path.join(fdir, x)) for x in tnames),
+                       track_times=";".join(f"{x:.3f}" for x in full_t), video_start_s=round(t_in, 3))
+            n_new += 1
+        except Exception as ex_:
+            rec["error"] = f"{type(ex_).__name__}: {ex_}"[:300]
+            n_err += 1
+        rows.append(rec)
+        if (n_new + n_err) % 25 == 0:
+            print(f"    {n_new + n_err} clip(s) registered ({time.time() - t0:.0f}s)", flush=True)
+    with open(man, "w", encoding="utf-8") as fh:
+        json.dump(index, fh)
+    if "_fx_load_index" in globals():
+        _fx_load_index()                                   # the new frames are readable right away
+    globals()["_vision_cur_width"] = None
+    if rows:
+        cols = list(dict.fromkeys(list(VISION_COLS) + ["frame_source"]))
+        cache = pd.concat([cache, pd.DataFrame(rows).reindex(columns=cols)], ignore_index=True)
+    print(f"  [export] {label}: {n_new} clip(s) from the export, {n_kept} kept from the earlier web capture"
+          + (f", {n_err} with errors (see the 'error' column)" if n_err else "") + f" ({time.time() - t0:.0f}s)", flush=True)
+    return cache
+
+
+def _vision_from_exports(sources, cache):
+    """VISION_SOURCE = "export": every game in `sources` from its Synergy export (exported first if needed)."""
+    if "_fx_decode" not in globals():                      # the frame reader lives in section 46a
+        globals()["FRAME_ARCHIVE_STEP"] = "hooks"
+        run_section("46a_frame_archive")
+    for label, url in sources:
+        gid = _sst_game_id_of(url)
+        if not gid:
+            print(f"  [export] {label}: no Synergy game ID in its video link -- skipped", flush=True)
+            continue
+        folder = _vx_find_export(gid, label, url, cache)
+        if folder is None:
+            if not globals().get("VISION_EXPORT_AUTO", True) or sys.platform != "win32":
+                print(f"  [export] {label}: no Synergy export in {_vx_root()} -- export the game from Synergy Editor "
+                      f"(FULL GAME VIDEO > Editor, then Ctrl+E) into that folder and run again.", flush=True)
+                continue
+            try:
+                folder = _vx_make_export(gid, label)
+            except Exception as e:
+                print(f"  [export] {label}: export failed ({type(e).__name__}: {e})", flush=True)
+                folder = None
+            if folder is None:
+                continue
+        print(f"  [export] {label}: export {os.path.basename(folder)!r}", flush=True)
+        _vx_wait_done(folder)
+        cache = _vis_dedupe(_vx_ingest(label, url, folder, cache))
+        cache.to_csv(VISION_CACHE, index=False)
+    return cache
+
+
+SYNERGY_EDITOR_TEST = globals().get("SYNERGY_EDITOR_TEST")
+SYNERGY_EDITOR_TEST_ONLY = globals().get("SYNERGY_EDITOR_TEST_ONLY", True)
+synergy_editor_link = None
+if SYNERGY_EDITOR_TEST:
+    print(f"Synergy Editor test: {SYNERGY_EDITOR_TEST}", flush=True)
+    try:
+        _sst_gid, _sst_lab = _sst_find_game(SYNERGY_EDITOR_TEST)
+        print(f"  [editor] {_sst_lab} -> Synergy game {_sst_gid}", flush=True)
+        synergy_editor_link = run_in_fastscout_session(lambda p: _sst_editor_open(p, _sst_gid, _sst_lab))
+    except Exception as _sst_e:
+        print(f"  [editor] test failed: {type(_sst_e).__name__}: {_sst_e}", flush=True)
+    if synergy_editor_link and globals().get("SYNERGY_EDITOR_EXPORT", True) and sys.platform == "win32":
+        try:
+            if _sst_editor_export(synergy_editor_link, globals().get("SYNERGY_EXPORT_DIR") or VISION_FRAMES_DIR, _sst_gid):
+                from urllib.parse import urlparse as _up, parse_qs as _pq
+                _t = (_pq(_up(synergy_editor_link).query).get("title") or [""])[0]
+                _vx_registry({_sst_gid: {"folder": _t, "title": _t, "label": _sst_lab,
+                                         "exported": pd.Timestamp.now().isoformat(timespec="seconds")}})
+        except Exception as _sst_x:
+            print(f"  [export] failed: {type(_sst_x).__name__}: {_sst_x}", flush=True)
+    if SYNERGY_EDITOR_TEST_ONLY and RUN_FRAME_CAPTURE:
+        print("  (SYNERGY_EDITOR_TEST_ONLY = True: frame capture skipped this run -- set SYNERGY_EDITOR_TEST = None to capture again)",
+              flush=True)
+
+
+clip_frames = (_vis_dedupe(pd.read_csv(VISION_CACHE, low_memory=False)) if os.path.exists(VISION_CACHE)
                else pd.DataFrame(columns=VISION_COLS))
-if RUN_FRAME_CAPTURE:
+if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
     # Every played game with a clip page: UWW's own games and the upcoming opponent's prior games,
     # plus any page listed by hand in VISION_PLAYLIST_URLS.
     _vis_sources = [(lab, url, pd.Timestamp.max) for lab, url in VISION_PLAYLIST_URLS]  # hand-listed go first
@@ -728,12 +1626,29 @@ if RUN_FRAME_CAPTURE:
             _curs = [f"/{f_}/" for f_ in _vision_track_folders()]
             _bad |= ~_full.get("track_files", pd.Series(index=_full.index, dtype=object)).map(
                 lambda ff: _vis_files_ok(ff) and any(c_ in str(ff).replace(os.sep, "/") for c_ in _curs))
-        _missing = _full[_bad]["source_url"].dropna().unique()
-        if len(_missing):
-            print(f"Frame capture: {len(_missing)} page(s) have clips with frame or tracking files missing on disk -- "
-                  f"revisiting them to capture just what's missing.")
-        _done = set(_full["source_url"].dropna()) - set(_missing)
+        _gap_urls = set(_full[_bad]["source_url"].dropna())           # captured, but some clips' files are missing / failed
+        # pages that stopped partway: fewer clips than the page had (page_clips). Pages captured before page_clips was
+        # recorded can't tell, so they're checked once (a quick visit: clips already on disk are reused, not recaptured).
+        _pc = pd.to_numeric(_full.get("page_clips", pd.Series(index=_full.index, dtype=float)), errors="coerce")
+        _incomplete = set()
+        for _u, _g in _full.assign(_pc=_pc).groupby("source_url"):
+            _n_page = _g["_pc"].max()
+            if pd.isna(_n_page) or len(_g) < int(_n_page):
+                _incomplete.add(_u)
+        _missing = _gap_urls | _incomplete
+        _in_run = {x[1] for x in _vis_sources}
+        _n_inc = len(_incomplete & _in_run)
+        _n_gap = len((_gap_urls - _incomplete) & _in_run)
+        if _n_inc or _n_gap:
+            print(f"Frame capture: " + ", ".join(x for x in (
+                f"{_n_inc} page(s) not fully captured (stopped partway, or captured before the page's clip count was "
+                f"recorded -- checked once)" if _n_inc else "",
+                f"{_n_gap} page(s) with clips whose files are missing or failed" if _n_gap else "") if x)
+                + " -- each is completed (only what's missing) before its side moves on to another game.")
+        _done = set(_full["source_url"].dropna()) - _missing
         _vis_sources = [s for s in _vis_sources if s[1] not in _done]
+    else:
+        _gap_urls, _incomplete = set(), set()
     # CONFIRMED CHANGE (requested: "only capture one game at a time since I need the coaches to analyze those games before
     # doing the 2nd most recent game"). Order: each side's MOST RECENT game first (the opponent's, then ours -- VISION_CAPTURE_FIRST),
     # then each side's second most recent, and so on. With VISION_WAIT_FOR_COACHES, a NEW game is only captured once every
@@ -770,7 +1685,13 @@ if RUN_FRAME_CAPTURE:
 
         _pending = {x[1]: x for x in _vis_sources}         # pages that need capturing (new, or frames missing)
         _keep = [x for x in _vis_sources if x[1] not in _vis_kind]           # hand-listed pages always go
-        for _side in ("opponent", "uww"):
+        # CONFIRMED CHANGE (requested: "just do one of them at a time -- don't do the opponent's current game until after UWW's
+        # most recent game is done"). VISION_ONE_GAME_AT_A_TIME: the sides take turns -- VISION_CAPTURE_FIRST's side first; the
+        # other side's game is only captured once the first side's current game is captured AND finished by the coaches.
+        _one = bool(globals().get("VISION_ONE_GAME_AT_A_TIME", True))
+        _order = ("uww", "opponent") if _first == "uww" else ("opponent", "uww")
+        for _side in _order:
+            _side_open = False
             _pages = sorted([u for u, k in _vis_kind.items() if k == _side], key=lambda u: _vis_recent_idx.get(u, 0))
             for _u in _pages:
                 _lab_u = next((x[0] for x in _vis_sources if x[1] == _u), None)
@@ -779,12 +1700,24 @@ if RUN_FRAME_CAPTURE:
                     _lab_u = str(_l.iloc[0]) if len(_l) else _u
                 if _u in _pending:                         # this side's current game: capture it / fill it in
                     _keep.append(_pending[_u])
+                    if _u in _gap_urls and _u not in _incomplete and _game_state(_u)[0]:
+                        continue                           # failed clips of a game the coaches already finished: fill
+                                                           # them in and keep going to this side's current game
+                    _side_open = True
                     break
                 _fin, _note = _game_state(_u)
                 if not _fin:
                     print(f"Frame capture: {'opponent' if _side == 'opponent' else 'UWW'} -- working on {_lab_u} ({_note}); "
                           f"its next game waits until the coaches finish it.", flush=True)
+                    _side_open = True
                     break
+            if _one and _side_open:
+                _other = [k for k in _order if k != _side][0]
+                if any(k == _other for k in _vis_kind.values()):
+                    print(f"Frame capture: one game at a time (VISION_ONE_GAME_AT_A_TIME) -- "
+                          f"{'the opponent' if _other == 'opponent' else 'UWW'}'s game waits until this "
+                          f"{'UWW' if _side == 'uww' else 'opponent'} game is finished by the coaches.", flush=True)
+                break
         _vis_sources = sorted(_keep, key=lambda x: (0 if x[1] not in _vis_kind else 1, _vis_recent_idx.get(x[1], 0),
                                                     _rank(x[1]), -x[2].value))
     _n_by = {k: sum(1 for x in _vis_sources if _vis_kind.get(x[1]) == k) for k in ("opponent", "uww")}
@@ -793,7 +1726,7 @@ if RUN_FRAME_CAPTURE:
           f"{'opponent' if _first == 'opponent' else 'UWW'} games first (VISION_CAPTURE_FIRST), newest first.")
     _vis_left = max(0, len(_vis_sources) - VISION_MAX_GAMES_PER_RUN)
     _vis_sources = [(l, u) for l, u, _d in _vis_sources[:VISION_MAX_GAMES_PER_RUN]]
-    if not clip_frames.empty:  # anything left for these pages is a test run or a retag -- replace it
+    if not clip_frames.empty and VISION_RETAG:  # a retag starts these pages over (otherwise rows are replaced clip by clip)
         clip_frames = clip_frames[~clip_frames["source_url"].isin([u for _l, u in _vis_sources])]
     if _vis_left:
         print(f"Frame capture: {_vis_left} more untagged game page(s) wait for later runs "
@@ -803,7 +1736,10 @@ if RUN_FRAME_CAPTURE:
     else:
         print(f"Frame capture: {len(_vis_sources)} game page(s) "
               f"({'TEST: first ' + str(VISION_TEST_CLIPS) + ' clips each' if VISION_TEST_CLIPS else 'all clips'})")
-        clip_frames = run_in_fastscout_session(lambda p: _vision_tag_pages(p, _vis_sources, clip_frames))
+        if str(globals().get("VISION_SOURCE", "export")).lower() == "export":
+            clip_frames = _vision_from_exports(_vis_sources, clip_frames)
+        else:
+            clip_frames = run_in_fastscout_session(lambda p: _vision_tag_pages(p, _vis_sources, clip_frames))
         clip_frames.to_csv(VISION_CACHE, index=False)
         print(f"  Frames are under {VISION_FRAMES_DIR} -- open a few to check they show the play.")
 print(f"Clips with frames: {int(pd.to_numeric(clip_frames.get('frames_captured'), errors='coerce').fillna(0).ge(VISION_FRAMES_PER_CLIP).sum())} "

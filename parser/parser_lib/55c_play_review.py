@@ -362,6 +362,50 @@ def _pr_mp4_ok():
     return importlib.util.find_spec("imageio_ffmpeg") is not None
 
 
+def _pr_clip_from_video(video, k0, k1, out_base):
+    """CONFIRMED CHANGE (Synergy exports): a play read from a Synergy export gets its video from the real clip -- smooth motion
+    at PLAY_REVIEW_EXPORT_FPS frames a second (15) instead of a 4-a-second slideshow of the tracking frames. Same width and
+    compression as before. -> file name, or None."""
+    import cv2
+    import imageio.v2 as imageio
+    cap = cv2.VideoCapture(video)
+    if not cap.isOpened():
+        return None
+    vfps = float(cap.get(cv2.CAP_PROP_FPS) or 30.0)
+    step = max(1, int(round(vfps / float(globals().get("PLAY_REVIEW_EXPORT_FPS", 15)))))
+    path = out_base + ".mp4"
+    wr, first, k = None, None, 0
+    try:
+        while k <= k1:
+            ok = cap.grab()
+            if not ok:
+                break
+            if k >= k0 and (k - k0) % step == 0:
+                ok, fr = cap.retrieve()
+                if not ok:
+                    break
+                H, W = fr.shape[:2]
+                sc = PLAY_REVIEW_VIDEO_WIDTH / float(W)
+                fr = cv2.resize(fr, (PLAY_REVIEW_VIDEO_WIDTH // 2 * 2, int(H * sc) // 2 * 2), interpolation=cv2.INTER_AREA)
+                rgb = cv2.cvtColor(fr, cv2.COLOR_BGR2RGB)
+                if wr is None:
+                    wr = imageio.get_writer(path, fps=vfps / step, codec="libx264", quality=None, macro_block_size=2,
+                                            pixelformat="yuv420p", ffmpeg_params=["-crf", "30", "-preset", "medium",
+                                                                                  "-movflags", "+faststart"])
+                    first = rgb
+                wr.append_data(rgb)
+            k += 1
+    finally:
+        cap.release()
+        if wr is not None:
+            wr.close()
+    if first is None:
+        return None
+    from PIL import Image
+    Image.fromarray(first).save(out_base + "_poster.jpg", "JPEG", quality=70)
+    return os.path.basename(path)
+
+
 def _pr_clip(files, rows, numtxt, out_base):
     """The play as a video (MP4, real speed, with play/pause) or an animated GIF -> file name, or None.
     CONFIRMED CHANGE: GIFs of a play were 3-7 MB each (~100 MB for 20 plays); an MP4 of the same frames is a small
@@ -379,6 +423,17 @@ def _pr_clip(files, rows, numtxt, out_base):
         return os.path.basename(out_base + ".mp4")
     if kind == "mp4" and not globals().setdefault("_pr_mp4_ready", _pr_mp4_ok()):
         kind = "gif"
+    if kind == "mp4" and files and "_fx_lookup" in globals():
+        h0 = _fx_lookup(os.path.join(VISION_FRAMES_DIR, files[0]))
+        h1 = _fx_lookup(os.path.join(VISION_FRAMES_DIR, files[-1]))
+        if h0 is not None and h1 is not None and h0[0] == h1[0]:
+            try:
+                made = _pr_clip_from_video(h0[0], h0[1], h1[1], out_base)
+                if made:
+                    return made
+            except Exception as e:
+                print(f"  [play review] clip video from the export failed ({type(e).__name__}: {e}) -- using the frames",
+                      flush=True)
     if kind == "mp4":
         frames = _pr_frames(files, rows, numtxt, every=1)
         if not frames:

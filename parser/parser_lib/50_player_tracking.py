@@ -239,6 +239,8 @@ def _trk_yolo():
         raise RuntimeError("ultralytics was installed. RESTART THE KERNEL (Kernel > Restart) and run the parser "
                            "again -- torch may have been updated and the old one is still loaded.")
     from ultralytics import YOLO
+    if "vision_hooks_ensure" in globals():
+        vision_hooks_ensure()
     m = globals().get("_trk_yolo_model")
     if m is None or m[0] != TRACK_DETECTOR:
         print(f"  [tracking] loading detector {TRACK_DETECTOR} (downloads once)...")
@@ -285,10 +287,20 @@ def _trk_tiled_predict(model, paths, H_of, classes, conf, keypoints=False):
     mapped back to the original picture, duplicates across tiles merged. Returns one list per picture of
     (box xyxy, conf, class, keypoints or None)."""
     import cv2
+    if "vision_hooks_ensure" in globals():
+        vision_hooks_ensure()                   # (ultralytics replaces cv2.imread on Windows -- frames inside exports need ours)
     U, T = float(TRACK_DETECT_UPSCALE), int(TRACK_DETECT_TILES)
     out_all = []
     for p in paths:
         img = cv2.imread(p)
+        if img is None:
+            # a frame that can't be read: no detections for it (said once), instead of stopping the whole run
+            _bad = globals().setdefault("_trk_unreadable", [])
+            _bad.append(p)
+            if len(_bad) <= 3:
+                print(f"  [tracking] couldn't read {p} -- skipped (no detections on it)", flush=True)
+            out_all.append([])
+            continue
         Hpx, W = img.shape[:2]
         band = _trk_court_band(H_of(p), W, Hpx) if (T > 1 or U != 1.0) else None
         y0, y1 = band if band else (0, Hpx)
@@ -1426,12 +1438,15 @@ def _trk_missed_points():
     d_ = _review_saves_dir() if "_review_saves_dir" in globals() else None
     if not d_ or not os.path.isdir(d_):
         return out
+    reset_at = tracking_reset_time() if "tracking_reset_time" in globals() else None
     for f in glob.glob(os.path.join(d_, "*.json")):
         try:
             with open(f, encoding="utf-8") as fh:
                 doc = _trk_json.load(fh)
         except Exception:
             continue
+        if doc.get("missed") and _saved_before_reset(doc.get("saved"), os.path.getmtime(f), reset_at):
+            continue                                   # marked on the old frames, before the tracking reset
         for m in doc.get("missed", []) or []:
             if m.get("frame_file") and m.get("cell") and m.get("W") and m.get("H"):
                 out.append(dict(m, game=doc.get("game"), coach=doc.get("coach")))
