@@ -74,12 +74,12 @@ Elmhurst Bluejays,2025-12-02,#21,Talen Pearson,G,"6'5""",180 lbs,SO,Bench,Shoot 
 Elmhurst Bluejays,2025-12-02,#11,Jack Cherry,G,"6'2""",190 lbs,SO,Bench,Shooter,No C & S 3's,True,Secondary Ball Handler,Synergy play types (low sample),Point of Attack,play-by-play only
 Elmhurst Bluejays,2025-12-02,#4,EJ Marshall,G,"6'0""",180 lbs,JR,Bench,Driver/shooter,Anticipate RHD,True,Stationary Shooter,Synergy play types (low sample),Low Activity,play-by-play only
 Elmhurst Bluejays,2025-12-02,#22,Jeffrey Williams,F,"6'4""",210 lbs,SO,Bench,Shooter,No C & S 3's!!,True,Stationary Shooter,play-by-play only (low sample),Wing Stopper,play-by-play only
-Coe Kohawks,2025-12-30,#5,Cooper Nailor,G,"6'1""",,SR,Starter,Main creator & scorer,No C & S 3's,True,Primary Ball Handler,Synergy play types,Helper,film tracking
-Coe Kohawks,2025-12-30,#4,Deuce Walters,G,"5'11""",,JR,Starter,Go to=Mid range pull up,Anticipate step back mid-range pull up,True,Primary Ball Handler,Synergy play types,Helper,film tracking
-Coe Kohawks,2025-12-30,#12,C. Reece Breitenbach,G,"5'11""",,JR,Starter,Shooter/Driver,No C & S 3's,True,Stationary Shooter,Synergy play types (low sample),Helper,film tracking
-Coe Kohawks,2025-12-30,#22,Jackson Bowman,F,"6'7""",,SR,Starter,Slasher/finisher - Attacks to score (6 asts),Anticipate RHD,True,Roll & Cut Big,Synergy play types (low sample),Mobile Big,film tracking (low sample)
-Coe Kohawks,2025-12-30,#34,Kanyon Bryte,F,"6'8""",,SO,Starter,LS/RH in post,NLS,True,Post Scorer,Synergy play types,Anchor Big,film tracking (low sample)
-Coe Kohawks,2025-12-30,#2,Ryan Dolphin,G,"5'9""",,SR,Bench,Shooter,No C & S 3's,True,Secondary Ball Handler,Synergy play types (low sample),Helper,film tracking
+Coe Kohawks,2025-12-30,#5,Cooper Nailor,G,"6'1""",,SR,Starter,Main creator & scorer,No C & S 3's,True,Primary Ball Handler,Synergy play types,Point of Attack,play-by-play only
+Coe Kohawks,2025-12-30,#4,Deuce Walters,G,"5'11""",,JR,Starter,Go to=Mid range pull up,Anticipate step back mid-range pull up,True,Primary Ball Handler,Synergy play types,Point of Attack,play-by-play only
+Coe Kohawks,2025-12-30,#12,C. Reece Breitenbach,G,"5'11""",,JR,Starter,Shooter/Driver,No C & S 3's,True,Stationary Shooter,Synergy play types (low sample),Point of Attack,play-by-play only
+Coe Kohawks,2025-12-30,#22,Jackson Bowman,F,"6'7""",,SR,Starter,Slasher/finisher - Attacks to score (6 asts),Anticipate RHD,True,Roll & Cut Big,Synergy play types (low sample),Mobile Big,play-by-play only
+Coe Kohawks,2025-12-30,#34,Kanyon Bryte,F,"6'8""",,SO,Starter,LS/RH in post,NLS,True,Post Scorer,Synergy play types,Anchor Big,play-by-play only
+Coe Kohawks,2025-12-30,#2,Ryan Dolphin,G,"5'9""",,SR,Bench,Shooter,No C & S 3's,True,Secondary Ball Handler,Synergy play types (low sample),Point of Attack,play-by-play only
 Coe Kohawks,2025-12-30,#20,Aaron Foote,F,"6'6""",,SR,Bench,Scores on back cuts & Slips,No Back cuts,True,Stretch Big,play-by-play only (low sample),Mobile Big,play-by-play only
 Coe Kohawks,2025-12-30,#35,Jackson Newell,F,"6'9""",,JR,Bench,Shoots mid range & 3's,Anticipate C & S (mid range and 3's),True,Stretch Big,play-by-play only (low sample),Anchor Big,play-by-play only
 UW-River Falls Falcons,2026-01-10,#14,Reggie Postel,G,"6'2""",175 lbs,SO,Starter,Shooter/Driver,NO C&S 3's,True,Primary Ball Handler,Synergy play types,Point of Attack,play-by-play only
@@ -125,16 +125,16 @@ UW-Eau Claire Blugolds,2026-01-24,#23,Xavier Lewis,F,"6'7""",225 lbs,SR,Starter,
 UW-Eau Claire Blugolds,2026-01-24,#22,Roan Demovsky,G,"6'0""",,FR,Bench,Backup PG Back up 5 man,Anticipate RHD No LS/RH,True,Secondary Ball Handler,Synergy play types (low sample),Low Activity,play-by-play only
 UW-Eau Claire Blugolds,2026-01-24,#10,Joey Butz,G,"6'0""",,SO,Bench,Shooter (57 of 65 FGA are 3's),No C&S 3's,True,Secondary Ball Handler,position only,Point of Attack,position only
 UW-Eau Claire Blugolds,2026-01-24,#5,Kenji Scales,G,"6'2""",195 lbs,SR,Bench,Driver/Shooter,"Jam and Pressure in ""10""",True,Slasher,play-by-play only (low sample),Point of Attack,play-by-play only
-UW-Oshkosh Titans,2026-01-03,#2,Joey LaChapell,G,"6'0""",175 lbs,SO,Starter,Shooter/Driver (seeks contact on jump shots),No transition 3's (locate early),True,Primary Ball Handler,Synergy play types (low sample),Chaser,film tracking
-UW-Oshkosh Titans,2026-01-03,#10,Nate Nazos,G,"6'0""",175 lbs,SO,Starter,Shooter & ball mover,No C & S 3's,True,Stationary Shooter,play-by-play only (low sample),Helper,film tracking
-UW-Oshkosh Titans,2026-01-03,#21,Carter Thomas,G,"6'5""",190 lbs,SR,Starter,Shooter/Driver,No C & S 3's,True,Movement Shooter,Synergy play types (low sample),Helper,film tracking
-UW-Oshkosh Titans,2026-01-03,#4,Michael Metcalf-Grassman,G,"6'5""",200 lbs,JR,Starter,Driver (Prefers RHD),No RHD,True,Slasher,Synergy play types (low sample),Helper,film tracking
-UW-Oshkosh Titans,2026-01-03,#0,Brandon Beck,F,"6'7""",195 lbs,SO,Starter,High level shooter and driver,Early high hand,True,Stationary Shooter,Synergy play types,Helper,film tracking
-UW-Oshkosh Titans,2026-01-03,#13,Logan Rindfleisch,G,"6'5""",190 lbs,SO,Bench,Driver/shooter,No rhythm 3's,True,Slasher,play-by-play only (low sample),Low Activity,film tracking (low sample)
-UW-Oshkosh Titans,2026-01-03,#1,Aiden Hawkinson,G,"6'3""",180 lbs,FR,Bench,Shooter,No C & S 3's,True,Movement Shooter,Synergy play types (low sample),Helper,film tracking
-UW-Oshkosh Titans,2026-01-03,#23,Oskar Kangas,F,"6'5""",205 lbs,FR,Bench,Shooter,Early high hand on closeouts,True,Stationary Shooter,Synergy play types (low sample),Wing Stopper,film tracking
-UW-Oshkosh Titans,2026-01-03,#12,Jonah Rindfleisch,F,"6'8""",215 lbs,SR,Bench,Rebounds hard!,BOX OUT!!!,True,Athletic Finisher,play-by-play only (low sample),Wing Stopper,film tracking (low sample)
-UW-Oshkosh Titans,2026-01-03,#5,Matt Imig,G,"6'1""",180 lbs,SR,Bench,Shooter (C&S & off dribble),No C & S 3's,True,Movement Shooter,Synergy play types (low sample),Helper,film tracking
+UW-Oshkosh Titans,2026-01-03,#2,Joey LaChapell,G,"6'0""",175 lbs,SO,Starter,Shooter/Driver (seeks contact on jump shots),No transition 3's (locate early),True,Primary Ball Handler,Synergy play types (low sample),Low Activity,play-by-play only
+UW-Oshkosh Titans,2026-01-03,#10,Nate Nazos,G,"6'0""",175 lbs,SO,Starter,Shooter & ball mover,No C & S 3's,True,Stationary Shooter,play-by-play only (low sample),Point of Attack,play-by-play only
+UW-Oshkosh Titans,2026-01-03,#21,Carter Thomas,G,"6'5""",190 lbs,SR,Starter,Shooter/Driver,No C & S 3's,True,Movement Shooter,Synergy play types (low sample),Low Activity,play-by-play only
+UW-Oshkosh Titans,2026-01-03,#4,Michael Metcalf-Grassman,G,"6'5""",200 lbs,JR,Starter,Driver (Prefers RHD),No RHD,True,Slasher,Synergy play types (low sample),Helper,play-by-play only
+UW-Oshkosh Titans,2026-01-03,#0,Brandon Beck,F,"6'7""",195 lbs,SO,Starter,High level shooter and driver,Early high hand,True,Stationary Shooter,Synergy play types,Low Activity,play-by-play only
+UW-Oshkosh Titans,2026-01-03,#13,Logan Rindfleisch,G,"6'5""",190 lbs,SO,Bench,Driver/shooter,No rhythm 3's,True,Slasher,play-by-play only (low sample),Low Activity,play-by-play only
+UW-Oshkosh Titans,2026-01-03,#1,Aiden Hawkinson,G,"6'3""",180 lbs,FR,Bench,Shooter,No C & S 3's,True,Movement Shooter,Synergy play types (low sample),Low Activity,play-by-play only
+UW-Oshkosh Titans,2026-01-03,#23,Oskar Kangas,F,"6'5""",205 lbs,FR,Bench,Shooter,Early high hand on closeouts,True,Stationary Shooter,Synergy play types (low sample),Wing Stopper,play-by-play only
+UW-Oshkosh Titans,2026-01-03,#12,Jonah Rindfleisch,F,"6'8""",215 lbs,SR,Bench,Rebounds hard!,BOX OUT!!!,True,Athletic Finisher,play-by-play only (low sample),Wing Stopper,play-by-play only
+UW-Oshkosh Titans,2026-01-03,#5,Matt Imig,G,"6'1""",180 lbs,SR,Bench,Shooter (C&S & off dribble),No C & S 3's,True,Movement Shooter,Synergy play types (low sample),Point of Attack,play-by-play only
 UW-Stevens Point Pointers,2026-01-07,#4,Josiah Butler,G,"6'2""",185 lbs,JR,Starter,3 level scorer,Cutoff baseline drives early,True,Movement Shooter,Synergy play types,Low Activity,play-by-play only
 UW-Stevens Point Pointers,2026-01-07,#5,Carter Combs,G,"6'0""",185 lbs,SO,Starter,Shooter,No C&S 3's,True,Secondary Ball Handler,play-by-play only (low sample),Point of Attack,play-by-play only
 UW-Stevens Point Pointers,2026-01-07,#15,Logan Baumgartner,G/F,"6'4""",225 lbs,JR,Starter,Shooter!!!,Find in Transition!!,True,Off Screen Shooter,Synergy play types,Low Activity,play-by-play only
@@ -152,30 +152,30 @@ Loras Duhawks,2026-03-06,#23,Jack Haynes,F,"6'7""",235 lbs,SR,Starter,"Scores in
 Loras Duhawks,2026-03-06,#24,Kyle Kober,G,"6'3""",195 lbs,JR,Bench,Driver/Shooter,Anticipate RHD,True,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only
 Loras Duhawks,2026-03-06,#20,Connor Mosele,G,"6'3""",205 lbs,JR,Bench,Shooter,High Hand v. 3s,True,Slasher,play-by-play only (low sample),Low Activity,play-by-play only
 Loras Duhawks,2026-03-06,#1,Deng Makeer,G,"6'6""",175 lbs,FR,Bench,Shooter (nealy 80% of shots are 3s),No C&S 3's,True,Stationary Shooter,play-by-play only (low sample),Point of Attack,play-by-play only
-Washington-St. Louis Bears,2026-03-07,#3,Josh Kim,G,"6'3""",175 lbs,FR,Starter,Driver/Shooter,Anticipate RH Finish,True,Primary Ball Handler,Synergy play types (low sample),Helper,film tracking
-Washington-St. Louis Bears,2026-03-07,#10,Yogi Oliff,G,"6'3""",175 lbs,SR,Starter,Driver/Shooter,No RHD - Keep him in FRONT!!,True,Athletic Finisher,play-by-play only (low sample),Chaser,film tracking
-Washington-St. Louis Bears,2026-03-07,#11,Ryan Cohen,G,"6'3""",180 lbs,JR,Starter,Shooter with quick release! (85% shot attempts are 3's),Locate early in transition,True,Stationary Shooter,Synergy play types (low sample),Point of Attack,film tracking
-Washington-St. Louis Bears,2026-03-07,#21,Connor May,F,"6'6""",210 lbs,SO,Starter,3 level scorer (high level shooter),Anticipate RHD,True,Movement Shooter,Synergy play types,Helper,film tracking
-Washington-St. Louis Bears,2026-03-07,#34,Calvin Kapral,C,"6'8""",225 lbs,SR,Starter,Scores in post & dump offs on drives,No LS/RH!,True,Post Scorer,play-by-play only (low sample),Anchor Big,film tracking
-Washington-St. Louis Bears,2026-03-07,#23,Anthony Przybilla,F,"6'6""",200 lbs,SO,Bench,Driver/Finisher,Keep vision of man & ball,True,Roll & Cut Big,Synergy play types (low sample),Mobile Big,film tracking
-Washington-St. Louis Bears,2026-03-07,#32,Will Grudzinski,G,"6'6""",200 lbs,SR,Bench,Shooter/Driver,High early hand on closeouts,True,Secondary Ball Handler,position only,Helper,film tracking
+Washington-St. Louis Bears,2026-03-07,#3,Josh Kim,G,"6'3""",175 lbs,FR,Starter,Driver/Shooter,Anticipate RH Finish,True,Primary Ball Handler,Synergy play types (low sample),Low Activity,play-by-play only
+Washington-St. Louis Bears,2026-03-07,#10,Yogi Oliff,G,"6'3""",175 lbs,SR,Starter,Driver/Shooter,No RHD - Keep him in FRONT!!,True,Athletic Finisher,play-by-play only (low sample),Helper,play-by-play only
+Washington-St. Louis Bears,2026-03-07,#11,Ryan Cohen,G,"6'3""",180 lbs,JR,Starter,Shooter with quick release! (85% shot attempts are 3's),Locate early in transition,True,Stationary Shooter,Synergy play types (low sample),Point of Attack,play-by-play only
+Washington-St. Louis Bears,2026-03-07,#21,Connor May,F,"6'6""",210 lbs,SO,Starter,3 level scorer (high level shooter),Anticipate RHD,True,Movement Shooter,Synergy play types,Helper,play-by-play only
+Washington-St. Louis Bears,2026-03-07,#34,Calvin Kapral,C,"6'8""",225 lbs,SR,Starter,Scores in post & dump offs on drives,No LS/RH!,True,Post Scorer,play-by-play only (low sample),Anchor Big,play-by-play only
+Washington-St. Louis Bears,2026-03-07,#23,Anthony Przybilla,F,"6'6""",200 lbs,SO,Bench,Driver/Finisher,Keep vision of man & ball,True,Roll & Cut Big,Synergy play types (low sample),Mobile Big,play-by-play only
+Washington-St. Louis Bears,2026-03-07,#32,Will Grudzinski,G,"6'6""",200 lbs,SR,Bench,Shooter/Driver,High early hand on closeouts,True,Secondary Ball Handler,position only,Low Activity,play-by-play only
 Washington-St. Louis Bears,2026-03-07,#30,Theo Rocca,G,"6'3""",190 lbs,FR,Bench,Capable shooter & driver,No C&S 3's,True,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only
-Washington-St. Louis Bears,2026-03-07,#33,George Gale,F,"6'6""",195 lbs,JR,Bench,LS/RH in post (5 man),No LS/RH,True,Roll & Cut Big,play-by-play only (low sample),Mobile Big,film tracking
-MSOE Raiders,2026-03-08,,Brady Gregg,,,,,Bench,,,False,,,Low Activity,play-by-play only
-MSOE Raiders,2026-03-08,,Brock Adams,,,,,Bench,,,False,,,Low Activity,play-by-play only
-MSOE Raiders,2026-03-08,,CJ Valente,,,,,Bench,,,False,,,Mobile Big,play-by-play only
-MSOE Raiders,2026-03-08,,Carson Cordelli,,,,,Bench,,,False,,,Wing Stopper,play-by-play only
-MSOE Raiders,2026-03-08,,Chad Coplin,,,,,Bench,,,False,,,Low Activity,play-by-play only
-MSOE Raiders,2026-03-08,,Chase Cummings,,,,,Bench,,,False,,,Point of Attack,play-by-play only
-MSOE Raiders,2026-03-08,,Daniel Franklin IV,,,,,Bench,,,False,,,Low Activity,play-by-play only
-MSOE Raiders,2026-03-08,,Dubem Igwilo,,,,,Bench,,,False,,,Low Activity,play-by-play only
-MSOE Raiders,2026-03-08,,Ethan Johnson,,,,,Bench,,,False,,,Anchor Big,play-by-play only
-MSOE Raiders,2026-03-08,,Isaac Wit,,,,,Bench,,,False,,,Low Activity,play-by-play only
-MSOE Raiders,2026-03-08,,Jace Paul,,,,,Bench,,,False,,,Low Activity,play-by-play only
-MSOE Raiders,2026-03-08,,Joey Jendusa,,,,,Bench,,,False,,,Point of Attack,play-by-play only
-MSOE Raiders,2026-03-08,,Jonathan Burroughs,,,,,Bench,,,False,,,Helper,play-by-play only
-MSOE Raiders,2026-03-08,,Kolby Henderlong,,,,,Bench,,,False,,,Low Activity,play-by-play only
-MSOE Raiders,2026-03-08,,Mason Accidentale,,,,,Bench,,,False,,,Low Activity,play-by-play only
-MSOE Raiders,2026-03-08,,Mason Dopirak,,,,,Bench,,,False,,,Point of Attack,play-by-play only
-MSOE Raiders,2026-03-08,,Matus Dopirak,,,,,Bench,,,False,,,Low Activity,play-by-play only
-MSOE Raiders,2026-03-08,,Quinn Rosenberg,,,,,Bench,,,False,,,Low Activity,play-by-play only
+Washington-St. Louis Bears,2026-03-07,#33,George Gale,F,"6'6""",195 lbs,JR,Bench,LS/RH in post (5 man),No LS/RH,True,Roll & Cut Big,play-by-play only (low sample),Mobile Big,play-by-play only
+MSOE Raiders,2026-03-08,,Brady Gregg,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Brock Adams,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,CJ Valente,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Carson Cordelli,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Chad Coplin,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Chase Cummings,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Daniel Franklin IV,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Dubem Igwilo,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Ethan Johnson,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Isaac Wit,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Jace Paul,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Joey Jendusa,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Jonathan Burroughs,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Kolby Henderlong,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Mason Accidentale,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Mason Dopirak,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Matus Dopirak,,,,,Bench,,,False,,,,
+MSOE Raiders,2026-03-08,,Quinn Rosenberg,,,,,Bench,,,False,,,,

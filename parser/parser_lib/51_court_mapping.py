@@ -161,6 +161,8 @@ def _cm_write_tool(game_key, arena, frames, base):
     """The click-to-calibrate page for one game: its frames, a court diagram with every landmark."""
     import base64
     imgs = []
+    if "vision_frames_ensure" in globals():                # frames inside a clip video (archive / Synergy export) -> JPEGs
+        vision_frames_ensure([os.path.join(base, rel) for rel in frames])
     for rel in frames:
         with open(os.path.join(base, rel), "rb") as fh:
             imgs.append({"file": rel, "src": "data:image/jpeg;base64," + base64.b64encode(fh.read()).decode("ascii")})

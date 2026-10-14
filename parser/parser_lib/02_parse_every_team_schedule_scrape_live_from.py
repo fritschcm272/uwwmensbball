@@ -80,6 +80,36 @@ def split_result(text):
     return (m.group(1), int(m.group(2)), int(m.group(3)))
 
 
+# CONFIRMED CHANGE (requested: get from a game to its Synergy game page, e.g.
+# https://apps.synergysports.com/basketball/games/69abb6434a361ba0101bd122/boxscore -- the start of exporting a game's
+# clips as video). The 24-character Synergy game ID is already inside every schedule row's video link:
+# ".../video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f<ID>%2ffullgamevideo%2fclips".
+# Every schedule now carries it as synergy_game_id, plus that game's box-score page (synergy_boxscore_url). A game with no
+# video link on FastScout (2025-26: 2/18 vs Stevens Point) has neither.
+SYNERGY_BOXSCORE_URL = "https://apps.synergysports.com/basketball/games/{game_id}/boxscore"
+_SYNERGY_GAME_ID_RE = re.compile(r"games(?:/|%2f)([0-9a-f]{24})(?![0-9a-f])", re.I)
+
+
+def synergy_game_id(url):
+    """The Synergy game ID in a FastScout/Synergy video link (or any Synergy game URL), else None."""
+    if url is None or (isinstance(url, float) and pd.isna(url)):
+        return None
+    m = _SYNERGY_GAME_ID_RE.search(str(url))
+    return m.group(1).lower() if m else None
+
+
+def add_synergy_game_ids(df):
+    """Adds synergy_game_id / synergy_boxscore_url from video_url (keeps an ID already there when the link is missing)."""
+    if not isinstance(df, pd.DataFrame) or "video_url" not in df.columns:
+        return df
+    ids = df["video_url"].map(synergy_game_id)
+    if "synergy_game_id" in df.columns:
+        ids = ids.where(ids.notna(), df["synergy_game_id"])
+    df["synergy_game_id"] = ids
+    df["synergy_boxscore_url"] = ids.map(lambda g: SYNERGY_BOXSCORE_URL.format(game_id=g) if isinstance(g, str) and g else None)
+    return df
+
+
 
 
 def _resolve_team_link(href):
@@ -212,6 +242,7 @@ def build_team_schedule_from_html(html, source_label):
     team_schedule["opponent_url"] = sched_raw["opponent_url"]
     team_schedule["game_url"] = sched_raw["game_url"]
     team_schedule["video_url"] = sched_raw["video_url"]
+    add_synergy_game_ids(team_schedule)
     res_split = sched_raw["Result"].apply(split_result)
     team_schedule["outcome"] = res_split.apply(lambda x: x[0])
     team_schedule["team_score"] = res_split.apply(lambda x: x[1])
@@ -266,7 +297,8 @@ def build_team_schedule_from_html(html, source_label):
     # the way a score/outcome is -- it's added to the allowlist alongside the other non-result columns.
     team_schedule.loc[
         team_schedule["Upcoming"] == "Yes",
-        team_schedule.columns.difference(["date", "opponent", "Upcoming", "team", "location", "opponent_url", "game_url", "video_url", "season"]),
+        team_schedule.columns.difference(["date", "opponent", "Upcoming", "team", "location", "opponent_url", "game_url", "video_url",
+                                         "synergy_game_id", "synergy_boxscore_url", "season"]),
     ] = None
 
     print(f"  {team_name} ({source_label}): {len(team_schedule)} game(s) -- {summary_note}")
@@ -1399,4 +1431,13 @@ for _, opp_row in opponents.iterrows():
         print(f"  No backup MHTML found for {opponent_name} either -- skipping this opponent.")
 
 schedule = pd.concat(team_schedules, ignore_index=True) if team_schedules else pd.DataFrame()
+add_synergy_game_ids(schedule)
+if not schedule.empty and "synergy_game_id" in schedule.columns:
+    _uw_rows = schedule[schedule["team"].astype(str).str.contains("Whitewater", case=False, na=False)]
+    _uw_played = _uw_rows[_uw_rows.get("Upcoming", pd.Series("No", index=_uw_rows.index)).astype(str) != "Yes"]
+    _uw_missing = _uw_played[_uw_played["synergy_game_id"].isna()]
+    print(f"Synergy game IDs: {int(_uw_played['synergy_game_id'].notna().sum())} of {len(_uw_played)} played UWW game(s), "
+          f"{int(schedule['synergy_game_id'].notna().sum())} game row(s) in all"
+          + (" -- no video link on FastScout for: " + ", ".join(f"{r['date']} {r['opponent']}" for _, r in _uw_missing.iterrows())
+             if len(_uw_missing) else ""))
 print(schedule)

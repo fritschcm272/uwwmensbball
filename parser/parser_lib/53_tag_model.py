@@ -327,6 +327,8 @@ def _tm_detect(paths):
         raise RuntimeError("ultralytics was installed. RESTART THE KERNEL (Kernel > Restart) and run the parser "
                            "again -- torch may have been updated and the old one is still loaded.")
     from ultralytics import YOLO
+    if "vision_hooks_ensure" in globals():
+        vision_hooks_ensure()          # ultralytics replaces cv2.imread on Windows
     from PIL import Image
     det = globals().get("_tm_detector")
     if det is None or det[0] != TAG_MODEL_DETECTOR:

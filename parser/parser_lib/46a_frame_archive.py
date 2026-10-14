@@ -91,6 +91,9 @@ def vision_frames_ensure(paths):
     """Make sure these frame files exist as JPEGs (unpacking their archived clips if needed). -> number unpacked."""
     done, n = set(), 0
     for p in paths:
+        if _fx_lookup(p) is not None and not _FA_ORIG["exists"](p):
+            n += bool(_fx_write(p))                       # a frame of a Synergy export: written from its clip video
+            continue
         hit = _fa_lookup(p)
         if hit is None or _FA_ORIG["exists"](p):
             continue
@@ -111,14 +114,171 @@ def vision_frame_archived(p):
     return _fa_lookup(p) is not None and not _FA_ORIG["exists"](p)
 
 
+# ---- Frames read straight from a game's Synergy export (no JPEGs on disk) ---------------------------------------------------
+# CONFIRMED CHANGE (requested: "build everything to use these [Synergy Editor exports] instead of the web scraping"). A game
+# exported from Synergy Editor (1080p, 30 frames a second, one .mp4 per clip, see section 46) gets its tracking frames named
+# exactly like captured ones (<game>/track1920v2/<clip>_t000.jpg ...), but they are NOT written to disk: <track folder>/
+# _export.json says which clip video and which video frame each one is. The hooks below hand any step that reads such a frame
+# (cv2.imread, PIL Image.open) the picture decoded straight from the clip video, at the game's tracking width; os.path.exists
+# sees it as present. A step that needs the actual file (a copy, a web page) calls vision_frames_ensure() first, which writes
+# those JPEGs. Disk cost: the export itself (~3 GB a game) and nothing per frame.
+_FX_INDEX_NAME = "_export.json"
+
+
+def _fx_load_index():
+    """{normalized frame path: (clip video, video frame number, width)} for every export-backed frame on disk."""
+    idx, clips = {}, {}
+    base = globals().get("VISION_FRAMES_DIR") or os.path.join(INPUT_DIR, "_vision_frames")
+    for man in glob.glob(os.path.join(base, "*", "track*", _FX_INDEX_NAME)):
+        try:
+            with open(man, encoding="utf-8") as fh:
+                d = json.load(fh)
+        except Exception:
+            continue
+        folder = os.path.dirname(man)
+        for clip, info in (d.get("clips") or {}).items():
+            vid = os.path.normpath(os.path.join(folder, info["video"]))
+            w = int(info.get("w") or 0)
+            for name, k in zip(info.get("frames", []), info.get("src", [])):
+                idx[_fa_norm(os.path.join(folder, name))] = (vid, int(k), w)
+            clips[(vid, w)] = sorted(set(int(k) for k in info.get("src", [])))
+    globals()["_fx_index"] = idx
+    globals()["_fx_clips"] = clips
+    return idx
+
+
+def _fx_lookup(p):
+    idx = globals().get("_fx_index")
+    if not idx:
+        return None
+    try:
+        return idx.get(_fa_norm(p))
+    except Exception:
+        return None
+
+
+def _fx_clip_cache(video, w, need):
+    """All of a clip's tracking frames, decoded ONCE and kept as compressed pictures (JPEG 95, ~0.3 MB each at 1920) for the
+    last few clips -- steps that jump around inside a clip (player fingerprints, review pictures) don't decode it again."""
+    import cv2
+    from collections import OrderedDict
+    st = globals().setdefault("_fx_cc", OrderedDict())
+    key = (video, w)
+    if key in st:
+        st.move_to_end(key)
+        return st[key]
+    want, got = set(need), {}
+    c = cv2.VideoCapture(video)
+    if not c.isOpened():
+        return None
+    last, i, top = None, 0, max(want)
+    q = [cv2.IMWRITE_JPEG_QUALITY, int(globals().get("FRAME_ARCHIVE_RESTORE_JPEG", 95))]
+    try:
+        while i <= top:
+            if i in want:
+                ok, fr = c.read()
+                if not ok:
+                    break
+                if w and fr.shape[1] > w:
+                    fr = cv2.resize(fr, (int(w), int(round(fr.shape[0] * w / fr.shape[1]))), interpolation=cv2.INTER_AREA)
+                ok, buf = cv2.imencode(".jpg", fr, q)
+                got[i] = last = buf
+            elif not c.grab():
+                break
+            i += 1
+    finally:
+        c.release()
+    for k in want:                                       # asked past the clip's last frame: its last frame
+        got.setdefault(k, last)
+    st[key] = got
+    while len(st) > int(globals().get("FRAME_EXPORT_CLIP_CACHE", 4)):
+        st.popitem(last=False)
+    return got
+
+
+def _fx_decode(video, k, w):
+    """Frame k of a clip video (BGR), shrunk to width w. A tracking frame comes from its clip's cache (the clip is decoded
+    once); any other frame (the tag-model frames when a game is registered) is read forward from the open video."""
+    import cv2
+    from collections import OrderedDict
+    need = (globals().get("_fx_clips") or {}).get((video, w))
+    if need and k in need:
+        got = _fx_clip_cache(video, w, need)
+        buf = got.get(k) if got else None
+        if buf is not None:
+            return cv2.imdecode(buf, cv2.IMREAD_COLOR)
+    st = globals().setdefault("_fx_state", {"caps": OrderedDict(), "memo": OrderedDict()})
+    key = (video, k, w)
+    if key in st["memo"]:
+        st["memo"].move_to_end(key)
+        return st["memo"][key].copy()
+    cap = st["caps"].get(video)
+    if cap is None or k < cap["next"]:
+        if cap is not None:
+            cap["cap"].release()
+        c = cv2.VideoCapture(video)
+        if not c.isOpened():
+            return None
+        cap = st["caps"][video] = {"cap": c, "next": 0, "last": None}
+        while len(st["caps"]) > 3:
+            _v, old = st["caps"].popitem(last=False)
+            old["cap"].release()
+    st["caps"].move_to_end(video)
+    c = cap["cap"]
+    while cap["next"] < k:
+        if not c.grab():
+            break
+        cap["next"] += 1
+    ok, fr = c.read()
+    if ok:
+        cap["next"] += 1
+        cap["last"] = fr
+    else:
+        fr = cap["last"]                                  # asked past the clip's last frame: its last frame
+        if fr is None:
+            return None
+    if w and fr.shape[1] > w:
+        fr = cv2.resize(fr, (int(w), int(round(fr.shape[0] * w / fr.shape[1]))), interpolation=cv2.INTER_AREA)
+    st["memo"][key] = fr
+    while len(st["memo"]) > 24:
+        st["memo"].popitem(last=False)
+    return fr.copy()
+
+
+def _fx_write(p):
+    """Write one export-backed frame to disk as a JPEG (for steps that need the file itself)."""
+    import cv2
+    hit = _fx_lookup(p)
+    if hit is None or _FA_ORIG["exists"](p):
+        return False
+    fr = _fx_decode(*hit)
+    if fr is None:
+        return False
+    return bool(_FA_ORIG["imwrite"](p, fr, [cv2.IMWRITE_JPEG_QUALITY, int(globals().get("FRAME_ARCHIVE_RESTORE_JPEG", 95))]))
+
+
 # ---- Hooks: archived frames look present, and are unpacked the moment something reads one ------------------------------
 def _fa_install_hooks():
     import cv2
     from PIL import Image as _PILImage
-    if globals().get("_FA_ORIG") is None or not getattr(cv2.imread, "_fa_hook", False):
-        globals()["_FA_ORIG"] = {"imread": cv2.imread, "imwrite": cv2.imwrite, "pil_open": _PILImage.open,
-                                 "exists": os.path.exists, "getsize": os.path.getsize, "isfile": os.path.isfile}
-    O = globals()["_FA_ORIG"]
+    # CONFIRMED BUG (fixed; detector compare on the WashU export: "'NoneType' object has no attribute 'shape'" from
+    # cv2.imread). On Windows, the YOLO library (ultralytics) REPLACES cv2.imread / cv2.imwrite with its own versions the
+    # first time it's imported (ultralytics/utils/__init__.py: "if WINDOWS: cv2.imread, cv2.imwrite, cv2.imshow = ...").
+    # When that happened after these hooks were installed, the hook was gone and every frame inside an export read as None.
+    # Now: ultralytics is imported FIRST (its patch lands before ours and ours wraps it), each original is kept per function
+    # (never our own hook -- that would call itself), and vision_hooks_ensure() puts the hooks back if anything replaces them.
+    try:
+        import importlib.util as _ilu
+        if _ilu.find_spec("ultralytics") is not None:
+            import ultralytics.utils  # noqa: F401  (applies its cv2 patch now, before ours)
+    except Exception:
+        pass
+    O = globals().get("_FA_ORIG") or {}
+    for _k, _f in (("imread", cv2.imread), ("imwrite", cv2.imwrite), ("pil_open", _PILImage.open),
+                   ("exists", os.path.exists), ("getsize", os.path.getsize), ("isfile", os.path.isfile)):
+        if not getattr(_f, "_fa_hook", False):
+            O[_k] = _f                        # the function underneath ours (the original, or another library's patch)
+    globals()["_FA_ORIG"] = O
 
     def _restore_for(p):
         hit = _fa_lookup(p)
@@ -128,27 +288,47 @@ def _fa_install_hooks():
             except Exception as e:
                 print(f"  [frame archive] couldn't unpack {os.path.basename(hit[0])}: {type(e).__name__}: {e}", flush=True)
 
+    def _virtual(p):
+        """A Synergy-export frame that isn't on disk: (video, frame, width), else None."""
+        if not isinstance(p, (str, os.PathLike)):
+            return None
+        hit = _fx_lookup(p)
+        return hit if hit is not None and not O["exists"](p) else None
+
     def imread(filename, *a, **k):
+        hit = _virtual(filename)
+        if hit is not None:
+            fr = _fx_decode(*hit)
+            flags = a[0] if a else k.get("flags", cv2.IMREAD_COLOR)
+            if fr is not None and flags == cv2.IMREAD_GRAYSCALE:
+                fr = cv2.cvtColor(fr, cv2.COLOR_BGR2GRAY)
+            return fr
         if isinstance(filename, (str, os.PathLike)):
             _restore_for(filename)
         return O["imread"](filename, *a, **k)
 
     def pil_open(fp, *a, **k):
+        hit = _virtual(fp)
+        if hit is not None:
+            fr = _fx_decode(*hit)
+            if fr is None:
+                raise FileNotFoundError(f"couldn't read frame {hit[1]} of {hit[0]}")
+            return _PILImage.fromarray(cv2.cvtColor(fr, cv2.COLOR_BGR2RGB))
         if isinstance(fp, (str, os.PathLike)):
             _restore_for(fp)
         return O["pil_open"](fp, *a, **k)
 
     def exists(p):
         r = O["exists"](p)
-        return r or (isinstance(p, (str, os.PathLike)) and _fa_lookup(p) is not None)
+        return r or (isinstance(p, (str, os.PathLike)) and (_fa_lookup(p) is not None or _fx_lookup(p) is not None))
 
     def isfile(p):
         r = O["isfile"](p)
-        return r or (isinstance(p, (str, os.PathLike)) and _fa_lookup(p) is not None)
+        return r or (isinstance(p, (str, os.PathLike)) and (_fa_lookup(p) is not None or _fx_lookup(p) is not None))
 
     def getsize(p):
-        if isinstance(p, (str, os.PathLike)) and not O["exists"](p) and _fa_lookup(p) is not None:
-            return 1                                       # archived: present, just packed in its clip video
+        if isinstance(p, (str, os.PathLike)) and not O["exists"](p) and (_fa_lookup(p) is not None or _fx_lookup(p) is not None):
+            return 1                                       # archived / in a Synergy export: present, just inside a video
         return O["getsize"](p)
 
     for f in (imread, pil_open, exists, isfile, getsize):
@@ -158,6 +338,15 @@ def _fa_install_hooks():
     os.path.exists = exists
     os.path.isfile = isfile
     os.path.getsize = getsize
+
+
+def vision_hooks_ensure():
+    """Put the frame hooks back if another library replaced them (ultralytics does on Windows). Cheap; call before reading."""
+    import cv2
+    from PIL import Image as _PILImage
+    if not (getattr(cv2.imread, "_fa_hook", False) and getattr(_PILImage.open, "_fa_hook", False)
+            and getattr(os.path.exists, "_fa_hook", False)):
+        _fa_install_hooks()
 
 
 # ---- Which frames must stay as JPEGs --------------------------------------------------------------------------------------
@@ -714,6 +903,8 @@ def frame_lean_run():
     tot_b = tot_a = 0.0
     for d in _fa_game_dirs():
         name = os.path.basename(d)
+        if glob.glob(os.path.join(d, "track*", _FX_INDEX_NAME)):
+            continue                                       # frames come from the game's Synergy export: nothing to slim down
         jpgs = glob.glob(os.path.join(d, "track*", "*.jpg"))
         archived = any(True for _ in glob.glob(os.path.join(d, "track*", "*.mp4")))
         if not jpgs and not archived:
@@ -765,6 +956,19 @@ def frame_archive_run():
         name = os.path.basename(d)
         if name in restore:
             continue
+        if glob.glob(os.path.join(d, "track*", _FX_INDEX_NAME)):
+            # a game read from its Synergy export: JPEGs written from it (vision_frames_ensure) are re-made in a moment, so
+            # they're removed here -- except coach-check and court-calibration frames
+            _fx_i = globals().get("_fx_index") or {}
+            made = [f for f in glob.glob(os.path.join(d, "track*", "*.jpg")) if _fa_norm(f) in _fx_i and _fa_norm(f) not in keep]
+            if made and not dry:
+                for f in made:
+                    os.remove(f)
+                print(f"Frame archive: {name} -- removed {len(made):,} JPEG(s) written from its Synergy export (re-made from "
+                      f"the clip videos when needed)", flush=True)
+            elif made:
+                print(f"Frame archive: {name} -- WOULD remove {len(made):,} JPEG(s) written from its Synergy export", flush=True)
+            continue
         if _FA_ORIG["exists"](os.path.join(d, _FL_NAME)):
             continue                                       # lean mode already keeps only a few frames of this game
         jpgs = [f for f in glob.glob(os.path.join(d, "track*", "*.jpg"))]
@@ -806,6 +1010,7 @@ def frame_archive_run():
 
 # ---- Every time this file runs: load the index and install the hooks -------------------------------------------------------
 _fa_install_hooks()
+_fx_load_index()
 _fa_idx = _fa_load_index()
 if _fa_idx:
     print(f"Frame archive: {len(_fa_idx):,} tracking frame(s) are packed in clip videos -- unpacked automatically when a "
