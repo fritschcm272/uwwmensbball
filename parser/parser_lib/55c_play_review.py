@@ -887,6 +887,40 @@ def _pr_film_here(r):
     return False
 
 
+def _tag_refresh_people(pkg, g, gd, gc):
+    """An open (unsaved) Film Tagging batch keeps its plays, but who was on offense / defense and the two fives are updated
+    from today's play calls. CONFIRMED BUG (fixed with the team-code fix in Play calls): batches built before it listed our
+    five as the offense on the opponent's possessions (the Screener list showed UWW players)."""
+    rj = os.path.join(pkg, "review.json")
+    try:
+        with open(rj, encoding="utf-8") as fh:
+            doc = json.load(fh)
+    except Exception:
+        return
+    by_key = {_pl_ckey_norm(f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}"): r for _, r in g.iterrows()}
+    try:
+        _gn = _trk_numbers_for_game(gd, gc) if "_trk_numbers_for_game" in globals() else {}
+    except Exception:
+        _gn = {}
+    n = 0
+    for pl in doc.get("plays", []):
+        r = by_key.get(_pl_ckey_norm(pl.get("clip_key")))
+        if r is None:
+            continue
+        five = {"offense": _trk_five(r.get("offense_lineup")), "defense": _trk_five(r.get("defense_lineup"))}
+        _cl = lambda v: None if v is None or (isinstance(v, float) and pd.isna(v)) else str(v)
+        new = {"offense": _cl(r.get("offense_team")), "defense": _cl(r.get("defense_team")), "five": five,
+               "five_labels": {nm: (f"#{_gn[str(nm).lower()]} {nm}" if _gn.get(str(nm).lower()) else nm)
+                               for side_ in ("offense", "defense") for nm in five[side_]}}
+        if any(pl.get(k) != v for k, v in new.items()):
+            pl.update(new)
+            n += 1
+    if n:
+        with open(rj, "w", encoding="utf-8") as fh:
+            json.dump(doc, fh, default=str)
+        print(f"Film Tagging: {gd} {gc}: open batch -- offense / defense and lineups updated on {n} play(s)", flush=True)
+
+
 def tag_queue():
     pc = play_calls.copy() if isinstance(globals().get("play_calls"), pd.DataFrame) else pd.DataFrame()
     if pc.empty:
@@ -952,6 +986,7 @@ def tag_queue():
                 if _tag_titles_saved(slug_game, old_run):
                     shutil.rmtree(pkg, ignore_errors=True)
                 elif globals().get("PLAY_TAG_REQUIRE_SAVED", True):
+                    _tag_refresh_people(pkg, g, gd, gc)        # same plays, today's offense / defense and lineups
                     continue                                   # its open batch isn't saved yet
             except Exception:
                 pass

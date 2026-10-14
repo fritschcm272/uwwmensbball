@@ -2290,13 +2290,15 @@ def _pl_untagged_from_frames(tagged):
     # CONFIRMED BUG (fixed; first run: all 386 untagged clips landed in "Other" and the run crashed). Which side a captured
     # game is on now comes from WHERE its clip page was found -- UWW's schedule or the upcoming opponent's prior games --
     # and from the play-by-play it was matched to, not only from the clip page's Team column (often blank).
-    _urls, _url_dates = {}, {}
+    _urls, _url_dates, _url_opp = {}, {}, {}
     for _sn, _side in (("uww_team_schedule", "UWW"), ("prev_games", "Opponent")):
         _sd = globals().get(_sn)
         if isinstance(_sd, pd.DataFrame) and "video_url" in _sd.columns:
             for _, _sr in _sd[_sd["video_url"].notna()].iterrows():
                 _u = str(_sr["video_url"])
                 _urls.setdefault(_u, _side)
+                if _side == "UWW" and str(_sr.get("opponent") or "").strip():
+                    _url_opp.setdefault(_u, str(_sr.get("opponent")).strip())   # our opponent in that game
                 # the game's real date, from the schedule the clip page was found on
                 _sgd = _sr.get("game_date")
                 if _sgd is None or (not isinstance(_sgd, str) and pd.isna(_sgd)):
@@ -2356,6 +2358,19 @@ def _pl_untagged_from_frames(tagged):
             _team = r.get("team")
             if (_team is None or (isinstance(_team, float) and pd.isna(_team)) or not str(_team).strip()) and m is not None:
                 _team = m.get("team")                      # the clip page had no Team: the matched play's team
+            # CONFIRMED BUG (fixed; Film Tagging: "it is always showing the UWW lineup in the screener options even though in
+            # this clip UWW is on defense"). Synergy gives the team as a 3-4 letter code ("WAS", "WWW"); matched against the
+            # play-by-play's team names nothing overlapped, so EVERY clip fell back to UW-Whitewater -- counted as our
+            # possession, with our five as the offense. A code is now turned into the team's name: WWW = us; the other code in
+            # one of our games = that game's opponent; else the matched play-by-play play's team.
+            _t = str(_team or "").strip()
+            if re.fullmatch(r"[A-Z]{2,5}", _t):
+                if _t == "WWW":
+                    _team = _PL_UWW
+                elif hint == "UWW" and _url_opp.get(str(_url)):
+                    _team = _url_opp[str(_url)]
+                elif m is not None and str(m.get("team") or "").strip():
+                    _team = m.get("team")
             rows.append({"Title": "", "Result": r.get("result"), "Date": str(gd0), "Pd.": None, "Clock": None,
                          "Player": r.get("player"), "Team": _team, "Game": r.get("clip_game"),
                          "Synergy String": desc, "#": int(n), "_route_hint": hint,

@@ -1,7 +1,3 @@
 opponent,item,what_they_do,how_we_attack,is_sample
-MSOE Raiders,Base defense,Man-to-man about 80% of possessions; 2-3 zone out of timeouts,Have a zone offense called from the bench on every dead ball,True
-MSOE Raiders,Ball-screen coverage,Hard hedge and recover,Short roll to the free-throw line; slip early,True
-MSOE Raiders,Handoffs,Switch,Keep the ball and attack the slower defender; re-screen,True
-MSOE Raiders,Post defense,"Play behind, dig from the passer",Swing it after the dig; shooter relocates,True
-MSOE Raiders,Help rules,Strong-side low man helps on drives,Corner stays filled; baseline drift,True
-MSOE Raiders,Pressure,"1-2-1-1 after made free throws, late halves","Middle flash, ball reversal, attack 4-on-3",True
+MSOE Raiders,Base defense,Man-to-Man on 100% of 20 tagged possessions,,False
+MSOE Raiders,Ball-screen coverage,Over (20x),,False

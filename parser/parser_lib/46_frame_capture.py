@@ -1410,9 +1410,9 @@ def _vx_ingest(label, url, folder, cache):
     for _, e in todo.iterrows():
         pos = int(pd.to_numeric(e["#"], errors="coerce"))
         desc = str(e.get("Synergy String") or "")
-        codes = str(e.get("Game") or "").split("@")
-        team = (next((c for c in codes if c.upper() == "WWW"), "WWW") if re.search(r"(?i)whitewater", str(e.get("Team") or ""))
-                else next((c for c in codes if c.upper() != "WWW"), str(e.get("Team") or "")))
+        # the team's full name ("Washington (St. Louis) Bears") -- Play calls matches it to the play-by-play by its words
+        # (a 3-letter code like "WAS" matched nothing, and every clip was counted as ours)
+        team = str(e.get("Team") or "").strip() or None
         rec = {"source_label": label, "source_url": url, "position": pos, "clip_game": game_part, "clip_date": clip_date,
                "team": team, "player": str(e.get("Title") or "").strip(), "result": e.get("Result"), "description": desc,
                "duration_s": _vx_secs(e.get("Duration")), "test_run": bool(VISION_TEST_CLIPS), "page_clips": len(todo),

@@ -214,3 +214,13 @@ Tag model (overall),v2026.10.14,2026-10-14,trained,2026-10-14T09:29:04,newest of
 Jersey-number recognizer,v2026.10.13.2,2026-10-13,trained,2026-10-13T22:19:00,"3560 training crops; 88% of held-back crops right; sources {'reads': 0, 'extra': 3615, 'coach': 517}",2026-10-14T09:31:49
 Player tracking,v2026.10.14,2026-10-14,pretrained + code,c284c9e91903,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-14T09:31:49
 Court mapping,v2026.10.14,2026-10-14,rules + code,431097ad445e,1 calibration file(s),2026-10-14T09:31:49
+Tag model: ball_screen_coverage,v2026.10.14.2,2026-10-14,trained,2026-10-14T11:34:54,"94 tagged clips, 5 answers learned, one answer only",2026-10-14T11:36:28
+Tag model: defense,v2026.10.14.2,2026-10-14,trained,2026-10-14T11:34:54,"274 tagged clips, 1 answers learned, one answer only",2026-10-14T11:36:28
+Tag model: formation,v2026.10.14.2,2026-10-14,trained,2026-10-14T11:34:54,"149 tagged clips, 4 answers learned, one answer only",2026-10-14T11:36:28
+Tag model: offball_coverage,v2026.10.14.2,2026-10-14,trained,2026-10-14T11:34:54,"71 tagged clips, 2 answers learned",2026-10-14T11:36:28
+Tag model: play_call,v2026.10.14.2,2026-10-14,trained,2026-10-14T11:34:54,"185 tagged clips, 7 answers learned",2026-10-14T11:36:28
+Tag model: press,v2026.10.14.2,2026-10-14,trained,2026-10-14T11:34:54,"274 tagged clips, 3 answers learned, one answer only",2026-10-14T11:36:28
+Tag model: primary_action,v2026.10.14.2,2026-10-14,trained,2026-10-14T11:34:54,"131 tagged clips, 6 answers learned, one answer only",2026-10-14T11:36:28
+Tag model: screen_defender,v2026.10.14.2,2026-10-14,trained,2026-10-14T11:34:54,"61 tagged clips, 6 answers learned",2026-10-14T11:36:28
+Tag model: situation,v2026.10.14.2,2026-10-14,trained,2026-10-14T11:34:54,"318 tagged clips, 5 answers learned, one answer only",2026-10-14T11:36:28
+Tag model (overall),v2026.10.14.2,2026-10-14,trained,2026-10-14T11:34:54,newest of 9 field model(s); last retrained field: situation,2026-10-14T11:36:28
