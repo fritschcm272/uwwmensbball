@@ -6892,15 +6892,28 @@ def _ft_seed_from_saves(d, store, kp):
         docs = []
     docs.sort(key=lambda x: str(x.get("saved", "")))
     fields_of = {pi: {f.get("field"): fi for fi, f in enumerate(pl.get("fields", []))} for pi, pl in enumerate(plays)}
-    ans, acts = {}, {}
+    ans, acts, real = {}, {}, set()
     for doc in docs:
+        # CONFIRMED CHANGE (requested: "Man-to-Man was most likely considered by the coach as correct"): on a play the coach
+        # worked on in a save (changed any field or its Actions table), the fields he left on the automatic answer were
+        # accepted -- they're loaded (and marked) too. A play he never touched in that save stays automatic.
+        worked = {str(a.get("clip_key")) for a in (doc.get("answers") or []) + (doc.get("actions") or [])
+                  if not a.get("prefilled")}
         for a in doc.get("answers") or []:
             pi = pi_of.get(str(a.get("clip_key")))
-            if pi is None or a.get("prefilled") or a.get("field") in _FT_ACTION_FIELDS:
+            if pi is None or a.get("field") in _FT_ACTION_FIELDS:
+                continue
+            if a.get("prefilled") and str(a.get("clip_key")) not in worked:
                 continue
             fi = fields_of.get(pi, {}).get(a.get("field"))
-            if fi is not None and a.get("verdict") in ("right", "wrong"):
+            if fi is None or a.get("verdict") not in ("right", "wrong"):
+                continue
+            if a.get("prefilled"):
+                if (pi, fi) not in real:                 # an accepted default never replaces a real answer
+                    ans[(pi, fi)] = a
+            else:
                 ans[(pi, fi)] = a
+                real.add((pi, fi))
         by = {}
         for a in doc.get("actions") or []:
             pi = pi_of.get(str(a.get("clip_key")))
