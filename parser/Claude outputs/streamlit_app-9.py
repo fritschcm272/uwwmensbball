@@ -6492,6 +6492,8 @@ _FT_ACT_COLS = ["Action", "Screener", "Screener action", "Coverage", "Screen def
 _FT_ACT_TEXT = list(_FT_ACT_COLS)
 # requested: actions offered in the Action list even before any clip has been tagged with them
 _FT_EXTRA_ACTIONS = ["Pass to the 5 and downscreen", "Rhino", "Cobra", "Fox"]
+# requested: coverages offered in the Coverage list even before any clip has been tagged with them
+_FT_EXTRA_COVERAGES = ["Flat Hedge"]
 # requested: "a column for what the screener did -- Pop, Roll, etc." (answers already typed are offered too)
 _FT_SCREENER_ACTIONS = ["Roll", "Pop", "Short roll", "Slip", "Ghost", "Re-screen", "Flare / fade", "Replace",
                         "Seal", "Cut to basket"]
@@ -6649,7 +6651,8 @@ def _ft_actions_editor(d, pi, store, kp):
                options=_FT_SCREENER_ACTIONS + [v for v in opt(voc.get("screener_action"), cur_vals("Screener action"))
                                                if v not in _FT_SCREENER_ACTIONS]),
            "Coverage": st.column_config.SelectboxColumn("Coverage", options=opt(voc.get("ball_screen_coverage"),
-                                                                                 voc.get("offball_coverage"), cur_vals("Coverage"))),
+                                                                                 voc.get("offball_coverage"), _FT_EXTRA_COVERAGES,
+                                                                                 cur_vals("Coverage"))),
            "Screen defender": st.column_config.SelectboxColumn("Screen defender", options=(
                opt([_ft_lab(pl, n) for n in five.get("defense") or []], cur_vals("Screen defender")) if five.get("defense")
                else opt(voc.get("screen_defender"), cur_vals("Screen defender"))))}
