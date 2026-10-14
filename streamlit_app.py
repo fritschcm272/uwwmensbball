@@ -6446,7 +6446,7 @@ def _pnt_check_form(prd):
                   + ".  To get new clips for the number checks, run the play tracking in the parser first "
                     "(Player tracking, then the Play review) -- new clips only appear after that."
                   if saved else ""))
-    with st.form(f"prx_players_form{sfx}"):
+    with _form_no_enter(f"prx_players_form{sfx}"):
         for pi, pl in enumerate(prd.get("plays", [])):
             with st.expander(f"Clip {pl.get('clip_number')} \u00b7 {pl.get('clock', '')} \u00b7 "
                              f"{str(pl.get('synergy', ''))[:70]}", expanded=True):     # requested: open by default
@@ -6748,6 +6748,16 @@ def _ft_field_widgets(d, pi, store, kp):
                 store.pop(kt, None)
 
 
+def _form_no_enter(key):
+    """CONFIRMED BUG (fixed; "every time I try to add text in the 'or type another answer' box, it tries to save the entire
+    form"): inside st.form, pressing Enter in any text box submits the form -- i.e. clicks Save. Enter no longer saves; only
+    the Save button does (Streamlit 1.40+; older versions don't have the switch)."""
+    try:
+        return st.form(key, enter_to_submit=False)
+    except TypeError:
+        return st.form(key)
+
+
 def render_film_tagging():
     """Analytics > Film Tagging (requested: coaches tag games in the app, not in Synergy's Title field). Every captured
     clip with no tag yet, a batch per game (ours and the upcoming opponent's), in game order: watch the play, pick or type
@@ -6805,7 +6815,7 @@ def render_film_tagging():
                 "Each field starts on the coach's answer (\u2713 = the automatic answer). ")
                + "Change only what's wrong; set a field to -- if you can't tell. Saving accepts the rest as they are.")
     _sfx = f"_ft_{d.get('slug')}"
-    _form = st.form(f"ft_form_{d.get('slug')}_{d.get('run')}")
+    _form = _form_no_enter(f"ft_form_{d.get('slug')}_{d.get('run')}")
     for pi, pl in enumerate(d.get("plays", [])):
         n_set = len([k for k in store if k.startswith(f"{kp}_v_{d.get('run')}_{pi}_")])
         head = (f"Clip {pl.get('clip_number')} \u00b7 {pl.get('clock') or ''} \u00b7 {str(pl.get('synergy') or '')[:90]}"
@@ -13775,7 +13785,7 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
     coach = st.text_input("Your name (required to save)", key=f"pr_coach{key_suffix}")
     norm = lambda x: re.sub(r"[^a-z0-9#]+", "", str(x).lower())
     vocab = d.get("vocab", {})
-    with st.form(f"pr_form_{d.get('run')}{key_suffix}"):
+    with _form_no_enter(f"pr_form_{d.get('run')}{key_suffix}"):
         sel = {}
         for pi, p in enumerate(d.get("plays", [])):
             st.markdown(f"**Clip {p.get('clip_number')}** &nbsp; {p.get('clock', '')} &nbsp; {p.get('synergy', '')}"
