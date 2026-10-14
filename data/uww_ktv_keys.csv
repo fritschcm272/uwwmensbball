@@ -13,18 +13,22 @@ MSOE Raiders,2026-03-08,Defense,3,📊,Take away their most efficient high-volum
 MSOE Raiders,2026-03-08,Defense,4,📊,Funnel them into their worst high-volume looks,Spot-Up: 42.0% on 471 attempts; Hand Off: 44.6% on 56 attempts,Each is 5+ points below their 50.2% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
 MSOE Raiders,2026-03-08,Defense,5,📊,Pressure the actions they turn it over on,Post-Up: 21 TO in 92 uses (22.8% vs 11.6% across all actions); Transition: 49 TO in 266 uses (18.4% vs 11.6% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
 MSOE Raiders,2026-03-08,Defense,6,🛡️,What MSOE Raiders goes to most: Drive to the basket,"474 attempts, 60% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
-MSOE Raiders,2026-03-08,Personnel,7,🔒,"Attack MSOE Raiders's Cordelli, Cummings, Johnson, Burroughs, Dopirak lineup","Worst +/- lineups:
+MSOE Raiders,2026-03-08,Defense,7,📋,Take away their go-to set: 5 Out Motion,"20 uses in 1 games · 1.00 PPP (their overall 1.00) · 9/18 FG · 2 TO
+Finished most by Marvin Haslett (3x)
+Built on: Ball Screen
+Tagged as: [app] 5 Out Motion: Man-to-Man (Over)","Their most-called half-court set (20 times in 1 games). Marvin Haslett finishes it most, usually off the ball screen -- take away the ball screen and make someone else beat us.",Data-Driven,1.0,1.0,True,90.0
+MSOE Raiders,2026-03-08,Personnel,8,🔒,"Attack MSOE Raiders's Cordelli, Cummings, Johnson, Burroughs, Dopirak lineup","Worst +/- lineups:
 -109.0 in 214.2 min, 57% FG — Cordelli, Cummings, Johnson, Burroughs, Dopirak
 -14.0 in 8.4 min, 73% FG — Cordelli, IV, Johnson, Burroughs, Dopirak
 -13.0 in 10.2 min, 54% FG — Valente, Cordelli, Cummings, Jendusa, Burroughs
 Highest TO rate (per 40 min):
 25.5 TO/40 — Cordelli, Johnson, Wit, Jendusa, Dopirak
 22.7 TO/40 — Cummings, Johnson, Wit, Burroughs, Dopirak","MSOE Raiders's most exploitable units: their worst net-rating lineups with real minutes this season (8+ min, losing their minutes), and the lineups that give the ball away most per 40 minutes. The headline names the worst of them.",Lineup Scouting,1.0,1.0,True,88.0
-MSOE Raiders,2026-03-08,Personnel,8,🔒,"Attack MSOE Raiders's Cordelli, Cummings, Burroughs combo","Worst +/- 3-man combos:
+MSOE Raiders,2026-03-08,Personnel,9,🔒,"Attack MSOE Raiders's Cordelli, Cummings, Burroughs combo","Worst +/- 3-man combos:
 -151.0 in 435.2 min — Cordelli, Cummings, Burroughs
 -145.0 in 245.3 min — Cordelli, Johnson, Burroughs
 -127.0 in 360.3 min — Cordelli, Johnson, Dopirak",MSOE Raiders's most exploitable 3-man combinations: their worst net-rating units with real minutes this season (12+ min).,Lineup Scouting,0.6939338235294118,1.0,True,75.8
-MSOE Raiders,2026-03-08,Personnel,9,,"Feature the Madson, Berezowitz, McEwen combo","Madson, Berezowitz, McEwen: +20.2 per 40 after shrinkage (+29.3 raw) · on/off +23.5 · 89 competitive min in 17 games (0 garbage-time min found)
+MSOE Raiders,2026-03-08,Personnel,10,,"Feature the Madson, Berezowitz, McEwen combo","Madson, Berezowitz, McEwen: +20.2 per 40 after shrinkage (+29.3 raw) · on/off +23.5 · 89 competitive min in 17 games (0 garbage-time min found)
 Madson, Quast, McEwen: +19.9 per 40 after shrinkage (+27.3 raw) · on/off +21.7 · 109 competitive min in 19 games (0 garbage-time min found)
 Chestnut, Quast, Berezowitz: +19.6 per 40 after shrinkage (+34.7 raw) · on/off +28.3 · 52 competitive min in 12 games (0 garbage-time min found)
 On/off: +23.5 per 40 minutes (better with them on the floor)",Our best trio this season -- +20.2 per 40 minutes together; get them on the floor together.,Lineup Scouting,1.0,0.7393333333333333,True,84.1

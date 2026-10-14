@@ -1,9 +1,9 @@
 game,clips,tracks,anchors,anchors_by_pose,anchors_by_rim,teams_by_color,clips_ball_seen,clips_with_lineups,synergy_player_in_lineup,tracks_named,anchor_name_check,tracks_named_by_number,tracks_number_read,anchor_vs_number_check,tracks_named_by_evidence,tracks_named_by_elimination,lineup_vs_anchor_check,numbers_used
 2025-12-20|WWW@AC,174,0,0,0,0,no -- no anchors and no home/away rule for this game,0,173,171,0,--,0,0,--,0,0,--,False
 2025-12-30|WWW@COE,175,0,0,0,0,no -- no anchors and no home/away rule for this game,0,168,159,0,--,0,0,--,0,0,--,False
-2026-01-03|UWOshkosh@UWWhitewater,12,0,0,0,0,no -- no anchors and no home/away rule for this game,0,10,6,0,--,0,0,--,0,0,--,False
+2026-01-03|UWOshkosh@UWWhitewater,12,0,0,0,0,no -- no anchors and no home/away rule for this game,0,12,12,0,--,0,0,--,0,0,--,False
 2026-01-03|WOS@WWW,184,0,0,0,0,no -- no anchors and no home/away rule for this game,0,175,169,0,--,0,0,--,0,0,--,False
-2026-02-21|Aurora@MSOE,165,0,0,0,0,no -- no anchors and no home/away rule for this game,0,0,0,0,--,0,0,--,0,0,--,False
-2026-02-24|Lakeland(WI)@MSOE,179,0,0,0,0,no -- no anchors and no home/away rule for this game,0,0,0,0,--,0,0,--,0,0,--,False
-2026-02-26|MarianWI@MSOE,30,0,0,0,0,no -- no anchors and no home/away rule for this game,0,0,0,0,--,0,0,--,0,0,--,False
-2026-03-07|UWWhitewater@Wash(StLouis),167,15326,0,0,0,"home team wears light (Washington-St. Louis Bears) -- jerseys look similar in brightness, check the images",167,160,68,0,--,0,0,--,0,0,--,False
+2026-02-21|Aurora@MSOE,165,0,0,0,0,no -- no anchors and no home/away rule for this game,0,127,70,0,--,0,0,--,0,0,--,False
+2026-02-24|Lakeland(WI)@MSOE,179,0,0,0,0,no -- no anchors and no home/away rule for this game,0,167,140,0,--,0,0,--,0,0,--,False
+2026-02-26|MarianWI@MSOE,30,0,0,0,0,no -- no anchors and no home/away rule for this game,0,30,17,0,--,0,0,--,0,0,--,False
+2026-03-07|UWWhitewater@Wash(StLouis),167,15326,0,0,0,"home team wears light (Washington-St. Louis Bears) -- jerseys look similar in brightness, check the images",167,162,147,0,--,0,0,--,0,0,--,False
