@@ -364,15 +364,19 @@ def _pr_mp4_ok():
 
 def _pr_clip_from_video(video, k0, k1, out_base):
     """CONFIRMED CHANGE (Synergy exports): a play read from a Synergy export gets its video from the real clip -- smooth motion
-    at PLAY_REVIEW_EXPORT_FPS frames a second (15) instead of a 4-a-second slideshow of the tracking frames. Same width and
-    compression as before. -> file name, or None."""
+    at PLAY_REVIEW_EXPORT_FPS frames a second instead of a 4-a-second slideshow of the tracking frames. CONFIRMED CHANGE
+    (coaches: the videos were choppy and not clear -- 560 px, 15 fps, CRF 30): now PLAY_REVIEW_EXPORT_WIDTH px (960) at
+    PLAY_REVIEW_EXPORT_FPS (30, the clip's own rate) and CRF PLAY_REVIEW_EXPORT_CRF (25) -- about 2 MB per 15-second play.
+    -> file name, or None."""
     import cv2
     import imageio.v2 as imageio
     cap = cv2.VideoCapture(video)
     if not cap.isOpened():
         return None
     vfps = float(cap.get(cv2.CAP_PROP_FPS) or 30.0)
-    step = max(1, int(round(vfps / float(globals().get("PLAY_REVIEW_EXPORT_FPS", 15)))))
+    step = max(1, int(round(vfps / float(globals().get("PLAY_REVIEW_EXPORT_FPS", 30)))))
+    _w = int(globals().get("PLAY_REVIEW_EXPORT_WIDTH", 960))
+    _crf = str(int(globals().get("PLAY_REVIEW_EXPORT_CRF", 25)))
     path = out_base + ".mp4"
     wr, first, k = None, None, 0
     try:
@@ -385,12 +389,13 @@ def _pr_clip_from_video(video, k0, k1, out_base):
                 if not ok:
                     break
                 H, W = fr.shape[:2]
-                sc = PLAY_REVIEW_VIDEO_WIDTH / float(W)
-                fr = cv2.resize(fr, (PLAY_REVIEW_VIDEO_WIDTH // 2 * 2, int(H * sc) // 2 * 2), interpolation=cv2.INTER_AREA)
+                if W > _w:
+                    sc = _w / float(W)
+                    fr = cv2.resize(fr, (_w // 2 * 2, int(H * sc) // 2 * 2), interpolation=cv2.INTER_AREA)
                 rgb = cv2.cvtColor(fr, cv2.COLOR_BGR2RGB)
                 if wr is None:
                     wr = imageio.get_writer(path, fps=vfps / step, codec="libx264", quality=None, macro_block_size=2,
-                                            pixelformat="yuv420p", ffmpeg_params=["-crf", "30", "-preset", "medium",
+                                            pixelformat="yuv420p", ffmpeg_params=["-crf", _crf, "-preset", "medium",
                                                                                   "-movflags", "+faststart"])
                     first = rgb
                 wr.append_data(rgb)
@@ -402,7 +407,7 @@ def _pr_clip_from_video(video, k0, k1, out_base):
     if first is None:
         return None
     from PIL import Image
-    Image.fromarray(first).save(out_base + "_poster.jpg", "JPEG", quality=70)
+    Image.fromarray(first).save(out_base + "_poster.jpg", "JPEG", quality=80)
     return os.path.basename(path)
 
 
