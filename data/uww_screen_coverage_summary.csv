@@ -3,8 +3,8 @@ UWW,MSOE Raiders,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x 
 UWW,MSOE Raiders,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Switch,20,20,False,,4,1,4,0.5,0.0,4,0,bs:press(rj)(switch) | 5OUT(BS):press(RJ)(SWITCH)
 UWW,MSOE Raiders,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),none,20,20,False,,4,1,4,1.0,50.0,4,0,::press(rj) | 5out(over):m2m(rj)
 UWW,MSOE Raiders,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Under,20,15,False,,3,1,3,0.67,33.3,3,0,[app] 5 Out Motion: Man-to-Man (Top Lock | Under) | [app] 5 Out Twins: Man-to-Man (Under)
-UWW,MSOE Raiders,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,#3 JOSH KIM,Over,1,100,True,,1,1,1,3.0,100.0,1,0,[app] 5 Out Motion: Man-to-Man (Over)
-UWW,MSOE Raiders,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,#34 CALVIN KAPRAL,Under,1,100,True,,1,1,1,0.0,0.0,1,0,[app] Opener Set Set: Man-to-Man (Under)
+UWW,MSOE Raiders,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,#3 Josh Kim,Over,1,100,True,,1,1,1,3.0,100.0,1,0,[app] 5 Out Motion: Man-to-Man (Over)
+UWW,MSOE Raiders,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,#34 Calvin Kapral,Under,1,100,True,,1,1,1,0.0,0.0,1,0,[app] Opener Set Set: Man-to-Man (Under)
 UWW,MSOE Raiders,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),NO ball screens,20,5,False,,1,1,1,3.0,100.0,1,0,5out(ds):m2m(rj)
 UWW,MSOE Raiders,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),No ball,20,5,False,,1,1,1,0.0,,0,1,::press(rj)
 UWW,MSOE Raiders,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),None,20,5,False,,1,1,1,0.0,,0,1,:press(rj)
@@ -12,7 +12,7 @@ UWW,MSOE Raiders,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x 
 UWW,MSOE Raiders,Defenses UWW faced,Ball screen,DHO,Defender x screen x coverage,(no jersey),Switch,3,67,True,,2,1,2,0.0,0.0,2,0,dho:press(rj)(switch)
 UWW,MSOE Raiders,Defenses UWW faced,Ball screen,DHO,Defender x screen x coverage,(no jersey),Over,3,33,True,,1,1,1,0.0,0.0,1,0,[app] 5 Out Motion: Man-to-Man (Over | Under)
 UWW,MSOE Raiders,Defenses UWW faced,Off-ball screen,Down Screen,Defender x screen x coverage,(no jersey),Switch,3,67,True,,2,1,2,0.5,,0,1,5OUT(DS):PRESS(RJ)(SWITCH)(DENYmadz) | 5out(ds):press(rj)(switch)
-UWW,MSOE Raiders,Defenses UWW faced,Off-ball screen,Down Screen,Defender x screen x coverage,#21 CONNOR MAY,Top Lock,1,100,True,,1,1,1,2.0,100.0,1,0,[app] 5 Out Motion: Man-to-Man (Top Lock | Under)
+UWW,MSOE Raiders,Defenses UWW faced,Off-ball screen,Down Screen,Defender x screen x coverage,#21 Connor May,Top Lock,1,100,True,,1,1,1,2.0,100.0,1,0,[app] 5 Out Motion: Man-to-Man (Top Lock | Under)
 UWW,MSOE Raiders,Defenses UWW faced,Off-ball screen,Down Screen,Defender x screen x coverage,(no jersey),Top Lock,3,33,True,,1,1,1,0.0,0.0,1,0,[app] 5 Out Motion: Man-to-Man (Top Lock)
 UWW,MSOE Raiders,Defenses UWW faced,Off-ball screen,Off-ball screen,Defender x screen x coverage,(no jersey),none,8,25,False,,2,1,2,0.0,0.0,2,0,::press(rj) | 5out(bs-reject):m2m
 UWW,MSOE Raiders,Defenses UWW faced,Off-ball screen,Off-ball screen,Defender x screen x coverage,(no jersey),No screens,8,12,False,,1,1,1,0.0,,0,1,::press(rj)
@@ -34,7 +34,7 @@ UWW,MSOE Raiders,Defenses UWW faced,Ball screen,Ball Screen,Screen x coverage,,S
 UWW,MSOE Raiders,Defenses UWW faced,Ball screen,DHO,Screen x coverage,,Switch,3,67,True,(no jersey),2,1,2,0.0,0.0,2,0,dho:press(rj)(switch)
 UWW,MSOE Raiders,Defenses UWW faced,Ball screen,DHO,Screen x coverage,,Over,3,33,True,(no jersey),1,1,1,0.0,0.0,1,0,[app] 5 Out Motion: Man-to-Man (Over | Under)
 UWW,MSOE Raiders,Defenses UWW faced,Off-ball screen,Down Screen,Screen x coverage,,Switch,4,50,True,(no jersey),2,1,2,0.5,,0,1,5OUT(DS):PRESS(RJ)(SWITCH)(DENYmadz) | 5out(ds):press(rj)(switch)
-UWW,MSOE Raiders,Defenses UWW faced,Off-ball screen,Down Screen,Screen x coverage,,Top Lock,4,50,True,#21 CONNOR MAY,2,1,2,1.0,50.0,2,0,[app] 5 Out Motion: Man-to-Man (Top Lock | Under) | [app] 5 Out Motion: Man-to-Man (Top Lock)
+UWW,MSOE Raiders,Defenses UWW faced,Off-ball screen,Down Screen,Screen x coverage,,Top Lock,4,50,True,#21 Connor May,2,1,2,1.0,50.0,2,0,[app] 5 Out Motion: Man-to-Man (Top Lock | Under) | [app] 5 Out Motion: Man-to-Man (Top Lock)
 UWW,MSOE Raiders,Defenses UWW faced,Off-ball screen,Off-ball screen,Screen x coverage,,none,8,25,False,(no jersey),2,1,2,0.0,0.0,2,0,::press(rj) | 5out(bs-reject):m2m
 UWW,MSOE Raiders,Defenses UWW faced,Off-ball screen,Off-ball screen,Screen x coverage,,No screens,8,12,False,(no jersey),1,1,1,0.0,,0,1,::press(rj)
 UWW,MSOE Raiders,Defenses UWW faced,Off-ball screen,Off-ball screen,Screen x coverage,,None,8,12,False,(no jersey),1,1,1,0.0,,0,1,:press(rj)
