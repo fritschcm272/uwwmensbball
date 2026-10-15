@@ -247,3 +247,14 @@ Tag model: primary_action,v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,"
 Tag model: screen_defender,v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,"71 tagged clips, 6 answers learned",2026-10-14T18:12:12
 Tag model: situation,v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,"338 tagged clips, 5 answers learned",2026-10-14T18:12:12
 Tag model (overall),v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,newest of 9 field model(s); last retrained field: situation,2026-10-14T18:12:12
+Tag model: ball_screen_coverage,v2026.10.14.5,2026-10-14,trained,2026-10-14T20:35:05,"110 tagged clips, 5 answers learned, one answer only",2026-10-14T20:41:01
+Tag model: defense,v2026.10.14.5,2026-10-14,trained,2026-10-14T20:35:05,"294 tagged clips, 1 answers learned, one answer only",2026-10-14T20:41:01
+Tag model: formation,v2026.10.14.5,2026-10-14,trained,2026-10-14T20:35:05,"169 tagged clips, 4 answers learned, one answer only",2026-10-14T20:41:01
+Tag model: offball_coverage,v2026.10.14.5,2026-10-14,trained,2026-10-14T20:35:05,"78 tagged clips, 2 answers learned",2026-10-14T20:41:01
+Tag model: play_call,v2026.10.14.5,2026-10-14,trained,2026-10-14T20:35:05,"205 tagged clips, 7 answers learned",2026-10-14T20:41:01
+Tag model: press,v2026.10.14.5,2026-10-14,trained,2026-10-14T20:35:05,"294 tagged clips, 3 answers learned, one answer only",2026-10-14T20:41:01
+Tag model: primary_action,v2026.10.14.5,2026-10-14,trained,2026-10-14T20:35:05,"148 tagged clips, 6 answers learned, one answer only",2026-10-14T20:41:01
+Tag model: screen_defender,v2026.10.14.5,2026-10-14,trained,2026-10-14T20:35:05,"71 tagged clips, 6 answers learned",2026-10-14T20:41:01
+Tag model: situation,v2026.10.14.5,2026-10-14,trained,2026-10-14T20:35:05,"338 tagged clips, 5 answers learned",2026-10-14T20:41:01
+Tag model (overall),v2026.10.14.5,2026-10-14,trained,2026-10-14T20:35:05,newest of 9 field model(s); last retrained field: situation,2026-10-14T20:41:01
+Player tracking,v2026.10.15,2026-10-15,pretrained + code,faaa468dcb8a,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-14T20:41:01

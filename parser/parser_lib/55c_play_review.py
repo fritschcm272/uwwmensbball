@@ -37,6 +37,34 @@ from PIL import Image
 # CONFIRMED CHANGE (requested: clean up -- the Play review replaced both pages). The Play review used these from
 # those two sections; they live here now, unchanged, so both sections (cells and files) could be removed.
 
+def _pr_pkg_stale(doc, g):
+    """An open review package whose player pictures don't match the current tracking: a picture's frame isn't one of the
+    game's tracking frames any more, or it isn't the clip's naming frame (track_name_frame)."""
+    try:
+        cur, nf = {}, {}
+        for _, r in g.iterrows():
+            fl = [f for f in str(r.get("track_files") or "").split(";") if f]
+            if fl:
+                cur[str(r.get("clip_number"))] = fl
+                v = pd.to_numeric(r.get("track_name_frame"), errors="coerce")
+                if pd.notna(v) and 0 <= int(v) < len(fl):
+                    nf[str(r.get("clip_number"))] = fl[int(v)]
+        for p in doc.get("plays", []):
+            for pic in p.get("pictures") or []:
+                ff = pic.get("frame_file")
+                fl = cur.get(str(p.get("clip_number")))
+                if not ff or fl is None:
+                    continue
+                if ff not in fl:
+                    return True
+                want = nf.get(str(p.get("clip_number")))
+                if pic.get("which") == "frame" and want and ff != want:
+                    return True
+    except Exception:
+        return False
+    return False
+
+
 def _val_frame_pick(tr_rows, lo, hi, prefer_late=False):
     """The frame in [lo, hi] where the most players are visible (ties -> the earliest, or the latest)."""
     count = {}
@@ -546,7 +574,7 @@ def _export_play_review_to_app(rdir, slug, game, run, plays, vocab, kind="play_r
                 # 1.6x (1638 px wide, quality 90) and then SHRUNK to 1100 px and re-saved at quality 72 for the app -- a second
                 # round of compression that smeared the numbers. Now kept at their drawn size by default (width / quality in
                 # the notebook cell: PLAY_REVIEW_PICTURE_WIDTH / PLAY_REVIEW_PICTURE_QUALITY).
-                _maxw = int(globals().get("PLAY_REVIEW_PICTURE_WIDTH", 1640))
+                _maxw = int(globals().get("PLAY_REVIEW_PICTURE_WIDTH", 1920))       # 1920 = a Synergy export frame, not shrunk
                 if im.size[0] > _maxw:
                     im = im.resize((_maxw, int(im.size[1] * _maxw / im.size[0])), Image.LANCZOS)
                 im.save(os.path.join(dest, name), "JPEG", quality=int(globals().get("PLAY_REVIEW_PICTURE_QUALITY", 92)),
@@ -675,6 +703,13 @@ def play_review():
                     _what = " and ".join({"titles": "Title checks", "players": "player checks"}[x] for x in sorted(_saved & _open))
                     print(f"Play review: {gd} {gc} -- {_what} of review run {_pkg_run} saved; a new batch is built"
                           + ("" if _open <= _saved else " (the part not saved yet keeps its plays)"), flush=True)
+                elif globals().get("PLAY_REVIEW_REBUILD_STALE", True) and _pr_pkg_stale(_pkg_doc, g):
+                    # CONFIRMED CHANGE (requested: sharp, one-frame player checks): an open review whose pictures were drawn
+                    # from frames the tracking no longer uses (e.g. the old 1280 web captures, before the Synergy-export
+                    # restart) or without the naming frame is rebuilt -- nothing on it is saved, so nothing is lost
+                    shutil.rmtree(_pkg, ignore_errors=True)
+                    print(f"Play review: {gd} {gc} -- its open review (run {_pkg_run}) was built from old frames; rebuilt on the "
+                          f"current tracking (one sharp frame per play)", flush=True)
                 elif globals().get("PLAY_REVIEW_REQUIRE_SAVED", True):
                     print(f"Play review: {gd} {gc} -- no new run: nothing in its open review (run {_pkg_run}) is saved yet "
                           f"(Title checks: Analytics > Film Tagging; player checks: Analytics > Player Number Tracking).", flush=True)
@@ -743,7 +778,12 @@ def play_review():
                 picks_ = [("start", _val_frame_pick(rows, 0, max(1, int(0.25 * n)))),
                           ("end", _val_frame_pick(rows, int(max(0, end_hi - 2 * fps)), end_hi, prefer_late=True))]
             else:
-                picks_ = [("frame", _val_frame_pick(rows, 0, max(0, n - 1)))]
+                # CONFIRMED CHANGE (requested: ONE frame per video, sharp): the tracking's naming frame -- the sharpest frame
+                # with the most players, the one the jersey numbers were read on (track_name_frame). Older tracking runs
+                # without it fall back to the frame with the most players.
+                _nf = pd.to_numeric(r.get("track_name_frame"), errors="coerce")
+                picks_ = [("frame", int(_nf) if pd.notna(_nf) and 0 <= int(_nf) < n
+                           else _val_frame_pick(rows, 0, max(0, n - 1)))]
             clock = r.get("time_remaining_seconds")
             clock_txt = f"{r.get('period', '')} {int(clock // 60)}:{int(clock % 60):02d}" if pd.notna(clock) else "(no clock)"
             lu = lambda side: ", ".join(numtxt(nm) for nm in _trk_five(r.get(f"{side}_lineup"))) or "(lineup unknown)"
@@ -760,21 +800,25 @@ def play_review():
                 boxes = _pr_boxes(rows, t, Image.open(img_path).size[1], numtxt)
                 header = [f"Clip {cn}  {clock_txt}  {str(r.get('synergy_string'))[:100]}",
                           (f"{'START' if which == 'start' else 'END'} of the play -- {t / fps:.1f} s into the clip" if which != "frame"
-                           else f"Frame for the player check -- {t / fps:.1f} s into the clip, most players visible"),
+                           else f"Frame for the player check -- {t / fps:.1f} s into the clip, the sharpest with the most players"),
                           f"OFFENSE (orange) {r.get('offense_team')}: {lu('offense')}",
                           f"DEFENSE (blue)  {r.get('defense_team')}: {lu('defense')}",
                           "Solid box = identified from evidence; DASHED box with ? = best guess; grey = not named"
                           + ("   |   A player with NO box? Pick the grid square at his feet in the app" if _grid else "")]
                 fname = f"clip_{fid}_{'a_start' if which == 'start' else 'c_frame' if which == 'frame' else 'b_end'}.jpg"
-                _val_draw(img_path, boxes, header, os.path.join(rdir, fname), grid=_grid)
-                # where each box sits on the PICTURE, as fractions of its width / height (the frame is enlarged 1.6x under
-                # a header) -- the app lets a coach click a box in the picture (requested)
                 _fw, _fh = Image.open(img_path).size
+                # CONFIRMED CHANGE (requested: the pictures were blurry): a full-width frame (Synergy export, 1920) is drawn at
+                # its own size -- it used to be blown up 1.6x and then shrunk back to 1640, softening it twice. Small
+                # frames are still enlarged 1.6x.
+                _sc = 1.0 if _fw >= 1600 else 1.6
+                _val_draw(img_path, boxes, header, os.path.join(rdir, fname), grid=_grid, scale=_sc)
+                # where each box sits on the PICTURE, as fractions of its width / height (the frame is drawn _sc x under
+                # a header) -- the app lets a coach click a box in the picture (requested)
                 _hh = 24 * len(header) + 10
                 for b in boxes:
                     x1, y1, x2, y2 = b["box"]
-                    b["nbox"] = [round(x1 / _fw, 4), round((y1 * 1.6 + _hh) / (_fh * 1.6 + _hh), 4),
-                                 round(x2 / _fw, 4), round((y2 * 1.6 + _hh) / (_fh * 1.6 + _hh), 4)]
+                    b["nbox"] = [round(x1 / _fw, 4), round((y1 * _sc + _hh) / (_fh * _sc + _hh), 4),
+                                 round(x2 / _fw, 4), round((y2 * _sc + _hh) / (_fh * _sc + _hh), 4)]
                 # CONFIRMED CHANGE (requested: much clearer pictures for the player-number checks). A zoomed close-up of every
                 # box (head and chest, where the number is) cut from the ORIGINAL captured frame -- not the picture with
                 # boxes drawn on it -- enlarged with Lanczos and shown beside the box's row in the app. Stored in the box
@@ -785,7 +829,9 @@ def play_review():
                         _fcache = {}
                         for b in boxes:
                             b["crop"] = _pr_box_crop(_src, b["box"])
-                            if globals().get("PLAY_REVIEW_CROP_BEST_FRAME", True):
+                            # close-ups come from the same one frame (requested: one frame per video) unless
+                            # PLAY_REVIEW_CROP_BEST_FRAME is turned back on
+                            if globals().get("PLAY_REVIEW_CROP_BEST_FRAME", False):
                                 _bi = _pr_best_instance(rows, b["track"], t, files, fps, _fcache)
                                 if _bi is not None and _bi[1] != t:
                                     _fp2 = os.path.join(VISION_FRAMES_DIR, files[_bi[1]])

@@ -459,6 +459,62 @@ def _trk_group_feat(rows):
     return np.column_stack([rows[:, 14], rows[:, 15] * 2, rows[:, 16], rows[:, 17] * 2, rows[:, 18]])
 
 
+def _trk_name_frames(clips, todo, base):
+    """CONFIRMED CHANGE (requested: "the frames are always too blurry ... switch back to finding ONE frame per video"; staff
+    picked: names only, from the sharpest frame with the most players). For each clip: the ONE tracking frame (about
+    every quarter second, at full width) where the most players on the court are boxed, and among those the SHARPEST
+    (least motion blur / camera pan). Jersey numbers are read on that frame only, and it is the coach's check picture.
+    Movement tracking (screens, help, spacing) still uses every frame and borrows the names. -> sets clip["name_frame"].
+    Sharpness is the variance of the Laplacian on the middle of the picture (where the court is), saved per frame."""
+    import cv2
+    cp = os.path.join(TRACK_DIR, "frame_sharpness.pkl")
+    cache = _safe_read_pickle(cp) if os.path.exists(cp) else {}
+    n_new, _t0 = 0, time.time()
+    slack = int(globals().get("TRACK_NAME_FRAME_SLACK", 1))      # frames with up to this many fewer players still compete
+    for _n, i in enumerate(todo, 1):
+        clip = clips[i]
+        count = {}
+        for k, tr in enumerate(clip["tracks"]):
+            if clip["side"].get(k) in ("offense", "defense"):
+                for t, _j in tr:
+                    count[t] = count.get(t, 0) + 1
+        if not count:
+            clip["name_frame"] = None
+            continue
+        top = max(count.values())
+        cand = sorted(t for t, c in count.items() if c >= top - slack)
+        sharp = {}
+        for t in cand:
+            rel = clip["files"][t]
+            if rel not in cache:
+                im = cv2.imread(os.path.join(base, rel), cv2.IMREAD_REDUCED_GRAYSCALE_2)
+                if im is None:
+                    cache[rel] = None
+                else:
+                    h_, w_ = im.shape[:2]
+                    mid = im[int(h_ * 0.25):int(h_ * 0.9), int(w_ * 0.1):int(w_ * 0.9)]
+                    cache[rel] = float(cv2.Laplacian(mid, cv2.CV_64F).var())
+                n_new += 1
+            if cache[rel] is not None:
+                sharp[t] = cache[rel]
+        if not sharp:
+            clip["name_frame"] = max(count, key=lambda t: (count[t], -t))
+            continue
+        # the sharpest frame wins, with a small edge to frames showing every player (a frame missing one player has to be
+        # clearly sharper -- TRACK_NAME_FRAME_MISSING_PENALTY -- to win)
+        pen = float(globals().get("TRACK_NAME_FRAME_MISSING_PENALTY", 0.15))
+        clip["name_frame"] = max(sharp, key=lambda t: (sharp[t] * (1 - pen * (top - count[t])), -t))
+        clip["name_frame_sharp"] = sharp[clip["name_frame"]]
+        if n_new and n_new % 500 == 0:
+            _safe_to_pickle(cache, cp)
+        _trk_progress("clips: naming frame picked", _n, len(todo), _t0)
+    if n_new:
+        _safe_to_pickle(cache, cp)
+    print(f"  [tracking]   naming frame: one per clip (sharpest of the frames with the most players) -- "
+          f"{sum(1 for i in todo if clips[i].get('name_frame') is not None):,} of {len(todo):,} clip(s)"
+          + (f"; {n_new:,} frame(s) measured for sharpness" if n_new else ""), flush=True)
+
+
 def _trk_read_numbers(clips, todo, base, engine):
     """(clip, track) -> list of (digits read, confidence) from the chest of the track's tallest boxes, with the
     reader chosen by the Jersey-number reader test. Every read is saved, so each crop is read once per reader."""
@@ -501,7 +557,14 @@ def _trk_read_numbers(clips, todo, base, engine):
             n_crops = (TRACK_OCR_CROPS_TRAINED if str(engine).startswith("trained") else TRACK_OCR_CROPS_PADDLE if str(engine).startswith("paddle")
                        else TRACK_OCR_CROPS_FIND if str(engine).endswith(("_find", "_local", "_rec")) else TRACK_OCR_CROPS)
             fps_ = float(clip.get("fps", 2.0))
-            if len(tr) < TRACK_OCR_MIN_TRACK_S * fps_:
+            if globals().get("TRACK_NAME_ONE_FRAME", True) and clip.get("name_frame") is not None:
+                # requested: numbers are read on the clip's ONE naming frame -- the player's box in that frame, nothing else
+                tallest = [tj for tj in tr if tj[0] == clip["name_frame"]][:1]
+                if not tallest:
+                    continue
+            else:
+                tallest = None
+            if tallest is None and len(tr) < TRACK_OCR_MIN_TRACK_S * fps_:
                 continue
             hts = {tj: clip["frames"][tj[0]][tj[1]][9] - clip["frames"][tj[0]][tj[1]][7] for tj in tr}
             hmax = max(hts.values())
@@ -509,7 +572,10 @@ def _trk_read_numbers(clips, todo, base, engine):
             cand = sorted((tj for tj in tr if hts[tj] >= 0.8 * hmax),
                           key=lambda tj: -((clip["frames"][tj[0]][tj[1]][8] - clip["frames"][tj[0]][tj[1]][6]) / max(hts[tj], 1e-6)))
             gap = max(1, int(round(fps_ / 2)))
-            tallest = []
+            if tallest is not None:
+                cand = []
+            else:
+                tallest = []
             for tj in cand:
                 if all(abs(tj[0] - o[0]) >= gap for o in tallest):
                     tallest.append(tj)
@@ -1798,6 +1864,8 @@ def player_tracking(pc):
                         n_dup_tr += 1
     _trk_note_drop("[tracks] duplicate box on the same player (dropped)", n_dup_tr)
     print(f"  [tracking]   {n_dup_tr:,} track(s) were a second box on a player already tracked (boxes overlap >= {_dup_iou:.0%}) -- dropped", flush=True)
+    if globals().get("TRACK_NAME_ONE_FRAME", True):
+        _trk_name_frames(clips, todo, base)
 
     # CONFIRMED CHANGE (requested: "do #2"). People standing along a sideline the whole time -- coaches, the bench, the scorer's
     # table -- passed the per-frame court filter whenever their feet mapped just inside the line (on the checks, 10 of the 15 boxes
@@ -2481,6 +2549,8 @@ def player_tracking(pc):
                 need = TRACK_SINGLE_DIGIT_VOTES if len(top) == 1 else TRACK_NUMBER_MIN_VOTES
                 if _prec is not None and _prec >= TRACK_READER_MIN_PRECISION and len(allv) == 1:
                     need = 1        # a reader that is rarely wrong when it answers, and nothing disagrees
+                if globals().get("TRACK_NAME_ONE_FRAME", True) and clips[i].get("name_frame") is not None:
+                    need = 1        # one naming frame = one read per player (requested); the coach check confirms it
                 # the winner must be one of the five on the floor, the MAJORITY of every confident read, and have
                 # enough agreeing reads (more for single digits)
                 if top in cand and len(cfs) >= need and len(cfs) > len(sure) / 2:
@@ -3330,6 +3400,7 @@ def player_tracking(pc):
         out.at[i, "track_clip_key"] = _trk_clip_key(pc.loc[i])
         out.at[i, "track_frames"] = len(clip["files"])
         out.at[i, "track_finish_frame"] = clip["t_finish"]
+        out.at[i, "track_name_frame"] = clip.get("name_frame")
         out.at[i, "track_holders"] = _trk_json.dumps({int(t): int(k) for t, k in clip["holder"].items()})
         scr = _trk_find_screen(clip)
         if scr:
@@ -3458,7 +3529,7 @@ def _trk_draw_checks(pc, clips, names_all, base, todo):
 _TRACK_COLS = ["track_players", "track_named", "track_ball_frames", "track_screen_type", "track_screener",
                "track_screened", "track_screened_defender", "track_screener_defender", "track_screen_conf",
                "track_screen_frame", "track_clip_key", "track_frames", "track_holders", "track_screen_ids",
-               "track_finish_frame"]
+               "track_finish_frame", "track_name_frame"]
 for _c in _TRACK_COLS:
     if _c not in play_calls.columns:
         play_calls[_c] = None
