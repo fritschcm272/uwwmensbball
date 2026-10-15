@@ -237,3 +237,13 @@ Tag model (overall),v2026.10.14.3,2026-10-14,trained,2026-10-14T17:44:48,newest 
 Player tracking,v2026.10.14.2,2026-10-14,pretrained + code,62e174ac7857,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-14T17:50:19
 Jersey-number reader test,v2026.10.14,2026-10-14,pretrained + code,d1ce65977855,scores the OCR readers; none retrained here,2026-10-14T17:50:19
 Court mapping,v2026.10.14.2,2026-10-14,rules + code,0fb098b4c363,1 calibration file(s),2026-10-14T17:50:19
+Tag model: ball_screen_coverage,v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,"110 tagged clips, 5 answers learned, one answer only",2026-10-14T18:12:12
+Tag model: defense,v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,"294 tagged clips, 1 answers learned, one answer only",2026-10-14T18:12:12
+Tag model: formation,v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,"169 tagged clips, 4 answers learned, one answer only",2026-10-14T18:12:12
+Tag model: offball_coverage,v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,"78 tagged clips, 2 answers learned",2026-10-14T18:12:12
+Tag model: play_call,v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,"205 tagged clips, 7 answers learned",2026-10-14T18:12:12
+Tag model: press,v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,"294 tagged clips, 3 answers learned, one answer only",2026-10-14T18:12:12
+Tag model: primary_action,v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,"148 tagged clips, 6 answers learned, one answer only",2026-10-14T18:12:12
+Tag model: screen_defender,v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,"71 tagged clips, 6 answers learned",2026-10-14T18:12:12
+Tag model: situation,v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,"338 tagged clips, 5 answers learned",2026-10-14T18:12:12
+Tag model (overall),v2026.10.14.4,2026-10-14,trained,2026-10-14T18:06:13,newest of 9 field model(s); last retrained field: situation,2026-10-14T18:12:12
