@@ -1581,6 +1581,40 @@ def _trk_team_means(clip):
     return [np.nanmean(v, 0) for v in by.values() if v]
 
 
+def _trk_is_export(files, base):
+    """A clip whose tracking frames come from a Synergy export (the 1920 clip videos) -- not the old web screen captures.
+    Export frames are listed in their folder's _export.json (read through the frame index when it's loaded)."""
+    if not files:
+        return False
+    p = os.path.join(base, files[0])
+    if "_fx_lookup" in globals():
+        try:
+            if _fx_lookup(p) is not None:
+                return True
+        except Exception:
+            pass
+    d = os.path.dirname(p)
+    seen = globals().setdefault("_trk_export_dirs", {})
+    if d not in seen:
+        seen[d] = os.path.isfile(os.path.join(d, "_export.json"))
+    return seen[d]
+
+
+def _trk_export_games(pc, base):
+    """(set of play_calls index labels of export-backed clips, [(game, clips) left out because their frames are old captures])."""
+    keep, left = set(), {}
+    for i, v in pc.get("track_files", pd.Series(index=pc.index, dtype=object)).items():
+        fl = [x for x in str(v).split(";") if x] if isinstance(v, str) else []
+        if not fl:
+            continue
+        if _trk_is_export(fl, base):
+            keep.add(i)
+        else:
+            gk = f"{pc.at[i, 'game_date']} {pc.at[i, 'game_code']}"
+            left[gk] = left.get(gk, 0) + 1
+    return keep, sorted(left.items())
+
+
 def player_tracking(pc):
     """Runs everything on the clips in pc that have tracking frames. Returns (per-clip columns, tracks table,
     report rows)."""
@@ -1589,6 +1623,16 @@ def player_tracking(pc):
     tf = pc.get("track_files", pd.Series(index=pc.index, dtype=object)).map(lambda v: v if isinstance(v, str) else "")
     lists = tf.map(lambda s: [x for x in s.split(";") if x])
     todo = [i for i in pc.index if len(lists[i]) >= 4]
+    # CONFIRMED CHANGE (requested: "limit tracking to the Synergy-export games"): the restart on the 1920 Synergy exports
+    # tracks ONLY games whose frames come from an export. Games still on the old web screen captures (blurry, 1024-1280
+    # wide) are left out -- no tracking, player checks or court calibration -- until they're exported from Synergy.
+    # TRACK_EXPORT_ONLY = False tracks every captured game again.
+    if globals().get("TRACK_EXPORT_ONLY", True):
+        _keep, _left = _trk_export_games(pc, base)
+        todo = [i for i in todo if i in _keep]
+        if _left:
+            print(f"  [tracking] Synergy-export games only (TRACK_EXPORT_ONLY): {len(_left)} game(s) on the old web captures "
+                  f"left out -- " + "; ".join(f"{g} ({n} clips)" for g, n in _left), flush=True)
     if not todo:
         return None, pd.DataFrame(), []
     print(f"  [tracking] step 1: player and ball detections for {len(todo)} clip(s) "
@@ -3598,7 +3642,92 @@ def _trk_run_all():
 
 
 
+class CourtCalibrationNeeded(Exception):
+    """Raised to STOP the notebook when a gym needs its one-time court calibration."""
+
+
+def _trk_court_precheck():
+    """CONFIRMED BUG (fixed; "I thought the notebook would stop running if a court mapping wasn't done"): the stop for a
+    missing court calibration lived in the Court mapping cell, AFTER Player tracking. When tracking didn't finish (or
+    found nothing), the run never reached it -- and when it did, tracking had already spent its whole run without the
+    court (fans and the bench kept, no court positions) only to be rerun. The check now happens HERE, before tracking:
+    any game about to be tracked whose gym has no usable calibration (4+ landmarks on a frame that's still on disk) gets
+    its calibration page written and opened, and the notebook stops. COURT_STOP_FOR_CALIBRATION = False (Court mapping
+    cell's setting) carries on without it, as before."""
+    if not globals().get("RUN_COURT_MAPPING", True) or not globals().get("COURT_STOP_FOR_CALIBRATION", True) \
+            or not globals().get("RUN_PLAYER_TRACKING", True):
+        return
+    if not isinstance(globals().get("play_calls"), pd.DataFrame) or play_calls.empty or "track_files" not in play_calls.columns:
+        return
+    # the Court mapping cell's settings and helpers (that cell runs after this one): defaults if it hasn't run yet
+    globals().setdefault("COURT_CAL_DIR", os.path.join(INPUT_DIR, "court_calibration"))
+    globals().setdefault("COURT_SEARCH_DOWNLOADS", True)
+    globals().setdefault("COURT_REF_FRAMES", 8)
+    globals().setdefault("COURT_FEATURE_WIDTH", 1024)
+    if "_cm_write_tool" not in globals() or "_cm_calibration_files" not in globals():
+        _src_ = os.path.join(globals().get("PARSER_LIB") or os.path.join(os.getcwd(), "parser_lib"), "51_court_mapping.py")
+        try:
+            with open(_src_, encoding="utf-8") as fh:
+                _code = fh.read().split("\n_cm_ran_now = False", 1)[0]          # its definitions only -- nothing runs
+            exec(compile(_code, _src_, "exec"), globals())
+        except Exception as e:
+            print(f"  [court] calibration check skipped -- couldn't load the Court mapping code ({type(e).__name__}: {e})",
+                  flush=True)
+            return
+    base = VISION_FRAMES_DIR if "VISION_FRAMES_DIR" in globals() else os.path.join(INPUT_DIR, "_vision_frames")
+    rows = play_calls[play_calls["track_files"].map(lambda v: isinstance(v, str) and v != "")]
+    if globals().get("TRACK_EXPORT_ONLY", True):
+        _keep, _left = _trk_export_games(rows, base)
+        rows = rows[rows.index.isin(_keep)]               # only the games tracking will run on
+    if rows.empty:
+        return
+    ok_arenas = set()
+    for cal in _cm_calibration_files():
+        for fr in cal.get("frames", []):
+            n_pts = sum(1 for p_ in fr.get("points", []) if p_.get("landmark") in COURT_LANDMARKS)
+            if n_pts >= 4 and os.path.exists(os.path.join(base, fr.get("file", ""))):
+                ok_arenas.add(str(cal.get("arena")))
+                break
+    need = []
+    for (gd, gc), g in rows.groupby(["game_date", "game_code"], dropna=False):
+        arena = _cm_arena(gc)
+        if arena in ok_arenas or any(arena == a for _gk, a, _p in need):
+            continue
+        pool = [fl[len(fl) // 2] for fl in ([f for f in str(v).split(";") if f] for v in g["track_files"]) if fl]
+        pick = [pool[int(i)] for i in np.linspace(0, len(pool) - 1, min(int(COURT_REF_FRAMES), len(pool)))] if pool else []
+        if not pick:
+            continue
+        try:
+            page = _cm_write_tool(f"{gd}|{gc}", arena, pick, base)
+        except Exception as e:
+            print(f"  [court] {gd}|{gc}: calibration page not written ({type(e).__name__}: {e})", flush=True)
+            continue
+        need.append((f"{gd}|{gc}", arena, page))
+    if not need:
+        print(f"  [court] every gym being tracked has a court calibration ({len(ok_arenas)} gym(s))", flush=True)
+        return
+    if globals().get("COURT_OPEN_CALIBRATION_PAGE", True):
+        import webbrowser
+        for _g, _a, page in need:
+            try:
+                webbrowser.open("file:///" + os.path.abspath(page).replace("\\", "/"))
+            except Exception:
+                pass
+    print("  " + "=" * 100)
+    print(f"  STOPPED before Player tracking: {len(need)} gym(s) need a one-time court calibration:")
+    for _g, _a, page in need:
+        print(f"    - {_g} (gym '{_a}'): {page}")
+    print("  What to do:")
+    print("    1. The page" + ("s are" if len(need) > 1 else " is") + " open in your browser (or open the file above).")
+    print("    2. On a few frames, click 4+ court landmarks (include one near each basket), then press Save.")
+    print("    3. Rerun THIS Player tracking cell, then continue with the cells below (Run > Run Selected Cell and All Below).")
+    print("  (To track without the court instead, set COURT_STOP_FOR_CALIBRATION = False in the Court mapping cell.)")
+    print("  " + "=" * 100, flush=True)
+    raise CourtCalibrationNeeded(f"{len(need)} gym(s) need court calibration -- see the steps printed above")
+
+
 player_tracks = pd.DataFrame()
 tracking_report = pd.DataFrame()
 _trk_court_frames_used = None
+_trk_court_precheck()                 # stops here (before tracking) when a gym needs its court calibration
 _trk_run_all()

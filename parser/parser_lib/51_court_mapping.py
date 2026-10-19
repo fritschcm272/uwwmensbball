@@ -305,6 +305,10 @@ def court_mapping(pc, tracks):
     import cv2
     base = VISION_FRAMES_DIR
     rows = pc[pc["track_files"].map(lambda v: isinstance(v, str) and v != "")]
+    # CONFIRMED CHANGE (requested: tracking limited to the Synergy-export games): only the clips tracking ran on are put on
+    # the court -- an untracked game (old web captures) no longer asks for a court calibration
+    if "track_clip_key" in rows.columns and isinstance(tracks, pd.DataFrame) and "clip_key" in tracks.columns:
+        rows = rows[rows["track_clip_key"].isin(set(tracks["clip_key"].dropna()))]
     if rows.empty:
         return tracks, pc, pd.DataFrame(), {}
     print(f"  [court] step 1: reading calibration files from {COURT_CAL_DIR}"

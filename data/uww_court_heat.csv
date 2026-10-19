@@ -1,1 +1,344 @@
-
+team,player,side,cell_hy,cell_hx,frames
+Washington-St. Louis Bears,TEAM,offense,45,45,1
+Washington-St. Louis Bears,TEAM,offense,35,40,12
+Washington-St. Louis Bears,TEAM,offense,15,25,37
+UW-Whitewater,TEAM,offense,20,20,3
+UW-Whitewater,TEAM,offense,15,20,1
+UW-Whitewater,TEAM,offense,15,15,2
+UW-Whitewater,TEAM,offense,10,15,1
+UW-Whitewater,TEAM,offense,10,10,1
+Washington-St. Louis Bears,TEAM,defense,25,30,30
+Washington-St. Louis Bears,TEAM,defense,25,25,51
+Washington-St. Louis Bears,TEAM,defense,30,25,49
+Washington-St. Louis Bears,TEAM,defense,40,45,2
+Washington-St. Louis Bears,TEAM,offense,10,45,8
+UW-Whitewater,Isaac Verges,defense,20,30,1
+UW-Whitewater,TEAM,defense,20,30,1
+UW-Whitewater,Isaac Verges,defense,10,30,1
+UW-Whitewater,TEAM,defense,10,30,1
+Washington-St. Louis Bears,TEAM,offense,30,40,14
+Washington-St. Louis Bears,TEAM,offense,25,35,32
+Washington-St. Louis Bears,TEAM,offense,30,35,30
+Washington-St. Louis Bears,Ryan Cohen,offense,35,45,1
+Washington-St. Louis Bears,TEAM,offense,35,45,5
+Washington-St. Louis Bears,Ryan Cohen,offense,35,40,1
+Washington-St. Louis Bears,Ryan Cohen,offense,45,20,1
+Washington-St. Louis Bears,TEAM,offense,45,20,9
+Washington-St. Louis Bears,Ryan Cohen,offense,40,40,1
+Washington-St. Louis Bears,TEAM,offense,40,40,11
+UW-Whitewater,TEAM,defense,20,40,1
+Washington-St. Louis Bears,Josh Kim,offense,30,40,2
+Washington-St. Louis Bears,Josh Kim,offense,35,40,1
+Washington-St. Louis Bears,TEAM,offense,5,30,22
+Washington-St. Louis Bears,TEAM,offense,10,40,20
+Washington-St. Louis Bears,Yogi Oliff,offense,0,40,1
+Washington-St. Louis Bears,TEAM,offense,0,40,12
+Washington-St. Louis Bears,Yogi Oliff,offense,0,35,1
+Washington-St. Louis Bears,TEAM,offense,0,35,14
+Washington-St. Louis Bears,Yogi Oliff,offense,5,30,2
+Washington-St. Louis Bears,TEAM,offense,0,45,5
+Washington-St. Louis Bears,TEAM,offense,0,30,14
+Washington-St. Louis Bears,TEAM,offense,0,25,14
+Washington-St. Louis Bears,TEAM,offense,0,15,22
+Washington-St. Louis Bears,TEAM,offense,5,15,45
+Washington-St. Louis Bears,TEAM,offense,5,10,36
+Washington-St. Louis Bears,Ryan Cohen,offense,45,35,1
+Washington-St. Louis Bears,TEAM,offense,45,35,2
+Washington-St. Louis Bears,TEAM,offense,10,35,31
+Washington-St. Louis Bears,TEAM,offense,10,30,96
+Washington-St. Louis Bears,TEAM,offense,15,30,62
+UW-Whitewater,TEAM,defense,40,35,1
+UW-Whitewater,TEAM,defense,40,20,3
+UW-Whitewater,TEAM,defense,40,15,1
+UW-Whitewater,TEAM,defense,35,5,2
+UW-Whitewater,TEAM,defense,30,5,1
+Washington-St. Louis Bears,TEAM,defense,20,20,107
+Washington-St. Louis Bears,Ryan Cohen,defense,25,40,1
+Washington-St. Louis Bears,TEAM,defense,25,40,20
+Washington-St. Louis Bears,TEAM,offense,5,35,22
+Washington-St. Louis Bears,TEAM,offense,0,20,20
+Washington-St. Louis Bears,TEAM,offense,0,10,78
+Washington-St. Louis Bears,TEAM,offense,0,5,145
+Washington-St. Louis Bears,TEAM,offense,5,20,87
+Washington-St. Louis Bears,TEAM,offense,5,45,8
+Washington-St. Louis Bears,TEAM,offense,10,25,85
+Washington-St. Louis Bears,TEAM,offense,25,40,17
+Washington-St. Louis Bears,TEAM,offense,15,35,33
+Washington-St. Louis Bears,TEAM,offense,25,25,37
+Washington-St. Louis Bears,TEAM,offense,5,25,96
+Washington-St. Louis Bears,TEAM,offense,10,20,37
+Washington-St. Louis Bears,TEAM,offense,5,40,11
+Washington-St. Louis Bears,TEAM,offense,15,15,20
+Washington-St. Louis Bears,TEAM,offense,15,20,22
+Washington-St. Louis Bears,TEAM,offense,20,10,34
+Washington-St. Louis Bears,TEAM,offense,35,20,42
+Washington-St. Louis Bears,TEAM,offense,35,25,58
+Washington-St. Louis Bears,TEAM,offense,40,25,20
+Washington-St. Louis Bears,TEAM,offense,30,20,39
+Washington-St. Louis Bears,TEAM,offense,25,20,35
+Washington-St. Louis Bears,TEAM,offense,25,15,15
+Washington-St. Louis Bears,TEAM,offense,20,15,20
+Washington-St. Louis Bears,TEAM,offense,20,20,34
+Washington-St. Louis Bears,TEAM,offense,20,25,21
+Washington-St. Louis Bears,TEAM,offense,25,30,42
+Washington-St. Louis Bears,TEAM,offense,40,45,4
+Washington-St. Louis Bears,TEAM,offense,45,40,3
+Washington-St. Louis Bears,TEAM,offense,30,30,58
+Washington-St. Louis Bears,TEAM,offense,30,25,59
+Washington-St. Louis Bears,TEAM,offense,15,10,33
+Washington-St. Louis Bears,TEAM,offense,35,35,20
+Washington-St. Louis Bears,TEAM,offense,40,15,34
+Washington-St. Louis Bears,TEAM,offense,40,10,21
+Washington-St. Louis Bears,TEAM,offense,35,10,19
+Washington-St. Louis Bears,TEAM,offense,15,5,38
+Washington-St. Louis Bears,TEAM,offense,20,5,79
+Washington-St. Louis Bears,TEAM,offense,20,0,13
+Washington-St. Louis Bears,TEAM,offense,35,5,16
+Washington-St. Louis Bears,TEAM,offense,10,10,33
+Washington-St. Louis Bears,TEAM,offense,10,15,31
+Washington-St. Louis Bears,TEAM,offense,25,5,58
+Washington-St. Louis Bears,TEAM,offense,40,20,64
+Washington-St. Louis Bears,TEAM,offense,30,15,35
+Washington-St. Louis Bears,TEAM,offense,35,15,25
+Washington-St. Louis Bears,TEAM,offense,35,0,24
+Washington-St. Louis Bears,TEAM,offense,40,0,9
+Washington-St. Louis Bears,TEAM,offense,45,5,48
+Washington-St. Louis Bears,TEAM,offense,45,10,25
+Washington-St. Louis Bears,TEAM,offense,25,0,9
+Washington-St. Louis Bears,TEAM,offense,40,5,15
+Washington-St. Louis Bears,TEAM,offense,45,25,7
+UW-Whitewater,TEAM,defense,15,25,1
+UW-Whitewater,TEAM,defense,15,20,1
+UW-Whitewater,TEAM,defense,10,20,2
+UW-Whitewater,TEAM,defense,15,15,4
+UW-Whitewater,TEAM,defense,10,15,3
+UW-Whitewater,TEAM,defense,5,15,2
+UW-Whitewater,TEAM,defense,5,20,1
+UW-Whitewater,TEAM,defense,0,20,8
+Washington-St. Louis Bears,TEAM,offense,35,30,22
+Washington-St. Louis Bears,TEAM,offense,20,30,86
+Washington-St. Louis Bears,TEAM,offense,20,35,59
+Washington-St. Louis Bears,TEAM,offense,30,10,25
+Washington-St. Louis Bears,TEAM,offense,45,0,3
+Washington-St. Louis Bears,TEAM,offense,45,15,16
+Washington-St. Louis Bears,TEAM,offense,5,5,21
+Washington-St. Louis Bears,TEAM,offense,25,10,41
+Washington-St. Louis Bears,TEAM,offense,15,40,18
+Washington-St. Louis Bears,TEAM,defense,0,5,31
+Washington-St. Louis Bears,TEAM,defense,5,5,74
+Washington-St. Louis Bears,TEAM,defense,5,10,74
+Washington-St. Louis Bears,TEAM,defense,10,20,106
+Washington-St. Louis Bears,TEAM,defense,10,25,65
+Washington-St. Louis Bears,TEAM,defense,15,30,39
+Washington-St. Louis Bears,TEAM,defense,5,20,47
+Washington-St. Louis Bears,TEAM,defense,15,15,103
+Washington-St. Louis Bears,TEAM,defense,20,10,98
+Washington-St. Louis Bears,TEAM,defense,35,0,6
+Washington-St. Louis Bears,TEAM,defense,30,15,84
+Washington-St. Louis Bears,TEAM,defense,20,25,77
+Washington-St. Louis Bears,TEAM,defense,20,30,34
+Washington-St. Louis Bears,TEAM,defense,30,30,55
+Washington-St. Louis Bears,TEAM,defense,30,35,14
+Washington-St. Louis Bears,TEAM,defense,25,35,21
+Washington-St. Louis Bears,TEAM,defense,5,40,9
+Washington-St. Louis Bears,TEAM,defense,10,40,15
+Washington-St. Louis Bears,TEAM,defense,10,45,5
+Washington-St. Louis Bears,TEAM,defense,10,30,33
+Washington-St. Louis Bears,TEAM,defense,15,35,18
+Washington-St. Louis Bears,TEAM,defense,15,40,13
+Washington-St. Louis Bears,TEAM,defense,20,5,94
+Washington-St. Louis Bears,TEAM,defense,15,5,57
+Washington-St. Louis Bears,TEAM,defense,15,10,75
+Washington-St. Louis Bears,TEAM,defense,5,30,10
+Washington-St. Louis Bears,TEAM,defense,5,35,8
+Washington-St. Louis Bears,TEAM,defense,0,40,2
+Washington-St. Louis Bears,TEAM,defense,25,10,97
+Washington-St. Louis Bears,TEAM,defense,15,25,55
+Washington-St. Louis Bears,TEAM,defense,10,35,28
+Washington-St. Louis Bears,TEAM,offense,20,40,13
+UW-Whitewater,TEAM,defense,35,35,1
+UW-Whitewater,TEAM,defense,35,30,2
+Washington-St. Louis Bears,TEAM,offense,30,5,39
+Washington-St. Louis Bears,Ryan Cohen,offense,0,5,22
+Washington-St. Louis Bears,Ryan Cohen,offense,0,10,1
+Washington-St. Louis Bears,Josh Kim,offense,15,5,1
+Washington-St. Louis Bears,Josh Kim,offense,20,30,2
+Washington-St. Louis Bears,Josh Kim,offense,25,30,2
+Washington-St. Louis Bears,Josh Kim,offense,30,30,20
+Washington-St. Louis Bears,Josh Kim,offense,30,25,13
+Washington-St. Louis Bears,Josh Kim,offense,35,30,5
+Washington-St. Louis Bears,Josh Kim,offense,35,35,3
+Washington-St. Louis Bears,Josh Kim,offense,25,25,1
+Washington-St. Louis Bears,Yogi Oliff,defense,25,30,6
+Washington-St. Louis Bears,Yogi Oliff,defense,25,25,3
+Washington-St. Louis Bears,Yogi Oliff,defense,10,35,1
+Washington-St. Louis Bears,Yogi Oliff,defense,10,40,1
+Washington-St. Louis Bears,Yogi Oliff,defense,10,45,1
+Washington-St. Louis Bears,TEAM,defense,20,35,32
+Washington-St. Louis Bears,TEAM,defense,20,40,20
+Washington-St. Louis Bears,TEAM,defense,15,20,144
+Washington-St. Louis Bears,Josh Kim,offense,5,20,1
+Washington-St. Louis Bears,Josh Kim,offense,10,25,1
+Washington-St. Louis Bears,Josh Kim,offense,10,30,1
+Washington-St. Louis Bears,Josh Kim,offense,10,35,1
+Washington-St. Louis Bears,Josh Kim,offense,15,35,1
+Washington-St. Louis Bears,TEAM,defense,0,10,34
+Washington-St. Louis Bears,TEAM,defense,5,15,38
+Washington-St. Louis Bears,TEAM,defense,10,10,184
+Washington-St. Louis Bears,TEAM,defense,30,20,68
+Washington-St. Louis Bears,TEAM,defense,30,10,94
+Washington-St. Louis Bears,TEAM,defense,30,0,25
+Washington-St. Louis Bears,TEAM,defense,10,15,92
+Washington-St. Louis Bears,TEAM,defense,25,45,2
+Washington-St. Louis Bears,TEAM,defense,35,5,60
+Washington-St. Louis Bears,TEAM,defense,35,10,121
+Washington-St. Louis Bears,TEAM,defense,40,10,28
+Washington-St. Louis Bears,TEAM,defense,40,15,13
+Washington-St. Louis Bears,TEAM,defense,35,15,53
+Washington-St. Louis Bears,TEAM,defense,35,20,91
+Washington-St. Louis Bears,TEAM,defense,35,25,37
+Washington-St. Louis Bears,TEAM,defense,30,40,7
+UW-Whitewater,TEAM,offense,20,0,2
+UW-Whitewater,TEAM,offense,20,10,7
+UW-Whitewater,TEAM,offense,20,15,8
+UW-Whitewater,TEAM,offense,25,35,2
+UW-Whitewater,TEAM,offense,25,40,2
+Washington-St. Louis Bears,Joey Berezowitz,defense,20,5,3
+Washington-St. Louis Bears,Joey Berezowitz,defense,15,10,2
+Washington-St. Louis Bears,Joey Berezowitz,defense,15,15,1
+Washington-St. Louis Bears,Joey Berezowitz,defense,25,25,1
+Washington-St. Louis Bears,Joey Berezowitz,defense,30,30,1
+Washington-St. Louis Bears,Joey Berezowitz,defense,30,40,1
+Washington-St. Louis Bears,Joey Berezowitz,defense,35,45,1
+Washington-St. Louis Bears,TEAM,defense,35,45,5
+UW-Whitewater,Yogi Oliff,offense,5,20,1
+UW-Whitewater,TEAM,offense,5,20,1
+UW-Whitewater,Yogi Oliff,offense,10,25,1
+UW-Whitewater,TEAM,offense,10,25,1
+UW-Whitewater,Yogi Oliff,offense,20,15,1
+UW-Whitewater,Yogi Oliff,offense,25,15,1
+UW-Whitewater,TEAM,offense,25,15,4
+UW-Whitewater,Yogi Oliff,offense,30,35,1
+UW-Whitewater,TEAM,offense,30,35,2
+UW-Whitewater,TEAM,offense,45,35,5
+UW-Whitewater,TEAM,offense,40,35,6
+UW-Whitewater,TEAM,offense,35,40,1
+Washington-St. Louis Bears,TEAM,offense,40,30,11
+Washington-St. Louis Bears,TEAM,offense,15,45,6
+Washington-St. Louis Bears,TEAM,defense,20,45,5
+Washington-St. Louis Bears,TEAM,defense,35,30,16
+Washington-St. Louis Bears,Josh Kim,offense,40,30,1
+Washington-St. Louis Bears,Josh Kim,offense,45,15,1
+Washington-St. Louis Bears,Josh Kim,offense,45,5,2
+Washington-St. Louis Bears,Josh Kim,offense,45,10,1
+Washington-St. Louis Bears,Josh Kim,offense,40,10,3
+Washington-St. Louis Bears,Josh Kim,offense,40,20,2
+Washington-St. Louis Bears,Josh Kim,offense,35,25,2
+Washington-St. Louis Bears,Connor May,offense,5,45,1
+Washington-St. Louis Bears,Connor May,offense,0,30,2
+Washington-St. Louis Bears,Connor May,offense,0,25,1
+Washington-St. Louis Bears,Connor May,offense,5,25,2
+Washington-St. Louis Bears,Connor May,offense,10,25,3
+Washington-St. Louis Bears,Connor May,offense,10,35,1
+Washington-St. Louis Bears,TEAM,offense,20,45,1
+Washington-St. Louis Bears,TEAM,offense,10,5,47
+Washington-St. Louis Bears,TEAM,defense,10,5,107
+Washington-St. Louis Bears,TEAM,defense,35,35,14
+Washington-St. Louis Bears,TEAM,defense,35,40,9
+Washington-St. Louis Bears,TEAM,defense,40,20,6
+UW-Whitewater,Luke Bara,offense,10,40,1
+UW-Whitewater,TEAM,offense,10,40,2
+UW-Whitewater,Luke Bara,offense,10,45,1
+UW-Whitewater,TEAM,offense,10,45,1
+Washington-St. Louis Bears,TEAM,offense,25,45,5
+Washington-St. Louis Bears,TEAM,offense,15,0,8
+Washington-St. Louis Bears,TEAM,offense,45,30,5
+Washington-St. Louis Bears,Yogi Oliff,offense,5,20,13
+Washington-St. Louis Bears,Yogi Oliff,offense,10,25,6
+Washington-St. Louis Bears,Yogi Oliff,offense,15,20,3
+Washington-St. Louis Bears,Yogi Oliff,offense,15,25,1
+Washington-St. Louis Bears,Yogi Oliff,offense,10,30,1
+Washington-St. Louis Bears,Yogi Oliff,offense,10,35,1
+Washington-St. Louis Bears,Yogi Oliff,offense,5,25,1
+Washington-St. Louis Bears,TEAM,defense,0,15,14
+Washington-St. Louis Bears,TEAM,defense,30,5,64
+Washington-St. Louis Bears,TEAM,defense,0,20,11
+Washington-St. Louis Bears,Josh Kim,offense,30,20,2
+Washington-St. Louis Bears,Josh Kim,offense,25,20,7
+Washington-St. Louis Bears,Josh Kim,offense,25,10,2
+Washington-St. Louis Bears,Josh Kim,offense,15,20,1
+Washington-St. Louis Bears,Josh Kim,offense,10,20,1
+Washington-St. Louis Bears,TEAM,offense,40,35,16
+Washington-St. Louis Bears,TEAM,offense,5,0,1
+Washington-St. Louis Bears,TEAM,offense,0,0,1
+Washington-St. Louis Bears,TEAM,offense,30,0,43
+UW-Whitewater,TEAM,defense,20,5,1
+Washington-St. Louis Bears,TEAM,defense,25,5,92
+Washington-St. Louis Bears,Yogi Oliff,offense,5,45,1
+Washington-St. Louis Bears,Yogi Oliff,offense,5,40,1
+Washington-St. Louis Bears,TEAM,defense,45,5,8
+Washington-St. Louis Bears,TEAM,defense,20,15,86
+Washington-St. Louis Bears,TEAM,defense,25,15,90
+Washington-St. Louis Bears,TEAM,defense,25,20,88
+Washington-St. Louis Bears,TEAM,offense,10,0,2
+Washington-St. Louis Bears,TEAM,defense,5,25,20
+Washington-St. Louis Bears,TEAM,defense,40,0,2
+Washington-St. Louis Bears,TEAM,offense,30,45,2
+UW-Whitewater,TEAM,offense,0,40,2
+UW-Whitewater,TEAM,offense,0,35,1
+UW-Whitewater,TEAM,offense,20,30,2
+Washington-St. Louis Bears,TEAM,defense,40,30,5
+Washington-St. Louis Bears,TEAM,defense,40,35,4
+Washington-St. Louis Bears,TEAM,defense,40,40,3
+UW-Whitewater,TEAM,defense,0,5,1
+UW-Whitewater,TEAM,defense,5,5,2
+UW-Whitewater,TEAM,defense,5,35,1
+UW-Whitewater,TEAM,defense,5,40,4
+Washington-St. Louis Bears,TEAM,defense,15,0,19
+UW-Whitewater,TEAM,defense,40,25,1
+UW-Whitewater,TEAM,offense,35,25,2
+UW-Whitewater,TEAM,offense,35,20,3
+UW-Whitewater,TEAM,offense,30,20,1
+UW-Whitewater,TEAM,offense,35,15,3
+UW-Whitewater,TEAM,offense,35,10,8
+UW-Whitewater,TEAM,offense,35,5,9
+UW-Whitewater,TEAM,offense,30,5,7
+UW-Whitewater,TEAM,offense,45,30,7
+Washington-St. Louis Bears,TEAM,defense,0,45,2
+Washington-St. Louis Bears,TEAM,defense,40,5,18
+Washington-St. Louis Bears,TEAM,defense,45,10,1
+UW-Whitewater,TEAM,defense,35,10,3
+UW-Whitewater,TEAM,defense,35,15,1
+UW-Whitewater,TEAM,offense,45,40,1
+Washington-St. Louis Bears,TEAM,defense,10,0,7
+Washington-St. Louis Bears,TEAM,defense,25,0,21
+Washington-St. Louis Bears,TEAM,defense,20,0,19
+UW-Whitewater,TEAM,offense,25,10,3
+UW-Whitewater,TEAM,offense,25,20,4
+UW-Whitewater,TEAM,offense,20,25,1
+UW-Whitewater,TEAM,offense,40,45,1
+UW-Whitewater,TEAM,offense,40,40,1
+UW-Whitewater,TEAM,offense,35,35,1
+Washington-St. Louis Bears,TEAM,defense,15,45,5
+Washington-St. Louis Bears,TEAM,defense,0,30,3
+Washington-St. Louis Bears,Anthony Przybilla,offense,20,10,1
+Washington-St. Louis Bears,Anthony Przybilla,offense,10,5,1
+UW-Whitewater,TEAM,defense,30,35,1
+UW-Whitewater,TEAM,defense,30,30,1
+UW-Whitewater,TEAM,offense,15,5,1
+UW-Whitewater,TEAM,offense,30,10,3
+UW-Whitewater,TEAM,defense,10,35,1
+UW-Whitewater,TEAM,offense,20,5,6
+Washington-St. Louis Bears,TEAM,defense,0,25,2
+Washington-St. Louis Bears,TEAM,defense,5,45,1
+UW-Whitewater,TEAM,offense,25,5,2
+UW-Whitewater,TEAM,offense,40,0,2
+UW-Whitewater,TEAM,offense,15,10,2
+UW-Whitewater,TEAM,offense,40,5,5
+UW-Whitewater,TEAM,offense,25,0,2
+UW-Whitewater,TEAM,offense,30,0,2
+UW-Whitewater,TEAM,offense,30,15,2
+Washington-St. Louis Bears,TEAM,defense,30,45,1
+UW-Whitewater,TEAM,offense,15,35,1
+Washington-St. Louis Bears,TEAM,defense,45,40,1
+Washington-St. Louis Bears,TEAM,defense,40,25,1

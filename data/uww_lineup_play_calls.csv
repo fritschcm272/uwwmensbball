@@ -1,14 +1,14 @@
 scouted_opponent,side,lineup,top_calls,tagged_possessions,ppp,grouping
-MSOE Raiders,Opponent,"Carson Cordelli, Chase Cummings, Ethan Johnson, Jonathan Burroughs, Mason Dopirak",5 Out Motion (10x),10,1.0,3G-1W-1B
+MSOE Raiders,Opponent,"Carson Cordelli, Chase Cummings, Ethan Johnson, Jonathan Burroughs, Mason Dopirak",5 Out Motion (20x),20,1.0,3G-1W-1B
 MSOE Raiders,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren","Motion (2x), SLOB Motion (1x), BLOB (1x)",6,1.0,
 MSOE Raiders,UWW,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren","5 Out Motion (9x), in trnasntion random movement (2x), Set (1x)",13,1.0,
 MSOE Raiders,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Jake Quast, Luke Bara","5 Out Motion (3x), BLOB Line Motion (1x)",4,0.5,
 MSOE Raiders,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren","5 Out Motion (14x), Motion (4x), BLOB Line Motion (3x)",32,0.72,
-MSOE Raiders,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson","BLOB Box Motion (2x), Spain (1x), BLOB Line Motion (1x)",4,0.5,
+MSOE Raiders,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson","BLOB Box Motion (2x), Spain (1x), 5 Out Motion (1x)",5,0.4,
 MSOE Raiders,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen","Ball Screen (3x), BLOB (1x), Spain (1x)",5,0.0,
 MSOE Raiders,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Richie Warren","BLOB (1x), Scissors (1x)",2,1.0,
 MSOE Raiders,UWW,"Brock Marino, Collin Madson, Jake Quast, Luke Bara, Richie Warren","BLOB Box Motion (2x), Ball Screen (2x), Spain (1x)",7,1.43,
-MSOE Raiders,UWW,"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren",5 Out Motion (7x),7,1.29,
+MSOE Raiders,UWW,"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren",5 Out Motion (13x),13,1.0,
 MSOE Raiders,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz","Motion (3x), Ball Screen (2x), Double Ball Screen (1x)",12,1.25,
 MSOE Raiders,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Luke Bara, Richie Warren",DHO (1x),1,0.0,
 MSOE Raiders,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren, Tyshawn Teague-Johnson","5 Out Motion (3x), Over (1x)",4,1.0,
@@ -17,3 +17,5 @@ MSOE Raiders,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara, Richi
 MSOE Raiders,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",Ball Screen (1x),1,3.0,
 MSOE Raiders,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",Ball Screen (2x),2,0.0,
 MSOE Raiders,UWW,"Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson","BLOB Box Motion (1x), Cheetah (1x)",2,1.0,
+MSOE Raiders,UWW,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers","5 Out Motion (5x), BLOB Set (1x), Snap (1x)",10,1.11,
+MSOE Raiders,UWW,"JR Lukenbill, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Richie Warren","TWINS LEFT (1x), SLOB 5 Out Motion (1x)",2,3.0,

@@ -258,3 +258,15 @@ Tag model: screen_defender,v2026.10.14.5,2026-10-14,trained,2026-10-14T20:35:05,
 Tag model: situation,v2026.10.14.5,2026-10-14,trained,2026-10-14T20:35:05,"338 tagged clips, 5 answers learned",2026-10-14T20:41:01
 Tag model (overall),v2026.10.14.5,2026-10-14,trained,2026-10-14T20:35:05,newest of 9 field model(s); last retrained field: situation,2026-10-14T20:41:01
 Player tracking,v2026.10.15,2026-10-15,pretrained + code,faaa468dcb8a,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-14T20:41:01
+Tag model: ball_screen_coverage,v2026.10.19,2026-10-19,trained,2026-10-19T17:52:49,"121 tagged clips, 5 answers learned, one answer only",2026-10-19T18:02:34
+Tag model: defense,v2026.10.19,2026-10-19,trained,2026-10-19T17:52:49,"314 tagged clips, 1 answers learned, one answer only",2026-10-19T18:02:34
+Tag model: formation,v2026.10.19,2026-10-19,trained,2026-10-19T17:52:49,"189 tagged clips, 5 answers learned, one answer only",2026-10-19T18:02:34
+Tag model: offball_coverage,v2026.10.19,2026-10-19,trained,2026-10-19T17:52:49,"88 tagged clips, 3 answers learned",2026-10-19T18:02:34
+Tag model: play_call,v2026.10.19,2026-10-19,trained,2026-10-19T17:52:49,"225 tagged clips, 7 answers learned",2026-10-19T18:02:34
+Tag model: press,v2026.10.19,2026-10-19,trained,2026-10-19T17:52:49,"314 tagged clips, 3 answers learned",2026-10-19T18:02:34
+Tag model: primary_action,v2026.10.19,2026-10-19,trained,2026-10-19T17:52:49,"161 tagged clips, 7 answers learned, one answer only",2026-10-19T18:02:34
+Tag model: screen_defender,v2026.10.19,2026-10-19,trained,2026-10-19T17:52:49,"78 tagged clips, 7 answers learned, one answer only",2026-10-19T18:02:34
+Tag model: situation,v2026.10.19,2026-10-19,trained,2026-10-19T17:52:49,"358 tagged clips, 5 answers learned",2026-10-19T18:02:34
+Tag model (overall),v2026.10.19,2026-10-19,trained,2026-10-19T17:52:49,newest of 9 field model(s); last retrained field: situation,2026-10-19T18:02:34
+Player tracking,v2026.10.19,2026-10-19,pretrained + code,6e2d8e0ea8a3,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-19T18:02:34
+Court mapping,v2026.10.19,2026-10-19,rules + code,b270cd2c464e,2 calibration file(s),2026-10-19T18:02:34
