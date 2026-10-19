@@ -6669,7 +6669,7 @@ def _ft_player_label(pl, who, side):
     labs = pl.get("five_labels") or {}
     if who in labs and not str(labs[who]).startswith("#?"):
         return labs[who]
-    names = (pl.get("five") or {}).get(side) or list(labs)
+    names = (((pl.get("five") or {}).get(side) or []) + ((pl.get("roster") or {}).get(side) or [])) or list(labs)
     m = re.match(r"^#?\s*(\d{1,2})\b", who)
     for nm in names:
         lab = str(labs.get(nm) or "")
@@ -6720,8 +6720,14 @@ def _ft_actions_editor(d, pi, store, kp):
     # answers already in the cells (incl. typed ones and the automatic answer) stay in the lists
     cur_vals = lambda c: [x for r in (cur or []) + init for x in str(r.get(c) or "").split(" / ")]
     keep_first = lambda first, *rest: list(first) + [v for v in opt(*rest) if v not in first]
-    off5 = [_ft_lab(pl, n) for n in five.get("offense") or []]
-    def5 = [_ft_lab(pl, n) for n in five.get("defense") or []]
+    # CONFIRMED BUG (fixed; "a few times player numbers and names are not showing up"): a play whose five on the floor isn't
+    # known (no play-by-play match, no game clock) had empty Trigger / Screener / Screen defender lists. The parser now
+    # sends that team's roster for the game for such a side; the list shows the five when known, else the roster.
+    roster = pl.get("roster", {}) or {}
+    off5 = [_ft_lab(pl, n) for n in (five.get("offense") or []) + (roster.get("offense") or [])]
+    def5 = [_ft_lab(pl, n) for n in (five.get("defense") or []) + (roster.get("defense") or [])]
+    _no5 = [f"{pl.get(s_) or s_} ({'offense' if s_ == 'offense' else 'defense'})" for s_ in ("offense", "defense")
+            if len(five.get(s_) or []) < 5]
     cfg = {"Action": _ft_choice_col("Action", keep_first(_FT_ACTIONS, cur_vals("Action")), help=_FT_ACTION_HELP,
                                     width="medium"),
            # requested: Trigger = the five on OFFENSE (jersey number + name), like the Screener list
@@ -6751,6 +6757,9 @@ def _ft_actions_editor(d, pi, store, kp):
     if _uns:
         st.caption("Not sure enough to fill in (pick it if it's right): " + "; ".join(
             f"{c} {g}" + (f" ({float(cf):.0%})" if cf is not None else "") for c, g, cf in _uns))
+    if _no5:
+        st.caption("Who was on the floor isn't known for this play (no play-by-play match), so the player lists show every "
+                   "player in the game for: " + "; ".join(_no5) + ".")
     if _FT_MULTI:
         st.caption("Pick from a list or type your own answer in any cell (press Enter to add it).")
     _df = pd.DataFrame([{c: _ft_to_cell(r.get(c)) for c in _FT_ACT_COLS} for r in (cur or [])], columns=_FT_ACT_COLS)

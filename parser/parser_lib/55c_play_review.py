@@ -938,6 +938,33 @@ def _pr_film_here(r):
     return False
 
 
+def _tag_rosters(g):
+    """{team: every player who was on the floor for that team in this game} -- from all of the game's clip lineups."""
+    out = {}
+    for _, r in g.iterrows():
+        for side in ("offense", "defense"):
+            team = r.get(f"{side}_team")
+            if isinstance(team, str) and team.strip():
+                out.setdefault(team, set()).update(_trk_five(r.get(f"{side}_lineup")))
+    return {t: sorted(n for n in v if n) for t, v in out.items()}
+
+
+def _tag_people(r, rosters, _gn):
+    """A Film Tagging play's offense / defense, both fives with jersey numbers, and -- for a side whose five isn't known
+    (CONFIRMED BUG, fixed: "a few times player numbers and names are not showing up") -- that team's roster for the game,
+    so the Trigger / Screener / Screen defender lists are never empty."""
+    _cl = lambda v: None if v is None or (isinstance(v, float) and pd.isna(v)) else str(v)
+    five = {"offense": _trk_five(r.get("offense_lineup")), "defense": _trk_five(r.get("defense_lineup"))}
+    roster = {}
+    for side in ("offense", "defense"):
+        if len(five[side]) < 5:
+            team = _cl(r.get(f"{side}_team"))
+            roster[side] = [n for n in rosters.get(team, []) if n not in five[side]] if team else []
+    names = [nm for side_ in ("offense", "defense") for nm in five[side_] + roster.get(side_, [])]
+    return {"offense": _cl(r.get("offense_team")), "defense": _cl(r.get("defense_team")), "five": five, "roster": roster,
+            "five_labels": {nm: (f"#{_gn[str(nm).lower()]} {nm}" if _gn.get(str(nm).lower()) else nm) for nm in names}}
+
+
 def _tag_refresh_people(pkg, g, gd, gc):
     """An open (unsaved) Film Tagging batch keeps its plays, but who was on offense / defense and the two fives are updated
     from today's play calls. CONFIRMED BUG (fixed with the team-code fix in Play calls): batches built before it listed our
@@ -954,15 +981,12 @@ def _tag_refresh_people(pkg, g, gd, gc):
     except Exception:
         _gn = {}
     n = 0
+    rosters = _tag_rosters(g)
     for pl in doc.get("plays", []):
         r = by_key.get(_pl_ckey_norm(pl.get("clip_key")))
         if r is None:
             continue
-        five = {"offense": _trk_five(r.get("offense_lineup")), "defense": _trk_five(r.get("defense_lineup"))}
-        _cl = lambda v: None if v is None or (isinstance(v, float) and pd.isna(v)) else str(v)
-        new = {"offense": _cl(r.get("offense_team")), "defense": _cl(r.get("defense_team")), "five": five,
-               "five_labels": {nm: (f"#{_gn[str(nm).lower()]} {nm}" if _gn.get(str(nm).lower()) else nm)
-                               for side_ in ("offense", "defense") for nm in five[side_]}}
+        new = _tag_people(r, rosters, _gn)
         if any(pl.get(k) != v for k, v in new.items()):
             pl.update(new)
             n += 1
@@ -1051,6 +1075,7 @@ def tag_queue():
             _gn = _trk_numbers_for_game(gd, gc) if "_trk_numbers_for_game" in globals() else {}
         except Exception:
             _gn = {}
+        _rosters = _tag_rosters(g)
         for _, r in pick.iterrows():
             files = [f for f in str(r.get("track_files") or "").split(";") if f] or \
                     [f for f in str(r.get("frame_files") or "").split(";") if f]
@@ -1085,11 +1110,9 @@ def tag_queue():
                           "poster": (f"clip_{fid}_poster.jpg" if clip_file and os.path.exists(os.path.join(rdir, f"clip_{fid}_poster.jpg")) else None),
                           "fid": fid, "synergy_url": url, "synergy_pos": int(pos) if pd.notna(pos) else None,
                           "pictures": [], "fields": fields,
-                          "five": {"offense": _trk_five(r.get("offense_lineup")), "defense": _trk_five(r.get("defense_lineup"))},
-                          # requested: the Screener / Screen defender lists show each player's jersey number
-                          "five_labels": {nm: (f"#{_gn[str(nm).lower()]} {nm}" if _gn.get(str(nm).lower()) else nm)
-                                          for side_ in ("offense", "defense")
-                                          for nm in _trk_five(r.get(f"{side_}_lineup"))}})
+                          # requested: the Screener / Screen defender lists show each player's jersey number; a side with
+                          # no known five gets the team's roster for the game instead (see _tag_people)
+                          **_tag_people(r, _rosters, _gn)})
         if not plays:
             shutil.rmtree(rdir, ignore_errors=True)
             shutil.rmtree(pkg, ignore_errors=True)

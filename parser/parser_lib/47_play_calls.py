@@ -1214,6 +1214,60 @@ def _pl_lineup_for(clips, events, lineup_col):
     matched = clips["event_index"].notna()
     if matched.any():
         out.loc[matched] = clips.loc[matched, "event_index"].map(events[lineup_col])
+    # CONFIRMED CHANGE (coaches: "a few times player numbers and names are not showing up" in Film Tagging -- the Screener /
+    # Trigger / Screen defender lists were empty on 9 of Wash U's 169 clips). A clip that matched no play-by-play event
+    # (Synergy's "No Violation", "Kicked Ball", a transition push that ended in a foul ...) but HAS its half and game clock
+    # still has a known five: whoever was on the floor at that clock. It's read from the last play-by-play action at or
+    # before that moment (substitutions and timeouts at the same clock are skipped -- the clip happened before them).
+    # Only the lineup columns; PLAY_CALLS_LINEUP_BY_CLOCK = False turns it off.
+    if "lineup" in str(lineup_col) and globals().get("PLAY_CALLS_LINEUP_BY_CLOCK", True):
+        try:
+            out = _pl_lineup_by_clock(clips, events, lineup_col, out)
+        except Exception as e:
+            print(f"  (lineups by game clock not filled for {lineup_col}: {type(e).__name__}: {e})", flush=True)
+    return out
+
+
+_PL_NOT_ACTION = {"sub_in", "sub_out", "timeout", "period_marker", "period_start", "period_end", "game_end"}
+
+
+def _pl_lineup_by_clock(clips, events, lineup_col, out):
+    """Fill `out` (a lineup per clip) for clips with no lineup yet but a half + game clock, from the play-by-play."""
+    need = out.isna() | (out.astype(str).str.strip() == "")
+    for c in ("period", "time_remaining_seconds", "game_date"):
+        if c not in clips.columns or c not in events.columns:
+            return out
+    t_clip = pd.to_numeric(clips["time_remaining_seconds"], errors="coerce")
+    need &= t_clip.notna() & clips["period"].notna()
+    if not need.any():
+        return out
+    ev = events.assign(_t=pd.to_numeric(events["time_remaining_seconds"], errors="coerce"),
+                       _o=pd.to_numeric(events["event_order"], errors="coerce") if "event_order" in events.columns
+                       else pd.Series(range(len(events)), index=events.index))
+    ev = ev[ev["_t"].notna() & ev[lineup_col].notna() & (ev[lineup_col].astype(str).str.strip() != "")]
+    if ev.empty:
+        return out
+    ev = ev.assign(_act=~ev["event_type"].astype(str).isin(_PL_NOT_ACTION) if "event_type" in ev.columns else True)
+    groups = {k: g.sort_values(["_t", "_o"], ascending=[True, False]) for k, g in
+              ev.groupby([ev["game_date"].astype(str), ev["period"].astype(str)])}
+    n = 0
+    for i in clips.index[need]:
+        g = groups.get((str(clips.at[i, "game_date"]), str(clips.at[i, "period"])))
+        if g is None:
+            continue
+        T = float(t_clip[i])
+        # AT the clip's moment: the last ACTION then (subs / timeouts at the same clock come after the play). Otherwise the
+        # last event of any kind before it (a sub earlier in the stoppage has happened by then).
+        same = g[(g["_t"] == T) & g["_act"]]
+        at = same if not same.empty else g[g["_t"] > T]       # the clock counts down: larger = earlier in the half
+        if at.empty:
+            at = g[g["_t"] == g["_t"].max()]                   # before the half's first event: its starting five
+        row = at[at["_t"] == at["_t"].min()].sort_values("_o").iloc[-1]
+        out.at[i] = row[lineup_col]
+        n += 1
+    if n:
+        print(f"  Lineups: {n} clip(s) with no matched play-by-play event got their {lineup_col.replace('_', ' ')} "
+              f"from the game clock", flush=True)
     return out
 
 

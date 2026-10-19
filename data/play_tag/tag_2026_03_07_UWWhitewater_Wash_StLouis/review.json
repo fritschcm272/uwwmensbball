@@ -1,446 +1,167 @@
 {
  "game": "2026-03-07|UWWhitewater@Wash(StLouis)",
  "slug": "tag_2026_03_07_UWWhitewater_Wash_StLouis",
- "run": "20261014_180633_tag",
+ "run": "20261019_175624_tag",
  "plays": [
   {
-   "clip_key": "2026-03-07|23|10 Yogi Oliff > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Connor May > Spot-Up > Drives Right > To Basket > Make 2 Pts",
-   "clip_number": 23,
-   "clock": "H1 13:59",
-   "synergy": "10 Yogi Oliff > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Connor May > Spot-Up > Drives Right > To Basket > Make 2 Pts",
+   "clip_key": "2026-03-07|45|33 George Gale > Cut > Basket > Miss 2 Pts",
+   "clip_number": 45,
+   "clock": "H1 10:05",
+   "synergy": "33 George Gale > Cut > Basket > Miss 2 Pts",
    "coach_title": null,
-   "auto_title": "5 out(bs): m2m (over)",
-   "film": null,
-   "offense": "Washington-St. Louis Bears",
-   "defense": "UW-Whitewater",
-   "player": "Connor May",
-   "result": "Make 2 Pts",
-   "clip": "clip_023_00.mp4",
-   "clip_kind": "video",
-   "poster": "clip_023_00_poster.jpg",
-   "fid": "023_00",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 23,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.97,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.66,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.72,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.77,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.39,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.66,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#12",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [
-     "Connor May",
-     "George Gale",
-     "Josh Kim",
-     "Ryan Cohen",
-     "Yogi Oliff"
-    ],
-    "defense": [
-     "Brock Marino",
-     "Collin Madson",
-     "Joey Berezowitz",
-     "Luke Bara",
-     "Richie Warren"
-    ]
-   },
-   "five_labels": {
-    "Connor May": "#21 Connor May",
-    "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Ryan Cohen": "#11 Ryan Cohen",
-    "Yogi Oliff": "#10 Yogi Oliff",
-    "Brock Marino": "#21 Brock Marino",
-    "Collin Madson": "#15 Collin Madson",
-    "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Luke Bara": "#32 Luke Bara",
-    "Richie Warren": "#24 Richie Warren"
-   }
-  },
-  {
-   "clip_key": "2026-03-07|24|15 Collin Madson > ISO > Right > Drives Left > To Basket > Miss 2 Pts",
-   "clip_number": 24,
-   "clock": "H1 13:43",
-   "synergy": "15 Collin Madson > ISO > Right > Drives Left > To Basket > Miss 2 Pts",
-   "coach_title": null,
-   "auto_title": "5 out(iso): m2m (over)",
-   "film": "Off-ball screen: unnamed offense screened for unnamed offense; defended by unnamed defense (on the player screened) and unnamed defense (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 0%)",
-   "offense": "UW-Whitewater",
-   "defense": "Washington-St. Louis Bears",
-   "player": "Collin Madson",
-   "result": "Miss 2 Pts",
-   "clip": "clip_024_01.mp4",
-   "clip_kind": "video",
-   "poster": "clip_024_01_poster.jpg",
-   "fid": "024_01",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 24,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.93,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.66,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.98,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.77,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.39,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.66,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.24,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [
-     "Brock Marino",
-     "Collin Madson",
-     "Joey Berezowitz",
-     "Luke Bara",
-     "Richie Warren"
-    ],
-    "defense": [
-     "Connor May",
-     "George Gale",
-     "Josh Kim",
-     "Ryan Cohen",
-     "Yogi Oliff"
-    ]
-   },
-   "five_labels": {
-    "Brock Marino": "#21 Brock Marino",
-    "Collin Madson": "#15 Collin Madson",
-    "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Luke Bara": "#32 Luke Bara",
-    "Richie Warren": "#24 Richie Warren",
-    "Connor May": "#21 Connor May",
-    "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Ryan Cohen": "#11 Ryan Cohen",
-    "Yogi Oliff": "#10 Yogi Oliff"
-   }
-  },
-  {
-   "clip_key": "2026-03-07|25|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
-   "clip_number": 25,
-   "clock": "H1 13:31",
-   "synergy": "11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
-   "coach_title": null,
-   "auto_title": "5 out: m2m (over)",
-   "film": null,
-   "offense": "Washington-St. Louis Bears",
-   "defense": "UW-Whitewater",
-   "player": "Ryan Cohen",
-   "result": "Miss 3 Pts",
-   "clip": "clip_025_02.mp4",
-   "clip_kind": "video",
-   "poster": "clip_025_02_poster.jpg",
-   "fid": "025_02",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 25,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.81,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.66,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.98,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.77,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.39,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.81,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.44,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [
-     "Connor May",
-     "George Gale",
-     "Josh Kim",
-     "Ryan Cohen",
-     "Yogi Oliff"
-    ],
-    "defense": [
-     "Brock Marino",
-     "Collin Madson",
-     "Joey Berezowitz",
-     "Luke Bara",
-     "Richie Warren"
-    ]
-   },
-   "five_labels": {
-    "Connor May": "#21 Connor May",
-    "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Ryan Cohen": "#11 Ryan Cohen",
-    "Yogi Oliff": "#10 Yogi Oliff",
-    "Brock Marino": "#21 Brock Marino",
-    "Collin Madson": "#15 Collin Madson",
-    "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Luke Bara": "#32 Luke Bara",
-    "Richie Warren": "#24 Richie Warren"
-   }
-  },
-  {
-   "clip_key": "2026-03-07|26|33 George Gale > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
-   "clip_number": 26,
-   "clock": "H1 13:25",
-   "synergy": "33 George Gale > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
-   "coach_title": null,
-   "auto_title": "5 out: m2m (over)",
+   "auto_title": "5 out(cut): m2m (over)",
    "film": null,
    "offense": "Washington-St. Louis Bears",
    "defense": "UW-Whitewater",
    "player": "George Gale",
-   "result": "Make 2 Pts",
-   "clip": "clip_026_03.mp4",
+   "result": "Miss 2 Pts",
+   "clip": "clip_045_00.mp4",
    "clip_kind": "video",
-   "poster": "clip_026_03_poster.jpg",
-   "fid": "026_03",
+   "poster": "clip_045_00_poster.jpg",
+   "fid": "045_00",
    "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 26,
+   "synergy_pos": 45,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.71,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.67,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.99,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.96,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.75,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Anthony Przybilla",
+     "Connor May",
+     "George Gale",
+     "Theo Rocca",
+     "Yogi Oliff"
+    ],
+    "defense": [
+     "JR Lukenbill",
+     "Joey Berezowitz",
+     "Kelton McEwen",
+     "Rashad Rogers",
+     "Richie Warren"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Connor May": "#21 Connor May",
+    "George Gale": "#33 George Gale",
+    "Theo Rocca": "#30 Theo Rocca",
+    "Yogi Oliff": "#10 Yogi Oliff",
+    "JR Lukenbill": "#11 JR Lukenbill",
+    "Joey Berezowitz": "#22 Joey Berezowitz",
+    "Kelton McEwen": "#2 Kelton McEwen",
+    "Rashad Rogers": "#35 Rashad Rogers",
+    "Richie Warren": "#24 Richie Warren"
+   }
+  },
+  {
+   "clip_key": "2026-03-07|46|22 Joey Berezowitz > Transition > Ballhandler > Turnover",
+   "clip_number": 46,
+   "clock": "H1 9:58",
+   "synergy": "22 Joey Berezowitz > Transition > Ballhandler > Turnover",
+   "coach_title": null,
+   "auto_title": "tran",
+   "film": null,
+   "offense": "UW-Whitewater",
+   "defense": "Washington-St. Louis Bears",
+   "player": "Joey Berezowitz",
+   "result": "Turnover",
+   "clip": "clip_046_01.mp4",
+   "clip_kind": "video",
+   "poster": "clip_046_01_poster.jpg",
+   "fid": "046_01",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
+   "synergy_pos": 46,
    "pictures": [],
    "fields": [
     {
@@ -448,8 +169,8 @@
      "label": "Situation",
      "coach": null,
      "auto": "Transition",
-     "conf": 0.48,
-     "sure": false,
+     "conf": 0.6,
+     "sure": true,
      "same": null,
      "note": ""
     },
@@ -458,7 +179,7 @@
      "label": "Formation",
      "coach": null,
      "auto": "5 Out",
-     "conf": 0.66,
+     "conf": 0.67,
      "sure": true,
      "same": null,
      "note": ""
@@ -468,7 +189,7 @@
      "label": "Play call",
      "coach": null,
      "auto": "Motion",
-     "conf": 0.97,
+     "conf": 1.0,
      "sure": true,
      "same": null,
      "note": ""
@@ -478,7 +199,7 @@
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.5,
+     "conf": 0.46,
      "sure": false,
      "same": null,
      "note": ""
@@ -498,7 +219,7 @@
      "label": "Press",
      "coach": null,
      "auto": null,
-     "conf": 0.77,
+     "conf": 0.85,
      "sure": false,
      "same": null,
      "note": ""
@@ -508,7 +229,7 @@
      "label": "Ball-screen coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.39,
+     "conf": 0.38,
      "sure": false,
      "same": null,
      "note": ""
@@ -518,7 +239,7 @@
      "label": "Off-ball coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.9,
+     "conf": 0.67,
      "sure": true,
      "same": null,
      "note": ""
@@ -528,7 +249,7 @@
      "label": "Screen defender",
      "coach": null,
      "auto": "#5",
-     "conf": 0.26,
+     "conf": 0.29,
      "sure": false,
      "same": null,
      "note": ""
@@ -536,199 +257,60 @@
    ],
    "five": {
     "offense": [
-     "Connor May",
-     "George Gale",
-     "Josh Kim",
-     "Ryan Cohen",
-     "Yogi Oliff"
-    ],
-    "defense": [
-     "Brock Marino",
-     "Collin Madson",
+     "JR Lukenbill",
      "Joey Berezowitz",
-     "Luke Bara",
-     "Richie Warren"
-    ]
-   },
-   "five_labels": {
-    "Connor May": "#21 Connor May",
-    "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Ryan Cohen": "#11 Ryan Cohen",
-    "Yogi Oliff": "#10 Yogi Oliff",
-    "Brock Marino": "#21 Brock Marino",
-    "Collin Madson": "#15 Collin Madson",
-    "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Luke Bara": "#32 Luke Bara",
-    "Richie Warren": "#24 Richie Warren"
-   }
-  },
-  {
-   "clip_key": "2026-03-07|27|24 Richie Warren > Post-Up > Left Block > Right Shoulder > Dribble Move > To Jumper > Miss 2 Pts",
-   "clip_number": 27,
-   "clock": "H1 13:09",
-   "synergy": "24 Richie Warren > Post-Up > Left Block > Right Shoulder > Dribble Move > To Jumper > Miss 2 Pts",
-   "coach_title": null,
-   "auto_title": "5 out(post): m2m (over)",
-   "film": null,
-   "offense": "UW-Whitewater",
-   "defense": "Washington-St. Louis Bears",
-   "player": "Richie Warren",
-   "result": "Miss 2 Pts",
-   "clip": "clip_027_04.mp4",
-   "clip_kind": "video",
-   "poster": "clip_027_04_poster.jpg",
-   "fid": "027_04",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 27,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.93,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.66,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.98,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.77,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.39,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.71,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.33,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [
-     "Brock Marino",
-     "Collin Madson",
-     "Joey Berezowitz",
-     "Luke Bara",
+     "Kelton McEwen",
+     "Rashad Rogers",
      "Richie Warren"
     ],
     "defense": [
+     "Anthony Przybilla",
      "Connor May",
      "George Gale",
-     "Josh Kim",
-     "Ryan Cohen",
+     "Theo Rocca",
      "Yogi Oliff"
     ]
    },
+   "roster": {},
    "five_labels": {
-    "Brock Marino": "#21 Brock Marino",
-    "Collin Madson": "#15 Collin Madson",
+    "JR Lukenbill": "#11 JR Lukenbill",
     "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Luke Bara": "#32 Luke Bara",
+    "Kelton McEwen": "#2 Kelton McEwen",
+    "Rashad Rogers": "#35 Rashad Rogers",
     "Richie Warren": "#24 Richie Warren",
+    "Anthony Przybilla": "#23 Anthony Przybilla",
     "Connor May": "#21 Connor May",
     "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Ryan Cohen": "#11 Ryan Cohen",
+    "Theo Rocca": "#30 Theo Rocca",
     "Yogi Oliff": "#10 Yogi Oliff"
    }
   },
   {
-   "clip_key": "2026-03-07|28|10 Yogi Oliff > Post-Up > Right Block > Right Shoulder > Dribble Move > Turnover",
-   "clip_number": 28,
-   "clock": "H1 12:53",
-   "synergy": "10 Yogi Oliff > Post-Up > Right Block > Right Shoulder > Dribble Move > Turnover",
+   "clip_key": "2026-03-07|47|30 Theo Rocca > Transition > Right Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 47,
+   "clock": "H1 9:58",
+   "synergy": "30 Theo Rocca > Transition > Right Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
    "coach_title": null,
-   "auto_title": "5 out(post): m2m (over)",
+   "auto_title": "tran",
    "film": null,
    "offense": "Washington-St. Louis Bears",
    "defense": "UW-Whitewater",
-   "player": "Yogi Oliff",
-   "result": "Turnover",
-   "clip": "clip_028_05.mp4",
+   "player": "Theo Rocca",
+   "result": "Miss 3 Pts",
+   "clip": "clip_047_02.mp4",
    "clip_kind": "video",
-   "poster": "clip_028_05_poster.jpg",
-   "fid": "028_05",
+   "poster": "clip_047_02_poster.jpg",
+   "fid": "047_02",
    "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 28,
+   "synergy_pos": 47,
    "pictures": [],
    "fields": [
     {
      "field": "situation",
      "label": "Situation",
      "coach": null,
-     "auto": "Half court",
-     "conf": 0.87,
+     "auto": "Transition",
+     "conf": 0.66,
      "sure": true,
      "same": null,
      "note": ""
@@ -738,7 +320,7 @@
      "label": "Formation",
      "coach": null,
      "auto": "5 Out",
-     "conf": 0.66,
+     "conf": 0.67,
      "sure": true,
      "same": null,
      "note": ""
@@ -748,7 +330,7 @@
      "label": "Play call",
      "coach": null,
      "auto": "Motion",
-     "conf": 1.0,
+     "conf": 0.99,
      "sure": true,
      "same": null,
      "note": ""
@@ -758,7 +340,7 @@
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.5,
+     "conf": 0.46,
      "sure": false,
      "same": null,
      "note": ""
@@ -778,7 +360,7 @@
      "label": "Press",
      "coach": null,
      "auto": null,
-     "conf": 0.77,
+     "conf": 0.94,
      "sure": false,
      "same": null,
      "note": ""
@@ -788,7 +370,7 @@
      "label": "Ball-screen coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.39,
+     "conf": 0.38,
      "sure": false,
      "same": null,
      "note": ""
@@ -798,147 +380,7 @@
      "label": "Off-ball coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.84,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#2",
-     "conf": 0.23,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [
-     "Connor May",
-     "George Gale",
-     "Josh Kim",
-     "Ryan Cohen",
-     "Yogi Oliff"
-    ],
-    "defense": [
-     "Brock Marino",
-     "Collin Madson",
-     "Joey Berezowitz",
-     "Luke Bara",
-     "Richie Warren"
-    ]
-   },
-   "five_labels": {
-    "Connor May": "#21 Connor May",
-    "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Ryan Cohen": "#11 Ryan Cohen",
-    "Yogi Oliff": "#10 Yogi Oliff",
-    "Brock Marino": "#21 Brock Marino",
-    "Collin Madson": "#15 Collin Madson",
-    "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Luke Bara": "#32 Luke Bara",
-    "Richie Warren": "#24 Richie Warren"
-   }
-  },
-  {
-   "clip_key": "2026-03-07|29|22 Joey Berezowitz > Non Possession > No Violation",
-   "clip_number": 29,
-   "clock": "(no clock)",
-   "synergy": "22 Joey Berezowitz > Non Possession > No Violation",
-   "coach_title": null,
-   "auto_title": "5 out: m2m (over)",
-   "film": null,
-   "offense": "UW-Whitewater",
-   "defense": "Washington-St. Louis Bears",
-   "player": "Joey Berezowitz",
-   "result": "No Violation",
-   "clip": "clip_029_06.mp4",
-   "clip_kind": "video",
-   "poster": "clip_029_06_poster.jpg",
-   "fid": "029_06",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 29,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.89,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.66,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.98,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.77,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.39,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.76,
+     "conf": 0.7,
      "sure": true,
      "same": null,
      "note": ""
@@ -948,36 +390,60 @@
      "label": "Screen defender",
      "coach": null,
      "auto": "#5",
-     "conf": 0.48,
+     "conf": 0.29,
      "sure": false,
      "same": null,
      "note": ""
     }
    ],
    "five": {
-    "offense": [],
-    "defense": []
+    "offense": [
+     "Anthony Przybilla",
+     "Connor May",
+     "George Gale",
+     "Theo Rocca",
+     "Yogi Oliff"
+    ],
+    "defense": [
+     "JR Lukenbill",
+     "Joey Berezowitz",
+     "Kelton McEwen",
+     "Rashad Rogers",
+     "Richie Warren"
+    ]
    },
-   "five_labels": {}
+   "roster": {},
+   "five_labels": {
+    "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Connor May": "#21 Connor May",
+    "George Gale": "#33 George Gale",
+    "Theo Rocca": "#30 Theo Rocca",
+    "Yogi Oliff": "#10 Yogi Oliff",
+    "JR Lukenbill": "#11 JR Lukenbill",
+    "Joey Berezowitz": "#22 Joey Berezowitz",
+    "Kelton McEwen": "#2 Kelton McEwen",
+    "Rashad Rogers": "#35 Rashad Rogers",
+    "Richie Warren": "#24 Richie Warren"
+   }
   },
   {
-   "clip_key": "2026-03-07|30|22 Joey Berezowitz > Hand Off > From Stationary > Left > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts",
-   "clip_number": 30,
-   "clock": "H1 12:40",
-   "synergy": "22 Joey Berezowitz > Hand Off > From Stationary > Left > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts",
+   "clip_key": "2026-03-07|48|2 Kelton Mcewen > Non Possession > No Violation",
+   "clip_number": 48,
+   "clock": "H1 9:27",
+   "synergy": "2 Kelton Mcewen > Non Possession > No Violation",
    "coach_title": null,
-   "auto_title": "5 out(dho): m2m (5over)",
-   "film": "Off-ball screen: unnamed offense screened for unnamed offense; defended by unnamed defense (on the player screened) and an unnamed player (on the screener); coverage from the players' movement: separated (under / behind) (screen confidence 0%)",
+   "auto_title": "5 out: m2m",
+   "film": null,
    "offense": "UW-Whitewater",
    "defense": "Washington-St. Louis Bears",
-   "player": "Joey Berezowitz",
-   "result": "Make 3 Pts",
-   "clip": "clip_030_07.mp4",
+   "player": "Kelton Mcewen",
+   "result": "No Violation",
+   "clip": "clip_048_03.mp4",
    "clip_kind": "video",
-   "poster": "clip_030_07_poster.jpg",
-   "fid": "030_07",
+   "poster": "clip_048_03_poster.jpg",
+   "fid": "048_03",
    "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 30,
+   "synergy_pos": 48,
    "pictures": [],
    "fields": [
     {
@@ -995,7 +461,7 @@
      "label": "Formation",
      "coach": null,
      "auto": "5 Out",
-     "conf": 0.66,
+     "conf": 0.67,
      "sure": true,
      "same": null,
      "note": ""
@@ -1005,7 +471,7 @@
      "label": "Play call",
      "coach": null,
      "auto": "Motion",
-     "conf": 0.96,
+     "conf": 0.94,
      "sure": true,
      "same": null,
      "note": ""
@@ -1015,7 +481,7 @@
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.5,
+     "conf": 0.46,
      "sure": false,
      "same": null,
      "note": ""
@@ -1035,7 +501,7 @@
      "label": "Press",
      "coach": null,
      "auto": null,
-     "conf": 0.77,
+     "conf": 0.78,
      "sure": false,
      "same": null,
      "note": ""
@@ -1045,7 +511,7 @@
      "label": "Ball-screen coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.39,
+     "conf": 0.38,
      "sure": false,
      "same": null,
      "note": ""
@@ -1055,8 +521,8 @@
      "label": "Off-ball coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.71,
-     "sure": true,
+     "conf": 0.52,
+     "sure": false,
      "same": null,
      "note": ""
     },
@@ -1065,8 +531,8 @@
      "label": "Screen defender",
      "coach": null,
      "auto": "#5",
-     "conf": 0.65,
-     "sure": true,
+     "conf": 0.29,
+     "sure": false,
      "same": null,
      "note": ""
     }
@@ -1074,190 +540,51 @@
    "five": {
     "offense": [
      "JR Lukenbill",
-     "Jake Quast",
      "Joey Berezowitz",
      "Kelton McEwen",
-     "Rashad Rogers"
+     "Rashad Rogers",
+     "Richie Warren"
     ],
     "defense": [
      "Anthony Przybilla",
+     "Connor May",
      "George Gale",
-     "Josh Kim",
-     "Theo Rocca",
-     "Will Grudzinski"
+     "Ryan Cohen",
+     "Yogi Oliff"
     ]
    },
+   "roster": {},
    "five_labels": {
     "JR Lukenbill": "#11 JR Lukenbill",
-    "Jake Quast": "#12 Jake Quast",
     "Joey Berezowitz": "#22 Joey Berezowitz",
     "Kelton McEwen": "#2 Kelton McEwen",
     "Rashad Rogers": "#35 Rashad Rogers",
+    "Richie Warren": "#24 Richie Warren",
     "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Connor May": "#21 Connor May",
     "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Theo Rocca": "#30 Theo Rocca",
-    "Will Grudzinski": "#32 Will Grudzinski"
+    "Ryan Cohen": "#11 Ryan Cohen",
+    "Yogi Oliff": "#10 Yogi Oliff"
    }
   },
   {
-   "clip_key": "2026-03-07|31|3 Josh Kim > Spot-Up > Drives Left > To Basket > Foul",
-   "clip_number": 31,
-   "clock": "H1 12:20",
-   "synergy": "3 Josh Kim > Spot-Up > Drives Left > To Basket > Foul",
+   "clip_key": "2026-03-07|49|15 Collin Madson > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts",
+   "clip_number": 49,
+   "clock": "H1 9:02",
+   "synergy": "15 Collin Madson > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts",
    "coach_title": null,
-   "auto_title": "5 out: m2m (over)",
-   "film": null,
-   "offense": "Washington-St. Louis Bears",
-   "defense": "UW-Whitewater",
-   "player": "Josh Kim",
-   "result": "Foul",
-   "clip": "clip_031_08.mp4",
-   "clip_kind": "video",
-   "poster": "clip_031_08_poster.jpg",
-   "fid": "031_08",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 31,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.87,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.66,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.87,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.77,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.39,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.69,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#23",
-     "conf": 0.28,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [
-     "Anthony Przybilla",
-     "George Gale",
-     "Josh Kim",
-     "Theo Rocca",
-     "Will Grudzinski"
-    ],
-    "defense": [
-     "JR Lukenbill",
-     "Jake Quast",
-     "Joey Berezowitz",
-     "Kelton McEwen",
-     "Rashad Rogers"
-    ]
-   },
-   "five_labels": {
-    "Anthony Przybilla": "#23 Anthony Przybilla",
-    "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Theo Rocca": "#30 Theo Rocca",
-    "Will Grudzinski": "#32 Will Grudzinski",
-    "JR Lukenbill": "#11 JR Lukenbill",
-    "Jake Quast": "#12 Jake Quast",
-    "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Kelton McEwen": "#2 Kelton McEwen",
-    "Rashad Rogers": "#35 Rashad Rogers"
-   }
-  },
-  {
-   "clip_key": "2026-03-07|34|2 Kelton Mcewen > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
-   "clip_number": 34,
-   "clock": "H1 12:03",
-   "synergy": "2 Kelton Mcewen > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
-   "coach_title": null,
-   "auto_title": "5 out(ds): m2m (5over)",
+   "auto_title": "5 out(bs): m2m",
    "film": null,
    "offense": "UW-Whitewater",
    "defense": "Washington-St. Louis Bears",
-   "player": "Kelton Mcewen",
+   "player": "Collin Madson",
    "result": "Miss 3 Pts",
-   "clip": "clip_034_09.mp4",
+   "clip": "clip_049_04.mp4",
    "clip_kind": "video",
-   "poster": "clip_034_09_poster.jpg",
-   "fid": "034_09",
+   "poster": "clip_049_04_poster.jpg",
+   "fid": "049_04",
    "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 34,
+   "synergy_pos": 49,
    "pictures": [],
    "fields": [
     {
@@ -1265,7 +592,7 @@
      "label": "Situation",
      "coach": null,
      "auto": "Half court",
-     "conf": 0.89,
+     "conf": 0.9,
      "sure": true,
      "same": null,
      "note": ""
@@ -1275,147 +602,7 @@
      "label": "Formation",
      "coach": null,
      "auto": "5 Out",
-     "conf": 0.66,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.95,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.77,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.39,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.68,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.62,
-     "sure": true,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [
-     "JR Lukenbill",
-     "Jake Quast",
-     "Joey Berezowitz",
-     "Kelton McEwen",
-     "Rashad Rogers"
-    ],
-    "defense": [
-     "Anthony Przybilla",
-     "George Gale",
-     "Josh Kim",
-     "Theo Rocca",
-     "Will Grudzinski"
-    ]
-   },
-   "five_labels": {
-    "JR Lukenbill": "#11 JR Lukenbill",
-    "Jake Quast": "#12 Jake Quast",
-    "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Kelton McEwen": "#2 Kelton McEwen",
-    "Rashad Rogers": "#35 Rashad Rogers",
-    "Anthony Przybilla": "#23 Anthony Przybilla",
-    "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Theo Rocca": "#30 Theo Rocca",
-    "Will Grudzinski": "#32 Will Grudzinski"
-   }
-  },
-  {
-   "clip_key": "2026-03-07|35|11 Jr Lukenbill > Offensive Rebound > Long > Run Offense",
-   "clip_number": 35,
-   "clock": "(no clock)",
-   "synergy": "11 Jr Lukenbill > Offensive Rebound > Long > Run Offense",
-   "coach_title": null,
-   "auto_title": "5 out: m2m (over)",
-   "film": null,
-   "offense": "UW-Whitewater",
-   "defense": "Washington-St. Louis Bears",
-   "player": "Jr Lukenbill",
-   "result": "Run Offense",
-   "clip": "clip_035_10.mp4",
-   "clip_kind": "video",
-   "poster": "clip_035_10_poster.jpg",
-   "fid": "035_10",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 35,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.73,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.66,
+     "conf": 0.67,
      "sure": true,
      "same": null,
      "note": ""
@@ -1435,7 +622,7 @@
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.5,
+     "conf": 0.46,
      "sure": false,
      "same": null,
      "note": ""
@@ -1455,7 +642,7 @@
      "label": "Press",
      "coach": null,
      "auto": null,
-     "conf": 0.77,
+     "conf": 0.87,
      "sure": false,
      "same": null,
      "note": ""
@@ -1465,7 +652,7 @@
      "label": "Ball-screen coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.39,
+     "conf": 0.38,
      "sure": false,
      "same": null,
      "note": ""
@@ -1474,9 +661,9 @@
      "field": "offball_coverage",
      "label": "Off-ball coverage",
      "coach": null,
-     "auto": "Over",
-     "conf": 0.73,
-     "sure": true,
+     "auto": "Switch",
+     "conf": 0.45,
+     "sure": false,
      "same": null,
      "note": ""
     },
@@ -1485,517 +672,98 @@
      "label": "Screen defender",
      "coach": null,
      "auto": "#5",
-     "conf": 0.4,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [
-     "JR Lukenbill",
-     "Jake Quast",
-     "Joey Berezowitz",
-     "Kelton McEwen",
-     "Rashad Rogers"
-    ],
-    "defense": [
-     "Anthony Przybilla",
-     "George Gale",
-     "Josh Kim",
-     "Theo Rocca",
-     "Will Grudzinski"
-    ]
-   },
-   "five_labels": {
-    "JR Lukenbill": "#11 JR Lukenbill",
-    "Jake Quast": "#12 Jake Quast",
-    "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Kelton McEwen": "#2 Kelton McEwen",
-    "Rashad Rogers": "#35 Rashad Rogers",
-    "Anthony Przybilla": "#23 Anthony Przybilla",
-    "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Theo Rocca": "#30 Theo Rocca",
-    "Will Grudzinski": "#32 Will Grudzinski"
-   }
-  },
-  {
-   "clip_key": "2026-03-07|36|22 Joey Berezowitz > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
-   "clip_number": 36,
-   "clock": "H1 11:49",
-   "synergy": "22 Joey Berezowitz > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
-   "coach_title": null,
-   "auto_title": "5 out: m2m (over)",
-   "film": null,
-   "offense": "UW-Whitewater",
-   "defense": "Washington-St. Louis Bears",
-   "player": "Joey Berezowitz",
-   "result": "Make 3 Pts",
-   "clip": "clip_036_11.mp4",
-   "clip_kind": "video",
-   "poster": "clip_036_11_poster.jpg",
-   "fid": "036_11",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 36,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.67,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.66,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.91,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.77,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.39,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.77,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.44,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [
-     "JR Lukenbill",
-     "Jake Quast",
-     "Joey Berezowitz",
-     "Kelton McEwen",
-     "Rashad Rogers"
-    ],
-    "defense": [
-     "Anthony Przybilla",
-     "George Gale",
-     "Josh Kim",
-     "Theo Rocca",
-     "Will Grudzinski"
-    ]
-   },
-   "five_labels": {
-    "JR Lukenbill": "#11 JR Lukenbill",
-    "Jake Quast": "#12 Jake Quast",
-    "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Kelton McEwen": "#2 Kelton McEwen",
-    "Rashad Rogers": "#35 Rashad Rogers",
-    "Anthony Przybilla": "#23 Anthony Przybilla",
-    "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Theo Rocca": "#30 Theo Rocca",
-    "Will Grudzinski": "#32 Will Grudzinski"
-   }
-  },
-  {
-   "clip_key": "2026-03-07|37|33 George Gale > Transition > Left Wing > To Basket > Miss 2 Pts",
-   "clip_number": 37,
-   "clock": "H1 11:38",
-   "synergy": "33 George Gale > Transition > Left Wing > To Basket > Miss 2 Pts",
-   "coach_title": null,
-   "auto_title": "5 out: m2m (over)",
-   "film": null,
-   "offense": "Washington-St. Louis Bears",
-   "defense": "UW-Whitewater",
-   "player": "George Gale",
-   "result": "Miss 2 Pts",
-   "clip": "clip_037_12.mp4",
-   "clip_kind": "video",
-   "poster": "clip_037_12_poster.jpg",
-   "fid": "037_12",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 37,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.49,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.66,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.91,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.77,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.39,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.79,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.3,
-     "sure": false,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [
-     "Anthony Przybilla",
-     "George Gale",
-     "Josh Kim",
-     "Theo Rocca",
-     "Will Grudzinski"
-    ],
-    "defense": [
-     "JR Lukenbill",
-     "Jake Quast",
-     "Joey Berezowitz",
-     "Kelton McEwen",
-     "Rashad Rogers"
-    ]
-   },
-   "five_labels": {
-    "Anthony Przybilla": "#23 Anthony Przybilla",
-    "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Theo Rocca": "#30 Theo Rocca",
-    "Will Grudzinski": "#32 Will Grudzinski",
-    "JR Lukenbill": "#11 JR Lukenbill",
-    "Jake Quast": "#12 Jake Quast",
-    "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Kelton McEwen": "#2 Kelton McEwen",
-    "Rashad Rogers": "#35 Rashad Rogers"
-   }
-  },
-  {
-   "clip_key": "2026-03-07|38|22 Joey Berezowitz > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
-   "clip_number": 38,
-   "clock": "H1 11:24",
-   "synergy": "22 Joey Berezowitz > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
-   "coach_title": null,
-   "auto_title": "5 out(ds): m2m (5over)",
-   "film": null,
-   "offense": "UW-Whitewater",
-   "defense": "Washington-St. Louis Bears",
-   "player": "Joey Berezowitz",
-   "result": "Miss 3 Pts",
-   "clip": "clip_038_13.mp4",
-   "clip_kind": "video",
-   "poster": "clip_038_13_poster.jpg",
-   "fid": "038_13",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 38,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.63,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.66,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Motion",
-     "conf": 0.97,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "primary_action",
-     "label": "Main action",
-     "coach": null,
-     "auto": "Ball Screen",
-     "conf": 0.5,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "defense",
-     "label": "Defense",
-     "coach": null,
-     "auto": "Man-to-Man",
-     "conf": 1.0,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "press",
-     "label": "Press",
-     "coach": null,
-     "auto": null,
-     "conf": 0.77,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "ball_screen_coverage",
-     "label": "Ball-screen coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.39,
-     "sure": false,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "offball_coverage",
-     "label": "Off-ball coverage",
-     "coach": null,
-     "auto": "Over",
-     "conf": 0.73,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "screen_defender",
-     "label": "Screen defender",
-     "coach": null,
-     "auto": "#5",
-     "conf": 0.62,
-     "sure": true,
-     "same": null,
-     "note": ""
-    }
-   ],
-   "five": {
-    "offense": [
-     "JR Lukenbill",
-     "Jake Quast",
-     "Joey Berezowitz",
-     "Kelton McEwen",
-     "Rashad Rogers"
-    ],
-    "defense": [
-     "Anthony Przybilla",
-     "George Gale",
-     "Josh Kim",
-     "Theo Rocca",
-     "Will Grudzinski"
-    ]
-   },
-   "five_labels": {
-    "JR Lukenbill": "#11 JR Lukenbill",
-    "Jake Quast": "#12 Jake Quast",
-    "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Kelton McEwen": "#2 Kelton McEwen",
-    "Rashad Rogers": "#35 Rashad Rogers",
-    "Anthony Przybilla": "#23 Anthony Przybilla",
-    "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Theo Rocca": "#30 Theo Rocca",
-    "Will Grudzinski": "#32 Will Grudzinski"
-   }
-  },
-  {
-   "clip_key": "2026-03-07|39|3 Josh Kim > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 23 Anthony Przybilla > Spot-Up > Drives Right > To Basket > Make 2 Pts",
-   "clip_number": 39,
-   "clock": "H1 11:24",
-   "synergy": "3 Josh Kim > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 23 Anthony Przybilla > Spot-Up > Drives Right > To Basket > Make 2 Pts",
-   "coach_title": null,
-   "auto_title": "5 out(bs): m2m (over)",
-   "film": null,
-   "offense": "Washington-St. Louis Bears",
-   "defense": "UW-Whitewater",
-   "player": "Anthony Przybilla",
-   "result": "Make 2 Pts",
-   "clip": "clip_039_14.mp4",
-   "clip_kind": "video",
-   "poster": "clip_039_14_poster.jpg",
-   "fid": "039_14",
-   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 39,
-   "pictures": [],
-   "fields": [
-    {
-     "field": "situation",
-     "label": "Situation",
-     "coach": null,
-     "auto": "Half court",
-     "conf": 0.97,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "formation",
-     "label": "Formation",
-     "coach": null,
-     "auto": "5 Out",
-     "conf": 0.66,
-     "sure": true,
-     "same": null,
-     "note": ""
-    },
-    {
-     "field": "play_call",
-     "label": "Play call",
-     "coach": null,
-     "auto": "Ball Screen",
      "conf": 0.29,
      "sure": false,
      "same": null,
      "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Collin Madson",
+     "JR Lukenbill",
+     "Joey Berezowitz",
+     "Rashad Rogers",
+     "Richie Warren"
+    ],
+    "defense": [
+     "Anthony Przybilla",
+     "Connor May",
+     "George Gale",
+     "Ryan Cohen",
+     "Yogi Oliff"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Collin Madson": "#15 Collin Madson",
+    "JR Lukenbill": "#11 JR Lukenbill",
+    "Joey Berezowitz": "#22 Joey Berezowitz",
+    "Rashad Rogers": "#35 Rashad Rogers",
+    "Richie Warren": "#24 Richie Warren",
+    "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Connor May": "#21 Connor May",
+    "George Gale": "#33 George Gale",
+    "Ryan Cohen": "#11 Ryan Cohen",
+    "Yogi Oliff": "#10 Yogi Oliff"
+   }
+  },
+  {
+   "clip_key": "2026-03-07|50|10 Yogi Oliff > Off Screen > To Shooter's Left > Straight > To Basket > Make 2 Pts",
+   "clip_number": 50,
+   "clock": "H1 8:43",
+   "synergy": "10 Yogi Oliff > Off Screen > To Shooter's Left > Straight > To Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "5 out(ds): m2m (over)",
+   "film": null,
+   "offense": "Washington-St. Louis Bears",
+   "defense": "UW-Whitewater",
+   "player": "Yogi Oliff",
+   "result": "Make 2 Pts",
+   "clip": "clip_050_05.mp4",
+   "clip_kind": "video",
+   "poster": "clip_050_05_poster.jpg",
+   "fid": "050_05",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
+   "synergy_pos": 50,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.8,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.67,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.96,
+     "sure": true,
+     "same": null,
+     "note": ""
     },
     {
      "field": "primary_action",
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.5,
+     "conf": 0.46,
      "sure": false,
      "same": null,
      "note": ""
@@ -2015,7 +783,7 @@
      "label": "Press",
      "coach": null,
      "auto": null,
-     "conf": 0.77,
+     "conf": 0.94,
      "sure": false,
      "same": null,
      "note": ""
@@ -2025,7 +793,7 @@
      "label": "Ball-screen coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.39,
+     "conf": 0.38,
      "sure": false,
      "same": null,
      "note": ""
@@ -2035,7 +803,7 @@
      "label": "Off-ball coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.67,
+     "conf": 0.66,
      "sure": true,
      "same": null,
      "note": ""
@@ -2044,8 +812,8 @@
      "field": "screen_defender",
      "label": "Screen defender",
      "coach": null,
-     "auto": "#12",
-     "conf": 0.48,
+     "auto": "#5",
+     "conf": 0.29,
      "sure": false,
      "same": null,
      "note": ""
@@ -2054,50 +822,51 @@
    "five": {
     "offense": [
      "Anthony Przybilla",
+     "Connor May",
      "George Gale",
-     "Josh Kim",
-     "Theo Rocca",
-     "Will Grudzinski"
+     "Ryan Cohen",
+     "Yogi Oliff"
     ],
     "defense": [
+     "Collin Madson",
      "JR Lukenbill",
-     "Jake Quast",
      "Joey Berezowitz",
-     "Kelton McEwen",
-     "Rashad Rogers"
+     "Rashad Rogers",
+     "Richie Warren"
     ]
    },
+   "roster": {},
    "five_labels": {
     "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Connor May": "#21 Connor May",
     "George Gale": "#33 George Gale",
-    "Josh Kim": "#3 Josh Kim",
-    "Theo Rocca": "#30 Theo Rocca",
-    "Will Grudzinski": "#32 Will Grudzinski",
+    "Ryan Cohen": "#11 Ryan Cohen",
+    "Yogi Oliff": "#10 Yogi Oliff",
+    "Collin Madson": "#15 Collin Madson",
     "JR Lukenbill": "#11 JR Lukenbill",
-    "Jake Quast": "#12 Jake Quast",
     "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Kelton McEwen": "#2 Kelton McEwen",
-    "Rashad Rogers": "#35 Rashad Rogers"
+    "Rashad Rogers": "#35 Rashad Rogers",
+    "Richie Warren": "#24 Richie Warren"
    }
   },
   {
-   "clip_key": "2026-03-07|40|11 Jr Lukenbill > Non Possession > No Violation",
-   "clip_number": 40,
-   "clock": "H1 10:51",
-   "synergy": "11 Jr Lukenbill > Non Possession > No Violation",
+   "clip_key": "2026-03-07|51|22 Joey Berezowitz > Hand Off > From Dribble > Right > To Basket > Make 2 Pts",
+   "clip_number": 51,
+   "clock": "H1 8:24",
+   "synergy": "22 Joey Berezowitz > Hand Off > From Dribble > Right > To Basket > Make 2 Pts",
    "coach_title": null,
-   "auto_title": "5 out: m2m (over)",
+   "auto_title": "5 out(dho): m2m",
    "film": null,
    "offense": "UW-Whitewater",
    "defense": "Washington-St. Louis Bears",
-   "player": "Jr Lukenbill",
-   "result": "No Violation",
-   "clip": "clip_040_15.mp4",
+   "player": "Joey Berezowitz",
+   "result": "Make 2 Pts",
+   "clip": "clip_051_06.mp4",
    "clip_kind": "video",
-   "poster": "clip_040_15_poster.jpg",
-   "fid": "040_15",
+   "poster": "clip_051_06_poster.jpg",
+   "fid": "051_06",
    "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 40,
+   "synergy_pos": 51,
    "pictures": [],
    "fields": [
     {
@@ -2115,7 +884,7 @@
      "label": "Formation",
      "coach": null,
      "auto": "5 Out",
-     "conf": 0.66,
+     "conf": 0.67,
      "sure": true,
      "same": null,
      "note": ""
@@ -2125,7 +894,7 @@
      "label": "Play call",
      "coach": null,
      "auto": "Motion",
-     "conf": 0.79,
+     "conf": 0.81,
      "sure": true,
      "same": null,
      "note": ""
@@ -2135,7 +904,7 @@
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.5,
+     "conf": 0.46,
      "sure": false,
      "same": null,
      "note": ""
@@ -2155,7 +924,7 @@
      "label": "Press",
      "coach": null,
      "auto": null,
-     "conf": 0.77,
+     "conf": 0.82,
      "sure": false,
      "same": null,
      "note": ""
@@ -2165,7 +934,7 @@
      "label": "Ball-screen coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.39,
+     "conf": 0.38,
      "sure": false,
      "same": null,
      "note": ""
@@ -2175,8 +944,8 @@
      "label": "Off-ball coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.73,
-     "sure": true,
+     "conf": 0.43,
+     "sure": false,
      "same": null,
      "note": ""
     },
@@ -2185,7 +954,7 @@
      "label": "Screen defender",
      "coach": null,
      "auto": "#5",
-     "conf": 0.43,
+     "conf": 0.29,
      "sure": false,
      "same": null,
      "note": ""
@@ -2193,40 +962,52 @@
    ],
    "five": {
     "offense": [
+     "Collin Madson",
      "JR Lukenbill",
-     "Jake Quast",
      "Joey Berezowitz",
-     "Kelton McEwen",
-     "Rashad Rogers"
+     "Rashad Rogers",
+     "Richie Warren"
     ],
-    "defense": []
+    "defense": [
+     "Anthony Przybilla",
+     "Connor May",
+     "George Gale",
+     "Ryan Cohen",
+     "Yogi Oliff"
+    ]
    },
+   "roster": {},
    "five_labels": {
+    "Collin Madson": "#15 Collin Madson",
     "JR Lukenbill": "#11 JR Lukenbill",
-    "Jake Quast": "#12 Jake Quast",
     "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Kelton McEwen": "#2 Kelton McEwen",
-    "Rashad Rogers": "#35 Rashad Rogers"
+    "Rashad Rogers": "#35 Rashad Rogers",
+    "Richie Warren": "#24 Richie Warren",
+    "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Connor May": "#21 Connor May",
+    "George Gale": "#33 George Gale",
+    "Ryan Cohen": "#11 Ryan Cohen",
+    "Yogi Oliff": "#10 Yogi Oliff"
    }
   },
   {
-   "clip_key": "2026-03-07|41|2 Kelton Mcewen > Off Screen > To Shooter's Left > Straight > Turnover",
-   "clip_number": 41,
-   "clock": "H1 10:47",
-   "synergy": "2 Kelton Mcewen > Off Screen > To Shooter's Left > Straight > Turnover",
+   "clip_key": "2026-03-07|52|21 Connor May > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > To Basket > Miss 2 Pts",
+   "clip_number": 52,
+   "clock": "H1 8:17",
+   "synergy": "21 Connor May > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > To Basket > Miss 2 Pts",
    "coach_title": null,
-   "auto_title": "5 out(ds): m2m",
-   "film": "Off-ball screen: unnamed offense screened for unnamed offense; defended by unnamed defense (on the player screened) and an unnamed player (on the screener); coverage from the players' movement: unclear (screen confidence 0%)",
-   "offense": "UW-Whitewater",
-   "defense": "Washington-St. Louis Bears",
-   "player": "Kelton Mcewen",
-   "result": "Turnover",
-   "clip": "clip_041_16.mp4",
+   "auto_title": "5 out(bs): m2m",
+   "film": null,
+   "offense": "Washington-St. Louis Bears",
+   "defense": "UW-Whitewater",
+   "player": "Connor May",
+   "result": "Miss 2 Pts",
+   "clip": "clip_052_07.mp4",
    "clip_kind": "video",
-   "poster": "clip_041_16_poster.jpg",
-   "fid": "041_16",
+   "poster": "clip_052_07_poster.jpg",
+   "fid": "052_07",
    "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 41,
+   "synergy_pos": 52,
    "pictures": [],
    "fields": [
     {
@@ -2234,7 +1015,7 @@
      "label": "Situation",
      "coach": null,
      "auto": "Half court",
-     "conf": 0.86,
+     "conf": 0.92,
      "sure": true,
      "same": null,
      "note": ""
@@ -2244,7 +1025,7 @@
      "label": "Formation",
      "coach": null,
      "auto": "5 Out",
-     "conf": 0.66,
+     "conf": 0.67,
      "sure": true,
      "same": null,
      "note": ""
@@ -2254,7 +1035,7 @@
      "label": "Play call",
      "coach": null,
      "auto": "Motion",
-     "conf": 0.98,
+     "conf": 0.93,
      "sure": true,
      "same": null,
      "note": ""
@@ -2264,7 +1045,7 @@
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.5,
+     "conf": 0.46,
      "sure": false,
      "same": null,
      "note": ""
@@ -2284,7 +1065,7 @@
      "label": "Press",
      "coach": null,
      "auto": null,
-     "conf": 0.77,
+     "conf": 0.95,
      "sure": false,
      "same": null,
      "note": ""
@@ -2294,7 +1075,7 @@
      "label": "Ball-screen coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.39,
+     "conf": 0.38,
      "sure": false,
      "same": null,
      "note": ""
@@ -2314,7 +1095,7 @@
      "label": "Screen defender",
      "coach": null,
      "auto": "#5",
-     "conf": 0.44,
+     "conf": 0.29,
      "sure": false,
      "same": null,
      "note": ""
@@ -2322,59 +1103,60 @@
    ],
    "five": {
     "offense": [
-     "JR Lukenbill",
-     "Jake Quast",
-     "Joey Berezowitz",
-     "Kelton McEwen",
-     "Rashad Rogers"
+     "Anthony Przybilla",
+     "Connor May",
+     "George Gale",
+     "Ryan Cohen",
+     "Yogi Oliff"
     ],
     "defense": [
-     "Anthony Przybilla",
-     "George Gale",
-     "Theo Rocca",
-     "Will Grudzinski",
-     "Yogi Oliff"
+     "Collin Madson",
+     "JR Lukenbill",
+     "Joey Berezowitz",
+     "Rashad Rogers",
+     "Richie Warren"
     ]
    },
+   "roster": {},
    "five_labels": {
-    "JR Lukenbill": "#11 JR Lukenbill",
-    "Jake Quast": "#12 Jake Quast",
-    "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Kelton McEwen": "#2 Kelton McEwen",
-    "Rashad Rogers": "#35 Rashad Rogers",
     "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Connor May": "#21 Connor May",
     "George Gale": "#33 George Gale",
-    "Theo Rocca": "#30 Theo Rocca",
-    "Will Grudzinski": "#32 Will Grudzinski",
-    "Yogi Oliff": "#10 Yogi Oliff"
+    "Ryan Cohen": "#11 Ryan Cohen",
+    "Yogi Oliff": "#10 Yogi Oliff",
+    "Collin Madson": "#15 Collin Madson",
+    "JR Lukenbill": "#11 JR Lukenbill",
+    "Joey Berezowitz": "#22 Joey Berezowitz",
+    "Rashad Rogers": "#35 Rashad Rogers",
+    "Richie Warren": "#24 Richie Warren"
    }
   },
   {
-   "clip_key": "2026-03-07|42|10 Yogi Oliff > Transition > Ballhandler > To Basket > Make 2 Pts",
-   "clip_number": 42,
-   "clock": "H1 10:38",
-   "synergy": "10 Yogi Oliff > Transition > Ballhandler > To Basket > Make 2 Pts",
+   "clip_key": "2026-03-07|53|33 George Gale > Offensive Rebound > Short > Scoring Attempt > At Basket > Miss 2 Pts",
+   "clip_number": 53,
+   "clock": "H1 7:55",
+   "synergy": "33 George Gale > Offensive Rebound > Short > Scoring Attempt > At Basket > Miss 2 Pts",
    "coach_title": null,
-   "auto_title": "tran",
+   "auto_title": "5 out: m2m (over)",
    "film": null,
    "offense": "Washington-St. Louis Bears",
    "defense": "UW-Whitewater",
-   "player": "Yogi Oliff",
-   "result": "Make 2 Pts",
-   "clip": "clip_042_17.mp4",
+   "player": "George Gale",
+   "result": "Miss 2 Pts",
+   "clip": "clip_053_08.mp4",
    "clip_kind": "video",
-   "poster": "clip_042_17_poster.jpg",
-   "fid": "042_17",
+   "poster": "clip_053_08_poster.jpg",
+   "fid": "053_08",
    "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 42,
+   "synergy_pos": 53,
    "pictures": [],
    "fields": [
     {
      "field": "situation",
      "label": "Situation",
      "coach": null,
-     "auto": "Transition",
-     "conf": 0.76,
+     "auto": "Offensive rebound",
+     "conf": 0.74,
      "sure": true,
      "same": null,
      "note": ""
@@ -2384,7 +1166,7 @@
      "label": "Formation",
      "coach": null,
      "auto": "5 Out",
-     "conf": 0.66,
+     "conf": 0.67,
      "sure": true,
      "same": null,
      "note": ""
@@ -2404,7 +1186,7 @@
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.5,
+     "conf": 0.46,
      "sure": false,
      "same": null,
      "note": ""
@@ -2424,7 +1206,7 @@
      "label": "Press",
      "coach": null,
      "auto": null,
-     "conf": 0.77,
+     "conf": 0.93,
      "sure": false,
      "same": null,
      "note": ""
@@ -2434,7 +1216,7 @@
      "label": "Ball-screen coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.39,
+     "conf": 0.38,
      "sure": false,
      "same": null,
      "note": ""
@@ -2444,7 +1226,7 @@
      "label": "Off-ball coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.85,
+     "conf": 0.79,
      "sure": true,
      "same": null,
      "note": ""
@@ -2453,8 +1235,8 @@
      "field": "screen_defender",
      "label": "Screen defender",
      "coach": null,
-     "auto": "#3",
-     "conf": 0.25,
+     "auto": "#5",
+     "conf": 0.29,
      "sure": false,
      "same": null,
      "note": ""
@@ -2463,50 +1245,51 @@
    "five": {
     "offense": [
      "Anthony Przybilla",
+     "Connor May",
      "George Gale",
-     "Theo Rocca",
-     "Will Grudzinski",
+     "Ryan Cohen",
      "Yogi Oliff"
     ],
     "defense": [
+     "Collin Madson",
      "JR Lukenbill",
-     "Jake Quast",
      "Joey Berezowitz",
-     "Kelton McEwen",
-     "Rashad Rogers"
+     "Rashad Rogers",
+     "Richie Warren"
     ]
    },
+   "roster": {},
    "five_labels": {
     "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Connor May": "#21 Connor May",
     "George Gale": "#33 George Gale",
-    "Theo Rocca": "#30 Theo Rocca",
-    "Will Grudzinski": "#32 Will Grudzinski",
+    "Ryan Cohen": "#11 Ryan Cohen",
     "Yogi Oliff": "#10 Yogi Oliff",
+    "Collin Madson": "#15 Collin Madson",
     "JR Lukenbill": "#11 JR Lukenbill",
-    "Jake Quast": "#12 Jake Quast",
     "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Kelton McEwen": "#2 Kelton McEwen",
-    "Rashad Rogers": "#35 Rashad Rogers"
+    "Rashad Rogers": "#35 Rashad Rogers",
+    "Richie Warren": "#24 Richie Warren"
    }
   },
   {
-   "clip_key": "2026-03-07|43|2 Kelton Mcewen > Non Possession > Non Shooting Foul",
-   "clip_number": 43,
-   "clock": "H1 10:24",
-   "synergy": "2 Kelton Mcewen > Non Possession > Non Shooting Foul",
+   "clip_key": "2026-03-07|54|11 Ryan Cohen > Offensive Rebound > Long > Run Offense",
+   "clip_number": 54,
+   "clock": "H1 7:45",
+   "synergy": "11 Ryan Cohen > Offensive Rebound > Long > Run Offense",
    "coach_title": null,
    "auto_title": "5 out: m2m (over)",
-   "film": "Off-ball screen: unnamed offense screened for unnamed offense; defended by unnamed defense (on the player screened) and unnamed defense (on the screener); coverage from the players' movement: unclear (screen confidence 0%)",
-   "offense": "UW-Whitewater",
-   "defense": "Washington-St. Louis Bears",
-   "player": "Kelton Mcewen",
-   "result": "Non Shooting Foul",
-   "clip": "clip_043_18.mp4",
+   "film": null,
+   "offense": "Washington-St. Louis Bears",
+   "defense": "UW-Whitewater",
+   "player": "Ryan Cohen",
+   "result": "Run Offense",
+   "clip": "clip_054_09.mp4",
    "clip_kind": "video",
-   "poster": "clip_043_18_poster.jpg",
-   "fid": "043_18",
+   "poster": "clip_054_09_poster.jpg",
+   "fid": "054_09",
    "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 43,
+   "synergy_pos": 54,
    "pictures": [],
    "fields": [
     {
@@ -2514,7 +1297,289 @@
      "label": "Situation",
      "coach": null,
      "auto": "Half court",
-     "conf": 0.94,
+     "conf": 0.5,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.67,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.8,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.91,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.76,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Anthony Przybilla",
+     "Connor May",
+     "George Gale",
+     "Ryan Cohen",
+     "Yogi Oliff"
+    ],
+    "defense": [
+     "Collin Madson",
+     "JR Lukenbill",
+     "Joey Berezowitz",
+     "Rashad Rogers",
+     "Richie Warren"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Connor May": "#21 Connor May",
+    "George Gale": "#33 George Gale",
+    "Ryan Cohen": "#11 Ryan Cohen",
+    "Yogi Oliff": "#10 Yogi Oliff",
+    "Collin Madson": "#15 Collin Madson",
+    "JR Lukenbill": "#11 JR Lukenbill",
+    "Joey Berezowitz": "#22 Joey Berezowitz",
+    "Rashad Rogers": "#35 Rashad Rogers",
+    "Richie Warren": "#24 Richie Warren"
+   }
+  },
+  {
+   "clip_key": "2026-03-07|55|21 Connor May > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts",
+   "clip_number": 55,
+   "clock": "H1 7:38",
+   "synergy": "21 Connor May > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts",
+   "coach_title": null,
+   "auto_title": "5 out: m2m (over)",
+   "film": null,
+   "offense": "Washington-St. Louis Bears",
+   "defense": "UW-Whitewater",
+   "player": "Connor May",
+   "result": "Make 3 Pts",
+   "clip": "clip_055_10.mp4",
+   "clip_kind": "video",
+   "poster": "clip_055_10_poster.jpg",
+   "fid": "055_10",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
+   "synergy_pos": 55,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.44,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.67,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.99,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.96,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.72,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Anthony Przybilla",
+     "Connor May",
+     "George Gale",
+     "Ryan Cohen",
+     "Yogi Oliff"
+    ],
+    "defense": [
+     "Collin Madson",
+     "JR Lukenbill",
+     "Joey Berezowitz",
+     "Rashad Rogers",
+     "Richie Warren"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Connor May": "#21 Connor May",
+    "George Gale": "#33 George Gale",
+    "Ryan Cohen": "#11 Ryan Cohen",
+    "Yogi Oliff": "#10 Yogi Oliff",
+    "Collin Madson": "#15 Collin Madson",
+    "JR Lukenbill": "#11 JR Lukenbill",
+    "Joey Berezowitz": "#22 Joey Berezowitz",
+    "Rashad Rogers": "#35 Rashad Rogers",
+    "Richie Warren": "#24 Richie Warren"
+   }
+  },
+  {
+   "clip_key": "2026-03-07|56|22 Joey Berezowitz > ISO > Right > Drives Right > Dribble Jumper > Short to < 17' > Make 2 Pts",
+   "clip_number": 56,
+   "clock": "H1 7:18",
+   "synergy": "22 Joey Berezowitz > ISO > Right > Drives Right > Dribble Jumper > Short to < 17' > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "5 out(iso): m2m",
+   "film": null,
+   "offense": "UW-Whitewater",
+   "defense": "Washington-St. Louis Bears",
+   "player": "Joey Berezowitz",
+   "result": "Make 2 Pts",
+   "clip": "clip_056_11.mp4",
+   "clip_kind": "video",
+   "poster": "clip_056_11_poster.jpg",
+   "fid": "056_11",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
+   "synergy_pos": 56,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.78,
      "sure": true,
      "same": null,
      "note": ""
@@ -2524,7 +1589,7 @@
      "label": "Formation",
      "coach": null,
      "auto": "5 Out",
-     "conf": 0.66,
+     "conf": 0.67,
      "sure": true,
      "same": null,
      "note": ""
@@ -2544,7 +1609,7 @@
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.5,
+     "conf": 0.46,
      "sure": false,
      "same": null,
      "note": ""
@@ -2564,7 +1629,7 @@
      "label": "Press",
      "coach": null,
      "auto": null,
-     "conf": 0.77,
+     "conf": 0.81,
      "sure": false,
      "same": null,
      "note": ""
@@ -2574,7 +1639,7 @@
      "label": "Ball-screen coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.39,
+     "conf": 0.38,
      "sure": false,
      "same": null,
      "note": ""
@@ -2584,7 +1649,148 @@
      "label": "Off-ball coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.64,
+     "conf": 0.44,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Collin Madson",
+     "JR Lukenbill",
+     "Joey Berezowitz",
+     "Rashad Rogers",
+     "Richie Warren"
+    ],
+    "defense": [
+     "Anthony Przybilla",
+     "Connor May",
+     "George Gale",
+     "Ryan Cohen",
+     "Yogi Oliff"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Collin Madson": "#15 Collin Madson",
+    "JR Lukenbill": "#11 JR Lukenbill",
+    "Joey Berezowitz": "#22 Joey Berezowitz",
+    "Rashad Rogers": "#35 Rashad Rogers",
+    "Richie Warren": "#24 Richie Warren",
+    "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Connor May": "#21 Connor May",
+    "George Gale": "#33 George Gale",
+    "Ryan Cohen": "#11 Ryan Cohen",
+    "Yogi Oliff": "#10 Yogi Oliff"
+   }
+  },
+  {
+   "clip_key": "2026-03-07|57|10 Yogi Oliff > P&R Ball Handler > Left P&R > Baseline > Go Away from Pick > To Basket > Turnover",
+   "clip_number": 57,
+   "clock": "H1 7:05",
+   "synergy": "10 Yogi Oliff > P&R Ball Handler > Left P&R > Baseline > Go Away from Pick > To Basket > Turnover",
+   "coach_title": null,
+   "auto_title": "5 out(bs,reject): m2m (over)",
+   "film": null,
+   "offense": "Washington-St. Louis Bears",
+   "defense": "UW-Whitewater",
+   "player": "Yogi Oliff",
+   "result": "Turnover",
+   "clip": "clip_057_12.mp4",
+   "clip_kind": "video",
+   "poster": "clip_057_12_poster.jpg",
+   "fid": "057_12",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
+   "synergy_pos": 57,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.8,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.67,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.98,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.92,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.69,
      "sure": true,
      "same": null,
      "note": ""
@@ -2594,7 +1800,7 @@
      "label": "Screen defender",
      "coach": null,
      "auto": "#5",
-     "conf": 0.55,
+     "conf": 0.29,
      "sure": false,
      "same": null,
      "note": ""
@@ -2602,9 +1808,150 @@
    ],
    "five": {
     "offense": [
+     "Anthony Przybilla",
+     "Connor May",
+     "George Gale",
+     "Ryan Cohen",
+     "Yogi Oliff"
+    ],
+    "defense": [
+     "Collin Madson",
      "JR Lukenbill",
      "Joey Berezowitz",
-     "Kelton McEwen",
+     "Rashad Rogers",
+     "Richie Warren"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Connor May": "#21 Connor May",
+    "George Gale": "#33 George Gale",
+    "Ryan Cohen": "#11 Ryan Cohen",
+    "Yogi Oliff": "#10 Yogi Oliff",
+    "Collin Madson": "#15 Collin Madson",
+    "JR Lukenbill": "#11 JR Lukenbill",
+    "Joey Berezowitz": "#22 Joey Berezowitz",
+    "Rashad Rogers": "#35 Rashad Rogers",
+    "Richie Warren": "#24 Richie Warren"
+   }
+  },
+  {
+   "clip_key": "2026-03-07|58|22 Joey Berezowitz > Transition > Trailer > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 58,
+   "clock": "H1 6:56",
+   "synergy": "22 Joey Berezowitz > Transition > Trailer > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": "5 out: m2m",
+   "film": null,
+   "offense": "UW-Whitewater",
+   "defense": "Washington-St. Louis Bears",
+   "player": "Joey Berezowitz",
+   "result": "Miss 3 Pts",
+   "clip": "clip_058_13.mp4",
+   "clip_kind": "video",
+   "poster": "clip_058_13_poster.jpg",
+   "fid": "058_13",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
+   "synergy_pos": 58,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.52,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.67,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.99,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.88,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Under",
+     "conf": 0.41,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Collin Madson",
+     "JR Lukenbill",
+     "Joey Berezowitz",
      "Rashad Rogers",
      "Richie Warren"
     ],
@@ -2612,41 +1959,183 @@
      "Anthony Przybilla",
      "Connor May",
      "George Gale",
-     "Theo Rocca",
+     "Ryan Cohen",
      "Yogi Oliff"
     ]
    },
+   "roster": {},
    "five_labels": {
+    "Collin Madson": "#15 Collin Madson",
     "JR Lukenbill": "#11 JR Lukenbill",
     "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Kelton McEwen": "#2 Kelton McEwen",
     "Rashad Rogers": "#35 Rashad Rogers",
     "Richie Warren": "#24 Richie Warren",
     "Anthony Przybilla": "#23 Anthony Przybilla",
     "Connor May": "#21 Connor May",
     "George Gale": "#33 George Gale",
-    "Theo Rocca": "#30 Theo Rocca",
+    "Ryan Cohen": "#11 Ryan Cohen",
     "Yogi Oliff": "#10 Yogi Oliff"
    }
   },
   {
-   "clip_key": "2026-03-07|44|11 Jr Lukenbill > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts",
-   "clip_number": 44,
-   "clock": "H1 10:11",
-   "synergy": "11 Jr Lukenbill > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts",
+   "clip_key": "2026-03-07|59|3 Josh Kim > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Connor May > P&R Roll Man > Pick and Pops > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 59,
+   "clock": "H1 6:56",
+   "synergy": "3 Josh Kim > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Connor May > P&R Roll Man > Pick and Pops > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
    "coach_title": null,
-   "auto_title": "5 out: m2m",
+   "auto_title": "5 out(bs,pop): m2m",
+   "film": null,
+   "offense": "Washington-St. Louis Bears",
+   "defense": "UW-Whitewater",
+   "player": "Connor May",
+   "result": "Make 3 Pts",
+   "clip": "clip_059_14.mp4",
+   "clip_kind": "video",
+   "poster": "clip_059_14_poster.jpg",
+   "fid": "059_14",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
+   "synergy_pos": 59,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.98,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.67,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.95,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.97,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.5,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Anthony Przybilla",
+     "Calvin Kapral",
+     "Connor May",
+     "Josh Kim",
+     "Ryan Cohen"
+    ],
+    "defense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Isaac Verges",
+     "Richie Warren",
+     "Tyshawn Teague-Johnson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Calvin Kapral": "#34 Calvin Kapral",
+    "Connor May": "#21 Connor May",
+    "Josh Kim": "#3 Josh Kim",
+    "Ryan Cohen": "#11 Ryan Cohen",
+    "Brock Marino": "#21 Brock Marino",
+    "Collin Madson": "#15 Collin Madson",
+    "Isaac Verges": "#0 Isaac Verges",
+    "Richie Warren": "#24 Richie Warren",
+    "Tyshawn Teague-Johnson": "#14 Tyshawn Teague-Johnson"
+   }
+  },
+  {
+   "clip_key": "2026-03-07|60|14 Tyshawn Teague-Johnson > Hand Off > From Dribble > Right > Turnover",
+   "clip_number": 60,
+   "clock": "H1 6:56",
+   "synergy": "14 Tyshawn Teague-Johnson > Hand Off > From Dribble > Right > Turnover",
+   "coach_title": null,
+   "auto_title": "5 out(dho): m2m",
    "film": null,
    "offense": "UW-Whitewater",
    "defense": "Washington-St. Louis Bears",
-   "player": "Jr Lukenbill",
-   "result": "Make 3 Pts",
-   "clip": "clip_044_19.mp4",
+   "player": "Tyshawn Teague-Johnson",
+   "result": "Turnover",
+   "clip": "clip_060_15.mp4",
    "clip_kind": "video",
-   "poster": "clip_044_19_poster.jpg",
-   "fid": "044_19",
+   "poster": "clip_060_15_poster.jpg",
+   "fid": "060_15",
    "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
-   "synergy_pos": 44,
+   "synergy_pos": 60,
    "pictures": [],
    "fields": [
     {
@@ -2664,7 +2153,7 @@
      "label": "Formation",
      "coach": null,
      "auto": "5 Out",
-     "conf": 0.66,
+     "conf": 0.67,
      "sure": true,
      "same": null,
      "note": ""
@@ -2674,7 +2163,7 @@
      "label": "Play call",
      "coach": null,
      "auto": "Motion",
-     "conf": 0.91,
+     "conf": 0.66,
      "sure": true,
      "same": null,
      "note": ""
@@ -2684,7 +2173,7 @@
      "label": "Main action",
      "coach": null,
      "auto": "Ball Screen",
-     "conf": 0.5,
+     "conf": 0.46,
      "sure": false,
      "same": null,
      "note": ""
@@ -2704,7 +2193,7 @@
      "label": "Press",
      "coach": null,
      "auto": null,
-     "conf": 0.77,
+     "conf": 0.75,
      "sure": false,
      "same": null,
      "note": ""
@@ -2714,7 +2203,7 @@
      "label": "Ball-screen coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.39,
+     "conf": 0.38,
      "sure": false,
      "same": null,
      "note": ""
@@ -2724,7 +2213,7 @@
      "label": "Off-ball coverage",
      "coach": null,
      "auto": "Over",
-     "conf": 0.55,
+     "conf": 0.47,
      "sure": false,
      "same": null,
      "note": ""
@@ -2734,7 +2223,7 @@
      "label": "Screen defender",
      "coach": null,
      "auto": "#5",
-     "conf": 0.43,
+     "conf": 0.29,
      "sure": false,
      "same": null,
      "note": ""
@@ -2742,31 +2231,596 @@
    ],
    "five": {
     "offense": [
-     "JR Lukenbill",
-     "Joey Berezowitz",
-     "Kelton McEwen",
-     "Rashad Rogers",
-     "Richie Warren"
+     "Brock Marino",
+     "Collin Madson",
+     "Isaac Verges",
+     "Richie Warren",
+     "Tyshawn Teague-Johnson"
     ],
     "defense": [
      "Anthony Przybilla",
+     "Calvin Kapral",
      "Connor May",
-     "George Gale",
-     "Theo Rocca",
-     "Yogi Oliff"
+     "Josh Kim",
+     "Ryan Cohen"
     ]
    },
+   "roster": {},
    "five_labels": {
-    "JR Lukenbill": "#11 JR Lukenbill",
-    "Joey Berezowitz": "#22 Joey Berezowitz",
-    "Kelton McEwen": "#2 Kelton McEwen",
-    "Rashad Rogers": "#35 Rashad Rogers",
+    "Brock Marino": "#21 Brock Marino",
+    "Collin Madson": "#15 Collin Madson",
+    "Isaac Verges": "#0 Isaac Verges",
     "Richie Warren": "#24 Richie Warren",
+    "Tyshawn Teague-Johnson": "#14 Tyshawn Teague-Johnson",
     "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Calvin Kapral": "#34 Calvin Kapral",
     "Connor May": "#21 Connor May",
-    "George Gale": "#33 George Gale",
-    "Theo Rocca": "#30 Theo Rocca",
-    "Yogi Oliff": "#10 Yogi Oliff"
+    "Josh Kim": "#3 Josh Kim",
+    "Ryan Cohen": "#11 Ryan Cohen"
+   }
+  },
+  {
+   "clip_key": "2026-03-07|61|21 Connor May > Spot-Up > Drives Right > To Basket > Foul",
+   "clip_number": 61,
+   "clock": "H1 6:34",
+   "synergy": "21 Connor May > Spot-Up > Drives Right > To Basket > Foul",
+   "coach_title": null,
+   "auto_title": "5 out: m2m (over)",
+   "film": null,
+   "offense": "Washington-St. Louis Bears",
+   "defense": "UW-Whitewater",
+   "player": "Connor May",
+   "result": "Foul",
+   "clip": "clip_061_16.mp4",
+   "clip_kind": "video",
+   "poster": "clip_061_16_poster.jpg",
+   "fid": "061_16",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
+   "synergy_pos": 61,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.85,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.67,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.99,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.85,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.66,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Anthony Przybilla",
+     "Calvin Kapral",
+     "Connor May",
+     "Josh Kim",
+     "Ryan Cohen"
+    ],
+    "defense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Isaac Verges",
+     "Richie Warren",
+     "Tyshawn Teague-Johnson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Calvin Kapral": "#34 Calvin Kapral",
+    "Connor May": "#21 Connor May",
+    "Josh Kim": "#3 Josh Kim",
+    "Ryan Cohen": "#11 Ryan Cohen",
+    "Brock Marino": "#21 Brock Marino",
+    "Collin Madson": "#15 Collin Madson",
+    "Isaac Verges": "#0 Isaac Verges",
+    "Richie Warren": "#24 Richie Warren",
+    "Tyshawn Teague-Johnson": "#14 Tyshawn Teague-Johnson"
+   }
+  },
+  {
+   "clip_key": "2026-03-07|62|21 Connor May > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts",
+   "clip_number": 62,
+   "clock": "H1 6:28",
+   "synergy": "21 Connor May > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts",
+   "coach_title": null,
+   "auto_title": "tran",
+   "film": null,
+   "offense": "Washington-St. Louis Bears",
+   "defense": "UW-Whitewater",
+   "player": "Connor May",
+   "result": "Make 3 Pts",
+   "clip": "clip_062_17.mp4",
+   "clip_kind": "video",
+   "poster": "clip_062_17_poster.jpg",
+   "fid": "062_17",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
+   "synergy_pos": 65,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Transition",
+     "conf": 0.84,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.67,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.91,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.74,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Anthony Przybilla",
+     "Calvin Kapral",
+     "Connor May",
+     "Josh Kim",
+     "Ryan Cohen"
+    ],
+    "defense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Isaac Verges",
+     "Richie Warren",
+     "Tyshawn Teague-Johnson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Calvin Kapral": "#34 Calvin Kapral",
+    "Connor May": "#21 Connor May",
+    "Josh Kim": "#3 Josh Kim",
+    "Ryan Cohen": "#11 Ryan Cohen",
+    "Brock Marino": "#21 Brock Marino",
+    "Collin Madson": "#15 Collin Madson",
+    "Isaac Verges": "#0 Isaac Verges",
+    "Richie Warren": "#24 Richie Warren",
+    "Tyshawn Teague-Johnson": "#14 Tyshawn Teague-Johnson"
+   }
+  },
+  {
+   "clip_key": "2026-03-07|63|0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts",
+   "clip_number": 63,
+   "clock": "H1 6:14",
+   "synergy": "0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "5 out(bs): m2m",
+   "film": null,
+   "offense": "UW-Whitewater",
+   "defense": "Washington-St. Louis Bears",
+   "player": "Isaac Verges",
+   "result": "Make 2 Pts",
+   "clip": "clip_063_18.mp4",
+   "clip_kind": "video",
+   "poster": "clip_063_18_poster.jpg",
+   "fid": "063_18",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
+   "synergy_pos": 66,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.92,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.67,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.6,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.86,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Under",
+     "conf": 0.37,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Isaac Verges",
+     "Richie Warren",
+     "Tyshawn Teague-Johnson"
+    ],
+    "defense": [
+     "Anthony Przybilla",
+     "Calvin Kapral",
+     "Connor May",
+     "Josh Kim",
+     "Ryan Cohen"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brock Marino": "#21 Brock Marino",
+    "Collin Madson": "#15 Collin Madson",
+    "Isaac Verges": "#0 Isaac Verges",
+    "Richie Warren": "#24 Richie Warren",
+    "Tyshawn Teague-Johnson": "#14 Tyshawn Teague-Johnson",
+    "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Calvin Kapral": "#34 Calvin Kapral",
+    "Connor May": "#21 Connor May",
+    "Josh Kim": "#3 Josh Kim",
+    "Ryan Cohen": "#11 Ryan Cohen"
+   }
+  },
+  {
+   "clip_key": "2026-03-07|64|15 Collin Madson > ISO > Right > Drives Left > To Basket > Miss 2 Pts",
+   "clip_number": 64,
+   "clock": "H1 6:06",
+   "synergy": "15 Collin Madson > ISO > Right > Drives Left > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "5 out(iso): m2m",
+   "film": null,
+   "offense": "UW-Whitewater",
+   "defense": "Washington-St. Louis Bears",
+   "player": "Collin Madson",
+   "result": "Miss 2 Pts",
+   "clip": "clip_064_19.mp4",
+   "clip_kind": "video",
+   "poster": "clip_064_19_poster.jpg",
+   "fid": "064_19",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips",
+   "synergy_pos": 64,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.87,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.67,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.95,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.74,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Switch",
+     "conf": 0.38,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brock Marino",
+     "Collin Madson",
+     "Isaac Verges",
+     "Richie Warren",
+     "Tyshawn Teague-Johnson"
+    ],
+    "defense": [
+     "Anthony Przybilla",
+     "Calvin Kapral",
+     "Connor May",
+     "Josh Kim",
+     "Ryan Cohen"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brock Marino": "#21 Brock Marino",
+    "Collin Madson": "#15 Collin Madson",
+    "Isaac Verges": "#0 Isaac Verges",
+    "Richie Warren": "#24 Richie Warren",
+    "Tyshawn Teague-Johnson": "#14 Tyshawn Teague-Johnson",
+    "Anthony Przybilla": "#23 Anthony Przybilla",
+    "Calvin Kapral": "#34 Calvin Kapral",
+    "Connor May": "#21 Connor May",
+    "Josh Kim": "#3 Josh Kim",
+    "Ryan Cohen": "#11 Ryan Cohen"
    }
   }
  ],
@@ -2798,7 +2852,10 @@
    "Over",
    "Panther",
    "Set",
+   "Snap",
+   "Snap 10",
    "Spain",
+   "TWINS LEFT",
    "Twins",
    "in trnasntion random movement"
   ],
@@ -2809,9 +2866,11 @@
    "DHO / PC5",
    "Down Screen",
    "Dribble Drive",
+   "Flow",
    "Ghost",
    "High Ball Screen",
    "Iso",
+   "Iso Cut",
    "No Ball Screen",
    "No screens",
    "Offensive Rebound",
@@ -2826,7 +2885,8 @@
    "none"
   ],
   "defense": [
-   "Man-to-Man"
+   "Man-to-Man",
+   "ZONE"
   ],
   "press": [
    "1-2-2 Press",
@@ -2846,11 +2906,13 @@
    "Stay",
    "Stay, then Switch 2nd",
    "Switch",
+   "Switch / Get back",
    "Switch at the end",
    "They went over",
    "Top Lock",
    "Under",
-   "none"
+   "none",
+   "under"
   ],
   "offball_coverage": [
    "No Off ball coded",
@@ -2858,6 +2920,7 @@
    "No screens",
    "None",
    "Over",
+   "Stick",
    "Switch",
    "This is the ball screen coverage",
    "Top Lock",
@@ -2891,18 +2954,15 @@
    "Richie Warren"
   ],
   "screen_defender": [
-   "#12",
-   "#14",
-   "#2",
-   "#23",
-   "#3",
    "#5",
    "CALVIN KAPRAL",
-   "COLLIN MADSON",
    "CONNOR MAY",
+   "Collin Madson",
    "JOSH KIM",
-   "LUKE BARA"
+   "Joey Berezowitz",
+   "Luke Bara",
+   "Rashad Rogers"
   ]
  },
- "built": "2026-10-14T18:09:04"
+ "built": "2026-10-19T17:59:40"
 }
