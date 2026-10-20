@@ -459,8 +459,20 @@ if isinstance(globals().get("player_tracks"), pd.DataFrame) and "court_path" in 
             _cz_tables[_n + "_by_game"] = pd.concat(_lst, ignore_index=True) if _lst else pd.DataFrame()
         _rep = court_report.copy()
         if not _shots.empty and not _rep.empty:
-            _rep["shots_zone_agrees_with_2_or_3_pct"] = round(100 * _shots["zone_agrees_with_result"].mean())
-            _rep["shots_checked"] = len(_shots)
+            # CONFIRMED BUG (fixed; found in the film-tracking review): every game's row got the ALL-games shot check (48% of
+            # 54 shots on both the MSOE and WashU rows). Each game now gets its own shots; the film-quality cell gates the
+            # brief's court sections on them.
+            _sd = _shots["game_date"].astype(str).str[:10] if "game_date" in _shots.columns else None
+            _agree, _nshots = [], []
+            for _g in _rep["game"].astype(str) if "game" in _rep.columns else []:
+                _s = _shots[_sd == _g.split("|")[0]] if _sd is not None else _shots
+                _agree.append(round(100 * _s["zone_agrees_with_result"].mean()) if len(_s) else None)
+                _nshots.append(len(_s))
+            if "game" in _rep.columns:
+                _rep["shots_zone_agrees_with_2_or_3_pct"], _rep["shots_checked"] = _agree, _nshots
+            else:
+                _rep["shots_zone_agrees_with_2_or_3_pct"] = round(100 * _shots["zone_agrees_with_result"].mean())
+                _rep["shots_checked"] = len(_shots)
         _cz_tables["uww_court_report"] = _rep
         print(f"Court insights: {len(_cz_c)} possession(s) on the court -- " + ", ".join(
             f"{k.replace('uww_court_', '')} {len(v)}" for k, v in _cz_tables.items()))

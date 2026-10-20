@@ -964,6 +964,72 @@ if RUN_TAG_MODEL and not _tm_src.empty:
         print(f"  Scored on: {str(_scored.iloc[0]).split(' (unchanged data')[0]}")
 
 
+# ---- Which automatic answers are trusted ------------------------------------------------------------------------
+# CONFIRMED CHANGE (requested: use automatic tags only where they beat guessing). A field's automatic answer fills an
+# untagged play, goes into the Suggested Title, or is PREFILLED in Film Tagging only when the field is trusted:
+#   * the model is in use (not the "most common answer" fallback), was scored on TAG_TRUST_MIN_SCORED+ held-out plays,
+#     and beats always-guessing-the-usual-answer by TAG_TRUST_MIN_LIFT+ points; or
+#   * the field has a single answer so far that covers TAG_TRUST_SINGLE_SHARE+ of the coaches' tags (Defense: Man-to-Man
+#     on all but one play) -- guessing it is right nearly every time.
+# Untrusted fields keep their predictions (pred_*), so the accuracy tables still score them, but in Film Tagging they are
+# offered as "not sure enough to fill in" instead of prefilled -- an untouched wrong default can't become a coach answer.
+TAG_TRUST_MIN_LIFT = float(globals().get("TAG_TRUST_MIN_LIFT", 3))
+TAG_TRUST_MIN_SCORED = int(globals().get("TAG_TRUST_MIN_SCORED", 30))
+TAG_TRUST_SINGLE_SHARE = float(globals().get("TAG_TRUST_SINGLE_SHARE", 0.9))
+
+
+def _tm_trust_table(report):
+    rows = []
+    for r in (report.itertuples() if isinstance(report, pd.DataFrame) and not report.empty else []):
+        acc, base, n = r.accuracy_pct, r.baseline_pct, r.clips_scored
+        using, how = str(r.using or ""), str(r.scored_how or "")
+        trusted, why = False, ""
+        if using == "model" and pd.notna(acc) and pd.notna(base) and pd.notna(n):
+            lift = float(acc) - float(base)
+            trusted = int(n) >= TAG_TRUST_MIN_SCORED and lift >= TAG_TRUST_MIN_LIFT
+            why = (f"{acc:.0f}% vs {base:.0f}% always guessing on {int(n)} held-out plays ({lift:+.0f} pts)"
+                   + ("" if trusted else f" -- needs {TAG_TRUST_MIN_LIFT:+.0f} pts on {TAG_TRUST_MIN_SCORED}+ plays"))
+        elif how.startswith("only one answer"):
+            other = sum(int(x) for x in re.findall(r"\((\d+)\)", str(r.not_learned_yet or "")))
+            tot = int(r.tagged_clips or 0)
+            share = (tot - other) / tot if tot else 0
+            trusted = tot >= TAG_TRUST_MIN_SCORED and share >= TAG_TRUST_SINGLE_SHARE
+            why = f"one answer covers {share:.0%} of {tot} coach tags"
+        elif "not better yet" in using:
+            why = (f"model not better than always guessing ({acc:.0f}% vs {base:.0f}%)" if pd.notna(acc) and pd.notna(base)
+                   else "model not better than always guessing")
+        else:
+            why = how or "not trained yet"
+        rows.append({"field": r.field, "trusted": bool(trusted), "why": why, "accuracy_pct": acc, "baseline_pct": base,
+                     "clips_scored": n, "trained_at": getattr(r, "trained_at", None)})
+    return pd.DataFrame(rows, columns=["field", "trusted", "why", "accuracy_pct", "baseline_pct", "clips_scored", "trained_at"])
+
+
+def tag_field_trusted(field):
+    """True when the Tag model's answer for this field may fill untagged plays / be prefilled (see above). Unknown -> False."""
+    t = globals().get("TAG_FIELD_TRUST") or {}
+    return bool(t.get(field, False))
+
+
+_tm_rep_for_trust = globals().get("tag_model_report")
+if not isinstance(_tm_rep_for_trust, pd.DataFrame) or _tm_rep_for_trust.empty:
+    try:                                   # the model didn't run this session: the last run's report
+        _tm_rep_for_trust = pd.read_csv(os.path.join(APP_DATA_DIR, "uww_tag_model_report.csv"))
+    except Exception:
+        _tm_rep_for_trust = pd.DataFrame()
+tag_field_trust = _tm_trust_table(_tm_rep_for_trust)
+TAG_FIELD_TRUST = dict(zip(tag_field_trust["field"], tag_field_trust["trusted"])) if len(tag_field_trust) else {}
+try:
+    tag_field_trust.to_csv(os.path.join(APP_DATA_DIR, "uww_tag_field_trust.csv"), index=False)
+except Exception:
+    pass
+if len(tag_field_trust):
+    print("  Automatic answers used for untagged plays / prefilled in Film Tagging: "
+          + (", ".join(tag_field_trust.loc[tag_field_trust["trusted"], "field"]) or "none yet")
+          + " | offered as 'not sure' only: "
+          + (", ".join(tag_field_trust.loc[~tag_field_trust["trusted"], "field"]) or "none"), flush=True)
+
+
 # ---- Suggested Title, in the coaches' format, from confident predictions only ---------------------------------
 _TM_SYNERGY_DETAILS = [
     (r"\bP&R Ball Handler\b|\bP&R Roll Man\b|\bPick and Pops?\b", "bs"), (r"\bGo Away from Pick\b", "reject"),
@@ -995,6 +1061,8 @@ def _tm_jersey_of(name):
 
 def _tm_suggest(r):
     def ok(f):
+        if not tag_field_trusted(f):
+            return None                    # not trusted yet (see TAG_FIELD_TRUST): left out of the Suggested Title
         v, c = r.get(f"pred_{f}"), r.get(f"pred_{f}_conf")
         return v if v is not None and not (isinstance(v, float) and pd.isna(v)) and pd.notna(c) and c >= TAG_MODEL_MIN_CONFIDENCE else None
     sit = ok("situation")

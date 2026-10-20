@@ -292,8 +292,17 @@ def _cm_apply(H, pts):
     return cv2.perspectiveTransform(np.float32(pts).reshape(-1, 1, 2), np.asarray(H, np.float64)).reshape(-1, 2)
 
 
-def _cm_plausible(H, rel):
-    feet = [((x1 + x2) / 2, y2) for x1, y1, x2, y2 in _cm_detection_boxes(rel)]
+def _cm_plausible(H, rel, players=None):
+    """Do the people in this frame land on the court under H? CONFIRMED BUG (fixed; the court report showed 0 frames
+    placed "via the frame before" and only ~20% of frames placed at all). This used EVERY detected person -- crowd,
+    benches and referees included -- and fans in the stands always land off the court, so most good matches were
+    thrown out: tested on the WashU export, frame-to-frame matches had ~1,000 matching floor features but 10 of 10 failed
+    this check; judged on the tracked PLAYERS only (offense / defense), 9 of 10 passed. `players` = foot points of the
+    tracked players in this frame; with fewer than 3, every detection is used as before."""
+    if players is not None and len(players) >= 3:
+        feet = list(players)
+    else:
+        feet = [((x1 + x2) / 2, y2) for x1, y1, x2, y2 in _cm_detection_boxes(rel)]
     if len(feet) < 3:
         return True
     m = _cm_apply(H, feet)
@@ -370,6 +379,30 @@ def court_mapping(pc, tracks):
                   f"{_games.groupby(['game_date', 'game_code']).ngroups} game(s) there are placed again "
                   f"({_n:,} saved frame(s) dropped); every other gym keeps its saved frames", flush=True)
     cache["_sig"], cache["_sig_by_arena"] = sig, sig_by_arena
+    # tracked players' foot points per (clip, frame) -- what _cm_plausible judges a placement by (see its note)
+    _feet = {}
+    if isinstance(tracks, pd.DataFrame) and {"clip_key", "path"} <= set(tracks.columns):
+        _tp = tracks[tracks["side"].notna()] if "side" in tracks.columns else tracks.iloc[0:0]
+        for _ck, _pth in zip(_tp["clip_key"], _tp["path"]):
+            try:
+                _pp = _trk_json.loads(_pth) if isinstance(_pth, str) else (_pth or [])
+            except Exception:
+                continue
+            for _e in _pp:
+                if len(_e) >= 6:
+                    _feet.setdefault((_ck, int(_e[0])), []).append((float(_e[4]), float(_e[5])))
+    # frames the old rule rejected get ONE more try under the new rule (placed frames are kept)
+    if cache.get("_plausible_rule") != "tracked players v1":
+        _rej = [k for k, v in cache.items() if not str(k).startswith("_") and v is None]
+        for k in _rej:
+            cache.pop(k, None)
+        cache["_plausible_rule"] = "tracked players v1"
+        cache.pop("_back_tried", None)
+        if _rej:
+            print(f"  [court]   {len(_rej):,} frame(s) the old on-court check threw out (it counted fans and benches) "
+                  f"get one more try, judged on the tracked players -- one time, slower than usual", flush=True)
+    _chained = set(cache.get("_chained") or [])
+    _back_tried = set(cache.get("_back_tried") or [])
     report, attack = [], {}
     last_ref = {}
     for (gd, gc), g in rows.groupby(["game_date", "game_code"], dropna=False):
@@ -391,9 +424,10 @@ def court_mapping(pc, tracks):
         print(f"  [court] step 2: {game_key}: placing {total:,} frame(s) on the court ({n_cached:,} already done in an "
               f"earlier run, {total - n_cached:,} to match against {len(refs)} calibrated frame(s))...", flush=True)
         _t0 = time.time()
-        for _, fl in clips:
+        for _ck, fl in clips:
             prev_rel, prev_feat = None, None
-            for rel in fl:
+            for _j, rel in enumerate(fl):
+                _pl = _feet.get((_ck, _j))
                 n_all += 1
                 if rel not in cache:
                     n_new += 1
@@ -419,31 +453,58 @@ def court_mapping(pc, tracks):
                         break
                 if best[1]:
                     last_ref[game_key] = best_ref
-                H = best[0] if best[1] >= COURT_MIN_INLIERS and _cm_plausible(best[0], rel) else None
+                H = best[0] if best[1] >= COURT_MIN_INLIERS and _cm_plausible(best[0], rel, _pl) else None
                 if H is None and prev_rel is not None and cache.get(prev_rel) is not None:
                     pf = prev_feat or _cm_features(prev_rel, base)
                     Hfp, n = _cm_match(feat, pf)
                     if Hfp is not None and n >= COURT_MIN_INLIERS:
                         Hc = np.asarray(cache[prev_rel]) @ Hfp
-                        if _cm_plausible(Hc, rel):
+                        if _cm_plausible(Hc, rel, _pl):
                             H = Hc
-                            n_chain += 1
+                            _chained.add(rel)
                 cache[rel] = H.tolist() if H is not None else None
                 if H is not None:
                     n_map += 1
                     prev_rel, prev_feat = rel, feat
+            # CONFIRMED CHANGE (with the fix above): frames BEFORE the first placed frame of a clip had nothing to chain
+            # from -- now each unplaced frame is also chained from the frame AFTER it (tried once per frame)
+            nxt_rel, nxt_feat = None, None
+            for _j in range(len(fl) - 1, -1, -1):
+                rel = fl[_j]
+                if cache.get(rel) is not None:
+                    nxt_rel, nxt_feat = rel, None
+                    continue
+                if nxt_rel is None or rel in _back_tried:
+                    continue
+                _back_tried.add(rel)
+                feat = _cm_features(rel, base)
+                nf = nxt_feat or _cm_features(nxt_rel, base)
+                Hfn, n = _cm_match(feat, nf)
+                if Hfn is not None and n >= COURT_MIN_INLIERS:
+                    Hc = np.asarray(cache[nxt_rel]) @ Hfn
+                    if _cm_plausible(Hc, rel, _feet.get((_ck, _j))):
+                        cache[rel] = Hc.tolist()
+                        _chained.add(rel)
+                        n_map += 1
+                        nxt_rel, nxt_feat = rel, feat
+        n_chain = sum(1 for _, fl in clips for rel in fl if rel in _chained and cache.get(rel) is not None)
         print(f"  [court]   {game_key}: {n_map:,} of {n_all:,} frame(s) on the court "
-              f"({round(100 * n_map / max(n_all, 1))}%, {n_chain:,} of them via the frame before)", flush=True)
+              f"({round(100 * n_map / max(n_all, 1))}%, {n_chain:,} of them chained from the frame before or after)", flush=True)
         errs = [r["err"] for r in refs]
         report.append({"game": game_key, "arena": arena, "calibrated": True, "frames": n_all,
                        "mapped_pct": round(100 * n_map / max(n_all, 1)), "mapped_by_chaining": n_chain,
                        "calibration_frames": len(refs), "calibration_error_ft": round(float(np.mean(errs)), 2),
                        "calibration_page": None})
+    cache["_chained"], cache["_back_tried"] = sorted(_chained), sorted(_back_tried)
     _safe_to_pickle(cache, cache_path)
 
     # ---- every track point onto the court, then turned so the offense attacks the same basket ----
     files_of = {r["track_clip_key"]: [f for f in r["track_files"].split(";") if f] for _, r in rows.iterrows()}
     raw_paths, inb, tot = {}, 0, 0
+    # CONFIRMED BUG (fixed; film-tracking review): players_on_court_pct was the all-games share copied onto every game's
+    # row -- it's now counted per game
+    _gkey_of = {r["track_clip_key"]: f"{r['game_date']}|{r['game_code']}" for _, r in rows.iterrows()}
+    _g_inb, _g_tot = {}, {}
     print(f"  [court] step 3: moving {len(tracks):,} player track(s) onto the court...", flush=True)
     _t0 = time.time()
     for _n, (idx, t) in enumerate(tracks.iterrows(), 1):
@@ -462,6 +523,9 @@ def court_mapping(pc, tracks):
             out.append([int(p[0]), round(float(X), 2), round(float(Y), 2)])
             tot += 1
             inb += int(-3 < X < 97 and -3 < Y < 53)
+            _gk = _gkey_of.get(t["clip_key"])
+            _g_tot[_gk] = _g_tot.get(_gk, 0) + 1
+            _g_inb[_gk] = _g_inb.get(_gk, 0) + int(-3 < X < 97 and -3 < Y < 53)
         raw_paths[idx] = out
     tracks = tracks.copy()
     tracks["court_raw_path"] = [(_trk_json.dumps(raw_paths[i]) if raw_paths.get(i) else None) for i in tracks.index]
@@ -491,7 +555,8 @@ def court_mapping(pc, tracks):
         lambda v: sum(1 for f in v.split(";") if f and cache.get(f) is not None) if isinstance(v, str) else None)
     rep = pd.DataFrame(report)
     if not rep.empty:
-        rep["players_on_court_pct"] = round(100 * inb / tot) if tot else None
+        rep["players_on_court_pct"] = [(round(100 * _g_inb.get(g, 0) / _g_tot[g]) if _g_tot.get(g) else None)
+                                       for g in rep["game"]]
     return tracks, pc, rep, cache
 
 

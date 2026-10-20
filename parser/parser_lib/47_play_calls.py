@@ -2752,7 +2752,12 @@ if not _pl_opp.empty:
     _pl_up_opp = (pbp_events_upcoming.dropna(subset=["game_date"]).groupby("game_date")["opponent"].first().to_dict()
                   if not pbp_events_upcoming.empty else {})
     _pl_opp["opponent"] = _pl_opp["game_date"].map(_pl_up_opp)
-    _pl_opp["offense_team"] = _pl_opp["team"].where(_pl_opp_off, _pl_opp["opponent"])
+    # CONFIRMED BUG (fixed; MSOE film: 91 of MSOE's own possessions had no offense team, so every offense-only read --
+    # their sets, the go-to-set key, film coverage -- skipped them). A clip with a blank Team is taken as the upcoming
+    # opponent's offense (_pl_possession_side), but offense_team was copied from that blank Team. It now names them.
+    _pl_opp_team_known = _pl_opp["team"].notna() & (_pl_opp["team"].astype(str).str.strip() != "")
+    _pl_opp["offense_team"] = (_pl_opp["team"].where(_pl_opp_team_known, upcoming_opponent_short)
+                               .where(_pl_opp_off, _pl_opp["opponent"]))
     _pl_opp["defense_team"] = _pl_opp["opponent"].where(_pl_opp_off, upcoming_opponent_short)
     _pl_other = _pl_opp["team"].notna() & (_pl_opp["team"] != upcoming_opponent_short)
     if int(_pl_other.sum()):
@@ -3274,6 +3279,134 @@ if screen_coverage.empty:
 else:
     print(f"  screen_coverage: {len(screen_coverage)} tagged screen coverage(s) -- "
           + ", ".join(f"{k}: {v}" for k, v in screen_coverage["perspective"].value_counts().items()))
+
+
+# ---- Ball-screen (and off-ball) defense BY DEFENDER, and the offense's reads -- from the coaches' tags ------------------
+# CONFIRMED CHANGE (requested, from the film-tracking review): two coach-tagged views the brief and the app didn't have.
+#   uww_screen_defenders  one row per defender per screen family: screens he defended, the coverages he played (share),
+#                         points per possession allowed, FG and turnovers -- for their defenders (who to attack) and ours
+#                         (self-scout). From uww_screen_coverage, i.e. tags that name the defender ("12drop" in a Title,
+#                         or the Screen defender in Film Tagging); screens with no defender named aren't in it.
+#   uww_action_reads      one row per player per read: the ball handler / trigger's read of each action (Use / Reject /
+#                         Split the ball screen, Cobra, Fox, ...) and the screener's (Roll, Pop, Slip, ...), with uses
+#                         and points per possession. From Film Tagging's Actions table (trigger_actions /
+#                         screener_actions). A play's points are credited to every action in it.
+SCREEN_DEFENDER_MIN = int(globals().get("SCREEN_DEFENDER_MIN", 2))      # screens before a defender gets a row
+
+
+def _pl_case(t):
+    """One spelling for typed labels: 'BALL SCREEN' / 'ball screen' -> 'Ball Screen'; short codes stay (PC5, DHO)."""
+    t = re.sub(r"\s+", " ", str(t or "")).strip()
+    if not t or (t != t.upper() and t != t.lower()):
+        return t[:1].upper() + t[1:]
+    codes = {"DHO", "ISO", "BS", "DS", "PNR", "ATO", "BLOB", "SLOB", "RJ", "UCLA", "IVO", "PC"}
+    return " ".join(w.upper() if (w.upper() in codes or any(ch.isdigit() for ch in w)) else w.capitalize()
+                    for w in t.split(" "))
+
+
+def _pl_person(n):
+    """Roster names arrive in capitals: 'KELTON MCEWEN' -> 'Kelton McEwen', 'JR LUKENBILL' -> 'JR Lukenbill'."""
+    n = re.sub(r"\s+", " ", str(n or "")).strip()
+    if n != n.upper():
+        return n
+    out = []
+    for w in n.split(" "):
+        if len(w) <= 2 and w.isalpha() and w not in ("JO",):
+            out.append(w)                                  # initials: JR, CJ, AJ
+        else:
+            w2 = w.capitalize()
+            out.append(re.sub(r"^Mc([a-z])", lambda m: "Mc" + m.group(1).upper(), w2))
+    return " ".join(out)
+
+
+def _scv_by_defender(cov):
+    if cov is None or cov.empty or "defender_jersey" not in cov.columns:
+        return pd.DataFrame()
+    p = cov[pd.to_numeric(cov["defender_jersey"], errors="coerce").notna()].copy()
+    if p.empty:
+        return pd.DataFrame()
+    p["_j"] = pd.to_numeric(p["defender_jersey"], errors="coerce").astype(int)
+    p["defender"] = p.apply(lambda r: f"#{r['_j']} {_pl_person(r['defender_name'])}"
+                            if isinstance(r.get("defender_name"), str) and r["defender_name"].strip() else f"#{r['_j']}", axis=1)
+    p["_pts"] = pd.to_numeric(p["points"], errors="coerce")
+    res = p["result"].astype(str)
+    p["_fga"] = res.str.contains(r"Make|Miss", case=False).astype(int)
+    p["_fgm"] = res.str.contains(r"Make", case=False).astype(int)
+    p["_to"] = res.str.contains(r"Turnover", case=False).astype(int)
+    rows = []
+    for (side, persp, team, who, fam), g in p.groupby(["side", "perspective", "defense_team", "defender", "screen_family"],
+                                                       dropna=False):
+        if len(g) < SCREEN_DEFENDER_MIN:
+            continue
+        vc = g["coverage"].astype(str).value_counts()
+        known = int(g["_pts"].notna().sum())
+        fga = int(g["_fga"].sum())
+        rows.append({"side": side, "scouted_opponent": upcoming_opponent_short, "perspective": persp, "defense_team": team,
+                     "defender": who, "screen_family": fam, "screens": len(g), "games": g["game_date"].nunique(),
+                     "coverages": " · ".join(f"{c} {round(100 * n / len(g))}% ({n})" for c, n in vc.items()),
+                     "main_coverage": vc.index[0], "ppp_allowed": round(g["_pts"].sum() / known, 2) if known else None,
+                     "fg_pct_allowed": round(100 * g["_fgm"].sum() / fga) if fga else None, "turnovers": int(g["_to"].sum())})
+    return pd.DataFrame(rows).sort_values(["perspective", "defense_team", "screens"], ascending=[True, True, False]) \
+        if rows else pd.DataFrame()
+
+
+def _pl_reads(clips):
+    """trigger_actions / screener_actions -> one row per (team, role, player, action, read)."""
+    if clips is None or clips.empty:
+        return pd.DataFrame()
+    book = _pl_jersey_book()
+
+    def _name(team, j):
+        for key, names in book.items():
+            if key == team or _pl_team_label(key, {team}) == team or _pl_team_label(team, {key}) == key:
+                if j in names:
+                    return f"#{j} " + _pl_person(names[j])
+        return f"#{j}"
+    recs = []
+    for _, r in clips.iterrows():
+        team, pts = r.get("offense_team"), pd.to_numeric(r.get("points"), errors="coerce")
+        for col, role in (("trigger_actions", "Ball handler / trigger"), ("screener_actions", "Screener")):
+            v = r.get(col)
+            if not isinstance(v, str) or not v.strip():
+                continue
+            for part in v.split(" | "):
+                m = re.match(r"^\s*(.*?)\s*(?:\(#(\d{1,2})\))?\s*:\s*(.+?)\s*$", part)
+                if not m:
+                    continue
+                action, j, read = _pl_case(m.group(1) or "Action"), m.group(2), m.group(3)
+                for one in [_pl_case(x) for x in read.split(" / ") if x.strip()]:
+                    recs.append({"side": r.get("side"), "offense_team": team, "role": role, "action": action,
+                                 "player": _name(team, j) if j else "(no number)", "read": one, "_pts": pts,
+                                 "game_date": r.get("game_date")})
+    if not recs:
+        return pd.DataFrame()
+    d = pd.DataFrame(recs)
+    out = []
+    for (side, team, role, player, action, read), g in d.groupby(["side", "offense_team", "role", "player", "action", "read"],
+                                                                  dropna=False):
+        known = int(g["_pts"].notna().sum())
+        out.append({"side": side, "scouted_opponent": upcoming_opponent_short, "offense_team": team, "role": role,
+                    "player": player, "action": action, "read": read, "uses": len(g), "games": g["game_date"].nunique(),
+                    "ppp": round(g["_pts"].sum() / known, 2) if known else None})
+    o = pd.DataFrame(out)
+    # each player's share of his reads, so "rejects 3 of 5" reads at a glance
+    o["share_pct"] = (100 * o["uses"] / o.groupby(["offense_team", "role", "player", "action"])["uses"].transform("sum")).round()
+    return o.sort_values(["offense_team", "role", "player", "uses"], ascending=[True, True, True, False]).reset_index(drop=True)
+
+
+screen_defenders = _scv_by_defender(screen_coverage)
+_ar_src = play_calls
+if not play_calls.empty and "possession_side" in play_calls.columns:
+    _ar_src = play_calls[(play_calls["side"] != "Other")]
+action_reads = _pl_reads(_ar_src)
+for _nm, _df in (("uww_screen_defenders", screen_defenders), ("uww_action_reads", action_reads)):
+    try:
+        _df.to_csv(os.path.join(APP_DATA_DIR, f"{_nm}.csv"), index=False)
+    except Exception as _e:
+        print(f"  ({_nm} not written: {_e})")
+print(f"  screen defense by defender: {len(screen_defenders)} row(s) (defenders with {SCREEN_DEFENDER_MIN}+ tagged screens); "
+      f"action reads: {len(action_reads)} row(s) from Film Tagging's Actions"
+      + (f" -- {action_reads['offense_team'].nunique()} team(s)" if len(action_reads) else ""), flush=True)
 
 
 # One lineup -> grouping map, exported so the game-plan cell aggregates MINUTES on exactly this rule rather

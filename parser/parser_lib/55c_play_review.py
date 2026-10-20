@@ -605,6 +605,48 @@ def _pr_synergy(r):
     return h.get("source_url"), h.get("position")
 
 
+def _pr_nk(n):
+    """A name as a comparison key: lower case, no punctuation, no Jr / II suffix ("Collin Madson, JR" -> "collin madson")."""
+    toks = re.sub(r"[^a-z0-9 ]+", " ", str(n or "").lower()).split()
+    while len(toks) > 2 and toks[-1] in ("jr", "sr", "ii", "iii", "iv", "v"):
+        toks = toks[:-1]
+    return " ".join(toks)
+
+
+def _pr_departed():
+    """CONFIRMED CHANGE (requested, film-tracking review: between seasons, put the returning players first). When the next
+    game is a scrimmage played between seasons, {name key} of last season's seniors on both teams -- the same rule the
+    brief's strike-through uses (strike_seniors_plan, brief cell). Otherwise an empty set.
+    PLAY_REVIEW_RETURNERS_FIRST = "auto" (default) / True / False."""
+    s = str(globals().get("PLAY_REVIEW_RETURNERS_FIRST", "auto")).strip().lower()
+    if s in ("false", "0", "no", "off", "never"):
+        return set()
+    try:
+        if "strike_seniors_plan" not in globals():
+            # the brief cell runs after this one: load just its strike helpers (they sit before class _SeniorStrike)
+            lib = globals().get("PARSER_LIB") or os.path.join(os.getcwd(), "parser_lib")
+            src = open(os.path.join(lib, "87_build_html_scouting_brief_for_upcoming.py"), encoding="utf-8").read()
+            a, b = src.find("import html as _sk_html"), src.find("class _SeniorStrike")
+            if a < 0 or b < a:
+                return set()
+            exec(src[a:b], globals())
+        sched = pd.read_csv(os.path.join(APP_DATA_DIR, "uww_schedule.csv"), low_memory=False)
+        ros = pd.read_csv(os.path.join(APP_DATA_DIR, "uww_live_rosters.csv"), low_memory=False)
+        uw = sched[sched["team"].astype(str).str.contains("Whitewater", case=False, na=False)] if "team" in sched.columns else sched
+        up = uw[uw["Upcoming"].astype(str).str.strip().str.lower() == "yes"] if "Upcoming" in uw.columns else uw.iloc[0:0]
+        if up.empty:
+            return set()
+        game = up.iloc[0]
+        plan = strike_seniors_plan(game, ros, "UW-Whitewater", str(game.get("opponent") or ""),
+                                   "true" if s in ("true", "1", "yes", "on", "always") else
+                                   globals().get("STRIKE_LAST_SEASON_SENIORS", "auto"),
+                                   globals().get("STRIKE_SENIORS_KEEP") or ())
+    except Exception as e:
+        print(f"  [play review] returners-first skipped ({type(e).__name__}: {e})", flush=True)
+        return set()
+    return {_pr_nk(n) for n in (plan["seniors"] if plan else [])}
+
+
 def play_review():
     pt = player_tracks if isinstance(globals().get("player_tracks"), pd.DataFrame) else pd.DataFrame()
     if pt.empty or "clip_key" not in pt.columns:
@@ -680,6 +722,22 @@ def play_review():
     min_c = float(globals().get("TAG_MODEL_MIN_CONFIDENCE", 0.6))
     if "_play_review_file_saves" in globals():
         _play_review_file_saves()                     # the saved reviews live in <data>/play_review_saves (one-time copy from the old folders)
+    # between seasons: the player checks go to the plays with the most RETURNING players on the floor first (last season's
+    # seniors won't be on the floor next game), ties in game order; their boxes are marked "senior, gone" in the app
+    _dep = _pr_departed()
+    if _dep:
+        print(f"Play review: between seasons -- player checks go to the plays with the most returning players first "
+              f"({len(_dep)} of last season's seniors set aside; PLAY_REVIEW_RETURNERS_FIRST = False turns it off)", flush=True)
+
+    def _by_returners(df):
+        if not _dep or df.empty:
+            return df.sort_values("clip_number", kind="stable")
+        # returners KNOWN to be on the floor (a play with no lineup counts none, so it doesn't jump the queue)
+        back = df.apply(lambda r: sum(_pr_nk(n) not in _dep for sd in ("offense", "defense")
+                                      for n in _trk_five(r.get(f"{sd}_lineup"))), axis=1)
+        return (df.assign(_back=back).sort_values(["_back", "clip_number"], ascending=[False, True], kind="stable")
+                .drop(columns="_back"))
+
     for (gd, gc), g in pc.groupby(["game_date", "game_code"], dropna=False):
         _slug_app = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
         _pkg = os.path.join(_pr_app_dir(), "play_review", _slug_app)
@@ -728,7 +786,7 @@ def play_review():
             pick = pool.loc[rng.sample(list(pool.index), min(PLAY_REVIEW_PLAYS_PER_GAME, len(pool)))].sort_values("clip_number")
         elif _sep:
             _n = PLAY_REVIEW_PLAYS_PER_GAME
-            _pp = g[~_kn.isin(done_p)].sort_values("clip_number", kind="stable").head(_n)
+            _pp = _by_returners(g[~_kn.isin(done_p)]).head(_n)
             # Title checks: only clips a coach already tagged (a Synergy Title) -- untagged clips are tagged in their own
             # Film Tagging batch (requested: tagging only on Analytics > Film Tagging, no duplicate plays)
             _tagged = g["decode_quality"].astype(str).ne("Untagged") if "decode_quality" in g.columns \
@@ -743,7 +801,7 @@ def play_review():
             if not len(fresh):
                 print(f"Play review: {gd} {gc} -- every play already has a check; nothing new to review", flush=True)
                 continue
-            pick = fresh.sort_values("clip_number", kind="stable").head(PLAY_REVIEW_PLAYS_PER_GAME)
+            pick = _by_returners(fresh).head(PLAY_REVIEW_PLAYS_PER_GAME).sort_values("clip_number", kind="stable")
         _parts_of = {}
         for _i in pick.index:
             if _sep and _mode != "random":
@@ -799,6 +857,9 @@ def play_review():
                     continue
                 from PIL import Image
                 boxes = _pr_boxes(rows, t, Image.open(img_path).size[1], numtxt)
+                for b in boxes:                # last season's senior (between seasons): the app lists him after the returners
+                    if _dep and b.get("name") and _pr_nk(b["name"]) in _dep:
+                        b["departed"] = True
                 header = [f"Clip {cn}  {clock_txt}  {str(r.get('synergy_string'))[:100]}",
                           (f"{'START' if which == 'start' else 'END'} of the play -- {t / fps:.1f} s into the clip" if which != "frame"
                            else f"Frame for the player check -- {t / fps:.1f} s into the clip, the sharpest with the most players"),
@@ -854,7 +915,9 @@ def play_review():
                 # Synergy-named screener), so it can be tagged even where the automatic Title has no answer yet
                 if cv is None and av is None and (tagged or f == "screener"):
                     continue
-                sure = av is not None and ac is not None and ac >= min_c
+                # untrusted fields (Tag model not better than guessing yet) are offered, never prefilled
+                sure = (av is not None and ac is not None and ac >= min_c
+                        and (tag_field_trusted(f) if "tag_field_trusted" in globals() else True))
                 fields.append({"field": f, "label": label, "coach": cv, "auto": av, "conf": round(ac, 2) if ac is not None else None,
                                "sure": sure, "same": (_tr_same(cv, av) if cv is not None and sure else None), "note": note})
             url, pos = _pr_synergy(r)
@@ -1100,7 +1163,9 @@ def tag_queue():
                 if f == "screener":
                     continue
                 av, ac, note = _tr_auto(r, f, False)
-                sure = av is not None and ac is not None and ac >= min_c
+                # untrusted fields (Tag model not better than guessing yet) are offered, never prefilled
+                sure = (av is not None and ac is not None and ac >= min_c
+                        and (tag_field_trusted(f) if "tag_field_trusted" in globals() else True))
                 fields.append({"field": f, "label": label, "coach": None, "auto": av,
                                "conf": round(ac, 2) if ac is not None else None, "sure": sure, "same": None, "note": note})
             clock = r.get("time_remaining_seconds")
