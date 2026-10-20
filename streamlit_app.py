@@ -5800,13 +5800,26 @@ def _pr_name_of(pl, text):
     return text
 
 
+# CONFIRMED CHANGE (requested: say WHICH kind of non-player a box is, not just "not a player"). All four still count as
+# "not a player" everywhere; the kind is saved with the check (not_player_kind) so the parser can use it: a bench player in
+# uniform has a readable number and is NOT taught to the jersey reader as "no number"; referee marks show which shirt-color
+# group is the referees; the outfit / player-model tests report how well each kind is caught.
+_PR_NOT_PLAYER = {"not a player": None, "not a player -- referee": "referee",
+                  "not a player -- bench player / coach / staff": "bench", "not a player -- crowd / other": "crowd"}
+
+
+def _pr_not_player_kind(val):
+    """A dropdown answer -> (is it "not a player"?, its kind or None)."""
+    return (val in _PR_NOT_PLAYER, _PR_NOT_PLAYER.get(val))
+
+
 def _pr_box_choices(pl, b):
     # a side with no known five lists that team's roster for the game (the parser sends it as "roster")
     _side = lambda sd: (pl.get("five", {}).get(sd, []) or []) + ((pl.get("roster") or {}).get(sd, []) or [])
     mine = _side(b.get("side"))
     other = _side("defense" if b.get("side") == "offense" else "offense")
     return ([_PR_NOT_CHECKED, "correct"] + [f"really {_pr_lab(pl, n)}" for n in mine if n != b.get("name")]
-            + [f"really {_pr_lab(pl, n)} (other team)" for n in other] + ["wrong team (don't know who)", "not a player"])
+            + [f"really {_pr_lab(pl, n)} (other team)" for n in other] + ["wrong team (don't know who)"] + list(_PR_NOT_PLAYER))
 
 
 def _pr_nbox(b, w, h):
@@ -5833,7 +5846,8 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
     # offers that team's whole roster for the game instead of no names at all
     roster = pl.get("roster", {}) or {}
     names = [n for side in ("offense", "defense") for n in (five.get(side) or []) + (roster.get(side) or [])]
-    choices = [_PR_NOT_CHECKED, "correct"] + [f"really {_pr_lab(pl, n)}" for n in names] + ["wrong team (don't know who)", "not a player"]
+    choices = [_PR_NOT_CHECKED, "correct"] + [f"really {_pr_lab(pl, n)}" for n in names] + ["wrong team (don't know who)"] \
+        + list(_PR_NOT_PLAYER)
     for ki, pic in enumerate(pl.get("pictures", [])):
         path = os.path.join(d["_dir"], pic.get("image") or "")
         boxes = pic.get("boxes", [])
@@ -5989,11 +6003,12 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
                 val = store.get(f"{kp}_b_{run}_{pi}_{ki}_{bi}", _PR_NOT_CHECKED)
                 if not isinstance(val, str) or val == _PR_NOT_CHECKED:
                     continue
-                if not (val in ("correct", "not a player") or val.startswith(("wrong team", "really "))):
+                if not (val == "correct" or val in _PR_NOT_PLAYER or val.startswith(("wrong team", "really "))):
                     continue                        # anything that isn't one of the choices is NOT a check
+                _np_kind = _PR_NOT_PLAYER.get(val)
                 if val == "correct":
                     verdict, name = "correct", b.get("name")
-                elif val == "not a player":
+                elif val in _PR_NOT_PLAYER:
                     verdict, name = "not a player", None
                 elif val.startswith("wrong team"):
                     verdict, name = "wrong team", None
@@ -6008,6 +6023,7 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
                                       "frame_file": pic.get("frame_file"), "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"),
                                       "side": b.get("side"), "assigned": b.get("name"), "assigned_how": b.get("how"),
                                       "assigned_conf": b.get("conf"), "verdict": verdict, "true_name": name,
+                                      "not_player_kind": _np_kind if verdict == "not a player" else None,
                                       "hidden_guess": b.get("hidden_guess"), "hidden_guess_p": b.get("hidden_guess_p")})
     if part == "titles":
         out.pop("checks")
@@ -14077,14 +14093,14 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
         else:
             _, pi, ki, bi = key
             if not isinstance(val, str) or val == _PR_NOT_CHECKED or not (
-                    val in ("correct", "not a player") or val.startswith(("wrong team", "really "))):
+                    val == "correct" or val in _PR_NOT_PLAYER or val.startswith(("wrong team", "really "))):
                 continue
             p = plays[pi]
             pic = p["pictures"][ki]
             b = pic["boxes"][bi]
             if val == "correct":
                 verdict, name = "correct", b.get("name")
-            elif val == "not a player":
+            elif val in _PR_NOT_PLAYER:
                 verdict, name = "not a player", None
             elif val.startswith("wrong team"):
                 verdict, name = "wrong team", None
@@ -14096,7 +14112,8 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
                                   "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"), "side": b.get("side"),
                                   "assigned": b.get("name"), "assigned_how": b.get("how"), "assigned_conf": b.get("conf"),
                                   "hidden_guess": b.get("hidden_guess"), "hidden_guess_p": b.get("hidden_guess_p"),
-                                  "verdict": verdict, "true_name": name})
+                                  "verdict": verdict, "true_name": name,
+                                  "not_player_kind": _PR_NOT_PLAYER.get(val) if verdict == "not a player" else None})
     fname = (f"play_review_{d.get('slug')}_{d.get('run')}_{re.sub(r'[^A-Za-z0-9]+', '_', coach.strip()).strip('_')}_"
              f"{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
     ok, msg = _pr_github_save(fname, out)

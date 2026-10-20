@@ -486,6 +486,40 @@ def _trk_set_aside_keep5(clip, flagged, prev, keep=5):
     return n_out, n_kept
 
 
+def _trk_ref_group(g, ids, lists, frames_of, km, min_marks=3):
+    """With 3+ coach-marked referees in game g: (the color group they fall in, a note), else None. A group that holds most
+    of the coach-NAMED players can't be the referees' group."""
+    if "coach_checks_all" not in globals():
+        return None
+    checks = [c for c in coach_checks_all()[0] if str(c.get("game")) == str(g)]
+    where = {}
+    for i in ids:
+        for t, f in enumerate(lists[i]):
+            where[f] = (i, t)
+    feats = {"referee": [], "player": []}
+    for c in checks:
+        kind = "referee" if (c.get("verdict") == "not a player" and c.get("not_player_kind") == "referee") else \
+            "player" if (c.get("verdict") in ("correct", "wrong", "wrong team") and c.get("true_name")) else None
+        hit = where.get(c.get("frame_file"))
+        if kind is None or hit is None:
+            continue
+        rows = frames_of[hit[0]][hit[1]]
+        if not len(rows):
+            continue
+        d = np.hypot((rows[:, 6] + rows[:, 8]) / 2 - float(c["px"]), rows[:, 9] - float(c["py"]))
+        j = int(np.argmin(d))
+        if d[j] < 25 and np.isfinite(rows[j, 14:19]).all():
+            feats[kind].append(rows[j])
+    if len(feats["referee"]) < min_marks:
+        return None
+    gr = km.predict(_trk_group_feat(np.vstack(feats["referee"])))
+    gp = km.predict(_trk_group_feat(np.vstack(feats["player"]))) if feats["player"] else np.array([], int)
+    score = {c: int((gr == c).sum()) - int((gp == c).sum()) for c in range(km.n_clusters)}
+    best = max(score, key=score.get)
+    return best, (f"{int((gr == best).sum())} of {len(gr)} marked referees and {int((gp == best).sum())} of {len(gp)} named "
+                  f"players are in it")
+
+
 def _trk_name_frames(clips, todo, base, pc=None, game_of=None):
     """CONFIRMED CHANGE (requested: "the frames are always too blurry ... switch back to finding ONE frame per video"; staff
     picked: names only, from the sharpest frame with the most players). For each clip: the ONE tracking frame (about
@@ -1819,6 +1853,20 @@ def player_tracking(pc):
         c_ = km.cluster_centers_
         # everyone-else = light shirt over dark pants, not warm (referees' black pants, coaches, fans)
         other = int(np.argmax((c_[:, 0] - c_[:, 2]) - np.abs(c_[:, 1] / 2)))
+        # CONFIRMED CHANGE (requested: "referee" marks in the player checks). When coaches marked referees in this game, the
+        # referees' group is the one most of those boxes fall in (and the fewest named players) -- the shirt-color rule above
+        # is only the fallback. In the last run 20 of 34 players with no box had been sorted in with the referees.
+        try:
+            _ref_o = _trk_ref_group(g, ids, lists, frames_of, km)
+            if _ref_o is not None and _ref_o[0] != other:
+                print(f"  [tracking]   {g}: referee marks put the referees in color group {_ref_o[0]} (the shirt-color rule "
+                      f"picked {other}) -- {_ref_o[1]}", flush=True)
+                other = _ref_o[0]
+            elif _ref_o is not None:
+                print(f"  [tracking]   {g}: referee marks agree with the shirt-color rule on which group is the referees "
+                      f"({_ref_o[1]})", flush=True)
+        except Exception as _re:
+            print(f"  [tracking]   referee marks not used for the color groups ({type(_re).__name__}: {_re})", flush=True)
         teams_ = [c for c in range(3) if c != other]
         lab = {teams_[0]: "A", teams_[1]: "B", other: "ref"}
         code = {teams_[0]: 0.0, teams_[1]: 1.0, other: 2.0}
@@ -2210,6 +2258,7 @@ def player_tracking(pc):
     _bg_pts = []                                      # (stated probability, right?) for every checked best guess
     _meth_prec = {}                                   # naming method -> (right, checked) on the coach-checked boxes
     coach, coach_flip = {}, set()
+    coach_kind = {}                                   # (clip, track) -> the coach's kind of non-player (referee / bench / crowd)
     if TRACK_USE_COACH_CHECKS:
         checks = _trk_coach_checks()
         if checks:
@@ -2256,6 +2305,8 @@ def player_tracking(pc):
                             coach[(i, best[1])] = ch["true_name"]
                         continue
                     coach[(i, best[1])] = ch.get("true_name") if ch.get("verdict") != "not a player" else None
+                    if ch.get("verdict") == "not a player":
+                        coach_kind[(i, best[1])] = ch.get("not_player_kind") or "not a player (kind not given)"
             if rep.get("best guess", [0, 0])[1] >= 30:
                 _bg_acc = rep["best guess"][0] / rep["best guess"][1]
             _meth_prec = {h: (r_, n_) for h, (r_, n_) in rep.items()}
@@ -2417,6 +2468,18 @@ def player_tracking(pc):
                 if _fl.sum() >= 10 and _y[_fl].mean() >= _min_prec and int((_fl & (_y == 0)).sum()) <= _max_lost:
                     _best = (float(_c), float(_y[_fl].mean()), float(_y[_fl].sum() / max(_y.sum(), 1)), int((_fl & (_y == 0)).sum()))
             _passed = bool(_best and _best[2] >= _min_rec)
+            # requested: how each kind of non-player is caught at the cutoff (held-out scores)
+            if _best:
+                _kc = {}
+                for n_, ik in enumerate(_lk):
+                    if _yl[n_] == 1 and np.isfinite(_oof[n_]):
+                        kd = coach_kind.get(ik, "not a player (kind not given)")
+                        _kc.setdefault(kd, [0, 0])
+                        _kc[kd][1] += 1
+                        _kc[kd][0] += int(_oof[n_] >= _best[0])
+                if _kc:
+                    print("  [tracking]   player model, non-players caught at its cutoff by kind: "
+                          + "; ".join(f"{kd} {a}/{n}" for kd, (a, n) in sorted(_kc.items())), flush=True)
             print(f"  [tracking]   player / not-a-player model: {_n1} not-a-player and {_n0} player label(s) from the coach checks"
                   f" ({len(_missed_tracks)} of {len(_missed)} missed-player mark(s) found on a track); tested with {_how}: "
                   + (f"AUC {_auc:.2f} (0.5 = coin flip, 1.0 = perfect); " if _auc is not None else "")
@@ -2651,6 +2714,10 @@ def player_tracking(pc):
                 if rd:
                     n_read_tracks += 1
                 sure = [(txt, cf) for txt, cf in rd if cf >= TRACK_OCR_MIN_CONF]
+                # a read that isn't the number of anyone in this team's five is no answer (not a vote against the others) --
+                # the way the Jersey-number reader test scores readers (JERSEY_READER_LINEUP_FILTER)
+                if cand and globals().get("JERSEY_READER_LINEUP_FILTER", True):
+                    sure = [(txt, cf) for txt, cf in sure if txt in cand]
                 # CONFIRMED BUG (fixed; review of the 1024 run): the reader sometimes catches ONE digit of a two-digit
                 # number -- "0" off a clear 10 (at 0.95), "2" off 23 -- and that digit was someone else's number (#0 Beck,
                 # #2 LaChapell). A single-digit read is AMBIGUOUS when another number on the floor for that team contains
