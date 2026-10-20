@@ -609,6 +609,7 @@ def _jn_read(engine, crops, polarity=None):
 if RUN_JERSEY_READER_TEST:
     import cv2
     _jn_key = dict(JERSEY_ANSWER_KEY)
+    _jn_five = {}                              # answer-key crop -> numbers of his team's five on the floor (when known)
     _extra = os.path.join(INPUT_DIR, "jersey_answer_key.csv")
     if os.path.exists(_extra):
         _jn_key.update({str(r["crop"]): str(r["number"]) for _, r in pd.read_csv(_extra, dtype=str).iterrows()})
@@ -627,6 +628,14 @@ if RUN_JERSEY_READER_TEST:
         _dets = [d_ for d_ in _dets if "jersey" not in d_]
         _det = _safe_read_latest(_dets) if _dets else {}
         _nums_by_game = {}
+        # each checked clip's two fives (requested: score the reader the way tracking USES it -- see _jn_five below)
+        _pc_fives = {}
+        _pcs_ = globals().get("play_calls")
+        if isinstance(_pcs_, pd.DataFrame) and not _pcs_.empty:
+            for _, _r5 in _pcs_.iterrows():
+                _pc_fives[f"{_r5.get('game_date')}|{_r5.get('clip_number')}|{_r5.get('synergy_string')}"] = [
+                    [x.strip() for x in str(_r5.get(c_) or "").split(",") if x.strip() and str(_r5.get(c_)) != "nan"]
+                    for c_ in ("offense_lineup", "defense_lineup")]
         for _ch in _checks:
             _gd, _gc = str(_ch.get("game") or "|").split("|", 1)
             if (_gd, _gc) not in _nums_by_game:
@@ -657,6 +666,11 @@ if RUN_JERSEY_READER_TEST:
                 if _k not in _jn_key:
                     _n_coach += 1
                 _jn_key[_k] = _num                     # the merged (latest) check
+                # the numbers of the five on the floor for HIS team in that clip (the side his name is in)
+                _tn = str(_ch.get("true_name") or "").strip().lower()
+                for _f5 in _pc_fives.get(str(_ch.get("clip_key")), []):
+                    if _tn in {x.lower() for x in _f5}:
+                        _jn_five[_k] = {str(_nums.get(x.lower())) for x in _f5 if _nums.get(x.lower())}
         print(f"  coach checks: {_st['files']} file(s) found"
               + (f" ({'; '.join(_vf[:3])})" if _vf else f" -- looked in: {'; '.join(_places)}")
               + f"; {_st['checks']} check(s), {_st['numbered']} with a jersey number for the real player, "
@@ -730,13 +744,24 @@ if RUN_JERSEY_READER_TEST:
                     _jr_torso_save()
                 os.makedirs(os.path.dirname(_cp), exist_ok=True)
                 _safe_to_pickle(_saved, _cp)
-            _right = sum(1 for k, v in _have.items() if _saved.get((_eng, k), ("", 0))[0] == v)
+            # CONFIRMED CHANGE (coach: two perfectly clear numbers, #35 and #10, were not named -- numbers were switched off
+            # because the reader scored 3/11 here). Player tracking only uses a read that is the number of a player ON THE FLOOR
+            # for that team (a "40" when nobody on the floor wears 40 is thrown away). The test now scores the reader the same
+            # way: a read outside that team's five counts as no answer (JERSEY_READER_LINEUP_FILTER = False -> every read).
+            _lf = bool(globals().get("JERSEY_READER_LINEUP_FILTER", True))
+            _rd = {}
+            for k in _have:
+                r0 = _saved.get((_eng, k), ("", 0))
+                if _lf and k in _jn_five and _jn_five[k] and r0[0] and str(r0[0]) not in _jn_five[k]:
+                    r0 = ("", 0.0)
+                _rd[k] = r0
+            _right = sum(1 for k, v in _have.items() if _rd.get(k, ("", 0))[0] == v)
             JERSEY_READER_ACCURACY[_eng] = _right / max(len(_have), 1)
             # CONFIRMED CHANGE (1024 test: easyocr_find read 11/48 and its misses were almost all "nothing", not wrong
             # numbers). For naming, what matters is how often it's RIGHT WHEN IT ANSWERS: a track has several chest crops,
             # so a reader that answers one crop in four but is right when it does still names most tracks. Measured
             # here, together with the lowest confidence at which it stays >= JERSEY_READER_TARGET_PRECISION.
-            _ans = [(k, v, _saved.get((_eng, k), ("", 0))) for k, v in _have.items() if _saved.get((_eng, k), ("", 0))[0]]
+            _ans = [(k, v, _rd.get(k, ("", 0))) for k, v in _have.items() if _rd.get(k, ("", 0))[0]]
             _best_c = None
             for _c in (0.0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95):
                 _a = [(v, r_) for _k, v, r_ in _ans if r_[1] >= _c]
@@ -759,7 +784,7 @@ if RUN_JERSEY_READER_TEST:
                 print(f"  {_eng:12}: by confidence -- {'; '.join(_bands)} (needs {JERSEY_READER_TARGET_PRECISION:.0%} "
                       f"on >= {JERSEY_READER_MIN_ANSWERS} answers to be trusted)", flush=True)
             _ck = [k for k in _have if k in _coach_keys]
-            _ck_ans = [(k, _saved.get((_eng, k), ("", 0))) for k in _ck if _saved.get((_eng, k), ("", 0))[0]]
+            _ck_ans = [(k, _rd.get(k, ("", 0))) for k in _ck if _rd.get(k, ("", 0))[0]]
             _ck_right = sum(1 for k, r_ in _ck_ans if r_[0] == _have[k])
             # CONFIRMED BUG (fixed): the best reader was picked by right answers at ANY confidence (113 vs 90), but tracking only
             # uses answers at or above its cutoff -- and "combined" was counted only where it is used. Now every reader is
@@ -769,6 +794,10 @@ if RUN_JERSEY_READER_TEST:
             globals().setdefault("JERSEY_READER_COACH_SCORE", {})[_eng] = (_ck_right, len(_ck_ans) - _ck_right, len(_ck))
             print(f"  {_eng:12}: on YOUR {len(_ck)} checked players: {_ck_right} right, "
                   f"{len(_ck_ans) - _ck_right} wrong, {len(_ck) - len(_ck_ans)} no answer", flush=True)
+            if _lf:
+                print(f"  {_eng:12}: (scored like Player tracking uses it: only reads that are the number of a player on the floor "
+                      f"for his team count -- {sum(1 for k in _have if k in _jn_five)} of {len(_have)} crops have their lineup)",
+                      flush=True)
             print(f"  {_eng:12}: [{len(_have)} crops] answered {len(_ans)}/{len(_have)}; right when it answers "
                   f"{JERSEY_READER_PRECISION[_eng]:.0%} ({sum(r_[0] == v for v, r_ in _a)}/{len(_a)} at confidence >= {_c_use:.2f}); "
                   f"wrong answers: {', '.join(f'{a} x{b}' for a, b in _wrong.items()) or 'none'}", flush=True)

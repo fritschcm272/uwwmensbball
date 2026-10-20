@@ -486,7 +486,7 @@ def _trk_set_aside_keep5(clip, flagged, prev, keep=5):
     return n_out, n_kept
 
 
-def _trk_name_frames(clips, todo, base):
+def _trk_name_frames(clips, todo, base, pc=None, game_of=None):
     """CONFIRMED CHANGE (requested: "the frames are always too blurry ... switch back to finding ONE frame per video"; staff
     picked: names only, from the sharpest frame with the most players). For each clip: the ONE tracking frame (about
     every quarter second, at full width) where the most players on the court are boxed, and among those the SHARPEST
@@ -498,7 +498,26 @@ def _trk_name_frames(clips, todo, base):
     cache = _safe_read_pickle(cp) if os.path.exists(cp) else {}
     n_new, _t0 = 0, time.time()
     slack = int(globals().get("TRACK_NAME_FRAME_SLACK", 1))      # frames with up to this many fewer players still compete
-    for _n, i in enumerate(todo, 1):
+    # CONFIRMED BUG (fixed; coach: "3 different clips with exactly the same images" -- clips 52, 53 and 54). Synergy logs one
+    # possession as several events whose clips SHARE the same film (52 = the P&R, 53 = Gale's offensive rebound and 54 = Cohen's
+    # offensive rebound; 53 and 54 are the very same video, and both sit inside 52). Each clip picked the same sharpest moment,
+    # so the player check showed one picture three times. Clips are now taken in game order, and a moment of the game film
+    # already used as another clip's naming frame (within TRACK_NAME_FRAME_GAP_S seconds) isn't picked again when the clip has
+    # any other usable frame.
+    gap_s = float(globals().get("TRACK_NAME_FRAME_GAP_S", 1.5))
+    times_of = {}
+    if isinstance(pc, pd.DataFrame) and "track_times" in pc.columns:
+        for i in todo:
+            try:
+                tt = [float(x) for x in str(pc.at[i, "track_times"]).split(";") if x.strip()]
+                if len(tt) == len(clips[i]["files"]):
+                    times_of[i] = tt
+            except Exception:
+                pass
+    used = {}                                                     # game -> [film seconds already used]
+    order = sorted(todo, key=lambda i: (str((game_of or {}).get(i)), times_of.get(i, [float("inf")])[0]))
+    n_moved = 0
+    for _n, i in enumerate(order, 1):
         clip = clips[i]
         count = {}
         for k, tr in enumerate(clip["tracks"]):
@@ -510,6 +529,16 @@ def _trk_name_frames(clips, todo, base):
             continue
         top = max(count.values())
         cand = sorted(t for t, c in count.items() if c >= top - slack)
+        g_ = (game_of or {}).get(i)
+        tt = times_of.get(i)
+        if tt is not None and used.get(g_):
+            _free = lambda t: all(abs(tt[t] - u) > gap_s for u in used[g_])
+            fresh = [t for t in cand if _free(t)]
+            if not fresh:                                         # widen: any frame with most of the players, not used yet
+                fresh = sorted(t for t, c in count.items() if c >= max(1, top - 3) and _free(t))
+            if fresh and set(fresh) != set(cand):
+                n_moved += 1
+            cand = fresh or cand
         sharp = {}
         for t in cand:
             rel = clip["files"][t]
@@ -525,13 +554,17 @@ def _trk_name_frames(clips, todo, base):
             if cache[rel] is not None:
                 sharp[t] = cache[rel]
         if not sharp:
-            clip["name_frame"] = max(count, key=lambda t: (count[t], -t))
+            clip["name_frame"] = max(cand, key=lambda t: (count[t], -t))
+            if tt is not None:
+                used.setdefault(g_, []).append(tt[clip["name_frame"]])
             continue
         # the sharpest frame wins, with a small edge to frames showing every player (a frame missing one player has to be
         # clearly sharper -- TRACK_NAME_FRAME_MISSING_PENALTY -- to win)
         pen = float(globals().get("TRACK_NAME_FRAME_MISSING_PENALTY", 0.15))
         clip["name_frame"] = max(sharp, key=lambda t: (sharp[t] * (1 - pen * (top - count[t])), -t))
         clip["name_frame_sharp"] = sharp[clip["name_frame"]]
+        if tt is not None:
+            used.setdefault(g_, []).append(tt[clip["name_frame"]])
         if n_new and n_new % 500 == 0:
             _safe_to_pickle(cache, cp)
         _trk_progress("clips: naming frame picked", _n, len(todo), _t0)
@@ -539,7 +572,8 @@ def _trk_name_frames(clips, todo, base):
         _safe_to_pickle(cache, cp)
     print(f"  [tracking]   naming frame: one per clip (sharpest of the frames with the most players) -- "
           f"{sum(1 for i in todo if clips[i].get('name_frame') is not None):,} of {len(todo):,} clip(s)"
-          + (f"; {n_new:,} frame(s) measured for sharpness" if n_new else ""), flush=True)
+          + (f"; {n_new:,} frame(s) measured for sharpness" if n_new else "")
+          + (f"; {n_moved} clip(s) share film with an earlier clip and got a different moment" if n_moved else ""), flush=True)
 
 
 def _trk_read_numbers(clips, todo, base, engine):
@@ -2425,7 +2459,7 @@ def player_tracking(pc):
 
     # the clip's ONE naming frame, picked after every not-a-player rule above, so it is the frame with the most players LEFT
     if globals().get("TRACK_NAME_ONE_FRAME", True):
-        _trk_name_frames(clips, todo, base)
+        _trk_name_frames(clips, todo, base, pc, game_of)
 
     # --- fingerprints for every track on a known side ---
     # CONFIRMED CHANGE (requested: the run sat on "fingerprinting 16858 player crop(s)" with no sign of life).
