@@ -1,2 +1,2 @@
 game,clips,tracks,anchors,anchors_by_pose,anchors_by_rim,teams_by_color,clips_ball_seen,clips_with_lineups,synergy_player_in_lineup,tracks_named,anchor_name_check,tracks_named_by_number,tracks_number_read,anchor_vs_number_check,tracks_named_by_evidence,tracks_named_by_elimination,lineup_vs_anchor_check,numbers_used
-2026-03-07|UWWhitewater@Wash(StLouis),167,14571,14,0,0,"home team wears light (Washington-St. Louis Bears) -- jerseys look similar in brightness, check the images",167,166,148,75,26/62,64,0,0/2,2,0,--,False
+2026-03-07|UWWhitewater@Wash(StLouis),167,14571,13,0,0,"home team wears light (Washington-St. Louis Bears) -- jerseys look similar in brightness, check the images",167,166,149,342,36/85,288,1497,2/5,234,0,2/2,True
