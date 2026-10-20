@@ -261,6 +261,13 @@ _GP_COVERAGE_BY_ACTION = {
 }
 _gp_pcs = _gp_load("uww_play_call_summary")
 _gp_pc = _gp_load("uww_play_calls")
+# CONFIRMED BUG (fixed here): side == "Opponent" names the FILE a clip came from, and the coaches now tag the
+# opponent's DEFENSIVE possessions too (in the app's Film Tagging) -- e.g. 20 Marian possessions against MSOE on
+# 2/26. Every table below about THEIR offense (sets, shot clock, personnel grouping, game situations) read those
+# rows as MSOE's own offense. _gp_pcs_off is the offense-only view; Ball screen coverage played still reads the
+# Defense rows on purpose (that one IS their defense).
+_gp_pcs_off = (_gp_pcs[_gp_pcs["possession_side"].astype(str) != "Defense"]
+               if not _gp_pcs.empty and "possession_side" in _gp_pcs.columns else _gp_pcs)
 
 # ---- Minimum tagged possessions before a split is reported as real rather than left as sample ----------
 # One place for every floor in this cell. These used to be defined inline next to each table, which meant
@@ -283,8 +290,8 @@ _GS_MIN_USES = MIN_USES["game_situation"]
 _sets_real = []
 _film_real = []
 if not _gp_pcs.empty and {"side", "level", "name"}.issubset(_gp_pcs.columns):
-    _opp_calls = _gp_pcs[(_gp_pcs["side"] == "Opponent") & (_gp_pcs["level"] == "Play call")
-                         & (_gp_pcs["scouted_opponent"].astype(str) == str(_gp_short))]
+    _opp_calls = _gp_pcs_off[(_gp_pcs_off["side"] == "Opponent") & (_gp_pcs_off["level"] == "Play call")
+                             & (_gp_pcs_off["scouted_opponent"].astype(str) == str(_gp_short))]
     _opp_calls = _opp_calls[~_opp_calls["name"].astype(str).str.contains("unspecified", na=False)]
     _opp_calls = _opp_calls.sort_values(["uses", "ppp"], ascending=[False, False])
     # Half-court sets first, then inbounds/ATO, so the table reads the way a walkthrough runs.
@@ -610,8 +617,8 @@ _clock_sample = [
 # situation, level="Shot clock" in uww_play_call_summary). Only matched clips carry an estimate.
 _clock_real = []
 if not _gp_pcs.empty and {"side", "level", "name", "uses"}.issubset(_gp_pcs.columns):
-    _sc_rows_df = _gp_pcs[(_gp_pcs["side"] == "Opponent") & (_gp_pcs["level"] == "Shot clock")
-                          & (_gp_pcs["scouted_opponent"].astype(str) == str(_gp_short))]
+    _sc_rows_df = _gp_pcs_off[(_gp_pcs_off["side"] == "Opponent") & (_gp_pcs_off["level"] == "Shot clock")
+                              & (_gp_pcs_off["scouted_opponent"].astype(str) == str(_gp_short))]
     _sc_order = ["Early clock (0-9 sec used)", "Organized offense (10-19 sec used)", "Late clock (20+ sec used)"]
     _sc_total_uses = _sc_rows_df["uses"].sum()
     for _bucket in _sc_order:
@@ -880,8 +887,8 @@ if not _gp_pcs.empty and {"side", "level", "name", "uses"}.issubset(_gp_pcs.colu
     # than half their playing time was simply absent. Only types with _PG_MIN_USES tagged clips were listed --
     # a type with plenty of real MINUTES but few matched clips vanished entirely. Every type with minutes is
     # listed now; the tagged columns are blank when there aren't enough clips to say anything about them.
-    _pg_rows_df = _gp_pcs[(_gp_pcs["side"] == "Opponent") & (_gp_pcs["level"] == "Personnel grouping type")
-                          & (_gp_pcs["scouted_opponent"].astype(str) == str(_gp_short))].sort_values(
+    _pg_rows_df = _gp_pcs_off[(_gp_pcs_off["side"] == "Opponent") & (_gp_pcs_off["level"] == "Personnel grouping type")
+                              & (_gp_pcs_off["scouted_opponent"].astype(str) == str(_gp_short))].sort_values(
                               "uses", ascending=False)
     # Real minutes share by TYPE: classify each literal lineup in the season lineup box score the SAME way
     # (top-2 rebounders = bigs) and sum its real MIN into that type's bucket, rather than guessing.
@@ -1049,9 +1056,9 @@ _gs_sample = [
 # not a new definition invented for this table. Reads level="Game situation" in uww_play_call_summary.
 _gs_real = []
 if not _gp_pcs.empty and {"side", "level", "name", "uses"}.issubset(_gp_pcs.columns):
-    _gs_rows_df = _gp_pcs[(_gp_pcs["side"] == "Opponent") & (_gp_pcs["level"] == "Game situation")
-                          & (_gp_pcs["scouted_opponent"].astype(str) == str(_gp_short))
-                          & (_gp_pcs["uses"] >= _GS_MIN_USES)]
+    _gs_rows_df = _gp_pcs_off[(_gp_pcs_off["side"] == "Opponent") & (_gp_pcs_off["level"] == "Game situation")
+                              & (_gp_pcs_off["scouted_opponent"].astype(str) == str(_gp_short))
+                              & (_gp_pcs_off["uses"] >= _GS_MIN_USES)]
     # Same left-to-right order as the sample rows, when present.
     _gs_order = ["Leading by 10+", "Trailing by 10+", "Clutch (last 5 min, margin \u2264 8)"]
     _gs_rows_df = _gs_rows_df.assign(_ord=_gs_rows_df["name"].apply(

@@ -4720,6 +4720,10 @@ def render_play_call_section(side: str, short_opponent: str, title: str, intro: 
     if sm.empty or not {"side", "level", "name"}.issubset(sm.columns):
         return
     sm = sm[(sm["side"] == side) & (sm["scouted_opponent"].astype(str) == str(short_opponent))]
+    if "possession_side" in sm.columns:
+        # CONFIRMED BUG (fixed here): side is the FILE a clip came from; the coaches also tag that side's
+        # defensive possessions, and those rows (the OTHER team's sets) were listed as this side's play calls.
+        sm = sm[sm["possession_side"].astype(str) != "Defense"]
     if sm.empty:
         return
     clips = load_table("uww_play_calls")
@@ -4727,6 +4731,8 @@ def render_play_call_section(side: str, short_opponent: str, title: str, intro: 
         clips = clips[(clips["side"] == side) & (clips["scouted_opponent"].astype(str) == str(short_opponent))]
         if side == "Opponent":
             clips = clips[clips["offense_team"].astype(str) == str(short_opponent)]
+        elif "possession_side" in clips.columns:
+            clips = clips[clips["possession_side"].astype(str) != "Defense"]
     calls = sm[(sm["level"] == "Play call") & ~sm["name"].astype(str).str.contains("unspecified", na=False)]
     team_ppp = calls["team_ppp"].dropna().iloc[0] if calls["team_ppp"].notna().any() else None
     section_header(title, "PPP counts what the play-by-play says was scored on the possession (free throws "
@@ -4859,6 +4865,93 @@ def render_screen_coverage(short_opponent: str, default_view: str = "Opponent de
                                               "defender_jersey": "#", "defender_name": "Defender",
                                               "result": "Result", "points": "Pts"}),
                              hide_index=True, use_container_width=True)
+
+
+def _tfo_poss(name):
+    """"MSOE Raiders'" / "Ripon's" -- the possessive the 2-for-1 labels use."""
+    name = str(name)
+    return name + ("'" if name.endswith("s") else "'s")
+
+
+def render_two_for_one(short_opponent, key_suffix="") -> None:
+    """\u23f1\ufe0f TWO-FOR-ONE -- end of each half against this opponent. Everything is built by the parser's two-for-one
+    cell (uww_two_for_one_plan / _calls / _attack / _possessions); the app only renders it. CONFIRMED CHANGE
+    (requested): how to take advantage of the upcoming opponent when 2-for-1 chances come up -- which play calls
+    worked, who to attack -- in the Game Plan tab (the brief carries the short version and links here)."""
+    plan = load_table("uww_two_for_one_plan")
+    if plan.empty or "opponent" not in plan.columns:
+        return
+    plan = plan[plan["opponent"].astype(str) == str(short_opponent)]
+    if plan.empty:
+        return
+    section_header("\u23f1\ufe0f TWO-FOR-ONE (END OF EACH HALF)",
+                   "A team that gets the ball with about 0:35-1:00 left in a half can shoot early on purpose: the other "
+                   "team then has to shoot before the horn, and the first team gets the last shot -- two possessions to "
+                   "one. NCAA men's rules (30-second shot clock, 20 after an offensive rebound). Went for it = first "
+                   "shot, free-throw trip or turnover with 0:33+ left. End of the 2nd half / OT only counts for a team "
+                   "that's behind (ahead or tied, teams hold for the last shot). Built from every game's play-by-play, "
+                   "ours and theirs; windows are the parser's TWO_FOR_ONE_* settings.")
+    body = ['<div class="gp-card">']
+    for part, g in plan.sort_values("order").groupby("part", sort=False):
+        body.append(f'<div style="font-weight:700;color:#4E2A84;margin:8px 0 2px;">{html.escape(str(part))}</div><ul style="margin:0 0 4px 18px;">')
+        for _, r in g.iterrows():
+            body.append(f"<li>{html.escape(_gp_clean(r.get('headline')))}"
+                        f'<div style="color:#666;font-size:0.85rem;">{html.escape(_gp_clean(r.get("detail")))}'
+                        f" (n = {_ft_int(r.get('sample_n'))})</div></li>")
+        body.append("</ul>")
+    body.append("</div>")
+    st.markdown("".join(body), unsafe_allow_html=True)
+
+    calls = load_table("uww_two_for_one_calls")
+    if not calls.empty and "opponent" in calls.columns:
+        calls = calls[calls["opponent"].astype(str) == str(short_opponent)]
+    if not calls.empty:
+        st.markdown("**What worked at the end of halves** -- play calls the coaches tagged, else Synergy's play type")
+        _whos = sorted(set(calls["who"].astype(str)),
+                       key=lambda w: (0 if w == "UWW offense" else 1 if w.startswith("Against ") else 2, w))
+        _w = st.selectbox("Whose possessions", _whos, key=f"tfo_who{key_suffix}")
+        _c = calls[calls["who"] == _w]
+        st.dataframe(_c[["moment", "kind", "name", "uses", "points", "ppp", "scored", "top_player", "note"]].rename(columns={
+            "moment": "Moment", "kind": "Source", "name": "What they ran", "uses": "Poss.", "points": "Pts",
+            "ppp": "PPP", "scored": "Scored on", "top_player": "Most often finished by", "note": "Note"}),
+            hide_index=True, use_container_width=True)
+        st.caption("Quick shot = the 2-for-1 chance itself; Last shot = the final possession of the half; Answering = "
+                   "the possession right after the other team went for it. A row needs 2+ possessions.")
+
+    att = load_table("uww_two_for_one_attack")
+    if not att.empty and "opponent" in att.columns:
+        att = att[att["opponent"].astype(str) == str(short_opponent)]
+    if not att.empty:
+        st.markdown(f"**Who to attack** -- {_tfo_poss(short_opponent)} defenders late in halves")
+        st.dataframe(att[["player", "verdict", "late_share_pct", "fouls_per_40", "late_fouls", "defensive_role", "why"]]
+                     .rename(columns={"player": "Player", "verdict": "Call", "late_share_pct": "On floor late (%)",
+                                      "fouls_per_40": "Fouls / 40", "late_fouls": "Fouls in 2-for-1 spots",
+                                      "defensive_role": "Defensive role", "why": "Why"}),
+                     hide_index=True, use_container_width=True)
+        _basis = _gp_clean(att.iloc[0].get("basis"))
+        st.caption("Attack = foul-prone and/or a weak defensive role, weighted by how often he's on the floor at the "
+                   "end of a half; Avoid = their best on-ball defenders. " + (f"On floor late: {_basis}." if _basis else ""))
+
+    pos = load_table("uww_two_for_one_possessions")
+    if not pos.empty and "side" in pos.columns:
+        opp_rows = pos[(pos["side"] == "Opponent") & (pos["scouted_opponent"].astype(str) == str(short_opponent))]
+        our_rows = pos[pos["side"] == "UWW"]
+        with st.expander(f"Every 2-for-1 possession on file -- {_tfo_poss(short_opponent)} games ({opp_rows['seq_id'].nunique()} "
+                         f"halves) and ours ({our_rows['seq_id'].nunique()})"):
+            _which = st.radio("Games", [f"{_tfo_poss(short_opponent)} games", "Our games"], horizontal=True,
+                              key=f"tfo_games{key_suffix}")
+            _p = opp_rows if _which != "Our games" else our_rows
+            _cols = [c for c in ["game_date", "opponent", "period", "team", "seq_role", "start", "first_action", "points",
+                                 "result", "finisher", "play_type", "play_call", "seq_went", "seq_got",
+                                 "defense_team_fouls"] if c in _p.columns]
+            st.dataframe(_p[_cols].rename(columns={
+                "game_date": "Date", "opponent": "Game vs", "period": "Half", "team": "Ball", "seq_role": "Role",
+                "start": "Got it at", "first_action": "First shot at", "points": "Pts", "result": "Result",
+                "finisher": "Finisher", "play_type": "Synergy type", "play_call": "Play call",
+                "seq_went": "Went for it", "seq_got": "Got 2-for-1", "defense_team_fouls": "Defense team fouls"}),
+                hide_index=True, use_container_width=True, height=360)
+            st.caption("One row per possession, from the 2-for-1 chance to the horn. Game vs = the team "
+                       + (f"{short_opponent} played." if _which != "Our games" else "we played."))
 
 
 def render_game_plan_tab(short_opponent: str) -> None:
@@ -5056,6 +5149,8 @@ def render_game_plan_tab(short_opponent: str) -> None:
                         "fouling at 75% or better.",
               cell_class=lambda col, r: ({"Foul": "gp-foul", "Do not foul": "gp-nofoul"}.get(_gp_clean(r.get("call")), "")
                                          if col == "call" else ""))
+    # CONFIRMED CHANGE (requested): the end-of-half 2-for-1 plan, right after the other end-of-half/game call
+    render_two_for_one(short_opponent)
     _gp_table("uww_scout_team", short_opponent, "\U0001f3ad SCOUT TEAM",
               [("scout_player", "Our player"), ("plays_as", "Plays as"), ("imitate", "What to imitate")],
               "Placeholder casting from our bench. Replace with staff_inputs/scout_team.csv.")
@@ -5152,9 +5247,87 @@ def _title_name(n) -> str:
     return n if n != n.upper() else " ".join(w[:1].upper() + w[1:].lower() for w in n.split(" "))
 
 
+def render_film_watched(header=True) -> None:
+    """HOW THE FILM IS WATCHED AUTOMATICALLY -- moved out of the scouting brief (requested); the brief's Methodology card
+    links here (?page=upcoming&tab=notes&section=film), and it also opens from Analytics > Video Tracking. The counts and
+    the "how well it's working" rows come from the parser (uww_film_ai_status.csv, written when the brief is built)."""
+    if header:
+        st.markdown("### \U0001f3a5 How the film is watched automatically")
+    st.markdown(
+        "**How it works**\n"
+        "1. **Capture.** Games are exported from Synergy Editor -- one video per clip, full 1920-wide. The parser takes 5 "
+        "key frames of each play for the play models, plus several frames a second for player tracking. Only exported "
+        "games are tracked.\n"
+        "2. **Players.** A detection model finds every person in each frame; a one-time court calibration per gym places "
+        "them on the floor; jersey colors split the teams, and referees, benches and the crowd are set aside. Each "
+        "player is followed through the clip. Names come from the coaches' player checks, jersey-number readers "
+        "(one trained on our own film), the five known to be on the floor (play-by-play substitutions) and matching "
+        "how players look across clips; anyone else gets a best guess, marked as one.\n"
+        "3. **Plays.** The Tag model learns the coaches' tags from Synergy's description of each play, its key frames and "
+        "the players' positions, then suggests formation, play call, situation, defense, press and coverages for every "
+        "play, tagged or not.\n"
+        "4. **Coaches' reviews (in this app).** Analytics \u2192 Film Tagging: a batch of plays per game, in game order. "
+        "Analytics \u2192 Player Number Tracking: the first 5 clips of a game, then groups of 5 not yet checked. Every "
+        "answer is training data, so the models improve each run. Answers saved before the restart on the Synergy "
+        "exports, and test saves, aren't used.")
+    fs = load_table("uww_film_ai_status")
+    if fs.empty:
+        st.info("No film status yet -- it's written when the parser builds the scouting brief.")
+        return
+    i = fs.iloc[0]
+    n = lambda k: (f"{int(pd.to_numeric(i.get(k), errors='coerce')):,}"
+                   if k in fs.columns and pd.notna(pd.to_numeric(i.get(k), errors="coerce")) else "--")
+    has = lambda k: k in fs.columns and pd.notna(pd.to_numeric(i.get(k), errors="coerce"))
+    st.markdown(
+        f"**So far:** {n('games_captured')} game(s) captured ({n('clips_captured')} clips); {n('games_tagged')} game(s) "
+        f"tagged ({n('clips_tagged')} plays); {n('games_tracked')} game(s) tracked ({n('clips_tracked')} plays, "
+        f"{n('frames_tracked')} frames). Coach reviews: {n('player_checks')} player check(s) on {n('plays_checked')} "
+        f"play(s), {n('title_answers')} tag answer(s) on {n('plays_title_reviewed')} play(s)"
+        + (f"; {n('validation_plays')} tagged plays held out of training to test the Tag model" if has("validation_plays") else "")
+        + (f". Players on the floor named from evidence (not a best guess): {n('players_from_evidence')} of "
+           f"{n('player_slots')}" if has("player_slots") else "")
+        + (f"; tracked frames placed on the court: {_gp_clean(i.get('court_mapped_pct'))}%" if has("court_mapped_pct") else "")
+        + ".")
+    rows = fs[fs["area"].notna()] if "area" in fs.columns else fs.iloc[0:0]
+    if not rows.empty:
+        st.markdown("**How well it's working** -- every row is something a coach checked, and how often the film's "
+                    "automatic answer agreed")
+        st.dataframe(rows[["area", "measure", "value", "detail"]].rename(columns={
+            "area": "Area", "measure": "What the coaches checked", "value": "Film agreed with the coaches",
+            "detail": "Detail"}), hide_index=True, use_container_width=True)
+    with st.expander("How to read these counts"):
+        st.markdown(
+            "- Only boxes and answers a coach actually judged count. A box left on *-- not checked --* is never saved, "
+            "so it is never counted as right or wrong.\n"
+            "- A name is not right when the coach marked it *really someone else* (right team, wrong player), *wrong "
+            "team*, or *not a player*; each Right-name row lists which.\n"
+            "- *Named by ...* is how the film had named that box when its review was built, so it reflects that run's "
+            "naming, even if a later run names the player differently.\n"
+            "- A box checked in more than one saved review counts once -- the latest check.\n"
+            "- Small samples move a lot from one run to the next -- a row with only a few checks says little yet. Read "
+            "these as where things stand today, not final grades.")
+    _ovr = str(i.get("review_overrides_title", True)).strip().lower() not in ("false", "0", "no")
+    with st.expander("How the coaches' answers are used"):
+        st.markdown(
+            "- *right* = the automatic answer was correct; *wrong* + a typed answer = the typed answer is correct; "
+            "*wrong* with nothing typed, or *can't tell* = only the mark is kept (no answer to learn).\n"
+            "- The latest saved answer for a play's field counts -- an older one is replaced, never added. An untouched "
+            "default never replaces an answer a coach gave earlier.\n"
+            "- Every answer becomes what the Tag model learns for that play: it fills fields the coach's tag left empty "
+            "and, when it disagrees with the coach's tag, it overrides it"
+            + ("" if _ovr else " (switched off on the last run -- disagreements leave the coach's tag in place)")
+            + ". The model retrains on the next run.\n"
+            "- Validation plays are never trained on, answers included.\n"
+            "- A typed answer that matches a known answer apart from capitals, spaces or punctuation is stored in the "
+            "known spelling ('2-3 zone' -> '2-3 Zone'); a genuinely new answer is kept as typed.")
+
+
 def render_brief_notes(short_opponent, focus=None, section=None) -> None:
     """The brief's methodology notes (uww_brief_notes.csv) and the play-title glossary. Each numbered marker
     in the brief links to ?tab=notes&note=N; that note is shown first and highlighted, the rest below it."""
+    if section == "film":
+        render_film_watched()
+        return
     if section == "glossary":
         gl = load_table("uww_play_glossary")
         st.markdown("### How the play titles were decoded")
@@ -5458,6 +5631,9 @@ def render_brief_deeplink(short_opponent) -> None:
             return
         if section == "screen_coverage":
             render_screen_coverage(short_opponent, key_suffix="_brief")  # separate keys: the tab renders it too
+            return
+        if section == "two_for_one":
+            render_two_for_one(short_opponent, key_suffix="_brief")  # separate keys: the Game Plan tab renders it too
             return
         if section == "lineups":
             lu = load_table("uww_opp_lineup_season_box")
@@ -5942,6 +6118,11 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
             _touched_a = _ak in store
             _rows = store.get(_ak) if _touched_a else _ft_rows(_ft_initial_actions(pl))
             _rows = [{c: _ft_unmark(v) if isinstance(v, str) else v for c, v in r_.items()} for r_ in (_rows or [])]
+            # CONFIRMED CHANGE (requested: an automatic coverage left in a row with NO action must not count as the coach's
+            # answer): an untouched table only keeps its rows that have an Action -- a coverage / screener on its own was
+            # never confirmed (the parser ignores such rows in saves made before this too)
+            if not _touched_a:
+                _rows = [r_ for r_ in _rows if _ft_clean(r_.get("Action"))]
             for _n, _r in enumerate(_rows or [], 1):
                 out.setdefault("actions", []).append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
                                                       "order": _n, "action": _ft_unmark(_r.get("Action")) or None,
@@ -6252,6 +6433,8 @@ def render_video_tracking():
     global _FT_GAME
     section_header("\U0001f3a5 VIDEO TRACKING", "Everything the parser tracked on the film: player positions, screens and "
                    "coverages, matchups, the court view, possession replays and tracking quality.")
+    with st.expander("\U0001f3a5 How the film is watched automatically \u2014 what went in and how well it's working"):
+        render_film_watched(header=False)
     cl = load_table("uww_trk_clips")
     if cl.empty:
         st.info("No tracked film yet. In the parser: Frame capture for a game (VISION_ONLY_GAME), then Player tracking.")
@@ -6770,20 +6953,15 @@ def _ft_actions_editor(d, pi, store, kp):
                                                       _FT_EXTRA_COVERAGES, cur_vals("Coverage"))),
            "Screen defender": _ft_choice_col("Screen defender", opt(def5, cur_vals("Screen defender")) if def5
                                              else opt(voc.get("screen_defender"), cur_vals("Screen defender")))}
-    st.markdown("**Actions in this play** (in order; \u2795 at the bottom adds another, e.g. a 2nd ball screen)"
-                + (f" \u2014 {_mark} = the automatic Title's answer" if any(
-                    str(v).startswith(_mark) for r_ in init for v in r_.values()) else "")
-                + (f" \u2014 {_FT_SAVED_MARK} = saved by a coach" if any(
-                    _FT_SAVED_MARK in str(v) for r_ in (cur or []) for v in r_.values()) else ""))
+    # CONFIRMED CHANGE (requested: remove the long description above every play's Actions table -- the heading, the mark
+    # legend and the "pick from a list or type" line; keep only a small italic line with the unsure answers)
     _uns = _ft_auto_parts(pl)[1]
     if _uns:
-        st.caption("Not sure enough to fill in (pick it if it's right): " + "; ".join(
-            f"{c} {g}" + (f" ({float(cf):.0%})" if cf is not None else "") for c, g, cf in _uns))
+        st.caption("*Not sure enough to fill in (pick it if it's right): " + "; ".join(
+            f"{c} {g}" + (f" ({float(cf):.0%})" if cf is not None else "") for c, g, cf in _uns).replace("*", "\\*") + "*")
     if _no5:
         st.caption("Who was on the floor isn't known for this play (no play-by-play match), so the player lists show every "
                    "player in the game for: " + "; ".join(_no5) + ".")
-    if _FT_MULTI:
-        st.caption("Pick from a list or type your own answer in any cell (press Enter to add it).")
     _df = pd.DataFrame([{c: _ft_to_cell(r.get(c)) for c in _FT_ACT_COLS} for r in (cur or [])], columns=_FT_ACT_COLS)
     edited = st.data_editor(_df, column_config=cfg, num_rows="dynamic",
                             hide_index=True, use_container_width=True, key=f"{kp}_acted_{run}_{pi}")
@@ -7341,7 +7519,9 @@ def _pbp_group_plays(df, clip_map=None):
         rv = next((int(pd.to_numeric(r.get("_review"), errors="coerce")) for r in [main] + others
                    if pd.notna(pd.to_numeric(r.get("_review"), errors="coerce"))), None)
         out.append({"label": label, "events": events, "details": details, "replay": rep, "review": rv,
-                    "key": txt(main.get("event_order")) or str(len(out))})
+                    "key": txt(main.get("event_order")) or str(len(out)),
+                    "eos": {float(e) for e in (pd.to_numeric(r.get("event_order"), errors="coerce") for r in g)
+                            if pd.notna(e)}})
     return out
 
 
@@ -7981,6 +8161,496 @@ def render_film_tracking(short_opponent, key_suffix=""):
             st.caption("Check images appear here after the parser's player-tracking cell runs.")
 
 
+
+# ---- Settings: strike through last season's seniors --------------------------------------------------------
+# "auto" = only when the upcoming game is a scrimmage/exhibition played after the season our data is from (the
+# schedule note's "real date ..."); True = always; False = never.
+STRIKE_LAST_SEASON_SENIORS = "auto"
+# Last season's seniors who ARE coming back (e.g. a grad year) -- never struck. Names as on the roster page.
+STRIKE_SENIORS_KEEP = []
+
+# ---- Strike through last season's seniors (a scrimmage played between seasons) -------------------------
+# CONFIRMED CHANGE (requested): the MSOE scrimmage is played after the 2025-26 season and before 2026-27, but
+# every number we have on both teams is 2025-26 -- so anything about a player who was a senior that year is
+# about someone who won't be on the floor. Those names (and a sentence / table row / list item that is only
+# about them) are drawn struck through. A line that also names a returning player keeps its text and only the
+# senior's name is struck. Links, photos and other attributes are never touched.
+import html as _sk_html
+_SK_SENIOR_CLASSES = {"SR", "GR", "GRAD", "GRADUATE", "SENIOR", "5TH", "5THYR", "FIFTH"}
+_SK_SUFFIX = {"JR", "SR", "II", "III", "IV", "V"}
+
+
+def _sk_real_date(note):
+    """The 'real date ...' in a schedule note (a scrimmage parked on a placeholder date), or None."""
+    m = re.search(r"real\s+date\s*:?\s*([A-Za-z]{3,9}\.?\s+\d{1,2}(?:st|nd|rd|th)?,?\s+\d{4}|\d{4}-\d{1,2}-\d{1,2}"
+                  r"|\d{1,2}/\d{1,2}/\d{4})", str(note or ""), re.I)
+    if not m:
+        return None
+    d = pd.to_datetime(re.sub(r"(\d)(st|nd|rd|th)", r"\1", m.group(1)), errors="coerce")
+    return None if pd.isna(d) else pd.Timestamp(d)
+
+
+def _sk_name_parts(name):
+    toks = [t for t in re.sub(r"\s+", " ", str(name or "")).strip().split(" ") if t]
+    while len(toks) > 2 and toks[-1].upper().strip(".,") in _SK_SUFFIX:
+        toks = toks[:-1]
+    return toks
+
+
+def strike_seniors_plan(game, rosters, uww_team, opp_team, setting="auto", keep=(), today=None):
+    """Who to strike for this game, or None.
+
+    setting: "auto" (default) = only when the game is a scrimmage/exhibition whose real date (the schedule
+    note's "real date ...", else today) falls after the season the data is from; True = always; False = never.
+    Seniors come from the live roster scrape (class SR / GR). A team whose roster scrape is already from a
+    different season than the game's is left alone -- its SRs would be THIS year's seniors.
+    """
+    s = str(setting).strip().lower()
+    if s in ("false", "0", "no", "off", "never", "none", ""):
+        return None
+    get = (lambda c: game.get(c)) if hasattr(game, "get") else (lambda c: None)
+    season = str(get("season") or "")
+    sm = re.match(r"\s*(\d{4})\s*[-/]\s*(\d{2,4})", season)
+    if s not in ("true", "1", "yes", "on", "always"):
+        kind = " ".join(str(get(c) or "") for c in ("game_type", "note")).lower()
+        if not re.search(r"scrimmage|exhibition", kind) or not sm:
+            return None
+        when = _sk_real_date(get("note")) or (pd.Timestamp(today) if today is not None else pd.Timestamp.now())
+        if when < pd.Timestamp(int(sm.group(1)) + 1, 5, 1):
+            return None
+    if rosters is None or getattr(rosters, "empty", True) or not {"team", "name"} <= set(rosters.columns):
+        return None
+    ros = rosters.copy()
+    ros["team"] = ros["team"].astype(str)
+    ros["name"] = ros["name"].astype(str).str.strip()
+    ros = ros[ros["name"].str.len() > 0]
+    cls = (ros["class_year"] if "class_year" in ros.columns else pd.Series("", index=ros.index))
+    ros["_sr"] = cls.astype(str).str.upper().str.replace(r"[^A-Z0-9]", "", regex=True).isin(_SK_SENIOR_CLASSES)
+    keep_l = {re.sub(r"\s+", " ", str(k)).strip().lower() for k in (keep or ())}
+    want = f"{int(sm.group(1))}-{int(sm.group(1)) + 1}" if sm else None
+
+    def team_rows(t):
+        t = str(t or "").strip().lower()
+        if not t:
+            return ros.iloc[0:0]
+        hit = ros[ros["team"].str.strip().str.lower() == t]
+        if hit.empty:
+            hit = ros[ros["team"].str.lower().str.contains(re.escape(t), na=False)]
+        return hit
+
+    teams, in_play = {}, []
+    for t in (opp_team, uww_team):
+        rows = team_rows(t)
+        if rows.empty:
+            continue
+        if want and "photo_url" in rows.columns:
+            seen = set(rows["photo_url"].astype(str).str.extract(r"/(\d{4}-\d{4})/")[0].dropna())
+            if seen and want not in seen:
+                continue  # this team's roster scrape is already a different season
+        in_play.append(rows)
+        srs = [n for n in rows.loc[rows["_sr"], "name"] if n.lower() not in keep_l]
+        if srs:
+            teams[str(rows["team"].iloc[0])] = srs
+    if not teams:
+        return None
+    seniors = [n for v in teams.values() for n in v]
+    sen_l = {n.lower() for n in seniors}
+    play = pd.concat(in_play)
+    others = sorted({n for n in play["name"] if n.lower() not in sen_l})
+    sen_last = {_sk_name_parts(n)[-1].lower() for n in seniors if _sk_name_parts(n)}
+    look = sorted({n for n in ros["name"] if n.lower() not in sen_l and _sk_name_parts(n)
+                   and _sk_name_parts(n)[-1].lower() in sen_last})
+    return {"teams": teams, "seniors": seniors, "others": others, "lookalikes": look,
+            "season": season}
+
+
+class _SeniorStrike:
+    """Finds struck seniors in text and wraps them. One instance per (seniors, others) set."""
+
+    _SPLIT = re.compile(r"(?<=[.!?;])\s+(?=\S)|\s+\|\s+|\s+·\s+")
+    _URL = re.compile(r"(?:https?:|data:|file:|www\.)\S+|\S+/\S+\.(?:jpe?g|png|gif|webp|svg)\b", re.I)
+    _MD_PROTECT = re.compile(r"~~.+?~~|`[^`]*`|\]\([^)]*\)|<[^>\n]*>|(?:https?://|www\.)\S+", re.I)
+    _MD_LEAD = re.compile(r"^\s*(?:(?:[-*+]|\d+[.)])\s+|#{1,6}\s+|>\s*)*")
+
+    def __init__(self, seniors, others=(), lookalikes=()):
+        def full_rx(parts):
+            body = r"\s+".join(re.escape(p) for p in parts)
+            return rf"(?i:{body})(?:\s+(?i:jr|sr|ii|iii|iv|v)\b\.?(?!\s+[A-Z]))?"
+
+        sen_parts = [p for p in (_sk_name_parts(n) for n in seniors) if len(p) >= 2]
+        oth_parts = [p for p in (_sk_name_parts(n) for n in others) if len(p) >= 2]
+        look_parts = [p for p in (_sk_name_parts(n) for n in lookalikes) if len(p) >= 2]
+        oth_last = {p[-1].lower() for p in oth_parts}
+        sen_last = {p[-1].lower() for p in sen_parts}
+        # a senior's last name on its own only counts when no returning player in play shares it
+        self._last_only = {l for l in sen_last if l not in oth_last and len(l) >= 3}
+        self._look_full = {" ".join(p).lower() for p in look_parts + oth_parts}
+        alts = []
+        for p in sorted(sen_parts, key=lambda p: -len(" ".join(p))):
+            alts.append(full_rx(p))
+            alts.append(rf"(?i:{re.escape(p[-1])},\s*{re.escape(p[0])})")
+            alts.append(rf"{re.escape(p[0][0].upper())}\.\s*(?=[A-Z])(?i:{re.escape(p[-1])})")
+        for l in sorted(self._last_only, key=len, reverse=True):
+            alts.append(rf"(?=[A-Z])(?i:{re.escape(l)})")
+        self._rx = re.compile(r"(?<![\w'\-])(?:" + "|".join(alts) + r")(?![\w\-])") if alts else None
+        oalts = [full_rx(p) for p in sorted(oth_parts + look_parts, key=lambda p: -len(" ".join(p)))]
+        oalts += [rf"(?=[A-Z])(?i:{re.escape(l)})" for l in sorted(oth_last - sen_last, key=len, reverse=True)
+                  if len(l) >= 3]
+        self._orx = re.compile(r"(?<![\w'\-])(?:" + "|".join(oalts) + r")(?![\w\-])") if oalts else None
+        q = sorted(sen_last, key=len, reverse=True)
+        self._quick = re.compile("|".join(re.escape(l) for l in q), re.I) if q else None
+
+    # ---- matching ----
+    def hit(self, text):
+        return bool(self._rx is not None and isinstance(text, str) and self._quick.search(text))
+
+    def _spans(self, text, protect=None):
+        bad = [m.span() for m in protect.finditer(text)] if protect is not None else []
+        inside = lambda s, e: any(a < e and s < b for a, b in bad)
+        sen = []
+        for m in self._rx.finditer(text):
+            s, e = m.span()
+            if inside(s, e) or text[max(0, s - 2):s] == "~~" or text[max(0, s - 3):s].lower() == "<s>":
+                continue
+            t = m.group()
+            if t.lower() in self._last_only:
+                pw = re.search(r"([A-Za-z][\w'\-]*)\s+$", text[:s])
+                if pw and f"{pw.group(1)} {t}".lower() in self._look_full:
+                    continue  # "Oliver Adams" -- someone else with a struck senior's last name
+            sen.append((s, e))
+        oth = []
+        if self._orx is not None and sen:
+            oth = [m.span() for m in self._orx.finditer(text)
+                   if not inside(*m.span()) and not any(a < m.end() and m.start() < b for a, b in sen)]
+        return sen, oth, bad
+
+    _GAP = re.compile(r"\s*(?:,\s*(?:and\s+|&\s*)?|(?:and|&|/|\+)\s*)", re.I)
+
+    def _grouped(self, text, sen, oth):
+        """Lineups / combos: 3+ player names in a row ("A, B, C", "A, B and C", "A / B / C") that include a
+        struck senior are ONE struck item -- that group won't be on the floor together. Returns (sen, oth) with
+        each such group merged into a single senior span and its returning players taken out of oth."""
+        allsp = sorted([(s, e, 1) for s, e in sen] + [(s, e, 0) for s, e in oth])
+        groups, cur = [], []
+        for sp in allsp:
+            if cur and self._GAP.fullmatch(text[cur[-1][1]:sp[0]]):
+                cur.append(sp)
+            else:
+                if cur:
+                    groups.append(cur)
+                cur = [sp]
+        if cur:
+            groups.append(cur)
+        nsen, noth = [], []
+        for g in groups:
+            if len(g) >= 3 and any(k for _, _, k in g):
+                nsen.append((g[0][0], g[-1][1]))
+            else:
+                nsen += [(s, e) for s, e, k in g if k]
+                noth += [(s, e) for s, e, k in g if not k]
+        return nsen, noth
+
+    def _apply(self, text, wrap, protect=None, whole_ok=None, lead=None):
+        if not self.hit(text):
+            return text
+        sen, oth, bad = self._spans(text, protect)
+        if not sen:
+            return text
+        sen, oth = self._grouped(text, sen, oth)
+        cuts = [m.span() for m in self._SPLIT.finditer(text)
+                if not any(a < m.end() and m.start() < b for a, b in sen + oth + bad)]
+        segs, pos = [], 0
+        for a, b in cuts:
+            segs.append((pos, a))
+            pos = b
+        segs.append((pos, len(text)))
+        out, last = [], 0
+        for i, (a, b) in enumerate(segs):
+            ss = [(s, e) for s, e in sen if a <= s and e <= b]
+            if not ss:
+                continue
+            seg = text[a:b]
+            lo = lead.match(seg).end() if (lead is not None and i == 0) else 0
+            lo += len(seg[lo:]) - len(seg[lo:].lstrip())
+            core = seg[lo:].rstrip()
+            only_seniors = not any(a <= s and e <= b for s, e in oth)
+            if only_seniors and core and (whole_ok is None or whole_ok(core)):
+                out.append(text[last:a + lo])
+                out.append(wrap(core))
+                last = a + lo + len(core)
+            else:
+                for s, e in ss:
+                    out.append(text[last:s])
+                    out.append(wrap(text[s:e]))
+                    last = e
+        out.append(text[last:])
+        return "".join(out)
+
+    # ---- the three kinds of text ----
+    @staticmethod
+    def _md_balanced(t):
+        t2 = t.replace("**", "")
+        return (t.count("**") % 2 == 0 and t2.count("*") % 2 == 0 and t.count("__") % 2 == 0
+                and "`" not in t and "$" not in t and t.count("[") == t.count("]")
+                and t.count("(") == t.count(")") and not t.startswith("|") and "~~" not in t)
+
+    def md(self, text):
+        if not self.hit(text):
+            return text
+        return "\n".join(self._apply(ln, lambda x: f"~~{x}~~", self._MD_PROTECT, self._md_balanced, self._MD_LEAD)
+                         if not ln.lstrip().startswith("|") else
+                         self._apply(ln, lambda x: f"~~{x}~~", self._MD_PROTECT, lambda x: False)
+                         for ln in text.split("\n"))
+
+    def plain(self, text):
+        if not self.hit(text) or self._URL.fullmatch(text.strip()):
+            return text
+        strike = lambda x: "".join(c + "\u0336" for c in x)
+        return self._apply(text, strike, self._URL)
+
+    _TAG = re.compile(r"(<!--.*?-->|<[^>]*>)", re.S)
+    _TAGNAME = re.compile(r"<\s*(/)?\s*([A-Za-z][A-Za-z0-9]*)")
+    # A table row is about one thing (a player, a lineup), so a row that LEADS with a struck senior (or a lineup
+    # with one) is struck whole. Other elements only when short -- a card's "name + stat line", not a section
+    # that happens to mention one of them (that falls back to striking just the sentence that does).
+    _BLOCKS = {"tr", "li", "p", "h1", "h2", "h3", "h4", "h5", "h6", "dt", "dd", "caption", "figcaption",
+               "div", "td", "th", "span", "a", "b", "strong", "em", "label"}
+    _BLOCK_MAX = 160
+    _RAW = {"style", "script", "title", "textarea", "code", "pre"}
+    _STRUCK = {"s", "del", "strike"}
+
+    def html(self, text):
+        if not self.hit(text):
+            return text
+        parts = self._TAG.split(text)
+        whole, raw = set(), [False] * len(parts)
+        stack, raw_tag, struckd = [], None, 0
+        for i in range(1, len(parts), 2):
+            m = self._TAGNAME.match(parts[i])
+            if raw_tag is not None:
+                # inside <style>/<script>/...: only its own closing tag counts (a CSS comment can say "<pre>")
+                if m and m.group(1) and m.group(2).lower() == raw_tag:
+                    raw_tag = None
+                elif i + 1 < len(parts):
+                    raw[i + 1] = True
+                continue
+            if not m:
+                continue
+            closing, tag = bool(m.group(1)), m.group(2).lower()
+            selfclose = parts[i].rstrip().endswith("/>")
+            if tag in self._RAW and not closing and not selfclose:
+                raw_tag = tag
+                if i + 1 < len(parts):
+                    raw[i + 1] = True
+                continue
+            if tag in self._STRUCK and not selfclose:
+                struckd = max(0, struckd - 1) if closing else struckd + 1
+            if i + 1 < len(parts) and struckd:
+                raw[i + 1] = True
+            if tag not in self._BLOCKS or selfclose:
+                continue
+            if not closing:
+                if stack and stack[-1][0] == tag and tag in ("li", "tr", "p", "dt", "dd"):
+                    self._close_block(parts, stack.pop()[1], i, whole, raw)
+                stack.append((tag, i))
+            elif any(t == tag for t, _ in stack):
+                while stack:
+                    t, j = stack.pop()
+                    self._close_block(parts, j, i, whole, raw)
+                    if t == tag:
+                        break
+        for t, j in stack:
+            self._close_block(parts, j, len(parts), whole, raw)
+        out = []
+        for i, p in enumerate(parts):
+            if i % 2 == 1 or raw[i] or not p.strip():
+                out.append(p)
+            elif i in whole:
+                out.append("\n".join(self._wrap_line(ln) for ln in p.split("\n")))
+            else:
+                out.append("\n".join(self._apply(ln, lambda x: f"<s>{x}</s>", self._URL, None, self._MD_LEAD)
+                                     for ln in p.split("\n")))
+        return "".join(out)
+
+    def _wrap_line(self, ln):
+        lo = self._MD_LEAD.match(ln).end()
+        lo += len(ln[lo:]) - len(ln[lo:].lstrip())
+        core = ln[lo:].rstrip()
+        return ln[:lo] + f"<s>{core}</s>" + ln[lo + len(core):] if core else ln
+
+    def _close_block(self, parts, j, k, whole, raw):
+        """Mark a block's text for whole strike when the block is about struck seniors. A table row: its first
+        real text (after a bare rank / jersey number) is a struck senior, or a lineup that includes one --
+        the row goes whole even if a later cell names someone else (his matchup, his read). A short element:
+        it names no returning player AND either starts with the senior or is a single sentence. Anything else
+        is left to sentence-level striking."""
+        idx = [x for x in range(j + 1, k) if x % 2 == 0 and not raw[x] and parts[x].strip()]
+        if not idx:
+            return
+        txt = "\n".join(_sk_html.unescape(parts[x]).strip() for x in idx)
+        is_row = parts[j][1:3].lower() == "tr" and not parts[j][3:4].isalnum()
+        if not self.hit(txt) or (not is_row and len(txt) > self._BLOCK_MAX):
+            return
+        sen, oth, _ = self._spans(txt)
+        if not sen:
+            return
+        sen, oth = self._grouped(txt, sen, oth)
+        p0 = re.match(r"[#\d\s.,:)(\-\u2013\u2014|]*", txt).end()
+        p0 = min(p0, sen[0][0]) if re.fullmatch(r"[#\d\s.,:)(\-\u2013\u2014|]*", txt[:sen[0][0]]) else p0
+        about = any(s == p0 or (s <= p0 + 4 and re.fullmatch(r"#?\d{1,2}\s+", txt[p0:s] or "x")) for s, _ in sen)
+        if is_row:
+            if about:
+                whole.update(idx)
+            return
+        single = not any(not any(a < m.end() and m.start() < b for a, b in sen + oth)
+                         for m in self._SPLIT.finditer(txt))
+        if not oth and (about or single):
+            whole.update(idx)
+
+    def frame(self, data):
+        """A DataFrame (or Styler) with struck text cells, for st.dataframe / st.table."""
+        sty = data if (hasattr(data, "data") and hasattr(data, "set_properties")) else None
+        df = sty.data if sty is not None else data
+        if not isinstance(df, pd.DataFrame) or df.empty:
+            return data
+        out = None
+        for j, c in enumerate(df.columns):
+            col = df.iloc[:, j]
+            if not (pd.api.types.is_object_dtype(col) or pd.api.types.is_string_dtype(col)):
+                continue
+            mask = col.map(self.hit)
+            if not mask.any():
+                continue
+            if out is None:
+                out = df.copy()
+            out.iloc[:, j] = col.map(lambda v: self.plain(v) if self.hit(v) else v)
+        if (sty is None and not isinstance(df.index, pd.MultiIndex)
+                and (pd.api.types.is_object_dtype(df.index) or pd.api.types.is_string_dtype(df.index))):
+            if df.index.map(self.hit).any():
+                out = (df.copy() if out is None else out)
+                out.index = df.index.map(lambda v: self.plain(v) if self.hit(v) else v)
+        if out is None:
+            return data
+        if sty is not None:
+            sty.data = out
+            return sty
+        return out
+
+
+# ---- Display hook: apply the strike to what the Upcoming Game page draws ---------------------------------
+# Rather than threading a flag through ~180 renderers, the Streamlit text/table elements are wrapped ONCE per
+# process. The wrapper does nothing unless st.session_state["_uww_strike"] is set, which render_upcoming_game()
+# sets for its own run and main() clears at the start of every run -- so other pages, and the sidebar (drawn
+# before the page), are never touched. A dialog's own reruns (fragments) keep the setting of the run that
+# opened it. Widgets whose VALUE is a name (selectbox, multiselect, data_editor) are left alone: rewriting them
+# would change what a coach's pick returns or saves. Charts aren't struck.
+import functools as _sk_functools
+import sys as _sk_sys
+import types as _sk_types
+
+# Kept in sys.modules: each rerun re-executes this file, but the streamlit module (and the wrappers installed
+# on it) live for the whole process. The wrappers look up the CURRENT run's code through this.
+_SK_STATE = _sk_sys.modules.get("_uww_strike_state")
+if _SK_STATE is None:
+    _SK_STATE = _sk_types.ModuleType("_uww_strike_state")
+    _sk_sys.modules["_uww_strike_state"] = _SK_STATE
+
+# element -> ((argument name, position, kind), ...)
+_SK_TARGETS = {
+    "markdown": (("body", 0, "md*"),), "caption": (("body", 0, "md*"),),
+    "title": (("body", 0, "md"),), "header": (("body", 0, "md"),), "subheader": (("body", 0, "md"),),
+    "info": (("body", 0, "md"),), "success": (("body", 0, "md"),), "warning": (("body", 0, "md"),),
+    "error": (("body", 0, "md"),), "expander": (("label", 0, "md"),), "popover": (("label", 0, "md"),),
+    "button": (("label", 0, "md"),), "tabs": (("tabs", 0, "mdlist"),),
+    "metric": (("label", 0, "md"), ("value", 1, "plain")), "text": (("body", 0, "plain"),),
+    "html": (("body", 0, "html"),), "dataframe": (("data", 0, "frame"),), "table": (("data", 0, "frame"),),
+}
+_SK_CACHE = {}
+
+
+def _sk_display_apply(name, has_self, args, kwargs):
+    try:
+        key = st.session_state.get("_uww_strike")
+    except Exception:
+        return args, kwargs
+    if not key:
+        return args, kwargs
+    S = _SK_CACHE.get(key)
+    if S is None:
+        S = _SK_CACHE[key] = _SeniorStrike(*key)
+    off = 1 if has_self else 0
+    args = list(args)
+    for pname, pos, kind in _SK_TARGETS.get(name, ()):
+        if pname in kwargs:
+            v, at = kwargs[pname], None
+        elif len(args) > off + pos:
+            v, at = args[off + pos], off + pos
+        else:
+            continue
+        if kind == "frame":
+            nv = S.frame(v)
+        elif kind == "mdlist":
+            nv = [S.md(x) if isinstance(x, str) else x for x in v] if isinstance(v, (list, tuple)) else v
+        elif isinstance(v, str):
+            if kind == "md*":
+                unsafe = kwargs.get("unsafe_allow_html", args[off + 1] if len(args) > off + 1 else False)
+                kind = "html" if bool(unsafe) and re.search(r"<[A-Za-z/!]", v) else "md"
+            nv = getattr(S, kind)(v)
+        else:
+            continue
+        if at is None:
+            kwargs[pname] = nv
+        else:
+            args[at] = nv
+    return tuple(args), kwargs
+
+
+def _sk_wrap(fn, name, has_self):
+    @_sk_functools.wraps(fn)
+    def _w(*args, **kwargs):
+        impl = getattr(_SK_STATE, "impl", None)
+        if impl is not None:
+            try:
+                args, kwargs = impl(name, has_self, args, kwargs)
+            except Exception:
+                pass  # never let the strike break the page -- worst case the name just isn't struck
+        return fn(*args, **kwargs)
+    _w._uww_strike = True
+    return _w
+
+
+def _sk_install():
+    try:
+        from streamlit.delta_generator import DeltaGenerator as _DG
+    except Exception:
+        _DG = None
+    for name in _SK_TARGETS:
+        for owner, has_self in ((st, False), (_DG, True)):
+            fn = getattr(owner, name, None) if owner is not None else None
+            if fn is None or getattr(fn, "_uww_strike", False):
+                continue
+            try:
+                setattr(owner, name, _sk_wrap(fn, name, has_self))
+            except Exception:
+                pass
+
+
+_SK_STATE.impl = _sk_display_apply
+_sk_install()
+
+
+def _sk_activate(next_game, full_opponent):
+    """Turn the strike on for this run of the Upcoming Game page when it applies. Returns the plan (or None)."""
+    try:
+        plan = strike_seniors_plan(next_game, load_table("uww_live_rosters"), "UW-Whitewater", full_opponent,
+                                   STRIKE_LAST_SEASON_SENIORS, STRIKE_SENIORS_KEEP)
+    except Exception:
+        plan = None
+    st.session_state["_uww_strike"] = ((tuple(plan["seniors"]), tuple(plan["others"]), tuple(plan["lookalikes"]))
+                                       if plan else None)
+    return plan
+
+
 def render_upcoming_game():
     """Upcoming Game page: banner, then Keys to Victory (combining pre-computed data-driven keys, the staff's
     written scouting report, lineup scouting, and season-stat-based recommendations into one grouped,
@@ -8002,6 +8672,9 @@ def render_upcoming_game():
         return
     next_game = upcoming.iloc[0]
     full_opponent = next_game["opponent"]
+    # CONFIRMED CHANGE (requested): a scrimmage played between seasons strikes through last season's seniors
+    # (both teams) everywhere on this page -- see strike_seniors_plan() / _sk_activate().
+    _sk_plan = _sk_activate(next_game, full_opponent)
 
     short_opponent = resolve_short_opponent(full_opponent, short_names)
 
@@ -8061,6 +8734,11 @@ def render_upcoming_game():
     _opp_streak_html = f'<div style="color:#aabbcc;font-size:0.8rem;font-style:italic;margin-top:2px;">{opp_streak_str}</div>' if opp_streak_str else ''
     banner_html = f'<div style="background:#1a1a2e;border-radius:10px;padding:22px 32px;margin-bottom:0.75rem;display:flex;align-items:center;justify-content:space-between;"><div style="text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;">{uww_logo_img}<div style="color:#ffffff;font-family:Montserrat,sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:0.5px;">UW-WHITEWATER</div><div style="color:#9DAAAC;font-size:1.05rem;font-weight:600;margin-top:3px;">{uww_wins}-{uww_losses}</div>{_uww_streak_html}</div><div style="text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;"><div style="color:#9DAAAC;font-size:1rem;font-weight:500;">{_gd_disp}</div><div style="color:#ffffff;font-size:1.6rem;font-weight:700;margin:4px 0;">VS</div><div style="color:#9DAAAC;font-size:0.95rem;">{location}</div></div><div style="text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;">{opp_logo_img}<div style="color:#ffffff;font-family:Montserrat,sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:0.5px;">{html.escape(opp_display.upper())}</div><div style="color:#9DAAAC;font-size:1.05rem;font-weight:600;margin-top:3px;">{opp_record if opp_record else ""}</div>{_opp_streak_html}</div></div>'
     st.markdown(banner_html, unsafe_allow_html=True)
+    if _sk_plan:
+        _sk_who = "; ".join(f"{html.escape(t)}: " + ", ".join(f"~~{_title_name(n)}~~" for n in v)
+                            for t, v in _sk_plan["teams"].items())
+        st.caption(f"\u2702\ufe0f This game is after the {_sk_plan['season'] or 'last'} season, so that season's "
+                   f"seniors are struck through on this page (and any line only about them) -- {_sk_who}.")
 
     # --- Reserve layout slots up front (Streamlit fills a container wherever it was CREATED in the
     # layout, regardless of when in the script it is actually written to) -- this is what lets
@@ -13555,6 +14233,10 @@ def render_previous_games():
         # checkbox filter in the Play-by-Play section instead.
         _pg_clutch = load_table("uww_clutch_events", _pg_season)
         _pg_clutch_game = _this_game(_pg_clutch, "uww_clutch_events") if not _pg_clutch.empty else pd.DataFrame()
+        # Each event's situation (Half court / Transition / ATO / BLOB / SLOB ...) and its 2-for-1 role, from the
+        # parser's two-for-one cell (uww_pbp_situations) -- the app only filters on it.
+        _pg_sit = load_table("uww_pbp_situations", _pg_season)
+        _pg_sit_game = _this_game(_pg_sit, "uww_pbp_situations") if not _pg_sit.empty else pd.DataFrame()
 
     with _pgt_pbp:
         # --- PLAY-BY-PLAY ---
@@ -13646,19 +14328,42 @@ def render_previous_games():
             # minutes, within 8 points" in the app would be a second definition free to drift from the first.
             _clutch_orders = (set(pd.to_numeric(_pg_clutch_game["event_order"], errors="coerce").dropna())
                               if not _pg_clutch_game.empty and "event_order" in _pg_clutch_game.columns else set())
+            # CONFIRMED CHANGE (requested): one "Situation" dropdown -- the possession's situation (the coaches' tag,
+            # else Synergy's play type), plus Clutch moments (was its own checkbox) and Two for one (end-of-half
+            # possessions where one team could get two shots to the other's one). Event orders per option.
+            _sit_orders, _tfo_role = {}, {}
+            if not _pg_sit_game.empty and {"event_order", "situation"} <= set(_pg_sit_game.columns):
+                _so = pd.to_numeric(_pg_sit_game["event_order"], errors="coerce")
+                for _o, _sv in zip(_so, _pg_sit_game["situation"]):
+                    if pd.notna(_o) and isinstance(_sv, str) and _sv.strip():
+                        _sit_orders.setdefault(_sv.strip(), set()).add(float(_o))
+                if "two_for_one" in _pg_sit_game.columns:
+                    _tfo_role = {float(_o): str(_r) for _o, _r in zip(_so, _pg_sit_game["two_for_one"])
+                                 if pd.notna(_o) and isinstance(_r, str) and _r.strip()}
+            elif "play_situation" in game_pbp.columns:
+                # older data (parser not re-run since the two-for-one cell): the coaches' tag only
+                for _o, _sv in zip(pd.to_numeric(game_pbp["event_order"], errors="coerce"), game_pbp["play_situation"]):
+                    if pd.notna(_o) and isinstance(_sv, str) and _sv.strip():
+                        _sit_orders.setdefault(_sv.strip(), set()).add(float(_o))
+            _SIT_ORDER = ["Half court", "Transition", "ATO", "BLOB", "SLOB", "Offensive rebound"]
+            _sit_opts = (sorted(_sit_orders, key=lambda x: (_SIT_ORDER.index(x) if x in _SIT_ORDER else len(_SIT_ORDER), x))
+                         + (["Clutch moments"] if _clutch_orders else [])
+                         + (["Two for one"] if _tfo_role else []))
             pbp_r3c1, pbp_r3c2, pbp_r3c3 = st.columns(3)
             with pbp_r3c1:
                 video_only = st.checkbox("Show only video-tagged plays", value=False, key=f"pbp_vidonly_{short_opponent}")
             with pbp_r3c2:
                 notes_only = st.checkbox("Show only plays with a coach note", value=False, key=f"pbp_notesonly_{short_opponent}") if "coach_note" in game_pbp.columns else False
             with pbp_r3c3:
-                clutch_only = st.checkbox(
-                    "Show only clutch moments", value=False, key=f"pbp_clutch_{short_opponent}",
-                    disabled=not _clutch_orders,
-                    help=("Last 5 minutes of the 2nd half or any overtime, with the score within 8 points."
-                          if _clutch_orders else
-                          "No clutch events recorded for this game -- it was never within 8 points late."),
-                ) if _clutch_orders else False
+                pbp_situation = st.selectbox(
+                    "Situation", ["All"] + _sit_opts, key=f"pbp_situation_{short_opponent}",
+                    help=("Half court / Transition / ATO / BLOB / SLOB: the coaches' tag on the possession, else "
+                          "Synergy's play type (Transition, or Half court for every half-court type). Clutch moments: "
+                          "last 5 minutes of the 2nd half or any overtime, score within 8. Two for one: from the first "
+                          "possession that starts with 0:35-1:00 left in a half to the horn -- the team with that ball "
+                          "can shoot early and get the last shot too. End of the 2nd half / OT only counts for a team "
+                          "that's behind."
+                          + ("" if _clutch_orders else " (No clutch time in this game.)")))
 
             filtered_pbp = game_pbp.copy()
             if pbp_team_filter != "All":
@@ -13684,9 +14389,15 @@ def render_previous_games():
                 filtered_pbp = filtered_pbp[filtered_pbp["video_description"].notna()]
             if notes_only:
                 filtered_pbp = filtered_pbp[filtered_pbp["coach_note"].notna()]
-            if clutch_only:
-                filtered_pbp = filtered_pbp[
-                    pd.to_numeric(filtered_pbp["event_order"], errors="coerce").isin(_clutch_orders)]
+            if pbp_situation != "All":
+                _keep = (_clutch_orders if pbp_situation == "Clutch moments" else
+                         set(_tfo_role) if pbp_situation == "Two for one" else _sit_orders.get(pbp_situation, set()))
+                filtered_pbp = filtered_pbp[pd.to_numeric(filtered_pbp["event_order"], errors="coerce").isin(_keep)]
+                if pbp_situation == "Two for one":
+                    st.caption("⏱️ Each half's 2-for-1 stretch, possession by possession: the **chance** (the team "
+                               "that got the ball with 0:35-1:00 left), the **answer**, and the **last shot**. Went for it "
+                               "= first shot or turnover with 0:33+ left. The Game Plan tab of Upcoming Game has what "
+                               "worked against the next opponent.")
 
             # Coach-note sentiment, folded into this KPI row from the COACH NOTES THIS GAME section that used
             # to sit below the table. Counted over filtered_pbp like every other tile here, so it answers "how
@@ -13781,7 +14492,9 @@ def render_previous_games():
                                "tracking: Analytics \u2192 Video Tracking.")
                     for _cr in _crows[(_page - 1) * _per: _page * _per]:
                         _rv = _rev_of.get(_cr["clip_number"])
-                        with st.expander(("\U0001f4dd " if _rv is not None else "") + _cr["label"]):
+                        _tfo_tag = next((_tfo_role[o] for o in sorted(_cr["eos"]) if o in _tfo_role), None)
+                        with st.expander(("\U0001f4dd " if _rv is not None else "")
+                                         + (f"\u23f1\ufe0f {_tfo_tag} \u00b7 " if _tfo_tag else "") + _cr["label"]):
                             if _cr["info"]:
                                 st.markdown("  \n".join(f"**{a}:** {b}" for a, b in _cr["info"]))
                             if _cr["events"]:
@@ -13805,7 +14518,9 @@ def render_previous_games():
                                "Possession replays and the rest of the player tracking: Analytics \u2192 Video Tracking.")
                     for _g in _plays[(_page - 1) * _per: _page * _per]:
                         _rep, _rv = _g["replay"], _g["review"]
-                        with st.expander(("\U0001f4dd " if _rv is not None else "") + _g["label"]):
+                        _tfo_tag = next((_tfo_role[o] for o in sorted(_g.get("eos", ())) if o in _tfo_role), None)
+                        with st.expander(("\U0001f4dd " if _rv is not None else "")
+                                         + (f"\u23f1\ufe0f {_tfo_tag} \u00b7 " if _tfo_tag else "") + _g["label"]):
                             if len(_g["events"]) > 1:
                                 st.markdown("  \n".join(f"\u2022 {e}" for e in _g["events"]))
                             st.markdown("  \n".join(f"**{lbl}:** {v}" for lbl, v in _g["details"]) or "_No details for this play._")
@@ -16071,6 +16786,9 @@ div[data-testid="stMarkdownContainer"] p {
 section[data-testid="stSidebar"] * {
     border-radius: 0px !important;
 }
+
+/* Struck-through text (last season's seniors before a between-seasons scrimmage) reads as faded */
+del, s { opacity: 0.55; }
 </style>
 """
 
@@ -16136,6 +16854,8 @@ def render_sidebar_nav():
 
 
 def main():
+    # The senior strike-through (see _sk_display_apply) is per page: off until render_upcoming_game() turns it on.
+    st.session_state["_uww_strike"] = None
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
     st.markdown(_willie_launcher_css(), unsafe_allow_html=True)
 

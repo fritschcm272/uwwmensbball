@@ -294,3 +294,16 @@ Tag model (overall),v2026.10.19.3,2026-10-19,trained,2026-10-19T23:13:36,newest 
 Jersey-number recognizer,v2026.10.19,2026-10-19,trained,2026-10-19T22:01:10,"3667 training crops; 29% of held-back crops right; sources {'reads': 0, 'extra': 3615, 'coach': 639}",2026-10-19T23:21:10
 Player tracking,v2026.10.20.2,2026-10-20,pretrained + code,4405e8d2c126,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-19T23:21:10
 Jersey-number reader test,v2026.10.20,2026-10-20,pretrained + code,8e25d00db1c0,scores the OCR readers; none retrained here,2026-10-19T23:21:10
+Tag model: ball_screen_coverage,v2026.10.20,2026-10-20,trained,2026-10-20T15:51:15,"111 tagged clips, 5 answers learned, one answer only",2026-10-20T16:10:38
+Tag model: defense,v2026.10.20,2026-10-20,trained,2026-10-20T15:51:15,"309 tagged clips, 1 answers learned, one answer only",2026-10-20T16:10:38
+Tag model: formation,v2026.10.20,2026-10-20,trained,2026-10-20T15:51:15,"185 tagged clips, 5 answers learned, one answer only",2026-10-20T16:10:38
+Tag model: offball_coverage,v2026.10.20,2026-10-20,trained,2026-10-20T15:51:15,"62 tagged clips, 3 answers learned, one answer only",2026-10-20T16:10:38
+Tag model: play_call,v2026.10.20,2026-10-20,trained,2026-10-20T15:51:15,"213 tagged clips, 7 answers learned",2026-10-20T16:10:38
+Tag model: press,v2026.10.20,2026-10-20,trained,2026-10-20T15:51:15,"310 tagged clips, 3 answers learned",2026-10-20T16:10:38
+Tag model: primary_action,v2026.10.20,2026-10-20,trained,2026-10-20T15:51:15,"157 tagged clips, 7 answers learned, one answer only",2026-10-20T16:10:38
+Tag model: screen_defender,v2026.10.20,2026-10-20,trained,2026-10-20T15:51:15,"80 tagged clips, 7 answers learned, one answer only",2026-10-20T16:10:38
+Tag model: situation,v2026.10.20,2026-10-20,trained,2026-10-20T15:51:15,"355 tagged clips, 5 answers learned",2026-10-20T16:10:38
+Tag model (overall),v2026.10.20,2026-10-20,trained,2026-10-20T15:51:15,newest of 9 field model(s); last retrained field: situation,2026-10-20T16:10:38
+Player tracking,v2026.10.20.3,2026-10-20,pretrained + code,dd7295347988,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-10-20T16:10:38
+Jersey-number reader test,v2026.10.20.2,2026-10-20,pretrained + code,05953b59279b,scores the OCR readers; none retrained here,2026-10-20T16:10:38
+Court mapping,v2026.10.19.2,2026-10-19,rules + code,77f0a596cdf8,3 calibration file(s),2026-10-20T16:10:38

@@ -1,2 +1,6 @@
 opponent,coverage,freq_pct,ppp,fg_pct,note,is_sample
-MSOE Raiders,Over,100,1.13,66.7,8 tagged ball screens -- most often by (no jersey),False
+MSOE Raiders,Drop,45,0.87,39,Big sags to the paint -- Jonathan Burroughs pulls up off it,True
+MSOE Raiders,Hard hedge,25,1.05,47,Big shows well but recovers late -- short roll is open behind it,True
+MSOE Raiders,Switch,15,0.95,43,"Switches 1 through 4, not onto Mason Dopirak",True
+MSOE Raiders,Ice (side ball screens),10,0.62,31,Forces it baseline; help comes from the nail,True
+MSOE Raiders,Blitz,5,1.3,50,Live-ball turnover risk if Carson Cordelli splits it,True
