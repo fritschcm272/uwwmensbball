@@ -269,7 +269,8 @@ def outfit_check_test():
         items.append((ch["frame_file"], p[j, :4]))
         truth.append(y)
         rows.append({"frame_file": ch["frame_file"], "px": ch["px"], "py": ch["py"], "verdict": vd,
-                     "assigned": ch.get("assigned"), "true_name": ch.get("true_name")})
+                     "assigned": ch.get("assigned"), "true_name": ch.get("true_name"),
+                     "kind": (ch.get("not_player_kind") or "not a player (kind not given)") if vd == "not a player" else "player"})
     n_np = sum(truth)
     print(f"Outfit check test: {len(items)} checked box(es) found in the saved detections -- {n_np} not a player, "
           f"{len(items) - n_np} real players", flush=True)
@@ -337,6 +338,17 @@ def outfit_check_test():
     print("  score cutoff | boxes flagged | really not players | non-players caught | real players lost", flush=True)
     for t, nf, prec, rec, lost in show:
         print(f"     {t:5.3f}     |   {nf:5d}       |      {prec:5.0%}        |      {rec:5.0%}         |   {lost}", flush=True)
+    # requested: how well each KIND of non-player is caught at the cutoff (referees and fans by their clothes; a bench player in
+    # uniform looks like a player -- the court filter has to catch him, not this check)
+    if best:
+        _kinds = {}
+        for k_ in ok:
+            _kd = rows[k_]["kind"]
+            _kinds.setdefault(_kd, [0, 0])
+            _kinds[_kd][1] += 1
+            _kinds[_kd][0] += int(sc[k_] >= best[0])
+        print("  flagged at that cutoff, by kind: " + "; ".join(
+            f"{kd} {a}/{n}" for kd, (a, n) in sorted(_kinds.items(), key=lambda kv: (kv[0] == "player", kv[0]))), flush=True)
     if passed:
         print(f"  PASSED: at a score of {best[0]:.2f}+ flagged boxes were really not players {best[1]:.0%} of the time, catching "
               f"{best[2]:.0%} of the non-players (costing {best[3]} real player box(es)). Player tracking will use it "

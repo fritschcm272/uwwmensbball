@@ -294,7 +294,10 @@ def jersey_collect():
         # player" (referee, coach, fan) is now a training example of a shirt with NO number -- class "nn" -- so the reader
         # learns to answer "no number" there instead of the nearest number (JERSEY_TRAIN_NO_NUMBER = False turns it off).
         if ch.get("verdict") == "not a player" and globals().get("JERSEY_TRAIN_NO_NUMBER", True):
-            num = "nn"
+            # CONFIRMED CHANGE (requested: kinds of non-player). A BENCH player / coach / staff box is not taught as "no number":
+            # bench players often wear the team uniform with a perfectly readable number. Referees, crowd and plain "not a
+            # player" still are.
+            num = None if ch.get("not_player_kind") == "bench" else "nn"
         box = _jr_box_at(det, ch.get("frame_file"), ch.get("px", -1e9), ch.get("py", -1e9))
         if box is None:
             continue
@@ -558,7 +561,8 @@ def jersey_train():
         _own = _by.get("reads", []) + _by.get("coach", [])
         score = (sum(_own) / len(_own)) if len(_own) >= 50 else acc
         if score >= best[0]:
-            best = (score, {k: v.clone() for k, v in net.state_dict().items()}, acc)
+            best = (score, {k: v.clone() for k, v in net.state_dict().items()}, acc, len(_own) >= 50,
+                    (sum(_own) / len(_own)) if _own else None)
         _parts = ", ".join(f"{n_} {sum(_by[k_]) / len(_by[k_]):.0%} of {len(_by[k_])}"
                            for k_, n_ in (("reads", "number tracks"), ("coach", "coach checks"), ("extra", "extra")) if _by.get(k_))
         print(f"  [recognizer]   round {ep + 1}/{JERSEY_TRAIN_EPOCHS}: {acc:.0%} of held-back crops right ({_parts}) "
@@ -580,8 +584,15 @@ def jersey_train():
         import shutil
         shutil.copyfile(JERSEY_MODEL_PATH + ".tmp", JERSEY_MODEL_PATH)
         os.remove(JERSEY_MODEL_PATH + ".tmp")
-    print(f"  [recognizer] saved -> {JERSEY_MODEL_PATH} (kept round: {best[0]:.0%} right on our own film, "
-          f"{best[2]:.0%} on all held-back crops)", flush=True)
+    # CONFIRMED BUG (fixed; the pose recognizer reported "87% right on our own film" while every round showed ~30% on the
+    # coach checks): with fewer than 50 of our own crops held back, the round is chosen on ALL held-back crops, and that
+    # score was printed as "our own film". It now says which it was.
+    if len(best) > 3 and not best[3]:
+        print(f"  [recognizer] saved -> {JERSEY_MODEL_PATH} (kept round: {best[2]:.0%} on all held-back crops; our own film "
+              f"{(best[4] or 0):.0%} -- too few of our own crops held back (under 50) to choose the round by)", flush=True)
+    else:
+        print(f"  [recognizer] saved -> {JERSEY_MODEL_PATH} (kept round: {best[0]:.0%} right on our own film, "
+              f"{best[2]:.0%} on all held-back crops)", flush=True)
 
 
 def _jr_settings_str():

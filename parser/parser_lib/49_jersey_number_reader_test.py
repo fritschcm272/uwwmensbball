@@ -832,14 +832,29 @@ if RUN_JERSEY_READER_TEST:
     # easyocr_find each read a handful right, not always the same players.) Scored from the saved answers -- no new reads.
     _members = [(e, JERSEY_READER_CONF.get(e, 0.0)) for e in JERSEY_READER_PRECISION if e != "combined"
                 and JERSEY_READER_ANSWERS.get(e, 0) >= JERSEY_READER_MIN_ANSWERS and JERSEY_READER_PRECISION[e] >= 0.80]
+    # CONFIRMED BUG (fixed; "combined" was right only 42% of the time although every member was 83-100% right): its
+    # members' answers were taken RAW, while each member had been scored with the lineup filter (a read that isn't the number
+    # of a player on the floor for his team counts as no answer -- the way Player tracking uses reads). Every stray read
+    # ("40", "12" when nobody on the floor wears them) became a combined answer. Combined now uses the same filter. A crop
+    # gets a reading when at least one member reads it and no member reads something else (they "agree" -- an answer
+    # nobody contradicts); a disagreement means no answer. This is also how Player tracking votes on combined reads.
+    def _cmb_read(e, k, c):
+        r0 = _saved.get((e, k), ("", 0))
+        if not r0[0] or r0[1] < c:
+            return None
+        if globals().get("JERSEY_READER_LINEUP_FILTER", True) and _jn_five.get(k) and str(r0[0]) not in _jn_five[k]:
+            return None
+        return str(r0[0])
     if len(_members) >= 2:
         _ck_all = [k for k in _have_all if k in _coach_keys]
         _cmb = {}
+        _n_agree2 = 0
         for k in _have_all:
-            ans = {_saved.get((e, k), ("", 0))[0] for e, c in _members
-                   if _saved.get((e, k), ("", 0))[0] and _saved.get((e, k), ("", 0))[1] >= c}
+            got = [a for a in (_cmb_read(e, k, c) for e, c in _members) if a]
+            ans = set(got)
             if len(ans) == 1:
                 _cmb[k] = ans.pop()
+                _n_agree2 += int(len(got) >= 2)
         _cr = sum(1 for k in _ck_all if _cmb.get(k) == _have_all[k])
         _cw = sum(1 for k in _ck_all if k in _cmb and _cmb[k] != _have_all[k])
         _all_ans = [k for k in _cmb]
@@ -849,7 +864,8 @@ if RUN_JERSEY_READER_TEST:
         JERSEY_READER_CONF["combined"] = 0.0
         JERSEY_READER_COACH_RIGHT["combined"] = _cr
         globals()["JERSEY_READER_COMBINED_MEMBERS"] = _members
-        print(f"  combined    : ({' + '.join(f'{e} >= {c:.1f}' for e, c in _members)}, used only when they agree)", flush=True)
+        print(f"  combined    : ({' + '.join(f'{e} >= {c:.1f}' for e, c in _members)}; a crop takes a reading when at least "
+              f"one reads it and none reads something else -- {_n_agree2} of its answers had 2+ readers agreeing)", flush=True)
         print(f"  combined    : on YOUR {len(_ck_all)} checked players: {_cr} right, {_cw} wrong, "
               f"{len(_ck_all) - _cr - _cw} no answer", flush=True)
         print(f"  combined    : [{len(_have_all)} crops] answered {len(_all_ans)}; right when it answers "
