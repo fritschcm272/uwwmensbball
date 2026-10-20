@@ -5801,8 +5801,10 @@ def _pr_name_of(pl, text):
 
 
 def _pr_box_choices(pl, b):
-    mine = pl.get("five", {}).get(b.get("side"), []) or []
-    other = pl.get("five", {}).get("defense" if b.get("side") == "offense" else "offense", []) or []
+    # a side with no known five lists that team's roster for the game (the parser sends it as "roster")
+    _side = lambda sd: (pl.get("five", {}).get(sd, []) or []) + ((pl.get("roster") or {}).get(sd, []) or [])
+    mine = _side(b.get("side"))
+    other = _side("defense" if b.get("side") == "offense" else "offense")
     return ([_PR_NOT_CHECKED, "correct"] + [f"really {_pr_lab(pl, n)}" for n in mine if n != b.get("name")]
             + [f"really {_pr_lab(pl, n)} (other team)" for n in other] + ["wrong team (don't know who)", "not a player"])
 
@@ -5827,7 +5829,10 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
     pl = d["plays"][pi]
     run = d.get("run")
     five = pl.get("five", {}) or {}
-    names = [n for side in ("offense", "defense") for n in (five.get(side) or [])]
+    # CONFIRMED BUG (fixed; clip 29 "has no roster"): a side whose five isn't known (no game clock / no play-by-play match)
+    # offers that team's whole roster for the game instead of no names at all
+    roster = pl.get("roster", {}) or {}
+    names = [n for side in ("offense", "defense") for n in (five.get(side) or []) + (roster.get(side) or [])]
     choices = [_PR_NOT_CHECKED, "correct"] + [f"really {_pr_lab(pl, n)}" for n in names] + ["wrong team (don't know who)", "not a player"]
     for ki, pic in enumerate(pl.get("pictures", [])):
         path = os.path.join(d["_dir"], pic.get("image") or "")
@@ -5996,7 +6001,8 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
                     verdict, name = "wrong team", _pr_name_of(pl, val[len("really "):-len(" (other team)")])
                 else:
                     name = _pr_name_of(pl, val[len("really "):])
-                    _other5 = pl.get("five", {}).get("defense" if b.get("side") == "offense" else "offense", []) or []
+                    _os = "defense" if b.get("side") == "offense" else "offense"
+                    _other5 = (pl.get("five", {}).get(_os, []) or []) + ((pl.get("roster") or {}).get(_os, []) or [])
                     verdict = "wrong team" if name in _other5 else "wrong"    # a name from the other team's five
                 out["checks"].append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
                                       "frame_file": pic.get("frame_file"), "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"),

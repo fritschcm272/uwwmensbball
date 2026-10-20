@@ -84,7 +84,8 @@ def _safe_to_pickle(obj, path):
 
 
 for _k, _v in (("OUTFIT_MODEL", "patrickjohncyh/fashion-clip"), ("OUTFIT_MIN_PRECISION", 0.9), ("OUTFIT_MIN_RECALL", 0.25),
-               ("OUTFIT_MIN_NONPLAYERS", 20), ("RUN_OUTFIT_CHECK_TEST", True)):
+               ("OUTFIT_MIN_NONPLAYERS", 20), ("RUN_OUTFIT_CHECK_TEST", True),
+               ("OUTFIT_MAX_PLAYERS_LOST", 0.05), ("OUTFIT_MIN_PLAYERS", 20)):
     globals().setdefault(_k, _v)
 if "TRACK_DIR" not in globals() and "INPUT_DIR" in globals():
     TRACK_DIR = os.path.join(INPUT_DIR, "_tracking")
@@ -310,9 +311,14 @@ def outfit_check_test():
         rec = float(y[flag].sum() / max(y.sum(), 1))
         lost = int(((y == 0) & flag).sum())
         table.append((t, int(flag.sum()), prec, rec, lost))
-        if prec >= OUTFIT_MIN_PRECISION:
+        # CONFIRMED BUG (fixed; the check passed at a cutoff of 0.03 that set aside 8 of the 24 checked REAL players, then
+        # tracking set aside 3,145 tracks -- most of one team): a cutoff must be right often enough AND cost at most
+        # OUTFIT_MAX_PLAYERS_LOST (5%) of the real players. With mostly "not a player" checks, "right 90% of the time" alone
+        # is met by flagging nearly everyone.
+        if prec >= OUTFIT_MIN_PRECISION and lost <= OUTFIT_MAX_PLAYERS_LOST * max(1, int((y == 0).sum())):
             best = (t, prec, rec, lost, int(flag.sum()))          # keep going: the lowest score that still meets the bar
-    passed = bool(best and best[2] >= OUTFIT_MIN_RECALL and n_np >= OUTFIT_MIN_NONPLAYERS)
+    n_pl = int((y == 0).sum())
+    passed = bool(best and best[2] >= OUTFIT_MIN_RECALL and n_np >= OUTFIT_MIN_NONPLAYERS and n_pl >= OUTFIT_MIN_PLAYERS)
     res = {"model": OUTFIT_MODEL, "player_words": OUTFIT_PLAYER_WORDS, "other_words": OUTFIT_OTHER_WORDS,
            "boxes": len(ok), "not_players": int(y.sum()), "auc": round(auc, 3) if auc is not None else None,
            "threshold": (round(best[0], 3) if best else None), "precision": (round(best[1], 3) if best else None),
@@ -336,7 +342,10 @@ def outfit_check_test():
               f"{best[2]:.0%} of the non-players (costing {best[3]} real player box(es)). Player tracking will use it "
               f"(TRACK_OUTFIT_CHECK = \"auto\").", flush=True)
     else:
-        why = ("no cutoff reached " + f"{OUTFIT_MIN_PRECISION:.0%} right" if not best else
+        why = (f"only {n_pl} checked real players (needs {OUTFIT_MIN_PLAYERS}) -- name more players in the checks"
+               if best and n_pl < OUTFIT_MIN_PLAYERS else
+               "no cutoff reached " + f"{OUTFIT_MIN_PRECISION:.0%} right while losing at most "
+               f"{OUTFIT_MAX_PLAYERS_LOST:.0%} of the real players" if not best else
                f"it catches only {best[2]:.0%} of the non-players at {OUTFIT_MIN_PRECISION:.0%} right (needs "
                f"{OUTFIT_MIN_RECALL:.0%})" if best[2] < OUTFIT_MIN_RECALL else
                f"only {n_np} checked non-players (needs {OUTFIT_MIN_NONPLAYERS})")

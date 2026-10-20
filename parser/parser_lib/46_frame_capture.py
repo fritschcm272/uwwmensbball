@@ -1484,6 +1484,17 @@ def _vx_ingest(label, url, folder, cache):
     if rows:
         cols = list(dict.fromkeys(list(VISION_COLS) + ["frame_source"]))
         cache = pd.concat([cache, pd.DataFrame(rows).reindex(columns=cols)], ignore_index=True)
+    # CONFIRMED BUG (fixed; "1 page(s) with clips whose files are missing or failed" on every run, and the Wash U export
+    # registered again each time): the page kept 2 rows from the old web capture for clips the export doesn't have (their
+    # frames were deleted at the restart), so the page always looked unfinished. When the export replaces the page, those
+    # rows go.
+    if replace and not cache.empty:
+        _keep_pos = {int(p_) for p_ in pd.to_numeric(todo["#"], errors="coerce").dropna()}
+        _stale = (cache["source_url"] == url) & ~pd.to_numeric(cache["position"], errors="coerce").isin(_keep_pos)
+        if _stale.any():
+            print(f"  [export] {label}: {int(_stale.sum())} clip(s) from the old web capture that the export doesn't have "
+                  f"(free throws / not exported) -- removed", flush=True)
+            cache = cache[~_stale].reset_index(drop=True)
     print(f"  [export] {label}: {n_new} clip(s) from the export, {n_kept} kept from the earlier web capture"
           + (f", {n_err} with errors (see the 'error' column)" if n_err else "") + f" ({time.time() - t0:.0f}s)", flush=True)
     return cache
@@ -1639,7 +1650,7 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
         _in_run = {x[1] for x in _vis_sources}
         _n_inc = len(_incomplete & _in_run)
         _n_gap = len((_gap_urls - _incomplete) & _in_run)
-        if _n_inc or _n_gap:
+        if False and (_n_inc or _n_gap):              # printed below, for the pages this run actually works on
             print(f"Frame capture: " + ", ".join(x for x in (
                 f"{_n_inc} page(s) not fully captured (stopped partway, or captured before the page's clip count was "
                 f"recorded -- checked once)" if _n_inc else "",
@@ -1726,6 +1737,16 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
           f"{'opponent' if _first == 'opponent' else 'UWW'} games first (VISION_CAPTURE_FIRST), newest first.")
     _vis_left = max(0, len(_vis_sources) - VISION_MAX_GAMES_PER_RUN)
     _vis_sources = [(l, u) for l, u, _d in _vis_sources[:VISION_MAX_GAMES_PER_RUN]]
+    # CONFIRMED BUG (fixed; the same "2 page(s) not fully captured ... checked once" note on every run): it counted pages in
+    # the window that one-game-at-a-time keeps WAITING, so they were never visited and the note never went away. It now
+    # names only the pages this run is completing.
+    _now = {u: l for l, u in _vis_sources}
+    _inc_now = [l for u, l in _now.items() if u in _incomplete]
+    _gap_now = [l for u, l in _now.items() if u in _gap_urls and u not in _incomplete]
+    if _inc_now or _gap_now:
+        print("Frame capture: completing " + "; ".join(
+            [f"{l} (stopped partway, or captured before its clip count was recorded)" for l in _inc_now]
+            + [f"{l} (some clips' frames are missing or failed)" for l in _gap_now]) + " -- only what's missing is captured.")
     if not clip_frames.empty and VISION_RETAG:  # a retag starts these pages over (otherwise rows are replaced clip by clip)
         clip_frames = clip_frames[~clip_frames["source_url"].isin([u for _l, u in _vis_sources])]
     if _vis_left:
@@ -1742,12 +1763,22 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
             clip_frames = run_in_fastscout_session(lambda p: _vision_tag_pages(p, _vis_sources, clip_frames))
         clip_frames.to_csv(VISION_CACHE, index=False)
         print(f"  Frames are under {VISION_FRAMES_DIR} -- open a few to check they show the play.")
+# CONFIRMED CHANGE (the "15 with capture errors ... No space left on device" line on every run): those were rows of an early
+# TEST capture (VISION_TEST_CLIPS) of one game that failed on a full disk -- they're replaced when that game is captured. They
+# are listed on their own line now, so the errors line only shows real captures.
+_test_rows = (clip_frames.get("test_run", pd.Series(False, index=clip_frames.index)).astype(str).str.lower().eq("true")
+              if not clip_frames.empty else pd.Series(dtype=bool))
+_err_all = clip_frames["error"].notna() if (not clip_frames.empty and "error" in clip_frames.columns) else _test_rows & False
 print(f"Clips with frames: {int(pd.to_numeric(clip_frames.get('frames_captured'), errors='coerce').fillna(0).ge(VISION_FRAMES_PER_CLIP).sum())} "
       f"of {len(clip_frames)} in {os.path.basename(VISION_CACHE)}"
-      + (f" -- {clip_frames['error'].notna().sum()} with capture errors (see the 'error' column)"
-         if len(clip_frames) and "error" in clip_frames.columns and clip_frames["error"].notna().any() else ""))
+      + (f" -- {int((_err_all & ~_test_rows).sum())} with capture errors (see the 'error' column)"
+         if (_err_all & ~_test_rows).any() else ""))
+if (_err_all & _test_rows).any():
+    _tl = clip_frames.loc[_err_all & _test_rows, "source_label"].dropna().astype(str).unique().tolist()
+    print(f"  ({int((_err_all & _test_rows).sum())} more row(s) with errors are from an old TEST capture of "
+          f"{', '.join(_tl) or 'a game'} -- replaced when that game is captured)")
 if not clip_frames.empty and "error" in clip_frames.columns:
-    _err = clip_frames["error"].dropna().astype(str)
+    _err = clip_frames.loc[_err_all & ~_test_rows, "error"].dropna().astype(str)
     _nc = int(_err.str.contains("clip start not confirmed").sum())
     if _nc:
         print("  " + "!" * 100)
