@@ -1008,6 +1008,8 @@ _G_MIN_THEIR_ALLOWED = 5  # possessions run against them (by anyone) before thei
 
 try:
     _pcs = _ktv_load("uww_play_call_summary")
+    if not _pcs.empty and "possession_side" in _pcs.columns:
+        _pcs = _pcs[_pcs["possession_side"].astype(str) != "Defense"]   # OUR offense only (see _ktv_offense_only)
     _our_series = pd.DataFrame()
     _our_avg_ppp = None
     if not _pcs.empty and {"side", "level", "name", "uses", "ppp"}.issubset(_pcs.columns):
@@ -1193,8 +1195,20 @@ except Exception as _e:
 # J names the opponent's go-to set and what it produces; K names our most productive set with real volume.
 # Both read uww_play_call_summary.csv, which excludes Rewatch/TBD clips from every ranking.
 _KTV_PLAY_MIN_USES = 4
+
+
+def _ktv_offense_only(df):
+    """Summary rows for the side's OWN offense. CONFIRMED BUG (fixed here): "Take away their go-to set: 5 Out
+    Motion -- Marvin Haslett finishes it" was MARIAN's offense: the coaches tagged 20 of Marian's possessions
+    against MSOE (MSOE on defense) in the app's Film Tagging, and side == "Opponent" only says which file a clip
+    came from. possession_side says who had the ball; rows from before it existed are offense."""
+    if df.empty or "possession_side" not in df.columns:
+        return df
+    return df[df["possession_side"].astype(str) != "Defense"]
+
+
 try:
-    _pcs = _ktv_load("uww_play_call_summary")
+    _pcs = _ktv_offense_only(_ktv_load("uww_play_call_summary"))
     if not _pcs.empty and {"side", "level", "name", "uses"}.issubset(_pcs.columns) and _ktv_short:
         _pcs = _pcs[_pcs["scouted_opponent"].astype(str) == str(_ktv_short)]
         # Rank "best set" on PPP shrunk toward the side's own average by _KTV_PLAY_SHRINK possessions, so a

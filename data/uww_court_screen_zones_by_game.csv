@@ -1,1 +1,13 @@
-
+offense_team,defense_team,screen_type,zone,coverage,screens,ppp,game_date,game_code
+Marian (WI) Sabres,MSOE Raiders,Off-ball screen,Left corner,separated (under / behind),1,0.0,2026-02-26,MarianWI@MSOE
+Marian (WI) Sabres,MSOE Raiders,Off-ball screen,Left wing,unclear,2,1.0,2026-02-26,MarianWI@MSOE
+Marian (WI) Sabres,MSOE Raiders,Off-ball screen,Paint / post,separated (under / behind),3,1.5,2026-02-26,MarianWI@MSOE
+Marian (WI) Sabres,MSOE Raiders,Off-ball screen,Paint / post,stayed attached (lock / trail),1,,2026-02-26,MarianWI@MSOE
+Marian (WI) Sabres,MSOE Raiders,Off-ball screen,Paint / post,unclear,3,1.5,2026-02-26,MarianWI@MSOE
+Marian (WI) Sabres,MSOE Raiders,Off-ball screen,Right baseline,separated (under / behind),1,2.0,2026-02-26,MarianWI@MSOE
+Marian (WI) Sabres,MSOE Raiders,Off-ball screen,Right baseline,unclear,1,1.0,2026-02-26,MarianWI@MSOE
+Marian (WI) Sabres,MSOE Raiders,Off-ball screen,Right corner,separated (under / behind),1,0.0,2026-02-26,MarianWI@MSOE
+,Marian (WI) Sabres,Off-ball screen,Paint / post,separated (under / behind),9,0.22,2026-02-26,MarianWI@MSOE
+,Marian (WI) Sabres,Off-ball screen,Paint / post,unclear,5,1.0,2026-02-26,MarianWI@MSOE
+,Marian (WI) Sabres,Off-ball screen,Right baseline,separated (under / behind),7,0.8,2026-02-26,MarianWI@MSOE
+,Marian (WI) Sabres,Off-ball screen,Right baseline,unclear,6,1.5,2026-02-26,MarianWI@MSOE

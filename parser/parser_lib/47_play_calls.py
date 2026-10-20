@@ -1338,6 +1338,54 @@ def _pl_app_answers():
     return by
 
 
+def _pl_title_save_ok(d, mtime):
+    """Should this Film Tagging / Title save be USED? CONFIRMED CHANGE (coach, about "Take away their go-to set: 5 Out
+    Motion -- Marvin Haslett finishes it": "those came from coach checks they did before the Synergy exporting of video
+    and our new coach film tracking versions"). Title and Actions answers saved before the tracking reset (the restart
+    on the 1920-wide Synergy exports -- inputs/_tracking/_reset.json) are set aside, the same rule the player checks
+    already follow, and so is any save whose coach name says it was a test ("CoreyTEST"). Set
+    TITLE_CHECKS_BEFORE_RESET = True (play-calls cell) to use the old ones again."""
+    if "test" in str(d.get("coach") or "").lower():
+        _pl_title_skip_note("test", d)
+        return False
+    if globals().get("TITLE_CHECKS_BEFORE_RESET", False):
+        return True
+    try:
+        with open(os.path.join(INPUT_DIR, "_tracking", "_reset.json"), encoding="utf-8") as fh:
+            reset_at = pd.Timestamp(json.load(fh)["at"]).tz_convert("UTC")
+    except Exception:
+        return True                                   # no reset on record: nothing is old
+    try:
+        t = pd.Timestamp(d.get("saved"))
+        if pd.isna(t):
+            raise ValueError("no saved time")
+        t = t.tz_localize("UTC") if t.tzinfo is None else t.tz_convert("UTC")
+    except Exception:
+        t = pd.Timestamp(mtime or 0, unit="s", tz="UTC")
+    if t < reset_at:
+        _pl_title_skip_note("old", d)
+        return False
+    return True
+
+
+def _pl_title_skip_note(kind, d):
+    """Say once per run which saves were set aside (and why)."""
+    seen = globals().setdefault("_pl_title_skipped", {})
+    k = (kind, d.get("game"), d.get("coach"), d.get("saved"))
+    if k in seen:
+        return
+    seen[k] = True
+    if not globals().get("_pl_title_skip_said"):
+        globals()["_pl_title_skip_said"] = True
+        print("  Film Tagging: answers saved before the tracking reset, and test saves, are set aside "
+              "(TITLE_CHECKS_BEFORE_RESET = True uses the old ones again):", flush=True)
+    print(f"    - {d.get('game')} by {d.get('coach') or 'unknown coach'}, saved {d.get('saved')} -- "
+          + ("a test save" if kind == "test" else "before the restart on the Synergy exports"), flush=True)
+
+
+_pl_title_skipped, _pl_title_skip_said = {}, False   # reset each run, so the set-aside list prints once per run
+
+
 def _pl_app_actions():
     """{normalized clip key: [action rows in order]} from Film Tagging's Actions tables (saves' "actions"), latest save of a
     clip wins (a save that emptied a clip's table clears it). Each row: action (DHO, PC5, Pistol, Over, PC2, 77, Ram or
@@ -1351,7 +1399,7 @@ def _pl_app_actions():
     try:
         for f in _review_files(_play_review_file_saves()):
             d = _review_doc(f)
-            if d is not None and (d.get("actions") or d.get("actions_cleared")):
+            if d is not None and (d.get("actions") or d.get("actions_cleared")) and _pl_title_save_ok(d, os.path.getmtime(f)):
                 docs.append((str(d.get("saved", "")), os.path.getmtime(f), d))
     except Exception as e:
         print(f"  (app actions not read: {type(e).__name__}: {e})", flush=True)
@@ -1364,6 +1412,11 @@ def _pl_app_actions():
             # an untouched (prefilled) table never replaces one a coach edited in an earlier save (see title_review_answers)
             if all(a.get("prefilled") for a in rows) and ck in coach_edited:
                 continue
+            # requested: an untouched automatic row with NO action (only a coverage, screener ...) wasn't confirmed -- left out
+            if all(a.get("prefilled") for a in rows):
+                rows = [a for a in rows if str(a.get("action") or "").strip()]
+                if not rows:
+                    continue
             if not all(a.get("prefilled") for a in rows):
                 coach_edited.add(ck)
             by[ck] = sorted(rows, key=lambda a: int(a.get("order") or 0))
@@ -1504,6 +1557,9 @@ def _pl_apply_app_tags(out):
                     put("defense_type", "Man-to-Man")
         elif untagged and blank(out.at[idx, "defense_press"]) and ("defense" in use):
             put("defense_press", False)
+        for f in ("ball_screen_coverage", "offball_coverage"):
+            if f in use and _PL_NO_COV_RX.match(str(use[f])):
+                use.pop(f)                                # "No screens": nothing to record as a coverage
         if any(f in use for f in ("ball_screen_coverage", "offball_coverage", "screen_defender")):
             ent = _pl_cov_entries(out.at[idx, "coverage_detail"])
             for f, fam_rx, label in (("ball_screen_coverage", _PL_BALL_FAMILY, "Ball Screen"),
@@ -1553,13 +1609,14 @@ def _pl_apply_app_tags(out):
             # ("Ball Screen: Drop (def #3)") so the coverage tables and the tag model read app tags like Titles
             _ent = []
             for x in _acts:
-                if not x.get("coverage"):
-                    continue
+                if not x.get("coverage") or _PL_NO_COV_RX.match(str(x.get("coverage"))):
+                    continue                              # none, or the coach typed "No screens" (no screen to cover)
                 _dn = _jer(x.get("screen_defender"), first=True)
                 _ent.append(f"{_pl_app_screen_label(x)}: {x['coverage']}" + (f" (def #{_dn})" if _dn else ""))
             if _ent:
                 put("coverage_detail", " | ".join(_ent))
-                put("defense_coverage", " | ".join(dict.fromkeys(str(x["coverage"]) for x in _acts if x.get("coverage"))))
+                put("defense_coverage", " | ".join(dict.fromkeys(str(x["coverage"]) for x in _acts if x.get("coverage")
+                                                                 and not _PL_NO_COV_RX.match(str(x.get("coverage"))))))
             if len(_acts) > 1:
                 n_multi += 1
             if not use:
@@ -2293,7 +2350,7 @@ def coach_checks_all():
     # CONFIRMED CHANGE (requested: start player tracking over on the 1920-wide Synergy exports). Player checks saved before
     # the reset were made on the old web frames (deleted; another size and other moments of the play): set aside -- tracking,
     # the reader test and the review queues use only checks made on the new frames. (Their jersey crops stay in the reader's
-    # training set; Film Tagging answers are not affected.)
+    # training set. Film Tagging answers follow the same cutoff -- see _pl_title_save_ok.)
     reset_at = tracking_reset_time()
     n_old = 0
     for _saved, _mt, d in sorted(docs, key=lambda x: (x[0], x[1])):
@@ -2310,6 +2367,19 @@ def coach_checks_all():
     return list(merged.values()), files
 
 
+_PL_ACTION_DERIVED = ("ball_screen_coverage", "offball_coverage", "screener", "screen_defender")
+# a coverage a coach types to say there was NO screen ("No screens", "none", "n/a") -- not a coverage
+_PL_NO_COV_RX = re.compile(r"^\s*(no\s*screens?|none|no\s*coverage|n\s*/?\s*a|-+)\s*$", re.I)
+
+
+def _pl_no_action_clips(d):
+    """Clip keys whose Actions table in this save has rows but no action in any of them."""
+    by = {}
+    for a in d.get("actions") or []:
+        by.setdefault(a.get("clip_key"), []).append(a)
+    return {ck for ck, rows in by.items() if not any(str(r.get("action") or "").strip() for r in rows)}
+
+
 def title_review_answers():
     """Answers from the Auto-Title review pages (title_review_*.json) -> {(clip_key, field): value}.
     'right' = the automatic answer shown was right; 'wrong' + a typed answer = that answer. Every file under
@@ -2321,6 +2391,8 @@ def title_review_answers():
         try:
             with open(f, encoding="utf-8") as fh:
                 d = json.load(fh)
+            if d.get("answers") and not _pl_title_save_ok(d, os.path.getmtime(f)):
+                continue                       # before the restart on the Synergy exports, or a test save
             docs.append((str(d.get("saved", "")), os.path.getmtime(f), d))
         except Exception:
             continue
@@ -2331,9 +2403,15 @@ def title_review_answers():
     # default never replaces an answer a coach actually gave; only a later real answer does.
     coach_given = set()
     for _s, _m, d in sorted(docs, key=lambda x: (x[0], x[1])):
+        _no_act = _pl_no_action_clips(d)
         for a in d.get("answers", []):
             key = (a.get("clip_key"), a.get("field"))
             if a.get("prefilled") and key in coach_given:
+                continue
+            # CONFIRMED CHANGE (requested: "when he didn't add an action ... you didn't accept this as a correct Coverage").
+            # An untouched automatic coverage / screener / screen defender on a play whose Actions table has NO action was
+            # never confirmed by the coach -- it isn't taken as the clip's answer.
+            if a.get("prefilled") and a.get("field") in _PL_ACTION_DERIVED and a.get("clip_key") in _no_act:
                 continue
             if not a.get("prefilled"):
                 coach_given.add(key)

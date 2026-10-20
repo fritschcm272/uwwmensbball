@@ -1,16 +1,31 @@
 defense_team,defender,role,screen_type,coverage,coverage_source,times,ppp,share_pct
-UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,7,1.0,64.0
-UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,1.0,18.0
+MSOE Raiders,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,24,0.78,52.0
+MSOE Raiders,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,19,1.0,41.0
+MSOE Raiders,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,1.0,7.0
+MSOE Raiders,unnamed defense,guarding the player screened,Ball screen,switch,tracking estimate,1,0.0,50.0
+MSOE Raiders,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,50.0
+MSOE Raiders,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,23,0.82,53.0
+MSOE Raiders,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,18,1.06,42.0
+MSOE Raiders,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,1.0,5.0
+MSOE Raiders,unnamed defense,guarding the screener,Ball screen,switch,tracking estimate,1,0.0,50.0
+MSOE Raiders,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,50.0
+Marian (WI) Sabres,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,30,0.63,59.0
+Marian (WI) Sabres,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,18,1.0,35.0
+Marian (WI) Sabres,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,0.0,6.0
+Marian (WI) Sabres,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,29,0.65,58.0
+Marian (WI) Sabres,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,18,1.0,36.0
+Marian (WI) Sabres,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,0.0,6.0
+UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,7,1.0,70.0
+UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.67,30.0
 UW-Whitewater,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0
-UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,Over,coach tag,1,0.0,9.0
-UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,0.0,9.0
 UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,7,1.0,78.0
 UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,2,1.0,22.0
 UW-Whitewater,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0
-Washington-St. Louis Bears,Ryan Cohen,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,0.75,36.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,0.67,27.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.0,27.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,Top Lock,coach tag,1,2.0,9.0
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,50.0
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,0.0,50.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,7,0.43,50.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,0.67,21.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,14.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,Over,coach tag,1,0.0,7.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,Top Lock,coach tag,1,2.0,7.0
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,4,0.0,50.0
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,0.67,38.0
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,Over,coach tag,1,0.0,12.0
