@@ -4840,9 +4840,21 @@ def render_screen_coverage(short_opponent: str, default_view: str = "Opponent de
         "Thin": team["thin_sample"].astype(str).str.lower().map({"true": "yes", "false": ""}),
     }), hide_index=True, use_container_width=True)
 
+    # CONFIRMED CHANGE (requested): one row per defender -- how he plays each kind of screen and what it gives up
+    # (uww_screen_defenders, built in the play-calls cell from tags that name the defender)
+    sdf = load_table("uww_screen_defenders")
+    if not sdf.empty and {"perspective", "scouted_opponent"} <= set(sdf.columns):
+        sdf = sdf[(sdf["perspective"] == view) & (sdf["scouted_opponent"].astype(str) == str(short_opponent))]
+        if not sdf.empty:
+            st.markdown("**By defender** -- who to put in the screen (defenders with 2+ tagged screens)")
+            st.dataframe(sdf[["defense_team", "defender", "screen_family", "screens", "coverages", "ppp_allowed",
+                              "fg_pct_allowed", "turnovers"]].rename(columns={
+                "defense_team": "Team", "defender": "Defender", "screen_family": "Screen", "screens": "Tagged",
+                "coverages": "How he plays it", "ppp_allowed": "PPP allowed", "fg_pct_allowed": "FG% allowed",
+                "turnovers": "TO"}), hide_index=True, use_container_width=True)
     dfd = part[part["level"] == "Defender x screen x coverage"].copy()
     if not dfd.empty:
-        with st.expander("By defender", expanded=view == "Opponent defense"):
+        with st.expander("By defender, screen by screen", expanded=False):
             screens = ["All screens"] + order
             pick = st.selectbox("Screen", screens, key=f"scv_screen_{short_opponent}_{view}{key_suffix}")
             if pick != "All screens":
@@ -4954,6 +4966,111 @@ def render_two_for_one(short_opponent, key_suffix="") -> None:
                        + (f"{short_opponent} played." if _which != "Our games" else "we played."))
 
 
+_CP_SCREENS = ["Any", "Ball screen", "Off-ball screen", "Hand-off"]
+_CP_COVERAGES = ["Drop", "Over", "Under", "Switch", "Hedge", "Show", "Ice", "Blitz", "Trap", "Top Lock", "Trail", "Stay"]
+
+
+def _cp_plan_docs():
+    """Every saved coverage plan (coverage_plan_*.json): the repo's copy plus the saves branch."""
+    docs = {}
+    for f in glob.glob(os.path.join(DATA_DIR, "play_review_saves", "coverage_plan_*.json")):
+        try:
+            with open(f, encoding="utf-8") as fh:
+                docs[os.path.basename(f)] = json.load(fh)
+        except Exception:
+            continue
+    try:
+        token, repo, _branch, sb, folder = _gh_cfg()
+        for k, v in (_pr_remote_save_docs(token, repo, sb, folder) or {}).items():
+            if str(k).startswith("coverage_plan_"):
+                docs[k] = v
+    except Exception:
+        pass
+    return [d for d in docs.values() if isinstance(d, dict) and d.get("kind") == "coverage_plan"]
+
+
+def render_coverage_plan(short_opponent, key_suffix="") -> None:
+    """Our screen-coverage plan, entered here. CONFIRMED CHANGE (requested): "our screen coverage vs the plan" needed a
+    plan, which only existed as a staff_inputs CSV nobody filled in. Saved like the play reviews (GitHub, saves branch) as
+    coverage_plan_<opponent>_<coach>_<time>.json; the parser's tracking-insights cell compares it with the coverage
+    tracking saw on our defense in that game (Film tracking > Self-scout, and the brief once a plan exists)."""
+    section_header("\U0001f6e1\ufe0f OUR SCREEN COVERAGE PLAN",
+                   "What we plan to play on each kind of screen -- for everyone, or for one defender. After the game is "
+                   "tracked, the parser compares it with what our defenders actually did (coach tags first, else "
+                   "tracking's own read of whether the defender stayed attached or went under/behind).")
+    sched = load_table("uww_schedule")
+    opps = [short_opponent]
+    if not sched.empty and {"team", "opponent"} <= set(sched.columns):
+        mine = sched[sched["team"].astype(str).str.contains("Whitewater", case=False, na=False)]
+        opps += [o for o in mine["opponent"].dropna().astype(str).iloc[::-1] if o not in opps]
+    who = st.selectbox("Plan for", opps, key=f"cp_opp{key_suffix}",
+                       help="The upcoming game by default. Pick an earlier game to record what the plan was then, so "
+                            "that game's tracked film can be compared with it.")
+    plans = [d for d in _cp_plan_docs() if str(d.get("opponent")) == str(who)]
+    latest = max(plans, key=lambda d: str(d.get("saved", ""))) if plans else None
+    rows = (latest.get("rows") if latest else None) or [{"screen_type": "Ball screen", "defender": "(anyone)",
+                                                        "planned_coverage": None, "note": ""}]
+    ros = load_table("uww_live_rosters")
+    names = (sorted({_title_name(n) for n in ros.loc[ros["team"].astype(str).str.contains("Whitewater", case=False, na=False),
+                                                       "name"].dropna()}) if not ros.empty and {"team", "name"} <= set(ros.columns)
+             else [])
+    df = pd.DataFrame(rows, columns=["screen_type", "defender", "planned_coverage", "note"])
+    ed = st.data_editor(
+        df, num_rows="dynamic", use_container_width=True, hide_index=True, key=f"cp_edit_{who}{key_suffix}",
+        column_config={
+            "screen_type": st.column_config.SelectboxColumn("Screen", options=_CP_SCREENS, required=True),
+            "defender": st.column_config.SelectboxColumn("Our defender", options=["(anyone)"] + names),
+            "planned_coverage": st.column_config.SelectboxColumn("Planned coverage", options=_CP_COVERAGES),
+            "note": st.column_config.TextColumn("Note")})
+    if latest:
+        st.caption(f"Last saved by {latest.get('coach') or 'a coach'} on {str(latest.get('saved', ''))[:16].replace('T', ' ')} UTC.")
+    c1, c2 = st.columns([3, 1])
+    coach = c1.text_input("Your name (required to save)", key=f"cp_coach{key_suffix}")
+    if c2.button("Save plan", key=f"cp_save{key_suffix}", use_container_width=True):
+        keep = [{k: (None if (isinstance(v, float) and pd.isna(v)) else v) for k, v in r.items()}
+                for r in ed.to_dict("records") if r.get("planned_coverage")]
+        if not coach.strip():
+            st.warning("Type your name first.")
+        elif not keep:
+            st.warning("Pick a planned coverage on at least one row.")
+        else:
+            stamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+            slug = lambda t: re.sub(r"[^A-Za-z0-9]+", "_", str(t)).strip("_")
+            payload = {"kind": "coverage_plan", "opponent": who, "coach": coach.strip(),
+                       "saved": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S+00:00"), "game": f"coverage plan vs {who}",
+                       "rows": keep}
+            ok, msg = _pr_github_save(f"coverage_plan_{slug(who)}_{slug(coach)}_{stamp}.json", payload)
+            (st.success if ok else st.error)(("Plan saved -- " if ok else "Not saved -- ") + msg)
+
+
+def render_action_reads(short_opponent, key_suffix="") -> None:
+    """Ball handler / trigger and screener reads from Film Tagging's Actions table (uww_action_reads, built in the
+    play-calls cell). CONFIRMED CHANGE (requested): use / reject / split the ball screen, Cobra, Fox, ... and roll / pop /
+    slip, by player, for scouting them and for our self-scout."""
+    ar = load_table("uww_action_reads")
+    if ar.empty or "offense_team" not in ar.columns:
+        return
+    section_header("\U0001f3af READS OFF ACTIONS",
+                   "From the coaches' Film Tagging: for each action in a play, what the ball handler / trigger did and "
+                   "what the screener did after. Share = of that player's reads of that action. A play's points are "
+                   "credited to every action in it.")
+    teams = sorted(set(ar["offense_team"].dropna().astype(str)),
+                   key=lambda t: (0 if t == str(short_opponent) else 1 if "whitewater" in t.lower() else 2, t))
+    if str(short_opponent) not in teams:
+        st.caption(f"No Film Tagging actions with {short_opponent} on offense yet -- tag one of their games in Analytics "
+                   "\u2192 Film Tagging.")
+    c1, c2 = st.columns(2)
+    team = c1.selectbox("Offense", teams, key=f"ar_team{key_suffix}")
+    roles = ["Both"] + sorted(set(ar["role"].dropna().astype(str)))
+    role = c2.selectbox("Who", roles, key=f"ar_role{key_suffix}")
+    d = ar[ar["offense_team"].astype(str) == team]
+    if role != "Both":
+        d = d[d["role"].astype(str) == role]
+    st.dataframe(d[["player", "role", "action", "read", "uses", "share_pct", "ppp", "games"]].rename(columns={
+        "player": "Player", "role": "Role", "action": "Action", "read": "Read", "uses": "Uses", "share_pct": "Share %",
+        "ppp": "PPP", "games": "Games"}), hide_index=True, use_container_width=True)
+
+
 def render_game_plan_tab(short_opponent: str) -> None:
     st.markdown(_GP_CSS, unsafe_allow_html=True)
     st.caption("Red boxes are SAMPLE DATA \u2014 placeholders generated by the parser until the staff fills in "
@@ -4999,6 +5116,14 @@ def render_game_plan_tab(short_opponent: str) -> None:
               "The exports carry no defensive-scheme tags, so all of this is a placeholder. Replace with "
               "staff_inputs/opp_defense.csv.")
     render_screen_coverage(short_opponent)
+    try:
+        render_coverage_plan(short_opponent)
+    except Exception as _cp_err:
+        report_section_error("Our screen coverage plan", _cp_err)
+    try:
+        render_action_reads(short_opponent)
+    except Exception as _ar_err:
+        report_section_error("Reads off actions", _ar_err)
 
     # ---- process fix: not opponent data, so a plain note rather than a sample table -----------------------
     section_header("\U0001f527 TAGGING PROCESS: CONTROLLED VOCABULARY")
@@ -5245,6 +5370,38 @@ def _title_name(n) -> str:
     """Rosters arrive in ALL CAPS from some sources; leave mixed-case names (McEwen, Mur Martin) alone."""
     n = re.sub(r"\s+", " ", str(n)).strip()
     return n if n != n.upper() else " ".join(w[:1].upper() + w[1:].lower() for w in n.split(" "))
+
+
+def _film_quality_rows(short_opponent):
+    """(opponent row, UWW row) from uww_film_quality.csv -- either may be None."""
+    fq = load_table("uww_film_quality")
+    if fq is None or fq.empty or "team" not in fq.columns:
+        return None, None
+    t = fq["team"].astype(str)
+    up = fq[t == str(short_opponent)] if short_opponent else fq.iloc[0:0]
+    if up.empty and "is_upcoming" in fq.columns:
+        up = fq[fq["is_upcoming"].astype(str).str.lower() == "true"]
+    uw = (fq[fq["is_uww"].astype(str).str.lower() == "true"] if "is_uww" in fq.columns
+          else fq[t.str.lower().str.contains("whitewater")])
+    return (up.iloc[0] if len(up) else None), (uw.iloc[0] if len(uw) else None)
+
+
+def render_film_coverage_line(short_opponent) -> None:
+    """One caption line per team: how much film is on file and how much of it can be trusted. Under the Upcoming Game
+    banner; the brief prints the same line on page 1."""
+    up, uw = _film_quality_rows(short_opponent)
+    parts = []
+    for label, r in ((strip_known_mascot_suffix(short_opponent) if short_opponent else "Opponent", up), ("Us", uw)):
+        if r is None:
+            continue
+        line = str(r.get("film_line") or "").strip()
+        if line:
+            parts.append(f"**{html.escape(str(label))}:** {html.escape(line)}")
+    if not parts:
+        return
+    st.caption("\U0001f3a5 Film on file -- " + " · ".join(parts)
+               + ". Film reads about who guards whom need players named on half the floor spots; court views need the "
+                 "court placed on most frames. Analytics > Video Tracking shows everything either way.")
 
 
 def render_film_watched(header=True) -> None:
@@ -5632,6 +5789,9 @@ def render_brief_deeplink(short_opponent) -> None:
         if section == "screen_coverage":
             render_screen_coverage(short_opponent, key_suffix="_brief")  # separate keys: the tab renders it too
             return
+        if section == "reads":
+            render_action_reads(short_opponent, key_suffix="_brief")
+            return
         if section == "two_for_one":
             render_two_for_one(short_opponent, key_suffix="_brief")  # separate keys: the Game Plan tab renders it too
             return
@@ -6010,6 +6170,19 @@ def _pr_nbox(b, w, h):
     return [x1 / fw, (head + y1 / fh * frame_h) / h, x2 / fw, (head + y2 / fh * frame_h) / h]
 
 
+def _pr_box_rank(b):
+    """CONFIRMED CHANGE (requested, film-tracking review: coaches check the players tracking is unsure of, those first).
+    Sort key for one box: not named (0), then best guesses (1), then boxes named from evidence (2); inside each, last
+    season's departed seniors after the returners (the parser marks them between seasons, "departed") and the least sure
+    first."""
+    tier = 0 if not b.get("name") else 1 if b.get("guess") else 2
+    try:
+        c = float(b.get("conf")) if b.get("conf") is not None else 0.0
+    except (TypeError, ValueError):
+        c = 0.0
+    return (tier, bool(b.get("departed")), c)
+
+
 def _pr_player_widgets(d, pi, store, kp, with_video=True):
     """The player-checks part of one play's review, laid out like the local review page (requested; the click-the-box
     version was too slow -- every click reran the page twice): each picture on the left, a "Players" table on the right
@@ -6027,6 +6200,8 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
     for ki, pic in enumerate(pl.get("pictures", [])):
         path = os.path.join(d["_dir"], pic.get("image") or "")
         boxes = pic.get("boxes", [])
+        # unsure boxes first (see _pr_box_rank); the saved answer still goes with the box's own position in the picture
+        _order = sorted(range(len(boxes)), key=lambda i: (_pr_box_rank(boxes[i]), i))
         left, right = st.columns([3, 2])
         with left:
             st.markdown("**FRAME for the player check**" if pic.get("which") == "frame" else
@@ -6034,7 +6209,8 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
             # CONFIRMED CHANGE (requested): the zoomed close-ups sit ABOVE the large picture, not beside it or under it.
             # CONFIRMED CHANGE (requested: much clearer images for the player-number checks): a zoomed head-and-chest
             # close-up of every box (cut from the original frame by the parser), so the number can be read.
-            _crops = [(b.get("id"), b.get("label"), b.get("crop"), b.get("crop_s")) for b in boxes if b.get("crop")]
+            _crops = [(b.get("id"), b.get("label"), b.get("crop"), b.get("crop_s")) for b in (boxes[i] for i in _order)
+                      if b.get("crop")]
             if _crops:
                 try:
                     st.image([base64.b64decode(c[2].split(",", 1)[1]) for c in _crops],
@@ -6068,34 +6244,54 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
                 st.caption("No player boxes in this picture.")
                 _missed_picker()
                 continue
-            keys = [f"{kp}_b_{run}_{pi}_{ki}_{bi}" for bi in range(len(boxes))]
-            df = pd.DataFrame([{"Box": b.get("id"), "Side": b.get("side"),
-                                "Assigned": (f"{b.get('label')} ({b.get('how')})" if b.get("label") else "not named"),
-                                "Your check": (store.get(k, _PR_NOT_CHECKED) if store.get(k, _PR_NOT_CHECKED) in choices
-                                               else _PR_NOT_CHECKED)} for b, k in zip(boxes, keys)])
-            try:
-                data = df.style.apply(lambda c: ["color:#1e7fc8;font-weight:700" if v == "defense" else
-                                                 "color:#c66a00;font-weight:700" if v == "offense" else "" for v in c],
-                                      subset=["Side"])
-            except Exception:
-                data = df
-            cfg = {"Box": st.column_config.TextColumn(disabled=True, width="small"),
-                   "Side": st.column_config.TextColumn(disabled=True, width="small"),
-                   "Assigned": st.column_config.TextColumn(disabled=True),
-                   "Your check": st.column_config.SelectboxColumn(options=choices, required=True)}
-            try:
-                edited = st.data_editor(data, column_config=cfg, hide_index=True, use_container_width=True,
-                                        key=f"{kp}_ptbl_{run}_{pi}_{ki}", num_rows="fixed")
-            except Exception:
-                edited = st.data_editor(df, column_config=cfg, hide_index=True, use_container_width=True,
-                                        key=f"{kp}_ptbl_{run}_{pi}_{ki}", num_rows="fixed")
-            for i, k in enumerate(keys):
-                v = edited.iloc[i]["Your check"] if i < len(edited) else _PR_NOT_CHECKED
-                # only a real choice from the list counts as checked; a blank / NaN / unknown cell is "not checked"
-                if isinstance(v, str) and v in choices and v != _PR_NOT_CHECKED:
-                    store[k] = v
-                else:
-                    store.pop(k, None)
+            # CONFIRMED CHANGE (requested, film-tracking review): the table lists the boxes tracking is unsure of first --
+            # not named, then best guesses (least sure first), returners before last season's seniors between seasons.
+            # Boxes already named from evidence sit in their own list under it, to check only when one looks wrong.
+            unsure = [i for i in _order if _pr_box_rank(boxes[i])[0] < 2]
+            sure = [i for i in _order if _pr_box_rank(boxes[i])[0] >= 2]
+
+            def _box_table(idx, tkey):
+                keys = [f"{kp}_b_{run}_{pi}_{ki}_{bi}" for bi in idx]
+                df = pd.DataFrame([{"Box": boxes[bi].get("id"), "Side": boxes[bi].get("side"),
+                                    "Assigned": ((f"{boxes[bi].get('label')} ({boxes[bi].get('how')})" if boxes[bi].get("label")
+                                                  else "not named")
+                                                 + (" -- senior, gone" if boxes[bi].get("departed") else "")),
+                                    "Your check": (store.get(k, _PR_NOT_CHECKED) if store.get(k, _PR_NOT_CHECKED) in choices
+                                                   else _PR_NOT_CHECKED)} for bi, k in zip(idx, keys)])
+                try:
+                    data = df.style.apply(lambda c: ["color:#1e7fc8;font-weight:700" if v == "defense" else
+                                                     "color:#c66a00;font-weight:700" if v == "offense" else "" for v in c],
+                                          subset=["Side"])
+                except Exception:
+                    data = df
+                cfg = {"Box": st.column_config.TextColumn(disabled=True, width="small"),
+                       "Side": st.column_config.TextColumn(disabled=True, width="small"),
+                       "Assigned": st.column_config.TextColumn(disabled=True),
+                       "Your check": st.column_config.SelectboxColumn(options=choices, required=True)}
+                try:
+                    edited = st.data_editor(data, column_config=cfg, hide_index=True, use_container_width=True,
+                                            key=tkey, num_rows="fixed")
+                except Exception:
+                    edited = st.data_editor(df, column_config=cfg, hide_index=True, use_container_width=True,
+                                            key=tkey, num_rows="fixed")
+                for i, k in enumerate(keys):
+                    v = edited.iloc[i]["Your check"] if i < len(edited) else _PR_NOT_CHECKED
+                    # only a real choice from the list counts as checked; a blank / NaN / unknown cell is "not checked"
+                    if isinstance(v, str) and v in choices and v != _PR_NOT_CHECKED:
+                        store[k] = v
+                    else:
+                        store.pop(k, None)
+
+            if unsure:
+                st.caption(f"{len(unsure)} box(es) tracking is unsure of -- check these first (least sure at the top).")
+                _box_table(unsure, f"{kp}_ptbl_{run}_{pi}_{ki}")
+            else:
+                st.caption("Tracking named every box from evidence -- open the list below only if one looks wrong.")
+            if sure:
+                _checked = sum(1 for bi in sure if store.get(f"{kp}_b_{run}_{pi}_{ki}_{bi}", _PR_NOT_CHECKED) != _PR_NOT_CHECKED)
+                with st.expander(f"Already named from evidence ({len(sure)})" + (f" -- {_checked} checked" if _checked else ""),
+                                 expanded=not unsure):
+                    _box_table(sure, f"{kp}_ptbl_{run}_{pi}_{ki}_sure")
             _missed_picker()
 
 def _pr_play_widgets(d, pi, store, kp):
@@ -8093,7 +8289,8 @@ def render_film_tracking(short_opponent, key_suffix=""):
                                 for _, r in ib.iterrows()), unsafe_allow_html=True)
 
     with sub[2]:
-        st.markdown("**Our screen coverage vs the plan** (plan: `staff_inputs/uww_coverage_plan.csv`)")
+        st.markdown("**Our screen coverage vs the plan** (enter the plan in Upcoming Game \u2192 Game Plan \u2192 Our screen "
+                    "coverage plan)")
         ce = _ft_load("uww_trk_coverage_execution")
         if not ce.empty:
             ce = ce.assign(coverage=ce["coverage"].astype(str) + ce["coverage_source"].map(lambda s: " *" if s == "tracking estimate" else ""))
@@ -8739,6 +8936,12 @@ def render_upcoming_game():
                             for t, v in _sk_plan["teams"].items())
         st.caption(f"\u2702\ufe0f This game is after the {_sk_plan['season'] or 'last'} season, so that season's "
                    f"seniors are struck through on this page (and any line only about them) -- {_sk_who}.")
+    # CONFIRMED CHANGE (requested, film-tracking review): say up front how much film is on file for this opponent and
+    # for us, and how much of it can be trusted (players named, court placed) -- from the parser's uww_film_quality.csv
+    try:
+        render_film_coverage_line(short_opponent)
+    except Exception as _fq_err:
+        report_section_error("Film on file", _fq_err)
 
     # --- Reserve layout slots up front (Streamlit fills a container wherever it was CREATED in the
     # layout, regardless of when in the script it is actually written to) -- this is what lets

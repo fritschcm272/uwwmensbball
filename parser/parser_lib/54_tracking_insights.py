@@ -391,7 +391,8 @@ def _ti_inbounds(clips):
         sit = str(r.get("play_situation") or "")
         if not sit.startswith(("BLOB", "SLOB")):
             psit = r.get("pred_situation")
-            if not (isinstance(psit, str) and psit in ("BLOB", "SLOB") and (r.get("pred_situation_conf") or 0) >= 0.6):
+            _ok_sit = tag_field_trusted("situation") if "tag_field_trusted" in globals() else True
+            if not (_ok_sit and isinstance(psit, str) and psit in ("BLOB", "SLOB") and (r.get("pred_situation_conf") or 0) >= 0.6):
                 continue
             sit = psit + " (predicted)"
         # first moment with enough of the offense in the picture
@@ -409,9 +410,13 @@ def _ti_zone_press(clips):
     for key, c in clips.items():
         r = c["row"]
         dt = str(r.get("defense_type") or "")
-        is_zone = "Zone" in dt or (str(r.get("pred_defense") or "").find("Zone") >= 0 and (r.get("pred_defense_conf") or 0) >= 0.6)
+        # predicted zone / press only when the Tag model is trusted on that field (TAG_FIELD_TRUST)
+        _tr = (lambda f: tag_field_trusted(f)) if "tag_field_trusted" in globals() else (lambda f: True)
+        is_zone = "Zone" in dt or (_tr("defense") and str(r.get("pred_defense") or "").find("Zone") >= 0
+                                   and (r.get("pred_defense_conf") or 0) >= 0.6)
         press = str(r.get("defense_press")).lower() == "true" or (
-            isinstance(r.get("pred_press"), str) and r.get("pred_press") not in ("None", "") and (r.get("pred_press_conf") or 0) >= 0.6)
+            _tr("press") and isinstance(r.get("pred_press"), str) and r.get("pred_press") not in ("None", "")
+            and (r.get("pred_press_conf") or 0) >= 0.6)
         if not (is_zone or press):
             continue
         rec = {"clip_key": key, "defense_team": _ti_teams(r)[1], "offense_team": _ti_teams(r)[0],
@@ -505,7 +510,41 @@ def _ti_coverage_execution(screens):
         return pd.DataFrame()
     plan = pd.read_csv(plan_path) if os.path.exists(plan_path) else pd.DataFrame(
         columns=["opponent", "screen_type", "defender", "planned_coverage"])
+    # CONFIRMED CHANGE (requested): the plan can be entered in the app (Upcoming Game > Game Plan > Our screen coverage
+    # plan). Those saves land in <data>/play_review_saves as coverage_plan_*.json; the newest one for an opponent
+    # replaces that opponent's rows from the staff_inputs file.
+    _app_rows, _app_opps = [], set()
+    try:
+        _sd = _review_saves_dir() if "_review_saves_dir" in globals() else os.path.join(APP_DATA_DIR, "play_review_saves")
+        _docs = []
+        for _f in glob.glob(os.path.join(_sd, "coverage_plan_*.json")):
+            try:
+                with open(_f, encoding="utf-8") as _fh:
+                    _d = _trk_json.load(_fh)
+                if isinstance(_d, dict) and _d.get("kind") == "coverage_plan" and _d.get("opponent"):
+                    _docs.append(_d)
+            except Exception:
+                continue
+        _newest = {}
+        for _d in sorted(_docs, key=lambda d: str(d.get("saved", ""))):
+            _newest[str(_d["opponent"])] = _d
+        for _o, _d in _newest.items():
+            _app_opps.add(_o)
+            for _r in _d.get("rows") or []:
+                if _r.get("planned_coverage"):
+                    _app_rows.append({"opponent": _o, "screen_type": _r.get("screen_type") or "Any",
+                                      "defender": "" if str(_r.get("defender") or "").startswith("(") else _r.get("defender") or "",
+                                      "planned_coverage": _r.get("planned_coverage")})
+    except Exception as _pe:
+        print(f"  (app coverage plans not read: {_pe})", flush=True)
+    if _app_rows:
+        plan = pd.concat([plan[~plan["opponent"].astype(str).isin(_app_opps)] if not plan.empty else plan,
+                          pd.DataFrame(_app_rows)], ignore_index=True)
     fam = lambda s: re.sub(r"[^a-z]", "", str(s).lower())
+    # tracking's own estimate only says whether the defender stayed attached or separated, so a planned coverage is
+    # judged at that level when there's no coach tag on the clip
+    _attached = {"over", "toplock", "lock", "trail", "chase", "fight", "fightover", "stay"}
+    _separated = {"under", "behind", "drop", "sag", "gounder"}
 
     def planned(row):
         for _, p in plan.iterrows():
@@ -513,15 +552,24 @@ def _ti_coverage_execution(screens):
                 continue
             if isinstance(p.get("screen_type"), str) and p["screen_type"] not in ("", "Any") and p["screen_type"] != row["screen_type"]:
                 continue
-            if isinstance(p.get("defender"), str) and p["defender"].strip() and p["defender"].strip() not in (
-                    row["screener_defender"], row["screened_defender"]):
+            if isinstance(p.get("defender"), str) and p["defender"].strip() and p["defender"].strip().lower() not in (
+                    str(row["screener_defender"]).lower(), str(row["screened_defender"]).lower()):
                 continue
             return p["planned_coverage"]
         return None
     ours["planned_coverage"] = ours.apply(planned, axis=1)
-    ours["followed_plan"] = ours.apply(
-        lambda x: None if not isinstance(x["planned_coverage"], str) else
-        (fam(x["planned_coverage"]) in fam(x["coverage"]) or fam(x["coverage"]) in fam(x["planned_coverage"])), axis=1)
+    def _followed(x):
+        if not isinstance(x["planned_coverage"], str):
+            return None
+        pl, cv = fam(x["planned_coverage"]), fam(x["coverage"])
+        if x.get("coverage_source") == "tracking estimate":
+            if "stayedattached" in cv:
+                return True if pl in _attached else (False if pl in _separated else None)
+            if "separated" in cv:
+                return True if pl in _separated else (False if pl in _attached else None)
+            return None                                   # "unclear": can't judge
+        return pl in cv or cv in pl
+    ours["followed_plan"] = ours.apply(_followed, axis=1)
     long = pd.concat([ours.assign(defender=ours["screener_defender"], role="guarding the screener"),
                       ours.assign(defender=ours["screened_defender"], role="guarding the player screened")])
     long = long[long["defender"].notna()]
@@ -532,7 +580,9 @@ def _ti_coverage_execution(screens):
                 followed_pct=("followed_plan", lambda s: round(100 * s.dropna().astype(bool).mean()) if s.notna().any() else None),
                 ppp=("points", "mean")).reset_index())
     out["ppp"] = out["ppp"].round(2)
-    out["plan_file"] = "found" if os.path.exists(plan_path) else "none yet -- staff_inputs/uww_coverage_plan.csv"
+    out["plan_file"] = ("app plan" + (" + staff_inputs file" if os.path.exists(plan_path) else "") if _app_rows else
+                        "found" if os.path.exists(plan_path) else
+                        "none yet -- enter one in the app (Game Plan > Our screen coverage plan)")
     return out.sort_values(["offense_team", "times"], ascending=[True, False])
 
 
