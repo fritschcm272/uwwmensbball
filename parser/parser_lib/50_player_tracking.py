@@ -459,6 +459,33 @@ def _trk_group_feat(rows):
     return np.column_stack([rows[:, 14], rows[:, 15] * 2, rows[:, 16], rows[:, 17] * 2, rows[:, 18]])
 
 
+def _trk_set_aside_keep5(clip, flagged, prev, keep=5):
+    """Set aside the flagged tracks of one clip (most-sure first) as not players -- but never one whose removal would leave
+    its team with fewer than `keep` boxes in ANY frame it's in. CONFIRMED BUG (fixed; coach: "the player number tracking
+    results are getting worse ... only found 4 players"): the outfit check set aside 3,145 of 5,699 tracks in one run --
+    mostly real players in one team's uniform -- so the check pictures showed 2-6 boxes, often only one team.
+    -> (number set aside, number flagged but kept)."""
+    by_t = {}
+    for k, v in clip["side"].items():
+        if v in ("offense", "defense"):
+            for t, _j in clip["tracks"][k]:
+                by_t.setdefault((t, v), set()).add(k)
+    n_out = n_kept = 0
+    for k in flagged:
+        sd = clip["side"].get(k)
+        if sd not in ("offense", "defense"):
+            continue
+        if all(len(by_t.get((t, sd), ())) - 1 >= keep for t, _j in clip["tracks"][k]):
+            for t, _j in clip["tracks"][k]:
+                by_t[(t, sd)].discard(k)
+            prev[k] = sd
+            clip["side"][k] = None
+            n_out += 1
+        else:
+            n_kept += 1
+    return n_out, n_kept
+
+
 def _trk_name_frames(clips, todo, base):
     """CONFIRMED CHANGE (requested: "the frames are always too blurry ... switch back to finding ONE frame per video"; staff
     picked: names only, from the sharpest frame with the most players). For each clip: the ONE tracking frame (about
@@ -1908,8 +1935,6 @@ def player_tracking(pc):
                         n_dup_tr += 1
     _trk_note_drop("[tracks] duplicate box on the same player (dropped)", n_dup_tr)
     print(f"  [tracking]   {n_dup_tr:,} track(s) were a second box on a player already tracked (boxes overlap >= {_dup_iou:.0%}) -- dropped", flush=True)
-    if globals().get("TRACK_NAME_ONE_FRAME", True):
-        _trk_name_frames(clips, todo, base)
 
     # CONFIRMED CHANGE (requested: "do #2"). People standing along a sideline the whole time -- coaches, the bench, the scorer's
     # table -- passed the per-frame court filter whenever their feet mapped just inside the line (on the checks, 10 of the 15 boxes
@@ -1964,6 +1989,13 @@ def player_tracking(pc):
                       + (" (no test yet -- run the Outfit check cell)" if not _oc_res else ""), flush=True)
             elif _oc_cut is None:
                 print("  [tracking]   outfit check not used: no tested cutoff", flush=True)
+            elif (_oc_res.get("players_lost") or 0) > float(globals().get("OUTFIT_MAX_PLAYERS_LOST", 0.05)) * max(
+                    1, int(_oc_res.get("boxes") or 0) - int(_oc_res.get("not_players") or 0)) and _oc_mode == "auto":
+                # a test saved before the players-lost rule: at its cutoff it set aside too many real players
+                print(f"  [tracking]   outfit check not used: at its tested cutoff it set aside {_oc_res.get('players_lost')} of "
+                      f"{int(_oc_res.get('boxes') or 0) - int(_oc_res.get('not_players') or 0)} real players on your checked boxes "
+                      f"(more than {float(globals().get('OUTFIT_MAX_PLAYERS_LOST', 0.05)):.0%}) -- rerun the Outfit check cell",
+                      flush=True)
             else:
                 _ncrop = int(globals().get("TRACK_OUTFIT_CROPS", 2))
                 items, owner = [], []
@@ -1984,16 +2016,23 @@ def player_tracking(pc):
                 for o_, v_ in zip(owner, _sc):
                     if v_ is not None:
                         _acc.setdefault(o_, []).append(v_)
-                n_out = 0
+                n_out = n_kept5 = 0
+                _flag_by = {}
                 for (i, k), vs in _acc.items():
                     if float(np.mean(vs)) >= float(_oc_cut):
-                        _set_aside_prev[(i, k)] = clips[i]["side"][k]
-                        clips[i]["side"][k] = None
-                        n_out += 1
+                        _flag_by.setdefault(i, []).append((float(np.mean(vs)), k))
+                for i, lst in _flag_by.items():
+                    _prev_i = {}
+                    a_, b_ = _trk_set_aside_keep5(clips[i], [k for _v, k in sorted(lst, reverse=True)], _prev_i)
+                    n_out += a_
+                    n_kept5 += b_
+                    for k, v in _prev_i.items():
+                        _set_aside_prev[(i, k)] = v
                 _trk_note_drop("[tracks] outfit says referee / coach / bench / fan (set aside)", n_out)
                 print(f"  [tracking]   outfit check: {n_out:,} track(s) dressed like a referee, coach, bench player or fan "
                       f"(score >= {float(_oc_cut):.2f}, tested {_oc_res.get('precision', 0):.0%} right) -- set aside as not "
-                      f"players ({time.time() - _t0o:.0f} s)", flush=True)
+                      f"players" + (f"; {n_kept5:,} more flagged but kept so each team keeps 5 boxes in every frame"
+                                    if n_kept5 else "") + f" ({time.time() - _t0o:.0f} s)", flush=True)
         except Exception as _e:
             if "RESTART THE KERNEL" in str(_e):
                 raise
@@ -2336,9 +2375,12 @@ def player_tracking(pc):
             _min_prec = float(globals().get("TRACK_PLAYER_MODEL_MIN_PRECISION", 0.9))
             _min_rec = float(globals().get("TRACK_PLAYER_MODEL_MIN_RECALL", 0.25))
             _best = None
+            # the lowest cutoff that is right often enough AND costs few real players (CONFIRMED BUG, fixed: it passed at a
+            # cutoff that set aside 7 of the 24 checked real players -- TRACK_PLAYER_MODEL_MAX_LOST, default 5%)
+            _max_lost = float(globals().get("TRACK_PLAYER_MODEL_MAX_LOST", 0.05)) * max(1, int((_y == 0).sum()))
             for _c in sorted(set(np.round(_s, 3)), reverse=True):
                 _fl = _s >= _c
-                if _fl.sum() >= 10 and _y[_fl].mean() >= _min_prec:
+                if _fl.sum() >= 10 and _y[_fl].mean() >= _min_prec and int((_fl & (_y == 0)).sum()) <= _max_lost:
                     _best = (float(_c), float(_y[_fl].mean()), float(_y[_fl].sum() / max(_y.sum(), 1)), int((_fl & (_y == 0)).sum()))
             _passed = bool(_best and _best[2] >= _min_rec)
             print(f"  [tracking]   player / not-a-player model: {_n1} not-a-player and {_n0} player label(s) from the coach checks"
@@ -2365,22 +2407,25 @@ def player_tracking(pc):
                     _n_pm = _n_kept_min = 0
                     for (i, k), p_ in zip(_cand, _P):
                         _pm_p[(i, k)] = float(p_)
-                    # safety: a team always keeps at least 5 tracks in a clip -- the least player-like go first
+                    # safety: a team always keeps at least 5 boxes in every frame -- the least player-like go first
                     for i in todo:
-                        for sd in ("offense", "defense"):
-                            ks = [k for k, v in clips[i]["side"].items() if v == sd]
-                            flag = sorted([k for k in ks if _pm_p.get((i, k), 0.0) >= _pm_cut], key=lambda k: -_pm_p[(i, k)])
-                            room = max(0, len(ks) - 5)
-                            for k in flag[:room]:
-                                _set_aside_prev[(i, k)] = clips[i]["side"][k]
-                                clips[i]["side"][k] = None
-                                _n_pm += 1
-                            _n_kept_min += max(0, len(flag) - room)
+                        ks = [k for k, v in clips[i]["side"].items() if v in ("offense", "defense")]
+                        flag = sorted([k for k in ks if _pm_p.get((i, k), 0.0) >= _pm_cut], key=lambda k: -_pm_p[(i, k)])
+                        _prev_i = {}
+                        a_, b_ = _trk_set_aside_keep5(clips[i], flag, _prev_i)
+                        _n_pm += a_
+                        _n_kept_min += b_
+                        for k, v in _prev_i.items():
+                            _set_aside_prev[(i, k)] = v
                     _trk_note_drop("[tracks] player model says referee / coach / fan (set aside)", _n_pm)
                     print(f"  [tracking]   player model: {_n_pm:,} track(s) set aside as not players (score >= {_pm_cut:.2f}) -- they "
                           f"can't take a jersey number or one of the five"
-                          + (f"; {_n_kept_min:,} more flagged but kept so each team still has 5 tracks in its clip"
+                          + (f"; {_n_kept_min:,} more flagged but kept so each team keeps 5 boxes in every frame"
                              if _n_kept_min else ""), flush=True)
+
+    # the clip's ONE naming frame, picked after every not-a-player rule above, so it is the frame with the most players LEFT
+    if globals().get("TRACK_NAME_ONE_FRAME", True):
+        _trk_name_frames(clips, todo, base)
 
     # --- fingerprints for every track on a known side ---
     # CONFIRMED CHANGE (requested: the run sat on "fingerprinting 16858 player crop(s)" with no sign of life).
@@ -3163,7 +3208,11 @@ def player_tracking(pc):
             _rmod = _rr.get("chosen") or (next((m for m, v in _rr.get("models", {}).items() if v.get("margin_cutoff") is not None), None)
                                           if _rm is True else None)
             _rinfo = _rr.get("models", {}).get(_rmod, {}) if _rmod else {}
-            if "reid_fingerprints" not in globals():
+            # the tested combination: model + crop ("dinov2 upper"); tests saved before crops were compared are "full"
+            _rmodel, _rcrop = _rinfo.get("model", _rmod), _rinfo.get("crop", "full")
+            if _rr.get("match"):
+                globals()["REID_MATCH"] = _rr["match"]           # match the way it was tested
+            if "reid_fingerprints" not in globals() or "reid_assign" not in globals():
                 print("  [tracking]   re-ID names not used: run the Re-ID check cell (50d) first", flush=True)
             elif not _rmod or _rinfo.get("margin_cutoff") is None:
                 print("  [tracking]   re-ID names not used: its test on your checked boxes did not pass"
@@ -3182,9 +3231,10 @@ def player_tracking(pc):
                         for t, j in sorted(tr, key=lambda tj: -float(clip["frames"][tj[0]][tj[1]][2]))[:_nc]:
                             items.append((clip["files"][t], clip["frames"][t][j][6:10]))
                             owner.append((i, k))
-                print(f"  [tracking]   re-ID ({_rmod}): fingerprinting {len(items):,} picture(s) (saved ones are reused)...", flush=True)
+                print(f"  [tracking]   re-ID ({_rmodel}, {_rcrop} crop): fingerprinting {len(items):,} picture(s) (saved ones are "
+                      f"reused)...", flush=True)
                 _vs = {}
-                for o_, v_ in zip(owner, reid_fingerprints(items, base, _rmod)):
+                for o_, v_ in zip(owner, reid_fingerprints(items, base, _rmodel, _rcrop)):
                     if v_ is not None:
                         _vs.setdefault(o_, []).append(np.asarray(v_, np.float32))
                 gal = {}
@@ -3198,15 +3248,25 @@ def player_tracking(pc):
                         continue
                     for sd in ("offense", "defense"):
                         five = _trk_five(pc.at[i, f"{sd}_lineup"])
+                        # CONFIRMED CHANGE (requested: five boxes, five names): the unnamed tracks of a team in a clip are named
+                        # TOGETHER (reid_assign) -- the surest first, and a name can't go to two tracks on the floor at the same
+                        # moment (nor to one overlapping a track already named). Fragments of one player that never overlap may
+                        # share a name.
+                        frs = {k: {t_ for t_, _ in clip["tracks"][k]} for k in range(len(clip["tracks"]))}
+                        ent = {}
                         for k in range(len(clip["tracks"])):
                             if clip["side"].get(k) != sd or (i, k) in names_all or (i, k) not in _vs:
                                 continue
-                            fr_k = {t_ for t_, _ in clip["tracks"][k]}
                             taken = {names_all[(i, kk)][0] for kk in range(len(clip["tracks"]))
-                                     if (i, kk) in names_all and fr_k & {t_ for t_, _ in clip["tracks"][kk]}}
+                                     if (i, kk) in names_all and frs[k] & frs[kk]}
                             q = np.mean(_vs[(i, k)], 0)
                             q = q / (np.linalg.norm(q) + 1e-8)
-                            pick, margin, _sc = reid_match(q, g_gal, [n_ for n_ in five if n_ not in taken])
+                            _p, _m, sc = reid_match(q, g_gal, [n_ for n_ in five if n_ not in taken])
+                            if sc:
+                                ent[k] = (sc, set())
+                        for k in ent:
+                            ent[k] = (ent[k][0], {kk for kk in ent if kk != k and frs[k] & frs[kk]})
+                        for k, (pick, margin) in reid_assign(ent).items():
                             if pick and margin >= _rcut:
                                 names_all[(i, k)] = (pick, round(_rprec, 2))
                                 reid_named[(i, k)] = pick

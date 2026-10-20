@@ -1,1 +1,4 @@
-
+clip_key,offense_team,situation,alignment,layout,points,play_title,game_date,game_code
+2026-03-07|30|22 Joey Berezowitz > Hand Off > From Stationary > Left > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,UW-Whitewater,BLOB,line,"[[20.9, 1.1, ""unnamed offense""], [32.0, -0.9, ""unnamed offense""], [-28.8, 0.7, ""unnamed offense""], [-24.2, -0.9, ""unnamed offense""]]",3.0,[app] BLOB Line Set: Man-to-Man (Under),2026-03-07,UWWhitewater@Wash(StLouis)
+2026-03-07|41|2 Kelton Mcewen > Off Screen > To Shooter's Left > Straight > Turnover,UW-Whitewater,SLOB,line,"[[54.4, -1.4, ""unnamed offense""], [-6.8, -0.4, ""unnamed offense""], [-47.4, 4.2, ""unnamed offense""], [-0.2, -2.5, ""unnamed offense""]]",0.0,[app] SLOB Line Motion: Man-to-Man (Over),2026-03-07,UWWhitewater@Wash(StLouis)
+2026-03-07|44|11 Jr Lukenbill > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,UW-Whitewater,SLOB,line,"[[10.2, -1.4, ""unnamed offense""], [5.5, 0.4, ""unnamed offense""], [15.8, -2.5, ""unnamed offense""], [-39.2, 4.2, ""unnamed offense""], [7.6, -0.8, ""unnamed offense""]]",3.0,[app] SLOB 5 Out Motion: ZONE,2026-03-07,UWWhitewater@Wash(StLouis)

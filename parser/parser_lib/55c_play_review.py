@@ -758,6 +758,7 @@ def play_review():
         _grid = globals().get("PLAY_REVIEW_GRID", (12, 8))
         gnums = _trk_numbers_for_game(gd, gc)
         numtxt = lambda n: f"#{gnums.get(str(n).lower(), '?')} {str(n).split()[-1]}"
+        _rosters_pr = _tag_rosters(g) if "_tag_rosters" in globals() else {}
         plays = []
         for _ri, r in pick.iterrows():
             _parts = _parts_of.get(_ri, ["titles", "players"])
@@ -875,10 +876,15 @@ def play_review():
                           "video_at": (f"{int(vs // 60)}:{int(vs % 60):02d}" if pd.notna(vs) else None),
                           "pictures": pics, "fields": fields,
                           "five": {"offense": _trk_five(r.get("offense_lineup")), "defense": _trk_five(r.get("defense_lineup"))},
-                          # CONFIRMED CHANGE (requested): the "Your check" dropdown shows jersey numbers ("really #12 Marino"),
-                          # so each name in the five carries its number label (same numtxt as the box labels)
+                          # CONFIRMED BUG (fixed; clip 29, no clock: "this one has no roster"): a side whose five isn't known gets
+                          # that team's roster for the game, so "really ..." in the player check still lists names and numbers
+                          "roster": {sd: [n for n in _rosters_pr.get(str(r.get(f"{sd}_team")), [])
+                                          if n not in _trk_five(r.get(f"{sd}_lineup"))]
+                                     for sd in ("offense", "defense") if len(_trk_five(r.get(f"{sd}_lineup"))) < 5},
                           "five_labels": {nm: f"{numtxt(nm).split(' ')[0]} {nm}" for side in ("offense", "defense")
-                                          for nm in _trk_five(r.get(f"{side}_lineup"))}})
+                                          for nm in _trk_five(r.get(f"{side}_lineup"))
+                                          + (_rosters_pr.get(str(r.get(f"{side}_team")), [])
+                                             if len(_trk_five(r.get(f"{side}_lineup"))) < 5 else [])}})
         # every answer already known for each field (coaches' Titles and the model's answers, all games) -- offered as
         # suggestions for a typed answer, so it matches an existing spelling (page and app)
         vocab = {}
