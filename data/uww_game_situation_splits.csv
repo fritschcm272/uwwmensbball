@@ -1,4 +1,4 @@
 opponent,situation,ppp,primary_actions,note,is_sample
-MSOE Raiders,Leading by 10+,0.85,"Slows down, more Hi-Lo DHO",Stops running in transition,True
-MSOE Raiders,Trailing by 10+,1.15,"More ball screens, faster pace",Mason Dopirak takes over possessions,True
-MSOE Raiders,"Clutch (last 5 min, margin ≤ 8)",0.97,Isolation for Mason Dopirak,Goes away from their sets late,True
+Wheaton (IL) Thunder,Leading by 10+,0.85,"Slows down, more Hi-Lo DHO",Stops running in transition,True
+Wheaton (IL) Thunder,Trailing by 10+,1.15,"More ball screens, faster pace",Soren Richardson takes over possessions,True
+Wheaton (IL) Thunder,"Clutch (last 5 min, margin ≤ 8)",0.97,Isolation for Soren Richardson,Goes away from their sets late,True

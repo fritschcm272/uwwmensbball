@@ -617,8 +617,10 @@ _SB_FF_HIGHER_IS_BETTER = {"eFG%": True, "TOV%": False, "ORB%": True, "FT Rate":
 def _sb_possessions(fga, oreb, to, fta):
     """The standard possession estimate. A box score carries no possession count, so this is the widely
     used approximation: a possession ends on a made shot, a defensive rebound, a turnover, or the last free
-    throw of a trip -- 0.44 approximating how often an FTA is the last of its trip."""
-    return fga - oreb + to + 0.44 * fta
+    throw of a trip -- 0.475 approximating how often a college FTA is the last of its trip. CONFIRMED CHANGE
+    (requested): Ken Pomeroy's (KenPom) college coefficient everywhere possessions are estimated; it was 0.44 (the
+    NBA version) here, so the Four Factors' TOV% and PACE above used different possession counts."""
+    return fga - oreb + to + 0.475 * fta
 
 
 def _sb_four_factors(team_box, opp_box):
@@ -2111,8 +2113,12 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             team = "uww"
         if _tier_note.get((side, _norm(name))):
             items = [_tier_note[(side, _norm(name))]] + items
-        detail = (("<ul class=\"tbl-bul\">" + "".join(f"<li>{_sb_esc(x)}</li>" for x in items[:3]) + "</ul>")
-                  if bullets else " \u00b7 ".join(_sb_esc(x) for x in items))
+        # CONFIRMED CHANGE (requested: the film goes into the existing sections, not its own): the player's film line
+        # (player tracking -- _film_player_note, built in "THE FILM" above the roster) rides along as one more line
+        _film = _film_player_note.get((side, _norm(name)))
+        detail = (("<ul class=\"tbl-bul\">" + "".join(f"<li>{_sb_esc(x)}</li>" for x in items[:3])
+                   + (f'<li class="film">\U0001f3a5 {_sb_esc(_film)}</li>' if _film else "") + "</ul>")
+                  if bullets else " \u00b7 ".join([_sb_esc(x) for x in items] + ([f"\U0001f3a5 {_sb_esc(_film)}"] if _film else [])))
         bits = " ".join(bio_bits(bio)) if bio is not None else ""
         # his offensive role (BBall Index's 12) -- the same lookup every roster table uses
         _team_q = short if side == "Opponent" else "Whitewater"
@@ -2126,7 +2132,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _drole, _dbasis = defensive_role_for(name, _team_q)
             if _drole:
                 bits = (bits + " &middot; " if bits else "") + f'Def: <strong>{_sb_esc(_drole)}</strong><span class="mini">{_q(_dbasis)}</span>'
-        return {"p": p, "bio": bio, "bits": bits, "items": items, "detail": detail, "team": team}
+        return {"p": p, "bio": bio, "bits": bits, "items": items, "detail": detail, "team": team, "film": _film}
 
     def _ft_cell(p):
         # A bare "100.0" invites exactly the question asked about Hillmer's free throws -- real, or one
@@ -2230,6 +2236,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             if r["items"]:
                 add('<div class="p-reads">' + ("<ul class=\"tbl-bul\">" + "".join(
                     f"<li>{_sb_esc(x)}</li>" for x in r["items"][:3]) + "</ul>") + "</div>")
+            if r.get("film"):
+                add(f'<div class="p-reads mini">\U0001f3a5 {_sb_esc(r["film"])}</div>')
             add("</div>")
 
     def personnel_pages(side, team_title, stats_df, card_fn, extra_no_min="", break_first=True, lead=None):
@@ -2255,7 +2263,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                               "notes pass through as written; data-driven lines are stated against the team's own "
                               "averages with attempt floors." if side == "Opponent" else
                               "Flags come from our own season film (highest-confidence first in the app). Play-call "
-                              "lines need 3+ tagged uses of a set.")))
+                              "lines need 3+ tagged uses of a set.")
+                           + (" " + _film_roster_note if side == "Opponent" and _film_roster_note else "")))
         # CONFIRMED CHANGE (requested): starters and every bench tier live in ONE roster section, in the same
         # table shape. Starters get up to three bullets in the last column; each player's full card (every
         # read, note and key) is one click away in the app.
@@ -2267,6 +2276,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 continue
             add(f'<div class="tier-h">{_sb_esc(label)}</div><p class="tier-c">{_sb_esc(caption)}</p>')
             bench_table(names, stats_df, side)
+        if side == "Opponent" and _film_names_gate:
+            add(_film_names_gate)          # why there are no film lines yet (tracking can't name enough players)
         # Players never on the floor in any game on film are also app-only now; count them with the rest.
         _extra_n = len([x for x in str(extra_no_min or "").split(",") if x.strip()])
         if side == "Opponent" and _foul_by:
@@ -3093,6 +3104,350 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         _sm = _sm[_sm["opponent"].astype(str) == str(short)]
 
 
+    # =====================================================================================================
+    # THE FILM (player tracking + court mapping) -- CONFIRMED CHANGE (requested: "the scouting brief should not have
+    # a separate FROM THE FILM section ... built directly into the Players, Offensive and Defensive sections that
+    # already exist"). What the tracked film shows about the opponent now rides inside their own sections:
+    #   ROSTER                  each player's film line (who he guarded most, how far off his man he plays, how he
+    #                           plays screens, who he screens for) -- _film_player_note, in _roster_player
+    #   HOW <OPP> RUNS OFFENSE  recurring alignments, inbounds, and (court mapping good enough) shot chart, screen
+    #                           spots, play diagrams -- _film_off_cards
+    #   HOW <OPP> GUARDS SCREENS how their defenders play each screen on film, the defenders who play it differently,
+    #                           zone / press, court traps -- _film_def_cards
+    # Every film table stays in the app (Film tracking, Court view). Only the upcoming opponent's film is used
+    # (TRACK_BRIEF_TEAM can name it when the spelling differs). The film-quality cell gates it: per-player lines need
+    # tracking to name players on FILM_NAMES_OK_PCT of floor spots; court pictures need the court mapping to pass.
+    # Prepared here, before the roster, because the roster carries each player's line.
+    # =====================================================================================================
+    _tk_clips = _sb_d("uww_trk_clips")
+    _fq = _sb_d("uww_film_quality")
+    _fq_of = lambda t: (_fq[_fq["team"].astype(str) == str(t)].iloc[0].to_dict()
+                        if t and not _fq.empty and "team" in _fq.columns and (_fq["team"].astype(str) == str(t)).any() else {})
+    _fq_true = lambda v: str(v).strip().lower() in ("true", "1")
+    _fq_pct = lambda v: (lambda x: f"{int(round(x))}" if pd.notna(x) else None)(pd.to_numeric(v, errors="coerce"))
+    _tk_unnamed = lambda v: "unnamed" in str(v).lower() or not _sb_clean(v)
+    _tk_team = None
+    if not _tk_clips.empty and {"offense_team", "defense_team"} <= set(_tk_clips.columns):
+        def _tk_is(team, label):
+            words = {w for w in re.split(r"[\s\-@()]+", str(label).lower()) if len(w) > 3 and w not in ("titans", "warhawks")}
+            return any(w in str(team).lower() for w in words)
+        _tk_teams = pd.concat([_tk_clips["offense_team"], _tk_clips["defense_team"]]).dropna().astype(str)
+        _tk_teams = _tk_teams[~_tk_teams.str.lower().str.contains("whitewater")]
+        _tk_team = next((t for t in _tk_teams.value_counts().index
+                         if _tk_is(t, globals().get("TRACK_BRIEF_TEAM") or short)), None)
+    _tk_n = (int(((_tk_clips["offense_team"].astype(str) == str(_tk_team))
+                  | (_tk_clips["defense_team"].astype(str) == str(_tk_team))).sum()) if _tk_team else 0)
+    _tk_q = _fq_of(_tk_team) if _tk_team else {}
+    _tk_names_ok = _fq_true(_tk_q.get("names_ok")) if _tk_q else False
+    _tk_court_ok = _fq_true(_tk_q.get("court_ok")) if _tk_q else False
+    _D = lambda name, col: ((lambda d: d[d[col].astype(str) == str(_tk_team)] if not d.empty and col in d.columns
+                             else pd.DataFrame())(_sb_d(name)) if _tk_team else pd.DataFrame())
+    _film_app_link = lambda label="Film tracking": app_link(label, page="upcoming", tab="game_plan", section="film_tracking")
+
+    def _tk_table(df, cols, heads, limit=10):
+        if df.empty:
+            return ""
+        h = "".join(f'<th style="text-align:left">{_sb_esc(x)}</th>' for x in heads)
+        body = ""
+        for _, r in df.head(limit).iterrows():
+            body += "<tr>" + "".join(f'<td style="text-align:left">{_sb_esc(_sb_clean(r.get(c)))}</td>' for c in cols) + "</tr>"
+        more = f'<p class="mini">+{len(df) - limit} more in the app.</p>' if len(df) > limit else ""
+        return f'<table class="compact"><thead><tr>{h}</tr></thead><tbody>{body}</tbody></table>{more}'
+
+    _film_cards_n = [0]             # film cards drawn so far (a section's trailing note / link only follows real cards)
+
+    def _film_card(title, body):
+        if not body:
+            return
+        _film_cards_n[0] += 1
+        add(f'<div class="card"><div class="pc-sub">\U0001f3a5 {title}</div>{body}</div>')
+
+    def _cz_png(shots=None, diagram=None, title=""):
+        """Half court (basket at top) as an embedded PNG: shots (green made / red missed) or a play diagram."""
+        import base64, io
+        from PIL import Image, ImageDraw
+        S, W, H = 6, 300, 290
+        im = Image.new("RGB", (W, H), (236, 214, 170))
+        d = ImageDraw.Draw(im)
+        P = lambda hx, hy: (hy * S, hx * S + 4)
+        white, ink = (255, 255, 255), (40, 40, 40)
+        d.rectangle([P(0, 0), P(47, 50)], outline=white, width=2)
+        d.rectangle([P(0, 19), P(19, 31)], outline=white, width=2)
+        d.ellipse([P(13, 19), P(25, 31)], outline=white, width=2)
+        d.line([P(0, 3.33), P(9.83, 3.33)], fill=white, width=2)
+        d.line([P(0, 46.67), P(9.83, 46.67)], fill=white, width=2)
+        arc = [P(5.25 + 22.146 * np.cos(a), 25 + 22.146 * np.sin(a)) for a in np.linspace(-1.35, 1.35, 60)]
+        d.line(arc, fill=white, width=2)
+        d.line([P(4, 22), P(4, 28)], fill=ink, width=2)
+        d.ellipse([P(4.5, 24.25), P(6.0, 25.75)], outline=(200, 60, 30), width=2)
+        if shots is not None:
+            for _, s_ in shots.iterrows():
+                x, y = P(float(s_["hx"]), float(s_["hy"]))
+                col = (40, 150, 60) if str(s_["made"]) == "True" else (200, 40, 40)
+                d.ellipse([x - 4, y - 4, x + 4, y + 4], fill=col, outline=ink)
+        if diagram is not None:
+            dg = diagram if isinstance(diagram, dict) else (globals().get("_trk_json") or __import__("json")).loads(diagram)
+            pos = {}
+            for p_ in dg.get("players", []):
+                pts = [P(hx, hy) for _, hx, hy in p_["path"]]
+                if not pts:
+                    continue
+                if p_["side"] == "offense" and p_.get("num"):
+                    pos[p_["num"]] = {int(t): P(hx, hy) for t, hx, hy in p_["path"]}
+                    if len(pts) > 1:
+                        d.line(pts, fill=ink, width=2)
+                        (x1, y1), (x2, y2) = pts[-2], pts[-1]
+                        ang = np.arctan2(y2 - y1, x2 - x1)
+                        d.polygon([(x2, y2), (x2 - 9 * np.cos(ang - 0.4), y2 - 9 * np.sin(ang - 0.4)),
+                                   (x2 - 9 * np.cos(ang + 0.4), y2 - 9 * np.sin(ang + 0.4))], fill=ink)
+                    x0, y0 = pts[0]
+                    d.ellipse([x0 - 8, y0 - 8, x0 + 8, y0 + 8], fill=(255, 255, 255), outline=ink, width=2)
+                    d.text((x0 - 3, y0 - 6), str(p_["num"]), fill=ink)
+                elif p_["side"] == "defense":
+                    x, y = pts[0]
+                    d.line([x - 4, y - 4, x + 4, y + 4], fill=(30, 110, 190), width=2)
+                    d.line([x - 4, y + 4, x + 4, y - 4], fill=(30, 110, 190), width=2)
+            for ps in dg.get("passes", []):
+                a, b = pos.get(ps["from"], {}), pos.get(ps["to"], {})
+                if a and b:
+                    pa = a[min(a, key=lambda t: abs(t - ps["t"]))]
+                    pb = b[min(b, key=lambda t: abs(t - ps["t"]))]
+                    for k in range(0, 10, 2):   # dashed pass line
+                        d.line([(pa[0] + (pb[0] - pa[0]) * k / 10, pa[1] + (pb[1] - pa[1]) * k / 10),
+                                (pa[0] + (pb[0] - pa[0]) * (k + 1) / 10, pa[1] + (pb[1] - pa[1]) * (k + 1) / 10)], fill=ink, width=2)
+            sc = dg.get("screen")
+            if sc:
+                x, y = P(sc["hx"], sc["hy"])
+                d.line([x - 7, y, x + 7, y], fill=(200, 40, 40), width=3)   # the screen "T"
+                d.line([x, y, x, y - 7], fill=(200, 40, 40), width=3)
+        if title:
+            d.text((4, H - 12), title[:48], fill=ink)
+        buf = io.BytesIO()
+        im.save(buf, "PNG")
+        return f'<img src="data:image/png;base64,{base64.b64encode(buf.getvalue()).decode()}" width="{W}" height="{H}" style="margin:4px"/>'
+
+    # ---- the roster: each player's film line, and why it's missing when it is -------------------------
+    _film_player_note = {}
+    _film_roster_note = ""          # added to the roster's footnote
+    _film_names_gate = ""           # one line under the roster while names aren't trusted yet
+    if _tk_team:
+        _film_roster_note = (
+            f"\U0001f3a5 lines are from player tracking on {_tk_n} tracked clip(s) of {_tk_team}: who he guarded most, how "
+            "far off his man he plays, how he plays screens and who he screens for. Only once tracking names players "
+            f"on {int(globals().get('FILM_NAMES_OK_PCT', 50))}%+ of their floor spots, and never from a player it "
+            "couldn't name; names on film are partly best guesses until the coaches' player checks confirm them. "
+            "Approximate feet, small sample.")
+        if not _tk_names_ok:
+            _film_names_gate = (
+                '<p class="mini">\U0001f3a5 Each player\'s film read (who he guards, how far off his man he plays, how he '
+                "plays screens, who he screens for) goes here once tracking names the players on at least "
+                f"{int(globals().get('FILM_NAMES_OK_PCT', 50))}% of {_sb_esc(_tk_team)} floor spots"
+                + (f" (now {_fq_pct(_tk_q.get('named_share_pct'))}%)" if _fq_pct(_tk_q.get("named_share_pct")) is not None else "")
+                + ": " + _film_app_link() + "</p>")
+        else:
+            _orl = _sb_d("uww_offensive_roles")
+            _role_of = ({_norm(p): r for p, r in zip(_orl["player"], _orl["offensive_role"])}
+                        if not _orl.empty and {"player", "offensive_role"} <= set(_orl.columns) else {})
+            _fp = {}
+            _m = _D("uww_trk_matchups", "defense_team")
+            if not _m.empty and {"defender", "guards", "possessions"} <= set(_m.columns):
+                _m = _m[[not (_tk_unnamed(a) or _tk_unnamed(b)) for a, b in zip(_m["defender"], _m["guards"])]].copy()
+                _m["_poss"] = pd.to_numeric(_m["possessions"], errors="coerce").fillna(0)
+                for _dn, _g in _m.groupby("defender"):
+                    _tot = _g["_poss"].sum()
+                    if _tot < 3:
+                        continue
+                    _top = _g.sort_values("_poss", ascending=False).iloc[0]
+                    _rl = _g.assign(_r=_g["guards"].map(lambda n: _role_of.get(_norm(n)))).dropna(subset=["_r"])
+                    _rtxt = ""
+                    if len(_rl):
+                        _rs = _rl.groupby("_r")["_poss"].sum().sort_values(ascending=False)
+                        _rtxt = f" -- {round(100 * _rs.iloc[0] / _tot)}% of them on our {_rs.index[0]}s"
+                    _fp.setdefault(_norm(_dn), []).append(
+                        f"guarded {_sb_title(_top['guards'])} most ({int(_top['_poss'])} of {int(_tot)} poss{_rtxt})")
+            _hh = _D("uww_trk_help", "defense_team")
+            if not _hh.empty and "defender" in _hh.columns:
+                for _, r in _hh[[not _tk_unnamed(x) for x in _hh["defender"]]].iterrows():
+                    _ws = pd.to_numeric(r.get("approx_ft_off_man_weak side"), errors="coerce")
+                    if pd.notna(_ws):
+                        _fp.setdefault(_norm(r["defender"]), []).append(
+                            f"plays about {_ws:.0f} ft off his man on the weak side"
+                            + (f" ({_sb_clean(r.get('tendency'))})" if _sb_clean(r.get("tendency")) else ""))
+            _c = _D("uww_trk_screen_coverage", "defense_team")
+            if not _c.empty and {"defender", "screen_type", "coverage", "times"} <= set(_c.columns):
+                _c = _c[[not _tk_unnamed(x) for x in _c["defender"]]].copy()
+                _c["_t"] = pd.to_numeric(_c["times"], errors="coerce").fillna(0)
+                for (_dn, _stp), _g in _c.groupby(["defender", "screen_type"]):
+                    _top = _g.sort_values("_t", ascending=False).iloc[0]
+                    if _top["_t"] >= 2:
+                        _fp.setdefault(_norm(_dn), []).append(
+                            f"{_stp.lower()}s: {_top['coverage']} {int(_top['_t'])} of {int(_g['_t'].sum())}")
+            _sp = _D("uww_trk_screen_pairs", "offense_team")
+            if not _sp.empty and {"screener", "screened", "times"} <= set(_sp.columns):
+                _sp = _sp[[not (_tk_unnamed(a) or _tk_unnamed(b)) for a, b in zip(_sp["screener"], _sp["screened"])]].copy()
+                _sp["_t"] = pd.to_numeric(_sp["times"], errors="coerce").fillna(0)
+                for _sn, _g in _sp.groupby("screener"):
+                    _top = _g.sort_values("_t", ascending=False).iloc[0]
+                    if _top["_t"] < 2:
+                        continue
+                    _after = ", ".join(f"{k} {int(_g[c].sum())}" for k, c in (("rolls", "rolls"), ("pops", "pops"), ("slips", "slips"))
+                                       if c in _g.columns and int(pd.to_numeric(_g[c], errors="coerce").fillna(0).sum()))
+                    _fp.setdefault(_norm(_sn), []).append(
+                        f"screens for {_sb_title(_top['screened'])} most ({int(_top['_t'])}x)" + (f", then {_after}" if _after else ""))
+            if _tk_court_ok:
+                _ch = _D("uww_court_help", "defense_team")
+                if not _ch.empty and "defender" in _ch.columns:
+                    for _, r in _ch[[not _tk_unnamed(x) for x in _ch["defender"]]].iterrows():
+                        _ip = pd.to_numeric(r.get("weak_side_in_paint_pct"), errors="coerce")
+                        if pd.notna(_ip):
+                            _fp.setdefault(_norm(r["defender"]), []).append(f"in the paint on {_ip:.0f}% of his weak-side frames")
+            _film_player_note = {("Opponent", k): "Film: " + "; ".join(v[:3]) for k, v in _fp.items() if v}
+
+    # ---- their defense on film: built into HOW <OPP> GUARDS SCREENS ------------------------------------
+    _film_def_note = (f"\U0001f3a5 From the film: player tracking on {_tk_n} tracked clip(s) of {_tk_team}. Each tracked "
+                      "screen's coverage is the coaches' tag when the clip has one, else tracking's own estimate (marked *: "
+                      "stayed attached vs went under / behind). Defenders who play it differently need tracking to name "
+                      "players first. Small sample -- a lead to check on film." if _tk_team else "")
+
+    def _film_def_cards():
+        if not _tk_team:
+            return
+        _scr = _D("uww_trk_screens", "defense_team")
+        _film_main = {}
+        if not _scr.empty and "screen_type" in _scr.columns:
+            _scr = _scr.assign(_cov=_scr["coverage"].fillna("unclear").astype(str),
+                               _est=_scr.get("coverage_source", pd.Series("", index=_scr.index)).astype(str).eq("tracking estimate"),
+                               _pts=pd.to_numeric(_scr.get("points"), errors="coerce"))
+            # "Usually by" (a defender's name) only when tracking names enough players to trust it
+            _rows = ['<table class="compact"><thead><tr><th style="text-align:left">Screen</th><th>Tracked</th>'
+                     '<th style="text-align:left">Main coverage</th><th>PPP</th><th style="text-align:left">Also</th>'
+                     + ('<th style="text-align:left">Usually by</th>' if _tk_names_ok else "") + '</tr></thead><tbody>']
+            for _st, _g in sorted(_scr.groupby("screen_type"), key=lambda x: -len(x[1])):
+                _vc = _g.groupby("_cov").agg(n=("_cov", "size"), est=("_est", "mean"), ppp=("_pts", "mean")).sort_values("n", ascending=False)
+                _mc, _mr = _vc.index[0], _vc.iloc[0]
+                _film_main[_st] = _mc
+                _star = "*" if _mr["est"] > 0.5 else ""
+                _also = ", ".join(f"{_sb_esc(c)}{'*' if r_['est'] > 0.5 else ''} {round(100 * r_['n'] / len(_g))}% ({int(r_['n'])})"
+                                  for c, r_ in _vc.iloc[1:4].iterrows()) or "&mdash;"
+                _by = (_g[_g["_cov"] == _mc]["screened_defender"].dropna().astype(str).value_counts()
+                       if "screened_defender" in _g.columns and _tk_names_ok else pd.Series(dtype=int))
+                _by = _by[[not _tk_unnamed(x) for x in _by.index]] if len(_by) else _by
+                _thin = "*" if len(_g) < 5 else ""
+                _rows.append(f'<tr><td style="text-align:left">{_sb_esc(_st)}{_thin}</td><td>{len(_g)}</td>'
+                             f'<td style="text-align:left"><b>{_sb_esc(_mc)}{_star}</b> {round(100 * _mr["n"] / len(_g))}% ({int(_mr["n"])})</td>'
+                             f'<td>{_sb_fmt(_mr["ppp"], 2)}</td><td style="text-align:left">{_also}</td>'
+                             + (f'<td style="text-align:left">{_sb_esc(_by.index[0]) if len(_by) else "&mdash;"}</td>'
+                                if _tk_names_ok else "") + '</tr>')
+            _rows.append("</tbody></table>")
+            _exc = []
+            _c = _D("uww_trk_screen_coverage", "defense_team")
+            if not _c.empty and "defender" in _c.columns:
+                _c = _c[[not _tk_unnamed(x) for x in _c["defender"]]]
+            if _tk_names_ok and not _c.empty and {"defender", "screen_type", "coverage", "times"} <= set(_c.columns):
+                for (_st, _who), _g in _c.groupby(["screen_type", "defender"]):
+                    _top = _g.sort_values("times", ascending=False).iloc[0]
+                    _n = int(_g["times"].sum())
+                    if int(_top["times"]) >= 2 and str(_top["coverage"]) != str(_film_main.get(_st)):
+                        _exc.append((_n, f"<b>{_sb_esc(_who)}</b> &mdash; {_sb_esc(_st)}: {_sb_esc(_top['coverage'])} "
+                                         f"{int(_top['times'])} of {_n} (team: {_sb_esc(_film_main.get(_st, '?'))})"))
+            if _exc:
+                _rows.append('<div class="pc-sub">Defenders who play it differently on film</div><ul class="mini">'
+                             + "".join(f"<li>{t}</li>" for _, t in sorted(_exc, key=lambda x: -x[0])[:5]) + "</ul>")
+            _rows.append('<p class="mini">* main coverage mostly from tracking\'s own estimate (no coach tag); screen types '
+                         'marked * have under 5 tracked. PPP = points on those possessions.</p>')
+            _film_card("On film: how their defenders play screens", "".join(_rows))
+        _zp = _D("uww_trk_zone_press", "defense_team")
+        if not _zp.empty and {"zone", "press"} <= set(_zp.columns):
+            _z, _p = _zp[_zp["zone"].astype(str) == "True"], _zp[_zp["press"].astype(str) == "True"]
+            if len(_z) or len(_p):
+                _zt = (f"Zone on {len(_z)} tracked clip(s)"
+                       + (f", spread about {_sb_fmt(pd.to_numeric(_z.get('zone_width_ft_approx'), errors='coerce').mean(), 0)} ft wide and "
+                          f"{_sb_fmt(pd.to_numeric(_z.get('zone_depth_ft_approx'), errors='coerce').mean(), 0)} ft deep")
+                       + f", {_sb_fmt(pd.to_numeric(_z['points'], errors='coerce').mean(), 2)} PPP. " if len(_z) else "No zone clips tracked. ")
+                _trapped = _p[pd.to_numeric(_p.get("trap_frames"), errors="coerce").fillna(0) > 0] if len(_p) else _p
+                _pt = (f"Pressed on {len(_p)} clip(s); trapped on {len(_trapped)}"
+                       + (f", first trap about {_sb_fmt(pd.to_numeric(_trapped['first_trap_seconds_into_clip'], errors='coerce').mean(), 1)} s into the clip" if len(_trapped) else "")
+                       + "." if len(_p) else "No press clips tracked.")
+                _film_card("On film: zone and press", f'<p class="mini">{_sb_esc(_zt + _pt)} Layouts are drawn in the app.</p>')
+        if _tk_court_ok:
+            _zc = _D("uww_court_zone_press", "defense_team")
+            if not _zc.empty:
+                _al = _zc["alignment"].dropna().value_counts() if "alignment" in _zc.columns else pd.Series(dtype=int)
+                _tp = _zc["trap_spot"].dropna().value_counts() if "trap_spot" in _zc.columns else pd.Series(dtype=int)
+                if len(_al) or len(_tp):
+                    _film_card("On the court: zone alignment and trap spots", '<p class="mini">'
+                               + _sb_esc(("Zone read from the court: " + ", ".join(f"{a} x{n}" for a, n in _al.items()) + ". ") if len(_al) else "")
+                               + _sb_esc(("Traps: " + ", ".join(f"{a} x{n}" for a, n in _tp.items()) + ".") if len(_tp) else "") + "</p>")
+
+    # ---- their offense on film: built into HOW <OPP> RUNS OFFENSE -------------------------------------
+    _film_off_note = (f"\U0001f3a5 From the film: player tracking on {_tk_n} tracked clip(s) of {_tk_team}. Recurring "
+                      "alignments are the same spots on the floor seen again and again (drawn in the app); inbounds are "
+                      "grouped by situation. Court pictures (shot chart, screen spots, play diagrams) only once the court "
+                      "mapping passes the film-quality check. Small sample -- a lead to check on film." if _tk_team else "")
+
+    def _film_off_cards():
+        if not _tk_team:
+            return
+        _n0 = _film_cards_n[0]
+        _st = _D("uww_trk_sets", "offense_team")
+        if not _st.empty and {"most_common_call", "call_share_pct"} <= set(_st.columns):
+            _st = _st.assign(call=_st["most_common_call"].astype(str) + " ("
+                             + pd.to_numeric(_st["call_share_pct"], errors="coerce").fillna(0).astype(int).astype(str) + "%)")
+            _film_card("On film: recurring alignments (diagrams in the app)",
+                       _tk_table(_st, ["set_id", "clips", "call", "situations", "ppp"],
+                                 ["Alignment", "Clips", "Most common tagged call", "Situations", "PPP"]))
+        _ib = _D("uww_trk_inbounds", "offense_team")
+        if not _ib.empty and {"situation", "alignment"} <= set(_ib.columns):
+            _ib = (_ib.groupby(["situation", "alignment"]).agg(clips=("clip_key", "count"), ppp=("points", "mean"))
+                   .reset_index().sort_values("clips", ascending=False))
+            _ib["ppp"] = _ib["ppp"].round(2)
+            _film_card("On film: inbounds alignments",
+                       _tk_table(_ib, ["situation", "alignment", "clips", "ppp"], ["Situation", "Alignment", "Clips", "PPP"]))
+        _cz_any = not _sb_d("uww_court_report").empty or not _sb_d("uww_court_shots").empty
+        if _tk_court_ok:
+            _sh = _D("uww_court_shots", "offense_team")
+            _zn = _D("uww_court_shot_zones", "offense_team")
+            if not _sh.empty:
+                _zt = _zn[_zn["shooter"] == "TEAM"].sort_values("attempts", ascending=False) if not _zn.empty else pd.DataFrame()
+                # only spots that match the play-by-play (a 3 outside the arc, a 2 inside it, ...) -- see _cz_shots
+                _n_all = len(_sh)
+                if "location_ok" in _sh.columns:
+                    _sh = _sh[_sh["location_ok"].astype(str).str.lower() == "true"]
+                _aside = _n_all - len(_sh)
+                _film_card("On the court: where they shoot (tracked shots)",
+                           _cz_png(shots=_sh, title=f"{len(_sh)} tracked shots" + (f" ({_aside} set aside)" if _aside else ""))
+                           + (f'<p class="mini">{_aside} of {_n_all} tracked shots were left off: the shooter\'s spot on film '
+                              "didn't match the shot in the play-by-play (a 3 inside the arc, a 2 outside it, a layup far from "
+                              "the rim). They come back as tracking improves.</p>" if _aside else "")
+                           + (_tk_table(_zt.assign(fg=_zt["makes"].astype(int).astype(str) + "/" + _zt["attempts"].astype(int).astype(str)),
+                                        ["zone", "fg", "fg_pct", "pts_per_shot"], ["Zone", "Made/Att", "FG%", "Pts/shot"])
+                              if not _zt.empty else ""))
+            _scz = _D("uww_court_screen_zones", "offense_team")
+            if not _scz.empty:
+                _film_card("On the court: where they set screens, and how they were guarded",
+                           _tk_table(_scz.sort_values("screens", ascending=False), ["zone", "screen_type", "coverage", "screens", "ppp"],
+                                     ["Spot", "Screen", "Coverage", "Screens", "PPP"]))
+            _sets_c = _D("uww_trk_sets", "offense_team")
+            _dg = _sb_d("uww_court_diagrams")
+            if not _sets_c.empty and not _dg.empty and "example_clip" in _sets_c.columns:
+                pics = ""
+                for _, s_ in _sets_c.sort_values("clips", ascending=False).head(2).iterrows():
+                    hit = _dg[_dg["clip_key"] == s_["example_clip"]]
+                    if len(hit):
+                        pics += _cz_png(diagram=hit.iloc[0]["diagram"], title=f"{s_['set_id']} ({int(s_['clips'])} clips)")
+                if pics:
+                    _film_card("On the court: their most common alignments, drawn from a real possession "
+                               "(numbers = offense, x = defense, dashed = pass, red T = screen)", pics)
+        if _film_cards_n[0] == _n0:
+            return                      # nothing on film to show -- no note or link on their own
+        if not _tk_court_ok and _cz_any:
+            add('<p class="mini">\U0001f3a5 Court-mapped film (shot chart, screen spots, play diagrams) stays in the app until '
+                f"the court mapping places {int(globals().get('FILM_COURT_OK_MAPPED', 60))}%+ of frames and shot spots agree "
+                f"{int(globals().get('FILM_COURT_OK_ZONE', 80))}%+ with the play-by-play"
+                + (f" (now {_fq_pct(_tk_q.get('court_mapped_pct')) or '?'}% and {_fq_pct(_tk_q.get('shot_zone_agree_pct')) or '?'}%)"
+                   if _tk_q else "") + ": " + _film_app_link("Court view") + "</p>")
+        add('<p class="mini">' + _film_app_link("Film tracking: diagrams, possession replays, search by player") + "</p>")
+
     # ---- personnel: starters page + bench page (#3) ---------------------------------------------------
     _no_min = _sb_d("uww_roster_no_minutes")
     _no_min_names = ""
@@ -3144,6 +3499,10 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # nothing is computed here beyond picking rows. Perspective "Opponent defense" = the upcoming opponent
     # DEFENDING, from their own defensive possessions in opponent_plays.csv. Every row prints its count.
     # =====================================================================================================
+    # CONFIRMED CHANGE (requested): how their defenders play screens ON FILM (player tracking) is built into this
+    # section instead of a separate FROM THE FILM section -- after the coach-tag card, or on its own when their
+    # defense isn't coach-tagged yet. See _film_def_cards ("THE FILM", above the roster).
+    _fd_html = capture(_film_def_cards)
     _scv_s = _sb_d("uww_screen_coverage_summary")
     if not _scv_s.empty and {"perspective", "level", "scouted_opponent"}.issubset(_scv_s.columns):
         _scv_s = _scv_s[(_scv_s["scouted_opponent"].astype(str) == str(short))
@@ -3159,7 +3518,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             "(by jersey) and how he played the screen, paired with the screen it answered. % is the share of "
             "that screen type. PPP is points on the possessions where that coverage was used -- what happened "
             f"after, not proof the coverage caused it. * = under {_scv_thin_n} tagged screens of that type: "
-            "confirm on film."))
+            "confirm on film." + (" " + _film_def_note if _fd_html else "")))
         add('<div class="card">')
         add('<table class="compact"><thead><tr><th style="text-align:left">Screen</th><th>Tagged</th>'
             '<th style="text-align:left">Main coverage</th><th>PPP</th>'
@@ -3212,434 +3571,42 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         add('<p class="mini">' + app_link("Every screen coverage, by defender", page="upcoming",
                                           tab="game_plan", section="screen_coverage") + "</p>")
         add("</div>")
+        add("".join(_fd_html))
+    elif _fd_html:
+        section(f"\U0001f6e1\ufe0f HOW {OPP_UP} GUARDS SCREENS" + footnote(_film_def_note))
+        add(f'<p class="mini">{_sb_esc(OPP_UP)}\u2019s defense isn\u2019t coach-tagged yet -- this is the player '
+            "tracking's read of the film.</p>")
+        add("".join(_fd_html))
 
-    def _reads_block(team, title, note):
-        """Ball handler / screener reads from Film Tagging's Actions (uww_action_reads), 2+ uses. CONFIRMED CHANGE
-        (requested): use / reject / split the ball screen and roll / pop / slip, by player."""
+    # CONFIRMED CHANGE (requested: no separate sections -- build it into the ones that exist): the reads off actions
+    # are a card inside HOW <OPP> RUNS OFFENSE / HOW WE RUN OFFENSE instead of their own "READS OFF ..." sections.
+    _READS_NOTE = ("Reads: from the coaches' Film Tagging -- for each action in a play, what the ball handler / trigger did "
+                   "(use, reject or split the ball screen, Cobra, Fox, ...) and what the screener did after (roll, pop, "
+                   "slip). Share = of that player's reads of that action. A play's points are credited to every action in "
+                   "it. Players with 2+ uses of a read.")
+
+    def _reads_card(team, title):
+        """Ball handler / screener reads from Film Tagging's Actions (uww_action_reads), 2+ uses, as one card (HTML),
+        or "" when there are none."""
         _ar = _sb_d("uww_action_reads")
         if _ar.empty or "offense_team" not in _ar.columns:
-            return
+            return ""
         _ar = _ar[(_ar["offense_team"].astype(str) == str(team)) & (pd.to_numeric(_ar["uses"], errors="coerce") >= 2)
                   & ~_ar["player"].astype(str).str.startswith("(")]
         if _ar.empty:
-            return
-        section(title + footnote(note))
-        add('<div class="card"><table class="compact"><thead><tr><th style="text-align:left">Player</th>'
-            '<th style="text-align:left">Role</th><th style="text-align:left">Action</th><th style="text-align:left">Read</th>'
-            '<th>Uses</th><th>Share</th><th>PPP</th></tr></thead><tbody>'
-            + "".join(f'<tr><td class="nm">{_sb_esc(r["player"])}</td><td style="text-align:left">{_sb_esc(r["role"])}</td>'
-                      f'<td style="text-align:left">{_sb_esc(r["action"])}</td><td style="text-align:left">{_sb_esc(r["read"])}</td>'
-                      f'<td>{int(r["uses"])}</td><td>{int(pd.to_numeric(r.get("share_pct"), errors="coerce") or 0)}%</td>'
-                      f'<td>{_sb_fmt(r.get("ppp"), 2)}</td></tr>'
-                      for _, r in _ar.sort_values("uses", ascending=False).head(12).iterrows())
-            + "</tbody></table><p class=\"mini\">"
-            + app_link("Every read, by player", page="upcoming", tab="game_plan", section="reads") + "</p></div>")
+            return ""
+        return ('<div class="card"><div class="pc-sub">' + _sb_esc(title) + '</div>'
+                '<table class="compact"><thead><tr><th style="text-align:left">Player</th>'
+                '<th style="text-align:left">Role</th><th style="text-align:left">Action</th><th style="text-align:left">Read</th>'
+                '<th>Uses</th><th>Share</th><th>PPP</th></tr></thead><tbody>'
+                + "".join(f'<tr><td class="nm">{_sb_esc(r["player"])}</td><td style="text-align:left">{_sb_esc(r["role"])}</td>'
+                          f'<td style="text-align:left">{_sb_esc(r["action"])}</td><td style="text-align:left">{_sb_esc(r["read"])}</td>'
+                          f'<td>{int(r["uses"])}</td><td>{int(pd.to_numeric(r.get("share_pct"), errors="coerce") or 0)}%</td>'
+                          f'<td>{_sb_fmt(r.get("ppp"), 2)}</td></tr>'
+                          for _, r in _ar.sort_values("uses", ascending=False).head(12).iterrows())
+                + "</tbody></table><p class=\"mini\">"
+                + app_link("Every read, by player", page="upcoming", tab="game_plan", section="reads") + "</p></div>")
 
-    _reads_block(short, f"\U0001f3af {OPP_UP} READS OFF THEIR ACTIONS",
-                 "From the coaches' Film Tagging: for each action in a play, what the ball handler / trigger did (use, "
-                 "reject or split the ball screen, Cobra, Fox, ...) and what the screener did after (roll, pop, slip). "
-                 "Share = of that player's reads of that action. A play's points are credited to every action in it. "
-                 "Players with 2+ uses of a read.")
-
-    # CONFIRMED CHANGE (requested: "move all the sections related to the film under 'How the film is watched
-    # automatically'"). The film sections (FROM THE FILM: <team>, SELF-SCOUT FROM THE FILM, ON THE COURT) still run
-    # here -- later code relies on names they set up -- but their output is collected into _film_html and printed
-    # at the end. ("How the film is watched automatically" itself moved to the app; the brief links to it.)
-    _sinks.append([])
-    # =====================================================================================================
-    # FROM THE FILM (requested: every tracking section in the brief, even on a small sample). Rendered from the
-    # tracking-insight tables built in the parser; nothing is computed here beyond picking rows. Only the
-    # upcoming opponent's film (TRACK_BRIEF_TEAM overrides the choice) and our self-scout; with no tracked film of
-    # them the section says so in one line (the app still shows other teams' film).
-    # =====================================================================================================
-    _tk_clips = _sb_d("uww_trk_clips")
-    if not _tk_clips.empty:
-        def _tk_is(team, label):
-            words = {w for w in re.split(r"[\s\-@()]+", str(label).lower()) if len(w) > 3 and w not in ("titans", "warhawks")}
-            return any(w in str(team).lower() for w in words)
-        _tk_is_uww = lambda t: "whitewater" in str(t).lower()
-        _tk_teams = pd.concat([_tk_clips["offense_team"], _tk_clips["defense_team"]]).astype(str)
-        _tk_teams = _tk_teams[~_tk_teams.map(_tk_is_uww)]
-        _tk_pick = globals().get("TRACK_BRIEF_TEAM")
-        _tk_team = next((t for t in _tk_teams.value_counts().index if _tk_is(t, _tk_pick or short)), None)
-        # CONFIRMED CHANGE (requested): the brief shows film of the UPCOMING opponent only (or TRACK_BRIEF_TEAM). With
-        # none tracked it used to fall back to the most-tracked opponent ("FROM THE FILM: WASHINGTON-ST. LOUIS BEARS" in
-        # an MSOE brief); now it says so in one line and links to the app, which still shows that fallback.
-        _tk_note = ""
-        # film quality per team (film-quality cell): what each film read can be trusted for
-        _fq = _sb_d("uww_film_quality")
-        _fq_of = lambda t: (_fq[_fq["team"].astype(str) == str(t)].iloc[0].to_dict()
-                            if t and not _fq.empty and "team" in _fq.columns and (_fq["team"].astype(str) == str(t)).any() else {})
-        _fq_true = lambda v: str(v).strip().lower() in ("true", "1")
-        _tk_unnamed = lambda v: "unnamed" in str(v).lower() or not _sb_clean(v)
-        _tk_n = int(((_tk_clips["offense_team"].astype(str) == str(_tk_team)) |
-                     (_tk_clips["defense_team"].astype(str) == str(_tk_team))).sum()) if _tk_team else 0
-
-        def _tk_table(df, cols, heads, limit=10):
-            if df.empty:
-                return '<p class="mini">None found in the tracked clips yet.</p>'
-            h = "".join(f'<th style="text-align:left">{_sb_esc(x)}</th>' for x in heads)
-            body = ""
-            for _, r in df.head(limit).iterrows():
-                body += "<tr>" + "".join(f'<td style="text-align:left">{_sb_esc(_sb_clean(r.get(c)))}</td>' for c in cols) + "</tr>"
-            more = f'<p class="mini">+{len(df) - limit} more in the app.</p>' if len(df) > limit else ""
-            return f'<table class="compact"><thead><tr>{h}</tr></thead><tbody>{body}</tbody></table>{more}'
-
-        if not _tk_team:
-            _fq_o = _fq_of(short)
-            section(f"\U0001f3a5 FROM THE FILM: {OPP_UP}")
-            add('<div class="card"><p class="mini">No tracked film of ' + _sb_esc(short) + " yet"
-                + (f" ({_sb_esc(re.sub(r'^no tracked games yet; ', '', str(_fq_o['film_line'])))})"
-                   if _sb_clean(_fq_o.get("film_line")) else "")
-                + ". Film of other teams stays in the app: "
-                + app_link("Film tracking", page="upcoming", tab="game_plan", section="film_tracking") + "</p></div>")
-        _tk_q = _fq_of(_tk_team)
-        _tk_names_ok = _fq_true(_tk_q.get("names_ok")) if _tk_q else False
-        _tk_named = _tk_q.get("named_share_pct")
-        _fq_pct = lambda v: (lambda x: f"{int(round(x))}" if pd.notna(x) else None)(pd.to_numeric(v, errors="coerce"))
-        _tk_names_note = (
-            '<p class="mini">Per-player film reads (who guards whom, help distances, who screens for whom, defenders who '
-            "play a screen differently) stay in the app until tracking names the players on at least "
-            f"{int(globals().get('FILM_NAMES_OK_PCT', 50))}% of {_sb_esc(_tk_team)} floor spots"
-            + (f" (now {_fq_pct(_tk_named)}%)" if _fq_pct(_tk_named) is not None else "") + ": "
-            + app_link("Film tracking", page="upcoming", tab="game_plan", section="film_tracking") + "</p>")
-        if _tk_team:
-            section(f"\U0001f3a5 FROM THE FILM: {str(_tk_team).upper()}" + footnote(
-                f"Built from player tracking on {_tk_n} tracked clip(s){_tk_note}. Players are found in every tracking "
-                "frame, split into teams by jersey color (referees, benches and the crowd set aside) and followed through "
-                "the clip. Names come from the coaches' player checks, jersey-number readers, the five on the floor in the "
-                "play-by-play, and matching how players look across clips; rows where tracking couldn't name a player are "
-                "left out of the brief (they're in the app). Coverage marked * is tracking's own estimate (no coach tag on "
-                "that clip). Feet are approximate (measured with the players' own height in the picture). SMALL SAMPLE -- "
-                "treat every number as a lead to check on film."))
-            _D = lambda name, col: (lambda d: d[d[col].astype(str) == str(_tk_team)] if not d.empty and col in d.columns else pd.DataFrame())(_sb_d(name))
-            # 1. How their defenders play screens -- laid out like "HOW <OPP> GUARDS SCREENS" (requested): one row per
-            #    screen type with its main coverage, then the defenders who guard it differently. One row per screen
-            #    (uww_trk_screens), so the two defenders of the same screen aren't counted twice.
-            _scr = _D("uww_trk_screens", "defense_team")
-            add('<div class="card"><div class="pc-sub">How their defenders play screens</div>')
-            if _scr.empty or "screen_type" not in _scr.columns:
-                add('<p class="mini">No screens found in the tracked clips yet.</p>')
-            else:
-                _scr = _scr.assign(_cov=_scr["coverage"].fillna("unclear").astype(str),
-                                   _est=_scr.get("coverage_source", pd.Series("", index=_scr.index)).astype(str).eq("tracking estimate"),
-                                   _pts=pd.to_numeric(_scr.get("points"), errors="coerce"))
-                # "Usually by" (a defender's name) only when tracking names enough players to trust it
-                add('<table class="compact"><thead><tr><th style="text-align:left">Screen</th><th>Tracked</th>'
-                    '<th style="text-align:left">Main coverage</th><th>PPP</th><th style="text-align:left">Also</th>'
-                    + ('<th style="text-align:left">Usually by</th>' if _tk_names_ok else "") + '</tr></thead><tbody>')
-                _film_main = {}
-                for _st, _g in sorted(_scr.groupby("screen_type"), key=lambda x: -len(x[1])):
-                    _vc = _g.groupby("_cov").agg(n=("_cov", "size"), est=("_est", "mean"), ppp=("_pts", "mean")).sort_values("n", ascending=False)
-                    _mc, _mr = _vc.index[0], _vc.iloc[0]
-                    _film_main[_st] = _mc
-                    _star = "*" if _mr["est"] > 0.5 else ""
-                    _also = ", ".join(f"{_sb_esc(c)}{'*' if r_['est'] > 0.5 else ''} {round(100 * r_['n'] / len(_g))}% ({int(r_['n'])})"
-                                      for c, r_ in _vc.iloc[1:4].iterrows()) or "&mdash;"
-                    _by = _g[_g["_cov"] == _mc]["screened_defender"].dropna().astype(str).value_counts() \
-                        if "screened_defender" in _g.columns and _tk_names_ok else pd.Series(dtype=int)
-                    _by = _by[[not _tk_unnamed(x) for x in _by.index]] if len(_by) else _by
-                    _thin = "*" if len(_g) < 5 else ""
-                    add(f'<tr><td style="text-align:left">{_sb_esc(_st)}{_thin}</td><td>{len(_g)}</td>'
-                        f'<td style="text-align:left"><b>{_sb_esc(_mc)}{_star}</b> {round(100 * _mr["n"] / len(_g))}% ({int(_mr["n"])})</td>'
-                        f'<td>{_sb_fmt(_mr["ppp"], 2)}</td><td style="text-align:left">{_also}</td>'
-                        + (f'<td style="text-align:left">{_sb_esc(_by.index[0]) if len(_by) else "&mdash;"}</td>'
-                           if _tk_names_ok else "") + '</tr>')
-                add("</tbody></table>")
-                _c = _D("uww_trk_screen_coverage", "defense_team")
-                _exc = []
-                if not _c.empty and "defender" in _c.columns:
-                    _c = _c[[not _tk_unnamed(x) for x in _c["defender"]]]
-                if _tk_names_ok and not _c.empty and {"defender", "screen_type", "coverage", "times"} <= set(_c.columns):
-                    for (_st, _who), _g in _c.groupby(["screen_type", "defender"]):
-                        _top = _g.sort_values("times", ascending=False).iloc[0]
-                        _n = int(_g["times"].sum())
-                        if int(_top["times"]) >= 2 and str(_top["coverage"]) != str(_film_main.get(_st)):
-                            _exc.append((_n, f"<b>{_sb_esc(_who)}</b> &mdash; {_sb_esc(_st)}: {_sb_esc(_top['coverage'])} "
-                                             f"{int(_top['times'])} of {_n} (team: {_sb_esc(_film_main.get(_st, '?'))})"))
-                if _exc:
-                    add('<div class="pc-sub">Defenders who guard it differently</div><ul class="mini">'
-                        + "".join(f"<li>{t}</li>" for _, t in sorted(_exc, key=lambda x: -x[0])[:5]) + "</ul>")
-                add('<p class="mini">* main coverage mostly from tracking\'s own estimate (no coach tag); screen types marked '
-                    '* have under 5 tracked. PPP = points on those possessions.</p>')
-            add("</div>")
-            # 2. Who guards whom -- grouped by the offensive role (BBall Index's 12) of the player being guarded
-            #    (requested): for each kind of player, how many possessions and which of their defenders take him.
-            if not _tk_names_ok:
-                add('<div class="card">' + _tk_names_note + "</div>")
-            _m = _D("uww_trk_matchups", "defense_team") if _tk_names_ok else pd.DataFrame()
-            if not _m.empty and {"defender", "guards"} <= set(_m.columns):
-                _m = _m[[not (_tk_unnamed(a) or _tk_unnamed(b)) for a, b in zip(_m["defender"], _m["guards"])]]
-            _orl = _sb_d("uww_offensive_roles")
-            _role_of = ({_norm(p): r for p, r in zip(_orl["player"], _orl["offensive_role"])}
-                        if not _orl.empty and {"player", "offensive_role"} <= set(_orl.columns) else {})
-            _drl = _sb_d("uww_defensive_roles")
-            _drole_of = ({_norm(p): r for p, r in zip(_drl["player"], _drl["defensive_role"])}
-                         if not _drl.empty and {"player", "defensive_role"} <= set(_drl.columns) else {})
-            if not _tk_names_ok:
-                pass                                   # per-player film reads: app only for now (see _tk_names_note)
-            elif _m.empty or not {"defender", "guards", "possessions"} <= set(_m.columns):
-                add('<div class="card"><div class="pc-sub">Who guards whom, by the kind of player</div>'
-                    '<p class="mini">None found in the tracked clips yet.</p>')
-            else:
-                add('<div class="card"><div class="pc-sub">Who guards whom, by the kind of player</div>')
-                _order = ["Primary Ball Handler", "Secondary Ball Handler", "Shot Creator", "Slasher", "Athletic Finisher",
-                          "Off Screen Shooter", "Movement Shooter", "Stationary Shooter", "Versatile Big", "Post Scorer",
-                          "Stretch Big", "Roll & Cut Big"]
-                _mm = _m.assign(_role=_m["guards"].map(lambda n: _role_of.get(_norm(n), "Role not known yet")),
-                                _poss=pd.to_numeric(_m["possessions"], errors="coerce").fillna(0),
-                                _ppp=pd.to_numeric(_m.get("ppp"), errors="coerce"))
-                add('<table class="compact"><thead><tr><th style="text-align:left">Guarding our&hellip;</th><th>Poss.</th>'
-                    '<th style="text-align:left">Their usual defenders (share)</th><th>PPP</th></tr></thead><tbody>')
-                for _rl in _order + ["Role not known yet"]:
-                    _g = _mm[_mm["_role"] == _rl]
-                    if _g.empty or _g["_poss"].sum() <= 0:
-                        continue
-                    _tot = _g["_poss"].sum()
-                    _by = _g.groupby("defender")["_poss"].sum().sort_values(ascending=False)
-                    _who = ", ".join(f"{_sb_esc(d)}" + (f" <span class='mini'>({_sb_esc(_drole_of[_norm(d)])})</span>"
-                                                       if _drole_of.get(_norm(d)) else "") + f" {round(100 * v / _tot)}%"
-                                     for d, v in _by.head(3).items())
-                    _ppp = (_g["_ppp"] * _g["_poss"]).sum() / _tot if _g["_ppp"].notna().any() else None
-                    add(f'<tr><td style="text-align:left">{_sb_esc(_rl)}s</td><td>{int(round(_tot))}</td>'
-                        f'<td style="text-align:left">{_who}</td><td>{_sb_fmt(_ppp, 2) if _ppp is not None else "&mdash;"}</td></tr>')
-                add("</tbody></table>")
-                add('<p class="mini">Each row: the possessions their defenders spent on players of that offensive role, and '
-                    "which defenders took them (with each defender's own defensive role). Names on film are partly best "
-                    "guesses until reviewed -- see the Play review.</p>")
-                add("</div>")
-            # 3. Help tendencies (per defender: names needed)
-            if _tk_names_ok:
-                _hh = _D("uww_trk_help", "defense_team")
-                if not _hh.empty and "defender" in _hh.columns:
-                    _hh = _hh[[not _tk_unnamed(x) for x in _hh["defender"]]]
-                add('<div class="card"><div class="pc-sub">Help: how far each defender plays off his man (approx ft)</div>'
-                    + _tk_table(_hh, ["defender", "approx_ft_off_man_weak side", "approx_ft_off_man_ball side",
-                                      "approx_ft_off_man_on ball", "tendency", "clips"],
-                                ["Defender", "Weak side", "Ball side", "On ball", "Tendency", "Clips"]) + "</div>")
-            # 4. Zone and press
-            _zp = _D("uww_trk_zone_press", "defense_team")
-            if not _zp.empty:
-                _z, _p = _zp[_zp["zone"].astype(str) == "True"], _zp[_zp["press"].astype(str) == "True"]
-                _zt = (f"Zone on {len(_z)} tracked clip(s)"
-                       + (f", spread about {_sb_fmt(pd.to_numeric(_z.get('zone_width_ft_approx'), errors='coerce').mean(), 0)} ft wide and "
-                          f"{_sb_fmt(pd.to_numeric(_z.get('zone_depth_ft_approx'), errors='coerce').mean(), 0)} ft deep" if len(_z) else "")
-                       + f", {_sb_fmt(pd.to_numeric(_z['points'], errors='coerce').mean(), 2)} PPP. " if len(_z) else "No zone clips tracked. ")
-                _trapped = _p[pd.to_numeric(_p.get("trap_frames"), errors="coerce").fillna(0) > 0] if len(_p) else _p
-                _pt = (f"Pressed on {len(_p)} clip(s); trapped on {len(_trapped)}"
-                       + (f", first trap about {_sb_fmt(pd.to_numeric(_trapped['first_trap_seconds_into_clip'], errors='coerce').mean(), 1)} s into the clip" if len(_trapped) else "")
-                       + "." if len(_p) else "No press clips tracked.")
-                add(f'<div class="card"><div class="pc-sub">Zone and press</div><p class="mini">{_sb_esc(_zt + _pt)} '
-                    'Layouts are drawn in the app.</p></div>')
-            # 5. Who screens for whom
-            _sp = _D("uww_trk_screen_pairs", "offense_team") if _tk_names_ok else pd.DataFrame()
-            if not _sp.empty and {"screener", "screened"} <= set(_sp.columns):
-                _sp = _sp[[not (_tk_unnamed(a) or _tk_unnamed(b)) for a, b in zip(_sp["screener"], _sp["screened"])]]
-            if not _sp.empty:
-                _sp = _sp.assign(after=_sp.apply(lambda r: ", ".join(f"{k} {int(r[c])}" for k, c in
-                                                                     (("roll", "rolls"), ("pop", "pops"), ("slip", "slips")) if int(r[c] or 0)) or "--", axis=1))
-            if _tk_names_ok:
-                add('<div class="card"><div class="pc-sub">Who screens for whom</div>'
-                    + _tk_table(_sp, ["screener", "screened", "screen_type", "times", "ppp", "after"],
-                                ["Screener", "For", "Screen", "Times", "PPP", "Screener after"]) + "</div>")
-            # 6. Sets found in the film
-            _st = _D("uww_trk_sets", "offense_team")
-            if not _st.empty:
-                _st = _st.assign(call=_st["most_common_call"].astype(str) + " (" + _st["call_share_pct"].fillna(0).astype(int).astype(str) + "%)")
-            add('<div class="card"><div class="pc-sub">Recurring alignments found in the film (diagrams in the app)</div>'
-                + _tk_table(_st, ["set_id", "clips", "call", "situations", "ppp"],
-                            ["Alignment", "Clips", "Most common tagged call", "Situations", "PPP"]) + "</div>")
-            # 7. Inbounds
-            _ib = _D("uww_trk_inbounds", "offense_team")
-            if not _ib.empty:
-                _ib = (_ib.groupby(["situation", "alignment"]).agg(clips=("clip_key", "count"), ppp=("points", "mean"))
-                       .reset_index().sort_values("clips", ascending=False))
-                _ib["ppp"] = _ib["ppp"].round(2)
-            add('<div class="card"><div class="pc-sub">Inbounds alignments</div>'
-                + _tk_table(_ib, ["situation", "alignment", "clips", "ppp"], ["Situation", "Alignment", "Clips", "PPP"]) + "</div>")
-
-        # Self-scout: UWW's own coverage execution and spacing
-        _ce = _sb_d("uww_trk_coverage_execution")
-        # CONFIRMED CHANGE (requested): "our screen coverage vs the plan" only once a plan exists (the Game Plan tab's
-        # coverage plan, or staff_inputs/uww_coverage_plan.csv) -- without one every row was tracking's estimate on an
-        # unnamed defender with no plan to compare to. The app still shows it.
-        if not _ce.empty and not ("planned" in _ce.columns and _ce["planned"].map(_sb_clean).astype(bool).any()):
-            _ce = pd.DataFrame()
-        if not _ce.empty and "defender" in _ce.columns:
-            _ce = _ce[[not _tk_unnamed(x) for x in _ce["defender"]]]
-        _spc = _sb_d("uww_trk_spacing")
-        if not _ce.empty or not _spc.empty:
-            section("\U0001fa9e SELF-SCOUT FROM THE FILM" + footnote(
-                "Our defense: the coverage we played on each tracked screen vs the plan in "
-                "staff_inputs/uww_coverage_plan.csv (a template is in staff_input_templates/). Our offense: spacing by "
-                "lineup -- average distance to the nearest teammate, how wide the five are, and how often two "
-                "teammates (not screening) were within 6 ft. Approximate feet; small sample."))
-            if not _ce.empty:
-                _ce = _ce.assign(cov=_ce["coverage"].astype(str) + _ce["coverage_source"].map(lambda s: "*" if s == "tracking estimate" else ""))
-                add('<div class="card"><div class="pc-sub">Our screen coverage vs the plan</div>'
-                    + _tk_table(_ce, ["defender", "role", "screen_type", "cov", "times", "planned", "followed_pct"],
-                                ["Our defender", "Role", "Screen", "Coverage", "Times", "Planned", "Followed %"]) + "</div>")
-            if not _spc.empty:
-                add('<div class="card"><div class="pc-sub">Our spacing by lineup (approx ft)</div>'
-                    + _tk_table(_spc, ["lineup", "possessions", "spacing_ft_approx", "width_ft_approx", "crowded_pct", "ppp"],
-                                ["Lineup", "Poss.", "Nearest teammate", "Width", "Crowded %", "PPP"], limit=8) + "</div>")
-        # =====================================================================================================
-        # ON THE COURT (requested: court-mapped information in the brief). Rendered from the court-insight tables;
-        # the shot chart and play diagram are drawn here as small PNG pictures (embedded, so they survive email).
-        # Half court drawn FastDraw-style: basket at the top, the offense's left on the left.
-        # =====================================================================================================
-        _cz_rep = _sb_d("uww_court_report")
-        # CONFIRMED CHANGE (requested): the court sections go in the brief only when the court mapping is good enough for
-        # the team shown (film-quality cell: frames placed on the court and shot spots agreeing with the play-by-play).
-        # Until then they're app-only (Film tracking > Court view) and the brief says why in one line.
-        _team_c = locals().get("_tk_team")
-        _cz_q = _fq_of(_team_c) if _team_c else _fq_of(next((t for t in (_fq["team"] if not _fq.empty and "team" in _fq.columns else [])
-                                                               if "whitewater" in str(t).lower()), None))
-        _cz_ok = _fq_true(_cz_q.get("court_ok")) if _cz_q else False
-        _cz_pct = lambda v: (lambda x: f"{int(round(x))}" if pd.notna(x) else "?")(pd.to_numeric(v, errors="coerce"))
-        if not _cz_ok and (not _cz_rep.empty or not _sb_d("uww_court_shots").empty):
-            add('<p class="mini">Court-mapped film (shot chart, screen spots, help in the paint, play diagrams) stays in the '
-                f"app until the court mapping places {int(globals().get('FILM_COURT_OK_MAPPED', 60))}%+ of frames and shot "
-                f"spots agree {int(globals().get('FILM_COURT_OK_ZONE', 80))}%+ with the play-by-play"
-                + (f" (now {_cz_pct(_cz_q.get('court_mapped_pct'))}% and {_cz_pct(_cz_q.get('shot_zone_agree_pct'))}%)"
-                   if _cz_q and _sb_clean(_cz_q.get("court_mapped_pct")) else "") + ": "
-                + app_link("Court view", page="upcoming", tab="game_plan", section="film_tracking") + "</p>")
-        if _cz_ok and (not _cz_rep.empty or not _sb_d("uww_court_shots").empty):
-            _cal_rows = _cz_rep[_cz_rep["calibrated"].astype(str) == "False"] if not _cz_rep.empty and "calibrated" in _cz_rep.columns else pd.DataFrame()
-            section("\U0001f3c0 ON THE COURT" + (f": {str(_team_c).upper()}" if _team_c else "") + footnote(
-                "Positions mapped onto the real court (feet) from the tracked film. Checks: " +
-                ("; ".join(f"{r['game']}: {r.get('mapped_pct')}% of frames mapped, calibration error {r.get('calibration_error_ft')} ft"
-                           + (f", {int(r['shots_zone_agrees_with_2_or_3_pct'])}% of {int(r['shots_checked'])} shots on the right side "
-                              f"of the 3-pt line" if pd.notna(r.get("shots_zone_agrees_with_2_or_3_pct")) else "")
-                           for r in _cz_rep[_cz_rep["calibrated"].astype(str) == "True"].to_dict("records")) or "none calibrated yet")
-                + ". SMALL SAMPLE."))
-            if len(_cal_rows):
-                add('<p class="mini">Not on the court yet (gym not calibrated): '
-                    + "; ".join(_sb_esc(f"{r['game']} -- open {r['calibration_page']}") for r in _cal_rows.to_dict("records")) + "</p>")
-
-            def _cz_png(shots=None, diagram=None, title=""):
-                """Half court (basket at top) as an embedded PNG: shots (green made / red missed) or a play diagram."""
-                import base64, io
-                from PIL import Image, ImageDraw
-                S, W, H = 6, 300, 290
-                im = Image.new("RGB", (W, H), (236, 214, 170))
-                d = ImageDraw.Draw(im)
-                P = lambda hx, hy: (hy * S, hx * S + 4)
-                white, ink = (255, 255, 255), (40, 40, 40)
-                d.rectangle([P(0, 0), P(47, 50)], outline=white, width=2)
-                d.rectangle([P(0, 19), P(19, 31)], outline=white, width=2)
-                d.ellipse([P(13, 19), P(25, 31)], outline=white, width=2)
-                d.line([P(0, 3.33), P(9.83, 3.33)], fill=white, width=2)
-                d.line([P(0, 46.67), P(9.83, 46.67)], fill=white, width=2)
-                arc = [P(5.25 + 22.146 * np.cos(a), 25 + 22.146 * np.sin(a)) for a in np.linspace(-1.35, 1.35, 60)]
-                d.line(arc, fill=white, width=2)
-                d.line([P(4, 22), P(4, 28)], fill=ink, width=2)
-                d.ellipse([P(4.5, 24.25), P(6.0, 25.75)], outline=(200, 60, 30), width=2)
-                if shots is not None:
-                    for _, s_ in shots.iterrows():
-                        x, y = P(float(s_["hx"]), float(s_["hy"]))
-                        col = (40, 150, 60) if str(s_["made"]) == "True" else (200, 40, 40)
-                        d.ellipse([x - 4, y - 4, x + 4, y + 4], fill=col, outline=ink)
-                if diagram is not None:
-                    dg = diagram if isinstance(diagram, dict) else _trk_json.loads(diagram)
-                    pos = {}
-                    for p_ in dg.get("players", []):
-                        pts = [P(hx, hy) for _, hx, hy in p_["path"]]
-                        if not pts:
-                            continue
-                        if p_["side"] == "offense" and p_.get("num"):
-                            pos[p_["num"]] = {int(t): P(hx, hy) for t, hx, hy in p_["path"]}
-                            if len(pts) > 1:
-                                d.line(pts, fill=ink, width=2)
-                                (x1, y1), (x2, y2) = pts[-2], pts[-1]
-                                ang = np.arctan2(y2 - y1, x2 - x1)
-                                d.polygon([(x2, y2), (x2 - 9 * np.cos(ang - 0.4), y2 - 9 * np.sin(ang - 0.4)),
-                                           (x2 - 9 * np.cos(ang + 0.4), y2 - 9 * np.sin(ang + 0.4))], fill=ink)
-                            x0, y0 = pts[0]
-                            d.ellipse([x0 - 8, y0 - 8, x0 + 8, y0 + 8], fill=(255, 255, 255), outline=ink, width=2)
-                            d.text((x0 - 3, y0 - 6), str(p_["num"]), fill=ink)
-                        elif p_["side"] == "defense":
-                            x, y = pts[0]
-                            d.line([x - 4, y - 4, x + 4, y + 4], fill=(30, 110, 190), width=2)
-                            d.line([x - 4, y + 4, x + 4, y - 4], fill=(30, 110, 190), width=2)
-                    for ps in dg.get("passes", []):
-                        a, b = pos.get(ps["from"], {}), pos.get(ps["to"], {})
-                        if a and b:
-                            pa = a[min(a, key=lambda t: abs(t - ps["t"]))]
-                            pb = b[min(b, key=lambda t: abs(t - ps["t"]))]
-                            for k in range(0, 10, 2):   # dashed pass line
-                                d.line([(pa[0] + (pb[0] - pa[0]) * k / 10, pa[1] + (pb[1] - pa[1]) * k / 10),
-                                        (pa[0] + (pb[0] - pa[0]) * (k + 1) / 10, pa[1] + (pb[1] - pa[1]) * (k + 1) / 10)], fill=ink, width=2)
-                    sc = dg.get("screen")
-                    if sc:
-                        x, y = P(sc["hx"], sc["hy"])
-                        d.line([x - 7, y, x + 7, y], fill=(200, 40, 40), width=3)   # the screen "T"
-                        d.line([x, y, x, y - 7], fill=(200, 40, 40), width=3)
-                if title:
-                    d.text((4, H - 12), title[:48], fill=ink)
-                buf = io.BytesIO()
-                im.save(buf, "PNG")
-                return f'<img src="data:image/png;base64,{base64.b64encode(buf.getvalue()).decode()}" width="{W}" height="{H}" style="margin:4px"/>'
-
-            _CZ = lambda name, col: (lambda d_: d_[d_[col].astype(str) == str(_team_c)] if _team_c and not d_.empty and col in d_.columns else pd.DataFrame())(_sb_d(name))
-            _sh = _CZ("uww_court_shots", "offense_team")
-            _zn = _CZ("uww_court_shot_zones", "offense_team")
-            if not _sh.empty:
-                _zt = _zn[_zn["shooter"] == "TEAM"].sort_values("attempts", ascending=False) if not _zn.empty else pd.DataFrame()
-                # only spots that match the play-by-play (a 3 outside the arc, a 2 inside it, ...) -- see _cz_shots
-                _n_all = len(_sh)
-                if "location_ok" in _sh.columns:
-                    _sh = _sh[_sh["location_ok"].astype(str).str.lower() == "true"]
-                _aside = _n_all - len(_sh)
-                add('<div class="card"><div class="pc-sub">Where they shoot (tracked shots)</div>'
-                    + _cz_png(shots=_sh, title=f"{len(_sh)} tracked shots" + (f" ({_aside} set aside)" if _aside else ""))
-                    + (f'<p class="mini">{_aside} of {_n_all} tracked shots were left off: the shooter\'s spot on film '
-                       "didn't match the shot in the play-by-play (a 3 inside the arc, a 2 outside it, a layup far from "
-                       "the rim). They come back as tracking improves.</p>" if _aside else "")
-                    + _tk_table(_zt.assign(fg=_zt["makes"].astype(int).astype(str) + "/" + _zt["attempts"].astype(int).astype(str)),
-                                ["zone", "fg", "fg_pct", "pts_per_shot"], ["Zone", "Made/Att", "FG%", "Pts/shot"]) + "</div>")
-            _scz = _CZ("uww_court_screen_zones", "offense_team")
-            if not _scz.empty:
-                add('<div class="card"><div class="pc-sub">Where they set screens, and how they were guarded</div>'
-                    + _tk_table(_scz.sort_values("screens", ascending=False), ["zone", "screen_type", "coverage", "screens", "ppp"],
-                                ["Spot", "Screen", "Coverage", "Screens", "PPP"]) + "</div>")
-            _hp = _CZ("uww_court_help", "defense_team")
-            # per-defender rows: only when tracking names enough players, and never the "unnamed" ones (app shows all)
-            if not _hp.empty and "defender" in _hp.columns:
-                _hp = _hp[[not _tk_unnamed(x) for x in _hp["defender"]]] if _tk_names_ok else _hp.iloc[0:0]
-            if not _hp.empty:
-                add('<div class="card"><div class="pc-sub">Their help, on the court: weak-side defenders in the paint</div>'
-                    + _tk_table(_hp, ["defender", "weak_side_in_paint_pct", "weak_side_ft_off_man", "on_ball_ft", "clips"],
-                                ["Defender", "Weak side in paint %", "Weak side ft off man", "On-ball ft", "Clips"]) + "</div>")
-            _zc = _CZ("uww_court_zone_press", "defense_team")
-            if not _zc.empty:
-                _al = _zc["alignment"].dropna().value_counts() if "alignment" in _zc.columns else pd.Series(dtype=int)
-                _tp = _zc["trap_spot"].dropna().value_counts() if "trap_spot" in _zc.columns else pd.Series(dtype=int)
-                add('<div class="card"><div class="pc-sub">Zone alignment and trap spots (court)</div><p class="mini">'
-                    + _sb_esc(("Zone read from the court: " + ", ".join(f"{a} x{n}" for a, n in _al.items()) + ". ") if len(_al) else "No zone clips on the court. ")
-                    + _sb_esc(("Traps: " + ", ".join(f"{a} x{n}" for a, n in _tp.items()) + ".") if len(_tp) else "No traps on the court.") + "</p></div>")
-            _sets_c = _tk_team and _sb_d("uww_trk_sets")
-            _dg = _sb_d("uww_court_diagrams")
-            if isinstance(_sets_c, pd.DataFrame) and not _sets_c.empty and not _dg.empty:
-                _sets_c = _sets_c[_sets_c["offense_team"].astype(str) == str(_team_c)].sort_values("clips", ascending=False).head(2)
-                pics = ""
-                for _, s_ in _sets_c.iterrows():
-                    hit = _dg[_dg["clip_key"] == s_["example_clip"]]
-                    if len(hit):
-                        pics += _cz_png(diagram=hit.iloc[0]["diagram"], title=f"{s_['set_id']} ({int(s_['clips'])} clips)")
-                if pics:
-                    add('<div class="card"><div class="pc-sub">Their most common alignments, drawn from a real possession '
-                        '(numbers = offense, x = defense, dashed = pass, red T = screen)</div>' + pics + "</div>")
-            _spc_c = _sb_d("uww_court_spacing")
-            if not _spc_c.empty:
-                add('<div class="card"><div class="pc-sub">Self-scout on the court: our spacing by lineup</div>'
-                    + _tk_table(_spc_c, ["lineup", "possessions", "both_corners_pct", "paint_crowded_pct", "spacing_ft", "ppp"],
-                                ["Lineup", "Poss.", "Both corners filled %", "Paint crowded %", "Nearest teammate ft", "PPP"], limit=8) + "</div>")
-
-        add('<p class="mini">' + app_link("Film tracking: diagrams, possession replays, search by player", page="upcoming",
-                                          tab="game_plan", section="film_tracking") + "</p>")
-
-    _film_html = _sinks.pop()                        # the film sections, printed at the end (see above)
 
     # =====================================================================================================
     # WHAT TO PLAY THEM IN -- everything here is only possible now that offense AND defense are tagged on
@@ -3910,21 +3877,29 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # low-usage / high-efficiency -- the thing they don't run often enough to have shown up on film, which
     # is exactly what beats an under-prepared defense.
     # =====================================================================================================
-    def offense_section_test2(side, title):
+    def offense_section_test2(side, title, extra=None, extra_note=""):
+        """extra: HTML cards built into this section (requested: their film and reads go in here, not in sections of
+        their own) -- after the quadrant card, or the section's only content when their offense isn't tagged yet."""
+        def _extra_only():
+            if extra:
+                section(title + footnote(extra_note))
+                add(f'<p class="mini">{_sb_esc(OPP_UP)}\u2019s offense isn\u2019t coach-tagged enough for the set '
+                    "breakdown yet -- what follows is from the film.</p>")
+                add("".join(extra))
         sm = _offense_rows(side)
         if sm.empty:
-            return
+            return _extra_only()
         calls = sm[(sm["level"] == "Play call")
                    & ~sm["name"].astype(str).str.contains("unspecified", na=False)].copy()
         if calls.empty:
-            return
+            return _extra_only()
         calls["_uses"] = pd.to_numeric(calls["uses"], errors="coerce").fillna(0)
         calls["_ppp"] = pd.to_numeric(calls["ppp"], errors="coerce")
         _QSHOW = 3     # plays listed per quadrant; the rest collapse to "+ N more"
         _QMIN = 2      # lower than our own side: a set they ran twice and scored on is still a warning
         _rated = calls[(calls["_uses"] >= _QMIN) & calls["_ppp"].notna()]
         if _rated.empty:
-            return
+            return _extra_only()
         team_ppp = calls["team_ppp"].dropna().iloc[0] if calls["team_ppp"].notna().any() else _rated["_ppp"].mean()
         _use_cut = _rated["_uses"].median()
         _meta_df, _meta_sample = staff_rows("uww_opp_sets")
@@ -3937,7 +3912,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             f"their own average ({team_ppp:.2f} PPP), so this is relative to them, not to the league. Sets "
             f"with fewer than {_QMIN} tagged possessions are left out. \"Haven't seen it enough\" is the "
             "cell to read twice: those are efficient looks with a thin sample, which is what beats a "
-            "defense that only prepared for the obvious."))
+            "defense that only prepared for the obvious." + (" " + extra_note if extra and extra_note else "")))
         add('<div class="card">')
 
         _quads = [
@@ -3989,8 +3964,13 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         add('<p class="mini">' + app_link("Every set, clip and spot", page="upcoming", tab="game_plan",
                                           section=f"play_calls_{side.lower()}") + "</p>")
         add("</div>")
+        if extra:
+            add("".join(extra))
 
-    offense_section_test2("Opponent", f"\U0001f3ac HOW {OPP_UP} RUNS OFFENSE")
+    _ro_card = _reads_card(short, f"{OPP_UP} reads off their actions (coaches' Film Tagging)")
+    _fo_html = capture(_film_off_cards)
+    offense_section_test2("Opponent", f"\U0001f3ac HOW {OPP_UP} RUNS OFFENSE", extra=([_ro_card] if _ro_card else []) + _fo_html,
+                          extra_note=" ".join(x for x in ((_READS_NOTE if _ro_card else ""), (_film_off_note if _fo_html else "")) if x))
 
     # ---- sections that need tagging or staff input (kept, laid out two-up) ---------------------------------
     # Only real rows reach these tables now (sample rows are dropped at load), so the section prints only
@@ -4087,14 +4067,20 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # every set into a usage x efficiency quadrant, which turns the table into a decision instead of a
     # reference. Cut whichever of the three loses.
     # =====================================================================================================
-    def offense_section_test_uww(side, title):
+    def offense_section_test_uww(side, title, extra=None, extra_note=""):
+        """extra: HTML cards built into this section (our reads off our actions) -- after the quadrant card, or on
+        their own when our offense has no rated sets yet."""
+        def _extra_only():
+            if extra:
+                section(title + footnote(extra_note))
+                add("".join(extra))
         sm = _offense_rows(side)
         if sm.empty:
-            return
+            return _extra_only()
         calls = sm[(sm["level"] == "Play call")
                    & ~sm["name"].astype(str).str.contains("unspecified", na=False)].copy()
         if calls.empty:
-            return
+            return _extra_only()
         calls["_uses"] = pd.to_numeric(calls["uses"], errors="coerce").fillna(0)
         calls["_ppp"] = pd.to_numeric(calls["ppp"], errors="coerce")
         # A set needs enough reps for its PPP to mean anything before it can be told to call it more or less.
@@ -4102,7 +4088,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         _QSHOW = 3     # sets listed per quadrant; the rest collapse to "+ N more"
         _rated = calls[(calls["_uses"] >= _QMIN) & calls["_ppp"].notna()]
         if _rated.empty:
-            return
+            return _extra_only()
         team_ppp = calls["team_ppp"].dropna().iloc[0] if calls["team_ppp"].notna().any() else _rated["_ppp"].mean()
         # Split on the median so the quadrants always have something in them -- a fixed usage cutoff would
         # empty out early in the season and overflow late.
@@ -4265,7 +4251,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             f"is our own average ({team_ppp:.2f} PPP), so this is relative to us, not to the league. Sets "
             f"with fewer than {_QMIN} tagged possessions are left out -- not enough reps to judge. Read it "
             "as a call sheet, not a verdict: a low-efficiency set may still be there to set up something "
-            "else."))
+            "else." + (" " + extra_note if extra and extra_note else "")))
         add('<div class="card">')
 
         _quads = [
@@ -4399,13 +4385,14 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         add('<p class="mini">' + app_link("Every set, clip and spot", page="upcoming", tab="game_plan",
                                           section="play_calls_uww") + "</p>")
         add("</div>")
+        if extra:
+            add("".join(extra))
 
-    offense_section_test_uww("UWW", "\U0001f3c0 HOW WE RUN OFFENSE")
     _ar_uww = next((t for t in _sb_d("uww_action_reads").get("offense_team", pd.Series(dtype=str)).dropna().astype(str).unique()
                     if "whitewater" in t.lower()), _SB_UWW)
-    _reads_block(_ar_uww, "\U0001f3af OUR READS OFF OUR ACTIONS (SELF-SCOUT)",
-                 "Same as the opponent's reads table: from the coaches' Film Tagging of our own games -- what our ball "
-                 "handlers did with each screen and what our screeners did after, with points per possession.")
+    _ru_card = _reads_card(_ar_uww, "Our reads off our actions (coaches' Film Tagging of our games)")
+    offense_section_test_uww("UWW", "\U0001f3c0 HOW WE RUN OFFENSE", extra=[_ru_card] if _ru_card else [],
+                             extra_note=_READS_NOTE if _ru_card else "")
 
     # AVAILABILITY and SCOUT TEAM removed from the brief (requested) -- still built and shown in full in
     # the app's Game Plan tab. Availability status still feeds the roster's per-player flag (see _avail_by
@@ -4438,9 +4425,48 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         pass
     # CONFIRMED CHANGE (requested): HOW THE FILM IS WATCHED AUTOMATICALLY (how it works, what went in, how well it's
     # working, how the coaches' answers are used) lives only in the app now -- the brief links to it from the
-    # Methodology card at the bottom. The film-built sections themselves (FROM THE FILM, SELF-SCOUT, ON THE COURT)
-    # stay in the brief, here at the end.
+    # Methodology card at the bottom. The opponent's film is built into their own sections; SELF-SCOUT FROM THE FILM
+    # stays in the brief, here at the end.
     _film_link = bool(_fs_rows or _fs_info.get("clips_captured") or _fs_info.get("player_checks"))
+    def _self_scout_film():
+        # CONFIRMED CHANGE (requested): the opponent's film is built into their own sections (roster, HOW <OPP> RUNS
+        # OFFENSE, HOW <OPP> GUARDS SCREENS -- see "THE FILM" above the roster). Our self-scout from the film is still
+        # its own section, drawn here at the end, after our own sections (so its footnote number stays in order).
+        # Self-scout: UWW's own coverage execution and spacing
+        _ce = _sb_d("uww_trk_coverage_execution")
+        # CONFIRMED CHANGE (requested): "our screen coverage vs the plan" only once a plan exists (the Game Plan tab's
+        # coverage plan, or staff_inputs/uww_coverage_plan.csv) -- without one every row was tracking's estimate on an
+        # unnamed defender with no plan to compare to. The app still shows it.
+        if not _ce.empty and not ("planned" in _ce.columns and _ce["planned"].map(_sb_clean).astype(bool).any()):
+            _ce = pd.DataFrame()
+        if not _ce.empty and "defender" in _ce.columns:
+            _ce = _ce[[not _tk_unnamed(x) for x in _ce["defender"]]]
+        _spc = _sb_d("uww_trk_spacing")
+        # our spacing on the court (court mapping) -- only when OUR film's court mapping passes the film-quality check
+        _uq = _fq_of(next((t for t in (_fq["team"] if not _fq.empty and "team" in _fq.columns else [])
+                           if "whitewater" in str(t).lower()), None))
+        _spc_c = _sb_d("uww_court_spacing") if (_uq and _fq_true(_uq.get("court_ok"))) else pd.DataFrame()
+        if not _ce.empty or not _spc.empty or not _spc_c.empty:
+            section("\U0001fa9e SELF-SCOUT FROM THE FILM" + footnote(
+                "Our defense: the coverage we played on each tracked screen vs the plan entered in the app (Game Plan > Our "
+                "screen coverage plan) or staff_inputs/uww_coverage_plan.csv. Our offense: spacing by lineup -- average "
+                "distance to the nearest teammate, how wide the five are, and how often two teammates (not screening) were "
+                "within 6 ft. Approximate feet; small sample."))
+            if not _ce.empty:
+                _ce = _ce.assign(cov=_ce["coverage"].astype(str) + _ce["coverage_source"].map(lambda s: "*" if s == "tracking estimate" else ""))
+                add('<div class="card"><div class="pc-sub">Our screen coverage vs the plan</div>'
+                    + _tk_table(_ce, ["defender", "role", "screen_type", "cov", "times", "planned", "followed_pct"],
+                                ["Our defender", "Role", "Screen", "Coverage", "Times", "Planned", "Followed %"]) + "</div>")
+            if not _spc.empty:
+                add('<div class="card"><div class="pc-sub">Our spacing by lineup (approx ft)</div>'
+                    + _tk_table(_spc, ["lineup", "possessions", "spacing_ft_approx", "width_ft_approx", "crowded_pct", "ppp"],
+                                ["Lineup", "Poss.", "Nearest teammate", "Width", "Crowded %", "PPP"], limit=8) + "</div>")
+            if not _spc_c.empty:
+                add('<div class="card"><div class="pc-sub">Our spacing on the court, by lineup</div>'
+                    + _tk_table(_spc_c, ["lineup", "possessions", "both_corners_pct", "paint_crowded_pct", "spacing_ft", "ppp"],
+                                ["Lineup", "Poss.", "Both corners filled %", "Paint crowded %", "Nearest teammate ft", "PPP"], limit=8) + "</div>")
+            add('<p class="mini">' + _film_app_link("Film tracking: diagrams, possession replays, search by player") + "</p>")
+    _film_html = capture(_self_scout_film)
     if _film_html:
         page_break()
         for _h in _film_html:

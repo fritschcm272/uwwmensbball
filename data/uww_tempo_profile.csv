@@ -1,5 +1,5 @@
 opponent,metric,value,note,is_sample
-MSOE Raiders,Possessions per game,74.3,Estimated over 27 game(s): FGA - OREB + TO + 0.475*FTA,False
-MSOE Raiders,Points per possession,1.14,Their scoring over 27 game(s) of film,False
+Wheaton (IL) Thunder,Possessions per game,74.9,Estimated over 26 game(s): FGA - OREB + TO + 0.475*FTA,False
+Wheaton (IL) Thunder,Points per possession,1.09,Their scoring over 26 game(s) of film,False
 UW-Whitewater,Possessions per game,69.4,Our own pace over 29 game(s),False
-MSOE Raiders,Early-offense share,30.0,% of 86 tagged possessions shooting inside 10 seconds,False
+Wheaton (IL) Thunder,Early-offense share,45.0,% of 88 tagged possessions shooting inside 10 seconds,False

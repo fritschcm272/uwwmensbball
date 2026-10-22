@@ -32,11 +32,88 @@ def _fa_norm(p):
     return os.path.normcase(os.path.abspath(str(p)))
 
 
+# ---- Storage drives: game folders and exports moved off _vision_frames -----------------------------------------------------
+# CONFIRMED CHANGE (requested: use F:\Backups\uwwmensbball_tracking "so that storage space is not an issue"). A game folder
+# moved from _vision_frames to a storage folder (VISION_STORAGE_DIRS / SYNERGY_EXPORT_DIR, same folder name) is still read:
+# every step still asks for <_vision_frames>/<game>/..., and the hooks below hand it the file from the storage folder. A
+# Synergy export moved there is found by its folder name. A drive that isn't plugged in is simply skipped.
+def _fs_base():
+    return os.path.abspath(globals().get("VISION_FRAMES_DIR") or os.path.join(INPUT_DIR, "_vision_frames"))
+
+
+def vision_storage_dirs():
+    """The storage folders reachable right now, besides _vision_frames (same as section 46's)."""
+    v = globals().get("VISION_STORAGE_DIRS") or []
+    v = [v] if isinstance(v, (str, os.PathLike)) else list(v)
+    if globals().get("SYNERGY_EXPORT_DIR"):
+        v.append(globals()["SYNERGY_EXPORT_DIR"])
+    out, seen = [], {os.path.normcase(_fs_base())}
+    for d in v:
+        d = os.path.abspath(str(d))
+        if os.path.normcase(d) not in seen and os.path.isdir(d):
+            seen.add(os.path.normcase(d))
+            out.append(d)
+    return out
+
+
+def _fs_refresh():
+    """{game folder name (normcase): [storage folder, ...]} for the game folders sitting in a storage folder."""
+    games = {}
+    for d in vision_storage_dirs():
+        try:
+            for name in os.listdir(d):
+                if os.path.isdir(os.path.join(d, name)):
+                    games.setdefault(os.path.normcase(name), []).append(d)
+        except Exception:
+            pass
+    globals()["_fs_games"] = games
+    return games
+
+
+def _fs_moved(p):
+    """A path under _vision_frames whose game folder is (also) in a storage folder: the same file there if it exists, else
+    None. Only called once the path itself is missing."""
+    games = globals().get("_fs_games")
+    if not games or not isinstance(p, (str, os.PathLike)):
+        return None
+    try:
+        a = os.path.abspath(os.fspath(p))
+        base = _fs_base()
+        if not os.path.normcase(a).startswith(os.path.normcase(base) + os.sep):
+            return None
+        rel = os.path.relpath(a, base)
+        roots = games.get(os.path.normcase(rel.split(os.sep, 1)[0]))
+        if not roots:
+            return None
+        ex = (globals().get("_FA_ORIG") or {}).get("exists", os.path.exists)
+        for d in roots:
+            c = os.path.join(d, rel)
+            if ex(c):
+                return c
+    except Exception:
+        return None
+    return None
+
+
+def _fs_manifests(name):
+    """(manifest path, the folder the steps know it by) for every <game>/track*/<name> -- _vision_frames' own, plus the game
+    folders in storage folders (listed first, so a game in both places uses _vision_frames' copy)."""
+    base = _fs_base()
+    out = []
+    for d in vision_storage_dirs():
+        for man in glob.glob(os.path.join(d, "*", "track*", name)):
+            folder = os.path.dirname(man)
+            out.append((man, os.path.join(base, os.path.relpath(folder, d))))
+    for man in glob.glob(os.path.join(base, "*", "track*", name)):
+        out.append((man, os.path.dirname(man)))
+    return out
+
+
 def _fa_load_index():
     """{normalized frame path: (video path, frame number, manifest path, clip)} for every archived clip on disk."""
     idx = {}
-    base = globals().get("VISION_FRAMES_DIR") or os.path.join(INPUT_DIR, "_vision_frames")
-    for man in glob.glob(os.path.join(base, "*", "track*", _FA_INDEX_NAME)):
+    _fs_refresh()
+    for man, home in _fs_manifests(_FA_INDEX_NAME):
         try:
             with open(man, encoding="utf-8") as fh:
                 d = json.load(fh)
@@ -46,7 +123,7 @@ def _fa_load_index():
         for clip, info in (d.get("clips") or {}).items():
             vid = os.path.join(folder, info["video"])
             for k, name in enumerate(info.get("frames", [])):
-                idx[_fa_norm(os.path.join(folder, name))] = (vid, k, man, clip)
+                idx[_fa_norm(os.path.join(home, name))] = (vid, k, man, clip)
     globals()["_fa_index"] = idx
     return idx
 
@@ -91,6 +168,8 @@ def vision_frames_ensure(paths):
     """Make sure these frame files exist as JPEGs (unpacking their archived clips if needed). -> number unpacked."""
     done, n = set(), 0
     for p in paths:
+        if not _FA_ORIG["exists"](p) and _fs_moved(p) is not None:
+            continue                                      # already a JPEG, in a game folder moved to a storage drive
         if _fx_lookup(p) is not None and not _FA_ORIG["exists"](p):
             n += bool(_fx_write(p))                       # a frame of a Synergy export: written from its clip video
             continue
@@ -125,11 +204,31 @@ def vision_frame_archived(p):
 _FX_INDEX_NAME = "_export.json"
 
 
+def _fx_find_video(vid, cache):
+    """A clip video that isn't where _export.json says (its export was moved, e.g. to the big drive): the same
+    <export folder>/video/<n>.mp4 in any storage folder, else the path as written."""
+    ex = (globals().get("_FA_ORIG") or {}).get("exists", os.path.exists)
+    if ex(vid):
+        return vid
+    parts = os.path.normpath(vid).split(os.sep)
+    if len(parts) < 3:
+        return vid
+    exp = parts[-3]
+    if exp not in cache:                                   # once per export folder
+        cache[exp] = None
+        roots = [os.path.abspath(globals().get("SYNERGY_EXPORT_DIR") or _fs_base()), _fs_base()] + vision_storage_dirs()
+        for r in roots:
+            if os.path.isdir(os.path.join(r, exp, parts[-2])):
+                cache[exp] = r
+                break
+    return os.path.join(cache[exp], exp, parts[-2], parts[-1]) if cache[exp] else vid
+
+
 def _fx_load_index():
     """{normalized frame path: (clip video, video frame number, width)} for every export-backed frame on disk."""
-    idx, clips = {}, {}
-    base = globals().get("VISION_FRAMES_DIR") or os.path.join(INPUT_DIR, "_vision_frames")
-    for man in glob.glob(os.path.join(base, "*", "track*", _FX_INDEX_NAME)):
+    idx, clips, found = {}, {}, {}
+    _fs_refresh()
+    for man, home in _fs_manifests(_FX_INDEX_NAME):
         try:
             with open(man, encoding="utf-8") as fh:
                 d = json.load(fh)
@@ -137,10 +236,10 @@ def _fx_load_index():
             continue
         folder = os.path.dirname(man)
         for clip, info in (d.get("clips") or {}).items():
-            vid = os.path.normpath(os.path.join(folder, info["video"]))
+            vid = _fx_find_video(os.path.normpath(os.path.join(folder, info["video"])), found)
             w = int(info.get("w") or 0)
             for name, k in zip(info.get("frames", []), info.get("src", [])):
-                idx[_fa_norm(os.path.join(folder, name))] = (vid, int(k), w)
+                idx[_fa_norm(os.path.join(home, name))] = (vid, int(k), w)
             clips[(vid, w)] = sorted(set(int(k) for k in info.get("src", [])))
     globals()["_fx_index"] = idx
     globals()["_fx_clips"] = clips
@@ -254,6 +353,7 @@ def _fx_write(p):
     fr = _fx_decode(*hit)
     if fr is None:
         return False
+    os.makedirs(os.path.dirname(os.path.abspath(p)), exist_ok=True)   # a game folder moved away: recreated for the file
     return bool(_FA_ORIG["imwrite"](p, fr, [cv2.IMWRITE_JPEG_QUALITY, int(globals().get("FRAME_ARCHIVE_RESTORE_JPEG", 95))]))
 
 
@@ -280,9 +380,15 @@ def _fa_install_hooks():
             O[_k] = _f                        # the function underneath ours (the original, or another library's patch)
     globals()["_FA_ORIG"] = O
 
+    def _real(p):
+        """The file to open: p itself, or its copy in a game folder moved to a storage drive."""
+        if not isinstance(p, (str, os.PathLike)) or O["exists"](p):
+            return p
+        return _fs_moved(p) or p
+
     def _restore_for(p):
         hit = _fa_lookup(p)
-        if hit is not None and not O["exists"](p):
+        if hit is not None and not O["exists"](_real(p)):
             try:
                 _fa_restore_clip(hit[0], hit[2], hit[3])
             except Exception as e:
@@ -293,7 +399,7 @@ def _fa_install_hooks():
         if not isinstance(p, (str, os.PathLike)):
             return None
         hit = _fx_lookup(p)
-        return hit if hit is not None and not O["exists"](p) else None
+        return hit if hit is not None and not O["exists"](_real(p)) else None
 
     def imread(filename, *a, **k):
         hit = _virtual(filename)
@@ -305,6 +411,7 @@ def _fa_install_hooks():
             return fr
         if isinstance(filename, (str, os.PathLike)):
             _restore_for(filename)
+            filename = _real(filename)
         return O["imread"](filename, *a, **k)
 
     def pil_open(fp, *a, **k):
@@ -316,19 +423,26 @@ def _fa_install_hooks():
             return _PILImage.fromarray(cv2.cvtColor(fr, cv2.COLOR_BGR2RGB))
         if isinstance(fp, (str, os.PathLike)):
             _restore_for(fp)
+            fp = _real(fp)
         return O["pil_open"](fp, *a, **k)
 
     def exists(p):
         r = O["exists"](p)
-        return r or (isinstance(p, (str, os.PathLike)) and (_fa_lookup(p) is not None or _fx_lookup(p) is not None))
+        return r or (isinstance(p, (str, os.PathLike)) and (_fa_lookup(p) is not None or _fx_lookup(p) is not None
+                                                            or _fs_moved(p) is not None))
 
     def isfile(p):
         r = O["isfile"](p)
-        return r or (isinstance(p, (str, os.PathLike)) and (_fa_lookup(p) is not None or _fx_lookup(p) is not None))
+        return r or (isinstance(p, (str, os.PathLike)) and (_fa_lookup(p) is not None or _fx_lookup(p) is not None
+                                                            or _fs_moved(p) is not None))
 
     def getsize(p):
-        if isinstance(p, (str, os.PathLike)) and not O["exists"](p) and (_fa_lookup(p) is not None or _fx_lookup(p) is not None):
-            return 1                                       # archived / in a Synergy export: present, just inside a video
+        if isinstance(p, (str, os.PathLike)) and not O["exists"](p):
+            m = _fs_moved(p)
+            if m is not None:
+                return O["getsize"](m)
+            if _fa_lookup(p) is not None or _fx_lookup(p) is not None:
+                return 1                                   # archived / in a Synergy export: present, just inside a video
         return O["getsize"](p)
 
     for f in (imread, pil_open, exists, isfile, getsize):

@@ -2685,7 +2685,7 @@ STAT_GLOSSARY = {
     },
     "TOV%": {
         "label": "Turnover Percentage",
-        "formula": "TO / (FGA + 0.44 x FTA + TO)",
+        "formula": "TO / Possessions  (Possessions = FGA - OREB + TO + 0.475 x FTA)",
         "definition": "The share of a team's possessions that end in a turnover, rather than a shot or trip to "
                        "the line. Lower is better. Normalizing by possessions (not just raw turnover count) "
                        "makes this comparable between a fast team and a slow team.",
@@ -2706,10 +2706,11 @@ STAT_GLOSSARY = {
     },
     "Poss": {
         "label": "Possessions",
-        "formula": "FGA - OREB + TO + 0.44 x FTA",
-        "definition": "The standard estimate of how many possessions a team used, since possessions aren't "
-                       "directly recorded in a normal box score. This is the denominator behind pace and "
-                       "offensive/defensive rating.",
+        "formula": "FGA - OREB + TO + 0.475 x FTA",
+        "definition": "Ken Pomeroy's (KenPom) college estimate of how many possessions a team used, since "
+                       "possessions aren't directly recorded in a normal box score. 0.475 is how often a college "
+                       "free-throw attempt ends a trip (the NBA version uses 0.44). This is the denominator behind "
+                       "pace, offensive/defensive rating and turnover rate, everywhere in the app and the brief.",
     },
     "Pace": {
         "label": "Pace",
@@ -2754,7 +2755,7 @@ STAT_GLOSSARY = {
     },
     "Usage%": {
         "label": "Usage Rate",
-        "formula": "100 x ((FGA + 0.44xFTA + TO) x (Team MIN/5)) / (MIN x (Team FGA + 0.44xTeam FTA + Team TO))",
+        "formula": "100 x ((FGA + 0.475xFTA + TO) x (Team MIN/5)) / (MIN x (Team FGA + 0.475xTeam FTA + Team TO))",
         "definition": "The percentage of a team's plays a player used (by shooting, getting to the line, or "
                        "turning it over) while on the floor. High usage isn't automatically good or bad -- it "
                        "just tells you who the offense runs through.",
@@ -2908,9 +2909,11 @@ def section_header(title: str, help_text: str = None, margin: str = "1.5rem 0 0.
 def estimate_possessions(fga, oreb, to, fta) -> float:
     """Standard possession estimate (there's no possession count in a normal box score, so this is the widely
     used approximation): a possession ends on a made shot, a defensive rebound, a turnover, or the last free
-    throw of a trip -- 0.44 approximates "how often a FTA trip is the LAST FTA of its trip" without needing to
-    know FT trip boundaries directly."""
-    return fga - oreb + to + 0.44 * fta
+    throw of a trip -- 0.475 approximates "how often a FTA is the LAST FTA of its trip" without needing to
+    know FT trip boundaries directly. CONFIRMED CHANGE (requested): Ken Pomeroy's (KenPom) college coefficient,
+    0.475, everywhere possessions are estimated (the app and the parser) -- it was 0.44 (the NBA version) here and
+    in the brief / style matchups, but 0.475 in the pace / tempo tables."""
+    return fga - oreb + to + 0.475 * fta
 
 
 # Dean Oliver's own weighting of the Four Factors -- shooting matters most, free throws least. Used to turn
@@ -3518,7 +3521,7 @@ def compute_usage_rate(player_row: pd.Series, player_minutes: float, team_box: p
     over the same set of games used for `player_row`'s totals. Returns 0 if minutes are missing/zero (can't
     estimate usage for a player with no recorded minutes).
 
-    NOTE: the standard Usage% formula's denominator is "team plays" = Tm FGA + 0.44 x Tm FTA + Tm TOV -- NOT
+    NOTE: the standard Usage% formula's denominator is "team plays" = Tm FGA + 0.475 x Tm FTA + Tm TOV -- NOT
     the same "possessions" estimate used elsewhere for pace/ratings (which also subtracts OREB, since an
     offensive rebound extends the same possession rather than ending it). Using the OREB-subtracted version
     here would inflate every player's Usage% by roughly however much OREB shrinks the team's own FGA total --
@@ -7455,6 +7458,283 @@ def render_film_tagging():
             st.error("Add your name next to the Save button, then save again.")
         else:
             _pr_commit(d, store, _coach, kp, "titles", _sfx, actions=True)
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Analytics > Court Calibration. CONFIRMED CHANGE (requested: "add court calibrations to the application instead of
+# stopping the parser notebook ... like the player number tracking ... and it would pick up the calibrations on the next
+# run of the parser"). The parser writes one package per uncalibrated gym into data/court_calibration/<gym>/ (request.json
+# + a few frames). Here a coach picks a landmark, clicks the same spot on the picture, does 4+ per frame, and saves; the
+# save goes to the saves branch as court_calibration_<gym>_<coach>_<time>.json -- the same points format as the parser's
+# old calibration page (pixels of the full-size frame) -- and the next parser run places that gym's frames on the court.
+# ---------------------------------------------------------------------------------------------------------------------
+import numpy as np                                    # (comes with pandas) -- the calibration math below
+_CC_DIR = os.path.join(DATA_DIR, "court_calibration")
+_CC_BASKET_X, _CC_ARC, _CC_CORNER = 5.25, 22.146, 21.667
+
+
+def _cc_slug(s):
+    return re.sub(r"[^A-Za-z0-9]+", "_", str(s)).strip("_")
+
+
+def _cc_requests():
+    out = []
+    for f in sorted(glob.glob(os.path.join(_CC_DIR, "*", "request.json"))):
+        try:
+            with open(f, encoding="utf-8") as fh:
+                d = json.load(fh)
+        except Exception:
+            continue
+        if isinstance(d, dict) and d.get("frames") and d.get("landmarks"):
+            d["_dir"] = os.path.dirname(f)
+            out.append(d)
+    return out
+
+
+def _cc_saved():
+    """Every saved court calibration (repo copy + saves branch) -> {gym: [documents], newest last}."""
+    docs = {}
+    for f in glob.glob(os.path.join(DATA_DIR, "play_review_saves", "court_calibration_*.json")):
+        try:
+            with open(f, encoding="utf-8") as fh:
+                docs[os.path.basename(f)] = json.load(fh)
+        except Exception:
+            continue
+    try:
+        token, repo, _branch, sb, folder = _gh_cfg()
+        for k, v in (_pr_remote_save_docs(token, repo, sb, folder) or {}).items():
+            if str(k).startswith("court_calibration_"):
+                docs[k] = v
+    except Exception:
+        pass
+    by = {}
+    for d in sorted((d for d in docs.values() if isinstance(d, dict) and d.get("frames")),
+                    key=lambda d: str(d.get("saved", ""))):
+        by.setdefault(str(d.get("arena")), []).append(d)
+    return by
+
+
+def _cc_homography(src, dst):
+    """Pixel -> court-feet homography from 4+ point pairs (normalized DLT). None when it can't be solved."""
+    src, dst = np.asarray(src, float), np.asarray(dst, float)
+    if len(src) < 4:
+        return None
+
+    def norm(p):
+        c = p.mean(0)
+        s = np.sqrt(2) / max(np.mean(np.linalg.norm(p - c, axis=1)), 1e-9)
+        return np.array([[s, 0, -s * c[0]], [0, s, -s * c[1]], [0, 0, 1]])
+    Ts, Td = norm(src), norm(dst)
+    ps = (Ts @ np.c_[src, np.ones(len(src))].T).T
+    pd_ = (Td @ np.c_[dst, np.ones(len(dst))].T).T
+    A = []
+    for (x, y, _), (u, v, _) in zip(ps, pd_):
+        A.append([-x, -y, -1, 0, 0, 0, u * x, u * y, u])
+        A.append([0, 0, 0, -x, -y, -1, v * x, v * y, v])
+    try:
+        H = np.linalg.svd(np.asarray(A))[2][-1].reshape(3, 3)
+        H = np.linalg.inv(Td) @ H @ Ts
+        return H / H[2, 2] if abs(H[2, 2]) > 1e-12 else None
+    except Exception:
+        return None
+
+
+def _cc_apply(H, pts):
+    v = np.c_[np.asarray(pts, float), np.ones(len(pts))] @ H.T
+    return v[:, :2] / v[:, 2:3]
+
+
+def _cc_court_lines():
+    """The court's lines in feet (NCAA men's), as polylines -- drawn on the picture through the calibration as a check."""
+    L = [[(0, 0), (94, 0)], [(0, 50), (94, 50)], [(0, 0), (0, 50)], [(94, 0), (94, 50)], [(47, 0), (47, 50)]]
+    circ = lambda cx, cy, r, a0=0, a1=2 * np.pi: [(cx + r * np.cos(a), cy + r * np.sin(a)) for a in np.linspace(a0, a1, 40)]
+    for left in (True, False):
+        X = (lambda x: x) if left else (lambda x: 94 - x)
+        L += [[(X(0), 19), (X(19), 19), (X(19), 31), (X(0), 31)]]
+        L += [[(X(x), y) for x, y in circ(19, 25, 6)]]
+        _x_arc = _CC_BASKET_X + np.sqrt(_CC_ARC ** 2 - _CC_CORNER ** 2)
+        L += [[(X(0), 25 - _CC_CORNER), (X(_x_arc), 25 - _CC_CORNER)], [(X(0), 25 + _CC_CORNER), (X(_x_arc), 25 + _CC_CORNER)]]
+        L += [[(X(_CC_BASKET_X + _CC_ARC * np.cos(a)), 25 + _CC_ARC * np.sin(a)) for a in np.linspace(-1.35, 1.35, 40)]]
+    L += [circ(47, 25, 6)]
+    return L
+
+
+def _cc_frame_picture(path, fr, points, H):
+    """The frame (as shrunk for the app) with the clicked landmarks, and the court lines through the calibration."""
+    from PIL import Image, ImageDraw
+    im = Image.open(path).convert("RGB")
+    d = ImageDraw.Draw(im)
+    s = im.size[0] / float(fr.get("W") or im.size[0])            # full-frame pixels -> this picture
+    if H is not None:
+        try:
+            Hi = np.linalg.inv(H)
+            for line in _cc_court_lines():
+                pix = _cc_apply(Hi, line) * s
+                ok = np.isfinite(pix).all(1) & (np.abs(pix) < 4 * max(im.size)).all(1)
+                for a, b, oa, ob in zip(pix[:-1], pix[1:], ok[:-1], ok[1:]):
+                    if oa and ob:
+                        d.line([tuple(a), tuple(b)], fill=(0, 255, 255), width=2)
+        except Exception:
+            pass
+    for p in points:
+        x, y = p["px"] * s, p["py"] * s
+        d.ellipse([x - 6, y - 6, x + 6, y + 6], outline=(255, 255, 0), width=3)
+        d.text((x + 8, y - 16), p["landmark"].replace("lane, ", "")[:30], fill=(255, 255, 0))
+    return im
+
+
+def _cc_court_diagram(landmarks, selected, done):
+    """Small court diagram: every landmark (green = clicked on this frame, red = the one you're placing)."""
+    from PIL import Image, ImageDraw
+    S, W, H = 6, 94 * 6 + 20, 50 * 6 + 20
+    im = Image.new("RGB", (W, H), (232, 211, 169))
+    d = ImageDraw.Draw(im)
+    P = lambda x, y: (10 + x * S, H - 10 - y * S)               # near sideline at the bottom, like the camera
+    for line in _cc_court_lines():
+        d.line([P(x, y) for x, y in line], fill=(255, 255, 255), width=2)
+    for nm, (x, y) in landmarks.items():
+        cx, cy = P(x, y)
+        col = (214, 39, 40) if nm == selected else ((44, 160, 44) if nm in done else (31, 119, 180))
+        r = 7 if nm == selected else 5
+        d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=col, outline=(0, 0, 0))
+    return im
+
+
+def _cc_rerun():
+    """Rerun only this page's fragment (each click would otherwise rerun every Analytics tab)."""
+    st.session_state["_analytics_open_tab"] = "Court Calibration"      # stay on this tab
+    try:
+        st.rerun(scope="fragment")
+    except Exception:
+        st.rerun()
+
+
+def render_court_calibration():
+    """Analytics > Court Calibration -- see the note above _CC_DIR. Drawn as a fragment where Streamlit supports it, so a
+    click reruns only this page."""
+    if hasattr(st, "fragment"):
+        st.fragment(_cc_page)()
+    else:
+        _cc_page()
+
+
+def _cc_page():
+    section_header("\U0001f4d0 COURT CALIBRATION",
+                   "One time per gym. Pick a landmark, then click that exact spot on the picture -- 4 or more spread-out "
+                   "landmarks per frame, ideally a frame at EACH basket. Save, and the parser's next run puts that gym's "
+                   "games on the court. 'Near' = the sideline closest to the camera.")
+    try:
+        from streamlit_image_coordinates import streamlit_image_coordinates as _sic
+    except Exception:
+        st.error("This page needs the streamlit-image-coordinates package (it's in requirements.txt -- reboot the app).")
+        return
+    reqs = _cc_requests()
+    saved = _cc_saved()
+    if not reqs:
+        st.info("No gym is waiting for a court calibration. When the parser tracks a game in a new gym, it puts that gym "
+                "here (push the data folder after the run).")
+        return
+    label = {}
+    for r in reqs:
+        n = len(saved.get(str(r.get("arena")), []))
+        label[f"{r.get('arena')} -- {r.get('game')}" + (" (saved -- the parser uses it next run)" if n else "")] = r
+    pick = st.selectbox("Gym", list(label), key="cc_gym")
+    req = label[pick]
+    gym = str(req.get("arena"))
+    lms = {k: tuple(v) for k, v in req["landmarks"].items()}
+    frames = req["frames"]
+    store = st.session_state.setdefault("cc_points", {}).setdefault(gym, {})
+    if not store and saved.get(gym):                              # start from the newest save of this gym
+        for f_ in saved[gym][-1].get("frames", []):
+            store[f_.get("file")] = [p for p in f_.get("points", []) if p.get("landmark") in lms]
+    if saved.get(gym):
+        last = saved[gym][-1]
+        st.success(f"Saved by {last.get('coach') or 'a coach'} ({str(last.get('saved', ''))[:16].replace('T', ' ')} UTC) -- the "
+                   "parser uses it on its next run. You can still change it and save again (the newest save is used).")
+
+    names = [f"Frame {i + 1} -- {len(store.get(f_['file'], []))} point(s)" + (" ✔" if len(store.get(f_['file'], [])) >= 4 else "")
+             for i, f_ in enumerate(frames)]
+    fi = st.radio("Frame", list(range(len(frames))), format_func=lambda i: names[i], horizontal=True, key=f"cc_fi_{gym}")
+    fr = frames[fi]
+    pts = store.setdefault(fr["file"], [])
+
+    # the landmark to place next (a click moves it on to the next one not yet placed on this frame)
+    lm_key = f"cc_lm_{gym}_{fi}"
+    _pending = st.session_state.pop("_cc_next_lm", None)
+    if _pending and _pending[0] == lm_key:
+        st.session_state[lm_key] = _pending[1]
+    lm_names = list(lms)
+    left, right = st.columns([3, 2])
+    with right:
+        sel = st.selectbox("Landmark to place", lm_names, key=lm_key,
+                           help="Pick a landmark you can see clearly in this picture, then click that spot on the picture.")
+        st.image(_cc_court_diagram(lms, sel, {p["landmark"] for p in pts}),
+                 caption="Red = the landmark you're placing; green = already placed on this frame", use_container_width=True)
+        H = _cc_homography([(p["px"], p["py"]) for p in pts], [lms[p["landmark"]] for p in pts]) if len(pts) >= 4 else None
+        if len(pts) >= 5 and H is not None:
+            err = np.linalg.norm(_cc_apply(H, [(p["px"], p["py"]) for p in pts]) - np.asarray([lms[p["landmark"]] for p in pts]),
+                                 axis=1)
+            st.caption(f"Click check: the points agree within {err.mean():.1f} ft on average (worst {err.max():.1f} ft -- "
+                       f"{pts[int(err.argmax())]['landmark']}). Under 1 ft is good; redo any point that's several feet off.")
+        elif len(pts) == 4:
+            st.caption("4 points: enough to calibrate. A 5th point lets the page check your clicks.")
+        if pts:
+            st.caption("Placed: " + ", ".join(p["landmark"] for p in pts))
+        for j, p in enumerate(list(pts)):
+            if st.button(f"Remove {p['landmark']}", key=f"cc_rm_{gym}_{fi}_{j}"):
+                pts.pop(j)
+                _cc_rerun()
+        if pts and st.button("Clear this frame", key=f"cc_clear_{gym}_{fi}"):
+            pts.clear()
+            _cc_rerun()
+    with left:
+        img_path = os.path.join(req["_dir"], fr["image"])
+        if not os.path.exists(img_path):
+            st.warning("This frame's picture is missing from data/court_calibration -- push the data folder again.")
+            return
+        st.caption("The cyan lines are the court drawn through your clicks (4+ points) -- they should sit on the real lines."
+                   if H is not None else "Click the landmark's exact spot (where the lines meet, at the floor).")
+        _pic = _cc_frame_picture(img_path, fr, pts, H)
+        try:
+            val = _sic(_pic, key=f"cc_img_{gym}_{fi}", use_column_width="always")
+        except TypeError:                                        # an older / newer component without use_column_width
+            val = _sic(_pic, key=f"cc_img_{gym}_{fi}", width=min(_pic.size[0], 900))
+        if val and val.get("x") is not None and val.get("width"):
+            sig = (gym, fi, val.get("x"), val.get("y"), val.get("unix_time"))
+            if st.session_state.get("_cc_last_click") != sig:
+                st.session_state["_cc_last_click"] = sig
+                sc = float(fr.get("W") or val["width"]) / float(val["width"])
+                pts[:] = [p for p in pts if p["landmark"] != sel] + [
+                    {"landmark": sel, "px": round(float(val["x"]) * sc, 1), "py": round(float(val["y"]) * sc, 1)}]
+                done = {p["landmark"] for p in pts}
+                nxt = next((n for n in lm_names[lm_names.index(sel) + 1:] + lm_names if n not in done), None)
+                if nxt:
+                    st.session_state["_cc_next_lm"] = (lm_key, nxt)
+                _cc_rerun()
+
+    ready = [f_ for f_ in frames if len(store.get(f_["file"], [])) >= 4]
+    ends = set()
+    for f_ in ready:
+        for p in store[f_["file"]]:
+            ends.add("LEFT" if p["landmark"].startswith("LEFT") else "RIGHT" if p["landmark"].startswith("RIGHT") else "MID")
+    st.markdown(f"**{len(ready)} of {len(frames)} frame(s) ready** (4+ points)"
+                + ("" if {"LEFT", "RIGHT"} <= ends else " -- try to calibrate a frame at each basket (LEFT and RIGHT landmarks)"))
+    c1, c2 = st.columns([3, 1])
+    coach = c1.text_input("Your name (required to save)", key="cc_coach")
+    if c2.button("Save calibration", key=f"cc_save_{gym}", disabled=not ready or not coach.strip()):
+        payload = {"kind": "court_calibration", "arena": gym, "game": req.get("game"), "coach": coach.strip(),
+                   "saved": pd.Timestamp.now(tz="UTC").isoformat(timespec="seconds"), "source": "streamlit app",
+                   "frames": [{"file": f_["file"], "points": store[f_["file"]]} for f_ in ready]}
+        fname = (f"court_calibration_{_cc_slug(gym)}_{_cc_slug(coach.strip())}_"
+                 f"{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
+        ok, msg = _pr_github_save(fname, payload)
+        if ok:
+            st.success(f"Saved ({msg}). The parser's next run places {gym}'s games on the court.")
+        else:
+            st.warning(f"Couldn't save to GitHub ({msg}). Download the file and put it in the repo's data/play_review_saves "
+                       "folder -- the parser picks it up from there.")
+            st.download_button("Download the calibration", json.dumps(payload, indent=1), file_name=fname,
+                                mime="application/json", key=f"cc_dl_{gym}")
 
 
 def render_player_number_tracking():
@@ -12596,7 +12876,7 @@ rather than taking the label's word for it.
                          "our own record agree." if _fp_gap > 0 else
                          f"Note: UWW has actually been {abs(_fp_gap):.1f} points/100 WORSE at this tempo. The "
                          "matchup argues for it, our own results don't -- worth weighing both.")
-                        + " Pace is an estimate from the box score (FGA - OREB + TO + 0.44*FTA), split at UWW's own median."
+                        + " Pace is an estimate from the box score (FGA - OREB + TO + 0.475*FTA, KenPom), split at UWW's own median."
                     )
 
             _fp_ohist = _card_data.get("pace_style_opp_history")
@@ -16780,6 +17060,7 @@ def render_analytics():
         "Players": render_players,
         "Video Tracking": render_video_tracking,
         "Player Number Tracking": render_player_number_tracking,
+        "Court Calibration": render_court_calibration,
         "Film Tagging": render_film_tagging,
     }
     _tab_order = list(_renderers)

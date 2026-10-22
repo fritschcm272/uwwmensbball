@@ -35,7 +35,7 @@ def _fq_table(name, mem=None):
         if isinstance(d, pd.DataFrame) and not d.empty:
             return d
     try:
-        return pd.read_csv(os.path.join(APP_DATA_DIR, f"{name}.csv"), low_memory=False)
+        return pd.read_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, f"{name}.csv"), low_memory=False)
     except Exception:
         return pd.DataFrame()
 
@@ -125,7 +125,10 @@ film_quality = pd.DataFrame(_fq_rows)
 for _c in ("named_share_pct", "court_mapped_pct", "shot_zone_agree_pct"):
     if _c in film_quality.columns:
         film_quality[_c] = pd.to_numeric(film_quality[_c], errors="coerce").round().astype("Int64")
-film_quality.to_csv(os.path.join(APP_DATA_DIR, "uww_film_quality.csv"), index=False)
+# CONFIRMED BUG (fixed): APP_DATA_DIR is first set in the CSV-export cell further down, so this cell (and the new code
+# in Play calls, Tag model, Tracking insights and Play review) failed or silently skipped its writes in a fresh session.
+# OUTPUT_DIR is the same folder (../data).
+film_quality.to_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, "uww_film_quality.csv"), index=False)
 for _, _r in film_quality[film_quality["is_upcoming"] | film_quality["is_uww"]].iterrows():
     print(f"Film on {_r['team']}: {_r['film_line']}."
           + ("" if not _r["tracked_games"] else

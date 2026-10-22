@@ -1,30 +1,30 @@
 opponent,game_date,category,key_number,icon,headline,evidence,reasoning,source,impact,confidence,brief_eligible,priority_score
-MSOE Raiders,2026-03-08,Offense,1,🎯,Attack their weakest look: Cut to the basket,"Opponents shot 58/94 (62% FG, 62% eFG) · 1.23 pts/attempt · +0.21 vs all looks (1.02) · 6% of attempts on this against MSOE Raiders
+Wheaton (IL) Thunder,2026-03-08,Offense,1,🎯,Attack their weakest look: Cut to the basket,"Opponents shot 109/154 (71% FG, 71% eFG) · 1.42 pts/attempt · +0.33 vs all looks (1.09) · 10% of attempts on this against Wheaton (IL) Thunder
 Best on this shot (5+ attempts):
 • Marino, Madson, Verges, Bara, Warren 19/36 (53%)
 Runs it most:
 • Marino, Madson, Verges, Bara, Warren 36x (53%)
 • Marino, Madson, Berezowitz, Bara, Warren 4x (50%)
 • Madson, Verges, Lukenbill, Quast, Bara 3x (100%)
-Usually comes off BLOB Line Motion for us (3 of 5 tagged possessions this season)",Teams have shot 62% on it against MSOE Raiders -- hunt it; we usually get it out of BLOB Line Motion.,Data-Driven,0.6,1.0,True,74.0
-MSOE Raiders,2026-03-08,Offense,2,📋,Call our best set: BLOB Line Motion,"1.17 PPP on 6 uses vs our 0.99 overall · 3/6 FG
-Finished most by Richie Warren (2x)","Our most productive set this season -- go to it when we need a good look, with Richie Warren finishing.",Data-Driven,0.15142857142857125,0.3,True,45.6
-MSOE Raiders,2026-03-08,Defense,3,📊,Take away their most efficient high-volume actions,Offensive Rebound: 75.7% on 37 attempts; Cut: 63.2% on 136 attempts,Each is 5+ points above their 50.2% overall clip on 15+ attempts. Offensive Rebound: hit a body on every shot before going to the ball. Cut: jump to the ball on every pass and see man and ball -- no back-cuts behind ball-watchers.,Data-Driven,,,True,62.5
-MSOE Raiders,2026-03-08,Defense,4,📊,Funnel them into their worst high-volume looks,Spot-Up: 42.0% on 471 attempts; Hand Off: 44.6% on 56 attempts,Each is 5+ points below their 50.2% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
-MSOE Raiders,2026-03-08,Defense,5,📊,Pressure the actions they turn it over on,Post-Up: 21 TO in 92 uses (22.8% vs 11.6% across all actions); Transition: 49 TO in 266 uses (18.4% vs 11.6% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
-MSOE Raiders,2026-03-08,Defense,6,🛡️,What MSOE Raiders goes to most: Drive to the basket,"474 attempts, 60% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
-MSOE Raiders,2026-03-08,Personnel,7,🔒,"Attack MSOE Raiders's Cordelli, Cummings, Johnson, Burroughs, Dopirak lineup","Worst +/- lineups:
--109.0 in 214.2 min, 57% FG — Cordelli, Cummings, Johnson, Burroughs, Dopirak
--14.0 in 8.4 min, 73% FG — Cordelli, IV, Johnson, Burroughs, Dopirak
--13.0 in 10.2 min, 54% FG — Valente, Cordelli, Cummings, Jendusa, Burroughs
+Usually comes off BLOB Line Motion for us (3 of 5 tagged possessions this season)",Teams have shot 71% on it against Wheaton (IL) Thunder -- hunt it; we usually get it out of BLOB Line Motion.,Data-Driven,0.6,1.0,True,74.0
+Wheaton (IL) Thunder,2026-03-08,Offense,2,📋,Call our best set: BLOB Line Motion,"1.17 PPP on 6 uses vs our 0.98 overall · 3/6 FG
+Finished most by Richie Warren (2x)","Our most productive set this season -- go to it when we need a good look, with Richie Warren finishing.",Data-Driven,0.16000000000000014,0.3,True,45.9
+Wheaton (IL) Thunder,2026-03-08,Defense,3,📊,Take away their most efficient high-volume actions,Offensive Rebound: 78.7% on 47 attempts; Cut: 68.4% on 193 attempts,Each is 5+ points above their 47.9% overall clip on 15+ attempts. Offensive Rebound: hit a body on every shot before going to the ball. Cut: jump to the ball on every pass and see man and ball -- no back-cuts behind ball-watchers.,Data-Driven,,,True,62.5
+Wheaton (IL) Thunder,2026-03-08,Defense,4,📊,Funnel them into their worst high-volume looks,P&R Ball Handler: 37.1% on 89 attempts; Off Screen: 37.8% on 230 attempts,Each is 5+ points below their 47.9% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
+Wheaton (IL) Thunder,2026-03-08,Defense,5,📊,Pressure the actions they turn it over on,P&R Ball Handler: 24 TO in 113 uses (21.2% vs 9.6% across all actions); Hand Off: 14 TO in 87 uses (16.1% vs 9.6% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
+Wheaton (IL) Thunder,2026-03-08,Defense,6,🛡️,What Wheaton (IL) Thunder goes to most: Drive to the basket,"523 attempts, 55% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
+Wheaton (IL) Thunder,2026-03-08,Personnel,7,🔒,"Attack Wheaton (IL) Thunder's Grier, Martin, VanderWoude, Neibch, Richardson lineup","Worst +/- lineups:
+-47.0 in 103.3 min, 52% FG — Grier, Martin, VanderWoude, Neibch, Richardson
+-21.0 in 13.3 min, 56% FG — Grier, VanderWoude, Carbonaro, Olson, Richardson
+-19.0 in 36.6 min, 50% FG — Wynja, Grier, VanderWoude, Olson, Richardson
 Highest TO rate (per 40 min):
-25.5 TO/40 — Cordelli, Johnson, Wit, Jendusa, Dopirak
-22.7 TO/40 — Cummings, Johnson, Wit, Burroughs, Dopirak","MSOE Raiders's most exploitable units: their worst net-rating lineups with real minutes this season (8+ min, losing their minutes), and the lineups that give the ball away most per 40 minutes. The headline names the worst of them.",Lineup Scouting,1.0,1.0,True,88.0
-MSOE Raiders,2026-03-08,Personnel,8,🔒,"Attack MSOE Raiders's Cordelli, Cummings, Burroughs combo","Worst +/- 3-man combos:
--151.0 in 435.2 min — Cordelli, Cummings, Burroughs
--145.0 in 245.3 min — Cordelli, Johnson, Burroughs
--127.0 in 360.3 min — Cordelli, Johnson, Dopirak",MSOE Raiders's most exploitable 3-man combinations: their worst net-rating units with real minutes this season (12+ min).,Lineup Scouting,0.6939338235294118,1.0,True,75.8
-MSOE Raiders,2026-03-08,Personnel,9,,"Feature the Madson, Berezowitz, McEwen combo","Madson, Berezowitz, McEwen: +20.2 per 40 after shrinkage (+29.3 raw) · on/off +23.5 · 89 competitive min in 17 games (0 garbage-time min found)
+20.2 TO/40 — Wynja, VanderWoude, Carbonaro, Olson, Richardson
+19.1 TO/40 — Grier, Martin, Neibch, Olson, Richardson","Wheaton (IL) Thunder's most exploitable units: their worst net-rating lineups with real minutes this season (8+ min, losing their minutes), and the lineups that give the ball away most per 40 minutes. The headline names the worst of them.",Lineup Scouting,0.909970958373669,1.0,True,84.4
+Wheaton (IL) Thunder,2026-03-08,Personnel,8,🔒,"Attack Wheaton (IL) Thunder's Grier, VanderWoude, Richardson combo","Worst +/- 3-man combos:
+-94.0 in 505.4 min — Grier, VanderWoude, Richardson
+-89.0 in 464.7 min — Grier, Martin, VanderWoude
+-64.0 in 176.5 min — Grier, VanderWoude, Neibch",Wheaton (IL) Thunder's most exploitable 3-man combinations: their worst net-rating units with real minutes this season (12+ min).,Lineup Scouting,0.37198258804907003,1.0,True,62.9
+Wheaton (IL) Thunder,2026-03-08,Personnel,9,,"Feature the Madson, Berezowitz, McEwen combo","Madson, Berezowitz, McEwen: +20.2 per 40 after shrinkage (+29.3 raw) · on/off +23.5 · 89 competitive min in 17 games (0 garbage-time min found)
 Madson, Quast, McEwen: +19.9 per 40 after shrinkage (+27.3 raw) · on/off +21.7 · 109 competitive min in 19 games (0 garbage-time min found)
 Chestnut, Quast, Berezowitz: +19.6 per 40 after shrinkage (+34.7 raw) · on/off +28.3 · 52 competitive min in 12 games (0 garbage-time min found)
 On/off: +23.5 per 40 minutes (better with them on the floor)",Our best trio this season -- +20.2 per 40 minutes together; get them on the floor together.,Lineup Scouting,1.0,0.7393333333333333,True,84.1

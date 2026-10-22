@@ -630,8 +630,8 @@ def _pr_departed():
             if a < 0 or b < a:
                 return set()
             exec(src[a:b], globals())
-        sched = pd.read_csv(os.path.join(APP_DATA_DIR, "uww_schedule.csv"), low_memory=False)
-        ros = pd.read_csv(os.path.join(APP_DATA_DIR, "uww_live_rosters.csv"), low_memory=False)
+        sched = pd.read_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, "uww_schedule.csv"), low_memory=False)
+        ros = pd.read_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, "uww_live_rosters.csv"), low_memory=False)
         uw = sched[sched["team"].astype(str).str.contains("Whitewater", case=False, na=False)] if "team" in sched.columns else sched
         up = uw[uw["Upcoming"].astype(str).str.strip().str.lower() == "yes"] if "Upcoming" in uw.columns else uw.iloc[0:0]
         if up.empty:
@@ -979,7 +979,8 @@ def play_review():
 # ---- Film Tagging queue: the clips with no tag yet, in game order, Titles only -------------------------------------------
 # CONFIRMED CHANGE (requested: coaches tag games in the app only, not in Synergy's Title field). The Play review only takes
 # 5 tracked plays a game at a time (it's built for the player checks). Tagging a game needs more: every captured clip of
-# every game (ours and the upcoming opponent's) that has no tag yet goes, PLAY_TAG_PER_GAME at a time in game order, into a
+# every game (ours and the upcoming opponent's) that has no tag yet goes into a batch (UWW games: all of our offense, then all
+# of our defense; other games: PLAY_TAG_PER_GAME_OTHER at a time, in game order -- see the CONFIRMED CHANGE below), into a
 # Titles-only package in <data>/play_tag/<game>/ -- the play as a short video, the automatic Title and one column per
 # field. The app shows it on Analytics > Film Tagging; what a coach saves there is the clip's tag (play-calls cell:
 # _pl_apply_app_tags). A game gets its next batch once the open one is saved (PLAY_TAG_REQUIRE_SAVED).
@@ -1123,21 +1124,45 @@ def tag_queue():
         todo = g[untagged & ~g["_key"].isin(answered)]
         n_tagged = int((~untagged).sum())
         summary.append(f"{gd} {gc}: {n_tagged} of {len(g)} clip(s) tagged, {len(todo)} to go")
-        if os.path.exists(os.path.join(pkg, "review.json")):
-            try:
-                with open(os.path.join(pkg, "review.json"), encoding="utf-8") as fh:
-                    old_run = json.load(fh).get("run")
-                if _tag_titles_saved(slug_game, old_run):
-                    shutil.rmtree(pkg, ignore_errors=True)
-                elif globals().get("PLAY_TAG_REQUIRE_SAVED", True):
-                    _tag_refresh_people(pkg, g, gd, gc)        # same plays, today's offense / defense and lineups
-                    continue                                   # its open batch isn't saved yet
-            except Exception:
-                pass
+        # CONFIRMED CHANGE (requested): a UWW game's batch is EVERY untagged UWW offensive play, then -- once those are all
+        # tagged -- every defensive play (PLAY_TAG_UWW_MAX caps a batch; None = all). Any other game (an opponent's earlier
+        # game) goes PLAY_TAG_PER_GAME_OTHER plays at a time (40), in game order: the first 40, then the next 40.
+        todo = todo.assign(_cn=pd.to_numeric(todo["clip_number"], errors="coerce")).sort_values("_cn", kind="stable")
+        _uww_game = ("side" in g.columns and g["side"].astype(str).eq("UWW").any()) or bool(re.search(r"(?i)whitewater|WWW", str(gc)))
+        if _uww_game:
+            _ot = todo["offense_team"].astype(str) if "offense_team" in todo.columns else pd.Series("", index=todo.index)
+            _ps = todo["possession_side"].astype(str) if "possession_side" in todo.columns else pd.Series("", index=todo.index)
+            _ours = _ot.str.contains("whitewater", case=False, na=False) | (_ot.isin(["nan", "None", ""]) & _ps.eq("Offense"))
+            _phase = "offense" if _ours.any() else "defense"
+            pick = todo[_ours] if _ours.any() else todo
+            _cap = globals().get("PLAY_TAG_UWW_MAX", None)
+            if _cap:
+                pick = pick.head(int(_cap))
+        else:
+            _phase = None
+            pick = todo.head(int(globals().get("PLAY_TAG_PER_GAME_OTHER", 40)))
         if todo.empty:
             shutil.rmtree(pkg, ignore_errors=True)
             continue
-        pick = todo.assign(_cn=pd.to_numeric(todo["clip_number"], errors="coerce")).sort_values("_cn", kind="stable").head(n_per)
+        if os.path.exists(os.path.join(pkg, "review.json")):
+            try:
+                with open(os.path.join(pkg, "review.json"), encoding="utf-8") as fh:
+                    _old = json.load(fh)
+                old_run = _old.get("run")
+                if _tag_titles_saved(slug_game, old_run):
+                    shutil.rmtree(pkg, ignore_errors=True)
+                elif globals().get("PLAY_TAG_REQUIRE_SAVED", True):
+                    # an open batch made under the old rule (the first 20 plays) is rebuilt to the new one -- nothing in
+                    # it is saved yet, so nothing is lost
+                    _old_keys = {_pl_ckey_norm(p_.get("clip_key")) for p_ in _old.get("plays", [])}
+                    if todo.empty or _old_keys == set(pick["_key"]) or _old_keys <= set(pick["_key"]) and len(_old_keys) >= len(pick) - 2:
+                        _tag_refresh_people(pkg, g, gd, gc)        # same plays, today's offense / defense and lineups
+                        continue                                   # its open batch isn't saved yet
+                    shutil.rmtree(pkg, ignore_errors=True)
+                    print(f"Film Tagging: {gd} {gc}: the open batch ({len(_old_keys)} plays, nothing saved) is rebuilt "
+                          f"to the new order", flush=True)
+            except Exception:
+                pass
         rdir = tempfile.mkdtemp(prefix=f"play_tag_{slug_game}_")
         plays = []
         try:
@@ -1192,8 +1217,10 @@ def tag_queue():
         try:
             _export_play_review_to_app(rdir, slug, f"{gd}|{gc}", stamp, plays, vocab, kind="play_tag")
             shutil.rmtree(rdir, ignore_errors=True)
-            print(f"Film Tagging: {gd} {gc}: {len(plays)} clip(s) to tag (of {len(todo)} untagged) -- in the app: "
-                  f"Analytics > Film Tagging", flush=True)
+            print(f"Film Tagging: {gd} {gc}: {len(plays)} clip(s) to tag"
+                  + (f" -- our {_phase} (every untagged UWW {_phase} play" + (", defense once all of the offense is tagged)"
+                                                                       if _phase == "offense" else ")") if _phase else "")
+                  + f" (of {len(todo)} untagged) -- in the app: Analytics > Film Tagging", flush=True)
         except Exception as _ae:
             print(f"  [film tagging] not exported to the app: {type(_ae).__name__}: {_ae}", flush=True)
     if summary:

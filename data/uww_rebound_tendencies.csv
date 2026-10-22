@@ -1,9 +1,9 @@
 opponent,situation,crash_pct,who_crashes,note,is_sample
-MSOE Raiders,Their missed layup / dunk,35,"Ethan Johnson (9), Carson Cordelli (8), Chase Cummings (8)",35% offensive rebound on 179 of 180 misses (1 unpaired),False
-MSOE Raiders,Their missed two-point jumper,29,"Carson Cordelli (22), Chase Cummings (19), Jonathan Burroughs (19)",29% offensive rebound on 632 of 637 misses (5 unpaired),False
-MSOE Raiders,Their missed free throw,46,"MSOE (38), Joey Jendusa (1), Chad Coplin (1)",46% offensive rebound on 94 of 102 misses (8 unpaired),False
-MSOE Raiders,All their misses,32,"MSOE (48), Carson Cordelli (31), Ethan Johnson (27)",32% offensive rebound on 905 of 919 misses (14 unpaired),False
-MSOE Raiders,Opponent missed layup / dunk,71,"Ethan Johnson (38), Carson Cordelli (26), Jonathan Burroughs (21)",They secure 71% of 238 opponent misses (3 unpaired),False
-MSOE Raiders,Opponent missed two-point jumper,75,"Mason Dopirak (118), Chase Cummings (72), Carson Cordelli (68)",They secure 75% of 740 opponent misses (2 unpaired),False
-MSOE Raiders,Opponent missed free throw,53,"Carson Cordelli (12), Chase Cummings (7), Mason Dopirak (7)",They secure 53% of 89 opponent misses (18 unpaired),False
-MSOE Raiders,All opponent misses,72,"Mason Dopirak (142), Carson Cordelli (106), Ethan Johnson (105)",They secure 72% of 1067 opponent misses (23 unpaired),False
+Wheaton (IL) Thunder,Their missed layup / dunk,44,"Carson Grier (27), Brady Wynja (18), Kyan VanderWoude (17)",44% offensive rebound on 271 of 271 misses (0 unpaired),False
+Wheaton (IL) Thunder,Their missed two-point jumper,25,"Brady Wynja (29), Carson Grier (27), Soren Richardson (26)",25% offensive rebound on 561 of 562 misses (1 unpaired),False
+Wheaton (IL) Thunder,Their missed free throw,47,"Wheaton (IL) (64), Noah Hedrick (2), Brady Wynja (2)",47% offensive rebound on 153 of 168 misses (15 unpaired),False
+Wheaton (IL) Thunder,All their misses,34,"Wheaton (IL) (77), Carson Grier (55), Brady Wynja (49)",34% offensive rebound on 985 of 1001 misses (16 unpaired),False
+Wheaton (IL) Thunder,Opponent missed layup / dunk,68,"Carson Grier (39), Brady Wynja (35), Kyan VanderWoude (35)",They secure 68% of 288 opponent misses (1 unpaired),False
+Wheaton (IL) Thunder,Opponent missed two-point jumper,73,"Carson Grier (70), Kyan VanderWoude (68), Brady Wynja (47)",They secure 73% of 527 opponent misses (1 unpaired),False
+Wheaton (IL) Thunder,Opponent missed free throw,38,"Kyan VanderWoude (16), Carson Grier (7), Brady Wynja (7)",They secure 38% of 119 opponent misses (16 unpaired),False
+Wheaton (IL) Thunder,All opponent misses,67,"Kyan VanderWoude (119), Carson Grier (116), Brady Wynja (89)",They secure 67% of 934 opponent misses (18 unpaired),False
