@@ -120,6 +120,43 @@ TAG_MODEL_TARGETS = {
 }
 
 
+# CONFIRMED CHANGE (requested: "Add additional information to the print outs when this is running so I can see what is
+# taking such a long time in this cell"). Every step now prints when it starts (with the time since the cell started), the
+# slow loops -- turning frames into numbers, finding players, each clip's player layout, retraining each field -- print a
+# count with time so far / time left, and the cell ends with where the time went, step by step.
+import time as _tm_time
+_tm_t_cell = _tm_time.time()
+_tm_steps = []                       # [(step, seconds)]
+_tm_step_open = None
+
+
+def _tm_clock():
+    return f"{(_tm_time.time() - _tm_t_cell) / 60:.1f} min"
+
+
+def _tm_step(name):
+    """Close the step that was running (its time is kept for the summary) and start this one."""
+    global _tm_step_open
+    now = _tm_time.time()
+    if _tm_step_open is not None:
+        _tm_steps.append((_tm_step_open[0], now - _tm_step_open[1]))
+    _tm_step_open = (name, now) if name else None
+    if name:
+        print(f"  [tag model {_tm_clock()}] {name}...", flush=True)
+
+
+def _tm_progress(label, done, total, t0, state, every=None):
+    """'<label>: done / total (pct) -- x min so far, ~y min left', at most every 20 s (and at the end)."""
+    now = _tm_time.time()
+    if done < total and now - state.get("last", t0) < (every or 20):
+        return
+    state["last"] = now
+    el = (now - t0) / 60.0
+    left = el / done * (total - done) if done else None
+    print(f"    {label}: {done:,} / {total:,} ({100 * done // max(total, 1)}%) -- {el:.1f} min so far"
+          + (f", ~{left:.1f} min left" if left is not None and done < total else ""), flush=True)
+
+
 def _tm_ensure(pkgs):
     import importlib
     missing = [p for p, mod in pkgs if importlib.util.find_spec(mod) is None]
@@ -224,8 +261,10 @@ def _tm_encode_images(paths):
         enc = globals()["_tm_encoder"] = (TAG_MODEL_FRAME_ENCODER, model)
     _, model = enc
     out = []
+    _t0, _st = _tm_time.time(), {}
     with torch.no_grad():
         for i in range(0, len(paths), 16):
+            _tm_progress("frames turned into numbers (image model)", i, len(paths), _t0, _st)
             batch = torch.from_numpy(np.stack([_tm_prep_image(Image.open(p)) for p in paths[i:i + 16]]))
             res = model(pixel_values=batch)
             h = res.last_hidden_state                      # [clip, 1 + patches, dims]
@@ -233,6 +272,7 @@ def _tm_encode_images(paths):
             # The whole-image summary (CLS) PLUS the average over every 14x14 patch -- the patch average keeps
             # more of WHERE things are on the floor, which is what formation and man vs zone depend on.
             out.extend(torch.cat([cls, h[:, 1:].mean(1)], dim=1).float().numpy())
+    _tm_progress("frames turned into numbers (image model)", len(paths), len(paths), _t0, _st)
     return out
 
 
@@ -266,17 +306,28 @@ def _tm_frame_matrix(pc):
     ok = lists.map(len).eq(n)
     base = VISION_FRAMES_DIR if "VISION_FRAMES_DIR" in globals() else os.path.join(INPUT_DIR, "_vision_frames")
     # Where frames drop out, stage by stage, so "frames for 0 clip(s)" always comes with the reason (requested).
+    _here = ok & lists.map(lambda fl: all(os.path.exists(os.path.join(base, f)) for f in fl))
+    # CONFIRMED CHANGE (requested): which games the clips WITHOUT frames on disk are from (1,492 listed -> 1,147 found) --
+    # usually old web captures whose frame folders were deleted at the restart on the Synergy exports
+    _gone = ok & ~_here
+    _by_game = {}
+    if _gone.any():
+        _gk = (pc.get("game_date", pd.Series("", index=pc.index)).astype(str).str[:10] + " "
+               + pc.get("game_code", pd.Series("", index=pc.index)).astype(str))
+        _by_game = _gk[_gone].value_counts().to_dict()
     _tm_frame_diag.update(joined=int(lists.map(len).gt(0).sum()), complete=int(ok.sum()),
-                          on_disk=int((ok & lists.map(lambda fl: all(os.path.exists(os.path.join(base, f)) for f in fl))).sum()),
-                          folder=base)
+                          on_disk=int(_here.sum()), missing_by_game=_by_game, folder=base)
     if not ok.any():
         return None
     cache_path = os.path.join(TAG_MODEL_DIR, f"frame_vectors_{re.sub(r'[^A-Za-z0-9]+', '_', TAG_MODEL_FRAME_ENCODER)}"
                                             f"_{TAG_MODEL_FRAME_SIZE[0]}x{TAG_MODEL_FRAME_SIZE[1]}_clsmean.pkl")
     cache = _safe_read_pickle(cache_path) if os.path.exists(cache_path) else {}
     todo = sorted({f for fl in lists[ok] for f in fl if f not in cache and os.path.exists(os.path.join(base, f))})
+    print(f"    frames: {int(ok.sum()):,} clip(s) with all their frames; {len(cache):,} frame(s) already turned into numbers "
+          f"(saved), {len(todo):,} new", flush=True)
     if todo:
-        print(f"  [tag model] encoding {len(todo)} new frame(s)...")
+        print(f"  [tag model] encoding {len(todo)} new frame(s) (~{len(todo) / 16 * 2.5 / 60:.0f}-{len(todo) / 16 * 6 / 60:.0f} "
+              f"min on a laptop)...", flush=True)
         for f, v in zip(todo, _tm_encode_images([os.path.join(base, f) for f in todo])):
             cache[f] = np.asarray(v, dtype=np.float16)
         os.makedirs(TAG_MODEL_DIR, exist_ok=True)
@@ -336,7 +387,9 @@ def _tm_detect(paths):
         det = globals()["_tm_detector"] = (TAG_MODEL_DETECTOR, YOLO(TAG_MODEL_DETECTOR))
     model = det[1]
     out = {}
+    _t0, _st = _tm_time.time(), {}
     for i in range(0, len(paths), 8):
+        _tm_progress("frames searched for players (detector)", i, len(paths), _t0, _st)
         chunk = paths[i:i + 8]
         results = model.predict(chunk, classes=[0], conf=TAG_MODEL_DETECT_CONF, imgsz=TAG_MODEL_DETECT_SIZE,
                                 verbose=False)
@@ -351,6 +404,7 @@ def _tm_detect(paths):
                 rgb = patch.reshape(-1, 3).mean(0) if patch.size else np.array([np.nan] * 3)
                 rows.append([x1, y1, x2, y2, cf, *rgb])
             out[p] = np.array(rows, dtype=np.float32).reshape(-1, 8)
+    _tm_progress("frames searched for players (detector)", len(paths), len(paths), _t0, _st)
     return out
 
 
@@ -427,8 +481,10 @@ def _tm_position_matrix(pc):
                                             f"_{TAG_MODEL_DETECT_SIZE}_{TAG_MODEL_DETECT_CONF}.pkl")
     cache = _safe_read_pickle(cache_path) if os.path.exists(cache_path) else {}
     todo = sorted({f for fl in lists[ok] for f in fl if f not in cache})
+    print(f"    positions: {int(ok.sum()):,} clip(s) with all their frames; players already found in {len(cache):,} frame(s) "
+          f"(saved), {len(todo):,} new", flush=True)
     if todo:
-        print(f"  [positions] finding players in {len(todo)} new frame(s)...")
+        print(f"  [positions] finding players in {len(todo)} new frame(s)...", flush=True)
         found = _tm_detect([os.path.join(base, f) for f in todo])
         for f in todo:
             cache[f] = found.get(os.path.join(base, f), np.zeros((0, 8), dtype=np.float32))
@@ -439,19 +495,43 @@ def _tm_position_matrix(pc):
     pm = pd.DataFrame(np.nan, index=pc.index, columns=cols)
     size_cache = {}
     n_players = []
-    for i in ok[ok].index:
+    _idx = list(ok[ok].index)
+    # CONFIRMED CHANGE (requested: the Tag model cell ran 31.8 min; 6.4 min of it, EVERY run, was working out each clip's
+    # player layout again from the saved player boxes). Each clip's layout is now saved too (clip_layouts_*.pkl, keyed by
+    # its frames), so only clips with new frames are worked out; the rest are read back in seconds.
+    _lay_path = os.path.join(TAG_MODEL_DIR, f"clip_layouts_v1_{re.sub(r'[^A-Za-z0-9]+', '_', TAG_MODEL_DETECTOR)}"
+                                            f"_{TAG_MODEL_DETECT_SIZE}_{TAG_MODEL_DETECT_CONF}.pkl")
+    _lay = _safe_read_pickle(_lay_path) if os.path.exists(_lay_path) else {}
+    _lay = _lay if isinstance(_lay, dict) else {}
+    _lay_key = lambda fl: "|".join(fl)
+    _lay_todo = [i for i in _idx if _lay_key(lists[i]) not in _lay]
+    print(f"  [tag model {_tm_clock()}] positions: each clip's player layout (teams by jersey color, spacing, where on the "
+          f"floor) -- {len(_idx) - len(_lay_todo):,} of {len(_idx):,} clip(s) saved from earlier runs, "
+          f"{len(_lay_todo):,} to work out...", flush=True)
+    _t0, _st = _tm_time.time(), {}
+    for _n_i, i in enumerate(_lay_todo):
+        _tm_progress("clips' player layout worked out", _n_i, len(_lay_todo), _t0, _st)
         fl = lists[i]
         if fl[0] not in size_cache:
             with Image.open(os.path.join(base, fl[0])) as im:
                 size_cache[fl[0]] = im.size
         W, H = size_cache[fl[0]]
         fpos = [_tm_frame_positions(cache.get(f), W, H) for f in fl]
-        feats = _tm_clip_position_features(fpos)
-        pm.loc[i, cols] = [feats[k][name] for k in range(n) for name in _TM_POS_PER_FRAME]
+        _lay[_lay_key(fl)] = _tm_clip_position_features(fpos)
+    if _lay_todo:
+        _tm_progress("clips' player layout worked out", len(_lay_todo), len(_lay_todo), _t0, _st)
+        _safe_to_pickle(_lay, _lay_path)
+    _rows = []
+    for i in _idx:
+        feats = _lay[_lay_key(lists[i])]
+        _rows.append([feats[k][name] for k in range(n) for name in _TM_POS_PER_FRAME])
         n_players.append(np.nanmean([ft["n_players"] for ft in feats]))
+    if _rows:
+        pm.loc[_idx, cols] = np.array(_rows, dtype=float)       # all clips at once (row by row was slow)
     pm["has_positions"] = ok.astype(float)
     _tm_pos_diag.update(clips_with_positions=int(ok.sum()),
                         avg_players=round(float(np.nanmean(n_players)), 1) if n_players else None)
+    print(f"  [tag model {_tm_clock()}] positions: drawing {TAG_MODEL_POSITION_CHECKS} check picture(s)...", flush=True)
     _tm_position_checks(pc, lists, ok, cache, base)
     return pm
 
@@ -610,9 +690,16 @@ _tm_src = (pd.concat([play_calls, _tm_other], ignore_index=True)
            if isinstance(_tm_other, pd.DataFrame) and not _tm_other.empty else play_calls.copy())
 _tm_n_pc = len(play_calls)   # rows [0, _tm_n_pc) of _tm_src are play_calls, in order
 if RUN_TAG_MODEL and not _tm_src.empty:
+    _tm_t_cell = _tm_time.time()
+    _tm_steps.clear()
+    print(f"Tag model: {len(_tm_src):,} clip(s) to learn from / predict ({_tm_n_pc:,} in the play calls, "
+          f"{len(_tm_src) - _tm_n_pc:,} from other teams' games); {len(TAG_MODEL_TARGETS)} field(s); "
+          f"TAG_MODEL_RETRAIN = {TAG_MODEL_RETRAIN!r}", flush=True)
+    _tm_step("checking the libraries")
     _tm_ensure([("scikit-learn", "sklearn"), ("joblib", "joblib")])
     import joblib
     os.makedirs(TAG_MODEL_DIR, exist_ok=True)
+    _tm_step("reading the coaches' answers from their Titles")
     _tm_lab = _tm_labels(_tm_src)
     # CONFIRMED CHANGE (requested: an automatic Title from the film, with a review like the player checks). Answers
     # confirmed or corrected in the Auto-Title review (title_review_*.json) are labels for clips the coaches never
@@ -627,6 +714,7 @@ if RUN_TAG_MODEL and not _tm_src.empty:
     _tm_n_review = _tm_n_override = 0
     _tm_new_answers = []
     _tm_norm = lambda x: re.sub(r"[^a-z0-9#]+", "", str(x).lower())
+    _tm_step("adding the answers saved in the app (Film Tagging / Play review)")
     _answers = title_review_answers() if "title_review_answers" in globals() else {}
     _marks_ = globals().get("_title_review_marks") or {}
     _key_of = [f"{play_calls.iloc[i].get('game_date')}|{play_calls.iloc[i].get('clip_number')}|"
@@ -634,18 +722,29 @@ if RUN_TAG_MODEL and not _tm_src.empty:
     _rows_of = {}
     for i, k in enumerate(_key_of):
         _rows_of.setdefault(k, []).append(i)
+    # CONFIRMED BUG (fixed; "offball_coverage: 'No Screens'; offball_coverage: 'No screens'"): two coaches typing the same NEW
+    # answer with different capitals became two different answers. The first spelling of a new answer is now its spelling
+    # for every later one that matches it apart from capitals / spaces / punctuation (most-used spelling wins).
+    _tm_new_spell = {}
+    for (_ck, _fld), _val in _answers.items():
+        if _val not in (None, ""):
+            _tm_new_spell.setdefault((_fld, _tm_norm(_val)), []).append(str(_val).strip())
+    _tm_new_spell = {k: max(set(v), key=lambda s: (v.count(s), s != s.lower(), s)) for k, v in _tm_new_spell.items()}
+    _tm_known_by_fld = {}
     for (_ck, _fld), _val in _answers.items():
         _col = TAG_MODEL_TARGETS.get(_fld)
         if not _col or _col not in _tm_lab.columns or _val in (None, ""):
             continue
         # the known spelling of this answer, if there is one
-        _known = {}
-        for v in list(_tm_lab_coach[_col].dropna().astype(str)) + list(play_calls.get(f"pred_{_fld}", pd.Series(dtype=object)).dropna().astype(str)):
-            _known.setdefault(_tm_norm(v), v)
+        _known = _tm_known_by_fld.get(_fld)
+        if _known is None:
+            _known = _tm_known_by_fld[_fld] = {}
+            for v in list(_tm_lab_coach[_col].dropna().astype(str)) + list(play_calls.get(f"pred_{_fld}", pd.Series(dtype=object)).dropna().astype(str)):
+                _known.setdefault(_tm_norm(v), v)
         _canon = _known.get(_tm_norm(_val))
         if _canon is None:
-            _tm_new_answers.append(f"{_fld}: '{_val}'")
-            _canon = str(_val)
+            _canon = _tm_new_spell.get((_fld, _tm_norm(_val)), str(_val))
+            _tm_new_answers.append(f"{_fld}: '{_canon}'")
         _pre = bool((_marks_.get((_ck, _fld)) or {}).get("prefilled"))
         # an automatic answer a coach left as it was in Film Tagging (it started pre-selected) is the clip's tag, but not a
         # training label -- the model would only be learning its own guess
@@ -673,6 +772,7 @@ if RUN_TAG_MODEL and not _tm_src.empty:
     _tm_frame_diag.clear()
     _tm_frame_err = None
     if TAG_MODEL_USE_FRAMES:
+        _tm_step("frames: checking every clip's 5 frames are on disk, then turning new ones into numbers")
         try:
             _tm_frames = _tm_frame_matrix(_tm_src)
         except Exception as _e:
@@ -687,6 +787,10 @@ if RUN_TAG_MODEL and not _tm_src.empty:
         print(f"  Frames: {_n_cap} clip(s) captured (uww_clip_frames.csv) -> {_d.get('joined', 0)} matched to a clip in "
               f"uww_plays.csv -> {_d.get('complete', 0)} with all {globals().get('VISION_FRAMES_PER_CLIP', 5)} frames -> "
               f"{_d.get('on_disk', 0)} found on disk -> {_d.get('encoded', 0)} turned into numbers")
+        if _d.get("missing_by_game"):
+            print("    frames NOT on disk (these clips are still used from their Titles, just without pictures; re-export "
+                  "the game from Synergy to bring them back): "
+                  + "; ".join(f"{g} {n} clip(s)" for g, n in sorted(_d["missing_by_game"].items())), flush=True)
         if _tm_frame_err:
             print("  " + "!" * 100)
             print(f"  FRAMES NOT USED THIS RUN -- the image model failed: {_tm_frame_err}")
@@ -706,6 +810,7 @@ if RUN_TAG_MODEL and not _tm_src.empty:
           f"frames for {int(_tm_frames['has_frames'].sum()) if _tm_frames is not None else 0} clip(s).")
     _tm_positions = None
     if TAG_MODEL_USE_POSITIONS:
+        _tm_step("positions: where the players are in each clip's frames")
         _tm_pos_diag.clear()
         try:
             _tm_positions = _tm_position_matrix(_tm_src)
@@ -719,6 +824,7 @@ if RUN_TAG_MODEL and not _tm_src.empty:
             print("  " + "!" * 100)
             print(f"  POSITIONS NOT USED THIS RUN: {type(_e).__name__}: {_e}")
             print("  " + "!" * 100)
+    _tm_step("putting each clip's inputs together (play-by-play context, frames, positions)")
     _tm_X = _tm_features(_tm_src, _tm_frames, _tm_positions)
     _tm_ctx_cols = [c for c in _tm_X.columns if not (c.startswith(("frame_pc", "pos_f")) or c in ("has_frames", "has_positions"))]
     _tm_frame_cols = [c for c in _tm_X.columns if c.startswith("frame_pc") or c == "has_frames"]
@@ -771,6 +877,8 @@ if RUN_TAG_MODEL and not _tm_src.empty:
     # (every input, every label, the settings); with TAG_MODEL_RETRAIN = "auto", a field whose fingerprint
     # matches its saved model is reused instead of re-scored and retrained (the slowest part of this cell).
     import hashlib as _tm_hash
+    _tm_step(f"checking which fields' training data changed since their saved models ({len(_tm_X):,} clips x "
+             f"{_tm_X.shape[1]:,} inputs)")
     _tm_sig_base = _tm_hash.md5(
         pd.util.hash_pandas_object(_tm_X.astype(str), index=True).values.tobytes()
         + pd.util.hash_pandas_object(_tm_lab.astype(str), index=True).values.tobytes()
@@ -779,7 +887,12 @@ if RUN_TAG_MODEL and not _tm_src.empty:
                 sorted(_tm_valid_keys))).encode()
     ).hexdigest()
     _tm_any_retrained = False
-    for _field, _col in TAG_MODEL_TARGETS.items():
+    _tm_step(f"the {len(TAG_MODEL_TARGETS)} fields, one at a time")
+    _tm_field_times = []
+    for _fi, (_field, _col) in enumerate(TAG_MODEL_TARGETS.items(), 1):
+        _tm_tf = _tm_time.time()
+        _tm_field_how = "reused (unchanged)"
+        print(f"  [tag model {_tm_clock()}] field {_fi}/{len(TAG_MODEL_TARGETS)}: {_field}...", flush=True)
         _y = _tm_lab[_col].where(~_tm_excl & ~_tm_valid).astype(object) if _col in _tm_lab.columns else pd.Series(dtype=object)
         _path = os.path.join(TAG_MODEL_DIR, f"{_field}.joblib")
         _counts = _y.value_counts()
@@ -816,12 +929,15 @@ if RUN_TAG_MODEL and not _tm_src.empty:
             _row.update(scored_how=f"only one answer tagged so far ({_only}): predicted for every clip at {_share:.0%}",
                         using="only answer")
             _tm_any_retrained = True
+            _tm_field_how = "only one answer tagged so far"
             joblib.dump({"model": None, "only": _only, "share": _share, "columns": [], "all_columns": list(_tm_X.columns),
                          "sig": _sig, "report_row": {k: v for k, v in _row.items() if k != "trained_at"},
                          "trained_at": _tm_now}, _path)
         elif _retrain:
             _tm_any_retrained = True
+            _tm_field_how = "retrained"
             if _y_fit.notna().sum() < TAG_MODEL_MIN_TRAIN_ROWS or _y_fit.dropna().nunique() < 2:
+                _tm_field_how = "not enough tags to train"
                 _row["scored_how"] = (f"not trained: needs {TAG_MODEL_MIN_TRAIN_ROWS}+ tagged clips over 2+ answers "
                                       f"(has {int(_y_fit.notna().sum())} over {_y_fit.dropna().nunique()})")
             else:
@@ -832,9 +948,20 @@ if RUN_TAG_MODEL and not _tm_src.empty:
                 # on held-out clips and keep the best -- so noisy image numbers can't drag a field down, and the
                 # report says per field what actually helped.
                 _best = None
-                for _set_name, _set_cols in _tm_sets.items():
+                _n_g = int(_tm_groups[_y_fit.notna()].nunique())
+                _n_fits = (len(_tm_sets) + max(len([c for c in TAG_MODEL_C_OPTIONS if c != 0.2]), 0)) * max(_n_g, 1)
+                print(f"    retraining {_field}: {int(_y_fit.notna().sum()):,} tagged clip(s), "
+                      f"{int(_y_fit.dropna().nunique())} answer(s); trying {len(_tm_sets)} input set(s) then "
+                      f"{len([c for c in TAG_MODEL_C_OPTIONS if c != 0.2])} model setting(s), each scored with "
+                      f"{max(_n_g, 1)} game(s) held out in turn (~{_n_fits} model fits)", flush=True)
+                for _si, (_set_name, _set_cols) in enumerate(_tm_sets.items(), 1):
                     TAG_MODEL_C = 0.2
+                    _ts = _tm_time.time()
                     _p, _c, _how = _tm_score(_tm_X[_set_cols], _y_fit, _tm_groups, _hold_arg, _lim)
+                    _s_ = _p.notna() & _y_fit.notna()
+                    print(f"      input set {_si}/{len(_tm_sets)} {_set_name} ({len(_set_cols):,} inputs): "
+                          f"{round(100 * (_p[_s_] == _y_fit[_s_]).mean()) if _s_.any() else '--'}% right "
+                          f"({_tm_time.time() - _ts:.0f} s)", flush=True)
                     _s = _p.notna() & _y_fit.notna()
                     _acc = (_p[_s] == _y_fit[_s]).mean() if _s.any() else -1
                     if _best is None or _acc > _best[0] + 0.005:   # a tie keeps the simpler set
@@ -845,9 +972,12 @@ if RUN_TAG_MODEL and not _tm_src.empty:
                     if _cval == 0.2:
                         continue
                     TAG_MODEL_C = _cval
+                    _ts = _tm_time.time()
                     _p, _c, _how = _tm_score(_Xs, _y_fit, _tm_groups, _hold_arg, _lim)
                     _s = _p.notna() & _y_fit.notna()
                     _acc = (_p[_s] == _y_fit[_s]).mean() if _s.any() else -1
+                    print(f"      model setting C={_cval} on {_set_name}: "
+                          f"{round(100 * _acc) if _acc >= 0 else '--'}% right ({_tm_time.time() - _ts:.0f} s)", flush=True)
                     if _acc > _best[0]:
                         _best = (_acc, _cval, _p, _c, _how, _s, _set_name)
                 _acc, _cval, _p, _c, _how, _s, _set_name = _best
@@ -870,6 +1000,7 @@ if RUN_TAG_MODEL and not _tm_src.empty:
                     _oof = None
                     _row["using"] = f"most common answer ({_most}) -- model not better yet"
                 else:
+                    print(f"      training the final {_field} model on all {int(_train.sum()):,} tagged clip(s)...", flush=True)
                     _model = _tm_pipeline(_Xs).fit(_Xs[_train], _y_fit[_train])
                     _row["using"] = "model"
                 joblib.dump({"model": _model, "only": _only, "share": _share, "columns": list(_Xs.columns),
@@ -923,6 +1054,11 @@ if RUN_TAG_MODEL and not _tm_src.empty:
             play_calls[f"heldout_{_field}"] = play_calls[f"heldout_{_field}"].astype(object)
             play_calls.loc[_vm, f"heldout_{_field}"] = play_calls.loc[_vm, f"pred_{_field}"]
             play_calls.loc[_vm, f"heldout_{_field}_conf"] = play_calls.loc[_vm, f"pred_{_field}_conf"]
+        if _only is not None and _tm_field_how == "retrained":
+            _tm_field_how = "retrained (predicts the most common answer)"
+        _tm_field_times.append((_field, _tm_time.time() - _tm_tf, _tm_field_how))
+        print(f"    {_field}: {_tm_field_how} -- {_tm_time.time() - _tm_tf:.0f} s", flush=True)
+    _tm_step("scoring the validation plays and writing the report")
     play_calls["tag_validation"] = _tm_valid.iloc[:_tm_n_pc].to_numpy()
     # the honest score: the validation plays, which no model ever trained on
     _vrows = []
@@ -958,10 +1094,21 @@ if RUN_TAG_MODEL and not _tm_src.empty:
                   + (f"  [{_r.features}]" if _r.using == "model" else f"  -> using {_r.using}")
                   + ("  (unchanged -- reused)" if "unchanged data" in str(_r.scored_how) else ""))
         else:
-            print(f"  {_r.field:22} {_r.scored_how}")
+            # (a field with no saved model printed "nan")
+            print(f"  {_r.field:22} " + (str(_r.scored_how) if pd.notna(_r.scored_how) and str(_r.scored_how).strip()
+                                          else "no saved model yet -- set TAG_MODEL_RETRAIN = \"auto\" to train it"))
     _scored = tag_model_report.loc[tag_model_report["accuracy_pct"].notna(), "scored_how"]
     if len(_scored):
         print(f"  Scored on: {str(_scored.iloc[0]).split(' (unchanged data')[0]}")
+    _tm_step(None)
+    _tm_total = _tm_time.time() - _tm_t_cell
+    print(f"  Tag model -- where the time went ({_tm_total / 60:.1f} min in all):", flush=True)
+    for _nm, _sec in sorted(_tm_steps, key=lambda x: -x[1]):
+        if _sec >= 1:
+            print(f"    {_sec / 60:5.1f} min  {_nm}", flush=True)
+    _slow = [f"{f} {s / 60:.1f} min ({how})" for f, s, how in sorted(_tm_field_times, key=lambda x: -x[1]) if s >= 5]
+    if _slow:
+        print("    fields: " + "; ".join(_slow), flush=True)
 
 
 # ---- Which automatic answers are trusted ------------------------------------------------------------------------

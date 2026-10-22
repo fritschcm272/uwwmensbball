@@ -187,6 +187,67 @@ def _tr_auto(r, f, tagged):
     return v, (float(c) if pd.notna(c) else None), ""
 
 
+# CONFIRMED BUG (fixed; Film Tagging in the app: every dropdown -- Situation, Formation, Play call, Defense, Press -- offered
+# only "--"). The answer lists came ONLY from the coach_* / pred_* columns, which the Tag model section makes; with
+# RUN_TAG_MODEL = False those columns don't exist, so every list went to the app empty. The lists now come from:
+#   1. the coaches' answers in their decoded Titles (the Tag model's own label reader, _tm_labels -- defined even when the
+#      model isn't run), plus the coach_* / pred_* columns when the model did run;
+#   2. every answer saved in the app (Film Tagging / Play review);
+#   3. the lists from earlier runs (<data>/play_tag_vocab.json), so an answer once known is never dropped.
+def _tr_vocab():
+    vals = {f: set() for f, _lab in _TR_FIELDS}
+    # ("None" stays: it is a real answer, e.g. Press = None)
+    add = lambda f, s: vals[f].update(str(v).strip() for v in s if v is not None and str(v).strip() not in ("", "nan", "NaN"))
+    srcs = [d for d in (globals().get("play_calls"), globals().get("play_calls_other"))
+            if isinstance(d, pd.DataFrame) and not d.empty]
+    for src in srcs:
+        for f in vals:
+            for c in (f"coach_{f}", f"pred_{f}"):
+                if c in src.columns:
+                    add(f, src[c].dropna())
+        if "_tm_labels" in globals() and "TAG_MODEL_TARGETS" in globals():
+            try:
+                lab = _tm_labels(src)
+                for f in vals:
+                    col = TAG_MODEL_TARGETS.get(f)
+                    if col and col in lab.columns:
+                        add(f, lab[col].dropna())
+            except Exception as _e:
+                print(f"  (answer lists: coaches' Titles not read -- {type(_e).__name__}: {_e})", flush=True)
+    try:
+        for (_ck, f), v in (title_review_answers() or {}).items():
+            if f in vals:
+                add(f, [v])
+    except Exception:
+        pass
+    p = os.path.join(_pr_app_dir(), "play_tag_vocab.json")
+    try:
+        with open(p, encoding="utf-8") as fh:
+            for f, lst in (json.load(fh) or {}).items():
+                if f in vals:
+                    add(f, lst)
+    except Exception:
+        pass
+    # one spelling per answer: "No Screens" / "No screens" (capitals / spaces / punctuation only) are the same answer --
+    # the capitalized spelling is kept
+    _nrm = lambda s: re.sub(r"[^a-z0-9#]+", "", s.lower())
+    out = {}
+    for f, v in vals.items():
+        one = {}
+        for s in sorted(v, key=lambda s: (s == s.lower(), s)):      # capitalized spellings first
+            one.setdefault(_nrm(s) or s, s)
+        out[f] = sorted(one.values(), key=str.lower)
+    try:
+        with open(p, "w", encoding="utf-8") as fh:
+            json.dump(out, fh, indent=1)
+    except Exception:
+        pass
+    empty = [lab_ for f, lab_ in _TR_FIELDS if not out[f]]
+    if empty:
+        print(f"  [answer lists] no known answers yet for: {', '.join(empty)} -- coaches type them the first time", flush=True)
+    return out
+
+
 def _tr_title(r, tagged):
     """The automatic Title in the coaches' shorthand -- the Tag model's own builder, fed the (held-out) answers."""
     rr = dict(r)
@@ -973,13 +1034,7 @@ def play_review():
                                              if len(_trk_five(r.get(f"{side}_lineup"))) < 5 else [])}})
         # every answer already known for each field (coaches' Titles and the model's answers, all games) -- offered as
         # suggestions for a typed answer, so it matches an existing spelling (page and app)
-        vocab = {}
-        for f, _lab in _TR_FIELDS:
-            vals = set()
-            for c in (f"coach_{f}", f"pred_{f}"):
-                if c in play_calls.columns:
-                    vals |= {str(v) for v in play_calls[c].dropna() if str(v).strip() and str(v) != "nan"}
-            vocab[f] = sorted(vals)
+        vocab = globals().get("_pr_vocab_run") or globals().setdefault("_pr_vocab_run", _tr_vocab())
         # CONFIRMED CHANGE (requested: the play reviews inside the Streamlit app, saved to GitHub; no more review.html).
         # The open review goes to the app's data folder (_pr_app_dir()/play_review/<game>/): review.json + each play's
         # video, cover image and pictures (1100 px). Commit / push it with the rest of the data; the app saves each
@@ -1161,13 +1216,9 @@ def tag_queue():
     min_c = float(globals().get("TAG_MODEL_MIN_CONFIDENCE", 0.6))
     if "_play_review_file_saves" in globals():
         _play_review_file_saves()
-    vocab = {}
-    for f, _lab in _TR_FIELDS:
-        vals = set()
-        for c in (f"coach_{f}", f"pred_{f}"):
-            if c in play_calls.columns:
-                vals |= {str(v) for v in play_calls[c].dropna() if str(v).strip() and str(v) != "nan"}
-        vocab[f] = sorted(vals)
+    vocab = globals().get("_pr_vocab_run") or globals().setdefault("_pr_vocab_run", _tr_vocab())
+    print("Film Tagging: answer lists -- " + ", ".join(f"{lab_} {len(vocab.get(f, []))}" for f, lab_ in _TR_FIELDS),
+          flush=True)
     summary, _outside = [], []
     for (gd, gc), g in pc.groupby(["game_date", "game_code"], dropna=False):
         slug_game = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
@@ -1338,6 +1389,37 @@ def _pr_retire_redated():
                       f"filed under {d_} (the game is dated right now; a new one is made under the right date)", flush=True)
 
 
+def _pr_refresh_vocab():
+    """Every open Film Tagging / Play review batch in the app gets today's answer lists (a batch kept from an earlier run --
+    nothing saved in it yet -- would otherwise keep the empty lists it was built with)."""
+    vocab = globals().get("_pr_vocab_run") or _tr_vocab()
+    n = 0
+    for kind in ("play_tag", "play_review"):
+        for rj in glob.glob(os.path.join(_pr_app_dir(), kind, "*", "review.json")):
+            try:
+                with open(rj, encoding="utf-8") as fh:
+                    doc = json.load(fh)
+                old = doc.get("vocab") or {}
+                _nrm = lambda s: re.sub(r"[^a-z0-9#]+", "", str(s).lower())
+                new = {}
+                for f in set(old) | set(vocab):
+                    one = {}
+                    for s in sorted(set(old.get(f) or []) | set(vocab.get(f) or []),
+                                    key=lambda s: (str(s) == str(s).lower(), str(s))):
+                        one.setdefault(_nrm(s) or s, s)                 # one spelling per answer
+                    new[f] = sorted(one.values(), key=lambda s: str(s).lower())
+                if new != old:
+                    doc["vocab"] = new
+                    with open(rj, "w", encoding="utf-8") as fh:
+                        json.dump(doc, fh, default=str)
+                    n += 1
+            except Exception:
+                continue
+    if n:
+        print(f"  [answer lists] updated in {n} open batch(es) in the app -- commit and push the data", flush=True)
+
+
+globals()["_pr_vocab_run"] = None                         # the answer lists are worked out fresh each run
 try:
     _pr_retire_redated()
 except Exception as _e:
@@ -1353,3 +1435,8 @@ if globals().get("RUN_TAG_QUEUE", True):
         tag_queue()
     except Exception as _e:
         print(f"Film Tagging skipped: {type(_e).__name__}: {_e}")
+if globals().get("RUN_TAG_QUEUE", True) or RUN_PLAY_REVIEW:
+    try:
+        _pr_refresh_vocab()
+    except Exception as _e:
+        print(f"  (answer lists not refreshed in the open batches: {type(_e).__name__}: {_e})")
