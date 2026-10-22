@@ -1,0 +1,5672 @@
+{
+ "game": "2026-02-24|WheatonIL@NorthPark",
+ "slug": "tag_2026_02_24_WheatonIL_NorthPark",
+ "run": "20261022_111009_tag",
+ "plays": [
+  {
+   "clip_key": "2026-02-24|1|4 Kyan VanderWoude > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts",
+   "clip_number": 1,
+   "clock": "H1 19:36",
+   "synergy": "4 Kyan VanderWoude > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "(post):",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Kyan VanderWoude",
+   "result": "Miss 2 Pts",
+   "clip": "clip_001_00.mp4",
+   "clip_kind": "video",
+   "poster": "clip_001_00_poster.jpg",
+   "fid": "001_00",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 1,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts",
+   "clip_number": 2,
+   "clock": "H1 19:36",
+   "synergy": "34 Carson Grier > Cut > Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "(cut):",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Carson Grier",
+   "result": "Make 2 Pts",
+   "clip": "clip_002_01.mp4",
+   "clip_kind": "video",
+   "poster": "clip_002_01_poster.jpg",
+   "fid": "002_01",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 2,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|3|25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts",
+   "clip_number": 3,
+   "clock": "H1 19:12",
+   "synergy": "25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "(post):",
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Marquis Vance",
+   "result": "Make 2 Pts",
+   "clip": "clip_003_02.mp4",
+   "clip_kind": "video",
+   "poster": "clip_003_02_poster.jpg",
+   "fid": "003_02",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 3,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 4,
+   "clock": "H1 18:55",
+   "synergy": "4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Kyan VanderWoude",
+   "result": "Miss 3 Pts",
+   "clip": "clip_004_03.mp4",
+   "clip_kind": "video",
+   "poster": "clip_004_03_poster.jpg",
+   "fid": "004_03",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 4,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts",
+   "clip_number": 5,
+   "clock": "H1 18:51",
+   "synergy": "34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "(post):",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Carson Grier",
+   "result": "Miss 2 Pts",
+   "clip": "clip_005_04.mp4",
+   "clip_kind": "video",
+   "poster": "clip_005_04_poster.jpg",
+   "fid": "005_04",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 5,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|6|5 Kolden Vanlandingham > Transition > Ballhandler > To Basket > Miss 2 Pts",
+   "clip_number": 6,
+   "clock": "H1 18:42",
+   "synergy": "5 Kolden Vanlandingham > Transition > Ballhandler > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Kolden Vanlandingham",
+   "result": "Miss 2 Pts",
+   "clip": "clip_006_05.mp4",
+   "clip_kind": "video",
+   "poster": "clip_006_05_poster.jpg",
+   "fid": "006_05",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 6,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 7,
+   "clock": "H1 18:17",
+   "synergy": "4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "coach_title": null,
+   "auto_title": "(ds):",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Kyan VanderWoude",
+   "result": "Make 3 Pts",
+   "clip": "clip_007_06.mp4",
+   "clip_kind": "video",
+   "poster": "clip_007_06_poster.jpg",
+   "fid": "007_06",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 7,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 8,
+   "clock": "H1 18:00",
+   "synergy": "4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": "(bs):",
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Marquis Vance",
+   "result": "Miss 3 Pts",
+   "clip": "clip_008_07.mp4",
+   "clip_kind": "video",
+   "poster": "clip_008_07_poster.jpg",
+   "fid": "008_07",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 8,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
+   "clip_number": 9,
+   "clock": "H1 17:56",
+   "synergy": "21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Lazario Cornish",
+   "result": "Make 2 Pts",
+   "clip": "clip_009_08.mp4",
+   "clip_kind": "video",
+   "poster": "clip_009_08_poster.jpg",
+   "fid": "009_08",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 9,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|10|12 Devin Martin > Non Possession > No Violation",
+   "clip_number": 10,
+   "clock": "H1 17:36",
+   "synergy": "12 Devin Martin > Non Possession > No Violation",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Devin Martin",
+   "result": "No Violation",
+   "clip": "clip_010_09.mp4",
+   "clip_kind": "video",
+   "poster": "clip_010_09_poster.jpg",
+   "fid": "010_09",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 10,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul",
+   "clip_number": 11,
+   "clock": "H1 17:25",
+   "synergy": "35 Brady Wynja > Non Possession > Non Shooting Foul",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Brady Wynja",
+   "result": "Non Shooting Foul",
+   "clip": "clip_011_10.mp4",
+   "clip_kind": "video",
+   "poster": "clip_011_10_poster.jpg",
+   "fid": "011_10",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 11,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts",
+   "clip_number": 12,
+   "clock": "H1 17:06",
+   "synergy": "12 Devin Martin > Cut > Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "(cut):",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Devin Martin",
+   "result": "Make 2 Pts",
+   "clip": "clip_012_11.mp4",
+   "clip_kind": "video",
+   "poster": "clip_012_11_poster.jpg",
+   "fid": "012_11",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 12,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|13|3 William Bates > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 13,
+   "clock": "H1 16:58",
+   "synergy": "3 William Bates > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "William Bates",
+   "result": "Miss 3 Pts",
+   "clip": "clip_013_12.mp4",
+   "clip_kind": "video",
+   "poster": "clip_013_12_poster.jpg",
+   "fid": "013_12",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 13,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts",
+   "clip_number": 14,
+   "clock": "H1 16:58",
+   "synergy": "34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts",
+   "coach_title": null,
+   "auto_title": "(dho):",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Carson Grier",
+   "result": "0 Pts",
+   "clip": "clip_014_13.mp4",
+   "clip_kind": "video",
+   "poster": "clip_014_13_poster.jpg",
+   "fid": "014_13",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 14,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts",
+   "clip_number": 16,
+   "clock": "H1 16:26",
+   "synergy": "5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "(bs):",
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Kolden Vanlandingham",
+   "result": "Make 2 Pts",
+   "clip": "clip_016_14.mp4",
+   "clip_kind": "video",
+   "poster": "clip_016_14_poster.jpg",
+   "fid": "016_14",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 16,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts",
+   "clip_number": 17,
+   "clock": "H1 16:13",
+   "synergy": "20 Soren Richardson > Cut > Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "(cut):",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Soren Richardson",
+   "result": "Make 2 Pts",
+   "clip": "clip_017_15.mp4",
+   "clip_kind": "video",
+   "poster": "clip_017_15_poster.jpg",
+   "fid": "017_15",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 17,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 18,
+   "clock": "H1 16:03",
+   "synergy": "4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": "(bs):",
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Marquis Vance",
+   "result": "Miss 3 Pts",
+   "clip": "clip_018_16.mp4",
+   "clip_kind": "video",
+   "poster": "clip_018_16_poster.jpg",
+   "fid": "018_16",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 18,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|19|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts",
+   "clip_number": 19,
+   "clock": "H1 15:52",
+   "synergy": "12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "(bs):",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Devin Martin",
+   "result": "Miss 2 Pts",
+   "clip": "clip_019_17.mp4",
+   "clip_kind": "video",
+   "poster": "clip_019_17_poster.jpg",
+   "fid": "019_17",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 19,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|20|5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts",
+   "clip_number": 20,
+   "clock": "(no clock)",
+   "synergy": "5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Kolden Vanlandingham",
+   "result": "Make 3 Pts",
+   "clip": "clip_020_18.mp4",
+   "clip_kind": "video",
+   "poster": "clip_020_18_poster.jpg",
+   "fid": "020_18",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 20,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ],
+    "defense": []
+   },
+   "roster": {
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Jace Olson",
+     "Kyan VanderWoude",
+     "Kyle Neibch",
+     "Luca Carbonaro",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "five_labels": {
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Jace Olson": "Jace Olson",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Kyle Neibch": "#3 Kyle Neibch",
+    "Luca Carbonaro": "#15 Luca Carbonaro",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|21|34 Carson Grier > Non Possession > No Violation",
+   "clip_number": 21,
+   "clock": "H1 15:34",
+   "synergy": "34 Carson Grier > Non Possession > No Violation",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Carson Grier",
+   "result": "No Violation",
+   "clip": "clip_021_19.mp4",
+   "clip_kind": "video",
+   "poster": "clip_021_19_poster.jpg",
+   "fid": "021_19",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 21,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|22|12 Devin Martin > No Play Type > Turnover",
+   "clip_number": 22,
+   "clock": "H1 15:24",
+   "synergy": "12 Devin Martin > No Play Type > Turnover",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Devin Martin",
+   "result": "Turnover",
+   "clip": "clip_022_20.mp4",
+   "clip_kind": "video",
+   "poster": "clip_022_20_poster.jpg",
+   "fid": "022_20",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 22,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|23|21 Lazario Cornish > Non Possession > Non Shooting Foul",
+   "clip_number": 23,
+   "clock": "H1 15:18",
+   "synergy": "21 Lazario Cornish > Non Possession > Non Shooting Foul",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Lazario Cornish",
+   "result": "Non Shooting Foul",
+   "clip": "clip_023_21.mp4",
+   "clip_kind": "video",
+   "poster": "clip_023_21_poster.jpg",
+   "fid": "023_21",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 23,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|24|5 Kolden Vanlandingham > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 24,
+   "clock": "H1 15:10",
+   "synergy": "5 Kolden Vanlandingham > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": "(ds):",
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Kolden Vanlandingham",
+   "result": "Miss 3 Pts",
+   "clip": "clip_024_22.mp4",
+   "clip_kind": "video",
+   "poster": "clip_024_22_poster.jpg",
+   "fid": "024_22",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 24,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ],
+    "defense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|25|34 Carson Grier > Transition > Right Wing > To Basket > Miss 2 Pts",
+   "clip_number": 25,
+   "clock": "H1 15:05",
+   "synergy": "34 Carson Grier > Transition > Right Wing > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Carson Grier",
+   "result": "Miss 2 Pts",
+   "clip": "clip_025_23.mp4",
+   "clip_kind": "video",
+   "poster": "clip_025_23_poster.jpg",
+   "fid": "025_23",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 25,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|26|4 Kyan VanderWoude > Offensive Rebound > Long > Scoring Attempt > Short to < 17' > Miss 2 Pts",
+   "clip_number": 26,
+   "clock": "H1 15:00",
+   "synergy": "4 Kyan VanderWoude > Offensive Rebound > Long > Scoring Attempt > Short to < 17' > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Kyan VanderWoude",
+   "result": "Miss 2 Pts",
+   "clip": "clip_026_24.mp4",
+   "clip_kind": "video",
+   "poster": "clip_026_24_poster.jpg",
+   "fid": "026_24",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 26,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|27|4 Kyan VanderWoude > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
+   "clip_number": 27,
+   "clock": "H1 14:53",
+   "synergy": "4 Kyan VanderWoude > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Kyan VanderWoude",
+   "result": "Make 2 Pts",
+   "clip": "clip_027_25.mp4",
+   "clip_kind": "video",
+   "poster": "clip_027_25_poster.jpg",
+   "fid": "027_25",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 27,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|28|4 Mike Vuckovic > Hand Off > From Stationary > Top > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts",
+   "clip_number": 28,
+   "clock": "H1 14:38",
+   "synergy": "4 Mike Vuckovic > Hand Off > From Stationary > Top > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts",
+   "coach_title": null,
+   "auto_title": "(dho):",
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Mike Vuckovic",
+   "result": "Make 3 Pts",
+   "clip": "clip_028_26.mp4",
+   "clip_kind": "video",
+   "poster": "clip_028_26_poster.jpg",
+   "fid": "028_26",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 28,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ],
+    "defense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|29|12 Devin Martin > Transition > Ballhandler > To Basket > Foul",
+   "clip_number": 29,
+   "clock": "H1 14:38",
+   "synergy": "12 Devin Martin > Transition > Ballhandler > To Basket > Foul",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Devin Martin",
+   "result": "Foul",
+   "clip": "clip_029_27.mp4",
+   "clip_kind": "video",
+   "poster": "clip_029_27_poster.jpg",
+   "fid": "029_27",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 29,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Marquis Vance",
+     "Mike Vuckovic",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Marquis Vance": "#25 Marquis Vance",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|32|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 2 Tyvin Garrison > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 32,
+   "clock": "H1 14:10",
+   "synergy": "4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 2 Tyvin Garrison > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": "(bs):",
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Tyvin Garrison",
+   "result": "Miss 3 Pts",
+   "clip": "clip_032_28.mp4",
+   "clip_kind": "video",
+   "poster": "clip_032_28_poster.jpg",
+   "fid": "032_28",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 32,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Mike Vuckovic",
+     "Tyvin Garrison",
+     "William Bates"
+    ],
+    "defense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "Tyvin Garrison": "#2 Tyvin Garrison",
+    "William Bates": "#3 William Bates",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|33|12 Devin Martin > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts",
+   "clip_number": 33,
+   "clock": "H1 13:58",
+   "synergy": "12 Devin Martin > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "(bs,reject):",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Devin Martin",
+   "result": "Miss 2 Pts",
+   "clip": "clip_033_29.mp4",
+   "clip_kind": "video",
+   "poster": "clip_033_29_poster.jpg",
+   "fid": "033_29",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 33,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Mike Vuckovic",
+     "Tyvin Garrison",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "Tyvin Garrison": "#2 Tyvin Garrison",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|34|4 Mike Vuckovic > Spot-Up > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts",
+   "clip_number": 34,
+   "clock": "H1 13:49",
+   "synergy": "4 Mike Vuckovic > Spot-Up > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Mike Vuckovic",
+   "result": "Miss 2 Pts",
+   "clip": "clip_034_30.mp4",
+   "clip_kind": "video",
+   "poster": "clip_034_30_poster.jpg",
+   "fid": "034_30",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 34,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Mike Vuckovic",
+     "Tyvin Garrison",
+     "William Bates"
+    ],
+    "defense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "Tyvin Garrison": "#2 Tyvin Garrison",
+    "William Bates": "#3 William Bates",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|35|34 Carson Grier > Transition > First Middle > To Basket > Miss 2 Pts",
+   "clip_number": 35,
+   "clock": "H1 13:33",
+   "synergy": "34 Carson Grier > Transition > First Middle > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Carson Grier",
+   "result": "Miss 2 Pts",
+   "clip": "clip_035_31.mp4",
+   "clip_kind": "video",
+   "poster": "clip_035_31_poster.jpg",
+   "fid": "035_31",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 35,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Mike Vuckovic",
+     "Tyvin Garrison",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "Tyvin Garrison": "#2 Tyvin Garrison",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|36|21 Lazario Cornish > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts",
+   "clip_number": 36,
+   "clock": "H1 13:21",
+   "synergy": "21 Lazario Cornish > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "(post):",
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Lazario Cornish",
+   "result": "Make 2 Pts",
+   "clip": "clip_036_32.mp4",
+   "clip_kind": "video",
+   "poster": "clip_036_32_poster.jpg",
+   "fid": "036_32",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 36,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Mike Vuckovic",
+     "Tyvin Garrison",
+     "William Bates"
+    ],
+    "defense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "Tyvin Garrison": "#2 Tyvin Garrison",
+    "William Bates": "#3 William Bates",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|37|12 Devin Martin > No Play Type > Turnover",
+   "clip_number": 37,
+   "clock": "H1 13:05",
+   "synergy": "12 Devin Martin > No Play Type > Turnover",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Devin Martin",
+   "result": "Turnover",
+   "clip": "clip_037_33.mp4",
+   "clip_kind": "video",
+   "poster": "clip_037_33_poster.jpg",
+   "fid": "037_33",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 37,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Kolden Vanlandingham",
+     "Lazario Cornish",
+     "Mike Vuckovic",
+     "Tyvin Garrison",
+     "William Bates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Lazario Cornish": "#21 Lazario Cornish",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "Tyvin Garrison": "#2 Tyvin Garrison",
+    "William Bates": "#3 William Bates"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|38|4 Mike Vuckovic > Spot-Up > Drives Left > To Basket > Miss 2 Pts",
+   "clip_number": 38,
+   "clock": "H1 12:38",
+   "synergy": "4 Mike Vuckovic > Spot-Up > Drives Left > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Mike Vuckovic",
+   "result": "Miss 2 Pts",
+   "clip": "clip_038_34.mp4",
+   "clip_kind": "video",
+   "poster": "clip_038_34_poster.jpg",
+   "fid": "038_34",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 38,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Harrison Long",
+     "Julian Campbell",
+     "Kolden Vanlandingham",
+     "Mike Vuckovic",
+     "Tyvin Garrison"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Devin Martin",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Harrison Long": "#34 Harrison Long",
+    "Julian Campbell": "#54 Julian Campbell",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "Tyvin Garrison": "#2 Tyvin Garrison",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Devin Martin": "#12 Devin Martin",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|39|54 Julian Campbell > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
+   "clip_number": 39,
+   "clock": "H1 13:02",
+   "synergy": "54 Julian Campbell > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Julian Campbell",
+   "result": "Make 2 Pts",
+   "clip": "clip_039_35.mp4",
+   "clip_kind": "video",
+   "poster": "clip_039_35_poster.jpg",
+   "fid": "039_35",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 39,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Harrison Long",
+     "Julian Campbell",
+     "Kolden Vanlandingham",
+     "Mike Vuckovic",
+     "Tyvin Garrison"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Devin Martin",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Harrison Long": "#34 Harrison Long",
+    "Julian Campbell": "#54 Julian Campbell",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "Tyvin Garrison": "#2 Tyvin Garrison",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Devin Martin": "#12 Devin Martin",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|40|20 Soren Richardson > ISO > Top > Drives Left > To Basket > Make 2 Pts Foul > 1 Pts",
+   "clip_number": 40,
+   "clock": "H1 12:24",
+   "synergy": "20 Soren Richardson > ISO > Top > Drives Left > To Basket > Make 2 Pts Foul > 1 Pts",
+   "coach_title": null,
+   "auto_title": "(iso):",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Soren Richardson",
+   "result": "1 Pts",
+   "clip": "clip_040_36.mp4",
+   "clip_kind": "video",
+   "poster": "clip_040_36_poster.jpg",
+   "fid": "040_36",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 40,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Devin Martin",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Harrison Long",
+     "Julian Campbell",
+     "Kolden Vanlandingham",
+     "Mike Vuckovic",
+     "Tyvin Garrison"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Devin Martin": "#12 Devin Martin",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Harrison Long": "#34 Harrison Long",
+    "Julian Campbell": "#54 Julian Campbell",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "Tyvin Garrison": "#2 Tyvin Garrison"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|42|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 54 Julian Campbell > P&R Roll Man > Rolls to Basket > Make 2 Pts",
+   "clip_number": 42,
+   "clock": "H1 11:49",
+   "synergy": "4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 54 Julian Campbell > P&R Roll Man > Rolls to Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "(bs):",
+   "film": null,
+   "offense": "North Park Vikings",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Julian Campbell",
+   "result": "Make 2 Pts",
+   "clip": "clip_042_37.mp4",
+   "clip_kind": "video",
+   "poster": "clip_042_37_poster.jpg",
+   "fid": "042_37",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 42,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Harrison Long",
+     "Julian Campbell",
+     "Kolden Vanlandingham",
+     "Mike Vuckovic",
+     "Tyvin Garrison"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Harrison Long": "#34 Harrison Long",
+    "Julian Campbell": "#54 Julian Campbell",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "Tyvin Garrison": "#2 Tyvin Garrison",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|43|10 Reid Olson > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts",
+   "clip_number": 43,
+   "clock": "H1 11:43",
+   "synergy": "10 Reid Olson > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": "(bs):",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Reid Olson",
+   "result": "Miss 3 Pts",
+   "clip": "clip_043_38.mp4",
+   "clip_kind": "video",
+   "poster": "clip_043_38_poster.jpg",
+   "fid": "043_38",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 43,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Harrison Long",
+     "Julian Campbell",
+     "Kolden Vanlandingham",
+     "Mike Vuckovic",
+     "Tyvin Garrison"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Harrison Long": "#34 Harrison Long",
+    "Julian Campbell": "#54 Julian Campbell",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "Tyvin Garrison": "#2 Tyvin Garrison"
+   }
+  },
+  {
+   "clip_key": "2026-02-24|44|35 Brady Wynja > Offensive Rebound > Short > Turnover",
+   "clip_number": 44,
+   "clock": "H1 11:19",
+   "synergy": "35 Brady Wynja > Offensive Rebound > Short > Turnover",
+   "coach_title": null,
+   "auto_title": null,
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "North Park Vikings",
+   "player": "Brady Wynja",
+   "result": "Turnover",
+   "clip": "clip_044_39.mp4",
+   "clip_kind": "video",
+   "poster": "clip_044_39_poster.jpg",
+   "fid": "044_39",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f699dc391dc2261b6874ffc38%2ffullgamevideo%2fclips",
+   "synergy_pos": 44,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Harrison Long",
+     "Julian Campbell",
+     "Kolden Vanlandingham",
+     "Mike Vuckovic",
+     "Tyvin Garrison"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Harrison Long": "#34 Harrison Long",
+    "Julian Campbell": "#54 Julian Campbell",
+    "Kolden Vanlandingham": "#5 Kolden Vanlandingham",
+    "Mike Vuckovic": "#4 Mike Vuckovic",
+    "Tyvin Garrison": "#2 Tyvin Garrison"
+   }
+  }
+ ],
+ "vocab": {
+  "situation": [],
+  "formation": [],
+  "play_call": [],
+  "primary_action": [],
+  "defense": [],
+  "press": [],
+  "ball_screen_coverage": [],
+  "offball_coverage": [],
+  "screener": [],
+  "screen_defender": []
+ },
+ "built": "2026-10-22T11:16:27"
+}

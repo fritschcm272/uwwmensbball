@@ -1,18 +1,18 @@
 model,kind,version,version_date,signature,detail,scripts,last_checked
-Tag model (overall),trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,newest of 9 field model(s); last retrained field: situation,53_tag_model.py,2026-10-22T10:31:57
-Jersey-number recognizer,trained,v2026.10.19,2026-10-19,2026-10-19T22:01:10,"3667 training crops; 29% of held-back crops right; sources {'reads': 0, 'extra': 3615, 'coach': 639}",48_jersey_number_recognizer.py,2026-10-22T10:31:57
-Tag model: ball_screen_coverage,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"111 tagged clips, 5 answers learned, one answer only",53_tag_model.py,2026-10-22T10:31:57
-Tag model: defense,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"309 tagged clips, 1 answers learned, one answer only",53_tag_model.py,2026-10-22T10:31:57
-Tag model: formation,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"185 tagged clips, 5 answers learned, one answer only",53_tag_model.py,2026-10-22T10:31:57
-Tag model: offball_coverage,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"62 tagged clips, 3 answers learned, one answer only",53_tag_model.py,2026-10-22T10:31:57
-Tag model: play_call,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"213 tagged clips, 7 answers learned",53_tag_model.py,2026-10-22T10:31:57
-Tag model: press,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"310 tagged clips, 3 answers learned",53_tag_model.py,2026-10-22T10:31:57
-Tag model: primary_action,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"157 tagged clips, 7 answers learned, one answer only",53_tag_model.py,2026-10-22T10:31:57
-Tag model: screen_defender,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"80 tagged clips, 7 answers learned, one answer only",53_tag_model.py,2026-10-22T10:31:57
-Tag model: situation,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"355 tagged clips, 5 answers learned",53_tag_model.py,2026-10-22T10:31:57
-Jersey-number reader test,pretrained + code,v2026.10.20.2,2026-10-20,05953b59279b,scores the OCR readers; none retrained here,49_jersey_number_reader_test.py,2026-10-22T10:31:57
-Player tracking,pretrained + code,v2026.10.22,2026-10-22,b1ef448734f0,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",50_player_tracking.py,2026-10-22T10:31:57
-Court mapping,rules + code,v2026.10.22,2026-10-22,098cafc54b06,4 calibration file(s),51_court_mapping.py,2026-10-22T10:31:57
-Defensive roles,rules + code,v2026.10.02,2026-10-02,6693b910acf2,"7 BBall Index-style roles, Division III cut-offs",55d_defensive_roles.py,2026-10-22T10:31:57
-Offensive roles,rules + code,v2026.10.02,2026-10-02,4fe5d5f99a0b,"12 BBall Index-style roles, Division III cut-offs",41b_offensive_roles.py,2026-10-22T10:31:57
-Player comparison,rules + code,v2026.10.07,2026-10-07,3c16f7881c90,tag-based similarity; LLM blend off,"32_load_player_comparison_algorithms_and.py, 33_surface_tag_based_best_match_per_target.py, 34_surface_llm_best_match_per_player.py, 35_blend_tag_based_and_llm_similarity_scores.py, 76_rebuild_player_comparisons_with_pbp.py",2026-10-22T10:31:57
+Tag model (overall),trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,newest of 9 field model(s); last retrained field: situation,53_tag_model.py,2026-10-22T11:18:52
+Jersey-number recognizer,trained,v2026.10.19,2026-10-19,2026-10-19T22:01:10,"3667 training crops; 29% of held-back crops right; sources {'reads': 0, 'extra': 3615, 'coach': 639}",48_jersey_number_recognizer.py,2026-10-22T11:18:52
+Tag model: ball_screen_coverage,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"111 tagged clips, 5 answers learned, one answer only",53_tag_model.py,2026-10-22T11:18:52
+Tag model: defense,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"309 tagged clips, 1 answers learned, one answer only",53_tag_model.py,2026-10-22T11:18:52
+Tag model: formation,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"185 tagged clips, 5 answers learned, one answer only",53_tag_model.py,2026-10-22T11:18:52
+Tag model: offball_coverage,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"62 tagged clips, 3 answers learned, one answer only",53_tag_model.py,2026-10-22T11:18:52
+Tag model: play_call,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"213 tagged clips, 7 answers learned",53_tag_model.py,2026-10-22T11:18:52
+Tag model: press,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"310 tagged clips, 3 answers learned",53_tag_model.py,2026-10-22T11:18:52
+Tag model: primary_action,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"157 tagged clips, 7 answers learned, one answer only",53_tag_model.py,2026-10-22T11:18:52
+Tag model: screen_defender,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"80 tagged clips, 7 answers learned, one answer only",53_tag_model.py,2026-10-22T11:18:52
+Tag model: situation,trained,v2026.10.20,2026-10-20,2026-10-20T15:51:15,"355 tagged clips, 5 answers learned",53_tag_model.py,2026-10-22T11:18:52
+Jersey-number reader test,pretrained + code,v2026.10.20.2,2026-10-20,05953b59279b,scores the OCR readers; none retrained here,49_jersey_number_reader_test.py,2026-10-22T11:18:52
+Player tracking,pretrained + code,v2026.10.22,2026-10-22,b1ef448734f0,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",50_player_tracking.py,2026-10-22T11:18:52
+Court mapping,rules + code,v2026.10.22,2026-10-22,098cafc54b06,4 calibration file(s),51_court_mapping.py,2026-10-22T11:18:52
+Defensive roles,rules + code,v2026.10.02,2026-10-02,6693b910acf2,"7 BBall Index-style roles, Division III cut-offs",55d_defensive_roles.py,2026-10-22T11:18:52
+Offensive roles,rules + code,v2026.10.02,2026-10-02,4fe5d5f99a0b,"12 BBall Index-style roles, Division III cut-offs",41b_offensive_roles.py,2026-10-22T11:18:52
+Player comparison,rules + code,v2026.10.07,2026-10-07,3c16f7881c90,tag-based similarity; LLM blend off,"32_load_player_comparison_algorithms_and.py, 33_surface_tag_based_best_match_per_target.py, 34_surface_llm_best_match_per_player.py, 35_blend_tag_based_and_llm_similarity_scores.py, 76_rebuild_player_comparisons_with_pbp.py",2026-10-22T11:18:52

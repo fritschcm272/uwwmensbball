@@ -26,6 +26,7 @@ import json
 import random
 import subprocess
 import tempfile
+import time
 import datetime as _pr_dt     # NOT "import datetime": the notebook's datetime is the class (section 01)
 import html as _pr_html
 import pandas as pd
@@ -374,6 +375,25 @@ def _pr_frames(files, rows, numtxt, every=1):
         sc = PLAY_REVIEW_VIDEO_WIDTH / float(W)
         out.append(im.resize((PLAY_REVIEW_VIDEO_WIDTH // 2 * 2, int(H * sc) // 2 * 2)))      # even sizes (video needs them)
     return out
+
+
+# CONFIRMED CHANGE (requested: "55c play review has been running a long time but there's no information about what it is
+# doing"). Each play's video is cut from its 1080p clip and re-encoded (several seconds a play, more from the F: drive), and
+# a game's batch can be 40+ plays -- 10-20 minutes with nothing printed. Every slow step now says what it's on, with a count,
+# time so far and time left (every PLAY_REVIEW_PROGRESS_EVERY plays, at most every 30 s, and when the game is done).
+def _pr_progress(label, done, total, t0, state):
+    """Print '<label>: done / total (pct) -- x min so far, ~y min left' now and then."""
+    now = time.time()
+    every = max(1, int(globals().get("PLAY_REVIEW_PROGRESS_EVERY", 5)))
+    if done < total and done % every and now - state.get("last", 0) < 30:
+        return
+    if done < total and now - state.get("last", 0) < 5:
+        return
+    state["last"] = now
+    el = (now - t0) / 60.0
+    left = (el / done * (total - done)) if done else float("nan")
+    print(f"  {label}: {done} / {total} ({100 * done // max(total, 1)}%) -- {el:.1f} min so far"
+          + (f", ~{left:.1f} min left" if done < total and left == left else ""), flush=True)
 
 
 def _pr_mp4_ok():
@@ -818,7 +838,10 @@ def play_review():
         numtxt = lambda n: f"#{gnums.get(str(n).lower(), '?')} {str(n).split()[-1]}"
         _rosters_pr = _tag_rosters(g) if "_tag_rosters" in globals() else {}
         plays = []
-        for _ri, r in pick.iterrows():
+        print(f"Play review: {gd} {gc}: building {len(pick)} play(s) -- pictures, close-ups and a video of each...", flush=True)
+        _pg_t0, _pg_st = time.time(), {}
+        for _pg_i, (_ri, r) in enumerate(pick.iterrows(), 1):
+            _pr_progress(f"[play review] {gc} plays built", _pg_i - 1, len(pick), _pg_t0, _pg_st)
             _parts = _parts_of.get(_ri, ["titles", "players"])
             files = [f for f in str(r["track_files"]).split(";") if f]
             rows = pt[pt["clip_key"] == r["track_clip_key"]].to_dict("records")
@@ -1066,7 +1089,37 @@ def _tag_refresh_people(pkg, g, gd, gc):
         print(f"Film Tagging: {gd} {gc}: open batch -- offense / defense and lineups updated on {n} play(s)", flush=True)
 
 
+# CONFIRMED CHANGE (requested: "Why is this doing work on the Oshkosh film when I have the upcoming opponent being the Wheaton
+# game?"). Film Tagging made a batch for EVERY game with film on disk -- the 1/3 Oshkosh game came back once its folder on the
+# F: drive could be read again. Now only the games in THIS run get batches (PLAY_TAG_RUN_ONLY, default True) -- the same rule
+# the frame archive uses (_fa_current_run): the upcoming opponent's games before facing us, any earlier meeting with them, and
+# UWW's most recent game (the one the staff is still reviewing). A game outside the run gets no batch, and its open batch
+# (nothing saved in it) leaves the app; answers already saved are kept and still count.
+def _tag_run_reason(gd, gc, g):
+    """Why this game is part of the current run, or None when it isn't. 'every game' when the run can't be worked out."""
+    if not globals().get("PLAY_TAG_RUN_ONLY", True) or "_fa_current_run" not in globals():
+        return "every game"
+    cur = globals().get("_tag_cur_run")
+    if cur is None:
+        try:
+            cur = globals()["_tag_cur_run"] = _fa_current_run()
+        except Exception:
+            cur = globals()["_tag_cur_run"] = {}
+    if not cur:
+        return "every game"
+    d = _fa_as_date(gd)
+    if d is None:
+        return "every game"
+    low = str(gc).lower().replace("-", "").replace(" ", "")
+    side = g["side"].astype(str) if "side" in g.columns else pd.Series(dtype=str)
+    is_uww = side.eq("UWW").any() or any(k in low for k in ("whitewater", "www", "uww"))
+    is_opp = side.eq("Opponent").any() or any(w in low for w in _fa_words(globals().get("upcoming_opponent_short") or ""))
+    need = {"opp": is_opp, "uww": is_uww, "both": is_uww and is_opp}
+    return next((why for (cd, kind), why in cur.items() if abs((d - cd).days) <= 1 and need.get(kind)), None)
+
+
 def tag_queue():
+    globals()["_tag_cur_run"] = None                     # worked out fresh each run (the upcoming opponent may have changed)
     pc = play_calls.copy() if isinstance(globals().get("play_calls"), pd.DataFrame) else pd.DataFrame()
     if pc.empty:
         print("Film Tagging: no play calls yet.")
@@ -1075,6 +1128,7 @@ def tag_queue():
         pc = pc[pc["side"].isin(["UWW", "Opponent"])]
     has = lambda c: pc[c].notna() if c in pc.columns else pd.Series(False, index=pc.index)
     pc = pc[has("track_files") | has("frame_files")]
+    print(f"Film Tagging: checking which of {len(pc):,} captured clip(s) still have their film on disk...", flush=True)
     # CONFIRMED BUG (fixed; Film Tagging listed "2026-03-06 Loras@UWWhitewater -- tag 1 play(s)" with no video: its frames were
     # deleted at the restart on the Synergy exports). A clip is only offered for tagging when its film is on disk, and a batch
     # already in the app for a game with no film left is removed -- it comes back once the game is exported.
@@ -1099,6 +1153,7 @@ def tag_queue():
     if pc.empty:
         print("Film Tagging: no captured clips to tag.")
         return
+    print("Film Tagging: reading the coaches' saved answers...", flush=True)
     title_review_answers()
     answered = {_pl_ckey_norm(ck) for (ck, _f) in (globals().get("_title_review_marks") or {})}
     n_per = int(globals().get("PLAY_TAG_PER_GAME", 20))
@@ -1113,11 +1168,18 @@ def tag_queue():
             if c in play_calls.columns:
                 vals |= {str(v) for v in play_calls[c].dropna() if str(v).strip() and str(v) != "nan"}
         vocab[f] = sorted(vals)
-    summary = []
+    summary, _outside = [], []
     for (gd, gc), g in pc.groupby(["game_date", "game_code"], dropna=False):
         slug_game = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
         slug = "tag_" + slug_game
         pkg = os.path.join(_pr_app_dir(), "play_tag", slug)
+        if not PLAY_REVIEW_ONLY_GAME and _tag_run_reason(gd, gc, g) is None:
+            _outside.append(f"{gd} {gc}")
+            if os.path.isdir(pkg):
+                shutil.rmtree(pkg, ignore_errors=True)
+                print(f"Film Tagging: removed the open batch for {gd} {gc} from the app -- not part of this run "
+                      f"(answers already saved are kept)", flush=True)
+            continue
         g = g.assign(_key=[_pl_ckey_norm(f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}")
                            for _, r in g.iterrows()])
         untagged = g["decode_quality"].eq("Untagged") if "decode_quality" in g.columns else pd.Series(True, index=g.index)
@@ -1170,7 +1232,10 @@ def tag_queue():
         except Exception:
             _gn = {}
         _rosters = _tag_rosters(g)
-        for _, r in pick.iterrows():
+        print(f"Film Tagging: {gd} {gc}: making the video of each of {len(pick)} play(s) for the app...", flush=True)
+        _tg_t0, _tg_st = time.time(), {}
+        for _tg_i, (_, r) in enumerate(pick.iterrows(), 1):
+            _pr_progress(f"[film tagging] {gc} play videos made", _tg_i - 1, len(pick), _tg_t0, _tg_st)
             files = [f for f in str(r.get("track_files") or "").split(";") if f] or \
                     [f for f in str(r.get("frame_files") or "").split(";") if f]
             cn = int(r["_cn"]) if pd.notna(r["_cn"]) else 0
@@ -1209,12 +1274,14 @@ def tag_queue():
                           # requested: the Screener / Screen defender lists show each player's jersey number; a side with
                           # no known five gets the team's roster for the game instead (see _tag_people)
                           **_tag_people(r, _rosters, _gn)})
+        _pr_progress(f"[film tagging] {gc} play videos made", len(pick), len(pick), _tg_t0, _tg_st)
         if not plays:
             shutil.rmtree(rdir, ignore_errors=True)
             shutil.rmtree(pkg, ignore_errors=True)
             print(f"Film Tagging: {gd} {gc}: no play videos could be made -- no batch", flush=True)
             continue
         try:
+            print(f"  [film tagging] copying {gc}'s batch into the app's data folder...", flush=True)
             _export_play_review_to_app(rdir, slug, f"{gd}|{gc}", stamp, plays, vocab, kind="play_tag")
             shutil.rmtree(rdir, ignore_errors=True)
             print(f"Film Tagging: {gd} {gc}: {len(plays)} clip(s) to tag"
@@ -1225,6 +1292,10 @@ def tag_queue():
             print(f"  [film tagging] not exported to the app: {type(_ae).__name__}: {_ae}", flush=True)
     if summary:
         print("Film Tagging -- tagging progress by game (Titles + app tags):\n  " + "\n  ".join(summary), flush=True)
+    if _outside:
+        print(f"Film Tagging: {len(_outside)} game(s) with film left out -- not part of this run (the upcoming opponent's "
+              f"games and our most recent game; PLAY_TAG_RUN_ONLY = False tags every game): " + "; ".join(_outside),
+              flush=True)
 
 
 def _pr_retire_redated():

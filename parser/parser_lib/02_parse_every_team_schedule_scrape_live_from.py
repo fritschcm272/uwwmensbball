@@ -671,6 +671,13 @@ def run_in_fastscout_session(fn):
         original_policy = asyncio.get_event_loop_policy() if sys.platform == "win32" else None
         if sys.platform == "win32":
             asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+        # CONFIRMED BUG (fixed; run of 2026-10-22: the FastScout login timed out, and then EVERY later FastScout step --
+        # rosters, the Synergy Editor export -- failed with "It looks like you are using Playwright Sync API inside the
+        # asyncio loop"). A failed login left this worker thread's Playwright running (started, never stopped, and not
+        # saved in _fastscout_session so nothing could stop it later); a running sync Playwright keeps an asyncio loop
+        # on the thread, so the next sync_playwright().start() on the same thread refused to start. Now a failed
+        # bootstrap closes what it opened before passing the error on, and the next step gets a clean retry.
+        playwright = browser = None
         try:
             sync_playwright = _ensure_playwright_ready()
             playwright = sync_playwright().start()
@@ -678,6 +685,15 @@ def run_in_fastscout_session(fn):
             page = browser.new_page()
             _ensure_fastscout_login(page)
             _fastscout_session.update(playwright=playwright, browser=browser, page=page)
+        except BaseException:
+            for obj, closer in ((browser, "close"), (playwright, "stop")):
+                if obj is not None:
+                    try:
+                        getattr(obj, closer)()
+                    except Exception:
+                        pass
+            _fastscout_session.update(playwright=None, browser=None, page=None)
+            raise
         finally:
             if sys.platform == "win32":
                 asyncio.set_event_loop_policy(original_policy)
