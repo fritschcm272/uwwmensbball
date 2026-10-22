@@ -2105,6 +2105,8 @@ def _saves_summary(d):
             except Exception as e:
                 bad.append(f"{os.path.basename(f)} ({os.path.getsize(f)} bytes, {type(e).__name__})")
                 continue
+            if isinstance(doc, dict) and doc.get("kind") in ("coverage_plan", "court_calibration"):
+                continue                     # not a review (coverage plans / court calibrations saved in the app)
             g = per.setdefault(str(doc.get("game") or "?"), {"n": 0, "coaches": set(), "latest": "", "plays": set(),
                                                                 "changed": 0})
             g["n"] += 1
@@ -3401,7 +3403,7 @@ if not play_calls.empty and "possession_side" in play_calls.columns:
 action_reads = _pl_reads(_ar_src)
 for _nm, _df in (("uww_screen_defenders", screen_defenders), ("uww_action_reads", action_reads)):
     try:
-        _df.to_csv(os.path.join(APP_DATA_DIR, f"{_nm}.csv"), index=False)
+        _df.to_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, f"{_nm}.csv"), index=False)
     except Exception as _e:
         print(f"  ({_nm} not written: {_e})")
 print(f"  screen defense by defender: {len(screen_defenders)} row(s) (defenders with {SCREEN_DEFENDER_MIN}+ tagged screens); "

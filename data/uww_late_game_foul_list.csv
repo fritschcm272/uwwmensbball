@@ -1,12 +1,10 @@
 opponent,player,call,ft_pct,ft_pct_adj,ftm,fta,games,note,is_sample
-MSOE Raiders,Isaac Wit,Neutral,61.5,63.1,16,26,23,,False
-MSOE Raiders,Carson Cordelli,Neutral,63.9,64.5,39,61,27,,False
-MSOE Raiders,Daniel Franklin IV,Neutral,63.6,65.9,7,11,20,,False
-MSOE Raiders,Ethan Johnson,Neutral,74.3,73.7,26,35,24,,False
-MSOE Raiders,Matus Dopirak,Do not foul,80.0,78.1,20,25,26,,False
-MSOE Raiders,Joey Jendusa,Do not foul,80.5,79.1,33,41,26,,False
-MSOE Raiders,Jonathan Burroughs,Do not foul,84.2,82.3,32,38,21,,False
-MSOE Raiders,CJ Valente,Do not foul,87.5,82.7,14,16,27,,False
-MSOE Raiders,Chase Cummings,Do not foul,85.7,84.0,42,49,26,,False
-MSOE Raiders,Brock Adams,Do not foul,100.0,87.1,8,8,13,Only 13 of 27 games on film,False
-MSOE Raiders,Mason Dopirak,Do not foul,90.0,89.4,180,200,26,,False
+Wheaton (IL) Thunder,Brady Wynja,Foul,51.0,53.0,26,51,26,,False
+Wheaton (IL) Thunder,Carson Grier,Foul,53.7,54.8,44,82,26,,False
+Wheaton (IL) Thunder,Luca Carbonaro,Neutral,66.7,67.8,8,12,14,,False
+Wheaton (IL) Thunder,Devin Martin,Neutral,67.8,67.9,82,121,26,,False
+Wheaton (IL) Thunder,Kyle Neibch,Neutral,69.2,69.5,9,13,26,,False
+Wheaton (IL) Thunder,Reid Olson,Neutral,73.1,72.5,19,26,26,,False
+Wheaton (IL) Thunder,Kyan VanderWoude,Do not foul,75.5,75.2,80,106,26,,False
+Wheaton (IL) Thunder,Soren Richardson,Do not foul,84.1,83.5,111,132,26,,False
+Wheaton (IL) Thunder,Christian Veirs,Do not foul,100.0,87.1,8,8,10,Only 10 of 26 games on film,False

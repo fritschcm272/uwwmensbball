@@ -515,7 +515,7 @@ def _ti_coverage_execution(screens):
     # replaces that opponent's rows from the staff_inputs file.
     _app_rows, _app_opps = [], set()
     try:
-        _sd = _review_saves_dir() if "_review_saves_dir" in globals() else os.path.join(APP_DATA_DIR, "play_review_saves")
+        _sd = _review_saves_dir() if "_review_saves_dir" in globals() else os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, "play_review_saves")
         _docs = []
         for _f in glob.glob(os.path.join(_sd, "coverage_plan_*.json")):
             try:

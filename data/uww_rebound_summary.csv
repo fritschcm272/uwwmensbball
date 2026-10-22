@@ -1,8 +1,8 @@
 opponent,metric,value,paired,player,count
-MSOE Raiders,their_oreb_pct,32.2,905,,291.0
-MSOE Raiders,our_dreb_allowed_base,35.1,1010,,
-MSOE Raiders,their_oreb_player,16.5,905,MSOE,48.0
-MSOE Raiders,their_oreb_player,10.7,905,Carson Cordelli,31.0
-MSOE Raiders,their_oreb_player,9.3,905,Ethan Johnson,27.0
-MSOE Raiders,their_dreb_pct,72.3,1067,,771.0
-MSOE Raiders,our_oreb_base,39.6,1075,,
+Wheaton (IL) Thunder,their_oreb_pct,33.6,985,,331.0
+Wheaton (IL) Thunder,our_dreb_allowed_base,35.1,1010,,
+Wheaton (IL) Thunder,their_oreb_player,23.3,985,Wheaton (IL),77.0
+Wheaton (IL) Thunder,their_oreb_player,16.6,985,Carson Grier,55.0
+Wheaton (IL) Thunder,their_oreb_player,14.8,985,Brady Wynja,49.0
+Wheaton (IL) Thunder,their_dreb_pct,67.3,934,,629.0
+Wheaton (IL) Thunder,our_oreb_base,39.6,1075,,

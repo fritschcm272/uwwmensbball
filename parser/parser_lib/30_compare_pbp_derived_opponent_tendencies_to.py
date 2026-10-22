@@ -101,8 +101,13 @@ def _pt_call(label):
     return f"make {label} a named item in the defensive walkthrough"
 
 
-overall_fg_pct = round(shots["made"].mean() * 100, 1)
-_pt_named = play_type_tendency[~play_type_tendency["play_type"].apply(_pt_is_placeholder)]
+# CONFIRMED BUG (fixed; "KeyError: 'attempts'" with Wheaton up next -- no scout report and 0 games on file). On an EMPTY
+# table, .apply() returns an object-dtype Series, and df[~that] is read as a list of COLUMNS to keep (none), not a row
+# filter -- so the next line found no "attempts" column. Every placeholder filter here is cast to bool, so with no
+# games on file this section just finds no keys.
+_pt_mask = lambda s: s.apply(_pt_is_placeholder).astype(bool)
+overall_fg_pct = round(shots["made"].mean() * 100, 1) if len(shots) else float("nan")
+_pt_named = play_type_tendency[~_pt_mask(play_type_tendency["play_type"])]
 high_volume_types = _pt_named[_pt_named["attempts"] >= _PT_MIN_ATTEMPTS]
 
 most_efficient = (high_volume_types[high_volume_types["fg_pct"] >= overall_fg_pct + _PT_MIN_GAP]
@@ -111,11 +116,12 @@ least_efficient = (high_volume_types[high_volume_types["fg_pct"] <= overall_fg_p
                    .sort_values("fg_pct").head(2))
 
 # Turnover RATE per use of each action. A use is a shot or a turnover on that action.
-_to_named = turnovers[~turnovers["play_type"].apply(_pt_is_placeholder)]
+_to_named = turnovers[~_pt_mask(turnovers["play_type"])]
 _to_counts = _to_named.groupby("play_type").size().rename("turnovers")
 turnover_rates = (play_type_tendency.set_index("play_type")[["attempts"]]
                   .join(_to_counts, how="outer").fillna(0))
-turnover_rates = turnover_rates[~turnover_rates.index.to_series().apply(_pt_is_placeholder)]
+turnover_rates = turnover_rates[~_pt_mask(turnover_rates.index.to_series())]
+turnover_rates = turnover_rates.astype({"attempts": float, "turnovers": float})   # numeric even when empty
 turnover_rates["uses"] = turnover_rates["attempts"] + turnover_rates["turnovers"]
 turnover_rates["to_rate"] = (100 * turnover_rates["turnovers"]
                              / turnover_rates["uses"].replace(0, float("nan"))).round(1)

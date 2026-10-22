@@ -154,7 +154,83 @@ def _cm_calibration_files():
                 out.append(_trk_json.load(fh))
         except Exception as e:
             print(f"  [court] couldn't read {os.path.basename(f)}: {e}")
+    # CONFIRMED CHANGE (requested: court calibrations are done in the Streamlit app, like the player-number checks). The
+    # app saves them to <data>/play_review_saves (saves branch, fetched with the other saves) as court_calibration_*.json
+    # -- the same points format as the calibration page (pixels of the ORIGINAL frame), so they're used the same way.
+    try:
+        _sd = _review_saves_dir() if "_review_saves_dir" in globals() else os.path.join(_cm_app_dir(), "play_review_saves")
+        for f in sorted(glob.glob(os.path.join(_sd, "court_calibration_*.json"))):
+            try:
+                with open(f, encoding="utf-8") as fh:
+                    d = _trk_json.load(fh)
+                if isinstance(d, dict) and d.get("frames"):
+                    out.append(d)
+            except Exception as e:
+                print(f"  [court] couldn't read {os.path.basename(f)}: {e}")
+    except Exception as e:
+        print(f"  [court] calibrations saved in the app not read ({type(e).__name__}: {e})", flush=True)
     return out
+
+
+# ---- court calibration in the app (requested: instead of stopping the notebook) -------------------------------------
+# A gym with no calibration gets a small package in the app's data folder -- <data>/court_calibration/<gym>/request.json
+# and its frames as JPEGs. Analytics > Court Calibration shows it; a coach clicks the landmarks there and saves. The next
+# parser run reads the save (above), places that gym's frames on the court, and removes the package. Commit / push the
+# data folder with the rest so the app sees new packages. COURT_CALIBRATION_IN_APP = False = the old way (a page that
+# opens in your browser, and COURT_STOP_FOR_CALIBRATION stops the notebook).
+COURT_CALIBRATION_IN_APP = globals().get("COURT_CALIBRATION_IN_APP", True)
+
+
+def _cm_app_dir():
+    return globals().get("APP_DATA_DIR") or globals().get("OUTPUT_DIR") or "."
+
+
+def _cm_export_to_app(game_key, arena, frames, base):
+    """Write the gym's calibration package for the app (frames shrunk to 1280 wide; clicks are scaled back to the full
+    frame in the app). Kept as is when the gym already has one with frames still on disk."""
+    from PIL import Image
+    d = os.path.join(_cm_app_dir(), "court_calibration", _cm_slug(arena) or "gym")
+    req = os.path.join(d, "request.json")
+    if os.path.exists(req):
+        try:
+            with open(req, encoding="utf-8") as fh:
+                old = _trk_json.load(fh)
+            if old.get("frames") and all(os.path.exists(os.path.join(d, f_["image"])) for f_ in old["frames"]):
+                return d
+        except Exception:
+            pass
+    os.makedirs(d, exist_ok=True)
+    if "vision_frames_ensure" in globals():                # frames inside a clip video (archive / Synergy export) -> JPEGs
+        vision_frames_ensure([os.path.join(base, rel) for rel in frames])
+    out = []
+    for i, rel in enumerate(frames, 1):
+        try:
+            im = Image.open(os.path.join(base, rel)).convert("RGB")
+        except Exception:
+            continue
+        W, H = im.size
+        w = min(1280, W)
+        sm = im.resize((w, int(round(H * w / W))), Image.LANCZOS) if w != W else im
+        name = f"frame_{i:02d}.jpg"
+        sm.save(os.path.join(d, name), quality=88)
+        out.append({"file": rel, "image": name, "W": W, "H": H, "w": sm.size[0], "h": sm.size[1]})
+    with open(req, "w", encoding="utf-8") as fh:
+        _trk_json.dump({"kind": "court_calibration_request", "game": game_key, "arena": arena, "frames": out,
+                        "landmarks": {k: list(v) for k, v in COURT_LANDMARKS.items()},
+                        "created": pd.Timestamp.now(tz="UTC").isoformat(timespec="seconds")}, fh, indent=1)
+    return d
+
+
+def _cm_app_cleanup(calibrated_arenas):
+    """A gym that's calibrated now: its package in the app's data folder isn't needed any more."""
+    root = os.path.join(_cm_app_dir(), "court_calibration")
+    if not os.path.isdir(root):
+        return
+    for a in calibrated_arenas:
+        d = os.path.join(root, _cm_slug(a) or "gym")
+        if os.path.isdir(d):
+            shutil.rmtree(d, ignore_errors=True)
+            print(f"  [court]   gym '{a}' is calibrated -- its calibration package was removed from the app", flush=True)
 
 
 def _cm_write_tool(game_key, arena, frames, base):
@@ -172,6 +248,11 @@ def _cm_write_tool(game_key, arena, frames, base):
     path = os.path.join(COURT_CAL_DIR, f"calibrate_{_cm_slug(game_key)}.html")
     with open(path, "w", encoding="utf-8") as fh:
         fh.write(page)
+    if COURT_CALIBRATION_IN_APP:
+        try:
+            _cm_export_to_app(game_key, arena, frames, base)
+        except Exception as e:
+            print(f"  [court] {game_key}: calibration package for the app not written ({type(e).__name__}: {e})", flush=True)
     return path
 
 
@@ -349,6 +430,7 @@ def court_mapping(pc, tracks):
     for a, rs in refs_by_arena.items():
         print(f"  [court]   gym '{a}': {len(rs)} usable calibrated frame(s), average click error "
               f"{np.mean([r['err'] for r in rs]):.2f} ft", flush=True)
+    _cm_app_cleanup(refs_by_arena)
     sig = _cm_slug(_trk_json.dumps(sorted((a, r["file"], round(r["err"], 3)) for a, rs in refs_by_arena.items() for r in rs)))[:120]
     cache_path = os.path.join(TRACK_DIR, "court_homographies.pkl")
     cache = _safe_read_pickle(cache_path) if os.path.exists(cache_path) else {}
@@ -576,7 +658,10 @@ if RUN_COURT_MAPPING and isinstance(globals().get("player_tracks"), pd.DataFrame
             if isinstance(player_tracks, pd.DataFrame) and not player_tracks.empty:
                 player_tracks, play_calls, court_report, court_frames = court_mapping(play_calls, player_tracks)
         for _r in court_report.to_dict("records"):
-            if not _r["calibrated"]:
+            if not _r["calibrated"] and COURT_CALIBRATION_IN_APP:
+                print(f"  {_r['game']}: NOT CALIBRATED for gym '{_r['arena']}' -- tracked without the court this run. Calibrate it "
+                      f"in the app (Analytics > Court Calibration; push the data folder first); the next run picks it up.")
+            elif not _r["calibrated"]:
                 print(f"  {_r['game']}: NOT CALIBRATED for gym '{_r['arena']}' -- open {_r['calibration_page']} in a browser, "
                       f"click 4+ landmarks on a few frames (one at each basket), press Save, rerun.")
             else:
@@ -602,7 +687,9 @@ _cm_need = []
 if _cm_ran_now and isinstance(globals().get("court_report"), pd.DataFrame) and not court_report.empty \
         and "calibrated" in court_report.columns:
     _cm_need = [r for r in court_report.to_dict("records") if not r.get("calibrated") and r.get("calibration_page")]
-if _cm_need and globals().get("COURT_STOP_FOR_CALIBRATION", True):
+# CONFIRMED CHANGE (requested: calibrate in the app instead of stopping the notebook): with COURT_CALIBRATION_IN_APP the run
+# carries on (those games without the court this run) and the gym waits in Analytics > Court Calibration.
+if _cm_need and globals().get("COURT_STOP_FOR_CALIBRATION", True) and not COURT_CALIBRATION_IN_APP:
     if globals().get("COURT_OPEN_CALIBRATION_PAGE", True):
         import webbrowser
         for _r in _cm_need:

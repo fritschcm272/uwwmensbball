@@ -120,7 +120,8 @@ def _sm_date_col(df):
 
 
 def _sm_possessions(fga, oreb, to, fta):
-    return fga - oreb + to + 0.44 * fta
+    # Ken Pomeroy's (KenPom) college estimate -- the same one the app and the brief use everywhere (requested)
+    return fga - oreb + to + 0.475 * fta
 
 
 def _sm_rate_profile(team_box, foe_box, games):

@@ -1,7 +1,7 @@
 offense_team,defender,role,screen_type,coverage,coverage_source,times,planned,followed_pct,ppp,plan_file
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,7,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,7,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,,,0.67,none yet -- staff_inputs/uww_coverage_plan.csv
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,2,,,1.0,none yet -- staff_inputs/uww_coverage_plan.csv
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- staff_inputs/uww_coverage_plan.csv
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,7,,,1.0,none yet -- enter one in the app (Game Plan > Our screen coverage plan)
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,7,,,1.0,none yet -- enter one in the app (Game Plan > Our screen coverage plan)
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,,,0.67,none yet -- enter one in the app (Game Plan > Our screen coverage plan)
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,2,,,1.0,none yet -- enter one in the app (Game Plan > Our screen coverage plan)
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- enter one in the app (Game Plan > Our screen coverage plan)
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,1,,,0.0,none yet -- enter one in the app (Game Plan > Our screen coverage plan)

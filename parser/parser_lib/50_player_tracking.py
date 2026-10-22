@@ -539,6 +539,12 @@ def _trk_name_frames(clips, todo, base, pc=None, game_of=None):
     # already used as another clip's naming frame (within TRACK_NAME_FRAME_GAP_S seconds) isn't picked again when the clip has
     # any other usable frame.
     gap_s = float(globals().get("TRACK_NAME_FRAME_GAP_S", 1.5))
+    # CONFIRMED CHANGE (requested: turn the slow part off for now): TRACK_NAME_FRAME_SHARPNESS = False skips measuring
+    # frames it hasn't measured before (reading every candidate frame off disk is what takes ~30 min). Frames measured in
+    # earlier runs still count; a clip with none measured gets the frame with the most players. True (default) = measure.
+    _measure = globals().get("TRACK_NAME_FRAME_SHARPNESS", True)
+    _measure = not (isinstance(_measure, str) and _measure.strip().lower() in ("false", "0", "no", "off", "")) and bool(_measure)
+    n_unmeasured = 0
     times_of = {}
     if isinstance(pc, pd.DataFrame) and "track_times" in pc.columns:
         for i in todo:
@@ -576,6 +582,9 @@ def _trk_name_frames(clips, todo, base, pc=None, game_of=None):
         sharp = {}
         for t in cand:
             rel = clip["files"][t]
+            if rel not in cache and not _measure:
+                n_unmeasured += 1
+                continue
             if rel not in cache:
                 im = cv2.imread(os.path.join(base, rel), cv2.IMREAD_REDUCED_GRAYSCALE_2)
                 if im is None:
@@ -607,7 +616,9 @@ def _trk_name_frames(clips, todo, base, pc=None, game_of=None):
     print(f"  [tracking]   naming frame: one per clip (sharpest of the frames with the most players) -- "
           f"{sum(1 for i in todo if clips[i].get('name_frame') is not None):,} of {len(todo):,} clip(s)"
           + (f"; {n_new:,} frame(s) measured for sharpness" if n_new else "")
-          + (f"; {n_moved} clip(s) share film with an earlier clip and got a different moment" if n_moved else ""), flush=True)
+          + (f"; {n_moved} clip(s) share film with an earlier clip and got a different moment" if n_moved else "")
+          + (f"; sharpness NOT measured on {n_unmeasured:,} new frame(s) (TRACK_NAME_FRAME_SHARPNESS = False) -- most players "
+             f"used there instead" if n_unmeasured else ""), flush=True)
 
 
 def _trk_read_numbers(clips, todo, base, engine):
@@ -2057,6 +2068,14 @@ def player_tracking(pc):
     # checked boxes PASSED (TRACK_OUTFIT_CHECK = "auto"; True = always, False = never): a track whose average score is at or above
     # the tested cutoff is set aside as not a player. TRACK_OUTFIT_CROPS pictures per track (its largest boxes) are scored.
     _oc_mode = globals().get("TRACK_OUTFIT_CHECK", "auto")
+    # CONFIRMED BUG (fixed): TRACK_OUTFIT_CHECK = "False" (in quotes) is a non-empty string, so the check still ran as if
+    # it were True. Spelled-out words are read as what they say.
+    if isinstance(_oc_mode, str) and _oc_mode.strip().lower() in ("false", "0", "no", "off", "none", "never", ""):
+        _oc_mode = False
+    elif isinstance(_oc_mode, str) and _oc_mode.strip().lower() in ("true", "1", "yes", "on", "always"):
+        _oc_mode = True
+    if not _oc_mode:
+        print("  [tracking]   outfit check skipped (TRACK_OUTFIT_CHECK = False)", flush=True)
     if _oc_mode:
         try:
             _oc_res = {}
@@ -3815,8 +3834,12 @@ def _trk_court_precheck():
     any game about to be tracked whose gym has no usable calibration (4+ landmarks on a frame that's still on disk) gets
     its calibration page written and opened, and the notebook stops. COURT_STOP_FOR_CALIBRATION = False (Court mapping
     cell's setting) carries on without it, as before."""
-    if not globals().get("RUN_COURT_MAPPING", True) or not globals().get("COURT_STOP_FOR_CALIBRATION", True) \
-            or not globals().get("RUN_PLAYER_TRACKING", True):
+    # CONFIRMED CHANGE (requested: court calibrations in the Streamlit app instead of stopping the notebook): with
+    # COURT_CALIBRATION_IN_APP (default) this still runs -- it writes each uncalibrated gym's package for the app -- but
+    # never stops; those games are tracked without the court until a coach calibrates the gym in the app.
+    _in_app = bool(globals().get("COURT_CALIBRATION_IN_APP", True))
+    if not globals().get("RUN_COURT_MAPPING", True) or not globals().get("RUN_PLAYER_TRACKING", True) \
+            or not (globals().get("COURT_STOP_FOR_CALIBRATION", True) or _in_app):
         return
     if not isinstance(globals().get("play_calls"), pd.DataFrame) or play_calls.empty or "track_files" not in play_calls.columns:
         return
@@ -3849,6 +3872,8 @@ def _trk_court_precheck():
             if n_pts >= 4 and os.path.exists(os.path.join(base, fr.get("file", ""))):
                 ok_arenas.add(str(cal.get("arena")))
                 break
+    if _in_app and "_cm_app_cleanup" in globals():
+        _cm_app_cleanup(ok_arenas)
     need = []
     for (gd, gc), g in rows.groupby(["game_date", "game_code"], dropna=False):
         arena = _cm_arena(gc)
@@ -3866,6 +3891,12 @@ def _trk_court_precheck():
         need.append((f"{gd}|{gc}", arena, page))
     if not need:
         print(f"  [court] every gym being tracked has a court calibration ({len(ok_arenas)} gym(s))", flush=True)
+        return
+    if _in_app:
+        print(f"  [court] {len(need)} gym(s) need a one-time court calibration -- they're waiting in the app (Analytics > Court "
+              f"Calibration) once you push the data folder: " + "; ".join(f"{_a} ({_g})" for _g, _a, _p in need)
+              + ". Those games are tracked WITHOUT the court this run; the next run after a coach saves picks it up.",
+              flush=True)
         return
     if globals().get("COURT_OPEN_CALIBRATION_PAGE", True):
         import webbrowser

@@ -1014,13 +1014,13 @@ def tag_field_trusted(field):
 _tm_rep_for_trust = globals().get("tag_model_report")
 if not isinstance(_tm_rep_for_trust, pd.DataFrame) or _tm_rep_for_trust.empty:
     try:                                   # the model didn't run this session: the last run's report
-        _tm_rep_for_trust = pd.read_csv(os.path.join(APP_DATA_DIR, "uww_tag_model_report.csv"))
+        _tm_rep_for_trust = pd.read_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, "uww_tag_model_report.csv"))
     except Exception:
         _tm_rep_for_trust = pd.DataFrame()
 tag_field_trust = _tm_trust_table(_tm_rep_for_trust)
 TAG_FIELD_TRUST = dict(zip(tag_field_trust["field"], tag_field_trust["trusted"])) if len(tag_field_trust) else {}
 try:
-    tag_field_trust.to_csv(os.path.join(APP_DATA_DIR, "uww_tag_field_trust.csv"), index=False)
+    tag_field_trust.to_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, "uww_tag_field_trust.csv"), index=False)
 except Exception:
     pass
 if len(tag_field_trust):

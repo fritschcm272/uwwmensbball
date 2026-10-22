@@ -1026,6 +1026,24 @@ def _sst_find_location_box(auto, dlg):
     return sorted(edits, key=score)[0]
 
 
+def _sst_default_export_gb():
+    """A whole game's export when its clip lengths aren't known: the biggest export on disk so far (most clips), at least
+    SYNERGY_EXPORT_DEFAULT_GB (5.5)."""
+    best = float(globals().get("SYNERGY_EXPORT_DEFAULT_GB", 5.5))
+    try:
+        for f in [v for r in _vx_roots() for v in glob.glob(os.path.join(r, "*", "video"))]:
+            vids = glob.glob(os.path.join(f, "*.mp4"))
+            try:
+                n_rows = len(pd.read_csv(os.path.join(os.path.dirname(f), "Export.csv"), dtype=str))
+            except Exception:
+                n_rows = len(vids)
+            if vids:
+                best = max(best, sum(os.path.getsize(v) for v in vids) / len(vids) * max(n_rows, len(vids)) / 1024 ** 3)
+    except Exception:
+        pass
+    return best
+
+
 def _sst_export_estimate_gb(game_id):
     """Rough size of the game's export: its clips' lengths (from uww_clip_frames.csv) x SYNERGY_EXPORT_MB_PER_S. None = unknown."""
     try:
@@ -1040,7 +1058,9 @@ def _sst_export_estimate_gb(game_id):
         est = secs * float(globals().get("SYNERGY_EXPORT_MB_PER_S", 1.06)) / 1024.0
         # CONFIRMED BUG (fixed; WashU: estimated 1.8 GB from the 90 clips captured so far, the export was ~3 GB for 185 clips):
         # a short clip list on file means a partial capture -- a whole game exports to about 3-3.5 GB
-        return est if n >= 150 else max(est, 3.5)
+        # CONFIRMED BUG (fixed; Wheaton @ North Park ran out of disk at 233 of 321 clips): a game with more clips is bigger --
+        # Synergy's full-game exports have run ~15 MB a clip, so a 321-clip game is ~5 GB, not 3.5
+        return est if n >= 150 else max(est, _sst_default_export_gb())
     except Exception:
         return None
 
@@ -1055,9 +1075,9 @@ def _sst_editor_export(link, export_dir, game_id=None):
     free_gb = _sh.disk_usage(export_dir).free / 1024 ** 3
     est = _sst_export_estimate_gb(game_id) if game_id else None
     keep = float(globals().get("SYNERGY_EXPORT_MIN_FREE_GB", globals().get("VISION_MIN_FREE_GB", 2)))
-    need = (est if est is not None else 3.5) + keep
+    need = (est if est is not None else _sst_default_export_gb()) + keep
     print(f"  [export] disk: {free_gb:.1f} GB free; this game's export is about "
-          f"{f'{est:.1f} GB' if est is not None else '? GB (no clip lengths on file -- assuming 3.5 GB, a whole game)'}, "
+          f"{f'{est:.1f} GB' if est is not None else f'? GB (no clip lengths on file -- assuming {_sst_default_export_gb():.1f} GB, the biggest whole game so far)'}, "
           f"+ {keep:.0f} GB kept free = {need:.1f} GB needed", flush=True)
     if free_gb < need:
         print("  [export] NOT enough room -- export not started. Free up space or export to another drive "
@@ -1081,8 +1101,15 @@ def _sst_editor_export(link, export_dir, game_id=None):
         print(f"  [export] Synergy Editor ({exe_name}) has no open window -- is it running?", flush=True)
         return False
     main = max(wins, key=lambda w: (w.BoundingRectangle.width() * w.BoundingRectangle.height()))
-    left = wait_max - (time.time() - t0)
-    print(f"  [export] Synergy Editor window: {main.Name.strip()!r} -- giving the game {max(0, left):.0f} s more to load", flush=True)
+    # CONFIRMED BUG (fixed; Wheaton @ North Park: "giving the game 0 s more to load"). When Synergy Editor had to START, its
+    # window took longer than SYNERGY_EDITOR_LOAD_WAIT to appear, so the whole wait was used up before the game began loading
+    # and Ctrl+E went to an empty editor. A cold start (window took more than a few seconds) now gets the full wait AFTER the
+    # window appears; an editor that was already open keeps the old timing.
+    _startup = time.time() - t0
+    left = wait_max if _startup > 3 else wait_max - _startup
+    print(f"  [export] Synergy Editor window: {main.Name.strip()!r}"
+          + (f" (took {_startup:.0f} s to start)" if _startup > 3 else "")
+          + f" -- giving the game {max(0, left):.0f} s more to load", flush=True)
     if left > 0:
         time.sleep(left)
     wins = _sst_editor_windows(auto, pids)
@@ -1099,13 +1126,16 @@ def _sst_editor_export(link, export_dir, game_id=None):
         t1 = time.time()
         while time.time() - t1 < 15 and dlg is None:
             time.sleep(0.5)
+            # CONFIRMED BUG (fixed; the "export window" it found was a ToolTip -- PopupRoot, a timeline timecode "02:02:58:46",
+            # see _synergy_export_window.txt): tooltips and other popups are not the export window, so they're skipped
+            _popup = lambda w: str(getattr(w, "ClassName", "") or "") in ("PopupRoot", "ToolTip")
             for w in _sst_editor_windows(auto, pids):              # a new top-level window (the export window) ...
-                if w.NativeWindowHandle not in before or re.search(r"(?i)export", w.Name or ""):
+                if not _popup(w) and (w.NativeWindowHandle not in before or re.search(r"(?i)export", w.Name or "")):
                     dlg = w
                     break
             if dlg is None:                                        # ... or a new dialog inside the main window
                 inner = [c for c in _sst_walk(auto, main, 6) if c.ControlTypeName == "WindowControl"
-                         and ident(c) not in before_inner]
+                         and ident(c) not in before_inner and not _popup(c)]
                 dlg = inner[0] if inner else None
         if dlg is not None:
             break
@@ -1237,20 +1267,62 @@ def _sst_editor_export(link, export_dir, game_id=None):
 _VX_REGISTRY = "_synergy_exports.json"
 
 
+# CONFIRMED CHANGE (requested: "I have a different drive ... F:\Backups\uwwmensbball_tracking ... How could you use this so
+# that storage space is not an issue?"). A game's export is the big part (3-5 GB); everything the parser keeps per game in
+# _vision_frames is small (the tag-model JPEGs, tracks, _export.json -- the tracking frames are read from the export's clip
+# videos). So:
+#   * SYNERGY_EXPORT_DIR = the big drive -> new exports are written straight there (the space check measures THAT drive);
+#   * exports are looked for on every storage folder (SYNERGY_EXPORT_DIR, _vision_frames, VISION_STORAGE_DIRS), so an export
+#     made on C: and later moved to the big drive is still found, and its frames still read (section 46a);
+#   * game folders moved out of _vision_frames to a storage folder (same folder name) are still read: coach-checked frames,
+#     the jersey reader's training crops, archived clips (section 46a);
+#   * the export registry (_synergy_exports.json) stays in _vision_frames, so it's there even when the drive isn't;
+#   * the drive not plugged in: nothing new is exported this run (it says so) -- exports already found are used as usual.
+def vision_storage_dirs():
+    """The storage folders reachable right now, besides _vision_frames: VISION_STORAGE_DIRS (a folder or a list) and
+    SYNERGY_EXPORT_DIR. A drive that isn't plugged in is left out."""
+    v = globals().get("VISION_STORAGE_DIRS") or []
+    v = [v] if isinstance(v, (str, os.PathLike)) else list(v)
+    if globals().get("SYNERGY_EXPORT_DIR"):
+        v.append(globals()["SYNERGY_EXPORT_DIR"])
+    home = os.path.normcase(os.path.abspath(VISION_FRAMES_DIR))
+    out, seen = [], {home}
+    for d in v:
+        d = os.path.abspath(str(d))
+        if os.path.normcase(d) not in seen and os.path.isdir(d):
+            seen.add(os.path.normcase(d))
+            out.append(d)
+    return out
+
+
 def _vx_root():
+    """Where NEW exports go."""
     return os.path.abspath(globals().get("SYNERGY_EXPORT_DIR") or VISION_FRAMES_DIR)
 
 
+def _vx_roots():
+    """Every folder an export can be in: the export folder, _vision_frames, then the other storage folders."""
+    out, seen = [], set()
+    for d in [_vx_root(), VISION_FRAMES_DIR] + vision_storage_dirs():
+        d = os.path.abspath(d)
+        if os.path.normcase(d) not in seen and os.path.isdir(d):
+            seen.add(os.path.normcase(d))
+            out.append(d)
+    return out
+
+
 def _vx_registry(update=None):
-    p = os.path.join(_vx_root(), _VX_REGISTRY)
-    try:
-        with open(p, encoding="utf-8") as fh:
-            reg = json.load(fh)
-    except Exception:
-        reg = {}
+    p = os.path.join(os.path.abspath(VISION_FRAMES_DIR), _VX_REGISTRY)
+    reg = {}
+    for q in [os.path.join(d, _VX_REGISTRY) for d in vision_storage_dirs()] + [p]:   # _vision_frames' copy wins
+        try:
+            with open(q, encoding="utf-8") as fh:
+                reg.update(json.load(fh))
+        except Exception:
+            pass
     if update:
         reg.update(update)
-        os.makedirs(_vx_root(), exist_ok=True)
+        os.makedirs(os.path.dirname(p), exist_ok=True)
         with open(p, "w", encoding="utf-8") as fh:
             json.dump(reg, fh, indent=1)
     return reg
@@ -1272,11 +1344,13 @@ def _vx_date_txt(d):
 def _vx_find_export(game_id, label, url, cache):
     """The game's export folder (with Export.csv), or None. The registry first; else a folder named for the game's date whose
     game part matches the clip page's Game cell (exports made before the registry, e.g. by the Synergy Editor test)."""
-    root = _vx_root()
+    roots = _vx_roots()
     reg = _vx_registry()
     hit = reg.get(game_id)
-    if hit and os.path.isfile(os.path.join(root, hit.get("folder", ""), "Export.csv")):
-        return os.path.join(root, hit["folder"])
+    if hit and hit.get("folder"):
+        for root in roots:                                 # wherever the export is now (made on C:, moved to the big drive)
+            if os.path.isfile(os.path.join(root, hit["folder"], "Export.csv")):
+                return os.path.join(root, hit["folder"])
     m = re.match(r"^\s*(\d{4}-\d{2}-\d{2})", str(label))
     if not m:
         return None
@@ -1284,9 +1358,12 @@ def _vx_find_export(game_id, label, url, cache):
     games = set()
     if isinstance(cache, pd.DataFrame) and not cache.empty and "clip_game" in cache.columns:
         games = {str(x) for x in cache.loc[cache["source_url"] == url, "clip_game"].dropna().unique()}
-    cands = []
-    for d in glob.glob(os.path.join(root, "*", "Export.csv")):
+    cands, seen = [], set()
+    for d in [f for root in roots for f in glob.glob(os.path.join(root, "*", "Export.csv"))]:
         name = os.path.basename(os.path.dirname(d))
+        if name in seen:                                   # the same export in two places: the first root's copy
+            continue
+        seen.add(name)
         if " - " not in name:
             continue
         g, dt = name.rsplit(" - ", 1)
@@ -1301,7 +1378,13 @@ def _vx_find_export(game_id, label, url, cache):
 def _vx_make_export(game_id, label):
     """Synergy Editor: open the game and export it. -> the export folder, or None."""
     from urllib.parse import urlparse, parse_qs
-    print(f"  [export] {label}: no Synergy export yet -- exporting it with Synergy Editor", flush=True)
+    try:
+        os.makedirs(_vx_root(), exist_ok=True)
+    except OSError:
+        print(f"  [export] {label}: no Synergy export yet, and the export folder {_vx_root()} isn't reachable -- is that "
+              f"drive plugged in? Not exported this run (plug the drive in and rerun).", flush=True)
+        return None
+    print(f"  [export] {label}: no Synergy export yet -- exporting it with Synergy Editor into {_vx_root()}", flush=True)
     link = run_in_fastscout_session(lambda p: _sst_editor_open(p, game_id, label))
     if not link:
         return None
@@ -1331,16 +1414,39 @@ def _vx_make_export(game_id, label):
 def _vx_wait_done(folder):
     """Wait until every clip in Export.csv has its video, and the newest video stopped growing. -> True when complete."""
     wait_s = float(globals().get("VISION_EXPORT_WAIT_MIN", 90)) * 60
+    # CONFIRMED BUG (fixed; Wheaton @ North Park: "233 of 321 clip videos written..." for 90 minutes). The export had stopped the
+    # night before (the disk filled up: a 321-clip game is ~5 GB, the space check assumed 3.5 GB), and every later run sat
+    # waiting the full VISION_EXPORT_WAIT_MIN for an export that wasn't running. An export with no new clip video for
+    # VISION_EXPORT_STALL_MIN minutes has stopped: its clips so far are used, and the run says why the rest are missing.
+    stall_s = float(globals().get("VISION_EXPORT_STALL_MIN", 5)) * 60
     t0, last_say = time.time(), 0
+    import shutil as _sh_
     while True:
         try:
             n_rows = len(pd.read_csv(os.path.join(folder, "Export.csv"), dtype=str))
         except Exception:
             n_rows = None
         vids = glob.glob(os.path.join(folder, "video", "*.mp4"))
-        newest = max((os.path.getmtime(v) for v in vids), default=0)
+        newest = max((os.path.getmtime(v) for v in vids + [os.path.join(folder, "Export.csv")] if os.path.exists(v)),
+                     default=0)
+        _tmp = glob.glob(os.path.join(folder, "video_temp", "*"))
+        newest = max([newest] + [os.path.getmtime(v) for v in _tmp if os.path.exists(v)])
         if n_rows and len(vids) >= n_rows and time.time() - newest > 20:
             return True
+        if n_rows and len(vids) < n_rows and time.time() - newest > stall_s:
+            try:
+                _free = _sh_.disk_usage(folder).free / 1024 ** 3
+            except Exception:
+                _free = None
+            _avg = (sum(os.path.getsize(v) for v in vids) / len(vids) / 1024 ** 3) if vids else None
+            print(f"  [export] {os.path.basename(folder)}: the export STOPPED at {len(vids)} of {n_rows} clip videos (nothing new "
+                  f"for {(time.time() - newest) / 60:.0f} min) -- using the {len(vids)} there."
+                  + (f" Disk: {_free:.1f} GB free" if _free is not None else "")
+                  + (f"; the other {n_rows - len(vids)} clips need about {(n_rows - len(vids)) * _avg:.1f} GB" if _avg else "")
+                  + ". Most likely the disk filled up: free space (or set SYNERGY_EXPORT_DIR to the big drive), then export "
+                    "the game again in Synergy Editor (Ctrl+E) into the same folder, or move this folder away so the next "
+                    "run exports it again.", flush=True)
+            return False
         if time.time() - t0 > wait_s:
             print(f"  [export] {os.path.basename(folder)}: still {len(vids)} of {n_rows} clip videos after "
                   f"{wait_s / 60:.0f} min -- using what's there; the rest are picked up on the next run.", flush=True)
@@ -1425,7 +1531,7 @@ def _vx_ingest(label, url, folder, cache):
             continue
         vid = os.path.join(folder, "video", f"{pos}.mp4")
         if not os.path.exists(vid):
-            rec["error"] = "clip video missing from the export (still being written?)"
+            rec["error"] = "clip video not in the export (the export stopped before it, or it is still being written)"
             rows.append(rec)
             n_err += 1
             continue

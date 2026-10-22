@@ -1,627 +1,547 @@
 opponent,game_date,team,player,PTS,FGM,FGA,FG3M,FG3A,FTM,FTA,OREB,DREB,AST,STL,BLK,TO,PF,REB,FG%,3P%,FT%,MIN,started
-Aurora Spartans,2026-01-17,Aurora Spartans,Adam Awender,3,1,1,1,1,0,0,0,0,0,0,0,0,0,0,100.0,100.0,,1.6,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Alex Ross,3,1,2,1,2,0,0,0,0,0,0,0,0,0,0,50.0,50.0,,4.1,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Aramis Currin,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.5,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Brycen Grove,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.6,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Bryden Gryzmala,3,1,3,1,2,0,0,0,0,0,0,0,0,0,0,33.3,50.0,,4.1,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Connor Fitzgerald,3,1,1,1,1,0,0,0,1,0,0,0,0,0,1,100.0,100.0,,1.6,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Cullen Rauls,12,5,7,2,2,0,0,0,3,2,2,1,2,4,3,71.4,100.0,,23.2,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Devon Richardson,23,8,13,0,0,7,8,2,10,0,0,0,2,2,12,61.5,,87.5,29.8,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Isaac Ross,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.0,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Isaiah Thompson,8,3,3,2,2,0,0,0,1,0,0,0,0,1,1,100.0,100.0,,13.8,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Jeffery Hillmer,8,4,4,0,0,0,0,1,0,8,0,0,1,2,1,100.0,,,26.4,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Jordan Schroeder,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,,,,2.0,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Josh Tinney,5,2,2,0,0,1,2,2,0,2,0,0,0,1,2,100.0,,50.0,4.1,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Juan Madrigal,10,4,11,1,5,1,1,0,6,4,1,0,0,1,6,36.4,20.0,100.0,30.4,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Kenny Rosario,0,0,1,0,0,0,0,0,2,0,0,0,0,1,2,0.0,,,1.6,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Matt Anderson,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,1.1,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Mekhi Doby,21,7,10,1,2,6,7,0,6,3,1,2,2,1,6,70.0,50.0,85.7,28.4,False
-Aurora Spartans,2026-01-17,Aurora Spartans,Zerrick Johnson,13,5,9,1,4,2,2,0,5,2,0,0,0,1,5,55.6,25.0,100.0,22.1,False
-Aurora Spartans,2026-01-17,MSOE Raiders,Brady Gregg,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.6,False
-Aurora Spartans,2026-01-17,MSOE Raiders,Brock Adams,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,4.3,False
-Aurora Spartans,2026-01-17,MSOE Raiders,CJ Valente,4,2,3,0,0,0,0,1,2,0,0,0,1,1,3,66.7,,,13.5,False
-Aurora Spartans,2026-01-17,MSOE Raiders,Carson Cordelli,14,6,9,0,0,2,2,0,4,2,0,0,1,0,4,66.7,,100.0,26.0,True
-Aurora Spartans,2026-01-17,MSOE Raiders,Chad Coplin,2,1,2,0,1,0,0,1,1,0,0,0,0,1,2,50.0,0.0,,5.9,False
-Aurora Spartans,2026-01-17,MSOE Raiders,Chase Cummings,5,2,10,0,4,1,2,1,1,2,0,0,1,1,2,20.0,0.0,50.0,30.7,True
-Aurora Spartans,2026-01-17,MSOE Raiders,Daniel Franklin IV,0,0,2,0,1,0,0,0,1,0,0,0,0,1,1,0.0,0.0,,5.1,False
-Aurora Spartans,2026-01-17,MSOE Raiders,Dubem Igwilo,3,1,3,0,0,1,4,1,2,3,0,0,0,0,3,33.3,,25.0,6.9,False
-Aurora Spartans,2026-01-17,MSOE Raiders,Ethan Johnson,0,0,2,0,0,0,0,0,2,1,1,0,1,2,2,0.0,,,12.2,True
-Aurora Spartans,2026-01-17,MSOE Raiders,Isaac Wit,3,1,3,1,3,0,0,2,1,1,0,0,0,3,3,33.3,33.3,,13.2,False
-Aurora Spartans,2026-01-17,MSOE Raiders,Jace Paul,2,1,1,0,0,0,0,0,1,0,0,0,0,0,1,100.0,,,3.6,False
-Aurora Spartans,2026-01-17,MSOE Raiders,Joey Jendusa,5,0,3,0,1,5,6,1,1,0,1,0,2,1,2,0.0,0.0,83.3,20.5,False
-Aurora Spartans,2026-01-17,MSOE Raiders,Jonathan Burroughs,16,6,11,4,6,0,1,0,2,1,2,0,2,2,2,54.5,66.7,0.0,27.3,True
-Aurora Spartans,2026-01-17,MSOE Raiders,Kolby Henderlong,3,1,2,1,2,0,0,0,0,0,0,0,0,1,0,50.0,50.0,,3.2,False
-Aurora Spartans,2026-01-17,MSOE Raiders,Mason Accidentale,6,2,5,2,5,0,0,0,0,0,0,0,0,0,0,40.0,40.0,,6.9,False
-Aurora Spartans,2026-01-17,MSOE Raiders,Mason Dopirak,4,2,7,0,0,0,0,1,0,0,0,0,0,0,1,28.6,,,4.9,True
-Aurora Spartans,2026-01-17,MSOE Raiders,Matus Dopirak,7,3,7,1,4,0,0,0,1,0,0,0,0,1,1,42.9,25.0,,7.5,False
-Aurora Spartans,2026-01-17,MSOE Raiders,Quinn Rosenberg,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0.0,0.0,,4.3,False
-Aurora Spartans,2026-02-21,Aurora Spartans,Cullen Rauls,9,2,10,2,7,3,3,0,3,1,0,0,1,3,3,20.0,28.6,100.0,38.6,False
-Aurora Spartans,2026-02-21,Aurora Spartans,Devon Richardson,8,3,6,0,0,2,4,3,9,1,0,0,4,2,12,50.0,,50.0,35.1,False
-Aurora Spartans,2026-02-21,Aurora Spartans,Jeffery Hillmer,4,2,11,0,1,0,1,2,2,3,1,1,0,1,4,18.2,0.0,0.0,39.1,False
-Aurora Spartans,2026-02-21,Aurora Spartans,Josh Tinney,0,0,5,0,1,0,0,1,0,0,0,0,0,2,1,0.0,0.0,,10.6,False
-Aurora Spartans,2026-02-21,Aurora Spartans,Juan Madrigal,35,12,21,6,10,5,5,0,5,0,1,0,1,1,5,57.1,60.0,100.0,38.3,False
-Aurora Spartans,2026-02-21,Aurora Spartans,Mekhi Doby,4,2,3,0,0,0,0,0,0,0,0,0,0,3,0,66.7,,,11.2,False
-Aurora Spartans,2026-02-21,Aurora Spartans,Zerrick Johnson,8,3,11,0,1,2,2,1,1,0,0,0,1,1,2,27.3,0.0,100.0,25.1,False
-Aurora Spartans,2026-02-21,MSOE Raiders,Brock Adams,4,1,1,0,0,2,2,0,1,0,0,0,0,0,1,100.0,,100.0,2.4,False
-Aurora Spartans,2026-02-21,MSOE Raiders,CJ Valente,0,0,2,0,0,0,0,1,1,0,0,0,1,1,2,0.0,,,11.8,False
-Aurora Spartans,2026-02-21,MSOE Raiders,Carson Cordelli,8,4,5,0,1,0,2,2,5,5,1,0,0,4,7,80.0,0.0,0.0,27.5,True
-Aurora Spartans,2026-02-21,MSOE Raiders,Chase Cummings,15,5,5,2,2,3,3,1,2,3,1,1,0,0,3,100.0,100.0,100.0,34.1,True
-Aurora Spartans,2026-02-21,MSOE Raiders,Ethan Johnson,10,5,7,0,0,0,0,2,7,1,1,2,0,3,9,71.4,,,27.6,False
-Aurora Spartans,2026-02-21,MSOE Raiders,Joey Jendusa,2,0,2,0,0,2,2,0,1,0,0,0,0,0,1,0.0,,100.0,12.6,False
-Aurora Spartans,2026-02-21,MSOE Raiders,Jonathan Burroughs,14,6,15,0,4,2,2,0,3,1,1,0,1,4,3,40.0,0.0,100.0,32.1,True
-Aurora Spartans,2026-02-21,MSOE Raiders,Mason Accidentale,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.4,False
-Aurora Spartans,2026-02-21,MSOE Raiders,Mason Dopirak,29,10,20,1,6,8,8,0,9,2,0,0,3,0,9,50.0,16.7,100.0,37.9,True
-Aurora Spartans,2026-02-21,MSOE Raiders,Matus Dopirak,2,1,2,0,1,0,0,0,5,1,0,0,0,1,5,50.0,0.0,,11.7,True
-Benedictine (IL) Eagles,2026-01-24,Benedictine (IL) Eagles,Aidan Werth,4,2,6,0,3,0,0,0,5,1,0,0,1,3,5,33.3,0.0,,24.8,False
-Benedictine (IL) Eagles,2026-01-24,Benedictine (IL) Eagles,Brandon McCoy,9,3,6,3,4,0,0,0,0,0,1,0,0,5,0,50.0,75.0,,22.2,False
-Benedictine (IL) Eagles,2026-01-24,Benedictine (IL) Eagles,Connor Glasgow,10,4,13,2,9,0,0,0,4,0,0,0,2,2,4,30.8,22.2,,26.8,False
-Benedictine (IL) Eagles,2026-01-24,Benedictine (IL) Eagles,Hudson Parker,4,1,1,0,0,2,2,0,1,2,1,0,0,3,1,100.0,,100.0,18.0,False
-Benedictine (IL) Eagles,2026-01-24,Benedictine (IL) Eagles,Nathan LaPlant,5,1,5,0,4,3,5,1,5,1,1,1,1,2,6,20.0,0.0,60.0,19.1,False
-Benedictine (IL) Eagles,2026-01-24,Benedictine (IL) Eagles,Noah Mason,14,5,12,2,4,2,3,2,5,4,2,2,1,2,7,41.7,50.0,66.7,32.4,False
-Benedictine (IL) Eagles,2026-01-24,Benedictine (IL) Eagles,Ryan Sammons,11,4,14,0,4,3,4,0,0,3,0,0,1,1,0,28.6,0.0,75.0,28.7,False
-Benedictine (IL) Eagles,2026-01-24,Benedictine (IL) Eagles,Ryan Tucker,5,2,5,1,3,0,0,1,4,1,2,0,1,0,5,40.0,33.3,,26.0,False
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Brock Adams,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,1.1,False
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,CJ Valente,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,9.1,False
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Carson Cordelli,6,2,7,1,2,1,2,3,5,3,0,0,3,2,8,28.6,50.0,50.0,28.2,True
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Chad Coplin,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.7,False
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Chase Cummings,17,6,10,3,3,2,2,1,5,0,0,0,2,0,6,60.0,100.0,100.0,31.0,True
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Daniel Franklin IV,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0.0,0.0,,9.6,False
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Dubem Igwilo,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,0.7,False
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Ethan Johnson,6,3,5,0,1,0,1,3,10,3,1,0,4,3,13,60.0,0.0,0.0,27.4,True
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Isaac Wit,1,0,2,0,1,1,4,0,1,1,0,0,1,0,1,0.0,0.0,25.0,7.0,False
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Joey Jendusa,2,1,3,0,2,0,0,0,0,2,0,0,0,2,0,33.3,0.0,,13.2,False
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Jonathan Burroughs,16,6,11,4,9,0,0,0,4,1,0,3,2,3,4,54.5,44.4,,30.1,True
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Kolby Henderlong,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,0.7,False
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Mason Dopirak,23,5,12,1,3,12,13,1,7,1,1,0,1,0,8,41.7,33.3,92.3,30.8,True
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Matus Dopirak,3,1,3,1,1,0,0,1,2,0,0,0,0,1,3,33.3,100.0,,7.8,False
-Benedictine (IL) Eagles,2026-01-24,MSOE Raiders,Quinn Rosenberg,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,0.7,False
-Carroll (WI) Pioneers,2025-11-25,Carroll (WI) Pioneers,Cai Joseph,3,1,1,1,1,0,0,1,0,0,0,0,0,1,1,100.0,100.0,,8.8,False
-Carroll (WI) Pioneers,2025-11-25,Carroll (WI) Pioneers,Dennis Estepp,8,2,8,1,4,3,4,1,5,3,1,0,1,3,6,25.0,25.0,75.0,26.0,False
-Carroll (WI) Pioneers,2025-11-25,Carroll (WI) Pioneers,Evan Oleson,3,1,2,1,2,0,0,0,0,1,3,0,0,2,0,50.0,50.0,,11.8,False
-Carroll (WI) Pioneers,2025-11-25,Carroll (WI) Pioneers,Greg Smith,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,,,,7.0,False
-Carroll (WI) Pioneers,2025-11-25,Carroll (WI) Pioneers,Jacob Naber,15,5,6,0,0,5,6,1,2,5,0,1,1,1,3,83.3,,83.3,31.9,False
-Carroll (WI) Pioneers,2025-11-25,Carroll (WI) Pioneers,Lamar Smith,18,6,9,1,1,5,6,3,6,3,1,2,1,4,9,66.7,100.0,83.3,26.3,False
-Carroll (WI) Pioneers,2025-11-25,Carroll (WI) Pioneers,Lucas Parker,6,2,7,2,6,0,0,0,0,0,0,0,1,1,0,28.6,33.3,,16.7,False
-Carroll (WI) Pioneers,2025-11-25,Carroll (WI) Pioneers,Michael McNabb,25,8,11,2,2,7,7,0,5,0,1,0,2,1,5,72.7,100.0,100.0,32.1,False
-Carroll (WI) Pioneers,2025-11-25,Carroll (WI) Pioneers,Peyton McKenna,15,5,12,5,12,0,0,0,2,1,0,1,2,2,2,41.7,41.7,,36.2,False
-Carroll (WI) Pioneers,2025-11-25,MSOE Raiders,CJ Valente,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,,,,11.6,False
-Carroll (WI) Pioneers,2025-11-25,MSOE Raiders,Carson Cordelli,11,5,8,0,1,1,1,0,5,2,1,0,0,0,5,62.5,0.0,100.0,22.8,True
-Carroll (WI) Pioneers,2025-11-25,MSOE Raiders,Chase Cummings,11,3,8,1,4,4,4,3,1,4,1,0,2,1,4,37.5,25.0,100.0,34.6,True
-Carroll (WI) Pioneers,2025-11-25,MSOE Raiders,Ethan Johnson,0,0,1,0,0,0,0,0,2,1,0,0,0,3,2,0.0,,,7.4,True
-Carroll (WI) Pioneers,2025-11-25,MSOE Raiders,Isaac Wit,5,2,4,1,3,0,0,2,2,2,0,0,1,1,4,50.0,33.3,,20.7,False
-Carroll (WI) Pioneers,2025-11-25,MSOE Raiders,Joey Jendusa,4,1,5,0,2,2,2,2,2,5,1,0,2,1,4,20.0,0.0,100.0,17.9,False
-Carroll (WI) Pioneers,2025-11-25,MSOE Raiders,Jonathan Burroughs,11,4,13,2,4,1,2,0,3,1,0,1,4,3,3,30.8,50.0,50.0,28.9,True
-Carroll (WI) Pioneers,2025-11-25,MSOE Raiders,Mason Dopirak,28,10,15,4,6,4,5,1,1,3,1,1,1,1,2,66.7,66.7,80.0,33.5,True
-Carroll (WI) Pioneers,2025-11-25,MSOE Raiders,Matus Dopirak,10,4,7,2,5,0,0,0,4,3,0,0,1,4,4,57.1,40.0,,19.6,False
-Coe Kohawks,2025-11-30,Coe Kohawks,Aaron Foote,5,2,2,1,1,0,0,1,5,3,2,0,2,0,6,100.0,100.0,,22.2,False
-Coe Kohawks,2025-11-30,Coe Kohawks,C. Reece Breitenbach,13,4,8,2,4,3,4,1,3,5,2,1,0,4,4,50.0,50.0,75.0,28.6,False
-Coe Kohawks,2025-11-30,Coe Kohawks,Cooper Nailor,20,8,14,4,7,0,0,1,2,5,1,0,4,2,3,57.1,57.1,,38.3,False
-Coe Kohawks,2025-11-30,Coe Kohawks,Deuce Walters,6,1,11,0,2,4,6,2,4,0,1,0,4,3,6,9.1,0.0,66.7,25.2,False
-Coe Kohawks,2025-11-30,Coe Kohawks,Jackson Bowman,10,4,6,0,0,2,2,1,3,1,0,0,0,0,4,66.7,,100.0,21.9,False
-Coe Kohawks,2025-11-30,Coe Kohawks,Jackson Newell,2,1,3,0,2,0,0,0,1,0,1,1,0,0,1,33.3,0.0,,12.6,False
-Coe Kohawks,2025-11-30,Coe Kohawks,Kanyon Bryte,8,4,11,0,0,0,2,1,1,0,1,4,2,1,2,36.4,,0.0,21.9,False
-Coe Kohawks,2025-11-30,Coe Kohawks,Ryan Dolphin,3,1,5,1,3,0,0,1,3,2,0,1,3,3,4,20.0,33.3,,24.5,False
-Coe Kohawks,2025-11-30,Coe Kohawks,Zach Strauss,5,1,4,1,4,2,2,1,0,0,0,0,0,2,1,25.0,25.0,100.0,3.3,False
-Coe Kohawks,2025-11-30,MSOE Raiders,CJ Valente,0,0,3,0,2,0,0,0,2,3,2,1,0,1,2,0.0,0.0,,12.7,False
-Coe Kohawks,2025-11-30,MSOE Raiders,Carson Cordelli,13,5,6,1,1,2,2,0,5,2,1,0,0,0,5,83.3,100.0,100.0,27.5,True
-Coe Kohawks,2025-11-30,MSOE Raiders,Chase Cummings,13,5,9,2,3,1,2,3,3,4,2,0,4,0,6,55.6,66.7,50.0,34.1,True
-Coe Kohawks,2025-11-30,MSOE Raiders,Ethan Johnson,2,1,2,0,0,0,0,0,5,1,1,2,1,3,5,50.0,,,24.6,True
-Coe Kohawks,2025-11-30,MSOE Raiders,Isaac Wit,4,2,4,0,1,0,0,2,2,1,1,0,2,1,4,50.0,0.0,,15.8,False
-Coe Kohawks,2025-11-30,MSOE Raiders,Joey Jendusa,4,2,3,0,0,0,2,2,0,1,0,0,2,1,2,66.7,,0.0,13.4,False
-Coe Kohawks,2025-11-30,MSOE Raiders,Jonathan Burroughs,14,6,8,2,4,0,0,0,5,0,1,1,3,3,5,75.0,50.0,,29.3,True
-Coe Kohawks,2025-11-30,MSOE Raiders,Mason Dopirak,29,8,21,1,9,12,12,0,4,3,2,0,2,0,4,38.1,11.1,100.0,33.0,True
-Coe Kohawks,2025-11-30,MSOE Raiders,Matus Dopirak,2,1,4,0,2,0,0,0,0,0,0,0,0,3,0,25.0,0.0,,8.0,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,AJ Willard,2,1,3,0,2,0,0,0,1,1,0,0,0,5,1,33.3,0.0,,10.4,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Aaron Brown,20,9,11,1,3,1,4,2,6,0,0,0,3,1,8,81.8,33.3,25.0,24.1,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Andreas Louloudis,2,1,5,0,2,0,0,0,1,0,2,0,1,0,1,20.0,0.0,,13.1,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Carson Knoll,0,0,3,0,3,0,0,0,2,0,1,0,0,0,2,0.0,0.0,,11.8,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Carter Privatt,0,0,3,0,1,0,0,0,1,0,1,0,0,1,1,0.0,0.0,,12.8,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Darrian Williams,5,2,10,1,4,0,0,1,3,3,0,0,1,2,4,20.0,25.0,,21.2,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Honore Yangoua,4,2,3,0,0,0,0,0,0,1,0,1,1,2,0,66.7,,,15.6,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Jacob Robinson,6,2,5,2,3,0,0,0,1,1,0,0,2,0,1,40.0,66.7,,9.9,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Kenton Pryor,3,1,2,0,0,1,2,2,1,0,0,0,1,1,3,50.0,,50.0,8.2,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Luca Bade,0,0,0,0,0,0,0,0,1,0,0,0,0,2,1,,,,3.5,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Matthew Guthrie,10,3,4,0,0,4,4,1,3,2,1,2,0,1,4,75.0,,100.0,27.1,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Ryker Johnson,9,2,4,1,3,4,6,1,3,2,1,0,3,5,4,50.0,33.3,66.7,19.0,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Sam Hillmann,2,1,3,0,1,0,0,0,0,0,0,0,2,1,0,33.3,0.0,,3.5,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Sebastian Hill,5,1,11,0,5,3,3,0,3,0,1,1,0,0,3,9.1,0.0,100.0,11.0,False
-Concordia Chicago Cougars,2026-01-10,Concordia Chicago Cougars,Tommy Zimmer,0,0,1,0,0,0,0,0,2,0,0,0,0,1,2,0.0,,,4.8,False
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Brady Gregg,2,0,1,0,1,2,2,0,0,0,0,0,0,0,0,0.0,0.0,100.0,2.7,False
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Brock Adams,2,0,0,0,0,2,2,0,0,0,0,0,0,0,0,,,100.0,2.5,False
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,CJ Valente,0,0,0,0,0,0,0,0,1,1,0,0,1,2,1,,,,9.6,False
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Carson Cordelli,11,4,7,1,1,2,2,0,3,6,1,0,3,0,3,57.1,100.0,100.0,24.3,True
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Chad Coplin,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.8,False
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Chase Cummings,10,3,5,2,4,2,2,0,4,2,1,0,0,3,4,60.0,50.0,100.0,20.8,True
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Daniel Franklin IV,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0.0,,,7.8,False
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Dubem Igwilo,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,,,,0.8,False
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Ethan Johnson,14,6,8,0,0,2,2,1,5,2,0,0,0,3,6,75.0,,100.0,22.7,True
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Isaac Wit,0,0,0,0,0,0,0,0,4,0,0,1,1,3,4,,,,8.3,False
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Jace Paul,0,0,0,0,0,0,2,0,3,0,0,0,1,0,3,,,0.0,2.7,False
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Joey Jendusa,4,2,5,0,1,0,0,1,3,2,0,0,2,2,4,40.0,0.0,,19.0,False
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Jonathan Burroughs,11,4,11,2,4,1,2,0,4,0,1,1,1,2,4,36.4,50.0,50.0,25.4,True
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Kolby Henderlong,3,1,3,1,3,0,0,0,0,0,1,0,0,0,0,33.3,33.3,,3.4,False
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Mason Accidentale,0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,,,,3.5,False
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Mason Dopirak,38,12,18,4,6,10,11,0,8,2,1,0,0,0,8,66.7,66.7,90.9,26.1,True
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Matus Dopirak,4,1,5,0,3,2,2,0,0,2,1,0,0,1,0,20.0,0.0,100.0,13.0,False
-Concordia Chicago Cougars,2026-01-10,MSOE Raiders,Quinn Rosenberg,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,2.7,False
-Concordia Wisconsin Falcons,2025-12-06,Concordia Wisconsin Falcons,Alex Greene,7,3,7,1,4,0,0,1,4,1,1,0,1,3,5,42.9,25.0,,20.4,False
-Concordia Wisconsin Falcons,2025-12-06,Concordia Wisconsin Falcons,Casey Verhagen,30,11,27,1,5,7,9,3,3,5,2,0,5,4,6,40.7,20.0,77.8,49.6,False
-Concordia Wisconsin Falcons,2025-12-06,Concordia Wisconsin Falcons,JD Davison,0,0,0,0,0,0,2,0,7,0,0,2,0,2,7,,,0.0,24.1,False
-Concordia Wisconsin Falcons,2025-12-06,Concordia Wisconsin Falcons,Jacob Christjohn,3,1,2,1,2,0,0,0,0,0,0,0,0,2,0,50.0,50.0,,16.4,False
-Concordia Wisconsin Falcons,2025-12-06,Concordia Wisconsin Falcons,Jaden Guyton,5,2,8,0,3,1,1,1,2,1,1,0,0,0,3,25.0,0.0,100.0,26.3,False
-Concordia Wisconsin Falcons,2025-12-06,Concordia Wisconsin Falcons,Javanni Blackman,10,4,10,2,5,0,0,2,0,2,2,0,0,4,2,40.0,40.0,,29.9,False
-Concordia Wisconsin Falcons,2025-12-06,Concordia Wisconsin Falcons,Logan Landers,49,13,23,0,2,23,23,7,3,1,1,0,2,4,10,56.5,0.0,100.0,48.1,False
-Concordia Wisconsin Falcons,2025-12-06,Concordia Wisconsin Falcons,Luke Eggemeyer,0,0,1,0,1,0,0,1,4,0,0,1,1,0,5,0.0,0.0,,8.4,False
-Concordia Wisconsin Falcons,2025-12-06,Concordia Wisconsin Falcons,Severin Hilt,5,2,10,1,5,0,0,3,2,4,2,0,0,1,5,20.0,20.0,,24.9,False
-Concordia Wisconsin Falcons,2025-12-06,MSOE Raiders,CJ Valente,4,1,2,0,0,2,2,0,1,3,0,0,0,5,1,50.0,,100.0,21.7,False
-Concordia Wisconsin Falcons,2025-12-06,MSOE Raiders,Carson Cordelli,20,8,12,0,1,4,7,1,6,1,1,0,2,4,7,66.7,0.0,57.1,44.1,True
-Concordia Wisconsin Falcons,2025-12-06,MSOE Raiders,Chase Cummings,13,5,11,3,8,0,1,2,4,1,1,0,1,3,6,45.5,37.5,0.0,38.6,True
-Concordia Wisconsin Falcons,2025-12-06,MSOE Raiders,Daniel Franklin IV,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,0.0,False
-Concordia Wisconsin Falcons,2025-12-06,MSOE Raiders,Ethan Johnson,13,6,8,0,0,1,1,2,3,1,0,0,1,5,5,75.0,,100.0,19.0,True
-Concordia Wisconsin Falcons,2025-12-06,MSOE Raiders,Isaac Wit,1,0,2,0,0,1,2,0,3,0,1,1,0,5,3,0.0,,50.0,14.7,False
-Concordia Wisconsin Falcons,2025-12-06,MSOE Raiders,Joey Jendusa,5,2,5,0,0,1,2,1,3,0,0,0,3,0,4,40.0,,50.0,17.8,False
-Concordia Wisconsin Falcons,2025-12-06,MSOE Raiders,Jonathan Burroughs,13,5,10,3,3,0,0,1,5,1,3,1,3,0,6,50.0,100.0,,27.0,True
-Concordia Wisconsin Falcons,2025-12-06,MSOE Raiders,Mason Dopirak,31,11,19,1,4,8,9,1,7,7,0,0,2,1,8,57.9,25.0,88.9,47.1,True
-Concordia Wisconsin Falcons,2025-12-06,MSOE Raiders,Matus Dopirak,13,4,4,2,2,3,3,0,2,0,0,0,3,4,2,100.0,100.0,100.0,13.2,False
-Concordia Wisconsin Falcons,2026-01-31,Concordia Wisconsin Falcons,Alex Greene,0,0,4,0,3,0,0,2,2,0,2,0,0,1,4,0.0,0.0,,22.4,False
-Concordia Wisconsin Falcons,2026-01-31,Concordia Wisconsin Falcons,Casey Verhagen,24,10,23,2,6,2,2,2,0,6,0,0,3,3,2,43.5,33.3,100.0,37.4,False
-Concordia Wisconsin Falcons,2026-01-31,Concordia Wisconsin Falcons,Ethan Ash,2,0,0,0,0,2,2,0,0,0,0,0,1,1,0,,,100.0,2.3,False
-Concordia Wisconsin Falcons,2026-01-31,Concordia Wisconsin Falcons,JD Davison,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,,,,3.5,False
-Concordia Wisconsin Falcons,2026-01-31,Concordia Wisconsin Falcons,Jacob Christjohn,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,,,,2.9,False
-Concordia Wisconsin Falcons,2026-01-31,Concordia Wisconsin Falcons,Jaden Guyton,4,2,5,0,1,0,0,0,1,1,1,0,0,1,1,40.0,0.0,,13.6,False
-Concordia Wisconsin Falcons,2026-01-31,Concordia Wisconsin Falcons,Javanni Blackman,7,3,3,0,0,1,2,1,0,1,1,0,1,1,1,100.0,,50.0,23.2,False
-Concordia Wisconsin Falcons,2026-01-31,Concordia Wisconsin Falcons,Logan Laine,0,0,0,0,0,0,0,1,1,0,0,0,1,1,2,,,,5.5,False
-Concordia Wisconsin Falcons,2026-01-31,Concordia Wisconsin Falcons,Logan Landers,27,9,12,1,2,8,9,2,7,2,0,0,2,3,9,75.0,50.0,88.9,29.7,False
-Concordia Wisconsin Falcons,2026-01-31,Concordia Wisconsin Falcons,Luke Eggemeyer,9,2,3,1,1,4,4,0,2,1,0,0,1,3,2,66.7,100.0,100.0,27.5,False
-Concordia Wisconsin Falcons,2026-01-31,Concordia Wisconsin Falcons,Severin Hilt,14,4,8,2,5,4,4,1,0,2,3,0,3,1,1,50.0,40.0,100.0,28.8,False
-Concordia Wisconsin Falcons,2026-01-31,MSOE Raiders,CJ Valente,8,2,3,0,0,4,4,2,1,1,0,0,1,3,3,66.7,,100.0,9.4,False
-Concordia Wisconsin Falcons,2026-01-31,MSOE Raiders,Carson Cordelli,16,7,9,0,0,2,2,2,3,2,1,0,4,3,5,77.8,,100.0,29.7,True
-Concordia Wisconsin Falcons,2026-01-31,MSOE Raiders,Chase Cummings,7,3,10,1,5,0,0,0,7,1,2,0,1,2,7,30.0,20.0,,35.6,True
-Concordia Wisconsin Falcons,2026-01-31,MSOE Raiders,Daniel Franklin IV,1,0,0,0,0,1,2,1,0,0,0,0,0,0,1,,,50.0,2.5,False
-Concordia Wisconsin Falcons,2026-01-31,MSOE Raiders,Isaac Wit,2,1,3,0,0,0,0,1,0,1,0,1,1,2,1,33.3,,,11.0,True
-Concordia Wisconsin Falcons,2026-01-31,MSOE Raiders,Joey Jendusa,11,5,7,0,1,1,2,1,1,2,3,0,1,2,2,71.4,0.0,50.0,26.3,False
-Concordia Wisconsin Falcons,2026-01-31,MSOE Raiders,Jonathan Burroughs,29,11,15,4,6,3,4,1,2,0,0,1,1,3,3,73.3,66.7,75.0,35.5,True
-Concordia Wisconsin Falcons,2026-01-31,MSOE Raiders,Mason Dopirak,25,7,12,3,5,8,8,1,4,4,1,0,1,1,5,58.3,60.0,100.0,38.8,True
-Concordia Wisconsin Falcons,2026-01-31,MSOE Raiders,Matus Dopirak,2,1,2,0,0,0,0,2,0,1,0,0,0,2,2,50.0,,,7.8,False
-Dominican (IL) Stars,2025-12-03,Dominican (IL) Stars,Antony Fernandez,8,3,9,2,7,0,0,0,0,1,2,0,1,0,0,33.3,28.6,,15.6,False
-Dominican (IL) Stars,2025-12-03,Dominican (IL) Stars,Blaise Brown,4,1,2,0,1,2,2,0,1,1,0,0,0,0,1,50.0,0.0,100.0,12.6,False
-Dominican (IL) Stars,2025-12-03,Dominican (IL) Stars,Braydon Murphy,21,6,13,0,0,9,9,3,4,2,0,2,0,2,7,46.2,,100.0,28.3,False
-Dominican (IL) Stars,2025-12-03,Dominican (IL) Stars,Chase LeFevre,5,2,2,0,0,1,4,2,0,2,0,0,1,4,2,100.0,,25.0,20.8,False
-Dominican (IL) Stars,2025-12-03,Dominican (IL) Stars,Dominic Crapia,0,0,9,0,6,0,0,0,4,2,1,0,3,1,4,0.0,0.0,,23.9,False
-Dominican (IL) Stars,2025-12-03,Dominican (IL) Stars,Elijah Daugherty,6,2,9,2,6,0,0,0,1,2,1,0,0,0,1,22.2,33.3,,19.4,False
-Dominican (IL) Stars,2025-12-03,Dominican (IL) Stars,Emmanuel Fuller,2,1,2,0,0,0,0,1,1,0,2,0,0,1,2,50.0,,,13.7,False
-Dominican (IL) Stars,2025-12-03,Dominican (IL) Stars,Frank Paszkowski,18,6,14,6,13,0,0,1,2,1,1,0,0,2,3,42.9,46.2,,27.3,False
-Dominican (IL) Stars,2025-12-03,Dominican (IL) Stars,Ismael Ndiaye,4,1,3,0,0,2,2,0,0,0,2,0,1,2,0,33.3,,100.0,20.1,False
-Dominican (IL) Stars,2025-12-03,Dominican (IL) Stars,Joseph Jones,3,1,3,1,2,0,2,0,0,0,0,0,0,1,0,33.3,50.0,0.0,13.4,False
-Dominican (IL) Stars,2025-12-03,Dominican (IL) Stars,Matthew Martinez,0,0,1,0,0,0,0,0,1,0,1,0,1,0,1,0.0,,,2.3,False
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Brady Gregg,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0.0,0.0,,2.3,False
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Brock Adams,4,1,2,0,0,2,2,0,0,0,1,0,0,0,0,50.0,,100.0,3.2,False
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,CJ Valente,4,0,2,0,0,4,4,1,4,2,0,0,1,0,5,0.0,,100.0,11.4,False
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Carson Cordelli,10,5,6,0,0,0,2,0,4,2,1,0,0,3,4,83.3,,0.0,21.3,True
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Chad Coplin,2,1,1,0,0,0,0,0,1,0,0,0,0,0,1,100.0,,,3.6,False
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Chase Cummings,5,2,5,1,4,0,0,0,5,1,0,0,1,0,5,40.0,25.0,,23.8,True
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Daniel Franklin IV,2,1,1,0,0,0,0,1,1,0,0,0,2,0,2,100.0,,,5.7,False
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Dubem Igwilo,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,3.3,False
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Ethan Johnson,14,5,7,1,1,3,4,3,3,3,0,0,2,3,6,71.4,100.0,75.0,14.8,True
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Isaac Wit,0,0,1,0,1,0,0,0,2,0,0,0,2,2,2,0.0,0.0,,14.4,False
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Jace Paul,4,2,2,0,0,0,0,0,2,0,0,0,0,0,2,100.0,,,3.6,False
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Joey Jendusa,10,4,5,0,1,2,2,1,1,2,0,1,1,0,2,80.0,0.0,100.0,18.7,False
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Jonathan Burroughs,6,3,6,0,1,0,0,2,1,1,1,1,1,2,3,50.0,0.0,,20.5,True
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Kolby Henderlong,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,,,,2.3,False
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Mason Accidentale,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,,,,3.6,False
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Mason Dopirak,24,9,12,2,2,4,4,0,7,1,0,0,1,1,7,75.0,100.0,100.0,24.3,True
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Matus Dopirak,11,5,10,1,1,0,0,1,2,1,0,0,0,2,3,50.0,100.0,,17.8,False
-Dominican (IL) Stars,2025-12-03,MSOE Raiders,Quinn Rosenberg,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,,,,3.2,False
-Dominican (IL) Stars,2026-01-07,Dominican (IL) Stars,Adrian Pelszynski,9,3,8,3,7,0,0,0,2,1,1,1,2,4,2,37.5,42.9,,16.0,False
-Dominican (IL) Stars,2026-01-07,Dominican (IL) Stars,Antony Fernandez,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,,,,2.6,False
-Dominican (IL) Stars,2026-01-07,Dominican (IL) Stars,Blaise Brown,0,0,1,0,0,0,0,0,2,3,0,0,1,4,2,0.0,,,11.6,False
-Dominican (IL) Stars,2026-01-07,Dominican (IL) Stars,Braydon Murphy,7,3,10,0,1,1,3,5,4,2,2,2,2,3,9,30.0,0.0,33.3,28.2,False
-Dominican (IL) Stars,2026-01-07,Dominican (IL) Stars,Chase LeFevre,5,0,0,0,0,5,6,0,1,0,0,0,2,2,1,,,83.3,15.2,False
-Dominican (IL) Stars,2026-01-07,Dominican (IL) Stars,Dean O'Brien,5,2,5,0,2,1,3,1,2,0,1,0,1,2,3,40.0,0.0,33.3,18.0,False
-Dominican (IL) Stars,2026-01-07,Dominican (IL) Stars,Dominic Crapia,3,1,5,1,5,0,0,1,6,3,1,0,1,4,7,20.0,20.0,,31.8,False
-Dominican (IL) Stars,2026-01-07,Dominican (IL) Stars,Elijah Daugherty,6,2,7,1,5,1,1,0,2,3,0,0,2,1,2,28.6,20.0,100.0,20.9,False
-Dominican (IL) Stars,2026-01-07,Dominican (IL) Stars,Frank Paszkowski,34,12,22,7,15,3,3,0,4,1,3,0,0,4,4,54.5,46.7,100.0,34.3,False
-Dominican (IL) Stars,2026-01-07,Dominican (IL) Stars,Ismael Ndiaye,5,2,4,0,1,1,3,0,0,4,1,0,3,2,0,50.0,0.0,33.3,29.2,False
-Dominican (IL) Stars,2026-01-07,Dominican (IL) Stars,Joseph Jones,8,3,5,2,3,0,0,0,0,0,0,0,0,1,0,60.0,66.7,,14.2,False
-Dominican (IL) Stars,2026-01-07,MSOE Raiders,CJ Valente,3,1,4,1,2,0,1,1,2,0,0,0,0,0,3,25.0,50.0,0.0,10.8,False
-Dominican (IL) Stars,2026-01-07,MSOE Raiders,Carson Cordelli,13,5,10,0,0,3,4,3,9,5,0,0,2,4,12,50.0,,75.0,35.8,True
-Dominican (IL) Stars,2026-01-07,MSOE Raiders,Chad Coplin,3,1,3,0,2,1,2,1,0,0,1,0,0,0,1,33.3,0.0,50.0,11.2,False
-Dominican (IL) Stars,2026-01-07,MSOE Raiders,Daniel Franklin IV,15,5,10,2,5,3,5,3,1,1,3,0,1,3,4,50.0,40.0,60.0,30.4,False
-Dominican (IL) Stars,2026-01-07,MSOE Raiders,Dubem Igwilo,0,0,0,0,0,0,0,3,3,1,0,0,0,1,6,,,,8.4,False
-Dominican (IL) Stars,2026-01-07,MSOE Raiders,Ethan Johnson,0,0,0,0,0,0,0,0,5,0,0,0,0,4,5,,,,10.8,True
-Dominican (IL) Stars,2026-01-07,MSOE Raiders,Isaac Wit,17,5,9,3,6,4,6,2,3,0,2,2,3,2,5,55.6,50.0,66.7,26.8,True
-Dominican (IL) Stars,2026-01-07,MSOE Raiders,Joey Jendusa,10,3,5,1,2,3,4,0,2,5,0,1,3,2,2,60.0,50.0,75.0,32.3,True
-Dominican (IL) Stars,2026-01-07,MSOE Raiders,Kolby Henderlong,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,2.4,False
-Dominican (IL) Stars,2026-01-07,MSOE Raiders,Mason Dopirak,23,5,17,2,8,11,12,2,8,1,3,0,3,1,10,29.4,25.0,91.7,39.3,True
-Dominican (IL) Stars,2026-01-07,MSOE Raiders,Matus Dopirak,1,0,4,0,2,1,2,0,1,1,0,0,1,0,1,0.0,0.0,50.0,14.0,False
-Edgewood Eagles,2026-01-14,Edgewood Eagles,AC Strok,10,4,8,2,3,0,0,1,2,3,2,0,0,3,3,50.0,66.7,,26.2,False
-Edgewood Eagles,2026-01-14,Edgewood Eagles,Avery Houden,3,1,3,0,0,1,2,1,3,1,0,0,2,0,4,33.3,,50.0,15.0,False
-Edgewood Eagles,2026-01-14,Edgewood Eagles,Cyle Steffl,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0.0,,,1.6,False
-Edgewood Eagles,2026-01-14,Edgewood Eagles,Hunter Hardyman,5,2,7,1,4,0,0,0,1,1,0,1,0,4,1,28.6,25.0,,17.0,False
-Edgewood Eagles,2026-01-14,Edgewood Eagles,Isaiah Hubanks,0,0,1,0,1,0,0,0,2,0,0,0,2,0,2,0.0,0.0,,8.1,False
-Edgewood Eagles,2026-01-14,Edgewood Eagles,Kaleb Walter,8,3,4,2,2,0,0,0,4,1,0,0,2,2,4,75.0,100.0,,11.4,False
-Edgewood Eagles,2026-01-14,Edgewood Eagles,Logan Steffensmeier,5,1,5,1,3,2,2,0,4,3,1,0,1,1,4,20.0,33.3,100.0,17.4,False
-Edgewood Eagles,2026-01-14,Edgewood Eagles,Payton Bowser,15,5,10,5,9,0,0,0,1,4,2,0,2,1,1,50.0,55.6,,25.0,False
-Edgewood Eagles,2026-01-14,Edgewood Eagles,Ryan Pavelec,5,2,2,1,1,0,0,0,0,1,1,0,0,0,0,100.0,100.0,,7.8,False
-Edgewood Eagles,2026-01-14,Edgewood Eagles,Trent Tousana,11,4,10,3,6,0,0,1,2,5,1,0,1,4,3,40.0,50.0,,30.7,False
-Edgewood Eagles,2026-01-14,Edgewood Eagles,Will Gretzinger,16,6,9,4,6,0,0,0,0,2,0,0,3,3,0,66.7,66.7,,28.1,False
-Edgewood Eagles,2026-01-14,Edgewood Eagles,Zane Willadsen,6,2,2,0,0,2,2,1,3,0,0,1,0,1,4,100.0,,100.0,8.9,False
-Edgewood Eagles,2026-01-14,MSOE Raiders,Brock Adams,2,0,0,0,0,2,2,0,0,2,0,1,0,1,0,,,100.0,5.6,False
-Edgewood Eagles,2026-01-14,MSOE Raiders,CJ Valente,6,3,5,0,1,0,0,0,2,0,1,0,0,1,2,60.0,0.0,,10.9,False
-Edgewood Eagles,2026-01-14,MSOE Raiders,Carson Cordelli,9,3,6,1,1,2,2,1,2,5,0,0,0,0,3,50.0,100.0,100.0,20.0,True
-Edgewood Eagles,2026-01-14,MSOE Raiders,Chad Coplin,1,0,2,0,0,1,2,1,0,0,1,0,1,0,1,0.0,,50.0,5.6,False
-Edgewood Eagles,2026-01-14,MSOE Raiders,Chase Cummings,10,3,8,2,6,2,2,2,4,5,1,0,1,0,6,37.5,33.3,100.0,20.0,True
-Edgewood Eagles,2026-01-14,MSOE Raiders,Daniel Franklin IV,4,1,2,1,2,1,2,0,3,2,0,0,2,1,3,50.0,50.0,50.0,14.5,False
-Edgewood Eagles,2026-01-14,MSOE Raiders,Dubem Igwilo,2,1,1,0,0,0,0,0,1,0,0,0,1,1,1,100.0,,,4.3,False
-Edgewood Eagles,2026-01-14,MSOE Raiders,Ethan Johnson,8,4,7,0,0,0,0,0,5,1,0,2,0,1,5,57.1,,,17.4,True
-Edgewood Eagles,2026-01-14,MSOE Raiders,Isaac Wit,3,1,2,1,2,0,0,1,0,1,0,0,1,3,1,50.0,50.0,,13.2,False
-Edgewood Eagles,2026-01-14,MSOE Raiders,Jace Paul,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,,,,4.0,False
-Edgewood Eagles,2026-01-14,MSOE Raiders,Joey Jendusa,13,5,6,1,2,2,2,0,1,3,0,0,0,0,1,83.3,50.0,100.0,14.6,False
-Edgewood Eagles,2026-01-14,MSOE Raiders,Jonathan Burroughs,15,5,5,3,3,2,2,3,0,1,1,2,1,0,3,100.0,100.0,100.0,20.8,True
-Edgewood Eagles,2026-01-14,MSOE Raiders,Kolby Henderlong,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.6,False
-Edgewood Eagles,2026-01-14,MSOE Raiders,Mason Accidentale,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,4.4,False
-Edgewood Eagles,2026-01-14,MSOE Raiders,Mason Dopirak,10,3,12,0,2,4,4,0,3,3,3,0,0,1,3,25.0,0.0,100.0,20.8,True
-Edgewood Eagles,2026-01-14,MSOE Raiders,Matus Dopirak,13,4,6,2,3,3,4,0,1,1,0,0,0,0,1,66.7,66.7,75.0,13.4,False
-Edgewood Eagles,2026-01-14,MSOE Raiders,Quinn Rosenberg,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,5.1,False
-Elmhurst Bluejays,2025-11-19,Elmhurst Bluejays,Aidyn Boone,13,4,10,3,7,2,2,0,11,2,2,2,6,2,11,40.0,42.9,100.0,30.4,False
-Elmhurst Bluejays,2025-11-19,Elmhurst Bluejays,Dominic Trelenberg,26,9,13,6,9,2,2,3,2,2,2,0,0,0,5,69.2,66.7,100.0,34.8,False
-Elmhurst Bluejays,2025-11-19,Elmhurst Bluejays,EJ Marshall,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0.0,0.0,,1.6,False
-Elmhurst Bluejays,2025-11-19,Elmhurst Bluejays,Jack Cherry,4,0,3,0,2,4,4,0,1,1,0,0,2,1,1,0.0,0.0,100.0,15.9,False
-Elmhurst Bluejays,2025-11-19,Elmhurst Bluejays,Jeffrey Williams,0,0,0,0,0,0,0,0,0,0,1,0,0,2,0,,,,7.6,False
-Elmhurst Bluejays,2025-11-19,Elmhurst Bluejays,John Witcher,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,1.4,False
-Elmhurst Bluejays,2025-11-19,Elmhurst Bluejays,Luke Smith,7,3,11,1,6,0,0,1,1,3,1,0,3,0,2,27.3,16.7,,25.7,False
-Elmhurst Bluejays,2025-11-19,Elmhurst Bluejays,Oliver Adams,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,,,,1.5,False
-Elmhurst Bluejays,2025-11-19,Elmhurst Bluejays,Sebastian Blachut,6,1,7,0,2,4,4,1,0,4,1,0,2,3,1,14.3,0.0,100.0,26.7,False
-Elmhurst Bluejays,2025-11-19,Elmhurst Bluejays,Talen Pearson,2,1,2,0,0,0,3,0,0,1,1,1,0,2,0,50.0,,0.0,20.8,False
-Elmhurst Bluejays,2025-11-19,Elmhurst Bluejays,Vinnie Adjahoungbeta,13,5,11,0,1,3,6,2,4,1,4,2,0,3,6,45.5,0.0,50.0,32.2,False
-Elmhurst Bluejays,2025-11-19,MSOE Raiders,CJ Valente,0,0,2,0,1,0,0,0,3,0,0,0,0,0,3,0.0,0.0,,12.5,False
-Elmhurst Bluejays,2025-11-19,MSOE Raiders,Carson Cordelli,8,4,6,0,0,0,1,1,4,3,1,0,2,3,5,66.7,,0.0,28.8,True
-Elmhurst Bluejays,2025-11-19,MSOE Raiders,Chase Cummings,11,4,8,1,3,2,2,2,0,1,2,0,1,3,2,50.0,33.3,100.0,33.5,True
-Elmhurst Bluejays,2025-11-19,MSOE Raiders,Ethan Johnson,8,4,7,0,0,0,0,1,5,2,1,2,2,3,6,57.1,,,19.9,True
-Elmhurst Bluejays,2025-11-19,MSOE Raiders,Joey Jendusa,0,0,3,0,1,0,0,0,0,0,2,0,2,1,0,0.0,0.0,,16.2,False
-Elmhurst Bluejays,2025-11-19,MSOE Raiders,Jonathan Burroughs,7,3,9,0,2,1,1,1,3,5,2,0,6,0,4,33.3,0.0,100.0,32.6,True
-Elmhurst Bluejays,2025-11-19,MSOE Raiders,Mason Dopirak,26,10,18,2,3,4,4,0,6,2,1,0,5,3,6,55.6,66.7,100.0,36.8,True
-Elmhurst Bluejays,2025-11-19,MSOE Raiders,Matus Dopirak,7,3,3,1,1,0,0,0,4,1,2,0,4,2,4,100.0,100.0,,18.3,False
-Illinois Tech Scarlet Hawks,2026-01-03,Illinois Tech Scarlet Hawks,Bryce Shoto,12,4,8,1,2,3,3,0,0,0,1,0,3,2,0,50.0,50.0,100.0,27.2,False
-Illinois Tech Scarlet Hawks,2026-01-03,Illinois Tech Scarlet Hawks,Garrison Carter,13,5,11,1,6,2,2,0,4,3,0,1,1,2,4,45.5,16.7,100.0,23.8,False
-Illinois Tech Scarlet Hawks,2026-01-03,Illinois Tech Scarlet Hawks,Isaiah Dudley,9,4,7,0,0,1,2,1,3,0,0,0,1,5,4,57.1,,50.0,23.0,False
-Illinois Tech Scarlet Hawks,2026-01-03,Illinois Tech Scarlet Hawks,Jason Pilapil,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,,,,7.2,False
-Illinois Tech Scarlet Hawks,2026-01-03,Illinois Tech Scarlet Hawks,John Davis III,19,6,14,0,3,7,9,1,3,4,2,0,1,3,4,42.9,0.0,77.8,33.6,False
-Illinois Tech Scarlet Hawks,2026-01-03,Illinois Tech Scarlet Hawks,Kalel Maxey,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,6.2,False
-Illinois Tech Scarlet Hawks,2026-01-03,Illinois Tech Scarlet Hawks,Nick Galati,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.4,False
-Illinois Tech Scarlet Hawks,2026-01-03,Illinois Tech Scarlet Hawks,Nicolas Ortiz,14,5,13,4,9,0,0,0,2,0,2,0,0,4,2,38.5,44.4,,35.5,False
-Illinois Tech Scarlet Hawks,2026-01-03,Illinois Tech Scarlet Hawks,Obrad Kuzmanovic,0,0,4,0,3,0,0,1,1,0,0,0,0,3,2,0.0,0.0,,21.2,False
-Illinois Tech Scarlet Hawks,2026-01-03,Illinois Tech Scarlet Hawks,Omar Salman,2,1,5,0,2,0,0,1,1,2,1,0,1,1,2,20.0,0.0,,14.8,False
-Illinois Tech Scarlet Hawks,2026-01-03,Illinois Tech Scarlet Hawks,Zachary Yujnovich,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.5,False
-Illinois Tech Scarlet Hawks,2026-01-03,MSOE Raiders,CJ Valente,3,1,1,0,0,1,1,0,1,0,0,0,0,0,1,100.0,,100.0,6.3,False
-Illinois Tech Scarlet Hawks,2026-01-03,MSOE Raiders,Carson Cordelli,10,4,4,0,0,2,3,1,1,4,0,0,2,1,2,100.0,,66.7,27.1,True
-Illinois Tech Scarlet Hawks,2026-01-03,MSOE Raiders,Chad Coplin,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.3,False
-Illinois Tech Scarlet Hawks,2026-01-03,MSOE Raiders,Chase Cummings,16,4,8,2,4,6,8,1,6,1,2,0,1,0,7,50.0,50.0,75.0,35.2,True
-Illinois Tech Scarlet Hawks,2026-01-03,MSOE Raiders,Daniel Franklin IV,2,1,2,0,1,0,0,0,1,0,1,0,0,1,1,50.0,0.0,,13.7,False
-Illinois Tech Scarlet Hawks,2026-01-03,MSOE Raiders,Ethan Johnson,4,2,5,0,1,0,0,1,3,3,1,1,4,3,4,40.0,0.0,,25.4,True
-Illinois Tech Scarlet Hawks,2026-01-03,MSOE Raiders,Isaac Wit,11,4,8,1,3,2,3,2,2,0,0,1,1,2,4,50.0,33.3,66.7,19.3,True
-Illinois Tech Scarlet Hawks,2026-01-03,MSOE Raiders,Joey Jendusa,7,2,4,0,1,3,4,1,2,3,0,0,1,2,3,50.0,0.0,75.0,20.1,False
-Illinois Tech Scarlet Hawks,2026-01-03,MSOE Raiders,Kolby Henderlong,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.3,False
-Illinois Tech Scarlet Hawks,2026-01-03,MSOE Raiders,Mason Dopirak,27,10,14,1,3,6,6,1,11,0,1,0,3,3,12,71.4,33.3,100.0,32.8,True
-Illinois Tech Scarlet Hawks,2026-01-03,MSOE Raiders,Matus Dopirak,6,2,5,0,0,2,4,1,3,2,0,0,1,3,4,40.0,,50.0,13.9,False
-Illinois Tech Scarlet Hawks,2026-02-07,Illinois Tech Scarlet Hawks,Garrison Carter,21,5,23,1,10,10,10,2,6,1,1,0,0,4,8,21.7,10.0,100.0,31.6,False
-Illinois Tech Scarlet Hawks,2026-02-07,Illinois Tech Scarlet Hawks,Igor Filipovic,3,0,4,0,3,3,4,2,2,1,0,0,0,3,4,0.0,0.0,75.0,12.2,False
-Illinois Tech Scarlet Hawks,2026-02-07,Illinois Tech Scarlet Hawks,Isaiah Dudley,10,4,5,1,1,1,1,0,7,1,0,0,2,4,7,80.0,100.0,100.0,21.2,False
-Illinois Tech Scarlet Hawks,2026-02-07,Illinois Tech Scarlet Hawks,James Pilapil,6,2,3,2,3,0,0,0,1,0,0,0,1,3,1,66.7,66.7,,19.1,False
-Illinois Tech Scarlet Hawks,2026-02-07,Illinois Tech Scarlet Hawks,Jason Pilapil,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.8,False
-Illinois Tech Scarlet Hawks,2026-02-07,Illinois Tech Scarlet Hawks,John Davis III,9,3,7,1,3,2,2,1,2,3,0,0,1,4,3,42.9,33.3,100.0,27.4,False
-Illinois Tech Scarlet Hawks,2026-02-07,Illinois Tech Scarlet Hawks,Nick Galati,7,3,8,1,5,0,0,1,1,1,0,1,1,0,2,37.5,20.0,,29.6,False
-Illinois Tech Scarlet Hawks,2026-02-07,Illinois Tech Scarlet Hawks,Nicolas Ortiz,8,2,8,0,2,4,4,1,5,3,3,0,1,3,6,25.0,0.0,100.0,32.5,False
-Illinois Tech Scarlet Hawks,2026-02-07,Illinois Tech Scarlet Hawks,Obrad Kuzmanovic,6,2,2,0,0,2,4,1,0,0,0,0,1,1,1,100.0,,50.0,15.1,False
-Illinois Tech Scarlet Hawks,2026-02-07,Illinois Tech Scarlet Hawks,Omar Salman,5,1,4,1,3,2,2,0,0,0,0,0,0,0,0,25.0,33.3,100.0,7.6,False
-Illinois Tech Scarlet Hawks,2026-02-07,MSOE Raiders,CJ Valente,6,3,4,0,0,0,0,1,1,0,0,0,1,0,2,75.0,,,11.3,False
-Illinois Tech Scarlet Hawks,2026-02-07,MSOE Raiders,Carson Cordelli,20,8,12,1,3,3,4,1,6,3,0,1,0,1,7,66.7,33.3,75.0,31.2,True
-Illinois Tech Scarlet Hawks,2026-02-07,MSOE Raiders,Chase Cummings,8,3,5,0,1,2,2,2,7,1,1,0,2,2,9,60.0,0.0,100.0,33.2,True
-Illinois Tech Scarlet Hawks,2026-02-07,MSOE Raiders,Daniel Franklin IV,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.1,False
-Illinois Tech Scarlet Hawks,2026-02-07,MSOE Raiders,Ethan Johnson,9,4,6,0,0,1,2,2,2,1,0,2,2,0,4,66.7,,50.0,16.6,True
-Illinois Tech Scarlet Hawks,2026-02-07,MSOE Raiders,Isaac Wit,2,1,2,0,1,0,0,0,2,0,0,0,0,2,2,50.0,0.0,,12.0,False
-Illinois Tech Scarlet Hawks,2026-02-07,MSOE Raiders,Joey Jendusa,4,0,3,0,0,4,4,0,4,0,1,0,2,4,4,0.0,,100.0,19.1,False
-Illinois Tech Scarlet Hawks,2026-02-07,MSOE Raiders,Jonathan Burroughs,21,8,15,1,4,4,4,4,3,2,2,1,1,4,7,53.3,25.0,100.0,26.6,True
-Illinois Tech Scarlet Hawks,2026-02-07,MSOE Raiders,Mason Dopirak,15,2,16,1,4,10,10,0,6,2,0,0,0,1,6,12.5,25.0,100.0,33.4,True
-Illinois Tech Scarlet Hawks,2026-02-07,MSOE Raiders,Matus Dopirak,2,1,3,0,1,0,0,0,1,0,0,0,1,1,1,33.3,0.0,,11.4,False
-Lake Forest Foresters,2025-11-15,Lake Forest Foresters,Alex Brown,6,2,5,0,1,2,2,0,1,3,0,0,2,5,1,40.0,0.0,100.0,25.5,False
-Lake Forest Foresters,2025-11-15,Lake Forest Foresters,Alex Forowycz,25,9,17,7,10,0,0,1,2,4,1,0,5,2,3,52.9,70.0,,30.5,False
-Lake Forest Foresters,2025-11-15,Lake Forest Foresters,Anthony Favia,5,2,5,1,3,0,0,0,3,3,0,0,2,3,3,40.0,33.3,,26.1,False
-Lake Forest Foresters,2025-11-15,Lake Forest Foresters,Ben Bochicchio,0,0,0,0,0,0,0,0,1,1,0,0,1,0,1,,,,4.8,False
-Lake Forest Foresters,2025-11-15,Lake Forest Foresters,Chase Honarvar,2,1,1,0,0,0,0,1,0,0,0,0,0,0,1,100.0,,,8.0,False
-Lake Forest Foresters,2025-11-15,Lake Forest Foresters,Coltrane Marchand,10,4,6,2,3,0,1,0,5,4,1,0,2,2,5,66.7,66.7,0.0,25.0,False
-Lake Forest Foresters,2025-11-15,Lake Forest Foresters,Cristian Rodriguez,16,7,11,0,0,2,2,1,3,0,2,0,1,1,4,63.6,,100.0,31.4,False
-Lake Forest Foresters,2025-11-15,Lake Forest Foresters,Luke Arington,18,6,12,6,11,0,0,0,1,1,0,0,0,2,1,50.0,54.5,,18.3,False
-Lake Forest Foresters,2025-11-15,Lake Forest Foresters,Marko Visnjevac,4,2,5,0,2,0,0,1,4,0,0,0,0,2,5,40.0,0.0,,16.9,False
-Lake Forest Foresters,2025-11-15,Lake Forest Foresters,Nikolas Popovic,0,0,3,0,1,0,2,1,1,3,1,0,0,3,2,0.0,0.0,0.0,11.5,False
-Lake Forest Foresters,2025-11-15,MSOE Raiders,CJ Valente,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,,,,7.4,False
-Lake Forest Foresters,2025-11-15,MSOE Raiders,Carson Cordelli,5,2,2,0,0,1,1,2,2,5,0,0,1,3,4,100.0,,100.0,24.1,True
-Lake Forest Foresters,2025-11-15,MSOE Raiders,Chase Cummings,18,7,10,3,5,1,2,0,5,3,1,0,1,0,5,70.0,60.0,50.0,32.6,True
-Lake Forest Foresters,2025-11-15,MSOE Raiders,Daniel Franklin IV,2,1,2,0,1,0,0,0,0,0,1,0,0,0,0,50.0,0.0,,6.2,False
-Lake Forest Foresters,2025-11-15,MSOE Raiders,Ethan Johnson,9,3,4,0,0,3,4,2,8,1,0,0,2,1,10,75.0,,75.0,20.2,True
-Lake Forest Foresters,2025-11-15,MSOE Raiders,Joey Jendusa,4,1,3,0,0,2,2,1,1,2,0,0,1,2,2,33.3,,100.0,21.1,False
-Lake Forest Foresters,2025-11-15,MSOE Raiders,Jonathan Burroughs,15,6,15,2,7,1,1,0,5,0,0,1,3,0,5,40.0,28.6,100.0,31.3,True
-Lake Forest Foresters,2025-11-15,MSOE Raiders,Mason Dopirak,29,8,16,3,6,10,12,0,5,5,0,0,3,0,5,50.0,50.0,83.3,37.1,True
-Lake Forest Foresters,2025-11-15,MSOE Raiders,Matus Dopirak,11,5,7,1,2,0,0,0,2,2,2,0,0,0,2,71.4,50.0,,17.7,False
-Lakeland Muskies,2026-02-04,Lakeland Muskies,Aaron Wolff,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.5,False
-Lakeland Muskies,2026-02-04,Lakeland Muskies,Adison Mittelstadt,0,0,3,0,3,0,0,0,0,1,1,0,1,0,0,0.0,0.0,,5.3,False
-Lakeland Muskies,2026-02-04,Lakeland Muskies,Asanjai Hunter,10,4,11,1,2,1,2,0,1,2,2,0,2,4,1,36.4,50.0,50.0,37.2,False
-Lakeland Muskies,2026-02-04,Lakeland Muskies,Austin Hohn,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,1.5,False
-Lakeland Muskies,2026-02-04,Lakeland Muskies,Emmitt Konieczny,6,2,3,2,3,0,0,0,2,0,3,0,0,2,2,66.7,66.7,,18.3,False
-Lakeland Muskies,2026-02-04,Lakeland Muskies,Gage Cornell,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,3.8,False
-Lakeland Muskies,2026-02-04,Lakeland Muskies,Jaxson Dillon,21,6,21,5,16,4,4,1,1,3,3,0,2,4,2,28.6,31.2,100.0,31.2,False
-Lakeland Muskies,2026-02-04,Lakeland Muskies,Max Justic,17,6,11,3,7,2,2,2,2,2,2,0,2,1,4,54.5,42.9,100.0,30.7,False
-Lakeland Muskies,2026-02-04,Lakeland Muskies,Parker Braun,0,0,2,0,2,0,0,0,1,2,3,0,1,1,1,0.0,0.0,,23.2,False
-Lakeland Muskies,2026-02-04,Lakeland Muskies,Peyton Mrotek,21,7,14,1,5,6,8,2,8,2,0,0,2,3,10,50.0,20.0,75.0,37.5,False
-Lakeland Muskies,2026-02-04,Lakeland Muskies,RJ Hines Jr.,0,0,1,0,0,0,0,1,2,0,0,0,1,0,3,0.0,,,6.1,False
-Lakeland Muskies,2026-02-04,MSOE Raiders,Brock Adams,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0.0,,,1.5,False
-Lakeland Muskies,2026-02-04,MSOE Raiders,CJ Valente,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,,,,4.6,False
-Lakeland Muskies,2026-02-04,MSOE Raiders,Carson Cordelli,11,5,6,0,0,1,2,3,9,3,0,1,2,1,12,83.3,,50.0,30.0,True
-Lakeland Muskies,2026-02-04,MSOE Raiders,Chad Coplin,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.6,False
-Lakeland Muskies,2026-02-04,MSOE Raiders,Chase Cummings,5,1,3,1,2,2,2,2,5,5,3,0,1,2,7,33.3,50.0,100.0,32.8,True
-Lakeland Muskies,2026-02-04,MSOE Raiders,Daniel Franklin IV,2,1,2,0,0,0,0,0,1,0,2,0,1,1,1,50.0,,,9.5,False
-Lakeland Muskies,2026-02-04,MSOE Raiders,Dubem Igwilo,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,,,,1.5,False
-Lakeland Muskies,2026-02-04,MSOE Raiders,Isaac Wit,2,0,1,0,1,2,2,0,3,0,0,1,0,4,3,0.0,0.0,100.0,19.5,True
-Lakeland Muskies,2026-02-04,MSOE Raiders,Jace Paul,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.8,False
-Lakeland Muskies,2026-02-04,MSOE Raiders,Joey Jendusa,15,6,8,1,1,2,2,0,0,0,1,1,0,1,0,75.0,100.0,100.0,21.3,False
-Lakeland Muskies,2026-02-04,MSOE Raiders,Jonathan Burroughs,21,8,14,2,5,3,4,2,7,1,0,1,3,1,9,57.1,40.0,75.0,30.2,True
-Lakeland Muskies,2026-02-04,MSOE Raiders,Kolby Henderlong,3,1,1,1,1,0,0,0,0,0,1,0,0,0,0,100.0,100.0,,1.5,False
-Lakeland Muskies,2026-02-04,MSOE Raiders,Mason Dopirak,34,11,20,2,5,10,13,2,7,4,1,1,7,2,9,55.0,40.0,76.9,33.2,True
-Lakeland Muskies,2026-02-04,MSOE Raiders,Matus Dopirak,7,3,5,1,1,0,0,0,0,1,0,0,1,0,0,60.0,100.0,,7.8,False
-Lakeland Muskies,2026-02-04,MSOE Raiders,Quinn Rosenberg,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.5,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,Aaron Wolff,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,0.4,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,Adison Mittelstadt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.4,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,Asanjai Hunter,21,7,15,0,1,7,7,1,4,2,2,0,3,4,5,46.7,0.0,100.0,35.6,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,Austin Hohn,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.4,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,Delon Zollicoffer-White,0,0,1,0,0,0,0,0,1,0,1,0,1,1,1,0.0,,,1.6,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,Emmitt Konieczny,0,0,2,0,2,0,0,0,1,2,1,0,1,0,1,0.0,0.0,,17.4,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,Gage Cornell,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,,,,4.8,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,Jamar Lampley Jr.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.4,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,Jaxson Dillon,21,8,14,5,10,0,0,0,0,0,2,0,2,2,0,57.1,50.0,,32.9,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,Keenan Klitzke,2,1,1,0,0,0,0,1,0,0,0,0,0,0,1,100.0,,,0.4,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,Max Justic,4,2,6,0,3,0,0,0,1,2,0,0,1,4,1,33.3,0.0,,27.7,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,Parker Braun,6,2,4,2,2,0,0,0,6,4,0,0,2,2,6,50.0,100.0,,28.4,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,Peyton Mrotek,25,7,12,5,7,6,8,1,4,2,1,0,1,4,5,58.3,71.4,75.0,39.0,False
-Lakeland Muskies,2026-02-24,Lakeland Muskies,RJ Hines Jr.,3,1,2,1,2,0,0,0,2,0,0,0,1,1,2,50.0,50.0,,7.5,False
-Lakeland Muskies,2026-02-24,MSOE Raiders,Brock Adams,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,2.0,False
-Lakeland Muskies,2026-02-24,MSOE Raiders,CJ Valente,0,0,0,0,0,0,0,1,0,1,0,0,0,1,1,,,,4.6,False
-Lakeland Muskies,2026-02-24,MSOE Raiders,Carson Cordelli,10,4,8,0,1,2,5,3,2,3,2,0,0,3,5,50.0,0.0,40.0,29.8,True
-Lakeland Muskies,2026-02-24,MSOE Raiders,Chad Coplin,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,1.7,False
-Lakeland Muskies,2026-02-24,MSOE Raiders,Chase Cummings,11,4,6,2,3,1,1,0,4,2,0,0,0,3,4,66.7,66.7,100.0,31.7,True
-Lakeland Muskies,2026-02-24,MSOE Raiders,Daniel Franklin IV,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,2.0,False
-Lakeland Muskies,2026-02-24,MSOE Raiders,Dubem Igwilo,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,,,,1.7,False
-Lakeland Muskies,2026-02-24,MSOE Raiders,Ethan Johnson,2,1,3,0,0,0,0,0,2,3,0,1,0,2,2,33.3,,,17.7,True
-Lakeland Muskies,2026-02-24,MSOE Raiders,Isaac Wit,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,,,,3.7,False
-Lakeland Muskies,2026-02-24,MSOE Raiders,Joey Jendusa,0,0,3,0,2,0,0,3,0,2,0,1,1,2,3,0.0,0.0,,21.3,False
-Lakeland Muskies,2026-02-24,MSOE Raiders,Jonathan Burroughs,26,8,14,4,5,6,6,1,2,5,4,1,4,2,3,57.1,80.0,100.0,35.3,True
-Lakeland Muskies,2026-02-24,MSOE Raiders,Mason Dopirak,46,15,22,4,7,12,12,0,9,2,2,0,2,0,9,68.2,57.1,100.0,35.2,True
-Lakeland Muskies,2026-02-24,MSOE Raiders,Matus Dopirak,2,0,3,0,1,2,2,1,1,1,1,0,1,0,2,0.0,0.0,100.0,8.5,False
-Lakeland Muskies,2026-02-24,MSOE Raiders,Quinn Rosenberg,2,1,2,0,1,0,0,1,0,0,0,0,0,0,1,50.0,0.0,,1.7,False
-Marian (WI) Sabres,2026-01-21,MSOE Raiders,CJ Valente,2,1,3,0,1,0,0,0,4,3,1,0,0,3,4,33.3,0.0,,19.4,False
-Marian (WI) Sabres,2026-01-21,MSOE Raiders,Carson Cordelli,4,1,2,0,0,2,4,0,3,0,1,0,2,0,3,50.0,,50.0,23.1,False
-Marian (WI) Sabres,2026-01-21,MSOE Raiders,Chase Cummings,15,4,9,3,6,4,4,1,5,2,2,0,0,0,6,44.4,50.0,100.0,36.2,True
-Marian (WI) Sabres,2026-01-21,MSOE Raiders,Daniel Franklin IV,2,1,2,0,0,0,0,0,0,1,1,2,0,2,0,50.0,,,10.4,False
-Marian (WI) Sabres,2026-01-21,MSOE Raiders,Ethan Johnson,8,3,3,0,0,2,2,1,6,4,0,0,2,4,7,100.0,,100.0,14.0,True
-Marian (WI) Sabres,2026-01-21,MSOE Raiders,Isaac Wit,0,0,3,0,1,0,2,1,2,1,0,0,0,2,3,0.0,0.0,0.0,12.2,True
-Marian (WI) Sabres,2026-01-21,MSOE Raiders,Joey Jendusa,2,1,2,0,0,0,0,0,1,1,0,0,2,0,1,50.0,,,12.0,False
-Marian (WI) Sabres,2026-01-21,MSOE Raiders,Jonathan Burroughs,18,6,9,3,3,3,4,1,4,3,2,5,1,2,5,66.7,100.0,75.0,35.8,True
-Marian (WI) Sabres,2026-01-21,MSOE Raiders,Mason Dopirak,28,11,22,1,6,5,6,1,2,1,1,0,5,1,3,50.0,16.7,83.3,40.9,True
-Marian (WI) Sabres,2026-01-21,MSOE Raiders,Matus Dopirak,6,2,5,1,3,1,2,1,3,1,0,0,1,3,4,40.0,33.3,50.0,13.7,False
-Marian (WI) Sabres,2026-01-21,Marian (WI) Sabres,Alex Vassilakis,2,0,5,0,3,2,2,2,1,0,2,0,1,5,3,0.0,0.0,100.0,28.4,False
-Marian (WI) Sabres,2026-01-21,Marian (WI) Sabres,Andrew Ayeni,20,6,14,1,3,7,8,1,6,6,3,0,5,5,7,42.9,33.3,87.5,40.3,False
-Marian (WI) Sabres,2026-01-21,Marian (WI) Sabres,Derek Lindert,19,7,16,5,10,0,0,1,4,1,0,0,0,2,5,43.8,50.0,,33.8,False
-Marian (WI) Sabres,2026-01-21,Marian (WI) Sabres,Fredrick Ware Jr.,2,1,3,0,2,0,0,0,1,0,0,0,0,1,1,33.3,0.0,,4.5,False
-Marian (WI) Sabres,2026-01-21,Marian (WI) Sabres,Harper Krolak,0,0,3,0,2,0,0,0,2,1,0,0,0,0,2,0.0,0.0,,25.3,False
-Marian (WI) Sabres,2026-01-21,Marian (WI) Sabres,Jazz Orozco,4,2,3,0,0,0,0,2,1,3,1,0,0,3,3,66.7,,,24.3,False
-Marian (WI) Sabres,2026-01-21,Marian (WI) Sabres,Keshawn Cotton,2,1,1,0,0,0,1,0,0,0,0,0,0,1,0,100.0,,0.0,4.6,False
-Marian (WI) Sabres,2026-01-21,Marian (WI) Sabres,Marvin Haslett,17,5,14,1,6,6,6,1,3,4,2,0,5,1,4,35.7,16.7,100.0,34.0,False
-Marian (WI) Sabres,2026-01-21,Marian (WI) Sabres,Rashawn Bost,15,5,10,5,9,0,0,0,4,2,1,0,1,0,4,50.0,55.6,,22.4,False
-Marian (WI) Sabres,2026-02-26,MSOE Raiders,Brock Adams,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.1,False
-Marian (WI) Sabres,2026-02-26,MSOE Raiders,CJ Valente,2,1,1,0,0,0,0,1,0,0,0,0,0,0,1,100.0,,,3.8,False
-Marian (WI) Sabres,2026-02-26,MSOE Raiders,Carson Cordelli,10,5,10,0,1,0,0,1,4,2,2,0,3,5,5,50.0,0.0,,27.8,True
-Marian (WI) Sabres,2026-02-26,MSOE Raiders,Chase Cummings,9,4,13,1,10,0,0,0,1,5,0,1,0,2,1,30.8,10.0,,38.0,True
-Marian (WI) Sabres,2026-02-26,MSOE Raiders,Ethan Johnson,8,4,7,0,0,0,0,0,5,1,0,2,2,1,5,57.1,,,20.2,True
-Marian (WI) Sabres,2026-02-26,MSOE Raiders,Isaac Wit,2,0,0,0,0,2,2,0,0,1,0,2,0,2,0,,,100.0,5.4,False
-Marian (WI) Sabres,2026-02-26,MSOE Raiders,Joey Jendusa,4,2,8,0,4,0,0,1,2,1,0,0,2,3,3,25.0,0.0,,24.5,False
-Marian (WI) Sabres,2026-02-26,MSOE Raiders,Jonathan Burroughs,8,3,8,2,4,0,0,3,3,3,1,0,4,3,6,37.5,50.0,,34.1,True
-Marian (WI) Sabres,2026-02-26,MSOE Raiders,Mason Dopirak,31,12,17,5,7,2,3,2,6,1,2,1,3,2,8,70.6,71.4,66.7,38.4,True
-Marian (WI) Sabres,2026-02-26,MSOE Raiders,Matus Dopirak,0,0,0,0,0,0,0,0,1,0,0,0,1,3,1,,,,5.2,False
-Marian (WI) Sabres,2026-02-26,Marian (WI) Sabres,Alex Vassilakis,15,5,10,3,4,2,2,3,3,0,1,0,1,4,6,50.0,75.0,100.0,29.7,False
-Marian (WI) Sabres,2026-02-26,Marian (WI) Sabres,Andrew Ayeni,25,8,18,1,4,8,11,2,8,5,4,1,2,2,10,44.4,25.0,72.7,35.7,False
-Marian (WI) Sabres,2026-02-26,Marian (WI) Sabres,Derek Lindert,21,5,10,4,7,7,8,1,3,2,2,0,0,1,4,50.0,57.1,87.5,31.2,False
-Marian (WI) Sabres,2026-02-26,Marian (WI) Sabres,Harper Krolak,5,2,6,1,2,0,0,0,0,3,0,0,2,1,0,33.3,50.0,,26.2,False
-Marian (WI) Sabres,2026-02-26,Marian (WI) Sabres,Jazz Orozco,3,1,3,0,1,1,2,2,2,1,3,0,0,2,4,33.3,0.0,50.0,27.7,False
-Marian (WI) Sabres,2026-02-26,Marian (WI) Sabres,Marvin Haslett,12,3,10,1,5,5,6,2,2,2,4,0,1,2,4,30.0,20.0,83.3,34.8,False
-Marian (WI) Sabres,2026-02-26,Marian (WI) Sabres,Max Breitenbach,4,2,2,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,7.5,False
-Marian (WI) Sabres,2026-02-26,Marian (WI) Sabres,Rashawn Bost,0,0,1,0,0,0,0,0,0,1,0,0,1,1,0,0.0,,,4.7,False
-Occidental Tigers,2025-12-30,MSOE Raiders,CJ Valente,2,0,0,0,0,2,2,0,0,1,0,0,0,0,0,,,100.0,10.4,False
-Occidental Tigers,2025-12-30,MSOE Raiders,Carson Cordelli,9,4,9,0,0,1,2,1,6,6,1,0,2,1,7,44.4,,50.0,30.7,True
-Occidental Tigers,2025-12-30,MSOE Raiders,Chase Cummings,13,5,11,2,7,1,1,2,8,3,0,0,1,0,10,45.5,28.6,100.0,35.2,True
-Occidental Tigers,2025-12-30,MSOE Raiders,Daniel Franklin IV,0,0,2,0,1,0,0,1,1,0,0,1,0,2,2,0.0,0.0,,13.7,False
-Occidental Tigers,2025-12-30,MSOE Raiders,Ethan Johnson,8,2,6,0,1,4,4,2,5,2,4,1,1,3,7,33.3,0.0,100.0,27.1,True
-Occidental Tigers,2025-12-30,MSOE Raiders,Isaac Wit,5,2,4,1,2,0,0,1,1,1,0,0,2,2,2,50.0,50.0,,19.7,True
-Occidental Tigers,2025-12-30,MSOE Raiders,Joey Jendusa,7,3,5,1,1,0,0,0,1,1,0,0,3,1,1,60.0,100.0,,15.7,False
-Occidental Tigers,2025-12-30,MSOE Raiders,Mason Dopirak,29,10,21,6,10,3,4,0,2,0,2,0,2,1,2,47.6,60.0,75.0,33.9,True
-Occidental Tigers,2025-12-30,MSOE Raiders,Matus Dopirak,5,2,6,1,3,0,0,1,1,1,0,0,0,3,2,33.3,33.3,,11.8,False
-Occidental Tigers,2025-12-30,Occidental Tigers,Alex McCleery Brown,17,8,13,0,0,1,2,2,5,2,3,0,1,1,7,61.5,,50.0,36.2,False
-Occidental Tigers,2025-12-30,Occidental Tigers,Atticus Boba,2,1,4,0,1,0,0,2,1,2,1,0,0,1,3,25.0,0.0,,22.9,False
-Occidental Tigers,2025-12-30,Occidental Tigers,Chase Miller,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,,,,3.4,False
-Occidental Tigers,2025-12-30,Occidental Tigers,Henry Wilson,0,0,1,0,0,0,0,0,1,1,0,0,0,1,1,0.0,,,7.2,False
-Occidental Tigers,2025-12-30,Occidental Tigers,Jacob Koretz,0,0,2,0,0,0,0,0,1,0,1,1,0,3,1,0.0,,,17.2,False
-Occidental Tigers,2025-12-30,Occidental Tigers,Micah Breaux,2,1,1,0,0,0,0,0,0,0,0,0,1,1,0,100.0,,,4.7,False
-Occidental Tigers,2025-12-30,Occidental Tigers,Nasir Luna,25,7,11,4,6,7,8,1,3,1,0,1,2,4,4,63.6,66.7,87.5,30.7,False
-Occidental Tigers,2025-12-30,Occidental Tigers,Nicky Clotfelter,23,9,15,2,4,3,6,3,8,4,1,2,3,2,11,60.0,50.0,50.0,33.4,False
-Occidental Tigers,2025-12-30,Occidental Tigers,Perry Rainey,5,2,6,1,3,0,0,0,8,2,0,0,3,4,8,33.3,33.3,,22.5,False
-Occidental Tigers,2025-12-30,Occidental Tigers,Peter Noble,6,2,8,2,6,0,1,0,1,1,2,0,0,0,1,25.0,33.3,0.0,20.3,False
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Brady Gregg,1,0,1,0,1,1,2,0,1,0,0,0,2,0,1,0.0,0.0,50.0,2.7,False
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Brock Adams,2,1,2,0,1,0,0,2,1,0,0,0,1,1,3,50.0,0.0,,5.5,False
-Redlands Bulldogs,2025-12-29,MSOE Raiders,CJ Valente,4,2,3,0,0,0,0,1,1,0,0,0,0,2,2,66.7,,,17.3,False
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Carson Cordelli,2,1,3,0,0,0,0,0,3,1,1,0,3,1,3,33.3,,,18.7,True
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Chad Coplin,2,1,5,0,1,0,0,0,1,1,1,0,0,0,1,20.0,0.0,,7.9,False
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Chase Cummings,15,5,11,3,4,2,2,1,2,1,1,0,1,3,3,45.5,75.0,100.0,30.5,True
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Daniel Franklin IV,9,3,5,1,1,2,2,1,2,1,0,0,1,0,3,60.0,100.0,100.0,12.1,False
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Dubem Igwilo,2,1,2,0,0,0,0,1,1,0,0,0,2,2,2,50.0,,,10.6,False
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Ethan Johnson,11,3,6,2,2,3,4,3,3,3,0,0,1,2,6,50.0,100.0,75.0,23.9,True
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Isaac Wit,0,0,1,0,0,0,0,0,3,2,0,0,2,2,3,0.0,,,10.1,True
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Jace Paul,0,0,0,0,0,0,1,0,3,1,0,0,1,1,3,,,0.0,6.9,False
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Kolby Henderlong,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,3.4,False
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Mason Accidentale,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0.0,0.0,,2.7,False
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Mason Dopirak,24,9,20,4,8,2,2,0,5,6,1,0,6,0,5,45.0,50.0,100.0,35.0,True
-Redlands Bulldogs,2025-12-29,MSOE Raiders,Matus Dopirak,10,4,7,2,5,0,0,0,1,1,1,0,2,1,1,57.1,40.0,,10.4,False
-Redlands Bulldogs,2025-12-29,Redlands Bulldogs,Austin Unegbu,3,1,4,1,3,0,0,0,0,2,0,0,0,5,0,25.0,33.3,,10.1,False
-Redlands Bulldogs,2025-12-29,Redlands Bulldogs,Cam Brown,17,7,9,1,2,2,3,2,1,2,3,0,1,1,3,77.8,50.0,66.7,17.7,False
-Redlands Bulldogs,2025-12-29,Redlands Bulldogs,Chozen Amadi,5,2,7,1,6,0,0,0,4,5,0,0,1,0,4,28.6,16.7,,22.8,False
-Redlands Bulldogs,2025-12-29,Redlands Bulldogs,Derek Sangster,8,3,12,0,3,2,4,5,7,4,5,0,2,2,12,25.0,0.0,50.0,22.5,False
-Redlands Bulldogs,2025-12-29,Redlands Bulldogs,Donovan Ware,11,4,9,3,8,0,0,3,0,1,1,0,0,0,3,44.4,37.5,,21.0,False
-Redlands Bulldogs,2025-12-29,Redlands Bulldogs,Elijah Duncan,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,2.7,False
-Redlands Bulldogs,2025-12-29,Redlands Bulldogs,Evan Lucas,0,0,1,0,1,0,0,1,1,0,0,0,0,0,2,0.0,0.0,,2.7,False
-Redlands Bulldogs,2025-12-29,Redlands Bulldogs,Jaiden Agbo,4,1,2,0,1,2,2,0,0,0,1,0,1,1,0,50.0,0.0,100.0,2.7,False
-Redlands Bulldogs,2025-12-29,Redlands Bulldogs,Jake Hlywiak,11,4,12,2,9,1,1,0,3,2,0,0,1,0,3,33.3,22.2,100.0,23.9,False
-Redlands Bulldogs,2025-12-29,Redlands Bulldogs,Jhace Boston,12,5,8,0,1,2,2,0,1,2,1,2,1,2,1,62.5,0.0,100.0,19.5,False
-Redlands Bulldogs,2025-12-29,Redlands Bulldogs,Lucas Gordon,11,4,11,2,6,1,2,4,5,0,1,0,1,2,9,36.4,33.3,50.0,20.3,False
-Redlands Bulldogs,2025-12-29,Redlands Bulldogs,Nathan Mattera,7,2,4,2,3,1,2,1,1,2,3,0,0,0,2,50.0,66.7,50.0,15.8,False
-Redlands Bulldogs,2025-12-29,Redlands Bulldogs,Omari Ferguson,13,6,9,0,0,1,1,4,2,2,1,0,1,4,6,66.7,,100.0,16.1,False
-Rockford Regents,2026-02-14,MSOE Raiders,Brock Adams,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,2.1,False
-Rockford Regents,2026-02-14,MSOE Raiders,CJ Valente,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,7.1,False
-Rockford Regents,2026-02-14,MSOE Raiders,Carson Cordelli,4,2,7,0,0,0,0,1,4,0,0,0,0,0,5,28.6,,,20.2,True
-Rockford Regents,2026-02-14,MSOE Raiders,Chase Cummings,12,5,10,2,5,0,0,1,4,2,0,2,0,0,5,50.0,40.0,,37.3,True
-Rockford Regents,2026-02-14,MSOE Raiders,Daniel Franklin IV,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.0,False
-Rockford Regents,2026-02-14,MSOE Raiders,Ethan Johnson,12,4,8,0,0,4,7,2,6,1,1,1,2,3,8,50.0,,57.1,29.9,True
-Rockford Regents,2026-02-14,MSOE Raiders,Isaac Wit,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,6.2,False
-Rockford Regents,2026-02-14,MSOE Raiders,Joey Jendusa,5,2,4,0,1,1,1,3,1,1,0,0,2,2,4,50.0,0.0,100.0,21.3,False
-Rockford Regents,2026-02-14,MSOE Raiders,Jonathan Burroughs,12,4,12,2,4,2,2,2,4,4,1,2,1,1,6,33.3,50.0,100.0,35.7,True
-Rockford Regents,2026-02-14,MSOE Raiders,Mason Dopirak,20,7,17,0,3,6,8,1,6,2,0,0,1,0,7,41.2,0.0,75.0,36.3,True
-Rockford Regents,2026-02-14,Rockford Regents,Adrian Agee,11,3,9,3,8,2,2,0,1,2,0,1,1,1,1,33.3,37.5,100.0,17.2,False
-Rockford Regents,2026-02-14,Rockford Regents,Cooper Jackson,17,8,14,0,0,1,2,6,5,2,0,1,1,2,11,57.1,,50.0,33.2,False
-Rockford Regents,2026-02-14,Rockford Regents,DeVon Oregon,5,1,5,1,4,2,2,0,4,4,1,1,1,4,4,20.0,25.0,100.0,22.4,False
-Rockford Regents,2026-02-14,Rockford Regents,Donovan Grunloh,8,3,4,2,3,0,0,0,2,0,1,0,0,2,2,75.0,66.7,,18.9,False
-Rockford Regents,2026-02-14,Rockford Regents,Jaden Bell,5,2,8,1,4,0,0,1,5,3,1,0,0,2,6,25.0,25.0,,31.5,False
-Rockford Regents,2026-02-14,Rockford Regents,Kamren Hogan,5,2,6,1,3,0,0,0,2,1,1,0,2,2,2,33.3,33.3,,21.0,False
-Rockford Regents,2026-02-14,Rockford Regents,Luke Stuckey,6,2,8,2,6,0,0,0,1,0,0,0,0,3,1,25.0,33.3,,30.4,False
-Rockford Regents,2026-02-14,Rockford Regents,Tre Miller,5,2,5,1,3,0,0,1,2,1,2,0,1,1,3,40.0,33.3,,22.8,False
-St. Norbert Green Knights,2025-12-13,MSOE Raiders,CJ Valente,2,1,3,0,2,0,0,0,2,0,1,0,1,1,2,33.3,0.0,,14.2,False
-St. Norbert Green Knights,2025-12-13,MSOE Raiders,Carson Cordelli,7,2,5,0,0,3,4,1,3,3,0,0,0,3,4,40.0,,75.0,28.7,True
-St. Norbert Green Knights,2025-12-13,MSOE Raiders,Chase Cummings,10,4,7,1,2,1,2,1,3,0,0,0,1,0,4,57.1,50.0,50.0,30.6,True
-St. Norbert Green Knights,2025-12-13,MSOE Raiders,Daniel Franklin IV,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,1.9,False
-St. Norbert Green Knights,2025-12-13,MSOE Raiders,Ethan Johnson,2,1,3,0,0,0,0,1,3,1,1,1,1,3,4,33.3,,,15.8,True
-St. Norbert Green Knights,2025-12-13,MSOE Raiders,Isaac Wit,2,1,3,0,2,0,0,0,6,0,0,0,2,4,6,33.3,0.0,,25.9,True
-St. Norbert Green Knights,2025-12-13,MSOE Raiders,Joey Jendusa,6,2,4,2,3,0,0,0,1,0,0,0,1,1,1,50.0,66.7,,19.0,False
-St. Norbert Green Knights,2025-12-13,MSOE Raiders,Mason Dopirak,25,7,18,1,6,10,11,0,4,3,1,0,1,3,4,38.9,16.7,90.9,36.2,True
-St. Norbert Green Knights,2025-12-13,MSOE Raiders,Matus Dopirak,5,2,6,1,4,0,0,0,0,0,2,0,1,2,0,33.3,25.0,,22.3,False
-St. Norbert Green Knights,2025-12-13,MSOE Raiders,Quinn Rosenberg,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,,,,1.9,False
-St. Norbert Green Knights,2025-12-13,St. Norbert Green Knights,Cam Lathos,14,6,10,1,4,1,2,1,1,0,1,0,1,3,2,60.0,25.0,50.0,22.1,False
-St. Norbert Green Knights,2025-12-13,St. Norbert Green Knights,Charlie Geske,0,0,1,0,0,0,2,0,1,1,0,0,1,1,1,0.0,,0.0,13.7,False
-St. Norbert Green Knights,2025-12-13,St. Norbert Green Knights,Cole Uhlenbrauck,3,1,3,1,3,0,0,1,1,0,0,0,0,2,2,33.3,33.3,,18.0,False
-St. Norbert Green Knights,2025-12-13,St. Norbert Green Knights,Connor Pytleski,20,7,10,3,5,3,4,0,4,1,3,1,4,1,4,70.0,60.0,75.0,29.2,False
-St. Norbert Green Knights,2025-12-13,St. Norbert Green Knights,Jaeden Grade,3,1,3,1,3,0,0,0,2,2,0,0,0,1,2,33.3,33.3,,18.7,False
-St. Norbert Green Knights,2025-12-13,St. Norbert Green Knights,Mason Freiburger,8,3,3,0,0,2,4,3,2,3,0,0,0,1,5,100.0,,50.0,18.5,False
-St. Norbert Green Knights,2025-12-13,St. Norbert Green Knights,Reid Rosseland,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0.0,,,6.2,False
-St. Norbert Green Knights,2025-12-13,St. Norbert Green Knights,Ryan Cox,7,3,10,1,4,0,2,1,7,5,0,0,1,1,8,30.0,25.0,0.0,31.8,False
-St. Norbert Green Knights,2025-12-13,St. Norbert Green Knights,Thomas Meyers,0,0,1,0,1,0,0,0,1,0,0,0,0,1,1,0.0,0.0,,2.4,False
-St. Norbert Green Knights,2025-12-13,St. Norbert Green Knights,Will Stuckey,17,5,12,2,4,5,6,1,6,2,1,0,2,2,7,41.7,50.0,83.3,36.0,False
-St. Norbert Green Knights,2026-02-18,MSOE Raiders,CJ Valente,1,0,0,0,0,1,2,0,1,0,0,0,0,0,1,,,50.0,6.9,False
-St. Norbert Green Knights,2026-02-18,MSOE Raiders,Carson Cordelli,12,5,7,2,3,0,1,1,2,4,1,0,0,2,3,71.4,66.7,0.0,33.9,True
-St. Norbert Green Knights,2026-02-18,MSOE Raiders,Chase Cummings,5,2,6,1,4,0,0,0,4,1,1,0,0,0,4,33.3,25.0,,37.7,True
-St. Norbert Green Knights,2026-02-18,MSOE Raiders,Ethan Johnson,13,5,6,0,0,3,4,1,3,1,0,1,2,3,4,83.3,,75.0,28.9,True
-St. Norbert Green Knights,2026-02-18,MSOE Raiders,Joey Jendusa,0,0,2,0,1,0,0,0,0,0,1,1,0,2,0,0.0,0.0,,16.4,False
-St. Norbert Green Knights,2026-02-18,MSOE Raiders,Jonathan Burroughs,13,5,10,1,3,2,2,0,4,5,0,2,2,3,4,50.0,33.3,100.0,30.5,True
-St. Norbert Green Knights,2026-02-18,MSOE Raiders,Mason Dopirak,31,10,15,2,4,9,13,0,10,1,0,0,4,1,10,66.7,50.0,69.2,37.5,True
-St. Norbert Green Knights,2026-02-18,MSOE Raiders,Matus Dopirak,0,0,1,0,1,0,0,0,1,2,0,0,0,2,1,0.0,0.0,,5.9,False
-St. Norbert Green Knights,2026-02-18,St. Norbert Green Knights,Cam Lathos,2,1,2,0,0,0,0,0,0,0,0,1,0,2,0,50.0,,,3.8,False
-St. Norbert Green Knights,2026-02-18,St. Norbert Green Knights,Charlie Geske,5,1,4,0,0,3,4,2,0,0,0,0,0,1,2,25.0,,75.0,9.5,False
-St. Norbert Green Knights,2026-02-18,St. Norbert Green Knights,Cole Uhlenbrauck,12,5,10,2,6,0,0,1,3,0,1,0,0,2,4,50.0,33.3,,33.6,False
-St. Norbert Green Knights,2026-02-18,St. Norbert Green Knights,Connor Pytleski,12,5,15,1,6,1,1,2,4,3,0,0,1,3,6,33.3,16.7,100.0,35.9,False
-St. Norbert Green Knights,2026-02-18,St. Norbert Green Knights,Jaeden Grade,0,0,2,0,2,0,0,0,0,0,1,0,0,0,0,0.0,0.0,,10.3,False
-St. Norbert Green Knights,2026-02-18,St. Norbert Green Knights,Mason Freiburger,17,8,10,1,1,0,1,2,2,1,1,0,2,3,4,80.0,100.0,0.0,29.6,False
-St. Norbert Green Knights,2026-02-18,St. Norbert Green Knights,Ryan Brown,0,0,1,0,1,0,0,0,1,0,1,0,0,1,1,0.0,0.0,,11.6,False
-St. Norbert Green Knights,2026-02-18,St. Norbert Green Knights,Ryan Cox,5,2,3,1,2,0,0,0,5,3,0,0,2,3,5,66.7,50.0,,27.3,False
-St. Norbert Green Knights,2026-02-18,St. Norbert Green Knights,Will Stuckey,14,6,15,0,5,2,2,1,3,5,0,0,0,4,4,40.0,0.0,100.0,36.1,False
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Brady Gregg,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,0.3,False
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Brock Adams,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.4,False
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,CJ Valente,4,2,2,0,0,0,0,1,0,0,0,0,0,1,1,100.0,,,16.6,False
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Carson Cordelli,6,2,4,0,1,2,3,0,3,0,1,0,2,4,3,50.0,0.0,66.7,17.8,True
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Chad Coplin,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,0.3,False
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Chase Cummings,8,3,10,1,6,1,1,0,5,2,0,0,3,1,5,30.0,16.7,100.0,35.5,True
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Daniel Franklin IV,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,7.2,False
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Dubem Igwilo,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.3,False
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Isaac Wit,6,2,3,2,2,0,0,1,0,0,0,0,0,1,1,66.7,100.0,,23.6,False
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Jace Paul,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,2.0,False
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Joey Jendusa,9,3,7,1,2,2,2,2,1,3,2,0,2,0,3,42.9,50.0,100.0,30.9,True
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Jonathan Burroughs,14,5,11,3,5,1,1,0,3,4,1,0,1,3,3,45.5,60.0,100.0,30.5,True
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Kolby Henderlong,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0.0,0.0,,1.2,False
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Mason Accidentale,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.3,False
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Matus Dopirak,10,3,8,0,2,4,4,0,5,3,0,0,0,2,5,37.5,0.0,100.0,22.8,True
-UW-Stevens Point Pointers,2025-11-08,MSOE Raiders,Quinn Rosenberg,0,0,3,0,2,0,0,2,0,1,0,0,1,0,2,0.0,0.0,,9.0,False
-UW-Stevens Point Pointers,2025-11-08,UW-Stevens Point Pointers,Austin Schaumburg,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.3,False
-UW-Stevens Point Pointers,2025-11-08,UW-Stevens Point Pointers,Cal Krohn,21,8,13,0,0,5,7,2,4,3,0,0,1,2,6,61.5,,71.4,29.8,False
-UW-Stevens Point Pointers,2025-11-08,UW-Stevens Point Pointers,Carter Combs,6,2,2,2,2,0,0,0,4,2,0,0,0,4,4,100.0,100.0,,15.2,False
-UW-Stevens Point Pointers,2025-11-08,UW-Stevens Point Pointers,Drew Daoust,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0.0,0.0,,5.4,False
-UW-Stevens Point Pointers,2025-11-08,UW-Stevens Point Pointers,Grant Manz,2,1,1,0,0,0,0,0,2,1,0,0,0,2,2,100.0,,,12.3,False
-UW-Stevens Point Pointers,2025-11-08,UW-Stevens Point Pointers,Isaiah Moore,4,2,5,0,2,0,0,3,1,1,1,0,0,3,4,40.0,0.0,,22.6,False
-UW-Stevens Point Pointers,2025-11-08,UW-Stevens Point Pointers,James Jacobs,2,1,1,0,0,0,0,0,0,0,0,0,2,0,0,100.0,,,2.2,False
-UW-Stevens Point Pointers,2025-11-08,UW-Stevens Point Pointers,Josiah Butler,24,7,15,4,8,6,7,1,4,2,1,0,1,2,5,46.7,50.0,85.7,36.6,False
-UW-Stevens Point Pointers,2025-11-08,UW-Stevens Point Pointers,Logan Baumgartner,11,4,8,3,7,0,0,1,3,0,1,0,1,2,4,50.0,42.9,,29.6,False
-UW-Stevens Point Pointers,2025-11-08,UW-Stevens Point Pointers,Max Raimer,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,4.4,False
-UW-Stevens Point Pointers,2025-11-08,UW-Stevens Point Pointers,Seth Miron,9,4,10,1,4,0,0,1,0,4,1,0,1,2,1,40.0,25.0,,26.2,False
-UW-Stevens Point Pointers,2025-11-08,UW-Stevens Point Pointers,Shane Tarjan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,4.1,False
-UW-Stevens Point Pointers,2025-11-08,UW-Stevens Point Pointers,Tyler Orr,0,0,2,0,2,0,0,0,3,0,0,0,0,1,3,0.0,0.0,,9.9,False
-Wisconsin Lutheran Warriors,2025-12-17,MSOE Raiders,CJ Valente,6,3,4,0,0,0,0,0,1,0,0,0,1,0,1,75.0,,,13.8,False
-Wisconsin Lutheran Warriors,2025-12-17,MSOE Raiders,Carson Cordelli,10,5,7,0,0,0,0,1,2,5,0,1,3,3,3,71.4,,,27.7,True
-Wisconsin Lutheran Warriors,2025-12-17,MSOE Raiders,Chase Cummings,17,6,10,3,6,2,2,0,4,0,0,1,0,1,4,60.0,50.0,100.0,33.9,True
-Wisconsin Lutheran Warriors,2025-12-17,MSOE Raiders,Ethan Johnson,8,4,8,0,0,0,0,2,8,3,0,1,1,1,10,50.0,,,20.8,True
-Wisconsin Lutheran Warriors,2025-12-17,MSOE Raiders,Isaac Wit,12,4,8,0,2,4,5,0,2,0,1,1,0,1,2,50.0,0.0,80.0,27.9,True
-Wisconsin Lutheran Warriors,2025-12-17,MSOE Raiders,Joey Jendusa,15,6,9,2,3,1,2,3,1,3,2,0,1,1,4,66.7,66.7,50.0,28.7,False
-Wisconsin Lutheran Warriors,2025-12-17,MSOE Raiders,Kolby Henderlong,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.1,False
-Wisconsin Lutheran Warriors,2025-12-17,MSOE Raiders,Mason Dopirak,21,7,10,1,2,6,6,2,6,3,1,0,6,2,8,70.0,50.0,100.0,32.9,True
-Wisconsin Lutheran Warriors,2025-12-17,MSOE Raiders,Matus Dopirak,4,1,2,0,1,2,2,0,1,3,0,0,1,1,1,50.0,0.0,100.0,11.5,False
-Wisconsin Lutheran Warriors,2025-12-17,Wisconsin Lutheran Warriors,Austin Wagner,10,4,8,0,1,2,2,1,1,0,0,0,1,1,2,50.0,0.0,100.0,27.0,False
-Wisconsin Lutheran Warriors,2025-12-17,Wisconsin Lutheran Warriors,Ben Lubbers,9,4,7,1,1,0,1,5,1,2,0,0,0,2,6,57.1,100.0,0.0,25.0,False
-Wisconsin Lutheran Warriors,2025-12-17,Wisconsin Lutheran Warriors,Bryce Appel,3,1,2,1,1,0,0,0,0,0,0,0,0,1,0,50.0,100.0,,10.7,False
-Wisconsin Lutheran Warriors,2025-12-17,Wisconsin Lutheran Warriors,Dom Hill,12,5,13,0,2,2,4,1,0,1,2,0,1,4,1,38.5,0.0,50.0,32.2,False
-Wisconsin Lutheran Warriors,2025-12-17,Wisconsin Lutheran Warriors,Ephraim Albers,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,1.7,False
-Wisconsin Lutheran Warriors,2025-12-17,Wisconsin Lutheran Warriors,Isaiah Mellock,12,5,9,2,5,0,0,1,1,2,1,0,1,1,2,55.6,40.0,,15.9,False
-Wisconsin Lutheran Warriors,2025-12-17,Wisconsin Lutheran Warriors,Ja'Quell Chisom,20,7,12,3,5,3,3,2,4,3,5,0,2,1,6,58.3,60.0,100.0,29.5,False
-Wisconsin Lutheran Warriors,2025-12-17,Wisconsin Lutheran Warriors,Lucas Anamndu,2,1,3,0,1,0,0,0,0,1,1,0,0,1,0,33.3,0.0,,16.9,False
-Wisconsin Lutheran Warriors,2025-12-17,Wisconsin Lutheran Warriors,Pierce Arenz,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.7,False
-Wisconsin Lutheran Warriors,2025-12-17,Wisconsin Lutheran Warriors,Sam Hans,5,2,5,1,3,0,0,0,1,0,0,0,2,3,1,40.0,33.3,,9.8,False
-Wisconsin Lutheran Warriors,2025-12-17,Wisconsin Lutheran Warriors,Trey Luehring,11,4,10,2,5,1,1,0,4,5,1,0,1,2,4,40.0,40.0,100.0,28.0,False
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Brock Adams,0,0,1,0,1,0,0,0,2,1,0,0,0,0,2,0.0,0.0,,3.2,False
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,CJ Valente,0,0,0,0,0,0,0,0,2,1,0,0,0,1,2,,,,9.4,False
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Carson Cordelli,14,5,8,1,1,3,3,2,3,5,1,1,0,0,5,62.5,100.0,100.0,29.6,True
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Chad Coplin,0,0,2,0,0,0,0,0,0,0,0,0,1,0,0,0.0,,,1.4,False
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Chase Cummings,11,3,9,3,8,2,2,2,3,1,0,0,1,3,5,33.3,37.5,100.0,26.4,True
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Daniel Franklin IV,0,0,3,0,1,0,0,0,0,1,0,0,0,4,0,0.0,0.0,,11.2,False
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Dubem Igwilo,0,0,0,0,0,0,0,0,1,1,0,1,0,1,1,,,,3.3,False
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Ethan Johnson,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,,,,2.3,True
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Isaac Wit,2,1,2,0,1,0,0,0,3,1,0,0,2,1,3,50.0,0.0,,9.0,False
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Jace Paul,3,1,1,1,1,0,0,0,0,0,0,0,0,1,0,100.0,100.0,,1.8,False
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Joey Jendusa,6,2,4,2,2,0,0,0,2,2,0,0,1,0,2,50.0,100.0,,16.2,False
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Jonathan Burroughs,17,7,13,3,6,0,0,3,4,2,1,1,0,2,7,53.8,50.0,,29.9,True
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Kolby Henderlong,6,2,2,2,2,0,0,1,1,0,0,0,1,1,2,100.0,100.0,,3.2,False
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Mason Dopirak,28,10,17,4,5,4,4,0,2,5,1,0,1,1,2,58.8,80.0,100.0,29.0,True
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Matus Dopirak,8,3,7,2,4,0,0,1,5,2,2,1,1,2,6,42.9,50.0,,20.9,False
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,Quinn Rosenberg,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.8,False
-Wisconsin Lutheran Warriors,2026-01-28,Wisconsin Lutheran Warriors,Austin Wagner,0,0,1,0,0,0,0,0,0,0,0,0,0,2,0,0.0,,,2.5,False
-Wisconsin Lutheran Warriors,2026-01-28,Wisconsin Lutheran Warriors,Ben Lubbers,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,,,,14.2,False
-Wisconsin Lutheran Warriors,2026-01-28,Wisconsin Lutheran Warriors,Bryce Appel,19,7,13,2,3,3,5,2,3,2,0,2,2,0,5,53.8,66.7,60.0,33.7,False
-Wisconsin Lutheran Warriors,2026-01-28,Wisconsin Lutheran Warriors,Dom Hill,5,2,8,0,2,1,2,1,1,1,0,0,0,3,2,25.0,0.0,50.0,19.4,False
-Wisconsin Lutheran Warriors,2026-01-28,Wisconsin Lutheran Warriors,Ephraim Albers,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,3.5,False
-Wisconsin Lutheran Warriors,2026-01-28,Wisconsin Lutheran Warriors,Isaiah Mellock,13,4,9,3,7,2,4,0,5,0,2,1,3,4,5,44.4,42.9,50.0,23.9,False
-Wisconsin Lutheran Warriors,2026-01-28,Wisconsin Lutheran Warriors,Ja'Quell Chisom,13,5,11,0,5,3,3,0,4,2,1,0,0,1,4,45.5,0.0,100.0,28.8,False
-Wisconsin Lutheran Warriors,2026-01-28,Wisconsin Lutheran Warriors,Lucas Anamndu,7,2,6,0,1,3,3,0,2,2,0,0,0,1,2,33.3,0.0,100.0,22.6,False
-Wisconsin Lutheran Warriors,2026-01-28,Wisconsin Lutheran Warriors,Pierce Arenz,2,1,2,0,0,0,0,0,0,0,1,0,1,0,0,50.0,,,14.7,False
-Wisconsin Lutheran Warriors,2026-01-28,Wisconsin Lutheran Warriors,Sam Hans,6,2,5,2,5,0,1,0,4,1,1,0,1,1,4,40.0,40.0,0.0,28.2,False
-Wisconsin Lutheran Warriors,2026-01-28,Wisconsin Lutheran Warriors,Trey Luehring,5,1,1,0,0,3,4,0,1,0,1,0,0,0,1,100.0,,75.0,5.2,False
-Wisconsin Lutheran Warriors,2026-01-28,Wisconsin Lutheran Warriors,Trey Raabe,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,,,,1.8,False
-Benedictine (IL) Eagles,2026-01-24,Benedictine (IL) Eagles,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,,False
-Coe Kohawks,2025-11-30,MSOE Raiders,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
-Dominican (IL) Stars,2025-12-03,Dominican (IL) Stars,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
-Illinois Tech Scarlet Hawks,2026-01-03,MSOE Raiders,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
-Lakeland Muskies,2026-02-04,Lakeland Muskies,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
-Marian (WI) Sabres,2026-01-21,MSOE Raiders,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,,False
-Marian (WI) Sabres,2026-02-26,Marian (WI) Sabres,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
-Rockford Regents,2026-02-14,MSOE Raiders,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
-Rockford Regents,2026-02-14,Rockford Regents,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
-St. Norbert Green Knights,2025-12-13,MSOE Raiders,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
-St. Norbert Green Knights,2026-02-18,St. Norbert Green Knights,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
-Wisconsin Lutheran Warriors,2026-01-28,MSOE Raiders,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Augustana (IL) Vikings,2025-12-03,Augustana (IL) Vikings,Andre Klaver,10,3,5,0,0,4,4,1,0,1,2,0,4,3,1,60.0,,100.0,16.8,False
+Augustana (IL) Vikings,2025-12-03,Augustana (IL) Vikings,Cam Atkinson,11,4,11,1,1,2,2,1,0,0,0,0,2,1,1,36.4,100.0,100.0,30.1,False
+Augustana (IL) Vikings,2025-12-03,Augustana (IL) Vikings,Dani Romero,4,2,6,0,0,0,0,0,2,0,0,0,2,3,2,33.3,,,27.4,False
+Augustana (IL) Vikings,2025-12-03,Augustana (IL) Vikings,Dom Rhoden,25,7,9,2,2,9,10,0,2,2,2,0,3,5,2,77.8,100.0,90.0,26.8,False
+Augustana (IL) Vikings,2025-12-03,Augustana (IL) Vikings,Ethan Andre,2,0,2,0,1,2,2,0,3,0,1,0,0,0,3,0.0,0.0,100.0,13.6,False
+Augustana (IL) Vikings,2025-12-03,Augustana (IL) Vikings,Jake Willems,6,1,3,1,1,3,5,1,1,3,1,0,2,1,2,33.3,100.0,60.0,12.5,False
+Augustana (IL) Vikings,2025-12-03,Augustana (IL) Vikings,Maddux Dieckman,4,2,3,0,0,0,0,2,0,1,0,0,1,3,2,66.7,,,14.8,False
+Augustana (IL) Vikings,2025-12-03,Augustana (IL) Vikings,Marieon Anderson,18,7,7,0,0,4,6,3,5,2,1,0,1,1,8,100.0,,66.7,29.5,False
+Augustana (IL) Vikings,2025-12-03,Augustana (IL) Vikings,Ray Maurchie,4,1,4,0,1,2,4,2,9,1,1,2,3,0,11,25.0,0.0,50.0,27.3,False
+Augustana (IL) Vikings,2025-12-03,Wheaton (IL) Thunder,Brady Wynja,0,0,1,0,0,0,0,0,1,0,0,0,0,2,1,0.0,,,8.0,True
+Augustana (IL) Vikings,2025-12-03,Wheaton (IL) Thunder,Carson Grier,9,4,7,0,0,1,2,3,3,2,3,1,1,3,6,57.1,,50.0,30.5,True
+Augustana (IL) Vikings,2025-12-03,Wheaton (IL) Thunder,Christian Veirs,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,,,,2.6,False
+Augustana (IL) Vikings,2025-12-03,Wheaton (IL) Thunder,Devin Martin,3,0,2,0,0,3,6,1,1,4,1,0,3,1,2,0.0,,50.0,19.4,True
+Augustana (IL) Vikings,2025-12-03,Wheaton (IL) Thunder,Jack Speers,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.3,False
+Augustana (IL) Vikings,2025-12-03,Wheaton (IL) Thunder,Kyan VanderWoude,5,2,5,0,2,1,2,0,3,0,0,0,1,2,3,40.0,0.0,50.0,29.0,True
+Augustana (IL) Vikings,2025-12-03,Wheaton (IL) Thunder,Kyle Neibch,14,4,8,3,6,3,3,0,0,1,0,0,0,5,0,50.0,50.0,100.0,21.6,False
+Augustana (IL) Vikings,2025-12-03,Wheaton (IL) Thunder,Noah Hedrick,4,2,3,0,0,0,0,0,1,1,1,0,0,1,1,66.7,,,12.4,False
+Augustana (IL) Vikings,2025-12-03,Wheaton (IL) Thunder,Reid Olson,17,5,12,5,10,2,3,0,2,5,2,0,4,2,2,41.7,50.0,66.7,34.9,False
+Augustana (IL) Vikings,2025-12-03,Wheaton (IL) Thunder,Soren Richardson,29,11,17,3,7,4,5,1,2,1,4,0,4,3,3,64.7,42.9,80.0,37.9,True
+Augustana (IL) Vikings,2026-01-28,Augustana (IL) Vikings,Andre Klaver,14,5,15,0,0,4,5,1,6,4,2,0,7,3,7,33.3,,80.0,27.3,False
+Augustana (IL) Vikings,2026-01-28,Augustana (IL) Vikings,Andrija Ivanovic,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,,,,2.1,False
+Augustana (IL) Vikings,2026-01-28,Augustana (IL) Vikings,Ben Jurzak,0,0,1,0,1,0,0,0,1,1,0,0,0,1,1,0.0,0.0,,4.7,False
+Augustana (IL) Vikings,2026-01-28,Augustana (IL) Vikings,Caden Workman,2,1,2,0,1,0,1,1,0,0,0,0,1,2,1,50.0,0.0,0.0,6.7,False
+Augustana (IL) Vikings,2026-01-28,Augustana (IL) Vikings,Cam Atkinson,13,5,11,3,9,0,0,0,2,1,2,0,0,2,2,45.5,33.3,,23.8,False
+Augustana (IL) Vikings,2026-01-28,Augustana (IL) Vikings,Dani Romero,10,4,6,0,0,2,4,1,3,0,0,0,3,2,4,66.7,,50.0,27.3,False
+Augustana (IL) Vikings,2026-01-28,Augustana (IL) Vikings,Dom Rhoden,3,1,2,0,0,1,1,0,3,0,0,0,1,4,3,50.0,,100.0,17.3,False
+Augustana (IL) Vikings,2026-01-28,Augustana (IL) Vikings,Eli Aldana,5,2,4,1,2,0,0,0,0,1,1,0,0,1,0,50.0,50.0,,15.8,False
+Augustana (IL) Vikings,2026-01-28,Augustana (IL) Vikings,Ethan Andre,0,0,2,0,2,0,0,0,2,0,0,0,0,0,2,0.0,0.0,,10.0,False
+Augustana (IL) Vikings,2026-01-28,Augustana (IL) Vikings,Jake Willems,12,3,9,2,4,4,4,0,5,1,0,1,0,2,5,33.3,50.0,100.0,29.8,False
+Augustana (IL) Vikings,2026-01-28,Augustana (IL) Vikings,Marieon Anderson,4,2,3,0,0,0,0,0,2,0,0,1,1,3,2,66.7,,,19.2,False
+Augustana (IL) Vikings,2026-01-28,Augustana (IL) Vikings,Ray Maurchie,2,1,4,0,0,0,0,3,3,2,0,3,1,2,6,25.0,,,13.9,False
+Augustana (IL) Vikings,2026-01-28,Wheaton (IL) Thunder,Brady Wynja,0,0,2,0,0,0,0,1,4,0,0,1,0,2,5,0.0,,,18.5,True
+Augustana (IL) Vikings,2026-01-28,Wheaton (IL) Thunder,Carson Grier,12,6,8,0,0,0,0,1,7,1,2,0,1,4,8,75.0,,,24.9,True
+Augustana (IL) Vikings,2026-01-28,Wheaton (IL) Thunder,Devin Martin,8,3,5,0,0,2,5,0,3,8,1,0,0,3,3,60.0,,40.0,35.8,True
+Augustana (IL) Vikings,2026-01-28,Wheaton (IL) Thunder,Kyan VanderWoude,22,7,19,0,3,8,9,2,8,0,0,0,2,3,10,36.8,0.0,88.9,36.1,True
+Augustana (IL) Vikings,2026-01-28,Wheaton (IL) Thunder,Kyle Neibch,6,1,3,1,3,3,4,0,0,0,0,0,2,0,0,33.3,33.3,75.0,11.8,False
+Augustana (IL) Vikings,2026-01-28,Wheaton (IL) Thunder,Luca Carbonaro,2,1,3,0,2,0,0,0,1,1,1,1,0,1,1,33.3,0.0,,9.4,False
+Augustana (IL) Vikings,2026-01-28,Wheaton (IL) Thunder,Noah Hedrick,0,0,1,0,1,0,0,1,3,1,3,2,0,0,4,0.0,0.0,,18.5,False
+Augustana (IL) Vikings,2026-01-28,Wheaton (IL) Thunder,Reid Olson,0,0,0,0,0,0,0,1,1,0,0,0,2,1,2,,,,15.3,False
+Augustana (IL) Vikings,2026-01-28,Wheaton (IL) Thunder,Soren Richardson,21,8,18,1,5,4,5,1,4,4,3,1,2,3,5,44.4,20.0,80.0,27.7,True
+Benedictine (IL) Eagles,2025-11-18,Benedictine (IL) Eagles,Aidan Werth,8,3,9,2,3,0,0,0,1,0,0,1,1,4,1,33.3,66.7,,22.7,False
+Benedictine (IL) Eagles,2025-11-18,Benedictine (IL) Eagles,Connor Glasgow,12,5,7,2,4,0,0,0,4,0,0,1,3,5,4,71.4,50.0,,24.3,False
+Benedictine (IL) Eagles,2025-11-18,Benedictine (IL) Eagles,Hudson Parker,2,1,2,0,0,0,0,0,1,2,0,0,3,1,1,50.0,,,16.9,False
+Benedictine (IL) Eagles,2025-11-18,Benedictine (IL) Eagles,Ibrahim Elagha,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,7.4,False
+Benedictine (IL) Eagles,2025-11-18,Benedictine (IL) Eagles,Nathan LaPlant,12,3,7,1,3,5,8,0,3,1,1,1,1,1,3,42.9,33.3,62.5,28.2,False
+Benedictine (IL) Eagles,2025-11-18,Benedictine (IL) Eagles,Noah Mason,13,4,7,0,1,5,8,2,6,1,2,1,3,5,8,57.1,0.0,62.5,25.8,False
+Benedictine (IL) Eagles,2025-11-18,Benedictine (IL) Eagles,Pavle Magazin,0,0,1,0,0,0,0,0,2,0,0,2,0,3,2,0.0,,,10.9,False
+Benedictine (IL) Eagles,2025-11-18,Benedictine (IL) Eagles,Ryan Sammons,12,5,7,2,4,0,1,1,2,5,0,0,6,1,3,71.4,50.0,0.0,23.2,False
+Benedictine (IL) Eagles,2025-11-18,Benedictine (IL) Eagles,Ryan Tucker,21,7,10,3,5,4,4,2,1,2,2,0,2,3,3,70.0,60.0,100.0,37.0,False
+Benedictine (IL) Eagles,2025-11-18,Wheaton (IL) Thunder,Brady Wynja,3,1,3,0,0,1,4,3,2,0,1,0,1,3,5,33.3,,25.0,21.3,True
+Benedictine (IL) Eagles,2025-11-18,Wheaton (IL) Thunder,Carson Grier,15,5,6,2,2,3,4,2,3,3,3,2,0,1,5,83.3,100.0,75.0,27.0,True
+Benedictine (IL) Eagles,2025-11-18,Wheaton (IL) Thunder,Christian Veirs,3,1,1,1,1,0,0,0,0,1,0,0,0,0,0,100.0,100.0,,5.0,False
+Benedictine (IL) Eagles,2025-11-18,Wheaton (IL) Thunder,Devin Martin,7,1,3,1,3,4,8,0,2,6,2,0,3,2,2,33.3,33.3,50.0,26.1,True
+Benedictine (IL) Eagles,2025-11-18,Wheaton (IL) Thunder,Kyan VanderWoude,28,10,20,2,5,6,6,1,7,1,2,0,4,2,8,50.0,40.0,100.0,35.1,True
+Benedictine (IL) Eagles,2025-11-18,Wheaton (IL) Thunder,Kyle Neibch,12,4,9,4,9,0,0,0,3,0,1,0,1,3,3,44.4,44.4,,26.2,False
+Benedictine (IL) Eagles,2025-11-18,Wheaton (IL) Thunder,Noah Hedrick,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0.0,,,5.9,False
+Benedictine (IL) Eagles,2025-11-18,Wheaton (IL) Thunder,Reid Olson,12,3,7,3,7,3,3,0,0,4,0,0,1,1,0,42.9,42.9,100.0,26.1,False
+Benedictine (IL) Eagles,2025-11-18,Wheaton (IL) Thunder,Soren Richardson,15,5,7,0,0,5,8,2,0,4,4,0,2,2,2,71.4,,62.5,23.9,True
+Carroll (WI) Pioneers,2026-01-07,Carroll (WI) Pioneers,Cai Joseph,0,0,0,0,0,0,0,0,0,1,0,0,1,2,0,,,,4.4,False
+Carroll (WI) Pioneers,2026-01-07,Carroll (WI) Pioneers,Dennis Estepp,11,5,8,1,1,0,0,1,2,0,4,1,3,0,3,62.5,100.0,,25.9,False
+Carroll (WI) Pioneers,2026-01-07,Carroll (WI) Pioneers,Evan Bland,10,3,9,2,2,2,3,0,1,2,0,0,0,5,1,33.3,100.0,66.7,17.9,False
+Carroll (WI) Pioneers,2026-01-07,Carroll (WI) Pioneers,Greg Smith,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0.0,,,1.9,False
+Carroll (WI) Pioneers,2026-01-07,Carroll (WI) Pioneers,Jacob Naber,10,4,6,0,0,2,2,2,7,0,0,1,2,4,9,66.7,,100.0,27.0,False
+Carroll (WI) Pioneers,2026-01-07,Carroll (WI) Pioneers,Jimmy Tarjan,0,0,0,0,0,0,0,0,1,1,0,0,0,2,1,,,,8.3,False
+Carroll (WI) Pioneers,2026-01-07,Carroll (WI) Pioneers,Lamar Smith,22,11,15,0,1,0,7,3,4,2,2,0,4,3,7,73.3,0.0,0.0,30.9,False
+Carroll (WI) Pioneers,2026-01-07,Carroll (WI) Pioneers,Lucas Parker,0,0,2,0,2,0,0,0,1,1,2,0,0,0,1,0.0,0.0,,16.0,False
+Carroll (WI) Pioneers,2026-01-07,Carroll (WI) Pioneers,Michael McNabb,27,11,18,2,4,3,3,2,2,2,1,0,1,1,4,61.1,50.0,100.0,37.1,False
+Carroll (WI) Pioneers,2026-01-07,Carroll (WI) Pioneers,Peyton McKenna,4,2,9,0,6,0,0,1,3,1,1,1,2,2,4,22.2,0.0,,29.4,False
+Carroll (WI) Pioneers,2026-01-07,Wheaton (IL) Thunder,Brady Wynja,4,2,3,0,0,0,0,1,3,1,1,1,1,2,4,66.7,,,18.1,False
+Carroll (WI) Pioneers,2026-01-07,Wheaton (IL) Thunder,Carson Grier,17,8,12,0,0,1,3,1,5,1,0,1,2,4,6,66.7,,33.3,30.4,True
+Carroll (WI) Pioneers,2026-01-07,Wheaton (IL) Thunder,Devin Martin,15,4,8,1,4,6,8,0,4,8,0,0,3,0,4,50.0,25.0,75.0,32.8,False
+Carroll (WI) Pioneers,2026-01-07,Wheaton (IL) Thunder,Jace Olson,3,1,2,0,1,1,2,0,1,0,0,1,0,2,1,50.0,0.0,50.0,13.0,True
+Carroll (WI) Pioneers,2026-01-07,Wheaton (IL) Thunder,Kyan VanderWoude,6,3,8,0,1,0,0,1,5,2,1,0,2,2,6,37.5,0.0,,29.7,True
+Carroll (WI) Pioneers,2026-01-07,Wheaton (IL) Thunder,Kyle Neibch,6,2,3,2,3,0,0,1,2,0,1,0,2,1,3,66.7,66.7,,23.7,False
+Carroll (WI) Pioneers,2026-01-07,Wheaton (IL) Thunder,Luca Carbonaro,3,1,2,0,1,1,1,0,1,1,0,0,0,1,1,50.0,0.0,100.0,4.1,False
+Carroll (WI) Pioneers,2026-01-07,Wheaton (IL) Thunder,Reid Olson,6,2,7,2,7,0,0,0,0,1,0,0,2,2,0,28.6,28.6,,13.7,True
+Carroll (WI) Pioneers,2026-01-07,Wheaton (IL) Thunder,Soren Richardson,25,8,16,1,4,8,8,2,3,2,5,1,0,2,5,50.0,25.0,100.0,33.2,True
+Carroll (WI) Pioneers,2026-01-31,Carroll (WI) Pioneers,Cai Joseph,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,3.2,False
+Carroll (WI) Pioneers,2026-01-31,Carroll (WI) Pioneers,Dennis Estepp,8,3,6,0,0,2,2,0,4,0,1,0,1,2,4,50.0,,100.0,23.2,False
+Carroll (WI) Pioneers,2026-01-31,Carroll (WI) Pioneers,Evan Bland,6,2,6,0,0,2,2,0,4,5,0,0,0,3,4,33.3,,100.0,24.9,False
+Carroll (WI) Pioneers,2026-01-31,Carroll (WI) Pioneers,Jacob Naber,9,3,4,0,0,3,4,1,5,2,1,1,4,5,6,75.0,,75.0,20.4,False
+Carroll (WI) Pioneers,2026-01-31,Carroll (WI) Pioneers,Jimmy Tarjan,6,3,7,0,2,0,0,3,3,0,0,0,3,4,6,42.9,0.0,,12.4,False
+Carroll (WI) Pioneers,2026-01-31,Carroll (WI) Pioneers,Lamar Smith,19,7,13,1,2,4,5,1,3,1,2,0,1,2,4,53.8,50.0,80.0,29.4,False
+Carroll (WI) Pioneers,2026-01-31,Carroll (WI) Pioneers,Lucas Parker,3,1,4,1,4,0,0,0,3,1,0,0,0,1,3,25.0,25.0,,16.1,False
+Carroll (WI) Pioneers,2026-01-31,Carroll (WI) Pioneers,Michael McNabb,22,7,14,0,3,8,10,4,3,3,2,0,1,2,7,50.0,0.0,80.0,34.2,False
+Carroll (WI) Pioneers,2026-01-31,Carroll (WI) Pioneers,Peyton McKenna,15,5,9,3,6,2,2,1,4,2,1,0,0,0,5,55.6,50.0,100.0,34.2,False
+Carroll (WI) Pioneers,2026-01-31,Wheaton (IL) Thunder,Brady Wynja,8,3,4,0,0,2,2,3,3,0,0,0,0,4,6,75.0,,100.0,13.0,True
+Carroll (WI) Pioneers,2026-01-31,Wheaton (IL) Thunder,Carson Grier,13,6,10,1,2,0,1,3,11,2,1,1,1,5,14,60.0,50.0,0.0,29.4,True
+Carroll (WI) Pioneers,2026-01-31,Wheaton (IL) Thunder,Christian Veirs,2,0,0,0,0,2,2,0,0,0,0,0,0,0,0,,,100.0,1.1,False
+Carroll (WI) Pioneers,2026-01-31,Wheaton (IL) Thunder,Devin Martin,8,2,7,0,2,4,6,3,3,4,0,1,1,1,6,28.6,0.0,66.7,30.5,True
+Carroll (WI) Pioneers,2026-01-31,Wheaton (IL) Thunder,Kyan VanderWoude,15,4,10,0,4,7,10,1,1,2,1,0,2,2,2,40.0,0.0,70.0,34.7,True
+Carroll (WI) Pioneers,2026-01-31,Wheaton (IL) Thunder,Kyle Neibch,0,0,2,0,2,0,0,1,0,1,0,1,1,1,1,0.0,0.0,,8.2,False
+Carroll (WI) Pioneers,2026-01-31,Wheaton (IL) Thunder,Luca Carbonaro,8,3,5,2,4,0,1,0,1,0,2,0,2,3,1,60.0,50.0,0.0,11.4,False
+Carroll (WI) Pioneers,2026-01-31,Wheaton (IL) Thunder,Noah Hedrick,5,2,4,1,3,0,0,0,0,0,0,0,0,0,0,50.0,33.3,,5.1,False
+Carroll (WI) Pioneers,2026-01-31,Wheaton (IL) Thunder,Reid Olson,14,6,11,2,6,0,1,1,2,2,0,0,0,0,3,54.5,33.3,0.0,28.7,False
+Carroll (WI) Pioneers,2026-01-31,Wheaton (IL) Thunder,Soren Richardson,11,4,15,2,9,1,1,2,1,5,1,0,3,3,3,26.7,22.2,100.0,35.8,True
+Carthage Firebirds,2025-12-13,Carthage Firebirds,AJ Johnson,22,8,19,4,7,2,3,3,1,1,0,0,2,1,4,42.1,57.1,66.7,30.9,False
+Carthage Firebirds,2025-12-13,Carthage Firebirds,AJ Williams,6,2,3,2,3,0,0,0,3,3,0,0,1,0,3,66.7,66.7,,24.2,False
+Carthage Firebirds,2025-12-13,Carthage Firebirds,Antuan Nesbitt,5,2,3,0,0,1,2,0,1,3,2,0,0,2,1,66.7,,50.0,28.5,False
+Carthage Firebirds,2025-12-13,Carthage Firebirds,Chris Schlesinger,6,3,8,0,2,0,1,0,2,2,1,2,1,2,2,37.5,0.0,0.0,22.5,False
+Carthage Firebirds,2025-12-13,Carthage Firebirds,Griffin Daun,5,2,5,0,2,1,2,2,4,2,0,0,0,1,6,40.0,0.0,50.0,28.5,False
+Carthage Firebirds,2025-12-13,Carthage Firebirds,Jabe Haith,2,1,3,0,0,0,0,0,4,3,0,0,0,1,4,33.3,,,8.9,False
+Carthage Firebirds,2025-12-13,Carthage Firebirds,Riley Brooks,14,5,9,4,6,0,0,0,3,2,1,0,2,3,3,55.6,66.7,,22.4,False
+Carthage Firebirds,2025-12-13,Carthage Firebirds,Ryan Johnson,17,7,12,0,1,3,5,3,8,3,0,1,1,3,11,58.3,0.0,60.0,31.4,False
+Carthage Firebirds,2025-12-13,Wheaton (IL) Thunder,Brady Wynja,0,0,2,0,0,0,0,1,4,1,0,0,0,2,5,0.0,,,13.8,False
+Carthage Firebirds,2025-12-13,Wheaton (IL) Thunder,Carson Grier,14,5,10,1,2,3,5,0,4,4,0,0,1,4,4,50.0,50.0,60.0,26.0,True
+Carthage Firebirds,2025-12-13,Wheaton (IL) Thunder,Christian Veirs,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,1.8,False
+Carthage Firebirds,2025-12-13,Wheaton (IL) Thunder,Devin Martin,8,4,7,0,1,0,1,1,1,0,0,0,1,1,2,57.1,0.0,0.0,29.5,True
+Carthage Firebirds,2025-12-13,Wheaton (IL) Thunder,Jace Olson,0,0,2,0,0,0,1,0,1,1,0,1,0,0,1,0.0,,0.0,10.7,False
+Carthage Firebirds,2025-12-13,Wheaton (IL) Thunder,Kyan VanderWoude,10,4,12,0,2,2,2,1,7,0,2,0,2,1,8,33.3,0.0,100.0,32.2,True
+Carthage Firebirds,2025-12-13,Wheaton (IL) Thunder,Kyle Neibch,3,1,5,1,5,0,0,1,2,1,0,0,0,1,3,20.0,20.0,,21.6,True
+Carthage Firebirds,2025-12-13,Wheaton (IL) Thunder,Noah Hedrick,3,1,2,1,2,0,0,0,1,0,0,0,1,0,1,50.0,50.0,,4.4,False
+Carthage Firebirds,2025-12-13,Wheaton (IL) Thunder,Reid Olson,0,0,3,0,3,0,0,0,1,2,0,0,0,1,1,0.0,0.0,,21.6,False
+Carthage Firebirds,2025-12-13,Wheaton (IL) Thunder,Soren Richardson,19,7,14,1,4,4,4,1,1,1,1,0,3,2,2,50.0,25.0,100.0,35.7,True
+Carthage Firebirds,2026-02-18,Carthage Firebirds,AJ Williams,9,3,6,3,5,0,0,1,2,0,0,0,0,4,3,50.0,60.0,,24.1,False
+Carthage Firebirds,2026-02-18,Carthage Firebirds,Antuan Nesbitt,4,1,1,0,0,2,2,0,1,2,0,0,3,2,1,100.0,,100.0,24.4,False
+Carthage Firebirds,2026-02-18,Carthage Firebirds,Chris Schlesinger,8,2,5,0,0,4,4,0,6,3,0,1,3,5,6,40.0,,100.0,21.2,False
+Carthage Firebirds,2026-02-18,Carthage Firebirds,Griffin Daun,10,5,7,0,1,0,1,0,6,1,1,0,2,4,6,71.4,0.0,0.0,26.3,False
+Carthage Firebirds,2026-02-18,Carthage Firebirds,Jabe Haith,8,4,7,0,0,0,0,0,0,2,0,0,0,2,0,57.1,,,24.0,False
+Carthage Firebirds,2026-02-18,Carthage Firebirds,Mason Miller,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,4.4,False
+Carthage Firebirds,2026-02-18,Carthage Firebirds,Riley Brooks,26,8,16,4,9,6,7,1,9,1,0,0,1,2,10,50.0,44.4,85.7,37.9,False
+Carthage Firebirds,2026-02-18,Carthage Firebirds,Ryan Johnson,23,8,13,1,2,6,11,1,4,5,0,1,3,3,5,61.5,50.0,54.5,35.5,False
+Carthage Firebirds,2026-02-18,Wheaton (IL) Thunder,Brady Wynja,6,3,5,0,1,0,0,0,1,0,0,0,1,5,1,60.0,0.0,,14.9,True
+Carthage Firebirds,2026-02-18,Wheaton (IL) Thunder,Carson Grier,12,4,8,1,1,3,4,3,6,3,3,0,0,3,9,50.0,100.0,75.0,31.2,True
+Carthage Firebirds,2026-02-18,Wheaton (IL) Thunder,Devin Martin,19,6,7,0,1,7,9,0,4,5,1,0,0,2,4,85.7,0.0,77.8,37.8,True
+Carthage Firebirds,2026-02-18,Wheaton (IL) Thunder,Jace Olson,0,0,0,0,0,0,0,0,0,0,0,1,0,2,0,,,,11.3,False
+Carthage Firebirds,2026-02-18,Wheaton (IL) Thunder,Kyan VanderWoude,12,5,11,0,1,2,2,3,3,1,1,0,1,1,6,45.5,0.0,100.0,23.3,True
+Carthage Firebirds,2026-02-18,Wheaton (IL) Thunder,Kyle Grier,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0.0,0.0,,1.0,False
+Carthage Firebirds,2026-02-18,Wheaton (IL) Thunder,Kyle Neibch,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,,,,0.8,False
+Carthage Firebirds,2026-02-18,Wheaton (IL) Thunder,Luca Carbonaro,9,3,5,2,3,1,2,1,3,1,0,0,0,1,4,60.0,66.7,50.0,12.6,False
+Carthage Firebirds,2026-02-18,Wheaton (IL) Thunder,Noah Hedrick,7,3,5,1,3,0,0,0,4,1,2,0,0,3,4,60.0,33.3,,20.3,False
+Carthage Firebirds,2026-02-18,Wheaton (IL) Thunder,Reid Olson,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,6.5,False
+Carthage Firebirds,2026-02-18,Wheaton (IL) Thunder,Soren Richardson,31,12,25,2,7,5,7,1,3,3,1,0,1,4,4,48.0,28.6,71.4,38.2,True
+Chicago Maroons,2026-01-03,Chicago Maroons,Arhan Lapsiwala,4,2,3,0,1,0,0,0,0,0,1,0,0,0,0,66.7,0.0,,3.9,False
+Chicago Maroons,2026-01-03,Chicago Maroons,Ben Chasin,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,2.8,False
+Chicago Maroons,2026-01-03,Chicago Maroons,Blake Hawthorne,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,,,,2.8,False
+Chicago Maroons,2026-01-03,Chicago Maroons,Daniel Cochran,4,2,6,0,3,0,0,3,4,4,1,2,2,1,7,33.3,0.0,,22.8,False
+Chicago Maroons,2026-01-03,Chicago Maroons,Eamonn Kenah,16,5,8,2,3,4,5,1,2,3,1,1,1,2,3,62.5,66.7,80.0,29.6,False
+Chicago Maroons,2026-01-03,Chicago Maroons,Jacob Randall,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.6,False
+Chicago Maroons,2026-01-03,Chicago Maroons,Joe Berry,14,5,6,2,3,2,2,0,2,2,1,1,2,3,2,83.3,66.7,100.0,26.4,False
+Chicago Maroons,2026-01-03,Chicago Maroons,LJ Moore,2,1,1,0,0,0,0,0,1,0,0,0,0,0,1,100.0,,,3.4,False
+Chicago Maroons,2026-01-03,Chicago Maroons,Luke Smith,2,1,1,0,0,0,0,1,1,2,2,0,1,1,2,100.0,,,14.1,False
+Chicago Maroons,2026-01-03,Chicago Maroons,Nick Roper,25,10,14,0,1,5,5,4,11,1,0,0,1,2,15,71.4,0.0,100.0,28.2,False
+Chicago Maroons,2026-01-03,Chicago Maroons,Noah Pit,11,4,8,3,6,0,0,0,0,0,0,0,1,2,0,50.0,50.0,,15.3,False
+Chicago Maroons,2026-01-03,Chicago Maroons,Phillip Lawrence,4,2,4,0,1,0,0,0,0,0,0,0,1,0,0,50.0,0.0,,15.1,False
+Chicago Maroons,2026-01-03,Chicago Maroons,Shane Regan,12,5,8,0,2,2,4,0,0,4,0,0,1,3,0,62.5,0.0,50.0,32.4,False
+Chicago Maroons,2026-01-03,Wheaton (IL) Thunder,Brady Wynja,8,4,8,0,0,0,0,4,3,0,0,1,2,3,7,50.0,,,24.9,True
+Chicago Maroons,2026-01-03,Wheaton (IL) Thunder,Carson Grier,9,3,9,0,1,3,3,0,2,1,0,0,2,3,2,33.3,0.0,100.0,32.2,True
+Chicago Maroons,2026-01-03,Wheaton (IL) Thunder,Devin Martin,6,2,4,0,0,2,3,0,1,4,0,0,5,1,1,50.0,,66.7,22.4,True
+Chicago Maroons,2026-01-03,Wheaton (IL) Thunder,Evan Montandon,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.8,False
+Chicago Maroons,2026-01-03,Wheaton (IL) Thunder,Jace Olson,3,1,2,1,1,0,0,0,3,1,0,0,0,2,3,50.0,100.0,,26.5,False
+Chicago Maroons,2026-01-03,Wheaton (IL) Thunder,Jack Speers,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.8,False
+Chicago Maroons,2026-01-03,Wheaton (IL) Thunder,Kenny Donnelly,2,1,2,0,1,0,0,0,0,0,0,0,0,0,0,50.0,0.0,,1.8,False
+Chicago Maroons,2026-01-03,Wheaton (IL) Thunder,Kyan VanderWoude,8,2,8,1,3,3,4,1,0,0,2,0,1,1,1,25.0,33.3,75.0,21.8,True
+Chicago Maroons,2026-01-03,Wheaton (IL) Thunder,Kyle Neibch,6,2,4,2,4,0,0,0,0,0,0,0,0,3,0,50.0,50.0,,9.1,False
+Chicago Maroons,2026-01-03,Wheaton (IL) Thunder,Reid Olson,3,1,2,1,2,0,0,0,1,2,0,0,0,1,1,50.0,50.0,,22.1,False
+Chicago Maroons,2026-01-03,Wheaton (IL) Thunder,Soren Richardson,28,11,20,4,9,2,2,0,1,2,2,0,2,1,1,55.0,44.4,100.0,32.8,True
+Concordia Wisconsin Falcons,2025-11-08,Concordia Wisconsin Falcons,Alex Greene,0,0,3,0,2,0,1,0,1,0,1,1,0,3,1,0.0,0.0,0.0,15.4,False
+Concordia Wisconsin Falcons,2025-11-08,Concordia Wisconsin Falcons,Casey Verhagen,27,10,17,0,0,7,9,1,1,8,2,0,1,2,2,58.8,,77.8,38.6,False
+Concordia Wisconsin Falcons,2025-11-08,Concordia Wisconsin Falcons,JD Davison,5,2,2,0,0,1,3,0,3,0,0,0,0,1,3,100.0,,33.3,16.5,False
+Concordia Wisconsin Falcons,2025-11-08,Concordia Wisconsin Falcons,Jacob Christjohn,1,0,2,0,1,1,2,0,1,0,0,0,0,1,1,0.0,0.0,50.0,5.9,False
+Concordia Wisconsin Falcons,2025-11-08,Concordia Wisconsin Falcons,Jaden Guyton,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,3.0,False
+Concordia Wisconsin Falcons,2025-11-08,Concordia Wisconsin Falcons,Javanni Blackman,9,4,5,0,0,1,2,1,2,1,1,0,1,4,3,80.0,,50.0,23.4,False
+Concordia Wisconsin Falcons,2025-11-08,Concordia Wisconsin Falcons,Logan Landers,27,7,15,0,1,13,15,2,5,2,1,0,1,4,7,46.7,0.0,86.7,28.8,False
+Concordia Wisconsin Falcons,2025-11-08,Concordia Wisconsin Falcons,Luke Eggemeyer,0,0,1,0,1,0,0,0,2,0,0,0,1,2,2,0.0,0.0,,15.9,False
+Concordia Wisconsin Falcons,2025-11-08,Concordia Wisconsin Falcons,Matt Merlo,18,6,6,2,2,4,4,0,5,0,0,0,1,1,5,100.0,100.0,100.0,28.2,False
+Concordia Wisconsin Falcons,2025-11-08,Concordia Wisconsin Falcons,Severin Hilt,8,3,5,2,4,0,0,0,3,0,1,0,1,3,3,60.0,50.0,,23.0,False
+Concordia Wisconsin Falcons,2025-11-08,Wheaton (IL) Thunder,Brady Wynja,5,1,3,0,1,3,4,0,4,1,1,0,0,3,4,33.3,0.0,75.0,18.3,True
+Concordia Wisconsin Falcons,2025-11-08,Wheaton (IL) Thunder,Carson Grier,9,4,5,0,0,1,4,1,2,1,1,0,0,4,3,80.0,,25.0,15.4,True
+Concordia Wisconsin Falcons,2025-11-08,Wheaton (IL) Thunder,Christian Veirs,2,0,0,0,0,2,2,0,1,0,0,0,0,3,1,,,100.0,2.5,False
+Concordia Wisconsin Falcons,2025-11-08,Wheaton (IL) Thunder,Devin Martin,12,4,7,1,1,3,4,1,3,2,1,0,3,2,4,57.1,100.0,75.0,26.7,True
+Concordia Wisconsin Falcons,2025-11-08,Wheaton (IL) Thunder,Kyan VanderWoude,26,12,22,1,4,1,2,3,2,4,0,1,2,2,5,54.5,25.0,50.0,36.7,True
+Concordia Wisconsin Falcons,2025-11-08,Wheaton (IL) Thunder,Kyle Neibch,18,6,9,5,8,1,2,2,2,2,0,0,0,4,4,66.7,62.5,50.0,28.7,False
+Concordia Wisconsin Falcons,2025-11-08,Wheaton (IL) Thunder,Noah Hedrick,0,0,0,0,0,0,0,1,1,2,0,0,2,3,2,,,,12.6,False
+Concordia Wisconsin Falcons,2025-11-08,Wheaton (IL) Thunder,Reid Olson,9,3,5,3,5,0,0,0,0,2,0,0,1,3,0,60.0,60.0,,26.6,False
+Concordia Wisconsin Falcons,2025-11-08,Wheaton (IL) Thunder,Soren Richardson,18,6,14,1,4,5,6,1,5,4,0,0,1,2,6,42.9,25.0,83.3,31.1,True
+Elmhurst Bluejays,2025-12-06,Elmhurst Bluejays,Aidyn Boone,14,5,10,2,6,2,2,3,4,1,1,1,1,4,7,50.0,33.3,100.0,31.2,False
+Elmhurst Bluejays,2025-12-06,Elmhurst Bluejays,Dominic Trelenberg,27,7,14,6,10,7,8,2,0,1,0,0,3,4,2,50.0,60.0,87.5,35.4,False
+Elmhurst Bluejays,2025-12-06,Elmhurst Bluejays,EJ Marshall,2,1,2,0,0,0,2,0,3,1,0,0,1,3,3,50.0,,0.0,12.9,False
+Elmhurst Bluejays,2025-12-06,Elmhurst Bluejays,Jack Cherry,4,2,3,0,1,0,0,1,1,4,0,0,0,1,2,66.7,0.0,,20.4,False
+Elmhurst Bluejays,2025-12-06,Elmhurst Bluejays,John Witcher,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,0.4,False
+Elmhurst Bluejays,2025-12-06,Elmhurst Bluejays,Luke Smith,11,4,13,1,7,2,3,0,3,1,2,0,1,1,3,30.8,14.3,66.7,23.1,False
+Elmhurst Bluejays,2025-12-06,Elmhurst Bluejays,Sebastian Blachut,12,3,6,1,3,5,8,2,1,3,0,1,2,3,3,50.0,33.3,62.5,21.7,False
+Elmhurst Bluejays,2025-12-06,Elmhurst Bluejays,Talen Pearson,4,2,4,0,1,0,0,0,4,1,1,1,1,2,4,50.0,0.0,,25.5,False
+Elmhurst Bluejays,2025-12-06,Elmhurst Bluejays,Vinnie Adjahoungbeta,7,3,7,1,4,0,0,2,4,1,1,0,2,4,6,42.9,25.0,,28.0,False
+Elmhurst Bluejays,2025-12-06,Wheaton (IL) Thunder,Brady Wynja,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,,,,4.2,False
+Elmhurst Bluejays,2025-12-06,Wheaton (IL) Thunder,Carson Grier,14,5,9,1,2,3,6,5,7,2,1,0,0,2,12,55.6,50.0,50.0,29.7,True
+Elmhurst Bluejays,2025-12-06,Wheaton (IL) Thunder,Devin Martin,14,5,5,2,2,2,2,0,3,3,0,0,2,1,3,100.0,100.0,100.0,32.6,True
+Elmhurst Bluejays,2025-12-06,Wheaton (IL) Thunder,Jace Olson,0,0,1,0,1,0,0,0,0,0,0,1,0,2,0,0.0,0.0,,5.4,False
+Elmhurst Bluejays,2025-12-06,Wheaton (IL) Thunder,Kyan VanderWoude,16,3,7,1,3,9,13,0,4,2,2,0,5,4,4,42.9,33.3,69.2,33.7,True
+Elmhurst Bluejays,2025-12-06,Wheaton (IL) Thunder,Kyle Neibch,0,0,2,0,2,0,0,0,1,0,0,0,1,4,1,0.0,0.0,,10.6,True
+Elmhurst Bluejays,2025-12-06,Wheaton (IL) Thunder,Noah Hedrick,11,4,9,3,6,0,0,0,2,1,1,0,1,1,2,44.4,50.0,,19.6,False
+Elmhurst Bluejays,2025-12-06,Wheaton (IL) Thunder,Reid Olson,5,1,5,1,5,2,3,0,0,0,1,0,2,1,0,20.0,20.0,66.7,24.9,False
+Elmhurst Bluejays,2025-12-06,Wheaton (IL) Thunder,Soren Richardson,22,7,13,1,5,7,9,1,6,4,0,0,0,3,7,53.8,20.0,77.8,37.9,True
+Elmhurst Bluejays,2026-02-11,Elmhurst Bluejays,Aidyn Boone,9,2,5,2,4,3,4,0,1,2,2,0,1,3,1,40.0,50.0,75.0,25.2,False
+Elmhurst Bluejays,2026-02-11,Elmhurst Bluejays,Andy Colvin,0,0,1,0,0,0,0,0,1,1,0,0,0,0,1,0.0,,,4.7,False
+Elmhurst Bluejays,2026-02-11,Elmhurst Bluejays,Dominic Trelenberg,23,8,13,3,6,4,7,2,7,2,0,0,2,2,9,61.5,50.0,57.1,38.7,False
+Elmhurst Bluejays,2026-02-11,Elmhurst Bluejays,EJ Marshall,12,4,6,1,1,3,3,1,0,2,0,0,1,2,1,66.7,100.0,100.0,19.3,False
+Elmhurst Bluejays,2026-02-11,Elmhurst Bluejays,Jack Cherry,4,1,1,0,0,2,2,0,2,1,1,0,0,0,2,100.0,,100.0,17.2,False
+Elmhurst Bluejays,2026-02-11,Elmhurst Bluejays,Luke Smith,14,6,12,2,7,0,0,0,1,1,1,0,0,1,1,50.0,28.6,,27.8,False
+Elmhurst Bluejays,2026-02-11,Elmhurst Bluejays,Sebastian Blachut,6,2,5,0,0,2,2,0,1,2,3,0,0,2,1,40.0,,100.0,24.2,False
+Elmhurst Bluejays,2026-02-11,Elmhurst Bluejays,Talen Pearson,7,2,4,1,2,2,2,0,3,1,0,0,0,3,3,50.0,50.0,100.0,15.5,False
+Elmhurst Bluejays,2026-02-11,Elmhurst Bluejays,Vinnie Adjahoungbeta,5,1,9,1,3,2,2,1,5,1,0,0,2,3,6,11.1,33.3,100.0,25.5,False
+Elmhurst Bluejays,2026-02-11,Wheaton (IL) Thunder,Brady Wynja,8,4,5,0,0,0,0,0,7,0,0,0,0,1,7,80.0,,,25.2,True
+Elmhurst Bluejays,2026-02-11,Wheaton (IL) Thunder,Carson Grier,21,9,11,1,1,2,5,4,4,1,1,0,3,0,8,81.8,100.0,40.0,36.5,True
+Elmhurst Bluejays,2026-02-11,Wheaton (IL) Thunder,Devin Martin,4,2,5,0,2,0,0,0,2,4,0,1,2,2,2,40.0,0.0,,28.2,True
+Elmhurst Bluejays,2026-02-11,Wheaton (IL) Thunder,Kyan VanderWoude,2,1,3,0,1,0,0,0,5,1,1,0,1,4,5,33.3,0.0,,18.5,True
+Elmhurst Bluejays,2026-02-11,Wheaton (IL) Thunder,Kyle Neibch,0,0,1,0,1,0,0,0,1,0,0,0,0,1,1,0.0,0.0,,4.7,False
+Elmhurst Bluejays,2026-02-11,Wheaton (IL) Thunder,Luca Carbonaro,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.1,False
+Elmhurst Bluejays,2026-02-11,Wheaton (IL) Thunder,Noah Hedrick,2,1,2,0,1,0,0,0,4,0,0,0,1,3,4,50.0,0.0,,16.6,False
+Elmhurst Bluejays,2026-02-11,Wheaton (IL) Thunder,Reid Olson,6,2,9,2,8,0,0,0,1,4,0,0,0,1,1,22.2,25.0,,28.5,False
+Elmhurst Bluejays,2026-02-11,Wheaton (IL) Thunder,Soren Richardson,36,11,18,6,10,8,9,0,3,4,0,0,5,4,3,61.1,60.0,88.9,37.7,True
+Hope Flying Dutchmen,2025-11-15,Hope Flying Dutchmen,Avery Sanchez,13,5,5,1,1,2,2,0,2,3,0,0,2,1,2,100.0,100.0,100.0,21.2,False
+Hope Flying Dutchmen,2025-11-15,Hope Flying Dutchmen,Brady Miller,4,2,6,0,2,0,0,0,1,0,0,0,0,1,1,33.3,0.0,,10.3,False
+Hope Flying Dutchmen,2025-11-15,Hope Flying Dutchmen,Brendan Cargill,12,5,11,2,4,0,0,0,10,1,2,0,2,4,10,45.5,50.0,,30.1,False
+Hope Flying Dutchmen,2025-11-15,Hope Flying Dutchmen,Brett Bultsma,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,5.4,False
+Hope Flying Dutchmen,2025-11-15,Hope Flying Dutchmen,Charles Howell,0,0,2,0,2,0,0,0,2,2,0,0,1,4,2,0.0,0.0,,24.0,False
+Hope Flying Dutchmen,2025-11-15,Hope Flying Dutchmen,Justice Mims,2,1,2,0,0,0,0,2,2,0,1,1,2,0,4,50.0,,,14.2,False
+Hope Flying Dutchmen,2025-11-15,Hope Flying Dutchmen,Kyle Blauch,7,2,8,0,0,3,5,2,2,0,0,0,0,3,4,25.0,,60.0,15.9,False
+Hope Flying Dutchmen,2025-11-15,Hope Flying Dutchmen,Marcus Wourman,22,8,17,2,4,4,5,0,2,3,2,0,0,4,2,47.1,50.0,80.0,30.4,False
+Hope Flying Dutchmen,2025-11-15,Hope Flying Dutchmen,Parker Hovey,14,7,12,0,2,0,0,1,8,3,0,3,2,1,9,58.3,0.0,,31.7,False
+Hope Flying Dutchmen,2025-11-15,Hope Flying Dutchmen,Simon Neuhaus,2,0,0,0,0,2,3,1,1,1,1,2,2,1,2,,,66.7,15.1,False
+Hope Flying Dutchmen,2025-11-15,Wheaton (IL) Thunder,Brady Wynja,4,1,3,0,0,2,4,3,3,0,0,1,0,4,6,33.3,,50.0,15.7,True
+Hope Flying Dutchmen,2025-11-15,Wheaton (IL) Thunder,Carson Grier,24,12,20,0,2,0,0,6,6,2,1,0,2,3,12,60.0,0.0,,34.2,True
+Hope Flying Dutchmen,2025-11-15,Wheaton (IL) Thunder,Christian Veirs,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.2,False
+Hope Flying Dutchmen,2025-11-15,Wheaton (IL) Thunder,Devin Martin,15,4,9,0,2,7,9,0,1,5,2,1,2,2,1,44.4,0.0,77.8,34.5,True
+Hope Flying Dutchmen,2025-11-15,Wheaton (IL) Thunder,Kyan VanderWoude,8,2,10,0,2,4,6,0,9,0,0,0,2,4,9,20.0,0.0,66.7,29.5,True
+Hope Flying Dutchmen,2025-11-15,Wheaton (IL) Thunder,Kyle Neibch,8,3,5,2,4,0,0,0,4,0,2,0,0,0,4,60.0,50.0,,27.0,False
+Hope Flying Dutchmen,2025-11-15,Wheaton (IL) Thunder,Noah Hedrick,0,0,2,0,0,0,0,1,2,0,0,0,0,1,3,0.0,,,6.3,False
+Hope Flying Dutchmen,2025-11-15,Wheaton (IL) Thunder,Reid Olson,6,2,4,2,4,0,0,0,1,1,0,0,1,0,1,50.0,50.0,,15.6,False
+Hope Flying Dutchmen,2025-11-15,Wheaton (IL) Thunder,Soren Richardson,10,4,17,1,5,1,1,2,2,1,1,0,2,1,4,23.5,20.0,100.0,35.2,True
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,Anthony Kemp,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0.0,,,1.5,False
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,Brady Kuehl,4,2,5,0,1,0,2,0,0,0,0,1,0,2,0,40.0,0.0,0.0,6.0,False
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,Brady Ruggles,0,0,2,0,1,0,0,3,0,0,0,0,0,0,3,0.0,0.0,,4.0,False
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,Casen Lawrence,22,8,11,6,9,0,0,0,2,2,0,0,1,2,2,72.7,66.7,,32.5,False
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,Connor Williams,0,0,2,0,1,0,0,0,0,0,1,0,0,0,0,0.0,0.0,,5.3,False
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,David Williams,2,0,0,0,0,2,2,0,0,2,1,0,2,2,0,,,100.0,10.5,False
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,Dylan Schmidt,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,,,,1.5,False
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,Jackson Niego,3,1,5,1,3,0,0,0,1,8,2,0,3,1,1,20.0,33.3,,28.3,False
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,Karlo Colak,12,4,11,2,3,2,2,1,6,4,2,0,3,0,7,36.4,66.7,100.0,34.0,False
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,Luke Meyer,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,,,,0.9,False
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,Mason Funk,4,1,8,0,2,2,2,2,4,2,4,3,3,4,6,12.5,0.0,100.0,28.9,False
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,Nathan Boldt,3,1,2,1,1,0,0,1,3,0,0,1,0,1,4,50.0,100.0,,11.7,False
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,Nick Tingley,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,0.9,False
+Illinois Wesleyan Titans,2026-01-17,Illinois Wesleyan Titans,Noah Cleveland,30,13,17,1,2,3,5,5,8,3,2,1,1,1,13,76.5,50.0,60.0,32.8,False
+Illinois Wesleyan Titans,2026-01-17,Wheaton (IL) Thunder,Brady Wynja,9,3,6,0,0,3,4,4,4,0,0,1,2,2,8,50.0,,75.0,25.4,False
+Illinois Wesleyan Titans,2026-01-17,Wheaton (IL) Thunder,Carson Grier,4,2,6,0,0,0,0,1,3,3,1,0,2,5,4,33.3,,,16.7,True
+Illinois Wesleyan Titans,2026-01-17,Wheaton (IL) Thunder,Devin Martin,2,1,4,0,3,0,0,0,2,2,0,0,2,2,2,25.0,0.0,,26.1,True
+Illinois Wesleyan Titans,2026-01-17,Wheaton (IL) Thunder,Jace Olson,0,0,2,0,1,0,0,1,1,0,0,0,0,0,2,0.0,0.0,,7.9,True
+Illinois Wesleyan Titans,2026-01-17,Wheaton (IL) Thunder,Kyan VanderWoude,30,9,15,5,8,7,7,2,3,2,0,0,2,0,5,60.0,62.5,100.0,35.4,True
+Illinois Wesleyan Titans,2026-01-17,Wheaton (IL) Thunder,Kyle Neibch,0,0,1,0,1,0,0,0,0,1,0,1,0,1,0,0.0,0.0,,10.5,False
+Illinois Wesleyan Titans,2026-01-17,Wheaton (IL) Thunder,Luca Carbonaro,2,0,4,0,2,2,2,0,2,1,0,1,2,0,2,0.0,0.0,100.0,16.4,False
+Illinois Wesleyan Titans,2026-01-17,Wheaton (IL) Thunder,Noah Brumfield,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0.0,,,0.9,False
+Illinois Wesleyan Titans,2026-01-17,Wheaton (IL) Thunder,Noah Hedrick,0,0,3,0,3,0,0,0,1,1,0,0,1,0,1,0.0,0.0,,6.3,False
+Illinois Wesleyan Titans,2026-01-17,Wheaton (IL) Thunder,Reid Olson,5,1,3,1,2,2,2,0,3,1,2,0,1,1,3,33.3,50.0,100.0,18.7,False
+Illinois Wesleyan Titans,2026-01-17,Wheaton (IL) Thunder,Soren Richardson,9,4,13,1,6,0,0,3,4,1,3,0,5,2,7,30.8,16.7,,34.5,True
+Illinois Wesleyan Titans,2026-02-04,Illinois Wesleyan Titans,Brady Kuehl,0,0,3,0,2,0,0,1,1,1,0,0,0,3,2,0.0,0.0,,9.5,False
+Illinois Wesleyan Titans,2026-02-04,Illinois Wesleyan Titans,Casen Lawrence,24,8,12,8,12,0,0,0,1,0,0,0,0,2,1,66.7,66.7,,36.2,False
+Illinois Wesleyan Titans,2026-02-04,Illinois Wesleyan Titans,Connor Williams,13,5,5,3,3,0,0,0,1,1,1,0,0,2,1,100.0,100.0,,13.8,False
+Illinois Wesleyan Titans,2026-02-04,Illinois Wesleyan Titans,David Williams,3,1,1,1,1,0,0,0,1,2,0,0,0,0,1,100.0,100.0,,10.4,False
+Illinois Wesleyan Titans,2026-02-04,Illinois Wesleyan Titans,Jackson Niego,3,1,5,1,2,0,0,1,0,1,1,0,1,0,1,20.0,50.0,,23.6,False
+Illinois Wesleyan Titans,2026-02-04,Illinois Wesleyan Titans,Karlo Colak,16,5,9,3,6,3,5,1,6,1,1,1,3,2,7,55.6,50.0,60.0,32.3,False
+Illinois Wesleyan Titans,2026-02-04,Illinois Wesleyan Titans,Mason Funk,11,5,12,1,4,0,0,0,7,2,0,4,0,2,7,41.7,25.0,,34.3,False
+Illinois Wesleyan Titans,2026-02-04,Illinois Wesleyan Titans,Nathan Boldt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.8,False
+Illinois Wesleyan Titans,2026-02-04,Illinois Wesleyan Titans,Noah Cleveland,12,6,11,0,2,0,5,6,11,9,1,2,7,0,17,54.5,0.0,0.0,35.6,False
+Illinois Wesleyan Titans,2026-02-04,Wheaton (IL) Thunder,Brady Wynja,13,6,10,1,3,0,1,2,2,0,0,0,1,1,4,60.0,33.3,0.0,29.2,True
+Illinois Wesleyan Titans,2026-02-04,Wheaton (IL) Thunder,Carson Grier,15,5,11,3,4,2,2,1,2,1,2,1,1,1,3,45.5,75.0,100.0,34.8,True
+Illinois Wesleyan Titans,2026-02-04,Wheaton (IL) Thunder,Devin Martin,0,0,5,0,3,0,0,0,1,1,1,0,0,1,1,0.0,0.0,,14.5,True
+Illinois Wesleyan Titans,2026-02-04,Wheaton (IL) Thunder,Kyan VanderWoude,10,5,13,0,3,0,0,1,7,1,0,0,0,1,8,38.5,0.0,,33.0,True
+Illinois Wesleyan Titans,2026-02-04,Wheaton (IL) Thunder,Kyle Neibch,0,0,2,0,2,0,0,0,1,0,0,0,0,0,1,0.0,0.0,,4.2,False
+Illinois Wesleyan Titans,2026-02-04,Wheaton (IL) Thunder,Luca Carbonaro,1,0,0,0,0,1,2,0,1,0,0,1,0,1,1,,,50.0,5.9,False
+Illinois Wesleyan Titans,2026-02-04,Wheaton (IL) Thunder,Noah Hedrick,3,1,2,1,2,0,0,0,0,4,1,0,0,0,0,50.0,50.0,,12.4,False
+Illinois Wesleyan Titans,2026-02-04,Wheaton (IL) Thunder,Reid Olson,9,4,6,1,1,0,1,1,3,4,1,0,1,0,4,66.7,100.0,0.0,26.0,False
+Illinois Wesleyan Titans,2026-02-04,Wheaton (IL) Thunder,Soren Richardson,20,7,14,2,5,4,4,2,1,3,2,0,3,2,3,50.0,40.0,100.0,38.3,True
+Lake Forest Foresters,2025-11-12,Lake Forest Foresters,Alex Brown,2,1,4,0,0,0,0,3,1,1,1,0,0,4,4,25.0,,,19.2,False
+Lake Forest Foresters,2025-11-12,Lake Forest Foresters,Alex Forowycz,19,8,19,1,6,2,2,0,5,4,1,1,0,2,5,42.1,16.7,100.0,31.1,False
+Lake Forest Foresters,2025-11-12,Lake Forest Foresters,Anthony Favia,12,4,6,2,4,2,2,0,4,2,0,0,3,2,4,66.7,50.0,100.0,20.7,False
+Lake Forest Foresters,2025-11-12,Lake Forest Foresters,Ben Bochicchio,3,1,1,1,1,0,0,0,0,0,0,0,1,0,0,100.0,100.0,,13.1,False
+Lake Forest Foresters,2025-11-12,Lake Forest Foresters,Chase Honarvar,4,2,2,0,0,0,0,1,1,0,0,1,0,0,2,100.0,,,7.0,False
+Lake Forest Foresters,2025-11-12,Lake Forest Foresters,Coltrane Marchand,6,2,4,0,1,2,2,0,3,4,2,2,0,5,3,50.0,0.0,100.0,23.2,False
+Lake Forest Foresters,2025-11-12,Lake Forest Foresters,Cristian Rodriguez,22,9,18,0,0,4,7,0,6,1,0,1,4,2,6,50.0,,57.1,32.3,False
+Lake Forest Foresters,2025-11-12,Lake Forest Foresters,Luke Arington,0,0,4,0,2,0,0,2,1,1,0,1,0,1,3,0.0,0.0,,12.4,False
+Lake Forest Foresters,2025-11-12,Lake Forest Foresters,Marko Visnjevac,10,3,5,0,2,4,4,1,3,1,4,0,2,4,4,60.0,0.0,100.0,19.4,False
+Lake Forest Foresters,2025-11-12,Lake Forest Foresters,Nikolas Popovic,11,5,8,0,0,1,1,0,1,3,2,0,2,0,1,62.5,,100.0,20.2,False
+Lake Forest Foresters,2025-11-12,Wheaton (IL) Thunder,Brady Wynja,4,1,3,0,0,2,4,1,2,0,0,2,0,2,3,33.3,,50.0,19.4,True
+Lake Forest Foresters,2025-11-12,Wheaton (IL) Thunder,Carson Grier,16,7,10,1,1,1,3,1,5,1,1,3,0,2,6,70.0,100.0,33.3,19.8,True
+Lake Forest Foresters,2025-11-12,Wheaton (IL) Thunder,Christian Veirs,2,1,2,0,1,0,0,0,1,0,0,0,1,1,1,50.0,0.0,,7.7,False
+Lake Forest Foresters,2025-11-12,Wheaton (IL) Thunder,Devin Martin,15,4,8,0,0,7,8,0,3,11,3,0,4,1,3,50.0,,87.5,33.9,True
+Lake Forest Foresters,2025-11-12,Wheaton (IL) Thunder,Kyan VanderWoude,14,4,13,2,4,4,5,0,8,1,1,0,6,2,8,30.8,50.0,80.0,36.0,True
+Lake Forest Foresters,2025-11-12,Wheaton (IL) Thunder,Kyle Neibch,12,4,8,4,7,0,0,1,2,1,1,0,1,1,3,50.0,57.1,,31.2,False
+Lake Forest Foresters,2025-11-12,Wheaton (IL) Thunder,Noah Hedrick,3,1,1,1,1,0,0,1,2,2,0,0,0,1,3,100.0,100.0,,7.6,False
+Lake Forest Foresters,2025-11-12,Wheaton (IL) Thunder,Reid Olson,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,,,,8.2,False
+Lake Forest Foresters,2025-11-12,Wheaton (IL) Thunder,Soren Richardson,27,8,14,3,8,8,9,1,3,4,0,0,2,2,4,57.1,37.5,88.9,34.9,True
+Manchester Spartans,2025-11-25,Manchester Spartans,Chris Hardy,0,0,0,0,0,0,0,0,5,1,0,1,0,1,5,,,,21.6,False
+Manchester Spartans,2025-11-25,Manchester Spartans,Clay McCorkle,23,10,14,3,5,0,0,1,1,4,1,0,2,2,2,71.4,60.0,,39.6,False
+Manchester Spartans,2025-11-25,Manchester Spartans,Jason Kobe,2,1,1,0,0,0,0,0,1,3,0,0,1,4,1,100.0,,,8.2,False
+Manchester Spartans,2025-11-25,Manchester Spartans,Logan Brace,8,4,6,0,0,0,0,4,2,1,1,0,1,5,6,66.7,,,30.7,False
+Manchester Spartans,2025-11-25,Manchester Spartans,Max Robertson,22,7,19,4,10,4,5,1,5,2,1,1,4,2,6,36.8,40.0,80.0,39.6,False
+Manchester Spartans,2025-11-25,Manchester Spartans,Talan Boehler,3,1,1,1,1,0,0,0,1,0,0,0,0,1,1,100.0,100.0,,18.7,False
+Manchester Spartans,2025-11-25,Manchester Spartans,Ty Lynas,30,12,26,4,12,2,2,3,1,4,4,0,2,2,4,46.2,33.3,100.0,39.6,False
+Manchester Spartans,2025-11-25,Wheaton (IL) Thunder,Brady Wynja,14,6,7,0,0,2,5,2,6,0,1,0,1,2,8,85.7,,40.0,18.9,True
+Manchester Spartans,2025-11-25,Wheaton (IL) Thunder,Carson Grier,19,9,14,1,2,0,0,1,4,3,2,0,3,0,5,64.3,50.0,,31.3,True
+Manchester Spartans,2025-11-25,Wheaton (IL) Thunder,Christian Veirs,4,1,1,0,0,2,2,0,0,1,0,0,0,0,0,100.0,,100.0,6.0,False
+Manchester Spartans,2025-11-25,Wheaton (IL) Thunder,Devin Martin,8,3,8,0,2,2,2,0,1,7,0,0,2,2,1,37.5,0.0,100.0,35.2,True
+Manchester Spartans,2025-11-25,Wheaton (IL) Thunder,Kyan VanderWoude,22,8,13,1,2,5,7,3,3,2,0,0,1,1,6,61.5,50.0,71.4,33.0,True
+Manchester Spartans,2025-11-25,Wheaton (IL) Thunder,Kyle Neibch,1,0,2,0,2,1,2,0,6,0,1,0,0,1,6,0.0,0.0,50.0,25.6,False
+Manchester Spartans,2025-11-25,Wheaton (IL) Thunder,Reid Olson,3,1,3,1,3,0,0,0,0,1,0,0,1,0,0,33.3,33.3,,18.9,False
+Manchester Spartans,2025-11-25,Wheaton (IL) Thunder,Soren Richardson,24,9,11,1,1,5,6,2,4,1,2,0,1,2,6,81.8,100.0,83.3,28.9,True
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Bryce Newsome,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.5,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Caden Nichols,2,1,7,0,3,0,0,1,1,0,1,0,0,1,2,14.3,0.0,,17.7,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Chris Ketchum,9,2,5,0,0,5,6,1,4,0,3,1,4,0,5,40.0,,83.3,15.1,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,David Hardesty,3,1,1,1,1,0,0,0,0,0,0,0,0,0,0,100.0,100.0,,0.5,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Eli Stipp,4,2,5,0,0,0,1,0,1,0,0,0,1,2,1,40.0,,0.0,13.0,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Jacob Aydelott,11,5,6,1,1,0,0,0,1,2,1,0,0,2,1,83.3,100.0,,16.2,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Jacob Bullock,2,1,2,0,1,0,0,1,1,0,0,0,0,1,2,50.0,0.0,,10.2,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Jacob Stellwagen,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.5,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Jamerr Campbell,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,,,,2.0,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Jason Pealer,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.5,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Kobe Anderson,9,2,5,0,0,5,5,0,2,1,1,0,2,1,2,40.0,,100.0,19.4,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Lane Thomann,10,5,11,0,0,0,0,3,1,2,0,1,0,0,4,45.5,,,26.6,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,McGrady Noyes,0,0,4,0,2,0,0,0,1,1,0,0,0,2,1,0.0,0.0,,23.5,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Nate Straughter,15,5,10,3,3,2,2,1,4,1,1,0,2,3,5,50.0,100.0,100.0,26.6,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Pat Origliasso,9,3,4,0,0,3,3,1,1,0,0,0,2,0,2,75.0,,100.0,8.9,False
+Millikin Big Blue,2026-01-14,Millikin Big Blue,Tionne Spates,2,1,3,0,0,0,0,3,4,0,0,0,2,2,7,33.3,,,17.3,False
+Millikin Big Blue,2026-01-14,Wheaton (IL) Thunder,Brady Wynja,0,0,1,0,0,0,0,0,1,0,0,0,1,3,1,0.0,,,6.9,False
+Millikin Big Blue,2026-01-14,Wheaton (IL) Thunder,Carson Grier,13,5,7,0,1,3,6,0,7,7,3,1,2,1,7,71.4,0.0,50.0,32.4,True
+Millikin Big Blue,2026-01-14,Wheaton (IL) Thunder,Devin Martin,3,1,3,1,3,0,0,1,3,5,2,0,2,3,4,33.3,33.3,,34.5,True
+Millikin Big Blue,2026-01-14,Wheaton (IL) Thunder,Jace Olson,0,0,0,0,0,0,0,0,2,1,0,0,0,0,2,,,,6.7,True
+Millikin Big Blue,2026-01-14,Wheaton (IL) Thunder,Kyan VanderWoude,15,7,11,1,4,0,0,0,5,3,1,0,3,2,5,63.6,25.0,,31.9,True
+Millikin Big Blue,2026-01-14,Wheaton (IL) Thunder,Kyle Neibch,12,4,7,4,6,0,0,2,1,1,0,0,0,0,3,57.1,66.7,,21.1,False
+Millikin Big Blue,2026-01-14,Wheaton (IL) Thunder,Luca Carbonaro,4,1,3,1,2,1,2,0,0,1,1,0,0,2,0,33.3,50.0,50.0,14.7,False
+Millikin Big Blue,2026-01-14,Wheaton (IL) Thunder,Noah Hedrick,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,3.6,False
+Millikin Big Blue,2026-01-14,Wheaton (IL) Thunder,Reid Olson,8,3,6,2,5,0,0,0,3,5,0,0,1,0,3,50.0,40.0,,14.5,False
+Millikin Big Blue,2026-01-14,Wheaton (IL) Thunder,Soren Richardson,33,11,19,6,9,5,6,1,0,2,0,0,3,2,1,57.9,66.7,83.3,32.4,True
+Millikin Big Blue,2026-02-21,Millikin Big Blue,Caden Nichols,0,0,1,0,1,0,0,0,4,2,0,0,0,0,4,0.0,0.0,,14.9,False
+Millikin Big Blue,2026-02-21,Millikin Big Blue,Chris Ketchum,14,6,8,0,0,2,6,3,4,1,1,1,1,3,7,75.0,,33.3,21.5,False
+Millikin Big Blue,2026-02-21,Millikin Big Blue,Eli Stipp,4,2,2,0,0,0,0,2,0,0,0,0,0,2,2,100.0,,,10.9,False
+Millikin Big Blue,2026-02-21,Millikin Big Blue,Ian Winkler,14,5,12,1,5,3,4,0,4,0,1,0,2,1,4,41.7,20.0,75.0,26.2,False
+Millikin Big Blue,2026-02-21,Millikin Big Blue,Jacob Bullock,2,1,1,0,0,0,0,0,1,0,0,0,0,1,1,100.0,,,9.8,False
+Millikin Big Blue,2026-02-21,Millikin Big Blue,Kobe Anderson,2,1,4,0,0,0,0,0,3,1,0,0,1,1,3,25.0,,,12.7,False
+Millikin Big Blue,2026-02-21,Millikin Big Blue,Lane Thomann,21,6,13,2,3,7,10,0,3,1,1,0,1,3,3,46.2,66.7,70.0,33.2,False
+Millikin Big Blue,2026-02-21,Millikin Big Blue,McGrady Noyes,0,0,1,0,0,0,0,0,3,0,0,0,2,2,3,0.0,,,12.0,False
+Millikin Big Blue,2026-02-21,Millikin Big Blue,Nate Straughter,11,4,9,0,2,3,4,0,4,1,0,0,2,4,4,44.4,0.0,75.0,27.5,False
+Millikin Big Blue,2026-02-21,Millikin Big Blue,Pat Origliasso,2,1,2,0,1,0,0,2,0,0,0,0,1,4,2,50.0,0.0,,16.1,False
+Millikin Big Blue,2026-02-21,Millikin Big Blue,Tionne Spates,0,0,2,0,0,0,0,0,3,2,1,1,1,2,3,0.0,,,13.3,False
+Millikin Big Blue,2026-02-21,Wheaton (IL) Thunder,Brady Wynja,5,2,3,0,1,1,2,2,2,0,0,0,1,4,4,66.7,0.0,50.0,19.5,False
+Millikin Big Blue,2026-02-21,Wheaton (IL) Thunder,Carson Grier,14,5,7,0,0,4,4,1,6,1,4,0,0,5,7,71.4,,100.0,33.1,True
+Millikin Big Blue,2026-02-21,Wheaton (IL) Thunder,Devin Martin,13,3,10,0,2,7,9,1,4,5,0,0,1,2,5,30.0,0.0,77.8,37.4,True
+Millikin Big Blue,2026-02-21,Wheaton (IL) Thunder,Jace Olson,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,2.1,False
+Millikin Big Blue,2026-02-21,Wheaton (IL) Thunder,Kyan VanderWoude,5,1,6,0,3,3,4,0,1,0,2,0,0,0,1,16.7,0.0,75.0,21.0,False
+Millikin Big Blue,2026-02-21,Wheaton (IL) Thunder,Kyle Neibch,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,4.2,True
+Millikin Big Blue,2026-02-21,Wheaton (IL) Thunder,Luca Carbonaro,5,1,3,1,2,2,2,1,3,0,0,0,1,1,4,33.3,50.0,100.0,11.0,False
+Millikin Big Blue,2026-02-21,Wheaton (IL) Thunder,Noah Hedrick,0,0,4,0,3,0,0,0,1,1,0,0,1,2,1,0.0,0.0,,16.0,True
+Millikin Big Blue,2026-02-21,Wheaton (IL) Thunder,Reid Olson,12,4,7,4,6,0,0,0,3,0,0,0,0,2,3,57.1,66.7,,17.4,False
+Millikin Big Blue,2026-02-21,Wheaton (IL) Thunder,Soren Richardson,13,3,15,1,6,6,8,1,3,2,0,2,4,2,4,20.0,16.7,75.0,36.4,True
+North Central (IL) Cardinals,2026-01-10,North Central (IL) Cardinals,Alejandro Diaz,13,4,10,0,1,5,6,1,3,4,4,0,4,3,4,40.0,0.0,83.3,32.1,False
+North Central (IL) Cardinals,2026-01-10,North Central (IL) Cardinals,Ethan Marlowe,8,3,5,0,0,2,3,4,3,1,1,0,1,4,7,60.0,,66.7,15.7,False
+North Central (IL) Cardinals,2026-01-10,North Central (IL) Cardinals,James Bullock,22,9,15,1,3,3,3,3,5,0,2,6,2,0,8,60.0,33.3,100.0,30.8,False
+North Central (IL) Cardinals,2026-01-10,North Central (IL) Cardinals,Justin Sveiteris,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,1.8,False
+North Central (IL) Cardinals,2026-01-10,North Central (IL) Cardinals,Sean Molloy,8,4,8,0,1,0,0,1,5,3,1,0,1,1,6,50.0,0.0,,34.4,False
+North Central (IL) Cardinals,2026-01-10,North Central (IL) Cardinals,Seth Cheney,0,0,5,0,3,0,0,1,0,0,0,0,2,2,1,0.0,0.0,,20.8,False
+North Central (IL) Cardinals,2026-01-10,North Central (IL) Cardinals,Tre Davis,2,1,1,0,0,0,0,1,2,1,0,0,3,4,3,100.0,,,17.5,False
+North Central (IL) Cardinals,2026-01-10,North Central (IL) Cardinals,Tyler DiSilvio,2,1,1,0,0,0,0,0,0,1,0,0,0,2,0,100.0,,,5.7,False
+North Central (IL) Cardinals,2026-01-10,North Central (IL) Cardinals,Tyler Surin,5,2,5,0,1,1,2,0,2,0,0,0,0,4,2,40.0,0.0,50.0,18.7,False
+North Central (IL) Cardinals,2026-01-10,North Central (IL) Cardinals,Tyler Swierczek,11,2,8,1,6,6,7,1,4,0,0,0,0,0,5,25.0,16.7,85.7,20.0,False
+North Central (IL) Cardinals,2026-01-10,Wheaton (IL) Thunder,Brady Wynja,9,3,3,0,0,3,5,2,3,0,0,0,2,3,5,100.0,,60.0,7.2,False
+North Central (IL) Cardinals,2026-01-10,Wheaton (IL) Thunder,Carson Grier,16,8,11,0,0,0,2,2,4,1,0,0,1,2,6,72.7,,0.0,34.0,True
+North Central (IL) Cardinals,2026-01-10,Wheaton (IL) Thunder,Devin Martin,11,4,8,0,0,3,6,2,1,4,1,0,1,1,3,50.0,,50.0,36.0,True
+North Central (IL) Cardinals,2026-01-10,Wheaton (IL) Thunder,Evan Montandon,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,,,,13.7,False
+North Central (IL) Cardinals,2026-01-10,Wheaton (IL) Thunder,Jace Olson,1,0,0,0,0,1,2,0,0,0,0,0,1,2,0,,,50.0,3.9,True
+North Central (IL) Cardinals,2026-01-10,Wheaton (IL) Thunder,Kyan VanderWoude,16,4,9,1,3,7,11,0,4,2,3,1,1,2,4,44.4,33.3,63.6,21.5,True
+North Central (IL) Cardinals,2026-01-10,Wheaton (IL) Thunder,Kyle Neibch,0,0,4,0,4,0,0,0,1,1,0,1,0,1,1,0.0,0.0,,16.5,False
+North Central (IL) Cardinals,2026-01-10,Wheaton (IL) Thunder,Luca Carbonaro,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,,,,2.9,False
+North Central (IL) Cardinals,2026-01-10,Wheaton (IL) Thunder,Noah Hedrick,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,,False
+North Central (IL) Cardinals,2026-01-10,Wheaton (IL) Thunder,Reid Olson,0,0,2,0,2,0,0,0,0,2,0,0,0,1,0,0.0,0.0,,24.1,False
+North Central (IL) Cardinals,2026-01-10,Wheaton (IL) Thunder,Soren Richardson,19,7,16,3,5,2,2,1,2,3,1,0,2,2,3,43.8,60.0,100.0,37.8,True
+North Central (IL) Cardinals,2026-02-07,North Central (IL) Cardinals,Alejandro Diaz,19,5,12,2,4,7,7,1,7,4,0,1,1,1,8,41.7,50.0,100.0,36.4,False
+North Central (IL) Cardinals,2026-02-07,North Central (IL) Cardinals,Ethan Marlowe,22,8,12,0,1,6,6,1,3,0,0,2,0,3,4,66.7,0.0,100.0,29.8,False
+North Central (IL) Cardinals,2026-02-07,North Central (IL) Cardinals,James Bullock,22,6,14,3,4,7,9,2,7,0,1,1,2,2,9,42.9,75.0,77.8,38.4,False
+North Central (IL) Cardinals,2026-02-07,North Central (IL) Cardinals,Jaydon James,0,0,1,0,0,0,0,1,1,0,1,0,0,1,2,0.0,,,22.4,False
+North Central (IL) Cardinals,2026-02-07,North Central (IL) Cardinals,Justin Sveiteris,2,1,2,0,0,0,0,0,1,1,0,1,1,2,1,50.0,,,7.8,False
+North Central (IL) Cardinals,2026-02-07,North Central (IL) Cardinals,Sean Molloy,8,3,7,0,1,2,2,0,4,7,0,0,2,3,4,42.9,0.0,100.0,33.6,False
+North Central (IL) Cardinals,2026-02-07,North Central (IL) Cardinals,Seth Cheney,2,1,4,0,1,0,0,1,4,0,0,0,1,1,5,25.0,0.0,,8.6,False
+North Central (IL) Cardinals,2026-02-07,North Central (IL) Cardinals,Tre Davis,4,2,7,0,2,0,2,0,4,0,0,0,3,4,4,28.6,0.0,0.0,27.9,False
+North Central (IL) Cardinals,2026-02-07,North Central (IL) Cardinals,Tyler Swierczek,2,1,3,0,1,0,0,0,2,0,0,0,0,0,2,33.3,0.0,,18.2,False
+North Central (IL) Cardinals,2026-02-07,Wheaton (IL) Thunder,Brady Wynja,5,2,2,1,1,0,0,1,4,0,0,1,2,4,5,100.0,100.0,,15.0,True
+North Central (IL) Cardinals,2026-02-07,Wheaton (IL) Thunder,Carson Grier,11,5,14,0,2,1,6,3,4,3,3,0,0,1,7,35.7,0.0,16.7,36.5,True
+North Central (IL) Cardinals,2026-02-07,Wheaton (IL) Thunder,Devin Martin,10,2,5,1,2,5,5,0,3,3,0,1,1,5,3,40.0,50.0,100.0,30.3,False
+North Central (IL) Cardinals,2026-02-07,Wheaton (IL) Thunder,Kyan VanderWoude,12,5,12,0,4,2,3,1,6,2,0,0,1,2,7,41.7,0.0,66.7,34.5,False
+North Central (IL) Cardinals,2026-02-07,Wheaton (IL) Thunder,Kyle Neibch,6,2,6,2,6,0,0,0,1,0,1,0,0,1,1,33.3,33.3,,11.9,False
+North Central (IL) Cardinals,2026-02-07,Wheaton (IL) Thunder,Luca Carbonaro,0,0,2,0,2,0,0,0,0,0,1,0,0,0,0,0.0,0.0,,5.1,False
+North Central (IL) Cardinals,2026-02-07,Wheaton (IL) Thunder,Noah Hedrick,3,1,6,1,6,0,0,1,4,3,0,0,1,0,5,16.7,16.7,,24.4,True
+North Central (IL) Cardinals,2026-02-07,Wheaton (IL) Thunder,Reid Olson,5,1,4,1,4,2,2,0,1,2,0,0,1,1,1,25.0,25.0,100.0,25.0,True
+North Central (IL) Cardinals,2026-02-07,Wheaton (IL) Thunder,Soren Richardson,22,9,23,0,6,4,4,1,3,1,1,2,0,4,4,39.1,0.0,100.0,40.5,True
+North Park Vikings,2026-01-24,North Park Vikings,Dylan Fuzak,0,0,1,0,1,0,0,0,1,1,0,0,2,1,1,0.0,0.0,,7.4,False
+North Park Vikings,2026-01-24,North Park Vikings,Jahki Gray,2,1,7,0,3,0,0,0,1,0,0,0,1,2,1,14.3,0.0,,13.8,False
+North Park Vikings,2026-01-24,North Park Vikings,"Jerome Smith, Jr.",6,3,8,0,4,0,0,1,4,3,2,0,2,3,5,37.5,0.0,,,False
+North Park Vikings,2026-01-24,North Park Vikings,Julian Campbell,2,1,3,0,1,0,0,1,1,1,0,1,0,0,2,33.3,0.0,,6.2,False
+North Park Vikings,2026-01-24,North Park Vikings,Kolden Vanlandingham,12,5,8,0,2,2,4,0,3,0,0,0,2,5,3,62.5,0.0,50.0,12.3,False
+North Park Vikings,2026-01-24,North Park Vikings,Lazario Cornish,8,4,6,0,1,0,2,2,3,5,0,2,0,3,5,66.7,0.0,0.0,26.0,False
+North Park Vikings,2026-01-24,North Park Vikings,Marquis Vance,23,8,11,1,2,6,6,1,1,1,1,1,1,4,2,72.7,50.0,100.0,32.9,False
+North Park Vikings,2026-01-24,North Park Vikings,Mike Vuckovic,24,9,18,3,4,3,3,2,4,2,2,0,2,2,6,50.0,75.0,100.0,37.2,False
+North Park Vikings,2026-01-24,North Park Vikings,Tyvin Garrison,0,0,1,0,1,0,0,0,1,0,0,0,0,1,1,0.0,0.0,,3.0,False
+North Park Vikings,2026-01-24,North Park Vikings,William Bates,8,4,7,0,1,0,0,0,2,3,1,0,1,2,2,57.1,0.0,,31.4,False
+North Park Vikings,2026-01-24,Wheaton (IL) Thunder,Brady Wynja,5,2,3,0,0,1,2,1,5,2,0,2,0,1,6,66.7,,50.0,22.5,True
+North Park Vikings,2026-01-24,Wheaton (IL) Thunder,Carson Grier,16,5,12,0,0,6,7,5,5,3,1,1,6,0,10,41.7,,85.7,30.6,True
+North Park Vikings,2026-01-24,Wheaton (IL) Thunder,Christian Veirs,4,1,2,0,0,2,2,2,1,0,0,0,1,1,3,50.0,,100.0,7.2,False
+North Park Vikings,2026-01-24,Wheaton (IL) Thunder,Devin Martin,12,5,6,1,1,1,5,0,1,8,0,0,1,2,1,83.3,100.0,20.0,33.6,True
+North Park Vikings,2026-01-24,Wheaton (IL) Thunder,Jace Olson,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,5.1,False
+North Park Vikings,2026-01-24,Wheaton (IL) Thunder,Kyan VanderWoude,24,11,14,1,1,1,2,1,2,1,1,0,2,2,3,78.6,100.0,50.0,29.8,True
+North Park Vikings,2026-01-24,Wheaton (IL) Thunder,Kyle Neibch,0,0,2,0,2,0,0,0,1,0,0,0,0,2,1,0.0,0.0,,4.0,False
+North Park Vikings,2026-01-24,Wheaton (IL) Thunder,Luca Carbonaro,2,1,2,0,1,0,0,1,4,0,1,1,0,0,5,50.0,0.0,,8.9,False
+North Park Vikings,2026-01-24,Wheaton (IL) Thunder,Reid Olson,5,2,5,1,4,0,2,0,2,2,0,0,0,3,2,40.0,25.0,0.0,22.7,False
+North Park Vikings,2026-01-24,Wheaton (IL) Thunder,Soren Richardson,26,8,18,3,6,7,7,1,5,4,1,2,0,3,6,44.4,50.0,100.0,33.6,True
+North Park Vikings,2026-02-14,North Park Vikings,Dylan Fuzak,0,0,1,0,1,0,0,3,4,1,0,1,1,2,7,0.0,0.0,,14.7,False
+North Park Vikings,2026-02-14,North Park Vikings,Harrison Long,8,3,4,2,2,0,1,0,0,0,1,0,1,0,0,75.0,100.0,0.0,8.4,False
+North Park Vikings,2026-02-14,North Park Vikings,"Jerome Smith, Jr.",3,1,4,1,3,0,0,0,1,3,1,0,0,1,1,25.0,33.3,,,False
+North Park Vikings,2026-02-14,North Park Vikings,Julian Campbell,6,3,6,0,0,0,0,0,2,0,0,0,1,0,2,50.0,,,8.2,False
+North Park Vikings,2026-02-14,North Park Vikings,Kolden Vanlandingham,23,9,16,2,5,3,4,1,3,7,1,0,2,3,4,56.2,40.0,75.0,36.1,False
+North Park Vikings,2026-02-14,North Park Vikings,Lazario Cornish,1,0,2,0,0,1,2,2,2,0,0,1,1,4,4,0.0,,50.0,15.9,False
+North Park Vikings,2026-02-14,North Park Vikings,Marquis Vance,9,4,10,0,2,1,4,1,3,1,3,0,1,5,4,40.0,0.0,25.0,20.7,False
+North Park Vikings,2026-02-14,North Park Vikings,Mike Vuckovic,24,7,13,2,3,8,8,1,3,4,1,0,2,0,4,53.8,66.7,100.0,34.4,False
+North Park Vikings,2026-02-14,North Park Vikings,Tyvin Garrison,5,1,1,1,1,2,2,0,1,1,0,0,2,1,1,100.0,100.0,100.0,14.7,False
+North Park Vikings,2026-02-14,North Park Vikings,William Bates,16,7,9,1,1,1,1,0,3,1,1,0,2,2,3,77.8,100.0,100.0,31.9,False
+North Park Vikings,2026-02-14,Wheaton (IL) Thunder,Brady Wynja,10,5,5,0,0,0,2,6,6,1,1,1,1,1,12,100.0,,0.0,29.4,True
+North Park Vikings,2026-02-14,Wheaton (IL) Thunder,Carson Grier,16,8,13,0,0,0,2,2,4,3,4,0,0,2,6,61.5,,0.0,31.5,True
+North Park Vikings,2026-02-14,Wheaton (IL) Thunder,Devin Martin,5,2,3,0,1,1,3,0,3,4,1,0,1,5,3,66.7,0.0,33.3,23.6,True
+North Park Vikings,2026-02-14,Wheaton (IL) Thunder,Kyan VanderWoude,23,10,15,1,4,2,2,0,5,3,0,0,2,2,5,66.7,25.0,100.0,33.7,True
+North Park Vikings,2026-02-14,Wheaton (IL) Thunder,Kyle Grier,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,0.6,False
+North Park Vikings,2026-02-14,Wheaton (IL) Thunder,Kyle Neibch,0,0,1,0,1,0,0,0,0,0,0,0,1,1,0,0.0,0.0,,3.8,False
+North Park Vikings,2026-02-14,Wheaton (IL) Thunder,Luca Carbonaro,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0.0,0.0,,3.7,False
+North Park Vikings,2026-02-14,Wheaton (IL) Thunder,Noah Hedrick,2,1,1,0,0,0,0,0,0,1,0,0,2,0,0,100.0,,,8.7,False
+North Park Vikings,2026-02-14,Wheaton (IL) Thunder,Reid Olson,7,2,9,1,7,2,2,0,3,1,1,0,1,1,3,22.2,14.3,100.0,26.2,False
+North Park Vikings,2026-02-14,Wheaton (IL) Thunder,Soren Richardson,29,12,21,1,7,4,4,1,4,1,0,0,2,4,5,57.1,14.3,100.0,36.9,True
+North Park Vikings,2026-02-24,North Park Vikings,Dylan Fuzak,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,2.1,False
+North Park Vikings,2026-02-24,North Park Vikings,Harrison Long,3,1,1,1,1,0,0,0,1,1,0,0,0,0,1,100.0,100.0,,12.0,False
+North Park Vikings,2026-02-24,North Park Vikings,Jahki Gray,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.6,False
+North Park Vikings,2026-02-24,North Park Vikings,"Jerome Smith, Jr.",0,0,3,0,3,0,0,0,0,0,0,0,1,2,0,0.0,0.0,,,False
+North Park Vikings,2026-02-24,North Park Vikings,Julian Campbell,8,3,6,0,1,2,2,2,4,1,0,0,0,3,6,50.0,0.0,100.0,16.2,False
+North Park Vikings,2026-02-24,North Park Vikings,Kolden Vanlandingham,19,7,16,2,5,3,4,3,4,4,1,2,3,5,7,43.8,40.0,75.0,30.2,False
+North Park Vikings,2026-02-24,North Park Vikings,Lazario Cornish,17,4,5,1,1,8,10,3,5,0,1,1,2,5,8,80.0,100.0,80.0,31.3,False
+North Park Vikings,2026-02-24,North Park Vikings,Marquis Vance,14,5,9,0,2,4,6,5,7,1,1,1,1,4,12,55.6,0.0,66.7,34.3,False
+North Park Vikings,2026-02-24,North Park Vikings,Mike Vuckovic,26,9,21,3,6,5,7,0,2,6,0,0,1,3,2,42.9,50.0,71.4,47.3,False
+North Park Vikings,2026-02-24,North Park Vikings,Tyvin Garrison,4,0,1,0,1,4,4,0,3,0,0,0,0,1,3,0.0,0.0,100.0,25.2,False
+North Park Vikings,2026-02-24,North Park Vikings,William Bates,16,5,11,2,6,4,5,0,2,0,0,0,3,5,2,45.5,33.3,80.0,39.0,False
+North Park Vikings,2026-02-24,Wheaton (IL) Thunder,Brady Wynja,9,4,5,0,0,1,4,4,4,1,1,0,2,5,8,80.0,,25.0,27.0,True
+North Park Vikings,2026-02-24,Wheaton (IL) Thunder,Carson Grier,19,7,15,0,1,5,9,4,3,3,1,1,2,2,7,46.7,0.0,55.6,47.1,True
+North Park Vikings,2026-02-24,Wheaton (IL) Thunder,Devin Martin,20,7,17,0,0,6,7,2,4,3,0,1,4,2,6,41.2,,85.7,47.8,True
+North Park Vikings,2026-02-24,Wheaton (IL) Thunder,Jace Olson,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,4.6,False
+North Park Vikings,2026-02-24,Wheaton (IL) Thunder,Kyan VanderWoude,16,5,16,1,4,5,8,3,7,0,0,0,1,3,10,31.2,25.0,62.5,37.3,True
+North Park Vikings,2026-02-24,Wheaton (IL) Thunder,Kyle Neibch,0,0,1,0,1,0,0,0,0,1,0,0,0,2,0,0.0,0.0,,5.9,False
+North Park Vikings,2026-02-24,Wheaton (IL) Thunder,Luca Carbonaro,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,1.2,False
+North Park Vikings,2026-02-24,Wheaton (IL) Thunder,Noah Hedrick,0,0,1,0,1,0,0,0,1,1,0,0,2,5,1,0.0,0.0,,17.1,False
+North Park Vikings,2026-02-24,Wheaton (IL) Thunder,Reid Olson,0,0,1,0,1,0,0,0,1,1,0,0,1,1,1,0.0,0.0,,11.6,False
+North Park Vikings,2026-02-24,Wheaton (IL) Thunder,Soren Richardson,36,12,23,3,7,9,11,3,5,6,0,0,1,3,8,52.2,42.9,81.8,48.4,True
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Aaron Keykal,10,3,4,0,0,4,4,2,6,0,0,0,1,2,8,75.0,,100.0,19.2,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Ben Raymond,4,1,3,0,1,2,2,0,1,1,1,1,0,0,1,33.3,0.0,100.0,14.3,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Conner Barney,0,0,2,0,0,0,0,0,2,0,0,0,0,1,2,0.0,,,6.6,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Davion Butler,17,7,14,2,7,1,2,0,0,1,2,0,3,3,0,50.0,28.6,50.0,21.8,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Drelyn Jones,8,3,6,1,3,1,2,0,3,1,0,0,0,2,3,50.0,33.3,50.0,14.6,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Drey Wisdom,3,1,1,1,1,0,0,0,0,0,1,0,1,1,0,100.0,100.0,,2.7,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,French Biltcliffe,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.9,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Hayden Kloos,2,1,1,0,0,0,0,0,2,0,0,0,0,1,2,100.0,,,13.8,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Ian Larsen,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.9,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Jayden Brown,3,1,4,1,2,0,0,1,1,1,1,0,1,1,2,25.0,50.0,,9.8,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Kobe Karels,0,0,0,0,0,0,0,0,1,0,1,0,3,1,1,,,,9.8,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Koy Nelson,4,1,3,0,1,2,2,0,4,1,0,0,2,1,4,33.3,0.0,100.0,26.4,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Nebiyu Teklemariam,8,3,5,1,1,1,2,2,1,1,0,1,0,2,3,60.0,100.0,50.0,11.8,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Owen Larsen,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0.0,,,4.8,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Paul Harris,0,0,2,0,0,0,0,0,1,0,0,0,0,1,1,0.0,,,9.6,False
+St. Scholastica Saints,2025-11-21,St. Scholastica Saints,Tanner Thomson,5,1,10,1,6,2,2,0,0,1,4,0,1,1,0,10.0,16.7,100.0,29.0,False
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Brady Wynja,5,2,3,0,0,1,2,2,2,1,0,1,2,4,4,66.7,,50.0,11.9,True
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Carson Grier,13,6,9,0,1,1,2,0,5,5,1,2,1,3,5,66.7,0.0,50.0,29.2,True
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Cayden Mudd,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,1.6,False
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Christian Veirs,2,1,1,0,0,0,0,0,1,0,1,0,2,2,1,100.0,,,7.9,False
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Devin Martin,14,4,6,2,2,4,6,1,3,7,0,1,1,0,4,66.7,100.0,66.7,30.8,True
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Jace Olson,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,1.6,False
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Jack Speers,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.7,False
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Kyan VanderWoude,7,3,8,1,4,0,0,0,4,4,1,0,2,0,4,37.5,25.0,,28.6,True
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Kyle Neibch,9,3,6,3,6,0,0,0,3,0,0,0,0,1,3,50.0,50.0,,26.4,False
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Noah Brumfield,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.6,False
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Noah Hedrick,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,6.6,False
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Reid Olson,13,4,6,3,5,2,2,0,2,0,1,0,2,0,2,66.7,60.0,100.0,18.9,False
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Soren Richardson,20,8,15,4,7,0,1,3,5,5,2,2,2,1,8,53.3,57.1,0.0,27.6,True
+St. Scholastica Saints,2025-11-21,Wheaton (IL) Thunder,Ty Ferguson,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.7,False
+UW-La Crosse Eagles,2025-11-22,UW-La Crosse Eagles,Ben Goedheer,0,0,0,0,0,0,0,1,0,0,0,0,1,2,1,,,,4.8,False
+UW-La Crosse Eagles,2025-11-22,UW-La Crosse Eagles,Carson Bauer,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.9,False
+UW-La Crosse Eagles,2025-11-22,UW-La Crosse Eagles,Devon Fielding,0,0,3,0,3,0,0,0,1,1,0,0,1,2,1,0.0,0.0,,10.8,False
+UW-La Crosse Eagles,2025-11-22,UW-La Crosse Eagles,Dustin Derousseau,13,5,11,1,5,2,2,1,4,1,2,2,2,3,5,45.5,20.0,100.0,38.4,False
+UW-La Crosse Eagles,2025-11-22,UW-La Crosse Eagles,JJ Paider,16,6,10,0,0,4,8,5,9,0,2,2,0,1,14,60.0,,50.0,35.0,False
+UW-La Crosse Eagles,2025-11-22,UW-La Crosse Eagles,Jack Crowley,0,0,3,0,3,0,0,0,0,0,0,0,0,1,0,0.0,0.0,,11.6,False
+UW-La Crosse Eagles,2025-11-22,UW-La Crosse Eagles,Jacob Butler,0,0,2,0,2,0,0,1,4,1,1,1,1,2,5,0.0,0.0,,27.7,False
+UW-La Crosse Eagles,2025-11-22,UW-La Crosse Eagles,Sam Ferge,11,3,5,3,5,2,2,0,1,0,3,0,1,3,1,60.0,60.0,100.0,30.3,False
+UW-La Crosse Eagles,2025-11-22,UW-La Crosse Eagles,Sam Grieger,30,12,21,0,2,6,9,1,2,6,2,0,2,2,3,57.1,0.0,66.7,38.3,False
+UW-La Crosse Eagles,2025-11-22,Wheaton (IL) Thunder,Brady Wynja,4,2,7,0,1,0,0,4,6,2,0,0,2,3,10,28.6,0.0,,17.4,True
+UW-La Crosse Eagles,2025-11-22,Wheaton (IL) Thunder,Carson Grier,11,5,5,1,1,0,0,3,3,3,0,0,0,5,6,100.0,100.0,,22.7,True
+UW-La Crosse Eagles,2025-11-22,Wheaton (IL) Thunder,Devin Martin,2,1,7,0,1,0,0,1,1,4,1,0,5,1,2,14.3,0.0,,29.1,True
+UW-La Crosse Eagles,2025-11-22,Wheaton (IL) Thunder,Kyan VanderWoude,13,6,10,1,3,0,0,1,6,2,0,0,1,2,7,60.0,33.3,,36.3,True
+UW-La Crosse Eagles,2025-11-22,Wheaton (IL) Thunder,Kyle Neibch,3,1,5,1,4,0,0,1,0,1,0,0,1,1,1,20.0,25.0,,22.3,False
+UW-La Crosse Eagles,2025-11-22,Wheaton (IL) Thunder,Noah Hedrick,1,0,1,0,1,1,2,0,3,0,0,1,0,1,3,0.0,0.0,50.0,10.0,False
+UW-La Crosse Eagles,2025-11-22,Wheaton (IL) Thunder,Reid Olson,13,3,5,3,5,4,5,0,0,2,0,0,1,0,0,60.0,60.0,80.0,25.0,False
+UW-La Crosse Eagles,2025-11-22,Wheaton (IL) Thunder,Soren Richardson,19,7,20,3,8,2,3,1,2,2,3,0,3,3,3,35.0,37.5,66.7,35.9,True
+Wisconsin Lutheran Warriors,2025-12-31,Wheaton (IL) Thunder,Brady Wynja,8,2,5,0,0,4,6,2,8,3,0,2,2,3,10,40.0,,66.7,20.7,True
+Wisconsin Lutheran Warriors,2025-12-31,Wheaton (IL) Thunder,Carson Grier,17,8,17,0,1,1,2,3,6,0,1,1,2,1,9,47.1,0.0,50.0,29.6,True
+Wisconsin Lutheran Warriors,2025-12-31,Wheaton (IL) Thunder,Devin Martin,10,2,6,0,1,6,9,1,5,6,2,0,2,0,6,33.3,0.0,66.7,35.2,True
+Wisconsin Lutheran Warriors,2025-12-31,Wheaton (IL) Thunder,Jace Olson,0,0,1,0,1,0,0,0,0,0,1,0,0,2,0,0.0,0.0,,9.1,False
+Wisconsin Lutheran Warriors,2025-12-31,Wheaton (IL) Thunder,Jack Speers,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.0,False
+Wisconsin Lutheran Warriors,2025-12-31,Wheaton (IL) Thunder,Kyan VanderWoude,13,5,10,2,5,1,1,1,7,0,1,0,2,3,8,50.0,40.0,100.0,28.7,True
+Wisconsin Lutheran Warriors,2025-12-31,Wheaton (IL) Thunder,Kyle Neibch,1,0,3,0,3,1,2,1,2,0,0,0,0,2,3,0.0,0.0,50.0,11.5,False
+Wisconsin Lutheran Warriors,2025-12-31,Wheaton (IL) Thunder,Noah Hedrick,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,2.7,False
+Wisconsin Lutheran Warriors,2025-12-31,Wheaton (IL) Thunder,Reid Olson,16,6,12,4,10,0,0,0,3,0,0,0,0,3,3,50.0,40.0,,23.9,False
+Wisconsin Lutheran Warriors,2025-12-31,Wheaton (IL) Thunder,Soren Richardson,18,8,15,1,3,1,2,1,2,4,3,1,0,2,3,53.3,33.3,50.0,32.0,True
+Wisconsin Lutheran Warriors,2025-12-31,Wheaton (IL) Thunder,Ty Ferguson,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,,,,3.2,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Austin Wagner,6,1,3,0,1,4,4,0,1,0,0,0,1,2,1,33.3,0.0,100.0,12.6,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Ben Lubbers,7,2,8,1,2,2,2,2,3,0,1,0,1,4,5,25.0,50.0,100.0,15.4,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Bryce Appel,3,1,7,1,2,0,0,1,1,0,0,0,0,0,2,14.3,50.0,,13.2,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Dom Hill,0,0,1,0,0,0,0,0,1,2,1,0,0,2,1,0.0,,,12.0,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Ephraim Albers,2,1,4,0,0,0,0,2,2,0,0,1,0,2,4,25.0,,,13.7,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Garrett Murphy,2,0,1,0,1,2,2,1,1,0,0,0,0,0,2,0.0,0.0,100.0,7.4,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Isaiah Mellock,5,2,7,0,1,1,3,1,3,1,0,0,2,2,4,28.6,0.0,33.3,22.7,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Ja'Quell Chisom,0,0,8,0,3,0,0,0,4,0,0,1,2,2,4,0.0,0.0,,15.2,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Jack Duffer,3,1,1,0,0,1,1,1,1,1,0,0,0,1,2,100.0,,100.0,6.4,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Kaycee Guzman,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,2.0,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Markel Webb,3,1,3,0,1,1,2,0,1,1,0,0,0,0,1,33.3,0.0,50.0,13.7,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Pierce Arenz,4,1,6,0,2,2,2,0,4,2,0,0,2,1,4,16.7,0.0,100.0,19.8,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Riley Mueller,2,1,1,0,0,0,0,0,0,0,0,0,1,0,0,100.0,,,2.8,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Sam Hans,8,3,8,2,5,0,0,1,6,1,0,0,2,2,7,37.5,40.0,,26.4,False
+Wisconsin Lutheran Warriors,2025-12-31,Wisconsin Lutheran Warriors,Trey Luehring,11,3,6,2,5,3,3,2,2,0,0,0,2,2,4,50.0,40.0,100.0,14.2,False
+Augustana (IL) Vikings,2025-12-03,Augustana (IL) Vikings,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Augustana (IL) Vikings,2025-12-03,Wheaton (IL) Thunder,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,,False
+Augustana (IL) Vikings,2026-01-28,Wheaton (IL) Thunder,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Benedictine (IL) Eagles,2025-11-18,Wheaton (IL) Thunder,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Carroll (WI) Pioneers,2026-01-07,Wheaton (IL) Thunder,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,,False
+Carthage Firebirds,2025-12-13,Carthage Firebirds,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,,False
+Concordia Wisconsin Falcons,2025-11-08,Wheaton (IL) Thunder,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Elmhurst Bluejays,2025-12-06,Wheaton (IL) Thunder,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Elmhurst Bluejays,2026-02-11,Elmhurst Bluejays,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Illinois Wesleyan Titans,2026-02-04,Illinois Wesleyan Titans,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,,False
+Illinois Wesleyan Titans,2026-02-04,Wheaton (IL) Thunder,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Lake Forest Foresters,2025-11-12,Wheaton (IL) Thunder,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Millikin Big Blue,2026-01-14,Wheaton (IL) Thunder,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+North Central (IL) Cardinals,2026-02-07,Wheaton (IL) Thunder,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,,False
+North Park Vikings,2026-01-24,North Park Vikings,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+North Park Vikings,2026-01-24,Wheaton (IL) Thunder,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+North Park Vikings,2026-02-14,Wheaton (IL) Thunder,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+North Park Vikings,2026-02-24,Wheaton (IL) Thunder,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,,,,,False
