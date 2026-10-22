@@ -436,10 +436,15 @@ _KTV_PROFILE_WEIGHTS = {**{f"pos_{p}": 1.0 for p in _KTV_POSITION_SLOTS},
 
 
 def _ktv_safe_float(val):
+    # CONFIRMED BUG (fixed; Wheaton (IL) run of 2026-10-22: "Lineup Scouting (counter lineup): cannot convert float NaN to
+    # integer"). A blank height came back as float NaN, which is truthy, so it was averaged in as a real height; the lineup's
+    # average height became NaN and int(NaN // 12) failed while describing it -- the whole counter-lineup key was lost.
+    # A blank (NaN / infinite) value is now None, like any other unreadable one.
     try:
-        return float(val)
+        f = float(val)
     except (TypeError, ValueError):
         return None
+    return f if f == f and f not in (float("inf"), float("-inf")) else None
 
 
 _ktv_player_lookup = {}

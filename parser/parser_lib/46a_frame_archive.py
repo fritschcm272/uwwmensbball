@@ -85,10 +85,15 @@ def _fs_moved(p):
         roots = games.get(os.path.normcase(rel.split(os.sep, 1)[0]))
         if not roots:
             return None
-        ex = (globals().get("_FA_ORIG") or {}).get("exists", os.path.exists)
+        # CONFIRMED BUG (fixed; Wheaton @ North Park, its game folder moved to F:: "FileNotFoundError: [WinError 3] ...
+        # _vision_frames\Feb_24_2026_WheatonIL@NorthPark\track1920v2"). FOLDERS were redirected too, so os.path.exists
+        # said the game folder was on C:; os.makedirs (which asks os.path.exists about each parent) then skipped making it
+        # and failed on the subfolder. Only FILES are redirected now: a moved game folder reads as missing on C: and is
+        # made fresh there when a step writes into it, while the files on the storage drive are still read.
+        isf = (globals().get("_FA_ORIG") or {}).get("isfile", os.path.isfile)
         for d in roots:
             c = os.path.join(d, rel)
-            if ex(c):
+            if isf(c):
                 return c
     except Exception:
         return None

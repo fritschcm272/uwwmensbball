@@ -20,11 +20,14 @@ Wheaton (IL) Thunder,2026-03-08,Personnel,7,🔒,"Attack Wheaton (IL) Thunder's 
 Highest TO rate (per 40 min):
 20.2 TO/40 — Wynja, VanderWoude, Carbonaro, Olson, Richardson
 19.1 TO/40 — Grier, Martin, Neibch, Olson, Richardson","Wheaton (IL) Thunder's most exploitable units: their worst net-rating lineups with real minutes this season (8+ min, losing their minutes), and the lineups that give the ball away most per 40 minutes. The headline names the worst of them.",Lineup Scouting,0.909970958373669,1.0,True,84.4
-Wheaton (IL) Thunder,2026-03-08,Personnel,8,🔒,"Attack Wheaton (IL) Thunder's Grier, VanderWoude, Richardson combo","Worst +/- 3-man combos:
+Wheaton (IL) Thunder,2026-03-08,Personnel,8,🔒,"Counter with Chestnut, Quast, Berezowitz, Rogers, Warren","+1.33/min (+7 in 5.3 min) — Chestnut, Quast, Berezowitz, Rogers, Warren
++1.29/min (+3 in 2.3 min) — Madson, Quast, Berezowitz, McEwen, Warren
++1.20/min (+4 in 3.3 min) — Marino, Chestnut, Verges, Lukenbill, Bara","UWW's best net margin against opponent units that resemble Wheaton (IL) Thunder's most-used lineup (Wynja, Grier, Martin, VanderWoude, Richardson). Measured across 28 comparable opponent unit(s), 40 min this season.",Lineup Scouting,1.0,0.6720000000000002,True,83.1
+Wheaton (IL) Thunder,2026-03-08,Personnel,9,🔒,"Attack Wheaton (IL) Thunder's Grier, VanderWoude, Richardson combo","Worst +/- 3-man combos:
 -94.0 in 505.4 min — Grier, VanderWoude, Richardson
 -89.0 in 464.7 min — Grier, Martin, VanderWoude
 -64.0 in 176.5 min — Grier, VanderWoude, Neibch",Wheaton (IL) Thunder's most exploitable 3-man combinations: their worst net-rating units with real minutes this season (12+ min).,Lineup Scouting,0.37198258804907003,1.0,True,62.9
-Wheaton (IL) Thunder,2026-03-08,Personnel,9,,"Feature the Madson, Berezowitz, McEwen combo","Madson, Berezowitz, McEwen: +20.2 per 40 after shrinkage (+29.3 raw) · on/off +23.5 · 89 competitive min in 17 games (0 garbage-time min found)
+Wheaton (IL) Thunder,2026-03-08,Personnel,10,,"Feature the Madson, Berezowitz, McEwen combo","Madson, Berezowitz, McEwen: +20.2 per 40 after shrinkage (+29.3 raw) · on/off +23.5 · 89 competitive min in 17 games (0 garbage-time min found)
 Madson, Quast, McEwen: +19.9 per 40 after shrinkage (+27.3 raw) · on/off +21.7 · 109 competitive min in 19 games (0 garbage-time min found)
 Chestnut, Quast, Berezowitz: +19.6 per 40 after shrinkage (+34.7 raw) · on/off +28.3 · 52 competitive min in 12 games (0 garbage-time min found)
 On/off: +23.5 per 40 minutes (better with them on the floor)",Our best trio this season -- +20.2 per 40 minutes together; get them on the floor together.,Lineup Scouting,1.0,0.7393333333333333,True,84.1
