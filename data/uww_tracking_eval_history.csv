@@ -1,0 +1,10 @@
+run_at,part,label,score,n,bar,chance,used,how,auc,caught,bar_n,best,games,status,checked,tested
+2026-10-23T14:41:55,anchors,Synergy-named player (anchor),33.3,3,,20.0,True,Synergy-named anchors that sat on the right player (coach-checked),,,,,,,,
+2026-10-23T14:41:55,player_model,Player / not-a-player model,96.0,269,90.0,,True,tracks it set aside that really weren't players (held-out clips),0.988,96.0,,,,,,
+2026-10-23T14:41:55,appearance,Appearance matching,47.7,86,60.0,20.0,False,names hidden from it that it got right (trusted names: coach checks / clear jersey numbers),,,20.0,,,,,
+2026-10-23T14:41:55,best_guess,Best guesses from the lineup,5.6,252,50.0,20.0,False,checked best guesses that were the right player (shown only at a probability level right 50%+ of the time),,,20.0,,,,,
+2026-10-23T14:41:55,located,Players found on the film,1.6,5920,,,,"on-floor players (five per team per clip) the tracking found on the film -- any way, coach checks too",,,,,2026-02-24 WheatonIL@NorthPark; 2026-02-26 MarianWI@MSOE; 2026-03-07 UWWhitewater@Wash(StLouis),,,
+2026-10-23T14:41:55,named_by_model,Players named by the tracking itself,0.338,5920,50.0,,,"on-floor players the tracking named ITSELF (jersey number, Synergy, following a named player, appearance) -- not counting coach-checked boxes; the brief's per-player film reads need this",,,,,2026-02-24 WheatonIL@NorthPark; 2026-02-26 MarianWI@MSOE; 2026-03-07 UWWhitewater@Wash(StLouis),,,
+2026-10-23T14:41:55,reader,Jersey-number reader,83.3,6,85.0,,False,"right when it answers (easyocr_find), on coach-checked crops it never trained on",,,6.0,,,switched off (TRACK_READ_NUMBERS = False),"5 right, 1 wrong of 39 checked players",
+2026-10-23T14:41:55,reid,Re-ID (looks like a checked player),29.6,27,80.0,20.0,False,checked players it picked out right (dinov2 full); used once a cutoff is right 80%+ of the time,,,,,,,,2026-10-23T14:29:45
+2026-10-23T14:41:55,outfit,Outfit check (referee / coach / fan),98.1,254,90.0,,False,boxes it flagged that really weren't players (coach checks),0.949,64.2,,,,switched off (TRACK_OUTFIT_CHECK = False),,2026-10-23T14:29:04

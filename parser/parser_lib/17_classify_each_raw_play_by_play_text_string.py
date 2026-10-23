@@ -63,6 +63,18 @@ TEAM_LEVEL_EXACT = {
 }
 
 
+# CONFIRMED BUG (fixed; Film Tagging / Player Number Tracking for Wheaton @ North Park offered "really #? Jerome Smith" and
+# "really #? Jr." -- one player split in two). The play-by-play writes a name suffix after a comma ("Jerome Smith, Jr.");
+# every lineup is stored as names joined by ", ", so that one player became "Jerome Smith" and "Jr." -- neither matched the
+# roster's "Jerome Smith Jr." (#0), so both had no number. The comma before Jr. / Sr. / II / III / IV / V is dropped here,
+# where every play-by-play name is read, so the name matches Synergy and the roster everywhere downstream.
+_PBP_SUFFIX_COMMA = re.compile(r",\s*(Jr\.?|Sr\.?|II|III|IV|V)(?=\s|$)", re.I)
+
+
+def pbp_name_clean(name):
+    return _PBP_SUFFIX_COMMA.sub(r" \1", name).strip() if isinstance(name, str) else name
+
+
 def classify_event(text):
     text = text.strip()
     if text in TEAM_LEVEL_EXACT:
@@ -70,7 +82,10 @@ def classify_event(text):
     for event_type, pattern in EVENT_PATTERNS:
         m = pattern.match(text)
         if m:
-            return {"event_type": event_type, **m.groupdict()}
+            d = {"event_type": event_type, **m.groupdict()}
+            if d.get("player"):
+                d["player"] = pbp_name_clean(d["player"])
+            return d
     # CONFIRMED BUG (fixed here): this used to return `player=text`, so any line the patterns above don't
     # recognise became a PLAYER named after the raw event string -- with its own box-score row, its own
     # minutes from the lineup reconstruction, and a place in the leaderboards. Keep the text in raw_text

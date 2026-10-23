@@ -7838,11 +7838,122 @@ def _cc_page():
                                 mime="application/json", key=f"cc_dl_{gym}")
 
 
+_TES_ORDER = ["named_by_model", "located", "reader", "appearance", "reid", "best_guess", "anchors", "player_model", "outfit"]
+
+
+def render_tracking_eval_scoreboard():
+    """CONFIRMED CHANGE (requested: "an evaluation of the Player Number Tracking that is similar to the 'How good is the
+    automatic tagging?' in Film Tagging"). Each part of the player-number tracking -- its test score on the coach checks, the
+    bar it must clear to be used, chance, used or not -- now and run by run, plus how much of the floor the tracking named.
+    From the parser's uww_tracking_eval_history.csv (a row each time a part's numbers change)."""
+    h = load_table("uww_tracking_eval_history")
+    with st.expander("\U0001f4c8 How good is the player-number tracking? (updated every parser run)", expanded=False):
+        if h.empty or "part" not in h.columns:
+            st.caption("No history yet -- it starts with the next parser run that has Player tracking on "
+                       "(RUN_PLAYER_TRACKING = True).")
+            return
+        h = h.copy()
+        h["run_at"] = pd.to_datetime(h["run_at"], errors="coerce")
+        h = h.sort_values("run_at")
+        _num = lambda v: None if v is None or pd.isna(v) else float(v)
+        _pct = lambda v: "--" if _num(v) is None else f"{_num(v):.0f}%"
+        _rank = {p: i for i, p in enumerate(_TES_ORDER)}
+        _yes = lambda v: str(v).lower() == "true"
+        now_t, over_t, all_t = st.tabs(["Now", "Over time", "Every change"])
+        with now_t:
+            last = h.groupby("part").tail(1).copy()
+            first = h.groupby("part").head(1).set_index("part")
+            last = last.assign(_o=last["part"].map(lambda p: _rank.get(p, 99))).sort_values("_o")
+            rows, notes = [], []
+            for _, r in last.iterrows():
+                sc, bar, ch = _num(r.get("score")), _num(r.get("bar")), _num(r.get("chance"))
+                bn = _num(r.get("bar_n")) if "bar_n" in r else None
+                _f0 = first.loc[r["part"]] if r["part"] in first.index else None
+                _chg = (sc - _num(_f0["score"])) if (_f0 is not None and sc is not None and _num(_f0["score"]) is not None) else None
+                st_ = r.get("status") if isinstance(r.get("status"), str) else ""
+                rows.append({
+                    "Part": r.get("label") or r["part"],
+                    "Score": _pct(sc),
+                    "Needs to be used": ("--" if bar is None else f"{bar:.0f}%" + (f" on {int(bn)}+" if bn else "")),
+                    "Chance": _pct(ch) if ch is not None else "--",
+                    "Used this run": ("--" if pd.isna(r.get("used")) else ("yes" if _yes(r.get("used")) else "no"))
+                                     + (f" -- {st_}" if st_ else ""),
+                    "Tested on": "--" if _num(r.get("n")) is None else f"{int(_num(r['n'])):,}",
+                    "Since first run": "--" if _chg is None else f"{_chg:+.0f} pts",
+                    "Last changed": r["run_at"].strftime("%b %d, %Y") if pd.notna(r["run_at"]) else "--",
+                })
+                extra = []
+                for col, lab in (("checked", ""), ("auc", "AUC (0.5 = coin flip, 1.0 = perfect)"),
+                                 ("caught", "non-players caught"), ("best", "right at its shown level"),
+                                 ("games", "games")):
+                    v = r.get(col) if col in r else None
+                    if v is None or (isinstance(v, float) and pd.isna(v)) or str(v) == "":
+                        continue
+                    if col == "auc":
+                        extra.append(f"{lab} {float(v):.2f}")
+                    elif col in ("caught", "best"):
+                        extra.append(f"{float(v):.0f}% {lab}")
+                    elif col == "games":
+                        extra.append(f"{lab}: {v}")
+                    else:
+                        extra.append(str(v))
+                notes.append((r.get("label") or r["part"], r.get("how") if isinstance(r.get("how"), str) else "", extra))
+            st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+            st.caption("**Score** = each part's own test on the coach checks (what it measures is under *What each score "
+                       "means*). A part is **used** once its score clears the bar. **Chance** = what guessing would get "
+                       "(one of five players = 20%). The top two rows are the result: how much of the floor the tracking "
+                       "found and named -- the brief's per-player film reads need 50% named by the tracking itself.")
+            with st.popover("What each score means"):
+                for lab, how, extra in notes:
+                    st.markdown(f"**{lab}** — {how}" + (f"  \n<small>{'; '.join(extra)}</small>" if extra else ""),
+                                unsafe_allow_html=True)
+        with over_t:
+            _parts = [p for p in _TES_ORDER if p in set(h["part"])] + sorted(set(h["part"]) - set(_TES_ORDER))
+            _labels = {p: (h.loc[h["part"] == p, "label"].dropna().iloc[-1] if h.loc[h["part"] == p, "label"].notna().any()
+                           else p) for p in _parts}
+            pick = st.selectbox("Part", _parts, format_func=lambda p: _labels.get(p, p), key="tes_part")
+            cols = ["run_at"] + [c for c in ("score", "bar", "chance", "n") if c in h.columns]
+            g = h[h["part"] == pick][cols].dropna(subset=["run_at"])
+            if g["score"].notna().sum() < 2:
+                st.caption("Not enough runs with a score yet -- the chart fills in as tracking runs on new checks.")
+            if g["score"].notna().any():
+                import altair as alt
+                _vv = [c for c in ("score", "bar", "chance") if c in g.columns]
+                long = g.melt(id_vars=["run_at"], value_vars=_vv, var_name="what", value_name="pct").dropna()
+                _nm = {"score": "Score", "bar": "Needs to be used", "chance": "Chance"}
+                long["what"] = long["what"].map(_nm)
+                _dom = [_nm[c] for c in _vv if _nm[c] in set(long["what"])]
+                ch = (alt.Chart(long).mark_line(point=True)
+                      .encode(x=alt.X("run_at:T", title="Parser run"),
+                              y=alt.Y("pct:Q", title="%", scale=alt.Scale(domain=[0, 100])),
+                              color=alt.Color("what:N", title=None, scale=alt.Scale(domain=_dom)),
+                              strokeDash=alt.condition(alt.datum.what == "Score", alt.value([1, 0]), alt.value([5, 4])),
+                              tooltip=[alt.Tooltip("run_at:T", title="Run"), alt.Tooltip("what:N", title=""),
+                                       alt.Tooltip("pct:Q", title="%", format=".0f")])
+                      .properties(height=260))
+                st.altair_chart(ch, use_container_width=True)
+                if "n" in g.columns and g["n"].notna().any():
+                    st.caption("Tested on over time: " + " → ".join(f"{int(x):,}" for x in g["n"].dropna()))
+        with all_t:
+            show = h.assign(_o=h["part"].map(lambda p: _rank.get(p, 99))).sort_values(["run_at", "_o"],
+                                                                                      ascending=[False, True])
+            st.dataframe(pd.DataFrame({
+                "Run": show["run_at"].dt.strftime("%b %d, %Y %H:%M"),
+                "Part": show["label"].fillna(show["part"]),
+                "Score": show["score"].map(_pct),
+                "Needs": show["bar"].map(_pct) if "bar" in show.columns else "--",
+                "Chance": show["chance"].map(_pct) if "chance" in show.columns else "--",
+                "Used": show["used"].map(lambda v: "--" if pd.isna(v) else ("yes" if _yes(v) else "no")),
+                "Tested on": show["n"].map(lambda v: "" if pd.isna(v) else f"{int(v):,}"),
+            }), hide_index=True, use_container_width=True)
+
+
 def render_player_number_tracking():
     """Analytics > Player Number Tracking (requested): each available game's player checks (moved here from Video
     Tracking) plus how accurate the model's player numbers have been, grouped by how it assigned them."""
     section_header("\U0001f522 PLAYER NUMBER TRACKING", "Check who the model named on each tracked box, and see which parts of "
                    "the player-number tracking are working.")
+    render_tracking_eval_scoreboard()
     pkgs = [v for v in (_pr_part_view(d, "players") for d in sorted(_pr_app_packages(), key=lambda d: str(d.get("game", "")),
                                                                      reverse=True)) if v]
     saves = _pnt_load_checks()
