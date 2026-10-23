@@ -1,11 +1,11 @@
 field,trusted,why,accuracy_pct,baseline_pct,clips_scored,trained_at
-formation,False,model not better than always guessing (72% vs 72%),72.0,72.0,202.0,2026-10-22T12:50:29
-play_call,False,62% vs 62% always guessing on 212 held-out plays (+0 pts) -- needs +3 pts on 30+ plays,62.0,62.0,212.0,2026-10-22T12:50:29
-defense,True,one answer covers 100% of 349 coach tags,,,,2026-10-22T12:50:29
-press,False,81% vs 81% always guessing on 344 held-out plays (+0 pts) -- needs +3 pts on 30+ plays,81.0,81.0,344.0,2026-10-22T12:50:29
-situation,True,79% vs 72% always guessing on 391 held-out plays (+7 pts),79.0,72.0,391.0,2026-10-22T12:50:29
-primary_action,False,model not better than always guessing (48% vs 48%),48.0,48.0,132.0,2026-10-22T12:50:29
-ball_screen_coverage,False,model not better than always guessing (22% vs 31%),22.0,31.0,109.0,2026-10-22T12:50:29
-offball_coverage,False,model not better than always guessing (31% vs 57%),31.0,57.0,42.0,2026-10-22T12:50:29
-screener,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),,,,2026-10-22T12:50:29
-screen_defender,False,model not better than always guessing (29% vs 29%),29.0,29.0,55.0,2026-10-22T12:50:29
+formation,False,model not better than always guessing (72% vs 72%),72.0,72.0,202.0,2026-10-23T07:25:49
+play_call,False,62% vs 62% always guessing on 212 held-out plays (+0 pts) -- needs +3 pts on 30+ plays,62.0,62.0,212.0,2026-10-23T07:25:49
+defense,True,one answer covers 100% of 349 coach tags,,,,2026-10-23T07:25:49
+press,False,81% vs 81% always guessing on 344 held-out plays (+0 pts) -- needs +3 pts on 30+ plays,81.0,81.0,344.0,2026-10-23T07:25:49
+situation,True,79% vs 72% always guessing on 391 held-out plays (+7 pts),79.0,72.0,391.0,2026-10-23T07:25:49
+primary_action,False,model not better than always guessing (48% vs 48%),48.0,48.0,132.0,2026-10-23T07:25:49
+ball_screen_coverage,False,model not better than always guessing (22% vs 31%),22.0,31.0,109.0,2026-10-23T07:25:49
+offball_coverage,False,model not better than always guessing (31% vs 57%),31.0,57.0,42.0,2026-10-23T07:25:49
+screener,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),,,,2026-10-23T07:25:49
+screen_defender,False,model not better than always guessing (29% vs 29%),29.0,29.0,55.0,2026-10-23T07:25:49
