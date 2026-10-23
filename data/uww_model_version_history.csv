@@ -331,3 +331,13 @@ Tag model: primary_action,v2026.10.23,2026-10-23,trained,2026-10-23T07:25:49,"17
 Tag model: screen_defender,v2026.10.23,2026-10-23,trained,2026-10-23T07:25:49,"88 tagged clips, 7 answers learned, one answer only",2026-10-23T07:28:11
 Tag model: situation,v2026.10.23,2026-10-23,trained,2026-10-23T07:25:49,"395 tagged clips, 5 answers learned",2026-10-23T07:28:11
 Tag model (overall),v2026.10.23,2026-10-23,trained,2026-10-23T07:25:49,newest of 9 field model(s); last retrained field: situation,2026-10-23T07:28:11
+Tag model: ball_screen_coverage,v2026.10.23.2,2026-10-23,trained,2026-10-23T13:29:24,"133 tagged clips, 5 answers learned, one answer only",2026-10-23T13:59:32
+Tag model: defense,v2026.10.23.2,2026-10-23,trained,2026-10-23T13:29:24,"393 tagged clips, 1 answers learned, one answer only",2026-10-23T13:59:32
+Tag model: formation,v2026.10.23.2,2026-10-23,trained,2026-10-23T13:29:24,"261 tagged clips, 6 answers learned, one answer only",2026-10-23T13:59:32
+Tag model: offball_coverage,v2026.10.23.2,2026-10-23,trained,2026-10-23T13:29:24,"63 tagged clips, 3 answers learned, one answer only",2026-10-23T13:59:32
+Tag model: play_call,v2026.10.23.2,2026-10-23,trained,2026-10-23T13:29:24,"291 tagged clips, 7 answers learned, one answer only",2026-10-23T13:59:32
+Tag model: press,v2026.10.23.2,2026-10-23,trained,2026-10-23T13:29:24,"394 tagged clips, 3 answers learned, one answer only",2026-10-23T13:59:32
+Tag model: primary_action,v2026.10.23.2,2026-10-23,trained,2026-10-23T13:29:24,"202 tagged clips, 8 answers learned, one answer only",2026-10-23T13:59:32
+Tag model: screen_defender,v2026.10.23.2,2026-10-23,trained,2026-10-23T13:29:24,"91 tagged clips, 7 answers learned, one answer only",2026-10-23T13:59:32
+Tag model: situation,v2026.10.23.2,2026-10-23,trained,2026-10-23T13:29:24,"439 tagged clips, 5 answers learned",2026-10-23T13:59:32
+Tag model (overall),v2026.10.23.2,2026-10-23,trained,2026-10-23T13:29:24,newest of 9 field model(s); last retrained field: situation,2026-10-23T13:59:32

@@ -2687,6 +2687,58 @@ _pl_untagged = _pl_untagged_from_frames(_pl_all_raw)
 if not _pl_untagged.empty:
     _pl_all_raw = pd.concat([_pl_all_raw, _pl_untagged], ignore_index=True)
     _pl_problems[:] = [p_ for p_ in _pl_problems if "not found in INPUT_DIR" not in p_]   # the file is optional now
+# CONFIRMED BUG (fixed; coach: "Why was this one tagged as a UWW possession?" -- WashU clip 106, "3 Josh Kim > Non Possession >
+# Non Shooting Foul"). Synergy leaves the Team column BLANK on its "Non Shooting Foul" clips (all 9 blank-Team clips of the
+# WashU game were these). A UWW game's blank Team was read as UW-Whitewater, so every one became OUR offensive possession --
+# here Richie Warren fouled Josh Kim at 15:08, WashU had the ball. Synergy names the player who DREW the foul, i.e. the
+# offense (coach-confirmed earlier: clip 22, Metcalf-Grassman's Non Shooting Foul was Brock Marino's foul). A blank Team is
+# now filled with the named player's own team: from the same game's other clips where he's listed with a team, else from
+# the play-by-play's roster for that game. Only clips with no player stay blank.
+def _pl_fill_blank_team(raw):
+    if raw.empty or "Team" not in raw.columns or "player" not in raw.columns:
+        return raw
+    _blank = raw["Team"].isna() | (raw["Team"].astype(str).str.strip().isin(["", "nan", "None"]))
+    _named = raw["player"].notna() & (raw["player"].astype(str).str.strip() != "")
+    if not (_blank & _named).any():
+        return raw
+    raw = raw.copy()
+    _nm = lambda s: re.sub(r"[^a-z]+", "", str(s).lower())
+    _gk = lambda r: (str(r.get("game_code") or ""), str(r.get("game_date") or "")[:10])
+    known = {}                                   # (game, player) -> Team, from the same game's other clips
+    for _, r in raw[~_blank & _named].iterrows():
+        known.setdefault((_gk(r), _nm(r["player"])), str(r["Team"]).strip())
+    pbp = {}                                     # (date, player) -> team label, from the play-by-play
+    for _src in ("pbp_events", "pbp_events_upcoming"):
+        _ev = globals().get(_src)
+        if isinstance(_ev, pd.DataFrame) and not _ev.empty and {"player", "team", "game_date"} <= set(_ev.columns):
+            for (_d, _p, _t), _ in _ev.dropna(subset=["player", "team", "game_date"]).groupby(
+                    [_ev["game_date"].astype(str).str[:10], "player", "team"]):
+                pbp.setdefault((_d, _nm(_p)), _t)
+    n_clip = n_pbp = 0
+    for i in raw.index[_blank & _named]:
+        r = raw.loc[i]
+        t = known.get((_gk(r), _nm(r["player"])))
+        if t:
+            n_clip += 1
+        else:
+            d0 = pd.to_datetime(r.get("game_date"), errors="coerce")
+            for dd in (0, -1, 1):
+                if pd.isna(d0):
+                    break
+                t = pbp.get(((d0 + pd.Timedelta(days=dd)).strftime("%Y-%m-%d"), _nm(r["player"])))
+                if t:
+                    n_pbp += 1
+                    break
+        if t:
+            raw.at[i, "Team"] = t
+    if n_clip or n_pbp:
+        print(f"  Blank Team on {int((_blank & _named).sum())} clip(s) (Synergy's Non Shooting Foul clips): filled with the named "
+              f"player's own team -- {n_clip} from his other clips in the game, {n_pbp} from the play-by-play "
+              f"(he drew the foul, so his team had the ball)", flush=True)
+    return raw
+
+
+_pl_all_raw = _pl_fill_blank_team(_pl_all_raw)
 _pl_all_raw["_route"] = _pl_route(_pl_all_raw) if not _pl_all_raw.empty else None
 _pl_split = {r: (_pl_all_raw[_pl_all_raw["_route"] == r].drop(columns="_route").reset_index(drop=True)
                  if not _pl_all_raw.empty else pd.DataFrame()) for r in ("UWW", "Opponent", "Other")}
