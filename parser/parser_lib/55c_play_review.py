@@ -1113,6 +1113,22 @@ def _tag_people(r, rosters, _gn):
             "five_labels": {nm: (f"#{_gn[str(nm).lower()]} {nm}" if _gn.get(str(nm).lower()) else nm) for nm in names}}
 
 
+def _tag_fields(r):
+    """One Film Tagging play's fields: the automatic answer for each (Tag model), its confidence, and whether it's trusted."""
+    min_c = float(globals().get("TAG_MODEL_MIN_CONFIDENCE", 0.6))
+    fields = []
+    for f, label in _TR_FIELDS:
+        if f == "screener":
+            continue
+        av, ac, note = _tr_auto(r, f, False)
+        # untrusted fields (Tag model not better than guessing yet) are offered, never prefilled
+        sure = (av is not None and ac is not None and ac >= min_c
+                and (tag_field_trusted(f) if "tag_field_trusted" in globals() else True))
+        fields.append({"field": f, "label": label, "coach": None, "auto": av,
+                       "conf": round(ac, 2) if ac is not None else None, "sure": sure, "same": None, "note": note})
+    return fields
+
+
 def _tag_refresh_people(pkg, g, gd, gc):
     """An open (unsaved) Film Tagging batch keeps its plays, but who was on offense / defense and the two fives are updated
     from today's play calls. CONFIRMED BUG (fixed with the team-code fix in Play calls): batches built before it listed our
@@ -1128,8 +1144,9 @@ def _tag_refresh_people(pkg, g, gd, gc):
         _gn = _trk_numbers_for_game(gd, gc) if "_trk_numbers_for_game" in globals() else {}
     except Exception:
         _gn = {}
-    n = 0
+    n = n_auto = 0
     rosters = _tag_rosters(g)
+    _have_pred = any(c.startswith("pred_") for c in g.columns)
     for pl in doc.get("plays", []):
         r = by_key.get(_pl_ckey_norm(pl.get("clip_key")))
         if r is None:
@@ -1138,10 +1155,28 @@ def _tag_refresh_people(pkg, g, gd, gc):
         if any(pl.get(k) != v for k, v in new.items()):
             pl.update(new)
             n += 1
-    if n:
+        # CONFIRMED BUG (fixed; Film Tagging showed "Automatic Title: (bs):" and no suggestion in any list). An open batch
+        # kept its automatic answers from the run that BUILT it -- that run had the Tag model off, so every answer was blank,
+        # and later runs with the model on never filled them in. The automatic answers and Title are now refreshed from
+        # this run's Tag model (only when it ran: a run without it leaves the last ones in place).
+        if _have_pred:
+            nf, nt = _tag_fields(r), _tr_title(r, False)
+            _old = {f_.get("field"): (f_.get("auto"), f_.get("conf"), f_.get("sure")) for f_ in pl.get("fields", [])}
+            _new = {f_["field"]: (f_["auto"], f_["conf"], f_["sure"]) for f_ in nf}
+            if _old != _new or pl.get("auto_title") != nt:
+                _by = {f_["field"]: f_ for f_ in nf}
+                for f_ in pl.get("fields", []):           # keep each field's place and anything else on it
+                    if f_.get("field") in _by:
+                        f_.update({k: _by[f_["field"]][k] for k in ("auto", "conf", "sure", "note")})
+                pl["auto_title"] = nt
+                n_auto += 1
+    if n or n_auto:
         with open(rj, "w", encoding="utf-8") as fh:
             json.dump(doc, fh, default=str)
-        print(f"Film Tagging: {gd} {gc}: open batch -- offense / defense and lineups updated on {n} play(s)", flush=True)
+        print(f"Film Tagging: {gd} {gc}: open batch -- "
+              + ", ".join(x for x in (f"offense / defense and lineups updated on {n} play(s)" if n else "",
+                                      f"automatic answers updated on {n_auto} play(s)" if n_auto else "") if x),
+              flush=True)
 
 
 # CONFIRMED CHANGE (requested: "Why is this doing work on the Oshkosh film when I have the upcoming opponent being the Wheaton
@@ -1299,16 +1334,7 @@ def tag_queue():
                     print(f"  [film tagging] clip video not made ({type(_ce).__name__}: {_ce})", flush=True)
             if PLAY_REVIEW_VIDEO and not clip_file:
                 continue                                   # no video of the play: nothing for a coach to tag from
-            fields = []
-            for f, label in _TR_FIELDS:
-                if f == "screener":
-                    continue
-                av, ac, note = _tr_auto(r, f, False)
-                # untrusted fields (Tag model not better than guessing yet) are offered, never prefilled
-                sure = (av is not None and ac is not None and ac >= min_c
-                        and (tag_field_trusted(f) if "tag_field_trusted" in globals() else True))
-                fields.append({"field": f, "label": label, "coach": None, "auto": av,
-                               "conf": round(ac, 2) if ac is not None else None, "sure": sure, "same": None, "note": note})
+            fields = _tag_fields(r)
             clock = r.get("time_remaining_seconds")
             url, pos = _pr_synergy(r)
             plays.append({"clip_key": f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}",

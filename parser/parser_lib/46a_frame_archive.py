@@ -845,7 +845,20 @@ def vision_clip_media(files):
     if not m:
         return None
     vid = os.path.join(os.path.dirname(os.path.dirname(first)), "media", m.group(1) + ".mp4")
-    return vid if _FA_ORIG["exists"](vid) else None
+    # a game folder moved to a storage drive: its play video is there (the real file -- steps copy it)
+    return vid if _FA_ORIG["exists"](vid) else _fs_moved(vid)
+
+
+def vision_real_path(p):
+    """CONFIRMED BUG (fixed; "Tracking review export skipped: FileNotFoundError: [WinError 3] ... _vision_frames\\
+    Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/1_1450ff05_t000.jpg"). The frame hooks make a frame in a game folder
+    moved to a storage drive look present, so a step that copies the FILE itself (a zip, shutil.copy) was handed the
+    _vision_frames path, where it isn't. This is the file to copy: the path itself, its copy on the storage drive, or None
+    when the frame is only inside a video (Synergy export / archive) and not written out (vision_frames_ensure writes it)."""
+    isf = (globals().get("_FA_ORIG") or {}).get("isfile", os.path.isfile)
+    if isf(p):
+        return p
+    return _fs_moved(p)
 
 
 def _fa_tables():

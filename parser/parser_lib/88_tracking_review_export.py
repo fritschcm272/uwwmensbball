@@ -95,9 +95,23 @@ if EXPORT_TRACKING_REVIEW:
         if "vision_frames_ensure" in globals():
             vision_frames_ensure([os.path.join(VISION_FRAMES_DIR, f) for f in _files])     # archived clips -> JPEGs
         with zipfile.ZipFile(_out, "w", zipfile.ZIP_DEFLATED) as z:
+            # CONFIRMED BUG (fixed; "FileNotFoundError: [WinError 3] ... Jan_2_2026_UWOshkosh@UWWhitewater/track1024v2/
+            # 1_1450ff05_t000.jpg"): a frame in a game folder moved to the F: drive looked present, but the zip read it from
+            # _vision_frames. The real file is used now (vision_real_path, section 46a); a frame that can't be found is
+            # counted and skipped instead of stopping the export.
+            _real_of = globals().get("vision_real_path") or (lambda p: p if os.path.isfile(p) else None)
+            _n_miss = 0
             for f in _files:
-                if os.path.exists(os.path.join(VISION_FRAMES_DIR, f)):
-                    z.write(os.path.join(VISION_FRAMES_DIR, f), "frames/" + f)
+                _src = _real_of(os.path.join(VISION_FRAMES_DIR, f))
+                if _src:
+                    try:
+                        z.write(_src, "frames/" + f)
+                        continue
+                    except OSError:
+                        pass
+                _n_miss += 1
+            if _n_miss:
+                print(f"  ({_n_miss} of {len(_files)} frame(s) not on disk -- left out of the export)", flush=True)
             z.writestr("play_calls.csv", _pc.to_csv(index=False))
             _sl = globals().get("trk_lineup_slots", pd.DataFrame())
             if isinstance(_sl, pd.DataFrame) and not _sl.empty:
