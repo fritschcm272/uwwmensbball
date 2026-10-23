@@ -203,7 +203,11 @@ def _oc_save_cache():
 
 def outfit_scores_for(items, base):
     """items: [(frame file, box)] -> [score or None]. Scores are cached on disk by frame + box, so reruns are fast; each
-    picture is read once."""
+    picture is read once.
+    CONFIRMED CHANGE (requested: "These take a very long time to run, can you add some description print outs so I know what
+    is happening" -- 67,302 pictures with nothing printed after the model loaded). It now says how many pictures are saved
+    from earlier runs vs new, then prints a count every 20 s (frames read, pictures scored, time so far / time left), and
+    saves the scores every 5 minutes so a stopped run keeps what it did."""
     import cv2
     cache = _oc_cache()
     keys = [f"{f}|{int(b[0])}|{int(b[1])}|{int(b[2])}|{int(b[3])}" for f, b in items]
@@ -211,24 +215,54 @@ def outfit_scores_for(items, base):
     for n, (k, (f, b)) in enumerate(zip(keys, items)):
         if k not in cache:
             todo.setdefault(f, []).append((n, b))
+    n_new = sum(len(v) for v in todo.values())
+    print(f"    [outfit] {len(keys) - n_new:,} of {len(keys):,} picture(s) already scored in earlier runs (reused); "
+          f"{n_new:,} new to score, from {len(todo):,} frame(s)" + (" -- nothing to do" if not n_new else ""), flush=True)
     if todo:
+        t0 = last = last_save = _oc_time.time()
+        done = n_frames = 0
         crops, where = [], []
+
+        def _say(final=False):
+            el = (_oc_time.time() - t0) / 60.0
+            left = el / done * (n_new - done) if done else None
+            print(f"    [outfit] pictures scored: {done:,} / {n_new:,} ({100 * done // max(n_new, 1)}%), {n_frames:,} of "
+                  f"{len(todo):,} frame(s) read -- {el:.1f} min so far"
+                  + (f", ~{left:.1f} min left" if left is not None and not final else ""), flush=True)
+
+        def _score_batch():
+            nonlocal done, last, last_save, crops, where
+            for n, s_ in zip(where, _oc_scores(crops)):
+                cache[keys[n]] = s_
+            done += len(where)
+            crops, where = [], []
+            now = _oc_time.time()
+            if now - last >= 20:
+                last = now
+                _say()
+            if now - last_save >= 300:                    # every 5 minutes: a stopped run keeps its scores
+                last_save = now
+                _oc_save_cache()
+
         for f, lst in todo.items():
             img = cv2.imread(os.path.join(base, f))
+            n_frames += 1
             for n, b in lst:
                 crops.append(_oc_crop(img, b) if img is not None else None)
                 where.append(n)
             if len(crops) >= 256:
-                for n, s_ in zip(where, _oc_scores(crops)):
-                    cache[keys[n]] = s_
-                crops, where = [], []
+                _score_batch()
         if crops:
-            for n, s_ in zip(where, _oc_scores(crops)):
-                cache[keys[n]] = s_
+            _score_batch()
+        _say(final=True)
         # CONFIRMED BUG (fixed): a box whose picture wasn't on disk was cached as "no score" for good, so it stayed unscored
         # even after the picture came back. Only real scores are kept.
-        for k in [k for k in keys if k in cache and cache[k] is None]:
+        _miss = [k for k in keys if k in cache and cache[k] is None]
+        for k in _miss:
             del cache[k]
+        if _miss:
+            print(f"    [outfit] {len(_miss):,} picture(s) couldn't be scored (frame not on disk) -- tried again next run",
+                  flush=True)
         _oc_save_cache()
     return [cache.get(k) for k in keys]
 
