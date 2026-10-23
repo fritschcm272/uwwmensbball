@@ -77,8 +77,26 @@ if EXPORT_TRACKING_REVIEW:
         for _c in ("track_files", "frame_files", "clip_number", "game_code", "track_clip_key"):
             if _c not in play_calls.columns:
                 play_calls[_c] = None
+        # CONFIRMED CHANGE (requested: "Nothing should be set to Oshkosh any more" -- REVIEW_GAME = "WOS" was left over from the
+        # Oshkosh review). REVIEW_GAME = None (the default) now packs the game this run is tracking: the newest game with
+        # player tracks (UWW's most recent game when it has them), so the setting never points at an old game again.
+        _rg = globals().get("REVIEW_GAME")
+        if not _rg:
+            _trk = play_calls[play_calls["track_files"].notna()]
+            _pt0 = player_tracks if isinstance(globals().get("player_tracks"), pd.DataFrame) else pd.DataFrame()
+            if not _pt0.empty and "clip_key" in _pt0.columns:
+                _trk = _trk[_trk["track_clip_key"].isin(set(_pt0["clip_key"]))]
+            if not _trk.empty:
+                _trk = _trk.assign(_d=pd.to_datetime(_trk["game_date"], errors="coerce"))
+                _uww = _trk[_trk["side"].astype(str).eq("UWW")] if "side" in _trk.columns else _trk.iloc[0:0]
+                _rg = str((_uww if not _uww.empty else _trk).sort_values("_d").iloc[-1]["game_code"])
+                print(f"  Tracking review export: REVIEW_GAME not set -- packing {_rg} (the newest tracked game)", flush=True)
+            else:
+                _rg = None
+        if not _rg:
+            raise RuntimeError("no tracked game to export -- run Player tracking first (or set REVIEW_GAME)")
         _pc = play_calls[play_calls["track_files"].notna()
-                         & play_calls["game_code"].astype(str).str.contains(REVIEW_GAME, regex=False)]
+                         & play_calls["game_code"].astype(str).str.contains(_rg, regex=False)]
         _pc = _pc.sort_values("clip_number").head(REVIEW_POSSESSIONS)
         _keys = set(_pc["track_clip_key"])
         _files = [f for col in ("track_files", "frame_files") for v in _pc[col].dropna() for f in v.split(";") if f]

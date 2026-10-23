@@ -248,6 +248,15 @@ def _tr_vocab():
     return out
 
 
+def _pr_vocab_now():
+    """This run's answer lists, worked out once. CONFIRMED BUG (fixed; "Film Tagging skipped: AttributeError: 'NoneType' object
+    has no attribute 'get'"): the run reset the saved lists to None, and setdefault() keeps an existing None, so every
+    Film Tagging batch failed and the open batches were never refreshed."""
+    if not globals().get("_pr_vocab_run"):
+        globals()["_pr_vocab_run"] = _tr_vocab()
+    return globals()["_pr_vocab_run"]
+
+
 def _tr_title(r, tagged):
     """The automatic Title in the coaches' shorthand -- the Tag model's own builder, fed the (held-out) answers."""
     rr = dict(r)
@@ -1034,7 +1043,7 @@ def play_review():
                                              if len(_trk_five(r.get(f"{side}_lineup"))) < 5 else [])}})
         # every answer already known for each field (coaches' Titles and the model's answers, all games) -- offered as
         # suggestions for a typed answer, so it matches an existing spelling (page and app)
-        vocab = globals().get("_pr_vocab_run") or globals().setdefault("_pr_vocab_run", _tr_vocab())
+        vocab = _pr_vocab_now()
         # CONFIRMED CHANGE (requested: the play reviews inside the Streamlit app, saved to GitHub; no more review.html).
         # The open review goes to the app's data folder (_pr_app_dir()/play_review/<game>/): review.json + each play's
         # video, cover image and pictures (1100 px). Commit / push it with the rest of the data; the app saves each
@@ -1251,7 +1260,7 @@ def tag_queue():
     min_c = float(globals().get("TAG_MODEL_MIN_CONFIDENCE", 0.6))
     if "_play_review_file_saves" in globals():
         _play_review_file_saves()
-    vocab = globals().get("_pr_vocab_run") or globals().setdefault("_pr_vocab_run", _tr_vocab())
+    vocab = _pr_vocab_now()
     print("Film Tagging: answer lists -- " + ", ".join(f"{lab_} {len(vocab.get(f, []))}" for f, lab_ in _TR_FIELDS),
           flush=True)
     summary, _outside = [], []
