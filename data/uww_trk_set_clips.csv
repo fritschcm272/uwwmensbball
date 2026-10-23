@@ -1,16 +1,27 @@
 clip_key,offense_team,set_id
-2026-02-24|13|3 William Bates > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 1
+2026-02-24|46|54 Julian Campbell > Offensive Rebound > Long > Run Offense,North Park Vikings,North Park V set 1
+2026-02-24|83|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Go Away from Pick > Turnover,North Park Vikings,North Park V set 1
+2026-02-24|110|21 Lazario Cornish > Cut > Screen > Foul,North Park Vikings,North Park V set 1
+2026-02-24|116|3 William Bates > Hand Off > From Dribble > Top > Dribble Jumper > Medium/17' to <3p > Make 2 Pts,North Park Vikings,North Park V set 1
+2026-02-24|122|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,North Park Vikings,North Park V set 1
 2026-02-24|128|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 3 William Bates > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts Foul > 1 Pts,North Park Vikings,North Park V set 1
-2026-02-24|179|5 Kolden Vanlandingham > Spot-Up > Drives Right > Dribble Jumper > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 1
+2026-02-24|164|4 Mike Vuckovic > Non Possession > No Violation,North Park Vikings,North Park V set 1
+2026-02-24|165|3 William Bates > ISO > Left > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts,North Park Vikings,North Park V set 1
+2026-02-24|170|3 William Bates > No Play Type > Turnover,North Park Vikings,North Park V set 1
+2026-02-24|173|5 Kolden Vanlandingham > Off Screen > To Shooter's Right > Straight > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 1
+2026-02-24|190|54 Julian Campbell > Post-Up > Right Block > Left Shoulder > Dribble Move > Defense Commits > Foul,North Park Vikings,North Park V set 1
+2026-02-24|194|21 Lazario Cornish > No Play Type > Turnover,North Park Vikings,North Park V set 1
+2026-02-24|216|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 3 William Bates > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 1
 2026-02-24|242|4 Mike Vuckovic > Non Possession > Non Shooting Foul,North Park Vikings,North Park V set 1
-2026-02-24|260|4 Mike Vuckovic > ISO > Top > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,North Park Vikings,North Park V set 1
-2026-02-24|274|54 Julian Campbell > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Make 2 Pts,North Park Vikings,North Park V set 1
+2026-02-24|276|4 Mike Vuckovic > ISO > Left > Drives Right > To Basket > Make 2 Pts Foul > 1 Pts,North Park Vikings,North Park V set 1
+2026-02-24|301|25 Marquis Vance > Offensive Rebound > Short > Run Offense,North Park Vikings,North Park V set 1
+2026-02-24|303|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Miss 2 Pts,North Park Vikings,North Park V set 1
+2026-02-24|317|2 Tyvin Garrison > No Play Type > Foul,North Park Vikings,North Park V set 1
 2026-02-24|3|25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,North Park Vikings,North Park V set 2
 2026-02-24|32|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 2 Tyvin Garrison > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 2
 2026-02-24|34|4 Mike Vuckovic > Spot-Up > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,North Park Vikings,North Park V set 2
 2026-02-24|91|3 William Bates > Spot-Up > Drives Left > To Basket > Foul,North Park Vikings,North Park V set 2
 2026-02-24|103|5 Kolden Vanlandingham > ISO > Top > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,North Park Vikings,North Park V set 2
-2026-02-24|114|25 Marquis Vance > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 2
 2026-02-24|153|5 Kolden Vanlandingham > Offensive Rebound > Short > Scoring Attempt > At Basket > Miss 2 Pts,North Park Vikings,North Park V set 2
 2026-02-24|154|5 Kolden Vanlandingham > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,North Park Vikings,North Park V set 2
 2026-02-24|169|4 Mike Vuckovic > Non Possession > No Violation,North Park Vikings,North Park V set 2
@@ -18,89 +29,78 @@ clip_key,offense_team,set_id
 2026-02-24|228|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 3 William Bates > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 2
 2026-02-24|261|35 Brady Wynja > No Play Type > Foul,North Park Vikings,North Park V set 2
 2026-02-24|264|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Cut > Basket > Make 2 Pts Foul > 1 Pts,North Park Vikings,North Park V set 2
+2026-02-24|285|25 Marquis Vance > Spot-Up > Drives Right > Turnover,North Park Vikings,North Park V set 2
+2026-02-24|294|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Foul,North Park Vikings,North Park V set 2
 2026-02-24|307|0 Jerome Smith Jr. > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 4 Mike Vuckovic > P&R Roll Man > Pick and Pops > Drives Left > To Basket > Make 2 Pts,North Park Vikings,North Park V set 2
-2026-02-24|24|5 Kolden Vanlandingham > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 3
-2026-02-24|36|21 Lazario Cornish > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,North Park Vikings,North Park V set 3
-2026-02-24|39|54 Julian Campbell > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,North Park Vikings,North Park V set 3
-2026-02-24|42|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 54 Julian Campbell > P&R Roll Man > Rolls to Basket > Make 2 Pts,North Park Vikings,North Park V set 3
-2026-02-24|49|5 Kolden Vanlandingham > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 54 Julian Campbell > P&R Roll Man > Rolls to Basket > Miss 2 Pts,North Park Vikings,North Park V set 3
-2026-02-24|53|5 Kolden Vanlandingham > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 3
-2026-02-24|57|5 Kolden Vanlandingham > Cut > Basket > Miss 2 Pts,North Park Vikings,North Park V set 3
-2026-02-24|58|5 Kolden Vanlandingham > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,North Park Vikings,North Park V set 3
+2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 3
+2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,North Park Vikings,North Park V set 3
+2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 3
+2026-02-24|47|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts,North Park Vikings,North Park V set 3
+2026-02-24|56|4 Mike Vuckovic > Non Possession > Non Shooting Foul,North Park Vikings,North Park V set 3
 2026-02-24|62|0 Jerome Smith Jr. > No Play Type > Dribble Jumper > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 3
-2026-02-24|74|4 Mike Vuckovic > Hand Off > From Dribble > Right > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 3
-2026-02-24|77|0 Jerome Smith Jr. > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 3
-2026-02-24|79|3 William Bates > Off Screen > To Shooter's Right > Straight > Dribble Jumper > Short to < 17' > Miss 2 Pts,North Park Vikings,North Park V set 3
-2026-02-24|87|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 54 Julian Campbell > P&R Roll Man > Pick and Pops > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 3
-2026-02-24|95|54 Julian Campbell > Post-Up > Right Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,North Park Vikings,North Park V set 3
-2026-02-24|99|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 3
+2026-02-24|67|25 Marquis Vance > P&R Ball Handler > Right P&R > Side > Go Away from Pick > Defense Commits > Ball Delivered > 34 Harrison Long > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 3
+2026-02-24|69|21 Lazario Cornish > Spot-Up > Drives Straight > Dribble Jumper > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 3
 2026-02-24|101|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Lazario Cornish > P&R Roll Man > Rolls to Basket > Turnover,North Park Vikings,North Park V set 3
-2026-02-24|148|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,North Park Vikings,North Park V set 3
-2026-02-24|152|5 Kolden Vanlandingham > P&R Ball Handler > Right P&R > Side > Go Away from Pick > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 3
-2026-02-24|163|5 Kolden Vanlandingham > Non Possession > Non Shooting Foul,North Park Vikings,North Park V set 3
-2026-02-24|270|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 3
-2026-02-24|280|4 Mike Vuckovic > Hand Off > From Stationary > Top > Turnover,North Park Vikings,North Park V set 3
-2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 4
-2026-02-24|23|21 Lazario Cornish > Non Possession > Non Shooting Foul,North Park Vikings,North Park V set 4
-2026-02-24|85|4 Mike Vuckovic > ISO > Top > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts,North Park Vikings,North Park V set 4
-2026-02-24|134|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 4
-2026-02-24|140|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,North Park Vikings,North Park V set 4
-2026-02-24|147|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 4
-2026-02-24|172|4 Mike Vuckovic > Non Possession > No Violation,North Park Vikings,North Park V set 4
-2026-02-24|175|5 Kolden Vanlandingham > ISO > Top > Drives Right > To Basket > Foul,North Park Vikings,North Park V set 4
-2026-02-24|253|4 Mike Vuckovic > ISO > Top > Drives Left > Dribble Jumper > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 4
-2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 5
-2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,North Park Vikings,North Park V set 5
-2026-02-24|46|54 Julian Campbell > Offensive Rebound > Long > Run Offense,North Park Vikings,North Park V set 5
-2026-02-24|47|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts,North Park Vikings,North Park V set 5
-2026-02-24|56|4 Mike Vuckovic > Non Possession > Non Shooting Foul,North Park Vikings,North Park V set 5
-2026-02-24|69|21 Lazario Cornish > Spot-Up > Drives Straight > Dribble Jumper > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 5
-2026-02-24|83|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Go Away from Pick > Turnover,North Park Vikings,North Park V set 5
-2026-02-24|110|21 Lazario Cornish > Cut > Screen > Foul,North Park Vikings,North Park V set 5
-2026-02-24|116|3 William Bates > Hand Off > From Dribble > Top > Dribble Jumper > Medium/17' to <3p > Make 2 Pts,North Park Vikings,North Park V set 5
-2026-02-24|122|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,North Park Vikings,North Park V set 5
-2026-02-24|145|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 5 Kolden Vanlandingham > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 5
-2026-02-24|165|3 William Bates > ISO > Left > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts,North Park Vikings,North Park V set 5
-2026-02-24|190|54 Julian Campbell > Post-Up > Right Block > Left Shoulder > Dribble Move > Defense Commits > Foul,North Park Vikings,North Park V set 5
-2026-02-24|194|21 Lazario Cornish > No Play Type > Turnover,North Park Vikings,North Park V set 5
-2026-02-24|198|5 Kolden Vanlandingham > Cut > Basket > Make 2 Pts,North Park Vikings,North Park V set 5
-2026-02-24|207|0 Jerome Smith Jr. > Non Possession > No Violation,North Park Vikings,North Park V set 5
-2026-02-24|208|3 William Bates > P&R Ball Handler > Right P&R > Side > Go Away from Pick > Defense Commits > Foul,North Park Vikings,North Park V set 5
-2026-02-24|216|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 3 William Bates > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 5
-2026-02-24|233|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts,North Park Vikings,North Park V set 5
-2026-02-24|276|4 Mike Vuckovic > ISO > Left > Drives Right > To Basket > Make 2 Pts Foul > 1 Pts,North Park Vikings,North Park V set 5
-2026-02-24|301|25 Marquis Vance > Offensive Rebound > Short > Run Offense,North Park Vikings,North Park V set 5
-2026-02-24|303|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Miss 2 Pts,North Park Vikings,North Park V set 5
-2026-02-24|317|2 Tyvin Garrison > No Play Type > Foul,North Park Vikings,North Park V set 5
-2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,North Park Vikings,North Park V set 6
-2026-02-24|121|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Lazario Cornish > P&R Roll Man > Rolls to Basket > Miss 2 Pts,North Park Vikings,North Park V set 6
-2026-02-24|139|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 6
-2026-02-24|243|21 Lazario Cornish > Cut > Basket > Foul,North Park Vikings,North Park V set 6
-2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 7
-2026-02-24|75|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,North Park Vikings,North Park V set 7
-2026-02-24|105|3 William Bates > ISO > Left > Drives Left > Dribble Jumper > Short to < 17' > Make 2 Pts,North Park Vikings,North Park V set 7
-2026-02-24|279|4 Mike Vuckovic > Non Possession > No Violation,North Park Vikings,North Park V set 7
-2026-02-24|300|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 7
-2026-02-24|321|2 Tyvin Garrison > Non Possession > No Violation,North Park Vikings,North Park V set 7
-2026-02-24|28|4 Mike Vuckovic > Hand Off > From Stationary > Top > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 8
-2026-02-24|38|4 Mike Vuckovic > Spot-Up > Drives Left > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 8
-2026-02-24|52|5 Kolden Vanlandingham > Non Possession > No Violation,North Park Vikings,North Park V set 8
-2026-02-24|63|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,North Park Vikings,North Park V set 8
-2026-02-24|67|25 Marquis Vance > P&R Ball Handler > Right P&R > Side > Go Away from Pick > Defense Commits > Ball Delivered > 34 Harrison Long > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 8
-2026-02-24|126|3 William Bates > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,North Park Vikings,North Park V set 8
-2026-02-24|164|4 Mike Vuckovic > Non Possession > No Violation,North Park Vikings,North Park V set 8
-2026-02-24|170|3 William Bates > No Play Type > Turnover,North Park Vikings,North Park V set 8
-2026-02-24|173|5 Kolden Vanlandingham > Off Screen > To Shooter's Right > Straight > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 8
-2026-02-24|181|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 3 William Bates > Spot-Up > Drives Left > Dribble Jumper > Short to < 17' > Make 2 Pts,North Park Vikings,North Park V set 8
-2026-02-24|200|42 Dylan Fuzak > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 8
-2026-02-24|214|0 Jerome Smith Jr. > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,North Park Vikings,North Park V set 8
-2026-02-24|285|25 Marquis Vance > Spot-Up > Drives Right > Turnover,North Park Vikings,North Park V set 8
-2026-02-24|287|4 Mike Vuckovic > Cut > Basket > Make 2 Pts,North Park Vikings,North Park V set 8
-2026-02-24|289|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > Defense Commits > Ball Delivered > 3 William Bates > P&R Roll Man > Pick and Pops > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 8
-2026-02-24|294|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Foul,North Park Vikings,North Park V set 8
-2026-02-24|298|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts,North Park Vikings,North Park V set 8
-2026-02-24|302|4 Mike Vuckovic > ISO > Left > Drives Left > Dribble Jumper > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 8
-2026-02-24|313|2 Tyvin Garrison > No Play Type > Foul,North Park Vikings,North Park V set 8
+2026-02-24|175|5 Kolden Vanlandingham > ISO > Top > Drives Right > To Basket > Foul,North Park Vikings,North Park V set 3
+2026-02-24|179|5 Kolden Vanlandingham > Spot-Up > Drives Right > Dribble Jumper > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 3
+2026-02-24|198|5 Kolden Vanlandingham > Cut > Basket > Make 2 Pts,North Park Vikings,North Park V set 3
+2026-02-24|207|0 Jerome Smith Jr. > Non Possession > No Violation,North Park Vikings,North Park V set 3
+2026-02-24|208|3 William Bates > P&R Ball Handler > Right P&R > Side > Go Away from Pick > Defense Commits > Foul,North Park Vikings,North Park V set 3
+2026-02-24|279|4 Mike Vuckovic > Non Possession > No Violation,North Park Vikings,North Park V set 3
+2026-02-24|13|3 William Bates > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 4
+2026-02-24|52|5 Kolden Vanlandingham > Non Possession > No Violation,North Park Vikings,North Park V set 4
+2026-02-24|63|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,North Park Vikings,North Park V set 4
+2026-02-24|114|25 Marquis Vance > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 4
+2026-02-24|126|3 William Bates > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,North Park Vikings,North Park V set 4
+2026-02-24|181|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 3 William Bates > Spot-Up > Drives Left > Dribble Jumper > Short to < 17' > Make 2 Pts,North Park Vikings,North Park V set 4
+2026-02-24|200|42 Dylan Fuzak > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 4
+2026-02-24|260|4 Mike Vuckovic > ISO > Top > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,North Park Vikings,North Park V set 4
+2026-02-24|274|54 Julian Campbell > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Make 2 Pts,North Park Vikings,North Park V set 4
+2026-02-24|289|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > Defense Commits > Ball Delivered > 3 William Bates > P&R Roll Man > Pick and Pops > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 4
+2026-02-24|298|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts,North Park Vikings,North Park V set 4
+2026-02-24|302|4 Mike Vuckovic > ISO > Left > Drives Left > Dribble Jumper > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 4
+2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 5
+2026-02-24|23|21 Lazario Cornish > Non Possession > Non Shooting Foul,North Park Vikings,North Park V set 5
+2026-02-24|38|4 Mike Vuckovic > Spot-Up > Drives Left > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 5
+2026-02-24|85|4 Mike Vuckovic > ISO > Top > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts,North Park Vikings,North Park V set 5
+2026-02-24|134|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 5
+2026-02-24|140|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,North Park Vikings,North Park V set 5
+2026-02-24|147|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 5
+2026-02-24|253|4 Mike Vuckovic > ISO > Top > Drives Left > Dribble Jumper > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 5
+2026-02-24|287|4 Mike Vuckovic > Cut > Basket > Make 2 Pts,North Park Vikings,North Park V set 5
+2026-02-24|28|4 Mike Vuckovic > Hand Off > From Stationary > Top > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 6
+2026-02-24|36|21 Lazario Cornish > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,North Park Vikings,North Park V set 6
+2026-02-24|39|54 Julian Campbell > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,North Park Vikings,North Park V set 6
+2026-02-24|42|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 54 Julian Campbell > P&R Roll Man > Rolls to Basket > Make 2 Pts,North Park Vikings,North Park V set 6
+2026-02-24|49|5 Kolden Vanlandingham > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 54 Julian Campbell > P&R Roll Man > Rolls to Basket > Miss 2 Pts,North Park Vikings,North Park V set 6
+2026-02-24|53|5 Kolden Vanlandingham > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,North Park Vikings,North Park V set 6
+2026-02-24|57|5 Kolden Vanlandingham > Cut > Basket > Miss 2 Pts,North Park Vikings,North Park V set 6
+2026-02-24|58|5 Kolden Vanlandingham > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,North Park Vikings,North Park V set 6
+2026-02-24|74|4 Mike Vuckovic > Hand Off > From Dribble > Right > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 6
+2026-02-24|77|0 Jerome Smith Jr. > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 6
+2026-02-24|79|3 William Bates > Off Screen > To Shooter's Right > Straight > Dribble Jumper > Short to < 17' > Miss 2 Pts,North Park Vikings,North Park V set 6
+2026-02-24|87|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 54 Julian Campbell > P&R Roll Man > Pick and Pops > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 6
+2026-02-24|95|54 Julian Campbell > Post-Up > Right Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,North Park Vikings,North Park V set 6
+2026-02-24|145|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 5 Kolden Vanlandingham > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 6
+2026-02-24|148|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,North Park Vikings,North Park V set 6
+2026-02-24|152|5 Kolden Vanlandingham > P&R Ball Handler > Right P&R > Side > Go Away from Pick > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 6
+2026-02-24|163|5 Kolden Vanlandingham > Non Possession > Non Shooting Foul,North Park Vikings,North Park V set 6
+2026-02-24|214|0 Jerome Smith Jr. > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,North Park Vikings,North Park V set 6
+2026-02-24|233|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts,North Park Vikings,North Park V set 6
+2026-02-24|313|2 Tyvin Garrison > No Play Type > Foul,North Park Vikings,North Park V set 6
+2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,North Park Vikings,North Park V set 7
+2026-02-24|121|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Lazario Cornish > P&R Roll Man > Rolls to Basket > Miss 2 Pts,North Park Vikings,North Park V set 7
+2026-02-24|139|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 7
+2026-02-24|172|4 Mike Vuckovic > Non Possession > No Violation,North Park Vikings,North Park V set 7
+2026-02-24|243|21 Lazario Cornish > Cut > Basket > Foul,North Park Vikings,North Park V set 7
+2026-02-24|24|5 Kolden Vanlandingham > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 8
+2026-02-24|75|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,North Park Vikings,North Park V set 8
+2026-02-24|99|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 8
+2026-02-24|105|3 William Bates > ISO > Left > Drives Left > Dribble Jumper > Short to < 17' > Make 2 Pts,North Park Vikings,North Park V set 8
+2026-02-24|270|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,North Park Vikings,North Park V set 8
+2026-02-24|280|4 Mike Vuckovic > Hand Off > From Stationary > Top > Turnover,North Park Vikings,North Park V set 8
+2026-02-24|300|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,North Park Vikings,North Park V set 8
+2026-02-24|321|2 Tyvin Garrison > Non Possession > No Violation,North Park Vikings,North Park V set 8
 2026-02-26|97|11 Joey Jendusa > Non Possession > Non Shooting Foul,UW-Platteville Pioneers,UW-Plattevil set 1
 2026-02-26|124|11 Marvin Haslett > Non Possession > Non Shooting Foul,UW-Platteville Pioneers,UW-Plattevil set 1
 2026-02-26|158|11 Marvin Haslett > Non Possession > Non Shooting Foul,UW-Platteville Pioneers,UW-Plattevil set 1
@@ -108,114 +108,114 @@ clip_key,offense_team,set_id
 2026-02-26|77|15 Alex Vassilakis > Non Possession > Non Shooting Foul,UW-Platteville Pioneers,UW-Plattevil set 2
 2026-02-26|118|42 Carson Cordelli > Non Possession > Non Shooting Foul,UW-Platteville Pioneers,UW-Plattevil set 2
 2026-02-26|196|23 Derek Lindert > No Play Type > Foul,UW-Platteville Pioneers,UW-Plattevil set 2
-2026-02-26|7|23 Derek Lindert > Hand Off > From Dribble > Right > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|8|15 Alex Vassilakis > Offensive Rebound > Long > Run Offense,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|9|2 Andrew Ayeni > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|10|50 Ethan Johnson > Cut > Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|20|15 Alex Vassilakis > Offensive Rebound > Short > Run Offense,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|23|2 Andrew Ayeni > Spot-Up > Drives Right > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|26|23 Derek Lindert > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|28|24 Harper Krolak > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 2 Andrew Ayeni > P&R Roll Man > Pick and Pops > Drives Right > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|30|15 Alex Vassilakis > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Turnover,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|32|2 Andrew Ayeni > Spot-Up > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|39|24 Harper Krolak > Hand Off > From Stationary > Right > Dribble Jumper > Short to < 17' > Make 2 Pts,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|44|13 Rashawn Bost > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|45|13 Isaac Wit > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|48|22 Max Breitenbach > Spot-Up > Drives Right > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|50|23 Derek Lindert > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 13 Rashawn Bost > P&R Roll Man > Pick and Pops > No Dribble Jumper > Guarded > Medium/17' to <3p > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|82|2 Andrew Ayeni > ISO > Left > Drives Right > Defense Commits > Ball Delivered > 24 Harper Krolak > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|119|50 Ethan Johnson > No Play Type > Turnover,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|127|25 Chase Cummings > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|136|5 Jonathan Burroughs > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 34 Matus Dopirak > P&R Roll Man > Pick and Pops > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 1
-2026-02-26|225|11 Marvin Haslett > Non Possession > No Violation,UW-Whitewater,UW-Whitewate set 1
-2026-03-07|68|21 Brock Marino > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 1
-2026-03-07|134|15 Collin Madson > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 1
-2026-03-07|4|24 Richie Warren > P&R Ball Handler > Left P&R > Side > Go Away from Pick > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 2
-2026-03-07|27|24 Richie Warren > Post-Up > Left Block > Right Shoulder > Dribble Move > To Jumper > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 2
-2026-03-07|40|11 Jr Lukenbill > Non Possession > No Violation,UW-Whitewater,UW-Whitewate set 2
-2026-03-07|56|22 Joey Berezowitz > ISO > Right > Drives Right > Dribble Jumper > Short to < 17' > Make 2 Pts,UW-Whitewater,UW-Whitewate set 2
-2026-03-07|60|14 Tyshawn Teague-Johnson > Hand Off > From Dribble > Right > Turnover,UW-Whitewater,UW-Whitewate set 2
-2026-03-07|77|15 Collin Madson > Spot-Up > Drives Left > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 2
-2026-03-07|85|32 Luke Bara > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 2
-2026-03-07|90|32 Luke Bara > ISO > Top > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 2
-2026-02-26|104|4 Mason Dopirak > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 3
-2026-02-26|105|24 Harper Krolak > No Play Type > Turnover,UW-Whitewater,UW-Whitewate set 3
-2026-02-26|106|5 Jonathan Burroughs > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 42 Carson Cordelli > Cut > Basket > Turnover,UW-Whitewater,UW-Whitewate set 3
-2026-02-26|108|4 Mason Dopirak > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 50 Ethan Johnson > Cut > Flash > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 3
-2026-03-07|35|11 Jr Lukenbill > Offensive Rebound > Long > Run Offense,UW-Whitewater,UW-Whitewate set 3
-2026-03-07|75|15 Collin Madson > ISO > Right > Drives Left > Defense Commits > Ball Delivered > 21 Brock Marino > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 3
-2026-03-07|100|21 Brock Marino > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Make 2 Pts Foul > 0 Pts,UW-Whitewater,UW-Whitewate set 3
-2026-03-07|105|32 Luke Bara > Spot-Up > Drives Left > Dribble Jumper > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 3
-2026-03-07|166|32 Luke Bara > P&R Ball Handler > Right P&R > Side > Go Away from Pick > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 3
-2026-03-07|171|22 Joey Berezowitz > Spot-Up > Drives Left > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 3
-2026-02-26|1|11 Marvin Haslett > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|5|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Marvin Haslett > Spot-Up > Drives Left > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|11|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Marvin Haslett > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|13|15 Alex Vassilakis > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|15|23 Derek Lindert > Cut > Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|38|2 Andrew Ayeni > Non Possession > No Violation,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|71|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts Foul > 1 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|73|11 Joey Jendusa > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|78|11 Marvin Haslett > Post-Up > Right Block > Left Shoulder > Dribble Move > Defense Commits > Ball Delivered > 24 Harper Krolak > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|81|2 Andrew Ayeni > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|83|44 Jazz Orozco > Offensive Rebound > Short > Run Offense,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|84|24 Harper Krolak > Spot-Up > Drives Right > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|86|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Marvin Haslett > Spot-Up > Drives Right > To Basket > Foul,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|90|2 Andrew Ayeni > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|91|2 Andrew Ayeni > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|95|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|96|2 Andrew Ayeni > Offensive Rebound > Short > Scoring Attempt > At Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|99|5 Jonathan Burroughs > Post-Up > Left Block > Right Shoulder > Dribble Move > Defense Commits > Ball Delivered > 42 Carson Cordelli > Cut > Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|109|2 Andrew Ayeni > Spot-Up > Drives Left > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|121|42 Carson Cordelli > Cut > Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|130|5 Jonathan Burroughs > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 34 Matus Dopirak > P&R Roll Man > Rolls to Basket > Turnover,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|131|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts Foul > 1 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|133|11 Joey Jendusa > P&R Ball Handler > Left P&R > Side > Go Away from Pick > Defense Commits > Ball Delivered > 25 Chase Cummings > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|134|5 Jonathan Burroughs > Cut > Basket > Turnover,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|141|4 Mason Dopirak > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|142|4 Mason Dopirak > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 42 Carson Cordelli > P&R Roll Man > Pick and Pops > Drives Left > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|143|11 Joey Jendusa > Cut > Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|162|4 Mason Dopirak > P&R Ball Handler > High P&R > Go Away from Pick > Dribble Jumper > Medium/17' to <3p > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|163|11 Joey Jendusa > Offensive Rebound > Long > Run Offense,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|164|11 Joey Jendusa > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 5 Jonathan Burroughs > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|166|4 Mason Dopirak > Hand Off > From Dribble > Left > Turnover,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|173|50 Ethan Johnson > Cut > Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|174|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|182|5 Jonathan Burroughs > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Joey Jendusa > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|183|5 Jonathan Burroughs > Offensive Rebound > Short > Run Offense,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|184|25 Chase Cummings > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|187|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|191|23 Derek Lindert > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Marvin Haslett > Spot-Up > Drives Left > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|204|44 Jazz Orozco > No Play Type > Foul,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|213|2 Andrew Ayeni > No Play Type > Foul,UW-Whitewater,UW-Whitewate set 4
-2026-02-26|217|11 Marvin Haslett > No Play Type > Foul,UW-Whitewater,UW-Whitewate set 4
-2026-03-07|36|22 Joey Berezowitz > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 4
-2026-03-07|16|22 Joey Berezowitz > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 24 Richie Warren > Spot-Up > No Dribble Jumper > Open > Medium/17' to <3p > Make 2 Pts,UW-Whitewater,UW-Whitewate set 5
-2026-03-07|38|22 Joey Berezowitz > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 5
-2026-03-07|48|2 Kelton Mcewen > Non Possession > No Violation,UW-Whitewater,UW-Whitewate set 5
-2026-03-07|51|22 Joey Berezowitz > Hand Off > From Dribble > Right > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 5
-2026-03-07|79|0 Isaac Verges > Hand Off > From Dribble > Right > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 5
-2026-03-07|106|3 Josh Kim > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 5
-2026-03-07|10|32 Luke Bara > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 24 Richie Warren > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 6
-2026-03-07|12|0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 6
-2026-03-07|20|22 Joey Berezowitz > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 32 Luke Bara > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 6
-2026-03-07|24|15 Collin Madson > ISO > Right > Drives Left > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 6
-2026-03-07|64|15 Collin Madson > ISO > Right > Drives Left > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 6
-2026-03-07|66|0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 6
-2026-03-07|71|21 Brock Marino > ISO > Top > Drives Right > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 6
-2026-03-07|81|0 Isaac Verges > Non Possession > Kicked Ball,UW-Whitewater,UW-Whitewate set 6
-2026-03-07|87|15 Collin Madson > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 6
-2026-03-07|92|32 Luke Bara > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,UW-Whitewater,UW-Whitewate set 6
-2026-02-26|137|11 Joey Jendusa > Offensive Rebound > Short > Scoring Attempt > At Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 7
-2026-02-26|138|4 Mason Dopirak > Offensive Rebound > Long > Scoring Attempt > At Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 7
-2026-03-07|18|32 Luke Bara > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Brock Marino > P&R Roll Man > Rolls to Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 7
-2026-03-07|22|22 Joey Berezowitz > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 7
-2026-02-26|177|50 Ethan Johnson > Spot-Up > No Dribble Jumper > Guarded > Medium/17' to <3p > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 8
-2026-03-07|2|0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 8
-2026-03-07|6|32 Luke Bara > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 8
-2026-03-07|8|21 Brock Marino > ISO > Top > Drives Right > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 8
-2026-03-07|34|2 Kelton Mcewen > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 8
-2026-03-07|43|2 Kelton Mcewen > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 8
+2026-03-07|4|24 Richie Warren > P&R Ball Handler > Left P&R > Side > Go Away from Pick > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 1
+2026-03-07|10|32 Luke Bara > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 24 Richie Warren > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 1
+2026-03-07|12|0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 1
+2026-03-07|20|22 Joey Berezowitz > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 32 Luke Bara > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 1
+2026-03-07|24|15 Collin Madson > ISO > Right > Drives Left > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 1
+2026-03-07|60|14 Tyshawn Teague-Johnson > Hand Off > From Dribble > Right > Turnover,UW-Whitewater,UW-Whitewate set 1
+2026-03-07|64|15 Collin Madson > ISO > Right > Drives Left > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 1
+2026-03-07|66|0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 1
+2026-03-07|71|21 Brock Marino > ISO > Top > Drives Right > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 1
+2026-03-07|81|0 Isaac Verges > Non Possession > Kicked Ball,UW-Whitewater,UW-Whitewate set 1
+2026-03-07|87|15 Collin Madson > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 1
+2026-03-07|92|32 Luke Bara > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,UW-Whitewater,UW-Whitewate set 1
+2026-03-07|105|32 Luke Bara > Spot-Up > Drives Left > Dribble Jumper > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 1
+2026-03-07|166|32 Luke Bara > P&R Ball Handler > Right P&R > Side > Go Away from Pick > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 1
+2026-02-26|1|11 Marvin Haslett > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|5|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Marvin Haslett > Spot-Up > Drives Left > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|11|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Marvin Haslett > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|13|15 Alex Vassilakis > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|15|23 Derek Lindert > Cut > Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|38|2 Andrew Ayeni > Non Possession > No Violation,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|71|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts Foul > 1 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|73|11 Joey Jendusa > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|78|11 Marvin Haslett > Post-Up > Right Block > Left Shoulder > Dribble Move > Defense Commits > Ball Delivered > 24 Harper Krolak > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|81|2 Andrew Ayeni > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|83|44 Jazz Orozco > Offensive Rebound > Short > Run Offense,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|84|24 Harper Krolak > Spot-Up > Drives Right > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|86|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Marvin Haslett > Spot-Up > Drives Right > To Basket > Foul,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|90|2 Andrew Ayeni > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|91|2 Andrew Ayeni > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|95|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|96|2 Andrew Ayeni > Offensive Rebound > Short > Scoring Attempt > At Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|99|5 Jonathan Burroughs > Post-Up > Left Block > Right Shoulder > Dribble Move > Defense Commits > Ball Delivered > 42 Carson Cordelli > Cut > Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|109|2 Andrew Ayeni > Spot-Up > Drives Left > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|121|42 Carson Cordelli > Cut > Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|130|5 Jonathan Burroughs > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 34 Matus Dopirak > P&R Roll Man > Rolls to Basket > Turnover,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|131|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts Foul > 1 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|133|11 Joey Jendusa > P&R Ball Handler > Left P&R > Side > Go Away from Pick > Defense Commits > Ball Delivered > 25 Chase Cummings > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|134|5 Jonathan Burroughs > Cut > Basket > Turnover,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|141|4 Mason Dopirak > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|142|4 Mason Dopirak > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 42 Carson Cordelli > P&R Roll Man > Pick and Pops > Drives Left > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|143|11 Joey Jendusa > Cut > Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|162|4 Mason Dopirak > P&R Ball Handler > High P&R > Go Away from Pick > Dribble Jumper > Medium/17' to <3p > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|163|11 Joey Jendusa > Offensive Rebound > Long > Run Offense,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|164|11 Joey Jendusa > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 5 Jonathan Burroughs > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|166|4 Mason Dopirak > Hand Off > From Dribble > Left > Turnover,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|173|50 Ethan Johnson > Cut > Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|174|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|182|5 Jonathan Burroughs > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Joey Jendusa > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|183|5 Jonathan Burroughs > Offensive Rebound > Short > Run Offense,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|184|25 Chase Cummings > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|187|2 Andrew Ayeni > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|191|23 Derek Lindert > P&R Ball Handler > Left P&R > Baseline > Dribble Off Pick > Defense Commits > Ball Delivered > 11 Marvin Haslett > Spot-Up > Drives Left > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|204|44 Jazz Orozco > No Play Type > Foul,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|213|2 Andrew Ayeni > No Play Type > Foul,UW-Whitewater,UW-Whitewate set 2
+2026-02-26|217|11 Marvin Haslett > No Play Type > Foul,UW-Whitewater,UW-Whitewate set 2
+2026-03-07|36|22 Joey Berezowitz > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 2
+2026-03-07|16|22 Joey Berezowitz > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 24 Richie Warren > Spot-Up > No Dribble Jumper > Open > Medium/17' to <3p > Make 2 Pts,UW-Whitewater,UW-Whitewate set 3
+2026-03-07|38|22 Joey Berezowitz > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 3
+2026-03-07|48|2 Kelton Mcewen > Non Possession > No Violation,UW-Whitewater,UW-Whitewate set 3
+2026-03-07|51|22 Joey Berezowitz > Hand Off > From Dribble > Right > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 3
+2026-03-07|79|0 Isaac Verges > Hand Off > From Dribble > Right > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 3
+2026-03-07|106|3 Josh Kim > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 3
+2026-02-26|104|4 Mason Dopirak > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 4
+2026-02-26|105|24 Harper Krolak > No Play Type > Turnover,UW-Whitewater,UW-Whitewate set 4
+2026-02-26|106|5 Jonathan Burroughs > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 42 Carson Cordelli > Cut > Basket > Turnover,UW-Whitewater,UW-Whitewate set 4
+2026-02-26|108|4 Mason Dopirak > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 50 Ethan Johnson > Cut > Flash > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 4
+2026-03-07|35|11 Jr Lukenbill > Offensive Rebound > Long > Run Offense,UW-Whitewater,UW-Whitewate set 4
+2026-03-07|75|15 Collin Madson > ISO > Right > Drives Left > Defense Commits > Ball Delivered > 21 Brock Marino > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 4
+2026-03-07|100|21 Brock Marino > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Make 2 Pts Foul > 0 Pts,UW-Whitewater,UW-Whitewate set 4
+2026-03-07|171|22 Joey Berezowitz > Spot-Up > Drives Left > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 4
+2026-02-26|177|50 Ethan Johnson > Spot-Up > No Dribble Jumper > Guarded > Medium/17' to <3p > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 5
+2026-03-07|2|0 Isaac Verges > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 5
+2026-03-07|6|32 Luke Bara > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 5
+2026-03-07|8|21 Brock Marino > ISO > Top > Drives Right > To Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 5
+2026-03-07|22|22 Joey Berezowitz > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Make 3 Pts,UW-Whitewater,UW-Whitewate set 5
+2026-03-07|34|2 Kelton Mcewen > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 5
+2026-03-07|43|2 Kelton Mcewen > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 5
+2026-03-07|27|24 Richie Warren > Post-Up > Left Block > Right Shoulder > Dribble Move > To Jumper > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 6
+2026-03-07|40|11 Jr Lukenbill > Non Possession > No Violation,UW-Whitewater,UW-Whitewate set 6
+2026-03-07|56|22 Joey Berezowitz > ISO > Right > Drives Right > Dribble Jumper > Short to < 17' > Make 2 Pts,UW-Whitewater,UW-Whitewate set 6
+2026-03-07|77|15 Collin Madson > Spot-Up > Drives Left > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 6
+2026-03-07|85|32 Luke Bara > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 6
+2026-03-07|90|32 Luke Bara > ISO > Top > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 6
+2026-02-26|7|23 Derek Lindert > Hand Off > From Dribble > Right > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|8|15 Alex Vassilakis > Offensive Rebound > Long > Run Offense,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|9|2 Andrew Ayeni > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|10|50 Ethan Johnson > Cut > Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|20|15 Alex Vassilakis > Offensive Rebound > Short > Run Offense,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|23|2 Andrew Ayeni > Spot-Up > Drives Right > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|26|23 Derek Lindert > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|28|24 Harper Krolak > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 2 Andrew Ayeni > P&R Roll Man > Pick and Pops > Drives Right > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|30|15 Alex Vassilakis > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Turnover,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|32|2 Andrew Ayeni > Spot-Up > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|39|24 Harper Krolak > Hand Off > From Stationary > Right > Dribble Jumper > Short to < 17' > Make 2 Pts,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|44|13 Rashawn Bost > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|45|13 Isaac Wit > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|48|22 Max Breitenbach > Spot-Up > Drives Right > To Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|50|23 Derek Lindert > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 13 Rashawn Bost > P&R Roll Man > Pick and Pops > No Dribble Jumper > Guarded > Medium/17' to <3p > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|82|2 Andrew Ayeni > ISO > Left > Drives Right > Defense Commits > Ball Delivered > 24 Harper Krolak > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|119|50 Ethan Johnson > No Play Type > Turnover,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|127|25 Chase Cummings > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|136|5 Jonathan Burroughs > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 34 Matus Dopirak > P&R Roll Man > Pick and Pops > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|225|11 Marvin Haslett > Non Possession > No Violation,UW-Whitewater,UW-Whitewate set 7
+2026-03-07|68|21 Brock Marino > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 7
+2026-03-07|134|15 Collin Madson > Non Possession > Non Shooting Foul,UW-Whitewater,UW-Whitewate set 7
+2026-02-26|137|11 Joey Jendusa > Offensive Rebound > Short > Scoring Attempt > At Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 8
+2026-02-26|138|4 Mason Dopirak > Offensive Rebound > Long > Scoring Attempt > At Basket > Miss 2 Pts,UW-Whitewater,UW-Whitewate set 8
+2026-03-07|18|32 Luke Bara > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Brock Marino > P&R Roll Man > Rolls to Basket > Make 2 Pts,UW-Whitewater,UW-Whitewate set 8
 2026-03-07|17|10 Yogi Oliff > Cut > Basket > Miss 2 Pts,Washington-St. Louis Bears,Washington-S set 1
 2026-03-07|21|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,Washington-St. Louis Bears,Washington-S set 1
 2026-03-07|23|10 Yogi Oliff > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Connor May > Spot-Up > Drives Right > To Basket > Make 2 Pts,Washington-St. Louis Bears,Washington-S set 1
@@ -283,107 +283,107 @@ clip_key,offense_team,set_id
 2026-03-07|107|21 Connor May > Spot-Up > Drives Left > To Basket > Miss 2 Pts,Washington-St. Louis Bears,Washington-S set 8
 2026-03-07|142|3 Josh Kim > Non Possession > No Violation,Washington-St. Louis Bears,Washington-S set 8
 2026-03-07|162|21 Connor May > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,Washington-St. Louis Bears,Washington-S set 8
-2026-02-24|19|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|22|12 Devin Martin > No Play Type > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|44|35 Brady Wynja > Offensive Rebound > Short > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|68|12 Devin Martin > ISO > Top > Drives Left > To Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|70|12 Devin Martin > ISO > Top > Drives Left > Defense Commits > Ball Delivered > 4 Kyan VanderWoude > Spot-Up > Drives Right > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|100|12 Devin Martin > ISO > Top > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|118|35 Brady Wynja > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|127|20 Soren Richardson > Post-Up > Left Block > Right Shoulder > Dribble Move > To Drop Step > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|135|12 Devin Martin > Non Possession > Non Shooting Foul,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|136|20 Soren Richardson > Cut > Basket > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|186|12 Devin Martin > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|196|4 Kyan VanderWoude > Offensive Rebound > Long > Run Offense,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|197|33 Noah Hedrick > Cut > Basket > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|211|12 Devin Martin > ISO > Right > Drives Left > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|212|20 Soren Richardson > Offensive Rebound > Long > Run Offense,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|213|20 Soren Richardson > Post-Up > Right Block > Defense Commits > Ball Delivered > 35 Brady Wynja > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|231|34 Carson Grier > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|247|20 Soren Richardson > ISO > Top > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
-2026-02-24|312|20 Soren Richardson > Hand Off > From Dribble > Right > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
+2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
+2026-02-24|86|34 Carson Grier > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 20 Soren Richardson > P&R Roll Man > Pick and Pops > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
+2026-02-24|144|20 Soren Richardson > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
+2026-02-24|159|12 Devin Martin > No Play Type > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 1
+2026-02-24|219|34 Carson Grier > Post-Up > Right Block > Face-up > Drive Middle > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 1
 2026-02-24|37|12 Devin Martin > No Play Type > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 2
 2026-02-24|51|35 Brady Wynja > Offensive Rebound > Short > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 2
 2026-02-24|55|34 Carson Grier > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 2
 2026-02-24|115|20 Soren Richardson > Spot-Up > Drives Right > Dribble Jumper > Long/3pt > Miss 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 2
+2026-02-24|131|34 Carson Grier > Offensive Rebound > Short > Run Offense,Wheaton (IL) Thunder,Wheaton (IL) set 2
 2026-02-24|150|34 Carson Grier > Offensive Rebound > Long > Run Offense,Wheaton (IL) Thunder,Wheaton (IL) set 2
+2026-02-24|151|20 Soren Richardson > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 2
 2026-02-24|204|35 Brady Wynja > Offensive Rebound > Long > Run Offense,Wheaton (IL) Thunder,Wheaton (IL) set 2
 2026-02-24|205|12 Devin Martin > Cut > Basket > Make 2 Pts Foul > 1 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 2
+2026-02-24|222|21 Lazario Cornish > No Play Type > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 2
 2026-02-24|227|20 Soren Richardson > Off Screen > To Shooter's Left > Curl > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 2
 2026-02-24|235|4 Mike Vuckovic > No Play Type > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 2
+2026-02-24|238|4 Kyan VanderWoude > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 2
 2026-02-24|241|34 Carson Grier > Cut > Screen > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 2
+2026-02-24|248|12 Devin Martin > No Play Type > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 2
 2026-02-24|249|12 Devin Martin > Cut > Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 2
 2026-02-24|275|12 Devin Martin > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 2
 2026-02-24|286|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 2
-2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|80|12 Devin Martin > No Play Type > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|88|20 Soren Richardson > Post-Up > Left Block > Right Shoulder > Dribble Move > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|131|34 Carson Grier > Offensive Rebound > Short > Run Offense,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|132|12 Devin Martin > Cut > Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|133|12 Devin Martin > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|143|12 Devin Martin > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|151|20 Soren Richardson > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|160|20 Soren Richardson > Offensive Rebound > Short > Scoring Attempt > Short to < 17' > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|161|12 Devin Martin > Offensive Rebound > Long > Run Offense,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|166|34 Carson Grier > Spot-Up > Drives Left > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|193|33 Noah Hedrick > No Play Type > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|195|4 Kyan VanderWoude > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|217|35 Brady Wynja > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|222|21 Lazario Cornish > No Play Type > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|225|4 Kyan VanderWoude > ISO > Right > Drives Left > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|238|4 Kyan VanderWoude > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|239|20 Soren Richardson > Post-Up > Right Block > Right Shoulder > Dribble Move > To Hook > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|248|12 Devin Martin > No Play Type > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|266|12 Devin Martin > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|297|4 Kyan VanderWoude > Post-Up > Right Block > Right Shoulder > Dribble Move > To Up and Under > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|304|34 Carson Grier > Spot-Up > Drives Right > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|308|4 Kyan VanderWoude > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
-2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|10|12 Devin Martin > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|21|34 Carson Grier > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|27|4 Kyan VanderWoude > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|33|12 Devin Martin > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|40|20 Soren Richardson > ISO > Top > Drives Left > To Basket > Make 2 Pts Foul > 1 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|43|10 Reid Olson > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|48|20 Soren Richardson > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Ball Delivered > 34 Carson Grier > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|71|34 Carson Grier > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|76|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 20 Soren Richardson > Spot-Up > Drives Right > Dribble Jumper > Short to < 17' > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|157|20 Soren Richardson > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|162|34 Carson Grier > Post-Up > Right Block > Left Shoulder > Dribble Move > To Drop Step > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|232|4 Kyan VanderWoude > ISO > Left > Drives Right > To Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|234|20 Soren Richardson > Post-Up > Right Block > Right Shoulder > Dribble Move > To Jumper > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|240|20 Soren Richardson > Offensive Rebound > Short > Scoring Attempt > Short to < 17' > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|246|20 Soren Richardson > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|258|20 Soren Richardson > ISO > Right > Drives Left > To Basket > Make 2 Pts Foul > 1 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
-2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
-2026-02-24|86|34 Carson Grier > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 20 Soren Richardson > P&R Roll Man > Pick and Pops > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
-2026-02-24|159|12 Devin Martin > No Play Type > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
-2026-02-24|219|34 Carson Grier > Post-Up > Right Block > Face-up > Drive Middle > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 5
-2026-02-24|1|4 Kyan VanderWoude > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 6
-2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 6
-2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 6
-2026-02-24|26|4 Kyan VanderWoude > Offensive Rebound > Long > Scoring Attempt > Short to < 17' > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 6
-2026-02-24|66|4 Kyan VanderWoude > Non Possession > Shot Clock Violation,Wheaton (IL) Thunder,Wheaton (IL) set 6
-2026-02-24|149|20 Soren Richardson > Post-Up > Right Block > Defense Commits > Ball Delivered > 33 Noah Hedrick > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 6
-2026-02-24|178|20 Soren Richardson > ISO > Top > Drives Left > To Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 6
-2026-02-24|183|20 Soren Richardson > ISO > Right > Early Jumper > No Dribble Jumper > Guarded > Medium/17' to <3p > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 6
-2026-02-24|187|4 Kyan VanderWoude > ISO > Left > Drives Left > To Basket > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 6
-2026-02-24|254|4 Kyan VanderWoude > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 6
-2026-02-24|267|20 Soren Richardson > Cut > Basket > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 6
-2026-02-24|290|20 Soren Richardson > Off Screen > To Shooter's Right > Flare > No Dribble Jumper > Guarded > Long/3pt > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 6
-2026-02-24|299|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 6
-2026-02-24|102|12 Devin Martin > Non Possession > Shot Clock Violation,Wheaton (IL) Thunder,Wheaton (IL) set 7
-2026-02-24|106|12 Devin Martin > Spot-Up > Drives Right > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 7
-2026-02-24|168|10 Reid Olson > No Play Type > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 7
-2026-02-24|251|4 Kyan VanderWoude > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 7
-2026-02-24|278|4 Kyan VanderWoude > Spot-Up > Drives Right > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 7
-2026-02-24|288|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 34 Carson Grier > P&R Roll Man > Rolls to Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 7
-2026-02-24|117|35 Brady Wynja > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
-2026-02-24|144|20 Soren Richardson > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
-2026-02-24|171|35 Brady Wynja > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
-2026-02-24|182|12 Devin Martin > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 8
-2026-02-24|199|34 Carson Grier > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > To Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
-2026-02-24|215|20 Soren Richardson > ISO > Top > Drives Right > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
-2026-02-24|252|20 Soren Richardson > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|19|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|21|34 Carson Grier > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|22|12 Devin Martin > No Play Type > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|40|20 Soren Richardson > ISO > Top > Drives Left > To Basket > Make 2 Pts Foul > 1 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|44|35 Brady Wynja > Offensive Rebound > Short > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|70|12 Devin Martin > ISO > Top > Drives Left > Defense Commits > Ball Delivered > 4 Kyan VanderWoude > Spot-Up > Drives Right > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|118|35 Brady Wynja > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|135|12 Devin Martin > Non Possession > Non Shooting Foul,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|136|20 Soren Richardson > Cut > Basket > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|197|33 Noah Hedrick > Cut > Basket > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|211|12 Devin Martin > ISO > Right > Drives Left > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|212|20 Soren Richardson > Offensive Rebound > Long > Run Offense,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|213|20 Soren Richardson > Post-Up > Right Block > Defense Commits > Ball Delivered > 35 Brady Wynja > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|231|34 Carson Grier > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|247|20 Soren Richardson > ISO > Top > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|278|4 Kyan VanderWoude > Spot-Up > Drives Right > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|288|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 34 Carson Grier > P&R Roll Man > Rolls to Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|312|20 Soren Richardson > Hand Off > From Dribble > Right > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 3
+2026-02-24|68|12 Devin Martin > ISO > Top > Drives Left > To Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|88|20 Soren Richardson > Post-Up > Left Block > Right Shoulder > Dribble Move > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|100|12 Devin Martin > ISO > Top > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|132|12 Devin Martin > Cut > Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|143|12 Devin Martin > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|160|20 Soren Richardson > Offensive Rebound > Short > Scoring Attempt > Short to < 17' > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|161|12 Devin Martin > Offensive Rebound > Long > Run Offense,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|193|33 Noah Hedrick > No Play Type > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|195|4 Kyan VanderWoude > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|196|4 Kyan VanderWoude > Offensive Rebound > Long > Run Offense,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|217|35 Brady Wynja > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|225|4 Kyan VanderWoude > ISO > Right > Drives Left > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|239|20 Soren Richardson > Post-Up > Right Block > Right Shoulder > Dribble Move > To Hook > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|266|12 Devin Martin > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|297|4 Kyan VanderWoude > Post-Up > Right Block > Right Shoulder > Dribble Move > To Up and Under > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|304|34 Carson Grier > Spot-Up > Drives Right > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|308|4 Kyan VanderWoude > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 4
+2026-02-24|1|4 Kyan VanderWoude > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|26|4 Kyan VanderWoude > Offensive Rebound > Long > Scoring Attempt > Short to < 17' > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|66|4 Kyan VanderWoude > Non Possession > Shot Clock Violation,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|133|12 Devin Martin > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|149|20 Soren Richardson > Post-Up > Right Block > Defense Commits > Ball Delivered > 33 Noah Hedrick > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|178|20 Soren Richardson > ISO > Top > Drives Left > To Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|183|20 Soren Richardson > ISO > Right > Early Jumper > No Dribble Jumper > Guarded > Medium/17' to <3p > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|187|4 Kyan VanderWoude > ISO > Left > Drives Left > To Basket > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|254|4 Kyan VanderWoude > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|267|20 Soren Richardson > Cut > Basket > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|290|20 Soren Richardson > Off Screen > To Shooter's Right > Flare > No Dribble Jumper > Guarded > Long/3pt > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|299|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 5
+2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,Wheaton (IL) Thunder,Wheaton (IL) set 6
+2026-02-24|76|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 20 Soren Richardson > Spot-Up > Drives Right > Dribble Jumper > Short to < 17' > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 6
+2026-02-24|102|12 Devin Martin > Non Possession > Shot Clock Violation,Wheaton (IL) Thunder,Wheaton (IL) set 6
+2026-02-24|106|12 Devin Martin > Spot-Up > Drives Right > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 6
+2026-02-24|168|10 Reid Olson > No Play Type > Turnover,Wheaton (IL) Thunder,Wheaton (IL) set 6
+2026-02-24|251|4 Kyan VanderWoude > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 6
+2026-02-24|117|35 Brady Wynja > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 7
+2026-02-24|127|20 Soren Richardson > Post-Up > Left Block > Right Shoulder > Dribble Move > To Drop Step > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 7
+2026-02-24|171|35 Brady Wynja > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 7
+2026-02-24|182|12 Devin Martin > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 7
+2026-02-24|186|12 Devin Martin > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 7
+2026-02-24|199|34 Carson Grier > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > To Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 7
+2026-02-24|215|20 Soren Richardson > ISO > Top > Drives Right > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 7
+2026-02-24|252|20 Soren Richardson > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 7
+2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|10|12 Devin Martin > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|27|4 Kyan VanderWoude > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|33|12 Devin Martin > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|43|10 Reid Olson > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|48|20 Soren Richardson > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Ball Delivered > 34 Carson Grier > Cut > Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|71|34 Carson Grier > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|80|12 Devin Martin > No Play Type > Foul,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|157|20 Soren Richardson > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|162|34 Carson Grier > Post-Up > Right Block > Left Shoulder > Dribble Move > To Drop Step > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|166|34 Carson Grier > Spot-Up > Drives Left > To Basket > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|232|4 Kyan VanderWoude > ISO > Left > Drives Right > To Basket > Make 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|234|20 Soren Richardson > Post-Up > Right Block > Right Shoulder > Dribble Move > To Jumper > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|240|20 Soren Richardson > Offensive Rebound > Short > Scoring Attempt > Short to < 17' > Miss 2 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|246|20 Soren Richardson > Non Possession > No Violation,Wheaton (IL) Thunder,Wheaton (IL) set 8
+2026-02-24|258|20 Soren Richardson > ISO > Right > Drives Left > To Basket > Make 2 Pts Foul > 1 Pts,Wheaton (IL) Thunder,Wheaton (IL) set 8

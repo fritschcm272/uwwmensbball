@@ -2380,6 +2380,8 @@ def player_tracking(pc):
                                       "ball_frames_won": v_[0] if v_ else None, "ball_frames_total": v_[1] if v_ else None,
                                       "ball_seen_frames": len(clips[i]["ball"]), "anchor_by": clips[i].get("anchor_by") or "ball"})
                 _n_au = sum(_au.values())
+                _trk_eval("anchors", score=(100 * _au["right"] / _n_au) if _n_au else None, n=_n_au, bar=None, chance=20,
+                          used=True, how="Synergy-named anchors that sat on the right player (coach-checked)")
                 if _n_au:
                     print(f"  [tracking]   Synergy anchor audit: {_n_au} anchor(s) sit on a track a coach checked -- right "
                           f"{_au['right']}; wrong because it was a teammate {_au['teammate']}, a defender / other team "
@@ -2499,6 +2501,9 @@ def player_tracking(pc):
                 if _kc:
                     print("  [tracking]   player model, non-players caught at its cutoff by kind: "
                           + "; ".join(f"{kd} {a}/{n}" for kd, (a, n) in sorted(_kc.items())), flush=True)
+            _trk_eval("player_model", score=(100 * _best[1]) if _best else None, n=_n1 + _n0, bar=100 * _min_prec,
+                      auc=round(float(_auc), 3) if _auc is not None else None, caught=(100 * _best[2]) if _best else None,
+                      used=bool(_passed), how="tracks it set aside that really weren't players (held-out clips)")
             print(f"  [tracking]   player / not-a-player model: {_n1} not-a-player and {_n0} player label(s) from the coach checks"
                   f" ({len(_missed_tracks)} of {len(_missed)} missed-player mark(s) found on a track); tested with {_how}: "
                   + (f"AUC {_auc:.2f} (0.5 = coin flip, 1.0 = perfect); " if _auc is not None else "")
@@ -3216,6 +3221,9 @@ def player_tracking(pc):
                   f"{TRACK_APPEARANCE_MIN_TRIES}", flush=True)
         # appearance names only when the check had enough trusted names to test against AND passed
         appearance_on = tries >= TRACK_APPEARANCE_MIN_TRIES and hits / tries >= TRACK_APPEARANCE_MIN_CHECK
+        _trk_eval("appearance", score=(100 * hits / tries) if tries else None, n=tries,
+                  bar=100 * TRACK_APPEARANCE_MIN_CHECK, bar_n=TRACK_APPEARANCE_MIN_TRIES, chance=20, used=bool(appearance_on),
+                  how="names hidden from it that it got right (trusted names: coach checks / clear jersey numbers)")
         if appearance_on:
             print(f"  [tracking]   appearance name check {hits}/{tries} ({hits / tries:.0%}) passes -- appearance names are used",
                   flush=True)
@@ -3474,6 +3482,11 @@ def player_tracking(pc):
             _edges = [0.0, 0.2, 0.3, 0.4, 0.5, 0.7, 1.01]
             _tab = "; ".join(f"{lo_:.0%}-{min(hi_, 1):.0%}: {int(_oks[(_ps >= lo_) & (_ps < hi_)].sum())}/{int(((_ps >= lo_) & (_ps < hi_)).sum())}"
                              for lo_, hi_ in zip(_edges, _edges[1:]) if ((_ps >= lo_) & (_ps < hi_)).any())
+            _trk_eval("best_guess", score=100 * float(_oks.mean()), n=len(_bg_pts), bar=100 * _target, bar_n=_need,
+                      chance=20, used=_cut is not None,
+                      best=(100 * float(_oks[_ps >= _cut - 1e-9].mean())) if _cut is not None else None,
+                      how="checked best guesses that were the right player (shown only at a probability level right "
+                          f"{_target:.0%}+ of the time)")
             if _cut is None:
                 _min_p = 2.0                                  # nothing is shown
                 print(f"  [tracking]   best-guess cutoff from {len(_bg_pts)} checked guesses: no probability level was right "
@@ -3691,6 +3704,15 @@ def player_tracking(pc):
         print(f"  [tracking]   of the five on the floor: {int(_ident.sum()):,} of {len(_sl):,} player-clips identified from "
               f"evidence, {int((_sl['located'] & ~_ident).sum()):,} named by best guess only, "
               f"{int((~_sl['located']).sum()):,} not on film (no track left for them)", flush=True)
+        _own = _sl["located"] & _sl["how"].map(lambda h: any(x not in ("best guess", "not located", "coach checked")
+                                                            for x in str(h).split(";")))
+        _games_ = sorted({f"{d} {c}" for d, c in zip(pc.loc[todo, "game_date"].astype(str).str[:10], pc.loc[todo, "game_code"])})
+        _trk_eval("located", score=100 * float(_sl["located"].mean()), n=len(_sl), bar=None, used=None, games="; ".join(_games_),
+                  how="on-floor players (five per team per clip) the tracking found on the film -- any way, coach checks too")
+        _trk_eval("named_by_model", score=100 * float(_own.mean()), n=len(_sl),
+                  bar=float(globals().get("FILM_NAMES_OK_PCT", 50)), used=None, games="; ".join(_games_),
+                  how="on-floor players the tracking named ITSELF (jersey number, Synergy, following a named player, "
+                      "appearance) -- not counting coach-checked boxes; the brief's per-player film reads need this")
         print(f"  [tracking]   players on the floor located on the film: {int(_sl['located'].sum()):,} of {len(_sl):,} "
               f"({100 * _sl['located'].mean():.0f}%) -- by " + ", ".join(
                   f"{h} {n}" for h, n in _sl.loc[_sl["located"], "how"].str.split(";").explode().value_counts().items()),
@@ -3761,8 +3783,105 @@ for _c in _TRACK_COLS:
 # mapping available for 0 of 7,595 frames" -- so it had no court filter, and fans got in). The tracking run is a
 # function now, so the Court mapping cell can rerun it with the court as soon as the court exists (every new game's
 # first run). Detections, colors, fingerprints etc. are saved, so the rerun takes minutes.
+# ---- Evaluation history for the app (Analytics > Player Number Tracking) ------------------------------------------------
+# CONFIRMED CHANGE (requested: "an evaluation of the Player Number Tracking that is similar to the 'How good is the automatic
+# tagging?' in Film Tagging"). Every tracking run records, for each part that names players or sets non-players aside, its
+# test score on the coach checks, the bar it must clear to be used, chance where there is one, and whether it was used --
+# plus how much of the floor the tracking covered. data/uww_tracking_eval_history.csv gets a row for a part only when one of
+# those changed, so the file is each part's story. The jersey-number reader, re-ID and outfit checks are read from their own
+# test cells (49, 50d, 50c).
+_TRK_EVAL_LABELS = {
+    "named_by_model": "Players named by the tracking itself", "located": "Players found on the film",
+    "reader": "Jersey-number reader", "appearance": "Appearance matching", "reid": "Re-ID (looks like a checked player)",
+    "best_guess": "Best guesses from the lineup", "anchors": "Synergy-named player (anchor)",
+    "player_model": "Player / not-a-player model", "outfit": "Outfit check (referee / coach / fan)"}
+_TRK_EVAL_KEYS = ["score", "n", "bar", "chance", "used", "status"]
+
+
+def _trk_eval(part, **kw):
+    globals().setdefault("trk_eval_parts", {})[part] = kw
+
+
+def _trk_eval_tests():
+    """The test cells' results (they run before tracking): reader (49), re-ID (50d), outfit (50c)."""
+    _on = lambda v: not (v is False or str(v).strip().lower() in ("false", "off", "no", "0", "none", ""))
+    best = globals().get("JERSEY_READER_BEST")
+    prec, ans = globals().get("JERSEY_READER_PRECISION") or {}, globals().get("JERSEY_READER_ANSWERS") or {}
+    if best and best in prec:
+        sc_ = (globals().get("JERSEY_READER_COACH_SCORE") or {}).get(best)
+        _tgt = float(globals().get("JERSEY_READER_TARGET_PRECISION", 0.85))
+        _min = int(globals().get("JERSEY_READER_MIN_ANSWERS", 6))
+        _ok = prec[best] >= float(globals().get("TRACK_READER_MIN_PRECISION", 0.8)) and ans.get(best, 0) >= _min
+        _trk_eval("reader", score=100 * prec[best], n=int(ans.get(best, 0)), bar=100 * _tgt, bar_n=_min, chance=None,
+                  used=bool(_ok and _on(globals().get("TRACK_READ_NUMBERS", True))),
+                  status=None if _on(globals().get("TRACK_READ_NUMBERS", True)) else "switched off (TRACK_READ_NUMBERS = False)",
+                  checked=(f"{sc_[0]} right, {sc_[1]} wrong of {sc_[2]} checked players" if sc_ else None),
+                  how=f"right when it answers ({best}), on coach-checked crops it never trained on")
+    try:
+        _rp = globals().get("REID_TEST_PATH") or os.path.join(TRACK_DIR, "reid_check_test.json")
+        if os.path.exists(_rp):
+            with open(_rp, encoding="utf-8") as fh:
+                _r = _trk_json.load(fh)
+            _ms = _r.get("models") or {}
+            if _ms:
+                _k = _r.get("chosen") or max(_ms, key=lambda m: _ms[m].get("right_overall") or 0)
+                m = _ms[_k]
+                _trk_eval("reid", score=100 * float(m.get("right_overall") or 0), n=int(m.get("questions") or 0),
+                          bar=100 * float(_r.get("min_precision") or 0.8), chance=100 * float(m.get("chance") or 0),
+                          used=bool(_r.get("passed")) and _on(globals().get("TRACK_REID_NAMES", "auto")),
+                          how=f"checked players it picked out right ({_k}); used once a cutoff is right "
+                              f"{float(_r.get('min_precision') or 0.8):.0%}+ of the time", tested=_r.get("tested"))
+    except Exception:
+        pass
+    try:
+        _op = globals().get("OUTFIT_TEST_PATH") or os.path.join(TRACK_DIR, "outfit_check_test.json")
+        if os.path.exists(_op):
+            with open(_op, encoding="utf-8") as fh:
+                _o = _trk_json.load(fh)
+            _off = not _on(globals().get("TRACK_OUTFIT_CHECK", "auto"))
+            _trk_eval("outfit", score=(100 * float(_o["precision"])) if _o.get("precision") is not None else None,
+                      n=int(_o.get("boxes") or 0), bar=100 * float(globals().get("OUTFIT_MIN_PRECISION", 0.9)),
+                      auc=_o.get("auc"), caught=(100 * float(_o["recall"])) if _o.get("recall") is not None else None,
+                      used=bool(_o.get("passed")) and not _off,
+                      status="switched off (TRACK_OUTFIT_CHECK = False)" if _off else None,
+                      how="boxes it flagged that really weren't players (coach checks)", tested=_o.get("tested"))
+    except Exception:
+        pass
+
+
+def _trk_eval_write():
+    _trk_eval_tests()
+    parts = globals().get("trk_eval_parts") or {}
+    if not parts:
+        return
+    hp = os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, "uww_tracking_eval_history.csv")
+    try:
+        old = pd.read_csv(hp)
+    except Exception:
+        old = pd.DataFrame()
+    now = pd.Timestamp.now().isoformat(timespec="seconds")
+    _r = lambda v: None if v is None or (isinstance(v, float) and not np.isfinite(v)) else (
+        (round(v, 3) if abs(v) < 1.5 else round(v, 1)) if isinstance(v, float) else v)      # AUC 0.99 stays 0.99
+    new = [{"run_at": now, "part": k, "label": _TRK_EVAL_LABELS.get(k, k), **{kk: _r(vv) for kk, vv in v.items()}}
+           for k, v in parts.items()]
+    norm = lambda v: None if v is None or (isinstance(v, float) and pd.isna(v)) else re.sub(r"\.0$", "", str(v))
+    keep = []
+    for r in new:
+        prev = old[old["part"] == r["part"]].tail(1) if len(old) and "part" in old.columns else pd.DataFrame()
+        if prev.empty or any(norm(prev.iloc[0].get(k)) != norm(r.get(k)) for k in _TRK_EVAL_KEYS):
+            keep.append(r)
+    out = pd.concat([old, pd.DataFrame(keep)], ignore_index=True) if keep else old
+    try:
+        out.to_csv(hp, index=False)
+        print(f"  Tracking evaluation: {len(keep)} part(s) changed since the last run -> {os.path.basename(hp)} (the app: "
+              f"Analytics > Player Number Tracking > How good is the player-number tracking?)", flush=True)
+    except Exception as _e:
+        print(f"  (tracking evaluation not saved: {type(_e).__name__}: {_e})", flush=True)
+
+
 def _trk_run_all():
     global play_calls, player_tracks, tracking_report
+    globals()["trk_eval_parts"] = {}                  # this run's evaluation (see _trk_eval_write)
     player_tracks = pd.DataFrame()
     tracking_report = pd.DataFrame()
     # CONFIRMED CHANGE (requested: naming "starts" with the 5 players known to be on the court): first make sure every
@@ -3783,6 +3902,10 @@ def _trk_run_all():
                 for _c in _TRACK_COLS:
                     play_calls[_c] = _trk_cols[_c]
                 tracking_report = pd.DataFrame(_trk_rep)
+                try:
+                    _trk_eval_write()
+                except Exception as _e:
+                    print(f"  (tracking evaluation not written: {type(_e).__name__}: {_e})", flush=True)
                 print("Player tracking:")
                 for _r in _trk_rep:
                     print(f"  {_r['game']}: {_r['clips']} clips, {_r['tracks']} tracks. Ball seen in {_r['clips_ball_seen']} clip(s). "
