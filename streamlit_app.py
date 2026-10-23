@@ -7367,6 +7367,106 @@ def _ft_seed_from_saves(d, store, kp):
     return res
 
 
+_TMS_ORDER = ["situation", "defense", "press", "formation", "play_call", "primary_action", "ball_screen_coverage",
+              "offball_coverage", "screen_defender", "screener"]
+
+
+def render_tag_model_scoreboard():
+    """CONFIRMED CHANGE (requested: "add that table ... to the application under Film Tagging tab so that I can watch how the
+    results change in the future"). How good the automatic tagging is, field by field -- the model's held-out accuracy vs
+    always guessing the usual answer, and whether the field is trusted (prefilled / in the Automatic Title) -- now, and run by
+    run. From the parser's uww_tag_model_history.csv (a row each time a field's numbers change)."""
+    h = load_table("uww_tag_model_history")
+    with st.expander("\U0001f4c8 How good is the automatic tagging? (updated every parser run)", expanded=False):
+        if h.empty or "field" not in h.columns:
+            st.caption("No history yet -- it starts with the next parser run that has the Tag model on (RUN_TAG_MODEL = True).")
+            return
+        h = h.copy()
+        h["run_at"] = pd.to_datetime(h["run_at"], errors="coerce")
+        h = h.sort_values("run_at")
+        _pct = lambda v: "--" if pd.isna(v) else f"{float(v):.0f}%"
+        _rank = {f: i for i, f in enumerate(_TMS_ORDER)}
+        now_t, over_t, all_t = st.tabs(["Now", "Over time", "Every change"])
+        with now_t:
+            last = h.groupby("field").tail(1).copy()
+            first = h.groupby("field").head(1).set_index("field")
+            last = last.assign(_o=last["field"].map(lambda f: _rank.get(f, 99))).sort_values("_o")
+            rows = []
+            for _, r in last.iterrows():
+                acc, base = r.get("accuracy_pct"), r.get("baseline_pct")
+                guess = r.get("guess_answer")
+                if r.get("using") == "usual answer" and pd.isna(acc):
+                    model_txt = f"only one answer tagged ({guess})" if isinstance(guess, str) else "--"
+                else:
+                    model_txt = _pct(acc)
+                _f0 = first.loc[r["field"]] if r["field"] in first.index else None
+                _chg = (float(acc) - float(_f0["accuracy_pct"])) if (_f0 is not None and pd.notna(acc)
+                                                                     and pd.notna(_f0["accuracy_pct"])) else None
+                vr, vp = r.get("validation_right"), r.get("validation_plays")
+                rows.append({
+                    "Field": r.get("label") or r["field"],
+                    "Model right": model_txt,
+                    "Always guessing the usual answer": (_pct(base) + (f' ("{guess}")' if isinstance(guess, str) and pd.notna(base)
+                                                                       else "")) if pd.notna(base) else "--",
+                    "Trusted": "yes" if str(r.get("trusted")).lower() == "true" else "no",
+                    "Using": "the model" if r.get("using") == "model" else str(r.get("using") or "--"),
+                    "Held-out plays": "--" if pd.isna(r.get("clips_scored")) else f"{int(r['clips_scored'])}",
+                    "Coach tags": "--" if pd.isna(r.get("tagged_clips")) else f"{int(r['tagged_clips'])}",
+                    "Validation plays": ("--" if pd.isna(vp) or not vp else f"{int(vr)}/{int(vp)}"),
+                    "Since first run": "--" if _chg is None else f"{_chg:+.0f} pts",
+                    "Last changed": r["run_at"].strftime("%b %d, %Y") if pd.notna(r["run_at"]) else "--",
+                })
+            st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+            st.caption("**Model right** = how often the model's answer matched the coaches' tag on plays it never learned "
+                       "from (each tagged game held out in turn). **Always guessing** = what you'd get by always picking that "
+                       "field's most common answer. A field is **trusted** -- prefilled in Film Tagging and written into the "
+                       "Automatic Title -- once the model beats always guessing by 3+ points on 30+ held-out plays (or one "
+                       "answer covers 90%+ of the coaches' tags). Untrusted fields still show the model's guess, marked "
+                       "❗ (unsure). **Validation plays** = 20 tagged plays the model never trains on.")
+            _why = last[["label", "why"]].dropna()
+            if len(_why):
+                with st.popover("Why each field is or isn't trusted"):
+                    for _, r in _why.iterrows():
+                        st.markdown(f"**{r['label']}** — {r['why']}")
+        with over_t:
+            _fields = [f for f in _TMS_ORDER if f in set(h["field"])] + sorted(set(h["field"]) - set(_TMS_ORDER))
+            _labels = {f: (h.loc[h["field"] == f, "label"].dropna().iloc[-1] if h.loc[h["field"] == f, "label"].notna().any()
+                           else f) for f in _fields}
+            pick = st.selectbox("Field", _fields, format_func=lambda f: _labels.get(f, f), key="tms_field")
+            g = h[h["field"] == pick][["run_at", "accuracy_pct", "baseline_pct", "tagged_clips"]].dropna(subset=["run_at"])
+            if g["accuracy_pct"].notna().sum() < 2:
+                st.caption("Not enough runs with a score yet -- the chart fills in as the model retrains on new tags.")
+            if g["accuracy_pct"].notna().any():
+                import altair as alt
+                long = g.melt(id_vars=["run_at"], value_vars=["accuracy_pct", "baseline_pct"], var_name="what",
+                              value_name="pct").dropna()
+                long["what"] = long["what"].map({"accuracy_pct": "Model right", "baseline_pct": "Always guessing"})
+                ch = (alt.Chart(long).mark_line(point=True)
+                      .encode(x=alt.X("run_at:T", title="Parser run"),
+                              y=alt.Y("pct:Q", title="% right", scale=alt.Scale(domain=[0, 100])),
+                              color=alt.Color("what:N", title=None,
+                                              scale=alt.Scale(domain=["Model right", "Always guessing"])),
+                              tooltip=[alt.Tooltip("run_at:T", title="Run"), alt.Tooltip("what:N", title=""),
+                                       alt.Tooltip("pct:Q", title="% right", format=".0f")])
+                      .properties(height=260))
+                st.altair_chart(ch, use_container_width=True)
+                st.caption("The model has learned something when its line sits above the guessing line. "
+                           "Coach tags over time: " + " → ".join(str(int(x)) for x in g["tagged_clips"].dropna()))
+        with all_t:
+            show = h.assign(_o=h["field"].map(lambda f: _rank.get(f, 99)))
+            show = show.sort_values(["run_at", "_o"], ascending=[False, True])
+            st.dataframe(pd.DataFrame({
+                "Run": show["run_at"].dt.strftime("%b %d, %Y %H:%M"),
+                "Field": show["label"].fillna(show["field"]),
+                "Model right": show["accuracy_pct"].map(_pct),
+                "Always guessing": show["baseline_pct"].map(_pct),
+                "Usual answer": show["guess_answer"].fillna(""),
+                "Trusted": show["trusted"].map(lambda v: "yes" if str(v).lower() == "true" else "no"),
+                "Held-out plays": show["clips_scored"].map(lambda v: "" if pd.isna(v) else f"{int(v)}"),
+                "Coach tags": show["tagged_clips"].map(lambda v: "" if pd.isna(v) else f"{int(v)}"),
+            }), hide_index=True, use_container_width=True)
+
+
 def render_film_tagging():
     """Analytics > Film Tagging (requested: coaches tag games in the app, not in Synergy's Title field). Every captured
     clip with no tag yet, a batch per game (ours and the upcoming opponent's), in game order: watch the play, pick or type
@@ -7375,6 +7475,7 @@ def render_film_tagging():
     section_header("\U0001f3f7\ufe0f FILM TAGGING", "Tag each play here instead of in Synergy's Title field. Pick the automatic "
                    "answer when it's right, another answer when it isn't. Saved tags go into every scouting table on the next "
                    "parser run, and teach the automatic Title.")
+    render_tag_model_scoreboard()
     # CONFIRMED CHANGE (requested: tagging ONLY here, and only games that have plays to tag right now). Two kinds of batch:
     #   * "Tag" -- untagged clips, a batch per game (Film Tagging queue)
     #   * "Title check" -- the Title part of a game's Play review (every game, ours too -- Previous Games no longer shows it),

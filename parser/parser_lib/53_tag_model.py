@@ -1177,6 +1177,99 @@ if len(tag_field_trust):
           + (", ".join(tag_field_trust.loc[~tag_field_trust["trusted"], "field"]) or "none"), flush=True)
 
 
+# ---- History for the app: how good the automatic tagging is, run by run ----------------------------------------------
+# CONFIRMED CHANGE (requested: "add that table ... to the application under Film Tagging tab so that I can watch how the
+# results change in the future"). Every run with the Tag model writes data/uww_tag_model_history.csv: one row per field --
+# the model's held-out accuracy, always-guessing-the-usual-answer (and what that answer is), held-out plays, coach tags,
+# trusted or not (and why), the validation plays. A field gets a new row only when one of those changed (a reused model
+# adds nothing), so the file is the field's story. The first time, the earlier retrains in _tag_model/history.csv are
+# added from their own dates. The app shows it in Analytics > Film Tagging.
+_TM_FIELD_LABELS = {"situation": "Situation", "formation": "Formation", "play_call": "Play call",
+                    "primary_action": "Main action", "defense": "Defense", "press": "Press",
+                    "ball_screen_coverage": "Ball-screen coverage", "offball_coverage": "Off-ball coverage",
+                    "screener": "Screener", "screen_defender": "Screen defender"}
+_TM_HIST_KEYS = ["accuracy_pct", "baseline_pct", "clips_scored", "tagged_clips", "trusted", "using", "validation_right",
+                 "validation_plays"]
+
+
+def _tm_history_rows(report, run_at, lab=None, valid=None, vtab=None):
+    trust = _tm_trust_table(report).set_index("field") if isinstance(report, pd.DataFrame) and len(report) else pd.DataFrame()
+    vt = vtab.set_index("field") if isinstance(vtab, pd.DataFrame) and len(vtab) and "field" in vtab.columns else pd.DataFrame()
+    rows = []
+    for r in report.itertuples():
+        guess = None
+        m = re.search(r"most common answer \((.*)\)", str(r.using or "")) or re.search(r"only one answer tagged so far \((.*?)\)",
+                                                                                     str(r.scored_how or ""))
+        if m:
+            guess = m.group(1)
+        elif isinstance(lab, pd.DataFrame) and r.label_column in lab.columns:
+            y = lab[r.label_column]
+            if isinstance(valid, pd.Series):
+                y = y.where(~valid)
+            vc = y.dropna().astype(str).value_counts()
+            guess = vc.index[0] if len(vc) else None
+        t = trust.loc[r.field] if r.field in trust.index else {}
+        v = vt.loc[r.field] if r.field in vt.index else {}
+        rows.append({"run_at": run_at, "field": r.field, "label": _TM_FIELD_LABELS.get(r.field, r.field),
+                     "accuracy_pct": r.accuracy_pct, "baseline_pct": r.baseline_pct, "guess_answer": guess,
+                     "clips_scored": r.clips_scored, "tagged_clips": r.tagged_clips,
+                     "using": ("model" if str(r.using) == "model" else "usual answer" if guess and "answer" in str(r.using)
+                               else str(r.using or "") or "not trained"),
+                     "trusted": bool(t.get("trusted", False)) if len(t) else False, "why": t.get("why", "") if len(t) else "",
+                     "validation_right": v.get("right") if len(v) else None,
+                     "validation_plays": v.get("validation_plays") if len(v) else None,
+                     "trained_at": getattr(r, "trained_at", None)})
+    return pd.DataFrame(rows)
+
+
+def _tm_hist_add(old, new):
+    """old + the rows of new whose field changed since that field's last row -> (table, rows added)."""
+    norm = lambda v: None if v is None or (isinstance(v, float) and pd.isna(v)) else re.sub(r"\.0$", "", str(v))
+    keep = []
+    for _, r in new.iterrows():
+        prev = old[old["field"] == r["field"]].tail(1) if len(old) and "field" in old.columns else pd.DataFrame()
+        if prev.empty or any(norm(prev.iloc[0].get(k)) != norm(r.get(k)) for k in _TM_HIST_KEYS):
+            keep.append(r)
+    return (pd.concat([old, pd.DataFrame(keep)], ignore_index=True) if keep else old), keep
+
+
+def _tm_write_history():
+    rep = globals().get("tag_model_report")
+    if not isinstance(rep, pd.DataFrame) or rep.empty:
+        return                                            # the Tag model didn't run this time
+    hp = os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, "uww_tag_model_history.csv")
+    try:
+        old = pd.read_csv(hp)
+    except Exception:
+        old = pd.DataFrame()
+    if old.empty:                                         # first time: the earlier retrains, from their own dates
+        ih = os.path.join(TAG_MODEL_DIR, "history.csv")
+        try:
+            hist = pd.read_csv(ih) if os.path.exists(ih) else pd.DataFrame()
+            old = pd.DataFrame()
+            for ta, g in hist.groupby("trained_at"):
+                if "field" in g.columns:
+                    old = _tm_hist_add(old, _tm_history_rows(g.drop_duplicates("field", keep="last"), ta))[0]
+        except Exception as _e:
+            print(f"  (tag model history: earlier retrains not added -- {type(_e).__name__}: {_e})", flush=True)
+            old = pd.DataFrame()
+    now = _tm_history_rows(rep, pd.Timestamp.now().isoformat(timespec="seconds"), globals().get("_tm_lab"),
+                           globals().get("_tm_valid"), globals().get("tag_model_validation"))
+    out, keep = _tm_hist_add(old, now)
+    try:
+        out.to_csv(hp, index=False)
+        print(f"  Tag model history: {len(keep)} field(s) changed since the last run -> {os.path.basename(hp)} "
+              f"(the app: Analytics > Film Tagging > How good is the automatic tagging?)", flush=True)
+    except Exception as _e:
+        print(f"  (tag model history not saved: {type(_e).__name__}: {_e})", flush=True)
+
+
+try:
+    _tm_write_history()
+except Exception as _e:
+    print(f"  (tag model history not written: {type(_e).__name__}: {_e})", flush=True)
+
+
 # ---- Suggested Title, in the coaches' format, from confident predictions only ---------------------------------
 _TM_SYNERGY_DETAILS = [
     (r"\bP&R Ball Handler\b|\bP&R Roll Man\b|\bPick and Pops?\b", "bs"), (r"\bGo Away from Pick\b", "reject"),
