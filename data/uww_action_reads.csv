@@ -8,18 +8,15 @@ UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#15 Collin Madson,
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#15 Collin Madson,Down Screen,Rhino,1,1,2.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#15 Collin Madson,PC5,Cobra,1,1,2.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#15 Collin Madson,Stagger,Swirl,1,1,0.0,100.0
-UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#2 Kelton McEwen,Ball Screen,Use Ball Screen,2,1,1.5,67.0
-UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#2 Kelton McEwen,Ball Screen,Reject Ball Screen,1,1,0.0,33.0
+UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#2 Kelton McEwen,Ball Screen,Reject Ball Screen,1,1,0.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#2 Kelton McEwen,DHO,Trigger,1,1,0.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#2 Kelton McEwen,Stagger,Use Ball Screen,1,1,3.0,50.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#2 Kelton McEwen,Stagger,Use Down Screen,1,1,0.0,50.0
-UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#2 Kelton McEwen,Zoom,DHO,1,1,3.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#22 Joey Berezowitz,Ball Screen,Use Ball Screen,10,1,1.38,83.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#22 Joey Berezowitz,Ball Screen,Reject Ball Screen,2,1,2.0,17.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#22 Joey Berezowitz,DHO,DHO,1,1,,50.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#22 Joey Berezowitz,DHO,Use Ball Screen,1,1,2.0,50.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#22 Joey Berezowitz,Over,Goes Over Shad,1,1,0.0,100.0
-UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#23 Maurquis Turner,Ball Screen,Use Ball Screen,1,1,0.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#24 Richie Warren,Action,Trigger,1,1,0.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#24 Richie Warren,Ball Screen,Use Ball Screen,1,1,0.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#24 Richie Warren,Flow,Use Fox,1,1,0.0,100.0
@@ -27,8 +24,6 @@ UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#32 Luke Bara,Ball
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#32 Luke Bara,Ball Screen,Reject Ball Screen,1,1,2.0,25.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#32 Luke Bara,Ball screen,Use Ball Screen,1,1,0.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#32 Luke Bara,Stagger,Straight,1,1,0.0,100.0
-UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#4 Mason Dopirak,Ball screen,Use Ball Screen,1,1,2.0,100.0
-UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,#42 Carson Cordelli,Ball Screen,Use Ball Screen,1,1,2.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,(no number),Ball Screen,Use Ball Screen,1,1,,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Ball handler / trigger,(no number),Twins Left,Swirl,1,1,0.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#0 Isaac Verges,PC5,Pop,1,1,2.0,100.0
@@ -39,7 +34,6 @@ UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#11 JR Lukenbill,DHO,Gets DHO,1,
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#12 Jake Quast,Ball Screen,Roll,3,1,1.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#12 Jake Quast,Ghost,Ghost,1,1,2.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#15 Collin Madson,PC5,Pop,1,1,0.0,100.0
-UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#2 Kelton McEwen,Ball Screen,Short roll,1,1,0.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#21 Brock Marino,Ball Screen,Roll,12,1,1.36,92.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#21 Brock Marino,Ball Screen,Short roll,1,1,0.0,8.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#21 Brock Marino,Stagger,Pop,1,1,0.0,100.0
@@ -47,17 +41,12 @@ UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#22 Joey Berezowitz,Ball Screen,
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#22 Joey Berezowitz,Down Screen,Pop,1,1,2.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#22 Joey Berezowitz,Flow,Fox,1,1,0.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#22 Joey Berezowitz,Fox,Fox,1,1,,100.0
-UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#23 Maurquis Turner,Ball Screen,Pop,2,1,1.5,100.0
-UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#23 Maurquis Turner,Zoom,Use zoom,1,1,3.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#24 Richie Warren,Ball Screen,Roll,4,1,0.5,57.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#24 Richie Warren,Ball Screen,Pop,3,1,2.0,43.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#24 Richie Warren,Stagger,Pop,1,1,0.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#35 Rashad Rogers,Ball Screen,Roll,6,1,0.67,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#35 Rashad Rogers,Stagger,Pop,2,1,1.5,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#35 Rashad Rogers,DHO,Roll,1,1,2.0,100.0
-UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#50 Ethan Johnson,Ball Screen,Pop,2,1,1.0,67.0
-UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#50 Ethan Johnson,Ball Screen,Short roll,1,1,2.0,33.0
-UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,#50 Ethan Johnson,Ball screen,Roll,1,1,2.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,(no number),Ball Screen,Roll,1,1,0.0,100.0
 UWW,Wheaton (IL) Thunder,UW-Whitewater,Screener,(no number),Ball screen,Pop,1,1,0.0,100.0
 UWW,Wheaton (IL) Thunder,Washington-St. Louis Bears,Ball handler / trigger,#10 Yogi Oliff,Ball Screen,Reject Ball Screen,1,1,0.0,50.0

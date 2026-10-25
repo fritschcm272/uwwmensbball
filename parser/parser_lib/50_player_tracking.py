@@ -1588,8 +1588,26 @@ def _trk_find_screen(clip):
     return best
 
 
+import re as _trk_re
+_TRK_NAME_SUFFIX = _trk_re.compile(r"^(?:jr|sr|ii|iii|iv|v)\.?$", _trk_re.I)
+
+
 def _trk_five(v):
-    return [p.strip() for p in v.split(",") if p.strip()] if isinstance(v, str) else []
+    # CONFIRMED BUG (fixed; Player Number Tracking for Wheaton @ North Park still offered "really #? Jerome Smith" and
+    # "really #? Jr."). Lineups are comma-separated, so a name written "Jerome Smith, Jr." became two players. Section 17
+    # now cleans the name at the source; this also joins a stray suffix ("Jr.", "Sr.", "II", "III", "IV") back onto the
+    # name before it, so an older lineup string can't split a player either.
+    if not isinstance(v, str):
+        return []
+    out = []
+    for p in (x.strip() for x in v.split(",")):
+        if not p:
+            continue
+        if out and _TRK_NAME_SUFFIX.match(p):
+            out[-1] = f"{out[-1]} {p}"
+        else:
+            out.append(p)
+    return out
 
 
 def _trk_clip_key(r):

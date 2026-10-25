@@ -1,11 +1,11 @@
 field,trusted,why,accuracy_pct,baseline_pct,clips_scored,trained_at
-formation,False,model not better than always guessing (73% vs 73%),73.0,73.0,241.0,2026-10-23T14:44:08
-play_call,False,model not better than always guessing (63% vs 63%),63.0,63.0,242.0,2026-10-23T14:44:08
-defense,True,one answer covers 100% of 393 coach tags,,,,2026-10-23T14:44:08
-press,False,model not better than always guessing (83% vs 83%),83.0,83.0,388.0,2026-10-23T14:44:08
-situation,True,79% vs 73% always guessing on 434 held-out plays (+6 pts),79.0,73.0,434.0,2026-10-23T14:44:08
-primary_action,False,model not better than always guessing (53% vs 54%),53.0,54.0,151.0,2026-10-23T14:44:08
-ball_screen_coverage,False,model not better than always guessing (24% vs 31%),24.0,31.0,119.0,2026-10-23T14:44:08
-offball_coverage,False,model not better than always guessing (33% vs 57%),33.0,57.0,42.0,2026-10-23T14:44:08
-screener,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),,,,2026-10-23T14:44:08
-screen_defender,False,model not better than always guessing (29% vs 29%),29.0,29.0,55.0,2026-10-23T14:44:08
+formation,False,model not better than always guessing (73% vs 73%),73.0,73.0,241.0,2026-10-25T10:19:29
+play_call,False,64% vs 63% always guessing on 242 held-out plays (+1 pts) -- needs +3 pts on 30+ plays,64.0,63.0,242.0,2026-10-25T10:19:29
+defense,True,one answer covers 100% of 393 coach tags,,,,2026-10-25T10:19:29
+press,False,model not better than always guessing (83% vs 83%),83.0,83.0,388.0,2026-10-25T10:19:29
+situation,True,79% vs 73% always guessing on 434 held-out plays (+6 pts),79.0,73.0,434.0,2026-10-25T10:19:29
+primary_action,False,model not better than always guessing (52% vs 54%),52.0,54.0,151.0,2026-10-25T10:19:29
+ball_screen_coverage,False,model not better than always guessing (24% vs 31%),24.0,31.0,119.0,2026-10-25T10:19:29
+offball_coverage,False,model not better than always guessing (33% vs 57%),33.0,57.0,42.0,2026-10-25T10:19:29
+screener,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),,,,2026-10-25T10:19:29
+screen_defender,False,model not better than always guessing (29% vs 29%),29.0,29.0,55.0,2026-10-25T10:19:29

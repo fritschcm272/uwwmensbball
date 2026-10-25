@@ -1,42 +1,32 @@
 defense_team,defender,role,screen_type,coverage,coverage_source,times,ppp,share_pct
-North Park Vikings,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,54,0.87,64.0
-North Park Vikings,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,28,0.89,33.0
+North Park Vikings,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,55,1.02,67.0
+North Park Vikings,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,25,0.75,30.0
 North Park Vikings,unnamed defense,guarding the player screened,Ball screen,back (drop),tracking estimate,4,1.0,50.0
 North Park Vikings,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,3,2.33,38.0
-North Park Vikings,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,0.67,4.0
-North Park Vikings,unnamed defense,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,2.0,12.0
-North Park Vikings,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,38,0.84,66.0
-North Park Vikings,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,18,1.0,31.0
+North Park Vikings,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,1.0,2.0
+North Park Vikings,unnamed defense,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,0.0,12.0
+North Park Vikings,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,40,1.06,69.0
+North Park Vikings,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,16,0.67,28.0
 North Park Vikings,unnamed defense,guarding the screener,Ball screen,back (drop),tracking estimate,4,1.0,67.0
 North Park Vikings,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,1.0,3.0
 North Park Vikings,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,1,2.0,17.0
-North Park Vikings,unnamed defense,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,2.0,17.0
-UW-Platteville Pioneers,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,34,0.77,49.0
-UW-Platteville Pioneers,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,30,0.79,43.0
-UW-Platteville Pioneers,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,5,0.5,7.0
-UW-Platteville Pioneers,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,29,0.65,48.0
-UW-Platteville Pioneers,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,26,0.8,43.0
-UW-Platteville Pioneers,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,5,0.5,8.0
-UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,8,1.12,80.0
-UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,20.0
+North Park Vikings,unnamed defense,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,0.0,17.0
+UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,7,1.0,64.0
+UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,4,0.67,36.0
 UW-Whitewater,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0
-UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,8,1.12,89.0
+UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,7,1.0,78.0
+UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,2,1.0,22.0
 UW-Whitewater,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,100.0
-UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,11.0
 Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,6,0.5,50.0
 Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,0.67,25.0
 Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,3,0.0,25.0
 Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,0.0,50.0
 Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,0.67,50.0
-Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,59,1.11,74.0
-Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,16,0.47,20.0
-Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,5,0.8,6.0
-Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Ball screen,back (drop),tracking estimate,1,3.0,33.0
-Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,33.0
-Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,4.0,33.0
-Wheaton (IL) Thunder,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,40,1.31,71.0
-Wheaton (IL) Thunder,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,12,0.58,21.0
-Wheaton (IL) Thunder,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,4,0.25,7.0
-Wheaton (IL) Thunder,unnamed defense,guarding the screener,Ball screen,back (drop),tracking estimate,1,3.0,33.0
-Wheaton (IL) Thunder,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,33.0
-Wheaton (IL) Thunder,unnamed defense,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,4.0,33.0
+Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,54,1.12,72.0
+Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,18,0.41,24.0
+Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,0.67,4.0
+Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,2,2.0,100.0
+Wheaton (IL) Thunder,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,37,1.33,69.0
+Wheaton (IL) Thunder,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,14,0.5,26.0
+Wheaton (IL) Thunder,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,3,0.67,6.0
+Wheaton (IL) Thunder,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,2,2.0,100.0
