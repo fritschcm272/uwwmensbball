@@ -2686,7 +2686,21 @@ def player_tracking(pc):
     # this fell back to EasyOCR -- loading it, reading every chest, and (with no test score to check) using its numbers.
     # No reliable reader now means no jersey reading this run.
     _engine = globals().get("JERSEY_READER_BEST") if TRACK_OCR_ENGINE == "auto" else TRACK_OCR_ENGINE
-    if TRACK_READ_NUMBERS and not _engine:
+    # CONFIRMED CHANGE (review of the 10/23 run: numbers were switched off because EasyOCR took ~40 min a game, while the
+    # recognizer trained on our own film -- milliseconds a crop -- wasn't even in the reader test). TRACK_READ_NUMBERS = "auto":
+    # read jersey numbers only when the reader test's winner is the TRAINED recognizer (fast) -- it still has to clear
+    # TRACK_READER_MIN_PRECISION below. A slow reader winning leaves numbers off. True / False as before ("False" as text = off).
+    _rn_set = TRACK_READ_NUMBERS
+    _read_nums = _rn_set
+    if str(_rn_set).strip().lower() == "auto":
+        _read_nums = bool(_engine) and str(_engine).startswith("trained")
+        print(f"  [tracking] step 5b: TRACK_READ_NUMBERS = \"auto\" -- the reader test's best reader is "
+              f"{_engine or 'none'}: " + ("trained on our film (fast), so numbers are read if it clears the bar"
+                                         if _read_nums else "not the trained recognizer, so numbers are NOT read "
+                                         "(a slow reader -- set True to use it anyway)"), flush=True)
+    elif str(_rn_set).strip().lower() in ("false", "off", "no", "0", "none", ""):
+        _read_nums = False
+    if _read_nums and not _engine:
         print("  [tracking] step 5b: jersey numbers NOT read -- no reader passed the Jersey-number reader test yet "
               "(train the recognizer: more checks, Roboflow's set, JERSEY_TRAIN_EXTRA_DIRS)", flush=True)
     _prec = (globals().get("JERSEY_READER_PRECISION") or {}).get(_engine)
@@ -2695,15 +2709,16 @@ def player_tracking(pc):
     if not _engine:
         _use_numbers = False
     elif _prec is not None:
-        _use_numbers = TRACK_READ_NUMBERS and _prec >= TRACK_READER_MIN_PRECISION and _nans >= 6
+        _use_numbers = _read_nums and _prec >= TRACK_READER_MIN_PRECISION and _nans >= 6
     else:
-        _use_numbers = TRACK_READ_NUMBERS and (_acc is None or _acc >= TRACK_READER_MIN_ACCURACY)
+        _use_numbers = _read_nums and (_acc is None or _acc >= TRACK_READER_MIN_ACCURACY)
+    globals()["_trk_numbers_used"] = bool(_use_numbers)      # for the tracking evaluation (app)
     _min_conf = (globals().get("JERSEY_READER_CONF") or {}).get(_engine, TRACK_OCR_MIN_CONF)
-    if TRACK_READ_NUMBERS and not _use_numbers and _engine:
+    if _read_nums and not _use_numbers and _engine:
         print(f"  [tracking] step 5b: jersey numbers NOT used -- the best reader ({_engine}) is right "
               f"{(_prec if _prec is not None else _acc or 0):.0%} of the time it answers ({_nans} answers), below "
               f"{TRACK_READER_MIN_PRECISION:.0%}. Players are named only where Synergy names them.", flush=True)
-    elif TRACK_READ_NUMBERS and _acc is None:
+    elif _read_nums and _acc is None:
         print(f"  [tracking]   (the Jersey-number reader test didn't run, so {_engine} is used untested)", flush=True)
     _reads_dbg = {}                                   # what the reader returned per track (for the audit below)
     if _use_numbers:
@@ -3813,8 +3828,9 @@ def _trk_eval_tests():
         _min = int(globals().get("JERSEY_READER_MIN_ANSWERS", 6))
         _ok = prec[best] >= float(globals().get("TRACK_READER_MIN_PRECISION", 0.8)) and ans.get(best, 0) >= _min
         _trk_eval("reader", score=100 * prec[best], n=int(ans.get(best, 0)), bar=100 * _tgt, bar_n=_min, chance=None,
-                  used=bool(_ok and _on(globals().get("TRACK_READ_NUMBERS", True))),
-                  status=None if _on(globals().get("TRACK_READ_NUMBERS", True)) else "switched off (TRACK_READ_NUMBERS = False)",
+                  used=bool(globals().get("_trk_numbers_used", _ok and _on(globals().get("TRACK_READ_NUMBERS", True)))),
+                  status=(None if _on(globals().get("TRACK_READ_NUMBERS", True)) else "switched off (TRACK_READ_NUMBERS = False)")
+                  if not globals().get("_trk_numbers_used") else None,
                   checked=(f"{sc_[0]} right, {sc_[1]} wrong of {sc_[2]} checked players" if sc_ else None),
                   how=f"right when it answers ({best}), on coach-checked crops it never trained on")
     try:

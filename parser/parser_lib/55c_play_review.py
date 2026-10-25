@@ -797,8 +797,11 @@ def play_review():
     # how the automatic Title did on everything reviewed so far
     marks = globals().get("_title_review_marks") or {}
     rep = {}
+    # CONFIRMED BUG (fixed; review of the 10/23 run: "Situation 0/36 (0%); Formation 0/16; Play call 0/31"). A play whose batch
+    # was built with the Tag model off had NO automatic answer; the coach's answer there was saved as "wrong" and counted as the
+    # automatic Title being wrong. Only plays that HAD an automatic answer for the field are scored now.
     for (_ck, f), a in marks.items():
-        if a.get("verdict") in ("right", "wrong") and not a.get("prefilled"):
+        if a.get("verdict") in ("right", "wrong") and not a.get("prefilled") and a.get("auto") not in (None, ""):
             rep.setdefault(f, [0, 0])
             rep[f][1] += 1
             rep[f][0] += int(a["verdict"] == "right")
@@ -828,9 +831,22 @@ def play_review():
         return (df.assign(_back=back).sort_values(["_back", "clip_number"], ascending=[False, True], kind="stable")
                 .drop(columns="_back"))
 
+    globals()["_tag_cur_run"] = None                  # this run's games, worked out fresh (see _tag_run_reason)
     for (gd, gc), g in pc.groupby(["game_date", "game_code"], dropna=False):
         _slug_app = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
         _pkg = os.path.join(_pr_app_dir(), "play_review", _slug_app)
+        # CONFIRMED CHANGE (review of the 10/23 run: MarianWI@MSOE still had open player checks in the app after MSOE stopped
+        # being the opponent). The player checks follow the same "this run only" rule as Film Tagging (PLAY_TAG_RUN_ONLY): the
+        # upcoming opponent's games and our most recent game. A game outside the run gets no batch, and its open one (nothing
+        # saved in it) leaves the app; saved checks are kept and still teach the tracking.
+        if not PLAY_REVIEW_ONLY_GAME and _tag_run_reason(gd, gc, g) is None:
+            if os.path.isdir(_pkg):
+                shutil.rmtree(_pkg, ignore_errors=True)
+                print(f"Play review: removed the open review for {gd} {gc} from the app -- not part of this run "
+                      f"(saved checks are kept)", flush=True)
+            else:
+                print(f"Play review: {gd} {gc} left out -- not part of this run", flush=True)
+            continue
         # CONFIRMED CHANGE (requested: everything in the data folder; the Title and player-number checks are done in the
         # Streamlit app, not review.html pages). A game's open review is its package in <data>/play_review/<game>/. With
         # PLAY_REVIEW_QUEUES = "separate" it's rebuilt once EITHER part is saved (the saved part moves on to its next plays,

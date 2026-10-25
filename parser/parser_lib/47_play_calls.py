@@ -2624,7 +2624,21 @@ def _pl_untagged_from_frames(tagged):
         # the nearest play-by-play within a day was the game the day before. The game's date now comes from the schedule
         # the clip page was found on; the old "nearest within a day" guess is only the fallback for hand-listed pages.
         _sd0 = _url_dates.get(str(_url))
-        if _sd0 is not None:
+        # CONFIRMED BUG (fixed; review of the 10/23 run: "2026-02-26 MarianWI@MSOE" -- an MSOE game, captured when MSOE was the
+        # upcoming opponent -- was filed as a UWW game against UW-Platteville: its 191 clips went into UWW's own play calls, the
+        # brief's film line ("2 tracked games ... vs UW-Platteville") and tracking). Once MSOE was no longer the opponent, its clip
+        # page was on neither schedule, and the fallback took the nearest play-by-play within a day -- UWW's own game. A page
+        # found on neither schedule whose Game cell names neither UWW nor the upcoming opponent is now "Other": not matched to
+        # anyone's play-by-play, kept out of UWW's / the opponent's tables, tracking and reviews.
+        _pg_games = " ".join(str(x) for x in g.get("clip_game", pd.Series(dtype=object)).dropna().unique())
+        _pg_uww = bool(re.search(r"WWW|whitewater", _pg_games, re.I))
+        _pg_opp = bool(upcoming_opponent_short) and any(
+            w in _pg_games.lower() for w in _pl_words(upcoming_opponent_short) if len(w) > 3)
+        _pg_other = (_sd0 is None and _urls.get(str(_url)) is None and bool(_pg_games.strip())
+                     and not _pg_uww and not _pg_opp)
+        if _pg_other:
+            gd0, e_ = d, pd.DataFrame()
+        elif _sd0 is not None:
             gd0 = _sd0
             e_ = ev[ev["game_date"] == gd0] if not ev.empty else pd.DataFrame()
         else:
@@ -2633,7 +2647,7 @@ def _pl_untagged_from_frames(tagged):
             if not e_.empty:
                 e_ = e_[e_["game_date"] == gd0]
         e_by_n = {int(r["_n"]): r for _, r in e_.iterrows()} if not e_.empty else {}
-        hint = _urls.get(str(_url))
+        hint = "Other" if _pg_other else _urls.get(str(_url))
         if hint is None and not e_.empty and "_src" in e_.columns:
             hint = "UWW" if (e_["_src"] == "pbp_events").mean() >= 0.5 else "Opponent"
         if hint is None and any(("WWW" in str(x).upper() or "WHITEWATER" in str(x).upper()) for x in g.get("clip_game", pd.Series(dtype=object)).dropna()):
