@@ -61,6 +61,18 @@ def _pr_pkg_stale(doc, g):
                 want = nf.get(str(p.get("clip_number")))
                 if pic.get("which") == "frame" and want and ff != want:
                     return True
+        # CONFIRMED BUG (fixed; the Wheaton @ North Park player check kept offering "really #? Jerome Smith" and "really #?
+        # Jr." after the name fix). An open review with nothing saved is never rebuilt, so it kept the fives it was built
+        # with. It is now also rebuilt when a play's two fives no longer match today's lineups (nothing on it is saved, so
+        # nothing is lost).
+        fives = {str(r.get("clip_number")): {"offense": _trk_five(r.get("offense_lineup")),
+                                             "defense": _trk_five(r.get("defense_lineup"))} for _, r in g.iterrows()}
+        for p in doc.get("plays", []):
+            now = fives.get(str(p.get("clip_number")))
+            was = p.get("five")
+            if now is not None and isinstance(was, dict) and any(
+                    sorted(was.get(sd) or []) != sorted(now[sd]) for sd in ("offense", "defense")):
+                return True
     except Exception:
         return False
     return False
@@ -872,8 +884,8 @@ def play_review():
                     # from frames the tracking no longer uses (e.g. the old 1280 web captures, before the Synergy-export
                     # restart) or without the naming frame is rebuilt -- nothing on it is saved, so nothing is lost
                     shutil.rmtree(_pkg, ignore_errors=True)
-                    print(f"Play review: {gd} {gc} -- its open review (run {_pkg_run}) was built from old frames; rebuilt on the "
-                          f"current tracking (one sharp frame per play)", flush=True)
+                    print(f"Play review: {gd} {gc} -- its open review (run {_pkg_run}) was built from old frames or old "
+                          f"lineups; rebuilt on the current tracking (nothing in it was saved)", flush=True)
                 elif globals().get("PLAY_REVIEW_REQUIRE_SAVED", True):
                     print(f"Play review: {gd} {gc} -- no new run: nothing in its open review (run {_pkg_run}) is saved yet "
                           f"(Title checks: Analytics > Film Tagging; player checks: Analytics > Player Number Tracking).", flush=True)
