@@ -2706,16 +2706,21 @@ def player_tracking(pc):
     _engine = globals().get("JERSEY_READER_BEST") if TRACK_OCR_ENGINE == "auto" else TRACK_OCR_ENGINE
     # CONFIRMED CHANGE (review of the 10/23 run: numbers were switched off because EasyOCR took ~40 min a game, while the
     # recognizer trained on our own film -- milliseconds a crop -- wasn't even in the reader test). TRACK_READ_NUMBERS = "auto":
-    # read jersey numbers only when the reader test's winner is the TRAINED recognizer (fast) -- it still has to clear
-    # TRACK_READER_MIN_PRECISION below. A slow reader winning leaves numbers off. True / False as before ("False" as text = off).
+    # read jersey numbers with whichever reader WINS the reader test -- it still has to clear TRACK_READER_MIN_PRECISION
+    # below. True / False as before ("False" as text = off).
+    # CONFIRMED CHANGE (requested: "Do #3" -- the 10/25 run left numbers off because "combined" (EasyOCR + the trained
+    # recognizer, 95% right) won and "auto" only allowed the trained recognizer). Any winning reader is used now, the slow
+    # ones too: a run with EasyOCR in the winner takes longer (roughly 40 min more a game).
     _rn_set = TRACK_READ_NUMBERS
     _read_nums = _rn_set
     if str(_rn_set).strip().lower() == "auto":
-        _read_nums = bool(_engine) and str(_engine).startswith("trained")
+        _read_nums = bool(_engine)
+        _slow = bool(_engine) and not str(_engine).startswith("trained")
         print(f"  [tracking] step 5b: TRACK_READ_NUMBERS = \"auto\" -- the reader test's best reader is "
-              f"{_engine or 'none'}: " + ("trained on our film (fast), so numbers are read if it clears the bar"
-                                         if _read_nums else "not the trained recognizer, so numbers are NOT read "
-                                         "(a slow reader -- set True to use it anyway)"), flush=True)
+              f"{_engine or 'none'}: " + ("numbers are read if it clears the bar"
+                                         + (" (it uses EasyOCR, so expect this step to take a while -- roughly 40 min a game)"
+                                            if _slow else " (trained on our film -- fast)")
+                                         if _read_nums else "no reader to use, so numbers are NOT read"), flush=True)
     elif str(_rn_set).strip().lower() in ("false", "off", "no", "0", "none", ""):
         _read_nums = False
     if _read_nums and not _engine:

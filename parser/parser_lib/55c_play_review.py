@@ -68,6 +68,8 @@ def _pr_pkg_stale(doc, g):
         fives = {str(r.get("clip_number")): {"offense": _trk_five(r.get("offense_lineup")),
                                              "defense": _trk_five(r.get("defense_lineup"))} for _, r in g.iterrows()}
         for p in doc.get("plays", []):
+            if "teams" not in p:                       # built before the team codes in the dropdown (see "teams" below)
+                return True
             now = fives.get(str(p.get("clip_number")))
             was = p.get("five")
             if now is not None and isinstance(was, dict) and any(
@@ -884,8 +886,8 @@ def play_review():
                     # from frames the tracking no longer uses (e.g. the old 1280 web captures, before the Synergy-export
                     # restart) or without the naming frame is rebuilt -- nothing on it is saved, so nothing is lost
                     shutil.rmtree(_pkg, ignore_errors=True)
-                    print(f"Play review: {gd} {gc} -- its open review (run {_pkg_run}) was built from old frames or old "
-                          f"lineups; rebuilt on the current tracking (nothing in it was saved)", flush=True)
+                    print(f"Play review: {gd} {gc} -- its open review (run {_pkg_run}) was built from old frames, old "
+                          f"lineups or without team codes; rebuilt on the current tracking (nothing in it was saved)", flush=True)
                 elif globals().get("PLAY_REVIEW_REQUIRE_SAVED", True):
                     print(f"Play review: {gd} {gc} -- no new run: nothing in its open review (run {_pkg_run}) is saved yet "
                           f"(Title checks: Analytics > Film Tagging; player checks: Analytics > Player Number Tracking).", flush=True)
@@ -1060,6 +1062,10 @@ def play_review():
                           "video_at": (f"{int(vs // 60)}:{int(vs % 60):02d}" if pd.notna(vs) else None),
                           "pictures": pics, "fields": fields,
                           "five": {"offense": _trk_five(r.get("offense_lineup")), "defense": _trk_five(r.get("defense_lineup"))},
+                          # CONFIRMED CHANGE (requested: the dropdown says "UWW #12 Marino" / "NPA #0 ...", not "really #12"):
+                          # each side's team, so the app can put the team's three-letter code on every player
+                          "teams": {sd: (str(r.get(f"{sd}_team")) if pd.notna(r.get(f"{sd}_team")) else "")
+                                    for sd in ("offense", "defense")},
                           # CONFIRMED BUG (fixed; clip 29, no clock: "this one has no roster"): a side whose five isn't known gets
                           # that team's roster for the game, so "really ..." in the player check still lists names and numbers
                           "roster": {sd: [n for n in _rosters_pr.get(str(r.get(f"{sd}_team")), [])

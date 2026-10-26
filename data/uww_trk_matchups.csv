@@ -1,35 +1,63 @@
 defense_team,defender,offense_team,guards,possessions,ppp,share_of_his_possessions
-North Park Vikings,unnamed defense,Wheaton (IL) Thunder,unnamed offense,129,0.87,100.0
-UW-Whitewater,Isaac Verges,Washington-St. Louis Bears,unnamed offense,1,0.0,100.0
+North Park Vikings,Kolden Vanlandingham,Wheaton (IL) Thunder,unnamed offense,4,2.33,80.0
+North Park Vikings,Kolden Vanlandingham,Wheaton (IL) Thunder,Soren Richardson,1,2.0,20.0
+North Park Vikings,Lazario Cornish,Wheaton (IL) Thunder,unnamed offense,1,0.0,100.0
+North Park Vikings,Marquis Vance,Wheaton (IL) Thunder,unnamed offense,2,1.5,50.0
+North Park Vikings,Marquis Vance,Wheaton (IL) Thunder,Kyan VanderWoude,1,2.0,25.0
+North Park Vikings,Marquis Vance,Wheaton (IL) Thunder,Soren Richardson,1,2.0,25.0
+North Park Vikings,Mike Vuckovic,Wheaton (IL) Thunder,Kyan VanderWoude,1,0.0,33.0
+North Park Vikings,Mike Vuckovic,Wheaton (IL) Thunder,Soren Richardson,1,0.0,33.0
+North Park Vikings,Mike Vuckovic,Wheaton (IL) Thunder,unnamed offense,1,,33.0
+North Park Vikings,William Bates,Wheaton (IL) Thunder,Soren Richardson,2,1.0,67.0
+North Park Vikings,William Bates,Wheaton (IL) Thunder,unnamed offense,1,3.0,33.0
+North Park Vikings,unnamed defense,Wheaton (IL) Thunder,unnamed offense,129,0.84,84.0
+North Park Vikings,unnamed defense,Wheaton (IL) Thunder,Soren Richardson,8,1.11,5.0
+North Park Vikings,unnamed defense,Wheaton (IL) Thunder,Kyan VanderWoude,6,1.0,4.0
+North Park Vikings,unnamed defense,Wheaton (IL) Thunder,Devin Martin,5,1.31,3.0
+North Park Vikings,unnamed defense,Wheaton (IL) Thunder,Brady Wynja,3,1.8,2.0
+North Park Vikings,unnamed defense,Wheaton (IL) Thunder,Carson Grier,2,0.0,1.0
+North Park Vikings,unnamed defense,Wheaton (IL) Thunder,Reid Olson,1,0.0,1.0
 UW-Whitewater,Joey Berezowitz,Washington-St. Louis Bears,Yogi Oliff,3,0.0,60.0
 UW-Whitewater,Joey Berezowitz,Washington-St. Louis Bears,unnamed offense,2,1.0,40.0
 UW-Whitewater,Kelton McEwen,Washington-St. Louis Bears,unnamed offense,1,2.0,100.0
 UW-Whitewater,Rashad Rogers,Washington-St. Louis Bears,unnamed offense,1,2.0,100.0
 UW-Whitewater,Richie Warren,Washington-St. Louis Bears,unnamed offense,4,0.0,80.0
 UW-Whitewater,Richie Warren,Washington-St. Louis Bears,Calvin Kapral,1,3.0,20.0
-UW-Whitewater,unnamed defense,Washington-St. Louis Bears,unnamed offense,80,0.95,84.0
-UW-Whitewater,unnamed defense,Washington-St. Louis Bears,Connor May,3,2.2,3.0
-UW-Whitewater,unnamed defense,Washington-St. Louis Bears,Josh Kim,3,0.67,3.0
+UW-Whitewater,unnamed defense,Washington-St. Louis Bears,unnamed offense,79,0.91,82.0
+UW-Whitewater,unnamed defense,Washington-St. Louis Bears,Connor May,3,2.0,3.0
+UW-Whitewater,unnamed defense,Washington-St. Louis Bears,Josh Kim,3,0.57,3.0
 UW-Whitewater,unnamed defense,Washington-St. Louis Bears,Ryan Cohen,3,1.67,3.0
-UW-Whitewater,unnamed defense,Washington-St. Louis Bears,Yogi Oliff,3,1.0,3.0
-UW-Whitewater,unnamed defense,Washington-St. Louis Bears,Anthony Przybilla,1,3.0,1.0
-UW-Whitewater,unnamed defense,Washington-St. Louis Bears,George Gale,1,0.0,1.0
+UW-Whitewater,unnamed defense,Washington-St. Louis Bears,Yogi Oliff,3,1.2,3.0
+UW-Whitewater,unnamed defense,Washington-St. Louis Bears,Anthony Przybilla,2,2.0,2.0
+UW-Whitewater,unnamed defense,Washington-St. Louis Bears,George Gale,2,0.0,2.0
 UW-Whitewater,unnamed defense,Washington-St. Louis Bears,Will Grudzinski,1,0.0,1.0
-Washington-St. Louis Bears,Anthony Przybilla,UW-Whitewater,unnamed offense,2,1.5,67.0
-Washington-St. Louis Bears,Anthony Przybilla,UW-Whitewater,Rashad Rogers,1,,33.0
+Washington-St. Louis Bears,Anthony Przybilla,UW-Whitewater,unnamed offense,2,1.5,100.0
 Washington-St. Louis Bears,Calvin Kapral,UW-Whitewater,unnamed offense,1,0.0,100.0
 Washington-St. Louis Bears,George Gale,UW-Whitewater,unnamed offense,2,3.0,100.0
 Washington-St. Louis Bears,Joey Berezowitz,UW-Whitewater,unnamed offense,1,2.0,100.0
-Washington-St. Louis Bears,Josh Kim,UW-Whitewater,Joey Berezowitz,1,0.0,50.0
-Washington-St. Louis Bears,Josh Kim,UW-Whitewater,unnamed offense,1,3.0,50.0
+Washington-St. Louis Bears,Josh Kim,UW-Whitewater,unnamed offense,2,1.5,67.0
+Washington-St. Louis Bears,Josh Kim,UW-Whitewater,Joey Berezowitz,1,0.0,33.0
 Washington-St. Louis Bears,Ryan Cohen,UW-Whitewater,unnamed offense,2,1.0,67.0
 Washington-St. Louis Bears,Ryan Cohen,UW-Whitewater,Joey Berezowitz,1,0.0,33.0
 Washington-St. Louis Bears,Theo Rocca,UW-Whitewater,unnamed offense,3,3.0,100.0
 Washington-St. Louis Bears,Will Grudzinski,UW-Whitewater,unnamed offense,4,0.0,80.0
 Washington-St. Louis Bears,Will Grudzinski,UW-Whitewater,Rashad Rogers,1,,20.0
-Washington-St. Louis Bears,Yogi Oliff,UW-Whitewater,unnamed offense,2,1.0,100.0
-Washington-St. Louis Bears,unnamed defense,UW-Whitewater,unnamed offense,79,0.79,96.0
+Washington-St. Louis Bears,Yogi Oliff,UW-Whitewater,unnamed offense,2,1.0,67.0
+Washington-St. Louis Bears,Yogi Oliff,UW-Whitewater,Joey Berezowitz,1,0.0,33.0
+Washington-St. Louis Bears,unnamed defense,UW-Whitewater,unnamed offense,79,0.8,95.0
+Washington-St. Louis Bears,unnamed defense,UW-Whitewater,JR Lukenbill,1,0.0,1.0
 Washington-St. Louis Bears,unnamed defense,UW-Whitewater,Joey Berezowitz,1,3.0,1.0
 Washington-St. Louis Bears,unnamed defense,UW-Whitewater,Luke Bara,1,3.0,1.0
 Washington-St. Louis Bears,unnamed defense,UW-Whitewater,Rashad Rogers,1,,1.0
-Wheaton (IL) Thunder,unnamed defense,North Park Vikings,unnamed offense,115,0.95,100.0
+Wheaton (IL) Thunder,Brady Wynja,North Park Vikings,Lazario Cornish,1,2.0,100.0
+Wheaton (IL) Thunder,Carson Grier,North Park Vikings,unnamed offense,3,0.67,75.0
+Wheaton (IL) Thunder,Carson Grier,North Park Vikings,Julian Campbell,1,0.0,25.0
+Wheaton (IL) Thunder,Devin Martin,North Park Vikings,unnamed offense,3,0.67,100.0
+Wheaton (IL) Thunder,Soren Richardson,North Park Vikings,unnamed offense,1,0.0,100.0
+Wheaton (IL) Thunder,unnamed defense,North Park Vikings,unnamed offense,115,0.95,89.0
+Wheaton (IL) Thunder,unnamed defense,North Park Vikings,Lazario Cornish,4,1.0,3.0
+Wheaton (IL) Thunder,unnamed defense,North Park Vikings,Kolden Vanlandingham,2,0.0,2.0
+Wheaton (IL) Thunder,unnamed defense,North Park Vikings,Marquis Vance,2,0.0,2.0
+Wheaton (IL) Thunder,unnamed defense,North Park Vikings,Mike Vuckovic,2,0.0,2.0
+Wheaton (IL) Thunder,unnamed defense,North Park Vikings,Tyvin Garrison,2,,2.0
+Wheaton (IL) Thunder,unnamed defense,North Park Vikings,William Bates,2,1.5,2.0
