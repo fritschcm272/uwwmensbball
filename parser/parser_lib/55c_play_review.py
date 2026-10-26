@@ -75,6 +75,27 @@ def _pr_pkg_stale(doc, g):
             if now is not None and isinstance(was, dict) and any(
                     sorted(was.get(sd) or []) != sorted(now[sd]) for sd in ("offense", "defense")):
                 return True
+        # CONFIRMED BUG (fixed; "there was not 1 player named in the player number tracking for the next set of clips for the
+        # Wheaton game"). The open batch was built by a run with jersey numbers off (names on 2 of 199 boxes); the next run read
+        # the numbers and named most players, but an open batch with nothing saved was never rebuilt, so the app kept the
+        # blank boxes. It is now rebuilt when tracking's names for its boxes have changed (nothing in it is saved -- nothing lost).
+        pt_ = globals().get("player_tracks")
+        if isinstance(pt_, pd.DataFrame) and not pt_.empty and {"clip_key", "track"} <= set(pt_.columns):
+            tck = {str(r.get("clip_number")): r.get("track_clip_key") for _, r in g.iterrows()}
+            want = {tck.get(str(p.get("clip_number"))) for p in doc.get("plays", [])} - {None}
+            by = {ck: grp for ck, grp in pt_[pt_["clip_key"].isin(want)].groupby("clip_key")}
+            for p in doc.get("plays", []):
+                grp = by.get(tck.get(str(p.get("clip_number"))))
+                if grp is None:
+                    continue
+                cur = {int(rr["track"]): (rr.get("name") if isinstance(rr.get("name"), str) else None)
+                       for rr in grp.to_dict("records") if pd.notna(pd.to_numeric(rr.get("track"), errors="coerce"))}
+                for pic in p.get("pictures") or []:
+                    for b in pic.get("boxes") or []:
+                        if b.get("track") is None:
+                            continue
+                        if int(b["track"]) not in cur or cur[int(b["track"])] != b.get("name"):
+                            return True
     except Exception:
         return False
     return False
@@ -887,7 +908,7 @@ def play_review():
                     # restart) or without the naming frame is rebuilt -- nothing on it is saved, so nothing is lost
                     shutil.rmtree(_pkg, ignore_errors=True)
                     print(f"Play review: {gd} {gc} -- its open review (run {_pkg_run}) was built from old frames, old "
-                          f"lineups or without team codes; rebuilt on the current tracking (nothing in it was saved)", flush=True)
+                          f"lineups, without team codes or before tracking's latest names; rebuilt on the current tracking (nothing in it was saved)", flush=True)
                 elif globals().get("PLAY_REVIEW_REQUIRE_SAVED", True):
                     print(f"Play review: {gd} {gc} -- no new run: nothing in its open review (run {_pkg_run}) is saved yet "
                           f"(Title checks: Analytics > Film Tagging; player checks: Analytics > Player Number Tracking).", flush=True)
