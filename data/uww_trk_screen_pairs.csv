@@ -1,73 +1,44 @@
 offense_team,screener,screened,screen_type,times,ppp,rolls,pops,slips
-North Park Vikings,Kolden Vanlandingham,unnamed offense,Off-ball screen,6,0.33,0,0,0
-North Park Vikings,unnamed offense,Kolden Vanlandingham,Off-ball screen,4,0.25,0,0,0
-North Park Vikings,unnamed offense,unnamed offense,Off-ball screen,4,1.25,0,0,0
-North Park Vikings,Kolden Vanlandingham,Lazario Cornish,Off-ball screen,3,0.67,0,0,0
-North Park Vikings,Lazario Cornish,unnamed offense,Off-ball screen,3,0.5,0,0,0
-North Park Vikings,Mike Vuckovic,unnamed offense,Off-ball screen,3,0.67,0,0,0
-North Park Vikings,William Bates,Mike Vuckovic,Off-ball screen,3,0.67,0,0,0
-North Park Vikings,unnamed offense,Mike Vuckovic,Off-ball screen,3,1.0,0,0,0
-North Park Vikings,Julian Campbell,Kolden Vanlandingham,Off-ball screen,2,1.5,1,0,0
-North Park Vikings,Julian Campbell,unnamed offense,Off-ball screen,2,1.5,1,0,0
-North Park Vikings,Marquis Vance,Kolden Vanlandingham,Off-ball screen,2,1.0,0,0,0
-North Park Vikings,Mike Vuckovic,Kolden Vanlandingham,Off-ball screen,2,0.0,0,0,0
-North Park Vikings,Tyvin Garrison,unnamed offense,Off-ball screen,2,0.0,0,0,0
-North Park Vikings,William Bates,unnamed offense,Off-ball screen,2,1.0,0,0,0
+North Park Vikings,unnamed offense,unnamed offense,Off-ball screen,63,0.9,5,0,0
+North Park Vikings,unnamed offense,unnamed offense,Ball screen,5,1.4,0,0,0
+North Park Vikings,Lazario Cornish,unnamed offense,Off-ball screen,2,0.0,0,0,0
 North Park Vikings,unnamed offense,Lazario Cornish,Off-ball screen,2,0.0,0,0,0
-North Park Vikings,Harrison Long,Mike Vuckovic,Ball screen,1,0.0,0,0,0
-North Park Vikings,Harrison Long,unnamed offense,Off-ball screen,1,2.0,1,0,0
-North Park Vikings,Jerome Smith Jr.,Kolden Vanlandingham,Ball screen,1,3.0,0,0,0
-North Park Vikings,Jerome Smith Jr.,Kolden Vanlandingham,Off-ball screen,1,2.0,0,0,0
-North Park Vikings,Jerome Smith Jr.,Lazario Cornish,Off-ball screen,1,0.0,0,0,0
-North Park Vikings,Jerome Smith Jr.,unnamed offense,Ball screen,1,0.0,0,0,0
-North Park Vikings,Lazario Cornish,Kolden Vanlandingham,Off-ball screen,1,2.0,0,0,0
-North Park Vikings,Marquis Vance,Julian Campbell,Off-ball screen,1,2.0,0,0,0
-North Park Vikings,Marquis Vance,Mike Vuckovic,Off-ball screen,1,0.0,0,0,0
-North Park Vikings,Marquis Vance,Tyvin Garrison,Off-ball screen,1,0.0,0,0,0
-North Park Vikings,Marquis Vance,unnamed offense,Off-ball screen,1,0.0,0,0,0
-North Park Vikings,Mike Vuckovic,Jerome Smith Jr.,Off-ball screen,1,0.0,0,0,0
-North Park Vikings,Mike Vuckovic,Tyvin Garrison,Off-ball screen,1,0.0,0,0,0
-North Park Vikings,Tyvin Garrison,Mike Vuckovic,Off-ball screen,1,0.0,0,0,0
-North Park Vikings,William Bates,Kolden Vanlandingham,Off-ball screen,1,2.0,0,0,0
-North Park Vikings,unnamed offense,Jerome Smith Jr.,Off-ball screen,1,2.0,0,0,0
-North Park Vikings,unnamed offense,Tyvin Garrison,Ball screen,1,0.0,0,0,0
-North Park Vikings,unnamed offense,Tyvin Garrison,Off-ball screen,1,0.0,0,0,0
-North Park Vikings,unnamed offense,William Bates,Off-ball screen,1,0.0,0,0,0
-UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,11,0.45,0,0,0
-UW-Whitewater,unnamed offense,Isaac Verges,Off-ball screen,1,0.0,0,0,0
-Washington-St. Louis Bears,unnamed offense,unnamed offense,Off-ball screen,12,1.0,1,0,0
-Washington-St. Louis Bears,unnamed offense,Josh Kim,Ball screen,1,0.0,0,0,0
-Wheaton (IL) Thunder,Carson Grier,unnamed offense,Off-ball screen,8,1.12,1,0,0
-Wheaton (IL) Thunder,unnamed offense,Carson Grier,Off-ball screen,8,1.0,0,0,0
-Wheaton (IL) Thunder,unnamed offense,unnamed offense,Off-ball screen,8,0.6,0,0,0
-Wheaton (IL) Thunder,Devin Martin,unnamed offense,Off-ball screen,7,1.4,0,0,0
-Wheaton (IL) Thunder,unnamed offense,Devin Martin,Off-ball screen,6,0.5,0,0,0
-Wheaton (IL) Thunder,Devin Martin,Carson Grier,Off-ball screen,5,1.2,0,0,0
-Wheaton (IL) Thunder,Devin Martin,Soren Richardson,Off-ball screen,4,1.5,0,0,0
-Wheaton (IL) Thunder,Kyan VanderWoude,Devin Martin,Off-ball screen,4,0.5,0,0,0
-Wheaton (IL) Thunder,Carson Grier,Noah Hedrick,Off-ball screen,3,0.67,0,0,0
+North Park Vikings,Lazario Cornish,Mike Vuckovic,Off-ball screen,1,2.0,0,0,0
+North Park Vikings,Marquis Vance,Jerome Smith Jr.,Off-ball screen,1,3.0,0,0,0
+North Park Vikings,Mike Vuckovic,Lazario Cornish,Ball screen,1,0.0,0,0,0
+North Park Vikings,Mike Vuckovic,unnamed offense,Off-ball screen,1,0.0,0,0,0
+North Park Vikings,Tyvin Garrison,unnamed offense,Off-ball screen,1,,0,0,0
+North Park Vikings,William Bates,unnamed offense,Off-ball screen,1,0.0,0,0,0
+North Park Vikings,unnamed offense,Julian Campbell,Off-ball screen,1,2.0,0,0,0
+North Park Vikings,unnamed offense,Kolden Vanlandingham,Off-ball screen,1,0.0,0,0,0
+UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,29,0.78,0,0,0
+UW-Whitewater,unnamed offense,unnamed offense,Ball screen,14,1.71,1,0,0
+UW-Whitewater,Luke Bara,unnamed offense,Ball screen,1,2.0,0,0,0
+UW-Whitewater,unnamed offense,Brock Marino,Off-ball screen,1,2.0,0,0,0
+UW-Whitewater,unnamed offense,Collin Madson,Off-ball screen,1,0.0,0,0,0
+UW-Whitewater,unnamed offense,Isaac Verges,Ball screen,1,2.0,0,0,0
+UW-Whitewater,unnamed offense,Joey Berezowitz,Off-ball screen,1,0.0,0,0,0
+Washington-St. Louis Bears,unnamed offense,unnamed offense,Off-ball screen,37,0.97,3,0,0
+Washington-St. Louis Bears,unnamed offense,unnamed offense,Ball screen,6,1.0,0,0,0
+Washington-St. Louis Bears,unnamed offense,Josh Kim,Ball screen,3,0.33,0,0,0
+Washington-St. Louis Bears,Ryan Cohen,unnamed offense,Off-ball screen,2,1.5,0,0,0
+Washington-St. Louis Bears,unnamed offense,Josh Kim,Off-ball screen,2,1.0,0,0,0
+Washington-St. Louis Bears,George Gale,Ryan Cohen,Off-ball screen,1,0.0,0,0,0
+Washington-St. Louis Bears,Joey Berezowitz,unnamed offense,Off-ball screen,1,2.0,0,0,0
+Washington-St. Louis Bears,Josh Kim,unnamed offense,Off-ball screen,1,0.0,0,0,0
+Washington-St. Louis Bears,Richie Warren,unnamed offense,Off-ball screen,1,0.0,0,0,0
+Washington-St. Louis Bears,Yogi Oliff,unnamed offense,Ball screen,1,3.0,0,0,0
+Washington-St. Louis Bears,unnamed offense,Connor May,Off-ball screen,1,3.0,0,0,0
+Washington-St. Louis Bears,unnamed offense,Yogi Oliff,Off-ball screen,1,2.0,0,0,0
+Wheaton (IL) Thunder,unnamed offense,unnamed offense,Off-ball screen,68,0.98,2,0,0
+Wheaton (IL) Thunder,unnamed offense,unnamed offense,Ball screen,7,1.14,0,0,0
 Wheaton (IL) Thunder,Brady Wynja,Devin Martin,Off-ball screen,2,2.5,0,0,0
-Wheaton (IL) Thunder,Carson Grier,Devin Martin,Off-ball screen,2,0.0,0,0,0
-Wheaton (IL) Thunder,Devin Martin,Kyan VanderWoude,Off-ball screen,2,0.0,0,0,0
-Wheaton (IL) Thunder,Soren Richardson,Carson Grier,Off-ball screen,2,1.0,0,0,0
-Wheaton (IL) Thunder,Soren Richardson,Devin Martin,Off-ball screen,2,0.0,0,0,0
-Wheaton (IL) Thunder,Brady Wynja,Carson Grier,Off-ball screen,1,0.0,0,0,0
-Wheaton (IL) Thunder,Brady Wynja,Noah Hedrick,Off-ball screen,1,0.0,0,0,0
-Wheaton (IL) Thunder,Carson Grier,Brady Wynja,Off-ball screen,1,0.0,0,0,0
-Wheaton (IL) Thunder,Carson Grier,Soren Richardson,Off-ball screen,1,2.0,0,0,0
-Wheaton (IL) Thunder,Devin Martin,Brady Wynja,Off-ball screen,1,1.0,0,0,0
-Wheaton (IL) Thunder,Devin Martin,unnamed offense,Ball screen,1,0.0,0,0,0
-Wheaton (IL) Thunder,Jace Olson,Soren Richardson,Off-ball screen,1,0.0,0,0,0
-Wheaton (IL) Thunder,Kyan VanderWoude,Soren Richardson,Off-ball screen,1,0.0,0,0,0
-Wheaton (IL) Thunder,Kyan VanderWoude,unnamed offense,Off-ball screen,1,0.0,0,0,0
-Wheaton (IL) Thunder,Kyle Neibch,Carson Grier,Off-ball screen,1,2.0,0,0,0
-Wheaton (IL) Thunder,Noah Hedrick,Devin Martin,Off-ball screen,1,2.0,0,0,0
-Wheaton (IL) Thunder,Noah Hedrick,Kyan VanderWoude,Off-ball screen,1,2.0,0,0,0
+Wheaton (IL) Thunder,Devin Martin,Soren Richardson,Off-ball screen,1,0.0,0,0,0
+Wheaton (IL) Thunder,Devin Martin,unnamed offense,Off-ball screen,1,0.0,0,0,0
 Wheaton (IL) Thunder,Reid Olson,Soren Richardson,Off-ball screen,1,0.0,0,0,0
-Wheaton (IL) Thunder,Soren Richardson,Brady Wynja,Off-ball screen,1,0.0,0,0,0
-Wheaton (IL) Thunder,Soren Richardson,Kyan VanderWoude,Ball screen,1,2.0,0,0,0
+Wheaton (IL) Thunder,Soren Richardson,Carson Grier,Off-ball screen,1,0.0,0,0,0
 Wheaton (IL) Thunder,Soren Richardson,Kyan VanderWoude,Off-ball screen,1,0.0,0,0,0
+Wheaton (IL) Thunder,Soren Richardson,unnamed offense,Ball screen,1,2.0,0,0,0
+Wheaton (IL) Thunder,Soren Richardson,unnamed offense,Off-ball screen,1,2.0,0,0,0
 Wheaton (IL) Thunder,unnamed offense,Kyan VanderWoude,Off-ball screen,1,2.0,0,0,0
-Wheaton (IL) Thunder,unnamed offense,Reid Olson,Off-ball screen,1,3.0,0,0,0
-Wheaton (IL) Thunder,unnamed offense,Soren Richardson,Ball screen,1,2.0,0,0,0
-Wheaton (IL) Thunder,unnamed offense,Soren Richardson,Off-ball screen,1,2.0,0,0,0
+Wheaton (IL) Thunder,unnamed offense,Soren Richardson,Off-ball screen,1,,0,0,0

@@ -6331,20 +6331,24 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
 
             def _box_table(idx, tkey):
                 keys = [f"{kp}_b_{run}_{pi}_{ki}_{bi}" for bi in idx]
-                df = pd.DataFrame([{"Box": boxes[bi].get("id"), "Side": boxes[bi].get("side"),
+                # CONFIRMED CHANGE (requested: "instead of the side column, make that the 3 character team acronym"):
+                # the box's team code ("UWW", "WHE", "NPA"), still colored by side (offense orange, defense blue)
+                _sides = [boxes[bi].get("side") for bi in idx]
+                df = pd.DataFrame([{"Box": boxes[bi].get("id"), "Team": _pr_side_code(pl, boxes[bi].get("side")),
                                     "Assigned": ((f"{boxes[bi].get('label')} ({boxes[bi].get('how')})" if boxes[bi].get("label")
                                                   else "not named")
                                                  + (" -- senior, gone" if boxes[bi].get("departed") else "")),
                                     "Your check": (store.get(k, _PR_NOT_CHECKED) if store.get(k, _PR_NOT_CHECKED) in choices
                                                    else _PR_NOT_CHECKED)} for bi, k in zip(idx, keys)])
                 try:
-                    data = df.style.apply(lambda c: ["color:#1e7fc8;font-weight:700" if v == "defense" else
-                                                     "color:#c66a00;font-weight:700" if v == "offense" else "" for v in c],
-                                          subset=["Side"])
+                    data = df.style.apply(lambda c: ["color:#1e7fc8;font-weight:700" if sd_ == "defense" else
+                                                     "color:#c66a00;font-weight:700" if sd_ == "offense" else ""
+                                                     for sd_ in _sides[:len(c)]], subset=["Team"])
                 except Exception:
                     data = df
                 cfg = {"Box": st.column_config.TextColumn(disabled=True, width="small"),
-                       "Side": st.column_config.TextColumn(disabled=True, width="small"),
+                       "Team": st.column_config.TextColumn(disabled=True, width="small",
+                                                           help="The player's team (orange = on offense, blue = on defense)"),
                        "Assigned": st.column_config.TextColumn(disabled=True),
                        "Your check": st.column_config.SelectboxColumn(options=choices, required=True)}
                 try:
