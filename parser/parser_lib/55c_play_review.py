@@ -835,8 +835,15 @@ def play_review():
     # CONFIRMED BUG (fixed; review of the 10/23 run: "Situation 0/36 (0%); Formation 0/16; Play call 0/31"). A play whose batch
     # was built with the Tag model off had NO automatic answer; the coach's answer there was saved as "wrong" and counted as the
     # automatic Title being wrong. Only plays that HAD an automatic answer for the field are scored now.
+    # CONFIRMED BUG (fixed; review of the 10/26 run: still "Situation 0/45; Formation 0/24; Play call 0/39"). Only the answers a
+    # coach CHANGED were scored -- and he only changes a field when the automatic answer is wrong, so every scored answer was
+    # "wrong". A field he left on the automatic answer, on a play he worked on (changed something), was accepted -- the same
+    # rule the app and the Tag model use -- and now counts as right.
+    _worked = {ck_ for (ck_, _f), a_ in marks.items() if not a_.get("prefilled")}
     for (_ck, f), a in marks.items():
-        if a.get("verdict") in ("right", "wrong") and not a.get("prefilled") and a.get("auto") not in (None, ""):
+        if a.get("prefilled") and not (_ck in _worked and a.get("verdict") == "right"):
+            continue
+        if a.get("verdict") in ("right", "wrong") and a.get("auto") not in (None, ""):
             rep.setdefault(f, [0, 0])
             rep[f][1] += 1
             rep[f][0] += int(a["verdict"] == "right")
