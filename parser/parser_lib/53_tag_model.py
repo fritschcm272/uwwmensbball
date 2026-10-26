@@ -1058,6 +1058,25 @@ if RUN_TAG_MODEL and not _tm_src.empty:
             _tm_field_how = "retrained (predicts the most common answer)"
         _tm_field_times.append((_field, _tm_time.time() - _tm_tf, _tm_field_how))
         print(f"    {_field}: {_tm_field_how} -- {_tm_time.time() - _tm_tf:.0f} s", flush=True)
+    # CONFIRMED CHANGE (requested: "there should be no set calls when a possession is purely transition"). On a transition
+    # possession -- tagged as one, Synergy calls it one, or the model is sure it is one -- the model suggests NO play call
+    # and NO formation (they'd only be its half-court habit, "Motion"), so the app doesn't prefill them and the automatic
+    # Title stays "tran". A play call a coach tagged on such a possession is still his answer (see 47).
+    _tm_known_sit = play_calls["play_situation"].where(
+        play_calls.get("situation_source", pd.Series(index=play_calls.index, dtype=object)).isin(["Tag", "Synergy", "Play-by-play (timeout)"]))
+    _tm_trans = _tm_known_sit.astype(str).eq("Transition")
+    if "pred_situation" in play_calls.columns:
+        _tm_trans = _tm_trans | (_tm_known_sit.isna() & play_calls["pred_situation"].astype(str).eq("Transition")
+                                 & pd.to_numeric(play_calls["pred_situation_conf"], errors="coerce").fillna(0)
+                                 .ge(TAG_MODEL_MIN_CONFIDENCE))
+    if _tm_trans.any():
+        for _f in ("play_call", "formation"):
+            for _pfx in ("pred_", "heldout_"):
+                if f"{_pfx}{_f}" in play_calls.columns:
+                    play_calls[f"{_pfx}{_f}"] = play_calls[f"{_pfx}{_f}"].astype(object)
+                    play_calls.loc[_tm_trans, f"{_pfx}{_f}"] = None
+                    play_calls.loc[_tm_trans, f"{_pfx}{_f}_conf"] = np.nan
+        print(f"  transition possessions: {int(_tm_trans.sum())} clip(s) get no play call / formation suggestion", flush=True)
     _tm_step("scoring the validation plays and writing the report")
     play_calls["tag_validation"] = _tm_valid.iloc[:_tm_n_pc].to_numpy()
     # the honest score: the validation plays, which no model ever trained on

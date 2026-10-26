@@ -354,7 +354,11 @@ def _decode_play_title_legacy(title, known_players=()):
         "Motion / no set" if actions else None)
 
     if out["play_call"] is None:
-        if situations:
+        if out["play_situation"] == "Transition":
+            # requested: a purely transition possession has no set call (was "Transition (unspecified)")
+            out["decode_quality"] = "No call"
+            out["decode_note"] = "transition: no set call"
+        elif situations:
             out["play_call"] = f"{out['play_situation']} (unspecified)"
             out["play_series"] = out["play_situation"].replace(" (ATO)", "")
             out["decode_quality"] = "Partial"
@@ -711,6 +715,7 @@ def decode_structured_title(title, known_players=()):
     else:
         call = "Motion"  # staff default when no play call is tagged
         call_is_action = False
+    call_defaulted = not call_txt.strip()               # no call typed: "Motion" is only the half-court default
     actions, detail_labels = [], []
     spots = []
     moved_cov = []                                  # coverage words typed on the offense side ('bs(stay)')
@@ -818,6 +823,13 @@ def decode_structured_title(title, known_players=()):
     base = f"{formation} {call}" if formation and (call == "Motion" or call_is_action) else call
     out["play_call"] = f"{oob} {base}" if oob else base
     out["play_series"] = oob or call
+    out["play_call_default"] = bool(call_defaulted)
+    # CONFIRMED CHANGE (requested: "there should be no set calls when a possession is purely transition"). A transition
+    # possession with no play call tagged gets NO set call -- not the "Motion" default -- and no formation guess from the
+    # Tag model; a call a coach actually tagged ("tran-horns-panther") is kept (that possession flowed into a set).
+    if call_defaulted and out["play_situation"] == "Transition":
+        out.update(play_set=None, play_call=None, play_series=None)
+        out["decode_note"] = (out["decode_note"] + "; " if out["decode_note"] else "") + "transition: no set call"
     if errors:
         out["decode_quality"] = "Partial"
         out["decode_note"] = "tag errors: " + "; ".join(errors)
@@ -920,7 +932,8 @@ PLAY_GLOSSARY = pd.DataFrame([
     ("Token", "A named ball-screen coverage call -- confirm the read with staff", "Inferred"),
     # New situation and set names, from the coaches' latest tagging convention:
     ("Tran / Transition", "Live-ball offense before the defense is set, as its own situation (not folded "
-     "into Half court)", "Standard"),
+     "into Half court). A purely transition possession has NO set call -- no Motion default, no suggested play call "
+     "or formation; a set the coach tags after it (tran-horns-panther) is kept", "Standard"),
     ("Flow / Chin / Twins / Snap / Black / Bulldog / Pinch / Blocker-Mover", "Named sets or formations",
      "Standard"),
     ("Guards Cross / UCLA", "Named actions -- two guards exchange; a screen off a UCLA cut", "Standard"),
@@ -1496,7 +1509,7 @@ def _pl_apply_app_tags(out):
     canon = lambda f, v: vocab.get(f, {}).get(norm(v), v)
     for c in ("situation_source", "play_actions", "trigger_actions", "screener_actions", "action_players", "action_results",
               "coverage_detail", "defense_coverage", "tag_format", "play_title",
-              "decode_note", "defense_type", "defense_press", "play_call", "play_series"):
+              "decode_note", "defense_type", "defense_press", "play_call", "play_series", "play_call_default"):
         if c not in out.columns:
             out[c] = None
     override = globals().get("TAG_MODEL_REVIEW_OVERRIDES_TITLE", True)
@@ -1620,7 +1633,7 @@ def _pl_apply_app_tags(out):
             for x in _acts:
                 _prs = x.get("players")
                 if not isinstance(_prs, list):
-                    _prs = [{"role": "Ball handler / trigger", "offense": x.get("trigger"), "offense_did": x.get("trigger_action")},
+                    _prs = [{"role": "Ball handler (trigger)", "offense": x.get("trigger"), "offense_did": x.get("trigger_action")},
                             {"role": "Screener", "offense": x.get("screener"), "offense_did": x.get("screener_action"),
                              "defender": x.get("screen_defender")}]
                 for p_ in _prs:
@@ -1666,9 +1679,20 @@ def _pl_apply_app_tags(out):
             sit = "Half court"
         oob = next((w for w in ("BLOB", "SLOB") if str(sit or "").upper().startswith(w)), None)
         call = out.at[idx, "play_set"]
-        if blank(call) and offense:
+        if str(sit or "") == "Transition":
+            # requested: no set call on a purely transition possession -- an automatic (prefilled) play call / formation
+            # the coach left untouched is dropped; one he picked himself is kept (that possession flowed into a set)
+            _pre = lambda f_: f_ in use and bool((a.get(f_) or (None, False))[1])
+            if _pre("play_call"):
+                call = None
+                for _c in ("play_set", "play_call", "play_series"):
+                    put(_c, None)
+            if _pre("formation"):
+                put("play_formation", None)
+        if blank(call) and offense and str(sit or "") != "Transition":
             call = "Motion"                               # staff default when no play call is tagged
             put("play_set", call)
+            put("play_call_default", True)
         form = out.at[idx, "play_formation"]
         if not blank(call):
             base = f"{form} {call}" if not blank(form) and call == "Motion" else call
@@ -2024,6 +2048,13 @@ def _pl_infer_situation(clips, events):
         if str(c.get("synergy_play_type") or "").strip().lower() == "transition":
             clips.at[i, "play_situation"] = "Transition"
             clips.at[i, "situation_source"] = "Synergy"
+            # requested: no set call on a purely transition possession -- the "Motion" default (no call was tagged) goes
+            if c.get("play_call_default") is True or str(c.get("play_call_default")).lower() == "true":
+                for _c in ("play_set", "play_call", "play_series"):
+                    if _c in clips.columns:
+                        clips.at[i, _c] = None
+                clips.at[i, "decode_note"] = ((str(c.get("decode_note")) + "; ") if isinstance(c.get("decode_note"), str)
+                                              and c.get("decode_note") else "") + "transition (Synergy): no set call"
             continue
         clips.at[i, "situation_source"] = "Default (Half court)"
     return clips
@@ -3490,6 +3521,8 @@ def _pl_reads(clips):
             for x in rows:
                 action = _pl_case(x.get("action") or "Action")
                 role = str(x.get("role") or "Player").strip()
+                if re.search(r"trigger|ball ?handler", role, re.I):
+                    role = "Ball handler (trigger)"         # one name (saves from the first days said "Ball handler / trigger")
                 for one in [_pl_case(v) for v in str(x.get("offense_did") or "").split(" / ") if v.strip()]:
                     recs.append({**base, "team": team, "side_of_ball": "Offense", "role": role, "action": action,
                                  "player": _who(team, x.get("offense_jersey"), x.get("offense")), "read": one})
@@ -3498,7 +3531,7 @@ def _pl_reads(clips):
                                  "role": "Guarding the " + re.sub(r"\s*\(.*\)\s*$", "", role).lower(), "action": action,
                                  "player": _who(dteam, x.get("defender_jersey"), x.get("defender")), "read": one})
             continue
-        for col, role in (("trigger_actions", "Ball handler / trigger"), ("screener_actions", "Screener")):
+        for col, role in (("trigger_actions", "Ball handler (trigger)"), ("screener_actions", "Screener")):
             v = r.get(col)
             if not isinstance(v, str) or not v.strip():
                 continue

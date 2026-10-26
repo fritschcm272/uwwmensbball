@@ -6977,7 +6977,7 @@ _FT_EXTRA_COVERAGES = ["Flat Hedge", "High Hedge"]   # requested: "High Hedge" a
 # automatic Title's answer is marked "\u2757" -- a different check from the "\u2713" a Title check uses for the automatic answer
 _FT_SAVED_MARK = "\u2705"
 # requested: "a column for what the screener did -- Pop, Roll, etc." (answers already typed are offered too)
-_FT_SCREENER_ACTIONS = ["Roll", "Pop", "Short roll", "Slip", "Ghost", "Re-screen", "Flare / fade", "Replace",
+_FT_SCREENER_ACTIONS = ["Roll", "Pop", "Short roll", "Slip", "Ghost", "Re-screen", "Flare (fade)", "Replace",
                         "Seal", "Cut to basket"]
 _FT_BALL_RX = re.compile(r"ball screen|p&r|pick|dho|hand ?off|\bget\b|drag|pistol|\b77\b|\bram\b", re.I)
 
@@ -6991,12 +6991,14 @@ _FT_A_COLS = ["#", "Action", "Coverage", "Result"]
 _FT_P_COLS = ["#", "Role", "Offense", "Offense did", "Defender", "Defender did"]
 _FT_A_TEXT = ["Action", "Coverage", "Result"]
 _FT_P_TEXT = ["Offense", "Offense did", "Defender", "Defender did"]
-_FT_ROLE_TRIGGER, _FT_ROLE_SCREENER = "Ball handler / trigger", "Screener"
-_FT_ROLES = [_FT_ROLE_TRIGGER, _FT_ROLE_SCREENER, "2nd screener", "Receiver (hand-off / pass)", "Cutter",
-             "Shooter / spacer", "Post", "Weak side (help comes off him)"]
-_FT_ROLE_HELP = ("Who this row is about. Each row is one offensive player and the defender guarding him: Ball handler / "
-                 "trigger (and his on-ball defender), Screener (and the screen defender), 2nd screener (77, stagger), "
-                 "Receiver of the hand-off / pass, Cutter, Shooter / spacer, Post, and Weak side -- the player the help "
+# CONFIRMED BUG (fixed; the Role cell showed "Ball handler / trigger" as two chips, "Ball handler" and "trigger"): a cell
+# holding several answers joins them with " / ", so no answer in these lists may contain " / " itself.
+_FT_ROLE_TRIGGER, _FT_ROLE_SCREENER = "Ball handler (trigger)", "Screener"
+_FT_ROLES = [_FT_ROLE_TRIGGER, _FT_ROLE_SCREENER, "2nd screener", "Receiver (hand-off or pass)", "Cutter",
+             "Shooter (spacer)", "Post", "Weak side (help comes off him)"]
+_FT_ROLE_HELP = ("Who this row is about. Each row is one offensive player and the defender guarding him: Ball handler "
+                 "(trigger) and his on-ball defender, Screener (and the screen defender), 2nd screener (77, stagger), "
+                 "Receiver of the hand-off or pass, Cutter, Shooter (spacer), Post, and Weak side -- the player the help "
                  "defender (low man / tagger) leaves. Not listed? Type it.")
 # more actions after the staff's own (_FT_ACTIONS)
 _FT_MORE_ACTIONS = ["Ball Screen", "Side Ball Screen", "Drag", "Double Drag", "Spain", "Get", "Down Screen", "Pin Down",
@@ -7009,14 +7011,14 @@ _FT_OFFENSE_DID = (list(_FT_TRIGGER_ACTIONS)
                    + ["Catch & shoot", "Catch & drive", "Curl", "Back cut", "Basket cut", "Lift", "Drift", "Stay spaced",
                       "Post up", "Duck in"])
 # what the DEFENDER did -- on the ball, guarding the screener, help, any
-_FT_DEFENDER_DID = ["Over", "Under", "Through", "Ice / Push", "Switch", "Trap / Blitz", "Caught on the screen",
-                    "Drop", "Flat Hedge", "High Hedge", "Hard Hedge / Show", "At level / Up to touch", "Recover", "Late",
-                    "Tag the roller", "Stunt & recover", "Rotate", "Stay home", "Sink / Fill", "X-out", "No help",
+_FT_DEFENDER_DID = ["Over", "Under", "Through", "Ice (push)", "Switch", "Trap (blitz)", "Caught on the screen",
+                    "Drop", "Flat Hedge", "High Hedge", "Hard Hedge (show)", "At level (up to touch)", "Recover", "Late",
+                    "Tag the roller", "Stunt & recover", "Rotate", "Stay home", "Sink (fill)", "X-out", "No help",
                     "Top lock", "Trail", "Chase", "Deny", "Front the post",
-                    "Contest", "Closeout", "Foul", "Deflection / Steal", "Beaten"]
+                    "Contest", "Closeout", "Foul", "Deflection or steal", "Beaten"]
 # what came of the action
 _FT_RESULTS = ["Shot at the rim", "Mid-range jumper", "3 off the action", "Kick-out 3", "Pass to the roller", "Post touch",
-               "Foul drawn", "Turnover", "Reset / nothing", "Into a 2nd action"]
+               "Foul drawn", "Turnover", "Reset (nothing)", "Into a 2nd action"]
 _FT_TRIGGER_RX = re.compile(r"trigger|ball ?handler", re.I)
 _FT_SCREENER_RX = re.compile(r"^\s*screener\b", re.I)
 
@@ -7564,7 +7566,9 @@ def _ft_seed_from_saves(d, store, kp):
             for p_ in _prs:
                 if not any(_ft_clean(p_.get(k_)) for k_ in ("offense", "offense_did", "defender", "defender_did")):
                     continue
-                _sp.append({"#": n, "Role": _ft_clean(p_.get("role")),
+                _rl = _ft_clean(p_.get("role"))
+                _rl = _FT_ROLE_TRIGGER if _FT_TRIGGER_RX.search(_rl) else _rl.replace(" / ", " or ")
+                _sp.append({"#": n, "Role": _rl,
                             "Offense": _labs(pl, p_.get("offense"), "offense"), "Offense did": _mk(p_.get("offense_did")),
                             "Defender": _labs(pl, p_.get("defender"), "defense"),
                             "Defender did": _mk(p_.get("defender_did"))})
