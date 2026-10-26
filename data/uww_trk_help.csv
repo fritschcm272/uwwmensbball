@@ -1,16 +1,25 @@
 defense_team,defender,approx_ft_off_man_ball side,approx_ft_off_man_on ball,approx_ft_off_man_weak side,frames_ball side,frames_on ball,frames_weak side,clips,tendency
-North Park Vikings,unnamed defense,13.8,14.2,15.3,2207.0,1482.0,6359.0,129,helps / sags off
-UW-Whitewater,Isaac Verges,12.3,,13.6,15.0,,3.0,1,helps / sags off
+North Park Vikings,Kolden Vanlandingham,11.7,10.0,13.6,29.0,41.0,37.0,7,helps / sags off
+North Park Vikings,Lazario Cornish,9.1,15.6,8.7,2.0,4.0,6.0,1,in between
+North Park Vikings,Marquis Vance,7.8,11.6,18.3,7.0,7.0,9.0,3,helps / sags off
+North Park Vikings,Mike Vuckovic,8.8,13.3,15.1,7.0,10.0,20.0,5,helps / sags off
+North Park Vikings,William Bates,9.3,12.5,11.1,15.0,18.0,26.0,5,in between
+North Park Vikings,unnamed defense,14.5,15.4,16.7,1807.0,1174.0,7033.0,129,helps / sags off
+UW-Whitewater,Isaac Verges,8.7,,5.6,7.0,,11.0,1,stays attached
 UW-Whitewater,Joey Berezowitz,19.6,15.5,21.0,8.0,16.0,21.0,7,helps / sags off
 UW-Whitewater,Kelton McEwen,7.1,12.8,21.8,5.0,6.0,4.0,1,helps / sags off
 UW-Whitewater,Rashad Rogers,7.9,17.5,,2.0,1.0,,1,
-UW-Whitewater,Richie Warren,12.4,,14.6,4.0,,13.0,5,helps / sags off
-UW-Whitewater,unnamed defense,25.4,24.6,21.4,757.0,638.0,2953.0,80,helps / sags off
+UW-Whitewater,Richie Warren,12.4,,14.1,4.0,,13.0,5,helps / sags off
+UW-Whitewater,unnamed defense,25.7,24.4,21.5,812.0,647.0,2991.0,79,helps / sags off
 Washington-St. Louis Bears,Anthony Przybilla,,15.8,,,1.0,,1,
 Washington-St. Louis Bears,George Gale,,20.9,,,3.0,,1,
-Washington-St. Louis Bears,Josh Kim,,15.8,22.5,,1.0,3.0,2,helps / sags off
-Washington-St. Louis Bears,Ryan Cohen,,12.4,8.7,,1.0,1.0,1,in between
+Washington-St. Louis Bears,Josh Kim,,,25.3,,,3.0,2,helps / sags off
+Washington-St. Louis Bears,Ryan Cohen,,,8.7,,,1.0,1,in between
 Washington-St. Louis Bears,Will Grudzinski,39.9,,33.9,7.0,,19.0,3,helps / sags off
-Washington-St. Louis Bears,Yogi Oliff,10.7,,24.0,12.0,,4.0,2,helps / sags off
-Washington-St. Louis Bears,unnamed defense,23.2,30.6,22.8,167.0,672.0,281.0,52,helps / sags off
-Wheaton (IL) Thunder,unnamed defense,14.6,16.3,14.5,1228.0,1232.0,3950.0,113,helps / sags off
+Washington-St. Louis Bears,Yogi Oliff,10.7,,24.5,12.0,,5.0,3,helps / sags off
+Washington-St. Louis Bears,unnamed defense,23.3,31.3,23.0,152.0,666.0,286.0,50,helps / sags off
+Wheaton (IL) Thunder,Brady Wynja,20.6,16.0,23.8,3.0,10.0,6.0,2,helps / sags off
+Wheaton (IL) Thunder,Carson Grier,10.5,23.4,14.0,7.0,2.0,22.0,4,helps / sags off
+Wheaton (IL) Thunder,Devin Martin,6.9,9.2,11.8,10.0,6.0,29.0,5,in between
+Wheaton (IL) Thunder,Soren Richardson,4.6,14.5,,2.0,1.0,,1,
+Wheaton (IL) Thunder,unnamed defense,16.8,19.2,16.2,1263.0,1143.0,4231.0,113,helps / sags off

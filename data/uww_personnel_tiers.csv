@@ -1,14 +1,14 @@
 scouted_opponent,side,team,player,tier,tier_order,games,mpg,recent_count,missed_recent,starts_recent,recent_n,starter_basis,last_game_min,last_game_rank,tier_note,offensive_role,offensive_role_basis,defensive_role,defensive_role_basis
-Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Brady Wynja,Starter,0,26,17.9,3,0,2,3,started 2+ of the last 3 game(s),27.0,5.0,,Roll & Cut Big,Synergy play types,Mobile Big,play-by-play only
-Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Carson Grier,Starter,0,26,29.9,3,0,3,3,started 2+ of the last 3 game(s),47.1,3.0,,Slasher,Synergy play types,Helper,play-by-play only
+Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Brady Wynja,Starter,0,26,17.9,3,0,2,3,started 2+ of the last 3 game(s),27.0,5.0,,Roll & Cut Big,Synergy play types,Mobile Big,film tracking
+Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Carson Grier,Starter,0,26,29.9,3,0,3,3,started 2+ of the last 3 game(s),47.1,3.0,,Slasher,Synergy play types,Helper,film tracking
 Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Christian Veirs,Bench — no minutes,3,10,4.2,0,7,0,3,started 2+ of the last 3 game(s),,,,Athletic Finisher,Synergy play types (low sample),Low Activity,play-by-play only
-Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Devin Martin,Starter,0,26,30.9,3,0,3,3,started 2+ of the last 3 game(s),47.8,2.0,,Primary Ball Handler,Synergy play types,Point of Attack,play-by-play only
+Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Devin Martin,Starter,0,26,30.9,3,0,3,3,started 2+ of the last 3 game(s),47.8,2.0,,Primary Ball Handler,Synergy play types,Helper,film tracking
 Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Jack Speers,Bench — no minutes,3,4,1.9,0,14,0,3,started 2+ of the last 3 game(s),,,,Secondary Ball Handler,position only,Low Activity,play-by-play only
 Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Kyan VanderWoude,Starter,0,26,30.8,3,0,2,3,started 2+ of the last 3 game(s),37.3,4.0,,Slasher,Synergy play types,Point of Attack,play-by-play only
 Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Kyle Neibch,Bench — rotation,1,26,15.1,3,0,1,3,started 2+ of the last 3 game(s),5.9,8.0,,Off Screen Shooter,Synergy play types,Low Activity,play-by-play only
 Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Noah Hedrick,Bench — rotation,1,21,11.3,3,0,1,3,started 2+ of the last 3 game(s),17.1,6.0,,Stationary Shooter,Synergy play types,Low Activity,play-by-play only
 Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Reid Olson,Bench — rotation,1,26,21.0,3,0,0,3,started 2+ of the last 3 game(s),11.6,7.0,,Off Screen Shooter,Synergy play types,Low Activity,play-by-play only
-Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Soren Richardson,Starter,0,26,34.8,3,0,3,3,started 2+ of the last 3 game(s),48.4,1.0,,Off Screen Shooter,Synergy play types,Point of Attack,play-by-play only
+Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Soren Richardson,Starter,0,26,34.8,3,0,3,3,started 2+ of the last 3 game(s),48.4,1.0,,Off Screen Shooter,Synergy play types,Chaser,film tracking
 Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Luca Carbonaro,Bench — limited minutes,2,14,7.8,3,0,0,3,started 2+ of the last 3 game(s),1.2,10.0,,Off Screen Shooter,Synergy play types,Point of Attack,play-by-play only
 Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Jace Olson,Bench — rotation,1,13,8.3,3,0,0,3,started 2+ of the last 3 game(s),4.6,9.0,,Movement Shooter,Synergy play types (low sample),Low Activity,play-by-play only
 Wheaton (IL) Thunder,Opponent,Wheaton (IL) Thunder,Kyle Grier,Bench — limited minutes,2,2,0.8,1,2,0,3,started 2+ of the last 3 game(s),,,,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only

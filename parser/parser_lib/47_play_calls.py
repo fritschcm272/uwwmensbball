@@ -1491,7 +1491,8 @@ def _pl_apply_app_tags(out):
             for v in out[c].dropna().astype(str):
                 vocab[f].setdefault(norm(v), v)
     canon = lambda f, v: vocab.get(f, {}).get(norm(v), v)
-    for c in ("situation_source", "play_actions", "trigger_actions", "screener_actions", "coverage_detail", "defense_coverage", "tag_format", "play_title",
+    for c in ("situation_source", "play_actions", "trigger_actions", "screener_actions", "action_players", "action_results",
+              "coverage_detail", "defense_coverage", "tag_format", "play_title",
               "decode_note", "defense_type", "defense_press", "play_call", "play_series"):
         if c not in out.columns:
             out[c] = None
@@ -1515,7 +1516,9 @@ def _pl_apply_app_tags(out):
         # the play's Actions table (Film Tagging): used like the answers -- always on an untagged clip, on a coach-Titled
         # clip only when a coach changed it
         _acts = [x for x in (acts_by.get(_ck) or []) if x.get("action") or x.get("coverage") or x.get("screener_action")
-                 or x.get("trigger") or x.get("trigger_action")]
+                 or x.get("trigger") or x.get("trigger_action") or x.get("result") or x.get("screen_defender")
+                 or any(any(p_.get(k_) for k_ in ("offense", "offense_did", "defender", "defender_did"))
+                        for p_ in (x.get("players") or []) if isinstance(p_, dict))]
         if _acts and not untagged and (not override or all(x.get("prefilled") for x in _acts)):
             _acts = []
         if not a and not _acts:
@@ -1605,6 +1608,32 @@ def _pl_apply_app_tags(out):
                     _sa.append(f"{x.get('action') or 'Screen'}" + (f" (#{_sn})" if _sn else "") + f": {x['screener_action']}")
             if _sa:
                 put("screener_actions", " | ".join(_sa))
+            # CONFIRMED CHANGE (requested: Film Tagging's Players table -- one row per matchup: the role, the offensive player
+            # and what he did, the defender guarding him and what HE did). Every player row of every action, in order, as
+            # JSON (action_players) -- read by the action reads table (uww_action_reads), offense AND defense; and what
+            # came of each action (action_results: "Pistol: Kick-out 3 | Ram: Shot at the rim"). Saves from before the
+            # Players table have no player rows: their trigger / screener fields stand in for them.
+            _ap = []
+            for x in _acts:
+                _prs = x.get("players")
+                if not isinstance(_prs, list):
+                    _prs = [{"role": "Ball handler / trigger", "offense": x.get("trigger"), "offense_did": x.get("trigger_action")},
+                            {"role": "Screener", "offense": x.get("screener"), "offense_did": x.get("screener_action"),
+                             "defender": x.get("screen_defender")}]
+                for p_ in _prs:
+                    if not isinstance(p_, dict) or not any(p_.get(k_) for k_ in ("offense", "offense_did", "defender",
+                                                                                   "defender_did")):
+                        continue
+                    _ap.append({"order": x.get("order"), "action": x.get("action"), "role": p_.get("role"),
+                                "offense": p_.get("offense"), "offense_jersey": _jer(p_.get("offense"), first=True),
+                                "offense_did": p_.get("offense_did"),
+                                "defender": p_.get("defender"), "defender_jersey": _jer(p_.get("defender"), first=True),
+                                "defender_did": p_.get("defender_did")})
+            if _ap:
+                put("action_players", json.dumps(_ap, ensure_ascii=False))
+            _rs = [f"{x.get('action') or 'Action'}: {x['result']}" for x in _acts if x.get("result")]
+            if _rs:
+                put("action_results", " | ".join(_rs))
             # each coverage as its own entry, named by screen family the way the Title decoder writes it
             # ("Ball Screen: Drop (def #3)") so the coverage tables and the tag model read app tags like Titles
             _ent = []
@@ -2936,7 +2965,7 @@ PLAY_CALL_COLS = [
     "play_title", "play_call", "play_series", "play_situation", "play_formation", "play_set", "play_actions",
     "primary_action", "play_location", "finish_spot", "featured_player", "decode_quality", "decode_note",
     # Film Tagging's Actions table (requested): what started each action and what each screener did
-    "trigger_actions", "screener_actions",
+    "trigger_actions", "screener_actions", "action_players", "action_results",
     "synergy_play_type", "synergy_string", "on_court_lineup", "personnel_grouping_type", "game_situation",
     "shot_clock_used", "shot_clock_max", "shot_clock_situation",
     # NEW: the defense this offense faced on the clip, from the coaches' updated Title tagging (see
@@ -3355,10 +3384,12 @@ else:
 #                         points per possession allowed, FG and turnovers -- for their defenders (who to attack) and ours
 #                         (self-scout). From uww_screen_coverage, i.e. tags that name the defender ("12drop" in a Title,
 #                         or the Screen defender in Film Tagging); screens with no defender named aren't in it.
-#   uww_action_reads      one row per player per read: the ball handler / trigger's read of each action (Use / Reject /
-#                         Split the ball screen, Cobra, Fox, ...) and the screener's (Roll, Pop, Slip, ...), with uses
-#                         and points per possession. From Film Tagging's Actions table (trigger_actions /
-#                         screener_actions). A play's points are credited to every action in it.
+#   uww_action_reads      one row per player per read: each offensive player's read of each action (ball handler /
+#                         trigger: Use / Reject / Split the ball screen, Cobra, Fox, ...; screener: Roll, Pop, Slip, ...;
+#                         cutters, shooters ...) and each DEFENDER's reaction (guarding the screener: Drop, Hedge,
+#                         Switch ...), with uses and points per possession. From Film Tagging's Players table
+#                         (action_players; older saves: trigger_actions / screener_actions). A play's points are
+#                         credited to every action in it.
 SCREEN_DEFENDER_MIN = int(globals().get("SCREEN_DEFENDER_MIN", 2))      # screens before a defender gets a row
 
 
@@ -3419,7 +3450,12 @@ def _scv_by_defender(cov):
 
 
 def _pl_reads(clips):
-    """trigger_actions / screener_actions -> one row per (team, role, player, action, read)."""
+    """One row per (team, side of the ball, role, player, action, read). CONFIRMED CHANGE (requested: Film Tagging's Players
+    table): from each clip's action_players -- every matchup row: the offensive player's read ("Ball handler / trigger":
+    Use / Reject the ball screen, Cobra ...; "Screener": Roll, Pop ...; cutters, shooters ...) AND the defender's reaction
+    (role "Guarding the screener": Drop, Hedge, Switch ...; "Guarding the ball handler / trigger": Over, Under ...; "Guarding
+    the weak side": Tag, Stunt, Rotate ...). Clips without it fall back to trigger_actions / screener_actions (offense only).
+    `team` = the player's team; offense_team = the team on offense in the play (both kept, so older readers still work)."""
     if clips is None or clips.empty:
         return pd.DataFrame()
     book = _pl_jersey_book()
@@ -3430,9 +3466,35 @@ def _pl_reads(clips):
                 if j in names:
                     return f"#{j} " + _pl_person(names[j])
         return f"#{j}"
+
+    def _who(team, j, nm):
+        if j:
+            return _name(team, str(j))
+        return _pl_person(nm) if isinstance(nm, str) and nm.strip() else "(no number)"
     recs = []
     for _, r in clips.iterrows():
-        team, pts = r.get("offense_team"), pd.to_numeric(r.get("points"), errors="coerce")
+        team, dteam = r.get("offense_team"), r.get("defense_team")
+        pts = pd.to_numeric(r.get("points"), errors="coerce")
+        base = {"side": r.get("side"), "offense_team": team, "_pts": pts, "game_date": r.get("game_date")}
+        ap = r.get("action_players")
+        rows = None
+        if isinstance(ap, str) and ap.strip().startswith("["):
+            try:
+                rows = json.loads(ap)
+            except Exception:
+                rows = None
+        if rows:
+            for x in rows:
+                action = _pl_case(x.get("action") or "Action")
+                role = str(x.get("role") or "Player").strip()
+                for one in [_pl_case(v) for v in str(x.get("offense_did") or "").split(" / ") if v.strip()]:
+                    recs.append({**base, "team": team, "side_of_ball": "Offense", "role": role, "action": action,
+                                 "player": _who(team, x.get("offense_jersey"), x.get("offense")), "read": one})
+                for one in [_pl_case(v) for v in str(x.get("defender_did") or "").split(" / ") if v.strip()]:
+                    recs.append({**base, "team": dteam, "side_of_ball": "Defense",
+                                 "role": "Guarding the " + re.sub(r"\s*\(.*\)\s*$", "", role).lower(), "action": action,
+                                 "player": _who(dteam, x.get("defender_jersey"), x.get("defender")), "read": one})
+            continue
         for col, role in (("trigger_actions", "Ball handler / trigger"), ("screener_actions", "Screener")):
             v = r.get(col)
             if not isinstance(v, str) or not v.strip():
@@ -3443,23 +3505,24 @@ def _pl_reads(clips):
                     continue
                 action, j, read = _pl_case(m.group(1) or "Action"), m.group(2), m.group(3)
                 for one in [_pl_case(x) for x in read.split(" / ") if x.strip()]:
-                    recs.append({"side": r.get("side"), "offense_team": team, "role": role, "action": action,
-                                 "player": _name(team, j) if j else "(no number)", "read": one, "_pts": pts,
-                                 "game_date": r.get("game_date")})
+                    recs.append({**base, "team": team, "side_of_ball": "Offense", "role": role, "action": action,
+                                 "player": _name(team, j) if j else "(no number)", "read": one})
     if not recs:
         return pd.DataFrame()
     d = pd.DataFrame(recs)
     out = []
-    for (side, team, role, player, action, read), g in d.groupby(["side", "offense_team", "role", "player", "action", "read"],
-                                                                  dropna=False):
+    for (side, oteam, team, sob, role, player, action, read), g in d.groupby(
+            ["side", "offense_team", "team", "side_of_ball", "role", "player", "action", "read"], dropna=False):
         known = int(g["_pts"].notna().sum())
-        out.append({"side": side, "scouted_opponent": upcoming_opponent_short, "offense_team": team, "role": role,
-                    "player": player, "action": action, "read": read, "uses": len(g), "games": g["game_date"].nunique(),
-                    "ppp": round(g["_pts"].sum() / known, 2) if known else None})
+        out.append({"side": side, "scouted_opponent": upcoming_opponent_short, "offense_team": oteam, "team": team,
+                    "side_of_ball": sob, "role": role, "player": player, "action": action, "read": read, "uses": len(g),
+                    "games": g["game_date"].nunique(), "ppp": round(g["_pts"].sum() / known, 2) if known else None})
     o = pd.DataFrame(out)
     # each player's share of his reads, so "rejects 3 of 5" reads at a glance
-    o["share_pct"] = (100 * o["uses"] / o.groupby(["offense_team", "role", "player", "action"])["uses"].transform("sum")).round()
-    return o.sort_values(["offense_team", "role", "player", "uses"], ascending=[True, True, True, False]).reset_index(drop=True)
+    o["share_pct"] = (100 * o["uses"] / o.groupby(["team", "side_of_ball", "role", "player", "action"])["uses"]
+                      .transform("sum")).round()
+    return o.sort_values(["team", "side_of_ball", "role", "player", "uses"],
+                         ascending=[True, False, True, True, False]).reset_index(drop=True)
 
 
 screen_defenders = _scv_by_defender(screen_coverage)
@@ -3473,8 +3536,9 @@ for _nm, _df in (("uww_screen_defenders", screen_defenders), ("uww_action_reads"
     except Exception as _e:
         print(f"  ({_nm} not written: {_e})")
 print(f"  screen defense by defender: {len(screen_defenders)} row(s) (defenders with {SCREEN_DEFENDER_MIN}+ tagged screens); "
-      f"action reads: {len(action_reads)} row(s) from Film Tagging's Actions"
-      + (f" -- {action_reads['offense_team'].nunique()} team(s)" if len(action_reads) else ""), flush=True)
+      f"action reads: {len(action_reads)} row(s) from Film Tagging's Actions / Players"
+      + (f" -- {action_reads['team'].nunique()} team(s), {int((action_reads['side_of_ball'] == 'Defense').sum())} defender "
+         f"reaction row(s)" if len(action_reads) else ""), flush=True)
 
 
 # One lineup -> grouping map, exported so the game-plan cell aggregates MINUTES on exactly this rule rather

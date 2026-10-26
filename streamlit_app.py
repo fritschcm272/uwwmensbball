@@ -5047,31 +5047,45 @@ def render_coverage_plan(short_opponent, key_suffix="") -> None:
 
 
 def render_action_reads(short_opponent, key_suffix="") -> None:
-    """Ball handler / trigger and screener reads from Film Tagging's Actions table (uww_action_reads, built in the
-    play-calls cell). CONFIRMED CHANGE (requested): use / reject / split the ball screen, Cobra, Fox, ... and roll / pop /
-    slip, by player, for scouting them and for our self-scout."""
+    """Reads off actions from Film Tagging (uww_action_reads, built in the play-calls cell). CONFIRMED CHANGE (requested):
+    use / reject / split the ball screen, Cobra, Fox, ... and roll / pop / slip, by player, for scouting them and for our
+    self-scout. CONFIRMED CHANGE (requested: the Players table -- the defender in each matchup and what he did): the
+    defense's reactions too (guarding the screener: Drop, Hedge, Switch ...; guarding the ball handler: Over, Under ...)."""
     ar = load_table("uww_action_reads")
     if ar.empty or "offense_team" not in ar.columns:
         return
+    ar = ar.copy()
+    if "team" not in ar.columns:                       # a table from before the Players table: offense only
+        ar["team"] = ar["offense_team"]
+    if "side_of_ball" not in ar.columns:
+        ar["side_of_ball"] = "Offense"
     section_header("\U0001f3af READS OFF ACTIONS",
-                   "From the coaches' Film Tagging: for each action in a play, what the ball handler / trigger did and "
-                   "what the screener did after. Share = of that player's reads of that action. A play's points are "
-                   "credited to every action in it.")
-    teams = sorted(set(ar["offense_team"].dropna().astype(str)),
+                   "From the coaches' Film Tagging: for each action in a play, what each offensive player did (the ball "
+                   "handler / trigger's read, the screener's roll / pop, cutters ...) and how each defender guarding them "
+                   "reacted. Share = of that player's reads of that action. A play's points are credited to every action "
+                   "in it (on defense: points allowed).")
+    teams = sorted(set(ar["team"].dropna().astype(str)),
                    key=lambda t: (0 if t == str(short_opponent) else 1 if "whitewater" in t.lower() else 2, t))
     if str(short_opponent) not in teams:
-        st.caption(f"No Film Tagging actions with {short_opponent} on offense yet -- tag one of their games in Analytics "
+        st.caption(f"No Film Tagging actions with {short_opponent} yet -- tag one of their games in Analytics "
                    "\u2192 Film Tagging.")
-    c1, c2 = st.columns(2)
-    team = c1.selectbox("Offense", teams, key=f"ar_team{key_suffix}")
-    roles = ["Both"] + sorted(set(ar["role"].dropna().astype(str)))
-    role = c2.selectbox("Who", roles, key=f"ar_role{key_suffix}")
-    d = ar[ar["offense_team"].astype(str) == team]
-    if role != "Both":
+    c1, c2, c3 = st.columns(3)
+    team = c1.selectbox("Team", teams, key=f"ar_team{key_suffix}")
+    d = ar[ar["team"].astype(str) == team]
+    sides = [x for x in ("Offense", "Defense") if (d["side_of_ball"] == x).any()] or ["Offense"]
+    sob = c2.radio("Side of the ball", sides, horizontal=True, key=f"ar_sob{key_suffix}")
+    d = d[d["side_of_ball"] == sob]
+    roles = ["All"] + sorted(set(d["role"].dropna().astype(str)))
+    role = c3.selectbox("Who", roles, key=f"ar_role{key_suffix}")
+    if role != "All":
         d = d[d["role"].astype(str) == role]
+    if d.empty:
+        st.caption(f"No {sob.lower()} reads tagged for {team} yet.")
+        return
     st.dataframe(d[["player", "role", "action", "read", "uses", "share_pct", "ppp", "games"]].rename(columns={
-        "player": "Player", "role": "Role", "action": "Action", "read": "Read", "uses": "Uses", "share_pct": "Share %",
-        "ppp": "PPP", "games": "Games"}), hide_index=True, use_container_width=True)
+        "player": "Player", "role": "Role", "action": "Action", "read": "Read" if sob == "Offense" else "Reaction",
+        "uses": "Uses", "share_pct": "Share %", "ppp": "PPP" if sob == "Offense" else "PPP allowed", "games": "Games"}),
+        hide_index=True, use_container_width=True)
 
 
 def render_game_plan_tab(short_opponent: str) -> None:
@@ -6152,13 +6166,76 @@ def _pr_not_player_kind(val):
     return (val in _PR_NOT_PLAYER, _PR_NOT_PLAYER.get(val))
 
 
+def _pr_team_code(name):
+    """A team's three-letter code for the player-check dropdowns: "UW-Whitewater" -> "UWW", "Wheaton (IL) Thunder" -> "WHE",
+    "North Park Vikings" -> "NPA", "UW-Oshkosh Titans" -> "UWO", "Washington-St. Louis Bears" -> "WSL"."""
+    s = re.sub(r"\([^)]*\)", " ", str(name or "")).strip()
+    if not s or s.lower() == "nan":
+        return ""
+    if re.search(r"whitewater", s, re.I):
+        return "UWW"
+    s = strip_team_mascot(s) or s
+    toks = [t for t in re.split(r"[\s\-.]+", s) if t and t.lower() not in ("of", "the", "at")]
+    if not toks:
+        return ""
+    if len(toks) == 1:
+        return re.sub(r"[^A-Za-z]", "", toks[0])[:3].upper()
+    code = "".join(t if (t.isupper() and len(t) <= 3) else t[0] for t in toks).upper()
+    if len(code) < 3:
+        code += re.sub(r"[^A-Za-z]", "", toks[-1])[1:1 + 3 - len(code)].upper()
+    return code[:3]
+
+
+def _pr_side_code(pl, side):
+    """The code of the team on this side of the play (the parser sends "teams"); older reviews: OFF / DEF."""
+    return _pr_team_code((pl.get("teams") or {}).get(side)) or ("OFF" if side == "offense" else "DEF")
+
+
+def _pr_player_opts(pl):
+    """Every player the check can name on this play, as {dropdown label: (name, side)}. CONFIRMED CHANGE (requested:
+    'Instead of "really #..." make it say "UWW #" or the three-letter abbreviation of the team'): a label is the team's
+    code, the number and the name ("UWW #12 Marino", "NPA #0 Jerome Smith Jr."). A side with no known five lists that
+    team's roster for the game (the parser sends it as "roster")."""
+    out = {}
+    for sd in ("offense", "defense"):
+        code = _pr_side_code(pl, sd)
+        for n in (pl.get("five", {}).get(sd, []) or []) + ((pl.get("roster") or {}).get(sd, []) or []):
+            lab = f"{code} {_pr_lab(pl, n)}"
+            if lab not in out:
+                out[lab] = (n, sd)
+    return out
+
+
+def _pr_check_of(pl, b, val):
+    """A box's dropdown answer -> (verdict, true name), or None when it isn't one of the choices (= not checked).
+    Also reads the old "really #12 Marino" / "... (other team)" answers."""
+    if not isinstance(val, str) or val == _PR_NOT_CHECKED:
+        return None
+    if val == "correct":
+        return "correct", b.get("name")
+    if val in _PR_NOT_PLAYER:
+        return "not a player", None
+    if val.startswith("wrong team"):
+        return "wrong team", None
+    opts = _pr_player_opts(pl)
+    if val in opts:
+        name, sd = opts[val]
+    elif val.startswith("really "):
+        name = _pr_name_of(pl, val[len("really "):].replace(" (other team)", ""))
+        sd = next((s_ for (n_, s_) in opts.values() if n_ == name), None)
+        if val.endswith("(other team)"):
+            return "wrong team", name
+    else:
+        return None
+    return ("wrong team" if sd and b.get("side") in ("offense", "defense") and sd != b.get("side") else "wrong"), name
+
+
 def _pr_box_choices(pl, b):
-    # a side with no known five lists that team's roster for the game (the parser sends it as "roster")
-    _side = lambda sd: (pl.get("five", {}).get(sd, []) or []) + ((pl.get("roster") or {}).get(sd, []) or [])
-    mine = _side(b.get("side"))
-    other = _side("defense" if b.get("side") == "offense" else "offense")
-    return ([_PR_NOT_CHECKED, "correct"] + [f"really {_pr_lab(pl, n)}" for n in mine if n != b.get("name")]
-            + [f"really {_pr_lab(pl, n)} (other team)" for n in other] + ["wrong team (don't know who)"] + list(_PR_NOT_PLAYER))
+    # this box's own team first, then the other team (the team code on each label says which)
+    opts = _pr_player_opts(pl)
+    mine = [lab for lab, (n, sd) in opts.items() if sd == b.get("side") and n != b.get("name")]
+    other = [lab for lab, (n, sd) in opts.items() if sd != b.get("side")]
+    return [_PR_NOT_CHECKED, "correct"] + mine + other + ["wrong team (don't know who)"] + list(_PR_NOT_PLAYER)
 
 
 def _pr_nbox(b, w, h):
@@ -6197,8 +6274,7 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
     # CONFIRMED BUG (fixed; clip 29 "has no roster"): a side whose five isn't known (no game clock / no play-by-play match)
     # offers that team's whole roster for the game instead of no names at all
     roster = pl.get("roster", {}) or {}
-    names = [n for side in ("offense", "defense") for n in (five.get(side) or []) + (roster.get(side) or [])]
-    choices = [_PR_NOT_CHECKED, "correct"] + [f"really {_pr_lab(pl, n)}" for n in names] + ["wrong team (don't know who)"] \
+    choices = [_PR_NOT_CHECKED, "correct"] + list(_pr_player_opts(pl)) + ["wrong team (don't know who)"] \
         + list(_PR_NOT_PLAYER)
     for ki, pic in enumerate(pl.get("pictures", [])):
         path = os.path.join(d["_dir"], pic.get("image") or "")
@@ -6315,32 +6391,26 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
         if actions and part != "players":
             _ak = f"{kp}_act_{run}_{pi}"
             _touched_a = _ak in store
-            _rows = store.get(_ak) if _touched_a else _ft_rows(_ft_initial_actions(pl))
-            _rows = [{c: _ft_unmark(v) if isinstance(v, str) else v for c, v in r_.items()} for r_ in (_rows or [])]
+            _acts = _ft_state_actions(store.get(_ak) if _touched_a else _ft_initial_actions(pl))
             # CONFIRMED CHANGE (requested: an automatic coverage left in a row with NO action must not count as the coach's
-            # answer): an untouched table only keeps its rows that have an Action -- a coverage / screener on its own was
+            # answer): untouched tables only keep the actions that have an Action -- a coverage / screener on its own was
             # never confirmed (the parser ignores such rows in saves made before this too)
             if not _touched_a:
-                _rows = [r_ for r_ in _rows if _ft_clean(r_.get("Action"))]
-            for _n, _r in enumerate(_rows or [], 1):
+                _acts = [a_ for a_ in _acts if _ft_clean(a_.get("action"))]
+            for _a in _acts:
                 out.setdefault("actions", []).append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
-                                                      "order": _n, "action": _ft_unmark(_r.get("Action")) or None,
-                                                      "trigger": _ft_unlab(_r.get("Trigger")) or None,
-                                                      "trigger_action": _ft_unmark(_r.get("Trigger action")) or None,
-                                                      "screener": _ft_unlab(_r.get("Screener")) or None,
-                                                      "screener_action": _ft_unmark(_r.get("Screener action")) or None,
-                                                      "coverage": _ft_unmark(_r.get("Coverage")) or None,
-                                                      "screen_defender": _ft_unlab(_r.get("Screen defender")) or None,
-                                                      "prefilled": not _touched_a})
-            if _touched_a and not _rows:
+                                                      **_a, "prefilled": not _touched_a})
+            if _touched_a and not _acts:
                 out.setdefault("actions_cleared", []).append(pl["clip_key"])
-            _first = (_rows or [{}])[0]
-            _ball = next((r_ for r_ in _rows or [] if _ft_is_ball(r_, d.get("vocab")) and r_.get("Coverage")), None)
-            _off = next((r_ for r_ in _rows or [] if not _ft_is_ball(r_, d.get("vocab")) and r_.get("Coverage")), None)
-            _derived = ({"primary_action": _first.get("Action"), "screener": _ft_unlab(_first.get("Screener")),
-                         "screen_defender": _ft_unlab(_first.get("Screen defender")),
-                         "ball_screen_coverage": (_ball or {}).get("Coverage"),
-                         "offball_coverage": (_off or {}).get("Coverage")}, _touched_a)
+            _first = (_acts or [{}])[0]
+            _as_row = lambda a_: {"Action": a_.get("action"), "Coverage": a_.get("coverage"),
+                                  "Trigger action": a_.get("trigger_action")}
+            _ball = next((a_ for a_ in _acts if _ft_is_ball(_as_row(a_), d.get("vocab")) and a_.get("coverage")), None)
+            _off = next((a_ for a_ in _acts if not _ft_is_ball(_as_row(a_), d.get("vocab")) and a_.get("coverage")), None)
+            _derived = ({"primary_action": _first.get("action"), "screener": _first.get("screener"),
+                         "screen_defender": _first.get("screen_defender"),
+                         "ball_screen_coverage": (_ball or {}).get("coverage"),
+                         "offball_coverage": (_off or {}).get("coverage")}, _touched_a)
         for fi, f in enumerate(pl.get("fields", []) if part != "players" else []):
             if _derived is not None and f.get("field") in _FT_ACTION_FIELDS:
                 _v = _ft_clean(_derived[0].get(f.get("field")))
@@ -6383,22 +6453,11 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
                 val = store.get(f"{kp}_b_{run}_{pi}_{ki}_{bi}", _PR_NOT_CHECKED)
                 if not isinstance(val, str) or val == _PR_NOT_CHECKED:
                     continue
-                if not (val == "correct" or val in _PR_NOT_PLAYER or val.startswith(("wrong team", "really "))):
+                _ck = _pr_check_of(pl, b, val)
+                if _ck is None:
                     continue                        # anything that isn't one of the choices is NOT a check
                 _np_kind = _PR_NOT_PLAYER.get(val)
-                if val == "correct":
-                    verdict, name = "correct", b.get("name")
-                elif val in _PR_NOT_PLAYER:
-                    verdict, name = "not a player", None
-                elif val.startswith("wrong team"):
-                    verdict, name = "wrong team", None
-                elif val.endswith("(other team)"):
-                    verdict, name = "wrong team", _pr_name_of(pl, val[len("really "):-len(" (other team)")])
-                else:
-                    name = _pr_name_of(pl, val[len("really "):])
-                    _os = "defense" if b.get("side") == "offense" else "offense"
-                    _other5 = (pl.get("five", {}).get(_os, []) or []) + ((pl.get("roster") or {}).get(_os, []) or [])
-                    verdict = "wrong team" if name in _other5 else "wrong"    # a name from the other team's five
+                verdict, name = _ck                 # a name from the other team -> "wrong team"
                 out["checks"].append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
                                       "frame_file": pic.get("frame_file"), "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"),
                                       "side": b.get("side"), "assigned": b.get("name"), "assigned_how": b.get("how"),
@@ -6922,6 +6981,45 @@ _FT_SCREENER_ACTIONS = ["Roll", "Pop", "Short roll", "Slip", "Ghost", "Re-screen
                         "Seal", "Cut to basket"]
 _FT_BALL_RX = re.compile(r"ball screen|p&r|pick|dho|hand ?off|\bget\b|drag|pistol|\b77\b|\bram\b", re.I)
 
+# CONFIRMED CHANGE (requested: "a major overhaul of this section ... more places for coaches to enter data, but there are
+# already too many columns ... I need to record who the screen defender is and what action they take"). The Actions table is
+# now TWO tables per play: ACTIONS (one row per action: #, Action, Coverage, Result) and PLAYERS (one row per matchup:
+# which action #, the role, the offensive player and what he did, the defender guarding him and what HE did). A new role is
+# a new row, not new columns. The old fields (trigger, trigger_action, screener, screener_action, screen_defender) are still
+# saved -- taken from each action's "Ball handler / trigger" and "Screener" rows -- so everything that reads them still works.
+_FT_A_COLS = ["#", "Action", "Coverage", "Result"]
+_FT_P_COLS = ["#", "Role", "Offense", "Offense did", "Defender", "Defender did"]
+_FT_A_TEXT = ["Action", "Coverage", "Result"]
+_FT_P_TEXT = ["Offense", "Offense did", "Defender", "Defender did"]
+_FT_ROLE_TRIGGER, _FT_ROLE_SCREENER = "Ball handler / trigger", "Screener"
+_FT_ROLES = [_FT_ROLE_TRIGGER, _FT_ROLE_SCREENER, "2nd screener", "Receiver (hand-off / pass)", "Cutter",
+             "Shooter / spacer", "Post", "Weak side (help comes off him)"]
+_FT_ROLE_HELP = ("Who this row is about. Each row is one offensive player and the defender guarding him: Ball handler / "
+                 "trigger (and his on-ball defender), Screener (and the screen defender), 2nd screener (77, stagger), "
+                 "Receiver of the hand-off / pass, Cutter, Shooter / spacer, Post, and Weak side -- the player the help "
+                 "defender (low man / tagger) leaves. Not listed? Type it.")
+# more actions after the staff's own (_FT_ACTIONS)
+_FT_MORE_ACTIONS = ["Ball Screen", "Side Ball Screen", "Drag", "Double Drag", "Spain", "Get", "Down Screen", "Pin Down",
+                    "Flare", "Back Screen", "Cross Screen", "Stagger", "Elevator", "Zipper", "UCLA", "Post Entry",
+                    "Isolation", "Handback"]
+# what the OFFENSIVE player did -- trigger / ball handler, then screener, then off the ball
+_FT_OFFENSE_DID = (list(_FT_TRIGGER_ACTIONS)
+                   + ["Drive", "Pull-up", "Pass to roller", "Kick-out", "Hand-off", "Retreat dribble", "Reset"]
+                   + [x for x in _FT_SCREENER_ACTIONS]
+                   + ["Catch & shoot", "Catch & drive", "Curl", "Back cut", "Basket cut", "Lift", "Drift", "Stay spaced",
+                      "Post up", "Duck in"])
+# what the DEFENDER did -- on the ball, guarding the screener, help, any
+_FT_DEFENDER_DID = ["Over", "Under", "Through", "Ice / Push", "Switch", "Trap / Blitz", "Caught on the screen",
+                    "Drop", "Flat Hedge", "Hard Hedge / Show", "At level / Up to touch", "Recover", "Late",
+                    "Tag the roller", "Stunt & recover", "Rotate", "Stay home", "Sink / Fill", "X-out", "No help",
+                    "Top lock", "Trail", "Chase", "Deny", "Front the post",
+                    "Contest", "Closeout", "Foul", "Deflection / Steal", "Beaten"]
+# what came of the action
+_FT_RESULTS = ["Shot at the rim", "Mid-range jumper", "3 off the action", "Kick-out 3", "Pass to the roller", "Post touch",
+               "Foul drawn", "Turnover", "Reset / nothing", "Into a 2nd action"]
+_FT_TRIGGER_RX = re.compile(r"trigger|ball ?handler", re.I)
+_FT_SCREENER_RX = re.compile(r"^\s*screener\b", re.I)
+
 
 def _ft_is_ball(row, voc=None):
     """An Actions row about a ball screen: by its Coverage when that's only ever a ball-screen (Drop, Hedge, ...) or only
@@ -7084,33 +7182,109 @@ def _ft_player_label(pl, who, side):
     return who
 
 
+def _ft_num(v):
+    """A table's "#" cell -> the action number (int) or None."""
+    try:
+        f = float(v)
+        return int(f) if f == f and f >= 1 else None
+    except (TypeError, ValueError):
+        return None
+
+
+def _ft_template_state(rows=None):
+    """Old-style Actions rows (one per action: Action, Trigger, Trigger action, Screener, Screener action, Coverage, Screen
+    defender) -> the two tables. No rows -> action 1 with an empty Ball handler / trigger row and Screener row to fill in."""
+    acts, players = [], []
+    for n, r in enumerate(rows or [{}], 1):
+        acts.append({"#": n, "Action": r.get("Action") or "", "Coverage": r.get("Coverage") or "",
+                     "Result": r.get("Result") or ""})
+        players.append({"#": n, "Role": _FT_ROLE_TRIGGER, "Offense": r.get("Trigger") or "",
+                        "Offense did": r.get("Trigger action") or "", "Defender": "", "Defender did": ""})
+        players.append({"#": n, "Role": _FT_ROLE_SCREENER, "Offense": r.get("Screener") or "",
+                        "Offense did": r.get("Screener action") or "", "Defender": r.get("Screen defender") or "",
+                        "Defender did": ""})
+    return {"actions": acts, "players": players}
+
+
 def _ft_initial_actions(pl, mark=None):
-    """The starting row of a play's Actions table: the coach's answers (a Title check) or the automatic ones (as the
-    automatic Title has them -- see _ft_auto_parts). With `mark`, each automatic cell starts with it (requested: the
-    default actions get the same "\u2757" as the dropdowns above them); _ft_unmark takes it off when saving."""
+    """The starting tables of a play: action 1 on the coach's answers (a Title check) or the automatic ones (as the
+    automatic Title has them -- see _ft_auto_parts), with a Ball handler / trigger row and a Screener row. With `mark`, each
+    automatic cell starts with it ("\u2757" / "\u2713"); _ft_unmark takes it off when saving."""
     row, _u = _ft_auto_parts(pl)
     auto = row.pop("_auto", set())
     if mark:
         row = {c: (f"{mark} {v}" if c in auto and v else v) for c, v in row.items()}
-    return [row] if any(_ft_clean(row[c]) for c in _FT_ACT_TEXT) else []
+    return _ft_template_state([row])
 
 
-def _ft_rows(df):
-    """Edited Actions table -> list of row dicts (empty rows dropped, values cleaned)."""
+def _ft_as_state(v):
+    """Whatever the store holds for a play's tables -> {"actions": [...], "players": [...]} (an old one-table list too)."""
+    if isinstance(v, dict) and "actions" in v:
+        return v
+    return _ft_template_state(list(v or [])) if v else {"actions": [], "players": []}
+
+
+def _ft_records(df, cols):
+    """An edited table -> list of row dicts (cells cleaned, "#" a number)."""
     out = []
-    for _, r in (df if isinstance(df, pd.DataFrame) else pd.DataFrame(df or [], columns=_FT_ACT_COLS)).iterrows():
-        row = {c: _ft_from_cell(r.get(c)) for c in _FT_ACT_TEXT}
-        if any(row[c] for c in _FT_ACT_TEXT):
-            out.append(row)
+    data = df if isinstance(df, pd.DataFrame) else pd.DataFrame(df or [], columns=cols)
+    for _, r in data.iterrows():
+        out.append({c: (_ft_num(r.get(c)) if c == "#" else _ft_from_cell(r.get(c))) for c in cols})
+    return out
+
+
+def _ft_state_clean(state):
+    """Drop empty rows: an action row with no Action / Coverage / Result, a player row with no player or answer in it (a Role
+    on its own -- the template rows -- isn't an answer)."""
+    state = _ft_as_state(state)
+    acts = [{c: (_ft_num(r.get(c)) if c == "#" else _ft_clean(r.get(c))) for c in _FT_A_COLS}
+            for r in state.get("actions") or []]
+    pls = [{c: (_ft_num(r.get(c)) if c == "#" else _ft_clean(r.get(c))) for c in _FT_P_COLS}
+           for r in state.get("players") or []]
+    return {"actions": [r for r in acts if any(r[c] for c in _FT_A_TEXT)],
+            "players": [r for r in pls if any(r[c] for c in _FT_P_TEXT)]}
+
+
+def _ft_state_actions(state):
+    """The two tables -> the saved "actions": one dict per action, in order -- action, coverage, result, players [{role,
+    offense, offense_did, defender, defender_did}] -- plus the old single fields from its Ball handler / trigger and Screener
+    rows (trigger, trigger_action, trigger_defender, trigger_defender_action, screener, screener_action, screen_defender,
+    screen_defender_action). A player row with no # goes with the first action; a # with no action row makes one."""
+    st_ = _ft_state_clean(state)
+    acts = {}
+    for a in st_["actions"]:
+        n = a["#"]
+        if n is None or n in acts:
+            n = (max(acts) + 1) if acts else 1
+        acts[n] = {"action": _ft_unmark(a["Action"]) or None, "coverage": _ft_unmark(a["Coverage"]) or None,
+                   "result": _ft_unmark(a["Result"]) or None, "players": []}
+    for p in st_["players"]:
+        n = p["#"] or (min(acts) if acts else 1)
+        a = acts.setdefault(n, {"action": None, "coverage": None, "result": None, "players": []})
+        a["players"].append({"role": _ft_unmark(p["Role"]) or None, "offense": _ft_unlab(p["Offense"]) or None,
+                             "offense_did": _ft_unmark(p["Offense did"]) or None,
+                             "defender": _ft_unlab(p["Defender"]) or None,
+                             "defender_did": _ft_unmark(p["Defender did"]) or None})
+    out = []
+    for k, n in enumerate(sorted(acts), 1):
+        a = acts[n]
+        trg = next((x for x in a["players"] if _FT_TRIGGER_RX.search(x.get("role") or "")), {})
+        scr = next((x for x in a["players"] if _FT_SCREENER_RX.match(x.get("role") or "")), {})
+        a.update({"order": k, "trigger": trg.get("offense"), "trigger_action": trg.get("offense_did"),
+                  "trigger_defender": trg.get("defender"), "trigger_defender_action": trg.get("defender_did"),
+                  "screener": scr.get("offense"), "screener_action": scr.get("offense_did"),
+                  "screen_defender": scr.get("defender"), "screen_defender_action": scr.get("defender_did")})
+        out.append(a)
     return out
 
 
 def _ft_actions_editor(d, pi, store, kp):
-    """CONFIRMED CHANGE (requested: "on some plays there are multiple actions -- 2 ball screens at different times -- I want
-    to record these as different actions ... multiple rows within each play"). Each play has an ACTIONS table, one row per
-    action in the order it happened: the action, who screened, the defense's coverage of it, who guarded the screen, and
-    (optional) the second of the clip it happens at. Row 1 starts on the automatic answers (or the coach's); "+" adds a row.
-    The first row also fills the single Main action / coverage fields, so nothing that reads those changes."""
+    """CONFIRMED CHANGE (requested: "on some plays there are multiple actions ... record these as different actions"; then
+    "a major overhaul ... I need to record who the screen defender is and what action they take"). Two tables per play:
+    ACTIONS -- one row per action in the order it happened (#, Action, the defense's Coverage, Result) -- and PLAYERS -- one
+    row per matchup: which action (#), the Role, the offensive player and what he did, the defender guarding him and what he
+    did. Action 1 starts on the automatic answers (or the coach's) with a Ball handler / trigger row and a Screener row;
+    "+" adds rows. Action 1 also fills the single Main action / coverage fields, so nothing that reads those changes."""
     pl = d["plays"][pi]
     run = d.get("run")
     voc = d.get("vocab", {}) or {}
@@ -7118,42 +7292,52 @@ def _ft_actions_editor(d, pi, store, kp):
     _mark = "\u2757" if "/play_tag/" in str(d.get("_dir", "")).replace(os.sep, "/") else "\u2713"
     init = _ft_initial_actions(pl, _mark)
     key = f"{kp}_act_{run}_{pi}"
-    cur = store.get(key, init)
+    cur = _ft_as_state(store.get(key, init))
     five = pl.get("five", {}) or {}
     opt = lambda *lists: sorted({_ft_clean(x) for lst in lists for x in (lst or []) if _ft_clean(x)})
     # answers already in the cells (incl. typed ones and the automatic answer) stay in the lists
-    cur_vals = lambda c: [x for r in (cur or []) + init for x in str(r.get(c) or "").split(" / ")]
-    keep_first = lambda first, *rest: list(first) + [v for v in opt(*rest) if v not in first]
+    cur_vals = lambda tbl, c: [x for r in (cur.get(tbl) or []) + (init.get(tbl) or []) for x in str(r.get(c) or "").split(" / ")]
+    keep_first = lambda first, *rest: list(dict.fromkeys(first)) + [v for v in opt(*rest) if v not in first]
     # CONFIRMED BUG (fixed; "a few times player numbers and names are not showing up"): a play whose five on the floor isn't
-    # known (no play-by-play match, no game clock) had empty Trigger / Screener / Screen defender lists. The parser now
-    # sends that team's roster for the game for such a side; the list shows the five when known, else the roster.
+    # known (no play-by-play match, no game clock) had empty player lists. The parser sends that team's roster for the game
+    # for such a side; the list shows the five when known, else the roster.
     roster = pl.get("roster", {}) or {}
     off5 = [_ft_lab(pl, n) for n in (five.get("offense") or []) + (roster.get("offense") or [])]
     def5 = [_ft_lab(pl, n) for n in (five.get("defense") or []) + (roster.get("defense") or [])]
     _no5 = [f"{pl.get(s_) or s_} ({'offense' if s_ == 'offense' else 'defense'})" for s_ in ("offense", "defense")
             if len(five.get(s_) or []) < 5]
-    cfg = {"Action": _ft_choice_col("Action", keep_first(_FT_ACTIONS, cur_vals("Action")), help=_FT_ACTION_HELP,
+    _numcol = lambda h: st.column_config.NumberColumn("#", min_value=1, max_value=9, step=1, format="%d", width="small",
+                                                      help=h)
+    a_cfg = {"#": _numcol("The action's number, in the order it happened (the Players rows use it)"),
+             "Action": _ft_choice_col("Action", keep_first(_FT_ACTIONS + _FT_MORE_ACTIONS, voc.get("primary_action"),
+                                                           cur_vals("actions", "Action")),
+                                      help=_FT_ACTION_HELP, width="medium"),
+             "Coverage": _ft_choice_col("Coverage", opt(voc.get("ball_screen_coverage"), voc.get("offball_coverage"),
+                                                        _FT_EXTRA_COVERAGES, cur_vals("actions", "Coverage")),
+                                        help="The defense's coverage of this action (the team's plan); each defender's own "
+                                             "reaction goes in the Players table", width="medium"),
+             "Result": _ft_choice_col("Result", keep_first(_FT_RESULTS, voc.get("action_result"),
+                                                           cur_vals("actions", "Result")),
+                                      help="What came of the action", width="medium")}
+    p_cfg = {"#": _numcol("Which action this player was in (the # in the Actions table)"),
+             "Role": _ft_choice_col("Role", keep_first(_FT_ROLES, cur_vals("players", "Role")), help=_FT_ROLE_HELP,
                                     width="medium"),
-           # requested: Trigger = the five on OFFENSE (jersey number + name), like the Screener list
-           "Trigger": _ft_choice_col("Trigger", opt(off5, cur_vals("Trigger")) if off5
-                                     else opt(voc.get("screener"), cur_vals("Trigger")),
-                                     help="The offensive player who starts the action"),
-           "Trigger action": _ft_choice_col("Trigger action", keep_first(_FT_TRIGGER_ACTIONS, cur_vals("Trigger action")),
-                                            help="What the trigger did: Cobra, Fox, Rhino, Snake, Swirl, Straight, or "
-                                                 "Use / Reject / Split the ball screen"),
-           # requested: the Screener list is only the five on OFFENSE, each with his jersey number ("#24 Richie Warren")
-           "Screener": _ft_choice_col("Screener", opt(off5, cur_vals("Screener")) if off5
-                                      else opt(voc.get("screener"), cur_vals("Screener"))),
-           "Screener action": _ft_choice_col("Screener action",
-                                             keep_first(_FT_SCREENER_ACTIONS, voc.get("screener_action"),
-                                                        cur_vals("Screener action")),
-                                             help="What the screener did after the screen: Roll, Pop, Slip, ..."),
-           "Coverage": _ft_choice_col("Coverage", opt(voc.get("ball_screen_coverage"), voc.get("offball_coverage"),
-                                                      _FT_EXTRA_COVERAGES, cur_vals("Coverage"))),
-           "Screen defender": _ft_choice_col("Screen defender", opt(def5, cur_vals("Screen defender")) if def5
-                                             else opt(voc.get("screen_defender"), cur_vals("Screen defender")))}
-    # CONFIRMED CHANGE (requested: remove the long description above every play's Actions table -- the heading, the mark
-    # legend and the "pick from a list or type" line; keep only a small italic line with the unsure answers)
+             "Offense": _ft_choice_col("Offense", opt(off5, cur_vals("players", "Offense")) if off5
+                                       else opt(voc.get("screener"), cur_vals("players", "Offense")),
+                                       help="The offensive player in this role (jersey number + name)"),
+             "Offense did": _ft_choice_col("Offense did", keep_first(_FT_OFFENSE_DID, voc.get("screener_action"),
+                                                                     cur_vals("players", "Offense did")),
+                                           help="What he did: Use / Reject / Split the ball screen, Cobra, Fox, ...; "
+                                                "a screener's Roll, Pop, Slip, ...; Curl, Back cut, Catch & shoot, ..."),
+             "Defender": _ft_choice_col("Defender", opt(def5, cur_vals("players", "Defender")) if def5
+                                        else opt(voc.get("screen_defender"), cur_vals("players", "Defender")),
+                                        help="The defender guarding him (on the Screener row: the screen defender; on the "
+                                             "Weak side row: the help defender)"),
+             "Defender did": _ft_choice_col("Defender did", keep_first(_FT_DEFENDER_DID, cur_vals("players", "Defender did")),
+                                            help="What the defender did: Over / Under / Switch ... on the ball; Drop, "
+                                                 "Hedge, Switch, Blitz ... on the screener; Tag, Stunt, Rotate ... in help")}
+    # CONFIRMED CHANGE (requested: remove the long description above every play's Actions table -- keep only a small
+    # italic line with the unsure answers)
     _uns = _ft_auto_parts(pl)[1]
     if _uns:
         st.caption("*Not sure enough to fill in (pick it if it's right): " + "; ".join(
@@ -7161,13 +7345,24 @@ def _ft_actions_editor(d, pi, store, kp):
     if _no5:
         st.caption("Who was on the floor isn't known for this play (no play-by-play match), so the player lists show every "
                    "player in the game for: " + "; ".join(_no5) + ".")
-    _df = pd.DataFrame([{c: _ft_to_cell(r.get(c)) for c in _FT_ACT_COLS} for r in (cur or [])], columns=_FT_ACT_COLS)
-    edited = st.data_editor(_df, column_config=cfg, num_rows="dynamic",
-                            hide_index=True, use_container_width=True, key=f"{kp}_acted_{run}_{pi}")
-    rows = _ft_rows(edited)
-    if key not in store and rows == _ft_rows(init):
-        return                                          # untouched: saved as the pre-filled starting row
-    store[key] = rows
+    _a_df = pd.DataFrame([{c: (r.get(c) if c == "#" else _ft_to_cell(r.get(c))) for c in _FT_A_COLS}
+                          for r in (cur.get("actions") or [])], columns=_FT_A_COLS)
+    _p_df = pd.DataFrame([{c: (r.get(c) if c == "#" else _ft_to_cell(r.get(c))) for c in _FT_P_COLS}
+                          for r in (cur.get("players") or [])], columns=_FT_P_COLS)
+    _a_df["#"] = pd.to_numeric(_a_df["#"], errors="coerce")
+    _p_df["#"] = pd.to_numeric(_p_df["#"], errors="coerce")
+    st.markdown("**Actions** <span style='color:#888;font-size:0.85em'>one row per action, in order</span>",
+                unsafe_allow_html=True)
+    a_ed = st.data_editor(_a_df, column_config=a_cfg, num_rows="dynamic", hide_index=True, use_container_width=True,
+                          key=f"{kp}_acted_{run}_{pi}")
+    st.markdown("**Players** <span style='color:#888;font-size:0.85em'>one row per matchup: the offensive player and the "
+                "defender guarding him (# = which action)</span>", unsafe_allow_html=True)
+    p_ed = st.data_editor(_p_df, column_config=p_cfg, num_rows="dynamic", hide_index=True, use_container_width=True,
+                          key=f"{kp}_plyed_{run}_{pi}")
+    new = {"actions": _ft_records(a_ed, _FT_A_COLS), "players": _ft_records(p_ed, _FT_P_COLS)}
+    if key not in store and _ft_state_clean(new) == _ft_state_clean(init):
+        return                                          # untouched: saved as the pre-filled starting rows
+    store[key] = new
 
 
 def _ft_field_widgets(d, pi, store, kp):
@@ -7356,11 +7551,24 @@ def _ft_seed_from_saves(d, store, kp):
         if key in store:
             continue
         pl = plays[pi]
-        store[key] = [{"Action": _mk(r.get("action")), "Trigger": _labs(pl, r.get("trigger"), "offense"),
-                       "Trigger action": _mk(r.get("trigger_action")),
-                       "Screener": _labs(pl, r.get("screener"), "offense"),
-                       "Screener action": _mk(r.get("screener_action")), "Coverage": _mk(r.get("coverage")),
-                       "Screen defender": _labs(pl, r.get("screen_defender"), "defense")} for r in rows]
+        _sa, _sp = [], []
+        for n, r in enumerate(rows, 1):
+            _sa.append({"#": n, "Action": _mk(r.get("action")), "Coverage": _mk(r.get("coverage")),
+                        "Result": _mk(r.get("result"))})
+            # a save from the two-table layout has its player rows; an older one has the trigger / screener fields
+            _prs = r.get("players")
+            if not isinstance(_prs, list):
+                _prs = [{"role": _FT_ROLE_TRIGGER, "offense": r.get("trigger"), "offense_did": r.get("trigger_action")},
+                        {"role": _FT_ROLE_SCREENER, "offense": r.get("screener"), "offense_did": r.get("screener_action"),
+                         "defender": r.get("screen_defender")}]
+            for p_ in _prs:
+                if not any(_ft_clean(p_.get(k_)) for k_ in ("offense", "offense_did", "defender", "defender_did")):
+                    continue
+                _sp.append({"#": n, "Role": _ft_clean(p_.get("role")),
+                            "Offense": _labs(pl, p_.get("offense"), "offense"), "Offense did": _mk(p_.get("offense_did")),
+                            "Defender": _labs(pl, p_.get("defender"), "defense"),
+                            "Defender did": _mk(p_.get("defender_did"))})
+        store[key] = {"actions": _sa, "players": _sp}
         seeded.add(pi)
     res = (len(seeded), str(docs[-1].get("saved", ""))[:16].replace("T", " ") if docs else "")
     st.session_state[flag] = res
@@ -15502,22 +15710,13 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
                                    "prefilled": bool(pre and v == "wrong" and norm(ans) == norm(f.get("coach")))})
         else:
             _, pi, ki, bi = key
-            if not isinstance(val, str) or val == _PR_NOT_CHECKED or not (
-                    val == "correct" or val in _PR_NOT_PLAYER or val.startswith(("wrong team", "really "))):
-                continue
             p = plays[pi]
             pic = p["pictures"][ki]
             b = pic["boxes"][bi]
-            if val == "correct":
-                verdict, name = "correct", b.get("name")
-            elif val in _PR_NOT_PLAYER:
-                verdict, name = "not a player", None
-            elif val.startswith("wrong team"):
-                verdict, name = "wrong team", None
-            elif val.endswith("(other team)"):
-                verdict, name = "wrong team", _pr_name_of(p, val[len("really "):-len(" (other team)")])
-            else:
-                verdict, name = "wrong", _pr_name_of(p, val[len("really "):])
+            _ck = _pr_check_of(p, b, val)
+            if _ck is None:
+                continue
+            verdict, name = _ck
             out["checks"].append({"clip_key": p["clip_key"], "clip_number": p.get("clip_number"), "frame_file": pic.get("frame_file"),
                                   "t": pic.get("t"), "px": b.get("px"), "py": b.get("py"), "side": b.get("side"),
                                   "assigned": b.get("name"), "assigned_how": b.get("how"), "assigned_conf": b.get("conf"),

@@ -218,7 +218,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-03-07|24|15 Collin Madson > ISO > Right > Drives Left > To Basket > Miss 2 Pts,24,2026-03-07,Washington-St. Louis Bears,defense,George Gale,play-by-play,False,,0.0,not located,
 2026-03-07|24|15 Collin Madson > ISO > Right > Drives Left > To Basket > Miss 2 Pts,24,2026-03-07,Washington-St. Louis Bears,defense,Josh Kim,play-by-play,True,5,14.5,coach checked,0.99
 2026-03-07|24|15 Collin Madson > ISO > Right > Drives Left > To Basket > Miss 2 Pts,24,2026-03-07,Washington-St. Louis Bears,defense,Ryan Cohen,play-by-play,True,68,3.2,coach checked,0.99
-2026-03-07|24|15 Collin Madson > ISO > Right > Drives Left > To Basket > Miss 2 Pts,24,2026-03-07,Washington-St. Louis Bears,defense,Yogi Oliff,play-by-play,False,,0.0,not located,
+2026-03-07|24|15 Collin Madson > ISO > Right > Drives Left > To Basket > Miss 2 Pts,24,2026-03-07,Washington-St. Louis Bears,defense,Yogi Oliff,play-by-play,True,71,3.2,coach checked,0.99
 2026-03-07|25|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,25,2026-03-07,Washington-St. Louis Bears,offense,Connor May,play-by-play,False,,0.0,not located,
 2026-03-07|25|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,25,2026-03-07,Washington-St. Louis Bears,offense,George Gale,play-by-play,False,,0.0,not located,
 2026-03-07|25|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,25,2026-03-07,Washington-St. Louis Bears,offense,Josh Kim,play-by-play,False,,0.0,not located,
@@ -399,7 +399,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-03-07|45|33 George Gale > Cut > Basket > Miss 2 Pts,45,2026-03-07,UW-Whitewater,defense,Kelton McEwen,play-by-play,False,,0.0,not located,
 2026-03-07|45|33 George Gale > Cut > Basket > Miss 2 Pts,45,2026-03-07,UW-Whitewater,defense,Rashad Rogers,play-by-play,False,,0.0,not located,
 2026-03-07|45|33 George Gale > Cut > Basket > Miss 2 Pts,45,2026-03-07,UW-Whitewater,defense,Richie Warren,play-by-play,True,23,2.0,coach checked,0.99
-2026-03-07|46|22 Joey Berezowitz > Transition > Ballhandler > Turnover,46,2026-03-07,UW-Whitewater,offense,JR Lukenbill,play-by-play,False,,0.0,not located,
+2026-03-07|46|22 Joey Berezowitz > Transition > Ballhandler > Turnover,46,2026-03-07,UW-Whitewater,offense,JR Lukenbill,play-by-play,True,89,1.0,coach checked,0.99
 2026-03-07|46|22 Joey Berezowitz > Transition > Ballhandler > Turnover,46,2026-03-07,UW-Whitewater,offense,Joey Berezowitz,play-by-play,False,,0.0,not located,
 2026-03-07|46|22 Joey Berezowitz > Transition > Ballhandler > Turnover,46,2026-03-07,UW-Whitewater,offense,Kelton McEwen,play-by-play,False,,0.0,not located,
 2026-03-07|46|22 Joey Berezowitz > Transition > Ballhandler > Turnover,46,2026-03-07,UW-Whitewater,offense,Rashad Rogers,play-by-play,False,,0.0,not located,
@@ -1070,7 +1070,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-03-07|117|0 Isaac Verges > No Play Type > Turnover,117,2026-03-07,Washington-St. Louis Bears,defense,Josh Kim,play-by-play,False,,0.0,not located,
 2026-03-07|117|0 Isaac Verges > No Play Type > Turnover,117,2026-03-07,Washington-St. Louis Bears,defense,Ryan Cohen,play-by-play,False,,0.0,not located,
 2026-03-07|118|21 Connor May > Transition > Ballhandler > To Basket > Foul,118,2026-03-07,Washington-St. Louis Bears,offense,Anthony Przybilla,play-by-play,False,,0.0,not located,
-2026-03-07|118|21 Connor May > Transition > Ballhandler > To Basket > Foul,118,2026-03-07,Washington-St. Louis Bears,offense,Connor May,play-by-play,False,,0.0,not located,
+2026-03-07|118|21 Connor May > Transition > Ballhandler > To Basket > Foul,118,2026-03-07,Washington-St. Louis Bears,offense,Connor May,play-by-play,True,12,2.2,Synergy,1.0
 2026-03-07|118|21 Connor May > Transition > Ballhandler > To Basket > Foul,118,2026-03-07,Washington-St. Louis Bears,offense,George Gale,play-by-play,False,,0.0,not located,
 2026-03-07|118|21 Connor May > Transition > Ballhandler > To Basket > Foul,118,2026-03-07,Washington-St. Louis Bears,offense,Josh Kim,play-by-play,False,,0.0,not located,
 2026-03-07|118|21 Connor May > Transition > Ballhandler > To Basket > Foul,118,2026-03-07,Washington-St. Louis Bears,offense,Ryan Cohen,play-by-play,False,,0.0,not located,
@@ -1669,22 +1669,22 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|1|4 Kyan VanderWoude > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,1,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|1|4 Kyan VanderWoude > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,1,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|1|4 Kyan VanderWoude > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,1,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
-2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
+2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,True,0,7.5,coach checked,0.99
 2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
-2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
-2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
+2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,True,5,8.0,coach checked,0.99
+2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,True,30,7.0,coach checked,0.99
 2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,False,,0.0,not located,
-2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
+2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,True,9,8.2,coach checked,0.99
 2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|2|34 Carson Grier > Cut > Basket > Make 2 Pts,2,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|3|25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,3,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
-2026-02-24|3|25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,3,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
+2026-02-24|3|25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,3,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,True,26,6.0,coach checked,0.99
 2026-02-24|3|25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,3,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|3|25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,3,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|3|25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,3,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
-2026-02-24|3|25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,3,2026-02-24,Wheaton (IL) Thunder,defense,Brady Wynja,play-by-play,False,,0.0,not located,
+2026-02-24|3|25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,3,2026-02-24,Wheaton (IL) Thunder,defense,Brady Wynja,play-by-play,True,0,7.2,coach checked,0.99
 2026-02-24|3|25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,3,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|3|25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,3,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|3|25 Marquis Vance > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,3,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
@@ -1693,21 +1693,21 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
-2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
-2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
-2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,False,,0.0,not located,
-2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
-2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
-2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
+2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,True,15,7.5,coach checked,0.99
+2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,True,3,19.5,coach checked,0.99
+2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,True,8,8.5,coach checked,0.99
+2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,True,10,5.8,coach checked,0.99
+2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,True,2,9.2,coach checked,0.99
+2026-02-24|4|4 Kyan VanderWoude > Transition > Left Wing > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,4,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,True,7,13.8,coach checked,0.99
 2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,5,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
 2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,5,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,5,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
-2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,5,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
+2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,5,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,True,57,4.0,coach checked,0.99
 2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,5,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,5,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
 2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,5,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,5,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
-2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,5,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
+2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,5,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,True,10,7.5,coach checked,0.99
 2026-02-24|5|34 Carson Grier > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,5,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|6|5 Kolden Vanlandingham > Transition > Ballhandler > To Basket > Miss 2 Pts,6,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
 2026-02-24|6|5 Kolden Vanlandingham > Transition > Ballhandler > To Basket > Miss 2 Pts,6,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
@@ -1716,65 +1716,65 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|6|5 Kolden Vanlandingham > Transition > Ballhandler > To Basket > Miss 2 Pts,6,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|6|5 Kolden Vanlandingham > Transition > Ballhandler > To Basket > Miss 2 Pts,6,2026-02-24,Wheaton (IL) Thunder,defense,Brady Wynja,play-by-play,False,,0.0,not located,
 2026-02-24|6|5 Kolden Vanlandingham > Transition > Ballhandler > To Basket > Miss 2 Pts,6,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
-2026-02-24|6|5 Kolden Vanlandingham > Transition > Ballhandler > To Basket > Miss 2 Pts,6,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,False,,0.0,not located,
+2026-02-24|6|5 Kolden Vanlandingham > Transition > Ballhandler > To Basket > Miss 2 Pts,6,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,True,24,2.2,coach checked,0.99
 2026-02-24|6|5 Kolden Vanlandingham > Transition > Ballhandler > To Basket > Miss 2 Pts,6,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
-2026-02-24|6|5 Kolden Vanlandingham > Transition > Ballhandler > To Basket > Miss 2 Pts,6,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
-2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
+2026-02-24|6|5 Kolden Vanlandingham > Transition > Ballhandler > To Basket > Miss 2 Pts,6,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,True,5,3.0,coach checked,0.99
+2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,True,17,5.2,coach checked,0.99
 2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
-2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
+2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,True,8,5.2,coach checked,0.99
 2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
-2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
+2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,True,45,23.0,coach checked,0.99
 2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,False,,0.0,not located,
-2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
+2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,True,3,4.8,coach checked,0.99
 2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
-2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
-2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
+2026-02-24|7|4 Kyan VanderWoude > Off Screen > To Shooter's Right > Straight > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,True,34,8.8,coach checked,0.99
+2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,True,61,8.2,coach checked,0.99
 2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
-2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
-2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
+2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,True,7,4.0,coach checked,0.99
+2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,True,8,9.8,coach checked,0.99
 2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,Wheaton (IL) Thunder,defense,Brady Wynja,play-by-play,False,,0.0,not located,
-2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
+2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,True,10,9.0,coach checked,0.99
 2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|8|4 Mike Vuckovic > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,8,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,9,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
 2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,9,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,9,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
-2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,9,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
+2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,9,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,True,1,9.8,coach checked,0.99
 2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,9,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,9,2026-02-24,Wheaton (IL) Thunder,defense,Brady Wynja,play-by-play,False,,0.0,not located,
 2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,9,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
-2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,9,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,False,,0.0,not located,
+2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,9,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,True,33,7.8,coach checked,0.99
 2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,9,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|9|21 Lazario Cornish > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts,9,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
-2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
+2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,True,86,1.5,coach checked,0.99
 2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
-2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
-2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
-2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
+2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,True,8,10.2,coach checked,0.99
+2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,True,3,10.8,coach checked,0.99
+2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,True,84,1.8,coach checked,0.99
 2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,False,,0.0,not located,
-2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
-2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
-2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
+2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,True,70,3.8,coach checked,0.99
+2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,True,1,10.0,coach checked,0.99
+2026-02-24|10|12 Devin Martin > Non Possession > No Violation,10,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,True,87,1.2,coach checked,0.99
 2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,11,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
 2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,11,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,11,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,11,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,11,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
-2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,11,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
+2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,11,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,True,85,6.0,coach checked,0.99
 2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,11,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,11,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
-2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,11,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
-2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,11,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
+2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,11,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,True,61,8.5,coach checked,0.99
+2026-02-24|11|35 Brady Wynja > Non Possession > Non Shooting Foul,11,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,True,7,18.0,coach checked,0.99
 2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,12,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
 2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,12,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,12,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
-2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,12,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
-2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,12,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
-2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,12,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
+2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,12,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,True,4,15.0,coach checked,0.99
+2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,12,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,True,17,12.0,coach checked,0.99
+2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,12,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,True,59,7.5,coach checked,0.99
 2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,12,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,12,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|12|12 Devin Martin > Cut > Basket > Make 2 Pts,12,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
@@ -1782,7 +1782,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|13|3 William Bates > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,13,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
 2026-02-24|13|3 William Bates > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,13,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|13|3 William Bates > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,13,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
-2026-02-24|13|3 William Bates > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,13,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
+2026-02-24|13|3 William Bates > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,13,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,True,31,13.2,coach checked,0.99
 2026-02-24|13|3 William Bates > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,13,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|13|3 William Bates > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,13,2026-02-24,Wheaton (IL) Thunder,defense,Brady Wynja,play-by-play,False,,0.0,not located,
 2026-02-24|13|3 William Bates > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,13,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
@@ -1793,40 +1793,40 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,14,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,14,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,14,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,clips before/after (no clock),False,,0.0,not located,
-2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,14,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,clips before/after (no clock),False,,0.0,not located,
-2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,14,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,clips before/after (no clock),False,,0.0,not located,
+2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,14,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,clips before/after (no clock),True,86,6.2,coach checked,0.99
+2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,14,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,clips before/after (no clock),True,22,14.0,coach checked,0.99
 2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,14,2026-02-24,North Park Vikings,defense,Lazario Cornish,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,14,2026-02-24,North Park Vikings,defense,Marquis Vance,clips before/after (no clock),False,,0.0,not located,
-2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,14,2026-02-24,North Park Vikings,defense,Mike Vuckovic,clips before/after (no clock),False,,0.0,not located,
-2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,14,2026-02-24,North Park Vikings,defense,William Bates,clips before/after (no clock),False,,0.0,not located,
+2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,14,2026-02-24,North Park Vikings,defense,Mike Vuckovic,clips before/after (no clock),True,106,1.2,coach checked,0.99
+2026-02-24|14|34 Carson Grier > Hand Off > From Dribble > Right > To Basket > Make 2 Pts Foul > 0 Pts,14,2026-02-24,North Park Vikings,defense,William Bates,clips before/after (no clock),True,84,4.0,coach checked,0.99
 2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,16,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
 2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,16,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,16,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,16,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
-2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,16,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
+2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,16,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,True,5,10.2,coach checked,0.99
 2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,16,2026-02-24,Wheaton (IL) Thunder,defense,Brady Wynja,play-by-play,False,,0.0,not located,
-2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,16,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
-2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,16,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,False,,0.0,not located,
+2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,16,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,True,15,7.0,coach checked,0.99
+2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,16,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,True,10,19.2,coach checked,0.99
 2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,16,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|16|5 Kolden Vanlandingham > P&R Ball Handler > Left P&R > Side > Split > To Basket > Make 2 Pts,16,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,17,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
 2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,17,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,17,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
-2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,17,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
+2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,17,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,True,15,6.2,coach checked,0.99
 2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,17,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
-2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,17,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
+2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,17,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,True,3,13.8,coach checked,0.99
 2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,17,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,17,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,17,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
-2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,17,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
+2026-02-24|17|20 Soren Richardson > Cut > Basket > Make 2 Pts,17,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,True,4,9.8,coach checked,0.99
 2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,18,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
 2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,18,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,18,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,18,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,18,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
-2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,18,2026-02-24,Wheaton (IL) Thunder,defense,Brady Wynja,play-by-play,False,,0.0,not located,
-2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,18,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
-2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,18,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,False,,0.0,not located,
+2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,18,2026-02-24,Wheaton (IL) Thunder,defense,Brady Wynja,play-by-play,True,2,5.2,coach checked,0.99
+2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,18,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,True,28,4.2,coach checked,0.99
+2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,18,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,True,0,11.0,coach checked,0.99
 2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,18,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|18|4 Mike Vuckovic > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 25 Marquis Vance > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,18,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|19|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,19,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
@@ -1839,14 +1839,14 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|19|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,19,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|19|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,19,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|19|12 Devin Martin > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts,19,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
-2026-02-24|20|5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts,20,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
+2026-02-24|20|5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts,20,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,True,70,1.8,coach checked,0.99
 2026-02-24|20|5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts,20,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|20|5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts,20,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|20|5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts,20,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|20|5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts,20,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|20|5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts,20,2026-02-24,Wheaton (IL) Thunder,defense,Brady Wynja,play-by-play,False,,0.0,not located,
 2026-02-24|20|5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts,20,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
-2026-02-24|20|5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts,20,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,False,,0.0,not located,
+2026-02-24|20|5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts,20,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,True,22,4.8,coach checked,0.99
 2026-02-24|20|5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts,20,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|20|5 Kolden Vanlandingham > Transition > Ballhandler > Dribble Jumper > Long/3pt > Make 3 Pts,20,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|21|34 Carson Grier > Non Possession > No Violation,21,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
@@ -1860,7 +1860,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|21|34 Carson Grier > Non Possession > No Violation,21,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|21|34 Carson Grier > Non Possession > No Violation,21,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|22|12 Devin Martin > No Play Type > Turnover,22,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
-2026-02-24|22|12 Devin Martin > No Play Type > Turnover,22,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
+2026-02-24|22|12 Devin Martin > No Play Type > Turnover,22,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,True,5,7.5,Synergy,1.0
 2026-02-24|22|12 Devin Martin > No Play Type > Turnover,22,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|22|12 Devin Martin > No Play Type > Turnover,22,2026-02-24,Wheaton (IL) Thunder,offense,Noah Hedrick,play-by-play,False,,0.0,not located,
 2026-02-24|22|12 Devin Martin > No Play Type > Turnover,22,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
@@ -1930,7 +1930,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|28|4 Mike Vuckovic > Hand Off > From Stationary > Top > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,28,2026-02-24,Wheaton (IL) Thunder,defense,Noah Hedrick,play-by-play,False,,0.0,not located,
 2026-02-24|28|4 Mike Vuckovic > Hand Off > From Stationary > Top > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,28,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|29|12 Devin Martin > Transition > Ballhandler > To Basket > Foul,29,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
-2026-02-24|29|12 Devin Martin > Transition > Ballhandler > To Basket > Foul,29,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
+2026-02-24|29|12 Devin Martin > Transition > Ballhandler > To Basket > Foul,29,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,True,16,16.2,Synergy,1.0
 2026-02-24|29|12 Devin Martin > Transition > Ballhandler > To Basket > Foul,29,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|29|12 Devin Martin > Transition > Ballhandler > To Basket > Foul,29,2026-02-24,Wheaton (IL) Thunder,offense,Noah Hedrick,play-by-play,False,,0.0,not located,
 2026-02-24|29|12 Devin Martin > Transition > Ballhandler > To Basket > Foul,29,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
@@ -1990,7 +1990,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|36|21 Lazario Cornish > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,36,2026-02-24,Wheaton (IL) Thunder,defense,Reid Olson,play-by-play,False,,0.0,not located,
 2026-02-24|36|21 Lazario Cornish > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts,36,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|37|12 Devin Martin > No Play Type > Turnover,37,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
-2026-02-24|37|12 Devin Martin > No Play Type > Turnover,37,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
+2026-02-24|37|12 Devin Martin > No Play Type > Turnover,37,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,True,86,4.0,Synergy,1.0
 2026-02-24|37|12 Devin Martin > No Play Type > Turnover,37,2026-02-24,Wheaton (IL) Thunder,offense,Noah Hedrick,play-by-play,False,,0.0,not located,
 2026-02-24|37|12 Devin Martin > No Play Type > Turnover,37,2026-02-24,Wheaton (IL) Thunder,offense,Reid Olson,play-by-play,False,,0.0,not located,
 2026-02-24|37|12 Devin Martin > No Play Type > Turnover,37,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
@@ -2049,7 +2049,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|43|10 Reid Olson > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,43,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
 2026-02-24|43|10 Reid Olson > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,43,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|43|10 Reid Olson > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts,43,2026-02-24,North Park Vikings,defense,Tyvin Garrison,play-by-play,False,,0.0,not located,
-2026-02-24|44|35 Brady Wynja > Offensive Rebound > Short > Turnover,44,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
+2026-02-24|44|35 Brady Wynja > Offensive Rebound > Short > Turnover,44,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,True,4,12.5,Synergy,1.0
 2026-02-24|44|35 Brady Wynja > Offensive Rebound > Short > Turnover,44,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|44|35 Brady Wynja > Offensive Rebound > Short > Turnover,44,2026-02-24,Wheaton (IL) Thunder,offense,Noah Hedrick,play-by-play,False,,0.0,not located,
 2026-02-24|44|35 Brady Wynja > Offensive Rebound > Short > Turnover,44,2026-02-24,Wheaton (IL) Thunder,offense,Reid Olson,play-by-play,False,,0.0,not located,
@@ -2060,12 +2060,12 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|44|35 Brady Wynja > Offensive Rebound > Short > Turnover,44,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|44|35 Brady Wynja > Offensive Rebound > Short > Turnover,44,2026-02-24,North Park Vikings,defense,Tyvin Garrison,play-by-play,False,,0.0,not located,
 2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,45,2026-02-24,North Park Vikings,offense,Harrison Long,play-by-play,False,,0.0,not located,
-2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,45,2026-02-24,North Park Vikings,offense,Julian Campbell,play-by-play,False,,0.0,not located,
+2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,45,2026-02-24,North Park Vikings,offense,Julian Campbell,play-by-play,True,6,4.5,coach checked,0.99
 2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,45,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
 2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,45,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,45,2026-02-24,North Park Vikings,offense,Tyvin Garrison,play-by-play,False,,0.0,not located,
 2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,45,2026-02-24,Wheaton (IL) Thunder,defense,Brady Wynja,play-by-play,False,,0.0,not located,
-2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,45,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
+2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,45,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,True,42,5.5,coach checked,0.99
 2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,45,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,45,2026-02-24,Wheaton (IL) Thunder,defense,Reid Olson,play-by-play,False,,0.0,not located,
 2026-02-24|45|4 Mike Vuckovic > P&R Ball Handler > High P&R > Go Away from Pick > To Basket > Miss 2 Pts,45,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
@@ -2223,7 +2223,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|63|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,63,2026-02-24,North Park Vikings,offense,Jerome Smith Jr.,play-by-play,False,,0.0,not located,
 2026-02-24|63|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,63,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
 2026-02-24|63|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,63,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
-2026-02-24|63|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,63,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
+2026-02-24|63|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,63,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,True,83,8.2,Synergy,1.0
 2026-02-24|63|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,63,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|63|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,63,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|63|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,63,2026-02-24,Wheaton (IL) Thunder,defense,Jace Olson,play-by-play,False,,0.0,not located,
@@ -2351,7 +2351,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|79|3 William Bates > Off Screen > To Shooter's Right > Straight > Dribble Jumper > Short to < 17' > Miss 2 Pts,79,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|80|12 Devin Martin > No Play Type > Foul,80,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
 2026-02-24|80|12 Devin Martin > No Play Type > Foul,80,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
-2026-02-24|80|12 Devin Martin > No Play Type > Foul,80,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
+2026-02-24|80|12 Devin Martin > No Play Type > Foul,80,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,True,54,5.2,Synergy,1.0
 2026-02-24|80|12 Devin Martin > No Play Type > Foul,80,2026-02-24,Wheaton (IL) Thunder,offense,Kyle Neibch,play-by-play,False,,0.0,not located,
 2026-02-24|80|12 Devin Martin > No Play Type > Foul,80,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|80|12 Devin Martin > No Play Type > Foul,80,2026-02-24,North Park Vikings,defense,Jerome Smith Jr.,play-by-play,False,,0.0,not located,
@@ -2360,7 +2360,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|80|12 Devin Martin > No Play Type > Foul,80,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|80|12 Devin Martin > No Play Type > Foul,80,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|83|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Go Away from Pick > Turnover,83,2026-02-24,North Park Vikings,offense,Julian Campbell,play-by-play,False,,0.0,not located,
-2026-02-24|83|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Go Away from Pick > Turnover,83,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
+2026-02-24|83|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Go Away from Pick > Turnover,83,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,True,89,3.2,Synergy,1.0
 2026-02-24|83|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Go Away from Pick > Turnover,83,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|83|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Go Away from Pick > Turnover,83,2026-02-24,North Park Vikings,offense,Tyvin Garrison,play-by-play,False,,0.0,not located,
 2026-02-24|83|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Go Away from Pick > Turnover,83,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
@@ -2443,7 +2443,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|91|3 William Bates > Spot-Up > Drives Left > To Basket > Foul,91,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|91|3 William Bates > Spot-Up > Drives Left > To Basket > Foul,91,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|91|3 William Bates > Spot-Up > Drives Left > To Basket > Foul,91,2026-02-24,North Park Vikings,offense,Tyvin Garrison,play-by-play,False,,0.0,not located,
-2026-02-24|91|3 William Bates > Spot-Up > Drives Left > To Basket > Foul,91,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
+2026-02-24|91|3 William Bates > Spot-Up > Drives Left > To Basket > Foul,91,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,True,38,21.5,Synergy,1.0
 2026-02-24|91|3 William Bates > Spot-Up > Drives Left > To Basket > Foul,91,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|91|3 William Bates > Spot-Up > Drives Left > To Basket > Foul,91,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|91|3 William Bates > Spot-Up > Drives Left > To Basket > Foul,91,2026-02-24,Wheaton (IL) Thunder,defense,Jace Olson,play-by-play,False,,0.0,not located,
@@ -2472,7 +2472,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|96|4 Kyan VanderWoude > Transition > Ballhandler > Foul,96,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|96|4 Kyan VanderWoude > Transition > Ballhandler > Foul,96,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|96|4 Kyan VanderWoude > Transition > Ballhandler > Foul,96,2026-02-24,Wheaton (IL) Thunder,offense,Jace Olson,play-by-play,False,,0.0,not located,
-2026-02-24|96|4 Kyan VanderWoude > Transition > Ballhandler > Foul,96,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
+2026-02-24|96|4 Kyan VanderWoude > Transition > Ballhandler > Foul,96,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,True,62,4.2,Synergy,1.0
 2026-02-24|96|4 Kyan VanderWoude > Transition > Ballhandler > Foul,96,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|96|4 Kyan VanderWoude > Transition > Ballhandler > Foul,96,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
 2026-02-24|96|4 Kyan VanderWoude > Transition > Ballhandler > Foul,96,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,False,,0.0,not located,
@@ -2500,7 +2500,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|100|12 Devin Martin > ISO > Top > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts,100,2026-02-24,North Park Vikings,defense,Tyvin Garrison,play-by-play,False,,0.0,not located,
 2026-02-24|100|12 Devin Martin > ISO > Top > Drives Right > Dribble Jumper > Short to < 17' > Miss 2 Pts,100,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|101|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Lazario Cornish > P&R Roll Man > Rolls to Basket > Turnover,101,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
-2026-02-24|101|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Lazario Cornish > P&R Roll Man > Rolls to Basket > Turnover,101,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
+2026-02-24|101|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Lazario Cornish > P&R Roll Man > Rolls to Basket > Turnover,101,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,True,6,4.8,Synergy,1.0
 2026-02-24|101|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Lazario Cornish > P&R Roll Man > Rolls to Basket > Turnover,101,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|101|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Lazario Cornish > P&R Roll Man > Rolls to Basket > Turnover,101,2026-02-24,North Park Vikings,offense,Tyvin Garrison,play-by-play,False,,0.0,not located,
 2026-02-24|101|5 Kolden Vanlandingham > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 21 Lazario Cornish > P&R Roll Man > Rolls to Basket > Turnover,101,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
@@ -2532,7 +2532,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|104|4 Kyan VanderWoude > Transition > Ballhandler > To Basket > Turnover,104,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|104|4 Kyan VanderWoude > Transition > Ballhandler > To Basket > Turnover,104,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|104|4 Kyan VanderWoude > Transition > Ballhandler > To Basket > Turnover,104,2026-02-24,Wheaton (IL) Thunder,offense,Jace Olson,play-by-play,False,,0.0,not located,
-2026-02-24|104|4 Kyan VanderWoude > Transition > Ballhandler > To Basket > Turnover,104,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
+2026-02-24|104|4 Kyan VanderWoude > Transition > Ballhandler > To Basket > Turnover,104,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,True,46,7.0,Synergy,1.0
 2026-02-24|104|4 Kyan VanderWoude > Transition > Ballhandler > To Basket > Turnover,104,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|104|4 Kyan VanderWoude > Transition > Ballhandler > To Basket > Turnover,104,2026-02-24,North Park Vikings,defense,Jahki Gray,play-by-play,False,,0.0,not located,
 2026-02-24|104|4 Kyan VanderWoude > Transition > Ballhandler > To Basket > Turnover,104,2026-02-24,North Park Vikings,defense,Jerome Smith Jr.,play-by-play,False,,0.0,not located,
@@ -2551,7 +2551,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|105|3 William Bates > ISO > Left > Drives Left > Dribble Jumper > Short to < 17' > Make 2 Pts,105,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|106|12 Devin Martin > Spot-Up > Drives Right > Turnover,106,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
 2026-02-24|106|12 Devin Martin > Spot-Up > Drives Right > Turnover,106,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
-2026-02-24|106|12 Devin Martin > Spot-Up > Drives Right > Turnover,106,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
+2026-02-24|106|12 Devin Martin > Spot-Up > Drives Right > Turnover,106,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,True,130,6.2,Synergy,1.0
 2026-02-24|106|12 Devin Martin > Spot-Up > Drives Right > Turnover,106,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|106|12 Devin Martin > Spot-Up > Drives Right > Turnover,106,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|106|12 Devin Martin > Spot-Up > Drives Right > Turnover,106,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
@@ -2560,7 +2560,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|106|12 Devin Martin > Spot-Up > Drives Right > Turnover,106,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|106|12 Devin Martin > Spot-Up > Drives Right > Turnover,106,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|107|21 Lazario Cornish > Transition > Ballhandler > Foul,107,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,clips before/after (no clock),False,,0.0,not located,
-2026-02-24|107|21 Lazario Cornish > Transition > Ballhandler > Foul,107,2026-02-24,North Park Vikings,offense,Lazario Cornish,clips before/after (no clock),False,,0.0,not located,
+2026-02-24|107|21 Lazario Cornish > Transition > Ballhandler > Foul,107,2026-02-24,North Park Vikings,offense,Lazario Cornish,clips before/after (no clock),True,0,9.8,Synergy,1.0
 2026-02-24|107|21 Lazario Cornish > Transition > Ballhandler > Foul,107,2026-02-24,North Park Vikings,offense,Marquis Vance,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|107|21 Lazario Cornish > Transition > Ballhandler > Foul,107,2026-02-24,North Park Vikings,offense,Mike Vuckovic,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|107|21 Lazario Cornish > Transition > Ballhandler > Foul,107,2026-02-24,North Park Vikings,offense,William Bates,clips before/after (no clock),False,,0.0,not located,
@@ -2570,7 +2570,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|107|21 Lazario Cornish > Transition > Ballhandler > Foul,107,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|107|21 Lazario Cornish > Transition > Ballhandler > Foul,107,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|110|21 Lazario Cornish > Cut > Screen > Foul,110,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
-2026-02-24|110|21 Lazario Cornish > Cut > Screen > Foul,110,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
+2026-02-24|110|21 Lazario Cornish > Cut > Screen > Foul,110,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,True,6,7.0,Synergy,1.0
 2026-02-24|110|21 Lazario Cornish > Cut > Screen > Foul,110,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|110|21 Lazario Cornish > Cut > Screen > Foul,110,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|110|21 Lazario Cornish > Cut > Screen > Foul,110,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
@@ -2629,7 +2629,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|117|35 Brady Wynja > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,117,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|117|35 Brady Wynja > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,117,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|117|35 Brady Wynja > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,117,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
-2026-02-24|118|35 Brady Wynja > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,118,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
+2026-02-24|118|35 Brady Wynja > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,118,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,True,55,5.5,Synergy,1.0
 2026-02-24|118|35 Brady Wynja > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,118,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|118|35 Brady Wynja > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,118,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|118|35 Brady Wynja > Offensive Rebound > Short > Scoring Attempt > At Basket > Foul,118,2026-02-24,Wheaton (IL) Thunder,offense,Kyle Neibch,play-by-play,False,,0.0,not located,
@@ -2763,7 +2763,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|136|20 Soren Richardson > Cut > Basket > Foul,136,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|136|20 Soren Richardson > Cut > Basket > Foul,136,2026-02-24,Wheaton (IL) Thunder,offense,Noah Hedrick,play-by-play,False,,0.0,not located,
 2026-02-24|136|20 Soren Richardson > Cut > Basket > Foul,136,2026-02-24,Wheaton (IL) Thunder,offense,Reid Olson,play-by-play,False,,0.0,not located,
-2026-02-24|136|20 Soren Richardson > Cut > Basket > Foul,136,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
+2026-02-24|136|20 Soren Richardson > Cut > Basket > Foul,136,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,True,95,10.0,Synergy,1.0
 2026-02-24|136|20 Soren Richardson > Cut > Basket > Foul,136,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
 2026-02-24|136|20 Soren Richardson > Cut > Basket > Foul,136,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|136|20 Soren Richardson > Cut > Basket > Foul,136,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
@@ -3022,7 +3022,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|168|10 Reid Olson > No Play Type > Turnover,168,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
 2026-02-24|168|10 Reid Olson > No Play Type > Turnover,168,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|168|10 Reid Olson > No Play Type > Turnover,168,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
-2026-02-24|168|10 Reid Olson > No Play Type > Turnover,168,2026-02-24,Wheaton (IL) Thunder,offense,Reid Olson,play-by-play,False,,0.0,not located,
+2026-02-24|168|10 Reid Olson > No Play Type > Turnover,168,2026-02-24,Wheaton (IL) Thunder,offense,Reid Olson,play-by-play,True,28,9.8,Synergy,1.0
 2026-02-24|168|10 Reid Olson > No Play Type > Turnover,168,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|168|10 Reid Olson > No Play Type > Turnover,168,2026-02-24,North Park Vikings,defense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
 2026-02-24|168|10 Reid Olson > No Play Type > Turnover,168,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,False,,0.0,not located,
@@ -3043,7 +3043,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|170|3 William Bates > No Play Type > Turnover,170,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|170|3 William Bates > No Play Type > Turnover,170,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|170|3 William Bates > No Play Type > Turnover,170,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
-2026-02-24|170|3 William Bates > No Play Type > Turnover,170,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
+2026-02-24|170|3 William Bates > No Play Type > Turnover,170,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,True,0,8.5,Synergy,1.0
 2026-02-24|170|3 William Bates > No Play Type > Turnover,170,2026-02-24,Wheaton (IL) Thunder,defense,Brady Wynja,play-by-play,False,,0.0,not located,
 2026-02-24|170|3 William Bates > No Play Type > Turnover,170,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|170|3 William Bates > No Play Type > Turnover,170,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,play-by-play,False,,0.0,not located,
@@ -3090,7 +3090,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|174|20 Soren Richardson > Transition > Ballhandler > To Basket > Make 2 Pts,174,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|174|20 Soren Richardson > Transition > Ballhandler > To Basket > Make 2 Pts,174,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|175|5 Kolden Vanlandingham > ISO > Top > Drives Right > To Basket > Foul,175,2026-02-24,North Park Vikings,offense,Jerome Smith Jr.,play-by-play,False,,0.0,not located,
-2026-02-24|175|5 Kolden Vanlandingham > ISO > Top > Drives Right > To Basket > Foul,175,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
+2026-02-24|175|5 Kolden Vanlandingham > ISO > Top > Drives Right > To Basket > Foul,175,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,True,61,18.2,Synergy,1.0
 2026-02-24|175|5 Kolden Vanlandingham > ISO > Top > Drives Right > To Basket > Foul,175,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|175|5 Kolden Vanlandingham > ISO > Top > Drives Right > To Basket > Foul,175,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|175|5 Kolden Vanlandingham > ISO > Top > Drives Right > To Basket > Foul,175,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
@@ -3211,7 +3211,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|193|33 Noah Hedrick > No Play Type > Turnover,193,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|194|21 Lazario Cornish > No Play Type > Turnover,194,2026-02-24,North Park Vikings,offense,Jerome Smith Jr.,play-by-play,False,,0.0,not located,
 2026-02-24|194|21 Lazario Cornish > No Play Type > Turnover,194,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
-2026-02-24|194|21 Lazario Cornish > No Play Type > Turnover,194,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
+2026-02-24|194|21 Lazario Cornish > No Play Type > Turnover,194,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,True,6,8.8,Synergy,1.0
 2026-02-24|194|21 Lazario Cornish > No Play Type > Turnover,194,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|194|21 Lazario Cornish > No Play Type > Turnover,194,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|194|21 Lazario Cornish > No Play Type > Turnover,194,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
@@ -3282,7 +3282,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|201|4 Kyan VanderWoude > Transition > Right Wing > Foul,201,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
 2026-02-24|201|4 Kyan VanderWoude > Transition > Right Wing > Foul,201,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
 2026-02-24|201|4 Kyan VanderWoude > Transition > Right Wing > Foul,201,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
-2026-02-24|201|4 Kyan VanderWoude > Transition > Right Wing > Foul,201,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
+2026-02-24|201|4 Kyan VanderWoude > Transition > Right Wing > Foul,201,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,True,111,6.8,Synergy,1.0
 2026-02-24|201|4 Kyan VanderWoude > Transition > Right Wing > Foul,201,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|201|4 Kyan VanderWoude > Transition > Right Wing > Foul,201,2026-02-24,North Park Vikings,defense,Jerome Smith Jr.,play-by-play,False,,0.0,not located,
 2026-02-24|201|4 Kyan VanderWoude > Transition > Right Wing > Foul,201,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,False,,0.0,not located,
@@ -3360,7 +3360,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|213|20 Soren Richardson > Post-Up > Right Block > Defense Commits > Ball Delivered > 35 Brady Wynja > Cut > Basket > Make 2 Pts,213,2026-02-24,North Park Vikings,defense,Tyvin Garrison,play-by-play,False,,0.0,not located,
 2026-02-24|213|20 Soren Richardson > Post-Up > Right Block > Defense Commits > Ball Delivered > 35 Brady Wynja > Cut > Basket > Make 2 Pts,213,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|214|0 Jerome Smith Jr. > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,214,2026-02-24,North Park Vikings,offense,Dylan Fuzak,play-by-play,False,,0.0,not located,
-2026-02-24|214|0 Jerome Smith Jr. > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,214,2026-02-24,North Park Vikings,offense,Jerome Smith Jr.,play-by-play,False,,0.0,not located,
+2026-02-24|214|0 Jerome Smith Jr. > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,214,2026-02-24,North Park Vikings,offense,Jerome Smith Jr.,play-by-play,True,72,5.8,Synergy,1.0
 2026-02-24|214|0 Jerome Smith Jr. > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,214,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|214|0 Jerome Smith Jr. > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,214,2026-02-24,North Park Vikings,offense,Tyvin Garrison,play-by-play,False,,0.0,not located,
 2026-02-24|214|0 Jerome Smith Jr. > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover,214,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
@@ -3410,7 +3410,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|218|0 Jerome Smith Jr. > Transition > Ballhandler > Dribble Jumper > Long/3pt > Miss 3 Pts,218,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|218|0 Jerome Smith Jr. > Transition > Ballhandler > Dribble Jumper > Long/3pt > Miss 3 Pts,218,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|219|34 Carson Grier > Post-Up > Right Block > Face-up > Drive Middle > Foul,219,2026-02-24,Wheaton (IL) Thunder,offense,Brady Wynja,play-by-play,False,,0.0,not located,
-2026-02-24|219|34 Carson Grier > Post-Up > Right Block > Face-up > Drive Middle > Foul,219,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
+2026-02-24|219|34 Carson Grier > Post-Up > Right Block > Face-up > Drive Middle > Foul,219,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,True,184,4.8,Synergy,1.0
 2026-02-24|219|34 Carson Grier > Post-Up > Right Block > Face-up > Drive Middle > Foul,219,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|219|34 Carson Grier > Post-Up > Right Block > Face-up > Drive Middle > Foul,219,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|219|34 Carson Grier > Post-Up > Right Block > Face-up > Drive Middle > Foul,219,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
@@ -3439,7 +3439,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|225|4 Kyan VanderWoude > ISO > Right > Drives Left > To Basket > Miss 2 Pts,225,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|225|4 Kyan VanderWoude > ISO > Right > Drives Left > To Basket > Miss 2 Pts,225,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|225|4 Kyan VanderWoude > ISO > Right > Drives Left > To Basket > Miss 2 Pts,225,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
-2026-02-24|226|5 Kolden Vanlandingham > Transition > Ballhandler > Turnover,226,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
+2026-02-24|226|5 Kolden Vanlandingham > Transition > Ballhandler > Turnover,226,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,True,54,10.8,Synergy,1.0
 2026-02-24|226|5 Kolden Vanlandingham > Transition > Ballhandler > Turnover,226,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|226|5 Kolden Vanlandingham > Transition > Ballhandler > Turnover,226,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|226|5 Kolden Vanlandingham > Transition > Ballhandler > Turnover,226,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
@@ -3453,7 +3453,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|227|20 Soren Richardson > Off Screen > To Shooter's Left > Curl > Turnover,227,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|227|20 Soren Richardson > Off Screen > To Shooter's Left > Curl > Turnover,227,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|227|20 Soren Richardson > Off Screen > To Shooter's Left > Curl > Turnover,227,2026-02-24,Wheaton (IL) Thunder,offense,Noah Hedrick,play-by-play,False,,0.0,not located,
-2026-02-24|227|20 Soren Richardson > Off Screen > To Shooter's Left > Curl > Turnover,227,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
+2026-02-24|227|20 Soren Richardson > Off Screen > To Shooter's Left > Curl > Turnover,227,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,True,76,13.2,Synergy,1.0
 2026-02-24|227|20 Soren Richardson > Off Screen > To Shooter's Left > Curl > Turnover,227,2026-02-24,North Park Vikings,defense,Lazario Cornish,play-by-play,False,,0.0,not located,
 2026-02-24|227|20 Soren Richardson > Off Screen > To Shooter's Left > Curl > Turnover,227,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|227|20 Soren Richardson > Off Screen > To Shooter's Left > Curl > Turnover,227,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
@@ -3585,7 +3585,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|242|4 Mike Vuckovic > Non Possession > Non Shooting Foul,242,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|242|4 Mike Vuckovic > Non Possession > Non Shooting Foul,242,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|243|21 Lazario Cornish > Cut > Basket > Foul,243,2026-02-24,North Park Vikings,offense,Kolden Vanlandingham,play-by-play,False,,0.0,not located,
-2026-02-24|243|21 Lazario Cornish > Cut > Basket > Foul,243,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,False,,0.0,not located,
+2026-02-24|243|21 Lazario Cornish > Cut > Basket > Foul,243,2026-02-24,North Park Vikings,offense,Lazario Cornish,play-by-play,True,144,5.0,Synergy,1.0
 2026-02-24|243|21 Lazario Cornish > Cut > Basket > Foul,243,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|243|21 Lazario Cornish > Cut > Basket > Foul,243,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|243|21 Lazario Cornish > Cut > Basket > Foul,243,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
@@ -3676,7 +3676,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|254|4 Kyan VanderWoude > Post-Up > Left Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,254,2026-02-24,North Park Vikings,defense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|255|4 Mike Vuckovic > Transition > Ballhandler > Foul,255,2026-02-24,North Park Vikings,offense,Julian Campbell,play-by-play,False,,0.0,not located,
 2026-02-24|255|4 Mike Vuckovic > Transition > Ballhandler > Foul,255,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
-2026-02-24|255|4 Mike Vuckovic > Transition > Ballhandler > Foul,255,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
+2026-02-24|255|4 Mike Vuckovic > Transition > Ballhandler > Foul,255,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,True,3,11.2,Synergy,1.0
 2026-02-24|255|4 Mike Vuckovic > Transition > Ballhandler > Foul,255,2026-02-24,North Park Vikings,offense,Tyvin Garrison,play-by-play,False,,0.0,not located,
 2026-02-24|255|4 Mike Vuckovic > Transition > Ballhandler > Foul,255,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
 2026-02-24|255|4 Mike Vuckovic > Transition > Ballhandler > Foul,255,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,play-by-play,False,,0.0,not located,
@@ -3738,7 +3738,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|267|20 Soren Richardson > Cut > Basket > Foul,267,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|267|20 Soren Richardson > Cut > Basket > Foul,267,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|267|20 Soren Richardson > Cut > Basket > Foul,267,2026-02-24,Wheaton (IL) Thunder,offense,Noah Hedrick,play-by-play,False,,0.0,not located,
-2026-02-24|267|20 Soren Richardson > Cut > Basket > Foul,267,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
+2026-02-24|267|20 Soren Richardson > Cut > Basket > Foul,267,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,True,0,7.2,Synergy,1.0
 2026-02-24|267|20 Soren Richardson > Cut > Basket > Foul,267,2026-02-24,North Park Vikings,defense,Julian Campbell,play-by-play,False,,0.0,not located,
 2026-02-24|267|20 Soren Richardson > Cut > Basket > Foul,267,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
 2026-02-24|267|20 Soren Richardson > Cut > Basket > Foul,267,2026-02-24,North Park Vikings,defense,Mike Vuckovic,play-by-play,False,,0.0,not located,
@@ -3825,7 +3825,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|280|4 Mike Vuckovic > Hand Off > From Stationary > Top > Turnover,280,2026-02-24,Wheaton (IL) Thunder,defense,Reid Olson,play-by-play,False,,0.0,not located,
 2026-02-24|280|4 Mike Vuckovic > Hand Off > From Stationary > Top > Turnover,280,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|281|12 Devin Martin > Transition > Ballhandler > To Basket > Foul,281,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,play-by-play,False,,0.0,not located,
-2026-02-24|281|12 Devin Martin > Transition > Ballhandler > To Basket > Foul,281,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
+2026-02-24|281|12 Devin Martin > Transition > Ballhandler > To Basket > Foul,281,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,True,93,2.8,Synergy,1.0
 2026-02-24|281|12 Devin Martin > Transition > Ballhandler > To Basket > Foul,281,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|281|12 Devin Martin > Transition > Ballhandler > To Basket > Foul,281,2026-02-24,Wheaton (IL) Thunder,offense,Reid Olson,play-by-play,False,,0.0,not located,
 2026-02-24|281|12 Devin Martin > Transition > Ballhandler > To Basket > Foul,281,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
@@ -3845,7 +3845,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|284|25 Marquis Vance > Transition > Ballhandler > Dribble Jumper > Long/3pt > Miss 3 Pts,284,2026-02-24,Wheaton (IL) Thunder,defense,Reid Olson,play-by-play,False,,0.0,not located,
 2026-02-24|284|25 Marquis Vance > Transition > Ballhandler > Dribble Jumper > Long/3pt > Miss 3 Pts,284,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
 2026-02-24|285|25 Marquis Vance > Spot-Up > Drives Right > Turnover,285,2026-02-24,North Park Vikings,offense,Julian Campbell,play-by-play,False,,0.0,not located,
-2026-02-24|285|25 Marquis Vance > Spot-Up > Drives Right > Turnover,285,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,False,,0.0,not located,
+2026-02-24|285|25 Marquis Vance > Spot-Up > Drives Right > Turnover,285,2026-02-24,North Park Vikings,offense,Marquis Vance,play-by-play,True,1,11.0,Synergy,1.0
 2026-02-24|285|25 Marquis Vance > Spot-Up > Drives Right > Turnover,285,2026-02-24,North Park Vikings,offense,Mike Vuckovic,play-by-play,False,,0.0,not located,
 2026-02-24|285|25 Marquis Vance > Spot-Up > Drives Right > Turnover,285,2026-02-24,North Park Vikings,offense,Tyvin Garrison,play-by-play,False,,0.0,not located,
 2026-02-24|285|25 Marquis Vance > Spot-Up > Drives Right > Turnover,285,2026-02-24,North Park Vikings,offense,William Bates,play-by-play,False,,0.0,not located,
@@ -3898,7 +3898,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|290|20 Soren Richardson > Off Screen > To Shooter's Right > Flare > No Dribble Jumper > Guarded > Long/3pt > Foul,290,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,play-by-play,False,,0.0,not located,
 2026-02-24|290|20 Soren Richardson > Off Screen > To Shooter's Right > Flare > No Dribble Jumper > Guarded > Long/3pt > Foul,290,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|290|20 Soren Richardson > Off Screen > To Shooter's Right > Flare > No Dribble Jumper > Guarded > Long/3pt > Foul,290,2026-02-24,Wheaton (IL) Thunder,offense,Reid Olson,play-by-play,False,,0.0,not located,
-2026-02-24|290|20 Soren Richardson > Off Screen > To Shooter's Right > Flare > No Dribble Jumper > Guarded > Long/3pt > Foul,290,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,False,,0.0,not located,
+2026-02-24|290|20 Soren Richardson > Off Screen > To Shooter's Right > Flare > No Dribble Jumper > Guarded > Long/3pt > Foul,290,2026-02-24,Wheaton (IL) Thunder,offense,Soren Richardson,play-by-play,True,48,8.2,Synergy,1.0
 2026-02-24|290|20 Soren Richardson > Off Screen > To Shooter's Right > Flare > No Dribble Jumper > Guarded > Long/3pt > Foul,290,2026-02-24,North Park Vikings,defense,Harrison Long,play-by-play,False,,0.0,not located,
 2026-02-24|290|20 Soren Richardson > Off Screen > To Shooter's Right > Flare > No Dribble Jumper > Guarded > Long/3pt > Foul,290,2026-02-24,North Park Vikings,defense,Julian Campbell,play-by-play,False,,0.0,not located,
 2026-02-24|290|20 Soren Richardson > Off Screen > To Shooter's Right > Flare > No Dribble Jumper > Guarded > Long/3pt > Foul,290,2026-02-24,North Park Vikings,defense,Marquis Vance,play-by-play,False,,0.0,not located,
@@ -3984,7 +3984,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|303|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Miss 2 Pts,303,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,play-by-play,False,,0.0,not located,
 2026-02-24|303|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Miss 2 Pts,303,2026-02-24,Wheaton (IL) Thunder,defense,Reid Olson,play-by-play,False,,0.0,not located,
 2026-02-24|303|25 Marquis Vance > Offensive Rebound > Short > Scoring Attempt > At Basket > Miss 2 Pts,303,2026-02-24,Wheaton (IL) Thunder,defense,Soren Richardson,play-by-play,False,,0.0,not located,
-2026-02-24|304|34 Carson Grier > Spot-Up > Drives Right > Foul,304,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,clips before/after (no clock),False,,0.0,not located,
+2026-02-24|304|34 Carson Grier > Spot-Up > Drives Right > Foul,304,2026-02-24,Wheaton (IL) Thunder,offense,Carson Grier,clips before/after (no clock),True,6,6.8,Synergy,1.0
 2026-02-24|304|34 Carson Grier > Spot-Up > Drives Right > Foul,304,2026-02-24,Wheaton (IL) Thunder,offense,Devin Martin,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|304|34 Carson Grier > Spot-Up > Drives Right > Foul,304,2026-02-24,Wheaton (IL) Thunder,offense,Kyan VanderWoude,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|304|34 Carson Grier > Spot-Up > Drives Right > Foul,304,2026-02-24,Wheaton (IL) Thunder,offense,Reid Olson,clips before/after (no clock),False,,0.0,not located,
@@ -4011,7 +4011,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|308|4 Kyan VanderWoude > Cut > Basket > Make 2 Pts,308,2026-02-24,North Park Vikings,defense,Tyvin Garrison,play-by-play,False,,0.0,not located,
 2026-02-24|309|25 Marquis Vance > Transition > Ballhandler > Foul,309,2026-02-24,North Park Vikings,offense,Harrison Long,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|309|25 Marquis Vance > Transition > Ballhandler > Foul,309,2026-02-24,North Park Vikings,offense,Julian Campbell,clips before/after (no clock),False,,0.0,not located,
-2026-02-24|309|25 Marquis Vance > Transition > Ballhandler > Foul,309,2026-02-24,North Park Vikings,offense,Marquis Vance,clips before/after (no clock),False,,0.0,not located,
+2026-02-24|309|25 Marquis Vance > Transition > Ballhandler > Foul,309,2026-02-24,North Park Vikings,offense,Marquis Vance,clips before/after (no clock),True,67,3.2,Synergy,1.0
 2026-02-24|309|25 Marquis Vance > Transition > Ballhandler > Foul,309,2026-02-24,North Park Vikings,offense,Mike Vuckovic,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|309|25 Marquis Vance > Transition > Ballhandler > Foul,309,2026-02-24,North Park Vikings,offense,Tyvin Garrison,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|309|25 Marquis Vance > Transition > Ballhandler > Foul,309,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,clips before/after (no clock),False,,0.0,not located,
@@ -4033,7 +4033,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|313|2 Tyvin Garrison > No Play Type > Foul,313,2026-02-24,North Park Vikings,offense,Julian Campbell,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|313|2 Tyvin Garrison > No Play Type > Foul,313,2026-02-24,North Park Vikings,offense,Marquis Vance,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|313|2 Tyvin Garrison > No Play Type > Foul,313,2026-02-24,North Park Vikings,offense,Mike Vuckovic,clips before/after (no clock),False,,0.0,not located,
-2026-02-24|313|2 Tyvin Garrison > No Play Type > Foul,313,2026-02-24,North Park Vikings,offense,Tyvin Garrison,clips before/after (no clock),False,,0.0,not located,
+2026-02-24|313|2 Tyvin Garrison > No Play Type > Foul,313,2026-02-24,North Park Vikings,offense,Tyvin Garrison,clips before/after (no clock),True,7,9.2,Synergy,1.0
 2026-02-24|313|2 Tyvin Garrison > No Play Type > Foul,313,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|313|2 Tyvin Garrison > No Play Type > Foul,313,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|313|2 Tyvin Garrison > No Play Type > Foul,313,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,clips before/after (no clock),False,,0.0,not located,
@@ -4053,7 +4053,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-02-24|317|2 Tyvin Garrison > No Play Type > Foul,317,2026-02-24,North Park Vikings,offense,Julian Campbell,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|317|2 Tyvin Garrison > No Play Type > Foul,317,2026-02-24,North Park Vikings,offense,Marquis Vance,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|317|2 Tyvin Garrison > No Play Type > Foul,317,2026-02-24,North Park Vikings,offense,Mike Vuckovic,clips before/after (no clock),False,,0.0,not located,
-2026-02-24|317|2 Tyvin Garrison > No Play Type > Foul,317,2026-02-24,North Park Vikings,offense,Tyvin Garrison,clips before/after (no clock),False,,0.0,not located,
+2026-02-24|317|2 Tyvin Garrison > No Play Type > Foul,317,2026-02-24,North Park Vikings,offense,Tyvin Garrison,clips before/after (no clock),True,65,7.2,Synergy,1.0
 2026-02-24|317|2 Tyvin Garrison > No Play Type > Foul,317,2026-02-24,Wheaton (IL) Thunder,defense,Carson Grier,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|317|2 Tyvin Garrison > No Play Type > Foul,317,2026-02-24,Wheaton (IL) Thunder,defense,Devin Martin,clips before/after (no clock),False,,0.0,not located,
 2026-02-24|317|2 Tyvin Garrison > No Play Type > Foul,317,2026-02-24,Wheaton (IL) Thunder,defense,Kyan VanderWoude,clips before/after (no clock),False,,0.0,not located,
