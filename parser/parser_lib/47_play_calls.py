@@ -146,7 +146,9 @@ _PD_PRESS_FORMATIONS = [
 ]
 # Checked in order: a named coverage before the bare word it's built from ("soft hedge" before "hedge").
 _PD_COVERAGE = [
-    (r"\bsoft\s*hedge\b", "Soft Hedge"), (r"\bflat\s*-?\s*hedge\b", "Flat Hedge"), (r"\bhedge\b", "Hedge"),
+    (r"\bsoft\s*hedge\b", "Soft Hedge"), (r"\bflat\s*-?\s*hedge\b", "Flat Hedge"),
+    (r"\bhigh\s*-?\s*hedge\b", "High Hedge"),   # requested coverage
+    (r"\bhedge\b", "Hedge"),
     (r"\bswitch\b", "Switch"),
     (r"\bice\b", "Ice"), (r"\bdrop\b", "Drop"), (r"\bdeny\b", "Deny"), (r"\bjam\b", "Jam"),
     # NEW, data-driven from the latest tagging:
@@ -405,6 +407,7 @@ _PT_OFFBALL_COVERAGE = {
 _PT_BALL_COVERAGE = {
     "drop": ("Drop", "Standard"), "hedge": ("Hedge", "Standard"), "softhedge": ("Soft Hedge", "Standard"),
     "flathedge": ("Flat Hedge", "Standard"),     # requested coverage ("flat hedge" / "flat-hedge" / "12flathedge")
+    "highhedge": ("High Hedge", "Standard"),     # requested coverage ("high hedge" / "high-hedge" / "12highhedge")
     "sh": ("Soft Hedge", "Inferred"), "show": ("Show", "Standard"), "ice": ("Ice", "Standard"),
     "blue": ("Ice", "Inferred"), "blitz": ("Blitz", "Standard"), "trap": ("Blitz", "Standard"),
     "under": ("Under", "Standard"), "fight": ("Fight", "Standard"),

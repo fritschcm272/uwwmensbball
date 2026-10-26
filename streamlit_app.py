@@ -6972,7 +6972,7 @@ _FT_ACTION_HELP = ("DHO = dribble hand-off to the corner · PC5 = pass to the 5 
 _FT_TRIGGER_ACTIONS = ["Cobra", "Fox", "Rhino", "Snake", "Swirl", "Straight", "Use Ball Screen", "Reject Ball Screen",
                        "Split Ball Screen"]
 # requested: coverages offered in the Coverage list even before any clip has been tagged with them
-_FT_EXTRA_COVERAGES = ["Flat Hedge"]
+_FT_EXTRA_COVERAGES = ["Flat Hedge", "High Hedge"]   # requested: "High Hedge" available to pick
 # requested: an answer a coach already saved for this clip (reloaded into the form) is marked with a check, the way the
 # automatic Title's answer is marked "\u2757" -- a different check from the "\u2713" a Title check uses for the automatic answer
 _FT_SAVED_MARK = "\u2705"
@@ -7010,7 +7010,7 @@ _FT_OFFENSE_DID = (list(_FT_TRIGGER_ACTIONS)
                       "Post up", "Duck in"])
 # what the DEFENDER did -- on the ball, guarding the screener, help, any
 _FT_DEFENDER_DID = ["Over", "Under", "Through", "Ice / Push", "Switch", "Trap / Blitz", "Caught on the screen",
-                    "Drop", "Flat Hedge", "Hard Hedge / Show", "At level / Up to touch", "Recover", "Late",
+                    "Drop", "Flat Hedge", "High Hedge", "Hard Hedge / Show", "At level / Up to touch", "Recover", "Late",
                     "Tag the roller", "Stunt & recover", "Rotate", "Stay home", "Sink / Fill", "X-out", "No help",
                     "Top lock", "Trail", "Chase", "Deny", "Front the post",
                     "Contest", "Closeout", "Foul", "Deflection / Steal", "Beaten"]
