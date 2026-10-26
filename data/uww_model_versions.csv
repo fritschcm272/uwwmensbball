@@ -1,18 +1,18 @@
 model,kind,version,version_date,signature,detail,scripts,last_checked
-Tag model (overall),trained,v2026.10.26,2026-10-26,2026-10-26T07:52:39,newest of 9 field model(s); last retrained field: situation,53_tag_model.py,2026-10-26T08:03:16
-Jersey-number recognizer,trained,v2026.10.19,2026-10-19,2026-10-19T22:01:10,"3667 training crops; 29% of held-back crops right; sources {'reads': 0, 'extra': 3615, 'coach': 639}",48_jersey_number_recognizer.py,2026-10-26T08:03:16
-Tag model: ball_screen_coverage,trained,v2026.10.26,2026-10-26,2026-10-26T07:52:39,"142 tagged clips, 5 answers learned, one answer only",53_tag_model.py,2026-10-26T08:03:16
-Tag model: defense,trained,v2026.10.26,2026-10-26,2026-10-26T07:52:39,"433 tagged clips, 1 answers learned, one answer only",53_tag_model.py,2026-10-26T08:03:16
-Tag model: formation,trained,v2026.10.26,2026-10-26,2026-10-26T07:52:39,"274 tagged clips, 6 answers learned, one answer only",53_tag_model.py,2026-10-26T08:03:16
-Tag model: offball_coverage,trained,v2026.10.26,2026-10-26,2026-10-26T07:52:39,"63 tagged clips, 3 answers learned, one answer only",53_tag_model.py,2026-10-26T08:03:16
-Tag model: play_call,trained,v2026.10.26,2026-10-26,2026-10-26T07:52:39,"307 tagged clips, 7 answers learned",53_tag_model.py,2026-10-26T08:03:16
-Tag model: press,trained,v2026.10.26,2026-10-26,2026-10-26T07:52:39,"434 tagged clips, 3 answers learned, one answer only",53_tag_model.py,2026-10-26T08:03:16
-Tag model: primary_action,trained,v2026.10.26,2026-10-26,2026-10-26T07:52:39,"217 tagged clips, 8 answers learned, one answer only",53_tag_model.py,2026-10-26T08:03:16
-Tag model: screen_defender,trained,v2026.10.26,2026-10-26,2026-10-26T07:52:39,"96 tagged clips, 7 answers learned, one answer only",53_tag_model.py,2026-10-26T08:03:16
-Tag model: situation,trained,v2026.10.26,2026-10-26,2026-10-26T07:52:39,"479 tagged clips, 5 answers learned",53_tag_model.py,2026-10-26T08:03:16
-Jersey-number reader test,pretrained + code,v2026.10.26,2026-10-26,d68f90f374aa,scores the OCR readers; none retrained here,49_jersey_number_reader_test.py,2026-10-26T08:03:16
-Player tracking,pretrained + code,v2026.10.26,2026-10-26,681b475250ff,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",50_player_tracking.py,2026-10-26T08:03:16
-Court mapping,rules + code,v2026.10.22,2026-10-22,098cafc54b06,4 calibration file(s),51_court_mapping.py,2026-10-26T08:03:16
-Defensive roles,rules + code,v2026.10.02,2026-10-02,6693b910acf2,"7 BBall Index-style roles, Division III cut-offs",55d_defensive_roles.py,2026-10-26T08:03:16
-Offensive roles,rules + code,v2026.10.02,2026-10-02,4fe5d5f99a0b,"12 BBall Index-style roles, Division III cut-offs",41b_offensive_roles.py,2026-10-26T08:03:16
-Player comparison,rules + code,v2026.10.07,2026-10-07,3c16f7881c90,tag-based similarity; LLM blend off,"32_load_player_comparison_algorithms_and.py, 33_surface_tag_based_best_match_per_target.py, 34_surface_llm_best_match_per_player.py, 35_blend_tag_based_and_llm_similarity_scores.py, 76_rebuild_player_comparisons_with_pbp.py",2026-10-26T08:03:16
+Tag model (overall),trained,v2026.10.26.2,2026-10-26,2026-10-26T11:46:17,newest of 9 field model(s); last retrained field: situation,53_tag_model.py,2026-10-26T12:01:15
+Jersey-number recognizer,trained,v2026.10.19,2026-10-19,2026-10-19T22:01:10,"3667 training crops; 29% of held-back crops right; sources {'reads': 0, 'extra': 3615, 'coach': 639}",48_jersey_number_recognizer.py,2026-10-26T12:01:15
+Tag model: ball_screen_coverage,trained,v2026.10.26.2,2026-10-26,2026-10-26T11:46:17,"142 tagged clips, 5 answers learned, one answer only",53_tag_model.py,2026-10-26T12:01:15
+Tag model: defense,trained,v2026.10.26.2,2026-10-26,2026-10-26T11:46:17,"433 tagged clips, 1 answers learned, one answer only",53_tag_model.py,2026-10-26T12:01:15
+Tag model: formation,trained,v2026.10.26.2,2026-10-26,2026-10-26T11:46:17,"274 tagged clips, 6 answers learned, one answer only",53_tag_model.py,2026-10-26T12:01:15
+Tag model: offball_coverage,trained,v2026.10.26.2,2026-10-26,2026-10-26T11:46:17,"63 tagged clips, 3 answers learned, one answer only",53_tag_model.py,2026-10-26T12:01:15
+Tag model: play_call,trained,v2026.10.26.2,2026-10-26,2026-10-26T11:46:17,"307 tagged clips, 7 answers learned",53_tag_model.py,2026-10-26T12:01:15
+Tag model: press,trained,v2026.10.26.2,2026-10-26,2026-10-26T11:46:17,"434 tagged clips, 3 answers learned, one answer only",53_tag_model.py,2026-10-26T12:01:15
+Tag model: primary_action,trained,v2026.10.26.2,2026-10-26,2026-10-26T11:46:17,"217 tagged clips, 8 answers learned, one answer only",53_tag_model.py,2026-10-26T12:01:15
+Tag model: screen_defender,trained,v2026.10.26.2,2026-10-26,2026-10-26T11:46:17,"96 tagged clips, 7 answers learned, one answer only",53_tag_model.py,2026-10-26T12:01:15
+Tag model: situation,trained,v2026.10.26.2,2026-10-26,2026-10-26T11:46:17,"479 tagged clips, 5 answers learned",53_tag_model.py,2026-10-26T12:01:15
+Jersey-number reader test,pretrained + code,v2026.10.26,2026-10-26,d68f90f374aa,scores the OCR readers; none retrained here,49_jersey_number_reader_test.py,2026-10-26T12:01:15
+Player tracking,pretrained + code,v2026.10.26,2026-10-26,681b475250ff,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",50_player_tracking.py,2026-10-26T12:01:15
+Court mapping,rules + code,v2026.10.22,2026-10-22,098cafc54b06,4 calibration file(s),51_court_mapping.py,2026-10-26T12:01:15
+Defensive roles,rules + code,v2026.10.02,2026-10-02,6693b910acf2,"7 BBall Index-style roles, Division III cut-offs",55d_defensive_roles.py,2026-10-26T12:01:15
+Offensive roles,rules + code,v2026.10.02,2026-10-02,4fe5d5f99a0b,"12 BBall Index-style roles, Division III cut-offs",41b_offensive_roles.py,2026-10-26T12:01:15
+Player comparison,rules + code,v2026.10.07,2026-10-07,3c16f7881c90,tag-based similarity; LLM blend off,"32_load_player_comparison_algorithms_and.py, 33_surface_tag_based_best_match_per_target.py, 34_surface_llm_best_match_per_player.py, 35_blend_tag_based_and_llm_similarity_scores.py, 76_rebuild_player_comparisons_with_pbp.py",2026-10-26T12:01:15

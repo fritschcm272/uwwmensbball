@@ -183,9 +183,11 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-10-26T07:52:57,formation,Formation,72.0,72.0,5 Out,250.0,274,usual answer,False,model not better than always guessing (72% vs 72%),8.0,13.0,2026-10-26T07:52:39
 2026-10-26T07:52:57,play_call,Play call,63.0,63.0,Motion,257.0,307,model,False,63% vs 63% always guessing on 257 held-out plays (+0 pts) -- needs +3 pts on 30+ plays,8.0,17.0,2026-10-26T07:52:39
 2026-10-26T07:52:57,defense,Defense,,,Man-to-Man,,433,usual answer,True,one answer covers 100% of 433 coach tags,20.0,20.0,2026-10-26T07:52:39
-2026-10-26T07:52:57,press,Press,82.0,83.0,None,428.0,434,usual answer,False,model not better than always guessing (82% vs 83%),17.0,20.0,2026-10-26T07:52:39
+2026-10-26T07:52:57,press,Press,82.0,83.0,,428.0,434,usual answer,False,model not better than always guessing (82% vs 83%),17.0,20.0,2026-10-26T07:52:39
 2026-10-26T07:52:57,situation,Situation,81.0,71.0,Half court,473.0,479,model,True,81% vs 71% always guessing on 473 held-out plays (+10 pts),12.0,20.0,2026-10-26T07:52:39
 2026-10-26T07:52:57,primary_action,Main action,55.0,55.0,Ball Screen,164.0,217,usual answer,False,model not better than always guessing (55% vs 55%),2.0,9.0,2026-10-26T07:52:39
 2026-10-26T07:52:57,ball_screen_coverage,Ball-screen coverage,24.0,31.0,Over,121.0,142,usual answer,False,model not better than always guessing (24% vs 31%),0.0,7.0,2026-10-26T07:52:39
-2026-10-26T07:52:57,screener,Screener,,,Luke Bara,,58,nan,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),0.0,1.0,2026-10-26T07:52:39
+2026-10-26T07:52:57,screener,Screener,,,Luke Bara,,58,,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),0.0,1.0,2026-10-26T07:52:39
 2026-10-26T07:52:57,screen_defender,Screen defender,29.0,29.0,#5,55.0,96,usual answer,False,model not better than always guessing (29% vs 29%),,,2026-10-26T07:52:39
+2026-10-26T11:46:43,ball_screen_coverage,Ball-screen coverage,25.0,31.0,Over,121.0,142,usual answer,False,model not better than always guessing (25% vs 31%),0.0,7.0,2026-10-26T11:46:17
+2026-10-26T11:46:43,screener,Screener,,,Luke Bara,,58,nan,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),0.0,1.0,2026-10-26T11:46:17
