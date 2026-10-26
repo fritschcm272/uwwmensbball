@@ -621,6 +621,80 @@ def _trk_name_frames(clips, todo, base, pc=None, game_of=None):
              f"used there instead" if n_unmeasured else ""), flush=True)
 
 
+def _trk_ck(k):
+    return _pl_ckey_norm(k) if "_pl_ckey_norm" in globals() else str(k)
+
+
+def _trk_app_keys(pc, todo):
+    """CONFIRMED CHANGE (requested: "only do the crops for the clips that will be sent to the application for either player
+    number tracking or the film tagging"). {clip key} of the clips the app shows or will show next:
+      * every play in an open Player Number Tracking batch (data/play_review) and Film Tagging batch (data/play_tag);
+      * per tracked game, the next 2 x PLAY_REVIEW_PLAYS_PER_GAME plays with no saved player check, in the order the Play
+        review picks them (between seasons: the most returning players first) -- this batch's plays and the next one's.
+    CONFIRMED CHANGE (requested: "don't do the film tagging plays"): TRACK_READ_NUMBERS_FOR = "player_checks" (the default)
+    leaves the Film Tagging batches out -- they show the lineup and roster numbers, not tracking's names (only their "seen on
+    the film" line uses them). "app" = Film Tagging too; "all" = every clip."""
+    scope = str(globals().get("TRACK_READ_NUMBERS_FOR", "player_checks")).strip().lower()
+    keys, n_open = set(), {}
+    appdir = globals().get("APP_DATA_DIR") or OUTPUT_DIR
+    kinds = ["play_review"] + ([] if scope in ("player_checks", "players") else ["play_tag"])
+    for kind in kinds:
+        for rj in glob.glob(os.path.join(appdir, kind, "*", "review.json")):
+            try:
+                with open(rj, encoding="utf-8") as fh:
+                    doc = _trk_json.load(fh)
+            except Exception:
+                continue
+            ks = {_trk_ck(p_.get("clip_key")) for p_ in doc.get("plays", []) or []}
+            keys |= ks
+            n_open[kind] = n_open.get(kind, 0) + len(ks)
+    done = set()
+    try:
+        done = {_trk_ck(ch.get("clip_key")) for ch in coach_checks_all()[0]}
+    except Exception:
+        pass
+    dep = set()
+    try:
+        if "_pr_departed" not in globals():
+            # the Play review cell runs after this one: load just its returners-first helpers (same rule, same order)
+            import ast as _ast
+            _src = open(os.path.join(globals().get("PARSER_LIB") or os.path.join(os.getcwd(), "parser_lib"),
+                                     "55c_play_review.py"), encoding="utf-8").read()
+            for _n in _ast.parse(_src).body:
+                if isinstance(_n, _ast.FunctionDef) and _n.name in ("_pr_departed", "_pr_nk"):
+                    exec(compile(_ast.Module([_n], []), "55c_play_review.py", "exec"), globals())
+        dep = _pr_departed() if "_pr_departed" in globals() else set()
+    except Exception:
+        dep = set()
+    nk = globals().get("_pr_nk") or (lambda n: str(n).strip().lower())
+    per = int(globals().get("PLAY_REVIEW_PLAYS_PER_GAME", 20))
+    n_next = 0
+    sub = pc.loc[[i for i in todo if i in pc.index]]
+    for _g, g in sub.groupby(["game_date", "game_code"], dropna=False):
+        g = g.assign(_ck=[_trk_ck(_trk_clip_key(r)) for _, r in g.iterrows()])
+        g = g[~g["_ck"].isin(done)]
+        if dep:
+            back = g.apply(lambda r: sum(nk(n) not in dep for sd in ("offense", "defense")
+                                         for n in _trk_five(r.get(f"{sd}_lineup"))), axis=1)
+            g = g.assign(_back=back).sort_values(["_back", "clip_number"], ascending=[False, True], kind="stable")
+        else:
+            g = g.sort_values("clip_number", kind="stable")
+        nxt = set(g["_ck"].head(2 * per))
+        n_next += len(nxt - keys)
+        keys |= nxt
+    print(f"  [tracking]   jersey numbers are read only on the clips the app shows (TRACK_READ_NUMBERS_FOR = {scope!r}): "
+          + ", ".join(f"{n} in open {'Player Number Tracking' if k == 'play_review' else 'Film Tagging'} batches"
+                      for k, n in n_open.items())
+          + f", {n_next} more coming up next in Player Number Tracking", flush=True)
+    return keys
+
+
+def _trk_game_label(g):
+    """ "2026-02-24|WheatonIL@NorthPark" -> "WheatonIL@NorthPark (2026-02-24)" for progress lines."""
+    d_, _, c_ = str(g or "?").partition("|")
+    return f"{c_} ({d_})" if c_ else d_
+
+
 def _trk_read_numbers(clips, todo, base, engine):
     """(clip, track) -> list of (digits read, confidence) from the chest of the track's tallest boxes, with the
     reader chosen by the Jersey-number reader test. Every read is saved, so each crop is read once per reader."""
@@ -661,7 +735,7 @@ def _trk_read_numbers(clips, todo, base, engine):
             if clip["side"].get(k) not in ("offense", "defense"):
                 continue
             n_crops = (TRACK_OCR_CROPS_TRAINED if str(engine).startswith("trained") else TRACK_OCR_CROPS_PADDLE if str(engine).startswith("paddle")
-                       else TRACK_OCR_CROPS_FIND if str(engine).endswith(("_find", "_local", "_rec")) else TRACK_OCR_CROPS)
+                       else TRACK_OCR_CROPS_FIND if str(engine).endswith(("_find", "_find_fast", "_local", "_rec")) else TRACK_OCR_CROPS)
             fps_ = float(clip.get("fps", 2.0))
             if globals().get("TRACK_NAME_ONE_FRAME", True) and clip.get("name_frame") is not None:
                 # requested: numbers are read on the clip's ONE naming frame -- the player's box in that frame, nothing else
@@ -693,14 +767,69 @@ def _trk_read_numbers(clips, todo, base, engine):
                 x1, y1, x2, y2 = [float(v) for v in clip["frames"][t][j][6:10]]
                 jobs.append(((i, k), f"{clip['files'][t]}|{int(x1)}|{int(y1)}|{int(x2)}|{int(y2)}|{_tag}",
                              clip["files"][t], (x1, y1, x2, y2), "as_is" if light else "invert"))
+    # requested (speed): a crop the normal EasyOCR reader already read (it enlarges more -- at least as good) counts as read for
+    # easyocr_find_fast, so switching to the fast reader doesn't read the same crops again
+    if engine == "easyocr_find_fast":
+        _n_reuse = 0
+        for jb in jobs:
+            if jb[1] not in cache:
+                _alt = jb[1][:-len(_tag)] + "easyocr_find2"
+                if _alt in cache:
+                    cache[jb[1]] = cache[_alt]
+                    _n_reuse += 1
+        if _n_reuse:
+            print(f"  [tracking]   {_n_reuse:,} chest crop(s) already read by easyocr_find -- reused", flush=True)
     new = [jb for jb in jobs if jb[1] not in cache]
+    # requested: only the clips the app shows (see _trk_app_keys); the others are read only within TRACK_READ_OTHERS_MIN
+    # minutes (0 = not at all) -- every read is saved, so a budget fills them in a little each run
+    _appk = globals().get("_trk_app_ckeys")
+    _later = []
+    if _appk is not None and str(globals().get("TRACK_READ_NUMBERS_FOR", "player_checks")).strip().lower() != "all":
+        _is_app = lambda jb: (clips.get(jb[0][0]) or {}).get("ckey") in _appk
+        _later = [jb for jb in new if not _is_app(jb)]
+        new = [jb for jb in new if _is_app(jb)]
+        _om = float(globals().get("TRACK_READ_OTHERS_MIN", 0) or 0)
+        if _later:
+            print(f"  [tracking]   {len(new):,} new chest crop(s) on the app's clips are read; {len(_later):,} on other clips "
+                  + (f"are read after them for up to {_om:.0f} min" if _om > 0 else
+                     "are skipped (TRACK_READ_OTHERS_MIN = 0; TRACK_READ_NUMBERS_FOR = \"all\" reads every clip)"),
+                  flush=True)
+        if _om <= 0:
+            _later = []
+    _n_app = len(new)
+    new = new + _later
     if new:
+        # CONFIRMED CHANGE (requested: "can it tell me which game this is from"): the crops are read one game at a time, the
+        # start line says how many each game has, and every progress line names the reader and the game it's on
+        _gm = lambda jb: _trk_game_label((clips.get(jb[0][0]) or {}).get("game"))
+        new = sorted(new[:_n_app], key=_gm) + sorted(new[_n_app:], key=_gm)   # app clips first; one game at a time
+        _per = {}
+        for jb in new:
+            _per[_gm(jb)] = _per.get(_gm(jb), 0) + 1
+        _spd = (globals().get("JERSEY_READER_SPEED") or {}).get(engine)
         print(f"  [tracking]   reading jersey numbers ({engine}) on {len(new):,} chest crop(s) "
-              f"({len(jobs) - len(new):,} read in earlier runs)...", flush=True)
+              f"({len(jobs) - len(new):,} read in earlier runs, saved -- each crop is read once): "
+              + "; ".join(f"{g_} {n_:,}" for g_, n_ in _per.items())
+              + (f" -- at {_spd:.2f} s a crop (reader test) that's about {_spd * len(new) / 60:.0f} min"
+                 if _spd and _spd * len(new) >= 60 else "") + "...", flush=True)
         _t0 = time.time()
         imgs = {}
+        _g_prev, _g_t0, _g_n = None, time.time(), 0
+        _t_others = None
         for s0 in range(0, len(new), 100):
             chunk = new[s0:s0 + 100]
+            if s0 >= _n_app:                           # past the app's clips: the others, within the time budget
+                _t_others = _t_others or time.time()
+                if time.time() - _t_others > 60 * float(globals().get("TRACK_READ_OTHERS_MIN", 0) or 0):
+                    print(f"  [tracking]   time budget for other clips used up -- {len(new) - s0:,} crop(s) left for "
+                          f"later runs", flush=True)
+                    break
+            _g_now = _gm(chunk[-1])
+            if _g_prev is not None and _g_now != _g_prev:
+                print(f"  [tracking]   ({engine}) finished {_g_prev}: {_per.get(_g_prev, 0):,} crop(s) in "
+                      f"{(time.time() - _g_t0) / 60:.1f} min", flush=True)
+                _g_t0 = time.time()
+            _g_prev = _g_now
             crops = []
             for _o, _key, rel, box, _pol in chunk:
                 if rel not in imgs:
@@ -712,7 +841,8 @@ def _trk_read_numbers(clips, todo, base, engine):
             for (_o, key, _rel, _box, _pol), (txt, cf) in zip(chunk, _jn_read(engine, crops, [jb[4] for jb in chunk])):
                 cache[key] = [(txt, cf)] if txt else []
             _safe_to_pickle(cache, cp)
-            _trk_progress("chest crops read", min(s0 + 100, len(new)), len(new), _t0, every=max(100, (len(new) // 10) // 100 * 100))
+            _trk_progress(f"chest crops read ({engine}; now on {_g_now})", min(s0 + 100, len(new)), len(new), _t0,
+                          every=max(100, (len(new) // 10) // 100 * 100))
         if "_jr_torso_save" in globals():
             _jr_torso_save()                          # the pose-based crops found this run (JERSEY_CROP_STYLE = "pose")
     out = {}
@@ -1937,7 +2067,8 @@ def player_tracking(pc):
                 continue
             bx, by, _c = d["b"][d["b"][:, 2].argmax()]
             ball[t] = (bx / d["H"], by / d["H"])
-        clip = {"frames": frames, "tracks": tracks, "shifts": shifts, "ball": ball, "files": lists[i], "fps": _fps}
+        clip = {"frames": frames, "tracks": tracks, "shifts": shifts, "ball": ball, "files": lists[i], "fps": _fps,
+                "game": game_of[i], "ckey": _trk_ck(_trk_clip_key(pc.loc[i]))}
         clip["basket"], clip["t_finish"], clip["window"] = _trk_finish(frames)
         clip["holder"] = _trk_holders(clip)
         g = game_of[i]
@@ -2718,7 +2849,8 @@ def player_tracking(pc):
         _slow = bool(_engine) and not str(_engine).startswith("trained")
         print(f"  [tracking] step 5b: TRACK_READ_NUMBERS = \"auto\" -- the reader test's best reader is "
               f"{_engine or 'none'}: " + ("numbers are read if it clears the bar"
-                                         + (" (it uses EasyOCR, so expect this step to take a while -- roughly 40 min a game)"
+                                         + (" (it uses EasyOCR -- slow, ~1-2 s a chest crop, so a game's FIRST read takes "
+                                            "hours; reads are saved, so after that only new frames are read)"
                                             if _slow else " (trained on our film -- fast)")
                                          if _read_nums else "no reader to use, so numbers are NOT read"), flush=True)
     elif str(_rn_set).strip().lower() in ("false", "off", "no", "0", "none", ""):
@@ -2750,6 +2882,13 @@ def player_tracking(pc):
                  f"{_min_conf:.2f})" if _prec is not None else (f" (scored {_acc:.0%} on the answer key)" if _acc is not None else ""))
               + "...", flush=True)
         try:
+            globals()["_trk_app_ckeys"] = None
+            if str(globals().get("TRACK_READ_NUMBERS_FOR", "player_checks")).strip().lower() != "all":
+                try:
+                    globals()["_trk_app_ckeys"] = _trk_app_keys(pc, todo)
+                except Exception as _ake:
+                    print(f"  [tracking]   (couldn't work out the app's clips -- reading every clip: "
+                          f"{type(_ake).__name__}: {_ake})", flush=True)
             if _engine == "combined":
                 # every member reader, each at its own confidence level; the vote below needs their reads to agree
                 reads = {}

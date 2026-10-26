@@ -1,4 +1,4 @@
 opponent,clock_situation,freq_pct,ppp,fg_pct,note,is_sample
-Wheaton (IL) Thunder,Early clock (0-9 sec used),22,1.18,54,Mostly transition and early ball screens,True
-Wheaton (IL) Thunder,Organized offense (10-19 sec used),55,0.94,41,"Their half-court sets, Carson Grier runs off screens here",True
-Wheaton (IL) Thunder,Late clock (20+ sec used),23,0.71,33,Soren Richardson isolation when the set breaks down,True
+Wheaton (IL) Thunder,Early clock (0-9 sec used),47,0.44,25.0,9 tagged possessions -- most often Ball Screen (Carson Grier),False
+Wheaton (IL) Thunder,Organized offense (10-19 sec used),26,0.8,50.0,5 tagged possessions -- most often Flair (Devin Martin),False
+Wheaton (IL) Thunder,Late clock (20+ sec used),26,2.0,33.3,5 tagged possessions -- most often Down Screen (Kyan VanderWoude),False

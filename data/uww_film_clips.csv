@@ -1,6 +1,6 @@
 opponent,clip_group,clips,who_watches,is_sample
-Wheaton (IL) Thunder,Their base offense (5-Out Motion),6,Whole team,True
-Wheaton (IL) Thunder,Carson Grier post touches and offensive rebounds,5,Bigs,True
-Wheaton (IL) Thunder,BLOB / SLOB / ATO,8,Whole team,True
-Wheaton (IL) Thunder,Their ball-screen coverage vs us-type guards,5,Guards,True
-Wheaton (IL) Thunder,Press break and 1-2-1-1,4,Whole team,True
+Wheaton (IL) Thunder,5 Out Motion (Half court),12,Whole team -- scout team runs it,False
+Wheaton (IL) Thunder,Motion (Half court),1,Whole team -- scout team runs it,False
+Wheaton (IL) Thunder,Set (Half court),1,Whole team -- scout team runs it,False
+Wheaton (IL) Thunder,BLOB Set (BLOB),3,Whole team,False
+Wheaton (IL) Thunder,SLOB 5 Out Motion (SLOB),1,Whole team,False

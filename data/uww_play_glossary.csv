@@ -32,7 +32,7 @@ Switch / Hedge / Soft Hedge / Ice / Drop,Ball-screen coverage call,Standard
 Deny / Jam,On-ball or off-ball denial call,Inferred
 Show / Under / Fight / Blitz,"More ball-screen coverage calls -- show and recover, go under, fight over the top, or trap it",Standard
 Token,A named ball-screen coverage call -- confirm the read with staff,Inferred
-Tran / Transition,"Live-ball offense before the defense is set, as its own situation (not folded into Half court)",Standard
+Tran / Transition,"Live-ball offense before the defense is set, as its own situation (not folded into Half court). A purely transition possession has NO set call -- no Motion default, no suggested play call or formation; a set the coach tags after it (tran-horns-panther) is kept",Standard
 Flow / Chin / Twins / Snap / Black / Bulldog / Pinch / Blocker-Mover,Named sets or formations,Standard
 Guards Cross / UCLA,Named actions -- two guards exchange; a screen off a UCLA cut,Standard
 Formation-Call(details): [Press] Defense (details),"Structured tag: formation, play call (Motion if blank), ordered offensive details; press (None if blank), defensive formation, coverage details",Standard

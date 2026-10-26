@@ -49,6 +49,17 @@ import numpy as np          # this cell runs before any other cell that imports 
 # tiktoken installed"). Installed here, at the top of this cell, before any reader runs. transformers only notices
 # it after a restart, so the cell stops and asks for ONE kernel restart right after installing it.
 import importlib
+import time
+
+JERSEY_READER_SPEED = {}          # seconds a crop, per reader (measured on the answer-key crops; saved with its answers)
+
+
+def _jn_speed_of(e):
+    """A reader's seconds a crop for tie-breaks ("combined" = its members together; unknown = 0)."""
+    if e == "combined":
+        return sum(JERSEY_READER_SPEED.get(m, 0.0) for m, _c in globals().get("JERSEY_READER_COMBINED_MEMBERS", []) or [])
+    return JERSEY_READER_SPEED.get(e, 0.0)
+
 
 # ---- cache files that survive a full disk (shared helper; the same copy is in every section that uses them) ---------
 # CONFIRMED BUG (fixed; "Jersey-number recognizer skipped: EOFError: Ran out of input", and tracking's "jersey numbers not
@@ -341,7 +352,7 @@ def _jn_prep_for(engine):
         return _jn_prep_pose_color
     if _jn_needs_color(engine):
         return _jn_prep_wide_color
-    if str(engine).endswith("_find"):
+    if str(engine).endswith(("_find", "_find_fast")):
         return _jn_prep_wide
     if str(engine).endswith(("_local", "_rec")):
         return _jn_prep_local
@@ -523,7 +534,12 @@ def _jn_read(engine, crops, polarity=None):
                     pass
             out.append(best)
         return out
-    if engine == "easyocr_find":
+    if engine in ("easyocr_find", "easyocr_find_fast"):
+        # CONFIRMED CHANGE (requested: tracking spent ~1.7 s a crop in EasyOCR -- 4.5 h for two games). "easyocr_find_fast"
+        # is the same reader on the same crop, but EasyOCR's text finder doesn't enlarge it again (mag_ratio
+        # JERSEY_EASYOCR_FAST_MAG, 1.0, instead of 1.5): the finder's work grows with the image's area, so it should take
+        # roughly half the time. The reader test scores it beside easyocr_find, so you can see what (if anything) it costs.
+        _mag = float(globals().get("JERSEY_EASYOCR_FAST_MAG", 1.0)) if engine == "easyocr_find_fast" else 1.5
         if importlib.util.find_spec("easyocr") is None:
             subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "--no-deps", "easyocr"])
             subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "python-bidi", "pyclipper", "shapely",
@@ -536,7 +552,7 @@ def _jn_read(engine, crops, polarity=None):
                 for img in ([c] if pol == "as_is" else [255 - c] if pol == "invert" else [c, 255 - c]):
                     try:
                         for _b, t_, cf in rd.readtext(img, allowlist="0123456789", detail=1, text_threshold=0.5,
-                                                      low_text=0.3, min_size=6, mag_ratio=1.5):
+                                                      low_text=0.3, min_size=6, mag_ratio=_mag):
                             if _jn_digits(t_) and cf > best[1]:
                                 best = (_jn_digits(t_), float(cf))
                     except Exception:
@@ -700,6 +716,10 @@ if RUN_JERSEY_READER_TEST:
     if _jcs in ("compare", "pose") and "trained" in JERSEY_READER_ENGINES:
         JERSEY_READER_ENGINES = ([e for e in JERSEY_READER_ENGINES if e != "trained"] if _jcs == "pose" else list(JERSEY_READER_ENGINES)) \
             + (["trained_pose"] if "trained_pose" not in JERSEY_READER_ENGINES else [])
+    # requested (speed): whenever EasyOCR is tested, its fast version is tested beside it (JERSEY_TEST_EASYOCR_FAST = False: not)
+    if "easyocr_find" in JERSEY_READER_ENGINES and "easyocr_find_fast" not in JERSEY_READER_ENGINES \
+            and globals().get("JERSEY_TEST_EASYOCR_FAST", True):
+        JERSEY_READER_ENGINES = list(JERSEY_READER_ENGINES) + ["easyocr_find_fast"]
     print(f"  readers tested (JERSEY_CROP_STYLE = {_jcs!r}): {', '.join(JERSEY_READER_ENGINES)}", flush=True)
     for _eng in JERSEY_READER_ENGINES:
         # a run where PaddleOCR failed to load saved "no answer" for every crop: once it loads, read those again
@@ -732,7 +752,11 @@ if RUN_JERSEY_READER_TEST:
                     rel, x1, y1, x2, y2 = k.split("|")
                     g_ = cv2.imread(os.path.join(_base, rel), cv2.IMREAD_COLOR if _jn_needs_color(_eng) else cv2.IMREAD_GRAYSCALE)
                     _crops.append(_jn_prep_for(_eng)(g_, tuple(float(v) for v in (x1, y1, x2, y2))) if g_ is not None else None)
+                _t_read = time.time()
                 _rs = _jn_read(_eng, _crops)
+                # requested: how long each reader takes a crop (saved, so a run with nothing new to read still shows it)
+                if _crops:
+                    _saved[("__speed__", _eng)] = (time.time() - _t_read) / len(_crops)
                 if _eng.startswith("paddle") and globals().get("_jn_paddle_ok") is False:
                     print(f"  {_eng:12}: not tested (PaddleOCR didn't load)", flush=True)
                     continue
@@ -783,6 +807,11 @@ if RUN_JERSEY_READER_TEST:
             if _bands:
                 print(f"  {_eng:12}: by confidence -- {'; '.join(_bands)} (needs {JERSEY_READER_TARGET_PRECISION:.0%} "
                       f"on >= {JERSEY_READER_MIN_ANSWERS} answers to be trusted)", flush=True)
+            _spd = _saved.get(("__speed__", _eng))
+            if _spd is not None:
+                JERSEY_READER_SPEED[_eng] = float(_spd)
+                print(f"  {_eng:12}: speed -- {_spd:.2f} s a crop" + (f" (~{_spd * 4500 / 3600:.1f} h for a game's first "
+                      f"~4,500 crops)" if _spd >= 0.2 else " (fast)"), flush=True)
             _ck = [k for k in _have if k in _coach_keys]
             _ck_ans = [(k, _rd.get(k, ("", 0))) for k in _ck if _rd.get(k, ("", 0))[0]]
             _ck_right = sum(1 for k, r_ in _ck_ans if r_[0] == _have[k])
@@ -838,6 +867,17 @@ if RUN_JERSEY_READER_TEST:
     # ("40", "12" when nobody on the floor wears them) became a combined answer. Combined now uses the same filter. A crop
     # gets a reading when at least one member reads it and no member reads something else (they "agree" -- an answer
     # nobody contradicts); a disagreement means no answer. This is also how Player tracking votes on combined reads.
+    # requested (speed): easyocr_find and easyocr_find_fast are the same reader -- "combined" takes only ONE of them: the fast
+    # one when it reads at least as many of your checked players right (within 1) and is right as often (within 3 points)
+    _ez = [e for e, _c in _members if e in ("easyocr_find", "easyocr_find_fast")]
+    if len(_ez) == 2:
+        _fr, _sr = JERSEY_READER_COACH_RIGHT.get("easyocr_find_fast", 0), JERSEY_READER_COACH_RIGHT.get("easyocr_find", 0)
+        _fp, _sp = JERSEY_READER_PRECISION.get("easyocr_find_fast", 0), JERSEY_READER_PRECISION.get("easyocr_find", 0)
+        _drop = "easyocr_find" if (_fr >= _sr - 1 and _fp >= _sp - 0.03) else "easyocr_find_fast"
+        _members = [(e, c) for e, c in _members if e != _drop]
+        print(f"  easyocr fast vs normal: {_fr} vs {_sr} of your checked players right, right {_fp:.0%} vs {_sp:.0%} when it "
+              f"answers -- combined uses {'easyocr_find_fast' if _drop == 'easyocr_find' else 'easyocr_find'}", flush=True)
+
     def _cmb_read(e, k, c):
         r0 = _saved.get((e, k), ("", 0))
         if not r0[0] or r0[1] < c:
@@ -880,7 +920,8 @@ if RUN_JERSEY_READER_TEST:
         _pool = _reliable or ([e for e in JERSEY_READER_PRECISION if JERSEY_READER_ANSWERS.get(e, 0) >= JERSEY_READER_MIN_ANSWERS]
                               or list(JERSEY_READER_PRECISION))
         JERSEY_READER_BEST = max(_pool, key=lambda e: (JERSEY_READER_COACH_RIGHT.get(e, 0), round(JERSEY_READER_PRECISION[e], 2),
-                                                       JERSEY_READER_ACCURACY.get(e, 0)))
+                                                       JERSEY_READER_ACCURACY.get(e, 0),
+                                                       -_jn_speed_of(e)))       # a tie goes to the faster reader
         print(f"  best reader: {JERSEY_READER_BEST} -- {JERSEY_READER_COACH_RIGHT.get(JERSEY_READER_BEST, 0)} of your checked "
               f"players read right at its cutoff; right {JERSEY_READER_PRECISION[JERSEY_READER_BEST]:.0%} of the time "
               f"it answers ({JERSEY_READER_ANSWERS[JERSEY_READER_BEST]} answers at confidence >= "

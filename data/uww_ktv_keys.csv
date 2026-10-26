@@ -1,5 +1,9 @@
 opponent,game_date,category,key_number,icon,headline,evidence,reasoning,source,impact,confidence,brief_eligible,priority_score
-Wheaton (IL) Thunder,2026-03-08,Offense,1,🎯,Attack their weakest look: Cut to the basket,"Opponents shot 110/155 (71% FG, 71% eFG) · 1.42 pts/attempt · +0.34 vs all looks (1.08) · 10% of attempts on this against Wheaton (IL) Thunder
+Wheaton (IL) Thunder,2026-03-08,Offense,1,🏀,Feature our best look: Motion,"Us: 1.06 PPP on 57 tagged possessions this season (team average 0.97)
+Them: opponents scored 0.86 PPP running this against Wheaton (IL) Thunder on 7 tagged possessions
+Runs it most: Marino, Madson, Verges, Bara, Warren (15x)
+Usually comes off 5 Out Motion (56 of 57 tagged possessions this season)","We score 1.06 a possession on it and Wheaton (IL) Thunder gives up 0.86 defending it -- go to it early, usually out of 5 Out Motion.",Data-Driven,0.48000000000000015,0.35,True,59.5
+Wheaton (IL) Thunder,2026-03-08,Offense,2,🎯,Attack their weakest look: Cut to the basket,"Opponents shot 110/155 (71% FG, 71% eFG) · 1.42 pts/attempt · +0.34 vs all looks (1.08) · 10% of attempts on this against Wheaton (IL) Thunder
 Best on this shot (5+ attempts):
 • Marino, Madson, Verges, Bara, Warren 19/36 (53%)
 Runs it most:
@@ -7,27 +11,31 @@ Runs it most:
 • Marino, Madson, Berezowitz, Bara, Warren 4x (50%)
 • Madson, Verges, Lukenbill, Quast, Bara 3x (100%)
 Usually comes off BLOB Line Motion for us (3 of 6 tagged possessions this season)",Teams have shot 71% on it against Wheaton (IL) Thunder -- hunt it; we usually get it out of BLOB Line Motion.,Data-Driven,0.6,1.0,True,74.0
-Wheaton (IL) Thunder,2026-03-08,Offense,2,📋,Call our best set: BLOB Set,"1.80 PPP on 5 uses vs our 0.97 overall · 4/5 FG
+Wheaton (IL) Thunder,2026-03-08,Offense,3,📋,Call our best set: BLOB Set,"1.80 PPP on 5 uses vs our 0.97 overall · 4/5 FG
 Finished most by Collin Madson (2x)","Our most productive set this season -- go to it when we need a good look, with Collin Madson finishing.",Data-Driven,0.6384615384615384,0.25,True,64.3
-Wheaton (IL) Thunder,2026-03-08,Defense,3,📊,Take away their most efficient high-volume actions,Offensive Rebound: 78.7% on 47 attempts; Cut: 68.4% on 193 attempts,Each is 5+ points above their 47.9% overall clip on 15+ attempts. Offensive Rebound: hit a body on every shot before going to the ball. Cut: jump to the ball on every pass and see man and ball -- no back-cuts behind ball-watchers.,Data-Driven,,,True,62.5
-Wheaton (IL) Thunder,2026-03-08,Defense,4,📊,Funnel them into their worst high-volume looks,P&R Ball Handler: 37.1% on 89 attempts; Off Screen: 37.8% on 230 attempts,Each is 5+ points below their 47.9% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
-Wheaton (IL) Thunder,2026-03-08,Defense,5,📊,Pressure the actions they turn it over on,P&R Ball Handler: 24 TO in 113 uses (21.2% vs 9.6% across all actions); Hand Off: 14 TO in 87 uses (16.1% vs 9.6% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
-Wheaton (IL) Thunder,2026-03-08,Defense,6,🛡️,What Wheaton (IL) Thunder goes to most: Drive to the basket,"523 attempts, 55% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
-Wheaton (IL) Thunder,2026-03-08,Personnel,7,🔒,"Attack Wheaton (IL) Thunder's Grier, Martin, VanderWoude, Neibch, Richardson lineup","Worst +/- lineups:
+Wheaton (IL) Thunder,2026-03-08,Defense,4,📊,Take away their most efficient high-volume actions,Offensive Rebound: 78.7% on 47 attempts; Cut: 68.4% on 193 attempts,Each is 5+ points above their 47.9% overall clip on 15+ attempts. Offensive Rebound: hit a body on every shot before going to the ball. Cut: jump to the ball on every pass and see man and ball -- no back-cuts behind ball-watchers.,Data-Driven,,,True,62.5
+Wheaton (IL) Thunder,2026-03-08,Defense,5,📊,Funnel them into their worst high-volume looks,P&R Ball Handler: 37.1% on 89 attempts; Off Screen: 37.8% on 230 attempts,Each is 5+ points below their 47.9% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
+Wheaton (IL) Thunder,2026-03-08,Defense,6,📊,Pressure the actions they turn it over on,P&R Ball Handler: 24 TO in 113 uses (21.2% vs 9.6% across all actions); Hand Off: 14 TO in 87 uses (16.1% vs 9.6% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
+Wheaton (IL) Thunder,2026-03-08,Defense,7,🛡️,What Wheaton (IL) Thunder goes to most: Drive to the basket,"523 attempts, 55% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
+Wheaton (IL) Thunder,2026-03-08,Defense,8,📋,Take away their go-to set: 5 Out Motion,"12 uses in 1 games · 1.27 PPP (their overall 0.95) · 2/6 FG · 4 TO
+Finished most by Devin Martin (4x)
+Built on: Ball Screen
+Tagged as: [app] 5 Out Motion: Run & Jump - Man-to-Man | [app] Offensive rebound 5 Out Motion: Man-to-Man | [app] Opener 5 Out Motion: Man-to-Man","Their most-called half-court set (12 times in 1 games). Devin Martin finishes it most, usually off the ball screen -- take away the ball screen and make someone else beat us.",Data-Driven,1.0,0.6,True,84.0
+Wheaton (IL) Thunder,2026-03-08,Personnel,9,🔒,"Attack Wheaton (IL) Thunder's Grier, Martin, VanderWoude, Neibch, Richardson lineup","Worst +/- lineups:
 -47.0 in 103.3 min, 52% FG — Grier, Martin, VanderWoude, Neibch, Richardson
 -21.0 in 13.3 min, 56% FG — Grier, VanderWoude, Carbonaro, Olson, Richardson
 -19.0 in 36.6 min, 50% FG — Wynja, Grier, VanderWoude, Olson, Richardson
 Highest TO rate (per 40 min):
 20.2 TO/40 — Wynja, VanderWoude, Carbonaro, Olson, Richardson
 19.1 TO/40 — Grier, Martin, Neibch, Olson, Richardson","Wheaton (IL) Thunder's most exploitable units: their worst net-rating lineups with real minutes this season (8+ min, losing their minutes), and the lineups that give the ball away most per 40 minutes. The headline names the worst of them.",Lineup Scouting,0.909970958373669,1.0,True,84.4
-Wheaton (IL) Thunder,2026-03-08,Personnel,8,🔒,"Counter with Chestnut, Quast, Berezowitz, Rogers, Warren","+1.33/min (+7 in 5.3 min) — Chestnut, Quast, Berezowitz, Rogers, Warren
+Wheaton (IL) Thunder,2026-03-08,Personnel,10,🔒,"Counter with Chestnut, Quast, Berezowitz, Rogers, Warren","+1.33/min (+7 in 5.3 min) — Chestnut, Quast, Berezowitz, Rogers, Warren
 +1.29/min (+3 in 2.3 min) — Madson, Quast, Berezowitz, McEwen, Warren
 +1.20/min (+4 in 3.3 min) — Marino, Chestnut, Verges, Lukenbill, Bara","UWW's best net margin against opponent units that resemble Wheaton (IL) Thunder's most-used lineup (Wynja, Grier, Martin, VanderWoude, Richardson). Measured across 28 comparable opponent unit(s), 40 min this season.",Lineup Scouting,1.0,0.6720000000000002,True,83.1
-Wheaton (IL) Thunder,2026-03-08,Personnel,9,🔒,"Attack Wheaton (IL) Thunder's Grier, VanderWoude, Richardson combo","Worst +/- 3-man combos:
+Wheaton (IL) Thunder,2026-03-08,Personnel,11,🔒,"Attack Wheaton (IL) Thunder's Grier, VanderWoude, Richardson combo","Worst +/- 3-man combos:
 -94.0 in 505.4 min — Grier, VanderWoude, Richardson
 -89.0 in 464.7 min — Grier, Martin, VanderWoude
 -64.0 in 176.5 min — Grier, VanderWoude, Neibch",Wheaton (IL) Thunder's most exploitable 3-man combinations: their worst net-rating units with real minutes this season (12+ min).,Lineup Scouting,0.37198258804907003,1.0,True,62.9
-Wheaton (IL) Thunder,2026-03-08,Personnel,10,,"Feature the Madson, Berezowitz, McEwen combo","Madson, Berezowitz, McEwen: +20.2 per 40 after shrinkage (+29.3 raw) · on/off +23.5 · 89 competitive min in 17 games (0 garbage-time min found)
+Wheaton (IL) Thunder,2026-03-08,Personnel,12,,"Feature the Madson, Berezowitz, McEwen combo","Madson, Berezowitz, McEwen: +20.2 per 40 after shrinkage (+29.3 raw) · on/off +23.5 · 89 competitive min in 17 games (0 garbage-time min found)
 Madson, Quast, McEwen: +19.9 per 40 after shrinkage (+27.3 raw) · on/off +21.7 · 109 competitive min in 19 games (0 garbage-time min found)
 Chestnut, Quast, Berezowitz: +19.6 per 40 after shrinkage (+34.7 raw) · on/off +28.3 · 52 competitive min in 12 games (0 garbage-time min found)
 On/off: +23.5 per 40 minutes (better with them on the floor)",Our best trio this season -- +20.2 per 40 minutes together; get them on the floor together.,Lineup Scouting,1.0,0.7393333333333333,True,84.1

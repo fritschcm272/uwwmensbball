@@ -1,5 +1,2 @@
 opponent,situation,primary_defense,freq_pct,secondary_defense,note,is_sample
-Wheaton (IL) Thunder,Half court,Man-to-man,78,2-3 zone (after a timeout or a long defensive stretch),"Switches 1-4, doesn't switch Carson Grier's matchup",True
-Wheaton (IL) Thunder,BLOB,Man-to-man,60,Box-and-1 on our best shooter,Denies the first pass hard,True
-Wheaton (IL) Thunder,SLOB,Man-to-man,85,,"Same coverage as half court, no separate call seen",True
-Wheaton (IL) Thunder,After a made basket (press),1-2-1-1 full-court,30,Man-to-man (no press),Presses more in the 4th when trailing,True
+Wheaton (IL) Thunder,Half court,Man-to-Man,100,,11 tagged possessions,False

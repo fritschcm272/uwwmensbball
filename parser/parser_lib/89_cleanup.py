@@ -177,7 +177,9 @@ def cleanup(dry_run=True):
     if os.path.exists(rt):
         d = _safe_read_pickle(rt)
         engines = set(globals().get("JERSEY_READER_ENGINES", [])) | {"__trained_model__"}
-        drop = [k for k in d if isinstance(k, tuple) and k[0] not in engines]
+        # CONFIRMED BUG (fixed): the bookkeeping entries ("__trained_pose_model__" = which model version the answers came from,
+        # "__speed__" = each reader's seconds a crop) were deleted as "readers no longer used" -- they're kept now
+        drop = [k for k in d if isinstance(k, tuple) and k[0] not in engines and not str(k[0]).startswith("__")]
         if drop and engines != {"__trained_model__"}:
             prune.append((rt, d, drop))
     # TrOCR's model, old review zips
