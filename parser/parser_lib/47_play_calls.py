@@ -3528,7 +3528,10 @@ def _pl_reads(clips):
                                  "player": _who(team, x.get("offense_jersey"), x.get("offense")), "read": one})
                 for one in [_pl_case(v) for v in str(x.get("defender_did") or "").split(" / ") if v.strip()]:
                     recs.append({**base, "team": dteam, "side_of_ball": "Defense",
-                                 "role": "Guarding the " + re.sub(r"\s*\(.*\)\s*$", "", role).lower(), "action": action,
+                                 # requested (Film Tagging's Defense table): On-Ball / Off-Ball defender
+                                 "role": ("On-ball defender" if re.search(r"trigger|ball ?handler", role, re.I) else
+                                          "Off-ball defender" if re.match(r"\s*screener\b", role, re.I) else
+                                          "Guarding the " + re.sub(r"\s*\(.*\)\s*$", "", role).lower()), "action": action,
                                  "player": _who(dteam, x.get("defender_jersey"), x.get("defender")), "read": one})
             continue
         for col, role in (("trigger_actions", "Ball handler (trigger)"), ("screener_actions", "Screener")):
