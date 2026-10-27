@@ -6340,8 +6340,13 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
                 # the box's team code ("UWW", "WHE", "NPA"), still colored by side (offense orange, defense blue)
                 _sides = [boxes[bi].get("side") for bi in idx]
                 df = pd.DataFrame([{"Box": boxes[bi].get("id"), "Team": _pr_side_code(pl, boxes[bi].get("side")),
+                                    # requested ("do all 3"): an unnamed box shows the appearance model's suggestion --
+                                    # confirm it by picking that player, or pick who it really is
                                     "Assigned": ((f"{boxes[bi].get('label')} ({boxes[bi].get('how')})" if boxes[bi].get("label")
-                                                  else "not named")
+                                                  else (f"looks like {_pr_lab(pl, boxes[bi]['hidden_guess'])}?"
+                                                        + (f" {float(boxes[bi]['hidden_guess_p']):.0%}"
+                                                           if boxes[bi].get("hidden_guess_p") is not None else ""))
+                                                  if boxes[bi].get("hidden_guess") else "not named")
                                                  + (" -- senior, gone" if boxes[bi].get("departed") else "")),
                                     "Your check": (store.get(k, _PR_NOT_CHECKED) if store.get(k, _PR_NOT_CHECKED) in choices
                                                    else _PR_NOT_CHECKED)} for bi, k in zip(idx, keys)])
