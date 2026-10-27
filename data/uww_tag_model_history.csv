@@ -195,4 +195,14 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-10-26T15:35:36,primary_action,Main action,55.0,55.0,Ball Screen,164.0,217,model,False,55% vs 55% always guessing on 164 held-out plays (+0 pts) -- needs +3 pts on 30+ plays,2.0,9.0,2026-10-26T15:35:08
 2026-10-26T15:35:36,ball_screen_coverage,Ball-screen coverage,24.0,31.0,Over,121.0,142,usual answer,False,model not better than always guessing (24% vs 31%),0.0,7.0,2026-10-26T15:35:08
 2026-10-26T15:35:36,offball_coverage,Off-ball coverage,29.0,57.0,Over,42.0,63,usual answer,False,model not better than always guessing (29% vs 57%),0.0,2.0,2026-10-26T15:35:08
-2026-10-26T15:35:36,screener,Screener,,,Luke Bara,,58,nan,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),0.0,1.0,2026-10-26T15:35:08
+2026-10-26T15:35:36,screener,Screener,,,Luke Bara,,58,,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),0.0,1.0,2026-10-26T15:35:08
+2026-10-27T07:14:27,formation,Formation,75.0,75.0,5 Out,280.0,304,usual answer,False,model not better than always guessing (75% vs 75%),8.0,13.0,2026-10-27T07:14:02
+2026-10-27T07:14:27,play_call,Play call,66.0,65.0,Motion,287.0,337,model,False,66% vs 65% always guessing on 287 held-out plays (+1 pts) -- needs +3 pts on 30+ plays,8.0,17.0,2026-10-27T07:14:02
+2026-10-27T07:14:27,defense,Defense,,,Man-to-Man,,472,usual answer,True,one answer covers 100% of 472 coach tags,20.0,20.0,2026-10-27T07:14:02
+2026-10-27T07:14:27,press,Press,85.0,84.0,,467.0,473,model,False,85% vs 84% always guessing on 467 held-out plays (+1 pts) -- needs +3 pts on 30+ plays,17.0,20.0,2026-10-27T07:14:02
+2026-10-27T07:14:27,situation,Situation,81.0,71.0,Half court,513.0,519,model,True,81% vs 71% always guessing on 513 held-out plays (+10 pts),12.0,20.0,2026-10-27T07:14:02
+2026-10-27T07:14:27,primary_action,Main action,56.0,56.0,Ball Screen,175.0,228,usual answer,False,model not better than always guessing (56% vs 56%),2.0,9.0,2026-10-27T07:14:02
+2026-10-27T07:14:27,ball_screen_coverage,Ball-screen coverage,26.0,31.0,Over,121.0,143,usual answer,False,model not better than always guessing (26% vs 31%),0.0,7.0,2026-10-27T07:14:02
+2026-10-27T07:14:27,screener,Screener,,,Luke Bara,,58,,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),0.0,1.0,2026-10-27T07:14:02
+2026-10-27T07:14:27,screen_defender,Screen defender,29.0,29.0,#5,55.0,97,usual answer,False,model not better than always guessing (29% vs 29%),,,2026-10-27T07:14:02
+2026-10-27T07:46:55,screener,Screener,,,Luke Bara,,58,nan,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),0.0,1.0,2026-10-27T07:46:35

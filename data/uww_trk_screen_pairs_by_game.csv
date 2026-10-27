@@ -1,44 +1,43 @@
 offense_team,screener,screened,screen_type,times,ppp,rolls,pops,slips,game_date,game_code
-UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,29,0.78,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-UW-Whitewater,unnamed offense,unnamed offense,Ball screen,14,1.71,1,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+UW-Whitewater,unnamed offense,unnamed offense,Off-ball screen,29,0.93,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+UW-Whitewater,unnamed offense,unnamed offense,Ball screen,11,1.64,1,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+UW-Whitewater,Brock Marino,Isaac Verges,Ball screen,1,2.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+UW-Whitewater,Brock Marino,Luke Bara,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+UW-Whitewater,Collin Madson,unnamed offense,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 UW-Whitewater,Luke Bara,unnamed offense,Ball screen,1,2.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-UW-Whitewater,unnamed offense,Brock Marino,Off-ball screen,1,2.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-UW-Whitewater,unnamed offense,Collin Madson,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-UW-Whitewater,unnamed offense,Isaac Verges,Ball screen,1,2.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-UW-Whitewater,unnamed offense,Joey Berezowitz,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-Washington-St. Louis Bears,unnamed offense,unnamed offense,Off-ball screen,37,0.97,3,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-Washington-St. Louis Bears,unnamed offense,unnamed offense,Ball screen,6,1.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-Washington-St. Louis Bears,unnamed offense,Josh Kim,Ball screen,3,0.33,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-Washington-St. Louis Bears,Ryan Cohen,unnamed offense,Off-ball screen,2,1.5,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-Washington-St. Louis Bears,unnamed offense,Josh Kim,Off-ball screen,2,1.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+UW-Whitewater,Rashad Rogers,Collin Madson,Ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+UW-Whitewater,unnamed offense,Luke Bara,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+Washington-St. Louis Bears,unnamed offense,unnamed offense,Off-ball screen,40,0.97,4,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+Washington-St. Louis Bears,unnamed offense,unnamed offense,Ball screen,9,0.56,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+Washington-St. Louis Bears,Josh Kim,unnamed offense,Off-ball screen,2,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+Washington-St. Louis Bears,Anthony Przybilla,unnamed offense,Ball screen,1,2.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+Washington-St. Louis Bears,Calvin Kapral,Josh Kim,Off-ball screen,1,2.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 Washington-St. Louis Bears,George Gale,Ryan Cohen,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-Washington-St. Louis Bears,Joey Berezowitz,unnamed offense,Off-ball screen,1,2.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-Washington-St. Louis Bears,Josh Kim,unnamed offense,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
 Washington-St. Louis Bears,Richie Warren,unnamed offense,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-Washington-St. Louis Bears,Yogi Oliff,unnamed offense,Ball screen,1,3.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-Washington-St. Louis Bears,unnamed offense,Connor May,Off-ball screen,1,3.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-Washington-St. Louis Bears,unnamed offense,Yogi Oliff,Off-ball screen,1,2.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
-North Park Vikings,unnamed offense,unnamed offense,Off-ball screen,63,0.9,5,0,0,2026-02-24,WheatonIL@NorthPark
-North Park Vikings,unnamed offense,unnamed offense,Ball screen,5,1.4,0,0,0,2026-02-24,WheatonIL@NorthPark
-North Park Vikings,Lazario Cornish,unnamed offense,Off-ball screen,2,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-North Park Vikings,unnamed offense,Lazario Cornish,Off-ball screen,2,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-North Park Vikings,Lazario Cornish,Mike Vuckovic,Off-ball screen,1,2.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-North Park Vikings,Marquis Vance,Jerome Smith Jr.,Off-ball screen,1,3.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-North Park Vikings,Mike Vuckovic,Lazario Cornish,Ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-North Park Vikings,Mike Vuckovic,unnamed offense,Off-ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-North Park Vikings,Tyvin Garrison,unnamed offense,Off-ball screen,1,,0,0,0,2026-02-24,WheatonIL@NorthPark
+Washington-St. Louis Bears,Ryan Cohen,unnamed offense,Off-ball screen,1,3.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+Washington-St. Louis Bears,unnamed offense,Anthony Przybilla,Off-ball screen,1,0.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+Washington-St. Louis Bears,unnamed offense,Ryan Cohen,Off-ball screen,1,2.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+Washington-St. Louis Bears,unnamed offense,Yogi Oliff,Off-ball screen,1,3.0,0,0,0,2026-03-07,UWWhitewater@Wash(StLouis)
+North Park Vikings,unnamed offense,unnamed offense,Off-ball screen,62,0.98,3,0,0,2026-02-24,WheatonIL@NorthPark
+North Park Vikings,unnamed offense,unnamed offense,Ball screen,4,0.75,0,0,0,2026-02-24,WheatonIL@NorthPark
+North Park Vikings,unnamed offense,Lazario Cornish,Off-ball screen,3,1.33,0,0,0,2026-02-24,WheatonIL@NorthPark
+North Park Vikings,unnamed offense,Jerome Smith Jr.,Off-ball screen,2,1.5,0,0,0,2026-02-24,WheatonIL@NorthPark
+North Park Vikings,unnamed offense,Julian Campbell,Off-ball screen,2,2.0,0,0,0,2026-02-24,WheatonIL@NorthPark
+North Park Vikings,Lazario Cornish,Marquis Vance,Off-ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
+North Park Vikings,Lazario Cornish,unnamed offense,Off-ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
+North Park Vikings,Mike Vuckovic,Dylan Fuzak,Off-ball screen,1,1.0,0,0,0,2026-02-24,WheatonIL@NorthPark
+North Park Vikings,Mike Vuckovic,Julian Campbell,Off-ball screen,1,2.0,1,0,0,2026-02-24,WheatonIL@NorthPark
+North Park Vikings,William Bates,Julian Campbell,Off-ball screen,1,3.0,0,0,0,2026-02-24,WheatonIL@NorthPark
 North Park Vikings,William Bates,unnamed offense,Off-ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-North Park Vikings,unnamed offense,Julian Campbell,Off-ball screen,1,2.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-North Park Vikings,unnamed offense,Kolden Vanlandingham,Off-ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-Wheaton (IL) Thunder,unnamed offense,unnamed offense,Off-ball screen,68,0.98,2,0,0,2026-02-24,WheatonIL@NorthPark
-Wheaton (IL) Thunder,unnamed offense,unnamed offense,Ball screen,7,1.14,0,0,0,2026-02-24,WheatonIL@NorthPark
-Wheaton (IL) Thunder,Brady Wynja,Devin Martin,Off-ball screen,2,2.5,0,0,0,2026-02-24,WheatonIL@NorthPark
-Wheaton (IL) Thunder,Devin Martin,Soren Richardson,Off-ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
+North Park Vikings,unnamed offense,Marquis Vance,Off-ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
+North Park Vikings,unnamed offense,Mike Vuckovic,Off-ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
+Wheaton (IL) Thunder,unnamed offense,unnamed offense,Off-ball screen,72,0.92,1,0,0,2026-02-24,WheatonIL@NorthPark
+Wheaton (IL) Thunder,unnamed offense,unnamed offense,Ball screen,5,0.8,0,0,0,2026-02-24,WheatonIL@NorthPark
+Wheaton (IL) Thunder,Soren Richardson,unnamed offense,Off-ball screen,3,1.33,0,0,0,2026-02-24,WheatonIL@NorthPark
+Wheaton (IL) Thunder,Devin Martin,Soren Richardson,Off-ball screen,2,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
+Wheaton (IL) Thunder,Brady Wynja,unnamed offense,Ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
+Wheaton (IL) Thunder,Carson Grier,Soren Richardson,Off-ball screen,1,2.0,0,0,0,2026-02-24,WheatonIL@NorthPark
+Wheaton (IL) Thunder,Carson Grier,unnamed offense,Off-ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
 Wheaton (IL) Thunder,Devin Martin,unnamed offense,Off-ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-Wheaton (IL) Thunder,Reid Olson,Soren Richardson,Off-ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-Wheaton (IL) Thunder,Soren Richardson,Carson Grier,Off-ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-Wheaton (IL) Thunder,Soren Richardson,Kyan VanderWoude,Off-ball screen,1,0.0,0,0,0,2026-02-24,WheatonIL@NorthPark
 Wheaton (IL) Thunder,Soren Richardson,unnamed offense,Ball screen,1,2.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-Wheaton (IL) Thunder,Soren Richardson,unnamed offense,Off-ball screen,1,2.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-Wheaton (IL) Thunder,unnamed offense,Kyan VanderWoude,Off-ball screen,1,2.0,0,0,0,2026-02-24,WheatonIL@NorthPark
-Wheaton (IL) Thunder,unnamed offense,Soren Richardson,Off-ball screen,1,,0,0,0,2026-02-24,WheatonIL@NorthPark
+Wheaton (IL) Thunder,unnamed offense,Devin Martin,Off-ball screen,1,,0,0,0,2026-02-24,WheatonIL@NorthPark

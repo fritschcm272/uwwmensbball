@@ -874,6 +874,7 @@ def play_review():
                 .drop(columns="_back"))
 
     globals()["_tag_cur_run"] = None                  # this run's games, worked out fresh (see _tag_run_reason)
+    _keep_slugs = set()                               # the games whose player checks stay in the app this run
     for (gd, gc), g in pc.groupby(["game_date", "game_code"], dropna=False):
         _slug_app = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
         _pkg = os.path.join(_pr_app_dir(), "play_review", _slug_app)
@@ -889,6 +890,7 @@ def play_review():
             else:
                 print(f"Play review: {gd} {gc} left out -- not part of this run", flush=True)
             continue
+        _keep_slugs.add(_slug_app)
         # CONFIRMED CHANGE (requested: everything in the data folder; the Title and player-number checks are done in the
         # Streamlit app, not review.html pages). A game's open review is its package in <data>/play_review/<game>/. With
         # PLAY_REVIEW_QUEUES = "separate" it's rebuilt once EITHER part is saved (the saved part moves on to its next plays,
@@ -1123,6 +1125,16 @@ def play_review():
         print(f"Play review: {gd} {gc}: {_nt} Title check(s) ({_rng('titles')}) -- Analytics > Film Tagging; {_np} player check(s) "
               f"({_rng('players')}) -- Analytics > Player Number Tracking "
               f"({'next unreviewed, in game order' if _mode != 'random' else 'random'})", flush=True)
+    # CONFIRMED CHANGE (requested: "these games for the Player Number Tracking aren't using the latest version, so can they be
+    # removed from the application?" -- WWW@AC, WWW@COE, WOS@WWW and MarianWI@MSOE still showed batches built on the old
+    # frames before the tracking restart). An open batch for a game with no player tracks this run, or outside this run, is
+    # removed from the app. Checks already saved are kept (play_review_saves) and still count.
+    if not PLAY_REVIEW_ONLY_GAME:
+        for _d in sorted(glob.glob(os.path.join(_pr_app_dir(), "play_review", "*"))):
+            if os.path.isdir(_d) and os.path.basename(_d) not in _keep_slugs:
+                shutil.rmtree(_d, ignore_errors=True)
+                print(f"Play review: removed the old player-check batch {os.path.basename(_d)} from the app -- no player "
+                      f"tracks for that game this run (saved checks are kept)", flush=True)
 
 
 # ---- Film Tagging queue: the clips with no tag yet, in game order, Titles only -------------------------------------------
