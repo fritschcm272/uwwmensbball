@@ -6227,7 +6227,12 @@ def _pr_check_of(pl, b, val):
             return "wrong team", name
     else:
         return None
-    return ("wrong team" if sd and b.get("side") in ("offense", "defense") and sd != b.get("side") else "wrong"), name
+    verdict = "wrong team" if sd and b.get("side") in ("offense", "defense") and sd != b.get("side") else "wrong"
+    # requested ("if this was my answer, would it still find it as correct?"): picking the player the box is ALREADY named as
+    # is the same as "correct" -- saved that way, so it reads plainly in the files and every count
+    if verdict == "wrong" and name and b.get("name") and _pr_norm(name) == _pr_norm(b.get("name")):
+        return "correct", b.get("name")
+    return verdict, name
 
 
 def _pr_box_choices(pl, b):

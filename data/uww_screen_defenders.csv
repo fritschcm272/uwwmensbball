@@ -1,6 +1,6 @@
 side,scouted_opponent,perspective,defense_team,defender,screen_family,screens,games,coverages,main_coverage,ppp_allowed,fg_pct_allowed,turnovers
 UWW,Wheaton (IL) Thunder,Defenses UWW faced,Washington-St. Louis Bears,#3 Josh Kim,Ball screen,4,1,Over 50% (2) · Under 25% (1) · Switch 25% (1),Over,1.25,50,0
-Opponent,Wheaton (IL) Thunder,Opponent defense,Wheaton (IL) Thunder,#35 Brady Wynja,Ball screen,3,1,High hedge 33% (1) · HIgh Hegde 33% (1) · Flat Hedge / Switch 33% (1),High hedge,0.67,33,0
+Opponent,Wheaton (IL) Thunder,Opponent defense,Wheaton (IL) Thunder,#35 Brady Wynja,Ball screen,4,1,High hedge 25% (1) · HIgh Hegde 25% (1) · Flat Hedge / Switch 25% (1) · Flat Hedge 25% (1),High hedge,0.5,25,0
 Opponent,Wheaton (IL) Thunder,Opponent defense,Wheaton (IL) Thunder,#33 Noah Hedrick,Ball screen,2,1,Flat Hedge 50% (1) · High Hedge 50% (1),Flat Hedge,1.0,50,0
 UWW,Wheaton (IL) Thunder,UWW defense,UW-Whitewater,#32 Luke Bara,Ball screen,6,1,Switch 67% (4) · Over 33% (2),Switch,0.83,50,1
 UWW,Wheaton (IL) Thunder,UWW defense,UW-Whitewater,#24 Richie Warren,Ball screen,5,1,Switch 40% (2) · Flat Hedge / Over 20% (1) · Switch / Get back 20% (1) · Stick 20% (1),Switch,1.2,50,0

@@ -1,8 +1,8 @@
 opponent,game_date,category,key_number,icon,headline,evidence,reasoning,source,impact,confidence,brief_eligible,priority_score
-Wheaton (IL) Thunder,2026-03-08,Offense,1,🏀,Feature our best look: Motion,"Us: 1.06 PPP on 57 tagged possessions this season (team average 0.97)
-Them: opponents scored 0.86 PPP running this against Wheaton (IL) Thunder on 7 tagged possessions
-Runs it most: Marino, Madson, Verges, Bara, Warren (15x)
-Usually comes off 5 Out Motion (56 of 57 tagged possessions this season)","We score 1.06 a possession on it and Wheaton (IL) Thunder gives up 0.86 defending it -- go to it early, usually out of 5 Out Motion.",Data-Driven,0.48000000000000015,0.35,True,59.5
+Wheaton (IL) Thunder,2026-03-08,Offense,1,🏀,Feature our best look: Set,"Us: 1.00 PPP on 6 tagged possessions this season (team average 0.97)
+Them: opponents scored 1.60 PPP running this against Wheaton (IL) Thunder on 5 tagged possessions
+Runs it most: Marino, Madson, Verges, Bara, Warren (2x)
+Usually comes off Set (6 of 6 tagged possessions this season)",We score 1.00 a possession on it and Wheaton (IL) Thunder gives up 1.60 defending it -- go to it early.,Data-Driven,0.36000000000000004,0.25,True,53.2
 Wheaton (IL) Thunder,2026-03-08,Offense,2,🎯,Attack their weakest look: Cut to the basket,"Opponents shot 110/155 (71% FG, 71% eFG) · 1.42 pts/attempt · +0.34 vs all looks (1.08) · 10% of attempts on this against Wheaton (IL) Thunder
 Best on this shot (5+ attempts):
 • Marino, Madson, Verges, Bara, Warren 19/36 (53%)
@@ -17,10 +17,10 @@ Wheaton (IL) Thunder,2026-03-08,Defense,4,📊,Take away their most efficient hi
 Wheaton (IL) Thunder,2026-03-08,Defense,5,📊,Funnel them into their worst high-volume looks,P&R Ball Handler: 37.1% on 89 attempts; Off Screen: 37.8% on 230 attempts,Each is 5+ points below their 47.9% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
 Wheaton (IL) Thunder,2026-03-08,Defense,6,📊,Pressure the actions they turn it over on,P&R Ball Handler: 24 TO in 113 uses (21.2% vs 9.6% across all actions); Hand Off: 14 TO in 87 uses (16.1% vs 9.6% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
 Wheaton (IL) Thunder,2026-03-08,Defense,7,🛡️,What Wheaton (IL) Thunder goes to most: Drive to the basket,"523 attempts, 55% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
-Wheaton (IL) Thunder,2026-03-08,Defense,8,📋,Take away their go-to set: 5 Out Motion,"12 uses in 1 games · 1.27 PPP (their overall 0.95) · 2/6 FG · 4 TO
-Finished most by Devin Martin (4x)
+Wheaton (IL) Thunder,2026-03-08,Defense,8,📋,Take away their go-to set: 5 Out Motion,"21 uses in 1 games · 1.35 PPP (their overall 1.13) · 6/12 FG · 6 TO
+Finished most by Kyan VanderWoude (5x)
 Built on: Ball Screen
-Tagged as: [app] 5 Out Motion: Run & Jump - Man-to-Man | [app] Offensive rebound 5 Out Motion: Man-to-Man | [app] Opener 5 Out Motion: Man-to-Man","Their most-called half-court set (12 times in 1 games). Devin Martin finishes it most, usually off the ball screen -- take away the ball screen and make someone else beat us.",Data-Driven,1.0,0.6,True,84.0
+Tagged as: [app] 5 Out Motion: Man-to-Man | [app] 5 Out Motion: Run & Jump - Man-to-Man | [app] Offensive rebound 5 Out Motion: Man-to-Man","Their most-called half-court set (21 times in 1 games). Kyan VanderWoude finishes it most, usually off the ball screen -- take away the ball screen and make someone else beat us.",Data-Driven,1.0,1.0,True,90.0
 Wheaton (IL) Thunder,2026-03-08,Personnel,9,🔒,"Attack Wheaton (IL) Thunder's Grier, Martin, VanderWoude, Neibch, Richardson lineup","Worst +/- lineups:
 -47.0 in 103.3 min, 52% FG — Grier, Martin, VanderWoude, Neibch, Richardson
 -21.0 in 13.3 min, 56% FG — Grier, VanderWoude, Carbonaro, Olson, Richardson

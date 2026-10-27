@@ -1,4 +1,4 @@
 opponent,clock_situation,freq_pct,ppp,fg_pct,note,is_sample
-Wheaton (IL) Thunder,Early clock (0-9 sec used),47,0.44,25.0,9 tagged possessions -- most often Ball Screen (Carson Grier),False
-Wheaton (IL) Thunder,Organized offense (10-19 sec used),26,0.8,50.0,5 tagged possessions -- most often Flair (Devin Martin),False
-Wheaton (IL) Thunder,Late clock (20+ sec used),26,2.0,33.3,5 tagged possessions -- most often Down Screen (Kyan VanderWoude),False
+Wheaton (IL) Thunder,Early clock (0-9 sec used),47,0.88,41.7,17 tagged possessions -- most often Ball Screen (Carson Grier),False
+Wheaton (IL) Thunder,Organized offense (10-19 sec used),28,0.8,42.9,10 tagged possessions -- most often Flair (Devin Martin),False
+Wheaton (IL) Thunder,Late clock (20+ sec used),25,2.11,66.7,9 tagged possessions -- most often Ball Screen (Kyan VanderWoude),False

@@ -1,85 +1,92 @@
 defense_team,defender,role,screen_type,coverage,coverage_source,times,ppp,share_pct
-North Park Vikings,Julian Campbell,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,100.0
+North Park Vikings,Julian Campbell,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,100.0
 North Park Vikings,Julian Campbell,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,100.0
-North Park Vikings,Mike Vuckovic,guarding the screener,Ball screen,back (drop),tracking estimate,1,1.0,100.0
-North Park Vikings,William Bates,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,,100.0
-North Park Vikings,William Bates,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,100.0
-North Park Vikings,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,55,1.02,72.0
-North Park Vikings,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,19,0.84,25.0
-North Park Vikings,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,5,1.8,62.0
-North Park Vikings,unnamed defense,guarding the player screened,Ball screen,back (drop),tracking estimate,2,0.5,25.0
-North Park Vikings,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,1.0,3.0
-North Park Vikings,unnamed defense,guarding the player screened,Ball screen,blitz / trap,tracking estimate,1,0.0,12.0
-North Park Vikings,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,42,1.03,71.0
-North Park Vikings,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,15,0.93,25.0
-North Park Vikings,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,3,1.33,75.0
-North Park Vikings,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,1.0,3.0
-North Park Vikings,unnamed defense,guarding the screener,Ball screen,blitz / trap,tracking estimate,1,0.0,25.0
-UW-Whitewater,Collin Madson,guarding the player screened,Ball screen,back (drop),tracking estimate,1,2.0,100.0
-UW-Whitewater,Isaac Verges,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,100.0
-UW-Whitewater,Joey Berezowitz,guarding the player screened,Ball screen,Over,coach tag,1,2.0,100.0
-UW-Whitewater,Richie Warren,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0
-UW-Whitewater,Yogi Oliff,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,100.0
-UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,22,1.35,49.0
-UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,20,0.74,44.0
-UW-Whitewater,unnamed defense,guarding the player screened,Ball screen,Over,coach tag,3,0.0,38.0
-UW-Whitewater,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,3,1.67,38.0
-UW-Whitewater,unnamed defense,guarding the player screened,Ball screen,Switch,coach tag,2,0.5,25.0
+North Park Vikings,Kolden Vanlandingham,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,100.0
+North Park Vikings,Lazario Cornish,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,100.0
+North Park Vikings,Lazario Cornish,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,,100.0
+North Park Vikings,Mike Vuckovic,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,50.0
+North Park Vikings,Mike Vuckovic,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,2.0,50.0
+North Park Vikings,William Bates,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,100.0
+North Park Vikings,William Bates,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,3,2.5,75.0
+North Park Vikings,William Bates,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,25.0
+North Park Vikings,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,54,0.89,74.0
+North Park Vikings,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,17,0.69,23.0
+North Park Vikings,unnamed defense,guarding the player screened,Ball screen,back (drop),tracking estimate,3,0.67,50.0
+North Park Vikings,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,3,1.33,50.0
+North Park Vikings,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,2.0,3.0
+North Park Vikings,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,42,0.83,71.0
+North Park Vikings,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,15,0.85,25.0
+North Park Vikings,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,3,0.67,60.0
+North Park Vikings,unnamed defense,guarding the screener,Ball screen,back (drop),tracking estimate,2,1.0,40.0
+North Park Vikings,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,2,2.0,3.0
+UW-Whitewater,Isaac Verges,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,3,1.67,100.0
+UW-Whitewater,Luke Bara,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,100.0
+UW-Whitewater,Richie Warren,guarding the screener,Ball screen,unclear,tracking estimate,1,2.0,100.0
+UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,23,1.19,50.0
+UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,21,0.8,46.0
+UW-Whitewater,unnamed defense,guarding the player screened,Ball screen,Over,coach tag,3,0.0,30.0
+UW-Whitewater,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,3,1.33,30.0
+UW-Whitewater,unnamed defense,guarding the player screened,Ball screen,Switch,coach tag,2,0.5,20.0
 UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,Over,coach tag,2,0.0,4.0
-UW-Whitewater,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,2.0
-UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,18,0.65,49.0
-UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,17,0.93,46.0
-UW-Whitewater,unnamed defense,guarding the screener,Ball screen,Over,coach tag,3,0.67,33.0
-UW-Whitewater,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,3,1.67,33.0
-UW-Whitewater,unnamed defense,guarding the screener,Ball screen,Switch,coach tag,2,0.5,22.0
-UW-Whitewater,unnamed defense,guarding the screener,Ball screen,back (drop),tracking estimate,1,2.0,11.0
+UW-Whitewater,unnamed defense,guarding the player screened,Ball screen,back (drop),tracking estimate,1,2.0,10.0
+UW-Whitewater,unnamed defense,guarding the player screened,Ball screen,switch,tracking estimate,1,0.0,10.0
+UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,21,1.32,54.0
+UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,17,0.69,44.0
+UW-Whitewater,unnamed defense,guarding the screener,Ball screen,Over,coach tag,2,0.0,25.0
+UW-Whitewater,unnamed defense,guarding the screener,Ball screen,Switch,coach tag,2,0.5,25.0
+UW-Whitewater,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,2,1.0,25.0
+UW-Whitewater,unnamed defense,guarding the screener,Ball screen,back (drop),tracking estimate,1,2.0,12.0
+UW-Whitewater,unnamed defense,guarding the screener,Ball screen,switch,tracking estimate,1,0.0,12.0
 UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,Over,coach tag,1,0.0,3.0
-UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,1,2.0,3.0
-Washington-St. Louis Bears,Calvin Kapral,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,100.0
-Washington-St. Louis Bears,Josh Kim,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0
-Washington-St. Louis Bears,Ryan Cohen,guarding the player screened,Ball screen,unclear,tracking estimate,1,2.0,100.0
-Washington-St. Louis Bears,Ryan Cohen,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,50.0
-Washington-St. Louis Bears,Ryan Cohen,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,50.0
+Washington-St. Louis Bears,Calvin Kapral,guarding the player screened,Ball screen,back (drop),tracking estimate,1,2.0,100.0
+Washington-St. Louis Bears,Josh Kim,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,100.0
+Washington-St. Louis Bears,Josh Kim,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,100.0
+Washington-St. Louis Bears,Josh Kim,guarding the screener,Ball screen,Switch,coach tag,1,2.0,100.0
+Washington-St. Louis Bears,Ryan Cohen,guarding the screener,Ball screen,back (drop),tracking estimate,1,3.0,100.0
+Washington-St. Louis Bears,Ryan Cohen,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,100.0
 Washington-St. Louis Bears,Will Grudzinski,guarding the player screened,Off-ball screen,Stick,coach tag,1,,100.0
-Washington-St. Louis Bears,Yogi Oliff,guarding the player screened,Ball screen,Drop,coach tag,1,2.0,50.0
-Washington-St. Louis Bears,Yogi Oliff,guarding the player screened,Ball screen,unclear,tracking estimate,1,2.0,50.0
+Washington-St. Louis Bears,Yogi Oliff,guarding the player screened,Ball screen,Drop,coach tag,1,2.0,100.0
+Washington-St. Louis Bears,Yogi Oliff,guarding the screener,Ball screen,back (drop),tracking estimate,1,2.0,100.0
 Washington-St. Louis Bears,Yogi Oliff,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,22,0.67,79.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,5,1.4,18.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,Switch,coach tag,4,1.5,31.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,Over,coach tag,2,2.5,15.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,back (drop),tracking estimate,2,2.5,15.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,2,1.0,15.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,2,1.0,15.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,20,0.63,69.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,7,1.57,24.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,Over,coach tag,3,1.67,25.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,Switch,coach tag,3,1.33,25.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,back (drop),tracking estimate,3,2.33,25.0
 Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,switch,tracking estimate,1,2.0,8.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,Over,coach tag,1,0.0,4.0
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,19,0.78,79.0
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,Switch,coach tag,4,1.5,27.0
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,4,1.5,27.0
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,4,1.0,17.0
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,back (drop),tracking estimate,2,2.5,13.0
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,up (hedge / show),tracking estimate,2,1.0,13.0
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,Drop,coach tag,1,2.0,7.0
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,Over,coach tag,1,2.0,7.0
-Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,switch,tracking estimate,1,2.0,7.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,8.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,up (hedge / show),tracking estimate,1,0.0,8.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,Over,coach tag,1,0.0,3.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,Top Lock,coach tag,1,2.0,3.0
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,16,0.8,67.0
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,6,1.83,25.0
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,Switch,coach tag,2,1.0,22.0
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,back (drop),tracking estimate,2,2.0,22.0
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,Drop,coach tag,1,2.0,11.0
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,Over,coach tag,1,2.0,11.0
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,switch,tracking estimate,1,2.0,11.0
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,11.0
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Ball screen,up (hedge / show),tracking estimate,1,0.0,11.0
 Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,Over,coach tag,1,0.0,4.0
-Wheaton (IL) Thunder,Brady Wynja,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,100.0
-Wheaton (IL) Thunder,Brady Wynja,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,100.0
-Wheaton (IL) Thunder,Devin Martin,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,1.5,67.0
-Wheaton (IL) Thunder,Devin Martin,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,33.0
-Wheaton (IL) Thunder,Devin Martin,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,100.0
+Washington-St. Louis Bears,unnamed defense,guarding the screener,Off-ball screen,Top Lock,coach tag,1,2.0,4.0
+Wheaton (IL) Thunder,Carson Grier,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,4,1.5,80.0
+Wheaton (IL) Thunder,Carson Grier,guarding the player screened,Off-ball screen,unclear,tracking estimate,1,0.0,20.0
+Wheaton (IL) Thunder,Devin Martin,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,2.5,67.0
+Wheaton (IL) Thunder,Devin Martin,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,33.0
+Wheaton (IL) Thunder,Devin Martin,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,2.5,50.0
+Wheaton (IL) Thunder,Devin Martin,guarding the screener,Off-ball screen,unclear,tracking estimate,2,1.0,50.0
 Wheaton (IL) Thunder,Soren Richardson,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0
-Wheaton (IL) Thunder,Soren Richardson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,50.0
-Wheaton (IL) Thunder,Soren Richardson,guarding the screener,Off-ball screen,unclear,tracking estimate,1,0.0,50.0
-Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,44,1.08,64.0
-Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,20,0.63,29.0
-Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,5,0.25,7.0
-Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,4,1.75,67.0
-Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Ball screen,Flat Hedge,coach tag,1,0.0,17.0
-Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Ball screen,back (drop),tracking estimate,1,0.0,17.0
-Wheaton (IL) Thunder,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,32,0.89,63.0
-Wheaton (IL) Thunder,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,14,0.64,27.0
-Wheaton (IL) Thunder,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,5,0.25,10.0
-Wheaton (IL) Thunder,unnamed defense,guarding the screener,Ball screen,Flat Hedge,coach tag,1,0.0,33.0
-Wheaton (IL) Thunder,unnamed defense,guarding the screener,Ball screen,back (drop),tracking estimate,1,0.0,33.0
-Wheaton (IL) Thunder,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,33.0
+Wheaton (IL) Thunder,Soren Richardson,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,50.0
+Wheaton (IL) Thunder,Soren Richardson,guarding the screener,Off-ball screen,unclear,tracking estimate,2,0.0,50.0
+Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,40,1.11,59.0
+Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,24,0.87,35.0
+Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Off-ball screen,stayed attached (lock / trail),tracking estimate,4,0.0,6.0
+Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Ball screen,back (drop),tracking estimate,2,1.5,50.0
+Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Ball screen,Flat Hedge,coach tag,1,0.0,25.0
+Wheaton (IL) Thunder,unnamed defense,guarding the player screened,Ball screen,unclear,tracking estimate,1,0.0,25.0
+Wheaton (IL) Thunder,unnamed defense,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,29,1.27,56.0
+Wheaton (IL) Thunder,unnamed defense,guarding the screener,Off-ball screen,unclear,tracking estimate,19,1.0,37.0
+Wheaton (IL) Thunder,unnamed defense,guarding the screener,Off-ball screen,stayed attached (lock / trail),tracking estimate,4,0.0,8.0
+Wheaton (IL) Thunder,unnamed defense,guarding the screener,Ball screen,back (drop),tracking estimate,2,1.5,50.0
+Wheaton (IL) Thunder,unnamed defense,guarding the screener,Ball screen,Flat Hedge,coach tag,1,0.0,25.0
+Wheaton (IL) Thunder,unnamed defense,guarding the screener,Ball screen,unclear,tracking estimate,1,0.0,25.0

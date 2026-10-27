@@ -2730,43 +2730,87 @@ def player_tracking(pc):
             print(f"  [tracking]   appearance: {len(_app_games)} game(s) with {_min_c}+ coach-named boxes get fingerprints"
                   + (": " + ", ".join(sorted(_app_games)) if _app_games else " (none yet -- save player checks in the app)"),
                   flush=True)
-        for _n_clip, i in enumerate(todo, 1):
-            _trk_progress("clips cut into player crops", _n_clip, len(todo), _t0)
-            if _app_games is not None and game_of[i] not in _app_games:
-                continue
-            clip = clips[i]
-            for k, tr in enumerate(clip["tracks"]):
-                if not clip["side"].get(k):
-                    continue
-                pick = [tr[int(x)] for x in np.linspace(0, len(tr) - 1, min(TRACK_EMBED_CROPS, len(tr)))]
-                for t, j in pick:
-                    f = clip["files"][t]
-                    x1, y1, x2, y2 = clip["frames"][t][j][6:10]
-                    ck = f"{f}|{int(x1)}|{int(y1)}|{int(x2)}|{int(y2)}"
-                    if ck in fp_cache:
-                        fps.setdefault((i, k), []).append(fp_cache[ck])
+        def _cut(ids, want, label):
+            """Crops (or saved fingerprints) for the tracks in clips `ids` that want(i, k) accepts."""
+            crops, owners, keys = [], [], []
+            _tc = time.time()
+            for _n_clip, i in enumerate(ids, 1):
+                _trk_progress(label, _n_clip, len(ids), _tc)
+                clip = clips[i]
+                for k, tr in enumerate(clip["tracks"]):
+                    if not clip["side"].get(k) or not want(i, k) or (i, k) in fps:
                         continue
-                    # (frame archive) the picture is opened only when its fingerprint isn't saved yet
-                    if f not in img_cache and not os.path.exists(os.path.join(base, f)):
-                        continue                           # (lean mode) frame deleted after tracking: no new crop from it
-                    if f not in img_cache:
-                        if len(img_cache) > 200:
-                            img_cache.clear()
-                        img_cache[f] = Image.open(os.path.join(base, f)).convert("RGB")
-                    crops.append(img_cache[f].crop((int(x1), int(y1), int(x2), int(y2))))
-                    owners.append((i, k))
-                    keys.append(ck)
-        n_reused = sum(len(v) for v in fps.values())
-        if crops:
-            print(f"  [tracking] fingerprinting {len(crops):,} new player crop(s) ({n_reused:,} reused from earlier runs) -- "
-                  f"the slowest step on a laptop, progress below...", flush=True)
-            for o, ck, v in zip(owners, keys, _trk_embed(crops)):
-                fps.setdefault(o, []).append(v)
-                fp_cache[ck] = np.asarray(v, dtype=np.float16)
-            os.makedirs(TRACK_DIR, exist_ok=True)
-            _safe_to_pickle(fp_cache, fp_path)
-        else:
-            print(f"  [tracking]   all {n_reused:,} fingerprints reused from earlier runs", flush=True)
+                    pick = [tr[int(x)] for x in np.linspace(0, len(tr) - 1, min(TRACK_EMBED_CROPS, len(tr)))]
+                    for t, j in pick:
+                        f = clip["files"][t]
+                        x1, y1, x2, y2 = clip["frames"][t][j][6:10]
+                        ck = f"{f}|{int(x1)}|{int(y1)}|{int(x2)}|{int(y2)}"
+                        if ck in fp_cache:
+                            fps.setdefault((i, k), []).append(fp_cache[ck])
+                            continue
+                        # (frame archive) the picture is opened only when its fingerprint isn't saved yet
+                        if f not in img_cache and not os.path.exists(os.path.join(base, f)):
+                            continue                       # (lean mode) frame deleted after tracking: no new crop from it
+                        if f not in img_cache:
+                            if len(img_cache) > 200:
+                                img_cache.clear()
+                            img_cache[f] = Image.open(os.path.join(base, f)).convert("RGB")
+                        crops.append(img_cache[f].crop((int(x1), int(y1), int(x2), int(y2))))
+                        owners.append((i, k))
+                        keys.append(ck)
+            n_reused = sum(len(fps.get(o, [])) for o in {o for o in fps})
+            if crops:
+                print(f"  [tracking] fingerprinting {len(crops):,} new player crop(s) -- progress below...", flush=True)
+                for o, ck, v in zip(owners, keys, _trk_embed(crops)):
+                    fps.setdefault(o, []).append(v)
+                    fp_cache[ck] = np.asarray(v, dtype=np.float16)
+                os.makedirs(TRACK_DIR, exist_ok=True)
+                _safe_to_pickle(fp_cache, fp_path)
+            return len(crops), n_reused
+
+        _ids_all = [i for i in todo if _app_games is None or game_of[i] in _app_games]
+        # CONFIRMED CHANGE (requested: "make it pass some type of test before turning it back on" -- the 10/26 run spent ~45 min
+        # fingerprinting every player for appearance names that then failed their check on both games). TRACK_APPEARANCE_GATE
+        # (default True): FIRST only the coach-checked players are fingerprinted (a minute or two) and the same honest test
+        # is run on them -- hide each checked player's name, let his look pick him out of the five on the floor from the
+        # OTHER checked boxes. Only a game that passes (TRACK_APPEARANCE_MIN_CHECK on TRACK_APPEARANCE_MIN_TRIES+ boxes) gets
+        # every player fingerprinted and appearance names; a game that fails keeps jersey-number / coach / Synergy names.
+        _gate = bool(globals().get("TRACK_APPEARANCE_GATE", True))
+        _pass_games = set(game_of[i] for i in _ids_all)
+        if _gate:
+            _n_new, _ = _cut(_ids_all, lambda i, k: bool(coach.get((i, k))), "clips: coach-checked players cut out")
+            _nrm = lambda vs: (np.mean(vs, 0) / (np.linalg.norm(np.mean(vs, 0)) + 1e-8))
+            _fpn = {o: _nrm(v) for o, v in fps.items()}
+            _pass_games = set()
+            for g_ in sorted(set(game_of[i] for i in _ids_all)):
+                seeds_ = [(i, k, n) for (i, k), n in coach.items() if n and game_of.get(i) == g_ and (i, k) in _fpn]
+                raw_ = {}
+                for i, k, n in seeds_:
+                    raw_.setdefault(n, []).append((i, _fpn[(i, k)]))
+                h_ = t_ = 0
+                for i, k, n in seeds_:
+                    pr_ = {m: _nrm([v for j_, v in vs if j_ != i]) for m, vs in raw_.items() if any(j_ != i for j_, _ in vs)}
+                    sd_ = clips[i]["side"].get(k)
+                    five_ = _trk_five(pc.at[i, "offense_lineup" if sd_ == "offense" else "defense_lineup"])
+                    sims_ = {m: float(_fpn[(i, k)] @ pr_[m]) for m in five_ if m in pr_}
+                    if not sims_:
+                        continue
+                    t_ += 1
+                    h_ += int(max(sims_, key=sims_.get) == n)
+                ok_ = t_ >= TRACK_APPEARANCE_MIN_TRIES and h_ / t_ >= TRACK_APPEARANCE_MIN_CHECK
+                if ok_:
+                    _pass_games.add(g_)
+                print(f"  [tracking]   appearance test, {g_}: {h_}/{t_} coach-checked players picked out by their look"
+                      + (f" ({h_ / t_:.0%})" if t_ else "") + " -- "
+                      + ("PASSES: every player gets fingerprinted" if ok_ else
+                         (f"below {TRACK_APPEARANCE_MIN_CHECK:.0%}" if t_ >= TRACK_APPEARANCE_MIN_TRIES else
+                          f"too few checked players to test (needs {TRACK_APPEARANCE_MIN_TRIES})")
+                         + ": no appearance names this run (and no full fingerprinting)"), flush=True)
+        _ids_full = [i for i in _ids_all if game_of[i] in _pass_games]
+        if _ids_full:
+            _n_new, n_reused = _cut(_ids_full, lambda i, k: True, "clips cut into player crops")
+            if not _n_new:
+                print(f"  [tracking]   all fingerprints for the {len(_pass_games)} game(s) reused from earlier runs", flush=True)
         fp = {o: (np.mean(v, 0) / (np.linalg.norm(np.mean(v, 0)) + 1e-8)) for o, v in fps.items()}
 
     # --- names: closest profile among the five on the floor, no duplicate names at the same moment ---
