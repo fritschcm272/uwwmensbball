@@ -324,6 +324,7 @@ def jersey_collect():
 
     # coach checks: the true number at the checked frame
     coach_spots = set()
+    coach_says = {}                                   # (frame, x1, y1) -> the checked player's name (None = not a player)
     _nums_by_game = {}
     _checks = coach_checks_all()[0]                   # every checks file, merged -- the latest check of a box wins
     _jr_say(f"cutting training crops from {len(_checks):,} coach check(s) (a crop already in the training set is skipped)...")
@@ -349,6 +350,8 @@ def jersey_collect():
             continue
         fname = _jr_name(ch["frame_file"], box)
         coach_spots.add((ch["frame_file"], int(box[0]), int(box[1])))
+        coach_says[(ch["frame_file"], int(box[0]), int(box[1]))] = (
+            ch.get("true_name") if ch.get("verdict") != "not a player" else None)
         # a box re-checked as someone else (or "not a player"): its crop must not stay under the old number
         for old_ in glob.glob(os.path.join(JERSEY_TRAIN_DIR, _jr_dir("coach"), "*", fname)):
             if os.path.basename(os.path.dirname(old_)) != num:
@@ -398,10 +401,25 @@ def jersey_collect():
         _pc["_key"] = [f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}" for _, r in _pc.iterrows()]
         meta = _pc.drop_duplicates("_key").set_index("_key")
         _jt = pt[pt["name_how"] == "jersey number"]
-        _jr_say(f"cutting training crops from {len(_jt):,} player track(s) named by jersey number in the last tracking run...")
+        # CONFIRMED CHANGE (requested: the repeat mistakes -- #24, #32, #35, #21 read as 15; #34, #4, #35 as 12; #35, #34 as 20).
+        # The crops it learns from its own readings ("reads") had become lopsided: 20 and 12 were 17% each of them but 3-6% of
+        # the coach-checked players, so a blurry number got called 12 or 20. The reads set is now REBUILT each run from:
+        #   (1) only readings at JERSEY_TRAIN_READ_MIN_CONF+ (0.9: right 64/64 on your checked players; was 0.5, ~1 in 8 wrong);
+        #   (2) only tracks no coach check contradicts -- a track you marked as someone else (or not a player) gives no crops,
+        #       and the ones it gave before are removed;
+        #   (3) at most JERSEY_TRAIN_READS_PER_COACH (3) x that number's coach-checked crops per number (at least
+        #       JERSEY_TRAIN_READS_MIN_CAP), spread across tracks -- no number floods the set.
+        # Crops of games not in this run's tracking are left as they are.
+        _min_rc = float(globals().get("JERSEY_TRAIN_READ_MIN_CONF", 0.9))
+        _per_coach = float(globals().get("JERSEY_TRAIN_READS_PER_COACH", 3.0))
+        _min_cap = int(globals().get("JERSEY_TRAIN_READS_MIN_CAP", 20))
+        _jr_say(f"choosing training crops from {len(_jt):,} player track(s) named by jersey number in the last tracking run "
+                f"(readings {_min_rc:.2f}+, no coach check against them, each number capped)...")
         _t0, _st = _jr_time.time(), {}
+        _nk = lambda x: re.sub(r"[^a-z0-9]+", "", str(x or "").lower())
+        cand, _tok, _n_contra = {}, set(), 0
         for _ti, (_, t) in enumerate(_jt.iterrows()):
-            _jr_progress("number tracks", _ti, len(_jt), _t0, _st, f"{added['reads']} new crop(s)")
+            _jr_progress("number tracks", _ti, len(_jt), _t0, _st, f"{sum(len(v) for v in cand.values())} crop(s) chosen")
             if t["clip_key"] not in meta.index:
                 continue
             r = meta.loc[t["clip_key"]]
@@ -409,12 +427,20 @@ def jersey_collect():
             files = [f for f in str(r.get("track_files") or "").split(";") if f]
             if not num or not files:
                 continue
+            _tok.add(re.sub(r"[^A-Za-z0-9]+", "_", os.path.dirname(files[0]))[-25:])
             _n_jt += 1
             path = [p for p in json.loads(t["path"]) if len(p) >= 6 and int(p[0]) < len(files)]
             boxes = {int(p[0]): _jr_box_at(det, files[int(p[0])], p[4], p[5]) for p in path}
-            # the frames where this number was actually READ on this track (a confident read)
+            # (2) a coach check on this track that names someone else / says "not a player": the reading was wrong
+            _says = [coach_says[(files[tt], int(b[0]), int(b[1]))] for tt, b in boxes.items()
+                     if b is not None and (files[tt], int(b[0]), int(b[1])) in coach_says]
+            if any(_nk(x) != _nk(t["name"]) for x in _says):
+                _n_contra += 1
+                continue
+            # (1) the frames where this number was READ on this track with a confident reading
             read_t = [tt for tt, b in boxes.items() if b is not None and any(
-                txt == num and cf >= 0.5 for key_, v in _reads_by_spot.get((files[tt], int(b[0]), int(b[1])), []) for txt, cf in v)]
+                txt == num and cf >= _min_rc for key_, v in _reads_by_spot.get((files[tt], int(b[0]), int(b[1])), [])
+                for txt, cf in v)]
             if not read_t:
                 continue
             _n_jt_read += 1
@@ -425,15 +451,48 @@ def jersey_collect():
                 f, box = files[tt], boxes[tt]
                 if (f, int(box[0]), int(box[1])) in coach_spots:     # never train on a test crop
                     continue
-                # (frame archive) a crop already in the training set needs no picture (an archived clip stays packed)
-                if os.path.exists(os.path.join(JERSEY_TRAIN_DIR, _jr_dir("reads"), num, _jr_name(f, box))):
-                    continue
-                im = _img(f)
-                c = _jr_chest(im, box) if im is not None else None
-                if c is None or cv2.Laplacian(cv2.cvtColor(c, cv2.COLOR_BGR2GRAY), cv2.CV_64F).var() < JERSEY_TRAIN_MIN_SHARPNESS:
-                    continue
-                if _jr_save(im, box, os.path.join(JERSEY_TRAIN_DIR, _jr_dir("reads"), num, _jr_name(f, box))):
-                    added["reads"] += 1
+                cand.setdefault(num, []).append((_ti, f, box))
+        # (3) cap each number at a multiple of its coach-checked crops, taking crops from as many tracks as possible
+        _cdir = os.path.join(JERSEY_TRAIN_DIR, _jr_dir("coach"))
+        _ccount = {d_: len(os.listdir(os.path.join(_cdir, d_))) for d_ in (os.listdir(_cdir) if os.path.isdir(_cdir) else [])
+                   if os.path.isdir(os.path.join(_cdir, d_))}
+        want, _capped = {}, []
+        for num, lst in cand.items():
+            cap = max(_min_cap, int(_per_coach * _ccount.get(num, 0)))
+            by_tr = {}
+            for x in lst:
+                by_tr.setdefault(x[0], []).append(x)
+            queues, picked = list(by_tr.values()), []
+            while len(picked) < cap and any(queues):
+                for q in queues:
+                    if q and len(picked) < cap:
+                        picked.append(q.pop(0))
+            if len(lst) > cap:
+                _capped.append(f"{num} {len(lst)}->{cap}")
+            for _ti_, f, box in picked:
+                want[(num, _jr_name(f, box))] = (f, box)
+        # sync the reads folder with what's wanted (only crops of games in this run's tracking)
+        _rdir = os.path.join(JERSEY_TRAIN_DIR, _jr_dir("reads"))
+        _n_rm = 0
+        for f_ in glob.glob(os.path.join(_rdir, "*", "*")):
+            fn_, num_ = os.path.basename(f_), os.path.basename(os.path.dirname(f_))
+            if any(tk_ in fn_ for tk_ in _tok) and (num_, fn_) not in want:
+                os.remove(f_)
+                _n_rm += 1
+        for (num, fn_), (f, box) in want.items():
+            dst = os.path.join(_rdir, num, fn_)
+            if os.path.exists(dst):
+                continue
+            im = _img(f)
+            c = _jr_chest(im, box) if im is not None else None
+            if c is None or cv2.Laplacian(cv2.cvtColor(c, cv2.COLOR_BGR2GRAY), cv2.CV_64F).var() < JERSEY_TRAIN_MIN_SHARPNESS:
+                continue
+            if _jr_save(im, box, dst):
+                added["reads"] += 1
+        print(f"  [recognizer] its own readings: {len(want):,} crop(s) kept from {_n_jt_read} track(s) read at {_min_rc:.2f}+; "
+              f"{_n_contra} track(s) left out because a coach check names someone else; {_n_rm:,} older crop(s) removed"
+              + (f"; capped: {', '.join(_capped)}" if _capped else ""), flush=True)
+        added["removed"] = _n_rm
     added["_tracks"] = (_n_jt, _n_jt_read)
     return added
 
@@ -743,6 +802,9 @@ def _jr_inputs_fingerprint():
                   JERSEY_TRAIN_MIN_SHARPNESS, str(JERSEY_TRAIN_USE_COACH), JERSEY_TRAIN_FROM_OWN_READS, JERSEY_TRAIN_EPOCHS,
                   JERSEY_TRAIN_MIN_IMAGES, str(globals().get("JERSEY_TRAIN_SPLIT_BY", "play")),
                   float(globals().get("JERSEY_TRAIN_BALANCE", 0.75)), float(globals().get("JERSEY_TRAIN_COACH_WEIGHT", 3.0))))
+    # the rules for its own readings (the "2" makes the first run with them clean up the old set)
+    parts.append(("reads_rules", 2, float(globals().get("JERSEY_TRAIN_READ_MIN_CONF", 0.9)),
+                  float(globals().get("JERSEY_TRAIN_READS_PER_COACH", 3.0)), int(globals().get("JERSEY_TRAIN_READS_MIN_CAP", 20))))
     return hashlib.md5(repr(sorted(map(repr, parts))).encode()).hexdigest()
 
 

@@ -88,13 +88,17 @@ def _pr_pkg_stale(doc, g):
                 grp = by.get(tck.get(str(p.get("clip_number"))))
                 if grp is None:
                     continue
-                cur = {int(rr["track"]): (rr.get("name") if isinstance(rr.get("name"), str) else None)
+                cur = {int(rr["track"]): (rr.get("name") if isinstance(rr.get("name"), str) else None,
+                                          rr.get("guess_name") if isinstance(rr.get("guess_name"), str) else None)
                        for rr in grp.to_dict("records") if pd.notna(pd.to_numeric(rr.get("track"), errors="coerce"))}
                 for pic in p.get("pictures") or []:
                     for b in pic.get("boxes") or []:
                         if b.get("track") is None:
                             continue
-                        if int(b["track"]) not in cur or cur[int(b["track"])] != b.get("name"):
+                        if int(b["track"]) not in cur or cur[int(b["track"])][0] != b.get("name"):
+                            return True
+                        # requested ("do all 3"): an unnamed box's suggestion ("looks like ...") changed -- rebuilt too
+                        if b.get("name") is None and cur[int(b["track"])][1] != b.get("hidden_guess"):
                             return True
     except Exception:
         return False

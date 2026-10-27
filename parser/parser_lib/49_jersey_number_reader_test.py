@@ -797,6 +797,27 @@ if RUN_JERSEY_READER_TEST:
             JERSEY_READER_PRECISION[_eng] = (sum(r_[0] == v for v, r_ in _a) / len(_a)) if _a else 0.0
             JERSEY_READER_ANSWERS[_eng] = len(_a)
             JERSEY_READER_CONF[_eng] = _c_use
+            # CONFIRMED CHANGE (requested: the repeat mistakes -- one number called for many players: 15, 12, 20). A number this
+            # reader has answered WRONG 2+ times on your checked players needs a higher confidence before tracking believes
+            # it: the lowest level where that number's answers are right JERSEY_READER_TARGET_PRECISION of the time (none ->
+            # that number is never used alone). JERSEY_READER_NUM_CONF[reader] = {number: confidence}.
+            _nc = {}
+            for _num in sorted({r_[0] for _k, _v, r_ in _ans if r_[1] >= _c_use}):
+                _rows = [(_v, r_) for _k, _v, r_ in _ans if r_[0] == _num and r_[1] >= _c_use]
+                if sum(r_[0] != _v for _v, r_ in _rows) < 2:
+                    continue
+                _need = 1.01
+                for _c in (0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 0.98):
+                    _b = [(_v, r_) for _v, r_ in _rows if r_[1] >= max(_c, _c_use)]
+                    if _b and sum(r_[0] == _v for _v, r_ in _b) / len(_b) >= JERSEY_READER_TARGET_PRECISION:
+                        _need = max(_c, _c_use)
+                        break
+                _nc[str(_num)] = _need
+            globals().setdefault("JERSEY_READER_NUM_CONF", {})[_eng] = _nc
+            if _nc:
+                print(f"  {_eng:12}: numbers it calls wrongly -- trusted only at a higher confidence: "
+                      + ", ".join(f"#{n_} >= {c_:.2f}" if c_ <= 1 else f"#{n_} never on its own" for n_, c_ in _nc.items()),
+                      flush=True)
             _wrong = pd.Series([f"{v}->{r_[0]}" for v, r_ in _a if r_[0] != v]).value_counts().head(4)
             # how often it's right at each confidence level -- shows whether its SURE answers could be trusted on their own
             _bands = []
@@ -881,6 +902,9 @@ if RUN_JERSEY_READER_TEST:
     def _cmb_read(e, k, c):
         r0 = _saved.get((e, k), ("", 0))
         if not r0[0] or r0[1] < c:
+            return None
+        # a number this member calls wrongly needs its own higher confidence (same as Player tracking)
+        if r0[1] < ((globals().get("JERSEY_READER_NUM_CONF") or {}).get(e) or {}).get(str(r0[0]), 0.0):
             return None
         if globals().get("JERSEY_READER_LINEUP_FILTER", True) and _jn_five.get(k) and str(r0[0]) not in _jn_five[k]:
             return None

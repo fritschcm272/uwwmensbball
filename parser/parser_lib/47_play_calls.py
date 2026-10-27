@@ -1230,6 +1230,33 @@ def _pl_lineup_for(clips, events, lineup_col):
     matched = clips["event_index"].notna()
     if matched.any():
         out.loc[matched] = clips.loc[matched, "event_index"].map(events[lineup_col])
+    # CONFIRMED BUG (fixed; coach: Wheaton @ North Park clip 219 -- "it does not have the correct lineup of 5 NPA players,
+    # there is definitely a #0 and a #2 on the court"). The clip (Carson Grier's post-up that drew a foul at 4:10) was matched
+    # to his free throw at 4:07, and the lineup was read THERE -- after North Park subbed #0 Smith Jr. and #2 Garrison out
+    # during the stoppage. A clip matched to a free throw, substitution, timeout or dead-ball rebound now takes the lineup at
+    # the action that started that stoppage (the foul), before any substitution made during it (~4% of clips, every game).
+    if matched.any() and "lineup" in str(lineup_col) and "event_type" in events.columns and "event_order" in events.columns:
+        _dead = {"free_throw_made", "free_throw_missed", "sub_in", "sub_out", "timeout", "team_deadball_rebound_offensive",
+                 "team_deadball_rebound_defensive", "period_marker"}
+        _keys = [k_ for k_ in ("game_date", "opponent") if k_ in events.columns]
+        _grp = events.groupby(_keys, dropna=False) if _keys else [(None, events)]
+        _prev = {}                                    # event index -> the index before it in the same game
+        for _g, _e in _grp:
+            _o = _e.sort_values("event_order")
+            _ix = list(_o.index)
+            _prev.update({b_: a_ for a_, b_ in zip(_ix, _ix[1:])})
+        _typ, _per = events["event_type"].astype(str), events.get("period")
+        for ci_ in clips.index[matched]:
+            e_ = clips.at[ci_, "event_index"]
+            if e_ not in events.index or _typ.get(e_) not in _dead:
+                continue
+            p0 = _per.get(e_) if _per is not None else None
+            while _typ.get(e_) in _dead and e_ in _prev and (_per is None or _per.get(_prev[e_]) == p0):
+                e_ = _prev[e_]
+            if e_ != clips.at[ci_, "event_index"]:
+                v_ = events.at[e_, lineup_col]
+                if isinstance(v_, str) and v_.strip():
+                    out.at[ci_] = v_
     # CONFIRMED CHANGE (coaches: "a few times player numbers and names are not showing up" in Film Tagging -- the Screener /
     # Trigger / Screen defender lists were empty on 9 of Wash U's 169 clips). A clip that matched no play-by-play event
     # (Synergy's "No Violation", "Kicked Ball", a transition push that ended in a foul ...) but HAS its half and game clock

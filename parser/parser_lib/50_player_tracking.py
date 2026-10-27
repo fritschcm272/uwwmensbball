@@ -2704,6 +2704,22 @@ def player_tracking(pc):
     n_anch = sum(1 for i in todo if clips[i]["anchor"])
     print(f"  [tracking]   named anchors so far: {n_anch} of {len(todo)} clip(s) "
           f"({sum(1 for i in todo if clips[i].get('anchor_by') == 'pose' and clips[i]['anchor'])} by shooting pose)", flush=True)
+    # the per-game appearance models (see _app_fit below): game -> model, game -> its test numbers
+    _app_models, _app_stats, _app_on_games, _fill_games = {}, {}, set(), set()
+    fps = {}
+    globals()["_trk_app_ckeys_run"] = None
+
+    def _app_probs_m(m_, i, k, five):
+        """{name: probability} over the five on the floor for track k of clip i (its crops averaged); None = no crops."""
+        vs = fps.get((i, k))
+        if not vs or m_ is None:
+            return None
+        P_ = m_.predict_proba(np.vstack([np.asarray(v, np.float32) for v in vs])).mean(0)
+        cls_ = list(m_.classes_)
+        p_ = {n: (float(P_[cls_.index(n)]) if n in cls_ else 0.0) for n in five}
+        t_ = sum(p_.values())
+        return {n: v / t_ for n, v in p_.items()} if t_ > 0 else None
+
     if not TRACK_USE_APPEARANCE:
         print("  [tracking] step 5: appearance fingerprints skipped (TRACK_USE_APPEARANCE = False)", flush=True)
         fp = {}
@@ -2768,6 +2784,51 @@ def player_tracking(pc):
                 _safe_to_pickle(fp_cache, fp_path)
             return len(crops), n_reused
 
+        def _app_X(keys_names):
+            X_, y_ = [], []
+            for i, k, n in keys_names:
+                for v in fps.get((i, k), []):
+                    X_.append(np.asarray(v, np.float32))
+                    y_.append(n)
+            return X_, y_
+
+        def _app_fit(seeds):
+            """A per-game "which player is this" model from the coach-checked boxes' crops (None = not enough to learn)."""
+            X_, y_ = _app_X(seeds)
+            if len(set(y_)) < 2:
+                return None
+            from sklearn.linear_model import LogisticRegression
+            m_ = LogisticRegression(C=float(globals().get("TRACK_APPEARANCE_MODEL_C", 1.0)), max_iter=2000)
+            m_.fit(np.vstack(X_), np.array(y_))
+            return m_
+
+        def _app_test(seeds):
+            """Honest test: clips split into folds; each fold's checked players predicted by a model trained on the rest.
+            -> {"top": (right, tried) picking among the five, "pair": (right, tried) between two of the five, "old": ...}"""
+            clips_ = sorted({i for i, _k, _n in seeds})
+            nf_ = int(globals().get("TRACK_APPEARANCE_FOLDS", 5))
+            if len(clips_) < nf_ or len(seeds) < TRACK_APPEARANCE_MIN_TRIES:
+                return None
+            fold_ = {c_: j_ % nf_ for j_, c_ in enumerate(clips_)}
+            h_ = t_ = ph_ = pt_ = 0
+            for f_ in range(nf_):
+                m_ = _app_fit([x for x in seeds if fold_[x[0]] != f_])
+                if m_ is None:
+                    continue
+                for i, k, n in [x for x in seeds if fold_[x[0]] == f_]:
+                    sd_ = clips[i]["side"].get(k)
+                    five_ = _trk_five(pc.at[i, "offense_lineup" if sd_ == "offense" else "defense_lineup"])
+                    pr_ = _app_probs_m(m_, i, k, five_)
+                    if not pr_ or n not in five_:
+                        continue
+                    t_ += 1
+                    h_ += int(max(pr_, key=pr_.get) == n)
+                    for m2 in five_:
+                        if m2 != n:
+                            pt_ += 1
+                            ph_ += int(pr_[n] > pr_[m2])
+            return {"top": (h_, t_), "pair": (ph_, pt_), "old": (None, None)} if t_ else None
+
         _ids_all = [i for i in todo if _app_games is None or game_of[i] in _app_games]
         # CONFIRMED CHANGE (requested: "make it pass some type of test before turning it back on" -- the 10/26 run spent ~45 min
         # fingerprinting every player for appearance names that then failed their check on both games). TRACK_APPEARANCE_GATE
@@ -2777,6 +2838,7 @@ def player_tracking(pc):
         # every player fingerprinted and appearance names; a game that fails keeps jersey-number / coach / Synergy names.
         _gate = bool(globals().get("TRACK_APPEARANCE_GATE", True))
         _pass_games = set(game_of[i] for i in _ids_all)
+        _fill_games = set()
         if _gate:
             _n_new, _ = _cut(_ids_all, lambda i, k: bool(coach.get((i, k))), "clips: coach-checked players cut out")
             _nrm = lambda vs: (np.mean(vs, 0) / (np.linalg.norm(np.mean(vs, 0)) + 1e-8))
@@ -2784,6 +2846,7 @@ def player_tracking(pc):
             _pass_games = set()
             for g_ in sorted(set(game_of[i] for i in _ids_all)):
                 seeds_ = [(i, k, n) for (i, k), n in coach.items() if n and game_of.get(i) == g_ and (i, k) in _fpn]
+                # the old way (each player's average look, nearest one wins) -- printed beside the model for comparison
                 raw_ = {}
                 for i, k, n in seeds_:
                     raw_.setdefault(n, []).append((i, _fpn[(i, k)]))
@@ -2797,20 +2860,51 @@ def player_tracking(pc):
                         continue
                     t_ += 1
                     h_ += int(max(sims_, key=sims_.get) == n)
+                # CONFIRMED CHANGE (requested: "do all 3" -- appearance carries names across clips, but at ~50% it was off). A
+                # model per game, trained on every coach-checked box's crops (20-40 per player), learns what tells THESE
+                # players apart -- instead of one averaged look per player. Tested the honest way: the checked clips are
+                # split in TRACK_APPEARANCE_FOLDS groups, each group predicted by a model trained on the others.
+                st_ = _app_test(seeds_) if globals().get("TRACK_APPEARANCE_MODEL", True) else None
+                if st_:
+                    st_["old"] = (h_, t_)
+                    _app_stats[g_] = st_
+                    h_, t_ = st_["top"]
+                    _ph, _pt_ = st_["pair"]
+                    _app_models[g_] = _app_fit(seeds_)
+                    if _pt_ and _ph / _pt_ >= float(globals().get("TRACK_APPEARANCE_FILL_MIN", 0.8)) and _app_models[g_] is not None:
+                        _fill_games.add(g_)
                 ok_ = t_ >= TRACK_APPEARANCE_MIN_TRIES and h_ / t_ >= TRACK_APPEARANCE_MIN_CHECK
                 if ok_:
                     _pass_games.add(g_)
                 print(f"  [tracking]   appearance test, {g_}: {h_}/{t_} coach-checked players picked out by their look"
-                      + (f" ({h_ / t_:.0%})" if t_ else "") + " -- "
-                      + ("PASSES: every player gets fingerprinted" if ok_ else
+                      + (f" ({h_ / t_:.0%})" if t_ else "")
+                      + (f" with the per-game model (the old average-look way: {st_['old'][0]}/{st_['old'][1]}); "
+                         f"between two of the five it picks the right one {_ph}/{_pt_} ({_ph / max(_pt_, 1):.0%})"
+                         if st_ else "") + " -- "
+                      + ("PASSES: appearance names are used" if ok_ else
                          (f"below {TRACK_APPEARANCE_MIN_CHECK:.0%}" if t_ >= TRACK_APPEARANCE_MIN_TRIES else
                           f"too few checked players to test (needs {TRACK_APPEARANCE_MIN_TRIES})")
-                         + ": no appearance names this run (and no full fingerprinting)"), flush=True)
-        _ids_full = [i for i in _ids_all if game_of[i] in _pass_games]
+                         + ": no appearance names" + ("; it still names the LAST one or two players left on the floor "
+                                                      "(between two it's reliable)" if g_ in _fill_games else "")),
+                      flush=True)
+        # every player is fingerprinted where appearance names are used (passes, or fills the last ones left); elsewhere only
+        # the clips the app shows, so the player checks can show its suggestion ("looks like ...")
+        _ids_full = [i for i in _ids_all if game_of[i] in (_pass_games | _fill_games)]
         if _ids_full:
             _n_new, n_reused = _cut(_ids_full, lambda i, k: True, "clips cut into player crops")
             if not _n_new:
-                print(f"  [tracking]   all fingerprints for the {len(_pass_games)} game(s) reused from earlier runs", flush=True)
+                print(f"  [tracking]   all fingerprints for the {len(_pass_games | _fill_games)} game(s) reused from earlier runs",
+                      flush=True)
+        if _app_models and globals().get("TRACK_APPEARANCE_SUGGEST", True):
+            try:
+                _ak_ = _trk_app_keys(pc, todo)
+                globals()["_trk_app_ckeys_run"] = _ak_
+                _ids_sug = [i for i in _ids_all if game_of[i] in _app_models and game_of[i] not in (_pass_games | _fill_games)
+                            and clips[i].get("ckey") in _ak_]
+                if _ids_sug:
+                    _cut(_ids_sug, lambda i, k: True, "app clips cut out (for the suggestions)")
+            except Exception as _se:
+                print(f"  [tracking]   (suggestion fingerprints skipped: {type(_se).__name__}: {_se})", flush=True)
         fp = {o: (np.mean(v, 0) / (np.linalg.norm(np.mean(v, 0)) + 1e-8)) for o, v in fps.items()}
 
     # --- names: closest profile among the five on the floor, no duplicate names at the same moment ---
@@ -2839,6 +2933,16 @@ def player_tracking(pc):
                         cand.append((9.0, k, af[1], 1.0))
                         continue
                     if (i, k) not in fp:
+                        continue
+                    # requested ("do all 3"): the per-game appearance model's probabilities, where the game has one
+                    _mdl = _app_models.get(game_of.get(i))
+                    if _mdl is not None:
+                        _pr = _app_probs_m(_mdl, i, k, five)
+                        if not _pr:
+                            continue
+                        p = np.array([_pr[n] for n in five])
+                        for rank, o in enumerate(np.argsort(-p)[:2]):
+                            cand.append((float(p[o]) - rank * 1e-3, k, five[o], float(p[o])))
                         continue
                     sims = np.array([float(fp[(i, k)] @ protos[n]) if n in protos else np.nan for n in five])
                     if np.all(np.isnan(sims)):
@@ -2929,7 +3033,9 @@ def player_tracking(pc):
             globals()["_trk_app_ckeys"] = None
             if str(globals().get("TRACK_READ_NUMBERS_FOR", "player_checks")).strip().lower() != "all":
                 try:
-                    globals()["_trk_app_ckeys"] = _trk_app_keys(pc, todo)
+                    globals()["_trk_app_ckeys"] = (globals().get("_trk_app_ckeys_run")
+                                                   if globals().get("_trk_app_ckeys_run") is not None
+                                                   else _trk_app_keys(pc, todo))
                 except Exception as _ake:
                     print(f"  [tracking]   (couldn't work out the app's clips -- reading every clip: "
                           f"{type(_ake).__name__}: {_ake})", flush=True)
@@ -2937,13 +3043,72 @@ def player_tracking(pc):
                 # every member reader, each at its own confidence level; the vote below needs their reads to agree
                 reads = {}
                 for _me, _mc in globals().get("JERSEY_READER_COMBINED_MEMBERS", []):
+                    _ncm = (globals().get("JERSEY_READER_NUM_CONF") or {}).get(_me) or {}
                     for o, rd in _trk_read_numbers(clips, todo, base, _me).items():
-                        reads.setdefault(o, []).extend((tx, cf) for tx, cf in rd if cf >= _mc)
+                        reads.setdefault(o, []).extend((tx, cf) for tx, cf in rd
+                                                       if cf >= _mc and cf >= _ncm.get(str(tx), 0.0))
             else:
                 reads = _trk_read_numbers(clips, todo, base, _engine)
                 # only reads at or above the confidence where the reader tested >= 85% right
-                reads = {o: [(tx, cf) for tx, cf in rd if cf >= _min_conf] for o, rd in reads.items()}
+                # CONFIRMED CHANGE (requested: the repeat mistakes): and, for a number the reader keeps calling wrongly, at or
+                # above that number's own bar from the reader test (JERSEY_READER_NUM_CONF)
+                _ncm = (globals().get("JERSEY_READER_NUM_CONF") or {}).get(_engine) or {}
+                reads = {o: [(tx, cf) for tx, cf in rd if cf >= _min_conf and cf >= _ncm.get(str(tx), 0.0)]
+                         for o, rd in reads.items()}
+            _ncu = {**((globals().get("JERSEY_READER_NUM_CONF") or {}).get(_engine) or {})}
+            for _me, _mc in (globals().get("JERSEY_READER_COMBINED_MEMBERS", []) if _engine == "combined" else []):
+                _ncu.update((globals().get("JERSEY_READER_NUM_CONF") or {}).get(_me) or {})
+            if _ncu:
+                print("  [tracking]   numbers the reader calls wrongly need a higher confidence: "
+                      + ", ".join(f"#{n_} {c_:.2f}+" if c_ <= 1 else f"#{n_} not used" for n_, c_ in sorted(_ncu.items())),
+                      flush=True)
             _reads_dbg = reads
+            # CONFIRMED CHANGE (requested: "make sure this is not a systemic issue" -- a clip's North Park five was missing #0
+            # and #2, who were plainly on the floor). A lineup check from the surest jersey reads (TRACK_LINEUP_CHECK_CONF,
+            # 0.95+: right 45/45 in the reader test): a read of a player of THAT team who isn't in the clip's five says the
+            # lineup is probably wrong there (a substitution the play-by-play missed or placed wrong, a clip matched to the
+            # wrong moment). Listed in _tracking/lineup_conflicts.csv; nothing is changed.
+            try:
+                _lc_conf = float(globals().get("TRACK_LINEUP_CHECK_CONF", 0.95))
+                _team_pl, _lc_rows = {}, []
+                for i_ in todo:
+                    for sd_ in ("offense", "defense"):
+                        tm_ = pc.at[i_, f"{sd_}_team"] if f"{sd_}_team" in pc.columns else None
+                        for n_ in _trk_five(pc.at[i_, f"{sd_}_lineup"]):
+                            _team_pl.setdefault((game_of[i_], tm_), set()).add(n_)
+                for (i_, k_), rd_ in reads.items():
+                    sd_ = clips[i_]["side"].get(k_)
+                    if sd_ not in ("offense", "defense"):
+                        continue
+                    five_ = _trk_five(pc.at[i_, f"{sd_}_lineup"])
+                    if len(five_) != 5:
+                        continue
+                    tm_ = pc.at[i_, f"{sd_}_team"] if f"{sd_}_team" in pc.columns else None
+                    fnums_ = {str(_numfor(i_, n)) for n in five_ if _numfor(i_, n)}
+                    for tx_ in sorted({str(tx) for tx, cf in rd_ if cf >= _lc_conf and str(tx) not in ("", "nn")}):
+                        if tx_ in fnums_:
+                            continue
+                        who_ = sorted(n for n in _team_pl.get((game_of[i_], tm_), ()) if str(_numfor(i_, n)) == tx_)
+                        if who_:
+                            _lc_rows.append({"game": game_of[i_], "clip_number": pc.at[i_, "clip_number"],
+                                             "period": pc.at[i_, "period"], "clock": pc.at[i_, "time_remaining_seconds"],
+                                             "matched_by": pc.at[i_, "matched_by"] if "matched_by" in pc.columns else None,
+                                             "team": tm_, "side": sd_, "number_read": tx_, "player": " / ".join(who_),
+                                             "lineup": ", ".join(five_)})
+                _lcdf = pd.DataFrame(_lc_rows).drop_duplicates(["game", "clip_number", "side", "number_read"]) \
+                    if _lc_rows else pd.DataFrame()
+                os.makedirs(TRACK_DIR, exist_ok=True)
+                _lcdf.to_csv(os.path.join(TRACK_DIR, "lineup_conflicts.csv"), index=False)
+                if len(_lcdf):
+                    _n_cl = _lcdf.groupby("game")["clip_number"].nunique()
+                    _n_all = pd.Series([game_of[i_] for i_ in todo]).value_counts()
+                    print("  [tracking]   lineup check (jersey reads 0.95+ of a player NOT in that clip's five): "
+                          + "; ".join(f"{g_}: {int(n_)} of {int(_n_all.get(g_, 0))} clip(s)" for g_, n_ in _n_cl.items())
+                          + " -- _tracking/lineup_conflicts.csv (the lineup there is probably wrong)", flush=True)
+                else:
+                    print("  [tracking]   lineup check: no sure jersey read contradicts a clip's five", flush=True)
+            except Exception as _lce:
+                print(f"  [tracking]   (lineup check skipped: {type(_lce).__name__}: {_lce})", flush=True)
             num_of = {}                                   # player name (lower case) -> jersey number
             book = _pl_jersey_book() if "_pl_jersey_book" in globals() else {}
             for team_book in book.values():
@@ -3441,7 +3606,11 @@ def player_tracking(pc):
                   f"({_ch / _ct:.0%}; chance is ~20%) -- the check switches to coach-checked boxes only once there are "
                   f"{TRACK_APPEARANCE_MIN_TRIES}", flush=True)
         # appearance names only when the check had enough trusted names to test against AND passed
+        if _app_stats.get(g):                         # the per-game model's honest test decides (see step 5)
+            hits, tries = _app_stats[g]["top"]
         appearance_on = tries >= TRACK_APPEARANCE_MIN_TRIES and hits / tries >= TRACK_APPEARANCE_MIN_CHECK
+        if appearance_on:
+            _app_on_games.add(g)
         _trk_eval("appearance", score=(100 * hits / tries) if tries else None, n=tries,
                   bar=100 * TRACK_APPEARANCE_MIN_CHECK, bar_n=TRACK_APPEARANCE_MIN_TRIES, chance=20, used=bool(appearance_on),
                   how="names hidden from it that it got right (trusted names: coach checks / clear jersey numbers)")
@@ -3624,6 +3793,55 @@ def player_tracking(pc):
         except Exception as _e:
             print(f"  [tracking]   re-ID names not used this run ({type(_e).__name__}: {_e})", flush=True)
 
+    # --- appearance for the LAST one or two players left (requested: "do all 3" -- use appearance where it's strongest) ---
+    # In a game where appearance isn't good enough to name players on its own but picks the right one of TWO players
+    # TRACK_APPEARANCE_FILL_MIN (80%) of the time, it names the players still unnamed once all but
+    # TRACK_APPEARANCE_FILL_MAX (2) of a team's five on the floor are named in a clip (by numbers, checks, the lineup ...):
+    # an unnamed track gets one of those names only if that name is also his look's top pick among all five.
+    app_fill = {}
+    _fill_max = int(globals().get("TRACK_APPEARANCE_FILL_MAX", 2))
+    _fill_conf = float(globals().get("TRACK_APPEARANCE_FILL_CONF", 0.6))
+    for i in todo:
+        g = game_of.get(i)
+        _mdl = _app_models.get(g)
+        if _mdl is None or g not in _fill_games or g in _app_on_games:
+            continue
+        clip = clips[i]
+        for sd in ("offense", "defense"):
+            five = _trk_five(pc.at[i, f"{sd}_lineup"])
+            if len(five) != 5:
+                continue
+            ks = [k for k in range(len(clip["tracks"])) if clip["side"].get(k) == sd]
+            named = {k: names_all[(i, k)][0] for k in ks if (i, k) in names_all}
+            left = [n for n in five if n not in set(named.values())]
+            if not left or len(left) > _fill_max:
+                continue
+            frames_of = {k: {t for t, _ in clip["tracks"][k]} for k in ks}
+            cands = []
+            for k in ks:
+                if k in named:
+                    continue
+                pr = _app_probs_m(_mdl, i, k, five)
+                if not pr:
+                    continue
+                top = max(pr, key=pr.get)
+                sub = sum(pr[n] for n in left)
+                if top not in left or sub <= 0 or pr[top] / sub < _fill_conf:
+                    continue
+                cands.append((pr[top] / sub * len(clip["tracks"][k]), k, top, pr[top] / sub))
+            taken = {}
+            for kk, nn in named.items():
+                taken.setdefault(nn, []).append(frames_of[kk])
+            for _sc, k, n, conf in sorted(cands, reverse=True):
+                if any(frames_of[k] & o for o in taken.get(n, [])):
+                    continue
+                names_all[(i, k)] = (n, round(float(conf), 2))
+                app_fill[(i, k)] = n
+                taken.setdefault(n, []).append(frames_of[k])
+    if _fill_games:
+        print(f"  [tracking]   appearance named {len(app_fill):,} track(s) as one of the last {_fill_max} unnamed players on "
+              f"the floor ({', '.join(sorted(_fill_games))})", flush=True)
+
     # --- best guess: every one of the five on the floor gets a track (the lineup is known; clues pick who is who) ---
     guessed = set()
     _raw_p = {}
@@ -3674,6 +3892,46 @@ def player_tracking(pc):
                     _tot = sum(_poss.values()) or 1.0
                     _raw_p[(i, k)] = (n, float(_poss.get(n, 0.0)) / _tot)
                     guessed.add((i, k))
+        # requested ("do all 3" -- show its pick as a suggestion): where the game has an appearance model, each guess is the
+        # model's pick among the names still free at that moment, with the model's probability. These are what the app shows
+        # ("looks like #24 Warren? 52%") and what your checks of those boxes measure -- once a probability level is right 50%+
+        # of the time, guesses at that level become names (the cutoff below).
+        _n_mg = 0
+        for i in todo:
+            _mdl = _app_models.get(game_of.get(i))
+            if _mdl is None:
+                continue
+            clip = clips[i]
+            for sd in ("offense", "defense"):
+                five = _trk_five(pc.at[i, f"{sd}_lineup"])
+                ks = [k for k in range(len(clip["tracks"])) if clip["side"].get(k) == sd]
+                if not five or not ks:
+                    continue
+                frames_of = {k: {t for t, _ in clip["tracks"][k]} for k in ks}
+                taken = {}
+                for k in ks:
+                    if (i, k) in names_all:
+                        taken.setdefault(names_all[(i, k)][0], []).append(frames_of[k])
+                picks = []
+                for k in ks:
+                    if (i, k) not in _raw_p:
+                        continue
+                    pr = _app_probs_m(_mdl, i, k, five)
+                    if pr:
+                        for n_, p_ in pr.items():
+                            picks.append((p_, k, n_))
+                done_ = set()
+                for p_, k, n_ in sorted(picks, reverse=True):
+                    if k in done_ or any(frames_of[k] & o for o in taken.get(n_, [])):
+                        continue
+                    _free = sum(pp for pp, kk, nn in picks if kk == k and not any(frames_of[k] & o for o in taken.get(nn, [])))
+                    _raw_p[(i, k)] = (n_, p_ / _free if _free > 0 else p_)
+                    taken.setdefault(n_, []).append(frames_of[k])
+                    done_.add(k)
+                    _n_mg += 1
+        if _n_mg:
+            print(f"  [tracking]   {_n_mg:,} guess(es) now come from the per-game appearance model (shown in the player checks "
+                  f"as \"looks like ...\")", flush=True)
         # Calibrate: the shares are RELATIVE (they always add to 1 over the possible names); scale them so the average stated
         # probability equals how often best guesses were actually right on the coach-checked boxes (when there are 30+ checks).
         _mean_raw = float(np.mean([p_ for _n, p_ in _raw_p.values()])) if _raw_p else 0.0
@@ -3846,6 +4104,8 @@ def player_tracking(pc):
             return "linked possession"
         if (i, k) in solved:
             return "lineup matching"
+        if (i, k) in app_fill:
+            return "appearance (last ones left)"
         return "appearance"
 
     for _n_clip, i in enumerate(todo, 1):
