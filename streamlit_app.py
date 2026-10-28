@@ -8007,6 +8007,8 @@ def _cc_frame_picture(path, fr, points, H):
     """The frame (as shrunk for the app) with the clicked landmarks, and the court lines through the calibration."""
     from PIL import Image, ImageDraw
     im = Image.open(path).convert("RGB")
+    if im.size[0] > 1280:                                        # (speed) sent to the browser on every click
+        im = im.resize((1280, int(round(im.size[1] * 1280 / im.size[0]))), Image.LANCZOS)
     d = ImageDraw.Draw(im)
     s = im.size[0] / float(fr.get("W") or im.size[0])            # full-frame pixels -> this picture
     if H is not None:
@@ -8114,35 +8116,67 @@ def _cc_page():
     if _pending and _pending[0] == lm_key:
         st.session_state[lm_key] = _pending[1]
     lm_names = list(lms)
+    if st.session_state.get(lm_key) not in lm_names:
+        _done0 = {p["landmark"] for p in pts}
+        st.session_state[lm_key] = next((n for n in lm_names if n not in _done0), lm_names[0])
+    _dkey, _ikey = f"cc_diag_{gym}_{fi}", f"cc_img_{gym}_{fi}"
+    _DW, _DH, _DS = 94 * 6 + 20, 50 * 6 + 20, 6                  # the court diagram's size and scale (see _cc_court_diagram)
+
+    # CONFIRMED BUG (fixed; "it is still sometimes reloading while making selections"): every click reran the page TWICE --
+    # once for the click, then again on purpose to redraw it -- and sent the full-size frame each time, so a quick next click
+    # landed while the page was still reloading. Clicks are now read BEFORE the page is drawn (one rerun per click, no
+    # second one) and the frame is sent at most 1280 px wide.
+    def _diag_click(v):
+        if not (v and v.get("x") is not None and v.get("width")):
+            return False
+        sig = (gym, fi, v.get("x"), v.get("y"), v.get("unix_time"))
+        if st.session_state.get("_cc_last_diag") == sig:
+            return False
+        st.session_state["_cc_last_diag"] = sig
+        k = _DW / float(v["width"])
+        x, y = float(v["x"]) * k, float(v["y"]) * k
+        dist = lambda n: ((10 + lms[n][0] * _DS - x) ** 2 + (_DH - 10 - lms[n][1] * _DS - y) ** 2) ** 0.5
+        near = min(lm_names, key=dist)
+        if dist(near) <= 18:
+            st.session_state[lm_key] = near
+            return True
+        return False
+
+    def _img_click(v):
+        if not (v and v.get("x") is not None and v.get("width")):
+            return False
+        sig = (gym, fi, v.get("x"), v.get("y"), v.get("unix_time"))
+        if st.session_state.get("_cc_last_click") == sig:
+            return False
+        st.session_state["_cc_last_click"] = sig
+        sel_ = st.session_state[lm_key]
+        sc = float(fr.get("W") or v["width"]) / float(v["width"])
+        pts[:] = [p for p in pts if p["landmark"] != sel_] + [
+            {"landmark": sel_, "px": round(float(v["x"]) * sc, 1), "py": round(float(v["y"]) * sc, 1)}]
+        done = {p["landmark"] for p in pts}
+        nxt = next((n for n in lm_names[lm_names.index(sel_) + 1:] + lm_names if n not in done), None)
+        if nxt:
+            st.session_state[lm_key] = nxt
+        return True
+
+    _diag_click(st.session_state.get(_dkey))                     # this rerun's clicks, before anything is drawn
+    _img_click(st.session_state.get(_ikey))
+    sel = st.session_state[lm_key]
     left, right = st.columns([3, 2])
     with right:
         # CONFIRMED CHANGE (requested: "I don't want a drop down, and I can't click on the circles on the court image"): the
         # court diagram IS the picker -- click a circle to choose the landmark, then click that spot on the frame. (After
         # each placed point it still moves on to the next landmark not placed yet.)
-        if st.session_state.get(lm_key) not in lm_names:
-            _done0 = {p["landmark"] for p in pts}
-            st.session_state[lm_key] = next((n for n in lm_names if n not in _done0), lm_names[0])
-        sel = st.session_state[lm_key]
         st.markdown(f"**Placing:** {sel}  \n<small>Click a circle on the court to place a different landmark.</small>",
                     unsafe_allow_html=True)
         _diag = _cc_court_diagram(lms, sel, {p["landmark"] for p in pts})
         try:
-            _dv = _sic(_diag, key=f"cc_diag_{gym}_{fi}", use_column_width="always")
+            _dv = _sic(_diag, key=_dkey, use_column_width="always")
         except TypeError:
-            _dv = _sic(_diag, key=f"cc_diag_{gym}_{fi}", width=_diag.size[0])
+            _dv = _sic(_diag, key=_dkey, width=_diag.size[0])
         st.caption("Red = the landmark you're placing; green = already placed on this frame")
-        if _dv and _dv.get("x") is not None and _dv.get("width"):
-            _dsig = (gym, fi, _dv.get("x"), _dv.get("y"), _dv.get("unix_time"))
-            if st.session_state.get("_cc_last_diag") != _dsig:
-                st.session_state["_cc_last_diag"] = _dsig
-                _k = _diag.size[0] / float(_dv["width"])
-                _x, _y = float(_dv["x"]) * _k, float(_dv["y"]) * _k
-                _S, _Hh = 6, _diag.size[1]
-                _near = min(lm_names, key=lambda n: (10 + lms[n][0] * _S - _x) ** 2 + (_Hh - 10 - lms[n][1] * _S - _y) ** 2)
-                _dd = ((10 + lms[_near][0] * _S - _x) ** 2 + (_Hh - 10 - lms[_near][1] * _S - _y) ** 2) ** 0.5
-                if _dd <= 18 and _near != sel:
-                    st.session_state["_cc_next_lm"] = (lm_key, _near)
-                    _cc_rerun()
+        if _diag_click(_dv):                                     # (a component that doesn't keep its value in the session)
+            _cc_rerun()
         H = _cc_homography([(p["px"], p["py"]) for p in pts], [lms[p["landmark"]] for p in pts]) if len(pts) >= 4 else None
         if len(pts) >= 5 and H is not None:
             err = np.linalg.norm(_cc_apply(H, [(p["px"], p["py"]) for p in pts]) - np.asarray([lms[p["landmark"]] for p in pts]),
@@ -8169,21 +8203,11 @@ def _cc_page():
                    if H is not None else "Click the landmark's exact spot (where the lines meet, at the floor).")
         _pic = _cc_frame_picture(img_path, fr, pts, H)
         try:
-            val = _sic(_pic, key=f"cc_img_{gym}_{fi}", use_column_width="always")
+            val = _sic(_pic, key=_ikey, use_column_width="always")
         except TypeError:                                        # an older / newer component without use_column_width
-            val = _sic(_pic, key=f"cc_img_{gym}_{fi}", width=min(_pic.size[0], 900))
-        if val and val.get("x") is not None and val.get("width"):
-            sig = (gym, fi, val.get("x"), val.get("y"), val.get("unix_time"))
-            if st.session_state.get("_cc_last_click") != sig:
-                st.session_state["_cc_last_click"] = sig
-                sc = float(fr.get("W") or val["width"]) / float(val["width"])
-                pts[:] = [p for p in pts if p["landmark"] != sel] + [
-                    {"landmark": sel, "px": round(float(val["x"]) * sc, 1), "py": round(float(val["y"]) * sc, 1)}]
-                done = {p["landmark"] for p in pts}
-                nxt = next((n for n in lm_names[lm_names.index(sel) + 1:] + lm_names if n not in done), None)
-                if nxt:
-                    st.session_state["_cc_next_lm"] = (lm_key, nxt)
-                _cc_rerun()
+            val = _sic(_pic, key=_ikey, width=min(_pic.size[0], 900))
+        if _img_click(val):                                      # (a component that doesn't keep its value in the session)
+            _cc_rerun()
 
     ready = [f_ for f_ in frames if len(store.get(f_["file"], [])) >= 4]
     ends = set()

@@ -2294,9 +2294,14 @@ def _sync_saves_branch(d):
     save): the app now commits saves to their own branch (REVIEW_SAVES_BRANCH, default "saves"). Once per run, fetch that branch
     and copy any save file this folder doesn't have yet into it -- no checkout, no merge, your working branch is untouched
     (the copied files are new files you can commit with your next push, or leave alone). REVIEW_SAVES_BRANCH = "" turns it off."""
-    if _saves_synced["done"]:
+    # CONFIRMED BUG (fixed; "court calibration was done, but" the notebook still stopped for it): the saves branch was fetched
+    # ONCE per notebook session, so a calibration (or starters / player checks) saved in the app after that was never seen
+    # until the kernel restarted. It's fetched again when the last fetch is over SAVES_REFETCH_S (120) seconds old.
+    _age = __import__("time").time() - float(_saves_synced.get("at") or 0)
+    if _saves_synced["done"] and _age < float(globals().get("SAVES_REFETCH_S", 120)):
         return
     _saves_synced["done"] = True
+    _saves_synced["at"] = __import__("time").time()
     br = str(globals().get("REVIEW_SAVES_BRANCH", "saves") or "").strip()
     if not br:
         return

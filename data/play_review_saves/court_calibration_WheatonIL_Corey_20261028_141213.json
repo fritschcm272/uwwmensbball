@@ -1,0 +1,350 @@
+{
+ "kind": "court_calibration",
+ "arena": "WheatonIL",
+ "game": "2026-02-21|Millikin@WheatonIL",
+ "coach": "Corey",
+ "saved": "2026-10-28T14:12:13+00:00",
+ "source": "streamlit app",
+ "frames": [
+  {
+   "file": "Feb_21_2026_Millikin@WheatonIL/track1920v2/1_3b99812b_t047.jpg",
+   "points": [
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 902.1,
+     "py": 602.2
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 984.8,
+     "py": 550.3
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1169.0,
+     "py": 571.5
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, near",
+     "px": 21.3,
+     "py": 699.0
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 805.3,
+     "py": 314.1
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1239.9,
+     "py": 581.0
+    }
+   ]
+  },
+  {
+   "file": "Feb_21_2026_Millikin@WheatonIL/track1920v2/28_3d1fafd5_t045.jpg",
+   "points": [
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 373.1,
+     "py": 529.0
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 606.9,
+     "py": 418.0
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 935.2,
+     "py": 616.4
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1107.6,
+     "py": 493.6
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 1022.6,
+     "py": 552.6
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1228.0,
+     "py": 578.6
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1298.9,
+     "py": 602.2
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 824.2,
+     "py": 309.4
+    }
+   ]
+  },
+  {
+   "file": "Feb_21_2026_Millikin@WheatonIL/track1920v2/55_ad18ecbd_t030.jpg",
+   "points": [
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1313.1,
+     "py": 597.5
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1225.7,
+     "py": 583.3
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 1032.0,
+     "py": 555.0
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1110.0,
+     "py": 493.6
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 947.0,
+     "py": 616.4
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 389.7,
+     "py": 526.6
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 833.7,
+     "py": 314.1
+    }
+   ]
+  },
+  {
+   "file": "Feb_21_2026_Millikin@WheatonIL/track1920v2/93_7ea2a2d3_t020.jpg",
+   "points": [
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 937.6,
+     "py": 618.7
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1102.9,
+     "py": 491.2
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1284.7,
+     "py": 611.7
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 824.2,
+     "py": 318.8
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 592.8,
+     "py": 422.7
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 384.9,
+     "py": 526.6
+    }
+   ]
+  },
+  {
+   "file": "Feb_21_2026_Millikin@WheatonIL/track1920v2/119_ef29c521_t022.jpg",
+   "points": [
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1100.5,
+     "py": 498.3
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 1027.3,
+     "py": 545.5
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 935.2,
+     "py": 606.9
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, near",
+     "px": 9.4,
+     "py": 710.8
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 836.0,
+     "py": 318.8
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1284.7,
+     "py": 599.9
+    }
+   ]
+  },
+  {
+   "file": "Feb_21_2026_Millikin@WheatonIL/track1920v2/151_f7a5e0c1_t037.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 715.6,
+     "py": 564.4
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 791.1,
+     "py": 550.3
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1646.1,
+     "py": 484.1
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1414.6,
+     "py": 384.9
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1091.1,
+     "py": 583.3
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 904.5,
+     "py": 460.5
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 982.4,
+     "py": 519.6
+    }
+   ]
+  },
+  {
+   "file": "Feb_21_2026_Millikin@WheatonIL/track1920v2/187_e52d34cd_t029.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 699.0,
+     "py": 562.1
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 784.1,
+     "py": 540.8
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 906.9,
+     "py": 462.9
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1074.5,
+     "py": 585.7
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 982.4,
+     "py": 521.9
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1636.6,
+     "py": 481.8
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1393.4,
+     "py": 389.7
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1173.7,
+     "py": 276.3
+    },
+    {
+     "landmark": "RIGHT baseline x far sideline",
+     "px": 1126.5,
+     "py": 252.7
+    }
+   ]
+  },
+  {
+   "file": "Feb_21_2026_Millikin@WheatonIL/track1920v2/232_ba223f92_t020.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 871.4,
+     "py": 540.8
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 862.0,
+     "py": 628.2
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 857.3,
+     "py": 460.5
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 880.9,
+     "py": 1017.9
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 857.3,
+     "py": 321.2
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 1636.6,
+     "py": 451.1
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1702.7,
+     "py": 507.7
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 1509.1,
+     "py": 503.0
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1447.7,
+     "py": 507.7
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 248.0,
+     "py": 550.3
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 177.1,
+     "py": 550.3
+    }
+   ]
+  }
+ ]
+}
