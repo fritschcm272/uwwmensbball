@@ -59,7 +59,7 @@ def _pr_pkg_stale(doc, g):
                 if ff not in fl:
                     return True
                 want = nf.get(str(p.get("clip_number")))
-                if pic.get("which") == "frame" and want and ff != want:
+                if pic.get("which") == "frame" and want and ff != want and not pic.get("alt_frame"):
                     return True
         # CONFIRMED BUG (fixed; the Wheaton @ North Park player check kept offering "really #? Jerome Smith" and "really #?
         # Jr." after the name fix). An open review with nothing saved is never rebuilt, so it kept the fives it was built
@@ -776,6 +776,23 @@ def _pr_departed():
     return {_pr_nk(n) for n in (plan["seniors"] if plan else [])}
 
 
+def _pr_starters_used_t(slug):
+    """The frames (their place in the clip, t) shown in this game's earlier STARTERS checks that were saved."""
+    used = set()
+    try:
+        for f in glob.glob(os.path.join(_review_saves_dir(), "*.json")):
+            d = _review_doc(f)
+            if d is None or d.get("part") != "starters" or _pr_game_slug(d.get("game")) != slug:
+                continue
+            for c in (d.get("checks") or []) + (d.get("missed") or []):
+                v = pd.to_numeric(c.get("t"), errors="coerce")
+                if pd.notna(v):
+                    used.add(int(v))
+    except Exception:
+        pass
+    return used
+
+
 def _pr_tipoff_index(g):
     """CONFIRMED CHANGE (requested: "a clip right at the tipoff (first possession) for each game"). The index (in g) of the
     game's first tracked possession: first half first, highest clock, then play-by-play order, then clip number. None when
@@ -905,6 +922,7 @@ def play_review():
     try:
         _st_info = new_game_info() if _st_on else None
         _st_saved = _st_info[0] if _st_info else {}
+        _st_partial = starters_saved_all(include_incomplete=True) if _st_on else {}
     except Exception as _se:
         print(f"Play review: saved starters not read ({type(_se).__name__}: {_se})", flush=True)
         _st_info, _st_saved = None, {}
@@ -994,6 +1012,12 @@ def play_review():
             # substitution, where the starters' looks are used), not returners-first.
             _pp = (_pool.assign(_cn=pd.to_numeric(_pool["clip_number"], errors="coerce")).sort_values("_cn", kind="stable")
                    .drop(columns="_cn") if _st_on and _st_this else _by_returners(_pool)).head(_n)
+            # CONFIRMED CHANGE (requested: "why is it building out stuff for other games when I only did the check for starters
+            # in a different game" -- 20 player checks were built for Wheaton @ North Park and WashU next to their starters
+            # checks). While a game's starters check is open, it gets NO other player checks: the next clips come once all ten
+            # starters are identified.
+            if _st_need is not None:
+                _pp = _pp.iloc[0:0]
             # Title checks: only clips a coach already tagged (a Synergy Title) -- untagged clips are tagged in their own
             # Film Tagging batch (requested: tagging only on Analytics > Film Tagging, no duplicate plays)
             _tagged = g["decode_quality"].astype(str).ne("Untagged") if "decode_quality" in g.columns \
@@ -1056,6 +1080,27 @@ def play_review():
                 _nf = pd.to_numeric(r.get("track_name_frame"), errors="coerce")
                 picks_ = [("frame", int(_nf) if pd.notna(_nf) and 0 <= int(_nf) < n
                            else _val_frame_pick(rows, 0, max(0, n - 1)))]
+            # CONFIRMED CHANGE (requested: "after the initial save of the player numbers for the starters, I would like it to
+            # take a new frame at a different time during the clip"). A starters check that comes back (not all ten
+            # identified yet) shows a frame at least STARTERS_NEW_FRAME_GAP_S (2) seconds from every frame already saved for
+            # it -- the one there with the most players -- so players hidden or boxless before can show up.
+            _alt = False
+            if _is_st:
+                _used = _pr_starters_used_t(_slug_app)
+                if _used:
+                    _gap = max(1, int(round(float(globals().get("STARTERS_NEW_FRAME_GAP_S", 2.0)) * fps)))
+                    _far = [t_ for t_ in range(n) if min(abs(t_ - u_) for u_ in _used) >= _gap]
+                    if _far:
+                        _cnt = {}
+                        for rr_ in rows:
+                            if rr_.get("side") not in ("offense", "defense"):
+                                continue
+                            for p_ in _trk_json.loads(rr_["path"]):
+                                if int(p_[0]) in _far:
+                                    _cnt[int(p_[0])] = _cnt.get(int(p_[0]), 0) + 1
+                        _best_t = max(_far, key=lambda t_: (_cnt.get(t_, 0), min(abs(t_ - u_) for u_ in _used)))
+                        picks_ = [("frame", _best_t)]
+                        _alt = True
             clock = r.get("time_remaining_seconds")
             clock_txt = f"{r.get('period', '')} {int(clock // 60)}:{int(clock % 60):02d}" if pd.notna(clock) else "(no clock)"
             lu = lambda side: ", ".join(numtxt(nm) for nm in _trk_five(r.get(f"{side}_lineup"))) or "(lineup unknown)"
@@ -1074,8 +1119,9 @@ def play_review():
                     if _dep and b.get("name") and _pr_nk(b["name"]) in _dep:
                         b["departed"] = True
                 header = [f"Clip {cn}  {clock_txt}  {str(r.get('synergy_string'))[:100]}",
-                          (f"STARTERS -- the first possession of the game, {t / fps:.1f} s into the clip: name every box, "
-                           f"confirm each team's five starters" if _is_st else
+                          (f"STARTERS -- the first possession of the game, {t / fps:.1f} s into the clip"
+                           + (" (a NEW moment -- not the frame you saved before)" if _alt else "")
+                           + ": name every box, confirm each team's five starters" if _is_st else
                            f"{'START' if which == 'start' else 'END'} of the play -- {t / fps:.1f} s into the clip" if which != "frame"
                            else f"Frame for the player check -- {t / fps:.1f} s into the clip, the sharpest with the most players"),
                           f"OFFENSE (orange) {r.get('offense_team')}: {lu('offense')}",
@@ -1118,6 +1164,7 @@ def play_review():
                     except Exception as _ce:
                         print(f"  [play review] close-ups not made ({type(_ce).__name__}: {_ce})", flush=True)
                 pics.append({"which": which, "image": fname, "frame_file": files[t], "t": int(t), "boxes": boxes,
+                             "alt_frame": bool(_alt),
                              "grid": list(_grid) if _grid else None, "W": int(_fw), "H": int(_fh)})
             clip_file = _pr_clip(files, rows, numtxt, os.path.join(rdir, f"clip_{fid}")) if PLAY_REVIEW_VIDEO else None
             # the Title review part (same logic as the Auto-Title review)
@@ -1168,7 +1215,11 @@ def play_review():
                                           for nm in _trk_five(r.get(f"{side}_lineup"))
                                           + (_rosters_pr.get(str(r.get(f"{side}_team")), [])
                                              if len(_trk_five(r.get(f"{side}_lineup"))) < 5 or _is_st else [])},
-                          **({"kind": "starters"} if _is_st else {})})
+                          **({"kind": "starters"} if _is_st else {}),
+                          # (the starters saved so far, when not all ten are identified yet: the app starts from them)
+                          **({"starters_prev": _st_partial[_slug_app]["starters"],
+                              "starters_missing": _st_partial[_slug_app]["missing"]}
+                             if _is_st and _slug_app in _st_partial else {})})
         # every answer already known for each field (coaches' Titles and the model's answers, all games) -- offered as
         # suggestions for a typed answer, so it matches an existing spelling (page and app)
         vocab = _pr_vocab_now()
@@ -1194,6 +1245,9 @@ def play_review():
             globals()["_pr_starters_waiting"].append((gd, gc, f"clip {_stp['clip_number']}, {_stp['clock']}"))
             _nb = sum(len(pic_.get("boxes") or []) for pic_ in _stp.get("pictures") or [])
             _nn = sum(1 for pic_ in _stp.get("pictures") or [] for b_ in pic_.get("boxes") or [] if b_.get("name"))
+            if _stp.get("starters_missing"):
+                print(f"Play review: {gd} {gc}: starters not all identified yet -- still to put on a player: "
+                      f"{', '.join(_stp['starters_missing'])} (clip 2 waits until all ten are)", flush=True)
             print(f"Play review: {gd} {gc}: STARTERS check on the first possession (clip {_stp['clip_number']}, "
                   f"{_stp['clock']}) -- {_nb} box(es), {_nn} named by tracking; validate it at the top of Analytics > "
                   f"Player Number Tracking", flush=True)

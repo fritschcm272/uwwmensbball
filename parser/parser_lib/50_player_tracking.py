@@ -1873,7 +1873,7 @@ def _trk_export_games(pc, base):
 # (rerun from the Player tracking cell) loads just those definitions here -- nothing else in that section runs.
 def _trk_load_new_game_helpers():
     need = ("StartersNeeded", "_pr_game_slug", "starters_saved_all", "new_game_pace", "new_game_info", "new_game_in_process",
-            "_sync_saves_branch")
+            "_sync_saves_branch", "_starters_identified")
     # (always reloaded: an older copy from earlier in the session must not stay in use)
     try:
         import ast as _ast
@@ -4941,6 +4941,11 @@ def _trk_starters_precheck():
             stp = next((p for p in doc.get("plays", []) if p.get("kind") == "starters"
                         or "starters" in (p.get("parts") or [])), None)
             slug = re.sub(r"[^A-Za-z0-9]+", "_", str(doc.get("game"))).strip("_")
+            # a starters check that WAS saved but doesn't put all ten starters on a player yet: no stop -- this run tracks the
+            # tipoff clip again (with the players you named) and the Play review brings the check back for the ones missing
+            if stp is not None and slug not in saved and "_run_parts_saved" in globals() \
+                    and "starters" in _run_parts_saved(slug, doc.get("run")):
+                continue
             if stp is not None and slug not in saved:
                 # CONFIRMED BUG (fixed; the notebook stopped for the Millikin @ Wheaton starters check, whose picture was
                 # made WITHOUT the court -- fans boxed, players missed -- while the gym still needed its calibration). The

@@ -2396,12 +2396,33 @@ def _pr_game_slug(game):
     return re.sub(r"[^A-Za-z0-9]+", "_", str(game)).strip("_")
 
 
-def starters_saved_all():
+def _starters_identified(d):
+    """The names a starters save puts on a player in the picture: a box checked as him (or "correct" on a box tracking named
+    him), or a player with no box marked with who he is."""
+    out = set()
+    for c in d.get("checks") or []:
+        v = c.get("verdict")
+        if v in ("wrong", "wrong team") and c.get("true_name"):
+            out.add(str(c["true_name"]))
+        elif v == "correct" and (c.get("assigned") or c.get("true_name")):
+            out.add(str(c.get("true_name") or c.get("assigned")))
+    for m in d.get("missed") or []:
+        if m.get("true_name"):
+            out.add(str(m["true_name"]))
+    return out
+
+
+def starters_saved_all(include_incomplete=False):
     """CONFIRMED CHANGE (requested: "I want to be given a clip right at the tipoff for each game ... I will then validate and
     determine the actual 10 starters"). The latest saved starters validation of each game, from the app's saves (part
-    "starters") -> {game slug: {"starters": {team: [5 names]}, "clip_key": ..., "coach": ..., "saved": ...}}. Saves made
-    before a tracking reset are set aside (the same rule as the player checks)."""
-    out = {}
+    "starters") -> {game slug: {"starters": {team: [5 names]}, "clip_key": ..., "coach": ..., "saved": ..., "complete": bool,
+    "missing": [names]}}. Saves made before a tracking reset are set aside (the same rule as the player checks).
+    CONFIRMED CHANGE (requested: "I don't want to move on to clip #2 until all 10 starters have been correctly identified"):
+    a game's starters only count as done ("complete") once EVERY one of its ten starters has been put on a player in the
+    starters picture -- a checked box, or a no-box mark saying who he is -- over all of that game's starters saves. Until then
+    the game stays on its starters check (it comes back each run, with the ones still missing); only complete games are
+    returned unless include_incomplete."""
+    out, ident = {}, {}
     reset_at = tracking_reset_time() if "tracking_reset_time" in globals() else None
     for f in glob.glob(os.path.join(_review_saves_dir(), "*.json")):
         d = _review_doc(f)
@@ -2416,10 +2437,19 @@ def starters_saved_all():
         if not any(st_.values()):
             continue
         slug = _pr_game_slug(d.get("game"))
+        ident.setdefault(slug, set()).update(_starters_identified(d))
         if slug not in out or str(d.get("saved") or "") >= str(out[slug].get("saved") or ""):
             out[slug] = {"starters": st_, "clip_key": d.get("starters_clip_key"), "coach": d.get("coach"),
                          "saved": d.get("saved"), "run": d.get("run")}
-    return out
+    _nk = lambda x: re.sub(r"[^a-z0-9]+", "", str(x).lower())
+    for slug, v in out.items():
+        have = {_nk(n) for n in ident.get(slug, set())}
+        v["missing"] = [n for names in v["starters"].values() for n in names if _nk(n) not in have]
+        v["complete"] = (not v["missing"]) and sum(len(x) for x in v["starters"].values()) >= 10
+    if not globals().get("STARTERS_REQUIRE_ALL_10", True):
+        for v in out.values():
+            v["complete"] = True
+    return out if include_incomplete else {k: v for k, v in out.items() if v["complete"]}
 
 
 # CONFIRMED CHANGE (requested: "I want this to be the process for right now for new games. I want there to be an option that

@@ -6994,6 +6994,10 @@ def _pnt_starters_form(sv):
             "\"not a player\". Mark any starter with no box on the grid. 2) Below the picture, make sure each team's five "
             "starters are right. 3) Save. Then rerun the parser from the Player tracking cell -- it uses what each starter "
             "looks like on the clips before the first substitution.")
+    if pl.get("starters_missing"):
+        st.warning("This check is back because these starters aren't on a player in the picture yet: "
+                   + ", ".join(pl["starters_missing"]) + ". Put each one on his box (or mark him in the no-box table with who "
+                   "he is). Clip 2 waits until all ten are identified.")
     store = _pr_store(run)
     saved = [x for x in _pr_app_saves_for(run) if "starters" in x[2]]
     if saved:
@@ -7011,6 +7015,8 @@ def _pnt_starters_form(sv):
             team = (pl.get("teams") or {}).get(sd) or ("Offense" if sd == "offense" else "Defense")
             labs = [lab for lab, (n, s_) in opts.items() if s_ == sd]
             five = (pl.get("five") or {}).get(sd) or []
+            # (the starters saved before, when the check came back because not all ten were identified)
+            five = (pl.get("starters_prev") or {}).get(team) or five
             dflt = [lab for lab in labs if opts[lab][0] in five]
             sel = cols[ci].multiselect(f"{_pr_side_code(pl, sd)} starters ({team}, on {sd} on this play)", labs,
                                        default=dflt, max_selections=5, key=f"{kp}_five_{run}_{sd}",
@@ -7033,10 +7039,27 @@ def _pnt_starters_form(sv):
     out["starters_clip_key"] = pl.get("clip_key")
     fname = (f"play_review_{sv.get('slug')}_{sv.get('run_real', run)}_starters_"
              f"{re.sub(r'[^A-Za-z0-9]+', '_', coach.strip()).strip('_')}_{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
+    # CONFIRMED CHANGE (requested: "I don't want to move on to clip #2 until all 10 starters have been correctly identified"):
+    # which of the ten this save (with the earlier ones) puts on a player -- the parser keeps the game on its starters check
+    # until all ten are
+    _nk = lambda x: re.sub(r"[^a-z0-9]+", "", str(x).lower())
+    _ided = set()
+    for c in out.get("checks", []):
+        if c.get("verdict") in ("wrong", "wrong team") and c.get("true_name"):
+            _ided.add(_nk(c["true_name"]))
+        elif c.get("verdict") == "correct" and c.get("assigned"):
+            _ided.add(_nk(c["assigned"]))
+    _ided |= {_nk(m["true_name"]) for m in out.get("missed", []) if m.get("true_name")}
+    _prev_missing = {_nk(n) for n in (pl.get("starters_missing") or [])}
+    _all10 = [n for names in out["starters"].values() for n in names]
+    _still = [n for n in _all10 if _nk(n) not in _ided and (not pl.get("starters_missing") or _nk(n) in _prev_missing)]
     ok, msg = _pr_github_save(fname, out)
     if ok:
         st.success(f"Saved the starters and {len(out.get('checks', []))} box check(s) ({msg}). Rerun the parser from the Player "
                    f"tracking cell -- it fetches this save and carries on.")
+        if _still:
+            st.warning("Not on a player in the picture yet: " + ", ".join(_still) + ". The next parser run brings this "
+                       "starters check back for them (clip 2 waits until all ten are identified).")
         try:
             _pr_remote_save_docs.clear()
         except Exception:
