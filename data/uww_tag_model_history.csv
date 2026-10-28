@@ -233,4 +233,5 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-10-28T12:13:34,offball_coverage,Off-ball coverage,29.0,57.0,Over,42.0,63,usual answer,False,model not better than always guessing (29% vs 57%),,,2026-10-27T11:35:35
 2026-10-28T12:13:34,screener,Screener,,,,,58,,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),,,2026-10-27T11:35:35
 2026-10-28T12:13:34,screen_defender,Screen defender,29.0,29.0,#5,55.0,97,usual answer,False,model not better than always guessing (29% vs 29%),,,2026-10-27T11:35:35
-2026-10-28T12:54:59,screener,Screener,,,,,58,nan,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),,,2026-10-27T11:35:35
+2026-10-28T12:54:59,screener,Screener,,,,,58,,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),,,2026-10-27T11:35:35
+2026-10-28T15:14:22,screener,Screener,,,,,58,nan,False,not trained: needs 30+ tagged clips over 2+ answers (has 5 over 1),,,2026-10-27T11:35:35

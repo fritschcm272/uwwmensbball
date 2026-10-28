@@ -1778,7 +1778,7 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
     # side's current game (VISION_WAIT_FOR_COACHES) -- same name format as VISION_ONLY_GAME ("2_21_26 Millikin @ Wheaton",
     # matched by the date within a day and a team word in the game's label). Only games in each side's VISION_RECENT_GAMES
     # window. A game already captured is skipped as usual. [] / None = off.
-    _also = globals().get("VISION_ALSO_GAMES", ["2_21_26 Millikin @ Wheaton"])
+    _also = globals().get("VISION_ALSO_GAMES", [])
     _force = set()
     for _nm in ([_also] if isinstance(_also, str) else list(_also or [])):
         _m = re.match(r"^\s*(\d{1,2})_(\d{1,2})_(\d{2,4})\s+(.*)$", str(_nm))
