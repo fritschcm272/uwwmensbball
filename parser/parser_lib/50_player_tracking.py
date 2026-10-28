@@ -2239,6 +2239,66 @@ def player_tracking(pc):
                 clip["team"][k] = max(set(labs), key=labs.count)
         clips[i] = clip
 
+    # CONFIRMED BUG (fixed; "A is definitely not #12 since E is" -- your #12 Martin check on one frame named a box on another
+    # frame that was a different Wheaton player). A track can switch from one player to another where they pass close without
+    # overlapping enough to be cut, and a check named the WHOLE track. In a game still on its starters check, a checked track
+    # is now cut to the stretch within TRACK_CHECK_SPAN_S (2) seconds of the checked frame; the rest become pieces of their
+    # own, which get the name only if they look like him and are on his team (carried names, step 6).
+    _span = float(globals().get("TRACK_CHECK_SPAN_S", 2.0))
+    if _span > 0 and TRACK_USE_COACH_CHECKS and globals().get("TRACK_CARRY_CHECKS", True):
+        try:
+            _done_ = starters_saved_all() if "starters_saved_all" in globals() else {}
+            _sl_ = lambda g_: re.sub(r"[^A-Za-z0-9]+", "_", str(g_)).strip("_")
+            _k2i_ = {_trk_clip_key(pc.loc[i]): i for i in todo}
+            _w = max(1, int(round(_span * _fps)))
+            _labm = {0.0: "A", 1.0: "B", 2.0: "ref"}
+            _n_split, _touched = 0, set()
+            for ch in _trk_coach_checks():
+                i = _k2i_.get(ch.get("clip_key"))
+                if i is None or _sl_(game_of[i]) in _done_:
+                    continue
+                _tv = pd.to_numeric(ch.get("t"), errors="coerce")
+                if pd.isna(_tv):
+                    continue
+                t = int(_tv)
+                clip = clips[i]
+                if not 0 <= t < len(clip["frames"]):
+                    continue
+                best = None
+                for k, tr in enumerate(clip["tracks"]):
+                    for tt, j in tr:
+                        if tt == t:
+                            row = clip["frames"][t][j]
+                            dpx = float(np.hypot((row[6] + row[8]) / 2 - float(ch.get("px", -1e9)), row[9] - float(ch.get("py", -1e9))))
+                            if dpx < 25 and (best is None or dpx < best[0]):
+                                best = (dpx, k)
+                if best is None:
+                    continue
+                k = best[1]
+                tr = clip["tracks"][k]
+                inside = [(tt, j) for tt, j in tr if abs(tt - t) <= _w]
+                rest = [[(tt, j) for tt, j in tr if tt < t - _w], [(tt, j) for tt, j in tr if tt > t + _w]]
+                if not any(rest):
+                    continue
+                clip["tracks"][k] = inside
+                for piece in rest:
+                    if not piece:
+                        continue
+                    clip["tracks"].append(piece)
+                    if "team" in clip:
+                        labs = [_labm.get(float(clip["frames"][tt][j][19])) for tt, j in piece]
+                        labs = [x for x in labs if x] or ["ref"]
+                        clip["team"][len(clip["tracks"]) - 1] = max(set(labs), key=labs.count)
+                    _n_split += 1
+                _touched.add(i)
+            for i in _touched:
+                clips[i]["holder"] = _trk_holders(clips[i])
+            if _n_split:
+                print(f"  [tracking]   checked tracks in starters clips cut to {_span:g} s around the checked frame: {_n_split} "
+                      f"piece(s) split off (they keep the name only if they look like him -- TRACK_CHECK_SPAN_S)", flush=True)
+        except Exception as _e:
+            print(f"  [tracking]   checked tracks not cut ({type(_e).__name__}: {_e})", flush=True)
+
     if _x_iou > 0:
         print(f"  [tracking]   tracks cut where two teammates overlapped (a swap can happen there): {_x_cut:,} cut(s); "
               f"{_x_short:,} piece(s) shorter than TRACK_MIN_FRAMES left out (TRACK_SPLIT_CROSS_IOU = {_x_iou:g}; 0 = off)", flush=True)
