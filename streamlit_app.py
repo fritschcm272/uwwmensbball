@@ -8098,7 +8098,13 @@ def _cc_page():
 
     names = [f"Frame {i + 1} -- {len(store.get(f_['file'], []))} point(s)" + (" ✔" if len(store.get(f_['file'], [])) >= 4 else "")
              for i, f_ in enumerate(frames)]
-    fi = st.radio("Frame", list(range(len(frames))), format_func=lambda i: names[i], horizontal=True, key=f"cc_fi_{gym}")
+    # CONFIRMED BUG (fixed; "when I click points on Frame 2 it is sometimes going back to Frame 1"): each frame's label shows its
+    # point count, and Streamlit treats a radio whose labels changed as a NEW widget -- so after a click that changed the count
+    # it started over on Frame 1. The chosen frame is now kept separately and given back to the radio every time.
+    _fk = f"cc_fi_sel_{gym}"
+    _fi0 = min(int(st.session_state.get(_fk, 0)), len(frames) - 1)
+    fi = st.radio("Frame", list(range(len(frames))), index=_fi0, format_func=lambda i: names[i], horizontal=True)
+    st.session_state[_fk] = fi
     fr = frames[fi]
     pts = store.setdefault(fr["file"], [])
 
