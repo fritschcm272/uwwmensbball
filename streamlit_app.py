@@ -8110,10 +8110,33 @@ def _cc_page():
     lm_names = list(lms)
     left, right = st.columns([3, 2])
     with right:
-        sel = st.selectbox("Landmark to place", lm_names, key=lm_key,
-                           help="Pick a landmark you can see clearly in this picture, then click that spot on the picture.")
-        st.image(_cc_court_diagram(lms, sel, {p["landmark"] for p in pts}),
-                 caption="Red = the landmark you're placing; green = already placed on this frame", use_container_width=True)
+        # CONFIRMED CHANGE (requested: "I don't want a drop down, and I can't click on the circles on the court image"): the
+        # court diagram IS the picker -- click a circle to choose the landmark, then click that spot on the frame. (After
+        # each placed point it still moves on to the next landmark not placed yet.)
+        if st.session_state.get(lm_key) not in lm_names:
+            _done0 = {p["landmark"] for p in pts}
+            st.session_state[lm_key] = next((n for n in lm_names if n not in _done0), lm_names[0])
+        sel = st.session_state[lm_key]
+        st.markdown(f"**Placing:** {sel}  \n<small>Click a circle on the court to place a different landmark.</small>",
+                    unsafe_allow_html=True)
+        _diag = _cc_court_diagram(lms, sel, {p["landmark"] for p in pts})
+        try:
+            _dv = _sic(_diag, key=f"cc_diag_{gym}_{fi}", use_column_width="always")
+        except TypeError:
+            _dv = _sic(_diag, key=f"cc_diag_{gym}_{fi}", width=_diag.size[0])
+        st.caption("Red = the landmark you're placing; green = already placed on this frame")
+        if _dv and _dv.get("x") is not None and _dv.get("width"):
+            _dsig = (gym, fi, _dv.get("x"), _dv.get("y"), _dv.get("unix_time"))
+            if st.session_state.get("_cc_last_diag") != _dsig:
+                st.session_state["_cc_last_diag"] = _dsig
+                _k = _diag.size[0] / float(_dv["width"])
+                _x, _y = float(_dv["x"]) * _k, float(_dv["y"]) * _k
+                _S, _Hh = 6, _diag.size[1]
+                _near = min(lm_names, key=lambda n: (10 + lms[n][0] * _S - _x) ** 2 + (_Hh - 10 - lms[n][1] * _S - _y) ** 2)
+                _dd = ((10 + lms[_near][0] * _S - _x) ** 2 + (_Hh - 10 - lms[_near][1] * _S - _y) ** 2) ** 0.5
+                if _dd <= 18 and _near != sel:
+                    st.session_state["_cc_next_lm"] = (lm_key, _near)
+                    _cc_rerun()
         H = _cc_homography([(p["px"], p["py"]) for p in pts], [lms[p["landmark"]] for p in pts]) if len(pts) >= 4 else None
         if len(pts) >= 5 and H is not None:
             err = np.linalg.norm(_cc_apply(H, [(p["px"], p["py"]) for p in pts]) - np.asarray([lms[p["landmark"]] for p in pts]),
