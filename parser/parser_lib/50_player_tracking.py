@@ -1873,7 +1873,7 @@ def _trk_export_games(pc, base):
 # (rerun from the Player tracking cell) loads just those definitions here -- nothing else in that section runs.
 def _trk_load_new_game_helpers():
     need = ("StartersNeeded", "_pr_game_slug", "starters_saved_all", "new_game_pace", "new_game_info", "new_game_in_process",
-            "_sync_saves_branch", "_starters_identified")
+            "_sync_saves_branch", "_starters_identified", "reuse_previous_model_columns", "reuse_previous_table")
     # (always reloaded: an older copy from earlier in the session must not stay in use)
     try:
         import ast as _ast
@@ -4948,6 +4948,13 @@ def _trk_run_all():
     for _c in _TRACK_COLS:
         if _c not in play_calls.columns:
             play_calls[_c] = None
+    if not RUN_PLAYER_TRACKING and globals().get("TRACK_REUSE_WHEN_OFF", True) and "reuse_previous_table" in globals():
+        # tracking switched off (e.g. the Film Tagging or Brief notebook): the last run's tracking is kept, not lost
+        player_tracks = reuse_previous_table("uww_player_tracks")
+        tracking_report = reuse_previous_table("uww_tracking_report")
+        globals()["trk_event_candidates"] = reuse_previous_table("uww_trk_event_candidates")
+        globals()["trk_lineup_slots"] = reuse_previous_table("uww_trk_lineup_slots")
+        reuse_previous_model_columns(play_calls, ("track_",), "player tracking (switched off this run)")
     if RUN_PLAYER_TRACKING and not play_calls.empty:
         try:
             _prev = _trk_previous_results()

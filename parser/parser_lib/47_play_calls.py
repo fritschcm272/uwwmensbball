@@ -2509,6 +2509,69 @@ def new_game_in_process(game, info=None):
     return True
 
 
+# CONFIRMED CHANGE (requested: separate notebooks -- "really quickly get my coaches new clips" / "create the scouting brief ...
+# based on everything we've done before"). When the slow model steps are switched off (player tracking, court mapping, the tag
+# model), their results from the last run are put back instead of being lost: the play calls' model columns (track_*,
+# court_*, pred_*, suggested_title) from the last uww_play_calls.csv, and the model tables from their CSVs.
+_MODEL_COL_PREFIXES = ("track_", "court_", "pred_")
+_MODEL_COLS = ("suggested_title",)
+
+
+def reuse_previous_model_columns(df, prefixes=None, label="model results"):
+    """Fill this run's play calls (df, changed in place) with the last run's model columns, clip by clip (game date | clip
+    number | Synergy text). Track / court columns only where the clip's tracking frames are the same. -> clips filled."""
+    if not isinstance(df, pd.DataFrame) or df.empty:
+        return 0
+    p_ = os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, "uww_play_calls.csv")
+    if not os.path.exists(p_):
+        return 0
+    try:
+        prev = pd.read_csv(p_, low_memory=False)
+    except Exception as e:
+        print(f"  [reuse] last run's play calls not read ({type(e).__name__}: {e})", flush=True)
+        return 0
+    pre = tuple(prefixes or _MODEL_COL_PREFIXES)
+    cols = [c for c in prev.columns if c.startswith(pre) or (prefixes is None and c in _MODEL_COLS)]
+    if not cols:
+        return 0
+    _k = lambda d: [_pl_ckey_norm(f"{a}|{b}|{c}") for a, b, c in zip(d["game_date"], d["clip_number"], d["synergy_string"])]
+    prev = prev.assign(_k=_k(prev)).drop_duplicates("_k", keep="last").set_index("_k")
+    keys = _k(df)
+    n = 0
+    for c in cols:
+        if c not in df.columns:
+            df[c] = None
+    for pos, (idx, k) in enumerate(zip(df.index, keys)):
+        if k not in prev.index:
+            continue
+        same_frames = ("track_files" not in df.columns or "track_files" not in prev.columns
+                       or str(df.at[idx, "track_files"]) == str(prev.at[k, "track_files"]))
+        hit = False
+        for c in cols:
+            if c.startswith(("track_", "court_")) and not same_frames:
+                continue
+            cur = df.at[idx, c]
+            if cur is None or (isinstance(cur, float) and pd.isna(cur)):
+                v = prev.at[k, c]
+                if not (isinstance(v, float) and pd.isna(v)):
+                    df.at[idx, c] = v
+                    hit = True
+        n += hit
+    print(f"  [reuse] {label}: the last run's results put back on {n:,} clip(s) ({len(cols)} column(s))", flush=True)
+    return n
+
+
+def reuse_previous_table(name, default=None):
+    """The last run's <data>/<name>.csv (a model table this run didn't rebuild), else default (an empty table)."""
+    p_ = os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, f"{name}.csv")
+    try:
+        t = pd.read_csv(p_, low_memory=False)
+        print(f"  [reuse] {name}: the last run's {len(t):,} row(s)", flush=True)
+        return t
+    except Exception:
+        return default if default is not None else pd.DataFrame()
+
+
 def _run_complete(slug, run):
     """A game's review run is done when BOTH parts are saved (in one file or two)."""
     return {"titles", "players"} <= _run_parts_saved(slug, run)

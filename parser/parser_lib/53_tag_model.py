@@ -689,6 +689,10 @@ _tm_other = globals().get("play_calls_other")
 _tm_src = (pd.concat([play_calls, _tm_other], ignore_index=True)
            if isinstance(_tm_other, pd.DataFrame) and not _tm_other.empty else play_calls.copy())
 _tm_n_pc = len(play_calls)   # rows [0, _tm_n_pc) of _tm_src are play_calls, in order
+# (tag model switched off -- e.g. the Film Tagging or Brief notebook: the last run's automatic answers and its report are kept)
+if not RUN_TAG_MODEL and "reuse_previous_model_columns" in globals():
+    reuse_previous_model_columns(play_calls, ("pred_", "suggested_title"), "tag model (switched off this run)")
+    tag_model_report = reuse_previous_table("uww_tag_model_report", tag_model_report)
 if RUN_TAG_MODEL and not _tm_src.empty:
     _tm_t_cell = _tm_time.time()
     _tm_steps.clear()
