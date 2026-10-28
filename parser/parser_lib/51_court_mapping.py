@@ -643,6 +643,10 @@ def court_mapping(pc, tracks):
 
 
 _cm_ran_now = False                           # the calibration stop only trusts a report made by THIS run
+# (court mapping switched off -- e.g. the Brief notebook: the last run's court columns on the play calls are kept; the player
+# tracks' court columns come back with the last run's player tracks)
+if not RUN_COURT_MAPPING and "reuse_previous_model_columns" in globals() and isinstance(globals().get("play_calls"), pd.DataFrame):
+    reuse_previous_model_columns(play_calls, ("court_",), "court mapping (switched off this run)")
 if RUN_COURT_MAPPING and isinstance(globals().get("player_tracks"), pd.DataFrame) and not player_tracks.empty:
     try:
         import cv2  # comes with ultralytics

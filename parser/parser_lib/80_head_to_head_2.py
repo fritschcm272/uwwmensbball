@@ -140,6 +140,15 @@ csv_tables = {
 # corrects that game's projection rather than duplicating it.
 
 csv_export_status = []
+# CONFIRMED CHANGE (separate notebooks): a model table this run didn't rebuild (player tracking / tag model / court mapping
+# switched off) is EMPTY here -- the last run's file is kept instead of being overwritten with nothing.
+_KEEP_IF_EMPTY = {"uww_player_tracks", "uww_tracking_report", "uww_trk_event_candidates", "uww_trk_lineup_slots",
+                  "uww_tag_model_report"}
+for name, df in list(csv_tables.items()):
+    if name in _KEEP_IF_EMPTY and (not isinstance(df, pd.DataFrame) or df.empty) \
+            and os.path.exists(os.path.join(APP_DATA_DIR, f"{name}.csv")):
+        print(f"  {name}: nothing new this run -- the last run's file is kept", flush=True)
+        csv_tables.pop(name)
 for name, df in csv_tables.items():
     path = os.path.join(APP_DATA_DIR, f"{name}.csv")
     keys = APPEND_TABLES.get(name)
