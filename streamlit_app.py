@@ -6212,6 +6212,10 @@ def _pr_check_of(pl, b, val):
     if not isinstance(val, str) or val == _PR_NOT_CHECKED:
         return None
     if val == "correct":
+        # requested ("will this show up as correct?"): on a box with no name, "correct" means the suggestion ("looks like
+        # #11 JR Lukenbill?") was right -- saved as that player; with no suggestion there's nothing to confirm (not saved)
+        if not b.get("name"):
+            return ("wrong", b["hidden_guess"]) if b.get("hidden_guess") else None
         return "correct", b.get("name")
     if val in _PR_NOT_PLAYER:
         return "not a player", None
@@ -6425,7 +6429,7 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
                          "screen_defender": _first.get("screen_defender"),
                          "ball_screen_coverage": (_ball or {}).get("coverage"),
                          "offball_coverage": (_off or {}).get("coverage")}, _touched_a)
-        for fi, f in enumerate(pl.get("fields", []) if part != "players" else []):
+        for fi, f in enumerate(pl.get("fields", []) if part not in ("players", "starters") else []):
             if _derived is not None and f.get("field") in _FT_ACTION_FIELDS:
                 _v = _ft_clean(_derived[0].get(f.get("field")))
                 if not _v:
@@ -6481,7 +6485,7 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
     if part == "titles":
         out.pop("checks")
         out.pop("missed", None)
-    elif part == "players":
+    elif part in ("players", "starters"):
         out.pop("answers")
     return out
 
@@ -6879,7 +6883,7 @@ def _pr_save_history(game, part):
         try:
             if str(d.get("game")) != str(game):
                 continue
-            parts = ({d["part"]} if d.get("part") in ("titles", "players") else
+            parts = ({d["part"]} if d.get("part") in ("titles", "players", "starters") else
                      ({"titles"} if isinstance(d.get("answers"), list) else set())
                      | ({"players"} if isinstance(d.get("checks"), list) else set()))
             if part not in parts:
@@ -6945,6 +6949,77 @@ def _pnt_check_form(prd):
             st.error("Add your name next to the Save button, then save again.")
         else:
             _pr_commit(prd, store, coach, "prxpnt", "players", sfx)
+
+
+def _pnt_starters_form(sv):
+    """CONFIRMED CHANGE (requested: "I want to be given a clip right at the tipoff (first possession) for each game ... use the
+    models to find all 10 of the starters in the game. I will then validate and determine the actual 10 starters"). The
+    STARTERS check (the parser's play with kind "starters"): the first possession's frame with every box tracking found and
+    named, both teams' whole rosters in the dropdowns, and each team's five starters to confirm. Saved as part "starters"
+    (the box checks + {team: [five starters]}); the parser stops until it's saved, then uses each starter's look on the
+    clips before the first substitution."""
+    run = sv.get("run")
+    sfx = f"_pnts_{sv.get('slug')}_{run}"
+    kp = "prxst"
+    pl = sv["plays"][0]
+    st.markdown("#### \U0001f3c0 Starters — the first possession of the game")
+    st.info("**The parser is stopped until this is saved.** 1) In the Players table, check every box: \"correct\" if "
+            "tracking named him right, otherwise pick who he really is (both teams' whole rosters are in the list), or "
+            "\"not a player\". Mark any starter with no box on the grid. 2) Below the picture, make sure each team's five "
+            "starters are right. 3) Save. Then rerun the parser from the Player tracking cell -- it uses what each starter "
+            "looks like on the clips before the first substitution.")
+    store = _pr_store(run)
+    saved = [x for x in _pr_app_saves_for(run) if "starters" in x[2]]
+    if saved:
+        st.success("Starters already saved for this batch: " + "; ".join(f"{c} ({t})" for c, t, _p in saved)
+                   + ". Rerun the parser from the Player tracking cell.")
+    opts = _pr_player_opts(pl)
+    with _form_no_enter(f"prx_starters_form{sfx}"):
+        with st.expander(f"Clip {pl.get('clip_number')} · {pl.get('clock', '')} · "
+                         f"{str(pl.get('synergy', ''))[:70]}", expanded=True):
+            _pr_player_widgets(sv, 0, store, kp, with_video=False)
+        st.markdown("**Each team's five starters**")
+        picks = {}
+        cols = st.columns(2)
+        for ci, sd in enumerate(("offense", "defense")):
+            team = (pl.get("teams") or {}).get(sd) or ("Offense" if sd == "offense" else "Defense")
+            labs = [lab for lab, (n, s_) in opts.items() if s_ == sd]
+            five = (pl.get("five") or {}).get(sd) or []
+            dflt = [lab for lab in labs if opts[lab][0] in five]
+            sel = cols[ci].multiselect(f"{_pr_side_code(pl, sd)} starters ({team}, on {sd} on this play)", labs,
+                                       default=dflt, max_selections=5, key=f"{kp}_five_{run}_{sd}",
+                                       help="Filled in from the play-by-play's starting five -- change it if it's wrong.")
+            picks[sd] = (team, [opts[lab][0] for lab in sel])
+        _nc, _sc = st.columns([3, 2], vertical_alignment="bottom")
+        coach = _nc.text_input("Your name (required to save)", key=f"pr_coach_starters{sfx}")
+        go = _sc.form_submit_button("Save the starters", use_container_width=True)
+    if not go:
+        return
+    if not str(coach).strip():
+        st.error("Add your name next to the Save button, then save again.")
+        return
+    short = [f"{_pr_side_code(pl, sd)} has {len(v[1])}" for sd, v in picks.items() if len(v[1]) != 5]
+    if short:
+        st.error("Pick exactly five starters for each team (" + "; ".join(short) + "), then save again.")
+        return
+    out = _pr_payload(sv, store, coach, kp, part="starters")
+    out["starters"] = {team: names for team, names in picks.values()}
+    out["starters_clip_key"] = pl.get("clip_key")
+    fname = (f"play_review_{sv.get('slug')}_{sv.get('run_real', run)}_starters_"
+             f"{re.sub(r'[^A-Za-z0-9]+', '_', coach.strip()).strip('_')}_{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
+    ok, msg = _pr_github_save(fname, out)
+    if ok:
+        st.success(f"Saved the starters and {len(out.get('checks', []))} box check(s) ({msg}). Rerun the parser from the Player "
+                   f"tracking cell -- it fetches this save and carries on.")
+        try:
+            _pr_remote_save_docs.clear()
+        except Exception:
+            pass
+    else:
+        st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in the repo's "
+                   f"data/play_review_saves folder.")
+        st.download_button("Download", json.dumps(out, indent=1), file_name=fname, mime="application/json",
+                           key=f"pr_dl_starters{sfx}")
 
 
 def _pnt_model_versions():
@@ -8080,7 +8155,8 @@ def _cc_page():
                                 mime="application/json", key=f"cc_dl_{gym}")
 
 
-_TES_ORDER = ["named_by_model", "located", "reader", "appearance", "reid", "best_guess", "anchors", "player_model", "outfit"]
+_TES_ORDER = ["named_by_model", "located", "reader", "appearance", "starter_look", "reid", "best_guess", "anchors",
+              "player_model", "outfit"]
 
 
 def render_tracking_eval_scoreboard():
@@ -8196,8 +8272,9 @@ def render_player_number_tracking():
     section_header("\U0001f522 PLAYER NUMBER TRACKING", "Check who the model named on each tracked box, and see which parts of "
                    "the player-number tracking are working.")
     render_tracking_eval_scoreboard()
-    pkgs = [v for v in (_pr_part_view(d, "players") for d in sorted(_pr_app_packages(), key=lambda d: str(d.get("game", "")),
-                                                                     reverse=True)) if v]
+    # a game's open package: its player checks and (until its starters are saved) its STARTERS check
+    pkgs = [d for d in sorted(_pr_app_packages(), key=lambda d: str(d.get("game", "")), reverse=True)
+            if _pr_part_view(d, "players") or _pr_part_view(d, "starters")]
     saves = _pnt_load_checks()
     games = {_pnt_game_label(d.get("game")): d for d in pkgs}
     for g in (saves["game"].dropna().unique() if not saves.empty else []):
@@ -8207,6 +8284,10 @@ def render_player_number_tracking():
                 "data/play_review/.")
         return
     _pnt_model_versions()
+    _st_wait = [k for k, v in games.items() if v is not None and _pr_part_view(v, "starters")]
+    if _st_wait:
+        st.warning("\U0001f3c0 Starters to validate (the parser is stopped until they're saved): " + "; ".join(_st_wait)
+                   + ". Pick the game below -- the Starters check is at the top.")
     pick = st.selectbox("Game", ["All Games"] + list(games), key="pnt_game")
     chosen = [(k, v) for k, v in games.items() if pick == "All Games" or k == pick]
     open_pk = [(k, v) for k, v in chosen if v is not None]
@@ -8220,10 +8301,19 @@ def render_player_number_tracking():
     for k, v in open_pk:
         if pick == "All Games":
             st.markdown(f"### {k}")
-        try:
-            _pnt_check_form(v)
-        except Exception as e:
-            report_section_error("Player Number Tracking", e)
+        _sv, _pv = _pr_part_view(v, "starters"), _pr_part_view(v, "players")
+        if _sv:
+            try:
+                _pnt_starters_form(_sv)
+            except Exception as e:
+                report_section_error("Starters check", e)
+            if _pv:
+                st.divider()
+        if _pv:
+            try:
+                _pnt_check_form(_pv)
+            except Exception as e:
+                report_section_error("Player Number Tracking", e)
         st.divider()
 
 
@@ -15573,7 +15663,7 @@ def _pr_app_saves_for(run):
         try:
             _slug = re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game", ""))).strip("_")
             if str(run) in (str(d.get("run")), f"{_slug}_{d.get('run')}"):
-                parts = ({d["part"]} if d.get("part") in ("titles", "players") else
+                parts = ({d["part"]} if d.get("part") in ("titles", "players", "starters") else
                          ({"titles"} if isinstance(d.get("answers"), list) else set())
                          | ({"players"} if isinstance(d.get("checks"), list) else set()))
                 out.append((d.get("coach") or "someone", str(d.get("saved", ""))[:16].replace("T", " "), parts))

@@ -1,4 +1,4 @@
-Export window: WindowControl name='Export - Edit - WheatonIL@NorthPark - Feb 24, 2026' class='ExportEditDialog'
+Export window: WindowControl name='Export - Edit - Millikin@WheatonIL - Feb 21, 2026' class='ExportEditDialog'
   GroupControl name='' id='' class='VisualLayerManager' rect=(668,466,2068,1262)
     GroupControl name='' id='' class='Border' rect=(668,466,2068,1262)
       GroupControl name='' id='' class='Grid' rect=(670,468,2066,1260)
@@ -10,12 +10,12 @@ Export window: WindowControl name='Export - Edit - WheatonIL@NorthPark - Feb 24,
                 GroupControl name='' id='' class='Grid' rect=(670,468,2066,1260)
                   GroupControl name='' id='' class='Rectangle' rect=(670,468,2066,1260)
                   GroupControl name='' id='TitleBar' class='Grid' rect=(670,468,2066,532)
-                    TextControl name='Export - Edit - WheatonIL@NorthPark - Feb 24, 2026' id='' class='TextBlock' rect=(670,483,1389,517)
+                    TextControl name='Export - Edit - Millikin@WheatonIL - Feb 21, 2026' id='' class='TextBlock' rect=(670,483,1343,517)
                     GroupControl name='' id='PART_HeaderContentPresenter' class='ContentPresenter' rect=(0,0,0,0)
                   GroupControl name='' id='PART_ContentPresenter' class='ContentPresenter' rect=(730,572,2006,1080)
                     GroupControl name='' id='' class='Grid' rect=(730,572,2006,1080)
                       TextControl name='Location:' id='' class='TextBlock' rect=(730,588,828,616)
-                      EditControl name='' id='' class='TextBox' rect=(856,572,1834,632) value='C:\\Users\\frits\\OneDrive\\Documents\\GitHub\\uwwmensbball\\parser\\inputs\\_vision_frames'
+                      EditControl name='' id='' class='TextBox' rect=(856,572,1834,632) value='F:\\Backups\\uwwmensbball_tracking'
                         GroupControl name='' id='' class='StackPanel' rect=(856,572,1834,632)
                           GroupControl name='' id='' class='Grid' rect=(856,572,1834,632)
                             GroupControl name='' id='border' class='Border' rect=(856,572,1834,632)
@@ -30,14 +30,14 @@ Export window: WindowControl name='Export - Edit - WheatonIL@NorthPark - Feb 24,
                                             GroupControl name='' id='PART_ContentPresenter' class='ScrollContentPresenter' rect=(866,582,1824,622)
                                               GroupControl name='' id='' class='Panel' rect=(0,0,0,0)
                                             GroupControl name='' id='' class='Panel' rect=(0,0,0,0)
-                                        TextControl name='C:\\Users\\frits\\OneDrive\\Documents\\GitHub\\uwwmensbball\\parser\\inputs\\_vision_frames' id='' class='TextBlock' rect=(866,588,1824,616)
+                                        TextControl name='F:\\Backups\\uwwmensbball_tracking' id='' class='TextBlock' rect=(866,588,1824,616)
                                       GroupControl name='' id='' class='ContentPresenter' rect=(0,0,0,0)
                             GroupControl name='' id='RightErrorsContainer' class='Grid' rect=(1724,572,1834,632)
                       ButtonControl name='Change...' id='' class='Button' rect=(1862,572,2006,632)
                         GroupControl name='' id='PART_ContentPresenter' class='ContentPresenter' rect=(1862,572,2006,632)
                           GroupControl name='' id='' class='AccessText' rect=(1881,588,1987,616)
                       TextControl name='Name:' id='' class='TextBlock' rect=(756,668,828,696)
-                      EditControl name='' id='' class='TextBox' rect=(856,652,1834,712) value='WheatonIL@NorthPark - Feb 24, 2026'
+                      EditControl name='' id='' class='TextBox' rect=(856,652,1834,712) value='Millikin@WheatonIL - Feb 21, 2026'
                         GroupControl name='' id='' class='StackPanel' rect=(856,652,1834,712)
                           GroupControl name='' id='' class='Grid' rect=(856,652,1834,712)
                             GroupControl name='' id='border' class='Border' rect=(856,652,1834,712)
@@ -52,7 +52,7 @@ Export window: WindowControl name='Export - Edit - WheatonIL@NorthPark - Feb 24,
                                             GroupControl name='' id='PART_ContentPresenter' class='ScrollContentPresenter' rect=(866,662,1824,702)
                                               GroupControl name='' id='' class='Panel' rect=(0,0,0,0)
                                             GroupControl name='' id='' class='Panel' rect=(0,0,0,0)
-                                        TextControl name='WheatonIL@NorthPark - Feb 24, 2026' id='' class='TextBlock' rect=(866,668,1824,696)
+                                        TextControl name='Millikin@WheatonIL - Feb 21, 2026' id='' class='TextBlock' rect=(866,668,1824,696)
                                       GroupControl name='' id='' class='ContentPresenter' rect=(0,0,0,0)
                             GroupControl name='' id='RightErrorsContainer' class='Grid' rect=(1724,652,1834,712)
                       GroupControl name='' id='' class='Grid' rect=(856,756,1834,796)

@@ -1773,9 +1773,31 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
     # VISION_WAIT_MAX_UNTAGGED of them are still untagged (from the last run's uww_play_calls.csv). Pages of captured games with
     # missing frames are always finished first.
     _first = str(globals().get("VISION_CAPTURE_FIRST", "opponent")).lower()
+    # CONFIRMED CHANGE (requested: "set it so that we get the 2nd most recent Wheaton game to test this on" -- the starters
+    # check). VISION_ALSO_GAMES: games captured NOW, on top of the usual pick, without waiting for the coaches to finish the
+    # side's current game (VISION_WAIT_FOR_COACHES) -- same name format as VISION_ONLY_GAME ("2_21_26 Millikin @ Wheaton",
+    # matched by the date within a day and a team word in the game's label). Only games in each side's VISION_RECENT_GAMES
+    # window. A game already captured is skipped as usual. [] / None = off.
+    _also = globals().get("VISION_ALSO_GAMES", ["2_21_26 Millikin @ Wheaton"])
+    _force = set()
+    for _nm in ([_also] if isinstance(_also, str) else list(_also or [])):
+        _m = re.match(r"^\s*(\d{1,2})_(\d{1,2})_(\d{2,4})\s+(.*)$", str(_nm))
+        if not _m:
+            print(f"Frame capture: VISION_ALSO_GAMES entry {_nm!r} not understood (like '2_21_26 Millikin @ Wheaton')", flush=True)
+            continue
+        _fd = pd.Timestamp(int(_m.group(3)) + (2000 if len(_m.group(3)) == 2 else 0), int(_m.group(1)), int(_m.group(2)))
+        _fw = {w for w in re.split(r"[\s@\-]+", _m.group(4).lower()) if len(w) > 2 and w not in {"uww", "whitewater", "warhawks", "the"}}
+        _hit = [x for x in _vis_sources if x[2] not in (pd.Timestamp.max, pd.Timestamp.min)
+                and abs((x[2] - _fd).days) <= 1 and any(w in x[0].lower() for w in _fw)]
+        if _hit:
+            _force.add(_hit[0][1])
+            print(f"Frame capture: also capturing {_hit[0][0]} now (VISION_ALSO_GAMES)", flush=True)
+        else:
+            print(f"Frame capture: VISION_ALSO_GAMES {_nm!r} -- already captured, or not one of the games in the window", flush=True)
     _rank = lambda u: 0 if u not in _vis_kind else (1 if _vis_kind[u] == _first else 2)   # hand-listed, chosen side, other
     _vis_sources = sorted({u: (l, u, d) for l, u, d in _vis_sources}.values(),
-                          key=lambda x: (0 if x[1] not in _vis_kind else 1, _vis_recent_idx.get(x[1], 0), _rank(x[1]), -x[2].value))
+                          key=lambda x: (0 if x[1] not in _vis_kind or x[1] in _force else 1, _vis_recent_idx.get(x[1], 0),
+                                         _rank(x[1]), -x[2].value))
     _captured_urls = set(clip_frames["source_url"].dropna()) if not clip_frames.empty and "source_url" in clip_frames.columns else set()
     # CONFIRMED CHANGE (requested: "it should be the most previous unfinished UWW game and most previous unfinished opponent's
     # game"). Each side works on ONE game at a time: its most recent game that the coaches haven't finished. That game is
@@ -1801,7 +1823,7 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
             return True, ""
 
         _pending = {x[1]: x for x in _vis_sources}         # pages that need capturing (new, or frames missing)
-        _keep = [x for x in _vis_sources if x[1] not in _vis_kind]           # hand-listed pages always go
+        _keep = [x for x in _vis_sources if x[1] not in _vis_kind or x[1] in _force]   # hand-listed / VISION_ALSO_GAMES always go
         # CONFIRMED CHANGE (requested: "just do one of them at a time -- don't do the opponent's current game until after UWW's
         # most recent game is done"). VISION_ONE_GAME_AT_A_TIME: the sides take turns -- VISION_CAPTURE_FIRST's side first; the
         # other side's game is only captured once the first side's current game is captured AND finished by the coaches.
@@ -1835,8 +1857,9 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
                           f"{'the opponent' if _other == 'opponent' else 'UWW'}'s game waits until this "
                           f"{'UWW' if _side == 'uww' else 'opponent'} game is finished by the coaches.", flush=True)
                 break
-        _vis_sources = sorted(_keep, key=lambda x: (0 if x[1] not in _vis_kind else 1, _vis_recent_idx.get(x[1], 0),
-                                                    _rank(x[1]), -x[2].value))
+        _vis_sources = sorted({x[1]: x for x in _keep}.values(),
+                              key=lambda x: (0 if x[1] not in _vis_kind or x[1] in _force else 1, _vis_recent_idx.get(x[1], 0),
+                                             _rank(x[1]), -x[2].value))
     _n_by = {k: sum(1 for x in _vis_sources if _vis_kind.get(x[1]) == k) for k in ("opponent", "uww")}
     print(f"Frame capture: game pages still to capture -- {_n_by['opponent']} of the upcoming opponent's "
           f"({globals().get('upcoming_opponent_short') or '?'}), {_n_by['uww']} of UWW's; "

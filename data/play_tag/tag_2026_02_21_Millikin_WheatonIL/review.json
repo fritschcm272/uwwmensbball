@@ -1,0 +1,5884 @@
+{
+ "game": "2026-02-21|Millikin@WheatonIL",
+ "slug": "tag_2026_02_21_Millikin_WheatonIL",
+ "run": "20261027_184040_tag",
+ "plays": [
+  {
+   "clip_key": "2026-02-21|1|7 Lane Thomann > Hand Off > From Dribble > Top > To Basket > Miss 2 Pts",
+   "clip_number": 1,
+   "clock": "H1 19:37",
+   "synergy": "7 Lane Thomann > Hand Off > From Dribble > Top > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "(dho): m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Lane Thomann",
+   "result": "Miss 2 Pts",
+   "clip": "clip_001_00.mp4",
+   "clip_kind": "video",
+   "poster": "clip_001_00_poster.jpg",
+   "fid": "001_00",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 1,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.85,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Set",
+     "conf": 0.52,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "DHO",
+     "conf": 0.55,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ],
+    "defense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyle Neibch",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyle Neibch": "#3 Kyle Neibch",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|2|20 Soren Richardson > Non Possession > Non Shooting Foul",
+   "clip_number": 2,
+   "clock": "H1 19:15",
+   "synergy": "20 Soren Richardson > Non Possession > Non Shooting Foul",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Soren Richardson",
+   "result": "Non Shooting Foul",
+   "clip": "clip_002_01.mp4",
+   "clip_kind": "video",
+   "poster": "clip_002_01_poster.jpg",
+   "fid": "002_01",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 2,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.68,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyle Neibch",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyle Neibch": "#3 Kyle Neibch",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|3|12 Devin Martin > Post-Up > Right Block > Right Shoulder > Dribble Move > To Jumper > Make 2 Pts",
+   "clip_number": 3,
+   "clock": "H1 18:55",
+   "synergy": "12 Devin Martin > Post-Up > Right Block > Right Shoulder > Dribble Move > To Jumper > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "(post): m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Devin Martin",
+   "result": "Make 2 Pts",
+   "clip": "clip_003_02.mp4",
+   "clip_kind": "video",
+   "poster": "clip_003_02_poster.jpg",
+   "fid": "003_02",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 3,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.82,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.64,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyle Neibch",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyle Neibch": "#3 Kyle Neibch",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|4|3 Nate Straughter > Off Screen > To Shooter's Right > Flare > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 4,
+   "clock": "H1 18:36",
+   "synergy": "3 Nate Straughter > Off Screen > To Shooter's Right > Flare > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": "(flare): m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Nate Straughter",
+   "result": "Miss 3 Pts",
+   "clip": "clip_004_03.mp4",
+   "clip_kind": "video",
+   "poster": "clip_004_03_poster.jpg",
+   "fid": "004_03",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 4,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.93,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Set",
+     "conf": 0.52,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Down Screen",
+     "conf": 0.59,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ],
+    "defense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyle Neibch",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyle Neibch": "#3 Kyle Neibch",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|5|20 Soren Richardson > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 5,
+   "clock": "H1 18:29",
+   "synergy": "20 Soren Richardson > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": "(ds): m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Soren Richardson",
+   "result": "Miss 3 Pts",
+   "clip": "clip_005_04.mp4",
+   "clip_kind": "video",
+   "poster": "clip_005_04_poster.jpg",
+   "fid": "005_04",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 5,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.79,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.94,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Down Screen",
+     "conf": 0.4,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyle Neibch",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyle Neibch": "#3 Kyle Neibch",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|6|4 Ian Winkler > Spot-Up > Drives Left > To Basket > Make 2 Pts",
+   "clip_number": 6,
+   "clock": "H1 18:12",
+   "synergy": "4 Ian Winkler > Spot-Up > Drives Left > To Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Ian Winkler",
+   "result": "Make 2 Pts",
+   "clip": "clip_006_05.mp4",
+   "clip_kind": "video",
+   "poster": "clip_006_05_poster.jpg",
+   "fid": "006_05",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 6,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.74,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.84,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ],
+    "defense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyle Neibch",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyle Neibch": "#3 Kyle Neibch",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|7|33 Noah Hedrick > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 7,
+   "clock": "H1 18:12",
+   "synergy": "33 Noah Hedrick > Off Screen > To Shooter's Left > Straight > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": "(ds): m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Noah Hedrick",
+   "result": "Miss 3 Pts",
+   "clip": "clip_007_06.mp4",
+   "clip_kind": "video",
+   "poster": "clip_007_06_poster.jpg",
+   "fid": "007_06",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 7,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.89,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.95,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Down Screen",
+     "conf": 0.44,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyle Neibch",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyle Neibch": "#3 Kyle Neibch",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|8|4 Ian Winkler > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 7 Lane Thomann > P&R Roll Man > Pick and Pops > Drives Right > Dribble Jumper > Medium/17' to <3p > Miss 2 Pts",
+   "clip_number": 8,
+   "clock": "H1 18:12",
+   "synergy": "4 Ian Winkler > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 7 Lane Thomann > P&R Roll Man > Pick and Pops > Drives Right > Dribble Jumper > Medium/17' to <3p > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "(bs,pop): m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Lane Thomann",
+   "result": "Miss 2 Pts",
+   "clip": "clip_008_07.mp4",
+   "clip_kind": "video",
+   "poster": "clip_008_07_poster.jpg",
+   "fid": "008_07",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 8,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.88,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.84,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ],
+    "defense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyle Neibch",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyle Neibch": "#3 Kyle Neibch",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|9|20 Soren Richardson > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts",
+   "clip_number": 9,
+   "clock": "H1 17:42",
+   "synergy": "20 Soren Richardson > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "(post): m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Soren Richardson",
+   "result": "Miss 2 Pts",
+   "clip": "clip_009_08.mp4",
+   "clip_kind": "video",
+   "poster": "clip_009_08_poster.jpg",
+   "fid": "009_08",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 9,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.71,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Set",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.63,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|10|33 Noah Hedrick > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts",
+   "clip_number": 10,
+   "clock": "H1 17:27",
+   "synergy": "33 Noah Hedrick > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "(bs): m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Noah Hedrick",
+   "result": "Miss 2 Pts",
+   "clip": "clip_010_09.mp4",
+   "clip_kind": "video",
+   "poster": "clip_010_09_poster.jpg",
+   "fid": "010_09",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 10,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.65,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Set",
+     "conf": 0.97,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.84,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|11|3 Nate Straughter > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover",
+   "clip_number": 11,
+   "clock": "H1 17:10",
+   "synergy": "3 Nate Straughter > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Turnover",
+   "coach_title": null,
+   "auto_title": "(bs): m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Nate Straughter",
+   "result": "Turnover",
+   "clip": "clip_011_10.mp4",
+   "clip_kind": "video",
+   "poster": "clip_011_10_poster.jpg",
+   "fid": "011_10",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 11,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.95,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.94,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ],
+    "defense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|12|4 Kyan VanderWoude > Non Possession > No Violation",
+   "clip_number": 12,
+   "clock": "H1 16:40",
+   "synergy": "4 Kyan VanderWoude > Non Possession > No Violation",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Kyan VanderWoude",
+   "result": "No Violation",
+   "clip": "clip_012_11.mp4",
+   "clip_kind": "video",
+   "poster": "clip_012_11_poster.jpg",
+   "fid": "012_11",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 12,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.42,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.58,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|13|4 Kyan VanderWoude > Non Possession > Non Shooting Foul",
+   "clip_number": 13,
+   "clock": "H1 16:14",
+   "synergy": "4 Kyan VanderWoude > Non Possession > Non Shooting Foul",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Kyan VanderWoude",
+   "result": "Non Shooting Foul",
+   "clip": "clip_013_12.mp4",
+   "clip_kind": "video",
+   "poster": "clip_013_12_poster.jpg",
+   "fid": "013_12",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 13,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.48,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.76,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.45,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|14|12 Devin Martin > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 14,
+   "clock": "H1 15:55",
+   "synergy": "12 Devin Martin > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Devin Martin",
+   "result": "Miss 3 Pts",
+   "clip": "clip_014_13.mp4",
+   "clip_kind": "video",
+   "poster": "clip_014_13_poster.jpg",
+   "fid": "014_13",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 14,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.85,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.54,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.45,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|15|4 Ian Winkler > Transition > Left Wing > Turnover",
+   "clip_number": 15,
+   "clock": "H1 15:36",
+   "synergy": "4 Ian Winkler > Transition > Left Wing > Turnover",
+   "coach_title": null,
+   "auto_title": "tran",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Ian Winkler",
+   "result": "Turnover",
+   "clip": "clip_015_14.mp4",
+   "clip_kind": "video",
+   "poster": "clip_015_14_poster.jpg",
+   "fid": "015_14",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 15,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Transition",
+     "conf": 0.86,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.74,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Ian Winkler",
+     "Jacob Bullock",
+     "Lane Thomann",
+     "Nate Straughter",
+     "Tionne Spates"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Ian Winkler": "#4 Ian Winkler",
+    "Jacob Bullock": "#1 Jacob Bullock",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Tionne Spates": "#2 Tionne Spates",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|16|12 Devin Martin > Transition > Ballhandler > To Basket > Foul",
+   "clip_number": 16,
+   "clock": "H1 15:25",
+   "synergy": "12 Devin Martin > Transition > Ballhandler > To Basket > Foul",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Devin Martin",
+   "result": "Foul",
+   "clip": "clip_016_15.mp4",
+   "clip_kind": "video",
+   "poster": "clip_016_15_poster.jpg",
+   "fid": "016_15",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 16,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Transition",
+     "conf": 0.48,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Ian Winkler",
+     "Lane Thomann",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Ian Winkler": "#4 Ian Winkler",
+    "Lane Thomann": "#7 Lane Thomann",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|19|4 Ian Winkler > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > Dribble Jumper > Medium/17' to <3p > Miss 2 Pts",
+   "clip_number": 19,
+   "clock": "H1 14:37",
+   "synergy": "4 Ian Winkler > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > Dribble Jumper > Medium/17' to <3p > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "(bs): m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Ian Winkler",
+   "result": "Miss 2 Pts",
+   "clip": "clip_019_16.mp4",
+   "clip_kind": "video",
+   "poster": "clip_019_16_poster.jpg",
+   "fid": "019_16",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 19,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.81,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.99,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.81,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Ian Winkler",
+     "Lane Thomann",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Ian Winkler": "#4 Ian Winkler",
+    "Lane Thomann": "#7 Lane Thomann",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|20|20 Soren Richardson > No Play Type > To Basket > Miss 2 Pts",
+   "clip_number": 20,
+   "clock": "H1 14:37",
+   "synergy": "20 Soren Richardson > No Play Type > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Soren Richardson",
+   "result": "Miss 2 Pts",
+   "clip": "clip_020_17.mp4",
+   "clip_kind": "video",
+   "poster": "clip_020_17_poster.jpg",
+   "fid": "020_17",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 20,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.45,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.97,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.63,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Ian Winkler",
+     "Lane Thomann",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Ian Winkler": "#4 Ian Winkler",
+    "Lane Thomann": "#7 Lane Thomann",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|21|35 Brady Wynja > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
+   "clip_number": 21,
+   "clock": "H1 14:37",
+   "synergy": "35 Brady Wynja > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Brady Wynja",
+   "result": "Make 2 Pts",
+   "clip": "clip_021_18.mp4",
+   "clip_kind": "video",
+   "poster": "clip_021_18_poster.jpg",
+   "fid": "021_18",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 21,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Offensive rebound",
+     "conf": 0.93,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.87,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Offensive Rebound",
+     "conf": 0.67,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Ian Winkler",
+     "Lane Thomann",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Ian Winkler": "#4 Ian Winkler",
+    "Lane Thomann": "#7 Lane Thomann",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|22|4 Ian Winkler > Off Screen > To Shooter's Left > Straight > Dribble Jumper > Short to < 17' > Make 2 Pts",
+   "clip_number": 22,
+   "clock": "H1 14:16",
+   "synergy": "4 Ian Winkler > Off Screen > To Shooter's Left > Straight > Dribble Jumper > Short to < 17' > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "(ds): m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Ian Winkler",
+   "result": "Make 2 Pts",
+   "clip": "clip_022_19.mp4",
+   "clip_kind": "video",
+   "poster": "clip_022_19_poster.jpg",
+   "fid": "022_19",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 22,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Transition",
+     "conf": 0.37,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.98,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.49,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Ian Winkler",
+     "Lane Thomann",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Ian Winkler": "#4 Ian Winkler",
+    "Lane Thomann": "#7 Lane Thomann",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|23|34 Carson Grier > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts",
+   "clip_number": 23,
+   "clock": "H1 14:04",
+   "synergy": "34 Carson Grier > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "(post): m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Carson Grier",
+   "result": "Make 2 Pts",
+   "clip": "clip_023_20.mp4",
+   "clip_kind": "video",
+   "poster": "clip_023_20_poster.jpg",
+   "fid": "023_20",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 23,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.73,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Set",
+     "conf": 0.5,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.76,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Chris Ketchum",
+     "Ian Winkler",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Ian Winkler": "#4 Ian Winkler",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|24|8 McGrady Noyes > No Play Type > Turnover",
+   "clip_number": 24,
+   "clock": "H1 14:04",
+   "synergy": "8 McGrady Noyes > No Play Type > Turnover",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "McGrady Noyes",
+   "result": "Turnover",
+   "clip": "clip_024_21.mp4",
+   "clip_kind": "video",
+   "poster": "clip_024_21_poster.jpg",
+   "fid": "024_21",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 24,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.91,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.94,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.77,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Chris Ketchum",
+     "Ian Winkler",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Ian Winkler": "#4 Ian Winkler",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|25|20 Soren Richardson > Post-Up > Right Block > Left Shoulder > Dribble Move > To Jumper > Miss 2 Pts",
+   "clip_number": 25,
+   "clock": "H1 14:03",
+   "synergy": "20 Soren Richardson > Post-Up > Right Block > Left Shoulder > Dribble Move > To Jumper > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "(post): m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Soren Richardson",
+   "result": "Miss 2 Pts",
+   "clip": "clip_025_22.mp4",
+   "clip_kind": "video",
+   "poster": "clip_025_22_poster.jpg",
+   "fid": "025_22",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 25,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.81,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Set",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.65,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Devin Martin",
+     "Kyan VanderWoude",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Chris Ketchum",
+     "Ian Winkler",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Ian Winkler": "#4 Ian Winkler",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|26|34 Carson Grier > Offensive Rebound > Long > Scoring Attempt > Short to < 17' > Make 2 Pts",
+   "clip_number": 26,
+   "clock": "H1 13:35",
+   "synergy": "34 Carson Grier > Offensive Rebound > Long > Scoring Attempt > Short to < 17' > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Carson Grier",
+   "result": "Make 2 Pts",
+   "clip": "clip_026_23.mp4",
+   "clip_kind": "video",
+   "poster": "clip_026_23_poster.jpg",
+   "fid": "026_23",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 26,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Offensive rebound",
+     "conf": 0.69,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.56,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.56,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Kyan VanderWoude",
+     "Reid Olson",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|27|3 Nate Straughter > Non Possession > Non Shooting Foul",
+   "clip_number": 27,
+   "clock": "H1 13:13",
+   "synergy": "3 Nate Straughter > Non Possession > Non Shooting Foul",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Nate Straughter",
+   "result": "Non Shooting Foul",
+   "clip": "clip_027_24.mp4",
+   "clip_kind": "video",
+   "poster": "clip_027_24_poster.jpg",
+   "fid": "027_24",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 27,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.89,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.89,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.73,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Kyan VanderWoude",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|28|3 Nate Straughter > Hand Off > From Dribble > Top > Dribble Jumper > Long/3pt > Miss 3 Pts",
+   "clip_number": 28,
+   "clock": "H1 12:55",
+   "synergy": "3 Nate Straughter > Hand Off > From Dribble > Top > Dribble Jumper > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": "(dho): m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Nate Straughter",
+   "result": "Miss 3 Pts",
+   "clip": "clip_028_25.mp4",
+   "clip_kind": "video",
+   "poster": "clip_028_25_poster.jpg",
+   "fid": "028_25",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 28,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.88,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.32,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Kyan VanderWoude",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|29|32 Pat Origliasso > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
+   "clip_number": 29,
+   "clock": "H1 12:48",
+   "synergy": "32 Pat Origliasso > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Pat Origliasso",
+   "result": "Make 2 Pts",
+   "clip": "clip_029_26.mp4",
+   "clip_kind": "video",
+   "poster": "clip_029_26_poster.jpg",
+   "fid": "029_26",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 29,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Offensive rebound",
+     "conf": 0.93,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Offensive Rebound",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Kyan VanderWoude",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|30|4 Kyan VanderWoude > Off Screen > To Shooter's Left > Curl > To Basket > Make 2 Pts",
+   "clip_number": 30,
+   "clock": "H1 12:35",
+   "synergy": "4 Kyan VanderWoude > Off Screen > To Shooter's Left > Curl > To Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "(ds): m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Kyan VanderWoude",
+   "result": "Make 2 Pts",
+   "clip": "clip_030_27.mp4",
+   "clip_kind": "video",
+   "poster": "clip_030_27_poster.jpg",
+   "fid": "030_27",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 30,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.62,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Set",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.59,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Kyan VanderWoude",
+     "Reid Olson",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|31|0 Chris Ketchum > Spot-Up > Drives Left > To Basket > Make 2 Pts",
+   "clip_number": 31,
+   "clock": "H1 12:16",
+   "synergy": "0 Chris Ketchum > Spot-Up > Drives Left > To Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Chris Ketchum",
+   "result": "Make 2 Pts",
+   "clip": "clip_031_28.mp4",
+   "clip_kind": "video",
+   "poster": "clip_031_28_poster.jpg",
+   "fid": "031_28",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 31,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.72,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.88,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "McGrady Noyes",
+     "Nate Straughter",
+     "Pat Origliasso"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Carson Grier",
+     "Kyan VanderWoude",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "McGrady Noyes": "#8 McGrady Noyes",
+    "Nate Straughter": "#3 Nate Straughter",
+    "Pat Origliasso": "#32 Pat Origliasso",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Carson Grier": "#34 Carson Grier",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|32|20 Soren Richardson > Non Possession > Non Shooting Foul",
+   "clip_number": 32,
+   "clock": "H1 12:16",
+   "synergy": "20 Soren Richardson > Non Possession > Non Shooting Foul",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Soren Richardson",
+   "result": "Non Shooting Foul",
+   "clip": "clip_032_29.mp4",
+   "clip_kind": "video",
+   "poster": "clip_032_29_poster.jpg",
+   "fid": "032_29",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 32,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.7,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Set",
+     "conf": 0.95,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.55,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 0.99,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Caden Nichols",
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "Lane Thomann",
+     "Pat Origliasso"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Caden Nichols": "#22 Caden Nichols",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Pat Origliasso": "#32 Pat Origliasso"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|33|20 Soren Richardson > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 33,
+   "clock": "H1 12:16",
+   "synergy": "20 Soren Richardson > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Soren Richardson",
+   "result": "Miss 3 Pts",
+   "clip": "clip_033_30.mp4",
+   "clip_kind": "video",
+   "poster": "clip_033_30_poster.jpg",
+   "fid": "033_30",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 33,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.74,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.72,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.45,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Caden Nichols",
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "Lane Thomann",
+     "Pat Origliasso"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Caden Nichols": "#22 Caden Nichols",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Pat Origliasso": "#32 Pat Origliasso"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|34|22 Caden Nichols > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 34,
+   "clock": "H1 11:58",
+   "synergy": "22 Caden Nichols > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Caden Nichols",
+   "result": "Miss 3 Pts",
+   "clip": "clip_034_31.mp4",
+   "clip_kind": "video",
+   "poster": "clip_034_31_poster.jpg",
+   "fid": "034_31",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 34,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.71,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.5,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Caden Nichols",
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "Lane Thomann",
+     "Pat Origliasso"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Caden Nichols": "#22 Caden Nichols",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Pat Origliasso": "#32 Pat Origliasso",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|35|20 Soren Richardson > Transition > Ballhandler > To Basket > Miss 2 Pts",
+   "clip_number": 35,
+   "clock": "H1 11:51",
+   "synergy": "20 Soren Richardson > Transition > Ballhandler > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "tran",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Soren Richardson",
+   "result": "Miss 2 Pts",
+   "clip": "clip_035_32.mp4",
+   "clip_kind": "video",
+   "poster": "clip_035_32_poster.jpg",
+   "fid": "035_32",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 35,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Transition",
+     "conf": 0.89,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.53,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Caden Nichols",
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "Lane Thomann",
+     "Pat Origliasso"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Caden Nichols": "#22 Caden Nichols",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Pat Origliasso": "#32 Pat Origliasso"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|36|9 Kobe Anderson > Transition > Ballhandler > To Basket > Miss 2 Pts",
+   "clip_number": 36,
+   "clock": "H1 11:32",
+   "synergy": "9 Kobe Anderson > Transition > Ballhandler > To Basket > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "tran",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Kobe Anderson",
+   "result": "Miss 2 Pts",
+   "clip": "clip_036_33.mp4",
+   "clip_kind": "video",
+   "poster": "clip_036_33_poster.jpg",
+   "fid": "036_33",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 36,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Transition",
+     "conf": 0.88,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": null,
+     "conf": null,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.62,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Caden Nichols",
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "Lane Thomann",
+     "Pat Origliasso"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Caden Nichols": "#22 Caden Nichols",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Pat Origliasso": "#32 Pat Origliasso",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|37|32 Pat Origliasso > Offensive Rebound > Long > Run Offense",
+   "clip_number": 37,
+   "clock": "H1 11:19",
+   "synergy": "32 Pat Origliasso > Offensive Rebound > Long > Run Offense",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Pat Origliasso",
+   "result": "Run Offense",
+   "clip": "clip_037_34.mp4",
+   "clip_kind": "video",
+   "poster": "clip_037_34_poster.jpg",
+   "fid": "037_34",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 37,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Offensive rebound",
+     "conf": 0.67,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.61,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Caden Nichols",
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "Lane Thomann",
+     "Pat Origliasso"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Caden Nichols": "#22 Caden Nichols",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Pat Origliasso": "#32 Pat Origliasso",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|38|0 Chris Ketchum > P&R Ball Handler > Left P&R > Side > Go Away from Pick > To Basket > Make 2 Pts",
+   "clip_number": 38,
+   "clock": "H1 11:19",
+   "synergy": "0 Chris Ketchum > P&R Ball Handler > Left P&R > Side > Go Away from Pick > To Basket > Make 2 Pts",
+   "coach_title": null,
+   "auto_title": "(bs,reject): m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Chris Ketchum",
+   "result": "Make 2 Pts",
+   "clip": "clip_038_35.mp4",
+   "clip_kind": "video",
+   "poster": "clip_038_35_poster.jpg",
+   "fid": "038_35",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 38,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.77,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.89,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Caden Nichols",
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "Lane Thomann",
+     "Pat Origliasso"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Caden Nichols": "#22 Caden Nichols",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Pat Origliasso": "#32 Pat Origliasso",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|39|35 Brady Wynja > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 39,
+   "clock": "H1 11:08",
+   "synergy": "35 Brady Wynja > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Brady Wynja",
+   "result": "Miss 3 Pts",
+   "clip": "clip_039_36.mp4",
+   "clip_kind": "video",
+   "poster": "clip_039_36_poster.jpg",
+   "fid": "039_36",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 39,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.87,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Set",
+     "conf": 0.69,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Kyan VanderWoude",
+     "Noah Hedrick",
+     "Reid Olson",
+     "Soren Richardson"
+    ],
+    "defense": [
+     "Caden Nichols",
+     "Chris Ketchum",
+     "Kobe Anderson",
+     "Lane Thomann",
+     "Pat Origliasso"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Kyan VanderWoude": "#4 Kyan VanderWoude",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Soren Richardson": "#20 Soren Richardson",
+    "Caden Nichols": "#22 Caden Nichols",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Pat Origliasso": "#32 Pat Origliasso"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|40|7 Lane Thomann > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 40,
+   "clock": "H1 11:05",
+   "synergy": "7 Lane Thomann > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "coach_title": null,
+   "auto_title": ": m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Lane Thomann",
+   "result": "Make 3 Pts",
+   "clip": "clip_040_37.mp4",
+   "clip_kind": "video",
+   "poster": "clip_040_37_poster.jpg",
+   "fid": "040_37",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 40,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.91,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.88,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.46,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Caden Nichols",
+     "Chris Ketchum",
+     "Eli Stipp",
+     "Kobe Anderson",
+     "Lane Thomann"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Devin Martin",
+     "Kyle Neibch",
+     "Noah Hedrick",
+     "Reid Olson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Caden Nichols": "#22 Caden Nichols",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Eli Stipp": "#15 Eli Stipp",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyle Neibch": "#3 Kyle Neibch",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|41|10 Reid Olson > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts",
+   "clip_number": 41,
+   "clock": "H1 10:57",
+   "synergy": "10 Reid Olson > P&R Ball Handler > Right P&R > Baseline > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts",
+   "coach_title": null,
+   "auto_title": "(bs): m2m",
+   "film": null,
+   "offense": "Wheaton (IL) Thunder",
+   "defense": "Millikin Big Blue",
+   "player": "Reid Olson",
+   "result": "Miss 3 Pts",
+   "clip": "clip_041_38.mp4",
+   "clip_kind": "video",
+   "poster": "clip_041_38_poster.jpg",
+   "fid": "041_38",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 41,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.89,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 0.94,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.74,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Brady Wynja",
+     "Devin Martin",
+     "Kyle Neibch",
+     "Noah Hedrick",
+     "Reid Olson"
+    ],
+    "defense": [
+     "Caden Nichols",
+     "Chris Ketchum",
+     "Eli Stipp",
+     "Kobe Anderson",
+     "Lane Thomann"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Brady Wynja": "#35 Brady Wynja",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyle Neibch": "#3 Kyle Neibch",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson",
+    "Caden Nichols": "#22 Caden Nichols",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Eli Stipp": "#15 Eli Stipp",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "Lane Thomann": "#7 Lane Thomann"
+   }
+  },
+  {
+   "clip_key": "2026-02-21|42|9 Kobe Anderson > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts",
+   "clip_number": 42,
+   "clock": "H1 10:37",
+   "synergy": "9 Kobe Anderson > P&R Ball Handler > High P&R > Dribble Off Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts",
+   "coach_title": null,
+   "auto_title": "(bs): m2m",
+   "film": null,
+   "offense": "Millikin Big Blue",
+   "defense": "Wheaton (IL) Thunder",
+   "player": "Kobe Anderson",
+   "result": "Miss 2 Pts",
+   "clip": "clip_042_39.mp4",
+   "clip_kind": "video",
+   "poster": "clip_042_39_poster.jpg",
+   "fid": "042_39",
+   "synergy_url": "https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c2c%2ffullgamevideo%2fclips",
+   "synergy_pos": 42,
+   "pictures": [],
+   "fields": [
+    {
+     "field": "situation",
+     "label": "Situation",
+     "coach": null,
+     "auto": "Half court",
+     "conf": 0.78,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "formation",
+     "label": "Formation",
+     "coach": null,
+     "auto": "5 Out",
+     "conf": 0.75,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "play_call",
+     "label": "Play call",
+     "coach": null,
+     "auto": "Motion",
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "primary_action",
+     "label": "Main action",
+     "coach": null,
+     "auto": "Ball Screen",
+     "conf": 0.88,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "defense",
+     "label": "Defense",
+     "coach": null,
+     "auto": "Man-to-Man",
+     "conf": 1.0,
+     "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "press",
+     "label": "Press",
+     "coach": null,
+     "auto": null,
+     "conf": 1.0,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.31,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "offball_coverage",
+     "label": "Off-ball coverage",
+     "coach": null,
+     "auto": "Over",
+     "conf": 0.57,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "screen_defender",
+     "label": "Screen defender",
+     "coach": null,
+     "auto": "#5",
+     "conf": 0.29,
+     "sure": false,
+     "same": null,
+     "note": ""
+    }
+   ],
+   "five": {
+    "offense": [
+     "Caden Nichols",
+     "Chris Ketchum",
+     "Eli Stipp",
+     "Kobe Anderson",
+     "Lane Thomann"
+    ],
+    "defense": [
+     "Brady Wynja",
+     "Devin Martin",
+     "Kyle Neibch",
+     "Noah Hedrick",
+     "Reid Olson"
+    ]
+   },
+   "roster": {},
+   "five_labels": {
+    "Caden Nichols": "#22 Caden Nichols",
+    "Chris Ketchum": "#0 Chris Ketchum",
+    "Eli Stipp": "#15 Eli Stipp",
+    "Kobe Anderson": "#9 Kobe Anderson",
+    "Lane Thomann": "#7 Lane Thomann",
+    "Brady Wynja": "#35 Brady Wynja",
+    "Devin Martin": "#12 Devin Martin",
+    "Kyle Neibch": "#3 Kyle Neibch",
+    "Noah Hedrick": "#33 Noah Hedrick",
+    "Reid Olson": "#10 Reid Olson"
+   }
+  }
+ ],
+ "vocab": {
+  "situation": [
+   "ATO",
+   "BLOB",
+   "Half court",
+   "Offensive rebound",
+   "Opener",
+   "SLOB",
+   "Transition"
+  ],
+  "formation": [
+   "21",
+   "3-2",
+   "33",
+   "4-1",
+   "41S",
+   "5 Out",
+   "Box",
+   "Chin",
+   "Horns",
+   "Iform",
+   "Knicks",
+   "Line",
+   "Motion",
+   "Princeton",
+   "Ram",
+   "Ram-Spain",
+   "Set",
+   "Spread",
+   "There's not really one",
+   "Twins"
+  ],
+  "play_call": [
+   "3Man",
+   "77Double",
+   "Ball Screen",
+   "Bulldog",
+   "Cheetah",
+   "Chin",
+   "DHO",
+   "Double Ball Screen",
+   "Dribble Drive",
+   "Flare",
+   "Flash",
+   "FOUL",
+   "Gc",
+   "High Ball Screen",
+   "in trnasntion random movement",
+   "ISO",
+   "Jungle",
+   "Knicks",
+   "Low",
+   "Lwing",
+   "M2M",
+   "Motion",
+   "Over",
+   "P2",
+   "Panther",
+   "Peja",
+   "Pistol",
+   "Set",
+   "Set ,Bs)",
+   "Snap",
+   "Snap 10",
+   "Spain",
+   "Spread",
+   "Stagger",
+   "Swing (pass across)",
+   "Twins",
+   "TWINS LEFT"
+  ],
+  "primary_action": [
+   "Ball Screen",
+   "Blitz Collin",
+   "Corner Cut",
+   "Cross Screen",
+   "Curl",
+   "DHO",
+   "DHO / PC5",
+   "Double Clear",
+   "Double Cut",
+   "Down Screen",
+   "Dribble Drive",
+   "Flair",
+   "Flare",
+   "Flash",
+   "Flow",
+   "Follow",
+   "Ghost",
+   "Give",
+   "High Ball Screen",
+   "ISO",
+   "Iso Cut",
+   "IVO",
+   "Offensive Rebound",
+   "Over",
+   "Pass to Corner",
+   "Pat Miller",
+   "PC5",
+   "Ram-Spain",
+   "Reject",
+   "Ricky (rescreen)",
+   "Scissors",
+   "Screen the Screener",
+   "Spain",
+   "STAGGER",
+   "Swing (pass across)",
+   "Twins Left",
+   "Twins Left / (Stagger)",
+   "Twins Right",
+   "UCLA",
+   "Up Screen",
+   "Zoom"
+  ],
+  "defense": [
+   "Man-to-Man",
+   "ZONE"
+  ],
+  "press": [
+   "1-2-2 Press",
+   "Full-court M2M Press",
+   "None",
+   "Press",
+   "Run & Jump",
+   "Token Press"
+  ],
+  "ball_screen_coverage": [
+   "Drop",
+   "Flat Hedge",
+   "Flat Hedge / Switch",
+   "Hedge",
+   "High Hedge",
+   "HIgh Hegde",
+   "Over",
+   "Stay",
+   "Stay, then Switch 2nd",
+   "stay12",
+   "Stick",
+   "Switch",
+   "Switch / Get back",
+   "Top Lock",
+   "Under",
+   "under1"
+  ],
+  "offball_coverage": [
+   "2",
+   "Drop",
+   "No Screens",
+   "Over",
+   "over23",
+   "over3drop23",
+   "Stay",
+   "stay12",
+   "stay2",
+   "stay3",
+   "stay5",
+   "Stick",
+   "Switch",
+   "there motion jacob",
+   "Top Lock",
+   "Under",
+   "under4"
+  ],
+  "screener": [
+   "Andre Renta",
+   "Asanjai Hunter",
+   "Carson Cordelli",
+   "Carson Grier",
+   "Chase Cummings",
+   "Collin Madson",
+   "Connor May",
+   "Cooper Nailor",
+   "Cullen Rauls",
+   "Derek Lindert",
+   "Devin Martin",
+   "Harper Krolak",
+   "Ian Winkler",
+   "Jaxson Dillon",
+   "Jerome Smith Jr.",
+   "Joey Jendusa",
+   "Joey LaChapell",
+   "Jonathan Burroughs",
+   "Josh Kim",
+   "Joss Bradley",
+   "Jr Lukenbill",
+   "Juan Madrigal",
+   "Kobe Anderson",
+   "Kolden Vanlandingham",
+   "Luke Bara",
+   "Mason Dopirak",
+   "Matt Imig",
+   "Mike Vuckovic",
+   "Peyton Mrotek",
+   "Raine Rodich",
+   "Richie Warren",
+   "Roan Demovsky",
+   "Seth Miron",
+   "Will Boser"
+  ],
+  "screen_defender": [
+   "#1",
+   "#12",
+   "#13",
+   "#14",
+   "#15",
+   "#2",
+   "#22",
+   "#23",
+   "#24",
+   "#3",
+   "#4",
+   "#5",
+   "#50",
+   "BRADY WYNJA",
+   "CALVIN KAPRAL",
+   "Carson Cordelli",
+   "COLLIN MADSON",
+   "CONNOR MAY",
+   "Cullen Rauls",
+   "DEVIN MARTIN",
+   "Devon Richardson",
+   "Ethan Johnson",
+   "GEORGE GALE",
+   "GREG SMITH",
+   "ISAAC VERGES",
+   "JOEY BEREZOWITZ",
+   "JOEY FUHREMANN",
+   "JOSH KIM",
+   "Kolden Vanlandingham",
+   "LUKE BARA",
+   "NOAH HEDRICK",
+   "RASHAD ROGERS",
+   "RICHIE WARREN",
+   "RYAN COHEN"
+  ]
+ },
+ "built": "2026-10-27T18:48:23"
+}

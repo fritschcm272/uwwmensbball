@@ -41,9 +41,14 @@ def _dr_tag_actions():
     out = []
     if not isinstance(pc, pd.DataFrame) or pc.empty or "coverage_detail" not in pc.columns:
         return out
+    _nums_by_game = {}
     for _, r in pc[pc["coverage_detail"].astype(str).str.contains("def #", na=False)].iterrows():
         team = r.get("defense_team")
-        nums = _trk_numbers_for_game(str(r.get("game_date")), str(r.get("game_code"))) if "_trk_numbers_for_game" in globals() else {}
+        # CONFIRMED BUG (fixed; speed): the game's name -> number list was rebuilt for every tagged clip -- once per game now
+        _gk_ = (str(r.get("game_date")), str(r.get("game_code")))
+        if _gk_ not in _nums_by_game:
+            _nums_by_game[_gk_] = _trk_numbers_for_game(*_gk_) if "_trk_numbers_for_game" in globals() else {}
+        nums = _nums_by_game[_gk_]
         five = [x.strip() for x in str(r.get("defense_lineup") or "").split(",") if x.strip()]
         by_num = {}
         for n_, j_ in nums.items():

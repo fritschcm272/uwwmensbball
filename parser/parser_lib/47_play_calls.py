@@ -1264,10 +1264,48 @@ def _pl_lineup_for(clips, events, lineup_col):
     # before that moment (substitutions and timeouts at the same clock are skipped -- the clip happened before them).
     # Only the lineup columns; PLAY_CALLS_LINEUP_BY_CLOCK = False turns it off.
     if "lineup" in str(lineup_col) and globals().get("PLAY_CALLS_LINEUP_BY_CLOCK", True):
+        _before = out.copy()
         try:
             out = _pl_lineup_by_clock(clips, events, lineup_col, out)
         except Exception as e:
             print(f"  (lineups by game clock not filled for {lineup_col}: {type(e).__name__}: {e})", flush=True)
+        # CONFIRMED CHANGE (review of the 10/27 afternoon run: half the lineups the jersey reads contradicted were clips that
+        # never matched the play-by-play, so their five came from Synergy's game clock -- which is minutes off on some clips).
+        # Such a clip's five now comes from the MATCHED clips right before and after it in the game: the same five on both
+        # sides -> that five; different (a substitution in between) -> the clock's five if it's one of the two, else the five
+        # of the nearer one. Clips are numbered in game order. PLAY_CALLS_LINEUP_FROM_NEIGHBORS = False = clock only.
+        if globals().get("PLAY_CALLS_LINEUP_FROM_NEIGHBORS", True) and "clip_number" in clips.columns:
+            try:
+                _gk = [c_ for c_ in ("game_date", "game_code") if c_ in clips.columns]
+                _valid = lambda v: isinstance(v, str) and v.strip() != ""
+                for _g, _gc in (clips.groupby(_gk, dropna=False) if _gk else [(None, clips)]):
+                    _ord = _gc.assign(_cn=pd.to_numeric(_gc["clip_number"], errors="coerce")).sort_values("_cn")
+                    _ids = list(_ord.index)
+                    _cn = list(_ord["_cn"])
+                    _good = [j for j, ix in enumerate(_ids) if matched.get(ix, False) and _valid(_before.get(ix))]
+                    if not _good:
+                        continue
+                    for j, ix in enumerate(_ids):
+                        if matched.get(ix, False):
+                            continue
+                        pj = max((g_ for g_ in _good if g_ < j), default=None)
+                        nj = min((g_ for g_ in _good if g_ > j), default=None)
+                        pv = _before.get(_ids[pj]) if pj is not None else None
+                        nv = _before.get(_ids[nj]) if nj is not None else None
+                        cands = [v for v in (pv, nv) if _valid(v)]
+                        if not cands:
+                            continue
+                        cv = out.get(ix)
+                        if _valid(cv) and cv in cands:
+                            continue                      # the clock's five agrees with a neighbor: keep it
+                        if pv == nv or len(cands) == 1:
+                            out.at[ix] = cands[0]
+                        else:
+                            dp = abs(_cn[j] - _cn[pj]) if pj is not None else 1e9
+                            dn = abs(_cn[nj] - _cn[j]) if nj is not None else 1e9
+                            out.at[ix] = pv if dp <= dn else nv
+            except Exception as e:
+                print(f"  (lineups from neighboring clips not filled for {lineup_col}: {type(e).__name__}: {e})", flush=True)
     return out
 
 
@@ -2165,7 +2203,8 @@ def _review_parts(doc):
     "part"; files from the local review page (and older app saves) hold both."""
     if not isinstance(doc, dict):
         return set()
-    if doc.get("part") in ("titles", "players"):
+    # CONFIRMED CHANGE (requested: validate each game's 10 starters on the tipoff clip): a starters save is its own part
+    if doc.get("part") in ("titles", "players", "starters"):
         return {doc["part"]}
     return ({"titles"} if isinstance(doc.get("answers"), list) else set()) | ({"players"} if isinstance(doc.get("checks"), list) else set())
 
@@ -2344,6 +2383,40 @@ def _run_parts_saved(slug, run):
     return parts
 
 
+class StartersNeeded(Exception):
+    """Raised to STOP the notebook until a game's 10 starters are validated in the app (Player Number Tracking)."""
+
+
+def _pr_game_slug(game):
+    return re.sub(r"[^A-Za-z0-9]+", "_", str(game)).strip("_")
+
+
+def starters_saved_all():
+    """CONFIRMED CHANGE (requested: "I want to be given a clip right at the tipoff for each game ... I will then validate and
+    determine the actual 10 starters"). The latest saved starters validation of each game, from the app's saves (part
+    "starters") -> {game slug: {"starters": {team: [5 names]}, "clip_key": ..., "coach": ..., "saved": ...}}. Saves made
+    before a tracking reset are set aside (the same rule as the player checks)."""
+    out = {}
+    reset_at = tracking_reset_time() if "tracking_reset_time" in globals() else None
+    for f in glob.glob(os.path.join(_review_saves_dir(), "*.json")):
+        d = _review_doc(f)
+        if d is None or d.get("part") != "starters" or not isinstance(d.get("starters"), dict):
+            continue
+        try:
+            if _saved_before_reset(d.get("saved"), os.path.getmtime(f), reset_at):
+                continue
+        except Exception:
+            pass
+        st_ = {str(t): [str(n) for n in (v or []) if str(n).strip()] for t, v in d["starters"].items() if str(t).strip()}
+        if not any(st_.values()):
+            continue
+        slug = _pr_game_slug(d.get("game"))
+        if slug not in out or str(d.get("saved") or "") >= str(out[slug].get("saved") or ""):
+            out[slug] = {"starters": st_, "clip_key": d.get("starters_clip_key"), "coach": d.get("coach"),
+                         "saved": d.get("saved"), "run": d.get("run")}
+    return out
+
+
 def _run_complete(slug, run):
     """A game's review run is done when BOTH parts are saved (in one file or two)."""
     return {"titles", "players"} <= _run_parts_saved(slug, run)
@@ -2451,6 +2524,15 @@ def coach_checks_all():
             continue
         for c in d.get("checks", []):
             key = (c.get("frame_file"), round(float(c.get("px", 0))), round(float(c.get("py", 0))))
+            # CONFIRMED BUG (fixed; coach: "will this show up as correct?" -- "correct" on a box shown as "looks like #11 JR
+            # Lukenbill? 94%"). On a box with NO name, "correct" was saved with no player, and that read as "not a player"
+            # (the box was set aside and taught to the player model as a non-player). "correct" on an unnamed box now means
+            # the SUGGESTION was right (that player, counted as a right guess); with no suggestion it says nothing and is left out.
+            if c.get("verdict") == "correct" and not c.get("assigned") and not c.get("true_name"):
+                if c.get("hidden_guess"):
+                    c = dict(c, verdict="wrong", true_name=c["hidden_guess"], accepted_suggestion=True)
+                else:
+                    continue
             merged[key] = dict(c, game=d.get("game"))
     if n_old and not globals().get("_cc_reset_said"):
         globals()["_cc_reset_said"] = True
