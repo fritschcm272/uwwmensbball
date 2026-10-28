@@ -1872,7 +1872,8 @@ def _trk_export_games(pc, base):
 # The new-game helpers live in the play calls section (47). A session whose Play calls cell ran before they were added
 # (rerun from the Player tracking cell) loads just those definitions here -- nothing else in that section runs.
 def _trk_load_new_game_helpers():
-    need = ("StartersNeeded", "_pr_game_slug", "starters_saved_all", "new_game_pace", "new_game_info", "new_game_in_process")
+    need = ("StartersNeeded", "_pr_game_slug", "starters_saved_all", "new_game_pace", "new_game_info", "new_game_in_process",
+            "_sync_saves_branch")
     # (always reloaded: an older copy from earlier in the session must not stay in use)
     try:
         import ast as _ast
@@ -1937,14 +1938,15 @@ def _trk_starters_first(pc, todo):
         order = sorted(ids, key=key)
         done_pos = [p for p, i in enumerate(order) if _trk_ck(_trk_clip_key(pc.loc[i])) in checked]
         if slug not in saved:
-            # (all games: a game with earlier checks keeps every clip up to its last checked one -- nothing it had is lost)
-            first = order[:max(n_first, (max(done_pos) + 1) if done_pos else 0)]
+            # CONFIRMED CHANGE (requested: "this is running for a very long time if it should just be working on the first clip
+            # of the new game" -- Wheaton @ North Park and WashU re-tracked 395 checked clips while waiting for their starters).
+            # Until a game's starters are saved, ONLY its first possession is tracked; its other clips keep their earlier
+            # results (_trk_carry_previous), so nothing is lost.
+            first = order[:n_first]
             out += first
-            print(f"  [tracking] {g}: starters not validated yet -- tracking "
-                  + (f"only its first {len(first)} possession(s) (clip "
-                     f"{', '.join(str(pc.at[i, 'clip_number']) for i in first)})" if not done_pos else
-                     f"its {len(first)} clip(s) up to the last one you checked")
-                  + " this run, for the STARTERS check; the rest follows TRACK_NEW_GAME_PACE once they're saved", flush=True)
+            print(f"  [tracking] {g}: starters not validated yet -- tracking only its first {len(first)} possession(s) (clip "
+                  f"{', '.join(str(pc.at[i, 'clip_number']) for i in first)}) this run for the STARTERS check"
+                  + (f"; its other {len(ids) - len(first)} clip(s) keep their earlier results" if done_pos else ""), flush=True)
             continue
         if kind == "all":
             keep, how = order, "All Clips"
@@ -4894,6 +4896,30 @@ def _trk_court_precheck():
     raise CourtCalibrationNeeded(f"{len(need)} gym(s) need court calibration -- see the steps printed above")
 
 
+def _trk_gym_calibrated_at(game):
+    """When the gym of this game ("date|code") got its newest usable court calibration (seconds since 1970), else None."""
+    if "_cm_calibration_files" not in globals() or "_cm_arena" not in globals():
+        return None
+    arena = _cm_arena(str(game).split("|", 1)[-1])
+    best = None
+    try:
+        for cal in _cm_calibration_files():
+            if str(cal.get("arena")) != str(arena):
+                continue
+            n_pts = max((sum(1 for p_ in fr.get("points", []) if p_.get("landmark") in COURT_LANDMARKS)
+                         for fr in cal.get("frames", [])), default=0)
+            if n_pts < 4:
+                continue
+            t = pd.Timestamp(cal.get("saved")) if cal.get("saved") else None
+            if t is None or pd.isna(t):
+                t = pd.Timestamp.now(tz="UTC")
+            t = t.tz_localize("UTC") if t.tzinfo is None else t
+            best = max(best or 0.0, t.timestamp())
+    except Exception:
+        return None
+    return best
+
+
 def _trk_starters_precheck():
     """CONFIRMED CHANGE (requested: the starters check stops the notebook "similar to the court calibration ... until it is
     completed"). Before tracking starts: a game whose open review in the app has a STARTERS check (tipoff clip) with no
@@ -4916,6 +4942,17 @@ def _trk_starters_precheck():
                         or "starters" in (p.get("parts") or [])), None)
             slug = re.sub(r"[^A-Za-z0-9]+", "_", str(doc.get("game"))).strip("_")
             if stp is not None and slug not in saved:
+                # CONFIRMED BUG (fixed; the notebook stopped for the Millikin @ Wheaton starters check, whose picture was
+                # made WITHOUT the court -- fans boxed, players missed -- while the gym still needed its calibration). The
+                # court calibration comes first (checked before this one now), and a starters check made before the
+                # gym's calibration was saved is thrown away (nothing in it is saved): this run tracks the first
+                # possession WITH the court and the Play review builds a new one.
+                _cal_t = _trk_gym_calibrated_at(str(doc.get("game")))
+                if _cal_t is not None and _cal_t > os.path.getmtime(rj):
+                    shutil.rmtree(os.path.dirname(rj), ignore_errors=True)
+                    print(f"  [starters] {doc.get('game')}: its starters check was made before the gym's court calibration "
+                          f"-- removed; this run makes a new one with the court", flush=True)
+                    continue
                 need.append((str(doc.get("game")), stp.get("clip_number"), stp.get("clock")))
     except Exception as e:
         print(f"  [starters] check skipped ({type(e).__name__}: {e})", flush=True)
@@ -4941,6 +4978,6 @@ def _trk_starters_precheck():
 player_tracks = pd.DataFrame()
 tracking_report = pd.DataFrame()
 _trk_court_frames_used = None
+_trk_court_precheck()                 # stops here (before tracking) when a gym needs its court calibration -- FIRST
 _trk_starters_precheck()              # stops here (before tracking) while a game's starters check is waiting in the app
-_trk_court_precheck()                 # stops here (before tracking) when a gym needs its court calibration
 _trk_run_all()
