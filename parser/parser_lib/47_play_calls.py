@@ -2417,6 +2417,63 @@ def starters_saved_all():
     return out
 
 
+# CONFIRMED CHANGE (requested: "I want this to be the process for right now for new games. I want there to be an option that
+# I can set that is 'One clip at a time', '40 clips at a time', 'All Offensive Clips' or 'All Clips'"). A NEW game -- one with
+# no player checks saved before this process (or already in it: its starters are saved) -- goes:
+#   1. its first possession is tracked and the notebook stops for the STARTERS check (play review);
+#   2. after that, each run tracks more of it by TRACK_NEW_GAME_PACE:
+#        "One clip at a time"  -- the clips you've checked so far + the next one (check it, run again, the next one comes)
+#        "40 clips at a time"  -- the clips you've checked so far + the next 40 (any number works: "10 clips at a time")
+#        "All Offensive Clips" -- every possession of the scouted team on offense (the upcoming opponent in its games,
+#                                 UWW in ours)
+#        "All Clips"           -- the whole game
+# (Every game since "I want all games to do the same thing": a game with earlier checks keeps every clip up to its last
+# checked one tracked, and earlier results of clips not tracked this run are kept -- see _trk_carry_previous.)
+# PLAY_REVIEW_STARTERS_GAMES (None = every new game) can limit the process to games whose "date|code" holds one of its words.
+def new_game_pace():
+    """TRACK_NEW_GAME_PACE -> ("n", clips per run) / ("offense", None) / ("all", None)."""
+    v = str(globals().get("TRACK_NEW_GAME_PACE", "One clip at a time") or "").strip().lower()
+    if "all" in v and "off" in v:
+        return ("offense", None)
+    if "all" in v:
+        return ("all", None)
+    m = re.search(r"(\d+)", v)
+    return ("n", max(1, int(m.group(1))) if m else 1)
+
+
+def new_game_info():
+    """(starters saved per game slug, game slugs with player checks saved OUTSIDE the new-game process). Checks saved
+    before the tracking reset don't count (they were on the old frames)."""
+    st = starters_saved_all()
+    old = set()
+    reset_at = tracking_reset_time() if "tracking_reset_time" in globals() else None
+    for f in glob.glob(os.path.join(_review_saves_dir(), "*.json")):
+        d = _review_doc(f)
+        if d is None or d.get("part") == "starters" or not d.get("checks"):
+            continue
+        try:
+            if _saved_before_reset(d.get("saved"), os.path.getmtime(f), reset_at):
+                continue
+        except Exception:
+            pass
+        old.add(_pr_game_slug(d.get("game")))
+    return st, old
+
+
+def new_game_in_process(game, info=None):
+    """True when this game ("date|code") goes through the new-game process (starters check, then TRACK_NEW_GAME_PACE)."""
+    if not globals().get("PLAY_REVIEW_STARTERS", True):
+        return False
+    want = globals().get("PLAY_REVIEW_STARTERS_GAMES")
+    want = [want] if isinstance(want, str) else list(want or [])
+    if want and not any(str(w).lower() in str(game).lower() for w in want):
+        return False
+    # CONFIRMED CHANGE (requested: "I want all games to do the same thing so that it is cleaner. I don't want to lose anything
+    # previously done though"): EVERY game goes through it now -- games with earlier checks too (their checked clips stay
+    # tracked: the pace counts from the last clip checked, and earlier results of clips not tracked this run are kept).
+    return True
+
+
 def _run_complete(slug, run):
     """A game's review run is done when BOTH parts are saved (in one file or two)."""
     return {"titles", "players"} <= _run_parts_saved(slug, run)

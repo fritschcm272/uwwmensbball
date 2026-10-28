@@ -1869,50 +1869,98 @@ def _trk_export_games(pc, base):
     return keep, sorted(left.items())
 
 
+# The new-game helpers live in the play calls section (47). A session whose Play calls cell ran before they were added
+# (rerun from the Player tracking cell) loads just those definitions here -- nothing else in that section runs.
+def _trk_load_new_game_helpers():
+    need = ("StartersNeeded", "_pr_game_slug", "starters_saved_all", "new_game_pace", "new_game_info", "new_game_in_process")
+    # (always reloaded: an older copy from earlier in the session must not stay in use)
+    try:
+        import ast as _ast
+        _src = os.path.join(globals().get("PARSER_LIB") or os.path.join(os.getcwd(), "parser_lib"), "47_play_calls.py")
+        with open(_src, encoding="utf-8") as fh:
+            _tree = _ast.parse(fh.read())
+        _defs = [n for n in _tree.body if isinstance(n, (_ast.FunctionDef, _ast.ClassDef)) and n.name in need]
+        exec(compile(_ast.Module(_defs, []), _src, "exec"), globals())
+    except Exception as e:
+        print(f"  [tracking] new-game helpers not loaded ({type(e).__name__}: {e}) -- rerun the Play calls cell", flush=True)
+
+
+_trk_load_new_game_helpers()
+
+
 def _trk_starters_first(pc, todo):
     """CONFIRMED CHANGE (requested: "why is it running tracking before I do my 1st clip player tracking" -- the new Millikin @
-    Wheaton game sat on 3.6 hours of player detection before its starters check). A game that gets the STARTERS check (play
-    review: PLAY_REVIEW_STARTERS, PLAY_REVIEW_STARTERS_GAMES) and has no starters saved yet is tracked only up to its first
-    TRACK_STARTERS_FIRST_CLIPS (1) possession(s) this run -- just enough for the starters check. The notebook stops after
-    the Play review; once the starters are saved, the next run tracks the whole game knowing what each starter looks like.
-    TRACK_STARTERS_FIRST = False tracks the whole game right away. -> the clips to track."""
-    if not globals().get("TRACK_STARTERS_FIRST", True) or not globals().get("PLAY_REVIEW_STARTERS", True) \
-            or "starters_saved_all" not in globals() or not todo:
+    Wheaton game sat on 3.6 hours of player detection before its starters check; then: "I want this to be the process for
+    right now for new games", with the pace an option). A NEW game (new_game_in_process, play calls section) is tracked:
+      * until its starters are saved: only its first TRACK_STARTERS_FIRST_CLIPS (1) possession(s) -- the STARTERS check;
+      * after that, by TRACK_NEW_GAME_PACE: "One clip at a time" / "40 clips at a time" (the clips checked so far + the next
+        one / 40, in game order), "All Offensive Clips" (the scouted team's possessions) or "All Clips".
+    Other games are tracked in full. TRACK_STARTERS_FIRST = False tracks every game in full. -> the clips to track."""
+    if not globals().get("TRACK_STARTERS_FIRST", True) or "new_game_in_process" not in globals() or not todo:
         return todo
     try:
-        saved = starters_saved_all()
+        info = new_game_info()
+        saved = info[0]
+        kind, n_pace = new_game_pace()
+        checked = {_trk_ck(c.get("clip_key")) for c in coach_checks_all()[0]}
     except Exception as e:
-        print(f"  [tracking] starters-first skipped (saved starters not read: {type(e).__name__}: {e})", flush=True)
+        print(f"  [tracking] new-game pace skipped (saves not read: {type(e).__name__}: {e})", flush=True)
         return todo
-    want = globals().get("PLAY_REVIEW_STARTERS_GAMES", ["millikin"])
-    want = [want] if isinstance(want, str) else list(want or [])
     n_first = max(1, int(globals().get("TRACK_STARTERS_FIRST_CLIPS", 1)))
     only = str(globals().get("PLAY_REVIEW_ONLY_GAME") or "")
     _rank = lambda x: {"H1": 1, "H2": 2}.get(str(x), 3 if str(x).startswith("OT") else 9)
     _num = lambda i, c: (pd.to_numeric(pc.at[i, c], errors="coerce") if c in pc.columns else np.nan)
+    # the same order the play review uses to find the tipoff clip: first half, highest clock, play-by-play order, clip
+    key = lambda i: (_rank(pc.at[i, "period"]) if "period" in pc.columns else 9,
+                     -(_num(i, "time_remaining_seconds") if pd.notna(_num(i, "time_remaining_seconds")) else -1.0),
+                     _num(i, "pbp_event_order") if pd.notna(_num(i, "pbp_event_order")) else np.inf,
+                     _num(i, "clip_number") if pd.notna(_num(i, "clip_number")) else np.inf)
+    _txt = lambda i, c: str(pc.at[i, c]) if c in pc.columns and pd.notna(pc.at[i, c]) else ""
+
+    def _scouted_offense(i):
+        """The scouted team has the ball: UWW in our games, the upcoming opponent in theirs."""
+        off = _txt(i, "offense_team").lower()
+        if _txt(i, "side") == "UWW":
+            return "whitewater" in off
+        sc = _txt(i, "scouted_opponent").lower()
+        return bool(off) and bool(sc) and (off == sc or off in sc or sc in off)
+
     by_game = {}
     for i in todo:
         by_game.setdefault(f"{pc.at[i, 'game_date']}|{pc.at[i, 'game_code']}", []).append(i)
     out = []
     for g, ids in by_game.items():
         slug = re.sub(r"[^A-Za-z0-9]+", "_", g).strip("_")
-        hit = (not want or any(str(w).lower() in g.lower() for w in want)) and (not only or only in g)
-        if not hit or slug in saved:
+        if (only and only not in g) or not new_game_in_process(g, info):
             out += ids
             continue
-        # the same order the play review uses to find the tipoff clip: first half, highest clock, play-by-play order, clip
-        key = lambda i: (_rank(pc.at[i, "period"]) if "period" in pc.columns else 9,
-                         -(_num(i, "time_remaining_seconds") if pd.notna(_num(i, "time_remaining_seconds")) else -1.0),
-                         _num(i, "pbp_event_order") if pd.notna(_num(i, "pbp_event_order")) else np.inf,
-                         _num(i, "clip_number") if pd.notna(_num(i, "clip_number")) else np.inf)
-        first = sorted(ids, key=key)[:n_first]
-        out += first
-        print(f"  [tracking] {g}: starters not validated yet -- tracking only its first {len(first)} possession(s) this run "
-              f"(clip {', '.join(str(pc.at[i, 'clip_number']) for i in first)}) for the STARTERS check; the other "
-              f"{len(ids) - len(first)} clip(s) are tracked once the starters are saved (TRACK_STARTERS_FIRST = False: all now)",
-              flush=True)
-    keep = set(out)
-    return [i for i in todo if i in keep]
+        order = sorted(ids, key=key)
+        done_pos = [p for p, i in enumerate(order) if _trk_ck(_trk_clip_key(pc.loc[i])) in checked]
+        if slug not in saved:
+            # (all games: a game with earlier checks keeps every clip up to its last checked one -- nothing it had is lost)
+            first = order[:max(n_first, (max(done_pos) + 1) if done_pos else 0)]
+            out += first
+            print(f"  [tracking] {g}: starters not validated yet -- tracking "
+                  + (f"only its first {len(first)} possession(s) (clip "
+                     f"{', '.join(str(pc.at[i, 'clip_number']) for i in first)})" if not done_pos else
+                     f"its {len(first)} clip(s) up to the last one you checked")
+                  + " this run, for the STARTERS check; the rest follows TRACK_NEW_GAME_PACE once they're saved", flush=True)
+            continue
+        if kind == "all":
+            keep, how = order, "All Clips"
+        elif kind == "offense":
+            keep = [i for p, i in enumerate(order) if p == 0 or p in done_pos or _scouted_offense(i)]
+            how = "All Offensive Clips (the scouted team's possessions)"
+        else:
+            upto = (max(done_pos) if done_pos else 0) + 1 + n_pace
+            keep = order[:upto]
+            how = (f"{'one clip' if n_pace == 1 else f'{n_pace} clips'} at a time: the {upto - n_pace} clip(s) up to the "
+                   f"last one checked + the next {min(n_pace, max(0, len(order) - (upto - n_pace)))}")
+        out += keep
+        print(f"  [tracking] {g} (starters saved): tracking {len(keep)} of {len(ids)} clip(s) -- "
+              f"TRACK_NEW_GAME_PACE = {how}", flush=True)
+    keep_ = set(out)
+    return [i for i in todo if i in keep_]
 
 
 def player_tracking(pc):
@@ -4614,6 +4662,55 @@ def _trk_eval_write():
         print(f"  (tracking evaluation not saved: {type(_e).__name__}: {_e})", flush=True)
 
 
+def _trk_previous_results():
+    """The last run's results (uww_play_calls.csv's track_* columns, uww_player_tracks.csv), read BEFORE this run replaces them."""
+    d = globals().get("APP_DATA_DIR") or OUTPUT_DIR
+    out = []
+    for f in ("uww_play_calls.csv", "uww_player_tracks.csv"):
+        try:
+            out.append(pd.read_csv(os.path.join(d, f), low_memory=False))
+        except Exception:
+            out.append(pd.DataFrame())
+    return out
+
+
+def _trk_carry_previous(prev_pc, prev_pt):
+    """CONFIRMED CHANGE (requested: every game tracked at the same pace -- "I don't want to lose anything previously done"). A clip
+    tracked in an earlier run but not in this one (beyond the pace) keeps its earlier results: its track_* columns and its
+    player tracks, as long as its tracking frames are the same ones. TRACK_KEEP_PREVIOUS = False drops them."""
+    global play_calls, player_tracks
+    if not globals().get("TRACK_KEEP_PREVIOUS", True) or prev_pc.empty or "track_clip_key" not in prev_pc.columns:
+        return
+    try:
+        _k = lambda r: _trk_ck(_trk_clip_key(r))
+        pv = prev_pc[prev_pc["track_clip_key"].notna()].copy()
+        pv["_k"] = [_k(r) for _, r in pv.iterrows()]
+        pv = pv.drop_duplicates("_k", keep="last").set_index("_k")
+        rows, keys = [], set()
+        for i in play_calls.index[play_calls["track_clip_key"].isna() & play_calls["track_files"].notna()]:
+            k = _k(play_calls.loc[i])
+            if k not in pv.index or str(pv.at[k, "track_files"]) != str(play_calls.at[i, "track_files"]):
+                continue
+            for c in _TRACK_COLS:
+                if c in pv.columns:
+                    v = pv.at[k, c]
+                    play_calls.at[i, c] = None if (isinstance(v, float) and pd.isna(v)) else v
+            rows.append(i)
+            keys.add(k)
+        n_tr = 0
+        if keys and not prev_pt.empty and "clip_key" in prev_pt.columns:
+            now = set(player_tracks["clip_key"].map(_trk_ck)) if not player_tracks.empty and "clip_key" in player_tracks.columns else set()
+            add = prev_pt[prev_pt["clip_key"].map(_trk_ck).isin(keys - now)]
+            n_tr = len(add)
+            if n_tr:
+                player_tracks = pd.concat([player_tracks, add], ignore_index=True) if not player_tracks.empty else add.reset_index(drop=True)
+        if rows:
+            print(f"  [tracking] kept the earlier results of {len(rows)} clip(s) not tracked this run (beyond the pace): "
+                  f"{n_tr:,} player track(s) carried over", flush=True)
+    except Exception as e:
+        print(f"  [tracking] earlier results not carried over ({type(e).__name__}: {e})", flush=True)
+
+
 def _trk_run_all():
     global play_calls, player_tracks, tracking_report
     globals()["trk_eval_parts"] = {}                  # this run's evaluation (see _trk_eval_write)
@@ -4630,12 +4727,14 @@ def _trk_run_all():
             play_calls[_c] = None
     if RUN_PLAYER_TRACKING and not play_calls.empty:
         try:
+            _prev = _trk_previous_results()
             _trk_cols, player_tracks, _trk_rep = player_tracking(play_calls)
             if _trk_cols is None:
                 print("Player tracking: no clips have tracking frames yet -- run frame capture with VISION_TRACK_FPS > 0.")
             else:
                 for _c in _TRACK_COLS:
                     play_calls[_c] = _trk_cols[_c]
+                _trk_carry_previous(*_prev)
                 tracking_report = pd.DataFrame(_trk_rep)
                 try:
                     _trk_eval_write()

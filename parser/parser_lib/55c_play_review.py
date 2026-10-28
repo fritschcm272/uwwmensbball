@@ -903,10 +903,11 @@ def play_review():
     # looks like. PLAY_REVIEW_STARTERS = False turns it off.
     _st_on = bool(globals().get("PLAY_REVIEW_STARTERS", True))
     try:
-        _st_saved = starters_saved_all() if _st_on else {}
+        _st_info = new_game_info() if _st_on else None
+        _st_saved = _st_info[0] if _st_info else {}
     except Exception as _se:
         print(f"Play review: saved starters not read ({type(_se).__name__}: {_se})", flush=True)
-        _st_saved = {}
+        _st_info, _st_saved = None, {}
     for (gd, gc), g in pc.groupby(["game_date", "game_code"], dropna=False):
         _slug_app = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
         _pkg = os.path.join(_pr_app_dir(), "play_review", _slug_app)
@@ -924,11 +925,9 @@ def play_review():
             continue
         _keep_slugs.add(_slug_app)
         # the tipoff clip, while this game's starters aren't validated yet (None = validated, or the check is off)
-        # PLAY_REVIEW_STARTERS_GAMES (requested: test it on Wheaton's 2nd most recent game, Millikin @ Wheaton 2/21/26): only
-        # games whose "date|code" contains one of these words get the starters check; None = every game in the run
-        _st_games = globals().get("PLAY_REVIEW_STARTERS_GAMES", ["millikin"])
-        _st_games = [_st_games] if isinstance(_st_games, str) else list(_st_games or [])
-        _st_this = not _st_games or any(str(w).lower() in f"{gd}|{gc}".lower() for w in _st_games)
+        # only NEW games get the starters check (new_game_in_process: no player checks saved before this process; see the
+        # play calls section -- also PLAY_REVIEW_STARTERS_GAMES)
+        _st_this = _st_on and new_game_in_process(f"{gd}|{gc}", _st_info) if _st_info is not None else False
         _st_need = _pr_tipoff_index(g) if _st_on and _st_this and _slug_app not in _st_saved else None
         # CONFIRMED CHANGE (requested: everything in the data folder; the Title and player-number checks are done in the
         # Streamlit app, not review.html pages). A game's open review is its package in <data>/play_review/<game>/. With
