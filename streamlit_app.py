@@ -6318,15 +6318,36 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
                 if _grid:
                     _cells = [f"{chr(65 + c_)}{r_ + 1}" for r_ in range(int(_grid[1])) for c_ in range(int(_grid[0]))]
                     _mk = f"{kp}_b_{run}_{pi}_{ki}_missed"
+                    # CONFIRMED CHANGE (requested: "in the starters check I need a way to mark that the guy in C5 is #4 Ian
+                    # Winkler"): one row per player with no box -- his grid square AND who he is (optional). Saved with the
+                    # mark ("true_name"); the parser names the track it finds at that square this run with it.
+                    _wk = _mk + "_who"
+                    _who_opts = ["-- don't know --"] + list(_pr_player_opts(pl))
                     _prev = [c_ for c_ in (store.get(_mk) or []) if c_ in _cells]
-                    _sel = st.multiselect("Players with NO box -- the grid square at each one's feet (one square per player)",
-                                          _cells, default=_prev, key=f"{kp}_mpk_{run}_{pi}_{ki}",
-                                          help="Real players on the floor that have no box in the picture. Leave empty when all "
-                                               "ten have a box (or the others are off the screen).")
+                    _pwho = store.get(_wk) or {}
+                    _df = pd.DataFrame([{"Grid square": c_, "Who": _pwho.get(c_, _who_opts[0])} for c_ in _prev]
+                                       or [], columns=["Grid square", "Who"])
+                    st.caption("Players with NO box: add a row for each -- the grid square at his feet, and who he is if you "
+                               "know. Leave it empty when all ten have a box (or the others are off the screen).")
+                    _ed = st.data_editor(_df, num_rows="dynamic", hide_index=True, use_container_width=True,
+                                         key=f"{kp}_mpk_{run}_{pi}_{ki}",
+                                         column_config={"Grid square": st.column_config.SelectboxColumn(options=_cells),
+                                                        "Who": st.column_config.SelectboxColumn(options=_who_opts)})
+                    _sel, _who = [], {}
+                    for _, _row in _ed.iterrows():
+                        _c = _row.get("Grid square")
+                        if isinstance(_c, str) and _c in _cells and _c not in _sel:
+                            _sel.append(_c)
+                            if isinstance(_row.get("Who"), str) and _row["Who"] in _who_opts[1:]:
+                                _who[_c] = _row["Who"]
                     if _sel:
-                        store[_mk] = list(_sel)
+                        store[_mk] = _sel
                     else:
                         store.pop(_mk, None)
+                    if _who:
+                        store[_wk] = _who
+                    else:
+                        store.pop(_wk, None)
 
             if not boxes:
                 st.caption("No player boxes in this picture.")
@@ -6463,10 +6484,15 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
                                    # tag model doesn't learn from it (it would only be learning its own guess)
                                    "accepted_default": bool(pre and not touched and f.get("coach") in (None, ""))})
         for ki, pic in enumerate(pl.get("pictures", []) if part != "titles" else []):
+            _who = store.get(f"{kp}_b_{run}_{pi}_{ki}_missed_who") or {}
+            _opts = _pr_player_opts(pl)
             for cell in (store.get(f"{kp}_b_{run}_{pi}_{ki}_missed") or []):
+                _nm_sd = _opts.get(_who.get(cell)) if _who.get(cell) else None
                 out.setdefault("missed", []).append({"clip_key": pl["clip_key"], "clip_number": pl.get("clip_number"),
                                                      "frame_file": pic.get("frame_file"), "t": pic.get("t"), "cell": cell,
-                                                     "grid": pic.get("grid"), "W": pic.get("W"), "H": pic.get("H")})
+                                                     "grid": pic.get("grid"), "W": pic.get("W"), "H": pic.get("H"),
+                                                     "true_name": _nm_sd[0] if _nm_sd else None,
+                                                     "side": _nm_sd[1] if _nm_sd else None})
             for bi, b in enumerate(pic.get("boxes", [])):
                 val = store.get(f"{kp}_b_{run}_{pi}_{ki}_{bi}", _PR_NOT_CHECKED)
                 if not isinstance(val, str) or val == _PR_NOT_CHECKED:
