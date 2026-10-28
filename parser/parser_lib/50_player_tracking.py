@@ -2627,18 +2627,34 @@ def player_tracking(pc):
                 if not 0 <= t < len(clips[i]["frames"]):
                     continue
                 best = None
+                _cands = []
                 for k, tr in enumerate(clips[i]["tracks"]):
                     for tt, j in tr:
                         if tt == t:
                             row = clips[i]["frames"][t][j]
                             dpx = float(np.hypot((row[6] + row[8]) / 2 - ch["px"], row[9] - ch["py"]))
+                            if dpx < 25:
+                                _cands.append((dpx, k))
                             if dpx < 25 and (best is None or dpx < best[0]):
                                 best = (dpx, k)
+                # CONFIRMED BUG (fixed; Thomann's check landed on Wheaton's #34 standing right in front of him). When two
+                # players' boxes are both at the checked spot, the one on the checked player's team (from the lineups) wins.
+                _nm = ch.get("true_name") or (ch.get("assigned") if ch.get("verdict") == "correct" else None)
+                if _nm and len(_cands) > 1:
+                    _sd_want = next((sd_ for sd_ in ("offense", "defense") if _nm in _trk_five(pc.at[i, f"{sd_}_lineup"])),
+                                    None)
+                    _same = [c_ for c_ in _cands if _sd_want and clips[i]["side"].get(c_[1]) == _sd_want]
+                    if _same:
+                        best = min(_same)
                 if best is not None:
                     if ch.get("verdict") == "wrong team":
                         # CONFIRMED CHANGE (requested: a "wrong team" option in the player review): the box is a player
                         # of the OTHER team -- move the track there; if the coach picked who it is, that's certain too
-                        coach_flip.add((i, best[1]))
+                        # (unless this run already has the track on his team -- the team colors can be right now)
+                        _sd_n = next((sd_ for sd_ in ("offense", "defense")
+                                      if ch.get("true_name") and ch["true_name"] in _trk_five(pc.at[i, f"{sd_}_lineup"])), None)
+                        if not (_sd_n and clips[i]["side"].get(best[1]) == _sd_n):
+                            coach_flip.add((i, best[1]))
                         if ch.get("true_name"):
                             coach[(i, best[1])] = ch["true_name"]
                         continue
@@ -4089,10 +4105,16 @@ def player_tracking(pc):
         for i in _carry_ids:
             clip = clips[i]
             fr = {k: {t for t, _ in clip["tracks"][k]} for k in range(len(clip["tracks"]))}
+            # CONFIRMED BUG (fixed; "it carried #7 Lane Thomann to the wrong team" -- onto Wheaton's #34 Grier, who stood in
+            # front of him). A checked name is only carried to pieces on HIS team (from the clip's lineups), and only checked
+            # pieces that are on his team teach his look (a check can land on the player standing in front of him).
+            _five = {sd_: set(_trk_five(pc.at[i, f"{sd_}_lineup"])) for sd_ in ("offense", "defense")}
+            _side_of = lambda n_: next((sd_ for sd_ in ("offense", "defense") if n_ in _five[sd_]), None)
             refs = {}                                  # name -> (side, [looks of his checked pieces])
             for k in range(len(clip["tracks"])):
                 n_ = coach.get((i, k))
-                if n_ and (i, k) in fp and clip["side"].get(k) in ("offense", "defense"):
+                if n_ and (i, k) in fp and clip["side"].get(k) in ("offense", "defense") \
+                        and clip["side"][k] == _side_of(n_):
                     refs.setdefault(n_, (clip["side"][k], []))[1].append(fp[(i, k)])
             if not refs:
                 continue
