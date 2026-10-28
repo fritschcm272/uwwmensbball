@@ -776,7 +776,23 @@ def _pr_departed():
     return {_pr_nk(n) for n in (plan["seniors"] if plan else [])}
 
 
+def _pr_tipoff_index(g):
+    """CONFIRMED CHANGE (requested: "a clip right at the tipoff (first possession) for each game"). The index (in g) of the
+    game's first tracked possession: first half first, highest clock, then play-by-play order, then clip number. None when
+    the game has no tracked clip."""
+    if g is None or g.empty:
+        return None
+    _rank = lambda x: {"H1": 1, "H2": 2}.get(str(x), 3 if str(x).startswith("OT") else 9)
+    num = lambda c: pd.to_numeric(g[c], errors="coerce") if c in g.columns else pd.Series(np.nan, index=g.index)
+    k = pd.DataFrame({"pd": g["period"].map(_rank) if "period" in g.columns else 9,
+                      "clk": -(num("time_remaining_seconds").fillna(-1.0)),       # no clock -> after every clocked clip
+                      "eo": num("pbp_event_order").fillna(np.inf),
+                      "cn": num("clip_number").fillna(np.inf)}, index=g.index)
+    return k.sort_values(["pd", "clk", "eo", "cn"], kind="stable").index[0]
+
+
 def play_review():
+    globals()["_pr_starters_waiting"] = []            # games whose starters check is open and not saved yet (see the stop below)
     pt = player_tracks if isinstance(globals().get("player_tracks"), pd.DataFrame) else pd.DataFrame()
     if pt.empty or "clip_key" not in pt.columns:
         print("Play review: no player tracks yet -- run Player tracking first.")
@@ -879,6 +895,18 @@ def play_review():
 
     globals()["_tag_cur_run"] = None                  # this run's games, worked out fresh (see _tag_run_reason)
     _keep_slugs = set()                               # the games whose player checks stay in the app this run
+    # CONFIRMED CHANGE (requested: "I want to be given a clip right at the tipoff (first possession) for each game ... use the
+    # models to find all 10 of the starters ... I will then validate and determine the actual 10 starters"). Until a game's
+    # starters are saved, its open batch also carries a STARTERS check: the first tracked possession, every box with what
+    # tracking named it, both teams' whole rosters to choose from, and the five starters of each team to confirm. Saved in
+    # the app (Analytics > Player Number Tracking, "Starters" at the top); player tracking then knows what each starter
+    # looks like. PLAY_REVIEW_STARTERS = False turns it off.
+    _st_on = bool(globals().get("PLAY_REVIEW_STARTERS", True))
+    try:
+        _st_saved = starters_saved_all() if _st_on else {}
+    except Exception as _se:
+        print(f"Play review: saved starters not read ({type(_se).__name__}: {_se})", flush=True)
+        _st_saved = {}
     for (gd, gc), g in pc.groupby(["game_date", "game_code"], dropna=False):
         _slug_app = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
         _pkg = os.path.join(_pr_app_dir(), "play_review", _slug_app)
@@ -895,6 +923,13 @@ def play_review():
                 print(f"Play review: {gd} {gc} left out -- not part of this run", flush=True)
             continue
         _keep_slugs.add(_slug_app)
+        # the tipoff clip, while this game's starters aren't validated yet (None = validated, or the check is off)
+        # PLAY_REVIEW_STARTERS_GAMES (requested: test it on Wheaton's 2nd most recent game, Millikin @ Wheaton 2/21/26): only
+        # games whose "date|code" contains one of these words get the starters check; None = every game in the run
+        _st_games = globals().get("PLAY_REVIEW_STARTERS_GAMES", ["millikin"])
+        _st_games = [_st_games] if isinstance(_st_games, str) else list(_st_games or [])
+        _st_this = not _st_games or any(str(w).lower() in f"{gd}|{gc}".lower() for w in _st_games)
+        _st_need = _pr_tipoff_index(g) if _st_on and _st_this and _slug_app not in _st_saved else None
         # CONFIRMED CHANGE (requested: everything in the data folder; the Title and player-number checks are done in the
         # Streamlit app, not review.html pages). A game's open review is its package in <data>/play_review/<game>/. With
         # PLAY_REVIEW_QUEUES = "separate" it's rebuilt once EITHER part is saved (the saved part moves on to its next plays,
@@ -910,6 +945,7 @@ def play_review():
                     _open |= set(_pl_.get("parts") or ["titles", "players"])
                 _saved = _run_parts_saved(_slug_app, _pkg_run)
                 _done_now = (bool(_saved & _open) if _sep else {"titles", "players"} <= _saved)
+                _has_st = "starters" in _open
                 if _done_now:
                     shutil.rmtree(_pkg, ignore_errors=True)
                     _what = " and ".join({"titles": "Title checks", "players": "player checks"}[x] for x in sorted(_saved & _open))
@@ -922,6 +958,18 @@ def play_review():
                     shutil.rmtree(_pkg, ignore_errors=True)
                     print(f"Play review: {gd} {gc} -- its open review (run {_pkg_run}) was built from old frames, old "
                           f"lineups, without team codes or before tracking's latest names; rebuilt on the current tracking (nothing in it was saved)", flush=True)
+                elif (_st_need is not None) != _has_st:
+                    # the starters check is added to an open batch built before it (or dropped once the starters are saved)
+                    shutil.rmtree(_pkg, ignore_errors=True)
+                    print(f"Play review: {gd} {gc} -- its open review (run {_pkg_run}) rebuilt "
+                          + ("with the STARTERS check (tipoff clip)" if _st_need is not None else
+                             "without the starters check (the starters are saved)") + " -- nothing in it was saved", flush=True)
+                elif _has_st and _st_need is not None:
+                    # the starters check is open and not saved: keep the batch as it is (and stop the notebook below)
+                    globals()["_pr_starters_waiting"].append((gd, gc, None))
+                    print(f"Play review: {gd} {gc} -- waiting for its STARTERS check (open review run {_pkg_run}) to be "
+                          f"saved in the app", flush=True)
+                    continue
                 elif globals().get("PLAY_REVIEW_REQUIRE_SAVED", True):
                     print(f"Play review: {gd} {gc} -- no new run: nothing in its open review (run {_pkg_run}) is saved yet "
                           f"(Title checks: Analytics > Film Tagging; player checks: Analytics > Player Number Tracking).", flush=True)
@@ -940,19 +988,25 @@ def play_review():
             pick = pool.loc[rng.sample(list(pool.index), min(PLAY_REVIEW_PLAYS_PER_GAME, len(pool)))].sort_values("clip_number")
         elif _sep:
             _n = PLAY_REVIEW_PLAYS_PER_GAME
-            _pp = _by_returners(g[~_kn.isin(done_p)]).head(_n)
+            # (the tipoff clip isn't also a regular player check while it's the starters check)
+            _pool = g[~_kn.isin(done_p) & ~g.index.isin([_st_need])]
+            # CONFIRMED CHANGE (requested: "after it is done with the starters for this game, I want to see what it assigned for
+            # clip #2"). A starters-check game's player checks go in GAME ORDER (clip 2, 3, ... -- the clips before the first
+            # substitution, where the starters' looks are used), not returners-first.
+            _pp = (_pool.assign(_cn=pd.to_numeric(_pool["clip_number"], errors="coerce")).sort_values("_cn", kind="stable")
+                   .drop(columns="_cn") if _st_on and _st_this else _by_returners(_pool)).head(_n)
             # Title checks: only clips a coach already tagged (a Synergy Title) -- untagged clips are tagged in their own
             # Film Tagging batch (requested: tagging only on Analytics > Film Tagging, no duplicate plays)
             _tagged = g["decode_quality"].astype(str).ne("Untagged") if "decode_quality" in g.columns \
                 else pd.Series(True, index=g.index)
             _pt = g[~_kn.isin(done_t) & _tagged].sort_values("clip_number", kind="stable").head(_n)
-            if not len(_pp) and not len(_pt):
+            if not len(_pp) and not len(_pt) and _st_need is None:
                 print(f"Play review: {gd} {gc} -- every play already has its checks; nothing new to review", flush=True)
                 continue
             pick = g.loc[sorted(set(_pp.index) | set(_pt.index), key=lambda i: list(g.index).index(i))]
             pick = pick.sort_values("clip_number", kind="stable")
         else:
-            if not len(fresh):
+            if not len(fresh) and _st_need is None:
                 print(f"Play review: {gd} {gc} -- every play already has a check; nothing new to review", flush=True)
                 continue
             pick = _by_returners(fresh).head(PLAY_REVIEW_PLAYS_PER_GAME).sort_values("clip_number", kind="stable")
@@ -971,12 +1025,15 @@ def play_review():
         gnums = _trk_numbers_for_game(gd, gc)
         numtxt = lambda n: f"#{gnums.get(str(n).lower(), '?')} {str(n).split()[-1]}"
         _rosters_pr = _tag_rosters(g) if "_tag_rosters" in globals() else {}
+        _items = [(_ri, r, _parts_of.get(_ri, ["titles", "players"])) for _ri, r in pick.iterrows()]
+        if _st_need is not None:
+            _items.insert(0, (_st_need, g.loc[_st_need], ["starters"]))   # the STARTERS check (tipoff clip) first
         plays = []
-        print(f"Play review: {gd} {gc}: building {len(pick)} play(s) -- pictures, close-ups and a video of each...", flush=True)
+        print(f"Play review: {gd} {gc}: building {len(_items)} play(s) -- pictures, close-ups and a video of each...", flush=True)
         _pg_t0, _pg_st = time.time(), {}
-        for _pg_i, (_ri, r) in enumerate(pick.iterrows(), 1):
-            _pr_progress(f"[play review] {gc} plays built", _pg_i - 1, len(pick), _pg_t0, _pg_st)
-            _parts = _parts_of.get(_ri, ["titles", "players"])
+        for _pg_i, (_ri, r, _parts) in enumerate(_items, 1):
+            _pr_progress(f"[play review] {gc} plays built", _pg_i - 1, len(_items), _pg_t0, _pg_st)
+            _is_st = "starters" in _parts
             files = [f for f in str(r["track_files"]).split(";") if f]
             rows = pt[pt["clip_key"] == r["track_clip_key"]].to_dict("records")
             n = len(files)
@@ -1004,7 +1061,7 @@ def play_review():
             clock_txt = f"{r.get('period', '')} {int(clock // 60)}:{int(clock % 60):02d}" if pd.notna(clock) else "(no clock)"
             lu = lambda side: ", ".join(numtxt(nm) for nm in _trk_five(r.get(f"{side}_lineup"))) or "(lineup unknown)"
             pics = []
-            if "players" not in _parts:
+            if "players" not in _parts and not _is_st:
                 picks_ = []                    # a Title-check-only play: no player pictures / close-ups to build
             for which, t in picks_:
                 if t is None or t >= n or any(p_["t"] == t for p_ in pics):
@@ -1018,7 +1075,9 @@ def play_review():
                     if _dep and b.get("name") and _pr_nk(b["name"]) in _dep:
                         b["departed"] = True
                 header = [f"Clip {cn}  {clock_txt}  {str(r.get('synergy_string'))[:100]}",
-                          (f"{'START' if which == 'start' else 'END'} of the play -- {t / fps:.1f} s into the clip" if which != "frame"
+                          (f"STARTERS -- the first possession of the game, {t / fps:.1f} s into the clip: name every box, "
+                           f"confirm each team's five starters" if _is_st else
+                           f"{'START' if which == 'start' else 'END'} of the play -- {t / fps:.1f} s into the clip" if which != "frame"
                            else f"Frame for the player check -- {t / fps:.1f} s into the clip, the sharpest with the most players"),
                           f"OFFENSE (orange) {r.get('offense_team')}: {lu('offense')}",
                           f"DEFENSE (blue)  {r.get('defense_team')}: {lu('defense')}",
@@ -1102,13 +1161,15 @@ def play_review():
                                     for sd in ("offense", "defense")},
                           # CONFIRMED BUG (fixed; clip 29, no clock: "this one has no roster"): a side whose five isn't known gets
                           # that team's roster for the game, so "really ..." in the player check still lists names and numbers
+                          # (the STARTERS check: both teams' whole rosters for the game, after the five on the floor)
                           "roster": {sd: [n for n in _rosters_pr.get(str(r.get(f"{sd}_team")), [])
                                           if n not in _trk_five(r.get(f"{sd}_lineup"))]
-                                     for sd in ("offense", "defense") if len(_trk_five(r.get(f"{sd}_lineup"))) < 5},
+                                     for sd in ("offense", "defense") if len(_trk_five(r.get(f"{sd}_lineup"))) < 5 or _is_st},
                           "five_labels": {nm: f"{numtxt(nm).split(' ')[0]} {nm}" for side in ("offense", "defense")
                                           for nm in _trk_five(r.get(f"{side}_lineup"))
                                           + (_rosters_pr.get(str(r.get(f"{side}_team")), [])
-                                             if len(_trk_five(r.get(f"{side}_lineup"))) < 5 else [])}})
+                                             if len(_trk_five(r.get(f"{side}_lineup"))) < 5 or _is_st else [])},
+                          **({"kind": "starters"} if _is_st else {})})
         # every answer already known for each field (coaches' Titles and the model's answers, all games) -- offered as
         # suggestions for a typed answer, so it matches an existing spelling (page and app)
         vocab = _pr_vocab_now()
@@ -1129,6 +1190,19 @@ def play_review():
         print(f"Play review: {gd} {gc}: {_nt} Title check(s) ({_rng('titles')}) -- Analytics > Film Tagging; {_np} player check(s) "
               f"({_rng('players')}) -- Analytics > Player Number Tracking "
               f"({'next unreviewed, in game order' if _mode != 'random' else 'random'})", flush=True)
+        _stp = next((p_ for p_ in plays if p_.get("kind") == "starters"), None)
+        if _stp is not None:
+            globals()["_pr_starters_waiting"].append((gd, gc, f"clip {_stp['clip_number']}, {_stp['clock']}"))
+            _nb = sum(len(pic_.get("boxes") or []) for pic_ in _stp.get("pictures") or [])
+            _nn = sum(1 for pic_ in _stp.get("pictures") or [] for b_ in pic_.get("boxes") or [] if b_.get("name"))
+            print(f"Play review: {gd} {gc}: STARTERS check on the first possession (clip {_stp['clip_number']}, "
+                  f"{_stp['clock']}) -- {_nb} box(es), {_nn} named by tracking; validate it at the top of Analytics > "
+                  f"Player Number Tracking", flush=True)
+            _r0 = g.loc[_st_need]
+            _c0 = pd.to_numeric(_r0.get("time_remaining_seconds"), errors="coerce")
+            if str(_r0.get("period")) != "H1" or pd.isna(_c0) or _c0 < 1140:
+                print(f"  [starters] NOTE: the game's first TRACKED clip isn't at the opening tip ({_stp['clock']}) -- the "
+                      f"five on the floor may not be the starters; pick the real starters in the app", flush=True)
     # CONFIRMED CHANGE (requested: "these games for the Player Number Tracking aren't using the latest version, so can they be
     # removed from the application?" -- WWW@AC, WWW@COE, WOS@WWW and MarianWI@MSOE still showed batches built on the old
     # frames before the tracking restart). An open batch for a game with no player tracks this run, or outside this run, is
@@ -1553,3 +1627,22 @@ if globals().get("RUN_TAG_QUEUE", True) or RUN_PLAY_REVIEW:
         _pr_refresh_vocab()
     except Exception as _e:
         print(f"  (answer lists not refreshed in the open batches: {type(_e).__name__}: {_e})")
+
+# CONFIRMED CHANGE (requested: the starters check works "similar to the court calibration where the notebook stops until it
+# is completed"). After the Play review and Film Tagging batches are written, the notebook STOPS while any game's starters
+# check is open and not saved. PLAY_REVIEW_STARTERS_STOP = False carries on without stopping.
+_stw = globals().get("_pr_starters_waiting") or []
+if RUN_PLAY_REVIEW and _stw and globals().get("PLAY_REVIEW_STARTERS_STOP", True):
+    print("  " + "=" * 100)
+    print(f"  STOPPED after the Play review: {len(_stw)} game(s) need their 10 STARTERS validated:")
+    for _g1, _g2, _where in _stw:
+        print(f"    - {_g1} {_g2}" + (f" ({_where})" if _where else ""))
+    print("  What to do:")
+    print("    1. Commit and push the data folder (GitHub Desktop) so the app has the starters clip.")
+    print("    2. In the app: Analytics > Player Number Tracking, pick the game. At the top, \"Starters\": check every box")
+    print("       (who it really is), pick each team's five starters, and press Save.")
+    print("    3. Rerun from the Player tracking cell (Run > Run Selected Cell and All Below). Tracking then knows what each")
+    print("       starter looks like and uses it on the clips before the first substitution.")
+    print("  (PLAY_REVIEW_STARTERS_STOP = False carries on without stopping; PLAY_REVIEW_STARTERS = False turns the check off.)")
+    print("  " + "=" * 100, flush=True)
+    raise StartersNeeded(f"{len(_stw)} game(s) need their starters validated -- see the steps printed above")

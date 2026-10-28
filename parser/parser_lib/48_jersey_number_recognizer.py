@@ -385,9 +385,8 @@ def jersey_collect():
     if os.path.exists(_jp):
         for key_, v in _safe_read_pickle(_jp).items():
             parts = str(key_).split("|")
-            # its OWN readings never become its training labels (it would learn its own mistakes) unless asked
-            if len(parts) >= 6 and parts[5].startswith("trained") and not JERSEY_TRAIN_FROM_OWN_READS:
-                continue
+            # its OWN readings become training labels only when very sure (JERSEY_TRAIN_OWN_MIN_CONF, below) -- or every
+            # one of them with JERSEY_TRAIN_FROM_OWN_READS = True
             if len(parts) >= 6 and v:
                 _reads_by_spot.setdefault((parts[0], int(parts[1]), int(parts[2])), []).append((key_, v))
     # CONFIRMED BUG (fixed): this used play_calls' "track_clip_key", a column Player tracking creates -- but this cell
@@ -423,7 +422,13 @@ def jersey_collect():
             if t["clip_key"] not in meta.index:
                 continue
             r = meta.loc[t["clip_key"]]
-            num = _trk_numbers_for_game(str(r["game_date"]), str(r["game_code"])).get(str(t["name"]).lower())
+            # CONFIRMED BUG (fixed; "this is taking a long time" -- the run sat on "choosing training crops from 225 player
+            # track(s)" for minutes): the game's name -> number list was rebuilt for EVERY track (each time reading every
+            # roster row and every Synergy description of the season). It's now worked out once per game, like the coach checks.
+            _gk_ = (str(r["game_date"]), str(r["game_code"]))
+            if _gk_ not in _nums_by_game:
+                _nums_by_game[_gk_] = _trk_numbers_for_game(*_gk_)
+            num = _nums_by_game[_gk_].get(str(t["name"]).lower())
             files = [f for f in str(r.get("track_files") or "").split(";") if f]
             if not num or not files:
                 continue
@@ -438,9 +443,16 @@ def jersey_collect():
                 _n_contra += 1
                 continue
             # (1) the frames where this number was READ on this track with a confident reading
+            # CONFIRMED CHANGE (review of the 10/27 afternoon run: with only the other readers' 0.9+ readings, 14 tracks
+            # qualified -- the recognizer lost 2,033 mostly-right practice crops and fell from 69% to 59% on our film). Its
+            # OWN readings count again when very sure: JERSEY_TRAIN_OWN_MIN_CONF (0.97; at 0.95+ it was right 43/43 on your
+            # checked players). The per-number cap and the coach-check rule below still apply, so no number floods the set.
+            _own_min = float(globals().get("JERSEY_TRAIN_OWN_MIN_CONF", 0.97))
+            _own = lambda k_: str(k_).split("|")[5].startswith("trained") if len(str(k_).split("|")) >= 6 else False
             read_t = [tt for tt, b in boxes.items() if b is not None and any(
-                txt == num and cf >= _min_rc for key_, v in _reads_by_spot.get((files[tt], int(b[0]), int(b[1])), [])
-                for txt, cf in v)]
+                txt == num and (cf >= _own_min if _own(key_) else cf >= _min_rc)
+                and (JERSEY_TRAIN_FROM_OWN_READS or not _own(key_) or cf >= _own_min)
+                for key_, v in _reads_by_spot.get((files[tt], int(b[0]), int(b[1])), []) for txt, cf in v)]
             if not read_t:
                 continue
             _n_jt_read += 1
@@ -452,6 +464,8 @@ def jersey_collect():
                 if (f, int(box[0]), int(box[1])) in coach_spots:     # never train on a test crop
                     continue
                 cand.setdefault(num, []).append((_ti, f, box))
+        _jr_say(f"  {sum(len(v) for v in cand.values()):,} candidate crop(s) from {_n_jt_read} track(s) "
+                f"({_jr_time.time() - _t0:.0f} s)")
         # (3) cap each number at a multiple of its coach-checked crops, taking crops from as many tracks as possible
         _cdir = os.path.join(JERSEY_TRAIN_DIR, _jr_dir("coach"))
         _ccount = {d_: len(os.listdir(os.path.join(_cdir, d_))) for d_ in (os.listdir(_cdir) if os.path.isdir(_cdir) else [])
@@ -479,17 +493,46 @@ def jersey_collect():
             if any(tk_ in fn_ for tk_ in _tok) and (num_, fn_) not in want:
                 os.remove(f_)
                 _n_rm += 1
-        for (num, fn_), (f, box) in want.items():
-            dst = os.path.join(_rdir, num, fn_)
-            if os.path.exists(dst):
-                continue
+        # CONFIRMED BUG (fixed; "still a long time" on "choosing training crops from 225 player track(s)"). Two things made this
+        # part slow on every run: (1) a crop too blurry to keep (JERSEY_TRAIN_MIN_SHARPNESS) was never saved, so EVERY run read
+        # its frame again only to throw it away -- and a frame from a Synergy export is decoded from its clip video on the
+        # storage drive; (2) the frames were read in number order, jumping between clips, so a clip video was decoded over
+        # and over. Crops found too blurry are now remembered (<training folder>/_reads_rejected.json, forgotten when the
+        # sharpness setting changes) and the frames are read clip by clip, with progress.
+        _rej_p = os.path.join(JERSEY_TRAIN_DIR, "_reads_rejected.json")
+        try:
+            with open(_rej_p, encoding="utf-8") as fh:
+                _rj = json.load(fh)
+            _rej = set(_rj.get("names") or []) if float(_rj.get("min_sharpness", -1)) == float(JERSEY_TRAIN_MIN_SHARPNESS) else set()
+        except Exception:
+            _rej = set()
+        _ex = (globals().get("_FA_ORIG") or {}).get("exists", os.path.exists)
+        _new = sorted(((num, fn_, f, box) for (num, fn_), (f, box) in want.items()
+                       if fn_ not in _rej and not _ex(os.path.join(_rdir, num, fn_))), key=lambda x: (x[2], x[1]))
+        _jr_say(f"reading {len(_new):,} new practice crop(s) from the film (clip by clip; {len(_rej):,} known-blurry skipped)...")
+        _t1, _st1, _n_blur = _jr_time.time(), {}, 0
+        for _ni, (num, fn_, f, box) in enumerate(_new):
+            _jr_progress("new practice crops", _ni, len(_new), _t1, _st1, f"{added['reads']} saved, {_n_blur} too blurry")
             im = _img(f)
             c = _jr_chest(im, box) if im is not None else None
-            if c is None or cv2.Laplacian(cv2.cvtColor(c, cv2.COLOR_BGR2GRAY), cv2.CV_64F).var() < JERSEY_TRAIN_MIN_SHARPNESS:
+            if c is None:
                 continue
-            if _jr_save(im, box, dst):
+            if cv2.Laplacian(cv2.cvtColor(c, cv2.COLOR_BGR2GRAY), cv2.CV_64F).var() < JERSEY_TRAIN_MIN_SHARPNESS:
+                _rej.add(fn_)
+                _n_blur += 1
+                continue
+            if _jr_save(im, box, os.path.join(_rdir, num, fn_)):
                 added["reads"] += 1
-        print(f"  [recognizer] its own readings: {len(want):,} crop(s) kept from {_n_jt_read} track(s) read at {_min_rc:.2f}+; "
+        if _new:
+            _jr_progress("new practice crops", len(_new), len(_new), _t1, _st1, f"{added['reads']} saved, {_n_blur} too blurry")
+        if _n_blur:
+            try:
+                with open(_rej_p, "w", encoding="utf-8") as fh:
+                    json.dump({"min_sharpness": float(JERSEY_TRAIN_MIN_SHARPNESS), "names": sorted(_rej)}, fh)
+            except Exception:
+                pass
+        print(f"  [recognizer] readings: {len(want):,} crop(s) kept from {_n_jt_read} track(s) read at {_min_rc:.2f}+ "
+              f"(its own readings: {float(globals().get('JERSEY_TRAIN_OWN_MIN_CONF', 0.97)):.2f}+); "
               f"{_n_contra} track(s) left out because a coach check names someone else; {_n_rm:,} older crop(s) removed"
               + (f"; capped: {', '.join(_capped)}" if _capped else ""), flush=True)
         added["removed"] = _n_rm
@@ -784,9 +827,14 @@ def _jr_inputs_fingerprint():
     for f in glob.glob(os.path.join(_play_review_file_saves(), "*.json")):
         parts.append((os.path.basename(f), os.path.getsize(f), int(os.path.getmtime(f))))
     def _dir_state(d):
+        # CONFIRMED BUG (fixed; the recognizer never said "nothing new ... skipped"): the training folder's state counted this
+        # cell's OWN bookkeeping files (_last_inputs.json, written right after the fingerprint is taken, and
+        # _reads_rejected.json), so the next run always saw a newer file there and redid the collection. They're left out.
         n, latest = 0, 0
         for root, _ds, fs in os.walk(d):
             for f in fs:
+                if os.path.abspath(root) == os.path.abspath(d) and f.startswith(("_last_inputs", "_reads_rejected")):
+                    continue
                 n += 1
                 latest = max(latest, int(os.path.getmtime(os.path.join(root, f))))
         return (n, latest)
@@ -803,7 +851,8 @@ def _jr_inputs_fingerprint():
                   JERSEY_TRAIN_MIN_IMAGES, str(globals().get("JERSEY_TRAIN_SPLIT_BY", "play")),
                   float(globals().get("JERSEY_TRAIN_BALANCE", 0.75)), float(globals().get("JERSEY_TRAIN_COACH_WEIGHT", 3.0))))
     # the rules for its own readings (the "2" makes the first run with them clean up the old set)
-    parts.append(("reads_rules", 2, float(globals().get("JERSEY_TRAIN_READ_MIN_CONF", 0.9)),
+    parts.append(("reads_rules", 3, float(globals().get("JERSEY_TRAIN_OWN_MIN_CONF", 0.97)),
+                  float(globals().get("JERSEY_TRAIN_READ_MIN_CONF", 0.9)),
                   float(globals().get("JERSEY_TRAIN_READS_PER_COACH", 3.0)), int(globals().get("JERSEY_TRAIN_READS_MIN_CAP", 20))))
     return hashlib.md5(repr(sorted(map(repr, parts))).encode()).hexdigest()
 
