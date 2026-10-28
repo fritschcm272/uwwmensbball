@@ -2671,6 +2671,10 @@ def player_tracking(pc):
                             _best = (dd, k)
         if _best is not None:
             _missed_tracks[_mi] = (_i, _best[1])
+            # CONFIRMED CHANGE (requested: "a way to mark that the guy in C5 is #4 Ian Winkler"): a no-box mark that says WHO the
+            # player is names the track found at that square this run, like a coach check (his look then counts too)
+            if _m.get("true_name") and (_i, _best[1]) not in coach:
+                coach[(_i, _best[1])] = str(_m["true_name"])
     _pm_mode = globals().get("TRACK_PLAYER_MODEL", "auto")
     if _pm_mode and TRACK_USE_COACH_CHECKS:
         _lab = {ik: (1 if n is None else 0) for ik, n in coach.items()}
@@ -4850,11 +4854,26 @@ def _trk_court_precheck():
         print(f"  [court] every gym being tracked has a court calibration ({len(ok_arenas)} gym(s))", flush=True)
         return
     if _in_app:
-        print(f"  [court] {len(need)} gym(s) need a one-time court calibration -- they're waiting in the app (Analytics > Court "
-              f"Calibration) once you push the data folder: " + "; ".join(f"{_a} ({_g})" for _g, _a, _p in need)
-              + ". Those games are tracked WITHOUT the court this run; the next run after a coach saves picks it up.",
-              flush=True)
-        return
+        # CONFIRMED CHANGE (requested: "make the parser notebook stop the player tracking cell if there is a court calibration
+        # that needs to be done" -- the Millikin @ Wheaton starters picture had fans boxed and most players missed, tracked
+        # without the court). The packages for the app are written, then the notebook STOPS before tracking.
+        # COURT_STOP_IN_APP = False goes back to tracking those games without the court.
+        if not globals().get("COURT_STOP_IN_APP", True):
+            print(f"  [court] {len(need)} gym(s) need a one-time court calibration -- they're waiting in the app (Analytics > "
+                  f"Court Calibration) once you push the data folder: " + "; ".join(f"{_a} ({_g})" for _g, _a, _p in need)
+                  + ". Those games are tracked WITHOUT the court this run (COURT_STOP_IN_APP = False).", flush=True)
+            return
+        print("  " + "=" * 100)
+        print(f"  STOPPED before Player tracking: {len(need)} gym(s) need a one-time court calibration:")
+        for _g, _a, _p in need:
+            print(f"    - gym '{_a}' ({_g})")
+        print("  What to do:")
+        print("    1. Commit and push the data folder (GitHub Desktop) -- the calibration frames are in it.")
+        print("    2. In the app: Analytics > Court Calibration -- click 4+ court landmarks (one near each basket), Save.")
+        print("    3. Rerun THIS Player tracking cell, then the cells below (Run > Run Selected Cell and All Below).")
+        print("  (To track without the court instead, set COURT_STOP_IN_APP = False.)")
+        print("  " + "=" * 100, flush=True)
+        raise CourtCalibrationNeeded(f"{len(need)} gym(s) need court calibration -- see the steps printed above")
     if globals().get("COURT_OPEN_CALIBRATION_PAGE", True):
         import webbrowser
         for _g, _a, page in need:
