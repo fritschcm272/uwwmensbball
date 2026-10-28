@@ -2099,13 +2099,49 @@ def player_tracking(pc):
     from sklearn.cluster import KMeans
     game_of = {i: f"{pc.at[i, 'game_date']}|{pc.at[i, 'game_code']}" for i in todo}
     team_color = {}
+    # CONFIRMED CHANGE (requested: "sort the teams using your checks" -- on the Millikin @ Wheaton starters clip every player on
+    # the floor was labelled MIL and the WHE label went to the fans and a referee: with ONE clip of the game there were more
+    # people in the stands than on the floor, so the color groups split floor from crowd instead of white from blue).
+    #   * the color groups are learned from the people ON THE COURT (court-mapped frames), when there are enough of them;
+    #   * your checked boxes decide which group is which: a player you named votes his team for his group, "not a player"
+    #     votes for the everyone-else group -- this comes before the home-wears-light rule (TRACK_TEAM_COLORS_FROM_CHECKS).
+    _cc_votes_src, _team_of_name, _coach_colors = [], {}, {}
+    if TRACK_USE_COACH_CHECKS and globals().get("TRACK_TEAM_COLORS_FROM_CHECKS", True):
+        try:
+            _k2i = {_trk_clip_key(pc.loc[i]): i for i in todo}
+            for ch in _trk_coach_checks():
+                i = _k2i.get(ch.get("clip_key"))
+                t = int(pd.to_numeric(ch.get("t"), errors="coerce")) if pd.notna(pd.to_numeric(ch.get("t"), errors="coerce")) else -1
+                if i is None or not 0 <= t < len(frames_of[i]) or not len(frames_of[i][t]):
+                    continue
+                f = frames_of[i][t]
+                d_ = np.hypot((f[:, 6] + f[:, 8]) / 2 - float(ch.get("px", -1e9)), f[:, 9] - float(ch.get("py", -1e9)))
+                j = int(np.argmin(d_))
+                if d_[j] >= 25 or not np.isfinite(f[j, 14:19]).all():
+                    continue
+                vd = ch.get("verdict")
+                nm = (ch.get("true_name") if vd in ("wrong", "wrong team") else
+                      (ch.get("true_name") or ch.get("assigned")) if vd == "correct" else None)
+                kind = "np" if vd == "not a player" else (("name", str(nm)) if nm else None)
+                if kind:
+                    _cc_votes_src.append((i, f[j].copy(), kind))
+            for i in todo:
+                for sd in ("offense", "defense"):
+                    for n_ in _trk_five(pc.at[i, f"{sd}_lineup"]):
+                        _team_of_name.setdefault(game_of[i], {}).setdefault(n_, str(pc.at[i, f"{sd}_team"]))
+        except Exception as _ce:
+            print(f"  [tracking]   your checks not used for the team colors ({type(_ce).__name__}: {_ce})", flush=True)
+            _cc_votes_src = []
     for g in set(game_of.values()):
         ids = [i for i in todo if game_of[i] == g]
         rows_ = [f[np.isfinite(f[:, 14:19]).all(1)] for i in ids for f in frames_of[i] if len(f)]
         allr = np.vstack(rows_) if rows_ else np.zeros((0, 20))
         if len(allr) < 30:
             continue
-        km = KMeans(n_clusters=3, n_init=10, random_state=0).fit(_trk_group_feat(allr))
+        _onc = allr[np.isfinite(allr[:, 10]) & np.isfinite(allr[:, 11]) & (allr[:, 10] > -3) & (allr[:, 10] < 97)
+                    & (allr[:, 11] > -3) & (allr[:, 11] < 53)]
+        _fit = _onc if len(_onc) >= max(30, int(globals().get("TRACK_TEAM_COURT_MIN", 60))) else allr
+        km = KMeans(n_clusters=3, n_init=10, random_state=0).fit(_trk_group_feat(_fit))
         c_ = km.cluster_centers_
         # everyone-else = light shirt over dark pants, not warm (referees' black pants, coaches, fans)
         other = int(np.argmax((c_[:, 0] - c_[:, 2]) - np.abs(c_[:, 1] / 2)))
@@ -2123,8 +2159,33 @@ def player_tracking(pc):
                       f"({_ref_o[1]})", flush=True)
         except Exception as _re:
             print(f"  [tracking]   referee marks not used for the color groups ({type(_re).__name__}: {_re})", flush=True)
+        # your checks: which color group each checked box is in
+        _pv, _npv = {c: {} for c in range(3)}, {c: 0 for c in range(3)}
+        for i_, row_, kind_ in _cc_votes_src:
+            if game_of.get(i_) != g:
+                continue
+            c_ = int(km.predict(_trk_group_feat(row_[None, :]))[0])
+            if kind_ == "np":
+                _npv[c_] += 1
+            else:
+                tm_ = _team_of_name.get(g, {}).get(kind_[1])
+                if tm_:
+                    _pv[c_][tm_] = _pv[c_].get(tm_, 0) + 1
+        _tot = {c: sum(_pv[c].values()) for c in range(3)}
+        if sum(_tot.values()) >= int(globals().get("TRACK_TEAM_CHECKS_MIN", 2)):
+            if _tot[other] > 0 and min(_tot.values()) < _tot[other]:
+                _o2 = min(range(3), key=lambda c: (_tot[c], -_npv[c]))
+                print(f"  [tracking]   {g}: your checks put players in color group {other} -- the everyone-else group is "
+                      f"{_o2} instead", flush=True)
+                other = _o2
         teams_ = [c for c in range(3) if c != other]
         lab = {teams_[0]: "A", teams_[1]: "B", other: "ref"}
+        _m = {lab[c]: max(_pv[c], key=_pv[c].get) for c in teams_ if _pv[c]}
+        if _m and len(set(_m.values())) == len(_m):
+            _coach_colors[g] = {tm_: L_ for L_, tm_ in _m.items()}
+            print(f"  [tracking]   {g}: your checks say which shirt color is which team -- "
+                  + "; ".join(f"{tm_}: group {L_} ({sum(_pv[c].values())} checked box(es))" for c in teams_
+                              for L_, tm_ in _m.items() if lab[c] == L_), flush=True)
         code = {teams_[0]: 0.0, teams_[1]: 1.0, other: 2.0}
         team_color[g] = (km, lab)
         # CONFIRMED CHANGE (coach: not all 5 players had a box). Frame by frame, some players were sorted into the WRONG
@@ -2220,6 +2281,18 @@ def player_tracking(pc):
         teams = sorted({str(pc.at[i, c]) for i in todo if game_of[i] == g for c in ("offense_team", "defense_team")})
         if len(teams) != 2:
             continue
+        if g in _coach_colors:                        # your checks first (see step 2)
+            cm_ = dict(_coach_colors[g])
+            if len(cm_) == 1:
+                t0_, L0_ = next(iter(cm_.items()))
+                t1_ = next((x for x in teams if x != t0_), None)
+                if t1_:
+                    cm_[t1_] = "B" if L0_ == "A" else "A"
+            if all(t_ in cm_ for t_ in teams):
+                for t_ in teams:
+                    color_of_team[(g, t_)] = cm_[t_]
+                color_source[g] = "your checks (which shirt color is which team)"
+                continue
         idx = {v: k for k, v in lab.items()}
         bright = {x: float(km_.cluster_centers_[idx[x]][0]) * 3 for x in ("A", "B")}   # feature 0 = lightness
         light, dark = (("A", "B") if bright["A"] >= bright["B"] else ("B", "A"))
@@ -2853,6 +2926,20 @@ def player_tracking(pc):
                     print(f"  [tracking]   NOTE {g_}, {team}: your starters ({', '.join(sorted(coach5))}) differ from the "
                           f"play-by-play's five on its first clip ({', '.join(sorted(pbp5))}) -- that game's lineups may be "
                           f"off, and the starter look is only used where they match", flush=True)
+    # CONFIRMED CHANGE (requested: "carry checked names through the whole clip" -- Thomann, Hedrick and Neibch, checked on the
+    # first starters frame, were unnamed on the second: a check names only the PIECE of a player's track it sits on, and the
+    # tracker cuts tracks where teammates overlap). In the clips of a game still on its starters check, every piece of a player
+    # gets fingerprinted, and a piece that never overlaps the checked player in time, is on his team and looks most like him
+    # takes his name ("same player as your check"). TRACK_CARRY_CHECKS = False turns it off.
+    _carry_ids = []
+    if globals().get("TRACK_CARRY_CHECKS", True) and TRACK_USE_COACH_CHECKS:
+        try:
+            _st_done = starters_saved_all() if "starters_saved_all" in globals() else {}
+            _slug_ = lambda g_: re.sub(r"[^A-Za-z0-9]+", "_", str(g_)).strip("_")
+            _named_clips = {i_ for (i_, _k), n_ in coach.items() if n_}
+            _carry_ids = [i for i in todo if i in _named_clips and _slug_(game_of[i]) not in _st_done]
+        except Exception as _e:
+            print(f"  [tracking]   carrying checked names skipped ({type(_e).__name__}: {_e})", flush=True)
     # the per-game appearance models (see _app_fit below): game -> model, game -> its test numbers
     _app_models, _app_stats, _app_on_games, _fill_games = {}, {}, set(), set()
     _app_scorers = {}                                 # game -> ("model", m) or ("protos", {name: look}) -- whichever tested better
@@ -3099,6 +3186,9 @@ def player_tracking(pc):
                 print(f"  [tracking]   (suggestion fingerprints skipped: {type(_se).__name__}: {_se})", flush=True)
         # the starter look (see _st_elig above): the coach-checked players of a game with validated starters (their looks)
         # and every player of a team whose five starters are on the floor
+        if _carry_ids:
+            _cut(_carry_ids, lambda i, k: clips[i]["side"].get(k) in ("offense", "defense") or bool(coach.get((i, k))),
+                 "clips: every player on the starters clip cut out (carrying your checked names)")
         if _st_elig:
             _st_ids = [i for i in todo if game_of[i] in _st_valid]
             _cut(_st_ids, lambda i, k: bool(coach.get((i, k))) or clips[i]["side"].get(k) in _st_elig.get(i, ()),
@@ -3991,6 +4081,49 @@ def player_tracking(pc):
         except Exception as _e:
             print(f"  [tracking]   re-ID names not used this run ({type(_e).__name__}: {_e})", flush=True)
 
+    # --- your checked names carried to the other pieces of the same player in the clip (see _carry_ids above) -------------
+    carry_named = {}
+    if _carry_ids and fp:
+        _cmin = float(globals().get("TRACK_CARRY_MIN_SIM", 0.80))
+        _cmar = float(globals().get("TRACK_CARRY_MARGIN", 0.03))
+        for i in _carry_ids:
+            clip = clips[i]
+            fr = {k: {t for t, _ in clip["tracks"][k]} for k in range(len(clip["tracks"]))}
+            refs = {}                                  # name -> (side, [looks of his checked pieces])
+            for k in range(len(clip["tracks"])):
+                n_ = coach.get((i, k))
+                if n_ and (i, k) in fp and clip["side"].get(k) in ("offense", "defense"):
+                    refs.setdefault(n_, (clip["side"][k], []))[1].append(fp[(i, k)])
+            if not refs:
+                continue
+            taken = {}                                 # name -> frame sets already carrying it in this clip
+            for k in range(len(clip["tracks"])):
+                if (i, k) in names_all and names_all[(i, k)][0]:
+                    taken.setdefault(names_all[(i, k)][0], []).append(fr[k])
+                if coach.get((i, k)):
+                    taken.setdefault(coach[(i, k)], []).append(fr[k])
+            cand = []
+            for k in range(len(clip["tracks"])):
+                sd = clip["side"].get(k)
+                if sd not in ("offense", "defense") or (i, k) in names_all or (i, k) in coach or (i, k) not in fp:
+                    continue
+                sims = sorted(((max(float(fp[(i, k)] @ v) for v in looks), n_) for n_, (rs, looks) in refs.items() if rs == sd),
+                              reverse=True)
+                if not sims:
+                    continue
+                best_s, best_n = sims[0]
+                second = sims[1][0] if len(sims) > 1 else -1.0
+                if best_s >= _cmin and best_s - second >= _cmar:
+                    cand.append((best_s, k, best_n))
+            for sc_, k, n_ in sorted(cand, reverse=True):
+                if any(fr[k] & o for o in taken.get(n_, [])):
+                    continue
+                names_all[(i, k)] = (n_, round(sc_, 2))
+                carry_named[(i, k)] = n_
+                taken.setdefault(n_, []).append(fr[k])
+        print(f"  [tracking]   your checked names carried to {len(carry_named):,} more piece(s) of the same players in "
+              f"{len(_carry_ids)} starters clip(s) (look alike {_cmin:.2f}+, never on the floor at the same moment)", flush=True)
+
     # --- starter look: a team's five starters on the floor, each player matched to the starters' looks ---------------------
     # CONFIRMED CHANGE (requested: "you will know exactly what each player looks like at least until the first substitution").
     # In a clip where a team's five on the floor is its validated five starters (_st_elig), the team's unnamed players are
@@ -4397,6 +4530,8 @@ def player_tracking(pc):
             return "re-id match"
         if starter_named.get((i, k)) == n:
             return "starter look"
+        if carry_named.get((i, k)) == n:
+            return "same player as your check"
         a, af = clips[i]["anchor"], clips[i].get("anchor_first")
         if (a and a[0] == k and a[1] == n) or (af and af[0] == k and af[1] == n):
             return "Synergy"
