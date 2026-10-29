@@ -1358,6 +1358,13 @@ def _vx_find_export(game_id, label, url, cache):
     games = set()
     if isinstance(cache, pd.DataFrame) and not cache.empty and "clip_game" in cache.columns:
         games = {str(x) for x in cache.loc[cache["source_url"] == url, "clip_game"].dropna().unique()}
+    # CONFIRMED BUG (fixed; "it didn't add any film tagging for the most recent Carroll games" -- Carroll @ Elmhurst, Feb 24,
+    # was given the Wheaton @ North Park export because it was the only export dated Feb 24, so Wheaton's clips were
+    # registered as Carroll's game). With no clips of the game captured yet, an export now also has to name BOTH teams of
+    # the clip page's label ("2026-02-24 Carroll (WI) Pioneers vs Elmhurst Bluejays" -> carroll + elmhurst).
+    _lab_teams = re.split(r"\s+vs\.?\s+|\s+@\s+", re.sub(r"^\s*\d{4}-\d{2}-\d{2}\s*", "", str(label)), maxsplit=1)
+    _first = lambda t: next((w for w in re.split(r"[^a-z]+", t.lower()) if len(w) > 2 and w not in ("the", "university")), "")
+    _team_words = [w for w in (_first(t) for t in _lab_teams) if w]
     cands, seen = [], set()
     for d in [f for root in roots for f in glob.glob(os.path.join(root, "*", "Export.csv"))]:
         name = os.path.basename(os.path.dirname(d))
@@ -1367,7 +1374,12 @@ def _vx_find_export(game_id, label, url, cache):
         if " - " not in name:
             continue
         g, dt = name.rsplit(" - ", 1)
-        if dt.strip() in dates and (not games or g.strip() in games):
+        _gl = re.sub(r"[^a-z]", "", g.lower())
+        # (4-letter starts: "Washington-St. Louis" is "Wash(StLouis)" in an export name; a UWW game's label names only the
+        # opponent, so UWW itself must be in the export name)
+        _names_teams = bool(_team_words) and all(w[:4] in _gl for w in _team_words) and (
+            len(_team_words) >= 2 or "whitewater" in _gl or "www" in _gl)
+        if dt.strip() in dates and ((g.strip() in games) if games else _names_teams):
             cands.append(os.path.dirname(d))
     if len(cands) == 1 or (cands and games):
         _vx_registry({game_id: {"folder": os.path.basename(cands[0]), "found": pd.Timestamp.now().isoformat(timespec="seconds")}})
