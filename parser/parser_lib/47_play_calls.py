@@ -1664,7 +1664,7 @@ def _pl_apply_app_tags(out):
                 vocab[f].setdefault(norm(v), v)
     canon = lambda f, v: vocab.get(f, {}).get(norm(v), v)
     for c in ("situation_source", "play_actions", "trigger_actions", "screener_actions", "action_players", "action_results",
-              "coverage_detail", "defense_coverage", "tag_format", "play_title",
+              "screen_taggers", "coverage_detail", "defense_coverage", "tag_format", "play_title",
               "decode_note", "defense_type", "defense_press", "play_call", "play_series", "play_call_default"):
         if c not in out.columns:
             out[c] = None
@@ -1814,6 +1814,18 @@ def _pl_apply_app_tags(out):
                     continue                              # none, or the coach typed "No screens" (no screen to cover)
                 _dn = _jer(x.get("screen_defender"), first=True)
                 _ent.append(f"{_pl_app_screen_label(x)}: {x['coverage']}" + (f" (def #{_dn})" if _dn else ""))
+            # CONFIRMED CHANGE (requested: Film Tagging's Tagger column -- "the defender that helps on the screen actions" --
+            # in the screen-defense tables, "so you can see who helps most and how often"): every tagger of every action,
+            # with the screen and the coverage it helped on, as JSON (screen_taggers) -> uww_screen_taggers below
+            _tg = []
+            for x in _acts:
+                for _nm in [p_.strip() for p_ in str(x.get("tagger") or "").split(" / ") if p_.strip()]:
+                    _mj = re.match(r"^#(\d{1,2})\b\s*(.*)$", _nm)
+                    _tg.append({"screen": _pl_app_screen_label(x), "coverage": x.get("coverage") or None,
+                                "jersey": _mj.group(1) if _mj else _jer(_nm, first=True),
+                                "name": (_mj.group(2) if _mj else _nm) or None})
+            if _tg:
+                put("screen_taggers", json.dumps(_tg, ensure_ascii=False))
             if _ent:
                 put("coverage_detail", " | ".join(_ent))
                 put("defense_coverage", " | ".join(dict.fromkeys(str(x["coverage"]) for x in _acts if x.get("coverage")
@@ -3354,7 +3366,7 @@ PLAY_CALL_COLS = [
     "play_title", "play_call", "play_series", "play_situation", "play_formation", "play_set", "play_actions",
     "primary_action", "play_location", "finish_spot", "featured_player", "decode_quality", "decode_note",
     # Film Tagging's Actions table (requested): what started each action and what each screener did
-    "trigger_actions", "screener_actions", "action_players", "action_results",
+    "trigger_actions", "screener_actions", "action_players", "action_results", "screen_taggers",
     "synergy_play_type", "synergy_string", "on_court_lineup", "personnel_grouping_type", "game_situation",
     "shot_clock_used", "shot_clock_max", "shot_clock_situation",
     # NEW: the defense this offense faced on the clip, from the coaches' updated Title tagging (see
@@ -3919,12 +3931,86 @@ def _pl_reads(clips):
                          ascending=[True, False, True, True, False]).reset_index(drop=True)
 
 
+def _scv_taggers(clips, pairs):
+    """uww_screen_taggers -- who helps on the screens (Film Tagging's Tagger), one row per helper per screen family per
+    team: how many screens he helped on, his share of that team's tagged screens of that family, the screen he helps on
+    most, the coverages he was helping in, and the points / FG / turnovers on those possessions. A player counts once per
+    possession per screen family."""
+    if clips is None or clips.empty or "screen_taggers" not in clips.columns:
+        return pd.DataFrame()
+    book = _pl_jersey_book()
+
+    def _who(team, j, nm):
+        if j:
+            for key, names in book.items():
+                if key == team or _pl_team_label(key, {team}) == team or _pl_team_label(team, {key}) == key:
+                    if str(j) in names:
+                        return f"#{j} " + _pl_person(names[str(j)])
+            return f"#{j}" + (f" {_pl_person(nm)}" if isinstance(nm, str) and nm.strip() else "")
+        return _pl_person(nm) if isinstance(nm, str) and nm.strip() else "(no number)"
+    recs = []
+    for _, c in clips.iterrows():
+        v = c.get("screen_taggers")
+        if not isinstance(v, str) or not v.strip().startswith("["):
+            continue
+        try:
+            items = json.loads(v)
+        except Exception:
+            continue
+        seen = set()
+        for it in items:
+            scr = str(it.get("screen") or "Screen")
+            fam = "Ball screen" if scr in _PT_BALL_SCREENS else "Off-ball screen"
+            who = _who(c.get("defense_team"), it.get("jersey"), it.get("name"))
+            if (who, fam) in seen:
+                continue
+            seen.add((who, fam))
+            recs.append({"side": c.get("side"), "possession_side": c.get("possession_side"),
+                         "perspective": _SCV_PERSPECTIVE.get((c.get("side"), c.get("possession_side")), "Unknown"),
+                         "defense_team": c.get("defense_team"), "game_date": c.get("game_date"), "tagger": who,
+                         "screen_family": fam, "screen_type": scr, "coverage": it.get("coverage"),
+                         "points": c.get("points"), "result": c.get("result")})
+    if not recs:
+        return pd.DataFrame()
+    d = pd.DataFrame(recs)
+    d["_pts"] = pd.to_numeric(d["points"], errors="coerce")
+    res = d["result"].astype(str)
+    d["_fga"] = res.str.contains(r"Make|Miss", case=False).astype(int)
+    d["_fgm"] = res.str.contains(r"Make", case=False).astype(int)
+    d["_to"] = res.str.contains(r"Turnover", case=False).astype(int)
+    rows = []
+    for (side, persp, team, fam), g in d.groupby(["side", "perspective", "defense_team", "screen_family"], dropna=False):
+        tagged = 0
+        if pairs is not None and not pairs.empty and "screen_family" in pairs.columns:
+            tagged = int(((pairs["side"] == side) & (pairs["perspective"] == persp) & (pairs["defense_team"] == team)
+                          & (pairs["screen_family"] == fam)).sum())
+        tot = max(tagged, len(g))
+        for who, gw in g.groupby("tagger"):
+            known = int(gw["_pts"].notna().sum())
+            fga = int(gw["_fga"].sum())
+            cov = gw["coverage"].dropna().astype(str).value_counts()
+            rows.append({"side": side, "scouted_opponent": upcoming_opponent_short, "perspective": persp,
+                         "defense_team": team, "tagger": who, "screen_family": fam, "helps": len(gw),
+                         "games": gw["game_date"].nunique(), "team_screens": tot,
+                         "share_pct": round(100 * len(gw) / tot) if tot else None,
+                         "most_on": gw["screen_type"].value_counts().index[0],
+                         "in_coverage": " · ".join(f"{k} ({n})" if n > 1 else k for k, n in cov.items()) or None,
+                         "ppp_allowed": round(gw["_pts"].sum() / known, 2) if known else None,
+                         "fg_pct_allowed": round(100 * gw["_fgm"].sum() / fga) if fga else None,
+                         "turnovers": int(gw["_to"].sum())})
+    return pd.DataFrame(rows).sort_values(["perspective", "defense_team", "screen_family", "helps"],
+                                          ascending=[True, True, True, False]).reset_index(drop=True)
+
+
 screen_defenders = _scv_by_defender(screen_coverage)
+screen_taggers = _scv_taggers(play_calls[play_calls["side"] != "Other"] if "side" in play_calls.columns else play_calls,
+                              screen_coverage)
 _ar_src = play_calls
 if not play_calls.empty and "possession_side" in play_calls.columns:
     _ar_src = play_calls[(play_calls["side"] != "Other")]
 action_reads = _pl_reads(_ar_src)
-for _nm, _df in (("uww_screen_defenders", screen_defenders), ("uww_action_reads", action_reads)):
+for _nm, _df in (("uww_screen_defenders", screen_defenders), ("uww_action_reads", action_reads),
+                 ("uww_screen_taggers", screen_taggers)):
     try:
         _df.to_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, f"{_nm}.csv"), index=False)
     except Exception as _e:
@@ -3932,7 +4018,9 @@ for _nm, _df in (("uww_screen_defenders", screen_defenders), ("uww_action_reads"
 print(f"  screen defense by defender: {len(screen_defenders)} row(s) (defenders with {SCREEN_DEFENDER_MIN}+ tagged screens); "
       f"action reads: {len(action_reads)} row(s) from Film Tagging's Actions / Players"
       + (f" -- {action_reads['team'].nunique()} team(s), {int((action_reads['side_of_ball'] == 'Defense').sum())} defender "
-         f"reaction row(s)" if len(action_reads) else ""), flush=True)
+         f"reaction row(s)" if len(action_reads) else "")
+      + (f"; screen help (Tagger): {int(screen_taggers['helps'].sum())} help(s) by {screen_taggers['tagger'].nunique()} "
+         f"defender(s)" if len(screen_taggers) else ""), flush=True)
 
 
 # One lineup -> grouping map, exported so the game-plan cell aggregates MINUTES on exactly this rule rather

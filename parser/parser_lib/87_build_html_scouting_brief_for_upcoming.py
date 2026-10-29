@@ -1359,6 +1359,10 @@ tr.dayhead td { background: var(--warhawk-light); color: var(--warhawk-purple); 
 .ktv-sentence .src {
     margin-left: auto; flex-shrink: 0;
 }
+.ktv-sentence .ktv-right { margin-left: auto; flex-shrink: 0; display: flex; align-items: center; gap: 6px; }
+.ktv-sentence .ktv-right .src { margin-left: 0; }
+.ktv-sentence .lsn { font-size: 0.7rem; font-weight: 700; color: #fff; background: #8a6d1f; border-radius: 4px;
+  padding: 1px 6px; letter-spacing: 0.3px; }
 /* last season's seniors before a between-seasons scrimmage */
 s { opacity: 0.55; }
 .pcard.gone { opacity: 0.55; }
@@ -1721,8 +1725,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     def section_html(title):
         # (preseason / season-opener brief: every section built on last season's numbers says so)
         _b = _bt_box["bt"]
-        if _b and _b["last_season"] and not re.search(r"ROSTER|NEEDS TAGGING|METHODOLOGY|CAUTION|WHEN WE'VE PLAYED",
-                                                       str(title), re.I):
+        # (KEYS TO VICTORY: the season goes on the staff's own keys, next to their "Keys to Victory" tag -- requested)
+        if _b and _b["last_season"] and not re.search(r"ROSTER|NEEDS TAGGING|METHODOLOGY|CAUTION|WHEN WE'VE PLAYED|"
+                                                       r"KEYS TO VICTORY", str(title), re.I):
             title = f'{title} <span class="lsn">{_sb_esc(_b["season"])}</span>'
         return f'<div class="sect"><div class="t">{title}</div></div>'
 
@@ -3059,6 +3064,12 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 _sentence += f' — {_sb_esc(_reasoning)}'
             _sentence += '.</span>'
 
+            # CONFIRMED CHANGE (requested: the 2025-26 tag next to the "Keys to Victory" tags on the right instead of in the
+            # section header): the staff's keys from last season's game carry the season beside their source tag
+            _bt_k = _bt_box["bt"]
+            if _source and _bt_k and _bt_k["last_season"] and _sb_clean(k.get("source")) == "Keys to Victory":
+                _source = (f' <span class="ktv-right"><span class="lsn">{_sb_esc(_bt_k["season"])}</span>'
+                           f'{_source}</span>')
             add(f'<div class="ktv-sentence">{_sentence} {_source}</div>')   # a space: copied text reads "... reason. Data-Driven"
         add('<p class="mini">' + app_link(f"All {_ktv_total} keys with evidence and reasoning", page="upcoming", tab="keys") + "</p>")
         add("</div>")
@@ -3833,6 +3844,25 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                               f'{_sb_esc(r["screen_family"])}</td><td>{int(r["screens"])}</td>'
                               f'<td style="text-align:left">{_sb_esc(r["coverages"])}</td>'
                               f'<td>{_sb_fmt(r.get("ppp_allowed"), 2)}</td></tr>' for _, r in _sdf.iterrows())
+                    + "</tbody></table>")
+        # CONFIRMED CHANGE (requested: Film Tagging's Tagger -- the defender who helps on the screen action -- in the
+        # screen-defense tables, "so you can see who helps most and how often"): uww_screen_taggers (play-calls cell)
+        _stg = _sb_d("uww_screen_taggers")
+        if not _stg.empty and {"perspective", "scouted_opponent", "tagger"} <= set(_stg.columns):
+            _stg = _stg[(_stg["perspective"] == "Opponent defense")
+                        & (_stg["scouted_opponent"].astype(str) == str(short))].sort_values("helps", ascending=False).head(8)
+            if not _stg.empty:
+                add('<div class="pc-sub">Who helps on the screen (the tagger)</div>'
+                    '<table class="compact"><thead><tr><th style="text-align:left">Defender</th>'
+                    '<th style="text-align:left">Screen</th><th>Helped</th><th>Of their tagged screens</th>'
+                    '<th style="text-align:left">Most on</th><th style="text-align:left">In coverage</th>'
+                    '<th>PPP allowed</th></tr></thead><tbody>'
+                    + "".join(f'<tr><td class="nm">{_sb_esc(r["tagger"])}</td><td style="text-align:left">'
+                              f'{_sb_esc(r["screen_family"])}</td><td>{int(r["helps"])}</td>'
+                              f'<td>{_sb_fmt(r.get("share_pct"), 0)}%</td>'
+                              f'<td style="text-align:left">{_sb_esc(_sb_clean(r.get("most_on")))}</td>'
+                              f'<td style="text-align:left">{_sb_esc(_sb_clean(r.get("in_coverage")))}</td>'
+                              f'<td>{_sb_fmt(r.get("ppp_allowed"), 2)}</td></tr>' for _, r in _stg.iterrows())
                     + "</tbody></table>")
         add('<p class="mini">' + app_link("Every screen coverage, by defender", page="upcoming",
                                           tab="game_plan", section="screen_coverage") + "</p>")
@@ -4819,11 +4849,7 @@ else:
         _sb_tc = lambda n: " ".join(w[:1].upper() + w[1:].lower() for w in str(n).split()) if str(n) == str(n).upper() else str(n)
         _sb_who = "; ".join(f"{_sb_esc(t)}: " + ", ".join(f"<s>{_sb_esc(_sb_tc(n))}</s>" for n in v)
                             for t, v in _sb_strike["teams"].items())
-        _sb_document = _sb_document.replace(
-            '<div class="page">\n',
-            '<div class="page">\n<div class="strike-note">\u2702\ufe0f This game is after the '
-            f'{_sb_esc(_sb_strike["season"] or "last")} season, so that season\u2019s seniors are struck through '
-            f'(and anything only about them) &mdash; {_sb_who}.</div>\n', 1)
+        # (requested: no "struck through" note at the top -- the SEASON OPENER / PRESEASON box says it)
         print(f"Struck through {len(_sb_strike['seniors'])} {_sb_strike['season']} senior(s) -- this game is after "
               "that season: " + "; ".join(f"{t}: {', '.join(_sb_tc(n) for n in v)}" for t, v in _sb_strike["teams"].items())
               + ". (STRIKE_LAST_SEASON_SENIORS / STRIKE_SENIORS_KEEP in the notebook cell.)")

@@ -4855,6 +4855,20 @@ def render_screen_coverage(short_opponent: str, default_view: str = "Opponent de
                 "defense_team": "Team", "defender": "Defender", "screen_family": "Screen", "screens": "Tagged",
                 "coverages": "How he plays it", "ppp_allowed": "PPP allowed", "fg_pct_allowed": "FG% allowed",
                 "turnovers": "TO"}), hide_index=True, use_container_width=True)
+    # CONFIRMED CHANGE (requested): who helps on the screens -- Film Tagging's Tagger column (uww_screen_taggers, built
+    # in the parser's play-calls cell): how many screens each defender helped on and his share of the team's tagged screens
+    stg = load_table("uww_screen_taggers")
+    if not stg.empty and {"perspective", "scouted_opponent", "tagger"} <= set(stg.columns):
+        stg = stg[(stg["perspective"] == view) & (stg["scouted_opponent"].astype(str) == str(short_opponent))]
+        if not stg.empty:
+            st.markdown("**Who helps on the screen** -- the tagger from Film Tagging, most helps first")
+            st.dataframe(stg.sort_values("helps", ascending=False)[
+                ["defense_team", "tagger", "screen_family", "helps", "team_screens", "share_pct", "most_on", "in_coverage",
+                 "ppp_allowed", "fg_pct_allowed", "turnovers"]].rename(columns={
+                "defense_team": "Team", "tagger": "Helper", "screen_family": "Screen", "helps": "Helped",
+                "team_screens": "Team's tagged screens", "share_pct": "% of them", "most_on": "Most on",
+                "in_coverage": "In coverage", "ppp_allowed": "PPP allowed", "fg_pct_allowed": "FG% allowed",
+                "turnovers": "TO"}), hide_index=True, use_container_width=True)
     dfd = part[part["level"] == "Defender x screen x coverage"].copy()
     if not dfd.empty:
         with st.expander("By defender, screen by screen", expanded=False):
@@ -7127,7 +7141,13 @@ _FT_BALL_RX = re.compile(r"ball screen|p&r|pick|dho|hand ?off|\bget\b|drag|pisto
 # trigger_defender_action (on-ball), screen_defender, screen_defender_action (off-ball) -- the same fields as before, so
 # everything that reads them keeps working; plus "players" (ball handler + screener matchups) for the reads table.
 _FT_O_COLS = ["#", "Action", "Trigger Player", "Trigger Action", "Screener", "Screener Action"]
-_FT_D_COLS = ["#", "Coverage", "On-Ball Defender", "On-Ball Action", "Off-Ball Defender", "Off-Ball Action"]
+# CONFIRMED CHANGE (requested: "the Coverage column removed, On-Ball Action renamed On-Ball Coverage, Off-Ball Action renamed
+# Off-Ball Coverage, and a Tagger column -- a dropdown of defenders -- because it is the defender that helps on the screen
+# actions"). The saved fields stay: trigger_defender_action = on-ball coverage, screen_defender_action = off-ball coverage,
+# plus "tagger" (the help defender). "coverage" (the team's coverage -- what the parser and the automatic Title read) is
+# now the off-ball coverage, else the on-ball one. A play saved with the old Coverage column opens with that coverage in
+# the off-ball column (or the on-ball one for Over / Under / Through / Ice ...).
+_FT_D_COLS = ["#", "On-Ball Defender", "On-Ball Coverage", "Off-Ball Defender", "Off-Ball Coverage", "Tagger"]
 _FT_O_TEXT = _FT_O_COLS[1:]
 _FT_D_TEXT = _FT_D_COLS[1:]
 _FT_ROLE_TRIGGER, _FT_ROLE_SCREENER = "Ball handler (trigger)", "Screener"
@@ -7146,6 +7166,28 @@ _FT_ONBALL_DID = ["Over", "Under", "Through", "Ice (push)", "Switch", "Trap (bli
 _FT_OFFBALL_DID = ["Drop", "Flat Hedge", "High Hedge", "Hard Hedge (show)", "At level (up to touch)", "Switch",
                    "Trap (blitz)", "Recover", "Late", "Tag the roller", "Top lock", "Trail", "Chase", "Stay home", "Rotate",
                    "X-out", "Contest", "Foul", "Beaten"]
+_FT_ONBALL_COV_RX = re.compile(r"^\W*(over|under|through|ice|go over|go under|chase|caught)\b", re.I)
+
+
+def _ft_def_row(r, n=None):
+    """One Defense row in the current columns from a row in any older shape (Coverage / On-Ball Action / Off-Ball Action /
+    Screen defender)."""
+    g = lambda *ks: next((r.get(k) for k in ks if _ft_clean(r.get(k))), "") or ""
+    on = g("On-Ball Coverage", "On-Ball Action")
+    off = g("Off-Ball Coverage", "Off-Ball Action")
+    cov = _ft_clean(r.get("Coverage"))
+    if cov and _ft_unmark(cov) not in (_ft_unmark(on), _ft_unmark(off)):
+        if _FT_ONBALL_COV_RX.search(_ft_unmark(cov)) and not on:
+            on = cov
+        elif not off:
+            off = cov
+        elif not on:
+            on = cov
+    return {"#": r.get("#") if n is None else n, "On-Ball Defender": g("On-Ball Defender"), "On-Ball Coverage": on,
+            "Off-Ball Defender": g("Off-Ball Defender", "Screen defender"), "Off-Ball Coverage": off,
+            "Tagger": g("Tagger")}
+
+
 _FT_TRIGGER_RX = re.compile(r"trigger|ball ?handler", re.I)
 _FT_SCREENER_RX = re.compile(r"^\s*screener\b", re.I)
 
@@ -7329,9 +7371,7 @@ def _ft_template_state(rows=None):
         off.append({"#": n, "Action": r.get("Action") or "", "Trigger Player": r.get("Trigger") or "",
                     "Trigger Action": r.get("Trigger action") or "", "Screener": r.get("Screener") or "",
                     "Screener Action": r.get("Screener action") or ""})
-        de.append({"#": n, "Coverage": r.get("Coverage") or "", "On-Ball Defender": r.get("On-Ball Defender") or "",
-                   "On-Ball Action": r.get("On-Ball Action") or "", "Off-Ball Defender": r.get("Screen defender") or "",
-                   "Off-Ball Action": r.get("Off-Ball Action") or ""})
+        de.append(_ft_def_row(r, n))
     return {"offense": off, "defense": de}
 
 
@@ -7350,7 +7390,7 @@ def _ft_as_state(v):
     """Whatever the store holds for a play's tables -> {"offense": [...], "defense": [...]} (older shapes too: the one-table
     list, and the Actions / Players tables of the week before)."""
     if isinstance(v, dict) and "offense" in v:
-        return v
+        return {"offense": v.get("offense") or [], "defense": [_ft_def_row(r) for r in v.get("defense") or []]}
     if isinstance(v, dict) and "actions" in v:              # Actions / Players tables -> rebuilt from their saved fields
         rows = []
         for a in _ft_state_actions_ap(v):
@@ -7358,7 +7398,7 @@ def _ft_as_state(v):
                          "Screener": a.get("screener"), "Screener action": a.get("screener_action"),
                          "Coverage": a.get("coverage"), "Screen defender": a.get("screen_defender"),
                          "On-Ball Defender": a.get("trigger_defender"), "On-Ball Action": a.get("trigger_defender_action"),
-                         "Off-Ball Action": a.get("screen_defender_action")})
+                         "Off-Ball Action": a.get("screen_defender_action"), "Tagger": a.get("tagger")})
         return _ft_template_state(rows) if rows else {"offense": [], "defense": []}
     return _ft_template_state(list(v or [])) if v else {"offense": [], "defense": []}
 
@@ -7425,13 +7465,15 @@ def _ft_state_actions(state):
         trigger_action=_ft_unmark(r["Trigger Action"]) or None, screener=_ft_unlab(r["Screener"]) or None,
         screener_action=_ft_unmark(r["Screener Action"]) or None))
     _put(st_["defense"], lambda a, r: a.update(
-        coverage=_ft_unmark(r["Coverage"]) or None, trigger_defender=_ft_unlab(r["On-Ball Defender"]) or None,
-        trigger_defender_action=_ft_unmark(r["On-Ball Action"]) or None,
+        coverage=_ft_unmark(r["Off-Ball Coverage"]) or _ft_unmark(r["On-Ball Coverage"]) or None,
+        trigger_defender=_ft_unlab(r["On-Ball Defender"]) or None,
+        trigger_defender_action=_ft_unmark(r["On-Ball Coverage"]) or None,
         screen_defender=_ft_unlab(r["Off-Ball Defender"]) or None,
-        screen_defender_action=_ft_unmark(r["Off-Ball Action"]) or None))
+        screen_defender_action=_ft_unmark(r["Off-Ball Coverage"]) or None,
+        tagger=_ft_unlab(r["Tagger"]) or None))
     out = []
     keys = ("action", "trigger", "trigger_action", "screener", "screener_action", "coverage", "trigger_defender",
-            "trigger_defender_action", "screen_defender", "screen_defender_action")
+            "trigger_defender_action", "screen_defender", "screen_defender_action", "tagger")
     for k, n in enumerate(sorted(acts), 1):
         a = {f: acts[n].get(f) for f in keys}
         a["order"] = k
@@ -7493,16 +7535,19 @@ def _ft_actions_editor(d, pi, store, kp):
                                                           cur_vals("offense", "Screener Action")),
                                                help="What the screener did after the screen: Roll, Pop, Slip, ...")}
     d_cfg = {"#": _numcol(),
-             "Coverage": _ft_choice_col("Coverage", opt(voc.get("ball_screen_coverage"), voc.get("offball_coverage"),
-                                                        _FT_EXTRA_COVERAGES, cur_vals("defense", "Coverage")),
-                                        help="The defense's coverage of this action (the team's plan)", width="medium"),
              "On-Ball Defender": _defp("On-Ball Defender", "The defender guarding the trigger / ball handler"),
-             "On-Ball Action": _ft_choice_col("On-Ball Action", keep_first(_FT_ONBALL_DID, cur_vals("defense", "On-Ball Action")),
-                                              help="What the on-ball defender did: Over, Under, Through, Ice, Switch, ..."),
+             "On-Ball Coverage": _ft_choice_col("On-Ball Coverage",
+                                                keep_first(_FT_ONBALL_DID, voc.get("ball_screen_coverage"),
+                                                           cur_vals("defense", "On-Ball Coverage")),
+                                                help="How the on-ball defender played it: Over, Under, Through, Ice, Switch, ..."),
              "Off-Ball Defender": _defp("Off-Ball Defender", "The defender guarding the screener (the screen defender)"),
-             "Off-Ball Action": _ft_choice_col("Off-Ball Action", keep_first(_FT_OFFBALL_DID, cur_vals("defense", "Off-Ball Action")),
-                                               help="What the off-ball defender did: Drop, Flat / High / Hard Hedge, Switch, "
-                                                    "Blitz, Tag, ...")}
+             "Off-Ball Coverage": _ft_choice_col("Off-Ball Coverage",
+                                                 keep_first(_FT_OFFBALL_DID, _FT_EXTRA_COVERAGES, voc.get("offball_coverage"),
+                                                            cur_vals("defense", "Off-Ball Coverage")),
+                                                 help="How the screener's defender played it: Drop, Flat / High / Hard Hedge, "
+                                                      "Switch, Blitz, ..."),
+             "Tagger": _defp("Tagger", "The defender who helps on the screen action (tags the roller / helps from the "
+                                       "weak side)")}
     # CONFIRMED CHANGE (requested: remove the long description above every play's Actions table -- keep only a small
     # italic line with the unsure answers)
     _uns = _ft_auto_parts(pl)[1]
@@ -7721,11 +7766,12 @@ def _ft_seed_from_saves(d, store, kp):
             _so.append({"#": n, "Action": _mk(r.get("action")), "Trigger Player": _labs(pl, r.get("trigger"), "offense"),
                         "Trigger Action": _mk(r.get("trigger_action")), "Screener": _labs(pl, r.get("screener"), "offense"),
                         "Screener Action": _mk(r.get("screener_action"))})
-            _sd.append({"#": n, "Coverage": _mk(r.get("coverage")),
-                        "On-Ball Defender": _labs(pl, r.get("trigger_defender"), "defense"),
-                        "On-Ball Action": _mk(r.get("trigger_defender_action")),
-                        "Off-Ball Defender": _labs(pl, r.get("screen_defender"), "defense"),
-                        "Off-Ball Action": _mk(r.get("screen_defender_action"))})
+            _sd.append(_ft_def_row({"Coverage": _mk(r.get("coverage")),
+                                    "On-Ball Defender": _labs(pl, r.get("trigger_defender"), "defense"),
+                                    "On-Ball Coverage": _mk(r.get("trigger_defender_action")),
+                                    "Off-Ball Defender": _labs(pl, r.get("screen_defender"), "defense"),
+                                    "Off-Ball Coverage": _mk(r.get("screen_defender_action")),
+                                    "Tagger": _labs(pl, r.get("tagger"), "defense")}, n))
         store[key] = {"offense": _so, "defense": _sd}
         seeded.add(pi)
     res = (len(seeded), str(docs[-1].get("saved", ""))[:16].replace("T", " ") if docs else "")
@@ -10094,11 +10140,7 @@ def render_upcoming_game():
                         _col.dataframe(_t, hide_index=True, use_container_width=True)
                     st.caption("This season's numbers are a few games -- small samples. Last season's box-score lines are "
                                "only there for teams we scouted last season; records and scoring come from the schedules.")
-    if _sk_plan:
-        _sk_who = "; ".join(f"{html.escape(t)}: " + ", ".join(f"~~{_title_name(n)}~~" for n in v)
-                            for t, v in _sk_plan["teams"].items())
-        st.caption(f"\u2702\ufe0f This game is after the {_sk_plan['season'] or 'last'} season, so that season's "
-                   f"seniors are struck through on this page (and any line only about them) -- {_sk_who}.")
+    # (requested: no "struck through" caption -- the SEASON OPENER / PRESEASON box says it)
     # CONFIRMED CHANGE (requested, film-tracking review): say up front how much film is on file for this opponent and
     # for us, and how much of it can be trusted (players named, court placed) -- from the parser's uww_film_quality.csv
     try:

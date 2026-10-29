@@ -156,7 +156,18 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
         else:
             _buf = _pm_io.StringIO()
             _disp = G.get("display")
-            G["display"] = lambda *a, **k: _buf.write("".join(str(x) for x in a) + "\n")   # tables go to the log too
+            _to_log = lambda *a, **k: _buf.write("".join(str(x) for x in a) + "\n")       # tables go to the log too
+            G["display"] = _to_log
+            # CONFIRMED BUG (fixed; "I'm still getting some printouts of tables in the parser_brief"): _show() (01) draws
+            # tables with IPython's own display(), imported inside the call -- that bypassed the swap above and went
+            # straight to the notebook. IPython's display() is swapped too while a quiet cell runs.
+            _ipy_mods, _ipy_old = [], []
+            for _mn in ("IPython.display", "IPython.core.display_functions", "IPython.core.display"):
+                _m = _pm_sys.modules.get(_mn)
+                if _m is not None and hasattr(_m, "display"):
+                    _ipy_mods.append(_m)
+                    _ipy_old.append(_m.display)
+                    _m.display = _to_log
             try:
                 with _pm_ctx.redirect_stdout(_buf), _pm_ctx.redirect_stderr(_buf):
                     exec(compile(code, f"<{notebook} cell {ci}>", "exec"), G)
@@ -166,6 +177,8 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
                 _real_out.flush()
                 raise
             finally:
+                for _m, _o in zip(_ipy_mods, _ipy_old):
+                    _m.display = _o
                 if _disp is not None:
                     G["display"] = _disp
                 else:

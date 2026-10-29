@@ -239,11 +239,11 @@ def _ktv_shot_looks(shots, min_attempts=8):
 
 def _ktv_shot_stat_line(row, baseline_ppa=None):
     parts = [
-        f"{int(row['Makes'])}/{int(row['Attempts'])} ({row['FG%']:.0f}% FG, {row['eFG%']:.0f}% eFG)",
+        f"{int(row['Makes'])}/{int(row['Attempts'])} \u00b7 {row['FG%']:.0f}% FG \u00b7 {row['eFG%']:.0f}% eFG",
         f"{row['PPA']:.2f} pts/attempt",
     ]
     if baseline_ppa:
-        parts.append(f"{row['PPA'] - baseline_ppa:+.2f} vs all looks ({baseline_ppa:.2f})")
+        parts.append(f"{row['PPA'] - baseline_ppa:+.2f} vs all looks")
     parts.append(f"{row['Share']:.0f}% of attempts")
     # CONFIRMED BUG (fixed here): printed "100% from three", which reads as a make rate and sat next to
     # "50% FG" on the same line. ThreeRate is the SHARE of these attempts that are threes.
@@ -422,8 +422,7 @@ def _ktv_top_play_text(rows, suffix=""):
     top, n = counts.index[0], int(counts.iloc[0])
     if n < _KTV_MIN_PLAY_CALLS or (n / len(calls)) < _KTV_MIN_PLAY_SHARE:
         return None
-    return (f"Usually comes off {top}{suffix} "
-            f"({n} of {len(calls)} tagged possessions this season)")
+    return f"Usually comes off {top}{suffix}"
 
 
 # --- lineup profile matching (ported from lineup_profile / profile_distance / counter_lineups) ----------
@@ -673,7 +672,7 @@ try:
                      f"Attack {_ktv_short}'s {_ktv_last_names(_worst.iloc[0]['lineup'])} lineup",
                      "\n".join(_lines),
                      f"{_ktv_short}'s most exploitable units: their worst net-rating lineups with real "
-                     f"minutes this season ({_KTV_OPP_LU_MIN_MINUTES:.0f}+ min, losing their minutes), and "
+                     f"minutes this season that are losing their minutes, and "
                      f"the lineups that give the ball away most per 40 "
                      f"minutes. The headline names the worst of them.",
                      "Lineup Scouting", "Personnel",
@@ -700,7 +699,7 @@ try:
     if _matched is not None and not _matched.empty:
         _rows = list(_matched.head(3).iterrows())
         _caption = "\n".join(
-            f"{_r['rate']:+.2f}/min ({_r['net']:+.0f} in {_r['MIN']:.1f} min) \u2014 {_ktv_last_names(_r['uww_lineup'])}"
+            f"{_r['rate']:+.2f}/min \u2014 {_ktv_last_names(_r['uww_lineup'])}"
             for _, _r in _rows)
         _reason = [f"UWW's best net margin against opponent units that resemble {_ktv_short}'s most-used "
                    f"lineup ({_ktv_last_names(_target)})."]
@@ -822,7 +821,7 @@ try:
                      f"Attack {_ktv_short}'s {_ktv_last_names(_worst3.iloc[0]['lineup'])} combo",
                      "\n".join(_lines),
                      f"{_ktv_short}'s most exploitable 3-man combinations: their worst net-rating units "
-                     f"with real minutes this season ({_KTV_OPP_3MAN_MIN_MINUTES:.0f}+ min).",
+                     f"with real minutes this season.",
                      "Lineup Scouting", "Personnel",
                      impact=-_worst3.iloc[0]['+/-'] / max(_worst3.iloc[0]['MIN'], 1) * 40 / 20, confidence=_worst3.iloc[0]['MIN'] / 40)
 
@@ -845,10 +844,9 @@ try:
         if not _best3.empty:
             _lines = [
                 f"{_ktv_last_names(_r['lineup'])}: {_r['shrunk_per40']:+.1f} per 40 after shrinkage "
-                f"({_r['per40']:+.1f} raw) \u00b7 on/off {_r['on_off']:+.1f} \u00b7 {_r['clean_min']:.0f} competitive "
+                f"\u00b7 on/off {_r['on_off']:+.1f} \u00b7 {_r['clean_min']:.0f} competitive "
                 f"min in {int(_r['clean_gp'])} games"
-                + (f" ({_r['garbage_min']:.0f} garbage-time min set aside)" if _r["garbage_min"] >= 1
-                   else " (0 garbage-time min found)" if _garbage_excludable else
+                + ("" if _garbage_excludable or _r["garbage_min"] >= 1 else
                    " \u26a0\ufe0f GARBAGE TIME NOT EXCLUDED -- stints have no start position; these minutes "
                    "may include blowout stretches")
                 + (f"; {int(_r['_same_as'])} other trio(s) have identical numbers -- they only ever played "
@@ -1071,7 +1069,7 @@ try:
                 if not _lu_rows.empty:
                     _lu_vc = _lu_rows["on_court_lineup"].astype(str).value_counts()
                     if len(_lu_vc):
-                        _lineup_txt = f"Runs it most: {_ktv_last_names(_lu_vc.index[0])} ({int(_lu_vc.iloc[0])}x)"
+                        _lineup_txt = f"Runs it most: {_ktv_last_names(_lu_vc.index[0])}"
             _play_txt = _ktv_top_play_text(_best_clips) if not _best_clips.empty else None
             _play_name = _ktv_top_play_name(_best_clips) if not _best_clips.empty else None
             # CONFIRMED CHANGE (coach: keys must read as a plain sentence). The brief prints HEADLINE -- REASONING;
@@ -1080,7 +1078,7 @@ try:
             _ktv_add("\U0001f3c0", f"Feature our best look: {_best['name']}",
                      "\n".join(p for p in (
                          f"Us: {_best['ppp_us']:.2f} PPP on {int(_best['uses_us'])} tagged possessions this season "
-                         f"(team average {_our_avg_ppp:.2f})",
+                         f"vs our {_our_avg_ppp:.2f} average",
                          f"Them: opponents scored {_best['ppp_them']:.2f} PPP running this against {_ktv_short} on "
                          f"{int(_best['uses_them'])} tagged possessions", _lineup_txt, _play_txt) if p),
                      f"We score {_best['ppp_us']:.2f} a possession on it and {_ktv_short} gives up "
@@ -1149,14 +1147,14 @@ try:
                         _qual = _lu[_lu["Attempts"] >= _KTV_LOOK_LINEUP_MIN_ATTEMPTS]
                         if not _qual.empty:
                             _top_fg = _qual.sort_values(["FG%", "Attempts"], ascending=False).head(3)
-                            _lineup_txt = "\n".join([f"Best on this shot ({_KTV_LOOK_LINEUP_MIN_ATTEMPTS}+ attempts):"] + [
+                            _lineup_txt = "\n".join(["Best on this shot:"] + [
                                 f"\u2022 {_ktv_last_names(_r['uww_lineup'])} {int(_r['Makes'])}/"
-                                f"{int(_r['Attempts'])} ({_r['FG%']:.0f}%)" for _, _r in _top_fg.iterrows()])
+                                f"{int(_r['Attempts'])} \u00b7 {_r['FG%']:.0f}%" for _, _r in _top_fg.iterrows()])
                         _top_vol = _lu.sort_values(["Attempts", "FG%"], ascending=False).head(3)
                         if not _top_vol.empty:
                             _volume_txt = "\n".join(["Runs it most:"] + [
                                 f"\u2022 {_ktv_last_names(_r['uww_lineup'])} {int(_r['Attempts'])}x "
-                                f"({_r['FG%']:.0f}%)" for _, _r in _top_vol.iterrows()])
+                                f"\u00b7 {_r['FG%']:.0f}%" for _, _r in _top_vol.iterrows()])
                 _play_txt = _ktv_top_play_text(_match, suffix=" for us")
 
             _parts = [p for p in (_lineup_txt, _volume_txt, _play_txt) if p]
@@ -1246,7 +1244,7 @@ try:
         if not _theirs_half.empty:
             _t = _theirs_half.iloc[0]
             _who, _act = _ktv_set_finisher(_t), _ktv_set_action(_t)
-            _lead = f"Their most-called half-court set ({int(_t['uses'])} times in {int(_t['games'])} games)."
+            _lead = "Their most-called half-court set."   # (requested: no "(22 times in 1 games)" -- the counts are in the evidence)
             if _who and _act:
                 _do = f"{_who} finishes it most, usually off the {_act} -- take away the {_act} and make someone else beat us."
             elif _who:
@@ -1259,15 +1257,15 @@ try:
             _second = _theirs_half.iloc[1] if len(_theirs_half) > 1 else None
             _ev_lines = [
                 f"{int(_t['uses'])} uses in {int(_t['games'])} games"
-                + (f" · {_t['ppp']:.2f} PPP (their overall {_t['team_ppp']:.2f})" if pd.notna(_t.get("ppp")) and pd.notna(_t.get("team_ppp")) else "")
+                + (f" · {_t['ppp']:.2f} PPP vs their {_t['team_ppp']:.2f} overall" if pd.notna(_t.get("ppp")) and pd.notna(_t.get("team_ppp")) else "")
                 + (f" · {int(_t['fgm'])}/{int(_t['fga'])} FG" if int(_t.get("fga") or 0) else "")
                 + (f" · {int(_t['turnovers'])} TO" if int(_t.get("turnovers") or 0) else ""),
-                f"Finished most by {_t['top_player']} ({int(_t['top_player_uses'])}x)" if _who else "",
+                f"Finished most by {_t['top_player']}" if _who else "",
                 f"Built on: {_t['top_action']}" if _act else "",
                 f"Usually run to the {_t['top_location'].lower()}" if isinstance(_t.get("top_location"), str) else "",
-                f"Next most-called: {_second['name']} ({int(_second['uses'])} uses)" if _second is not None else "",
-                (f"Busiest inbounds set: {_theirs_oob.iloc[0]['name']} ({int(_theirs_oob.iloc[0]['uses'])} uses"
-                 + (f", {_theirs_oob.iloc[0]['ppp']:.2f} PPP)" if pd.notna(_theirs_oob.iloc[0].get('ppp')) else ")")
+                f"Next most-called: {_second['name']}" if _second is not None else "",
+                (f"Busiest inbounds set: {_theirs_oob.iloc[0]['name']}"
+                 + (f" \u00b7 {_theirs_oob.iloc[0]['ppp']:.2f} PPP" if pd.notna(_theirs_oob.iloc[0].get('ppp')) else "")
                  if not _theirs_oob.empty else ""),
                 f"Tagged as: {_t['example_titles']}" if isinstance(_t.get("example_titles"), str) else ""]
             _ev = "\n".join(x for x in _ev_lines if x)
@@ -1282,7 +1280,7 @@ try:
                 _ew = _ktv_set_finisher(_e)
                 _ktv_add("\U0001f4cb", f"Know their best set: {_e['name']}",
                          f"{_e['ppp']:.2f} PPP on {int(_e['uses'])} uses vs {_e['team_ppp']:.2f} overall"
-                         + (f"\nFinished most by {_e['top_player']} ({int(_e['top_player_uses'])}x)" if _ew else ""),
+                         + (f"\nFinished most by {_e['top_player']}" if _ew else ""),
                          "Their most productive set -- recognize the alignment and call it out before the action starts"
                          + (f"; {_ew} is usually the one finishing it." if _ew else "."),
                          "Data-Driven", "Defense",
@@ -1295,7 +1293,7 @@ try:
             _ktv_add("\U0001f4cb", f"Call our best set: {_o['name']}",
                      f"{_o['ppp']:.2f} PPP on {int(_o['uses'])} uses vs our {_o['team_ppp']:.2f} overall"
                      + (f" · {int(_o['fgm'])}/{int(_o['fga'])} FG" if int(_o.get("fga") or 0) else "")
-                     + (f"\nFinished most by {_o['top_player']} ({int(_o['top_player_uses'])}x)" if _ow else ""),
+                     + (f"\nFinished most by {_o['top_player']}" if _ow else ""),
                      "Our most productive set this season -- go to it when we need a good look"
                      + (f", with {_ow} finishing." if _ow else "."),
                      "Data-Driven", "Offense",
@@ -1362,13 +1360,12 @@ try:
                                           if _oreb_n else None, "paired": len(_their), "player": _pl,
                                           "count": int(_c)})
             if len(_their) >= _R["min_paired"] and _oreb_pct >= _R["crash_rate"]:
-                _who = ", ".join(f"{p} ({int(c)})" for p, c in _crashers.head(2).items())
+                _who = ", ".join(str(p) for p in _crashers.head(2).index)
                 _vs_us = (f" -- we usually allow {_our_dreb_allowed_base:.0f}%, so this is "
                           f"{'well above' if _oreb_pct - _our_dreb_allowed_base >= 8 else 'above'} our norm"
                           if _our_dreb_allowed_base is not None else "")
                 _ktv_add("", "Finish every defensive possession with a box-out",
-                         f"They grab {_oreb_pct:.0f}% of their own misses ({_oreb_n} of {len(_their)} paired "
-                         f"misses in their play-by-play){_vs_us}" + (f"; most by {_who}." if _who else "."),
+                         f"They grab {_oreb_pct:.0f}% of their own misses{_vs_us}" + (f"; most by {_who}." if _who else "."),
                          f"They get {_oreb_pct:.0f}% of their own misses back -- a stop isn't a stop until we "
                          "secure the rebound"
                          + (f"; find {_crashers.index[0]} on every shot." if len(_crashers) else "."),
@@ -1385,8 +1382,7 @@ try:
                 _vs_us2 = (f" -- we usually get {_our_oreb_base:.0f}% ourselves, so this is a real opening"
                           if _our_oreb_base is not None and (100 - _dreb_pct) - _our_oreb_base >= 8 else "")
                 _ktv_add("", "Send an extra body to the offensive glass",
-                         f"Opponents rebound {100 - _dreb_pct:.0f}% of their own misses against them "
-                         f"({int(_opp['offensive'].sum())} of {len(_opp)} paired misses){_vs_us2}.",
+                         f"Opponents rebound {100 - _dreb_pct:.0f}% of their own misses against them{_vs_us2}.",
                          f"They secure only {_dreb_pct:.0f}% of defensive boards -- our misses are live balls. "
                          "Crash with a fourth man when the shot goes up from the perimeter.",
                          "Data-Driven", "Offense",
