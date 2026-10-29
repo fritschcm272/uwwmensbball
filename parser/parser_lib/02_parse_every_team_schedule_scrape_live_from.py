@@ -166,6 +166,11 @@ def scouted_opponents_for(team_name, scout_files):
 # assumed. _DEFAULT_SEASON_START_YEAR is kept as a fallback ONLY for the rare case a page's season
 # text can't be found/parsed, so a run never hard-fails over this specifically.
 _DEFAULT_SEASON_START_YEAR = 2025
+# CONFIRMED CHANGE (season switch, 00b_season_switch): the run's season (SEASON_START_YEAR) is the default and the
+# FastScout season code for the live pages -- a new season's first run has no saved schedule to read it from yet.
+if globals().get("SEASON_START_YEAR"):
+    _DEFAULT_SEASON_START_YEAR = int(SEASON_START_YEAR)
+    FASTSCOUT_DOCS_SEASON = f"{int(SEASON_START_YEAR) % 100:02d}"
 
 def extract_season_start_year(soup, fallback=None):
     """Read a FastScout team page's own season-selector text (e.g. "2025-2026") directly off the page,
@@ -636,10 +641,31 @@ if not (synergy_username and synergy_password):
     )
 
 
+def _this_season_file(path):
+    """CONFIRMED BUG (fixed with the season switch): a saved page with ANOTHER season's "_<year>" suffix
+    ("UW-Whitewater - Schedule_2023.html", kept for head-to-head) must never be taken as this season's -- once this
+    season's own page is saved as "..._2026.html", "..._2023.html" sorted first and would have been picked."""
+    m = re.search(r"_(\d{4})\.m?html$", os.path.basename(str(path)), re.IGNORECASE)
+    yr = globals().get("SEASON_START_YEAR")
+    return not (m and yr and int(m.group(1)) != int(yr))
+
+
+def _schedule_fresh(path):
+    """CONFIRMED CHANGE (season switch): during the season being played (after the switch) a saved schedule is only
+    reused for SCHEDULE_REFRESH_HOURS (12) -- then it's read live again so new results come in. A finished season's
+    saved schedules are always reused (the original "captured once is enough" rule)."""
+    if not path or not os.path.exists(path):
+        return False
+    if not globals().get("LAST_SEASON"):
+        return True
+    return (time.time() - os.path.getmtime(path)) < 3600 * float(globals().get("SCHEDULE_REFRESH_HOURS", 12))
+
+
 def find_backup_mhtml(opponent_name, schedules_dir):
     """Find a saved schedule snapshot for this opponent in schedules_dir, matched loosely by name -- either a
     genuine ".mhtml" export or this notebook's own live-scrape ".html" cache (see _save_scraped_html)."""
-    for path in sorted(glob.glob(f"{schedules_dir}/*.mhtml") + glob.glob(f"{schedules_dir}/*.html")):
+    for path in sorted(p for p in glob.glob(f"{schedules_dir}/*.mhtml") + glob.glob(f"{schedules_dir}/*.html")
+                       if _this_season_file(p)):
         base = re.sub(r"(_schedule(?:_\d{4})?\.(mhtml|html)$|\s*-\s*Schedule(?:_\d{4})?\.(mhtml|html)$)", "", os.path.basename(path), flags=re.IGNORECASE)
         if base.lower() in opponent_name.lower():
             return path
@@ -765,7 +791,8 @@ def close_fastscout_session():
 #    resolves to whichever team the logged-in account belongs to -- no need to know UWW's own team id), the
 #    same live-scrape-with-MHTML-backup pattern already used for every opponent below. Falls back to the
 #    local MHTML snapshot if no credentials are set or the live scrape fails for any reason.
-uww_mhtml_path = next((p for p in schedule_mhtml_paths if "whitewater" in os.path.basename(p).lower()), None)
+uww_mhtml_path = next((p for p in schedule_mhtml_paths if "whitewater" in os.path.basename(p).lower()
+                       and _this_season_file(p)), None)
 
 # CONFIRMED BUG (fixed here): FASTSCOUT_DOCS_SEASON was hardcoded to "25" (the 2025-26 season) in every
 # live-scrape URL used to auto-download a missing scout report -- meaning the "Documents" page those
@@ -805,7 +832,7 @@ if fastscout_username and fastscout_password:
     # check), just using uww_mhtml_path (already resolved above via the same "whitewater" filename match)
     # instead of re-deriving it. Confirmed by the user: once a schedule has been captured once, there's no
     # need to pay for a fresh (slow, resource-heavy) live scrape on every subsequent run.
-    if uww_mhtml_path is not None:
+    if uww_mhtml_path is not None and _schedule_fresh(uww_mhtml_path):
         print(f"Skipping live scrape for UW-Whitewater's own schedule -- a local schedule file already exists: {os.path.basename(uww_mhtml_path)}")
     else:
         try:
@@ -1320,6 +1347,17 @@ def _extra_find_team_url(name):
     return url, txt
 
 
+def _extra_note(g):
+    """What the brief / app show in place of the game's placeholder date. CONFIRMED CHANGE (requested: "the Carroll game is
+    the first game of the 2026-2027 year so the brief shouldn't say 'game, real date Nov 7, 2026'"): a real game shows its
+    date ("Sat, Nov 7, 2026"); a scrimmage / exhibition still says so ("scrimmage, real date Oct 30, 2026")."""
+    kind = str(g.get("type") or "scrimmage").strip()
+    rd = pd.to_datetime(g.get("real_date"), errors="coerce") if g.get("real_date") else None
+    if re.search(r"scrimmage|exhibition", kind, re.I) or rd is None or pd.isna(rd):
+        return kind + (f", real date {g['real_date']}" if g.get("real_date") else "")
+    return f"{rd:%a}, {rd:%b} {rd.day}, {rd.year}"
+
+
 def _add_extra_games(uww_sched):
     games = [g for g in (globals().get("EXTRA_GAMES") or []) if g and g.get("opponent")]
     if not games:
@@ -1362,8 +1400,8 @@ def _add_extra_games(uww_sched):
     row.update({"date": date_txt, "opponent": g["opponent"], "team": uww_sched["team"].iloc[0] if len(uww_sched) else "UW-Whitewater",
                 "location": g.get("location") or "Neutral", "opponent_url": url, "game_url": None, "video_url": None,
                 "season": f"{uww_season_start_year}-{str(uww_season_start_year + 1)[-2:]}", "Upcoming": "Yes",
-                "game_type": g.get("type") or "scrimmage", "note": g.get("note") or (
-                    f"{g.get('type') or 'scrimmage'}" + (f", real date {g['real_date']}" if g.get("real_date") else ""))})
+                "game_type": g.get("type") or "scrimmage", "note": g.get("note") or _extra_note(g),
+                "real_date": g.get("real_date")})
     # a real game that would have been "upcoming" at reference_date isn't played yet -- it's dropped, the extra game is next
     out = uww_sched[uww_sched["Upcoming"] != "Yes"].copy() if "Upcoming" in uww_sched.columns else uww_sched.copy()
     out["Upcoming"] = "No"
@@ -1376,7 +1414,95 @@ def _add_extra_games(uww_sched):
     return out
 
 
+def _new_season_check(uww_sched):
+    """CONFIRMED CHANGE (requested: "if UWW or the upcoming opponent have played at least one game in the new season, it
+    should not be treated the way it is now ... make a check for this since you know the new season schedules from
+    FastScout"). With an EXTRA_GAMES game (a game after the season our data is from), UWW's and the opponent's NEXT-season
+    schedules are read from FastScout (season=<next>), and the games each has already played are counted. Any played game
+    means the new season is under way: the between-seasons treatment stops (last season's seniors are no longer struck --
+    the rosters are this season's now) and the run says so loudly, because the scouting then belongs on the new season's
+    data. The answer is saved (inputs/_new_season_check.json) and read again after NEW_SEASON_CHECK_HOURS (12).
+    NEW_SEASON_CHECK = False turns it off. -> {team: games played this new season} ({} = not checked)."""
+    import json
+    games = [g for g in (globals().get("EXTRA_GAMES") or []) if g and g.get("opponent")]
+    if not games or not globals().get("NEW_SEASON_CHECK", True) or "Upcoming" not in uww_sched.columns:
+        return {}
+    up = uww_sched[uww_sched["Upcoming"] == "Yes"]
+    if up.empty:
+        return {}
+    nxt_year = int(uww_season_start_year) + 1
+    nxt = f"{nxt_year % 100:02d}"
+    cache_p = os.path.join(INPUT_DIR, "_new_season_check.json")
+    try:
+        with open(cache_p, encoding="utf-8") as fh:
+            cache = json.load(fh)
+    except Exception:
+        cache = {}
+    opp = str(games[0]["opponent"])
+    fresh = (cache.get("season") == nxt and cache.get("opponent") == opp and cache.get("checked")
+             and (pd.Timestamp.now() - pd.Timestamp(cache["checked"])).total_seconds()
+             < 3600 * float(globals().get("NEW_SEASON_CHECK_HOURS", 12)))
+    if fresh:
+        played = dict(cache.get("played") or {})
+        print(f"  New-season check ({nxt_year}-{str(nxt_year + 1)[-2:]}, checked {str(cache['checked'])[:16]}): "
+              + ", ".join(f"{t} {n} game(s) played" for t, n in played.items()))
+    else:
+        if not (fastscout_username and fastscout_password):
+            print("  New-season check skipped -- no FastScout login (FASTSCOUT_USERNAME / FASTSCOUT_PASSWORD)")
+            return {}
+        origin = globals().get("FASTSCOUT_ORIGIN") or "https://fastscout.fastmodelsports.com"
+        league = globals().get("FASTSCOUT_DOCS_LEAGUE") or "NCAAB-III"
+        opp_url = str(up.iloc[-1].get("opponent_url") or "")
+        urls = {"UW-Whitewater": f"{origin}/teams/myTeam?league={league}&season={nxt}"}
+        if opp_url:
+            urls[opp] = (re.sub(r"season=\d+", f"season={nxt}", opp_url) if "season=" in opp_url
+                         else opp_url + ("&" if "?" in opp_url else "?") + f"league={league}&season={nxt}")
+        played = {}
+        for team, url in urls.items():
+            try:
+                html_ = run_in_fastscout_session(lambda page, u=url: scrape_rendered_html(page, u))
+                soup_ = BeautifulSoup(html_, "lxml")
+                yr = extract_season_start_year(soup_, fallback=None)
+                if yr is not None and int(yr) != nxt_year:
+                    print(f"  New-season check: {team}'s page showed the {yr} season, not {nxt_year} -- not counted")
+                    continue
+                tab_ = pd.read_html(StringIO(str(soup_.find_all("table")[0])))[0]
+                res_ = tab_["Result"] if "Result" in tab_.columns else pd.Series(dtype=object)
+                played[team] = int(sum(split_result(x)[0] is not None for x in res_))
+            except Exception as e:
+                print(f"  New-season check: {team}'s {nxt_year}-{str(nxt_year + 1)[-2:]} schedule not read "
+                      f"({type(e).__name__}: {e})")
+        if played:
+            try:
+                with open(cache_p, "w", encoding="utf-8") as fh:
+                    json.dump({"season": nxt, "opponent": opp, "checked": pd.Timestamp.now().isoformat(timespec="seconds"),
+                               "played": played}, fh, indent=1)
+            except Exception:
+                pass
+        print(f"  New-season check ({nxt_year}-{str(nxt_year + 1)[-2:]} on FastScout): "
+              + (", ".join(f"{t} {n} game(s) played" for t, n in played.items()) or "couldn't be read"))
+    if any(int(n or 0) > 0 for n in played.values()):
+        started = ", ".join(f"{t} {n}" for t, n in played.items() if int(n or 0) > 0)
+        print("  " + "!" * 100)
+        print(f"  !! The {nxt_year}-{str(nxt_year + 1)[-2:]} season has started ({started} game(s) played) -- this run is "
+              f"NOT treated as between seasons: last season's seniors are no longer struck through. The scouting below is "
+              f"still built on {uww_season_start_year}-{str(uww_season_start_year + 1)[-2:]} data; the new season's games "
+              f"need the new season's FastScout pages.")
+        print("  " + "!" * 100, flush=True)
+        uww_sched.loc[up.index, "new_season_games"] = started
+    else:
+        if played:
+            print(f"  New-season check: no {nxt_year}-{str(nxt_year + 1)[-2:]} games played yet by either team -- "
+                  f"treated as between seasons (last season's seniors struck through)")
+    globals()["NEW_SEASON_PLAYED"] = played
+    return played
+
+
 uww_team_schedule = _add_extra_games(uww_team_schedule)
+try:
+    _new_season_check(uww_team_schedule)
+except Exception as _nse:
+    print(f"  New-season check failed ({type(_nse).__name__}: {_nse})")
 team_schedules[0] = uww_team_schedule
 
 # 2) For every opponent that shows up in UWW's own (scouted, date-capped) schedule, scrape their live
@@ -1414,7 +1540,7 @@ if fastscout_username and fastscout_password and not opponents.empty:
             # live scrape on every subsequent run. This only skips the ATTEMPT -- the fallback loop below
             # still loads that same file via find_backup_mhtml, so the resulting team_schedules entry is
             # unchanged either way.
-            if find_backup_mhtml(opponent_name, schedules_dir):
+            if _schedule_fresh(find_backup_mhtml(opponent_name, schedules_dir)):
                 print(f"  Skipping live scrape for {opponent_name} -- a local schedule file already exists.")
                 continue
             try:

@@ -72,6 +72,198 @@ def _sk_real_date(note):
     return None if pd.isna(d) else pd.Timestamp(d)
 
 
+def last_season_record_label(game):
+    """CONFIRMED CHANGE (requested: the first game of a new season "really has to be different from any other scouting brief
+    ... it should say 'Last Season' on these records"). True when the upcoming game is in the season AFTER the one our records
+    are from (an EXTRA_GAMES game with a real date after it) and neither team has played a game of the new season yet
+    (new_season_games, the schedule cell's new-season check)."""
+    get = (lambda c: game.get(c)) if hasattr(game, "get") else (lambda c: None)
+    if str(get("new_season_games") or "").strip() not in ("", "nan", "None"):
+        return False
+    rd = pd.to_datetime(get("real_date"), errors="coerce") if str(get("real_date") or "").strip() not in ("", "nan", "None") else None
+    sm = re.match(r"\s*(\d{4})", str(get("season") or ""))
+    return bool(rd is not None and not pd.isna(rd) and sm and rd >= pd.Timestamp(int(sm.group(1)) + 1, 8, 1))
+
+
+def last_season_text(record, streak):
+    """("Last season: 21-8", "Ended last season on a 1-game loss streak")."""
+    rec = f"Last season: {record}" if str(record or "").strip() else ""
+    stk = str(streak or "").strip()
+    return rec, (f"Ended last season on a {stk}" if stk else "")
+
+
+BRIEF_FIRST_GAMES_MIN = 3        # (requested) a team needs this many games this season before the brief is a regular one
+
+
+def brief_type_for(game, n_uww, n_opp, setting="auto"):
+    """CONFIRMED CHANGE (requested: "there really should be at least 3 different types of scouting briefs: 1) Exhibition /
+    Scrimmage games before the season, 2) First games for each team, 3) Regular games that we have season data for").
+    -> {"type": "preseason" | "first_games" | "regular", "last_season": the numbers are all last season's, "title", "sub",
+    "n_uww", "n_opp"}. n_uww / n_opp = games each team has played this season before this one. A team needs
+    BRIEF_FIRST_GAMES_MIN (3) of them for a regular brief. setting = "auto" or one of the three types (BRIEF_TYPE)."""
+    get = (lambda c: game.get(c)) if hasattr(game, "get") else (lambda c: None)
+    kind = " ".join(str(get(c) or "") for c in ("game_type", "note")).lower()
+    exhib = bool(re.search(r"scrimmage|exhibition", kind))
+    nxt = last_season_record_label(game)                 # a game in the NEXT season: every number is last season's
+    sm = re.match(r"\s*(\d{4})", str(get("season") or ""))
+    last = f"{sm.group(1)}-{str(int(sm.group(1)) + 1)[-2:]}" if sm else "last season"
+    if nxt:
+        n_uww = n_opp = 0
+    s = str(setting or "auto").strip().lower().replace("-", "_").replace(" ", "_")
+    try:
+        _min = int(globals().get("BRIEF_FIRST_GAMES_MIN", 3))
+    except Exception:
+        _min = 3
+    if s in ("preseason", "first_games", "regular"):
+        t = s
+    elif exhib and (nxt or n_uww == 0):
+        t = "preseason"
+    elif nxt or min(n_uww, n_opp) < _min:
+        t = "first_games"
+    else:
+        t = "regular"
+    if t == "preseason":
+        title = "PRESEASON BRIEF \u2014 " + ("SCRIMMAGE" if "scrimmage" in kind else "EXHIBITION" if exhib else "BEFORE THE SEASON")
+        sub = (f"Built on last season ({last}): the records, tendencies and player numbers below are last season's and are "
+               f"marked that way. Last season's seniors are crossed out.")
+    elif t == "first_games" and nxt:
+        title = "SEASON OPENER BRIEF \u2014 FIRST GAMES"
+        sub = (f"Neither team has played this season yet, so everything below is last season ({last}) and marked that way "
+               f"(last season's seniors are crossed out). It becomes a regular brief once both teams "
+               f"have played {_min} games.")
+    elif t == "first_games":
+        title = "FIRST GAMES BRIEF \u2014 SMALL SAMPLES"
+        sub = (f"We've played {n_uww} game(s) this season and they've played {n_opp}: this season's numbers are small "
+               f"samples, shown next to last season's. It becomes a regular brief once both teams have played {_min} games.")
+    else:
+        title, sub = "", ""
+    return {"type": t, "last_season": bool(nxt),
+            "season": last, "title": title, "sub": sub, "n_uww": n_uww, "n_opp": n_opp}
+
+
+def roster_changes(rosters, team):
+    """(back, gone, new) for one team from the roster table: back = [(name, this season's class)], gone = last season's
+    seniors / players not on this season's roster, new = [(name, class)]. Only meaningful once the roster has been updated
+    to the new season (class_year_prev, the roster cell); before that, gone = last season's seniors."""
+    if rosters is None or getattr(rosters, "empty", True) or "team" not in rosters.columns:
+        return [], [], []
+    t = str(team or "").strip().lower()
+    r = rosters[rosters["team"].astype(str).str.strip().str.lower() == t]
+    if r.empty:
+        r = rosters[rosters["team"].astype(str).str.lower().str.contains(re.escape(t), na=False)]
+    if r.empty:
+        return [], [], []
+    srs = {"SR", "GR", "GRAD", "GRADUATE", "SENIOR", "5TH", "5THYR", "FIFTH"}
+    clean = lambda v: re.sub(r"[^A-Z0-9]", "", str(v or "").upper())
+    if "class_year_prev" in r.columns and r["source"].astype(str).str.contains("new season", na=False).any():
+        on_new = r["source"].astype(str).str.contains("new season", na=False)
+        prev = r["class_year_prev"]
+        back = [(n, c) for n, c, p, o in zip(r["name"], r["class_year"], prev, on_new) if o and pd.notna(p)]
+        new = [(n, c) for n, c, p, o in zip(r["name"], r["class_year"], prev, on_new) if o and pd.isna(p)]
+        gone = [n for n, o in zip(r["name"], on_new) if not o]
+    else:
+        gone = [n for n, c in zip(r["name"], r["class_year"]) if clean(c) in srs]
+        back = [(n, c) for n, c in zip(r["name"], r["class_year"]) if clean(c) not in srs]
+        new = []
+    return back, gone, new
+
+
+def _sc_norm(x):
+    return re.sub(r"[^a-z0-9 ]+", " ", str(x or "").lower()).strip()
+
+
+def _sc_is(team_val, name, is_uww):
+    t = _sc_norm(team_val)
+    if is_uww:
+        return "whitewater" in t
+    n = _sc_norm(name)
+    return bool(t) and bool(n) and (t == n or t.startswith(n) or n.startswith(t))
+
+
+def _sc_line(load, team, is_uww):
+    """One season's per-game line for a team: (games, {stat: value}) from that season's tables. load(name) -> DataFrame."""
+    out = {}
+    sched = load("uww_schedule" if is_uww else "uww_opponent_schedules")
+    if isinstance(sched, pd.DataFrame) and not sched.empty and "outcome" in sched.columns:
+        s = sched
+        if is_uww:
+            if "team" in s.columns:
+                s = s[s["team"].astype(str).str.contains("whitewater", case=False, na=False)]
+            if "Upcoming" in s.columns:
+                s = s[s["Upcoming"].astype(str).str.strip().str.lower() != "yes"]
+        else:
+            s = s[s["opponent"].map(lambda v: _sc_is(v, team, False))] if "opponent" in s.columns else s.iloc[0:0]
+        s = s[s["outcome"].astype(str).str.upper().isin(["W", "L"])]
+        if len(s):
+            w = int((s["outcome"].astype(str).str.upper() == "W").sum())
+            out["Record"] = f"{w}-{len(s) - w}"
+            ts = pd.to_numeric(s.get("team_score"), errors="coerce")
+            os_ = pd.to_numeric(s.get("opponent_score"), errors="coerce")
+            if ts is not None and ts.notna().any():
+                out["PPG"] = ts.mean()
+                out["Opp PPG"] = os_.mean()
+                out["Margin"] = (ts - os_).mean()
+    n_games = int(out.get("Record", "0-0").split("-")[0]) + int(out.get("Record", "0-0").split("-")[1]) if "Record" in out else 0
+    box = load("uww_pbp_box_score" if is_uww else "uww_opponent_prior_games_box_score")
+    if isinstance(box, pd.DataFrame) and not box.empty and {"team", "game_date"}.issubset(box.columns):
+        b = box.copy()
+        key = ["opponent", "game_date"] if "opponent" in b.columns else ["game_date"]
+        # only the team whose games the table is about (the opponent's own schedule of games -- a team that merely
+        # played them shows up in one or two of those games, which is not its season)
+        _games_by_team = b.drop_duplicates(key + ["team"])["team"].value_counts()
+        _subject = _games_by_team.index[0] if len(_games_by_team) else None
+        mine = b[b["team"].map(lambda v: _sc_is(v, team, is_uww))] if _subject is not None \
+            and _sc_is(_subject, team, is_uww) else b.iloc[0:0]
+        if not mine.empty:
+            cols = [c for c in ("PTS", "FGM", "FGA", "FG3M", "FG3A", "FTM", "FTA", "OREB", "REB", "AST", "STL", "TO")
+                    if c in b.columns]
+            for c in cols:
+                b[c] = pd.to_numeric(b[c], errors="coerce")
+            mine = b.loc[mine.index]
+            g = mine.groupby(key)[cols].sum()
+            n_box = len(g)
+            if n_box:
+                t = g.sum()
+                per = lambda c: t[c] / n_box if c in t else None
+                pct = lambda m, a: (100.0 * t[m] / t[a]) if m in t and a in t and t[a] else None
+                if "PPG" not in out and "PTS" in t:
+                    out["PPG"] = per("PTS")
+                if {"FGA", "OREB", "TO", "FTA"}.issubset(t.index):
+                    out["Pace (poss/g)"] = (t["FGA"] - t["OREB"] + t["TO"] + 0.475 * t["FTA"]) / n_box
+                out["FG%"] = pct("FGM", "FGA")
+                out["3P%"] = pct("FG3M", "FG3A")
+                out["3PA/g"] = per("FG3A")
+                out["FT%"] = pct("FTM", "FTA")
+                out["FTA/g"] = per("FTA")
+                out["REB/g"] = per("REB")
+                out["OREB/g"] = per("OREB")
+                out["AST/g"] = per("AST")
+                out["TO/g"] = per("TO")
+                out["STL/g"] = per("STL")
+                out["_box_games"] = n_box
+                n_games = max(n_games, n_box)
+    return n_games, out
+
+
+def season_compare(load_this, load_last, team, is_uww, last_label="Last season"):
+    """CONFIRMED CHANGE (requested: first-games briefs show this season "side by side" with last season). -> DataFrame
+    [stat, This season (N g), Last season (2025-26)] for one team, or None when neither season has anything. A team's
+    last-season box line is only there when we scouted its games last season; its record and scoring come from the
+    schedules either way."""
+    n1, a = _sc_line(load_this, team, is_uww) if load_this else (0, {})
+    n0, b = _sc_line(load_last, team, is_uww) if load_last else (0, {})
+    if not a and not b:
+        return None
+    order = ["Record", "PPG", "Opp PPG", "Margin", "Pace (poss/g)", "FG%", "3P%", "3PA/g", "FT%", "FTA/g", "REB/g",
+             "OREB/g", "AST/g", "TO/g", "STL/g"]
+    fmt = lambda k, v: ("--" if v is None or (isinstance(v, float) and pd.isna(v)) else v if isinstance(v, str)
+                        else f"{v:+.1f}" if k == "Margin" else f"{v:.1f}")
+    rows = [(k, fmt(k, a.get(k)), fmt(k, b.get(k))) for k in order if k in a or k in b]
+    c1 = f"This season ({n1} g)"
+    c0 = f"{last_label} ({n0} g)" if n0 else last_label
+    return pd.DataFrame(rows, columns=["", c1, c0])
+
+
 def _sk_name_parts(name):
     toks = [t for t in re.sub(r"\s+", " ", str(name or "")).strip().split(" ") if t]
     while len(toks) > 2 and toks[-1].upper().strip(".,") in _SK_SUFFIX:
@@ -95,9 +287,16 @@ def strike_seniors_plan(game, rosters, uww_team, opp_team, setting="auto", keep=
     sm = re.match(r"\s*(\d{4})\s*[-/]\s*(\d{2,4})", season)
     if s not in ("true", "1", "yes", "on", "always"):
         kind = " ".join(str(get(c) or "") for c in ("game_type", "note")).lower()
-        if not re.search(r"scrimmage|exhibition", kind) or not sm:
+        # CONFIRMED CHANGE (requested: the Carroll game is the FIRST game of 2026-27, not a scrimmage): any game with a real
+        # date (EXTRA_GAMES' "real_date") after the season our data is from strikes last season's seniors too
+        _rd = pd.to_datetime(get("real_date"), errors="coerce") if str(get("real_date") or "").strip() not in ("", "nan", "None") else None
+        _rd = None if _rd is None or pd.isna(_rd) else pd.Timestamp(_rd)
+        if not (re.search(r"scrimmage|exhibition", kind) or _rd is not None) or not sm:
             return None
-        when = _sk_real_date(get("note")) or (pd.Timestamp(today) if today is not None else pd.Timestamp.now())
+        # (the new season has started -- UWW or the opponent has played a game in it: not between seasons any more)
+        if str(get("new_season_games") or "").strip() not in ("", "nan", "None"):
+            return None
+        when = _rd or _sk_real_date(get("note")) or (pd.Timestamp(today) if today is not None else pd.Timestamp.now())
         if when < pd.Timestamp(int(sm.group(1)) + 1, 5, 1):
             return None
     if rosters is None or getattr(rosters, "empty", True) or not {"team", "name"} <= set(rosters.columns):
@@ -106,7 +305,10 @@ def strike_seniors_plan(game, rosters, uww_team, opp_team, setting="auto", keep=
     ros["team"] = ros["team"].astype(str)
     ros["name"] = ros["name"].astype(str).str.strip()
     ros = ros[ros["name"].str.len() > 0]
-    cls = (ros["class_year"] if "class_year" in ros.columns else pd.Series("", index=ros.index))
+    # (last season's class when the roster was updated to the new season -- see the roster cell)
+    cls = (ros["class_year_prev"].fillna("")              # (a player new this season wasn't a senior last season)
+           if "class_year_prev" in ros.columns else
+           ros["class_year"] if "class_year" in ros.columns else pd.Series("", index=ros.index))
     ros["_sr"] = cls.astype(str).str.upper().str.replace(r"[^A-Z0-9]", "", regex=True).isin(_SK_SENIOR_CLASSES)
     keep_l = {re.sub(r"\s+", " ", str(k)).strip().lower() for k in (keep or ())}
     want = f"{int(sm.group(1))}-{int(sm.group(1)) + 1}" if sm else None
@@ -759,6 +961,17 @@ p { margin: 0 0 0.65rem; }
 /* section_header() */
 .sect { border: 1px solid var(--edge); border-radius: 8px; padding: 12px 16px; margin: 1.5rem 0 0.75rem; }
 .sect .t { font-weight: 800; font-size: 1.05rem; letter-spacing: 0.5px; color: var(--warhawk-purple); }
+.cmpwrap { display: flex; flex-wrap: wrap; gap: 14px; } .cmp { flex: 1 1 260px; } .cmp table { width: 100%; }
+.sect .t .lsn { font-size: 0.7rem; font-weight: 700; color: #fff; background: #8a6d1f; border-radius: 4px; padding: 1px 6px;
+  margin-left: 6px; vertical-align: middle; letter-spacing: 0.3px; }
+.btype { border-left: 5px solid #8a6d1f; background: #fbf6e9; border-radius: 6px; padding: 8px 14px; margin: 10px 0 4px; }
+.btype.bt-preseason { border-left-color: #2e7d32; background: #eef7ee; }
+.btype .btt { font-weight: 800; letter-spacing: 0.5px; font-size: 0.95rem; color: #3b2a00; }
+.btype.bt-preseason .btt { color: #1b4d1e; }
+.btype .bts { font-size: 0.8rem; color: #444; margin-top: 2px; }
+.rcwrap { display: flex; gap: 18px; flex-wrap: wrap; font-size: 0.82rem; }
+.rcwrap .rc { flex: 1 1 280px; }
+.rcwrap .rct { font-weight: 800; margin-bottom: 4px; }
 .card { border: 1px solid var(--edge); border-radius: 8px; padding: 12px 16px; margin: 0 0 0.75rem; }
 .card .hd { font-weight: 800; font-size: 1.05rem; letter-spacing: 0.5px; margin-bottom: 8px; }
 
@@ -1503,7 +1716,14 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         add(f'<div class="divider"><div class="dt">{title}</div>'
             + (f'<div class="ds">{sub}</div>' if sub else "") + "</div>")
 
+    _bt_box = {"bt": None}                 # the brief's type (set after the records below)
+
     def section_html(title):
+        # (preseason / season-opener brief: every section built on last season's numbers says so)
+        _b = _bt_box["bt"]
+        if _b and _b["last_season"] and not re.search(r"ROSTER|NEEDS TAGGING|METHODOLOGY|CAUTION|WHEN WE'VE PLAYED",
+                                                       str(title), re.I):
+            title = f'{title} <span class="lsn">{_sb_esc(_b["season"])}</span>'
         return f'<div class="sect"><div class="t">{title}</div></div>'
 
     def section(title):
@@ -1521,6 +1741,14 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     if not opp_sched.empty and "opponent" in opp_sched.columns:
         opp_before = opp_sched[opp_sched["opponent"].astype(str).str.strip() == str(short).strip()]
     opp_record, opp_streak = _sb_record_and_streak(opp_before)
+    _n_played = lambda d: int(d["outcome"].astype(str).str.upper().isin(["W", "L"]).sum()) \
+        if isinstance(d, pd.DataFrame) and not d.empty and "outcome" in d.columns else 0
+    _bt = brief_type_for(game, _n_played(uww_before), _n_played(opp_before), globals().get("BRIEF_TYPE", "auto"))
+    _bt_box["bt"] = _bt
+    print(f"  Brief type: {_bt['type']}" + (f" -- {_bt['title']}" if _bt["title"] else ""), flush=True)
+    if last_season_record_label(game):                 # the season opener: these are LAST season's records
+        uww_record, uww_streak = last_season_text(uww_record, uww_streak)
+        opp_record, opp_streak = last_season_text(opp_record, opp_streak)
 
     opp_display = _sb_strip_mascot(short)
     uww_logo = _sb_logo_b64("UW-Whitewater")
@@ -1547,6 +1775,38 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         + (f'<div class="streak">{_sb_esc(opp_streak)}</div>' if opp_streak else "")
         + "</div>")
     add("</div>")
+    # the brief's type, right under the banner (preseason / first games -- a regular brief has none)
+    if _bt["title"]:
+        add(f'<div class="btype bt-{_bt["type"]}"><div class="btt">{_sb_esc(_bt["title"])}</div>'
+            f'<div class="bts">{_sb_esc(_bt["sub"])}</div></div>')
+    # (requested: no ROSTER CHANGES section -- the struck-through seniors already show who's gone)
+    # this season next to last season (first-games / preseason brief once the parser is on the new season's data --
+    # season switch, 00b_season_switch: last season's tables are in LAST_SEASON_DATA_DIR)
+    _ls_dir = globals().get("LAST_SEASON_DATA_DIR")
+    if _bt["type"] in ("preseason", "first_games") and not _bt["last_season"] and _ls_dir and os.path.isdir(_ls_dir):
+        try:
+            def _ls_load(name, _d=_ls_dir):
+                try:
+                    return pd.read_csv(os.path.join(_d, f"{name}.csv"))
+                except Exception:
+                    return pd.DataFrame()
+            _ls_lbl = f"Last season ({globals().get('LAST_SEASON') or 'last season'})"
+            _cmp = [(lbl, season_compare(_sb_d, _ls_load, tm, u, _ls_lbl))
+                    for lbl, tm, u in (("UW-Whitewater", "UW-Whitewater", True), (opp_display, short, False))]
+            _cmp = [(l, t) for l, t in _cmp if t is not None]
+            if _cmp:
+                section("\U0001f4ca THIS SEASON vs LAST SEASON")
+                _h = '<div class="card"><div class="cmpwrap">'
+                for _l, _t in _cmp:
+                    _h += (f'<div class="cmp"><div class="rct">{_sb_esc(_l)}</div><table class="compact"><tr>'
+                           + "".join(f"<th>{_sb_esc(c)}</th>" for c in _t.columns) + "</tr>"
+                           + "".join("<tr>" + "".join(f"<td>{_sb_esc(v)}</td>" for v in r) + "</tr>"
+                                     for r in _t.itertuples(index=False)) + "</table></div>")
+                add(_h + '</div><p class="note">This season\u2019s numbers are a few games \u2014 small samples. '
+                    'Last season\u2019s box-score lines are only there for teams we scouted last season; records and '
+                    'scoring come from the schedules.</p></div>')
+        except Exception as _cme:
+            print(f"  (this season vs last season not shown: {type(_cme).__name__}: {_cme})", flush=True)
     # CONFIRMED CHANGE (requested, film-tracking review): page 1 says how much film is on file for them and for us, and how
     # much of it can be trusted (film-quality cell, uww_film_quality.csv) -- the same line the Upcoming Game page shows
     try:
@@ -1974,10 +2234,16 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     _DEF_FAMILY_MIN = 6      # possessions before a family is reported at all
     _DEF_SPLIT_MIN = 4       # possessions before a per-player / per-series split is reported
 
+    # CONFIRMED BUG (fixed here; Carroll brief after Coach Jake's 2/24 Elmhurst tags): a clip with no press tag has press_faced
+    # = NaN, and bool(NaN) is True -- so 26 of Carroll's 28 tagged possessions (no defense tagged at all) were counted as
+    # "Press" ("1.31 PPP vs Press", "turnover rate moves +19.2 points under pressure"). Only a real True counts now.
+    def _press_true(v):
+        return v is not None and not (isinstance(v, float) and pd.isna(v)) and str(v).strip().lower() in ("true", "1", "1.0", "yes")
+
     def _def_family(row):
         """man / zone / press, from the decoded defense fields. Press is its own family because it's a
         separate decision and a separate practice block -- a pressing man team lands in 'press'."""
-        if bool(row.get("press_faced")):
+        if _press_true(row.get("press_faced")):
             return "Press"
         d = _sb_clean(row.get("defense_faced"))
         if not d:
@@ -3086,7 +3352,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
 
     # ---- recent results ------------------------------------------------------------------------------
     if not opp_before.empty:
-        section(f"\U0001f4c5 {OPP_UP} RECENT RESULTS")
+        section(f"\U0001f4c5 {OPP_UP} " + ("\u2014 HOW THEY FINISHED LAST SEASON" if _bt["last_season"] else "RECENT RESULTS"))
         add('<div class="card">')
         add('<div class="results">')
         for _, g in opp_before.tail(5).iterrows():
@@ -3653,7 +3919,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                         else pd.Series("", index=_ours.index)
                     _ours["_to"] = _ores.str.contains("turnover|violation|kicked", regex=True)
                     _ours["_fam"] = _ours.apply(
-                        lambda r: "Press" if bool(r.get("press_played")) else
+                        lambda r: "Press" if _press_true(r.get("press_played")) else
                         ("Zone" if "zone" in str(r.get("defense_played") or "").lower() else
                          ("Man" if "man" in str(r.get("defense_played") or "").lower() else "")), axis=1)
                     _ours = _ours[_ours["_fam"] != ""]

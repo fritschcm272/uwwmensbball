@@ -56,6 +56,7 @@ PARSER_MODES = {
                   "53_tag_model": {"RUN_TAG_MODEL": False},
                   "55c_play_review": {"RUN_PLAY_REVIEW": False, "RUN_TAG_QUEUE": False}},
         "save": None,                                                       # section 80 exports everything
+        "quiet": True,                                                      # one "done" line per section (see run_parser)
     },
 }
 
@@ -102,10 +103,14 @@ def _pm_save(kind):
     print(f"[{kind}] saved {n} table(s) to {d} -- commit and push the data folder for the app", flush=True)
 
 
-def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb"):
+def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb", quiet=None):
     """Run parser_nb.ipynb's cells for one job: "models", "tagging" or "brief" (see the top of this file).
     start_at = a section name ("50_player_tracking") to continue from after a stop -- the sections above it are not run
-    again (their results are still in this notebook's memory from the earlier run). stop_after = a section to stop after."""
+    again (their results are still in this notebook's memory from the earlier run). stop_after = a section to stop after.
+    CONFIRMED CHANGE (requested: "for the parser_brief, can we only print out when each cell is done instead of printing out the
+    stuff from the cell?"): quiet (the brief's default; quiet=False shows everything) prints one line per section when it's
+    done -- with its time and any "!!" problem lines -- and writes everything else to a log file
+    (inputs/_logs/<job>_<date>.log). If a section fails, the last lines it printed are shown with the error."""
     if mode not in PARSER_MODES:
         raise ValueError(f"mode must be one of {list(PARSER_MODES)}")
     G = globals()
@@ -118,6 +123,19 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb")
         raise RuntimeError("start_at needs an earlier run in this notebook (run it once without start_at first)")
     _skipped = []
     G["_pm_depth"] = 0
+    import io as _pm_io
+    import sys as _pm_sys
+    import time as _pm_time
+    import contextlib as _pm_ctx
+    quiet = plan.get("quiet", False) if quiet is None else bool(quiet)
+    _real_out = _pm_sys.stdout
+    _log = None
+    if quiet:
+        _ld = _pm_os.path.join(G.get("INPUT_DIR") or "./inputs", "_logs")
+        _pm_os.makedirs(_ld, exist_ok=True)
+        _log = _pm_os.path.join(_ld, f"{mode}_{_pm_time.strftime('%Y%m%d_%H%M%S')}.log")
+        print(f"(quiet: one line per section; everything else goes to {_log})", flush=True)
+    G["_pm_quiet"] = (quiet, _real_out)
     for ci, cell in enumerate(nb["cells"]):
         if cell.get("cell_type") != "code":
             continue
@@ -133,7 +151,27 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb")
         code = "\n".join(lines)
         if not code.strip():
             continue
-        exec(compile(code, f"<{notebook} cell {ci}>", "exec"), G)
+        if not quiet:
+            exec(compile(code, f"<{notebook} cell {ci}>", "exec"), G)
+        else:
+            _buf = _pm_io.StringIO()
+            _disp = G.get("display")
+            G["display"] = lambda *a, **k: _buf.write("".join(str(x) for x in a) + "\n")   # tables go to the log too
+            try:
+                with _pm_ctx.redirect_stdout(_buf), _pm_ctx.redirect_stderr(_buf):
+                    exec(compile(code, f"<{notebook} cell {ci}>", "exec"), G)
+            except BaseException:
+                _tail = _buf.getvalue().splitlines()[-60:]
+                _real_out.write("\n".join(["--- the last lines it printed ---"] + _tail) + "\n")
+                _real_out.flush()
+                raise
+            finally:
+                if _disp is not None:
+                    G["display"] = _disp
+                else:
+                    G.pop("display", None)
+                with open(_log, "a", encoding="utf-8") as _fh:
+                    _fh.write(f"\n===== cell {ci} {', '.join(secs)} =====\n" + _buf.getvalue())
         if is_setup:
             # the notebook's run_section, wrapped: a section this job doesn't need is skipped, and the job's switches are
             # set right before a section runs (after its cell's own settings)
@@ -150,10 +188,21 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb")
                         for k, v in PARSER_MODES[m]["flags"].get(base, {}).items():
                             G[k] = v
                     G["_pm_depth"] = depth + 1
+                    _q, _out = G.get("_pm_quiet") or (False, None)
+                    _t0 = _pm_time.time()
+                    _mark = _pm_sys.stdout.tell() if _q and depth == 0 and hasattr(_pm_sys.stdout, "tell") else None
                     try:
-                        return _orig(name)
+                        r_ = _orig(name)
                     finally:
                         G["_pm_depth"] = depth
+                    if _q and depth == 0 and _out is not None:
+                        _probs = []
+                        if _mark is not None and hasattr(_pm_sys.stdout, "getvalue"):
+                            _probs = [ln.strip() for ln in _pm_sys.stdout.getvalue()[_mark:].splitlines() if "!!" in ln][:5]
+                        _out.write(f"done  {base}  ({_pm_time.time() - _t0:.0f} s)\n"
+                                   + "".join(f"      {ln}\n" for ln in _probs))
+                        _out.flush()
+                    return r_
                 _run_section._pm_wrapped = True
                 G["run_section"] = _run_section
             G["_PARSER_MODE"] = mode
@@ -163,5 +212,8 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb")
         raise ValueError(f"start_at={start_at!r}: no cell in {notebook} runs that section")
     if plan.get("save"):
         _pm_save(plan["save"])
+    if quiet:
+        G["_pm_quiet"] = (False, None)
+        print(f"[{mode}] finished -- everything the sections printed is in {_log}", flush=True)
     if _skipped:
         print(f"[{mode}] skipped {len(_skipped)} section(s) this job doesn't need: " + ", ".join(_skipped), flush=True)

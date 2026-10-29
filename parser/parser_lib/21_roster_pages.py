@@ -263,13 +263,23 @@ def scrape_uww_live_roster(page, timeout_ms=30000, save_path=None):
     return html
 
 
-def _ros_local_backup(team_label):
+def _ros_local_backup(team_label, year=None):
     """A previously-saved roster snapshot for this team, either a genuine MHTML export or this cell's own
-    live-scrape cache -- same skip-the-live-scrape-if-we-already-have-one convention as the schedule cell."""
+    live-scrape cache -- same skip-the-live-scrape-if-we-already-have-one convention as the schedule cell.
+    year = a season's start year: only that season's snapshot ("..._2026.html"); None = this run's season (a snapshot
+    of a LATER season -- the new-season roster below -- is never taken for it)."""
     key = team_label.split()[0].lower()
+    later = {str(y) for y in range(int(uww_season_start_year) + 1, int(uww_season_start_year) + 4)} \
+        if "uww_season_start_year" in globals() else set()
     for p in sorted(glob.glob(f"{schedules_dir}/*.html") + glob.glob(f"{schedules_dir}/*.mhtml")):
         base = os.path.basename(p)
-        if re.search(r"-\s*Roster", base, re.IGNORECASE) and key in base.lower():
+        if not (re.search(r"-\s*Roster", base, re.IGNORECASE) and key in base.lower()):
+            continue
+        m = re.search(r"_(\d{4})\.(?:m?html)$", base)
+        if year is not None:
+            if m and m.group(1) == str(year):
+                return p
+        elif not (m and m.group(1) in later):
             return p
     return None
 
@@ -372,6 +382,100 @@ for _team_label, _team_url in _ros_targets:
 live_rosters = (pd.concat(_ros_frames, ignore_index=True) if _ros_frames else
                pd.DataFrame(columns=["team", "jersey_number", "name", "position", "height", "class_year",
                                      "photo_url", "source"]))
+
+# CONFIRMED CHANGE (requested: "the scouting brief still shows Peyton McKenna as a sophomore, which would have been during
+# the 2025-2026 season -- is it not bringing in the new roster?"). It wasn't: rosters were read once and kept, always for the
+# season our data is from. When the upcoming game is in the NEXT season (an EXTRA_GAMES game with a real date after this
+# season, e.g. at Carroll on Nov 7, 2026), UWW's and the opponent's NEXT-season rosters are read from FastScout too (saved
+# as "<team> - Roster_<year>.html", read again after ROSTER_NEXT_SEASON_MAX_AGE_DAYS = 3 days -- preseason rosters change).
+# Every returning player then shows this season's class, number, height, position and photo; new players are added; last
+# season's class stays in class_year_prev (that's what finds last season's seniors to strike through).
+# ROSTERS_NEXT_SEASON = False turns it off.
+def _ros_next_season_year():
+    g_ = [g for g in (globals().get("EXTRA_GAMES") or []) if g and g.get("opponent") and g.get("real_date")]
+    if not g_ or not globals().get("ROSTERS_NEXT_SEASON", True) or "uww_season_start_year" not in globals():
+        return None
+    d_ = pd.to_datetime(g_[0]["real_date"], errors="coerce")
+    if pd.isna(d_) or d_ < pd.Timestamp(int(uww_season_start_year) + 1, 8, 1):
+        return None
+    return int(uww_season_start_year) + 1
+
+
+def _ros_merge_next(cur, nxt_df):
+    """cur (last season) updated with the next season's roster rows of the same team(s)."""
+    cur = cur.copy()
+    if "class_year_prev" not in cur.columns:
+        cur["class_year_prev"] = cur["class_year"]
+    for team_, new_ in nxt_df.groupby("team"):
+        old_idx = cur.index[cur["team"] == team_]
+        old_by = {_ros_norm_name(n): i for i, n in zip(old_idx, cur.loc[old_idx, "name"])}
+        add = []
+        for _, r_ in new_.iterrows():
+            i_ = old_by.get(_ros_norm_name(r_["name"]))
+            if i_ is None:
+                add.append(dict(r_, class_year_prev=None, source="FastScout roster page (new season)"))
+                continue
+            for c_ in ("jersey_number", "position", "height", "class_year", "photo_url"):
+                if pd.notna(r_.get(c_)) and str(r_.get(c_)).strip():
+                    cur.at[i_, c_] = r_[c_]
+            cur.at[i_, "source"] = "FastScout roster page (new season)"
+        if add:
+            cur = pd.concat([cur, pd.DataFrame(add)], ignore_index=True)
+        n_on = int(sum(_ros_norm_name(n) in old_by for n in new_["name"]))
+        print(f"  [roster] {team_}: {nxt_year}-{str(nxt_year + 1)[-2:]} roster -- {n_on} returning player(s) updated "
+              f"(class, number, photo), {len(add)} new player(s) added", flush=True)
+    return cur
+
+
+nxt_year = _ros_next_season_year()
+if nxt_year is not None and not live_rosters.empty:
+    _nxt_code = f"{nxt_year % 100:02d}"
+    _want = [(t, u) for t, u in _ros_targets if t == _ros_targets[0][0] or t == upcoming_opponent]
+    _max_age = float(globals().get("ROSTER_NEXT_SEASON_MAX_AGE_DAYS", 3)) * 86400
+    _nxt_html = {}
+    _to_scrape = []
+    for _t, _u in _want:
+        _b = _ros_local_backup(_t, year=nxt_year)
+        if _b and (time.time() - os.path.getmtime(_b)) < _max_age:
+            _nxt_html[_t] = load_html_snapshot(_b)
+        elif _u:
+            _to_scrape.append((_t, re.sub(r"season=\d+", f"season={_nxt_code}", _u) if "season=" in _u
+                               else _u + ("&" if "?" in _u else "?") + f"season={_nxt_code}", _b))
+    if _to_scrape and fastscout_username and fastscout_password:
+        def _scrape_next(page):
+            out_ = {}
+            for _t, _u, _b in _to_scrape:
+                try:
+                    _h = scrape_roster_rendered_html(page, _u)
+                    _yr = extract_season_start_year(BeautifulSoup(_h, "lxml"), fallback=None)
+                    if _yr is not None and int(_yr) != nxt_year:
+                        print(f"  [roster] {_t}: FastScout showed the {_yr} roster, not {nxt_year} -- not used")
+                        continue
+                    _save_scraped_html(_h, os.path.join(schedules_dir, f"{_t} - Roster_{nxt_year}.html"),
+                                       f"{nxt_year}-{str(nxt_year + 1)[-2:]} roster")
+                    out_[_t] = _h
+                except Exception as _e:
+                    print(f"  [roster] {_t}: {nxt_year}-{str(nxt_year + 1)[-2:]} roster not read ({type(_e).__name__}: {_e})"
+                          + (" -- using the copy saved before" if _b else ""))
+                    if _b:
+                        out_[_t] = load_html_snapshot(_b)
+            return out_
+        try:
+            _nxt_html.update(run_in_fastscout_session(_scrape_next))
+        except Exception as _e:
+            print(f"  [roster] new-season rosters not read ({type(_e).__name__}: {_e})")
+    _nxt_frames = []
+    for _t, _h in _nxt_html.items():
+        try:
+            _df = parse_roster_html(_h, _t)
+            if not _df.empty:
+                _nxt_frames.append(_df)
+            else:
+                print(f"  [roster] {_t}: no players on the {nxt_year}-{str(nxt_year + 1)[-2:]} roster page yet")
+        except Exception as _e:
+            print(f"  [roster] {_t}: new-season roster not parsed ({type(_e).__name__}: {_e})")
+    if _nxt_frames:
+        live_rosters = _ros_merge_next(live_rosters, pd.concat(_nxt_frames, ignore_index=True))
 
 print(f"\nlive_rosters: {len(live_rosters)} player(s) across {live_rosters['team'].nunique() if not live_rosters.empty else 0} team(s).")
 for _team_label, _ in _ros_targets:

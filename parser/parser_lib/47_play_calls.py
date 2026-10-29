@@ -35,6 +35,97 @@ _PL_EVENT_COLS = ["play_call", "play_series", "play_situation", "play_actions", 
                   "possession_side", "defense_faced", "defense_played", "coverage_faced", "coverage_played"]
 _pl_problems = []
 
+
+# ---- Last season's games keep their film (season switch) ------------------------------------------------------------
+# CONFIRMED CHANGE (requested: switch the parser to 2026-27 but "Keep 2025-26 film"). Every run saves this season's
+# play-by-play (UWW's games and the upcoming opponent's) in inputs\_film_pbp\<season>\. After the season switch
+# (00b_season_switch), the film cells -- play calls, tracking, the Play review / Film Tagging batches -- run on this
+# season's play-by-play PLUS last season's saved one, so the clips of last season's games keep matching their play-by-play:
+# all of UWW's games (WashU, ...), and an opponent's games whenever that team is the upcoming opponent again (a team that
+# isn't up next is "Other" film, the same as within a season). film_pbp_end() (called by the first brief cell and the export) takes last season's
+# rows back out, so every season number in the brief and the app is this season's only.
+_FILM_SEASON_COL = "_film_season"
+
+
+def _film_slug(name):
+    return re.sub(r"[^a-z0-9]+", "_", str(name or "").lower()).strip("_") or "opponent"
+
+
+def _film_pbp_save():
+    season = globals().get("SEASON_NOW")
+    if not season:
+        return
+    d = os.path.join(INPUT_DIR, "_film_pbp", season)
+    try:
+        os.makedirs(d, exist_ok=True)
+        for df, name in ((globals().get("pbp_events"), "uww"),
+                         (globals().get("pbp_events_upcoming"), "opp_" + _film_slug(globals().get("upcoming_opponent_short")))):
+            if isinstance(df, pd.DataFrame) and not df.empty:
+                df.drop(columns=[_FILM_SEASON_COL], errors="ignore").to_pickle(os.path.join(d, name + ".pkl"))
+    except Exception as e:
+        print(f"  !! film play-by-play not saved ({type(e).__name__}: {e})", flush=True)
+
+
+def _film_pbp_begin():
+    last = globals().get("LAST_SEASON")
+    if not last or globals().get("_film_pbp_active"):
+        return
+    d = os.path.join(INPUT_DIR, "_film_pbp", last)
+    mine = "opp_" + _film_slug(globals().get("upcoming_opponent_short")) + ".pkl"
+    added = {}
+    # (opponents: only the UPCOMING opponent's own games from last season -- the film cells treat the upcoming opponent's
+    # games as "Opponent" and every other team's as "Other", exactly as within a season)
+    for var, files in (("pbp_events", ["uww.pkl"]), ("pbp_events_upcoming", [mine])):
+        cur = globals().get(var)
+        cur = cur if isinstance(cur, pd.DataFrame) else pd.DataFrame()
+        parts, seen = [], set(cur["game_date"].dropna().astype(str)) if "game_date" in cur.columns else set()
+        for f in files:
+            f = f if os.path.isabs(f) else os.path.join(d, f)
+            if not os.path.exists(f):
+                continue
+            try:
+                old = pd.read_pickle(f)
+            except Exception as e:
+                print(f"  !! {os.path.basename(f)} (last season's film play-by-play) not read: {type(e).__name__}: {e}")
+                continue
+            if "game_date" in old.columns:
+                old = old[~old["game_date"].astype(str).isin(seen)]
+                seen |= set(old["game_date"].dropna().astype(str))
+            if not old.empty:
+                parts.append(old)
+        if parts:
+            old = pd.concat(parts, ignore_index=True).assign(**{_FILM_SEASON_COL: last})
+            if cur.empty:
+                globals().setdefault("_film_pbp_empty", {})[var] = cur          # put back as it was (film_pbp_end)
+                globals()[var] = old
+            else:
+                globals()[var] = pd.concat([cur.assign(**{_FILM_SEASON_COL: "current"}), old], ignore_index=True)
+            added[var] = (old["game_date"].nunique() if "game_date" in old.columns else 0, len(old))
+    globals()["_film_pbp_active"] = bool(added)
+    if added:
+        print(f"  Film: last season's ({last}) play-by-play added for the film cells -- "
+              + ", ".join(f"{'UWW' if v == 'pbp_events' else 'opponents'} {g} game(s)" for v, (g, _n) in added.items())
+              + ". The brief cells see this season's only.", flush=True)
+
+
+def film_pbp_end():
+    """Take last season's film rows back out of pbp_events / pbp_events_upcoming (the brief and the export are this
+    season's only). The rows keep everything the film cells added to them."""
+    if not globals().get("_film_pbp_active"):
+        return
+    for var in ("pbp_events", "pbp_events_upcoming"):
+        df = globals().get(var)
+        if isinstance(df, pd.DataFrame) and _FILM_SEASON_COL in df.columns:
+            keep = df[df[_FILM_SEASON_COL].astype(str) == "current"].drop(columns=[_FILM_SEASON_COL]).reset_index(drop=True)
+            globals()[var] = (globals().get("_film_pbp_empty") or {}).get(var, keep) if keep.empty else keep
+    globals()["_film_pbp_active"] = False
+    globals()["_film_pbp_empty"] = {}
+
+
+film_pbp_end()                       # (a re-run of this cell starts from this season's rows)
+_film_pbp_save()
+_film_pbp_begin()
+
 # --- Play-title decoder ------------------------------------------------------------------------------------
 # The "Title" column is the tagger's shorthand, typed live and inconsistently:
 #   "OK State- DHO RS- Sci Sc- STS -RE"   "Blob-Box-Curl"   "5 out- pass 5 -flair"   "41- BS LS- Reject"
