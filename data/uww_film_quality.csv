@@ -1,8 +1,8 @@
 team,is_upcoming,is_uww,tracked_games,tracked_clips,last_tracked,tracked_vs,tagged_offense,tagged_defense,clips_on_file,floor_spots,named_share_pct,court_mapped_pct,shots_checked,shot_zone_agree_pct,names_ok,court_ok,film_line
 Alma Scots,False,False,0,0,,,103,105,208,0,,,0,,False,False,"no tracked games yet; 103 coach-tagged possessions on offense, 105 on defense"
-Carroll (WI) Pioneers,True,False,0,0,,,28,1,160,0,,,0,,False,False,"no tracked games yet; 28 coach-tagged possessions on offense, 1 on defense"
+Carroll (WI) Pioneers,True,False,0,0,,,30,1,160,0,,,0,,False,False,"no tracked games yet; 30 coach-tagged possessions on offense, 1 on defense"
 Coe Kohawks,False,False,0,0,,,104,107,211,0,,,0,,False,False,"no tracked games yet; 104 coach-tagged possessions on offense, 107 on defense"
-Elmhurst Bluejays,False,False,0,0,,,1,28,160,0,,,0,,False,False,"no tracked games yet; 1 coach-tagged possession on offense, 28 on defense"
+Elmhurst Bluejays,False,False,0,0,,,1,30,160,0,,,0,,False,False,"no tracked games yet; 1 coach-tagged possession on offense, 30 on defense"
 Loras Duhawks,False,False,0,0,,,0,0,1,0,,,0,,False,False,"no tracked games yet; 0 coach-tagged possessions on offense, 0 on defense"
 UW-Oshkosh Titans,False,False,0,0,,,87,98,197,0,,,0,,False,False,"no tracked games yet; 87 coach-tagged possessions on offense, 98 on defense"
 UW-Whitewater,False,True,1,167,2026-03-07,3/7/26 vs Washington-St. Louis Bears,393,333,784,830,20,,0,,False,False,"1 tracked game (3/7/26 vs Washington-St. Louis Bears, 167 clips) -- players named on 20% of floor spots; 393 coach-tagged possessions on offense, 333 on defense"
