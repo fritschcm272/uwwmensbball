@@ -1,36 +1,35 @@
 scouted_opponent,side,lineup,top_calls,tagged_possessions,ppp,grouping
-Wheaton (IL) Thunder,Opponent,"Brady Wynja, Carson Grier, Devin Martin, Kyan VanderWoude, Luca Carbonaro","5 Out Motion (5x), Set (1x)",6,1.17,4G-1W
-Wheaton (IL) Thunder,Opponent,"Brady Wynja, Carson Grier, Devin Martin, Kyan VanderWoude, Soren Richardson","5 Out Motion (8x), BLOB Set (3x), Set (2x)",14,1.31,4G-1W
-Wheaton (IL) Thunder,Opponent,"Brady Wynja, Carson Grier, Devin Martin, Kyle Neibch, Soren Richardson","5 Out Motion (11x), Set (2x)",13,0.85,4G-1W
-Wheaton (IL) Thunder,Opponent,"Brady Wynja, Carson Grier, Kyan VanderWoude, Reid Olson, Soren Richardson","5 Out Motion (2x), Set (1x)",3,0.67,4G-1W
-Wheaton (IL) Thunder,Opponent,"Brady Wynja, Devin Martin, Noah Hedrick, Reid Olson, Soren Richardson","77Double (1x), 5 Out Motion (1x)",2,1.5,4G-1W
-Wheaton (IL) Thunder,Opponent,"Brady Wynja, Kyan VanderWoude, Noah Hedrick, Reid Olson, Soren Richardson","5 Out Motion (2x), Horns Motion (1x)",3,0.67,4G-1W
-Wheaton (IL) Thunder,Opponent,"Carson Grier, Devin Martin, Jace Olson, Kyan VanderWoude, Soren Richardson","5 Out Motion (4x), Set (1x)",5,2.5,Two-big lineup
-Wheaton (IL) Thunder,Opponent,"Carson Grier, Devin Martin, Kyan VanderWoude, Luca Carbonaro, Noah Hedrick",5 Out Motion (2x),2,0.0,5G
-Wheaton (IL) Thunder,Opponent,"Carson Grier, Devin Martin, Kyan VanderWoude, Noah Hedrick, Soren Richardson","5 Out Motion (3x), SLOB 5 Out Motion (1x), Spain (1x)",7,0.83,5G
-Wheaton (IL) Thunder,Opponent,"Carson Grier, Devin Martin, Noah Hedrick, Reid Olson, Soren Richardson","5 Out Motion (2x), 41S Motion (1x), Motion (1x)",4,0.5,5G
-Wheaton (IL) Thunder,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren","SLOB Motion (1x), BLOB (1x), Ball Screen (1x)",5,1.2,
-Wheaton (IL) Thunder,UWW,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren","5 Out Motion (24x), Set (2x), in trnasntion random movement (2x)",35,0.83,
-Wheaton (IL) Thunder,UWW,"Brock Marino, Collin Madson, Isaac Verges, Richie Warren, Tyshawn Teague-Johnson","5 Out Motion (3x), TWINS LEFT (1x)",4,1.25,
-Wheaton (IL) Thunder,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Jake Quast, Luke Bara","5 Out Motion (3x), BLOB Line Motion (1x)",4,0.5,
-Wheaton (IL) Thunder,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren","5 Out Motion (14x), BLOB Line Motion (3x), BLOB (3x)",27,0.85,
-Wheaton (IL) Thunder,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson","BLOB Box Motion (2x), Spain (1x), 5 Out Motion (1x)",5,0.4,
-Wheaton (IL) Thunder,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen","Ball Screen (3x), BLOB (1x), Spain (1x)",5,0.0,
-Wheaton (IL) Thunder,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Richie Warren","BLOB (1x), Scissors (1x)",2,1.0,
-Wheaton (IL) Thunder,UWW,"Brock Marino, Collin Madson, Jake Quast, Luke Bara, Richie Warren","BLOB Box Motion (2x), Ball Screen (2x), Spain (1x)",7,1.43,
-Wheaton (IL) Thunder,UWW,"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren",5 Out Motion (12x),12,0.92,
-Wheaton (IL) Thunder,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz","Ball Screen (2x), Double Ball Screen (1x), BLOB Line Motion (1x)",8,1.12,
-Wheaton (IL) Thunder,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Luke Bara, Richie Warren",DHO (1x),1,0.0,
-Wheaton (IL) Thunder,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren, Tyshawn Teague-Johnson","5 Out Motion (3x), Over (1x)",4,1.0,
-Wheaton (IL) Thunder,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Joey Berezowitz","5 Out Motion (5x), Set (1x), FOUL (1x)",8,1.25,
-Wheaton (IL) Thunder,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Luke Bara",Set (1x),1,0.0,
-Wheaton (IL) Thunder,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Richie Warren","5 Out Motion (3x), Set (1x), Iso (1x)",7,1.29,
-Wheaton (IL) Thunder,UWW,"Collin Madson, Isaac Verges, Luke Bara, Rashad Rogers, Richie Warren","5 Out Motion (4x), BLOB Set (2x), ISO (1x)",8,0.5,
-Wheaton (IL) Thunder,UWW,"Collin Madson, JR Lukenbill, Jake Quast, Luke Bara, Richie Warren","Twins Motion (1x), 5 Out Motion (1x)",2,1.0,
-Wheaton (IL) Thunder,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren","5 Out Motion (3x), DHO (1x), Ball Screen (1x)",6,1.83,
-Wheaton (IL) Thunder,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Rashad Rogers, Richie Warren","5 Out Motion (8x), BLOB Set (1x)",9,1.12,
-Wheaton (IL) Thunder,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",Ball Screen (1x),1,3.0,
-Wheaton (IL) Thunder,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",Ball Screen (2x),2,0.0,
-Wheaton (IL) Thunder,UWW,"Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson","BLOB Box Motion (1x), Cheetah (1x)",2,1.0,
-Wheaton (IL) Thunder,UWW,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers","5 Out Motion (3x), BLOB Set (1x), Snap (1x)",8,1.14,
-Wheaton (IL) Thunder,UWW,"JR Lukenbill, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Richie Warren","TWINS LEFT (1x), SLOB 5 Out Motion (1x), 5 Out Motion (1x)",4,1.5,
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lamar Smith, Lucas Parker",Motion (1x),1,2.0,3G-2W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lamar Smith, Peyton McKenna",Motion (1x),1,2.0,3G-2W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lucas Parker, Michael McNabb",Motion (1x),1,0.0,4G-1W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jimmy Tarjan, Lamar Smith, Peyton McKenna",Motion (1x),1,1.0,4G-1W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jimmy Tarjan, Lucas Parker, Michael McNabb",Motion (1x),1,0.0,5G
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Jacob Naber, Lamar Smith, Michael McNabb, Peyton McKenna",Motion (3x),3,0.0,3G-2W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Jimmy Tarjan, Lamar Smith, Lucas Parker, Michael McNabb",Motion (3x),3,2.0,4G-1W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Jimmy Tarjan, Lucas Parker, Michael McNabb, Peyton McKenna",Motion (1x),1,0.0,5G
+Carroll (WI) Pioneers,Opponent,"Evan Bland, Jacob Naber, Lamar Smith, Michael McNabb, Peyton McKenna","Motion (11x), Set (1x), BLOB 3 and 1 Motion (1x)",13,1.69,3G-2W
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren","SLOB Motion (1x), BLOB (1x), Ball Screen (1x)",5,1.2,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren","5 Out Motion (25x), Set (2x), in trnasntion random movement (2x)",36,0.86,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Isaac Verges, Richie Warren, Tyshawn Teague-Johnson","5 Out Motion (3x), TWINS LEFT (1x)",4,1.25,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Jake Quast, Luke Bara","5 Out Motion (3x), BLOB Line Motion (1x)",4,0.5,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren","5 Out Motion (15x), BLOB Line Motion (3x), BLOB (3x)",29,0.82,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson","BLOB Box Motion (2x), Spain (1x), 5 Out Motion (1x)",6,0.4,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen","Ball Screen (3x), BLOB (1x), Spain (1x)",5,0.0,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Richie Warren","BLOB (1x), Scissors (1x)",2,1.0,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Jake Quast, Luke Bara, Richie Warren","BLOB Box Motion (2x), Ball Screen (2x), Spain (1x)",8,1.43,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren",5 Out Motion (13x),13,0.92,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz","5 Out Motion (3x), Ball Screen (2x), Double Ball Screen (1x)",10,1.0,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Luke Bara, Richie Warren",DHO (1x),1,0.0,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren, Tyshawn Teague-Johnson","5 Out Motion (3x), Over (1x), 5 Out (1x)",5,1.0,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Joey Berezowitz","5 Out Motion (5x), Set (1x), FOUL (1x)",8,1.25,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Luke Bara","Set (1x), BLOB Set (1x), Snap 10 (1x)",3,0.67,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Richie Warren","5 Out Motion (3x), Set (1x), Iso (1x)",7,1.29,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Isaac Verges, Luke Bara, Rashad Rogers, Richie Warren","5 Out Motion (3x), BLOB Set (2x), ISO (1x)",7,0.29,
+Carroll (WI) Pioneers,UWW,"Collin Madson, JR Lukenbill, Jake Quast, Luke Bara, Richie Warren","Twins Motion (1x), 5 Out Motion (1x)",2,1.0,
+Carroll (WI) Pioneers,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren","5 Out Motion (3x), DHO (1x), Ball Screen (1x)",6,1.83,
+Carroll (WI) Pioneers,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Rashad Rogers, Richie Warren","5 Out Motion (8x), BLOB Set (1x)",9,1.12,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",Ball Screen (1x),1,3.0,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",Ball Screen (2x),2,0.0,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson","BLOB Box Motion (1x), Cheetah (1x)",2,1.0,
+Carroll (WI) Pioneers,UWW,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers","5 Out Motion (4x), BLOB Set (1x), Snap (1x)",9,1.14,
+Carroll (WI) Pioneers,UWW,"JR Lukenbill, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Richie Warren","TWINS LEFT (1x), SLOB 5 Out Motion (1x), 5 Out Motion (1x)",4,1.5,

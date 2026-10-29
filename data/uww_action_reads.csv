@@ -1,4 +1,14 @@
 side,scouted_opponent,offense_team,team,side_of_ball,role,player,action,read,uses,games,ppp,share_pct
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Ball handler (trigger),Evan Bland,Ball Screen,Use Ball Screen,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Ball handler (trigger),Evan Bland,Down Screen,Use Screen,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Screener,#23 Jimmy Tarjan,Ball Screen,Pop,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Screener,Jacob Naber,Ball Screen,Roll,3,1,1.67,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Screener,Jacob Naber,Down Screen,Pop,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Elmhurst Bluejays,Defense,Off-ball defender,#40 Aidyn Boone,Ball Screen,Flat Hedge,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,High Hedge,1,1,3.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Elmhurst Bluejays,Defense,On-ball defender,#15 Vinnie Adjahoungbeta,Ball Screen,Over,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Elmhurst Bluejays,Defense,On-ball defender,#15 Vinnie Adjahoungbeta,Down Screen,Under,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Elmhurst Bluejays,Defense,On-ball defender,(no number),Ball Screen,Over,1,1,3.0,100.0
 UWW,Carroll (WI) Pioneers,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#0 Isaac Verges,Ball Screen,Use Ball Screen,7,1,1.57,100.0
 UWW,Carroll (WI) Pioneers,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#0 Isaac Verges,Ghost,Use Ball Screen,1,1,2.0,100.0
 UWW,Carroll (WI) Pioneers,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#0 Isaac Verges,PC5,Fox,1,1,0.0,100.0

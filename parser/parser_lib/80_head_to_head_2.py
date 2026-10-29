@@ -5,6 +5,9 @@
 # read them as static bundled data (pandas.read_csv) instead of querying a SQL warehouse / Unity Catalog at
 # runtime. (The Databricks-only Delta-table export used inside the workspace is skipped in this portable
 # version -- there's no Spark session outside Databricks, and this CSV export is the app's actual data source.)
+# the season switch: last season's film rows (47_play_calls) are not this season's numbers
+if "film_pbp_end" in globals():
+    film_pbp_end()
 os.makedirs(APP_DATA_DIR, exist_ok=True)
 
 # opponent_schedules is derived straight from the combined "schedule" frame (which already loops over every

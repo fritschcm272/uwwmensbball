@@ -1,10 +1,8 @@
 opponent,player,call,ft_pct,ft_pct_adj,ftm,fta,games,note,is_sample
-Wheaton (IL) Thunder,Brady Wynja,Foul,51.0,53.0,26,51,26,,False
-Wheaton (IL) Thunder,Carson Grier,Foul,53.7,54.8,44,82,26,,False
-Wheaton (IL) Thunder,Luca Carbonaro,Neutral,66.7,67.8,8,12,14,,False
-Wheaton (IL) Thunder,Devin Martin,Neutral,67.8,67.9,82,121,26,,False
-Wheaton (IL) Thunder,Kyle Neibch,Neutral,69.2,69.5,9,13,26,,False
-Wheaton (IL) Thunder,Reid Olson,Neutral,73.1,72.5,19,26,26,,False
-Wheaton (IL) Thunder,Kyan VanderWoude,Do not foul,75.5,75.2,80,106,26,,False
-Wheaton (IL) Thunder,Soren Richardson,Do not foul,84.1,83.5,111,132,26,,False
-Wheaton (IL) Thunder,Christian Veirs,Do not foul,100.0,87.1,8,8,10,Only 10 of 26 games on film,False
+Carroll (WI) Pioneers,Jimmy Tarjan,Foul,33.3,43.8,5,15,20,,False
+Carroll (WI) Pioneers,Peyton McKenna,Foul,50.0,54.6,10,20,26,,False
+Carroll (WI) Pioneers,Evan Bland,Foul,53.5,55.5,23,43,21,,False
+Carroll (WI) Pioneers,Lamar Smith,Neutral,68.7,68.7,103,150,26,,False
+Carroll (WI) Pioneers,Dennis Estepp,Neutral,75.6,74.9,31,41,26,,False
+Carroll (WI) Pioneers,Jacob Naber,Do not foul,80.3,79.5,61,76,26,,False
+Carroll (WI) Pioneers,Michael McNabb,Do not foul,80.7,80.3,121,150,26,,False

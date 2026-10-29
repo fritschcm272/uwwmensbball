@@ -1,4 +1,5 @@
 opponent,situation,primary_defense,freq_pct,secondary_defense,note,is_sample
-Wheaton (IL) Thunder,Half court,Man-to-Man,100,,28 tagged possessions,False
-Wheaton (IL) Thunder,Offensive rebound,Man-to-Man,100,,4 tagged possessions,False
-Wheaton (IL) Thunder,Transition,Man-to-Man,100,,5 tagged possessions,False
+Carroll (WI) Pioneers,Half court,Man-to-man,78,2-3 zone (after a timeout or a long defensive stretch),"Switches 1-4, doesn't switch Lamar Smith's matchup",True
+Carroll (WI) Pioneers,BLOB,Man-to-man,60,Box-and-1 on our best shooter,Denies the first pass hard,True
+Carroll (WI) Pioneers,SLOB,Man-to-man,85,,"Same coverage as half court, no separate call seen",True
+Carroll (WI) Pioneers,After a made basket (press),1-2-1-1 full-court,30,Man-to-man (no press),Presses more in the 4th when trailing,True

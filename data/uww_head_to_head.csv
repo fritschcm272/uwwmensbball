@@ -1,1 +1,4 @@
-season,date,location,outcome,team_score,opponent_score,opponent_as_listed,game_url,source
+season,date,location,outcome,team_score,opponent_score,opponent_as_listed,game_url,source,margin,home_away,game_date,uww_leader,opp_leader
+2025-26,"Sat, Dec 13",Home,W,64.0,60.0,Carroll (WI) Pioneers,https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/au9j7soeTl2RmUly4t-vRg/boxscore?league=NCAAB-III&season=25,this season's schedule,4.0,Home,2025-12-13,Collin Madson 22,Lamar Smith 22
+2024-25,"Tue, Nov 12",Away,W,77.0,71.0,Carroll (WI) Pioneers,https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/WGSdS1cSRkOfRxtFZxsrCQ/boxscore?league=NCAAB-III&season=24,2024-25 schedule,6.0,Away,2024-11-12,,
+2023-24,"Wed, Nov 15",Home,W,86.0,77.0,Carroll (WI) Pioneers,https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/rzlfHmPpRoq-GClahhsrtA/boxscore?league=NCAAB-III&season=23,2023-24 schedule,9.0,Home,2023-11-15,,

@@ -2,6 +2,9 @@
 # Runs inside the notebook via run_section("56_compute_biggest_scoring_runs_and_largest"); its settings are in that notebook cell.
 
 # --- Scoring runs and largest lead/deficit per game, with the 5-man lineups on the floor for each ------------
+# the season switch: last season's film rows (47_play_calls) are not this season's numbers
+if "film_pbp_end" in globals():
+    film_pbp_end()
 scoring_events = pbp_events[pbp_events["event_type"].isin(["made_shot", "free_throw_made"])].copy()
 scoring_events["points"] = scoring_events.apply(
     lambda row: int(row["shot_type"]) if row["event_type"] == "made_shot" else 1, axis=1

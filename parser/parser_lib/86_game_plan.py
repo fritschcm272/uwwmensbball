@@ -1200,7 +1200,9 @@ if not _gp_pc.empty and "defense_faced" in _gp_pc.columns:
         _rc["_pts"] = pd.to_numeric(_rc.get("points"), errors="coerce")
 
         def _rec_family(r):
-            if bool(r.get("press_faced")):
+            # (a clip with no press tag is NaN, and bool(NaN) is True -- only a real True is a press)
+            _pf = r.get("press_faced")
+            if _pf is not None and not (isinstance(_pf, float) and pd.isna(_pf)) and str(_pf).strip().lower() in ("true", "1", "1.0", "yes"):
                 return "press"
             d = str(r.get("defense_faced") or "")
             return "zone" if "zone" in d.lower() else ("man" if "man" in d.lower() else "")

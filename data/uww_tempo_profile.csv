@@ -1,5 +1,5 @@
 opponent,metric,value,note,is_sample
-Wheaton (IL) Thunder,Possessions per game,74.9,Estimated over 26 game(s): FGA - OREB + TO + 0.475*FTA,False
-Wheaton (IL) Thunder,Points per possession,1.09,Their scoring over 26 game(s) of film,False
+Carroll (WI) Pioneers,Possessions per game,74.0,Estimated over 26 game(s): FGA - OREB + TO + 0.475*FTA,False
+Carroll (WI) Pioneers,Points per possession,1.05,Their scoring over 26 game(s) of film,False
 UW-Whitewater,Possessions per game,69.4,Our own pace over 29 game(s),False
-Wheaton (IL) Thunder,Early-offense share,41.0,% of 94 tagged possessions shooting inside 10 seconds,False
+Carroll (WI) Pioneers,Early-offense share,37.0,% of 71 tagged possessions shooting inside 10 seconds,False

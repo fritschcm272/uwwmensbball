@@ -1,9 +1,9 @@
 opponent,situation,crash_pct,who_crashes,note,is_sample
-Wheaton (IL) Thunder,Their missed layup / dunk,44,"Carson Grier (27), Brady Wynja (18), Kyan VanderWoude (17)",44% offensive rebound on 271 of 271 misses (0 unpaired),False
-Wheaton (IL) Thunder,Their missed two-point jumper,25,"Brady Wynja (29), Carson Grier (27), Soren Richardson (26)",25% offensive rebound on 561 of 562 misses (1 unpaired),False
-Wheaton (IL) Thunder,Their missed free throw,47,"Wheaton (IL) (64), Noah Hedrick (2), Brady Wynja (2)",47% offensive rebound on 153 of 168 misses (15 unpaired),False
-Wheaton (IL) Thunder,All their misses,34,"Wheaton (IL) (77), Carson Grier (55), Brady Wynja (49)",34% offensive rebound on 985 of 1001 misses (16 unpaired),False
-Wheaton (IL) Thunder,Opponent missed layup / dunk,68,"Carson Grier (39), Brady Wynja (35), Kyan VanderWoude (35)",They secure 68% of 288 opponent misses (1 unpaired),False
-Wheaton (IL) Thunder,Opponent missed two-point jumper,73,"Carson Grier (70), Kyan VanderWoude (68), Brady Wynja (47)",They secure 73% of 527 opponent misses (1 unpaired),False
-Wheaton (IL) Thunder,Opponent missed free throw,38,"Kyan VanderWoude (16), Carson Grier (7), Brady Wynja (7)",They secure 38% of 119 opponent misses (16 unpaired),False
-Wheaton (IL) Thunder,All opponent misses,67,"Kyan VanderWoude (119), Carson Grier (116), Brady Wynja (89)",They secure 67% of 934 opponent misses (18 unpaired),False
+Carroll (WI) Pioneers,Their missed layup / dunk,34,"Jacob Naber (30), Lamar Smith (24), Michael McNabb (22)",34% offensive rebound on 357 of 357 misses (0 unpaired),False
+Carroll (WI) Pioneers,Their missed two-point jumper,26,"Lamar Smith (27), Jacob Naber (22), Michael McNabb (13)",26% offensive rebound on 470 of 471 misses (1 unpaired),False
+Carroll (WI) Pioneers,Their missed free throw,56,"Carroll (WI) (52), Lamar Smith (6), Jacob Naber (3)",56% offensive rebound on 131 of 147 misses (16 unpaired),False
+Carroll (WI) Pioneers,All their misses,33,"Lamar Smith (57), Carroll (WI) (55), Jacob Naber (55)",33% offensive rebound on 958 of 975 misses (17 unpaired),False
+Carroll (WI) Pioneers,Opponent missed layup / dunk,56,"Lamar Smith (38), Jacob Naber (28), Dennis Estepp (18)",They secure 56% of 276 opponent misses (1 unpaired),False
+Carroll (WI) Pioneers,Opponent missed two-point jumper,72,"Lamar Smith (76), Jacob Naber (69), Dennis Estepp (50)",They secure 72% of 594 opponent misses (1 unpaired),False
+Carroll (WI) Pioneers,Opponent missed free throw,45,"Jacob Naber (16), Lamar Smith (15), Michael McNabb (9)",They secure 45% of 141 opponent misses (21 unpaired),False
+Carroll (WI) Pioneers,All opponent misses,64,"Lamar Smith (129), Jacob Naber (113), Dennis Estepp (75)",They secure 64% of 1011 opponent misses (23 unpaired),False
