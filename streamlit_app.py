@@ -8427,6 +8427,21 @@ def render_player_number_tracking():
     games = {_pnt_game_label(d.get("game")): d for d in pkgs}
     for g in (saves["game"].dropna().unique() if not saves.empty else []):
         games.setdefault(_pnt_game_label(g), None)
+    # CONFIRMED CHANGE (requested: "remove all of these games from the player number tracking ... I want to move on to a new
+    # game"): with the parser's PLAYER_TRACKING_GAMES set, it writes the game(s) it works on to uww_player_tracking_games.csv
+    # and only those are listed here (their checks are the metrics). Earlier games' saved checks are kept and still teach the
+    # tracking; Film Tagging is not affected. No file = every game (the old way).
+    _ptg_path = os.path.join(DATA_DIR, "uww_player_tracking_games.csv")
+    if os.path.exists(_ptg_path):
+        _ptg = load_table("uww_player_tracking_games")
+        _allowed = {_pnt_game_label(g) for g in (_ptg["game"].dropna() if "game" in _ptg.columns else [])}
+        games = {k: v for k, v in games.items() if k in _allowed}
+        if not saves.empty:
+            saves = saves[saves["game"].map(_pnt_game_label).isin(_allowed)]
+        if not games:
+            st.info("The parser's Player Number Tracking game (PLAYER_TRACKING_GAMES) isn't ready yet -- run parser_models: "
+                    "it exports the game, then the court calibration and the STARTERS check (first clip) show up here.")
+            return
     if not games:
         st.info("No player-check reviews yet. In the parser, run the play review for a game; its review package lands in "
                 "data/play_review/.")

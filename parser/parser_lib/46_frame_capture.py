@@ -560,6 +560,43 @@ def _vision_saved_frames(label, row):
     return []
 
 
+# CONFIRMED CHANGE (requested: "remove all of these games from the player number tracking in the application because I want
+# to move on to a new game with my new process of the court calibration and finding the starters on only the first clip --
+# Carroll's first game of 2025-26 against Washington University"; and "I do not want anything you do to affect the games
+# and clips that are currently in the film tagging section"). PLAYER_TRACKING_GAMES (frame capture cell) = the games the
+# player-number tracking works on: they're captured (exported) even outside the VISION_RECENT_GAMES window, only they are
+# tracked (every other game keeps its earlier tracking), only they get starters / player checks, and only they are listed in
+# the app's Player Number Tracking. Film Tagging is left exactly as it is: those games aren't added to it, and every other
+# game keeps its Film Tagging batches. [] / None = the old way (every tracked game).
+def _ptg_entries():
+    out = []
+    v = globals().get("PLAYER_TRACKING_GAMES") or []
+    for nm in ([v] if isinstance(v, str) else list(v)):
+        m = re.match(r"^\s*(\d{1,2})_(\d{1,2})_(\d{2,4})\s+(.*)$", str(nm))
+        if not m:
+            print(f"PLAYER_TRACKING_GAMES entry {nm!r} not understood (like '11_7_25 Carroll (WI) Pioneers @ "
+                  f"Washington-St. Louis Bears')", flush=True)
+            continue
+        d = pd.Timestamp(int(m.group(3)) + (2000 if len(m.group(3)) == 2 else 0), int(m.group(1)), int(m.group(2)))
+        words = {w for w in re.split(r"[^a-z0-9]+", m.group(4).lower())
+                 if len(w) > 3 and w not in {"whitewater", "warhawks", "pioneers", "bears", "louis"}}
+        out.append((str(nm), d, words))
+    return out
+
+
+def player_tracking_listed(game_date, game_label):
+    """None when PLAYER_TRACKING_GAMES is off (every game is tracked); else True / False: is this game one of them?
+    game_label = the play calls' game code ("Carroll(WI)@Wash(StLouis)") or a page label -- matched by the date (within a
+    day) and a team word."""
+    ents = _ptg_entries()
+    if not ents:
+        return None
+    gd = pd.to_datetime(game_date, errors="coerce")
+    lab = re.sub(r"[^a-z0-9]+", "", str(game_label or "").lower())
+    return any(pd.notna(gd) and abs((gd.normalize() - d).days) <= 1 and any(w[:5] in lab for w in ws)
+               for _nm, d, ws in ents)
+
+
 def _vision_named_game():
     """VISION_ONLY_GAME -> (date, opponent words), or None. Same name format as the _pbp/_video files."""
     if not VISION_ONLY_GAME:
@@ -1423,6 +1460,97 @@ def _vx_make_export(game_id, label):
     return folder
 
 
+# CONFIRMED CHANGE (requested: "When you are done exporting clips from Synergy, it should close the box and clear the
+# cache"). Once every clip video of an export is written: the "Export is available." box is closed (its Close button), and
+# Synergy Editor's cache is cleared -- the folders with "cache" in their name under a Synergy folder in the Windows app-data
+# and temp folders (LOCALAPPDATA, APPDATA, TEMP), plus the export's own leftover video_temp folder. Files Synergy Editor still
+# has open are skipped. Everything cleared is listed in the run. SYNERGY_EXPORT_CLOSE_BOX / SYNERGY_CLEAR_CACHE = False turn
+# either off.
+def _sst_close_export_box(timeout_s=20):
+    try:
+        auto = _sst_uia()
+    except Exception as e:
+        print(f"  [export] export box not closed (uiautomation: {type(e).__name__}: {e})", flush=True)
+        return False
+    cmd = _sst_editor_handler() or ""
+    m = re.match(r'^\s*"([^"]+)"|^\s*(\S+)', cmd)
+    exe_name = os.path.basename((m.group(1) or m.group(2)) if m else "Synergy.Editor.Basketball.exe")
+    t0 = time.time()
+    while time.time() - t0 < timeout_s:
+        for w in _sst_editor_windows(auto, _sst_editor_pids(exe_name)):
+            for d in [w] + [c for c in _sst_walk(auto, w, 8) if c.ControlTypeName == "WindowControl"]:
+                kids = _sst_walk(auto, d, 12)
+                if not (re.match(r"(?i)^\s*export\b", d.Name or "")
+                        or any(re.search(r"(?i)export is available", c.Name or "") for c in kids)):
+                    continue
+                btn = next((c for c in kids if c.ControlTypeName == "ButtonControl"
+                            and re.match(r"(?i)^\s*close\s*$", c.Name or "")), None)
+                if btn is None:
+                    continue
+                try:
+                    try:
+                        btn.GetInvokePattern().Invoke()
+                    except Exception:
+                        btn.Click(simulateMove=False)
+                    print(f"  [export] closed Synergy Editor's export box ({(d.Name or '').strip()!r})", flush=True)
+                    return True
+                except Exception as e:
+                    print(f"  [export] export box not closed ({type(e).__name__}: {e})", flush=True)
+                    return False
+        time.sleep(2)
+    print("  [export] (no 'Export is available' box found to close)", flush=True)
+    return False
+
+
+def _sst_clear_cache(folder=None):
+    import shutil as _sh_c
+    roots = [os.environ.get(k) for k in ("LOCALAPPDATA", "APPDATA", "TEMP")]
+    targets = []
+    for r in [x for x in roots if x and os.path.isdir(x)]:
+        try:
+            syn = [os.path.join(r, d) for d in os.listdir(r) if re.search(r"(?i)synergy", d)]
+        except Exception:
+            syn = []
+        for sd in syn:
+            for dp, dns, _fns in os.walk(sd):
+                for dn in list(dns):
+                    if re.search(r"(?i)cache", dn):
+                        targets.append(os.path.join(dp, dn))
+                        dns.remove(dn)                       # its contents are cleared with it
+    if folder and os.path.isdir(os.path.join(folder, "video_temp")):
+        targets.append(os.path.join(folder, "video_temp"))
+    freed, skipped, done = 0, 0, []
+    for t in targets:
+        n0 = 0
+        for dp, _dns, fns in os.walk(t, topdown=False):
+            for fn in fns:
+                fp = os.path.join(dp, fn)
+                try:
+                    sz = os.path.getsize(fp)
+                    os.remove(fp)
+                    n0 += sz
+                except Exception:
+                    skipped += 1
+            if dp != t:
+                try:
+                    os.rmdir(dp)
+                except Exception:
+                    pass
+        if t.endswith("video_temp"):
+            try:
+                os.rmdir(t)
+            except Exception:
+                pass
+        freed += n0
+        done.append(f"{t} ({n0 / 1024 ** 2:,.0f} MB)")
+    if done:
+        print(f"  [export] cleared Synergy's cache: {freed / 1024 ** 3:.2f} GB freed -- " + "; ".join(done)
+              + (f" ({skipped} file(s) in use were left)" if skipped else ""), flush=True)
+    else:
+        print("  [export] no Synergy cache folder found to clear (looked under LOCALAPPDATA, APPDATA and TEMP)", flush=True)
+    return freed
+
+
 def _vx_wait_done(folder):
     """Wait until every clip in Export.csv has its video, and the newest video stopped growing. -> True when complete."""
     wait_s = float(globals().get("VISION_EXPORT_WAIT_MIN", 90)) * 60
@@ -1629,6 +1757,7 @@ def _vision_from_exports(sources, cache):
             print(f"  [export] {label}: no Synergy game ID in its video link -- skipped", flush=True)
             continue
         folder = _vx_find_export(gid, label, url, cache)
+        _vx_new = False                                   # exported by this run (then its box is closed / cache cleared)
         if folder is None:
             if not globals().get("VISION_EXPORT_AUTO", True) or sys.platform != "win32":
                 print(f"  [export] {label}: no Synergy export in {_vx_root()} -- export the game from Synergy Editor "
@@ -1641,8 +1770,22 @@ def _vision_from_exports(sources, cache):
                 folder = None
             if folder is None:
                 continue
+            _vx_new = True
         print(f"  [export] {label}: export {os.path.basename(folder)!r}", flush=True)
-        _vx_wait_done(folder)
+        _vx_ok = _vx_wait_done(folder)
+        # (also an export that finished since the last run -- Export.csv written in the last 3 hours)
+        try:
+            _vx_recent = (time.time() - os.path.getmtime(os.path.join(folder, "Export.csv"))) < 3 * 3600
+        except Exception:
+            _vx_recent = False
+        if _vx_ok and sys.platform == "win32" and (_vx_new or _vx_recent):
+            if globals().get("SYNERGY_EXPORT_CLOSE_BOX", True):
+                _sst_close_export_box()
+            if globals().get("SYNERGY_CLEAR_CACHE", True):
+                try:
+                    _sst_clear_cache(folder)
+                except Exception as e:
+                    print(f"  [export] cache not cleared ({type(e).__name__}: {e})", flush=True)
         cache = _vis_dedupe(_vx_ingest(label, url, folder, cache))
         cache.to_csv(VISION_CACHE, index=False)
     return cache
@@ -1707,7 +1850,10 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
         _nrec = globals().get("VISION_RECENT_GAMES", 2)
         _cand.sort(key=lambda x: x[0], reverse=True)
         if _nrec and not VISION_ONLY_GAME:
-            _cand = _cand[:int(_nrec)]
+            # (a PLAYER_TRACKING_GAMES game is captured even when it's older than the window)
+            _cand = _cand[:int(_nrec)] + [c for c in _cand[int(_nrec):] if player_tracking_listed(
+                c[0], f"{globals().get('upcoming_opponent_short') or ''} {c[1].get('opponent', '')}"
+                if _sched_name == "prev_games" else f"whitewater {c[1].get('opponent', '')}")]
         for _ri, (_gts, _g) in enumerate(_cand):
             _vis_recent_idx[_g["video_url"]] = _ri
             _gd = None if _gts == pd.Timestamp.min else _gts
@@ -1791,8 +1937,9 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
     # matched by the date within a day and a team word in the game's label). Only games in each side's VISION_RECENT_GAMES
     # window. A game already captured is skipped as usual. [] / None = off.
     _also = globals().get("VISION_ALSO_GAMES", [])
+    _also = ([_also] if isinstance(_also, str) else list(_also or [])) + [e[0] for e in _ptg_entries()]
     _force = set()
-    for _nm in ([_also] if isinstance(_also, str) else list(_also or [])):
+    for _nm in _also:
         _m = re.match(r"^\s*(\d{1,2})_(\d{1,2})_(\d{2,4})\s+(.*)$", str(_nm))
         if not _m:
             print(f"Frame capture: VISION_ALSO_GAMES entry {_nm!r} not understood (like '2_21_26 Millikin @ Wheaton')", flush=True)

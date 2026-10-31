@@ -824,7 +824,14 @@ def _jr_inputs_fingerprint():
     parts = []
     # CONFIRMED CHANGE (requested: everything in the data folder): coach checks are the saved reviews in
     # <data>/play_review_saves (any .json there is a review, whatever its name)
+    # CONFIRMED BUG (fixed; "is it doing stuff for more than just the first clip?" -- a coach's Film Tagging save made the
+    # recognizer cut crops from all 1,316 player checks again, ~5 min, for 0 new crops). Only PLAYER checks (player /
+    # starters checks, track validations, older combined reviews) can teach it; Film Tagging / Title saves and court
+    # calibrations are left out of the "anything new?" test.
     for f in glob.glob(os.path.join(_play_review_file_saves(), "*.json")):
+        _b = os.path.basename(f).lower()
+        if re.search(r"(^|_)tag_|_titles?_|^court_calibration", _b) and not re.search(r"_(players|starters)_", _b):
+            continue
         parts.append((os.path.basename(f), os.path.getsize(f), int(os.path.getmtime(f))))
     def _dir_state(d):
         # CONFIRMED BUG (fixed; the recognizer never said "nothing new ... skipped"): the training folder's state counted this
