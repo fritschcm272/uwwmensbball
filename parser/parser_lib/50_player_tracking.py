@@ -1983,6 +1983,16 @@ def player_tracking(pc):
         if _left:
             print(f"  [tracking] Synergy-export games only (TRACK_EXPORT_ONLY): {len(_left)} game(s) on the old web captures "
                   f"left out -- " + "; ".join(f"{g} ({n} clips)" for g, n in _left), flush=True)
+    # CONFIRMED CHANGE (requested: move the player-number tracking on to one new game -- PLAYER_TRACKING_GAMES, frame capture
+    # cell): only those games are tracked; every other game keeps its earlier results (_trk_carry_previous)
+    _ptl = globals().get("player_tracking_listed")
+    if _ptl is not None and todo and _ptl(pc.at[todo[0], "game_date"], pc.at[todo[0], "game_code"]) is not None:
+        _left_g = sorted({f"{pc.at[i, 'game_date']} {pc.at[i, 'game_code']}" for i in todo
+                          if not _ptl(pc.at[i, "game_date"], pc.at[i, "game_code"])})
+        todo = [i for i in todo if _ptl(pc.at[i, "game_date"], pc.at[i, "game_code"])]
+        print(f"  [tracking] PLAYER_TRACKING_GAMES: tracking only {', '.join(str(x) for x in globals().get('PLAYER_TRACKING_GAMES') or [])}"
+              + (f" -- {len(_left_g)} other game(s) keep their earlier tracking" if _left_g else "")
+              + ("" if todo else " -- none of its clips have frames yet (Frame capture exports it)"), flush=True)
     todo = _trk_starters_first(pc, todo)
     if not todo:
         return None, pd.DataFrame(), []
@@ -4960,7 +4970,12 @@ def _trk_run_all():
             _prev = _trk_previous_results()
             _trk_cols, player_tracks, _trk_rep = player_tracking(play_calls)
             if _trk_cols is None:
-                print("Player tracking: no clips have tracking frames yet -- run frame capture with VISION_TRACK_FPS > 0.")
+                print("Player tracking: no clips to track this run -- run frame capture with VISION_TRACK_FPS > 0 "
+                      "(or the PLAYER_TRACKING_GAMES game isn't exported yet).")
+                # every clip tracked before keeps its results (nothing is lost when this run tracks nothing)
+                _trk_carry_previous(*_prev)
+                if "reuse_previous_table" in globals():
+                    tracking_report = reuse_previous_table("uww_tracking_report")
             else:
                 for _c in _TRACK_COLS:
                     play_calls[_c] = _trk_cols[_c]
@@ -5050,6 +5065,9 @@ def _trk_court_precheck():
     if globals().get("TRACK_EXPORT_ONLY", True):
         _keep, _left = _trk_export_games(rows, base)
         rows = rows[rows.index.isin(_keep)]               # only the games tracking will run on
+    _ptl = globals().get("player_tracking_listed")        # PLAYER_TRACKING_GAMES: only those games are tracked
+    if _ptl is not None and not rows.empty and _ptl(rows["game_date"].iloc[0], rows["game_code"].iloc[0]) is not None:
+        rows = rows[[bool(_ptl(a, b)) for a, b in zip(rows["game_date"], rows["game_code"])]]
     if rows.empty:
         return
     ok_arenas = set()
@@ -5165,6 +5183,10 @@ def _trk_starters_precheck():
             stp = next((p for p in doc.get("plays", []) if p.get("kind") == "starters"
                         or "starters" in (p.get("parts") or [])), None)
             slug = re.sub(r"[^A-Za-z0-9]+", "_", str(doc.get("game"))).strip("_")
+            _ptl = globals().get("player_tracking_listed")          # PLAYER_TRACKING_GAMES: other games never stop the run
+            if _ptl is not None and "|" in str(doc.get("game")) \
+                    and _ptl(*str(doc.get("game")).split("|", 1)) is False:
+                continue
             # a starters check that WAS saved but doesn't put all ten starters on a player yet: no stop -- this run tracks the
             # tipoff clip again (with the players you named) and the Play review brings the check back for the ones missing
             if stp is not None and slug not in saved and "_run_parts_saved" in globals() \

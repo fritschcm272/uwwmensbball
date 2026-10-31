@@ -912,6 +912,24 @@ def play_review():
 
     globals()["_tag_cur_run"] = None                  # this run's games, worked out fresh (see _tag_run_reason)
     _keep_slugs = set()                               # the games whose player checks stay in the app this run
+    # CONFIRMED CHANGE (requested: Player Number Tracking moves on to one new game -- PLAYER_TRACKING_GAMES, frame capture
+    # cell). Only those games get starters / player checks; every other game's Title checks go on exactly as before. The
+    # app lists only them in Player Number Tracking (uww_player_tracking_games.csv; no file = every game, the old way).
+    _ptl = globals().get("player_tracking_listed")
+    _ptg_file = os.path.join(_pr_app_dir(), "uww_player_tracking_games.csv")
+    _ptg_on = _ptl is not None and bool(globals().get("PLAYER_TRACKING_GAMES"))
+    try:
+        if _ptg_on:
+            _ptg_keys = sorted({f"{a}|{b}" for a, b in play_calls[["game_date", "game_code"]].dropna().drop_duplicates()
+                               .itertuples(index=False) if _ptl(a, b)})
+            pd.DataFrame({"game": _ptg_keys}, columns=["game"]).to_csv(_ptg_file, index=False)
+            print(f"Play review: Player Number Tracking works on {', '.join(map(str, globals().get('PLAYER_TRACKING_GAMES')))}"
+                  + (f" ({', '.join(_ptg_keys)})" if _ptg_keys else " -- not captured yet (Frame capture exports it)")
+                  + "; other games keep their Title checks, no new player checks", flush=True)
+        elif os.path.exists(_ptg_file):
+            os.remove(_ptg_file)
+    except Exception as _pe:
+        print(f"Play review: player-tracking game list not written ({type(_pe).__name__}: {_pe})", flush=True)
     # CONFIRMED CHANGE (requested: "I want to be given a clip right at the tipoff (first possession) for each game ... use the
     # models to find all 10 of the starters ... I will then validate and determine the actual 10 starters"). Until a game's
     # starters are saved, its open batch also carries a STARTERS check: the first tracked possession, every box with what
@@ -933,7 +951,8 @@ def play_review():
         # being the opponent). The player checks follow the same "this run only" rule as Film Tagging (PLAY_TAG_RUN_ONLY): the
         # upcoming opponent's games and our most recent game. A game outside the run gets no batch, and its open one (nothing
         # saved in it) leaves the app; saved checks are kept and still teach the tracking.
-        if not PLAY_REVIEW_ONLY_GAME and _tag_run_reason(gd, gc, g) is None:
+        _ptg_this = _ptl(gd, gc) if _ptg_on else None      # True / False with PLAYER_TRACKING_GAMES, else None
+        if not PLAY_REVIEW_ONLY_GAME and not _ptg_this and _tag_run_reason(gd, gc, g) is None:
             if os.path.isdir(_pkg):
                 shutil.rmtree(_pkg, ignore_errors=True)
                 print(f"Play review: removed the open review for {gd} {gc} from the app -- not part of this run "
@@ -946,6 +965,8 @@ def play_review():
         # only NEW games get the starters check (new_game_in_process: no player checks saved before this process; see the
         # play calls section -- also PLAY_REVIEW_STARTERS_GAMES)
         _st_this = _st_on and new_game_in_process(f"{gd}|{gc}", _st_info) if _st_info is not None else False
+        if _ptg_this is False:
+            _st_this = False                              # not a PLAYER_TRACKING_GAMES game: no starters / player checks
         _st_need = _pr_tipoff_index(g) if _st_on and _st_this and _slug_app not in _st_saved else None
         # CONFIRMED CHANGE (requested: everything in the data folder; the Title and player-number checks are done in the
         # Streamlit app, not review.html pages). A game's open review is its package in <data>/play_review/<game>/. With
@@ -1016,7 +1037,7 @@ def play_review():
             # in a different game" -- 20 player checks were built for Wheaton @ North Park and WashU next to their starters
             # checks). While a game's starters check is open, it gets NO other player checks: the next clips come once all ten
             # starters are identified.
-            if _st_need is not None:
+            if _st_need is not None or _ptg_this is False:
                 _pp = _pp.iloc[0:0]
             # Title checks: only clips a coach already tagged (a Synergy Title) -- untagged clips are tagged in their own
             # Film Tagging batch (requested: tagging only on Analytics > Film Tagging, no duplicate plays)
@@ -1473,6 +1494,13 @@ def tag_queue():
         slug_game = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
         slug = "tag_" + slug_game
         pkg = os.path.join(_pr_app_dir(), "play_tag", slug)
+        # (requested: Film Tagging stays exactly as it is -- a PLAYER_TRACKING_GAMES game isn't added to it;
+        # PLAY_TAG_INCLUDE_TRACKING_GAMES = True adds it)
+        _ptl_t = globals().get("player_tracking_listed")
+        if _ptl_t is not None and _ptl_t(gd, gc) and not globals().get("PLAY_TAG_INCLUDE_TRACKING_GAMES", False) \
+                and not os.path.isdir(pkg):
+            print(f"Film Tagging: {gd} {gc} left out -- it's a Player Number Tracking game (PLAYER_TRACKING_GAMES)", flush=True)
+            continue
         if not PLAY_REVIEW_ONLY_GAME and _tag_run_reason(gd, gc, g) is None:
             _outside.append(f"{gd} {gc}")
             if os.path.isdir(pkg):

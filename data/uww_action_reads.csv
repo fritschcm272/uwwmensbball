@@ -2,8 +2,8 @@ side,scouted_opponent,offense_team,team,side_of_ball,role,player,action,read,use
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Ball handler (trigger),Evan Bland,Ball Screen,Use Ball Screen,1,1,0.0,100.0
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Ball handler (trigger),Evan Bland,Down Screen,Use Screen,1,1,0.0,100.0
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Screener,#23 Jimmy Tarjan,Ball Screen,Pop,1,1,0.0,100.0
-Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Screener,Jacob Naber,Ball Screen,Roll,3,1,1.67,100.0
-Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Screener,Jacob Naber,Down Screen,Pop,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Screener,#41 Jayce Brechtl,Ball Screen,Roll,3,1,1.67,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Screener,#41 Jayce Brechtl,Down Screen,Pop,1,1,0.0,100.0
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Elmhurst Bluejays,Defense,Off-ball defender,#40 Aidyn Boone,Ball Screen,Flat Hedge,1,1,0.0,100.0
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,High Hedge,1,1,3.0,100.0
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Elmhurst Bluejays,Defense,On-ball defender,#15 Vinnie Adjahoungbeta,Ball Screen,Over,1,1,0.0,100.0
