@@ -8149,21 +8149,40 @@ def _cc_page():
         st.info("No gym is waiting for a court calibration. When the parser tracks a game in a new gym, it puts that gym "
                 "here (push the data folder after the run).")
         return
+    # a save counts for a request only when it was clicked on that request's frames (a gym calibrated from ANOTHER game
+    # doesn't count -- the parser asks for a calibration on the new game's own frames)
+    _mine = lambda r: [d_ for d_ in saved.get(str(r.get("arena")), [])
+                       if {f_.get("file") for f_ in d_.get("frames", [])} & {f_.get("file") for f_ in r.get("frames", [])}]
     label = {}
     for r in reqs:
-        n = len(saved.get(str(r.get("arena")), []))
+        n = len(_mine(r))
         label[f"{r.get('arena')} -- {r.get('game')}" + (" (saved -- the parser uses it next run)" if n else "")] = r
     pick = st.selectbox("Gym", list(label), key="cc_gym")
     req = label[pick]
     gym = str(req.get("arena"))
     lms = {k: tuple(v) for k, v in req["landmarks"].items()}
     frames = req["frames"]
-    store = st.session_state.setdefault("cc_points", {}).setdefault(gym, {})
-    if not store and saved.get(gym):                              # start from the newest save of this gym
-        for f_ in saved[gym][-1].get("frames", []):
+    store = st.session_state.setdefault("cc_points", {}).setdefault(f"{gym}|{req.get('game')}", {})
+    _my_saves = _mine(req)
+    if not store and _my_saves:                                   # start from the newest save of these frames
+        for f_ in _my_saves[-1].get("frames", []):
             store[f_.get("file")] = [p for p in f_.get("points", []) if p.get("landmark") in lms]
-    if saved.get(gym):
-        last = saved[gym][-1]
+    # CONFIRMED CHANGE (requested: "default the old landmark entries onto these frames and I can just confirm that it still
+    # works for this gym"): the parser carries the gym's earlier calibration onto each new frame ("suggested") -- those
+    # points start on the frame; confirm them (or click to move any that are off) and Save
+    _sug_n = 0
+    for f_ in frames:
+        if f_.get("file") not in store and f_.get("suggested"):
+            store[f_["file"]] = [dict(p) for p in f_["suggested"] if p.get("landmark") in lms]
+            _sug_n += 1
+    if any(f_.get("suggested") for f_ in frames) and not _my_saves:
+        _from = next((f_.get("suggested_from") for f_ in frames if f_.get("suggested_from")), None)
+        st.info(f"Pre-filled from this gym's earlier calibration" + (f" ({_from})" if _from else "")
+                + f" on {sum(1 for f_ in frames if f_.get('suggested'))} of {len(frames)} frame(s). Check that each dot sits on "
+                "its landmark and the cyan court lines sit on the real lines. If one is off, pick it on the court diagram and "
+                "click its real spot. Then Save -- that confirms the calibration for this game.")
+    if _my_saves:
+        last = _my_saves[-1]
         st.success(f"Saved by {last.get('coach') or 'a coach'} ({str(last.get('saved', ''))[:16].replace('T', ' ')} UTC) -- the "
                    "parser uses it on its next run. You can still change it and save again (the newest save is used).")
 

@@ -35,6 +35,11 @@ PARSER_MODES = {
         "run": _PM_MODEL,
         "flags": {},                                                        # the notebook's own settings
         "save": "models",
+        # CONFIRMED CHANGE (requested: "parser_models needs to remove the print out and tables similar to parser_brief"):
+        # one "done" line per section; everything else goes to the log. The lines you act on still show up AS THEY HAPPEN
+        # (quiet_show): problems ("!!"), the Synergy export, the court calibration and the starters check.
+        "quiet": True,
+        "quiet_show": r"!!|\[export\]|\[court\]|\[starters\]|Starters to validate|calibrat|STOP",
     },
     "tagging": {
         "label": "New clips for Film Tagging, fast (no automatic Titles, no tracking)",
@@ -103,6 +108,31 @@ def _pm_save(kind):
     print(f"[{kind}] saved {n} table(s) to {d} -- commit and push the data folder for the app", flush=True)
 
 
+import io as _pm_io_mod
+
+
+class _PmQuietBuf(_pm_io_mod.StringIO):
+    """Quiet mode's capture: everything is kept for the log; a line matching `show` (a regex) also goes to the notebook
+    right away."""
+
+    def __init__(self, show=None, out=None):
+        super().__init__()
+        self._rx = _pm_re.compile(show) if show else None
+        self._out = out
+        self._part = ""
+
+    def write(self, s):
+        n = super().write(s)
+        if self._rx is not None and self._out is not None:
+            self._part += str(s)
+            *lines, self._part = self._part.split("\n")
+            for ln in lines:
+                if self._rx.search(ln):
+                    self._out.write(ln + "\n")
+                    self._out.flush()
+        return n
+
+
 def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb", quiet=None):
     """Run parser_nb.ipynb's cells for one job: "models", "tagging" or "brief" (see the top of this file).
     start_at = a section name ("50_player_tracking") to continue from after a stop -- the sections above it are not run
@@ -154,7 +184,7 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
         if not quiet:
             exec(compile(code, f"<{notebook} cell {ci}>", "exec"), G)
         else:
-            _buf = _pm_io.StringIO()
+            _buf = _PmQuietBuf(plan.get("quiet_show"), _real_out)
             _disp = G.get("display")
             _to_log = lambda *a, **k: _buf.write("".join(str(x) for x in a) + "\n")       # tables go to the log too
             G["display"] = _to_log
@@ -210,6 +240,8 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
                         G["_pm_depth"] = depth
                     if _q and depth == 0 and _out is not None:
                         _probs = []
+                        if PARSER_MODES.get(m or "", {}).get("quiet_show"):
+                            _mark = None                       # (already shown as they happened)
                         if _mark is not None and hasattr(_pm_sys.stdout, "getvalue"):
                             _probs = [ln.strip() for ln in _pm_sys.stdout.getvalue()[_mark:].splitlines() if "!!" in ln][:5]
                         _out.write(f"done  {base}  ({_pm_time.time() - _t0:.0f} s)\n"
