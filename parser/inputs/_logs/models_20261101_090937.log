@@ -1,0 +1,503 @@
+
+===== cell 1 <file> =====
+
+===== cell 108 46_frame_capture =====
+Frame archive: 32,487 tracking frame(s) are packed in clip videos -- unpacked automatically when a step reads them.
+Frame capture: VISION_ALSO_GAMES '11_7_25 Carroll (WI) Pioneers @ Washington-St. Louis Bears' -- already captured, or not one of the games in the window
+Frame capture: UWW -- working on 2026-03-07 Washington-St. Louis Bears (45 of 167 clips still untagged -- Analytics > Film Tagging); its next game waits until the coaches finish it.
+Frame capture: game pages still to capture -- 1 of the upcoming opponent's (Carroll (WI) Pioneers), 0 of UWW's; UWW games first (VISION_CAPTURE_FIRST), newest first.
+Frame capture: completing 2026-02-24 Carroll (WI) Pioneers vs Elmhurst Bluejays (some clips' frames are missing or failed) -- only what's missing is captured.
+Frame capture: 1 game page(s) (all clips)
+  [export] 2026-02-24 Carroll (WI) Pioneers vs Elmhurst Bluejays: export 'Carroll(WI)@Elmhurst - Feb 24, 2026'
+  [export] Carroll(WI)@Elmhurst - Feb 24, 2026: the export STOPPED at 201 of 234 clip videos (nothing new for 5364 min) -- using the 201 there. Disk: 1683.7 GB free; the other 33 clips need about 0.5 GB. Most likely the disk filled up: free space (or set SYNERGY_EXPORT_DIR to the big drive), then export the game again in Synergy Editor (Ctrl+E) into the same folder, or move this folder away so the next run exports it again.
+  [export] 2026-02-24 Carroll (WI) Pioneers vs Elmhurst Bluejays: 234 clips in the export (176 after skipping free throws); tracking frames 1920 wide, 4 a second
+    25 clip(s) registered (2s)
+    50 clip(s) registered (4s)
+    75 clip(s) registered (5s)
+    100 clip(s) registered (7s)
+    125 clip(s) registered (8s)
+    150 clip(s) registered (10s)
+  [export] 2026-02-24 Carroll (WI) Pioneers vs Elmhurst Bluejays: 160 clip(s) from the export, 0 kept from the earlier web capture, 16 with errors (see the 'error' column) (12s)
+  Frames are under ./inputs\_vision_frames -- open a few to check they show the play.
+Clips with frames: 2052 of 2082 in uww_clip_frames.csv -- 16 with capture errors (see the 'error' column)
+  (15 more row(s) with errors are from an old TEST capture of 2026-03-06 Loras Duhawks -- replaced when that game is captured)
+  Capture errors (first 3): clip video not in the export (the export stopped before it, or it is still being written) | clip video not in the export (the export stopped before it, or it is still being written) | clip video not in the export (the export stopped before it, or it is still being written)
+
+===== cell 110 47_play_calls =====
+  Captured clips with no Title: 1519 clip(s) from 10 game(s) not in uww_plays.csv added as play calls (532 placed on the play-by-play clock through the video-tagging match; the rest have no half / clock, so no lineups). The app's Play review is where they get tagged.
+  Blank Team on 58 clip(s) (Synergy's Non Shooting Foul clips): filled with the named player's own team -- 57 from his other clips in the game, 0 from the play-by-play (he drew the foul, so his team had the ball)
+  Play clips by game type: UWW 784 clip(s) in 6 game(s), Opponent 381 clip(s) in 2 game(s), Other 1098 clip(s) in 6 game(s)
+  [saves] fetched branch 'saves': 1 new saved review file(s) copied into data/play_review_saves (52 on the branch; its newest commit: 2026-11-01 09:08:20 -0600  Play review: 2025-11-07|Carroll(WI)@Wash(StLouis) by Corey)
+  [saves] 50 saved review file(s) read from play_review_saves:
+    2025-11-07|Carroll(WI)@Wash(StLouis): 1 file(s) by Corey (latest 2026-11-01 15:08 UTC) -- 1 play(s) with coach answers
+    2025-12-30|WWW@COE: 1 file(s) by Corey (latest 2026-10-05 13:45 UTC) -- 20 play(s) with coach answers
+    2026-01-03|WOS@WWW: 12 file(s) by Corey, someone (latest 2026-10-10 00:18 UTC) -- 77 play(s) with coach answers
+    2026-02-21|Millikin@WheatonIL: 4 file(s) by Corey (latest 2026-10-28 16:15 UTC) -- 1 play(s) with coach answers
+    2026-02-24|Carroll(WI)@Elmhurst: 3 file(s) by Coach Jake (latest 2026-10-29 18:18 UTC) -- 15 play(s) with coach answers
+    2026-02-24|WheatonIL@NorthPark: 7 file(s) by Coach Jake, Corey (latest 2026-10-27 14:07 UTC) -- 115 play(s) with coach answers
+    2026-02-26|MarianWI@MSOE: 2 file(s) by Coach Jake, CoreyTEST (latest 2026-10-21 15:41 UTC) -- 14 play(s) with coach answers
+    2026-03-07|UWWhitewater@Wash(StLouis): 20 file(s) by COACH JAKE, Coach Jake, Corey (latest 2026-10-27 13:54 UTC) -- 137 play(s) with coach answers
+  Film Tagging: answers saved before the tracking reset, and test saves, are set aside (TITLE_CHECKS_BEFORE_RESET = True uses the old ones again):
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-10-01T17:23:50.635Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-09-30T18:14:20.554Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-10-01T19:48:37.750Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-07T19:03:11+00:00 -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-09T00:23:56+00:00 -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-10T00:18:04+00:00 -- before the restart on the Synergy exports
+    - 2026-02-26|MarianWI@MSOE by CoreyTEST, saved 2026-10-13T21:18:09+00:00 -- a test save
+  App tags: 122 clip(s) tagged in the app (no Title) and 0 coach Title(s) corrected in the app -- used in every play-call table like a Title; 18 play(s) with more than one action recorded
+  Lineups: 19 clip(s) with no matched play-by-play event got their uww lineup from the game clock
+  Lineups: 19 clip(s) with no matched play-by-play event got their opp lineup from the game clock
+  App tags: 31 clip(s) tagged in the app (no Title) and 0 coach Title(s) corrected in the app -- used in every play-call table like a Title; 5 play(s) with more than one action recorded
+  Upcoming-opponent games: 193 clip(s) are the OTHER team's offense -- kept, but excluded from Carroll (WI) Pioneers's play-call scouting.
+  Lineups: 62 clip(s) with no matched play-by-play event got their self lineup from the game clock
+  Lineups: 62 clip(s) with no matched play-by-play event got their their lineup from the game clock
+  App tags: 100 clip(s) tagged in the app (no Title) and 0 coach Title(s) corrected in the app -- used in every play-call table like a Title; 2 play(s) with more than one action recorded
+  Frames matched to 2052 of 2263 clip(s) (2082 captured).
+    captured page '2025-11-07 Carroll (WI) Pioneers vs Washingto': 221 clip(s), 221 matched to tagged clips
+    captured page '2025-12-20 Alma Scots': 174 clip(s), 174 matched to tagged clips
+    captured page '2025-12-30 Coe Kohawks': 175 clip(s), 175 matched to tagged clips
+    captured page '2026-01-03 UW-Oshkosh Titans': 196 clip(s), 196 matched to tagged clips
+    captured page '2026-02-21 MSOE Raiders vs Aurora Spartans': 165 clip(s), 165 matched to tagged clips
+    captured page '2026-02-21 Wheaton (IL) Thunder vs Millikin B': 179 clip(s), 179 matched to tagged clips
+    captured page '2026-02-24 Carroll (WI) Pioneers vs Elmhurst ': 176 clip(s), 160 matched to tagged clips
+    captured page '2026-02-24 MSOE Raiders vs Lakeland Muskies': 179 clip(s), 179 matched to tagged clips
+    captured page '2026-02-24 Wheaton (IL) Thunder vs North Park': 244 clip(s), 244 matched to tagged clips
+    captured page '2026-02-26 MSOE Raiders vs Marian (WI) Sabres': 191 clip(s), 191 matched to tagged clips
+    captured page '2026-03-06 Loras Duhawks': 15 clip(s), 1 matched to tagged clips
+    captured page '2026-03-07 Washington-St. Louis Bears': 167 clip(s), 167 matched to tagged clips
+    tagged game 2026-01-03 WEC@WSP: 140 clip(s), no frames -- a game between two other teams (not UWW or the upcoming opponent), which Frame capture doesn't capture; used from its Titles only
+  (frame check: 34 non-possession line(s) (free throws, no violation) in 2025-12-20 WWW@AC have no clip on Synergy's page and are not counted)
+  (frame check: 36 non-possession line(s) (free throws, no violation) in 2025-12-30 WWW@COE have no clip on Synergy's page and are not counted)
+  (frame check: 1 non-possession line(s) (free throws, no violation) in 2026-01-03 WOS@WWW have no clip on Synergy's page and are not counted)
+  play_call_summary: 190 offensive row(s), 124 defensive.
+  screen_coverage: 108 tagged screen coverage(s) -- Defenses UWW faced: 54, UWW defense: 49, Defenses opponent faced: 5
+  screen defense by defender: 5 row(s) (defenders with 2+ tagged screens); action reads: 80 row(s) from Film Tagging's Actions / Players -- 4 team(s), 5 defender reaction row(s)
+UWW games: 784 clip(s) across 5 game(s); decoded {'No call': 526, 'App tag': 116, 'Clean': 83, 'Untagged': 58, 'Partial': 1}; matched to play-by-play 679/784 ({'synergy string': 561, 'player + clock': 77, 'clip order + foul by the defense': 24, 'clip order + player': 11, 'clock + result': 6}).
+  First unmatched clips (date, period, clock, player, result):
+     game_date period  Clock           player                result
+0   2025-12-20     H1    NaN  Donovan Collins          No Violation
+3   2025-12-20     H1  19:11     Brock Marino            Miss 2 Pts
+5   2025-12-20     H1    NaN    Collin Madson          No Violation
+8   2025-12-20     H1    NaN    Richie Warren            Free Throw
+21  2025-12-20     H1    NaN  Korbin Heitzman  Shot Clock Violation
+29  2025-12-20     H1    NaN  Korbin Heitzman            Free Throw
+  ... 99 more row(s) of 105 (SHOW_ROWS = 6)
+  Most-called: {'5 Out Motion': 95, 'Ball Screen': 15, 'BLOB Line Motion': 7, 'BLOB': 7, 'BLOB Box Motion': 6, 'BLOB Set': 6}
+  Shot clock estimated for 679/784 clip(s) (needs a matched pbp event).
+  Defense tagged on 264/784 clip(s): {'Man-to-Man': 263, 'ZONE': 1}; press on 67, coverage called on 216.
+    Possessions: 399 offensive, 385 defensive -> 163 defense-faced tag(s), 101 defense-played tag(s).
+upcoming-opponent games: 381 clip(s) across 2 game(s); decoded {'Untagged': 350, 'App tag': 28, 'No call': 3}; matched to play-by-play 305/381 ({'synergy string': 241, 'player + clock': 30, 'clock + result': 19, 'clip order + player': 9, 'clip order + foul by the defense': 6}).
+  First unmatched clips (date, period, clock, player, result):
+     game_date period Clock           player             result
+3   2025-11-07     H1  None         Josh Kim  Non Shooting Foul
+15  2025-11-07     H1  None  Will Grudzinski       No Violation
+17  2025-11-07     H1  None      Lamar Smith               Foul
+23  2025-11-07     H1  None   Greg Smith,Jr.           Turnover
+34  2025-11-07     H1  None       Connor May       No Violation
+35  2025-11-07     H1  None       Connor May       No Violation
+  ... 70 more row(s) of 76 (SHOW_ROWS = 6)
+  Most-called: {'Motion': 23, 'Set': 2, 'BLOB 3 and 1 Motion': 1}
+  Shot clock estimated for 305/381 clip(s) (needs a matched pbp event).
+  Defense tagged on 2/381 clip(s): {'Man-to-Man': 2}; press on 0, coverage called on 381.
+    Possessions: 188 offensive, 193 defensive -> 2 defense-faced tag(s), 0 defense-played tag(s).
+    NOTE: no defensive possessions in this file, so nothing here can describe the defense this team PLAYS -- only what its offense faced. If you tagged their defense, check whether the Team column names the team being scouted rather than the team with the ball.
+Play-call problems:
+  - Carroll (WI) Pioneers plays file: 8 clip(s) have no Team value -- assumed OFFENSIVE possessions. Check them before trusting defense splits.
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  CLIP ORDER CHECK: 69 clip(s) sit at a spot in the game video that doesn't match their game clock (captured at the wrong place?):
+     game_date                  game_code period  clip_number  video_start_s   clock                                                            description
+0   2025-11-07  Carroll(WI)@Wash(StLouis)     H1           21         1273.0   975.0  21 Connor May > Spot-Up > Drives Left > Dribble Jumper > Medium/17...
+1   2025-11-07  Carroll(WI)@Wash(StLouis)     H1           64         1971.5   521.0              33 Dennis Estepp > Offensive Rebound > Long > Run Offense
+2   2025-11-07  Carroll(WI)@Wash(StLouis)     H1           78         2381.2   333.0  21 Connor May > Post-Up > Left Block > Right Shoulder > Dribble Mo...
+3   2025-11-07  Carroll(WI)@Wash(StLouis)     H1           85         2500.7   208.0                     32 Will Grudzinski > Non Possession > No Violation
+4   2025-11-07  Carroll(WI)@Wash(StLouis)     H1           86         2525.9   201.0     15 Jake Davis > Transition > First Middle > To Basket > Make 2 Pts
+5   2025-11-07  Carroll(WI)@Wash(StLouis)     H2          119         4142.4  1063.0                       3 Josh Kim > Transition > Ballhandler > Turnover
+6   2025-11-07  Carroll(WI)@Wash(StLouis)     H2          120         4150.1  1060.0   4 Michael McNabb > Transition > Ballhandler > To Basket > Miss 2 Pts
+7   2025-11-07  Carroll(WI)@Wash(StLouis)     H2          130         4309.1   919.0  32 Will Grudzinski > P&R Ball Handler > Right P&R > Baseline > Dri...
+8   2025-11-07  Carroll(WI)@Wash(StLouis)     H2          140         4560.9   811.0  33 Dennis Estepp > Spot-Up > No Dribble Jumper > Guarded > Long/3p...
+9   2025-11-07  Carroll(WI)@Wash(StLouis)     H2          146         4601.2   793.0       15 Evan Bland > Transition > Right Wing > To Basket > Make 2 Pts
+10  2025-11-07  Carroll(WI)@Wash(StLouis)     H2          164         4829.6   684.0                       33 Dennis Estepp > Non Possession > No Violation
+11  2025-11-07  Carroll(WI)@Wash(StLouis)     H2          182         5255.9   439.0                                11 Ryan Cohen > No Play Type > Turnover
+12  2025-11-07  Carroll(WI)@Wash(StLouis)     H2          187         5418.7   405.0     4 Michael McNabb > Transition > Leak Outs > To Basket > Make 2 Pts
+13  2025-11-07  Carroll(WI)@Wash(StLouis)     H2          190         5476.5   363.0         21 Connor May > Spot-Up > Drives Left > To Basket > Miss 2 Pts
+14  2025-11-07  Carroll(WI)@Wash(StLouis)     H2          216         6143.9   196.0  12 Peyton McKenna > P&R Ball Handler > High P&R > Dribble Off Pick...
+  ... 54 more row(s) of 69 (SHOW_ROWS = 15)
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+===== cell 112 48_jersey_number_recognizer =====
+  [recognizer 0.0 min] checking whether anything changed since the last run (coach checks, extra data, the training folder, settings)...
+  [recognizer 0.2 min] adding new training crops...
+  [recognizer 0.2 min] loading the saved player detections (to find each checked box)...
+  [recognizer 0.2 min]   42,790 frame(s) of saved detections loaded (1 s)
+  [recognizer 0.2 min] cutting training crops from 1,323 coach check(s) (a crop already in the training set is skipped)...
+    coach checks: 1,071 / 1,323 (80%) -- 0.4 min so far, ~0.1 min left -- 0 new crop(s), 624 already had
+    coach checks: 1,317 / 1,323 (99%) -- 0.8 min so far, ~0.0 min left -- 1 new crop(s), 736 already had
+    coach checks: 1,323 / 1,323 (100%) -- 0.8 min so far -- 7 new crop(s), 736 already had, 120 with no box found there (partly hidden / not in the saved detections), 454 without a jersey number to learn
+  [recognizer 1.0 min] choosing training crops from 91 player track(s) named by jersey number in the last tracking run (readings 0.90+, no coach check against them, each number capped)...
+  [recognizer 1.0 min]   159 candidate crop(s) from 21 track(s) (0 s)
+  [recognizer 1.0 min] reading 8 new practice crop(s) from the film (clip by clip; 0 known-blurry skipped)...
+    new practice crops: 8 / 8 (100%) -- 0.3 min so far -- 7 saved, 0 too blurry
+  [recognizer] readings: 159 crop(s) kept from 21 track(s) read at 0.90+ (its own readings: 0.97+); 0 track(s) left out because a coach check names someone else; 0 older crop(s) removed
+  [recognizer 1.2 min] adding the extra labeled data...
+  [recognizer 1.2 min] checking the extra labeled data for new crops (1 folder(s): extra)...
+Jersey-number recognizer: added 7 crop(s) from players named by jersey number (91 such track(s) in the last run, 21 with a confirmed reading to take crops around), 7 from coach checks, 0 from extra data
+  [recognizer 1.4 min] counting the training set...
+  [pose crop] training set: 653 from jersey-number tracks, 3,615 extra, 1,315 coach checks (half trained on, half kept as the TEST set)  -- ./inputs\jersey_training
+  [recognizer 1.4 min] comparing the training set with the saved recognizer (retrain or keep it?)...
+  training set changed by -68 crop(s) since the saved model (4,968 then, 4,900 now) -- under the retrain bar of 150 crops or 15%, so the saved recognizer is kept (JERSEY_TRAIN_NOW = True forces a retrain).
+  saved recognizer is up to date with the training set -- not retrained
+  Jersey-number recognizer -- where the time went (1.5 min in all): adding new training crops 1.1 min; checking whether anything changed since the last run (coach checks, extra data, the training folder, settings) 0.2 min; adding the extra labeled data 0.1 min; comparing the training set with the saved recognizer (retrain or keep it?) 0.1 min
+  [time] 48_jersey_number_recognizer: 1.5 min
+
+===== cell 114 49_jersey_number_reader_test =====
+  coach checks: 50 file(s) found (C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\data\play_review_saves\oct-1st.json; C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\data\play_review_saves\play_review_2025_11_07_Carroll_WI_Wash_StLouis_20261101_085055_starters_Corey_20261101_150819.json; C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\data\play_review_saves\play_review_2025_12_30_WWW_COE_2025_12_30_WWW_COE_20261001_130211_players_Corey_20261005_134527.json); 1323 check(s), 293 with a jersey number for the real player, 293 with their frame on disk, 293 matched to a saved detection (detections file: detections_yolo11s_pt_1024_tiles3x2.pkl)
+Jersey-number reader test: 145 answer-key crop(s) (145 with their frame on disk, 0 from saved answers; 145 added from coach checks)
+  readers tested (JERSEY_CROP_STYLE = 'pose'): easyocr_find, trained_pose, easyocr_find_fast
+  easyocr_find: by confidence -- >= 0.50: 17/17 right; >= 0.70: 17/17 right; >= 0.80: 16/16 right; >= 0.90: 13/13 right; >= 0.95: 13/13 right (needs 85% on >= 6 answers to be trusted)
+  easyocr_find: speed -- 1.70 s a crop (~2.1 h for a game's first ~4,500 crops)
+  easyocr_find: on YOUR 145 checked players: 18 right, 3 wrong, 124 no answer
+  easyocr_find: (scored like Player tracking uses it: only reads that are the number of a player on the floor for his team count -- 145 of 145 crops have their lineup)
+  easyocr_find: [145 crops] answered 21/145; right when it answers 86% (18/21 at confidence >= 0.00); wrong answers: 22->12 x1, 32->0 x1, 21->3 x1
+  easyocr_find: right / wrong per jersey number on your checked players (answers given most often: 32 x4, 21 x3, 10 x2):
+  number  checked  right  right_pct mistaken_for
+0     32        5      4         80         0 x1
+1     21        4      3         75         3 x1
+2     10        2      2        100             
+3     15        2      2        100             
+4     22        2      1         50        12 x1
+5     23        2      2        100             
+6      0        1      1        100             
+7     11        1      1        100             
+8      2        1      1        100             
+9     24        1      1        100             
+  trained_pose: numbers it calls wrongly -- trusted only at a higher confidence: #11 >= 0.60, #15 >= 0.70, #34 >= 0.80
+  trained_pose: by confidence -- >= 0.50: 61/74 right; >= 0.70: 49/53 right; >= 0.80: 37/38 right; >= 0.90: 28/29 right; >= 0.95: 16/17 right (needs 85% on >= 6 answers to be trusted)
+  trained_pose: speed -- 0.01 s a crop (fast)
+  trained_pose: on YOUR 145 checked players: 78 right, 30 wrong, 37 no answer
+  trained_pose: (scored like Player tracking uses it: only reads that are the number of a player on the floor for his team count -- 145 of 145 crops have their lineup)
+  trained_pose: [145 crops] answered 108/145; right when it answers 87% (55/63 at confidence >= 0.60); wrong answers: 3->34 x2, 32->15 x1, 30->21 x1, 32->24 x1
+  trained_pose: right / wrong per jersey number on your checked players (answers given most often: 11 x19, 21 x17, 3 x15):
+   number  checked  right  right_pct         mistaken_for
+0       3       22     13         59  21 x5, 34 x2, 11 x2
+1      11       16     14         88         23 x1, 34 x1
+2      21       12      9         75         11 x2, 15 x1
+3      15        8      7         88                24 x1
+4      32        8      4         50         15 x3, 24 x1
+5       0        7      7        100                     
+6      10        7      6         86                11 x1
+7      24        7      4         57          15 x2, 0 x1
+8      34        7      5         71          3 x1, 21 x1
+9      22        5      4         80                15 x1
+10     23        4      4        100                     
+11     33        4      1         25   3 x1, 23 x1, 21 x1
+12     30        1      0          0                21 x1
+  easyocr_find_fast: by confidence -- >= 0.50: 13/14 right; >= 0.70: 12/12 right; >= 0.80: 12/12 right; >= 0.90: 12/12 right; >= 0.95: 11/11 right (needs 85% on >= 6 answers to be trusted)
+  easyocr_find_fast: speed -- 0.78 s a crop (~1.0 h for a game's first ~4,500 crops)
+  easyocr_find_fast: on YOUR 145 checked players: 14 right, 5 wrong, 126 no answer
+  easyocr_find_fast: (scored like Player tracking uses it: only reads that are the number of a player on the floor for his team count -- 145 of 145 crops have their lineup)
+  easyocr_find_fast: [145 crops] answered 19/145; right when it answers 93% (13/14 at confidence >= 0.50); wrong answers: 21->3 x1
+  easyocr_find_fast: right / wrong per jersey number on your checked players (answers given most often: 32 x5, 3 x3, 21 x3):
+  number  checked  right  right_pct mistaken_for
+0     21        6      3         50         3 x3
+1     32        6      5         83         0 x1
+2     15        2      2        100             
+3     22        2      1         50        12 x1
+4     10        1      1        100             
+5     23        1      1        100             
+6     24        1      1        100             
+  easyocr fast vs normal: 13 vs 18 of your checked players right, right 93% vs 86% when it answers -- combined uses easyocr_find
+  combined    : (easyocr_find >= 0.0 + trained_pose >= 0.6; a crop takes a reading when at least one reads it and none reads something else -- 13 of its answers had 2+ readers agreeing)
+  combined    : on YOUR 145 checked players: 55 right, 5 wrong, 85 no answer
+  combined    : [145 crops] answered 60; right when it answers 92%
+  best reader: combined -- 55 of your checked players read right at its cutoff; right 92% of the time it answers (60 answers at confidence >= 0.00); answers 38% of all crops correctly
+
+===== cell 117 50c_outfit_check =====
+Outfit check test: 1323 checked box(es) found in the saved detections -- 736 not a player, 587 real players
+    [outfit] 1,316 of 1,323 picture(s) already scored in earlier runs (reused); 7 new to score, from 1 frame(s)
+  [outfit] loading patrickjohncyh/fashion-clip (downloads ~600 MB the first time)...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]
+    [outfit] pictures scored: 7 / 7 (100%), 1 of 1 frame(s) read -- 0.4 min so far, ~0.0 min left
+    [outfit] pictures scored: 7 / 7 (100%), 1 of 1 frame(s) read -- 0.4 min so far
+  scored 1323 box(es) in 25 s
+  how well the score tells them apart (AUC; 0.5 = coin flip, 1.0 = perfect): 0.96
+  score cutoff | boxes flagged | really not players | non-players caught | real players lost
+     0.007     |     930       |        78%        |        98%         |   209
+     0.006     |     937       |        77%        |        98%         |   213
+     0.005     |     950       |        76%        |        98%         |   226
+     0.004     |     964       |        75%        |        99%         |   239
+     0.003     |     979       |        74%        |        99%         |   253
+     0.002     |     995       |        73%        |        99%         |   267
+     0.001     |    1027       |        71%        |        99%         |   296
+     0.000     |    1323       |        56%        |       100%         |   587
+  flagged at that cutoff, by kind: bench 158/223; crowd 234/278; not a player (kind not given) 128/165; referee 63/70; player 29/587
+  PASSED: at a score of 0.66+ flagged boxes were really not players 95% of the time, catching 79% of the non-players (costing 29 real player box(es)). Player tracking will use it (TRACK_OUTFIT_CHECK = "auto").
+
+===== cell 119 50d_reid_check =====
+
+===== cell 120 50_player_tracking =====
+  [saves] fetched branch 'saves': 0 new saved review file(s) copied into data/play_review_saves (52 on the branch; its newest commit: 2026-11-01 09:08:20 -0600  Play review: 2025-11-07|Carroll(WI)@Wash(StLouis) by Corey)
+  [tracking] Synergy-export games only (TRACK_EXPORT_ONLY): 4 game(s) on the old web captures left out -- 2025-12-20 WWW@AC (174 clips); 2025-12-30 WWW@COE (175 clips); 2026-01-03 UWOshkosh@UWWhitewater (12 clips); 2026-01-03 WOS@WWW (184 clips)
+  [tracking] PLAYER_TRACKING_GAMES: tracking only 11_7_25 Carroll (WI) Pioneers @ Washington-St. Louis Bears -- 2 other game(s) keep their earlier tracking
+  [tracking] 2025-11-07|Carroll(WI)@Wash(StLouis): starters not validated yet -- tracking only its first 1 possession(s) (clip 1) this run for the STARTERS check; its other 220 clip(s) keep their earlier results
+  [tracking] step 1: player and ball detections for 1 clip(s) (104 frames; saved ones are reused)...
+  [tracking]   court mapping available for 100 of 104 frame(s)
+  [tracking]   court mapping borrowed from a nearby frame (pan-corrected, up to 4 frames away) for 3 more frame(s)
+  [tracking] step 2: finding the players in 1 clip(s) and sorting them into teams...
+  [tracking]   set aside 6 seated or partly hidden people (shorter than a standing player there)
+  [tracking]   2025-11-07|Carroll(WI)@Wash(StLouis): your checks say which shirt color is which team -- Washington-St. Louis Bears: group A (2 checked box(es)); Carroll (WI) Pioneers: group B (1 checked box(es))
+  [tracking] step 3: following players through 1 clip(s) (never across teams)...
+  [tracking]   checked tracks in starters clips cut to 2 s around the checked frame: 9 piece(s) split off (they keep the name only if they look like him -- TRACK_CHECK_SPAN_S)
+  [tracking]   tracks cut where two teammates overlapped (a swap can happen there): 118 cut(s); 77 piece(s) shorter than TRACK_MIN_FRAMES left out (TRACK_SPLIT_CROSS_IOU = 0.25; 0 = off)
+  [tracking]   kept 2,573 of 5,638 people detected (15.2 players per frame after setting aside referees/coaches/fans); 139 tracks, 139.0 per clip (10 players + 3 refs is ideal)
+  [tracking] step 4: finding the Synergy-named player in each clip (ball, then shooting pose)...
+  [tracking]   0 track(s) were a second box on a player already tracked (boxes overlap >= 55%) -- dropped
+  [tracking]   6 track(s) stood still along a sideline the whole time (coaches, bench, table) -- set aside as not players
+  [tracking]   outfit check skipped (TRACK_OUTFIT_CHECK = False)
+  [tracking]   anchors from a finish at the rim: 0 (switched off -- TRACK_USE_RIM_ANCHORS)
+  [tracking]   anchors from the FIRST player Synergy names (the early ball handler): 0
+  [tracking]   coach checks: 1323 saved, 7 matched to this run's tracks. How often each naming method was RIGHT on the boxes checked: not named 0/660 (0%); jersey number 186/249 (75%); appearance 4/40 (10%); Synergy 1/3 (33%); lineup matching 0/2 (0%); same player as your check 0/1 (0%); coach checked 1/1 (100%)
+  [tracking]   player / not-a-player model: 4 not-a-player and 3 player label(s) from the coach checks (needs 15+ of each) -- not trained yet
+  [tracking]   naming frame: one per clip (sharpest of the frames with the most players) -- 1 of 1 clip(s)
+  [tracking]   named anchors so far: 0 of 1 clip(s) (0 by shooting pose)
+  [tracking] step 5: cutting out each player for his appearance fingerprint...
+  [tracking]   appearance: 0 game(s) with 10+ coach-named boxes get fingerprints (none yet -- save player checks in the app)
+  [tracking] fingerprinting 349 new player crop(s) -- progress below...
+Loading weights:   0%|          | 0/223 [00:00<?, ?it/s]
+  [tracking]   player crops fingerprinted: 192 / 349 (55%) -- 0.2 min so far, ~0.1 min left
+  [tracking]   player crops fingerprinted: 256 / 349 (73%) -- 0.2 min so far, ~0.1 min left
+  [tracking]   player crops fingerprinted: 320 / 349 (91%) -- 0.3 min so far, ~0.0 min left
+  [tracking]   player crops fingerprinted: 349 / 349 (100%) -- 0.3 min so far, ~0.0 min left
+  [tracking] step 5b: TRACK_READ_NUMBERS = "auto" -- the reader test's best reader is combined: numbers are read if it clears the bar (it uses EasyOCR -- slow, ~1-2 s a chest crop, so a game's FIRST read takes hours; reads are saved, so after that only new frames are read)
+  [tracking] step 5b: reading jersey numbers with combined (right 92% of the time it answers on the answer key; using reads at confidence >= 0.00)...
+  [saves] fetched branch 'saves': 0 new saved review file(s) copied into data/play_review_saves (52 on the branch; its newest commit: 2026-11-01 09:08:20 -0600  Play review: 2025-11-07|Carroll(WI)@Wash(StLouis) by Corey)
+  [tracking]   jersey numbers are read only on the clips the app shows (TRACK_READ_NUMBERS_FOR = 'player_checks'): 1 in open Player Number Tracking batches, 0 more coming up next in Player Number Tracking
+  [tracking]   reading jersey numbers (easyocr_find) on 22 chest crop(s) (0 read in earlier runs, saved -- each crop is read once): Carroll(WI)@Wash(StLouis) (2025-11-07) 22...
+C:\Users\frits\anaconda3\Lib\site-packages\torch\utils\data\dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+  [tracking]   chest crops read (easyocr_find; now on Carroll(WI)@Wash(StLouis) (2025-11-07)): 22 / 22 (100%) -- 0.2 min so far, ~0.0 min left
+  [tracking]   reading jersey numbers (trained_pose) on 22 chest crop(s) (0 read in earlier runs, saved -- each crop is read once): Carroll(WI)@Wash(StLouis) (2025-11-07) 22...
+  [tracking]   chest crops read (trained_pose; now on Carroll(WI)@Wash(StLouis) (2025-11-07)): 22 / 22 (100%) -- 0.0 min so far, ~0.0 min left
+  [tracking]   numbers the reader calls wrongly need a higher confidence: #11 0.60+, #15 0.70+, #34 0.80+
+  [tracking]   lineup check: no sure jersey read contradicts a clip's five
+  [tracking]   a jersey number was read on 9 track(s); 1 named by number
+  [tracking]   jersey-number audit on 3 coach-checked track(s) (tracking_number_audit.csv):
+         3  reader gave no answer above its confidence bar on this track's chest crops (or the track was too short)
+  [tracking] step 5d: play-by-play events point at 1 player(s) (rebound defensive 1); where the player was already known they agreed 0 of 0 time(s) -- REVIEW mode: saved for checking, not used for names
+  [tracking] step 5e: 3 track(s) locked to a name by a clear jersey number or a coach check; following those players through the clip named 4 more piece(s) of their paths
+  [tracking] step 5a: linking possessions that show the same moments of the game...
+  [tracking]   0 pairs of clips meet or overlap in the game video (0 back-to-back play boundaries); 0 track links made; 0 linked players; a name reached 0 more track(s) through the links
+  [tracking] step 5c: matching each team's tracks to its five on the floor (numbers, partial numbers, anchors, then elimination)...
+  [tracking]   named 1 track(s) from evidence (jersey numbers and Synergy anchors) and 0 more by elimination; agreement with Synergy anchors (anchor hidden): --
+  [tracking]   jersey-number conflicts between sources (this game's number is used): Aleks Jajic: #0 in this game / current roster, #1 elsewhere; Austin Beeson: #99 in this game / current roster, #25 elsewhere
+  [tracking] step 6: matching every player to the five on the floor...
+  [tracking]   2025-11-07|Carroll(WI)@Wash(StLouis): 16 track(s) named; checking appearance against 4 trusted name(s)...
+  [tracking]   appearance name check 0/0 -- too few trusted names to check it (needs 20): appearance-only names are left blank (12 dropped); keeping 4 named by jersey number or Synergy
+  [tracking]   0 track(s) lost a name they shared with another track on the floor at the same moment (the track with the stronger evidence keeps it)
+  [tracking]   re-ID names not used: its test on your checked boxes did not pass
+  [tracking]   your checked names carried to 8 more piece(s) of the same players in 1 starters clip(s) (look alike 0.80+, never on the floor at the same moment)
+  [tracking]   best-guess cutoff from 1027 checked guesses: no probability level was right 50% of the time (0%-20%: 1/56; 20%-30%: 62/799; 30%-40%: 6/104; 50%-70%: 5/42; 70%-100%: 3/26 right) -- best guesses are NOT shown this run (kept as hidden guesses for checking)
+  [tracking] step 6b: best guesses from the lineup for 0 more track(s) (33 more left UNNAMED: no guess has earned a name yet) (marked "best guess"; each carries its probability of being that player -- average 0%, not calibrated yet -- needs 30+ coach-checked best guesses)
+  [tracking]   46 track(s) beyond the five on the floor set aside as not players (referees, coaches, sideline) -- no unnamed players remain where the lineup is known
+  [tracking] players with NO box that coaches marked (54) -- why each was missed (_tracking/missed_players_report.csv):
+        54  clip not in this run
+  [tracking] where people were lost (diagnostic):
+    5,638 people detected in the frames used; 2,573 (46%) passed every filter
+      -     2,798 ( 49.6%)  off the court (fans, bench, table)
+      -       222 (  3.9%)  cut off at the edge of the picture
+      -        31 (  0.5%)  too small or too large for a player
+      -         8 (  0.1%)  wide box (seated person)
+      -         6 (  0.1%)  short for its spot in the picture (seated / partly hidden)
+           46  beyond the five on the floor (set aside as not players)
+            0  duplicate box on the same player (dropped)
+           34  followed for fewer than TRACK_MIN_FRAMES frames (thrown away)
+            6  standing still along a sideline (coach / bench / table -- set aside)
+          123  tracks built
+    (grey boxes marked with the reason are drawn on the check pictures in _tracking/checks/)
+  [tracking] step 7: looking for the screen in 1 clip(s)...
+  [tracking] step 8: drawing the check images...
+  [tracking]   of the five on the floor: 3 of 10 player-clips identified from evidence, 0 named by best guess only, 7 not on film (no track left for them)
+  [tracking]   players on the floor located on the film: 3 of 10 (30%) -- by coach checked 2, same player as your check 2, jersey number 1
+  [tracking] kept the earlier results of 167 clip(s) not tracked this run (beyond the pace): 16,107 player track(s) carried over
+  Tracking evaluation: 4 part(s) changed since the last run -> uww_tracking_eval_history.csv (the app: Analytics > Player Number Tracking > How good is the player-number tracking?)
+Player tracking:
+  2025-11-07|Carroll(WI)@Wash(StLouis): 1 clips, 139 tracks. Ball seen in 1 clip(s). Teams by jersey color: your checks (which shirt color is which team). Lineups on 1 clip(s), Synergy's player found in that lineup on 1. Named anchors: 0 (0 by shooting pose, 0 by finish at the rim). 4 tracks named (1 by lineup matching on jersey numbers + Synergy, 0 by elimination). Name check (appearance): -- right. Synergy anchor vs jersey number: -- agree.
+  Screens found: 109 clip(s). Check images: ./inputs\_tracking\checks
+  Coach-tagged screen defender found among the tracked defenders: 0/19
+  [time] 50_player_tracking: 3.9 min
+
+===== cell 122 50b_detector_compare =====
+
+===== cell 123  =====
+
+===== cell 125 51_court_mapping =====
+  [reuse] court mapping (switched off this run): the last run's results put back on 0 clip(s) (2 column(s))
+
+===== cell 127 53_tag_model =====
+Tag model: 2,263 clip(s) to learn from / predict (1,165 in the play calls, 1,098 from other teams' games); 10 field(s); TAG_MODEL_RETRAIN = 'auto'
+  [tag model 0.0 min] checking the libraries...
+  [tag model 0.0 min] reading the coaches' answers from their Titles...
+  [tag model 0.0 min] adding the answers saved in the app (Film Tagging / Play review)...
+  [tag model] review answers: 15 added as labels where the coach's Title had none, 7 overriding the coach's Title (TAG_MODEL_REVIEW_OVERRIDES_TITLE)
+  [tag model] new answers typed in reviews (not seen before -- check for typos): offball_coverage: 'No screens'; screen_defender: 'Brady Wynja'; screen_defender: 'Carson Cordelli'; screen_defender: 'Devin Martin'; screen_defender: 'Ethan Johnson'; screen_defender: 'Hedge'; screen_defender: 'Kolden Vanlandingham'; screen_defender: 'Luke Bara'; screen_defender: 'Noah Hedrick'
+  [tag model 0.0 min] frames: checking every clip's 5 frames are on disk, then turning new ones into numbers...
+    frames: 2,052 clip(s) with all their frames; 8,535 frame(s) already turned into numbers (saved), 0 new
+  Frames: 2052 clip(s) captured (uww_clip_frames.csv) -> 2052 matched to a clip in uww_plays.csv -> 2052 with all 5 frames -> 1707 found on disk -> 1707 turned into numbers
+    frames NOT on disk (these clips are still used from their Titles, just without pictures; re-export the game from Synergy to bring them back): 2026-02-20 Aurora@MSOE 165 clip(s); 2026-02-23 Lakeland(WI)@MSOE 179 clip(s); 2026-03-06 Loras@UWWhitewater 1 clip(s)
+Tag model: 570 coach-tagged clip(s) across 7 game(s) (239 from other teams' games); frames for 1707 clip(s).
+  [tag model 0.3 min] positions: where the players are in each clip's frames...
+    positions: 1,707 clip(s) with all their frames; players already found in 8,535 frame(s) (saved), 0 new
+  [tag model 0.3 min] positions: each clip's player layout (teams by jersey color, spacing, where on the floor) -- 1,707 of 1,707 clip(s) saved from earlier runs, 0 to work out...
+  [tag model 0.3 min] positions: drawing 12 check picture(s)...
+  Positions: players found in 1707 clip(s), ~10.5 player(s) per frame on average (10 on the floor + refs = best case). Check the boxes: ./inputs\_tag_model\position_checks
+  [tag model 0.3 min] putting each clip's inputs together (play-by-play context, frames, positions)...
+  [tag model] 20 coach-tagged play(s) kept OUT of training for validation (TAG_MODEL_VALIDATION_PLAYS; list in ./inputs\_tag_model\validation_plays.csv)
+  [tag model 0.3 min] checking which fields' training data changed since their saved models (2,263 clips x 156 inputs)...
+  [tag model 0.3 min] the 10 fields, one at a time...
+  [tag model 0.3 min] field 1/10: formation...
+    retraining formation: 286 tagged clip(s), 7 answer(s); trying 4 input set(s) then 2 model setting(s), each scored with 7 game(s) held out in turn (~42 model fits)
+      input set 1/4 context (17 inputs): 73% right (0 s)
+      input set 2/4 context+frames (50 inputs): 63% right (0 s)
+      input set 3/4 context+positions (123 inputs): 62% right (1 s)
+      input set 4/4 context+frames+positions (156 inputs): 62% right (1 s)
+      model setting C=0.05 on context: 73% right (0 s)
+      model setting C=1.0 on context: 72% right (0 s)
+    formation: retrained (predicts the most common answer) -- 3 s
+  [tag model 0.3 min] field 2/10: play_call...
+    retraining play_call: 313 tagged clip(s), 7 answer(s); trying 4 input set(s) then 2 model setting(s), each scored with 7 game(s) held out in turn (~42 model fits)
+      input set 1/4 context (17 inputs): 65% right (0 s)
+      input set 2/4 context+frames (50 inputs): 55% right (0 s)
+      input set 3/4 context+positions (123 inputs): 66% right (1 s)
+      input set 4/4 context+frames+positions (156 inputs): 63% right (1 s)
+      model setting C=0.05 on context+positions: 67% right (1 s)
+      model setting C=1.0 on context+positions: 66% right (2 s)
+    play_call: retrained (predicts the most common answer) -- 7 s
+  [tag model 0.4 min] field 3/10: defense...
+    defense: only one answer tagged so far -- 0 s
+  [tag model 0.4 min] field 4/10: press...
+    retraining press: 469 tagged clip(s), 3 answer(s); trying 4 input set(s) then 2 model setting(s), each scored with 7 game(s) held out in turn (~42 model fits)
+      input set 1/4 context (17 inputs): 80% right (0 s)
+      input set 2/4 context+frames (50 inputs): 77% right (0 s)
+      input set 3/4 context+positions (123 inputs): 85% right (1 s)
+      input set 4/4 context+frames+positions (156 inputs): 84% right (1 s)
+      model setting C=0.05 on context+positions: 84% right (0 s)
+      model setting C=1.0 on context+positions: 85% right (1 s)
+      training the final press model on all 469 tagged clip(s)...
+    press: retrained -- 4 s
+  [tag model 0.5 min] field 5/10: situation...
+    retraining situation: 548 tagged clip(s), 6 answer(s); trying 4 input set(s) then 2 model setting(s), each scored with 7 game(s) held out in turn (~42 model fits)
+      input set 1/4 context (17 inputs): 80% right (0 s)
+      input set 2/4 context+frames (50 inputs): 75% right (0 s)
+      input set 3/4 context+positions (123 inputs): 63% right (2 s)
+      input set 4/4 context+frames+positions (156 inputs): 65% right (2 s)
+      model setting C=0.05 on context: 76% right (0 s)
+      model setting C=1.0 on context: 78% right (0 s)
+      training the final situation model on all 548 tagged clip(s)...
+    situation: retrained -- 5 s
+  [tag model 0.6 min] field 6/10: primary_action...
+    retraining primary_action: 200 tagged clip(s), 8 answer(s); trying 4 input set(s) then 2 model setting(s), each scored with 7 game(s) held out in turn (~42 model fits)
+      input set 1/4 context (17 inputs): 62% right (0 s)
+      input set 2/4 context+frames (50 inputs): 58% right (0 s)
+      input set 3/4 context+positions (123 inputs): 58% right (1 s)
+      input set 4/4 context+frames+positions (156 inputs): 56% right (1 s)
+      model setting C=0.05 on context: 62% right (0 s)
+      model setting C=1.0 on context: 62% right (0 s)
+      training the final primary_action model on all 200 tagged clip(s)...
+    primary_action: retrained -- 3 s
+  [tag model 0.6 min] field 7/10: ball_screen_coverage...
+    retraining ball_screen_coverage: 127 tagged clip(s), 6 answer(s); trying 4 input set(s) then 2 model setting(s), each scored with 7 game(s) held out in turn (~42 model fits)
+      input set 1/4 context (17 inputs): 25% right (0 s)
+      input set 2/4 context+frames (50 inputs): 22% right (0 s)
+      input set 3/4 context+positions (123 inputs): 12% right (1 s)
+      input set 4/4 context+frames+positions (156 inputs): 15% right (1 s)
+      model setting C=0.05 on context: 22% right (0 s)
+      model setting C=1.0 on context: 24% right (0 s)
+    ball_screen_coverage: retrained (predicts the most common answer) -- 2 s
+  [tag model 0.7 min] field 8/10: offball_coverage...
+    retraining offball_coverage: 43 tagged clip(s), 3 answer(s); trying 4 input set(s) then 2 model setting(s), each scored with 4 game(s) held out in turn (~24 model fits)
+      input set 1/4 context (17 inputs): 23% right (0 s)
+      input set 2/4 context+frames (50 inputs): 21% right (0 s)
+      input set 3/4 context+positions (123 inputs): 30% right (0 s)
+      input set 4/4 context+frames+positions (156 inputs): 28% right (0 s)
+      model setting C=0.05 on context+positions: 30% right (0 s)
+      model setting C=1.0 on context+positions: 30% right (0 s)
+    offball_coverage: retrained (predicts the most common answer) -- 1 s
+  [tag model 0.7 min] field 9/10: screener...
+    screener: not enough tags to train -- 0 s
+  [tag model 0.7 min] field 10/10: screen_defender...
+    retraining screen_defender: 55 tagged clip(s), 7 answer(s); trying 4 input set(s) then 2 model setting(s), each scored with 2 game(s) held out in turn (~12 model fits)
+      input set 1/4 context (17 inputs): 15% right (0 s)
+      input set 2/4 context+frames (50 inputs): 16% right (0 s)
+      input set 3/4 context+positions (123 inputs): 5% right (0 s)
+      input set 4/4 context+frames+positions (156 inputs): 5% right (0 s)
+      model setting C=0.05 on context+frames: 7% right (0 s)
+      model setting C=1.0 on context+frames: 18% right (0 s)
+    screen_defender: retrained (predicts the most common answer) -- 0 s
+  transition possessions: 175 clip(s) get no play call / formation suggestion
+  [tag model 0.7 min] scoring the validation plays and writing the report...
+  [tag model] on the 20 validation plays (never trained on): formation 8/13 (confident: 62% of 13); play_call 10/17 (confident: 59% of 17); defense 20/20 (confident: 100% of 20); press 18/20 (confident: 89% of 19); situation 12/20 (confident: 69% of 16); primary_action 2/9 (confident: 25% of 8); ball_screen_coverage 0/7; offball_coverage 0/2; screener 0/1
+  formation               73% right (always-most-common: 73%)  n=286  | confident on 96%, 73% right  -> using most common answer (5 Out) -- model not better yet
+  play_call               67% right (always-most-common: 67%)  n=313  | confident on 96%, 67% right  -> using most common answer (Motion) -- model not better yet
+  defense                only one answer tagged so far (Man-to-Man): predicted for every clip at 100%
+  press                   85% right (always-most-common: 84%)  n=469  | confident on 99%, 85% right  [context+positions]
+  situation               80% right (always-most-common: 71%)  n=548  | confident on 86%, 82% right  [context]
+  primary_action          62% right (always-most-common: 55%)  n=200  | confident on 71%, 68% right  [context]
+  ball_screen_coverage    25% right (always-most-common: 30%)  n=127  | confident on 17%, 38% right  -> using most common answer (Over) -- model not better yet
+  offball_coverage        30% right (always-most-common: 56%)  n=43  | confident on 95%, 32% right  -> using most common answer (Over) -- model not better yet
+  screener               not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2)
+  screen_defender         18% right (always-most-common: 29%)  n=55  | confident on 45%, 32% right  -> using most common answer (#5) -- model not better yet
+  Scored on: each of 7 tagged games held out in turn
+  Tag model -- where the time went (0.7 min in all):
+      0.4 min  the 10 fields, one at a time
+      0.3 min  frames: checking every clip's 5 frames are on disk, then turning new ones into numbers
+    fields: play_call 0.1 min (retrained (predicts the most common answer)); situation 0.1 min (retrained)
+  Automatic answers used for untagged plays / prefilled in Film Tagging: defense, situation, primary_action | offered as 'not sure' only: formation, play_call, press, ball_screen_coverage, offball_coverage, screener, screen_defender
+  Tag model history: 1 field(s) changed since the last run -> uww_tag_model_history.csv (the app: Analytics > Film Tagging > How good is the automatic tagging?)
+  Suggested Titles: 1165 clip(s), 834 of them not tagged by a coach yet.
+
+===== cell 129 54_tracking_insights =====
+Tracking insights: matchups 79, help 24, screens 109, screen_coverage 52, screen_pairs 23, sets 16, set_clips 136, inbounds 11, zone_press 0, coverage_execution 18, spacing 11, roles 2424, clips 168, matchups_raw 1837, help_raw 13780, matchups_by_game 79, help_by_game 24, screen_coverage_by_game 52, screen_pairs_by_game 23, sets_by_game 16, inbounds_by_game 11, zone_press_by_game 0, coverage_execution_by_game 18, spacing_by_game 11
+
+===== cell 131 55_court_insights =====
+Court insights: nothing on the court yet (court mapping needs a calibration -- see the court mapping cell).
+
+===== cell 133 55c_play_review =====
+Play review: 2025-12-20 WWW@AC left out -- tracking frames but no player tracks yet -- run Player tracking
+Play review: 2025-12-30 WWW@COE left out -- tracking frames but no player tracks yet -- run Player tracking
+Play review: 2026-01-03 UWOshkosh@UWWhitewater left out -- tracking frames but no player tracks yet -- run Player tracking
+Play review: 2026-01-03 WOS@WWW left out -- tracking frames but no player tracks yet -- run Player tracking
+Play review: 2026-02-24 Carroll(WI)@Elmhurst left out -- tracking frames but no player tracks yet -- run Player tracking
+Play review: 2026-03-06 Loras@UWWhitewater left out -- key frames but no tracking frames -- run Frame capture for this game with VISION_TRACK_FPS on
+Play review -- how often each field of the automatic Title was RIGHT on the plays reviewed so far: Situation 99/144 (69%); Formation 110/135 (81%); Play call 99/138 (72%); Main action 59/92 (64%); Defense 143/144 (99%); Ball-screen coverage 9/60 (15%); Screen defender 3/39 (8%); Off-ball coverage 3/15 (20%)
+Play review: between seasons -- player checks go to the plays with the most returning players first (9 of last season's seniors set aside; PLAY_REVIEW_RETURNERS_FIRST = False turns it off)
+Play review: Player Number Tracking works on 11_7_25 Carroll (WI) Pioneers @ Washington-St. Louis Bears (2025-11-07|Carroll(WI)@Wash(StLouis)); other games keep their Title checks, no new player checks
+Play review: 2025-11-07 Carroll(WI)@Wash(StLouis): building 1 play(s) -- pictures, close-ups and a video of each...
+  [play review] Carroll(WI)@Wash(StLouis) plays built: 0 / 1 (0%) -- 0.0 min so far
+  [play review] copied to the app: ../data\play_review\2025_11_07_Carroll_WI_Wash_StLouis (4 MB) -- commit and push it with the data
+Play review: 2025-11-07 Carroll(WI)@Wash(StLouis): 0 Title check(s) (none) -- Analytics > Film Tagging; 0 player check(s) (none) -- Analytics > Player Number Tracking (next unreviewed, in game order)
+Play review: 2025-11-07 Carroll(WI)@Wash(StLouis): starters not all identified yet -- still to put on a player: Calvin Kapral, Connor May, Josh Kim, Evan Bland, Jacob Naber, Lamar Smith, Michael McNabb (clip 2 waits until all ten are)
+Play review: 2025-11-07 Carroll(WI)@Wash(StLouis): STARTERS check on the first possession (clip 1, H1 19:33) -- 10 box(es), 1 named by tracking; validate it at the top of Analytics > Player Number Tracking
+Play review: 2026-03-07 UWWhitewater@Wash(StLouis) -- every play already has its checks; nothing new to review
+Play review: removed the old player-check batch 2026_02_21_Millikin_WheatonIL from the app -- no player tracks for that game this run (saved checks are kept)
+Play review: removed the old player-check batch 2026_02_24_WheatonIL_NorthPark from the app -- no player tracks for that game this run (saved checks are kept)
+Film Tagging: checking which of 1,094 captured clip(s) still have their film on disk...
+Film Tagging: reading the coaches' saved answers...
+Film Tagging: answer lists -- Situation 7, Formation 21, Play call 37, Main action 43, Defense 2, Press 6, Ball-screen coverage 17, Off-ball coverage 17, Screener 38, Screen defender 37
+Film Tagging: 2025-11-07 Carroll(WI)@Wash(StLouis) left out -- it's a Player Number Tracking game (PLAYER_TRACKING_GAMES)
+Film Tagging: removed the open batch for 2026-01-03 UWOshkosh@UWWhitewater from the app -- not part of this run (answers already saved are kept)
+Film Tagging -- tagging progress by game (Titles + app tags):
+  2026-02-24 Carroll(WI)@Elmhurst: 31 of 160 clip(s) tagged, 129 to go
+  2026-03-07 UWWhitewater@Wash(StLouis): 122 of 167 clip(s) tagged, 45 to go
+Film Tagging: 4 game(s) with film left out -- not part of this run (the upcoming opponent's games and our most recent game; PLAY_TAG_RUN_ONLY = False tags every game): 2025-12-20 WWW@AC; 2025-12-30 WWW@COE; 2026-01-03 UWOshkosh@UWWhitewater; 2026-01-03 WOS@WWW
+  ====================================================================================================
+  STOPPED after the Play review: 1 game(s) need their 10 STARTERS validated:
+    - 2025-11-07 Carroll(WI)@Wash(StLouis) (clip 1, H1 19:33)
+  What to do:
+    1. Commit and push the data folder (GitHub Desktop) so the app has the starters clip.
+    2. In the app: Analytics > Player Number Tracking, pick the game. At the top, "Starters": check every box
+       (who it really is), pick each team's five starters, and press Save.
+    3. Rerun from the Player tracking cell (Run > Run Selected Cell and All Below). Tracking then knows what each
+       starter looks like and uses it on the clips before the first substitution.
+  (PLAY_REVIEW_STARTERS_STOP = False carries on without stopping; PLAY_REVIEW_STARTERS = False turns the check off.)
+  ====================================================================================================
