@@ -443,7 +443,7 @@ def _cm_apply(H, pts):
     return cv2.perspectiveTransform(np.float32(pts).reshape(-1, 1, 2), np.asarray(H, np.float64)).reshape(-1, 2)
 
 
-def _cm_plausible(H, rel, players=None):
+def _cm_plausible(H, rel, players=None, min_share=None):
     """Do the people in this frame land on the court under H? CONFIRMED BUG (fixed; the court report showed 0 frames
     placed "via the frame before" and only ~20% of frames placed at all). This used EVERY detected person -- crowd,
     benches and referees included -- and fans in the stands always land off the court, so most good matches were
@@ -452,16 +452,34 @@ def _cm_plausible(H, rel, players=None):
     tracked players in this frame; with fewer than 3, every detection is used as before."""
     if players is not None and len(players) >= 3:
         feet = list(players)
-    else:
-        feet = [((x1 + x2) / 2, y2) for x1, y1, x2, y2 in _cm_detection_boxes(rel)]
+        m = _cm_apply(H, feet)
+        inside = ((m[:, 0] > -6) & (m[:, 0] < 100) & (m[:, 1] > -6) & (m[:, 1] < 56)).mean()
+        return inside >= (COURT_MIN_IN_BOUNDS if min_share is None else min_share)
+    # CONFIRMED BUG (fixed; Carroll@WashU: only 100 of 203 frames on the court, and fans were boxed and named). Before
+    # tracking (the court check places the frames about to be tracked) there are no tracked players yet, so EVERY detected
+    # person was judged -- fans in the stands, the bench -- and 70% of them had to land on the court: good matches failed
+    # and the frame was saved as "not on the court" for good. With no tracked players, a placement now passes when at least
+    # COURT_NOPLAYERS_MIN_IN (6) people land on the court and they are at least COURT_NOPLAYERS_MIN_SHARE (25%) of everyone
+    # detected (ten players and three refs on a court; the rest are the crowd) -- and the picture's bottom middle must land
+    # near the court (a wild homography fails that).
+    feet = [((x1 + x2) / 2, y2) for x1, y1, x2, y2 in _cm_detection_boxes(rel)]
     if len(feet) < 3:
         return True
     m = _cm_apply(H, feet)
-    inside = ((m[:, 0] > -6) & (m[:, 0] < 100) & (m[:, 1] > -6) & (m[:, 1] < 56)).mean()
-    return inside >= COURT_MIN_IN_BOUNDS
+    ins = (m[:, 0] > -6) & (m[:, 0] < 100) & (m[:, 1] > -6) & (m[:, 1] < 56)
+    try:
+        from PIL import Image as _Im
+        _w, _h = _Im.open(os.path.join(VISION_FRAMES_DIR, rel)).size
+        bm = _cm_apply(H, [(_w / 2.0, _h * 0.95)])[0]
+        if not (-30 < bm[0] < 124 and -30 < bm[1] < 80):
+            return False
+    except Exception:
+        pass
+    return (int(ins.sum()) >= int(globals().get("COURT_NOPLAYERS_MIN_IN", 6))
+            and float(ins.mean()) >= float(globals().get("COURT_NOPLAYERS_MIN_SHARE", 0.25)))
 
 
-def court_mapping(pc, tracks, frames_only=False):
+def court_mapping(pc, tracks, frames_only=False, feet_tracks=None):
     """frames_only = True (called by Player tracking's court check, BEFORE tracking): only place the frames of `pc` on the
     court (court_homographies.pkl) -- tracks may be None then -- so the clips about to be tracked have the court."""
     import cv2
@@ -534,9 +552,15 @@ def court_mapping(pc, tracks, frames_only=False):
                   f"({_n:,} saved frame(s) dropped); every other gym keeps its saved frames", flush=True)
     cache["_sig"], cache["_sig_by_arena"] = sig, sig_by_arena
     # tracked players' foot points per (clip, frame) -- what _cm_plausible judges a placement by (see its note)
-    _feet = {}
-    if isinstance(tracks, pd.DataFrame) and {"clip_key", "path"} <= set(tracks.columns):
-        _tp = tracks[tracks["side"].notna()] if "side" in tracks.columns else tracks.iloc[0:0]
+    _feet, _pl_share = {}, None
+    # feet_tracks: tracks from an EARLIER run (the court check before tracking passes the last run's player tracks), used
+    # only to judge placements -- unlike `tracks` it doesn't limit which clips are placed
+    _ft_src = tracks if isinstance(tracks, pd.DataFrame) else feet_tracks
+    if isinstance(_ft_src, pd.DataFrame) and {"clip_key", "path"} <= set(_ft_src.columns):
+        tracks_ = _ft_src
+        # an earlier run's tracks can still hold a few unmarked fans (frames that had no court then): a lower bar
+        _pl_share = None if isinstance(tracks, pd.DataFrame) else float(globals().get("COURT_MIN_IN_BOUNDS_PRIOR", 0.5))
+        _tp = tracks_[tracks_["side"].notna()] if "side" in tracks_.columns else tracks_.iloc[0:0]
         for _ck, _pth in zip(_tp["clip_key"], _tp["path"]):
             try:
                 _pp = _trk_json.loads(_pth) if isinstance(_pth, str) else (_pth or [])
@@ -546,17 +570,35 @@ def court_mapping(pc, tracks, frames_only=False):
                 if len(_e) >= 6:
                     _feet.setdefault((_ck, int(_e[0])), []).append((float(_e[4]), float(_e[5])))
     # frames the old rule rejected get ONE more try under the new rule (placed frames are kept)
-    if cache.get("_plausible_rule") != "tracked players v1":
+    # v2: frames thrown out BEFORE tracking (judged on every person, crowd included -- see _cm_plausible) get one more try
+    if cache.get("_plausible_rule") != "tracked players v2":
         _rej = [k for k, v in cache.items() if not str(k).startswith("_") and v is None]
         for k in _rej:
             cache.pop(k, None)
-        cache["_plausible_rule"] = "tracked players v1"
+        cache["_plausible_rule"] = "tracked players v2"
+        cache.pop("_nofeet_none", None)
         cache.pop("_back_tried", None)
         if _rej:
             print(f"  [court]   {len(_rej):,} frame(s) the old on-court check threw out (it counted fans and benches) "
                   f"get one more try, judged on the tracked players -- one time, slower than usual", flush=True)
     _chained = set(cache.get("_chained") or [])
     _back_tried = set(cache.get("_back_tried") or [])
+    # frames left off the court when there were no tracked players to judge them by: tried again once players are known
+    _nofeet = set(cache.get("_nofeet_none") or [])
+    if _feet and _nofeet:
+        _fk = {}
+        for _, _r in rows.iterrows():
+            for _j, _f in enumerate(f for f in str(_r["track_files"]).split(";") if f):
+                if _f in _nofeet and len(_feet.get((_r["track_clip_key"], _j)) or []) >= 3:
+                    _fk[_f] = 1
+        for _f in _fk:
+            if cache.get(_f) is None:
+                cache.pop(_f, None)
+            _nofeet.discard(_f)
+            _back_tried.discard(_f)
+        if _fk:
+            print(f"  [court]   {len(_fk):,} frame(s) left off the court before the players were tracked get another try, "
+                  f"judged on the tracked players", flush=True)
     report, attack = [], {}
     last_ref = {}
     for (gd, gc), g in rows.groupby(["game_date", "game_code"], dropna=False):
@@ -607,16 +649,18 @@ def court_mapping(pc, tracks, frames_only=False):
                         break
                 if best[1]:
                     last_ref[game_key] = best_ref
-                H = best[0] if best[1] >= COURT_MIN_INLIERS and _cm_plausible(best[0], rel, _pl) else None
+                H = best[0] if best[1] >= COURT_MIN_INLIERS and _cm_plausible(best[0], rel, _pl, _pl_share) else None
                 if H is None and prev_rel is not None and cache.get(prev_rel) is not None:
                     pf = prev_feat or _cm_features(prev_rel, base)
                     Hfp, n = _cm_match(feat, pf)
                     if Hfp is not None and n >= COURT_MIN_INLIERS:
                         Hc = np.asarray(cache[prev_rel]) @ Hfp
-                        if _cm_plausible(Hc, rel, _pl):
+                        if _cm_plausible(Hc, rel, _pl, _pl_share):
                             H = Hc
                             _chained.add(rel)
                 cache[rel] = H.tolist() if H is not None else None
+                if H is None and not (_pl and len(_pl) >= 3):
+                    _nofeet.add(rel)
                 if H is not None:
                     n_map += 1
                     prev_rel, prev_feat = rel, feat
@@ -636,7 +680,7 @@ def court_mapping(pc, tracks, frames_only=False):
                 Hfn, n = _cm_match(feat, nf)
                 if Hfn is not None and n >= COURT_MIN_INLIERS:
                     Hc = np.asarray(cache[nxt_rel]) @ Hfn
-                    if _cm_plausible(Hc, rel, _feet.get((_ck, _j))):
+                    if _cm_plausible(Hc, rel, _feet.get((_ck, _j)), _pl_share):
                         cache[rel] = Hc.tolist()
                         _chained.add(rel)
                         n_map += 1
@@ -650,6 +694,7 @@ def court_mapping(pc, tracks, frames_only=False):
                        "calibration_frames": len(refs), "calibration_error_ft": round(float(np.mean(errs)), 2),
                        "calibration_page": None})
     cache["_chained"], cache["_back_tried"] = sorted(_chained), sorted(_back_tried)
+    cache["_nofeet_none"] = sorted(f for f in _nofeet if cache.get(f) is None)
     _safe_to_pickle(cache, cache_path)
     if frames_only or tracks is None:
         return tracks, pc, pd.DataFrame(report), cache

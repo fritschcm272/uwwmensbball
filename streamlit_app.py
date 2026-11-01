@@ -6217,6 +6217,24 @@ def _pr_player_opts(pl):
             lab = f"{code} {_pr_lab(pl, n)}"
             if lab not in out:
                 out[lab] = (n, sd)
+    # CONFIRMED CHANGE (requested: missing starters first in the dropdowns, then the players tracking quietly guessed a box
+    # is): only the ORDER changes -- the labels stay the same, so answers saved before still match
+    try:
+        _nk_ = lambda x: re.sub(r"[^a-z0-9]+", "", str(x).lower())
+        _miss = [_nk_(x) for x in (pl.get("starters_missing") or [])]
+        _hid = []
+        for pic in pl.get("pictures") or []:
+            for b in pic.get("boxes") or []:
+                g_ = b.get("hidden_guess") if not b.get("name") else None
+                if g_ and _nk_(g_) not in _hid:
+                    _hid.append(_nk_(g_))
+        if _miss or _hid:
+            def _rank(item):
+                k_ = _nk_(item[1][0])
+                return (0, _miss.index(k_)) if k_ in _miss else (1, _hid.index(k_)) if k_ in _hid else (2, 0)
+            out = dict(sorted(out.items(), key=_rank))          # sorted() is stable: the rest keep their order
+    except Exception:
+        pass
     return out
 
 
@@ -7007,6 +7025,10 @@ def _pnt_starters_form(sv):
     kp = "prxst"
     pl = sv["plays"][0]
     st.markdown("#### \U0001f3c0 Starters — the first possession of the game")
+    # CONFIRMED CHANGE (requested: list the missing starters at the top): who is still missing, before anything else
+    if pl.get("starters_missing"):
+        st.error("**Still missing:** " + ", ".join(f"**{x}**" for x in pl["starters_missing"])
+                 + " -- they are listed first in each box's dropdown and in the no-box table.")
     st.info("**The parser is stopped until this is saved.** 1) In the Players table, check every box: \"correct\" if "
             "tracking named him right, otherwise pick who he really is (both teams' whole rosters are in the list), or "
             "\"not a player\". Mark any starter with no box on the grid. 2) Below the picture, make sure each team's five "
