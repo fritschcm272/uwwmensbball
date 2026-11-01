@@ -261,4 +261,5 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-01T11:00:00,screener,Screener,,,Luke Bara,,70,,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-01T10:59:26
 2026-11-01T11:26:07,screener,Screener,,,Luke Bara,,70,,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-01T11:25:33
 2026-11-01T12:58:11,screener,Screener,,,Luke Bara,,70,,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-01T12:57:46
-2026-11-01T13:16:02,screener,Screener,,,Luke Bara,,70,nan,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-01T13:15:36
+2026-11-01T13:16:02,screener,Screener,,,Luke Bara,,70,,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-01T13:15:36
+2026-11-01T13:37:33,screener,Screener,,,Luke Bara,,70,nan,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-01T13:36:56
