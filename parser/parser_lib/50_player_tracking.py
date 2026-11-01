@@ -1265,7 +1265,7 @@ def _trk_stitch(frames, tracks, shifts, fps_):
     the camera's pan removed), same jersey color and size. A join is made only when it is the best choice for BOTH pieces
     by TRACK_STITCH_MARGIN -- at a crossing where either teammate could be either piece, the pieces stay apart.
     -> (tracks, joins made)."""
-    gap_max = max(1, int(round(float(globals().get("TRACK_STITCH_GAP_S", 1.5)) * max(fps_, 0.5))))
+    gap_max = max(1, int(round(float(globals().get("TRACK_STITCH_GAP_S", 0.5)) * max(fps_, 0.5))))
     margin = float(globals().get("TRACK_STITCH_MARGIN", 0.5))
     vmax = float(globals().get("TRACK_MAX_SPEED_FTS", 25.0))
     cum = np.cumsum(np.array([np.asarray(s_, float)[:2] for s_ in shifts] or [np.zeros(2)]), axis=0)
@@ -1324,11 +1324,11 @@ def _trk_stitch(frames, tracks, shifts, fps_):
                     continue                                   # a very different size: not the same man
                 if np.isfinite([pa[3], pa[4], pb[3], pb[4]]).all():
                     pred = np.array([pa[3], pa[4]]) + (vca * dt if vca is not None else 0.0)
-                    reach = 2.5 + 0.5 * vmax * dt / max(fps_, 0.5)
+                    reach = 2.0 + 0.35 * vmax * dt / max(fps_, 0.5)
                     dn = float(np.linalg.norm(pred - np.array([pb[3], pb[4]]))) / reach
                 else:
                     pred = np.array([pa[0], pa[1]]) + (vpa * dt if vpa is not None else 0.0)
-                    reach = ha * (0.6 + 0.35 * dt * 4.0 / max(fps_, 0.5))
+                    reach = ha * (0.4 + 0.2 * dt * 4.0 / max(fps_, 0.5))
                     dn = float(np.linalg.norm(pred - np.array([pb[0], pb[1]]))) / max(reach, 1e-4)
                 cd = float(np.linalg.norm(cola - colb)) / 60.0
                 if dn >= 1.0 or cd >= 1.2:
@@ -2475,7 +2475,11 @@ def player_tracking(pc):
             _n_split, _touched = 0, set()
             for ch in _trk_coach_checks():
                 i = _k2i_.get(ch.get("clip_key"))
-                if i is None or _sl_(game_of[i]) in _done_:
+                # CONFIRMED BUG (fixed; clip 1 re-check: three CHEERLEADERS carried #34 Kapral, #21 May and #12 McKenna).
+                # Once a game's starters were saved this step was skipped, so a check named its WHOLE track -- and a track
+                # chained over 25 s of film wandered from the checked player to the cheerleaders behind the baseline. A
+                # check now names only the stretch it was made on, in every game.
+                if i is None or (not globals().get("TRACK_CHECK_CUT_ALWAYS", True) and _sl_(game_of[i]) in _done_):
                     continue
                 t = _trk_t_of(ch, -1)
                 clip = clips[i]
@@ -2520,11 +2524,31 @@ def player_tracking(pc):
                                     and min(y2, float(r2[9])) > max(y1, float(r2[7]))):
                                 return True
                         return False
+                    # ...and where the track has a hole or a jump: the stretch before / after it may be someone else (the
+                    # tracker bridges missed frames, and pieces are joined back) -- TRACK_CHECK_MAX_GAP_S, TRACK_CHECK_MAX_JUMP
+                    _fps_c = float(clip.get("fps", _fps))
+                    _gap_mx = max(1, int(round(float(globals().get("TRACK_CHECK_MAX_GAP_S", 0.25)) * _fps_c)))
+                    _jmp = float(globals().get("TRACK_CHECK_MAX_JUMP", 0.6))
+
+                    def _cont(a, b):
+                        (ta, ja), (tb, jb) = a, b
+                        dt = abs(tb - ta)
+                        if dt > _gap_mx:
+                            return False
+                        ra, rb = _fr[ta][ja], _fr[tb][jb]
+                        if len(ra) > 11 and np.isfinite([ra[10], ra[11], rb[10], rb[11]]).all():
+                            d = float(np.hypot(rb[10] - ra[10], rb[11] - ra[11]))
+                            return d <= 2.0 + 25.0 * dt / max(_fps_c, 0.5)
+                        # no court: the feet in the picture (a frame or two apart the camera barely moves; its estimated
+                        # pan is too noisy for this), in box heights
+                        d = float(np.hypot((rb[6] + rb[8]) / 2 - (ra[6] + ra[8]) / 2, rb[9] - ra[9]))
+                        return d <= max(float(ra[9] - ra[7]), 1.0) * (_jmp + 0.3 * dt * 8.0 / max(_fps_c, 0.5))
+
                     lo = _ix
-                    while lo > 0 and not _near_mate(*_tr_s[lo - 1]):
+                    while lo > 0 and not _near_mate(*_tr_s[lo - 1]) and _cont(_tr_s[lo - 1], _tr_s[lo]):
                         lo -= 1
                     hi = _ix
-                    while hi < len(_tr_s) - 1 and not _near_mate(*_tr_s[hi + 1]):
+                    while hi < len(_tr_s) - 1 and not _near_mate(*_tr_s[hi + 1]) and _cont(_tr_s[hi], _tr_s[hi + 1]):
                         hi += 1
                     inside = _tr_s[lo:hi + 1]
                     rest = [_tr_s[:lo], _tr_s[hi + 1:]]
@@ -2547,8 +2571,8 @@ def player_tracking(pc):
             for i in _touched:
                 clips[i]["holder"] = _trk_holders(clips[i])
             if _n_split:
-                print(f"  [tracking]   checked tracks in starters clips "
-                      + ("followed until they touch a teammate (TRACK_CHECK_FOLLOW)" if _follow else
+                print(f"  [tracking]   checked tracks "
+                      + ("followed until they touch a teammate, or the track has a hole or a jump (TRACK_CHECK_FOLLOW)" if _follow else
                          f"cut to {_span:g} s around the checked frame (TRACK_CHECK_SPAN_S)")
                       + f": {_n_split} piece(s) split off" + (" (they keep the name only if they look like him)"
                          if globals().get("TRACK_CARRY_CHECKS", False) else " (left unnamed -- carrying by look is off)"), flush=True)
@@ -2765,13 +2789,25 @@ def player_tracking(pc):
                 for (i, k), vs in _acc.items():
                     if float(np.mean(vs)) >= float(_oc_cut):
                         _flag_by.setdefault(i, []).append((float(np.mean(vs)), k))
+                # CONFIRMED CHANGE (clip 1 re-check: a cheerleader behind the baseline kept a box -- and took #11 Cohen's
+                # name -- because "keep 5 boxes a team" held her back). A track scoring TRACK_OUTFIT_SURE (0.90)+ is set
+                # aside even then: with tracks in pieces, a team often has fewer than 5 boxes in a frame anyway.
+                _sure = float(globals().get("TRACK_OUTFIT_SURE", 0.90))
+                n_sure = 0
                 for i, lst in _flag_by.items():
                     _prev_i = {}
-                    a_, b_ = _trk_set_aside_keep5(clips[i], [k for _v, k in sorted(lst, reverse=True)], _prev_i)
+                    for v_, k in sorted(lst, reverse=True):
+                        sd_ = clips[i]["side"].get(k)
+                        if v_ >= _sure and sd_ in ("offense", "defense"):
+                            _prev_i[k] = sd_
+                            clips[i]["side"][k] = None
+                            n_sure += 1
+                    a_, b_ = _trk_set_aside_keep5(clips[i], [k for v_, k in sorted(lst, reverse=True) if v_ < _sure], _prev_i)
                     n_out += a_
                     n_kept5 += b_
                     for k, v in _prev_i.items():
                         _set_aside_prev[(i, k)] = v
+                n_out += n_sure
                 _trk_note_drop("[tracks] outfit says referee / coach / bench / fan (set aside)", n_out)
                 print(f"  [tracking]   outfit check: {n_out:,} track(s) dressed like a referee, coach, bench player or fan "
                       f"(score >= {float(_oc_cut):.2f}, tested {_oc_res.get('precision', 0):.0%} right) -- set aside as not "
@@ -3009,6 +3045,24 @@ def player_tracking(pc):
             if coach_flip:
                 print(f"  [tracking]   coach checks: {len(coach_flip)} player(s) moved to the other team (\"wrong team\")",
                       flush=True)
+            # CONFIRMED BUG (fixed; clip 1 re-check: #21 May -- WashU, white -- had a Carroll (blue) box). A track a coach
+            # named with a player of the OTHER side's five is on that side: his name says which team he plays for.
+            _n_side = 0
+            for (i, k), n in coach.items():
+                if not n:
+                    continue
+                sd = clips[i]["side"].get(k)
+                if sd not in ("offense", "defense"):
+                    continue
+                other = "defense" if sd == "offense" else "offense"
+                if n in _trk_five(pc.at[i, f"{other}_lineup"]) and n not in _trk_five(pc.at[i, f"{sd}_lineup"]):
+                    clips[i]["side"][k] = other
+                    if clips[i].get("team", {}).get(k) in _other_team:
+                        clips[i]["team"][k] = _other_team[clips[i]["team"][k]]
+                    _n_side += 1
+            if _n_side:
+                print(f"  [tracking]   coach checks: {_n_side} named player(s) were on the other team's side -- moved to his "
+                      f"team", flush=True)
 
             # --- audit of Synergy's anchors against the coaches' checks (requested: "Synergy is 0/5 -- is it working?") ---
             # For every anchor (the ball holder late in the clip = the player Synergy names) whose track a coach also
