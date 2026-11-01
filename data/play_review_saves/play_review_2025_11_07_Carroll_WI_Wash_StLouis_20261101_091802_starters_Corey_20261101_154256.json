@@ -1,0 +1,78 @@
+{
+ "game": "2025-11-07|Carroll(WI)@Wash(StLouis)",
+ "run": "20261101_091802",
+ "coach": "Corey",
+ "saved": "2026-11-01T15:42:56+00:00",
+ "checks": [
+  {
+   "clip_key": "2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts",
+   "clip_number": 1,
+   "frame_file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/1_d2e82d60_t032.jpg",
+   "t": 32,
+   "px": 492.9,
+   "py": 302.9,
+   "side": "defense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "not a player",
+   "true_name": null,
+   "not_player_kind": "referee",
+   "hidden_guess": "Michael McNabb",
+   "hidden_guess_p": 0.25
+  },
+  {
+   "clip_key": "2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts",
+   "clip_number": 1,
+   "frame_file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/1_d2e82d60_t032.jpg",
+   "t": 32,
+   "px": 984.8,
+   "py": 728.1,
+   "side": "offense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "wrong",
+   "true_name": "Connor May",
+   "not_player_kind": null,
+   "hidden_guess": "Calvin Kapral",
+   "hidden_guess_p": 0.33
+  },
+  {
+   "clip_key": "2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts",
+   "clip_number": 1,
+   "frame_file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/1_d2e82d60_t032.jpg",
+   "t": 32,
+   "px": 308.8,
+   "py": 269.8,
+   "side": "offense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "not a player",
+   "true_name": null,
+   "not_player_kind": "crowd",
+   "hidden_guess": "Josh Kim",
+   "hidden_guess_p": 0.33
+  }
+ ],
+ "source": "streamlit app",
+ "part": "starters",
+ "starters": {
+  "Washington-St. Louis Bears": [
+   "Calvin Kapral",
+   "Connor May",
+   "Josh Kim",
+   "Ryan Cohen",
+   "Will Grudzinski"
+  ],
+  "Carroll (WI) Pioneers": [
+   "Evan Bland",
+   "Jacob Naber",
+   "Lamar Smith",
+   "Michael McNabb",
+   "Peyton McKenna"
+  ]
+ },
+ "starters_clip_key": "2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts"
+}
