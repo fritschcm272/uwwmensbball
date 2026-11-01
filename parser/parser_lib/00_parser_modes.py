@@ -133,7 +133,39 @@ class _PmQuietBuf(_pm_io_mod.StringIO):
         return n
 
 
-def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb", quiet=None):
+def _pm_core_fingerprint(nb, upto):
+    """Everything the core sections (01-45: schedules, rosters, play-by-play, lineups ...) read: their cells' code and
+    settings, their parser_lib files, the FastScout pages in INPUT_DIR (names, sizes, times), today's date."""
+    import hashlib as _h
+    import datetime as _dt
+    parts = [str(_dt.date.today())]
+    lib = globals().get("PARSER_LIB") or _pm_os.path.join(_pm_os.getcwd(), "parser_lib")
+    for ci, cell in enumerate(nb["cells"][:upto]):
+        if cell.get("cell_type") != "code":
+            continue
+        src = "".join(cell.get("source") or [])
+        parts.append(src)
+        for sec in _pm_re.findall(r'run_section\("([^"]+)"', src):
+            f = _pm_os.path.join(lib, sec if sec.endswith(".py") else sec + ".py")
+            try:
+                st_ = _pm_os.stat(f)
+                parts.append(f"{sec}:{st_.st_size}:{int(st_.st_mtime)}")
+            except OSError:
+                parts.append(f"{sec}:missing")
+    ind = globals().get("INPUT_DIR") or "./inputs"
+    try:
+        for e in sorted(_pm_os.scandir(ind), key=lambda e: e.name):
+            # (left out: files the run itself rewrites every time -- caches "_*", the film tables "uww_*", and the
+            # FastScout / Synergy pages saved at each login)
+            if e.is_file() and not e.name.startswith(("_", "uww_", "myTeam - ", "Synergy - ")):
+                st_ = e.stat()
+                parts.append(f"in:{e.name}:{st_.st_size}:{int(st_.st_mtime)}")
+    except OSError:
+        pass
+    return _h.md5("\n".join(parts).encode("utf-8", "replace")).hexdigest()
+
+
+def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb", quiet=None, fresh=False):
     """Run parser_nb.ipynb's cells for one job: "models", "tagging" or "brief" (see the top of this file).
     start_at = a section name ("50_player_tracking") to continue from after a stop -- the sections above it are not run
     again (their results are still in this notebook's memory from the earlier run). stop_after = a section to stop after.
@@ -166,12 +198,34 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
         _log = _pm_os.path.join(_ld, f"{mode}_{_pm_time.strftime('%Y%m%d_%H%M%S')}.log")
         print(f"(quiet: one line per section; everything else goes to {_log})", flush=True)
     G["_pm_quiet"] = (quiet, _real_out)
+    # CONFIRMED CHANGE (requested: "does parser_models really need to run all of the cells through 44 ... when it is being
+    # run for a game that stopped at court calibration? nothing should change for the same game"). The core sections
+    # (01-45) are skipped when THIS notebook session already ran them and nothing they read has changed since: their cells
+    # and settings, their code, the FastScout pages in INPUT_DIR, the date (_pm_core_fingerprint). Their results are still in
+    # memory, exactly as after a start_at. A restarted kernel has nothing in memory, so it runs them; run_parser(...,
+    # fresh=True) forces them.
+    _first_model = next((ci for ci, c in enumerate(nb["cells"]) if c.get("cell_type") == "code" and any(
+        (_pm_num(x) is not None and _pm_num(x) > _PM_CORE_MAX) or x in _PM_MODEL
+        for x in _pm_re.findall(r'run_section\("([^"]+)"', "".join(c.get("source") or [])))), len(nb["cells"]))
+    _core_fp = _pm_core_fingerprint(nb, _first_model) if start_at is None else None
+    _skip_core = bool(start_at is None and not fresh and G.get("_pm_core_ok") and G.get("_pm_core_fp") == _core_fp
+                      and "run_section" in G)
+    if _skip_core:
+        print("(sections 01-45 skipped: this session already ran them and nothing they read has changed -- "
+              "run_parser(..., fresh=True) runs them again)", flush=True)
+    elif start_at is None:
+        G["_pm_core_ok"] = False
     for ci, cell in enumerate(nb["cells"]):
         if cell.get("cell_type") != "code":
             continue
         src = "".join(cell.get("source") or [])
         secs = _pm_re.findall(r'run_section\("([^"]+)"', src)
         is_setup = "def run_section(" in src
+        if start_at is None and ci >= _first_model and not G.get("_pm_core_ok"):
+            # the core cells all ran: remember what they read, as it is NOW (they save the pages they scrape)
+            G["_pm_core_ok"], G["_pm_core_fp"] = True, _pm_core_fingerprint(nb, _first_model)
+        if _skip_core and ci < _first_model and not is_setup:
+            continue
         if not started:
             if start_at in secs:
                 started = True

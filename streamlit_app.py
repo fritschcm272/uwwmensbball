@@ -6430,7 +6430,7 @@ def _pr_play_widgets(d, pi, store, kp):
     _pr_title_widgets(d, pi, store, kp)
     _pr_player_widgets(d, pi, store, kp, with_video=False)
 
-def _pr_payload(d, store, coach, kp, part=None, actions=False):
+def _pr_payload(d, store, coach, kp, part=None, actions=False, only=None):
     """Every answer for this review -- the ones changed (kept in `store`) and the prefilled defaults. part = "titles" or
     "players" saves only that part (each is its own file; the parser counts a review done when both are saved)."""
     out = {"game": d.get("game"), "run": d.get("run_real", d.get("run")), "coach": coach.strip(),
@@ -6438,6 +6438,8 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
            "source": "streamlit app", "part": part}
     run = d.get("run")
     for pi, pl in enumerate(d.get("plays", [])):
+        if only is not None and pi not in only:          # Film Tagging saves one page (20 plays) at a time
+            continue
         # Film Tagging's Actions table (one row per action): saved as "actions", and its FIRST row (first ball-screen /
         # off-ball row for the coverages) also answers the single action fields below, so everything reading them still works
         _derived = None
@@ -6530,10 +6532,11 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False):
     return out
 
 
-def _pr_commit(d, store, coach, kp, part, key_suffix, actions=False):
-    """Save one part of the review to GitHub (or offer the file)."""
+def _pr_commit(d, store, coach, kp, part, key_suffix, actions=False, only=None):
+    """Save one part of the review to GitHub (or offer the file). only = the plays (their positions) to save -- Film
+    Tagging saves a page at a time. -> True when it saved to GitHub."""
     what = "Title checks" if part == "titles" else "player checks"
-    out = _pr_payload(d, store, coach, kp, part=part, actions=actions)
+    out = _pr_payload(d, store, coach, kp, part=part, actions=actions, only=only)
     fname = (f"play_review_{d.get('slug')}_{d.get('run')}_{part}_{re.sub(r'[^A-Za-z0-9]+', '_', coach.strip()).strip('_')}_"
              f"{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
     ok, msg = _pr_github_save(fname, out)
@@ -6552,10 +6555,11 @@ def _pr_commit(d, store, coach, kp, part, key_suffix, actions=False):
             _pr_remote_save_docs.clear()                 # the next page load sees this save (form reload, history)
         except Exception:
             pass
-    else:
-        st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in the repo's data/play_review_saves folder.")
-        st.download_button("Download", json.dumps(out, indent=1), file_name=fname, mime="application/json",
-                           key=f"pr_dl_{part}{key_suffix}")
+        return True
+    st.warning(f"Couldn't save to GitHub ({msg}). Download the file instead and put it in the repo's data/play_review_saves folder.")
+    st.download_button("Download", json.dumps(out, indent=1), file_name=fname, mime="application/json",
+                       key=f"pr_dl_{part}{key_suffix}")
+    return False
 
 
 def _pr_save_bar(d, store, kp, key_suffix, part="titles"):
@@ -7879,6 +7883,28 @@ def render_tag_model_scoreboard():
             }), hide_index=True, use_container_width=True)
 
 
+FT_PAGE_SIZE = 20          # Film Tagging: plays per page (requested: "only 20 plays at a time ... save after each 20")
+
+
+def _ft_saved_clip_keys(d):
+    """The plays of this batch already saved (any coach, any page) -- their clip keys."""
+    out = set()
+    _slug = re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game", ""))).strip("_")
+    runs = {str(d.get("run")), str(d.get("run_real", d.get("run")))}
+    for doc in _pr_save_docs():
+        try:
+            if not ({str(doc.get("run")), f"{_slug}_{doc.get('run')}"} & runs):
+                continue
+            if not (doc.get("part") == "titles" or (doc.get("part") is None and isinstance(doc.get("answers"), list))):
+                continue
+            for a in list(doc.get("answers") or []) + list(doc.get("actions") or []):
+                out.add(str(a.get("clip_key")))
+            out |= {str(x) for x in doc.get("actions_cleared") or []}
+        except Exception:
+            continue
+    return out
+
+
 def render_film_tagging():
     """Analytics > Film Tagging (requested: coaches tag games in the app, not in Synergy's Title field). Every captured
     clip with no tag yet, a batch per game (ours and the upcoming opponent's), in game order: watch the play, pick or type
@@ -7888,6 +7914,9 @@ def render_film_tagging():
                    "answer when it's right, another answer when it isn't. Saved tags go into every scouting table on the next "
                    "parser run, and teach the automatic Title.")
     render_tag_model_scoreboard()
+    _flash = st.session_state.pop("_ft_flash", None)
+    if _flash:
+        st.success(_flash)
     # CONFIRMED CHANGE (requested: tagging ONLY here, and only games that have plays to tag right now). Two kinds of batch:
     #   * "Tag" -- untagged clips, a batch per game (Film Tagging queue)
     #   * "Title check" -- the Title part of a game's Play review (every game, ours too -- Previous Games no longer shows it),
@@ -7910,7 +7939,11 @@ def render_film_tagging():
                                 and _has_vid(v, p)]}
             if v["plays"]:
                 rev_pk.append(v)
-    _saved = lambda d: any("titles" in x[2] for x in _pr_app_saves_for(d.get("run")))
+    # CONFIRMED CHANGE (requested: pages of 20, each saved as you go): a batch is waiting for the parser only once EVERY
+    # play in it is saved; a partly saved batch stays here and opens on its first page not saved yet
+    def _saved(d):
+        _k = _ft_saved_clip_keys(d)
+        return bool(d.get("plays")) and all(str(p.get("clip_key")) in _k for p in d.get("plays", []))
     waiting = [d for d in tag_pk + rev_pk if _saved(d)]
     pkgs = [d for d in tag_pk + rev_pk if not _saved(d)]
     if waiting:
@@ -7941,8 +7974,29 @@ def render_film_tagging():
                 "Each field starts on the coach's answer (\u2713 = the automatic answer). ")
                + "Change only what's wrong; set a field to -- if you can't tell. Saving accepts the rest as they are.")
     _sfx = f"_ft_{d.get('slug')}"
-    _form = _form_no_enter(f"ft_form_{d.get('slug')}_{d.get('run')}")
+    # ---- pages of FT_PAGE_SIZE plays (requested: less lag; each page saved before the next) ----
+    _all = d.get("plays", [])
+    _sv = _ft_saved_clip_keys(d)
+    _npg = max(1, -(-len(_all) // FT_PAGE_SIZE))
+    _pg_done = [all(str(p.get("clip_key")) in _sv for p in _all[i * FT_PAGE_SIZE:(i + 1) * FT_PAGE_SIZE]) for i in range(_npg)]
+    _pgk = f"ft_page_{d.get('slug')}_{d.get('run')}"
+    if _pgk not in st.session_state:
+        st.session_state[_pgk] = next((i for i, ok_ in enumerate(_pg_done) if not ok_), 0)
+    if _npg > 1:
+        _pg_lab = lambda i: (f"Plays {i * FT_PAGE_SIZE + 1}–{min(len(_all), (i + 1) * FT_PAGE_SIZE)}"
+                             + (" ✅" if _pg_done[i] else ""))
+        _pg = st.radio("Page", list(range(_npg)), index=min(int(st.session_state[_pgk]), _npg - 1), format_func=_pg_lab,
+                       horizontal=True, key=f"{_pgk}_radio")
+        st.session_state[_pgk] = _pg
+        st.caption(f"{sum(_pg_done)} of {_npg} page(s) saved (✅). Save each page when you finish it -- it saves those "
+                   f"{FT_PAGE_SIZE} plays and opens the next page.")
+    else:
+        _pg = 0
+    _lo, _hi = _pg * FT_PAGE_SIZE, min(len(_all), (_pg + 1) * FT_PAGE_SIZE)
+    _form = _form_no_enter(f"ft_form_{d.get('slug')}_{d.get('run')}_{_pg}")
     for pi, pl in enumerate(d.get("plays", [])):
+        if not (_lo <= pi < _hi):
+            continue
         n_set = len([k for k in store if k.startswith(f"{kp}_v_{d.get('run')}_{pi}_")])
         head = (f"Clip {pl.get('clip_number')} \u00b7 {pl.get('clock') or ''} \u00b7 {str(pl.get('synergy') or '')[:90]}"
                 + (f"  \u2014 {n_set} changed" if n_set else ""))
@@ -7965,12 +8019,18 @@ def render_film_tagging():
     with _form:
         _nc, _sc = st.columns([3, 2], vertical_alignment="bottom")
         _coach = _nc.text_input("Your name (required to save)", key=f"pr_coach_titles{_sfx}")
-        _go = _sc.form_submit_button("Save my tags", use_container_width=True)
+        _go = _sc.form_submit_button(f"Save plays {_lo + 1}–{_hi}" + (" and go to the next page" if _pg < _npg - 1 else ""),
+                                     use_container_width=True)
     if _go:
         if not str(_coach).strip():
             st.error("Add your name next to the Save button, then save again.")
-        else:
-            _pr_commit(d, store, _coach, kp, "titles", _sfx, actions=True)
+        elif _pr_commit(d, store, _coach, kp, "titles", _sfx, actions=True, only=set(range(_lo, _hi))):
+            st.session_state["_ft_flash"] = (f"Saved plays {_lo + 1}–{_hi}."
+                                             + (" Next page below." if _pg < _npg - 1 else " That was the last page."))
+            if _pg < _npg - 1:
+                st.session_state[_pgk] = _pg + 1
+                st.session_state.pop(f"{_pgk}_radio", None)
+            st.rerun()
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -7990,6 +8050,7 @@ def _cc_slug(s):
     return re.sub(r"[^A-Za-z0-9]+", "_", str(s)).strip("_")
 
 
+@st.cache_data(ttl=120, show_spinner=False)
 def _cc_requests():
     out = []
     for f in sorted(glob.glob(os.path.join(_CC_DIR, "*", "request.json"))):
@@ -8004,8 +8065,10 @@ def _cc_requests():
     return out
 
 
+@st.cache_data(ttl=120, show_spinner=False)
 def _cc_saved():
-    """Every saved court calibration (repo copy + saves branch) -> {gym: [documents], newest last}."""
+    """Every saved court calibration (repo copy + saves branch) -> {gym: [documents], newest last}. (Cached for 2 minutes and
+    cleared on a save: it was read again on every click.)"""
     docs = {}
     for f in glob.glob(os.path.join(DATA_DIR, "play_review_saves", "court_calibration_*.json")):
         try:
@@ -8072,18 +8135,32 @@ def _cc_court_lines():
     return L
 
 
+@st.cache_resource(show_spinner=False, max_entries=24)
+def _cc_frame_base(path, mtime):
+    """The frame read from disk and shrunk to 1280 wide -- once per frame, not on every click (speed: "refreshes when
+    selecting landmarks")."""
+    from PIL import Image
+    im = Image.open(path).convert("RGB")
+    if im.size[0] > 1280:
+        im = im.resize((1280, int(round(im.size[1] * 1280 / im.size[0]))), Image.LANCZOS)
+    return im
+
+
+@st.cache_resource(show_spinner=False)
+def _cc_court_lines_cached():
+    return _cc_court_lines()
+
+
 def _cc_frame_picture(path, fr, points, H):
     """The frame (as shrunk for the app) with the clicked landmarks, and the court lines through the calibration."""
-    from PIL import Image, ImageDraw
-    im = Image.open(path).convert("RGB")
-    if im.size[0] > 1280:                                        # (speed) sent to the browser on every click
-        im = im.resize((1280, int(round(im.size[1] * 1280 / im.size[0]))), Image.LANCZOS)
+    from PIL import ImageDraw
+    im = _cc_frame_base(path, os.path.getmtime(path)).copy()    # (speed) sent to the browser on every click
     d = ImageDraw.Draw(im)
     s = im.size[0] / float(fr.get("W") or im.size[0])            # full-frame pixels -> this picture
     if H is not None:
         try:
             Hi = np.linalg.inv(H)
-            for line in _cc_court_lines():
+            for line in _cc_court_lines_cached():
                 pix = _cc_apply(Hi, line) * s
                 ok = np.isfinite(pix).all(1) & (np.abs(pix) < 4 * max(im.size)).all(1)
                 for a, b, oa, ob in zip(pix[:-1], pix[1:], ok[:-1], ok[1:]):
@@ -8313,6 +8390,11 @@ def _cc_page():
         fname = (f"court_calibration_{_cc_slug(gym)}_{_cc_slug(coach.strip())}_"
                  f"{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
         ok, msg = _pr_github_save(fname, payload)
+        try:
+            _cc_saved.clear()
+            _pr_remote_save_docs.clear()
+        except Exception:
+            pass
         if ok:
             st.success(f"Saved ({msg}). The parser's next run places {gym}'s games on the court.")
         else:
