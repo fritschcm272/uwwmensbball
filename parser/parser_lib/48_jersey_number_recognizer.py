@@ -456,7 +456,8 @@ def jersey_collect():
             if not read_t:
                 continue
             _n_jt_read += 1
-            fps_ = float(globals().get("VISION_TRACK_FPS") or 2.0)
+            fps_ = (_trk_clip_fps(r) if "_trk_clip_fps" in globals()
+                    else float(globals().get("VISION_TRACK_FPS") or 2.0))     # the clip's own rate (8 on a tracking game)
             near = [tt for tt in sorted(boxes) if boxes[tt] is not None
                     and min(abs(tt - r_) for r_ in read_t) <= JERSEY_TRAIN_NEAR_READ_S * fps_]
             for tt in [near[int(k)] for k in np.linspace(0, len(near) - 1, min(JERSEY_TRAIN_CROPS_PER_TRACK, len(near)))]:
@@ -638,6 +639,28 @@ def _jr_samples(sources):
                 continue
             out.append((f, os.path.basename(os.path.dirname(f))))
     return sorted(out)
+
+
+def jersey_recognizer_probs(crops_bgr, style="fixed", keep_min=0.001):
+    """CONFIRMED CHANGE (requested: a jersey reader that only picks from the five on the floor, voting over the whole track).
+    Like jersey_recognizer_read, but each crop gives the recognizer's WHOLE answer: {number: probability} for every number
+    it knows (and "nn" = no number visible), so tracking can keep only the five numbers on the floor and add up the
+    evidence of many crops of one player. None when there is no trained model."""
+    if jersey_recognizer_read([], style=style) is None and globals().get("_jr_model" if style != "pose" else "_jr_model_pose") is None:
+        return None
+    import torch
+    from PIL import Image
+    net, classes, tf = globals()["_jr_model" if style != "pose" else "_jr_model_pose"]
+    out = []
+    with torch.no_grad():
+        for c in crops_bgr:
+            if c is None or getattr(c, "size", 0) == 0:
+                out.append(None)
+                continue
+            x = tf(Image.fromarray(c[:, :, ::-1].copy())).unsqueeze(0)
+            pr = torch.softmax(net(x), 1)[0].numpy()
+            out.append({classes[j]: round(float(v), 4) for j, v in enumerate(pr) if v >= keep_min})
+    return out
 
 
 def jersey_train():

@@ -1791,6 +1791,114 @@ def _vision_from_exports(sources, cache):
     return cache
 
 
+_VX_DENSE_RX = re.compile(r"_t\d{3,}[a-z]\.jpg$")
+
+
+def _vx_densify_tracking(cache):
+    """CONFIRMED CHANGE (requested: "#1 -- fewer broken-up tracks"). Tracking frames were 4 a second: players move several
+    feet between frames, so the tracker loses and swaps them. A PLAYER_TRACKING_GAMES game (only those -- every other game,
+    the Film Tagging games included, is untouched) now gets VISION_TRACK_FPS_TRACKING (8) tracking frames a second. Its
+    EXISTING frames keep their names and pictures (your saved checks, the court calibration and the jersey reads stay
+    valid); the new in-between frames are added between them ("..._t004a.jpg" between t004 and t005), read from the same
+    clip video. VISION_TRACK_FPS_TRACKING = None / 0 takes the in-between frames out again. -> (cache, clips changed)."""
+    import cv2
+    target = float(globals().get("VISION_TRACK_FPS_TRACKING", 8) or 0)
+    base_fps = float(globals().get("VISION_TRACK_FPS") or 4)
+    if cache is None or cache.empty or "track_files" not in cache.columns:
+        return cache, 0
+    _ptl = globals().get("player_tracking_listed")
+    if _ptl is None:
+        return cache, 0
+    factor = int(round(target / base_fps)) if target > 0 else 1
+    mans, n_changed, n_added = {}, 0, 0
+    for ix, r in cache.iterrows():
+        tf = r.get("track_files")
+        if not isinstance(tf, str) or not tf:
+            continue
+        try:
+            if not _ptl(r.get("clip_date"), r.get("clip_game")):
+                continue
+        except Exception:
+            continue
+        files = [f.replace("\\", "/") for f in tf.split(";") if f]
+        times = [x for x in str(r.get("track_times") or "").split(";") if x.strip()]
+        dense = any(_VX_DENSE_RX.search(f) for f in files)
+        if factor < 2 and not dense:
+            continue
+        tdir = os.path.dirname(os.path.join(VISION_FRAMES_DIR, files[0]))
+        man = os.path.join(tdir, "_export.json")
+        if man not in mans:
+            try:
+                with open(man, encoding="utf-8") as fh:
+                    mans[man] = [json.load(fh), False]
+            except Exception:
+                mans[man] = [None, False]
+        index = mans[man][0]
+        if not index:
+            continue
+        stem = re.sub(r"_t\d{3,}[a-z]?\.jpg$", "", os.path.basename(files[0]))
+        info = (index.get("clips") or {}).get(stem)
+        if not info or not info.get("src"):
+            continue
+        names, src = list(info["frames"]), [int(x) for x in info["src"]]
+        keep = [k for k, nm in enumerate(names) if not _VX_DENSE_RX.search(nm)]
+        o_names, o_src = [names[k] for k in keep], [src[k] for k in keep]
+        o_times = [float(times[k]) for k in keep] if len(times) == len(names) else [float(x) for x in times]
+        # CONFIRMED BUG (fixed; 11/1: every frame of the game was detected again and none had the court): the new list was
+        # joined with Windows' "\\", while every saved result (detections, court placements, jersey reads) is keyed by
+        # the "/" paths the capture writes -- the frame paths are always written with "/" now
+        rel_dir = os.path.dirname(files[0].replace("\\", "/")).replace("\\", "/")
+        n = len(o_names)
+        if factor >= 2 and n >= 2:
+            if dense and len(names) == n + (n - 1) * (factor - 1) and "\\" not in tf:
+                continue                                   # already at this rate
+            # the clip video's own frame rate, from the old frames' positions in it (k / base_fps seconds each)
+            m_ = max(1, (n - 1) // 2)
+            vfps = (o_src[m_] - o_src[0]) * base_fps / m_
+            vfps = min((23.976, 24.0, 25.0, 29.97, 30.0, 50.0, 59.94, 60.0), key=lambda v_: abs(v_ - vfps))
+            nn, ns, nt = [], [], []
+            for k in range(n):
+                nn.append(o_names[k]); ns.append(o_src[k]); nt.append(o_times[k] if k < len(o_times) else None)
+                if k == n - 1:
+                    break
+                for s_ in range(1, factor):
+                    frac = s_ / factor
+                    tk = k / base_fps + frac / base_fps
+                    nn.append(f"{stem}_t{k:03d}{chr(96 + s_)}.jpg")
+                    ns.append(int(min(max(round(tk * vfps), o_src[k]), o_src[k + 1])))
+                    if k + 1 < len(o_times):
+                        nt.append(o_times[k] + frac * (o_times[k + 1] - o_times[k]))
+                    else:
+                        nt.append(None)
+            fps_new = base_fps * factor
+            n_added += len(nn) - n
+        else:
+            nn, ns, nt, fps_new = o_names, o_src, o_times, base_fps
+        info["frames"], info["src"], info["fps"] = nn, ns, fps_new
+        mans[man][1] = True
+        cache.at[ix, "track_files"] = ";".join(f"{rel_dir}/{x}" if rel_dir else x for x in nn)
+        if all(x is not None for x in nt):
+            cache.at[ix, "track_times"] = ";".join(f"{x:.3f}" for x in nt)
+            try:
+                with open(os.path.join(tdir, f"{stem}_times.json"), "w") as fh:
+                    json.dump([round(x, 3) for x in nt], fh)
+            except Exception:
+                pass
+        n_changed += 1
+    for man, (index, dirty) in mans.items():
+        if dirty and index:
+            with open(man, "w", encoding="utf-8") as fh:
+                json.dump(index, fh)
+    if n_changed:
+        if "_fx_load_index" in globals():
+            _fx_load_index()
+        print(f"  [export] PLAYER_TRACKING_GAMES: {n_changed} clip(s) now have "
+              + (f"{base_fps * factor:g} tracking frames a second ({n_added:,} in-between frames added; the old frames are "
+                 f"unchanged)" if factor >= 2 else f"{base_fps:g} tracking frames a second again (in-between frames taken out)")
+              + " -- VISION_TRACK_FPS_TRACKING", flush=True)
+    return cache, n_changed
+
+
 SYNERGY_EDITOR_TEST = globals().get("SYNERGY_EDITOR_TEST")
 SYNERGY_EDITOR_TEST_ONLY = globals().get("SYNERGY_EDITOR_TEST_ONLY", True)
 synergy_editor_link = None
@@ -2051,6 +2159,13 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
             clip_frames = run_in_fastscout_session(lambda p: _vision_tag_pages(p, _vis_sources, clip_frames))
         clip_frames.to_csv(VISION_CACHE, index=False)
         print(f"  Frames are under {VISION_FRAMES_DIR} -- open a few to check they show the play.")
+if not clip_frames.empty:
+    try:
+        clip_frames, _vx_nd = _vx_densify_tracking(clip_frames)
+        if _vx_nd:
+            clip_frames.to_csv(VISION_CACHE, index=False)
+    except Exception as _vx_de:
+        print(f"  [export] tracking frames not made denser ({type(_vx_de).__name__}: {_vx_de})", flush=True)
 # CONFIRMED CHANGE (the "15 with capture errors ... No space left on device" line on every run): those were rows of an early
 # TEST capture (VISION_TEST_CLIPS) of one game that failed on a full disk -- they're replaced when that game is captured. They
 # are listed on their own line now, so the errors line only shows real captures.

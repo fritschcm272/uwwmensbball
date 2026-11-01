@@ -568,11 +568,11 @@ def _pr_clip_from_video(video, k0, k1, out_base):
     return os.path.basename(path)
 
 
-def _pr_clip(files, rows, numtxt, out_base):
+def _pr_clip(files, rows, numtxt, out_base, fps=None):
     """The play as a video (MP4, real speed, with play/pause) or an animated GIF -> file name, or None.
     CONFIRMED CHANGE: GIFs of a play were 3-7 MB each (~100 MB for 20 plays); an MP4 of the same frames is a small
     fraction of that and plays with a scrubber. GIF stays as the fallback (PLAY_REVIEW_VIDEO = "gif")."""
-    fps = float(globals().get("VISION_TRACK_FPS") or 2.0)
+    fps = float(fps or globals().get("VISION_TRACK_FPS") or 2.0)      # the clip's own rate (8 a second on a tracking game)
     kind = PLAY_REVIEW_VIDEO
     # CONFIRMED CHANGE (lean mode): a game in lean mode keeps each clip's play video ready-made (<game>/media/<clip>.mp4)
     # instead of all its frames -- use it as is
@@ -785,8 +785,9 @@ def _pr_starters_used_t(slug):
             if d is None or d.get("part") != "starters" or _pr_game_slug(d.get("game")) != slug:
                 continue
             for c in (d.get("checks") or []) + (d.get("missed") or []):
-                v = pd.to_numeric(c.get("t"), errors="coerce")
-                if pd.notna(v):
+                # by its frame FILE where it can (a game made denser -- 8 frames a second -- moved its old frames)
+                v = _trk_t_of(c, -1) if "_trk_t_of" in globals() else pd.to_numeric(c.get("t"), errors="coerce")
+                if pd.notna(v) and int(v) >= 0:
                     used.add(int(v))
     except Exception:
         pass
@@ -890,7 +891,7 @@ def play_review():
               + "; ".join(f"{lab.get(f, f)} {r_}/{n} ({100 * r_ / n:.0f}%)" for f, (r_, n) in rep.items()), flush=True)
     rng = random.Random(PLAY_REVIEW_SEED)
     stamp = _pr_dt.datetime.now().strftime("%Y%m%d_%H%M%S")
-    fps = float(globals().get("VISION_TRACK_FPS") or 2.0)
+    fps = _fps0 = float(globals().get("VISION_TRACK_FPS") or 2.0)
     min_c = float(globals().get("TAG_MODEL_MIN_CONFIDENCE", 0.6))
     if "_play_review_file_saves" in globals():
         _play_review_file_saves()                     # the saved reviews live in <data>/play_review_saves (one-time copy from the old folders)
@@ -1086,6 +1087,8 @@ def play_review():
             # the clip number, and a game exported with every clip number = 0 (WWW@AC) wrote all 20 plays to clip_000_*.jpg, so
             # the last play's picture overwrote the others. Files now carry the play's position in the review as well.
             fid = f"{cn:03d}_{len(plays):02d}"
+            # this clip's own frames a second (a PLAYER_TRACKING_GAMES game is captured at 8, the others at 4)
+            fps = _trk_clip_fps(r, _fps0) if "_trk_clip_fps" in globals() else _fps0
             # pictures: the start and the end of the play, most players visible
             t_end = pd.to_numeric(r.get("track_finish_frame"), errors="coerce")
             end_hi = int(min(n - 1, t_end)) if pd.notna(t_end) else n - 1
@@ -1112,14 +1115,56 @@ def play_review():
                     _gap = max(1, int(round(float(globals().get("STARTERS_NEW_FRAME_GAP_S", 2.0)) * fps)))
                     _far = [t_ for t_ in range(n) if min(abs(t_ - u_) for u_ in _used) >= _gap]
                     if _far:
-                        _cnt = {}
+                        # CONFIRMED CHANGE (requested: a smarter next starters picture). Each far-enough frame is scored, not
+                        # just by how many players have boxes: + the boxes that could be a starter still missing (a box
+                        # unnamed, or named / quietly guessed as one of the missing starters), - boxes that overlap another
+                        # box (two players stacked -- the one behind is hard to name). STARTERS_FRAME_SMART = False = the
+                        # old most-boxes frame.
+                        _smart = bool(globals().get("STARTERS_FRAME_SMART", True))
+                        try:
+                            _miss = {_pr_nk(x_) for x_ in ((_st_partial.get(_slug_app) or {}).get("missing") or [])}
+                        except Exception:
+                            _miss = set()
+                        try:
+                            from PIL import Image as _Im_
+                            _Hpx = _Im_.open(os.path.join(VISION_FRAMES_DIR, files[0])).size[1] if _smart else 0
+                        except Exception:
+                            _Hpx, _smart = 0, False
+                        _cnt, _bx = {}, {}
+                        _farset = set(_far)
                         for rr_ in rows:
                             if rr_.get("side") not in ("offense", "defense"):
                                 continue
+                            _nm_ = rr_.get("name") if isinstance(rr_.get("name"), str) else None
+                            _gs_ = rr_.get("guess_name") if isinstance(rr_.get("guess_name"), str) else None
+                            _hint = (_nm_ is None) or bool(_miss and (_pr_nk(_nm_) in _miss or (_gs_ and _pr_nk(_gs_) in _miss)))
+                            if _nm_ is None and _gs_ and _miss and _pr_nk(_gs_) in _miss:
+                                _hint = 2                          # quietly guessed as a missing starter: the best hint
                             for p_ in _trk_json.loads(rr_["path"]):
-                                if int(p_[0]) in _far:
-                                    _cnt[int(p_[0])] = _cnt.get(int(p_[0]), 0) + 1
-                        _best_t = max(_far, key=lambda t_: (_cnt.get(t_, 0), min(abs(t_ - u_) for u_ in _used)))
+                                t_ = int(p_[0])
+                                if t_ not in _farset:
+                                    continue
+                                _cnt[t_] = _cnt.get(t_, 0) + 1
+                                if _smart and len(p_) >= 6:
+                                    hh_ = float(p_[3]) * _Hpx
+                                    x_, y_ = float(p_[4]), float(p_[5])
+                                    _bx.setdefault(t_, []).append(((x_ - 0.21 * hh_, y_ - hh_, x_ + 0.21 * hh_, y_), int(_hint)))
+                        def _iou_(a_, b_):
+                            ix_ = max(0.0, min(a_[2], b_[2]) - max(a_[0], b_[0]))
+                            iy_ = max(0.0, min(a_[3], b_[3]) - max(a_[1], b_[1]))
+                            in_ = ix_ * iy_
+                            un_ = (a_[2] - a_[0]) * (a_[3] - a_[1]) + (b_[2] - b_[0]) * (b_[3] - b_[1]) - in_
+                            return in_ / un_ if un_ > 0 else 0.0
+                        def _score_(t_):
+                            bs_ = _bx.get(t_) or []
+                            if not _smart or not bs_:
+                                return float(_cnt.get(t_, 0))
+                            over_ = sum(1 for j_, (b1_, _h1) in enumerate(bs_)
+                                        if any(_iou_(b1_, b2_) > 0.15 for k_, (b2_, _h2) in enumerate(bs_) if k_ != j_))
+                            hint_ = sum(h_ for _b, h_ in bs_ if h_)
+                            return len(bs_) + 1.0 * hint_ - 1.5 * over_
+                        _best_t = max(_far, key=lambda t_: (round(_score_(t_), 2), _cnt.get(t_, 0),
+                                                           min(abs(t_ - u_) for u_ in _used)))
                         picks_ = [("frame", _best_t)]
                         _alt = True
             clock = r.get("time_remaining_seconds")
@@ -1187,7 +1232,7 @@ def play_review():
                 pics.append({"which": which, "image": fname, "frame_file": files[t], "t": int(t), "boxes": boxes,
                              "alt_frame": bool(_alt),
                              "grid": list(_grid) if _grid else None, "W": int(_fw), "H": int(_fh)})
-            clip_file = _pr_clip(files, rows, numtxt, os.path.join(rdir, f"clip_{fid}")) if PLAY_REVIEW_VIDEO else None
+            clip_file = _pr_clip(files, rows, numtxt, os.path.join(rdir, f"clip_{fid}"), fps=fps) if PLAY_REVIEW_VIDEO else None
             # the Title review part (same logic as the Auto-Title review)
             tagged = any(_tr_val(r.get(f"coach_{f}")) is not None for f, _ in _TR_FIELDS)
             fields = []

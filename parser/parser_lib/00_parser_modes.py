@@ -39,7 +39,10 @@ PARSER_MODES = {
         # one "done" line per section; everything else goes to the log. The lines you act on still show up AS THEY HAPPEN
         # (quiet_show): problems ("!!"), the Synergy export, the court calibration and the starters check.
         "quiet": True,
-        "quiet_show": r"!!|\[export\]|\[court\]|\[starters\]|Starters to validate|calibrat|STOP",
+        # (+ the tracking scorecard and the jersey-vote test -- requested: compare the new tracking with the old)
+        "quiet_show": r"!!|\[export\]|\[court\]|\[starters\]|\[scorecard\]|jersey vote \(|Starters to validate|calibrat|STOP",
+        # the one updating status line: each section's steps and progress (see _PmQuietBuf)
+        "quiet_status": r"\[(tracking|court|play review|tag model[^\]]*|recognizer|jersey|outfit|reid|frame archive|saves)\]|min left|so far|step \d",
     },
     "tagging": {
         "label": "New clips for Film Tagging, fast (no automatic Titles, no tracking)",
@@ -109,28 +112,90 @@ def _pm_save(kind):
 
 
 import io as _pm_io_mod
+import time as _pm_time
 
 
 class _PmQuietBuf(_pm_io_mod.StringIO):
     """Quiet mode's capture: everything is kept for the log; a line matching `show` (a regex) also goes to the notebook
     right away."""
 
-    def __init__(self, show=None, out=None):
+    # CONFIRMED CHANGE (requested: "this has taken a long time -- can you make a better description"). Two things while a
+    # quiet section runs: (1) ONE status line in the notebook that keeps updating in place -- the section, its current step
+    # and its latest progress ("frames checked for players: 120 / 400 (30%) -- 2.1 min so far, ~5 min left"); lines that
+    # match `status` (a regex) feed it. (2) The log file is written AS the section runs (it used to be written when the
+    # section finished), so the log always shows where a long run is.
+    def __init__(self, show=None, out=None, status=None, log=None, header=None, section=""):
         super().__init__()
         self._rx = _pm_re.compile(show) if show else None
+        self._st_rx = _pm_re.compile(status) if status else None
+        self._step_rx = _pm_re.compile(r"\[(?:tracking|court|play review|tag model[^\]]*|recognizer|export)\] (?:step [\w.]+:.*|[A-Z].*)")
         self._out = out
         self._part = ""
+        self._section = section
+        self._step = ""
+        self._st_len = 0
+        self._t0 = _pm_time.time()
+        self._fh = None
+        if log:
+            try:
+                self._fh = open(log, "a", encoding="utf-8")
+                if header:
+                    self._fh.write(header)
+                    self._fh.flush()
+            except Exception:
+                self._fh = None
+
+    def _status(self, text):
+        if self._out is None:
+            return
+        el = (_pm_time.time() - self._t0) / 60
+        line = f"  ... {self._section} ({el:.0f} min): {text}"[:220]
+        pad = max(0, self._st_len - len(line))
+        self._out.write("\r" + line + " " * pad)
+        self._out.flush()
+        self._st_len = len(line)
+
+    def end_status(self):
+        """Clears the status line (the 'done' line is printed in its place)."""
+        if self._out is not None and self._st_len:
+            self._out.write("\r" + " " * self._st_len + "\r")
+            self._out.flush()
+            self._st_len = 0
 
     def write(self, s):
         n = super().write(s)
-        if self._rx is not None and self._out is not None:
+        if self._fh is not None:
+            try:
+                self._fh.write(str(s))
+                self._fh.flush()
+            except Exception:
+                pass
+        if self._out is not None and (self._rx is not None or self._st_rx is not None):
             self._part += str(s)
             *lines, self._part = self._part.split("\n")
             for ln in lines:
-                if self._rx.search(ln):
+                if self._rx is not None and self._rx.search(ln):
+                    self.end_status()
                     self._out.write(ln + "\n")
                     self._out.flush()
+                elif self._st_rx is not None and self._st_rx.search(ln):
+                    txt = ln.strip()
+                    if self._step_rx.search(ln) and "min left" not in ln and "so far" not in ln:
+                        self._step = _pm_re.sub(r"^\[[^\]]+\]\s*", "", txt)[:110]
+                        self._status(self._step)
+                    else:
+                        self._status((self._step[:60] + " | " if self._step else "")
+                                     + _pm_re.sub(r"^\[[^\]]+\]\s*", "", txt))
         return n
+
+    def finish(self):
+        self.end_status()
+        if self._fh is not None:
+            try:
+                self._fh.close()
+            except Exception:
+                pass
+            self._fh = None
 
 
 def _pm_core_fingerprint(nb, upto):
@@ -238,7 +303,8 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
         if not quiet:
             exec(compile(code, f"<{notebook} cell {ci}>", "exec"), G)
         else:
-            _buf = _PmQuietBuf(plan.get("quiet_show"), _real_out)
+            _buf = _PmQuietBuf(plan.get("quiet_show"), _real_out, status=plan.get("quiet_status"), log=_log,
+                               header=f"\n===== cell {ci} {', '.join(secs)} =====\n", section=", ".join(secs) or f"cell {ci}")
             _disp = G.get("display")
             _to_log = lambda *a, **k: _buf.write("".join(str(x) for x in a) + "\n")       # tables go to the log too
             G["display"] = _to_log
@@ -267,8 +333,7 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
                     G["display"] = _disp
                 else:
                     G.pop("display", None)
-                with open(_log, "a", encoding="utf-8") as _fh:
-                    _fh.write(f"\n===== cell {ci} {', '.join(secs)} =====\n" + _buf.getvalue())
+                _buf.finish()                               # (the log was written as the section ran)
         if is_setup:
             # the notebook's run_section, wrapped: a section this job doesn't need is skipped, and the job's switches are
             # set right before a section runs (after its cell's own settings)
@@ -288,11 +353,17 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
                     _q, _out = G.get("_pm_quiet") or (False, None)
                     _t0 = _pm_time.time()
                     _mark = _pm_sys.stdout.tell() if _q and depth == 0 and hasattr(_pm_sys.stdout, "tell") else None
+                    _cb = _pm_sys.stdout if isinstance(_pm_sys.stdout, _PmQuietBuf) else None
+                    if _cb is not None and depth == 0:
+                        _cb._section, _cb._step, _cb._t0 = base, "", _pm_time.time()   # the status line names this section
+                        _cb._status("starting")
                     try:
                         r_ = _orig(name)
                     finally:
                         G["_pm_depth"] = depth
                     if _q and depth == 0 and _out is not None:
+                        if _cb is not None:
+                            _cb.end_status()
                         _probs = []
                         if PARSER_MODES.get(m or "", {}).get("quiet_show"):
                             _mark = None                       # (already shown as they happened)
