@@ -335,6 +335,25 @@ def _pr_ck(k):
     return _pl_ckey_norm(k) if "_pl_ckey_norm" in globals() else str(k)
 
 
+def _pr_rechecked_keys(since):
+    """Clip keys with a PLAYER check saved at or after `since` (a time) -- see PLAY_REVIEW_RECHECK_CLIPS."""
+    keys = set()
+    try:
+        for f in glob.glob(os.path.join(_review_saves_dir(), "*.json")):
+            d = _review_doc(f)
+            if d is None or d.get("part") != "players":
+                continue
+            st_ = pd.to_datetime(d.get("saved"), utc=True, errors="coerce")
+            if pd.notna(since) and (pd.isna(st_) or st_ < since):
+                continue
+            for c in (d.get("checks") or []) + (d.get("missed") or []):
+                if c.get("clip_key"):
+                    keys.add(_pr_ck(c.get("clip_key")))
+    except Exception:
+        pass
+    return keys
+
+
 def _pr_reviewed_keys(part=None):
     """Clip keys already reviewed: part "players" = a player check saved, "titles" = a Title answer saved, None = either."""
     keys = set()
@@ -1040,6 +1059,20 @@ def play_review():
             # starters are identified.
             if _st_need is not None or _ptg_this is False:
                 _pp = _pp.iloc[0:0]
+            # CONFIRMED CHANGE (requested: "can we go back to checking clip 1 -- I just want to make sure that each clip is
+            # getting the correct players"). PLAY_REVIEW_RECHECK_CLIPS (clip numbers) come back as player checks -- first in
+            # the batch, as the tracking sees them NOW -- until a player check of that clip is saved after
+            # PLAY_REVIEW_RECHECK_SINCE. Your earlier checks of them are kept; the new ones are added (the latest wins on the
+            # same box).
+            _rc = [int(x) for x in (globals().get("PLAY_REVIEW_RECHECK_CLIPS") or []) if str(x).strip().isdigit()]
+            if _rc and _st_need is None and _ptg_this is not False:
+                _since = pd.to_datetime(globals().get("PLAY_REVIEW_RECHECK_SINCE"), utc=True, errors="coerce")
+                _redone = _pr_rechecked_keys(_since)
+                _redo = g[pd.to_numeric(g["clip_number"], errors="coerce").isin(_rc) & ~_kn.isin(_redone)]
+                if len(_redo):
+                    _pp = pd.concat([_redo, _pp[~_pp.index.isin(_redo.index)]])
+                    print(f"Play review: {gd} {gc} -- clip(s) {', '.join(str(x) for x in sorted(pd.to_numeric(_redo['clip_number'], errors='coerce').dropna().astype(int)))} "
+                          f"come back for a re-check (PLAY_REVIEW_RECHECK_CLIPS)", flush=True)
             # Title checks: only clips a coach already tagged (a Synergy Title) -- untagged clips are tagged in their own
             # Film Tagging batch (requested: tagging only on Analytics > Film Tagging, no duplicate plays)
             _tagged = g["decode_quality"].astype(str).ne("Untagged") if "decode_quality" in g.columns \

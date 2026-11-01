@@ -1417,8 +1417,17 @@ def _trk_split_crossings(frames, tracks, iou_min):
     return out, n_cut, n_short
 
 
-def _trk_follow_names(clips, i, seeds, fps_=None):
-    """seeds: {track: name} locked in clip i. -> {track: (name, from_track)} for the OTHER pieces of those players."""
+def _trk_follow_names(clips, i, seeds, fps_=None, looks=None, votes=None):
+    """seeds: {track: name} locked in clip i. -> {track: (name, from_track)} for the OTHER pieces of those players.
+    CONFIRMED CHANGE (requested: "#2 -- let the joining use more than color"; tracks were 1.8 s long and a teammate
+    crossing left the pieces unnamed). looks = {track: appearance fingerprint}, votes = {track: (name, probability,
+    crops)} from the jersey vote. Where both teammates could continue a piece by position alone, the one who LOOKS more
+    like it (TRACK_FOLLOW_LOOK_W) can now take it, and a piece whose jersey vote clearly says someone else is never
+    given this name (a clear vote for him makes it cheaper). The position limits (TRACK_LOCK_MAX_COST) are unchanged."""
+    looks = looks or {}
+    votes = votes or {}
+    look_w = float(globals().get("TRACK_FOLLOW_LOOK_W", 1.5))
+    v_p = float(globals().get("TRACK_VOTE_MIN_P", 0.90))
     clip = clips[i]
     fps_ = float(fps_ or clip.get("fps", 2.0))
     max_gap = float(globals().get("TRACK_LOCK_MAX_GAP_S", 3.0))
@@ -1464,6 +1473,30 @@ def _trk_follow_names(clips, i, seeds, fps_=None):
             holders.setdefault(n, set()).add(k)
     owner = {k: n for n, ks in holders.items() for k in ks}
     out = {}
+
+    def _hlook(n):
+        vs = [np.asarray(looks[k], float) for k in holders.get(n, ()) if k in looks]
+        if not vs:
+            return None
+        m = np.mean(vs, 0)
+        return m / (np.linalg.norm(m) + 1e-8)
+
+    def total(n, c, b):
+        """position cost + how unlike player n this piece looks; the jersey vote can veto or help."""
+        vt = votes.get(b)
+        if vt and vt[0] != n and vt[1] >= v_p and vt[2] >= 2:
+            return None                                           # his number clearly says someone else
+        hl = _hlook(n)
+        if hl is not None and b in looks:
+            lb = np.asarray(looks[b], float)
+            lk = float(lb @ hl / (np.linalg.norm(lb) + 1e-8))
+            t_ = c + look_w * max(0.0, 1.0 - lk)
+        else:
+            t_ = c + look_w * 0.15                                  # no look to compare: an average one
+        if vt and vt[0] == n and vt[1] >= v_p:
+            t_ *= 0.6
+        return t_
+
     for _round in range(6):
         cands = {}                                            # track -> (cost, name, from)
         for n, ks in holders.items():
@@ -1477,10 +1510,13 @@ def _trk_follow_names(clips, i, seeds, fps_=None):
                 best = None
                 for k in ks:
                     c = pair_cost(k, b)
-                    if c is not None and (best is None or c < best[0]):
+                    if c is not None and c <= max_cost and (best is None or c < best[0]):
                         best = (c, k)
-                if best and best[0] <= max_cost and (b not in cands or best[0] < cands[b][0]):
-                    cands[b] = (best[0], n, best[1])
+                if not best:
+                    continue
+                tc = total(n, best[0], b)
+                if tc is not None and (b not in cands or tc < cands[b][0]):
+                    cands[b] = (tc, n, best[1])
         added = {}
         for b, (c, n, frm) in sorted(cands.items(), key=lambda kv: kv[1][0]):
             # a rival piece that overlaps this one in time and is nearly as close: ambiguous, skip
@@ -1496,7 +1532,10 @@ def _trk_follow_names(clips, i, seeds, fps_=None):
                     if clip["side"].get(k2) != clip["side"].get(b):
                         continue
                     c2 = pair_cost(k2, b)
-                    if c2 is not None and c2 < 1.2 * max(c, 0.05):
+                    if c2 is None or c2 > max_cost:
+                        continue
+                    t2 = total(n2, c2, b)
+                    if t2 is not None and t2 < 1.2 * max(c, 0.05):
                         rival = True
             if rival:
                 continue
@@ -3846,6 +3885,7 @@ def player_tracking(pc):
     # right TRACK_VOTE_MIN_PREC (85%) of the time on TRACK_VOTE_MIN_TESTS (8)+ of them. Until then its picks are only the
     # "looks like #..?" suggestions in the player checks. TRACK_NUMBER_VOTE = False turns it off.
     vote_named, _vote_sugg, _vote_stats = {}, {}, {"tested": 0, "right": 0, "answered": 0, "tracks": 0, "crops": 0}
+    _vres = {}
     if globals().get("TRACK_NUMBER_VOTE", True) and "jersey_recognizer_probs" in globals():
         try:
             import cv2 as _cv2v
@@ -4124,6 +4164,13 @@ def player_tracking(pc):
 
     # --- locked names: a very clear jersey number (or a coach check) names the player's other pieces in the clip ---
     followed, locked_set = {}, {}
+
+    def _follow_kw(i):
+        """each piece's look and jersey vote for _trk_follow_names (TRACK_FOLLOW_LOOK_W = 0 -> position only, as before)"""
+        if float(globals().get("TRACK_FOLLOW_LOOK_W", 1.5)) <= 0:
+            return {}
+        return {"looks": {k: fp[(i, k)] for k in range(len(clips[i]["tracks"])) if (i, k) in fp},
+                "votes": {k: (v_[0], v_[1], v_[2]) for (ii, k), v_ in _vres.items() if ii == i}}
     if globals().get("TRACK_LOCK_NAMES", True):
         try:
             _lock_min = float(globals().get("TRACK_LOCK_MIN_CONF", 0.9))
@@ -4136,7 +4183,7 @@ def player_tracking(pc):
                     continue
                 for k, n in seeds_.items():
                     locked_set[(i, k)] = n
-                for k2, (n, frm) in _trk_follow_names(clips, i, seeds_).items():
+                for k2, (n, frm) in _trk_follow_names(clips, i, seeds_, **_follow_kw(i)).items():
                     own = number_names.get((i, k2))
                     if (own and own[0] != n) or (coach.get((i, k2)) and coach.get((i, k2)) != n):
                         continue                                 # that piece has its own, different evidence
@@ -4215,7 +4262,7 @@ def player_tracking(pc):
                     seeds_ = dict(sd_)
                     seeds_.update({k: n for (ii, k), n in locked_set.items() if ii == i})
                     seeds_.update({k: v[0] for (ii, k), v in followed.items() if ii == i})
-                    for k2, (n, frm) in _trk_follow_names(clips, i, seeds_).items():
+                    for k2, (n, frm) in _trk_follow_names(clips, i, seeds_, **_follow_kw(i)).items():
                         own = number_names.get((i, k2))
                         if (i, k2) in followed or (own and own[0] != n) or (coach.get((i, k2)) and coach.get((i, k2)) != n):
                             continue
