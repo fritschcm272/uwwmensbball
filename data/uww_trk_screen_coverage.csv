@@ -20,7 +20,8 @@ UW-Whitewater,unnamed defense,guarding the screener,Off-ball screen,Over,coach t
 Washington-St. Louis Bears,Anthony Przybilla,guarding the player screened,Off-ball screen,unclear,tracking estimate,2,0.0,100.0
 Washington-St. Louis Bears,Calvin Kapral,guarding the player screened,Ball screen,back (drop),tracking estimate,1,2.0,100.0
 Washington-St. Louis Bears,Calvin Kapral,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,100.0
-Washington-St. Louis Bears,Connor May,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,100.0
+Washington-St. Louis Bears,Connor May,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,2,0.0,67.0
+Washington-St. Louis Bears,Connor May,guarding the screener,Off-ball screen,unclear,tracking estimate,1,3.0,33.0
 Washington-St. Louis Bears,George Gale,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,1,2.0,100.0
 Washington-St. Louis Bears,Josh Kim,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,2,1.0,100.0
 Washington-St. Louis Bears,Josh Kim,guarding the screener,Ball screen,Switch,coach tag,1,2.0,100.0
@@ -32,8 +33,8 @@ Washington-St. Louis Bears,Yogi Oliff,guarding the player screened,Ball screen,D
 Washington-St. Louis Bears,Yogi Oliff,guarding the player screened,Ball screen,Switch,coach tag,1,2.0,50.0
 Washington-St. Louis Bears,Yogi Oliff,guarding the screener,Ball screen,back (drop),tracking estimate,1,2.0,100.0
 Washington-St. Louis Bears,Yogi Oliff,guarding the screener,Off-ball screen,separated (under / behind),tracking estimate,1,0.0,100.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,22,0.81,73.0
-Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,6,2.0,20.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,separated (under / behind),tracking estimate,22,0.81,71.0
+Washington-St. Louis Bears,unnamed defense,guarding the player screened,Off-ball screen,unclear,tracking estimate,7,2.14,23.0
 Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,Switch,coach tag,3,1.33,33.0
 Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,Over,coach tag,2,2.5,22.0
 Washington-St. Louis Bears,unnamed defense,guarding the player screened,Ball screen,back (drop),tracking estimate,2,1.0,22.0
