@@ -5077,11 +5077,40 @@ def _trk_court_precheck():
             if n_pts >= 4 and os.path.exists(os.path.join(base, fr.get("file", ""))):
                 ok_arenas.add(str(cal.get("arena")))
                 break
-    if _in_app and "_cm_app_cleanup" in globals():
-        _cm_app_cleanup(ok_arenas)
+    # CONFIRMED BUG (fixed; "I think it should have stopped at a court calibration step" -- Carroll @ WashU 11/7/25 went
+    # straight to the starters check with NO court: 0 of 104 frames on the court, fans boxed). The WashU gym counted as
+    # calibrated from OUR 3/7/26 game there, but this game's frames were never placed on the court (the Court mapping cell
+    # runs after tracking, and is off), and another game's camera isn't this game's. A PLAYER_TRACKING_GAMES game now needs
+    # a calibration clicked on ITS OWN frames (the court calibration step of the new-game process); once it has one, the
+    # frames of the clips about to be tracked are placed on the court HERE, before tracking.
+    globals().setdefault("COURT_ORB_FEATURES", 2000)
+    globals().setdefault("COURT_MIN_INLIERS", 30)
+    globals().setdefault("COURT_MIN_IN_BOUNDS", 0.7)
+    _ptl = globals().get("player_tracking_listed")
+    _own_cal = set()                                       # frame folders with a usable calibration clicked on them
+    for cal in _cm_calibration_files():
+        for fr in cal.get("frames", []):
+            n_pts = sum(1 for p_ in fr.get("points", []) if p_.get("landmark") in COURT_LANDMARKS)
+            if n_pts >= 4 and os.path.exists(os.path.join(base, fr.get("file", ""))):
+                _own_cal.add(str(fr.get("file", "")).replace("\\", "/").split("/")[0])
+    _folder_of = lambda g_: {str(f).replace("\\", "/").split("/")[0] for v in g_["track_files"] for f in str(v).split(";") if f}
     need = []
     for (gd, gc), g in rows.groupby(["game_date", "game_code"], dropna=False):
         arena = _cm_arena(gc)
+        _listed = _ptl is not None and bool(_ptl(gd, gc))
+        if _listed and not (_folder_of(g) & _own_cal):
+            pool = [fl[len(fl) // 2] for fl in ([f for f in str(v).split(";") if f] for v in g["track_files"]) if fl]
+            pick = [pool[int(i)] for i in np.linspace(0, len(pool) - 1, min(int(COURT_REF_FRAMES), len(pool)))] if pool else []
+            if pick:
+                try:
+                    page = _cm_write_tool(f"{gd}|{gc}", arena, pick, base)
+                    need.append((f"{gd}|{gc}", arena, page))
+                    print(f"  [court] {gd}|{gc}: a new Player Number Tracking game -- its court calibration (on its own "
+                          f"frames) comes first" + (f" (gym '{arena}' was calibrated from another game, whose camera may "
+                                                    f"differ)" if arena in ok_arenas else ""), flush=True)
+                except Exception as e:
+                    print(f"  [court] {gd}|{gc}: calibration page not written ({type(e).__name__}: {e})", flush=True)
+            continue
         if arena in ok_arenas or any(arena == a for _gk, a, _p in need):
             continue
         pool = [fl[len(fl) // 2] for fl in ([f for f in str(v).split(";") if f] for v in g["track_files"]) if fl]
@@ -5094,8 +5123,22 @@ def _trk_court_precheck():
             print(f"  [court] {gd}|{gc}: calibration page not written ({type(e).__name__}: {e})", flush=True)
             continue
         need.append((f"{gd}|{gc}", arena, page))
+    if _in_app and "_cm_app_cleanup" in globals():
+        _cm_app_cleanup(ok_arenas - {a for _g, a, _p in need})
     if not need:
         print(f"  [court] every gym being tracked has a court calibration ({len(ok_arenas)} gym(s))", flush=True)
+        # the clips about to be tracked (PLAYER_TRACKING_GAMES games) are placed on the court now, before tracking
+        if _ptl is not None and "court_mapping" in globals():
+            _lr = rows[[bool(_ptl(a, b)) for a, b in zip(rows["game_date"], rows["game_code"])]]
+            if not _lr.empty:
+                try:
+                    _ids = _trk_starters_first(play_calls, list(_lr.index))
+                    _r = court_mapping(play_calls.loc[_ids], None, frames_only=True)[2]
+                    for _, _x in (_r.iterrows() if isinstance(_r, pd.DataFrame) else []):
+                        print(f"  [court] {_x.get('game')}: {_x.get('mapped_pct')}% of the frames about to be tracked are on "
+                              f"the court", flush=True)
+                except Exception as e:
+                    print(f"  [court] frames not placed on the court before tracking ({type(e).__name__}: {e})", flush=True)
         return
     if _in_app:
         # CONFIRMED CHANGE (requested: "make the parser notebook stop the player tracking cell if there is a court calibration

@@ -185,6 +185,62 @@ def _cm_app_dir():
     return globals().get("APP_DATA_DIR") or globals().get("OUTPUT_DIR") or "."
 
 
+def _cm_suggest_refs(arena, base):
+    """The gym's earlier calibrated frames: [(file, H pixels->court, the landmarks clicked there, its game)]."""
+    import cv2
+    out = []
+    for cal in _cm_calibration_files():
+        if str(cal.get("arena")) != str(arena):
+            continue
+        for fr in cal.get("frames", []):
+            pts = [p_ for p_ in fr.get("points", []) if p_.get("landmark") in COURT_LANDMARKS]
+            if len(pts) < 4 or not os.path.exists(os.path.join(base, fr.get("file", ""))):
+                continue
+            H, _ = cv2.findHomography(np.float32([(p_["px"], p_["py"]) for p_ in pts]),
+                                      np.float32([COURT_LANDMARKS[p_["landmark"]] for p_ in pts]),
+                                      cv2.RANSAC if len(pts) > 4 else 0, 1.5)
+            if H is not None:
+                out.append((fr["file"], H, [p_["landmark"] for p_ in pts], cal.get("game")))
+    return out
+
+
+def _cm_suggest_points(rel, refs, base, W, Hh):
+    """CONFIRMED CHANGE (requested: "since it may be the same gym as a previous save, default the old landmark entries onto
+    these frames and I can just confirm"). The new frame is matched to the gym's earlier calibrated frames (floor features);
+    the best match carries that frame's landmarks onto this one. -> (points [{landmark, px, py}], inliers, game) or None."""
+    import cv2
+    if not refs:
+        return None
+    try:
+        fa = _cm_features(rel, base)
+    except Exception:
+        return None
+    best = None
+    for f_old, H_old, lms_old, game_old in refs:
+        try:
+            Hfr, n = _cm_match(fa, _cm_features(f_old, base))
+        except Exception:
+            continue
+        if Hfr is not None and n >= int(globals().get("COURT_MIN_INLIERS", 30)) and (best is None or n > best[0]):
+            best = (n, np.asarray(H_old) @ Hfr, lms_old, game_old)
+    if best is None:
+        return None
+    n, Hc, lms_old, game_old = best
+    try:
+        Hinv = np.linalg.inv(Hc)
+    except Exception:
+        return None
+    pts = []
+    for lm in lms_old:
+        v = Hinv @ np.array([COURT_LANDMARKS[lm][0], COURT_LANDMARKS[lm][1], 1.0])
+        if abs(v[2]) < 1e-9:
+            continue
+        x, y = v[0] / v[2], v[1] / v[2]
+        if 0 <= x < W and 0 <= y < Hh:
+            pts.append({"landmark": lm, "px": round(float(x), 1), "py": round(float(y), 1)})
+    return (pts, int(n), game_old) if len(pts) >= 4 else None
+
+
 def _cm_export_to_app(game_key, arena, frames, base):
     """Write the gym's calibration package for the app (frames shrunk to 1280 wide; clicks are scaled back to the full
     frame in the app). Kept as is when the gym already has one with frames still on disk."""
@@ -203,6 +259,12 @@ def _cm_export_to_app(game_key, arena, frames, base):
     if "vision_frames_ensure" in globals():                # frames inside a clip video (archive / Synergy export) -> JPEGs
         vision_frames_ensure([os.path.join(base, rel) for rel in frames])
     out = []
+    try:
+        _refs = _cm_suggest_refs(arena, base)            # the gym's earlier calibration, to pre-fill these frames
+    except Exception as e:
+        _refs = []
+        print(f"  [court] {game_key}: earlier calibration of gym '{arena}' not read ({type(e).__name__}: {e})", flush=True)
+    _n_sug = 0
     for i, rel in enumerate(frames, 1):
         try:
             im = Image.open(os.path.join(base, rel)).convert("RGB")
@@ -213,7 +275,15 @@ def _cm_export_to_app(game_key, arena, frames, base):
         sm = im.resize((w, int(round(H * w / W))), Image.LANCZOS) if w != W else im
         name = f"frame_{i:02d}.jpg"
         sm.save(os.path.join(d, name), quality=88)
-        out.append({"file": rel, "image": name, "W": W, "H": H, "w": sm.size[0], "h": sm.size[1]})
+        rec = {"file": rel, "image": name, "W": W, "H": H, "w": sm.size[0], "h": sm.size[1]}
+        sug = _cm_suggest_points(rel, _refs, base, W, H) if _refs else None
+        if sug:
+            rec.update(suggested=sug[0], suggested_inliers=sug[1], suggested_from=sug[2])
+            _n_sug += 1
+        out.append(rec)
+    if _refs:
+        print(f"  [court] {game_key}: gym '{arena}' was calibrated before -- its landmarks were carried onto {_n_sug} of "
+              f"{len(out)} frame(s) as a starting point (confirm them in the app)", flush=True)
     with open(req, "w", encoding="utf-8") as fh:
         _trk_json.dump({"kind": "court_calibration_request", "game": game_key, "arena": arena, "frames": out,
                         "landmarks": {k: list(v) for k, v in COURT_LANDMARKS.items()},
@@ -391,7 +461,9 @@ def _cm_plausible(H, rel, players=None):
     return inside >= COURT_MIN_IN_BOUNDS
 
 
-def court_mapping(pc, tracks):
+def court_mapping(pc, tracks, frames_only=False):
+    """frames_only = True (called by Player tracking's court check, BEFORE tracking): only place the frames of `pc` on the
+    court (court_homographies.pkl) -- tracks may be None then -- so the clips about to be tracked have the court."""
     import cv2
     base = VISION_FRAMES_DIR
     rows = pc[pc["track_files"].map(lambda v: isinstance(v, str) and v != "")]
@@ -579,6 +651,8 @@ def court_mapping(pc, tracks):
                        "calibration_page": None})
     cache["_chained"], cache["_back_tried"] = sorted(_chained), sorted(_back_tried)
     _safe_to_pickle(cache, cache_path)
+    if frames_only or tracks is None:
+        return tracks, pc, pd.DataFrame(report), cache
 
     # ---- every track point onto the court, then turned so the offense attacks the same basket ----
     files_of = {r["track_clip_key"]: [f for f in r["track_files"].split(";") if f] for _, r in rows.iterrows()}
