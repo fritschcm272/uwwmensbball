@@ -2255,7 +2255,10 @@ def player_tracking(pc):
     # is now cut to the stretch within TRACK_CHECK_SPAN_S (2) seconds of the checked frame; the rest become pieces of their
     # own, which get the name only if they look like him and are on his team (carried names, step 6).
     _span = float(globals().get("TRACK_CHECK_SPAN_S", 2.0))
-    if _span > 0 and TRACK_USE_COACH_CHECKS and globals().get("TRACK_CARRY_CHECKS", True):
+    # TRACK_CHECK_FOLLOW = True (default): a checked name follows the track until it touches a teammate (below);
+    # False = the old fixed TRACK_CHECK_SPAN_S window
+    _follow = bool(globals().get("TRACK_CHECK_FOLLOW", True))
+    if (_span > 0 or _follow) and TRACK_USE_COACH_CHECKS and globals().get("TRACK_CARRY_CHECKS", True):
         try:
             _done_ = starters_saved_all() if "starters_saved_all" in globals() else {}
             _sl_ = lambda g_: re.sub(r"[^A-Za-z0-9]+", "_", str(g_)).strip("_")
@@ -2286,8 +2289,43 @@ def player_tracking(pc):
                     continue
                 k = best[1]
                 tr = clip["tracks"][k]
-                inside = [(tt, j) for tt, j in tr if abs(tt - t) <= _w]
-                rest = [[(tt, j) for tt, j in tr if tt < t - _w], [(tt, j) for tt, j in tr if tt > t + _w]]
+                if _follow:
+                    # CONFIRMED CHANGE (requested: "let a name you check follow that player's track for the whole clip,
+                    # and stop only where it overlaps a teammate"). From the checked frame, the name goes back and
+                    # forward along the track until the first frame where his box touches a TEAMMATE's box (where a swap
+                    # can happen); the track is cut there. No teammate nearby = the whole track keeps the name.
+                    _fr = clip["frames"]
+                    _tr_s = sorted(tr)
+                    _ix = next((n_ for n_, (tt, _j) in enumerate(_tr_s) if tt == t), None)
+                    if _ix is None:
+                        continue
+
+                    def _near_mate(tt, j):
+                        r = _fr[tt][j]
+                        tm = r[19]
+                        if tm is None or (isinstance(tm, float) and np.isnan(tm)) or float(tm) == 2.0:
+                            return False
+                        x1, y1, x2, y2 = float(r[6]), float(r[7]), float(r[8]), float(r[9])
+                        pad = 0.10 * (x2 - x1)
+                        for jj, r2 in enumerate(_fr[tt]):
+                            if jj == j or r2[19] is None or (isinstance(r2[19], float) and np.isnan(r2[19])) \
+                                    or float(r2[19]) != float(tm):
+                                continue
+                            if (min(x2 + pad, float(r2[8])) > max(x1 - pad, float(r2[6]))
+                                    and min(y2, float(r2[9])) > max(y1, float(r2[7]))):
+                                return True
+                        return False
+                    lo = _ix
+                    while lo > 0 and not _near_mate(*_tr_s[lo - 1]):
+                        lo -= 1
+                    hi = _ix
+                    while hi < len(_tr_s) - 1 and not _near_mate(*_tr_s[hi + 1]):
+                        hi += 1
+                    inside = _tr_s[lo:hi + 1]
+                    rest = [_tr_s[:lo], _tr_s[hi + 1:]]
+                else:
+                    inside = [(tt, j) for tt, j in tr if abs(tt - t) <= _w]
+                    rest = [[(tt, j) for tt, j in tr if tt < t - _w], [(tt, j) for tt, j in tr if tt > t + _w]]
                 if not any(rest):
                     continue
                 clip["tracks"][k] = inside
@@ -2304,8 +2342,10 @@ def player_tracking(pc):
             for i in _touched:
                 clips[i]["holder"] = _trk_holders(clips[i])
             if _n_split:
-                print(f"  [tracking]   checked tracks in starters clips cut to {_span:g} s around the checked frame: {_n_split} "
-                      f"piece(s) split off (they keep the name only if they look like him -- TRACK_CHECK_SPAN_S)", flush=True)
+                print(f"  [tracking]   checked tracks in starters clips "
+                      + ("followed until they touch a teammate (TRACK_CHECK_FOLLOW)" if _follow else
+                         f"cut to {_span:g} s around the checked frame (TRACK_CHECK_SPAN_S)")
+                      + f": {_n_split} piece(s) split off (they keep the name only if they look like him)", flush=True)
         except Exception as _e:
             print(f"  [tracking]   checked tracks not cut ({type(_e).__name__}: {_e})", flush=True)
 
