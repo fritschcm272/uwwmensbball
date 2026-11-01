@@ -1,0 +1,370 @@
+{
+ "kind": "court_calibration",
+ "arena": "Wash(StLouis)",
+ "game": "2025-11-07|Carroll(WI)@Wash(StLouis)",
+ "coach": "Corey",
+ "saved": "2026-11-01T14:36:57+00:00",
+ "source": "streamlit app",
+ "frames": [
+  {
+   "file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/1_d2e82d60_t052.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 1737.4,
+     "py": 693.8
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 1745.2,
+     "py": 609.8
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 1728.2,
+     "py": 792.7
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1162.4,
+     "py": 583.2
+    },
+    {
+     "landmark": "LEFT baseline x far sideline",
+     "px": 802.3,
+     "py": 272.1
+    },
+    {
+     "landmark": "LEFT baseline x near sideline",
+     "px": 83.7,
+     "py": 786.7
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 454.3,
+     "py": 516.5
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, near",
+     "px": 165.0,
+     "py": 724.5
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/34_71dce159_t034.jpg",
+   "points": [
+    {
+     "landmark": "LEFT corner 3 at baseline, near",
+     "px": 150.1,
+     "py": 730.5
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 1734.5,
+     "py": 691.0
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 1742.6,
+     "py": 606.0
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 1725.1,
+     "py": 790.6
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1160.8,
+     "py": 581.7
+    },
+    {
+     "landmark": "LEFT baseline x far sideline",
+     "px": 803.7,
+     "py": 272.0
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/65_bdff7105_t045.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1045.8,
+     "py": 279.8
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 853.9,
+     "py": 483.3
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1034.5,
+     "py": 616.0
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 710.1,
+     "py": 600.1
+    },
+    {
+     "landmark": "RIGHT baseline x far sideline",
+     "px": 1025.8,
+     "py": 241.5
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1293.5,
+     "py": 375.4
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1494.4,
+     "py": 483.0
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, near",
+     "px": 1860.2,
+     "py": 681.4
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/99_f14ad4f9_t037.jpg",
+   "points": [
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 879.9,
+     "py": 528.4
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 822.5,
+     "py": 533.2
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 681.4,
+     "py": 504.5
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 621.7,
+     "py": 585.8
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 719.7,
+     "py": 442.3
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 167.4,
+     "py": 526.0
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 334.7,
+     "py": 404.1
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 485.4,
+     "py": 289.3
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 1401.1,
+     "py": 590.6
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 1398.8,
+     "py": 688.6
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 1403.5,
+     "py": 337.1
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/136_c892bc8a_t020.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 649.4,
+     "py": 585.9
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1197.9,
+     "py": 515.5
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 1257.0,
+     "py": 507.9
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1398.3,
+     "py": 489.7
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1471.9,
+     "py": 554.0
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1546.2,
+     "py": 247.4
+    },
+    {
+     "landmark": "RIGHT baseline x far sideline",
+     "px": 1510.9,
+     "py": 219.9
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 1341.4,
+     "py": 406.5
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 581.0,
+     "py": 303.7
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/174_6d4e3d60_t027.jpg",
+   "points": [
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 246.3,
+     "py": 516.5
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 406.3,
+     "py": 394.5
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 685.6,
+     "py": 587.9
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 802.8,
+     "py": 447.3
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 748.1,
+     "py": 511.7
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 896.5,
+     "py": 533.2
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 1517.6,
+     "py": 625.0
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/209_f3ed1756_t016.jpg",
+   "points": [
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 854.1,
+     "py": 636.1
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 941.5,
+     "py": 541.4
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1017.8,
+     "py": 458.6
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 738.2,
+     "py": 225.5
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 525.4,
+     "py": 367.2
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1138.7,
+     "py": 580.1
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 320.3,
+     "py": 513.7
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/262_0e2ee942_t025.jpg",
+   "points": [
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 171.9,
+     "py": 525.4
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 337.9,
+     "py": 400.4
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 623.1,
+     "py": 584.0
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 736.4,
+     "py": 441.4
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 677.8,
+     "py": 513.7
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 830.1,
+     "py": 525.4
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 1433.7,
+     "py": 591.8
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 1433.7,
+     "py": 687.5
+    }
+   ]
+  }
+ ]
+}
