@@ -1575,12 +1575,18 @@ def _trk_follow_names(clips, i, seeds, fps_=None, looks=None, votes=None):
                     continue
                 tc = total(n, best[0], b)
                 if tc is not None and (b not in cands or tc < cands[b][0]):
-                    cands[b] = (tc, n, best[1])
+                    cands[b] = (tc, n, best[1], best[0])
         added = {}
-        for b, (c, n, frm) in sorted(cands.items(), key=lambda kv: kv[1][0]):
+        # CONFIRMED BUG (fixed; clip 1's first picture, 7 s in, had NO followed players). Since the look was added to the
+        # cost, the "is another player just as likely?" tests compared the totals with a ratio (1.2x): the look part is
+        # about the same for every teammate, so it squeezed every pair of totals within 1.2x of each other and nearly every
+        # piece looked ambiguous. Now a piece is ambiguous only when its POSITION fits another player about as well (the
+        # old test, on position alone) AND his look doesn't clearly settle it (totals within TRACK_FOLLOW_LOOK_MARGIN).
+        _lmar = float(globals().get("TRACK_FOLLOW_LOOK_MARGIN", 0.06))
+        for b, (c, n, frm, cpos) in sorted(cands.items(), key=lambda kv: kv[1][0]):
             # a rival piece that overlaps this one in time and is nearly as close: ambiguous, skip
-            if any(b2 != b and span[b][2] & span[b2][2] and c2 < 1.5 * max(c, 0.05) and n2 == n
-                   for b2, (c2, n2, _f2) in cands.items()):
+            if any(b2 != b and span[b][2] & span[b2][2] and n2 == n and p2 < 1.5 * max(cpos, 0.05) and c2 - c < _lmar
+                   for b2, (c2, n2, _f2, p2) in cands.items()):
                 continue
             # another player already placed (a different name) who could just as well be this piece
             rival = False
@@ -1594,7 +1600,7 @@ def _trk_follow_names(clips, i, seeds, fps_=None, looks=None, votes=None):
                     if c2 is None or c2 > max_cost:
                         continue
                     t2 = total(n2, c2, b)
-                    if t2 is not None and t2 < 1.2 * max(c, 0.05):
+                    if t2 is not None and c2 < 1.2 * max(cpos, 0.05) and t2 - c < _lmar:
                         rival = True
             if rival:
                 continue
