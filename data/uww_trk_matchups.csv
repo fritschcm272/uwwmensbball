@@ -1,11 +1,14 @@
 defense_team,defender,offense_team,guards,possessions,ppp,share_of_his_possessions
 Carroll (WI) Pioneers,Evan Bland,Washington-St. Louis Bears,Josh Kim,2,0.0,67.0
 Carroll (WI) Pioneers,Evan Bland,Washington-St. Louis Bears,unnamed offense,1,0.0,33.0
+Carroll (WI) Pioneers,Jacob Naber,Washington-St. Louis Bears,Connor May,1,0.0,100.0
 Carroll (WI) Pioneers,Lamar Smith,Washington-St. Louis Bears,Calvin Kapral,1,0.0,50.0
 Carroll (WI) Pioneers,Lamar Smith,Washington-St. Louis Bears,Connor May,1,0.0,50.0
-Carroll (WI) Pioneers,Michael McNabb,Washington-St. Louis Bears,Ryan Cohen,1,0.0,100.0
-Carroll (WI) Pioneers,Peyton McKenna,Washington-St. Louis Bears,Calvin Kapral,1,0.0,50.0
-Carroll (WI) Pioneers,Peyton McKenna,Washington-St. Louis Bears,Will Grudzinski,1,0.0,50.0
+Carroll (WI) Pioneers,Michael McNabb,Washington-St. Louis Bears,Ryan Cohen,1,0.0,50.0
+Carroll (WI) Pioneers,Michael McNabb,Washington-St. Louis Bears,Will Grudzinski,1,0.0,50.0
+Carroll (WI) Pioneers,Peyton McKenna,Washington-St. Louis Bears,Calvin Kapral,1,0.0,33.0
+Carroll (WI) Pioneers,Peyton McKenna,Washington-St. Louis Bears,Ryan Cohen,1,0.0,33.0
+Carroll (WI) Pioneers,Peyton McKenna,Washington-St. Louis Bears,Will Grudzinski,1,0.0,33.0
 Carroll (WI) Pioneers,unnamed defense,Washington-St. Louis Bears,Ryan Cohen,3,0.0,30.0
 Carroll (WI) Pioneers,unnamed defense,Washington-St. Louis Bears,unnamed offense,3,0.0,30.0
 Carroll (WI) Pioneers,unnamed defense,Washington-St. Louis Bears,Calvin Kapral,1,0.0,10.0
@@ -67,7 +70,7 @@ Washington-St. Louis Bears,Isaac Verges,UW-Whitewater,unnamed offense,1,2.0,100.
 Washington-St. Louis Bears,JR Lukenbill,UW-Whitewater,unnamed offense,1,0.0,100.0
 Washington-St. Louis Bears,Josh Kim,UW-Whitewater,unnamed offense,7,0.57,37.0
 Washington-St. Louis Bears,Josh Kim,UW-Whitewater,Luke Bara,4,0.0,21.0
-Washington-St. Louis Bears,Josh Kim,Carroll (WI) Pioneers,unnamed offense,3,1.5,16.0
+Washington-St. Louis Bears,Josh Kim,Carroll (WI) Pioneers,unnamed offense,3,1.8,16.0
 Washington-St. Louis Bears,Josh Kim,Carroll (WI) Pioneers,Evan Bland,2,0.0,11.0
 Washington-St. Louis Bears,Josh Kim,UW-Whitewater,Isaac Verges,1,2.0,5.0
 Washington-St. Louis Bears,Josh Kim,UW-Whitewater,Joey Berezowitz,1,0.0,5.0
@@ -87,7 +90,7 @@ Washington-St. Louis Bears,unnamed defense,UW-Whitewater,unnamed offense,83,0.85
 Washington-St. Louis Bears,unnamed defense,UW-Whitewater,Richie Warren,12,0.93,9.0
 Washington-St. Louis Bears,unnamed defense,UW-Whitewater,Isaac Verges,7,0.73,5.0
 Washington-St. Louis Bears,unnamed defense,UW-Whitewater,JR Lukenbill,6,1.44,4.0
-Washington-St. Louis Bears,unnamed defense,Carroll (WI) Pioneers,unnamed offense,5,0.87,4.0
+Washington-St. Louis Bears,unnamed defense,Carroll (WI) Pioneers,unnamed offense,5,0.77,4.0
 Washington-St. Louis Bears,unnamed defense,UW-Whitewater,Brock Marino,5,0.4,4.0
 Washington-St. Louis Bears,unnamed defense,UW-Whitewater,Collin Madson,5,0.25,4.0
 Washington-St. Louis Bears,unnamed defense,Carroll (WI) Pioneers,Evan Bland,3,0.5,2.0
