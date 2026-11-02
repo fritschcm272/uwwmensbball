@@ -270,4 +270,7 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-01T19:37:36,screener,Screener,,,Luke Bara,,70,,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-01T19:37:01
 2026-11-01T20:01:25,screener,Screener,,,Luke Bara,,70,,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-01T20:00:50
 2026-11-01T21:25:47,screener,Screener,,,Luke Bara,,70,,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-01T21:24:38
-2026-11-02T04:39:28,screener,Screener,,,Luke Bara,,70,nan,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-02T04:39:25
+2026-11-02T04:39:28,screener,Screener,,,Luke Bara,,70,,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-02T04:39:25
+2026-11-02T04:57:38,screener,Screener,,,Luke Bara,,70,,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-02T04:57:35
+2026-11-02T07:19:58,screener,Screener,,,Luke Bara,,70,,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-02T07:19:57
+2026-11-02T07:39:42,screener,Screener,,,Luke Bara,,70,nan,False,not trained: needs 30+ tagged clips over 2+ answers (has 10 over 2),0.0,1.0,2026-11-02T07:38:24

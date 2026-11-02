@@ -524,7 +524,8 @@ def _pr_guess_among_left(boxes, rows, r):
         five = {sd: _trk_five(r.get(f"{sd}_lineup")) for sd in ("offense", "defense")}
         named = {sd: {b["name"] for b in boxes if b.get("side") == sd and b.get("name") and not b.get("guess")}
                  for sd in ("offense", "defense")}
-        for b in boxes:
+        probs = {}                                     # box index -> {name: share among the players left}
+        for bi, b in enumerate(boxes):
             if b.get("name") and not b.get("guess"):
                 continue
             s_ = sc.get(int(b.get("track", -1)))
@@ -537,10 +538,24 @@ def _pr_guess_among_left(boxes, rows, r):
             m_ = max(s_[n] for n in left)
             e_ = {n: float(np.exp(s_[n] - m_)) for n in left}
             z_ = sum(e_.values())
-            best = max(e_, key=e_.get)
-            b["hidden_guess"], b["hidden_guess_p"] = best, round(e_[best] / z_, 2)
+            probs[bi] = {n: e_[n] / z_ for n in left}
             b["guess_left"] = len(left)
-            b["guess_all"] = {n: round(e_[n] / z_, 2) for n in sorted(e_, key=e_.get, reverse=True)}
+            b["guess_all"] = {n: round(probs[bi][n], 2) for n in sorted(probs[bi], key=probs[bi].get, reverse=True)}
+        # CONFIRMED CHANGE (clip 1's first picture: all five Carroll boxes said "looks like Bland?"). The unnamed boxes of a
+        # team in one picture are guessed TOGETHER: each gets a different player -- the pairing the shares make most likely
+        # -- and shows that player's share for its box.
+        from scipy.optimize import linear_sum_assignment as _lsa
+        for sd in ("offense", "defense"):
+            bis = [bi for bi in probs if boxes[bi].get("side") == sd]
+            if not bis:
+                continue
+            names_ = sorted({n for bi in bis for n in probs[bi]})
+            cost = np.array([[-np.log(max(probs[bi].get(n, 0.0), 1e-6)) for n in names_] for bi in bis])
+            ri, ci = _lsa(cost)
+            got = {bis[r_]: names_[c_] for r_, c_ in zip(ri, ci)}
+            for bi in bis:
+                n_ = got.get(bi) or max(probs[bi], key=probs[bi].get)    # more boxes than players left: its own best
+                boxes[bi]["hidden_guess"], boxes[bi]["hidden_guess_p"] = n_, round(probs[bi][n_], 2)
     except Exception as _ge:
         print(f"  [play review] guesses among the players left not worked out ({type(_ge).__name__}: {_ge})", flush=True)
 
@@ -761,8 +776,12 @@ def _export_play_review_to_app(rdir, slug, game, run, plays, vocab, kind="play_r
         q["clip"] = _media(clip, f"clip_{fid}.{'mp4' if is_mp4 else 'gif'}")
         q["clip_kind"] = "video" if is_mp4 else "image"
         q["poster"] = _media(q.get("poster"), f"clip_{fid}_poster.jpg")
-        for pic in q.get("pictures", []):
-            name = f"clip_{fid}_{'a_start' if pic.get('which') == 'start' else 'c_frame' if pic.get('which') == 'frame' else 'b_end'}.jpg"
+        _npics = len(q.get("pictures", []))
+        for _pix, pic in enumerate(q.get("pictures", [])):
+            name = f"clip_{fid}_{'a_start' if pic.get('which') == 'start' else 'c_frame' if pic.get('which') == 'frame' else 'b_end'}" \
+                   + (f"_{_pix + 1}" if _npics > 1 and pic.get("which") == "frame" else "") + ".jpg"
+            # CONFIRMED BUG (fixed; clip 1's 3 pictures all showed the LAST one): every "frame" picture was saved to the app
+            # under the same name, so each overwrote the one before -- each picture now keeps its own file
             v = pic.get("image")
             try:
                 if str(v or "").startswith("data:"):
