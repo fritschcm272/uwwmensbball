@@ -640,7 +640,7 @@ if RUN_JERSEY_READER_TEST:
         _checks, _vf = coach_checks_all()
         _places = [_play_review_file_saves()]
         _st = {"files": len(_vf), "checks": 0, "numbered": 0, "on_disk": 0, "detected": 0}
-        _dets = sorted(glob.glob(os.path.join(INPUT_DIR, "_tracking", "detections_*tiles*.pkl")), key=os.path.getmtime)
+        _dets = sorted(glob.glob(os.path.join((globals().get("TRACK_DIR") or os.path.join(INPUT_DIR, "_tracking")), "detections_*tiles*.pkl")), key=os.path.getmtime)
         _dets = [d_ for d_ in _dets if "jersey" not in d_]
         _det = _safe_read_latest(_dets) if _dets else {}
         _nums_by_game = {}
@@ -694,7 +694,7 @@ if RUN_JERSEY_READER_TEST:
               f"(detections file: {os.path.basename(_dets[-1]) if _dets else 'none found'})", flush=True)
     except Exception as _e:
         print(f"  (coach checks not added to the answer key: {type(_e).__name__}: {_e})")
-    _cp = os.path.join(INPUT_DIR, "_tracking", "jersey_reader_test.pkl")
+    _cp = os.path.join((globals().get("TRACK_DIR") or os.path.join(INPUT_DIR, "_tracking")), "jersey_reader_test.pkl")
     _saved = _safe_read_pickle(_cp) if os.path.exists(_cp) else {}
     # CONFIRMED BUG (fixed): the answer-key crops live on the frames they were cut from, and when those frames were
     # deleted (the old track1024 folder) the test found 0 crops and switched jersey numbers off -- although every
