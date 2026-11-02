@@ -44,12 +44,58 @@ if (globals().get("FRAME_ARCHIVE_HOOKS", True) or str(globals().get("VISION_SOUR
 #     the review queues ignore them (coach_checks_all, Play calls section). Their crops stay in the training set. Film Tagging
 #     answers (Titles) are about plays, not frames -- they all stay.
 #   * every game is redone from its Synergy export at VISION_EXPORT_TRACK_WIDTH (VISION_EXPORT_REPLACE_CAPTURED).
+def _track_dir_move():
+    """CONFIRMED CHANGE (requested: move the tracking files off C:). The tracking files (detections, look fingerprints,
+    court placements, jersey reads ... ~370 MB, rewritten every run) lived in <inputs>\\_tracking, inside OneDrive on C:,
+    and filled the disk. They now live in TRACK_DIR (frame-capture cell: the F: drive). The first run after the change MOVES
+    everything from the old folder to the new one (files already there are kept), so C: gets the space back; later runs
+    find nothing left to move. Runs once per session."""
+    import shutil as _sh
+    if globals().get("_track_dir_moved"):
+        return
+    new = globals().get("TRACK_DIR")
+    old = os.path.join(INPUT_DIR, "_tracking") if "INPUT_DIR" in globals() else None
+    if not new or not old or os.path.normcase(os.path.abspath(new)) == os.path.normcase(os.path.abspath(old)):
+        globals()["_track_dir_moved"] = True
+        return
+    try:
+        os.makedirs(new, exist_ok=True)
+    except Exception as e:
+        print(f"  [tracking files] {new} can't be used ({type(e).__name__}: {e}) -- staying in {old}", flush=True)
+        globals()["TRACK_DIR"] = old
+        globals()["_track_dir_moved"] = True
+        return
+    n_mv = n_keep = 0
+    mb = 0.0
+    if os.path.isdir(old):
+        for name in os.listdir(old):
+            src, dst = os.path.join(old, name), os.path.join(new, name)
+            try:
+                if os.path.exists(dst):
+                    n_keep += 1
+                    continue
+                sz = os.path.getsize(src) if os.path.isfile(src) else sum(
+                    os.path.getsize(os.path.join(r_, f_)) for r_, _d, fs_ in os.walk(src) for f_ in fs_)
+                _sh.move(src, dst)
+                n_mv += 1
+                mb += sz / 1e6
+            except Exception as e:
+                print(f"  [tracking files] {name} not moved ({type(e).__name__}: {e}) -- it stays in {old}", flush=True)
+    if n_mv:
+        print(f"  [tracking files] moved {n_mv} item(s), {mb:,.0f} MB, from {old} to {new} (TRACK_DIR)"
+              + (f"; {n_keep} already there were kept" if n_keep else ""), flush=True)
+    globals()["_track_dir_moved"] = True
+
+
+_track_dir_move()
+
+
 def _tracking_reset():
     import shutil as _sh
     rid = globals().get("TRACKING_RESET_ID")
     if not rid:
         return
-    tdir = os.path.join(INPUT_DIR, "_tracking")
+    tdir = globals().get("TRACK_DIR") or os.path.join(INPUT_DIR, "_tracking")
     marker = os.path.join(tdir, "_reset.json")
     try:
         with open(marker, encoding="utf-8") as fh:

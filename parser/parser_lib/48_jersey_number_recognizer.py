@@ -215,7 +215,7 @@ def _jr_torso_box(img, box):
 
 def _jr_torso_load():
     try:
-        p_ = os.path.join(INPUT_DIR, "_tracking", "jersey_torso_boxes.pkl")
+        p_ = os.path.join((globals().get("TRACK_DIR") or os.path.join(INPUT_DIR, "_tracking")), "jersey_torso_boxes.pkl")
         return _safe_read_pickle(p_) if os.path.exists(p_) else {}
     except Exception:
         return {}
@@ -223,8 +223,8 @@ def _jr_torso_load():
 
 def _jr_torso_save():
     try:
-        os.makedirs(os.path.join(INPUT_DIR, "_tracking"), exist_ok=True)
-        _safe_to_pickle(globals().get("_jr_torso_cache", {}), os.path.join(INPUT_DIR, "_tracking", "jersey_torso_boxes.pkl"))
+        os.makedirs(os.path.join((globals().get("TRACK_DIR") or os.path.join(INPUT_DIR, "_tracking"))), exist_ok=True)
+        _safe_to_pickle(globals().get("_jr_torso_cache", {}), os.path.join((globals().get("TRACK_DIR") or os.path.join(INPUT_DIR, "_tracking")), "jersey_torso_boxes.pkl"))
     except Exception:
         pass
 
@@ -247,7 +247,7 @@ def _jr_chest(img, box, style=None):
 
 
 def _jr_det_cache():
-    dets = sorted([d for d in glob.glob(os.path.join(INPUT_DIR, "_tracking", "detections_*tiles*.pkl")) if "jersey" not in d],
+    dets = sorted([d for d in glob.glob(os.path.join((globals().get("TRACK_DIR") or os.path.join(INPUT_DIR, "_tracking")), "detections_*tiles*.pkl")) if "jersey" not in d],
                   key=os.path.getmtime)
     return _safe_read_latest(dets) if dets else {}
 
@@ -381,7 +381,7 @@ def jersey_collect():
     pcs = globals().get("play_calls", pd.DataFrame())
     # every saved jersey reading, by spot on the picture: (frame, x1, y1) -> [(key, [(text, conf)])]
     _reads_by_spot = {}
-    _jp = os.path.join(INPUT_DIR, "_tracking", "jersey_numbers.pkl")
+    _jp = os.path.join((globals().get("TRACK_DIR") or os.path.join(INPUT_DIR, "_tracking")), "jersey_numbers.pkl")
     if os.path.exists(_jp):
         for key_, v in _safe_read_pickle(_jp).items():
             parts = str(key_).split("|")
@@ -873,7 +873,7 @@ def _jr_inputs_fingerprint():
                   os.path.isdir(os.path.join(JERSEY_TRAIN_DIR, "_roboflow_nba"))))
     parts.append(("training_folder",) + _dir_state(JERSEY_TRAIN_DIR))
     if JERSEY_TRAIN_FROM_OWN_READS or any(e != "trained" for e in globals().get("JERSEY_READER_ENGINES", ["trained"])):
-        for f in (os.path.join(INPUT_DIR, "_tracking", "jersey_numbers.pkl"), os.path.join(OUTPUT_DIR, "uww_player_tracks.csv")):
+        for f in (os.path.join((globals().get("TRACK_DIR") or os.path.join(INPUT_DIR, "_tracking")), "jersey_numbers.pkl"), os.path.join(OUTPUT_DIR, "uww_player_tracks.csv")):
             parts.append((os.path.basename(f), int(os.path.getmtime(f)) if os.path.exists(f) else 0))
     parts.append(("model", int(os.path.getmtime(JERSEY_MODEL_PATH)) if os.path.exists(JERSEY_MODEL_PATH) else 0))
     parts.append(("settings", JERSEY_TRAIN_ADD_FRAMES, JERSEY_TRAIN_CROPS_PER_TRACK, JERSEY_TRAIN_NEAR_READ_S,

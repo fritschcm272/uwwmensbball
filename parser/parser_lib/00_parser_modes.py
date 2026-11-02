@@ -52,6 +52,15 @@ PARSER_MODES = {
                   "53_tag_model": {"RUN_TAG_MODEL": False},                 # no automatic Titles (last ones kept)
                   "55c_play_review": {"RUN_PLAY_REVIEW": False, "RUN_TAG_QUEUE": True}},
         "save": "tagging",
+        # CONFIRMED CHANGE (requested: "Does parser_tagging have a similar 'quiet' output as the parser_brief and
+        # parser_models notebooks?"): one "done" line per section; everything else goes to the log. Shown as it happens:
+        # problems ("!!"), the Synergy export, each game's Film Tagging result (clips to tag / left out / removed / no
+        # batch) and the tagging-progress lines; the updating status line follows frame capture and the play videos.
+        "quiet": True,
+        "quiet_show": r"!!|\[export\]|STOP|\[film tagging\]|Film Tagging: .*(clip\(s\) to tag|left out|removed|no batch|rebuilt)"
+                      r"|Film Tagging -- tagging progress|^  \d{4}-\d\d-\d\d .*clip\(s\) tagged",
+        "quiet_status": r"Frame capture|\[frame archive\]|Frame archive|Film Tagging: .*(checking|reading|making the video|open batch)"
+                        r"|min left|so far|step \d",
     },
     "brief": {
         "label": "Scouting brief + app data for the upcoming opponent, from everything done before",
