@@ -543,3 +543,13 @@ Tag model: screen_defender,v2026.11.01.9,2026-11-01,trained,2026-11-01T19:37:01,
 Tag model: situation,v2026.11.01.9,2026-11-01,trained,2026-11-01T19:37:01,"550 tagged clips, 6 answers learned",2026-11-01T19:38:37
 Tag model (overall),v2026.11.01.9,2026-11-01,trained,2026-11-01T19:37:01,newest of 9 field model(s); last retrained field: situation,2026-11-01T19:38:37
 Player tracking,v2026.11.02,2026-11-02,pretrained + code,beba8207cf53,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-11-01T19:38:37
+Tag model: ball_screen_coverage,v2026.11.01.10,2026-11-01,trained,2026-11-01T20:00:50,"147 tagged clips, 6 answers learned, one answer only",2026-11-01T20:02:06
+Tag model: defense,v2026.11.01.10,2026-11-01,trained,2026-11-01T20:00:50,"474 tagged clips, 1 answers learned, one answer only",2026-11-01T20:02:06
+Tag model: formation,v2026.11.01.10,2026-11-01,trained,2026-11-01T20:00:50,"307 tagged clips, 7 answers learned, one answer only",2026-11-01T20:02:06
+Tag model: offball_coverage,v2026.11.01.10,2026-11-01,trained,2026-11-01T20:00:50,"64 tagged clips, 3 answers learned, one answer only",2026-11-01T20:02:06
+Tag model: play_call,v2026.11.01.10,2026-11-01,trained,2026-11-01T20:00:50,"363 tagged clips, 7 answers learned, one answer only",2026-11-01T20:02:06
+Tag model: press,v2026.11.01.10,2026-11-01,trained,2026-11-01T20:00:50,"475 tagged clips, 3 answers learned",2026-11-01T20:02:06
+Tag model: primary_action,v2026.11.01.10,2026-11-01,trained,2026-11-01T20:00:50,"256 tagged clips, 8 answers learned",2026-11-01T20:02:06
+Tag model: screen_defender,v2026.11.01.10,2026-11-01,trained,2026-11-01T20:00:50,"91 tagged clips, 7 answers learned, one answer only",2026-11-01T20:02:06
+Tag model: situation,v2026.11.01.10,2026-11-01,trained,2026-11-01T20:00:50,"550 tagged clips, 6 answers learned",2026-11-01T20:02:06
+Tag model (overall),v2026.11.01.10,2026-11-01,trained,2026-11-01T20:00:50,newest of 9 field model(s); last retrained field: situation,2026-11-01T20:02:06
