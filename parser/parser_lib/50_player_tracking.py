@@ -493,6 +493,65 @@ def _trk_set_aside_keep5(clip, flagged, prev, keep=5):
     return n_out, n_kept
 
 
+def _trk_ref_model(g, ids, lists, frames_of, min_marks=3):
+    """CONFIRMED CHANGE (requested: "fix the referee sorting" -- Carroll@WashU: only 2 of the 5 referees you marked fell in the
+    referee color group; the other 3 were sorted into a TEAM, and one took McKenna's name). The 3 color groups are learned from
+    everyone on the floor, and with white WashU and dark Carroll jerseys the referees' black-and-white stripes don't get a
+    group of their own. Your referee marks now teach a referee detector for the game: the colors / stripes of the boxes you
+    marked "referee" against the boxes you named (both teams). Tested leaving each marked box out in turn; used only when it
+    catches TRACK_REF_MIN_CATCH (60%) of the marked referees and calls at most TRACK_REF_MAX_LOST (5%) of the named players
+    a referee. -> (predict_proba function on rows, note) or (None, note)."""
+    if "coach_checks_all" not in globals():
+        return None, "no checks"
+    checks = [c for c in coach_checks_all()[0] if str(c.get("game")) == str(g)]
+    pos = {}
+    for i in ids:
+        for t, f in enumerate(lists[i]):
+            pos[_trk_norm_rel(f)] = (i, t)
+    X, y = [], []
+    for c in checks:
+        vd = c.get("verdict")
+        kind = 1 if (vd == "not a player" and c.get("not_player_kind") == "referee") else \
+            0 if (vd in ("correct", "wrong", "wrong team") and (c.get("true_name") or c.get("assigned"))) else None
+        hit = pos.get(_trk_norm_rel(c.get("frame_file")))
+        if kind is None or hit is None:
+            continue
+        rows = frames_of[hit[0]][hit[1]]
+        if not len(rows):
+            continue
+        d = np.hypot((rows[:, 6] + rows[:, 8]) / 2 - float(c["px"]), rows[:, 9] - float(c["py"]))
+        j = int(np.argmin(d))
+        if d[j] < 25 and np.isfinite(rows[j, 14:19]).all():
+            X.append(_trk_group_feat(rows[j:j + 1])[0])
+            y.append(kind)
+    X, y = np.asarray(X, float), np.asarray(y, int)
+    n_ref, n_pl = int((y == 1).sum()), int((y == 0).sum())
+    if n_ref < min_marks or n_pl < 5:
+        return None, f"{n_ref} referee mark(s) and {n_pl} named player(s) found on this run's frames (needs {min_marks}+ and 5+)"
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.pipeline import make_pipeline
+    mk = lambda: make_pipeline(StandardScaler(), LogisticRegression(class_weight="balanced", C=1.0, max_iter=500))
+    cut = float(globals().get("TRACK_REF_P", 0.7))
+    pr = np.zeros(len(y))
+    for k in range(len(y)):                             # leave each marked box out in turn
+        m = np.ones(len(y), bool)
+        m[k] = False
+        if len(set(y[m])) < 2:
+            pr[k] = 0.0
+            continue
+        pr[k] = mk().fit(X[m], y[m]).predict_proba(X[k:k + 1])[0, 1]
+    caught = int(((pr >= cut) & (y == 1)).sum())
+    lost = int(((pr >= cut) & (y == 0)).sum())
+    note = (f"tested leaving each box out: {caught} of {n_ref} marked referees caught, {lost} of {n_pl} named players "
+            f"called a referee")
+    if caught < float(globals().get("TRACK_REF_MIN_CATCH", 0.6)) * n_ref or \
+            lost > float(globals().get("TRACK_REF_MAX_LOST", 0.05)) * n_pl:
+        return None, note + " -- not good enough, not used"
+    model = mk().fit(X, y)
+    return (lambda rows: model.predict_proba(_trk_group_feat(rows))[:, 1]), note
+
+
 def _trk_ref_group(g, ids, lists, frames_of, km, min_marks=3):
     """With 3+ coach-marked referees in game g: (the color group they fall in, a note), else None. A group that holds most
     of the coach-NAMED players can't be the referees' group."""
@@ -2395,6 +2454,14 @@ def player_tracking(pc):
                               for L_, tm_ in _m.items() if lab[c] == L_), flush=True)
         code = {teams_[0]: 0.0, teams_[1]: 1.0, other: 2.0}
         team_color[g] = (km, lab)
+        _refp, _ref_cut, _n_ref_moved = None, float(globals().get("TRACK_REF_P", 0.7)), [0]
+        if globals().get("TRACK_REF_FROM_MARKS", True):
+            try:
+                _refp, _ref_note = _trk_ref_model(g, ids, lists, frames_of)
+                print(f"  [tracking]   {g}: referee detector from your referee marks -- {_ref_note}", flush=True)
+            except Exception as _rme:
+                print(f"  [tracking]   referee detector not used ({type(_rme).__name__}: {_rme})", flush=True)
+                _refp = None
         # CONFIRMED CHANGE (coach: not all 5 players had a box). Frame by frame, some players were sorted into the WRONG
         # team (e.g. a gold-and-black Oshkosh player labelled with the white UWW group when his chest patch caught bright
         # floor) -- he was then missing from his own team, and his track split in two ("never across teams"). A
@@ -2411,7 +2478,14 @@ def player_tracking(pc):
                     unsure = srt[:, 0] > TRACK_TEAM_SURE_RATIO * srt[:, 1]
                     vals = np.array([code[int(x)] for x in lab_], float)
                     vals[unsure & (vals != 2.0)] = -1.0      # unsure between the two TEAMS -> no team this frame
+                    if _refp is not None:
+                        _rp = _refp(f[ok])
+                        _n_ref_moved[0] += int(((_rp >= _ref_cut) & (vals != 2.0)).sum())
+                        vals[_rp >= _ref_cut] = 2.0          # looks like the referees you marked -> everyone-else group
                     f[ok, 19] = vals
+        if _refp is not None:
+            print(f"  [tracking]   {g}: {_n_ref_moved[0]:,} box(es) that look like your marked referees moved from a team to "
+                  f"the referees' group", flush=True)
     print(f"  [tracking] step 3: following players through {len(todo)} clip(s) (never across teams)...", flush=True)
     clips = {}
     _t0 = time.time()
@@ -5682,12 +5756,21 @@ def _trk_court_precheck():
     globals().setdefault("COURT_SEARCH_DOWNLOADS", True)
     globals().setdefault("COURT_REF_FRAMES", 8)
     globals().setdefault("COURT_FEATURE_WIDTH", 1024)
-    if "_cm_write_tool" not in globals() or "_cm_calibration_files" not in globals():
-        _src_ = os.path.join(globals().get("PARSER_LIB") or os.path.join(os.getcwd(), "parser_lib"), "51_court_mapping.py")
+    # CONFIRMED BUG (fixed; 11/1: a fix to the court placement didn't take effect -- this check ran the Court mapping
+    # code left in memory by the PREVIOUS run, since its cell comes after tracking). The code is (re)loaded whenever the
+    # file changed since it was last loaded.
+    _src_ = os.path.join(globals().get("PARSER_LIB") or os.path.join(os.getcwd(), "parser_lib"), "51_court_mapping.py")
+    try:
+        _mt_ = os.path.getmtime(_src_)
+    except OSError:
+        _mt_ = None
+    if "_cm_write_tool" not in globals() or "_cm_calibration_files" not in globals() \
+            or (_mt_ is not None and globals().get("_cm_defs_mtime") != _mt_):
         try:
             with open(_src_, encoding="utf-8") as fh:
                 _code = fh.read().split("\n_cm_ran_now = False", 1)[0]          # its definitions only -- nothing runs
             exec(compile(_code, _src_, "exec"), globals())
+            globals()["_cm_defs_mtime"] = _mt_
         except Exception as e:
             print(f"  [court] calibration check skipped -- couldn't load the Court mapping code ({type(e).__name__}: {e})",
                   flush=True)

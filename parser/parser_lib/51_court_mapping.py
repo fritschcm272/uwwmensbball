@@ -422,6 +422,26 @@ def _cm_features(rel, base):
     return shape0, pts, des
 
 
+def _cm_norm(p):
+    return str(p or "").replace("\\", "/").strip().lower()
+
+
+def _cm_floor_only(feat, H, margin=4.0):
+    """CONFIRMED BUG (fixed; Carroll@WashU clip 1: the calibration frame's OWN placement was 5.9 ft off on average --
+    cheerleaders behind the baseline landed on the court and kept boxes; clicking it gave 0.14 ft). Features were taken
+    from everything below the top 12% of the picture -- bleachers, the bench, banners -- and a homography fit to the
+    stands is not the floor's. When a frame's court placement is known (a calibrated frame, or the frame a match chains
+    from), only its features that lie ON the floor (within `margin` ft of the court) are kept."""
+    if feat is None or H is None:
+        return feat
+    shape0, pts, des = feat
+    if des is None or not len(pts):
+        return feat
+    m = _cm_apply(np.asarray(H, np.float64), pts)
+    ok = (m[:, 0] > -margin) & (m[:, 0] < 94 + margin) & (m[:, 1] > -margin) & (m[:, 1] < 50 + margin)
+    return shape0, pts[ok], des[ok]
+
+
 def _cm_match(fa, fb):
     """Homography taking picture A to picture B from their floor features, and how many features agreed."""
     import cv2
@@ -512,7 +532,8 @@ def court_mapping(pc, tracks, frames_only=False, feet_tracks=None):
                 continue
             err = float(np.mean(np.linalg.norm(_cm_apply(H, pts) - np.float32(dst), axis=1)))
             refs_by_arena.setdefault(str(cal.get("arena")), []).append(
-                {"file": fr["file"], "H": H, "err": err, "feat": _cm_features(fr["file"], base)})
+                {"file": fr["file"], "H": H, "err": err, "game": str(cal.get("game")),
+                 "feat": _cm_floor_only(_cm_features(fr["file"], base), H)})
     _miss = globals().pop("_cm_missing_frames", [])
     if _miss:
         print(f"  [court]   {len(_miss)} calibrated frame(s) are no longer on disk (e.g. {_miss[0]}) -- that calibration "
@@ -528,7 +549,7 @@ def court_mapping(pc, tracks, frames_only=False, feet_tracks=None):
     # Whitewater frames?"). One fingerprint covered EVERY gym's calibration, so adding Coe's threw away all saved
     # frames, including Whitewater's 16,500 whose calibration hadn't changed. Now each gym has its own fingerprint:
     # when a gym's calibration changes, only the games played in that gym are placed again.
-    sig_by_arena = {a: _cm_slug(_trk_json.dumps(sorted((r["file"], round(r["err"], 3)) for r in rs)))[:120]
+    sig_by_arena = {a: _cm_slug(_trk_json.dumps(["floor-v3"] + sorted((r["file"], round(r["err"], 3)) for r in rs)))[:120]
                     for a, rs in refs_by_arena.items()}
     old_by = cache.get("_sig_by_arena")
     if old_by is None:
@@ -620,7 +641,34 @@ def court_mapping(pc, tracks, frames_only=False, feet_tracks=None):
         print(f"  [court] step 2: {game_key}: placing {total:,} frame(s) on the court ({n_cached:,} already done in an "
               f"earlier run, {total - n_cached:,} to match against {len(refs)} calibrated frame(s))...", flush=True)
         _t0 = time.time()
+        _ref_of = {_cm_norm(r_["file"]): r_ for r_ in refs}
+        _chain_min = int(globals().get("COURT_CHAIN_MIN_INLIERS", 2 * COURT_MIN_INLIERS))
         for _ck, fl in clips:
+            # a frame you calibrated is placed by YOUR clicks (it used to be matched like any other frame)
+            _anch = []
+            for _ja, rel in enumerate(fl):
+                r_ = _ref_of.get(_cm_norm(rel))
+                if r_ is not None:
+                    cache[rel] = np.asarray(r_["H"]).tolist()
+                    _anch.append(_ja)
+            # ...and the frames BEFORE it in the clip are chained backward from it first (frame to frame, floor only)
+            if _anch:
+                nf_ = None
+                for _jb in range(_anch[0] - 1, -1, -1):
+                    rel, nxt = fl[_jb], fl[_jb + 1]
+                    if cache.get(nxt) is None:
+                        break
+                    nf_ = nf_ or _cm_floor_only(_cm_features(nxt, base), cache[nxt])
+                    fb_ = _cm_features(rel, base)
+                    Hfn, n = _cm_match(fb_, nf_)
+                    if Hfn is None or n < _chain_min:
+                        break
+                    Hc = np.asarray(cache[nxt]) @ Hfn
+                    if not _cm_plausible(Hc, rel, _feet.get((_ck, _jb)), _pl_share):
+                        break
+                    cache[rel] = Hc.tolist()
+                    _chained.add(rel)
+                    nf_ = _cm_floor_only(fb_, Hc)
             prev_rel, prev_feat = None, None
             for _j, rel in enumerate(fl):
                 _pl = _feet.get((_ck, _j))
@@ -637,10 +685,26 @@ def court_mapping(pc, tracks, frames_only=False, feet_tracks=None):
                     prev_feat = None
                     continue
                 feat = _cm_features(rel, base)
+                # CONFIRMED CHANGE (with _cm_floor_only): the frame just before, when it's placed, is matched FIRST -- an
+                # eighth of a second apart the two pictures are nearly the same, so that match is far surer than one to a
+                # calibrated frame from another moment (COURT_CHAIN_MIN_INLIERS floor features must agree)
+                if prev_rel is not None and cache.get(prev_rel) is not None:
+                    pf = prev_feat or _cm_floor_only(_cm_features(prev_rel, base), cache[prev_rel])
+                    prev_feat = pf
+                    Hfp, n = _cm_match(feat, pf)
+                    if Hfp is not None and n >= _chain_min:
+                        Hc = np.asarray(cache[prev_rel]) @ Hfp
+                        if _cm_plausible(Hc, rel, _pl, _pl_share):
+                            cache[rel] = Hc.tolist()
+                            _chained.add(rel)
+                            n_map += 1
+                            prev_rel, prev_feat = rel, _cm_floor_only(feat, Hc)
+                            continue
                 best = (None, 0)
                 # Speed: try the calibrated frame that matched the last frame first; a strong match there
-                # (3x the minimum) is good enough, so the other calibrated frames are skipped.
-                for ref in sorted(refs, key=lambda r_: r_ is not last_ref.get(game_key)):
+                # (3x the minimum) is good enough, so the other calibrated frames are skipped. This game's own
+                # calibrated frames come before another game's in the same gym (same camera spot and zoom).
+                for ref in sorted(refs, key=lambda r_: (r_ is not last_ref.get(game_key), r_.get("game") != game_key)):
                     Hfr, n = _cm_match(feat, ref["feat"])
                     if Hfr is not None and n > best[1]:
                         best = (ref["H"] @ Hfr, n)
@@ -651,7 +715,7 @@ def court_mapping(pc, tracks, frames_only=False, feet_tracks=None):
                     last_ref[game_key] = best_ref
                 H = best[0] if best[1] >= COURT_MIN_INLIERS and _cm_plausible(best[0], rel, _pl, _pl_share) else None
                 if H is None and prev_rel is not None and cache.get(prev_rel) is not None:
-                    pf = prev_feat or _cm_features(prev_rel, base)
+                    pf = prev_feat or _cm_floor_only(_cm_features(prev_rel, base), cache[prev_rel])
                     Hfp, n = _cm_match(feat, pf)
                     if Hfp is not None and n >= COURT_MIN_INLIERS:
                         Hc = np.asarray(cache[prev_rel]) @ Hfp
@@ -663,7 +727,7 @@ def court_mapping(pc, tracks, frames_only=False, feet_tracks=None):
                     _nofeet.add(rel)
                 if H is not None:
                     n_map += 1
-                    prev_rel, prev_feat = rel, feat
+                    prev_rel, prev_feat = rel, _cm_floor_only(feat, H)
             # CONFIRMED CHANGE (with the fix above): frames BEFORE the first placed frame of a clip had nothing to chain
             # from -- now each unplaced frame is also chained from the frame AFTER it (tried once per frame)
             nxt_rel, nxt_feat = None, None
@@ -676,7 +740,7 @@ def court_mapping(pc, tracks, frames_only=False, feet_tracks=None):
                     continue
                 _back_tried.add(rel)
                 feat = _cm_features(rel, base)
-                nf = nxt_feat or _cm_features(nxt_rel, base)
+                nf = nxt_feat or _cm_floor_only(_cm_features(nxt_rel, base), cache[nxt_rel])
                 Hfn, n = _cm_match(feat, nf)
                 if Hfn is not None and n >= COURT_MIN_INLIERS:
                     Hc = np.asarray(cache[nxt_rel]) @ Hfn
@@ -684,7 +748,7 @@ def court_mapping(pc, tracks, frames_only=False, feet_tracks=None):
                         cache[rel] = Hc.tolist()
                         _chained.add(rel)
                         n_map += 1
-                        nxt_rel, nxt_feat = rel, feat
+                        nxt_rel, nxt_feat = rel, _cm_floor_only(feat, Hc)
         n_chain = sum(1 for _, fl in clips for rel in fl if rel in _chained and cache.get(rel) is not None)
         print(f"  [court]   {game_key}: {n_map:,} of {n_all:,} frame(s) on the court "
               f"({round(100 * n_map / max(n_all, 1))}%, {n_chain:,} of them chained from the frame before or after)", flush=True)

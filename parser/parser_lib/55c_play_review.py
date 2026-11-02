@@ -335,6 +335,25 @@ def _pr_ck(k):
     return _pl_ckey_norm(k) if "_pl_ckey_norm" in globals() else str(k)
 
 
+def _pr_checked_t(clip_key):
+    """The frames (their place in the clip, t) of every saved check of this clip -- player checks and starters checks."""
+    used, ck = set(), _pr_ck(clip_key)
+    try:
+        for f in glob.glob(os.path.join(_review_saves_dir(), "*.json")):
+            d = _review_doc(f)
+            if d is None:
+                continue
+            for c in (d.get("checks") or []) + (d.get("missed") or []):
+                if _pr_ck(c.get("clip_key")) != ck:
+                    continue
+                v = _trk_t_of(c, -1) if "_trk_t_of" in globals() else pd.to_numeric(c.get("t"), errors="coerce")
+                if pd.notna(v) and int(v) >= 0:
+                    used.add(int(v))
+    except Exception:
+        pass
+    return used
+
+
 def _pr_rechecked_keys(since):
     """Clip keys with a PLAYER check saved at or after `since` (a time) -- see PLAY_REVIEW_RECHECK_CLIPS."""
     keys = set()
@@ -1028,6 +1047,14 @@ def play_review():
                     print(f"Play review: {gd} {gc} -- waiting for its STARTERS check (open review run {_pkg_run}) to be "
                           f"saved in the app", flush=True)
                     continue
+                elif _ptg_this and globals().get("PLAY_REVIEW_REBUILD_UNSAVED", True):
+                    # CONFIRMED CHANGE (requested: "don't check clip 1 yet -- rerun first" kept showing the OLD pictures: an
+                    # unsaved batch was kept as it was). In the Player Number Tracking game an unsaved batch is rebuilt from
+                    # THIS run's tracking -- the same clips, as tracking sees them now. PLAY_REVIEW_REBUILD_UNSAVED = False =
+                    # keep it.
+                    shutil.rmtree(_pkg, ignore_errors=True)
+                    print(f"Play review: {gd} {gc} -- its open review (run {_pkg_run}) wasn't saved: rebuilt from this run's "
+                          f"tracking", flush=True)
                 elif globals().get("PLAY_REVIEW_REQUIRE_SAVED", True):
                     print(f"Play review: {gd} {gc} -- no new run: nothing in its open review (run {_pkg_run}) is saved yet "
                           f"(Title checks: Analytics > Film Tagging; player checks: Analytics > Player Number Tracking).", flush=True)
@@ -1036,6 +1063,7 @@ def play_review():
                 pass
         g = g.assign(_key=[f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}" for _, r in g.iterrows()])
         _kn = g["_key"].map(_pr_ck)
+        _rc_idx = set()                                   # plays that came back for a re-check (PLAY_REVIEW_RECHECK_CLIPS)
         fresh = g[~_kn.isin(done)]
         # CONFIRMED CHANGE (requested: "the first 5 clips, then groups of 5 after that that haven't had a check run on them"):
         # PLAY_REVIEW_PICK = "next" takes the first PLAY_REVIEW_PLAYS_PER_GAME plays, in game order, that have no saved check yet;
@@ -1070,6 +1098,7 @@ def play_review():
                 _redone = _pr_rechecked_keys(_since)
                 _redo = g[pd.to_numeric(g["clip_number"], errors="coerce").isin(_rc) & ~_kn.isin(_redone)]
                 if len(_redo):
+                    _rc_idx = set(_redo.index)
                     _pp = pd.concat([_redo, _pp[~_pp.index.isin(_redo.index)]])
                     print(f"Play review: {gd} {gc} -- clip(s) {', '.join(str(x) for x in sorted(pd.to_numeric(_redo['clip_number'], errors='coerce').dropna().astype(int)))} "
                           f"come back for a re-check (PLAY_REVIEW_RECHECK_CLIPS)", flush=True)
@@ -1142,10 +1171,15 @@ def play_review():
             # identified yet) shows a frame at least STARTERS_NEW_FRAME_GAP_S (2) seconds from every frame already saved for
             # it -- the one there with the most players -- so players hidden or boxless before can show up.
             _alt = False
-            if _is_st:
-                _used = _pr_starters_used_t(_slug_app)
+            # CONFIRMED CHANGE (requested: "go back to another frame for clip 1 -- make sure everything is carrying correctly
+            # through the first clip"). A re-checked clip (PLAY_REVIEW_RECHECK_CLIPS) also shows a NEW moment: at least
+            # PLAY_REVIEW_RECHECK_GAP_S (3) seconds from every frame of it you've already checked, picked like the starters' one.
+            _is_rc = _ri in _rc_idx and "players" in _parts
+            if _is_st or _is_rc:
+                _used = _pr_starters_used_t(_slug_app) if _is_st else _pr_checked_t(r.get("_key"))
                 if _used:
-                    _gap = max(1, int(round(float(globals().get("STARTERS_NEW_FRAME_GAP_S", 2.0)) * fps)))
+                    _gap = max(1, int(round(float(globals().get("STARTERS_NEW_FRAME_GAP_S", 2.0) if _is_st else
+                                                  globals().get("PLAY_REVIEW_RECHECK_GAP_S", 3.0)) * fps)))
                     _far = [t_ for t_ in range(n) if min(abs(t_ - u_) for u_ in _used) >= _gap]
                     if _far:
                         # CONFIRMED CHANGE (requested: a smarter next starters picture). Each far-enough frame is scored, not
@@ -1222,7 +1256,8 @@ def play_review():
                            + (" (a NEW moment -- not the frame you saved before)" if _alt else "")
                            + ": name every box, confirm each team's five starters" if _is_st else
                            f"{'START' if which == 'start' else 'END'} of the play -- {t / fps:.1f} s into the clip" if which != "frame"
-                           else f"Frame for the player check -- {t / fps:.1f} s into the clip, the sharpest with the most players"),
+                           else f"Frame for the player check -- {t / fps:.1f} s into the clip"
+                           + (" (a NEW moment -- not one you checked before)" if _alt else ", the sharpest with the most players")),
                           f"OFFENSE (orange) {r.get('offense_team')}: {lu('offense')}",
                           f"DEFENSE (blue)  {r.get('defense_team')}: {lu('defense')}",
                           "Solid box = identified from evidence; DASHED box with ? = best guess; grey = not named"
