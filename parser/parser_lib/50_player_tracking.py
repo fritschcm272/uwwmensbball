@@ -5323,6 +5323,92 @@ def player_tracking(pc):
             return "appearance (last ones left)"
         return "appearance"
 
+    # --- each player track's evidence for EVERY name of its team's five (requested: "the probability of it being the person
+    # compared to all the players on the team that weren't already automatically tagged") ---------------------------------
+    # CONFIRMED CHANGE. A "looks like ...?" guess said 95% when guesses like it were right 23% of the time: it was a share
+    # squeezed hard toward one name. Now every player track carries a score for each of the five on its team
+    # (track "guess_scores"): how much he looks like each of them (his look against each player's look, taught by your
+    # checks of OTHER clips) plus his jersey vote. The play review turns those into the chance he is each player LEFT --
+    # the five minus the players already named on another box in that picture -- so the shares add up to 100% over the
+    # players still to be found. How sharp the shares are (the temperature) is fitted on your checked boxes, so a box shown
+    # at 60% is right about 60% of the time among the players left.
+    guess_scores = {}
+    try:
+        _gs_on = bool(globals().get("TRACK_GUESS_SCORES", True)) and bool(fp)
+        _refs_g = {}
+
+        def _refs_excl(g_, ex):
+            key_ = (g_, ex)
+            if key_ not in _refs_g:
+                acc_ = {}
+                for (i_, k_), n_ in coach.items():
+                    if n_ and game_of.get(i_) == g_ and i_ != ex and (i_, k_) in fp:
+                        acc_.setdefault(n_, []).append(np.asarray(fp[(i_, k_)], float))
+                _refs_g[key_] = {n_: (np.mean(v_, 0) / (np.linalg.norm(np.mean(v_, 0)) + 1e-8)) for n_, v_ in acc_.items()}
+            return _refs_g[key_]
+
+        def _raw_scores(i, k):
+            sd = clips[i]["side"].get(k)
+            if sd not in ("offense", "defense") or (i, k) not in fp:
+                return None
+            five = _trk_five(pc.at[i, f"{sd}_lineup"])
+            refs_ = _refs_excl(game_of[i], i)
+            have = [n_ for n_ in five if n_ in refs_]
+            if len(five) < 2 or len(have) < 2:
+                return None
+            v_ = np.asarray(fp[(i, k)], float)
+            v_ = v_ / (np.linalg.norm(v_) + 1e-8)
+            sims = {n_: float(v_ @ refs_[n_]) for n_ in have}
+            # a player you haven't checked yet (no look to compare -- e.g. #41 Naber) gets the average of the others: still
+            # one of the players left, neither favored nor ruled out
+            _avg = float(np.mean(list(sims.values())))
+            for n_ in five:
+                sims.setdefault(n_, _avg)
+            vt = _vres.get((i, k))
+            return sims, (vt[0], float(vt[1])) if vt else None
+
+        if _gs_on:
+            # fit the temperature on your checked boxes: the true name among the five, from the OTHER clips' looks
+            _fit = []
+            for (i, k), n_true in coach.items():
+                if not n_true:
+                    continue
+                r_ = _raw_scores(i, k)
+                if r_ and n_true in r_[0]:
+                    _fit.append((r_, n_true))
+            _vw = float(globals().get("TRACK_GUESS_VOTE_W", 2.0))
+
+            def _logits(r_, T):
+                sims, vt = r_
+                lg = {n_: s_ / T for n_, s_ in sims.items()}
+                if vt and vt[0] in lg:
+                    lg[vt[0]] += _vw * vt[1]
+                return lg
+
+            def _nll(T):
+                tot = 0.0
+                for r_, n_true in _fit:
+                    lg = _logits(r_, T)
+                    m_ = max(lg.values())
+                    z = sum(np.exp(x - m_) for x in lg.values())
+                    tot -= (lg[n_true] - m_) - np.log(z)
+                return tot / max(len(_fit), 1)
+
+            _T = float(globals().get("TRACK_GUESS_TEMP", 0) or 0)
+            if not _T:
+                _grid = [0.005, 0.01, 0.015, 0.02, 0.03, 0.04, 0.06, 0.08, 0.12, 0.2, 0.4]
+                _T = min(_grid, key=_nll) if len(_fit) >= 10 else 0.08
+            for i in todo:
+                for k in range(len(clips[i]["tracks"])):
+                    r_ = _raw_scores(i, k)
+                    if r_:
+                        guess_scores[(i, k)] = {n_: round(float(x), 4) for n_, x in _logits(r_, _T).items()}
+            _top = sum(1 for r_, n_true in _fit if max(_logits(r_, _T).items(), key=lambda kv: kv[1])[0] == n_true)
+            print(f"  [tracking]   guess scores: {len(guess_scores):,} player track(s) get a score for each of the five "
+                  f"(look + jersey vote; sharpness fitted on {len(_fit)} checked box(es): T = {_T:g}; the top name was "
+                  f"right {_top} of {len(_fit)} among all five)", flush=True)
+    except Exception as _gse:
+        print(f"  [tracking]   guess scores not worked out ({type(_gse).__name__}: {_gse})", flush=True)
     for _n_clip, i in enumerate(todo, 1):
         _trk_progress("clips searched for a screen", _n_clip, len(todo), _t0)
         clip = clips[i]
@@ -5364,6 +5450,7 @@ def player_tracking(pc):
                          "name": n, "name_conf": round(c, 2) if n else None, "name_how": _h,
                          # the best guess that was NOT shown (under the cutoff): saved with the box so checks keep measuring it
                          "guess_name": _lg[0] if _lg else None, "guess_p": _lg[1] if _lg else None,
+                         "guess_scores": (_trk_json.dumps(guess_scores[(i, k)]) if (i, k) in guess_scores else None),
                          "anchored": bool(clip["anchor"] and clip["anchor"][0] == k), "frames": len(tr),
                          # [frame, x, y, box height]: x/y are the feet in picture-height units with the camera's
                          # pan removed; box height lets the insights cell turn distances into approximate feet.

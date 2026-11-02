@@ -1,0 +1,93 @@
+{
+ "game": "2025-11-07|Carroll(WI)@Wash(StLouis)",
+ "run": "20261101_200134",
+ "coach": "Corey",
+ "saved": "2026-11-02T02:37:06+00:00",
+ "checks": [
+  {
+   "clip_key": "2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 7,
+   "frame_file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/7_85d82568_t056.jpg",
+   "t": 112,
+   "px": 40.8,
+   "py": 457.9,
+   "side": "defense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "not a player",
+   "true_name": null,
+   "not_player_kind": "crowd",
+   "hidden_guess": "Jacob Naber",
+   "hidden_guess_p": 0.02
+  },
+  {
+   "clip_key": "2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 7,
+   "frame_file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/7_85d82568_t056.jpg",
+   "t": 112,
+   "px": 548.9,
+   "py": 417.3,
+   "side": "defense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "wrong",
+   "true_name": "Evan Bland",
+   "not_player_kind": null,
+   "hidden_guess": "Lamar Smith",
+   "hidden_guess_p": 0.95
+  },
+  {
+   "clip_key": "2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 7,
+   "frame_file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/7_85d82568_t056.jpg",
+   "t": 112,
+   "px": 516.2,
+   "py": 578.2,
+   "side": "offense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "wrong",
+   "true_name": "Josh Kim",
+   "not_player_kind": null,
+   "hidden_guess": "Ryan Cohen",
+   "hidden_guess_p": 0.95
+  }
+ ],
+ "source": "streamlit app",
+ "part": "players",
+ "missed": [
+  {
+   "clip_key": "2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 7,
+   "frame_file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/7_85d82568_t056.jpg",
+   "t": 112,
+   "cell": "I4",
+   "grid": [
+    12,
+    8
+   ],
+   "W": 1920,
+   "H": 1080,
+   "true_name": null,
+   "side": null
+  },
+  {
+   "clip_key": "2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 7,
+   "frame_file": "Nov_7_2025_Carroll_WI_@Wash_StLouis/track1920v2/7_85d82568_t056.jpg",
+   "t": 112,
+   "cell": "D4",
+   "grid": [
+    12,
+    8
+   ],
+   "W": 1920,
+   "H": 1080,
+   "true_name": null,
+   "side": null
+  }
+ ]
+}
