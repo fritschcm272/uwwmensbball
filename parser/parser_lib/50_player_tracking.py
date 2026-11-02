@@ -2212,6 +2212,15 @@ def _trk_starters_first(pc, todo):
             keep = order[:upto]
             how = (f"{'one clip' if n_pace == 1 else f'{n_pace} clips'} at a time: the {upto - n_pace} clip(s) up to the "
                    f"last one checked + the next {min(n_pace, max(0, len(order) - (upto - n_pace)))}")
+            # CONFIRMED CHANGE (requested: "stop moving forward with clips 9 and later -- there might be a substitution
+            # soon"): TRACK_HOLD_AT_CLIP = N tracks no clip past clip N (None = move on as usual)
+            _hold = globals().get("TRACK_HOLD_AT_CLIP")
+            if _hold:
+                _cn_ = lambda i_: pd.to_numeric(pc.at[i_, "clip_number"], errors="coerce")
+                _held = [i_ for i_ in keep if not (pd.notna(_cn_(i_)) and _cn_(i_) > int(_hold))]
+                if len(_held) < len(keep):
+                    how += f" -- held at clip {int(_hold)} (TRACK_HOLD_AT_CLIP)"
+                keep = _held
         out += keep
         print(f"  [tracking] {g} (starters saved): tracking {len(keep)} of {len(ids)} clip(s) -- "
               f"TRACK_NEW_GAME_PACE = {how}", flush=True)
@@ -3220,6 +3229,33 @@ def player_tracking(pc):
             # player is names the track found at that square this run, like a coach check (his look then counts too)
             if _m.get("true_name") and (_i, _best[1]) not in coach:
                 coach[(_i, _best[1])] = str(_m["true_name"])
+    # CONFIRMED CHANGE (requested: make the "players with NO box" marks count fully). The track found at a no-box mark is a
+    # REAL PLAYER: it goes back on the floor if a rule set it aside (sorted in with the referees by shirt color, outfit,
+    # sideline), on HIS team when you said who he is (else the team its shirt color / earlier side says), and it is never
+    # set aside later as "beyond the five" or by the player model (_missed_protect).
+    _missed_protect = set()
+    _n_back = 0
+    for _mi, (_i, _k) in _missed_tracks.items():
+        _missed_protect.add((_i, _k))
+        _m = _missed[_mi]
+        _clip = clips[_i]
+        _sd_now = _clip["side"].get(_k)
+        _sd_new = None
+        _nm = _m.get("true_name")
+        if _nm:
+            _sd_new = next((sd_ for sd_ in ("offense", "defense") if str(_nm) in _trk_five(pc.at[_i, f"{sd_}_lineup"])), None)
+        if _sd_new is None and _sd_now not in ("offense", "defense"):
+            _sd_new = _set_aside_prev.get((_i, _k))
+            if _sd_new is None and _clip.get("team", {}).get(_k) in ("A", "B"):
+                _same = [_clip["side"].get(k2) for k2, tm2 in _clip["team"].items()
+                         if tm2 == _clip["team"][_k] and _clip["side"].get(k2) in ("offense", "defense")]
+                _sd_new = max(set(_same), key=_same.count) if _same else None
+        if _sd_new and _sd_new != _sd_now:
+            _clip["side"][_k] = _sd_new
+            _n_back += 1
+    if _missed_tracks:
+        print(f"  [tracking]   your no-box marks: {len(_missed_tracks)} found on a track this run -- {_n_back} of them put back "
+              f"on the floor / on their team; all of them are kept as players", flush=True)
     _pm_mode = globals().get("TRACK_PLAYER_MODEL", "auto")
     if _pm_mode and TRACK_USE_COACH_CHECKS:
         _lab = {ik: (1 if n is None else 0) for ik, n in coach.items()}
@@ -3324,7 +3360,8 @@ def player_tracking(pc):
                     # safety: a team always keeps at least 5 boxes in every frame -- the least player-like go first
                     for i in todo:
                         ks = [k for k, v in clips[i]["side"].items() if v in ("offense", "defense")]
-                        flag = sorted([k for k in ks if _pm_p.get((i, k), 0.0) >= _pm_cut], key=lambda k: -_pm_p[(i, k)])
+                        flag = sorted([k for k in ks if _pm_p.get((i, k), 0.0) >= _pm_cut and (i, k) not in _missed_protect],
+                                      key=lambda k: -_pm_p[(i, k)])
                         _prev_i = {}
                         a_, b_ = _trk_set_aside_keep5(clips[i], flag, _prev_i)
                         _n_pm += a_
@@ -5212,7 +5249,8 @@ def player_tracking(pc):
                 if not _trk_five(pc.at[i, f"{sd}_lineup"]):
                     continue
                 for k in range(len(clip["tracks"])):
-                    if clip["side"].get(k) == sd and (i, k) not in names_all and (i, k) not in low_guess:
+                    if clip["side"].get(k) == sd and (i, k) not in names_all and (i, k) not in low_guess \
+                            and (i, k) not in _missed_protect:
                         clip["side"][k] = None
                         n_set_aside += 1
         _trk_note_drop("[tracks] beyond the five on the floor (set aside as not players)", n_set_aside)

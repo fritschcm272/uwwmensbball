@@ -1124,6 +1124,11 @@ def play_review():
             # starters are identified.
             if _st_need is not None or _ptg_this is False:
                 _pp = _pp.iloc[0:0]
+            # CONFIRMED CHANGE (requested: "stop moving forward with clips 9 and later"): no new player checks past
+            # TRACK_HOLD_AT_CLIP in the Player Number Tracking game (the re-checks below still come)
+            _hold = globals().get("TRACK_HOLD_AT_CLIP")
+            if _hold and _ptg_this and len(_pp):
+                _pp = _pp[~(pd.to_numeric(_pp["clip_number"], errors="coerce") > int(_hold))]
             # CONFIRMED CHANGE (requested: "can we go back to checking clip 1 -- I just want to make sure that each clip is
             # getting the correct players"). PLAY_REVIEW_RECHECK_CLIPS (clip numbers) come back as player checks -- first in
             # the batch, as the tracking sees them NOW -- until a player check of that clip is saved after
@@ -1271,6 +1276,35 @@ def play_review():
                                                            min(abs(t_ - u_) for u_ in _used)))
                         picks_ = [("frame", _best_t)]
                         _alt = True
+            # CONFIRMED CHANGE (requested: "go back to just checking different frames of clip 1 -- 3 different times during
+            # clip 1"). A re-checked clip shows PLAY_REVIEW_RECHECK_FRAMES (3) pictures, one in each part of the clip (start /
+            # middle / end), each the moment there with the most players. Frames you already checked are skipped unless
+            # PLAY_REVIEW_RECHECK_REUSE = True (on a checked frame the boxes you checked just show your own answers back).
+            _nrc = int(globals().get("PLAY_REVIEW_RECHECK_FRAMES", 1) or 1)
+            if _is_rc and _nrc >= 2 and n > 0:
+                _used_rc = _pr_checked_t(r.get("_key"))
+                _reuse = bool(globals().get("PLAY_REVIEW_RECHECK_REUSE", False))
+                _cnt_rc = {}
+                for rr_ in rows:
+                    if rr_.get("side") not in ("offense", "defense"):
+                        continue
+                    for p_ in _trk_json.loads(rr_["path"]):
+                        _cnt_rc[int(p_[0])] = _cnt_rc.get(int(p_[0]), 0) + 1
+                _near = max(1, int(round(1.0 * fps)))          # a new frame stays 1 s from a checked one
+                picks_ = []
+                for s_ in range(_nrc):
+                    lo_, hi_ = int(n * s_ / _nrc), max(int(n * (s_ + 1) / _nrc) - 1, int(n * s_ / _nrc))
+                    mid_ = (lo_ + hi_) // 2
+                    prev_ = [u for u in _used_rc if lo_ <= u <= hi_]
+                    if _reuse and prev_:
+                        t_ = min(prev_, key=lambda u: abs(u - mid_))
+                    else:
+                        cands = [t2 for t2 in range(lo_, hi_ + 1)
+                                 if _cnt_rc.get(t2, 0) and all(abs(t2 - u) >= _near for u in _used_rc)] \
+                            or [t2 for t2 in range(lo_, hi_ + 1) if _cnt_rc.get(t2, 0)] or [mid_]
+                        t_ = max(cands, key=lambda t2: (_cnt_rc.get(t2, 0), -abs(t2 - mid_)))
+                    picks_.append(("frame", int(t_)))
+                _alt = True
             clock = r.get("time_remaining_seconds")
             clock_txt = f"{r.get('period', '')} {int(clock // 60)}:{int(clock % 60):02d}" if pd.notna(clock) else "(no clock)"
             lu = lambda side: ", ".join(numtxt(nm) for nm in _trk_five(r.get(f"{side}_lineup"))) or "(lineup unknown)"
@@ -1300,7 +1334,8 @@ def play_review():
                           f"DEFENSE (blue)  {r.get('defense_team')}: {lu('defense')}",
                           "Solid box = identified from evidence; DASHED box with ? = best guess; grey = not named"
                           + ("   |   A player with NO box? Pick the grid square at his feet in the app" if _grid else "")]
-                fname = f"clip_{fid}_{'a_start' if which == 'start' else 'c_frame' if which == 'frame' else 'b_end'}.jpg"
+                fname = f"clip_{fid}_{'a_start' if which == 'start' else 'c_frame' if which == 'frame' else 'b_end'}" \
+                        + (f"_{len(pics) + 1}" if len(picks_) > 1 and which == "frame" else "") + ".jpg"
                 _fw, _fh = Image.open(img_path).size
                 # CONFIRMED CHANGE (requested: the pictures were blurry): a full-width frame (Synergy export, 1920) is drawn at
                 # its own size -- it used to be blown up 1.6x and then shrunk back to 1640, softening it twice. Small
