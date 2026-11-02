@@ -508,6 +508,43 @@ def _pr_boxes(rows, t, Hpx, numtxt):
     return boxes
 
 
+def _pr_guess_among_left(boxes, rows, r):
+    """CONFIRMED CHANGE (requested: "the probability of it being the person compared to all the players on the team that
+    weren't already automatically tagged"). For every box with no name, its "looks like ...?" guess and its % are worked
+    out over the players LEFT on its team in this picture -- the five on the floor minus the players already named on
+    another box -- from the tracking's score for each name (guess_scores: his look + his jersey vote, with a sharpness
+    fitted on your checks). The %s of the players left add up to 100%; the box also says how many were left
+    ("1 of 3 left"). Boxes without scores keep the tracking's old guess."""
+    try:
+        sc = {}
+        for rr in rows:
+            g_ = rr.get("guess_scores")
+            if isinstance(g_, str) and g_:
+                sc[int(rr["track"])] = _trk_json.loads(g_)
+        five = {sd: _trk_five(r.get(f"{sd}_lineup")) for sd in ("offense", "defense")}
+        named = {sd: {b["name"] for b in boxes if b.get("side") == sd and b.get("name") and not b.get("guess")}
+                 for sd in ("offense", "defense")}
+        for b in boxes:
+            if b.get("name") and not b.get("guess"):
+                continue
+            s_ = sc.get(int(b.get("track", -1)))
+            sd = b.get("side")
+            if not s_ or sd not in five:
+                continue
+            left = [n for n in five[sd] if n not in named[sd] and n in s_]
+            if not left:
+                continue
+            m_ = max(s_[n] for n in left)
+            e_ = {n: float(np.exp(s_[n] - m_)) for n in left}
+            z_ = sum(e_.values())
+            best = max(e_, key=e_.get)
+            b["hidden_guess"], b["hidden_guess_p"] = best, round(e_[best] / z_, 2)
+            b["guess_left"] = len(left)
+            b["guess_all"] = {n: round(e_[n] / z_, 2) for n in sorted(e_, key=e_.get, reverse=True)}
+    except Exception as _ge:
+        print(f"  [play review] guesses among the players left not worked out ({type(_ge).__name__}: {_ge})", flush=True)
+
+
 def _pr_frames(files, rows, numtxt, every=1):
     """The play's tracking frames, as filmed (PIL images) -- CONFIRMED CHANGE (requested): no boxes or labels on the
     video; the player checks happen on the still pictures below it."""
@@ -1248,6 +1285,7 @@ def play_review():
                     continue
                 from PIL import Image
                 boxes = _pr_boxes(rows, t, Image.open(img_path).size[1], numtxt)
+                _pr_guess_among_left(boxes, rows, r)
                 for b in boxes:                # last season's senior (between seasons): the app lists him after the returners
                     if _dep and b.get("name") and _pr_nk(b["name"]) in _dep:
                         b["departed"] = True

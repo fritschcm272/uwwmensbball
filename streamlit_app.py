@@ -6402,7 +6402,10 @@ def _pr_player_widgets(d, pi, store, kp, with_video=True):
                                     "Assigned": ((f"{boxes[bi].get('label')} ({boxes[bi].get('how')})" if boxes[bi].get("label")
                                                   else (f"looks like {_pr_lab(pl, boxes[bi]['hidden_guess'])}?"
                                                         + (f" {float(boxes[bi]['hidden_guess_p']):.0%}"
-                                                           if boxes[bi].get("hidden_guess_p") is not None else ""))
+                                                           if boxes[bi].get("hidden_guess_p") is not None else "")
+                                                        # requested: the % is among the team's players not named yet
+                                                        + (f" (of {int(boxes[bi]['guess_left'])} left)"
+                                                           if boxes[bi].get("guess_left") else ""))
                                                   if boxes[bi].get("hidden_guess") else "not named")
                                                  + (" -- senior, gone" if boxes[bi].get("departed") else "")),
                                     "Your check": (store.get(k, _PR_NOT_CHECKED) if store.get(k, _PR_NOT_CHECKED) in choices
