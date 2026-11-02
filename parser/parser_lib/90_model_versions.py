@@ -49,8 +49,23 @@ def model_versions():
     out_dir = globals().get("APP_DATA_DIR") or globals().get("OUTPUT_DIR") or "."
     cur_path = os.path.join(out_dir, "uww_model_versions.csv")
     his_path = os.path.join(out_dir, "uww_model_version_history.csv")
-    cur = pd.read_csv(cur_path, dtype=str).fillna("") if os.path.exists(cur_path) else pd.DataFrame()
-    his = pd.read_csv(his_path, dtype=str).fillna("") if os.path.exists(his_path) else pd.DataFrame()
+    # CONFIRMED BUG (fixed; 11/2: "EmptyDataError: No columns to parse from file" -- a run on a full disk left
+    # uww_model_versions.csv EMPTY, and the next run stopped here). An empty / damaged table is read as nothing, and the
+    # current versions are taken back from the history (each model's latest row), so nothing is lost or re-stamped.
+    def _read(p_):
+        if not os.path.exists(p_):
+            return pd.DataFrame()
+        try:
+            return pd.read_csv(p_, dtype=str).fillna("")
+        except Exception as e_:
+            print(f"Model versions: {os.path.basename(p_)} couldn't be read ({type(e_).__name__}) -- rebuilt", flush=True)
+            return pd.DataFrame()
+    cur = _read(cur_path)
+    his = _read(his_path)
+    if cur.empty and not his.empty and "model" in his.columns:
+        _h = his.copy()
+        _h["_o"] = range(len(_h))
+        cur = _h.sort_values("_o").groupby("model", as_index=False).tail(1).drop(columns="_o")
     prev = {r["model"]: r for r in cur.to_dict("records")} if not cur.empty else {}
     now = pd.Timestamp.now()
     rows, new_hist = [], []
