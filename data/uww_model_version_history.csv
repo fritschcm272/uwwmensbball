@@ -576,3 +576,14 @@ Tag model: screen_defender,v2026.11.02,2026-11-02,trained,2026-11-02T07:38:24,"9
 Tag model: situation,v2026.11.02,2026-11-02,trained,2026-11-02T07:38:24,"550 tagged clips, 6 answers learned",2026-11-02T08:07:59
 Tag model (overall),v2026.11.02,2026-11-02,trained,2026-11-02T07:38:24,newest of 9 field model(s); last retrained field: situation,2026-11-02T08:07:59
 Player tracking,v2026.11.02.4,2026-11-02,pretrained + code,0c701eb4b605,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-11-02T08:07:59
+Tag model: ball_screen_coverage,v2026.11.02.2,2026-11-02,trained,2026-11-02T09:10:35,"147 tagged clips, 6 answers learned, one answer only",2026-11-02T09:13:32
+Tag model: defense,v2026.11.02.2,2026-11-02,trained,2026-11-02T09:10:35,"474 tagged clips, 1 answers learned, one answer only",2026-11-02T09:13:32
+Tag model: formation,v2026.11.02.2,2026-11-02,trained,2026-11-02T09:10:35,"307 tagged clips, 7 answers learned, one answer only",2026-11-02T09:13:32
+Tag model: offball_coverage,v2026.11.02.2,2026-11-02,trained,2026-11-02T09:10:35,"64 tagged clips, 3 answers learned, one answer only",2026-11-02T09:13:32
+Tag model: play_call,v2026.11.02.2,2026-11-02,trained,2026-11-02T09:10:35,"363 tagged clips, 7 answers learned, one answer only",2026-11-02T09:13:32
+Tag model: press,v2026.11.02.2,2026-11-02,trained,2026-11-02T09:10:35,"475 tagged clips, 3 answers learned",2026-11-02T09:13:32
+Tag model: primary_action,v2026.11.02.2,2026-11-02,trained,2026-11-02T09:10:35,"256 tagged clips, 8 answers learned",2026-11-02T09:13:32
+Tag model: screen_defender,v2026.11.02.2,2026-11-02,trained,2026-11-02T09:10:35,"91 tagged clips, 7 answers learned, one answer only",2026-11-02T09:13:32
+Tag model: situation,v2026.11.02.2,2026-11-02,trained,2026-11-02T09:10:35,"550 tagged clips, 6 answers learned",2026-11-02T09:13:32
+Tag model (overall),v2026.11.02.2,2026-11-02,trained,2026-11-02T09:10:35,newest of 9 field model(s); last retrained field: situation,2026-11-02T09:13:32
+Jersey-number reader test,v2026.11.02,2026-11-02,pretrained + code,411a289b3a38,scores the OCR readers; none retrained here,2026-11-02T09:32:19
