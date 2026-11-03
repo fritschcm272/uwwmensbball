@@ -59,5 +59,20 @@ all_game_plans = pd.concat(
     [extract_game_plan_from_pdf(df, opponent) for opponent, df in scout_reports.items()],
     ignore_index=True,
 ) if scout_reports else pd.DataFrame(columns=game_plan_cols)
+# CONFIRMED CHANGE (requested: bring in Carroll's 2026-27 report). all_game_plans_history = each opponent's plan from the
+# report of the game we already played (section 11 / 12 pair those keys with that game's result). all_game_plans -- what
+# the app, the keys to victory and the brief read (uww_opponent_game_plans) -- uses the UPCOMING game's report instead
+# for an opponent that has one. report_date says which report each row came from.
+_rd = globals().get("scout_report_dates") or {}
+all_game_plans["report_date"] = all_game_plans["opponent"].map(lambda o: _rd.get(o))
+all_game_plans_history = all_game_plans.copy()
+_gp_up = globals().get("scout_reports_upcoming") or {}
+if _gp_up:
+    _rdu = globals().get("scout_report_dates_upcoming") or {}
+    _new_plans = [extract_game_plan_from_pdf(df, o).assign(report_date=_rdu.get(o)) for o, df in _gp_up.items()]
+    all_game_plans = pd.concat([all_game_plans[~all_game_plans["opponent"].isin(list(_gp_up))]] + _new_plans,
+                               ignore_index=True)
+    print("Game plans from the UPCOMING game's report: " + "; ".join(
+        f"{o} ({_rdu.get(o)}, {len(p)} topic(s))" for o, p in zip(_gp_up, _new_plans)), flush=True)
 pd.set_option("display.max_colwidth", 150)
 print(all_game_plans)

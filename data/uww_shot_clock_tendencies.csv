@@ -1,4 +1,4 @@
 opponent,clock_situation,freq_pct,ppp,fg_pct,note,is_sample
-Carroll (WI) Pioneers,Early clock (0-9 sec used),29,1.12,57.1,8 tagged possessions -- most often DHO (Peyton McKenna),False
-Carroll (WI) Pioneers,Organized offense (10-19 sec used),43,1.67,83.3,12 tagged possessions -- most often Ball Screen (Lamar Smith),False
-Carroll (WI) Pioneers,Late clock (20+ sec used),29,0.88,50.0,8 tagged possessions -- most often Down Screen (Lamar Smith),False
+Carroll (WI) Pioneers,Early clock (0-9 sec used),41,0.71,32.0,34 tagged possessions -- most often Ball Screen (Michael McNabb),False
+Carroll (WI) Pioneers,Organized offense (10-19 sec used),37,1.1,52.4,31 tagged possessions -- most often Ball Screen (Jacob Naber),False
+Carroll (WI) Pioneers,Late clock (20+ sec used),22,0.94,50.0,18 tagged possessions -- most often Ball Screen (Lamar Smith),False

@@ -5112,9 +5112,18 @@ def render_game_plan_tab(short_opponent: str) -> None:
     brief_path = os.path.join(DATA_DIR, "scouting_briefs", f"scouting_brief_{brief_slug}.html")
     if os.path.exists(brief_path):
         with open(brief_path, "rb") as f:
-            st.download_button("\U0001f4e5 Download the scouting brief (HTML)", data=f,
+            st.download_button("\U0001f4e5 Download the scouting brief (HTML)"
+                               + (" \u2014 last season's seniors struck through" if os.path.exists(
+                                   brief_path[:-5] + "_no_seniors.html") else ""), data=f,
                                file_name=os.path.basename(brief_path), mime="text/html",
                                key=f"brief_download_{brief_slug}")
+    # (requested) a scrimmage / season-opener brief also comes as a second copy with last season's seniors left out
+    _brief_ns = brief_path[:-5] + "_no_seniors.html"
+    if os.path.exists(_brief_ns):
+        with open(_brief_ns, "rb") as f:
+            st.download_button("\U0001f4e5 Download the scouting brief (HTML) \u2014 last season's seniors left out",
+                               data=f, file_name=os.path.basename(_brief_ns), mime="text/html",
+                               key=f"brief_download_ns_{brief_slug}")
 
     # --- how they play ---
     render_tempo(short_opponent)

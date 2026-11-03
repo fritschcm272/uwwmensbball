@@ -36,7 +36,7 @@ _ROSTER_STATS_HEADERS = {
 # Same bullet-separated shape as the PDF roster's PLAYER_LINE_RE, loosened for an unknown live separator
 # and an optional weight field between height and class. Height accepts both "6-2" and "6'2\"" spellings.
 _ROSTER_LINE_RE = re.compile(
-    r"#(\d{1,2})\s*[\u2022|\u00b7]\s*([A-Za-z][A-Za-z.'\-\u00e9\u00f1 ]+?)\s*[\u2022|\u00b7]\s*"
+    r"#(\d{1,2})\s*[\u2022|\u00b7]\s*([A-Za-z][A-Za-z.,'\-\u00e9\u00f1 ]+?)\s*[\u2022|\u00b7]\s*"
     r"([A-Z]{1,4}(?:/[A-Z]{1,4})?)\s*[\u2022|\u00b7]\s*"
     r"(\d{1,2}[-'\u2019]\d{1,2}\"?)\s*(?:[\u2022|\u00b7]\s*\d{2,3}\s*(?:lbs?)?\s*)?[\u2022|\u00b7]\s*"
     r"([A-Za-z]{2,10})\.?"
@@ -52,6 +52,16 @@ def _ros_normalize_height(raw):
 
 def _ros_norm_name(name):
     return re.sub(r"\s+", " ", str(name)).strip().lower()
+
+
+def _ros_match_key(name):
+    """Name key for matching one season's roster row to the next: no punctuation, no Jr./Sr./II/III/IV suffix --
+    CONFIRMED BUG (fixed): Carroll's 2026-27 page lists "GREG SMITH, JR." (2025-26: "GREG SMITH"); the comma kept him
+    off the parsed roster entirely, so he looked like he'd left the program."""
+    toks = re.sub(r"[.,]", " ", _ros_norm_name(name)).split()
+    while len(toks) > 2 and toks[-1] in ("jr", "sr", "ii", "iii", "iv", "v"):
+        toks = toks[:-1]
+    return " ".join(toks)
 
 
 # CONFIRMED BY A LIVE RUN: FastScout's headshot CDN URL carries the player's own name in its path --
@@ -408,10 +418,10 @@ def _ros_merge_next(cur, nxt_df):
         cur["class_year_prev"] = cur["class_year"]
     for team_, new_ in nxt_df.groupby("team"):
         old_idx = cur.index[cur["team"] == team_]
-        old_by = {_ros_norm_name(n): i for i, n in zip(old_idx, cur.loc[old_idx, "name"])}
+        old_by = {_ros_match_key(n): i for i, n in zip(old_idx, cur.loc[old_idx, "name"])}
         add = []
         for _, r_ in new_.iterrows():
-            i_ = old_by.get(_ros_norm_name(r_["name"]))
+            i_ = old_by.get(_ros_match_key(r_["name"]))
             if i_ is None:
                 add.append(dict(r_, class_year_prev=None, source="FastScout roster page (new season)"))
                 continue
@@ -421,7 +431,7 @@ def _ros_merge_next(cur, nxt_df):
             cur.at[i_, "source"] = "FastScout roster page (new season)"
         if add:
             cur = pd.concat([cur, pd.DataFrame(add)], ignore_index=True)
-        n_on = int(sum(_ros_norm_name(n) in old_by for n in new_["name"]))
+        n_on = int(sum(_ros_match_key(n) in old_by for n in new_["name"]))
         print(f"  [roster] {team_}: {nxt_year}-{str(nxt_year + 1)[-2:]} roster -- {n_on} returning player(s) updated "
               f"(class, number, photo), {len(add)} new player(s) added", flush=True)
     return cur

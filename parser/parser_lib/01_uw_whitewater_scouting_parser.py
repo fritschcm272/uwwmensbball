@@ -66,7 +66,10 @@ def _auto_reference_after_last_game():
     last = None
     for f in glob.glob(os.path.join(INPUT_DIR, "*")):
         b = os.path.basename(f)
-        if "whitewater" not in b.lower() or not re.search(r"_(pbp|scout|video)", b, re.I):
+        # CONFIRMED BUG (fixed): the upcoming game's own scouting report ("11_7_26 UW-Whitewater @ Carroll ..._scout.html",
+        # downloaded before the game) counted as UWW's last game, so the run's date jumped to 11/8/26 and EXTRA_GAMES' game
+        # was dropped. Only _pbp / _video files (made after a game is played) count.
+        if "whitewater" not in b.lower() or not re.search(r"_(pbp|video)", b, re.I):
             continue
         m = re.match(r"^(\d{1,2})_(\d{1,2})_(\d{2,4})\s", b)
         if not m:
@@ -92,7 +95,10 @@ if [g for g in (globals().get("EXTRA_GAMES") or []) if g and g.get("opponent")]:
     else:
         print("EXTRA_GAMES is set but no dated UWW game files were found in INPUT_DIR -- using REFERENCE_DATE.")
 reference_date = datetime.strptime(reference_date_str, "%Y-%m-%d")
-before_scout = "yes"      # "yes" = run as if the UPCOMING opponent's own scouting report does not exist yet,
+# CONFIRMED CHANGE (requested: bring in Carroll's 2026-27 scouting report): this was hard-coded to "yes" (a testing switch
+# left on), so the upcoming game's own report was ignored even when it was on disk. It is now the notebook setting
+# BEFORE_SCOUT (default "no" = use the upcoming game's report when there is one).
+before_scout = str(globals().get("BEFORE_SCOUT", "no"))   # "yes" = run as if the UPCOMING opponent's own scouting report does not exist yet,
                          # even when a "*_scout.html"/"*_scout.pdf" file for that game IS sitting in
                          # INPUT_DIR. Reports for games BEFORE the upcoming one are still used normally, and
                          # nothing is deleted from disk -- the upcoming game's report is simply filtered out

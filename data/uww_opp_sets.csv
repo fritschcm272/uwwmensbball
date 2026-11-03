@@ -1,3 +1,5 @@
 opponent,situation,set_name,primary_player,action,frequency,our_call,film_ref,is_sample
-Carroll (WI) Pioneers,Half court,Motion,Michael McNabb,Ball Screen,"22 uses in 1 games, 1.45 PPP",Pick one ball-screen coverage and stay in it; no middle,Carroll(WI)@Elmhurst,False
-Carroll (WI) Pioneers,Half court,Set,Jacob Naber,Down Screen,"2 uses in 1 games, 1.50 PPP",Lock and trail; bump the cutter off the screen,Carroll(WI)@Elmhurst,False
+Carroll (WI) Pioneers,Half court,Motion,Lamar Smith,Ball Screen,"30 uses in 2 games, 1.30 PPP",Pick one ball-screen coverage and stay in it; no middle,Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
+Carroll (WI) Pioneers,Half court,5 Out Motion,Jacob Naber,Ball Screen,"23 uses in 2 games, 0.58 PPP",Pick one ball-screen coverage and stay in it; no middle,Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
+Carroll (WI) Pioneers,Half court,Set,Jacob Naber,Swing (pass across),"6 uses in 1 games, 0.60 PPP",,Carroll(WI)@Elmhurst,False
+Carroll (WI) Pioneers,BLOB,BLOB Set,Lamar Smith,Pistol,"3 uses in 1 games, 1.00 PPP",,Carroll(WI)@Elmhurst,False

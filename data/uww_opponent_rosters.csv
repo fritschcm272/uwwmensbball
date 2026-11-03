@@ -49,12 +49,12 @@ Lawrence Vikings,2025-12-10,#21,Nolan Koch,F,"6'5""",215 lbs,SO,Bench,LS/RH in P
 Lawrence Vikings,2025-12-10,#14,Landon Key,F,"6'4""",180 lbs,SO,Bench,Driver (either way),Be a helper!!,True,Slasher,play-by-play only (low sample),Low Activity,play-by-play only
 Lawrence Vikings,2025-12-10,#4,Caleb Nash,G,"6'1""",190 lbs,SO,Bench,Driver (either way),Be a Helper!!,True,Athletic Finisher,play-by-play only (low sample),Low Activity,play-by-play only
 Carroll (WI) Pioneers,2025-12-13,#33,Dennis Estepp,G,"6'0""",170 lbs,JR,Starter,PG - pushes tempo in transition,Stop him down in transition,True,Secondary Ball Handler,Synergy play types,Point of Attack,play-by-play only
-Carroll (WI) Pioneers,2025-12-13,#12,Peyton McKenna,G,"6'2""",175 lbs,SO,Starter,Shooter! (70 of 78 shot attempts are 3's),LOCK & TRAIL!!!,True,Movement Shooter,Synergy play types,Helper,play-by-play only
-Carroll (WI) Pioneers,2025-12-13,#4,Michael McNabb,G,"6'5""",205 lbs,SO,Starter,LH Driver/Shooter,Show hands/don't foul on drives!!,True,Slasher,Synergy play types,Point of Attack,play-by-play only
-Carroll (WI) Pioneers,2025-12-13,#44,Lamar Smith,F,"6'4""",185 lbs,SR,Starter,Driver (Prefers RHD but capable LHD),Anticipate quick 1st step,True,Slasher,Synergy play types,Wing Stopper,play-by-play only
-Carroll (WI) Pioneers,2025-12-13,#41,Jacob Naber,F,"6'8""",230 lbs,SR,Starter,Posts hard after DHO or ball screen,Extend & Limit Catches | Crash to 3/4 front,True,Post Scorer,Synergy play types,Mobile Big,play-by-play only
+Carroll (WI) Pioneers,2025-12-13,#12,Peyton McKenna,G,"6'2""",175 lbs,SO,Starter,Shooter! (70 of 78 shot attempts are 3's),LOCK & TRAIL!!!,True,Movement Shooter,Synergy play types,Helper,film tracking
+Carroll (WI) Pioneers,2025-12-13,#4,Michael McNabb,G,"6'5""",205 lbs,SO,Starter,LH Driver/Shooter,Show hands/don't foul on drives!!,True,Slasher,Synergy play types,Helper,film tracking
+Carroll (WI) Pioneers,2025-12-13,#44,Lamar Smith,F,"6'4""",185 lbs,SR,Starter,Driver (Prefers RHD but capable LHD),Anticipate quick 1st step,True,Slasher,Synergy play types,Helper,film tracking
+Carroll (WI) Pioneers,2025-12-13,#41,Jacob Naber,F,"6'8""",230 lbs,SR,Starter,Posts hard after DHO or ball screen,Extend & Limit Catches | Crash to 3/4 front,True,Post Scorer,Synergy play types,Mobile Big,film tracking
 Carroll (WI) Pioneers,2025-12-13,#3,Lucas Parker,G,"6'4""",185 lbs,JR,Bench,Shooter,NO C&S 3's!!!,True,Movement Shooter,Synergy play types,Low Activity,play-by-play only
-Carroll (WI) Pioneers,2025-12-13,#15,Evan Bland,G,"6'0""",165 lbs,SR,Bench,"Aggressive Driver (prefers RH, will go both)",Anticipate RHD,True,Secondary Ball Handler,Synergy play types,Point of Attack,play-by-play only
+Carroll (WI) Pioneers,2025-12-13,#15,Evan Bland,G,"6'0""",165 lbs,SR,Bench,"Aggressive Driver (prefers RH, will go both)",Anticipate RHD,True,Secondary Ball Handler,Synergy play types,Helper,film tracking
 Carroll (WI) Pioneers,2025-12-13,#42,Greg Smith,F,"6'7""",,FR,Bench,Back up 5 man,Be a Helper!!!,True,Roll & Cut Big,play-by-play only (low sample),Mobile Big,play-by-play only
 Alma Scots,2025-12-20,#14,Raine Rodich,G,"6'0""",185 lbs,SO,Starter,Driver (Non-shooter),Anticipate spin back on finishes,True,Slasher,play-by-play only (low sample),Point of Attack,play-by-play only
 Alma Scots,2025-12-20,#3,Donovan Collins,G,"6'0""",150 lbs,JR,Starter,Shooter,High early hand on closeouts,True,Off Screen Shooter,Synergy play types (low sample),Low Activity,play-by-play only
@@ -154,17 +154,17 @@ Loras Duhawks,2026-03-06,#20,Connor Mosele,G,"6'3""",205 lbs,JR,Bench,Shooter,Hi
 Loras Duhawks,2026-03-06,#1,Deng Makeer,G,"6'6""",175 lbs,FR,Bench,Shooter (nealy 80% of shots are 3s),No C&S 3's,True,Stationary Shooter,play-by-play only (low sample),Point of Attack,play-by-play only
 Washington-St. Louis Bears,2026-03-07,#3,Josh Kim,G,"6'3""",175 lbs,FR,Starter,Driver/Shooter,Anticipate RH Finish,True,Primary Ball Handler,Synergy play types (low sample),Chaser,coach tags + film
 Washington-St. Louis Bears,2026-03-07,#10,Yogi Oliff,G,"6'3""",175 lbs,SR,Starter,Driver/Shooter,No RHD - Keep him in FRONT!!,True,Athletic Finisher,play-by-play only (low sample),Helper,film tracking
-Washington-St. Louis Bears,2026-03-07,#11,Ryan Cohen,G,"6'3""",180 lbs,JR,Starter,Shooter with quick release! (85% shot attempts are 3's),Locate early in transition,True,Movement Shooter,Synergy play types (low sample),Helper,coach tags + film
+Washington-St. Louis Bears,2026-03-07,#11,Ryan Cohen,G,"6'3""",180 lbs,JR,Starter,Shooter with quick release! (85% shot attempts are 3's),Locate early in transition,True,Movement Shooter,Synergy play types (low sample),Chaser,coach tags + film
 Washington-St. Louis Bears,2026-03-07,#21,Connor May,F,"6'6""",210 lbs,SO,Starter,3 level scorer (high level shooter),Anticipate RHD,True,Movement Shooter,Synergy play types,Helper,coach tags + film
 Washington-St. Louis Bears,2026-03-07,#34,Calvin Kapral,C,"6'8""",225 lbs,SR,Starter,Scores in post & dump offs on drives,No LS/RH!,True,Post Scorer,Synergy play types (low sample),Anchor Big,coach tags + film
 Washington-St. Louis Bears,2026-03-07,#23,Anthony Przybilla,F,"6'6""",200 lbs,SO,Bench,Driver/Finisher,Keep vision of man & ball,True,Roll & Cut Big,Synergy play types (low sample),Mobile Big,film tracking
 Washington-St. Louis Bears,2026-03-07,#32,Will Grudzinski,G,"6'6""",200 lbs,SR,Bench,Shooter/Driver,High early hand on closeouts,True,Movement Shooter,Synergy play types (low sample),Helper,film tracking
 Washington-St. Louis Bears,2026-03-07,#30,Theo Rocca,G,"6'3""",190 lbs,FR,Bench,Capable shooter & driver,No C&S 3's,True,Movement Shooter,Synergy play types (low sample),Helper,film tracking
 Washington-St. Louis Bears,2026-03-07,#33,George Gale,F,"6'6""",195 lbs,JR,Bench,LS/RH in post (5 man),No LS/RH,True,Roll & Cut Big,Synergy play types (low sample),Anchor Big,coach tags + film
-Carroll (WI) Pioneers,2025-12-13,,Auggie Hoffman,,,,,Bench,,,False,,,,
-Carroll (WI) Pioneers,2025-12-13,,Brendan Beaumont,,,,,Bench,,,False,,,,
-Carroll (WI) Pioneers,2025-12-13,,Cale Buboltz,,,,,Bench,,,False,,,,
-Carroll (WI) Pioneers,2025-12-13,,Gray Dingwall,,,,,Bench,,,False,,,,
-Carroll (WI) Pioneers,2025-12-13,,Hayden Stebbins,,,,,Bench,,,False,,,,
-Carroll (WI) Pioneers,2025-12-13,,Jimmy Tarjan,,,,,Bench,,,False,,,,
-Carroll (WI) Pioneers,2025-12-13,,Matt Leonhard,,,,,Bench,,,False,,,,
+Carroll (WI) Pioneers,2025-12-13,,Auggie Hoffman,,,,,Bench,,,False,,,Low Activity,play-by-play only
+Carroll (WI) Pioneers,2025-12-13,,Brendan Beaumont,,,,,Bench,,,False,,,Low Activity,play-by-play only
+Carroll (WI) Pioneers,2025-12-13,,Cale Buboltz,,,,,Bench,,,False,,,Point of Attack,play-by-play only
+Carroll (WI) Pioneers,2025-12-13,,Gray Dingwall,,,,,Bench,,,False,,,Low Activity,play-by-play only
+Carroll (WI) Pioneers,2025-12-13,,Hayden Stebbins,,,,,Bench,,,False,,,Low Activity,play-by-play only
+Carroll (WI) Pioneers,2025-12-13,,Jimmy Tarjan,,,,,Bench,,,False,,,Low Activity,play-by-play only
+Carroll (WI) Pioneers,2025-12-13,,Matt Leonhard,,,,,Bench,,,False,,,Low Activity,play-by-play only

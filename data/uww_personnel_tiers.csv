@@ -1,14 +1,14 @@
 scouted_opponent,side,team,player,tier,tier_order,games,mpg,recent_count,missed_recent,starts_recent,recent_n,starter_basis,last_game_min,last_game_rank,tier_note,offensive_role,offensive_role_basis,defensive_role,defensive_role_basis
 Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Cai Joseph,Bench — no minutes,3,15,5.3,0,6,0,3,scouting report role,,,,Stationary Shooter,Synergy play types,Low Activity,play-by-play only
 Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Dennis Estepp,Starter,0,26,23.7,3,0,0,3,scouting report role,21.6,6.0,,Secondary Ball Handler,Synergy play types,Point of Attack,play-by-play only
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Evan Bland,Bench — rotation,1,21,22.3,3,0,3,3,scouting report role,27.6,5.0,,Secondary Ball Handler,Synergy play types,Point of Attack,play-by-play only
+Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Evan Bland,Bench — rotation,1,21,22.3,3,0,3,3,scouting report role,27.6,5.0,,Secondary Ball Handler,Synergy play types,Helper,film tracking
 Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Greg Smith,Bench — no minutes,3,21,6.7,0,3,0,3,scouting report role,,,,Roll & Cut Big,play-by-play only (low sample),Mobile Big,play-by-play only
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Jacob Naber,Starter,0,26,27.2,3,0,3,3,scouting report role,31.3,4.0,,Post Scorer,Synergy play types,Mobile Big,play-by-play only
+Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Jacob Naber,Starter,0,26,27.2,3,0,3,3,scouting report role,31.3,4.0,,Post Scorer,Synergy play types,Mobile Big,film tracking
 Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Jimmy Tarjan,Bench — rotation,1,20,12.8,3,0,0,3,scouting report role,8.3,8.0,,Athletic Finisher,Synergy play types,Low Activity,play-by-play only
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Lamar Smith,Starter,0,26,28.6,3,0,3,3,scouting report role,33.3,2.0,,Slasher,Synergy play types,Wing Stopper,play-by-play only
+Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Lamar Smith,Starter,0,26,28.6,3,0,3,3,scouting report role,33.3,2.0,,Slasher,Synergy play types,Helper,film tracking
 Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Lucas Parker,Bench — rotation,1,25,15.8,3,0,0,3,scouting report role,9.8,7.0,,Movement Shooter,Synergy play types,Low Activity,play-by-play only
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Michael McNabb,Starter,0,26,31.0,3,0,3,3,scouting report role,33.4,1.0,,Slasher,Synergy play types,Point of Attack,play-by-play only
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Peyton McKenna,Starter,0,26,31.9,3,0,3,3,scouting report role,32.4,3.0,,Movement Shooter,Synergy play types,Helper,play-by-play only
+Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Michael McNabb,Starter,0,26,31.0,3,0,3,3,scouting report role,33.4,1.0,,Slasher,Synergy play types,Helper,film tracking
+Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Peyton McKenna,Starter,0,26,31.9,3,0,3,3,scouting report role,32.4,3.0,,Movement Shooter,Synergy play types,Helper,film tracking
 Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Evan Oleson,Bench — no minutes,3,11,6.2,0,4,0,3,scouting report role,,,,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only
 Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Andrew Hollerich,Bench — no minutes,3,6,4.7,0,4,0,3,scouting report role,,,,Off Screen Shooter,Synergy play types (low sample),Low Activity,play-by-play only
 Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Auggie Hoffman,Bench — no minutes,3,1,1.8,0,15,0,3,scouting report role,,,,Secondary Ball Handler,position only,Low Activity,play-by-play only

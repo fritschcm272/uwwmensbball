@@ -64,7 +64,10 @@ def _ss_data_season():
     last = None
     for f in _ss_glob.glob(_ss_os.path.join(INPUT_DIR, "*")):
         b = _ss_os.path.basename(f)
-        m = _ss_re.match(r"^(\d{1,2})_(\d{1,2})_(\d{2,4})\s.*whitewater.*_(pbp|scout|video)\.", b, _ss_re.I)
+        # CONFIRMED BUG (fixed; the run after Carroll's 2026-27 report was downloaded said "Season: 2026-27" and moved the run's
+        # date to 11/8/26): a scouting report is written BEFORE its game, so "11_7_26 ... _scout.html" is not a played game.
+        # Only _pbp / _video files (made after a game) say which season's games are on file.
+        m = _ss_re.match(r"^(\d{1,2})_(\d{1,2})_(\d{2,4})\s.*whitewater.*_(pbp|video)\.", b, _ss_re.I)
         if not m:
             continue
         y = int(m.group(3)) + (2000 if len(m.group(3)) == 2 else 0)
