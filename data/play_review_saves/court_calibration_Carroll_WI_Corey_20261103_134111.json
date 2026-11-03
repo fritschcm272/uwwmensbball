@@ -1,0 +1,405 @@
+{
+ "kind": "court_calibration",
+ "arena": "Carroll(WI)",
+ "game": "2025-11-12|Beloit@Carroll(WI)",
+ "coach": "Corey",
+ "saved": "2026-11-03T13:41:11+00:00",
+ "source": "streamlit app",
+ "frames": [
+  {
+   "file": "Nov_12_2025_Beloit@Carroll_WI/track1920v2/1_11dc45af_t040a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT corner 3 at baseline, near",
+     "px": 12.0,
+     "py": 614.5
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 710.1,
+     "py": 401.7
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1190.7,
+     "py": 547.5
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 1877.0,
+     "py": 590.6
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 1872.2,
+     "py": 655.1
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 860.8,
+     "py": 566.7
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 994.7,
+     "py": 494.9
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 937.3,
+     "py": 528.4
+    }
+   ]
+  },
+  {
+   "file": "Nov_12_2025_Beloit@Carroll_WI/track1920v2/28_41f616a8_t038.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 652.8,
+     "py": 554.7
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 394.5,
+     "py": 870.3
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 155.4,
+     "py": 463.9
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 989.9,
+     "py": 571.5
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 863.2,
+     "py": 509.3
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 913.4,
+     "py": 540.4
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1449.0,
+     "py": 521.2
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1298.3,
+     "py": 471.0
+    }
+   ]
+  },
+  {
+   "file": "Nov_12_2025_Beloit@Carroll_WI/track1920v2/60_703ad14b_t035a.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 351.5,
+     "py": 557.1
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 994.7,
+     "py": 528.4
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 385.0,
+     "py": 863.2
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 346.7,
+     "py": 425.6
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 365.8,
+     "py": 609.7
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 1080.7,
+     "py": 518.9
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1661.8,
+     "py": 454.3
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1336.6,
+     "py": 547.5
+    }
+   ]
+  },
+  {
+   "file": "Nov_12_2025_Beloit@Carroll_WI/track1920v2/90_b9d2049d_t017.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 286.9,
+     "py": 566.7
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 315.6,
+     "py": 858.4
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 275.0,
+     "py": 435.2
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 294.1,
+     "py": 621.7
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 279.8,
+     "py": 523.6
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 939.7,
+     "py": 538.0
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 1016.2,
+     "py": 528.4
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1269.6,
+     "py": 549.9
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 1131.0,
+     "py": 487.8
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1202.7,
+     "py": 514.1
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1790.9,
+     "py": 518.9
+    }
+   ]
+  },
+  {
+   "file": "Nov_12_2025_Beloit@Carroll_WI/track1920v2/125_2612f348_t033.jpg",
+   "points": [
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1107.0,
+     "py": 545.2
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1035.3,
+     "py": 528.4
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 853.6,
+     "py": 530.8
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 925.3,
+     "py": 485.4
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 784.3,
+     "py": 561.9
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 246.3,
+     "py": 516.5
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 449.5,
+     "py": 456.7
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 1767.0,
+     "py": 891.9
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 1793.3,
+     "py": 442.3
+    }
+   ]
+  },
+  {
+   "file": "Nov_12_2025_Beloit@Carroll_WI/track1920v2/154_ceb5b2e3_t043a.jpg",
+   "points": [
+    {
+     "landmark": "center circle, near",
+     "px": 169.8,
+     "py": 645.6
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 157.8,
+     "py": 540.4
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 165.0,
+     "py": 585.8
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 824.9,
+     "py": 545.2
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 198.5,
+     "py": 879.9
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 150.6,
+     "py": 447.1
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1083.1,
+     "py": 523.6
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1666.6,
+     "py": 521.2
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1468.1,
+     "py": 461.5
+    }
+   ]
+  },
+  {
+   "file": "Nov_12_2025_Beloit@Carroll_WI/track1920v2/185_4cd2aa56_t034a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 946.8,
+     "py": 535.6
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1128.6,
+     "py": 542.8
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, near",
+     "px": 7.2,
+     "py": 628.8
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 719.7,
+     "py": 399.3
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1193.1,
+     "py": 557.1
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 872.7,
+     "py": 566.7
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1006.6,
+     "py": 504.5
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 341.9,
+     "py": 518.9
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 1903.3,
+     "py": 600.1
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 1888.9,
+     "py": 911.0
+    }
+   ]
+  },
+  {
+   "file": "Nov_12_2025_Beloit@Carroll_WI/track1920v2/214_d810a400_t041.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 707.7,
+     "py": 559.5
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 52.6,
+     "py": 920.5
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 0.0,
+     "py": 471.0
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 16.7,
+     "py": 662.3
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 891.9,
+     "py": 499.7
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 954.0,
+     "py": 533.2
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 767.5,
+     "py": 552.3
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, near",
+     "px": 1877.0,
+     "py": 619.3
+    }
+   ]
+  }
+ ]
+}

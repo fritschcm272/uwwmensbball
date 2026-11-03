@@ -1031,7 +1031,7 @@ def play_review():
     # tracking named it, both teams' whole rosters to choose from, and the five starters of each team to confirm. Saved in
     # the app (Analytics > Player Number Tracking, "Starters" at the top); player tracking then knows what each starter
     # looks like. PLAY_REVIEW_STARTERS = False turns it off.
-    _st_on = bool(globals().get("PLAY_REVIEW_STARTERS", True))
+    _st_on = bool(globals().get("PLAY_REVIEW_STARTERS", False))
     try:
         _st_info = new_game_info() if _st_on else None
         _st_saved = _st_info[0] if _st_info else {}
@@ -1938,7 +1938,7 @@ if globals().get("RUN_TAG_QUEUE", True) or RUN_PLAY_REVIEW:
 # is completed"). After the Play review and Film Tagging batches are written, the notebook STOPS while any game's starters
 # check is open and not saved. PLAY_REVIEW_STARTERS_STOP = False carries on without stopping.
 _stw = globals().get("_pr_starters_waiting") or []
-if RUN_PLAY_REVIEW and _stw and globals().get("PLAY_REVIEW_STARTERS_STOP", True):
+if RUN_PLAY_REVIEW and _stw and globals().get("PLAY_REVIEW_STARTERS_STOP", False):
     print("  " + "=" * 100)
     print(f"  STOPPED after the Play review: {len(_stw)} game(s) need their 10 STARTERS validated:")
     for _g1, _g2, _where in _stw:
