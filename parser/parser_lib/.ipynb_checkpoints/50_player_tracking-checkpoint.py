@@ -1,0 +1,6135 @@
+# 50_player_tracking.py -- code for the notebook section "Player tracking: follow every player through the clip, put names on them, find the screen "
+# Runs inside the notebook via run_section("50_player_tracking"); its settings are in that notebook cell.
+
+# --- Player tracking: follow every player through the clip, put names on them, find the screen ----------------
+# CONFIRMED CHANGE (requested: connect the detector's boxes to the five names on the floor, and find who set
+# the screen and who defended it). A first version, built to be MEASURED -- every run reports how often it
+# gets names right, so it's clear how far to trust it.
+#   1. Detect   every person and the ball in each clip's tracking frames (VISION_TRACK_FPS per second, from the
+#               frame-capture cell). YOLO; cached per frame file, so each frame is detected once ever.
+#   2. Track    link each player's box from one frame to the next into a track, allowing for the camera
+#               panning (the whole picture's shift is measured first, then players are matched after it).
+#   3. Teams    jersey colors across the whole GAME are grouped into 3 (two teams + referees, the smallest).
+#               Which color is which team is learned from the anchors below -- no uniform rules assumed.
+#   4. Anchors  Synergy names the player who ends the possession (the shooter / ball handler / turnover). In
+#               the last part of the clip, the track nearest the ball most often IS that player. That gives a
+#               few named tracks per game for free.
+#   5. Names    every track gets an appearance fingerprint (the pretrained image model on crops of the
+#               player). Each named player's fingerprints form his profile; every other track is matched to
+#               the closest profile AMONG THE FIVE ON THE FLOOR FOR HIS TEAM (lineups from the play-by-play),
+#               never giving two tracks on the floor at the same time the same name.
+#   6. Screens  a screen = an offensive player nearly standing still, touching a defender who had been
+#               guarding a DIFFERENT offensive player, while that player passes close by. It reports the
+#               screener, the player screened for (ball screen when he has the ball), that player's defender,
+#               and the screener's own defender.
+# Honest limits: every teammate wears the same uniform, so naming depends on small differences (build,
+# skin, hair, shoes, sleeves) and the named examples Synergy provides; ball detection on game film is patchy;
+# screens that happen between tracking frames are missed. The report at the end measures each part.
+# Outputs: track_* columns on play_calls (the tag model can learn from them) and uww_player_tracks.csv (one row
+# per track, for the app later). Check images with names drawn on them: _tracking/checks/.
+
+# CONFIRMED CHANGE (requested: "switch to yolo11s"). The small model (yolo11n) boxed some players only part of the
+# time -- overlapping, far away, partly out of the picture -- so review pictures showed 3-5 players per team instead of
+# 5. yolo11s finds more of them; detection takes ~2-3x as long (once per frame -- saved). New detections mean new
+# boxes, so jersey colors, fingerprints and jersey reads are redone for those frames too (all saved as before).
+# CONFIRMED CHANGE (first real run: "0 named by Synergy + ball, teams told apart by color: no" -- the generic
+# detector rarely finds a small, blurry basketball on game film, and every later step waited on it). Two
+# routes that don't need the ball:
+#   * teams: NCAA home teams wear the LIGHT jersey, so the lighter jersey-color group is the home team
+#     (TRACK_TEAM_COLORS overrides it, e.g. {"UW-Oshkosh": "light"} for a game where the home team wore dark)
+#   * names: on shot clips, the offensive player with his ARMS UP at the end is the shooter (a pose model finds
+#     arms), and Synergy names the shooter -- that's the anchor.
+# CONFIRMED CHANGE (review of the first 5 Oshkosh possessions: fans in the front rows, the scorer's table and
+# seated bench players were being detected and even tracked as players -- one bench player was tracked as a
+# defender -- which broke tracks into pieces, muddied the jersey-color groups and left 3 anchors all game). With
+# the gym calibrated, every detection is put on the court first:
+#   * anyone standing more than TRACK_COURT_MARGIN_FT outside the court lines is dropped
+#   * players are linked frame to frame by real distance in feet (a player covers at most TRACK_MAX_SPEED_FTS
+#     feet per second), which the camera's pan and perspective can't fool
+#   * a track survives TRACK_KEEP_ALIVE missed frames (a player hidden behind another for a moment)
+#   * a new anchor that needs neither ball nor pose: on a finish at the rim ("Basket", "Layup", "Putback", ...),
+#     the offensive player closest to the basket at the end is the Synergy-named finisher.
+# Uses the court mapping saved by the Court mapping cell (_tracking/court_homographies.pkl). On a game's very
+# first run that file doesn't cover it yet -- rerun from this cell after Court mapping and it will.
+# CONFIRMED CHANGE (first review on correctly captured frames: both finish-at-the-rim anchors named the wrong player --
+# Richie Warren's cut (#24) landed on #21, Luke Bara's drive (#32) on #15 -- with clean, single-player tracks, so the
+# RULE is wrong, not the tracking; it also explains the anchors disagreeing with jersey numbers 0 of 4 before). Off
+# until it can be made reliable; jersey numbers, Synergy's ball-based anchors and the possession links still name.
+# Detecting small, far-away players (review: only ~6 of the 10 players + 3 refs were found per frame). With the
+# gym calibrated, each frame is cropped to the COURT STRIP (plus room above for heads), enlarged
+# TRACK_DETECT_UPSCALE times and split into TRACK_DETECT_TILES overlapping pieces, so a far player the detector
+# saw as 40 pixels tall is now ~80-100. Detections from the pieces are mapped back and duplicates merged.
+# Costs ~TRACK_DETECT_TILES detector runs per frame (~15-25 min for a game with the small model, once --
+# saved like before). 1 and 1.0 = the old whole-frame detection.
+# CONFIRMED CHANGE (third review of the first 5 Oshkosh possessions: tracks jumped between players and even
+# between teams -- the "Richie Warren" track was #21, a referee was tracked as offense -- and naming by
+# appearance was no better than chance, 11 of 67). Two changes:
+#   * Everyone is sorted into THREE groups BEFORE tracks are built -- team A, team B, and everyone else
+#     (referees, coaches, fans at the sideline) -- by jersey AND shorts color (referees: black pants under a
+#     grey striped shirt; UWW: white on white; Oshkosh: black and gold). A track can never cross groups.
+#   * Players are named by the NUMBER ON THE JERSEY (read with EasyOCR from the chest of each tracked player;
+#     one-time install + ~100 MB model download), limited to the numbers of the five on the floor for that
+#     team (rosters + Synergy's "24 Richie Warren"). Appearance matching only fills in what numbers can't.
+# CONFIRMED CHANGE (first review with jersey numbers on correctly captured frames: the reader answered only 38 of 492
+# crops -- the 3 TALLEST boxes per player are often a player turned sideways). Crops that got confident answers were
+# clearly WIDER for their height (0.51 vs 0.40: shoulders square to the camera, number showing); the widest quarter
+# got confident answers 3-4x as often. So each player's crops are his widest boxes that are still near full height,
+# at least half a second apart; tracks shorter than TRACK_OCR_MIN_TRACK_S aren't read (elimination and the
+# possession links name those).
+# CONFIRMED CHANGE (fourth review: of 12 tracks named by jersey number in the first 5 possessions ~4 were right).
+#   * Seated people: at the same spot in the picture a seated bench player is much shorter than a standing one
+#     (Oshkosh's #23 on the bench measured 0.65 of the standing height there; players on the floor 0.9-1.2;
+#     seated fans and bench 0.43-0.59, crouching or partly hidden players 0.66-0.73).
+#     Anyone under TRACK_MIN_STANDING of the standing height for that picture row is set aside.
+#   * The number vote now counts EVERY confident read: the winning number must be the majority of all of them
+#     (a track read "22" again and again was being named #4 off one stray "4"), and a single-digit number needs
+#     TRACK_SINGLE_DIGIT_VOTES reads (blurry chests read as "0" constantly).
+#   * Appearance-only names are switched off automatically while the appearance name check is below
+#     TRACK_APPEARANCE_MIN_CHECK -- a blank is better than a wrong name in the brief.
+# CONFIRMED CHANGE (coach: "not all 5 players even have a box around them"). Per frame the detector finds ~13 people on
+# the court -- the 10 players and 3 referees -- but only ~6-7 players survived: the "seated person" and "wide box"
+# checks (meant for fans and the bench along the sidelines) threw out real players crouched on defense, arms out,
+# bent for a rebound. Both checks now apply only within TRACK_EDGE_ZONE_FT of a sideline or baseline, where people
+# actually sit; out on the floor nobody is seated, so everyone standing there is kept.
+# CONFIRMED CHANGE (requested: "there should never be an unnamed offense or unnamed defense -- make a best guess at each
+# of the 5 players based on who we know is in the lineup"). After every trusted name is placed, the rest of each team's
+# five are shared out among its remaining tracks using whatever weak clues exist (which known player he looks most
+# like, partial jersey reads, names carried from linked possessions) -- and with no clue at all, still a name from the
+# lineup. Never the same name on two tracks at once, never more than five at once (extras at the same moment are not
+# players). Every such name is MARKED: name_how = "best guess", name_conf = TRACK_BEST_GUESS_CONF.
+# CONFIRMED CHANGE (requested: validate the 10 players on the court from one picture per clip). Coach checks saved from
+# track_validation/<game>/review.html (track_validation_*.json, picked up from Downloads) are CERTAIN names: they
+# outrank every other source, teach each player's look, and "not a player" removes a box from naming. Each run also
+# prints how often each naming method was right on the boxes a coach checked.
+# CONFIRMED CHANGE (coach: "there are still unnamed offense and defensive players" in the scouting tables). The best
+# guess treated every track of a team alike, so at a moment with 6+ tracks for a team -- a referee, a coach, a fan in a
+# white shirt by the sideline sorted in by color -- it could hand a name to the sideline figure and leave a real player
+# unnamed (review of 22 unnamed tracks: nearly all real players). Each track now gets a PLAYER-LIKENESS: out on the floor
+# (not along a sideline / baseline), tracked through much of the play, moving. The most player-like tracks get the
+# names; any track still unnamed after that can't be a 6th player on the floor, so it's set aside as NOT A PLAYER (like
+# referees) and never appears as "unnamed offense / defense" in the tables.
+# CONFIRMED CHANGE (requested: "you already know which 5 players from each team are on the court and their numbers
+# -- make sure all 10 are matched up with that"). Names are now solved as ONE MATCHING per team per clip: the
+# five names on the floor are shared out among that team's tracks, each player at most once at any moment,
+# using every clue together:
+#   * jersey readings scored against ONLY those five numbers -- an exact read counts most, and a partial read
+#     still points the right way when only one of the five fits it (UWW's 21/15/11/32/24: a "4" can only be
+#     #24, a "5" only #15), so even the reader's misreads carry information
+#   * the Synergy-named anchor (weaker: anchors and numbers agreed only 4 of 18 times)
+#   * elimination: when four of a team's five on the floor are identified at a moment, the one track left
+#     is the fifth player -- no reading needed
+# Players with no clue at all stay blank rather than being guessed (a guess among five is right 1 time in 5).
+# CONFIRMED CHANGE (requested: "go forward and backwards in the Synergy details"). Every tracking frame now has its
+# time in the full-game video, and back-to-back clips overlap (review: two Oshkosh-game clips shared 14 seconds;
+# 27 track pairs lined up, most under 1 ft apart). Where two clips show the same moment, a team's tracks that stand
+# in the same court spot are the same player, so they're LINKED; a player's linked tracks can run across many
+# possessions, and a name found in any of them counts as evidence in all of them.
+# CONFIRMED CHANGE (requested: use the play-by-play's named events). Rebounds, steals, blocks and fouls name a player
+# at a known game-clock moment -- the only source that names DEFENDERS. Each clip has its own game clock, and its
+# frames have game-video times, so an event lands on a frame: the clip's finish frame, shifted by how far the clock
+# ran between them. There, the named player is:
+#   rebound -> that team's player nearest the basket being attacked
+#   steal   -> that team's player nearest the player who turned it over (once he's identified)
+#   block   -> that team's player nearest the shooter;   foul -> that team's player nearest the player fouled
+# accepted only if he is in that team's five on the floor and clearly the nearest (TRACK_PBP_MARGIN_FT).
+# CONFIRMED CHANGE (review of the first full run with events: where an event pointed at an already-known player it
+# was wrong 3 of 3 times, and a foul named "Brandon Beck (#0)" landed on a track showing #12 and #5). Until the event
+# names are verified, they run in REVIEW mode: found and saved (uww_trk_event_candidates.csv, and crops of every one in
+# the review zip) but NOT used to name anyone. True = use them; False = skip them.
+# CONFIRMED CHANGE (coach: "there has to be some way to find the exact place one play ends and the next play starts").
+# The clips are one continuous stretch of game video: each play's clip starts 0.2-0.4 s BEFORE the previous one ends.
+# Linking used to need 1+ s of overlap and 3 shared moments, so back-to-back plays (one shared moment) were never
+# linked. At every play boundary the players at the end of one play are now matched, spot for spot, with the players
+# at the start of the next -- names carry across in both directions, play after play, until a substitution.
+
+
+# ---- cache files that survive a full disk (shared helper; the same copy is in every section that uses them) ---------
+# CONFIRMED BUG (fixed; "Jersey-number recognizer skipped: EOFError: Ran out of input", and tracking's "jersey numbers not
+# read this run (EOFError ...)"): a run that filled the disk left a cache file empty / cut short, and loading it stopped the
+# section. A damaged cache is now set aside as "<name>.broken" (it's rebuilt), and caches are written to a temporary file
+# first and swapped in only when complete, so a full disk can no longer leave a half-written cache behind.
+def _safe_read_pickle(path, default=None):
+    try:
+        return pd.read_pickle(path)
+    except Exception as _e:
+        try:
+            if os.path.isfile(path):
+                os.replace(path, path + ".broken")
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} was damaged ({type(_e).__name__}) -- set aside as .broken and "
+              f"rebuilt (a disk that filled up mid-save does this)", flush=True)
+        return {} if default is None else default
+
+
+def _safe_read_latest(paths, default=None):
+    """The newest readable file of several (e.g. detections_*.pkl), newest first; damaged ones are set aside."""
+    for p_ in sorted(paths, key=lambda q: os.path.getmtime(q) if os.path.exists(q) else 0, reverse=True):
+        d_ = _safe_read_pickle(p_, default=False)
+        if d_ is not False:
+            return d_
+    return {} if default is None else default
+
+
+def _safe_to_pickle(obj, path):
+    if not isinstance(path, (str, bytes, os.PathLike)):
+        return pd.to_pickle(obj, path)                    # an in-memory buffer
+    root, ext = os.path.splitext(str(path))
+    tmp = f"{root}.tmp{ext}"
+    try:
+        pd.to_pickle(obj, tmp)
+    except OSError as _e:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved ({type(_e).__name__}: {_e}) -- free disk space; the "
+              f"previous copy is kept", flush=True)
+        return
+    # CONFIRMED BUG (fixed; "PermissionError: [WinError 5] Access is denied: ...jersey_numbers.tmp.pkl -> jersey_numbers.pkl"):
+    # on Windows, OneDrive or antivirus holds a file open for a moment while it syncs / scans it, and swapping the new copy in
+    # fails then. It's retried for a few seconds; if the file stays locked, it's written in place instead.
+    import time as _sp_time
+    for _try in range(8):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:
+            _sp_time.sleep(0.25 * (_try + 1))
+        except OSError:
+            break
+    try:
+        pd.to_pickle(obj, path)
+    except OSError as _e:
+        print(f"  [cache] {os.path.basename(str(path))} NOT saved -- the file is locked by another program (OneDrive sync or "
+              f"antivirus?) ({type(_e).__name__}); the previous copy is kept and it's saved again on the next save", flush=True)
+    finally:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+
+
+import json as _trk_json
+import time
+import glob
+import shutil
+# CONFIRMED BUG (fixed): numpy was first imported in the tag model cell, which runs AFTER this one
+# ("PLAYER TRACKING NOT RUN: NameError: name 'np' is not defined"). Every cell that uses np imports it itself.
+import numpy as np
+
+
+def _trk_progress(label, done, total, t0, every=None):
+    """One progress line with elapsed time and an estimate of what's left (requested: "make sure it is actually
+    continuing to work"). About 10 lines per slow step; quick steps only print their finishing line."""
+    every = every or max(1, total // 10)
+    el = time.time() - t0
+    # quick steps stay quiet: a line only once a step has run 5+ seconds, and always the finishing line
+    if done == total and el >= 1 or (done % every == 0 and el >= 5):
+        left = el / max(done, 1) * (total - done)
+        print(f"  [tracking]   {label}: {done:,} / {total:,} ({100 * done // max(total, 1)}%) -- "
+              f"{el / 60:.1f} min so far, ~{left / 60:.1f} min left", flush=True)
+
+
+def _trk_yolo():
+    import importlib
+    if importlib.util.find_spec("ultralytics") is None:
+        print("  [tracking] installing ultralytics (one time; it may also update torch)...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "ultralytics"])
+        raise RuntimeError("ultralytics was installed. RESTART THE KERNEL (Kernel > Restart) and run the parser "
+                           "again -- torch may have been updated and the old one is still loaded.")
+    from ultralytics import YOLO
+    if "vision_hooks_ensure" in globals():
+        vision_hooks_ensure()
+    m = globals().get("_trk_yolo_model")
+    if m is None or m[0] != TRACK_DETECTOR:
+        print(f"  [tracking] loading detector {TRACK_DETECTOR} (downloads once)...")
+        m = globals()["_trk_yolo_model"] = (TRACK_DETECTOR, YOLO(TRACK_DETECTOR))
+    return m[1]
+
+
+def _trk_det_cache_path():
+    tiled = TRACK_DETECT_TILES > 1 or TRACK_DETECT_UPSCALE != 1.0
+    return os.path.join(TRACK_DIR, f"detections_{re.sub(r'[^A-Za-z0-9]+', '_', TRACK_DETECTOR)}_{TRACK_DETECT_SIZE}"
+                        + (f"_tiles{TRACK_DETECT_TILES}x{TRACK_DETECT_UPSCALE:g}" if tiled else "") + ".pkl")
+
+
+def _trk_court_band(H, W, Hpx):
+    """(y0, y1) rows of the picture that hold the court (feet) plus head room; None = use the whole frame."""
+    if H is None:
+        return None
+    try:
+        Hi = np.linalg.inv(np.asarray(H, np.float64))
+    except Exception:
+        return None
+    # A homography is only defined up to scale, so "in front of the camera" is the SAME SIGN of w as a spot
+    # known to be in the picture (its lower middle), not w > 0.
+    c = np.asarray(H, np.float64) @ np.array([W / 2, 0.8 * Hpx, 1.0])
+    front = np.sign((Hi @ (c / c[2]))[2]) or 1.0
+    ys = []
+    for X in np.linspace(-12, 106, 25):             # CONFIRMED CHANGE: room behind the baselines too (an inbounder stands out there)
+        for Y in (-3, 25, 53):
+            v = Hi @ np.array([X, Y, 1.0])
+            if np.sign(v[2]) != front or abs(v[2]) < 1e-9:
+                continue
+            u, w = v[0] / v[2], v[1] / v[2]
+            if -0.5 * W <= u <= 1.5 * W:
+                ys.append(w)
+    if len(ys) < 3:
+        return None
+    y1 = int(min(Hpx, max(ys) + 4))
+    y0 = int(max(0, min(ys) - 0.22 * Hpx))          # room above the far sideline for a standing player
+    return (y0, y1) if y1 - y0 > 0.2 * Hpx else None
+
+
+def _trk_tiled_predict(model, paths, H_of, classes, conf, keypoints=False):
+    """Run `model` on the enlarged court strip of each picture in overlapping tiles; boxes (and keypoints)
+    mapped back to the original picture, duplicates across tiles merged. Returns one list per picture of
+    (box xyxy, conf, class, keypoints or None)."""
+    import cv2
+    if "vision_hooks_ensure" in globals():
+        vision_hooks_ensure()                   # (ultralytics replaces cv2.imread on Windows -- frames inside exports need ours)
+    U, T = float(TRACK_DETECT_UPSCALE), int(TRACK_DETECT_TILES)
+    out_all = []
+    for p in paths:
+        img = cv2.imread(p)
+        if img is None:
+            # a frame that can't be read: no detections for it (said once), instead of stopping the whole run
+            _bad = globals().setdefault("_trk_unreadable", [])
+            _bad.append(p)
+            if len(_bad) <= 3:
+                print(f"  [tracking] couldn't read {p} -- skipped (no detections on it)", flush=True)
+            out_all.append([])
+            continue
+        Hpx, W = img.shape[:2]
+        band = _trk_court_band(H_of(p), W, Hpx) if (T > 1 or U != 1.0) else None
+        y0, y1 = band if band else (0, Hpx)
+        strip = img[y0:y1]
+        if U != 1.0:
+            strip = cv2.resize(strip, (int(W * U), int((y1 - y0) * U)), interpolation=cv2.INTER_CUBIC)
+        SW = strip.shape[1]
+        tw = int(np.ceil(SW / T * 1.15)) if T > 1 else SW
+        starts = [int(round(k * (SW - tw) / max(T - 1, 1))) for k in range(T)] if T > 1 else [0]
+        tiles = [strip[:, s0:s0 + tw] for s0 in starts]
+        res = model.predict(tiles, classes=classes, conf=conf, imgsz=TRACK_DETECT_SIZE, verbose=False)
+        found = []
+        for s0, r in zip(starts, res):
+            bx = r.boxes.xyxy.cpu().numpy() if r.boxes is not None else np.zeros((0, 4))
+            cf = r.boxes.conf.cpu().numpy() if r.boxes is not None else np.zeros(0)
+            cl = r.boxes.cls.cpu().numpy() if r.boxes is not None else np.zeros(0)
+            kp = r.keypoints.data.cpu().numpy() if keypoints and getattr(r, "keypoints", None) is not None else None
+            for n_, (b, c, k) in enumerate(zip(bx, cf, cl)):
+                # a box cut by an inner tile edge is left to the neighbouring tile, which sees it whole
+                if (b[0] <= 2 and s0 > 0) or (b[2] >= tw - 2 and s0 + tw < SW):
+                    continue
+                box = np.array([(b[0] + s0) / U, b[1] / U + y0, (b[2] + s0) / U, b[3] / U + y0])
+                kk = None
+                if kp is not None and n_ < len(kp):
+                    kk = kp[n_].copy()
+                    kk[:, 0] = (kk[:, 0] + s0) / U
+                    kk[:, 1] = kk[:, 1] / U + y0
+                found.append((box, float(c), int(k), kk))
+        # merge duplicates from the overlaps (same class, heavy overlap -> keep the more confident)
+        found.sort(key=lambda x: -x[1])
+        kept = []
+        for f in found:
+            if all(f[2] != g[2] or _trk_iou(f[0], g[0]) < 0.5 for g in kept):
+                kept.append(f)
+        out_all.append(kept)
+    return out_all
+
+
+def _trk_iou(a, b):
+    ix = max(0.0, min(a[2], b[2]) - max(a[0], b[0]))
+    iy = max(0.0, min(a[3], b[3]) - max(a[1], b[1]))
+    inter = ix * iy
+    return inter / max((a[2] - a[0]) * (a[3] - a[1]) + (b[2] - b[0]) * (b[3] - b[1]) - inter, 1e-6)
+
+
+def _trk_court_H_lookup(base):
+    cp = os.path.join(TRACK_DIR, "court_homographies.pkl")
+    cache = {k: v for k, v in _safe_read_pickle(cp).items() if not str(k).startswith("_")} if os.path.exists(cp) else {}
+    return lambda p: cache.get(os.path.relpath(p, base).replace(os.sep, "/"))
+
+
+def _trk_detect(rels, base):
+    """rel path -> {"p": [x1,y1,x2,y2,conf,r,g,b] people, "b": [cx,cy,conf] balls, "W", "H"}; cached."""
+    os.makedirs(TRACK_DIR, exist_ok=True)
+    cpath = _trk_det_cache_path()
+    cache = _safe_read_pickle(cpath) if os.path.exists(cpath) else {}
+    # (a frame listed with "\\" one run and "/" the next -- the 8-a-second frames on 11/1 -- is the same frame)
+    for r in dict.fromkeys(rels):
+        if r not in cache:
+            for alt in (r.replace("\\", "/"), r.replace("/", "\\")):
+                if alt != r and alt in cache:
+                    cache[r] = cache[alt]
+                    break
+    todo = [r for r in dict.fromkeys(rels) if r not in cache and os.path.exists(os.path.join(base, r))]
+    if todo:
+        from PIL import Image
+        model = _trk_yolo()
+        H_of = _trk_court_H_lookup(base)
+        n_band = sum(1 for r in todo if H_of(os.path.join(base, r)) is not None)
+        print(f"  [tracking] finding players and the ball in {len(todo)} new frame(s) "
+              f"({TRACK_DETECT_TILES} enlarged court-strip tiles per frame; court strip known for {n_band:,})...", flush=True)
+        try:
+            import torch
+            _dev = f"GPU ({torch.cuda.get_device_name(0)})" if torch.cuda.is_available() else "CPU -- this will be SLOW"
+        except Exception:
+            _dev = "unknown"
+        print(f"  [tracking]   detector {TRACK_DETECTOR} at size {TRACK_DETECT_SIZE} runs on: {_dev}. Every finished frame is "
+              f"saved in batches, so you can stop (Interrupt) and rerun -- it continues where it stopped.", flush=True)
+        _t0 = time.time()
+        _last_say = _t0
+        for i in range(0, len(todo), 8):
+            chunk = todo[i:i + 8]
+            res = _trk_tiled_predict(model, [os.path.join(base, r) for r in chunk], H_of, [0, 32],
+                                     min(TRACK_PERSON_CONF, TRACK_BALL_CONF))
+            for r, found in zip(chunk, res):
+                img = np.asarray(Image.open(os.path.join(base, r)).convert("RGB"))
+                H, W = img.shape[:2]
+                people, balls = [], []
+                for (x1, y1, x2, y2), cf, cl, _k in found:
+                    if cl == 32 and cf >= TRACK_BALL_CONF:
+                        balls.append([(x1 + x2) / 2, (y1 + y2) / 2, cf])
+                    elif cl == 0 and cf >= TRACK_PERSON_CONF:
+                        w, h = x2 - x1, y2 - y1
+                        patch = img[max(int(y1 + 0.2 * h), 0):max(int(y1 + 0.45 * h), int(y1 + 0.2 * h) + 1),
+                                    max(int(x1 + 0.3 * w), 0):max(int(x2 - 0.3 * w), int(x1 + 0.3 * w) + 1)]
+                        rgb = patch.reshape(-1, 3).mean(0) if patch.size else np.array([np.nan] * 3)
+                        # color strength and "stripes" of the chest: referees' black-and-white stripes are
+                        # colorless with strong light/dark variation; jerseys aren't (review: gold-and-black
+                        # Oshkosh jerseys under the lights were being grouped with the referees)
+                        if patch.size:
+                            pf = patch.reshape(-1, 3).astype(np.float32)
+                            sat = float(np.mean(pf.max(1) - pf.min(1)))
+                            stripes = float(np.std(pf.mean(1)))
+                        else:
+                            sat = stripes = np.nan
+                        people.append([x1, y1, x2, y2, cf, *rgb, sat, stripes])
+                cache[r] = {"p": np.array(people, dtype=np.float32).reshape(-1, 10),
+                            "b": np.array(balls, dtype=np.float32).reshape(-1, 3), "W": W, "H": H}
+            if (i // 8) % 40 == 39:
+                _safe_to_pickle(cache, cpath)
+            # a status line at least every 2 minutes (the percentage lines below can be hours apart on a slow machine)
+            _now = time.time()
+            if _now - _last_say >= 120 or i == 24:
+                _last_say = _now
+                _done = min(i + 8, len(todo))
+                _rate = (_now - _t0) / max(_done, 1)
+                print(f"  [tracking]   ...{_done:,} of {len(todo):,} frames done ({_rate:.2f} s per frame; about "
+                      f"{_rate * (len(todo) - _done) / 3600:.1f} hours left)", flush=True)
+            _trk_progress("frames checked for players", min(i + 8, len(todo)), len(todo), _t0,
+                          every=max(8, (len(todo) // 20) // 8 * 8))
+        _safe_to_pickle(cache, cpath)
+    return cache
+
+
+def _trk_jersey_feats(rels, det, base):
+    """rel -> array (one row per detection in det[rel]["p"]): chest lightness, chest warmth (red - blue),
+    shorts lightness, shorts warmth, chest light/dark variation. Read from the frames once and saved."""
+    cp = _trk_det_cache_path().replace(".pkl", "_jersey.pkl")
+    cache = _safe_read_pickle(cp) if os.path.exists(cp) else {}
+    todo = [r for r in dict.fromkeys(rels) if r not in cache and det.get(r) is not None]
+    if todo:
+        from PIL import Image
+        print(f"  [tracking]   reading jersey and shorts colors in {len(todo):,} frame(s)...", flush=True)
+        _t0 = time.time()
+        for n, r in enumerate(todo, 1):
+            _trk_progress("frames read for jersey colors", n, len(todo), _t0)
+            p = det[r]["p"]
+            if not len(p):
+                cache[r] = np.zeros((0, 5), np.float32)
+                continue
+            if not os.path.exists(os.path.join(base, r)):      # (lean mode) this frame was deleted after tracking
+                continue
+            img = np.asarray(Image.open(os.path.join(base, r)).convert("RGB")).astype(np.float32)
+            rows = []
+            for x1, y1, x2, y2 in p[:, :4]:
+                w, h = x2 - x1, y2 - y1
+                def _patch(a, b):
+                    return img[max(int(y1 + a * h), 0):max(int(y1 + b * h), int(y1 + a * h) + 1),
+                               max(int(x1 + 0.3 * w), 0):max(int(x2 - 0.3 * w), int(x1 + 0.3 * w) + 1)].reshape(-1, 3)
+                t_, s_ = _patch(0.2, 0.45), _patch(0.5, 0.68)
+                if not len(t_) or not len(s_):
+                    rows.append([np.nan] * 5)
+                    continue
+                tm, sm = t_.mean(0), s_.mean(0)
+                rows.append([tm.mean(), tm[0] - tm[2], sm.mean(), sm[0] - sm[2], float(np.std(t_.mean(1)))])
+            cache[r] = np.array(rows, np.float32)
+        _safe_to_pickle(cache, cp)
+    return cache
+
+
+def _trk_group_feat(rows):
+    """What sorts people into team A / team B / everyone else: chest and shorts lightness and warmth."""
+    return np.column_stack([rows[:, 14], rows[:, 15] * 2, rows[:, 16], rows[:, 17] * 2, rows[:, 18]])
+
+
+def _trk_set_aside_keep5(clip, flagged, prev, keep=5):
+    """Set aside the flagged tracks of one clip (most-sure first) as not players -- but never one whose removal would leave
+    its team with fewer than `keep` boxes in ANY frame it's in. CONFIRMED BUG (fixed; coach: "the player number tracking
+    results are getting worse ... only found 4 players"): the outfit check set aside 3,145 of 5,699 tracks in one run --
+    mostly real players in one team's uniform -- so the check pictures showed 2-6 boxes, often only one team.
+    -> (number set aside, number flagged but kept)."""
+    by_t = {}
+    for k, v in clip["side"].items():
+        if v in ("offense", "defense"):
+            for t, _j in clip["tracks"][k]:
+                by_t.setdefault((t, v), set()).add(k)
+    n_out = n_kept = 0
+    for k in flagged:
+        sd = clip["side"].get(k)
+        if sd not in ("offense", "defense"):
+            continue
+        if all(len(by_t.get((t, sd), ())) - 1 >= keep for t, _j in clip["tracks"][k]):
+            for t, _j in clip["tracks"][k]:
+                by_t[(t, sd)].discard(k)
+            prev[k] = sd
+            clip["side"][k] = None
+            n_out += 1
+        else:
+            n_kept += 1
+    return n_out, n_kept
+
+
+def _trk_ref_model(g, ids, lists, frames_of, min_marks=3):
+    """CONFIRMED CHANGE (requested: "fix the referee sorting" -- Carroll@WashU: only 2 of the 5 referees you marked fell in the
+    referee color group; the other 3 were sorted into a TEAM, and one took McKenna's name). The 3 color groups are learned from
+    everyone on the floor, and with white WashU and dark Carroll jerseys the referees' black-and-white stripes don't get a
+    group of their own. Your referee marks now teach a referee detector for the game: the colors / stripes of the boxes you
+    marked "referee" against the boxes you named (both teams). Tested leaving each marked box out in turn; used only when it
+    catches TRACK_REF_MIN_CATCH (60%) of the marked referees and calls at most TRACK_REF_MAX_LOST (5%) of the named players
+    a referee. -> (predict_proba function on rows, note) or (None, note)."""
+    if "coach_checks_all" not in globals():
+        return None, "no checks"
+    checks = [c for c in coach_checks_all()[0] if str(c.get("game")) == str(g)]
+    pos = {}
+    for i in ids:
+        for t, f in enumerate(lists[i]):
+            pos[_trk_norm_rel(f)] = (i, t)
+    X, y = [], []
+    for c in checks:
+        vd = c.get("verdict")
+        kind = 1 if (vd == "not a player" and c.get("not_player_kind") == "referee") else \
+            0 if (vd in ("correct", "wrong", "wrong team") and (c.get("true_name") or c.get("assigned"))) else None
+        hit = pos.get(_trk_norm_rel(c.get("frame_file")))
+        if kind is None or hit is None:
+            continue
+        rows = frames_of[hit[0]][hit[1]]
+        if not len(rows):
+            continue
+        d = np.hypot((rows[:, 6] + rows[:, 8]) / 2 - float(c["px"]), rows[:, 9] - float(c["py"]))
+        j = int(np.argmin(d))
+        if d[j] < 25 and np.isfinite(rows[j, 14:19]).all():
+            X.append(_trk_group_feat(rows[j:j + 1])[0])
+            y.append(kind)
+    X, y = np.asarray(X, float), np.asarray(y, int)
+    n_ref, n_pl = int((y == 1).sum()), int((y == 0).sum())
+    if n_ref < min_marks or n_pl < 5:
+        return None, f"{n_ref} referee mark(s) and {n_pl} named player(s) found on this run's frames (needs {min_marks}+ and 5+)"
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.pipeline import make_pipeline
+    mk = lambda: make_pipeline(StandardScaler(), LogisticRegression(class_weight="balanced", C=1.0, max_iter=500))
+    cut = float(globals().get("TRACK_REF_P", 0.7))
+    pr = np.zeros(len(y))
+    for k in range(len(y)):                             # leave each marked box out in turn
+        m = np.ones(len(y), bool)
+        m[k] = False
+        if len(set(y[m])) < 2:
+            pr[k] = 0.0
+            continue
+        pr[k] = mk().fit(X[m], y[m]).predict_proba(X[k:k + 1])[0, 1]
+    caught = int(((pr >= cut) & (y == 1)).sum())
+    lost = int(((pr >= cut) & (y == 0)).sum())
+    note = (f"tested leaving each box out: {caught} of {n_ref} marked referees caught, {lost} of {n_pl} named players "
+            f"called a referee")
+    if caught < float(globals().get("TRACK_REF_MIN_CATCH", 0.6)) * n_ref or \
+            lost > float(globals().get("TRACK_REF_MAX_LOST", 0.05)) * n_pl:
+        return None, note + " -- not good enough, not used"
+    model = mk().fit(X, y)
+    return (lambda rows: model.predict_proba(_trk_group_feat(rows))[:, 1]), note
+
+
+def _trk_ref_group(g, ids, lists, frames_of, km, min_marks=3):
+    """With 3+ coach-marked referees in game g: (the color group they fall in, a note), else None. A group that holds most
+    of the coach-NAMED players can't be the referees' group."""
+    if "coach_checks_all" not in globals():
+        return None
+    checks = [c for c in coach_checks_all()[0] if str(c.get("game")) == str(g)]
+    where = {}
+    for i in ids:
+        for t, f in enumerate(lists[i]):
+            where[f] = (i, t)
+    feats = {"referee": [], "player": []}
+    for c in checks:
+        kind = "referee" if (c.get("verdict") == "not a player" and c.get("not_player_kind") == "referee") else \
+            "player" if (c.get("verdict") in ("correct", "wrong", "wrong team") and c.get("true_name")) else None
+        hit = where.get(c.get("frame_file"))
+        if kind is None or hit is None:
+            continue
+        rows = frames_of[hit[0]][hit[1]]
+        if not len(rows):
+            continue
+        d = np.hypot((rows[:, 6] + rows[:, 8]) / 2 - float(c["px"]), rows[:, 9] - float(c["py"]))
+        j = int(np.argmin(d))
+        if d[j] < 25 and np.isfinite(rows[j, 14:19]).all():
+            feats[kind].append(rows[j])
+    if len(feats["referee"]) < min_marks:
+        return None
+    gr = km.predict(_trk_group_feat(np.vstack(feats["referee"])))
+    gp = km.predict(_trk_group_feat(np.vstack(feats["player"]))) if feats["player"] else np.array([], int)
+    score = {c: int((gr == c).sum()) - int((gp == c).sum()) for c in range(km.n_clusters)}
+    best = max(score, key=score.get)
+    return best, (f"{int((gr == best).sum())} of {len(gr)} marked referees and {int((gp == best).sum())} of {len(gp)} named "
+                  f"players are in it")
+
+
+def _trk_name_frames(clips, todo, base, pc=None, game_of=None):
+    """CONFIRMED CHANGE (requested: "the frames are always too blurry ... switch back to finding ONE frame per video"; staff
+    picked: names only, from the sharpest frame with the most players). For each clip: the ONE tracking frame (about
+    every quarter second, at full width) where the most players on the court are boxed, and among those the SHARPEST
+    (least motion blur / camera pan). Jersey numbers are read on that frame only, and it is the coach's check picture.
+    Movement tracking (screens, help, spacing) still uses every frame and borrows the names. -> sets clip["name_frame"].
+    Sharpness is the variance of the Laplacian on the middle of the picture (where the court is), saved per frame."""
+    import cv2
+    cp = os.path.join(TRACK_DIR, "frame_sharpness.pkl")
+    cache = _safe_read_pickle(cp) if os.path.exists(cp) else {}
+    n_new, _t0 = 0, time.time()
+    slack = int(globals().get("TRACK_NAME_FRAME_SLACK", 1))      # frames with up to this many fewer players still compete
+    # CONFIRMED BUG (fixed; coach: "3 different clips with exactly the same images" -- clips 52, 53 and 54). Synergy logs one
+    # possession as several events whose clips SHARE the same film (52 = the P&R, 53 = Gale's offensive rebound and 54 = Cohen's
+    # offensive rebound; 53 and 54 are the very same video, and both sit inside 52). Each clip picked the same sharpest moment,
+    # so the player check showed one picture three times. Clips are now taken in game order, and a moment of the game film
+    # already used as another clip's naming frame (within TRACK_NAME_FRAME_GAP_S seconds) isn't picked again when the clip has
+    # any other usable frame.
+    gap_s = float(globals().get("TRACK_NAME_FRAME_GAP_S", 1.5))
+    # CONFIRMED CHANGE (requested: turn the slow part off for now): TRACK_NAME_FRAME_SHARPNESS = False skips measuring
+    # frames it hasn't measured before (reading every candidate frame off disk is what takes ~30 min). Frames measured in
+    # earlier runs still count; a clip with none measured gets the frame with the most players. True (default) = measure.
+    _measure = globals().get("TRACK_NAME_FRAME_SHARPNESS", True)
+    _measure = not (isinstance(_measure, str) and _measure.strip().lower() in ("false", "0", "no", "off", "")) and bool(_measure)
+    n_unmeasured = 0
+    times_of = {}
+    if isinstance(pc, pd.DataFrame) and "track_times" in pc.columns:
+        for i in todo:
+            try:
+                tt = [float(x) for x in str(pc.at[i, "track_times"]).split(";") if x.strip()]
+                if len(tt) == len(clips[i]["files"]):
+                    times_of[i] = tt
+            except Exception:
+                pass
+    used = {}                                                     # game -> [film seconds already used]
+    order = sorted(todo, key=lambda i: (str((game_of or {}).get(i)), times_of.get(i, [float("inf")])[0]))
+    n_moved = 0
+    for _n, i in enumerate(order, 1):
+        clip = clips[i]
+        count = {}
+        for k, tr in enumerate(clip["tracks"]):
+            if clip["side"].get(k) in ("offense", "defense"):
+                for t, _j in tr:
+                    count[t] = count.get(t, 0) + 1
+        if not count:
+            clip["name_frame"] = None
+            continue
+        top = max(count.values())
+        cand = sorted(t for t, c in count.items() if c >= top - slack)
+        g_ = (game_of or {}).get(i)
+        tt = times_of.get(i)
+        if tt is not None and used.get(g_):
+            _free = lambda t: all(abs(tt[t] - u) > gap_s for u in used[g_])
+            fresh = [t for t in cand if _free(t)]
+            if not fresh:                                         # widen: any frame with most of the players, not used yet
+                fresh = sorted(t for t, c in count.items() if c >= max(1, top - 3) and _free(t))
+            if fresh and set(fresh) != set(cand):
+                n_moved += 1
+            cand = fresh or cand
+        sharp = {}
+        for t in cand:
+            rel = clip["files"][t]
+            if rel not in cache and not _measure:
+                n_unmeasured += 1
+                continue
+            if rel not in cache:
+                im = cv2.imread(os.path.join(base, rel), cv2.IMREAD_REDUCED_GRAYSCALE_2)
+                if im is None:
+                    cache[rel] = None
+                else:
+                    h_, w_ = im.shape[:2]
+                    mid = im[int(h_ * 0.25):int(h_ * 0.9), int(w_ * 0.1):int(w_ * 0.9)]
+                    cache[rel] = float(cv2.Laplacian(mid, cv2.CV_64F).var())
+                n_new += 1
+            if cache[rel] is not None:
+                sharp[t] = cache[rel]
+        if not sharp:
+            clip["name_frame"] = max(cand, key=lambda t: (count[t], -t))
+            if tt is not None:
+                used.setdefault(g_, []).append(tt[clip["name_frame"]])
+            continue
+        # the sharpest frame wins, with a small edge to frames showing every player (a frame missing one player has to be
+        # clearly sharper -- TRACK_NAME_FRAME_MISSING_PENALTY -- to win)
+        pen = float(globals().get("TRACK_NAME_FRAME_MISSING_PENALTY", 0.15))
+        clip["name_frame"] = max(sharp, key=lambda t: (sharp[t] * (1 - pen * (top - count[t])), -t))
+        clip["name_frame_sharp"] = sharp[clip["name_frame"]]
+        if tt is not None:
+            used.setdefault(g_, []).append(tt[clip["name_frame"]])
+        if n_new and n_new % 500 == 0:
+            _safe_to_pickle(cache, cp)
+        _trk_progress("clips: naming frame picked", _n, len(todo), _t0)
+    if n_new:
+        _safe_to_pickle(cache, cp)
+    print(f"  [tracking]   naming frame: one per clip (sharpest of the frames with the most players) -- "
+          f"{sum(1 for i in todo if clips[i].get('name_frame') is not None):,} of {len(todo):,} clip(s)"
+          + (f"; {n_new:,} frame(s) measured for sharpness" if n_new else "")
+          + (f"; {n_moved} clip(s) share film with an earlier clip and got a different moment" if n_moved else "")
+          + (f"; sharpness NOT measured on {n_unmeasured:,} new frame(s) (TRACK_NAME_FRAME_SHARPNESS = False) -- most players "
+             f"used there instead" if n_unmeasured else ""), flush=True)
+
+
+def _trk_ck(k):
+    return _pl_ckey_norm(k) if "_pl_ckey_norm" in globals() else str(k)
+
+
+def _trk_app_keys(pc, todo):
+    """CONFIRMED CHANGE (requested: "only do the crops for the clips that will be sent to the application for either player
+    number tracking or the film tagging"). {clip key} of the clips the app shows or will show next:
+      * every play in an open Player Number Tracking batch (data/play_review) and Film Tagging batch (data/play_tag);
+      * per tracked game, the next 2 x PLAY_REVIEW_PLAYS_PER_GAME plays with no saved player check, in the order the Play
+        review picks them (between seasons: the most returning players first) -- this batch's plays and the next one's.
+    CONFIRMED CHANGE (requested: "don't do the film tagging plays"): TRACK_READ_NUMBERS_FOR = "player_checks" (the default)
+    leaves the Film Tagging batches out -- they show the lineup and roster numbers, not tracking's names (only their "seen on
+    the film" line uses them). "app" = Film Tagging too; "all" = every clip."""
+    scope = str(globals().get("TRACK_READ_NUMBERS_FOR", "player_checks")).strip().lower()
+    keys, n_open = set(), {}
+    appdir = globals().get("APP_DATA_DIR") or OUTPUT_DIR
+    kinds = ["play_review"] + ([] if scope in ("player_checks", "players") else ["play_tag"])
+    for kind in kinds:
+        for rj in glob.glob(os.path.join(appdir, kind, "*", "review.json")):
+            try:
+                with open(rj, encoding="utf-8") as fh:
+                    doc = _trk_json.load(fh)
+            except Exception:
+                continue
+            ks = {_trk_ck(p_.get("clip_key")) for p_ in doc.get("plays", []) or []}
+            keys |= ks
+            n_open[kind] = n_open.get(kind, 0) + len(ks)
+    done = set()
+    try:
+        done = {_trk_ck(ch.get("clip_key")) for ch in coach_checks_all()[0]}
+    except Exception:
+        pass
+    dep = set()
+    try:
+        if "_pr_departed" not in globals():
+            # the Play review cell runs after this one: load just its returners-first helpers (same rule, same order)
+            import ast as _ast
+            _src = open(os.path.join(globals().get("PARSER_LIB") or os.path.join(os.getcwd(), "parser_lib"),
+                                     "55c_play_review.py"), encoding="utf-8").read()
+            for _n in _ast.parse(_src).body:
+                if isinstance(_n, _ast.FunctionDef) and _n.name in ("_pr_departed", "_pr_nk"):
+                    exec(compile(_ast.Module([_n], []), "55c_play_review.py", "exec"), globals())
+        dep = _pr_departed() if "_pr_departed" in globals() else set()
+    except Exception:
+        dep = set()
+    nk = globals().get("_pr_nk") or (lambda n: str(n).strip().lower())
+    per = int(globals().get("PLAY_REVIEW_PLAYS_PER_GAME", 20))
+    n_next = 0
+    sub = pc.loc[[i for i in todo if i in pc.index]]
+    for _g, g in sub.groupby(["game_date", "game_code"], dropna=False):
+        g = g.assign(_ck=[_trk_ck(_trk_clip_key(r)) for _, r in g.iterrows()])
+        g = g[~g["_ck"].isin(done)]
+        if dep:
+            back = g.apply(lambda r: sum(nk(n) not in dep for sd in ("offense", "defense")
+                                         for n in _trk_five(r.get(f"{sd}_lineup"))), axis=1)
+            g = g.assign(_back=back).sort_values(["_back", "clip_number"], ascending=[False, True], kind="stable")
+        else:
+            g = g.sort_values("clip_number", kind="stable")
+        nxt = set(g["_ck"].head(2 * per))
+        n_next += len(nxt - keys)
+        keys |= nxt
+    print(f"  [tracking]   jersey numbers are read only on the clips the app shows (TRACK_READ_NUMBERS_FOR = {scope!r}): "
+          + ", ".join(f"{n} in open {'Player Number Tracking' if k == 'play_review' else 'Film Tagging'} batches"
+                      for k, n in n_open.items())
+          + f", {n_next} more coming up next in Player Number Tracking", flush=True)
+    return keys
+
+
+def _trk_game_label(g):
+    """ "2026-02-24|WheatonIL@NorthPark" -> "WheatonIL@NorthPark (2026-02-24)" for progress lines."""
+    d_, _, c_ = str(g or "?").partition("|")
+    return f"{c_} ({d_})" if c_ else d_
+
+
+def _trk_read_numbers(clips, todo, base, engine):
+    """(clip, track) -> list of (digits read, confidence) from the chest of the track's tallest boxes, with the
+    reader chosen by the Jersey-number reader test. Every read is saved, so each crop is read once per reader."""
+    import cv2
+    cp = os.path.join(TRACK_DIR, "jersey_numbers.pkl")
+    cache = _safe_read_pickle(cp) if os.path.exists(cp) else {}
+    # CONFIRMED BUG (fixed): reads were saved per crop + reader name only, so after the recognizer was RETRAINED (new coach
+    # checks, the new "no number" examples) tracking kept using the OLD model's reads. The trained reader's saved reads now
+    # carry the model file's version; a retrained model reads its crops again (once) and the old model's reads are dropped.
+    _tag = f"{engine}2"
+    if str(engine).startswith("trained"):
+        try:
+            _mp_ = _jr_path_for("pose" if str(engine) == "trained_pose" else "fixed") if "_jr_path_for" in globals() \
+                else JERSEY_MODEL_PATH
+            if os.path.exists(_mp_):
+                _tag = f"{engine}2@{int(os.path.getmtime(_mp_))}"
+        except Exception:
+            pass
+        _stale = [k_ for k_ in cache if str(k_).rsplit("|", 1)[-1].split("@")[0] == f"{engine}2"
+                  and str(k_).rsplit("|", 1)[-1] != _tag]
+        _n_redo = _n_keep = 0
+        for k_ in _stale:
+            # a crop whose frame is gone (game folder deleted) can't be read again: its old read is kept
+            if os.path.exists(os.path.join(base, str(k_).split("|", 1)[0])):
+                del cache[k_]
+                _n_redo += 1
+            else:
+                cache[str(k_).rsplit("|", 1)[0] + "|" + _tag] = cache.pop(k_)
+                _n_keep += 1
+        if _stale:
+            print(f"  [tracking]   jersey reader {engine}: the model changed since these crops were read -- {_n_redo:,} read "
+                  f"again with the new model" + (f"; {_n_keep:,} kept as they were (their frames aren't on disk any more)"
+                                                 if _n_keep else ""), flush=True)
+    jobs = []
+    for i in todo:
+        clip = clips[i]
+        for k, tr in enumerate(clip["tracks"]):
+            if clip["side"].get(k) not in ("offense", "defense"):
+                continue
+            n_crops = (TRACK_OCR_CROPS_TRAINED if str(engine).startswith("trained") else TRACK_OCR_CROPS_PADDLE if str(engine).startswith("paddle")
+                       else TRACK_OCR_CROPS_FIND if str(engine).endswith(("_find", "_find_fast", "_local", "_rec")) else TRACK_OCR_CROPS)
+            fps_ = float(clip.get("fps", 2.0))
+            if globals().get("TRACK_NAME_ONE_FRAME", True) and clip.get("name_frame") is not None:
+                # requested: numbers are read on the clip's ONE naming frame -- the player's box in that frame, nothing else
+                tallest = [tj for tj in tr if tj[0] == clip["name_frame"]][:1]
+                if not tallest:
+                    continue
+            else:
+                tallest = None
+            if tallest is None and len(tr) < TRACK_OCR_MIN_TRACK_S * fps_:
+                continue
+            hts = {tj: clip["frames"][tj[0]][tj[1]][9] - clip["frames"][tj[0]][tj[1]][7] for tj in tr}
+            hmax = max(hts.values())
+            # widest for its height (facing the camera) among the boxes near his full height, spread out in time
+            cand = sorted((tj for tj in tr if hts[tj] >= 0.8 * hmax),
+                          key=lambda tj: -((clip["frames"][tj[0]][tj[1]][8] - clip["frames"][tj[0]][tj[1]][6]) / max(hts[tj], 1e-6)))
+            gap = max(1, int(round(fps_ / 2)))
+            if tallest is not None:
+                cand = []
+            else:
+                tallest = []
+            for tj in cand:
+                if all(abs(tj[0] - o[0]) >= gap for o in tallest):
+                    tallest.append(tj)
+                if len(tallest) >= n_crops:
+                    break
+            # dark digits on a light jersey are read as-is; light digits on a dark jersey inverted
+            light = np.nanmean([clip["frames"][tt][jj][14] for tt, jj in tr]) > 130
+            for t, j in tallest:
+                x1, y1, x2, y2 = [float(v) for v in clip["frames"][t][j][6:10]]
+                jobs.append(((i, k), f"{clip['files'][t]}|{int(x1)}|{int(y1)}|{int(x2)}|{int(y2)}|{_tag}",
+                             clip["files"][t], (x1, y1, x2, y2), "as_is" if light else "invert"))
+    # requested (speed): a crop the normal EasyOCR reader already read (it enlarges more -- at least as good) counts as read for
+    # easyocr_find_fast, so switching to the fast reader doesn't read the same crops again
+    if engine == "easyocr_find_fast":
+        _n_reuse = 0
+        for jb in jobs:
+            if jb[1] not in cache:
+                _alt = jb[1][:-len(_tag)] + "easyocr_find2"
+                if _alt in cache:
+                    cache[jb[1]] = cache[_alt]
+                    _n_reuse += 1
+        if _n_reuse:
+            print(f"  [tracking]   {_n_reuse:,} chest crop(s) already read by easyocr_find -- reused", flush=True)
+    new = [jb for jb in jobs if jb[1] not in cache]
+    # requested: only the clips the app shows (see _trk_app_keys); the others are read only within TRACK_READ_OTHERS_MIN
+    # minutes (0 = not at all) -- every read is saved, so a budget fills them in a little each run
+    _appk = globals().get("_trk_app_ckeys")
+    _later = []
+    if _appk is not None and str(globals().get("TRACK_READ_NUMBERS_FOR", "player_checks")).strip().lower() != "all":
+        _is_app = lambda jb: (clips.get(jb[0][0]) or {}).get("ckey") in _appk
+        _later = [jb for jb in new if not _is_app(jb)]
+        new = [jb for jb in new if _is_app(jb)]
+        _om = float(globals().get("TRACK_READ_OTHERS_MIN", 0) or 0)
+        if _later:
+            print(f"  [tracking]   {len(new):,} new chest crop(s) on the app's clips are read; {len(_later):,} on other clips "
+                  + (f"are read after them for up to {_om:.0f} min" if _om > 0 else
+                     "are skipped (TRACK_READ_OTHERS_MIN = 0; TRACK_READ_NUMBERS_FOR = \"all\" reads every clip)"),
+                  flush=True)
+        if _om <= 0:
+            _later = []
+    _n_app = len(new)
+    new = new + _later
+    if new:
+        # CONFIRMED CHANGE (requested: "can it tell me which game this is from"): the crops are read one game at a time, the
+        # start line says how many each game has, and every progress line names the reader and the game it's on
+        _gm = lambda jb: _trk_game_label((clips.get(jb[0][0]) or {}).get("game"))
+        new = sorted(new[:_n_app], key=_gm) + sorted(new[_n_app:], key=_gm)   # app clips first; one game at a time
+        _per = {}
+        for jb in new:
+            _per[_gm(jb)] = _per.get(_gm(jb), 0) + 1
+        _spd = (globals().get("JERSEY_READER_SPEED") or {}).get(engine)
+        print(f"  [tracking]   reading jersey numbers ({engine}) on {len(new):,} chest crop(s) "
+              f"({len(jobs) - len(new):,} read in earlier runs, saved -- each crop is read once): "
+              + "; ".join(f"{g_} {n_:,}" for g_, n_ in _per.items())
+              + (f" -- at {_spd:.2f} s a crop (reader test) that's about {_spd * len(new) / 60:.0f} min"
+                 if _spd and _spd * len(new) >= 60 else "") + "...", flush=True)
+        _t0 = time.time()
+        imgs = {}
+        _g_prev, _g_t0, _g_n = None, time.time(), 0
+        _t_others = None
+        for s0 in range(0, len(new), 100):
+            chunk = new[s0:s0 + 100]
+            if s0 >= _n_app:                           # past the app's clips: the others, within the time budget
+                _t_others = _t_others or time.time()
+                if time.time() - _t_others > 60 * float(globals().get("TRACK_READ_OTHERS_MIN", 0) or 0):
+                    print(f"  [tracking]   time budget for other clips used up -- {len(new) - s0:,} crop(s) left for "
+                          f"later runs", flush=True)
+                    break
+            _g_now = _gm(chunk[-1])
+            if _g_prev is not None and _g_now != _g_prev:
+                print(f"  [tracking]   ({engine}) finished {_g_prev}: {_per.get(_g_prev, 0):,} crop(s) in "
+                      f"{(time.time() - _g_t0) / 60:.1f} min", flush=True)
+                _g_t0 = time.time()
+            _g_prev = _g_now
+            crops = []
+            for _o, _key, rel, box, _pol in chunk:
+                if rel not in imgs:
+                    if len(imgs) > 300:
+                        imgs.clear()
+                    imgs[rel] = cv2.imread(os.path.join(base, rel),
+                                           cv2.IMREAD_COLOR if _jn_needs_color(engine) else cv2.IMREAD_GRAYSCALE)
+                crops.append(_jn_prep_for(engine)(imgs[rel], box) if imgs[rel] is not None else None)
+            for (_o, key, _rel, _box, _pol), (txt, cf) in zip(chunk, _jn_read(engine, crops, [jb[4] for jb in chunk])):
+                cache[key] = [(txt, cf)] if txt else []
+            _safe_to_pickle(cache, cp)
+            _trk_progress(f"chest crops read ({engine}; now on {_g_now})", min(s0 + 100, len(new)), len(new), _t0,
+                          every=max(100, (len(new) // 10) // 100 * 100))
+        if "_jr_torso_save" in globals():
+            _jr_torso_save()                          # the pose-based crops found this run (JERSEY_CROP_STYLE = "pose")
+    out = {}
+    for owner, key, _rel, _box, _pol in jobs:
+        out.setdefault(owner, []).extend(cache.get(key, []))
+    return out
+
+
+def _trk_read_scores(rd, five_nums):
+    """Evidence for each of the five names from one track's jersey readings. five_nums: {name: "24"}."""
+    sc = {n: 0.0 for n in five_nums}
+    for txt, cf in rd:
+        if not txt or cf < TRACK_MIN_READ_CONF:
+            continue
+        exact = [n for n, num in five_nums.items() if num == txt]
+        # a single digit that is also PART of another number on the floor ("0" vs #10, "2" vs #21/#23/#32) is only a
+        # shared hint: split between everyone it could be, like a partial read
+        if exact and len(txt) == 1 and any(len(num) == 2 and txt in num for num in five_nums.values()):
+            exact = []
+        if exact:
+            w = TRACK_EXACT_READ_WEIGHT * (0.5 if len(txt) == 1 else 1.0)
+            for n in exact:
+                sc[n] += w * cf / len(exact)
+            continue
+        part = [n for n, num in five_nums.items() if txt in num or (num in txt and len(num) > 1)]
+        for n in part:
+            sc[n] += TRACK_PARTIAL_READ_WEIGHT * cf / len(part)
+    return sc
+
+
+def _trk_solve_team(tracks, ks, score):
+    """One matching for one team in one clip. ks: that team's track ids; score[k][name] = evidence. Every track
+    gets at most one name, and two tracks seen at the same moment never share a name. Maximizes the total
+    evidence (scipy's integer solver; a careful greedy pass if that isn't available). -> {k: name}"""
+    names = sorted({n for k in ks for n in score[k]})
+    if not ks or not names:
+        return {}
+    frames_of = {k: {t for t, _ in tracks[k]} for k in ks}
+    pairs = [(a, b) for x, a in enumerate(ks) for b in ks[x + 1:] if frames_of[a] & frames_of[b]]
+    try:
+        from scipy.optimize import milp, LinearConstraint, Bounds
+        idx = {(k, n): v for v, (k, n) in enumerate((k, n) for k in ks for n in names)}
+        nv = len(idx)
+        c = np.array([-score[k][n] + 1e-3 for (k, n) in idx])     # the tiny cost: no evidence -> stay blank
+        rows, ub = [], []
+        for k in ks:                                              # at most one name per track
+            r = np.zeros(nv)
+            for n in names:
+                r[idx[(k, n)]] = 1
+            rows.append(r)
+            ub.append(1)
+        for a, b in pairs:                                        # never the same name at the same moment
+            for n in names:
+                r = np.zeros(nv)
+                r[idx[(a, n)]] = r[idx[(b, n)]] = 1
+                rows.append(r)
+                ub.append(1)
+        res = milp(c, constraints=LinearConstraint(np.array(rows), -np.inf, np.array(ub)),
+                   integrality=np.ones(nv), bounds=Bounds(0, 1))
+        if res.x is not None:
+            return {k: n for (k, n), v in idx.items() if res.x[v] > 0.5 and score[k][n] > 0}
+    except Exception:
+        pass
+    out, used = {}, {}
+    for s_, k, n in sorted(((score[k][n], k, n) for k in ks for n in names if score[k][n] > 0), reverse=True):
+        if k in out or any(frames_of[k] & frames_of[o] for o in used.get(n, [])):
+            continue
+        out[k] = n
+        used.setdefault(n, []).append(k)
+    return out
+
+
+def _trk_eliminate(tracks, ks, five, named):
+    """Lineup elimination: at any moment where four of the five are placed on tracks and one track of that team is
+    still blank, that track is the fifth player (if he isn't on another track at any moment it covers)."""
+    frames_of = {k: {t for t, _ in tracks[k]} for k in ks}
+    added = {}
+    changed = True
+    while changed:
+        changed = False
+        allt = sorted({t for k in ks for t in frames_of[k]})
+        for t in allt:
+            here = [k for k in ks if t in frames_of[k]]
+            named_here = {named.get(k) or added.get(k) for k in here} - {None}
+            blank = [k for k in here if not (named.get(k) or added.get(k))]
+            left = [n for n in five if n not in named_here]
+            if len(blank) == 1 and len(left) == 1 and len(named_here) == len(five) - 1:
+                k, n = blank[0], left[0]
+                clash = any((named.get(o) == n or added.get(o) == n) and frames_of[o] & frames_of[k] for o in ks if o != k)
+                if not clash:
+                    added[k] = n
+                    changed = True
+    return added
+
+
+def _trk_fill_lineups(pc):
+    """Clips with no game clock can't be matched to the play-by-play, so they had NO five on the floor and nobody in
+    them could be named (e.g. clip 2, a Synergy "Non Possession" foul). Every clip has a spot in the game video, though:
+    if the clips just before and after it show the same five for a team, nobody subbed in between -- that's its five.
+    Fills offense_lineup / defense_lineup in place; lineup_source says where each came from."""
+    if "lineup_source" not in pc.columns:
+        pc["lineup_source"] = None
+    for c in ("offense_lineup", "defense_lineup", "video_start_s"):
+        if c not in pc.columns:
+            return 0
+    has = lambda v: isinstance(v, str) and v.strip() != ""
+    pc.loc[pc["offense_lineup"].map(has) & pc["lineup_source"].isna(), "lineup_source"] = "play-by-play"
+    n_filled = 0
+    vs = pd.to_numeric(pc["video_start_s"], errors="coerce")
+    for (gd, gc), g in pc[vs.notna()].groupby(["game_date", "game_code"], dropna=False):
+        g = g.assign(_v=vs[g.index]).sort_values("_v")
+        order = list(g.index)
+        def five_of(i, team):
+            for side in ("offense", "defense"):
+                if str(pc.at[i, f"{side}_team"]) == str(team) and has(pc.at[i, f"{side}_lineup"]) \
+                        and pc.at[i, "lineup_source"] == "play-by-play":
+                    return pc.at[i, f"{side}_lineup"]
+            return None
+        for x, i in enumerate(order):
+            for side in ("offense", "defense"):
+                team = pc.at[i, f"{side}_team"]
+                if has(pc.at[i, f"{side}_lineup"]) or not isinstance(team, str):
+                    continue
+                prev = next((five_of(j, team) for j in reversed(order[:x]) if five_of(j, team)), None)
+                nxt = next((five_of(j, team) for j in order[x + 1:] if five_of(j, team)), None)
+                same = lambda a, b: a and b and sorted(p.strip() for p in a.split(",")) == sorted(p.strip() for p in b.split(","))
+                pick = prev if (prev and nxt and same(prev, nxt)) else (prev or nxt if not (prev and nxt) else None)
+                if pick:
+                    pc.at[i, f"{side}_lineup"] = pick
+                    pc.at[i, "lineup_source"] = "clips before/after (no clock)"
+                    n_filled += 1
+    return n_filled
+
+
+def _trk_coach_checks():
+    """Every coach check saved from the validation pages -- all files merged, the latest check of a box wins
+    (coach_checks_all, in the Play calls section)."""
+    return coach_checks_all()[0]
+
+
+def _trk_player_likeness(clip, k):
+    """0..1: how much a track behaves like a player on the floor -- out on the court (not along a sideline or baseline,
+    where coaches, the bench and fans are), tracked through much of the play, and moving."""
+    tr = clip["tracks"][k]
+    pts = [clip["frames"][t][j][10:12] for t, j in tr]
+    pts = [(float(x), float(y)) for x, y in pts if np.isfinite(x) and np.isfinite(y)]
+    n = max(len(clip["frames"]), 1)
+    length = min(1.0, len(tr) / max(0.5 * n, 1))
+    if not pts:
+        return 0.3 * length
+    inside = float(np.mean([3 <= x <= 91 and 3 <= y <= 47 for x, y in pts]))
+    steps = [np.hypot(b[0] - a[0], b[1] - a[1]) for a, b in zip(pts, pts[1:])]
+    moving = float(np.mean([s_ > 0.4 for s_ in steps])) if steps else 0.0
+    return 0.5 * inside + 0.3 * length + 0.2 * moving
+
+
+def _trk_synergy_names(ss):
+    """Every player a Synergy description names, in order ("24 Richie Warren > ... > 32 Luke Bara" -> both)."""
+    out = []
+    for _j, n in re.findall(r"(?:^|>)\s*(\d{1,2})\s+([A-Za-z][^>]*?)\s*(?=>|$)", str(ss or "")):
+        n = n.strip()
+        if n and n not in out:
+            out.append(n)
+    return out
+
+
+def _trk_pbp_anchors(clips, todo, pc, known, fps):
+    """Play-by-play named events -> [(clip, track, name, event type)]. `known`: {(clip, name): track} already
+    identified (Synergy anchors, jersey numbers) -- the reference for steals, blocks and fouls."""
+    out = []
+    for i in todo:
+        clip, r = clips[i], pc.loc[i]
+        c_clip, per = pd.to_numeric(r.get("time_remaining_seconds"), errors="coerce"), r.get("period")
+        if pd.isna(c_clip) or clip.get("t_finish") is None or not isinstance(per, str):
+            continue
+        ev = globals().get("pbp_events") if str(r.get("side")) == "UWW" else globals().get("pbp_events_upcoming")
+        if not isinstance(ev, pd.DataFrame) or ev.empty or "event_type" not in ev.columns:
+            continue
+        m = (ev["game_date"].astype(str) == str(r.get("game_date"))) & (ev["period"].astype(str) == per) \
+            & pd.to_numeric(ev["time_remaining_seconds"], errors="coerce").between(c_clip - TRACK_PBP_WINDOW_S,
+                                                                                 c_clip + TRACK_PBP_WINDOW_S)
+        evs = ev[m & ev["player"].notna()]
+        if evs.empty:
+            continue
+        n = len(clip["frames"])
+        team_name = {"offense": str(r.get("offense_team")), "defense": str(r.get("defense_team"))}
+        five_of = {str(r.get("offense_team")): _trk_five(r.get("offense_lineup")),
+                   str(r.get("defense_team")): _trk_five(r.get("defense_lineup"))}
+        pos = {}
+        for k, tr in enumerate(clip["tracks"]):
+            for t, j in tr:
+                X, Y = clip["frames"][t][j][10:12]
+                if np.isfinite(X) and np.isfinite(Y):
+                    pos.setdefault(k, {})[t] = (float(X), float(Y))
+
+        def _at(k, f):
+            for d in (0, -1, 1, -2, 2):
+                if f + d in pos.get(k, {}):
+                    return pos[k][f + d]
+            return None
+
+        for _, e in evs.iterrows():
+            et, P, T = str(e["event_type"]), str(e["player"]).strip(), str(e.get("team"))
+            if et not in ("rebound_offensive", "rebound_defensive", "steal", "block", "foul"):
+                continue
+            _norm = lambda x: re.sub(r"[^a-z]", "", str(x).lower())
+            side = next((sd for sd, nm in team_name.items()
+                         if _norm(T) and (_norm(T) == _norm(nm) or _norm(T) in _norm(nm) or _norm(nm) in _norm(T))), None)
+            if side is None or (five_of.get(team_name[side]) and P not in five_of[team_name[side]]):
+                continue
+            fps = float(clip.get("fps", fps))
+            fe = int(round(clip["t_finish"] + (c_clip - float(e["time_remaining_seconds"])) * fps))
+            # the finish frame is an estimate (review: a steal happened 3 frames before it), so look across a short
+            # window -- before and just after it for steals / blocks / fouls, after it for rebounds -- and keep the
+            # frame where one player is most clearly the nearest
+            win = range(fe, fe + int(2.0 * fps) + 1) if et.startswith("rebound") else range(fe - int(2.0 * fps), fe + int(1.0 * fps) + 1)
+            best = None
+            other_side = "defense" if side == "offense" else "offense"
+            if not et.startswith("rebound"):
+                same_t = evs[pd.to_numeric(evs["time_remaining_seconds"], errors="coerce") == float(e["time_remaining_seconds"])]
+                want = {"steal": ("turnover",), "block": ("missed_shot",), "foul": ("free_throw_made", "free_throw_missed",
+                                                                                     "made_shot", "missed_shot", "turnover")}[et]
+                others = [str(x) for x in same_t.loc[same_t["event_type"].isin(want), "player"].dropna()]
+                if et == "foul" and isinstance(r.get("player"), str):
+                    others.append(r.get("player").strip())
+                ref_k = next((known.get((i, o)) for o in others if known.get((i, o)) is not None
+                              and clip["side"].get(known.get((i, o))) == other_side), None)
+                if ref_k is None:
+                    continue
+            elif clip.get("basket") is None:
+                continue
+            for f in win:
+                if not 0 <= f < n:
+                    continue
+                if et.startswith("rebound"):
+                    ref, lim = clip["basket"], TRACK_PBP_REBOUND_FT
+                else:
+                    ref, lim = pos.get(ref_k, {}).get(f), TRACK_PBP_NEAR_FT
+                    if ref is None:
+                        continue
+                cands = [(k, pos[k][f]) for k in pos if clip["side"].get(k) == side and f in pos[k]]
+                if not cands:
+                    continue
+                dist = sorted((float(np.hypot(p[0] - ref[0], p[1] - ref[1])), k) for k, p in cands)
+                margin = (dist[1][0] - dist[0][0]) if len(dist) > 1 else 99.0
+                kp = pos[dist[0][1]][f]
+                crowd = any(float(np.hypot(p[0] - kp[0], p[1] - kp[1])) < TRACK_PBP_CROWD_FT for k, p in cands if k != dist[0][1])
+                if dist[0][0] <= lim and margin >= TRACK_PBP_MARGIN_FT and not crowd and (best is None or margin > best[0]):
+                    best = (margin, dist[0][1])
+            if best is not None:
+                out.append((i, best[1], P, et))
+    return out
+
+
+def _trk_link_possessions(clips, todo, pc, game_of):
+    """Link a team's tracks across clips that show the same moments of the game. -> {(clip, track): group id},
+    plus (links made, clip pairs overlapping)."""
+    from scipy.optimize import linear_sum_assignment
+    times = {}
+    for i in todo:
+        tt = [float(x) for x in str(pc.at[i, "track_times"] if "track_times" in pc.columns else "").split(";") if x and x != "nan"]
+        if len(tt) == len(clips[i]["frames"]) and tt:
+            times[i] = np.array(tt)
+    pos = {}
+    for i in times:
+        d = {}
+        for k, tr in enumerate(clips[i]["tracks"]):
+            tm = clips[i].get("team", {}).get(k)
+            if tm not in ("A", "B"):
+                continue
+            for t, j in tr:
+                X, Y = clips[i]["frames"][t][j][10:12]
+                if np.isfinite(X) and np.isfinite(Y):
+                    d.setdefault(t, []).append((k, float(X), float(Y), tm))
+        pos[i] = d
+    ids = sorted(times, key=lambda i: times[i][0])
+    cands, n_pairs = [], 0
+    n_bound = [0]
+    for x, a in enumerate(ids):
+        for b in ids[x + 1:]:
+            if game_of[a] != game_of[b]:
+                continue
+            if times[b][0] > times[a][-1]:
+                break                                            # sorted by start: nothing later overlaps a
+            overlap = min(times[a][-1], times[b][-1]) - max(times[a][0], times[b][0])
+            if overlap < -TRACK_LINK_BOUNDARY_S:
+                continue
+            boundary = overlap < 1.0                    # back-to-back plays: they meet at one moment
+            n_pairs += 1
+            n_bound[0] += int(boundary)
+            co = {}
+            max_dt = TRACK_LINK_BOUNDARY_S if boundary else TRACK_LINK_MAX_DT
+            for fa, t_a in enumerate(times[a]):
+                fb = int(np.argmin(np.abs(times[b] - t_a)))
+                if abs(times[b][fb] - t_a) > max_dt:
+                    continue
+                for team in ("A", "B"):
+                    pa = [p for p in pos[a].get(fa, []) if p[3] == team]
+                    pb = [p for p in pos[b].get(fb, []) if p[3] == team]
+                    if not pa or not pb:
+                        continue
+                    D = np.array([[np.hypot(p[1] - q[1], p[2] - q[2]) for q in pb] for p in pa])
+                    r, c = linear_sum_assignment(D)
+                    for u, v in zip(r, c):
+                        if D[u, v] < TRACK_LINK_FT:
+                            co.setdefault((pa[u][0], pb[v][0]), []).append(D[u, v])
+            for (ka, kb), ds in co.items():
+                if (len(ds) >= TRACK_LINK_MIN_MOMENTS and np.median(ds) <= TRACK_LINK_FT * 0.67) or \
+                        (boundary and np.median(ds) <= TRACK_LINK_BOUNDARY_FT):
+                    cands.append((len(ds), -float(np.median(ds)), (a, ka), (b, kb)))
+    # join strongest links first; a group may never hold two tracks of the same clip that are seen at the same moment
+    parent, members = {}, {}
+    def find(u):
+        while parent.get(u, u) != u:
+            u = parent[u]
+        return u
+    def frames_of(node):
+        i, k = node
+        return {float(times[i][t]) for t, _ in clips[i]["tracks"][k]}
+    n_links = 0
+    for _n, _d, u, v in sorted(cands, reverse=True):
+        ru, rv = find(u), find(v)
+        if ru == rv:
+            continue
+        mu, mv = members.get(ru, [ru]), members.get(rv, [rv])
+        clash = any(p[0] == q[0] and p[1] != q[1] and (frames_of(p) & frames_of(q)) for p in mu for q in mv)
+        if clash:
+            continue
+        parent[rv] = ru
+        members[ru] = mu + mv
+        members.pop(rv, None)
+        n_links += 1
+    group = {}
+    for root, ms in members.items():
+        for m in ms:
+            group[m] = root
+    globals()["_trk_n_boundaries"] = n_bound[0]
+    return group, n_links, n_pairs
+
+
+# CONFIRMED CHANGE (requested: "when a player's number is extremely clear in one frame, use that name for all previous and
+# future frames -- watch where the player has been and where they go"). A track that is broken in pieces (a player hidden
+# behind a screen, a missed detection, a swapped box) is several tracks of ONE person. When one piece is LOCKED to a name
+# (a clear jersey number or a coach check), the pieces before and after it that pick up exactly where it left off -- same
+# team, no overlap in time, reachable at running speed, and clearly the nearest -- get the same name. Careful on purpose:
+# an ambiguous join (two pieces equally close, or another named player closer to the join) is skipped.
+def _trk_track_overlap(clip, a, b):
+    """How much two tracks of one clip sit on top of each other: (median IoU of their boxes over the frames both have, number of
+    shared frames, shared frames as a share of the SHORTER track). CONFIRMED CHANGE (a #12 on two boxes in one picture, one named,
+    one "not named"): one player doubled by the detector -- two tracks for one person."""
+    def box(k):
+        return {t: np.asarray(clip["frames"][t][j][6:10], float) for t, j in clip["tracks"][k]}
+    ba, bb = box(a), box(b)
+    sh = sorted(set(ba) & set(bb))
+    if not sh:
+        return 0.0, 0, 0.0
+    ious = []
+    for t in sh:
+        x1, y1 = np.maximum(ba[t][:2], bb[t][:2])
+        x2, y2 = np.minimum(ba[t][2:], bb[t][2:])
+        inter = max(0.0, x2 - x1) * max(0.0, y2 - y1)
+        ua = (ba[t][2] - ba[t][0]) * (ba[t][3] - ba[t][1]) + (bb[t][2] - bb[t][0]) * (bb[t][3] - bb[t][1]) - inter
+        ious.append(inter / ua if ua > 0 else 0.0)
+    return float(np.median(ious)), len(sh), len(sh) / max(1, min(len(ba), len(bb)))
+
+
+def _trk_clip_fps(row, default=None):
+    """Tracking frames a second for one clip: from its frame times (track_times), so a game captured at 8 a second
+    (PLAYER_TRACKING_GAMES, VISION_TRACK_FPS_TRACKING) and one at 4 are each read right. Falls back to VISION_TRACK_FPS."""
+    dflt = float(default or globals().get("VISION_TRACK_FPS") or 2.0)
+    try:
+        tt = [float(x) for x in str(row.get("track_times") or "").split(";") if x.strip()]
+        if len(tt) >= 3:
+            d = float(np.median(np.diff(tt)))
+            if d > 0:
+                f_ = 1.0 / d
+                return float(round(f_ * 2) / 2) if f_ > 0.5 else dflt
+    except Exception:
+        pass
+    return dflt
+
+
+def _trk_norm_rel(p):
+    return str(p or "").replace("\\", "/").strip().lower()
+
+
+def _trk_t_of(ch, default=-1):
+    """The frame index a saved check / mark sits on: found by its frame FILE in its clip's current frame list (a game whose
+    frames were made denser -- 8 a second -- keeps its old frames, but at new positions), else its saved "t"."""
+    ff = _trk_norm_rel(ch.get("frame_file"))
+    pc_ = globals().get("play_calls")
+    if ff and isinstance(pc_, pd.DataFrame) and "track_files" in pc_.columns:
+        key = (id(pc_), len(pc_))
+        m = globals().get("_trk_tpos_map")
+        if not m or m[0] != key:
+            pos = {}
+            for v in pc_["track_files"].dropna().astype(str):
+                for j_, f_ in enumerate(x for x in v.split(";") if x):
+                    pos[_trk_norm_rel(f_)] = j_
+            m = globals()["_trk_tpos_map"] = (key, pos)
+        if ff in m[1]:
+            return int(m[1][ff])
+    v = pd.to_numeric(ch.get("t"), errors="coerce")
+    return int(v) if pd.notna(v) else default
+
+
+def _trk_stitch(frames, tracks, shifts, fps_):
+    """CONFIRMED CHANGE (requested: "#1 -- fewer broken-up tracks"; 3 clips of Carroll@WashU gave 300 tracks, ~100 a clip,
+    for 10 players + 3 refs). Tracks break where the detector misses a player for a moment and where two teammates overlap
+    (TRACK_SPLIT_CROSS_IOU cuts them there on purpose, so a swap can't carry a name to the wrong man). Each piece that ENDS
+    is now joined to a piece that STARTS soon after (within TRACK_STITCH_GAP_S) when it is clearly the same player:
+    same team color group, where his motion says he'd be (court feet when the frame is on the court, else the picture with
+    the camera's pan removed), same jersey color and size. A join is made only when it is the best choice for BOTH pieces
+    by TRACK_STITCH_MARGIN -- at a crossing where either teammate could be either piece, the pieces stay apart.
+    -> (tracks, joins made)."""
+    gap_max = max(1, int(round(float(globals().get("TRACK_STITCH_GAP_S", 0.5)) * max(fps_, 0.5))))
+    margin = float(globals().get("TRACK_STITCH_MARGIN", 0.5))
+    vmax = float(globals().get("TRACK_MAX_SPEED_FTS", 25.0))
+    cum = np.cumsum(np.array([np.asarray(s_, float)[:2] for s_ in shifts] or [np.zeros(2)]), axis=0)
+
+    def pt(t, j):
+        r = frames[t][j]
+        c = cum[min(t, len(cum) - 1)]
+        X = float(r[10]) if len(r) > 11 else np.nan
+        Y = float(r[11]) if len(r) > 11 else np.nan
+        return (float(r[0]) - c[0], float(r[1]) - c[1], float(r[2]), X, Y, np.asarray(r[3:6], float))
+
+    def grp(tr):
+        labs = [float(frames[t][j][19]) for t, j in tr if len(frames[t][j]) > 19 and float(frames[t][j][19]) in (0.0, 1.0)]
+        return max(set(labs), key=labs.count) if labs else None
+
+    def end_info(tr, last=True):
+        seq = tr[-3:] if last else tr[:3]
+        ps = [(t, pt(t, j)) for t, j in seq]
+        t0 = ps[-1][0] if last else ps[0][0]
+        p0 = ps[-1][1] if last else ps[0][1]
+        vel_p = vel_c = None
+        if len(ps) >= 2:
+            (ta, pa), (tb, pb) = ps[0], ps[-1]
+            dt = max(tb - ta, 1)
+            vel_p = np.array([(pb[0] - pa[0]) / dt, (pb[1] - pa[1]) / dt])
+            if np.isfinite([pa[3], pa[4], pb[3], pb[4]]).all():
+                vel_c = np.array([(pb[3] - pa[3]) / dt, (pb[4] - pa[4]) / dt])
+                sp = np.linalg.norm(vel_c) * fps_
+                if sp > vmax:
+                    vel_c *= vmax / sp
+        col = np.mean([p_[5] for _t, p_ in ps], axis=0)
+        h = float(np.median([p_[2] for _t, p_ in ps]))
+        return t0, p0, vel_p, vel_c, col, h
+
+    n_join = 0
+    for _pass in range(6):
+        if len(tracks) < 2:
+            break
+        G = [grp(tr) for tr in tracks]
+        E = [end_info(tr, True) for tr in tracks]
+        S = [end_info(tr, False) for tr in tracks]
+        span = [({t for t, _ in tr}) for tr in tracks]
+        cost = {}
+        for a in range(len(tracks)):
+            if G[a] is None:
+                continue
+            ta, pa, vpa, vca, cola, ha = E[a]
+            for b in range(len(tracks)):
+                if b == a or G[b] != G[a]:
+                    continue
+                tb, pb, _vpb, _vcb, colb, hb = S[b]
+                dt = tb - ta
+                if dt < 1 or dt > gap_max or (span[a] & span[b]):
+                    continue
+                if abs(np.log(max(hb, 1e-4) / max(ha, 1e-4))) > 0.35:
+                    continue                                   # a very different size: not the same man
+                if np.isfinite([pa[3], pa[4], pb[3], pb[4]]).all():
+                    pred = np.array([pa[3], pa[4]]) + (vca * dt if vca is not None else 0.0)
+                    reach = 2.0 + 0.35 * vmax * dt / max(fps_, 0.5)
+                    dn = float(np.linalg.norm(pred - np.array([pb[3], pb[4]]))) / reach
+                else:
+                    pred = np.array([pa[0], pa[1]]) + (vpa * dt if vpa is not None else 0.0)
+                    reach = ha * (0.4 + 0.2 * dt * 4.0 / max(fps_, 0.5))
+                    dn = float(np.linalg.norm(pred - np.array([pb[0], pb[1]]))) / max(reach, 1e-4)
+                cd = float(np.linalg.norm(cola - colb)) / 60.0
+                if dn >= 1.0 or cd >= 1.2:
+                    continue
+                cost[(a, b)] = dn + 0.5 * cd + 0.05 * dt
+        if not cost:
+            break
+        best_a, best_b = {}, {}
+        for (a, b), c in cost.items():
+            best_a.setdefault(a, []).append((c, b))
+            best_b.setdefault(b, []).append((c, a))
+        joins = []
+        for a, lst in best_a.items():
+            lst.sort()
+            c, b = lst[0]
+            if len(lst) > 1 and lst[1][0] < c + margin:
+                continue                                       # two pieces could continue him: ambiguous
+            lb = sorted(best_b[b])
+            if lb[0][1] != a or (len(lb) > 1 and lb[1][0] < c + margin):
+                continue                                       # another piece could lead into this one: ambiguous
+            joins.append((c, a, b))
+        if not joins:
+            break
+        used, merged_into, drop = set(), {}, set()
+        for c, a, b in sorted(joins):
+            if a in used or b in used:
+                continue
+            used |= {a, b}
+            tracks[a] = sorted(tracks[a] + tracks[b])
+            drop.add(b)
+            n_join += 1
+        tracks = [tr for x_, tr in enumerate(tracks) if x_ not in drop]
+    return tracks, n_join
+
+
+def _trk_split_crossings(frames, tracks, iou_min):
+    """CONFIRMED CHANGE (requested: "do the things you recommended" -- all 3 wrong coach-checked boxes were a coach check
+    carried along a track that had SWITCHED players: clip 1 Beck -> Metcalf-Grassman, clip 4 Nazos -> Beck, clip 5 Madson ->
+    Marino). When two players of the SAME team overlap on the picture (boxes IoU >= iou_min), the tracker can swap them. Each
+    track is cut at those moments: the part before, the overlapping part, the part after become separate tracks, so a coach
+    check or a jersey number names only the stretch it was seen on. Pieces that clearly continue one another are joined back
+    later by the name-following step (it refuses an ambiguous join -- exactly the crossing case).
+    -> (tracks, number of cuts, overlap pieces too short to keep)."""
+    grp = {}
+    for k, tr in enumerate(tracks):
+        labs = [float(frames[t][j][19]) for t, j in tr if float(frames[t][j][19]) in (0.0, 1.0)]
+        grp[k] = max(set(labs), key=labs.count) if labs else None
+    at = {}
+    for k, tr in enumerate(tracks):
+        for t, j in tr:
+            at.setdefault(t, []).append((k, j))
+    hot = {k: set() for k in range(len(tracks))}
+    for t, lst in at.items():
+        for x_ in range(len(lst)):
+            a, ja = lst[x_]
+            if grp[a] is None:
+                continue
+            for b, jb in lst[x_ + 1:]:
+                if grp[b] != grp[a]:
+                    continue
+                if _trk_iou(frames[t][ja][6:10], frames[t][jb][6:10]) >= iou_min:
+                    hot[a].add(t)
+                    hot[b].add(t)
+    out, n_cut, n_short = [], 0, 0
+    min_f = int(globals().get("TRACK_MIN_FRAMES", 3))
+    for k, tr in enumerate(tracks):
+        if not hot[k]:
+            out.append(tr)
+            continue
+        pieces, cur, state = [], [], None
+        for t, j in tr:
+            s_ = t in hot[k]
+            if cur and s_ != state:
+                pieces.append((state, cur))
+                cur = []
+            cur.append((t, j))
+            state = s_
+        if cur:
+            pieces.append((state, cur))
+        n_cut += len(pieces) - 1
+        for is_hot, pc_ in pieces:
+            if len(pc_) < min_f:
+                n_short += 1                     # too short to be a track (TRACK_MIN_FRAMES), e.g. the overlap moment itself
+                continue
+            out.append(pc_)
+    return out, n_cut, n_short
+
+
+def _trk_follow_names(clips, i, seeds, fps_=None, looks=None, votes=None):
+    """seeds: {track: name} locked in clip i. -> {track: (name, from_track)} for the OTHER pieces of those players.
+    CONFIRMED CHANGE (requested: "#2 -- let the joining use more than color"; tracks were 1.8 s long and a teammate
+    crossing left the pieces unnamed). looks = {track: appearance fingerprint}, votes = {track: (name, probability,
+    crops)} from the jersey vote. Where both teammates could continue a piece by position alone, the one who LOOKS more
+    like it (TRACK_FOLLOW_LOOK_W) can now take it, and a piece whose jersey vote clearly says someone else is never
+    given this name (a clear vote for him makes it cheaper). The position limits (TRACK_LOCK_MAX_COST) are unchanged."""
+    looks = looks or {}
+    votes = votes or {}
+    look_w = float(globals().get("TRACK_FOLLOW_LOOK_W", 1.5))
+    v_p = float(globals().get("TRACK_VOTE_MIN_P", 0.90))
+    clip = clips[i]
+    fps_ = float(fps_ or clip.get("fps", 2.0))
+    max_gap = float(globals().get("TRACK_LOCK_MAX_GAP_S", 3.0))
+    max_cost = float(globals().get("TRACK_LOCK_MAX_COST", 0.6))
+    speed = float(globals().get("TRACK_MAX_SPEED_FTS", 24.0))
+    shifts = np.array(clip["shifts"]) if len(clip.get("shifts", [])) else None
+    cum = np.cumsum(shifts, axis=0) if shifts is not None else None
+    tracks = clip["tracks"]
+    span = {k: (tr[0][0], tr[-1][0], {t for t, _ in tr}) for k, tr in enumerate(tracks) if tr}
+
+    def point(k, first):
+        t, j = tracks[k][0 if first else -1]
+        row = clip["frames"][t][j]
+        if len(row) >= 12 and np.isfinite(row[10]) and np.isfinite(row[11]):
+            return ("court", float(row[10]), float(row[11]))
+        h = float(row[2]) if float(row[2]) > 1e-6 else 0.1
+        dx, dy = (cum[t] if cum is not None else (0.0, 0.0))
+        return ("pic", float((row[0] - dx) / h * 6.2), float((row[1] - dy) / h * 6.2))
+
+    def cost(p, q):
+        """cost of q being the same person as p, p before q (None = can't be: overlap, wrong order, too far apart in time)"""
+        if span[p][2] & span[q][2]:
+            return None
+        if span[p][1] >= span[q][0]:
+            return None
+        gap = (span[q][0] - span[p][1]) / fps_
+        if gap > max_gap:
+            return None
+        a, b = point(p, False), point(q, True)
+        if a[0] != b[0]:
+            return None
+        d = float(np.hypot(a[1] - b[1], a[2] - b[2]))
+        return d / (speed * max(gap, 1.0 / fps_) + 3.0)
+
+    def pair_cost(p, q):                                      # whichever comes first
+        if span[p][0] <= span[q][0]:
+            return cost(p, q)
+        return cost(q, p)
+
+    holders = {}
+    for k, n in seeds.items():
+        if k in span:
+            holders.setdefault(n, set()).add(k)
+    owner = {k: n for n, ks in holders.items() for k in ks}
+    out = {}
+
+    def _hlook(n):
+        vs = [np.asarray(looks[k], float) for k in holders.get(n, ()) if k in looks]
+        if not vs:
+            return None
+        m = np.mean(vs, 0)
+        return m / (np.linalg.norm(m) + 1e-8)
+
+    def total(n, c, b):
+        """position cost + how unlike player n this piece looks; the jersey vote can veto or help."""
+        vt = votes.get(b)
+        if vt and vt[0] != n and vt[1] >= v_p and vt[2] >= 2:
+            return None                                           # his number clearly says someone else
+        hl = _hlook(n)
+        if hl is not None and b in looks:
+            lb = np.asarray(looks[b], float)
+            lk = float(lb @ hl / (np.linalg.norm(lb) + 1e-8))
+            t_ = c + look_w * max(0.0, 1.0 - lk)
+        else:
+            t_ = c + look_w * 0.15                                  # no look to compare: an average one
+        if vt and vt[0] == n and vt[1] >= v_p:
+            t_ *= 0.6
+        return t_
+
+    for _round in range(6):
+        cands = {}                                            # track -> (cost, name, from)
+        for n, ks in holders.items():
+            for b in span:
+                if b in owner or clip["side"].get(b) is None:
+                    continue
+                if any(clip["side"].get(b) != clip["side"].get(k) for k in ks):
+                    continue
+                if any(span[b][2] & span[k][2] for k in ks):
+                    continue                                  # on the floor at the same moment as him: another person
+                best = None
+                for k in ks:
+                    c = pair_cost(k, b)
+                    if c is not None and c <= max_cost and (best is None or c < best[0]):
+                        best = (c, k)
+                if not best:
+                    continue
+                tc = total(n, best[0], b)
+                if tc is not None and (b not in cands or tc < cands[b][0]):
+                    cands[b] = (tc, n, best[1], best[0])
+        added = {}
+        # CONFIRMED BUG (fixed; clip 1's first picture, 7 s in, had NO followed players). Since the look was added to the
+        # cost, the "is another player just as likely?" tests compared the totals with a ratio (1.2x): the look part is
+        # about the same for every teammate, so it squeezed every pair of totals within 1.2x of each other and nearly every
+        # piece looked ambiguous. Now a piece is ambiguous only when its POSITION fits another player about as well (the
+        # old test, on position alone) AND his look doesn't clearly settle it (totals within TRACK_FOLLOW_LOOK_MARGIN).
+        _lmar = float(globals().get("TRACK_FOLLOW_LOOK_MARGIN", 0.06))
+        for b, (c, n, frm, cpos) in sorted(cands.items(), key=lambda kv: kv[1][0]):
+            # a rival piece that overlaps this one in time and is nearly as close: ambiguous, skip
+            if any(b2 != b and span[b][2] & span[b2][2] and n2 == n and p2 < 1.5 * max(cpos, 0.05) and c2 - c < _lmar
+                   for b2, (c2, n2, _f2, p2) in cands.items()):
+                continue
+            # another player already placed (a different name) who could just as well be this piece
+            rival = False
+            for n2, ks2 in holders.items():
+                if n2 == n:
+                    continue
+                for k2 in ks2:
+                    if clip["side"].get(k2) != clip["side"].get(b):
+                        continue
+                    c2 = pair_cost(k2, b)
+                    if c2 is None or c2 > max_cost:
+                        continue
+                    t2 = total(n2, c2, b)
+                    if t2 is not None and c2 < 1.2 * max(cpos, 0.05) and t2 - c < _lmar:
+                        rival = True
+            if rival:
+                continue
+            if any(span[b][2] & span[x][2] for x in added if added[x][0] == n):
+                continue
+            added[b] = (n, frm)
+        if not added:
+            break
+        for b, (n, frm) in added.items():
+            holders[n].add(b)
+            owner[b] = n
+            out[b] = (n, frm)
+    return out
+
+
+# CONFIRMED CHANGE (requested: a diagnostic of WHERE players are lost). Every stage that can throw a person away counts
+# what it dropped and why (counts), and keeps the dropped boxes per frame (boxes) so the check pictures can draw them.
+_trk_drop = {"counts": {}, "boxes": {}}
+
+
+def _trk_note_drop(reason, n=1, file=None, boxes=None):
+    c = _trk_drop["counts"]
+    c[reason] = c.get(reason, 0) + int(n)
+    if file is not None and boxes is not None:
+        for b in boxes:
+            _trk_drop["boxes"].setdefault(file, []).append((float(b[0]), float(b[1]), float(b[2]), float(b[3]), reason))
+
+
+def _trk_players(d, H=None, feats=None, opening=False, file=None):
+    """Kept player boxes for one frame -> rows [x, y, h, r, g, b, x1, y1, x2, y2, X, Y, sat, stripes, chest L,
+    chest warmth, shorts L, shorts warmth, chest variation, group] with x, y the feet point
+    measured in picture-HEIGHT units (so left-right and up-down distances are comparable), h the box height,
+    and X, Y the feet on the court in feet (NaN when this frame has no court mapping). With a court mapping,
+    anyone standing off the court (fans, bench, the scorer's table) is dropped."""
+    if d is None or len(d["p"]) == 0:
+        return np.zeros((0, 20), dtype=np.float32)
+    p, W, Hpx = d["p"], d["W"], d["H"]
+    p = p[np.isfinite(p[:, 5])]
+    h = (p[:, 3] - p[:, 1]) / Hpx
+    fy = p[:, 3] / Hpx
+    fx = (p[:, 0] + p[:, 2]) / 2 / W
+    # Review of the first 5 Oshkosh possessions: the front row of fans (heads and hoodies cut off by the bottom of
+    # the picture) was being kept as "players". Anyone whose feet run off the bottom edge can't be put on the
+    # court, and a player's box is tall and narrow -- wide, squat boxes are seated people.
+    wid = (p[:, 2] - p[:, 0]) / np.maximum(p[:, 3] - p[:, 1], 1e-6)
+    m_size = ~((h > 0.03) & (h < 0.45))
+    m_edge = ~((fy > 0.15) & (fy < 0.975) & (fx > 0.005) & (fx < 0.995))
+    keep = ~m_size & ~m_edge
+    m_court = np.zeros(len(p), bool)
+    m_wide = np.zeros(len(p), bool)
+    X = np.full(len(p), np.nan)
+    Y = np.full(len(p), np.nan)
+    if H is not None and len(p):
+        Hm = np.asarray(H, np.float64)
+        v = Hm @ np.vstack([(p[:, 0] + p[:, 2]) / 2, p[:, 3], np.ones(len(p))])
+        X, Y = v[0] / v[2], v[1] / v[2]
+        m = TRACK_COURT_MARGIN_FT
+        # Bench players and coaches stand right behind the far sideline with their legs hidden by the ad boards, so
+        # their boxes end at the board and map to Y = 49..52 ft (compare pictures). TRACK_FAR_MARGIN_FT is how far past the
+        # far sideline (Y = 50) a person may be: negative pulls the cutoff inside the line (default -1.5 -> Y < 48.5).
+        _fm = float(globals().get("TRACK_FAR_MARGIN_FT", -1.5))
+        court_ok = (X > -m) & (X < 94 + m) & (Y > -TRACK_NEAR_MARGIN_FT) & (Y < 50 + _fm)
+        # CONFIRMED CHANGE (coach: "the model normally misses the player throwing the ball in on BLOB plays"). The inbounder
+        # stands BEHIND the baseline -- farther out than TRACK_COURT_MARGIN_FT -- so he was dropped with the fans and the
+        # bench. In a clip's opening seconds (TRACK_INBOUND_OPEN_S) a standing person up to TRACK_INBOUND_MARGIN_FT behind
+        # either baseline, within TRACK_INBOUND_Y_FT across the court, is kept (0 = off). Referees and anyone else back
+        # there fall into the third color group ("everyone else"); the seated / wide-box checks below still apply.
+        _im = float(globals().get("TRACK_INBOUND_MARGIN_FT", 10.0))
+        if opening and _im > 0:
+            _y0, _y1 = globals().get("TRACK_INBOUND_Y_FT", (8.0, 42.0))
+            court_ok |= (((X <= -m) & (X > -_im)) | ((X >= 94 + m) & (X < 94 + _im))) & (Y >= _y0) & (Y <= _y1)
+        m_court = ~court_ok
+        edge = (X < TRACK_EDGE_ZONE_FT) | (X > 94 - TRACK_EDGE_ZONE_FT) | (Y < TRACK_EDGE_ZONE_FT) | (Y > 50 - TRACK_EDGE_ZONE_FT)
+        m_wide = edge & ~(wid < 0.8)         # wide boxes: seated people -- only along the edges
+    else:
+        m_wide = ~(wid < 0.8)                 # no court position: the old rule everywhere
+    keep &= ~m_court & ~m_wide
+    _why = np.full(len(p), "", dtype=object)
+    for _m, _r in ((m_size, "too small or too large for a player"), (m_edge, "cut off at the edge of the picture"),
+                   (m_court, "off the court (fans, bench, table)"), (m_wide, "wide box (seated person)")):
+        _why[(_why == "") & _m] = _r
+    _trk_note_drop("people detected", len(p))
+    for _r in set(_why[~keep]):
+        _sel = ~keep & (_why == _r)
+        _trk_note_drop(_r, int(_sel.sum()), file, p[_sel][:, 0:4])
+    rgb = p[:, 5:8]
+    sat = p[:, 8] if p.shape[1] > 8 else rgb.max(1) - rgb.min(1)
+    stripes = p[:, 9] if p.shape[1] > 9 else np.zeros(len(p))
+    jf = feats if feats is not None and len(feats) == len(p) else np.full((len(p), 5), np.nan, np.float32)
+    grp = np.full(len(p), -1.0)                    # filled in by the team grouping (0 = A, 1 = B, 2 = everyone else)
+    return np.column_stack([fx[keep] * W / Hpx, fy[keep], h[keep], rgb[keep], p[keep][:, 0:4],
+                            X[keep], Y[keep], sat[keep], stripes[keep], jf[keep], grp[keep]]).astype(np.float32)
+
+
+def _trk_finish(frames):
+    """(basket, finish frame, window) for one clip, from the court positions of everyone on the floor.
+    Synergy clips run on after the play ends (review: in possession 3 the basket comes at frame 14 and by
+    frame 17 everyone is running the other way), so "the end of the clip" is the wrong moment. The attacked
+    basket = the end the players are at during the first 70% of the clip; the finish = the frame they're
+    deepest toward it; the window = the stretch leading up to it (where the shooter / finisher is read).
+    Without court positions: the old rule, the last 40% of the clip."""
+    n = len(frames)
+    xs = np.array([np.nanmedian(f[:, 10]) if len(f) and f.shape[1] >= 12 and np.isfinite(f[:, 10]).any() else np.nan
+                   for f in frames])
+    first = xs[: max(2, int(0.7 * n))]
+    if not np.isfinite(first).any():
+        return None, n - 1, list(range(int(0.6 * n), n))
+    bx = 5.25 if np.nanmedian(first) < 47 else 88.75
+    lo, hi = int(0.2 * n), max(int(0.9 * n), int(0.2 * n) + 1)
+    depth = np.abs(xs - bx)
+    cand = [t for t in range(lo, min(hi, n)) if np.isfinite(depth[t])]
+    t_fin = min(cand, key=lambda t: depth[t]) if cand else n - 1
+    w0 = max(0, t_fin - max(2, int(0.25 * n)))
+    return (bx, 25.0), t_fin, list(range(w0, min(n, t_fin + 2)))
+
+
+def _trk_color_feat(rows):
+    """Jersey description used to split the teams: lightness, color direction, color strength, stripes."""
+    rows = np.asarray(rows, np.float32).reshape(-1, rows.shape[-1] if hasattr(rows, "shape") else 14)
+    rgb = rows[:, 3:6]
+    L = rgb.mean(1)
+    chroma = rgb - L[:, None]
+    sat = rows[:, 12] if rows.shape[1] > 12 else rgb.max(1) - rgb.min(1)
+    stripes = rows[:, 13] if rows.shape[1] > 13 else np.zeros(len(rows))
+    sat = np.where(np.isfinite(sat), sat, rgb.max(1) - rgb.min(1))
+    stripes = np.where(np.isfinite(stripes), stripes, 0.0)
+    return np.column_stack([L, chroma[:, 0] * 2, chroma[:, 1] * 2, chroma[:, 2] * 2, sat, stripes * 1.5])
+
+
+def _trk_link(frames, fps_=2.0):
+    """frames: list of player arrays. -> (tracks, shifts): tracks = list of lists of (t, i); shifts[t] = the
+    camera's estimated move from frame t-1 to t (x, y), applied before matching players."""
+    from scipy.optimize import linear_sum_assignment
+    tracks, active = [], []          # active: indexes into tracks
+    shifts = [np.zeros(2)]
+    for t, P in enumerate(frames):
+        if t == 0 or not active:
+            for i in range(len(P)):
+                tracks.append([(t, i)])
+            active = list(range(len(tracks)))
+            if t:
+                shifts.append(np.zeros(2))
+            continue
+        last = [tracks[k][-1] for k in active]
+        prev_pts = np.array([frames[lt][li][:2] for lt, li in last]) if last else np.zeros((0, 2))
+        prev_col = np.array([frames[lt][li][3:6] for lt, li in last]) if last else np.zeros((0, 3))
+        unit = float(np.median(P[:, 2])) if len(P) else 0.1
+        shift = np.zeros(2)
+        if len(P) and len(prev_pts):
+            # Camera move: median offset between each previous player and the nearest same-colored one now.
+            d = np.linalg.norm(prev_pts[:, None, :] - P[None, :, :2], axis=2)
+            cd = np.linalg.norm(prev_col[:, None, :] - P[None, :, 3:6], axis=2)
+            d_ok = np.where(cd < 60, d, np.inf)
+            j = d_ok.argmin(1)
+            good = np.isfinite(d_ok[np.arange(len(j)), j]) & (d_ok[np.arange(len(j)), j] < 5 * unit)
+            if good.sum() >= 3:
+                shift = np.median(P[j[good], :2] - prev_pts[good], axis=0)
+        shifts.append(shift)
+        if len(P) == 0:
+            continue
+        pred = prev_pts + shift
+        dist = np.linalg.norm(pred[:, None, :] - P[None, :, :2], axis=2) / unit
+        cdist = np.linalg.norm(prev_col[:, None, :] - P[None, :, 3:6], axis=2) / 60.0
+        # On the court (both ends mapped): real feet, allowing TRACK_MAX_SPEED_FTS per second for every frame
+        # since the track was last seen. Otherwise: picture distance after the camera's pan, as before.
+        prev_court = np.array([frames[lt][li][10:12] if frames[lt].shape[1] >= 12 else [np.nan, np.nan] for lt, li in last])
+        gaps = np.array([t - lt for lt, _ in last], dtype=float)
+        court_ok = np.isfinite(prev_court).all(1)[:, None] & (np.isfinite(P[:, 10:12]).all(1)[None, :] if P.shape[1] >= 12 else False)
+        if np.any(court_ok):
+            dft = np.linalg.norm(prev_court[:, None, :] - P[None, :, 10:12], axis=2)
+            reach = (TRACK_MAX_SPEED_FTS / max(fps_, 0.5)) * gaps[:, None]
+            dist = np.where(court_ok, dft / np.maximum(reach, 1e-3) * 2.0, dist)   # 2.0 = the old gate, in the same scale
+        cost = dist + 0.5 * cdist
+        gate = (dist < 2.0) & (cdist < 1.4)
+        # never across groups: team A, team B and everyone else stay apart (review: a track ran from a UWW player
+        # to an Oshkosh player to a seated bench player)
+        if P.shape[1] >= 20:
+            prev_grp = np.array([frames[lt][li][19] for lt, li in last])
+            known = (prev_grp[:, None] >= 0) & (P[None, :, 19] >= 0)
+            gate &= ~known | (prev_grp[:, None] == P[None, :, 19])
+        cost = np.where(gate, cost, 1e6)
+        ri, ci = linear_sum_assignment(cost)
+        used = set()
+        new_active = []
+        for a, b in zip(ri, ci):
+            if cost[a, b] < 1e6:
+                tracks[active[a]].append((t, b))
+                used.add(b)
+                new_active.append(active[a])
+        # a track missed for a frame or two stays alive (TRACK_KEEP_ALIVE)
+        for a, k in enumerate(active):
+            if k not in new_active and tracks[k][-1][0] >= t - max(1, int(round(TRACK_KEEP_ALIVE_S * fps_))):
+                new_active.append(k)
+        for b in range(len(P)):
+            if b not in used:
+                tracks.append([(t, b)])
+                new_active.append(len(tracks) - 1)
+        active = new_active
+    _short = sum(1 for tr in tracks if len(tr) < TRACK_MIN_FRAMES)
+    if _short:
+        _trk_note_drop("[tracks] followed for fewer than TRACK_MIN_FRAMES frames (thrown away)", _short)
+    _trk_note_drop("[tracks] tracks built", len(tracks))
+    return [tr for tr in tracks if len(tr) >= TRACK_MIN_FRAMES], shifts
+
+
+def _trk_holders(clip, allowed=None):
+    """frame -> track holding the ball: the (allowed) player whose body is closest to the ball, within 0.8 of
+    a player-height. `allowed` = only these tracks (the offense, once the teams are known) -- the defender
+    guarding the ball is often just as close."""
+    out = {}
+    where = {}
+    for k, tr in enumerate(clip["tracks"]):
+        if allowed is not None and k not in allowed:
+            continue
+        for t, j in tr:
+            where.setdefault(t, []).append((k, j))
+    for t, (bx, by) in clip["ball"].items():
+        best, bd = None, np.inf
+        for k, j in where.get(t, []):
+            row = clip["frames"][t][j]
+            x1, y1, x2, y2 = row[6:10]                      # pixels
+            H = y2 / max(float(row[1]), 1e-6)               # picture height in pixels (row[1] = feet y / height)
+            cx, cy = (x1 + x2) / 2 / H, (y1 + y2) / 2 / H   # body center, in picture-height units like the ball
+            dd = np.hypot(cx - bx, cy - by) / max(float(row[2]), 1e-3)
+            if dd < bd:
+                best, bd = k, dd
+        if best is not None and bd < 0.8:
+            out[t] = best
+    return out
+
+
+def _trk_embed(crops):
+    """PIL crops -> L2-normalized fingerprints (pretrained image model; whole summary + patch average)."""
+    import torch
+    from transformers import AutoModel
+    enc = globals().get("_trk_encoder")
+    if enc is None or enc[0] != TRACK_EMBED_MODEL:
+        enc = globals()["_trk_encoder"] = (TRACK_EMBED_MODEL, AutoModel.from_pretrained(TRACK_EMBED_MODEL).eval())
+    model = enc[1]
+    mean, std = np.array([0.485, 0.456, 0.406], np.float32), np.array([0.229, 0.224, 0.225], np.float32)
+    out = []
+    _t0 = time.time()
+    with torch.no_grad():
+        for i in range(0, len(crops), 64):
+            if i:
+                _trk_progress("player crops fingerprinted", i, len(crops), _t0, every=max(64, (len(crops) // 20) // 64 * 64))
+            arr = np.stack([((np.asarray(c.convert("RGB").resize((112, 224)), np.float32) / 255 - mean) / std)
+                            .transpose(2, 0, 1) for c in crops[i:i + 64]])
+            res = model(pixel_values=torch.from_numpy(arr))
+            h = res.last_hidden_state
+            v = torch.cat([h[:, 0], h[:, 1:].mean(1)], 1).float().numpy()
+            out.extend(v / (np.linalg.norm(v, axis=1, keepdims=True) + 1e-8))
+    if crops:
+        _trk_progress("player crops fingerprinted", len(crops), len(crops), _t0)
+    return out
+
+
+def _trk_dist(a, b):
+    return float(np.linalg.norm(np.asarray(a[:2]) - np.asarray(b[:2])))
+
+
+def _trk_pose(rels, base):
+    """rel path -> list of (box xyxy, keypoints [17 x (x, y, conf)]); cached like the detections."""
+    cpath = _trk_det_cache_path().replace("detections_" + re.sub(r"[^A-Za-z0-9]+", "_", TRACK_DETECTOR),
+                                          "pose_" + re.sub(r"[^A-Za-z0-9]+", "_", TRACK_POSE_MODEL))
+    cache = _safe_read_pickle(cpath) if os.path.exists(cpath) else {}
+    todo = [r for r in dict.fromkeys(rels) if r not in cache and os.path.exists(os.path.join(base, r))]
+    if todo:
+        from ultralytics import YOLO
+        m = globals().get("_trk_pose_model")
+        if m is None or m[0] != TRACK_POSE_MODEL:
+            print(f"  [tracking] loading pose model {TRACK_POSE_MODEL} (downloads once)...")
+            m = globals()["_trk_pose_model"] = (TRACK_POSE_MODEL, YOLO(TRACK_POSE_MODEL))
+        print(f"  [tracking] reading arm positions in {len(todo)} end-of-clip frame(s)...", flush=True)
+        _t0 = time.time()
+        H_of = _trk_court_H_lookup(base)
+        for i in range(0, len(todo), 8):
+            chunk = todo[i:i + 8]
+            _trk_progress("end-of-clip frames read", min(i + 8, len(todo)), len(todo), _t0,
+                          every=max(8, (len(todo) // 20) // 8 * 8))
+            res = _trk_tiled_predict(m[1], [os.path.join(base, x) for x in chunk], H_of, None, TRACK_PERSON_CONF,
+                                     keypoints=True)
+            for r, found in zip(chunk, res):
+                cache[r] = [(box, kk) for box, _c, _cl, kk in found if kk is not None]
+        os.makedirs(TRACK_DIR, exist_ok=True)
+        _safe_to_pickle(cache, cpath)
+    return cache
+
+
+def _trk_arms_up(box, poses):
+    """How far above the shoulders the higher wrist is, in box-heights (the pose matched to `box` by overlap)."""
+    x1, y1, x2, y2 = box
+    best, biou = None, 0.0
+    for pb, kp in poses:
+        ix = max(0, min(x2, pb[2]) - max(x1, pb[0]))
+        iy = max(0, min(y2, pb[3]) - max(y1, pb[1]))
+        inter = ix * iy
+        iou = inter / max((x2 - x1) * (y2 - y1) + (pb[2] - pb[0]) * (pb[3] - pb[1]) - inter, 1e-6)
+        if iou > biou:
+            best, biou = kp, iou
+    if best is None or biou < 0.4:
+        return None
+    sh = [best[i][1] for i in (5, 6) if best[i][2] > 0.3]
+    wr = [best[i][1] for i in (9, 10) if best[i][2] > 0.3]
+    if not sh or not wr:
+        return None
+    return (min(sh) - min(wr)) / max(y2 - y1, 1e-6)
+
+
+def _trk_find_screen(clip):
+    """Best screen in the clip from the tracks' positions. Returns a dict or None."""
+    frames, tracks, side, shifts, holder = clip["frames"], clip["tracks"], clip["side"], clip["shifts"], clip["holder"]
+    pos = {}   # track -> {t: (x, y) with the camera's accumulated move removed}
+    cum = np.cumsum(np.array(shifts), axis=0)
+    for k, tr in enumerate(tracks):
+        pos[k] = {t: frames[t][i][:2] - cum[t] for t, i in tr}
+    units = [float(np.median(f[:, 2])) if len(f) else np.nan for f in frames]
+    off = [k for k in range(len(tracks)) if side.get(k) == "offense"]
+    dfn = [k for k in range(len(tracks)) if side.get(k) == "defense"]
+    best = None
+    # half-second steps, so "standing still" / "moving" mean the same thing at any tracking rate (tuned at 2 a second)
+    st = max(1, int(round(float(clip.get("fps", 2.0)) / 2.0)))
+    # only up to the finish (clips run on after the play; a "screen" in the next possession isn't this play's)
+    t_end = min(len(frames) - 1, int(clip.get("t_finish", len(frames))) + 2)
+    for t in range(1, t_end):
+        u = units[t]
+        if not np.isfinite(u):
+            continue
+        for s in off:
+            # the screener doesn't have the ball around this moment
+            if t not in pos[s] or any(holder.get(tt) == s for tt in range(t - 2 * st, t + 3 * st)):
+                continue
+            sp = [pos[s][tt] for tt in (t - st, t + st) if tt in pos[s]]
+            speed = (max(_trk_dist(pos[s][t], q) for q in sp) / u) if sp else 9
+            if speed > 0.6:                                    # a screener is (nearly) set
+                continue
+            for d in dfn:
+                if t not in pos[d]:
+                    continue
+                gap = _trk_dist(pos[s][t], pos[d][t]) / u
+                if gap > 0.9:                                  # screener and defender in contact
+                    continue
+                # Whom was this defender guarding just before? The offensive player he stayed closest to.
+                man, man_d = None, np.inf
+                for c in off:
+                    if c == s:
+                        continue
+                    ds = [_trk_dist(pos[d][tt], pos[c][tt]) / units[tt] for tt in range(max(0, t - 3 * st), t)
+                          if tt in pos[d] and tt in pos[c] and np.isfinite(units[tt])]
+                    if ds and np.mean(ds) < man_d:
+                        man, man_d = c, float(np.mean(ds))
+                if man is None or man_d > 1.5 or t not in pos[man]:
+                    continue
+                if _trk_dist(pos[man][t], pos[s][t]) / u > 2.0:   # the screened player comes by the screen
+                    continue
+                # ...and is the one MOVING (coming off it), unless he has the ball (a ball screen can be waited on)
+                msp = [pos[man][tt] for tt in (t - st, t + st) if tt in pos[man]]
+                man_speed = (max(_trk_dist(pos[man][t], q) for q in msp) / u) if msp else 0
+                if man_speed <= speed and holder.get(t) != man:
+                    continue
+                score = (0.9 - gap) + (1.0 if holder.get(t) == man else 0.0) + (1.5 - man_d) / 1.5
+                if best is None or score > best["score"]:
+                    # The screener's own defender: the other defender closest to him just before.
+                    sd, sd_d = None, np.inf
+                    for d2 in dfn:
+                        if d2 == d:
+                            continue
+                        ds = [_trk_dist(pos[d2][tt], pos[s][tt]) / units[tt] for tt in range(max(0, t - 3 * st), t + 1)
+                              if tt in pos[d2] and tt in pos[s] and np.isfinite(units[tt])]
+                        if ds and np.mean(ds) < sd_d:
+                            sd, sd_d = d2, float(np.mean(ds))
+                    best = {"t": t, "screener": s, "screened": man, "screened_defender": d,
+                            "screener_defender": sd if sd_d < 2.5 else None,
+                            "type": "Ball screen" if holder.get(t) == man else "Off-ball screen", "score": score}
+    return best
+
+
+import re as _trk_re
+_TRK_NAME_SUFFIX = _trk_re.compile(r"^(?:jr|sr|ii|iii|iv|v)\.?$", _trk_re.I)
+
+
+def _trk_five(v):
+    # CONFIRMED BUG (fixed; Player Number Tracking for Wheaton @ North Park still offered "really #? Jerome Smith" and
+    # "really #? Jr."). Lineups are comma-separated, so a name written "Jerome Smith, Jr." became two players. Section 17
+    # now cleans the name at the source; this also joins a stray suffix ("Jr.", "Sr.", "II", "III", "IV") back onto the
+    # name before it, so an older lineup string can't split a player either.
+    if not isinstance(v, str):
+        return []
+    out = []
+    for p in (x.strip() for x in v.split(",")):
+        if not p:
+            continue
+        if out and _TRK_NAME_SUFFIX.match(p):
+            out[-1] = f"{out[-1]} {p}"
+        else:
+            out.append(p)
+    return out
+
+
+def _trk_clip_key(r):
+    return f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}"
+
+
+# ---- coach labels beyond the boxes: players with NO box ("missed"), and a learned player / not-a-player model ----------
+# CONFIRMED CHANGE (requested: "there should always be 10 players in the clip ... I'm getting quite a bit fewer. How can we
+# get better training data of what is and is not a player on the court?"). Two kinds of coach labels now teach it:
+#   * every checked box: "not a player" = a referee / coach / fan; a name (or "wrong team") = a real player;
+#   * NEW: players with no box at all, marked in the app by the grid square at their feet ("missed" in the saved checks).
+# The missed marks say which filter threw a real player out (or that the detector never saw him) -- printed and saved to
+# _tracking/missed_players_report.csv -- and, with the checked boxes, train a small player / not-a-player model on what's
+# already saved for every detection (shirt and shorts color, stripes, where on the court, how much it moves, how long it's
+# seen). The model tests itself on games it didn't learn from and is only used when it passes (TRACK_PLAYER_MODEL = "auto").
+def _trk_missed_points():
+    out = []
+    d_ = _review_saves_dir() if "_review_saves_dir" in globals() else None
+    if not d_ or not os.path.isdir(d_):
+        return out
+    reset_at = tracking_reset_time() if "tracking_reset_time" in globals() else None
+    for f in glob.glob(os.path.join(d_, "*.json")):
+        try:
+            with open(f, encoding="utf-8") as fh:
+                doc = _trk_json.load(fh)
+        except Exception:
+            continue
+        if doc.get("missed") and _saved_before_reset(doc.get("saved"), os.path.getmtime(f), reset_at):
+            continue                                   # marked on the old frames, before the tracking reset
+        for m in doc.get("missed", []) or []:
+            if m.get("frame_file") and m.get("cell") and m.get("W") and m.get("H"):
+                out.append(dict(m, game=doc.get("game"), coach=doc.get("coach")))
+    return out
+
+
+def _trk_cell_rect(m):
+    """Grid square ("C4" = 3rd column, 4th row) -> its rectangle on the frame (pixels), a little enlarged."""
+    mm = re.fullmatch(r"([A-Z])(\d{1,2})", str(m.get("cell", "")).strip().upper())
+    if not mm:
+        return None
+    cols, rows = (m.get("grid") or [12, 8])[:2]
+    W, H = float(m["W"]), float(m["H"])
+    c, r = ord(mm.group(1)) - 65, int(mm.group(2)) - 1
+    cw, rh = W / cols, H / rows
+    pad = 0.15
+    return (c * cw - pad * cw, r * rh - pad * rh, (c + 1) * cw + pad * cw, (r + 1) * rh + pad * rh)
+
+
+_TRK_PM_FEATS = ["r", "g", "b", "sat", "stripes", "chest_l", "chest_warm", "shorts_l", "shorts_warm", "chest_var",
+                 "frac_other_group", "frac_unsure", "frac_on_court", "edge_ft", "speed_ft_s", "speed_pic_s", "seen_share",
+                 "rel_height", "aspect", "feet_y", "color_gap_teams"]
+
+
+def _trk_pm_feats(clip, k, team_means, fps_):
+    """One track -> the numbers the player / not-a-player model uses (all from the saved detections; no pictures needed)."""
+    tr = clip["tracks"][k]
+    R = np.array([clip["frames"][t][j] for t, j in tr], dtype=np.float64)
+    med = lambda c: float(np.nanmedian(R[:, c])) if np.isfinite(R[:, c]).any() else np.nan
+    X, Y = R[:, 10], R[:, 11]
+    onc = np.isfinite(X) & np.isfinite(Y)
+    edge = np.minimum.reduce([X, 94 - X, Y, 50 - Y]) if onc.any() else np.array([np.nan])
+    secs = max((tr[-1][0] - tr[0][0]) / max(fps_, 1e-6), 1e-6)
+    if onc.sum() >= 2:
+        xy = np.column_stack([X[onc], Y[onc]])
+        spd_ft = float(np.linalg.norm(np.diff(xy, axis=0), axis=1).sum()) / secs
+    else:
+        spd_ft = np.nan
+    spd_pic = float(np.linalg.norm(np.diff(R[:, 0:2], axis=0), axis=1).sum()) / secs if len(R) >= 2 else np.nan
+    rel = []
+    for t, j in tr:
+        hs = [row[2] for row in clip["frames"][t]]
+        if hs:
+            rel.append(clip["frames"][t][j][2] / max(float(np.median(hs)), 1e-6))
+    w_h = (R[:, 8] - R[:, 6]) / np.maximum(R[:, 9] - R[:, 7], 1e-6)
+    rgb = np.array([med(3), med(4), med(5)])
+    gap = np.nan
+    if team_means and np.isfinite(rgb).all():
+        gap = float(min(np.linalg.norm(rgb - m_) for m_ in team_means))
+    grp = R[:, 19]
+    return [med(3), med(4), med(5), med(12), med(13), med(14), med(15), med(16), med(17), med(18),
+            float(np.mean(grp == 2)), float(np.mean(grp == -1)), float(np.mean(onc)),
+            float(np.nanmedian(edge)) if np.isfinite(edge).any() else np.nan, spd_ft, spd_pic,
+            len(tr) / max(len(clip["frames"]), 1), float(np.median(rel)) if rel else np.nan,
+            float(np.median(w_h)), float(np.median(R[:, 9] / max(float(np.nanmax(R[:, 9])), 1.0))), gap]
+
+
+def _trk_team_means(clip):
+    """Mean shirt color of each team's tracks in the clip (to measure how far a track's colors are from BOTH teams)."""
+    by = {}
+    for k, tr in enumerate(clip["tracks"]):
+        tm = clip.get("team", {}).get(k)
+        if tm in ("A", "B") and tr:
+            R = np.array([clip["frames"][t][j][3:6] for t, j in tr], dtype=np.float64)
+            by.setdefault(tm, []).append(np.nanmedian(R, 0))
+    return [np.nanmean(v, 0) for v in by.values() if v]
+
+
+def _trk_is_export(files, base):
+    """A clip whose tracking frames come from a Synergy export (the 1920 clip videos) -- not the old web screen captures.
+    Export frames are listed in their folder's _export.json (read through the frame index when it's loaded)."""
+    if not files:
+        return False
+    p = os.path.join(base, files[0])
+    if "_fx_lookup" in globals():
+        try:
+            if _fx_lookup(p) is not None:
+                return True
+        except Exception:
+            pass
+    d = os.path.dirname(p)
+    seen = globals().setdefault("_trk_export_dirs", {})
+    if d not in seen:
+        seen[d] = os.path.isfile(os.path.join(d, "_export.json"))
+    return seen[d]
+
+
+def _trk_export_games(pc, base):
+    """(set of play_calls index labels of export-backed clips, [(game, clips) left out because their frames are old captures])."""
+    keep, left = set(), {}
+    for i, v in pc.get("track_files", pd.Series(index=pc.index, dtype=object)).items():
+        fl = [x for x in str(v).split(";") if x] if isinstance(v, str) else []
+        if not fl:
+            continue
+        if _trk_is_export(fl, base):
+            keep.add(i)
+        else:
+            gk = f"{pc.at[i, 'game_date']} {pc.at[i, 'game_code']}"
+            left[gk] = left.get(gk, 0) + 1
+    return keep, sorted(left.items())
+
+
+# The new-game helpers live in the play calls section (47). A session whose Play calls cell ran before they were added
+# (rerun from the Player tracking cell) loads just those definitions here -- nothing else in that section runs.
+def _trk_load_new_game_helpers():
+    need = ("StartersNeeded", "_pr_game_slug", "starters_saved_all", "new_game_pace", "new_game_info", "new_game_in_process",
+            "_sync_saves_branch", "_starters_identified", "reuse_previous_model_columns", "reuse_previous_table")
+    # (always reloaded: an older copy from earlier in the session must not stay in use)
+    try:
+        import ast as _ast
+        _src = os.path.join(globals().get("PARSER_LIB") or os.path.join(os.getcwd(), "parser_lib"), "47_play_calls.py")
+        with open(_src, encoding="utf-8") as fh:
+            _tree = _ast.parse(fh.read())
+        _defs = [n for n in _tree.body if isinstance(n, (_ast.FunctionDef, _ast.ClassDef)) and n.name in need]
+        exec(compile(_ast.Module(_defs, []), _src, "exec"), globals())
+    except Exception as e:
+        print(f"  [tracking] new-game helpers not loaded ({type(e).__name__}: {e}) -- rerun the Play calls cell", flush=True)
+
+
+_trk_load_new_game_helpers()
+
+
+def _trk_starters_first(pc, todo):
+    """CONFIRMED CHANGE (requested: "why is it running tracking before I do my 1st clip player tracking" -- the new Millikin @
+    Wheaton game sat on 3.6 hours of player detection before its starters check; then: "I want this to be the process for
+    right now for new games", with the pace an option). A NEW game (new_game_in_process, play calls section) is tracked:
+      * until its starters are saved: only its first TRACK_STARTERS_FIRST_CLIPS (1) possession(s) -- the STARTERS check;
+      * after that, by TRACK_NEW_GAME_PACE: "One clip at a time" / "40 clips at a time" (the clips checked so far + the next
+        one / 40, in game order), "All Offensive Clips" (the scouted team's possessions) or "All Clips".
+    Other games are tracked in full. TRACK_STARTERS_FIRST = False tracks every game in full. -> the clips to track."""
+    if not globals().get("TRACK_STARTERS_FIRST", True) or "new_game_in_process" not in globals() or not todo:
+        return todo
+    try:
+        info = new_game_info()
+        saved = info[0]
+        kind, n_pace = new_game_pace()
+        checked = {_trk_ck(c.get("clip_key")) for c in coach_checks_all()[0]}
+    except Exception as e:
+        print(f"  [tracking] new-game pace skipped (saves not read: {type(e).__name__}: {e})", flush=True)
+        return todo
+    n_first = max(1, int(globals().get("TRACK_STARTERS_FIRST_CLIPS", 1)))
+    only = str(globals().get("PLAY_REVIEW_ONLY_GAME") or "")
+    _rank = lambda x: {"H1": 1, "H2": 2}.get(str(x), 3 if str(x).startswith("OT") else 9)
+    _num = lambda i, c: (pd.to_numeric(pc.at[i, c], errors="coerce") if c in pc.columns else np.nan)
+    # the same order the play review uses to find the tipoff clip: first half, highest clock, play-by-play order, clip
+    key = lambda i: (_rank(pc.at[i, "period"]) if "period" in pc.columns else 9,
+                     -(_num(i, "time_remaining_seconds") if pd.notna(_num(i, "time_remaining_seconds")) else -1.0),
+                     _num(i, "pbp_event_order") if pd.notna(_num(i, "pbp_event_order")) else np.inf,
+                     _num(i, "clip_number") if pd.notna(_num(i, "clip_number")) else np.inf)
+    _txt = lambda i, c: str(pc.at[i, c]) if c in pc.columns and pd.notna(pc.at[i, c]) else ""
+
+    def _scouted_offense(i):
+        """The scouted team has the ball: UWW in our games, the upcoming opponent in theirs."""
+        off = _txt(i, "offense_team").lower()
+        if _txt(i, "side") == "UWW":
+            return "whitewater" in off
+        sc = _txt(i, "scouted_opponent").lower()
+        return bool(off) and bool(sc) and (off == sc or off in sc or sc in off)
+
+    by_game = {}
+    for i in todo:
+        by_game.setdefault(f"{pc.at[i, 'game_date']}|{pc.at[i, 'game_code']}", []).append(i)
+    out = []
+    for g, ids in by_game.items():
+        slug = re.sub(r"[^A-Za-z0-9]+", "_", g).strip("_")
+        if (only and only not in g) or not new_game_in_process(g, info):
+            out += ids
+            continue
+        order = sorted(ids, key=key)
+        done_pos = [p for p, i in enumerate(order) if _trk_ck(_trk_clip_key(pc.loc[i])) in checked]
+        if slug not in saved:
+            # CONFIRMED CHANGE (requested: "this is running for a very long time if it should just be working on the first clip
+            # of the new game" -- Wheaton @ North Park and WashU re-tracked 395 checked clips while waiting for their starters).
+            # Until a game's starters are saved, ONLY its first possession is tracked; its other clips keep their earlier
+            # results (_trk_carry_previous), so nothing is lost.
+            first = order[:n_first]
+            out += first
+            print(f"  [tracking] {g}: starters not validated yet -- tracking only its first {len(first)} possession(s) (clip "
+                  f"{', '.join(str(pc.at[i, 'clip_number']) for i in first)}) this run for the STARTERS check"
+                  + (f"; its other {len(ids) - len(first)} clip(s) keep their earlier results" if done_pos else ""), flush=True)
+            continue
+        if kind == "all":
+            keep, how = order, "All Clips"
+        elif kind == "offense":
+            keep = [i for p, i in enumerate(order) if p == 0 or p in done_pos or _scouted_offense(i)]
+            how = "All Offensive Clips (the scouted team's possessions)"
+        else:
+            upto = (max(done_pos) if done_pos else 0) + 1 + n_pace
+            keep = order[:upto]
+            how = (f"{'one clip' if n_pace == 1 else f'{n_pace} clips'} at a time: the {upto - n_pace} clip(s) up to the "
+                   f"last one checked + the next {min(n_pace, max(0, len(order) - (upto - n_pace)))}")
+            # CONFIRMED CHANGE (requested: "stop moving forward with clips 9 and later -- there might be a substitution
+            # soon"): TRACK_HOLD_AT_CLIP = N tracks no clip past clip N (None = move on as usual)
+            _hold = (ptg_setting("TRACK_HOLD_AT_CLIP", str(g).split("|")[0], g) if "ptg_setting" in globals()
+                     else globals().get("TRACK_HOLD_AT_CLIP"))      # (can be per game -- see ptg_setting, 46)
+            if _hold:
+                _cn_ = lambda i_: pd.to_numeric(pc.at[i_, "clip_number"], errors="coerce")
+                _held = [i_ for i_ in keep if not (pd.notna(_cn_(i_)) and _cn_(i_) > int(_hold))]
+                if len(_held) < len(keep):
+                    how += f" -- held at clip {int(_hold)} (TRACK_HOLD_AT_CLIP)"
+                keep = _held
+        out += keep
+        print(f"  [tracking] {g} (starters saved): tracking {len(keep)} of {len(ids)} clip(s) -- "
+              f"TRACK_NEW_GAME_PACE = {how}", flush=True)
+    keep_ = set(out)
+    return [i for i in todo if i in keep_]
+
+
+def player_tracking(pc):
+    """Runs everything on the clips in pc that have tracking frames. Returns (per-clip columns, tracks table,
+    report rows)."""
+    from PIL import Image
+    base = VISION_FRAMES_DIR if "VISION_FRAMES_DIR" in globals() else os.path.join(INPUT_DIR, "_vision_frames")
+    tf = pc.get("track_files", pd.Series(index=pc.index, dtype=object)).map(lambda v: v if isinstance(v, str) else "")
+    lists = tf.map(lambda s: [x for x in s.split(";") if x])
+    todo = [i for i in pc.index if len(lists[i]) >= 4]
+    # CONFIRMED CHANGE (requested: "limit tracking to the Synergy-export games"): the restart on the 1920 Synergy exports
+    # tracks ONLY games whose frames come from an export. Games still on the old web screen captures (blurry, 1024-1280
+    # wide) are left out -- no tracking, player checks or court calibration -- until they're exported from Synergy.
+    # TRACK_EXPORT_ONLY = False tracks every captured game again.
+    if globals().get("TRACK_EXPORT_ONLY", True):
+        _keep, _left = _trk_export_games(pc, base)
+        todo = [i for i in todo if i in _keep]
+        if _left:
+            print(f"  [tracking] Synergy-export games only (TRACK_EXPORT_ONLY): {len(_left)} game(s) on the old web captures "
+                  f"left out -- " + "; ".join(f"{g} ({n} clips)" for g, n in _left), flush=True)
+    # CONFIRMED CHANGE (requested: move the player-number tracking on to one new game -- PLAYER_TRACKING_GAMES, frame capture
+    # cell): only those games are tracked; every other game keeps its earlier results (_trk_carry_previous)
+    _ptl = globals().get("player_tracking_listed")
+    if _ptl is not None and todo and _ptl(pc.at[todo[0], "game_date"], pc.at[todo[0], "game_code"]) is not None:
+        _left_g = sorted({f"{pc.at[i, 'game_date']} {pc.at[i, 'game_code']}" for i in todo
+                          if not _ptl(pc.at[i, "game_date"], pc.at[i, "game_code"])})
+        todo = [i for i in todo if _ptl(pc.at[i, "game_date"], pc.at[i, "game_code"])]
+        print(f"  [tracking] PLAYER_TRACKING_GAMES: tracking only {', '.join(str(x) for x in globals().get('PLAYER_TRACKING_GAMES') or [])}"
+              + (f" -- {len(_left_g)} other game(s) keep their earlier tracking" if _left_g else "")
+              + ("" if todo else " -- none of its clips have frames yet (Frame capture exports it)"), flush=True)
+    todo = _trk_starters_first(pc, todo)
+    if not todo:
+        return None, pd.DataFrame(), []
+    print(f"  [tracking] step 1: player and ball detections for {len(todo)} clip(s) "
+          f"({sum(len(lists[i]) for i in todo):,} frames; saved ones are reused)...", flush=True)
+    det = _trk_detect([f for i in todo for f in lists[i]], base)
+    court_H = {}
+    if TRACK_USE_COURT:
+        _cp = os.path.join(TRACK_DIR, "court_homographies.pkl")
+        if os.path.exists(_cp):
+            court_H = {k: v for k, v in _safe_read_pickle(_cp).items() if not str(k).startswith("_") and v is not None}
+        n_cf = sum(1 for i in todo for f in lists[i] if f in court_H)
+        globals()["_trk_court_frames_used"] = n_cf
+        n_all_f = sum(len(lists[i]) for i in todo)
+        print(f"  [tracking]   court mapping available for {n_cf:,} of {n_all_f:,} frame(s)"
+              + ("" if n_cf else " -- run the Court mapping cell, then rerun from this cell to use it"), flush=True)
+        # CONFIRMED CHANGE (requested: "do #2" -- stop naming people who aren't players). On the saved checks, 54 of the 90 boxes
+        # marked "not a player" were in frames with NO court mapping, so the off-the-court filter never ran on them (most in the
+        # Coe game); 103 of the 134 checked frames without a mapping had a mapped frame within 5 frames. A frame without a
+        # mapping now borrows the nearest mapped frame's of the same clip (up to TRACK_H_BORROW_FRAMES away), corrected for the
+        # camera's pan between the two (measured by phase correlation of the two pictures). 0 = off.
+        _nb = int(globals().get("TRACK_H_BORROW_FRAMES", 4))
+        if court_H and _nb > 0:
+            try:
+                import cv2 as _cv2h
+                n_borrow = 0
+                # CONFIRMED CHANGE (frame archive): the measured pan between two frames is saved, so a rerun doesn't open
+                # (or unpack) the pictures again
+                _pc_path = os.path.join(TRACK_DIR, "court_pan_shifts.pkl")
+                _pc_cache = _safe_read_pickle(_pc_path) if os.path.exists(_pc_path) else {}
+                _pc_new = 0
+                for i in todo:
+                    fl = lists[i]
+                    have = [t for t, f in enumerate(fl) if f in court_H]
+                    if not have or len(have) == len(fl):
+                        continue
+                    _small = {}
+
+                    def _gray(f):
+                        if f not in _small:
+                            im = _cv2h.imread(os.path.join(base, f), _cv2h.IMREAD_GRAYSCALE)
+                            _small[f] = (None if im is None else
+                                         _cv2h.resize(im, (im.shape[1] // 2, im.shape[0] // 2)).astype(np.float32))
+                        return _small[f]
+                    for t, f in enumerate(fl):
+                        if f in court_H:
+                            continue
+                        near_ = [u for u in have if abs(u - t) <= _nb]
+                        if not near_:
+                            continue
+                        u = min(near_, key=lambda u: abs(u - t))
+                        _pk = f"{f}|{fl[u]}"
+                        if _pk not in _pc_cache:
+                            a_, b_ = _gray(f), _gray(fl[u])
+                            if a_ is None or b_ is None or a_.shape != b_.shape:
+                                _pc_cache[_pk] = None
+                            else:
+                                (dx_, dy_), resp_ = _cv2h.phaseCorrelate(a_, b_)   # a point at p here sits at p + (dx, dy) there
+                                _pc_cache[_pk] = (float(dx_), float(dy_), float(resp_), int(a_.shape[1]), int(a_.shape[0]))
+                            _pc_new += 1
+                        if _pc_cache[_pk] is None:
+                            continue
+                        dx, dy, resp, _w2, _h2 = _pc_cache[_pk]
+                        if resp < 0.05 or abs(dx) > 0.25 * _w2 or abs(dy) > 0.15 * _h2:
+                            continue
+                        T_ = np.array([[1.0, 0.0, 2.0 * dx], [0.0, 1.0, 2.0 * dy], [0.0, 0.0, 1.0]])
+                        court_H[f] = np.asarray(court_H[fl[u]], np.float64) @ T_
+                        n_borrow += 1
+                if _pc_new:
+                    _safe_to_pickle(_pc_cache, _pc_path)
+                print(f"  [tracking]   court mapping borrowed from a nearby frame (pan-corrected, up to {_nb} frames away) for "
+                      f"{n_borrow:,} more frame(s)", flush=True)
+            except Exception as _e:
+                print(f"  [tracking]   court mapping not borrowed ({type(_e).__name__}: {_e})", flush=True)
+    _fps = VISION_TRACK_FPS if "VISION_TRACK_FPS" in globals() and VISION_TRACK_FPS else 2.0
+
+    # --- per clip: players; then team groups for the whole game; then tracks ---
+    print(f"  [tracking] step 2: finding the players in {len(todo)} clip(s) and sorting them into teams...", flush=True)
+    jfeat = _trk_jersey_feats([f for i in todo for f in lists[i]], det, base)
+    _n_open = int(round(float(globals().get("TRACK_INBOUND_OPEN_S", 2.0)) * float(globals().get("VISION_TRACK_FPS") or 2.0)))
+    _trk_drop["counts"].clear()
+    _trk_drop["boxes"].clear()
+    _open_s = float(globals().get("TRACK_INBOUND_OPEN_S", 2.0))
+    _n_open_of = {i: int(round(_open_s * _trk_clip_fps(pc.loc[i], _fps))) for i in todo}
+    frames_of = {i: [_trk_players(det.get(f), court_H.get(f), jfeat.get(f), opening=(t_ < _n_open_of[i]), file=f)
+                     for t_, f in enumerate(lists[i])] for i in todo}
+    # seated / partly hidden people: shorter than a standing player at the same picture row
+    _n_seated = 0
+    for g_ in set(f"{pc.at[i, 'game_date']}|{pc.at[i, 'game_code']}" for i in todo):
+        ids_ = [i for i in todo if f"{pc.at[i, 'game_date']}|{pc.at[i, 'game_code']}" == g_]
+        rows_ = [f for i in ids_ for f in frames_of[i] if len(f)]
+        if not rows_:
+            continue
+        allr = np.vstack(rows_)
+        y2, hpx = allr[:, 9], allr[:, 9] - allr[:, 7]
+        edges = np.linspace(y2.min(), y2.max(), 13)
+        pts = [(0.5 * (a + b), np.percentile(hpx[(y2 >= a) & (y2 < b)], 70)) for a, b in zip(edges[:-1], edges[1:])
+               if ((y2 >= a) & (y2 < b)).sum() > 20]
+        if len(pts) < 3:
+            continue
+        coef = np.polyfit([p[0] for p in pts], [p[1] for p in pts], 1)
+        for i in ids_:
+            for t_, f in enumerate(frames_of[i]):
+                if len(f):
+                    keep_ = (f[:, 9] - f[:, 7]) >= TRACK_MIN_STANDING * np.polyval(coef, f[:, 9])
+                    X_, Y_ = f[:, 10], f[:, 11]
+                    inside = np.isfinite(X_) & (X_ >= TRACK_EDGE_ZONE_FT) & (X_ <= 94 - TRACK_EDGE_ZONE_FT) \
+                        & (Y_ >= TRACK_EDGE_ZONE_FT) & (Y_ <= 50 - TRACK_EDGE_ZONE_FT)
+                    keep_ |= inside                   # out on the floor nobody is seated
+                    _n_seated += int((~keep_).sum())
+                    if (~keep_).any():
+                        _trk_note_drop("short for its spot in the picture (seated / partly hidden)", int((~keep_).sum()),
+                                       lists[i][t_], f[~keep_][:, 6:10])
+                    frames_of[i][t_] = f[keep_]
+    print(f"  [tracking]   set aside {_n_seated:,} seated or partly hidden people (shorter than a standing player there)", flush=True)
+    from sklearn.cluster import KMeans
+    game_of = {i: f"{pc.at[i, 'game_date']}|{pc.at[i, 'game_code']}" for i in todo}
+    team_color = {}
+    # CONFIRMED CHANGE (requested: "sort the teams using your checks" -- on the Millikin @ Wheaton starters clip every player on
+    # the floor was labelled MIL and the WHE label went to the fans and a referee: with ONE clip of the game there were more
+    # people in the stands than on the floor, so the color groups split floor from crowd instead of white from blue).
+    #   * the color groups are learned from the people ON THE COURT (court-mapped frames), when there are enough of them;
+    #   * your checked boxes decide which group is which: a player you named votes his team for his group, "not a player"
+    #     votes for the everyone-else group -- this comes before the home-wears-light rule (TRACK_TEAM_COLORS_FROM_CHECKS).
+    _cc_votes_src, _team_of_name, _coach_colors = [], {}, {}
+    if TRACK_USE_COACH_CHECKS and globals().get("TRACK_TEAM_COLORS_FROM_CHECKS", True):
+        try:
+            _k2i = {_trk_clip_key(pc.loc[i]): i for i in todo}
+            for ch in _trk_coach_checks():
+                i = _k2i.get(ch.get("clip_key"))
+                t = _trk_t_of(ch, -1)
+                if i is None or not 0 <= t < len(frames_of[i]) or not len(frames_of[i][t]):
+                    continue
+                f = frames_of[i][t]
+                d_ = np.hypot((f[:, 6] + f[:, 8]) / 2 - float(ch.get("px", -1e9)), f[:, 9] - float(ch.get("py", -1e9)))
+                j = int(np.argmin(d_))
+                if d_[j] >= 25 or not np.isfinite(f[j, 14:19]).all():
+                    continue
+                vd = ch.get("verdict")
+                nm = (ch.get("true_name") if vd in ("wrong", "wrong team") else
+                      (ch.get("true_name") or ch.get("assigned")) if vd == "correct" else None)
+                kind = "np" if vd == "not a player" else (("name", str(nm)) if nm else None)
+                if kind:
+                    _cc_votes_src.append((i, f[j].copy(), kind))
+            for i in todo:
+                for sd in ("offense", "defense"):
+                    for n_ in _trk_five(pc.at[i, f"{sd}_lineup"]):
+                        _team_of_name.setdefault(game_of[i], {}).setdefault(n_, str(pc.at[i, f"{sd}_team"]))
+        except Exception as _ce:
+            print(f"  [tracking]   your checks not used for the team colors ({type(_ce).__name__}: {_ce})", flush=True)
+            _cc_votes_src = []
+    for g in set(game_of.values()):
+        ids = [i for i in todo if game_of[i] == g]
+        rows_ = [f[np.isfinite(f[:, 14:19]).all(1)] for i in ids for f in frames_of[i] if len(f)]
+        allr = np.vstack(rows_) if rows_ else np.zeros((0, 20))
+        if len(allr) < 30:
+            continue
+        _onc = allr[np.isfinite(allr[:, 10]) & np.isfinite(allr[:, 11]) & (allr[:, 10] > -3) & (allr[:, 10] < 97)
+                    & (allr[:, 11] > -3) & (allr[:, 11] < 53)]
+        _fit = _onc if len(_onc) >= max(30, int(globals().get("TRACK_TEAM_COURT_MIN", 60))) else allr
+        km = KMeans(n_clusters=3, n_init=10, random_state=0).fit(_trk_group_feat(_fit))
+        c_ = km.cluster_centers_
+        # everyone-else = light shirt over dark pants, not warm (referees' black pants, coaches, fans)
+        other = int(np.argmax((c_[:, 0] - c_[:, 2]) - np.abs(c_[:, 1] / 2)))
+        # CONFIRMED CHANGE (requested: "referee" marks in the player checks). When coaches marked referees in this game, the
+        # referees' group is the one most of those boxes fall in (and the fewest named players) -- the shirt-color rule above
+        # is only the fallback. In the last run 20 of 34 players with no box had been sorted in with the referees.
+        try:
+            _ref_o = _trk_ref_group(g, ids, lists, frames_of, km)
+            if _ref_o is not None and _ref_o[0] != other:
+                print(f"  [tracking]   {g}: referee marks put the referees in color group {_ref_o[0]} (the shirt-color rule "
+                      f"picked {other}) -- {_ref_o[1]}", flush=True)
+                other = _ref_o[0]
+            elif _ref_o is not None:
+                print(f"  [tracking]   {g}: referee marks agree with the shirt-color rule on which group is the referees "
+                      f"({_ref_o[1]})", flush=True)
+        except Exception as _re:
+            print(f"  [tracking]   referee marks not used for the color groups ({type(_re).__name__}: {_re})", flush=True)
+        # your checks: which color group each checked box is in
+        _pv, _npv = {c: {} for c in range(3)}, {c: 0 for c in range(3)}
+        for i_, row_, kind_ in _cc_votes_src:
+            if game_of.get(i_) != g:
+                continue
+            c_ = int(km.predict(_trk_group_feat(row_[None, :]))[0])
+            if kind_ == "np":
+                _npv[c_] += 1
+            else:
+                tm_ = _team_of_name.get(g, {}).get(kind_[1])
+                if tm_:
+                    _pv[c_][tm_] = _pv[c_].get(tm_, 0) + 1
+        _tot = {c: sum(_pv[c].values()) for c in range(3)}
+        if sum(_tot.values()) >= int(globals().get("TRACK_TEAM_CHECKS_MIN", 2)):
+            if _tot[other] > 0 and min(_tot.values()) < _tot[other]:
+                _o2 = min(range(3), key=lambda c: (_tot[c], -_npv[c]))
+                print(f"  [tracking]   {g}: your checks put players in color group {other} -- the everyone-else group is "
+                      f"{_o2} instead", flush=True)
+                other = _o2
+        teams_ = [c for c in range(3) if c != other]
+        lab = {teams_[0]: "A", teams_[1]: "B", other: "ref"}
+        _m = {lab[c]: max(_pv[c], key=_pv[c].get) for c in teams_ if _pv[c]}
+        if _m and len(set(_m.values())) == len(_m):
+            _coach_colors[g] = {tm_: L_ for L_, tm_ in _m.items()}
+            print(f"  [tracking]   {g}: your checks say which shirt color is which team -- "
+                  + "; ".join(f"{tm_}: group {L_} ({sum(_pv[c].values())} checked box(es))" for c in teams_
+                              for L_, tm_ in _m.items() if lab[c] == L_), flush=True)
+        code = {teams_[0]: 0.0, teams_[1]: 1.0, other: 2.0}
+        team_color[g] = (km, lab)
+        _refp, _ref_cut, _n_ref_moved = None, float(globals().get("TRACK_REF_P", 0.7)), [0]
+        if globals().get("TRACK_REF_FROM_MARKS", True):
+            try:
+                _refp, _ref_note = _trk_ref_model(g, ids, lists, frames_of)
+                print(f"  [tracking]   {g}: referee detector from your referee marks -- {_ref_note}", flush=True)
+            except Exception as _rme:
+                print(f"  [tracking]   referee detector not used ({type(_rme).__name__}: {_rme})", flush=True)
+                _refp = None
+        # CONFIRMED CHANGE (coach: not all 5 players had a box). Frame by frame, some players were sorted into the WRONG
+        # team (e.g. a gold-and-black Oshkosh player labelled with the white UWW group when his chest patch caught bright
+        # floor) -- he was then missing from his own team, and his track split in two ("never across teams"). A
+        # detection whose colors are about as close to the other team as to its own is now UNSURE (-1): it links
+        # freely, and each track's team is decided by the majority of its frames.
+        for i in ids:
+            for f in frames_of[i]:
+                ok = np.isfinite(f[:, 14:19]).all(1) if len(f) else np.zeros(0, bool)
+                if ok.any():
+                    F_ = _trk_group_feat(f[ok])
+                    dd = np.linalg.norm(F_[:, None, :] - km.cluster_centers_[None, :, :], axis=2)
+                    lab_ = dd.argmin(1)
+                    srt = np.sort(dd, 1)
+                    unsure = srt[:, 0] > TRACK_TEAM_SURE_RATIO * srt[:, 1]
+                    vals = np.array([code[int(x)] for x in lab_], float)
+                    vals[unsure & (vals != 2.0)] = -1.0      # unsure between the two TEAMS -> no team this frame
+                    if _refp is not None:
+                        _rp = _refp(f[ok])
+                        _n_ref_moved[0] += int(((_rp >= _ref_cut) & (vals != 2.0)).sum())
+                        vals[_rp >= _ref_cut] = 2.0          # looks like the referees you marked -> everyone-else group
+                    f[ok, 19] = vals
+        if _refp is not None:
+            print(f"  [tracking]   {g}: {_n_ref_moved[0]:,} box(es) that look like your marked referees moved from a team to "
+                  f"the referees' group", flush=True)
+    print(f"  [tracking] step 3: following players through {len(todo)} clip(s) (never across teams)...", flush=True)
+    clips = {}
+    _t0 = time.time()
+    _x_iou = float(globals().get("TRACK_SPLIT_CROSS_IOU", 0.25))
+    _x_cut = _x_short = _x_join = _n_tr_raw = 0
+    for _n_clip, i in enumerate(todo, 1):
+        _trk_progress("clips tracked", _n_clip, len(todo), _t0)
+        frames = frames_of[i]
+        _fps_i = _trk_clip_fps(pc.loc[i], _fps)               # 8 a second for a PLAYER_TRACKING_GAMES game (see 46)
+        tracks, shifts = _trk_link(frames, _fps_i)
+        if _x_iou > 0:
+            tracks, _c1, _c2 = _trk_split_crossings(frames, tracks, _x_iou)
+            _x_cut += _c1
+            _x_short += _c2
+        _n_tr_raw += len(tracks)
+        if globals().get("TRACK_STITCH", True):
+            try:
+                tracks, _nj = _trk_stitch(frames, tracks, shifts, _fps_i)
+                _x_join += _nj
+            except Exception as _se:
+                print(f"  [tracking]   track joining skipped on a clip ({type(_se).__name__}: {_se})", flush=True)
+        ball = {}
+        for t, f in enumerate(lists[i]):
+            d = det.get(f)
+            if d is None or not len(d["b"]):
+                continue
+            bx, by, _c = d["b"][d["b"][:, 2].argmax()]
+            ball[t] = (bx / d["H"], by / d["H"])
+        clip = {"frames": frames, "tracks": tracks, "shifts": shifts, "ball": ball, "files": lists[i], "fps": _fps_i,
+                "game": game_of[i], "ckey": _trk_ck(_trk_clip_key(pc.loc[i]))}
+        clip["basket"], clip["t_finish"], clip["window"] = _trk_finish(frames)
+        clip["holder"] = _trk_holders(clip)
+        g = game_of[i]
+        if g in team_color:
+            lab = {0.0: "A", 1.0: "B", 2.0: "ref"}
+            clip["team"] = {}
+            for k, tr in enumerate(tracks):
+                labs = [lab.get(float(frames[t][j][19])) for t, j in tr]
+                labs = [x for x in labs if x] or ["ref"]          # unsure frames don't vote
+                clip["team"][k] = max(set(labs), key=labs.count)
+        clips[i] = clip
+
+    # CONFIRMED BUG (fixed; "A is definitely not #12 since E is" -- your #12 Martin check on one frame named a box on another
+    # frame that was a different Wheaton player). A track can switch from one player to another where they pass close without
+    # overlapping enough to be cut, and a check named the WHOLE track. In a game still on its starters check, a checked track
+    # is now cut to the stretch within TRACK_CHECK_SPAN_S (2) seconds of the checked frame; the rest become pieces of their
+    # own, which get the name only if they look like him and are on his team (carried names, step 6).
+    _span = float(globals().get("TRACK_CHECK_SPAN_S", 2.0))
+    # TRACK_CHECK_FOLLOW = True (default): a checked name follows the track until it touches a teammate (below);
+    # False = the old fixed TRACK_CHECK_SPAN_S window
+    _follow = bool(globals().get("TRACK_CHECK_FOLLOW", True))
+    # CONFIRMED CHANGE (requested: "make the check for #2" -- following a checked track was 2 of 2 right, carrying a name by
+    # look was 1 of 5). Following no longer depends on TRACK_CARRY_CHECKS, so it stays on with carrying off.
+    if (_span > 0 or _follow) and TRACK_USE_COACH_CHECKS:
+        try:
+            _done_ = starters_saved_all() if "starters_saved_all" in globals() else {}
+            _sl_ = lambda g_: re.sub(r"[^A-Za-z0-9]+", "_", str(g_)).strip("_")
+            _k2i_ = {_trk_clip_key(pc.loc[i]): i for i in todo}
+            _w = max(1, int(round(_span * _fps)))
+            _labm = {0.0: "A", 1.0: "B", 2.0: "ref"}
+            _n_split, _touched = 0, set()
+            for ch in _trk_coach_checks():
+                i = _k2i_.get(ch.get("clip_key"))
+                # CONFIRMED BUG (fixed; clip 1 re-check: three CHEERLEADERS carried #34 Kapral, #21 May and #12 McKenna).
+                # Once a game's starters were saved this step was skipped, so a check named its WHOLE track -- and a track
+                # chained over 25 s of film wandered from the checked player to the cheerleaders behind the baseline. A
+                # check now names only the stretch it was made on, in every game.
+                if i is None or (not globals().get("TRACK_CHECK_CUT_ALWAYS", True) and _sl_(game_of[i]) in _done_):
+                    continue
+                t = _trk_t_of(ch, -1)
+                clip = clips[i]
+                if not 0 <= t < len(clip["frames"]):
+                    continue
+                _w = max(1, int(round(_span * float(clip.get("fps", _fps)))))
+                best = None
+                for k, tr in enumerate(clip["tracks"]):
+                    for tt, j in tr:
+                        if tt == t:
+                            row = clip["frames"][t][j]
+                            dpx = float(np.hypot((row[6] + row[8]) / 2 - float(ch.get("px", -1e9)), row[9] - float(ch.get("py", -1e9))))
+                            if dpx < 25 and (best is None or dpx < best[0]):
+                                best = (dpx, k)
+                if best is None:
+                    continue
+                k = best[1]
+                tr = clip["tracks"][k]
+                if _follow:
+                    # CONFIRMED CHANGE (requested: "let a name you check follow that player's track for the whole clip,
+                    # and stop only where it overlaps a teammate"). From the checked frame, the name goes back and
+                    # forward along the track until the first frame where his box touches a TEAMMATE's box (where a swap
+                    # can happen); the track is cut there. No teammate nearby = the whole track keeps the name.
+                    _fr = clip["frames"]
+                    _tr_s = sorted(tr)
+                    _ix = next((n_ for n_, (tt, _j) in enumerate(_tr_s) if tt == t), None)
+                    if _ix is None:
+                        continue
+
+                    def _near_mate(tt, j):
+                        r = _fr[tt][j]
+                        tm = r[19]
+                        if tm is None or (isinstance(tm, float) and np.isnan(tm)) or float(tm) == 2.0:
+                            return False
+                        x1, y1, x2, y2 = float(r[6]), float(r[7]), float(r[8]), float(r[9])
+                        pad = 0.10 * (x2 - x1)
+                        for jj, r2 in enumerate(_fr[tt]):
+                            if jj == j or r2[19] is None or (isinstance(r2[19], float) and np.isnan(r2[19])) \
+                                    or float(r2[19]) != float(tm):
+                                continue
+                            if (min(x2 + pad, float(r2[8])) > max(x1 - pad, float(r2[6]))
+                                    and min(y2, float(r2[9])) > max(y1, float(r2[7]))):
+                                return True
+                        return False
+                    # ...and where the track has a hole or a jump: the stretch before / after it may be someone else (the
+                    # tracker bridges missed frames, and pieces are joined back) -- TRACK_CHECK_MAX_GAP_S, TRACK_CHECK_MAX_JUMP
+                    _fps_c = float(clip.get("fps", _fps))
+                    _gap_mx = max(1, int(round(float(globals().get("TRACK_CHECK_MAX_GAP_S", 0.25)) * _fps_c)))
+                    _jmp = float(globals().get("TRACK_CHECK_MAX_JUMP", 0.6))
+
+                    def _cont(a, b):
+                        (ta, ja), (tb, jb) = a, b
+                        dt = abs(tb - ta)
+                        if dt > _gap_mx:
+                            return False
+                        ra, rb = _fr[ta][ja], _fr[tb][jb]
+                        if len(ra) > 11 and np.isfinite([ra[10], ra[11], rb[10], rb[11]]).all():
+                            d = float(np.hypot(rb[10] - ra[10], rb[11] - ra[11]))
+                            return d <= 2.0 + 25.0 * dt / max(_fps_c, 0.5)
+                        # no court: the feet in the picture (a frame or two apart the camera barely moves; its estimated
+                        # pan is too noisy for this), in box heights
+                        d = float(np.hypot((rb[6] + rb[8]) / 2 - (ra[6] + ra[8]) / 2, rb[9] - ra[9]))
+                        return d <= max(float(ra[9] - ra[7]), 1.0) * (_jmp + 0.3 * dt * 8.0 / max(_fps_c, 0.5))
+
+                    lo = _ix
+                    while lo > 0 and not _near_mate(*_tr_s[lo - 1]) and _cont(_tr_s[lo - 1], _tr_s[lo]):
+                        lo -= 1
+                    hi = _ix
+                    while hi < len(_tr_s) - 1 and not _near_mate(*_tr_s[hi + 1]) and _cont(_tr_s[hi], _tr_s[hi + 1]):
+                        hi += 1
+                    inside = _tr_s[lo:hi + 1]
+                    rest = [_tr_s[:lo], _tr_s[hi + 1:]]
+                else:
+                    inside = [(tt, j) for tt, j in tr if abs(tt - t) <= _w]
+                    rest = [[(tt, j) for tt, j in tr if tt < t - _w], [(tt, j) for tt, j in tr if tt > t + _w]]
+                if not any(rest):
+                    continue
+                clip["tracks"][k] = inside
+                for piece in rest:
+                    if not piece:
+                        continue
+                    clip["tracks"].append(piece)
+                    if "team" in clip:
+                        labs = [_labm.get(float(clip["frames"][tt][j][19])) for tt, j in piece]
+                        labs = [x for x in labs if x] or ["ref"]
+                        clip["team"][len(clip["tracks"]) - 1] = max(set(labs), key=labs.count)
+                    _n_split += 1
+                _touched.add(i)
+            for i in _touched:
+                clips[i]["holder"] = _trk_holders(clips[i])
+            if _n_split:
+                print(f"  [tracking]   checked tracks "
+                      + ("followed until they touch a teammate, or the track has a hole or a jump (TRACK_CHECK_FOLLOW)" if _follow else
+                         f"cut to {_span:g} s around the checked frame (TRACK_CHECK_SPAN_S)")
+                      + f": {_n_split} piece(s) split off" + (" (they keep the name only if they look like him)"
+                         if globals().get("TRACK_CARRY_CHECKS", False) else " (left unnamed -- carrying by look is off)"), flush=True)
+        except Exception as _e:
+            print(f"  [tracking]   checked tracks not cut ({type(_e).__name__}: {_e})", flush=True)
+
+    if _x_iou > 0:
+        print(f"  [tracking]   tracks cut where two teammates overlapped (a swap can happen there): {_x_cut:,} cut(s); "
+              f"{_x_short:,} piece(s) shorter than TRACK_MIN_FRAMES left out (TRACK_SPLIT_CROSS_IOU = {_x_iou:g}; 0 = off)", flush=True)
+    if globals().get("TRACK_STITCH", True):
+        print(f"  [tracking]   broken tracks joined back (same player, clearly -- TRACK_STITCH): {_x_join:,} join(s), "
+              f"{_n_tr_raw:,} -> {_n_tr_raw - _x_join:,} track(s)", flush=True)
+    try:
+        _fps_seen = sorted({round(float(clips[i]["fps"]), 2) for i in todo})
+        print(f"  [tracking]   frames a second in the tracked clips: {', '.join(f'{x:g}' for x in _fps_seen)}", flush=True)
+    except Exception:
+        pass
+    _n_det = sum(len(det[f]["p"]) for i in todo for f in lists[i] if det.get(f) is not None)
+    _n_keep = sum(len(f) for i in todo for f in clips[i]["frames"])
+    _n_players = sum(1 for i in todo for f in clips[i]["frames"] for r_ in f if r_[19] in (0.0, 1.0))
+    print(f"  [tracking]   kept {_n_keep:,} of {_n_det:,} people detected ({_n_players / max(sum(len(lists[i]) for i in todo), 1):.1f} "
+          f"players per frame after setting aside referees/coaches/fans); "
+          f"{sum(len(clips[i]['tracks']) for i in todo):,} tracks, "
+          f"{sum(len(clips[i]['tracks']) for i in todo) / max(len(todo), 1):.1f} per clip (10 players + 3 refs is ideal)", flush=True)
+
+    # --- anchors: the Synergy-named player = the track with the ball late in the clip ---
+    print("  [tracking] step 4: finding the Synergy-named player in each clip (ball, then shooting pose)...", flush=True)
+    votes = {}   # (game, team name) -> Counter of color label
+    for i in todo:
+        clip = clips[i]
+        n = len(clip["frames"])
+        late = [clip["holder"][t] for t in clip["holder"] if t in clip["window"]]
+        clip["anchor"] = None
+        if late:
+            k = max(set(late), key=late.count)
+            name = pc.at[i, "player"].strip() if isinstance(pc.at[i, "player"], str) else ""
+            five = _trk_five(pc.at[i, "offense_lineup"])
+            if late.count(k) >= 2 and name and (not five or name in five) and clip.get("team", {}).get(k) in ("A", "B"):
+                clip["anchor"] = (k, name)
+                key = (game_of[i], str(pc.at[i, "offense_team"]))
+                votes.setdefault(key, {}).setdefault(clip["team"][k], 0)
+                votes[key][clip["team"][k]] += 1
+    color_of_team = {}
+    for (g, team), v in votes.items():
+        color_of_team[(g, team)] = max(v, key=v.get)
+    color_source = {g: "anchors (ball)" for g, _ in color_of_team}
+    # CONFIRMED BUG (fixed): the ball-based votes decided which jersey color is which team whenever any existed,
+    # and on the full Oshkosh game (ball seen in 110 clips) they got it backwards -- most tracks landed on the
+    # wrong team. The override (TRACK_TEAM_COLORS) and the home-wears-light rule now come FIRST; the ball votes
+    # only decide when neither applies, and a disagreement is printed. (Review of the first 5 possessions: with
+    # the home rule, 90 of 91 player tracks were on the right team.)
+    ball_votes = dict(color_of_team)
+    for g, (km_, lab) in team_color.items():
+        teams = sorted({str(pc.at[i, c]) for i in todo if game_of[i] == g for c in ("offense_team", "defense_team")})
+        if len(teams) != 2:
+            continue
+        if g in _coach_colors:                        # your checks first (see step 2)
+            cm_ = dict(_coach_colors[g])
+            if len(cm_) == 1:
+                t0_, L0_ = next(iter(cm_.items()))
+                t1_ = next((x for x in teams if x != t0_), None)
+                if t1_:
+                    cm_[t1_] = "B" if L0_ == "A" else "A"
+            if all(t_ in cm_ for t_ in teams):
+                for t_ in teams:
+                    color_of_team[(g, t_)] = cm_[t_]
+                color_source[g] = "your checks (which shirt color is which team)"
+                continue
+        idx = {v: k for k, v in lab.items()}
+        bright = {x: float(km_.cluster_centers_[idx[x]][0]) * 3 for x in ("A", "B")}   # feature 0 = lightness
+        light, dark = (("A", "B") if bright["A"] >= bright["B"] else ("B", "A"))
+        light_team = None
+        for t in teams:   # manual override first
+            for key_, val in TRACK_TEAM_COLORS.items():
+                if str(key_).lower() in t.lower():
+                    light_team = t if val == "light" else next(x for x in teams if x != t)
+        src = "override (TRACK_TEAM_COLORS)"
+        if light_team is None and TRACK_HOME_WEARS_LIGHT:
+            code = str(next((pc.at[i, "game_code"] for i in todo if game_of[i] == g), ""))
+            uww = next((t for t in teams if "whitewater" in t.lower()), None)
+            if uww and "@" in code:
+                # "WOS@WWW" (coaches' export) or "Loras@UWWhitewater" (a captured clip page): either names UWW as home
+                _home = code.split("@")[-1].strip()
+                home_is_uww = _home.upper() == TRACK_UWW_GAME_CODE.upper() or "whitewater" in _home.lower()
+                light_team = uww if home_is_uww else next(t for t in teams if t != uww)
+                src = f"home team wears light ({light_team})"
+        if light_team:
+            dark_team = next(t for t in teams if t != light_team)
+            if ball_votes.get((g, light_team)) not in (None, light) or ball_votes.get((g, dark_team)) not in (None, dark):
+                print(f"  [tracking]   note: the ball-based guess disagreed with '{src}' for {g} -- using {src}", flush=True)
+            color_of_team[(g, light_team)], color_of_team[(g, dark_team)] = light, dark
+            gap = abs(bright["A"] - bright["B"])
+            color_source[g] = src + ("" if gap > 60 else " -- jerseys look similar in brightness, check the images")
+    for i in todo:
+        clip, g = clips[i], game_of[i]
+        oc = color_of_team.get((g, str(pc.at[i, "offense_team"])))
+        dc = color_of_team.get((g, str(pc.at[i, "defense_team"])))
+        if oc is None and dc in ("A", "B"):
+            oc = "B" if dc == "A" else "A"
+        clip["side"] = {k: ("offense" if lab == oc else "defense") if lab in ("A", "B") and oc else None
+                        for k, lab in clip.get("team", {}).items()}
+
+    # --- one person on two tracks: the detector sometimes boxes the same player twice (a second box on the same man in the same
+    # frames). The shorter track is dropped as a duplicate (not a player), so it can't take a name from the five or split the
+    # evidence. TRACK_DUP_IOU = how much the boxes overlap (median IoU, over frames both tracks have); 0 = off.
+    _dup_iou = float(globals().get("TRACK_DUP_IOU", 0.55))
+    n_dup_tr = 0
+    if _dup_iou > 0:
+        for i in todo:
+            clip = clips[i]
+            ks = [k for k in range(len(clip["tracks"])) if clip["side"].get(k) in ("offense", "defense")]
+            for x_, a in enumerate(ks):
+                for b in ks[x_ + 1:]:
+                    if clip["side"].get(a) is None or clip["side"].get(b) is None:
+                        continue
+                    iou_, n_sh, frac = _trk_track_overlap(clip, a, b)
+                    if n_sh >= 2 and iou_ >= _dup_iou and frac >= 0.5:
+                        drop = a if len(clip["tracks"][a]) < len(clip["tracks"][b]) else b
+                        clip["side"][drop] = None
+                        n_dup_tr += 1
+    _trk_note_drop("[tracks] duplicate box on the same player (dropped)", n_dup_tr)
+    print(f"  [tracking]   {n_dup_tr:,} track(s) were a second box on a player already tracked (boxes overlap >= {_dup_iou:.0%}) -- dropped", flush=True)
+
+    # CONFIRMED CHANGE (requested: "do #2"). People standing along a sideline the whole time -- coaches, the bench, the scorer's
+    # table -- passed the per-frame court filter whenever their feet mapped just inside the line (on the checks, 10 of the 15 boxes
+    # 0-3 ft inside the near sideline were not players). A track that spends most of its time (70%+) within
+    # TRACK_SIDELINE_STRIP_FT of a sideline AND barely moves (less than TRACK_SIDELINE_STILL_FT in any direction over 3+ seconds)
+    # is set aside as not a player. Baselines are left out (inbounders), and so are tracks starting a BLOB / SLOB clip.
+    # TRACK_SIDELINE_STILL_FT = 0 turns this off.
+    _still = float(globals().get("TRACK_SIDELINE_STILL_FT", 4.0))
+    n_still = 0
+    _set_aside_prev = {}                 # (clip, track) -> side before a rule below set it aside (a coach naming him restores it)
+    if _still > 0:
+        _strip = float(globals().get("TRACK_SIDELINE_STRIP_FT", 3.0))
+        for i in todo:
+            clip = clips[i]
+            _min_t = max(3, int(round(3.0 * float(clip.get("fps", _fps)))))
+            _oob = bool(re.search(r"OB", str(pc.at[i, "play_situation"] if "play_situation" in pc.columns else "")))
+            for k in range(len(clip["tracks"])):
+                if clip["side"].get(k) not in ("offense", "defense"):
+                    continue
+                tr = clip["tracks"][k]
+                if _oob and tr and tr[0][0] < _n_open_of.get(i, _n_open) + 2:
+                    continue
+                pts = np.array([clip["frames"][t][j][10:12] for t, j in tr], np.float64)
+                pts = pts[np.isfinite(pts).all(1)] if len(pts) else pts
+                if len(pts) < _min_t:
+                    continue
+                edge_ = (pts[:, 1] < _strip) | (pts[:, 1] > 50 - _strip)
+                if edge_.mean() >= 0.7 and max(np.ptp(pts[:, 0]), np.ptp(pts[:, 1])) < _still:
+                    _set_aside_prev[(i, k)] = clip["side"][k]
+                    clip["side"][k] = None
+                    n_still += 1
+        _trk_note_drop("[tracks] standing still along a sideline (coach / bench / table -- set aside)", n_still)
+        print(f"  [tracking]   {n_still:,} track(s) stood still along a sideline the whole time (coaches, bench, table) -- "
+              f"set aside as not players", flush=True)
+
+    # CONFIRMED CHANGE (requested: "do #1 and if it performs well, add it"): the outfit check (Fashion-CLIP, section 50c) scores
+    # each track's clothes: player uniform vs referee stripes, suit, polo, hoodie, warm-up, fan. Used only when its test on your
+    # checked boxes PASSED (TRACK_OUTFIT_CHECK = "auto"; True = always, False = never): a track whose average score is at or above
+    # the tested cutoff is set aside as not a player. TRACK_OUTFIT_CROPS pictures per track (its largest boxes) are scored.
+    _oc_mode = globals().get("TRACK_OUTFIT_CHECK", "auto")
+    # CONFIRMED BUG (fixed): TRACK_OUTFIT_CHECK = "False" (in quotes) is a non-empty string, so the check still ran as if
+    # it were True. Spelled-out words are read as what they say.
+    if isinstance(_oc_mode, str) and _oc_mode.strip().lower() in ("false", "0", "no", "off", "none", "never", ""):
+        _oc_mode = False
+    elif isinstance(_oc_mode, str) and _oc_mode.strip().lower() in ("true", "1", "yes", "on", "always"):
+        _oc_mode = True
+    if not _oc_mode:
+        print("  [tracking]   outfit check skipped (TRACK_OUTFIT_CHECK = False)", flush=True)
+    if _oc_mode:
+        try:
+            _oc_res = {}
+            if os.path.exists(os.path.join(TRACK_DIR, "outfit_check_test.json")):
+                with open(os.path.join(TRACK_DIR, "outfit_check_test.json")) as _fh:
+                    _oc_res = _trk_json.load(_fh)
+            _oc_cut = _oc_res.get("threshold")
+            if "outfit_scores_for" not in globals():
+                print("  [tracking]   outfit check not used: run the Outfit check cell (50c) first", flush=True)
+            elif _oc_mode == "auto" and not _oc_res.get("passed"):
+                print("  [tracking]   outfit check not used: its test on your checked boxes did not pass"
+                      + (" (no test yet -- run the Outfit check cell)" if not _oc_res else ""), flush=True)
+            elif _oc_cut is None:
+                print("  [tracking]   outfit check not used: no tested cutoff", flush=True)
+            elif (_oc_res.get("players_lost") or 0) > float(globals().get("OUTFIT_MAX_PLAYERS_LOST", 0.05)) * max(
+                    1, int(_oc_res.get("boxes") or 0) - int(_oc_res.get("not_players") or 0)) and _oc_mode == "auto":
+                # a test saved before the players-lost rule: at its cutoff it set aside too many real players
+                print(f"  [tracking]   outfit check not used: at its tested cutoff it set aside {_oc_res.get('players_lost')} of "
+                      f"{int(_oc_res.get('boxes') or 0) - int(_oc_res.get('not_players') or 0)} real players on your checked boxes "
+                      f"(more than {float(globals().get('OUTFIT_MAX_PLAYERS_LOST', 0.05)):.0%}) -- rerun the Outfit check cell",
+                      flush=True)
+            else:
+                _ncrop = int(globals().get("TRACK_OUTFIT_CROPS", 2))
+                items, owner = [], []
+                for i in todo:
+                    clip = clips[i]
+                    for k, tr in enumerate(clip["tracks"]):
+                        if clip["side"].get(k) not in ("offense", "defense"):
+                            continue
+                        big = sorted(tr, key=lambda tj: -float(clip["frames"][tj[0]][tj[1]][2]))[:_ncrop]
+                        for t, j in big:
+                            items.append((clip["files"][t], clip["frames"][t][j][6:10]))
+                            owner.append((i, k))
+                _t0o = time.time()
+                print(f"  [tracking]   outfit check: scoring {len(items):,} picture(s) of {len(set(owner)):,} track(s) "
+                      f"(saved scores are reused)...", flush=True)
+                _sc = outfit_scores_for(items, base)
+                _acc = {}
+                for o_, v_ in zip(owner, _sc):
+                    if v_ is not None:
+                        _acc.setdefault(o_, []).append(v_)
+                n_out = n_kept5 = 0
+                _flag_by = {}
+                for (i, k), vs in _acc.items():
+                    if float(np.mean(vs)) >= float(_oc_cut):
+                        _flag_by.setdefault(i, []).append((float(np.mean(vs)), k))
+                # CONFIRMED CHANGE (clip 1 re-check: a cheerleader behind the baseline kept a box -- and took #11 Cohen's
+                # name -- because "keep 5 boxes a team" held her back). A track scoring TRACK_OUTFIT_SURE (0.90)+ is set
+                # aside even then: with tracks in pieces, a team often has fewer than 5 boxes in a frame anyway.
+                _sure = float(globals().get("TRACK_OUTFIT_SURE", 0.90))
+                n_sure = 0
+                for i, lst in _flag_by.items():
+                    _prev_i = {}
+                    for v_, k in sorted(lst, reverse=True):
+                        sd_ = clips[i]["side"].get(k)
+                        if v_ >= _sure and sd_ in ("offense", "defense"):
+                            _prev_i[k] = sd_
+                            clips[i]["side"][k] = None
+                            n_sure += 1
+                    a_, b_ = _trk_set_aside_keep5(clips[i], [k for v_, k in sorted(lst, reverse=True) if v_ < _sure], _prev_i)
+                    n_out += a_
+                    n_kept5 += b_
+                    for k, v in _prev_i.items():
+                        _set_aside_prev[(i, k)] = v
+                n_out += n_sure
+                _trk_note_drop("[tracks] outfit says referee / coach / bench / fan (set aside)", n_out)
+                print(f"  [tracking]   outfit check: {n_out:,} track(s) dressed like a referee, coach, bench player or fan "
+                      f"(score >= {float(_oc_cut):.2f}, tested {_oc_res.get('precision', 0):.0%} right) -- set aside as not "
+                      f"players" + (f"; {n_kept5:,} more flagged but kept so each team keeps 5 boxes in every frame"
+                                    if n_kept5 else "") + f" ({time.time() - _t0o:.0f} s)", flush=True)
+        except Exception as _e:
+            if "RESTART THE KERNEL" in str(_e):
+                raise
+            print(f"  [tracking]   outfit check not used this run ({type(_e).__name__}: {_e})", flush=True)
+
+    # Now that the offense is known: the ball holder is looked for among the OFFENSE only, and each clip's
+    # anchor is re-picked from that -- a defender hugging the ball can't become the named player.
+    for i in todo:
+        clip = clips[i]
+        offk = {k for k, sd in clip["side"].items() if sd == "offense"}
+        if not offk:
+            clip["anchor"] = None
+            continue
+        clip["holder"] = _trk_holders(clip, allowed=offk)
+        n = len(clip["frames"])
+        late = [clip["holder"][t] for t in clip["holder"] if t in clip["window"]]
+        name = pc.at[i, "player"].strip() if isinstance(pc.at[i, "player"], str) else ""
+        five = _trk_five(pc.at[i, "offense_lineup"])
+        clip["anchor"] = None
+        # CONFIRMED CHANGE (audit of 16 coach-checked anchors, tracking_anchor_audit.csv): the late ball holder was the Synergy-named
+        # player only 3 times in 14 (21% -- the same as picking one of five at random). Every shot ending (Make / Miss: 0 of 8) and
+        # "Non Possession" clip was wrong: after a shot the ball is in the air or in someone else's hands, so the player holding it
+        # late is NOT the shooter. Where the named player still has the ball when the clip ends (a turnover, a foul: 3 of 6) the
+        # ball is a usable clue. TRACK_ANCHOR_BALL_EVENTS is a regex over the Synergy string + result; "" = use the ball on every
+        # clip (the old behavior). The shot clips fall through to the rim / shooting-pose anchors below.
+        _bev = str(globals().get("TRACK_ANCHOR_BALL_EVENTS", r"Turnover|Foul"))
+        _txt = f"{pc.at[i, 'synergy_string']} {pc.at[i, 'result']}"
+        _ball_ok = (not _bev) or (bool(re.search(_bev, _txt, re.I)) and not re.search(r"(Make|Miss)\w*\s+[23]\s*Pts", _txt, re.I)
+                                  and not re.search(r"Non[ -]Possession", _txt, re.I))
+        if late and name and (not five or name in five) and _ball_ok:
+            k = max(set(late), key=late.count)
+            if late.count(k) >= 2:
+                clip["anchor"] = (k, name)
+                clip["anchor_votes"] = (late.count(k), len(late))
+
+    # Finish at the rim, no anchor yet -> the offensive player closest to the attacked basket at the end.
+    anchors_rim = 0
+    for i in (todo if TRACK_USE_RIM_ANCHORS else []):
+        clip = clips[i]
+        if clip["anchor"] is not None:
+            continue
+        syn, res = str(pc.at[i, "synergy_string"] or ""), str(pc.at[i, "result"] or "")
+        if not (re.search(r"Basket|Layup|At Rim|Putback|Dunk|Tip", syn, re.I) or re.search(r"\b(Make|Miss)\w*\s+2\s*Pts", res, re.I)):
+            continue
+        name = pc.at[i, "player"].strip() if isinstance(pc.at[i, "player"], str) else ""
+        five = _trk_five(pc.at[i, "offense_lineup"])
+        if not name or (five and name not in five):
+            continue
+        basket = clip["basket"]
+        if basket is None:
+            continue
+        near = {}
+        for k, tr in enumerate(clip["tracks"]):
+            if clip["side"].get(k) != "offense":
+                continue
+            for t, j in tr:
+                if t not in clip["window"]:
+                    continue
+                X, Y = clip["frames"][t][j][10:12]
+                if np.isfinite(X) and np.hypot(X - basket[0], Y - basket[1]) <= TRACK_RIM_ANCHOR_FT:
+                    near[k] = near.get(k, 0) + 1
+        if near:
+            k = max(near, key=near.get)
+            clip["anchor"] = (k, name)
+            clip["anchor_by"] = "rim"
+            anchors_rim += 1
+    print(f"  [tracking]   anchors from a finish at the rim: {anchors_rim}"
+          + ("" if TRACK_USE_RIM_ANCHORS else " (switched off -- TRACK_USE_RIM_ANCHORS)"), flush=True)
+
+    # No ball-based anchor on a shot clip -> the offensive player with his arms up at the end is the shooter.
+    anchors_pose = 0
+    if TRACK_USE_POSE_ANCHORS:
+        shot_clips = [i for i in todo if clips[i]["anchor"] is None
+                      and re.search(r"\b(Make|Miss)\w*\s+[23]\s*Pts", str(pc.at[i, "result"] or ""), re.I)
+                      and any(sd == "offense" for sd in clips[i]["side"].values())]
+        late_files = {i: [clips[i]["files"][t] for t in clips[i]["window"]] for i in shot_clips}
+        poses = _trk_pose([f for fl in late_files.values() for f in fl], base) if shot_clips else {}
+        for i in shot_clips:
+            clip = clips[i]
+            name = pc.at[i, "player"].strip() if isinstance(pc.at[i, "player"], str) else ""
+            five = _trk_five(pc.at[i, "offense_lineup"])
+            if not name or (five and name not in five):
+                continue
+            score = {}
+            for k, tr in enumerate(clip["tracks"]):
+                if clip["side"].get(k) != "offense":
+                    continue
+                for t, j in tr:
+                    if t not in clip["window"]:
+                        continue
+                    a = _trk_arms_up(clip["frames"][t][j][6:10], poses.get(clip["files"][t], []))
+                    if a is not None:
+                        score[k] = max(score.get(k, -9), a)
+            ranked = sorted(score.items(), key=lambda x: -x[1])
+            if ranked and ranked[0][1] >= 0.15 and (len(ranked) == 1 or ranked[0][1] - ranked[1][1] >= 0.08):
+                clip["anchor"] = (ranked[0][0], name)
+                clip["anchor_by"] = "pose"
+                anchors_pose += 1
+
+    # No ball seen but Synergy says who had it: on "P&R Ball Handler" / "Isolation" / "Hand Off" / "Post-Up"
+    # clips the named player IS the ball handler, so his (anchored) track holds the ball -- that's what lets a
+    # screen be recognized as a BALL screen without seeing the ball.
+    # CONFIRMED BUG (fixed): when Synergy names TWO players ("24 Richie Warren > P&R Ball Handler > ... > 32 Luke Bara
+    # > ..."), the anchor is the LAST one (Bara, who finished), but the ball handler is the FIRST (Warren) -- so this
+    # rule only applies when the description names one player.
+    for i in todo:
+        clip = clips[i]
+        if clip["holder"] or not clip["anchor"]:
+            continue
+        ss_ = str(pc.at[i, "synergy_string"] or "")
+        if len(_trk_synergy_names(ss_)) == 1 and re.search(r"P&R Ball Handler|Isolation|\bISO\b|Hand Off|Post-Up", ss_):
+            k = clip["anchor"][0]
+            clip["holder"] = {t: k for t, _ in clip["tracks"][k]}
+            clip["holder_from"] = "synergy"
+
+    # EVERY player Synergy names (requested: "we know who was part of those plays"). Beyond the last-named finisher
+    # (the anchor), the FIRST-named player had the ball early: the offensive player seen holding it most in the first
+    # part of the clip is him -- a second anchor, often a different player.
+    n_first = 0
+    for i in todo:
+        clip = clips[i]
+        names_ = _trk_synergy_names(pc.at[i, "synergy_string"])
+        clip["anchor_first"] = None
+        if len(names_) < 2 or names_[0] == names_[-1]:
+            continue
+        five = _trk_five(pc.at[i, "offense_lineup"])
+        if five and names_[0] not in five:
+            continue
+        offk = {k for k, sd in clip["side"].items() if sd == "offense"}
+        early = [k for t, k in clip["holder"].items() if k in offk and t <= max(2, int(0.35 * len(clip["frames"])))]
+        if not early:
+            continue
+        k = max(set(early), key=early.count)
+        if early.count(k) >= 2 and not (clip["anchor"] and clip["anchor"][0] == k):
+            clip["anchor_first"] = (k, names_[0])
+            n_first += 1
+    print(f"  [tracking]   anchors from the FIRST player Synergy names (the early ball handler): {n_first}", flush=True)
+
+    # --- coach checks -> the tracks they point at (same frame, same spot on the picture) ---
+    _bg_acc = None                                    # how often best guesses were right on the coach-checked boxes
+    _bg_pts = []                                      # (stated probability, right?) for every checked best guess
+    _meth_prec = {}                                   # naming method -> (right, checked) on the coach-checked boxes
+    coach, coach_flip = {}, set()
+    coach_kind = {}                                   # (clip, track) -> the coach's kind of non-player (referee / bench / crowd)
+    _coach_t = {}                                     # (clip, track) -> the frames the coach checked it on (the vote test leaves them out)
+    if TRACK_USE_COACH_CHECKS:
+        checks = _trk_coach_checks()
+        if checks:
+            key_to_i = {_trk_clip_key(pc.loc[i]): i for i in todo}
+            rep = {}
+            for ch in checks:
+                how = ch.get("assigned_how") or "not named"
+                # CONFIRMED BUG (fixed; found in the saved checks): a few checks say "wrong" but name the SAME player that was
+                # assigned (a slip in the review) -- the name was right, so they count as right.
+                _ok = ch.get("verdict") == "correct" or (ch.get("verdict") == "wrong" and ch.get("true_name")
+                                                         and ch.get("true_name") == ch.get("assigned"))
+                if ch.get("assigned") is not None or ch.get("verdict") == "not a player":
+                    rep.setdefault(how, [0, 0])
+                    rep[how][1] += 1
+                    rep[how][0] += int(bool(_ok))
+                # CONFIRMED CHANGE (requested: "do #1" -- set the best-guess cutoff from the checks). Every checked best guess with
+                # its stated probability; also the HIDDEN guess on a box shown unnamed that the coach named ("really X").
+                _vd = ch.get("verdict")
+                if how == "best guess" and ch.get("assigned_conf") is not None and _vd in ("correct", "wrong", "wrong team", "not a player"):
+                    _bg_pts.append((float(ch["assigned_conf"]), bool(_ok)))
+                elif ch.get("assigned") is None and ch.get("hidden_guess") and ch.get("hidden_guess_p") is not None \
+                        and _vd in ("wrong", "wrong team", "not a player"):
+                    _bg_pts.append((float(ch["hidden_guess_p"]), _vd == "wrong" and ch.get("true_name") == ch["hidden_guess"]))
+                i = key_to_i.get(ch.get("clip_key"))
+                if i is None:
+                    continue
+                t = _trk_t_of(ch, -1)
+                if not 0 <= t < len(clips[i]["frames"]):
+                    continue
+                best = None
+                _cands = []
+                for k, tr in enumerate(clips[i]["tracks"]):
+                    for tt, j in tr:
+                        if tt == t:
+                            row = clips[i]["frames"][t][j]
+                            dpx = float(np.hypot((row[6] + row[8]) / 2 - ch["px"], row[9] - ch["py"]))
+                            if dpx < 25:
+                                _cands.append((dpx, k))
+                            if dpx < 25 and (best is None or dpx < best[0]):
+                                best = (dpx, k)
+                # CONFIRMED BUG (fixed; Thomann's check landed on Wheaton's #34 standing right in front of him). When two
+                # players' boxes are both at the checked spot, the one on the checked player's team (from the lineups) wins.
+                _nm = ch.get("true_name") or (ch.get("assigned") if ch.get("verdict") == "correct" else None)
+                if _nm and len(_cands) > 1:
+                    _sd_want = next((sd_ for sd_ in ("offense", "defense") if _nm in _trk_five(pc.at[i, f"{sd_}_lineup"])),
+                                    None)
+                    _same = [c_ for c_ in _cands if _sd_want and clips[i]["side"].get(c_[1]) == _sd_want]
+                    if _same:
+                        best = min(_same)
+                if best is not None:
+                    if ch.get("verdict") == "wrong team":
+                        # CONFIRMED CHANGE (requested: a "wrong team" option in the player review): the box is a player
+                        # of the OTHER team -- move the track there; if the coach picked who it is, that's certain too
+                        # (unless this run already has the track on his team -- the team colors can be right now)
+                        _sd_n = next((sd_ for sd_ in ("offense", "defense")
+                                      if ch.get("true_name") and ch["true_name"] in _trk_five(pc.at[i, f"{sd_}_lineup"])), None)
+                        if not (_sd_n and clips[i]["side"].get(best[1]) == _sd_n):
+                            coach_flip.add((i, best[1]))
+                        if ch.get("true_name"):
+                            coach[(i, best[1])] = ch["true_name"]
+                        continue
+                    coach[(i, best[1])] = ch.get("true_name") if ch.get("verdict") != "not a player" else None
+                    _coach_t.setdefault((i, best[1]), set()).add(t)
+                    if ch.get("verdict") == "not a player":
+                        coach_kind[(i, best[1])] = ch.get("not_player_kind") or "not a player (kind not given)"
+            if rep.get("best guess", [0, 0])[1] >= 30:
+                _bg_acc = rep["best guess"][0] / rep["best guess"][1]
+            _meth_prec = {h: (r_, n_) for h, (r_, n_) in rep.items()}
+            print(f"  [tracking]   coach checks: {len(checks)} saved, {len(set(coach) | coach_flip)} matched to this run's tracks. How often each "
+                  f"naming method was RIGHT on the boxes checked: " + "; ".join(
+                      f"{h} {r}/{n} ({100 * r / max(n, 1):.0f}%)" for h, (r, n) in sorted(rep.items(), key=lambda x: -x[1][1])),
+                  flush=True)
+            for (i, k), n in coach.items():
+                if n is None:
+                    clips[i]["side"][k] = None                    # coach: not a player -> never named
+                elif clips[i]["side"].get(k) is None and (i, k) in _set_aside_prev:
+                    clips[i]["side"][k] = _set_aside_prev[(i, k)]  # set aside by the sideline / outfit rule, but a coach named him
+            _other_team = {"A": "B", "B": "A"}
+            for (i, k) in coach_flip:
+                sd = clips[i]["side"].get(k)
+                if sd in ("offense", "defense"):
+                    clips[i]["side"][k] = "defense" if sd == "offense" else "offense"
+                if clips[i].get("team", {}).get(k) in _other_team:
+                    clips[i]["team"][k] = _other_team[clips[i]["team"][k]]
+            if coach_flip:
+                print(f"  [tracking]   coach checks: {len(coach_flip)} player(s) moved to the other team (\"wrong team\")",
+                      flush=True)
+            # CONFIRMED BUG (fixed; clip 1 re-check: #21 May -- WashU, white -- had a Carroll (blue) box). A track a coach
+            # named with a player of the OTHER side's five is on that side: his name says which team he plays for.
+            _n_side = 0
+            for (i, k), n in coach.items():
+                if not n:
+                    continue
+                sd = clips[i]["side"].get(k)
+                if sd not in ("offense", "defense"):
+                    continue
+                other = "defense" if sd == "offense" else "offense"
+                if n in _trk_five(pc.at[i, f"{other}_lineup"]) and n not in _trk_five(pc.at[i, f"{sd}_lineup"]):
+                    clips[i]["side"][k] = other
+                    if clips[i].get("team", {}).get(k) in _other_team:
+                        clips[i]["team"][k] = _other_team[clips[i]["team"][k]]
+                    _n_side += 1
+            if _n_side:
+                print(f"  [tracking]   coach checks: {_n_side} named player(s) were on the other team's side -- moved to his "
+                      f"team", flush=True)
+
+            # --- audit of Synergy's anchors against the coaches' checks (requested: "Synergy is 0/5 -- is it working?") ---
+            # For every anchor (the ball holder late in the clip = the player Synergy names) whose track a coach also
+            # checked: right, or WHY wrong -- the coach says it is a teammate, a defender / other team, or not a player.
+            # Also: how many late frames the ball sat with the winning track (right vs wrong), so a vote threshold can be chosen.
+            try:
+                _au, _rows = {"right": 0, "teammate": 0, "defender / other team": 0, "not a player": 0, "found elsewhere": 0}, []
+                for i in todo:
+                    for kind, a_ in (("late ball holder", clips[i].get("anchor")), ("first named", clips[i].get("anchor_first"))):
+                        if not a_:
+                            continue
+                        k, name = a_
+                        if (i, k) in coach_flip:
+                            res = "defender / other team"
+                        elif (i, k) in coach:
+                            tn = coach[(i, k)]
+                            if tn is None:
+                                res = "not a player"
+                            elif tn == name:
+                                res = "right"
+                            else:
+                                dfive = _trk_five(pc.at[i, "defense_lineup"])
+                                res = "defender / other team" if tn in dfive else "teammate"
+                        else:
+                            continue
+                        _au[res] += 1
+                        v_ = clips[i].get("anchor_votes") if kind == "late ball holder" else None
+                        _rows.append({"clip_key": _trk_clip_key(pc.loc[i]), "kind": kind, "anchor_name": name,
+                                      "coach_says": coach.get((i, k)), "result": res,
+                                      "ball_frames_won": v_[0] if v_ else None, "ball_frames_total": v_[1] if v_ else None,
+                                      "ball_seen_frames": len(clips[i]["ball"]), "anchor_by": clips[i].get("anchor_by") or "ball"})
+                _n_au = sum(_au.values())
+                _trk_eval("anchors", score=(100 * _au["right"] / _n_au) if _n_au else None, n=_n_au, bar=None, chance=20,
+                          used=True, how="Synergy-named anchors that sat on the right player (coach-checked)")
+                if _n_au:
+                    print(f"  [tracking]   Synergy anchor audit: {_n_au} anchor(s) sit on a track a coach checked -- right "
+                          f"{_au['right']}; wrong because it was a teammate {_au['teammate']}, a defender / other team "
+                          f"{_au['defender / other team']}, not a player {_au['not a player']}", flush=True)
+                    _by = {}
+                    for r_ in _rows:
+                        if r_["ball_frames_won"] is not None:
+                            _by.setdefault(r_["ball_frames_won"], [0, 0])
+                            _by[r_["ball_frames_won"]][1] += 1
+                            _by[r_["ball_frames_won"]][0] += int(r_["result"] == "right")
+                    if _by:
+                        print("  [tracking]     right by number of late frames the ball was at that track: "
+                              + "; ".join(f"{k_} frame(s): {r_}/{n_}" for k_, (r_, n_) in sorted(_by.items())), flush=True)
+                    pd.DataFrame(_rows).to_csv(os.path.join(TRACK_DIR, "tracking_anchor_audit.csv"), index=False)
+            except Exception as _e:
+                print(f"  [tracking]   Synergy anchor audit skipped ({type(_e).__name__}: {_e})", flush=True)
+
+    # --- coach labels -> a learned player / not-a-player model (see _trk_missed_points above) -------------------------
+    _pm_p, _pm_cut = {}, None
+    _missed = _trk_missed_points() if TRACK_USE_COACH_CHECKS else []
+    _missed_tracks = {}                              # missed mark -> the (clip, track) at its grid square, if any
+    _key_to_i_all = {_trk_clip_key(pc.loc[i]): i for i in todo}
+    for _mi, _m in enumerate(_missed):
+        _i = _key_to_i_all.get(_m.get("clip_key"))
+        _rect = _trk_cell_rect(_m)
+        if _i is None or _rect is None:
+            continue
+        _t = _trk_t_of(_m, -1)
+        if not 0 <= _t < len(clips[_i]["frames"]):
+            continue
+        _cx, _cy = (_rect[0] + _rect[2]) / 2, (_rect[1] + _rect[3]) / 2
+        _best = None
+        for k, tr in enumerate(clips[_i]["tracks"]):
+            if (_i, k) in coach:                     # a box the coach checked in that picture is someone else
+                continue
+            for tt, j in tr:
+                if tt == _t:
+                    row = clips[_i]["frames"][_t][j]
+                    fx, fy = (row[6] + row[8]) / 2, row[9]
+                    if _rect[0] <= fx <= _rect[2] and _rect[1] <= fy <= _rect[3]:
+                        dd = float(np.hypot(fx - _cx, fy - _cy))
+                        if _best is None or dd < _best[0]:
+                            _best = (dd, k)
+        if _best is not None:
+            _missed_tracks[_mi] = (_i, _best[1])
+            # CONFIRMED CHANGE (requested: "a way to mark that the guy in C5 is #4 Ian Winkler"): a no-box mark that says WHO the
+            # player is names the track found at that square this run, like a coach check (his look then counts too)
+            if _m.get("true_name") and (_i, _best[1]) not in coach:
+                coach[(_i, _best[1])] = str(_m["true_name"])
+    # CONFIRMED CHANGE (requested: make the "players with NO box" marks count fully). The track found at a no-box mark is a
+    # REAL PLAYER: it goes back on the floor if a rule set it aside (sorted in with the referees by shirt color, outfit,
+    # sideline), on HIS team when you said who he is (else the team its shirt color / earlier side says), and it is never
+    # set aside later as "beyond the five" or by the player model (_missed_protect).
+    _missed_protect = set()
+    _n_back = 0
+    for _mi, (_i, _k) in _missed_tracks.items():
+        _missed_protect.add((_i, _k))
+        _m = _missed[_mi]
+        _clip = clips[_i]
+        _sd_now = _clip["side"].get(_k)
+        _sd_new = None
+        _nm = _m.get("true_name")
+        if _nm:
+            _sd_new = next((sd_ for sd_ in ("offense", "defense") if str(_nm) in _trk_five(pc.at[_i, f"{sd_}_lineup"])), None)
+        if _sd_new is None and _sd_now not in ("offense", "defense"):
+            _sd_new = _set_aside_prev.get((_i, _k))
+            if _sd_new is None and _clip.get("team", {}).get(_k) in ("A", "B"):
+                _same = [_clip["side"].get(k2) for k2, tm2 in _clip["team"].items()
+                         if tm2 == _clip["team"][_k] and _clip["side"].get(k2) in ("offense", "defense")]
+                _sd_new = max(set(_same), key=_same.count) if _same else None
+        if _sd_new and _sd_new != _sd_now:
+            _clip["side"][_k] = _sd_new
+            _n_back += 1
+    if _missed_tracks:
+        print(f"  [tracking]   your no-box marks: {len(_missed_tracks)} found on a track this run -- {_n_back} of them put back "
+              f"on the floor / on their team; all of them are kept as players", flush=True)
+    _pm_mode = globals().get("TRACK_PLAYER_MODEL", "auto")
+    if _pm_mode and TRACK_USE_COACH_CHECKS:
+        _lab = {ik: (1 if n is None else 0) for ik, n in coach.items()}
+        _lab.update({ik: 0 for ik in coach_flip})
+        for ik in _missed_tracks.values():
+            _lab.setdefault(ik, 0)
+        _tm_cache, _fcache = {}, {}
+
+        def _pm_feat(ik):
+            if ik not in _fcache:
+                i_, k_ = ik
+                if i_ not in _tm_cache:
+                    _tm_cache[i_] = _trk_team_means(clips[i_])
+                import warnings as _pm_w
+                with _pm_w.catch_warnings():
+                    _pm_w.simplefilter("ignore")
+                    _fcache[ik] = _trk_pm_feats(clips[i_], k_, _tm_cache[i_], float(clips[i_].get("fps", _fps)))
+            return _fcache[ik]
+        _lk = [ik for ik in _lab if clips[ik[0]]["tracks"][ik[1]]]
+        _yl = np.array([_lab[ik] for ik in _lk], int)
+        _n1, _n0 = int(_yl.sum()), int(len(_yl) - _yl.sum())
+        _min_each = int(globals().get("TRACK_PLAYER_MODEL_MIN_EACH", 15))
+        if _n1 < _min_each or _n0 < _min_each:
+            print(f"  [tracking]   player / not-a-player model: {_n1} not-a-player and {_n0} player label(s) from the coach checks "
+                  f"(needs {_min_each}+ of each) -- not trained yet", flush=True)
+        else:
+            from sklearn.impute import SimpleImputer
+            from sklearn.linear_model import LogisticRegression
+            from sklearn.pipeline import make_pipeline
+            from sklearn.preprocessing import StandardScaler
+            _Xl = np.array([_pm_feat(ik) for ik in _lk], float)
+            _gl = np.array([game_of[ik[0]] for ik in _lk])
+            _mk = lambda: make_pipeline(SimpleImputer(strategy="median", keep_empty_features=True), StandardScaler(),
+                                        LogisticRegression(C=0.5, class_weight="balanced", max_iter=3000))
+            # held-out test: each GAME predicted by a model that never saw it (one game only: 5 groups of clips)
+            if len(set(_gl)) >= 2:
+                _folds = [(_gl != g_, _gl == g_) for g_ in sorted(set(_gl))]
+                _how = "each game predicted by a model trained on the other games"
+            else:
+                _ci = np.array([ik[0] for ik in _lk])
+                _grp = np.array([hash(int(c)) % 5 for c in _ci])
+                _folds = [(_grp != q, _grp == q) for q in range(5)]
+                _how = "5 groups of clips, each predicted by a model trained on the rest"
+            _oof = np.full(len(_yl), np.nan)
+            for _tr_m, _te_m in _folds:
+                if _te_m.any() and len(set(_yl[_tr_m])) == 2:
+                    _oof[_te_m] = _mk().fit(_Xl[_tr_m], _yl[_tr_m]).predict_proba(_Xl[_te_m])[:, 1]
+            _ok = np.isfinite(_oof)
+            _s, _y = _oof[_ok], _yl[_ok]
+            _pos, _neg = _s[_y == 1], _s[_y == 0]
+            _auc = float(np.mean([(p_ > _neg).mean() + 0.5 * (p_ == _neg).mean() for p_ in _pos])) if len(_pos) and len(_neg) else None
+            _min_prec = float(globals().get("TRACK_PLAYER_MODEL_MIN_PRECISION", 0.9))
+            _min_rec = float(globals().get("TRACK_PLAYER_MODEL_MIN_RECALL", 0.25))
+            _best = None
+            # the lowest cutoff that is right often enough AND costs few real players (CONFIRMED BUG, fixed: it passed at a
+            # cutoff that set aside 7 of the 24 checked real players -- TRACK_PLAYER_MODEL_MAX_LOST, default 5%)
+            _max_lost = float(globals().get("TRACK_PLAYER_MODEL_MAX_LOST", 0.05)) * max(1, int((_y == 0).sum()))
+            for _c in sorted(set(np.round(_s, 3)), reverse=True):
+                _fl = _s >= _c
+                if _fl.sum() >= 10 and _y[_fl].mean() >= _min_prec and int((_fl & (_y == 0)).sum()) <= _max_lost:
+                    _best = (float(_c), float(_y[_fl].mean()), float(_y[_fl].sum() / max(_y.sum(), 1)), int((_fl & (_y == 0)).sum()))
+            _passed = bool(_best and _best[2] >= _min_rec)
+            # requested: how each kind of non-player is caught at the cutoff (held-out scores)
+            if _best:
+                _kc = {}
+                for n_, ik in enumerate(_lk):
+                    if _yl[n_] == 1 and np.isfinite(_oof[n_]):
+                        kd = coach_kind.get(ik, "not a player (kind not given)")
+                        _kc.setdefault(kd, [0, 0])
+                        _kc[kd][1] += 1
+                        _kc[kd][0] += int(_oof[n_] >= _best[0])
+                if _kc:
+                    print("  [tracking]   player model, non-players caught at its cutoff by kind: "
+                          + "; ".join(f"{kd} {a}/{n}" for kd, (a, n) in sorted(_kc.items())), flush=True)
+            _trk_eval("player_model", score=(100 * _best[1]) if _best else None, n=_n1 + _n0, bar=100 * _min_prec,
+                      auc=round(float(_auc), 3) if _auc is not None else None, caught=(100 * _best[2]) if _best else None,
+                      used=bool(_passed), how="tracks it set aside that really weren't players (held-out clips)")
+            print(f"  [tracking]   player / not-a-player model: {_n1} not-a-player and {_n0} player label(s) from the coach checks"
+                  f" ({len(_missed_tracks)} of {len(_missed)} missed-player mark(s) found on a track); tested with {_how}: "
+                  + (f"AUC {_auc:.2f} (0.5 = coin flip, 1.0 = perfect); " if _auc is not None else "")
+                  + (f"at {_best[0]:.2f}+ it was right {_best[1]:.0%} of the time and caught {_best[2]:.0%} of the non-players "
+                     f"(costing {_best[3]} real player(s))" if _best else f"no cutoff reached {_min_prec:.0%} right")
+                  + (" -- PASSED, used this run" if _passed else " -- not passed, NOT used (it keeps learning from new checks)"),
+                  flush=True)
+            try:
+                pd.DataFrame([dict(zip(_TRK_PM_FEATS, _Xl[n_]), clip_key=_trk_clip_key(pc.loc[ik[0]]), track=ik[1],
+                                   not_a_player=int(_yl[n_]), held_out_score=_oof[n_]) for n_, ik in enumerate(_lk)]
+                             ).to_csv(os.path.join(TRACK_DIR, "player_model_labels.csv"), index=False)
+            except Exception:
+                pass
+            if _passed or _pm_mode is True:
+                # never below 50% sure it's not a player (TRACK_PLAYER_MODEL_MIN_CUT), even when the test allows lower
+                _pm_cut = max(_best[0] if _best else 0.8, float(globals().get("TRACK_PLAYER_MODEL_MIN_CUT", 0.5)))
+                _model = _mk().fit(_Xl, _yl)
+                _cand = [(i, k) for i in todo for k in range(len(clips[i]["tracks"]))
+                         if clips[i]["side"].get(k) in ("offense", "defense") and (i, k) not in coach and (i, k) not in coach_flip]
+                if _cand:
+                    _P = _model.predict_proba(np.array([_pm_feat(ik) for ik in _cand], float))[:, 1]
+                    _n_pm = _n_kept_min = 0
+                    for (i, k), p_ in zip(_cand, _P):
+                        _pm_p[(i, k)] = float(p_)
+                    # safety: a team always keeps at least 5 boxes in every frame -- the least player-like go first
+                    for i in todo:
+                        ks = [k for k, v in clips[i]["side"].items() if v in ("offense", "defense")]
+                        flag = sorted([k for k in ks if _pm_p.get((i, k), 0.0) >= _pm_cut and (i, k) not in _missed_protect],
+                                      key=lambda k: -_pm_p[(i, k)])
+                        _prev_i = {}
+                        a_, b_ = _trk_set_aside_keep5(clips[i], flag, _prev_i)
+                        _n_pm += a_
+                        _n_kept_min += b_
+                        for k, v in _prev_i.items():
+                            _set_aside_prev[(i, k)] = v
+                    _trk_note_drop("[tracks] player model says referee / coach / fan (set aside)", _n_pm)
+                    print(f"  [tracking]   player model: {_n_pm:,} track(s) set aside as not players (score >= {_pm_cut:.2f}) -- they "
+                          f"can't take a jersey number or one of the five"
+                          + (f"; {_n_kept_min:,} more flagged but kept so each team keeps 5 boxes in every frame"
+                             if _n_kept_min else ""), flush=True)
+
+    # the clip's ONE naming frame, picked after every not-a-player rule above, so it is the frame with the most players LEFT
+    if globals().get("TRACK_NAME_ONE_FRAME", True):
+        _trk_name_frames(clips, todo, base, pc, game_of)
+
+    # --- fingerprints for every track on a known side ---
+    # CONFIRMED CHANGE (requested: the run sat on "fingerprinting 16858 player crop(s)" with no sign of life).
+    # Progress is printed, and every crop's fingerprint is SAVED (_tracking/fingerprints_<model>.pkl, keyed by
+    # frame + box), so a rerun only fingerprints crops it hasn't seen before.
+    n_anch = sum(1 for i in todo if clips[i]["anchor"])
+    print(f"  [tracking]   named anchors so far: {n_anch} of {len(todo)} clip(s) "
+          f"({sum(1 for i in todo if clips[i].get('anchor_by') == 'pose' and clips[i]['anchor'])} by shooting pose)", flush=True)
+    # CONFIRMED CHANGE (requested: "I will then validate and determine the actual 10 starters ... You will then be able to use
+    # this in further clips because you will know exactly what each player looks like at least until the first
+    # substitution"). Each game's validated starters (saved in the app's STARTERS check, play review) -> the clips where a
+    # team's five on the floor IS its five starters (before the first substitution, and again whenever the starters are all
+    # back, e.g. the start of the second half): {clip: [side, ...]}. Their players are matched to the starters' looks from
+    # the coach checks (step 6, "starter look"). TRACK_STARTERS_LOOK = False turns it off.
+    _st_elig, _st_valid = {}, {}
+    if globals().get("TRACK_STARTERS_LOOK", True) and "starters_saved_all" in globals():
+        try:
+            _st_all = starters_saved_all()
+        except Exception as _e:
+            _st_all = {}
+            print(f"  [tracking]   saved starters not read ({type(_e).__name__}: {_e})", flush=True)
+        _slug_of = lambda g_: re.sub(r"[^A-Za-z0-9]+", "_", str(g_)).strip("_")
+        _rank_pd = lambda x: {"H1": 1, "H2": 2}.get(str(x), 3 if str(x).startswith("OT") else 9)
+        _first = {}
+        for i in todo:
+            sv = _st_all.get(_slug_of(game_of[i]))
+            if not sv:
+                continue
+            _st_valid[game_of[i]] = sv["starters"]
+            _o = (_rank_pd(pc.at[i, "period"]) if "period" in pc.columns else 9,
+                  -float(pd.to_numeric(pc.at[i, "time_remaining_seconds"], errors="coerce"))
+                  if "time_remaining_seconds" in pc.columns
+                  and pd.notna(pd.to_numeric(pc.at[i, "time_remaining_seconds"], errors="coerce")) else 1.0,
+                  float(np.nan_to_num(pd.to_numeric(pc.at[i, "clip_number"], errors="coerce"), nan=1e9)))
+            if game_of[i] not in _first or _o < _first[game_of[i]][0]:
+                _first[game_of[i]] = (_o, i)
+            for sd in ("offense", "defense"):
+                five = _trk_five(pc.at[i, f"{sd}_lineup"])
+                team = str(pc.at[i, f"{sd}_team"]) if f"{sd}_team" in pc.columns else ""
+                if len(five) == 5 and set(five) == set(sv["starters"].get(team) or []):
+                    _st_elig.setdefault(i, []).append(sd)
+        for g_, sv in sorted(_st_valid.items()):
+            n_cl = sum(1 for i in _st_elig if game_of[i] == g_)
+            print(f"  [tracking]   starters validated for {g_}: {n_cl} clip(s) with a team's five starters on the floor "
+                  f"get the starter look", flush=True)
+            # the play-by-play's lineups decide which clips those are -- say so when they disagree with the coach
+            i0 = _first.get(g_, (None, None))[1]
+            for sd in ("offense", "defense"):
+                if i0 is None:
+                    break
+                team = str(pc.at[i0, f"{sd}_team"]) if f"{sd}_team" in pc.columns else ""
+                pbp5, coach5 = set(_trk_five(pc.at[i0, f"{sd}_lineup"])), set(sv.get(team) or [])
+                if pbp5 and coach5 and pbp5 != coach5:
+                    print(f"  [tracking]   NOTE {g_}, {team}: your starters ({', '.join(sorted(coach5))}) differ from the "
+                          f"play-by-play's five on its first clip ({', '.join(sorted(pbp5))}) -- that game's lineups may be "
+                          f"off, and the starter look is only used where they match", flush=True)
+    # CONFIRMED CHANGE (requested: "carry checked names through the whole clip" -- Thomann, Hedrick and Neibch, checked on the
+    # first starters frame, were unnamed on the second: a check names only the PIECE of a player's track it sits on, and the
+    # tracker cuts tracks where teammates overlap). In the clips of a game still on its starters check, every piece of a player
+    # gets fingerprinted, and a piece that never overlaps the checked player in time, is on his team and looks most like him
+    # takes his name ("same player as your check"). TRACK_CARRY_CHECKS = False turns it off.
+    # CONFIRMED CHANGE (requested: "make the check for #2"): on the Carroll@WashU checks this carry was right 1 time in 5,
+    # so it is OFF by default now (TRACK_CARRY_CHECKS = True brings it back, with the stricter look bars below).
+    _carry_ids = []
+    if globals().get("TRACK_CARRY_CHECKS", False) and TRACK_USE_COACH_CHECKS:
+        try:
+            _st_done = starters_saved_all() if "starters_saved_all" in globals() else {}
+            _slug_ = lambda g_: re.sub(r"[^A-Za-z0-9]+", "_", str(g_)).strip("_")
+            _named_clips = {i_ for (i_, _k), n_ in coach.items() if n_}
+            _carry_ids = [i for i in todo if i in _named_clips and _slug_(game_of[i]) not in _st_done]
+        except Exception as _e:
+            print(f"  [tracking]   carrying checked names skipped ({type(_e).__name__}: {_e})", flush=True)
+    # the per-game appearance models (see _app_fit below): game -> model, game -> its test numbers
+    _app_models, _app_stats, _app_on_games, _fill_games = {}, {}, set(), set()
+    _app_scorers = {}                                 # game -> ("model", m) or ("protos", {name: look}) -- whichever tested better
+    fps = {}
+    globals()["_trk_app_ckeys_run"] = None
+
+    def _app_probs_m(m_, i, k, five):
+        """{name: probability} over the five on the floor for track k of clip i (its crops averaged); None = no crops."""
+        vs = fps.get((i, k))
+        if not vs or m_ is None:
+            return None
+        P_ = m_.predict_proba(np.vstack([np.asarray(v, np.float32) for v in vs])).mean(0)
+        cls_ = list(m_.classes_)
+        p_ = {n: (float(P_[cls_.index(n)]) if n in cls_ else 0.0) for n in five}
+        t_ = sum(p_.values())
+        return {n: v / t_ for n, v in p_.items()} if t_ > 0 else None
+
+    def _app_p(g, i, k, five):
+        """{name: probability} over the five for track k of clip i by the game's better appearance method (or None)."""
+        sc_ = _app_scorers.get(g)
+        if not sc_:
+            return None
+        if sc_[0] == "model":
+            return _app_probs_m(sc_[1], i, k, five)
+        vs = fps.get((i, k))
+        if not vs:
+            return None
+        v_ = np.mean([np.asarray(x, np.float32) for x in vs], 0)
+        v_ = v_ / (np.linalg.norm(v_) + 1e-8)
+        names_ = [n for n in five if n in sc_[1]]
+        if not names_:
+            return None
+        sims_ = np.array([float(v_ @ sc_[1][n]) for n in names_])
+        z_ = (sims_ - sims_.mean()) / (sims_.std() + 1e-6)
+        e_ = np.exp(3 * z_)
+        p_ = {n: 0.0 for n in five}
+        p_.update({n: float(x) for n, x in zip(names_, e_ / e_.sum())})
+        return p_
+
+    if not TRACK_USE_APPEARANCE:
+        print("  [tracking] step 5: appearance fingerprints skipped (TRACK_USE_APPEARANCE = False)", flush=True)
+        fp = {}
+    else:
+        print("  [tracking] step 5: cutting out each player for his appearance fingerprint...", flush=True)
+        fp_path = os.path.join(TRACK_DIR, f"fingerprints_{re.sub(r'[^A-Za-z0-9]+', '_', TRACK_EMBED_MODEL)}.pkl")
+        fp_cache = _safe_read_pickle(fp_path) if os.path.exists(fp_path) else {}
+        crops, owners, keys = [], [], []
+        fps = {}
+        img_cache = {}
+        _t0 = time.time()
+        # CONFIRMED CHANGE (requested: carry names from checked plays into the next ones by how each player LOOKS).
+        # TRACK_USE_APPEARANCE = "checked": fingerprints only for games with TRACK_APPEARANCE_MIN_COACH+ coach-named boxes --
+        # those are the games where appearance has trustworthy examples to learn each player's look from (and it keeps the
+        # first, slow fingerprinting run to those games). True = every game.
+        _app_games = None
+        if str(TRACK_USE_APPEARANCE).lower() == "checked":
+            _cn = {}
+            for (i_, _k), n_ in coach.items():
+                if n_:
+                    _cn[game_of[i_]] = _cn.get(game_of[i_], 0) + 1
+            _min_c = int(globals().get("TRACK_APPEARANCE_MIN_COACH", 10))
+            # CONFIRMED CHANGE (requested: look-matching sooner): a PLAYER_TRACKING_GAMES game (the new starters process)
+            # needs only TRACK_APPEARANCE_MIN_COACH_STARTERS (5) coach-named boxes; other games keep TRACK_APPEARANCE_MIN_COACH
+            _min_s = int(globals().get("TRACK_APPEARANCE_MIN_COACH_STARTERS", 5))
+            _ptl_a = globals().get("player_tracking_listed")
+            def _need_c(g_):
+                try:
+                    d_, c_ = str(g_).split("|", 1)
+                    return min(_min_c, _min_s) if (_ptl_a is not None and _ptl_a(d_, c_)) else _min_c
+                except Exception:
+                    return _min_c
+            _app_games = {g_ for g_, c_ in _cn.items() if c_ >= _need_c(g_)}
+            _min_txt = (f"{min(_min_c, _min_s)} (tracking game) / {_min_c}" if any(_need_c(g_) < _min_c for g_ in _cn)
+                        else str(_min_c))
+            print(f"  [tracking]   appearance: {len(_app_games)} game(s) with {_min_txt}+ coach-named boxes get fingerprints"
+                  + (": " + ", ".join(sorted(_app_games)) if _app_games else " (none yet -- save player checks in the app)"),
+                  flush=True)
+        def _cut(ids, want, label):
+            """Crops (or saved fingerprints) for the tracks in clips `ids` that want(i, k) accepts."""
+            crops, owners, keys = [], [], []
+            _tc = time.time()
+            for _n_clip, i in enumerate(ids, 1):
+                _trk_progress(label, _n_clip, len(ids), _tc)
+                clip = clips[i]
+                for k, tr in enumerate(clip["tracks"]):
+                    if (not clip["side"].get(k) and (i, k) not in coach_kind) or not want(i, k) or (i, k) in fps:
+                        continue
+                    pick = [tr[int(x)] for x in np.linspace(0, len(tr) - 1, min(TRACK_EMBED_CROPS, len(tr)))]
+                    for t, j in pick:
+                        f = clip["files"][t]
+                        x1, y1, x2, y2 = clip["frames"][t][j][6:10]
+                        ck = f"{f}|{int(x1)}|{int(y1)}|{int(x2)}|{int(y2)}"
+                        if ck in fp_cache:
+                            fps.setdefault((i, k), []).append(fp_cache[ck])
+                            continue
+                        # (frame archive) the picture is opened only when its fingerprint isn't saved yet
+                        if f not in img_cache and not os.path.exists(os.path.join(base, f)):
+                            continue                       # (lean mode) frame deleted after tracking: no new crop from it
+                        if f not in img_cache:
+                            if len(img_cache) > 200:
+                                img_cache.clear()
+                            img_cache[f] = Image.open(os.path.join(base, f)).convert("RGB")
+                        crops.append(img_cache[f].crop((int(x1), int(y1), int(x2), int(y2))))
+                        owners.append((i, k))
+                        keys.append(ck)
+            n_reused = sum(len(fps.get(o, [])) for o in {o for o in fps})
+            if crops:
+                print(f"  [tracking] fingerprinting {len(crops):,} new player crop(s) -- progress below...", flush=True)
+                for o, ck, v in zip(owners, keys, _trk_embed(crops)):
+                    fps.setdefault(o, []).append(v)
+                    fp_cache[ck] = np.asarray(v, dtype=np.float16)
+                os.makedirs(TRACK_DIR, exist_ok=True)
+                _safe_to_pickle(fp_cache, fp_path)
+            return len(crops), n_reused
+
+        def _app_X(keys_names):
+            X_, y_ = [], []
+            for i, k, n in keys_names:
+                for v in fps.get((i, k), []):
+                    X_.append(np.asarray(v, np.float32))
+                    y_.append(n)
+            return X_, y_
+
+        def _app_fit(seeds):
+            """A per-game "which player is this" model from the coach-checked boxes' crops (None = not enough to learn)."""
+            X_, y_ = _app_X(seeds)
+            if len(set(y_)) < 2:
+                return None
+            from sklearn.linear_model import LogisticRegression
+            m_ = LogisticRegression(C=float(globals().get("TRACK_APPEARANCE_MODEL_C", 1.0)), max_iter=2000)
+            m_.fit(np.vstack(X_), np.array(y_))
+            return m_
+
+        def _app_test(seeds):
+            """Honest test: clips split into folds; each fold's checked players predicted by a model trained on the rest.
+            -> {"top": (right, tried) picking among the five, "pair": (right, tried) between two of the five, "old": ...}"""
+            clips_ = sorted({i for i, _k, _n in seeds})
+            nf_ = int(globals().get("TRACK_APPEARANCE_FOLDS", 5))
+            if len(clips_) < nf_ or len(seeds) < TRACK_APPEARANCE_MIN_TRIES:
+                return None
+            fold_ = {c_: j_ % nf_ for j_, c_ in enumerate(clips_)}
+            h_ = t_ = ph_ = pt_ = 0
+            for f_ in range(nf_):
+                m_ = _app_fit([x for x in seeds if fold_[x[0]] != f_])
+                if m_ is None:
+                    continue
+                for i, k, n in [x for x in seeds if fold_[x[0]] == f_]:
+                    sd_ = clips[i]["side"].get(k)
+                    five_ = _trk_five(pc.at[i, "offense_lineup" if sd_ == "offense" else "defense_lineup"])
+                    pr_ = _app_probs_m(m_, i, k, five_)
+                    if not pr_ or n not in five_:
+                        continue
+                    t_ += 1
+                    h_ += int(max(pr_, key=pr_.get) == n)
+                    for m2 in five_:
+                        if m2 != n:
+                            pt_ += 1
+                            ph_ += int(pr_[n] > pr_[m2])
+            return {"top": (h_, t_), "pair": (ph_, pt_), "old": (None, None)} if t_ else None
+
+        _ids_all = [i for i in todo if _app_games is None or game_of[i] in _app_games]
+        # CONFIRMED CHANGE (requested: "make it pass some type of test before turning it back on" -- the 10/26 run spent ~45 min
+        # fingerprinting every player for appearance names that then failed their check on both games). TRACK_APPEARANCE_GATE
+        # (default True): FIRST only the coach-checked players are fingerprinted (a minute or two) and the same honest test
+        # is run on them -- hide each checked player's name, let his look pick him out of the five on the floor from the
+        # OTHER checked boxes. Only a game that passes (TRACK_APPEARANCE_MIN_CHECK on TRACK_APPEARANCE_MIN_TRIES+ boxes) gets
+        # every player fingerprinted and appearance names; a game that fails keeps jersey-number / coach / Synergy names.
+        _gate = bool(globals().get("TRACK_APPEARANCE_GATE", True))
+        _pass_games = set(game_of[i] for i in _ids_all)
+        _fill_games = set()
+        if _gate:
+            _n_new, _ = _cut(_ids_all, lambda i, k: bool(coach.get((i, k))), "clips: coach-checked players cut out")
+            _nrm = lambda vs: (np.mean(vs, 0) / (np.linalg.norm(np.mean(vs, 0)) + 1e-8))
+            _fpn = {o: _nrm(v) for o, v in fps.items()}
+            _pass_games = set()
+            for g_ in sorted(set(game_of[i] for i in _ids_all)):
+                seeds_ = [(i, k, n) for (i, k), n in coach.items() if n and game_of.get(i) == g_ and (i, k) in _fpn]
+                # the old way (each player's average look, nearest one wins) -- printed beside the model for comparison
+                raw_ = {}
+                for i, k, n in seeds_:
+                    raw_.setdefault(n, []).append((i, _fpn[(i, k)]))
+                h_ = t_ = oph_ = opt_ = 0
+                for i, k, n in seeds_:
+                    pr_ = {m: _nrm([v for j_, v in vs if j_ != i]) for m, vs in raw_.items() if any(j_ != i for j_, _ in vs)}
+                    sd_ = clips[i]["side"].get(k)
+                    five_ = _trk_five(pc.at[i, "offense_lineup" if sd_ == "offense" else "defense_lineup"])
+                    sims_ = {m: float(_fpn[(i, k)] @ pr_[m]) for m in five_ if m in pr_}
+                    if not sims_:
+                        continue
+                    t_ += 1
+                    h_ += int(max(sims_, key=sims_.get) == n)
+                    if n in sims_:
+                        for m2 in sims_:
+                            if m2 != n:
+                                opt_ += 1
+                                oph_ += int(sims_[n] > sims_[m2])
+                # CONFIRMED CHANGE (requested: "do all 3" -- appearance carries names across clips, but at ~50% it was off). A
+                # model per game, trained on every coach-checked box's crops (20-40 per player), learns what tells THESE
+                # players apart -- instead of one averaged look per player. Tested the honest way: the checked clips are
+                # split in TRACK_APPEARANCE_FOLDS groups, each group predicted by a model trained on the others.
+                st_ = _app_test(seeds_) if globals().get("TRACK_APPEARANCE_MODEL", True) else None
+                # CONFIRMED CHANGE (review of the 10/27 afternoon run: the per-game model scored BELOW the average-look way --
+                # Wheaton 48% vs 52%, WashU 41% vs 49%). Each game uses whichever method its honest test scored higher, for
+                # appearance names, the "last ones left" rule and the suggestions in the app.
+                _old_st = {"top": (h_, t_), "pair": (oph_, opt_)}
+                _use_model = bool(st_) and st_["top"][1] > 0 and t_ > 0 and st_["top"][0] / st_["top"][1] > h_ / t_
+                if st_:
+                    st_["old"] = (h_, t_)
+                if _use_model:
+                    _m_ = _app_fit(seeds_)
+                    if _m_ is not None:
+                        _app_models[g_] = _m_
+                        _app_scorers[g_] = ("model", _m_)
+                        _app_stats[g_] = st_
+                if g_ not in _app_scorers and raw_:
+                    _app_scorers[g_] = ("protos", {m: _nrm([v for _j, v in vs]) for m, vs in raw_.items()})
+                    _app_stats[g_] = dict(_old_st, old=(h_, t_), method="average look")
+                _best = _app_stats.get(g_) or _old_st
+                h_, t_ = _best["top"]
+                _ph, _pt_ = _best["pair"]
+                if _pt_ and _ph / _pt_ >= float(globals().get("TRACK_APPEARANCE_FILL_MIN", 0.8)) and g_ in _app_scorers:
+                    _fill_games.add(g_)
+                ok_ = t_ >= TRACK_APPEARANCE_MIN_TRIES and h_ / t_ >= TRACK_APPEARANCE_MIN_CHECK
+                if ok_:
+                    _pass_games.add(g_)
+                print(f"  [tracking]   appearance test, {g_}: {h_}/{t_} coach-checked players picked out by their look"
+                      + (f" ({h_ / t_:.0%})" if t_ else "")
+                      + ((f" with the {'per-game model' if _use_model else 'average-look way'} (the "
+                          f"{'average-look way' if _use_model else 'per-game model'}: "
+                          f"{(st_['old'] if _use_model else st_['top'])[0]}/{(st_['old'] if _use_model else st_['top'])[1]})")
+                         if st_ else "")
+                      + f"; between two of the five it picks the right one {_ph}/{_pt_} ({_ph / max(_pt_, 1):.0%}) -- "
+                      + ("PASSES: appearance names are used" if ok_ else
+                         (f"below {TRACK_APPEARANCE_MIN_CHECK:.0%}" if t_ >= TRACK_APPEARANCE_MIN_TRIES else
+                          f"too few checked players to test (needs {TRACK_APPEARANCE_MIN_TRIES})")
+                         + ": no appearance names" + ("; it still names the LAST one or two players left on the floor "
+                                                      "(between two it's reliable)" if g_ in _fill_games else "")),
+                      flush=True)
+        # every player is fingerprinted where appearance names are used (passes, or fills the last ones left); elsewhere only
+        # the clips the app shows, so the player checks can show its suggestion ("looks like ...")
+        _ids_full = [i for i in _ids_all if game_of[i] in (_pass_games | _fill_games)]
+        if _ids_full:
+            _n_new, n_reused = _cut(_ids_full, lambda i, k: True, "clips cut into player crops")
+            if not _n_new:
+                print(f"  [tracking]   all fingerprints for the {len(_pass_games | _fill_games)} game(s) reused from earlier runs",
+                      flush=True)
+        if _app_scorers and globals().get("TRACK_APPEARANCE_SUGGEST", True):
+            try:
+                _ak_ = _trk_app_keys(pc, todo)
+                globals()["_trk_app_ckeys_run"] = _ak_
+                _ids_sug = [i for i in _ids_all if game_of[i] in _app_scorers and game_of[i] not in (_pass_games | _fill_games)
+                            and clips[i].get("ckey") in _ak_]
+                if _ids_sug:
+                    _cut(_ids_sug, lambda i, k: True, "app clips cut out (for the suggestions)")
+            except Exception as _se:
+                print(f"  [tracking]   (suggestion fingerprints skipped: {type(_se).__name__}: {_se})", flush=True)
+        # the starter look (see _st_elig above): the coach-checked players of a game with validated starters (their looks)
+        # and every player of a team whose five starters are on the floor
+        if _carry_ids:
+            _cut(_carry_ids, lambda i, k: clips[i]["side"].get(k) in ("offense", "defense") or bool(coach.get((i, k))),
+                 "clips: every player on the starters clip cut out (carrying your checked names)")
+        if _st_elig:
+            _st_ids = [i for i in todo if game_of[i] in _st_valid]
+            # (+ the boxes coaches marked "not a player": what a fan / ref looks like next to the starters -- see _st_gate)
+            _cut(_st_ids, lambda i, k: bool(coach.get((i, k))) or (i, k) in coach_kind
+                 or clips[i]["side"].get(k) in _st_elig.get(i, ()),
+                 "clips: starters cut out (starter look)")
+        fp = {o: (np.mean(v, 0) / (np.linalg.norm(np.mean(v, 0)) + 1e-8)) for o, v in fps.items()}
+
+    # --- names: closest profile among the five on the floor, no duplicate names at the same moment ---
+    _tau_box = {"v": None}   # similarity below which a track looks like none of the known players (set per game)
+
+    def assign(game_ids, protos, exclude_clip=None):
+        names = {}
+        for i in game_ids:
+            clip = clips[i]
+            for sd, col in (("offense", "offense_lineup"), ("defense", "defense_lineup")):
+                five = _trk_five(pc.at[i, col])
+                ks = [k for k in range(len(clip["tracks"])) if clip["side"].get(k) == sd
+                      and ((i, k) in fp or (i, k) in number_names)]
+                if not five or not ks:
+                    continue
+                cand = []
+                for k in ks:
+                    if (i, k) in number_names:            # the number on his jersey beats everything else
+                        cand.append((10.0, k, number_names[(i, k)][0], number_names[(i, k)][1]))
+                        continue
+                    if clip["anchor"] and clip["anchor"][0] == k and i != exclude_clip:
+                        cand.append((9.0, k, clip["anchor"][1], 1.0))
+                        continue
+                    af = clip.get("anchor_first")
+                    if af and af[0] == k and i != exclude_clip:
+                        cand.append((9.0, k, af[1], 1.0))
+                        continue
+                    if (i, k) not in fp:
+                        continue
+                    # requested ("do all 3"): the per-game appearance model's probabilities, where the game has one
+                    _mdl = _app_models.get(game_of.get(i))
+                    if _mdl is not None:
+                        _pr = _app_probs_m(_mdl, i, k, five)
+                        if not _pr:
+                            continue
+                        p = np.array([_pr[n] for n in five])
+                        for rank, o in enumerate(np.argsort(-p)[:2]):
+                            cand.append((float(p[o]) - rank * 1e-3, k, five[o], float(p[o])))
+                        continue
+                    sims = np.array([float(fp[(i, k)] @ protos[n]) if n in protos else np.nan for n in five])
+                    if np.all(np.isnan(sims)):
+                        continue
+                    # elimination by appearance: he looks like none of the known players on the floor, and exactly one
+                    # of the five has no known look yet -> it's him
+                    unknown = [n for n in five if n not in protos]
+                    if _tau_box["v"] is not None and len(unknown) == 1 and np.nanmax(sims) < _tau_box["v"]:
+                        cand.append((0.6, k, unknown[0], 0.6))
+                        continue
+                    z = np.nan_to_num((sims - np.nanmean(sims)) / (np.nanstd(sims) + 1e-6), nan=-1.0)
+                    p = np.exp(3 * z) / np.exp(3 * z).sum()
+                    order = np.argsort(-p)
+                    for rank, o in enumerate(order[:2]):
+                        cand.append((float(p[o]) - rank * 1e-3, k, five[o], float(p[o])))
+                taken = {}   # name -> list of frame sets already using it
+                for score, k, n, conf in sorted(cand, reverse=True):
+                    if (i, k) in names or conf < TRACK_NAME_MIN_CONF:
+                        continue
+                    tset = {t for t, _ in clip["tracks"][k]}
+                    if any(tset & other for other in taken.get(n, [])):
+                        continue
+                    names[(i, k)] = (n, conf)
+                    taken.setdefault(n, []).append(tset)
+        return names
+
+    # jersey numbers come from each clip's OWN game (see _trk_numbers_for_game)
+    _game_nums, _num_conflicts = {}, []
+    def _numfor(i, n):
+        gk = (str(pc.at[i, "game_date"]), str(pc.at[i, "game_code"]))
+        if gk not in _game_nums:
+            _game_nums[gk] = _trk_numbers_for_game(*gk, report=_num_conflicts)
+        return _game_nums[gk].get(str(n).strip().lower())
+
+    # --- jersey numbers -> names (limited to the five on the floor for that team) ---
+    number_names, n_read_tracks = {}, 0
+    # CONFIRMED BUG (fixed): with no reader chosen by the reader test (e.g. the trained recognizer not trained yet)
+    # this fell back to EasyOCR -- loading it, reading every chest, and (with no test score to check) using its numbers.
+    # No reliable reader now means no jersey reading this run.
+    _engine = globals().get("JERSEY_READER_BEST") if TRACK_OCR_ENGINE == "auto" else TRACK_OCR_ENGINE
+    # CONFIRMED CHANGE (review of the 10/23 run: numbers were switched off because EasyOCR took ~40 min a game, while the
+    # recognizer trained on our own film -- milliseconds a crop -- wasn't even in the reader test). TRACK_READ_NUMBERS = "auto":
+    # read jersey numbers with whichever reader WINS the reader test -- it still has to clear TRACK_READER_MIN_PRECISION
+    # below. True / False as before ("False" as text = off).
+    # CONFIRMED CHANGE (requested: "Do #3" -- the 10/25 run left numbers off because "combined" (EasyOCR + the trained
+    # recognizer, 95% right) won and "auto" only allowed the trained recognizer). Any winning reader is used now, the slow
+    # ones too: a run with EasyOCR in the winner takes longer (roughly 40 min more a game).
+    _rn_set = TRACK_READ_NUMBERS
+    _read_nums = _rn_set
+    if str(_rn_set).strip().lower() == "auto":
+        _read_nums = bool(_engine)
+        _slow = bool(_engine) and not str(_engine).startswith("trained")
+        print(f"  [tracking] step 5b: TRACK_READ_NUMBERS = \"auto\" -- the reader test's best reader is "
+              f"{_engine or 'none'}: " + ("numbers are read if it clears the bar"
+                                         + (" (it uses EasyOCR -- slow, ~1-2 s a chest crop, so a game's FIRST read takes "
+                                            "hours; reads are saved, so after that only new frames are read)"
+                                            if _slow else " (trained on our film -- fast)")
+                                         if _read_nums else "no reader to use, so numbers are NOT read"), flush=True)
+    elif str(_rn_set).strip().lower() in ("false", "off", "no", "0", "none", ""):
+        _read_nums = False
+    if _read_nums and not _engine:
+        print("  [tracking] step 5b: jersey numbers NOT read -- no reader passed the Jersey-number reader test yet "
+              "(train the recognizer: more checks, Roboflow's set, JERSEY_TRAIN_EXTRA_DIRS)", flush=True)
+    _prec = (globals().get("JERSEY_READER_PRECISION") or {}).get(_engine)
+    _nans = (globals().get("JERSEY_READER_ANSWERS") or {}).get(_engine, 0)
+    _acc = (globals().get("JERSEY_READER_ACCURACY") or {}).get(_engine)
+    if not _engine:
+        _use_numbers = False
+    elif _prec is not None:
+        _use_numbers = _read_nums and _prec >= TRACK_READER_MIN_PRECISION and _nans >= 6
+    else:
+        _use_numbers = _read_nums and (_acc is None or _acc >= TRACK_READER_MIN_ACCURACY)
+    globals()["_trk_numbers_used"] = bool(_use_numbers)      # for the tracking evaluation (app)
+    _min_conf = (globals().get("JERSEY_READER_CONF") or {}).get(_engine, TRACK_OCR_MIN_CONF)
+    if _read_nums and not _use_numbers and _engine:
+        print(f"  [tracking] step 5b: jersey numbers NOT used -- the best reader ({_engine}) is right "
+              f"{(_prec if _prec is not None else _acc or 0):.0%} of the time it answers ({_nans} answers), below "
+              f"{TRACK_READER_MIN_PRECISION:.0%}. Players are named only where Synergy names them.", flush=True)
+    elif _read_nums and _acc is None:
+        print(f"  [tracking]   (the Jersey-number reader test didn't run, so {_engine} is used untested)", flush=True)
+    _reads_dbg = {}                                   # what the reader returned per track (for the audit below)
+    if _use_numbers:
+        print(f"  [tracking] step 5b: reading jersey numbers with {_engine}"
+              + (f" (right {_prec:.0%} of the time it answers on the answer key; using reads at confidence >= "
+                 f"{_min_conf:.2f})" if _prec is not None else (f" (scored {_acc:.0%} on the answer key)" if _acc is not None else ""))
+              + "...", flush=True)
+        try:
+            globals()["_trk_app_ckeys"] = None
+            if str(globals().get("TRACK_READ_NUMBERS_FOR", "player_checks")).strip().lower() != "all":
+                try:
+                    globals()["_trk_app_ckeys"] = (globals().get("_trk_app_ckeys_run")
+                                                   if globals().get("_trk_app_ckeys_run") is not None
+                                                   else _trk_app_keys(pc, todo))
+                except Exception as _ake:
+                    print(f"  [tracking]   (couldn't work out the app's clips -- reading every clip: "
+                          f"{type(_ake).__name__}: {_ake})", flush=True)
+            if _engine == "combined":
+                # every member reader, each at its own confidence level; the vote below needs their reads to agree
+                reads = {}
+                for _me, _mc in globals().get("JERSEY_READER_COMBINED_MEMBERS", []):
+                    _ncm = (globals().get("JERSEY_READER_NUM_CONF") or {}).get(_me) or {}
+                    for o, rd in _trk_read_numbers(clips, todo, base, _me).items():
+                        reads.setdefault(o, []).extend((tx, cf) for tx, cf in rd
+                                                       if cf >= _mc and cf >= _ncm.get(str(tx), 0.0))
+            else:
+                reads = _trk_read_numbers(clips, todo, base, _engine)
+                # only reads at or above the confidence where the reader tested >= 85% right
+                # CONFIRMED CHANGE (requested: the repeat mistakes): and, for a number the reader keeps calling wrongly, at or
+                # above that number's own bar from the reader test (JERSEY_READER_NUM_CONF)
+                _ncm = (globals().get("JERSEY_READER_NUM_CONF") or {}).get(_engine) or {}
+                reads = {o: [(tx, cf) for tx, cf in rd if cf >= _min_conf and cf >= _ncm.get(str(tx), 0.0)]
+                         for o, rd in reads.items()}
+            _ncu = {**((globals().get("JERSEY_READER_NUM_CONF") or {}).get(_engine) or {})}
+            for _me, _mc in (globals().get("JERSEY_READER_COMBINED_MEMBERS", []) if _engine == "combined" else []):
+                _ncu.update((globals().get("JERSEY_READER_NUM_CONF") or {}).get(_me) or {})
+            if _ncu:
+                print("  [tracking]   numbers the reader calls wrongly need a higher confidence: "
+                      + ", ".join(f"#{n_} {c_:.2f}+" if c_ <= 1 else f"#{n_} not used" for n_, c_ in sorted(_ncu.items())),
+                      flush=True)
+            _reads_dbg = reads
+            # CONFIRMED CHANGE (requested: "make sure this is not a systemic issue" -- a clip's North Park five was missing #0
+            # and #2, who were plainly on the floor). A lineup check from the surest jersey reads (TRACK_LINEUP_CHECK_CONF,
+            # 0.95+: right 45/45 in the reader test): a read of a player of THAT team who isn't in the clip's five says the
+            # lineup is probably wrong there (a substitution the play-by-play missed or placed wrong, a clip matched to the
+            # wrong moment). Listed in _tracking/lineup_conflicts.csv; nothing is changed.
+            try:
+                _lc_conf = float(globals().get("TRACK_LINEUP_CHECK_CONF", 0.95))
+                _team_pl, _lc_rows = {}, []
+                for i_ in todo:
+                    for sd_ in ("offense", "defense"):
+                        tm_ = pc.at[i_, f"{sd_}_team"] if f"{sd_}_team" in pc.columns else None
+                        for n_ in _trk_five(pc.at[i_, f"{sd_}_lineup"]):
+                            _team_pl.setdefault((game_of[i_], tm_), set()).add(n_)
+                for (i_, k_), rd_ in reads.items():
+                    sd_ = clips[i_]["side"].get(k_)
+                    if sd_ not in ("offense", "defense"):
+                        continue
+                    five_ = _trk_five(pc.at[i_, f"{sd_}_lineup"])
+                    if len(five_) != 5:
+                        continue
+                    tm_ = pc.at[i_, f"{sd_}_team"] if f"{sd_}_team" in pc.columns else None
+                    fnums_ = {str(_numfor(i_, n)) for n in five_ if _numfor(i_, n)}
+                    for tx_ in sorted({str(tx) for tx, cf in rd_ if cf >= _lc_conf and str(tx) not in ("", "nn")}):
+                        if tx_ in fnums_:
+                            continue
+                        who_ = sorted(n for n in _team_pl.get((game_of[i_], tm_), ()) if str(_numfor(i_, n)) == tx_)
+                        if who_:
+                            _lc_rows.append({"game": game_of[i_], "clip_number": pc.at[i_, "clip_number"],
+                                             "period": pc.at[i_, "period"], "clock": pc.at[i_, "time_remaining_seconds"],
+                                             "matched_by": pc.at[i_, "matched_by"] if "matched_by" in pc.columns else None,
+                                             "team": tm_, "side": sd_, "number_read": tx_, "player": " / ".join(who_),
+                                             "lineup": ", ".join(five_)})
+                _lcdf = pd.DataFrame(_lc_rows).drop_duplicates(["game", "clip_number", "side", "number_read"]) \
+                    if _lc_rows else pd.DataFrame()
+                os.makedirs(TRACK_DIR, exist_ok=True)
+                _lcdf.to_csv(os.path.join(TRACK_DIR, "lineup_conflicts.csv"), index=False)
+                if len(_lcdf):
+                    _n_cl = _lcdf.groupby("game")["clip_number"].nunique()
+                    _n_all = pd.Series([game_of[i_] for i_ in todo]).value_counts()
+                    print("  [tracking]   lineup check (jersey reads 0.95+ of a player NOT in that clip's five): "
+                          + "; ".join(f"{g_}: {int(n_)} of {int(_n_all.get(g_, 0))} clip(s)" for g_, n_ in _n_cl.items())
+                          + " -- _tracking/lineup_conflicts.csv (the lineup there is probably wrong)", flush=True)
+                else:
+                    print("  [tracking]   lineup check: no sure jersey read contradicts a clip's five", flush=True)
+            except Exception as _lce:
+                print(f"  [tracking]   (lineup check skipped: {type(_lce).__name__}: {_lce})", flush=True)
+            num_of = {}                                   # player name (lower case) -> jersey number
+            book = _pl_jersey_book() if "_pl_jersey_book" in globals() else {}
+            for team_book in book.values():
+                for j_, n_ in team_book.items():
+                    num_of.setdefault(str(n_).strip().lower(), str(j_).strip())
+            for ss in pc["synergy_string"].dropna().astype(str):   # Synergy's "24 Richie Warren > ..." wins
+                for j_, n_ in re.findall(r"(?:^|>)\s*(\d{1,2})\s+([A-Za-z][^>]*?)\s*(?=>|$)", ss):
+                    num_of[n_.strip().lower()] = j_
+            for (i, k), rd in reads.items():
+                sd = clips[i]["side"].get(k)
+                five = _trk_five(pc.at[i, "offense_lineup" if sd == "offense" else "defense_lineup"])
+                cand = {_numfor(i, n): n for n in five if _numfor(i, n)}
+                if rd:
+                    n_read_tracks += 1
+                sure = [(txt, cf) for txt, cf in rd if cf >= TRACK_OCR_MIN_CONF]
+                # a read that isn't the number of anyone in this team's five is no answer (not a vote against the others) --
+                # the way the Jersey-number reader test scores readers (JERSEY_READER_LINEUP_FILTER)
+                if cand and globals().get("JERSEY_READER_LINEUP_FILTER", True):
+                    sure = [(txt, cf) for txt, cf in sure if txt in cand]
+                # CONFIRMED BUG (fixed; review of the 1024 run): the reader sometimes catches ONE digit of a two-digit
+                # number -- "0" off a clear 10 (at 0.95), "2" off 23 -- and that digit was someone else's number (#0 Beck,
+                # #2 LaChapell). A single-digit read is AMBIGUOUS when another number on the floor for that team contains
+                # it; it never names a track by itself (the lineup matching still weighs it as a shared hint).
+                _two = [num for num in cand if len(num) == 2]
+                # CONFIRMED CHANGE (requested: three clearly readable numbers -- #0, #2, #4 -- were not read as numbers; "2" and "4"
+                # were dropped as "ambiguous" because #21 / #14 etc. were also on the floor). The ambiguity is real for an OCR
+                # reader that can miss a digit, but the TRAINED recognizer classifies the WHOLE number (0-99) -- when it answers "2"
+                # it means #2, not "2 of 21" -- so its single-digit answers are kept (TRACK_TRAINED_WHOLE_NUMBER = False -> old rule).
+                _whole = str(_engine).startswith("trained") and bool(globals().get("TRACK_TRAINED_WHOLE_NUMBER", True))
+                if not _whole:
+                    sure = [(txt, cf) for txt, cf in sure if not (len(txt) == 1 and any(txt in num for num in _two))]
+                if not sure:
+                    continue
+                allv = {}
+                for txt, cf in sure:
+                    allv.setdefault(txt, []).append(cf)
+                top, cfs = max(allv.items(), key=lambda kv: (len(kv[1]), max(kv[1])))
+                need = TRACK_SINGLE_DIGIT_VOTES if len(top) == 1 else TRACK_NUMBER_MIN_VOTES
+                if _prec is not None and _prec >= TRACK_READER_MIN_PRECISION and len(allv) == 1:
+                    need = 1        # a reader that is rarely wrong when it answers, and nothing disagrees
+                if globals().get("TRACK_NAME_ONE_FRAME", True) and clips[i].get("name_frame") is not None:
+                    need = 1        # one naming frame = one read per player (requested); the coach check confirms it
+                # the winner must be one of the five on the floor, the MAJORITY of every confident read, and have
+                # enough agreeing reads (more for single digits)
+                if top in cand and len(cfs) >= need and len(cfs) > len(sure) / 2:
+                    number_names[(i, k)] = (cand[top], round(min(0.95, 0.6 + 0.1 * len(cfs)), 2))
+            # CONFIRMED BUG (fixed; found by the best-guess check): two tracks seen at the SAME moment both read "21" --
+            # two different players 20+ ft apart -- and both were named #21. One player can't be on two tracks at once:
+            # keep the one with more agreeing reads (then the longer one); the other goes back to the lineup matching.
+            _dropped, _dropped_dup = 0, 0
+            for i in {i for (i, _k) in number_names}:
+                by_name = {}
+                for (ii, k), (n, cf) in number_names.items():
+                    if ii == i:
+                        by_name.setdefault(n, []).append((cf, len(clips[i]["tracks"][k]), k))
+                for n, lst in by_name.items():
+                    kept = []
+                    for cf, ln, k in sorted(lst, reverse=True):
+                        fk = {t for t, _ in clips[i]["tracks"][k]}
+                        if any(fk & {t for t, _ in clips[i]["tracks"][o]} for o in kept):
+                            number_names.pop((i, k), None)
+                            _dropped += 1
+                            # the same number on two tracks at the same moment whose boxes sit on each other: ONE player boxed
+                            # twice, not a second player -- drop the second box instead of leaving him to the best guess
+                            try:
+                                if _dup_iou > 0 and any(
+                                        (lambda r_: r_[1] >= 1 and r_[0] >= 0.3)(_trk_track_overlap(clips[i], k, o)) for o in kept):
+                                    clips[i]["side"][k] = None
+                                    _dropped_dup += 1
+                            except Exception:
+                                pass
+                        else:
+                            kept.append(k)
+            # CONFIRMED CHANGE (requested: the same #24 on two boxes, one named and one "not named"): a player split into
+            # pieces. A piece that has only a FEW reads of a number (fewer than the votes normally needed) is still that
+            # number's player when the same name is on the floor in that clip and the piece is never on the floor at the
+            # same moment as the track already carrying the name (one man can't be in two places). Setting
+            # TRACK_FRAGMENT_NUMBER_JOIN = False turns this off.
+            _n_frag = 0
+            if bool(globals().get("TRACK_FRAGMENT_NUMBER_JOIN", True)):
+                try:
+                    for (i, k), rd in reads.items():
+                        if (i, k) in number_names or clips[i]["side"].get(k) is None:
+                            continue
+                        sd = clips[i]["side"].get(k)
+                        five = _trk_five(pc.at[i, "offense_lineup" if sd == "offense" else "defense_lineup"])
+                        cand = {_numfor(i, n): n for n in five if _numfor(i, n)}
+                        sure = [(txt, cf) for txt, cf in rd if cf >= TRACK_OCR_MIN_CONF]
+                        if not _whole:
+                            _two = [num for num in cand if len(num) == 2]
+                            sure = [(txt, cf) for txt, cf in sure if not (len(txt) == 1 and any(txt in num for num in _two))]
+                        if not sure:
+                            continue
+                        allv = {}
+                        for txt, cf in sure:
+                            allv.setdefault(txt, []).append(cf)
+                        top, cfs = max(allv.items(), key=lambda kv: (len(kv[1]), max(kv[1])))
+                        if top not in cand or len(cfs) <= len(sure) / 2 or max(cfs) < max(_min_conf, 0.6):
+                            continue
+                        nm = cand[top]
+                        mine = {t for t, _ in clips[i]["tracks"][k]}
+                        holders_ = [o for (ii, o), (n_, _c) in number_names.items() if ii == i and n_ == nm]
+                        if any(mine & {t for t, _ in clips[i]["tracks"][o]} for o in holders_):
+                            continue                          # on the floor at the same moment as the named one: another man
+                        number_names[(i, k)] = (nm, 0.55)
+                        _n_frag += 1
+                except Exception as _e:
+                    print(f"  [tracking]   fragment number join skipped ({type(_e).__name__}: {_e})", flush=True)
+            print(f"  [tracking]   a jersey number was read on {n_read_tracks:,} track(s); "
+                  + (f"{_n_frag} more piece(s) of an already-named player named from a few reads; " if _n_frag else "")
+                  + f"{len(number_names):,} named by number"
+                  + (f" ({_dropped} dropped: the same number read on two players at the same moment"
+                     + (f"; {_dropped_dup} of those were a second box on the same player and are now dropped as duplicates" if _dropped_dup else "")
+                     + ")" if _dropped else ""),
+                  flush=True)
+        except Exception as _e:
+            print(f"  [tracking]   jersey numbers not read this run ({type(_e).__name__}: {_e})", flush=True)
+
+    # --- step 5b2: the JERSEY VOTE -- the trained recognizer, limited to the five on the floor, voting over the whole track ---
+    # CONFIRMED CHANGE (requested: "#2 -- a jersey reader that only picks from the 5 players on the floor"). The jersey audit
+    # showed the reader gave NO answer on 20 of 23 checked players: it read ONE chest crop per player (the naming frame),
+    # and had to pick among every number 0-99. Now the trained recognizer looks at up to TRACK_VOTE_CROPS (8) chest crops
+    # spread along each player's track (the boxes where he is near full height and facing the camera), and each crop's
+    # answer is kept ONLY for the five numbers of his team on the floor. The crops' evidence is added up (a crop where no
+    # number shows says almost nothing either way), plus any confident read from the other readers. A name is used when one
+    # of the five reaches TRACK_VOTE_MIN_P (0.90) with 2+ crops pointing at him -- and only if the vote passes its own test
+    # first: every coach-checked player is voted on WITHOUT the crops from the frames you checked him on, and it has to be
+    # right TRACK_VOTE_MIN_PREC (85%) of the time on TRACK_VOTE_MIN_TESTS (8)+ of them. Until then its picks are only the
+    # "looks like #..?" suggestions in the player checks. TRACK_NUMBER_VOTE = False turns it off.
+    vote_named, _vote_sugg, _vote_stats = {}, {}, {"tested": 0, "right": 0, "answered": 0, "tracks": 0, "crops": 0}
+    _vres = {}
+    if globals().get("TRACK_NUMBER_VOTE", True) and "jersey_recognizer_probs" in globals():
+        try:
+            import cv2 as _cv2v
+            _vstyle = "pose" if ("_jr_path_for" in globals() and os.path.exists(_jr_path_for("pose"))) else "fixed"
+            _vprep = _jn_prep_for("trained_pose" if _vstyle == "pose" else "trained") if "_jn_prep_for" in globals() else None
+            _vmp = _jr_path_for(_vstyle) if "_jr_path_for" in globals() else JERSEY_MODEL_PATH
+            if _vprep is None or not os.path.exists(_vmp):
+                raise RuntimeError("no trained jersey recognizer yet")
+            _vtag = f"{_vstyle}@{int(os.path.getmtime(_vmp))}"
+            _vcp = os.path.join(TRACK_DIR, "jersey_vote_probs.pkl")
+            _vcache = _safe_read_pickle(_vcp) if os.path.exists(_vcp) else {}
+            _vcache = {k_: v_ for k_, v_ in _vcache.items() if str(k_).endswith("|" + _vtag)}   # a retrained model reads again
+            _vn = int(globals().get("TRACK_VOTE_CROPS", 8))
+            _va = float(globals().get("TRACK_VOTE_SMOOTH", 0.01))
+            _vcrop_min = float(globals().get("TRACK_VOTE_CROP_MIN", 0.5))
+            _vmin_p = float(globals().get("TRACK_VOTE_MIN_P", 0.90))
+            _vmin_sup = int(globals().get("TRACK_VOTE_MIN_CROPS", 2))
+            _rd_all = _reads_dbg or {}
+            _jobs_v = {}                                      # (i, k) -> [(cache key, file, box, t)]
+            for i in todo:
+                clip = clips[i]
+                fps_v = float(clip.get("fps", _fps))
+                gap_v = max(1, int(round(float(globals().get("TRACK_VOTE_GAP_S", 0.5)) * fps_v)))
+                for k, tr in enumerate(clip["tracks"]):
+                    if clip["side"].get(k) not in ("offense", "defense") or len(tr) < 2:
+                        continue
+                    hts = {tj: clip["frames"][tj[0]][tj[1]][9] - clip["frames"][tj[0]][tj[1]][7] for tj in tr}
+                    hmax = max(hts.values())
+                    cand_ = sorted((tj for tj in tr if hts[tj] >= 0.7 * hmax),
+                                   key=lambda tj: -((clip["frames"][tj[0]][tj[1]][8] - clip["frames"][tj[0]][tj[1]][6])
+                                                    / max(hts[tj], 1e-6)))
+                    pick_ = []
+                    for tj in cand_:
+                        if all(abs(tj[0] - o[0]) >= gap_v for o in pick_):
+                            pick_.append(tj)
+                        if len(pick_) >= _vn:
+                            break
+                    for t, j in pick_:
+                        x1, y1, x2, y2 = [float(v) for v in clip["frames"][t][j][6:10]]
+                        _jobs_v.setdefault((i, k), []).append(
+                            (f"{clip['files'][t]}|{int(x1)}|{int(y1)}|{int(x2)}|{int(y2)}|{_vtag}", clip["files"][t],
+                             (x1, y1, x2, y2), t))
+            _new_v = [jb for lst in _jobs_v.values() for jb in lst if jb[0] not in _vcache]
+            if _new_v:
+                print(f"  [tracking] step 5b2: jersey vote -- reading {len(_new_v):,} new chest crop(s) with the trained "
+                      f"recognizer ({_vstyle} crop; saved, each crop is read once)...", flush=True)
+                _t0v = time.time()
+                _imgs = {}
+                for s0 in range(0, len(_new_v), 64):
+                    ch_ = _new_v[s0:s0 + 64]
+                    crops_ = []
+                    for _key, rel, box, _t in ch_:
+                        if rel not in _imgs:
+                            if len(_imgs) > 200:
+                                _imgs.clear()
+                            _imgs[rel] = _cv2v.imread(os.path.join(base, rel), _cv2v.IMREAD_COLOR)
+                        try:
+                            crops_.append(_vprep(_imgs[rel], box) if _imgs[rel] is not None else None)
+                        except Exception:
+                            crops_.append(None)
+                    for (_key, _rel, _box, _t), pr_ in zip(ch_, jersey_recognizer_probs(crops_, style=_vstyle) or []):
+                        _vcache[_key] = pr_ or {}
+                    _trk_progress("jersey vote crops read", min(s0 + 64, len(_new_v)), len(_new_v), _t0v)
+                if "_jr_torso_save" in globals():
+                    _jr_torso_save()
+                _safe_to_pickle(_vcache, _vcp)
+
+            # CONFIRMED CHANGE (first run, 11/1: the vote was right 4 of 8 -- it kept answering #15 Bland and #34 Kapral). The
+            # recognizer leans toward the numbers it saw most in training, and adding up weak crops added up that lean. Each
+            # number's answer is now measured against how much the recognizer gives that number on EVERY crop of the run (its
+            # lean), and only crops where one of the five reaches TRACK_VOTE_CROP_MIN (0.5) vote at all -- on the saved
+            # crops of that run this was right 7 of 9 (the old way 4 of 8; a single crop at 0.6+ is right ~78% of the time).
+            _vprior = {}
+            _vall = [_vcache.get(jb[0]) or {} for lst in _jobs_v.values() for jb in lst]
+            _vnums = {str(x) for lst in _vall for x in lst}
+
+            def _prior(num):
+                if num not in _vprior:
+                    _vprior[num] = float(np.mean([p_.get(num, 0.0) for p_ in _vall])) if _vall else 0.0
+                return _vprior[num]
+
+            def _vote(i, k, skip_t=()):
+                """-> (name, posterior, crops pointing at him, crops used) for track k, or None."""
+                sd = clips[i]["side"].get(k)
+                five = _trk_five(pc.at[i, "offense_lineup" if sd == "offense" else "defense_lineup"])
+                cand = {str(_numfor(i, n)): n for n in five if _numfor(i, n)}
+                if len(cand) < 2:
+                    return None
+                nums = list(cand)
+                logit = np.zeros(len(nums))
+                sup = np.zeros(len(nums), int)
+                used = 0
+                for key_, _rel, _box, t in _jobs_v.get((i, k), []):
+                    if t in skip_t:
+                        continue
+                    pr_ = _vcache.get(key_) or {}
+                    if not pr_:
+                        continue
+                    q = np.array([float(pr_.get(nm_, 0.0)) for nm_ in nums])
+                    if q.max() < _vcrop_min:
+                        continue                               # no clear number of the five on this crop
+                    used += 1
+                    pri = np.array([_prior(nm_) for nm_ in nums])
+                    logit += np.log((q + _va) / (pri + _va))
+                    sup[int(q.argmax())] += 1
+                # the other readers' confident reads of one of the five (not on a checked frame -- they can't tell)
+                if not skip_t:
+                    for tx, cf in _rd_all.get((i, k)) or []:
+                        if str(tx) in cand:
+                            logit[nums.index(str(tx))] += 1.5 * float(cf)
+                if not used:
+                    return None
+                e = np.exp(logit - logit.max())
+                post = e / e.sum()
+                b = int(post.argmax())
+                return cand[nums[b]], float(post[b]), int(sup[b]), used
+
+            _vres = {}
+            for (i, k) in _jobs_v:
+                r_ = _vote(i, k)
+                if r_:
+                    _vres[(i, k)] = r_
+                    _vote_stats["crops"] += r_[3]
+            _vote_stats["tracks"] = len(_vres)
+            # the honest test: coach-checked players, voted on without the frames you checked them on
+            _vt_rows = []
+            for (i, k), n_true in coach.items():
+                if not n_true or (i, k) not in _jobs_v:
+                    continue
+                r_ = _vote(i, k, skip_t=_coach_t.get((i, k), set()))
+                if r_ is None:
+                    continue
+                _vote_stats["tested"] += 1
+                ok_ = r_[1] >= _vmin_p and r_[2] >= _vmin_sup
+                if ok_:
+                    _vote_stats["answered"] += 1
+                    _vote_stats["right"] += int(r_[0] == n_true)
+                _vt_rows.append({"clip": _trk_clip_key(pc.loc[i]), "track": k, "true_name": n_true, "vote": r_[0],
+                                 "probability": round(r_[1], 3), "crops_pointing": r_[2], "crops_used": r_[3],
+                                 "answered": ok_, "right": ok_ and r_[0] == n_true})
+            try:
+                pd.DataFrame(_vt_rows).to_csv(os.path.join(TRACK_DIR, "jersey_vote_test.csv"), index=False)
+            except Exception:
+                pass
+            _v_need = int(globals().get("TRACK_VOTE_MIN_TESTS", 8))
+            _v_bar = float(globals().get("TRACK_VOTE_MIN_PREC", 0.85))
+            _v_ans, _v_right = _vote_stats["answered"], _vote_stats["right"]
+            _v_pass = _v_ans >= _v_need and _v_right / max(_v_ans, 1) >= _v_bar
+            globals()["_trk_vote_pass"] = _v_pass
+            # one player can't be on two tracks at the same moment: the more sure vote keeps the name
+            _by_clip = {}
+            for (i, k), (n_, p_, sup_, used_) in _vres.items():
+                if p_ >= _vmin_p and sup_ >= _vmin_sup:
+                    _by_clip.setdefault((i, n_), []).append((p_, sup_, k))
+            for (i, n_), lst in _by_clip.items():
+                kept = []
+                for p_, sup_, k in sorted(lst, reverse=True):
+                    fk = {t for t, _ in clips[i]["tracks"][k]}
+                    if any(fk & {t for t, _ in clips[i]["tracks"][o]} for o in kept):
+                        continue
+                    kept.append(k)
+                    if (i, k) in number_names:
+                        continue
+                    if _v_pass:
+                        number_names[(i, k)] = (n_, round(min(0.95, p_), 2))
+                        vote_named[(i, k)] = n_
+                    else:
+                        _vote_sugg[(i, k)] = (n_, round(p_ * 0.9, 3))
+            _sum = (f"{_v_right}/{_v_ans} right on the coach-checked players it answered"
+                    + (f" ({_v_right / _v_ans:.0%})" if _v_ans else "")
+                    + f", {_vote_stats['tested'] - _v_ans} of {_vote_stats['tested']} too unsure to answer")
+            _trk_eval("jersey_vote", score=(100 * _v_right / _v_ans) if _v_ans else None, n=_v_ans, bar=100 * _v_bar,
+                      bar_n=_v_need, chance=20, used=bool(_v_pass),
+                      how="the trained recognizer over up to 8 chest crops per track, only the five numbers on the floor; "
+                          "tested on coach-checked players without the frames they were checked on")
+            print(f"  [tracking]   jersey vote ({_vote_stats['tracks']:,} track(s), {_vote_stats['crops']:,} chest crops): "
+                  f"test {_sum} -- "
+                  + (f"PASSES: {len(vote_named):,} more track(s) named by number" if _v_pass else
+                     f"not used for names yet (needs {_v_bar:.0%} on {_v_need}+): {len(_vote_sugg):,} track(s) get it as "
+                     f"their \"looks like ...?\" suggestion") + " (jersey_vote_test.csv)", flush=True)
+        except Exception as _ve:
+            print(f"  [tracking]   jersey vote skipped ({type(_ve).__name__}: {_ve})", flush=True)
+
+    # --- audit (requested: "these three are extremely clear and only one got classified correctly"): for every track a coach
+    # checked, WHY it did or did not get its name from the jersey number. Saved to tracking_number_audit.csv. ---
+    try:
+        _aud, _why_n = [], {}
+        for (i, k), n_true in coach.items():
+            if not n_true:
+                continue
+            true_num = None
+            try:
+                true_num = str(_numfor(i, n_true)) if _numfor(i, n_true) else None
+            except Exception:
+                pass
+            rd = [(tx, round(float(cf), 2)) for tx, cf in (_reads_dbg.get((i, k)) or [])]
+            got = number_names.get((i, k))
+            if not _use_numbers:
+                why = "jersey numbers were not used this run (reader not chosen / below the precision bar)"
+            elif got and got[0] == n_true:
+                why = "named correctly by jersey number"
+            elif got:
+                why = f"named WRONG by jersey number ({got[0]})"
+            elif not rd:
+                why = "reader gave no answer above its confidence bar on this track's chest crops (or the track was too short)"
+            elif true_num and any(tx == true_num for tx, _c in rd):
+                why = "the right number WAS read but not enough votes / not the majority / a one-digit read held back"
+            else:
+                why = "reader read a different number: " + ", ".join(sorted({tx for tx, _c in rd}))
+            _why_n[why] = _why_n.get(why, 0) + 1
+            _aud.append({"clip": _trk_clip_key(pc.loc[i]), "track": k, "true_name": n_true, "true_number": true_num,
+                         "reads": "; ".join(f"{tx} ({cf})" for tx, cf in rd), "named_by_number": got[0] if got else None, "why": why})
+        if _aud:
+            pd.DataFrame(_aud).to_csv(os.path.join(TRACK_DIR, "tracking_number_audit.csv"), index=False)
+            print(f"  [tracking]   jersey-number audit on {len(_aud)} coach-checked track(s) (tracking_number_audit.csv):", flush=True)
+            for w_, c_ in sorted(_why_n.items(), key=lambda x: -x[1]):
+                print(f"      {c_:>4}  {w_}", flush=True)
+    except Exception as _e:
+        print(f"  [tracking]   jersey-number audit skipped ({type(_e).__name__}: {_e})", flush=True)
+
+    # coach-checked names are certain: they replace any number name on that track, and no other track of that clip
+    # may carry the same name at the same moment
+    for (i, k), n in coach.items():
+        if not n:
+            continue
+        fk = {t for t, _ in clips[i]["tracks"][k]}
+        for (ii, kk) in [key for key, v in number_names.items() if key[0] == i and v[0] == n and key[1] != k]:
+            if fk & {t for t, _ in clips[i]["tracks"][kk]}:
+                number_names.pop((ii, kk), None)
+        number_names[(i, k)] = (n, 0.99)
+
+    # --- play-by-play named events (rebounds, steals, blocks, fouls): anchors for offense AND defense ---
+    for i in todo:
+        clips[i]["anchors_pbp"] = []
+    globals()["trk_event_candidates"] = pd.DataFrame()
+    if TRACK_USE_PBP_EVENTS:
+        try:
+            known = {}
+            for i in todo:
+                for a in (clips[i]["anchor"], clips[i].get("anchor_first")):
+                    if a:
+                        known[(i, a[1])] = a[0]
+            for (i, k), (n, _c) in number_names.items():
+                known.setdefault((i, n), k)
+            pa = _trk_pbp_anchors(clips, todo, pc, known, _fps)
+            agree = disagree = 0
+            _cands_rows = []
+            _rd_all = locals().get("reads", {}) or {}
+            _nums = locals().get("num_of", {}) or {}
+            for i, k, n, et in pa:
+                # the track's own jersey readings clearly show a DIFFERENT two-digit number -> not him
+                _mine = _numfor(i, n)
+                if any(len(tx) == 2 and cf >= 0.5 and tx != _mine for tx, cf in _rd_all.get((i, k), [])):
+                    disagree += 1
+                    continue
+                prior = [nm for (ii, nm), kk in known.items() if ii == i and kk == k]
+                if prior:
+                    agree += int(n in prior)
+                    disagree += int(n not in prior)
+                    if n not in prior:
+                        continue                                  # conflicts with a name we already trust: skip it
+                _cands_rows.append({"clip_key": pc.at[i, "track_clip_key"], "clip_number": pc.at[i, "clip_number"],
+                                    "track": int(k), "name": n, "event": et, "game_date": pc.at[i, "game_date"]})
+                if TRACK_USE_PBP_EVENTS != "review":
+                    clips[i]["anchors_pbp"].append((k, n, et))
+            globals()["trk_event_candidates"] = pd.DataFrame(_cands_rows)
+            by_type = pd.Series([et for *_x, et in pa]).value_counts().to_dict() if pa else {}
+            _types = ", ".join(str(k).replace("_", " ") + " " + str(v) for k, v in by_type.items()) or "none"
+            _n_pbp = len(_cands_rows)
+            print(f"  [tracking] step 5d: play-by-play events point at {_n_pbp:,} player(s) ({_types}); where the player "
+                  f"was already known they agreed {agree} of {agree + disagree} time(s)"
+                  + (" -- REVIEW mode: saved for checking, not used for names" if TRACK_USE_PBP_EVENTS == "review" else ""),
+                  flush=True)
+        except Exception as _e:
+            print(f"  [tracking]   play-by-play events not used this run ({type(_e).__name__}: {_e})", flush=True)
+
+    # --- locked names: a very clear jersey number (or a coach check) names the player's other pieces in the clip ---
+    followed, locked_set = {}, {}
+
+    def _follow_kw(i):
+        """each piece's look and jersey vote for _trk_follow_names (TRACK_FOLLOW_LOOK_W = 0 -> position only, as before)"""
+        if float(globals().get("TRACK_FOLLOW_LOOK_W", 1.5)) <= 0:
+            return {}
+        return {"looks": {k: fp[(i, k)] for k in range(len(clips[i]["tracks"])) if (i, k) in fp},
+                "votes": {k: (v_[0], v_[1], v_[2]) for (ii, k), v_ in _vres.items() if ii == i}}
+    if globals().get("TRACK_LOCK_NAMES", True):
+        try:
+            _lock_min = float(globals().get("TRACK_LOCK_MIN_CONF", 0.9))
+            for i in todo:
+                seeds_ = {k: v[0] for (ii, k), v in number_names.items() if ii == i and v[1] >= _lock_min}
+                for (ii, k), n in coach.items():
+                    if ii == i and n:
+                        seeds_[k] = n
+                if not seeds_:
+                    continue
+                for k, n in seeds_.items():
+                    locked_set[(i, k)] = n
+                for k2, (n, frm) in _trk_follow_names(clips, i, seeds_, **_follow_kw(i)).items():
+                    own = number_names.get((i, k2))
+                    if (own and own[0] != n) or (coach.get((i, k2)) and coach.get((i, k2)) != n):
+                        continue                                 # that piece has its own, different evidence
+                    followed[(i, k2)] = (n, frm)
+            print(f"  [tracking] step 5e: {len(locked_set):,} track(s) locked to a name by a clear jersey number or a coach "
+                  f"check; following those players through the clip named {len(followed):,} more piece(s) of their paths",
+                  flush=True)
+        except Exception as _e:
+            print(f"  [tracking]   locked-name following not used this run ({type(_e).__name__}: {_e})", flush=True)
+
+    # --- link possessions: the same player across overlapping clips; names travel along the links ---
+    link_names = {}
+    if TRACK_LINK_POSSESSIONS:
+        print("  [tracking] step 5a: linking possessions that show the same moments of the game...", flush=True)
+        try:
+            group, n_links, n_pairs = _trk_link_possessions(clips, todo, pc, game_of)
+            by_group = {}
+            for node, gid in group.items():
+                by_group.setdefault(gid, []).append(node)
+            # what each linked player is called anywhere. CONFIRMED CHANGE (requested, from the player-check results: names
+            # carried along linked possessions were right 0 of 5 times, and one wrong name spreads across every clip in the
+            # link). With TRACK_LINK_EVIDENCE = "numbers+coach" (the default) ONLY a jersey number or a coach check starts a
+            # carried name -- Synergy / rim / pose / play-by-play anchors no longer do. "all" = the old behavior.
+            _link_all = str(globals().get("TRACK_LINK_EVIDENCE", "numbers+coach")).lower() == "all"
+            for gid, nodes in by_group.items():
+                votes = {}
+                for (i, k) in nodes:
+                    if _link_all:
+                        for a in (clips[i]["anchor"], clips[i].get("anchor_first")):
+                            if a and a[0] == k:
+                                votes[a[1]] = votes.get(a[1], 0) + 1
+                        for kk, nn, _et in clips[i].get("anchors_pbp", []):
+                            if kk == k:
+                                votes[nn] = votes.get(nn, 0) + 1
+                    if (i, k) in number_names:
+                        votes[number_names[(i, k)][0]] = votes.get(number_names[(i, k)][0], 0) + 1
+                    if coach.get((i, k)):                           # a name the coaches checked is certain: it counts double
+                        votes[coach[(i, k)]] = votes.get(coach[(i, k)], 0) + 2
+                    if (i, k) in locked_set and (i, k) in number_names:     # a very clear number counts extra
+                        votes[locked_set[(i, k)]] = votes.get(locked_set[(i, k)], 0) + 1
+                    if (i, k) in followed:                                  # a piece of a locked player's path
+                        votes[followed[(i, k)][0]] = votes.get(followed[(i, k)][0], 0) + 1
+                if not votes:
+                    continue
+                name, sup = max(votes.items(), key=lambda kv: kv[1])
+                if sup <= sum(votes.values()) / 2:
+                    continue                                     # the evidence disagrees -- don't carry it
+                # CONFIRMED BUG (fixed; coach: "the same player is assigned to multiple boxes"). A linked group can merge
+                # two DIFFERENT players, so two tracks of one group can be on the floor at the same moment in a clip (e.g.
+                # "#24 Warren" on one box by jersey number and on another as "linked possession"). In such a clip only a
+                # track with its OWN evidence for the name keeps it; the others get no carried name.
+                _by_clip = {}
+                for (i, k) in nodes:
+                    _by_clip.setdefault(i, []).append(k)
+                for i, ks_ in _by_clip.items():
+                    fr_ = {k: {t_ for t_, _ in clips[i]["tracks"][k]} for k in ks_}
+                    for k in ks_:
+                        clash = any(k2 != k and fr_[k] & fr_[k2] for k2 in ks_)
+                        own = ((i, k) in number_names and number_names[(i, k)][0] == name) or coach.get((i, k)) == name
+                        if _link_all and not own:
+                            own = any(a and a[0] == k and a[1] == name for a in (clips[i]["anchor"], clips[i].get("anchor_first"))) \
+                                or any(kk == k and nn == name for kk, nn, _et in clips[i].get("anchors_pbp", []))
+                        if clash and not own:
+                            continue
+                        link_names[(i, k)] = (name, sup)
+            # a locked player's name traveled along a link into another clip: follow him through THAT clip too
+            if globals().get("TRACK_LOCK_NAMES", True) and (locked_set or followed):
+                _strong = {}
+                for gid, nodes in by_group.items():
+                    if any(nd in locked_set or nd in followed for nd in nodes):
+                        for nd in nodes:
+                            if nd in link_names and nd not in locked_set and nd not in followed:
+                                _strong.setdefault(nd[0], {})[nd[1]] = link_names[nd][0]
+                _more = 0
+                for i, sd_ in _strong.items():
+                    seeds_ = dict(sd_)
+                    seeds_.update({k: n for (ii, k), n in locked_set.items() if ii == i})
+                    seeds_.update({k: v[0] for (ii, k), v in followed.items() if ii == i})
+                    for k2, (n, frm) in _trk_follow_names(clips, i, seeds_, **_follow_kw(i)).items():
+                        own = number_names.get((i, k2))
+                        if (i, k2) in followed or (own and own[0] != n) or (coach.get((i, k2)) and coach.get((i, k2)) != n):
+                            continue
+                        followed[(i, k2)] = (n, frm)
+                        _more += 1
+                if _more:
+                    print(f"  [tracking]   following linked players through their other clips named {_more:,} more piece(s)",
+                          flush=True)
+            n_carried = sum(1 for (i, k) in link_names if not (clips[i]["anchor"] and clips[i]["anchor"][0] == k))
+            print(f"  [tracking]   {n_pairs:,} pairs of clips meet or overlap in the game video "
+                  f"({globals().get('_trk_n_boundaries', 0):,} back-to-back play boundaries); {n_links:,} track links made; "
+                  f"{len(by_group):,} linked players; a name reached {n_carried:,} more track(s) through the links", flush=True)
+        except Exception as _e:
+            print(f"  [tracking]   possessions not linked this run ({type(_e).__name__}: {_e})", flush=True)
+
+    _reads_all = locals().get("reads", {}) or {}
+    _num_of_all = locals().get("num_of", {}) or {}
+    solved, solve_how = {}, {}
+    if TRACK_SOLVE_LINEUPS:
+        print("  [tracking] step 5c: matching each team's tracks to its five on the floor (numbers, partial numbers, "
+              "anchors, then elimination)...", flush=True)
+        _reads = locals().get("reads", {}) or {}
+        _num_of = locals().get("num_of", {}) or {}
+        def _team_solve(i, sd, use_anchor=True):
+            clip = clips[i]
+            five = _trk_five(pc.at[i, "offense_lineup" if sd == "offense" else "defense_lineup"])
+            five_nums = {n: _numfor(i, n) for n in five if _numfor(i, n)}
+            ks = [k for k in range(len(clip["tracks"])) if clip["side"].get(k) == sd]
+            if not five or not ks:
+                return {}, {}, {}
+            score = {k: _trk_read_scores(_reads.get((i, k), []), five_nums) for k in ks}
+            for k in ks:
+                for n in five:
+                    score[k].setdefault(n, 0.0)
+            if use_anchor and clip["anchor"] and clip["anchor"][0] in score and clip["anchor"][1] in score[clip["anchor"][0]]:
+                score[clip["anchor"][0]][clip["anchor"][1]] += TRACK_ANCHOR_WEIGHT
+            af = clip.get("anchor_first")
+            if use_anchor and af and af[0] in score and af[1] in score[af[0]]:
+                score[af[0]][af[1]] += TRACK_ANCHOR_WEIGHT
+            for kk, nn, _et in clip.get("anchors_pbp", []):          # rebound / steal / block / foul
+                if kk in score and nn in score[kk]:
+                    score[kk][nn] += TRACK_PBP_WEIGHT
+            for k in ks:                                          # a name carried from a linked possession
+                ln = link_names.get((i, k))
+                if ln and ln[0] in score[k] and not (not use_anchor and clip["anchor"] and clip["anchor"][0] == k):
+                    score[k][ln[0]] += TRACK_LINK_WEIGHT * min(ln[1], 3)
+            for k in ks:                                          # a piece of a locked player's path
+                fo = followed.get((i, k))
+                if fo and fo[0] in score[k]:
+                    score[k][fo[0]] += float(globals().get("TRACK_LOCK_WEIGHT", 3.0))
+            got = _trk_solve_team(clip["tracks"], ks, score)
+            # weak or tied evidence doesn't name anyone by itself (elimination below can still place him)
+            def _clear(k, n):
+                ss_ = sorted(score[k].values(), reverse=True)
+                second = ss_[1] if len(ss_) > 1 else 0.0
+                return score[k][n] >= TRACK_MIN_NAME_EVIDENCE and score[k][n] - (second if ss_[0] == score[k][n] else ss_[0]) >= TRACK_MIN_NAME_MARGIN
+            got = {k: n for k, n in got.items() if _clear(k, n)}
+            elim = _trk_eliminate(clip["tracks"], ks, five, got)
+            return got, elim, score
+        n_ev = n_el = 0
+        for i in todo:
+            for sd in ("offense", "defense"):
+                got, elim, score = _team_solve(i, sd)
+                for k, n in got.items():
+                    tot = sum(score[k].values()) or 1.0
+                    solved[(i, k)] = (n, round(float(min(0.95, max(0.4, score[k][n] / tot))), 2))
+                    solve_how[(i, k)] = "evidence"
+                    n_ev += 1
+                for k, n in elim.items():
+                    solved[(i, k)] = (n, 0.6)
+                    solve_how[(i, k)] = "elimination"
+                    n_el += 1
+        # honest check: on clips with a Synergy anchor, solve WITHOUT the anchor and see if the anchor's track
+        # still gets the anchor's name (both are imperfect -- this measures how often they agree)
+        lc = []
+        for i in todo:
+            a = clips[i]["anchor"]
+            if a:
+                got, elim, _s = _team_solve(i, "offense", use_anchor=False)
+                n_ = got.get(a[0]) or elim.get(a[0])
+                if n_:
+                    lc.append(n_ == a[1])
+        lineup_check = f"{sum(lc)}/{len(lc)}" if lc else "--"
+        print(f"  [tracking]   named {n_ev:,} track(s) from evidence ("
+              + ("jersey numbers and Synergy anchors" if _use_numbers else "Synergy anchors only -- numbers are off")
+              + f") and {n_el:,} more by elimination; "
+              f"agreement with Synergy anchors (anchor hidden): {lineup_check}", flush=True)
+    else:
+        lineup_check = "--"
+
+    if _num_conflicts:
+        print("  [tracking]   jersey-number conflicts between sources (this game's number is used): "
+              + "; ".join(sorted(set(_num_conflicts))[:8]), flush=True)
+    print("  [tracking] step 6: matching every player to the five on the floor...", flush=True)
+    report, names_all = [], {}
+    _looks_by_game = {}
+    for g in sorted(set(game_of.values())):
+        ids = [i for i in todo if game_of[i] == g]
+        anchors = [(i, clips[i]["anchor"]) for i in ids if clips[i]["anchor"] and (i, clips[i]["anchor"][0]) in fp]
+        # CONFIRMED CHANGE (requested: use who is on the court across clips, not just within one). Every track of a team is
+        # one of its five on the floor, so each player's LOOK, learned from the tracks we can name for sure, names his
+        # other tracks in every clip he plays in. Learned only from TRUSTED names -- jersey numbers, Synergy's ball-based
+        # anchors (and verified play-by-play events) -- never from the finish-at-the-rim guesses that taught it wrong
+        # faces before.
+        # CONFIRMED CHANGE (requested: Synergy lower priority -- its anchors were right 0 of 10 on the checks). Synergy anchors no
+        # longer teach each player's look unless TRACK_APPEARANCE_SEED_ANCHORS = True; coach checks do instead.
+        _seed_anch = bool(globals().get("TRACK_APPEARANCE_SEED_ANCHORS", False))
+        seeds = [(i, k, n) for i, (k, n) in anchors] if _seed_anch else []
+        seeds += [(i, clips[i]["anchor_first"][0], clips[i]["anchor_first"][1]) for i in ids
+                  if _seed_anch and clips[i].get("anchor_first") and (i, clips[i]["anchor_first"][0]) in fp]
+        seeds += [(i, k, n) for (i, k), n in coach.items() if n and game_of.get(i) == g and (i, k) in fp]
+        seeds += [(i, k, n) for (i, k), (n, _c) in number_names.items() if game_of.get(i) == g and (i, k) in fp]
+        seeds += [(i, k, n) for i in ids for k, n, _et in clips[i].get("anchors_pbp", []) if (i, k) in fp]
+        seeds = list(dict.fromkeys(seeds))
+        norm = lambda vs: (np.mean(vs, 0) / (np.linalg.norm(np.mean(vs, 0)) + 1e-8))
+        # CONFIRMED CHANGE (requested: coach checks as the reference). Jersey-number names were right only ~64% of the time on the
+        # checked boxes (a referee's shirt read as #10, ...), and every wrong one taught the wrong look. A player's look now comes
+        # FIRST from his coach-checked boxes; a jersey-number / play-by-play seed that looks more like another of the five than
+        # like the coach-checked player it's named as is left out of the reference.
+        _coach_seeds = [(i, k, n) for (i, k, n) in seeds if coach.get((i, k)) == n]
+        _cp_raw = {}
+        for i, k, n in _coach_seeds:
+            _cp_raw.setdefault(n, []).append(fp[(i, k)])
+        _cp = {n: norm(v) for n, v in _cp_raw.items() if len(v) >= 2}
+        _n_out = 0
+        if _cp:
+            _kept_seeds = []
+            for i, k, n in seeds:
+                if coach.get((i, k)) != n and n in _cp:
+                    sd = clips[i]["side"].get(k)
+                    five = _trk_five(pc.at[i, "offense_lineup" if sd == "offense" else "defense_lineup"])
+                    own = float(fp[(i, k)] @ _cp[n])
+                    if any(float(fp[(i, k)] @ _cp[m]) > own for m in five if m != n and m in _cp):
+                        _n_out += 1
+                        continue
+                _kept_seeds.append((i, k, n))
+            seeds = _kept_seeds
+        protos_raw = {}
+        for i, k, n in seeds:
+            protos_raw.setdefault(n, []).append((i, fp[(i, k)]))
+        protos = {n: norm([v for _, v in vs]) for n, vs in protos_raw.items()}
+        # how alike the same player looks vs two teammates, from the seeds -> the "looks like none of them" line
+        _same, _other = [], []
+        for i, k, n in seeds:
+            sd = clips[i]["side"].get(k)
+            five = _trk_five(pc.at[i, "offense_lineup" if sd == "offense" else "defense_lineup"])
+            others = [v for j, v in protos_raw[n] if not (j == i)]
+            if others:
+                _same.append(float(fp[(i, k)] @ norm(others)))
+            _other += [float(fp[(i, k)] @ protos[m]) for m in five if m != n and m in protos]
+        _tau_box["v"] = (float(np.median(_same)) + float(np.median(_other))) / 2 if len(_same) >= 6 and len(_other) >= 6 else None
+        names = assign(ids, protos)
+        # second pass: confident names join the profiles (more views of each player), then reassign
+        grow = {}
+        for (i, k), (n, c) in names.items():
+            if c >= 0.7 and (i, k) in fp:                 # named by number/coach with appearance off: no look to add
+                grow.setdefault(n, []).append(fp[(i, k)])
+        protos2 = {n: norm([v for _, v in protos_raw.get(n, [])] + grow.get(n, [])) for n in set(protos_raw) | set(grow)}
+        _looks_by_game[g] = protos2
+        names = assign(ids, protos2)
+        _check_on = [x for x in seeds if coach.get((x[0], x[1])) == x[2]]
+        _check_coach = len(_check_on) >= TRACK_APPEARANCE_MIN_TRIES
+        if not _check_coach:
+            _check_on = seeds
+        print(f"  [tracking]   {g}: {sum(1 for (i, _k) in names if i in ids):,} track(s) named; checking appearance "
+              f"against {len(_check_on)} trusted name(s)" + (" (coach-checked boxes only)" if _check_coach else "")
+              + (f"; {_n_out} jersey-number seed(s) left out (look like a different player than the coach-checked one)"
+                 if _n_out else "") + "...", flush=True)
+        # Honest check: hide each trusted name (and everything its clip taught), let appearance name that track, compare.
+        hits = tries = 0
+        _ch = _ct = 0                                    # the same check on the coach-checked boxes only (the fair number)
+        for i, k, n in _check_on:
+            pr = {m: norm([v for j, v in vs if j != i]) for m, vs in protos_raw.items() if any(j != i for j, _ in vs)}
+            sd = clips[i]["side"].get(k)
+            five = _trk_five(pc.at[i, "offense_lineup" if sd == "offense" else "defense_lineup"])
+            sims = {m: float(fp[(i, k)] @ pr[m]) for m in five if m in pr}
+            if not sims:
+                continue
+            best = max(sims, key=sims.get)
+            unknown = [m for m in five if m not in pr]
+            if _tau_box["v"] is not None and len(unknown) == 1 and sims[best] < _tau_box["v"]:
+                best = unknown[0]
+            tries += 1
+            hits += int(best == n)
+            if coach.get((i, k)) == n:
+                _ct += 1
+                _ch += int(best == n)
+        if _ct and not _check_coach:
+            print(f"  [tracking]   appearance on the {_ct} coach-checked box(es) alone: {_ch}/{_ct} right "
+                  f"({_ch / _ct:.0%}; chance is ~20%) -- the check switches to coach-checked boxes only once there are "
+                  f"{TRACK_APPEARANCE_MIN_TRIES}", flush=True)
+        # appearance names only when the check had enough trusted names to test against AND passed
+        if _app_stats.get(g):                         # the per-game model's honest test decides (see step 5)
+            hits, tries = _app_stats[g]["top"]
+        appearance_on = tries >= TRACK_APPEARANCE_MIN_TRIES and hits / tries >= TRACK_APPEARANCE_MIN_CHECK
+        if appearance_on:
+            _app_on_games.add(g)
+        _trk_eval("appearance", score=(100 * hits / tries) if tries else None, n=tries,
+                  bar=100 * TRACK_APPEARANCE_MIN_CHECK, bar_n=TRACK_APPEARANCE_MIN_TRIES, chance=20, used=bool(appearance_on),
+                  how="names hidden from it that it got right (trusted names: coach checks / clear jersey numbers)")
+        if appearance_on:
+            print(f"  [tracking]   appearance name check {hits}/{tries} ({hits / tries:.0%}) passes -- appearance names are used",
+                  flush=True)
+        if not appearance_on:
+            keep_names = {(i, k): v for (i, k), v in names.items()
+                          if (i, k) in number_names or (clips[i]["anchor"] and clips[i]["anchor"][0] == k)}
+            print(f"  [tracking]   appearance name check {hits}/{tries}"
+                  + (f" is below {TRACK_APPEARANCE_MIN_CHECK:.0%}" if tries >= TRACK_APPEARANCE_MIN_TRIES
+                     else f" -- too few trusted names to check it (needs {TRACK_APPEARANCE_MIN_TRIES})")
+                  + ": appearance-only "
+                  f"names are left blank ({len(names) - len(keep_names):,} dropped); keeping {len(keep_names):,} "
+                  f"named by jersey number or Synergy", flush=True)
+            names = keep_names
+        # the lineup matching wins wherever it named a track
+        for (i, k), v in solved.items():
+            if game_of.get(i) == g:
+                names[(i, k)] = v
+        names_all.update(names)
+        # Number check: where a Synergy-based anchor's track ALSO has its jersey number read, do they agree?
+        # (low = the anchors themselves are picking the wrong player)
+        nc = [(n == number_names[(i, k)][0]) for i, (k, n) in anchors if (i, k) in number_names]
+        n_tracks = sum(len(clips[i]["tracks"]) for i in ids)
+        n_named = sum(1 for (i, k) in names if i in ids)
+        # Where the chain can break, counted (requested after the first real run named nobody).
+        with_lineup = [i for i in ids if _trk_five(pc.at[i, "offense_lineup"])]
+        in_lineup = sum(1 for i in with_lineup if isinstance(pc.at[i, "player"], str)
+                        and pc.at[i, "player"].strip() in _trk_five(pc.at[i, "offense_lineup"]))
+        report.append({"game": g, "clips": len(ids), "tracks": n_tracks, "anchors": len(anchors),
+                       "anchors_by_pose": sum(1 for i in ids if clips[i].get("anchor_by") == "pose" and clips[i]["anchor"]),
+                       "anchors_by_rim": sum(1 for i in ids if clips[i].get("anchor_by") == "rim" and clips[i]["anchor"]),
+                       "teams_by_color": color_source.get(g, "no -- no anchors and no home/away rule for this game"),
+                       "clips_ball_seen": sum(1 for i in ids if clips[i]["ball"]),
+                       "clips_with_lineups": len(with_lineup), "synergy_player_in_lineup": in_lineup,
+                       "tracks_named": n_named, "anchor_name_check": f"{hits}/{tries}" if tries else "--",
+                       "tracks_named_by_number": sum(1 for (i, k) in number_names if game_of.get(i) == g),
+                       "tracks_number_read": n_read_tracks,
+                       "anchor_vs_number_check": f"{sum(nc)}/{len(nc)}" if nc else "--",
+                       "tracks_named_by_evidence": sum(1 for (i, k), h in solve_how.items() if h == "evidence" and game_of.get(i) == g),
+                       "tracks_named_by_elimination": sum(1 for (i, k), h in solve_how.items() if h == "elimination" and game_of.get(i) == g),
+                       "lineup_vs_anchor_check": lineup_check,
+                       "numbers_used": bool(_use_numbers)})
+
+    # --- one name per player at any moment ---------------------------------------------------------------------------
+    # CONFIRMED BUG (fixed; coach: "we're still getting the same player assigned to multiple boxes" -- #24 Warren on two
+    # defenders in one picture, one by jersey number, one as "linked possession"). The names come from several sources
+    # (jersey reads, anchors, the lineup solver, appearance, links) that were each unique on their own but never checked
+    # against EACH OTHER. Now, in every clip, two tracks that are on the floor at the same moment can't share a name: the
+    # one with the stronger evidence keeps it (coach check > jersey number > Synergy anchor > play-by-play event > lineup
+    # evidence > elimination > appearance > Synergy > followed > linked possession -- see _name_rank), the other is left unnamed here and the
+    # best guess below can give it one of the names still free.
+    # CONFIRMED CHANGE (requested: "make Synergy, linked possession and followed player a lower priority -- they are worse than the
+    # other methods"; on the checks: Synergy 0/10, linked possession 0/6, followed player 0/2). They now rank BELOW the lineup
+    # matching, elimination and appearance: coach check > jersey number > play-by-play event > lineup evidence > elimination >
+    # appearance > Synergy > followed player > linked possession.
+    def _name_rank(i, k, n, c):
+        if coach.get((i, k)) == n:
+            r = 100
+        elif (i, k) in number_names and number_names[(i, k)][0] == n:
+            r = 90
+        elif any(kk == k and nn == n for kk, nn, _e in clips[i].get("anchors_pbp", [])):
+            r = 70
+        elif solve_how.get((i, k)) == "evidence":
+            r = 60
+        elif solve_how.get((i, k)) == "elimination":
+            r = 50
+        elif any(a and a[0] == k and a[1] == n for a in (clips[i]["anchor"], clips[i].get("anchor_first"))):
+            r = 35
+        elif followed.get((i, k), (None,))[0] == n:
+            r = 33
+        elif link_names.get((i, k), (None,))[0] == n:
+            r = 30
+        else:
+            r = 40
+        return r + float(c or 0.0)
+    n_dup = 0
+    for i in todo:
+        clip = clips[i]
+        by_name = {}
+        for k in range(len(clip["tracks"])):
+            v = names_all.get((i, k))
+            if v and v[0]:
+                by_name.setdefault(v[0], []).append(k)
+        for n, ks_ in by_name.items():
+            if len(ks_) < 2:
+                continue
+            fr_ = {k: {t_ for t_, _ in clip["tracks"][k]} for k in ks_}
+            kept = []
+            for k in sorted(ks_, key=lambda k: (_name_rank(i, k, n, names_all[(i, k)][1]), len(fr_[k])), reverse=True):
+                if any(fr_[k] & fr_[k2] for k2 in kept):
+                    names_all.pop((i, k), None)
+                    n_dup += 1
+                else:
+                    kept.append(k)
+    print(f"  [tracking]   {n_dup:,} track(s) lost a name they shared with another track on the floor at the same moment "
+          f"(the track with the stronger evidence keeps it)", flush=True)
+
+    # --- re-ID names: an unnamed track that clearly looks like a player you checked in this game ---------------------------
+    # CONFIRMED CHANGE (requested; section 50d). Used only when the Re-ID check test PASSED (TRACK_REID_NAMES = "auto"; True =
+    # use the tested model anyway, False = off). Reference pictures = the tracks your checks named in this game; an unnamed
+    # track gets the name of the player (among the five on the floor, not already on the floor at the same moment) whose
+    # pictures look most like his -- only when he beats the second best by the tested margin. Marked "re-id match".
+    reid_named = {}
+    _rm = globals().get("TRACK_REID_NAMES", "auto")
+    if _rm:
+        try:
+            _rr = {}
+            if os.path.exists(os.path.join(TRACK_DIR, "reid_check_test.json")):
+                with open(os.path.join(TRACK_DIR, "reid_check_test.json")) as _fh:
+                    _rr = _trk_json.load(_fh)
+            _rmod = _rr.get("chosen") or (next((m for m, v in _rr.get("models", {}).items() if v.get("margin_cutoff") is not None), None)
+                                          if _rm is True else None)
+            _rinfo = _rr.get("models", {}).get(_rmod, {}) if _rmod else {}
+            # the tested combination: model + crop ("dinov2 upper"); tests saved before crops were compared are "full"
+            _rmodel, _rcrop = _rinfo.get("model", _rmod), _rinfo.get("crop", "full")
+            if _rr.get("match"):
+                globals()["REID_MATCH"] = _rr["match"]           # match the way it was tested
+            if "reid_fingerprints" not in globals() or "reid_assign" not in globals():
+                print("  [tracking]   re-ID names not used: run the Re-ID check cell (50d) first", flush=True)
+            elif not _rmod or _rinfo.get("margin_cutoff") is None:
+                print("  [tracking]   re-ID names not used: its test on your checked boxes did not pass"
+                      + (" (no test yet -- run the Re-ID check cell)" if not _rr else ""), flush=True)
+            else:
+                _rcut, _rprec = float(_rinfo["margin_cutoff"]), float(_rinfo.get("precision") or 0.8)
+                _nc = int(globals().get("TRACK_REID_CROPS", 3))
+                items, owner = [], []
+                for i in todo:
+                    clip = clips[i]
+                    for k, tr in enumerate(clip["tracks"]):
+                        if clip["side"].get(k) not in ("offense", "defense"):
+                            continue
+                        if (i, k) in names_all and coach.get((i, k)) is None:
+                            continue                          # already named (coach-named tracks are needed as references)
+                        for t, j in sorted(tr, key=lambda tj: -float(clip["frames"][tj[0]][tj[1]][2]))[:_nc]:
+                            items.append((clip["files"][t], clip["frames"][t][j][6:10]))
+                            owner.append((i, k))
+                print(f"  [tracking]   re-ID ({_rmodel}, {_rcrop} crop): fingerprinting {len(items):,} picture(s) (saved ones are "
+                      f"reused)...", flush=True)
+                _vs = {}
+                for o_, v_ in zip(owner, reid_fingerprints(items, base, _rmodel, _rcrop)):
+                    if v_ is not None:
+                        _vs.setdefault(o_, []).append(np.asarray(v_, np.float32))
+                gal = {}
+                for (i, k), n_ in coach.items():
+                    if n_ and (i, k) in _vs:
+                        gal.setdefault(game_of.get(i), {}).setdefault(n_, []).extend(_vs[(i, k)])
+                for i in todo:
+                    clip = clips[i]
+                    g_gal = gal.get(game_of.get(i))
+                    if not g_gal:
+                        continue
+                    for sd in ("offense", "defense"):
+                        five = _trk_five(pc.at[i, f"{sd}_lineup"])
+                        # CONFIRMED CHANGE (requested: five boxes, five names): the unnamed tracks of a team in a clip are named
+                        # TOGETHER (reid_assign) -- the surest first, and a name can't go to two tracks on the floor at the same
+                        # moment (nor to one overlapping a track already named). Fragments of one player that never overlap may
+                        # share a name.
+                        frs = {k: {t_ for t_, _ in clip["tracks"][k]} for k in range(len(clip["tracks"]))}
+                        ent = {}
+                        for k in range(len(clip["tracks"])):
+                            if clip["side"].get(k) != sd or (i, k) in names_all or (i, k) not in _vs:
+                                continue
+                            taken = {names_all[(i, kk)][0] for kk in range(len(clip["tracks"]))
+                                     if (i, kk) in names_all and frs[k] & frs[kk]}
+                            q = np.mean(_vs[(i, k)], 0)
+                            q = q / (np.linalg.norm(q) + 1e-8)
+                            _p, _m, sc = reid_match(q, g_gal, [n_ for n_ in five if n_ not in taken])
+                            if sc:
+                                ent[k] = (sc, set())
+                        for k in ent:
+                            ent[k] = (ent[k][0], {kk for kk in ent if kk != k and frs[k] & frs[kk]})
+                        for k, (pick, margin) in reid_assign(ent).items():
+                            if pick and margin >= _rcut:
+                                names_all[(i, k)] = (pick, round(_rprec, 2))
+                                reid_named[(i, k)] = pick
+                print(f"  [tracking]   re-ID names: {len(reid_named):,} more track(s) named by looking like a player you checked "
+                      f"(margin >= {_rcut:.3f}; tested right {_rprec:.0%})", flush=True)
+        except Exception as _e:
+            print(f"  [tracking]   re-ID names not used this run ({type(_e).__name__}: {_e})", flush=True)
+
+    # --- your checked names carried to the other pieces of the same player in the clip (see _carry_ids above) -------------
+    carry_named = {}
+    if _carry_ids and fp:
+        _cmin = float(globals().get("TRACK_CARRY_MIN_SIM", 0.92))     # was 0.80 / 0.03 -- too loose (1 of 5 right)
+        _cmar = float(globals().get("TRACK_CARRY_MARGIN", 0.08))
+        for i in _carry_ids:
+            clip = clips[i]
+            fr = {k: {t for t, _ in clip["tracks"][k]} for k in range(len(clip["tracks"]))}
+            # CONFIRMED BUG (fixed; "it carried #7 Lane Thomann to the wrong team" -- onto Wheaton's #34 Grier, who stood in
+            # front of him). A checked name is only carried to pieces on HIS team (from the clip's lineups), and only checked
+            # pieces that are on his team teach his look (a check can land on the player standing in front of him).
+            _five = {sd_: set(_trk_five(pc.at[i, f"{sd_}_lineup"])) for sd_ in ("offense", "defense")}
+            _side_of = lambda n_: next((sd_ for sd_ in ("offense", "defense") if n_ in _five[sd_]), None)
+            refs = {}                                  # name -> (side, [looks of his checked pieces])
+            for k in range(len(clip["tracks"])):
+                n_ = coach.get((i, k))
+                if n_ and (i, k) in fp and clip["side"].get(k) in ("offense", "defense") \
+                        and clip["side"][k] == _side_of(n_):
+                    refs.setdefault(n_, (clip["side"][k], []))[1].append(fp[(i, k)])
+            if not refs:
+                continue
+            taken = {}                                 # name -> frame sets already carrying it in this clip
+            for k in range(len(clip["tracks"])):
+                if (i, k) in names_all and names_all[(i, k)][0]:
+                    taken.setdefault(names_all[(i, k)][0], []).append(fr[k])
+                if coach.get((i, k)):
+                    taken.setdefault(coach[(i, k)], []).append(fr[k])
+            cand = []
+            for k in range(len(clip["tracks"])):
+                sd = clip["side"].get(k)
+                if sd not in ("offense", "defense") or (i, k) in names_all or (i, k) in coach or (i, k) not in fp:
+                    continue
+                sims = sorted(((max(float(fp[(i, k)] @ v) for v in looks), n_) for n_, (rs, looks) in refs.items() if rs == sd),
+                              reverse=True)
+                if not sims:
+                    continue
+                best_s, best_n = sims[0]
+                second = sims[1][0] if len(sims) > 1 else -1.0
+                if best_s >= _cmin and best_s - second >= _cmar:
+                    cand.append((best_s, k, best_n))
+            for sc_, k, n_ in sorted(cand, reverse=True):
+                if any(fr[k] & o for o in taken.get(n_, [])):
+                    continue
+                names_all[(i, k)] = (n_, round(sc_, 2))
+                carry_named[(i, k)] = n_
+                taken.setdefault(n_, []).append(fr[k])
+        print(f"  [tracking]   your checked names carried to {len(carry_named):,} more piece(s) of the same players in "
+              f"{len(_carry_ids)} starters clip(s) (look alike {_cmin:.2f}+, never on the floor at the same moment)", flush=True)
+
+    # --- starter look: a team's five starters on the floor, each player matched to the starters' looks ---------------------
+    # CONFIRMED CHANGE (requested: "you will know exactly what each player looks like at least until the first substitution").
+    # In a clip where a team's five on the floor is its validated five starters (_st_elig), the team's unnamed players are
+    # matched to the five starters' looks (from the coach-checked boxes of this game -- the starters check names all ten),
+    # one player per starter at any moment. Tested the honest way first: every coach-checked box in those clips is named
+    # again with its own clip's checks hidden. TRACK_STARTERS_LOOK_MIN_CHECK (80%) on TRACK_STARTERS_LOOK_MIN_TRIES (8)+
+    # boxes -> the names are used ("starter look"); not enough checked boxes to test yet -> they're the "looks like ...?"
+    # suggestions in the player checks (your answers there become its test); below the bar -> not used.
+    starter_named, _st_sugg = {}, {}
+    if _st_elig and fp:
+        _st_min_p = float(globals().get("TRACK_STARTERS_LOOK_MIN_P", 0.4))
+        _st_ref_cache = {}
+
+        def _st_refs(g_, excl=None):
+            if (g_, excl) in _st_ref_cache:
+                return _st_ref_cache[(g_, excl)]
+            r_ = {}
+            for (i_, k_), n_ in coach.items():
+                if n_ and game_of.get(i_) == g_ and i_ != excl and (i_, k_) in fp:
+                    r_.setdefault(n_, []).append(fp[(i_, k_)])
+            out_ = {n_: np.mean(v_, 0) / (np.linalg.norm(np.mean(v_, 0)) + 1e-8) for n_, v_ in r_.items()}
+            _st_ref_cache[(g_, excl)] = out_
+            return out_
+
+        # CONFIRMED BUG (fixed; clip 2 of Carroll@WashU: 4 of the 8 boxes were fans / a referee and every one of them got
+        # "looks like <a starter>? 95%"). The share was RELATIVE -- how much more a box looked like one starter than the
+        # other four -- so anything, even a fan, got a confident starter. Now (_st_gate, per game) the box's look must ALSO
+        # be close enough to a starter in absolute terms: the bar is learned from your checks -- how close your named boxes
+        # are to their own player's look (from the OTHER clips) and how close the boxes you marked "not a player" come to
+        # any starter. The probability shown is the share times how often a box that close was really a player on your
+        # checks, and a box on a frame with no court mapping (so the off-the-court filter couldn't run) counts half.
+        _st_gate_cache = {}
+
+        def _st_gate(g_):
+            """(bar, positives, negatives) for game g_: bar = None when there aren't enough checks to set one."""
+            if g_ in _st_gate_cache:
+                return _st_gate_cache[g_]
+            pos, neg = [], []
+            for (i_, k_), n_ in coach.items():
+                if n_ and game_of.get(i_) == g_ and (i_, k_) in fp:
+                    r_ = _st_refs(g_, excl=i_)
+                    if n_ in r_:
+                        pos.append(float(fp[(i_, k_)] @ r_[n_]))
+            for (i_, k_) in coach_kind:
+                if game_of.get(i_) == g_ and (i_, k_) in fp:
+                    r_ = _st_refs(g_, excl=i_)
+                    if r_:
+                        neg.append(max(float(fp[(i_, k_)] @ v_) for v_ in r_.values()))
+            bar = globals().get("TRACK_STARTERS_LOOK_MIN_SIM")
+            if bar is None and len(pos) >= 5:
+                if len(neg) >= 3:
+                    # the cut that best separates your named boxes from your "not a player" boxes (Youden's J)
+                    cands = sorted(set(pos + neg))
+                    bar = max(cands, key=lambda c_: (np.mean(np.array(pos) >= c_) - np.mean(np.array(neg) >= c_), -c_))
+                else:
+                    bar = float(np.percentile(pos, 10))
+            out_ = (None if bar is None else float(bar), sorted(pos), sorted(neg))
+            _st_gate_cache[g_] = out_
+            return out_
+
+        def _st_conf(g_, sim_):
+            """How often a box this close to a starter was really a player on your checks (smoothed)."""
+            _bar, pos, neg = _st_gate(g_)
+            if not pos:
+                return 0.5
+            pb = (sum(1 for x_ in pos if x_ <= sim_) + 1) / (len(pos) + 2)        # how far into your players' range
+            if not neg:
+                return pb
+            na = (sum(1 for x_ in neg if x_ >= sim_) + 1) / (len(neg) + 2)        # how many non-players come this close
+            return pb / (pb + na)
+
+        def _st_on_court(i, k):
+            """False when NONE of the track's frames has a court mapping (the off-the-court filter couldn't run on it)."""
+            try:
+                fl_ = lists[i]
+                return any(fl_[t] in court_H for t, _j in clips[i]["tracks"][k] if t < len(fl_))
+            except Exception:
+                return True
+
+        def _st_assign(i, sd, refs, fixed):
+            """{track: (starter, probability)} for the side's tracks not in `fixed` ({track: name already given}); None
+            when a starter on the floor has no look yet."""
+            clip = clips[i]
+            five = _trk_five(pc.at[i, f"{sd}_lineup"])
+            if len(five) != 5 or any(n_ not in refs for n_ in five):
+                return None
+            fr = {k: {t for t, _ in clip["tracks"][k]} for k in range(len(clip["tracks"]))}
+            taken = {}
+            for k, n_ in fixed.items():
+                taken.setdefault(n_, []).append(fr[k])
+            _bar = _st_gate(game_of[i])[0] if globals().get("TRACK_STARTERS_LOOK_GATE", True) else None
+            picks, conf_ = [], {}
+            for k in range(len(clip["tracks"])):
+                if clip["side"].get(k) != sd or k in fixed or (i, k) not in fp:
+                    continue
+                sims = np.array([float(fp[(i, k)] @ refs[n_]) for n_ in five])
+                if _bar is not None and float(sims.max()) < _bar:
+                    _st_gated[0] += 1
+                    continue                               # looks like none of the starters: no suggestion
+                conf_[k] = _st_conf(game_of[i], float(sims.max())) * (1.0 if _st_on_court(i, k) else 0.5)
+                z = (sims - sims.mean()) / (sims.std() + 1e-6)
+                e = np.exp(3 * z)
+                for n_, p_ in zip(five, e / e.sum()):
+                    picks.append((float(p_), len(clip["tracks"][k]), k, n_))
+            got = {}
+            for p_, _ln, k, n_ in sorted(picks, reverse=True):
+                if k in got or p_ < _st_min_p or any(fr[k] & o for o in taken.get(n_, [])):
+                    continue
+                got[k] = (n_, round(p_ * conf_.get(k, 1.0), 3))
+                taken.setdefault(n_, []).append(fr[k])
+            return got
+        _st_gated = [0]
+
+        # the honest test: each clip's coach-checked boxes named again from the OTHER clips' checks
+        _st_h = _st_t = _st_asked = 0
+        for i, sds in _st_elig.items():
+            for sd in sds:
+                chk = {k: n_ for k in range(len(clips[i]["tracks"])) for n_ in [coach.get((i, k))]
+                       if n_ and clips[i]["side"].get(k) == sd}
+                if not chk:
+                    continue
+                res = _st_assign(i, sd, _st_refs(game_of[i], excl=i), {})
+                if res is None:
+                    continue
+                for k, n_ in chk.items():
+                    _st_asked += 1
+                    if k in res:
+                        _st_t += 1
+                        _st_h += int(res[k][0] == n_)
+        _st_need_n = int(globals().get("TRACK_STARTERS_LOOK_MIN_TRIES", 8))
+        _st_bar = float(globals().get("TRACK_STARTERS_LOOK_MIN_CHECK", 0.8))
+        _st_pass = _st_t >= _st_need_n and _st_h / _st_t >= _st_bar
+        _st_untested = _st_t < _st_need_n
+        _trk_eval("starter_look", score=(100 * _st_h / _st_t) if _st_t else None, n=_st_t, bar=100 * _st_bar,
+                  bar_n=_st_need_n, chance=20, used=bool(_st_pass),
+                  status=("suggestions only until enough checked boxes test it" if _st_untested else None),
+                  how="coach-checked players in clips with the five starters on the floor, named by the starters' looks "
+                      "with their own clip's checks hidden")
+        for i, sds in _st_elig.items():
+            refs = _st_refs(game_of[i])
+            for sd in sds:
+                fixed = {k: names_all[(i, k)][0] for k in range(len(clips[i]["tracks"]))
+                         if clips[i]["side"].get(k) == sd and (i, k) in names_all}
+                res = _st_assign(i, sd, refs, fixed) or {}
+                for k, (n_, p_) in res.items():
+                    if _st_pass:
+                        names_all[(i, k)] = (n_, round(float(p_), 2))
+                        starter_named[(i, k)] = n_
+                    elif _st_untested:
+                        _st_sugg[(i, k)] = (n_, float(p_))
+        try:
+            for g_ in sorted({game_of[i] for i in _st_elig}):
+                _b, _po, _ne = _st_gate(g_)
+                print(f"  [tracking]   starter look, {g_}: look bar "
+                      + (f"{_b:.3f}" if _b is not None else "not set yet (needs 5+ named boxes)")
+                      + f" from {len(_po)} named box(es) and {len(_ne)} 'not a player' box(es)"
+                      + (f" -- {_st_gated[0]} box(es) look like none of the starters (no suggestion)" if _st_gated[0] else ""),
+                      flush=True)
+        except Exception:
+            pass
+        print(f"  [tracking]   starter look: test {_st_h}/{_st_t} coach-checked players in starter clips picked out right"
+              + (f" ({_st_h / _st_t:.0%})" if _st_t else "")
+              + (f", {_st_asked - _st_t} left unnamed (unsure)" if _st_asked > _st_t else "") + " -- "
+              + (f"PASSES: {len(starter_named):,} more track(s) named by the starters' looks" if _st_pass else
+                 f"too few checked boxes in those clips to test it yet (needs {_st_need_n}): {len(_st_sugg):,} track(s) get "
+                 f"it as their \"looks like ...?\" suggestion -- your checks of them become its test" if _st_untested else
+                 f"below {_st_bar:.0%}: not used"), flush=True)
+    elif _st_elig:
+        print("  [tracking]   starter look not used: appearance fingerprints are off (TRACK_USE_APPEARANCE)", flush=True)
+
+    # --- appearance for the LAST one or two players left (requested: "do all 3" -- use appearance where it's strongest) ---
+    # In a game where appearance isn't good enough to name players on its own but picks the right one of TWO players
+    # TRACK_APPEARANCE_FILL_MIN (80%) of the time, it names the players still unnamed once all but
+    # TRACK_APPEARANCE_FILL_MAX (2) of a team's five on the floor are named in a clip (by numbers, checks, the lineup ...):
+    # an unnamed track gets one of those names only if that name is also his look's top pick among all five.
+    app_fill = {}
+    _fill_max = int(globals().get("TRACK_APPEARANCE_FILL_MAX", 2))
+    _fill_conf = float(globals().get("TRACK_APPEARANCE_FILL_CONF", 0.6))
+    for i in todo:
+        g = game_of.get(i)
+        if g not in _app_scorers or g not in _fill_games or g in _app_on_games:
+            continue
+        clip = clips[i]
+        for sd in ("offense", "defense"):
+            five = _trk_five(pc.at[i, f"{sd}_lineup"])
+            if len(five) != 5:
+                continue
+            ks = [k for k in range(len(clip["tracks"])) if clip["side"].get(k) == sd]
+            named = {k: names_all[(i, k)][0] for k in ks if (i, k) in names_all}
+            left = [n for n in five if n not in set(named.values())]
+            if not left or len(left) > _fill_max:
+                continue
+            frames_of = {k: {t for t, _ in clip["tracks"][k]} for k in ks}
+            cands = []
+            for k in ks:
+                if k in named:
+                    continue
+                pr = _app_p(g, i, k, five)
+                if not pr:
+                    continue
+                top = max(pr, key=pr.get)
+                sub = sum(pr[n] for n in left)
+                if top not in left or sub <= 0 or pr[top] / sub < _fill_conf:
+                    continue
+                cands.append((pr[top] / sub * len(clip["tracks"][k]), k, top, pr[top] / sub))
+            taken = {}
+            for kk, nn in named.items():
+                taken.setdefault(nn, []).append(frames_of[kk])
+            for _sc, k, n, conf in sorted(cands, reverse=True):
+                if any(frames_of[k] & o for o in taken.get(n, [])):
+                    continue
+                names_all[(i, k)] = (n, round(float(conf), 2))
+                app_fill[(i, k)] = n
+                taken.setdefault(n, []).append(frames_of[k])
+    if _fill_games:
+        print(f"  [tracking]   appearance named {len(app_fill):,} track(s) as one of the last {_fill_max} unnamed players on "
+              f"the floor ({', '.join(sorted(_fill_games))})", flush=True)
+
+    # --- best guess: every one of the five on the floor gets a track (the lineup is known; clues pick who is who) ---
+    guessed = set()
+    _raw_p = {}
+    low_guess = {}
+    if TRACK_BEST_GUESS:
+        for i in todo:
+            clip = clips[i]
+            g = game_of.get(i)
+            looks = _looks_by_game.get(g, {})
+            for sd in ("offense", "defense"):
+                five = _trk_five(pc.at[i, f"{sd}_lineup"])
+                ks = [k for k in range(len(clip["tracks"])) if clip["side"].get(k) == sd]
+                if not five or not ks:
+                    continue
+                named = {k: names_all[(i, k)][0] for k in ks if (i, k) in names_all}
+                free = [k for k in ks if k not in named]
+                if not free:
+                    continue
+                frames_of = {k: {t for t, _ in clip["tracks"][k]} for k in ks}
+                five_nums = {n: _numfor(i, n) for n in five if _numfor(i, n)}
+                like = {k: _trk_player_likeness(clip, k) for k in free}
+                score = {}
+                for k in free:
+                    rd = _trk_read_scores(_reads_all.get((i, k), []), five_nums) if five_nums else {}
+                    score[k] = {}
+                    for n in five:
+                        # a name already on a track seen at the same moment is taken for this one
+                        if any(nm_ == n and frames_of[k] & frames_of[kk] for kk, nm_ in named.items()):
+                            score[k][n] = -1e6                          # taken at the same moment: never chosen
+                            continue
+                        sc = 1.0                                        # every lineup name is possible
+                        if (i, k) in fp and n in looks:                # looks like him (0..0.5)
+                            sc += 0.25 * (1.0 + float(fp[(i, k)] @ looks[n]))
+                        sc += rd.get(n, 0.0)                            # partial / uncertain jersey reads
+                        ln = link_names.get((i, k))
+                        if ln and ln[0] == n:                           # carried from a linked possession
+                            sc += 0.5
+                        sc += TRACK_LIKENESS_WEIGHT * like[k]           # a player-like track before a sideline figure
+                        # weighted by how LONG the track is: the goal is to name as much of the play as possible
+                        # (review: five short fragments each took a name, so a player tracked through the whole clip
+                        # overlapped all five somewhere and got none)
+                        score[k][n] = sc * len(clip["tracks"][k])
+                got = _trk_solve_team(clip["tracks"], free, score)
+                for k, n in got.items():
+                    # CONFIRMED CHANGE (requested: "for the Best Guess, give a probability of it being this player"). The guess's
+                    # chance of being him = his share of the evidence among the names still possible for that track.
+                    _poss = {m: v for m, v in score[k].items() if v > -1e5}
+                    _tot = sum(_poss.values()) or 1.0
+                    _raw_p[(i, k)] = (n, float(_poss.get(n, 0.0)) / _tot)
+                    guessed.add((i, k))
+        # requested ("do all 3" -- show its pick as a suggestion): where the game has an appearance model, each guess is the
+        # model's pick among the names still free at that moment, with the model's probability. These are what the app shows
+        # ("looks like #24 Warren? 52%") and what your checks of those boxes measure -- once a probability level is right 50%+
+        # of the time, guesses at that level become names (the cutoff below).
+        _n_mg = 0
+        for i in todo:
+            if game_of.get(i) not in _app_scorers:
+                continue
+            clip = clips[i]
+            for sd in ("offense", "defense"):
+                five = _trk_five(pc.at[i, f"{sd}_lineup"])
+                ks = [k for k in range(len(clip["tracks"])) if clip["side"].get(k) == sd]
+                if not five or not ks:
+                    continue
+                frames_of = {k: {t for t, _ in clip["tracks"][k]} for k in ks}
+                taken = {}
+                for k in ks:
+                    if (i, k) in names_all:
+                        taken.setdefault(names_all[(i, k)][0], []).append(frames_of[k])
+                picks = []
+                for k in ks:
+                    if (i, k) not in _raw_p:
+                        continue
+                    pr = _app_p(game_of.get(i), i, k, five)
+                    if pr:
+                        for n_, p_ in pr.items():
+                            picks.append((p_, k, n_))
+                done_ = set()
+                for p_, k, n_ in sorted(picks, reverse=True):
+                    if k in done_ or any(frames_of[k] & o for o in taken.get(n_, [])):
+                        continue
+                    _free = sum(pp for pp, kk, nn in picks if kk == k and not any(frames_of[k] & o for o in taken.get(nn, [])))
+                    _raw_p[(i, k)] = (n_, p_ / _free if _free > 0 else p_)
+                    taken.setdefault(n_, []).append(frames_of[k])
+                    done_.add(k)
+                    _n_mg += 1
+        if _n_mg:
+            print(f"  [tracking]   {_n_mg:,} guess(es) now come from appearance (the better-testing method per game; shown in the player checks "
+                  f"as \"looks like ...\")", flush=True)
+        # the starter look, while it's untested: its pick is the suggestion (see "starter look" above)
+        _n_sg = 0
+        for o_, v_ in _st_sugg.items():
+            if o_ in _raw_p:
+                _raw_p[o_] = v_
+                _n_sg += 1
+        if _n_sg:
+            print(f"  [tracking]   {_n_sg:,} guess(es) come from the starters' looks (clips with the five starters on the floor)",
+                  flush=True)
+        # the jersey vote, while it hasn't passed its test: its pick is the suggestion (it beats the starter look)
+        _n_vg = 0
+        for o_, v_ in _vote_sugg.items():
+            if o_ in _raw_p or (o_ not in names_all and clips[o_[0]]["side"].get(o_[1]) in ("offense", "defense")):
+                _raw_p[o_] = v_
+                _n_vg += 1
+        if _n_vg:
+            print(f"  [tracking]   {_n_vg:,} guess(es) come from the jersey vote", flush=True)
+        # Calibrate: the shares are RELATIVE (they always add to 1 over the possible names); scale them so the average stated
+        # probability equals how often best guesses were actually right on the coach-checked boxes (when there are 30+ checks).
+        _mean_raw = float(np.mean([p_ for _n, p_ in _raw_p.values()])) if _raw_p else 0.0
+        _f = (_bg_acc / _mean_raw) if (_bg_acc is not None and _mean_raw > 0) else 1.0
+        # CONFIRMED CHANGE (requested: item 3, best guesses were right ~23% of the time -- chance among five is 20%): a best guess whose
+        # stated probability is below TRACK_BEST_GUESS_MIN_P is NOT used -- the track stays an unnamed PLAYER (not set aside as a
+        # non-player, so screens and positions still see him) and a wrong name can't spread through links and the lineup solver.
+        # The probability table in the app (Player Number Tracking tab) shows where a good cutoff is. 0 = name every track.
+        _min_p = float(globals().get("TRACK_BEST_GUESS_MIN_P", 0.30))
+        # CONFIRMED CHANGE (requested: "do #1"). The cutoff now comes from YOUR checks when there are enough of them
+        # (TRACK_BEST_GUESS_MIN_CHECKS): the lowest stated probability above which checked guesses were right at least
+        # TRACK_BEST_GUESS_TARGET of the time (on 10+ guesses). If no level gets there, NO best guess is shown -- the tracks
+        # stay unnamed players. Measured on the saved checks (run 20261007): guesses stated at 15-25% were right 4 of 21,
+        # at 30-35% 3 of 18 -- the stated probability carried no signal, so nothing passes yet. The guess is still saved
+        # with the box (hidden) so your checks of unnamed boxes keep measuring it, and a better guess will start showing again.
+        _target = float(globals().get("TRACK_BEST_GUESS_TARGET", 0.5))
+        _need = int(globals().get("TRACK_BEST_GUESS_MIN_CHECKS", 20))
+        if _target > 0 and len(_bg_pts) >= _need:
+            _ps = np.array([p_ for p_, _o in _bg_pts], float)
+            _oks = np.array([float(_o) for _p, _o in _bg_pts])
+            _cut = None
+            for _t in sorted(set(np.round(_ps, 2))):
+                _sel = _ps >= _t - 1e-9
+                if _sel.sum() >= 10 and _oks[_sel].mean() >= _target:
+                    _cut = float(_t)
+                    break
+            _edges = [0.0, 0.2, 0.3, 0.4, 0.5, 0.7, 1.01]
+            _tab = "; ".join(f"{lo_:.0%}-{min(hi_, 1):.0%}: {int(_oks[(_ps >= lo_) & (_ps < hi_)].sum())}/{int(((_ps >= lo_) & (_ps < hi_)).sum())}"
+                             for lo_, hi_ in zip(_edges, _edges[1:]) if ((_ps >= lo_) & (_ps < hi_)).any())
+            _trk_eval("best_guess", score=100 * float(_oks.mean()), n=len(_bg_pts), bar=100 * _target, bar_n=_need,
+                      chance=20, used=_cut is not None,
+                      best=(100 * float(_oks[_ps >= _cut - 1e-9].mean())) if _cut is not None else None,
+                      how="checked best guesses that were the right player (shown only at a probability level right "
+                          f"{_target:.0%}+ of the time)")
+            if _cut is None:
+                _min_p = 2.0                                  # nothing is shown
+                print(f"  [tracking]   best-guess cutoff from {len(_bg_pts)} checked guesses: no probability level was right "
+                      f"{_target:.0%} of the time ({_tab} right) -- best guesses are NOT shown this run (kept as hidden "
+                      f"guesses for checking)", flush=True)
+            else:
+                _min_p = max(_min_p, _cut)
+                print(f"  [tracking]   best-guess cutoff from {len(_bg_pts)} checked guesses: {_cut:.0%} (guesses at or above it were "
+                      f"right {_oks[_ps >= _cut - 1e-9].mean():.0%} of the time; {_tab} right)", flush=True)
+        elif _target > 0:
+            print(f"  [tracking]   best-guess cutoff: only {len(_bg_pts)} checked guess(es) with a probability (needs "
+                  f"{_need}) -- using TRACK_BEST_GUESS_MIN_P = {_min_p:.0%}", flush=True)
+        low_guess = {}
+        for (i, k), (n, p_) in _raw_p.items():
+            pp_ = round(float(min(0.95, max(0.02, p_ * _f))), 2)
+            if pp_ < _min_p:
+                low_guess[(i, k)] = (n, pp_)
+                guessed.discard((i, k))
+                continue
+            names_all[(i, k)] = (n, pp_)
+        print(f"  [tracking] step 6b: best guesses from the lineup for {len(guessed):,} more track(s) "
+              + (f"({len(low_guess):,} more left UNNAMED: " + ("no guess has earned a name yet" if _min_p > 1 else
+                    f"probability under {_min_p:.0%}") + ") " if low_guess else "")
+              + f"(marked \"best guess\"; each carries its probability of being that player -- average "
+              f"{(np.mean([names_all[o][1] for o in guessed]) if guessed else 0):.0%}"
+              + (f", calibrated to the {_bg_acc:.0%} the coach checks measured" if _bg_acc is not None else
+                 ", not calibrated yet -- needs 30+ coach-checked best guesses") + ")", flush=True)
+        # every track still without a name, in a clip whose five are known, can't be a 6th player: not a player
+        n_set_aside = 0
+        for i in todo:
+            clip = clips[i]
+            for sd in ("offense", "defense"):
+                if not _trk_five(pc.at[i, f"{sd}_lineup"]):
+                    continue
+                for k in range(len(clip["tracks"])):
+                    if clip["side"].get(k) == sd and (i, k) not in names_all and (i, k) not in low_guess \
+                            and (i, k) not in _missed_protect:
+                        clip["side"][k] = None
+                        n_set_aside += 1
+        _trk_note_drop("[tracks] beyond the five on the floor (set aside as not players)", n_set_aside)
+        print(f"  [tracking]   {n_set_aside:,} track(s) beyond the five on the floor set aside as not players "
+              f"(referees, coaches, sideline) -- no unnamed players remain where the lineup is known", flush=True)
+
+    # --- missed players the coaches marked: why didn't they get a box? (requested) ---------------------------------------
+    if _missed:
+        _mrows = []
+        for _mi, _m in enumerate(_missed):
+            _i = _key_to_i_all.get(_m.get("clip_key"))
+            _rect = _trk_cell_rect(_m)
+            _t = _trk_t_of(_m, -1)
+            if _i is None or _rect is None or not 0 <= _t < len(clips[_i]["frames"]):
+                _why = "clip not in this run"
+            else:
+                _f = clips[_i]["files"][_t]
+                _inr = lambda bx: _rect[0] <= (bx[0] + bx[2]) / 2 <= _rect[2] and _rect[1] <= bx[3] <= _rect[3]
+                _d = det.get(_f)
+                _raw = [] if _d is None or not len(_d.get("p", [])) else [b for b in _d["p"][:, 0:4] if _inr(b)]
+                _drops = [r_ for r_ in _trk_drop["boxes"].get(_f, []) if _inr(r_[:4])]
+                _ik = _missed_tracks.get(_mi)
+                if not _raw:
+                    _why = "not detected (the person detector never found him in that frame)"
+                elif _ik is not None:
+                    _i2, _k2 = _ik
+                    _sd = clips[_i2]["side"].get(_k2)
+                    if _sd in ("offense", "defense"):
+                        _why = "has a box this run"
+                    elif clips[_i2].get("team", {}).get(_k2) not in ("A", "B"):
+                        _why = "sorted in with the referees / everyone else by shirt color"
+                    elif (_i2, _k2) in _pm_p and _pm_cut is not None and _pm_p[(_i2, _k2)] >= _pm_cut:
+                        _why = "player model said not a player"
+                    elif (_i2, _k2) in _set_aside_prev:
+                        _why = "set aside by the sideline / outfit / duplicate-box rule"
+                    else:
+                        _why = "set aside as beyond the five (no name, less player-like than the five kept)"
+                elif _drops:
+                    _why = "filtered out before tracking: " + _drops[0][4]
+                else:
+                    _why = "detected, but lost while following players (a short piece, or a track cut where players overlapped)"
+            _mrows.append({"game": _m.get("game"), "clip_key": _m.get("clip_key"), "t": _m.get("t"), "cell": _m.get("cell"),
+                           "frame_file": _m.get("frame_file"), "coach": _m.get("coach"), "why_no_box": _why})
+        _mr = pd.DataFrame(_mrows)
+        try:
+            _mr.to_csv(os.path.join(TRACK_DIR, "missed_players_report.csv"), index=False)
+        except Exception:
+            pass
+        print(f"  [tracking] players with NO box that coaches marked ({len(_mr)}) -- why each was missed "
+              f"(_tracking/missed_players_report.csv):", flush=True)
+        for _w, _n in _mr["why_no_box"].value_counts().items():
+            print(f"      {_n:>4}  {_w}", flush=True)
+
+    # --- diagnostic: where were people lost? ---------------------------------------------------------------------
+    _dc = dict(_trk_drop["counts"])
+    _det = _dc.get("people detected", 0)
+    if _det:
+        _lost = sorted(((r, n) for r, n in _dc.items() if not r.startswith(("people", "[tracks]"))), key=lambda x: -x[1])
+        _kept = _det - sum(n for _, n in _lost)
+        print("  [tracking] where people were lost (diagnostic):", flush=True)
+        print(f"    {_det:,} people detected in the frames used; {_kept:,} ({100 * _kept / _det:.0f}%) passed every filter", flush=True)
+        for r, n in _lost:
+            print(f"      - {n:>9,} ({100 * n / _det:5.1f}%)  {r}", flush=True)
+        for r, n in sorted(((r, n) for r, n in _dc.items() if r.startswith("[tracks]")), key=lambda x: x[0]):
+            print(f"    {n:>9,}  {r[len('[tracks] '):]}", flush=True)
+        print("    (grey boxes marked with the reason are drawn on the check pictures in _tracking/checks/)", flush=True)
+        try:
+            pd.DataFrame([{"stage": r, "count": n, "share_of_detected": round(n / _det, 4)} for r, n in sorted(_dc.items())]
+                         ).to_csv(os.path.join(TRACK_DIR, "tracking_drop_report.csv"), index=False)
+        except Exception:
+            pass
+
+    # --- screens + per-clip columns ---
+    out = pd.DataFrame(index=pc.index, columns=_TRACK_COLS, dtype=object)
+    rows = []
+    print(f"  [tracking] step 7: looking for the screen in {len(todo)} clip(s)...", flush=True)
+    _t0 = time.time()
+    def _how(i, k, n):
+        """How a track's name was found (for the per-player table and every track row)."""
+        if n is None:
+            return None
+        if coach.get((i, k)) == n and n is not None:
+            return "coach checked"
+        if (i, k) in guessed:
+            return "best guess"
+        if (i, k) in number_names and number_names[(i, k)][0] == n:
+            return "jersey number"
+        if reid_named.get((i, k)) == n:
+            return "re-id match"
+        if starter_named.get((i, k)) == n:
+            return "starter look"
+        if carry_named.get((i, k)) == n:
+            return "same player as your check"
+        a, af = clips[i]["anchor"], clips[i].get("anchor_first")
+        if (a and a[0] == k and a[1] == n) or (af and af[0] == k and af[1] == n):
+            return "Synergy"
+        if any(kk == k and nn == n for kk, nn, _e in clips[i].get("anchors_pbp", [])):
+            return "play-by-play event"
+        if followed.get((i, k), (None,))[0] == n:
+            return "followed player"
+        if solve_how.get((i, k)) == "elimination":
+            return "elimination"
+        if link_names.get((i, k), (None,))[0] == n:
+            return "linked possession"
+        if (i, k) in solved:
+            return "lineup matching"
+        if (i, k) in app_fill:
+            return "appearance (last ones left)"
+        return "appearance"
+
+    # --- each player track's evidence for EVERY name of its team's five (requested: "the probability of it being the person
+    # compared to all the players on the team that weren't already automatically tagged") ---------------------------------
+    # CONFIRMED CHANGE. A "looks like ...?" guess said 95% when guesses like it were right 23% of the time: it was a share
+    # squeezed hard toward one name. Now every player track carries a score for each of the five on its team
+    # (track "guess_scores"): how much he looks like each of them (his look against each player's look, taught by your
+    # checks of OTHER clips) plus his jersey vote. The play review turns those into the chance he is each player LEFT --
+    # the five minus the players already named on another box in that picture -- so the shares add up to 100% over the
+    # players still to be found. How sharp the shares are (the temperature) is fitted on your checked boxes, so a box shown
+    # at 60% is right about 60% of the time among the players left.
+    guess_scores = {}
+    try:
+        _gs_on = bool(globals().get("TRACK_GUESS_SCORES", True)) and bool(fp)
+        _refs_g = {}
+
+        def _refs_excl(g_, ex):
+            key_ = (g_, ex)
+            if key_ not in _refs_g:
+                acc_ = {}
+                for (i_, k_), n_ in coach.items():
+                    if n_ and game_of.get(i_) == g_ and i_ != ex and (i_, k_) in fp:
+                        acc_.setdefault(n_, []).append(np.asarray(fp[(i_, k_)], float))
+                _refs_g[key_] = {n_: (np.mean(v_, 0) / (np.linalg.norm(np.mean(v_, 0)) + 1e-8)) for n_, v_ in acc_.items()}
+            return _refs_g[key_]
+
+        def _raw_scores(i, k):
+            sd = clips[i]["side"].get(k)
+            if sd not in ("offense", "defense") or (i, k) not in fp:
+                return None
+            five = _trk_five(pc.at[i, f"{sd}_lineup"])
+            refs_ = _refs_excl(game_of[i], i)
+            have = [n_ for n_ in five if n_ in refs_]
+            if len(five) < 2 or len(have) < 2:
+                return None
+            v_ = np.asarray(fp[(i, k)], float)
+            v_ = v_ / (np.linalg.norm(v_) + 1e-8)
+            sims = {n_: float(v_ @ refs_[n_]) for n_ in have}
+            # a player you haven't checked yet (no look to compare -- e.g. #41 Naber) gets the average of the others: still
+            # one of the players left, neither favored nor ruled out
+            _avg = float(np.mean(list(sims.values())))
+            for n_ in five:
+                sims.setdefault(n_, _avg)
+            vt = _vres.get((i, k))
+            return sims, (vt[0], float(vt[1])) if vt else None
+
+        if _gs_on:
+            # fit the temperature on your checked boxes: the true name among the five, from the OTHER clips' looks
+            _fit = []
+            for (i, k), n_true in coach.items():
+                if not n_true:
+                    continue
+                r_ = _raw_scores(i, k)
+                if r_ and n_true in r_[0]:
+                    _fit.append((r_, n_true))
+            _vw = float(globals().get("TRACK_GUESS_VOTE_W", 2.0))
+
+            def _logits(r_, T):
+                sims, vt = r_
+                lg = {n_: s_ / T for n_, s_ in sims.items()}
+                if vt and vt[0] in lg:
+                    lg[vt[0]] += _vw * vt[1]
+                return lg
+
+            def _nll(T):
+                tot = 0.0
+                for r_, n_true in _fit:
+                    lg = _logits(r_, T)
+                    m_ = max(lg.values())
+                    z = sum(np.exp(x - m_) for x in lg.values())
+                    tot -= (lg[n_true] - m_) - np.log(z)
+                return tot / max(len(_fit), 1)
+
+            _T = float(globals().get("TRACK_GUESS_TEMP", 0) or 0)
+            if not _T:
+                _grid = [0.005, 0.01, 0.015, 0.02, 0.03, 0.04, 0.06, 0.08, 0.12, 0.2, 0.4]
+                _T = min(_grid, key=_nll) if len(_fit) >= 10 else 0.08
+            for i in todo:
+                for k in range(len(clips[i]["tracks"])):
+                    r_ = _raw_scores(i, k)
+                    if r_:
+                        guess_scores[(i, k)] = {n_: round(float(x), 4) for n_, x in _logits(r_, _T).items()}
+            _top = sum(1 for r_, n_true in _fit if max(_logits(r_, _T).items(), key=lambda kv: kv[1])[0] == n_true)
+            print(f"  [tracking]   guess scores: {len(guess_scores):,} player track(s) get a score for each of the five "
+                  f"(look + jersey vote; sharpness fitted on {len(_fit)} checked box(es): T = {_T:g}; the top name was "
+                  f"right {_top} of {len(_fit)} among all five)", flush=True)
+    except Exception as _gse:
+        print(f"  [tracking]   guess scores not worked out ({type(_gse).__name__}: {_gse})", flush=True)
+    for _n_clip, i in enumerate(todo, 1):
+        _trk_progress("clips searched for a screen", _n_clip, len(todo), _t0)
+        clip = clips[i]
+        nm = lambda k: names_all.get((i, k), (None, 0.0)) if k is not None else (None, 0.0)
+        out.at[i, "track_players"] = len(clip["tracks"])
+        out.at[i, "track_named"] = sum(1 for k in range(len(clip["tracks"])) if (i, k) in names_all)
+        out.at[i, "track_ball_frames"] = len(clip["holder"])
+        out.at[i, "track_clip_key"] = _trk_clip_key(pc.loc[i])
+        out.at[i, "track_frames"] = len(clip["files"])
+        out.at[i, "track_finish_frame"] = clip["t_finish"]
+        out.at[i, "track_name_frame"] = clip.get("name_frame")
+        out.at[i, "track_holders"] = _trk_json.dumps({int(t): int(k) for t, k in clip["holder"].items()})
+        scr = _trk_find_screen(clip)
+        if scr:
+            parts = {r: nm(scr[r]) for r in ("screener", "screened", "screened_defender", "screener_defender")}
+            out.at[i, "track_screen_type"] = scr["type"]
+            for r, (n, c) in parts.items():
+                out.at[i, f"track_{r}"] = n
+            confs = [c for n, c in parts.values() if n]
+            out.at[i, "track_screen_conf"] = round(min(1.0, scr["score"] / 3.0) * (float(np.mean(confs)) if confs else 0.0), 2)
+            out.at[i, "track_screen_frame"] = clip["files"][scr["t"]]
+            out.at[i, "track_screen_ids"] = _trk_json.dumps({r: (int(scr[r]) if scr[r] is not None else None)
+                                                             for r in ("screener", "screened", "screened_defender",
+                                                                       "screener_defender")}
+                                                            | {"t": int(scr["t"]), "type": scr["type"]})
+            clip["screen"] = scr
+        for k, tr in enumerate(clip["tracks"]):
+            n, c = nm(k)
+            cum = np.cumsum(np.array(clip["shifts"]), axis=0)
+            _h = _how(i, k, n)
+            # CONFIRMED CHANGE (requested: weak methods were shown at 95%): a name's confidence can't be higher than how often its
+            # method was right on your checks ((right + 1) / (checked + 2), once TRACK_METHOD_CONF_MIN_CHECKS are checked) --
+            # e.g. Synergy 0 of 10 -> 8%, jersey number 69 of 101 -> 68%.
+            if n and _h in _meth_prec and _meth_prec[_h][1] >= int(globals().get("TRACK_METHOD_CONF_MIN_CHECKS", 8)):
+                c = min(float(c or 0.0), (_meth_prec[_h][0] + 1) / (_meth_prec[_h][1] + 2))
+            _lg = low_guess.get((i, k)) if not n else None
+            rows.append({"clip_key": _trk_clip_key(pc.loc[i]), "game_date": pc.at[i, "game_date"],
+                         "clip_number": pc.at[i, "clip_number"], "track": k, "side": clip["side"].get(k),
+                         "name": n, "name_conf": round(c, 2) if n else None, "name_how": _h,
+                         # the best guess that was NOT shown (under the cutoff): saved with the box so checks keep measuring it
+                         "guess_name": _lg[0] if _lg else None, "guess_p": _lg[1] if _lg else None,
+                         "guess_scores": (_trk_json.dumps(guess_scores[(i, k)]) if (i, k) in guess_scores else None),
+                         "anchored": bool(clip["anchor"] and clip["anchor"][0] == k), "frames": len(tr),
+                         # [frame, x, y, box height]: x/y are the feet in picture-height units with the camera's
+                         # pan removed; box height lets the insights cell turn distances into approximate feet.
+                         # [frame, x, y, box height, feet px, feet py]: x/y are the feet in picture-height units with
+                         # the camera's pan removed; px/py the same point in the frame's pixels (court mapping).
+                         "path": _trk_json.dumps([[t, round(float(clip["frames"][t][j][0] - cum[t][0]), 3),
+                                                   round(float(clip["frames"][t][j][1] - cum[t][1]), 3),
+                                                   round(float(clip["frames"][t][j][2]), 3),
+                                                   # raw feet point in the frame's own pixels, for court mapping
+                                                   round(float((clip["frames"][t][j][6] + clip["frames"][t][j][8]) / 2), 1),
+                                                   round(float(clip["frames"][t][j][9]), 1)] for t, j in tr])})
+    print("  [tracking] step 8: drawing the check images...", flush=True)
+    # --- the five on the floor, player by player: which track is him, how we know -- or "not located" ---
+    slots = []
+    for i in todo:
+        for sd in ("offense", "defense"):
+            five = _trk_five(pc.at[i, f"{sd}_lineup"])
+            team = pc.at[i, f"{sd}_team"]
+            for p in five:
+                ks = [k for k in range(len(clips[i]["tracks"])) if clips[i]["side"].get(k) == sd
+                      and names_all.get((i, k), (None,))[0] == p]
+                slots.append({"clip_key": _trk_clip_key(pc.loc[i]), "clip_number": pc.at[i, "clip_number"],
+                              "game_date": pc.at[i, "game_date"], "team": team, "side": sd, "player": p,
+                              "lineup_source": pc.at[i, "lineup_source"] if "lineup_source" in pc.columns else None,
+                              "located": bool(ks), "tracks": ";".join(str(k) for k in ks),
+                              "seconds_seen": round(sum(len(clips[i]["tracks"][k]) for k in ks)
+                                                    / max(float(clips[i].get("fps", _fps)), 0.5), 1),
+                              "how": ";".join(sorted({_how(i, k, p) for k in ks})) if ks else "not located",
+                              "confidence": round(max(names_all[(i, k)][1] for k in ks), 2) if ks else None})
+    globals()["trk_lineup_slots"] = pd.DataFrame(slots)
+    if slots:
+        _sl = globals()["trk_lineup_slots"]
+        # identified = at least one of his tracks was named from evidence (not only by best guess)
+        _ident = _sl["how"].map(lambda h: any(x not in ("best guess", "not located") for x in str(h).split(";")))
+        print(f"  [tracking]   of the five on the floor: {int(_ident.sum()):,} of {len(_sl):,} player-clips identified from "
+              f"evidence, {int((_sl['located'] & ~_ident).sum()):,} named by best guess only, "
+              f"{int((~_sl['located']).sum()):,} not on film (no track left for them)", flush=True)
+        _own = _sl["located"] & _sl["how"].map(lambda h: any(x not in ("best guess", "not located", "coach checked")
+                                                            for x in str(h).split(";")))
+        _games_ = sorted({f"{d} {c}" for d, c in zip(pc.loc[todo, "game_date"].astype(str).str[:10], pc.loc[todo, "game_code"])})
+        _trk_eval("located", score=100 * float(_sl["located"].mean()), n=len(_sl), bar=None, used=None, games="; ".join(_games_),
+                  how="on-floor players (five per team per clip) the tracking found on the film -- any way, coach checks too")
+        _trk_eval("named_by_model", score=100 * float(_own.mean()), n=len(_sl),
+                  bar=float(globals().get("FILM_NAMES_OK_PCT", 50)), used=None, games="; ".join(_games_),
+                  how="on-floor players the tracking named ITSELF (jersey number, Synergy, following a named player, "
+                      "appearance) -- not counting coach-checked boxes; the brief's per-player film reads need this")
+        print(f"  [tracking]   players on the floor located on the film: {int(_sl['located'].sum()):,} of {len(_sl):,} "
+              f"({100 * _sl['located'].mean():.0f}%) -- by " + ", ".join(
+                  f"{h} {n}" for h, n in _sl.loc[_sl["located"], "how"].str.split(";").explode().value_counts().items()),
+              flush=True)
+        # CONFIRMED CHANGE (requested: compare the new tracking with the old): one scorecard line per run
+        try:
+            _secs = []
+            for i in todo:
+                n_ = len(clips[i]["frames"])
+                if n_:
+                    _secs.append(n_ / max(float(clips[i].get("fps", _fps)), 0.5))
+            _pl_tr = [(i, k) for i in todo for k in range(len(clips[i]["tracks"]))
+                      if clips[i]["side"].get(k) in ("offense", "defense")]
+            _len_s = [len(clips[i]["tracks"][k]) / max(float(clips[i].get("fps", _fps)), 0.5) for i, k in _pl_tr]
+            _cov = (_sl.loc[_sl["located"], "seconds_seen"].sum() / max(1e-6, sum(
+                _secs[todo.index(i)] for i in todo for _ in range(10)))) if len(_secs) == len(todo) else float("nan")
+            print(f"  [scorecard] {len(todo)} clip(s): {sum(len(clips[i]['tracks']) for i in todo) / max(len(todo), 1):.0f} "
+                  f"tracks a clip ({len(_pl_tr) / max(len(todo), 1):.0f} player tracks); a player track lasts "
+                  f"{(np.median(_len_s) if _len_s else 0):.1f} s (median); players located {int(_sl['located'].sum())} of "
+                  f"{len(_sl)}; named player-time {100 * _cov:.0f}% of the ten players' time on the floor", flush=True)
+        except Exception as _sce:
+            print(f"  [scorecard] not worked out ({type(_sce).__name__}: {_sce})", flush=True)
+
+    _trk_draw_checks(pc, clips, names_all, base, todo)
+    return out, pd.DataFrame(rows), report
+
+
+def _trk_draw_checks(pc, clips, names_all, base, todo):
+    if not TRACK_CHECKS:
+        return
+    from PIL import Image, ImageDraw
+    cdir = os.path.join(TRACK_DIR, "checks")
+    os.makedirs(cdir, exist_ok=True)
+    # (frame archive) pictures come from clips whose frames are on disk -- an archived game isn't unpacked just for these
+    _arch = globals().get("vision_frame_archived")
+    todo = [i for i in todo if not (_arch and clips[i]["files"] and _arch(os.path.join(base, clips[i]["files"][0])))]
+    todo = [i for i in todo if clips[i]["files"] and all(os.path.exists(os.path.join(base, f)) for f in clips[i]["files"])]
+    shown = [i for i in todo if clips[i].get("screen")][:TRACK_CHECKS] or todo[:TRACK_CHECKS]
+    col = {"offense": (255, 215, 0), "defense": (0, 200, 255), None: (150, 150, 150)}
+    for i in shown:
+        clip = clips[i]
+        n = len(clip["files"])
+        ts = sorted(set([0, n // 3, 2 * n // 3, n - 1] + ([clip["screen"]["t"]] if clip.get("screen") else [])))[:5]
+        tiles = []
+        for t in ts:
+            im = Image.open(os.path.join(base, clip["files"][t])).convert("RGB")
+            dr = ImageDraw.Draw(im)
+            for k, tr in enumerate(clip["tracks"]):
+                j = dict(tr).get(t)
+                if j is None:
+                    continue
+                x1, y1, x2, y2 = clip["frames"][t][j][6:10]
+                sd = clip["side"].get(k)
+                label = names_all.get((i, k), (f"#{k}", 0))[0]
+                scr = clip.get("screen")
+                if scr and scr["t"] == t and k == scr["screener"]:
+                    label = "SCREEN " + label
+                dr.rectangle([x1, y1, x2, y2], outline=col.get(sd, (150, 150, 150)), width=2)
+                dr.text((x1, max(0, y1 - 11)), label, fill=col.get(sd, (150, 150, 150)))
+            # people the filters threw away on this frame, in magenta with the reason (diagnostic)
+            for (x1, y1, x2, y2, why) in _trk_drop["boxes"].get(clip["files"][t], []):
+                dr.rectangle([x1, y1, x2, y2], outline=(255, 0, 255), width=1)
+                dr.text((x1, min(im.height - 11, y2 + 1)), why.split(" (")[0][:22], fill=(255, 0, 255))
+            if clip["holder"].get(t) is not None:
+                dr.text((6, 6), "ball: track #" + str(clip["holder"][t]), fill=(255, 80, 80))
+            tiles.append(im)
+        W = sum(im.width for im in tiles)
+        strip = Image.new("RGB", (W, max(im.height for im in tiles) + 16), (0, 0, 0))
+        x = 0
+        for im in tiles:
+            strip.paste(im, (x, 16))
+            x += im.width
+        ImageDraw.Draw(strip).text((4, 2), str(pc.at[i, "synergy_string"])[:160], fill=(255, 255, 255))
+        strip.save(os.path.join(cdir, f"{pc.at[i, 'game_date']}_{pc.at[i, 'clip_number']}.jpg"))
+
+
+# ---- Run --------------------------------------------------------------------------------------------------
+_TRACK_COLS = ["track_players", "track_named", "track_ball_frames", "track_screen_type", "track_screener",
+               "track_screened", "track_screened_defender", "track_screener_defender", "track_screen_conf",
+               "track_screen_frame", "track_clip_key", "track_frames", "track_holders", "track_screen_ids",
+               "track_finish_frame", "track_name_frame"]
+for _c in _TRACK_COLS:
+    if _c not in play_calls.columns:
+        play_calls[_c] = None
+# CONFIRMED CHANGE (first run at 1024 wide: tracking ran BEFORE the new frames were placed on the court -- "court
+# mapping available for 0 of 7,595 frames" -- so it had no court filter, and fans got in). The tracking run is a
+# function now, so the Court mapping cell can rerun it with the court as soon as the court exists (every new game's
+# first run). Detections, colors, fingerprints etc. are saved, so the rerun takes minutes.
+# ---- Evaluation history for the app (Analytics > Player Number Tracking) ------------------------------------------------
+# CONFIRMED CHANGE (requested: "an evaluation of the Player Number Tracking that is similar to the 'How good is the automatic
+# tagging?' in Film Tagging"). Every tracking run records, for each part that names players or sets non-players aside, its
+# test score on the coach checks, the bar it must clear to be used, chance where there is one, and whether it was used --
+# plus how much of the floor the tracking covered. data/uww_tracking_eval_history.csv gets a row for a part only when one of
+# those changed, so the file is each part's story. The jersey-number reader, re-ID and outfit checks are read from their own
+# test cells (49, 50d, 50c).
+_TRK_EVAL_LABELS = {
+    "named_by_model": "Players named by the tracking itself", "located": "Players found on the film",
+    "reader": "Jersey-number reader", "appearance": "Appearance matching", "reid": "Re-ID (looks like a checked player)",
+    "best_guess": "Best guesses from the lineup", "anchors": "Synergy-named player (anchor)",
+    "player_model": "Player / not-a-player model", "outfit": "Outfit check (referee / coach / fan)",
+    "starter_look": "Starter look (five starters on the floor)",
+    "jersey_vote": "Jersey vote (five numbers on the floor, whole track)"}
+_TRK_EVAL_KEYS = ["score", "n", "bar", "chance", "used", "status"]
+
+
+def _trk_eval(part, **kw):
+    globals().setdefault("trk_eval_parts", {})[part] = kw
+
+
+def _trk_eval_tests():
+    """The test cells' results (they run before tracking): reader (49), re-ID (50d), outfit (50c)."""
+    _on = lambda v: not (v is False or str(v).strip().lower() in ("false", "off", "no", "0", "none", ""))
+    best = globals().get("JERSEY_READER_BEST")
+    prec, ans = globals().get("JERSEY_READER_PRECISION") or {}, globals().get("JERSEY_READER_ANSWERS") or {}
+    if best and best in prec:
+        sc_ = (globals().get("JERSEY_READER_COACH_SCORE") or {}).get(best)
+        _tgt = float(globals().get("JERSEY_READER_TARGET_PRECISION", 0.85))
+        _min = int(globals().get("JERSEY_READER_MIN_ANSWERS", 6))
+        _ok = prec[best] >= float(globals().get("TRACK_READER_MIN_PRECISION", 0.8)) and ans.get(best, 0) >= _min
+        _trk_eval("reader", score=100 * prec[best], n=int(ans.get(best, 0)), bar=100 * _tgt, bar_n=_min, chance=None,
+                  used=bool(globals().get("_trk_numbers_used", _ok and _on(globals().get("TRACK_READ_NUMBERS", True)))),
+                  status=(None if _on(globals().get("TRACK_READ_NUMBERS", True)) else "switched off (TRACK_READ_NUMBERS = False)")
+                  if not globals().get("_trk_numbers_used") else None,
+                  checked=(f"{sc_[0]} right, {sc_[1]} wrong of {sc_[2]} checked players" if sc_ else None),
+                  how=f"right when it answers ({best}), on coach-checked crops it never trained on")
+    try:
+        _rp = globals().get("REID_TEST_PATH") or os.path.join(TRACK_DIR, "reid_check_test.json")
+        if os.path.exists(_rp):
+            with open(_rp, encoding="utf-8") as fh:
+                _r = _trk_json.load(fh)
+            _ms = _r.get("models") or {}
+            if _ms:
+                _k = _r.get("chosen") or max(_ms, key=lambda m: _ms[m].get("right_overall") or 0)
+                m = _ms[_k]
+                _trk_eval("reid", score=100 * float(m.get("right_overall") or 0), n=int(m.get("questions") or 0),
+                          bar=100 * float(_r.get("min_precision") or 0.8), chance=100 * float(m.get("chance") or 0),
+                          used=bool(_r.get("passed")) and _on(globals().get("TRACK_REID_NAMES", "auto")),
+                          how=f"checked players it picked out right ({_k}); used once a cutoff is right "
+                              f"{float(_r.get('min_precision') or 0.8):.0%}+ of the time", tested=_r.get("tested"))
+    except Exception:
+        pass
+    try:
+        _op = globals().get("OUTFIT_TEST_PATH") or os.path.join(TRACK_DIR, "outfit_check_test.json")
+        if os.path.exists(_op):
+            with open(_op, encoding="utf-8") as fh:
+                _o = _trk_json.load(fh)
+            _off = not _on(globals().get("TRACK_OUTFIT_CHECK", "auto"))
+            _trk_eval("outfit", score=(100 * float(_o["precision"])) if _o.get("precision") is not None else None,
+                      n=int(_o.get("boxes") or 0), bar=100 * float(globals().get("OUTFIT_MIN_PRECISION", 0.9)),
+                      auc=_o.get("auc"), caught=(100 * float(_o["recall"])) if _o.get("recall") is not None else None,
+                      used=bool(_o.get("passed")) and not _off,
+                      status="switched off (TRACK_OUTFIT_CHECK = False)" if _off else None,
+                      how="boxes it flagged that really weren't players (coach checks)", tested=_o.get("tested"))
+    except Exception:
+        pass
+
+
+def _trk_eval_write():
+    _trk_eval_tests()
+    parts = globals().get("trk_eval_parts") or {}
+    if not parts:
+        return
+    hp = os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, "uww_tracking_eval_history.csv")
+    try:
+        old = pd.read_csv(hp)
+    except Exception:
+        old = pd.DataFrame()
+    now = pd.Timestamp.now().isoformat(timespec="seconds")
+    _r = lambda v: None if v is None or (isinstance(v, float) and not np.isfinite(v)) else (
+        (round(v, 3) if abs(v) < 1.5 else round(v, 1)) if isinstance(v, float) else v)      # AUC 0.99 stays 0.99
+    new = [{"run_at": now, "part": k, "label": _TRK_EVAL_LABELS.get(k, k), **{kk: _r(vv) for kk, vv in v.items()}}
+           for k, v in parts.items()]
+    norm = lambda v: None if v is None or (isinstance(v, float) and pd.isna(v)) else re.sub(r"\.0$", "", str(v))
+    keep = []
+    for r in new:
+        prev = old[old["part"] == r["part"]].tail(1) if len(old) and "part" in old.columns else pd.DataFrame()
+        if prev.empty or any(norm(prev.iloc[0].get(k)) != norm(r.get(k)) for k in _TRK_EVAL_KEYS):
+            keep.append(r)
+    out = pd.concat([old, pd.DataFrame(keep)], ignore_index=True) if keep else old
+    try:
+        out.to_csv(hp, index=False)
+        print(f"  Tracking evaluation: {len(keep)} part(s) changed since the last run -> {os.path.basename(hp)} (the app: "
+              f"Analytics > Player Number Tracking > How good is the player-number tracking?)", flush=True)
+    except Exception as _e:
+        print(f"  (tracking evaluation not saved: {type(_e).__name__}: {_e})", flush=True)
+
+
+def _trk_previous_results():
+    """The last run's results (uww_play_calls.csv's track_* columns, uww_player_tracks.csv), read BEFORE this run replaces them."""
+    d = globals().get("APP_DATA_DIR") or OUTPUT_DIR
+    out = []
+    for f in ("uww_play_calls.csv", "uww_player_tracks.csv"):
+        try:
+            out.append(pd.read_csv(os.path.join(d, f), low_memory=False))
+        except Exception:
+            out.append(pd.DataFrame())
+    return out
+
+
+def _trk_carry_previous(prev_pc, prev_pt):
+    """CONFIRMED CHANGE (requested: every game tracked at the same pace -- "I don't want to lose anything previously done"). A clip
+    tracked in an earlier run but not in this one (beyond the pace) keeps its earlier results: its track_* columns and its
+    player tracks, as long as its tracking frames are the same ones. TRACK_KEEP_PREVIOUS = False drops them."""
+    global play_calls, player_tracks
+    if not globals().get("TRACK_KEEP_PREVIOUS", True) or prev_pc.empty or "track_clip_key" not in prev_pc.columns:
+        return
+    try:
+        _k = lambda r: _trk_ck(_trk_clip_key(r))
+        pv = prev_pc[prev_pc["track_clip_key"].notna()].copy()
+        pv["_k"] = [_k(r) for _, r in pv.iterrows()]
+        pv = pv.drop_duplicates("_k", keep="last").set_index("_k")
+        rows, keys = [], set()
+        for i in play_calls.index[play_calls["track_clip_key"].isna() & play_calls["track_files"].notna()]:
+            k = _k(play_calls.loc[i])
+            if k not in pv.index or str(pv.at[k, "track_files"]) != str(play_calls.at[i, "track_files"]):
+                continue
+            for c in _TRACK_COLS:
+                if c in pv.columns:
+                    v = pv.at[k, c]
+                    play_calls.at[i, c] = None if (isinstance(v, float) and pd.isna(v)) else v
+            rows.append(i)
+            keys.add(k)
+        n_tr = 0
+        if keys and not prev_pt.empty and "clip_key" in prev_pt.columns:
+            now = set(player_tracks["clip_key"].map(_trk_ck)) if not player_tracks.empty and "clip_key" in player_tracks.columns else set()
+            add = prev_pt[prev_pt["clip_key"].map(_trk_ck).isin(keys - now)]
+            n_tr = len(add)
+            if n_tr:
+                player_tracks = pd.concat([player_tracks, add], ignore_index=True) if not player_tracks.empty else add.reset_index(drop=True)
+        if rows:
+            print(f"  [tracking] kept the earlier results of {len(rows)} clip(s) not tracked this run (beyond the pace): "
+                  f"{n_tr:,} player track(s) carried over", flush=True)
+    except Exception as e:
+        print(f"  [tracking] earlier results not carried over ({type(e).__name__}: {e})", flush=True)
+
+
+def _trk_run_all():
+    global play_calls, player_tracks, tracking_report
+    globals()["trk_eval_parts"] = {}                  # this run's evaluation (see _trk_eval_write)
+    player_tracks = pd.DataFrame()
+    tracking_report = pd.DataFrame()
+    # CONFIRMED CHANGE (requested: naming "starts" with the 5 players known to be on the court): first make sure every
+    # clip HAS its five -- including clips with no game clock, filled from the clips around them.
+    _nf = _trk_fill_lineups(play_calls)
+    if _nf:
+        print(f"  [tracking] filled {_nf} team lineup(s) for clips with no game clock, from the clips just before and "
+              f"after them (same five on both sides = nobody subbed)", flush=True)
+    for _c in _TRACK_COLS:
+        if _c not in play_calls.columns:
+            play_calls[_c] = None
+    if not RUN_PLAYER_TRACKING and globals().get("TRACK_REUSE_WHEN_OFF", True) and "reuse_previous_table" in globals():
+        # tracking switched off (e.g. the Film Tagging or Brief notebook): the last run's tracking is kept, not lost
+        player_tracks = reuse_previous_table("uww_player_tracks")
+        tracking_report = reuse_previous_table("uww_tracking_report")
+        globals()["trk_event_candidates"] = reuse_previous_table("uww_trk_event_candidates")
+        globals()["trk_lineup_slots"] = reuse_previous_table("uww_trk_lineup_slots")
+        reuse_previous_model_columns(play_calls, ("track_",), "player tracking (switched off this run)")
+    if RUN_PLAYER_TRACKING and not play_calls.empty:
+        try:
+            _prev = _trk_previous_results()
+            _trk_cols, player_tracks, _trk_rep = player_tracking(play_calls)
+            if _trk_cols is None:
+                print("Player tracking: no clips to track this run -- run frame capture with VISION_TRACK_FPS > 0 "
+                      "(or the PLAYER_TRACKING_GAMES game isn't exported yet).")
+                # every clip tracked before keeps its results (nothing is lost when this run tracks nothing)
+                _trk_carry_previous(*_prev)
+                if "reuse_previous_table" in globals():
+                    tracking_report = reuse_previous_table("uww_tracking_report")
+            else:
+                for _c in _TRACK_COLS:
+                    play_calls[_c] = _trk_cols[_c]
+                _trk_carry_previous(*_prev)
+                tracking_report = pd.DataFrame(_trk_rep)
+                try:
+                    _trk_eval_write()
+                except Exception as _e:
+                    print(f"  (tracking evaluation not written: {type(_e).__name__}: {_e})", flush=True)
+                print("Player tracking:")
+                for _r in _trk_rep:
+                    print(f"  {_r['game']}: {_r['clips']} clips, {_r['tracks']} tracks. Ball seen in {_r['clips_ball_seen']} clip(s). "
+                          f"Teams by jersey color: {_r['teams_by_color']}. Lineups on {_r['clips_with_lineups']} clip(s), Synergy's "
+                          f"player found in that lineup on {_r['synergy_player_in_lineup']}. Named anchors: {_r['anchors']} "
+                          f"({_r['anchors_by_pose']} by shooting pose, {_r.get('anchors_by_rim', 0)} by finish at the rim). "
+                          f"{_r['tracks_named']} tracks named ({_r.get('tracks_named_by_evidence', 0)} by lineup matching on "
+                          + ("jersey numbers + Synergy" if _r.get("numbers_used") else "Synergy only -- jersey numbers off")
+                          + f", {_r.get('tracks_named_by_elimination', 0)} by elimination). "
+                          f"Name check (appearance): {_r['anchor_name_check']} right. Synergy anchor vs jersey number: "
+                          f"{_r.get('anchor_vs_number_check', '--')} agree.")
+                # The check images also go to the app's data folder (Tracking Quality section in the app).
+                try:
+                    _app_dir = globals().get("OUTPUT_DIR")
+                    if _app_dir:
+                        _dst = os.path.join(_app_dir, "tracking_checks")
+                        os.makedirs(_dst, exist_ok=True)
+                        for _f in os.listdir(os.path.join(TRACK_DIR, "checks")):
+                            shutil.copy2(os.path.join(TRACK_DIR, "checks", _f), os.path.join(_dst, _f))
+                except Exception as _e:
+                    print(f"  (couldn't copy check images to the app folder: {_e})")
+                _n_scr = int(play_calls["track_screen_type"].notna().sum())
+                print(f"  Screens found: {_n_scr} clip(s). Check images: {os.path.join(TRACK_DIR, 'checks')}")
+                # Against the coaches' own defender tags ("12drop" -> #12, named from the roster), where both exist.
+                _tag_def = play_calls.get("coverage_defenders", pd.Series(dtype=object)).map(
+                    lambda v: re.search(r"def #\d{1,2} ([^)|]+?)\)", v).group(1).strip()
+                    if isinstance(v, str) and re.search(r"def #\d{1,2} ([^)|]+?)\)", v) else None)
+                _both = _tag_def.notna() & play_calls["track_screen_type"].notna()
+                if _both.any():
+                    _hit = sum(_tag_def[i] in (play_calls.at[i, "track_screened_defender"], play_calls.at[i, "track_screener_defender"])
+                               for i in _both[_both].index)
+                    print(f"  Coach-tagged screen defender found among the tracked defenders: {_hit}/{int(_both.sum())}")
+        except Exception as _e:
+            print("  " + "!" * 100)
+            print(f"  PLAYER TRACKING NOT RUN: {type(_e).__name__}: {_e}")
+            print("  " + "!" * 100)
+
+
+
+class CourtCalibrationNeeded(Exception):
+    """Raised to STOP the notebook when a gym needs its one-time court calibration."""
+
+
+def _trk_court_precheck():
+    """CONFIRMED BUG (fixed; "I thought the notebook would stop running if a court mapping wasn't done"): the stop for a
+    missing court calibration lived in the Court mapping cell, AFTER Player tracking. When tracking didn't finish (or
+    found nothing), the run never reached it -- and when it did, tracking had already spent its whole run without the
+    court (fans and the bench kept, no court positions) only to be rerun. The check now happens HERE, before tracking:
+    any game about to be tracked whose gym has no usable calibration (4+ landmarks on a frame that's still on disk) gets
+    its calibration page written and opened, and the notebook stops. COURT_STOP_FOR_CALIBRATION = False (Court mapping
+    cell's setting) carries on without it, as before."""
+    # CONFIRMED CHANGE (requested: court calibrations in the Streamlit app instead of stopping the notebook): with
+    # COURT_CALIBRATION_IN_APP (default) this still runs -- it writes each uncalibrated gym's package for the app -- but
+    # never stops; those games are tracked without the court until a coach calibrates the gym in the app.
+    _in_app = bool(globals().get("COURT_CALIBRATION_IN_APP", True))
+    # CONFIRMED BUG (fixed; the 11/1 runs had the court on 100 of 203 frames, then 0 of 403): this check -- and the placing
+    # of the frames about to be tracked on the court -- was skipped whenever RUN_COURT_MAPPING was False, and the Court
+    # mapping cell (after tracking) sets it False, so from the second run in a session on, tracking never got the court.
+    # That switch is for the Court mapping CELL; this check runs whenever tracking does (TRACK_COURT_PRECHECK = False = off).
+    if not globals().get("TRACK_COURT_PRECHECK", True) or not globals().get("RUN_PLAYER_TRACKING", True) \
+            or not (globals().get("COURT_STOP_FOR_CALIBRATION", True) or _in_app):
+        return
+    if not isinstance(globals().get("play_calls"), pd.DataFrame) or play_calls.empty or "track_files" not in play_calls.columns:
+        return
+    # the Court mapping cell's settings and helpers (that cell runs after this one): defaults if it hasn't run yet
+    globals().setdefault("COURT_CAL_DIR", os.path.join(INPUT_DIR, "court_calibration"))
+    globals().setdefault("COURT_SEARCH_DOWNLOADS", True)
+    globals().setdefault("COURT_REF_FRAMES", 8)
+    globals().setdefault("COURT_FEATURE_WIDTH", 1024)
+    # CONFIRMED BUG (fixed; 11/1: a fix to the court placement didn't take effect -- this check ran the Court mapping
+    # code left in memory by the PREVIOUS run, since its cell comes after tracking). The code is (re)loaded whenever the
+    # file changed since it was last loaded.
+    _src_ = os.path.join(globals().get("PARSER_LIB") or os.path.join(os.getcwd(), "parser_lib"), "51_court_mapping.py")
+    try:
+        _mt_ = os.path.getmtime(_src_)
+    except OSError:
+        _mt_ = None
+    if "_cm_write_tool" not in globals() or "_cm_calibration_files" not in globals() \
+            or (_mt_ is not None and globals().get("_cm_defs_mtime") != _mt_):
+        try:
+            with open(_src_, encoding="utf-8") as fh:
+                _code = fh.read().split("\n_cm_ran_now = False", 1)[0]          # its definitions only -- nothing runs
+            exec(compile(_code, _src_, "exec"), globals())
+            globals()["_cm_defs_mtime"] = _mt_
+        except Exception as e:
+            print(f"  [court] calibration check skipped -- couldn't load the Court mapping code ({type(e).__name__}: {e})",
+                  flush=True)
+            return
+    base = VISION_FRAMES_DIR if "VISION_FRAMES_DIR" in globals() else os.path.join(INPUT_DIR, "_vision_frames")
+    rows = play_calls[play_calls["track_files"].map(lambda v: isinstance(v, str) and v != "")]
+    if globals().get("TRACK_EXPORT_ONLY", True):
+        _keep, _left = _trk_export_games(rows, base)
+        rows = rows[rows.index.isin(_keep)]               # only the games tracking will run on
+    _ptl = globals().get("player_tracking_listed")        # PLAYER_TRACKING_GAMES: only those games are tracked
+    if _ptl is not None and not rows.empty and _ptl(rows["game_date"].iloc[0], rows["game_code"].iloc[0]) is not None:
+        rows = rows[[bool(_ptl(a, b)) for a, b in zip(rows["game_date"], rows["game_code"])]]
+    if rows.empty:
+        return
+    ok_arenas = set()
+    for cal in _cm_calibration_files():
+        for fr in cal.get("frames", []):
+            n_pts = sum(1 for p_ in fr.get("points", []) if p_.get("landmark") in COURT_LANDMARKS)
+            if n_pts >= 4 and os.path.exists(os.path.join(base, fr.get("file", ""))):
+                ok_arenas.add(str(cal.get("arena")))
+                break
+    # CONFIRMED BUG (fixed; "I think it should have stopped at a court calibration step" -- Carroll @ WashU 11/7/25 went
+    # straight to the starters check with NO court: 0 of 104 frames on the court, fans boxed). The WashU gym counted as
+    # calibrated from OUR 3/7/26 game there, but this game's frames were never placed on the court (the Court mapping cell
+    # runs after tracking, and is off), and another game's camera isn't this game's. A PLAYER_TRACKING_GAMES game now needs
+    # a calibration clicked on ITS OWN frames (the court calibration step of the new-game process); once it has one, the
+    # frames of the clips about to be tracked are placed on the court HERE, before tracking.
+    globals().setdefault("COURT_ORB_FEATURES", 2000)
+    globals().setdefault("COURT_MIN_INLIERS", 30)
+    globals().setdefault("COURT_MIN_IN_BOUNDS", 0.7)
+    _ptl = globals().get("player_tracking_listed")
+    _own_cal = set()                                       # frame folders with a usable calibration clicked on them
+    for cal in _cm_calibration_files():
+        for fr in cal.get("frames", []):
+            n_pts = sum(1 for p_ in fr.get("points", []) if p_.get("landmark") in COURT_LANDMARKS)
+            if n_pts >= 4 and os.path.exists(os.path.join(base, fr.get("file", ""))):
+                _own_cal.add(str(fr.get("file", "")).replace("\\", "/").split("/")[0])
+    _folder_of = lambda g_: {str(f).replace("\\", "/").split("/")[0] for v in g_["track_files"] for f in str(v).split(";") if f}
+    need = []
+    for (gd, gc), g in rows.groupby(["game_date", "game_code"], dropna=False):
+        arena = _cm_arena(gc)
+        _listed = _ptl is not None and bool(_ptl(gd, gc))
+        if _listed and not (_folder_of(g) & _own_cal):
+            pool = [fl[len(fl) // 2] for fl in ([f for f in str(v).split(";") if f] for v in g["track_files"]) if fl]
+            pick = [pool[int(i)] for i in np.linspace(0, len(pool) - 1, min(int(COURT_REF_FRAMES), len(pool)))] if pool else []
+            if pick:
+                try:
+                    page = _cm_write_tool(f"{gd}|{gc}", arena, pick, base)
+                    need.append((f"{gd}|{gc}", arena, page))
+                    print(f"  [court] {gd}|{gc}: a new Player Number Tracking game -- its court calibration (on its own "
+                          f"frames) comes first" + (f" (gym '{arena}' was calibrated from another game, whose camera may "
+                                                    f"differ)" if arena in ok_arenas else ""), flush=True)
+                except Exception as e:
+                    print(f"  [court] {gd}|{gc}: calibration page not written ({type(e).__name__}: {e})", flush=True)
+            continue
+        if arena in ok_arenas or any(arena == a for _gk, a, _p in need):
+            continue
+        pool = [fl[len(fl) // 2] for fl in ([f for f in str(v).split(";") if f] for v in g["track_files"]) if fl]
+        pick = [pool[int(i)] for i in np.linspace(0, len(pool) - 1, min(int(COURT_REF_FRAMES), len(pool)))] if pool else []
+        if not pick:
+            continue
+        try:
+            page = _cm_write_tool(f"{gd}|{gc}", arena, pick, base)
+        except Exception as e:
+            print(f"  [court] {gd}|{gc}: calibration page not written ({type(e).__name__}: {e})", flush=True)
+            continue
+        need.append((f"{gd}|{gc}", arena, page))
+    if _in_app and "_cm_app_cleanup" in globals():
+        _cm_app_cleanup(ok_arenas - {a for _g, a, _p in need})
+    if not need:
+        print(f"  [court] every gym being tracked has a court calibration ({len(ok_arenas)} gym(s))", flush=True)
+        # the clips about to be tracked (PLAYER_TRACKING_GAMES games) are placed on the court now, before tracking
+        if _ptl is not None and "court_mapping" in globals():
+            _lr = rows[[bool(_ptl(a, b)) for a, b in zip(rows["game_date"], rows["game_code"])]]
+            if not _lr.empty:
+                try:
+                    _ids = _trk_starters_first(play_calls, list(_lr.index))
+                    # the last run's player tracks judge the placements of clips tracked before (see _cm_plausible) --
+                    # without them every person (fans included) was judged and good placements were thrown out
+                    _pt_prev = globals().get("player_tracks")
+                    if not (isinstance(_pt_prev, pd.DataFrame) and not _pt_prev.empty) and "reuse_previous_table" in globals():
+                        try:
+                            _pt_prev = reuse_previous_table("uww_player_tracks")
+                        except Exception:
+                            _pt_prev = None
+                    try:
+                        _r = court_mapping(play_calls.loc[_ids], None, frames_only=True, feet_tracks=_pt_prev)[2]
+                    except TypeError:                                    # an older 51 without feet_tracks
+                        _r = court_mapping(play_calls.loc[_ids], None, frames_only=True)[2]
+                    for _, _x in (_r.iterrows() if isinstance(_r, pd.DataFrame) else []):
+                        print(f"  [court] {_x.get('game')}: {_x.get('mapped_pct')}% of the frames about to be tracked are on "
+                              f"the court", flush=True)
+                except Exception as e:
+                    print(f"  [court] frames not placed on the court before tracking ({type(e).__name__}: {e})", flush=True)
+        return
+    if _in_app:
+        # CONFIRMED CHANGE (requested: "make the parser notebook stop the player tracking cell if there is a court calibration
+        # that needs to be done" -- the Millikin @ Wheaton starters picture had fans boxed and most players missed, tracked
+        # without the court). The packages for the app are written, then the notebook STOPS before tracking.
+        # COURT_STOP_IN_APP = False goes back to tracking those games without the court.
+        if not globals().get("COURT_STOP_IN_APP", True):
+            print(f"  [court] {len(need)} gym(s) need a one-time court calibration -- they're waiting in the app (Analytics > "
+                  f"Court Calibration) once you push the data folder: " + "; ".join(f"{_a} ({_g})" for _g, _a, _p in need)
+                  + ". Those games are tracked WITHOUT the court this run (COURT_STOP_IN_APP = False).", flush=True)
+            return
+        print("  " + "=" * 100)
+        print(f"  STOPPED before Player tracking: {len(need)} gym(s) need a one-time court calibration:")
+        for _g, _a, _p in need:
+            print(f"    - gym '{_a}' ({_g})")
+        print("  What to do:")
+        print("    1. Commit and push the data folder (GitHub Desktop) -- the calibration frames are in it.")
+        print("    2. In the app: Analytics > Court Calibration -- click 4+ court landmarks (one near each basket), Save.")
+        print("    3. Rerun THIS Player tracking cell, then the cells below (Run > Run Selected Cell and All Below).")
+        print("  (To track without the court instead, set COURT_STOP_IN_APP = False.)")
+        print("  " + "=" * 100, flush=True)
+        raise CourtCalibrationNeeded(f"{len(need)} gym(s) need court calibration -- see the steps printed above")
+    if globals().get("COURT_OPEN_CALIBRATION_PAGE", True):
+        import webbrowser
+        for _g, _a, page in need:
+            try:
+                webbrowser.open("file:///" + os.path.abspath(page).replace("\\", "/"))
+            except Exception:
+                pass
+    print("  " + "=" * 100)
+    print(f"  STOPPED before Player tracking: {len(need)} gym(s) need a one-time court calibration:")
+    for _g, _a, page in need:
+        print(f"    - {_g} (gym '{_a}'): {page}")
+    print("  What to do:")
+    print("    1. The page" + ("s are" if len(need) > 1 else " is") + " open in your browser (or open the file above).")
+    print("    2. On a few frames, click 4+ court landmarks (include one near each basket), then press Save.")
+    print("    3. Rerun THIS Player tracking cell, then continue with the cells below (Run > Run Selected Cell and All Below).")
+    print("  (To track without the court instead, set COURT_STOP_FOR_CALIBRATION = False in the Court mapping cell.)")
+    print("  " + "=" * 100, flush=True)
+    raise CourtCalibrationNeeded(f"{len(need)} gym(s) need court calibration -- see the steps printed above")
+
+
+def _trk_gym_calibrated_at(game):
+    """When the gym of this game ("date|code") got its newest usable court calibration (seconds since 1970), else None."""
+    if "_cm_calibration_files" not in globals() or "_cm_arena" not in globals():
+        return None
+    arena = _cm_arena(str(game).split("|", 1)[-1])
+    best = None
+    try:
+        for cal in _cm_calibration_files():
+            if str(cal.get("arena")) != str(arena):
+                continue
+            n_pts = max((sum(1 for p_ in fr.get("points", []) if p_.get("landmark") in COURT_LANDMARKS)
+                         for fr in cal.get("frames", [])), default=0)
+            if n_pts < 4:
+                continue
+            t = pd.Timestamp(cal.get("saved")) if cal.get("saved") else None
+            if t is None or pd.isna(t):
+                t = pd.Timestamp.now(tz="UTC")
+            t = t.tz_localize("UTC") if t.tzinfo is None else t
+            best = max(best or 0.0, t.timestamp())
+    except Exception:
+        return None
+    return best
+
+
+def _trk_starters_precheck():
+    """CONFIRMED CHANGE (requested: the starters check stops the notebook "similar to the court calibration ... until it is
+    completed"). Before tracking starts: a game whose open review in the app has a STARTERS check (tipoff clip) with no
+    starters saved yet stops the notebook here -- tracking would otherwise spend its whole run without them.
+    TRACK_STARTERS_STOP = False (or PLAY_REVIEW_STARTERS_STOP = False) carries on without them."""
+    if not globals().get("RUN_PLAYER_TRACKING", True) or not globals().get("PLAY_REVIEW_STARTERS", True):
+        return
+    if not globals().get("TRACK_STARTERS_STOP", globals().get("PLAY_REVIEW_STARTERS_STOP", False)):
+        return
+    if "starters_saved_all" not in globals():
+        return
+    try:
+        saved = starters_saved_all()
+        root = os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, "play_review")
+        need = []
+        for rj in sorted(glob.glob(os.path.join(root, "*", "review.json"))):
+            with open(rj, encoding="utf-8") as fh:
+                doc = _trk_json.load(fh)
+            stp = next((p for p in doc.get("plays", []) if p.get("kind") == "starters"
+                        or "starters" in (p.get("parts") or [])), None)
+            slug = re.sub(r"[^A-Za-z0-9]+", "_", str(doc.get("game"))).strip("_")
+            _ptl = globals().get("player_tracking_listed")          # PLAYER_TRACKING_GAMES: other games never stop the run
+            if _ptl is not None and "|" in str(doc.get("game")) \
+                    and _ptl(*str(doc.get("game")).split("|", 1)) is False:
+                continue
+            # a starters check that WAS saved but doesn't put all ten starters on a player yet: no stop -- this run tracks the
+            # tipoff clip again (with the players you named) and the Play review brings the check back for the ones missing
+            if stp is not None and slug not in saved and "_run_parts_saved" in globals() \
+                    and "starters" in _run_parts_saved(slug, doc.get("run")):
+                continue
+            if stp is not None and slug not in saved:
+                # CONFIRMED BUG (fixed; the notebook stopped for the Millikin @ Wheaton starters check, whose picture was
+                # made WITHOUT the court -- fans boxed, players missed -- while the gym still needed its calibration). The
+                # court calibration comes first (checked before this one now), and a starters check made before the
+                # gym's calibration was saved is thrown away (nothing in it is saved): this run tracks the first
+                # possession WITH the court and the Play review builds a new one.
+                _cal_t = _trk_gym_calibrated_at(str(doc.get("game")))
+                if _cal_t is not None and _cal_t > os.path.getmtime(rj):
+                    shutil.rmtree(os.path.dirname(rj), ignore_errors=True)
+                    print(f"  [starters] {doc.get('game')}: its starters check was made before the gym's court calibration "
+                          f"-- removed; this run makes a new one with the court", flush=True)
+                    continue
+                need.append((str(doc.get("game")), stp.get("clip_number"), stp.get("clock")))
+    except Exception as e:
+        print(f"  [starters] check skipped ({type(e).__name__}: {e})", flush=True)
+        return
+    if not need:
+        if saved:
+            print(f"  [starters] validated starters for {len(saved)} game(s) -- tracking uses their looks", flush=True)
+        return
+    print("  " + "=" * 100)
+    print(f"  STOPPED before Player tracking: {len(need)} game(s) have a STARTERS check waiting in the app:")
+    for g_, cn_, clk_ in need:
+        print(f"    - {g_} (clip {cn_}, {clk_})")
+    print("  What to do:")
+    print("    1. Make sure the data folder is pushed (GitHub Desktop), so the app has the starters clip.")
+    print("    2. In the app: Analytics > Player Number Tracking, pick the game. At the top, \"Starters\": check every box,")
+    print("       pick each team's five starters, and press Save.")
+    print("    3. Rerun THIS Player tracking cell, then the cells below (Run > Run Selected Cell and All Below).")
+    print("  (To track without them, set TRACK_STARTERS_STOP = False.)")
+    print("  " + "=" * 100, flush=True)
+    raise StartersNeeded(f"{len(need)} game(s) need their starters validated -- see the steps printed above")
+
+
+player_tracks = pd.DataFrame()
+tracking_report = pd.DataFrame()
+_trk_court_frames_used = None
+_trk_court_precheck()                 # stops here (before tracking) when a gym needs its court calibration -- FIRST
+_trk_starters_precheck()              # stops here (before tracking) while a game's starters check is waiting in the app
+_trk_run_all()

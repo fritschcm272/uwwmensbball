@@ -6070,7 +6070,7 @@ def _trk_starters_precheck():
     TRACK_STARTERS_STOP = False (or PLAY_REVIEW_STARTERS_STOP = False) carries on without them."""
     if not globals().get("RUN_PLAYER_TRACKING", True) or not globals().get("PLAY_REVIEW_STARTERS", True):
         return
-    if not globals().get("TRACK_STARTERS_STOP", globals().get("PLAY_REVIEW_STARTERS_STOP", True)):
+    if not globals().get("TRACK_STARTERS_STOP", globals().get("PLAY_REVIEW_STARTERS_STOP", False)):
         return
     if "starters_saved_all" not in globals():
         return

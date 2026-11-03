@@ -588,3 +588,16 @@ Tag model: situation,v2026.11.02.2,2026-11-02,trained,2026-11-02T09:10:35,"550 t
 Tag model (overall),v2026.11.02.2,2026-11-02,trained,2026-11-02T09:10:35,newest of 9 field model(s); last retrained field: situation,2026-11-02T09:13:32
 Jersey-number reader test,v2026.11.02,2026-11-02,pretrained + code,411a289b3a38,scores the OCR readers; none retrained here,2026-11-02T09:32:19
 Court mapping,v2026.11.01.4,2026-11-01,rules + code,a5f63159e204,3 calibration file(s),2026-11-02T13:41:03
+Tag model: ball_screen_coverage,v2026.11.03,2026-11-03,trained,2026-11-03T09:36:25,"152 tagged clips, 6 answers learned, one answer only",2026-11-03T10:20:19
+Tag model: defense,v2026.11.03,2026-11-03,trained,2026-11-03T09:36:25,"545 tagged clips, 1 answers learned, one answer only",2026-11-03T10:20:19
+Tag model: formation,v2026.11.03,2026-11-03,trained,2026-11-03T09:36:25,"342 tagged clips, 7 answers learned, one answer only",2026-11-03T10:20:19
+Tag model: offball_coverage,v2026.11.03,2026-11-03,trained,2026-11-03T09:36:25,"65 tagged clips, 3 answers learned, one answer only",2026-11-03T10:20:19
+Tag model: play_call,v2026.11.03,2026-11-03,trained,2026-11-03T09:36:25,"407 tagged clips, 7 answers learned, one answer only",2026-11-03T10:20:19
+Tag model: press,v2026.11.03,2026-11-03,trained,2026-11-03T09:36:25,"546 tagged clips, 3 answers learned",2026-11-03T10:20:19
+Tag model: primary_action,v2026.11.03,2026-11-03,trained,2026-11-03T09:36:25,"301 tagged clips, 9 answers learned",2026-11-03T10:20:19
+Tag model: screen_defender,v2026.11.03,2026-11-03,trained,2026-11-03T09:36:25,"91 tagged clips, 7 answers learned, one answer only",2026-11-03T10:20:19
+Tag model: situation,v2026.11.03,2026-11-03,trained,2026-11-03T09:36:25,"621 tagged clips, 6 answers learned",2026-11-03T10:20:19
+Tag model (overall),v2026.11.03,2026-11-03,trained,2026-11-03T09:36:25,newest of 9 field model(s); last retrained field: situation,2026-11-03T10:20:19
+Player tracking,v2026.11.03,2026-11-03,pretrained + code,b1ecb3ec1a58,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-11-03T10:20:19
+Court mapping,v2026.11.01.5,2026-11-01,rules + code,f373bae1d7b2,4 calibration file(s),2026-11-03T10:20:19
+Offensive roles,v2026.11.03,2026-11-03,rules + code,9efd66193ac4,"12 BBall Index-style roles, Division III cut-offs",2026-11-03T10:20:19
