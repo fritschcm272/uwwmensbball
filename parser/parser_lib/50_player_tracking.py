@@ -2220,7 +2220,8 @@ def _trk_starters_first(pc, todo):
                    f"last one checked + the next {min(n_pace, max(0, len(order) - (upto - n_pace)))}")
             # CONFIRMED CHANGE (requested: "stop moving forward with clips 9 and later -- there might be a substitution
             # soon"): TRACK_HOLD_AT_CLIP = N tracks no clip past clip N (None = move on as usual)
-            _hold = globals().get("TRACK_HOLD_AT_CLIP")
+            _hold = (ptg_setting("TRACK_HOLD_AT_CLIP", str(g).split("|")[0], g) if "ptg_setting" in globals()
+                     else globals().get("TRACK_HOLD_AT_CLIP"))      # (can be per game -- see ptg_setting, 46)
             if _hold:
                 _cn_ = lambda i_: pd.to_numeric(pc.at[i_, "clip_number"], errors="coerce")
                 _held = [i_ for i_ in keep if not (pd.notna(_cn_(i_)) and _cn_(i_) > int(_hold))]

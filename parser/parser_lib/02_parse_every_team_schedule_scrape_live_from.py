@@ -1498,11 +1498,86 @@ def _new_season_check(uww_sched):
     return played
 
 
+def _extra_game_scout_report(uww_sched):
+    """CONFIRMED BUG (fixed; "There should now be a 2026-2027 scouting report available for Carroll. Why was it not
+    brought in?"). Scout reports were only looked for on UWW's 2025-26 schedule (the EXTRA_GAMES game isn't on it), on
+    the opponents' 2025-26 documents pages, and a "Carroll" report from last season counted as "already have it". The
+    EXTRA_GAMES game's own report is now looked for on the opponent's NEXT-season documents page, matched on the game's
+    real date, and saved as "<M>_<D>_<YY> UW-Whitewater @ <opponent>_scout.html" (the same name every report has). Only
+    that exact file counts as "already have it". A game with no report posted yet is checked again after
+    EXTRA_SCOUT_CHECK_HOURS (6). Its use is decided by BEFORE_SCOUT (Configuration cell)."""
+    import json
+    games = [g for g in (globals().get("EXTRA_GAMES") or []) if g and g.get("opponent")]
+    if not games or "Upcoming" not in uww_sched.columns:
+        return None
+    g = games[0]
+    rd = pd.to_datetime(g.get("real_date"), errors="coerce") if g.get("real_date") else None
+    if rd is None or pd.isna(rd):
+        print("  Scout report for the EXTRA_GAMES game: no real_date -- can't match it on FastScout's documents page")
+        return None
+    up = uww_sched[uww_sched["Upcoming"] == "Yes"]
+    opp_url = str(up.iloc[-1].get("opponent_url") or "") if not up.empty else ""
+    location = g.get("location") or (up.iloc[-1].get("location") if not up.empty else "Away")
+    opponent = str(g["opponent"])
+    matchup = f"{opponent} @ UW-Whitewater" if str(location).strip().lower() == "home" else f"UW-Whitewater @ {opponent}"
+    fname = f"{rd.month}_{rd.day}_{rd.strftime('%y')} {matchup}_scout.html"
+    dest = os.path.join(schedules_dir, fname)
+    if os.path.exists(dest):
+        print(f"  Scout report for the upcoming game: {fname} (on file)")
+        return dest
+    if _before_scout_enabled:
+        print(f"  Scout report for the upcoming game: not downloaded -- BEFORE_SCOUT = \"yes\"")
+        return None
+    if not (fastscout_username and fastscout_password) or not opp_url:
+        print(f"  Scout report for the upcoming game: can't download {fname} -- "
+              + ("no FastScout login" if opp_url else f"no FastScout team page for {opponent}"))
+        return None
+    cache_p = os.path.join(INPUT_DIR, "_extra_scout_check.json")
+    try:
+        with open(cache_p, encoding="utf-8") as fh:
+            cache = json.load(fh)
+    except Exception:
+        cache = {}
+    if (cache.get("file") == fname and cache.get("checked")
+            and (pd.Timestamp.now() - pd.Timestamp(cache["checked"])).total_seconds()
+            < 3600 * float(globals().get("EXTRA_SCOUT_CHECK_HOURS", 6))):
+        print(f"  Scout report for the upcoming game: none posted on FastScout when checked {str(cache['checked'])[:16]} "
+              f"({cache.get('why', '')}) -- checked again after {globals().get('EXTRA_SCOUT_CHECK_HOURS', 6)} hour(s)")
+        return None
+    nxt = f"{(int(uww_season_start_year) + 1) % 100:02d}"
+    base = opp_url.split("?")[0].rstrip("/")
+    docs_url = f"{base}/documents?league={FASTSCOUT_DOCS_LEAGUE}&season={nxt}"
+    _old_season = globals().get("FASTSCOUT_DOCS_SEASON")
+    globals()["FASTSCOUT_DOCS_SEASON"] = nxt          # the report page's own URL carries the season too
+    try:
+        saved = run_in_fastscout_session(
+            lambda page: _download_matching_scout_pdf(page, docs_url, opponent, rd.to_pydatetime(), location))
+        print(f"  Scout report for the upcoming game: downloaded {os.path.basename(saved)} from {opponent}'s "
+              f"{int(uww_season_start_year) + 1}-{str(int(uww_season_start_year) + 2)[-2:]} documents page")
+        return saved
+    except Exception as e:
+        why = f"{type(e).__name__}: {str(e)[:200]}"
+        print(f"  Scout report for the upcoming game: not found on {opponent}'s documents page yet ({why})")
+        try:
+            with open(cache_p, "w", encoding="utf-8") as fh:
+                json.dump({"file": fname, "checked": pd.Timestamp.now().isoformat(timespec="seconds"), "why": why}, fh)
+        except Exception:
+            pass
+        return None
+    finally:
+        globals()["FASTSCOUT_DOCS_SEASON"] = _old_season
+
+
 uww_team_schedule = _add_extra_games(uww_team_schedule)
 try:
     _new_season_check(uww_team_schedule)
 except Exception as _nse:
     print(f"  New-season check failed ({type(_nse).__name__}: {_nse})")
+try:
+    if _extra_game_scout_report(uww_team_schedule):
+        scout_pdf_files = find_scout_files(volume_dir)
+except Exception as _xse:
+    print(f"  Scout report for the upcoming game: failed ({type(_xse).__name__}: {_xse})")
 team_schedules[0] = uww_team_schedule
 
 # 2) For every opponent that shows up in UWW's own (scouted, date-capped) schedule, scrape their live

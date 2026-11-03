@@ -623,6 +623,73 @@ class _SeniorStrike:
 _SB_STRUCK = set()  # normalized names struck in THIS build (set in the run block below)
 
 
+def _sb_drop_struck(doc):
+    """The struck-through brief with last season's seniors LEFT OUT (requested: a second copy of a scrimmage / season-
+    opener brief). Works on _SeniorStrike's output: a table row, list item or paragraph that is only about struck
+    seniors (nothing left once the <s>...</s> text is gone but numbers and punctuation) is removed whole; a struck name
+    or sentence inside other text is removed with its separator ("A, <s>B</s> and C" -> "A and C"); tables, lists and
+    roster tiers left empty go too."""
+    _sp = re.compile(r"<s>.*?</s>", re.S)
+    _tg = re.compile(r"<[^>]+>")
+    _junk = re.compile(r"[\s#\d.,:;()\-\u2013\u2014|/%+\u00b7\u2022\u2714\u2718]*")
+
+    def _only_struck(block):
+        if "<s>" not in block:
+            return False
+        rest = _sk_html.unescape(_tg.sub("", _sp.sub("", block)))
+        return _junk.fullmatch(rest) is not None
+
+    def _leads_struck(block):
+        """The item STARTS with struck text (after its number): a key, read or note about a senior / a lineup with one
+        -- the rest of it is his explanation, so the whole item goes."""
+        body = re.sub(r'^<[^>]+>\s*(?:<span class="n">[^<]*</span>\s*)?', "", block)
+        m = re.search(r"<s>|[^\s<>]", re.sub(r"<(?!s>)[^>]+>", "", body))
+        return bool(m and m.group(0) == "<s>")
+
+    # keep <style> / <script> untouched
+    keep = []
+
+    def _stash(m):
+        keep.append(m.group(0))
+        return f"\x00{len(keep) - 1}\x00"
+    doc = re.sub(r"<(style|script)\b.*?</\1>", _stash, doc, flags=re.S | re.I)
+    # the keys to victory: a key whose title is struck goes whole, and the keys left are numbered 1, 2, 3 again
+    _parts = re.split(r'(?=<div class="sect">)', doc)
+    for _i, _pt in enumerate(_parts):
+        _n0 = _pt.count('class="ktv-sentence"')
+        _pt = re.sub(r'<div class="ktv-sentence">(?:(?!<div\b).)*?</div>',
+                     lambda m: "" if ("<s>" in m.group(0) and _leads_struck(m.group(0))) else m.group(0), _pt, flags=re.S)
+        if _pt.count('class="ktv-sentence"') != _n0:
+            _k = iter(range(1, 1000))
+            _pt = re.sub(r'(<div class="ktv-sentence"><span class="n">)\d+\.', lambda m: f"{m.group(1)}{next(_k)}.", _pt)
+        _parts[_i] = _pt
+    doc = "".join(_parts)
+    doc = re.sub(r"<li\b[^>]*>(?:(?!<li\b).)*?</li>",
+                 lambda m: "" if ("<s>" in m.group(0) and _leads_struck(m.group(0))) else m.group(0), doc, flags=re.S)
+    for tag in ("tr", "li", "p", "dt", "dd", "td"):
+        rx = re.compile(rf"<{tag}\b[^>]*>(?:(?!<{tag}\b).)*?</{tag}>", re.S)
+        if tag == "td":
+            # a cell keeps its place in the row (the columns must still line up): only its struck text goes
+            doc = rx.sub(lambda m: (re.sub(r">.*</td>$", "></td>", m.group(0), flags=re.S)
+                                    if _only_struck(m.group(0)) else m.group(0)), doc)
+        else:
+            doc = rx.sub(lambda m: "" if _only_struck(m.group(0)) else m.group(0), doc)
+    _sep = r"(?:,|&middot;|\u00b7|\||&amp;|\band\b|\bor\b)"        # (not ";" -- it ends every &entity;)
+    _st = r"<s>(?:(?!</?s>).)*</s>(?:\s*\([^()<>]{0,60}\))?"                        # a struck name and its "(49)" / "(4.5 fouls/40)"
+    doc = re.sub(rf"{_st}\s*{_sep}\s*", "", doc, flags=re.S)             # "<s>A</s> (3), B" -> "B"
+    doc = re.sub(rf"\s*{_sep}?\s*{_st}", "", doc, flags=re.S)            # "A, <s>B</s>" -> "A"
+    for _ in range(3):
+        doc = re.sub(r"<ul\b[^>]*>\s*</ul>", "", doc)
+        doc = re.sub(r"<table\b[^>]*>(?:(?!<table\b).)*?<tbody>\s*</tbody>\s*</table>", "", doc, flags=re.S)
+        # a roster tier header with nothing under it any more
+        doc = re.sub(r'<div class="tier-h">[^<]*</div>\s*(?:<p class="tier-c">[^<]*</p>\s*)?(?=<div class="tier-h">|</div>|<p class="mini">)',
+                     "", doc)
+    doc = re.sub(r"([Ll])ast season(?:'|&#x27;|&#39;|\u2019)s seniors are crossed out",
+                 lambda m: m.group(1) + "ast season\u2019s seniors are left out", doc)
+    doc = re.sub(r"\x00(\d+)\x00", lambda m: keep[int(m.group(1))], doc)
+    return doc
+
+
 # --------------------------------------------------------------------------------------------
 # Loading
 # --------------------------------------------------------------------------------------------
@@ -1165,6 +1232,14 @@ sup.fn a.fnlink { color: inherit; text-decoration: none; border-bottom: 1px dott
 .tier-c { font-size: 0.76rem; color: var(--dim); margin: 0 0 6px; }
 table.compact td, table.compact th { padding: 4px 6px; font-size: 0.78rem; }
 td.nm { font-weight: 700; white-space: nowrap; }
+/* roster: each player's bio bar, then his row with the photo above his name */
+table.roster tr.p-hd td { text-align: left; background: #f4f2f8; border-top: 2px solid #d9d3e6; padding: 3px 8px;
+                          font-size: 0.74rem; color: #444; white-space: normal; }
+table.roster tr.p-hd .p-hd-nm { display: none; }
+table.roster thead th:first-child { text-align: center; }
+.thin-ast { color: #8c1d2c; font-weight: 700; margin-left: 1px; }
+table.roster td.nm.p-cell { text-align: center; vertical-align: top; white-space: normal; padding-top: 4px; }
+table.roster td.nm.p-cell .photo-thumb { margin: 0 auto 3px; width: 44px; height: 44px; }
 .mini { font-size: 0.74rem; color: var(--dim); }
 .results { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
 .foul-icon { font-size: 1rem; text-align: center; }
@@ -1368,6 +1443,9 @@ s { opacity: 0.55; }
 .pcard.gone { opacity: 0.55; }
 .pcard.gone, .pcard.gone * { text-decoration: line-through; }
 .strike-note { font-size: 0.85rem; color: #555; margin: 0 0 10px; }
+/* no-seniors brief: a player moved into the starting five in place of a graduated senior starter */
+.proj-start { display: inline-block; margin-top: 2px; padding: 0 5px; border-radius: 3px; background: #fff3cd;
+              color: #7a5200; border: 1px solid #e0b84a; font-size: 0.66rem; font-weight: 700; white-space: nowrap; }
 """
 
 
@@ -1722,6 +1800,20 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
 
     _bt_box = {"bt": None}                 # the brief's type (set after the records below)
 
+    def _staff_keys_this_season():
+        """CONFIRMED CHANGE (Carroll's 2026-27 report): the staff's written keys come from the UPCOMING game's report
+        when there is one (uww_opponent_game_plans' report_date is after the season our numbers are from) -- then
+        they are this season's and get no last-season tag."""
+        try:
+            gp_ = _sb_d("uww_opponent_game_plans")
+            if gp_.empty or "report_date" not in gp_.columns:
+                return False
+            d_ = pd.to_datetime(gp_[gp_["opponent"].astype(str) == str(short)]["report_date"], errors="coerce").dropna()
+            m_ = re.match(r"(\d{4})", str((_bt_box["bt"] or {}).get("season") or ""))
+            return bool(len(d_) and m_ and d_.max() >= pd.Timestamp(int(m_.group(1)) + 1, 8, 1))
+        except Exception:
+            return False
+
     def section_html(title):
         # (preseason / season-opener brief: every section built on last season's numbers says so)
         _b = _bt_box["bt"]
@@ -1749,6 +1841,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     _n_played = lambda d: int(d["outcome"].astype(str).str.upper().isin(["W", "L"]).sum()) \
         if isinstance(d, pd.DataFrame) and not d.empty and "outcome" in d.columns else 0
     _bt = brief_type_for(game, _n_played(uww_before), _n_played(opp_before), globals().get("BRIEF_TYPE", "auto"))
+    # (requested) scrimmage / season-opener briefs list the whole bench, every tier
+    _sb_full_bench = bool(globals().get("BRIEF_FULL_BENCH_OPENER", True)) and (
+        _bt["type"] == "preseason" or (_bt["type"] == "first_games" and _bt["last_season"]))
     _bt_box["bt"] = _bt
     print(f"  Brief type: {_bt['type']}" + (f" -- {_bt['title']}" if _bt["title"] else ""), flush=True)
     if last_season_record_label(game):                 # the season opener: these are LAST season's records
@@ -1814,7 +1909,11 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             print(f"  (this season vs last season not shown: {type(_cme).__name__}: {_cme})", flush=True)
     # CONFIRMED CHANGE (requested, film-tracking review): page 1 says how much film is on file for them and for us, and how
     # much of it can be trusted (film-quality cell, uww_film_quality.csv) -- the same line the Upcoming Game page shows
+    # CONFIRMED CHANGE (requested: "This section is not needed or misleading"): the film-on-file line is no longer in the
+    # brief (the app's Video tracking page still shows it). BRIEF_FILM_ON_FILE = True puts it back.
     try:
+        if not globals().get("BRIEF_FILM_ON_FILE", False):
+            raise StopIteration
         _fq1 = _sb_d("uww_film_quality")
         _fq1_parts = []
         if not _fq1.empty and {"team", "film_line"} <= set(_fq1.columns):
@@ -1830,6 +1929,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         if _fq1_parts:
             add('<p class="note">\U0001f3a5 Film on file &mdash; ' + " &middot; ".join(_fq1_parts) + ". "
                 + app_link("Video tracking", page="upcoming", tab="game_plan", section="film_tracking") + "</p>")
+    except StopIteration:
+        pass
     except Exception as _fq1_err:
         print(f"  (film-on-file line skipped: {_fq1_err})")
 
@@ -2072,6 +2173,13 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         bench = [
             ("Bench \u2014 rotation", f"Played in the last {n} game(s) and averaging 8+ minutes.", by("Bench \u2014 rotation")),
         ]
+        # CONFIRMED CHANGE (requested: "for scrimmages and season opener briefs ... include everyone on the bench instead of
+        # filtering out the ones with 8 or fewer minutes played"): a preseason / season-opener brief lists every tier.
+        if _sb_full_bench:
+            bench += [("Bench \u2014 limited minutes", f"Played in the last {n} game(s), under 8 minutes a game.",
+                       by("Bench \u2014 limited minutes")),
+                      ("Bench \u2014 no minutes", f"No minutes in the last {n} game(s).", by("Bench \u2014 no minutes"))]
+            _limited = []
         return starters, bench, basis, _limited
 
     # ---- personnel identity (photo / # / pos / ht / yr) ------------------------------------------------
@@ -2089,6 +2197,16 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _uww_bio[_norm(r["name"])] = {"player": r["name"], "jersey": r.get("jersey_number"),
                                           "position": r.get("position"), "height": r.get("height"),
                                           "class_year": r.get("class_year"), "photo_url": r.get("photo_url")}
+    # CONFIRMED BUG (fixed; "Why does Nolan Groh not have a photo on the brief?"): the opponent's photo / # / position /
+    # height / class came only from uww_opp_personnel, which lists the players on film. A player who has never played
+    # (a freshman like Groh, now listed with the whole bench) had no bio and no photo even though the live roster page has
+    # both -- he now gets them from the live roster.
+    _opp_ros_bio = {}
+    if not _live_ros.empty and {"team", "name"} <= set(_live_ros.columns):
+        for _, r in _live_ros[_live_ros["team"].astype(str) == str(short)].iterrows():
+            _opp_ros_bio[_norm(r["name"])] = {"player": r["name"], "jersey": r.get("jersey_number"),
+                                              "position": r.get("position"), "height": r.get("height"),
+                                              "class_year": r.get("class_year"), "photo_url": r.get("photo_url")}
     _avail_by = {_norm(r["player"]): r for _, r in _avail.iterrows()} if not _avail.empty else {}
 
     _photo_stats = {"Opponent": [0, []], "UWW": [0, []]}
@@ -2231,10 +2349,19 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # ---- compact roster rows ---------------------------------------------------------------------------
     # One table shape for every tier, with fixed column widths so the starters, rotation, limited-minutes and
     # no-minutes tables all line up down the page instead of each sizing itself to its own content.
-    _ROSTER_COLS = ('<colgroup><col style="width:30px"><col style="width:13%"><col style="width:9%">'
-                    '<col style="width:4%"><col style="width:5%"><col style="width:5%"><col style="width:5%">'
-                    '<col style="width:5%"><col style="width:5%"><col style="width:5%"><col style="width:5%">'
-                    '<col style="width:7%"><col style="width:32%"></colgroup>')
+    # CONFIRMED CHANGE (requested: "put the picture right above the player name. Instead of a bio column, make that
+    # information into kind of a header row for each player"): 11 columns -- player (photo over name), the 8 stats, late
+    # game foul, reads -- and each player's bio (#, position, height, class, Off / Def role) is a bar across the table
+    # right above his row.
+    _ROSTER_COLS = ('<colgroup><col style="width:14%">'
+                    '<col style="width:5%"><col style="width:6%"><col style="width:6%"><col style="width:6%">'
+                    '<col style="width:6%"><col style="width:6%"><col style="width:6%"><col style="width:7%">'
+                    '<col style="width:7%"><col style="width:31%"></colgroup>')
+    # (requested: "UWW doesn't need 'Late game foul' column") -- our own roster: 10 columns, the reads get the room
+    _ROSTER_COLS_UWW = ('<colgroup><col style="width:14%">'
+                        '<col style="width:5%"><col style="width:6%"><col style="width:6%"><col style="width:6%">'
+                        '<col style="width:6%"><col style="width:6%"><col style="width:6%"><col style="width:7%">'
+                        '<col style="width:38%"></colgroup>')
 
     _DEF_FAMILY_MIN = 6      # possessions before a family is reported at all
     _DEF_SPLIT_MIN = 4       # possessions before a per-player / per-series split is reported
@@ -2324,6 +2451,29 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
 
     # Who dominates their offensive glass, if anyone -- keyed by normalised name for the roster read above.
     _reb_crasher = {}
+    # CONFIRMED CHANGE (requested: "move the 'Who to attack' up to the player roster section when it's applicable"). The
+    # two-for-one cell's Attack / Avoid call on a player (uww_two_for_one_attack) is now a line on his roster entry instead
+    # of a table in the TWO-FOR-ONE section. Only players still on the roster get it (a struck-through senior doesn't).
+    _tf_attack_by = {}
+    _tfa_df, _ = staff_rows("uww_two_for_one_attack")
+    if not _tfa_df.empty and {"player", "verdict"} <= set(_tfa_df.columns):
+        for _, _a in _tfa_df.iterrows():
+            if str(_a["verdict"]) in ("Attack", "Avoid") and _norm(_a["player"]) not in globals().get("_SB_STRUCK", ()):
+                _tf_attack_by[_norm(_a["player"])] = _a
+
+    def _tf_attack_line(name):
+        a = _tf_attack_by.get(_norm(name))
+        if a is None:
+            return None
+        _f40 = pd.to_numeric(a.get("fouls_per_40"), errors="coerce")
+        _lf = int(pd.to_numeric(a.get("late_fouls"), errors="coerce") or 0)
+        _ls = pd.to_numeric(a.get("late_share_pct"), errors="coerce")
+        _why = ", ".join(x for x in (
+            f"{_f40:.1f} fouls/40" if pd.notna(_f40) else "",
+            f"{_lf} foul{'s' if _lf != 1 else ''} defending 2-for-1 possessions",
+            f"on the floor {int(_ls)}% of the time late in halves" if pd.notna(_ls) else "") if x)
+        return (("Attack him late in a half (2-for-1 window)" if str(a["verdict"]) == "Attack"
+                 else "Don\u2019t attack him late in a half (2-for-1 window)") + (f" \u2014 {_why}" if _why else ""))
     _RRr = globals().get("REBOUND_RULES") or {"min_paired": 20, "player_share": 35, "player_min": 5}
     _rsr = _sb_d("uww_rebound_summary")
     if not _rsr.empty and {"opponent", "metric", "player", "value", "count", "paired"}.issubset(_rsr.columns):
@@ -2345,13 +2495,20 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             if _sb_clean(_t.get("tier_note")):
                 _tier_note[(_t["side"], _norm(_t["player"]))] = _sb_clean(_t["tier_note"])
 
+    _proj_note = {}      # (side, name) -> "Projected starter ..." line, only while the no-seniors roster is drawn
+    _thin_mins = {}      # read kind -> (minimum, "attempt"/"shot"), from the below-minimum lines (the * legend)
+    _thin_seen = [0]     # players drawn with an * (too few attempts for any read)
+
     def _roster_player(name, stats_df, side, bullets):
         """Everything one roster entry needs, assembled once so the table layout and the stacked layout
         can't show different reads, keys or flags for the same player."""
+        _thin = False
         s_ = stats_df[stats_df["name"].map(_norm) == _norm(name)] if not stats_df.empty else pd.DataFrame()
         p = s_.iloc[0] if not s_.empty else None
         if side == "Opponent":
             bio = _opp_bio.get(_norm(name))
+            if bio is None:
+                bio = _opp_ros_bio.get(_norm(name))
             rows = (_notes_tbl[(_notes_tbl["subject_type"] == "player") & (_notes_tbl["name"].map(_norm) == _norm(name))]
                     if not _notes_tbl.empty else pd.DataFrame())
             reads = [x for _, r in rows.iterrows() for x in _sb_split(r.get("strengths")) + _sb_split(r.get("weaknesses"))]
@@ -2359,8 +2516,17 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             items = reads[:2] + keys[:1]
             # No real read: show the stats that fell short of a minimum (or that nothing met a threshold)
             # rather than a blank cell -- requested, because a blank looked like the notes had failed.
+            # CONFIRMED CHANGE (requested: "remove the minimum descriptions on every player ... just an asterisk next to
+            # them with one line near the bottom that explains the asterisks"): the below-minimum lines are no longer
+            # printed; the player gets an * by his name and the roster ends with one line explaining it.
             if not items and "below_minimum" in rows.columns:
-                items = [x for _, r in rows.iterrows() for x in _sb_split(r.get("below_minimum"))]
+                _bm = [x for _, r in rows.iterrows() for x in _sb_split(r.get("below_minimum"))]
+                if _bm:
+                    _thin = True
+                    for x in _bm:
+                        m_ = re.search(r"under the (\d+)-(attempt|shot) minimum for an? ([\w-]+) read", str(x))
+                        if m_:
+                            _thin_mins[m_.group(3)] = (int(m_.group(1)), m_.group(2))
             # Rebounding read (requested): only for the one player who dominates their offensive glass, by
             # the same REBOUND_RULES as the key and the Bottom Line. Goes FIRST so it survives the top-three
             # cut -- if he's doing this, it's the thing to know about him.
@@ -2370,6 +2536,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 items = [_dsplit] + items
             if _crash:
                 items = [_crash] + items
+            _tfat = _tf_attack_line(name)       # (requested) the 2-for-1 Attack / Avoid call goes first
+            if _tfat:
+                items = [_tfat] + items
             if bullets and len(items) < 3:
                 # Fill to three from whatever is left, keys first -- an instruction beats another label.
                 items += [x for x in keys[1:] + reads[2:] if x not in items][:3 - len(items)]
@@ -2384,6 +2553,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             team = "uww"
         if _tier_note.get((side, _norm(name))):
             items = [_tier_note[(side, _norm(name))]] + items
+        if _proj_note.get((side, _norm(name))):          # (no-seniors brief) why he's in the starting five now
+            items = [_proj_note[(side, _norm(name))]] + items
         # CONFIRMED CHANGE (requested: the film goes into the existing sections, not its own): the player's film line
         # (player tracking -- _film_player_note, built in "THE FILM" above the roster) rides along as one more line
         _film = _film_player_note.get((side, _norm(name)))
@@ -2403,7 +2574,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _drole, _dbasis = defensive_role_for(name, _team_q)
             if _drole:
                 bits = (bits + " &middot; " if bits else "") + f'Def: <strong>{_sb_esc(_drole)}</strong><span class="mini">{_q(_dbasis)}</span>'
-        return {"p": p, "bio": bio, "bits": bits, "items": items, "detail": detail, "team": team, "film": _film}
+        return {"p": p, "bio": bio, "bits": bits, "items": items, "detail": detail, "team": team, "film": _film,
+                "thin": _thin}
 
     def _ft_cell(p):
         # A bare "100.0" invites exactly the question asked about Hillmer's free throws -- real, or one
@@ -2414,28 +2586,37 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                    if (p.get("FTA") or 0) and p["FTA"] < 10
                    and round(float(p.get("FT%") or 0), 1) != 100.0 else "") + "</td>")
 
-    def bench_table(names, stats_df, side, bullets=False):
+    def bench_table(names, stats_df, side, bullets=False, tags=None):
         """bullets=True (starters): the last column holds up to three bulleted items instead of a one-line
         summary -- the same table the bench uses, with room for more of each starter's read."""
         if ROSTER_LAYOUT == "stacked":
             return stacked_roster(names, stats_df, side, bullets)
-        add('<table class="compact roster">' + _ROSTER_COLS
-            + '<thead><tr><th></th><th style="text-align:left">Player</th>'
-            '<th style="text-align:left">Bio</th><th>GP</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th>'
-            '<th>FG%</th><th>3P%</th><th>FT%</th><th style="text-align:left">Late game foul</th>'
-            '<th style="text-align:left">'
+        _opp = side == "Opponent"
+        _ncol = 11 if _opp else 10
+        add('<table class="compact roster">' + (_ROSTER_COLS if _opp else _ROSTER_COLS_UWW)
+            + '<thead><tr><th>Player</th>'
+            '<th>GP</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th>'
+            '<th>FG%</th><th>3P%</th><th>FT%</th>'
+            + ('<th style="text-align:left">Late game foul</th>' if _opp else "")
+            + '<th style="text-align:left">'
             + ("Top read / key" if side == "Opponent" else "Flag / play calls") + "</th></tr></thead><tbody>")
         for name in names:
             r = _roster_player(name, stats_df, side, bullets)
             p, bio = r["p"], r["bio"]
-            add(f'<tr><td>{photo_cell(bio.get("photo_url") if bio is not None else None, name, side)}</td>'
-                f'<td class="nm">{name_link_lines(name, page="upcoming", tab="personnel", team=r["team"], player=name)}</td>'
-                f'<td class="wrap mini">{r["bits"]}</td>'
+            _thin_seen[0] += 1 if r.get("thin") else 0
+            # the bio bar (his name is in it, hidden, so a struck senior's bar goes with his row)
+            add(f'<tr class="p-hd"><td colspan="{_ncol}"><span class="p-hd-nm">{_sb_esc(name)} </span>'
+                f'{r["bits"] or "<span class=mini>No roster-page details on file</span>"}</td></tr>')
+            add(f'<tr><td class="nm p-cell">{photo_cell(bio.get("photo_url") if bio is not None else None, name, side)}'
+                f'{name_link_lines(name, page="upcoming", tab="personnel", team=r["team"], player=name)}'
+                + ('<span class="thin-ast" title="Too few attempts for a read">*</span>' if r.get("thin") else "")
+                + (f'<br><span class="proj-start">{(tags or {}).get(name)}</span>' if (tags or {}).get(name) else "")
+                + '</td>'
                 + (f'<td>{_sb_fmt(p["games"], 0)}</td><td>{_sb_fmt(p.get("MIN"))}</td><td>{_sb_fmt(p["PTS"])}</td>'
                    f'<td>{_sb_fmt(p["REB"])}</td><td>{_sb_fmt(p["AST"])}</td><td>{_sb_fmt(p["FG%"])}</td>'
                    f'<td>{_sb_fmt(p["3P%"])}</td>' + _ft_cell(p)
                    if p is not None else '<td colspan="8" class="mini">no box-score line</td>')
-                + (foul_cell(name) if side == "Opponent" else '<td class="mini">--</td>')
+                + (foul_cell(name) if _opp else "")
                 + f'<td class="wrap mini">{r["detail"]}</td></tr>')
         add("</tbody></table>")
 
@@ -2536,12 +2717,117 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                               "Flags come from our own season film (highest-confidence first in the app). Play-call "
                               "lines need 3+ tagged uses of a set.")
                            + (" " + _film_roster_note if side == "Opponent" and _film_roster_note else "")))
+        # CONFIRMED CHANGE (requested: "on the no_seniors scouting briefs ... always 5 starters"). When last season's
+        # seniors are struck (scrimmage / season opener), the roster is drawn twice: the struck-through copy exactly as
+        # before, and -- for the no-seniors copy -- one without the seniors where every graduated senior STARTER is
+        # replaced by the returning player most likely to take his spot, tagged "Projected starter". The run block keeps
+        # the right one in each file (<!--NS:strike--> / <!--NS:remove-->).
+        _ns = _no_senior_roster(side, starters, bench, extra_no_min)
+        if _ns is None:
+            _roster_card(side, stats_df, starters, bench, limited, extra_no_min)
+            return
+        add("<!--NS:strike-->")
+        _roster_card(side, stats_df, starters, bench, limited, extra_no_min)
+        add("<!--/NS--><!--NS:remove-->")
+        _ns_starters, _ns_bench, _ns_extra, _ns_tags = _ns
+        try:
+            _roster_card(side, stats_df, _ns_starters, _ns_bench, [], _ns_extra, tags=_ns_tags,
+                         proj_note=bool(_ns_tags))
+        finally:
+            _proj_note.clear()
+        add("<!--/NS-->")
+
+    def _no_senior_roster(side, starters, bench, extra_no_min):
+        """(starters, bench, never-played names, {name: tag}) without last season's seniors and with five starters, or
+        None when no senior is on this roster. A returning starter stays a starter, untagged. Each open spot goes to the
+        returning player who played the most minutes a game last season (then starts in the recent games, then games),
+        and he is tagged."""
+        struck = globals().get("_SB_STRUCK") or set()
+        if not struck:
+            return None
+        # CONFIRMED BUG (fixed; "Is Greg Smith really a freshman still?"): once a team's roster has been updated to the new
+        # season, a player who is NOT on it (Carroll's Greg Smith, Gray Dingwall, Brandon Keaton -- last season's rows, so
+        # still listed "FR") has left the program. He was projected into Carroll's five; in this copy he is treated like a
+        # graduated senior -- not on the roster, never projected, and his starting spot (if he had one) is filled.
+        _gone_ns = set()
+        try:
+            _b, _g, _n = roster_changes(_sb_d("uww_live_rosters"), "UW-Whitewater Warhawks" if side == "UWW" else short)
+            if _n or any(True for _ in _b):
+                _src = _sb_d("uww_live_rosters")
+                if "source" in _src.columns and _src["source"].astype(str).str.contains("new season", na=False).any():
+                    _gone_ns = {_norm(x) for x in _g}
+        except Exception:
+            _gone_ns = set()
+        struck = set(struck) | _gone_ns
+        extra = [x.strip() for x in str(extra_no_min or "").split(",") if x.strip()]
+        everyone = list(starters) + [n for g in bench for n in g[2]] + extra
+        if not any(_norm(n) in struck for n in everyone):
+            return None
+        keep = lambda names: [n for n in names if _norm(n) not in struck]  # noqa: E731
+        st = keep(starters)
+        t = _tiers[_tiers["side"] == side] if not _tiers.empty and "side" in _tiers.columns else pd.DataFrame()
+        info = {_norm(r["player"]): r for _, r in t.iterrows()} if not t.empty else {}
+        num = lambda r, c: float(pd.to_numeric(r.get(c), errors="coerce") or 0) if r is not None else 0.0  # noqa: E731
+        n_recent = int(num(t.iloc[0], "recent_n")) if not t.empty else 0
+        pool = [n for n in keep([n for g in bench for n in g[2]] + extra) if n not in st]
+        # CONFIRMED CHANGE (requested: "a little bit more logic ... I don't believe that Carroll is going to start 5 guards
+        # and UWW is going to start 3 forwards"). Each graduated senior starter's spot goes to a returning player of the
+        # SAME kind -- guard, wing (G/F), forward or big -- so the five keeps last season's shape. Kind = roster position
+        # (live roster), and a big is a C or a player whose role is Post Scorer / Roll & Cut Big / Anchor Big. Among the
+        # candidates the most minutes a game wins, but each step away from the right kind costs PROJ_STARTER_POS_PENALTY
+        # minutes (6): a 12.8-minute wing beats a 1.3-minute forward for a forward's spot; a 15.8-minute guard does not.
+        _lr = _sb_d("uww_live_rosters")
+        pos = {}
+        if not _lr.empty and {"team", "name", "position"} <= set(_lr.columns):
+            _tm = _lr["team"].astype(str)
+            _lr = _lr[_tm.str.contains("whitewater", case=False)] if side == "UWW" else _lr[_tm == str(short)]
+            pos = {_norm(r["name"]): str(r["position"] if pd.notna(r["position"]) else "").upper() for _, r in _lr.iterrows()}
+
+        def kind(n):
+            r, p_ = info.get(_norm(n)), pos.get(_norm(n), "")
+            off = str(r.get("offensive_role") or "") if r is not None else ""
+            dfn = str(r.get("defensive_role") or "") if r is not None else ""
+            if "C" in p_.split("/") or off in ("Post Scorer", "Roll & Cut Big") or dfn == "Anchor Big":
+                return "big"
+            return {"G": "guard", "G/F": "wing", "F": "forward", "F/C": "big"}.get(p_, "unknown")
+        _pref = {"guard": ["guard", "wing", "unknown", "forward", "big"],
+                 "wing": ["wing", "forward", "guard", "unknown", "big"],
+                 "forward": ["forward", "wing", "big", "unknown", "guard"],
+                 "big": ["big", "forward", "wing", "unknown", "guard"],
+                 "unknown": ["guard", "wing", "forward", "big", "unknown"]}
+        _pen = float(globals().get("PROJ_STARTER_POS_PENALTY", 6))
+        gone = sorted([n for n in starters if _norm(n) in struck], key=lambda n: -num(info.get(_norm(n)), "mpg"))
+        tags = {}
+        n_open = max(0, min(5, len(st) + len(pool)) - len(st))
+        for i in range(n_open):
+            if not pool:
+                break
+            want = kind(gone[i]) if i < len(gone) else "unknown"
+            order = _pref[want] if want != "unknown" else None
+            score = lambda c: ((num(info.get(_norm(c)), "mpg") - (_pen * order.index(kind(c)) if order else 0)),  # noqa: E731
+                               num(info.get(_norm(c)), "starts_recent"), num(info.get(_norm(c)), "games"))
+            n = max(pool, key=score)
+            pool.remove(n)
+            st.append(n)
+            tags[n] = "Projected starter"
+            r = info.get(_norm(n))
+            bits = []
+            if r is not None and num(r, "mpg"):
+                bits.append(f"{num(r, 'mpg'):.1f} minutes a game last season")
+            _proj_note[(side, _norm(n))] = "Projected starter" + (" \u2014 " + ", ".join(bits) if bits else "")
+        taken = set(st)
+        nb = [(lab, cap, [n for n in keep(names) if n not in taken]) for lab, cap, names in bench]
+        ex = ", ".join(n for n in keep(extra) if n not in taken)
+        return st, nb, ex, tags
+
+    def _roster_card(side, stats_df, starters, bench, limited, extra_no_min, tags=None, proj_note=False):
         # CONFIRMED CHANGE (requested): starters and every bench tier live in ONE roster section, in the same
         # table shape. Starters get up to three bullets in the last column; each player's full card (every
         # read, note and key) is one click away in the app.
         add('<div class="card">')
+        _thin0 = _thin_seen[0]
         add('<div class="tier-h">Starters</div>')
-        bench_table(starters, stats_df, side, bullets=True)
+        bench_table(starters, stats_df, side, bullets=True, tags=tags)
         for label, caption, names in bench:
             if not names:
                 continue
@@ -2551,6 +2837,16 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             add(_film_names_gate)          # why there are no film lines yet (tracking can't name enough players)
         # Players never on the floor in any game on film are also app-only now; count them with the rest.
         _extra_n = len([x for x in str(extra_no_min or "").split(",") if x.strip()])
+        if _sb_full_bench and _extra_n:
+            # (requested: everyone on the bench in a preseason / season-opener brief) -- their names, no stat line
+            add('<div class="tier-h">Bench \u2014 never played</div><p class="tier-c">On the roster, no minutes in any '
+                'game we have a box score for.</p>')
+            bench_table([x.strip() for x in str(extra_no_min).split(",") if x.strip()], stats_df, side)
+            _extra_n = 0
+        if _thin_seen[0] > _thin0:
+            _mins = [f"{n} {u}s for {'an' if k[:1] in 'aeiou' else 'a'} {k} read" for k, (n, u) in _thin_mins.items()]
+            add('<p class="mini"><span class="thin-ast">*</span> Too few attempts last season for a scouting read on him'
+                + (" (the minimums: " + ", ".join(_mins) + ")" if _mins else "") + ".</p>")
         if side == "Opponent" and _foul_by:
             add('<p class="mini">Late game foul: <span class="call-foul">\u2714</span> foul him '
                 '(62% or worse on 8+ attempts) &middot; <span class="call-nofoul">\u2718</span> do not foul '
@@ -3067,7 +3363,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             # CONFIRMED CHANGE (requested: the 2025-26 tag next to the "Keys to Victory" tags on the right instead of in the
             # section header): the staff's keys from last season's game carry the season beside their source tag
             _bt_k = _bt_box["bt"]
-            if _source and _bt_k and _bt_k["last_season"] and _sb_clean(k.get("source")) == "Keys to Victory":
+            if _source and _bt_k and _bt_k["last_season"] and not _staff_keys_this_season() \
+                    and _sb_clean(k.get("source")) == "Keys to Victory":
                 _source = (f' <span class="ktv-right"><span class="lsn">{_sb_esc(_bt_k["season"])}</span>'
                            f'{_source}</span>')
             add(f'<div class="ktv-sentence">{_sentence} {_source}</div>')   # a space: copied text reads "... reason. Data-Driven"
@@ -4118,10 +4415,12 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             "team. End of the 2nd half / overtime counts only for a team that's behind -- ahead or tied, teams hold "
             "for the last shot. Possessions are rebuilt from every game's play-by-play (no possession column exists), "
             "so every half on file counts, not just tagged clips. Play calls appear once the coaches have tagged 2+ "
-            "end-of-half possessions with one; until then it's Synergy's play type. Who to attack weighs foul rate "
+            "end-of-half possessions with one; until then it's Synergy's play type. Who to attack (on each player in the roster) weighs foul rate "
             "(box scores), fouls while defending 2-for-1 possessions, defensive role and how often he's on the floor "
             "at the end of a half."))
         add('<div class="card">')
+        # (requested) "Who to attack" now lives on each player in the roster, not here
+        _tf_plan = _tf_plan[~_tf_plan["part"].astype(str).str.contains("who to attack", case=False)]
         for _part, _g in _tf_plan.sort_values("order").groupby("part", sort=False):
             add(f'<div class="tier-h">{_sb_esc(_part)}</div><ul class="bl">')
             for _, _r in _g.iterrows():
@@ -4145,7 +4444,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                         f'<td>{int(_r["uses"])}</td><td>{_sb_fmt(_r["ppp"], 2)}</td>'
                         f'<td class="wrap">{_sb_esc(_sb_clean(_r.get("top_player")))}</td></tr>')
                 add("</tbody></table>")
-        _tf_att, _ = staff_rows("uww_two_for_one_attack")
+        _tf_att = pd.DataFrame()                 # (requested) moved to the roster -- see _tf_attack_by
         if not _tf_att.empty:
             _tf_att = _tf_att[_tf_att["verdict"].astype(str).isin(["Attack", "Avoid"])]
         if not _tf_att.empty:
@@ -4855,6 +5154,11 @@ else:
               + ". (STRIKE_LAST_SEASON_SENIORS / STRIKE_SENIORS_KEEP in the notebook cell.)")
     if _sb_data.sample_dropped:
         print("Sample data left out of the brief (still in the app): " + ", ".join(sorted(set(_sb_data.sample_dropped))))
+    # (no-seniors brief) the roster is drawn twice when seniors are struck -- each copy keeps its own
+    _sb_doc_all = _sb_document
+    _sb_ns_pick = lambda doc, drop: re.sub(r"<!--NS:(?:strike|remove)-->|<!--/NS-->", "",  # noqa: E731
+                                          re.sub(rf"<!--NS:{drop}-->.*?<!--/NS-->", "", doc, flags=re.S))
+    _sb_document = _sb_ns_pick(_sb_doc_all, "remove")
     os.makedirs(_SB_OUT_DIR, exist_ok=True)
     _sb_slug = re.sub(r"[^\w]+", "_", str(_sb_short)).strip("_") or "opponent"
     _sb_path = os.path.join(_SB_OUT_DIR, f"scouting_brief_{_sb_slug}.html")
@@ -4862,6 +5166,22 @@ else:
         _sb_f.write(_sb_document)
     print(f"Wrote {os.path.abspath(_sb_path)} ({len(_sb_document):,} bytes) -- open it in a browser, or "
           f"attach it to an email as-is.")
+    # CONFIRMED CHANGE (requested: "for scrimmages and season opener briefs ... 2 different copies": one exactly as before,
+    # last season's seniors struck through; one with anything about them removed). The second copy is the first with every
+    # struck row / item / sentence taken out: scouting_brief_<team>_no_seniors.html. Any other brief has no second copy
+    # (an old one is deleted so it can't be mistaken for this game's).
+    _sb_path2 = os.path.join(_SB_OUT_DIR, f"scouting_brief_{_sb_slug}_no_seniors.html")
+    if _sb_strike:
+        _sb_doc2 = _sb_drop_struck(_sb_ns_pick(_sb_doc_all, "strike"))
+        with open(_sb_path2, "w", encoding="utf-8") as _sb_f:
+            _sb_f.write(_sb_doc2)
+        print(f"Wrote {os.path.abspath(_sb_path2)} ({len(_sb_doc2):,} bytes) -- the same brief with last season's seniors "
+              f"left out ({_sb_document.count('<s>') - _sb_doc2.count('<s>')} struck item(s) removed).")
+    elif os.path.exists(_sb_path2):
+        try:
+            os.remove(_sb_path2)
+        except OSError:
+            pass
     # The Notes page moved out of the brief and into the app (requested), so the app needs the text. Note
     # numbers are the deep-link target the brief's ⓘ markers point at, so they're stored explicitly rather
     # than left to row order.

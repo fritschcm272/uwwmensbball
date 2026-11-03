@@ -85,6 +85,7 @@ def _or_player_events():
         desc = str(e.get("shot_desc") or "")
         pb_clock = prev.get((gkey, pl))
         rows.append({"team": tm, "player": pl, "kind": "shot" if is_shot else ("to" if et == "turnover" else "ft"),
+                     "_gd": e.get("game_date"), "_per": e.get("period"), "_clk": clock, "_src": e.get("_src"),
                      "three": is_shot and str(e.get("shot_type")) == "3",
                      "driving": is_shot and "driving" in desc.lower(),
                      "post_shot": is_shot and any(w in desc.lower() for w in ("hook", "turnaround", "post")),
@@ -95,15 +96,27 @@ def _or_player_events():
     return pd.DataFrame(rows)
 
 
-def _or_assists():
-    out = {}
+def _or_assists(canon=None):
+    """{(team, player): assists}. With canon (merged team labels), a game that is in both files (our play-by-play and
+    the opponent's) counts once: assists are de-duplicated on team, player, date, period and clock."""
+    canon = canon or {}
+    fr = []
     for nm in ("pbp_events", "pbp_events_upcoming"):
         ev = globals().get(nm)
-        if isinstance(ev, pd.DataFrame) and not ev.empty and "event_type" in ev.columns:
-            a = ev[ev["event_type"] == "assist"].groupby(["team", "player"]).size()
-            for k, v in a.items():
-                out[k] = out.get(k, 0) + int(v)
-    return out
+        if isinstance(ev, pd.DataFrame) and not ev.empty and {"event_type", "team", "player"} <= set(ev.columns):
+            a = ev[ev["event_type"] == "assist"]
+            fr.append(pd.DataFrame({"team": a["team"].map(lambda t: canon.get(t, t)), "player": a["player"],
+                                    "_gd": a.get("game_date"), "_per": a.get("period"),
+                                    "_clk": a.get("time_remaining_seconds"), "_src": nm}))
+    if not fr:
+        return {}
+    a = _or_keycols(pd.concat(fr, ignore_index=True))
+    if canon:
+        # the same assist from both files: same team / player / date / period / clock, different source file
+        a = a.sort_values("_src").drop_duplicates(subset=["team", "player", "_gd", "_per", "_clk", "_src"])
+        dup = a.duplicated(subset=["team", "player", "_gd", "_per", "_clk"], keep="first") & a["_gd"].notna() & a["_clk"].notna()
+        a = a[~dup]
+    return {k: int(v) for k, v in a.groupby(["team", "player"]).size().items()}
 
 
 def _or_features(g, n_ast):
@@ -167,12 +180,18 @@ def _or_decide(f, pos, height_in, team_onball_share):
         big = (f["big_share"] >= ROLE_BIG_SHARE or "C" in pos.replace("CENTER", "C")
                or ("F" in pos and (height_in or 0) >= ROLE_BIG_HEIGHT_IN and f["big_share"] >= ROLE_BIG_SHARE_TALL))
     tr = f["three_rate"]
+    # CONFIRMED CHANGE (requested; "How is Collin Madson a Secondary Ball Handler with these stats?" -- 18 points and 1.1
+    # assists a game). The ball in his hands (P&R ball handler + isolation + transition ball handling, 38%) made him a
+    # ball handler without asking whether he sets anyone else up. A ball handler now also has to CREATE for others:
+    # ROLE_BALLHANDLER_MIN_AST assists per possession (0.15). A player with the ball a lot who doesn't is a scorer and
+    # goes on through the scoring roles (Madson: Slasher, 41% drives); if none fits, Shot Creator.
+    creator = f["ast_per_poss"] >= float(globals().get("ROLE_BALLHANDLER_MIN_AST", 0.15))
     if big:
         post, shoots = f["post"] >= ROLE_POST_SHARE, tr >= ROLE_BIG_3PA_RATE
         role = ("Versatile Big" if post and shoots else "Post Scorer" if post else "Stretch Big" if shoots else "Roll & Cut Big")
     elif f["iso"] >= ROLE_ISO_SHARE:
         role = "Shot Creator"
-    elif f["onball"] >= ROLE_ONBALL_MIN:
+    elif f["onball"] >= ROLE_ONBALL_MIN and creator:
         role = "Primary Ball Handler" if team_onball_share >= ROLE_PRIMARY_TEAM_SHARE else "Secondary Ball Handler"
     elif f["drive"] >= ROLE_DRIVE_SHARE and tr < ROLE_SHOOTER_3PA_RATE:
         role = "Slasher"
@@ -184,19 +203,62 @@ def _or_decide(f, pos, height_in, team_onball_share):
         role = "Movement Shooter" if f["moving3"] >= ROLE_MOVING_SHARE else "Stationary Shooter"
     else:                                         # nothing stands out: the biggest part of his game decides
         cand = {"Slasher": f["drive"], "Athletic Finisher": f["cut"] + f["putback"],
-                "Secondary Ball Handler": f["onball"], "Stationary Shooter": tr * 0.8 + f["spot"] * 0.5}
+                ("Secondary Ball Handler" if creator else "Shot Creator"): f["onball"],
+                "Stationary Shooter": tr * 0.8 + f["spot"] * 0.5}
         role = max(cand, key=cand.get)
     pct = lambda x: f"{100 * x:.0f}%"
     why = (f"{'big' if big else 'guard/wing'}; PnR {pct(f['prbh'])} · ISO {pct(f['iso'])} · spot-up {pct(f['spot'])} · "
            f"off screen/handoff {pct(f['offscreen'] + f['handoff'])} · cut/putback {pct(f['cut'] + f['putback'])} · "
            f"post {pct(f['post'])} · roll {pct(f['roll'])} · drives {pct(f['drive'])} · 3PA rate {pct(tr)} · "
+           f"assists/poss {f['ast_per_poss']:.2f} · "
            f"{f['poss']} poss ({f['source']})")
     return role, why
 
 
+def _or_keycols(df):
+    """Date / period / clock in one format whichever file a row came from (for de-duplicating merged teams)."""
+    df["_gd"] = pd.to_datetime(df["_gd"], errors="coerce").dt.strftime("%Y-%m-%d")
+    df["_per"] = df["_per"].astype(str).str.upper().str.replace(r"[^A-Z0-9]", "", regex=True)
+    df["_clk"] = pd.to_numeric(df["_clk"], errors="coerce").round(0)
+    return df
+
+
+def _or_team_canon(pe):
+    """{team label: the label to use} -- CONFIRMED BUG (fixed; Madson had two roles: "UW-Whitewater" from our own games,
+    Secondary Ball Handler on 338 possessions, and "UW-Whitewater Warhawks" from the opponents' games against us,
+    Slasher on a few). Two labels for one team -- one name starts with the other ("UW-Whitewater" / "... Warhawks") AND
+    they share players -- become one: the label with more possessions."""
+    n = pe.groupby("team").size().to_dict()
+    players = {t: set(g["player"].map(_or_norm)) for t, g in pe.groupby("team")}
+    canon = {}
+    labels = sorted(n, key=lambda t: -n[t])
+    for i, a in enumerate(labels):
+        if a in canon:
+            continue
+        for b in labels[i + 1:]:
+            if b in canon:
+                continue
+            na, nb = _or_norm(a), _or_norm(b)
+            if len(min(na, nb, key=len)) >= 5 and (na.startswith(nb) or nb.startswith(na)) and players[a] & players[b]:
+                canon[b] = a
+    return canon
+
+
 def offensive_roles():
     pe = _or_player_events()
-    ast = _or_assists()
+    _canon = _or_team_canon(pe) if not pe.empty else {}
+    ast = _or_assists(_canon)
+    if not pe.empty:
+        if _canon:
+            pe["team"] = pe["team"].map(lambda t: _canon.get(t, t))
+            pe = _or_keycols(pe)
+            # a game in both files (ours and the opponent's) now has two copies of each of his possessions -- keep one
+            _k = ["team", "player", "_gd", "_per", "_clk", "kind", "three"]
+            _dup = pe.duplicated(subset=_k, keep="first") & pe["_gd"].notna() & pe["_clk"].notna()
+            _dup &= pe.groupby(_k, dropna=False)["_src"].transform("nunique") > 1
+            pe = pe[~_dup].reset_index(drop=True)
+            print("  Offensive roles: one team under two names, merged -- "
+                  + "; ".join(f"{b} -> {a}" for b, a in sorted(_canon.items())), flush=True)
     # roster facts (position, height) for every player we can find
     ros = []
     for nm, team_col in (("live_rosters", "team"), ("player_profiles", "opponent"), ("all_rosters", "opponent")):

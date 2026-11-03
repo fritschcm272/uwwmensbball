@@ -98,10 +98,18 @@ def extract_team_totals_from_pdf(elements_df, opponent):
         return None
     if opp_row.empty:
         print(f"  Note: '{opponent}' boxscore has no 'Opponent' row (points allowed) -- reporting team_ppg only.")
+    # CONFIRMED BUG (fixed; ValueError: could not convert string to float: '-'): a report written before a team has played
+    # (Carroll's 2026-27 report) shows "-" for every total. No numbers -> no team-totals row (these totals are blanked
+    # further down anyway -- the report's own stats aren't used).
+    _ppg = pd.to_numeric(team_row["PTS"].iloc[0], errors="coerce")
+    if pd.isna(_ppg):
+        print(f"  Skipping '{opponent}': its report has no team totals yet ('{team_row['PTS'].iloc[0]}').")
+        return None
+    _alw = pd.to_numeric(opp_row["PTS"].iloc[0], errors="coerce") if not opp_row.empty else None
     return {
         "opponent": opponent,
-        "team_ppg": float(team_row["PTS"].iloc[0]),
-        "opp_ppg_allowed": float(opp_row["PTS"].iloc[0]) if not opp_row.empty else None,
+        "team_ppg": float(_ppg),
+        "opp_ppg_allowed": float(_alw) if _alw is not None and pd.notna(_alw) else None,
     }
 
 team_totals = pd.DataFrame([
@@ -275,8 +283,9 @@ else:
           "are always blank now -- team/player statistics from the scouting report are no longer used; see "
           "the blanking earlier in this cell.)")
     for _, row in scouted_game_comparison.iterrows():
-        keys_to_victory = all_game_plans.loc[
-            (all_game_plans["opponent"] == row["opponent"]) & (all_game_plans["topic"] == "KEYS TO VICTORY"), "notes"
+        _gp_hist = globals().get("all_game_plans_history", all_game_plans)   # (the keys written for THAT past game)
+        keys_to_victory = _gp_hist.loc[
+            (_gp_hist["opponent"] == row["opponent"]) & (_gp_hist["topic"] == "KEYS TO VICTORY"), "notes"
         ]
         print(f"\n{row['opponent']} ({row['date']}, {row['location']}): UWW {row['uww_points']} - "
               f"{row['opponent']} {row['opp_actual_ppg']} ({row['outcome']}, margin {row['point_margin']:+.0f})")

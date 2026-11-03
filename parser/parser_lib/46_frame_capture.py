@@ -630,6 +630,29 @@ def _ptg_entries():
     return out
 
 
+def ptg_setting(name, game_date, game_label, default=None):
+    """CONFIRMED CHANGE (requested: set up Carroll vs. Beloit for Player Number Tracking next to the WashU game). A
+    Player Number Tracking setting can now be different per game: a dict {game name (PLAYER_TRACKING_GAMES format): value}
+    -- e.g. TRACK_HOLD_AT_CLIP = {"11_7_25 Carroll (WI) Pioneers @ Washington-St. Louis Bears": 8} holds WashU at clip 8
+    and leaves Beloit free. A game not in the dict gets `default`. A plain value (not a dict) applies to every game, as
+    before. Matched like PLAYER_TRACKING_GAMES: the date (within a day) and a team word."""
+    v = globals().get(name, default)
+    if not isinstance(v, dict):
+        return v
+    gd = pd.to_datetime(game_date, errors="coerce")
+    lab = re.sub(r"[^a-z0-9]+", "", str(game_label or "").lower())
+    for key, val in v.items():
+        m = re.match(r"^\s*(\d{1,2})_(\d{1,2})_(\d{2,4})\s+(.*)$", str(key))
+        if not m or pd.isna(gd):
+            continue
+        d = pd.Timestamp(int(m.group(3)) + (2000 if len(m.group(3)) == 2 else 0), int(m.group(1)), int(m.group(2)))
+        ws = {w for w in re.split(r"[^a-z0-9]+", m.group(4).lower())
+              if len(w) > 3 and w not in {"whitewater", "warhawks", "pioneers", "bears", "louis"}}
+        if abs((gd.normalize() - d).days) <= 1 and any(w[:5] in lab for w in ws):
+            return val
+    return default
+
+
 def player_tracking_listed(game_date, game_label):
     """None when PLAYER_TRACKING_GAMES is off (every game is tracked); else True / False: is this game one of them?
     game_label = the play calls' game code ("Carroll(WI)@Wash(StLouis)") or a page label -- matched by the date (within a

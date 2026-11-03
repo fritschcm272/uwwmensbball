@@ -1,0 +1,13 @@
+I'm continuing work on my UW-Whitewater men's basketball scouting project (repo: C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball).
+
+Before doing anything else:
+1. Stage and read CLAUDE.md in the repo root -- it's the handoff doc with the project layout, how to edit my files, my standing rules, and where everything stands.
+2. Stage and read the newest log in parser\inputs\_logs (it tells you what my last run did).
+3. Give me a short summary (5-8 lines) of where things stand and anything in that log that looks wrong.
+
+Rules to keep: don't change anything that affects the games/clips already in Film Tagging; after every file you save to my computer, re-check that the saved file's size matches yours; I only run parser_models, parser_tagging and parser_brief (never parser_nb directly). Player Number Tracking is paused unless I say otherwise.
+
+Today I want to: [WHAT YOU WANT TO WORK ON]
+
+
+At the end of a long session, ask the chat to “update CLAUDE.md with what we did today.” Then the next chat starts from the latest state.

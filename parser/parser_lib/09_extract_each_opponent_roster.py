@@ -168,4 +168,36 @@ all_rosters = pd.concat(
     [extract_roster_from_pdf(df, opponent) for opponent, df in scout_reports.items()],
     ignore_index=True,
 ) if scout_reports else pd.DataFrame(columns=roster_cols)
+# CONFIRMED CHANGE (requested: bring in Carroll's 2026-27 report). When an opponent also has the UPCOMING game's report
+# (scout_reports_upcoming, section 08), its Player Notes / Keys to Defending are this season's: they replace last
+# season's for every player it covers, matched by NAME (numbers change between seasons -- and the season box score is
+# joined on the number, so a number is never copied over). A player only in the new report (a freshman, a transfer) is
+# added with his notes and no number.
+def _roster_key(n):
+    t = re.sub(r"[.,]", " ", str(n or "")).lower().split()
+    while len(t) > 2 and t[-1] in ("jr", "sr", "ii", "iii", "iv", "v"):
+        t = t[:-1]
+    return " ".join(t)
+
+
+for _o, _df in (globals().get("scout_reports_upcoming") or {}).items():
+    _new = extract_roster_from_pdf(_df, _o)
+    if _new.empty:
+        print(f"  {_o}: the upcoming game's report has no player entries -- last season's player notes kept")
+        continue
+    _new_by = {_roster_key(r["name"]): r for _, r in _new.iterrows()}
+    _mask = all_rosters["opponent"] == _o
+    _hit = 0
+    for _i in all_rosters.index[_mask]:
+        _r = _new_by.pop(_roster_key(all_rosters.at[_i, "name"]), None)
+        if _r is not None:
+            for _c in ("player_notes", "keys_to_defending", "role"):
+                all_rosters.at[_i, _c] = _r[_c]
+            _hit += 1
+    _add = pd.DataFrame(list(_new_by.values()))
+    if not _add.empty:
+        _add["jersey_number"] = None
+        all_rosters = pd.concat([all_rosters, _add[roster_cols]], ignore_index=True)
+    print(f"  {_o}: player notes from the upcoming game's report -- {_hit} player(s) updated, {len(_add)} new player(s) "
+          f"added" + (f" ({', '.join(_add['name'])})" if len(_add) else ""), flush=True)
 print(all_rosters)

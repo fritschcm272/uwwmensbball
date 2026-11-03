@@ -71,8 +71,9 @@ def stat_cols_for_note(note_text):
 
 game_category_rows = []
 for _, row in scouted_game_comparison.iterrows():
-    keys_to_victory = all_game_plans.loc[
-        (all_game_plans["opponent"] == row["opponent"]) & (all_game_plans["topic"] == "KEYS TO VICTORY"), "notes"
+    _gp_hist = globals().get("all_game_plans_history", all_game_plans)   # (the keys written for THAT past game)
+    keys_to_victory = _gp_hist.loc[
+        (_gp_hist["opponent"] == row["opponent"]) & (_gp_hist["topic"] == "KEYS TO VICTORY"), "notes"
     ]
     if keys_to_victory.empty:
         continue

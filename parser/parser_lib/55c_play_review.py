@@ -1145,7 +1145,8 @@ def play_review():
                 _pp = _pp.iloc[0:0]
             # CONFIRMED CHANGE (requested: "stop moving forward with clips 9 and later"): no new player checks past
             # TRACK_HOLD_AT_CLIP in the Player Number Tracking game (the re-checks below still come)
-            _hold = globals().get("TRACK_HOLD_AT_CLIP")
+            _hold = (ptg_setting("TRACK_HOLD_AT_CLIP", gd, gc) if "ptg_setting" in globals()
+                     else globals().get("TRACK_HOLD_AT_CLIP"))      # (can be per game -- see ptg_setting, 46)
             if _hold and _ptg_this and len(_pp):
                 _pp = _pp[~(pd.to_numeric(_pp["clip_number"], errors="coerce") > int(_hold))]
             # CONFIRMED CHANGE (requested: "can we go back to checking clip 1 -- I just want to make sure that each clip is
@@ -1153,7 +1154,9 @@ def play_review():
             # the batch, as the tracking sees them NOW -- until a player check of that clip is saved after
             # PLAY_REVIEW_RECHECK_SINCE. Your earlier checks of them are kept; the new ones are added (the latest wins on the
             # same box).
-            _rc = [int(x) for x in (globals().get("PLAY_REVIEW_RECHECK_CLIPS") or []) if str(x).strip().isdigit()]
+            _rc_v = (ptg_setting("PLAY_REVIEW_RECHECK_CLIPS", gd, gc, []) if "ptg_setting" in globals()
+                     else globals().get("PLAY_REVIEW_RECHECK_CLIPS"))   # (can be per game -- see ptg_setting, 46)
+            _rc = [int(x) for x in (_rc_v or []) if str(x).strip().isdigit()]
             if _rc and _st_need is None and _ptg_this is not False:
                 _since = pd.to_datetime(globals().get("PLAY_REVIEW_RECHECK_SINCE"), utc=True, errors="coerce")
                 _redone = _pr_rechecked_keys(_since)

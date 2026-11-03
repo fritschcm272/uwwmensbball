@@ -1,13 +1,16 @@
 scouted_opponent,side,lineup,top_calls,tagged_possessions,ppp,grouping
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lamar Smith, Lucas Parker",Motion (1x),1,2.0,3G-2W
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lamar Smith, Peyton McKenna",Motion (1x),1,2.0,3G-2W
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lucas Parker, Michael McNabb",Motion (1x),1,0.0,4G-1W
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jimmy Tarjan, Lamar Smith, Peyton McKenna",Motion (1x),1,1.0,4G-1W
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jimmy Tarjan, Lucas Parker, Michael McNabb",Motion (1x),1,0.0,5G
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Jacob Naber, Lamar Smith, Michael McNabb, Peyton McKenna",Motion (3x),3,0.0,3G-2W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Greg Smith, Lucas Parker, Michael McNabb",5 Out Motion (3x),3,0.0,4G-1W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lamar Smith, Lucas Parker","5 Out Motion (5x), Motion (1x)",6,1.0,3G-2W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lamar Smith, Peyton McKenna","SLOB Set Motion (1x), Motion (1x)",2,1.0,3G-2W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lucas Parker, Michael McNabb","Set (1x), 5 Out Motion (1x), Motion (1x)",4,0.67,4G-1W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lucas Parker, Peyton McKenna",5 Out Motion (1x),1,2.0,4G-1W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jimmy Tarjan, Lamar Smith, Peyton McKenna","Motion (1x), 5 Out Motion (1x), BLOB Set (1x)",3,1.33,4G-1W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jimmy Tarjan, Lucas Parker, Michael McNabb","Set (1x), Motion (1x)",2,0.0,5G
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Greg Smith, Lucas Parker, Michael McNabb, Peyton McKenna",5 Out Motion (2x),2,0.0,4G-1W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Jacob Naber, Lamar Smith, Michael McNabb, Peyton McKenna","Motion (5x), 5 Out Motion (3x), Set (1x)",10,0.44,3G-2W
 Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Jimmy Tarjan, Lamar Smith, Lucas Parker, Michael McNabb","Motion (3x), Set (1x)",4,2.0,4G-1W
 Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Jimmy Tarjan, Lucas Parker, Michael McNabb, Peyton McKenna",Motion (1x),1,0.0,5G
-Carroll (WI) Pioneers,Opponent,"Evan Bland, Jacob Naber, Lamar Smith, Michael McNabb, Peyton McKenna","Motion (11x), Set (1x), BLOB 3 and 1 Motion (1x)",13,1.69,3G-2W
+Carroll (WI) Pioneers,Opponent,"Evan Bland, Jacob Naber, Lamar Smith, Michael McNabb, Peyton McKenna","Motion (17x), 5 Out Motion (9x), Set (2x)",32,1.03,3G-2W
 Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren","SLOB Motion (1x), BLOB (1x), Ball Screen (1x)",5,1.2,
 Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren","5 Out Motion (25x), Set (2x), in trnasntion random movement (2x)",36,0.86,
 Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Isaac Verges, Richie Warren, Tyshawn Teague-Johnson","5 Out Motion (3x), TWINS LEFT (1x)",4,1.25,

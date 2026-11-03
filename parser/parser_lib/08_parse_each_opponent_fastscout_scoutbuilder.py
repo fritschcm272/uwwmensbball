@@ -364,7 +364,38 @@ def parse_scout_html_elements(path):
 
 
 scout_reports = {}  # opponent short name (from filename) -> parsed element table (element_index, element_type, element_content)
-for path in scout_report_files:
+# CONFIRMED CHANGE (requested: bring in Carroll's 2026-27 report). An opponent can now have TWO reports: last season's
+# game (12_13_25 Carroll ...) and the upcoming game's (11_7_26 Carroll ...). They used to overwrite each other in
+# filename order (the older one won). Now:
+#   * scout_reports[opp]          = the most recent report from BEFORE the run's date -- the past game's own report, so
+#                                   everything about past meetings (keys vs result, W/L splits) stays paired with the
+#                                   keys written for THAT game. An opponent with only an upcoming report (the normal
+#                                   in-season case) keeps it here, exactly as before.
+#   * scout_reports_upcoming[opp] = the upcoming game's report, when the opponent ALSO has an older one. Its game plan
+#                                   (keys to victory, team strengths, schemes) and its player notes are what the
+#                                   game plan, keys, notes and brief use for the upcoming game (sections 09 / 10).
+def _scout_sort_key(p):
+    d_ = scout_file_game_date(p)
+    return (d_ or datetime(1900, 1, 1), os.path.basename(p))
+
+
+scout_reports_upcoming = {}
+scout_report_dates_upcoming = {}  # opponent -> the upcoming game's report date (YYYY-MM-DD)
+scout_report_dates = {}           # opponent -> the date of the report in scout_reports (YYYY-MM-DD) or None
+_by_opp = {}
+for path in sorted(scout_report_files, key=_scout_sort_key):
+    _by_opp.setdefault(opponent_from_scout_filename(path), []).append(path)
+_hist_paths, _up_paths = {}, {}
+for _o, _ps in _by_opp.items():
+    _before = [p for p in _ps if (scout_file_game_date(p) or datetime(1900, 1, 1)) < reference_date]
+    _after = [p for p in _ps if p not in _before]
+    if _before:
+        _hist_paths[_o] = _before[-1]
+        if _after:
+            _up_paths[_o] = _after[-1]
+    else:
+        _hist_paths[_o] = _ps[-1]
+for path in [p for _o, p in _hist_paths.items()]:
     # Filenames are either "<date> UW-Whitewater @ <Opponent>_scout.<ext>" (away game) or
     # "<date> <Opponent> @ UW-Whitewater_scout.<ext>" (home game, e.g. the Aurora report) -- reuse the
     # same home/away-aware extraction defined above instead of always taking the text after "@", which
@@ -374,8 +405,18 @@ for path in scout_report_files:
     parser_fn = parse_scout_html_elements if path.lower().endswith(".html") else parse_scout_pdf_elements
     elements_df = parser_fn(path)
     scout_reports[opponent_short] = elements_df
+    _d = scout_file_game_date(path)
+    scout_report_dates[opponent_short] = _d.strftime("%Y-%m-%d") if _d else None
     n_tables = (elements_df["element_type"] == "table").sum()
     print(f"  Parsed '{opponent_short}' ({os.path.splitext(path)[1]}): {len(elements_df)} elements, {n_tables} tables")
+for _o, path in _up_paths.items():
+    _fn = parse_scout_html_elements if path.lower().endswith(".html") else parse_scout_pdf_elements
+    scout_reports_upcoming[_o] = _fn(path)
+    _d = scout_file_game_date(path)
+    scout_report_dates_upcoming[_o] = _d.strftime("%Y-%m-%d") if _d else None
+    print(f"  Parsed '{_o}' UPCOMING game's report ({os.path.basename(path)}): {len(scout_reports_upcoming[_o])} elements "
+          f"-- its game plan and player notes are used for the upcoming game; last season's "
+          f"({os.path.basename(_hist_paths[_o])}) stays with the past game", flush=True)
 
 # Flag any opponent that only has an MHTML report -- since MHTML is no longer used as a source at all, they're
 # excluded from every downstream cell until a PDF version is added for them too.
