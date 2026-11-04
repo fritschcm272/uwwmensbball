@@ -1,5 +1,9 @@
 opponent,situation,set_name,primary_player,action,frequency,our_call,film_ref,is_sample
-Carroll (WI) Pioneers,Half court,Motion,Lamar Smith,Ball Screen,"30 uses in 2 games, 1.30 PPP",Pick one ball-screen coverage and stay in it; no middle,Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
-Carroll (WI) Pioneers,Half court,5 Out Motion,Jacob Naber,Ball Screen,"23 uses in 2 games, 0.58 PPP",Pick one ball-screen coverage and stay in it; no middle,Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
-Carroll (WI) Pioneers,Half court,Set,Jacob Naber,Swing (pass across),"6 uses in 1 games, 0.60 PPP",,Carroll(WI)@Elmhurst,False
-Carroll (WI) Pioneers,BLOB,BLOB Set,Lamar Smith,Pistol,"3 uses in 1 games, 1.00 PPP",,Carroll(WI)@Elmhurst,False
+Carroll (WI) Pioneers,Half court,Ball-screen Motion,Lamar Smith,Ball Screen,"45 uses in 3 games, 0.98 PPP",Pick one ball-screen coverage and stay in it; no middle,Beloit@Carroll(WI) Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
+Carroll (WI) Pioneers,Half court,DHO Motion,Michael McNabb,DHO,"27 uses in 3 games, 0.22 PPP",Get into the handoff; force it away from the middle,Beloit@Carroll(WI) Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
+Carroll (WI) Pioneers,Half court,Motion (no action tagged),Lucas Parker,Post Entry,"22 uses in 3 games, 1.14 PPP",,Beloit@Carroll(WI) Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
+Carroll (WI) Pioneers,Half court,Off-ball screen Motion,Michael McNabb,Down Screen,"13 uses in 3 games, 0.50 PPP",Lock and trail; bump the cutter off the screen,Beloit@Carroll(WI) Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
+Carroll (WI) Pioneers,Half court,Set,Lamar Smith,Swing (pass across),"7 uses in 2 games, 0.50 PPP",,Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
+Carroll (WI) Pioneers,Half court,Cutting Motion,Jacob Naber,Throw to the Pinch,"4 uses in 2 games, 1.50 PPP",,Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
+Carroll (WI) Pioneers,Half court,Drive Motion,Lamar Smith,Throw Pinch,"4 uses in 2 games, 1.00 PPP",,Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
+Carroll (WI) Pioneers,BLOB,BLOB Set,Lamar Smith,Ball Screen,"4 uses in 2 games, 1.33 PPP",Pick one ball-screen coverage and stay in it; no middle,Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False

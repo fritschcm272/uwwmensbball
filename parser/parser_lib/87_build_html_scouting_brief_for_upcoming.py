@@ -4556,6 +4556,44 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         if _meta_sample:
             add('<p class="mini">Coverage calls are a generated placeholder until '
                 'staff_inputs/opp_sets.csv exists.</p>')
+        # CONFIRMED CHANGE (requested: "I don't want anything to just say 'motion' ... every team runs a motion offense but
+        # they all do things differently"): how THIS team runs its Motion -- one row per Motion family (uww_motion_breakdown,
+        # built in 47): how often, PPP, the usual actions in order, who triggers it, who screens, how it ends.
+        try:
+            _mb = _sb_d("uww_motion_breakdown")
+        except Exception:
+            _mb = pd.DataFrame()
+        if not _mb.empty and "side" in _mb.columns:
+            _mb = _mb[(_mb["side"].astype(str) == side)
+                      & (_mb["scouted_opponent"].astype(str) == str(short) if "scouted_opponent" in _mb.columns else True)]
+            if not _mb.empty:
+                _tm = _mb.groupby("team")["uses"].sum().sort_values(ascending=False).index[0]
+                _mb = _mb[_mb["team"] == _tm].copy()
+                _mb["_u"] = pd.to_numeric(_mb["uses"], errors="coerce").fillna(0)
+                _mb = _mb.sort_values("_u", ascending=False)
+                _tot = int(_mb["_u"].sum())
+                add('<div class="card"><div class="quad-h">How they run Motion'
+                    f'<span class="quad-n">{_tot}</span></div>'
+                    '<div class="quad-sub">Motion split by the first action that defines it -- every team’s motion is '
+                    'different</div><table><tr><th>Motion</th><th>Uses</th><th>PPP</th><th>Usual actions</th>'
+                    '<th>Triggered by</th><th>Screener</th><th>How it ends</th></tr>')
+                for _, _r in _mb.iterrows():
+                    _pp = pd.to_numeric(_r.get("ppp"), errors="coerce")
+                    _sh = pd.to_numeric(_r.get("share_pct"), errors="coerce")
+                    add("<tr>" + "".join(f"<td>{x}</td>" for x in (
+                        _sb_esc(_sb_clean(_r.get("motion_family"))),
+                        f"{int(_r['_u'])}" + (f' <span class="mini">({int(_sh)}%)</span>' if pd.notna(_sh) else ""),
+                        f"{_pp:.2f}" if pd.notna(_pp) else "--",
+                        _sb_esc(_sb_clean(_r.get("actions"))) or "--",
+                        _sb_esc(_sb_clean(_r.get("trigger"))) or "--",
+                        _sb_esc(_sb_clean(_r.get("screener"))) or "--",
+                        _sb_esc(_sb_clean(_r.get("finish"))) or "--")) + "</tr>")
+                add("</table>")
+                _na = _mb[_mb["motion_family"].astype(str).str.contains("no action", case=False)]["_u"].sum()
+                if _na:
+                    add(f'<p class="mini">{int(_na)} Motion possession(s) were tagged without an action -- '
+                        "they stay “no action tagged” until the action is added in Film Tagging.</p>")
+                add("</div>")
         add('<p class="mini">' + app_link("Every set, clip and spot", page="upcoming", tab="game_plan",
                                           section=f"play_calls_{side.lower()}") + "</p>")
         add("</div>")
@@ -5066,32 +5104,10 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         page_break()
         for _h in _film_html:
             add(_h)
-    if not _warn_df.empty or footnotes or not gl.empty or _film_link:
-        page_break()
-        if not _warn_df.empty:
-            section("\u26a0\ufe0f READ WITH CAUTION")
-            add('<div class="card caution">')
-            for _, _w in _warn_df.iterrows():
-                add(f'<div class="row"><span class="area">{_sb_esc(_w.get("area"))}</span>'
-                    f'<strong>{_sb_esc(_w.get("subject"))}</strong> \u2014 {_sb_esc(_w.get("detail"))}</div>')
-            add("</div>")
-        if footnotes or not gl.empty or _film_link:
-            section("\u24d8 METHODOLOGY")
-            add('<div class="card"><ul class="bl">')
-            if _film_link:
-                add("<li>" + app_link("How the film is watched automatically", page="upcoming", tab="notes",
-                                      section="film")
-                    + " \u2014 how plays and players are tagged from the video, what has gone in so far, and how "
-                      "often the automatic answers agree with the coaches.</li>")
-            if footnotes:
-                add("<li>" + app_link(f"Notes ({len(footnotes)}) \u2014 how every number on this brief was built",
-                                      page="upcoming", tab="notes")
-                    + " \u2014 each \u24d8 in this brief links straight to its own note.</li>")
-            if not gl.empty:
-                add("<li>" + app_link(f"How the play titles were decoded ({len(gl)} shorthand terms)",
-                                      page="upcoming", tab="notes", section="glossary")
-                    + " \u2014 what each tagging shorthand reads as, and how confident that read is.</li>")
-            add("</ul></div>")
+    # CONFIRMED CHANGE (requested: "remove the METHODOLOGY section and just have a link to it in the app down in the section
+    # that starts with 'Generated ...'"). The Methodology card is gone; the footer links to the app's Notes instead.
+    # CONFIRMED CHANGE (requested: "READ WITH CAUTION should also be removed from the briefs and should only be in the
+    # application") -- the sample-size warnings (uww_sample_size_warnings) show in the app only.
 
     # ---- footer ---------------------------------------------------------------------------
     try:
@@ -5109,7 +5125,68 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         add(f'<p>Not available for this build: {_sb_esc(", ".join(sorted(set(_sb_d.missing))))}. '
             f'Sections relying on those sources were left out rather than filled with estimates.</p>')
     add("<p>Prepared ahead of the staff's own scouting reports. Numbers will move as more film is "
-        "tagged.</p></div>")
+        "tagged.</p>")
+    # CONFIRMED CHANGE (requested: "On the bottom of the scouting briefs, make sure to include notes about the scouting
+    # reports, player number tracking and film tracking that was used in creation").
+    _src = []
+    try:
+        _ind = globals().get("INPUT_DIR") or "./inputs"
+        _key = re.sub(r"[^a-z0-9]+", "", str(short).lower())[:8]
+        _reps = []
+        for _fn in sorted(os.listdir(_ind)):
+            _m = re.match(r"^(\d{1,2})_(\d{1,2})_(\d{2}) (.+?)_scout\.(html|pdf)$", _fn, re.I)
+            if _m and _key and _key in re.sub(r"[^a-z0-9]+", "", _m.group(4).lower()):
+                _d = pd.Timestamp(year=2000 + int(_m.group(3)), month=int(_m.group(1)), day=int(_m.group(2)))
+                _reps.append((_d, _m.group(4)))
+        if _reps:
+            _src.append("<b>Scouting reports (FastScout):</b> " + "; ".join(
+                f"{_sb_esc(t)} ({d.month}/{d.day}/{d.strftime('%y')})"
+                + (" \u2014 the upcoming game's report" if d >= pd.Timestamp.now().normalize() - pd.Timedelta(days=30)
+                   else " \u2014 last meeting with us")
+                for d, t in sorted(_reps)) + ".")
+    except Exception:
+        pass
+    try:
+        _ptg = _sb_d("uww_player_tracking_games")
+        _trr = _sb_d("uww_tracking_report")
+        if not _ptg.empty and "game" in _ptg.columns:
+            _bits = []
+            for _g in _ptg["game"].astype(str):
+                _r = _trr[_trr["game"].astype(str) == _g].iloc[0].to_dict() if (not _trr.empty and "game" in _trr.columns
+                                                                                  and (_trr["game"].astype(str) == _g).any()) else {}
+                _dt, _, _gc = _g.partition("|")
+                _bits.append(f"{_sb_esc(_gc)} ({_sb_esc(_dt)})"
+                             + (f": {int(_r['clips'])} clip(s) tracked, {int(_r.get('tracks_named') or 0)} player track(s) "
+                                "named" if _r.get("clips") == _r.get("clips") and _r.get("clips") is not None else ""))
+            # CONFIRMED CHANGE (requested: "only the checks in use"): the coach checks on THESE tracked games, made on the
+            # current frames (coach_checks_all already sets aside the ones from before the tracking reset)
+            _games = set(_ptg["game"].astype(str))
+            try:
+                _cc = [c for c in (coach_checks_all()[0] if "coach_checks_all" in globals() else []) if str(c.get("game")) in _games]
+            except Exception:
+                _cc = []
+            _src.append("<b>Player Number Tracking:</b> " + "; ".join(_bits)
+                        + (f" \u2014 {len(_cc)} coach player check(s) in use, on {len({c.get('clip_key') for c in _cc})} play(s)"
+                           if _cc else "") + ".")
+    except Exception:
+        pass
+    try:
+        if not _fq.empty and "team" in _fq.columns:
+            _rows_fq = _fq[(_fq.get("is_upcoming").astype(str) == "True") | (_fq.get("is_uww").astype(str) == "True")]
+            _bits = [f"{_sb_esc(r['team'])} \u2014 {_sb_esc(_sb_clean(r.get('film_line')))}" for _, r in _rows_fq.iterrows()
+                     if _sb_clean(r.get("film_line"))]
+            if _bits:
+                _src.append("<b>Film tracking and tagging:</b> " + "; ".join(_bits) + ".")
+    except Exception:
+        pass
+    if _src:
+        add('<p><b>Built from:</b></p><ul class="bl">' + "".join(f"<li>{x}</li>" for x in _src) + "</ul>")
+    if footnotes or not gl.empty or _film_link:
+        add("<p>" + app_link("Methodology", page="upcoming", tab="notes")
+            + " \u2014 how every number on this brief was built"
+            + (", how the film is watched automatically" if _film_link else "")
+            + (" and how the play titles were decoded" if not gl.empty else "") + ".</p>")
+    add("</div>")
 
     body = "\n".join(parts)
     return (

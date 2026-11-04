@@ -105,11 +105,19 @@ def _pr_pkg_stale(doc, g):
     return False
 
 
+# CONFIRMED BUG (fixed; "Fix Beloit's Player Number Tracking check is empty again"): on a new game tracking can't split the
+# people into teams yet ("Teams by jersey color: no -- no anchors"), so every track of Beloit@Carroll clip 1 had NO side.
+# Pictures and boxes only took offense / defense tracks, so the check was built with no picture and no boxes -- and the
+# coach checks that would teach the team colors could never be made. A clip where no track has a side now shows every
+# track as side "unknown" (the dropdown lists both teams; the coach's names then tell tracking which color is which).
+_PR_SIDES = ("offense", "defense", "unknown")
+
+
 def _val_frame_pick(tr_rows, lo, hi, prefer_late=False):
     """The frame in [lo, hi] where the most players are visible (ties -> the earliest, or the latest)."""
     count = {}
     for r in tr_rows:
-        if r.get("side") not in ("offense", "defense"):
+        if r.get("side") not in _PR_SIDES:
             continue
         for p in _trk_json.loads(r["path"]):
             t = int(p[0])
@@ -217,6 +225,34 @@ def _tr_same(a, b):
 
 def _tr_auto(r, f, tagged):
     """The automatic answer for one field: (value, confidence, note)."""
+    v, c, note = _tr_auto_raw(r, f, tagged)
+    # CONFIRMED CHANGE (requested: "it should not be autofilling the formation and play call when the situation was
+    # autofilled with 'Transition'. And that should be coming from the Synergy play information"). Transition comes from
+    # Synergy's play type ("... > Transition > ..."): then Situation = Transition (sure) and Formation / Play call get NO
+    # automatic answer. The model's own "Transition" guess on a play Synergy doesn't call transition isn't offered.
+    if f in ("situation", "formation", "play_call"):
+        _tr_syn = bool(re.search(r">\s*Transition\s*>", str(r.get("synergy_string") or ""), re.I))
+        if f == "situation":
+            if _tr_syn:
+                return "Transition", 1.0, "from Synergy's play type"
+            if v is not None and str(v).strip().lower() == "transition":
+                return None, None, ""
+        elif _tr_syn:
+            return None, None, "transition (Synergy): no set"
+    # CONFIRMED CHANGE (requested: never just "Motion" -- recommendation 5). The Play call model isn't better than always
+    # picking "Motion" yet, so a bare "Motion" guess tells the coach nothing: it's only offered WITH the predicted Main
+    # action ("likely Ball-screen Motion -- Main action: Ball Screen"); with no Main action guess, no play call is offered.
+    if f == "play_call" and v is not None and str(v).strip().lower() == "motion":
+        pa = _tr_auto_raw(r, "primary_action", tagged)[0]
+        if not pa:
+            return None, None, ""
+        fam = _pl_motion_family([pa])[0] if "_pl_motion_family" in globals() else None
+        fam = f"{fam} Motion" if fam and fam != "other" else "Motion"
+        return v, c, f"likely {fam} -- Main action: {pa}"
+    return v, c, note
+
+
+def _tr_auto_raw(r, f, tagged):
     if tagged:
         v, c = _tr_val(r.get(f"heldout_{f}")), r.get(f"heldout_{f}_conf")
         if v is None and _tr_val(r.get(f"pred_{f}")) is not None:
@@ -270,6 +306,10 @@ def _tr_vocab():
     # one spelling per answer: "No Screens" / "No screens" (capitals / spaces / punctuation only) are the same answer --
     # the capitalized spelling is kept
     _nrm = lambda s: re.sub(r"[^a-z0-9#]+", "", s.lower())
+    # CONFIRMED CHANGE (requested: clean up the answer lists -- recommendation 6): typos, a second spelling or an answer for
+    # another field typed into this one (PLAY_ANSWER_ALIASES in Play calls) leave the lists; saved answers aren't changed
+    if "_pl_answer_alias" in globals():
+        vals = {f: {a for a in (_pl_answer_alias(f, x) for x in v) if a is not None and str(a).strip()} for f, v in vals.items()}
     out = {}
     for f, v in vals.items():
         one = {}
@@ -489,7 +529,7 @@ def _pr_boxes(rows, t, Hpx, numtxt):
     boxes = []
     for rr in sorted(rows, key=lambda x: (str(x.get("side")), str(x.get("name")))):
         p = next((p for p in _trk_json.loads(rr["path"]) if int(p[0]) == t and len(p) >= 6), None)
-        if p is None or rr.get("side") not in ("offense", "defense"):
+        if p is None or rr.get("side") not in _PR_SIDES:
             continue
         hh = float(p[3]) * Hpx
         x, y = float(p[4]), float(p[5])
@@ -1207,6 +1247,10 @@ def play_review():
             _is_st = "starters" in _parts
             files = [f for f in str(r["track_files"]).split(";") if f]
             rows = pt[pt["clip_key"] == r["track_clip_key"]].to_dict("records")
+            if rows and not any(rr_.get("side") in ("offense", "defense") for rr_ in rows):
+                rows = [dict(rr_, side="unknown") for rr_ in rows]          # (see _PR_SIDES)
+                print(f"  [play review] {gc} clip {r.get('clip_number')}: tracking hasn't split the players into teams yet "
+                      f"-- every box is shown with team '?' so the check can teach it", flush=True)
             n = len(files)
             cn = int(r["clip_number"])
             # CONFIRMED BUG (fixed; the review showed the SAME picture for different plays): picture / clip files were named from

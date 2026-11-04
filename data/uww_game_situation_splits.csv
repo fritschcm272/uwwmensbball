@@ -1,2 +1,3 @@
 opponent,situation,ppp,primary_actions,note,is_sample
-Carroll (WI) Pioneers,"Clutch (last 5 min, margin ≤ 8)",0.0,"Motion (3x), 5 Out Motion (3x)",7 tagged possessions (their overall 0.94 PPP),False
+Carroll (WI) Pioneers,Trailing by 10+,0.75,"Ball-screen Motion (3x), DHO Motion (2x)",8 tagged possessions (their overall 0.88 PPP),False
+Carroll (WI) Pioneers,"Clutch (last 5 min, margin ≤ 8)",0.33,"Ball-screen Motion (3x), Motion (no action tagged) (2x)",9 tagged possessions (their overall 0.88 PPP),False

@@ -4741,6 +4741,21 @@ def render_play_call_section(side: str, short_opponent: str, title: str, intro: 
     section_header(title, "PPP counts what the play-by-play says was scored on the possession (free throws "
                           "included) when the clip matched an event, otherwise what its result tag implies. Clips "
                           "tagged Rewatch/TBD or with no call are left out of the rankings.")
+    # CONFIRMED CHANGE (requested: never just "Motion" -- every team runs it differently): how this side runs its Motion,
+    # from the parser's uww_motion_breakdown (one row per Motion family)
+    _mb = load_table("uww_motion_breakdown")
+    if not _mb.empty and {"side", "team", "motion_family"}.issubset(_mb.columns):
+        _mb = _mb[(_mb["side"] == side) & (_mb["scouted_opponent"].astype(str) == str(short_opponent))]
+        if side == "Opponent":
+            _mb = _mb[_mb["team"].astype(str) == str(short_opponent)]
+        if not _mb.empty:
+            _mb = _mb[_mb["team"] == _mb.groupby("team")["uses"].sum().idxmax()].sort_values("uses", ascending=False)
+            st.markdown("**How they run Motion** — split by the first action that defines it")
+            st.dataframe(_mb[[c for c in ("motion_family", "uses", "share_pct", "ppp", "actions", "trigger", "screener",
+                                          "finish") if c in _mb.columns]].rename(columns={
+                "motion_family": "Motion", "uses": "Uses", "share_pct": "% of their Motion", "ppp": "PPP",
+                "actions": "Usual actions", "trigger": "Triggered by", "screener": "Screener", "finish": "How it ends"}),
+                hide_index=True, use_container_width=True)
     if not clips.empty:
         _q = clips["decode_quality"].value_counts()
         _m = int(clips["matched_event"].astype(str).str.lower().eq("true").sum())
@@ -6211,6 +6226,10 @@ def _pr_team_code(name):
 
 def _pr_side_code(pl, side):
     """The code of the team on this side of the play (the parser sends "teams"); older reviews: OFF / DEF."""
+    # CONFIRMED BUG (fixed; Beloit's empty Player Number Tracking check): a box tracking couldn't put on a team yet comes as
+    # side "unknown" -- shown as "?" (not "DEF")
+    if side not in ("offense", "defense"):
+        return "?"
     return _pr_team_code((pl.get("teams") or {}).get(side)) or ("OFF" if side == "offense" else "DEF")
 
 
@@ -7592,6 +7611,13 @@ def _ft_actions_editor(d, pi, store, kp):
     if _uns:
         st.caption("*Not sure enough to fill in (pick it if it's right): " + "; ".join(
             f"{c} {g}" + (f" ({float(cf):.0%})" if cf is not None else "") for c, g, cf in _uns).replace("*", "\\*") + "*")
+    # CONFIRMED CHANGE (requested: Motion in coordination with the play call -- recommendation 4): a play called "Motion" with
+    # no action in the Offense table can only ever count as "Motion (no action tagged)" -- a reminder, never a block
+    _pc_now = str(st.session_state.get(f"{kp}_pcnow_{run}_{pi}") or "")
+    _has_act = any(str(r_.get("Action") or "").strip() not in ("", "None", "nan") for r_ in (cur.get("offense") or []))
+    if re.search(r"\bmotion\b", _pc_now, re.I) and not _has_act:
+        st.warning("Motion with no action: add the first action below (Ball Screen, DHO, Down Screen, ...) so this play "
+                   "shows up as which Motion it is -- otherwise it counts as \"Motion (no action tagged)\".")
     if _no5:
         st.caption("Who was on the floor isn't known for this play (no play-by-play match), so the player lists show every "
                    "player in the game for: " + "; ".join(_no5) + ".")
@@ -7629,6 +7655,9 @@ def _ft_field_widgets(d, pi, store, kp):
         # not something a coach has confirmed; on a Title check it stays "\u2713"
         _mark = "\u2757" if "/play_tag/" in str(d.get("_dir", "")).replace(os.sep, "/") else "\u2713"
         auto_opt = (f"{_mark} {auto}" + ("" if f.get("sure") else " (unsure)")) if auto else None
+        # CONFIRMED CHANGE (requested: never just "Motion"): a "Motion" guess carries which Motion it likely is
+        if auto_opt and f.get("field") == "play_call" and str(f.get("note") or "").startswith("likely"):
+            auto_opt += f" — {f['note']}"
         coach_v = f.get("coach") if f.get("coach") not in (None, "") else None
         if coach_v and coach_v not in known and not (auto and _pr_norm(coach_v) == _pr_norm(auto)):
             known = [coach_v] + known
@@ -7674,6 +7703,10 @@ def _ft_field_widgets(d, pi, store, kp):
                                   key=f"{kt}_ft",
                                   label_visibility="collapsed", placeholder="or type another answer")
         typed = (typed or "").strip()
+        if f.get("field") == "play_call":              # (the Actions table below checks it: Motion needs an action)
+            st.session_state[f"{kp}_pcnow_{run}_{pi}"] = (typed or (auto if auto_opt and ch == auto_opt else
+                                                                    saved if saved_opt and ch == saved_opt else
+                                                                    None if ch == "--" else ch))
         if typed:                                      # a typed answer wins over the list
             store[kv] = "wrong" if not (auto and _pr_norm(typed) == _pr_norm(auto)) else "right"
             if store[kv] == "wrong":
@@ -7948,6 +7981,18 @@ def render_film_tagging():
                    "answer when it's right, another answer when it isn't. Saved tags go into every scouting table on the next "
                    "parser run, and teach the automatic Title.")
     render_tag_model_scoreboard()
+    # CONFIRMED CHANGE (requested: recommendation 4 -- the Motion plays already tagged with no action, to go back to)
+    try:
+        _mna = load_table("uww_motion_needs_action")
+    except Exception:
+        _mna = pd.DataFrame()
+    if isinstance(_mna, pd.DataFrame) and not _mna.empty:
+        with st.expander(f"\U0001f50e Motion plays tagged with no action ({len(_mna)}) -- these only count as "
+                         "\"Motion (no action tagged)\"", expanded=False):
+            _c = [c for c in ("game_date", "game_code", "clip_number", "period", "play_title", "synergy_string") if c in _mna.columns]
+            st.dataframe(_mna[_c].rename(columns={"game_date": "Date", "game_code": "Game", "clip_number": "Clip",
+                                                  "period": "Half", "play_title": "Tag", "synergy_string": "Synergy"}),
+                         hide_index=True, use_container_width=True)
     _flash = st.session_state.pop("_ft_flash", None)
     if _flash:
         st.success(_flash)

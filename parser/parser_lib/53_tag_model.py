@@ -917,7 +917,18 @@ if RUN_TAG_MODEL and not _tm_src.empty:
             except Exception:
                 _saved = None
             _retrain = not (_saved and _saved.get("sig") == _sig)
-        if not _retrain and TAG_MODEL_RETRAIN == "auto" and _saved:
+        # CONFIRMED BUG (fixed; parser_models with TRAIN_MODELS = False, 11/4: "Automatic answers used ... prefilled in Film
+        # Tagging: none yet" -- every field became 'not sure'). With TAG_MODEL_RETRAIN = False the saved model was loaded
+        # WITHOUT its saved scores, so no field passed the trust bar. It now reuses the model AND its scores, like "auto"
+        # does for unchanged data (only when the saved model's inputs match this run's).
+        if TAG_MODEL_RETRAIN is False and os.path.exists(_path):
+            try:
+                _saved = joblib.load(_path)
+            except Exception:
+                _saved = None
+            if _saved and _saved.get("all_columns", _saved.get("columns")) != list(_tm_X.columns):
+                _saved = None
+        if not _retrain and TAG_MODEL_RETRAIN in ("auto", False) and _saved:
             # unchanged since the saved model: reuse it AND its scores
             _model, _only, _share = _saved["model"], _saved.get("only"), _saved.get("share")
             if _saved.get("oof") and len(_saved["oof"][0]) == len(_tm_src):
