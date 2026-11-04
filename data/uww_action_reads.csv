@@ -1,5 +1,11 @@
 side,scouted_opponent,offense_team,team,side_of_ball,role,player,action,read,uses,games,ppp,share_pct
-Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Beloit Buccaneers,Defense,On-ball defender,(no number),Ball Screen,Under,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Beloit Buccaneers,Defense,Off-ball defender,(no number),Ball Screen,Drop,3,1,0.0,75.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Beloit Buccaneers,Defense,Off-ball defender,(no number),Ball Screen,Switch,1,1,0.0,25.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Beloit Buccaneers,Defense,Off-ball defender,(no number),Pinch Ball Screen,Drop,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Beloit Buccaneers,Defense,On-ball defender,(no number),Ball Screen,Under,3,1,0.0,60.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Beloit Buccaneers,Defense,On-ball defender,(no number),Ball Screen,Over,1,1,0.0,20.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Beloit Buccaneers,Defense,On-ball defender,(no number),Ball Screen,Switch,1,1,0.0,20.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Beloit Buccaneers,Defense,On-ball defender,(no number),Pinch Ball Screen,Over,1,1,0.0,100.0
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Ball handler (trigger),#12 Peyton McKenna,DHO,USe DHO,1,1,0.0,100.0
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Ball handler (trigger),#12 Peyton McKenna,Ghost,Use Ball Screen,1,1,0.0,100.0
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Ball handler (trigger),Evan Bland,Ball Screen,Use Ball Screen,2,1,0.0,67.0

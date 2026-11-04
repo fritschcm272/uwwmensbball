@@ -934,7 +934,51 @@ def _find_matching_scout_document_row(docs_soup, game_date):
     return None, seen_dates
 
 
-def _download_matching_scout_pdf(page, docs_url, opponent, game_date, location, timeout_ms=30000):
+# CONFIRMED CHANGE (requested: "check on the 'Last Modified' field because I believe the Carroll scouting report has been
+# updated but we aren't bringing it in because we already had one"). The documents page's "Last Modified" value for each
+# report is remembered in <schedules>/_scout_last_modified.json; the upcoming game's report is downloaded again when
+# FastScout shows a different Last Modified than the one saved with it (the old copy is kept as "<name>.<time>.bak").
+def _scout_lm_path():
+    return os.path.join(schedules_dir, "_scout_last_modified.json")
+
+
+def _scout_lm_read():
+    import json
+    try:
+        with open(_scout_lm_path(), encoding="utf-8") as fh:
+            return json.load(fh) or {}
+    except Exception:
+        return {}
+
+
+def _scout_lm_write(fname, lm):
+    import json
+    if not lm:
+        return
+    d = _scout_lm_read()
+    d[fname] = lm
+    try:
+        with open(_scout_lm_path(), "w", encoding="utf-8") as fh:
+            json.dump(d, fh, indent=1)
+    except Exception as e:
+        print(f"    (Last Modified not remembered for {fname}: {type(e).__name__}: {e})")
+
+
+def _scout_row_last_modified(docs_soup, row_el):
+    """The matched row's 'Last Modified' text on the documents page (None if the page has no such column)."""
+    t = docs_soup.find("table")
+    if t is None or row_el is None:
+        return None
+    headers = [th.get_text(" ", strip=True).lower() for th in t.find_all("th")]
+    idx = next((i for i, h in enumerate(headers) if "modified" in h or "updated" in h), None)
+    cells = row_el.find_all("td")
+    if idx is None or idx >= len(cells):
+        return None
+    return cells[idx].get_text(" ", strip=True) or None
+
+
+def _download_matching_scout_pdf(page, docs_url, opponent, game_date, location, timeout_ms=30000,
+                                 refresh_if_modified=False):
     # docs_url's "/documents?..." deep link doesn't render directly via page.goto() (see _click_tab_by_text)
     # -- land on the opponent's own base team page first, then click through to their documents/scouts tab.
     opponent_base_url = docs_url.split("/documents")[0]
@@ -1020,9 +1064,29 @@ def _download_matching_scout_pdf(page, docs_url, opponent, game_date, location, 
     # ANY existing report filename -- it can't know the EXACT filename this specific game would produce until
     # game_date/matchup are resolved (both only available here, mid-function). Re-check the precise dest_path
     # too, as a second, exact line of defense, before doing any browser work at all.
+    _lm = _scout_row_last_modified(docs_soup, matched_row_el)
+    globals()["_scout_last_mod_seen"] = _lm
     if os.path.exists(dest_path):
-        print(f"  [{opponent}] scout report already exists in {schedules_dir} -- skipping download: {filename}")
-        return dest_path
+        _rec = _scout_lm_read().get(filename)
+        _newer = False
+        if refresh_if_modified and _lm and _lm != _rec:
+            if _rec is not None:
+                _newer = True                       # FastScout shows a different Last Modified than the saved copy's
+            else:
+                # first time it's seen: download again only if FastScout's Last Modified is on/after the saved file's day
+                _lmt = pd.to_datetime(_lm, errors="coerce")
+                _newer = bool(pd.notna(_lmt) and _lmt.normalize()
+                              >= pd.Timestamp(os.path.getmtime(dest_path), unit="s").normalize())
+        if not _newer:
+            if _lm and _rec is None:
+                _scout_lm_write(filename, _lm)
+            print(f"  [{opponent}] scout report already exists in {schedules_dir} -- skipping download: {filename}"
+                  + (f" (FastScout Last Modified: {_lm})" if _lm else ""))
+            return dest_path
+        _bak = f"{dest_path}.{pd.Timestamp.now():%Y%m%d_%H%M}.bak"
+        os.replace(dest_path, _bak)
+        print(f"  [{opponent}] FastScout's report was updated (Last Modified {_lm}; saved copy: {_rec or 'unknown'}) -- "
+              f"downloading it again (old copy kept as {os.path.basename(_bak)})")
 
     # Prefer a direct <a href="...pdf"> link in the matched row -- fetch it with the browser context's own
     # authenticated cookies (page.context.request) rather than clicking through the UI.
@@ -1033,6 +1097,7 @@ def _download_matching_scout_pdf(page, docs_url, opponent, game_date, location, 
             raise RuntimeError(f"GET {pdf_hrefs[0]} returned HTTP {response.status}")
         with open(dest_path, "wb") as f:
             f.write(response.body())
+        _scout_lm_write(filename, _lm)
         return dest_path
 
     # No download button here after all (confirmed by the user) -- the team-name cell's edit icon carries
@@ -1172,6 +1237,7 @@ def _download_matching_scout_pdf(page, docs_url, opponent, game_date, location, 
 
         with open(dest_path, "w", encoding="utf-8") as f:
             f.write(page.content())
+        _scout_lm_write(filename, _lm)
     except Exception as e:
         raise RuntimeError(
             f"GET {report_url} was not a PDF (content-type={content_type!r}), and saving its rendered HTML "
@@ -1522,9 +1588,26 @@ def _extra_game_scout_report(uww_sched):
     matchup = f"{opponent} @ UW-Whitewater" if str(location).strip().lower() == "home" else f"UW-Whitewater @ {opponent}"
     fname = f"{rd.month}_{rd.day}_{rd.strftime('%y')} {matchup}_scout.html"
     dest = os.path.join(schedules_dir, fname)
-    if os.path.exists(dest):
-        print(f"  Scout report for the upcoming game: {fname} (on file)")
-        return dest
+    _have = os.path.exists(dest)
+    _cp = os.path.join(INPUT_DIR, "_extra_scout_check.json")
+    _c = {}
+    if _have:
+        # (see _scout_lm_read: on file -- but have the coaches updated the report on FastScout since?)
+        try:
+            with open(_cp, encoding="utf-8") as fh:
+                _c = json.load(fh)
+        except Exception:
+            _c = {}
+        _hrs = float(globals().get("EXTRA_SCOUT_CHECK_HOURS", 6))
+        _recent = bool(_c.get("modified_file") == fname and _c.get("modified_checked")
+                       and (pd.Timestamp.now() - pd.Timestamp(_c["modified_checked"])).total_seconds() < 3600 * _hrs)
+        _lm_saved = _scout_lm_read().get(fname)
+        if _recent or _before_scout_enabled or not (fastscout_username and fastscout_password) or not opp_url:
+            print(f"  Scout report for the upcoming game: {fname} (on file"
+                  + (f"; FastScout Last Modified {_lm_saved}" if _lm_saved else "")
+                  + (f"; Last Modified checked {str(_c['modified_checked'])[:16]}, again after {_hrs:g} hour(s)" if _recent else "")
+                  + ")")
+            return dest
     if _before_scout_enabled:
         print(f"  Scout report for the upcoming game: not downloaded -- BEFORE_SCOUT = \"yes\"")
         return None
@@ -1538,7 +1621,7 @@ def _extra_game_scout_report(uww_sched):
             cache = json.load(fh)
     except Exception:
         cache = {}
-    if (cache.get("file") == fname and cache.get("checked")
+    if (not _have and cache.get("file") == fname and cache.get("checked")
             and (pd.Timestamp.now() - pd.Timestamp(cache["checked"])).total_seconds()
             < 3600 * float(globals().get("EXTRA_SCOUT_CHECK_HOURS", 6))):
         print(f"  Scout report for the upcoming game: none posted on FastScout when checked {str(cache['checked'])[:16]} "
@@ -1549,6 +1632,25 @@ def _extra_game_scout_report(uww_sched):
     docs_url = f"{base}/documents?league={FASTSCOUT_DOCS_LEAGUE}&season={nxt}"
     _old_season = globals().get("FASTSCOUT_DOCS_SEASON")
     globals()["FASTSCOUT_DOCS_SEASON"] = nxt          # the report page's own URL carries the season too
+    if _have:
+        try:
+            run_in_fastscout_session(
+                lambda page: _download_matching_scout_pdf(page, docs_url, opponent, rd.to_pydatetime(), location,
+                                                          refresh_if_modified=True))
+            print(f"  Scout report for the upcoming game: {fname} (on file; FastScout's Last Modified: "
+                  f"{globals().get('_scout_last_mod_seen') or 'not shown on the documents page'})")
+        except Exception as e:
+            print(f"  Scout report for the upcoming game: {fname} (on file; couldn't check FastScout's Last Modified -- "
+                  f"{type(e).__name__}: {str(e)[:160]})")
+        finally:
+            globals()["FASTSCOUT_DOCS_SEASON"] = _old_season
+        try:
+            _c["modified_file"], _c["modified_checked"] = fname, pd.Timestamp.now().isoformat(timespec="seconds")
+            with open(_cp, "w", encoding="utf-8") as fh:
+                json.dump(_c, fh)
+        except Exception:
+            pass
+        return dest
     try:
         saved = run_in_fastscout_session(
             lambda page: _download_matching_scout_pdf(page, docs_url, opponent, rd.to_pydatetime(), location))

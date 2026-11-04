@@ -2499,12 +2499,61 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     _thin_mins = {}      # read kind -> (minimum, "attempt"/"shot"), from the below-minimum lines (the * legend)
     _thin_seen = [0]     # players drawn with an * (too few attempts for any read)
 
+    # CONFIRMED CHANGE (requested: last season's numbers for transfers like Logan Steffensmeier, "and somehow flag that
+    # they are transfers"). A player on a team's NEW-season roster with no line for that team last season, who shows up in
+    # another team's box scores we have (any game in uww_opponent_prior_games_box_score / uww_pbp_box_score), is a
+    # transfer: his roster row uses those games' per-game averages and carries a "Transfer -- from <team>" tag.
+    _xfer_cache = {}
+
+    def _xkey(n):
+        t = re.sub(r"[.,']", " ", str(n or "")).lower().split()
+        while len(t) > 2 and t[-1] in ("jr", "sr", "ii", "iii", "iv"):
+            t = t[:-1]
+        return " ".join(t)
+
+    def _transfer_of(name, side):
+        k = (side, _xkey(name))
+        if k in _xfer_cache:
+            return _xfer_cache[k]
+        _xfer_cache[k] = None
+        own = "whitewater" if side == "UWW" else _norm(short)
+        lr = _live_ros
+        if lr.empty or "source" not in lr.columns:
+            return None
+        _mine = lr[lr["team"].astype(str).map(_norm).str.contains(own, regex=False)]
+        if not (_mine["source"].astype(str).str.contains("new season", na=False).any()
+                and (_mine["name"].map(_xkey) == _xkey(name)).any()):
+            return None
+        bx = pd.concat([d for d in (_sb_d("uww_opponent_prior_games_box_score"), _sb_d("uww_pbp_box_score"))
+                        if not d.empty and {"team", "player", "game_date"} <= set(d.columns)], ignore_index=True)
+        if bx.empty:
+            return None
+        bx = bx[bx["player"].map(_xkey) == _xkey(name)].drop_duplicates(["game_date", "team", "player"])
+        if bx.empty or bx["team"].astype(str).map(_norm).str.contains(own, regex=False).any():
+            return None
+        team_from = bx["team"].astype(str).value_counts().index[0]
+        g = bx[bx["team"].astype(str) == team_from]
+        num = lambda c: pd.to_numeric(g[c], errors="coerce") if c in g.columns else pd.Series(dtype=float)  # noqa: E731
+        n = len(g)
+        pct = lambda m, a: round(100 * num(m).sum() / num(a).sum(), 1) if num(a).sum() else None  # noqa: E731
+        p = pd.Series({"games": n, "MIN": round(num("MIN").mean(), 1) if num("MIN").notna().any() else None,
+                       "PTS": round(num("PTS").sum() / n, 1), "REB": round(num("REB").sum() / n, 1),
+                       "AST": round(num("AST").sum() / n, 1), "TO": round(num("TO").sum() / n, 1),
+                       "FG%": pct("FGM", "FGA"), "3P%": pct("FG3M", "FG3A"), "FT%": pct("FTM", "FTA"),
+                       "FTM": num("FTM").sum(), "FTA": num("FTA").sum(), "PTS_total": num("PTS").sum()})
+        vs = ", ".join(sorted({str(x) for x in g.get("opponent", pd.Series(dtype=str)).dropna() if str(x) != team_from}))
+        _xfer_cache[k] = {"team": team_from, "p": p, "games": n, "vs": vs}
+        return _xfer_cache[k]
+
     def _roster_player(name, stats_df, side, bullets):
         """Everything one roster entry needs, assembled once so the table layout and the stacked layout
         can't show different reads, keys or flags for the same player."""
         _thin = False
         s_ = stats_df[stats_df["name"].map(_norm) == _norm(name)] if not stats_df.empty else pd.DataFrame()
         p = s_.iloc[0] if not s_.empty else None
+        _xf = _transfer_of(name, side) if p is None else None
+        if _xf is not None:
+            p = _xf["p"]
         if side == "Opponent":
             bio = _opp_bio.get(_norm(name))
             if bio is None:
@@ -2513,6 +2562,11 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     if not _notes_tbl.empty else pd.DataFrame())
             reads = [x for _, r in rows.iterrows() for x in _sb_split(r.get("strengths")) + _sb_split(r.get("weaknesses"))]
             keys = [x for _, r in rows.iterrows() for x in _sb_split(r.get("keys_to_defending"))]
+            # CONFIRMED CHANGE (requested: "It should have brought in information for Logan Steffensmeier"): a player with
+            # no read from the numbers (a transfer or freshman, no box-score line) shows the coaches' own Player Notes
+            # from the scouting report instead of an empty cell
+            if not reads and "source" in rows.columns:
+                reads = [x for _, r in rows[rows["source"].astype(str) == "Coach"].iterrows() for x in _sb_split(r.get("notes"))]
             items = reads[:2] + keys[:1]
             # No real read: show the stats that fell short of a minimum (or that nothing met a threshold)
             # rather than a blank cell -- requested, because a blank looked like the notes had failed.
@@ -2574,7 +2628,13 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _drole, _dbasis = defensive_role_for(name, _team_q)
             if _drole:
                 bits = (bits + " &middot; " if bits else "") + f'Def: <strong>{_sb_esc(_drole)}</strong><span class="mini">{_q(_dbasis)}</span>'
+        if _xf is not None:
+            _xl = (f"Transfer from {_xf['team']} \u2014 his numbers are last season's there "
+                   f"({_xf['games']} game{'s' if _xf['games'] != 1 else ''} on file" + (f", vs {_xf['vs']}" if _xf["vs"] else "") + ")")
+            detail = (("<ul class=\"tbl-bul\"><li>" + _sb_esc(_xl) + "</li>" + detail[len('<ul class="tbl-bul">'):])
+                      if detail.startswith('<ul class="tbl-bul">') else _sb_esc(_xl) + (" \u00b7 " + detail if detail else ""))
         return {"p": p, "bio": bio, "bits": bits, "items": items, "detail": detail, "team": team, "film": _film,
+                "xfer": _xf,
                 "thin": _thin}
 
     def _ft_cell(p):
@@ -2611,6 +2671,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 f'{name_link_lines(name, page="upcoming", tab="personnel", team=r["team"], player=name)}'
                 + ('<span class="thin-ast" title="Too few attempts for a read">*</span>' if r.get("thin") else "")
                 + (f'<br><span class="proj-start">{(tags or {}).get(name)}</span>' if (tags or {}).get(name) else "")
+                + (f'<br><span class="proj-start">Transfer \u2014 {_sb_esc(r["xfer"]["team"])}</span>' if r.get("xfer") else "")
                 + '</td>'
                 + (f'<td>{_sb_fmt(p["games"], 0)}</td><td>{_sb_fmt(p.get("MIN"))}</td><td>{_sb_fmt(p["PTS"])}</td>'
                    f'<td>{_sb_fmt(p["REB"])}</td><td>{_sb_fmt(p["AST"])}</td><td>{_sb_fmt(p["FG%"])}</td>'
@@ -2698,6 +2759,35 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         if starters is None:
             starters, bench = names_by_prod[:5], [("Bench", "No personnel tiers on file yet.", names_by_prod[5:])]
             basis = "no tier table -- top five by production"
+        # CONFIRMED CHANGE (requested: the season-opener brief starts the coaches' five): when the coaches' scouting report
+        # for THIS game lists its starters (uww_opponent_rosters, upcoming_report = True), they are the starters; last
+        # season's starters who aren't in it move to the top of the bench.
+        if side == "Opponent":
+            try:
+                _or = _sb_d("uww_opponent_rosters")
+                if not _or.empty and {"upcoming_report", "role", "name", "opponent"} <= set(_or.columns):
+                    _rs = _or[(_or["opponent"].astype(str) == str(short))
+                              & (_or["upcoming_report"].astype(str).str.lower() == "true")
+                              & (_or["role"].astype(str) == "Starter")]["name"].astype(str).tolist()
+                    if 3 <= len(_rs) <= 5:
+                        _everyone = list(starters) + [n for g in bench for n in g[2]] + \
+                            [x.strip() for x in str(extra_no_min or "").split(",") if x.strip()] + list(limited or [])
+                        _by = {_xkey(n): n for n in _everyone}
+                        _new_st = [_by.get(_xkey(n), n) for n in _rs]
+                        _ks = {_xkey(n) for n in _new_st}
+                        _was = [n for n in starters if _xkey(n) not in _ks]
+                        bench = [(lab, cap, [n for n in names if _xkey(n) not in _ks]) for lab, cap, names in bench]
+                        if bench:
+                            bench[0] = (bench[0][0], bench[0][1], _was + bench[0][2])
+                        else:
+                            bench = [("Bench", "", _was)]
+                        extra_no_min = ", ".join(x.strip() for x in str(extra_no_min or "").split(",")
+                                                 if x.strip() and _xkey(x) not in _ks)
+                        limited = [n for n in (limited or []) if _xkey(n) not in _ks]
+                        starters = _new_st
+                        basis = "the coaches' scouting report for this game (FastScout)"
+            except Exception as _e:
+                print(f"  (coaches' starters not used: {type(_e).__name__}: {_e})")
         if not starters and not any(g[2] for g in bench):
             return
         if break_first:
@@ -3382,6 +3472,10 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         _this_season = _sb_clean(game.get("season"))
         _h2h_this_season = _h2h[_h2h["season"].astype(str) == _this_season] if _this_season else pd.DataFrame()
         _h2h = (_h2h_this_season if not _h2h_this_season.empty else _h2h).head(3)
+    # CONFIRMED CHANGE (requested: "remove the WHEN WE'VE PLAYED <OPP> section from the scouting briefs and leave it in the
+    # application"). The app's "When we've played ..." panel is unchanged; BRIEF_HEAD_TO_HEAD = True brings it back here.
+    if not globals().get("BRIEF_HEAD_TO_HEAD", False):
+        _h2h = pd.DataFrame()
     if not _h2h.empty:
         _h2h_w = int((_h2h["outcome"].astype(str).str.upper() == "W").sum())
         section(f"\U0001f501 WHEN WE'VE PLAYED {OPP_UP}" + footnote(
@@ -5177,6 +5271,26 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                      if _sb_clean(r.get("film_line"))]
             if _bits:
                 _src.append("<b>Film tracking and tagging:</b> " + "; ".join(_bits) + ".")
+    except Exception:
+        pass
+    # CONFIRMED CHANGE (requested: "Is there not any coach-tagged data for Carroll vs Elmhurst?" -- there is; the film line
+    # only names the PLAYER-TRACKED games). Every game with coach-tagged possessions, per team, on offense.
+    try:
+        _pcf = _sb_d("uww_play_calls")
+        if not _pcf.empty and {"game_date", "game_code", "offense_team", "decode_quality"} <= set(_pcf.columns):
+            _pcf = _pcf[_pcf["decode_quality"].astype(str) != "Untagged"]
+            if "scouted_opponent" in _pcf.columns:
+                _pcf = _pcf[_pcf["scouted_opponent"].astype(str) == str(short)]
+            _tb = []
+            for _team in [str(short)] + [t for t in _pcf["offense_team"].dropna().astype(str).unique()
+                                         if "whitewater" in t.lower()][:1]:
+                _gt = _pcf[_pcf["offense_team"].astype(str) == _team].groupby(["game_date", "game_code"]).size()
+                if len(_gt):
+                    _tb.append(f"{_sb_esc(_team)}: " + ", ".join(
+                        f"{_sb_esc(gc)} {pd.Timestamp(gd).month}/{pd.Timestamp(gd).day}/{pd.Timestamp(gd).strftime('%y')} ({int(n_)})"
+                        for (gd, gc), n_ in _gt.sort_index().items()))
+            if _tb:
+                _src.append("<b>Coach-tagged possessions on offense, by game:</b> " + "; ".join(_tb) + ".")
     except Exception:
         pass
     if _src:
