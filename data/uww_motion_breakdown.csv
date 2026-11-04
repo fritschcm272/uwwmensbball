@@ -1,7 +1,7 @@
 scouted_opponent,side,team,motion_family,uses,share_pct,ppp,actions,trigger,screener,finish,games
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Screen Motion,55,39,0.82,Ball Screen (45),Michael McNabb (1) · Evan Bland (1),Jacob Naber (4) · Lamar Smith (1),P&R Ball Handler (28) · Non Possession (10),3
+Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Screen Motion,52,38,0.87,Ball Screen (42),Evan Bland (1),Jacob Naber (3) · Jimmy Tarjan (1),P&R Ball Handler (28) · Non Possession (7),3
 Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,DHO Motion,32,23,0.34,DHO (11) · DHO > Ball Screen (6),Lamar Smith (1) · Michael McNabb (1),Jacob Naber (2),Hand Off (14) · P&R Ball Handler (8),3
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Motion (no action tagged),28,20,1.2,,,,Spot-Up (11) · Post-Up (7),3
+Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Motion (no action tagged),27,20,1.2,,,,Spot-Up (11) · Post-Up (7),3
 Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Off-ball screen Motion,13,9,0.5,Down Screen (7),,,Off Screen (6) · Spot-Up (3),3
 Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Cutting Motion,5,4,1.6,,,,Non Possession (2) · Cut (2),3
 Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Drive Motion,4,3,1.0,,Michael McNabb (2),,Spot-Up (2) · Post-Up (1),2

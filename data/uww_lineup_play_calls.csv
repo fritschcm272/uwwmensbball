@@ -1,48 +1,53 @@
 scouted_opponent,side,lineup,top_calls,tagged_possessions,ppp,grouping
-Carroll (WI) Pioneers,Opponent,"Cai Joseph, Dennis Estepp, Greg Smith, Lucas Parker, Peyton McKenna",Ball-screen Motion (1x),1,0.0,4G-1W
+Carroll (WI) Pioneers,Opponent,"Cai Joseph, Dennis Estepp, Greg Smith, Lucas Parker, Peyton McKenna",Screen Motion (1x),1,0.0,4G-1W
 Carroll (WI) Pioneers,Opponent,"Cai Joseph, Dennis Estepp, Jacob Naber, Lamar Smith, Peyton McKenna","Motion (no action tagged) (4x), DHO Motion (1x), Cutting Motion (1x)",6,0.67,3G-2W
-Carroll (WI) Pioneers,Opponent,"Cai Joseph, Evan Bland, Jacob Naber, Lamar Smith, Lucas Parker",BLOB Ball-screen Motion (1x),1,0.0,3G-2W
+Carroll (WI) Pioneers,Opponent,"Cai Joseph, Evan Bland, Jacob Naber, Lamar Smith, Lucas Parker",BLOB Screen Motion (1x),1,0.0,3G-2W
 Carroll (WI) Pioneers,Opponent,"Cai Joseph, Evan Oleson, Greg Smith, Lucas Parker, Peyton McKenna",Motion (no action tagged) (3x),3,0.0,4G-1W
-Carroll (WI) Pioneers,Opponent,"Cai Joseph, Evan Oleson, Greg Smith, Michael McNabb, Peyton McKenna","Ball-screen Motion (3x), Motion (no action tagged) (2x)",5,0.5,4G-1W
+Carroll (WI) Pioneers,Opponent,"Cai Joseph, Evan Oleson, Greg Smith, Michael McNabb, Peyton McKenna","Screen Motion (3x), Motion (no action tagged) (2x)",5,0.5,4G-1W
 Carroll (WI) Pioneers,Opponent,"Cai Joseph, Jacob Naber, Lamar Smith, Michael McNabb, Peyton McKenna","Drive Motion (1x), DHO Motion (1x)",2,1.0,3G-2W
 Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Greg Smith, Lamar Smith, Michael McNabb",DHO Motion (1x),1,0.0,3G-2W
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Greg Smith, Lucas Parker, Michael McNabb","Ball-screen Motion (3x), DHO Motion (3x), Motion (no action tagged) (1x)",7,0.29,4G-1W
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lamar Smith, Lucas Parker","Ball-screen Motion (5x), DHO Motion (1x), BLOB Box (1x)",9,1.0,3G-2W
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lamar Smith, Peyton McKenna","SLOB Off-ball screen Motion (1x), Ball-screen Motion (1x)",2,1.0,3G-2W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Greg Smith, Lucas Parker, Michael McNabb","Screen Motion (3x), DHO Motion (3x), Motion (no action tagged) (1x)",7,0.29,4G-1W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lamar Smith, Lucas Parker","Screen Motion (5x), DHO Motion (1x), BLOB Box (1x)",9,1.0,3G-2W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lamar Smith, Peyton McKenna","SLOB Off-ball screen Motion (1x), Screen Motion (1x)",2,1.0,3G-2W
 Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lucas Parker, Michael McNabb","Off-ball screen Motion (2x), Set (1x), FLEX (1x)",4,0.67,4G-1W
 Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jacob Naber, Lucas Parker, Peyton McKenna",Cutting Motion (1x),1,2.0,4G-1W
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jimmy Tarjan, Lamar Smith, Peyton McKenna","DHO Motion (1x), Ball-screen Motion (1x), BLOB Set (1x)",3,1.33,4G-1W
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jimmy Tarjan, Lucas Parker, Michael McNabb","Set (1x), Ball-screen Motion (1x)",2,0.0,5G
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Greg Smith, Lucas Parker, Michael McNabb, Peyton McKenna","Ball-screen Motion (2x), DHO Motion (1x), Motion (no action tagged) (1x)",4,0.0,4G-1W
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Jacob Naber, Lamar Smith, Michael McNabb, Peyton McKenna","Ball-screen Motion (9x), DHO Motion (5x), Off-ball screen Motion (4x)",25,0.58,3G-2W
-Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Jimmy Tarjan, Lamar Smith, Lucas Parker, Michael McNabb","Ball-screen Motion (2x), Set (1x), DHO Motion (1x)",4,2.0,4G-1W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jimmy Tarjan, Lamar Smith, Peyton McKenna","DHO Motion (1x), Screen Motion (1x), BLOB Set (1x)",3,1.33,4G-1W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Bland, Jimmy Tarjan, Lucas Parker, Michael McNabb","Set (1x), Screen Motion (1x)",2,0.0,5G
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Oleson, Greg Smith, Lamar Smith, Lucas Parker","Cutting Motion (1x), Screen Motion (1x), BLOB Motion (other) (1x)",3,0.67,3G-2W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Oleson, Greg Smith, Lamar Smith, Michael McNabb",BLOB Set (1x),1,0.0,3G-2W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Oleson, Jacob Naber, Lamar Smith, Michael McNabb","DHO Motion (1x), Motion (no action tagged) (1x)",2,1.0,3G-2W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Evan Oleson, Jacob Naber, Lucas Parker, Michael McNabb",Screen Motion (2x),2,1.0,4G-1W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Greg Smith, Lucas Parker, Michael McNabb, Peyton McKenna","Screen Motion (2x), DHO Motion (1x), Motion (no action tagged) (1x)",4,0.0,4G-1W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Jacob Naber, Lamar Smith, Michael McNabb, Peyton McKenna","Screen Motion (12x), DHO Motion (8x), Motion (no action tagged) (6x)",35,0.61,3G-2W
+Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Jimmy Tarjan, Lamar Smith, Lucas Parker, Michael McNabb","Screen Motion (2x), Set (1x), DHO Motion (1x)",4,2.0,4G-1W
 Carroll (WI) Pioneers,Opponent,"Dennis Estepp, Jimmy Tarjan, Lucas Parker, Michael McNabb, Peyton McKenna",DHO Motion (1x),1,0.0,5G
 Carroll (WI) Pioneers,Opponent,"Evan Bland, Greg Smith, Lamar Smith, Lucas Parker, Peyton McKenna",Motion (no action tagged) (1x),1,3.0,3G-2W
-Carroll (WI) Pioneers,Opponent,"Evan Bland, Jacob Naber, Lamar Smith, Michael McNabb, Peyton McKenna","Ball-screen Motion (13x), DHO Motion (9x), Motion (no action tagged) (6x)",41,0.92,3G-2W
-Carroll (WI) Pioneers,Opponent,"Evan Bland, Jacob Naber, Lucas Parker, Michael McNabb, Peyton McKenna","Motion (no action tagged) (2x), Ball-screen Motion (1x)",3,1.0,4G-1W
-Carroll (WI) Pioneers,Opponent,"Evan Oleson, Jacob Naber, Lamar Smith, Lucas Parker, Michael McNabb",Ball-screen Motion (2x),2,0.0,3G-2W
-Carroll (WI) Pioneers,Opponent,"Evan Oleson, Jacob Naber, Lamar Smith, Michael McNabb, Peyton McKenna","Ball-screen Motion (2x), Off-ball screen Motion (1x)",3,1.0,3G-2W
-Carroll (WI) Pioneers,Opponent,"Jacob Naber, Lamar Smith, Lucas Parker, Michael McNabb, Peyton McKenna","Ball-screen Motion (2x), DHO Motion (2x), Motion (no action tagged) (1x)",5,0.6,3G-2W
-Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren","SLOB Ball-screen Motion (1x), BLOB (1x), Ball Screen (1x)",5,1.2,
-Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren","Ball-screen Motion (17x), Motion (no action tagged) (7x), Set (2x)",36,0.86,
+Carroll (WI) Pioneers,Opponent,"Evan Bland, Jacob Naber, Lamar Smith, Michael McNabb, Peyton McKenna","Screen Motion (13x), DHO Motion (9x), Motion (no action tagged) (6x)",41,0.92,3G-2W
+Carroll (WI) Pioneers,Opponent,"Evan Bland, Jacob Naber, Lucas Parker, Michael McNabb, Peyton McKenna","Motion (no action tagged) (2x), Screen Motion (1x)",3,1.0,4G-1W
+Carroll (WI) Pioneers,Opponent,"Evan Oleson, Jacob Naber, Lamar Smith, Lucas Parker, Michael McNabb",Screen Motion (2x),2,0.0,3G-2W
+Carroll (WI) Pioneers,Opponent,"Evan Oleson, Jacob Naber, Lamar Smith, Michael McNabb, Peyton McKenna","Screen Motion (3x), Off-ball screen Motion (1x)",4,0.67,3G-2W
+Carroll (WI) Pioneers,Opponent,"Evan Oleson, Jacob Naber, Lucas Parker, Michael McNabb, Peyton McKenna",DHO Motion (1x),1,3.0,4G-1W
+Carroll (WI) Pioneers,Opponent,"Jacob Naber, Lamar Smith, Lucas Parker, Michael McNabb, Peyton McKenna","Screen Motion (2x), DHO Motion (2x), Motion (no action tagged) (1x)",5,0.6,3G-2W
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren","SLOB Screen Motion (1x), BLOB (1x), Ball Screen (1x)",5,1.2,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren","Screen Motion (17x), Motion (no action tagged) (7x), Set (2x)",36,0.86,
 Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Isaac Verges, Richie Warren, Tyshawn Teague-Johnson","Off-ball screen Motion (1x), DHO Motion (1x), TWINS LEFT (1x)",4,1.25,
-Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Jake Quast, Luke Bara","Ball-screen Motion (2x), BLOB Motion (no action tagged) (1x), Off-ball screen Motion (1x)",4,0.5,
-Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren","Ball-screen Motion (6x), BLOB Motion (no action tagged) (3x), Off-ball screen Motion (3x)",29,0.82,
-Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson","Spain (1x), Ball-screen Motion (1x), BLOB Motion (no action tagged) (1x)",6,0.4,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Jake Quast, Luke Bara","Screen Motion (2x), BLOB Motion (no action tagged) (1x), Off-ball screen Motion (1x)",4,0.5,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren","Screen Motion (6x), BLOB Motion (no action tagged) (3x), Off-ball screen Motion (3x)",29,0.82,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson","Spain (1x), Screen Motion (1x), BLOB Motion (no action tagged) (1x)",6,0.4,
 Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen","Ball Screen (3x), BLOB (1x), Spain (1x)",5,0.0,
 Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Richie Warren","BLOB (1x), Scissors (1x)",2,1.0,
 Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Jake Quast, Luke Bara, Richie Warren","Ball Screen (2x), BLOB Off-ball screen Motion (1x), Spain (1x)",8,1.43,
-Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren","Ball-screen Motion (7x), Motion (no action tagged) (4x), Off-ball screen Motion (1x)",13,0.92,
+Carroll (WI) Pioneers,UWW,"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren","Screen Motion (7x), Motion (no action tagged) (4x), Off-ball screen Motion (1x)",13,0.92,
 Carroll (WI) Pioneers,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz","Off-ball screen Motion (2x), Ball Screen (2x), Double Ball Screen (1x)",10,1.0,
 Carroll (WI) Pioneers,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Luke Bara, Richie Warren",DHO (1x),1,0.0,
-Carroll (WI) Pioneers,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren, Tyshawn Teague-Johnson","Ball-screen Motion (2x), Over (1x), 5 Out (1x)",5,1.0,
-Carroll (WI) Pioneers,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Joey Berezowitz","Ball-screen Motion (5x), Set (1x), FOUL (1x)",8,1.25,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren, Tyshawn Teague-Johnson","Screen Motion (2x), Over (1x), 5 Out (1x)",5,1.0,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Joey Berezowitz","Screen Motion (5x), Set (1x), FOUL (1x)",8,1.25,
 Carroll (WI) Pioneers,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Luke Bara","Set (1x), BLOB Set (1x), Snap 10 (1x)",3,0.67,
-Carroll (WI) Pioneers,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Richie Warren","Ball-screen Motion (2x), Set (1x), Iso (1x)",7,1.29,
-Carroll (WI) Pioneers,UWW,"Collin Madson, Isaac Verges, Luke Bara, Rashad Rogers, Richie Warren","BLOB Set (2x), Ball-screen Motion (2x), Motion (other) (1x)",7,0.29,
-Carroll (WI) Pioneers,UWW,"Collin Madson, JR Lukenbill, Jake Quast, Luke Bara, Richie Warren","Motion (no action tagged) (1x), Ball-screen Motion (1x)",2,1.0,
-Carroll (WI) Pioneers,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren","Ball-screen Motion (3x), DHO (1x), Ball Screen (1x)",6,1.83,
-Carroll (WI) Pioneers,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Rashad Rogers, Richie Warren","Ball-screen Motion (4x), Motion (no action tagged) (3x), BLOB Set (1x)",9,1.12,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Richie Warren","Screen Motion (2x), Set (1x), Iso (1x)",7,1.29,
+Carroll (WI) Pioneers,UWW,"Collin Madson, Isaac Verges, Luke Bara, Rashad Rogers, Richie Warren","BLOB Set (2x), Screen Motion (2x), Motion (other) (1x)",7,0.29,
+Carroll (WI) Pioneers,UWW,"Collin Madson, JR Lukenbill, Jake Quast, Luke Bara, Richie Warren","Motion (no action tagged) (1x), Screen Motion (1x)",2,1.0,
+Carroll (WI) Pioneers,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren","Screen Motion (3x), DHO (1x), Ball Screen (1x)",6,1.83,
+Carroll (WI) Pioneers,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Rashad Rogers, Richie Warren","Screen Motion (4x), Motion (no action tagged) (3x), BLOB Set (1x)",9,1.12,
 Carroll (WI) Pioneers,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",Ball Screen (1x),1,3.0,
 Carroll (WI) Pioneers,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren",Ball Screen (2x),2,0.0,
 Carroll (WI) Pioneers,UWW,"Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson","BLOB Cutting Motion (1x), Cheetah (1x)",2,1.0,
