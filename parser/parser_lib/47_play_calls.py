@@ -3568,11 +3568,11 @@ if isinstance(globals().get("clip_frames"), pd.DataFrame) and not clip_frames.em
 # the play call. Every team runs a motion offense but they all do things differently" -- recommendations 1, 2 and 6).
 #   play_call_base   = the call as decoded before this step (e.g. "5 Out Motion")
 #   play_call        = a Motion call becomes its FAMILY, from the first defining action:
-#                      "Ball-screen Motion", "DHO Motion", "Off-ball screen Motion", "Cutting Motion", "Drive Motion",
+#                      "Screen Motion", "DHO Motion", "Off-ball screen Motion", "Cutting Motion", "Drive Motion",
 #                      "Motion (other)", or "Motion (no action tagged)" -- every table, the brief and the app read this
 #   play_call_detail = formation + Motion + the first two actions in order ("5 Out Motion: DHO > Ball Screen"); a detail a
 #                      team ran fewer than MOTION_DETAIL_MIN (3) times rolls up to "<family>: other"
-#   play_call_family = the family alone ("Ball-screen"); not-Motion calls keep their own call in every column.
+#   play_call_family = the family alone ("Screen"); not-Motion calls keep their own call in every column.
 # Coaches' typed answers are cleaned the same way (PLAY_ANSWER_ALIASES: typos, case, a defense typed as a play call), only
 # when read -- nothing saved is changed.
 PLAY_ANSWER_ALIASES = globals().get("PLAY_ANSWER_ALIASES") or {
@@ -3583,7 +3583,8 @@ PLAY_ANSWER_ALIASES = globals().get("PLAY_ANSWER_ALIASES") or {
     "offball_coverage": {"theremotionjacob": None, "2": None},
 }
 _MOTION_FAMILIES = [
-    ("Ball-screen", r"ball ?screen|\bbs\b|drag|pick|p&r|pnr|\bpc5\b|spain|double ball"),
+    # CONFIRMED CHANGE (requested: "rename the Ball-screen Motion to be just Screen Motion")
+    ("Screen", r"ball ?screen|\bbs\b|drag|pick|p&r|pnr|\bpc5\b|spain|double ball"),
     ("DHO", r"\bdho\b|hand ?off|weave|pistol|zoom|\bgive\b|follow"),
     ("Off-ball screen", r"down ?screen|stagger|flare|flair|cross ?screen|back ?screen|screen the screener|pin ?down|curl|"
                         r"flex|\bram\b|elevator|\bivo\b|iverson|ricky|rescreen|ghost|scissors|pat miller|away"),
@@ -3654,7 +3655,7 @@ def _pl_motion_detail(df):
         if "play_series" in df.columns and re.search(r"\bmotion\b", str(r.get("play_series") or ""), re.I):
             df.at[i, "play_series"] = label
         df.at[i, "play_call_family"] = fam or "no action tagged"
-    # a detail a team ran only once or twice rolls up into its family ("Ball-screen Motion: other")
+    # a detail a team ran only once or twice rolls up into its family ("Screen Motion: other")
     if mot.any() and "offense_team" in df.columns:
         cnt = df[mot].groupby(["offense_team", "play_call_detail"])["play_call_detail"].transform("size")
         rare = cnt[cnt < MOTION_DETAIL_MIN].index

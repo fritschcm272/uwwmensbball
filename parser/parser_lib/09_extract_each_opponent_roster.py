@@ -114,6 +114,14 @@ def extract_roster_from_pdf(elements_df, opponent):
                 jersey, name, pos, height, weight, cls = m.groups()
                 player_seq += 1
                 notes, keys, combined_blob = [], [], None
+                # CONFIRMED BUG (fixed; "It should have brought in information for Logan Steffensmeier"): only the FIRST
+                # line under "Player Notes" / "Keys to Defending" was kept (a line counted only when the element right
+                # before it was the header). His report has three of each -- "Driver/Shooter", "Likes to slash to
+                # basket/prefers RHD", "Crashes O-Boards!" and "Box Out!!", "Anticipate RHD", "No C&S" -- and only the
+                # first of each came through. Every line under a header now counts, up to the next header; an HTML
+                # report's lines are separate items (joined " | "), a PDF's are one paragraph broken across lines.
+                _mode = None
+                _is_html = bool(globals().get("_scout_src_is_html", {}).get(opponent, True))
                 j = i + 1
                 while j < n:
                     nel = elements[j]
@@ -121,20 +129,26 @@ def extract_roster_from_pdf(elements_df, opponent):
                         break
                     if nel["element_type"] == "section_header" and nel["element_content"].strip() in ("STARTERS", "BENCH"):
                         break
-                    if nel["element_type"] == "text":
+                    if nel["element_type"] == "section_header":
+                        _h = nel["element_content"].strip()
+                        _mode = ("notes" if _h.startswith("Player Notes") else "keys" if _h.startswith("Keys to Defending")
+                                 else None)
+                    elif nel["element_type"] == "text":
                         content = nel["element_content"].strip()
-                        prev = elements[j - 1]
-                        if prev["element_type"] == "section_header" and prev["element_content"].startswith("Player Notes"):
-                            notes.append(content)
-                        elif prev["element_type"] == "section_header" and prev["element_content"].startswith("Keys to Defending"):
-                            keys.append(content)
-                        elif "player notes" in content.lower() and "keys to defending" in content.lower():
+                        if "player notes" in content.lower() and "keys to defending" in content.lower():
                             combined_blob = content
+                        elif _mode == "notes" and content:
+                            notes.append(content)
+                        elif _mode == "keys" and content:
+                            keys.append(content)
+                    else:
+                        _mode = None
                     j += 1
+                _jn = " | " if _is_html else " "
                 if not notes and not keys and combined_blob:
                     notes_text, keys_text = split_combined_notes_keys(combined_blob)
                 else:
-                    notes_text, keys_text = " ".join(notes), " ".join(keys)
+                    notes_text, keys_text = _jn.join(notes), _jn.join(keys)
                 if bench_idx is not None:
                     role = "Starter" if el["element_index"] < bench_idx else "Bench"
                 else:
@@ -186,6 +200,10 @@ for _o, _df in (globals().get("scout_reports_upcoming") or {}).items():
         print(f"  {_o}: the upcoming game's report has no player entries -- last season's player notes kept")
         continue
     _new_by = {_roster_key(r["name"]): r for _, r in _new.iterrows()}
+    # CONFIRMED CHANGE (requested: the season-opener brief starts the coaches' five): which rows the upcoming game's
+    # report covers -- its Starter / Bench is the coaches' call for THIS game (the brief reads upcoming_report)
+    if "upcoming_report" not in all_rosters.columns:
+        all_rosters["upcoming_report"] = False
     _mask = all_rosters["opponent"] == _o
     _hit = 0
     for _i in all_rosters.index[_mask]:
@@ -193,11 +211,13 @@ for _o, _df in (globals().get("scout_reports_upcoming") or {}).items():
         if _r is not None:
             for _c in ("player_notes", "keys_to_defending", "role"):
                 all_rosters.at[_i, _c] = _r[_c]
+            all_rosters.at[_i, "upcoming_report"] = True
             _hit += 1
     _add = pd.DataFrame(list(_new_by.values()))
     if not _add.empty:
         _add["jersey_number"] = None
-        all_rosters = pd.concat([all_rosters, _add[roster_cols]], ignore_index=True)
+        _add["upcoming_report"] = True
+        all_rosters = pd.concat([all_rosters, _add[roster_cols + ["upcoming_report"]]], ignore_index=True)
     print(f"  {_o}: player notes from the upcoming game's report -- {_hit} player(s) updated, {len(_add)} new player(s) "
           f"added" + (f" ({', '.join(_add['name'])})" if len(_add) else ""), flush=True)
 print(all_rosters)

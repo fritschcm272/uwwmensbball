@@ -115,7 +115,10 @@ if not box_only.empty:
     box_only["has_scouting_report"] = False
     print(f"Adding {len(box_only)} box-score-only player(s) with no scouting writeup (defaulted to role=Bench):")
     _show(box_only[["opponent", "jersey_number", "name"]])
-    player_profiles = pd.concat([player_profiles, box_only[player_profiles.columns.tolist()]], ignore_index=True)
+    # CONFIRMED BUG (fixed; KeyError "['upcoming_report'] not in index"): a column the rosters carry that box-score-only
+    # players don't (upcoming_report, added for the coaches' starters) is left blank for them instead of failing
+    player_profiles = pd.concat([player_profiles, box_only.reindex(columns=player_profiles.columns.tolist())],
+                                ignore_index=True)
 else:
     print("No box-score-only players found -- every player in the season boxscore already has a roster/notes entry.")
 

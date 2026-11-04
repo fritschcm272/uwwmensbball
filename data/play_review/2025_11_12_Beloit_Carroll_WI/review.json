@@ -1,7 +1,7 @@
 {
  "game": "2025-11-12|Beloit@Carroll(WI)",
  "slug": "2025_11_12_Beloit_Carroll_WI",
- "run": "20261104_111810",
+ "run": "20261104_144645",
  "plays": [
   {
    "clip_key": "2025-11-12|1|44 Lamar Smith > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts",
@@ -936,10 +936,12 @@
    "No Play",
    "Offensive Rebound",
    "Over",
+   "pass to 5",
    "Pass to Corner",
    "Pass wing",
    "Pat Miller",
    "PC5",
+   "Pinch Flash",
    "Pistol",
    "Post Entry",
    "Ram-Spain",
@@ -951,6 +953,7 @@
    "Slot Cutter",
    "Spain",
    "STAGGER",
+   "STS",
    "Swing (pass across)",
    "Throw 5",
    "Throw Pinch",
@@ -1092,5 +1095,5 @@
    "Will Grudzinski"
   ]
  },
- "built": "2026-11-04T11:18:28"
+ "built": "2026-11-04T14:46:58"
 }
