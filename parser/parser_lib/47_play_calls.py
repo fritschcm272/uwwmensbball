@@ -3563,13 +3563,119 @@ if isinstance(globals().get("clip_frames"), pd.DataFrame) and not clip_frames.em
         if not _test:
             raise FramesNotReady("captured frames and uww_plays.csv don't line up -- see the list printed above")
 
+# ---- Motion, in coordination with what the team actually runs ---------------------------------------------------------
+# CONFIRMED CHANGE (requested: "I don't want anything to just say 'motion', but instead it needs to be in coordination with
+# the play call. Every team runs a motion offense but they all do things differently" -- recommendations 1, 2 and 6).
+#   play_call_base   = the call as decoded before this step (e.g. "5 Out Motion")
+#   play_call        = a Motion call becomes its FAMILY, from the first defining action:
+#                      "Ball-screen Motion", "DHO Motion", "Off-ball screen Motion", "Cutting Motion", "Drive Motion",
+#                      "Motion (other)", or "Motion (no action tagged)" -- every table, the brief and the app read this
+#   play_call_detail = formation + Motion + the first two actions in order ("5 Out Motion: DHO > Ball Screen"); a detail a
+#                      team ran fewer than MOTION_DETAIL_MIN (3) times rolls up to "<family>: other"
+#   play_call_family = the family alone ("Ball-screen"); not-Motion calls keep their own call in every column.
+# Coaches' typed answers are cleaned the same way (PLAY_ANSWER_ALIASES: typos, case, a defense typed as a play call), only
+# when read -- nothing saved is changed.
+PLAY_ANSWER_ALIASES = globals().get("PLAY_ANSWER_ALIASES") or {
+    "play_call": {"intrnasntionrandommovement": None, "set bs": "Set", "twinsleft": "Twins", "m2m": None},
+    "formation": {"motion": None, "theresnotreallyone": None},
+    "primary_action": {"flair": "Flare", "isolation": "ISO", "blitzcollin": None},
+    "ball_screen_coverage": {"hihghegde": "High Hedge", "highhegde": "High Hedge"},
+    "offball_coverage": {"theremotionjacob": None, "2": None},
+}
+_MOTION_FAMILIES = [
+    ("Ball-screen", r"ball ?screen|\bbs\b|drag|pick|p&r|pnr|\bpc5\b|spain|double ball"),
+    ("DHO", r"\bdho\b|hand ?off|weave|pistol|zoom|\bgive\b|follow"),
+    ("Off-ball screen", r"down ?screen|stagger|flare|flair|cross ?screen|back ?screen|screen the screener|pin ?down|curl|"
+                        r"flex|\bram\b|elevator|\bivo\b|iverson|ricky|rescreen|ghost|scissors|pat miller|away"),
+    ("Cutting", r"cut|flash|backdoor|basket ?cut|split"),
+    ("Drive", r"drive|\biso\b|isolation|double clear|clear"),
+]
+# moving the ball, not the action that defines the possession -- skipped to find the first defining action
+_MOTION_SKIP = r"pass to corner|swing|twins|throw to the pinch|post entry|entry|\bflow\b|offensive rebound|no play|reversal"
+MOTION_DETAIL_MIN = int(globals().get("MOTION_DETAIL_MIN", 3))
+
+
+def _pl_answer_alias(field, v):
+    """A coach's typed answer, cleaned (PLAY_ANSWER_ALIASES); None = not a real answer for this field."""
+    if v is None or (isinstance(v, float) and pd.isna(v)):
+        return v
+    k = re.sub(r"[^a-z0-9#]+", "", str(v).lower())
+    al = PLAY_ANSWER_ALIASES.get(field, {})
+    return al[k] if k in al else v
+
+
+def _pl_motion_family(actions):
+    """[action, ...] in order -> (family, [defining actions shown in the detail])."""
+    acts = [a for a in actions if a and str(a).strip()]
+    defining = [a for a in acts if not re.search(_MOTION_SKIP, str(a), re.I)]
+    for a in defining:
+        for fam, rx in _MOTION_FAMILIES:
+            if re.search(rx, str(a), re.I):
+                return fam, (defining or acts)[:2]
+    if defining:
+        return "other", defining[:2]
+    return None, acts[:2]
+
+
+def _pl_motion_detail(df):
+    if df is None or df.empty or "play_call" not in df.columns:
+        return df
+    df = df.copy()
+    for f, c in (("play_call", "play_set"), ("formation", "play_formation"), ("primary_action", "primary_action")):
+        if c in df.columns:
+            df[c] = df[c].map(lambda v, f=f: _pl_answer_alias(f, v))
+    df["play_call_base"] = df["play_call"]
+    df["play_call_detail"] = df["play_call"]
+    df["play_call_family"] = None
+    mot = df["play_call"].astype(str).str.contains(r"\bmotion\b", case=False, regex=True, na=False)
+    for i in df.index[mot]:
+        r = df.loc[i]
+        acts = [a.strip() for a in str(r.get("play_actions") or "").split("|") if a.strip() and a.strip() != "nan"]
+        if not acts and isinstance(r.get("primary_action"), str) and r.get("primary_action").strip():
+            acts = [r.get("primary_action").strip()]
+        fam, shown = _pl_motion_family(acts)
+        sit = str(r.get("play_situation") or "")
+        oob = next((x for x in ("BLOB", "SLOB") if sit.startswith(x)), None)
+        pre = f"{oob} " if oob else ""
+        form = r.get("play_formation")
+        form = f"{form} " if isinstance(form, str) and form.strip() and form.lower() not in ("motion", "nan") else ""
+        if fam is None:
+            label = f"{pre}Motion (no action tagged)"
+            detail = f"{pre}{form}Motion (no action tagged)"
+        elif fam == "other":
+            label = f"{pre}Motion (other)"
+            detail = f"{pre}{form}Motion: " + " > ".join(shown)
+        else:
+            label = f"{pre}{fam} Motion"
+            detail = f"{pre}{form}Motion: " + " > ".join(shown)
+        df.at[i, "play_call"] = label
+        df.at[i, "play_call_detail"] = detail
+        # (the series too -- the brief's "What they went to most" read play_series and still printed "Motion (82x)")
+        if "play_series" in df.columns and re.search(r"\bmotion\b", str(r.get("play_series") or ""), re.I):
+            df.at[i, "play_series"] = label
+        df.at[i, "play_call_family"] = fam or "no action tagged"
+    # a detail a team ran only once or twice rolls up into its family ("Ball-screen Motion: other")
+    if mot.any() and "offense_team" in df.columns:
+        cnt = df[mot].groupby(["offense_team", "play_call_detail"])["play_call_detail"].transform("size")
+        rare = cnt[cnt < MOTION_DETAIL_MIN].index
+        df.loc[rare, "play_call_detail"] = df.loc[rare, "play_call"].astype(str) + ": other"
+    return df
+
+
+play_calls = _pl_motion_detail(play_calls)
+_n_mot = int(play_calls["play_call_family"].notna().sum()) if "play_call_family" in play_calls.columns else 0
+if _n_mot:
+    print("  Motion broken out by what each team runs: " + ", ".join(
+        f"{k} {v}" for k, v in play_calls["play_call"].where(play_calls["play_call_family"].notna()).value_counts().items())
+        + f" ({_n_mot} Motion possession(s))", flush=True)
+
 play_calls_other = play_calls[play_calls["side"] == "Other"].reset_index(drop=True)
 play_calls = play_calls[play_calls["side"] != "Other"].reset_index(drop=True)
 
 # ---- Summaries: one row per (side, level, name) --------------------------------------------------------
 # Built here so the brief and the app read the same numbers. A clip flagged Rewatch/TBD or with no call is
 # counted in the totals but never ranked as a set.
-_PL_LEVELS = [("play_call", "Play call"), ("play_series", "Series"), ("primary_action", "Primary action"),
+_PL_LEVELS = [("play_call", "Play call"), ("play_call_detail", "Play call detail"), ("play_series", "Series"), ("primary_action", "Primary action"),
               ("play_situation", "Situation"), ("play_location", "Location"), ("synergy_play_type", "Finish type"),
               # Which 5-man unit was on the floor, from the play-by-play's own lineup reconstruction (see
               # "On-court 5-man lineups" / the upcoming-opponent lineup cell) -- not decoded from the clip,
@@ -4055,8 +4161,60 @@ _ar_src = play_calls
 if not play_calls.empty and "possession_side" in play_calls.columns:
     _ar_src = play_calls[(play_calls["side"] != "Other")]
 action_reads = _pl_reads(_ar_src)
+
+
+# CONFIRMED CHANGE (requested: Motion in coordination with the play call -- recommendations 3 and 4). How each team runs
+# its Motion (uww_motion_breakdown: one row per team x Motion family -- how often, PPP, its usual actions in order, who
+# triggers it, who screens, how it ends) for the brief and the app; and the Motion plays a coach tagged with no action
+# (uww_motion_needs_action) so they can be gone back to.
+def _pl_motion_tables(pc):
+    if pc is None or pc.empty or "play_call_family" not in pc.columns:
+        return pd.DataFrame(), pd.DataFrame()
+    m = pc[pc["play_call_family"].notna()].copy()
+    if "possession_side" in m.columns:
+        m = m[m["possession_side"].astype(str) != "Defense"]
+    if m.empty:
+        return pd.DataFrame(), pd.DataFrame()
+    m["_pts"] = pd.to_numeric(m["points"], errors="coerce")
+
+    def _who(v, role):
+        try:
+            ps = json.loads(v) if isinstance(v, str) and v.strip().startswith("[") else []
+        except Exception:
+            ps = []
+        for p_ in ps:
+            if isinstance(p_, dict) and str(p_.get("order")) in ("1", "1.0") and role in str(p_.get("role") or "").lower():
+                nm_ = p_.get("offense")
+                return nm_ if nm_ and "missing" not in str(nm_).lower() else None
+        return None
+    m["_trig"] = m["action_players"].map(lambda v: _who(v, "trigger")) if "action_players" in m.columns else None
+    m["_scr"] = m["action_players"].map(lambda v: _who(v, "screener")) if "action_players" in m.columns else None
+    top = lambda s_, k=2: " · ".join(f"{a} ({int(b)})" for a, b in s_.dropna().astype(str).value_counts().head(k).items())
+    rows = []
+    for (opp, side, team, fam), g in m.groupby(["scouted_opponent", "side", "offense_team", "play_call"], dropna=False):
+        tot = int((m["offense_team"] == team).sum())
+        known = g["_pts"].notna().sum()
+        det = g["play_call_detail"].astype(str).str.split(": ", n=1).str[-1]
+        rows.append({"scouted_opponent": opp, "side": side, "team": team, "motion_family": fam, "uses": len(g),
+                     "share_pct": round(100 * len(g) / tot) if tot else None,
+                     "ppp": round(g["_pts"].sum() / known, 2) if known else None,
+                     "actions": top(det[~det.str.contains("no action|other", case=False)], 3),
+                     "trigger": top(g["_trig"]), "screener": top(g["_scr"]),
+                     "finish": top(g["synergy_play_type"]) if "synergy_play_type" in g.columns else None,
+                     "games": g["game_date"].nunique()})
+    br = pd.DataFrame(rows).sort_values(["scouted_opponent", "side", "team", "uses"], ascending=[True, True, True, False])
+    na = m[m["play_call_family"] == "no action tagged"]
+    keep = [c for c in ("scouted_opponent", "side", "offense_team", "game_date", "game_code", "clip_number", "period",
+                        "time_remaining_seconds", "play_title", "synergy_string") if c in na.columns]
+    return br.reset_index(drop=True), na[keep].sort_values(["game_date", "clip_number"]).reset_index(drop=True)
+
+
+motion_breakdown, motion_needs_action = _pl_motion_tables(play_calls)
+print(f"  Motion breakdown: {len(motion_breakdown)} team x family row(s); {len(motion_needs_action)} Motion play(s) tagged "
+      "with no action (uww_motion_needs_action -- Analytics > Film Tagging lists them)", flush=True)
 for _nm, _df in (("uww_screen_defenders", screen_defenders), ("uww_action_reads", action_reads),
-                 ("uww_screen_taggers", screen_taggers)):
+                 ("uww_screen_taggers", screen_taggers),
+                 ("uww_motion_breakdown", motion_breakdown), ("uww_motion_needs_action", motion_needs_action)):
     try:
         _df.to_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, f"{_nm}.csv"), index=False)
     except Exception as _e:

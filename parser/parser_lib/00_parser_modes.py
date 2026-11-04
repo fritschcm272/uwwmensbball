@@ -239,7 +239,46 @@ def _pm_core_fingerprint(nb, upto):
     return _h.md5("\n".join(parts).encode("utf-8", "replace")).hexdigest()
 
 
-def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb", quiet=None, fresh=False):
+# CONFIRMED CHANGE (requested: "Is parser_models always re-training things or is it possible to set a new game, get the
+# video export and apply the current models for player number tracking and film tagging? Maybe add some simple options that
+# I can change in the first cell"). run_parser(..., options={...}) -- set in the job notebook's first cell:
+#   TRAIN_MODELS = False   use the SAVED tag model (automatic Titles) and jersey-number reader as they are: no retraining,
+#                          no new training crops. (TAG_MODEL_RETRAIN = False, JERSEY_TRAIN_NOW = False,
+#                          JERSEY_TRAIN_ADD_FRAMES = False.) True / None = parser_nb's own settings ("auto").
+#   ADD_GAMES = [...]      games added to PLAYER_TRACKING_GAMES for this run (same name format as the _pbp files, e.g.
+#                          "11_12_25 Beloit Buccaneers @ Carroll (WI) Pioneers"): exported from Synergy, tracked, and given a
+#                          Film Tagging batch (PLAY_TAG_INCLUDE_TRACKING_GAMES). Games already listed are not doubled.
+# Nothing else changes: existing Film Tagging batches and saved answers are untouched. (The quick per-game pieces tracking
+# learns from the coach checks each run -- referee / team colors, player look -- still run; they are part of applying.)
+def _pm_apply_options(G):
+    o = G.get("_PM_OPTIONS") or {}
+    if o.get("TRAIN_MODELS") is False:
+        G["TAG_MODEL_RETRAIN"] = False
+        G["JERSEY_TRAIN_NOW"] = False
+        G["JERSEY_TRAIN_ADD_FRAMES"] = False
+    # CONFIRMED CHANGE (requested: "another simple option to decide if I want to do player tracking or film tagging during
+    # the parser_models run"). DO_PLAYER_TRACKING = False: no tracking (the last tracks are kept), no player checks for
+    # Player Number Tracking, and the jersey reader / its tests are skipped. DO_FILM_TAGGING = False: no new Film Tagging
+    # batches and the open ones are left exactly as they are. Either way nothing saved is touched.
+    if o.get("DO_PLAYER_TRACKING") is False:
+        G["RUN_PLAYER_TRACKING"] = False
+        G["RUN_PLAY_REVIEW"] = False
+        G["RUN_JERSEY_RECOGNIZER"] = False
+    if o.get("DO_FILM_TAGGING") is False:
+        G["RUN_TAG_QUEUE"] = False
+    add = o.get("ADD_GAMES") or []
+    if isinstance(add, str):
+        add = [add]
+    add = [str(x).strip() for x in add if str(x).strip()]
+    if add:
+        G["PLAYER_TRACKING_GAMES"] = list(dict.fromkeys(list(G.get("PLAYER_TRACKING_GAMES") or []) + add))
+
+
+_PM_TRACKING_ONLY = {"48_jersey_number_recognizer", "49_jersey_number_reader_test", "50b_detector_compare",
+                     "50c_outfit_check", "50d_reid_check", "88_tracking_review_export"}
+
+
+def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb", quiet=None, fresh=False, options=None):
     """Run parser_nb.ipynb's cells for one job: "models", "tagging" or "brief" (see the top of this file).
     start_at = a section name ("50_player_tracking") to continue from after a stop -- the sections above it are not run
     again (their results are still in this notebook's memory from the earlier run). stop_after = a section to stop after.
@@ -254,6 +293,15 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
     with open(notebook, encoding="utf-8") as fh:
         nb = _pm_json.load(fh)
     print(f"=== {mode.upper()}: {plan['label']} ===", flush=True)
+    G["_PM_OPTIONS"] = dict(options or {})
+    if G["_PM_OPTIONS"]:
+        _o = G["_PM_OPTIONS"]
+        print("Options: " + ("models NOT retrained (saved tag model + jersey reader used as they are)"
+                             if _o.get("TRAIN_MODELS") is False else "models retrain as parser_nb says")
+              + (f"; games added to Player Number Tracking + Film Tagging: {', '.join(map(str, [_o['ADD_GAMES']] if isinstance(_o.get('ADD_GAMES'), str) else _o.get('ADD_GAMES')))}"
+                 if _o.get("ADD_GAMES") else "")
+              + ("; player tracking OFF" if _o.get("DO_PLAYER_TRACKING") is False else "")
+              + ("; Film Tagging OFF" if _o.get("DO_FILM_TAGGING") is False else ""), flush=True)
     started = start_at is None
     if not started and "run_section" not in G:
         raise RuntimeError("start_at needs an earlier run in this notebook (run it once without start_at first)")
@@ -353,11 +401,13 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
                     m = G.get("_PARSER_MODE")
                     depth = G.get("_pm_depth", 0)
                     if depth == 0 and m:                 # (a section that runs another one -- e.g. the frame hooks -- always does)
-                        if not _pm_wanted(m, base):
+                        if not _pm_wanted(m, base) or (base in _PM_TRACKING_ONLY and
+                                                       (G.get("_PM_OPTIONS") or {}).get("DO_PLAYER_TRACKING") is False):
                             _skipped.append(base)
                             return None
                         for k, v in PARSER_MODES[m]["flags"].get(base, {}).items():
                             G[k] = v
+                        _pm_apply_options(G)                 # the job notebook's first-cell options (see above)
                     G["_pm_depth"] = depth + 1
                     _q, _out = G.get("_pm_quiet") or (False, None)
                     _t0 = _pm_time.time()

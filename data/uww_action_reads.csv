@@ -1,7 +1,9 @@
 side,scouted_opponent,offense_team,team,side_of_ball,role,player,action,read,uses,games,ppp,share_pct
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Beloit Buccaneers,Defense,On-ball defender,(no number),Ball Screen,Under,1,1,0.0,100.0
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Ball handler (trigger),#12 Peyton McKenna,DHO,USe DHO,1,1,0.0,100.0
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Ball handler (trigger),#12 Peyton McKenna,Ghost,Use Ball Screen,1,1,0.0,100.0
-Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Ball handler (trigger),Evan Bland,Ball Screen,Use Ball Screen,2,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Ball handler (trigger),Evan Bland,Ball Screen,Use Ball Screen,2,1,0.0,67.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Ball handler (trigger),Evan Bland,Ball Screen,Reject Ball Screen,1,1,2.0,33.0
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Ball handler (trigger),Evan Bland,Down Screen,Use Screen,1,1,0.0,100.0
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Screener,#23 Jimmy Tarjan,Ball Screen,Pop,1,1,0.0,100.0
 Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Offense,Screener,#41 Jayce Brechtl,Ball Screen,Roll,5,2,1.6,100.0
@@ -92,3 +94,17 @@ UWW,Carroll (WI) Pioneers,Washington-St. Louis Bears,Washington-St. Louis Bears,
 UWW,Carroll (WI) Pioneers,Washington-St. Louis Bears,Washington-St. Louis Bears,Offense,Screener,#33 George Gale,Ball Screen,Pop,2,1,0.0,33.0
 UWW,Carroll (WI) Pioneers,Washington-St. Louis Bears,Washington-St. Louis Bears,Offense,Screener,#33 George Gale,Zoom,Roll,1,1,0.0,100.0
 UWW,Carroll (WI) Pioneers,Washington-St. Louis Bears,Washington-St. Louis Bears,Offense,Screener,#34 Calvin Kapral,Ball Screen,Roll,1,1,1.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,Off-ball defender,#34 Calvin Kapral,Ball Screen,Drop,1,1,2.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,Off-ball defender,(no number),Ball Screen,High Hedge,3,1,0.67,43.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,Off-ball defender,(no number),Ball Screen,Drop,2,1,0.0,29.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,Off-ball defender,(no number),Ball Screen,Switch,2,1,1.0,29.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,Off-ball defender,(no number),DHO,Drop,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,Off-ball defender,(no number),Pass wing,High Hedge,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,Off-ball defender,(no number),Swing (pass across),Drop,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,On-ball defender,#3 Josh Kim,Ball Screen,Over,1,1,2.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,On-ball defender,(no number),Ball Screen,Over,4,1,0.0,57.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,On-ball defender,(no number),Ball Screen,Switch,2,1,1.0,29.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,On-ball defender,(no number),Ball Screen,Under,1,1,2.0,14.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,On-ball defender,(no number),DHO,Over,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,On-ball defender,(no number),Pass wing,Under,1,1,0.0,100.0
+Opponent,Carroll (WI) Pioneers,Carroll (WI) Pioneers,Washington-St. Louis Bears,Defense,On-ball defender,(no number),Swing (pass across),Over,1,1,0.0,100.0
