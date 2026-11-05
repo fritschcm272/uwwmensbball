@@ -5117,6 +5117,44 @@ def render_action_reads(short_opponent, key_suffix="") -> None:
         hide_index=True, use_container_width=True)
 
 
+# CONFIRMED CHANGE (requested: "I need to be able to send the hyperlink of it to a coach"). <app>/?brief=<opponent>
+# opens JUST that brief, full width, nothing else of the app -- e.g. ?brief=Carroll_WI_Pioneers (seniors struck through)
+# or ?brief=Carroll_WI_Pioneers_no_seniors. The link stays the same for an opponent; it always shows the latest brief built.
+APP_PUBLIC_URL = "https://uwwmensbball-new.streamlit.app/"
+
+
+def _brief_link(fname):
+    base = APP_PUBLIC_URL
+    try:
+        _u = str(getattr(st.context, "url", "") or "")
+        if _u.startswith("http"):
+            base = _u.split("?")[0].rstrip("/") + "/"
+    except Exception:
+        pass
+    return f"{base}?brief={fname[len('scouting_brief_'):-5]}"
+
+
+def render_brief_page(slug) -> bool:
+    """The ?brief= page: True when it was drawn (the rest of the app is skipped)."""
+    import streamlit.components.v1 as _bv
+    folder = os.path.join(DATA_DIR, "scouting_briefs")
+    name = "scouting_brief_" + re.sub(r"[^\w]+", "_", str(slug)).strip("_") + ".html"     # no paths, only a brief file
+    path = os.path.join(folder, name)
+    if not os.path.isfile(path):
+        st.error("That scouting brief isn't on the app (it may not have been built or pushed yet).")
+        return True
+    with open(path, encoding="utf-8") as fh:
+        html_doc = fh.read()
+    _when = datetime.fromtimestamp(os.path.getmtime(path)).strftime("%b %d, %Y %I:%M %p")
+    c1, c2 = st.columns([5, 2], vertical_alignment="center")
+    c1.caption(f"UWW scouting brief \u2014 built {_when}")
+    with open(path, "rb") as fb:
+        c2.download_button("\U0001f4e5 Download / print", data=fb, file_name=name, mime="text/html",
+                           use_container_width=True, key="brief_page_dl")
+    _bv.html(html_doc, height=3200, scrolling=True)
+    return True
+
+
 def render_brief_viewer(brief_path, brief_slug):
     """CONFIRMED CHANGE (requested: "I need a way to view the scouting briefs on the application"). The brief itself, shown
     inside the app (the same HTML file the download buttons give): this opponent's brief -- either copy when there are two
@@ -5145,6 +5183,9 @@ def render_brief_viewer(brief_path, brief_slug):
             return
         _when = datetime.fromtimestamp(os.path.getmtime(os.path.join(folder, pick))).strftime("%b %d, %Y %I:%M %p")
         st.caption(f"Built {_when}. Scroll inside the frame; links open the app in a new tab.")
+        # (requested) a link to send a coach -- opens only this brief; always the latest one built for this opponent
+        st.markdown("**\U0001f517 Link to send a coach** (opens just this brief; copy with the button on the right)")
+        st.code(_brief_link(pick), language=None)
         _bv.html(html_doc, height=1400, scrolling=True)
 
 
@@ -18493,6 +18534,13 @@ def main():
     # page and would otherwise be drawing from a value that hasn't been validated yet.
     if "nav_page" not in st.session_state:
         st.session_state.nav_page = PAGES[0]
+    # A shared brief link (?brief=...) shows only the brief
+    try:
+        _bq = st.query_params.get("brief")
+    except Exception:
+        _bq = None
+    if _bq and render_brief_page(_bq):
+        return
     # Links from the emailed scouting brief carry ?page=...&tab=... -- route them before anything renders.
     handle_brief_deeplink()
     # A session open across an earlier change (or a bookmarked state) can still be holding a retired page
