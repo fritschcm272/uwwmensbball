@@ -1878,12 +1878,142 @@ def tag_queue():
                   + f" (of {len(todo)} untagged) -- in the app: Analytics > Film Tagging", flush=True)
         except Exception as _ae:
             print(f"  [film tagging] not exported to the app: {type(_ae).__name__}: {_ae}", flush=True)
+    try:
+        _tag_reopen(pc, vocab, min_c)
+    except Exception as _re:
+        print(f"  [fix saved plays] not built: {type(_re).__name__}: {_re}", flush=True)
     if summary:
         print("Film Tagging -- tagging progress by game (Titles + app tags):\n  " + "\n  ".join(summary), flush=True)
     if _outside:
         print(f"Film Tagging: {len(_outside)} game(s) with film left out -- not part of this run (the upcoming opponent's "
               f"games and our most recent game; PLAY_TAG_RUN_ONLY = False tags every game): " + "; ".join(_outside),
               flush=True)
+
+
+# CONFIRMED CHANGE (requested: "add a way to reopen saved plays for edits"). PLAY_TAG_REOPEN (parser_models' first cell:
+# REOPEN_PLAYS) lists plays that are already tagged and saved, to be opened again in Film Tagging:
+#   "action:split"         every tagged play with that action (typos like "Spilit" / "Spilt" count for split)
+#   "motion-no-action"     every Motion play saved with no action
+#   "Elmhurst 44"          one play: part of the game code + its clip number
+# They go into their own batch per game ("fix_<game>"), next to the game's normal batch, which is not touched. The form
+# starts on what was saved (every earlier save of that game, the latest winning); a coach changes what he wants and saves --
+# the new save is the latest, so it wins everywhere. Nothing already saved is deleted. Once saved, the fix batch goes on the
+# next run; empty REOPEN_PLAYS removes an unsaved fix batch.
+_REOPEN_ACTION_RX = {"split": r"spi?l?i?t", "wide pin": r"wide\s*pin", "side ball screen": r"side\s*(ball\s*screen|bs)"}
+
+
+def _tag_reopen(pc, vocab, min_c):
+    req = globals().get("PLAY_TAG_REOPEN") or []
+    if isinstance(req, str):
+        req = [req]
+    req = [str(x).strip() for x in req if str(x).strip()]
+    base = os.path.join(_pr_app_dir(), "play_tag")
+    have = {d_: os.path.join(base, d_) for d_ in (os.listdir(base) if os.path.isdir(base) else []) if d_.startswith("fix_")}
+    if pc.empty:
+        return
+    pc = pc.copy()
+    pc["_key"] = [_pl_ckey_norm(f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}") for _, r in pc.iterrows()]
+    tagged = pc[pc["decode_quality"].astype(str) != "Untagged"] if "decode_quality" in pc.columns else pc
+    acts = (tagged.get("play_actions", pd.Series("", index=tagged.index)).fillna("").astype(str) + " | "
+            + tagged.get("primary_action", pd.Series("", index=tagged.index)).fillna("").astype(str)).str.lower()
+    want = pd.Series(False, index=tagged.index)
+    for q in req:
+        ql = q.lower()
+        if ql.startswith("action:"):
+            a = ql.split(":", 1)[1].strip()
+            want |= acts.str.contains(_REOPEN_ACTION_RX.get(a, re.escape(a)), regex=True)
+        elif ql in ("motion-no-action", "motion no action"):
+            if "play_call_family" in tagged.columns:
+                want |= tagged["play_call_family"].astype(str).eq("no action tagged")
+        else:
+            m = re.match(r"^(.*?)\s+#?(\d+)$", q)
+            if m:
+                want |= (tagged["game_code"].astype(str).str.contains(m.group(1).strip(), case=False, regex=False)
+                         & (pd.to_numeric(tagged["clip_number"], errors="coerce") == int(m.group(2))))
+            else:
+                print(f"  [fix saved plays] didn't understand {q!r} -- use \"action:split\", \"motion-no-action\" or "
+                      f"\"<game> <clip #>\"", flush=True)
+    pick_all = tagged[want]
+    keep = set()
+    for (gd, gc), g in (pick_all.groupby(["game_date", "game_code"]) if not pick_all.empty else []):
+        slug_game = re.sub(r"[^A-Za-z0-9]+", "_", f"{gd}|{gc}").strip("_")
+        slug = "fix_" + slug_game
+        keep.add(slug)
+        pkg = os.path.join(base, slug)
+        rj = os.path.join(pkg, "review.json")
+        if os.path.exists(rj):
+            try:
+                with open(rj, encoding="utf-8") as fh:
+                    _old = json.load(fh)
+                _ok = {_pl_ckey_norm(p_.get("clip_key")) for p_ in _old.get("plays", [])}
+                if _tag_titles_saved(slug_game, _old.get("run")):
+                    shutil.rmtree(pkg, ignore_errors=True)
+                    print(f"Fix saved plays: {gd} {gc} -- the fix batch was saved; take it out of REOPEN_PLAYS "
+                          f"(it's rebuilt otherwise)", flush=True)
+                    keep.discard(slug)
+                    continue
+                if _ok == set(g["_key"]):
+                    continue                                    # same plays, not saved yet: kept as it is
+            except Exception:
+                pass
+        g = g.assign(_cn=pd.to_numeric(g["clip_number"], errors="coerce")).sort_values("_cn", kind="stable")
+        rdir = tempfile.mkdtemp(prefix=f"play_fix_{slug_game}_")
+        try:
+            _gn = _trk_numbers_for_game(gd, gc) if "_trk_numbers_for_game" in globals() else {}
+        except Exception:
+            _gn = {}
+        _rosters = _tag_rosters(pc[(pc["game_date"] == gd) & (pc["game_code"] == gc)])
+        plays = []
+        print(f"Fix saved plays: {gd} {gc}: making the video of each of {len(g)} saved play(s) to reopen...", flush=True)
+        for _, r in g.iterrows():
+            files = [f for f in str(r.get("track_files") or "").split(";") if f] or \
+                    [f for f in str(r.get("frame_files") or "").split(";") if f]
+            cn = int(r["_cn"]) if pd.notna(r["_cn"]) else 0
+            fid = f"{cn:03d}_{len(plays):02d}"
+            clip_file = None
+            if PLAY_REVIEW_VIDEO and files:
+                try:
+                    clip_file = _pr_clip(files, [], None, os.path.join(rdir, f"clip_{fid}"))
+                except Exception as _ce:
+                    print(f"  [fix saved plays] clip video not made ({type(_ce).__name__}: {_ce})", flush=True)
+            if PLAY_REVIEW_VIDEO and not clip_file:
+                continue
+            clock = r.get("time_remaining_seconds")
+            url, pos = _pr_synergy(r)
+            plays.append({"clip_key": f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}",
+                          "clip_number": cn,
+                          "clock": (f"{r.get('period', '')} {int(clock // 60)}:{int(clock % 60):02d}" if pd.notna(clock) else "(no clock)"),
+                          "synergy": str(r.get("synergy_string") or ""),
+                          "coach_title": _tr_val(r.get("play_title")),
+                          "auto_title": _tr_title(r, False), "film": _tr_film(r.get("track_clip_key")),
+                          "offense": r.get("offense_team"), "defense": r.get("defense_team"), "player": r.get("player"),
+                          "result": r.get("result"), "clip": clip_file,
+                          "clip_kind": ("video" if str(clip_file).endswith(".mp4") else "image"),
+                          "poster": (f"clip_{fid}_poster.jpg" if clip_file and os.path.exists(os.path.join(rdir, f"clip_{fid}_poster.jpg")) else None),
+                          "fid": fid, "synergy_url": url, "synergy_pos": int(pos) if pd.notna(pos) else None,
+                          "pictures": [], "fields": _tag_fields(r), **_tag_people(r, _rosters, _gn)})
+        if not plays:
+            shutil.rmtree(rdir, ignore_errors=True)
+            print(f"Fix saved plays: {gd} {gc}: no play videos could be made -- no fix batch", flush=True)
+            continue
+        stamp = _pr_dt.datetime.now().strftime("%Y%m%d_%H%M%S") + "_fix"
+        _export_play_review_to_app(rdir, slug, f"{gd}|{gc}", stamp, plays, vocab, kind="play_tag")
+        shutil.rmtree(rdir, ignore_errors=True)
+        try:                                         # the app starts the form on every earlier save of this game
+            with open(rj, encoding="utf-8") as fh:
+                _doc = json.load(fh)
+            _doc["seed_all_runs"], _doc["reopen"] = True, True
+            with open(rj, "w", encoding="utf-8") as fh:
+                json.dump(_doc, fh, default=str)
+        except Exception as _we:
+            print(f"  [fix saved plays] couldn't mark the batch ({type(_we).__name__}: {_we})", flush=True)
+        print(f"Fix saved plays: {gd} {gc}: {len(plays)} saved play(s) reopened -- in the app: Analytics > Film Tagging "
+              f"(\"fix ... saved play(s)\")", flush=True)
+    for slug, path in have.items():
+        if slug not in keep:
+            shutil.rmtree(path, ignore_errors=True)
+            print(f"Fix saved plays: removed {slug} from the app -- not in REOPEN_PLAYS any more (anything saved in it is "
+                  f"kept)", flush=True)
 
 
 def _pr_retire_redated():

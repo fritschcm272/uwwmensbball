@@ -1236,6 +1236,68 @@ td.nm { font-weight: 700; white-space: nowrap; }
 table.roster tr.p-hd td { text-align: left; background: #f4f2f8; border-top: 2px solid #d9d3e6; padding: 3px 8px;
                           font-size: 0.74rem; color: #444; white-space: normal; }
 table.roster tr.p-hd .p-hd-nm { display: none; }
+/* (requested: Option A -- the numbers across, the reads under them in two labeled columns, Offense / Defense) */
+table.roster tr.p-rd .p-hd-nm { display: none; }
+table.roster tr.p-rd td { padding: 0 0 6px; border-top: none; white-space: normal; text-align: left; }
+.rd2 { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #e6e1ee; }
+.rd2 > div { padding: 5px 10px 2px; font-size: 0.76rem; line-height: 1.35; }
+.rd2 > div + div { border-left: 1px solid #e6e1ee; }
+.rd2 .rd-h { display: block; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.8px; color: var(--warhawk-purple); margin-bottom: 2px; }
+.rd2 ul { margin: 0; padding-left: 14px; } .rd2 li { margin: 0 0 1px; }
+.rd2 li.key { font-weight: 700; }
+.rd2 .none { color: var(--dim); font-style: italic; }
+.rd2 .rd-role { margin: 0 0 2px; }
+/* the player card (requested: "I still need the display to look better") */
+table.pc2 { width: 100%; border: 1px solid #ddd6e8; border-radius: 8px; border-collapse: separate; border-spacing: 0;
+            overflow: hidden; margin: 0 0 8px; break-inside: avoid; page-break-inside: avoid; }
+table.pc2 td { padding: 0; border: none; text-align: left; white-space: normal; }
+table.pc2 .p-hd-nm { display: none; }
+.pc-top-in { display: flex; align-items: center; gap: 10px; padding: 6px 10px; background: #f4f2f8; }
+.pc-top-in .photo-thumb { width: 46px; height: 46px; margin: 0; flex: none; }
+.pc-who { flex: 1; min-width: 0; }
+.pc-nm { font-weight: 800; font-size: 0.95rem; }
+.pc-nm a { color: inherit; }
+.pc-bio { font-size: 0.72rem; color: #555; }
+.pc-chips { margin-top: 2px; }
+.pc-chip { display: inline-block; font-size: 0.66rem; font-weight: 700; background: #fff3b0; color: #5c4a00; border-radius: 9px;
+           padding: 1px 7px; margin-right: 4px; }
+.pc-foul { font-size: 0.7rem; border: 1px solid #ddd; background: #fff; border-radius: 10px; padding: 2px 8px; white-space: nowrap;
+           color: #666; }
+.pc-foul.yes { color: #1e7b34; border-color: #9fd3ad; font-weight: 700; }
+.pc-foul.no { color: #b3261e; border-color: #eba9a4; font-weight: 700; }
+.pc-grid { display: grid; grid-template-columns: repeat(8, 1fr); text-align: center; border-bottom: 1px solid #ece8f2;
+           position: relative; }
+.pc-grid > div { padding: 4px 2px 3px; }
+.pc-grid b { display: block; font-size: 0.9rem; }
+.pc-grid span { display: block; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.6px; color: #888; }
+.pc-grid .pc-sub { display: inline; font-size: 0.6rem; font-weight: 400; color: #888; letter-spacing: 0; }
+.pc-grid .pc-src { grid-column: 1 / -1; font-size: 0.62rem; color: #8a6d00; padding: 0 0 3px; }
+.pc-none { font-size: 0.74rem; color: var(--dim); font-style: italic; padding: 5px 10px; border-bottom: 1px solid #ece8f2; }
+table.pc2 .rd2 { border-top: none; }
+table.pc2 .rd2 > div { padding: 5px 10px 4px; }
+table.pc2 .rd-o { background: #fbfaf7; }
+/* (requested: "Remove all of the 'All caps' and bold writing so that everything looks similar font") -- the roster card in
+   one weight and normal case; headings are told apart by color and size only */
+table.pc2, table.pc2 * { font-weight: 400 !important; text-transform: none !important; letter-spacing: normal !important; }
+table.pc2 .pc-nm { font-size: 0.95rem; }
+table.pc2 .pc-grid b { font-size: 0.88rem; }
+table.pc2 .pc-grid span { font-size: 0.62rem; color: #888; }
+table.pc2 .rd-h { font-size: 0.7rem; color: var(--warhawk-purple); }
+table.pc2 li.key { color: #1f5e2e; }
+/* CONFIRMED BUG (fixed; "The player roster is too wide now"): the cards ran to ~2x the page. The page already has a
+   ".pc-grid > div { min-width: 260px }" rule (another section's grid, same class name) that hit the stat strip, and the
+   auto-sized table grew to the reads' full line length. Fixed layout + zero minimum widths keep each card on the page. */
+table.pc2 { table-layout: fixed; width: 100%; max-width: 100%; }
+table.pc2 .rd2 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+table.pc2 .pc-grid { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+table.pc2 .pc-grid > div, table.pc2 .rd2 > div { min-width: 0; flex: none; }
+table.pc2 li, table.pc2 .pc-bio { overflow-wrap: anywhere; }
+/* the "How they run Motion" table wraps its long cells instead of running off the page */
+table.mb-tbl { width: 100%; table-layout: fixed; }
+table.pc2 .rd-tend { margin-top: 4px; padding-top: 3px; border-top: 1px dashed #e2dcec; }
+table.pc2 .rd-sub { display: block; font-size: 0.66rem; color: var(--warhawk-purple); }
+table.mb-tbl td, table.mb-tbl th { white-space: normal; overflow-wrap: anywhere; text-align: left; }
+.rd-lead { font-size: 0.72rem; color: #6b5a1e; background: #fff8dc; padding: 2px 10px; }
 table.roster thead th:first-child { text-align: center; }
 .thin-ast { color: #8c1d2c; font-weight: 700; margin-left: 1px; }
 table.roster td.nm.p-cell { text-align: center; vertical-align: top; white-space: normal; padding-top: 4px; }
@@ -1436,6 +1498,9 @@ tr.dayhead td { background: var(--warhawk-light); color: var(--warhawk-purple); 
 }
 .ktv-sentence .ktv-right { margin-left: auto; flex-shrink: 0; display: flex; align-items: center; gap: 6px; }
 .ktv-sentence .ktv-right .src { margin-left: 0; }
+.ktv-sentence .ktv-score { font-size: 0.7rem; color: var(--warhawk-purple); border: 1px solid #cfc4e2; border-radius: 9px;
+                           padding: 0 6px; white-space: nowrap; }
+.ktv-sentence .ktv-score::after { content: " / 100"; color: #999; font-size: 0.62rem; }
 .ktv-sentence .lsn { font-size: 0.7rem; font-weight: 700; color: #fff; background: #8a6d1f; border-radius: 4px;
   padding: 1px 6px; letter-spacing: 0.3px; }
 /* last season's seniors before a between-seasons scrimmage */
@@ -2353,15 +2418,17 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # information into kind of a header row for each player"): 11 columns -- player (photo over name), the 8 stats, late
     # game foul, reads -- and each player's bio (#, position, height, class, Off / Def role) is a bar across the table
     # right above his row.
-    _ROSTER_COLS = ('<colgroup><col style="width:14%">'
-                    '<col style="width:5%"><col style="width:6%"><col style="width:6%"><col style="width:6%">'
-                    '<col style="width:6%"><col style="width:6%"><col style="width:6%"><col style="width:7%">'
-                    '<col style="width:7%"><col style="width:31%"></colgroup>')
+    # CONFIRMED CHANGE (requested: Option A): no reads column any more -- the reads go in a row of their own under the
+    # numbers, so the 8 stats (and the opponent's late game foul call) spread across the full width
+    _ROSTER_COLS = ('<colgroup><col style="width:18%">'
+                    '<col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%">'
+                    '<col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%">'
+                    '<col style="width:10%"></colgroup>')
     # (requested: "UWW doesn't need 'Late game foul' column") -- our own roster: 10 columns, the reads get the room
-    _ROSTER_COLS_UWW = ('<colgroup><col style="width:14%">'
-                        '<col style="width:5%"><col style="width:6%"><col style="width:6%"><col style="width:6%">'
-                        '<col style="width:6%"><col style="width:6%"><col style="width:6%"><col style="width:7%">'
-                        '<col style="width:38%"></colgroup>')
+    _ROSTER_COLS_UWW = ('<colgroup><col style="width:20%">'
+                        '<col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:10%">'
+                        '<col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:10%">'
+                        '</colgroup>')
 
     _DEF_FAMILY_MIN = 6      # possessions before a family is reported at all
     _DEF_SPLIT_MIN = 4       # possessions before a per-player / per-series split is reported
@@ -2545,6 +2612,92 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         _xfer_cache[k] = {"team": team_from, "p": p, "games": n, "vs": vs}
         return _xfer_cache[k]
 
+    # CONFIRMED CHANGE (requested: offensive tendencies on the roster -- "which of the actions is McNabb most aggressive",
+    # "what types of cuts", "add other things that describe the player on offense"): uww_player_tendencies (built in 47)
+    _tend_tbl = _sb_d("uww_player_tendencies")
+
+    def _tendencies_of(name, side):
+        if _tend_tbl.empty or not {"player", "team", "tendencies"} <= set(_tend_tbl.columns):
+            return []
+        t = _tend_tbl[_tend_tbl["side"].astype(str) == side] if "side" in _tend_tbl.columns else _tend_tbl
+        if "scouted_opponent" in t.columns:
+            t = t[t["scouted_opponent"].astype(str) == str(short)]
+        own = "whitewater" if side == "UWW" else _norm(short)
+        t = t[t["team"].astype(str).map(_norm).str.contains(own, regex=False)]
+        t = t[t["player"].map(_xkey) == _xkey(name)]
+        return _sb_split(t.iloc[0]["tendencies"]) if not t.empty else []
+
+    # CONFIRMED CHANGE (requested: "list out what type of defender will the player struggle against"). Read from how he
+    # scores (uww_player_tendencies' numbers): a shooter who rarely puts it on the floor -> a long closeout defender; a rim
+    # attacker -> a physical on-ball defender with a big behind; a one-way driver -> a defender who forces his other hand;
+    # a post scorer -> a strong post defender who fronts; a weak ball-screen handler -> a mobile big who switches / hedges;
+    # a putback threat -> a big who boxes out. On the opponent's cards each type names OUR returning players with that
+    # defensive role (uww_defensive_roles). It is a read of his tendencies, not a measured matchup result.
+    _dr_tbl = _sb_d("uww_defensive_roles")
+
+    def _our_fits(roles):
+        if _dr_tbl.empty or not {"team", "player", "defensive_role"} <= set(_dr_tbl.columns):
+            return []
+        u = _dr_tbl[_dr_tbl["team"].astype(str).str.contains("whitewater", case=False, na=False)
+                    & _dr_tbl["defensive_role"].isin(roles)].copy()
+        u = u[~u["player"].map(_norm).isin(globals().get("_SB_STRUCK") or set())]
+        u = u[~u["player"].astype(str).str.contains("whitewater", case=False)]
+        if "role_basis" in u.columns:                    # a role from his position alone isn't evidence he defends that way
+            u = u[u["role_basis"].astype(str) != "position only"]
+        _q = {"coach tags + film": 0, "film tracking": 1, "play-by-play only": 2, "position only": 3}
+        u["_q"] = u.get("role_basis", pd.Series("", index=u.index)).map(lambda b: _q.get(str(b), 2))
+        u["_r"] = u["defensive_role"].map(lambda r: roles.index(r) if r in roles else 9)
+        u = u.sort_values(["_r", "_q"])
+        return [f"{_sb_title(r['player'])} ({r['defensive_role']})" for _, r in u.head(2).iterrows()]
+
+    def _struggles_of(name, side):
+        if _tend_tbl.empty or "share_spot" not in _tend_tbl.columns:
+            return []
+        t = _tend_tbl[_tend_tbl["side"].astype(str) == side] if "side" in _tend_tbl.columns else _tend_tbl
+        if "scouted_opponent" in t.columns:
+            t = t[t["scouted_opponent"].astype(str) == str(short)]
+        own = "whitewater" if side == "UWW" else _norm(short)
+        t = t[t["team"].astype(str).map(_norm).str.contains(own, regex=False) & (t["player"].map(_xkey) == _xkey(name))]
+        if t.empty:
+            return []
+        m = t.iloc[0]
+        f = lambda c: float(pd.to_numeric(m.get(c), errors="coerce")) if pd.notna(pd.to_numeric(m.get(c), errors="coerce")) else 0.0  # noqa: E731
+        n = f("possessions")
+        out = []
+        if f("spot_n") >= 5 and f("spot_cs") / f("spot_n") >= 0.7:
+            out.append(("A long, active closeout defender who runs him off the line",
+                        f"catch-and-shoot on {int(f('spot_cs'))} of {int(f('spot_n'))} spot-ups -- rarely puts it on the floor",
+                        ["Wing Stopper", "Chaser", "Point of Attack"]))
+        if n >= 10 and f("rim_finishes") / n >= 0.45:
+            out.append(("A physical on-ball defender who keeps him in front, with a big waiting at the rim",
+                        f"{int(f('rim_finishes'))} of {int(n)} finishes are at the rim", ["Point of Attack", "Wing Stopper"]))
+        dl, dr = f("drives_left"), f("drives_right")
+        if dl + dr >= 5 and max(dl, dr) / (dl + dr) >= 0.65:
+            _to, _away = ("right", "left") if dr > dl else ("left", "right")
+            out.append((f"A defender who sits on his {_to} hand and forces him {_away}",
+                        f"drives {_to} on {int(max(dl, dr))} of {int(dl + dr)}", ["Point of Attack", "Wing Stopper"]))
+        if f("post_n") >= 5:
+            _b = _sb_clean(m.get("post_block")).lower()
+            out.append(("A strong post defender who fronts him and takes away the " + (_b or "block"),
+                        f"{int(f('post_n'))} post-ups" + (f", mostly {_b}" if _b else "")
+                        + (f", {_sb_clean(m.get('post_shoulder')).lower()} turn" if _sb_clean(m.get("post_shoulder")) else ""),
+                        ["Anchor Big", "Mobile Big"]))
+        _pp = pd.to_numeric(m.get("pr_ppp"), errors="coerce")
+        if f("pr_n") >= 4 and pd.notna(_pp) and _pp < 0.85:
+            out.append(("A mobile big who switches or hedges his ball screens", f"{_pp:.2f} PPP as the ball-screen handler",
+                        ["Mobile Big"]))
+        if n >= 10 and f("share_putback") >= 0.15:
+            out.append(("A big who finds him and boxes him out", f"{round(100 * f('share_putback'))}% of his finishes are putbacks",
+                        ["Anchor Big", "Mobile Big"]))
+        if n >= 10 and f("share_trans") >= 0.3:
+            out.append(("Defenders who sprint back and match up early", f"{round(100 * f('share_trans'))}% of his finishes "
+                        "come in transition", []))
+        res = []
+        for typ, why, roles in out[:3]:
+            fits = _our_fits(roles) if side == "Opponent" and roles else []
+            res.append(f"{typ} -- {why}" + (f". Our fit: {', '.join(fits)}" if fits else ""))
+        return res
+
     def _roster_player(name, stats_df, side, bullets):
         """Everything one roster entry needs, assembled once so the table layout and the stacked layout
         can't show different reads, keys or flags for the same player."""
@@ -2554,6 +2707,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         _xf = _transfer_of(name, side) if p is None else None
         if _xf is not None:
             p = _xf["p"]
+        reads, keys, _tfat, _crash, _dsplit, pf, calls = [], [], None, None, None, pd.DataFrame(), None
         if side == "Opponent":
             bio = _opp_bio.get(_norm(name))
             if bio is None:
@@ -2616,6 +2770,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                    + (f'<li class="film">\U0001f3a5 {_sb_esc(_film)}</li>' if _film else "") + "</ul>")
                   if bullets else " \u00b7 ".join([_sb_esc(x) for x in items] + ([f"\U0001f3a5 {_sb_esc(_film)}"] if _film else [])))
         bits = " ".join(bio_bits(bio)) if bio is not None else ""
+        _bits_bio, _role_html, _drole_html = bits, "", ""
         # his offensive role (BBall Index's 12) -- the same lookup every roster table uses
         _team_q = short if side == "Opponent" else "Whitewater"
         _q = lambda bb: (" (low sample)" if "low sample" in str(bb) else
@@ -2624,17 +2779,56 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _role, _basis = offensive_role_for(name, _team_q)
             if _role:
                 bits = (bits + " &middot; " if bits else "") + f'Off: <strong>{_sb_esc(_role)}</strong><span class="mini">{_q(_basis)}</span>'
+                _role_html = f'Role: <strong>{_sb_esc(_role)}</strong><span class="mini">{_q(_basis)}</span>'
         if "defensive_role_for" in globals():
             _drole, _dbasis = defensive_role_for(name, _team_q)
             if _drole:
                 bits = (bits + " &middot; " if bits else "") + f'Def: <strong>{_sb_esc(_drole)}</strong><span class="mini">{_q(_dbasis)}</span>'
+                _drole_html = f'Role: <strong>{_sb_esc(_drole)}</strong><span class="mini">{_q(_dbasis)}</span>'
         if _xf is not None:
             _xl = (f"Transfer from {_xf['team']} \u2014 his numbers are last season's there "
                    f"({_xf['games']} game{'s' if _xf['games'] != 1 else ''} on file" + (f", vs {_xf['vs']}" if _xf["vs"] else "") + ")")
             detail = (("<ul class=\"tbl-bul\"><li>" + _sb_esc(_xl) + "</li>" + detail[len('<ul class="tbl-bul">'):])
                       if detail.startswith('<ul class="tbl-bul">') else _sb_esc(_xl) + (" \u00b7 " + detail if detail else ""))
+        # CONFIRMED CHANGE (requested: Option A, reads under "Offense" and "Defense" -- "Let's just do Offense and
+        # Defense"). Offense = how he scores / plays with the ball, plus the coaches' keys to guarding him (bold);
+        # Defense = how he defends: steals / blocks / fouls, the 2-for-1 attack-him call, where he plays off his man
+        # (film). The transfer / projected-starter / tier notes ride above both.
+        _off, _dfn, _lead = [], [], []
+        _DRX = re.compile(r"steal|spg|block|bpg|active hands|deflect|defend|on[- ]ball|guarded|fouls?/40|2-for-1|"
+                          r"off his man|sags|helps|closeout|switch|point of attack", re.I)
+        _add = lambda col, x, key=False: col.append((x, key)) if x and x not in [a for a, _k in col] else None  # noqa: E731
+        if side == "Opponent":
+            if _tfat:
+                _add(_dfn, _tfat)
+            if _crash:
+                _add(_off, _crash)
+            if _dsplit:
+                _add(_dfn, _dsplit)
+            for x in reads:
+                _add(_dfn if _DRX.search(x) else _off, x)
+            for x in keys:
+                _add(_dfn if re.search(r"attack him|go at him|post him|make him guard", x, re.I) else _off, x, True)
+        else:
+            for _, f_ in pf.iterrows():
+                x = _sb_clean(f_.get("flag"))
+                _add(_dfn if _DRX.search(x) else _off, x)
+            if calls:
+                _add(_off, calls)
+        if _film:
+            _add(_dfn, "\U0001f3a5 " + _film)
+        for _k in ("_tier", "_proj"):
+            _nt = (_tier_note if _k == "_tier" else _proj_note).get((side, _norm(name)))
+            if _nt:
+                _lead.append(_nt)
+        if _xf is not None:
+            _lead.insert(0, f"Transfer from {_xf['team']} \u2014 his numbers are last season's there "
+                            f"({_xf['games']} game{'s' if _xf['games'] != 1 else ''} on file"
+                            + (f", vs {_xf['vs']}" if _xf["vs"] else "") + ")")
         return {"p": p, "bio": bio, "bits": bits, "items": items, "detail": detail, "team": team, "film": _film,
-                "xfer": _xf,
+                "off": _off[:3], "def": _dfn[:3], "lead": _lead, "xfer": _xf, "tend": _tendencies_of(name, side)[:6],
+                "struggle": _struggles_of(name, side),
+                "bits_bio": _bits_bio, "role_off": _role_html, "role_def": _drole_html,
                 "thin": _thin}
 
     def _ft_cell(p):
@@ -2651,35 +2845,60 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         summary -- the same table the bench uses, with room for more of each starter's read."""
         if ROSTER_LAYOUT == "stacked":
             return stacked_roster(names, stats_df, side, bullets)
+        # CONFIRMED CHANGE (requested: "I still need the display to look better than this"): each player is ONE card --
+        # a header band (photo, name, #/pos/ht/class, transfer / projected-starter tags, the late-game foul call), a stat
+        # strip with each number labelled under it, and the Offense | Defense reads. One small table per player, so a
+        # struck senior's card (every row starts with his name) is struck / left out whole.
         _opp = side == "Opponent"
-        _ncol = 11 if _opp else 10
-        add('<table class="compact roster">' + (_ROSTER_COLS if _opp else _ROSTER_COLS_UWW)
-            + '<thead><tr><th>Player</th>'
-            '<th>GP</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th>'
-            '<th>FG%</th><th>3P%</th><th>FT%</th>'
-            + ('<th style="text-align:left">Late game foul</th>' if _opp else "")
-            + '<th style="text-align:left">'
-            + ("Top read / key" if side == "Opponent" else "Flag / play calls") + "</th></tr></thead><tbody>")
+        _li = lambda col: ("<ul>" + "".join(f'<li class="key">{_sb_esc(x)}</li>' if k_ else f"<li>{_sb_esc(x)}</li>"  # noqa: E731
+                                            for x, k_ in col) + "</ul>") if col else '<span class="none">nothing on file yet</span>'
+        _labs = ("GP", "MIN", "PTS", "REB", "AST", "FG%", "3P%", "FT%")
         for name in names:
             r = _roster_player(name, stats_df, side, bullets)
             p, bio = r["p"], r["bio"]
             _thin_seen[0] += 1 if r.get("thin") else 0
-            # the bio bar (his name is in it, hidden, so a struck senior's bar goes with his row)
-            add(f'<tr class="p-hd"><td colspan="{_ncol}"><span class="p-hd-nm">{_sb_esc(name)} </span>'
-                f'{r["bits"] or "<span class=mini>No roster-page details on file</span>"}</td></tr>')
-            add(f'<tr><td class="nm p-cell">{photo_cell(bio.get("photo_url") if bio is not None else None, name, side)}'
-                f'{name_link_lines(name, page="upcoming", tab="personnel", team=r["team"], player=name)}'
+            _hid = f'<span class="p-hd-nm">{_sb_esc(name)} </span>'
+            _chips = ""
+            # (a projected starter's note -- with his minutes -- is the yellow line above the reads, so no chip for it)
+            if r.get("xfer"):
+                _chips += f'<span class="pc-chip">Transfer \u2014 {_sb_esc(r["xfer"]["team"])}</span>'
+            _foul = ""
+            if _opp:
+                _fr = _foul_by.get(_norm(name))
+                _call = _sb_clean(_fr.get("call")) if _fr is not None else ""
+                _foul = {"Foul": '<span class="pc-foul yes">\u2714 Foul him late</span>',
+                         "Do not foul": '<span class="pc-foul no">\u2718 Don\u2019t foul late</span>'}.get(
+                    _call, '<span class="pc-foul">Late foul: \u2013</span>')
+            add('<table class="pc2"><tbody>')
+            add(f'<tr class="pc-top"><td><div class="pc-top-in">'
+                f'{photo_cell(bio.get("photo_url") if bio is not None else None, name, side)}'
+                f'<div class="pc-who"><div class="pc-nm">{name_link(name, page="upcoming", tab="personnel", team=r["team"], player=name)}'
                 + ('<span class="thin-ast" title="Too few attempts for a read">*</span>' if r.get("thin") else "")
-                + (f'<br><span class="proj-start">{(tags or {}).get(name)}</span>' if (tags or {}).get(name) else "")
-                + (f'<br><span class="proj-start">Transfer \u2014 {_sb_esc(r["xfer"]["team"])}</span>' if r.get("xfer") else "")
-                + '</td>'
-                + (f'<td>{_sb_fmt(p["games"], 0)}</td><td>{_sb_fmt(p.get("MIN"))}</td><td>{_sb_fmt(p["PTS"])}</td>'
-                   f'<td>{_sb_fmt(p["REB"])}</td><td>{_sb_fmt(p["AST"])}</td><td>{_sb_fmt(p["FG%"])}</td>'
-                   f'<td>{_sb_fmt(p["3P%"])}</td>' + _ft_cell(p)
-                   if p is not None else '<td colspan="8" class="mini">no box-score line</td>')
-                + (foul_cell(name) if _opp else "")
-                + f'<td class="wrap mini">{r["detail"]}</td></tr>')
-        add("</tbody></table>")
+                + f'</div><div class="pc-bio">{r.get("bits_bio") or "No roster-page details on file"}</div>'
+                + (f'<div class="pc-chips">{_chips}</div>' if _chips else "") + f'</div>{_foul}</div></td></tr>')
+            if p is not None:
+                _vals = [_sb_fmt(p["games"], 0), _sb_fmt(p.get("MIN")), _sb_fmt(p["PTS"]), _sb_fmt(p["REB"]),
+                         _sb_fmt(p["AST"]), _sb_fmt(p["FG%"]), _sb_fmt(p["3P%"]), _sb_fmt(p["FT%"])]
+                _ft = (f'<span class="pc-sub">{int(p.get("FTM") or 0)}-{int(p.get("FTA") or 0)}</span>'
+                       if (p.get("FTA") or 0) and p["FTA"] < 10 and round(float(p.get("FT%") or 0), 1) != 100.0 else "")
+                add(f'<tr class="pc-st"><td>{_hid}<div class="pc-grid">'
+                    + "".join(f'<div><b>{v}{(" " + _ft) if l_ == "FT%" and _ft else ""}</b><span>{l_}</span></div>' for v, l_ in zip(_vals, _labs))
+                    + (f'<div class="pc-src">{r["xfer"]["games"]} game(s) at {_sb_esc(r["xfer"]["team"])}</div>' if r.get("xfer") else "")
+                    + "</div></td></tr>")
+            else:
+                add(f'<tr class="pc-st"><td>{_hid}<div class="pc-none">No box-score line \u2014 hasn\u2019t played in a game we have</div></td></tr>')
+            add(f'<tr class="pc-rd"><td>{_hid}'
+                + "".join(f'<div class="rd-lead">{_sb_esc(x)}</div>' for x in r.get("lead") or [] if not x.startswith("Transfer from"))
+                + f'<div class="rd2"><div class="rd-o"><span class="rd-h">Offense</span>'
+                + (f'<div class="rd-role">{r["role_off"]}</div>' if r.get("role_off") else "") + f'{_li(r.get("off"))}'
+                + ('<div class="rd-tend"><span class="rd-sub">Tendencies (from the film)</span><ul>'
+                   + "".join(f"<li>{_sb_esc(x)}</li>" for x in r.get("tend") or []) + "</ul></div>" if r.get("tend") else "")
+                + ('<div class="rd-tend"><span class="rd-sub">Struggles against</span><ul>'
+                   + "".join(f"<li>{_sb_esc(x)}</li>" for x in r.get("struggle") or []) + "</ul></div>" if r.get("struggle") else "")
+                + '</div>'
+                  f'<div class="rd-d"><span class="rd-h">Defense</span>'
+                + (f'<div class="rd-role">{r["role_def"]}</div>' if r.get("role_def") else "") + f'{_li(r.get("def"))}</div></div></td></tr>')
+            add("</tbody></table>")
 
     # ---- STACKED roster layout (requested example) ---------------------------------------------------
     # Each player gets a HEADER BAR -- photo, name, bio, late-game foul call -- and the full width below
@@ -3457,6 +3676,14 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     and _sb_clean(k.get("source")) == "Keys to Victory":
                 _source = (f' <span class="ktv-right"><span class="lsn">{_sb_esc(_bt_k["season"])}</span>'
                            f'{_source}</span>')
+            # CONFIRMED CHANGE (requested: "Show the priority score on the briefs"): each key's 0-100 priority score sits on
+            # the right, before its source tag
+            _ps = pd.to_numeric(k.get("priority_score"), errors="coerce")
+            _score = (f'<span class="ktv-score" title="Priority score (0-100): who says so, how big the edge, how much data, '
+                      f'whether it is an instruction">{int(round(_ps))}</span>') if pd.notna(_ps) else ""
+            if _score:
+                _source = (_source.replace('<span class="ktv-right">', '<span class="ktv-right">' + _score, 1)
+                           if 'class="ktv-right"' in _source else f'<span class="ktv-right">{_score}{_source}</span>')
             add(f'<div class="ktv-sentence">{_sentence} {_source}</div>')   # a space: copied text reads "... reason. Data-Driven"
         add('<p class="mini">' + app_link(f"All {_ktv_total} keys with evidence and reasoning", page="upcoming", tab="keys") + "</p>")
         add("</div>")
@@ -4481,7 +4708,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                                 f"Our own offense scores best against {_ur[0][0]} "
                                 f"({_sb_fmt(_ppp_of(_ur[0][1]), 2)} PPP) \u2014 confirm they'll actually show "
                                 f"it before building around it.", len(_ur[0][1])))
-        if _checks:
+        # CONFIRMED CHANGE (requested: remove the "Confirm these on film" list from the briefs);
+        # BRIEF_CONFIRM_ON_FILM = True brings it back
+        if _checks and globals().get("BRIEF_CONFIRM_ON_FILM", False):
             add('<div class="tier-h">Confirm these on film</div>')
             add('<ul class="bl">')
             for _w8, _text, _n in sorted(_checks, key=lambda x: -x[0])[:5]:
@@ -4499,7 +4728,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # tab has every table and possession.
     # =====================================================================================================
     _tf_plan, _ = staff_rows("uww_two_for_one_plan")
-    if not _tf_plan.empty:
+    # CONFIRMED CHANGE (requested: remove the TWO-FOR-ONE section from the briefs, keep it in the app -- Game Plan tab);
+    # BRIEF_TWO_FOR_ONE = True brings it back. Each player's "Attack him late in a half" read stays on the roster.
+    if not _tf_plan.empty and globals().get("BRIEF_TWO_FOR_ONE", False):
         section(f"\u23f1\ufe0f TWO-FOR-ONE vs {OPP_UP}" + footnote(
             "A team that gets the ball with about 0:35-1:00 left in a half can shoot early on purpose: the other team "
             "then has to shoot before the horn, and the first team gets the last shot -- two possessions to one. "
@@ -4566,12 +4797,47 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # low-usage / high-efficiency -- the thing they don't run often enough to have shown up on film, which
     # is exactly what beats an under-prepared defense.
     # =====================================================================================================
+    def _action_freq_card(side):
+        """CONFIRMED CHANGE (requested: "under HOW <OPP> RUNS OFFENSE ... the first thing should be a table that lists the
+        Action (coach-tagged)"): every action group, how many of the team's coach-tagged possessions include it, and the
+        share -- No action tagged first, then most-run first (uww_action_frequency, built in 47)."""
+        try:
+            af = _sb_d("uww_action_frequency")
+        except Exception:
+            return
+        if af.empty or not {"side", "team", "action"} <= set(af.columns):
+            return
+        af = af[(af["side"].astype(str) == side) & (af["scouted_opponent"].astype(str) == str(short))]
+        if side == "Opponent":
+            af = af[af["team"].astype(str) == str(short)]
+        else:
+            af = af[af["team"].astype(str).str.contains("whitewater", case=False, na=False)]
+        if af.empty:
+            return
+        af = af[af["team"] == af.groupby("team")["tagged_possessions"].max().idxmax()].copy()
+        af["_p"] = pd.to_numeric(af["possessions"], errors="coerce").fillna(0)
+        af["_o"] = pd.to_numeric(af["order"], errors="coerce").fillna(99)
+        af = pd.concat([af[af["_o"] == 0], af[af["_o"] != 0].sort_values(["_p", "_o"], ascending=[False, True])])
+        n = int(pd.to_numeric(af["tagged_possessions"], errors="coerce").max() or 0)
+        ng = int(pd.to_numeric(af["games"], errors="coerce").max() or 0)
+        add('<div class="card"><div class="pc-sub">Actions (coach-tagged)</div><table class="compact">'
+            '<thead><tr><th style="text-align:left">Action (coach-tagged)</th><th>Possessions</th>'
+            f'<th>% of {n}</th></tr></thead><tbody>')
+        for _, r in af.iterrows():
+            add(f'<tr><td style="text-align:left">{_sb_esc(r["action"])}</td><td>{int(r["_p"])}</td>'
+                f'<td>{_sb_fmt(r.get("pct"))}%</td></tr>')
+        add("</tbody></table>"
+            f'<p class="mini">Out of {n} coach-tagged possessions on offense in {ng} game(s). One possession can include '
+            "several actions, so the shares add to more than 100%. \u201cNo action tagged\u201d is mostly transition and "
+            "putbacks; it makes every other share a minimum.</p></div>")
+
     def offense_section_test2(side, title, extra=None, extra_note=""):
         """extra: HTML cards built into this section (requested: their film and reads go in here, not in sections of
         their own) -- after the quadrant card, or the section's only content when their offense isn't tagged yet."""
         def _extra_only():
             if extra:
                 section(title + footnote(extra_note))
+                _action_freq_card(side)
                 add(f'<p class="mini">{_sb_esc(OPP_UP)}\u2019s offense isn\u2019t coach-tagged enough for the set '
                     "breakdown yet -- what follows is from the film.</p>")
                 add("".join(extra))
@@ -4602,6 +4868,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             f"with fewer than {_QMIN} tagged possessions are left out. \"Haven't seen it enough\" is the "
             "cell to read twice: those are efficient looks with a thin sample, which is what beats a "
             "defense that only prepared for the obvious." + (" " + extra_note if extra and extra_note else "")))
+        _action_freq_card(side)
         add('<div class="card">')
 
         _quads = [
@@ -4669,7 +4936,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 add('<div class="card"><div class="quad-h">How they run Motion'
                     f'<span class="quad-n">{_tot}</span></div>'
                     '<div class="quad-sub">Motion split by the first action that defines it -- every team’s motion is '
-                    'different</div><table><tr><th>Motion</th><th>Uses</th><th>PPP</th><th>Usual actions</th>'
+                    'different</div><table class="compact mb-tbl"><tr><th>Motion</th><th>Uses</th><th>PPP</th><th>Usual actions</th>'
                     '<th>Triggered by</th><th>Screener</th><th>How it ends</th></tr>')
                 for _, _r in _mb.iterrows():
                     _pp = pd.to_numeric(_r.get("ppp"), errors="coerce")
@@ -5193,7 +5460,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     + _tk_table(_spc_c, ["lineup", "possessions", "both_corners_pct", "paint_crowded_pct", "spacing_ft", "ppp"],
                                 ["Lineup", "Poss.", "Both corners filled %", "Paint crowded %", "Nearest teammate ft", "PPP"], limit=8) + "</div>")
             add('<p class="mini">' + _film_app_link("Film tracking: diagrams, possession replays, search by player") + "</p>")
-    _film_html = capture(_self_scout_film)
+    # CONFIRMED CHANGE (requested: remove SELF-SCOUT FROM THE FILM from the brief, keep it in the app -- Film tracking);
+    # BRIEF_SELF_SCOUT_FILM = True brings it back
+    _film_html = capture(_self_scout_film) if globals().get("BRIEF_SELF_SCOUT_FILM", False) else []
     if _film_html:
         page_break()
         for _h in _film_html:

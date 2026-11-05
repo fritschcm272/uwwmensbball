@@ -266,6 +266,9 @@ def _pm_apply_options(G):
         G["RUN_JERSEY_RECOGNIZER"] = False
     if o.get("DO_FILM_TAGGING") is False:
         G["RUN_TAG_QUEUE"] = False
+    # CONFIRMED CHANGE (requested: reopen saved plays for edits) -- see _tag_reopen in 55c
+    if "REOPEN_PLAYS" in o:
+        G["PLAY_TAG_REOPEN"] = o.get("REOPEN_PLAYS") or []
     add = o.get("ADD_GAMES") or []
     if isinstance(add, str):
         add = [add]
