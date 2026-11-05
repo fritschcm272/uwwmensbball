@@ -669,12 +669,11 @@ try:
                     for _, _r in _high_to.iterrows():
                         _lines.append(f"{_r['_to_rate']:.1f} TO/40 \u2014 {_ktv_last_names(_r['lineup'])}")
             _ktv_add("\U0001f512",
-                     f"Attack {_ktv_short}'s {_ktv_last_names(_worst.iloc[0]['lineup'])} lineup",
+                     # CONFIRMED CHANGE (requested wording): "Attack lineup of Smith, McNabb, McKenna -- their worst
+                     # net-rating lineups with real minutes this season"
+                     f"Attack lineup of {_ktv_last_names(_worst.iloc[0]['lineup'])}",
                      "\n".join(_lines),
-                     f"{_ktv_short}'s most exploitable units: their worst net-rating lineups with real "
-                     f"minutes this season that are losing their minutes, and "
-                     f"the lineups that give the ball away most per 40 "
-                     f"minutes. The headline names the worst of them.",
+                     "their worst net-rating lineups with real minutes this season",
                      "Lineup Scouting", "Personnel",
                      impact=-_worst.iloc[0]['+/-'] / max(_worst.iloc[0]['MIN'], 1) * 40 / 20, confidence=_worst.iloc[0]['MIN'] / 40)
 except Exception as _e:
@@ -1406,9 +1405,10 @@ rebound_summary.to_csv(os.path.join(APP_DATA_DIR, "uww_rebound_summary.csv"), in
 # The brief shows keys scoring min_score or more, best first, up to max_keys; if fewer than min_keys
 # clear the bar it fills up to min_keys with the next best, so the brief is never empty. Only one key
 # per topic (e.g. one rebounding key), and placeholders ("no data yet") are never shown.
+# CONFIRMED CHANGE (requested: "Allow the most important 7 keys to victory on the scouting briefs"): max_keys 6 -> 7
 KTV_BRIEF_RULES = {
     "min_score": 55,
-    "max_keys": 6,
+    "max_keys": 7,
     "min_keys": 3,
     "source_points": {"Keys to Victory": 30, "Coach Notes": 26, "Data-Driven": 20, "Lineup Scouting": 18,
                       "Game Plan": 16, "Team Strengths": 14},

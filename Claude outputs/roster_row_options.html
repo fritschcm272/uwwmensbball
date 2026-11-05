@@ -1,0 +1,74 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roster row options</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--purple:#4E2A84;--bar:#f1eef6;--ink:#222;--mute:#666;--edge:#ddd;--red:#b3261e;--green:#1e7b34;--gold:#f5c400}
+body{font-family:Montserrat,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;padding:24px 16px;max-width:1000px}
+h2{font-size:15px;letter-spacing:.5px;margin:34px 0 4px;color:var(--purple)}
+p.why{margin:0 0 12px;color:var(--mute);font-size:13px}
+.photo{width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 50% 38%,#e9c9a8 0 30%,#1f2a44 31%);flex:none}
+.nm{font-weight:800;font-size:16px}
+.bio{color:var(--mute);font-size:12px}
+.bio b{color:var(--ink)}
+
+/* Option A: card */
+.a{border:1px solid var(--edge);border-radius:10px;overflow:hidden}
+.a .top{display:flex;gap:14px;align-items:center;padding:12px 14px;background:var(--bar)}
+.a .top .who{flex:1}
+.a .foul{font-size:12px;border:1px solid var(--edge);border-radius:14px;padding:4px 10px;background:#fff}
+.a .stats{display:grid;grid-template-columns:repeat(8,1fr);text-align:center;border-bottom:1px solid var(--edge)}
+.a .stats div{padding:8px 2px;font-size:15px;font-weight:600}
+.a .stats span{display:block;font-size:10px;color:var(--mute);font-weight:600;letter-spacing:.5px}
+.a .reads{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.a .reads div{padding:10px 14px;font-size:13px;line-height:1.4;border-right:1px solid var(--edge)}
+.a .reads div:last-child{border-right:0}
+.a .reads em{display:block;font-style:normal;font-size:10px;font-weight:800;letter-spacing:.8px;margin-bottom:3px}
+.t-att{color:var(--red)} .t-ten{color:var(--purple)} .t-key{color:var(--green)}
+
+/* Option B: compact line + chips */
+.b{display:flex;gap:14px;padding:12px 0;border-bottom:2px solid var(--bar);align-items:flex-start}
+.b .photo{width:52px;height:52px}
+.b .main{flex:1}
+.b .line{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+.b .sl{font-size:13px;color:var(--ink);margin:4px 0 8px}
+.b .sl b{font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;border-radius:14px;padding:4px 10px;line-height:1.3}
+.c-att{background:#fdecea;color:var(--red)} .c-ten{background:#efe9f7;color:var(--purple)} .c-key{background:#e8f5ec;color:var(--green);font-weight:700}
+.c-foul{background:#f4f4f4;color:var(--mute)}
+</style></head><body>
+
+<h2>OPTION A — PLAYER CARD (numbers across, reads in three labeled columns)</h2>
+<p class="why">Each read gets a label, so a coach sees at a glance what to attack, what he does, and the key. Takes a little more height per player.</p>
+<div class="a">
+  <div class="top"><div class="photo"></div>
+    <div class="who"><div class="nm">Dennis Estepp</div>
+      <div class="bio">#33 G 6-0 SR · Off: <b>Secondary Ball Handler</b> · Def: <b>Point of Attack</b></div></div>
+    <div class="foul">Late game foul: –</div></div>
+  <div class="stats">
+    <div>26<span>GP</span></div><div>23.7<span>MIN</span></div><div>6.4<span>PTS</span></div><div>3.3<span>REB</span></div>
+    <div>1.6<span>AST</span></div><div>43.7<span>FG%</span></div><div>29.8<span>3P%</span></div><div>75.6<span>FT%</span></div></div>
+  <div class="reads">
+    <div><em class="t-att">ATTACK</em>Late in a half (2-for-1 window) — 3.5 fouls/40, on the floor 79% of late-half possessions</div>
+    <div><em class="t-ten">TENDENCY</em>Driver — 51% of his shots at the rim, 56% there</div>
+    <div><em class="t-key">KEY</em>Stop him early in transition</div>
+  </div>
+</div>
+
+<h2>OPTION B — COMPACT ROW (one stat line, reads as colored tags)</h2>
+<p class="why">About half the height of today's row, so more players fit per page. Reads are shortened to fit a tag; the full text stays in the app.</p>
+<div class="b"><div class="photo"></div>
+  <div class="main">
+    <div class="line"><span class="nm">Dennis Estepp</span>
+      <span class="bio">#33 G 6-0 SR · Off: <b>Secondary Ball Handler</b> · Def: <b>Point of Attack</b></span></div>
+    <div class="sl"><b>6.4</b> pts · <b>3.3</b> reb · <b>1.6</b> ast · 43.7 FG% · 29.8 3P% · 75.6 FT% · 23.7 min · 26 GP</div>
+    <div class="chips">
+      <span class="chip c-att">Attack late in halves (2-for-1)</span>
+      <span class="chip c-ten">Driver — 51% at the rim</span>
+      <span class="chip c-key">KEY: Stop him early in transition</span>
+      <span class="chip c-foul">Late foul: –</span>
+    </div>
+  </div></div>
+
+</body></html>

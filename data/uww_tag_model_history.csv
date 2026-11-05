@@ -395,4 +395,9 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-04T15:10:16,primary_action,Main action,61.0,55.0,,228.0,301,model,True,61% vs 55% always guessing on 228 held-out plays (+6 pts),,,2026-11-04T14:46:38
 2026-11-04T15:10:16,ball_screen_coverage,Ball-screen coverage,27.0,29.0,Switch,131.0,152,usual answer,False,model not better than always guessing (27% vs 29%),,,2026-11-04T14:46:38
 2026-11-04T15:10:16,offball_coverage,Off-ball coverage,50.0,57.0,Over,44.0,65,usual answer,False,model not better than always guessing (50% vs 57%),,,2026-11-04T14:46:38
-2026-11-04T15:10:16,screener,Screener,,,,,75,nan,False,nan,,,2026-11-04T14:46:38
+2026-11-04T15:10:16,screener,Screener,,,,,75,,False,,,,2026-11-04T14:46:38
+2026-11-04T18:23:30,screener,Screener,,,,,75,,False,,,,2026-11-04T14:46:38
+2026-11-04T18:34:45,screener,Screener,,,,,75,,False,,,,2026-11-04T14:46:38
+2026-11-04T19:19:43,screener,Screener,,,,,75,,False,,,,2026-11-04T14:46:38
+2026-11-04T19:54:12,screener,Screener,,,,,75,,False,,,,2026-11-04T14:46:38
+2026-11-04T20:08:32,screener,Screener,,,,,75,nan,False,nan,,,2026-11-04T14:46:38

@@ -4210,12 +4210,265 @@ def _pl_motion_tables(pc):
     return br.reset_index(drop=True), na[keep].sort_values(["game_date", "clip_number"]).reset_index(drop=True)
 
 
+# CONFIRMED CHANGE (requested: the brief's "HOW <OPP> RUNS OFFENSE" opens with a table of every coach-tagged action and how
+# often the team ran it). uww_action_frequency: per team on offense, the share of its coach-tagged possessions that include
+# each action group (a possession can have several; misspellings like "Spilit" count), plus "No action tagged".
+ACTION_GROUPS = globals().get("ACTION_GROUPS") or [
+    ("Ball screen (any)", r"ball ?screen|drag|\bpc5\b|p&r|pnr"),
+    ("DHO / handoff (incl. Zoom, Pistol, Give)", r"dho|zoom|pistol|hand ?off|\bgive\b"),
+    ("Swing / ball reversal", r"swing|reversal"),
+    ("Pinch post (throw / pass to the pinch)", r"pinch"),
+    ("Down screen", r"down ?screen"),
+    ("Isolation", r"\biso\b|isolation"),
+    ("Post entry / throw to the 5", r"post entry|throw 5|pass 5|pass to 5|throw back 5|give 5|hi-lo"),
+    ("Split action (incl. split scissors)", r"spi?l?i?t"),
+    ("Over", r"\bover\b"),
+    ("Cuts (backdoor, slot, shallow, flash)", r"cut|back ?door|flash"),
+    ("Flare", r"flare|flair"),
+    ("Stagger", r"stagger"),
+    ("Cross / back screen", r"cross ?screen|back ?screen"),
+    ("Scissors", r"scissors"),
+    ("Pass to corner", r"corner"),
+    ("Ghost", r"ghost"),
+    ("Rifle", r"rifle"),
+    ("Wide pin", r"wide ?pin"),
+]
+
+
+def _pl_action_frequency(pc):
+    if pc is None or pc.empty or "offense_team" not in pc.columns:
+        return pd.DataFrame()
+    t = pc[pc["decode_quality"].astype(str) != "Untagged"] if "decode_quality" in pc.columns else pc
+    if "possession_side" in t.columns:
+        t = t[t["possession_side"].astype(str) != "Defense"]
+    rows = []
+    for (opp, side, team), g in t.groupby(["scouted_opponent", "side", "offense_team"], dropna=False):
+        n = len(g)
+        if not n:
+            continue
+        a = (g.get("play_actions", pd.Series("", index=g.index)).fillna("").astype(str) + " | "
+             + g.get("primary_action", pd.Series("", index=g.index)).fillna("").astype(str)).str.lower()
+        none = ~a.str.replace(r"[|\s]|nan", "", regex=True).astype(bool)
+        rows.append({"scouted_opponent": opp, "side": side, "team": team, "action": "No action tagged",
+                     "possessions": int(none.sum()), "pct": round(100 * none.sum() / n, 1), "tagged_possessions": n,
+                     "games": g["game_date"].nunique(), "order": 0})
+        for i, (lab, rx) in enumerate(ACTION_GROUPS, 1):
+            m = a.str.contains(rx, regex=True)
+            rows.append({"scouted_opponent": opp, "side": side, "team": team, "action": lab,
+                         "possessions": int(m.sum()), "pct": round(100 * m.sum() / n, 1), "tagged_possessions": n,
+                         "games": g["game_date"].nunique(), "order": i})
+    return pd.DataFrame(rows)
+
+
+action_frequency = _pl_action_frequency(play_calls)
+
+
+# CONFIRMED CHANGE (requested: "the player roster [should] list offensive tendencies (ex. which of the actions is McNabb most
+# aggressive or what types of cuts does this player do most frequently). Add other things that you think describes the
+# player on offense"). uww_player_tendencies: per team and player, up to 6 plain-language lines built from the Synergy play
+# strings of every clip (how he's used, ball screens, drives, cuts, post-ups, spot-ups, transition, who he creates for) and
+# the coaches' Film Tagging (the actions he finishes most, his role in them). The brief's roster shows them under Offense.
+_TD_PLAYER_RX = re.compile(r"^#?(\d{1,2})\s+(.+)$")
+_TD_TYPES = {"P&R Ball Handler": "ball screen (handler)", "Spot-Up": "spot-up", "Transition": "transition",
+             "Post-Up": "post-up", "Offensive Rebound": "putback", "Hand Off": "handoff", "ISO": "isolation",
+             "Off Screen": "off a screen", "Cut": "cut", "P&R Roll Man": "roll / pop man"}
+
+
+def _td_parse(s):
+    """'4 Michael McNabb > P&R Ball Handler > ... > Ball Delivered > 10 Cai Joseph > Spot-Up > ...' ->
+    [(name, play type, [details])] in order (the last one finished the possession)."""
+    out = []
+    for seg in [x.strip() for x in str(s or "").split(">")]:
+        m = _TD_PLAYER_RX.match(seg)
+        if m and not re.match(r"^\d+\s*(pts|pt)\b", seg, re.I):
+            out.append([m.group(2).strip(), None, []])
+        elif out:
+            if out[-1][1] is None:
+                out[-1][1] = seg
+            else:
+                out[-1][2].append(seg)
+    return out
+
+
+def _pl_player_tendencies(pc):
+    if pc is None or pc.empty or "synergy_string" not in pc.columns:
+        return pd.DataFrame()
+    pc = pc[pc["offense_team"].notna()]
+    if "possession_side" in pc.columns:
+        pc = pc[pc["possession_side"].astype(str) != "Defense"]
+    grp = ACTION_GROUPS if "ACTION_GROUPS" in globals() else []
+    rows = []
+    for (opp, side, team), g in pc.groupby(["scouted_opponent", "side", "offense_team"], dropna=False):
+        P = {}
+        for _, r in g.iterrows():
+            seq = _td_parse(r.get("synergy_string"))
+            if not seq:
+                continue
+            pts = pd.to_numeric(r.get("points"), errors="coerce")
+            acts = (str(r.get("play_actions") or "") + " | " + str(r.get("primary_action") or "")).lower()
+            for i, (nm, pt, det) in enumerate(seq):
+                d = P.setdefault(nm, {"use": 0, "types": {}, "pts": {}, "det": [], "pass_from": {}, "acts": {}, "act_pts": {},
+                                      "trig": {}, "scr": {}, "did": {}})
+                fin = i == len(seq) - 1
+                if fin:
+                    if pt in ("Non Possession", "No Play Type", None):
+                        continue
+                    d["use"] += 1
+                    d["types"][pt] = d["types"].get(pt, 0) + 1
+                    if pd.notna(pts):
+                        d["pts"].setdefault(pt, []).append(float(pts))
+                    d["det"].append((pt, det))
+                    for lab, rx in grp:
+                        if re.search(rx, acts):
+                            d["acts"][lab] = d["acts"].get(lab, 0) + 1
+                            if pd.notna(pts):
+                                d["act_pts"].setdefault(lab, []).append(float(pts))
+                elif pt:
+                    d["pass_from"][pt] = d["pass_from"].get(pt, 0) + 1     # he made the play and passed out of it
+            try:
+                for p_ in json.loads(r.get("action_players")) if str(r.get("action_players") or "").startswith("[") else []:
+                    nm = str(p_.get("offense") or "").strip()
+                    if not nm or "missing" in nm.lower():
+                        continue
+                    d = P.setdefault(nm, {"use": 0, "types": {}, "pts": {}, "det": [], "pass_from": {}, "acts": {},
+                                          "act_pts": {}, "trig": {}, "scr": {}, "did": {}})
+                    a = str(p_.get("action") or "").strip().title() or "Action"
+                    role = "scr" if "screen" in str(p_.get("role") or "").lower() else "trig"
+                    d[role][a] = d[role].get(a, 0) + 1
+                    if p_.get("offense_did"):
+                        k = (role, str(p_["offense_did"]).strip().lower())
+                        d["did"][k] = d["did"].get(k, 0) + 1
+            except Exception:
+                pass
+        # CONFIRMED BUG (fixed; "Richie" and "Richie Warren", "Rashad Rodgers" and "Rashad Rogers" were counted as two
+        # players): a name typed in Film Tagging is matched to the player Synergy names on this team -- same name, else the
+        # one player with that first or last name, else a spelling within one or two letters -- and their counts merged.
+        import difflib as _dl
+        _nk = lambda x: re.sub(r"[^a-z ]", "", str(x).lower()).split()  # noqa: E731
+        _canon = [nm for nm, d in P.items() if d["use"] or d["pass_from"]]
+
+        def _match(nm):
+            t = _nk(nm)
+            if not t:
+                return None
+            for c in _canon:
+                if _nk(c) == t:
+                    return c
+            if len(t) == 1:
+                hits = [c for c in _canon if t[0] in _nk(c)]
+                return hits[0] if len(hits) == 1 else None
+            close = _dl.get_close_matches(" ".join(t), [" ".join(_nk(c)) for c in _canon], n=1, cutoff=0.85)
+            if close:
+                return next(c for c in _canon if " ".join(_nk(c)) == close[0])
+            hits = [c for c in _canon if _nk(c)[-1:] == t[-1:]]
+            return hits[0] if len(hits) == 1 else None
+        for nm in [x for x in list(P) if x not in _canon]:
+            tgt = _match(nm)
+            if not tgt:
+                continue
+            src, dst = P.pop(nm), P[tgt]
+            for k in ("trig", "scr", "did", "acts", "pass_from", "types"):
+                for kk, vv in src[k].items():
+                    dst[k][kk] = dst[k].get(kk, 0) + vv
+            for k in ("pts", "act_pts"):
+                for kk, vv in src[k].items():
+                    dst[k].setdefault(kk, []).extend(vv)
+            dst["det"] += src["det"]
+            dst["use"] += src["use"]
+        _MIN = int(globals().get("TENDENCY_MIN_PLAYS", 3))     # (requested: a line needs 3+ plays)
+        for nm, d in P.items():
+            lines = []
+            n = d["use"]
+            ppp = lambda k: (sum(d["pts"].get(k, [])) / len(d["pts"][k])) if d["pts"].get(k) else None  # noqa: E731
+            if n >= 3:
+                top = sorted(d["types"].items(), key=lambda x: -x[1])[:3]
+                lines.append("Used most: " + ", ".join(
+                    f"{_TD_TYPES.get(k, k.lower())} {round(100 * v / n)}%" + (f" ({ppp(k):.2f} PPP)" if len(d["pts"].get(k, [])) >= 3 else "")
+                    for k, v in top) + f" -- {n} possessions finished")
+            # (ball movement isn't an action he attacks out of)
+            ag = sorted([(k, v) for k, v in d["acts"].items() if not re.search(r"swing|corner|no action", k, re.I)],
+                        key=lambda x: -x[1])
+            ag = [(k, v) for k, v in ag if v >= _MIN][:2]
+            if ag:
+                lines.append("Most aggressive out of: " + " · ".join(
+                    f"{k.split(' (')[0].lower()} ({v}" + (f", {sum(d['act_pts'][k]) / len(d['act_pts'][k]):.2f} PPP"
+                                                       if len(d["act_pts"].get(k, [])) >= 3 else "") + ")" for k, v in ag))
+            det = d["det"]
+            pr = [x for t, x in det if t == "P&R Ball Handler"]
+            if len(pr) >= 3:
+                side_ = sum(1 for x in pr if any(s in ("Left P&R", "Right P&R") for s in x))
+                rim = sum(1 for x in pr if "To Basket" in x)
+                lines.append(f"Ball screens: side {side_} / high {len(pr) - side_}; gets to the rim on {rim} of {len(pr)}"
+                             + (f"; rejects / goes away from the pick {sum(1 for x in pr if 'Go Away from Pick' in x)}"
+                                if any("Go Away from Pick" in x for x in pr) else ""))
+            dl = sum(1 for _t, x in det if "Drives Left" in x)
+            dr = sum(1 for _t, x in det if "Drives Right" in x)
+            if dl + dr >= 3:
+                _hi = max(dl, dr)
+                lines.append(f"Drives {'right' if dr >= dl else 'left'}: {_hi} of {dl + dr} drives ({round(100 * _hi / (dl + dr))}%)"
+                             if _hi / (dl + dr) >= 0.6 else f"Drives both ways: right {dr}, left {dl}")
+            cuts = [x[0] for t, x in det if t == "Cut" and x]
+            if len(cuts) >= _MIN:
+                cc = pd.Series(cuts).value_counts()
+                lines.append("Cuts: " + ", ".join(f"{k.lower()} cut {v}" if k.lower() in ("basket", "flash") else f"{k.lower()} {v}"
+                                                  for k, v in cc.items()))
+            po = [x for t, x in det if t == "Post-Up"]
+            if len(po) >= 3:
+                blk = pd.Series([y for x in po for y in x if "Block" in y or y in ("Flash Middle",)]).value_counts()
+                sh = pd.Series([y for x in po for y in x if "Shoulder" in y or y == "Face-up"]).value_counts()
+                lines.append(f"Post-ups: {len(po)}" + (f", mostly {blk.index[0].lower()}" if len(blk) else "")
+                             + (f", {sh.index[0].lower()}" + (" turn" if "Shoulder" in sh.index[0] else "") if len(sh) else ""))
+            su = [x for t, x in det if t == "Spot-Up"]
+            if len(su) >= 3:
+                cs = sum(1 for x in su if "No Dribble Jumper" in x)
+                three = sum(1 for x in su if "Long/3pt" in x)
+                lines.append(f"Spot-ups: catch-and-shoot {cs} of {len(su)}" + (f" ({three} from 3)" if three else "")
+                             + f", attacks the closeout {len(su) - cs}")
+            tr = [x[0] for t, x in det if t == "Transition" and x]
+            if len(tr) >= 3:
+                tc = pd.Series(tr).value_counts().head(2)
+                lines.append("Transition: " + ", ".join(f"{k.lower()} {v}" for k, v in tc.items()))
+            pf = sum(d["pass_from"].values())
+            if pf >= _MIN:
+                k0 = max(d["pass_from"], key=d["pass_from"].get)
+                lines.append(f"Creates: passed out of {_TD_TYPES.get(k0, k0.lower())} {d['pass_from'][k0]}x"
+                             + (f" ({pf} plays made for others)" if pf > d["pass_from"][k0] else ""))
+            if sum(d["scr"].values()) >= _MIN:
+                a0 = max(d["scr"], key=d["scr"].get)
+                dd = {k[1]: v for k, v in d["did"].items() if k[0] == "scr"}
+                lines.append(f"Screener in {sum(d['scr'].values())} tagged action(s), most in {a0.lower()}"
+                             + (" -- " + ", ".join(f"{k} {v}" for k, v in sorted(dd.items(), key=lambda x: -x[1])) if dd else ""))
+            # the numbers behind the lines -- the brief's "Struggles against" read uses them (requested: "what type of
+            # defender will the player struggle against")
+            _sh = lambda k: round(d["types"].get(k, 0) / n, 3) if n else 0.0  # noqa: E731
+            _su = [x for t, x in det if t == "Spot-Up"]
+            _po = [x for t, x in det if t == "Post-Up"]
+            _blk = pd.Series([y for x in _po for y in x if "Block" in y]).value_counts()
+            _shd = pd.Series([y for x in _po for y in x if "Shoulder" in y]).value_counts()
+            _ppp_pr = ppp("P&R Ball Handler")
+            metrics = {"share_pr": _sh("P&R Ball Handler"), "share_spot": _sh("Spot-Up"), "share_trans": _sh("Transition"),
+                       "share_post": _sh("Post-Up"), "share_iso": _sh("ISO"), "share_putback": _sh("Offensive Rebound"),
+                       "share_cut": _sh("Cut"), "pr_n": len(pr), "pr_rim": sum(1 for x in pr if "To Basket" in x),
+                       "pr_ppp": round(_ppp_pr, 2) if _ppp_pr is not None and len(d["pts"].get("P&R Ball Handler", [])) >= 3 else None,
+                       "drives_left": dl, "drives_right": dr, "spot_n": len(_su),
+                       "spot_cs": sum(1 for x in _su if "No Dribble Jumper" in x),
+                       "post_n": len(_po), "post_block": _blk.index[0] if len(_blk) else None,
+                       "post_shoulder": _shd.index[0] if len(_shd) else None,
+                       "rim_finishes": sum(1 for _t, x in det if "To Basket" in x)}
+            if lines:
+                rows.append({"scouted_opponent": opp, "side": side, "team": team, "player": nm, "possessions": n,
+                             "tendencies": " | ".join(lines[:6]), **metrics})
+    return pd.DataFrame(rows)
+
+
+player_tendencies = _pl_player_tendencies(play_calls)
 motion_breakdown, motion_needs_action = _pl_motion_tables(play_calls)
 print(f"  Motion breakdown: {len(motion_breakdown)} team x family row(s); {len(motion_needs_action)} Motion play(s) tagged "
       "with no action (uww_motion_needs_action -- Analytics > Film Tagging lists them)", flush=True)
 for _nm, _df in (("uww_screen_defenders", screen_defenders), ("uww_action_reads", action_reads),
                  ("uww_screen_taggers", screen_taggers),
-                 ("uww_motion_breakdown", motion_breakdown), ("uww_motion_needs_action", motion_needs_action)):
+                 ("uww_motion_breakdown", motion_breakdown), ("uww_motion_needs_action", motion_needs_action),
+                 ("uww_action_frequency", action_frequency), ("uww_player_tendencies", player_tendencies)):
     try:
         _df.to_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, f"{_nm}.csv"), index=False)
     except Exception as _e:

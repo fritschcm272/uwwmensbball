@@ -7768,8 +7768,10 @@ def _ft_seed_from_saves(d, store, kp):
     docs = []
     try:
         for doc in _pr_save_docs():
-            if str(doc.get("game")) == game and str(doc.get("run")) in real and (doc.get("answers") or doc.get("actions")
-                                                                                 or doc.get("actions_cleared")):
+            # CONFIRMED CHANGE (requested: reopen saved plays for edits): a "fix" batch starts on EVERY earlier save of its
+            # game (its plays were saved in other batches), the latest winning
+            if str(doc.get("game")) == game and (str(doc.get("run")) in real or d.get("seed_all_runs")) \
+                    and (doc.get("answers") or doc.get("actions") or doc.get("actions_cleared")):
                 docs.append(doc)
     except Exception:
         docs = []
@@ -8034,7 +8036,8 @@ def render_film_tagging():
         return
     _is_tag = lambda d: "/play_tag/" in d.get("_dir", "").replace(os.sep, "/")
     label = lambda d: (f"{_pnt_game_label(d.get('game'))} \u2014 "
-                       + (f"tag {len(d.get('plays', []))} play(s)" if _is_tag(d) else f"check {len(d.get('plays', []))} Title(s)"))
+                       + (f"fix {len(d.get('plays', []))} saved play(s)" if d.get("reopen") else
+                          f"tag {len(d.get('plays', []))} play(s)" if _is_tag(d) else f"check {len(d.get('plays', []))} Title(s)"))
     names = [label(d) for d in pkgs]
     pick = st.selectbox("Game", names, key="ft_game")
     d = pkgs[names.index(pick)]
