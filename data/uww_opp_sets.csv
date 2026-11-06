@@ -1,9 +1,10 @@
 opponent,situation,set_name,primary_player,action,frequency,our_call,film_ref,is_sample
-Carroll (WI) Pioneers,Half court,Screen Motion,Lamar Smith,Ball Screen,"52 uses in 3 games, 0.87 PPP",Pick one ball-screen coverage and stay in it; no middle,Beloit@Carroll(WI) Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
-Carroll (WI) Pioneers,Half court,DHO Motion,Michael McNabb,DHO,"32 uses in 3 games, 0.34 PPP",Get into the handoff; force it away from the middle,Beloit@Carroll(WI) Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
-Carroll (WI) Pioneers,Half court,Motion (no action tagged),Jacob Naber,Post Entry,"27 uses in 3 games, 1.20 PPP",,Beloit@Carroll(WI) Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
-Carroll (WI) Pioneers,Half court,Off-ball screen Motion,Michael McNabb,Down Screen,"13 uses in 3 games, 0.50 PPP",Lock and trail; bump the cutter off the screen,Beloit@Carroll(WI) Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
-Carroll (WI) Pioneers,Half court,Set,Lamar Smith,Swing (pass across),"7 uses in 2 games, 0.50 PPP",,Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
-Carroll (WI) Pioneers,Half court,Cutting Motion,Jacob Naber,Throw to the Pinch,"5 uses in 3 games, 1.60 PPP",,Beloit@Carroll(WI) Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
-Carroll (WI) Pioneers,Half court,Drive Motion,Lamar Smith,Throw Pinch,"4 uses in 2 games, 1.00 PPP",,Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
-Carroll (WI) Pioneers,BLOB,BLOB Set,Lamar Smith,Ball Screen,"5 uses in 3 games, 1.00 PPP",Pick one ball-screen coverage and stay in it; no middle,Beloit@Carroll(WI) Carroll(WI)@Elmhurst Carroll(WI)@Wash(StLouis),False
+Ripon Red Hawks,Half court,5-Out Motion,Kolby Williams,Drive-and-kick off a dribble handoff at the top,Base offense (~40%),"Gap help, no middle drives, close out short","Gm 2, 1st half",True
+Ripon Red Hawks,Half court,Horns Flare,Anton Kilde,"Elbow ball screen, weak-side flare for the shooter",3-4x a half,Top-lock the flare; switch 4-5 on the elbow screen,"Gm 1, 2nd half",True
+Ripon Red Hawks,Half court,Post Split,Kolby Williams,"Entry to the block, split cut above it",2-3x a half,Three-quarter front; dig from the passer,"Gm 3, 1st half",True
+Ripon Red Hawks,Half court,Spain PnR,Seth Bunders,Ball screen with a back-screen on the roller's man,Late clock,Ice the ball screen; talk the back-screen early,"Gm 4, 2nd half",True
+Ripon Red Hawks,BLOB,Box Up,Anton Kilde,"Stagger to the corner, big seals the rim",Most BLOBs,Switch everything on the box; bump the sealer,Gm 2,True
+Ripon Red Hawks,SLOB,Stack Lob,Kolby Williams,"Stack at the elbow, back-screen lob to the rim",Under 5:00,Help side sits on the rim; no top-side denial,Gm 1,True
+Ripon Red Hawks,ATO,Elevator,Anton Kilde,Elevator doors at the top of the key for a catch-and-shoot,Out of timeouts,Chase over the top; the screener's man sits in the doors,Gm 3,True
+Ripon Red Hawks,Press break,4-Across,Seth Bunders,"Four across the free-throw line, inbounder runs baseline",vs full-court pressure,Deny the first pass to the handler; trap the catch,Gm 4,True
+Ripon Red Hawks,End of game,Iso-High Ball Screen,Kolby Williams,"Clear-out, late high ball screen with 8 on the clock",Last possession,Show and recover; no fouling on the drive,Gm 2,True

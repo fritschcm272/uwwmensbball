@@ -2952,7 +2952,99 @@ def _pl_txt(series):
     return series.map(lambda v: "" if v is None or (not isinstance(v, str) and pd.isna(v)) else str(v))
 
 
+# ---- Synergy exports dropped in the tracking backup folder (requested) ----------------------------------------
+# CONFIRMED CHANGE (requested: "write code that goes into any folders within F:\Backups\uwwmensbball_tracking that
+# have an export.csv and put that data in for me"): before uww_plays.csv is read, every Export.csv under
+# SYNERGY_EXPORT_ROOT (any depth, any capitalisation) is checked, and each GAME in it (Game code + Date) that isn't
+# already in uww_plays.csv is appended to it. Rules:
+#   * a game already in uww_plays.csv is never touched or added twice -- re-running is safe;
+#   * only coach-TAGGED games are added: a plain Synergy export titles every clip with the player's name, and those
+#     games already come in through Film Tagging / frame capture, so adding them would count their plays twice.
+#     A game counts as tagged when 30%+ of its clips have a Title that isn't one of the clip's player names;
+#   * the columns are lined up to uww_plays.csv's; a file missing Title/Result/Date/Pd./Clock/Player/Team is skipped;
+#   * before the first write of a run, uww_plays.csv is copied to inputs/_backup/uww_plays_<date-time>.csv.
+# Set SYNERGY_EXPORT_ROOT = "" to turn it off.
+SYNERGY_EXPORT_ROOT = globals().get("SYNERGY_EXPORT_ROOT", r"F:\Backups\uwwmensbball_tracking")
+
+
+# Games that came in from an Export.csv (Game|YYYY-MM-DD). They're tag-only games with no captured frames, so the
+# frame check below doesn't stop the run for them (CONFIRMED BUG fixed: FramesNotReady on WWW@RIP / EC@WWW / WWW@STC).
+_PL_EXPORT_LIST = os.path.join(os.path.dirname(_PL_UWW_FILE), "_synergy_export_games.json")
+
+
+def _pl_export_games():
+    try:
+        import json
+        with open(_PL_EXPORT_LIST, encoding="utf-8") as fh:
+            return set(json.load(fh))
+    except Exception:
+        return set()
+
+
+def _pl_merge_exports():
+    root = globals().get("SYNERGY_EXPORT_ROOT") or ""
+    if not root or not os.path.isdir(root):
+        if root:
+            print(f"  Synergy exports: {root} not found -- skipped (plug the drive in, or set SYNERGY_EXPORT_ROOT).")
+        return
+    paths = []
+    for d, _subs, files in os.walk(root):
+        paths += [os.path.join(d, f) for f in files if f.lower() == "export.csv"]
+    if not paths:
+        return
+    need = ["Title", "Result", "Date", "Pd.", "Clock", "Player", "Team"]
+    base = pd.read_csv(_PL_UWW_FILE, dtype=str) if os.path.exists(_PL_UWW_FILE) else pd.DataFrame(columns=need + ["Game"])
+    _gk = lambda df: (df.get("Game", pd.Series("", index=df.index)).fillna("").astype(str).str.strip() + "|"  # noqa: E731
+                      + pd.to_datetime(df["Date"], errors="coerce").dt.strftime("%Y-%m-%d").fillna(""))
+    have = set(_gk(base)) if len(base) else set()
+    add, said, _done = [], [], set(_pl_export_games())
+    for path in sorted(paths):
+        rel = os.path.relpath(path, root)
+        try:
+            ex = pd.read_csv(path, dtype=str)
+        except Exception as e:
+            said.append(f"{rel}: could not read ({e})")
+            continue
+        if set(need) - set(ex.columns):
+            said.append(f"{rel}: missing column(s) {sorted(set(need) - set(ex.columns))} -- skipped")
+            continue
+        ex = ex[ex["Player"].notna() & ex["Title"].notna()].copy()
+        ex["_gk"] = _gk(ex)
+        for gk, g in ex.groupby("_gk"):
+            if gk in have:
+                continue
+            ttl = g["Title"].astype(str).str.strip().str.lower()
+            pls = g["Player"].astype(str).str.lower()
+            tagged = sum(t not in p for t, p in zip(ttl, pls)) / max(len(g), 1)
+            if tagged < 0.3:
+                said.append(f"{rel}: {gk.replace('|', ' ')} has no coach tags (titles are player names) -- not added")
+                continue
+            add.append(g.drop(columns="_gk"))
+            have.add(gk)
+            _done.add(gk)
+            said.append(f"{rel}: {gk.replace('|', ' ')} -- added {len(g)} clip(s) to uww_plays.csv")
+    for m in said:
+        print("  Synergy exports: " + m)
+    if not add:
+        return
+    cols = list(base.columns) if len(base.columns) else list(add[0].columns)
+    new = pd.concat([a.reindex(columns=cols) for a in add], ignore_index=True)
+    if os.path.exists(_PL_UWW_FILE):
+        import shutil
+        bdir = os.path.join(os.path.dirname(_PL_UWW_FILE), "_backup")
+        os.makedirs(bdir, exist_ok=True)
+        shutil.copy2(_PL_UWW_FILE, os.path.join(bdir, "uww_plays_" + pd.Timestamp.now().strftime("%Y%m%d_%H%M%S") + ".csv"))
+    pd.concat([base, new], ignore_index=True).to_csv(_PL_UWW_FILE, index=False)
+    import json
+    with open(_PL_EXPORT_LIST, "w", encoding="utf-8") as fh:
+        json.dump(sorted(_done), fh, indent=1)
+
+
 def _pl_load_all():
+    try:
+        _pl_merge_exports()
+    except Exception as e:                                # never stop the run over the export folder
+        print(f"  Synergy exports: skipped ({e})")
     frames = []
     for path, label in ((_PL_UWW_FILE, "UW-Whitewater"), (_PL_OPP_FILE, "opponent")):
         if os.path.exists(path):
@@ -3501,6 +3593,13 @@ if isinstance(globals().get("clip_frames"), pd.DataFrame) and not clip_frames.em
     for (_lab, _url), _cfp in clip_frames.groupby([clip_frames.get("source_label", pd.Series("", index=clip_frames.index)),
                                                    clip_frames.get("source_url", pd.Series("", index=clip_frames.index))],
                                                   dropna=False):
+        # CONFIRMED BUG (fixed; the run stopped on "2026-02-21 Ripon Red Hawks vs Beloit Buccaneers: 175 clip(s) captured,
+        # none in uww_plays.csv" when its Synergy export had written 0 videos -- every row was an error, nothing captured):
+        # a game whose rows have NO frames at all isn't "captured"; it gets a note and the run goes on.
+        if _cfp["frame_files"].dropna().astype(str).str.strip().eq("").all():
+            print(f"  (frame check: {_lab}: no frames captured yet ({len(_cfp)} clip row(s), all with errors) -- not "
+                  "stopping; re-export it in Synergy Editor and it is captured next run)", flush=True)
+            continue
         if not _cfp["frame_files"].dropna().astype(str).isin(_used_ff).any() and not _ignored(_lab, _url):
             _gaps_capt.append(f"    - {_lab}: {len(_cfp)} clip(s) captured, none in uww_plays.csv")
     for (_gd, _gc), _g in play_calls.groupby(["game_date", "game_code"], dropna=False):
@@ -3534,6 +3633,9 @@ if isinstance(globals().get("clip_frames"), pd.DataFrame) and not clip_frames.em
                           f"that have frames -- duplicate rows in uww_plays.csv, e.g. clip number 0 -- not counted; "
                           f"remove the duplicates from the file when you can)")
                     _miss = _miss[~_dup]
+        if len(_miss) == len(_g) and f"{_gc}|{str(_gd)[:10]}" in _pl_export_games():
+            print(f"  (frame check: {_gd} {_gc} came in from a Synergy Export.csv -- coach tags only, no frames needed)")
+            continue
         if len(_miss) == len(_g):
             _gaps_tag.append(f"    - {_gd} {_gc}: {len(_g)} tagged play(s), NO frames")
         elif len(_miss) > _allow:
@@ -4462,13 +4564,238 @@ def _pl_player_tendencies(pc):
 
 
 player_tendencies = _pl_player_tendencies(play_calls)
+
+
+# CONFIRMED CHANGE (requested: one table for "which actions are being run out of situations and formations" -- the
+# brief's HOW <OPP> RUNS OFFENSE opens with it). uww_offense_breakdown: per scouted team on offense, a row per situation
+# (Half court, Transition, Offensive rebound, BLOB, SLOB, ATO, Opener) and, under half court / BLOB / SLOB, a row per
+# formation used 3+ times: possessions, PPP, its top play calls, the top actions out of it (count and PPP), the
+# ball-screen coverages defenses showed, and OUR defense in the same situation / formation (our games' defensive
+# possessions).
+_OB_SIT_ORDER = ["Half court", "Transition", "Offensive rebound", "BLOB", "SLOB", "ATO", "Opener"]
+
+
+def _pl_offense_breakdown(pc):
+    if pc is None or pc.empty or "offense_team" not in pc.columns:
+        return pd.DataFrame()
+    t = pc[pc["decode_quality"].astype(str) != "Untagged"].copy() if "decode_quality" in pc.columns else pc.copy()
+    t["_P"] = pd.to_numeric(t["points"], errors="coerce")
+    t["_SIT"] = t["play_situation"].fillna("(none tagged)").astype(str).str.replace(r"\s*\(ATO\)$", "", regex=True)
+    t["_FORM"] = t["play_formation"].fillna("").astype(str).str.strip().str.title().replace({"": "(none tagged)"})
+    t["_ACTS"] = (t.get("play_actions", pd.Series("", index=t.index)).fillna("").astype(str) + " | "
+                  + t.get("primary_action", pd.Series("", index=t.index)).fillna("").astype(str)).str.lower()
+    t["_COV"] = (t.get("coverage_faced", pd.Series("", index=t.index)).fillna("").astype(str)
+                 .map(lambda v: _pl_answer_alias("ball_screen_coverage", v.split(" | ")[0]) or "") if "coverage_faced" in t.columns else "")
+    # CONFIRMED CHANGE (requested: "Make the green side match"): our own ball-screen coverage on the same
+    # situation / formation (coverage_played on our defensive possessions), with PPP allowed in each.
+    t["_OCOV"] = (t["coverage_played"].fillna("").astype(str)
+                  .map(lambda v: _pl_answer_alias("ball_screen_coverage", v.split(" | ")[0]) or "")
+                  if "coverage_played" in t.columns else "")
+    off = t[t["possession_side"].astype(str) != "Defense"] if "possession_side" in t.columns else t
+    ours = t[(t["side"] == "UWW") & (t["possession_side"].astype(str) == "Defense")] if "possession_side" in t.columns else t.iloc[0:0]
+    _lab = lambda l: re.sub(r"\s*\(.*\)$", "", l)  # noqa: E731
+    ppp = lambda g: (g["_P"].sum() / g["_P"].notna().sum()) if g["_P"].notna().sum() else None  # noqa: E731
+
+    def _acts(g):
+        res = []
+        for lab, rx in ACTION_GROUPS:
+            x = g[g["_ACTS"].str.contains(rx, regex=True)]
+            if len(x):
+                res.append((len(x), _lab(lab), ppp(x)))
+        res.sort(key=lambda z: -z[0])
+        return " · ".join(f"{l} {n}" + (f" ({p:.2f})" if p is not None else "") for n, l, p in res[:3]) \
+            or "no action tagged"
+
+    class _PCStr(str):
+        counts = ""
+
+    def _calls(g):
+        # CONFIRMED CHANGE (requested: "add each play call's PPP the same way actions show it" and no 3-play minimum)
+        pc = g["play_call"].astype(str)
+        vc = g["play_call"].dropna().astype(str).value_counts().head(2)
+        out = []
+        for a, b in vc.items():
+            p = ppp(g[pc == a])
+            # CONFIRMED CHANGE (requested: drop the count -- "BLOB Set 5" read like a play name; Poss already has it)
+            out.append(f"{a}" + (f" ({p:.2f})" if p is not None else ""))
+        res = _PCStr(" · ".join(out))
+        res.counts = ";".join(f"{a}={b}" for a, b in vc.items())   # play_calls_n (counts per play call, for the brief's flags)
+        return res
+
+    def _cov(g):
+        vc = g.loc[g["_COV"].astype(str).str.strip() != "", "_COV"].value_counts().head(2)
+        return " · ".join(f"{a} {b}" for a, b in vc.items())
+    def _ocov(g):
+        x = g[g["_OCOV"].astype(str).str.strip() != ""]
+        res = sorted(((len(c), a, ppp(c)) for a, c in x.groupby("_OCOV")), key=lambda z: -z[0])[:3]
+        return " · ".join(f"{a} {n}" + (f" ({p:.2f})" if p is not None else "") for n, a, p in res)
+    # CONFIRMED CHANGE (requested: "if we ran something different it should just be on a different line within the
+    # same situation/formation row"): one "coverage" line per ball-screen coverage under each situation / formation --
+    # their possessions where defenses played it, and our own possessions where WE played it, side by side.
+    def _cov_group(v):
+        """CONFIRMED CHANGE (requested: "Under and under should be the same thing. All of the Hedges should be grouped
+        together along with things that are similar like Show and Get Back"): coverage families for the brief table."""
+        x = str(v).strip().lower()
+        if not x:
+            return ""
+        if "hedge" in x or "hegde" in x or "show" in x or "blitz" in x or "trap" in x:
+            return "Hedge / Show"
+        if "switch" in x:
+            return "Switch"
+        if "drop" in x or "sag" in x:
+            return "Drop"
+        if "under" in x:
+            return "Under"
+        if "top lock" in x or "ice" in x or "push" in x:
+            return "Top Lock / Ice"
+        if "over" in x or "chase" in x:
+            return "Over"
+        return str(v).strip()[:1].upper() + str(v).strip()[1:]
+
+    def _cov_split(g):
+        """CONFIRMED CHANGE (requested: "separate the Coverages into Ball Screen and Off-Ball Screen Coverages"): one row
+        per (possession, kind, coverage family) from coverage_detail ("Ball Screen: Switch (def #32) | Down Screen: Top
+        Lock"). Ball Screen and DHO = ball screen; every other screen type = off-ball. Falls back to the plain coverage
+        column as ball screen when a possession has no coverage_detail."""
+        recs = []
+        det = g["coverage_detail"] if "coverage_detail" in g.columns else pd.Series("", index=g.index)
+        for i, d, fb in zip(g.index, det.fillna("").astype(str), g["_COV"].astype(str)):
+            parts = [x.strip() for x in d.split(" | ") if x.strip()]
+            if not parts and fb.strip():
+                parts = ["Ball Screen: " + fb]
+            seen = set()
+            for x in parts:
+                typ, _, cov = x.partition(":") if ":" in x else ("Ball Screen", "", x)
+                cov = re.sub(r"\s*\(def[^)]*\)", "", cov).strip()
+                fam = _cov_group(cov.split(" / ")[0] if "hedge" in cov.lower() and "/" in cov else cov)
+                if not fam:
+                    continue
+                kind = "Ball screen" if re.search(r"ball\s*screen|dho|handoff", typ, re.I) else "Off-ball screen"
+                if (kind, fam) not in seen:
+                    seen.add((kind, fam))
+                    recs.append((i, kind, fam))
+        r = pd.DataFrame(recs, columns=["_i", "kind", "fam"])
+        if r.empty:
+            return r.assign(_P=pd.Series(dtype=float))
+        return r.assign(_P=g.loc[r["_i"], "_P"].values)
+
+    def _cov_rows(g, u, base, k):
+        out = []
+        cg, cu = _cov_split(g), _cov_split(u.assign(_COV=u["_OCOV"]))
+        for kind in ("Ball screen", "Off-ball screen"):
+            kg, ku = cg[cg["kind"] == kind], cu[cu["kind"] == kind]
+            names = set(kg["fam"]) | set(ku["fam"])
+            for c in sorted(names, key=lambda c: (-(kg["fam"] == c).sum(), -(ku["fam"] == c).sum(), c)):
+                a, bb = kg[kg["fam"] == c], ku[ku["fam"] == c]
+                k += 1
+                out.append({**base, "order": k, "level": "coverage", "cov_kind": kind, "label": c, "possessions": len(a),
+                            "share_pct": None, "ppp": round(ppp(a), 2) if len(a) and ppp(a) is not None else None,
+                            # CONFIRMED CHANGE (requested: fold "What they called" into the coverage lines):
+                            "play_calls": _calls(g.loc[a["_i"].unique()].assign(
+                                play_call=lambda d: d["play_call"].where(~d["play_call"].astype(str).str.contains(
+                                    "unspecified", case=False, na=False)))),
+                            "actions": "", "coverage": c, "our_possessions": len(bb),
+                            "our_ppp_allowed": round(ppp(bb), 2) if len(bb) and ppp(bb) is not None else None})
+        # CONFIRMED CHANGE (requested: a "No coverage tagged" line so every possession is accounted for): their / our
+        # possessions in this situation / formation with no ball-screen or off-ball coverage tagged at all.
+        ng = g[~g.index.isin(set(cg["_i"]) if len(cg) else set())]
+        nu = u[~u.index.isin(set(cu["_i"]) if len(cu) else set())]
+        if len(ng) or len(nu):
+            k += 1
+            out.append({**base, "order": k, "level": "coverage", "cov_kind": "None", "label": "No coverage tagged",
+                        "possessions": len(ng), "share_pct": None,
+                        "ppp": round(ppp(ng), 2) if len(ng) and ppp(ng) is not None else None,
+                        "play_calls": _calls(ng.assign(play_call=ng["play_call"].where(~ng["play_call"].astype(str).str.contains(
+                            "unspecified", case=False, na=False)))) if len(ng) else "",
+                        "actions": "", "coverage": "", "our_possessions": len(nu),
+                        "our_ppp_allowed": round(ppp(nu), 2) if len(nu) and ppp(nu) is not None else None})
+        return out, k
+    rows = []
+    # CONFIRMED CHANGE (requested: "the opposite of HOW CARROLL (WI) RUNS OFFENSE for how we run offense and how they
+    # might defend it"): the same rows for OUR offense (perspective "UWW"); its comparison side is the opponent's own
+    # DEFENSIVE possessions in their games (same situation / formation), and their coverage_played.
+    theirs_def = (t[(t["side"] == "Opponent") & (t["possession_side"].astype(str) == "Defense")]
+                  if "possession_side" in t.columns else t.iloc[0:0])
+    # CONFIRMED BUG (fixed; "Shouldn't there still be a Ripon offensive table because we have some of the film tagged"):
+    # the opponent's offense in OUR game against them (e.g. 2025-11-07 WWW@RIP, tagged by the coaches) sits on the UWW
+    # side as our defensive possessions, so it never reached their table. Those possessions now count as theirs too.
+    if "possession_side" in t.columns and "offense_team" in t.columns:
+        _h2h = t[(t["side"] == "UWW") & (t["possession_side"].astype(str) == "Defense")
+                 & (t["offense_team"].astype(str).str.strip() == t["scouted_opponent"].astype(str).str.strip())]
+        if len(_h2h):
+            off = pd.concat([off, _h2h.assign(side="Opponent")])
+    for (opp, side, team), g in off.groupby(["scouted_opponent", "side", "offense_team"], dropna=False):
+        if side not in ("Opponent", "UWW"):
+            continue
+        _r0 = len(rows)
+        n_all = len(g)
+        uo = (ours if side == "Opponent" else theirs_def)
+        uo = uo[uo["scouted_opponent"] == opp]
+        _persp = side
+        sits = [x for x in _OB_SIT_ORDER if (g["_SIT"] == x).any()] + \
+               [x for x in g["_SIT"].value_counts().index if x not in _OB_SIT_ORDER]
+        k = 0
+        for sit in sits:
+            gs = g[g["_SIT"] == sit]
+            us = uo[uo["_SIT"] == sit]
+            k += 1
+            rows.append({"scouted_opponent": opp, "team": team, "perspective": _persp, "order": k, "level": "situation", "situation": sit,
+                         "label": sit, "possessions": len(gs), "share_pct": round(100 * len(gs) / n_all),
+                         "ppp": round(ppp(gs), 2) if ppp(gs) is not None else None, "play_calls": _calls(gs),
+                         "actions": _acts(gs), "coverage": _cov(gs), "our_possessions": len(us), "our_coverage": _ocov(us),
+                         "our_ppp_allowed": round(ppp(us), 2) if len(us) and ppp(us) is not None else None})
+            # CONFIRMED CHANGE: coverage lines only under formation rows (not the situation total).
+            if sit in ("Half court", "BLOB", "SLOB"):
+                for fm, gf in sorted(gs.groupby("_FORM"), key=lambda x: -len(x[1])):
+                    # CONFIRMED CHANGE (requested: remove the 3-play minimum -- a filter will come later)
+                    # CONFIRMED CHANGE: no "our defense" comparison for an untagged formation (it pooled every
+                    # possession we never tagged a formation on, which told a coach nothing).
+                    uf = us[us["_FORM"] == fm] if fm != "(none tagged)" else us.iloc[0:0]
+                    k += 1
+                    rows.append({"scouted_opponent": opp, "team": team, "perspective": _persp, "order": k, "level": "formation", "situation": sit,
+                                 "label": fm, "possessions": len(gf), "share_pct": round(100 * len(gf) / n_all),
+                                 "ppp": round(ppp(gf), 2) if ppp(gf) is not None else None, "play_calls": _calls(gf),
+                                 "actions": _acts(gf), "coverage": _cov(gf), "our_possessions": len(uf), "our_coverage": _ocov(uf),
+                                 "our_ppp_allowed": round(ppp(uf), 2) if len(uf) and ppp(uf) is not None else None})
+                    # CONFIRMED CHANGE (requested: "put the Play Call into the table similar to Situation and Formation
+                    # so that it makes new rows for each of them. Everything that doesn't have a play call should say
+                    # 'No Play Call'"): one row per play call under each formation (most run first, No Play Call
+                    # last), with its coverage lines under it. Our defense isn't matched to THEIR play calls, so the
+                    # green side stays on the situation / formation rows.
+                    _pcn = gf["play_call"].astype(str).where(
+                        gf["play_call"].notna() & ~gf["play_call"].astype(str).str.contains("unspecified", case=False, na=False)
+                        & (gf["play_call"].astype(str).str.strip() != ""), "No Play Call")
+                    _ord = [x for x in _pcn.value_counts().index if x != "No Play Call"] + \
+                           (["No Play Call"] if (_pcn == "No Play Call").any() else [])
+                    for _pn in _ord:
+                        gp = gf[_pcn == _pn]
+                        k += 1
+                        _cnt = _PCStr(_pn)
+                        _cnt.counts = f"{_pn}={len(gp)}"
+                        rows.append({"scouted_opponent": opp, "team": team, "perspective": _persp, "order": k, "level": "play_call",
+                                     "situation": sit, "formation": fm, "label": _pn, "possessions": len(gp),
+                                     "share_pct": round(100 * len(gp) / n_all),
+                                     "ppp": round(ppp(gp), 2) if ppp(gp) is not None else None, "play_calls": _cnt,
+                                     "actions": _acts(gp), "coverage": _cov(gp), "our_possessions": 0,
+                                     "our_ppp_allowed": None})
+                        _cr, k = _cov_rows(gp, uf.iloc[0:0], {"scouted_opponent": opp, "team": team, "perspective": _persp, "situation": sit}, k)
+                        rows += _cr
+    for r in rows:
+        r.setdefault("perspective", "Opponent")
+        r["play_calls_n"] = getattr(r.get("play_calls"), "counts", "")
+        r["play_calls"] = str(r.get("play_calls") or "")
+    return pd.DataFrame(rows)
+
+
+offense_breakdown = _pl_offense_breakdown(play_calls)
 motion_breakdown, motion_needs_action = _pl_motion_tables(play_calls)
 print(f"  Motion breakdown: {len(motion_breakdown)} team x family row(s); {len(motion_needs_action)} Motion play(s) tagged "
       "with no action (uww_motion_needs_action -- Analytics > Film Tagging lists them)", flush=True)
 for _nm, _df in (("uww_screen_defenders", screen_defenders), ("uww_action_reads", action_reads),
                  ("uww_screen_taggers", screen_taggers),
                  ("uww_motion_breakdown", motion_breakdown), ("uww_motion_needs_action", motion_needs_action),
-                 ("uww_action_frequency", action_frequency), ("uww_player_tendencies", player_tendencies)):
+                 ("uww_action_frequency", action_frequency), ("uww_player_tendencies", player_tendencies),
+                 ("uww_offense_breakdown", offense_breakdown)):
     try:
         _df.to_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, f"{_nm}.csv"), index=False)
     except Exception as _e:

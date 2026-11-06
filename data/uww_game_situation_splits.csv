@@ -1,3 +1,4 @@
 opponent,situation,ppp,primary_actions,note,is_sample
-Carroll (WI) Pioneers,Trailing by 10+,0.75,"Screen Motion (3x), DHO Motion (2x)",8 tagged possessions (their overall 0.89 PPP),False
-Carroll (WI) Pioneers,"Clutch (last 5 min, margin ≤ 8)",0.5,"Screen Motion (3x), Motion (no action tagged) (2x)",10 tagged possessions (their overall 0.89 PPP),False
+Ripon Red Hawks,Leading by 10+,0.85,"Slows down, more Hi-Lo DHO",Stops running in transition,True
+Ripon Red Hawks,Trailing by 10+,1.15,"More ball screens, faster pace",Kolby Williams takes over possessions,True
+Ripon Red Hawks,"Clutch (last 5 min, margin ≤ 8)",0.97,Isolation for Kolby Williams,Goes away from their sets late,True

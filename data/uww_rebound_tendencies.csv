@@ -1,9 +1,9 @@
 opponent,situation,crash_pct,who_crashes,note,is_sample
-Carroll (WI) Pioneers,Their missed layup / dunk,34,"Jacob Naber (30), Lamar Smith (24), Michael McNabb (22)",34% offensive rebound on 357 of 357 misses (0 unpaired),False
-Carroll (WI) Pioneers,Their missed two-point jumper,26,"Lamar Smith (27), Jacob Naber (22), Michael McNabb (13)",26% offensive rebound on 470 of 471 misses (1 unpaired),False
-Carroll (WI) Pioneers,Their missed free throw,56,"Carroll (WI) (52), Lamar Smith (6), Jacob Naber (3)",56% offensive rebound on 131 of 147 misses (16 unpaired),False
-Carroll (WI) Pioneers,All their misses,33,"Lamar Smith (57), Carroll (WI) (55), Jacob Naber (55)",33% offensive rebound on 958 of 975 misses (17 unpaired),False
-Carroll (WI) Pioneers,Opponent missed layup / dunk,56,"Lamar Smith (38), Jacob Naber (28), Dennis Estepp (18)",They secure 56% of 276 opponent misses (1 unpaired),False
-Carroll (WI) Pioneers,Opponent missed two-point jumper,72,"Lamar Smith (76), Jacob Naber (69), Dennis Estepp (50)",They secure 72% of 594 opponent misses (1 unpaired),False
-Carroll (WI) Pioneers,Opponent missed free throw,45,"Jacob Naber (16), Lamar Smith (15), Michael McNabb (9)",They secure 45% of 141 opponent misses (21 unpaired),False
-Carroll (WI) Pioneers,All opponent misses,64,"Lamar Smith (129), Jacob Naber (113), Dennis Estepp (75)",They secure 64% of 1011 opponent misses (23 unpaired),False
+Ripon Red Hawks,Their missed layup / dunk,30,"Kolby Williams (16), Ripon (8), CJ Brown (7)",30% offensive rebound on 198 of 198 misses (0 unpaired),False
+Ripon Red Hawks,Their missed two-point jumper,20,"Ripon (23), Kolby Williams (21), Keenan Rahn (11)",20% offensive rebound on 701 of 701 misses (0 unpaired),False
+Ripon Red Hawks,Their missed free throw,55,"Ripon (38), Kolby Williams (1), Seth Bunders (1)",55% offensive rebound on 76 of 90 misses (14 unpaired),False
+Ripon Red Hawks,All their misses,25,"Ripon (69), Kolby Williams (38), Keenan Rahn (18)",25% offensive rebound on 975 of 989 misses (14 unpaired),False
+Ripon Red Hawks,Opponent missed layup / dunk,63,"Kolby Williams (29), Seth Bunders (23), Michael Asman (20)",They secure 63% of 276 opponent misses (1 unpaired),False
+Ripon Red Hawks,Opponent missed two-point jumper,65,"Seth Bunders (63), Kolby Williams (56), Ripon (33)",They secure 65% of 560 opponent misses (0 unpaired),False
+Ripon Red Hawks,Opponent missed free throw,41,"Anton Kilde (13), Jack Field (12), Kolby Williams (11)",They secure 41% of 169 opponent misses (19 unpaired),False
+Ripon Red Hawks,All opponent misses,60,"Kolby Williams (96), Seth Bunders (91), Michael Asman (55)",They secure 60% of 1005 opponent misses (20 unpaired),False

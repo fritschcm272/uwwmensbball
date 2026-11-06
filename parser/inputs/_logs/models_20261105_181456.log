@@ -1,0 +1,38 @@
+
+===== cell 1 <file> =====
+
+===== cell 108 46_frame_capture =====
+Frame archive: 32,487 tracking frame(s) are packed in clip videos -- unpacked automatically when a step reads them.
+Frame capture: VISION_ALSO_GAMES '11_7_25 Carroll (WI) Pioneers @ Washington-St. Louis Bears' -- already captured, or not one of the games in the window
+Frame capture: VISION_ALSO_GAMES '11_12_25 Beloit Buccaneers @ Carroll (WI) Pioneers' -- already captured, or not one of the games in the window
+Frame capture: UWW -- working on 2026-03-07 Washington-St. Louis Bears (45 of 167 clips still untagged -- Analytics > Film Tagging); its next game waits until the coaches finish it.
+Frame capture: game pages still to capture -- 1 of the upcoming opponent's (Ripon Red Hawks), 0 of UWW's; UWW games first (VISION_CAPTURE_FIRST), newest first.
+Frame capture: completing 2026-02-21 Ripon Red Hawks vs Beloit Buccaneers (some clips' frames are missing or failed) -- only what's missing is captured.
+Frame capture: 1 game page(s) (all clips)
+  [export] 2026-02-21 Ripon Red Hawks vs Beloit Buccaneers: no Synergy export yet -- exporting it with Synergy Editor into F:\Backups\uwwmensbball_tracking
+  [editor] signing in to Synergy...
+    [save] Synergy login page (diagnostic) -> Synergy - Login Page (diagnostic).html
+    [synergy-login] username field matched: name='Username' id='Username' type='text'
+    [synergy-login] password field matched: name='Password' id='Password'
+  [export] 2026-02-21 Ripon Red Hawks vs Beloit Buccaneers: export failed (TimeoutError: Locator.wait_for: Timeout 60000ms exceeded.
+Call log:
+  - waiting for locator("a.ts-playlist-link").filter(has_text=re.compile(r"full\s*game\s*video", re.IGNORECASE)).first
+)
+  Frames are under ./inputs\_vision_frames -- open a few to check they show the play.
+Clips with frames: 2230 of 2439 in uww_clip_frames.csv -- 195 with capture errors (see the 'error' column)
+  (15 more row(s) with errors are from an old TEST capture of 2026-03-06 Loras Duhawks -- replaced when that game is captured)
+  Capture errors (first 3): clip video not in the export (the export stopped before it, or it is still being written) | clip video not in the export (the export stopped before it, or it is still being written) | clip video not in the export (the export stopped before it, or it is still being written)
+  [time] 46_frame_capture: 2.1 min
+
+===== cell 110 47_play_calls =====
+  Synergy exports: Beloit@Carroll(WI) - Nov 12, 2025\Export.csv: BEL@CAR 2025-11-12 has no coach tags (titles are player names) -- not added
+  Synergy exports: Carroll(WI)@Elmhurst - Feb 24, 2026\Export.csv: CAR@EC 2026-02-24 has no coach tags (titles are player names) -- not added
+  Synergy exports: Carroll(WI)@Wash(StLouis) - Nov 7, 2025\Export.csv: CAR@WAS 2025-11-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: MarianWI@MSOE - Feb 26, 2026\Export.csv: MAR@MSE 2026-02-26 has no coach tags (titles are player names) -- not added
+  Synergy exports: Millikin@WheatonIL - Feb 21, 2026\Export.csv: MIL@WHE 2026-02-21 has no coach tags (titles are player names) -- not added
+  Synergy exports: UWWhitewater@Wash(StLouis) - Mar 7, 2026\Export.csv: WWW@WAS 2026-03-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: WheatonIL@NorthPark - Feb 24, 2026\Export.csv: WHE@NP 2026-02-24 has no coach tags (titles are player names) -- not added
+  Captured clips with no Title: 1697 clip(s) from 11 game(s) not in uww_plays.csv added as play calls (166 placed on the play-by-play clock through the video-tagging match; the rest have no half / clock, so no lineups). The app's Play review is where they get tagged.
+  Blank Team on 76 clip(s) (Synergy's Non Shooting Foul clips): filled with the named player's own team -- 75 from his other clips in the game, 0 from the play-by-play (he drew the foul, so his team had the ball)
+  Play clips by game type: UWW 1240 clip(s) in 9 game(s), Opponent 0 clip(s) in 0 game(s), Other 1657 clip(s) in 9 game(s)
+  [saves] fetched branch 'saves': 0 new saved review file(s) copied into data/play_review_saves (77 on the branch; its newest commit: 2026-11-04 14:04:33 -0600  Play review: 2025-11-12|Beloit@Carroll(WI) by Coach Jake)

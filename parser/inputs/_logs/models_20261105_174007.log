@@ -1,0 +1,1177 @@
+
+===== cell 1 <file> =====
+
+===== cell 2 00b_season_switch, 01_uw_whitewater_scouting_parser =====
+SEASON = "auto": UWW hasn't played a 2026-27 game yet -- this run stays on 2025-26 (every number in the brief is labeled last season). It switches by itself after UWW's first game; SEASON = "2026-27" switches now.
+Season: 2025-26
+EXTRA_GAMES is set: the run's date is 2026-3-8, the day after UWW's last game on file (03/07/26) -- every game on file counts as played, the extra game is next. (REFERENCE_DATE is ignored while EXTRA_GAMES is set.)
+Input directory: ./inputs
+Output directory: ../data
+LLM comparisons: disabled
+Reference date: 2026-3-8
+Before scout: no -- using every scouting report found
+  APP_BASE_URL normalized: 'uwwmensbball-new.streamlit.app' -> https://uwwmensbball-new.streamlit.app
+Brief links -> https://uwwmensbball-new.streamlit.app
+
+===== cell 4  =====
+
+===== cell 5  =====
+
+===== cell 7 02_parse_every_team_schedule_scrape_live_from =====
+Found 26 schedule MHTML file(s) in ./inputs:
+ - Alma Scots - Schedule.html
+ - Aurora Spartans - Schedule.html
+ - Carroll (WI) Pioneers - Schedule.html
+ - Coe Kohawks - Schedule.html
+ - Elmhurst Bluejays - Schedule.html
+ - Eureka Red Devils - Schedule.html
+ - Hope Flying Dutchmen - Schedule.html
+ - Lawrence Vikings - Schedule.html
+ - Loras Duhawks - Schedule.html
+ - MSOE Raiders - Schedule_2025.html
+ - Ripon Red Hawks - Schedule.html
+ - Simpson Storm - Schedule.html
+ - St. Thomas (TX) Celts - Schedule.html
+ - UW-Eau Claire Blugolds - Schedule.html
+ - UW-La Crosse Eagles - Schedule.html
+ - UW-Oshkosh Titans - Schedule.html
+ - UW-Platteville Pioneers - Schedule.html
+ - UW-River Falls Falcons - Schedule.html
+ - UW-Stevens Point Pointers - Schedule.html
+ - UW-Stout Blue Devils - Schedule.html
+ - UW-Whitewater - Schedule.mhtml
+ - UW-Whitewater - Schedule_2023.html
+ - UW-Whitewater - Schedule_2024.html
+ - Washington-St. Louis Bears - Schedule_2025.html
+ - Wheaton (IL) Thunder - Schedule_2025.html
+ - Wheaton Thunder - Schedule_2025.html
+Detected season 2025 from UWW's local schedule snapshot -- using FASTSCOUT_DOCS_SEASON='25' for any live-scrape URLs below (was hardcoded to '25').
+Skipping live scrape for UW-Whitewater's own schedule -- a local schedule file already exists: UW-Whitewater - Schedule.mhtml
+
+Every game already has a local scouting-report PDF, or is missing required data -- nothing to download from FastScout. (29 raw game(s) found; 0 missing opponent_url, 0 missing a parseable date.)
+  UW-Whitewater Warhawks (UW-Whitewater - Schedule.mhtml): 29 game(s) -- scouted opponents: ['St. Thomas (TX) Celts', 'Eureka Red Devils', 'Aurora Spartans', 'Simpson Storm', 'Ripon Red Hawks', 'Carroll (WI) Pioneers', 'Lawrence Vikings', 'Carroll (WI) Pioneers', 'Hope Flying Dutchmen', 'Alma Scots', 'Elmhurst Bluejays', 'Coe Kohawks', 'UW-River Falls Falcons', 'UW-La Crosse Eagles', 'UW-Stout Blue Devils', 'UW-Platteville Pioneers', 'UW-Eau Claire Blugolds', 'UW-Oshkosh Titans', 'UW-Stevens Point Pointers', 'UW-Platteville Pioneers', 'UW-Eau Claire Blugolds', 'UW-La Crosse Eagles', 'UW-Stout Blue Devils', 'Loras Duhawks', 'Washington-St. Louis Bears']
+  EXTRA_GAMES: Ripon Red Hawks -- FastScout team page found on a saved schedule as 'Ripon Red Hawks': https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ?league=NCAAB-III&season=25
+  EXTRA_GAMES: added Ripon Red Hawks as the UPCOMING game (Sat, Nov 14, 2026), placed on Sun, Mar 08, 1 day(s) after UWW's last 2025-26 game
+  New-season check: UW-Whitewater's 2026-27 schedule not read (CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.)
+  New-season check: Ripon Red Hawks's 2026-27 schedule not read (CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.)
+  New-season check (2026-27 on FastScout): couldn't be read
+  Scout report for the upcoming game: not found on Ripon Red Hawks's documents page yet (CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.)
+
+Fetching 20 opponent schedule(s) (scrape opponent_url, MHTML backup on failure):
+  Could not start an authenticated FastScout browser session: CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+Traceback (most recent call last):
+  File "C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\parser\parser_lib\02_parse_every_team_schedule_scrape_live_from.py", line 1731, in <module>
+    scraped_html_by_opponent = run_in_fastscout_session(_run_fastscout_scrape_session)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\parser\parser_lib\02_parse_every_team_schedule_scrape_live_from.py", line 769, in run_in_fastscout_session
+    return _fastscout_session["executor"].submit(_job).result()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\frits\anaconda3\Lib\concurrent\futures\_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\frits\anaconda3\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\frits\anaconda3\Lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\parser\parser_lib\02_parse_every_team_schedule_scrape_live_from.py", line 739, in _job
+    _bootstrap()
+  File "C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\parser\parser_lib\02_parse_every_team_schedule_scrape_live_from.py", line 708, in _bootstrap
+    sync_playwright = _ensure_playwright_ready()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\parser\parser_lib\02_parse_every_team_schedule_scrape_live_from.py", line 521, in _ensure_playwright_ready
+    subprocess.check_call([sys.executable, "-m", "playwright", "install", "chromium"])
+  File "C:\Users\frits\anaconda3\Lib\subprocess.py", line 413, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Falling back to local backup MHTML for Ripon Red Hawks: Ripon Red Hawks - Schedule.html
+  Ripon Red Hawks (Ripon Red Hawks - Schedule.html): 26 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for St. Thomas (TX) Celts: St. Thomas (TX) Celts - Schedule.html
+  St. Thomas (TX) Celts (St. Thomas (TX) Celts - Schedule.html): 30 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for Eureka Red Devils: Eureka Red Devils - Schedule.html
+  Eureka Red Devils (Eureka Red Devils - Schedule.html): 27 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for Aurora Spartans: Aurora Spartans - Schedule.html
+  Aurora Spartans (Aurora Spartans - Schedule.html): 29 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for Simpson Storm: Simpson Storm - Schedule.html
+  Simpson Storm (Simpson Storm - Schedule.html): 26 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for Elmhurst Bluejays: Elmhurst Bluejays - Schedule.html
+  Elmhurst Bluejays (Elmhurst Bluejays - Schedule.html): 28 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for Lawrence Vikings: Lawrence Vikings - Schedule.html
+  Lawrence Vikings (Lawrence Vikings - Schedule.html): 26 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for Carroll (WI) Pioneers: Carroll (WI) Pioneers - Schedule.html
+  Carroll (WI) Pioneers (Carroll (WI) Pioneers - Schedule.html): 26 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for Hope Flying Dutchmen: Hope Flying Dutchmen - Schedule.html
+  Hope Flying Dutchmen (Hope Flying Dutchmen - Schedule.html): 28 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for Alma Scots: Alma Scots - Schedule.html
+  Alma Scots (Alma Scots - Schedule.html): 27 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for Coe Kohawks: Coe Kohawks - Schedule.html
+  Coe Kohawks (Coe Kohawks - Schedule.html): 29 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for UW-Oshkosh Titans: UW-Oshkosh Titans - Schedule.html
+  UW-Oshkosh Titans (UW-Oshkosh Titans - Schedule.html): 26 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for UW-Stevens Point Pointers: UW-Stevens Point Pointers - Schedule.html
+  UW-Stevens Point Pointers (UW-Stevens Point Pointers - Schedule.html): 28 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for UW-River Falls Falcons: UW-River Falls Falcons - Schedule.html
+  UW-River Falls Falcons (UW-River Falls Falcons - Schedule.html): 26 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for UW-La Crosse Eagles: UW-La Crosse Eagles - Schedule.html
+  UW-La Crosse Eagles (UW-La Crosse Eagles - Schedule.html): 30 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for UW-Stout Blue Devils: UW-Stout Blue Devils - Schedule.html
+  UW-Stout Blue Devils (UW-Stout Blue Devils - Schedule.html): 27 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for UW-Platteville Pioneers: UW-Platteville Pioneers - Schedule.html
+  UW-Platteville Pioneers (UW-Platteville Pioneers - Schedule.html): 29 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for UW-Eau Claire Blugolds: UW-Eau Claire Blugolds - Schedule.html
+  UW-Eau Claire Blugolds (UW-Eau Claire Blugolds - Schedule.html): 25 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for Loras Duhawks: Loras Duhawks - Schedule.html
+  Loras Duhawks (Loras Duhawks - Schedule.html): 29 game(s) -- all games before 2026-3-8
+  Falling back to local backup MHTML for Washington-St. Louis Bears: Washington-St. Louis Bears - Schedule_2025.html
+  Washington-St. Louis Bears (Washington-St. Louis Bears - Schedule_2025.html): 27 game(s) -- all games before 2026-3-8
+Synergy game IDs: 28 of 29 played UWW game(s), 560 game row(s) in all -- no video link on FastScout for: Wed, Feb 18 UW-Stevens Point Pointers
+            date                opponent                        team  \
+0     Fri, Nov 7         Ripon Red Hawks      UW-Whitewater Warhawks   
+1    Fri, Nov 14   St. Thomas (TX) Celts      UW-Whitewater Warhawks   
+2    Sat, Nov 15       Eureka Red Devils      UW-Whitewater Warhawks   
+3    Wed, Nov 19         Aurora Spartans      UW-Whitewater Warhawks   
+4    Tue, Nov 25           Simpson Storm      UW-Whitewater Warhawks   
+..           ...                     ...                         ...   
+574  Fri, Feb 20             NYU Violets  Washington-St. Louis Bears   
+575  Sun, Feb 22         Brandeis Judges  Washington-St. Louis Bears   
+576  Sat, Feb 28         Chicago Maroons  Washington-St. Louis Bears   
+577   Fri, Mar 6   Transylvania Pioneers  Washington-St. Louis Bears   
+578   Sat, Mar 7  UW-Whitewater Warhawks  Washington-St. Louis Bears   
+
+          location  \
+0             Away   
+1    Neutral Court   
+2    Neutral Court   
+3             Home   
+4             Home   
+..             ...   
+574           Away   
+575           Away   
+576           Home   
+577           Home   
+578           Home   
+
+                                                                                      opponent_url  \
+0    https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ?league=NCAAB-III&season=25   
+1    https://fastscout.fastmodelsports.com/teams/anCMEUdqSzWIAKDyPWdskA?league=NCAAB-III&season=25   
+2    https://fastscout.fastmodelsports.com/teams/jVR53GJ3SVCQW2MBg7YgPQ?league=NCAAB-III&season=25   
+3    https://fastscout.fastmodelsports.com/teams/UxiGqKUrSCmXR4N-1svMtA?league=NCAAB-III&season=25   
+4    https://fastscout.fastmodelsports.com/teams/gJj-UOqhSs-rqAEEH1mw6A?league=NCAAB-III&season=25   
+..                                                                                             ...   
+574  https://fastscout.fastmodelsports.com/teams/CI6LBSD6TyWbB2_6MWhnmw?league=NCAAB-III&season=25   
+575  https://fastscout.fastmodelsports.com/teams/K6DEreL6RyGPHcEpM0aUgQ?league=NCAAB-III&season=25   
+576  https://fastscout.fastmodelsports.com/teams/PNimtdzUS9azFOoUwuMfKQ?league=NCAAB-III&season=25   
+577  https://fastscout.fastmodelsports.com/teams/S1Ph0BR9SW67H9N-QrX3_A?league=NCAAB-III&season=25   
+578  https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw?league=NCAAB-III&season=25   
+
+                                                                                                                                game_url  \
+0    https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/Z0-ctt8vSRGBq7L9GQd3rg/boxscore?league=NCAAB-III&season=25   
+1    https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/JcwXgHrZQgOeF6s3qZVhjw/boxscore?league=NCAAB-III&season=25   
+2    https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/mLvThP_nRhm2OBQ6J9BORA/boxscore?league=NCAAB-III&season=25   
+3    https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/ULe6tyLSRjOi02aI8Th1Uw/boxscore?league=NCAAB-III&season=25   
+4    https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/xeVKXMreRY-u-_yZJzD2pw/boxscore?league=NCAAB-III&season=25   
+..                                                                                                                                   ...   
+574  https://fastscout.fastmodelsports.com/teams/LUSewnwnR7S6NaJQp6WaTA/games/SKSURhfUQ4S9chYuMKEzEg/boxscore?league=NCAAB-III&season=25   
+575  https://fastscout.fastmodelsports.com/teams/LUSewnwnR7S6NaJQp6WaTA/games/NyCH4QWwTxuo93DVmsXXHA/boxscore?league=NCAAB-III&season=25   
+576  https://fastscout.fastmodelsports.com/teams/LUSewnwnR7S6NaJQp6WaTA/games/6-njJFqpQ62CDzEzNSegDg/boxscore?league=NCAAB-III&season=25   
+577  https://fastscout.fastmodelsports.com/teams/LUSewnwnR7S6NaJQp6WaTA/games/U-dsXJxoSU2NN5ciWc1sog/boxscore?league=NCAAB-III&season=25   
+578  https://fastscout.fastmodelsports.com/teams/LUSewnwnR7S6NaJQp6WaTA/games/PYoPanJnThuo0uFdbDmcQg/boxscore?league=NCAAB-III&season=25   
+
+                                                                                                                                                                  video_url  \
+0    https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce749ed0cee8bbd101a32%2ffullgamevideo%2fclips   
+1    https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68deda8125423a1fd110a592%2ffullgamevideo%2fclips   
+2    https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dd65d8fe000370dae0eae6%2ffullgamevideo%2fclips   
+3    https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dc5148e106e7b276af199f%2ffullgamevideo%2fclips   
+4    https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d7de383c744037aaf49e8f%2ffullgamevideo%2fclips   
+..                                                                                                                                                                      ...   
+574  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68da98aa7a1c5eda71dddf2f%2ffullgamevideo%2fclips   
+575  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68da98aa7a1c5eda71dddf30%2ffullgamevideo%2fclips   
+576  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68da977db2494e65efbde77b%2ffullgamevideo%2fclips   
+577  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69a629f1a90179f1552e9b46%2ffullgamevideo%2fclips   
+578  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69abb6434a361ba0101bd122%2ffullgamevideo%2fclips   
+
+              synergy_game_id  \
+0    68dce749ed0cee8bbd101a32   
+1    68deda8125423a1fd110a592   
+2    68dd65d8fe000370dae0eae6   
+3    68dc5148e106e7b276af199f   
+4    68d7de383c744037aaf49e8f   
+..                        ...   
+574  68da98aa7a1c5eda71dddf2f   
+575  68da98aa7a1c5eda71dddf30   
+576  68da977db2494e65efbde77b   
+577  69a629f1a90179f1552e9b46   
+578  69abb6434a361ba0101bd122   
+
+                                                                  synergy_boxscore_url  \
+0    https://apps.synergysports.com/basketball/games/68dce749ed0cee8bbd101a32/boxscore   
+1    https://apps.synergysports.com/basketball/games/68deda8125423a1fd110a592/boxscore   
+2    https://apps.synergysports.com/basketball/games/68dd65d8fe000370dae0eae6/boxscore   
+3    https://apps.synergysports.com/basketball/games/68dc5148e106e7b276af199f/boxscore   
+4    https://apps.synergysports.com/basketball/games/68d7de383c744037aaf49e8f/boxscore   
+..                                                                                 ...   
+574  https://apps.synergysports.com/basketball/games/68da98aa7a1c5eda71dddf2f/boxscore   
+575  https://apps.synergysports.com/basketball/games/68da98aa7a1c5eda71dddf30/boxscore   
+576  https://apps.synergysports.com/basketball/games/68da977db2494e65efbde77b/boxscore   
+577  https://apps.synergysports.com/basketball/games/69a629f1a90179f1552e9b46/boxscore   
+578  https://apps.synergysports.com/basketball/games/69abb6434a361ba0101bd122/boxscore   
+
+    outcome  team_score  opponent_score  point_margin   season Upcoming  \
+0         W        76.0            58.0          18.0  2025-26       No   
+1         L        73.0            81.0          -8.0  2025-26       No   
+2         W       116.0            73.0          43.0  2025-26       No   
+3         W        82.0            73.0           9.0  2025-26       No   
+4         W       100.0            78.0          22.0  2025-26       No   
+..      ...         ...             ...           ...      ...      ...   
+574       W        84.0            74.0          10.0  2025-26       No   
+575       W        74.0            68.0           6.0  2025-26       No   
+576       W        82.0            73.0           9.0  2025-26       No   
+577       W        82.0            47.0          35.0  2025-26       No   
+578       W        74.0            71.0           3.0  2025-26       No   
+
+    game_type  note real_date  
+0        None  None       NaN  
+1        None  None       NaN  
+2        None  None       NaN  
+3        None  None       NaN  
+4        None  None       NaN  
+..        ...   ...       ...  
+574       NaN   NaN       NaN  
+575       NaN   NaN       NaN  
+576       NaN   NaN       NaN  
+577       NaN   NaN       NaN  
+578       NaN   NaN       NaN  
+
+[579 rows x 18 columns]
+
+===== cell 9  =====
+
+===== cell 11  =====
+    jersey_number                  PLAYER  GP-GS   MIN      FGM-A    FG%  \
+0            14.0            Mikey Wildes    4-0     2    0.0-0.2     0%   
+1            24.0           Richie Warren  29-24    22    3.5-8.1  43.2%   
+2             0.0            Isaac Verges  27-26    23    3.5-6.7  52.5%   
+3            23.0          Mauryon Turner      -     -          -      -   
+4            23.0         Maurquis Turner    3-0     3    0.7-1.0  66.7%   
+5            40.0  Tyshawn Teague-Johnson   18-1    11    1.7-3.9  42.9%   
+6            35.0           Rashad Rogers   19-2     9    0.8-1.7  48.5%   
+7             5.0         Isaiah Robinson   20-0     8    0.4-1.0  33.3%   
+8            12.0              Jake Quast   28-0    16    2.0-4.0  51.4%   
+9            30.0           Matthew McKay    3-0     2    0.7-0.7   100%   
+10            2.0           Kelton McEwen   28-0    11    1.1-2.6  41.7%   
+11           21.0            Brock Marino  28-27    21    3.2-6.1  52.3%   
+12           15.0           Collin Madson  29-29    33   5.8-10.5  55.6%   
+13           25.0          Tristian Lynch    2-0     4    0.5-1.5  33.3%   
+14           11.0            JR Lukenbill   26-6    13    1.1-2.3  45.9%   
+15            1.0         Agape Keyes Jr.    6-0     4    0.5-2.0    25%   
+16            3.0              Zay Howard    3-0     1    0.0-0.7     0%   
+17           33.0         Trent Grunewald    6-0     4    0.2-1.2  14.3%   
+18           30.0          Spencer Cullum      -     -          -      -   
+19           10.0         Darius Chestnut   18-0    10    1.3-2.5  51.1%   
+20           22.0         Joey Berezowitz   29-1    14    1.2-2.4  49.3%   
+21           32.0               Luke Bara  29-29    24    3.2-8.2  38.7%   
+22           20.0          Austin Ambrose    8-0     9    1.1-2.5    45%   
+23            NaN              Team Total     29  5825  27.3-57.3  47.6%   
+24            NaN                Opponent     29  5825  24.3-53.6  45.4%   
+
+       3PM-A    3P%   3P-R      FTM-A    FT%   PTS   ORB   DRB   REB   AST  \
+0    0.0-0.0      -     0%    0.0-0.0      -   0.0   0.0   0.2   0.2   0.2   
+1    0.3-1.2    25%  15.3%    1.3-2.1    65%   8.7   1.5   3.4   4.9   1.1   
+2    0.4-1.2  37.5%  17.7%    2.3-3.3  71.6%   9.8   1.5   2.9   4.4   1.9   
+3          -      -      -          -      -     -     -     -     -     -   
+4    0.0-0.0      -     0%    0.0-0.7     0%   1.3   0.0   0.3   0.3   0.0   
+5    0.4-1.0  38.9%  25.7%    0.4-1.2  36.4%   4.2   0.9   1.1   2.0   0.3   
+6    0.1-0.4  28.6%  21.2%    0.5-0.7  69.2%   2.3   0.6   1.4   2.1   0.5   
+7    0.2-0.6  23.1%  61.9%    0.2-0.5    50%   1.1   0.2   0.3   0.5   0.6   
+8    0.4-1.1  31.2%  28.8%    1.8-2.8  64.9%   6.2   1.4   1.5   2.9   0.6   
+9    0.0-0.0      -     0%    0.0-0.3     0%   1.3   0.7   0.0   0.7   0.0   
+10   0.8-1.9  39.6%  73.6%    0.6-0.9  65.4%   3.5   0.1   0.2   0.3   0.5   
+11   0.3-0.9  34.6%  15.1%    2.1-4.0  53.2%   8.9   1.2   4.2   5.4   0.6   
+12   1.7-3.7  45.3%  34.9%    4.7-5.8  80.4%  18.0   1.4   3.9   5.4   1.1   
+13   0.0-1.0     0%  66.7%    0.0-0.0      -   1.0   0.0   0.5   0.5   0.0   
+14   0.3-0.8  33.3%  34.4%    0.5-0.8  54.5%   2.9   0.7   1.0   1.7   0.6   
+15   0.5-1.2  42.9%  58.3%    0.0-0.0      -   1.5   0.2   0.0   0.2   0.2   
+16   0.0-0.3     0%    50%    0.0-0.0      -   0.0   0.0   0.0   0.0   0.3   
+17   0.0-0.5     0%  42.9%    0.0-0.0      -   0.3   0.3   1.0   1.3   0.3   
+18         -      -      -          -      -     -     -     -     -     -   
+19   0.5-1.0    50%    40%    0.5-0.8  64.3%   3.6   0.4   0.7   1.1   0.3   
+20   0.7-1.6  44.4%  65.2%    0.4-0.4  91.7%   3.4   0.4   0.7   1.2   1.4   
+21   2.0-5.4  37.3%  66.4%    1.8-2.0  89.7%  10.2   0.2   1.3   1.6   1.3   
+22   0.2-1.2    20%    50%    0.2-0.8  33.3%   2.8   0.2   1.5   1.8   0.1   
+23  7.6-20.3  37.6%  35.4%  16.2-23.8  68.3%  78.4  11.1  22.7  33.9  10.2   
+24  6.4-20.2  31.6%  37.6%  15.8-22.2    71%  70.8   9.4  21.6  31.0  10.7   
+
+      TO  STL  BLK    PF  
+0    0.0  0.0  0.0   0.2  
+1    0.9  0.8  1.0   3.0  
+2    1.6  1.1  0.1   2.0  
+3      -    -    -     -  
+4    0.3  0.3  0.0   0.7  
+5    0.6  0.1  0.3   1.2  
+6    0.6  0.3  0.4   1.5  
+7    0.2  1.2  0.0   1.2  
+8    0.8  1.0  0.1   2.0  
+9    0.3  0.7  0.0   1.0  
+10   0.3  0.2  0.0   0.7  
+11   1.4  0.6  0.2   2.4  
+12   1.2  1.2  0.1   1.6  
+13   0.0  0.0  0.0   1.0  
+14   0.5  0.4  0.2   1.7  
+15   0.0  0.2  0.0   0.8  
+16   0.0  0.3  0.0   0.3  
+17   0.3  0.0  0.0   0.0  
+18     -    -    -     -  
+19   0.7  0.3  0.1   0.8  
+20   0.5  1.2  0.1   1.0  
+21   1.3  0.7  0.0   1.8  
+22   0.8  0.1  0.2   1.5  
+23  10.6  8.6  2.3  19.6  
+24  13.5  5.3  3.2  19.7  
+
+===== cell 13 03_investigate_playerstattable_tile_widgets =====
+
+===== cell 15 04_investigate_myteam_analytics_dashboard =====
+
+===== cell 16 05_investigate_myteam_analytics_dashboard_2 =====
+
+===== cell 17 06_investigate_myteam_analytics_dashboard_3 =====
+
+===== cell 18 07_investigate_myteam_analytics_dashboard_4 =====
+
+===== cell 20  =====
+Overall record (W-L): 21-8
+outcome       location  L   W  games
+0                 Away  3   9     12
+1                 Home  4  10     14
+2        Neutral Court  1   2      3
+        location  avg_point_margin
+0           Away               7.0
+1           Home               6.6
+2  Neutral Court              14.7
+
+===== cell 22 08_parse_each_opponent_fastscout_scoutbuilder =====
+Found 0 PDF scout report(s) and 25 HTML scout report(s):
+ - 11_14_25 UW-Whitewater @ St. Thomas (TX) Celts_scout.html
+ - 11_15_25 UW-Whitewater @ Eureka Red Devils_scout.html
+ - 11_19_25 Aurora Spartans @ UW-Whitewater_scout.html
+ - 11_25_25 Simpson Storm @ UW-Whitewater_scout.html
+ - 11_7_25 UW-Whitewater @ Ripon Red Hawks_scout.html
+ - 11_7_26 UW-Whitewater @ Carroll (WI) Pioneers_scout.html
+ - 12_10_25 UW-Whitewater @ Lawrence Vikings_scout.html
+ - 12_13_25 Carroll (WI) Pioneers @ UW-Whitewater_scout.html
+ - 12_19_25 UW-Whitewater @ Hope Flying Dutchmen_scout.html
+ - 12_20_25 UW-Whitewater @ Alma Scots_scout.html
+ - 12_2_25 Elmhurst Bluejays @ UW-Whitewater_scout.html
+ - 12_30_25 UW-Whitewater @ Coe Kohawks_scout.html
+ - 1_10_26 UW-Whitewater @ UW-River Falls Falcons_scout.html
+ - 1_14_26 UW-Whitewater @ UW-La Crosse Eagles_scout.html
+ - 1_17_26 UW-Stout Blue Devils @ UW-Whitewater_scout.html
+ - 1_21_26 UW-Whitewater @ UW-Platteville Pioneers_scout.html
+ - 1_24_26 UW-Eau Claire Blugolds @ UW-Whitewater_scout.html
+ - 1_3_26 UW-Oshkosh Titans @ UW-Whitewater_scout.html
+ - 1_7_26 UW-Stevens Point Pointers @ UW-Whitewater_scout.html
+ - 2_11_26 UW-Platteville Pioneers @ UW-Whitewater_scout.html
+ - 2_14_26 UW-Whitewater @ UW-Eau Claire Blugolds_scout.html
+ - 2_4_26 UW-La Crosse Eagles @ UW-Whitewater_scout.html
+ - 2_7_26 UW-Whitewater @ UW-Stout Blue Devils_scout.html
+ - 3_6_26 UW-Whitewater @ Loras Duhawks_scout.html
+ - 3_7_26 UW-Whitewater @ Washington-St. Louis Bears_scout.html
+  Parsed 'Ripon Red Hawks' (.html): 129 elements, 1 tables
+  Parsed 'St. Thomas (TX) Celts' (.html): 151 elements, 1 tables
+  Parsed 'Eureka Red Devils' (.html): 116 elements, 1 tables
+  Parsed 'Aurora Spartans' (.html): 146 elements, 1 tables
+  Parsed 'Simpson Storm' (.html): 138 elements, 1 tables
+  Parsed 'Elmhurst Bluejays' (.html): 138 elements, 1 tables
+  Parsed 'Lawrence Vikings' (.html): 136 elements, 1 tables
+  Parsed 'Carroll (WI) Pioneers' (.html): 139 elements, 1 tables
+  Parsed 'Hope Flying Dutchmen' (.html): 0 elements, 0 tables
+  Parsed 'Alma Scots' (.html): 140 elements, 1 tables
+  Parsed 'Coe Kohawks' (.html): 143 elements, 1 tables
+  Parsed 'UW-Oshkosh Titans' (.html): 149 elements, 1 tables
+  Parsed 'UW-Stevens Point Pointers' (.html): 147 elements, 1 tables
+  Parsed 'UW-River Falls Falcons' (.html): 134 elements, 1 tables
+  Parsed 'UW-La Crosse Eagles' (.html): 148 elements, 1 tables
+  Parsed 'UW-Stout Blue Devils' (.html): 136 elements, 1 tables
+  Parsed 'UW-Platteville Pioneers' (.html): 143 elements, 1 tables
+  Parsed 'UW-Eau Claire Blugolds' (.html): 147 elements, 1 tables
+  Parsed 'Loras Duhawks' (.html): 148 elements, 1 tables
+  Parsed 'Washington-St. Louis Bears' (.html): 150 elements, 1 tables
+  Parsed 'Carroll (WI) Pioneers' UPCOMING game's report (11_7_26 UW-Whitewater @ Carroll (WI) Pioneers_scout.html): 126 elements -- its game plan and player notes are used for the upcoming game; last season's (12_13_25 Carroll (WI) Pioneers @ UW-Whitewater_scout.html) stays with the past game
+
+===== cell 24 09_extract_each_opponent_roster =====
+  Carroll (WI) Pioneers: player notes from the upcoming game's report -- 5 player(s) updated, 2 new player(s) added (Cahlil Jones, Logan Steffensmeier)
+                       opponent   game_date jersey_number  \
+0               Ripon Red Hawks  2025-11-07            #3   
+1               Ripon Red Hawks  2025-11-07           #13   
+2               Ripon Red Hawks  2025-11-07           #44   
+3               Ripon Red Hawks  2025-11-07           #35   
+4               Ripon Red Hawks  2025-11-07           #12   
+..                          ...         ...           ...   
+159  Washington-St. Louis Bears  2026-03-07           #32   
+160  Washington-St. Louis Bears  2026-03-07           #30   
+161  Washington-St. Louis Bears  2026-03-07           #33   
+162       Carroll (WI) Pioneers  2025-12-13          None   
+163       Carroll (WI) Pioneers  2025-12-13          None   
+
+                    name position height   weight class_year     role  \
+0           Seth Bunders        G   6'0"  140 lbs         JR  Starter   
+1               CJ Brown        G   6'3"     None         SR  Starter   
+2      Marshawn Robinson        G   6'3"  180 lbs         JR  Starter   
+3          Michael Asman        F   6'7"     None         SO  Starter   
+4         Kolby Williams        F   6'7"     None         SR  Starter   
+..                   ...      ...    ...      ...        ...      ...   
+159      Will Grudzinski        G   6'6"  200 lbs         SR    Bench   
+160           Theo Rocca        G   6'3"  190 lbs         FR    Bench   
+161          George Gale        F   6'6"  195 lbs         JR    Bench   
+162         Cahlil Jones        G   6'2"     None         FR  Starter   
+163  Logan Steffensmeier        F   6'7"     None         SO  Starter   
+
+                                                                                        player_notes  \
+0        Shooter! | Seeks contact on drives and jump shots | Pump fakes & jab steps before he drives   
+1                          Go To=mid range pull up (1-2 dribbles) | C & S 3's | Prefers LH on drives   
+2                              Driver/Shooter | RHD=gets to rim. LHD= Pull up jumper | Rebounds hard   
+3                                                            C&S 3's | Quick Release | LS/RH in post   
+4    Rebounds Hard! | Power post game. Finishes through his defender. | LS/RH in post. RH on drives.   
+..                                                                                               ...   
+159                                         Shooter/Driver | RH Driver | Struggle with ball pressure   
+160                                 Capable shooter & driver | C&S 3's | Drive to Post (RH Finisher)   
+161                                       LS/RH in post (5 man) | RHD from perimeter | Rebounds Hard   
+162                              Driver/Shooter | Looking to score in transition | Prefers RHD drive   
+163                        Driver/Shooter | Likes to slash to basket/prefers RHD | Crashes O-Boards!   
+
+                                                           keys_to_defending  \
+0        NO C&S 3's!!! | Do NOT foul on jump shots | Stay down v. shot fakes   
+1    Anticipate 1 dribble pull up | Anticipate LHD | Stay down on shot fakes   
+2       Anticipate pull up when he goes left | Keep him in front | Box out!!   
+3                No C&S 3s!! (stunt v. pick & pop) | NLS in post | Box Out!!   
+4                         Boxout!!! | NLS finishes | Be Physical & Stay Down   
+..                                                                       ...   
+159       High early hand on closeouts | Anticipate RHD | Pressure & Trace!!   
+160                                        No C&S 3's | Anticipate RH Finish   
+161                                            No LS/RH | No RHD | Box out!!   
+162             Anticipate RHD | Keep out of the paint!! | Contest all shots   
+163                                      Box Out!! | Anticipate RHD | No C&S   
+
+     has_scouting_report  upcoming_report  
+0                   True            False  
+1                   True            False  
+2                   True            False  
+3                   True            False  
+4                   True            False  
+..                   ...              ...  
+159                 True            False  
+160                 True            False  
+161                 True            False  
+162                 True             True  
+163                 True             True  
+
+[164 rows x 13 columns]
+
+===== cell 26 10_extract_uw_whitewater_offensive_and =====
+Game plans from the UPCOMING game's report: Carroll (WI) Pioneers (2026-11-07, 14 topic(s))
+                  opponent                                    category  \
+0          Ripon Red Hawks                          Game Plan Overview   
+1          Ripon Red Hawks                          Game Plan Overview   
+2          Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+3          Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+4          Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+..                     ...                                         ...   
+256  Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+257  Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+258  Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+259  Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+260  Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+
+                               topic  \
+0                     TEAM STRENGTHS   
+1                    KEYS TO VICTORY   
+2           Overall Defensive Scheme   
+3        Attacking their man defense   
+4          Ball Screen & DHO Defense   
+..                               ...   
+256           Defending Their Action   
+257  Ball Screen Actions & Personnel   
+258          Ball Screen Coverage(s)   
+259  Potential Adjustments (Offense)   
+260                      ELOB & SLOB   
+
+                                                                                                                                                     notes  \
+0                     Motion offense with good ball movement & cutting | Force TO's with active hands (Gaps!) | Heavy ball screen usage at multiple angles   
+1                                                                      1. DOMINATE THE GLASS | 2. ATTACK THE BASKET | 3. COMMUNICATION SCREENING ACTION!!!   
+2    M2M Gap Defense | Heavy Gap Help | Active with hands in gaps=steals | Give help deep around FT line or lower | Fight over & chase vs screens off t...   
+3    Hunt for paint touches (SHOT FAKES!!) | Drive & kick 3's available vs Gap help | Don't drive through the help ( Kick it out! ) | Attack the Hard H...   
+4                                                                           Hard Hedge vs Ball Screens | Switch certain match ups | Chase & trail vs DHO's   
+..                                                                                                                                                     ...   
+256  TRANSITION DEFENSE!!! | Contain & turn the ball handler early | No Back cuts! | SQUEEZE #4 ON DRIVES | Guard your yard 1 on 1 | Early & Strong Gap...   
+257                  DHO's & ball screens after entry to 5 man at high post | Like to Ghost ball screens | 5 setting drag screens & step ups in transition   
+258                                                                                                                                                14X- FH   
+259                                                                                                                                                    15X   
+260                                                                                                                                    Staggered's for #12   
+
+    report_date  
+0    2025-11-07  
+1    2025-11-07  
+2    2025-11-07  
+3    2025-11-07  
+4    2025-11-07  
+..          ...  
+256  2026-11-07  
+257  2026-11-07  
+258  2026-11-07  
+259  2026-11-07  
+260  2026-11-07  
+
+[261 rows x 5 columns]
+
+===== cell 28  =====
+Team efficiency narrative (ORtg/DRtg/Pace/FASTINTELLIGENCE) is not captured in the PDF export -- it's a
+UI-only panel that isn't part of the printable ScoutBuilder report, and is no longer available now that
+scouting reports are sourced exclusively from PDFs.
+
+===== cell 30 11_cross_reference_each_scouted_opponent =====
+                      opponent         date       location outcome  \
+0              Ripon Red Hawks   Fri, Nov 7           Away       W   
+1        St. Thomas (TX) Celts  Fri, Nov 14  Neutral Court       L   
+2            Eureka Red Devils  Sat, Nov 15  Neutral Court       W   
+3              Aurora Spartans  Wed, Nov 19           Home       W   
+4                Simpson Storm  Tue, Nov 25           Home       W   
+5            Elmhurst Bluejays   Tue, Dec 2           Home       W   
+6             Lawrence Vikings  Wed, Dec 10           Away       W   
+7        Carroll (WI) Pioneers  Sat, Dec 13           Home       W   
+8                   Alma Scots  Sat, Dec 20           Away       W   
+9                  Coe Kohawks  Tue, Dec 30           Away       L   
+10           UW-Oshkosh Titans   Sat, Jan 3           Home       L   
+11   UW-Stevens Point Pointers   Wed, Jan 7           Home       L   
+12      UW-River Falls Falcons  Sat, Jan 10           Away       W   
+13         UW-La Crosse Eagles  Wed, Jan 14           Away       W   
+14        UW-Stout Blue Devils  Sat, Jan 17           Home       W   
+15     UW-Platteville Pioneers  Wed, Jan 21           Away       L   
+16      UW-Eau Claire Blugolds  Sat, Jan 24           Home       W   
+17               Loras Duhawks   Fri, Mar 6  Neutral Court       W   
+18  Washington-St. Louis Bears   Sat, Mar 7           Away       L   
+
+   opp_season_avg_ppg  opp_actual_ppg opp_ppg_vs_average  uww_points  \
+0                None            58.0               None        76.0   
+1                None            81.0               None        73.0   
+2                None            73.0               None       116.0   
+3                None            73.0               None        82.0   
+4                None            78.0               None       100.0   
+5                None            72.0               None        88.0   
+6                None            58.0               None        88.0   
+7                None            60.0               None        64.0   
+8                None            61.0               None        90.0   
+9                None            86.0               None        73.0   
+10               None            90.0               None        78.0   
+11               None            79.0               None        71.0   
+12               None            59.0               None        67.0   
+13               None            60.0               None        63.0   
+14               None            54.0               None        72.0   
+15               None            70.0               None        60.0   
+16               None            76.0               None        83.0   
+17               None            76.0               None        85.0   
+18               None            74.0               None        71.0   
+
+   opp_season_avg_ppg_allowed uww_ppg_vs_opp_avg_allowed  point_margin  
+0                        None                       None          18.0  
+1                        None                       None          -8.0  
+2                        None                       None          43.0  
+3                        None                       None           9.0  
+4                        None                       None          22.0  
+5                        None                       None          16.0  
+6                        None                       None          30.0  
+7                        None                       None           4.0  
+8                        None                       None          29.0  
+9                        None                       None         -13.0  
+10                       None                       None         -12.0  
+11                       None                       None          -8.0  
+12                       None                       None           8.0  
+13                       None                       None           3.0  
+14                       None                       None          18.0  
+15                       None                       None         -10.0  
+16                       None                       None           7.0  
+17                       None                       None           9.0  
+18                       None                       None          -3.0  
+
+(opp_season_avg_ppg / opp_ppg_vs_average / opp_season_avg_ppg_allowed / uww_ppg_vs_opp_avg_allowed are always blank now -- team/player statistics from the scouting report are no longer used; see the blanking earlier in this cell.)
+
+Ripon Red Hawks (Fri, Nov 7, Away): UWW 76.0 - Ripon Red Hawks 58.0 (W, margin +18)
+  Pre-game keys to victory: 1. DOMINATE THE GLASS | 2. ATTACK THE BASKET | 3. COMMUNICATION SCREENING ACTION!!!
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+St. Thomas (TX) Celts (Fri, Nov 14, Neutral Court): UWW 73.0 - St. Thomas (TX) Celts 81.0 (L, margin -8)
+  Pre-game keys to victory: 1. BALL SECURITY | 2. LIMIT THEIR SCORING @ THE RIM/IN THE PAINT | 3. BULLY THEM ON THE GLASS
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Eureka Red Devils (Sat, Nov 15, Neutral Court): UWW 116.0 - Eureka Red Devils 73.0 (W, margin +43)
+  Pre-game keys to victory: 1. EARLY GAP / HELP SIDE | 2. KEEP THE BALL IN FRONT (ACTIVE HANDS) | 3. OWN THE PAINT
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Aurora Spartans (Wed, Nov 19, Home): UWW 82.0 - Aurora Spartans 73.0 (W, margin +9)
+  Pre-game keys to victory: 1. GUARD YOUR YARD (+ Early Gap Help) | 2. WALL UP, DON'T FOUL | 3. ATTACK THE PAINT!!!
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Simpson Storm (Tue, Nov 25, Home): UWW 100.0 - Simpson Storm 78.0 (W, margin +22)
+  Pre-game keys to victory: 1. TAKE AWAY PERSONNEL TENDANCIES | 2. LIVE IN THE PAINT!!! | 3. DOMINATE THE GLASS
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Elmhurst Bluejays (Tue, Dec 2, Home): UWW 88.0 - Elmhurst Bluejays 72.0 (W, margin +16)
+  Pre-game keys to victory: 1. COMMUNICATE SCREENS & ACTIONS | 2. DOMINATE THE PAINT | 3. GUARD 1 ON 1
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Lawrence Vikings (Wed, Dec 10, Away): UWW 88.0 - Lawrence Vikings 58.0 (W, margin +30)
+  Pre-game keys to victory: 1. DRIVE DOWN 3PT ATTEMPTS!!! | 2. FINISH DEFENSIVE POSSESSIONS (LATE CLOCK) | 3. ATTACK THE PAINT
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Carroll (WI) Pioneers (Sat, Dec 13, Home): UWW 64.0 - Carroll (WI) Pioneers 60.0 (W, margin +4)
+  Pre-game keys to victory: 1. TRANSITION DEFENSE!!! | 2. SQUEEZE & LIMIT #4 (Guard 1 on 1 + Gap Help) | 3. ATTACK THE PAINT OFFENSIVELY!!
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Alma Scots (Sat, Dec 20, Away): UWW 90.0 - Alma Scots 61.0 (W, margin +29)
+  Pre-game keys to victory: 1. CONTAIN #11 | 2. GREAT WALL UPS & LIMIT FOULS | 3. ATTACK MISMATCHES (after switches)
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Coe Kohawks (Tue, Dec 30, Away): UWW 73.0 - Coe Kohawks 86.0 (L, margin -13)
+  Pre-game keys to victory: 1. ATTACK THE PAINT | 2. BALL SCREEN DEFENSE (DISRUPTIVE & CONNECTED) | 3. DOMINATE REBS & FTs
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+UW-Oshkosh Titans (Sat, Jan 3, Home): UWW 78.0 - UW-Oshkosh Titans 90.0 (L, margin -12)
+  Pre-game keys to victory: 1. WIN THE POSSESSION BATTLE (TO's & Rebounds) | 2. ATTACK & EXECUTE OFFENSIVELY | 3. MULTIPLE EFFORTS DEFENSIVELY (never stop!!)
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+UW-Stevens Point Pointers (Wed, Jan 7, Home): UWW 71.0 - UW-Stevens Point Pointers 79.0 (L, margin -8)
+  Pre-game keys to victory: 1. Physicality & Post Defense | 2. Early ball movement & cutting | 3. Building a wall around the paint
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+UW-River Falls Falcons (Sat, Jan 10, Away): UWW 67.0 - UW-River Falls Falcons 59.0 (W, margin +8)
+  Pre-game keys to victory: 1. PRESSURE ON THE BALL | 2. ATTACK THE PAINT!! | 3. RELENTLESS EFFORT & WINNING PLAYS !!
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+UW-La Crosse Eagles (Wed, Jan 14, Away): UWW 63.0 - UW-La Crosse Eagles 60.0 (W, margin +3)
+  Pre-game keys to victory: 1. TAKE AWAY #15 & #11 | 2. GREAT BALL SCREEN & GAP DEFENSE | 3. MUST BE OUR PAINT!!! (Pts, Rebs +5, & FTs)
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+UW-Stout Blue Devils (Sat, Jan 17, Home): UWW 72.0 - UW-Stout Blue Devils 54.0 (W, margin +18)
+  Pre-game keys to victory: 1. DOMINATE THE GLASS +10 (again)!!! | 2. BALL SCREEN DEFENSE & CLOSEOUTS | 3. ATTACK INSIDE-OUT OFFENSIVELY
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+UW-Platteville Pioneers (Wed, Jan 21, Away): UWW 60.0 - UW-Platteville Pioneers 70.0 (L, margin -10)
+  Pre-game keys to victory: 1. BEING CONNECTED DEFENSIVELY | 2. PAYBACK INSIDE!!! (FTs, Rebs, Pts) | 3. BE AGGRESSIVE & PHYSICAL ATTACKING THE PAINT
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+UW-Eau Claire Blugolds (Sat, Jan 24, Home): UWW 83.0 - UW-Eau Claire Blugolds 76.0 (W, margin +7)
+  Pre-game keys to victory: 1. TALK SETS/ACTIONS--EARLY & LOUD!!! | 2. PERIMETER PRESSURE & BALL SCREEN DEFENSE | 3. AGGRESSIVE V. ICE COVERAGE -- ATTACK THE PAINT
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Loras Duhawks (Fri, Mar 6, Neutral Court): UWW 85.0 - Loras Duhawks 76.0 (W, margin +9)
+  Pre-game keys to victory: 1. BALL PRESSURE TO DISRUPT THEIR ACTION(S) | 2. INTENTIONAL ABOUT ATTACKING MISMATCHES | 3. DOMINATE THE GLASS!!!
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Washington-St. Louis Bears (Sat, Mar 7, Away): UWW 71.0 - Washington-St. Louis Bears 74.0 (L, margin -3)
+  Pre-game keys to victory: 1. PRESSURE & DISRUPT THEIR OFFENSE | 2. ATTACK MATCHUPS VS SWITCHES | 3. POUND THEM ON THE GLASS!!!
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+===== cell 32 12_win_loss_splits_by_keys_to_victory =====
+Per-game 'Keys to Victory' categories detected WITH SIDE ATTRIBUTION:
+  UWW = what Whitewater does proactively (attack, score, rebound, share)
+  OPP = what Whitewater does to contain the opponent (guard, force TOs, limit, pressure)
+                      opponent outcome                           category side
+0              Ripon Red Hawks       W                         Rebounding  UWW
+1              Ripon Red Hawks       W                     Scoring Inside  UWW
+2        St. Thomas (TX) Celts       L          Ball Security / Turnovers  UWW
+3        St. Thomas (TX) Celts       L              Field Goal Efficiency  OPP
+4        St. Thomas (TX) Celts       L                         Rebounding  UWW
+5            Eureka Red Devils       W  Perimeter Defense / Ball Pressure  OPP
+6            Eureka Red Devils       W                         Rebounding  UWW
+7              Aurora Spartans       W                 Fouls / Discipline  OPP
+8              Aurora Spartans       W  Perimeter Defense / Ball Pressure  OPP
+9              Aurora Spartans       W                     Scoring Inside  UWW
+10               Simpson Storm       W                         Rebounding  UWW
+11               Simpson Storm       W                     Scoring Inside  UWW
+12           Elmhurst Bluejays       W  Perimeter Defense / Ball Pressure  OPP
+13           Elmhurst Bluejays       W                     Scoring Inside  UWW
+14            Lawrence Vikings       W                     Scoring Inside  UWW
+15            Lawrence Vikings       W               Three-Point Shooting  OPP
+16       Carroll (WI) Pioneers       W  Perimeter Defense / Ball Pressure  OPP
+17       Carroll (WI) Pioneers       W                     Scoring Inside  UWW
+18                  Alma Scots       W                 Fouls / Discipline  OPP
+19                 Coe Kohawks       L                     Scoring Inside  UWW
+20           UW-Oshkosh Titans       L                         Rebounding  UWW
+21   UW-Stevens Point Pointers       L            Ball Movement / Assists  UWW
+22      UW-River Falls Falcons       W  Perimeter Defense / Ball Pressure  OPP
+23      UW-River Falls Falcons       W                     Scoring Inside  UWW
+24         UW-La Crosse Eagles       W              (no matched category)     
+25        UW-Stout Blue Devils       W                         Rebounding  UWW
+26     UW-Platteville Pioneers       L              (no matched category)     
+27      UW-Eau Claire Blugolds       W  Perimeter Defense / Ball Pressure  OPP
+28      UW-Eau Claire Blugolds       W                     Scoring Inside  UWW
+29               Loras Duhawks       W  Perimeter Defense / Ball Pressure  OPP
+30               Loras Duhawks       W                         Rebounding  UWW
+31  Washington-St. Louis Bears       L  Perimeter Defense / Ball Pressure  OPP
+32  Washington-St. Louis Bears       L                         Rebounding  UWW
+
+Win/loss splits by category + side (UWW vs OPP emphasis):
+                    display_label side                           category  \
+0         : (no matched category)                   (no matched category)   
+1             UWW: Share the Ball  UWW            Ball Movement / Assists   
+2           UWW: Protect the Ball  UWW          Ball Security / Turnovers   
+3  OPP: Limit Their FG Efficiency  OPP              Field Goal Efficiency   
+4            OPP: They Draw Fouls  OPP                 Fouls / Discipline   
+5            OPP: On-Ball Defense  OPP  Perimeter Defense / Ball Pressure   
+6           UWW: Crash the Boards  UWW                         Rebounding   
+7           UWW: Attack the Paint  UWW                     Scoring Inside   
+8     OPP: Contest Their Shooting  OPP               Three-Point Shooting   
+
+   games  wins  losses  win_pct  
+0      2     1       1    0.500  
+1      1     0       1    0.000  
+2      1     0       1    0.000  
+3      1     0       1    0.000  
+4      2     2       0    1.000  
+5      8     7       1    0.875  
+6      8     5       3    0.625  
+7      9     8       1    0.889  
+8      1     1       0    1.000  
+
+===== cell 34 13_keys_to_victory_category_reference =====
+                             category         stat_cols                                                        example_phrases                                                             why_chosen
+0           Ball Security / Turnovers                TO  ball security, turnover, protect/take care of the ball, limit turn...  Directly named -- "ball security"/"turnovers" have a 1:1 stat colu...
+1                          Rebounding     REB, ORB, DRB  own the paint, bully/dominate the glass, rebound, board, second ch...  "Glass"/"board"/"crash"/"own the paint" possession language in thi...
+2                Three-Point Shooting        3PM-A, 3P%  three, 3 pt, 3pt, perimeter shooting, spacing, shooting ability, s...  Direct stat match for perimeter shot volume/efficiency. Expanded w...
+3                         Free Throws        FTM-A, FT%                                     free throw, ft line, getting to ft  Direct stat match. Added "ft line" / "getting to ft" from Aurora (...
+4                  Fouls / Discipline                PF                                           foul, wall up, drawing fouls  Direct stat match for foul-discipline emphasis. Added "wall up" (A...
+5             Ball Movement / Assists               AST   assist, ball movement, share the ball, playmaking, playmaker, create  Direct stat match for offensive ball-sharing emphasis. Added "play...
+6           Paint Protection / Blocks               BLK                               block, protect the rim, paint protection                 Direct stat match for interior shot-blocking emphasis.
+7   Perimeter Defense / Ball Pressure               STL  steal, press capable, full court press, force turnovers, force to'...  Renamed from "Ball Pressure / Steals" once Aurora/Eureka/Elmhurst ...
+8                      Scoring Inside  FG2M, FG2A, FG2%  dominate the paint, attack the paint, live in the paint, attack th...  Interior-scoring emphasis -- uses derived 2PT FG stats (FGM-FG3M, ...
+9               Field Goal Efficiency        FGM-A, FG%                                                    limit their scoring  Overall shooting efficiency emphasis -- used when the scouting not...
+10           (intentionally unmapped)                 -  communication screening action / communicate screens & actions (Ri...  No corresponding stat exists in a season box score for screen-navi...
+
+===== cell 36 14_build_per_player_scouting_profiles =====
+No season boxscore table found for 'Hope Flying Dutchmen'.
+Adding 64 box-score-only player(s) with no scouting writeup (defaulted to role=Bench):
+                 opponent jersey_number             name
+6         Ripon Red Hawks           #23      Keenan Rahn
+7         Ripon Red Hawks           #11        Sam Leoni
+8         Ripon Red Hawks           #20      Anton Kilde
+9         Ripon Red Hawks            #2     Caeden Holly
+18  St. Thomas (TX) Celts           #23       Jaden Ross
+20  St. Thomas (TX) Celts           #11  Tamarcus Butler
+21  St. Thomas (TX) Celts           #13    Legborsi Mato
+28      Eureka Red Devils           #35   Max Richardson
+30      Eureka Red Devils           #20       Nolan Kerr
+31      Eureka Red Devils           #22       Tony Mabon
+32      Eureka Red Devils           #15  Amare Brokemond
+33      Eureka Red Devils            #3    Blake Logsdon
+34      Eureka Red Devils            #0    Colin DeLaere
+35      Eureka Red Devils            #1    Dylan Logsdon
+43        Aurora Spartans            #0     Cullen Rauls
+  ... 49 more row(s) of 64 (SHOW_ROWS = 15)
+Scouting-report player statistics are disabled by design (PDF reports are last-season data) -- player_profiles stat columns start blank and are only filled in by the PBP-derived override further down this notebook, from real current-season games.
+                       opponent jersey_number                name     role  \
+0               Ripon Red Hawks            #3        Seth Bunders  Starter   
+1               Ripon Red Hawks           #13            CJ Brown  Starter   
+2               Ripon Red Hawks           #44   Marshawn Robinson  Starter   
+3               Ripon Red Hawks           #35       Michael Asman  Starter   
+4               Ripon Red Hawks           #12      Kolby Williams  Starter   
+..                          ...           ...                 ...      ...   
+223               Loras Duhawks           #35          Dylan Kurt    Bench   
+224               Loras Duhawks           #15        Brock Massey    Bench   
+225               Loras Duhawks           #30        Patrick Coen    Bench   
+226               Loras Duhawks           #22  Patrick Quarnstrom    Bench   
+227  Washington-St. Louis Bears           #15          Jake Davis    Bench   
+
+                                                                    notes_tags_display  \
+0                                                  slasher_driver, three_point_shooter   
+1    catch_and_shoot, high_usage, pull_up_shooter, slasher_driver, three_point_shooter   
+2                      pull_up_shooter, rebounder, slasher_driver, three_point_shooter   
+3                                    catch_and_shoot, post_scorer, three_point_shooter   
+4                            physical_finisher, post_scorer, rebounder, slasher_driver   
+..                                                                                 ...   
+223                                                                                      
+224                                                                                      
+225                                                                                      
+226                                                                                      
+227                                                                                      
+
+                                        keys_tags_display   PTS   REB   AST  \
+0               deny_catch_and_shoot, physical_discipline  None  None  None   
+1                    anticipate_move, physical_discipline  None  None  None   
+2        anticipate_move, box_out_priority, keep_in_front  None  None  None   
+3    box_out_priority, deny_catch_and_shoot, post_defense  None  None  None   
+4     box_out_priority, physical_discipline, post_defense  None  None  None   
+..                                                    ...   ...   ...   ...   
+223                                                        None  None  None   
+224                                                        None  None  None   
+225                                                        None  None  None   
+226                                                        None  None  None   
+227                                                        None  None  None   
+
+      FG%   3P%  
+0    None  None  
+1    None  None  
+2    None  None  
+3    None  None  
+4    None  None  
+..    ...   ...  
+223  None  None  
+224  None  None  
+225  None  None  
+226  None  None  
+227  None  None  
+
+[228 rows x 11 columns]
+
+===== cell 38 15_break_out_keys_to_victory_categories_by =====
+Opponent production by role (Starter vs Bench) for the stat(s) behind each matched Keys-to-Victory category:
+Empty DataFrame
+Columns: [opponent, outcome, category, role, stat, players_with_data, avg_per_player, role_total]
+Index: []
+No count-type stats available yet to compare Starter vs Bench totals for the matched categories.
+
+===== cell 40 16_play_by_play_parsing_functions =====
+
+===== cell 42 17_classify_each_raw_play_by_play_text_string =====
+
+===== cell 44 18_turn_raw_4_column_play_by_play_table_into =====
+
+===== cell 46 19_extract_opponent_name_from_pbp_mhtml =====
+
+===== cell 48 20_identify_upcoming_opponent =====
+
+===== cell 50 21_roster_pages =====
+Roster targets this run: ['UW-Whitewater Warhawks', 'Ripon Red Hawks', 'St. Thomas (TX) Celts', 'Eureka Red Devils', 'Aurora Spartans', 'Simpson Storm', 'Elmhurst Bluejays', 'Lawrence Vikings', 'Carroll (WI) Pioneers', 'Hope Flying Dutchmen', 'Alma Scots', 'Coe Kohawks', 'UW-Oshkosh Titans', 'UW-Stevens Point Pointers', 'UW-River Falls Falcons', 'UW-La Crosse Eagles', 'UW-Stout Blue Devils', 'UW-Platteville Pioneers', 'UW-Eau Claire Blugolds', 'Loras Duhawks', 'Washington-St. Louis Bears']
+    [roster] UW-Whitewater Warhawks: 19 photo(s) matched by name in the URL, 2 fell back to page position (lower confidence -- spot-check these).
+    [roster] St. Thomas (TX) Celts: 20 photo(s) matched by name in the URL, 1 fell back to page position (lower confidence -- spot-check these).
+    [roster] Eureka Red Devils: 25 photo(s) matched by name in the URL, 6 fell back to page position (lower confidence -- spot-check these).
+    [roster] Aurora Spartans: 23 photo(s) matched by name in the URL, 4 fell back to page position (lower confidence -- spot-check these).
+    [roster] Carroll (WI) Pioneers: 16 photo(s) matched by name in the URL, 2 fell back to page position (lower confidence -- spot-check these).
+    [roster] UW-Stevens Point Pointers: 18 photo(s) matched by name in the URL, 2 fell back to page position (lower confidence -- spot-check these).
+    [roster] UW-River Falls Falcons: 15 photo(s) matched by name in the URL, 1 fell back to page position (lower confidence -- spot-check these).
+    [roster] UW-La Crosse Eagles: 16 photo(s) matched by name in the URL, 1 fell back to page position (lower confidence -- spot-check these).
+    [roster] UW-Stout Blue Devils: 19 photo(s) matched by name in the URL, 1 fell back to page position (lower confidence -- spot-check these).
+    [roster] UW-Platteville Pioneers: 18 photo(s) matched by name in the URL, 1 fell back to page position (lower confidence -- spot-check these).
+  [roster] new-season rosters not read (CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.)
+
+live_rosters: 453 player(s) across 21 team(s).
+                        value
+team                         
+Alma Scots                 29
+Aurora Spartans            27
+Carroll (WI) Pioneers      18
+Coe Kohawks                23
+Elmhurst Bluejays          25
+Eureka Red Devils          31
+Hope Flying Dutchmen       19
+Lawrence Vikings           20
+Loras Duhawks              20
+Ripon Red Hawks            26
+Simpson Storm              21
+St. Thomas (TX) Celts      21
+UW-Eau Claire Blugolds     20
+UW-La Crosse Eagles        17
+UW-Oshkosh Titans          22
+  ... 6 more row(s) of 21 (SHOW_ROWS = 15)
+
+Roster problems:
+  - could not start an authenticated FastScout session for rosters: CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+
+===== cell 52 22_locate_opponent_own_schedule_backup_file =====
+
+===== cell 54  =====
+
+===== cell 56 23_build_opp_schedule =====
+
+===== cell 58 24_find_opponent_games_before_they_played_uw =====
+Ripon Red Hawks's games before facing UW-Whitewater on 2026-03-08:
+           date   game_date                      opponent outcome  team_score  \
+0    Fri, Nov 7  2025-11-07        UW-Whitewater Warhawks       L        58.0   
+1   Mon, Nov 10  2025-11-10         Green Bay Phoenix EXH       L        63.0   
+2   Wed, Nov 12  2025-11-12     St. Norbert Green Knights       L        43.0   
+3   Tue, Nov 18  2025-11-18              Lakeland Muskies       L        73.0   
+4   Fri, Nov 21  2025-11-21             Millikin Big Blue       L        58.0   
+5   Sat, Nov 22  2025-11-22      Bethany Lutheran Vikings       L        55.0   
+6   Wed, Nov 26  2025-11-26            Carthage Firebirds       L        56.0   
+7    Tue, Dec 2  2025-12-02             Beloit Buccaneers       W        59.0   
+8    Thu, Dec 4  2025-12-04           UW-La Crosse Eagles       L        62.0   
+9    Sat, Dec 6  2025-12-06          Cornell College Rams       W        62.0   
+10  Sat, Dec 13  2025-12-13             Grinnell Pioneers       L        95.0   
+11  Wed, Dec 17  2025-12-17             UW-Oshkosh Titans       L        74.0   
+12  Fri, Dec 19  2025-12-19         Lake Forest Foresters       L        69.0   
+13  Tue, Dec 30  2025-12-30             Elmhurst Bluejays       L        57.0   
+14   Wed, Jan 7  2026-01-07  Monmouth (IL) Fighting Scots       L        75.0   
+15  Sat, Jan 10  2026-01-10     Illinois College Blueboys       L        63.0   
+16  Tue, Jan 13  2026-01-13              Lawrence Vikings       W        83.0   
+17  Sat, Jan 17  2026-01-17             Grinnell Pioneers       L        71.0   
+18  Sat, Jan 24  2026-01-24             Knox Prairie Fire       L        77.0   
+19  Tue, Jan 27  2026-01-27         Lake Forest Foresters       L        81.0   
+20  Sat, Jan 31  2026-01-31     Illinois College Blueboys       W        67.0   
+21   Thu, Feb 5  2026-02-05              Lawrence Vikings       L        71.0   
+22   Sat, Feb 7  2026-02-07  Monmouth (IL) Fighting Scots       L        66.0   
+23  Tue, Feb 10  2026-02-10          Cornell College Rams       L        74.0   
+24  Sat, Feb 14  2026-02-14             Knox Prairie Fire       L        67.0   
+25  Sat, Feb 21  2026-02-21             Beloit Buccaneers       W        65.0   
+
+    opponent_score  \
+0             76.0   
+1             83.0   
+2             67.0   
+3             77.0   
+4             73.0   
+5             73.0   
+6             84.0   
+7             46.0   
+8             72.0   
+9             53.0   
+10           104.0   
+11           100.0   
+12            74.0   
+13            84.0   
+14            81.0   
+15            66.0   
+16            67.0   
+17           109.0   
+18            81.0   
+19            88.0   
+20            62.0   
+21            75.0   
+22            79.0   
+23            76.0   
+24            71.0   
+25            58.0   
+
+                                                                                                                                                                 video_url  \
+0   https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce749ed0cee8bbd101a32%2ffullgamevideo%2fclips   
+1   https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68f9362b857f9c97d6d0b604%2ffullgamevideo%2fclips   
+2   https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dc84d7872cbc0ecf981795%2ffullgamevideo%2fclips   
+3   https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dc77f55c056b698025a728%2ffullgamevideo%2fclips   
+4   https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c20%2ffullgamevideo%2fclips   
+5   https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69247e3e8e4f8e2ecf0697f2%2ffullgamevideo%2fclips   
+6   https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce749ed0cee8bbd101a33%2ffullgamevideo%2fclips   
+7   https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dbbd9f2b35716962b1bc85%2ffullgamevideo%2fclips   
+8   https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce749ed0cee8bbd101a34%2ffullgamevideo%2fclips   
+9   https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dbccdc583fffc42aa3945b%2ffullgamevideo%2fclips   
+10  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dcd80bea1753b5dbb96ed2%2ffullgamevideo%2fclips   
+11  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce749ed0cee8bbd101a35%2ffullgamevideo%2fclips   
+12  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce298ba5896ed2ac61138%2ffullgamevideo%2fclips   
+13  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b0a0c95ff04e3e97d061%2ffullgamevideo%2fclips   
+14  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce61de8640316f9f1471a%2ffullgamevideo%2fclips   
+15  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dc0fa93b14912cbc5a9b4d%2ffullgamevideo%2fclips   
+16  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce3c5573ccda860719963%2ffullgamevideo%2fclips   
+17  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dcd1046400c5b7be154398%2ffullgamevideo%2fclips   
+18  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce749ed0cee8bbd101a36%2ffullgamevideo%2fclips   
+19  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce16c3679df3bfc400c29%2ffullgamevideo%2fclips   
+20  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dc1201dd0520adaba26fce%2ffullgamevideo%2fclips   
+21  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce3c5573ccda860719965%2ffullgamevideo%2fclips   
+22  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce61de8640316f9f1471b%2ffullgamevideo%2fclips   
+23  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dbd3e5bd67c4febd6e7c29%2ffullgamevideo%2fclips   
+24  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce749ed0cee8bbd101a37%2ffullgamevideo%2fclips   
+25  https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dbbff8b76cef5dbd2b823d%2ffullgamevideo%2fclips   
+
+             synergy_game_id  \
+0   68dce749ed0cee8bbd101a32   
+1   68f9362b857f9c97d6d0b604   
+2   68dc84d7872cbc0ecf981795   
+3   68dc77f55c056b698025a728   
+4   68d9b67caa23efd9b2af7c20   
+5   69247e3e8e4f8e2ecf0697f2   
+6   68dce749ed0cee8bbd101a33   
+7   68dbbd9f2b35716962b1bc85   
+8   68dce749ed0cee8bbd101a34   
+9   68dbccdc583fffc42aa3945b   
+10  68dcd80bea1753b5dbb96ed2   
+11  68dce749ed0cee8bbd101a35   
+12  68dce298ba5896ed2ac61138   
+13  68d9b0a0c95ff04e3e97d061   
+14  68dce61de8640316f9f1471a   
+15  68dc0fa93b14912cbc5a9b4d   
+16  68dce3c5573ccda860719963   
+17  68dcd1046400c5b7be154398   
+18  68dce749ed0cee8bbd101a36   
+19  68dce16c3679df3bfc400c29   
+20  68dc1201dd0520adaba26fce   
+21  68dce3c5573ccda860719965   
+22  68dce61de8640316f9f1471b   
+23  68dbd3e5bd67c4febd6e7c29   
+24  68dce749ed0cee8bbd101a37   
+25  68dbbff8b76cef5dbd2b823d   
+
+                                                                 synergy_boxscore_url  \
+0   https://apps.synergysports.com/basketball/games/68dce749ed0cee8bbd101a32/boxscore   
+1   https://apps.synergysports.com/basketball/games/68f9362b857f9c97d6d0b604/boxscore   
+2   https://apps.synergysports.com/basketball/games/68dc84d7872cbc0ecf981795/boxscore   
+3   https://apps.synergysports.com/basketball/games/68dc77f55c056b698025a728/boxscore   
+4   https://apps.synergysports.com/basketball/games/68d9b67caa23efd9b2af7c20/boxscore   
+5   https://apps.synergysports.com/basketball/games/69247e3e8e4f8e2ecf0697f2/boxscore   
+6   https://apps.synergysports.com/basketball/games/68dce749ed0cee8bbd101a33/boxscore   
+7   https://apps.synergysports.com/basketball/games/68dbbd9f2b35716962b1bc85/boxscore   
+8   https://apps.synergysports.com/basketball/games/68dce749ed0cee8bbd101a34/boxscore   
+9   https://apps.synergysports.com/basketball/games/68dbccdc583fffc42aa3945b/boxscore   
+10  https://apps.synergysports.com/basketball/games/68dcd80bea1753b5dbb96ed2/boxscore   
+11  https://apps.synergysports.com/basketball/games/68dce749ed0cee8bbd101a35/boxscore   
+12  https://apps.synergysports.com/basketball/games/68dce298ba5896ed2ac61138/boxscore   
+13  https://apps.synergysports.com/basketball/games/68d9b0a0c95ff04e3e97d061/boxscore   
+14  https://apps.synergysports.com/basketball/games/68dce61de8640316f9f1471a/boxscore   
+15  https://apps.synergysports.com/basketball/games/68dc0fa93b14912cbc5a9b4d/boxscore   
+16  https://apps.synergysports.com/basketball/games/68dce3c5573ccda860719963/boxscore   
+17  https://apps.synergysports.com/basketball/games/68dcd1046400c5b7be154398/boxscore   
+18  https://apps.synergysports.com/basketball/games/68dce749ed0cee8bbd101a36/boxscore   
+19  https://apps.synergysports.com/basketball/games/68dce16c3679df3bfc400c29/boxscore   
+20  https://apps.synergysports.com/basketball/games/68dc1201dd0520adaba26fce/boxscore   
+21  https://apps.synergysports.com/basketball/games/68dce3c5573ccda860719965/boxscore   
+22  https://apps.synergysports.com/basketball/games/68dce61de8640316f9f1471b/boxscore   
+23  https://apps.synergysports.com/basketball/games/68dbd3e5bd67c4febd6e7c29/boxscore   
+24  https://apps.synergysports.com/basketball/games/68dce749ed0cee8bbd101a37/boxscore   
+25  https://apps.synergysports.com/basketball/games/68dbbff8b76cef5dbd2b823d/boxscore   
+
+                                                                                                                               game_url  \
+0   https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/Z0-ctt8vSRGBq7L9GQd3rg/boxscore?league=NCAAB-III&season=25   
+1   https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/bywCEOlYRBi3Oz2AFxk35Q/boxscore?league=NCAAB-III&season=25   
+2   https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/DCAhgMMcTKGgp2Bxh7NVYQ/boxscore?league=NCAAB-III&season=25   
+3   https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/vS8itADXSxOdEPwdAGQe3w/boxscore?league=NCAAB-III&season=25   
+4   https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/TsM8NjBJSLyy94ZjMyOwAw/boxscore?league=NCAAB-III&season=25   
+5   https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/84me5GbcT7C5oFd0-EV2jQ/boxscore?league=NCAAB-III&season=25   
+6   https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/DVfb6CPbTvK0gzPJGAJ7sA/boxscore?league=NCAAB-III&season=25   
+7   https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/-qZ_6hHPTn6Nbvgql6uTkg/boxscore?league=NCAAB-III&season=25   
+8   https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/CgvKpsnrTAGkkWj8_wBe9g/boxscore?league=NCAAB-III&season=25   
+9   https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/nLTZvhNkTqaAr7llNeFNNw/boxscore?league=NCAAB-III&season=25   
+10  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/sMMzyuvjSO2YTdNXqhLOVw/boxscore?league=NCAAB-III&season=25   
+11  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/tYezKcDDRkSgCdLEzQPMIA/boxscore?league=NCAAB-III&season=25   
+12  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/MD-NhaBER-m1sXoeEWCqqw/boxscore?league=NCAAB-III&season=25   
+13  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/cZzcmSGVTRyXC_uCVzvCqg/boxscore?league=NCAAB-III&season=25   
+14  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/GjAB6zfFSXixJpxHt8Jylg/boxscore?league=NCAAB-III&season=25   
+15  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/lp11IJv7Q7OI6PdBbkv3Kg/boxscore?league=NCAAB-III&season=25   
+16  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/RQDjowgvQvynMxfcdnJcDw/boxscore?league=NCAAB-III&season=25   
+17  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/S_gzF0bVSquVIuKp2zoqLg/boxscore?league=NCAAB-III&season=25   
+18  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/tFY77X50Rk-t5GjQjbyEmQ/boxscore?league=NCAAB-III&season=25   
+19  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/O9ZfO2LkR4uOdwgfUOEcDg/boxscore?league=NCAAB-III&season=25   
+20  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/bduIggpXS-SQrofFNZCkZQ/boxscore?league=NCAAB-III&season=25   
+21  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/_iq_BX_LTm-MRvlpyZYdrg/boxscore?league=NCAAB-III&season=25   
+22  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/UY91AclQSS6nPO_O65NlCw/boxscore?league=NCAAB-III&season=25   
+23  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/WP8bXoXeT86wvALdHVw16w/boxscore?league=NCAAB-III&season=25   
+24  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/KLKp9xDEQVO1ZTyh7Rir1A/boxscore?league=NCAAB-III&season=25   
+25  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/cACIdv81SIWkugpnEDacZA/boxscore?league=NCAAB-III&season=25   
+
+         location  
+0            Home  
+1            Away  
+2            Away  
+3            Home  
+4   Neutral Court  
+5   Neutral Court  
+6            Home  
+7            Away  
+8            Home  
+9            Away  
+10           Home  
+11           Away  
+12           Home  
+13           Away  
+14           Away  
+15           Away  
+16           Home  
+17           Away  
+18           Home  
+19           Away  
+20           Home  
+21           Away  
+22           Home  
+23           Home  
+24           Away  
+25           Home  
+
+Video links for these games (raw full-game film, independent of any manually-tagged _video.mhtml export):
+  2025-11-07 vs UW-Whitewater Warhawks: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce749ed0cee8bbd101a32%2ffullgamevideo%2fclips
+  2025-11-10 vs Green Bay Phoenix EXH: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68f9362b857f9c97d6d0b604%2ffullgamevideo%2fclips
+  2025-11-12 vs St. Norbert Green Knights: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dc84d7872cbc0ecf981795%2ffullgamevideo%2fclips
+  2025-11-18 vs Lakeland Muskies: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dc77f55c056b698025a728%2ffullgamevideo%2fclips
+  2025-11-21 vs Millikin Big Blue: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b67caa23efd9b2af7c20%2ffullgamevideo%2fclips
+  2025-11-22 vs Bethany Lutheran Vikings: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f69247e3e8e4f8e2ecf0697f2%2ffullgamevideo%2fclips
+  2025-11-26 vs Carthage Firebirds: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce749ed0cee8bbd101a33%2ffullgamevideo%2fclips
+  2025-12-02 vs Beloit Buccaneers: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dbbd9f2b35716962b1bc85%2ffullgamevideo%2fclips
+  2025-12-04 vs UW-La Crosse Eagles: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce749ed0cee8bbd101a34%2ffullgamevideo%2fclips
+  2025-12-06 vs Cornell College Rams: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dbccdc583fffc42aa3945b%2ffullgamevideo%2fclips
+  2025-12-13 vs Grinnell Pioneers: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dcd80bea1753b5dbb96ed2%2ffullgamevideo%2fclips
+  2025-12-17 vs UW-Oshkosh Titans: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce749ed0cee8bbd101a35%2ffullgamevideo%2fclips
+  2025-12-19 vs Lake Forest Foresters: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce298ba5896ed2ac61138%2ffullgamevideo%2fclips
+  2025-12-30 vs Elmhurst Bluejays: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68d9b0a0c95ff04e3e97d061%2ffullgamevideo%2fclips
+  2026-01-07 vs Monmouth (IL) Fighting Scots: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce61de8640316f9f1471a%2ffullgamevideo%2fclips
+  2026-01-10 vs Illinois College Blueboys: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dc0fa93b14912cbc5a9b4d%2ffullgamevideo%2fclips
+  2026-01-13 vs Lawrence Vikings: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce3c5573ccda860719963%2ffullgamevideo%2fclips
+  2026-01-17 vs Grinnell Pioneers: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dcd1046400c5b7be154398%2ffullgamevideo%2fclips
+  2026-01-24 vs Knox Prairie Fire: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce749ed0cee8bbd101a36%2ffullgamevideo%2fclips
+  2026-01-27 vs Lake Forest Foresters: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce16c3679df3bfc400c29%2ffullgamevideo%2fclips
+  2026-01-31 vs Illinois College Blueboys: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dc1201dd0520adaba26fce%2ffullgamevideo%2fclips
+  2026-02-05 vs Lawrence Vikings: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce3c5573ccda860719965%2ffullgamevideo%2fclips
+  2026-02-07 vs Monmouth (IL) Fighting Scots: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce61de8640316f9f1471b%2ffullgamevideo%2fclips
+  2026-02-10 vs Cornell College Rams: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dbd3e5bd67c4febd6e7c29%2ffullgamevideo%2fclips
+  2026-02-14 vs Knox Prairie Fire: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dce749ed0cee8bbd101a37%2ffullgamevideo%2fclips
+  2026-02-21 vs Beloit Buccaneers: https://editor-web.synergysports.com/video?playlistUrl=https%3a%2f%2fbasketball.synergysportstech.com%2fapi%2fgames%2f68dbbff8b76cef5dbd2b823d%2ffullgamevideo%2fclips
+
+Missing _pbp or _video files for the following games before the Whitewater matchup:
+  2025-11-10 vs Green Bay Phoenix EXH: pbp_found=False, video_found=False
+  2025-11-12 vs St. Norbert Green Knights: pbp_found=False, video_found=False
+  2025-11-18 vs Lakeland Muskies: pbp_found=False, video_found=False
+  2025-11-21 vs Millikin Big Blue: pbp_found=False, video_found=False
+  2025-11-22 vs Bethany Lutheran Vikings: pbp_found=False, video_found=False
+  2025-11-26 vs Carthage Firebirds: pbp_found=False, video_found=False
+  2025-12-02 vs Beloit Buccaneers: pbp_found=False, video_found=False
+  2025-12-04 vs UW-La Crosse Eagles: pbp_found=False, video_found=False
+  2025-12-06 vs Cornell College Rams: pbp_found=False, video_found=False
+  2025-12-13 vs Grinnell Pioneers: pbp_found=False, video_found=False
+  2025-12-19 vs Lake Forest Foresters: pbp_found=False, video_found=False
+  2025-12-30 vs Elmhurst Bluejays: pbp_found=False, video_found=False
+  2026-01-07 vs Monmouth (IL) Fighting Scots: pbp_found=False, video_found=False
+  2026-01-10 vs Illinois College Blueboys: pbp_found=False, video_found=False
+  2026-01-13 vs Lawrence Vikings: pbp_found=False, video_found=False
+  2026-01-17 vs Grinnell Pioneers: pbp_found=False, video_found=False
+  2026-01-24 vs Knox Prairie Fire: pbp_found=False, video_found=False
+  2026-01-27 vs Lake Forest Foresters: pbp_found=False, video_found=False
+  2026-01-31 vs Illinois College Blueboys: pbp_found=False, video_found=False
+  2026-02-05 vs Lawrence Vikings: pbp_found=False, video_found=False
+  2026-02-07 vs Monmouth (IL) Fighting Scots: pbp_found=False, video_found=False
+  2026-02-10 vs Cornell College Rams: pbp_found=False, video_found=False
+  2026-02-14 vs Knox Prairie Fire: pbp_found=False, video_found=False
+  2026-02-21 vs Beloit Buccaneers: pbp_found=False, video_found=False
+
+===== cell 60 25_live_scrape_any_missing_play_by_play_files =====
+  Could not live-scrape pbp for Green Bay Phoenix EXH (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/bywCEOlYRBi3Oz2AFxk35Q/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for St. Norbert Green Knights (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/DCAhgMMcTKGgp2Bxh7NVYQ/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Lakeland Muskies (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/vS8itADXSxOdEPwdAGQe3w/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Millikin Big Blue (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/TsM8NjBJSLyy94ZjMyOwAw/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Bethany Lutheran Vikings (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/84me5GbcT7C5oFd0-EV2jQ/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Carthage Firebirds (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/DVfb6CPbTvK0gzPJGAJ7sA/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Beloit Buccaneers (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/-qZ_6hHPTn6Nbvgql6uTkg/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for UW-La Crosse Eagles (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/CgvKpsnrTAGkkWj8_wBe9g/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Cornell College Rams (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/nLTZvhNkTqaAr7llNeFNNw/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Grinnell Pioneers (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/sMMzyuvjSO2YTdNXqhLOVw/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Lake Forest Foresters (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/MD-NhaBER-m1sXoeEWCqqw/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Elmhurst Bluejays (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/cZzcmSGVTRyXC_uCVzvCqg/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Monmouth (IL) Fighting Scots (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/GjAB6zfFSXixJpxHt8Jylg/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Illinois College Blueboys (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/lp11IJv7Q7OI6PdBbkv3Kg/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Lawrence Vikings (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/RQDjowgvQvynMxfcdnJcDw/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Grinnell Pioneers (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/S_gzF0bVSquVIuKp2zoqLg/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Knox Prairie Fire (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/tFY77X50Rk-t5GjQjbyEmQ/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Lake Forest Foresters (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/O9ZfO2LkR4uOdwgfUOEcDg/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Illinois College Blueboys (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/bduIggpXS-SQrofFNZCkZQ/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Lawrence Vikings (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/_iq_BX_LTm-MRvlpyZYdrg/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Monmouth (IL) Fighting Scots (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/UY91AclQSS6nPO_O65NlCw/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
+  Could not live-scrape pbp for Cornell College Rams (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/WP8bXoXeT86wvALdHVw16w/boxscore?league=NCAAB-III&season=25): CalledProcessError: Command '['C:\\Users\\frits\\anaconda3\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794.
