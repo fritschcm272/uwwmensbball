@@ -1,4 +1,4 @@
 opponent,clock_situation,freq_pct,ppp,fg_pct,note,is_sample
-Carroll (WI) Pioneers,Early clock (0-9 sec used),41,0.91,38.6,79 tagged possessions -- most often Ball Screen (Michael McNabb),False
-Carroll (WI) Pioneers,Organized offense (10-19 sec used),40,0.91,45.6,76 tagged possessions -- most often Ball Screen (Michael McNabb),False
-Carroll (WI) Pioneers,Late clock (20+ sec used),19,0.81,38.5,36 tagged possessions -- most often Ball Screen (Jacob Naber),False
+Ripon Red Hawks,Early clock (0-9 sec used),22,1.18,54,Mostly transition and early ball screens,True
+Ripon Red Hawks,Organized offense (10-19 sec used),55,0.94,41,"Their half-court sets, Anton Kilde runs off screens here",True
+Ripon Red Hawks,Late clock (20+ sec used),23,0.71,33,Kolby Williams isolation when the set breaks down,True

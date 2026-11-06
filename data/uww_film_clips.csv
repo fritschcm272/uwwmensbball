@@ -1,7 +1,6 @@
 opponent,clip_group,clips,who_watches,is_sample
-Carroll (WI) Pioneers,Screen Motion (Half court),52,Whole team -- scout team runs it,False
-Carroll (WI) Pioneers,DHO Motion (Half court),32,Whole team -- scout team runs it,False
-Carroll (WI) Pioneers,Motion (no action tagged) (Half court),27,Whole team -- scout team runs it,False
-Carroll (WI) Pioneers,Off-ball screen Motion (Half court),13,Whole team -- scout team runs it,False
-Carroll (WI) Pioneers,BLOB Set (BLOB),5,Whole team,False
-Carroll (WI) Pioneers,FLEX (Offensive rebound),1,Whole team,False
+Ripon Red Hawks,Their base offense (5-Out Motion),6,Whole team,True
+Ripon Red Hawks,Kolby Williams post touches and offensive rebounds,5,Bigs,True
+Ripon Red Hawks,BLOB / SLOB / ATO,8,Whole team,True
+Ripon Red Hawks,Their ball-screen coverage vs us-type guards,5,Guards,True
+Ripon Red Hawks,Press break and 1-2-1-1,4,Whole team,True

@@ -1,21 +1,10 @@
 scouted_opponent,side,team,motion_family,uses,share_pct,ppp,actions,trigger,screener,finish,games
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Screen Motion,52,38,0.87,Ball Screen (42),Evan Bland (1),Jacob Naber (3) · Jimmy Tarjan (1),P&R Ball Handler (28) · Non Possession (7),3
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,DHO Motion,32,23,0.34,DHO (11) · DHO > Ball Screen (6),Lamar Smith (1) · Michael McNabb (1),Jacob Naber (2),Hand Off (14) · P&R Ball Handler (8),3
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Motion (no action tagged),27,20,1.2,,,,Spot-Up (11) · Post-Up (7),3
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Off-ball screen Motion,13,9,0.5,Down Screen (7),,,Off Screen (6) · Spot-Up (3),3
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Cutting Motion,5,4,1.6,,,,Non Possession (2) · Cut (2),3
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Drive Motion,4,3,1.0,,Michael McNabb (2),,Spot-Up (2) · Post-Up (1),2
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,BLOB Motion (other),1,1,0.0,,,,Spot-Up (1),1
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,BLOB Off-ball screen Motion,1,1,0.0,,,,Spot-Up (1),1
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,BLOB Screen Motion,1,1,0.0,,,,P&R Ball Handler (1),1
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,Motion (other),1,1,1.0,,,,Spot-Up (1),1
-Carroll (WI) Pioneers,Opponent,Carroll (WI) Pioneers,SLOB Off-ball screen Motion,1,1,0.0,,Peyton McKenna (1),Jacob Naber (1),Spot-Up (1),1
-Carroll (WI) Pioneers,UWW,UW-Whitewater,Screen Motion,32,47,1.2,Ball Screen (25),Joey Berezowitz (7) · Isaac Verges (5),Brock Marino (8) · Richie Warren (4),P&R Ball Handler (19) · ISO (6),2
-Carroll (WI) Pioneers,UWW,UW-Whitewater,Motion (no action tagged),13,19,0.75,,Richie Warren (1),Joey Berezowitz (1),ISO (5) · Non Possession (3),2
-Carroll (WI) Pioneers,UWW,UW-Whitewater,Off-ball screen Motion,8,12,1.38,Down Screen (6),Collin Madson (1),Joey Berezowitz (1),Post-Up (2) · No Play Type (2),2
-Carroll (WI) Pioneers,UWW,UW-Whitewater,BLOB Motion (no action tagged),7,10,1.0,,,,Cut (2) · Spot-Up (2),2
-Carroll (WI) Pioneers,UWW,UW-Whitewater,DHO Motion,3,4,0.0,,Joey Berezowitz (1),JR Lukenbill (1),Hand Off (2) · Non Possession (1),1
-Carroll (WI) Pioneers,UWW,UW-Whitewater,SLOB Motion (no action tagged),2,3,1.5,,,,Spot-Up (1) · ISO (1),1
-Carroll (WI) Pioneers,UWW,UW-Whitewater,Motion (other),1,1,0.0,,,,Non Possession (1),1
-Carroll (WI) Pioneers,UWW,UW-Whitewater,SLOB Off-ball screen Motion,1,1,0.0,,Kelton McEwen (1),Rashad Rogers (1),Off Screen (1),1
-Carroll (WI) Pioneers,UWW,UW-Whitewater,SLOB Screen Motion,1,1,0.0,,Isaac Verges (1),JR Lukenbill (1),P&R Ball Handler (1),1
+Ripon Red Hawks,UWW,UW-Whitewater,Screen Motion,32,43,1.2,Ball Screen (25),Joey Berezowitz (7) · Isaac Verges (5),Brock Marino (8) · Richie Warren (4),P&R Ball Handler (19) · ISO (6),2
+Ripon Red Hawks,UWW,UW-Whitewater,Motion (no action tagged),14,19,0.69,,Richie Warren (1),Joey Berezowitz (1),ISO (5) · Non Possession (3),3
+Ripon Red Hawks,UWW,UW-Whitewater,BLOB Motion (no action tagged),12,16,1.0,,,,Cut (3) · Spot-Up (3),3
+Ripon Red Hawks,UWW,UW-Whitewater,Off-ball screen Motion,8,11,1.38,Down Screen (6),Collin Madson (1),Joey Berezowitz (1),Post-Up (2) · No Play Type (2),2
+Ripon Red Hawks,UWW,UW-Whitewater,DHO Motion,3,4,0.0,,Joey Berezowitz (1),JR Lukenbill (1),Hand Off (2) · Non Possession (1),1
+Ripon Red Hawks,UWW,UW-Whitewater,SLOB Motion (no action tagged),2,3,1.5,,,,Spot-Up (1) · ISO (1),1
+Ripon Red Hawks,UWW,UW-Whitewater,Motion (other),1,1,0.0,,,,Non Possession (1),1
+Ripon Red Hawks,UWW,UW-Whitewater,SLOB Off-ball screen Motion,1,1,0.0,,Kelton McEwen (1),Rashad Rogers (1),Off Screen (1),1
+Ripon Red Hawks,UWW,UW-Whitewater,SLOB Screen Motion,1,1,0.0,,Isaac Verges (1),JR Lukenbill (1),P&R Ball Handler (1),1

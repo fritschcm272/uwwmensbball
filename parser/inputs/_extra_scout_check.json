@@ -1,1 +1,1 @@
-{"modified_file": "11_7_26 UW-Whitewater @ Carroll (WI) Pioneers_scout.html", "modified_checked": "2026-11-04T11:50:38"}
+{"file": "11_14_26 Ripon Red Hawks @ UW-Whitewater_scout.html", "checked": "2026-11-05T17:40:31", "why": "CalledProcessError: Command '['C:\\\\Users\\\\frits\\\\anaconda3\\\\python.exe', '-m', 'playwright', 'install', 'chromium']' returned non-zero exit status 3221225794."}

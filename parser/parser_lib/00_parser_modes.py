@@ -42,7 +42,7 @@ PARSER_MODES = {
         # (+ the tracking scorecard and the jersey-vote test -- requested: compare the new tracking with the old)
         "quiet_show": r"!!|\[export\]|\[court\]|\[starters\]|\[scorecard\]|jersey vote \(|Starters to validate|calibrat|STOP",
         # the one updating status line: each section's steps and progress (see _PmQuietBuf)
-        "quiet_status": r"\[(tracking|court|play review|tag model[^\]]*|recognizer|jersey|outfit|reid|frame archive|saves)\]|min left|so far|step \d",
+        "quiet_status": r"\[(tracking|court|play review|tag model[^\]]*|recognizer|jersey|outfit|reid|frame archive|frame capture|saves)\]|min left|so far|step \d|clip videos written|Frame capture",
     },
     "tagging": {
         "label": "New clips for Film Tagging, fast (no automatic Titles, no tracking)",

@@ -929,7 +929,27 @@ def _sst_editor_open(page, game_id, label="", launch=True):
             print("  [editor] signing in to Synergy...", flush=True)
             login_to_synergy(page, synergy_username, synergy_password, timeout_ms=60000)
             page.goto(box, wait_until="domcontentloaded", timeout=60000)
-        link.wait_for(state="attached", timeout=60000)
+        # CONFIRMED BUG (fixed; "export failed (TimeoutError: Locator.wait_for ... full game video)" on 2026-02-21 Ripon vs
+        # Beloit right after signing in to Synergy -- the run before had found the link on the same game): the box score
+        # sometimes comes up without the link after a fresh sign-in. It is reloaded and waited for again (up to 3 tries)
+        # before giving up, and the page is saved for a look when it never shows.
+        for _w in range(3):
+            try:
+                link.wait_for(state="attached", timeout=45000)
+                break
+            except Exception:
+                if _w == 2:
+                    try:
+                        _save_scraped_html(page.content(), os.path.join(INPUT_DIR, "Synergy - box score (diagnostic).html"),
+                                           "Synergy box score without FULL GAME VIDEO (diagnostic)")
+                    except Exception:
+                        pass
+                    raise
+                print(f"  [editor] FULL GAME VIDEO link not on the box score yet -- reloading ({_w + 2} of 3)", flush=True)
+                page.goto(box, wait_until="domcontentloaded", timeout=60000)
+                if "auth.synergysportstech.com" in page.url:
+                    login_to_synergy(page, synergy_username, synergy_password, timeout_ms=60000)
+                    page.goto(box, wait_until="domcontentloaded", timeout=60000)
         page.wait_for_timeout(1500)
         href = link.get_attribute("href") or ""
     finally:
@@ -1196,7 +1216,9 @@ def _sst_editor_export(link, export_dir, game_id=None):
     # the Editor's window (its title is just "Synergy Editor" -- the game's name only shows in the export window), then give the
     # game SYNERGY_EDITOR_LOAD_WAIT seconds to load. The export window's title is checked below, so a game that loaded slowly
     # (still the previous edit on screen) is caught there.
-    wait_max = float(globals().get("SYNERGY_EDITOR_LOAD_WAIT", 20))
+    # CONFIRMED BUG (fixed; Beloit @ Ripon exported Export.csv but NO video folder twice when the run pressed OK, and exported
+    # fine by hand): 20 s wasn't always enough for the game's video to load in Synergy Editor before Ctrl+E. Now 60 s.
+    wait_max = float(globals().get("SYNERGY_EDITOR_LOAD_WAIT", 60))
     main, wins, pids, t0 = None, [], set(), time.time()
     while time.time() - t0 < 30 and not wins:
         pids = _sst_editor_pids(exe_name)
@@ -1648,6 +1670,11 @@ def _vx_wait_done(folder):
             except Exception:
                 _free = None
             _avg = (sum(os.path.getsize(v) for v in vids) / len(vids) / 1024 ** 3) if vids else None
+            if not vids:
+                print(f"  [export] {os.path.basename(folder)}: Synergy Editor wrote the clip list but NO clip videos -- the game's "
+                      "video most likely hadn't loaded when the export started. Export it by hand in Synergy Editor (Ctrl+E) into "
+                      "this same folder (move this folder away first), then rerun.", flush=True)
+                return False
             print(f"  [export] {os.path.basename(folder)}: the export STOPPED at {len(vids)} of {n_rows} clip videos (nothing new "
                   f"for {(time.time() - newest) / 60:.0f} min) -- using the {len(vids)} there."
                   + (f" Disk: {_free:.1f} GB free" if _free is not None else "")
@@ -1789,8 +1816,14 @@ def _vx_ingest(label, url, folder, cache):
             rec["error"] = f"{type(ex_).__name__}: {ex_}"[:300]
             n_err += 1
         rows.append(rec)
-        if (n_new + n_err) % 25 == 0:
-            print(f"    {n_new + n_err} clip(s) registered ({time.time() - t0:.0f}s)", flush=True)
+        # CONFIRMED CHANGE (requested: show how far along it is): every 5 clips, "x / total (pct) -- min so far, ~min left",
+        # which quiet mode shows on its live status line.
+        _dn = n_new + n_err
+        if _dn % 5 == 0 or _dn == len(todo):
+            _el = time.time() - t0
+            _left = _el / _dn * (len(todo) - _dn) if _dn else 0
+            print(f"    [frame capture] {label}: {_dn} / {len(todo)} clips ({100 * _dn // max(len(todo), 1)}%) -- "
+                  f"{_el / 60:.1f} min so far, ~{_left / 60:.0f} min left", flush=True)
     with open(man, "w", encoding="utf-8") as fh:
         json.dump(index, fh)
     if "_fx_load_index" in globals():

@@ -518,7 +518,23 @@ def _ensure_playwright_ready():
     # exactly what the "Looks like Playwright was just installed or updated -- please run playwright install"
     # message means. Running this every time is a fast no-op once the browser is already downloaded, so
     # there's no need to run it manually in a separate terminal.
-    subprocess.check_call([sys.executable, "-m", "playwright", "install", "chromium"])
+    # CONFIRMED BUG (fixed; "python.exe - Application Error ... (0xc0000142)" popup every run, and FastScout scraping /
+    # scout-report check failing with exit status 3221225794): this started a second python.exe on EVERY run just to run
+    # "playwright install chromium", and on this computer Windows fails to start that child process. Now the install
+    # only runs when Chromium really isn't downloaded yet (checked in-process, no new python.exe), and a failed install
+    # no longer stops the scrape when the browser is already there.
+    if globals().get("_PW_CHROMIUM_OK"):
+        return sync_playwright
+    import glob as _pw_glob
+    _pw_root = os.environ.get("PLAYWRIGHT_BROWSERS_PATH") or os.path.join(
+        os.environ.get("LOCALAPPDATA") or os.path.expanduser("~"), "ms-playwright")
+    _have = bool(_pw_glob.glob(os.path.join(_pw_root, "chromium-*")))        # no new process needed to check
+    if not _have:
+        try:
+            subprocess.check_call([sys.executable, "-m", "playwright", "install", "chromium"])
+        except Exception as _e:
+            print(f"  (playwright install chromium failed: {type(_e).__name__}: {_e} -- trying the browser anyway)", flush=True)
+    globals()["_PW_CHROMIUM_OK"] = True
     return sync_playwright
 
 
