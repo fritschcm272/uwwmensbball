@@ -1,0 +1,360 @@
+{
+ "kind": "court_calibration",
+ "arena": "UWPlatteville",
+ "game": "2026-11-06|Thiel@UWPlatteville",
+ "coach": "Corey",
+ "saved": "2026-11-07T03:34:39+00:00",
+ "source": "streamlit app",
+ "frames": [
+  {
+   "file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/1_f05b64f4_t020.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1233.8,
+     "py": 593.0
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 483.0,
+     "py": 1073.6
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 451.9,
+     "py": 361.0
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 468.6,
+     "py": 712.5
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 473.4,
+     "py": 542.8
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 461.5,
+     "py": 619.3
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 1499.2,
+     "py": 514.1
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1559.0,
+     "py": 581.0
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 1327.0,
+     "py": 585.8
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/36_a6640035_t023.jpg",
+   "points": [
+    {
+     "landmark": "LEFT baseline x far sideline",
+     "px": 614.5,
+     "py": 272.6
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 148.2,
+     "py": 552.3
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 361.0,
+     "py": 428.0
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 853.6,
+     "py": 633.6
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 992.3,
+     "py": 490.2
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 925.3,
+     "py": 566.7
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1154.9,
+     "py": 583.4
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/64_1896b812_t036.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 413.6,
+     "py": 590.6
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 413.6,
+     "py": 662.3
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 401.7,
+     "py": 511.7
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1188.3,
+     "py": 540.4
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 442.3,
+     "py": 1035.3
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 399.3,
+     "py": 318.0
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 1284.0,
+     "py": 545.2
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1580.5,
+     "py": 604.9
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/106_1c6f0a8e_t009.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 676.7,
+     "py": 571.5
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1446.6,
+     "py": 547.5
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 1542.2,
+     "py": 547.5
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 691.0,
+     "py": 1021.0
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 669.5,
+     "py": 310.8
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1855.4,
+     "py": 631.2
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 1716.8,
+     "py": 473.4
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/140_2d4e8001_t080.jpg",
+   "points": [
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 514.1,
+     "py": 260.6
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1169.2,
+     "py": 549.9
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1078.4,
+     "py": 542.8
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 793.8,
+     "py": 583.4
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 925.3,
+     "py": 447.1
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 860.8,
+     "py": 509.3
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 289.3,
+     "py": 385.0
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 83.7,
+     "py": 502.1
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/177_d69ba941_t051a.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 815.3,
+     "py": 566.7
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 810.6,
+     "py": 652.8
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 810.6,
+     "py": 496.1
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 822.3,
+     "py": 1007.9
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 796.9,
+     "py": 306.7
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1584.0,
+     "py": 556.7
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 1681.7,
+     "py": 558.6
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 1867.3,
+     "py": 490.3
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/207_df84e8f5_t029a.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1349.7,
+     "py": 380.9
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 865.3,
+     "py": 586.0
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 730.5,
+     "py": 459.0
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 793.0,
+     "py": 521.5
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 580.1,
+     "py": 546.9
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, near",
+     "px": 1896.6,
+     "py": 701.2
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1134.8,
+     "py": 255.9
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 484.4,
+     "py": 552.8
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1548.9,
+     "py": 496.1
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/235_827b56de_t072a.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1048.9,
+     "py": 586.0
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 910.2,
+     "py": 451.2
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 972.7,
+     "py": 515.6
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 752.0,
+     "py": 541.0
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1537.2,
+     "py": 388.7
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1326.2,
+     "py": 261.7
+    }
+   ]
+  }
+ ]
+}
