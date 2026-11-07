@@ -11,3 +11,6 @@ Today I want to: [WHAT YOU WANT TO WORK ON]
 
 
 At the end of a long session, ask the chat to “update CLAUDE.md with what we did today.” Then the next chat starts from the latest state.
+
+
+- Wisconsin-Platteville played Thiel tonight.  How would I go about getting that video from synergy exported and put into the application for coaches to tag the film.  This data can be available for the player number tracking as well, but should not be used in any of the Carroll or Ripon scouting briefs that I'm working on right now.  It should only be used for when we play Platteville later in the year.

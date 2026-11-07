@@ -242,6 +242,10 @@ def _tr_auto(r, f, tagged):
     # CONFIRMED CHANGE (requested: never just "Motion" -- recommendation 5). The Play call model isn't better than always
     # picking "Motion" yet, so a bare "Motion" guess tells the coach nothing: it's only offered WITH the predicted Main
     # action ("likely Ball-screen Motion -- Main action: Ball Screen"); with no Main action guess, no play call is offered.
+    # CONFIRMED CHANGE (Tag model retargeted to the Motion type): the model now answers e.g. "Screen Motion". The play call
+    # offered stays "Motion" (what the coaches tag; the action says which), with the type as the note.
+    if f == "play_call" and v is not None and re.match(r"^.+ Motion$", str(v).strip()) and str(v).strip().lower() != "motion":
+        return "Motion", c, f"likely {str(v).strip()}"
     if f == "play_call" and v is not None and str(v).strip().lower() == "motion":
         pa = _tr_auto_raw(r, "primary_action", tagged)[0]
         if not pa:
@@ -303,6 +307,10 @@ def _tr_vocab():
                     add(f, lst)
     except Exception:
         pass
+    # the Tag model's Motion types ("Screen Motion" ...) are not play calls the coaches pick -- the list keeps "Motion"
+    if "play_call" in vals:
+        vals["play_call"] = {("Motion" if re.match(r"^.+ Motion$", x) or x.startswith("Motion (") else x)
+                             for x in vals["play_call"]}
     # one spelling per answer: "No Screens" / "No screens" (capitals / spaces / punctuation only) are the same answer --
     # the capitalized spelling is kept
     _nrm = lambda s: re.sub(r"[^a-z0-9#]+", "", s.lower())
@@ -1608,6 +1616,12 @@ def _tag_fields(r):
         if f == "screener":
             continue
         av, ac, note = _tr_auto(r, f, False)
+        # CONFIRMED CHANGE (requested: coaches complained it "always just puts Motion and 5 Out"): a field whose model isn't
+        # trusted (not 5+ points better than always guessing on 50+ held-out plays -- see Tag model) gets NO suggestion; its
+        # list starts blank. Synergy's own Transition answer for Situation is kept.
+        if ("tag_field_trusted" in globals() and not tag_field_trusted(f)
+                and not (f == "situation" and note == "from Synergy's play type")):
+            av, ac, note = None, None, ""
         # untrusted fields (Tag model not better than guessing yet) are offered, never prefilled
         sure = (av is not None and ac is not None and ac >= min_c
                 and (tag_field_trusted(f) if "tag_field_trusted" in globals() else True))
@@ -1674,6 +1688,11 @@ def _tag_refresh_people(pkg, g, gd, gc):
 # (nothing saved in it) leaves the app; answers already saved are kept and still count.
 def _tag_run_reason(gd, gc, g):
     """Why this game is part of the current run, or None when it isn't. 'every game' when the run can't be worked out."""
+    if "bank_game_for" in globals():
+        _tm = tuple(g[c].dropna().astype(str).iloc[0] for c in ("offense_team", "defense_team") if c in g.columns and g[c].notna().any())
+        _b = bank_game_for(game_date=gd, teams=_tm + (str(gc),))
+        if _b is not None:
+            return f"banked for {_b['for']}"
     if not globals().get("PLAY_TAG_RUN_ONLY", True) or "_fa_current_run" not in globals():
         return "every game"
     cur = globals().get("_tag_cur_run")
@@ -1702,7 +1721,13 @@ def tag_queue():
         print("Film Tagging: no play calls yet.")
         return
     if "side" in pc.columns:
-        pc = pc[pc["side"].isin(["UWW", "Opponent"])]
+        # banked games (BANK_GAMES) are tagged now even while they're "Other" (a later opponent's game)
+        _bnk = pd.Series(False, index=pc.index)
+        if "bank_game_for" in globals() and bank_games():
+            _bnk = pd.Series([bank_game_for(game_date=r.get("game_date"), teams=(r.get("offense_team"), r.get("defense_team"),
+                                                                                   r.get("game_code"))) is not None
+                              for _, r in pc.iterrows()], index=pc.index)
+        pc = pc[pc["side"].isin(["UWW", "Opponent"]) | _bnk]
     has = lambda c: pc[c].notna() if c in pc.columns else pd.Series(False, index=pc.index)
     pc = pc[has("track_files") | has("frame_files")]
     print(f"Film Tagging: checking which of {len(pc):,} captured clip(s) still have their film on disk...", flush=True)
@@ -1788,6 +1813,10 @@ def tag_queue():
             _ot = todo["offense_team"].astype(str).str.lower() if "offense_team" in todo.columns else pd.Series("", index=todo.index)
             _sc = str(g["scouted_opponent"].dropna().iloc[0]).lower() if "scouted_opponent" in g.columns and g["scouted_opponent"].notna().any() \
                 else str(globals().get("upcoming_opponent") or "").lower()
+            _bk_ = bank_game_for(game_date=gd, teams=tuple(g["offense_team"].dropna().astype(str).unique()) + (str(gc),)) \
+                if "bank_game_for" in globals() and "offense_team" in g.columns else None
+            if _bk_ is not None:
+                _sc = _bk_["for"].lower()                  # a banked game: the team it's banked for, on offense first
             _w = [w for w in re.split(r"[^a-z]+", _sc) if len(w) > 3 and w not in ("thunder", "warhawks")][:1] or [_sc]
             _theirs = _ot.map(lambda o: bool(_sc) and (o == _sc or any(w_ and w_ in o for w_ in _w)))
             _phase = "offense" if _theirs.any() else "rest"

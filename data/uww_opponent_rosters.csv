@@ -152,28 +152,28 @@ Loras Duhawks,2026-03-06,#23,Jack Haynes,F,"6'7""",235 lbs,SR,Starter,"Scores in
 Loras Duhawks,2026-03-06,#24,Kyle Kober,G,"6'3""",195 lbs,JR,Bench,Driver/Shooter | RHD | Rebounds hard,Anticipate RHD | BOX OUT | **Be a Hard Tag**,True,False,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only
 Loras Duhawks,2026-03-06,#20,Connor Mosele,G,"6'3""",205 lbs,JR,Bench,Shooter | Ball Mover (Looking to pass on all drives) | Hasn't made a 2-pt this season,High Hand v. 3s | Heavy ball pressure!!! | **Be a Hard Tag**,True,False,Slasher,play-by-play only (low sample),Low Activity,play-by-play only
 Loras Duhawks,2026-03-06,#1,Deng Makeer,G,"6'6""",175 lbs,FR,Bench,Shooter (nealy 80% of shots are 3s) | Looks to shoot on soft closeouts | 15 ft pull ups on drives,No C&S 3's | High Early Hand | Anticipate pull ups on drives,True,False,Stationary Shooter,play-by-play only (low sample),Point of Attack,play-by-play only
-Washington-St. Louis Bears,2026-03-07,#3,Josh Kim,G,"6'3""",175 lbs,FR,Starter,"Driver/Shooter | Will attack either way, prefer RH Finish | Struggles with physicality",Anticipate RH Finish | Be Physical | Test him defensively (especially in switches),True,False,Primary Ball Handler,Synergy play types (low sample),Chaser,coach tags + film
-Washington-St. Louis Bears,2026-03-07,#10,Yogi Oliff,G,"6'3""",175 lbs,SR,Starter,Driver/Shooter | L to R crossover before he drives | RH Finisher,No RHD - Keep him in FRONT!! | Anticipate L to R Crossover | BOX OUT!!,True,False,Athletic Finisher,play-by-play only (low sample),Helper,film tracking
-Washington-St. Louis Bears,2026-03-07,#11,Ryan Cohen,G,"6'3""",180 lbs,JR,Starter,Shooter with quick release! (85% shot attempts are 3's) | Hunts for shot in transition and in offense | Struggles to finish at the rim (2 pt=29.7%),Locate early in transition | Arrive ON THE CATCH w/ High Hand | Chase Everything,True,False,Stationary Shooter,Synergy play types (low sample),Helper,coach tags + film
-Washington-St. Louis Bears,2026-03-07,#21,Connor May,F,"6'6""",210 lbs,SO,Starter,"3 level scorer (high level shooter) | Prefers RHD, always finishes with RH.",Anticipate RHD | No rhythm 3's | Heavy help in Gaps,True,False,Movement Shooter,Synergy play types,Helper,coach tags + film
-Washington-St. Louis Bears,2026-03-07,#34,Calvin Kapral,C,"6'8""",225 lbs,SR,Starter,Scores in post & dump offs on drives | Prefers LS/RH | Non-shooter,No LS/RH! | Don't get buried in post,True,False,Post Scorer,play-by-play only (low sample),Anchor Big,coach tags + film
-Washington-St. Louis Bears,2026-03-07,#23,Anthony Przybilla,F,"6'6""",200 lbs,SO,Bench,Driver/Finisher | Can finish with either hand | Looking to cut anytime man loses vision,Keep vision of man & ball | Focus on help when he's on perimeter | BOX OUT!!,True,False,Roll & Cut Big,Synergy play types (low sample),Mobile Big,film tracking
-Washington-St. Louis Bears,2026-03-07,#32,Will Grudzinski,G,"6'6""",200 lbs,SR,Bench,Shooter/Driver | RH Driver | Struggle with ball pressure,High early hand on closeouts | Anticipate RHD | Pressure & Trace!!,True,False,Secondary Ball Handler,position only,Helper,film tracking
-Washington-St. Louis Bears,2026-03-07,#30,Theo Rocca,G,"6'3""",190 lbs,FR,Bench,Capable shooter & driver | C&S 3's | Drive to Post (RH Finisher),No C&S 3's | Anticipate RH Finish,True,False,Stationary Shooter,play-by-play only (low sample),Helper,film tracking
-Washington-St. Louis Bears,2026-03-07,#33,George Gale,F,"6'6""",195 lbs,JR,Bench,LS/RH in post (5 man) | RHD from perimeter | Rebounds Hard,No LS/RH | No RHD | Box out!!,True,False,Roll & Cut Big,play-by-play only (low sample),Mobile Big,coach tags + film
+Washington-St. Louis Bears,2026-03-07,#3,Josh Kim,G,"6'3""",175 lbs,FR,Starter,"Driver/Shooter | Will attack either way, prefer RH Finish | Struggles with physicality",Anticipate RH Finish | Be Physical | Test him defensively (especially in switches),True,False,Primary Ball Handler,Synergy play types (low sample),Point of Attack,coach tags
+Washington-St. Louis Bears,2026-03-07,#10,Yogi Oliff,G,"6'3""",175 lbs,SR,Starter,Driver/Shooter | L to R crossover before he drives | RH Finisher,No RHD - Keep him in FRONT!! | Anticipate L to R Crossover | BOX OUT!!,True,False,Athletic Finisher,play-by-play only (low sample),Helper,play-by-play only
+Washington-St. Louis Bears,2026-03-07,#11,Ryan Cohen,G,"6'3""",180 lbs,JR,Starter,Shooter with quick release! (85% shot attempts are 3's) | Hunts for shot in transition and in offense | Struggles to finish at the rim (2 pt=29.7%),Locate early in transition | Arrive ON THE CATCH w/ High Hand | Chase Everything,True,False,Stationary Shooter,Synergy play types (low sample),Point of Attack,coach tags (low sample)
+Washington-St. Louis Bears,2026-03-07,#21,Connor May,F,"6'6""",210 lbs,SO,Starter,"3 level scorer (high level shooter) | Prefers RHD, always finishes with RH.",Anticipate RHD | No rhythm 3's | Heavy help in Gaps,True,False,Movement Shooter,Synergy play types,Helper,coach tags (low sample)
+Washington-St. Louis Bears,2026-03-07,#34,Calvin Kapral,C,"6'8""",225 lbs,SR,Starter,Scores in post & dump offs on drives | Prefers LS/RH | Non-shooter,No LS/RH! | Don't get buried in post,True,False,Post Scorer,play-by-play only (low sample),Anchor Big,coach tags (low sample)
+Washington-St. Louis Bears,2026-03-07,#23,Anthony Przybilla,F,"6'6""",200 lbs,SO,Bench,Driver/Finisher | Can finish with either hand | Looking to cut anytime man loses vision,Keep vision of man & ball | Focus on help when he's on perimeter | BOX OUT!!,True,False,Roll & Cut Big,Synergy play types (low sample),Mobile Big,play-by-play only
+Washington-St. Louis Bears,2026-03-07,#32,Will Grudzinski,G,"6'6""",200 lbs,SR,Bench,Shooter/Driver | RH Driver | Struggle with ball pressure,High early hand on closeouts | Anticipate RHD | Pressure & Trace!!,True,False,Secondary Ball Handler,position only,Low Activity,play-by-play only
+Washington-St. Louis Bears,2026-03-07,#30,Theo Rocca,G,"6'3""",190 lbs,FR,Bench,Capable shooter & driver | C&S 3's | Drive to Post (RH Finisher),No C&S 3's | Anticipate RH Finish,True,False,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only
+Washington-St. Louis Bears,2026-03-07,#33,George Gale,F,"6'6""",195 lbs,JR,Bench,LS/RH in post (5 man) | RHD from perimeter | Rebounds Hard,No LS/RH | No RHD | Box out!!,True,False,Roll & Cut Big,play-by-play only (low sample),Mobile Big,coach tags (low sample)
 Carroll (WI) Pioneers,2025-12-13,,Cahlil Jones,G,"6'2""",,FR,Starter,Driver/Shooter | Looking to score in transition | Prefers RHD drive,Anticipate RHD | Keep out of the paint!! | Contest all shots,True,True,Secondary Ball Handler,position only,Point of Attack,position only
 Carroll (WI) Pioneers,2025-12-13,,Logan Steffensmeier,F,"6'7""",,SO,Starter,Driver/Shooter | Likes to slash to basket/prefers RHD | Crashes O-Boards!,Box Out!! | Anticipate RHD | No C&S,True,True,Roll & Cut Big,position only,Mobile Big,position only
-Ripon Red Hawks,2025-11-07,,Abe Dykstra,,,,,Bench,,,False,,,,Low Activity,play-by-play only
-Ripon Red Hawks,2025-11-07,,Birch Gunja,,,,,Bench,,,False,,,,Low Activity,play-by-play only
-Ripon Red Hawks,2025-11-07,,Christian Wilson,,,,,Bench,,,False,,,,Low Activity,play-by-play only
-Ripon Red Hawks,2025-11-07,,Fisher MacKenzie,,,,,Bench,,,False,,,,Low Activity,play-by-play only
-Ripon Red Hawks,2025-11-07,,Houston McKenzie,,,,,Bench,,,False,,,,Low Activity,play-by-play only
-Ripon Red Hawks,2025-11-07,,Isaac Knoll,,,,,Bench,,,False,,,,Low Activity,play-by-play only
-Ripon Red Hawks,2025-11-07,,Jack Ellickson,,,,,Bench,,,False,,,,Low Activity,play-by-play only
-Ripon Red Hawks,2025-11-07,,Jack Field,,,,,Bench,,,False,,,,Low Activity,play-by-play only
-Ripon Red Hawks,2025-11-07,,Jackson Flowers,,,,,Bench,,,False,,,,Low Activity,play-by-play only
-Ripon Red Hawks,2025-11-07,,Joey Daun,,,,,Bench,,,False,,,,Low Activity,play-by-play only
-Ripon Red Hawks,2025-11-07,,Jose Gonzales,,,,,Bench,,,False,,,,Low Activity,play-by-play only
-Ripon Red Hawks,2025-11-07,,Landon Lee,,,,,Bench,,,False,,,,Low Activity,play-by-play only
-Ripon Red Hawks,2025-11-07,,Nick Ahlquist,,,,,Bench,,,False,,,,Low Activity,play-by-play only
-Ripon Red Hawks,2025-11-07,,Olin Zellmer,,,,,Bench,,,False,,,,Low Activity,play-by-play only
+Ripon Red Hawks,2025-11-07,,Abe Dykstra,,,,,Bench,,,False,,,,,
+Ripon Red Hawks,2025-11-07,,Birch Gunja,,,,,Bench,,,False,,,,,
+Ripon Red Hawks,2025-11-07,,Christian Wilson,,,,,Bench,,,False,,,,,
+Ripon Red Hawks,2025-11-07,,Fisher MacKenzie,,,,,Bench,,,False,,,,,
+Ripon Red Hawks,2025-11-07,,Houston McKenzie,,,,,Bench,,,False,,,,,
+Ripon Red Hawks,2025-11-07,,Isaac Knoll,,,,,Bench,,,False,,,,,
+Ripon Red Hawks,2025-11-07,,Jack Ellickson,,,,,Bench,,,False,,,,,
+Ripon Red Hawks,2025-11-07,,Jack Field,,,,,Bench,,,False,,,,,
+Ripon Red Hawks,2025-11-07,,Jackson Flowers,,,,,Bench,,,False,,,,,
+Ripon Red Hawks,2025-11-07,,Joey Daun,,,,,Bench,,,False,,,,,
+Ripon Red Hawks,2025-11-07,,Jose Gonzales,,,,,Bench,,,False,,,,,
+Ripon Red Hawks,2025-11-07,,Landon Lee,,,,,Bench,,,False,,,,,
+Ripon Red Hawks,2025-11-07,,Nick Ahlquist,,,,,Bench,,,False,,,,,
+Ripon Red Hawks,2025-11-07,,Olin Zellmer,,,,,Bench,,,False,,,,,

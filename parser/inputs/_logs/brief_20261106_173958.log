@@ -1,0 +1,63 @@
+
+===== cell 1 <file> =====
+
+===== cell 2 00b_season_switch, 01_uw_whitewater_scouting_parser =====
+SEASON = "auto": UWW hasn't played a 2026-27 game yet -- this run stays on 2025-26 (every number in the brief is labeled last season). It switches by itself after UWW's first game; SEASON = "2026-27" switches now.
+Season: 2025-26
+EXTRA_GAMES is set: the run's date is 2026-3-8, the day after UWW's last game on file (03/07/26) -- every game on file counts as played, the extra game is next. (REFERENCE_DATE is ignored while EXTRA_GAMES is set.)
+Input directory: ./inputs
+Output directory: ../data
+LLM comparisons: disabled
+Reference date: 2026-3-8
+Before scout: no -- using every scouting report found
+  APP_BASE_URL normalized: 'uwwmensbball-new.streamlit.app' -> https://uwwmensbball-new.streamlit.app
+Brief links -> https://uwwmensbball-new.streamlit.app
+
+===== cell 4  =====
+
+===== cell 5  =====
+
+===== cell 7 02_parse_every_team_schedule_scrape_live_from =====
+Found 26 schedule MHTML file(s) in ./inputs:
+ - Alma Scots - Schedule.html
+ - Aurora Spartans - Schedule.html
+ - Carroll (WI) Pioneers - Schedule.html
+ - Coe Kohawks - Schedule.html
+ - Elmhurst Bluejays - Schedule.html
+ - Eureka Red Devils - Schedule.html
+ - Hope Flying Dutchmen - Schedule.html
+ - Lawrence Vikings - Schedule.html
+ - Loras Duhawks - Schedule.html
+ - MSOE Raiders - Schedule_2025.html
+ - Ripon Red Hawks - Schedule.html
+ - Simpson Storm - Schedule.html
+ - St. Thomas (TX) Celts - Schedule.html
+ - UW-Eau Claire Blugolds - Schedule.html
+ - UW-La Crosse Eagles - Schedule.html
+ - UW-Oshkosh Titans - Schedule.html
+ - UW-Platteville Pioneers - Schedule.html
+ - UW-River Falls Falcons - Schedule.html
+ - UW-Stevens Point Pointers - Schedule.html
+ - UW-Stout Blue Devils - Schedule.html
+ - UW-Whitewater - Schedule.mhtml
+ - UW-Whitewater - Schedule_2023.html
+ - UW-Whitewater - Schedule_2024.html
+ - Washington-St. Louis Bears - Schedule_2025.html
+ - Wheaton (IL) Thunder - Schedule_2025.html
+ - Wheaton Thunder - Schedule_2025.html
+Detected season 2025 from UWW's local schedule snapshot -- using FASTSCOUT_DOCS_SEASON='25' for any live-scrape URLs below (was hardcoded to '25').
+Skipping live scrape for UW-Whitewater's own schedule -- a local schedule file already exists: UW-Whitewater - Schedule.mhtml
+
+Every game already has a local scouting-report PDF, or is missing required data -- nothing to download from FastScout. (29 raw game(s) found; 0 missing opponent_url, 0 missing a parseable date.)
+  UW-Whitewater Warhawks (UW-Whitewater - Schedule.mhtml): 29 game(s) -- scouted opponents: ['St. Thomas (TX) Celts', 'Eureka Red Devils', 'Aurora Spartans', 'Simpson Storm', 'Ripon Red Hawks', 'Carroll (WI) Pioneers', 'Lawrence Vikings', 'Carroll (WI) Pioneers', 'Hope Flying Dutchmen', 'Alma Scots', 'Elmhurst Bluejays', 'Coe Kohawks', 'UW-River Falls Falcons', 'UW-La Crosse Eagles', 'UW-Stout Blue Devils', 'UW-Platteville Pioneers', 'UW-Eau Claire Blugolds', 'UW-Oshkosh Titans', 'UW-Stevens Point Pointers', 'UW-Platteville Pioneers', 'UW-Eau Claire Blugolds', 'UW-La Crosse Eagles', 'UW-Stout Blue Devils', 'Loras Duhawks', 'Washington-St. Louis Bears']
+  EXTRA_GAMES: Ripon Red Hawks -- FastScout team page found on a saved schedule as 'Ripon Red Hawks': https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ?league=NCAAB-III&season=25
+  EXTRA_GAMES: added Ripon Red Hawks as the UPCOMING game (Sat, Nov 14, 2026), placed on Sun, Mar 08, 1 day(s) after UWW's last 2025-26 game
+  New-season check (2026-27, checked 2026-11-06T14:01): Ripon Red Hawks 0 game(s) played
+  New-season check: no 2026-27 games played yet by either team -- treated as between seasons (last season's seniors struck through)
+  Scout report for the upcoming game: none posted on FastScout when checked 2026-11-06T17:32 (RuntimeError: No row matched game date Nov 14 on https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/documents?league=NCAAB-III&season=26 -- 'Game Date' values seen on the page: ['', 'Nov 07, 2025', ) -- checked again after 6 hour(s)
+
+Fetching 20 opponent schedule(s) (scrape opponent_url, MHTML backup on failure):
+    [login] navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=25
+    [auth-retry] got redirected to identity.hudl.com while waiting on https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=25 -- logging in and retrying
+    [auth-retry] login_to_fastscout returned, now at https://fastscout.fastmodelsports.com/#access_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZaYjBkN0VpWG9TQ0FhUTdYaW90SCJ9.eyJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2Nvbm5lY3Rpb25fbmFtZSI6InByb2QtaHVkbC11c2Vycy10ZXJyYWZvcm0iLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL3VzZXJfaWQiOiI2NDM1MDQ3IiwiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS90b2siOiJpZCIsImh0dHBzOi8vaWRlbnRpdHkuaHVkbC5jb20vaXNfc3lzYWRtaW4iOmZhbHNlLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2ludGVybmFsX2lkX2h1ZGwiOiI2NDM1MDQ3IiwiZ2l2ZW5fbmFtZSI6IkNvcmV5IiwiZmFtaWx5X25hbWUiOiJGcml0c2NoIiwibmlja25hbWUiOiJmcml0c2NoY20yNyIsIm5hbWUiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOTY3OWI2Mzk1N2E1ZTJmZmE2NjMyYWZhYjVmMGExYTU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZmci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAyNi0xMS0wNlQyMzo0MDo0MS4wMTBaIiwiZW1haWwiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS8iLCJhdWQiOiJ1UFJyRFVpWkZOU3d2RnJ0cnVsQ3lBWDBwaDZBckx6VSIsInN1YiI6ImF1dGgwfGh1ZGx8NjQzNTA0NyIsImlhdCI6MTc5NDAwODQ0MSwiZXhwIjoxNzk1MjE4MDQxLCJzaWQiOiJ2a2p6SW1iaEYzV1d3aVlvQTY3amR3Z1RiTzFGUGlwcCIsImNfaGFzaCI6IkVxMFhER2ctQUpXeTF2a3ZfM05FZmciLCJub25jZSI6IjRiMGExMGI4LWI0MTItNDE3NC05ODczLTFkNDU2YTdmMjlmYSJ9.qJ9qNL66nKK8v8_FkhvNGOSG8SWxvJUH4rbeqkmjdOy17VbM-LIpHwbO7XhZ9RqnfMj-wB-4EPOUqAbKk5Qtz93AIo25Wc0pBAl2vxNBPFpuYcr-phtYUSgJa2I2pPSmADWNQRsL0wURK8XfFTv0DRyPWWcZc0TMr_AxQYDoEiFsDTfkkr3K7fHw7TXLE6nGvSALkffP0mfxVCKke0xWsVap3l6bm0MZDTqL2Y6qv-irFRcKlFTPVvs1MCya4AL42BoUdThPDIxVoC-S7cGrPXw6F664SWtHDvOWx_3A5ago-nA-E-gA0C7n7r908FKguzDr4NlNEsH2cYuO4I5eOg&token_type=Bearer&expires_at=1795218041 -- re-navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=25
+    [auth-retry] re-navigated, now at https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=25 -- waiting for 'text=SCHEDULE'

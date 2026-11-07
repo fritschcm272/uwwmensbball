@@ -1,4 +1,22 @@
 side,scouted_opponent,offense_team,team,side_of_ball,role,player,action,read,uses,games,ppp,share_pct
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,Off-ball defender,(no number),Ball Screen,Switch,4,1,2.25,67.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,Off-ball defender,(no number),Ball Screen,Drop,2,1,1.5,33.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,Off-ball defender,(no number),Booty Screen,Switch,2,1,1.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,Off-ball defender,(no number),DHO,Switch,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,Off-ball defender,(no number),High Ball Screen,Switch,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,Off-ball defender,(no number),Rifle,Switch,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,On-ball defender,(no number),Ball Screen,Switch,4,1,2.25,57.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,On-ball defender,(no number),Ball Screen,Over,2,1,1.0,29.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,On-ball defender,(no number),Booty Screen,Switch,2,1,1.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,On-ball defender,(no number),Ball Screen,Under,1,1,3.0,14.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,On-ball defender,(no number),DHO,Switch,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,On-ball defender,(no number),Flare,Chase,1,1,3.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,On-ball defender,(no number),High Ball Screen,Switch,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Beloit Buccaneers,Defense,On-ball defender,(no number),Rifle,Switch,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Ball handler (trigger),#12 Domanic Rasberry,Flare,Sets flare,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Ball handler (trigger),#3 Keenan Rahn,Flare,Curl,1,1,3.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Ball handler (trigger),(no number),Ball Screen,Reject Ball Screen,1,1,,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Screener,#12 Domanic Rasberry,Down Screen,Roll,1,1,2.0,100.0
 UWW,Ripon Red Hawks,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#0 Isaac Verges,Ball Screen,Use Ball Screen,7,1,1.57,100.0
 UWW,Ripon Red Hawks,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#0 Isaac Verges,Ghost,Use Ball Screen,1,1,2.0,100.0
 UWW,Ripon Red Hawks,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#0 Isaac Verges,PC5,Fox,1,1,0.0,100.0

@@ -105,7 +105,10 @@ def _safe_to_pickle(obj, path):
 # field -> column holding the coach's answer. Columns starting "label_" are built below from the decoded Title.
 TAG_MODEL_TARGETS = {
     "formation": "play_formation",
-    "play_call": "play_set",
+    # CONFIRMED CHANGE (requested: "Retarget play call to the Motion type"): a "Motion" play call is learned and scored as
+    # WHICH Motion it was (Screen / DHO / Cutting / Off-ball screen / Drive Motion, from its tagged actions -- Play calls'
+    # relabel); a Motion with no action tagged isn't an answer (it tells the coach nothing). Other play calls as tagged.
+    "play_call": "label_play_call",
     "defense": "defense_formation",
     "press": "label_press",
     "situation": "label_situation",
@@ -198,6 +201,12 @@ def _tm_labels(pc):
     named = cd.str.extract(r"def #\d{1,2} ([^)|]+?)\)", expand=False).str.strip()
     num = cov.str.extract(r"def #(\d{1,2})", expand=False)
     lab["label_screen_defender"] = named.where(named.notna() & named.ne(""), "#" + num).where(named.notna() | num.notna())
+    _ps = pc["play_set"] if "play_set" in pc.columns else pd.Series(None, index=pc.index, dtype=object)
+    _pcl = pc["play_call"] if "play_call" in pc.columns else pd.Series(None, index=pc.index, dtype=object)
+    _fam = _pcl.astype(str).str.replace(r"^\s*(?:BLOB|SLOB)\s+", "", regex=True).str.strip()
+    _is_m = _ps.astype(str).str.strip().str.lower().eq("motion")
+    _good_fam = _fam.str.match(r"^.+ Motion$") & ~_fam.str.lower().eq("motion")
+    lab["label_play_call"] = _ps.where(~_is_m, _fam.where(_good_fam))
     for col in set(TAG_MODEL_TARGETS.values()):
         if not col.startswith("label_"):
             lab[col] = pc[col] if col in pc.columns else None
@@ -1154,8 +1163,10 @@ if RUN_TAG_MODEL and not _tm_src.empty:
 #     on all but one play) -- guessing it is right nearly every time.
 # Untrusted fields keep their predictions (pred_*), so the accuracy tables still score them, but in Film Tagging they are
 # offered as "not sure enough to fill in" instead of prefilled -- an untouched wrong default can't become a coach answer.
-TAG_TRUST_MIN_LIFT = float(globals().get("TAG_TRUST_MIN_LIFT", 3))
-TAG_TRUST_MIN_SCORED = int(globals().get("TAG_TRUST_MIN_SCORED", 30))
+# CONFIRMED CHANGE (requested: "make the requirement for how good the model is before putting in a recommendation a little
+# higher"): +5 points over always-guessing (was +3) on 50+ held-out plays (was 30).
+TAG_TRUST_MIN_LIFT = float(globals().get("TAG_TRUST_MIN_LIFT", 5))
+TAG_TRUST_MIN_SCORED = int(globals().get("TAG_TRUST_MIN_SCORED", 50))
 TAG_TRUST_SINGLE_SHARE = float(globals().get("TAG_TRUST_SINGLE_SHARE", 0.9))
 
 
@@ -1176,6 +1187,11 @@ def _tm_trust_table(report):
             share = (tot - other) / tot if tot else 0
             trusted = tot >= TAG_TRUST_MIN_SCORED and share >= TAG_TRUST_SINGLE_SHARE
             why = f"one answer covers {share:.0%} of {tot} coach tags"
+        elif "not better yet" in using and pd.notna(base) and float(base) >= 100 * TAG_TRUST_SINGLE_SHARE \
+                and pd.notna(n) and int(n) >= TAG_TRUST_MIN_SCORED:
+            # one answer is nearly always right (Defense: Man-to-Man on every tagged play) -- worth suggesting
+            trusted = True
+            why = f"the usual answer is right {base:.0f}% of the time on {int(n)} held-out plays"
         elif "not better yet" in using:
             why = (f"model not better than always guessing ({acc:.0f}% vs {base:.0f}%)" if pd.notna(acc) and pd.notna(base)
                    else "model not better than always guessing")

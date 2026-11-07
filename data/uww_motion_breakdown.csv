@@ -1,4 +1,8 @@
 scouted_opponent,side,team,motion_family,uses,share_pct,ppp,actions,trigger,screener,finish,games
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Off-ball screen Motion,10,38,0.7,,,Kolby Williams (1),Post-Up (4) · Spot-Up (2),1
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Screen Motion,9,35,1.33,Ball Screen > Down Screen (3) · Ball Screen (3),,,Spot-Up (3) · P&R Ball Handler (3),1
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Motion (no action tagged),5,19,0.4,,,,Cut (1) · P&R Ball Handler (1),1
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Drive Motion,2,8,2.5,,Kolby Williams (2),,Post-Up (2),1
 Ripon Red Hawks,UWW,UW-Whitewater,Screen Motion,32,43,1.2,Ball Screen (25),Joey Berezowitz (7) · Isaac Verges (5),Brock Marino (8) · Richie Warren (4),P&R Ball Handler (19) · ISO (6),2
 Ripon Red Hawks,UWW,UW-Whitewater,Motion (no action tagged),14,19,0.69,,Richie Warren (1),Joey Berezowitz (1),ISO (5) · Non Possession (3),3
 Ripon Red Hawks,UWW,UW-Whitewater,BLOB Motion (no action tagged),12,16,1.0,,,,Cut (3) · Spot-Up (3),3

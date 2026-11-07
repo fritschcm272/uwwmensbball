@@ -1649,9 +1649,22 @@ def _sb_strip_mascot(name):
     # real mascot "Pointers", leaving "UW-Stevens" on every banner and section header. Stripping only the
     # trailing word works correctly for every UW campus regardless of how many words its name has --
     # "UW-Eau Claire Blugolds" -> "UW-Eau Claire", "UW-Whitewater Warhawks" -> "UW-Whitewater", etc.
+    # CONFIRMED BUG (fixed; the Ripon brief said "RIPON RED"): a two-word mascot ("Red Hawks") lost only its last word.
+    if len(words) >= 3 and " ".join(words[-2:]).lower() in _SB_TWO_WORD_MASCOTS:
+        return " ".join(words[:-2])
     if len(words) >= 2 and words[-1][:1].isupper():
         return " ".join(words[:-1])
     return text
+
+
+_SB_TWO_WORD_MASCOTS = {
+    "red hawks", "red devils", "blue devils", "blue jays", "golden eagles", "golden bears", "golden gophers",
+    "fighting hawks", "fighting scots", "purple eagles", "purple aces", "big red", "sea gulls", "red raiders",
+    "red storm", "blue hose", "blue hawks", "black bears", "golden knights", "golden flashes", "golden griffins",
+    "green knights", "fighting saints", "red foxes", "great danes", "blue streaks", "scarlet knights", "red wolves",
+    "nittany lions", "tar heels", "sun devils", "golden hurricane", "mountain hawks", "river hawks", "storm petrels",
+    "flying dutchmen", "tommies", "running rebels", "yellow jackets", "war hawks", "fighting irish", "ice dogs",
+}
 
 
 # Filled in by _sb_build_html so the run can report which players ended up with no headshot -- a silent
@@ -5014,23 +5027,30 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 nm = re.sub(rf"^\s*{_sit}\s+", "", nm, flags=re.I) or nm
             return _sb_esc(nm) + tag
 
+        # CONFIRMED CHANGE (requested: "the poss % should not be on the 'All' rows but on the other rows"): a formation's
+        # % (next to its name) is its share of its situation; a play call's % is its share of its formation.
+        _sit_n, _form_n = 0, 0
+        _pct = lambda a, b: f' <span class="mini">({round(100 * a / b)}%)</span>' if b else ""  # noqa: E731
         for _ri, r in ob.iterrows():
             lvl = str(r.get("level"))
             n = _num(r.get("possessions"))
             _p = pd.to_numeric(r.get("ppp"), errors="coerce")
             _pt = f'<td class="t1">{_sb_fmt(_p, 2) if n else "--"}</td>'
             if lvl == "situation":
+                _sit_n = n
                 add(f'<tr class="ob-sit"><td class="ob-vs" rowspan="{_span.get(_ri, 1)}"><div>{_c(r.get("label"))}</div></td>'
                     f'<td class="l n" colspan="2">All</td>'
-                    f'<td class="t1">{n}' + (f' ({int(r["share_pct"])}%)' if pd.notna(r.get("share_pct")) else "") + "</td>"
+                    f'<td class="t1">{n}</td>'
                     + _pt + '<td class="t1 l w"></td>' + _cov_cells(None) + _green(r, True) + "</tr>")  # "All" rows: no actions (requested)
             elif lvl == "formation" and _ri in _solo.values():
+                _form_n = n
                 continue
             elif lvl == "formation":
+                _form_n = n
                 _lab = _c(r.get("label"))
                 if _lab == "(none tagged)":
                     _lab = "No Formation"  # CONFIRMED CHANGE (requested: "(none tagged)" -> "No Formation")
-                add(f'<tr class="ob-form"><td class="l n ob-fm" rowspan="{_span.get(_ri, 1)}">{_lab}</td>'
+                add(f'<tr class="ob-form"><td class="l n ob-fm" rowspan="{_span.get(_ri, 1)}">{_lab}{_pct(n, _sit_n)}</td>'
                     f'<td class="l ob-pcall ob-all">All</td><td class="t1">{n}</td>' + _pt
                     + '<td class="t1 l w"></td>' + _cov_cells(None) + _green(r, True) + "</tr>")  # "All" row: no actions (requested)
             elif lvl == "play_call":
@@ -5039,9 +5059,10 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 if _fr is not None:
                     _fl = _c(_fr.get("label"))
                     _fl = "No Formation" if _fl == "(none tagged)" else _fl
-                    _fcell = f'<td class="l n ob-fm" rowspan="{_span.get(_ri, 1)}">{_fl}</td>'
+                    _fcell = f'<td class="l n ob-fm" rowspan="{_span.get(_ri, 1)}">{_fl}{_pct(_num(_fr.get("possessions")), _sit_n)}</td>'
                 add(f'<tr class="{"ob-form" if _fr is not None else "ob-pc"}">{_fcell}<td class="l ob-pcall" rowspan="{_span.get(_ri, 1)}">{_pc_label(r)}</td>'
-                    f'<td class="t1">{n}</td>' + _pt + f'<td class="t1 l w">{_c(r.get("actions"))}</td>'
+                    f'<td class="t1">{n}{"" if _fr is not None else _pct(n, _form_n)}</td>' + _pt
+                    + f'<td class="t1 l w">{_c(r.get("actions"))}</td>'
                     + _cov_cells(_ri) + (_green(_fr, True) if _fr is not None else _green(r, False)) + "</tr>")
             else:   # coverage line under a play call
                 _off = str(r.get("cov_kind") or "Ball screen") == "Off-ball screen"
@@ -5066,6 +5087,36 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                '<span class="pc-flag q-bad">Scored here</span> a set they usually don\u2019t score with that scored 0.25+ '
                'PPP above their average in that formation (2+ possessions).</p>' if _FL and not _us else "")
             + "</div>")
+        # CONFIRMED CHANGE (requested: passes per possession -- "a simple analysis on the scouting briefs"): one short card
+        # under the table from uww_pass_summary (built after Player tracking): how often a possession ends on a pass
+        # (Synergy, every game) and, on tracked games, the estimated passes per possession and PPP by passes.
+        try:
+            _ps = _sb_d("uww_pass_summary")
+        except Exception:
+            _ps = pd.DataFrame()
+        if not _ps.empty and {"scouted_opponent", "team"} <= set(_ps.columns):
+            _ps = _ps[_ps["scouted_opponent"].astype(str) == str(short)]
+            _ps = (_ps[_ps["team"].astype(str).str.contains("whitewater", case=False, na=False)] if _us
+                   else _ps[_ps["team"].astype(str) == str(short)])
+            if not _ps.empty:
+                _r = _ps.sort_values("possessions", ascending=False).iloc[0]
+                _f = lambda v, d=2: _sb_fmt(pd.to_numeric(v, errors="coerce"), d)  # noqa: E731
+                _who = "We" if _us else _sb_esc(opp_display)
+                _lines = []
+                if pd.notna(pd.to_numeric(_r.get("ends_on_pass_pct"), errors="coerce")):
+                    _lines.append(f"<b>{int(_r['ends_on_pass_pct'])}%</b> of {('our' if _us else 'their')} "
+                                  f"{int(_r['possessions'])} possessions end on a pass to the finisher "
+                                  f"({_f(_r.get('ppp_ends_on_pass'))} PPP) vs {_f(_r.get('ppp_no_final_pass'))} PPP "
+                                  "when the finisher creates his own shot. <span class=\"mini\">(Synergy)</span>")
+                _nt = int(pd.to_numeric(_r.get("tracked_possessions"), errors="coerce") or 0)
+                if _nt >= 20:
+                    _b = " · ".join(f"{lab}: {_f(_r.get('ppp_' + k))} PPP ({int(pd.to_numeric(_r.get('poss_' + k), errors='coerce') or 0)})"
+                                    for lab, k in (("0–1 passes", "0_1"), ("2–3", "2_3"), ("4+", "4_plus")))
+                    _lines.append(f"{_who} average about <b>{_f(_r.get('avg_passes'), 1)} passes</b> a possession -- {_b}. "
+                                  f"<span class=\"mini\">(estimate from player tracking, {_nt} possessions)</span>")
+                if _lines:
+                    add('<div class="card"><div class="pc-sub">Passing</div>'
+                        + "".join(f'<p class="strip-line">{x}</p>' for x in _lines) + "</div>")
 
     def _action_freq_card(side):
         """CONFIRMED CHANGE (requested: "under HOW <OPP> RUNS OFFENSE ... the first thing should be a table that lists the

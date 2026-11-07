@@ -409,7 +409,26 @@ for path in [p for _o, p in _hist_paths.items()]:
     scout_report_dates[opponent_short] = _d.strftime("%Y-%m-%d") if _d else None
     n_tables = (elements_df["element_type"] == "table").sum()
     print(f"  Parsed '{opponent_short}' ({os.path.splitext(path)[1]}): {len(elements_df)} elements, {n_tables} tables")
-for _o, path in _up_paths.items():
+for _o, path in list(_up_paths.items()):
+    # CONFIRMED BUG (fixed; Ripon's brief showed St. Thomas's players -- the downloaded "11_14_26 Ripon" report was really
+    # St. Thomas's 11/14/25 report): an upcoming report that never names the opponent is the wrong team's. It's set aside
+    # as ".wrong_team" (so the next run downloads it again) and not used.
+    try:
+        with open(path, encoding="utf-8", errors="ignore") as _fh:
+            _txt = _fh.read()
+    except Exception:
+        _txt = ""
+    _w = re.sub(r"\s*\(.*?\)", "", str(_o)).split()
+    _w = _w[0] if _w else ""
+    if path.lower().endswith(".html") and _w and _w.lower() not in _txt.lower():
+        print(f"  !! '{os.path.basename(path)}' doesn't mention {_o} -- it's another team's report. Set aside as "
+              f".wrong_team; the upcoming game's report is downloaded again next run.", flush=True)
+        try:
+            os.replace(path, path + ".wrong_team")
+        except Exception:
+            pass
+        _up_paths.pop(_o, None)
+        continue
     _fn = parse_scout_html_elements if path.lower().endswith(".html") else parse_scout_pdf_elements
     scout_reports_upcoming[_o] = _fn(path)
     _d = scout_file_game_date(path)

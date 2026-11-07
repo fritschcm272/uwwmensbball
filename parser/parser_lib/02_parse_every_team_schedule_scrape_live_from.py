@@ -945,7 +945,10 @@ def _find_matching_scout_document_row(docs_soup, game_date):
                 parsed = datetime.strptime(cell_text, fmt)
             except ValueError:
                 continue
-            if parsed.month == game_date.month and parsed.day == game_date.day:
+            # CONFIRMED BUG (fixed; Ripon's 11/14/26 brief got St. Thomas's report from 11/14/25 -- same month/day): a
+            # date that carries a year must match the year too.
+            if parsed.month == game_date.month and parsed.day == game_date.day and (
+                    "%Y" not in fmt and "%y" not in fmt or parsed.year == game_date.year):
                 return row_el, row_idx
     return None, seen_dates
 
