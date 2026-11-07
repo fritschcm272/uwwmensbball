@@ -2208,7 +2208,10 @@ def _trk_starters_first(pc, todo):
                   f"{', '.join(str(pc.at[i, 'clip_number']) for i in first)}) this run for the STARTERS check"
                   + (f"; its other {len(ids) - len(first)} clip(s) keep their earlier results" if done_pos else ""), flush=True)
             continue
-        if kind == "all":
+        if kind == "starters":
+            # CONFIRMED CHANGE (requested: PLAYER_TRACKING_TYPE "Starters"): only the first clip, nothing past it
+            keep, how = order[:n_first], "Starters (only the first clip -- PLAYER_TRACKING_TYPE)"
+        elif kind == "all":
             keep, how = order, "All Clips"
         elif kind == "offense":
             keep = [i for p, i in enumerate(order) if p == 0 or p in done_pos or _scouted_offense(i)]

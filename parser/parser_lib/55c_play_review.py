@@ -1079,7 +1079,10 @@ def play_review():
     # tracking named it, both teams' whole rosters to choose from, and the five starters of each team to confirm. Saved in
     # the app (Analytics > Player Number Tracking, "Starters" at the top); player tracking then knows what each starter
     # looks like. PLAY_REVIEW_STARTERS = False turns it off.
-    _st_on = bool(globals().get("PLAY_REVIEW_STARTERS", False))
+    # CONFIRMED BUG (fixed; Thiel@UWPlatteville never got a STARTERS check, so tracking stayed on clip 2 forever): this
+    # defaulted to False while Player tracking (new_game_in_process) defaults to True and waits for the starters. Both now
+    # default to True.
+    _st_on = bool(globals().get("PLAY_REVIEW_STARTERS", True))
     try:
         _st_info = new_game_info() if _st_on else None
         _st_saved = _st_info[0] if _st_info else {}
@@ -1366,8 +1369,14 @@ def play_review():
             # middle / end), each the moment there with the most players. Frames you already checked are skipped unless
             # PLAY_REVIEW_RECHECK_REUSE = True (on a checked frame the boxes you checked just show your own answers back).
             _nrc = int(globals().get("PLAY_REVIEW_RECHECK_FRAMES", 1) or 1)
-            if _is_rc and _nrc >= 2 and n > 0:
-                _used_rc = _pr_checked_t(r.get("_key"))
+            # CONFIRMED CHANGE (requested: PLAYER_TRACKING_TYPE "Starters" -- 3 frames of the first clip until all 10 starters
+            # are listed): the STARTERS check shows STARTERS_PICTURES frames (start / middle / end of the tipoff clip), each
+            # the moment there with the most players, skipping moments already saved.
+            _nst = int(globals().get("STARTERS_PICTURES", 1) or 1)
+            if _is_st and _nst >= 2 and n > 0:
+                _nrc = _nst
+            if ((_is_rc and _nrc >= 2) or (_is_st and _nst >= 2)) and n > 0:
+                _used_rc = _pr_starters_used_t(_slug_app) if _is_st else _pr_checked_t(r.get("_key"))
                 _reuse = bool(globals().get("PLAY_REVIEW_RECHECK_REUSE", False))
                 _cnt_rc = {}
                 for rr_ in rows:

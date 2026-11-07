@@ -266,6 +266,18 @@ def _pm_apply_options(G):
         G["RUN_PLAYER_TRACKING"] = False
         G["RUN_PLAY_REVIEW"] = False
         G["RUN_JERSEY_RECOGNIZER"] = False
+    # CONFIRMED CHANGE (requested: PLAYER_TRACKING_TYPE right under DO_PLAYER_TRACKING): "Starters" = only the starters
+    # check (3 frames of the first clip, back each run until all 10 starters are listed; no clips past it), "5 Clips" /
+    # "20 Clips" = after the starters are saved, each run tracks up to 5 / 20 clips past the last one checked.
+    _ptt = str(o.get("PLAYER_TRACKING_TYPE") or "").strip().lower()
+    if _ptt:
+        G["PLAY_REVIEW_STARTERS"] = True
+        G["STARTERS_PICTURES"] = 3
+        if "starter" in _ptt:
+            G["TRACK_NEW_GAME_PACE"] = "Starters"
+        else:
+            _m = _pm_re.search(r"(\d+)", _ptt)
+            G["TRACK_NEW_GAME_PACE"] = f"{int(_m.group(1)) if _m else 5} clips at a time"
     if o.get("DO_FILM_TAGGING") is False:
         G["RUN_TAG_QUEUE"] = False
     # CONFIRMED CHANGE (requested: an option under DO_FILM_TAGGING, FILM_TAGGING_SUGGESTIONS): False = Film Tagging batches

@@ -620,4 +620,5 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-06T22:03:18,screener,Screener,,,Seth Bunders,,103,,False,,0.0,1.0,2026-11-06T22:03:17
 2026-11-07T08:41:38,screener,Screener,,,Seth Bunders,,103,,False,,0.0,1.0,2026-11-07T08:41:37
 2026-11-07T09:39:24,screener,Screener,,,Seth Bunders,,103,,False,,0.0,1.0,2026-11-07T09:39:22
-2026-11-07T09:58:19,screener,Screener,,,Seth Bunders,,103,nan,False,nan,0.0,1.0,2026-11-07T09:58:18
+2026-11-07T09:58:19,screener,Screener,,,Seth Bunders,,103,,False,,0.0,1.0,2026-11-07T09:58:18
+2026-11-07T10:23:32,screener,Screener,,,Seth Bunders,,103,nan,False,nan,0.0,1.0,2026-11-07T10:23:30

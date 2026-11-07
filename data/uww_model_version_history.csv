@@ -612,3 +612,4 @@ Tag model: screen_defender,v2026.11.06,2026-11-06,trained,2026-11-06T14:07:50,"9
 Tag model: situation,v2026.11.06,2026-11-06,trained,2026-11-06T14:07:50,"1243 tagged clips, 7 answers learned",2026-11-06T14:13:56
 Tag model (overall),v2026.11.06,2026-11-06,trained,2026-11-06T14:07:50,newest of 9 field model(s); last retrained field: situation,2026-11-06T14:13:56
 Player tracking,v2026.11.06,2026-11-06,pretrained + code,a4ca0ba15bca,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-11-06T17:35:50
+Player tracking,v2026.11.07,2026-11-07,pretrained + code,f72e1076ab28,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-11-07T10:23:50

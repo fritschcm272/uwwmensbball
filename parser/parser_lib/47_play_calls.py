@@ -2571,6 +2571,9 @@ def starters_saved_all(include_incomplete=False):
 def new_game_pace():
     """TRACK_NEW_GAME_PACE -> ("n", clips per run) / ("offense", None) / ("all", None)."""
     v = str(globals().get("TRACK_NEW_GAME_PACE", "One clip at a time") or "").strip().lower()
+    # CONFIRMED CHANGE (requested: PLAYER_TRACKING_TYPE "Starters"): only the starters' first clip, even after they're saved
+    if "starter" in v:
+        return ("starters", None)
     if "all" in v and "off" in v:
         return ("offense", None)
     if "all" in v:
