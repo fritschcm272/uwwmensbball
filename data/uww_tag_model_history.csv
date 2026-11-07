@@ -609,9 +609,12 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-06T21:13:16,formation,Formation,66.0,66.0,5 Out,502.0,535,usual answer,False,model not better than always guessing (66% vs 66%),8.0,13.0,2026-11-06T21:13:15
 2026-11-06T21:13:16,play_call,Play call,37.0,36.0,Screen Motion,402.0,456,model,False,37% vs 36% always guessing on 402 held-out plays (+1 pts) -- needs +3 pts on 30+ plays,4.0,14.0,2026-11-06T21:13:15
 2026-11-06T21:13:16,defense,Defense,100.0,100.0,Man-to-Man,962.0,1086,usual answer,True,the usual answer is right 100% of the time on 962 held-out plays,20.0,20.0,2026-11-06T21:13:15
-2026-11-06T21:13:16,press,Press,82.0,82.0,None,1080.0,1088,usual answer,False,model not better than always guessing (82% vs 82%),17.0,20.0,2026-11-06T21:13:15
+2026-11-06T21:13:16,press,Press,82.0,82.0,,1080.0,1088,usual answer,False,model not better than always guessing (82% vs 82%),17.0,20.0,2026-11-06T21:13:15
 2026-11-06T21:13:16,situation,Situation,78.0,66.0,Half court,1242.0,1243,model,True,78% vs 66% always guessing on 1242 held-out plays (+12 pts),12.0,20.0,2026-11-06T21:13:15
 2026-11-06T21:13:16,primary_action,Main action,56.0,50.0,Ball Screen,346.0,432,model,True,56% vs 50% always guessing on 346 held-out plays (+6 pts),2.0,9.0,2026-11-06T21:13:15
 2026-11-06T21:13:16,ball_screen_coverage,Ball-screen coverage,26.0,29.0,Switch,158.0,176,usual answer,False,model not better than always guessing (26% vs 29%),3.0,7.0,2026-11-06T21:13:15
 2026-11-06T21:13:16,offball_coverage,Off-ball coverage,61.0,54.0,Over,46.0,69,model,True,61% vs 54% always guessing on 46 held-out plays (+7 pts),0.0,2.0,2026-11-06T21:13:15
-2026-11-06T21:13:16,screener,Screener,,,Seth Bunders,,103,nan,False,nan,0.0,1.0,2026-11-06T21:13:15
+2026-11-06T21:13:16,screener,Screener,,,Seth Bunders,,103,,False,,0.0,1.0,2026-11-06T21:13:15
+2026-11-06T21:39:22,play_call,Play call,37.0,36.0,Screen Motion,402.0,456,model,False,37% vs 36% always guessing on 402 held-out plays (+1 pts) -- needs +3 pts on 30+ plays,3.0,14.0,2026-11-06T21:39:21
+2026-11-06T21:39:22,screener,Screener,,,Seth Bunders,,103,,False,,0.0,1.0,2026-11-06T21:39:21
+2026-11-06T22:03:18,screener,Screener,,,Seth Bunders,,103,nan,False,nan,0.0,1.0,2026-11-06T22:03:17
