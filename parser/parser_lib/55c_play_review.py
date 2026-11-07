@@ -951,6 +951,33 @@ def _pr_tipoff_index(g):
     return k.sort_values(["pd", "clk", "eo", "cn"], kind="stable").index[0]
 
 
+def _pr_synergy_starters(gd, g):
+    """A banked game's starters read from Synergy's box score (Frame capture -> inputs/_bank_games.json), keyed by this
+    game's own team names (offense_team / defense_team). {} when there are none."""
+    try:
+        if "bank_games" not in globals() or "_bank_cache" not in globals():
+            return {}
+        day = pd.Timestamp(gd).normalize()
+        b = next((b for b in bank_games() if b["date"] is not None and b["date"] == day), None)
+        st = ((_bank_cache().get(b["gid"]) or {}).get("starters") or {}) if b else {}
+        if sum(len(v) for v in st.values()) < 10:
+            return {}
+        teams = [t for t in pd.concat([g.get("offense_team", pd.Series(dtype=object)),
+                                       g.get("defense_team", pd.Series(dtype=object))]).dropna().astype(str).unique()]
+        wd = lambda x: {w for w in re.split(r"[^a-z]+", str(x).lower()) if len(w) > 3
+                        and w not in ("pioneers", "college", "university", "wisconsin")}
+        out = {}
+        for syn_t, names in st.items():
+            hit = max(teams, key=lambda t: len(wd(t) & wd(syn_t)), default=None)
+            if hit is None or not (wd(hit) & wd(syn_t)):
+                left = [t for t in teams if t not in out]
+                hit = left[0] if len(left) == 1 else syn_t
+            out[hit] = list(names)
+        return out
+    except Exception:
+        return {}
+
+
 def play_review():
     globals()["_pr_starters_waiting"] = []            # games whose starters check is open and not saved yet (see the stop below)
     pt = player_tracks if isinstance(globals().get("player_tracks"), pd.DataFrame) else pd.DataFrame()
@@ -1520,7 +1547,11 @@ def play_review():
                           # (the starters saved so far, when not all ten are identified yet: the app starts from them)
                           **({"starters_prev": _st_partial[_slug_app]["starters"],
                               "starters_missing": _st_partial[_slug_app]["missing"]}
-                             if _is_st and _slug_app in _st_partial else {})})
+                             if _is_st and _slug_app in _st_partial else
+                             # CONFIRMED CHANGE (requested: starters from Synergy's box score for banked games): nothing
+                             # saved yet -> the app starts from Synergy's ten starters
+                             ({"starters_prev": _syn_st, "starters_missing": [n for v in _syn_st.values() for n in v]}
+                              if _is_st and (_syn_st := _pr_synergy_starters(gd, g)) else {}))})
         # every answer already known for each field (coaches' Titles and the model's answers, all games) -- offered as
         # suggestions for a typed answer, so it matches an existing spelling (page and app)
         vocab = _pr_vocab_now()

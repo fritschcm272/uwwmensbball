@@ -2039,6 +2039,166 @@ def _bank_fill():
         _bank_cache(upd)
 
 
+# CONFIRMED CHANGE (requested: "synergy website lists out the starters for each team using the game id"): a banked game's
+# starters are read from its Synergy box score (both teams' tabs) and kept in inputs/_bank_games.json ("starters":
+# {team: [5 names]}). The Player Number Tracking STARTERS check then starts with all ten listed. The page's data and HTML
+# are saved in inputs/_bank/ so the reading can be checked. BANK_STARTERS_FROM_SYNERGY = False turns it off.
+def _bank_starters_from_json(obj, team_hint=None, out=None):
+    """{team: [names]} from Synergy's box-score data: any player record with a starter flag."""
+    out = {} if out is None else out
+    def _name(d):
+        for k in ("name", "fullName", "playerName", "displayName"):
+            if isinstance(d.get(k), str) and d[k].strip():
+                return d[k].strip()
+        f, l = d.get("firstName"), d.get("lastName")
+        if isinstance(f, str) and isinstance(l, str):
+            return f"{f.strip()} {l.strip()}"
+        for k in ("player", "person"):
+            if isinstance(d.get(k), dict):
+                n = _name(d[k])
+                if n:
+                    return n
+        return None
+    def _team(d):
+        for k in ("team", "teamName", "offenseTeam"):
+            v = d.get(k)
+            if isinstance(v, dict):
+                v = v.get("name") or v.get("fullName") or v.get("abbr")
+            if isinstance(v, str) and v.strip():
+                return v.strip()
+        return None
+    def _walk(o, th):
+        if isinstance(o, dict):
+            th = _team(o) or th if not any(k.lower() in ("isstarter", "starter", "started", "gamesstarted", "gs")
+                                         for k in o) else th
+            sk = next((k for k in o if k.lower() in ("isstarter", "starter", "started")), None)
+            if sk is not None and _name(o):
+                v = o[sk]
+                if v is True or str(v).lower() in ("true", "1", "yes"):
+                    t = _team(o) or th or "?"
+                    lst = out.setdefault(t, [])
+                    if _name(o) not in lst:
+                        lst.append(_name(o))
+            for v in o.values():
+                _walk(v, th)
+        elif isinstance(o, list):
+            for v in o:
+                _walk(v, th)
+    _walk(obj, team_hint)
+    return out
+
+
+def _bank_starters_fetch(page, gid):
+    """Open the banked game's box score (each team's tab), keep the data it loads, and read both teams' starters."""
+    sdir = os.path.join(INPUT_DIR, "_bank")
+    os.makedirs(sdir, exist_ok=True)
+    bodies = []
+    def _on_resp(r):
+        try:
+            if "json" in (r.headers.get("content-type") or "") and ("synergysports" in r.url):
+                bodies.append((r.url, r.json()))
+        except Exception:
+            pass
+    page.on("response", _on_resp)
+    box = _SST_BOXSCORE.format(gid=gid)
+    urls, starters, htmls = [box], {}, []
+    try:
+        i = 0
+        while i < len(urls) and i < 3:
+            page.goto(urls[i], wait_until="domcontentloaded", timeout=60000)
+            if "auth.synergysportstech.com" in page.url:
+                login_to_synergy(page, synergy_username, synergy_password, timeout_ms=60000)
+                page.goto(urls[i], wait_until="domcontentloaded", timeout=60000)
+            try:
+                page.wait_for_load_state("networkidle", timeout=30000)
+            except Exception:
+                pass
+            page.wait_for_timeout(2500)
+            html_ = page.content()
+            htmls.append(html_)
+            for h in re.findall(r'href="([^"]*boxscore\?team=[0-9a-f]{24}[^"]*)"', html_):
+                u = h if h.startswith("http") else "https://apps.synergysports.com" + (h if h.startswith("/") else "/" + h)
+                u = u.replace("&amp;", "&")
+                if u not in urls:
+                    urls.append(u)
+            i += 1
+    finally:
+        try:
+            page.remove_listener("response", _on_resp)
+        except Exception:
+            pass
+    try:
+        with open(os.path.join(sdir, f"{gid}_boxscore_data.json"), "w", encoding="utf-8") as fh:
+            json.dump([{"url": u, "data": d} for u, d in bodies], fh)
+        for k, h in enumerate(htmls):
+            with open(os.path.join(sdir, f"{gid}_boxscore_{k}.html"), "w", encoding="utf-8") as fh:
+                fh.write(h)
+    except Exception:
+        pass
+    for _u, d in bodies:
+        _bank_starters_from_json(d, out=starters)
+    if sum(len(v) for v in starters.values()) < 10:
+        # the page itself: a box-score table per team, starters marked in a "Starters" block or a GS / starter column
+        try:
+            for h in htmls:
+                soup_ = BeautifulSoup(h, "lxml")
+                for tbl in soup_.find_all("table"):
+                    cap = tbl.find_previous(string=re.compile(r"\S"))
+                    rows = tbl.find_all("tr")
+                    hdr = [c.get_text(" ", strip=True).lower() for c in (rows[0].find_all(["th", "td"]) if rows else [])]
+                    team = None
+                    for el in tbl.find_all_previous(["h1", "h2", "h3", "h4", "div", "span"], limit=40):
+                        t_ = el.get_text(" ", strip=True)
+                        if 3 < len(t_) < 60 and not re.search(r"\d{2,}", t_) and not re.search(r"starter|bench|total|box", t_, re.I):
+                            team = t_
+                            break
+                    in_st, names = None, []
+                    gs_col = next((j for j, c in enumerate(hdr) if c in ("gs", "starter", "st")), None)
+                    for tr in rows[1:]:
+                        cells = [c.get_text(" ", strip=True) for c in tr.find_all(["th", "td"])]
+                        if not cells:
+                            continue
+                        lab = " ".join(cells).lower()
+                        if len(cells) <= 2 and "starter" in lab:
+                            in_st = True; continue
+                        if len(cells) <= 2 and ("bench" in lab or "reserve" in lab):
+                            in_st = False; continue
+                        nm = re.sub(r"^\s*#?\d{1,2}\s+", "", cells[0]).strip()
+                        if not re.search(r"[A-Za-z]{2,}", nm) or re.search(r"total|team", nm, re.I):
+                            continue
+                        if gs_col is not None and gs_col < len(cells):
+                            if cells[gs_col].strip() in ("1", "*", "Y", "Yes", "yes"):
+                                names.append(nm)
+                        elif in_st:
+                            names.append(nm)
+                    if len(names) == 5 and team:
+                        starters.setdefault(team, names)
+        except Exception as e_:
+            print(f"  [bank] starters: box-score page not read ({type(e_).__name__}: {e_})", flush=True)
+    return {t: v[:5] for t, v in starters.items() if v}
+
+
+def _bank_starters_all():
+    if not globals().get("BANK_STARTERS_FROM_SYNERGY", True) or "bank_games" not in globals():
+        return
+    for b in bank_games(with_unknown=True):
+        c = (_bank_cache().get(b["gid"]) or {})
+        if sum(len(v) for v in (c.get("starters") or {}).values()) >= 10:
+            continue
+        try:
+            st = run_in_fastscout_session(lambda p, g_=b["gid"]: _bank_starters_fetch(p, g_))
+        except Exception as e:
+            print(f"  [bank] {b['label']}: starters not read from Synergy ({type(e).__name__}: {e})", flush=True)
+            continue
+        if sum(len(v) for v in st.values()) >= 10:
+            _bank_cache({b["gid"]: dict(c, starters=st)})
+            print(f"  [bank] {b['label']}: starters from Synergy -- "
+                  + "; ".join(f"{t}: {', '.join(v)}" for t, v in st.items()), flush=True)
+        else:
+            print(f"  [bank] {b['label']}: Synergy's box score didn't show both teams' starters"
+                  f" (found {sum(len(v) for v in st.values())}) -- saved its page in inputs/_bank for a look", flush=True)
+
+
 SYNERGY_EDITOR_TEST = globals().get("SYNERGY_EDITOR_TEST")
 SYNERGY_EDITOR_TEST_ONLY = globals().get("SYNERGY_EDITOR_TEST_ONLY", True)
 synergy_editor_link = None
@@ -2072,6 +2232,10 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
     _vis_sources = [(lab, url, pd.Timestamp.max) for lab, url in VISION_PLAYLIST_URLS]  # hand-listed go first
     # banked games (BANK_GAMES -- a later opponent's game): captured whatever the run's date, like a hand-listed page
     _bank_fill()                       # games exported on an earlier run: their date / teams / "for" (once)
+    try:
+        _bank_starters_all()           # banked games: both teams' starters from Synergy's box score (once)
+    except Exception as _bse:
+        print(f"  [bank] starters skipped ({type(_bse).__name__}: {_bse})", flush=True)
     for _b in (bank_games(with_unknown=True) if "bank_games" in globals() else []):
         _vis_sources.append(((f"{_b['date'].date()} " if _b["date"] is not None else "") + f"{_b['label']}"
                              + (f" (banked for {_b['for']})" if _b["for"] else " (banked)"),
