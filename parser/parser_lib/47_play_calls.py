@@ -3216,6 +3216,11 @@ def _pl_untagged_from_frames(tagged):
                 e_ = e_[e_["game_date"] == gd0]
         e_by_n = {int(r["_n"]): r for _, r in e_.iterrows()} if not e_.empty else {}
         hint = "Other" if _pg_other else _urls.get(str(_url))
+        # a banked game (BANK_GAMES): its own date, and "Other" until its team is the upcoming opponent
+        _bk = bank_game_for(gid=_sst_game_id_of(_url)) if "bank_game_for" in globals() and "_sst_game_id_of" in globals() else None
+        if _bk is not None:
+            gd0, e_ = _bk["date"].date(), pd.DataFrame()
+            hint = "Opponent" if bank_is_current(_bk) else "Other"
         if hint is None and not e_.empty and "_src" in e_.columns:
             hint = "UWW" if (e_["_src"] == "pbp_events").mean() >= 0.5 else "Opponent"
         if hint is None and any(("WWW" in str(x).upper() or "WHITEWATER" in str(x).upper()) for x in g.get("clip_game", pd.Series(dtype=object)).dropna()):
@@ -3251,10 +3256,12 @@ def _pl_untagged_from_frames(tagged):
                          "player": str(r.get("player") or "").strip(), "result": str(r.get("result") or "").strip(),
                          "game_code": r.get("clip_game"), "synergy_string": desc,
                          "synergy_play_type": (re.findall(r"^\s*\d*\s*[^>]+>\s*([^>]+?)\s*(?:>|$)", desc) or [None])[0],
-                         "clip_number": int(n), "_file": "(captured clips, no Title)", "_untagged": True})
+                         "clip_number": int(n), "_file": "(captured clips, no Title)", "_untagged": True,
+                         "_bank": _bk is not None})
     out = pd.DataFrame(rows)
     if not out.empty:
         _fut = out["game_date"].notna() & (pd.to_datetime(out["game_date"]).dt.date >= reference_date.date())
+        _fut &= ~out.get("_bank", pd.Series(False, index=out.index)).fillna(False).astype(bool)   # banked games stay
         out = out[~_fut].reset_index(drop=True)
         print(f"  Captured clips with no Title: {len(out)} clip(s) from {n_games} game(s) not in uww_plays.csv added as "
               f"play calls ({n_timed} placed on the play-by-play clock through the video-tagging match; the rest have no "
@@ -3429,6 +3436,18 @@ if not _pl_other.empty:
         if len(set(_pl_game_teams.get((r["game_code"], r["game_date"]), [])) - {r["team"]}) == 1 else None, axis=1)
     _pl_other["opponent"] = _pl_other["defense_team"]
     _pl_other = _pl_infer_situation(_pl_other, pd.DataFrame())
+    # CONFIRMED BUG (fixed; the Thiel @ Platteville run made no Film Tagging batch and tracked nothing): "Other" plays are
+    # split off into play_calls_other below, which Film Tagging and tracking never read. A banked game (BANK_GAMES) is
+    # marked side "Banked": it stays with the play calls (Film Tagging, tracking), and every scouting table -- they take
+    # only "UWW" / "Opponent" -- still leaves it out until its team is the upcoming opponent.
+    if "bank_game_for" in globals() and bank_games():
+        _bm = pd.Series([bank_game_for(game_date=r.get("game_date"), teams=(r.get("offense_team"), r.get("defense_team"),
+                                                                             r.get("game_code"))) is not None
+                         for _, r in _pl_other.iterrows()], index=_pl_other.index)
+        if _bm.any():
+            _pl_other.loc[_bm, "side"] = "Banked"
+            print(f"  Banked games: {int(_bm.sum())} clip(s) kept for Film Tagging / tracking, left out of every scouting "
+                  "table until their team is the upcoming opponent", flush=True)
 
 for _df_name in ("pbp_events", "pbp_events_upcoming"):
     _df = globals()[_df_name]

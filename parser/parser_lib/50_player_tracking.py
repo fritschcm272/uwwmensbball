@@ -6133,3 +6133,77 @@ _trk_court_frames_used = None
 _trk_court_precheck()                 # stops here (before tracking) when a gym needs its court calibration -- FIRST
 _trk_starters_precheck()              # stops here (before tracking) while a game's starters check is waiting in the app
 _trk_run_all()
+
+
+# ---- Passes per possession (requested: "Is there a way to show how many passes are made on each possession?") -------
+# CONFIRMED CHANGE (requested options 1 + 3):
+#   1. Tracking (estimate): the ball holder tracking already finds in each frame (track_holders, offense only, 4 frames a
+#      second). A holder must keep the ball 2+ frames in a row to count (one-frame flickers are dropped); each change of
+#      holder after that is one pass. Quick passes between frames are missed and a player split into two tracks adds a
+#      false one, so it is an ESTIMATE -- only on tracked games.
+#   2. Synergy: "Ball Delivered" in the play description = the possession ended on a pass to the finisher (every game).
+# Outputs: uww_pass_counts.csv (one row per possession) and uww_pass_summary.csv (per team: averages and PPP by passes).
+PASS_MIN_HOLD_FRAMES = int(globals().get("PASS_MIN_HOLD_FRAMES", 2))
+
+
+def _pass_count(v, minrun=PASS_MIN_HOLD_FRAMES):
+    try:
+        d = _trk_json.loads(v) if isinstance(v, str) else (v if isinstance(v, dict) else None)
+    except Exception:
+        d = None
+    if not d:
+        return None
+    runs = []
+    for _f, t in sorted((int(k), int(x)) for k, x in d.items()):
+        if runs and runs[-1][0] == t:
+            runs[-1][1] += 1
+        else:
+            runs.append([t, 1])
+    keep = [r[0] for r in runs if r[1] >= minrun]
+    if not keep:
+        return None
+    seq = [k for i, k in enumerate(keep) if i == 0 or k != keep[i - 1]]
+    return len(seq) - 1
+
+
+def _pass_tables(pc):
+    if pc is None or pc.empty:
+        return pd.DataFrame(), pd.DataFrame()
+    d = pc.copy()
+    d["passes_tracked"] = d["track_holders"].map(_pass_count) if "track_holders" in d.columns else None
+    ss = d.get("synergy_string", pd.Series("", index=d.index)).fillna("").astype(str)
+    d["ends_on_pass"] = ss.str.contains(r">\s*Ball Delivered\s*>", case=False, regex=True)
+    d["points_n"] = pd.to_numeric(d.get("points"), errors="coerce")
+    keep = [c for c in ("scouted_opponent", "side", "offense_team", "defense_team", "game_date", "game_code",
+                        "clip_number", "play_situation", "play_call", "passes_tracked", "ends_on_pass", "points_n")
+            if c in d.columns]
+    rows = d[keep].rename(columns={"points_n": "points"})
+    # real possessions only: drop Synergy's non-possession lines (free throws etc.)
+    rows = rows[~ss.loc[rows.index].str.contains("Non Possession", case=False)]
+    summ = []
+    for (opp, team), g in rows.groupby(["scouted_opponent", "offense_team"], dropna=False):
+        ppp = lambda x: round(float(x["points"].mean()), 2) if x["points"].notna().any() else None  # noqa: E731
+        t = g[g["passes_tracked"].notna()]
+        r = {"scouted_opponent": opp, "team": team, "possessions": len(g),
+             "ends_on_pass_pct": round(100 * g["ends_on_pass"].mean()) if len(g) else None,
+             "ppp_ends_on_pass": ppp(g[g["ends_on_pass"]]), "ppp_no_final_pass": ppp(g[~g["ends_on_pass"]]),
+             "tracked_possessions": len(t),
+             "avg_passes": round(float(t["passes_tracked"].mean()), 1) if len(t) else None}
+        for lab, lo, hi in (("0_1", 0, 1), ("2_3", 2, 3), ("4_plus", 4, 999)):
+            b = t[(t["passes_tracked"] >= lo) & (t["passes_tracked"] <= hi)]
+            r[f"poss_{lab}"] = len(b)
+            r[f"ppp_{lab}"] = ppp(b)
+        summ.append(r)
+    return rows.reset_index(drop=True), pd.DataFrame(summ)
+
+
+try:
+    pass_counts, pass_summary = _pass_tables(play_calls)
+    for _nm, _df in (("uww_pass_counts", pass_counts), ("uww_pass_summary", pass_summary)):
+        _df.to_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, f"{_nm}.csv"), index=False)
+    _nt = int(pass_counts["passes_tracked"].notna().sum()) if len(pass_counts) else 0
+    print(f"  Passes per possession: {_nt} tracked possession(s) with an estimated pass count; "
+          f"{int(pass_counts['ends_on_pass'].sum()) if len(pass_counts) else 0} of {len(pass_counts)} possession(s) end "
+          "on a pass (Synergy 'Ball Delivered') -> uww_pass_counts / uww_pass_summary", flush=True)
+except Exception as _pe:
+    print(f"  Passes per possession not worked out ({type(_pe).__name__}: {_pe})", flush=True)

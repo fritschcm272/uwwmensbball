@@ -1,18 +1,52 @@
 scouted_opponent,team,perspective,order,level,situation,label,possessions,share_pct,ppp,play_calls,actions,coverage,our_possessions,our_coverage,our_ppp_allowed,play_calls_n,formation,cov_kind
-Ripon Red Hawks,Ripon Red Hawks,Opponent,1,situation,Half court,Half court,53,70.0,0.8,,no action tagged,,408,Switch 14 (0.93) · Over 8 (0.25) · Top Lock 6 (1.20),0.88,,,
-Ripon Red Hawks,Ripon Red Hawks,Opponent,2,formation,Half court,(none tagged),53,70.0,0.8,,no action tagged,,0,,,,,
-Ripon Red Hawks,Ripon Red Hawks,Opponent,3,play_call,Half court,No Play Call,53,70.0,0.8,No Play Call,no action tagged,,0,,,No Play Call=53,(none tagged),
-Ripon Red Hawks,Ripon Red Hawks,Opponent,4,coverage,Half court,No coverage tagged,53,,0.8,,,,0,,,,,None
-Ripon Red Hawks,Ripon Red Hawks,Opponent,5,situation,Transition,Transition,11,14.0,1.2,,no action tagged,,89,Over 1 (2.00),1.38,,,
-Ripon Red Hawks,Ripon Red Hawks,Opponent,6,situation,BLOB,BLOB,6,8.0,0.4,BLOB (0.40),no action tagged,,29,,0.62,BLOB=6,,
-Ripon Red Hawks,Ripon Red Hawks,Opponent,7,formation,BLOB,(none tagged),6,8.0,0.4,BLOB (0.40),no action tagged,,0,,,BLOB=6,,
-Ripon Red Hawks,Ripon Red Hawks,Opponent,8,play_call,BLOB,BLOB,6,8.0,0.4,BLOB,no action tagged,,0,,,BLOB=6,(none tagged),
-Ripon Red Hawks,Ripon Red Hawks,Opponent,9,coverage,BLOB,No coverage tagged,6,,0.4,BLOB (0.40),,,0,,,BLOB=6,,None
-Ripon Red Hawks,Ripon Red Hawks,Opponent,10,situation,SLOB,SLOB,5,7.0,1.0,SLOB (1.00),no action tagged,,8,Stay (reject) 1 (0.00),0.88,SLOB=5,,
-Ripon Red Hawks,Ripon Red Hawks,Opponent,11,formation,SLOB,(none tagged),5,7.0,1.0,SLOB (1.00),no action tagged,,0,,,SLOB=5,,
-Ripon Red Hawks,Ripon Red Hawks,Opponent,12,play_call,SLOB,SLOB,5,7.0,1.0,SLOB,no action tagged,,0,,,SLOB=5,(none tagged),
-Ripon Red Hawks,Ripon Red Hawks,Opponent,13,coverage,SLOB,No coverage tagged,5,,1.0,SLOB (1.00),,,0,,,SLOB=5,,None
-Ripon Red Hawks,Ripon Red Hawks,Opponent,14,situation,ATO,ATO,1,1.0,0.0,ATO (unspecified) (0.00),no action tagged,,19,Drop 1 (0.00) · Stay (reject) 1 (0.00),0.74,ATO (unspecified)=1,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,1,situation,Half court,Half court,81,70.0,0.84,Off-ball screen Motion (0.70) · Screen Motion (1.33),Down screen 12 (0.83) · Ball screen 10 (1.43) · Flare 10 (1.10),Switch 7 · Over 1,408,Switch 14 (0.93) · Over 8 (0.25) · Top Lock 6 (1.20),0.88,Off-ball screen Motion=10;Screen Motion=9,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,2,formation,Half court,(none tagged),71,61.0,0.77,Screen Motion (0.00) · Off-ball screen Motion (0.50),Ball screen 6 (0.67) · Down screen 4 (0.50) · Isolation 4 (1.25),Switch 2 · Over 1,0,,,Screen Motion=5;Off-ball screen Motion=4,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,3,play_call,Half court,Screen Motion,5,4.0,0.0,Screen Motion,Ball screen 5 (0.00) · Stagger 1 (0.00) · Rifle 1 (0.00),Switch 2,0,,,Screen Motion=5,(none tagged),
+Ripon Red Hawks,Ripon Red Hawks,Opponent,4,coverage,Half court,Switch,2,,0.0,Screen Motion (0.00),,Switch,0,,,Screen Motion=2,,Ball screen
+Ripon Red Hawks,Ripon Red Hawks,Opponent,5,coverage,Half court,Switch,1,,0.0,Screen Motion (0.00),,Switch,0,,,Screen Motion=1,,Off-ball screen
+Ripon Red Hawks,Ripon Red Hawks,Opponent,6,coverage,Half court,No coverage tagged,3,,,Screen Motion,,,0,,,Screen Motion=3,,None
+Ripon Red Hawks,Ripon Red Hawks,Opponent,7,play_call,Half court,Off-ball screen Motion,4,3.0,0.5,Off-ball screen Motion,Down screen 2 (1.00) · Isolation 2 (0.00) · Flare 2 (1.00),Over 1,0,,,Off-ball screen Motion=4,(none tagged),
+Ripon Red Hawks,Ripon Red Hawks,Opponent,8,coverage,Half court,Over,1,,2.0,Off-ball screen Motion (2.00),,Over,0,,,Off-ball screen Motion=1,,Ball screen
+Ripon Red Hawks,Ripon Red Hawks,Opponent,9,coverage,Half court,No coverage tagged,3,,0.0,Off-ball screen Motion (0.00),,,0,,,Off-ball screen Motion=3,,None
+Ripon Red Hawks,Ripon Red Hawks,Opponent,10,play_call,Half court,Motion (no action tagged),3,3.0,0.67,Motion (no action tagged),no action tagged,,0,,,Motion (no action tagged)=3,(none tagged),
+Ripon Red Hawks,Ripon Red Hawks,Opponent,11,coverage,Half court,No coverage tagged,3,,0.67,Motion (no action tagged) (0.67),,,0,,,Motion (no action tagged)=3,,None
+Ripon Red Hawks,Ripon Red Hawks,Opponent,12,play_call,Half court,Set,2,2.0,0.0,Set,Down screen 2 (0.00) · Flare 1 (0.00),,0,,,Set=2,(none tagged),
+Ripon Red Hawks,Ripon Red Hawks,Opponent,13,coverage,Half court,No coverage tagged,2,,0.0,Set (0.00),,,0,,,Set=2,,None
+Ripon Red Hawks,Ripon Red Hawks,Opponent,14,play_call,Half court,Drive Motion,2,2.0,2.5,Drive Motion,Isolation 2 (2.50),,0,,,Drive Motion=2,(none tagged),
+Ripon Red Hawks,Ripon Red Hawks,Opponent,15,coverage,Half court,No coverage tagged,2,,2.5,Drive Motion (2.50),,,0,,,Drive Motion=2,,None
+Ripon Red Hawks,Ripon Red Hawks,Opponent,16,play_call,Half court,No Play Call,55,47.0,0.79,No Play Call,no action tagged,,0,,,No Play Call=55,(none tagged),
+Ripon Red Hawks,Ripon Red Hawks,Opponent,17,coverage,Half court,No coverage tagged,55,,0.79,,,,0,,,,,None
+Ripon Red Hawks,Ripon Red Hawks,Opponent,18,formation,Half court,5 Out,6,5.0,1.83,Off-ball screen Motion (1.00) · Screen Motion (2.67),Down screen 5 (1.60) · Flare 5 (1.80) · Ball screen 3 (2.67),Switch 3,37,Switch 10 (0.70) · Over 8 (0.25) · Top Lock 3 (0.00),0.63,Off-ball screen Motion=3;Screen Motion=3,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,19,play_call,Half court,Off-ball screen Motion,3,3.0,1.0,Off-ball screen Motion,Flare 3 (1.00) · Down screen 2 (0.00),Switch 1,0,,,Off-ball screen Motion=3,5 Out,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,20,coverage,Half court,Switch,1,,0.0,Off-ball screen Motion (0.00),,Switch,0,,,Off-ball screen Motion=1,,Off-ball screen
+Ripon Red Hawks,Ripon Red Hawks,Opponent,21,coverage,Half court,No coverage tagged,2,,1.5,Off-ball screen Motion (1.50),,,0,,,Off-ball screen Motion=2,,None
+Ripon Red Hawks,Ripon Red Hawks,Opponent,22,play_call,Half court,Screen Motion,3,3.0,2.67,Screen Motion,Ball screen 3 (2.67) · Down screen 3 (2.67) · Flare 2 (3.00),Switch 2,0,,,Screen Motion=3,5 Out,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,23,coverage,Half court,Switch,2,,3.0,Screen Motion (3.00),,Switch,0,,,Screen Motion=2,,Ball screen
+Ripon Red Hawks,Ripon Red Hawks,Opponent,24,coverage,Half court,Over,1,,3.0,Screen Motion (3.00),,Over,0,,,Screen Motion=1,,Off-ball screen
+Ripon Red Hawks,Ripon Red Hawks,Opponent,25,coverage,Half court,No coverage tagged,1,,2.0,Screen Motion (2.00),,,0,,,Screen Motion=1,,None
+Ripon Red Hawks,Ripon Red Hawks,Opponent,26,formation,Half court,Set,2,2.0,1.0,Off-ball screen Motion (2.00) · Screen Motion (0.00),Isolation 2 (1.00) · Ball screen 1 (0.00) · Down screen 1 (0.00),Switch 1,0,,,Off-ball screen Motion=1;Screen Motion=1,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,27,play_call,Half court,Off-ball screen Motion,1,1.0,2.0,Off-ball screen Motion,Isolation 1 (2.00) · Stagger 1 (2.00),Switch 1,0,,,Off-ball screen Motion=1,Set,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,28,coverage,Half court,Switch,1,,2.0,Off-ball screen Motion (2.00),,Switch,0,,,Off-ball screen Motion=1,,Off-ball screen
+Ripon Red Hawks,Ripon Red Hawks,Opponent,29,play_call,Half court,Screen Motion,1,1.0,0.0,Screen Motion,Ball screen 1 (0.00) · Down screen 1 (0.00) · Isolation 1 (0.00),,0,,,Screen Motion=1,Set,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,30,coverage,Half court,No coverage tagged,1,,0.0,Screen Motion (0.00),,,0,,,Screen Motion=1,,None
+Ripon Red Hawks,Ripon Red Hawks,Opponent,31,formation,Half court,4 Low,1,1.0,0.0,Off-ball screen Motion (0.00),Down screen 1 (0.00) · Flare 1 (0.00),,0,,,Off-ball screen Motion=1,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,32,play_call,Half court,Off-ball screen Motion,1,1.0,0.0,Off-ball screen Motion,Down screen 1 (0.00) · Flare 1 (0.00),,0,,,Off-ball screen Motion=1,4 Low,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,33,coverage,Half court,No coverage tagged,1,,0.0,Off-ball screen Motion (0.00),,,0,,,Off-ball screen Motion=1,,None
+Ripon Red Hawks,Ripon Red Hawks,Opponent,34,formation,Half court,4-1,1,1.0,0.0,Off-ball screen Motion (0.00),DHO / handoff 1 (0.00) · Swing / ball reversal 1 (0.00) · Down screen 1 (0.00),Switch 1,0,,,Off-ball screen Motion=1,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,35,play_call,Half court,Off-ball screen Motion,1,1.0,0.0,Off-ball screen Motion,DHO / handoff 1 (0.00) · Swing / ball reversal 1 (0.00) · Down screen 1 (0.00),Switch 1,0,,,Off-ball screen Motion=1,4-1,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,36,coverage,Half court,Switch,1,,0.0,Off-ball screen Motion (0.00),,Switch,0,,,Off-ball screen Motion=1,,Ball screen
+Ripon Red Hawks,Ripon Red Hawks,Opponent,37,situation,Transition,Transition,15,13.0,1.31,,Ball screen 2 (1.50),Drop 2,89,Over 1 (2.00),1.38,,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,38,situation,Offensive rebound,Offensive rebound,7,6.0,0.33,Motion (no action tagged) (0.00),no action tagged,,8,,1.86,Motion (no action tagged)=2,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,39,situation,BLOB,BLOB,6,5.0,0.4,BLOB (0.40),no action tagged,,29,,0.62,BLOB=6,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,40,formation,BLOB,(none tagged),6,5.0,0.4,BLOB (0.40),no action tagged,,0,,,BLOB=6,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,41,play_call,BLOB,BLOB,6,5.0,0.4,BLOB,no action tagged,,0,,,BLOB=6,(none tagged),
+Ripon Red Hawks,Ripon Red Hawks,Opponent,42,coverage,BLOB,No coverage tagged,6,,0.4,BLOB (0.40),,,0,,,BLOB=6,,None
+Ripon Red Hawks,Ripon Red Hawks,Opponent,43,situation,SLOB,SLOB,5,4.0,1.0,SLOB (1.00),no action tagged,,8,Stay (reject) 1 (0.00),0.88,SLOB=5,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,44,formation,SLOB,(none tagged),5,4.0,1.0,SLOB (1.00),no action tagged,,0,,,SLOB=5,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,45,play_call,SLOB,SLOB,5,4.0,1.0,SLOB,no action tagged,,0,,,SLOB=5,(none tagged),
+Ripon Red Hawks,Ripon Red Hawks,Opponent,46,coverage,SLOB,No coverage tagged,5,,1.0,SLOB (1.00),,,0,,,SLOB=5,,None
+Ripon Red Hawks,Ripon Red Hawks,Opponent,47,situation,ATO,ATO,1,1.0,0.0,ATO (unspecified) (0.00),no action tagged,,19,Drop 1 (0.00) · Stay (reject) 1 (0.00),0.74,ATO (unspecified)=1,,
+Ripon Red Hawks,Ripon Red Hawks,Opponent,48,situation,(none tagged),(none tagged),1,1.0,0.0,,no action tagged,,0,,,,,
 Ripon Red Hawks,UW-Whitewater,UWW,1,situation,Half court,Half court,417,67.0,1.06,Screen Motion (1.20) · Flow (1.55),Ball screen 53 (0.98) · Down screen 17 (1.24) · DHO / handoff 12 (0.50),Switch 28 · Drop 12,0,,,Screen Motion=32;Flow=31,,
 Ripon Red Hawks,UW-Whitewater,UWW,2,formation,Half court,(none tagged),262,42.0,1.04,Panther (1.00) · Cheetah (0.88),DHO / handoff 1 (1.00),Switch 7 · Drop 6,0,,,Panther=12;Cheetah=8,,
 Ripon Red Hawks,UW-Whitewater,UWW,3,play_call,Half court,Panther,12,2.0,1.0,Panther,no action tagged,Drop 1,0,,,Panther=12,(none tagged),

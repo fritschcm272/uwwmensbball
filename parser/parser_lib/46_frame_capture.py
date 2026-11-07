@@ -1880,9 +1880,13 @@ def _vision_from_exports(sources, cache):
             _vx_recent = (time.time() - os.path.getmtime(os.path.join(folder, "Export.csv"))) < 3 * 3600
         except Exception:
             _vx_recent = False
+        # CONFIRMED BUG (fixed; "It still does not actually close the synergy pop up window after exporting"): the box was
+        # only closed when EVERY clip video was written -- Thiel @ Platteville finished at 234 of 235 (one clip Synergy never
+        # writes), so the run treated it as unfinished and left "Export is available." open. The box is now closed once the
+        # export has stopped, finished or not; the cache is still only cleared after a complete export.
+        if sys.platform == "win32" and (_vx_new or _vx_recent) and globals().get("SYNERGY_EXPORT_CLOSE_BOX", True):
+            _sst_close_export_box()
         if _vx_ok and sys.platform == "win32" and (_vx_new or _vx_recent):
-            if globals().get("SYNERGY_EXPORT_CLOSE_BOX", True):
-                _sst_close_export_box()
             if globals().get("SYNERGY_CLEAR_CACHE", True):
                 try:
                     _sst_clear_cache(folder)
@@ -2032,6 +2036,10 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
     # Every played game with a clip page: UWW's own games and the upcoming opponent's prior games,
     # plus any page listed by hand in VISION_PLAYLIST_URLS.
     _vis_sources = [(lab, url, pd.Timestamp.max) for lab, url in VISION_PLAYLIST_URLS]  # hand-listed go first
+    # banked games (BANK_GAMES -- a later opponent's game): captured whatever the run's date, like a hand-listed page
+    for _b in (bank_games() if "bank_games" in globals() else []):
+        _vis_sources.append((f"{_b['date'].date()} {_b['label']} (banked for {_b['for']})",
+                             _SST_BOXSCORE.format(gid=_b["gid"]), pd.Timestamp.max))
     # CONFIRMED CHANGE (requested: "why is it only capturing our games and not the opponent's games? I need it to do both").
     # Both were always in the list, but newest-first across everything, 2 a run -- so our own late-season games came first.
     # VISION_CAPTURE_FIRST = "opponent" now captures the UPCOMING OPPONENT's games (prev_games: theirs before facing us)

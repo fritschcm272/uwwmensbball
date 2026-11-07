@@ -1,3 +1,5 @@
+import pandas as _pm_pd
+import re as _pm_re
 # 00_parser_modes.py -- run ONLY the parts of the parser a job needs (requested: "separate the parser notebooks into different
 # notebooks based on what I need to accomplish without it needing to run every single thing").
 #
@@ -269,12 +271,64 @@ def _pm_apply_options(G):
     # CONFIRMED CHANGE (requested: reopen saved plays for edits) -- see _tag_reopen in 55c
     if "REOPEN_PLAYS" in o:
         G["PLAY_TAG_REOPEN"] = o.get("REOPEN_PLAYS") or []
+    if o.get("BANK_GAMES"):
+        G["BANK_GAMES"] = o.get("BANK_GAMES")
     add = o.get("ADD_GAMES") or []
     if isinstance(add, str):
         add = [add]
     add = [str(x).strip() for x in add if str(x).strip()]
+    for _b in bank_games() if G.get("BANK_GAMES") else []:     # banked games are tracked too (Player Number Tracking)
+        add.append(f"{_b['date'].month}_{_b['date'].day}_{str(_b['date'].year)[2:]} {_b['label']}")
     if add:
         G["PLAYER_TRACKING_GAMES"] = list(dict.fromkeys(list(G.get("PLAYER_TRACKING_GAMES") or []) + add))
+
+
+# CONFIRMED CHANGE (requested: bank a game for a LATER opponent -- "Wisconsin-Platteville played Thiel tonight ... should not be
+# used in any of the Carroll or Ripon scouting briefs ... only for when we play Platteville later in the year").
+# BANK_GAMES (parser_models' first cell): [{"synergy_id": "<24 characters after /games/>", "date": "Nov 6, 2026",
+#   "label": "UW-Platteville Pioneers vs Thiel", "for": "UW-Platteville Pioneers"}]. A banked game is exported from Synergy,
+# captured, tracked (Player Number Tracking) and given a Film Tagging batch NOW -- whatever the run's date -- but its plays
+# count for the scouting tables / brief ONLY when its "for" team is the upcoming opponent (until then they are "Other").
+def bank_games():
+    out = []
+    for e in (globals().get("BANK_GAMES") or []):
+        if not isinstance(e, dict):
+            continue
+        gid = str(e.get("synergy_id") or "").strip().lower()
+        try:
+            d = _pm_pd.Timestamp(e.get("date")).normalize()
+        except Exception:
+            d = None
+        if len(gid) == 24 and d is not None:
+            out.append({"gid": gid, "date": d, "label": str(e.get("label") or gid).strip(),
+                        "for": str(e.get("for") or "").strip()})
+    return out
+
+
+def _bank_words(name):
+    return [w for w in _pm_re.split(r"[^a-z]+", str(name or "").lower()) if len(w) > 3 and w not in ("pioneers", "college")][:2]
+
+
+def bank_game_for(gid=None, game_date=None, teams=()):
+    """The banked game matching a Synergy game id, or a date (within a day) plus a team named like its "for" team."""
+    for b in bank_games():
+        if gid and str(gid).lower() == b["gid"]:
+            return b
+        if game_date is not None:
+            try:
+                dd = abs((_pm_pd.Timestamp(game_date).normalize() - b["date"]).days)
+            except Exception:
+                continue
+            txt = " ".join(str(t).lower() for t in teams)
+            if dd <= 1 and any(w in txt for w in _bank_words(b["for"])):
+                return b
+    return None
+
+
+def bank_is_current(b):
+    """True when the banked game's "for" team is this run's upcoming opponent (then its plays count as theirs)."""
+    up = str(globals().get("upcoming_opponent_short") or "").lower()
+    return bool(b) and bool(up) and any(w in up for w in _bank_words(b["for"]))
 
 
 _PM_TRACKING_ONLY = {"48_jersey_number_recognizer", "49_jersey_number_reader_test", "50b_detector_compare",
