@@ -201,3 +201,4 @@ run_at,part,label,score,n,bar,chance,used,how,auc,caught,bar_n,best,games,status
 2026-11-06T21:39:07,anchors,Synergy-named player (anchor),,0,,20.0,True,Synergy-named anchors that sat on the right player (coach-checked),,,,,,,,
 2026-11-06T21:39:07,jersey_vote,"Jersey vote (five numbers on the floor, whole track)",,0,85.0,20.0,False,"the trained recognizer over up to 8 chest crops per track, only the five numbers on the floor; tested on coach-checked players without the frames they were checked on",,,8.0,,,,,
 2026-11-06T21:39:07,reader,Jersey-number reader,0.0,0,85.0,,False,"right when it answers (trained_pose), on coach-checked crops it never trained on",,,6.0,,,,"0 right, 0 wrong of 0 checked players",
+2026-11-07T09:57:59,reader,Jersey-number reader,0.0,1,85.0,,False,"right when it answers (trained_pose), on coach-checked crops it never trained on",,,6.0,,,,"0 right, 1 wrong of 1 checked players",

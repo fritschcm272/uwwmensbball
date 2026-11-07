@@ -1243,7 +1243,18 @@ def play_review():
         _grid = globals().get("PLAY_REVIEW_GRID", (12, 8))
         gnums = _trk_numbers_for_game(gd, gc)
         numtxt = lambda n: f"#{gnums.get(str(n).lower(), '?')} {str(n).split()[-1]}"
-        _rosters_pr = _tag_rosters(g) if "_tag_rosters" in globals() else {}
+        # CONFIRMED BUG (fixed; banked Thiel@UWPlatteville player check listed only "WIS #22 Max Lucey"): g holds only the
+        # TRACKED clips (one, before the starters check), so the roster came from that clip alone. It now comes from every
+        # clip of the game in play_calls.
+        _g_all = g
+        try:
+            _pcs = play_calls
+            _g_all = _pcs[(_pcs["game_date"] == gd) & (_pcs["game_code"] == gc)]
+            if _g_all.empty:
+                _g_all = g
+        except Exception:
+            _g_all = g
+        _rosters_pr = _tag_rosters(_g_all) if "_tag_rosters" in globals() else {}
         _items = [(_ri, r, _parts_of.get(_ri, ["titles", "players"])) for _ri, r in pick.iterrows()]
         if _st_need is not None:
             _items.insert(0, (_st_need, g.loc[_st_need], ["starters"]))   # the STARTERS check (tipoff clip) first
