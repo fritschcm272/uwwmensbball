@@ -1589,6 +1589,14 @@ def _tag_rosters(g):
             team = r.get(f"{side}_team")
             if isinstance(team, str) and team.strip():
                 out.setdefault(team, set()).update(_trk_five(r.get(f"{side}_lineup")))
+    # CONFIRMED CHANGE (requested: rosters for games with no play-by-play -- banked games): every player Synergy names with a
+    # number in the game's play descriptions ("0 Logan Luxem > ...") is added to the team that had the ball on that clip,
+    # so the lists offer both teams' players even when no lineup is known.
+    for _, r in g.iterrows():
+        team = r.get("offense_team")
+        if isinstance(team, str) and team.strip():
+            for _j, _n in re.findall(r"(?:^|>)\s*(\d{1,2})\s+([A-Za-z][^>]*?)\s*(?=>|$)", str(r.get("synergy_string") or "")):
+                out.setdefault(team, set()).add(_n.strip())
     return {t: sorted(n for n in v if n) for t, v in out.items()}
 
 
@@ -1616,6 +1624,8 @@ def _tag_fields(r):
         if f == "screener":
             continue
         av, ac, note = _tr_auto(r, f, False)
+        if globals().get("FILM_TAGGING_SUGGESTIONS", True) is False:     # (parser_models option) no suggestions at all
+            av, ac, note = None, None, ""
         # CONFIRMED CHANGE (requested: coaches complained it "always just puts Motion and 5 Out"): a field whose model isn't
         # trusted (not 5+ points better than always guessing on 50+ held-out plays -- see Tag model) gets NO suggestion; its
         # list starts blank. Synergy's own Transition answer for Situation is kept.

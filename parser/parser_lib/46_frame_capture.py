@@ -2005,6 +2005,40 @@ def _vx_densify_tracking(cache):
     return cache, n_changed
 
 
+def _bank_fill():
+    """Banked games given by Synergy ID only: their date, label and "for" team, read from their Synergy export (date and the
+    two teams in Export.csv; "for" = the team that's on UW-Whitewater's schedule) -> inputs/_bank_games.json."""
+    if "bank_games" not in globals():
+        return
+    reg = _vx_registry()
+    sched = globals().get("uww_team_schedule")
+    opp = " ".join(str(x).lower() for x in (sched["opponent"].dropna() if isinstance(sched, pd.DataFrame) and "opponent" in sched.columns else []))
+    upd = {}
+    for b in bank_games(with_unknown=True):
+        if b["date"] is not None and b["for"] and not b["label"].startswith("banked game"):
+            continue
+        hit = reg.get(b["gid"]) or {}
+        folder = next((os.path.join(r_, hit.get("folder", "")) for r_ in _vx_roots()
+                       if hit.get("folder") and os.path.isfile(os.path.join(r_, hit["folder"], "Export.csv"))), None)
+        if not folder:
+            continue
+        try:
+            ex = pd.read_csv(os.path.join(folder, "Export.csv"), dtype=str)
+        except Exception:
+            continue
+        d = pd.to_datetime(ex.get("Date"), errors="coerce").dropna()
+        teams = [t for t in ex.get("Team", pd.Series(dtype=str)).dropna().astype(str).str.strip().value_counts().index[:2]]
+        ours = [t for t in teams if any(w in opp for w in re.split(r"[^a-z]+", t.lower()) if len(w) > 4)]
+        rec = {"date": str(d.iloc[0].date()) if len(d) else None,
+               "label": (f"{teams[0]} vs {teams[1]}" if len(teams) == 2 else (hit.get("title") or b["label"])),
+               "for": ours[0] if len(ours) == 1 else ""}
+        upd[b["gid"]] = rec
+        print(f"  [bank] {b['gid']}: {rec['label']} on {rec['date']}"
+              + (f" -- banked for {rec['for']}" if rec["for"] else " -- couldn't tell which team we play: add \"for\" to its BANK_GAMES entry"), flush=True)
+    if upd:
+        _bank_cache(upd)
+
+
 SYNERGY_EDITOR_TEST = globals().get("SYNERGY_EDITOR_TEST")
 SYNERGY_EDITOR_TEST_ONLY = globals().get("SYNERGY_EDITOR_TEST_ONLY", True)
 synergy_editor_link = None
@@ -2037,8 +2071,10 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
     # plus any page listed by hand in VISION_PLAYLIST_URLS.
     _vis_sources = [(lab, url, pd.Timestamp.max) for lab, url in VISION_PLAYLIST_URLS]  # hand-listed go first
     # banked games (BANK_GAMES -- a later opponent's game): captured whatever the run's date, like a hand-listed page
-    for _b in (bank_games() if "bank_games" in globals() else []):
-        _vis_sources.append((f"{_b['date'].date()} {_b['label']} (banked for {_b['for']})",
+    _bank_fill()                       # games exported on an earlier run: their date / teams / "for" (once)
+    for _b in (bank_games(with_unknown=True) if "bank_games" in globals() else []):
+        _vis_sources.append(((f"{_b['date'].date()} " if _b["date"] is not None else "") + f"{_b['label']}"
+                             + (f" (banked for {_b['for']})" if _b["for"] else " (banked)"),
                              _SST_BOXSCORE.format(gid=_b["gid"]), pd.Timestamp.max))
     # CONFIRMED CHANGE (requested: "why is it only capturing our games and not the opponent's games? I need it to do both").
     # Both were always in the list, but newest-first across everything, 2 a run -- so our own late-season games came first.
@@ -2265,6 +2301,7 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
               f"({'TEST: first ' + str(VISION_TEST_CLIPS) + ' clips each' if VISION_TEST_CLIPS else 'all clips'})")
         if str(globals().get("VISION_SOURCE", "export")).lower() == "export":
             clip_frames = _vision_from_exports(_vis_sources, clip_frames)
+            _bank_fill()
         else:
             clip_frames = run_in_fastscout_session(lambda p: _vision_tag_pages(p, _vis_sources, clip_frames))
         clip_frames.to_csv(VISION_CACHE, index=False)

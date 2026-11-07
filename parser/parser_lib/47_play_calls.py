@@ -3220,7 +3220,24 @@ def _pl_untagged_from_frames(tagged):
         _bk = bank_game_for(gid=_sst_game_id_of(_url)) if "bank_game_for" in globals() and "_sst_game_id_of" in globals() else None
         if _bk is not None:
             gd0, e_ = _bk["date"].date(), pd.DataFrame()
+            e_by_n = {}                                    # (never another game's play-by-play)
             hint = "Opponent" if bank_is_current(_bk) else "Other"
+        # CONFIRMED CHANGE (requested: banked games' half and game clock -- the "easy part" of their play-by-play): read from
+        # the game's own Synergy export (Export.csv's Pd. / Clock, by clip number). No lineups (that needs the play-by-play).
+        _bk_clock = {}
+        if _bk is not None:
+            try:
+                _hit = (_vx_registry() or {}).get(_bk["gid"]) or {}
+                _fx = next((os.path.join(r_, _hit["folder"], "Export.csv") for r_ in _vx_roots()
+                            if _hit.get("folder") and os.path.isfile(os.path.join(r_, _hit["folder"], "Export.csv"))), None)
+                if _fx:
+                    for _, x_ in pd.read_csv(_fx, dtype=str).iterrows():
+                        _n_ = pd.to_numeric(x_.get("#"), errors="coerce")
+                        if pd.notna(_n_):
+                            _bk_clock[int(_n_)] = (_recap_period_label(x_.get("Pd.")) if pd.notna(x_.get("Pd.")) else None,
+                                                   _clock_to_seconds(x_.get("Clock")) if pd.notna(x_.get("Clock")) else None)
+            except Exception as _bce:
+                print(f"  (banked game's half / clock not read: {type(_bce).__name__}: {_bce})", flush=True)
         if hint is None and not e_.empty and "_src" in e_.columns:
             hint = "UWW" if (e_["_src"] == "pbp_events").mean() >= 0.5 else "Opponent"
         if hint is None and any(("WWW" in str(x).upper() or "WHITEWATER" in str(x).upper()) for x in g.get("clip_game", pd.Series(dtype=object)).dropna()):
@@ -3248,11 +3265,12 @@ def _pl_untagged_from_frames(tagged):
                     _team = _url_opp[str(_url)]
                 elif m is not None and str(m.get("team") or "").strip():
                     _team = m.get("team")
+            _bc = _bk_clock.get(int(n)) if _bk_clock else None
             rows.append({"Title": "", "Result": r.get("result"), "Date": str(gd0), "Pd.": None, "Clock": None,
                          "Player": r.get("player"), "Team": _team, "Game": r.get("clip_game"),
                          "Synergy String": desc, "#": int(n), "_route_hint": hint,
-                         "game_date": gd0, "period": m["period"] if m is not None else None,
-                         "time_remaining_seconds": m["time_remaining_seconds"] if m is not None else None,
+                         "game_date": gd0, "period": m["period"] if m is not None else (_bc[0] if _bc else None),
+                         "time_remaining_seconds": m["time_remaining_seconds"] if m is not None else (_bc[1] if _bc else None),
                          "player": str(r.get("player") or "").strip(), "result": str(r.get("result") or "").strip(),
                          "game_code": r.get("clip_game"), "synergy_string": desc,
                          "synergy_play_type": (re.findall(r"^\s*\d*\s*[^>]+>\s*([^>]+?)\s*(?:>|$)", desc) or [None])[0],
@@ -3791,6 +3809,164 @@ if _n_mot:
         f"{k} {v}" for k, v in play_calls["play_call"].where(play_calls["play_call_family"].notna()).value_counts().items())
         + f" ({_n_mot} Motion possession(s))", flush=True)
 
+# ---- Banked games: play-by-play and 5-man lineups (requested: "I need the hard parts built as well so that I can get the 5
+# man lineups on the court for each team in film tagging") -------------------------------------------------------------
+# CONFIRMED CHANGE. For each banked game (BANK_GAMES): its FastScout play-by-play -- a saved "<m>_<d>_<yy> ..._pbp.*" file in
+# the inputs folder if there is one, else read live: the "for" team's FastScout page for that game's season, the schedule
+# row with the same Synergy game ID (or date), its box score's Play By Play tab (saved for the next run). Both teams' fives
+# are rebuilt from the substitutions (the same rule as the on-court lineups section: each half's starters = players whose
+# first event isn't a sub-in, then subs applied in order), and each banked clip gets the fives on the floor at its half /
+# clock (Synergy export) -- offense_lineup / defense_lineup, which Film Tagging shows.
+def _bank_words_t(name):
+    return {w for w in re.split(r"[^a-z]+", str(name or "").lower()) if len(w) > 3
+            and w not in ("pioneers", "college", "university", "wisconsin")}
+
+
+def _bank_pbp_raw(b):
+    d = b["date"]
+    stem = f"{d.month}_{d.day}_{d.strftime('%y')}"
+    fw = _bank_words_t(b["for"])
+    vd = globals().get("volume_dir") or INPUT_DIR
+    for f_ in sorted(glob.glob(os.path.join(vd, f"{stem}*_pbp.*"))):
+        if any(w in os.path.basename(f_).lower() for w in fw):
+            try:
+                return parse_pbp_mhtml(f_), os.path.basename(f_)
+            except Exception as e:
+                print(f"  [bank] {os.path.basename(f_)} not read ({type(e).__name__}: {e})", flush=True)
+    if not (globals().get("fastscout_username") and globals().get("fastscout_password")):
+        return None, "no saved play-by-play file and no FastScout login"
+    # CONFIRMED BUG (fixed; Synergy names like "Wisconsin-(Platteville) Pioneers" missed the saved
+    # "UW-Platteville Pioneers" schedule -- try the UW- spelling and the bare school word too)
+    url = None
+    _alts = [b["for"]]
+    _m = re.match(r"\s*Wisconsin\s*-?\s*\(?\s*([A-Za-z .'-]+?)\s*\)?\s+(\S.*)$", str(b["for"]))
+    if _m:
+        _alts += [f"UW-{_m.group(1).strip()} {_m.group(2).strip()}", f"UW-{_m.group(1).strip()}"]
+    for _n in _alts:
+        if "_extra_find_team_url" in globals():
+            try:
+                url, _txt = _extra_find_team_url(_n)
+            except Exception:
+                url = None
+        if url:
+            break
+    if not url:
+        _sd = globals().get("volume_dir") or INPUT_DIR
+        for _f in glob.glob(os.path.join(_sd, "* - Schedule*.html")):
+            _team = os.path.basename(_f).split(" - Schedule")[0]
+            if fw & _bank_words_t(_team) and "_extra_find_team_url" in globals():
+                try:
+                    url, _txt = _extra_find_team_url(_team)
+                except Exception:
+                    url = None
+                if url:
+                    break
+    if not url:
+        return None, f"{b['for']}'s FastScout page not found on the saved schedules"
+    season = f"{(d.year if d.month >= 8 else d.year - 1) % 100:02d}"
+    url = re.sub(r"season=\d+", f"season={season}", url) if "season=" in url else \
+        url + ("&" if "?" in url else "?") + f"league={globals().get('FASTSCOUT_DOCS_LEAGUE') or 'NCAAB-III'}&season={season}"
+    html_ = run_in_fastscout_session(lambda page, u=url: scrape_rendered_html(page, u))
+    soup_ = BeautifulSoup(html_, "lxml")
+    game_url = None
+    for tr in [r for r in soup_.find_all("tr") if r.find_all("td")]:
+        hrefs = [a["href"] for a in tr.find_all("a", href=True)]
+        box = [h for h in hrefs if "/boxscore" in h]
+        if not box:
+            continue
+        if any(b["gid"] in h.lower() for h in hrefs):
+            game_url = _resolve_team_link(box[0])
+            break
+        try:
+            gd_ = parse_schedule_date(tr.find_all("td")[0].get_text(" ", strip=True), d.year if d.month >= 8 else d.year - 1)
+            if gd_ is not None and abs((pd.Timestamp(gd_).normalize() - d).days) <= 1:
+                game_url = _resolve_team_link(box[0])
+        except Exception:
+            pass
+    if not game_url:
+        return None, f"the game isn't on {b['for']}'s {season} FastScout schedule yet (or has no box score)"
+    save = os.path.join(vd, f"{stem} {re.sub(r'[^A-Za-z0-9 ()@.-]+', ' ', b['label']).strip()}_pbp.html")
+    raw = run_in_fastscout_session(lambda page, u=game_url, sp=save: scrape_pbp_live(page, u, save_path=sp))
+    return raw, f"read from FastScout ({game_url})"
+
+
+def _bank_lineups(raw, b):
+    """Play-by-play events for both teams with each team's five ('lineup') at every event."""
+    labels = raw.attrs.get("column_teams") or {}
+    fw = _bank_words_t(b["for"])
+    self_col = next((c for c in ("uww_text", "opp_text") if fw & _bank_words_t(labels.get(c))), "uww_text")
+    other = labels.get("opp_text" if self_col == "uww_text" else "uww_text") or "Opponent"
+    ev = build_pbp_events(raw, other, b["date"], self_team=b["for"], self_column=self_col)
+    ev = ev[ev["event_type"] != "period_marker"].copy()
+    tl = set(globals().get("TEAM_LEVEL_EVENT_TYPES") or [])
+    real = ev[ev["player"].notna() & ~ev["event_type"].isin(tl)].sort_values("event_order")
+    out = []
+    for team in (b["for"], other):
+        te = real[real["team"] == team]
+        for per, pe in te.groupby("period", sort=False):
+            first = pe.groupby("player").first()
+            cur = set(first[first["event_type"] != "sub_in"].index)
+            out.append((per, 10 ** 6, team, frozenset(cur)))           # start of the half
+            for _, r in pe[pe["event_type"].isin(["sub_in", "sub_out"])].iterrows():
+                (cur.add if r["event_type"] == "sub_in" else cur.discard)(r["player"])
+                if len(cur) == 5:
+                    out.append((per, r["time_remaining_seconds"], team, frozenset(cur)))
+    return pd.DataFrame(out, columns=["period", "secs", "team", "five"]), b["for"], other
+
+
+def _bank_five_at(lu, team, period, secs):
+    x = lu[(lu["team"] == team) & (lu["period"].astype(str) == str(period))]
+    if x.empty or secs is None or pd.isna(secs):
+        return None
+    x = x[pd.to_numeric(x["secs"], errors="coerce") >= float(secs)]   # the clock counts down: the last change before it
+    return ", ".join(sorted(x.iloc[-1]["five"])) if len(x) and len(x.iloc[-1]["five"]) == 5 else None
+
+
+def _bank_attach_lineups(df):
+    if df is None or df.empty or "side" not in df.columns or "bank_games" not in globals():
+        return df
+    for b in bank_games():
+        if not b["for"]:
+            continue
+        m = (df["side"] == "Banked") | (df["side"] == "Opponent")
+        m &= pd.Series([bank_game_for(game_date=r.get("game_date"), teams=(r.get("offense_team"), r.get("defense_team"),
+                                                                            r.get("game_code"))) is b or
+                        (bank_game_for(game_date=r.get("game_date"), teams=(r.get("offense_team"), r.get("defense_team"),
+                                                                             r.get("game_code"))) or {}).get("gid") == b["gid"]
+                        for _, r in df.iterrows()], index=df.index)
+        if not m.any():
+            continue
+        try:
+            raw, how = _bank_pbp_raw(b)
+        except Exception as e:
+            raw, how = None, f"{type(e).__name__}: {e}"
+        if raw is None:
+            print(f"  [bank] {b['label']}: no play-by-play -- {how}; Film Tagging shows full rosters instead of the fives",
+                  flush=True)
+            continue
+        lu, t_for, t_oth = _bank_lineups(raw, b)
+        fw = _bank_words_t(t_for)
+        n_ok = 0
+        for i in df.index[m]:
+            r = df.loc[i]
+            off_is_for = bool(fw & _bank_words_t(r.get("offense_team")))
+            f_for = _bank_five_at(lu, t_for, r.get("period"), r.get("time_remaining_seconds"))
+            f_oth = _bank_five_at(lu, t_oth, r.get("period"), r.get("time_remaining_seconds"))
+            df.at[i, "offense_lineup"] = f_for if off_is_for else f_oth
+            df.at[i, "defense_lineup"] = f_oth if off_is_for else f_for
+            n_ok += bool(f_for and f_oth)
+        print(f"  [bank] {b['label']}: play-by-play {how}; both fives found for {n_ok} of {int(m.sum())} clip(s)", flush=True)
+    return df
+
+
+for _c_ in ("offense_lineup", "defense_lineup"):
+    if _c_ not in play_calls.columns:
+        play_calls[_c_] = None
+play_calls[["offense_lineup", "defense_lineup"]] = play_calls[["offense_lineup", "defense_lineup"]].astype(object)
+try:
+    play_calls = _bank_attach_lineups(play_calls)
+except Exception as _ble:
+    print(f"  [bank] lineups not worked out ({type(_ble).__name__}: {_ble})", flush=True)
 play_calls_other = play_calls[play_calls["side"] == "Other"].reset_index(drop=True)
 play_calls = play_calls[play_calls["side"] != "Other"].reset_index(drop=True)
 

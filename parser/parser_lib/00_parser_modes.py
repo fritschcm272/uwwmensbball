@@ -268,6 +268,9 @@ def _pm_apply_options(G):
         G["RUN_JERSEY_RECOGNIZER"] = False
     if o.get("DO_FILM_TAGGING") is False:
         G["RUN_TAG_QUEUE"] = False
+    # CONFIRMED CHANGE (requested: an option under DO_FILM_TAGGING, FILM_TAGGING_SUGGESTIONS): False = Film Tagging batches
+    # start every field blank -- no automatic answers / model suggestions (coaches tag from scratch).
+    G["FILM_TAGGING_SUGGESTIONS"] = o.get("FILM_TAGGING_SUGGESTIONS", True) is not False
     # CONFIRMED CHANGE (requested: reopen saved plays for edits) -- see _tag_reopen in 55c
     if "REOPEN_PLAYS" in o:
         G["PLAY_TAG_REOPEN"] = o.get("REOPEN_PLAYS") or []
@@ -289,19 +292,54 @@ def _pm_apply_options(G):
 #   "label": "UW-Platteville Pioneers vs Thiel", "for": "UW-Platteville Pioneers"}]. A banked game is exported from Synergy,
 # captured, tracked (Player Number Tracking) and given a Film Tagging batch NOW -- whatever the run's date -- but its plays
 # count for the scouting tables / brief ONLY when its "for" team is the upcoming opponent (until then they are "Other").
-def bank_games():
-    out = []
+def _bank_cache_path():
+    return _pm_os.path.join(globals().get("INPUT_DIR") or "./inputs", "_bank_games.json")
+
+
+def _bank_cache(update=None):
+    """What was looked up for each banked game from its Synergy export: {synergy_id: {date, label, for}}."""
+    p = _bank_cache_path()
+    try:
+        with open(p, encoding="utf-8") as fh:
+            c = _pm_json.load(fh) or {}
+    except Exception:
+        c = {}
+    if update:
+        c.update(update)
+        try:
+            with open(p, "w", encoding="utf-8") as fh:
+                _pm_json.dump(c, fh, indent=1)
+        except Exception:
+            pass
+    return c
+
+
+def bank_games(with_unknown=False):
+    """CONFIRMED CHANGE (requested: "can it look up the date, label and for from just the synergy_id?"): an entry can be just
+    {"synergy_id": "..."} (or a bare ID string). Date, label and "for" are filled from the game's Synergy export after it
+    is exported (Frame capture: the export's date, its two teams, and the one that's on our schedule) and remembered in
+    inputs/_bank_games.json; anything typed in BANK_GAMES wins. Until the export exists the game has no date
+    (with_unknown=True lists it anyway, for Frame capture)."""
+    out, cache = [], _bank_cache()
     for e in (globals().get("BANK_GAMES") or []):
+        if isinstance(e, str):
+            e = {"synergy_id": e}
         if not isinstance(e, dict):
             continue
         gid = str(e.get("synergy_id") or "").strip().lower()
+        if len(gid) != 24:
+            continue
+        k = dict(cache.get(gid) or {})
+        k.update({x: e[x] for x in ("date", "label", "for") if e.get(x)})
         try:
-            d = _pm_pd.Timestamp(e.get("date")).normalize()
+            d = _pm_pd.Timestamp(k.get("date")).normalize() if k.get("date") else None
+            d = None if d is None or _pm_pd.isna(d) else d
         except Exception:
             d = None
-        if len(gid) == 24 and d is not None:
-            out.append({"gid": gid, "date": d, "label": str(e.get("label") or gid).strip(),
-                        "for": str(e.get("for") or "").strip()})
+        if d is None and not with_unknown:
+            continue
+        out.append({"gid": gid, "date": d, "label": str(k.get("label") or f"banked game {gid}").strip(),
+                    "for": str(k.get("for") or "").strip()})
     return out
 
 
