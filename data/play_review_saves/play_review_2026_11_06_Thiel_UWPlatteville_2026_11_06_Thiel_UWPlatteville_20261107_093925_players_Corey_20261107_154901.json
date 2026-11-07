@@ -1,0 +1,61 @@
+{
+ "game": "2026-11-06|Thiel@UWPlatteville",
+ "run": "20261107_093925",
+ "coach": "Corey",
+ "saved": "2026-11-07T15:49:01+00:00",
+ "checks": [
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t063a.jpg",
+   "t": 127,
+   "px": 1532.1,
+   "py": 441.4,
+   "side": "defense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "wrong team",
+   "true_name": null,
+   "not_player_kind": null,
+   "hidden_guess": null,
+   "hidden_guess_p": null
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t063a.jpg",
+   "t": 127,
+   "px": 958.5,
+   "py": 531.3,
+   "side": "defense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "wrong team",
+   "true_name": null,
+   "not_player_kind": null,
+   "hidden_guess": null,
+   "hidden_guess_p": null
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t063a.jpg",
+   "t": 127,
+   "px": 982.8,
+   "py": 848.3,
+   "side": "offense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "wrong",
+   "true_name": "Max Lucey",
+   "not_player_kind": null,
+   "hidden_guess": null,
+   "hidden_guess_p": null
+  }
+ ],
+ "source": "streamlit app",
+ "part": "players"
+}
