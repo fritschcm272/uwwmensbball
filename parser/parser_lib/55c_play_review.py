@@ -968,8 +968,10 @@ def _pr_synergy_starters(gd, g):
                         and w not in ("pioneers", "college", "university", "wisconsin")}
         out = {}
         for syn_t, names in st.items():
-            hit = max(teams, key=lambda t: len(wd(t) & wd(syn_t)), default=None)
-            if hit is None or not (wd(hit) & wd(syn_t)):
+            # (Synergy's short names run words together -- "UWPlatteville" -- so a team word found INSIDE the name counts)
+            _sc = lambda t: sum(1 for w in wd(t) if w in re.sub(r"[^a-z]+", "", str(syn_t).lower()))
+            hit = max(teams, key=_sc, default=None)
+            if hit is None or not _sc(hit):
                 left = [t for t in teams if t not in out]
                 hit = left[0] if len(left) == 1 else syn_t
             out[hit] = list(names)

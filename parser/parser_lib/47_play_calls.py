@@ -3939,6 +3939,49 @@ def _bank_attach_lineups(df):
                         for _, r in df.iterrows()], index=df.index)
         if not m.any():
             continue
+        # CONFIRMED CHANGE (requested: 5-man lineups for banked games): Synergy's own possession lineups (Frame capture ->
+        # inputs/_bank/<gid>_lineups.csv) come first -- a clip is matched by its Synergy description, else by half +
+        # game clock + team with the ball. FastScout's play-by-play is only the fallback.
+        _lp = os.path.join(INPUT_DIR, "_bank", f"{b['gid']}_lineups.csv")
+        if os.path.exists(_lp):
+            try:
+                _L = pd.read_csv(_lp, dtype={"description": str, "offense": str, "defense": str,
+                                             "offense_lineup": str, "defense_lineup": str})
+                _nd = lambda x: re.sub(r"[^a-z0-9]+", "", str(x).lower())
+                _by_d = {}
+                for _, lr in _L.iterrows():
+                    _by_d.setdefault(_nd(lr["description"]), []).append(lr)
+                _per = lambda v: {"H1": 1, "H2": 2}.get(str(v), pd.to_numeric(str(v).replace("OT", ""), errors="coerce") + 2
+                                                        if str(v).startswith("OT") else pd.to_numeric(v, errors="coerce"))
+                n_ok = 0
+                for i in df.index[m]:
+                    r = df.loc[i]
+                    hit = (_by_d.get(_nd(r.get("synergy_string"))) or [None])[0]
+                    if hit is None:
+                        pr_, ck_ = _per(r.get("period")), pd.to_numeric(r.get("time_remaining_seconds"), errors="coerce")
+                        if pd.notna(pr_) and pd.notna(ck_):
+                            c_ = _L[(pd.to_numeric(_L["period"], errors="coerce") == pr_)].copy()
+                            ow = _bank_words_t(r.get("offense_team"))
+                            c_ = c_[[any(w in re.sub(r"[^a-z]+", "", str(o).lower()) for w in ow) for o in c_["offense"]]] if ow else c_
+                            c_["d"] = (pd.to_numeric(c_["clock_s"], errors="coerce") - ck_).abs()
+                            c_ = c_[c_["d"] <= 10].sort_values("d")
+                            hit = c_.iloc[0] if len(c_) else None
+                    if hit is None:
+                        continue
+                    ow = _bank_words_t(r.get("offense_team"))
+                    # (Synergy's short names run words together -- "UWPlatteville" -- so a word found INSIDE it counts)
+                    _ho = re.sub(r"[^a-z]+", "", str(hit["offense"]).lower())
+                    same = (not ow) or any(w in _ho for w in ow)
+                    ol, dl = (hit["offense_lineup"], hit["defense_lineup"]) if same else (hit["defense_lineup"], hit["offense_lineup"])
+                    if isinstance(ol, str) and isinstance(dl, str):
+                        df.at[i, "offense_lineup"], df.at[i, "defense_lineup"] = ol, dl
+                        n_ok += 1
+                print(f"  [bank] {b['label']}: Synergy lineups -- both fives found for {n_ok} of {int(m.sum())} clip(s)",
+                      flush=True)
+                if n_ok:
+                    continue
+            except Exception as e:
+                print(f"  [bank] {b['label']}: Synergy lineups not used ({type(e).__name__}: {e})", flush=True)
         try:
             raw, how = _bank_pbp_raw(b)
         except Exception as e:

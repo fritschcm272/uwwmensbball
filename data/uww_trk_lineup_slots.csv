@@ -1,91 +1,11 @@
 clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,seconds_seen,how,confidence
-2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,1,2025-11-07,Washington-St. Louis Bears,offense,Calvin Kapral,play-by-play,True,37;61;66;67;70;99;107;140;152,10.8,coach checked;jersey number,0.99
-2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,1,2025-11-07,Washington-St. Louis Bears,offense,Connor May,play-by-play,True,2;30;57;100;105;106;125;158,16.8,coach checked;jersey number,0.99
-2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,1,2025-11-07,Washington-St. Louis Bears,offense,Josh Kim,play-by-play,True,16;50;60;108;128;129;134;135;151,13.8,coach checked;followed player;jersey number,0.99
-2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,1,2025-11-07,Washington-St. Louis Bears,offense,Ryan Cohen,play-by-play,True,17;40;55;79;85;98;141;153;169,14.4,coach checked;followed player;jersey number,0.99
-2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,1,2025-11-07,Washington-St. Louis Bears,offense,Will Grudzinski,play-by-play,True,28;75;92;93;113;119;130;131,13.9,coach checked;jersey number,0.99
-2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,1,2025-11-07,Carroll (WI) Pioneers,defense,Evan Bland,play-by-play,True,6;27;51;111;133;155,12.8,coach checked;jersey number,0.99
-2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,1,2025-11-07,Carroll (WI) Pioneers,defense,Jacob Naber,play-by-play,True,25,1.5,coach checked,0.99
-2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,1,2025-11-07,Carroll (WI) Pioneers,defense,Lamar Smith,play-by-play,True,0;39;56;58;112;146,7.9,coach checked;jersey number,0.99
-2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,1,2025-11-07,Carroll (WI) Pioneers,defense,Michael McNabb,play-by-play,True,7;53;103;104;116;145;154;171,14.1,coach checked;followed player;jersey number,0.99
-2025-11-07|1|34 Calvin Kapral > Post-Up > Right Block > Left Shoulder > Dribble Move > To Basket > Miss 2 Pts,1,2025-11-07,Carroll (WI) Pioneers,defense,Peyton McKenna,play-by-play,True,3;35;81;114;115;148;156,13.9,coach checked;jersey number,0.99
-2025-11-07|2|15 Evan Bland > Non Possession > No Violation,2,2025-11-07,Carroll (WI) Pioneers,offense,Evan Bland,play-by-play,False,,0.0,not located,
-2025-11-07|2|15 Evan Bland > Non Possession > No Violation,2,2025-11-07,Carroll (WI) Pioneers,offense,Jacob Naber,play-by-play,False,,0.0,not located,
-2025-11-07|2|15 Evan Bland > Non Possession > No Violation,2,2025-11-07,Carroll (WI) Pioneers,offense,Lamar Smith,play-by-play,True,1;22;23;28;47,7.1,coach checked;followed player;jersey number,0.99
-2025-11-07|2|15 Evan Bland > Non Possession > No Violation,2,2025-11-07,Carroll (WI) Pioneers,offense,Michael McNabb,play-by-play,True,9,9.8,jersey number,0.95
-2025-11-07|2|15 Evan Bland > Non Possession > No Violation,2,2025-11-07,Carroll (WI) Pioneers,offense,Peyton McKenna,play-by-play,True,3,10.4,jersey number,0.95
-2025-11-07|2|15 Evan Bland > Non Possession > No Violation,2,2025-11-07,Washington-St. Louis Bears,defense,Calvin Kapral,play-by-play,True,16,2.6,coach checked,0.99
-2025-11-07|2|15 Evan Bland > Non Possession > No Violation,2,2025-11-07,Washington-St. Louis Bears,defense,Connor May,play-by-play,True,2;49,7.8,coach checked;jersey number,0.99
-2025-11-07|2|15 Evan Bland > Non Possession > No Violation,2,2025-11-07,Washington-St. Louis Bears,defense,Josh Kim,play-by-play,True,11;39,8.4,coach checked;followed player,0.99
-2025-11-07|2|15 Evan Bland > Non Possession > No Violation,2,2025-11-07,Washington-St. Louis Bears,defense,Ryan Cohen,play-by-play,True,6,10.2,jersey number,0.95
-2025-11-07|2|15 Evan Bland > Non Possession > No Violation,2,2025-11-07,Washington-St. Louis Bears,defense,Will Grudzinski,play-by-play,True,0;50,11.2,coach checked;jersey number,0.99
-2025-11-07|3|15 Evan Bland > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 44 Lamar Smith > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,3,2025-11-07,Carroll (WI) Pioneers,offense,Evan Bland,play-by-play,True,14,5.9,jersey number,0.95
-2025-11-07|3|15 Evan Bland > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 44 Lamar Smith > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,3,2025-11-07,Carroll (WI) Pioneers,offense,Jacob Naber,play-by-play,False,,0.0,not located,
-2025-11-07|3|15 Evan Bland > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 44 Lamar Smith > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,3,2025-11-07,Carroll (WI) Pioneers,offense,Lamar Smith,play-by-play,False,,0.0,not located,
-2025-11-07|3|15 Evan Bland > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 44 Lamar Smith > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,3,2025-11-07,Carroll (WI) Pioneers,offense,Michael McNabb,play-by-play,True,8,2.4,jersey number,0.95
-2025-11-07|3|15 Evan Bland > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 44 Lamar Smith > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,3,2025-11-07,Carroll (WI) Pioneers,offense,Peyton McKenna,play-by-play,False,,0.0,not located,
-2025-11-07|3|15 Evan Bland > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 44 Lamar Smith > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,3,2025-11-07,Washington-St. Louis Bears,defense,Calvin Kapral,play-by-play,True,50,7.2,jersey number,0.95
-2025-11-07|3|15 Evan Bland > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 44 Lamar Smith > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,3,2025-11-07,Washington-St. Louis Bears,defense,Connor May,play-by-play,True,2;38,3.9,coach checked;jersey number,0.99
-2025-11-07|3|15 Evan Bland > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 44 Lamar Smith > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,3,2025-11-07,Washington-St. Louis Bears,defense,Josh Kim,play-by-play,True,0;51,6.6,coach checked;jersey number,0.99
-2025-11-07|3|15 Evan Bland > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 44 Lamar Smith > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,3,2025-11-07,Washington-St. Louis Bears,defense,Ryan Cohen,play-by-play,True,3,11.4,jersey number,0.95
-2025-11-07|3|15 Evan Bland > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 44 Lamar Smith > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts,3,2025-11-07,Washington-St. Louis Bears,defense,Will Grudzinski,play-by-play,True,34,1.8,jersey number,0.95
-2025-11-07|4|3 Josh Kim > Non Possession > Non Shooting Foul,4,2025-11-07,Carroll (WI) Pioneers,offense,Evan Bland,play-by-play,True,5;22,4.0,coach checked;followed player,0.99
-2025-11-07|4|3 Josh Kim > Non Possession > Non Shooting Foul,4,2025-11-07,Carroll (WI) Pioneers,offense,Jacob Naber,play-by-play,False,,0.0,not located,
-2025-11-07|4|3 Josh Kim > Non Possession > Non Shooting Foul,4,2025-11-07,Carroll (WI) Pioneers,offense,Lamar Smith,play-by-play,False,,0.0,not located,
-2025-11-07|4|3 Josh Kim > Non Possession > Non Shooting Foul,4,2025-11-07,Carroll (WI) Pioneers,offense,Michael McNabb,play-by-play,False,,0.0,not located,
-2025-11-07|4|3 Josh Kim > Non Possession > Non Shooting Foul,4,2025-11-07,Carroll (WI) Pioneers,offense,Peyton McKenna,play-by-play,True,7,7.9,jersey number,0.95
-2025-11-07|4|3 Josh Kim > Non Possession > Non Shooting Foul,4,2025-11-07,Washington-St. Louis Bears,defense,Calvin Kapral,play-by-play,True,6;18,2.9,jersey number,0.95
-2025-11-07|4|3 Josh Kim > Non Possession > Non Shooting Foul,4,2025-11-07,Washington-St. Louis Bears,defense,Connor May,play-by-play,True,27,1.0,coach checked,0.99
-2025-11-07|4|3 Josh Kim > Non Possession > Non Shooting Foul,4,2025-11-07,Washington-St. Louis Bears,defense,Josh Kim,play-by-play,False,,0.0,not located,
-2025-11-07|4|3 Josh Kim > Non Possession > Non Shooting Foul,4,2025-11-07,Washington-St. Louis Bears,defense,Ryan Cohen,play-by-play,True,8;24,7.6,jersey number,0.95
-2025-11-07|4|3 Josh Kim > Non Possession > Non Shooting Foul,4,2025-11-07,Washington-St. Louis Bears,defense,Will Grudzinski,play-by-play,True,11,6.9,coach checked,0.99
-2025-11-07|5|21 Connor May > Transition > First Middle > Turnover,5,2025-11-07,Washington-St. Louis Bears,offense,Calvin Kapral,play-by-play,True,6;27,5.6,coach checked;jersey number,0.99
-2025-11-07|5|21 Connor May > Transition > First Middle > Turnover,5,2025-11-07,Washington-St. Louis Bears,offense,Connor May,play-by-play,True,19;22,3.5,jersey number,0.95
-2025-11-07|5|21 Connor May > Transition > First Middle > Turnover,5,2025-11-07,Washington-St. Louis Bears,offense,Josh Kim,play-by-play,True,3;51,12.9,coach checked;followed player,0.99
-2025-11-07|5|21 Connor May > Transition > First Middle > Turnover,5,2025-11-07,Washington-St. Louis Bears,offense,Ryan Cohen,play-by-play,True,1,6.5,coach checked,0.99
-2025-11-07|5|21 Connor May > Transition > First Middle > Turnover,5,2025-11-07,Washington-St. Louis Bears,offense,Will Grudzinski,play-by-play,True,10;15;17,10.6,coach checked;jersey number,0.99
-2025-11-07|5|21 Connor May > Transition > First Middle > Turnover,5,2025-11-07,Carroll (WI) Pioneers,defense,Evan Bland,play-by-play,True,9,4.1,coach checked,0.99
-2025-11-07|5|21 Connor May > Transition > First Middle > Turnover,5,2025-11-07,Carroll (WI) Pioneers,defense,Jacob Naber,play-by-play,False,,0.0,not located,
-2025-11-07|5|21 Connor May > Transition > First Middle > Turnover,5,2025-11-07,Carroll (WI) Pioneers,defense,Lamar Smith,play-by-play,True,25;45,5.4,followed player;jersey number,0.95
-2025-11-07|5|21 Connor May > Transition > First Middle > Turnover,5,2025-11-07,Carroll (WI) Pioneers,defense,Michael McNabb,play-by-play,False,,0.0,not located,
-2025-11-07|5|21 Connor May > Transition > First Middle > Turnover,5,2025-11-07,Carroll (WI) Pioneers,defense,Peyton McKenna,play-by-play,True,4,4.1,coach checked,0.99
-2025-11-07|6|12 Peyton McKenna > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,6,2025-11-07,Carroll (WI) Pioneers,offense,Evan Bland,play-by-play,True,20;33;149,17.4,coach checked;jersey number,0.99
-2025-11-07|6|12 Peyton McKenna > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,6,2025-11-07,Carroll (WI) Pioneers,offense,Jacob Naber,play-by-play,False,,0.0,not located,
-2025-11-07|6|12 Peyton McKenna > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,6,2025-11-07,Carroll (WI) Pioneers,offense,Lamar Smith,play-by-play,True,1;49;111,13.2,followed player;jersey number,0.95
-2025-11-07|6|12 Peyton McKenna > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,6,2025-11-07,Carroll (WI) Pioneers,offense,Michael McNabb,play-by-play,False,,0.0,not located,
-2025-11-07|6|12 Peyton McKenna > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,6,2025-11-07,Carroll (WI) Pioneers,offense,Peyton McKenna,play-by-play,True,97,8.5,jersey number,0.95
-2025-11-07|6|12 Peyton McKenna > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,6,2025-11-07,Washington-St. Louis Bears,defense,Calvin Kapral,play-by-play,True,5;18;24;78;143,7.6,coach checked;jersey number,0.99
-2025-11-07|6|12 Peyton McKenna > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,6,2025-11-07,Washington-St. Louis Bears,defense,Connor May,play-by-play,True,115,4.9,jersey number,0.95
-2025-11-07|6|12 Peyton McKenna > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,6,2025-11-07,Washington-St. Louis Bears,defense,Josh Kim,play-by-play,True,4;41;50;135,8.5,coach checked;jersey number,0.99
-2025-11-07|6|12 Peyton McKenna > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,6,2025-11-07,Washington-St. Louis Bears,defense,Ryan Cohen,play-by-play,True,37;59;68;142,9.1,coach checked;jersey number,0.99
-2025-11-07|6|12 Peyton McKenna > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts,6,2025-11-07,Washington-St. Louis Bears,defense,Will Grudzinski,play-by-play,True,67,1.9,coach checked,0.99
-2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,7,2025-11-07,Washington-St. Louis Bears,offense,Calvin Kapral,play-by-play,False,,0.0,not located,
-2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,7,2025-11-07,Washington-St. Louis Bears,offense,Connor May,play-by-play,True,38,5.5,jersey number,0.95
-2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,7,2025-11-07,Washington-St. Louis Bears,offense,Josh Kim,play-by-play,True,83,2.1,coach checked,0.99
-2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,7,2025-11-07,Washington-St. Louis Bears,offense,Ryan Cohen,play-by-play,True,6,4.0,jersey number,0.95
-2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,7,2025-11-07,Washington-St. Louis Bears,offense,Will Grudzinski,play-by-play,True,49,4.2,jersey number,0.95
-2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,7,2025-11-07,Carroll (WI) Pioneers,defense,Evan Bland,play-by-play,True,12;91,15.1,coach checked;jersey number,0.99
-2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,7,2025-11-07,Carroll (WI) Pioneers,defense,Jacob Naber,play-by-play,False,,0.0,not located,
-2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,7,2025-11-07,Carroll (WI) Pioneers,defense,Lamar Smith,play-by-play,True,52,1.4,jersey number,0.95
-2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,7,2025-11-07,Carroll (WI) Pioneers,defense,Michael McNabb,play-by-play,False,,0.0,not located,
-2025-11-07|7|11 Ryan Cohen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,7,2025-11-07,Carroll (WI) Pioneers,defense,Peyton McKenna,play-by-play,False,,0.0,not located,
-2025-11-07|8|41 Jacob Naber > ISO > Right > Drives Right > To Basket > Miss 2 Pts,8,2025-11-07,Carroll (WI) Pioneers,offense,Evan Bland,play-by-play,False,,0.0,not located,
-2025-11-07|8|41 Jacob Naber > ISO > Right > Drives Right > To Basket > Miss 2 Pts,8,2025-11-07,Carroll (WI) Pioneers,offense,Jacob Naber,play-by-play,False,,0.0,not located,
-2025-11-07|8|41 Jacob Naber > ISO > Right > Drives Right > To Basket > Miss 2 Pts,8,2025-11-07,Carroll (WI) Pioneers,offense,Lamar Smith,play-by-play,True,37,4.6,jersey number,0.95
-2025-11-07|8|41 Jacob Naber > ISO > Right > Drives Right > To Basket > Miss 2 Pts,8,2025-11-07,Carroll (WI) Pioneers,offense,Michael McNabb,play-by-play,True,52,0.8,coach checked,0.99
-2025-11-07|8|41 Jacob Naber > ISO > Right > Drives Right > To Basket > Miss 2 Pts,8,2025-11-07,Carroll (WI) Pioneers,offense,Peyton McKenna,play-by-play,True,58;116,8.1,jersey number,0.95
-2025-11-07|8|41 Jacob Naber > ISO > Right > Drives Right > To Basket > Miss 2 Pts,8,2025-11-07,Washington-St. Louis Bears,defense,Calvin Kapral,play-by-play,True,1;43;132;133,6.8,coach checked;followed player;jersey number,0.99
-2025-11-07|8|41 Jacob Naber > ISO > Right > Drives Right > To Basket > Miss 2 Pts,8,2025-11-07,Washington-St. Louis Bears,defense,Connor May,play-by-play,True,128,5.8,jersey number,0.95
-2025-11-07|8|41 Jacob Naber > ISO > Right > Drives Right > To Basket > Miss 2 Pts,8,2025-11-07,Washington-St. Louis Bears,defense,Josh Kim,play-by-play,True,50;130;131,9.2,coach checked;jersey number,0.99
-2025-11-07|8|41 Jacob Naber > ISO > Right > Drives Right > To Basket > Miss 2 Pts,8,2025-11-07,Washington-St. Louis Bears,defense,Ryan Cohen,play-by-play,True,13,8.1,coach checked,0.99
-2025-11-07|8|41 Jacob Naber > ISO > Right > Drives Right > To Basket > Miss 2 Pts,8,2025-11-07,Washington-St. Louis Bears,defense,Will Grudzinski,play-by-play,True,47,11.1,coach checked,0.99
-2025-11-12|1|44 Lamar Smith > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts,1,2025-11-12,Carroll (WI) Pioneers,offense,Dennis Estepp,play-by-play,False,,0.0,not located,
-2025-11-12|1|44 Lamar Smith > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts,1,2025-11-12,Carroll (WI) Pioneers,offense,Jacob Naber,play-by-play,False,,0.0,not located,
-2025-11-12|1|44 Lamar Smith > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts,1,2025-11-12,Carroll (WI) Pioneers,offense,Lamar Smith,play-by-play,False,,0.0,not located,
-2025-11-12|1|44 Lamar Smith > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts,1,2025-11-12,Carroll (WI) Pioneers,offense,Michael McNabb,play-by-play,False,,0.0,not located,
-2025-11-12|1|44 Lamar Smith > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts,1,2025-11-12,Carroll (WI) Pioneers,offense,Peyton McKenna,play-by-play,False,,0.0,not located,
-2025-11-12|1|44 Lamar Smith > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts,1,2025-11-12,Beloit Buccaneers,defense,Anthony Carter,play-by-play,False,,0.0,not located,
-2025-11-12|1|44 Lamar Smith > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts,1,2025-11-12,Beloit Buccaneers,defense,Lathan Lewis,play-by-play,False,,0.0,not located,
-2025-11-12|1|44 Lamar Smith > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts,1,2025-11-12,Beloit Buccaneers,defense,Semaj Roy,play-by-play,False,,0.0,not located,
-2025-11-12|1|44 Lamar Smith > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts,1,2025-11-12,Beloit Buccaneers,defense,Tommy Glenn,play-by-play,False,,0.0,not located,
-2025-11-12|1|44 Lamar Smith > Hand Off > From Dribble > Left > To Basket > Miss 2 Pts,1,2025-11-12,Beloit Buccaneers,defense,Will Schubert,play-by-play,False,,0.0,not located,
+2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-06,Wisconsin-(Platteville) Pioneers,offense,Max Lucey,play-by-play,True,40;66,6.2,coach checked,0.99
+2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-06,Wisconsin-(Platteville) Pioneers,offense,Kaden MacKenzie,play-by-play,True,9;44,1.2,coach checked,0.99
+2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-06,Wisconsin-(Platteville) Pioneers,offense,Ben Forbes,play-by-play,False,,0.0,not located,
+2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-06,Wisconsin-(Platteville) Pioneers,offense,Lucas Rameker,play-by-play,True,25;26,6.6,coach checked,0.99
+2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-06,Wisconsin-(Platteville) Pioneers,offense,Logan Luxem,play-by-play,True,18;42,12.6,coach checked,0.99
+2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-06,Thiel,defense,Noah Payne,play-by-play,False,,0.0,not located,
+2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-06,Thiel,defense,DeAndre Brown Jr.,play-by-play,False,,0.0,not located,
+2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-06,Thiel,defense,Landon Percinsky,play-by-play,False,,0.0,not located,
+2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-06,Thiel,defense,John Osuji,play-by-play,False,,0.0,not located,
+2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-06,Thiel,defense,Khamari Accursio-Haris,play-by-play,False,,0.0,not located,

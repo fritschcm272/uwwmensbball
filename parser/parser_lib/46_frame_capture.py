@@ -2106,9 +2106,23 @@ def _bank_starters_fetch(page, gid):
         i = 0
         while i < len(urls) and i < 3:
             page.goto(urls[i], wait_until="domcontentloaded", timeout=60000)
-            if "auth.synergysportstech.com" in page.url:
+            # CONFIRMED BUG (fixed; first try saved Synergy's sign-in page, 0 starters found): a signed-out visitor is
+            # sent to the sign-in page a moment AFTER the box score starts loading -- wait for that, sign in, reload
+            for _try in range(2):
+                t0 = time.time()
+                while time.time() - t0 < 20 and "auth.synergysportstech.com" not in page.url:
+                    if page.locator("table").count():
+                        break
+                    page.wait_for_timeout(500)
+                if "auth.synergysportstech.com" not in page.url:
+                    break
+                print("  [bank] signing in to Synergy for the box score...", flush=True)
                 login_to_synergy(page, synergy_username, synergy_password, timeout_ms=60000)
                 page.goto(urls[i], wait_until="domcontentloaded", timeout=60000)
+            try:
+                page.locator("table").first.wait_for(state="attached", timeout=30000)
+            except Exception:
+                pass
             try:
                 page.wait_for_load_state("networkidle", timeout=30000)
             except Exception:
@@ -2135,7 +2149,38 @@ def _bank_starters_fetch(page, gid):
                 fh.write(h)
     except Exception:
         pass
+    # CONFIRMED CHANGE (requested: 5-man lineups for banked games): Synergy's own game data lists the offensive and
+    # defensive five on EVERY possession (api/games/<id>/events: offensiveLineup / defensiveLineup) -> inputs/_bank/
+    # <gid>_lineups.csv (one row per Synergy clip, with its half and game clock from the play-by-play). The starters are
+    # the two fives on the game's first possession.
+    try:
+        _ev = [x for u_, d_ in bodies if "/events?" in u_ and isinstance(d_, dict) for x in (d_.get("result") or [])]
+        _pb = [x for u_, d_ in bodies if "/playbyplays?" in u_ and isinstance(d_, dict) for x in (d_.get("result") or [])]
+        _clk = {}
+        for x in _pb:
+            if x.get("eventIid") is not None and x.get("clock") is not None:
+                _clk[x["eventIid"]] = max(_clk.get(x["eventIid"], -1), int(x["clock"]))
+        _rows = []
+        for x in _ev:
+            nm = lambda L: ", ".join(str(p_.get("name") or "").strip() for p_ in (L or []) if p_.get("name"))
+            c_ = _clk.get(x.get("iid"))
+            _rows.append({"period": x.get("period"), "clock_s": (c_ / 10.0) if c_ is not None else None, "utc": x.get("utc"),
+                          "description": x.get("description"), "offense": (x.get("offense") or {}).get("name"),
+                          "defense": (x.get("defense") or {}).get("name"),
+                          "offense_lineup": nm(x.get("offensiveLineup")), "defense_lineup": nm(x.get("defensiveLineup"))})
+        if _rows:
+            _ldf = pd.DataFrame(_rows).assign(_c=lambda d_: -pd.to_numeric(d_["clock_s"], errors="coerce").fillna(-1e9)).sort_values(["period", "_c", "utc"], kind="stable").drop(columns="_c")
+            _ldf.to_csv(os.path.join(sdir, f"{gid}_lineups.csv"), index=False)
+            _first = _ldf[(_ldf["offense_lineup"].str.count(",") == 4) & (_ldf["defense_lineup"].str.count(",") == 4)].head(1)
+            for _, r0 in _first.iterrows():
+                starters[str(r0["offense"])] = [n_.strip() for n_ in r0["offense_lineup"].split(",")]
+                starters[str(r0["defense"])] = [n_.strip() for n_ in r0["defense_lineup"].split(",")]
+            print(f"  [bank] {gid}: Synergy lineups for {len(_ldf)} clip(s) -> inputs/_bank/{gid}_lineups.csv", flush=True)
+    except Exception as e_:
+        print(f"  [bank] {gid}: Synergy lineups not read ({type(e_).__name__}: {e_})", flush=True)
     for _u, d in bodies:
+        if sum(len(v) for v in starters.values()) >= 10:
+            break
         _bank_starters_from_json(d, out=starters)
     if sum(len(v) for v in starters.values()) < 10:
         # the page itself: a box-score table per team, starters marked in a "Starters" block or a GS / starter column
@@ -2183,7 +2228,8 @@ def _bank_starters_all():
         return
     for b in bank_games(with_unknown=True):
         c = (_bank_cache().get(b["gid"]) or {})
-        if sum(len(v) for v in (c.get("starters") or {}).values()) >= 10:
+        if (sum(len(v) for v in (c.get("starters") or {}).values()) >= 10
+                and os.path.exists(os.path.join(INPUT_DIR, "_bank", f"{b['gid']}_lineups.csv"))):
             continue
         try:
             st = run_in_fastscout_session(lambda p, g_=b["gid"]: _bank_starters_fetch(p, g_))

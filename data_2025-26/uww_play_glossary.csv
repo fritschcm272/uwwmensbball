@@ -1,0 +1,71 @@
+shorthand,meaning,confidence
+BLOB / SLOB,Baseline / sideline out-of-bounds play,Standard
+ATO,After-timeout play,Standard
+BO,"Bad offense: no real setup, a quick shot (a situation, like ATO)",Standard
+Opener,First set of a half,Inferred
+5 Out / 4-1 (41) / 3-2 (32) / 2-3 (23),Floor alignment: perimeter-post split,Standard
+33,Named set (alignment not stated),Inferred
+HiLo / Hi-Low,High-low post alignment,Standard
+Horns,Two bigs at the elbows,Standard
+Box / Line / Stairs / 2-1-1,Inbounds alignments,Standard
+"OK State, Panther, Cheetah, Flop, Highway, Pistol, Monty",Named sets from the staff's playbook,Standard
+DHO / DH / handoff,Dribble handoff,Standard
+BS,Ball screen,Standard
+DS,Down screen,Standard
+STS,Screen the screener,Standard
+Sci / Sci Sc,Scissors cut off the post,Inferred
+Flair / Flare,Flare screen,Standard
+RJ / Reject,Ball handler rejects the screen,Standard
+DD,Double drag ball screen,Inferred
+IVO,Iverson cut,Inferred
+RIC / Ricky,Named action (ricochet screen) -- confirm with staff,Inferred
+Zoom / Twirl / Grenade / Hammer / Pat Miller / Breddy / Rip / Spain,Named actions,Standard
+PT,Post touch -- confirm with staff,Inferred
+BC Cut,Backdoor cut,Inferred
+LW RW LC RC LS RS LB RB LE RE Top,"Left/right wing, corner, side, block, elbow; top of the key",Standard
+LW 3 / top key 3,Where the three-point shot came from,Standard
+Rewatch / TBD / ? / mess up,Tagger flagged the clip for review -- excluded from set rankings,Standard
+M2M,Man-to-man defense,Standard
+2-3 / 3-2 / 1-3-1 Zone / Zone,"Zone defense, with subtype when stated",Standard
+Press / 1-2-1-1 / 1-2-2 / 1-2,"Full-court press, with formation when named",Standard
+Switch / Hedge / Soft Hedge / Ice / Drop,Ball-screen coverage call,Standard
+Deny / Jam,On-ball or off-ball denial call,Inferred
+Show / Under / Fight / Blitz,"More ball-screen coverage calls -- show and recover, go under, fight over the top, or trap it",Standard
+Token,A named ball-screen coverage call -- confirm the read with staff,Inferred
+Tran / Transition,"Live-ball offense before the defense is set, as its own situation (not folded into Half court). A purely transition possession has NO set call -- no Motion default, no suggested play call or formation; a set the coach tags after it (tran-horns-panther) is kept",Standard
+Flow / Chin / Twins / Snap / Black / Bulldog / Pinch / Blocker-Mover,Named sets or formations,Standard
+Guards Cross / UCLA,Named actions -- two guards exchange; a screen off a UCLA cut,Standard
+Formation-Call(details): [Press] Defense (details),"Structured tag: formation, play call (Motion if blank), ordered offensive details; press (None if blank), defensive formation, coverage details",Standard
+pass 5 / 5 bs,"Number inside the OFFENSE parentheses = position (1-5), not jersey",Standard
+tl,Top lock on an off-ball screen,Standard
+trail / chase / cheat / over / through / bump,Off-ball (down/flare/pin) screen coverages,Standard
+drop / hedge / show / ice / blitz / under / fight / switch,Ball-screen coverages,Standard
+R+J,Run-and-jump press,Standard
+122 - m2m,"Press slot before the dash: 1-2-2 press, falling back to man-to-man (1211, 221, 12 likewise)",Standard
+5tl,DEFENDER #5 top-locked the screen (the number is the defender's jersey),Standard
+m2m (alone),Defense-only tag on a possession where only the defense is being charted,Standard
+HI BS,High (center) ball screen,Standard
+Over (offense),5-out play call: go over the 5 man after the pass to him,Standard
+Swing,Pass across the middle of the court,Standard
+Swing Screen,Screen set on the low block,Standard
+Ricky,A screen followed by an immediate rescreen,Standard
+Doubleclear / Doublecut,Two players clear / cut out to open an iso,Standard
+Slip,Screener slips to the basket before/without setting the screen,Standard
+Ghost,"Run up like a screen, then run through it without setting it",Standard
+Stagger,Two players set down screens in a row for one player,Standard
+Zoom,Dribble handoff with a screen from a player in between,Standard
+DD,Dribble drive,Standard
+Flash / Pop / Iso,Flash to the ball / screener pops out for 3 / one player on his own,Standard
+P-wing / Pass corner,Pass to the wing / pass to the corner,Standard
+Line / Box (inbounds),"Line: two in the corners, two on the blocks. Box: one on each elbow and each block",Standard
+Over (coverage),On-ball defender goes over the screen and stays with his man,Standard
+Under (coverage),Defender goes under the screen and stays on his man,Standard
+Switch,The two defenders trade men on the screen,Standard
+Stay,Ball handler rejects the screen; the defender stays with him,Standard
+Show & GB,"Show (soft or hard hedge), then get back to the screener",Standard
+Switch2nd,"Stayed on the first screen, switched the second",Standard
+TL,Top lock,Standard
+RJ / press(rj),Run-and-jump press (falls back into man),Standard
+press(12),1-2-2 press (falls back into man),Standard
+Token,Token press: pressure without going for steals,Standard
+deny / double + player,"Denied a player the ball / double-teamed him (e.g. denymadz, deny15)",Standard

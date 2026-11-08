@@ -1,0 +1,152 @@
+
+===== cell 1 <file> =====
+
+===== cell 2 00b_season_switch, 01_uw_whitewater_scouting_parser =====
+Season: 2026-27 (last season 2025-26: C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\data_2025-26)
+Input directory: ./inputs
+Output directory: ../data
+LLM comparisons: disabled
+Reference date: 2026-11-8
+Before scout: no -- using every scouting report found
+  APP_BASE_URL normalized: 'uwwmensbball-new.streamlit.app' -> https://uwwmensbball-new.streamlit.app
+Brief links -> https://uwwmensbball-new.streamlit.app
+
+===== cell 4  =====
+
+===== cell 5  =====
+
+===== cell 7 02_parse_every_team_schedule_scrape_live_from =====
+Found 3 schedule MHTML file(s) in ./inputs:
+ - UW-Whitewater - Schedule_2023.html
+ - UW-Whitewater - Schedule_2024.html
+ - UW-Whitewater - Schedule_2026.html
+Detected season 2026 from UWW's local schedule snapshot -- using FASTSCOUT_DOCS_SEASON='26' for any live-scrape URLs below (was hardcoded to '25').
+Skipping live scrape for UW-Whitewater's own schedule -- a local schedule file already exists: UW-Whitewater - Schedule_2026.html
+Excluding 22 game(s) scheduled beyond the next upcoming game -- not downloading those reports yet.
+
+Downloading 1 missing scouting-report PDF(s) from FastScout:
+    [login] navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [auth-retry] got redirected to identity.hudl.com while waiting on https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26 -- logging in and retrying
+    [auth-retry] login_to_fastscout returned, now at https://fastscout.fastmodelsports.com/#access_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZaYjBkN0VpWG9TQ0FhUTdYaW90SCJ9.eyJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2Nvbm5lY3Rpb25fbmFtZSI6InByb2QtaHVkbC11c2Vycy10ZXJyYWZvcm0iLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL3VzZXJfaWQiOiI2NDM1MDQ3IiwiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS90b2siOiJpZCIsImh0dHBzOi8vaWRlbnRpdHkuaHVkbC5jb20vaXNfc3lzYWRtaW4iOmZhbHNlLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2ludGVybmFsX2lkX2h1ZGwiOiI2NDM1MDQ3IiwiZ2l2ZW5fbmFtZSI6IkNvcmV5IiwiZmFtaWx5X25hbWUiOiJGcml0c2NoIiwibmlja25hbWUiOiJmcml0c2NoY20yNyIsIm5hbWUiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOTY3OWI2Mzk1N2E1ZTJmZmE2NjMyYWZhYjVmMGExYTU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZmci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAyNi0xMS0wOFQwMTo0NToyMy4yMDNaIiwiZW1haWwiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS8iLCJhdWQiOiJ1UFJyRFVpWkZOU3d2RnJ0cnVsQ3lBWDBwaDZBckx6VSIsInN1YiI6ImF1dGgwfGh1ZGx8NjQzNTA0NyIsImlhdCI6MTc5NDEwMjMyMywiZXhwIjoxNzk1MzExOTIzLCJzaWQiOiJrVmZSSlpid1Vkd3U3d0dHbm9HTEFNQ1YwNUsyX0FwNSIsImNfaGFzaCI6IlJZZnEyQjZncmlhVWdic0wtU0xzWXciLCJub25jZSI6IjA1NDA2MzNkLTJiODEtNDkzMi05NGI2LWFjMzkyMjlmZTExNyJ9.HJ94TTWVxgo-O5CmRN8_BQtBBMgznOEvEduv358qymHyV42_pcLdmOWrjZv2w2J23sKXAHQ_afY6KH4dWmBxZttzPfPMK6fzFRtc8vdB9-MihihQOZsyxYeca3Af5t4UPVwuNJZu-mxPfpyQVqu7IlU86wT1pTYuUL8oOEcF-u59Xvdvyio0w80bxWwI8sBOprhj9rOqT9xcV8qFOedCzddX_RLu-pejEGYYsoHEMyqno4Kc-grGhXHGkoVLh-2l-C1xXWn2Hgeh360yU-33EffofEr4Q1l0FhSmWmO3KBoaCXg7Y6HhgyR6HDV8fghRvbhYWFiiqZ_Zxf_tvUjwWA&token_type=Bearer&expires_at=1795311923 -- re-navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [auth-retry] re-navigated, now at https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26 -- waiting for 'text=SCHEDULE'
+    [login] confirmed logged in, landed on https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [save] myTeam analytics dashboard (diagnostic) -> myTeam - Analytics Dashboard.html
+  [Ripon Red Hawks] could not download scouting report: RuntimeError: No row matched game date Nov 14 on https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/documents?league=NCAAB-III&season=26 -- 'Game Date' values seen on the page: ['', 'Nov 07, 2025', 'Dec 31, 2024', 'Nov 25, 2023', 'Nov 25, 2023', 'Dec 17, 2021', 'Nov 26, 2022']
+  UW-Whitewater Warhawks (UW-Whitewater - Schedule_2026.html): 2 game(s) -- scouted opponents: ['Carroll (WI) Pioneers']
+
+Fetching 2 opponent schedule(s) (scrape opponent_url, MHTML backup on failure):
+    [scrape] navigating to https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw?league=NCAAB-III&season=26
+    [scrape] landed on https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw/analytics/dashboard?league=NCAAB-III&season=26 -- clicking 'SCHEDULE' tab
+    [scrape] (non-fatal) second stats table never loaded, proceeding with schedule table only: TimeoutError: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("td div[data-id]") to be visible
+    62 × locator resolved to 22 elements. Proceeding with the first one: <div data-id="bXPBwcvPQDiXi5Q8DXd6Bg">Jimmy Tarjan</div>
+
+    [scrape] landed on https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw/games?league=NCAAB-III&season=26
+    [save] scraped opponent schedule -> Carroll (WI) Pioneers - Schedule_2026.html
+    [scrape] navigating to https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ?league=NCAAB-III&season=26
+    [scrape] landed on https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/analytics/dashboard?league=NCAAB-III&season=25 -- clicking 'SCHEDULE' tab
+    [scrape] FastScout opened season 25 -- switched the season selector to 2026-2027 (now https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/analytics/dashboard?league=NCAAB-III&season=26)
+    [scrape] (non-fatal) second stats table never loaded, proceeding with schedule table only: TimeoutError: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("td div[data-id]") to be visible
+    62 × locator resolved to 24 elements. Proceeding with the first one: <div data-id="lcle882sTQuX-MAGyZMMSg">Christian Wilson</div>
+
+    [scrape] landed on https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games?league=NCAAB-III&season=26
+    [save] scraped opponent schedule -> Ripon Red Hawks - Schedule_2026.html
+  Carroll (WI) Pioneers (scraped live): 1 game(s) -- all games before 2026-11-8
+  Ripon Red Hawks (scraped live): 1 game(s) -- all games before 2026-11-8
+Synergy game IDs: 0 of 1 played UWW game(s), 0 game row(s) in all -- no video link on FastScout for: Sat, Nov 7 Carroll (WI) Pioneers
+          date                opponent                    team location  \
+0   Sat, Nov 7   Carroll (WI) Pioneers  UW-Whitewater Warhawks     Away   
+1  Sat, Nov 14         Ripon Red Hawks  UW-Whitewater Warhawks     Home   
+2   Sat, Nov 7  UW-Whitewater Warhawks   Carroll (WI) Pioneers     Home   
+3   Sat, Nov 7       Elmhurst Bluejays         Ripon Red Hawks     Home   
+
+                                                                                    opponent_url  \
+0  https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw?league=NCAAB-III&season=26   
+1  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ?league=NCAAB-III&season=26   
+2  https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw?league=NCAAB-III&season=26   
+3  https://fastscout.fastmodelsports.com/teams/wI_oq6BcQWaPN8iyk-64bw?league=NCAAB-III&season=26   
+
+                                                                                                                              game_url  \
+0  https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/BTiJn2Q2QUqwnB4oVvvRsA/boxscore?league=NCAAB-III&season=26   
+1  https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/iWbUqzNQS52l9UpBBUC83Q/boxscore?league=NCAAB-III&season=26   
+2  https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw/games/BTiJn2Q2QUqwnB4oVvvRsA/boxscore?league=NCAAB-III&season=26   
+3  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/Q-R41YqCRVa_Rf_nXXlVQg/boxscore?league=NCAAB-III&season=26   
+
+  video_url synergy_game_id synergy_boxscore_url outcome team_score  \
+0      None            None                 None    None       None   
+1      None            None                 None    None       None   
+2      None            None                 None    None       None   
+3      None            None                 None    None       None   
+
+  opponent_score point_margin   season Upcoming  
+0           None          NaN  2026-27       No  
+1           None         None  2026-27      Yes  
+2           None          NaN  2026-27       No  
+3           None          NaN  2026-27       No  
+  [time] 02_parse_every_team_schedule_scrape_live_from: 2.3 min
+
+===== cell 9  =====
+
+===== cell 11  =====
+    jersey_number                  PLAYER GP-GS MIN FGM-A FG% 3PM-A 3P% 3P-R  \
+0            14.0            Mikey Wildes     -   -     -   -     -   -    -   
+1            25.0             Taveon Vann     -   -     -   -     -   -    -   
+2            23.0          Mauryon Turner     -   -     -   -     -   -    -   
+3            12.0  Tyshawn Teague-Johnson     -   -     -   -     -   -    -   
+4            35.0           Rashad Rogers     -   -     -   -     -   -    -   
+5             5.0         Isaiah Robinson     -   -     -   -     -   -    -   
+6            11.0            Luke Paddock     -   -     -   -     -   -    -   
+7             2.0           Kelton McEwen     -   -     -   -     -   -    -   
+8            21.0            Brock Marino     -   -     -   -     -   -    -   
+9            15.0           Collin Madson     -   -     -   -     -   -    -   
+10            1.0            JR Lukenbill     -   -     -   -     -   -    -   
+11            0.0          Agape Keys Jr.     -   -     -   -     -   -    -   
+12           20.0           Chris Johnson     -   -     -   -     -   -    -   
+13            3.0              Zay Howard     -   -     -   -     -   -    -   
+14           33.0         Trent Grunewald     -   -     -   -     -   -    -   
+15           10.0         Darius Chestnut     -   -     -   -     -   -    -   
+16           24.0         Zavier Castillo     -   -     -   -     -   -    -   
+17           27.0          Jonathan Aluyi     -   -     -   -     -   -    -   
+18            NaN              Team Total     -   -     -   -     -   -    -   
+19            NaN                Opponent     -   -     -   -     -   -    -   
+
+   FTM-A FT% PTS ORB DRB REB AST TO STL BLK PF  
+0      -   -   -   -   -   -   -  -   -   -  -  
+1      -   -   -   -   -   -   -  -   -   -  -  
+2      -   -   -   -   -   -   -  -   -   -  -  
+3      -   -   -   -   -   -   -  -   -   -  -  
+4      -   -   -   -   -   -   -  -   -   -  -  
+5      -   -   -   -   -   -   -  -   -   -  -  
+6      -   -   -   -   -   -   -  -   -   -  -  
+7      -   -   -   -   -   -   -  -   -   -  -  
+8      -   -   -   -   -   -   -  -   -   -  -  
+9      -   -   -   -   -   -   -  -   -   -  -  
+10     -   -   -   -   -   -   -  -   -   -  -  
+11     -   -   -   -   -   -   -  -   -   -  -  
+12     -   -   -   -   -   -   -  -   -   -  -  
+13     -   -   -   -   -   -   -  -   -   -  -  
+14     -   -   -   -   -   -   -  -   -   -  -  
+15     -   -   -   -   -   -   -  -   -   -  -  
+16     -   -   -   -   -   -   -  -   -   -  -  
+17     -   -   -   -   -   -   -  -   -   -  -  
+18     -   -   -   -   -   -   -  -   -   -  -  
+19     -   -   -   -   -   -   -  -   -   -  -  
+
+===== cell 13 03_investigate_playerstattable_tile_widgets =====
+
+===== cell 15 04_investigate_myteam_analytics_dashboard =====
+
+===== cell 16 05_investigate_myteam_analytics_dashboard_2 =====
+
+===== cell 17 06_investigate_myteam_analytics_dashboard_3 =====
+
+===== cell 18 07_investigate_myteam_analytics_dashboard_4 =====
+
+===== cell 20  =====
+Overall record (W-L): 0-0
+Empty DataFrame
+Columns: [location, games]
+Index: []

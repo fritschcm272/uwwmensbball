@@ -2,6 +2,22 @@
  "6aee1d6c9e04633c52349e89": {
   "date": "2026-11-06",
   "label": "Wisconsin-(Platteville) Pioneers vs Thiel",
-  "for": "Wisconsin-(Platteville) Pioneers"
+  "for": "Wisconsin-(Platteville) Pioneers",
+  "starters": {
+   "UWPlatteville": [
+    "Max Lucey",
+    "Kaden MacKenzie",
+    "Ben Forbes",
+    "Lucas Rameker",
+    "Logan Luxem"
+   ],
+   "Thiel": [
+    "Noah Payne",
+    "DeAndre Brown Jr.",
+    "Landon Percinsky",
+    "John Osuji",
+    "Khamari Accursio-Haris"
+   ]
+  }
  }
 }

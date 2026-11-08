@@ -448,6 +448,25 @@ def scrape_rendered_html(page, url, wait_selector="#myTeamSchedule", timeout_ms=
     try:
         _goto_with_auth_retry(page, url, "text=SCHEDULE", timeout_ms)
         print(f"    [scrape] landed on {page.url} -- clicking 'SCHEDULE' tab")
+        # CONFIRMED BUG (fixed; first 2026-27 run: Ripon's and Carroll's team pages asked for season=26 but FastScout sent
+        # them to season=25, so last season's schedule was read as this season's -- the 2025 Ripon game came back dated
+        # 2026-11-07 and Frame capture re-captured it under that date). When FastScout lands on another season, the
+        # page's season selector is switched to the one asked for before the schedule is read.
+        _want_s = re.search(r"season=(\d+)", url)
+        _got_s = re.search(r"season=(\d+)", page.url)
+        if _want_s and _got_s and _want_s.group(1) != _got_s.group(1):
+            _yy = 2000 + int(_want_s.group(1))
+            _lab = f"{_yy}-{_yy + 1}"
+            try:
+                page.locator("#seasonDropdown").first.click(timeout=timeout_ms)
+                page.get_by_text(re.compile(rf"^\s*{_lab}\s*$")).last.click(timeout=timeout_ms)
+                page.wait_for_timeout(2500)
+                print(f"    [scrape] FastScout opened season {_got_s.group(1)} -- switched the season selector to {_lab}"
+                      f" (now {page.url})", flush=True)
+            except Exception as _se:
+                print(f"    [scrape] FastScout opened season {_got_s.group(1)} and its season selector couldn't be "
+                      f"switched to {_lab} ({type(_se).__name__}) -- this page is NOT used as {_lab}", flush=True)
+                raise RuntimeError(f"FastScout showed season {_got_s.group(1)} instead of {_want_s.group(1)}")
         _click_tab_by_text(page, "SCHEDULE", timeout_ms)
         page.wait_for_selector(wait_selector, timeout=timeout_ms)
         # The container can become visible before its rows finish an async data fetch triggered by the tab

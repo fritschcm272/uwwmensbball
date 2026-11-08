@@ -1,0 +1,47 @@
+scouted_opponent,side,team,player,tier,tier_order,games,mpg,recent_count,missed_recent,starts_recent,recent_n,starter_basis,last_game_min,last_game_rank,tier_note,offensive_role,offensive_role_basis,defensive_role,defensive_role_basis
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Anton Kilde,Bench — rotation,1,23,13.6,3,0,0,3,scouting report role,11.6,8.0,,Stationary Shooter,Synergy play types,Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,CJ Brown,Starter,0,26,26.5,3,0,1,3,scouting report role,32.5,2.0,,Movement Shooter,Synergy play types,Point of Attack,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Jack Field,Bench — rotation,1,26,17.5,3,0,3,3,scouting report role,22.6,5.0,,Stationary Shooter,Synergy play types,Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Keenan Rahn,Bench — rotation,1,24,12.6,3,0,2,3,scouting report role,13.7,7.0,,Stationary Shooter,Synergy play types,Point of Attack,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Kolby Williams,Starter,0,25,26.8,2,0,1,3,scouting report role,33.0,1.0,,Post Scorer,Synergy play types,Mobile Big,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Landon Lee,Bench — limited minutes,2,22,7.2,3,0,0,3,scouting report role,9.0,9.0,,Secondary Ball Handler,Synergy play types,Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Michael Asman,Starter,0,16,25.4,0,7,0,3,scouting report role,,,,Stationary Shooter,Synergy play types,Wing Stopper,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Sam Leoni,Bench — rotation,1,25,23.6,3,0,3,3,scouting report role,14.2,6.0,,Stationary Shooter,Synergy play types,Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Seth Bunders,Starter,0,26,30.6,3,0,3,3,scouting report role,30.2,3.0,,Primary Ball Handler,Synergy play types,Point of Attack,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Joey Daun,Bench — rotation,1,17,8.4,3,0,0,3,scouting report role,7.6,10.0,,Stationary Shooter,Synergy play types,Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Marshawn Robinson,Starter,0,13,24.2,3,0,2,3,scouting report role,23.8,4.0,,Secondary Ball Handler,Synergy play types,Point of Attack,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Abe Dykstra,Bench — limited minutes,2,7,4.2,1,2,0,3,scouting report role,,,,Shot Creator,Synergy play types (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Isaac Knoll,Bench — no minutes,3,4,2.4,0,20,0,3,scouting report role,,,,Slasher,play-by-play only (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Jake Thomsen,Bench — no minutes,3,3,3.1,0,20,0,3,scouting report role,,,,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Jarton Davis,Bench — no minutes,3,8,15.0,0,17,0,3,scouting report role,,,,Movement Shooter,Synergy play types,Point of Attack,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Jose Gonzales,Bench — limited minutes,2,10,5.1,2,1,0,3,scouting report role,,,,Slasher,Synergy play types (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Christian Wilson,Bench — no minutes,3,4,2.0,0,8,0,3,scouting report role,,,,Secondary Ball Handler,position only,Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Nick Ahlquist,Bench — no minutes,3,2,2.0,0,14,0,3,scouting report role,,,,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Houston McKenzie,Bench — no minutes,3,7,4.5,0,12,0,3,scouting report role,,,,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Jack Ellickson,Bench — limited minutes,2,3,2.7,1,2,0,3,scouting report role,,,,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Caeden Holly,Bench — no minutes,3,2,2.4,0,23,0,3,scouting report role,,,,Slasher,play-by-play only (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Jackson Flowers,Bench — limited minutes,2,6,4.2,1,1,0,3,scouting report role,,,,Stationary Shooter,Synergy play types (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Olin Zellmer,Bench — no minutes,3,3,2.2,0,8,0,3,scouting report role,,,,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Birch Gunja,Bench — no minutes,3,2,1.6,0,8,0,3,scouting report role,,,,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Fisher MacKenzie,Bench — no minutes,3,1,2.6,0,8,0,3,scouting report role,,,,Secondary Ball Handler,position only,Low Activity,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Agape Keyes Jr.,Bench — no minutes,3,6,3.7,0,18,0,3,started 2+ of the last 3 game(s),,,,Movement Shooter,Synergy play types (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Brock Marino,Starter,0,28,21.1,3,0,3,3,started 2+ of the last 3 game(s),16.8,7.0,,Post Scorer,Synergy play types,Mobile Big,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Collin Madson,Starter,0,29,32.9,3,0,3,3,started 2+ of the last 3 game(s),36.6,1.0,,Slasher,Synergy play types,Point of Attack,coach tags (low sample)
+Ripon Red Hawks,UWW,UW-Whitewater,Darius Chestnut,Bench — no minutes,3,18,9.5,0,6,0,3,started 2+ of the last 3 game(s),,,,Stationary Shooter,Synergy play types,Low Activity,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Isaac Verges,Starter,0,27,22.5,3,0,3,3,started 2+ of the last 3 game(s),27.1,3.0,,Secondary Ball Handler,Synergy play types,Point of Attack,coach tags (low sample)
+Ripon Red Hawks,UWW,UW-Whitewater,Isaiah Robinson,Bench — limited minutes,2,20,7.7,1,1,0,3,started 2+ of the last 3 game(s),,,,Secondary Ball Handler,Synergy play types,Point of Attack,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Jake Quast,Bench — rotation,1,28,16.0,3,0,0,3,started 2+ of the last 3 game(s),6.4,9.0,,Slasher,Synergy play types,Point of Attack,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Joey Berezowitz,Bench — rotation,1,29,13.5,3,0,0,3,started 2+ of the last 3 game(s),23.5,4.0,,Movement Shooter,Synergy play types,Chaser,coach tags (low sample)
+Ripon Red Hawks,UWW,UW-Whitewater,Kelton McEwen,Bench — rotation,1,28,10.6,3,0,0,3,started 2+ of the last 3 game(s),3.2,10.0,,Off Screen Shooter,Synergy play types,Low Activity,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Luke Bara,Starter,0,29,23.6,3,0,3,3,started 2+ of the last 3 game(s),22.7,5.0,,Off Screen Shooter,Synergy play types,Point of Attack,coach tags
+Ripon Red Hawks,UWW,UW-Whitewater,Mauryon Turner,Bench — no minutes,3,3,3.4,0,19,0,3,started 2+ of the last 3 game(s),,,,Roll & Cut Big,play-by-play only (low sample),Mobile Big,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Rashad Rogers,Bench — rotation,1,19,8.5,2,0,0,3,started 2+ of the last 3 game(s),7.9,8.0,,Post Scorer,Synergy play types,Mobile Big,coach tags (low sample)
+Ripon Red Hawks,UWW,UW-Whitewater,Richie Warren,Starter,0,29,21.9,3,0,3,3,started 2+ of the last 3 game(s),32.9,2.0,,Slasher,Synergy play types,Wing Stopper,coach tags
+Ripon Red Hawks,UWW,UW-Whitewater,Trent Grunewald,Bench — no minutes,3,6,4.4,0,13,0,3,started 2+ of the last 3 game(s),,,,Off Screen Shooter,Synergy play types (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Tyshawn Teague-Johnson,Bench — rotation,1,18,10.6,3,0,0,3,started 2+ of the last 3 game(s),1.7,11.0,,Slasher,Synergy play types,Low Activity,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,JR Lukenbill,Bench — rotation,1,26,12.4,3,0,0,3,started 2+ of the last 3 game(s),20.3,6.0,,Athletic Finisher,Synergy play types,Low Activity,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Matthew McKay,Bench — no minutes,3,3,2.0,0,13,0,3,started 2+ of the last 3 game(s),,,,Roll & Cut Big,play-by-play only (low sample),Mobile Big,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Mikey Wildes,Bench — no minutes,3,4,2.0,0,13,0,3,started 2+ of the last 3 game(s),,,,Athletic Finisher,play-by-play only (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Austin Ambrose,Bench — no minutes,3,8,9.0,0,9,0,3,started 2+ of the last 3 game(s),,,,Stationary Shooter,Synergy play types,Low Activity,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Tristian Lynch,Bench — no minutes,3,2,3.9,0,24,0,3,started 2+ of the last 3 game(s),,,,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only
+Ripon Red Hawks,UWW,UW-Whitewater,Zay Howard,Bench — no minutes,3,3,1.2,0,13,0,3,started 2+ of the last 3 game(s),,,,Stationary Shooter,play-by-play only (low sample),Low Activity,play-by-play only

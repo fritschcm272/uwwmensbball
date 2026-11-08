@@ -1,0 +1,6 @@
+opponent,situation,set_name,primary_player,action,frequency,our_call,film_ref,is_sample
+Ripon Red Hawks,Half court,Off-ball screen Motion,Kolby Williams,Down Screen,"10 uses in 1 games, 0.70 PPP",Lock and trail; bump the cutter off the screen,Beloit@Ripon,False
+Ripon Red Hawks,Half court,Screen Motion,CJ Brown,Ball Screen,"9 uses in 1 games, 1.33 PPP",Pick one ball-screen coverage and stay in it; no middle,Beloit@Ripon,False
+Ripon Red Hawks,Half court,Motion (no action tagged),Jack Field,nan,"5 uses in 1 games, 0.40 PPP",,Beloit@Ripon,False
+Ripon Red Hawks,Half court,Drive Motion,Kolby Williams,ISO,"2 uses in 1 games, 2.50 PPP","Gap help, make him score over a crowd",Beloit@Ripon,False
+Ripon Red Hawks,Half court,Set,CJ Brown,Down Screen,"2 uses in 1 games, 0.00 PPP",Lock and trail; bump the cutter off the screen,Beloit@Ripon,False

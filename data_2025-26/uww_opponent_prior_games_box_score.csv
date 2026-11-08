@@ -1,0 +1,631 @@
+opponent,game_date,team,player,PTS,FGM,FGA,FG3M,FG3A,FTM,FTA,OREB,DREB,AST,STL,BLK,TO,PF,REB,FG%,3P%,FT%,MIN,started
+Beloit Buccaneers,2025-12-02,Beloit Buccaneers,Anthony Carter,17,4,10,2,5,7,12,2,6,1,2,0,0,3,8,40.0,40.0,58.3,33.9,False
+Beloit Buccaneers,2025-12-02,Beloit Buccaneers,Austin Walker,0,0,2,0,2,0,0,0,2,1,1,0,0,3,2,0.0,0.0,,12.6,False
+Beloit Buccaneers,2025-12-02,Beloit Buccaneers,Dae'Quan Davis,6,3,6,0,2,0,0,1,7,0,1,0,2,1,8,50.0,0.0,,18.7,False
+Beloit Buccaneers,2025-12-02,Beloit Buccaneers,Dasan Reed,4,1,1,0,0,2,2,0,1,0,0,0,0,1,1,100.0,,100.0,7.6,False
+Beloit Buccaneers,2025-12-02,Beloit Buccaneers,Lathan Lewis,4,2,5,0,0,0,0,1,1,0,0,0,0,0,2,40.0,,,21.6,False
+Beloit Buccaneers,2025-12-02,Beloit Buccaneers,Olin Emerson,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,,,,10.0,False
+Beloit Buccaneers,2025-12-02,Beloit Buccaneers,Owen Geiger,0,0,3,0,1,0,0,0,0,2,0,0,0,0,0,0.0,0.0,,14.2,False
+Beloit Buccaneers,2025-12-02,Beloit Buccaneers,Semaj Roy,5,1,14,0,5,3,8,2,5,4,0,1,4,2,7,7.1,0.0,37.5,32.2,False
+Beloit Buccaneers,2025-12-02,Beloit Buccaneers,Tommy Glenn,7,3,8,1,2,0,0,4,1,1,0,0,1,1,5,37.5,50.0,,29.6,False
+Beloit Buccaneers,2025-12-02,Beloit Buccaneers,Will Schubert,3,1,5,1,3,0,0,1,3,0,1,0,0,0,4,20.0,33.3,,17.4,False
+Beloit Buccaneers,2025-12-02,Ripon Red Hawks,Anton Kilde,0,0,1,0,1,0,0,0,1,0,0,0,0,3,1,0.0,0.0,,9.3,False
+Beloit Buccaneers,2025-12-02,Ripon Red Hawks,CJ Brown,6,2,8,0,3,2,2,0,1,1,2,0,0,3,1,25.0,0.0,100.0,34.8,True
+Beloit Buccaneers,2025-12-02,Ripon Red Hawks,Jack Field,0,0,2,0,2,0,0,0,1,1,0,0,0,1,1,0.0,0.0,,10.7,False
+Beloit Buccaneers,2025-12-02,Ripon Red Hawks,Keenan Rahn,2,1,2,0,0,0,0,1,2,0,1,0,1,1,3,50.0,,,10.7,False
+Beloit Buccaneers,2025-12-02,Ripon Red Hawks,Kolby Williams,12,6,11,0,0,0,0,2,8,3,0,2,5,2,10,54.5,,,34.7,True
+Beloit Buccaneers,2025-12-02,Ripon Red Hawks,Landon Lee,0,0,2,0,1,0,0,0,0,1,0,0,0,0,0,0.0,0.0,,5.1,False
+Beloit Buccaneers,2025-12-02,Ripon Red Hawks,Michael Asman,16,7,11,2,4,0,1,0,6,0,0,0,0,4,6,63.6,50.0,0.0,25.5,True
+Beloit Buccaneers,2025-12-02,Ripon Red Hawks,Sam Leoni,5,2,7,0,3,1,1,1,5,3,0,0,1,2,6,28.6,0.0,100.0,30.0,True
+Beloit Buccaneers,2025-12-02,Ripon Red Hawks,Seth Bunders,18,6,15,2,3,4,4,3,7,1,1,0,0,2,10,40.0,66.7,100.0,36.8,True
+Beloit Buccaneers,2026-02-21,Beloit Buccaneers,Anthony Carter,19,7,18,1,6,4,6,3,8,2,0,0,0,0,11,38.9,16.7,66.7,37.2,False
+Beloit Buccaneers,2026-02-21,Beloit Buccaneers,Austin Walker,10,4,8,2,4,0,1,1,3,1,1,0,4,2,4,50.0,50.0,0.0,29.3,False
+Beloit Buccaneers,2026-02-21,Beloit Buccaneers,Dae'Quan Davis,8,2,7,0,2,4,4,2,4,2,1,0,0,1,6,28.6,0.0,100.0,20.0,False
+Beloit Buccaneers,2026-02-21,Beloit Buccaneers,Lathan Lewis,5,2,3,1,2,0,0,1,2,1,1,0,0,2,3,66.7,50.0,,20.2,False
+Beloit Buccaneers,2026-02-21,Beloit Buccaneers,Olin Emerson,2,1,1,0,0,0,3,2,0,0,0,2,0,1,2,100.0,,0.0,12.7,False
+Beloit Buccaneers,2026-02-21,Beloit Buccaneers,Owen Geiger,5,1,4,1,3,2,2,0,2,0,0,0,3,4,2,25.0,33.3,100.0,28.8,False
+Beloit Buccaneers,2026-02-21,Beloit Buccaneers,Semaj Roy,0,0,0,0,0,0,0,0,0,1,0,0,2,0,0,,,,3.9,False
+Beloit Buccaneers,2026-02-21,Beloit Buccaneers,Tommy Glenn,4,2,8,0,3,0,0,0,3,0,0,1,4,1,3,25.0,0.0,,26.9,False
+Beloit Buccaneers,2026-02-21,Beloit Buccaneers,Will Schubert,0,0,1,0,1,0,0,0,0,0,0,0,0,2,0,0.0,0.0,,6.9,False
+Beloit Buccaneers,2026-02-21,Beloit Buccaneers,Zayn Young,5,2,3,0,0,1,2,1,2,1,0,0,1,4,3,66.7,,50.0,12.2,False
+Beloit Buccaneers,2026-02-21,Ripon Red Hawks,Anton Kilde,3,1,4,1,2,0,1,1,0,0,0,0,0,2,1,25.0,50.0,0.0,11.6,False
+Beloit Buccaneers,2026-02-21,Ripon Red Hawks,CJ Brown,11,3,9,1,5,4,5,2,2,2,3,0,3,1,4,33.3,20.0,80.0,32.5,True
+Beloit Buccaneers,2026-02-21,Ripon Red Hawks,Jack Field,8,3,7,2,5,0,0,0,2,1,0,0,0,1,2,42.9,40.0,,22.6,True
+Beloit Buccaneers,2026-02-21,Ripon Red Hawks,Joey Daun,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,,,,7.6,False
+Beloit Buccaneers,2026-02-21,Ripon Red Hawks,Keenan Rahn,2,1,4,0,1,0,0,1,1,1,0,0,1,1,2,25.0,0.0,,13.7,False
+Beloit Buccaneers,2026-02-21,Ripon Red Hawks,Kolby Williams,20,8,17,0,1,4,6,2,7,1,0,0,2,4,9,47.1,0.0,66.7,33.0,True
+Beloit Buccaneers,2026-02-21,Ripon Red Hawks,Landon Lee,1,0,0,0,0,1,2,0,0,0,1,0,0,0,0,,,50.0,9.0,False
+Beloit Buccaneers,2026-02-21,Ripon Red Hawks,Marshawn Robinson,7,3,8,1,4,0,3,0,11,0,1,1,0,2,11,37.5,25.0,0.0,23.8,False
+Beloit Buccaneers,2026-02-21,Ripon Red Hawks,Sam Leoni,3,1,2,0,0,1,2,0,1,1,0,0,1,3,1,50.0,,50.0,14.2,True
+Beloit Buccaneers,2026-02-21,Ripon Red Hawks,Seth Bunders,10,4,5,1,2,1,1,1,1,2,3,1,1,1,2,80.0,50.0,100.0,30.2,True
+Bethany Lutheran Vikings,2025-11-22,Bethany Lutheran Vikings,Amory Peterson,11,3,5,1,3,4,4,1,7,1,1,0,1,1,8,60.0,33.3,100.0,19.1,False
+Bethany Lutheran Vikings,2025-11-22,Bethany Lutheran Vikings,Blue Smaller,13,5,6,0,0,3,6,2,2,1,1,1,1,3,4,83.3,,50.0,16.5,False
+Bethany Lutheran Vikings,2025-11-22,Bethany Lutheran Vikings,Brady Ingersoll,2,1,5,0,2,0,0,1,1,1,1,0,1,1,2,20.0,0.0,,10.2,False
+Bethany Lutheran Vikings,2025-11-22,Bethany Lutheran Vikings,Cole Johnson,2,1,1,0,0,0,0,1,5,2,0,0,1,3,6,100.0,,,16.7,False
+Bethany Lutheran Vikings,2025-11-22,Bethany Lutheran Vikings,Cooper Mensink,5,2,4,1,3,0,0,0,0,0,0,0,0,2,0,50.0,33.3,,4.9,False
+Bethany Lutheran Vikings,2025-11-22,Bethany Lutheran Vikings,Eli Rogers,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,2.7,False
+Bethany Lutheran Vikings,2025-11-22,Bethany Lutheran Vikings,Elliot Whitney,7,3,9,1,4,0,0,0,4,1,1,0,2,3,4,33.3,25.0,,26.7,False
+Bethany Lutheran Vikings,2025-11-22,Bethany Lutheran Vikings,Jack Brockmann,4,2,2,0,0,0,2,0,4,0,1,1,2,2,4,100.0,,0.0,23.6,False
+Bethany Lutheran Vikings,2025-11-22,Bethany Lutheran Vikings,Kaden Butler,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0.0,,,4.1,False
+Bethany Lutheran Vikings,2025-11-22,Bethany Lutheran Vikings,Max Briggs,10,3,8,2,6,2,2,1,2,2,1,0,2,1,3,37.5,33.3,100.0,25.0,False
+Bethany Lutheran Vikings,2025-11-22,Bethany Lutheran Vikings,Ricky Wengert,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,,,,2.2,False
+Bethany Lutheran Vikings,2025-11-22,Bethany Lutheran Vikings,Rysley Borman,8,3,9,2,8,0,1,1,1,3,0,0,2,1,2,33.3,25.0,0.0,24.3,False
+Bethany Lutheran Vikings,2025-11-22,Bethany Lutheran Vikings,Will Walter,11,2,4,2,3,5,6,1,4,0,1,0,1,0,5,50.0,66.7,83.3,20.9,False
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,Abe Dykstra,8,3,4,0,0,2,3,2,1,0,0,0,0,1,3,75.0,,66.7,10.3,False
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,Anton Kilde,3,1,3,1,3,0,0,0,7,0,0,0,0,0,7,33.3,33.3,,22.5,False
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,CJ Brown,0,0,5,0,3,0,1,0,1,1,1,0,2,3,1,0.0,0.0,0.0,19.8,True
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,Isaac Knoll,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.8,False
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,Jack Field,7,3,8,1,4,0,0,2,0,1,0,0,2,3,2,37.5,25.0,,29.2,True
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,Jake Thomsen,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,3.6,False
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,Jarton Davis,11,4,11,0,3,3,4,0,2,1,1,0,1,1,2,36.4,0.0,75.0,19.7,False
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,Joey Daun,2,0,1,0,1,2,2,0,1,0,0,0,0,0,1,0.0,0.0,100.0,3.6,False
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,Jose Gonzales,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.3,False
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,Keenan Rahn,0,0,1,0,1,0,0,1,2,0,1,0,0,2,3,0.0,0.0,,8.7,False
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,Kolby Williams,9,1,3,0,0,7,8,1,3,1,0,0,1,1,4,33.3,,87.5,26.4,True
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,Landon Lee,0,0,4,0,1,0,0,1,0,0,3,0,1,0,1,0.0,0.0,,9.8,False
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,Sam Leoni,4,1,6,0,3,2,3,0,0,1,0,0,0,2,0,16.7,0.0,66.7,14.1,True
+Bethany Lutheran Vikings,2025-11-22,Ripon Red Hawks,Seth Bunders,9,3,11,1,4,2,3,0,4,4,3,0,2,2,4,27.3,25.0,66.7,27.3,True
+Carthage Firebirds,2025-11-26,Carthage Firebirds,AJ Johnson,12,5,8,2,5,0,0,0,2,0,2,0,0,1,2,62.5,40.0,,22.9,False
+Carthage Firebirds,2025-11-26,Carthage Firebirds,AJ Williams,5,1,3,1,3,2,2,2,0,0,0,0,2,0,2,33.3,33.3,100.0,12.4,False
+Carthage Firebirds,2025-11-26,Carthage Firebirds,Antuan Nesbitt,15,6,9,2,4,1,2,1,2,4,0,0,3,1,3,66.7,50.0,50.0,23.9,False
+Carthage Firebirds,2025-11-26,Carthage Firebirds,Chris Schlesinger,13,5,7,3,4,0,1,1,4,4,1,1,1,0,5,71.4,75.0,0.0,20.5,False
+Carthage Firebirds,2025-11-26,Carthage Firebirds,Ethan Dabu,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0.0,0.0,,4.4,False
+Carthage Firebirds,2025-11-26,Carthage Firebirds,Griffin Daun,6,3,5,0,1,0,1,0,4,1,3,0,0,0,4,60.0,0.0,0.0,23.7,False
+Carthage Firebirds,2025-11-26,Carthage Firebirds,Jalen Brown,0,0,3,0,2,0,0,0,1,0,0,0,1,1,1,0.0,0.0,,12.4,False
+Carthage Firebirds,2025-11-26,Carthage Firebirds,Kaden Dawson,0,0,0,0,0,0,0,1,0,0,1,0,1,0,1,,,,3.4,False
+Carthage Firebirds,2025-11-26,Carthage Firebirds,Mason Miller,5,2,4,1,1,0,0,0,2,0,0,0,1,1,2,50.0,100.0,,9.0,False
+Carthage Firebirds,2025-11-26,Carthage Firebirds,Nate Montgomery,4,1,1,0,0,2,3,0,2,2,0,0,0,3,2,100.0,,66.7,12.2,False
+Carthage Firebirds,2025-11-26,Carthage Firebirds,Patrick Laurich,0,0,2,0,0,0,0,0,1,1,0,0,0,0,1,0.0,,,4.4,False
+Carthage Firebirds,2025-11-26,Carthage Firebirds,Quentin Villa,0,0,3,0,3,0,0,0,1,1,0,0,0,1,1,0.0,0.0,,6.9,False
+Carthage Firebirds,2025-11-26,Carthage Firebirds,Riley Brooks,16,6,14,2,7,2,2,3,3,1,2,0,2,2,6,42.9,28.6,100.0,22.2,False
+Carthage Firebirds,2025-11-26,Carthage Firebirds,Ryan Johnson,8,2,5,1,2,3,5,3,6,3,3,0,4,1,9,40.0,50.0,60.0,20.9,False
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,Abe Dykstra,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,,,,3.6,False
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,Anton Kilde,8,3,6,2,3,0,0,2,5,0,1,0,2,0,7,50.0,66.7,,22.4,True
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,CJ Brown,9,3,9,1,4,2,2,0,1,0,2,0,4,2,1,33.3,25.0,100.0,24.1,True
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,Christian Wilson,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,2.7,False
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,Jack Field,11,4,7,2,3,1,1,0,7,0,0,0,2,1,7,57.1,66.7,100.0,21.8,False
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,Jarton Davis,0,0,2,0,2,0,0,0,0,1,1,0,1,1,0,0.0,0.0,,8.8,False
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,Joey Daun,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0.0,0.0,,3.4,False
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,Jose Gonzales,6,2,4,0,0,2,2,2,0,0,1,0,0,0,2,50.0,,100.0,13.9,False
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,Keenan Rahn,2,1,4,0,2,0,0,2,2,0,2,0,1,2,4,25.0,0.0,,12.8,False
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,Kolby Williams,5,2,9,0,1,1,2,1,3,1,0,0,0,4,4,22.2,0.0,50.0,28.7,True
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,Landon Lee,10,3,4,1,1,3,3,0,1,1,1,0,3,2,1,75.0,100.0,100.0,12.6,False
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,Nick Ahlquist,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,1.3,False
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,Sam Leoni,0,0,2,0,0,0,0,0,0,3,0,0,1,0,0,0.0,,,17.1,True
+Carthage Firebirds,2025-11-26,Ripon Red Hawks,Seth Bunders,5,2,11,0,2,1,1,0,1,3,1,0,3,2,1,18.2,0.0,100.0,25.7,True
+Cornell College Rams,2025-12-06,Cornell College Rams,Caleb Leslie,6,2,12,2,11,0,0,2,4,1,1,0,0,1,6,16.7,18.2,,25.3,False
+Cornell College Rams,2025-12-06,Cornell College Rams,Cezer Sotomayor,1,0,1,0,0,1,2,0,1,0,0,0,0,0,1,0.0,,50.0,3.2,False
+Cornell College Rams,2025-12-06,Cornell College Rams,Daniel Taylor,10,3,4,1,1,3,4,0,2,2,0,1,1,2,2,75.0,100.0,75.0,19.2,False
+Cornell College Rams,2025-12-06,Cornell College Rams,Joseph Hudson,5,2,2,0,0,1,2,1,1,0,0,0,1,2,2,100.0,,50.0,14.7,False
+Cornell College Rams,2025-12-06,Cornell College Rams,Jude Weaver,10,4,9,0,3,2,2,1,3,3,0,0,2,3,4,44.4,0.0,100.0,23.4,False
+Cornell College Rams,2025-12-06,Cornell College Rams,Keon Talgo,3,1,8,1,3,0,0,2,2,0,1,0,6,1,4,12.5,33.3,,19.2,False
+Cornell College Rams,2025-12-06,Cornell College Rams,Kylen Bonner,2,1,2,0,1,0,0,0,1,1,2,0,0,0,1,50.0,0.0,,16.7,False
+Cornell College Rams,2025-12-06,Cornell College Rams,Luke Hellige,7,2,11,1,9,2,2,1,6,2,0,0,2,1,7,18.2,11.1,100.0,26.1,False
+Cornell College Rams,2025-12-06,Cornell College Rams,Nebil Mohammed,6,2,2,0,0,2,2,1,2,0,1,0,1,0,3,100.0,,100.0,14.6,False
+Cornell College Rams,2025-12-06,Cornell College Rams,Noah Williams,1,0,1,0,0,1,2,0,4,1,0,0,0,1,4,0.0,,50.0,17.6,False
+Cornell College Rams,2025-12-06,Cornell College Rams,Wayne Jurica,2,1,4,0,3,0,0,0,1,0,1,0,1,4,1,25.0,0.0,,17.4,False
+Cornell College Rams,2025-12-06,Ripon Red Hawks,Anton Kilde,10,4,4,2,2,0,0,1,4,2,0,0,0,2,5,100.0,100.0,,21.7,False
+Cornell College Rams,2025-12-06,Ripon Red Hawks,CJ Brown,10,4,9,2,5,0,1,0,4,5,1,0,2,3,4,44.4,40.0,0.0,30.1,True
+Cornell College Rams,2025-12-06,Ripon Red Hawks,Houston McKenzie,6,2,3,2,3,0,0,0,1,0,0,0,0,1,1,66.7,66.7,,7.3,False
+Cornell College Rams,2025-12-06,Ripon Red Hawks,Jack Field,0,0,2,0,2,0,0,0,1,0,0,0,0,2,1,0.0,0.0,,4.5,False
+Cornell College Rams,2025-12-06,Ripon Red Hawks,Jose Gonzales,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,,,,1.2,False
+Cornell College Rams,2025-12-06,Ripon Red Hawks,Keenan Rahn,0,0,0,0,0,0,0,0,0,1,0,0,1,2,0,,,,4.0,False
+Cornell College Rams,2025-12-06,Ripon Red Hawks,Kolby Williams,4,2,5,0,0,0,0,1,3,0,0,0,2,3,4,40.0,,,23.3,True
+Cornell College Rams,2025-12-06,Ripon Red Hawks,Landon Lee,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,2.2,False
+Cornell College Rams,2025-12-06,Ripon Red Hawks,Michael Asman,15,6,12,3,4,0,0,0,4,2,1,0,1,1,4,50.0,75.0,,32.1,True
+Cornell College Rams,2025-12-06,Ripon Red Hawks,Sam Leoni,12,3,5,2,4,4,5,0,3,3,0,0,0,0,3,60.0,50.0,80.0,36.3,True
+Cornell College Rams,2025-12-06,Ripon Red Hawks,Seth Bunders,5,2,14,0,10,1,3,0,6,4,4,0,2,2,6,14.3,0.0,33.3,34.7,True
+Cornell College Rams,2026-02-10,Cornell College Rams,Caleb Leslie,12,4,7,4,7,0,0,1,3,1,0,0,0,0,4,57.1,57.1,,26.8,False
+Cornell College Rams,2026-02-10,Cornell College Rams,Cristian Acevedo,2,1,2,0,0,0,0,0,1,0,1,1,0,2,1,50.0,,,18.3,False
+Cornell College Rams,2026-02-10,Cornell College Rams,Daniel Taylor,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,0.5,False
+Cornell College Rams,2026-02-10,Cornell College Rams,Garrett Hempen,0,0,2,0,2,0,0,1,0,1,0,0,1,0,1,0.0,0.0,,12.9,False
+Cornell College Rams,2026-02-10,Cornell College Rams,Joseph Hudson,3,0,1,0,0,3,4,0,3,0,1,0,1,0,3,0.0,,75.0,10.6,False
+Cornell College Rams,2026-02-10,Cornell College Rams,Jude Weaver,2,1,3,0,2,0,0,1,4,6,1,0,3,1,5,33.3,0.0,,21.9,False
+Cornell College Rams,2026-02-10,Cornell College Rams,Keon Talgo,14,5,10,4,6,0,0,0,3,0,0,0,1,0,3,50.0,66.7,,17.1,False
+Cornell College Rams,2026-02-10,Cornell College Rams,Kylen Bonner,14,5,7,0,1,4,5,1,4,5,1,1,4,3,5,71.4,0.0,80.0,21.3,False
+Cornell College Rams,2026-02-10,Cornell College Rams,Luke Hellige,14,5,5,4,4,0,0,0,1,1,0,0,0,1,1,100.0,100.0,,20.4,False
+Cornell College Rams,2026-02-10,Cornell College Rams,Max Markgraf,9,3,4,0,0,3,3,1,2,0,0,0,1,3,3,75.0,,100.0,19.9,False
+Cornell College Rams,2026-02-10,Cornell College Rams,Noah Williams,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.0,False
+Cornell College Rams,2026-02-10,Cornell College Rams,Wayne Jurica,6,2,6,1,4,1,2,1,0,1,1,0,4,2,1,33.3,25.0,50.0,29.6,False
+Cornell College Rams,2026-02-10,Ripon Red Hawks,Abe Dykstra,0,0,0,0,0,0,0,1,0,1,0,0,1,0,1,,,,3.1,False
+Cornell College Rams,2026-02-10,Ripon Red Hawks,Anton Kilde,10,3,5,2,3,2,2,0,2,0,0,0,0,1,2,60.0,66.7,100.0,18.7,False
+Cornell College Rams,2026-02-10,Ripon Red Hawks,CJ Brown,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,6.2,False
+Cornell College Rams,2026-02-10,Ripon Red Hawks,Jack Ellickson,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,3.8,False
+Cornell College Rams,2026-02-10,Ripon Red Hawks,Jack Field,15,5,9,3,4,2,2,1,2,2,0,1,0,4,3,55.6,75.0,100.0,24.6,True
+Cornell College Rams,2026-02-10,Ripon Red Hawks,Joey Daun,8,3,7,0,2,2,2,1,2,1,1,0,0,2,3,42.9,0.0,100.0,15.0,False
+Cornell College Rams,2026-02-10,Ripon Red Hawks,Jose Gonzales,2,1,3,0,1,0,0,0,0,0,1,0,0,1,0,33.3,0.0,,9.1,False
+Cornell College Rams,2026-02-10,Ripon Red Hawks,Keenan Rahn,15,5,6,2,3,3,3,0,2,1,0,0,0,2,2,83.3,66.7,100.0,27.4,True
+Cornell College Rams,2026-02-10,Ripon Red Hawks,Kolby Williams,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.4,False
+Cornell College Rams,2026-02-10,Ripon Red Hawks,Landon Lee,2,1,1,0,0,0,0,0,0,2,0,0,1,0,0,100.0,,,6.8,False
+Cornell College Rams,2026-02-10,Ripon Red Hawks,Marshawn Robinson,10,4,12,0,3,2,2,1,4,2,2,1,2,3,5,33.3,0.0,100.0,23.4,True
+Cornell College Rams,2026-02-10,Ripon Red Hawks,Sam Leoni,2,1,5,0,0,0,0,0,3,4,1,0,1,0,3,20.0,,,28.5,True
+Cornell College Rams,2026-02-10,Ripon Red Hawks,Seth Bunders,10,4,12,2,8,0,0,1,2,4,4,0,0,1,3,33.3,25.0,,31.5,True
+Elmhurst Bluejays,2025-12-30,Elmhurst Bluejays,Aidyn Boone,12,4,6,2,4,2,4,2,5,5,1,0,2,3,7,66.7,50.0,50.0,25.4,False
+Elmhurst Bluejays,2025-12-30,Elmhurst Bluejays,Dominic Trelenberg,14,5,12,2,5,2,2,3,7,3,2,0,3,3,10,41.7,40.0,100.0,29.9,False
+Elmhurst Bluejays,2025-12-30,Elmhurst Bluejays,EJ Marshall,5,2,5,1,3,0,0,0,3,2,1,1,0,0,3,40.0,33.3,,18.4,False
+Elmhurst Bluejays,2025-12-30,Elmhurst Bluejays,Jack Cherry,9,3,3,2,2,1,2,0,1,1,1,0,0,0,1,100.0,100.0,50.0,19.5,False
+Elmhurst Bluejays,2025-12-30,Elmhurst Bluejays,Jeffrey Williams,5,2,4,0,2,1,2,0,1,0,0,0,0,3,1,50.0,0.0,50.0,13.8,False
+Elmhurst Bluejays,2025-12-30,Elmhurst Bluejays,John Witcher,3,1,1,1,1,0,0,0,0,0,0,0,0,0,0,100.0,100.0,,3.4,False
+Elmhurst Bluejays,2025-12-30,Elmhurst Bluejays,Luke Smith,17,6,12,2,6,3,3,1,1,2,0,0,0,1,2,50.0,33.3,100.0,25.1,False
+Elmhurst Bluejays,2025-12-30,Elmhurst Bluejays,Sebastian Blachut,9,3,5,0,1,3,3,2,4,4,2,0,5,1,6,60.0,0.0,100.0,26.5,False
+Elmhurst Bluejays,2025-12-30,Elmhurst Bluejays,Talen Pearson,5,1,6,1,4,2,2,2,0,3,0,0,2,2,2,16.7,25.0,100.0,13.9,False
+Elmhurst Bluejays,2025-12-30,Elmhurst Bluejays,Vinnie Adjahoungbeta,5,1,6,1,3,2,2,0,4,1,1,0,0,2,4,16.7,33.3,100.0,20.1,False
+Elmhurst Bluejays,2025-12-30,Ripon Red Hawks,Anton Kilde,7,2,3,1,2,2,4,0,2,1,1,0,1,3,2,66.7,50.0,50.0,12.8,False
+Elmhurst Bluejays,2025-12-30,Ripon Red Hawks,CJ Brown,8,3,7,2,4,0,0,0,1,3,0,0,3,4,1,42.9,50.0,,32.2,True
+Elmhurst Bluejays,2025-12-30,Ripon Red Hawks,Houston McKenzie,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.0,False
+Elmhurst Bluejays,2025-12-30,Ripon Red Hawks,Jack Field,2,1,6,0,2,0,0,2,2,0,0,1,0,0,4,16.7,0.0,,8.2,False
+Elmhurst Bluejays,2025-12-30,Ripon Red Hawks,Joey Daun,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,20.0,True
+Elmhurst Bluejays,2025-12-30,Ripon Red Hawks,Keenan Rahn,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,,,,2.0,False
+Elmhurst Bluejays,2025-12-30,Ripon Red Hawks,Kolby Williams,15,5,6,0,0,5,6,1,3,1,0,1,5,2,4,83.3,,83.3,32.6,True
+Elmhurst Bluejays,2025-12-30,Ripon Red Hawks,Landon Lee,0,0,2,0,0,0,0,0,0,0,0,0,1,0,0,0.0,,,5.4,False
+Elmhurst Bluejays,2025-12-30,Ripon Red Hawks,Marshawn Robinson,10,2,7,1,4,5,6,0,1,4,0,1,4,4,1,28.6,25.0,83.3,26.4,True
+Elmhurst Bluejays,2025-12-30,Ripon Red Hawks,Michael Asman,3,1,6,1,4,0,0,1,1,0,0,1,0,2,2,16.7,25.0,,16.7,True
+Elmhurst Bluejays,2025-12-30,Ripon Red Hawks,Sam Leoni,10,3,6,2,2,2,2,0,2,1,2,0,0,0,2,50.0,100.0,100.0,18.8,False
+Elmhurst Bluejays,2025-12-30,Ripon Red Hawks,Seth Bunders,2,0,10,0,5,2,2,1,5,1,3,0,1,0,6,0.0,0.0,100.0,23.0,True
+Green Bay Phoenix EXH,2025-11-10,Green Bay Phoenix EXH,Brady Fitzgerald,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.2,False
+Green Bay Phoenix EXH,2025-11-10,Green Bay Phoenix EXH,C.J. O'Hara,11,4,6,0,0,3,5,1,2,0,2,0,2,2,3,66.7,,60.0,23.9,False
+Green Bay Phoenix EXH,2025-11-10,Green Bay Phoenix EXH,Caden Wilkins,7,3,6,1,4,0,2,0,2,2,0,1,0,3,2,50.0,25.0,0.0,23.9,False
+Green Bay Phoenix EXH,2025-11-10,Green Bay Phoenix EXH,Dontrell Hewlett,2,1,5,0,1,0,2,1,1,2,0,0,1,1,2,20.0,0.0,0.0,14.2,False
+Green Bay Phoenix EXH,2025-11-10,Green Bay Phoenix EXH,Josh Hines,5,2,3,1,1,0,1,0,0,2,0,0,0,0,0,66.7,100.0,0.0,15.8,False
+Green Bay Phoenix EXH,2025-11-10,Green Bay Phoenix EXH,Justin Allen,3,1,2,1,2,0,0,0,0,0,0,0,0,0,0,50.0,50.0,,5.2,False
+Green Bay Phoenix EXH,2025-11-10,Green Bay Phoenix EXH,LeBron Thomas,0,0,0,0,0,0,0,0,0,1,0,0,2,0,0,,,,1.7,False
+Green Bay Phoenix EXH,2025-11-10,Green Bay Phoenix EXH,Mac Wrecke,13,4,6,1,3,4,5,0,4,1,1,1,0,2,4,66.7,33.3,80.0,20.3,False
+Green Bay Phoenix EXH,2025-11-10,Green Bay Phoenix EXH,Marcus Hall,21,5,11,0,5,11,14,1,9,4,2,0,2,0,10,45.5,0.0,78.6,29.8,False
+Green Bay Phoenix EXH,2025-11-10,Green Bay Phoenix EXH,Maruan Cicic,10,4,4,0,0,2,3,1,2,1,0,1,0,3,3,100.0,,66.7,18.8,False
+Green Bay Phoenix EXH,2025-11-10,Green Bay Phoenix EXH,Preston Ruedinger,5,2,5,1,3,0,0,1,4,7,1,0,0,2,5,40.0,33.3,,25.0,False
+Green Bay Phoenix EXH,2025-11-10,Green Bay Phoenix EXH,Ramel Bethea,2,1,1,0,0,0,0,2,2,1,0,3,2,4,4,100.0,,,10.0,False
+Green Bay Phoenix EXH,2025-11-10,Green Bay Phoenix EXH,Vukasin Todorovic,4,2,6,0,0,0,1,1,3,2,0,0,0,0,4,33.3,,0.0,8.2,False
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Abe Dykstra,0,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0.0,,,3.4,False
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,CJ Brown,3,1,3,1,1,0,0,0,1,2,0,0,0,4,1,33.3,100.0,,14.1,True
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Caeden Holly,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,2.0,False
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Houston McKenzie,1,0,0,0,0,1,2,0,0,2,0,0,0,1,0,,,50.0,8.3,False
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Isaac Knoll,0,0,0,0,0,0,0,2,1,0,1,0,0,2,3,,,,6.8,False
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Jack Field,6,2,6,2,4,0,0,0,1,0,0,0,0,2,1,33.3,50.0,,17.7,False
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Jackson Flowers,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,1.2,False
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Jake Thomsen,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.0,False
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Jarton Davis,18,7,10,3,5,1,2,1,4,0,0,0,3,2,5,70.0,60.0,50.0,27.9,True
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Joey Daun,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,1.2,False
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Jose Gonzales,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.2,False
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Keenan Rahn,11,3,6,3,6,2,2,0,5,2,1,0,2,3,5,50.0,50.0,100.0,24.7,False
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Kolby Williams,11,3,14,0,2,5,8,2,3,2,1,0,1,3,5,21.4,0.0,62.5,29.5,True
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Landon Lee,0,0,0,0,0,0,0,0,0,2,0,0,1,0,0,,,,5.3,False
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Michael Asman,5,2,7,1,5,0,0,1,3,2,0,0,3,2,4,28.6,20.0,,23.8,True
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Olin Zellmer,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.2,False
+Green Bay Phoenix EXH,2025-11-10,Ripon Red Hawks,Seth Bunders,8,3,11,2,6,0,0,0,2,3,2,0,3,4,2,27.3,33.3,,27.8,True
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Aidan Wiley,3,1,4,1,4,0,0,0,0,0,1,0,0,0,0,25.0,25.0,,6.1,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Carson DeBruhl,2,1,1,0,0,0,0,0,0,0,2,0,2,0,0,100.0,,,6.1,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Gabe Garcia,13,5,8,1,2,2,7,0,2,7,0,0,1,4,2,62.5,50.0,28.6,17.2,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,John Vincent,0,0,1,0,0,0,1,0,1,0,0,0,0,2,1,0.0,,0.0,12.6,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Kai Te Huki,5,1,7,1,4,2,2,0,0,0,0,0,4,2,0,14.3,25.0,100.0,8.8,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Kingzten Bristol,4,1,4,1,4,1,2,1,2,3,3,0,1,1,3,25.0,25.0,50.0,15.3,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Luka Pinto,5,2,3,1,2,0,0,0,0,0,0,0,1,1,0,66.7,50.0,,9.9,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Nick Courtney,1,0,0,0,0,1,2,2,3,1,2,0,2,2,5,,,50.0,16.2,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Nick Lundy,7,2,6,1,3,2,5,1,3,1,1,0,1,0,4,33.3,33.3,40.0,18.3,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Sean Murphy,11,3,12,2,11,3,3,0,1,0,1,0,1,1,1,25.0,18.2,100.0,16.4,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Sean Walser,6,2,2,0,0,2,3,1,0,1,3,0,0,3,1,100.0,,66.7,13.4,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Strahinja Nikolic,5,1,2,1,2,2,3,2,4,0,0,0,3,0,6,50.0,50.0,66.7,10.8,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Tanner Deal,12,4,7,4,7,0,0,1,0,1,0,0,0,0,1,57.1,57.1,,12.8,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Tyler Copes,8,3,5,1,1,1,1,2,4,0,1,2,0,0,6,60.0,100.0,100.0,15.7,False
+Grinnell Pioneers,2025-12-13,Grinnell Pioneers,Zach Rosen,22,6,10,5,6,5,7,1,4,4,3,0,3,3,5,60.0,83.3,71.4,18.4,False
+Grinnell Pioneers,2025-12-13,Ripon Red Hawks,Anton Kilde,6,1,4,1,3,3,3,0,3,0,0,0,1,4,3,25.0,33.3,100.0,11.7,False
+Grinnell Pioneers,2025-12-13,Ripon Red Hawks,CJ Brown,20,7,14,3,4,3,3,0,7,5,3,0,5,5,7,50.0,75.0,100.0,27.5,True
+Grinnell Pioneers,2025-12-13,Ripon Red Hawks,Houston McKenzie,2,0,0,0,0,2,2,0,0,1,1,0,1,0,0,,,100.0,2.3,False
+Grinnell Pioneers,2025-12-13,Ripon Red Hawks,Jack Field,15,6,6,3,3,0,0,0,3,0,1,0,5,4,3,100.0,100.0,,12.7,False
+Grinnell Pioneers,2025-12-13,Ripon Red Hawks,Keenan Rahn,3,1,2,1,1,0,0,1,4,2,0,0,1,2,5,50.0,100.0,,11.9,False
+Grinnell Pioneers,2025-12-13,Ripon Red Hawks,Kolby Williams,2,0,2,0,0,2,4,1,1,2,2,2,1,3,2,0.0,,50.0,26.9,True
+Grinnell Pioneers,2025-12-13,Ripon Red Hawks,Landon Lee,0,0,0,0,0,0,0,0,0,2,1,0,2,2,0,,,,9.4,False
+Grinnell Pioneers,2025-12-13,Ripon Red Hawks,Marshawn Robinson,9,3,7,0,3,3,6,2,2,0,2,0,2,4,4,42.9,0.0,50.0,16.9,False
+Grinnell Pioneers,2025-12-13,Ripon Red Hawks,Michael Asman,15,4,12,2,8,5,5,0,4,2,0,0,2,2,4,33.3,25.0,100.0,27.9,True
+Grinnell Pioneers,2025-12-13,Ripon Red Hawks,Sam Leoni,5,2,2,1,1,0,0,0,0,1,1,0,3,1,0,100.0,100.0,,22.9,True
+Grinnell Pioneers,2025-12-13,Ripon Red Hawks,Seth Bunders,18,7,13,2,3,2,2,3,3,4,1,0,3,4,6,53.8,66.7,100.0,27.9,True
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Aidan Wiley,0,0,2,0,2,0,0,0,1,0,1,0,0,4,1,0.0,0.0,,7.9,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Brady Schuettpelz,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,2.0,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Carson DeBruhl,5,2,5,1,3,0,0,1,0,0,1,0,1,2,1,40.0,33.3,,9.9,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Davis Currie,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0.0,0.0,,2.0,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Gabe Garcia,11,3,10,0,2,5,6,0,0,6,2,0,4,1,0,30.0,0.0,83.3,13.4,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,John O'Leary,3,1,1,1,1,0,0,1,1,0,0,0,0,0,2,100.0,100.0,,2.0,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,John Vincent,4,1,2,0,0,2,3,0,3,0,0,0,0,0,3,50.0,,66.7,10.1,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Kai Te Huki,14,5,9,1,2,3,6,0,0,5,0,0,0,0,0,55.6,50.0,50.0,14.9,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Kingzten Bristol,5,2,2,1,1,0,0,0,2,1,1,0,1,1,2,100.0,100.0,,13.3,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Luka Pinto,4,1,3,0,1,2,2,1,5,0,0,0,0,1,6,33.3,0.0,100.0,10.5,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Nick Courtney,6,3,3,0,0,0,0,0,0,1,1,0,0,2,0,100.0,,,13.9,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Nick Lundy,14,6,8,2,3,0,0,3,1,2,1,0,2,1,4,75.0,66.7,,12.3,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Owen Theus,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,2.0,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Sean Murphy,9,3,5,3,5,0,0,0,0,1,1,0,0,0,0,60.0,60.0,,17.1,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Sean Walser,2,1,4,0,2,0,0,0,5,1,0,0,0,3,5,25.0,0.0,,12.2,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Strahinja Nikolic,10,3,6,2,5,2,2,1,2,1,1,1,1,0,3,50.0,40.0,100.0,13.8,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Tanner Deal,6,2,5,2,4,0,0,1,1,0,1,0,0,3,2,40.0,50.0,,11.1,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Tyler Copes,14,7,8,0,0,0,1,3,3,1,1,1,0,1,6,87.5,,0.0,15.4,False
+Grinnell Pioneers,2026-01-17,Grinnell Pioneers,Zach Rosen,2,1,5,0,2,0,4,2,3,6,3,0,2,1,5,20.0,0.0,0.0,15.0,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Abe Dykstra,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,2.8,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Anton Kilde,7,3,6,1,3,0,0,1,2,2,0,0,2,1,3,50.0,33.3,,16.6,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Birch Gunja,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,2.8,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,CJ Brown,3,1,5,0,3,1,2,0,2,2,0,1,1,5,2,20.0,0.0,50.0,17.2,True
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Christian Wilson,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.8,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Fisher MacKenzie,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.6,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Jack Ellickson,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0.0,,,1.8,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Jack Field,0,0,3,0,3,0,1,0,3,3,0,2,0,3,3,0.0,0.0,0.0,15.5,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Jackson Flowers,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.0,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Joey Daun,14,4,4,1,1,5,6,3,2,3,2,1,2,3,5,100.0,100.0,83.3,16.6,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Jose Gonzales,2,1,1,0,0,0,0,0,0,0,1,0,0,1,0,100.0,,,3.3,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Keenan Rahn,10,3,5,2,3,2,2,0,4,1,2,0,2,1,4,60.0,66.7,100.0,16.4,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Kolby Williams,4,2,4,0,0,0,0,1,4,1,0,3,1,3,5,50.0,,,20.3,True
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Landon Lee,9,4,6,0,1,1,1,0,1,4,1,0,2,0,1,66.7,0.0,100.0,20.2,True
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Michael Asman,9,3,6,1,2,2,3,0,2,2,0,0,2,0,2,50.0,50.0,66.7,19.7,True
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Olin Zellmer,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,2.8,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Sam Leoni,6,3,7,0,1,0,0,1,2,1,0,1,2,1,3,42.9,0.0,,18.6,True
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,Seth Bunders,7,2,8,2,6,1,3,1,2,1,0,0,6,4,3,25.0,33.3,33.3,21.4,True
+Illinois College Blueboys,2026-01-10,Illinois College Blueboys,Andrew Thomas,6,2,10,0,3,2,4,3,6,1,0,0,1,4,9,20.0,0.0,50.0,31.7,False
+Illinois College Blueboys,2026-01-10,Illinois College Blueboys,Austin Robinson,0,0,0,0,0,0,0,0,2,0,0,0,0,0,2,,,,5.6,False
+Illinois College Blueboys,2026-01-10,Illinois College Blueboys,Brady Clark,0,0,1,0,0,0,2,2,0,1,0,0,0,2,2,0.0,,0.0,16.1,False
+Illinois College Blueboys,2026-01-10,Illinois College Blueboys,DeShawn Nolan,4,2,7,0,4,0,0,0,1,0,1,0,1,4,1,28.6,0.0,,24.6,False
+Illinois College Blueboys,2026-01-10,Illinois College Blueboys,Henry Thomas,2,0,0,0,0,2,2,1,1,0,0,0,0,0,2,,,100.0,4.0,False
+Illinois College Blueboys,2026-01-10,Illinois College Blueboys,Isayah Kloster,5,2,2,0,0,1,3,1,2,1,0,0,3,3,3,100.0,,33.3,15.1,False
+Illinois College Blueboys,2026-01-10,Illinois College Blueboys,Jayden McCoo,3,1,4,0,1,1,2,0,2,1,1,0,1,3,2,25.0,0.0,50.0,20.3,False
+Illinois College Blueboys,2026-01-10,Illinois College Blueboys,Jaylen Swinney,3,1,5,0,3,1,4,3,2,0,0,0,0,1,5,20.0,0.0,25.0,9.7,False
+Illinois College Blueboys,2026-01-10,Illinois College Blueboys,Seth Doss,10,5,8,0,0,0,2,0,6,1,0,1,3,4,6,62.5,,0.0,32.8,False
+Illinois College Blueboys,2026-01-10,Illinois College Blueboys,Ty Lenhardt,33,9,18,3,10,12,14,1,3,1,1,0,2,1,4,50.0,30.0,85.7,39.2,False
+Illinois College Blueboys,2026-01-10,Ripon Red Hawks,Anton Kilde,14,5,10,3,6,1,2,1,3,0,0,0,2,5,4,50.0,50.0,50.0,22.9,False
+Illinois College Blueboys,2026-01-10,Ripon Red Hawks,CJ Brown,13,6,10,1,4,0,0,0,1,3,0,0,3,5,1,60.0,25.0,,33.4,True
+Illinois College Blueboys,2026-01-10,Ripon Red Hawks,Jack Field,7,2,7,1,6,2,2,2,5,0,0,1,0,2,7,28.6,16.7,100.0,20.3,False
+Illinois College Blueboys,2026-01-10,Ripon Red Hawks,Joey Daun,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,2.4,False
+Illinois College Blueboys,2026-01-10,Ripon Red Hawks,Keenan Rahn,2,0,0,0,0,2,2,0,0,0,0,0,0,0,0,,,100.0,10.5,False
+Illinois College Blueboys,2026-01-10,Ripon Red Hawks,Kolby Williams,0,0,2,0,0,0,0,0,2,1,1,0,3,6,2,0.0,,,16.5,True
+Illinois College Blueboys,2026-01-10,Ripon Red Hawks,Landon Lee,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.6,False
+Illinois College Blueboys,2026-01-10,Ripon Red Hawks,Michael Asman,8,4,8,0,1,0,0,2,8,1,1,0,2,5,10,50.0,0.0,,28.5,True
+Illinois College Blueboys,2026-01-10,Ripon Red Hawks,Sam Leoni,17,3,8,0,1,11,13,0,1,0,0,1,1,3,1,37.5,0.0,84.6,32.1,True
+Illinois College Blueboys,2026-01-10,Ripon Red Hawks,Seth Bunders,2,1,7,0,4,0,0,0,1,1,2,1,0,3,1,14.3,0.0,,30.5,True
+Illinois College Blueboys,2026-01-31,Illinois College Blueboys,Andrew Thomas,13,4,8,3,4,2,4,1,2,2,0,0,1,4,3,50.0,75.0,50.0,38.5,False
+Illinois College Blueboys,2026-01-31,Illinois College Blueboys,Brady Clark,6,2,4,0,0,2,2,2,4,3,1,0,1,2,6,50.0,,100.0,33.0,False
+Illinois College Blueboys,2026-01-31,Illinois College Blueboys,DeShawn Nolan,10,4,9,0,3,2,2,0,1,2,0,0,1,2,1,44.4,0.0,100.0,26.7,False
+Illinois College Blueboys,2026-01-31,Illinois College Blueboys,Henry Thomas,2,1,2,0,1,0,0,0,1,1,0,0,0,0,1,50.0,0.0,,7.9,False
+Illinois College Blueboys,2026-01-31,Illinois College Blueboys,Isayah Kloster,4,2,3,0,0,0,0,0,1,0,0,0,0,0,1,66.7,,,10.5,False
+Illinois College Blueboys,2026-01-31,Illinois College Blueboys,Jayden McCoo,5,2,5,1,4,0,0,0,1,0,0,0,0,4,1,40.0,25.0,,14.7,False
+Illinois College Blueboys,2026-01-31,Illinois College Blueboys,Seth Doss,12,6,9,0,0,0,0,1,8,3,1,0,4,5,9,66.7,,,29.5,False
+Illinois College Blueboys,2026-01-31,Illinois College Blueboys,Ty Lenhardt,10,4,11,1,6,1,2,0,5,1,1,0,3,0,5,36.4,16.7,50.0,36.9,False
+Illinois College Blueboys,2026-01-31,Ripon Red Hawks,Anton Kilde,0,0,2,0,1,0,0,0,3,0,1,0,0,0,3,0.0,0.0,,11.4,False
+Illinois College Blueboys,2026-01-31,Ripon Red Hawks,CJ Brown,14,3,5,1,1,7,8,2,1,0,0,0,1,2,3,60.0,100.0,87.5,30.0,True
+Illinois College Blueboys,2026-01-31,Ripon Red Hawks,Jack Field,7,3,5,1,2,0,0,0,0,0,1,0,0,1,0,60.0,50.0,,11.1,False
+Illinois College Blueboys,2026-01-31,Ripon Red Hawks,Joey Daun,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.6,False
+Illinois College Blueboys,2026-01-31,Ripon Red Hawks,Keenan Rahn,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,,,,12.2,False
+Illinois College Blueboys,2026-01-31,Ripon Red Hawks,Kolby Williams,8,3,6,0,0,2,2,3,6,1,1,1,1,4,9,50.0,,100.0,31.4,True
+Illinois College Blueboys,2026-01-31,Ripon Red Hawks,Landon Lee,2,1,1,0,0,0,0,0,0,1,0,0,0,0,0,100.0,,,4.4,False
+Illinois College Blueboys,2026-01-31,Ripon Red Hawks,Marshawn Robinson,7,3,13,0,2,1,2,2,3,2,0,0,3,1,5,23.1,0.0,50.0,33.5,True
+Illinois College Blueboys,2026-01-31,Ripon Red Hawks,Sam Leoni,8,2,6,0,0,4,4,0,2,1,0,0,1,0,2,33.3,,100.0,27.9,True
+Illinois College Blueboys,2026-01-31,Ripon Red Hawks,Seth Bunders,21,6,14,2,6,7,7,0,1,1,3,0,0,2,1,42.9,33.3,100.0,35.2,True
+Knox Prairie Fire,2026-01-24,Knox Prairie Fire,Aydan Ayer,8,3,6,1,2,1,2,1,2,4,1,0,0,2,3,50.0,50.0,50.0,26.5,False
+Knox Prairie Fire,2026-01-24,Knox Prairie Fire,B.J. Cooley,3,1,1,1,1,0,0,1,0,1,0,0,0,1,1,100.0,100.0,,6.6,False
+Knox Prairie Fire,2026-01-24,Knox Prairie Fire,Braedy Phelan,5,2,3,1,1,0,0,0,2,0,1,0,1,0,2,66.7,100.0,,10.7,False
+Knox Prairie Fire,2026-01-24,Knox Prairie Fire,Carl Dortch,0,0,1,0,0,0,0,0,1,0,0,0,0,1,1,0.0,,,6.4,False
+Knox Prairie Fire,2026-01-24,Knox Prairie Fire,Denim Tuala-Fata,4,2,2,0,0,0,0,2,2,1,0,0,1,2,4,100.0,,,11.5,False
+Knox Prairie Fire,2026-01-24,Knox Prairie Fire,Josh Stewart,18,7,8,1,1,3,5,3,8,2,0,2,3,2,11,87.5,100.0,60.0,34.3,False
+Knox Prairie Fire,2026-01-24,Knox Prairie Fire,Noah Campbell,10,4,10,1,2,1,2,1,4,7,0,0,4,2,5,40.0,50.0,50.0,30.0,False
+Knox Prairie Fire,2026-01-24,Knox Prairie Fire,Russell Wright,15,4,11,0,2,7,9,5,3,2,2,1,4,2,8,36.4,0.0,77.8,31.0,False
+Knox Prairie Fire,2026-01-24,Knox Prairie Fire,Ryan Erdos,14,5,10,4,5,0,0,1,3,0,0,1,0,1,4,50.0,80.0,,22.6,False
+Knox Prairie Fire,2026-01-24,Knox Prairie Fire,Vladimir Marinov,3,1,3,1,3,0,0,0,1,0,0,0,0,0,1,33.3,33.3,,7.8,False
+Knox Prairie Fire,2026-01-24,Knox Prairie Fire,Willie Rogers III,1,0,1,0,1,1,2,0,1,1,0,1,2,1,1,0.0,0.0,50.0,10.6,False
+Knox Prairie Fire,2026-01-24,Ripon Red Hawks,Anton Kilde,6,2,3,2,3,0,0,0,2,0,0,0,0,3,2,66.7,66.7,,11.0,False
+Knox Prairie Fire,2026-01-24,Ripon Red Hawks,CJ Brown,15,5,9,2,3,3,3,0,3,1,0,0,1,4,3,55.6,66.7,100.0,30.4,True
+Knox Prairie Fire,2026-01-24,Ripon Red Hawks,Jack Field,6,2,5,2,5,0,0,1,0,0,0,1,1,1,1,40.0,40.0,,15.6,False
+Knox Prairie Fire,2026-01-24,Ripon Red Hawks,Joey Daun,5,1,3,1,2,2,2,1,0,1,0,0,0,1,1,33.3,50.0,100.0,17.2,False
+Knox Prairie Fire,2026-01-24,Ripon Red Hawks,Keenan Rahn,0,0,2,0,2,0,0,2,0,0,0,0,0,0,2,0.0,0.0,,8.2,False
+Knox Prairie Fire,2026-01-24,Ripon Red Hawks,Kolby Williams,18,7,14,0,0,4,4,3,4,1,2,2,0,3,7,50.0,,100.0,36.4,True
+Knox Prairie Fire,2026-01-24,Ripon Red Hawks,Landon Lee,6,2,4,2,2,0,0,0,0,5,0,0,1,1,0,50.0,100.0,,10.9,False
+Knox Prairie Fire,2026-01-24,Ripon Red Hawks,Michael Asman,3,1,2,1,1,0,2,0,2,0,0,2,0,0,2,50.0,100.0,0.0,12.5,True
+Knox Prairie Fire,2026-01-24,Ripon Red Hawks,Sam Leoni,13,5,9,1,2,2,4,0,0,6,0,0,0,2,0,55.6,50.0,50.0,30.8,True
+Knox Prairie Fire,2026-01-24,Ripon Red Hawks,Seth Bunders,5,2,10,1,5,0,0,0,2,4,2,0,2,1,2,20.0,20.0,,25.3,True
+Knox Prairie Fire,2026-02-14,Knox Prairie Fire,Aydan Ayer,4,1,5,0,2,2,2,1,2,1,1,0,0,4,3,20.0,0.0,100.0,12.2,False
+Knox Prairie Fire,2026-02-14,Knox Prairie Fire,B.J. Cooley,0,0,2,0,2,0,0,0,0,0,0,1,1,2,0,0.0,0.0,,5.9,False
+Knox Prairie Fire,2026-02-14,Knox Prairie Fire,Braedy Phelan,3,0,1,0,0,3,4,1,1,0,2,0,0,1,2,0.0,,75.0,17.6,False
+Knox Prairie Fire,2026-02-14,Knox Prairie Fire,Cameron Betker,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,3.3,False
+Knox Prairie Fire,2026-02-14,Knox Prairie Fire,Carl Dortch,4,2,6,0,0,0,2,4,2,0,0,0,1,0,6,33.3,,0.0,11.9,False
+Knox Prairie Fire,2026-02-14,Knox Prairie Fire,Denim Tuala-Fata,8,4,8,0,0,0,2,4,3,2,0,1,1,1,7,50.0,,0.0,16.8,False
+Knox Prairie Fire,2026-02-14,Knox Prairie Fire,Josh Stewart,15,6,14,0,1,3,4,1,7,3,2,0,0,2,8,42.9,0.0,75.0,33.4,False
+Knox Prairie Fire,2026-02-14,Knox Prairie Fire,Noah Campbell,16,7,15,0,2,2,4,3,7,3,2,0,4,1,10,46.7,0.0,50.0,32.5,False
+Knox Prairie Fire,2026-02-14,Knox Prairie Fire,Russell Wright,11,4,9,0,1,3,4,3,4,1,0,0,1,3,7,44.4,0.0,75.0,27.1,False
+Knox Prairie Fire,2026-02-14,Knox Prairie Fire,Ryan Erdos,1,0,3,0,2,1,2,0,1,0,0,0,1,1,1,0.0,0.0,50.0,11.1,False
+Knox Prairie Fire,2026-02-14,Knox Prairie Fire,Vladimir Marinov,3,1,2,1,2,0,0,1,1,1,0,0,1,0,2,50.0,50.0,,7.2,False
+Knox Prairie Fire,2026-02-14,Knox Prairie Fire,Willie Rogers III,6,2,8,2,5,0,0,0,3,2,0,0,1,0,3,25.0,40.0,,19.6,False
+Knox Prairie Fire,2026-02-14,Ripon Red Hawks,Anton Kilde,6,1,4,1,3,3,4,1,1,1,0,0,0,1,2,25.0,33.3,75.0,16.4,False
+Knox Prairie Fire,2026-02-14,Ripon Red Hawks,CJ Brown,5,2,6,1,3,0,0,2,2,2,1,1,1,1,4,33.3,33.3,,20.0,False
+Knox Prairie Fire,2026-02-14,Ripon Red Hawks,Jack Field,4,2,7,0,3,0,0,0,5,3,0,1,2,1,5,28.6,0.0,,22.5,True
+Knox Prairie Fire,2026-02-14,Ripon Red Hawks,Jackson Flowers,10,4,7,2,3,0,2,0,3,0,0,1,0,3,3,57.1,66.7,0.0,17.2,False
+Knox Prairie Fire,2026-02-14,Ripon Red Hawks,Joey Daun,10,3,5,2,3,2,3,0,4,1,1,1,1,0,4,60.0,66.7,66.7,13.5,False
+Knox Prairie Fire,2026-02-14,Ripon Red Hawks,Jose Gonzales,0,0,2,0,0,0,0,1,0,0,1,1,0,3,1,0.0,,,7.0,False
+Knox Prairie Fire,2026-02-14,Ripon Red Hawks,Keenan Rahn,8,3,7,2,5,0,0,3,2,2,2,0,1,3,5,42.9,40.0,,23.3,True
+Knox Prairie Fire,2026-02-14,Ripon Red Hawks,Landon Lee,0,0,4,0,2,0,0,1,1,1,0,0,1,2,2,0.0,0.0,,11.5,False
+Knox Prairie Fire,2026-02-14,Ripon Red Hawks,Marshawn Robinson,5,2,3,1,1,0,0,0,4,1,0,1,1,2,4,66.7,100.0,,12.9,True
+Knox Prairie Fire,2026-02-14,Ripon Red Hawks,Sam Leoni,14,3,11,1,2,7,8,2,1,2,0,0,2,0,3,27.3,50.0,87.5,26.6,True
+Knox Prairie Fire,2026-02-14,Ripon Red Hawks,Seth Bunders,5,2,12,1,10,0,0,1,2,3,0,0,3,3,3,16.7,10.0,,27.6,True
+Lake Forest Foresters,2025-12-19,Lake Forest Foresters,Alex Brown,2,0,1,0,0,2,2,0,1,1,1,0,0,2,1,0.0,,100.0,16.0,False
+Lake Forest Foresters,2025-12-19,Lake Forest Foresters,Alex Forowycz,12,5,15,2,7,0,0,1,8,1,1,1,4,1,9,33.3,28.6,,29.2,False
+Lake Forest Foresters,2025-12-19,Lake Forest Foresters,Anthony Favia,1,0,2,0,0,1,2,1,0,2,0,0,1,0,1,0.0,,50.0,16.9,False
+Lake Forest Foresters,2025-12-19,Lake Forest Foresters,Ben Bochicchio,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0.0,0.0,,8.3,False
+Lake Forest Foresters,2025-12-19,Lake Forest Foresters,Chase Honarvar,2,0,1,0,0,2,2,2,0,1,0,0,0,1,2,0.0,,100.0,7.4,False
+Lake Forest Foresters,2025-12-19,Lake Forest Foresters,Coltrane Marchand,8,4,11,0,3,0,0,3,5,0,1,0,2,0,8,36.4,0.0,,25.6,False
+Lake Forest Foresters,2025-12-19,Lake Forest Foresters,Cristian Rodriguez,17,7,10,0,0,3,4,3,5,6,2,0,1,1,8,70.0,,75.0,31.8,False
+Lake Forest Foresters,2025-12-19,Lake Forest Foresters,Luke Arington,15,5,10,5,9,0,0,0,4,0,0,0,0,0,4,50.0,55.6,,25.5,False
+Lake Forest Foresters,2025-12-19,Lake Forest Foresters,Marko Visnjevac,11,3,6,1,2,4,5,2,1,1,0,0,2,2,3,50.0,50.0,80.0,22.8,False
+Lake Forest Foresters,2025-12-19,Lake Forest Foresters,Nikolas Popovic,6,3,6,0,2,0,0,1,2,0,0,0,1,0,3,50.0,0.0,,15.1,False
+Lake Forest Foresters,2025-12-19,Ripon Red Hawks,Anton Kilde,8,3,5,2,4,0,0,0,4,0,0,0,1,4,4,60.0,50.0,,17.1,False
+Lake Forest Foresters,2025-12-19,Ripon Red Hawks,CJ Brown,0,0,4,0,2,0,0,0,3,2,2,1,1,1,3,0.0,0.0,,27.4,True
+Lake Forest Foresters,2025-12-19,Ripon Red Hawks,Jack Field,5,2,3,1,1,0,0,0,2,0,0,1,0,1,2,66.7,100.0,,11.5,False
+Lake Forest Foresters,2025-12-19,Ripon Red Hawks,Keenan Rahn,0,0,1,0,1,0,0,0,0,0,1,0,0,1,0,0.0,0.0,,2.6,False
+Lake Forest Foresters,2025-12-19,Ripon Red Hawks,Kolby Williams,8,3,8,0,0,2,2,6,6,0,1,1,2,2,12,37.5,,100.0,27.2,True
+Lake Forest Foresters,2025-12-19,Ripon Red Hawks,Landon Lee,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.7,False
+Lake Forest Foresters,2025-12-19,Ripon Red Hawks,Marshawn Robinson,18,7,12,2,5,2,2,1,3,2,0,2,1,1,4,58.3,40.0,100.0,27.5,False
+Lake Forest Foresters,2025-12-19,Ripon Red Hawks,Michael Asman,7,3,5,1,2,0,0,1,0,1,0,1,1,1,1,60.0,50.0,,23.8,True
+Lake Forest Foresters,2025-12-19,Ripon Red Hawks,Sam Leoni,5,2,5,1,1,0,0,0,0,1,0,0,0,0,0,40.0,100.0,,20.9,True
+Lake Forest Foresters,2025-12-19,Ripon Red Hawks,Seth Bunders,18,7,21,2,9,2,2,0,4,3,4,2,2,2,4,33.3,22.2,100.0,38.3,True
+Lake Forest Foresters,2026-01-27,Lake Forest Foresters,Alex Brown,9,3,6,1,2,2,2,1,4,1,1,0,0,1,5,50.0,50.0,100.0,23.8,False
+Lake Forest Foresters,2026-01-27,Lake Forest Foresters,Alex Forowycz,18,6,11,2,6,4,4,0,4,1,0,0,5,4,4,54.5,33.3,100.0,22.8,False
+Lake Forest Foresters,2026-01-27,Lake Forest Foresters,Anthony Favia,6,2,2,2,2,0,0,1,0,1,0,0,0,0,1,100.0,100.0,,9.8,False
+Lake Forest Foresters,2026-01-27,Lake Forest Foresters,Ben Bochicchio,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,,,,2.9,False
+Lake Forest Foresters,2026-01-27,Lake Forest Foresters,Chase Honarvar,0,0,2,0,0,0,0,2,1,1,1,0,2,1,3,0.0,,,9.6,False
+Lake Forest Foresters,2026-01-27,Lake Forest Foresters,Coltrane Marchand,3,1,3,0,0,1,2,1,6,4,1,0,2,3,7,33.3,,50.0,17.3,False
+Lake Forest Foresters,2026-01-27,Lake Forest Foresters,Cristian Rodriguez,24,8,11,0,0,8,8,0,7,2,1,0,2,1,7,72.7,,100.0,30.0,False
+Lake Forest Foresters,2026-01-27,Lake Forest Foresters,Luke Arington,13,4,7,2,3,3,3,2,5,2,0,0,4,0,7,57.1,66.7,100.0,30.2,False
+Lake Forest Foresters,2026-01-27,Lake Forest Foresters,Marko Visnjevac,14,4,8,4,5,2,2,1,3,1,1,0,5,2,4,50.0,80.0,100.0,29.9,False
+Lake Forest Foresters,2026-01-27,Lake Forest Foresters,Nikolas Popovic,1,0,1,0,1,1,2,2,0,2,0,0,0,0,2,0.0,0.0,50.0,22.2,False
+Lake Forest Foresters,2026-01-27,Ripon Red Hawks,Anton Kilde,0,0,4,0,3,0,0,1,1,0,3,0,0,4,2,0.0,0.0,,9.2,False
+Lake Forest Foresters,2026-01-27,Ripon Red Hawks,CJ Brown,6,3,8,0,3,0,0,0,1,1,1,0,1,3,1,37.5,0.0,,25.4,True
+Lake Forest Foresters,2026-01-27,Ripon Red Hawks,Jack Field,13,6,8,1,3,0,1,1,1,1,0,1,3,0,2,75.0,33.3,0.0,17.2,True
+Lake Forest Foresters,2026-01-27,Ripon Red Hawks,Joey Daun,4,1,4,0,2,2,2,0,0,0,0,0,1,0,0,25.0,0.0,100.0,9.0,False
+Lake Forest Foresters,2026-01-27,Ripon Red Hawks,Keenan Rahn,12,3,3,2,2,4,4,2,0,0,1,1,0,0,2,100.0,100.0,100.0,22.0,False
+Lake Forest Foresters,2026-01-27,Ripon Red Hawks,Kolby Williams,7,3,7,0,0,1,3,0,4,0,1,0,0,3,4,42.9,,33.3,25.8,True
+Lake Forest Foresters,2026-01-27,Ripon Red Hawks,Landon Lee,0,0,3,0,1,0,0,0,0,2,1,0,0,1,0,0.0,0.0,,11.8,False
+Lake Forest Foresters,2026-01-27,Ripon Red Hawks,Marshawn Robinson,18,7,12,2,4,2,3,1,0,3,3,0,1,3,1,58.3,50.0,66.7,27.9,False
+Lake Forest Foresters,2026-01-27,Ripon Red Hawks,Sam Leoni,1,0,2,0,0,1,2,0,1,1,1,0,0,2,1,0.0,,50.0,14.4,True
+Lake Forest Foresters,2026-01-27,Ripon Red Hawks,Seth Bunders,20,7,13,2,5,4,4,0,4,3,3,0,1,4,4,53.8,40.0,100.0,35.7,True
+Lakeland Muskies,2025-11-18,Lakeland Muskies,Asanjai Hunter,30,9,20,1,5,11,13,0,6,2,3,0,1,3,6,45.0,20.0,84.6,37.3,False
+Lakeland Muskies,2025-11-18,Lakeland Muskies,Delon Zollicoffer-White,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,2.3,False
+Lakeland Muskies,2025-11-18,Lakeland Muskies,Emmitt Konieczny,4,0,2,0,1,4,4,0,2,4,0,0,0,0,2,0.0,0.0,100.0,25.0,False
+Lakeland Muskies,2025-11-18,Lakeland Muskies,Gage Cornell,0,0,2,0,1,0,0,0,3,0,1,1,1,1,3,0.0,0.0,,11.0,False
+Lakeland Muskies,2025-11-18,Lakeland Muskies,Jaxson Dillon,16,4,12,1,7,7,7,1,2,3,0,0,1,4,3,33.3,14.3,100.0,23.6,False
+Lakeland Muskies,2025-11-18,Lakeland Muskies,Max Justic,12,5,7,1,3,1,3,0,6,2,4,0,0,4,6,71.4,33.3,33.3,29.1,False
+Lakeland Muskies,2025-11-18,Lakeland Muskies,Parker Braun,6,2,11,0,3,2,3,4,3,1,2,0,1,3,7,18.2,0.0,66.7,37.2,False
+Lakeland Muskies,2025-11-18,Lakeland Muskies,Peyton Mrotek,6,2,6,2,3,0,0,1,3,1,0,0,2,3,4,33.3,66.7,,21.7,False
+Lakeland Muskies,2025-11-18,Lakeland Muskies,RJ Hines Jr.,3,1,2,1,2,0,0,1,0,0,1,0,1,3,1,50.0,50.0,,10.5,False
+Lakeland Muskies,2025-11-18,Ripon Red Hawks,CJ Brown,4,2,8,0,1,0,0,1,6,0,1,0,1,5,7,25.0,0.0,,33.1,True
+Lakeland Muskies,2025-11-18,Ripon Red Hawks,Isaac Knoll,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,1.1,False
+Lakeland Muskies,2025-11-18,Ripon Red Hawks,Jack Field,4,1,2,0,0,2,2,0,1,0,0,0,1,2,1,50.0,,100.0,9.4,False
+Lakeland Muskies,2025-11-18,Ripon Red Hawks,Jarton Davis,2,0,0,0,0,2,2,0,1,0,0,1,1,2,1,,,100.0,7.6,False
+Lakeland Muskies,2025-11-18,Ripon Red Hawks,Jose Gonzales,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,3.2,False
+Lakeland Muskies,2025-11-18,Ripon Red Hawks,Keenan Rahn,3,1,2,1,2,0,0,1,2,0,1,0,0,2,3,50.0,50.0,,12.5,False
+Lakeland Muskies,2025-11-18,Ripon Red Hawks,Kolby Williams,18,7,11,0,0,4,6,1,6,0,0,1,2,3,7,63.6,,66.7,32.1,True
+Lakeland Muskies,2025-11-18,Ripon Red Hawks,Michael Asman,8,2,7,0,3,4,5,0,9,0,1,0,3,0,9,28.6,0.0,80.0,27.6,True
+Lakeland Muskies,2025-11-18,Ripon Red Hawks,Sam Leoni,14,4,7,2,3,4,4,0,1,5,0,1,1,3,1,57.1,66.7,100.0,32.8,True
+Lakeland Muskies,2025-11-18,Ripon Red Hawks,Seth Bunders,20,6,12,2,4,6,8,1,4,6,1,0,5,3,5,50.0,50.0,75.0,38.6,True
+Lawrence Vikings,2026-01-13,Lawrence Vikings,CJ Campbell,8,3,8,2,7,0,0,0,2,1,0,0,2,0,2,37.5,28.6,,21.8,False
+Lawrence Vikings,2026-01-13,Lawrence Vikings,Caleb Nash,7,3,4,0,0,1,2,0,0,3,1,1,4,0,0,75.0,,50.0,21.1,False
+Lawrence Vikings,2026-01-13,Lawrence Vikings,Cameron Nash,4,1,4,0,2,2,2,0,3,1,1,0,0,0,3,25.0,0.0,100.0,19.8,False
+Lawrence Vikings,2026-01-13,Lawrence Vikings,Casey Schoenecker,13,6,10,0,0,1,1,1,2,0,1,0,1,3,3,60.0,,100.0,33.1,False
+Lawrence Vikings,2026-01-13,Lawrence Vikings,Hogan Demovsky,11,3,6,3,5,2,3,0,4,0,0,0,1,5,4,50.0,60.0,66.7,32.0,False
+Lawrence Vikings,2026-01-13,Lawrence Vikings,Nathan Valentine,5,2,7,1,5,0,0,0,3,3,0,0,3,3,3,28.6,20.0,,20.8,False
+Lawrence Vikings,2026-01-13,Lawrence Vikings,Nicholas Gouriotis,10,4,10,2,7,0,0,1,6,0,0,0,0,3,7,40.0,28.6,,32.0,False
+Lawrence Vikings,2026-01-13,Lawrence Vikings,Nicolas Manzanera,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,3.8,False
+Lawrence Vikings,2026-01-13,Lawrence Vikings,Nolan Koch,9,3,6,0,1,3,6,1,1,1,2,0,0,0,2,50.0,0.0,50.0,12.0,False
+Lawrence Vikings,2026-01-13,Ripon Red Hawks,Anton Kilde,9,3,4,3,3,0,0,0,5,0,0,0,0,2,5,75.0,100.0,,15.0,False
+Lawrence Vikings,2026-01-13,Ripon Red Hawks,CJ Brown,12,6,8,0,1,0,0,0,1,1,3,0,1,1,1,75.0,0.0,,35.0,True
+Lawrence Vikings,2026-01-13,Ripon Red Hawks,Jack Field,3,1,5,1,4,0,0,1,1,0,0,1,0,1,2,20.0,25.0,,14.2,False
+Lawrence Vikings,2026-01-13,Ripon Red Hawks,Keenan Rahn,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.4,False
+Lawrence Vikings,2026-01-13,Ripon Red Hawks,Kolby Williams,7,3,3,0,0,1,2,1,2,1,1,1,3,5,3,100.0,,50.0,20.0,True
+Lawrence Vikings,2026-01-13,Ripon Red Hawks,Marshawn Robinson,18,4,10,1,2,9,10,0,8,1,0,0,3,2,8,40.0,50.0,90.0,32.1,True
+Lawrence Vikings,2026-01-13,Ripon Red Hawks,Michael Asman,13,5,11,2,4,1,1,2,3,2,1,0,1,1,5,45.5,50.0,100.0,29.4,True
+Lawrence Vikings,2026-01-13,Ripon Red Hawks,Sam Leoni,2,1,2,0,1,0,0,0,2,0,0,0,0,0,2,50.0,0.0,,15.1,False
+Lawrence Vikings,2026-01-13,Ripon Red Hawks,Seth Bunders,19,8,17,2,6,1,1,1,2,9,2,0,0,0,3,47.1,33.3,100.0,33.3,True
+Lawrence Vikings,2026-02-05,Lawrence Vikings,CJ Campbell,11,3,5,2,3,3,4,0,3,1,1,0,3,1,3,60.0,66.7,75.0,24.4,False
+Lawrence Vikings,2026-02-05,Lawrence Vikings,Caleb Nash,6,3,5,0,1,0,1,0,3,7,0,1,4,1,3,60.0,0.0,0.0,27.1,False
+Lawrence Vikings,2026-02-05,Lawrence Vikings,Cameron Nash,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,3.5,False
+Lawrence Vikings,2026-02-05,Lawrence Vikings,Casey Schoenecker,2,1,5,0,0,0,0,1,6,4,1,2,1,5,7,20.0,,,25.4,False
+Lawrence Vikings,2026-02-05,Lawrence Vikings,Damian Cejka,2,1,1,0,0,0,0,0,0,0,0,0,0,2,0,100.0,,,4.6,False
+Lawrence Vikings,2026-02-05,Lawrence Vikings,Hogan Demovsky,13,3,7,3,6,4,4,0,3,1,0,0,1,2,3,42.9,50.0,100.0,34.6,False
+Lawrence Vikings,2026-02-05,Lawrence Vikings,Jackson Weber,0,0,0,0,0,0,0,0,1,3,0,0,1,1,1,,,,8.0,False
+Lawrence Vikings,2026-02-05,Lawrence Vikings,Matai Edgecombe,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,4.9,False
+Lawrence Vikings,2026-02-05,Lawrence Vikings,Nicholas Gouriotis,27,8,13,7,10,4,4,1,5,0,1,0,1,0,6,61.5,70.0,100.0,34.8,False
+Lawrence Vikings,2026-02-05,Lawrence Vikings,Nicolas Manzanera,2,1,2,0,1,0,0,0,0,0,0,0,0,1,0,50.0,0.0,,11.8,False
+Lawrence Vikings,2026-02-05,Lawrence Vikings,Nolan Koch,12,4,7,0,0,4,4,0,3,0,0,1,0,1,3,57.1,,100.0,19.6,False
+Lawrence Vikings,2026-02-05,Ripon Red Hawks,Anton Kilde,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,1.0,False
+Lawrence Vikings,2026-02-05,Ripon Red Hawks,CJ Brown,6,2,8,0,4,2,2,2,0,2,1,0,1,1,2,25.0,0.0,100.0,30.5,True
+Lawrence Vikings,2026-02-05,Ripon Red Hawks,Jack Field,10,4,6,2,3,0,0,0,2,1,0,1,0,0,2,66.7,66.7,,14.3,False
+Lawrence Vikings,2026-02-05,Ripon Red Hawks,Joey Daun,6,2,3,2,2,0,0,0,2,2,1,0,1,1,2,66.7,100.0,,21.8,False
+Lawrence Vikings,2026-02-05,Ripon Red Hawks,Keenan Rahn,4,2,2,0,0,0,0,1,1,1,0,0,0,0,2,100.0,,,12.6,False
+Lawrence Vikings,2026-02-05,Ripon Red Hawks,Kolby Williams,16,5,10,0,0,6,7,1,4,2,3,1,2,4,5,50.0,,85.7,36.0,True
+Lawrence Vikings,2026-02-05,Ripon Red Hawks,Landon Lee,2,0,0,0,0,2,2,0,0,1,0,0,0,0,0,,,100.0,3.2,False
+Lawrence Vikings,2026-02-05,Ripon Red Hawks,Marshawn Robinson,2,1,4,0,0,0,0,0,4,4,1,0,1,1,4,25.0,,,23.4,True
+Lawrence Vikings,2026-02-05,Ripon Red Hawks,Sam Leoni,4,1,3,0,1,2,2,0,1,2,0,0,0,2,1,33.3,0.0,100.0,18.8,True
+Lawrence Vikings,2026-02-05,Ripon Red Hawks,Seth Bunders,21,7,19,5,8,2,2,0,4,1,2,0,0,5,4,36.8,62.5,100.0,36.9,True
+Millikin Big Blue,2025-11-21,Millikin Big Blue,Braden Phillips,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.7,False
+Millikin Big Blue,2025-11-21,Millikin Big Blue,Caden Nichols,0,0,2,0,0,0,0,1,0,0,0,0,0,0,1,0.0,,,1.7,False
+Millikin Big Blue,2025-11-21,Millikin Big Blue,Chris Ketchum,5,1,7,0,1,3,4,2,4,3,2,0,0,0,6,14.3,0.0,75.0,19.9,False
+Millikin Big Blue,2025-11-21,Millikin Big Blue,Eli Stipp,1,0,0,0,0,1,2,0,0,1,0,0,0,0,0,,,50.0,6.0,False
+Millikin Big Blue,2025-11-21,Millikin Big Blue,Ian Winkler,15,4,11,1,4,6,6,0,3,1,1,0,1,1,3,36.4,25.0,100.0,30.5,False
+Millikin Big Blue,2025-11-21,Millikin Big Blue,Jacob Bullock,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,3.4,False
+Millikin Big Blue,2025-11-21,Millikin Big Blue,Kobe Anderson,1,0,2,0,0,1,6,0,5,2,1,0,1,2,5,0.0,,16.7,15.6,False
+Millikin Big Blue,2025-11-21,Millikin Big Blue,Lane Thomann,18,8,12,2,4,0,0,3,4,1,1,0,7,1,7,66.7,50.0,,30.6,False
+Millikin Big Blue,2025-11-21,Millikin Big Blue,McGrady Noyes,4,1,3,0,2,2,3,4,1,2,0,0,0,2,5,33.3,0.0,66.7,22.0,False
+Millikin Big Blue,2025-11-21,Millikin Big Blue,Nate Straughter,19,7,17,5,9,0,0,0,5,0,1,0,1,2,5,41.2,55.6,,34.7,False
+Millikin Big Blue,2025-11-21,Millikin Big Blue,Pat Origliasso,4,2,2,0,0,0,1,1,1,0,0,0,0,1,2,100.0,,0.0,9.9,False
+Millikin Big Blue,2025-11-21,Millikin Big Blue,Tionne Spates,6,2,2,0,0,2,3,5,5,4,0,0,2,3,10,100.0,,66.7,23.7,False
+Millikin Big Blue,2025-11-21,Ripon Red Hawks,Anton Kilde,7,3,4,1,2,0,0,1,2,1,0,0,0,5,3,75.0,50.0,,23.1,False
+Millikin Big Blue,2025-11-21,Ripon Red Hawks,CJ Brown,14,6,11,2,4,0,0,1,1,2,2,0,0,3,2,54.5,50.0,,27.7,True
+Millikin Big Blue,2025-11-21,Ripon Red Hawks,Houston McKenzie,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,2.1,False
+Millikin Big Blue,2025-11-21,Ripon Red Hawks,Jack Field,8,3,7,2,6,0,0,0,1,0,0,1,0,5,1,42.9,33.3,,21.2,True
+Millikin Big Blue,2025-11-21,Ripon Red Hawks,Jarton Davis,0,0,2,0,1,0,0,0,0,1,1,0,0,0,0,0.0,0.0,,7.0,False
+Millikin Big Blue,2025-11-21,Ripon Red Hawks,Keenan Rahn,0,0,4,0,4,0,0,0,1,0,0,0,1,0,1,0.0,0.0,,14.0,False
+Millikin Big Blue,2025-11-21,Ripon Red Hawks,Kolby Williams,7,2,9,0,3,3,6,1,7,0,3,0,1,3,8,22.2,0.0,50.0,34.7,True
+Millikin Big Blue,2025-11-21,Ripon Red Hawks,Landon Lee,2,0,0,0,0,2,2,0,0,2,0,0,1,0,0,,,100.0,10.1,False
+Millikin Big Blue,2025-11-21,Ripon Red Hawks,Sam Leoni,5,2,4,0,1,1,2,0,2,1,1,0,0,0,2,50.0,0.0,50.0,26.1,True
+Millikin Big Blue,2025-11-21,Ripon Red Hawks,Seth Bunders,15,5,16,3,7,2,4,0,6,1,0,0,4,1,6,31.2,42.9,50.0,32.8,True
+Monmouth (IL) Fighting Scots,2026-01-07,Monmouth (IL) Fighting Scots,Cameron Thomas,16,4,6,3,4,5,7,0,5,1,0,3,5,2,5,66.7,75.0,71.4,31.2,False
+Monmouth (IL) Fighting Scots,2026-01-07,Monmouth (IL) Fighting Scots,Connor Watson,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0.0,0.0,,7.2,False
+Monmouth (IL) Fighting Scots,2026-01-07,Monmouth (IL) Fighting Scots,Jase Whiteman,10,3,7,2,5,2,3,0,3,0,2,0,0,1,3,42.9,40.0,66.7,19.9,False
+Monmouth (IL) Fighting Scots,2026-01-07,Monmouth (IL) Fighting Scots,Jason Huber,4,1,2,0,0,2,2,2,2,1,1,1,1,2,4,50.0,,100.0,21.4,False
+Monmouth (IL) Fighting Scots,2026-01-07,Monmouth (IL) Fighting Scots,Kamran Banks,2,1,3,0,0,0,0,3,0,2,0,0,0,0,3,33.3,,,13.8,False
+Monmouth (IL) Fighting Scots,2026-01-07,Monmouth (IL) Fighting Scots,Kyle Taylor,12,3,10,1,2,5,6,1,3,6,2,0,2,2,4,30.0,50.0,83.3,32.4,False
+Monmouth (IL) Fighting Scots,2026-01-07,Monmouth (IL) Fighting Scots,Max Maring,14,4,9,1,3,5,6,0,2,0,0,0,0,3,2,44.4,33.3,83.3,23.4,False
+Monmouth (IL) Fighting Scots,2026-01-07,Monmouth (IL) Fighting Scots,Payton Crims,4,2,2,0,0,0,0,1,2,1,1,0,0,0,3,100.0,,,16.8,False
+Monmouth (IL) Fighting Scots,2026-01-07,Monmouth (IL) Fighting Scots,Turner Plumer,4,1,1,0,0,2,2,1,0,0,0,0,1,1,1,100.0,,100.0,7.0,False
+Monmouth (IL) Fighting Scots,2026-01-07,Monmouth (IL) Fighting Scots,Zay Brown,15,4,7,0,1,7,8,0,8,1,0,0,2,2,8,57.1,0.0,87.5,25.2,False
+Monmouth (IL) Fighting Scots,2026-01-07,Ripon Red Hawks,Anton Kilde,4,1,2,1,2,1,1,0,0,0,0,0,1,3,0,50.0,50.0,100.0,9.6,False
+Monmouth (IL) Fighting Scots,2026-01-07,Ripon Red Hawks,CJ Brown,2,0,4,0,1,2,2,1,1,0,2,0,1,1,2,0.0,0.0,100.0,20.2,True
+Monmouth (IL) Fighting Scots,2026-01-07,Ripon Red Hawks,Jack Field,9,3,3,3,3,0,0,0,0,1,0,0,1,5,0,100.0,100.0,,15.6,False
+Monmouth (IL) Fighting Scots,2026-01-07,Ripon Red Hawks,Kolby Williams,15,6,10,0,0,3,3,3,5,0,1,1,1,1,8,60.0,,100.0,36.6,True
+Monmouth (IL) Fighting Scots,2026-01-07,Ripon Red Hawks,Landon Lee,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,100.0,,,5.6,False
+Monmouth (IL) Fighting Scots,2026-01-07,Ripon Red Hawks,Marshawn Robinson,7,3,13,1,3,0,0,2,0,0,2,0,0,1,2,23.1,33.3,,21.8,True
+Monmouth (IL) Fighting Scots,2026-01-07,Ripon Red Hawks,Michael Asman,14,5,12,2,6,2,2,1,2,2,0,0,0,4,3,41.7,33.3,100.0,25.5,True
+Monmouth (IL) Fighting Scots,2026-01-07,Ripon Red Hawks,Sam Leoni,8,3,5,0,1,2,4,1,3,2,1,0,1,2,4,60.0,0.0,50.0,28.2,False
+Monmouth (IL) Fighting Scots,2026-01-07,Ripon Red Hawks,Seth Bunders,14,5,16,3,9,1,1,0,6,3,1,0,2,3,6,31.2,33.3,100.0,35.2,True
+Monmouth (IL) Fighting Scots,2026-02-07,Monmouth (IL) Fighting Scots,Cameron Thomas,21,5,14,1,7,10,11,0,5,2,1,0,0,4,5,35.7,14.3,90.9,30.8,False
+Monmouth (IL) Fighting Scots,2026-02-07,Monmouth (IL) Fighting Scots,Connor Watson,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.9,False
+Monmouth (IL) Fighting Scots,2026-02-07,Monmouth (IL) Fighting Scots,Jase Whiteman,3,1,5,1,5,0,0,0,1,0,0,0,0,0,1,20.0,20.0,,12.1,False
+Monmouth (IL) Fighting Scots,2026-02-07,Monmouth (IL) Fighting Scots,Jason Huber,8,3,3,1,1,1,2,2,5,1,1,0,0,2,7,100.0,100.0,50.0,28.8,False
+Monmouth (IL) Fighting Scots,2026-02-07,Monmouth (IL) Fighting Scots,Kamran Banks,1,0,3,0,0,1,2,0,1,0,0,0,1,0,1,0.0,,50.0,7.4,False
+Monmouth (IL) Fighting Scots,2026-02-07,Monmouth (IL) Fighting Scots,Kyle Taylor,14,2,8,1,4,9,10,2,4,7,1,0,6,1,6,25.0,25.0,90.0,36.6,False
+Monmouth (IL) Fighting Scots,2026-02-07,Monmouth (IL) Fighting Scots,Max Maring,10,4,9,1,1,1,2,3,3,0,0,0,0,3,6,44.4,100.0,50.0,25.6,False
+Monmouth (IL) Fighting Scots,2026-02-07,Monmouth (IL) Fighting Scots,Payton Crims,0,0,1,0,1,0,0,0,1,0,0,1,0,2,1,0.0,0.0,,9.6,False
+Monmouth (IL) Fighting Scots,2026-02-07,Monmouth (IL) Fighting Scots,Turner Plumer,2,1,1,0,0,0,0,3,1,0,2,0,0,1,4,100.0,,,11.3,False
+Monmouth (IL) Fighting Scots,2026-02-07,Monmouth (IL) Fighting Scots,Zay Brown,20,7,19,2,4,4,7,4,4,2,0,0,3,2,8,36.8,50.0,57.1,32.5,False
+Monmouth (IL) Fighting Scots,2026-02-07,Ripon Red Hawks,Anton Kilde,3,1,2,1,2,0,0,0,2,0,0,0,0,0,2,50.0,50.0,,9.1,False
+Monmouth (IL) Fighting Scots,2026-02-07,Ripon Red Hawks,CJ Brown,8,3,9,2,6,0,2,0,0,2,1,0,3,1,0,33.3,33.3,0.0,31.1,True
+Monmouth (IL) Fighting Scots,2026-02-07,Ripon Red Hawks,Jack Field,10,3,10,2,6,2,2,0,4,0,0,2,2,3,4,30.0,33.3,100.0,32.0,True
+Monmouth (IL) Fighting Scots,2026-02-07,Ripon Red Hawks,Joey Daun,0,0,0,0,0,0,0,0,0,1,0,0,0,2,0,,,,3.7,False
+Monmouth (IL) Fighting Scots,2026-02-07,Ripon Red Hawks,Keenan Rahn,6,2,3,0,1,2,2,1,1,0,0,0,0,1,2,66.7,0.0,100.0,10.1,False
+Monmouth (IL) Fighting Scots,2026-02-07,Ripon Red Hawks,Kolby Williams,13,2,6,0,0,9,10,1,7,2,0,1,2,4,8,33.3,,90.0,32.2,True
+Monmouth (IL) Fighting Scots,2026-02-07,Ripon Red Hawks,Landon Lee,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.9,False
+Monmouth (IL) Fighting Scots,2026-02-07,Ripon Red Hawks,Marshawn Robinson,19,7,9,1,3,4,4,1,1,2,1,1,5,5,2,77.8,33.3,100.0,26.9,False
+Monmouth (IL) Fighting Scots,2026-02-07,Ripon Red Hawks,Sam Leoni,5,2,8,1,2,0,0,0,4,2,0,1,0,5,4,25.0,50.0,,30.2,True
+Monmouth (IL) Fighting Scots,2026-02-07,Ripon Red Hawks,Seth Bunders,2,1,5,0,2,0,0,0,3,1,1,1,3,2,3,20.0,0.0,,19.5,True
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,Abe Dykstra,0,0,2,0,1,0,0,0,0,0,1,0,0,0,0,0.0,0.0,,2.4,False
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,CJ Brown,2,1,6,0,3,0,0,0,0,0,1,0,1,2,0,16.7,0.0,,20.0,True
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,Caeden Holly,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,2.7,False
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,Houston McKenzie,0,0,0,0,0,0,0,0,2,0,0,0,1,0,2,,,,7.7,False
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,Jack Field,6,3,7,0,2,0,0,0,2,1,0,0,0,1,2,42.9,0.0,,17.2,False
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,Jackson Flowers,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0.0,0.0,,2.4,False
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,Jarton Davis,6,2,5,2,4,0,0,0,1,1,1,0,3,0,1,40.0,50.0,,14.9,False
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,Joey Daun,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0.0,0.0,,2.2,False
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,Jose Gonzales,5,1,2,0,0,3,4,2,0,0,0,0,0,0,2,50.0,,75.0,5.7,False
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,Keenan Rahn,5,2,4,1,3,0,0,1,1,0,1,0,1,1,2,50.0,33.3,,16.1,False
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,Kolby Williams,8,3,9,1,1,1,2,2,4,0,0,0,2,3,6,33.3,100.0,50.0,27.8,True
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,Michael Asman,9,4,9,1,2,0,0,0,3,1,1,1,1,3,3,44.4,50.0,,29.7,True
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,Sam Leoni,0,0,3,0,0,0,0,0,2,1,0,0,0,4,2,0.0,,,15.4,True
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,Seth Bunders,2,1,7,0,3,0,0,0,8,5,0,0,2,2,8,14.3,0.0,,31.9,True
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Bobby Vespa,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,,,,0.8,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Cam Lathos,6,2,6,2,4,0,0,1,1,1,0,0,0,1,2,33.3,50.0,,16.1,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Cam Vine,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,0.6,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Charlie Geske,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0.0,,,1.6,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Cohen Priebe,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.6,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Cole Uhlenbrauck,3,1,10,0,5,1,1,0,1,0,1,0,1,0,1,10.0,0.0,100.0,20.5,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Connor Pytleski,16,6,11,1,3,3,4,3,7,4,3,0,4,2,10,54.5,33.3,75.0,30.9,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Derek Shaw,0,0,6,0,5,0,1,3,1,0,0,0,0,0,4,0.0,0.0,0.0,9.8,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Ethan LeClair,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,0.6,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Jaeden Grade,2,1,2,0,1,0,0,0,1,2,0,0,0,1,1,50.0,0.0,,14.0,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Liam Hanson,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,2.6,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Maddox Cornette,2,1,1,0,0,0,0,1,1,0,0,1,1,0,2,100.0,,,1.6,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Mason Freiburger,2,1,2,0,0,0,0,0,2,1,0,0,1,2,2,50.0,,,14.3,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Reid Rosseland,0,0,1,0,0,0,0,1,2,0,0,0,0,1,3,0.0,,,6.8,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Ryan Brown,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,5.4,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Ryan Cox,21,8,12,2,6,3,3,0,4,1,0,0,1,0,4,66.7,33.3,100.0,26.6,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Thomas Meyers,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.8,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Will Friedenfels,2,1,2,0,0,0,0,2,3,1,0,0,0,0,5,50.0,,,15.4,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Will Stuckey,11,4,9,2,3,1,2,3,4,3,2,0,1,1,7,44.4,66.7,50.0,24.8,False
+St. Norbert Green Knights,2025-11-12,St. Norbert Green Knights,Zach Froemming,2,0,0,0,0,2,2,0,0,0,0,0,0,1,0,,,100.0,1.6,False
+UW-La Crosse Eagles,2025-12-04,Ripon Red Hawks,Anton Kilde,0,0,0,0,0,0,0,1,2,0,0,0,1,2,3,,,,14.2,False
+UW-La Crosse Eagles,2025-12-04,Ripon Red Hawks,CJ Brown,6,3,9,0,3,0,0,0,0,2,1,0,2,5,0,33.3,0.0,,35.4,True
+UW-La Crosse Eagles,2025-12-04,Ripon Red Hawks,Jack Field,8,3,6,2,4,0,0,0,6,0,0,1,0,1,6,50.0,50.0,,24.7,False
+UW-La Crosse Eagles,2025-12-04,Ripon Red Hawks,Jarton Davis,11,4,8,2,4,1,2,1,3,1,2,0,0,0,4,50.0,50.0,50.0,22.1,False
+UW-La Crosse Eagles,2025-12-04,Ripon Red Hawks,Kolby Williams,2,1,1,0,0,0,0,0,1,0,0,1,1,3,1,100.0,,,11.2,True
+UW-La Crosse Eagles,2025-12-04,Ripon Red Hawks,Michael Asman,10,4,9,2,5,0,0,2,2,1,1,0,2,3,4,44.4,40.0,,32.1,True
+UW-La Crosse Eagles,2025-12-04,Ripon Red Hawks,Sam Leoni,11,5,9,1,2,0,0,1,3,1,0,0,3,1,4,55.6,50.0,,23.2,True
+UW-La Crosse Eagles,2025-12-04,Ripon Red Hawks,Seth Bunders,14,3,13,1,5,7,8,1,2,3,1,2,4,3,3,23.1,20.0,87.5,34.1,True
+UW-La Crosse Eagles,2025-12-04,UW-La Crosse Eagles,Ben Goedheer,1,0,0,0,0,1,2,0,0,0,0,0,1,1,0,,,50.0,3.4,False
+UW-La Crosse Eagles,2025-12-04,UW-La Crosse Eagles,Carson Bauer,6,2,6,2,5,0,0,1,2,0,2,0,1,1,3,33.3,40.0,,21.9,False
+UW-La Crosse Eagles,2025-12-04,UW-La Crosse Eagles,Devon Fielding,3,1,5,1,4,0,0,0,4,1,1,0,0,2,4,20.0,25.0,,17.8,False
+UW-La Crosse Eagles,2025-12-04,UW-La Crosse Eagles,Dustin Derousseau,14,5,10,1,3,3,4,1,3,1,2,1,1,2,4,50.0,33.3,75.0,32.7,False
+UW-La Crosse Eagles,2025-12-04,UW-La Crosse Eagles,Eli Schroeder,3,1,2,1,2,0,0,0,1,0,0,0,0,0,1,50.0,50.0,,4.7,False
+UW-La Crosse Eagles,2025-12-04,UW-La Crosse Eagles,JJ Paider,17,7,12,0,0,3,7,4,6,3,0,0,1,1,10,58.3,,42.9,32.7,False
+UW-La Crosse Eagles,2025-12-04,UW-La Crosse Eagles,Jack Crowley,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0.0,0.0,,1.7,False
+UW-La Crosse Eagles,2025-12-04,UW-La Crosse Eagles,Jacob Butler,3,1,3,1,3,0,0,0,1,2,0,1,0,1,1,33.3,33.3,,13.1,False
+UW-La Crosse Eagles,2025-12-04,UW-La Crosse Eagles,Kade Van Asten,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0.0,0.0,,3.2,False
+UW-La Crosse Eagles,2025-12-04,UW-La Crosse Eagles,Sam Ferge,12,4,6,0,2,4,6,2,3,1,4,0,1,0,5,66.7,0.0,66.7,31.2,False
+UW-La Crosse Eagles,2025-12-04,UW-La Crosse Eagles,Sam Grieger,13,5,11,1,4,2,2,1,3,3,1,0,1,1,4,45.5,25.0,100.0,34.8,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Abe Dykstra,0,0,1,0,0,0,1,1,0,0,0,0,1,0,1,0.0,,0.0,3.5,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Anton Kilde,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,5.4,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Birch Gunja,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,0.5,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,CJ Brown,2,1,4,0,1,0,0,1,0,2,0,0,0,3,1,25.0,0.0,,17.0,True
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Christian Wilson,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,2.6,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Houston McKenzie,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.6,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Jack Ellickson,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,,,,2.6,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Jack Field,7,3,8,0,3,1,1,0,4,1,0,0,0,4,4,37.5,0.0,100.0,21.1,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Jackson Flowers,4,1,1,0,0,2,2,0,0,0,0,0,0,0,0,100.0,,100.0,2.6,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Joey Daun,3,1,2,1,2,0,0,0,0,0,0,0,0,1,0,50.0,50.0,,4.9,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Jose Gonzales,4,1,1,0,0,2,2,0,1,0,0,0,0,0,1,100.0,,100.0,5.5,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Keenan Rahn,4,1,1,1,1,1,2,1,5,0,3,0,2,2,6,100.0,100.0,50.0,19.2,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Kolby Williams,10,4,6,0,0,2,3,1,3,0,1,0,2,2,4,66.7,,66.7,21.7,True
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Landon Lee,4,2,5,0,1,0,0,0,0,3,0,0,1,0,0,40.0,0.0,,8.1,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Marshawn Robinson,11,5,11,1,5,0,0,1,1,1,0,1,2,3,2,45.5,20.0,,18.5,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Michael Asman,10,4,6,1,2,1,2,1,5,0,0,0,3,2,6,66.7,50.0,50.0,19.1,True
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Nick Ahlquist,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,,,,2.6,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Olin Zellmer,4,1,2,0,0,2,2,0,0,0,0,0,1,0,0,50.0,,100.0,2.6,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Sam Leoni,2,1,3,0,0,0,0,0,2,0,1,0,2,0,2,33.3,,,19.2,True
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,Seth Bunders,9,4,11,1,3,0,0,0,2,0,0,0,2,3,2,36.4,33.3,,19.6,True
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,AJ Ohrmundt,2,1,2,0,0,0,0,1,0,0,0,0,0,0,1,50.0,,,3.3,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Adam Guyette,1,0,1,0,1,1,2,0,0,0,0,0,0,0,0,0.0,0.0,50.0,4.0,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Aiden Hawkinson,15,6,7,3,4,0,0,2,0,0,2,0,1,0,2,85.7,75.0,,15.2,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Ben Grabner,3,1,2,1,1,0,0,0,0,0,0,0,0,0,0,50.0,100.0,,2.2,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Brandon Beck,21,7,13,4,9,3,4,0,6,1,1,1,3,3,6,53.8,44.4,75.0,18.7,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Carter Thomas,7,0,2,0,2,7,8,0,3,0,1,0,1,0,3,0.0,0.0,87.5,18.7,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Jay Dalton,4,2,4,0,1,0,2,0,0,2,1,0,0,3,0,50.0,0.0,0.0,8.5,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Joey LaChapell,12,3,3,2,2,4,5,0,1,3,1,0,0,2,1,100.0,100.0,80.0,18.7,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Jonah Rindfleisch,0,0,0,0,0,0,0,0,2,2,0,0,2,0,2,,,,7.8,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Logan Rindfleisch,5,1,2,0,1,3,4,0,2,1,1,0,2,3,2,50.0,0.0,75.0,16.5,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Matt Imig,3,1,2,1,2,0,0,0,0,2,0,0,1,0,0,50.0,50.0,,7.8,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Max Tutas,0,0,2,0,1,0,0,1,2,0,0,0,0,1,3,0.0,0.0,,3.8,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Michael Metcalf-Grassman,17,7,9,2,2,1,3,1,3,2,1,0,0,2,4,77.8,100.0,33.3,18.7,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Nate Nazos,2,1,4,0,2,0,0,0,0,2,3,0,0,0,0,25.0,0.0,,18.5,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Oskar Kangas,5,2,3,1,2,0,2,0,3,1,1,0,1,0,3,66.7,50.0,0.0,15.6,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Reed Seckar,0,0,3,0,1,0,0,0,0,0,2,0,0,1,0,0.0,0.0,,5.7,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Riley Rindfleisch,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,,,,1.7,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Tristan Johanknecht,3,1,1,0,0,1,2,1,1,0,0,0,0,0,2,100.0,,50.0,3.5,False
+UW-Oshkosh Titans,2025-12-17,UW-Oshkosh Titans,Vitorio Dante,0,0,3,0,2,0,0,0,1,0,0,0,0,2,1,0.0,0.0,,8.8,False
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Anton Kilde,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,0.9,False
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,CJ Brown,7,2,6,1,2,2,2,0,0,2,2,0,2,4,0,33.3,50.0,100.0,33.4,True
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Christian Wilson,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.9,False
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Isaac Knoll,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.0,False
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Jack Field,3,1,6,0,2,1,1,1,0,0,0,0,1,4,1,16.7,0.0,100.0,19.9,False
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Jackson Flowers,2,0,0,0,0,2,2,0,0,0,0,0,0,0,0,,,100.0,0.9,False
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Jake Thomsen,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0.0,0.0,,3.8,False
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Jarton Davis,0,0,2,0,1,0,0,0,0,1,0,0,1,1,0,0.0,0.0,,11.8,False
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Joey Daun,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,0.9,False
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Keenan Rahn,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,,,,4.5,False
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Kolby Williams,7,3,8,0,0,1,3,3,3,0,1,1,3,4,6,37.5,,33.3,23.3,True
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Landon Lee,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.9,False
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Michael Asman,18,6,8,4,6,2,2,1,2,0,2,2,1,3,3,75.0,66.7,100.0,33.3,True
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Sam Leoni,4,0,2,0,1,4,4,0,1,5,0,0,0,2,1,0.0,0.0,100.0,28.3,True
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,Seth Bunders,17,7,17,2,7,1,2,0,7,3,1,0,4,3,7,41.2,28.6,50.0,35.1,True
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Agape Keyes Jr.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.9,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Austin Ambrose,3,1,1,1,1,0,0,0,2,0,1,0,1,2,2,100.0,100.0,,8.7,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Brock Marino,16,7,9,0,0,2,6,3,3,0,0,1,1,3,6,77.8,,33.3,30.2,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Collin Madson,13,4,12,2,8,3,3,0,5,1,1,0,2,3,5,33.3,25.0,100.0,32.6,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Darius Chestnut,9,2,4,0,2,5,7,1,2,0,1,0,2,1,3,50.0,0.0,71.4,20.1,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Isaac Verges,15,5,10,0,1,5,6,3,4,2,1,0,1,1,7,50.0,0.0,83.3,28.3,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Isaiah Robinson,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.9,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,JR Lukenbill,5,2,4,0,2,1,2,3,2,0,2,1,0,1,5,50.0,0.0,50.0,22.6,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Jake Quast,11,2,3,1,1,6,9,1,1,0,0,0,1,1,2,66.7,100.0,66.7,10.4,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Joey Berezowitz,0,0,0,0,0,0,0,0,1,2,2,0,0,0,1,,,,11.9,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Kelton McEwen,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,0.9,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Luke Bara,2,1,4,0,1,0,0,0,2,0,0,0,2,0,2,25.0,0.0,,17.5,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Mauryon Turner,2,1,1,0,0,0,0,0,0,0,1,0,1,1,0,100.0,,,0.9,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Rashad Rogers,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.9,False
+UW-Whitewater Warhawks,2025-11-07,UW-Whitewater Warhawks,Richie Warren,0,0,3,0,1,0,0,1,2,0,0,0,1,3,3,0.0,0.0,,12.2,False
+Cornell College Rams,2025-12-06,Cornell College Rams,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,,False
+Cornell College Rams,2025-12-06,Ripon Red Hawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,,False
+Cornell College Rams,2026-02-10,Ripon Red Hawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Grinnell Pioneers,2026-01-17,Ripon Red Hawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Illinois College Blueboys,2026-01-10,Ripon Red Hawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Lake Forest Foresters,2026-01-27,Ripon Red Hawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Millikin Big Blue,2025-11-21,Millikin Big Blue,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,,False
+Monmouth (IL) Fighting Scots,2026-01-07,Ripon Red Hawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+St. Norbert Green Knights,2025-11-12,Ripon Red Hawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+UW-Oshkosh Titans,2025-12-17,Ripon Red Hawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,,False
+UW-Whitewater Warhawks,2025-11-07,Ripon Red Hawks,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
