@@ -207,3 +207,6 @@ run_at,part,label,score,n,bar,chance,used,how,auc,caught,bar_n,best,games,status
 2026-11-07T20:13:20,reader,Jersey-number reader,0.0,0,85.0,,False,"right when it answers (trained_pose), on coach-checked crops it never trained on",,,6.0,,,,"0 right, 0 wrong of 1 checked players",
 2026-11-07T20:22:35,located,Players found on the film,40.0,10,,,,"on-floor players (five per team per clip) the tracking found on the film -- any way, coach checks too",,,,,2026-11-06 Thiel@UWPlatteville,,,
 2026-11-07T20:22:35,reader,Jersey-number reader,100.0,2,85.0,,False,"right when it answers (easyocr_find), on coach-checked crops it never trained on",,,6.0,,,,"2 right, 0 wrong of 7 checked players",
+2026-11-07T20:57:08,best_guess,Best guesses from the lineup,8.5,1100,50.0,20.0,False,checked best guesses that were the right player (shown only at a probability level right 50%+ of the time),,,20.0,,,,,
+2026-11-07T20:57:08,located,Players found on the film,50.0,10,,,,"on-floor players (five per team per clip) the tracking found on the film -- any way, coach checks too",,,,,2026-11-06 Thiel@UWPlatteville,,,
+2026-11-07T20:57:08,reader,Jersey-number reader,100.0,4,85.0,,False,"right when it answers (easyocr_find), on coach-checked crops it never trained on",,,6.0,,,,"4 right, 0 wrong of 17 checked players",
