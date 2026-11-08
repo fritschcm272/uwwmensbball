@@ -3228,9 +3228,12 @@ def _pl_untagged_from_frames(tagged):
         # CONFIRMED CHANGE (requested: banked games' half and game clock -- the "easy part" of their play-by-play): read from
         # the game's own Synergy export (Export.csv's Pd. / Clock, by clip number). No lineups (that needs the play-by-play).
         _bk_clock = {}
-        if _bk is not None:
+        # CONFIRMED CHANGE (requested: games found on Synergy before FastScout posts them): a game with a Synergy export and
+        # no play-by-play matched (UWW @ Carroll, 11/7/26) also takes its half / clock from Export.csv
+        _gid_x = _sst_game_id_of(_url) if "_sst_game_id_of" in globals() else None
+        if _bk is not None or (_gid_x and not e_by_n):
             try:
-                _hit = (_vx_registry() or {}).get(_bk["gid"]) or {}
+                _hit = (_vx_registry() or {}).get(_bk["gid"] if _bk is not None else _gid_x) or {}
                 _fx = next((os.path.join(r_, _hit["folder"], "Export.csv") for r_ in _vx_roots()
                             if _hit.get("folder") and os.path.isfile(os.path.join(r_, _hit["folder"], "Export.csv"))), None)
                 if _fx:
@@ -3369,6 +3372,31 @@ if not _pl_uww.empty:
     _pl_date_opp = (pbp_events.dropna(subset=["game_date"]).groupby("game_date")["opponent"].first().to_dict()
                     if not pbp_events.empty else {})
     _pl_uww["opponent"] = _pl_uww["game_date"].map(_pl_date_opp)
+    # CONFIRMED BUG (fixed; UWW @ Carroll 11/7/26 from Synergy before FastScout posted its play-by-play: Carroll's
+    # possessions had NO offense team, so Film Tagging and the tables lost them). With no play-by-play for the date, the
+    # opponent comes from UWW's schedule, else from the clips' own Team column (the team that isn't us).
+    _miss_o = _pl_uww["opponent"].isna()
+    if _miss_o.any():
+        _sched_o = {}
+        _us = globals().get("uww_team_schedule")
+        if isinstance(_us, pd.DataFrame) and not _us.empty and "opponent" in _us.columns:
+            for _, _sr in _us.iterrows():
+                _sgd = _sr.get("game_date")
+                if _sgd is None or (not isinstance(_sgd, str) and pd.isna(_sgd)):
+                    try:
+                        _sgd = parse_schedule_date(_sr.get("date"), globals().get("uww_season_start_year"))
+                    except Exception:
+                        _sgd = None
+                if _sgd is not None and not (not isinstance(_sgd, str) and pd.isna(_sgd)):
+                    _sched_o[pd.Timestamp(_sgd).date()] = str(_sr["opponent"])
+        for _d0 in _pl_uww.loc[_miss_o, "game_date"].dropna().unique():
+            _o = _sched_o.get(pd.Timestamp(_d0).date())
+            if not _o and "Team" in _pl_uww.columns:
+                _tm = _pl_uww.loc[_pl_uww["game_date"] == _d0, "Team"].dropna().astype(str)
+                _tm = _tm[~_tm.str.contains("whitewater|^WWW$", case=False, regex=True)]
+                _o = _tm.mode().iloc[0] if len(_tm) else None
+            if _o:
+                _pl_uww.loc[_miss_o & (_pl_uww["game_date"] == _d0), "opponent"] = _o
     # Who actually had the ball -- no longer "always us". On a defensive possession the opponent is the
     # offense and we are the defense.
     _pl_uww_off = _pl_uww["possession_side"] == "Offense"
@@ -4013,6 +4041,65 @@ try:
     play_calls = _bank_attach_lineups(play_calls)
 except Exception as _ble:
     print(f"  [bank] lineups not worked out ({type(_ble).__name__}: {_ble})", flush=True)
+
+
+def _syn_attach_lineups(df):
+    """CONFIRMED CHANGE (requested: Synergy game lookup for games FastScout hasn't posted): any game found on Synergy
+    (inputs/_synergy_ids.json) whose possession lineups were saved (inputs/_bank/<id>_lineups.csv) fills both fives on
+    its clips that have none yet -- matched by Synergy description, else half + game clock + team with the ball."""
+    try:
+        with open(os.path.join(INPUT_DIR, "_synergy_ids.json"), encoding="utf-8") as fh:
+            games = (json.load(fh) or {}).get("games") or {}
+    except Exception:
+        return df
+    _nd = lambda x: re.sub(r"[^a-z0-9]+", "", str(x).lower())
+    _flat = lambda x: re.sub(r"[^a-z]+", "", str(x).lower())
+    _per = lambda v: {"H1": 1, "H2": 2}.get(str(v), pd.to_numeric(str(v).replace("OT", ""), errors="coerce") + 2
+                                            if str(v).startswith("OT") else pd.to_numeric(v, errors="coerce"))
+    for gid, g in games.items():
+        lp = os.path.join(INPUT_DIR, "_bank", f"{gid}_lineups.csv")
+        if not os.path.exists(lp) or not g.get("date"):
+            continue
+        blob = _flat(f"{g.get('home')} {g.get('home_short')} {g.get('away')} {g.get('away_short')}")
+        gd_ = pd.to_datetime(df["game_date"], errors="coerce").dt.strftime("%Y-%m-%d")
+        m = (gd_ == g["date"]) & df["offense_lineup"].isna()
+        m &= pd.Series([any(w in blob for w in _bank_words_t(t)) for t in df["offense_team"]], index=df.index)
+        if not m.any():
+            continue
+        L = pd.read_csv(lp, dtype={"description": str, "offense": str, "defense": str, "offense_lineup": str, "defense_lineup": str})
+        by_d = {}
+        for _, lr in L.iterrows():
+            by_d.setdefault(_nd(lr["description"]), []).append(lr)
+        n_ok = 0
+        for i in df.index[m]:
+            r = df.loc[i]
+            hit = (by_d.get(_nd(r.get("synergy_string"))) or [None])[0]
+            ow = _bank_words_t(r.get("offense_team"))
+            if hit is None:
+                pr_, ck_ = _per(r.get("period")), pd.to_numeric(r.get("time_remaining_seconds"), errors="coerce")
+                if pd.notna(pr_) and pd.notna(ck_):
+                    c_ = L[pd.to_numeric(L["period"], errors="coerce") == pr_].copy()
+                    if ow:
+                        c_ = c_[[any(w in _flat(o) for w in ow) for o in c_["offense"]]]
+                    c_["d"] = (pd.to_numeric(c_["clock_s"], errors="coerce") - ck_).abs()
+                    c_ = c_[c_["d"] <= 10].sort_values("d")
+                    hit = c_.iloc[0] if len(c_) else None
+            if hit is None:
+                continue
+            same = (not ow) or any(w in _flat(hit["offense"]) for w in ow)
+            ol, dl = (hit["offense_lineup"], hit["defense_lineup"]) if same else (hit["defense_lineup"], hit["offense_lineup"])
+            if isinstance(ol, str) and isinstance(dl, str):
+                df.at[i, "offense_lineup"], df.at[i, "defense_lineup"] = ol, dl
+                n_ok += 1
+        print(f"  [synergy] {g['date']} {g.get('name')}: Synergy lineups -- both fives found for {n_ok} of {int(m.sum())} "
+              f"clip(s) with none from the play-by-play", flush=True)
+    return df
+
+
+try:
+    play_calls = _syn_attach_lineups(play_calls)
+except Exception as _sle:
+    print(f"  [synergy] lineups not worked out ({type(_sle).__name__}: {_sle})", flush=True)
 play_calls_other = play_calls[play_calls["side"] == "Other"].reset_index(drop=True)
 play_calls = play_calls[play_calls["side"] != "Other"].reset_index(drop=True)
 

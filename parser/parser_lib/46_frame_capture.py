@@ -1557,7 +1557,12 @@ def _vx_make_export(game_id, label):
 # and temp folders (LOCALAPPDATA, APPDATA, TEMP), plus the export's own leftover video_temp folder. Files Synergy Editor still
 # has open are skipped. Everything cleared is listed in the run. SYNERGY_EXPORT_CLOSE_BOX / SYNERGY_CLEAR_CACHE = False turn
 # either off.
-def _sst_close_export_box(timeout_s=20):
+def _sst_close_export_box(timeout_s=None):
+    # CONFIRMED BUG (fixed; "It still does not close the synergy export pop up window", UWW @ Carroll): the box shows up
+    # after the last clip is written -- often more than the 20 s it was given -- and it's its own top-level window
+    # ("Export: <game>"), not always found under the Editor's process. It is now waited for up to
+    # SYNERGY_EXPORT_BOX_WAIT_S (180 s) and looked for among ALL top-level windows too.
+    timeout_s = timeout_s or float(globals().get("SYNERGY_EXPORT_BOX_WAIT_S", 180))
     try:
         auto = _sst_uia()
     except Exception as e:
@@ -1568,7 +1573,12 @@ def _sst_close_export_box(timeout_s=20):
     exe_name = os.path.basename((m.group(1) or m.group(2)) if m else "Synergy.Editor.Basketball.exe")
     t0 = time.time()
     while time.time() - t0 < timeout_s:
-        for w in _sst_editor_windows(auto, _sst_editor_pids(exe_name)):
+        try:
+            _tops = [w_ for w_ in auto.GetRootControl().GetChildren()
+                     if re.search(r"(?i)^\s*export\b|synergy", w_.Name or "")]
+        except Exception:
+            _tops = []
+        for w in list(_sst_editor_windows(auto, _sst_editor_pids(exe_name))) + _tops:
             for d in [w] + [c for c in _sst_walk(auto, w, 8) if c.ControlTypeName == "WindowControl"]:
                 kids = _sst_walk(auto, d, 12)
                 if not (re.match(r"(?i)^\s*export\b", d.Name or "")
@@ -1595,13 +1605,24 @@ def _sst_close_export_box(timeout_s=20):
 
 def _sst_clear_cache(folder=None):
     import shutil as _sh_c
-    roots = [os.environ.get(k) for k in ("LOCALAPPDATA", "APPDATA", "TEMP")]
+    # CONFIRMED BUG (fixed; "no Synergy cache folder found to clear" while Synergy Editor showed 44 GB of disk usage):
+    # the cache isn't always under LOCALAPPDATA / APPDATA / TEMP. Also searched now: ProgramData, the user's home
+    # folder and its Documents / Videos, and every drive's top level; SYNERGY_CACHE_DIR names the folder outright.
+    _home = os.environ.get("USERPROFILE") or os.path.expanduser("~")
+    roots = [os.environ.get(k) for k in ("LOCALAPPDATA", "APPDATA", "TEMP", "PROGRAMDATA")] + \
+        [_home, os.path.join(_home, "Documents"), os.path.join(_home, "Videos")] + \
+        [f"{d_}:\\" for d_ in "CDEFG" if os.path.isdir(f"{d_}:\\")]
     targets = []
+    _named = globals().get("SYNERGY_CACHE_DIR")
+    if _named and os.path.isdir(_named):
+        targets.append(_named)
+    _seen_syn = []
     for r in [x for x in roots if x and os.path.isdir(x)]:
         try:
-            syn = [os.path.join(r, d) for d in os.listdir(r) if re.search(r"(?i)synergy", d)]
+            syn = [os.path.join(r, d) for d in os.listdir(r) if re.search(r"(?i)synergy|sportstec", d)]
         except Exception:
             syn = []
+        _seen_syn += syn
         for sd in syn:
             for dp, dns, _fns in os.walk(sd):
                 for dn in list(dns):
@@ -1638,7 +1659,9 @@ def _sst_clear_cache(folder=None):
         print(f"  [export] cleared Synergy's cache: {freed / 1024 ** 3:.2f} GB freed -- " + "; ".join(done)
               + (f" ({skipped} file(s) in use were left)" if skipped else ""), flush=True)
     else:
-        print("  [export] no Synergy cache folder found to clear (looked under LOCALAPPDATA, APPDATA and TEMP)", flush=True)
+        print("  [export] no Synergy cache folder found to clear (looked under AppData, Temp, ProgramData, your home folder "
+              "and the drives' top level)" + (f" -- Synergy folders seen: {'; '.join(_seen_syn[:8])}" if _seen_syn else "")
+              + ". Set SYNERGY_CACHE_DIR to the folder Synergy Editor's settings show for its cache.", flush=True)
     return freed
 
 
@@ -2245,6 +2268,231 @@ def _bank_starters_all():
                   f" (found {sum(len(v) for v in st.values())}) -- saved its page in inputs/_bank for a look", flush=True)
 
 
+# CONFIRMED CHANGE (requested: "Is there a way that you would have known that the synergy game id is ..." -> "Yes, build
+# that"). A played game with no video link on FastScout yet (FastScout posts a day or two late) is looked up on Synergy:
+# a known Synergy game of this season (SYNERGY_SEED_GAMES, or any game already found) is opened with ?team=<that team>,
+# and Synergy's own game list for the team (api/games) gives every game's ID by date and teams. IDs are kept in
+# inputs/_synergy_ids.json, so a game is looked up once. Its fives on every possession are saved too
+# (inputs/_bank/<id>_lineups.csv, like a banked game). SYNERGY_LOOKUP = False turns it off.
+def _syn_ids(update=None):
+    p_ = os.path.join(INPUT_DIR, "_synergy_ids.json")
+    try:
+        with open(p_, encoding="utf-8") as fh:
+            c_ = json.load(fh) or {}
+    except Exception:
+        c_ = {}
+    c_.setdefault("games", {}); c_.setdefault("teams", {})
+    if update:
+        for k_, v_ in update.items():
+            if isinstance(v_, dict):
+                c_.setdefault(k_, {}).update(v_)
+        try:
+            with open(p_, "w", encoding="utf-8") as fh:
+                json.dump(c_, fh, indent=1)
+        except Exception:
+            pass
+    return c_
+
+
+def _syn_words(x):
+    return {w for w in re.split(r"[^a-z]+", str(x or "").lower()) if len(w) > 3
+            and w not in ("pioneers", "college", "university", "wisconsin", "warhawks", "state")}
+
+
+def _syn_game_rec(g):
+    ht, at = g.get("homeTeam") or {}, g.get("awayTeam") or {}
+    return {"date": str(g.get("localDate") or "")[:10], "name": g.get("name"),
+            "home": ht.get("fullName") or ht.get("name"), "home_short": ht.get("name"), "home_id": ht.get("id"),
+            "away": at.get("fullName") or at.get("name"), "away_short": at.get("name"), "away_id": at.get("id")}
+
+
+def _syn_capture(page, url):
+    """Open a Synergy page (signing in if sent to the sign-in page) and keep every JSON answer it loads."""
+    bodies = []
+    def _on(r):
+        try:
+            if "json" in (r.headers.get("content-type") or "") and "synergysports" in r.url:
+                bodies.append((r.url, r.json()))
+        except Exception:
+            pass
+    page.on("response", _on)
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=60000)
+        for _try in range(2):
+            t0 = time.time()
+            while time.time() - t0 < 20 and "auth.synergysportstech.com" not in page.url:
+                if page.locator("table").count():
+                    break
+                page.wait_for_timeout(500)
+            if "auth.synergysportstech.com" not in page.url:
+                break
+            login_to_synergy(page, synergy_username, synergy_password, timeout_ms=60000)
+            page.goto(url, wait_until="domcontentloaded", timeout=60000)
+        try:
+            page.wait_for_load_state("networkidle", timeout=30000)
+        except Exception:
+            pass
+        page.wait_for_timeout(2500)
+    finally:
+        try:
+            page.remove_listener("response", _on)
+        except Exception:
+            pass
+    return bodies
+
+
+def _syn_save_lineups(gid, bodies):
+    """Both fives on every possession of a game (Synergy api/games/<id>/events) -> inputs/_bank/<gid>_lineups.csv."""
+    try:
+        _ev = [x for u_, d_ in bodies if f"/games/{gid}/events" in u_ and isinstance(d_, dict) for x in (d_.get("result") or [])]
+        _pb = [x for u_, d_ in bodies if f"/games/{gid}/playbyplays" in u_ and isinstance(d_, dict) for x in (d_.get("result") or [])]
+        if not _ev:
+            return 0
+        _clk = {}
+        for x in _pb:
+            if x.get("eventIid") is not None and x.get("clock") is not None:
+                _clk[x["eventIid"]] = max(_clk.get(x["eventIid"], -1), int(x["clock"]))
+        nm = lambda L: ", ".join(str(p_.get("name") or "").strip() for p_ in (L or []) if p_.get("name"))
+        rows = [{"period": x.get("period"), "clock_s": (_clk[x.get("iid")] / 10.0) if x.get("iid") in _clk else None,
+                 "utc": x.get("utc"), "description": x.get("description"), "offense": (x.get("offense") or {}).get("name"),
+                 "defense": (x.get("defense") or {}).get("name"), "offense_lineup": nm(x.get("offensiveLineup")),
+                 "defense_lineup": nm(x.get("defensiveLineup"))} for x in _ev]
+        d_ = os.path.join(INPUT_DIR, "_bank")
+        os.makedirs(d_, exist_ok=True)
+        df_ = pd.DataFrame(rows)
+        df_ = (df_.assign(_c=-pd.to_numeric(df_["clock_s"], errors="coerce").fillna(-1e9))
+               .sort_values(["period", "_c", "utc"], kind="stable").drop(columns="_c"))
+        df_.to_csv(os.path.join(d_, f"{gid}_lineups.csv"), index=False)
+        return len(df_)
+    except Exception as e_:
+        print(f"  [synergy] {gid}: lineups not saved ({type(e_).__name__}: {e_})", flush=True)
+        return 0
+
+
+def _syn_lookup(wanted):
+    """wanted: [(team name, date 'YYYY-MM-DD', opponent name)] -> {(team, date, opponent): gid}, using Synergy's game lists."""
+    cache = _syn_ids()
+    out, todo = {}, []
+    for t_, d_, o_ in wanted:
+        tw, ow = _syn_words(t_), _syn_words(o_)
+        hit = next((gid for gid, g in cache["games"].items() if g.get("date") == d_
+                    and any(w in re.sub(r"[^a-z]+", "", f"{g.get('home')} {g.get('home_short')} {g.get('away')} {g.get('away_short')}".lower()) for w in ow)
+                    and any(w in re.sub(r"[^a-z]+", "", f"{g.get('home')} {g.get('home_short')} {g.get('away')} {g.get('away_short')}".lower()) for w in tw)), None)
+        if hit:
+            out[(t_, d_, o_)] = hit
+        else:
+            todo.append((t_, d_, o_))
+    if not todo:
+        return out
+    seeds = [str(x).lower() for x in (globals().get("SYNERGY_SEED_GAMES") or [])] + list(cache["games"].keys()) + \
+        [b["gid"] for b in (bank_games(with_unknown=True) if "bank_games" in globals() else [])]
+    seeds = list(dict.fromkeys(s_ for s_ in seeds if re.fullmatch(r"[0-9a-f]{24}", s_)))
+    if not seeds:
+        print("  [synergy] no Synergy game to start from -- add one to SYNERGY_SEED_GAMES (the 24 characters after /games/)",
+              flush=True)
+        return out
+    def _work(page):
+        found, saved_lu = {}, 0
+        new_games, new_teams = {}, {}
+        teams_done = set()
+        for t_, d_, o_ in todo:
+            tw = _syn_words(t_)
+            tid = next((i_ for n_, i_ in {**cache["teams"], **new_teams}.items()
+                        if any(w in re.sub(r"[^a-z]+", "", n_.lower()) for w in tw)), None)
+            if tid is None:
+                # learn the team's Synergy ID from a seed game it played in (or any seed's team list)
+                for sg in seeds[:6]:
+                    for u_, b_ in _syn_capture(page, _SST_BOXSCORE.format(gid=sg)):
+                        r_ = b_.get("result") if isinstance(b_, dict) else None
+                        for g in (r_ if isinstance(r_, list) else [r_] if isinstance(r_, dict) else []):
+                            if isinstance(g, dict) and ("homeTeam" in g or "awayTeam" in g):
+                                if g.get("id"):
+                                    new_games[g["id"]] = _syn_game_rec(g)
+                                for side_ in ("homeTeam", "awayTeam"):
+                                    tm = g.get(side_) or {}
+                                    if tm.get("id"):
+                                        new_teams[str(tm.get("fullName") or tm.get("name"))] = tm["id"]
+                                        if tm.get("name"):
+                                            new_teams[str(tm["name"])] = tm["id"]
+                    tid = next((i_ for n_, i_ in new_teams.items()
+                                if any(w in re.sub(r"[^a-z]+", "", n_.lower()) for w in tw)), None)
+                    if tid:
+                        break
+            if tid is None:
+                print(f"  [synergy] {t_}: its Synergy team wasn't found from the known games -- add one of its Synergy "
+                      f"games to SYNERGY_SEED_GAMES", flush=True)
+                continue
+            if tid not in teams_done:
+                teams_done.add(tid)
+                for sg in seeds[:3]:
+                    got = 0
+                    for u_, b_ in _syn_capture(page, _SST_BOXSCORE.format(gid=sg) + f"?team={tid}"):
+                        r_ = b_.get("result") if isinstance(b_, dict) else None
+                        for g in (r_ if isinstance(r_, list) else []):
+                            if isinstance(g, dict) and g.get("id") and ("homeTeam" in g or "awayTeam" in g):
+                                new_games[g["id"]] = _syn_game_rec(g)
+                                got += 1
+                    if got:
+                        break
+            ow = _syn_words(o_)
+            for gid, g in new_games.items():
+                blob = re.sub(r"[^a-z]+", "", f"{g.get('home')} {g.get('home_short')} {g.get('away')} {g.get('away_short')}".lower())
+                if g.get("date") == d_ and any(w in blob for w in ow) and any(w in blob for w in tw):
+                    found[(t_, d_, o_)] = gid
+                    if not os.path.exists(os.path.join(INPUT_DIR, "_bank", f"{gid}_lineups.csv")):
+                        saved_lu += bool(_syn_save_lineups(gid, _syn_capture(page, _SST_BOXSCORE.format(gid=gid))))
+                    break
+        return found, new_games, new_teams, saved_lu
+    try:
+        found, ng, nt, nlu = run_in_fastscout_session(_work)
+    except Exception as e:
+        print(f"  [synergy] game lookup failed ({type(e).__name__}: {e})", flush=True)
+        return out
+    _syn_ids({"games": ng, "teams": nt})
+    for k_, gid in found.items():
+        print(f"  [synergy] {k_[1]} {k_[0]} vs {k_[2]}: Synergy game {gid} (not on FastScout yet)", flush=True)
+    for k_ in todo:
+        if k_ not in found:
+            print(f"  [synergy] {k_[1]} {k_[0]} vs {k_[2]}: not in Synergy's game list either", flush=True)
+    out.update(found)
+    return out
+
+
+def _syn_fill_video_urls():
+    """Played games (before the run's date) with no video link on FastScout get their Synergy box score as the link."""
+    if not globals().get("SYNERGY_LOOKUP", True) or not (globals().get("synergy_username") and globals().get("synergy_password")):
+        return
+    plans = []
+    for sched_name, team_name in (("uww_team_schedule", "UW-Whitewater"),
+                                  ("prev_games", globals().get("upcoming_opponent_short") or globals().get("upcoming_opponent") or "")):
+        sch = globals().get(sched_name)
+        if not isinstance(sch, pd.DataFrame) or sch.empty or not team_name:
+            continue
+        if "video_url" not in sch.columns:
+            sch["video_url"] = None
+        for i_, r_ in sch.iterrows():
+            if isinstance(r_.get("video_url"), str) and r_["video_url"].strip():
+                continue
+            gd = r_.get("game_date")
+            if gd is None or pd.isna(gd):
+                try:
+                    gd = parse_schedule_date(r_["date"], uww_season_start_year)
+                except Exception:
+                    gd = None
+            if gd is None or pd.Timestamp(gd) >= reference_date or pd.Timestamp(gd) < pd.Timestamp(int(uww_season_start_year), 8, 1):
+                continue
+            plans.append((sched_name, i_, team_name, str(pd.Timestamp(gd).date()), str(r_.get("opponent") or "")))
+    if not plans:
+        return
+    ids = _syn_lookup([(t, d, o) for _, _, t, d, o in plans])
+    for sched_name, i_, t, d, o in plans:
+        gid = ids.get((t, d, o))
+        if gid:
+            globals()[sched_name].at[i_, "video_url"] = _SST_BOXSCORE.format(gid=gid)
+            if "synergy_game_id" in globals()[sched_name].columns:
+                globals()[sched_name].at[i_, "synergy_game_id"] = gid
+
+
 SYNERGY_EDITOR_TEST = globals().get("SYNERGY_EDITOR_TEST")
 SYNERGY_EDITOR_TEST_ONLY = globals().get("SYNERGY_EDITOR_TEST_ONLY", True)
 synergy_editor_link = None
@@ -2276,6 +2524,10 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
     # Every played game with a clip page: UWW's own games and the upcoming opponent's prior games,
     # plus any page listed by hand in VISION_PLAYLIST_URLS.
     _vis_sources = [(lab, url, pd.Timestamp.max) for lab, url in VISION_PLAYLIST_URLS]  # hand-listed go first
+    try:
+        _syn_fill_video_urls()         # played games FastScout has no video link for yet: found on Synergy instead
+    except Exception as _sfe:
+        print(f"  [synergy] lookup skipped ({type(_sfe).__name__}: {_sfe})", flush=True)
     # banked games (BANK_GAMES -- a later opponent's game): captured whatever the run's date, like a hand-listed page
     _bank_fill()                       # games exported on an earlier run: their date / teams / "for" (once)
     try:

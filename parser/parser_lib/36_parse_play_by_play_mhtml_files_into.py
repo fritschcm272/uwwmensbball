@@ -108,6 +108,18 @@ for path in pbp_files:
     pbp_events_list.append(events)
 
 pbp_events = pd.concat(pbp_events_list, ignore_index=True) if pbp_events_list else pd.DataFrame()
+# CONFIRMED BUG (fixed; first 2026-27 run: no UWW play-by-play posted on FastScout yet -> an empty table with no columns,
+# and the lineup sections crashed on KeyError 'player'). An empty play-by-play keeps its columns.
+_PBP_COLS = ["opponent", "game_date", "event_order", "period", "time_remaining", "time_remaining_seconds", "team",
+             "event_type", "raw_text", "uww_score", "opp_score", "player", "shot_type", "shot_desc", "turnover_type",
+             "foul_type", "ft_num", "ft_total", "coach_note", "play_call", "uww_lineup", "opp_lineup"]
+if pbp_events.empty:
+    pbp_events = pd.DataFrame(columns=_PBP_COLS)
+    # (numeric columns typed as numbers -- an empty object column broke the lineup minutes' running minimum)
+    pbp_events = pbp_events.astype({c_: "float64" for c_ in ("event_order", "time_remaining_seconds", "uww_score",
+                                                             "opp_score", "ft_num", "ft_total")})
+    print("No UW-Whitewater play-by-play yet this season (FastScout posts it after each game) -- the play-by-play "
+          "sections run on an empty table.", flush=True)
 
 # CONFIRMED BUG (fixed here): pbp_files (above) is a pure filesystem glob with no reference_date awareness at
 # all -- it picks up EVERY local "*_pbp.mhtml"/"*_pbp.html" file regardless of that game's date, so pbp_events

@@ -47,6 +47,7 @@ stint_source["prev_opp_score"] = stint_source.groupby(GAME_KEYS, dropna=False)["
 # Without it, ANY out-of-order row makes (prev - now) positive on the way back down and .clip(lower=0)
 # keeps that phantom elapsed time while discarding the compensating negative -- silently inventing
 # minutes. Grouping on the game (not just the opponent) is what stops two meetings interleaving here.
+stint_source["time_remaining_seconds"] = pd.to_numeric(stint_source["time_remaining_seconds"], errors="coerce")  # (CONFIRMED BUG fixed: empty play-by-play = object dtype)
 stint_source["clock"] = stint_source.groupby(GAME_KEYS + ["period"], dropna=False)["time_remaining_seconds"].cummin()
 stint_source["prev_time_remaining_seconds"] = stint_source.groupby(GAME_KEYS + ["period"], dropna=False)["clock"].shift(1)
 stint_source["seconds_elapsed"] = (stint_source["prev_time_remaining_seconds"] - stint_source["clock"]).clip(lower=0).fillna(0)

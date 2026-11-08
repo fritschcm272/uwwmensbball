@@ -547,6 +547,25 @@ def _fa_current_run():
                 d = _fa_as_date(gd)
                 if d is not None and ow & _fa_words(o):
                     cur.setdefault((d, "both"), f"our earlier game against {opp} (upcoming opponent)")
+    # CONFIRMED BUG (fixed; UWW @ Carroll 11/7/26 got no Film Tagging batch: it was found on Synergy before FastScout
+    # posted its play-by-play, and "our most recent game" only came from the play-by-play). A played game on UWW's
+    # schedule with a video link counts too.
+    us = globals().get("uww_team_schedule")
+    if isinstance(us, pd.DataFrame) and not us.empty and "video_url" in us.columns:
+        _sd = []
+        for _, r_ in us[us["video_url"].notna()].iterrows():
+            d_ = _fa_as_date(r_.get("game_date"))
+            if d_ is None:
+                try:
+                    d_ = _fa_as_date(parse_schedule_date(r_.get("date"), globals().get("uww_season_start_year")))
+                except Exception:
+                    d_ = None
+            if d_ is not None and (ref is None or d_ < ref):
+                _sd.append(d_)
+        _have = [d for (d, k) in cur if k == "uww"]
+        for d in sorted(_sd)[-int(globals().get("FRAME_ARCHIVE_KEEP_RECENT", 1)):]:
+            if not _have or d > max(_have):
+                cur.setdefault((d, "uww"), "our most recent game (still being reviewed)")
     return cur
 
 
