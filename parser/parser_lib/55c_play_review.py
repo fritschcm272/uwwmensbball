@@ -1649,7 +1649,12 @@ def _tag_rosters(g):
         team = r.get("offense_team")
         if isinstance(team, str) and team.strip():
             for _j, _n in re.findall(r"(?:^|>)\s*(\d{1,2})\s+([A-Za-z][^>]*?)\s*(?=>|$)", str(r.get("synergy_string") or "")):
-                out.setdefault(team, set()).add(_n.strip())
+                # CONFIRMED BUG (fixed; the player lists offered "WIS #1 Pts" / "THI #1 Pts"): Synergy's "... Foul > 1 Pts"
+                # (the and-one) looked like player #1 "Pts". Only a name of 2+ words that isn't a stat is a player.
+                _n = _n.strip()
+                if len(_n.split()) < 2 or re.search(r"(?i)\b(pts?|points?|fga?|fta?|3pt|2pt|shots?|fouls?|free throws?)\b", _n):
+                    continue
+                out.setdefault(team, set()).add(_n)
     return {t: sorted(n for n in v if n) for t, v in out.items()}
 
 
