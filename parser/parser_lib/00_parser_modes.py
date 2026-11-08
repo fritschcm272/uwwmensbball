@@ -288,6 +288,11 @@ def _pm_apply_options(G):
         G["PLAY_TAG_REOPEN"] = o.get("REOPEN_PLAYS") or []
     if o.get("BANK_GAMES"):
         G["BANK_GAMES"] = o.get("BANK_GAMES")
+    # CONFIRMED CHANGE (requested: PLAYER_TRACKING_GAMES in parser_models "so that I know to do it"): when parser_models
+    # gives the list, it replaces parser_nb's
+    if o.get("PLAYER_TRACKING_GAMES") is not None:
+        _ptg = o.get("PLAYER_TRACKING_GAMES")
+        G["PLAYER_TRACKING_GAMES"] = [_ptg] if isinstance(_ptg, str) else list(_ptg or [])
     add = o.get("ADD_GAMES") or []
     if isinstance(add, str):
         add = [add]
