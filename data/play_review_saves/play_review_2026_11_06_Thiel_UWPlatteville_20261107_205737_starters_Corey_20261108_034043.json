@@ -1,0 +1,302 @@
+{
+ "game": "2026-11-06|Thiel@UWPlatteville",
+ "run": "20261107_205737",
+ "coach": "Corey",
+ "saved": "2026-11-08T03:40:43+00:00",
+ "checks": [
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t008a.jpg",
+   "t": 17,
+   "px": 429.9,
+   "py": 473.1,
+   "side": "defense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "wrong team",
+   "true_name": "Logan Luxem",
+   "not_player_kind": null,
+   "hidden_guess": "Khamari Accursio-Haris",
+   "hidden_guess_p": 0.2
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t008a.jpg",
+   "t": 17,
+   "px": 835.2,
+   "py": 499.4,
+   "side": "defense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "wrong team",
+   "true_name": "Ben Forbes",
+   "not_player_kind": null,
+   "hidden_guess": "John Osuji",
+   "hidden_guess_p": 0.2
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t008a.jpg",
+   "t": 17,
+   "px": 891.7,
+   "py": 678.0,
+   "side": "defense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "wrong team",
+   "true_name": "Max Lucey",
+   "not_player_kind": null,
+   "hidden_guess": "Noah Payne",
+   "hidden_guess_p": 0.2
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t008a.jpg",
+   "t": 17,
+   "px": 152.9,
+   "py": 643.8,
+   "side": "offense",
+   "assigned": "Kaden MacKenzie",
+   "assigned_how": "coach checked",
+   "assigned_conf": 0.96,
+   "verdict": "correct",
+   "true_name": "Kaden MacKenzie",
+   "not_player_kind": null,
+   "hidden_guess": null,
+   "hidden_guess_p": null
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t033.jpg",
+   "t": 66,
+   "px": 575.9,
+   "py": 631.3,
+   "side": "defense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "wrong team",
+   "true_name": "Kaden MacKenzie",
+   "not_player_kind": null,
+   "hidden_guess": "Noah Payne",
+   "hidden_guess_p": 0.2
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t033.jpg",
+   "t": 66,
+   "px": 1432.7,
+   "py": 548.5,
+   "side": "offense",
+   "assigned": "Logan Luxem",
+   "assigned_how": "coach checked",
+   "assigned_conf": 0.96,
+   "verdict": "correct",
+   "true_name": "Logan Luxem",
+   "not_player_kind": null,
+   "hidden_guess": null,
+   "hidden_guess_p": null
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t033.jpg",
+   "t": 66,
+   "px": 952.3,
+   "py": 888.8,
+   "side": "offense",
+   "assigned": "Max Lucey",
+   "assigned_how": "coach checked",
+   "assigned_conf": 0.96,
+   "verdict": "correct",
+   "true_name": "Max Lucey",
+   "not_player_kind": null,
+   "hidden_guess": null,
+   "hidden_guess_p": null
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t075.jpg",
+   "t": 150,
+   "px": 810.6,
+   "py": 433.5,
+   "side": "defense",
+   "assigned": null,
+   "assigned_how": null,
+   "assigned_conf": null,
+   "verdict": "wrong",
+   "true_name": "Landon Percinsky",
+   "not_player_kind": null,
+   "hidden_guess": "DeAndre Brown Jr.",
+   "hidden_guess_p": 0.2
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t075.jpg",
+   "t": 150,
+   "px": 1579.5,
+   "py": 562.3,
+   "side": "offense",
+   "assigned": "Logan Luxem",
+   "assigned_how": "coach checked",
+   "assigned_conf": 0.96,
+   "verdict": "correct",
+   "true_name": "Logan Luxem",
+   "not_player_kind": null,
+   "hidden_guess": null,
+   "hidden_guess_p": null
+  }
+ ],
+ "source": "streamlit app",
+ "part": "starters",
+ "missed": [
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t008a.jpg",
+   "t": 17,
+   "cell": "C5",
+   "grid": [
+    12,
+    8
+   ],
+   "W": 1920,
+   "H": 1080,
+   "true_name": null,
+   "side": null
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t008a.jpg",
+   "t": 17,
+   "cell": "F5",
+   "grid": [
+    12,
+    8
+   ],
+   "W": 1920,
+   "H": 1080,
+   "true_name": null,
+   "side": null
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t008a.jpg",
+   "t": 17,
+   "cell": "I3",
+   "grid": [
+    12,
+    8
+   ],
+   "W": 1920,
+   "H": 1080,
+   "true_name": null,
+   "side": null
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t008a.jpg",
+   "t": 17,
+   "cell": "E3",
+   "grid": [
+    12,
+    8
+   ],
+   "W": 1920,
+   "H": 1080,
+   "true_name": "Noah Payne",
+   "side": "defense"
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t033.jpg",
+   "t": 66,
+   "cell": "H4",
+   "grid": [
+    12,
+    8
+   ],
+   "W": 1920,
+   "H": 1080,
+   "true_name": null,
+   "side": null
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t033.jpg",
+   "t": 66,
+   "cell": "E5",
+   "grid": [
+    12,
+    8
+   ],
+   "W": 1920,
+   "H": 1080,
+   "true_name": null,
+   "side": null
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t033.jpg",
+   "t": 66,
+   "cell": "C5",
+   "grid": [
+    12,
+    8
+   ],
+   "W": 1920,
+   "H": 1080,
+   "true_name": null,
+   "side": null
+  },
+  {
+   "clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "frame_file": "Nov_6_2026_Thiel@UWPlatteville/track1920v2/2_d69ba941_t075.jpg",
+   "t": 150,
+   "cell": "I4",
+   "grid": [
+    12,
+    8
+   ],
+   "W": 1920,
+   "H": 1080,
+   "true_name": "Noah Payne",
+   "side": "defense"
+  }
+ ],
+ "starters": {
+  "Wisconsin-(Platteville) Pioneers": [
+   "Kaden MacKenzie",
+   "Ben Forbes",
+   "Max Lucey",
+   "Lucas Rameker",
+   "Logan Luxem"
+  ],
+  "Thiel": [
+   "Noah Payne",
+   "DeAndre Brown Jr.",
+   "Khamari Accursio-Haris",
+   "Landon Percinsky",
+   "John Osuji"
+  ]
+ },
+ "starters_clip_key": "2026-11-06|2|22 Max Lucey > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts"
+}
