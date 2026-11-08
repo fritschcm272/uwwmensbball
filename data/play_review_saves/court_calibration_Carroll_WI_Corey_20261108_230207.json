@@ -1,0 +1,455 @@
+{
+ "kind": "court_calibration",
+ "arena": "Carroll(WI)",
+ "game": "2026-11-07|UWWhitewater@Carroll(WI)",
+ "coach": "Corey",
+ "saved": "2026-11-08T23:02:07+00:00",
+ "source": "streamlit app",
+ "frames": [
+  {
+   "file": "Nov_7_2026_UWWhitewater@Carroll_WI/track1920v2/1_4da44fa7_t053a.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 216.2,
+     "py": 550.8
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 254.0,
+     "py": 846.1
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 199.0,
+     "py": 415.6
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 222.5,
+     "py": 599.7
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 211.0,
+     "py": 509.9
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 890.8,
+     "py": 513.2
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 963.4,
+     "py": 509.1
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1218.4,
+     "py": 536.3
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 1067.5,
+     "py": 467.8
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1137.2,
+     "py": 499.4
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1731.3,
+     "py": 503.7
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_UWWhitewater@Carroll_WI/track1920v2/36_ffa36220_t029a.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1138.1,
+     "py": 502.1
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 514.1,
+     "py": 822.5
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 485.4,
+     "py": 389.7
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 492.6,
+     "py": 571.5
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 485.4,
+     "py": 471.0
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 1214.6,
+     "py": 497.3
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1465.7,
+     "py": 528.4
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1606.8,
+     "py": 368.2
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1805.2,
+     "py": 435.2
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_UWWhitewater@Carroll_WI/track1920v2/72_75662238_t038a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 854.5,
+     "py": 507.3
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 779.0,
+     "py": 503.6
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 596.7,
+     "py": 494.6
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 661.0,
+     "py": 458.3
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 523.2,
+     "py": 536.1
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 165.5,
+     "py": 436.6
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 1493.4,
+     "py": 828.3
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 1518.3,
+     "py": 392.1
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_UWWhitewater@Carroll_WI/track1920v2/100_4697cdab_t049a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 979.3,
+     "py": 477.1
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1183.0,
+     "py": 504.0
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1263.0,
+     "py": 514.5
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1049.5,
+     "py": 437.1
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 1811.5,
+     "py": 866.7
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 930.1,
+     "py": 549.9
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 406.5,
+     "py": 499.7
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 595.4,
+     "py": 447.1
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, near",
+     "px": 35.9,
+     "py": 609.7
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 760.3,
+     "py": 392.1
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 1874.6,
+     "py": 573.8
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 1891.3,
+     "py": 432.8
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_UWWhitewater@Carroll_WI/track1920v2/133_faa7c274_t059a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1153.9,
+     "py": 524.9
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1078.4,
+     "py": 519.1
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 897.7,
+     "py": 505.3
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 963.5,
+     "py": 471.1
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 822.6,
+     "py": 544.3
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 294.0,
+     "py": 499.4
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 482.6,
+     "py": 437.6
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 1817.2,
+     "py": 858.4
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 1831.5,
+     "py": 624.1
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 1838.7,
+     "py": 511.7
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 1829.1,
+     "py": 561.9
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 1843.5,
+     "py": 418.4
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_UWWhitewater@Carroll_WI/track1920v2/163_f5f603e6_t018a.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 518.8,
+     "py": 520.2
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 551.5,
+     "py": 820.3
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 506.3,
+     "py": 404.6
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 523.7,
+     "py": 565.0
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 514.9,
+     "py": 484.0
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1180.0,
+     "py": 499.7
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 1255.6,
+     "py": 497.3
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1440.4,
+     "py": 491.6
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 1374.8,
+     "py": 461.5
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1501.6,
+     "py": 528.4
+    },
+    {
+     "landmark": "RIGHT baseline x far sideline",
+     "px": 1609.2,
+     "py": 353.9
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1841.1,
+     "py": 437.6
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_UWWhitewater@Carroll_WI/track1920v2/197_4b28fbdc_t032a.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 667.8,
+     "py": 532.8
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 911.5,
+     "py": 509.0
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1489.8,
+     "py": 494.5
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1269.4,
+     "py": 434.8
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 985.1,
+     "py": 549.9
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 851.2,
+     "py": 487.8
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1090.3,
+     "py": 392.1
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 729.3,
+     "py": 533.2
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, near",
+     "px": 1841.1,
+     "py": 607.3
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_UWWhitewater@Carroll_WI/track1920v2/235_cc63a888_t028.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 677.4,
+     "py": 533.6
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1018.7,
+     "py": 548.5
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 818.9,
+     "py": 476.8
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 914.9,
+     "py": 511.3
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1504.0,
+     "py": 509.3
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1310.3,
+     "py": 444.7
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 33.5,
+     "py": 884.7
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, near",
+     "px": 1862.6,
+     "py": 614.5
+    }
+   ]
+  }
+ ]
+}
