@@ -2290,6 +2290,18 @@ def player_tracking(pc):
             _bf = [i for i in _todo_all if i not in _tset
                    and _trk_ck(_trk_clip_key(pc.loc[i])) not in _in_bank
                    and _trk_ck(_trk_clip_key(pc.loc[i])) in _chk]
+            # CONFIRMED BUG (fixed; "Do we really need to be doing this for every frame?" -- the backfill sent 131 clips /
+            # 8,589 frames to the person detector, ~3.2 hours): only clips whose player detections are ALREADY saved are
+            # backfilled (no new detection at all); the others wait until that game is tracked again for its own sake.
+            try:
+                _dk = set((_safe_read_pickle(_trk_det_cache_path()) or {}).keys()) if os.path.exists(_trk_det_cache_path()) else set()
+            except Exception:
+                _dk = set()
+            _n_bf0 = len(_bf)
+            _bf = [i for i in _bf if lists[i] and sum(f_ in _dk for f_ in lists[i]) >= 0.95 * len(lists[i])]
+            if _n_bf0 > len(_bf):
+                print(f"  [tracking] player-model backfill: {_n_bf0 - len(_bf)} checked clip(s) left out -- their player "
+                      f"detections aren't saved (they'd need the slow detector)", flush=True)
             _bf = _bf[:int(globals().get("TRACK_BANK_BACKFILL_MAX", 150))]
             if _bf:
                 _bfg = sorted({f"{pc.at[i, 'game_date']} {pc.at[i, 'game_code']}" for i in _bf})

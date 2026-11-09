@@ -1,11 +1,11 @@
 field,trusted,why,accuracy_pct,baseline_pct,clips_scored,trained_at
-formation,False,model not better than always guessing (66% vs 66%),66.0,66.0,502.0,2026-11-09T06:24:44
-play_call,True,39% vs 36% always guessing on 402 held-out plays (+3 pts),39.0,36.0,402.0,2026-11-09T06:24:44
-defense,True,the usual answer is right 100% of the time on 962 held-out plays,100.0,100.0,962.0,2026-11-09T06:24:44
-press,False,model not better than always guessing (82% vs 82%),82.0,82.0,1080.0,2026-11-09T06:24:44
-situation,True,79% vs 66% always guessing on 1242 held-out plays (+13 pts),79.0,66.0,1242.0,2026-11-09T06:24:44
-primary_action,True,58% vs 50% always guessing on 346 held-out plays (+8 pts),58.0,50.0,346.0,2026-11-09T06:24:44
-ball_screen_coverage,False,model not better than always guessing (29% vs 29%),29.0,29.0,158.0,2026-11-09T06:24:44
-offball_coverage,False,model not better than always guessing (41% vs 54%),41.0,54.0,46.0,2026-11-09T06:24:44
-screener,False,nan,,,,2026-11-09T06:24:44
-screen_defender,False,model not better than always guessing (29% vs 29%),29.0,29.0,55.0,2026-11-09T06:24:44
+formation,False,model not better than always guessing (66% vs 66%),66.0,66.0,502.0,2026-11-09T09:18:43
+play_call,True,39% vs 36% always guessing on 402 held-out plays (+3 pts),39.0,36.0,402.0,2026-11-09T09:18:43
+defense,True,the usual answer is right 100% of the time on 962 held-out plays,100.0,100.0,962.0,2026-11-09T09:18:43
+press,False,model not better than always guessing (82% vs 82%),82.0,82.0,1080.0,2026-11-09T09:18:43
+situation,True,79% vs 66% always guessing on 1242 held-out plays (+13 pts),79.0,66.0,1242.0,2026-11-09T09:18:43
+primary_action,True,58% vs 50% always guessing on 346 held-out plays (+8 pts),58.0,50.0,346.0,2026-11-09T09:18:43
+ball_screen_coverage,False,model not better than always guessing (29% vs 29%),29.0,29.0,158.0,2026-11-09T09:18:43
+offball_coverage,False,model not better than always guessing (41% vs 54%),41.0,54.0,46.0,2026-11-09T09:18:43
+screener,False,nan,,,,2026-11-09T09:18:43
+screen_defender,False,model not better than always guessing (29% vs 29%),29.0,29.0,55.0,2026-11-09T09:18:43

@@ -1,0 +1,910 @@
+
+===== cell 1 <file> =====
+
+===== cell 2 00b_season_switch, 01_uw_whitewater_scouting_parser =====
+Season: 2026-27 (last season 2025-26: C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\data_2025-26)
+Input directory: ./inputs
+Output directory: ../data
+LLM comparisons: disabled
+Reference date: 2026-11-8
+Before scout: no -- using every scouting report found
+APP_BASE_URL taken from UWW_APP_URL in .env
+  APP_BASE_URL normalized: 'uwwmensbball-new.streamlit.app' -> https://uwwmensbball-new.streamlit.app
+Brief links -> https://uwwmensbball-new.streamlit.app
+
+===== cell 4  =====
+
+===== cell 5  =====
+
+===== cell 7 02_parse_every_team_schedule_scrape_live_from =====
+Found 6 schedule MHTML file(s) in ./inputs:
+ - Carroll (WI) Pioneers - Schedule_2026.html
+ - Ripon Red Hawks - Schedule_2026.html
+ - UW-Whitewater - Schedule_2023.html
+ - UW-Whitewater - Schedule_2024.html
+ - UW-Whitewater - Schedule_2025.html
+ - UW-Whitewater - Schedule_2026.html
+Detected season 2026 from UWW's local schedule snapshot -- using FASTSCOUT_DOCS_SEASON='26' for any live-scrape URLs below (was hardcoded to '25').
+Skipping live scrape for UW-Whitewater's own schedule -- a local schedule file already exists: UW-Whitewater - Schedule_2026.html
+Excluding 22 game(s) scheduled beyond the next upcoming game -- not downloading those reports yet.
+
+Downloading 1 missing scouting-report PDF(s) from FastScout:
+    [login] navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [auth-retry] got redirected to identity.hudl.com while waiting on https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26 -- logging in and retrying
+    [auth-retry] login_to_fastscout returned, now at https://fastscout.fastmodelsports.com/#access_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZaYjBkN0VpWG9TQ0FhUTdYaW90SCJ9.eyJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2Nvbm5lY3Rpb25fbmFtZSI6InByb2QtaHVkbC11c2Vycy10ZXJyYWZvcm0iLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL3VzZXJfaWQiOiI2NDM1MDQ3IiwiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS90b2siOiJpZCIsImh0dHBzOi8vaWRlbnRpdHkuaHVkbC5jb20vaXNfc3lzYWRtaW4iOmZhbHNlLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2ludGVybmFsX2lkX2h1ZGwiOiI2NDM1MDQ3IiwiZ2l2ZW5fbmFtZSI6IkNvcmV5IiwiZmFtaWx5X25hbWUiOiJGcml0c2NoIiwibmlja25hbWUiOiJmcml0c2NoY20yNyIsIm5hbWUiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOTY3OWI2Mzk1N2E1ZTJmZmE2NjMyYWZhYjVmMGExYTU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZmci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAyNi0xMS0wOVQxNDowMzoyNS42NjVaIiwiZW1haWwiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS8iLCJhdWQiOiJ1UFJyRFVpWkZOU3d2RnJ0cnVsQ3lBWDBwaDZBckx6VSIsInN1YiI6ImF1dGgwfGh1ZGx8NjQzNTA0NyIsImlhdCI6MTc5NDIzMzAwNiwiZXhwIjoxNzk1NDQyNjA2LCJzaWQiOiJUazV3OTNKMEkyQU40YVN5WndOZkMwWlpHWjNrN3JmVyIsImNfaGFzaCI6IkpiZXhybEpjTDRLREdQM2RUR1ZPZ3ciLCJub25jZSI6IjVhYTA4NjI0LTNlNWYtNDc5MC04MTJkLTczZGFhM2VjNmJkMyJ9.n5zLB6-ZHRAHaWgIE2qBfd9Eve8bsYvVJvAWFPdD-VgEMFtQT_92vnTY9q93__hIVYrvmzYIVqb85HwvXg-WSGhB_eoxrUG1LP9ND1fi1MKfqTUovrLArBrq5RzEaoRd81uDr_vG6SMABCWRTL4muicoGKpv-1DyuaAVKId8WUl2k48MEZh90T3BjTQuaKEvLtXf9_UK9GVQFyM2_mYvJse-6uexFhHpDApL-lT6thWjcyMspPCB4LixRjTg-wjnVHHw3i6Gs9VYmUZKS59Gcuhs0i6xQ7gUOM_dvHowHOvK6k5EaXsB_XfA2Mc1M-u0mhTSiIb67gRG_FxVJ7r9BQ&token_type=Bearer&expires_at=1795442606 -- re-navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [auth-retry] re-navigated, now at https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26 -- waiting for 'text=SCHEDULE'
+    [login] confirmed logged in, landed on https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [save] myTeam analytics dashboard (diagnostic) -> myTeam - Analytics Dashboard.html
+  [Ripon Red Hawks] could not download scouting report: RuntimeError: No row matched game date Nov 14 on https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/documents?league=NCAAB-III&season=26 -- 'Game Date' values seen on the page: ['', 'Nov 07, 2025', 'Dec 31, 2024', 'Nov 25, 2023', 'Nov 25, 2023', 'Dec 17, 2021', 'Nov 26, 2022']
+  UW-Whitewater Warhawks (UW-Whitewater - Schedule_2026.html): 2 game(s) -- scouted opponents: ['Carroll (WI) Pioneers']
+
+Fetching 2 opponent schedule(s) (scrape opponent_url, MHTML backup on failure):
+  Skipping live scrape for Carroll (WI) Pioneers -- a local schedule file already exists.
+  Skipping live scrape for Ripon Red Hawks -- a local schedule file already exists.
+  Falling back to local backup MHTML for Carroll (WI) Pioneers: Carroll (WI) Pioneers - Schedule_2026.html
+  Carroll (WI) Pioneers (Carroll (WI) Pioneers - Schedule_2026.html): 1 game(s) -- all games before 2026-11-8
+  Falling back to local backup MHTML for Ripon Red Hawks: Ripon Red Hawks - Schedule_2026.html
+  Ripon Red Hawks (Ripon Red Hawks - Schedule_2026.html): 1 game(s) -- all games before 2026-11-8
+Synergy game IDs: 0 of 1 played UWW game(s), 0 game row(s) in all -- no video link on FastScout for: Sat, Nov 7 Carroll (WI) Pioneers
+          date                opponent                    team location  \
+0   Sat, Nov 7   Carroll (WI) Pioneers  UW-Whitewater Warhawks     Away   
+1  Sat, Nov 14         Ripon Red Hawks  UW-Whitewater Warhawks     Home   
+2   Sat, Nov 7  UW-Whitewater Warhawks   Carroll (WI) Pioneers     Home   
+3   Sat, Nov 7       Elmhurst Bluejays         Ripon Red Hawks     Home   
+
+                                        opponent_url  \
+0  https://fastscout.fastmodelsports.com/teams/nk...   
+1  https://fastscout.fastmodelsports.com/teams/NY...   
+2  https://fastscout.fastmodelsports.com/teams/YN...   
+3  https://fastscout.fastmodelsports.com/teams/wI...   
+
+                                            game_url video_url  \
+0  https://fastscout.fastmodelsports.com/teams/YN...      None   
+1  https://fastscout.fastmodelsports.com/teams/YN...      None   
+2  https://fastscout.fastmodelsports.com/teams/nk...      None   
+3  https://fastscout.fastmodelsports.com/teams/NY...      None   
+
+  synergy_game_id synergy_boxscore_url outcome team_score opponent_score  \
+0            None                 None    None       None           None   
+1            None                 None    None       None           None   
+2            None                 None    None       None           None   
+3            None                 None    None        NaN            NaN   
+
+  point_margin   season Upcoming  
+0         None  2026-27       No  
+1         None  2026-27      Yes  
+2         None  2026-27       No  
+3          NaN  2026-27       No  
+  [time] 02_parse_every_team_schedule_scrape_live_from: 1.0 min
+
+===== cell 9  =====
+
+===== cell 11  =====
+   jersey_number    PLAYER GP-GS MIN FGM-A FG% 3PM-A 3P% 3P-R FTM-A FT% PTS  \
+0            NaN  Player 1     -   -     -   -     -   -    -     -   -   -   
+1            NaN  Player 2     -   -     -   -     -   -    -     -   -   -   
+2            NaN  Player 3     -   -     -   -     -   -    -     -   -   -   
+3            NaN  Player 4     -   -     -   -     -   -    -     -   -   -   
+4            NaN  Player 5     -   -     -   -     -   -    -     -   -   -   
+5            NaN  Player 6     -   -     -   -     -   -    -     -   -   -   
+6            NaN  Player 7     -   -     -   -     -   -    -     -   -   -   
+7            NaN    Totals     -   -     -   -     -   -    -     -   -   -   
+8            NaN  Opponent     -   -     -   -     -   -    -     -   -   -   
+
+  ORB DRB REB AST TO STL BLK PF  
+0   -   -   -   -  -   -   -  -  
+1   -   -   -   -  -   -   -  -  
+2   -   -   -   -  -   -   -  -  
+3   -   -   -   -  -   -   -  -  
+4   -   -   -   -  -   -   -  -  
+5   -   -   -   -  -   -   -  -  
+6   -   -   -   -  -   -   -  -  
+7   -   -   -   -  -   -   -  -  
+8   -   -   -   -  -   -   -  -  
+
+===== cell 13 03_investigate_playerstattable_tile_widgets =====
+
+===== cell 15 04_investigate_myteam_analytics_dashboard =====
+
+===== cell 16 05_investigate_myteam_analytics_dashboard_2 =====
+
+===== cell 17 06_investigate_myteam_analytics_dashboard_3 =====
+
+===== cell 18 07_investigate_myteam_analytics_dashboard_4 =====
+
+===== cell 20  =====
+Overall record (W-L): 0-0
+Empty DataFrame
+Columns: [location, games]
+Index: []
+  location  avg_point_margin
+0     Away               NaN
+1     Home               NaN
+
+===== cell 22 08_parse_each_opponent_fastscout_scoutbuilder =====
+Found 0 PDF scout report(s) and 1 HTML scout report(s):
+ - 11_7_26 UW-Whitewater @ Carroll (WI) Pioneers_scout.html
+  Parsed 'Carroll (WI) Pioneers' (.html): 121 elements, 1 tables
+
+===== cell 24 09_extract_each_opponent_roster =====
+                opponent   game_date jersey_number                 name  \
+0  Carroll (WI) Pioneers  2026-11-07           #33        Dennis Estepp   
+1  Carroll (WI) Pioneers  2026-11-07           #12       Peyton McKenna   
+2  Carroll (WI) Pioneers  2026-11-07           #34         Cahlil Jones   
+3  Carroll (WI) Pioneers  2026-11-07            #4       Michael McNabb   
+4  Carroll (WI) Pioneers  2026-11-07           #25  Logan Steffensmeier   
+5  Carroll (WI) Pioneers  2026-11-07            #3         Lucas Parker   
+6  Carroll (WI) Pioneers  2026-11-07           #23         Jimmy Tarjan   
+7  Carroll (WI) Pioneers  2026-11-07           #42      Greg Smith, Jr.   
+
+  position height   weight class_year     role  \
+0        G   6'0"  170 lbs         SR  Starter   
+1        G   6'2"  175 lbs         JR  Starter   
+2        G   6'2"     None         FR  Starter   
+3        G   6'5"  205 lbs         JR  Starter   
+4        F   6'7"     None         SO  Starter   
+5        G   6'4"  185 lbs         SR    Bench   
+6      G/F   6'3"  200 lbs         JR    Bench   
+7        F   6'7"  215 lbs         SO    Bench   
+
+                                        player_notes  \
+0  PG - pushes tempo in transition | Driver/shoot...   
+1  Shooter! (213 of 254 shot attempts were 3's) |...   
+2  Driver/Shooter | Looking to score in transitio...   
+3  LH Driver/Shooter | Seeks contact on most fini...   
+4  Driver/Shooter | Likes to slash to basket | Cr...   
+5      Shooter!! | C&S 3's | Hunts 3's in transition   
+6                   Driver/Cutter | Crashes O-Boards   
+7        5 man | Screener & ball mover | Non-shooter   
+
+                                   keys_to_defending  has_scouting_report  
+0  Stop him early in transition | No back cuts!!!...                 True  
+1  LOCK & TRAIL!!! | OVER EVERYTHING!!! | Pressur...                 True  
+2  Anticipate RHD | Keep out of the paint!! | Con...                 True  
+3  Show hands/don't foul on drives!! | Heavy gap ...                 True  
+4                Box Out!! | No SLD! | No rhythm C&S                 True  
+5         NO C&S 3's!!! | Locate early in transition                 True  
+6        Box Out | Keep him in front | Be a Helper!!                 True  
+7                           Be a Helper!!! | Box out                 True  
+
+===== cell 26 10_extract_uw_whitewater_offensive_and =====
+                 opponent                                    category  \
+0   Carroll (WI) Pioneers                          Game Plan Overview   
+1   Carroll (WI) Pioneers                          Game Plan Overview   
+2   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+3   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+4   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+5   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+6   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+7   Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+8   Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+9   Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+10  Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+11  Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+
+                              topic  \
+0                   KEYS TO VICTORY   
+1                    TEAM STRENGTHS   
+2          Overall Defensive Scheme   
+3         Ball Screen & DHO Defense   
+4       Ball Screen Actions & Reads   
+5        Speciality Defensive Notes   
+6   Potential Adjustments (Defense)   
+7            Defending Their Action   
+8   Ball Screen Actions & Personnel   
+9           Ball Screen Coverage(s)   
+10  Potential Adjustments (Offense)   
+11                      ELOB & SLOB   
+
+                                                                                                                                                    notes  \
+0                                        1. TRANSITION DEFENSE!!! | 2. SQUEEZE & LIMIT #4 (Guard 1 on 1 + Gap Help) | 3. DOMINATE THE PAINT OFFENSIVELY!!   
+1   1. Transition/Fast paced offense (quick ball movement & cutting) | 2. Main scorer #4 capable of carrying offense (22 ppg) | 3. Quick & aggressive ...   
+2   M2M Defense | Full/Deep help in Gaps | Protecting the basket first | Struggle to closeout & rotate after gap help | Full court 2 man press | Looki...   
+3            FH-Will switch when guard is late to recover | Will switch 1-4 | DHO vs shooter-Guard chases over. Big FH | DHO vs Driver- Open & go through   
+4                                                                                         Attack the big | Reject the screen! | Hit the pop or short roll   
+5                                                                                                           2 Man Press (want to push up sideline & trap)   
+6                                                                                                                                                           
+7   TRANSITION DEFENSE!!! | Contain & turn the ball handler early | No Back cuts! | Keep them off the FT Line = Wall up and Stay Down | SQUEEZE #4 ON ...   
+8                   DHO's & ball screens after entry to 5 man at high post | Like to Ghost ball screens | 5 setting drag screens & step ups in transition   
+9                                                                                                                   14X-Strong (Hard Hedge) | No splits!!   
+10                                                                                                                                            15X / Blitz   
+11                                                                                                                              Staggered screens for #12   
+
+   report_date  
+0   2026-11-07  
+1   2026-11-07  
+2   2026-11-07  
+3   2026-11-07  
+4   2026-11-07  
+5   2026-11-07  
+6   2026-11-07  
+7   2026-11-07  
+8   2026-11-07  
+9   2026-11-07  
+10  2026-11-07  
+11  2026-11-07  
+
+===== cell 28  =====
+Team efficiency narrative (ORtg/DRtg/Pace/FASTINTELLIGENCE) is not captured in the PDF export -- it's a
+UI-only panel that isn't part of the printable ScoutBuilder report, and is no longer available now that
+scouting reports are sourced exclusively from PDFs.
+
+===== cell 30 11_cross_reference_each_scouted_opponent =====
+                opponent        date location outcome opp_season_avg_ppg  \
+0  Carroll (WI) Pioneers  Sat, Nov 7     Away    None               None   
+
+  opp_actual_ppg opp_ppg_vs_average uww_points opp_season_avg_ppg_allowed  \
+0           None               None       None                       None   
+
+  uww_ppg_vs_opp_avg_allowed point_margin  
+0                       None         None  
+
+(opp_season_avg_ppg / opp_ppg_vs_average / opp_season_avg_ppg_allowed / uww_ppg_vs_opp_avg_allowed are always blank now -- team/player statistics from the scouting report are no longer used; see the blanking earlier in this cell.)
+
+Carroll (WI) Pioneers (Sat, Nov 7, Away): UWW None - Carroll (WI) Pioneers None (None, margin n/a)
+  Pre-game keys to victory: 1. TRANSITION DEFENSE!!! | 2. SQUEEZE & LIMIT #4 (Guard 1 on 1 + Gap Help) | 3. DOMINATE THE PAINT OFFENSIVELY!!
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+===== cell 32 12_win_loss_splits_by_keys_to_victory =====
+Per-game 'Keys to Victory' categories detected WITH SIDE ATTRIBUTION:
+  UWW = what Whitewater does proactively (attack, score, rebound, share)
+  OPP = what Whitewater does to contain the opponent (guard, force TOs, limit, pressure)
+                opponent outcome                           category side
+0  Carroll (WI) Pioneers    None  Perimeter Defense / Ball Pressure  OPP
+1  Carroll (WI) Pioneers    None                     Scoring Inside  UWW
+
+Win/loss splits by category + side (UWW vs OPP emphasis):
+           display_label side                           category  games  wins  \
+0   OPP: On-Ball Defense  OPP  Perimeter Defense / Ball Pressure      0     0   
+1  UWW: Attack the Paint  UWW                     Scoring Inside      0     0   
+
+   losses  win_pct  
+0       0      NaN  
+1       0      NaN  
+
+===== cell 34 13_keys_to_victory_category_reference =====
+                             category         stat_cols                                                        example_phrases                                                             why_chosen
+0           Ball Security / Turnovers                TO  ball security, turnover, protect/take care of the ball, limit turn...  Directly named -- "ball security"/"turnovers" have a 1:1 stat colu...
+1                          Rebounding     REB, ORB, DRB  own the paint, bully/dominate the glass, rebound, board, second ch...  "Glass"/"board"/"crash"/"own the paint" possession language in thi...
+2                Three-Point Shooting        3PM-A, 3P%  three, 3 pt, 3pt, perimeter shooting, spacing, shooting ability, s...  Direct stat match for perimeter shot volume/efficiency. Expanded w...
+3                         Free Throws        FTM-A, FT%                                     free throw, ft line, getting to ft  Direct stat match. Added "ft line" / "getting to ft" from Aurora (...
+4                  Fouls / Discipline                PF                                           foul, wall up, drawing fouls  Direct stat match for foul-discipline emphasis. Added "wall up" (A...
+5             Ball Movement / Assists               AST   assist, ball movement, share the ball, playmaking, playmaker, create  Direct stat match for offensive ball-sharing emphasis. Added "play...
+6           Paint Protection / Blocks               BLK                               block, protect the rim, paint protection                 Direct stat match for interior shot-blocking emphasis.
+7   Perimeter Defense / Ball Pressure               STL  steal, press capable, full court press, force turnovers, force to'...  Renamed from "Ball Pressure / Steals" once Aurora/Eureka/Elmhurst ...
+8                      Scoring Inside  FG2M, FG2A, FG2%  dominate the paint, attack the paint, live in the paint, attack th...  Interior-scoring emphasis -- uses derived 2PT FG stats (FGM-FG3M, ...
+9               Field Goal Efficiency        FGM-A, FG%                                                    limit their scoring  Overall shooting efficiency emphasis -- used when the scouting not...
+10           (intentionally unmapped)                 -  communication screening action / communicate screens & actions (Ri...  No corresponding stat exists in a season box score for screen-navi...
+
+===== cell 36 14_build_per_player_scouting_profiles =====
+Adding 7 box-score-only player(s) with no scouting writeup (defaulted to role=Bench):
+                 opponent jersey_number              name
+5   Carroll (WI) Pioneers           #22  Andrew Hollerich
+6   Carroll (WI) Pioneers           #10        Cai Joseph
+7   Carroll (WI) Pioneers           #11       Evan Oleson
+8   Carroll (WI) Pioneers           #24      Cale Buboltz
+9   Carroll (WI) Pioneers           #15   Hayden Stebbins
+10  Carroll (WI) Pioneers           #35     Matt Leonhard
+11  Carroll (WI) Pioneers           #30    Auggie Hoffman
+Scouting-report player statistics are disabled by design (PDF reports are last-season data) -- player_profiles stat columns start blank and are only filled in by the PBP-derived override further down this notebook, from real current-season games.
+                 opponent jersey_number                 name     role  \
+0   Carroll (WI) Pioneers           #33        Dennis Estepp  Starter   
+1   Carroll (WI) Pioneers           #12       Peyton McKenna  Starter   
+2   Carroll (WI) Pioneers           #34         Cahlil Jones  Starter   
+3   Carroll (WI) Pioneers            #4       Michael McNabb  Starter   
+4   Carroll (WI) Pioneers           #25  Logan Steffensmeier  Starter   
+5   Carroll (WI) Pioneers            #3         Lucas Parker    Bench   
+6   Carroll (WI) Pioneers           #23         Jimmy Tarjan    Bench   
+7   Carroll (WI) Pioneers           #42      Greg Smith, Jr.    Bench   
+8   Carroll (WI) Pioneers           #22     Andrew Hollerich    Bench   
+9   Carroll (WI) Pioneers           #10           Cai Joseph    Bench   
+10  Carroll (WI) Pioneers           #11          Evan Oleson    Bench   
+11  Carroll (WI) Pioneers           #24         Cale Buboltz    Bench   
+12  Carroll (WI) Pioneers           #15      Hayden Stebbins    Bench   
+13  Carroll (WI) Pioneers           #35        Matt Leonhard    Bench   
+14  Carroll (WI) Pioneers           #30       Auggie Hoffman    Bench   
+
+                                notes_tags_display  \
+0              slasher_driver, three_point_shooter   
+1             catch_and_shoot, three_point_shooter   
+2              slasher_driver, three_point_shooter   
+3              slasher_driver, three_point_shooter   
+4   rebounder, slasher_driver, three_point_shooter   
+5             catch_and_shoot, three_point_shooter   
+6                        rebounder, slasher_driver   
+7                                        playmaker   
+8                                                    
+9                                                    
+10                                                   
+11                                                   
+12                                                   
+13                                                   
+14                                                   
+
+                                keys_tags_display   PTS   REB   AST   FG%  \
+0                   deny_cuts, transition_defense  None  None  None  None   
+1                                pressure_disrupt  None  None  None  None   
+2                  anticipate_move, keep_in_front  None  None  None  None   
+3                                    help_defense  None  None  None  None   
+4          box_out_priority, deny_catch_and_shoot  None  None  None  None   
+5        deny_catch_and_shoot, transition_defense  None  None  None  None   
+6   box_out_priority, help_defense, keep_in_front  None  None  None  None   
+7                  box_out_priority, help_defense  None  None  None  None   
+8                                                  None  None  None  None   
+9                                                  None  None  None  None   
+10                                                 None  None  None  None   
+11                                                 None  None  None  None   
+12                                                 None  None  None  None   
+13                                                 None  None  None  None   
+14                                                 None  None  None  None   
+
+     3P%  
+0   None  
+1   None  
+2   None  
+3   None  
+4   None  
+5   None  
+6   None  
+7   None  
+8   None  
+9   None  
+10  None  
+11  None  
+12  None  
+13  None  
+14  None  
+
+===== cell 38 15_break_out_keys_to_victory_categories_by =====
+Opponent production by role (Starter vs Bench) for the stat(s) behind each matched Keys-to-Victory category:
+Empty DataFrame
+Columns: [opponent, outcome, category, role, stat, players_with_data, avg_per_player, role_total]
+Index: []
+No count-type stats available yet to compare Starter vs Bench totals for the matched categories.
+
+===== cell 40 16_play_by_play_parsing_functions =====
+
+===== cell 42 17_classify_each_raw_play_by_play_text_string =====
+
+===== cell 44 18_turn_raw_4_column_play_by_play_table_into =====
+
+===== cell 46 19_extract_opponent_name_from_pbp_mhtml =====
+
+===== cell 48 20_identify_upcoming_opponent =====
+No scout report on file for the next scheduled opponent (Ripon Red Hawks) -- using the schedule's own name for them as the short name, so their prior-game PBP (season leaders, team stats, lineups) is still built. Only the scouting-report-sourced output (game plan, keys to victory, player notes, tag-based comparisons) will be missing.
+
+===== cell 50 21_roster_pages =====
+Roster targets this run: ['UW-Whitewater Warhawks', 'Carroll (WI) Pioneers', 'Ripon Red Hawks']
+  Skipping live roster scrape for UW-Whitewater Warhawks -- a local roster file already exists.
+  Skipping live roster scrape for Carroll (WI) Pioneers -- a local roster file already exists.
+  Skipping live roster scrape for Ripon Red Hawks -- a local roster file already exists.
+
+live_rosters: 60 player(s) across 3 team(s).
+                        value
+team                         
+Carroll (WI) Pioneers      20
+Ripon Red Hawks            22
+UW-Whitewater Warhawks     18
+
+===== cell 52 22_locate_opponent_own_schedule_backup_file =====
+
+===== cell 54  =====
+
+===== cell 56 23_build_opp_schedule =====
+
+===== cell 58 24_find_opponent_games_before_they_played_uw =====
+Ripon Red Hawks's games before facing UW-Whitewater on 2026-11-14:
+         date   game_date           opponent outcome  team_score  \
+0  Sat, Nov 7  2026-11-07  Elmhurst Bluejays    None         NaN   
+
+   opponent_score video_url synergy_game_id synergy_boxscore_url  \
+0             NaN      None            None                 None   
+
+                                                                                                                              game_url  \
+0  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/Q-R41YqCRVa_Rf_nXXlVQg/boxscore?league=NCAAB-III&season=26   
+
+  location  
+0     Home  
+
+Video links for these games (raw full-game film, independent of any manually-tagged _video.mhtml export):
+  2026-11-07 vs Elmhurst Bluejays: (no video_url)
+
+Missing _pbp or _video files for the following games before the Whitewater matchup:
+  2026-11-07 vs Elmhurst Bluejays: pbp_found=False, video_found=False
+
+===== cell 60 25_live_scrape_any_missing_play_by_play_files =====
+  Could not live-scrape pbp for Elmhurst Bluejays (https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/Q-R41YqCRVa_Rf_nXXlVQg/boxscore?league=NCAAB-III&season=26): TimeoutError: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("text=Play By Play") to be visible
+
+
+===== cell 62 26_parse_play_by_play_events_for_opponent =====
+  No PBP data found/scraped for any of Ripon Red Hawks's 1 game(s) before UWW -- pbp_events_upcoming is empty but well-formed.
+  (no data)
+
+===== cell 64 27_shared_video_tagging_helper_functions =====
+
+===== cell 66 28_attach_video_tagging_clip_descriptions =====
+
+Tagged-video coverage for Ripon Red Hawks: 0 of 1 game(s) before facing UWW contributed tagged shots.
+    game_date                 vs video_file  pbp_rows  clips  matched                                      why
+0  2026-11-07  Elmhurst Bluejays                    0      0        0  no _video file found and no live scrape
+
+1 game(s) contributed nothing -- reasons above. The most common cause is a filename the glob can't see: it needs BOTH the no-leading-zero date ("1_10_26", not "01_10_26") and "Ripon Red Hawks" in the name, e.g. "1_10_26 Ripon Red Hawks @ Coe_video.mhtml".
+
+Games with a video-tagging file: []
+pbp_events_upcoming rows with a matched video description: 0 of 0
+WARNING: No opponent prior-game events to display (opponent schedule file not loaded).
+
+===== cell 68 29_scout_upcoming_opponent_own_tendencies =====
+Ripon Red Hawks's own events across their 1 games before Whitewater: 0
+Their opponents' events across those same games: 0
+
+Ripon Red Hawks's shot-type tendencies (volume + efficiency, tagged by play_type/guarded) across their last 1 games:
+  (no data)
+
+Ripon Red Hawks's shot attempts by play type:
+  (no data)
+
+Ripon Red Hawks's shot attempts by contest level:
+  (no data)
+
+Ripon Red Hawks's turnover types (0 total, tagged by play_type):
+  (no data)
+
+Ripon Red Hawks's foul types (0 total, with video_description):
+  (no data)
+
+Ripon Red Hawks's top scorers across their last 1 games (from play-by-play):
+  (no data)
+
+===== cell 70 30_compare_pbp_derived_opponent_tendencies_to =====
+UWW's own scouting notes for Ripon Red Hawks [SOURCE: SCOUTING REPORT]:
+
+--- Comparing PBP evidence to the stated Keys to Victory [SOURCE: SCOUTING REPORT] ---
+
+KEY 1 [SCOUTING REPORT] -- COMMUNICATE SCREENS & ACTIONS:
+  Not directly measurable from play-by-play event types (no screen-action tagging) -- this is a
+  communication/technique key tied to their offensive scheme (per the scout's own Offensive Scheme notes),
+  not something the event log alone can confirm or refute.
+
+KEY 2 [SCOUTING REPORT] -- DOMINATE THE PAINT:
+  Their own rebounding split across their 1 games: []
+  Their layup-area attempts (Layup + Driving Layup): 0 of 0 total FGA
+  Blocks recorded against them by opponents: 0
+  Compare against their own Defensive Scheme notes and layup-area conversion rate to judge whether this key
+  is supported by the evidence.
+
+KEY 3 [SCOUTING REPORT] -- GUARD 1 ON 1:
+  Measured 3PT jump-shot rate: 0 attempts at None%.
+  Scoring balance (top 5 scorers): []
+  Compare against the scout's own TEAM STRENGTHS note on shooting/scoring balance to judge whether
+  over-helping creates open catch-and-shoot looks that straight man coverage would limit.
+
+
+--- New Keys to Victory, derived from PBP data/tendencies [SOURCE: PBP-DERIVED] ---
+
+  No action cleared the volume and gap floors -- no PBP-derived keys this week.
+
+Structured PBP-derived keys, ready for CSV export:
+  (no data)
+
+===== cell 72 31_diagnose_opponent_weakest_video_tagged =====
+Ripon Red Hawks's video-tagged play types, across their 1 games before Whitewater (0 video-matched attempts):
+
+  (no data)
+Weakest high-volume play type (>= 10 attempts): '(none)' at 0% (0/0)
+
+'(none)' shot-quality breakdown (0 attempts):
+
+By shot mechanic:
+  (no data)
+
+By contest level:
+  (no data)
+
+By shot distance:
+  (no data)
+
+Per-player '(none)' volume/efficiency, with catch-and-shoot% and guarded% of those attempts:
+  (no data)
+
+===== cell 74 32_load_player_comparison_algorithms_and =====
+WARNING: upcoming opponent 'Ripon Red Hawks' has no scout report loaded (scouted: ['Carroll (WI) Pioneers']) -- player comparisons will be empty for them. Add their scout report to INPUT_DIR and re-run.
+LLM comparison skipped (use_llm=False) -- using tag-based similarity only.
+Loaded player comparison algorithms (version 2026-07-29-portable). use_llm=False
+
+Scouted opponents and their game number on the schedule:
+  Game #1: Carroll (WI) Pioneers
+
+Target (most recently scouted game): Ripon Red Hawks (game #None)
+Previous scouted opponents to compare against: ['Carroll (WI) Pioneers']
+
+player_notes-derived tag frequency and rarity-based importance weight (rarer tags count more toward similarity):
+                   tag  count  importance_weight
+0  three_point_shooter      6              1.827
+1       slasher_driver      5              1.981
+2      catch_and_shoot      2              2.674
+3            rebounder      2              2.674
+4            playmaker      1              3.079
+
+keys_to_defending-derived tag frequency and rarity-based importance weight:
+                    tag  count  importance_weight
+0      box_out_priority      3              2.386
+1          help_defense      3              2.386
+2  deny_catch_and_shoot      2              2.674
+3         keep_in_front      2              2.674
+4    transition_defense      2              2.674
+5       anticipate_move      1              3.079
+6             deny_cuts      1              3.079
+7      pressure_disrupt      1              3.079
+
+===== cell 76 33_surface_tag_based_best_match_per_target =====
+No player comparisons available for Ripon Red Hawks yet -- there's no previously-scouted opponent on record to compare their players against. Expected for the first scouted game of the season; comparisons will start appearing once a second opponent has been scouted.
+
+===== cell 78  =====
+LLM-based comparison was skipped (USE_LLM=False). Set the USE_LLM config variable to True to run this cell.
+
+===== cell 80 34_surface_llm_best_match_per_player =====
+LLM-based comparison was skipped (USE_LLM=False). Set the USE_LLM config variable to True to run this cell.
+
+===== cell 82 35_blend_tag_based_and_llm_similarity_scores =====
+LLM-based comparison was skipped (USE_LLM=False), so there is no LLM score to blend with the tag-based score. Set the USE_LLM config variable to True to run this cell.
+
+===== cell 84  =====
+Empty DataFrame
+Columns: []
+Index: []
+
+===== cell 86 36_parse_play_by_play_mhtml_files_into =====
+  Could not live-scrape UWW's own pbp for Carroll (WI) Pioneers (https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/BTiJn2Q2QUqwnB4oVvvRsA/boxscore?league=NCAAB-III&season=26): TimeoutError: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("text=Play By Play") to be visible
+
+Found 0 UW-Whitewater play-by-play file(s):
+No UW-Whitewater play-by-play yet this season (FastScout posts it after each game) -- the play-by-play sections run on an empty table.
+
+Every play-by-play line was classified.
+  (no data)
+
+===== cell 88 37_load_coach_tagged_recap_csvs =====
+Found 1 playbook catalog file(s):
+ - UW-Whitewater - Plays.mhtml
+
+Parsed 27 play(s) across 9 series and 17 family/families.
+        series play_family       play_name aliases
+0         ELOB        ELOB            "20"      20
+1         Snap        Snap  20 Snap (flip)        
+2         Snap        Snap       30 (flip)        
+3         Snap        Snap         40 Snap        
+4         Over     Cheetah         Cheetah        
+5       Bursts       Cobra           Cobra        
+6       Bursts         Fox             Fox        
+7   Transition         Get             Get        
+8     Specials    Kentucky        Kentucky        
+9     Specials     Panther  Panther 2 "P2"      P2
+10    Specials     Panther  Panther-4 "P4"      P4
+11    Specials     Panther     Panther "P"       P
+12        Over         Pin       Pin Flair        
+13     Entries      Pistol          Pistol        
+14  Transition       Pitch           Pitch        
+  ... 12 more row(s) of 27 (SHOW_ROWS = 15)
+
+===== cell 89 38_load_coach_tagged_recap_csvs_2 =====
+Found 0 coach-note/play-log CSV(s):
+
+===== cell 91 39_reconstruct_on_court_5_man_lineup_for_both =====
+Lineup column check: 0 game(s) had our lineup in the opponent's column and were corrected.
+  (no data)
+
+Lineup size check (every non-null value should be exactly 5 players):
+ uww_lineup sizes: {}
+ opp_lineup sizes: {}
+
+===== cell 93 40_classify_each_on_court_opponent_lineup =====
+Empty DataFrame
+Columns: [opponent, opp_lineup, opp_lineup_summary]
+Index: []
+
+===== cell 95 41_attach_video_tagging_clip_descriptions_2 =====
+Found 0 video-tagging file(s):
+Empty DataFrame
+Columns: [opponent, event_order, team, player, event_type, raw_text, video_clip_number, video_result, video_player, video_description]
+Index: []
+
+0 still-unmatched row(s) among attempted event types across 0 game(s) with a video-tagging file (0 bare team-level turnover(s) with no player excluded -- never matchable):
+Empty DataFrame
+Columns: [opponent, event_order, period, time_remaining, team, player, event_type, raw_text]
+Index: []
+No unmatched clips found in the video-tagging files.
+
+Timing: live scraping 0s, parsing + aligning 0s.
+
+===== cell 97 41b_offensive_roles =====
+Offensive roles: 60 player(s) -- 0 from Synergy play types, 0 from the play-by-play only, 60 from roster position only (0 marked low sample)
+  roles: Secondary Ball Handler 35; Roll & Cut Big 22; Stationary Shooter 3
+
+===== cell 98  =====
+Empty DataFrame
+Columns: [period, time_remaining, event_order, uww_score, opp_score, team, player, event_type, raw_text, shot_type, shot_desc, video_clip_number, video_description, video_player, video_result]
+Index: []
+
+===== cell 100 42_reconstruct_and_validate_per_game_box =====
+Validating PBP-reconstructed final scores against the schedule:
+
+
+0 game(s) reconcile exactly, 0 do not.
+  (no data)
+
+Found 0 official box-score file(s) to cross-validate against:
+
+Validating PBP-reconstructed per-player box score against the official box-score file, where available:
+
+
+===== cell 102 43_diagnostic =====
+1 played game(s) are missing a box score:
+
+  Carroll (WI) Pioneers: no local _pbp file found, and the live-scrape fallback either wasn't attempted or failed -- check the earlier cell's output for this opponent's name
+
+===== cell 104 44_reconstruct_single_game_box_score_by_5_man =====
+Validating lineup-level PTS totals against the schedule:
+
+  (no data)
+
+===== cell 106 45_aggregate_upcoming_opponent_5_man_lineup =====
+No PBP data available for Ripon Red Hawks -- lineup season box scores will populate once PBP files are uploaded.
+
+===== cell 108 46_frame_capture =====
+Frame archive: 32,487 tracking frame(s) are packed in clip videos -- unpacked automatically when a step reads them.
+Frame capture: VISION_ALSO_GAMES '11_7_26 UW-Whitewater @ Carroll (WI) Pioneers' -- already captured, or not one of the games in the window
+Frame capture: UWW -- working on 2026-11-07 Carroll (WI) Pioneers (183 of 191 clips still untagged -- Analytics > Film Tagging); its next game waits until the coaches finish it.
+Frame capture: opponent -- working on 2026-11-07 Ripon Red Hawks vs Elmhurst Bluejays (178 of 178 clips still untagged -- Analytics > Film Tagging); its next game waits until the coaches finish it.
+Frame capture: game pages still to capture -- 0 of the upcoming opponent's (Ripon Red Hawks), 0 of UWW's; UWW games first (VISION_CAPTURE_FIRST), newest first.
+Frame capture: every game with a clip page is already in the cache (set VISION_RETAG = True to redo).
+Clips with frames: 3043 of 3180 in uww_clip_frames.csv -- 123 with capture errors (see the 'error' column)
+  (15 more row(s) with errors are from an old TEST capture of 2026-03-06 Loras Duhawks -- replaced when that game is captured)
+  Capture errors (first 3): clip video not in the export (the export stopped before it, or it is still being written) | clip video not in the export (the export stopped before it, or it is still being written) | clip video not in the export (the export stopped before it, or it is still being written)
+  [time] 46_frame_capture: 1.3 min
+
+===== cell 110 47_play_calls =====
+  Film: last season's (2025-26) play-by-play added for the film cells -- UWW 29 game(s), opponents 26 game(s). The brief cells see this season's only.
+  Synergy exports: Beloit@Carroll(WI) - Nov 12, 2025\Export.csv: BEL@CAR 2025-11-12 has no coach tags (titles are player names) -- not added
+  Synergy exports: Beloit@Ripon - Feb 21, 2026\Export.csv: BEL@RIP 2026-02-21 has no coach tags (titles are player names) -- not added
+  Synergy exports: Carroll(WI)@Elmhurst - Feb 24, 2026\Export.csv: CAR@EC 2026-02-24 has no coach tags (titles are player names) -- not added
+  Synergy exports: Carroll(WI)@Wash(StLouis) - Nov 7, 2025\Export.csv: CAR@WAS 2025-11-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: Elmhurst@Ripon - Nov 7, 2026\Export.csv: EC@RIP 2026-11-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: MarianWI@MSOE - Feb 26, 2026\Export.csv: MAR@MSE 2026-02-26 has no coach tags (titles are player names) -- not added
+  Synergy exports: Millikin@WheatonIL - Feb 21, 2026\Export.csv: MIL@WHE 2026-02-21 has no coach tags (titles are player names) -- not added
+  Synergy exports: Thiel@UWPlatteville - Nov 6, 2026\Export.csv: THI@WPL 2026-11-06 has no coach tags (titles are player names) -- not added
+  Synergy exports: UWWhitewater@Carroll(WI) - Nov 7, 2026\Export.csv: WWW@CAR 2026-11-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: UWWhitewater@Wash(StLouis) - Mar 7, 2026\Export.csv: WWW@WAS 2026-03-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: WheatonIL@NorthPark - Feb 24, 2026\Export.csv: WHE@NP 2026-02-24 has no coach tags (titles are player names) -- not added
+  Captured clips with no Title: 2447 clip(s) from 16 game(s) not in uww_plays.csv added as play calls (342 placed on the play-by-play clock through the video-tagging match; the rest have no half / clock, so no lineups). The app's Play review is where they get tagged.
+  Blank Team on 110 clip(s) (Synergy's Non Shooting Foul clips): filled with the named player's own team -- 109 from his other clips in the game, 0 from the play-by-play (he drew the foul, so his team had the ball)
+  Play clips by game type: UWW 1616 clip(s) in 12 game(s), Opponent 178 clip(s) in 1 game(s), Other 1853 clip(s) in 10 game(s)
+  [saves] saves branch not fetched (TimeoutExpired: Command '['C:\\Program Files\\Git\\cmd\\git.EXE', '-C', '../data\\play_review_saves', 'fetch', 'origin', '+refs/heads/saves:refs/remotes/origin/saves']' timed out after 90 seconds)
+  [saves] 87 saved review file(s) read from play_review_saves:
+    2025-11-07|Carroll(WI)@Wash(StLouis): 19 file(s) by Coach Jake, Corey, Corey2, Corey4, Coreyplay3, coreyplay2 (latest 2026-11-04 17:00 UTC) -- 50 play(s) with coach answers
+    2025-11-12|Beloit@Carroll(WI): 3 file(s) by Coach Jake (latest 2026-11-04 20:04 UTC) -- 22 play(s) with coach answers
+    2025-12-30|WWW@COE: 1 file(s) by Corey (latest 2026-10-05 13:45 UTC) -- 20 play(s) with coach answers
+    2026-01-03|WOS@WWW: 12 file(s) by Corey, someone (latest 2026-10-10 00:18 UTC) -- 77 play(s) with coach answers
+    2026-02-21|Beloit@Ripon: 2 file(s) by Coach Jake (latest 2026-11-06 17:33 UTC) -- 24 play(s) with coach answers
+    2026-02-21|Millikin@WheatonIL: 4 file(s) by Corey (latest 2026-10-28 16:15 UTC) -- 1 play(s) with coach answers
+    2026-02-24|Carroll(WI)@Elmhurst: 6 file(s) by Coach Jake (latest 2026-11-02 17:29 UTC) -- 50 play(s) with coach answers
+    2026-02-24|WheatonIL@NorthPark: 7 file(s) by Coach Jake, Corey (latest 2026-10-27 14:07 UTC) -- 115 play(s) with coach answers
+    2026-02-26|MarianWI@MSOE: 2 file(s) by Coach Jake, CoreyTEST (latest 2026-10-21 15:41 UTC) -- 14 play(s) with coach answers
+    2026-03-07|UWWhitewater@Wash(StLouis): 20 file(s) by COACH JAKE, Coach Jake, Corey (latest 2026-10-27 13:54 UTC) -- 137 play(s) with coach answers
+    2026-11-06|Thiel@UWPlatteville: 7 file(s) by Corey (latest 2026-11-08 20:20 UTC) -- 1 play(s) with coach answers
+    2026-11-07|UWWhitewater@Carroll(WI): 4 file(s) by Coach Jake, Corey (latest 2026-11-09 04:37 UTC) -- 6 play(s) with coach answers
+  Film Tagging: answers saved before the tracking reset, and test saves, are set aside (TITLE_CHECKS_BEFORE_RESET = True uses the old ones again):
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-10-01T17:23:50.635Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-09-30T18:14:20.554Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-10-01T19:48:37.750Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-07T19:03:11+00:00 -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-09T00:23:56+00:00 -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-10T00:18:04+00:00 -- before the restart on the Synergy exports
+    - 2026-02-26|MarianWI@MSOE by CoreyTEST, saved 2026-10-13T21:18:09+00:00 -- a test save
+  [saves] fetched branch 'saves': 1 new saved review file(s) copied into data/play_review_saves (93 on the branch; its newest commit: 2026-11-09 07:26:07 -0600  Play review: 2026-11-07|UWWhitewater@Carroll(WI) by Corey)
+  App tags: 170 clip(s) tagged in the app (no Title) and 0 coach Title(s) corrected in the app -- used in every play-call table like a Title; 37 play(s) with more than one action recorded
+  Lineups: 1211 clip(s) with no matched play-by-play event got their uww lineup from the game clock
+  Lineups: 1211 clip(s) with no matched play-by-play event got their opp lineup from the game clock
+  Upcoming-opponent games: 89 clip(s) are the OTHER team's offense -- kept, but excluded from Ripon Red Hawks's play-call scouting.
+  App tags: 341 clip(s) tagged in the app (no Title) and 0 coach Title(s) corrected in the app -- used in every play-call table like a Title; 52 play(s) with more than one action recorded
+  Frames matched to 3043 of 3647 clip(s) (3180 captured).
+    captured page '2025-11-07 Carroll (WI) Pioneers vs Washingto': 221 clip(s), 221 matched to tagged clips
+    captured page '2025-11-07 Ripon Red Hawks vs UW-Whitewater W': 175 clip(s), 73 matched to tagged clips
+    captured page '2025-11-12 Carroll (WI) Pioneers vs Beloit Bu': 182 clip(s), 178 matched to tagged clips
+    captured page '2025-12-20 Alma Scots': 174 clip(s), 174 matched to tagged clips
+    captured page '2025-12-30 Coe Kohawks': 175 clip(s), 175 matched to tagged clips
+    captured page '2026-01-03 UW-Oshkosh Titans': 196 clip(s), 196 matched to tagged clips
+    captured page '2026-02-21 MSOE Raiders vs Aurora Spartans': 165 clip(s), 165 matched to tagged clips
+    captured page '2026-02-21 Ripon Red Hawks vs Beloit Buccanee': 175 clip(s), 175 matched to tagged clips
+    captured page '2026-02-21 Wheaton (IL) Thunder vs Millikin B': 179 clip(s), 179 matched to tagged clips
+    captured page '2026-02-24 Carroll (WI) Pioneers vs Elmhurst ': 176 clip(s), 160 matched to tagged clips
+    captured page '2026-02-24 MSOE Raiders vs Lakeland Muskies': 179 clip(s), 179 matched to tagged clips
+    captured page '2026-02-24 Wheaton (IL) Thunder vs North Park': 244 clip(s), 244 matched to tagged clips
+    captured page '2026-02-26 MSOE Raiders vs Marian (WI) Sabres': 191 clip(s), 191 matched to tagged clips
+    captured page '2026-03-06 Loras Duhawks': 15 clip(s), 1 matched to tagged clips
+    captured page '2026-03-07 Washington-St. Louis Bears': 167 clip(s), 167 matched to tagged clips
+    captured page '2026-11-06 Wisconsin-(Platteville) Pioneers v': 197 clip(s), 196 matched to tagged clips
+    captured page '2026-11-07 Carroll (WI) Pioneers': 191 clip(s), 191 matched to tagged clips
+    captured page '2026-11-07 Ripon Red Hawks vs Elmhurst Blueja': 178 clip(s), 178 matched to tagged clips
+    tagged game 2025-11-14 WWW@STC: 138 clip(s), NO frames -- capture it (Frame capture, VISION_ONLY_GAME = that game)
+    tagged game 2025-11-15 EC@WWW: 167 clip(s), NO frames -- capture it (Frame capture, VISION_ONLY_GAME = that game)
+    tagged game 2026-01-03 WEC@WSP: 140 clip(s), no frames -- a game between two other teams (not UWW or the upcoming opponent), which Frame capture doesn't capture; used from its Titles only
+  (frame check: 2025-11-14 WWW@STC came in from a Synergy Export.csv -- coach tags only, no frames needed)
+  (frame check: 2025-11-15 EC@WWW came in from a Synergy Export.csv -- coach tags only, no frames needed)
+  (frame check: 34 non-possession line(s) (free throws, no violation) in 2025-12-20 WWW@AC have no clip on Synergy's page and are not counted)
+  (frame check: 36 non-possession line(s) (free throws, no violation) in 2025-12-30 WWW@COE have no clip on Synergy's page and are not counted)
+  (frame check: 1 non-possession line(s) (free throws, no violation) in 2026-01-03 WOS@WWW have no clip on Synergy's page and are not counted)
+  Motion broken out by what each team runs: Screen Motion 150, Motion (no action tagged) 90, DHO Motion 44, Off-ball screen Motion 41, BLOB Motion (no action tagged) 14, Cutting Motion 8, Drive Motion 8, BLOB Drive Motion 4, BLOB Cutting Motion 3, BLOB Off-ball screen Motion 3, SLOB Motion (no action tagged) 3, Motion (other) 3, BLOB Motion (other) 3, SLOB Screen Motion 2, SLOB Off-ball screen Motion 2, BLOB Screen Motion 1 (379 Motion possession(s))
+  [synergy] 2026-11-07 UWWhitewater@Carroll(WI): Synergy lineups -- both fives found for 189 of 280 clip(s) with none from the play-by-play
+  [synergy] 2026-11-07 Elmhurst@Ripon: Synergy lineups -- both fives found for 89 of 89 clip(s) with none from the play-by-play
+  This season only (2026-27): 369 of 1794 clip(s) go into the brief's and the app's play-call tables (last season's 1425 stay for Film Tagging / tracking -- BRIEF_THIS_SEASON_ONLY = False uses them too)
+  play_call_summary: 17 offensive row(s), 0 defensive.
+  screen_coverage: 1 tagged screen coverage(s) -- Defenses UWW faced: 1
+  Motion breakdown: 2 team x family row(s); 0 Motion play(s) tagged with no action (uww_motion_needs_action -- Analytics > Film Tagging lists them)
+  screen defense by defender: 0 row(s) (defenders with 2+ tagged screens); action reads: 10 row(s) from Film Tagging's Actions / Players -- 2 team(s), 1 defender reaction row(s)
+UWW games: 1616 clip(s) across 10 game(s); decoded {'No call': 816, 'Untagged': 386, 'Clean': 239, 'App tag': 154, 'Partial': 15, 'Needs review': 6}; matched to play-by-play 0/1616 ({}).
+  First unmatched clips (date, period, clock, player, result):
+    game_date period  Clock           player        result
+0  2025-12-20     H1    NaN  Donovan Collins  No Violation
+1  2025-12-20     H1  19:39  Donovan Collins    Make 3 Pts
+2  2025-12-20     H1  19:11     Brock Marino    Miss 2 Pts
+3  2025-12-20     H1  19:11     Brock Marino    Miss 2 Pts
+4  2025-12-20     H1  18:57  Korbin Heitzman      Turnover
+5  2025-12-20     H1    NaN    Collin Madson  No Violation
+  ... 1,610 more row(s) of 1,616 (SHOW_ROWS = 6)
+  Most-called: {'5 Out Motion': 105, 'Flow': 33, 'BLOB': 28, 'Motion': 20, 'SLOB': 15, 'Ball Screen': 15}
+  Defense tagged on 672/1616 clip(s): {'Man-to-Man': 664, '2-3 Zone': 7, 'ZONE': 1}; press on 181, coverage called on 630.
+    Possessions: 815 offensive, 801 defensive -> 322 defense-faced tag(s), 350 defense-played tag(s).
+upcoming-opponent games: 178 clip(s) across 1 game(s); decoded {'Untagged': 178}; matched to play-by-play 0/178 ({}).
+  First unmatched clips (date, period, clock, player, result):
+    game_date period Clock         player        result
+0  2026-11-07     H1  None  Michael Asman  No Violation
+1  2026-11-07     H1  None  Jose Gonzales      Turnover
+2  2026-11-07     H1  None    Aidyn Boone    Miss 3 Pts
+3  2026-11-07     H1  None  Jose Gonzales      Turnover
+4  2026-11-07     H1  None    Jack Cherry    Miss 2 Pts
+5  2026-11-07     H1  None   Seth Bunders      Turnover
+  ... 172 more row(s) of 178 (SHOW_ROWS = 6)
+  Most-called: {}
+Clip order check: every tracked clip's spot in the game video agrees with the game clock.
+  [time] 47_play_calls: 5.7 min
+
+===== cell 112 48_jersey_number_recognizer =====
+  [recognizer 0.0 min] checking whether anything changed since the last run (coach checks, extra data, the training folder, settings)...
+  [recognizer 0.2 min] counting the training set...
+  [pose crop] training set: 661 from jersey-number tracks, 3,615 extra, 1,464 coach checks (half trained on, half kept as the TEST set)  -- ./inputs\jersey_training
+  [recognizer 0.2 min] comparing the training set with the saved recognizer (retrain or keep it?)...
+  saved recognizer is up to date with the training set -- not retrained
+
+===== cell 114 49_jersey_number_reader_test =====
+  Player checks: 841 made before the tracking reset (2026-10-14 02:47 UTC) set aside -- they were on the old frames. Only checks on the new 1920-wide frames are used.
+  coach checks: 88 file(s) found (C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\data\play_review_saves\oct-1st.json; C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\data\play_review_saves\play_review_2025_11_07_Carroll_WI_Wash_StLouis_2025_11_07_Carroll_WI_Wash_StLouis_20261101_110009_players_coreyplay2_20261101_171525.json; C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\data\play_review_saves\play_review_2025_11_07_Carroll_WI_Wash_StLouis_2025_11_07_Carroll_WI_Wash_StLouis_20261101_131608_players_Coreyplay3_20261101_192443.json); 1583 check(s), 423 with a jersey number for the real player, 423 with their frame on disk, 75 matched to a saved detection (detections file: detections_yolo11s_pt_1024_tiles3x2.pkl)
+Jersey-number reader test: 23 answer-key crop(s) (23 with their frame on disk, 0 from saved answers; 23 added from coach checks)
+  readers tested (JERSEY_CROP_STYLE = 'pose'): easyocr_find, trained_pose, easyocr_find_fast
+C:\Users\frits\anaconda3\Lib\site-packages\paramiko\transport.py:219: CryptographyDeprecationWarning: Blowfish has been deprecated
+  "class": algorithms.Blowfish,
+C:\Users\frits\anaconda3\Lib\site-packages\torch\ao\nn\quantized\dynamic\modules\rnn.py:162: UserWarning: torch.quantize_per_tensor, torch.quantize_per_channel and other quantized tensor creation functions that produce tensors with dtype torch.quint8, torch.qint8, and torch.qint32 are deprecated and will be removed in a future PyTorch release. Please see https://github.com/pytorch/pytorch/issues/184982 for more information. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\aten\src\ATen\quantized\Quantizer.cpp:116.)
+  w_ih = torch.quantize_per_tensor(
+C:\Users\frits\anaconda3\Lib\site-packages\torch\utils\data\dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+  easyocr_find: by confidence -- >= 0.50: 2/2 right; >= 0.70: 2/2 right; >= 0.80: 2/2 right; >= 0.90: 2/2 right; >= 0.95: 2/2 right (needs 85% on >= 6 answers to be trusted)
+  easyocr_find: speed -- 12.02 s a crop (~15.0 h for a game's first ~4,500 crops)
+  easyocr_find: on YOUR 23 checked players: 2 right, 0 wrong, 21 no answer
+  easyocr_find: (scored like Player tracking uses it: only reads that are the number of a player on the floor for his team count -- 21 of 23 crops have their lineup)
+  easyocr_find: [23 crops] answered 2/23; right when it answers 100% (2/2 at confidence >= 0.00); wrong answers: none
+  easyocr_find: right / wrong per jersey number on your checked players (answers given most often: 5 x1, 42 x1):
+  number  checked  right  right_pct mistaken_for
+0     42        1      1        100             
+1      5        1      1        100             
+  trained_pose: by confidence -- >= 0.50: 5/5 right; >= 0.70: 5/5 right; >= 0.80: 3/3 right (needs 85% on >= 6 answers to be trusted)
+  trained_pose: speed -- 0.08 s a crop (fast)
+  trained_pose: on YOUR 23 checked players: 9 right, 3 wrong, 11 no answer
+  trained_pose: (scored like Player tracking uses it: only reads that are the number of a player on the floor for his team count -- 21 of 23 crops have their lineup)
+  trained_pose: [23 crops] answered 12/23; right when it answers 100% (7/7 at confidence >= 0.30); wrong answers: none
+  trained_pose: right / wrong per jersey number on your checked players (answers given most often: 15 x4, 35 x2, 34 x1):
+  number  checked  right  right_pct  mistaken_for
+0     12        3      1         33  15 x1, 23 x1
+1     15        3      3        100              
+2     35        2      2        100              
+3     42        2      1         50         34 x1
+4      2        1      1        100              
+5      5        1      1        100              
+C:\Users\frits\anaconda3\Lib\site-packages\torch\utils\data\dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+  easyocr_find_fast: numbers it calls wrongly -- trusted only at a higher confidence: #2 never on its own
+  easyocr_find_fast: by confidence -- >= 0.50: 2/3 right; >= 0.70: 2/2 right; >= 0.80: 2/2 right; >= 0.90: 2/2 right; >= 0.95: 1/1 right (needs 85% on >= 6 answers to be trusted)
+  easyocr_find_fast: speed -- 1.12 s a crop (~1.4 h for a game's first ~4,500 crops)
+  easyocr_find_fast: on YOUR 23 checked players: 2 right, 3 wrong, 18 no answer
+  easyocr_find_fast: (scored like Player tracking uses it: only reads that are the number of a player on the floor for his team count -- 21 of 23 crops have their lineup)
+  easyocr_find_fast: [23 crops] answered 5/23; right when it answers 40% (2/5 at confidence >= 0.00); wrong answers: 5->2 x1, 15->5 x1, 15->2 x1
+  easyocr_find_fast: right / wrong per jersey number on your checked players (answers given most often: 2 x2, 5 x2, 42 x1):
+  number  checked  right  right_pct mistaken_for
+0     15        2      0          0   5 x1, 2 x1
+1      5        2      1         50         2 x1
+2     42        1      1        100             
+  best reader: trained_pose -- 7 of your checked players read right at its cutoff; right 100% of the time it answers (7 answers at confidence >= 0.30); answers 39% of all crops correctly
+  [time] 49_jersey_number_reader_test: 1.9 min
+
+===== cell 117 50c_outfit_check =====
+  [saves] fetched branch 'saves': 0 new saved review file(s) copied into data/play_review_saves (93 on the branch; its newest commit: 2026-11-09 07:26:07 -0600  Play review: 2026-11-07|UWWhitewater@Carroll(WI) by Corey)
+Outfit check test: 150 checked box(es) found in the saved detections -- 26 not a player, 124 real players
+    [outfit] 110 of 150 picture(s) already scored in earlier runs (reused); 40 new to score, from 5 frame(s)
+  [outfit] loading patrickjohncyh/fashion-clip (downloads ~600 MB the first time)...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]
+    [outfit] pictures scored: 40 / 40 (100%), 5 of 5 frame(s) read -- 1.6 min so far, ~0.0 min left
+    [outfit] pictures scored: 40 / 40 (100%), 5 of 5 frame(s) read -- 1.6 min so far
+  scored 150 box(es) in 95 s
+  how well the score tells them apart (AUC; 0.5 = coin flip, 1.0 = perfect): 0.99
+  score cutoff | boxes flagged | really not players | non-players caught | real players lost
+     0.023     |      40       |        65%        |       100%         |   14
+     0.014     |      41       |        63%        |       100%         |   15
+     0.011     |      42       |        62%        |       100%         |   16
+     0.010     |      44       |        59%        |       100%         |   18
+     0.006     |      45       |        58%        |       100%         |   19
+     0.005     |      47       |        55%        |       100%         |   21
+     0.004     |      48       |        54%        |       100%         |   22
+     0.003     |      51       |        51%        |       100%         |   25
+  flagged at that cutoff, by kind: bench 12/13; crowd 2/2; not a player (kind not given) 2/3; referee 5/8; player 2/124
+  PASSED: at a score of 0.41+ flagged boxes were really not players 91% of the time, catching 81% of the non-players (costing 2 real player box(es)). Player tracking will use it (TRACK_OUTFIT_CHECK = "auto").
+  [time] 50c_outfit_check: 1.7 min
+
+===== cell 119 50d_reid_check =====
+
+===== cell 120 50_player_tracking =====
+  [court] every gym being tracked has a court calibration (7 gym(s))
+  [tracking] 2026-11-07|UWWhitewater@Carroll(WI) (starters saved): tracking 16 of 191 clip(s) -- TRACK_NEW_GAME_PACE = 5 clips at a time: the 11 clip(s) up to the last one checked + the next 5
+  [reuse] uww_player_tracks: the last run's 1,718 row(s)
+  [court] step 1: reading calibration files from ./inputs\court_calibration and your Downloads folder...
+  [court]   found 9 calibration file(s): 2025-12-20|WWW@AC (8 frame(s)), 2026-02-24|WheatonIL@NorthPark (8 frame(s)), 2026-02-26|MarianWI@MSOE (8 frame(s)), 2026-03-07|UWWhitewater@Wash(StLouis) (8 frame(s)), 2025-11-12|Beloit@Carroll(WI) (8 frame(s)), 2026-11-07|UWWhitewater@Carroll(WI) (8 frame(s)), 2026-11-06|Thiel@UWPlatteville (8 frame(s)), 2025-11-07|Carroll(WI)@Wash(StLouis) (8 frame(s)), 2026-02-21|Millikin@WheatonIL (8 frame(s))
+  [court]   gym 'AC': 7 usable calibrated frame(s), average click error 0.12 ft
+  [court]   gym 'NorthPark': 8 usable calibrated frame(s), average click error 0.38 ft
+  [court]   gym 'MSOE': 7 usable calibrated frame(s), average click error 1.34 ft
+  [court]   gym 'Wash(StLouis)': 15 usable calibrated frame(s), average click error 0.22 ft
+  [court]   gym 'Carroll(WI)': 16 usable calibrated frame(s), average click error 0.89 ft
+  [court]   gym 'UWPlatteville': 8 usable calibrated frame(s), average click error 0.27 ft
+  [court]   gym 'WheatonIL': 8 usable calibrated frame(s), average click error 0.39 ft
+  [court] step 2: 2026-11-07|UWWhitewater@Carroll(WI): placing 2,650 frame(s) on the court (1,883 already done in an earlier run, 767 to match against 16 calibrated frame(s))...
+  [court]   frames matched (1,958 on the court so far): 76 / 767 (9%) -- 1.0 min so far, ~9.5 min left
+  [court]   frames matched (2,034 on the court so far): 152 / 767 (19%) -- 1.5 min so far, ~6.0 min left
+  [court]   frames matched (2,110 on the court so far): 228 / 767 (29%) -- 1.7 min so far, ~4.0 min left
+  [court]   frames matched (2,186 on the court so far): 304 / 767 (39%) -- 2.0 min so far, ~3.1 min left
+  [court]   frames matched (2,262 on the court so far): 380 / 767 (49%) -- 2.2 min so far, ~2.3 min left
+  [court]   frames matched (2,338 on the court so far): 456 / 767 (59%) -- 2.7 min so far, ~1.8 min left
+  [court]   frames matched (2,414 on the court so far): 532 / 767 (69%) -- 2.9 min so far, ~1.3 min left
+  [court]   frames matched (2,490 on the court so far): 608 / 767 (79%) -- 3.3 min so far, ~0.9 min left
+  [court]   frames matched (2,566 on the court so far): 684 / 767 (89%) -- 3.5 min so far, ~0.4 min left
+  [court]   frames matched (2,642 on the court so far): 760 / 767 (99%) -- 3.7 min so far, ~0.0 min left
+  [court]   frames matched (2,649 on the court so far): 767 / 767 (100%) -- 3.7 min so far, ~0.0 min left
+  [court]   2026-11-07|UWWhitewater@Carroll(WI): 2,650 of 2,650 frame(s) on the court (100%, 2,634 of them chained from the frame before or after)
+  [court] 2026-11-07|UWWhitewater@Carroll(WI): 100% of the frames about to be tracked are on the court
+  [tracking] filled 194 team lineup(s) for clips with no game clock, from the clips just before and after them (same five on both sides = nobody subbed)
+  [tracking] Synergy-export games only (TRACK_EXPORT_ONLY): 4 game(s) on the old web captures left out -- 2025-12-20 WWW@AC (174 clips); 2025-12-30 WWW@COE (175 clips); 2026-01-03 UWOshkosh@UWWhitewater (12 clips); 2026-01-03 WOS@WWW (184 clips)
+  [tracking] PLAYER_TRACKING_GAMES: tracking only 11_7_26 UW-Whitewater @ Carroll (WI) Pioneers -- 5 other game(s) keep their earlier tracking
+  [saves] fetched branch 'saves': 0 new saved review file(s) copied into data/play_review_saves (93 on the branch; its newest commit: 2026-11-09 07:26:07 -0600  Play review: 2026-11-07|UWWhitewater@Carroll(WI) by Corey)
+  [tracking] 2026-11-07|UWWhitewater@Carroll(WI) (starters saved): tracking 16 of 191 clip(s) -- TRACK_NEW_GAME_PACE = 5 clips at a time: the 11 clip(s) up to the last one checked + the next 5
+  [tracking] player-model backfill: 115 checked clip(s) from 1 earlier game(s) tracked once more so their checks train the models -- 2026-03-07 UWWhitewater@Wash(StLouis)
+  [tracking] step 1: player and ball detections for 131 clip(s) (10,472 frames; saved ones are reused)...
+  [tracking] loading detector yolo11s.pt (downloads once)...
+  [tracking] finding players and the ball in 8589 new frame(s) (3 enlarged court-strip tiles per frame; court strip known for 2,279)...
+  [tracking]   detector yolo11s.pt at size 1024 runs on: CPU -- this will be SLOW. Every finished frame is saved in batches, so you can stop (Interrupt) and rerun -- it continues where it stopped.
+  [tracking]   ...32 of 8,589 frames done (1.59 s per frame; about 3.8 hours left)
+  [tracking]   ...120 of 8,589 frames done (1.50 s per frame; about 3.5 hours left)
+  [tracking]   ...216 of 8,589 frames done (1.43 s per frame; about 3.3 hours left)
+  [tracking]   ...304 of 8,589 frames done (1.44 s per frame; about 3.3 hours left)
+  [tracking]   ...392 of 8,589 frames done (1.43 s per frame; about 3.2 hours left)
+  [tracking]   frames checked for players: 424 / 8,589 (4%) -- 10.3 min so far, ~197.6 min left
+  [tracking]   ...472 of 8,589 frames done (1.44 s per frame; about 3.3 hours left)
+  [tracking]   ...568 of 8,589 frames done (1.41 s per frame; about 3.2 hours left)
+  [tracking]   ...656 of 8,589 frames done (1.43 s per frame; about 3.2 hours left)
+  [tracking]   ...728 of 8,589 frames done (1.47 s per frame; about 3.2 hours left)
+  [tracking]   ...808 of 8,589 frames done (1.48 s per frame; about 3.2 hours left)
+  [tracking]   frames checked for players: 848 / 8,589 (9%) -- 21.2 min so far, ~193.1 min left
+  [tracking]   ...888 of 8,589 frames done (1.50 s per frame; about 3.2 hours left)
+  [tracking]   ...936 of 8,589 frames done (1.61 s per frame; about 3.4 hours left)
+  [tracking]   ...1,000 of 8,589 frames done (1.63 s per frame; about 3.4 hours left)
+  [time] 50_player_tracking: 32.8 min
