@@ -1,11 +1,11 @@
 clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,seconds_seen,how,confidence
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Collin Madson,play-by-play,False,,0.0,not located,
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Tyshawn Teague-Johnson,play-by-play,False,,0.0,not located,
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Kelton Mcewen,play-by-play,False,,0.0,not located,
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Isaiah Robinson,play-by-play,False,,0.0,not located,
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Rashad Rogers,play-by-play,False,,0.0,not located,
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Peyton McKenna,play-by-play,False,,0.0,not located,
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Michael McNabb,play-by-play,False,,0.0,not located,
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Collin Madson,play-by-play,True,106,0.4,coach checked,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Tyshawn Teague-Johnson,play-by-play,True,127,0.4,coach checked,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Kelton Mcewen,play-by-play,True,29;125,0.5,coach checked,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Isaiah Robinson,play-by-play,True,5;128,1.0,coach checked,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Rashad Rogers,play-by-play,True,34,0.5,coach checked,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Peyton McKenna,play-by-play,True,11,0.5,coach checked,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Michael McNabb,play-by-play,True,3;97,2.6,coach checked,0.99
 2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Dennis Estepp,play-by-play,False,,0.0,not located,
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Jimmy Tarjan,play-by-play,False,,0.0,not located,
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Jimmy Tarjan,play-by-play,True,14;121,2.6,coach checked,0.99
 2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Greg Smith Jr.,play-by-play,False,,0.0,not located,

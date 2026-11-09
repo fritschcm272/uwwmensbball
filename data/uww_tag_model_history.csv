@@ -634,4 +634,5 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-08T11:10:32,screener,Screener,,,Collin Madson,,109,,False,,0.0,1.0,2026-11-08T11:10:31
 2026-11-08T12:07:16,screener,Screener,,,Collin Madson,,109,,False,,0.0,1.0,2026-11-08T12:07:15
 2026-11-08T14:06:21,screener,Screener,,,Collin Madson,,109,,False,,0.0,1.0,2026-11-08T14:06:19
-2026-11-08T17:09:15,screener,Screener,,,Collin Madson,,109,nan,False,nan,0.0,1.0,2026-11-08T17:09:14
+2026-11-08T17:09:15,screener,Screener,,,Collin Madson,,109,,False,,0.0,1.0,2026-11-08T17:09:14
+2026-11-08T18:09:38,screener,Screener,,,Collin Madson,,109,nan,False,nan,0.0,1.0,2026-11-08T18:09:37
