@@ -646,3 +646,13 @@ Tag model (overall),v2026.11.08.3,2026-11-08,trained,2026-11-08T20:23:38,newest 
 Player tracking,v2026.11.09,2026-11-09,pretrained + code,ff01a94ab2ab,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-11-09T04:28:52
 Player tracking,v2026.11.09.2,2026-11-09,pretrained + code,2bbc68dfabe5,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-11-09T04:58:47
 Player tracking,v2026.11.09.3,2026-11-09,pretrained + code,15a954ff2d38,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-11-09T09:20:14
+Tag model: ball_screen_coverage,v2026.11.09,2026-11-09,trained,2026-11-09T11:26:11,"183 tagged clips, 7 answers learned, one answer only",2026-11-09T11:29:58
+Tag model: defense,v2026.11.09,2026-11-09,trained,2026-11-09T11:26:11,"1101 tagged clips, 2 answers learned, one answer only",2026-11-09T11:29:58
+Tag model: formation,v2026.11.09,2026-11-09,trained,2026-11-09T11:26:11,"548 tagged clips, 11 answers learned, one answer only",2026-11-09T11:29:58
+Tag model: offball_coverage,v2026.11.09,2026-11-09,trained,2026-11-09T11:26:11,"71 tagged clips, 3 answers learned, one answer only",2026-11-09T11:29:58
+Tag model: play_call,v2026.11.09,2026-11-09,trained,2026-11-09T11:26:11,"476 tagged clips, 15 answers learned",2026-11-09T11:29:58
+Tag model: press,v2026.11.09,2026-11-09,trained,2026-11-09T11:26:11,"1097 tagged clips, 4 answers learned, one answer only",2026-11-09T11:29:58
+Tag model: primary_action,v2026.11.09,2026-11-09,trained,2026-11-09T11:26:11,"456 tagged clips, 12 answers learned",2026-11-09T11:29:58
+Tag model: screen_defender,v2026.11.09,2026-11-09,trained,2026-11-09T11:26:11,"92 tagged clips, 7 answers learned, one answer only",2026-11-09T11:29:58
+Tag model: situation,v2026.11.09,2026-11-09,trained,2026-11-09T11:26:11,"1267 tagged clips, 7 answers learned",2026-11-09T11:29:58
+Tag model (overall),v2026.11.09,2026-11-09,trained,2026-11-09T11:26:11,newest of 9 field model(s); last retrained field: situation,2026-11-09T11:29:58
