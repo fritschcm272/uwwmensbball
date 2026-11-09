@@ -1,11 +1,61 @@
 clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,seconds_seen,how,confidence
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Collin Madson,play-by-play,True,106,0.4,coach checked,0.99
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Tyshawn Teague-Johnson,play-by-play,True,127,0.4,coach checked,0.99
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Kelton Mcewen,play-by-play,True,29;125,0.5,coach checked,0.99
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Isaiah Robinson,play-by-play,True,5;128,1.0,coach checked,0.99
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Rashad Rogers,play-by-play,True,34,0.5,coach checked,0.99
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Peyton McKenna,play-by-play,True,11,0.5,coach checked,0.99
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Michael McNabb,play-by-play,True,3;97,2.6,coach checked,0.99
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Dennis Estepp,play-by-play,False,,0.0,not located,
-2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Jimmy Tarjan,play-by-play,True,14;121,2.6,coach checked,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Collin Madson,play-by-play,True,37;57;60;103;147,10.4,coach checked;followed player,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Tyshawn Teague-Johnson,play-by-play,True,34;89,3.4,coach checked,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Kelton Mcewen,play-by-play,True,83;104,4.2,coach checked,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Isaiah Robinson,play-by-play,True,3;36;100;106;119;128,3.0,coach checked;followed player,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,UW-Whitewater,offense,Rashad Rogers,play-by-play,True,4;16;41,1.5,coach checked,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Peyton McKenna,play-by-play,True,6;33;59;102,11.5,coach checked;followed player,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Michael McNabb,play-by-play,True,2;35;81;91,3.8,coach checked;followed player,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Dennis Estepp,play-by-play,True,22,1.0,coach checked,0.99
+2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Jimmy Tarjan,play-by-play,True,10;86,4.4,coach checked,0.99
 2026-11-07|1|5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts,1,2026-11-07,Carroll (WI) Pioneers,defense,Greg Smith Jr.,play-by-play,False,,0.0,not located,
+2026-11-07|2|12 Peyton McKenna > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-07,Carroll (WI) Pioneers,offense,Peyton McKenna,play-by-play,False,,0.0,not located,
+2026-11-07|2|12 Peyton McKenna > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-07,Carroll (WI) Pioneers,offense,Michael McNabb,play-by-play,False,,0.0,not located,
+2026-11-07|2|12 Peyton McKenna > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-07,Carroll (WI) Pioneers,offense,Dennis Estepp,play-by-play,False,,0.0,not located,
+2026-11-07|2|12 Peyton McKenna > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-07,Carroll (WI) Pioneers,offense,Jimmy Tarjan,play-by-play,False,,0.0,not located,
+2026-11-07|2|12 Peyton McKenna > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-07,Carroll (WI) Pioneers,offense,Greg Smith Jr.,play-by-play,False,,0.0,not located,
+2026-11-07|2|12 Peyton McKenna > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-07,UW-Whitewater,defense,Collin Madson,play-by-play,False,,0.0,not located,
+2026-11-07|2|12 Peyton McKenna > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-07,UW-Whitewater,defense,Tyshawn Teague-Johnson,play-by-play,False,,0.0,not located,
+2026-11-07|2|12 Peyton McKenna > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-07,UW-Whitewater,defense,Kelton Mcewen,play-by-play,False,,0.0,not located,
+2026-11-07|2|12 Peyton McKenna > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-07,UW-Whitewater,defense,Isaiah Robinson,play-by-play,False,,0.0,not located,
+2026-11-07|2|12 Peyton McKenna > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,2,2026-11-07,UW-Whitewater,defense,Rashad Rogers,play-by-play,False,,0.0,not located,
+2026-11-07|4|35 Rashad Rogers > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,4,2026-11-07,UW-Whitewater,offense,Collin Madson,play-by-play,False,,0.0,not located,
+2026-11-07|4|35 Rashad Rogers > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,4,2026-11-07,UW-Whitewater,offense,Tyshawn Teague-Johnson,play-by-play,False,,0.0,not located,
+2026-11-07|4|35 Rashad Rogers > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,4,2026-11-07,UW-Whitewater,offense,Kelton Mcewen,play-by-play,False,,0.0,not located,
+2026-11-07|4|35 Rashad Rogers > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,4,2026-11-07,UW-Whitewater,offense,Isaiah Robinson,play-by-play,False,,0.0,not located,
+2026-11-07|4|35 Rashad Rogers > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,4,2026-11-07,UW-Whitewater,offense,Rashad Rogers,play-by-play,False,,0.0,not located,
+2026-11-07|4|35 Rashad Rogers > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,4,2026-11-07,Carroll (WI) Pioneers,defense,Peyton McKenna,play-by-play,False,,0.0,not located,
+2026-11-07|4|35 Rashad Rogers > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,4,2026-11-07,Carroll (WI) Pioneers,defense,Michael McNabb,play-by-play,False,,0.0,not located,
+2026-11-07|4|35 Rashad Rogers > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,4,2026-11-07,Carroll (WI) Pioneers,defense,Dennis Estepp,play-by-play,False,,0.0,not located,
+2026-11-07|4|35 Rashad Rogers > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,4,2026-11-07,Carroll (WI) Pioneers,defense,Jimmy Tarjan,play-by-play,False,,0.0,not located,
+2026-11-07|4|35 Rashad Rogers > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts,4,2026-11-07,Carroll (WI) Pioneers,defense,Greg Smith Jr.,play-by-play,False,,0.0,not located,
+2026-11-07|5|4 Michael McNabb > Transition > Ballhandler > Turnover,5,2026-11-07,Carroll (WI) Pioneers,offense,Peyton McKenna,play-by-play,False,,0.0,not located,
+2026-11-07|5|4 Michael McNabb > Transition > Ballhandler > Turnover,5,2026-11-07,Carroll (WI) Pioneers,offense,Michael McNabb,play-by-play,False,,0.0,not located,
+2026-11-07|5|4 Michael McNabb > Transition > Ballhandler > Turnover,5,2026-11-07,Carroll (WI) Pioneers,offense,Dennis Estepp,play-by-play,False,,0.0,not located,
+2026-11-07|5|4 Michael McNabb > Transition > Ballhandler > Turnover,5,2026-11-07,Carroll (WI) Pioneers,offense,Jimmy Tarjan,play-by-play,False,,0.0,not located,
+2026-11-07|5|4 Michael McNabb > Transition > Ballhandler > Turnover,5,2026-11-07,Carroll (WI) Pioneers,offense,Greg Smith Jr.,play-by-play,False,,0.0,not located,
+2026-11-07|5|4 Michael McNabb > Transition > Ballhandler > Turnover,5,2026-11-07,UW-Whitewater,defense,Collin Madson,play-by-play,False,,0.0,not located,
+2026-11-07|5|4 Michael McNabb > Transition > Ballhandler > Turnover,5,2026-11-07,UW-Whitewater,defense,Tyshawn Teague-Johnson,play-by-play,False,,0.0,not located,
+2026-11-07|5|4 Michael McNabb > Transition > Ballhandler > Turnover,5,2026-11-07,UW-Whitewater,defense,Kelton Mcewen,play-by-play,False,,0.0,not located,
+2026-11-07|5|4 Michael McNabb > Transition > Ballhandler > Turnover,5,2026-11-07,UW-Whitewater,defense,Isaiah Robinson,play-by-play,False,,0.0,not located,
+2026-11-07|5|4 Michael McNabb > Transition > Ballhandler > Turnover,5,2026-11-07,UW-Whitewater,defense,Rashad Rogers,play-by-play,False,,0.0,not located,
+2026-11-07|7|12 Tyshawn Teague-Johnson > ISO > Top > Drives Right > Defense Commits > Ball Delivered > 2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-11-07,UW-Whitewater,offense,Collin Madson,play-by-play,False,,0.0,not located,
+2026-11-07|7|12 Tyshawn Teague-Johnson > ISO > Top > Drives Right > Defense Commits > Ball Delivered > 2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-11-07,UW-Whitewater,offense,Tyshawn Teague-Johnson,play-by-play,False,,0.0,not located,
+2026-11-07|7|12 Tyshawn Teague-Johnson > ISO > Top > Drives Right > Defense Commits > Ball Delivered > 2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-11-07,UW-Whitewater,offense,Kelton Mcewen,play-by-play,False,,0.0,not located,
+2026-11-07|7|12 Tyshawn Teague-Johnson > ISO > Top > Drives Right > Defense Commits > Ball Delivered > 2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-11-07,UW-Whitewater,offense,Isaiah Robinson,play-by-play,False,,0.0,not located,
+2026-11-07|7|12 Tyshawn Teague-Johnson > ISO > Top > Drives Right > Defense Commits > Ball Delivered > 2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-11-07,UW-Whitewater,offense,Rashad Rogers,play-by-play,False,,0.0,not located,
+2026-11-07|7|12 Tyshawn Teague-Johnson > ISO > Top > Drives Right > Defense Commits > Ball Delivered > 2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-11-07,Carroll (WI) Pioneers,defense,Peyton McKenna,play-by-play,False,,0.0,not located,
+2026-11-07|7|12 Tyshawn Teague-Johnson > ISO > Top > Drives Right > Defense Commits > Ball Delivered > 2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-11-07,Carroll (WI) Pioneers,defense,Michael McNabb,play-by-play,False,,0.0,not located,
+2026-11-07|7|12 Tyshawn Teague-Johnson > ISO > Top > Drives Right > Defense Commits > Ball Delivered > 2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-11-07,Carroll (WI) Pioneers,defense,Dennis Estepp,play-by-play,False,,0.0,not located,
+2026-11-07|7|12 Tyshawn Teague-Johnson > ISO > Top > Drives Right > Defense Commits > Ball Delivered > 2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-11-07,Carroll (WI) Pioneers,defense,Jimmy Tarjan,play-by-play,False,,0.0,not located,
+2026-11-07|7|12 Tyshawn Teague-Johnson > ISO > Top > Drives Right > Defense Commits > Ball Delivered > 2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts,7,2026-11-07,Carroll (WI) Pioneers,defense,Greg Smith Jr.,play-by-play,False,,0.0,not located,
+2026-11-07|8|4 Michael McNabb > Spot-Up > Drives Left > To Basket > Miss 2 Pts,8,2026-11-07,Carroll (WI) Pioneers,offense,Peyton McKenna,play-by-play,False,,0.0,not located,
+2026-11-07|8|4 Michael McNabb > Spot-Up > Drives Left > To Basket > Miss 2 Pts,8,2026-11-07,Carroll (WI) Pioneers,offense,Michael McNabb,play-by-play,False,,0.0,not located,
+2026-11-07|8|4 Michael McNabb > Spot-Up > Drives Left > To Basket > Miss 2 Pts,8,2026-11-07,Carroll (WI) Pioneers,offense,Dennis Estepp,play-by-play,False,,0.0,not located,
+2026-11-07|8|4 Michael McNabb > Spot-Up > Drives Left > To Basket > Miss 2 Pts,8,2026-11-07,Carroll (WI) Pioneers,offense,Jimmy Tarjan,play-by-play,False,,0.0,not located,
+2026-11-07|8|4 Michael McNabb > Spot-Up > Drives Left > To Basket > Miss 2 Pts,8,2026-11-07,Carroll (WI) Pioneers,offense,Greg Smith Jr.,play-by-play,False,,0.0,not located,
+2026-11-07|8|4 Michael McNabb > Spot-Up > Drives Left > To Basket > Miss 2 Pts,8,2026-11-07,UW-Whitewater,defense,Collin Madson,play-by-play,False,,0.0,not located,
+2026-11-07|8|4 Michael McNabb > Spot-Up > Drives Left > To Basket > Miss 2 Pts,8,2026-11-07,UW-Whitewater,defense,Tyshawn Teague-Johnson,play-by-play,False,,0.0,not located,
+2026-11-07|8|4 Michael McNabb > Spot-Up > Drives Left > To Basket > Miss 2 Pts,8,2026-11-07,UW-Whitewater,defense,Kelton Mcewen,play-by-play,False,,0.0,not located,
+2026-11-07|8|4 Michael McNabb > Spot-Up > Drives Left > To Basket > Miss 2 Pts,8,2026-11-07,UW-Whitewater,defense,Isaiah Robinson,play-by-play,False,,0.0,not located,
+2026-11-07|8|4 Michael McNabb > Spot-Up > Drives Left > To Basket > Miss 2 Pts,8,2026-11-07,UW-Whitewater,defense,Rashad Rogers,play-by-play,False,,0.0,not located,
