@@ -1,6 +1,10 @@
 opponent,situation,set_name,primary_player,action,frequency,our_call,film_ref,is_sample
-Ripon Red Hawks,Half court,Off-ball screen Motion,Kolby Williams,Down Screen,"10 uses in 1 games, 0.70 PPP",Lock and trail; bump the cutter off the screen,Beloit@Ripon,False
-Ripon Red Hawks,Half court,Screen Motion,CJ Brown,Ball Screen,"9 uses in 1 games, 1.33 PPP",Pick one ball-screen coverage and stay in it; no middle,Beloit@Ripon,False
-Ripon Red Hawks,Half court,Motion (no action tagged),Jack Field,nan,"5 uses in 1 games, 0.40 PPP",,Beloit@Ripon,False
-Ripon Red Hawks,Half court,Drive Motion,Kolby Williams,ISO,"2 uses in 1 games, 2.50 PPP","Gap help, make him score over a crowd",Beloit@Ripon,False
-Ripon Red Hawks,Half court,Set,CJ Brown,Down Screen,"2 uses in 1 games, 0.00 PPP",Lock and trail; bump the cutter off the screen,Beloit@Ripon,False
+Ripon Red Hawks,Half court,5-Out Motion,their best player,Drive-and-kick off a dribble handoff at the top,Base offense (~40%),"Gap help, no middle drives, close out short","Gm 2, 1st half",True
+Ripon Red Hawks,Half court,Horns Flare,their best player,"Elbow ball screen, weak-side flare for the shooter",3-4x a half,Top-lock the flare; switch 4-5 on the elbow screen,"Gm 1, 2nd half",True
+Ripon Red Hawks,Half court,Post Split,their best player,"Entry to the block, split cut above it",2-3x a half,Three-quarter front; dig from the passer,"Gm 3, 1st half",True
+Ripon Red Hawks,Half court,Spain PnR,their best player,Ball screen with a back-screen on the roller's man,Late clock,Ice the ball screen; talk the back-screen early,"Gm 4, 2nd half",True
+Ripon Red Hawks,BLOB,Box Up,their best player,"Stagger to the corner, big seals the rim",Most BLOBs,Switch everything on the box; bump the sealer,Gm 2,True
+Ripon Red Hawks,SLOB,Stack Lob,their best player,"Stack at the elbow, back-screen lob to the rim",Under 5:00,Help side sits on the rim; no top-side denial,Gm 1,True
+Ripon Red Hawks,ATO,Elevator,their best player,Elevator doors at the top of the key for a catch-and-shoot,Out of timeouts,Chase over the top; the screener's man sits in the doors,Gm 3,True
+Ripon Red Hawks,Press break,4-Across,their best player,"Four across the free-throw line, inbounder runs baseline",vs full-court pressure,Deny the first pass to the handler; trap the catch,Gm 4,True
+Ripon Red Hawks,End of game,Iso-High Ball Screen,their best player,"Clear-out, late high ball screen with 8 on the clock",Last possession,Show and recover; no fouling on the drive,Gm 2,True

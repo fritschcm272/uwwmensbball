@@ -288,7 +288,9 @@ else:
             (_gp_hist["opponent"] == row["opponent"]) & (_gp_hist["topic"] == "KEYS TO VICTORY"), "notes"
         ]
         print(f"\n{row['opponent']} ({row['date']}, {row['location']}): UWW {row['uww_points']} - "
-              f"{row['opponent']} {row['opp_actual_ppg']} ({row['outcome']}, margin {row['point_margin']:+.0f})")
+              f"{row['opponent']} {row['opp_actual_ppg']} ({row['outcome']}, margin "
+      # CONFIRMED BUG (fixed; a game with no score yet has margin None, which can't be formatted)
+      + (f"{float(row['point_margin']):+.0f}" if pd.notna(pd.to_numeric(row['point_margin'], errors='coerce')) else "n/a") + ")")
         if not keys_to_victory.empty:
             print("  Pre-game keys to victory:", keys_to_victory.iloc[0])
             print_keys_to_victory_stats(keys_to_victory.iloc[0])

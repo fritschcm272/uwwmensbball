@@ -1,10 +1,3 @@
 scouted_opponent,side,team,motion_family,uses,share_pct,ppp,actions,trigger,screener,finish,games
-Ripon Red Hawks,UWW,UW-Whitewater,Screen Motion,32,43,1.14,Ball Screen (25),Joey Berezowitz (7) · Isaac Verges (5),Brock Marino (8) · Richie Warren (4),P&R Ball Handler (19) · ISO (6),2
-Ripon Red Hawks,UWW,UW-Whitewater,Motion (no action tagged),14,19,0.78,,Richie Warren (1),Joey Berezowitz (1),ISO (5) · Non Possession (3),3
-Ripon Red Hawks,UWW,UW-Whitewater,BLOB Motion (no action tagged),12,16,1.0,,,,Cut (3) · Spot-Up (3),3
-Ripon Red Hawks,UWW,UW-Whitewater,Off-ball screen Motion,8,11,1.43,Down Screen (6),Collin Madson (1),Joey Berezowitz (1),Post-Up (2) · No Play Type (2),2
-Ripon Red Hawks,UWW,UW-Whitewater,DHO Motion,3,4,0.0,,Joey Berezowitz (1),JR Lukenbill (1),Hand Off (2) · Non Possession (1),1
-Ripon Red Hawks,UWW,UW-Whitewater,SLOB Motion (no action tagged),2,3,1.5,,,,Spot-Up (1) · ISO (1),1
-Ripon Red Hawks,UWW,UW-Whitewater,Motion (other),1,1,0.0,,,,Non Possession (1),1
-Ripon Red Hawks,UWW,UW-Whitewater,SLOB Off-ball screen Motion,1,1,0.0,,Kelton McEwen (1),Rashad Rogers (1),Off Screen (1),1
-Ripon Red Hawks,UWW,UW-Whitewater,SLOB Screen Motion,1,1,0.0,,Isaac Verges (1),JR Lukenbill (1),P&R Ball Handler (1),1
+Ripon Red Hawks,UWW,UW-Whitewater,Screen Motion,5,62,0.5,Ball Screen (5),,Taveon Vann (1),P&R Ball Handler (5),1
+Ripon Red Hawks,UWW,UW-Whitewater,Off-ball screen Motion,3,38,0.0,,,,Off Screen (2) · Post-Up (1),1

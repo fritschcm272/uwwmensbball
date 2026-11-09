@@ -1,5 +1,4 @@
 opponent,metric,value,note,is_sample
-Ripon Red Hawks,Possessions per game,71.4,Estimated over 26 game(s): FGA - OREB + TO + 0.475*FTA,False
-Ripon Red Hawks,Points per possession,0.94,Their scoring over 26 game(s) of film,False
-UW-Whitewater,Possessions per game,69.4,Our own pace over 29 game(s),False
-Ripon Red Hawks,Early-offense share,24.0,% of 66 tagged possessions shooting inside 10 seconds,False
+Ripon Red Hawks,Possessions per game,71.4,Sample -- needs their prior-game box scores,True
+Ripon Red Hawks,Points per possession,1.07,Sample,True
+Ripon Red Hawks,Early-offense share,38.0,Sample -- % of tagged possessions shooting inside 10 seconds,True

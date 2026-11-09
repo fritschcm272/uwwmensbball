@@ -1,5 +1,6 @@
 opponent,clip_group,clips,who_watches,is_sample
-Ripon Red Hawks,Off-ball screen Motion (Half court),10,Whole team -- scout team runs it,False
-Ripon Red Hawks,Screen Motion (Half court),9,Whole team -- scout team runs it,False
-Ripon Red Hawks,Motion (no action tagged) (Half court),5,Whole team -- scout team runs it,False
-Ripon Red Hawks,Drive Motion (Half court),2,Whole team -- scout team runs it,False
+Ripon Red Hawks,Their base offense (5-Out Motion),6,Whole team,True
+Ripon Red Hawks,their best player post touches and offensive rebounds,5,Bigs,True
+Ripon Red Hawks,BLOB / SLOB / ATO,8,Whole team,True
+Ripon Red Hawks,Their ball-screen coverage vs us-type guards,5,Guards,True
+Ripon Red Hawks,Press break and 1-2-1-1,4,Whole team,True

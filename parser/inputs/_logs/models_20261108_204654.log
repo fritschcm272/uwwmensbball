@@ -1,0 +1,258 @@
+
+===== cell 1 <file> =====
+
+===== cell 2 00b_season_switch, 01_uw_whitewater_scouting_parser =====
+Season: 2026-27 (last season 2025-26: C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\data_2025-26)
+Input directory: ./inputs
+Output directory: ../data
+LLM comparisons: disabled
+Reference date: 2026-11-8
+Before scout: no -- using every scouting report found
+APP_BASE_URL taken from UWW_APP_URL in .env
+  APP_BASE_URL normalized: 'uwwmensbball-new.streamlit.app' -> https://uwwmensbball-new.streamlit.app
+Brief links -> https://uwwmensbball-new.streamlit.app
+
+===== cell 4  =====
+
+===== cell 5  =====
+
+===== cell 7 02_parse_every_team_schedule_scrape_live_from =====
+Found 5 schedule MHTML file(s) in ./inputs:
+ - Carroll (WI) Pioneers - Schedule_2026.html
+ - Ripon Red Hawks - Schedule_2026.html
+ - UW-Whitewater - Schedule_2023.html
+ - UW-Whitewater - Schedule_2024.html
+ - UW-Whitewater - Schedule_2026.html
+Detected season 2026 from UWW's local schedule snapshot -- using FASTSCOUT_DOCS_SEASON='26' for any live-scrape URLs below (was hardcoded to '25').
+    [login] navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [auth-retry] got redirected to identity.hudl.com while waiting on https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26 -- logging in and retrying
+    [auth-retry] login_to_fastscout returned, now at https://fastscout.fastmodelsports.com/#access_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZaYjBkN0VpWG9TQ0FhUTdYaW90SCJ9.eyJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2Nvbm5lY3Rpb25fbmFtZSI6InByb2QtaHVkbC11c2Vycy10ZXJyYWZvcm0iLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL3VzZXJfaWQiOiI2NDM1MDQ3IiwiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS90b2siOiJpZCIsImh0dHBzOi8vaWRlbnRpdHkuaHVkbC5jb20vaXNfc3lzYWRtaW4iOmZhbHNlLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2ludGVybmFsX2lkX2h1ZGwiOiI2NDM1MDQ3IiwiZ2l2ZW5fbmFtZSI6IkNvcmV5IiwiZmFtaWx5X25hbWUiOiJGcml0c2NoIiwibmlja25hbWUiOiJmcml0c2NoY20yNyIsIm5hbWUiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOTY3OWI2Mzk1N2E1ZTJmZmE2NjMyYWZhYjVmMGExYTU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZmci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAyNi0xMS0wOVQwMjo0NzozMS42MDFaIiwiZW1haWwiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS8iLCJhdWQiOiJ1UFJyRFVpWkZOU3d2RnJ0cnVsQ3lBWDBwaDZBckx6VSIsInN1YiI6ImF1dGgwfGh1ZGx8NjQzNTA0NyIsImlhdCI6MTc5NDE5MjQ1MiwiZXhwIjoxNzk1NDAyMDUyLCJzaWQiOiJsS0pvTUtad204UmF1Tk9PSngxdXUxMVlKdmdES1IzVyIsImNfaGFzaCI6Im5ZTC0zSXZjcDFPaGo4c1g4eUF1NWciLCJub25jZSI6ImFjYmM3ZWNjLTJjZGMtNGNjOC1iZWM1LWMzNjdjZTNiMmIxMCJ9.oxy3r8tNL-qvCN5aoky1EpeCTOBElDml1T3eqmlrrQVSyU2Vvx-j64OV84HTQYiAjdO_5NMNL24zC7DFK7p-0nnWSd5VyDGC5V85dNibQwwYRZyOQ2ozHbXhJtaCMU0ZWPeMKK5-BLi2hX1ZCHwJ_4tpZBC40xsxe4_-bZi94zuGjg2Z_7Pdju22-bwz092h2MbGYPWSZqzQlptFO2xGaI0BqGotgVf-qJxG1irlhJWF5yXNtW15oef2338qcWHWYylBcgFg85HYsyOHunlju8k_g7oX0k3dG0LAcTq5SSVkuYiK5c02BHwEaEIohQVqJhXWb8Dh-kWwhQ2kmBr77w&token_type=Bearer&expires_at=1795402052 -- re-navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [auth-retry] re-navigated, now at https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26 -- waiting for 'text=SCHEDULE'
+    [login] confirmed logged in, landed on https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [save] myTeam analytics dashboard (diagnostic) -> myTeam - Analytics Dashboard.html
+    [scrape] clicking 'SCHEDULE' tab
+    [scrape] landed on https://fastscout.fastmodelsports.com/teams/myTeam/games?league=NCAAB-III&season=26
+    [save] UW-Whitewater's own scraped schedule -> UW-Whitewater - Schedule_2026.html
+Scraped UW-Whitewater's own schedule live from FastScout (teams/myTeam/games).
+Excluding 22 game(s) scheduled beyond the next upcoming game -- not downloading those reports yet.
+
+Downloading 1 missing scouting-report PDF(s) from FastScout:
+  [Ripon Red Hawks] could not download scouting report: RuntimeError: No row matched game date Nov 14 on https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/documents?league=NCAAB-III&season=26 -- 'Game Date' values seen on the page: ['', 'Nov 07, 2025', 'Dec 31, 2024', 'Nov 25, 2023', 'Nov 25, 2023', 'Dec 17, 2021', 'Nov 26, 2022']
+  UW-Whitewater Warhawks (scraped live (myTeam)): 2 game(s) -- scouted opponents: ['Carroll (WI) Pioneers']
+
+Fetching 2 opponent schedule(s) (scrape opponent_url, MHTML backup on failure):
+    [scrape] navigating to https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw?league=NCAAB-III&season=26
+    [scrape] landed on https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw/analytics/dashboard?league=NCAAB-III&season=26 -- clicking 'SCHEDULE' tab
+    [scrape] (non-fatal) second stats table never loaded, proceeding with schedule table only: TimeoutError: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("td div[data-id]") to be visible
+    62 × locator resolved to 22 elements. Proceeding with the first one: <div data-id="bXPBwcvPQDiXi5Q8DXd6Bg">Jimmy Tarjan</div>
+
+    [scrape] landed on https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw/games?league=NCAAB-III&season=26
+    [save] scraped opponent schedule -> Carroll (WI) Pioneers - Schedule_2026.html
+    [scrape] navigating to https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ?league=NCAAB-III&season=26
+    [scrape] landed on https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/analytics/dashboard?league=NCAAB-III&season=26 -- clicking 'SCHEDULE' tab
+    [scrape] (non-fatal) second stats table never loaded, proceeding with schedule table only: TimeoutError: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("td div[data-id]") to be visible
+    62 × locator resolved to 24 elements. Proceeding with the first one: <div data-id="lcle882sTQuX-MAGyZMMSg">Christian Wilson</div>
+
+    [scrape] landed on https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games?league=NCAAB-III&season=26
+    [save] scraped opponent schedule -> Ripon Red Hawks - Schedule_2026.html
+  Carroll (WI) Pioneers (scraped live): 1 game(s) -- all games before 2026-11-8
+  Ripon Red Hawks (scraped live): 1 game(s) -- all games before 2026-11-8
+Synergy game IDs: 0 of 1 played UWW game(s), 0 game row(s) in all -- no video link on FastScout for: Sat, Nov 7 Carroll (WI) Pioneers
+          date                opponent                    team location  \
+0   Sat, Nov 7   Carroll (WI) Pioneers  UW-Whitewater Warhawks     Away   
+1  Sat, Nov 14         Ripon Red Hawks  UW-Whitewater Warhawks     Home   
+2   Sat, Nov 7  UW-Whitewater Warhawks   Carroll (WI) Pioneers     Home   
+3   Sat, Nov 7       Elmhurst Bluejays         Ripon Red Hawks     Home   
+
+                                        opponent_url  \
+0  https://fastscout.fastmodelsports.com/teams/nk...   
+1  https://fastscout.fastmodelsports.com/teams/NY...   
+2  https://fastscout.fastmodelsports.com/teams/YN...   
+3  https://fastscout.fastmodelsports.com/teams/wI...   
+
+                                            game_url video_url  \
+0  https://fastscout.fastmodelsports.com/teams/YN...      None   
+1  https://fastscout.fastmodelsports.com/teams/YN...      None   
+2  https://fastscout.fastmodelsports.com/teams/nk...      None   
+3  https://fastscout.fastmodelsports.com/teams/NY...      None   
+
+  synergy_game_id synergy_boxscore_url outcome team_score opponent_score  \
+0            None                 None    None       None           None   
+1            None                 None    None       None           None   
+2            None                 None    None       None           None   
+3            None                 None    None        NaN            NaN   
+
+  point_margin   season Upcoming  
+0         None  2026-27       No  
+1         None  2026-27      Yes  
+2         None  2026-27       No  
+3          NaN  2026-27       No  
+  [time] 02_parse_every_team_schedule_scrape_live_from: 2.3 min
+
+===== cell 9  =====
+
+===== cell 11  =====
+   jersey_number    PLAYER GP-GS MIN FGM-A FG% 3PM-A 3P% 3P-R FTM-A FT% PTS  \
+0            NaN  Player 1     -   -     -   -     -   -    -     -   -   -   
+1            NaN  Player 2     -   -     -   -     -   -    -     -   -   -   
+2            NaN  Player 3     -   -     -   -     -   -    -     -   -   -   
+3            NaN  Player 4     -   -     -   -     -   -    -     -   -   -   
+4            NaN  Player 5     -   -     -   -     -   -    -     -   -   -   
+5            NaN  Player 6     -   -     -   -     -   -    -     -   -   -   
+6            NaN  Player 7     -   -     -   -     -   -    -     -   -   -   
+7            NaN    Totals     -   -     -   -     -   -    -     -   -   -   
+8            NaN  Opponent     -   -     -   -     -   -    -     -   -   -   
+
+  ORB DRB REB AST TO STL BLK PF  
+0   -   -   -   -  -   -   -  -  
+1   -   -   -   -  -   -   -  -  
+2   -   -   -   -  -   -   -  -  
+3   -   -   -   -  -   -   -  -  
+4   -   -   -   -  -   -   -  -  
+5   -   -   -   -  -   -   -  -  
+6   -   -   -   -  -   -   -  -  
+7   -   -   -   -  -   -   -  -  
+8   -   -   -   -  -   -   -  -  
+
+===== cell 13 03_investigate_playerstattable_tile_widgets =====
+
+===== cell 15 04_investigate_myteam_analytics_dashboard =====
+
+===== cell 16 05_investigate_myteam_analytics_dashboard_2 =====
+
+===== cell 17 06_investigate_myteam_analytics_dashboard_3 =====
+
+===== cell 18 07_investigate_myteam_analytics_dashboard_4 =====
+
+===== cell 20  =====
+Overall record (W-L): 0-0
+Empty DataFrame
+Columns: [location, games]
+Index: []
+  location  avg_point_margin
+0     Away               NaN
+1     Home               NaN
+
+===== cell 22 08_parse_each_opponent_fastscout_scoutbuilder =====
+Found 0 PDF scout report(s) and 1 HTML scout report(s):
+ - 11_7_26 UW-Whitewater @ Carroll (WI) Pioneers_scout.html
+  Parsed 'Carroll (WI) Pioneers' (.html): 121 elements, 1 tables
+
+===== cell 24 09_extract_each_opponent_roster =====
+                opponent   game_date jersey_number                 name  \
+0  Carroll (WI) Pioneers  2026-11-07           #33        Dennis Estepp   
+1  Carroll (WI) Pioneers  2026-11-07           #12       Peyton McKenna   
+2  Carroll (WI) Pioneers  2026-11-07           #34         Cahlil Jones   
+3  Carroll (WI) Pioneers  2026-11-07            #4       Michael McNabb   
+4  Carroll (WI) Pioneers  2026-11-07           #25  Logan Steffensmeier   
+5  Carroll (WI) Pioneers  2026-11-07            #3         Lucas Parker   
+6  Carroll (WI) Pioneers  2026-11-07           #23         Jimmy Tarjan   
+7  Carroll (WI) Pioneers  2026-11-07           #42      Greg Smith, Jr.   
+
+  position height   weight class_year     role  \
+0        G   6'0"  170 lbs         SR  Starter   
+1        G   6'2"  175 lbs         JR  Starter   
+2        G   6'2"     None         FR  Starter   
+3        G   6'5"  205 lbs         JR  Starter   
+4        F   6'7"     None         SO  Starter   
+5        G   6'4"  185 lbs         SR    Bench   
+6      G/F   6'3"  200 lbs         JR    Bench   
+7        F   6'7"  215 lbs         SO    Bench   
+
+                                        player_notes  \
+0  PG - pushes tempo in transition | Driver/shoot...   
+1  Shooter! (213 of 254 shot attempts were 3's) |...   
+2  Driver/Shooter | Looking to score in transitio...   
+3  LH Driver/Shooter | Seeks contact on most fini...   
+4  Driver/Shooter | Likes to slash to basket | Cr...   
+5      Shooter!! | C&S 3's | Hunts 3's in transition   
+6                   Driver/Cutter | Crashes O-Boards   
+7        5 man | Screener & ball mover | Non-shooter   
+
+                                   keys_to_defending  has_scouting_report  
+0  Stop him early in transition | No back cuts!!!...                 True  
+1  LOCK & TRAIL!!! | OVER EVERYTHING!!! | Pressur...                 True  
+2  Anticipate RHD | Keep out of the paint!! | Con...                 True  
+3  Show hands/don't foul on drives!! | Heavy gap ...                 True  
+4                Box Out!! | No SLD! | No rhythm C&S                 True  
+5         NO C&S 3's!!! | Locate early in transition                 True  
+6        Box Out | Keep him in front | Be a Helper!!                 True  
+7                           Be a Helper!!! | Box out                 True  
+
+===== cell 26 10_extract_uw_whitewater_offensive_and =====
+                 opponent                                    category  \
+0   Carroll (WI) Pioneers                          Game Plan Overview   
+1   Carroll (WI) Pioneers                          Game Plan Overview   
+2   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+3   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+4   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+5   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+6   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+7   Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+8   Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+9   Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+10  Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+11  Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+
+                              topic  \
+0                   KEYS TO VICTORY   
+1                    TEAM STRENGTHS   
+2          Overall Defensive Scheme   
+3         Ball Screen & DHO Defense   
+4       Ball Screen Actions & Reads   
+5        Speciality Defensive Notes   
+6   Potential Adjustments (Defense)   
+7            Defending Their Action   
+8   Ball Screen Actions & Personnel   
+9           Ball Screen Coverage(s)   
+10  Potential Adjustments (Offense)   
+11                      ELOB & SLOB   
+
+                                                                                                                                                    notes  \
+0                                        1. TRANSITION DEFENSE!!! | 2. SQUEEZE & LIMIT #4 (Guard 1 on 1 + Gap Help) | 3. DOMINATE THE PAINT OFFENSIVELY!!   
+1   1. Transition/Fast paced offense (quick ball movement & cutting) | 2. Main scorer #4 capable of carrying offense (22 ppg) | 3. Quick & aggressive ...   
+2   M2M Defense | Full/Deep help in Gaps | Protecting the basket first | Struggle to closeout & rotate after gap help | Full court 2 man press | Looki...   
+3            FH-Will switch when guard is late to recover | Will switch 1-4 | DHO vs shooter-Guard chases over. Big FH | DHO vs Driver- Open & go through   
+4                                                                                         Attack the big | Reject the screen! | Hit the pop or short roll   
+5                                                                                                           2 Man Press (want to push up sideline & trap)   
+6                                                                                                                                                           
+7   TRANSITION DEFENSE!!! | Contain & turn the ball handler early | No Back cuts! | Keep them off the FT Line = Wall up and Stay Down | SQUEEZE #4 ON ...   
+8                   DHO's & ball screens after entry to 5 man at high post | Like to Ghost ball screens | 5 setting drag screens & step ups in transition   
+9                                                                                                                   14X-Strong (Hard Hedge) | No splits!!   
+10                                                                                                                                            15X / Blitz   
+11                                                                                                                              Staggered screens for #12   
+
+   report_date  
+0   2026-11-07  
+1   2026-11-07  
+2   2026-11-07  
+3   2026-11-07  
+4   2026-11-07  
+5   2026-11-07  
+6   2026-11-07  
+7   2026-11-07  
+8   2026-11-07  
+9   2026-11-07  
+10  2026-11-07  
+11  2026-11-07  
+
+===== cell 28  =====
+Team efficiency narrative (ORtg/DRtg/Pace/FASTINTELLIGENCE) is not captured in the PDF export -- it's a
+UI-only panel that isn't part of the printable ScoutBuilder report, and is no longer available now that
+scouting reports are sourced exclusively from PDFs.
+
+===== cell 30 11_cross_reference_each_scouted_opponent =====
+                opponent        date location outcome opp_season_avg_ppg  \
+0  Carroll (WI) Pioneers  Sat, Nov 7     Away    None               None   
+
+  opp_actual_ppg opp_ppg_vs_average uww_points opp_season_avg_ppg_allowed  \
+0           None               None       None                       None   
+
+  uww_ppg_vs_opp_avg_allowed point_margin  
+0                       None         None  
+
+(opp_season_avg_ppg / opp_ppg_vs_average / opp_season_avg_ppg_allowed / uww_ppg_vs_opp_avg_allowed are always blank now -- team/player statistics from the scouting report are no longer used; see the blanking earlier in this cell.)

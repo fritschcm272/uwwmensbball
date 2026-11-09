@@ -2282,7 +2282,33 @@ def _trk_numbers_for_game(game_date, game_code, report=None):
         elif report is not None and any(j_ != out[n_] for j_ in v):
             report.append(f"{n_.title()}: #{out[n_]} in this game / current roster, "
                           + ", ".join(f"#{j_}" for j_ in v if j_ != out[n_]) + " elsewhere")
-    return out
+    return _NameNums(out)
+
+
+class _NameNums(dict):
+    """CONFIRMED BUG (fixed; "CAR #? Greg Smith Jr." -- he's #42): the roster writes "Greg Smith, Jr.", Synergy writes
+    "Greg Smith Jr.", so the exact-name lookup missed. Names are also looked up with punctuation and spaces ignored."""
+    _k = staticmethod(lambda x: re.sub(r"[^a-z0-9]+", "", str(x).lower()))
+
+    def __init__(self, d):
+        super().__init__(d)
+        self._loose = {}
+        for k_, v_ in d.items():
+            self._loose.setdefault(self._k(k_), v_)
+
+    def get(self, key, default=None):
+        if dict.__contains__(self, key):
+            return dict.get(self, key)
+        return self._loose.get(self._k(key), default)
+
+    def __contains__(self, key):
+        return dict.__contains__(self, key) or self._k(key) in self._loose
+
+    def __getitem__(self, key):
+        v_ = self.get(key, _NameNums)
+        if v_ is _NameNums:
+            raise KeyError(key)
+        return v_
 
 
 def _review_doc(path):
@@ -4103,6 +4129,28 @@ except Exception as _sle:
 play_calls_other = play_calls[play_calls["side"] == "Other"].reset_index(drop=True)
 play_calls = play_calls[play_calls["side"] != "Other"].reset_index(drop=True)
 
+# ---- This season only, for everything the brief and the app's scouting tables show ------------------------
+# CONFIRMED CHANGE (requested: "Because the scouting brief for Ripon should have both teams playing at least 1 game prior
+# during the season, it should not include any film tagging data from the prior year"). Once the run is on a new season
+# (the season switch has happened), every summary built from here on -- play calls, situations, the offense breakdowns,
+# screen coverage, ball-screen defense, coach notes, passing -- uses THIS season's clips only. play_calls itself keeps
+# every season (Film Tagging, tracking and the models still use last season's film). BRIEF_THIS_SEASON_ONLY = False
+# brings last season's clips back into the tables.
+def season_play_calls(df):
+    if not globals().get("BRIEF_THIS_SEASON_ONLY", True) or not globals().get("LAST_SEASON") or not isinstance(df, pd.DataFrame) \
+            or df.empty or "game_date" not in df.columns:
+        return df
+    start = pd.Timestamp(int(globals().get("SEASON_START_YEAR") or 2000), 8, 1)
+    return df[pd.to_datetime(df["game_date"], errors="coerce") >= start].reset_index(drop=True)
+
+
+_pc_all_seasons = play_calls
+play_calls = season_play_calls(play_calls)
+if len(play_calls) != len(_pc_all_seasons):
+    print(f"  This season only ({globals().get('SEASON_NOW')}): {len(play_calls)} of {len(_pc_all_seasons)} clip(s) go into the "
+          f"brief's and the app's play-call tables (last season's {len(_pc_all_seasons) - len(play_calls)} stay for Film "
+          f"Tagging / tracking -- BRIEF_THIS_SEASON_ONLY = False uses them too)", flush=True)
+
 # ---- Summaries: one row per (side, level, name) --------------------------------------------------------
 # Built here so the brief and the app read the same numbers. A clip flagged Rewatch/TBD or with no call is
 # counted in the totals but never ranked as a set.
@@ -5254,3 +5302,6 @@ if "video_start_s" in play_calls.columns and play_calls["video_start_s"].notna()
               f"(captured at the wrong place?):")
         _show(_order_bad, rows=15)
         print("  " + "!" * 100)
+
+# (every season again for the sections after this one -- Film Tagging, tracking, the models; see "This season only")
+play_calls = _pc_all_seasons

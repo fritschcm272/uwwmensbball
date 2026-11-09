@@ -1599,7 +1599,46 @@ def _sst_close_export_box(timeout_s=None):
                     print(f"  [export] export box not closed ({type(e).__name__}: {e})", flush=True)
                     return False
         time.sleep(2)
-    print("  [export] (no 'Export is available' box found to close)", flush=True)
+    # CONFIRMED BUG (fixed; still not closed for Elmhurst @ Ripon): the "Export is available." box is drawn INSIDE the
+    # Editor's own window (not a separate window), deeper than the search above reached. Last try: the whole Editor window
+    # is searched for that text, then its Close button is found next to it (in the same box).
+    try:
+        for w in list(_sst_editor_windows(auto, _sst_editor_pids(exe_name))):
+            allc = _sst_walk(auto, w, 60)
+            txt = next((c for c in allc if re.search(r"(?i)export is available", c.Name or "")), None)
+            if txt is None:
+                continue
+            box = txt
+            for _up in range(10):
+                try:
+                    box = box.GetParentControl()
+                except Exception:
+                    box = None
+                if box is None:
+                    break
+                btn = next((c for c in _sst_walk(auto, box, 20) if c.ControlTypeName == "ButtonControl"
+                            and re.match(r"(?i)^\s*close\s*$", c.Name or "")), None)
+                if btn is not None:
+                    try:
+                        btn.GetInvokePattern().Invoke()
+                    except Exception:
+                        btn.Click(simulateMove=False)
+                    print("  [export] closed Synergy Editor's 'Export is available.' box", flush=True)
+                    return True
+        # not found: what the Editor showed is written down so the next fix is exact
+        with open(os.path.join(INPUT_DIR, "_synergy_export_done_window.txt"), "w", encoding="utf-8") as fh:
+            for w in list(_sst_editor_windows(auto, _sst_editor_pids(exe_name))) + list(auto.GetRootControl().GetChildren()):
+                try:
+                    fh.write(f"WINDOW {w.ControlTypeName} name={w.Name!r} class={w.ClassName!r} pid={w.ProcessId}\n")
+                    for c in _sst_walk(auto, w, 60):
+                        if c.Name or c.ControlTypeName in ("ButtonControl", "WindowControl"):
+                            fh.write(f"  {c.ControlTypeName} name={(c.Name or '')[:80]!r} class={c.ClassName!r}\n")
+                except Exception:
+                    continue
+    except Exception as e:
+        print(f"  [export] export box search failed ({type(e).__name__}: {e})", flush=True)
+    print("  [export] (no 'Export is available' box found to close -- what the Editor showed is in "
+          "inputs/_synergy_export_done_window.txt)", flush=True)
     return False
 
 
@@ -1659,6 +1698,28 @@ def _sst_clear_cache(folder=None):
         print(f"  [export] cleared Synergy's cache: {freed / 1024 ** 3:.2f} GB freed -- " + "; ".join(done)
               + (f" ({skipped} file(s) in use were left)" if skipped else ""), flush=True)
     else:
+        try:
+            def _sz(d_):
+                t_ = 0
+                for dp_, _dn, fns_ in os.walk(d_):
+                    for f_ in fns_:
+                        try:
+                            t_ += os.path.getsize(os.path.join(dp_, f_))
+                        except Exception:
+                            pass
+                return t_
+            _rep = []
+            for sd_ in _seen_syn[:8]:
+                subs = []
+                for d2 in os.listdir(sd_):
+                    p2 = os.path.join(sd_, d2)
+                    if os.path.isdir(p2):
+                        subs.append((_sz(p2), d2))
+                subs.sort(reverse=True)
+                _rep.append(f"{sd_} = {_sz(sd_) / 1024 ** 3:.1f} GB (" + ", ".join(f"{n_} {b_ / 1024 ** 3:.1f} GB" for b_, n_ in subs[:4]) + ")")
+            print("  [export] Synergy folder sizes: " + "; ".join(_rep), flush=True)
+        except Exception:
+            pass
         print("  [export] no Synergy cache folder found to clear (looked under AppData, Temp, ProgramData, your home folder "
               "and the drives' top level)" + (f" -- Synergy folders seen: {'; '.join(_seen_syn[:8])}" if _seen_syn else "")
               + ". Set SYNERGY_CACHE_DIR to the folder Synergy Editor's settings show for its cache.", flush=True)
@@ -2316,6 +2377,15 @@ def _syn_capture(page, url):
         except Exception:
             pass
     page.on("response", _on)
+    # (the request that loads a team's game list, kept so it can be sent again for ANOTHER team -- see _syn_team_games)
+    def _onq(q):
+        try:
+            if re.search(r"/api/games(\?|$)", q.url):
+                globals().setdefault("_SYN_LIST_REQS", []).append(
+                    {"url": q.url, "method": q.method, "headers": dict(q.headers), "body": q.post_data})
+        except Exception:
+            pass
+    page.on("request", _onq)
     try:
         page.goto(url, wait_until="domcontentloaded", timeout=60000)
         for _try in range(2):
@@ -2336,9 +2406,38 @@ def _syn_capture(page, url):
     finally:
         try:
             page.remove_listener("response", _on)
+            page.remove_listener("request", _onq)
         except Exception:
             pass
     return bodies
+
+
+def _syn_team_games(page, tid, known):
+    """CONFIRMED BUG (fixed; Ripon vs Elmhurst 11/7/26 still "not in Synergy's game list"): a box score only loads the
+    HOME team's game list, and no Ripon home game was known. Synergy's own game-list request (kept from any box score
+    opened this run) is sent again with the team swapped for this one. -> [game dicts]"""
+    out = []
+    for rq in list(globals().get("_SYN_LIST_REQS") or [])[::-1]:
+        body, url = rq.get("body") or "", rq.get("url") or ""
+        ids = set(re.findall(r"[0-9a-f]{24}", body + url))
+        team_ids = {i_ for i_ in ids if i_ in known} - {tid}
+        if not team_ids:
+            continue
+        for old_id in team_ids:
+            b2, u2 = body.replace(old_id, tid), url.replace(old_id, tid)
+            hdr = {k_: v_ for k_, v_ in (rq.get("headers") or {}).items()
+                   if k_.lower() in ("authorization", "content-type", "accept", "x-requested-with") or k_.lower().startswith("x-")}
+            try:
+                r_ = page.request.fetch(u2, method=rq.get("method") or "GET", headers=hdr, data=b2 or None, timeout=60000)
+                js = r_.json() if r_.ok else {}
+            except Exception:
+                js = {}
+            res = js.get("result") if isinstance(js, dict) else None
+            got = [g for g in (res or []) if isinstance(g, dict) and g.get("id") and ("homeTeam" in g or "awayTeam" in g)
+                   and tid in ((g.get("homeTeam") or {}).get("id"), (g.get("awayTeam") or {}).get("id"))]
+            if got:
+                return got
+    return out
 
 
 def _syn_save_lineups(gid, bodies):
@@ -2384,58 +2483,68 @@ def _syn_lookup(wanted):
             todo.append((t_, d_, o_))
     if not todo:
         return out
-    seeds = [str(x).lower() for x in (globals().get("SYNERGY_SEED_GAMES") or [])] + list(cache["games"].keys()) + \
-        [b["gid"] for b in (bank_games(with_unknown=True) if "bank_games" in globals() else [])]
-    seeds = list(dict.fromkeys(s_ for s_ in seeds if re.fullmatch(r"[0-9a-f]{24}", s_)))
-    if not seeds:
-        print("  [synergy] no Synergy game to start from -- add one to SYNERGY_SEED_GAMES (the 24 characters after /games/)",
-              flush=True)
-        return out
+    # CONFIRMED CHANGE (requested: "I don't want to hard code the Ripon game ... This is a list of UWW Upcoming opponents on
+    # synergy website ... Can you use this site instead?"). Synergy's Games page lists ANY team's games for the season:
+    #   apps.synergysports.com/basketball/games?leagueId=<league>&seasonId=<season>&competitionKeys=<league>:ALL&teamAId=<team>
+    # The run opens it for UWW (our team comes from the signed-in account) and then for each team it needs (its Synergy ID
+    # from UWW's games), and reads every game's ID, date and teams from what the page loads. Nothing is typed in by hand.
+    _lg = str(globals().get("SYNERGY_LEAGUE_ID") or "54457dce300969b132fcfb37")         # College Men
+    _season_lab = f"{int(globals().get('SEASON_START_YEAR') or uww_season_start_year)}-{int(globals().get('SEASON_START_YEAR') or uww_season_start_year) + 1}"
+
     def _work(page):
         found, saved_lu = {}, 0
         new_games, new_teams = {}, {}
-        teams_done = set()
+        state = {"sid": globals().get("SYNERGY_SEASON_ID"), "us": None}
+
+        def _take(bodies):
+            n_ = 0
+            for u_, b_ in bodies:
+                r_ = b_.get("result") if isinstance(b_, dict) else None
+                if "/users/getme" in u_ and isinstance(r_, dict):
+                    state["us"] = ((r_.get("team") or {}).get("id")) or state["us"]
+                if "/seasons" in u_ and isinstance(r_, list) and not state["sid"]:
+                    for se in r_:
+                        if (isinstance(se, dict) and str(se.get("name")) == _season_lab
+                                and (se.get("league") or {}).get("id") == _lg):
+                            state["sid"] = se.get("id")
+                for g in (r_ if isinstance(r_, list) else [r_] if isinstance(r_, dict) else []):
+                    if isinstance(g, dict) and g.get("id") and ("homeTeam" in g or "awayTeam" in g):
+                        if not state["sid"] and (g.get("season") or {}).get("name") == _season_lab:
+                            state["sid"] = (g.get("season") or {}).get("id")
+                        new_games[g["id"]] = _syn_game_rec(g)
+                        n_ += 1
+                        for side_ in ("homeTeam", "awayTeam"):
+                            tm = g.get(side_) or {}
+                            if tm.get("id"):
+                                for nm_ in (tm.get("fullName"), tm.get("name")):
+                                    if nm_:
+                                        new_teams[str(nm_)] = tm["id"]
+            return n_
+
+        def _games_page(tid):
+            url = "https://apps.synergysports.com/basketball/games?leagueId=" + _lg
+            if state["sid"]:
+                url += f"&seasonId={state['sid']}"
+            url += f"&competitionKeys={_lg}:ALL&teamAId={tid}&view=1"
+            return _take(_syn_capture(page, url))
+
+        _take(_syn_capture(page, "https://apps.synergysports.com/basketball/games"))   # who we are + this season's ID
+        if not state["us"]:
+            state["us"] = next((i_ for n_, i_ in cache["teams"].items() if "whitewater" in n_.lower()), None)
+        if state["us"]:
+            print(f"  [synergy] UW-Whitewater's {_season_lab} games page: {_games_page(state['us'])} game(s)", flush=True)
+        done = {state["us"]}
         for t_, d_, o_ in todo:
-            tw = _syn_words(t_)
-            tid = next((i_ for n_, i_ in {**cache["teams"], **new_teams}.items()
-                        if any(w in re.sub(r"[^a-z]+", "", n_.lower()) for w in tw)), None)
-            if tid is None:
-                # learn the team's Synergy ID from a seed game it played in (or any seed's team list)
-                for sg in seeds[:6]:
-                    for u_, b_ in _syn_capture(page, _SST_BOXSCORE.format(gid=sg)):
-                        r_ = b_.get("result") if isinstance(b_, dict) else None
-                        for g in (r_ if isinstance(r_, list) else [r_] if isinstance(r_, dict) else []):
-                            if isinstance(g, dict) and ("homeTeam" in g or "awayTeam" in g):
-                                if g.get("id"):
-                                    new_games[g["id"]] = _syn_game_rec(g)
-                                for side_ in ("homeTeam", "awayTeam"):
-                                    tm = g.get(side_) or {}
-                                    if tm.get("id"):
-                                        new_teams[str(tm.get("fullName") or tm.get("name"))] = tm["id"]
-                                        if tm.get("name"):
-                                            new_teams[str(tm["name"])] = tm["id"]
-                    tid = next((i_ for n_, i_ in new_teams.items()
-                                if any(w in re.sub(r"[^a-z]+", "", n_.lower()) for w in tw)), None)
-                    if tid:
-                        break
-            if tid is None:
-                print(f"  [synergy] {t_}: its Synergy team wasn't found from the known games -- add one of its Synergy "
-                      f"games to SYNERGY_SEED_GAMES", flush=True)
-                continue
-            if tid not in teams_done:
-                teams_done.add(tid)
-                for sg in seeds[:3]:
-                    got = 0
-                    for u_, b_ in _syn_capture(page, _SST_BOXSCORE.format(gid=sg) + f"?team={tid}"):
-                        r_ = b_.get("result") if isinstance(b_, dict) else None
-                        for g in (r_ if isinstance(r_, list) else []):
-                            if isinstance(g, dict) and g.get("id") and ("homeTeam" in g or "awayTeam" in g):
-                                new_games[g["id"]] = _syn_game_rec(g)
-                                got += 1
-                    if got:
-                        break
-            ow = _syn_words(o_)
-            for gid, g in new_games.items():
+            tw, ow = _syn_words(t_), _syn_words(o_)
+            if not any(w in "whitewater" for w in tw):
+                tid = next((i_ for n_, i_ in {**cache["teams"], **new_teams}.items()
+                            if any(w in re.sub(r"[^a-z]+", "", n_.lower()) for w in tw)), None)
+                if tid and tid not in done:
+                    done.add(tid)
+                    print(f"  [synergy] {t_}'s {_season_lab} games page: {_games_page(tid)} game(s)", flush=True)
+                elif tid is None:
+                    print(f"  [synergy] {t_}: no Synergy team found among UW-Whitewater's games", flush=True)
+            for gid, g in {**cache["games"], **new_games}.items():
                 blob = re.sub(r"[^a-z]+", "", f"{g.get('home')} {g.get('home_short')} {g.get('away')} {g.get('away_short')}".lower())
                 if g.get("date") == d_ and any(w in blob for w in ow) and any(w in blob for w in tw):
                     found[(t_, d_, o_)] = gid

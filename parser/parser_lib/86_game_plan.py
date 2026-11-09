@@ -97,14 +97,20 @@ def _gp_write(section, columns, sample_rows, real_rows=None):
 
 
 # ---- per-player season lines, both sides --------------------------------------------------------------
+# CONFIRMED BUG (fixed; first 2026-27 brief: no UWW box score yet -> a table with no columns -> KeyError 'player'). An
+# empty result keeps the player-line columns.
+_GP_EMPTY_LINES = lambda: pd.DataFrame(columns=["player", "PTS", "MIN", "FGA", "FG3M", "FG3A", "FTM", "FTA", "REB", "OREB",
+                                                "AST", "BLK", "TO", "games"])
+
+
 def _gp_player_lines(box, team_value, invert=False):
     if box.empty or "team" not in box.columns:
-        return pd.DataFrame()
+        return _GP_EMPTY_LINES()
     mask = box["team"].astype(str) == str(team_value)
     rows = box[~mask if invert else mask]
     rows = rows[rows["player"].astype(str) != "TEAM"]
     if rows.empty:
-        return pd.DataFrame()
+        return _GP_EMPTY_LINES()
     cols = [c for c in ("PTS", "MIN", "FGA", "FG3M", "FG3A", "FTM", "FTA", "REB", "OREB", "AST", "BLK", "TO")
             if c in rows.columns]
     work = rows.copy()

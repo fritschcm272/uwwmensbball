@@ -1,2 +1,15 @@
 opponent,day,date,segment,minutes,detail,ties_to,schedule_is_sample,is_sample
-Ripon Red Hawks,Game day,"Sun, Mar 8",Shootaround,45,"Walk their sets, matchups and the foul list; 50 game-speed shots each",Matchups,True,True
+Ripon Red Hawks,Recovery + film,"Wed, Nov 11",Film,40,"Scout film: 5-Out Motion, Horns Flare, Post Split",Opponent sets,True,True
+Ripon Red Hawks,Recovery + film,"Wed, Nov 11",Shooting,20,"Form and free throws, no contact",,True,True
+Ripon Red Hawks,Practice 1,"Thu, Nov 12",Warm-up / dynamic,10,,,True,True
+Ripon Red Hawks,Practice 1,"Thu, Nov 12",Scout team,15,"Scout team runs 5-Out Motion, Horns Flare, Post Split",Opponent sets,True,True
+Ripon Red Hawks,Practice 1,"Thu, Nov 12",Offensive emphasis,10,Attack Opponent Worst Offensive Shot Selection & Quality,Key 1,True,True
+Ripon Red Hawks,Practice 1,"Thu, Nov 12",Offensive emphasis,10,Call our best set: Flow,Key 2,True,True
+Ripon Red Hawks,Practice 1,"Thu, Nov 12",Special situations,8,"Defend Box Up, Stack Lob, Elevator",Opponent sets,True,True
+Ripon Red Hawks,Practice 1,"Thu, Nov 12",Late game,8,End-of-game situations,,True,True
+Ripon Red Hawks,Practice 1,"Thu, Nov 12",Live 5-on-5,15,Scout team in their personnel; stop on key violations,,True,True
+Ripon Red Hawks,Practice 2 (light),"Fri, Nov 13",Warm-up / dynamic,10,,,True,True
+Ripon Red Hawks,Practice 2 (light),"Fri, Nov 13",Scout team,15,"Scout team runs 5-Out Motion, Horns Flare, Post Split",Opponent sets,True,True
+Ripon Red Hawks,Practice 2 (light),"Fri, Nov 13",Offensive emphasis,10,Attack Opponent Worst Offensive Shot Selection & Quality,Key 1,True,True
+Ripon Red Hawks,Practice 2 (light),"Fri, Nov 13",Special situations,8,"Defend Box Up, Stack Lob, Elevator",Opponent sets,True,True
+Ripon Red Hawks,Game day,"Sat, Nov 14",Shootaround,45,"Walk their sets, matchups and the foul list; 50 game-speed shots each",Matchups,True,True

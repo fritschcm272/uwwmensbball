@@ -520,6 +520,14 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
                         for k, v in PARSER_MODES[m]["flags"].get(base, {}).items():
                             G[k] = v
                         _pm_apply_options(G)                 # the job notebook's first-cell options (see above)
+                        # CONFIRMED CHANGE (requested: "parser_brief needs the reference date or game parameters in it
+                        # instead of parser_nb"): REFERENCE_DATE / EXTRA_GAMES given by the job notebook replace
+                        # parser_nb's -- set once, right before the season switch (which may still adjust them)
+                        if base == "00b_season_switch":
+                            _o_ = G.get("_PM_OPTIONS") or {}
+                            for _k_ in ("REFERENCE_DATE", "EXTRA_GAMES"):
+                                if _o_.get(_k_) is not None:
+                                    G[_k_] = _o_[_k_]
                     G["_pm_depth"] = depth + 1
                     _q, _out = G.get("_pm_quiet") or (False, None)
                     _t0 = _pm_time.time()

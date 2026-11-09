@@ -74,7 +74,9 @@ OPPONENT_PRIOR_PBP_EXPORT_COLS = [
 csv_tables = {
     "uww_schedule": schedule,
     "uww_season_stats": stats,
-    "uww_pbp_events": pbp_events[PBP_EVENTS_EXPORT_COLS],
+    # CONFIRMED BUG (fixed; first 2026-27 brief: no UWW play-by-play yet, so the play-call columns were never added) --
+    # a missing column is exported empty instead of crashing
+    "uww_pbp_events": pbp_events.reindex(columns=PBP_EVENTS_EXPORT_COLS),
     "uww_pbp_box_score": pbp_box_score,
     "uww_lineup_stints": lineup_stints,
     "uww_coaching_flags": coaching_flags_df,

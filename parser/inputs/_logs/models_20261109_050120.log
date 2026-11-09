@@ -1,0 +1,313 @@
+
+===== cell 1 <file> =====
+
+===== cell 108 46_frame_capture =====
+Frame archive: 32,487 tracking frame(s) are packed in clip videos -- unpacked automatically when a step reads them.
+  [synergy] 2026-11-07 Ripon Red Hawks vs Elmhurst Bluejays: not in Synergy's game list either
+Frame capture: VISION_ALSO_GAMES '11_7_26 UW-Whitewater @ Carroll (WI) Pioneers' -- already captured, or not one of the games in the window
+Frame capture: UWW -- working on 2026-11-07 Carroll (WI) Pioneers (183 of 191 clips still untagged -- Analytics > Film Tagging); its next game waits until the coaches finish it.
+Frame capture: game pages still to capture -- 0 of the upcoming opponent's (Ripon Red Hawks), 0 of UWW's; UWW games first (VISION_CAPTURE_FIRST), newest first.
+Frame capture: every game with a clip page is already in the cache (set VISION_RETAG = True to redo).
+Clips with frames: 2865 of 3002 in uww_clip_frames.csv -- 123 with capture errors (see the 'error' column)
+  (15 more row(s) with errors are from an old TEST capture of 2026-03-06 Loras Duhawks -- replaced when that game is captured)
+  Capture errors (first 3): clip video not in the export (the export stopped before it, or it is still being written) | clip video not in the export (the export stopped before it, or it is still being written) | clip video not in the export (the export stopped before it, or it is still being written)
+
+===== cell 110 47_play_calls =====
+  Film: last season's (2025-26) play-by-play added for the film cells -- UWW 29 game(s), opponents 26 game(s). The brief cells see this season's only.
+  Synergy exports: Beloit@Carroll(WI) - Nov 12, 2025\Export.csv: BEL@CAR 2025-11-12 has no coach tags (titles are player names) -- not added
+  Synergy exports: Beloit@Ripon - Feb 21, 2026\Export.csv: BEL@RIP 2026-02-21 has no coach tags (titles are player names) -- not added
+  Synergy exports: Carroll(WI)@Elmhurst - Feb 24, 2026\Export.csv: CAR@EC 2026-02-24 has no coach tags (titles are player names) -- not added
+  Synergy exports: Carroll(WI)@Wash(StLouis) - Nov 7, 2025\Export.csv: CAR@WAS 2025-11-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: MarianWI@MSOE - Feb 26, 2026\Export.csv: MAR@MSE 2026-02-26 has no coach tags (titles are player names) -- not added
+  Synergy exports: Millikin@WheatonIL - Feb 21, 2026\Export.csv: MIL@WHE 2026-02-21 has no coach tags (titles are player names) -- not added
+  Synergy exports: Thiel@UWPlatteville - Nov 6, 2026\Export.csv: THI@WPL 2026-11-06 has no coach tags (titles are player names) -- not added
+  Synergy exports: UWWhitewater@Carroll(WI) - Nov 7, 2026\Export.csv: WWW@CAR 2026-11-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: UWWhitewater@Wash(StLouis) - Mar 7, 2026\Export.csv: WWW@WAS 2026-03-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: WheatonIL@NorthPark - Feb 24, 2026\Export.csv: WHE@NP 2026-02-24 has no coach tags (titles are player names) -- not added
+  Captured clips with no Title: 2269 clip(s) from 15 game(s) not in uww_plays.csv added as play calls (342 placed on the play-by-play clock through the video-tagging match; the rest have no half / clock, so no lineups). The app's Play review is where they get tagged.
+  Blank Team on 101 clip(s) (Synergy's Non Shooting Foul clips): filled with the named player's own team -- 100 from his other clips in the game, 0 from the play-by-play (he drew the foul, so his team had the ball)
+  Play clips by game type: UWW 1616 clip(s) in 12 game(s), Opponent 0 clip(s) in 0 game(s), Other 1853 clip(s) in 10 game(s)
+  [saves] fetched branch 'saves': 0 new saved review file(s) copied into data/play_review_saves (92 on the branch; its newest commit: 2026-11-08 22:37:58 -0600  Play review: 2026-11-07|UWWhitewater@Carroll(WI) by Coach Jake)
+  [saves] 87 saved review file(s) read from play_review_saves:
+    2025-11-07|Carroll(WI)@Wash(StLouis): 19 file(s) by Coach Jake, Corey, Corey2, Corey4, Coreyplay3, coreyplay2 (latest 2026-11-04 17:00 UTC) -- 50 play(s) with coach answers
+    2025-11-12|Beloit@Carroll(WI): 3 file(s) by Coach Jake (latest 2026-11-04 20:04 UTC) -- 22 play(s) with coach answers
+    2025-12-30|WWW@COE: 1 file(s) by Corey (latest 2026-10-05 13:45 UTC) -- 20 play(s) with coach answers
+    2026-01-03|WOS@WWW: 12 file(s) by Corey, someone (latest 2026-10-10 00:18 UTC) -- 77 play(s) with coach answers
+    2026-02-21|Beloit@Ripon: 2 file(s) by Coach Jake (latest 2026-11-06 17:33 UTC) -- 24 play(s) with coach answers
+    2026-02-21|Millikin@WheatonIL: 4 file(s) by Corey (latest 2026-10-28 16:15 UTC) -- 1 play(s) with coach answers
+    2026-02-24|Carroll(WI)@Elmhurst: 6 file(s) by Coach Jake (latest 2026-11-02 17:29 UTC) -- 50 play(s) with coach answers
+    2026-02-24|WheatonIL@NorthPark: 7 file(s) by Coach Jake, Corey (latest 2026-10-27 14:07 UTC) -- 115 play(s) with coach answers
+    2026-02-26|MarianWI@MSOE: 2 file(s) by Coach Jake, CoreyTEST (latest 2026-10-21 15:41 UTC) -- 14 play(s) with coach answers
+    2026-03-07|UWWhitewater@Wash(StLouis): 20 file(s) by COACH JAKE, Coach Jake, Corey (latest 2026-10-27 13:54 UTC) -- 137 play(s) with coach answers
+    2026-11-06|Thiel@UWPlatteville: 7 file(s) by Corey (latest 2026-11-08 20:20 UTC) -- 1 play(s) with coach answers
+    2026-11-07|UWWhitewater@Carroll(WI): 4 file(s) by Coach Jake, Corey (latest 2026-11-09 04:37 UTC) -- 6 play(s) with coach answers
+  Film Tagging: answers saved before the tracking reset, and test saves, are set aside (TITLE_CHECKS_BEFORE_RESET = True uses the old ones again):
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-10-01T17:23:50.635Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-09-30T18:14:20.554Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-10-01T19:48:37.750Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-07T19:03:11+00:00 -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-09T00:23:56+00:00 -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-10T00:18:04+00:00 -- before the restart on the Synergy exports
+    - 2026-02-26|MarianWI@MSOE by CoreyTEST, saved 2026-10-13T21:18:09+00:00 -- a test save
+  App tags: 170 clip(s) tagged in the app (no Title) and 0 coach Title(s) corrected in the app -- used in every play-call table like a Title; 37 play(s) with more than one action recorded
+  Lineups: 1211 clip(s) with no matched play-by-play event got their uww lineup from the game clock
+  Lineups: 1211 clip(s) with no matched play-by-play event got their opp lineup from the game clock
+  App tags: 341 clip(s) tagged in the app (no Title) and 0 coach Title(s) corrected in the app -- used in every play-call table like a Title; 52 play(s) with more than one action recorded
+  Frames matched to 2865 of 3469 clip(s) (3002 captured).
+    captured page '2025-11-07 Carroll (WI) Pioneers vs Washingto': 221 clip(s), 221 matched to tagged clips
+    captured page '2025-11-07 Ripon Red Hawks vs UW-Whitewater W': 175 clip(s), 73 matched to tagged clips
+    captured page '2025-11-12 Carroll (WI) Pioneers vs Beloit Bu': 182 clip(s), 178 matched to tagged clips
+    captured page '2025-12-20 Alma Scots': 174 clip(s), 174 matched to tagged clips
+    captured page '2025-12-30 Coe Kohawks': 175 clip(s), 175 matched to tagged clips
+    captured page '2026-01-03 UW-Oshkosh Titans': 196 clip(s), 196 matched to tagged clips
+    captured page '2026-02-21 MSOE Raiders vs Aurora Spartans': 165 clip(s), 165 matched to tagged clips
+    captured page '2026-02-21 Ripon Red Hawks vs Beloit Buccanee': 175 clip(s), 175 matched to tagged clips
+    captured page '2026-02-21 Wheaton (IL) Thunder vs Millikin B': 179 clip(s), 179 matched to tagged clips
+    captured page '2026-02-24 Carroll (WI) Pioneers vs Elmhurst ': 176 clip(s), 160 matched to tagged clips
+    captured page '2026-02-24 MSOE Raiders vs Lakeland Muskies': 179 clip(s), 179 matched to tagged clips
+    captured page '2026-02-24 Wheaton (IL) Thunder vs North Park': 244 clip(s), 244 matched to tagged clips
+    captured page '2026-02-26 MSOE Raiders vs Marian (WI) Sabres': 191 clip(s), 191 matched to tagged clips
+    captured page '2026-03-06 Loras Duhawks': 15 clip(s), 1 matched to tagged clips
+    captured page '2026-03-07 Washington-St. Louis Bears': 167 clip(s), 167 matched to tagged clips
+    captured page '2026-11-06 Wisconsin-(Platteville) Pioneers v': 197 clip(s), 196 matched to tagged clips
+    captured page '2026-11-07 Carroll (WI) Pioneers': 191 clip(s), 191 matched to tagged clips
+    tagged game 2025-11-14 WWW@STC: 138 clip(s), NO frames -- capture it (Frame capture, VISION_ONLY_GAME = that game)
+    tagged game 2025-11-15 EC@WWW: 167 clip(s), NO frames -- capture it (Frame capture, VISION_ONLY_GAME = that game)
+    tagged game 2026-01-03 WEC@WSP: 140 clip(s), no frames -- a game between two other teams (not UWW or the upcoming opponent), which Frame capture doesn't capture; used from its Titles only
+  (frame check: 2025-11-14 WWW@STC came in from a Synergy Export.csv -- coach tags only, no frames needed)
+  (frame check: 2025-11-15 EC@WWW came in from a Synergy Export.csv -- coach tags only, no frames needed)
+  (frame check: 34 non-possession line(s) (free throws, no violation) in 2025-12-20 WWW@AC have no clip on Synergy's page and are not counted)
+  (frame check: 36 non-possession line(s) (free throws, no violation) in 2025-12-30 WWW@COE have no clip on Synergy's page and are not counted)
+  (frame check: 1 non-possession line(s) (free throws, no violation) in 2026-01-03 WOS@WWW have no clip on Synergy's page and are not counted)
+  Motion broken out by what each team runs: Screen Motion 150, Motion (no action tagged) 90, DHO Motion 44, Off-ball screen Motion 41, BLOB Motion (no action tagged) 14, Cutting Motion 8, Drive Motion 8, BLOB Drive Motion 4, BLOB Cutting Motion 3, BLOB Off-ball screen Motion 3, SLOB Motion (no action tagged) 3, Motion (other) 3, BLOB Motion (other) 3, SLOB Screen Motion 2, SLOB Off-ball screen Motion 2, BLOB Screen Motion 1 (379 Motion possession(s))
+  [synergy] 2026-11-07 UWWhitewater@Carroll(WI): Synergy lineups -- both fives found for 189 of 191 clip(s) with none from the play-by-play
+  This season only (2026-27): 191 of 1616 clip(s) go into the brief's and the app's play-call tables (last season's 1425 stay for Film Tagging / tracking -- BRIEF_THIS_SEASON_ONLY = False uses them too)
+  play_call_summary: 17 offensive row(s), 0 defensive.
+  screen_coverage: 1 tagged screen coverage(s) -- Defenses UWW faced: 1
+  Motion breakdown: 2 team x family row(s); 0 Motion play(s) tagged with no action (uww_motion_needs_action -- Analytics > Film Tagging lists them)
+  screen defense by defender: 0 row(s) (defenders with 2+ tagged screens); action reads: 10 row(s) from Film Tagging's Actions / Players -- 2 team(s), 1 defender reaction row(s)
+UWW games: 1616 clip(s) across 10 game(s); decoded {'No call': 816, 'Untagged': 386, 'Clean': 239, 'App tag': 154, 'Partial': 15, 'Needs review': 6}; matched to play-by-play 0/1616 ({}).
+  First unmatched clips (date, period, clock, player, result):
+    game_date period  Clock           player        result
+0  2025-12-20     H1    NaN  Donovan Collins  No Violation
+1  2025-12-20     H1  19:39  Donovan Collins    Make 3 Pts
+2  2025-12-20     H1  19:11     Brock Marino    Miss 2 Pts
+3  2025-12-20     H1  19:11     Brock Marino    Miss 2 Pts
+4  2025-12-20     H1  18:57  Korbin Heitzman      Turnover
+5  2025-12-20     H1    NaN    Collin Madson  No Violation
+  ... 1,610 more row(s) of 1,616 (SHOW_ROWS = 6)
+  Most-called: {'5 Out Motion': 105, 'Flow': 33, 'BLOB': 28, 'Motion': 20, 'SLOB': 15, 'Ball Screen': 15}
+  Defense tagged on 672/1616 clip(s): {'Man-to-Man': 664, '2-3 Zone': 7, 'ZONE': 1}; press on 181, coverage called on 630.
+    Possessions: 815 offensive, 801 defensive -> 322 defense-faced tag(s), 350 defense-played tag(s).
+Clip order check: every tracked clip's spot in the game video agrees with the game clock.
+
+===== cell 112 48_jersey_number_recognizer =====
+
+===== cell 114 49_jersey_number_reader_test =====
+
+===== cell 117 50c_outfit_check =====
+
+===== cell 119 50d_reid_check =====
+
+===== cell 120 50_player_tracking =====
+  [tracking] filled 146 team lineup(s) for clips with no game clock, from the clips just before and after them (same five on both sides = nobody subbed)
+  [reuse] uww_player_tracks: the last run's 1,718 row(s)
+  [reuse] uww_tracking_report: the last run's 1 row(s)
+  [reuse] uww_trk_event_candidates: the last run's 2 row(s)
+  [reuse] uww_trk_lineup_slots: the last run's 110 row(s)
+  [reuse] player tracking (switched off this run): the last run's results put back on 178 clip(s) (18 column(s))
+  Passes per possession: 11 tracked possession(s) with an estimated pass count; 22 of 174 possession(s) end on a pass (Synergy 'Ball Delivered') -> uww_pass_counts / uww_pass_summary
+
+===== cell 122 50b_detector_compare =====
+
+===== cell 123  =====
+
+===== cell 125 51_court_mapping =====
+  [reuse] court mapping (switched off this run): the last run's results put back on 0 clip(s) (2 column(s))
+
+===== cell 127 53_tag_model =====
+Tag model: 3,469 clip(s) to learn from / predict (1,616 in the play calls, 1,853 from other teams' games); 10 field(s); TAG_MODEL_RETRAIN = False
+  [tag model 0.0 min] checking the libraries...
+  [tag model 0.0 min] reading the coaches' answers from their Titles...
+  [tag model 0.0 min] adding the answers saved in the app (Film Tagging / Play review)...
+  [tag model] review answers: 18 added as labels where the coach's Title had none, 9 overriding the coach's Title (TAG_MODEL_REVIEW_OVERRIDES_TITLE)
+  [tag model] new answers typed in reviews (not seen before -- check for typos): formation: 'There's not really one'; offball_coverage: 'No screens'; play_call: 'Motion'; play_call: 'TWINS LEFT'; play_call: 'in trnasntion random movement'; primary_action: 'Blitz Collin'; primary_action: 'Flair'; primary_action: 'Isolation'; screen_defender: 'Brady Wynja'; screen_defender: 'Carson Cordelli'; screen_defender: 'Devin Martin'; screen_defender: 'Ethan Johnson'
+  [tag model 0.0 min] frames: checking every clip's 5 frames are on disk, then turning new ones into numbers...
+    frames: 2,865 clip(s) with all their frames; 12,600 frame(s) already turned into numbers (saved), 0 new
+  Frames: 2865 clip(s) captured (uww_clip_frames.csv) -> 2865 matched to a clip in uww_plays.csv -> 2865 with all 5 frames -> 2520 found on disk -> 2520 turned into numbers
+    frames NOT on disk (these clips are still used from their Titles, just without pictures; re-export the game from Synergy to bring them back): 2026-02-20 Aurora@MSOE 165 clip(s); 2026-02-23 Lakeland(WI)@MSOE 179 clip(s); 2026-03-06 Loras@UWWhitewater 1 clip(s)
+Tag model: 1271 coach-tagged clip(s) across 14 game(s) (480 from other teams' games); frames for 2520 clip(s).
+  [tag model 0.1 min] positions: where the players are in each clip's frames...
+    positions: 2,520 clip(s) with all their frames; players already found in 12,600 frame(s) (saved), 0 new
+  [tag model 0.2 min] positions: each clip's player layout (teams by jersey color, spacing, where on the floor) -- 2,520 of 2,520 clip(s) saved from earlier runs, 0 to work out...
+  [tag model 0.2 min] positions: drawing 12 check picture(s)...
+  Positions: players found in 2520 clip(s), ~10.9 player(s) per frame on average (10 on the floor + refs = best case). Check the boxes: ./inputs\_tag_model\position_checks
+  [tag model 0.2 min] putting each clip's inputs together (play-by-play context, frames, positions)...
+  [tag model] 20 coach-tagged play(s) kept OUT of training for validation (TAG_MODEL_VALIDATION_PLAYS; list in ./inputs\_tag_model\validation_plays.csv)
+  [tag model 0.2 min] checking which fields' training data changed since their saved models (3,469 clips x 156 inputs)...
+  [tag model 0.2 min] the 10 fields, one at a time...
+  [tag model 0.2 min] field 1/10: formation...
+    formation: reused (unchanged) -- 0 s
+  [tag model 0.2 min] field 2/10: play_call...
+    play_call: reused (unchanged) -- 0 s
+  [tag model 0.2 min] field 3/10: defense...
+    defense: reused (unchanged) -- 0 s
+  [tag model 0.2 min] field 4/10: press...
+    press: reused (unchanged) -- 0 s
+  [tag model 0.2 min] field 5/10: situation...
+    situation: reused (unchanged) -- 0 s
+  [tag model 0.2 min] field 6/10: primary_action...
+    primary_action: reused (unchanged) -- 0 s
+  [tag model 0.2 min] field 7/10: ball_screen_coverage...
+    ball_screen_coverage: reused (unchanged) -- 0 s
+  [tag model 0.2 min] field 8/10: offball_coverage...
+    offball_coverage: reused (unchanged) -- 0 s
+  [tag model 0.2 min] field 9/10: screener...
+    screener: reused (unchanged) -- 0 s
+  [tag model 0.2 min] field 10/10: screen_defender...
+    screen_defender: reused (unchanged) -- 0 s
+  transition possessions: 265 clip(s) get no play call / formation suggestion
+  [tag model 0.2 min] scoring the validation plays and writing the report...
+  [tag model] on the 20 validation plays (never trained on): formation 8/13 (confident: 62% of 13); play_call 3/14 (confident: 40% of 5); defense 20/20 (confident: 100% of 20); press 17/20 (confident: 85% of 20); situation 12/20 (confident: 60% of 20); primary_action 2/9 (confident: 22% of 9); ball_screen_coverage 3/7; offball_coverage 0/2; screener 0/1
+  formation               66% right (always-most-common: 66%)  n=502  | confident on 78%, 67% right  -> using most common answer (5 Out) -- model not better yet  (unchanged -- reused)
+  play_call               39% right (always-most-common: 36%)  n=402  | confident on 7%, 60% right  [context]  (unchanged -- reused)
+  defense                100% right (always-most-common: 100%)  n=962  | confident on 100%, 100% right  -> using most common answer (Man-to-Man) -- model not better yet  (unchanged -- reused)
+  press                   82% right (always-most-common: 82%)  n=1080  | confident on 97%, 83% right  -> using most common answer (None) -- model not better yet  (unchanged -- reused)
+  situation               79% right (always-most-common: 66%)  n=1242  | confident on 93%, 79% right  [context]  (unchanged -- reused)
+  primary_action          58% right (always-most-common: 50%)  n=346  | confident on 51%, 64% right  [context]  (unchanged -- reused)
+  ball_screen_coverage    29% right (always-most-common: 29%)  n=158  | confident on 38%, 37% right  -> using most common answer (Switch) -- model not better yet  (unchanged -- reused)
+  offball_coverage        41% right (always-most-common: 54%)  n=46  | confident on 59%, 48% right  -> using most common answer (Over) -- model not better yet  (unchanged -- reused)
+  screener               no saved model yet -- set TAG_MODEL_RETRAIN = "auto" to train it
+  screen_defender         29% right (always-most-common: 29%)  n=55  | confident on 91%, 32% right  -> using most common answer (#5) -- model not better yet  (unchanged -- reused)
+  Scored on: each of 13 tagged games held out in turn
+  Tag model -- where the time went (0.2 min in all):
+      0.1 min  frames: checking every clip's 5 frames are on disk, then turning new ones into numbers
+      0.0 min  positions: where the players are in each clip's frames
+  Automatic answers used for untagged plays / prefilled in Film Tagging: play_call, defense, situation, primary_action | offered as 'not sure' only: formation, press, ball_screen_coverage, offball_coverage, screener, screen_defender
+  Tag model history: 1 field(s) changed since the last run -> uww_tag_model_history.csv (the app: Analytics > Film Tagging > How good is the automatic tagging?)
+  Suggested Titles: 1616 clip(s), 825 of them not tagged by a coach yet.
+
+===== cell 129 54_tracking_insights =====
+Tracking insights: matchups 19, help 11, screens 11, screen_coverage 15, screen_pairs 4, sets 0, set_clips 0, inbounds 0, zone_press 0, coverage_execution 9, spacing 1, roles 306, clips 11, matchups_raw 251, help_raw 1607, matchups_by_game 19, help_by_game 11, screen_coverage_by_game 15, screen_pairs_by_game 4, sets_by_game 0, inbounds_by_game 0, zone_press_by_game 0, coverage_execution_by_game 9, spacing_by_game 1
+
+===== cell 131 55_court_insights =====
+Court insights: nothing on the court yet (court mapping needs a calibration -- see the court mapping cell).
+
+===== cell 133 55c_play_review =====
+Film Tagging: checking which of 1,152 captured clip(s) still have their film on disk...
+Film Tagging: reading the coaches' saved answers...
+Film Tagging: answer lists -- Situation 8, Formation 26, Play call 44, Main action 63, Defense 3, Press 8, Ball-screen coverage 16, Off-ball coverage 18, Screener 56, Screen defender 44
+Film Tagging: removed the open batch for 2026-01-03 UWOshkosh@UWWhitewater from the app -- not part of this run (answers already saved are kept)
+Film Tagging: removed the open batch for 2026-02-21 Beloit@Ripon from the app -- not part of this run (answers already saved are kept)
+Film Tagging -- tagging progress by game (Titles + app tags):
+  2025-11-07 UWWhitewater@Ripon: 0 of 10 clip(s) tagged, 10 to go
+  2026-03-07 UWWhitewater@Wash(StLouis): 122 of 167 clip(s) tagged, 45 to go
+  2026-11-07 UWWhitewater@Carroll(WI): 8 of 191 clip(s) tagged, 183 to go
+Film Tagging: 6 game(s) with film left out -- not part of this run (the upcoming opponent's games and our most recent game; PLAY_TAG_RUN_ONLY = False tags every game): 2025-11-07 WWW@RIP; 2025-12-20 WWW@AC; 2025-12-30 WWW@COE; 2026-01-03 UWOshkosh@UWWhitewater; 2026-01-03 WOS@WWW; 2026-02-21 Beloit@Ripon
+
+===== cell 135 55d_defensive_roles =====
+Defensive roles: 508 player(s) -- 461 from play-by-play only, 29 from position only, 10 from coach tags, 6 from film tracking, 2 from coach tags + film (8 marked low sample)
+  roles: Low Activity 289; Point of Attack 132; Helper 63; Mobile Big 21; Wing Stopper 1; Chaser 1; Anchor Big 1
+
+===== cell 136 55e_film_quality =====
+Film on Ripon Red Hawks: no tracked games yet; 0 coach-tagged possessions on offense, 0 on defense.
+Film on UW-Whitewater: 1 tracked game (11/7/26 vs Carroll (WI) Pioneers, 11 clips) -- players named on 51% of floor spots; 623 coach-tagged possessions on offense, 601 on defense. Brief: per-player film reads ON (named 51%, needs 50%), court sections off (placed <NA>%, shot spots agree <NA>% -- needs 60% and 80%). The app shows everything either way.
+
+===== cell 138 56_compute_biggest_scoring_runs_and_largest =====
+
+===== cell 140 57_surface_clutch_time_events_with_lineup =====
+
+===== cell 142 58_cross_reference_actual_pbp_turnovers =====
+
+===== cell 144 59_cross_reference_actual_pbp_rebounding =====
+
+===== cell 146 60_compute_scoring_margin_and_minutes_played =====
+
+===== cell 148 61_add_minutes_played_onto_reconstructed_box =====
+
+===== cell 150 62_identify_lineups_on_court_during_each_team =====
+
+===== cell 152 63_season_wide_5_man_lineup_analysis_across =====
+
+===== cell 154 64_uww_performance_vs_opponent_lineup_profile =====
+
+===== cell 156 65_diagnose_spot_up_struggles =====
+
+===== cell 158 66_check_contest_mechanic_patterns_across_all =====
+
+===== cell 160 67_contest_level =====
+
+===== cell 163 68_investigate_why_guarded_catch_and_shoot =====
+
+===== cell 166 69_structured_coaching_flags_recommendations =====
+
+===== cell 168 70_expected_box_score_for_upcoming_game =====
+
+===== cell 171 71_reconstruct_box_score_for_opponent_games =====
+
+===== cell 173 72_minutes_played_for_upcoming_opponent_prior =====
+
+===== cell 175 73_replace_upcoming_opponent_pdf_scouting =====
+
+===== cell 177 74_replace_upcoming_opponent_team_totals_with =====
+
+===== cell 179 75_back_fill_past_scouted_opponents_player =====
+
+===== cell 181 76_rebuild_player_comparisons_with_pbp =====
+
+===== cell 182 77_rebuild_player_comparisons_with_pbp_2 =====
+
+===== cell 183 78_rebuild_player_comparisons_with_pbp_3 =====
+
+===== cell 185 79_head_to_head =====
+
+===== cell 186 80_head_to_head_2 =====
+
+===== cell 188 81_extract_and_save_team_logos_from_pbp_mhtml =====
+
+===== cell 190 82_extract_player_headshots_from_scouting =====
+
+===== cell 192 83_assemble_every_key_to_victory_into_one =====
+
+===== cell 194 84_style_matchups =====
+
+===== cell 196 85_scouting_notes_and_keys_to_defending =====
+
+===== cell 198 86_game_plan =====
+
+===== cell 200 86b_two_for_one =====
+
+===== cell 202 87_build_html_scouting_brief_for_upcoming =====
+
+===== cell 204 88_tracking_review_export =====
+
+===== cell 206 46a_frame_archive =====
+Frame archive: 32,487 tracking frame(s) are packed in clip videos -- unpacked automatically when a step reads them.
+Frame archive: Feb_21_2026_Millikin@WheatonIL -- WOULD remove 8 JPEG(s) written from its Synergy export
+Frame archive: Mar_7_2026_UWWhitewater@Wash_StLouis -- WOULD remove 357 JPEG(s) written from its Synergy export
+Frame archive: Nov_12_2025_Beloit@Carroll_WI -- WOULD remove 8 JPEG(s) written from its Synergy export
+Frame archive: Nov_6_2026_Thiel@UWPlatteville -- WOULD remove 8 JPEG(s) written from its Synergy export
+Frame archive: Nov_7_2025_Carroll_WI_@Wash_StLouis -- WOULD remove 8 JPEG(s) written from its Synergy export
+Frame archive: Nov_7_2026_UWWhitewater@Carroll_WI -- WOULD remove 8 JPEG(s) written from its Synergy export
+
+===== cell 208 89_cleanup =====
+Cleanup (DELETING): 0 item(s), 0 KB
+  done -- freed about 0 KB
+
+===== cell 210 90_model_versions =====
+Model versions: 16 model(s) -> ../data\uww_model_versions.csv (no new versions this run)
+
+===== cell 211  =====
+Run time: 2 min across 14 section(s) -- the slowest:
+     0.8 min  46_frame_capture
+     0.3 min  47_play_calls
+     0.2 min  53_tag_model
+     0.1 min  46a_frame_archive
+     0.0 min  46a_frame_archive
+     0.0 min  89_cleanup
+     0.0 min  55d_defensive_roles
+     0.0 min  55c_play_review
+     0.0 min  54_tracking_insights
+     0.0 min  50_player_tracking
+     0.0 min  51_court_mapping
+     0.0 min  90_model_versions

@@ -1,8 +1,12 @@
 defense_team,defender,approx_ft_off_man_ball side,approx_ft_off_man_on ball,approx_ft_off_man_weak side,frames_ball side,frames_on ball,frames_weak side,clips,tendency
 Carroll (WI) Pioneers,Dennis Estepp,,6.4,,,3.0,,1,
-Carroll (WI) Pioneers,Greg Smith;Jr.,13.0,,,3.0,,,1,
-Carroll (WI) Pioneers,Jimmy Tarjan,,18.4,4.8,,6.0,4.0,1,stays attached
-Carroll (WI) Pioneers,Michael McNabb,5.9,7.3,,1.0,2.0,,1,
-Carroll (WI) Pioneers,Peyton McKenna,8.3,11.3,12.6,9.0,9.0,4.0,1,helps / sags off
-Carroll (WI) Pioneers,unnamed defense,7.5,8.7,7.6,131.0,128.0,87.0,3,in between
-UW-Whitewater,unnamed defense,9.6,8.7,8.3,151.0,77.0,50.0,3,in between
+Carroll (WI) Pioneers,Greg Smith;Jr.,4.4,,,3.0,,,1,
+Carroll (WI) Pioneers,Jimmy Tarjan,7.2,11.5,5.6,8.0,9.0,15.0,2,stays attached
+Carroll (WI) Pioneers,Michael McNabb,6.1,5.9,6.5,4.0,3.0,2.0,1,stays attached
+Carroll (WI) Pioneers,Peyton McKenna,7.3,11.1,10.7,14.0,8.0,2.0,1,in between
+Carroll (WI) Pioneers,unnamed defense,7.5,8.1,10.6,239.0,150.0,240.0,5,in between
+UW-Whitewater,Collin Madson,7.0,8.8,,5.0,2.0,,2,
+UW-Whitewater,Kelton Mcewen,25.1,,,6.0,,,1,
+UW-Whitewater,Rashad Rogers,10.3,,,2.0,,,1,
+UW-Whitewater,Tyshawn Teague-Johnson,6.4,10.3,3.5,1.0,3.0,1.0,3,stays attached
+UW-Whitewater,unnamed defense,10.3,10.0,8.6,426.0,181.0,280.0,6,in between

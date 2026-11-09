@@ -2258,6 +2258,7 @@ def player_tracking(pc):
                   f"left out -- " + "; ".join(f"{g} ({n} clips)" for g, n in _left), flush=True)
     # CONFIRMED CHANGE (requested: move the player-number tracking on to one new game -- PLAYER_TRACKING_GAMES, frame capture
     # cell): only those games are tracked; every other game keeps its earlier results (_trk_carry_previous)
+    _todo_all = list(todo)                       # (every export game's clips -- for the player-model backfill below)
     _ptl = globals().get("player_tracking_listed")
     if _ptl is not None and todo and _ptl(pc.at[todo[0], "game_date"], pc.at[todo[0], "game_code"]) is not None:
         _left_g = sorted({f"{pc.at[i, 'game_date']} {pc.at[i, 'game_code']}" for i in todo
@@ -2267,6 +2268,41 @@ def player_tracking(pc):
               + (f" -- {len(_left_g)} other game(s) keep their earlier tracking" if _left_g else "")
               + ("" if todo else " -- none of its clips have frames yet (Frame capture exports it)"), flush=True)
     todo = _trk_starters_first(pc, todo)
+    # CONFIRMED CHANGE (requested: "every film and player coach tracks should be used from all time"). A game whose coach
+    # checks aren't in the player-model bank yet (player_model_bank.csv) has ONLY its checked clips tracked once more --
+    # their saved detections are reused, so it's quick -- and their checks join the bank. Once a game is in, it's never
+    # backfilled again (by clip, up to TRACK_BANK_BACKFILL_MAX a run). TRACK_BANK_BACKFILL = False turns it off.
+    if globals().get("TRACK_BANK_BACKFILL", True) and TRACK_USE_COACH_CHECKS:
+        try:
+            try:
+                _in_bank = {_trk_ck(k_) for k_ in pd.read_csv(os.path.join(TRACK_DIR, "player_model_bank.csv"),
+                                                               usecols=["clip_key"], dtype=str)["clip_key"]}
+            except Exception:
+                _in_bank = set()
+            _bf_done_p = os.path.join(TRACK_DIR, "player_model_backfilled.txt")
+            try:
+                with open(_bf_done_p, encoding="utf-8") as fh:
+                    _in_bank |= {ln.strip() for ln in fh if ln.strip()}     # (tried once already, even if no track matched)
+            except Exception:
+                pass
+            _chk = {_trk_ck(c.get("clip_key")) for c in coach_checks_all()[0]} if "coach_checks_all" in globals() else set()
+            _tset = set(todo)
+            _bf = [i for i in _todo_all if i not in _tset
+                   and _trk_ck(_trk_clip_key(pc.loc[i])) not in _in_bank
+                   and _trk_ck(_trk_clip_key(pc.loc[i])) in _chk]
+            _bf = _bf[:int(globals().get("TRACK_BANK_BACKFILL_MAX", 150))]
+            if _bf:
+                _bfg = sorted({f"{pc.at[i, 'game_date']} {pc.at[i, 'game_code']}" for i in _bf})
+                print(f"  [tracking] player-model backfill: {len(_bf)} checked clip(s) from {len(_bfg)} earlier game(s) tracked "
+                      f"once more so their checks train the models -- " + "; ".join(_bfg), flush=True)
+                todo = todo + _bf
+                try:
+                    with open(_bf_done_p, "a", encoding="utf-8") as fh:
+                        fh.write("".join(_trk_ck(_trk_clip_key(pc.loc[i])) + "\n" for i in _bf))
+                except Exception:
+                    pass
+        except Exception as _bfe:
+            print(f"  [tracking] player-model backfill skipped ({type(_bfe).__name__}: {_bfe})", flush=True)
     if not todo:
         return None, pd.DataFrame(), []
     print(f"  [tracking] step 1: player and ball detections for {len(todo)} clip(s) "
@@ -3285,8 +3321,29 @@ def player_tracking(pc):
                     _fcache[ik] = _trk_pm_feats(clips[i_], k_, _tm_cache[i_], float(clips[i_].get("fps", _fps)))
             return _fcache[ik]
         _lk = [ik for ik in _lab if clips[ik[0]]["tracks"][ik[1]]]
-        _yl = np.array([_lab[ik] for ik in _lk], int)
+        # CONFIRMED CHANGE (requested: "every film and player coach tracks should be used from all time to build out better
+        # models"). Each checked track's numbers are kept in TRACK_DIR/player_model_bank.csv, game by game; a clip tracked
+        # again replaces its own rows. The model learns from EVERY game's checks ever saved, not only this run's clips.
+        _bank_p = os.path.join(TRACK_DIR, "player_model_bank.csv")
+        _cur = pd.DataFrame([dict(zip(_TRK_PM_FEATS, _pm_feat(ik)), game=str(game_of[ik[0]]),
+                                  clip_key=str(_trk_clip_key(pc.loc[ik[0]])), track=int(ik[1]),
+                                  not_a_player=int(_lab[ik]), kind=str(coach_kind.get(ik, "") or ""))
+                             for ik in _lk], columns=_TRK_PM_FEATS + ["game", "clip_key", "track", "not_a_player", "kind"])
+        try:
+            _old = pd.read_csv(_bank_p, dtype={"game": str, "clip_key": str, "kind": str})
+            _old = _old[~_old["clip_key"].isin({str(_trk_clip_key(pc.loc[i_])) for i_ in todo})]
+        except Exception:
+            _old = pd.DataFrame(columns=_cur.columns)
+        _B = pd.concat([_cur, _old], ignore_index=True)
+        try:
+            _B.to_csv(_bank_p, index=False)
+        except Exception as _be:
+            print(f"  [tracking]   player model bank not saved ({type(_be).__name__}: {_be})", flush=True)
+        _B["kind"] = _B["kind"].fillna("")
+        _yl = _B["not_a_player"].astype(int).to_numpy()
         _n1, _n0 = int(_yl.sum()), int(len(_yl) - _yl.sum())
+        print(f"  [tracking]   player model bank: {len(_B)} checked track(s) from {_B['game'].nunique()} game(s) "
+              f"({len(_cur)} from this run)", flush=True)
         _min_each = int(globals().get("TRACK_PLAYER_MODEL_MIN_EACH", 15))
         if _n1 < _min_each or _n0 < _min_each:
             print(f"  [tracking]   player / not-a-player model: {_n1} not-a-player and {_n0} player label(s) from the coach checks "
@@ -3296,8 +3353,8 @@ def player_tracking(pc):
             from sklearn.linear_model import LogisticRegression
             from sklearn.pipeline import make_pipeline
             from sklearn.preprocessing import StandardScaler
-            _Xl = np.array([_pm_feat(ik) for ik in _lk], float)
-            _gl = np.array([game_of[ik[0]] for ik in _lk])
+            _Xl = _B[_TRK_PM_FEATS].apply(pd.to_numeric, errors="coerce").to_numpy(float)
+            _gl = _B["game"].astype(str).to_numpy()
             _mk = lambda: make_pipeline(SimpleImputer(strategy="median", keep_empty_features=True), StandardScaler(),
                                         LogisticRegression(C=0.5, class_weight="balanced", max_iter=3000))
             # held-out test: each GAME predicted by a model that never saw it (one game only: 5 groups of clips)
@@ -3305,8 +3362,7 @@ def player_tracking(pc):
                 _folds = [(_gl != g_, _gl == g_) for g_ in sorted(set(_gl))]
                 _how = "each game predicted by a model trained on the other games"
             else:
-                _ci = np.array([ik[0] for ik in _lk])
-                _grp = np.array([hash(int(c)) % 5 for c in _ci])
+                _grp = np.array([hash(str(c)) % 5 for c in _B["clip_key"]])
                 _folds = [(_grp != q, _grp == q) for q in range(5)]
                 _how = "5 groups of clips, each predicted by a model trained on the rest"
             _oof = np.full(len(_yl), np.nan)
@@ -3331,9 +3387,9 @@ def player_tracking(pc):
             # requested: how each kind of non-player is caught at the cutoff (held-out scores)
             if _best:
                 _kc = {}
-                for n_, ik in enumerate(_lk):
+                for n_ in range(len(_yl)):
                     if _yl[n_] == 1 and np.isfinite(_oof[n_]):
-                        kd = coach_kind.get(ik, "not a player (kind not given)")
+                        kd = _B["kind"].iat[n_] or "not a player (kind not given)"
                         _kc.setdefault(kd, [0, 0])
                         _kc[kd][1] += 1
                         _kc[kd][0] += int(_oof[n_] >= _best[0])
@@ -3351,9 +3407,7 @@ def player_tracking(pc):
                   + (" -- PASSED, used this run" if _passed else " -- not passed, NOT used (it keeps learning from new checks)"),
                   flush=True)
             try:
-                pd.DataFrame([dict(zip(_TRK_PM_FEATS, _Xl[n_]), clip_key=_trk_clip_key(pc.loc[ik[0]]), track=ik[1],
-                                   not_a_player=int(_yl[n_]), held_out_score=_oof[n_]) for n_, ik in enumerate(_lk)]
-                             ).to_csv(os.path.join(TRACK_DIR, "player_model_labels.csv"), index=False)
+                _B.assign(held_out_score=_oof).to_csv(os.path.join(TRACK_DIR, "player_model_labels.csv"), index=False)
             except Exception:
                 pass
             if _passed or _pm_mode is True:
@@ -6201,7 +6255,7 @@ def _pass_tables(pc):
 
 
 try:
-    pass_counts, pass_summary = _pass_tables(play_calls)
+    pass_counts, pass_summary = _pass_tables(season_play_calls(play_calls) if "season_play_calls" in globals() else play_calls)
     for _nm, _df in (("uww_pass_counts", pass_counts), ("uww_pass_summary", pass_summary)):
         _df.to_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, f"{_nm}.csv"), index=False)
     _nt = int(pass_counts["passes_tracked"].notna().sum()) if len(pass_counts) else 0
