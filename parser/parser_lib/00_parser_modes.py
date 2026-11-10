@@ -78,6 +78,12 @@ PARSER_MODES = {
         "quiet": True,                                                      # one "done" line per section (see run_parser)
     },
 }
+# CONFIRMED CHANGE (requested: "a parser_analysis.ipynb notebook that allows me to choose a season and a team to analyze ...
+# the same as the scouting briefs, but not including any of the UW-Whitewater information"). Same sections as the brief;
+# the chosen team is scouted as if it were the next game, everything is written to ../data_analysis/<team>/ (the app's
+# data folder is never touched), and the brief leaves out every UW-Whitewater section.
+PARSER_MODES["analysis"] = dict(PARSER_MODES["brief"], label="Team analysis brief (no UW-Whitewater sections) -- "
+                                                              "written to data_analysis, the app's data is not touched")
 
 
 def _pm_num(name):
@@ -390,6 +396,55 @@ _PM_TRACKING_ONLY = {"48_jersey_number_recognizer", "49_jersey_number_reader_tes
                      "50c_outfit_check", "50d_reid_check", "88_tracking_review_export"}
 
 
+def _pm_analysis_setup(G, o):
+    """parser_analysis: the chosen team becomes the "next game" (an EXTRA_GAMES scrimmage dated after the run's date, so
+    every game it has played so far counts), and the run writes to ../data_analysis/<team>/ -- a copy of the app's data
+    folder (without the film / tracking pictures) so the app's own files are never changed."""
+    import shutil as _sh
+    team = str(o.get("TEAM") or "").strip()
+    if not team:
+        raise ValueError("parser_analysis: set TEAM in its first cell (the team's name the way FastScout writes it)")
+    season = str(o.get("SEASON") or "").strip()
+    cur = str(G.get("SEASON") or "").strip()
+    if season and cur and season.lower() != "auto" and cur.lower() != "auto" and season != cur:
+        raise ValueError(f"parser_analysis: SEASON {season!r} -- only the parser's current season ({cur}) can be analyzed "
+                         f"so far (last season's FastScout files were moved to the inputs_<season> folder by the season switch)")
+    ref = str(o.get("REFERENCE_DATE") or "").strip() or _pm_pd.Timestamp.now().strftime("%Y-%m-%d")
+    G["REFERENCE_DATE"] = ref
+    nxt = (_pm_pd.Timestamp(ref) + _pm_pd.Timedelta(days=1)).strftime("%b %d, %Y")
+    g = {"opponent": team, "location": "Neutral", "type": "scrimmage", "real_date": nxt}
+    if o.get("TEAM_URL"):
+        g["opponent_url"] = o["TEAM_URL"]
+    G["EXTRA_GAMES"] = [g]
+    G["ANALYSIS_TEAM"] = team
+    src = G.get("OUTPUT_DIR") or "../data"            # (parser_nb's own data folder, set in its first cell)
+    slug = _pm_re.sub(r"[^A-Za-z0-9]+", "_", team).strip("_")
+    # CONFIRMED CHANGE (requested: "Why is it creating a full folder structure here" -> off OneDrive, copy less): the copy
+    # goes to ANALYSIS_DIR (default F:\Backups\uwwmensbball_analysis, else data_analysis next to the data folder) and holds
+    # only what the run reads: the data folder's own files (the last run's tables it reuses) plus the coaches' saved
+    # answers, logos, player photos and brand files -- no film, tracking pictures, reviews or briefs.
+    _root = str(o.get("ANALYSIS_DIR") or G.get("ANALYSIS_DIR") or r"F:\Backups\uwwmensbball_analysis")
+    if not _pm_os.path.isdir(_pm_os.path.splitdrive(_root)[0] + "\\" if _pm_os.path.splitdrive(_root)[0] else _root):
+        _root = _pm_os.path.join(_pm_os.path.dirname(_pm_os.path.abspath(src)), "data_analysis")
+    dst = _pm_os.path.join(_root, slug)
+    if _pm_os.path.abspath(src) != _pm_os.path.abspath(dst):
+        _keep_dirs = {"play_review_saves", "logo", "player_images", "brand", "uww_player_pictures", "staff_input_templates",
+                      "staff_inputs"}
+        _pm_os.makedirs(dst, exist_ok=True)
+        for n_ in _pm_os.listdir(src):
+            p_ = _pm_os.path.join(src, n_)
+            try:
+                if _pm_os.path.isfile(p_):
+                    _sh.copy2(p_, _pm_os.path.join(dst, n_))
+                elif n_ in _keep_dirs:
+                    _sh.copytree(p_, _pm_os.path.join(dst, n_), dirs_exist_ok=True)
+            except Exception as _ce:
+                print(f"  (analysis copy: {n_} not copied -- {type(_ce).__name__}: {_ce})", flush=True)
+    G["OUTPUT_DIR"] = G["APP_DATA_DIR"] = dst
+    print(f"ANALYSIS: {team} -- every game they've played before {ref}; written to {dst} (the app's data is not touched)",
+          flush=True)
+
+
 def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb", quiet=None, fresh=False, options=None):
     """Run parser_nb.ipynb's cells for one job: "models", "tagging" or "brief" (see the top of this file).
     start_at = a section name ("50_player_tracking") to continue from after a stop -- the sections above it are not run
@@ -406,6 +461,7 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
         nb = _pm_json.load(fh)
     print(f"=== {mode.upper()}: {plan['label']} ===", flush=True)
     G["_PM_OPTIONS"] = dict(options or {})
+    G["ANALYSIS_MODE"] = (mode == "analysis")
     if G["_PM_OPTIONS"]:
         _o = G["_PM_OPTIONS"]
         print("Options: " + ("models NOT retrained (saved tag model + jersey reader used as they are)"
@@ -528,6 +584,8 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
                             for _k_ in ("REFERENCE_DATE", "EXTRA_GAMES"):
                                 if _o_.get(_k_) is not None:
                                     G[_k_] = _o_[_k_]
+                            if G.get("ANALYSIS_MODE"):
+                                _pm_analysis_setup(G, _o_)
                     G["_pm_depth"] = depth + 1
                     _q, _out = G.get("_pm_quiet") or (False, None)
                     _t0 = _pm_time.time()

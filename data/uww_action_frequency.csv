@@ -1,4 +1,23 @@
 scouted_opponent,side,team,action,possessions,pct,tagged_possessions,games,order
+Ripon Red Hawks,Opponent,Ripon Red Hawks,No action tagged,24,42.1,57,1,0
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Ball screen (any),14,24.6,57,1,1
+Ripon Red Hawks,Opponent,Ripon Red Hawks,"DHO / handoff (incl. Zoom, Pistol, Give)",6,10.5,57,1,2
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Swing / ball reversal,2,3.5,57,1,3
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Pinch post (throw / pass to the pinch),0,0.0,57,1,4
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Down screen,12,21.1,57,1,5
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Isolation,4,7.0,57,1,6
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Post entry / throw to the 5,1,1.8,57,1,7
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Split action (incl. split scissors),0,0.0,57,1,8
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Over,1,1.8,57,1,9
+Ripon Red Hawks,Opponent,Ripon Red Hawks,"Cuts (backdoor, slot, shallow, flash)",0,0.0,57,1,10
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Flare,9,15.8,57,1,11
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Stagger,8,14.0,57,1,12
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Cross / back screen,0,0.0,57,1,13
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Scissors,0,0.0,57,1,14
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Pass to corner,0,0.0,57,1,15
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Ghost,0,0.0,57,1,16
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Rifle,0,0.0,57,1,17
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Wide pin,0,0.0,57,1,18
 Ripon Red Hawks,UWW,UW-Whitewater,No action tagged,0,0.0,8,1,0
 Ripon Red Hawks,UWW,UW-Whitewater,Ball screen (any),6,75.0,8,1,1
 Ripon Red Hawks,UWW,UW-Whitewater,"DHO / handoff (incl. Zoom, Pistol, Give)",0,0.0,8,1,2

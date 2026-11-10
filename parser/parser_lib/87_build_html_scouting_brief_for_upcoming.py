@@ -1298,6 +1298,7 @@ table.mb-tbl { width: 100%; table-layout: fixed; }
 table.ob-tbl { width: 100%; border-collapse: collapse; font-size: 0.74rem; table-layout: fixed; }
 table.ob-tbl col.c1 { width: 15%; }
 table.ob-tbl th, table.ob-tbl td { padding: 4px 6px; text-align: right; white-space: normal; overflow-wrap: anywhere; }
+table.ob-tbl .ob-who { margin-top: 3px; font-size: 0.66rem; line-height: 1.25; color: #555; overflow-wrap: normal; }
 table.ob-tbl th { color: #666; font-weight: 600; }
 table.ob-tbl th.ob-b1 { border-top: 3px solid var(--warhawk-purple); background: #f4f1f9; color: var(--warhawk-purple);
                         font-size: 0.66rem; letter-spacing: 0.6px; text-align: center; }
@@ -1806,7 +1807,17 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # column (see capture()) with the exact same code that renders it full width.
     _sinks = [parts]
 
+    # CONFIRMED CHANGE (requested: parser_analysis -- "the same as the scouting briefs, but not including any of the
+    # UW-Whitewater information"). ANALYSIS_MODE: the banner and the matchup sections before the opponent's part are left out
+    # (except the late-game foul list), the opponent's part is kept minus the sections about playing them, and everything
+    # from the UW-WHITEWATER divider to the footer is left out.
+    _an = {"on": bool(globals().get("ANALYSIS_MODE")), "pre": True, "skip": bool(globals().get("ANALYSIS_MODE")), "ours": False}
+    _AN_DROP = re.compile(r"KEYS TO VICTORY|WHEN WE'VE PLAYED|WHAT TO PLAY|TWO-FOR-ONE|NEEDS TAGGING|SELF-SCOUT|WHITEWATER|"
+                          r"\bOUR\b|\bVS\.? UW", re.I)
+
     def add(html_text):
+        if _an["on"] and (_an["skip"] or _an["ours"]):
+            return
         _sinks[-1].append(html_text)
 
     def capture(fn, *args, **kwargs):
@@ -1904,6 +1915,14 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         add('<div class="pb"></div>')
 
     def divider(title, sub=""):
+        if _an["on"]:
+            if "WHITEWATER" in str(title).upper():
+                _an["ours"] = True                    # our own part of the brief: left out to the footer
+                return
+            if _an["pre"] and "opponent" in str(sub).lower():
+                _an["pre"], _an["skip"] = False, False
+                title, sub = f"TEAM ANALYSIS: {title}", (f"{globals().get('SEASON_NOW') or ''} -- every game before "
+                                                         f"{globals().get('REFERENCE_DATE') or 'today'}")
         add(f'<div class="divider"><div class="dt">{title}</div>'
             + (f'<div class="ds">{sub}</div>' if sub else "") + "</div>")
 
@@ -1933,6 +1952,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         return f'<div class="sect"><div class="t">{title}</div></div>'
 
     def section(title):
+        if _an["on"] and not _an["ours"]:
+            _an["skip"] = (not re.search(r"LATE-GAME FOUL", str(title), re.I)) if _an["pre"] else bool(_AN_DROP.search(str(title)))
         add(section_html(title))
 
     # ---- banner (same markup and values as render_upcoming_game) ---------------------------
@@ -5027,6 +5048,14 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 nm = re.sub(rf"^\s*{_sit}\s+", "", nm, flags=re.I) or nm
             return _sb_esc(nm) + tag
 
+        # CONFIRMED CHANGE (requested: "All of the offensive tables within briefs needs to also include the 5 person lineup
+        # that runs it most and any players that are best at scoring off of it"): under each row, the five that runs it most
+        # (possessions, PPP) and its top scorers (points, scoring possessions) -- top_lineup / top_scorers from 47.
+        def _who(r):
+            lu, sc = _sb_clean(r.get("top_lineup")), _sb_clean(r.get("top_scorers"))
+            bits = ([f"<b>Runs it:</b> {_sb_esc(lu)}"] if lu else []) + ([f"<b>Scores:</b> {_sb_esc(sc)}"] if sc else [])
+            return ('<div class="mini ob-who">' + "<br>".join(bits) + "</div>") if bits else ""
+
         # CONFIRMED CHANGE (requested: "the poss % should not be on the 'All' rows but on the other rows"): a formation's
         # % (next to its name) is its share of its situation; a play call's % is its share of its formation.
         _sit_n, _form_n = 0, 0
@@ -5041,7 +5070,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 add(f'<tr class="ob-sit"><td class="ob-vs" rowspan="{_span.get(_ri, 1)}"><div>{_c(r.get("label"))}</div></td>'
                     f'<td class="l n" colspan="2">All</td>'
                     f'<td class="t1">{n}</td>'
-                    + _pt + '<td class="t1 l w"></td>' + _cov_cells(None) + _green(r, True) + "</tr>")  # "All" rows: no actions (requested)
+                    + _pt + f'<td class="t1 l w">{_who(r)}</td>' + _cov_cells(None) + _green(r, True) + "</tr>")  # "All" rows: no actions (requested) -- lineup / scorers only
             elif lvl == "formation" and _ri in _solo.values():
                 _form_n = n
                 continue
@@ -5052,7 +5081,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     _lab = "No Formation"  # CONFIRMED CHANGE (requested: "(none tagged)" -> "No Formation")
                 add(f'<tr class="ob-form"><td class="l n ob-fm" rowspan="{_span.get(_ri, 1)}">{_lab}{_pct(n, _sit_n)}</td>'
                     f'<td class="l ob-pcall ob-all">All</td><td class="t1">{n}</td>' + _pt
-                    + '<td class="t1 l w"></td>' + _cov_cells(None) + _green(r, True) + "</tr>")  # "All" row: no actions (requested)
+                    + f'<td class="t1 l w">{_who(r)}</td>' + _cov_cells(None) + _green(r, True) + "</tr>")  # "All" row: no actions (requested) -- lineup / scorers only
             elif lvl == "play_call":
                 _fr = ob.loc[_solo[_ri]] if _ri in _solo else None
                 _fcell = ""
@@ -5062,7 +5091,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     _fcell = f'<td class="l n ob-fm" rowspan="{_span.get(_ri, 1)}">{_fl}{_pct(_num(_fr.get("possessions")), _sit_n)}</td>'
                 add(f'<tr class="{"ob-form" if _fr is not None else "ob-pc"}">{_fcell}<td class="l ob-pcall" rowspan="{_span.get(_ri, 1)}">{_pc_label(r)}</td>'
                     f'<td class="t1">{n}{"" if _fr is not None else _pct(n, _form_n)}</td>' + _pt
-                    + f'<td class="t1 l w">{_c(r.get("actions"))}</td>'
+                    + f'<td class="t1 l w">{_c(r.get("actions"))}{_who(r)}</td>'
                     + _cov_cells(_ri) + (_green(_fr, True) if _fr is not None else _green(r, False)) + "</tr>")
             else:   # coverage line under a play call
                 _off = str(r.get("cov_kind") or "Ball screen") == "Off-ball screen"
@@ -5834,6 +5863,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # application") -- the sample-size warnings (uww_sample_size_warnings) show in the app only.
 
     # ---- footer ---------------------------------------------------------------------------
+    _an["skip"] = _an["ours"] = False                 # (parser_analysis: the footer is kept)
     try:
         generated = datetime.now().strftime("%B %-d, %Y at %-I:%M %p")
     except ValueError:
@@ -5936,8 +5966,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     return (
         '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
-        f"<title>{_sb_esc(_SB_UWW)} vs {_sb_esc(short)} &mdash; scouting brief</title>\n"
-        f"<style>{_SB_CSS}</style>\n</head>\n<body>\n<div class=\"page\">\n{body}\n</div>\n</body>\n</html>\n"
+        + (f"<title>{_sb_esc(short)} &mdash; team analysis</title>\n" if _an["on"] else
+           f"<title>{_sb_esc(_SB_UWW)} vs {_sb_esc(short)} &mdash; scouting brief</title>\n")
+        + f"<style>{_SB_CSS}</style>\n</head>\n<body>\n<div class=\"page\">\n{body}\n</div>\n</body>\n</html>\n"
     )
 
 

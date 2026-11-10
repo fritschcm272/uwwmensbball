@@ -1,4 +1,4 @@
 opponent,clock_situation,freq_pct,ppp,fg_pct,note,is_sample
-Ripon Red Hawks,Early clock (0-9 sec used),22,1.18,54,Mostly transition and early ball screens,True
-Ripon Red Hawks,Organized offense (10-19 sec used),55,0.94,41,"Their half-court sets, their best player runs off screens here",True
-Ripon Red Hawks,Late clock (20+ sec used),23,0.71,33,their best player isolation when the set breaks down,True
+Ripon Red Hawks,Early clock (0-9 sec used),19,0.8,42.9,10 tagged possessions -- most often Booty Screen (Seth Bunders),False
+Ripon Red Hawks,Organized offense (10-19 sec used),33,0.83,45.5,18 tagged possessions -- most often Down Screen (Jackson Flowers),False
+Ripon Red Hawks,Late clock (20+ sec used),48,0.62,30.0,26 tagged possessions -- most often Down Screen (Seth Bunders),False

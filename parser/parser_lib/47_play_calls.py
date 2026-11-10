@@ -3931,7 +3931,7 @@ def _bank_pbp_raw(b):
         box = [h for h in hrefs if "/boxscore" in h]
         if not box:
             continue
-        if any(b["gid"] in h.lower() for h in hrefs):
+        if b.get("gid") and any(b["gid"] in h.lower() for h in hrefs):     # (no ID -> match by date only)
             game_url = _resolve_team_link(box[0])
             break
         try:
@@ -4126,6 +4126,76 @@ try:
     play_calls = _syn_attach_lineups(play_calls)
 except Exception as _sle:
     print(f"  [synergy] lineups not worked out ({type(_sle).__name__}: {_sle})", flush=True)
+
+
+def _export_pbp_lineups(df):
+    """CONFIRMED CHANGE (requested: "I want it to be able to get the 5 man lineups that are on the court without the full
+    video export ... from the play-by-play data from fastscout"). A coach-tagged Synergy Export.csv merged from the backup
+    folder (e.g. Calvin @ UW-Stout) whose clips still have no fives after Synergy's lineups (_syn_attach_lineups) gets them
+    from FastScout's play-by-play: the game is found on a team's FastScout page by its date, its play-by-play is read (and
+    saved, so it's read once), both fives are worked out at every substitution, and each clip takes the fives at its own half
+    and game clock (Export.csv's Pd. / Clock). This season's games only (last season's come with their play-by-play)."""
+    if "_pl_export_games" not in globals() or df is None or df.empty:
+        return df
+    try:
+        keys = _pl_export_games()
+    except Exception:
+        return df
+    start = pd.Timestamp(int(globals().get("SEASON_START_YEAR") or 2000), 8, 1)
+    opp_words = set()
+    _us = globals().get("uww_team_schedule")
+    if isinstance(_us, pd.DataFrame) and "opponent" in _us.columns:
+        for o_ in _us["opponent"].dropna():
+            opp_words |= _bank_words_t(o_)
+    gd_all = pd.to_datetime(df["game_date"], errors="coerce")
+    for key in sorted(keys):
+        code, _, d_ = str(key).partition("|")
+        d0 = pd.to_datetime(d_, errors="coerce")
+        if pd.isna(d0) or d0 < start:
+            continue
+        m = (gd_all.dt.normalize() == d0.normalize()) & (df["game_code"].astype(str) == code)
+        need = m & df["offense_lineup"].isna()
+        if not need.any() or "WWW" in code.upper():
+            continue
+        teams = [t for t in pd.concat([df.loc[m, "offense_team"], df.loc[m, "defense_team"]]).dropna().astype(str).unique() if t.strip()]
+        if len(teams) < 2:
+            teams = [t for t in df.loc[m, "Team"].dropna().astype(str).unique()] if "Team" in df.columns else teams
+        if not teams:
+            continue
+        t_for = next((t for t in teams if _bank_words_t(t) & opp_words), teams[0])
+        b = {"gid": "", "date": d0.normalize(), "label": " vs ".join(teams[:2]), "for": t_for}
+        try:
+            raw, how = _bank_pbp_raw(b)
+        except Exception as e:
+            raw, how = None, f"{type(e).__name__}: {e}"
+        if raw is None:
+            print(f"  [export lineups] {d0.date()} {code}: no FastScout play-by-play yet -- {how}", flush=True)
+            continue
+        try:
+            lu, tf_, to_ = _bank_lineups(raw, b)
+        except Exception as e:
+            print(f"  [export lineups] {d0.date()} {code}: play-by-play not read ({type(e).__name__}: {e})", flush=True)
+            continue
+        fw = _bank_words_t(tf_)
+        n_ok = 0
+        for i in df.index[need]:
+            r = df.loc[i]
+            off_is_for = bool(fw & _bank_words_t(r.get("offense_team")))
+            f_for = _bank_five_at(lu, tf_, r.get("period"), r.get("time_remaining_seconds"))
+            f_oth = _bank_five_at(lu, to_, r.get("period"), r.get("time_remaining_seconds"))
+            if f_for and f_oth:
+                df.at[i, "offense_lineup"] = f_for if off_is_for else f_oth
+                df.at[i, "defense_lineup"] = f_oth if off_is_for else f_for
+                n_ok += 1
+        print(f"  [export lineups] {d0.date()} {code}: FastScout play-by-play {how}; both fives for {n_ok} of {int(need.sum())} "
+              f"clip(s)", flush=True)
+    return df
+
+
+try:
+    play_calls = _export_pbp_lineups(play_calls)
+except Exception as _ele:
+    print(f"  [export lineups] skipped ({type(_ele).__name__}: {_ele})", flush=True)
 play_calls_other = play_calls[play_calls["side"] == "Other"].reset_index(drop=True)
 play_calls = play_calls[play_calls["side"] != "Other"].reset_index(drop=True)
 
@@ -4144,6 +4214,34 @@ def season_play_calls(df):
     return df[pd.to_datetime(df["game_date"], errors="coerce") >= start].reset_index(drop=True)
 
 
+# CONFIRMED CHANGE (requested: "BLOB #1" and "Blob #1" showed as two play calls -- "Things like this need to be combined on
+# the scouting briefs"). Names that differ only in capitals, spacing or punctuation spacing are one play call: every
+# spelling takes the one used most often (ties: the earliest). Applied to play_call and play_call_detail for every season.
+def _pl_merge_spellings(df, cols=("play_call", "play_call_detail")):
+    n_ch = 0
+    for c in cols:
+        if c not in df.columns:
+            continue
+        v = df[c]
+        ok = v.notna() & (v.astype(str).str.strip() != "")
+        if not ok.any():
+            continue
+        txt = v[ok].astype(str).str.strip().str.replace(r"\s+", " ", regex=True)
+        key = txt.str.lower().str.replace(r"\s*([#/&+-])\s*", r"\1", regex=True)
+        canon = {}
+        for k_, grp in txt.groupby(key, sort=False):
+            vc = grp.value_counts(sort=False)
+            canon[k_] = max(vc.index, key=lambda sp: (vc[sp], -list(vc.index).index(sp)))
+        new_v = key.map(canon)
+        n_ch += int((new_v != v[ok].astype(str)).sum())
+        df.loc[ok, c] = new_v
+    if n_ch:
+        print(f"  Play-call names: {n_ch} clip(s) written the same way as the most-used spelling (e.g. 'Blob #1' = 'BLOB #1')",
+              flush=True)
+    return df
+
+
+play_calls = _pl_merge_spellings(play_calls)
 _pc_all_seasons = play_calls
 play_calls = season_play_calls(play_calls)
 if len(play_calls) != len(_pc_all_seasons):
@@ -5086,6 +5184,38 @@ def _pl_offense_breakdown(pc):
                         "actions": "", "coverage": "", "our_possessions": len(nu),
                         "our_ppp_allowed": round(ppp(nu), 2) if len(nu) and ppp(nu) is not None else None})
         return out, k
+    # CONFIRMED CHANGE (requested: "All of the offensive tables within briefs needs to also include the 5 person lineup that
+    # runs it most and any players that are best at scoring off of it"). On every situation / formation / play-call row:
+    # top_lineup = the five on the floor most often (last names, its possessions and PPP); top_scorers = the players who
+    # score most on it (the Synergy-named finisher on possessions that scored: points, and on how many possessions).
+    _last = lambda nm: str(nm).strip().split()[-1] if str(nm).strip() else ""  # noqa: E731
+    _short_last = lambda nm: (" ".join(str(nm).split()[-2:]) if re.match(r"(?i)^(jr\.?|sr\.?|ii|iii|iv)$",
+                                                                        str(nm).split()[-1]) else _last(nm))  # noqa: E731
+
+    def _top_lineup(g):
+        if "offense_lineup" not in g.columns:
+            return ""
+        lu = g["offense_lineup"].dropna().astype(str)
+        lu = lu[lu.str.count(",") >= 4]
+        if lu.empty:
+            return ""
+        key = lu.map(lambda v: ", ".join(sorted(x.strip() for x in _trk_five(v)) if "_trk_five" in globals()
+                                         else sorted(x.strip() for x in v.split(","))))
+        top = key.value_counts()
+        five, n = top.index[0], int(top.iloc[0])
+        p_ = ppp(g.loc[key[key == five].index])
+        return (", ".join(_short_last(x) for x in five.split(", ")) + f" ({n} poss"
+                + (f", {p_:.2f}" if p_ is not None else "") + ")")
+
+    def _top_scorers(g):
+        if "player" not in g.columns:
+            return ""
+        x = g[(g["_P"] > 0) & g["player"].notna() & ~g["player"].astype(str).str.strip().str.lower().isin(["", "nan", "none"])]
+        if x.empty:
+            return ""
+        agg = x.groupby(x["player"].astype(str).str.strip())["_P"].agg(["sum", "count"]).sort_values(["sum", "count"], ascending=False)
+        return " · ".join(f"{_short_last(nm)} {int(r_['sum'])} pts ({int(r_['count'])})" for nm, r_ in agg.head(3).iterrows())
+
     rows = []
     # CONFIRMED CHANGE (requested: "the opposite of HOW CARROLL (WI) RUNS OFFENSE for how we run offense and how they
     # might defend it"): the same rows for OUR offense (perspective "UWW"); its comparison side is the opponent's own
@@ -5119,7 +5249,8 @@ def _pl_offense_breakdown(pc):
                          "label": sit, "possessions": len(gs), "share_pct": round(100 * len(gs) / n_all),
                          "ppp": round(ppp(gs), 2) if ppp(gs) is not None else None, "play_calls": _calls(gs),
                          "actions": _acts(gs), "coverage": _cov(gs), "our_possessions": len(us), "our_coverage": _ocov(us),
-                         "our_ppp_allowed": round(ppp(us), 2) if len(us) and ppp(us) is not None else None})
+                         "our_ppp_allowed": round(ppp(us), 2) if len(us) and ppp(us) is not None else None,
+                         "top_lineup": _top_lineup(gs), "top_scorers": _top_scorers(gs)})
             # CONFIRMED CHANGE: coverage lines only under formation rows (not the situation total).
             if sit in ("Half court", "BLOB", "SLOB"):
                 for fm, gf in sorted(gs.groupby("_FORM"), key=lambda x: -len(x[1])):
@@ -5132,7 +5263,8 @@ def _pl_offense_breakdown(pc):
                                  "label": fm, "possessions": len(gf), "share_pct": round(100 * len(gf) / n_all),
                                  "ppp": round(ppp(gf), 2) if ppp(gf) is not None else None, "play_calls": _calls(gf),
                                  "actions": _acts(gf), "coverage": _cov(gf), "our_possessions": len(uf), "our_coverage": _ocov(uf),
-                                 "our_ppp_allowed": round(ppp(uf), 2) if len(uf) and ppp(uf) is not None else None})
+                                 "our_ppp_allowed": round(ppp(uf), 2) if len(uf) and ppp(uf) is not None else None,
+                         "top_lineup": _top_lineup(gf), "top_scorers": _top_scorers(gf)})
                     # CONFIRMED CHANGE (requested: "put the Play Call into the table similar to Situation and Formation
                     # so that it makes new rows for each of them. Everything that doesn't have a play call should say
                     # 'No Play Call'"): one row per play call under each formation (most run first, No Play Call
@@ -5153,11 +5285,14 @@ def _pl_offense_breakdown(pc):
                                      "share_pct": round(100 * len(gp) / n_all),
                                      "ppp": round(ppp(gp), 2) if ppp(gp) is not None else None, "play_calls": _cnt,
                                      "actions": _acts(gp), "coverage": _cov(gp), "our_possessions": 0,
-                                     "our_ppp_allowed": None})
+                                     "our_ppp_allowed": None,
+                         "top_lineup": _top_lineup(gp), "top_scorers": _top_scorers(gp)})
                         _cr, k = _cov_rows(gp, uf.iloc[0:0], {"scouted_opponent": opp, "team": team, "perspective": _persp, "situation": sit}, k)
                         rows += _cr
     for r in rows:
         r.setdefault("perspective", "Opponent")
+        r.setdefault("top_lineup", "")
+        r.setdefault("top_scorers", "")
         r["play_calls_n"] = getattr(r.get("play_calls"), "counts", "")
         r["play_calls"] = str(r.get("play_calls") or "")
     return pd.DataFrame(rows)

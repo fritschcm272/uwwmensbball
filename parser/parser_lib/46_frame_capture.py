@@ -2537,8 +2537,11 @@ def _syn_lookup(wanted):
         for t_, d_, o_ in todo:
             tw, ow = _syn_words(t_), _syn_words(o_)
             if not any(w in "whitewater" for w in tw):
-                tid = next((i_ for n_, i_ in {**cache["teams"], **new_teams}.items()
-                            if any(w in re.sub(r"[^a-z]+", "", n_.lower()) for w in tw)), None)
+                # (the name sharing the MOST words wins -- "Stout Blue Devils" must not land on "Bluejays")
+                _sc_t = [(sum(w in re.sub(r"[^a-z]+", "", n_.lower()) for w in tw), i_)
+                         for n_, i_ in {**cache["teams"], **new_teams}.items()]
+                _sc_t = [x for x in _sc_t if x[0] > 0]
+                tid = max(_sc_t)[1] if _sc_t else None
                 if tid and tid not in done:
                     done.add(tid)
                     print(f"  [synergy] {t_}'s {_season_lab} games page: {_games_page(tid)} game(s)", flush=True)
@@ -2565,6 +2568,45 @@ def _syn_lookup(wanted):
             print(f"  [synergy] {k_[1]} {k_[0]} vs {k_[2]}: not in Synergy's game list either", flush=True)
     out.update(found)
     return out
+
+
+def _syn_export_lineups():
+    """CONFIRMED CHANGE (requested: fives for a coach-tagged Export.csv game with no video export, e.g. Calvin @ UW-Stout).
+    Every coach-tagged export merged from the backup folder (this season) is looked up on Synergy's Games pages by its date
+    and two teams, and its offensive / defensive five on every possession is saved (inputs/_bank/<id>_lineups.csv) -- no
+    video is downloaded. Play calls attaches them (_syn_attach_lineups); FastScout's play-by-play is the fallback there."""
+    if not globals().get("SYNERGY_LOOKUP", True) or not (globals().get("synergy_username") and globals().get("synergy_password")):
+        return
+    try:
+        with open(os.path.join(INPUT_DIR, "_synergy_export_games.json"), encoding="utf-8") as fh:
+            keys = json.load(fh) or []
+        plays = pd.read_csv(os.path.join(INPUT_DIR, "uww_plays.csv"), dtype=str, low_memory=False)
+    except Exception:
+        return
+    start = pd.Timestamp(int(globals().get("SEASON_START_YEAR") or uww_season_start_year), 8, 1)
+    have = _syn_ids()["games"]
+    want = []
+    for k_ in keys:
+        code, _, d_ = str(k_).partition("|")
+        d0 = pd.to_datetime(d_, errors="coerce")
+        if pd.isna(d0) or d0 < start or "WWW" in code.upper():
+            continue
+        rows = plays[(plays["Game"].astype(str) == code)
+                     & (pd.to_datetime(plays["Date"], errors="coerce").dt.normalize() == d0.normalize())]
+        teams = [t for t in rows["Team"].dropna().astype(str).value_counts().index[:2]]
+        if len(teams) < 2:
+            continue
+        ds = str(d0.date())
+        if any(g.get("date") == ds and os.path.exists(os.path.join(INPUT_DIR, "_bank", f"{gid}_lineups.csv"))
+               and all(any(w in re.sub(r"[^a-z]+", "", f"{g.get('home')} {g.get('away')}".lower()) for w in _syn_words(t))
+                       for t in teams)
+               for gid, g in have.items()):
+            continue                                        # (already done)
+        want.append((teams[0], ds, teams[1]))
+    if want:
+        print(f"  [synergy] coach-tagged exports with no lineups yet: " + "; ".join(f"{d} {a} vs {b}" for a, d, b in want),
+              flush=True)
+        _syn_lookup(want)
 
 
 def _syn_fill_video_urls():
@@ -2637,6 +2679,10 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
         _syn_fill_video_urls()         # played games FastScout has no video link for yet: found on Synergy instead
     except Exception as _sfe:
         print(f"  [synergy] lookup skipped ({type(_sfe).__name__}: {_sfe})", flush=True)
+    try:
+        _syn_export_lineups()          # coach-tagged exports (no video): both fives from Synergy's game data
+    except Exception as _sxe:
+        print(f"  [synergy] export lineups skipped ({type(_sxe).__name__}: {_sxe})", flush=True)
     # banked games (BANK_GAMES -- a later opponent's game): captured whatever the run's date, like a hand-listed page
     _bank_fill()                       # games exported on an earlier run: their date / teams / "for" (once)
     try:

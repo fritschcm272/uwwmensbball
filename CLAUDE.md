@@ -1,7 +1,32 @@
 # CLAUDE.md — handoff notes for a new chat
 
 Read this first in any new chat about the UW-Whitewater (UWW) men's basketball scouting project.
-Last updated: Nov 2, 2026 (end of day). Owner: Corey.
+Last updated: Nov 9, 2026. Owner: Corey. (Sections 0, 4 and 7 are current; section 8 is the Nov 2 history.)
+
+---
+
+## 0. "Update all scouting briefs" -- what that means (READ THIS)
+
+There are several kinds of scouting brief. When Corey asks to **update all scouting briefs** (or to change something "in the
+briefs"), every one of them must be updated / re-run, and a change to the brief code (`87_build_html_scouting_brief_for_upcoming.py`)
+must work for all of them:
+
+| Brief | Built by | Output |
+|---|---|---|
+| **Upcoming opponent brief** -- our next game. Its *type* is picked automatically (`brief_type_for`, `BRIEF_TYPE = "auto"`): **preseason** (scrimmage / exhibition before the season, on last season's numbers), **first games** (either team has played < `BRIEF_FIRST_GAMES_MIN` = 3 games this season: small samples shown next to last season), **regular** | `parser_brief.ipynb` (`run_parser("brief")`; `REFERENCE_DATE` / `EXTRA_GAMES` in its first cell) | `data\scouting_briefs\scouting_brief_<team>.html` |
+| **No-seniors copy** of a preseason / season-opener brief (last season's seniors removed instead of struck through, projected starters) | same run, automatically whenever a strike plan exists | `..._<team>_no_seniors.html` |
+| **Team analysis** -- ANY team, this season, NO UW-Whitewater sections (no banner/matchup, keys to victory, head-to-head, team-stat comparison, what-to-play, two-for-one, needs-tagging, and nothing after the UW-WHITEWATER divider; the late-game foul list stays) | `parser_analysis.ipynb` (`run_parser("analysis")`; `TEAM`, `SEASON`, `REFERENCE_DATE`, `TEAM_URL`) -- one run per team | `F:\Backups\uwwmensbball_analysis\<Team>\scouting_briefs\scouting_brief_<team>.html` (fallback `data_analysis\<Team>\`; `ANALYSIS_DIR` overrides). Works on a copy of `data\` (table files + saves, logos, photos, brand), so the app's data is never touched |
+
+So "update all briefs" = run `parser_brief` for the upcoming game AND re-run `parser_analysis` for every team that has a
+folder under the analysis directory (list the folders; ask Corey if unsure which teams he still wants). Run
+`parser_models` first if film/tags changed. Analysis mode is `ANALYSIS_MODE` in 87 (`_an` state in `add` / `section` /
+`divider`) and `_pm_analysis_setup` in `00_parser_modes.py`; only the parser's CURRENT season works (past seasons stop
+with a message -- their FastScout files are in `inputs_<season>`).
+
+Brief data rule (11/9): once the season has switched, every table built from tagged clips (play calls, situations, the
+offense breakdowns, screen coverage, ball-screen defense, coach notes, passing) uses **this season's clips only**
+(`season_play_calls` in 47, `BRIEF_THIS_SEASON_ONLY = True`). `play_calls` itself keeps every season for Film Tagging,
+tracking and the models.
 
 ---
 
@@ -21,7 +46,8 @@ C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\
     parser_nb.ipynb           ALL settings + one cell per section (Corey never opens it directly)
     parser_models.ipynb       job: run_parser("models")  -- tracking, court, jersey reader, tag model, checks
     parser_tagging.ipynb      job: run_parser("tagging") -- new Film Tagging batches, fast
-    parser_brief.ipynb        job: run_parser("brief")   -- scouting brief + app data
+    parser_brief.ipynb        job: run_parser("brief")   -- scouting brief + app data (REFERENCE_DATE, EXTRA_GAMES in its first cell)
+    parser_analysis.ipynb     job: run_parser("analysis") -- team analysis brief, no UWW sections (see section 0)
     parser_lib\NN_*.py        the code for each section (run_section("NN_name"))
     parser_lib\00_parser_modes.py   the job definitions (which sections each job runs, quiet mode)
     inputs\                   FastScout pages, rosters, logs (inputs\_logs\<job>_<time>.log)
@@ -39,16 +65,16 @@ F:\Backups\uwwmensbball_tracking\_tracking\ tracking files (TRACK_DIR) -- moved 
 
 ## 2. How to work on his files (important)
 
-- Corey's computer is reached through the `mcp__remote-devices__*` tools. **`device_bash` has NOT been available**, so the workflow is:
-  1. `device_stage_files` (copies the file to `/mnt/user-data/uploads/...`). Wait about 2 seconds before reading it.
-  2. Edit a copy under `/mnt/user-data/outputs/...` (python read-modify-write with exact `old` / `new` and `assert count == 1`), then `python3 -m py_compile`.
-  3. `device_commit_files` with `expectedMtimeMs` from the stage.
-  4. **VERIFY**: `device_list_dir` or re-stage, and check the file **size on the device equals the local size**.
-     **Seen twice:** re-saving a file from the SAME outputs path after editing it again can write the OLD copy (a stale
-     snapshot). Copy the edited file to a NEW path (e.g. `outputs/v2/<name>`) and save from there, then verify. On 11/2 a commit reported "written" but the device kept the old file. That run printed the old output and cost a whole parser run.
-- 30 MB per file commit limit. You can't delete files on the device (no `device_bash`).
+- Corey's computer is reached through the `mcp__remote-devices__*` tools. **`device_bash` IS available now** (since 11/3):
+  his repo is mounted at `$HOME/mnt/uwwmensbball`. Edit files IN PLACE there with a python read-modify-write
+  (`assert s.count(old) == 1`), then check syntax with `python3 -c "import ast; ast.parse(open(f).read())"`
+  (`py_compile` can fail with an I/O error writing `__pycache__` on the mount). Don't stage files just to edit them.
+- `F:\Backups\uwwmensbball_tracking` is connected but often does NOT mount in `device_bash`; use `device_list_dir` /
+  `device_stage_files` for it.
+- Deleting needs Corey's approval (`device_request_delete_permission`); otherwise `mv -n` into a `_to_delete` / `_wrong_season_scrapes` folder.
+- To analyze a run: newest `parser\inputs\_logs\<job>_<YYYYMMDD_HHMMSS>.log`, grep it (see section 6).
 - Write `CONFIRMED CHANGE (requested: "...")` or `CONFIRMED BUG (fixed; ...)` comments at each change, quoting Corey. The whole code base does this; keep it up.
-- Prefer verifying against real data (stage the CSV or log) over guessing.
+- Prefer verifying against real data (the log, the CSVs in `data\`, `inputs\`) over guessing.
 
 ### Standing rules from Corey
 - **"I do not want anything you do to effect the games and clips that are currently in the film tagging section."** Never break or rebuild existing Film Tagging batches or saved answers. Saves on the `saves` branch must still count.
@@ -76,7 +102,105 @@ F:\Backups\uwwmensbball_tracking\_tracking\ tracking files (TRACK_DIR) -- moved 
 
 ---
 
-## 4. Current state (Nov 2, 2026)
+## 4. Current state (Nov 9, 2026)
+
+### Season / opponent
+- **Season 2026-27** (`SEASON = "2026-27"` in parser_nb; the switch moved 2025-26 FastScout files to `parser\inputs_2025-26`
+  and copied last season's tables to `data_2025-26`). `REFERENCE_DATE = "2026-11-8"` in parser_nb AND in parser_brief's first
+  cell -> upcoming game **Ripon Red Hawks, Home, Nov 14 2026**. `EXTRA_GAMES = []`.
+- UWW's first game: **@ Carroll, Nov 7 2026** (Synergy game `6ac6ee2d34559f81e3ab11c7`). FastScout had not posted its score /
+  play-by-play as of 11/9, so the brief has no UWW season stats yet (many sections were made to handle empty tables).
+- Ripon's first game: vs Elmhurst Nov 7 (Synergy `6abc2667a50466db6de75137`) -- exported from Synergy 11/9 for Film Tagging.
+- Ripon's scout report not posted on FastScout yet.
+- `FRAMES_STOP_IGNORE_GAMES = ["2025-11-07 WWW@RIP"]` (last season's Ripon game: Synergy page has only 175 clips).
+
+### parser_models first cell (options passed to run_parser)
+`TRAIN_MODELS`, `DO_PLAYER_TRACKING`, **`PLAYER_TRACKING_TYPE`** ("Starters" = 3 frames of the first clip until all 10
+starters are placed; "5 Clips" / "20 Clips" per run after that), **`PLAYER_TRACKING_GAMES`** (replaces parser_nb's list;
+currently WashU 11/7/25, Beloit@Carroll 11/12/25, `"11_7_26 UW-Whitewater @ Carroll (WI) Pioneers"` -- add each new game
+here), `DO_FILM_TAGGING`, `FILM_TAGGING_SUGGESTIONS`, `ADD_GAMES`, `REOPEN_PLAYS`, `BANK_GAMES` (Platteville vs Thiel
+`6aee1d6c9e04633c52349e89`; La Crosse vs St. John's commented out).
+
+---
+
+## 5. Key settings (parser_nb.ipynb)
+
+| Cell | Settings |
+|---|---|
+| 2 | `EXTRA_GAMES` (upcoming game), `SEASON` |
+| 108 (46 frame capture) | `TRACKING_RESET_ID`, `SYNERGY_EXPORT_DIR = F:\Backups\uwwmensbball_tracking`, `TRACK_DIR = F:\...\_tracking`, `PLAYER_TRACKING_GAMES`, `VISION_TRACK_FPS_TRACKING = 8` |
+| 120 (50 tracking) | `TRACK_*` settings, `TRACK_HOLD_AT_CLIP = 8`, `TRACK_DIR = globals().get("TRACK_DIR") or ...` |
+| 125 | `COURT_*` |
+| 133 (55c play review / tagging) | `PLAY_REVIEW_*`, `PLAY_TAG_*`, `PLAY_TAG_INCLUDE_TRACKING_GAMES = True` |
+| 202 (87 brief) | `ROSTER_LAYOUT = "table"`; optional `BRIEF_FILM_ON_FILE`, `BRIEF_FULL_BENCH_OPENER`, `PROJ_STARTER_POS_PENALTY` |
+
+---
+
+## 6. Useful log lines to grep
+
+- `Film Tagging:` and the indented `YYYY-MM-DD ... clip(s) tagged` lines: batches and progress.
+- `[saves]`: which saved review files were read.
+- `Film on <team>:` (55e): film quality.
+- `Tracking reset (` — **should never appear again**.
+- `Struck through N ... senior(s)` and `Wrote ...scouting_brief_...html` (87).
+- `[roster] <team>: 2026-27 roster -- N returning player(s) updated, M new player(s) added` (21).
+- `[synergy]` (lookup, lineups), `[bank]`, `[export]` (Synergy Editor), `[export lineups]` (FastScout fallback).
+- `This season only (2026-27): N of M clip(s)` (47), `ANALYSIS:` (parser_analysis setup).
+- `[tracking] player model bank:` / `player-model backfill:` / `TRACK_NEW_GAME_PACE =`.
+
+
+---
+
+## 7. What was built Nov 3-9, 2026
+
+**Synergy (no FastScout needed)** -- `46_frame_capture.py`
+- `_syn_lookup` / `_syn_fill_video_urls`: a played game with no video link on FastScout is found on **Synergy's Games page**
+  (`apps.synergysports.com/basketball/games?leagueId=...&seasonId=...&competitionKeys=<league>:ALL&teamAId=<team>&view=1`):
+  our team id from `/api/users/getme`, season id from the seasons list, opponent team ids from UWW's games. Cache:
+  `inputs\_synergy_ids.json`. `SYNERGY_LOOKUP = False` turns it off. Nothing is hard-coded (Corey: don't hard-code games).
+- Every looked-up / banked game saves **both fives on every possession** from Synergy's `api/games/<id>/events`
+  (`offensiveLineup` / `defensiveLineup`) to `inputs\_bank\<id>_lineups.csv`; starters = first possession's fives.
+  47 attaches them (`_syn_attach_lineups`, matched by Synergy description, else half + clock + team).
+- **Coach-tagged Export.csv games with no video** (e.g. `F:\...\STOUT\Export.csv` = Calvin @ UW-Stout 11/7/26): merged into
+  `uww_plays.csv`; `_syn_export_lineups` gets their fives from Synergy; FastScout play-by-play fallback in 47
+  (`_export_pbp_lineups`). They count for an opponent's brief when that team is upcoming.
+- Banked games (`BANK_GAMES`, ID only): date / label / "for" looked up; Synergy starters + lineups; FastScout pbp fallback.
+- Synergy Editor export box close (`_sst_close_export_box`) and cache clear (`_sst_clear_cache`, `SYNERGY_CACHE_DIR`) were
+  still NOT confirmed working on 11/9: the close now searches inside the Editor window and dumps
+  `inputs\_synergy_export_done_window.txt` on failure; the cache step prints Synergy folder sizes. Check after the next export.
+
+**Season switch to 2026-27** -- 02 now switches FastScout's season selector when a team page opens on the wrong season
+(`season=26` asked, `25` served); `_extra_find_team_url` forces the current season on links from old schedule files.
+Bad wrong-season files went to `inputs_2025-26\_wrong_season_scrapes`.
+
+**Player Number Tracking**
+- Starters check: `PLAY_REVIEW_STARTERS` now defaults True (it was off while tracking waited on it -> stuck at clip 2);
+  `STARTERS_PICTURES` (3 frames); Synergy starters prefilled for banked games; named "no box" rows count.
+- `_NameNums`: jersey lookup ignores punctuation ("Greg Smith, Jr." = "Greg Smith Jr." = #42).
+- Roster lists ignore Synergy's "1 Pts" (and-one) as a fake player.
+- Player / not-a-player model now trains on **every game's checks ever** (`_tracking\player_model_bank.csv`); old checked
+  clips are backfilled ONLY when their detections are already saved (`TRACK_BANK_BACKFILL`, `_MAX` 150) -- the first version
+  ran the CPU detector on 8,589 frames (~3 h); don't repeat that.
+- Jersey reader: `JERSEY_READER_MIN_ANSWERS` 6 -> 20 (it named players wrongly on 9 answers), `JERSEY_TRAIN_MIN_NEW` 150 -> 40.
+- Detection runs on CPU (~1.5 s/frame); Corey's PC has 8 GB RAM (kernel died at 96% memory; he raised the page file).
+
+**Brief / app data**
+- Empty-season fixes (no UWW pbp/stats yet): 36 typed empty pbp, 44 numeric clock, 70 expected box skipped (empty
+  projected tables), 80 `reindex`, 86 empty player lines, 11 margin "n/a".
+- Offense breakdown / coverage tables, passing card, reads-to-roster etc. from earlier in the week (see the code comments).
+- `parser_brief` first cell has `REFERENCE_DATE` / `EXTRA_GAMES` (applied at 00b; replace parser_nb's).
+- Offense tables (11/9, Corey: "All of the offensive tables within briefs needs to also include the 5 person lineup that runs it most and any players that are best at scoring off of it"): `uww_offense_breakdown` has `top_lineup` / `top_scorers` on every situation / formation / play-call row (47 `_top_lineup`, `_top_scorers`); 87 `_offense_breakdown_card` shows them under each row ("Runs it:" / "Scores:"). Applies to every brief kind (ours, theirs, analysis). Any NEW offensive table in a brief must carry the same two lines.
+- Play-call names that differ only by capitals / spacing ("BLOB #1" vs "Blob #1") are merged to the most-used spelling for every season (47 `_pl_merge_spellings`, before all summaries). Corey wants such near-duplicates always combined in the briefs.
+
+**App -- Film Tagging (11/9)**: one clip at a time (`render_film_tagging`): Previous / Next clip buttons, Go to clip list, saved every `FT_SAVE_EVERY` = 10 clips (only the clips opened since the last save) or with Save now; Enter = Next clip, space = play / pause (a small script in a zero-height component; ignored while typing or with a dropdown open). Answers live in `_pr_store` between clips; unsaved clips are lost if the page is reloaded.
+
+**Corey's open items (11/9)**: Ripon brief needs UWW + Ripon this-season film tagged; Carroll player checks at "5 Clips";
+delete the old `data_analysis\UW_Stout_Blue_Devils` folder in the repo (superseded by F:); first `parser_analysis` run for
+UW-Stout not finished yet.
+
+---
+
+## 8. History: state on Nov 2, 2026 (superseded by sections 4 and 7)
 
 ### Season / opponent
 - The parser is on the **2025-26** data (SEASON "auto"; UWW hasn't played 2026-27 yet). `EXTRA_GAMES` sets the upcoming game: **Carroll (WI) Pioneers, Away, real date Nov 7 2026** (UWW's 2026-27 opener). Run date is 2026-3-8.
@@ -160,25 +284,3 @@ Corey said it's "good enough" for now; don't test more unless he asks.
 - UWW's own tracked game (3/7/26) shows "players named <NA>%" in the film quality line since the reset. It was noted to Corey but not fixed.
 
 ---
-
-## 5. Key settings (parser_nb.ipynb)
-
-| Cell | Settings |
-|---|---|
-| 2 | `EXTRA_GAMES` (upcoming game), `SEASON` |
-| 108 (46 frame capture) | `TRACKING_RESET_ID`, `SYNERGY_EXPORT_DIR = F:\Backups\uwwmensbball_tracking`, `TRACK_DIR = F:\...\_tracking`, `PLAYER_TRACKING_GAMES`, `VISION_TRACK_FPS_TRACKING = 8` |
-| 120 (50 tracking) | `TRACK_*` settings, `TRACK_HOLD_AT_CLIP = 8`, `TRACK_DIR = globals().get("TRACK_DIR") or ...` |
-| 125 | `COURT_*` |
-| 133 (55c play review / tagging) | `PLAY_REVIEW_*`, `PLAY_TAG_*`, `PLAY_TAG_INCLUDE_TRACKING_GAMES = True` |
-| 202 (87 brief) | `ROSTER_LAYOUT = "table"`; optional `BRIEF_FILM_ON_FILE`, `BRIEF_FULL_BENCH_OPENER`, `PROJ_STARTER_POS_PENALTY` |
-
----
-
-## 6. Useful log lines to grep
-
-- `Film Tagging:` and the indented `YYYY-MM-DD ... clip(s) tagged` lines: batches and progress.
-- `[saves]`: which saved review files were read.
-- `Film on <team>:` (55e): film quality.
-- `Tracking reset (` — **should never appear again**.
-- `Struck through N ... senior(s)` and `Wrote ...scouting_brief_...html` (87).
-- `[roster] <team>: 2026-27 roster -- N returning player(s) updated, M new player(s) added` (21).

@@ -1,11 +1,40 @@
 side,scouted_opponent,offense_team,team,side_of_ball,role,player,action,read,uses,games,ppp,share_pct
 UWW,Ripon Red Hawks,UW-Whitewater,Carroll (WI) Pioneers,Defense,Off-ball defender,#23 Jimmy Tarjan,Flare,Through,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,Switch,7,1,1.43,78.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),DHO,Switch,4,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),High Ball Screen,Drop,2,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,High Hedge,1,1,0.0,11.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,Through,1,1,0.0,11.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Deuce Ball Screen,Switch,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Zoom,Switch,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,#4 EJ Marshall,Ball Screen,Over,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Ball Screen,Switch,7,1,1.43,78.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),DHO,Switch,4,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Action,Switch,1,1,2.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Ball Screen,Over,1,1,0.0,11.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Ball Screen,Under,1,1,0.0,11.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Deuce Ball Screen,Switch,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Down Screen,Over,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),High Ball Screen,Over,1,1,0.0,50.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),High Ball Screen,Under,1,1,0.0,50.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Zoom,Switch,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Ball handler (trigger),#0 Jose Gonzales,Ball Screen,Use Ball Screen,1,1,2.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Ball handler (trigger),#1,Ball Screen,Use Ball Screen,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Ball handler (trigger),#30 Seth Bunders,Ball Screen,Use Ball Screen,1,1,2.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Ball handler (trigger),#30 Seth Bunders,Down Screen,Use Ball Screen,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Ball handler (trigger),#30 Seth Bunders,Up Screen,Use Ball Screen,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Screener,#34 Jackson Flowers,Ball Screen,Roll,2,1,1.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Screener,#34 Jackson Flowers,Down Screen,Stay,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Screener,#34 Jackson Flowers,Ricky,Pop,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Screener,#34 Jackson Flowers,Up Screen,Stay,1,1,0.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Screener,#35 Michael Asman,Ball Screen,Roll,1,1,2.0,100.0
+Opponent,Ripon Red Hawks,Ripon Red Hawks,Ripon Red Hawks,Offense,Screener,#40,Ball Screen,Pop,1,1,0.0,100.0
 UWW,Ripon Red Hawks,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#15 Collin Madson,Ball Screen,Use Ball Screen,1,1,0.0,100.0
 UWW,Ripon Red Hawks,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#15 Collin Madson,Down Screen,Cobra,1,1,0.0,50.0
 UWW,Ripon Red Hawks,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#15 Collin Madson,Down Screen,Straight,1,1,0.0,50.0
 UWW,Ripon Red Hawks,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#35 Rashad Rogers,Post Isolation,Iso,1,1,0.0,100.0
 UWW,Ripon Red Hawks,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#5 Isaiah Robinson,Flare,Use it,1,1,0.0,100.0
-UWW,Ripon Red Hawks,UW-Whitewater,UW-Whitewater,Offense,Screener,#25 Taveon Vann,Ball Screen,Roll,1,1,,100.0
+UWW,Ripon Red Hawks,UW-Whitewater,UW-Whitewater,Offense,Screener,#25 Taveon Vann,Ball Screen,Roll,1,1,2.0,100.0
 UWW,Ripon Red Hawks,UW-Whitewater,UW-Whitewater,Offense,Screener,#35 Rashad Rogers,Ball Screen,Ghost,1,1,0.0,100.0
 UWW,Ripon Red Hawks,UW-Whitewater,UW-Whitewater,Offense,Screener,#35 Rashad Rogers,Flare,Pop,1,1,0.0,100.0
 UWW,Ripon Red Hawks,UW-Whitewater,UW-Whitewater,Offense,Screener,#5 Isaiah Robinson,Down Screen,Pop,2,1,0.0,100.0

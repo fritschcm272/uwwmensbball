@@ -9,3 +9,4 @@ parser/inputs/track_review/*
 data/tracking_checks/*
 /parser/inputs/_tag_model
 parser/inputs/tracking_review_first5.zip
+data_analysis/

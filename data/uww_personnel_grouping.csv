@@ -1,4 +1,5 @@
 opponent,personnel_grouping,minutes_pct,primary_actions_used,note,is_sample
-Ripon Red Hawks,Base five (one big),72,"4-1 Ball Screen, Hi-Lo DHO",Their most-used grouping all four games,True
-Ripon Red Hawks,Two-big lineup,18,"Post touches, offensive rebounding","Comes in for defensive stops, stays if it's working",True
-Ripon Red Hawks,Small / shooting five (no true big),10,"5 Out, ball screens for their best player",Closing lineup when trailing,True
+Ripon Red Hawks,3G-2W,59.0,"Off-ball screen Motion (8x), Motion (no action tagged) (8x), Screen Motion (4x)","38 tagged possessions, 0.73 PPP (their overall 0.72)",False
+Ripon Red Hawks,4G-1W,19.0,"BLOB BLOB #1 (2x), Flow (1x), Screen Motion (1x)","7 tagged possessions, 0.80 PPP (their overall 0.72)",False
+Ripon Red Hawks,2G-3W,17.0,"Off-ball screen Motion (3x), Motion (no action tagged) (3x), DHO Motion (1x)","12 tagged possessions, 0.67 PPP (their overall 0.72)",False
+Ripon Red Hawks,Small / shooting five (no true big),5.0,--,No tagged clips matched this grouping yet,False

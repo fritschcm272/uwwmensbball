@@ -1448,6 +1448,12 @@ def _extra_find_team_url(name):
     if not hits:
         return None, None
     url, (txt, _n) = max(hits.items(), key=lambda kv: kv[1][1])
+    # CONFIRMED BUG (fixed; parser_analysis opened UW-Stout's FastScout page for season=23: the link was found on an old
+    # 2023-24 UWW schedule file). The team page is always asked for in the run's own season.
+    _fs = globals().get("FASTSCOUT_DOCS_SEASON")
+    if _fs:
+        url = re.sub(r"season=\d+", f"season={_fs}", url) if "season=" in url else \
+            url + ("&" if "?" in url else "?") + f"league={globals().get('FASTSCOUT_DOCS_LEAGUE') or 'NCAAB-III'}&season={_fs}"
     return url, txt
 
 

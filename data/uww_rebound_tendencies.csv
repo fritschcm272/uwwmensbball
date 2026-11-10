@@ -1,4 +1,8 @@
 opponent,situation,crash_pct,who_crashes,note,is_sample
-Ripon Red Hawks,Miss by a non-shooter (paint attempt),65,their best player + ball-side wing,Second-chance points mostly come from this situation,True
-Ripon Red Hawks,Miss by their primary shooter (three),20,their best player only,Everyone else gets back -- transition D opportunity for us,True
-Ripon Red Hawks,Missed free throw,40,their best player,"Lines up early, boxes out inconsistently",True
+Ripon Red Hawks,Their missed layup / dunk,24,"Anton Kilde (1), Ripon (1), Jose Gonzales (1)",24% offensive rebound on 17 of 17 misses (0 unpaired),False
+Ripon Red Hawks,Their missed two-point jumper,5,Christian Wilson (1),5% offensive rebound on 21 of 21 misses (0 unpaired),False
+Ripon Red Hawks,All their misses,17,"Ripon (3), Anton Kilde (1), Jose Gonzales (1)",17% offensive rebound on 42 of 42 misses (0 unpaired),False
+Ripon Red Hawks,Opponent missed layup / dunk,41,"Keenan Rahn (2), Michael Asman (1), Anton Kilde (1)",They secure 41% of 17 opponent misses (0 unpaired),False
+Ripon Red Hawks,Opponent missed two-point jumper,88,"Jackson Flowers (4), Landon Lee (3), Seth Bunders (2)",They secure 88% of 17 opponent misses (0 unpaired),False
+Ripon Red Hawks,Opponent missed free throw,44,"Jose Gonzales (2), Michael Asman (1), Ripon (1)",They secure 44% of 9 opponent misses (0 unpaired),False
+Ripon Red Hawks,All opponent misses,60,"Jackson Flowers (5), Keenan Rahn (4), Michael Asman (3)",They secure 60% of 43 opponent misses (0 unpaired),False

@@ -1,4 +1,15 @@
 side,team,lineup,grouping,shape,scouted_opponent
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,Ripon Red Hawks
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveon Vann",3G-2W,3G-2W,Ripon Red Hawks
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Taveon Vann",3G-2W,3G-2W,Ripon Red Hawks
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Tyshawn Teague-Johnson",3G-2W,3G-2W,Ripon Red Hawks
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson",3G-2W,3G-2W,Ripon Red Hawks
+UWW,UW-Whitewater,"Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo",2G-3W,2G-3W,Ripon Red Hawks
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Zavier Castillo",2G-3W,2G-3W,Ripon Red Hawks
+UWW,UW-Whitewater,"Collin Madson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo",2G-3W,2G-3W,Ripon Red Hawks
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson, Zavier Castillo",2G-3W,2G-3W,Ripon Red Hawks
+UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",2G-3W,2G-3W,Ripon Red Hawks
+UWW,UW-Whitewater,"Isaiah Robinson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",2G-3W,2G-3W,Ripon Red Hawks
 UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara",Two-big lineup,,Ripon Red Hawks
 UWW,UW-Whitewater,"Brock Marino, Collin Madson, Darius Chestnut, JR Lukenbill, Joey Berezowitz",Two-big lineup,,Ripon Red Hawks
 UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren",Base five (one big),,Ripon Red Hawks
@@ -288,3 +299,30 @@ UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Joey Berezowitz, Rashad Rogers, 
 UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Richie Warren, Tyshawn Teague-Johnson",Two-big lineup,,Ripon Red Hawks
 UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Richie Warren",Base five (one big),,Ripon Red Hawks
 UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Luke Bara",Base five (one big),,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Jackson Flowers, Jose Gonzales, Keenan Rahn, Michael Asman, Seth Bunders",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Anton Kilde, Jack Field, Landon Lee, Michael Asman, Sam Leoni",2G-3W,2G-3W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Christian Wilson, Jackson Flowers, Jose Gonzales, Landon Lee, Michael Asman",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Jackson Flowers, Jose Gonzales, Keenan Rahn, Sam Leoni, Seth Bunders",4G-1W,4G-1W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Jackson Flowers, Keenan Rahn, Landon Lee, Michael Asman, Seth Bunders",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Jack Field, Jackson Flowers, Jose Gonzales, Keenan Rahn, Seth Bunders",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Christian Wilson, Jackson Flowers, Keenan Rahn, Michael Asman, Sam Leoni",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Christian Wilson, Jose Gonzales, Keenan Rahn, Landon Lee, Michael Asman",4G-1W,4G-1W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Anton Kilde, Jack Field, Jackson Flowers, Landon Lee, Sam Leoni",2G-3W,2G-3W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Christian Wilson, Jackson Flowers, Jose Gonzales, Keenan Rahn, Landon Lee",4G-1W,4G-1W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Jackson Flowers, Jose Gonzales, Landon Lee, Michael Asman, Sam Leoni",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Jack Field, Jose Gonzales, Landon Lee, Michael Asman, Seth Bunders",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Jackson Flowers, Jose Gonzales, Michael Asman, Sam Leoni, Seth Bunders",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Jackson Flowers, Joey Daun, Keenan Rahn, Michael Asman, Sam Leoni",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Jose Gonzales, Keenan Rahn, Michael Asman, Sam Leoni, Seth Bunders",4G-1W,4G-1W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Keenan Rahn, Landon Lee, Michael Asman, Sam Leoni, Seth Bunders",4G-1W,4G-1W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Jack Field, Jackson Flowers, Keenan Rahn, Sam Leoni, Seth Bunders",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Christian Wilson, Jackson Flowers, Keenan Rahn, Michael Asman, Seth Bunders",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Anton Kilde, Jackson Flowers, Landon Lee, Michael Asman, Sam Leoni",2G-3W,2G-3W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Anton Kilde, Jackson Flowers, Joey Daun, Keenan Rahn, Sam Leoni",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Devon Feck, Dominic Rasberry, Fisher MacKenzie, Jatyn Barkus, Nick Ahlquist",Small / shooting five (no true big),,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Christian Wilson, Jackson Flowers, Jose Gonzales, Michael Asman, Seth Bunders",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Christian Wilson, Devon Feck, Dominic Rasberry, Fisher MacKenzie, Nick Ahlquist",Small / shooting five (no true big),,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Anton Kilde, Christian Wilson, Devon Feck, Dominic Rasberry, Jose Gonzales",Small / shooting five (no true big),,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Jack Field, Keenan Rahn, Landon Lee, Michael Asman, Sam Leoni",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Jack Field, Jose Gonzales, Michael Asman, Sam Leoni, Seth Bunders",3G-2W,3G-2W,Ripon Red Hawks
+Opponent,Ripon Red Hawks,"Jose Gonzales, Landon Lee, Michael Asman, Sam Leoni, Seth Bunders",4G-1W,4G-1W,Ripon Red Hawks

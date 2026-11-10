@@ -1,3 +1,8 @@
 scouted_opponent,side,team,motion_family,uses,share_pct,ppp,actions,trigger,screener,finish,games
-Ripon Red Hawks,UWW,UW-Whitewater,Screen Motion,5,62,0.5,Ball Screen (5),,Taveon Vann (1),P&R Ball Handler (5),1
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Motion (no action tagged),11,34,0.73,,,,Spot-Up (3) · ISO (2),1
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Off-ball screen Motion,11,34,0.45,,,,Spot-Up (4) · No Play Type (2),1
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Screen Motion,6,19,1.0,,#1 (1),#40 (1) · Jackson Flowers (1),P&R Ball Handler (3) · Spot-Up (2),1
+Ripon Red Hawks,Opponent,Ripon Red Hawks,DHO Motion,2,6,0.0,,,,No Play Type (1) · ISO (1),1
+Ripon Red Hawks,Opponent,Ripon Red Hawks,Drive Motion,2,6,0.0,,Sam Leoni (1) · Jack Field (1),,P&R Ball Handler (1) · Offensive Rebound (1),1
+Ripon Red Hawks,UWW,UW-Whitewater,Screen Motion,5,62,0.8,Ball Screen (5),,Taveon Vann (1),P&R Ball Handler (5),1
 Ripon Red Hawks,UWW,UW-Whitewater,Off-ball screen Motion,3,38,0.0,,,,Off Screen (2) · Post-Up (1),1

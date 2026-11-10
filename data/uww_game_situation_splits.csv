@@ -1,4 +1,2 @@
 opponent,situation,ppp,primary_actions,note,is_sample
-Ripon Red Hawks,Leading by 10+,0.85,"Slows down, more Hi-Lo DHO",Stops running in transition,True
-Ripon Red Hawks,Trailing by 10+,1.15,"More ball screens, faster pace",their best player takes over possessions,True
-Ripon Red Hawks,"Clutch (last 5 min, margin ≤ 8)",0.97,Isolation for their best player,Goes away from their sets late,True
+Ripon Red Hawks,Leading by 10+,0.6,"Motion (no action tagged) (8x), STAGGER (3x)",25 tagged possessions (their overall 0.72 PPP),False

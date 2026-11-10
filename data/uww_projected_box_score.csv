@@ -1,1 +1,20 @@
-PLAYER,MIN,projected_PTS,projected_REB,projected_AST,FG%,3P%,FT%,projection_basis
+opponent,game_date,PLAYER,MIN,projected_PTS,projected_REB,projected_AST,FG%,3P%,FT%,projection_basis
+Ripon Red Hawks,"Sat, Nov 14",Collin Madson,38.0,26.2,4.0,2.0,60%,25%,75%,"Own season avg: 28.0 PTS, 4.0 REB, 2.0 AST/gm over 38 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 73 pts: 50% season PPG 78.0 + 50% actual PPG vs scouted opponents this season 68.0)"
+Ripon Red Hawks,"Sat, Nov 14",Tyshawn Teague-Johnson,32.0,12.2,13.0,1.0,41.7%,33.3%,50%,"Own season avg: 13.0 PTS, 13.0 REB, 1.0 AST/gm over 32 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 73 pts: 50% season PPG 78.0 + 50% actual PPG vs scouted opponents this season 68.0)"
+Ripon Red Hawks,"Sat, Nov 14",JR Lukenbill,22.0,10.3,3.0,1.0,57.1%,33.3%,100%,"Own season avg: 11.0 PTS, 3.0 REB, 1.0 AST/gm over 22 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 73 pts: 50% season PPG 78.0 + 50% actual PPG vs scouted opponents this season 68.0)"
+Ripon Red Hawks,"Sat, Nov 14",Kelton McEwen,38.0,9.4,0.0,2.0,40%,28.6%,-,"Own season avg: 10.0 PTS, 0.0 REB, 2.0 AST/gm over 38 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 73 pts: 50% season PPG 78.0 + 50% actual PPG vs scouted opponents this season 68.0)"
+Ripon Red Hawks,"Sat, Nov 14",Rashad Rogers,25.0,5.6,5.0,1.0,40%,50%,33.3%,"Own season avg: 6.0 PTS, 5.0 REB, 1.0 AST/gm over 25 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 73 pts: 50% season PPG 78.0 + 50% actual PPG vs scouted opponents this season 68.0)"
+Ripon Red Hawks,"Sat, Nov 14",Isaiah Robinson,25.0,5.6,3.0,1.0,33.3%,0%,40%,"Own season avg: 6.0 PTS, 3.0 REB, 1.0 AST/gm over 25 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 73 pts: 50% season PPG 78.0 + 50% actual PPG vs scouted opponents this season 68.0)"
+Ripon Red Hawks,"Sat, Nov 14",Taveon Vann,4.0,1.9,1.0,0.0,-,-,100%,"Own season avg: 2.0 PTS, 1.0 REB, 0.0 AST/gm over 4 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 73 pts: 50% season PPG 78.0 + 50% actual PPG vs scouted opponents this season 68.0)"
+Ripon Red Hawks,"Sat, Nov 14",Zavier Castillo,12.0,1.9,0.0,0.0,100%,-,-,"Own season avg: 2.0 PTS, 0.0 REB, 0.0 AST/gm over 12 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 73 pts: 50% season PPG 78.0 + 50% actual PPG vs scouted opponents this season 68.0)"
+Ripon Red Hawks,"Sat, Nov 14",Darius Chestnut,4.0,0.0,0.0,0.0,-,-,-,"Own season avg: 0.0 PTS, 0.0 REB, 0.0 AST/gm over 4 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 73 pts: 50% season PPG 78.0 + 50% actual PPG vs scouted opponents this season 68.0)"
+Ripon Red Hawks,"Sat, Nov 14",Mikey Wildes,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Ripon Red Hawks,"Sat, Nov 14",Mauryon Turner,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Ripon Red Hawks,"Sat, Nov 14",Luke Paddock,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Ripon Red Hawks,"Sat, Nov 14",Brock Marino,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Ripon Red Hawks,"Sat, Nov 14",Agape Keys Jr.,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Ripon Red Hawks,"Sat, Nov 14",Agape Keyes Jr.,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Ripon Red Hawks,"Sat, Nov 14",Chris Johnson,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Ripon Red Hawks,"Sat, Nov 14",Zay Howard,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Ripon Red Hawks,"Sat, Nov 14",Trent Grunewald,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Ripon Red Hawks,"Sat, Nov 14",Jonathan Aluyi,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.

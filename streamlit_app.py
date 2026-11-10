@@ -8025,7 +8025,8 @@ def render_tag_model_scoreboard():
             }), hide_index=True, use_container_width=True)
 
 
-FT_PAGE_SIZE = 20          # Film Tagging: plays per page (requested: "only 20 plays at a time ... save after each 20")
+FT_PAGE_SIZE = 20          # Film Tagging: plays per page (requested: "only 20 plays at a time ... save after each 20") -- no longer used
+FT_SAVE_EVERY = 10         # Film Tagging: one clip at a time, saved every 10 clips (requested)
 
 
 def _ft_saved_clip_keys(d):
@@ -8129,63 +8130,103 @@ def render_film_tagging():
                 "Each field starts on the coach's answer (\u2713 = the automatic answer). ")
                + "Change only what's wrong; set a field to -- if you can't tell. Saving accepts the rest as they are.")
     _sfx = f"_ft_{d.get('slug')}"
-    # ---- pages of FT_PAGE_SIZE plays (requested: less lag; each page saved before the next) ----
+    # ---- ONE clip at a time -------------------------------------------------------------------------------------------
+    # CONFIRMED CHANGE (requested: "Instead of there being groups of 20 videos on one page and needing to scroll down, I would
+    # like to be able to click a button to go to the next clip. But I only want to save it every 10 clips so that it doesn't
+    # always have to refresh. I also want to be able to click the enter key to move to the next clip. Give me a button to go
+    # to the previous clip. I want to be able to play the video by hitting the space bar."). One clip is shown; Next /
+    # Previous keep the answers in this session (the same store as before), and every FT_SAVE_EVERY (10) clips the ones
+    # visited since the last save are saved (Save now saves at any time). Enter = Next, space = play / pause the video
+    # (both ignored while typing in a text box).
     _all = d.get("plays", [])
+    if not _all:
+        st.info("No plays in this batch.")
+        return
     _sv = _ft_saved_clip_keys(d)
-    _npg = max(1, -(-len(_all) // FT_PAGE_SIZE))
-    _pg_done = [all(str(p.get("clip_key")) in _sv for p in _all[i * FT_PAGE_SIZE:(i + 1) * FT_PAGE_SIZE]) for i in range(_npg)]
-    _pgk = f"ft_page_{d.get('slug')}_{d.get('run')}"
-    if _pgk not in st.session_state:
-        st.session_state[_pgk] = next((i for i, ok_ in enumerate(_pg_done) if not ok_), 0)
-    if _npg > 1:
-        _pg_lab = lambda i: (f"Plays {i * FT_PAGE_SIZE + 1}–{min(len(_all), (i + 1) * FT_PAGE_SIZE)}"
-                             + (" ✅" if _pg_done[i] else ""))
-        _pg = st.radio("Page", list(range(_npg)), index=min(int(st.session_state[_pgk]), _npg - 1), format_func=_pg_lab,
-                       horizontal=True, key=f"{_pgk}_radio")
-        st.session_state[_pgk] = _pg
-        st.caption(f"{sum(_pg_done)} of {_npg} page(s) saved (✅). Save each page when you finish it -- it saves those "
-                   f"{FT_PAGE_SIZE} plays and opens the next page.")
-    else:
-        _pg = 0
-    _lo, _hi = _pg * FT_PAGE_SIZE, min(len(_all), (_pg + 1) * FT_PAGE_SIZE)
-    _form = _form_no_enter(f"ft_form_{d.get('slug')}_{d.get('run')}_{_pg}")
-    for pi, pl in enumerate(d.get("plays", [])):
-        if not (_lo <= pi < _hi):
-            continue
-        n_set = len([k for k in store if k.startswith(f"{kp}_v_{d.get('run')}_{pi}_")])
-        head = (f"Clip {pl.get('clip_number')} \u00b7 {pl.get('clock') or ''} \u00b7 {str(pl.get('synergy') or '')[:90]}"
-                + (f"  \u2014 {n_set} changed" if n_set else ""))
-        with _form.expander(head, expanded=True):        # requested: every play open by default
-            if pl.get("coach_title"):
-                st.markdown(f"Coach's Title (Synergy): `{pl['coach_title']}`")
-            if pl.get("auto_title"):
-                st.markdown(f"Automatic Title: `{pl['auto_title']}`")
-            if pl.get("film"):
-                st.caption(pl["film"])
-            if pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
-                if pl.get("clip_kind") == "video":
-                    _pr_video(os.path.join(d["_dir"], pl["clip"]), rate=FT_VIDEO_SPEED)
-                else:
-                    st.image(os.path.join(d["_dir"], pl["clip"]))
-            if pl.get("synergy_url"):
-                st.markdown(f"[Open in Synergy]({pl['synergy_url']})" + (f" (clip {pl['synergy_pos']})" if pl.get("synergy_pos") else ""))
-            _ft_field_widgets(d, pi, store, kp)
-            _ft_actions_editor(d, pi, store, kp)
-    with _form:
-        _nc, _sc = st.columns([3, 2], vertical_alignment="bottom")
-        _coach = _nc.text_input("Your name (required to save)", key=f"pr_coach_titles{_sfx}")
-        _go = _sc.form_submit_button(f"Save plays {_lo + 1}–{_hi}" + (" and go to the next page" if _pg < _npg - 1 else ""),
-                                     use_container_width=True)
-    if _go:
+    _ik = f"ft_clip_{d.get('slug')}_{d.get('run')}"
+    _visk = f"{_ik}_visited"                     # plays opened since the last save (only these are saved)
+    if _ik not in st.session_state:
+        st.session_state[_ik] = next((i for i, p_ in enumerate(_all) if str(p_.get("clip_key")) not in _sv), 0)
+    _i = min(max(int(st.session_state[_ik]), 0), len(_all) - 1)
+    _vis = st.session_state.setdefault(_visk, set())
+    _vis.add(_i)
+    _n_saved = sum(str(p_.get("clip_key")) in _sv for p_ in _all)
+    _coach = st.text_input("Your name (required to save)", key=f"pr_coach_titles{_sfx}")
+
+    def _save(idxs, msg):
+        idxs = set(idxs)
+        if not idxs:
+            return True
         if not str(_coach).strip():
-            st.error("Add your name next to the Save button, then save again.")
-        elif _pr_commit(d, store, _coach, kp, "titles", _sfx, actions=True, only=set(range(_lo, _hi))):
-            st.session_state["_ft_flash"] = (f"Saved plays {_lo + 1}–{_hi}."
-                                             + (" Next page below." if _pg < _npg - 1 else " That was the last page."))
-            if _pg < _npg - 1:
-                st.session_state[_pgk] = _pg + 1
-                st.session_state.pop(f"{_pgk}_radio", None)
-            st.rerun()
+            st.session_state["_ft_flash"] = "Add your name at the top -- nothing was saved yet."
+            return False
+        if _pr_commit(d, store, _coach, kp, "titles", _sfx, actions=True, only=idxs):
+            st.session_state[_visk] = set()
+            st.session_state["_ft_flash"] = msg
+            return True
+        return False
+
+    _jump = st.selectbox("Go to clip", list(range(len(_all))), index=_i,
+                         format_func=lambda j: (f"{j + 1}. Clip {_all[j].get('clip_number')} · {_all[j].get('clock') or ''}"
+                                                + (" ✅" if str(_all[j].get("clip_key")) in _sv else "")),
+                         key=f"{_ik}_jump_{_i}")
+    if _jump != _i:
+        st.session_state[_ik] = _jump
+        st.rerun()
+    st.caption(f"Clip {_i + 1} of {len(_all)} · {_n_saved} saved (✅) · {len(_vis)} opened since the last save "
+               f"-- saved every {FT_SAVE_EVERY} clips. **Enter** = next clip, **space** = play / pause.")
+    pl = _all[_i]
+    pi = _i
+    _form = _form_no_enter(f"ft_form_{d.get('slug')}_{d.get('run')}_{_i}")
+    with _form:
+        n_set = len([k for k in store if k.startswith(f"{kp}_v_{d.get('run')}_{pi}_")])
+        st.markdown(f"**Clip {pl.get('clip_number')} · {pl.get('clock') or ''}** · {str(pl.get('synergy') or '')[:110]}"
+                    + (f"  — {n_set} changed" if n_set else "")
+                    + ("  ✅ saved" if str(pl.get("clip_key")) in _sv else ""))
+        if pl.get("coach_title"):
+            st.markdown(f"Coach's Title (Synergy): `{pl['coach_title']}`")
+        if pl.get("auto_title"):
+            st.markdown(f"Automatic Title: `{pl['auto_title']}`")
+        if pl.get("film"):
+            st.caption(pl["film"])
+        if pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
+            if pl.get("clip_kind") == "video":
+                _pr_video(os.path.join(d["_dir"], pl["clip"]), rate=FT_VIDEO_SPEED)
+            else:
+                st.image(os.path.join(d["_dir"], pl["clip"]))
+        if pl.get("synergy_url"):
+            st.markdown(f"[Open in Synergy]({pl['synergy_url']})" + (f" (clip {pl['synergy_pos']})" if pl.get("synergy_pos") else ""))
+        _ft_field_widgets(d, pi, store, kp)
+        _ft_actions_editor(d, pi, store, kp)
+        _b1, _b2, _b3 = st.columns([1, 1, 2])
+        _prev = _b1.form_submit_button("◀ Previous clip", use_container_width=True, disabled=_i == 0)
+        _next = _b2.form_submit_button("Next clip ▶" if _i < len(_all) - 1 else "Finish ✔", type="primary",
+                                       use_container_width=True)
+        _now = _b3.form_submit_button(f"Save now ({len(_vis)} clip(s))", use_container_width=True)
+    # keyboard: Enter clicks "Next clip", space plays / pauses the clip's video (not while typing in a box)
+    try:
+        import streamlit.components.v1 as _kv1
+        _kv1.html("""<script>(function(){var P=window.parent;if(P.__uwwFtKeys)return;P.__uwwFtKeys=1;
+P.document.addEventListener('keydown',function(e){var a=P.document.activeElement,tg=a?a.tagName:'';
+var typing=(tg==='INPUT'&&!(a.getAttribute('role')==='combobox'))||tg==='TEXTAREA'||(a&&a.isContentEditable);
+function btn(t){var bs=P.document.querySelectorAll('button');for(var i=0;i<bs.length;i++){var x=(bs[i].innerText||'').trim();
+if(x.indexOf(t)===0&&!bs[i].disabled)return bs[i];}return null;}
+if(a&&a.getAttribute('aria-expanded')==='true')return;
+if(e.key==='Enter'&&!e.shiftKey){var b=btn('Next clip')||btn('Finish');if(!b)return;if(typing){setTimeout(function(){b.click();},250);}
+else{e.preventDefault();b.click();}}
+else if((e.key===' '||e.code==='Space')&&!typing){var v=P.document.querySelector('video');if(!v)return;e.preventDefault();
+if(v.paused){v.play();}else{v.pause();}}},true);})();</script>""", height=0)
+    except Exception:
+        pass
+    if _prev or _next or _now:
+        _to = _i - 1 if _prev else (_i + 1 if _next else _i)
+        _last = _next and _i >= len(_all) - 1
+        _ok = True
+        if _now or _last or (_next and (_i + 1) % FT_SAVE_EVERY == 0):
+            _ok = _save(_vis, f"Saved {len(_vis)} clip(s)." + (" That was the last clip." if _last else ""))
+        if _ok:
+            st.session_state[_ik] = min(max(_to, 0), len(_all) - 1)
+        st.rerun()
 
 
 # ---------------------------------------------------------------------------------------------------------------------
