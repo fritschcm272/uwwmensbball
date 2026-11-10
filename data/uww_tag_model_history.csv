@@ -692,4 +692,5 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-09T19:17:44,offball_coverage,Off-ball coverage,41.0,54.0,Over,46.0,71,usual answer,False,model not better than always guessing (41% vs 54%),,,2026-11-09T12:58:10
 2026-11-09T19:17:44,screener,Screener,,,,,116,,False,,,,2026-11-09T12:58:10
 2026-11-09T19:30:03,screener,Screener,,,,,116,,False,,,,2026-11-09T12:58:10
-2026-11-09T19:37:22,screener,Screener,,,,,116,nan,False,nan,,,2026-11-09T12:58:10
+2026-11-09T19:37:22,screener,Screener,,,,,116,,False,,,,2026-11-09T12:58:10
+2026-11-09T19:46:19,screener,Screener,,,,,116,nan,False,nan,,,2026-11-09T12:58:10

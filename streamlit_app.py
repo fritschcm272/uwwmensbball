@@ -15976,7 +15976,7 @@ def render_previous_games():
             # crashed the page). The column is text, empty when missing.
             game_pbp["video_description"] = (game_pbp["video_description"] if "video_description" in game_pbp.columns
                                         else pd.Series("", index=game_pbp.index)).fillna("").astype(str)
-            game_pbp["play_type"] = game_pbp["video_description"].str.split(">").str[1].str.strip()
+            game_pbp["play_type"] = game_pbp["video_description"].str.split(">").str[1].fillna("").astype(str).str.strip().replace("", None)
             game_pbp["shot_outcome"] = game_pbp["video_description"].str.extract(r"(Make \d+ Pts|Miss \d+ Pts|Turnover|Foul)", expand=False)
 
             pbp_r1c1, pbp_r1c2, pbp_r1c3, pbp_r1c4 = st.columns(4)
@@ -16095,7 +16095,7 @@ def render_previous_games():
             if pbp_event_filter != "All":
                 filtered_pbp = filtered_pbp[filtered_pbp["event_type"] == pbp_event_filter]
             if pbp_player_search.strip():
-                filtered_pbp = filtered_pbp[filtered_pbp["player"].str.contains(pbp_player_search.strip(), case=False, na=False)]
+                filtered_pbp = filtered_pbp[filtered_pbp["player"].fillna("").astype(str).str.contains(pbp_player_search.strip(), case=False, na=False)]
             if period_filter != "All":
                 filtered_pbp = filtered_pbp[filtered_pbp["period"] == period_filter]
             if pbp_play_type != "All":
@@ -17022,7 +17022,7 @@ def render_team():
         # crashed the page). The column is text, empty when missing.
         pbp["video_description"] = (pbp["video_description"] if "video_description" in pbp.columns
                                     else pd.Series("", index=pbp.index)).fillna("").astype(str)
-        pbp["play_type"] = pbp["video_description"].str.split(">").str[1].str.strip()
+        pbp["play_type"] = pbp["video_description"].str.split(">").str[1].fillna("").astype(str).str.strip().replace("", None)
         pbp["shot_outcome"] = pbp["video_description"].str.extract(r"(Make \d+ Pts|Miss \d+ Pts|Turnover|Foul)", expand=False)
 
         # Row 1: Core filters
@@ -17072,7 +17072,7 @@ def render_team():
         if team_pbp_event != "All":
             filtered = filtered[filtered["event_type"] == team_pbp_event]
         if team_pbp_player.strip():
-            filtered = filtered[filtered["player"].str.contains(team_pbp_player.strip(), case=False, na=False)]
+            filtered = filtered[filtered["player"].fillna("").astype(str).str.contains(team_pbp_player.strip(), case=False, na=False)]
         if team_pbp_playtype != "All":
             filtered = filtered[filtered["play_type"] == team_pbp_playtype]
         if team_pbp_outcome != "All":
