@@ -5070,7 +5070,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 add(f'<tr class="ob-sit"><td class="ob-vs" rowspan="{_span.get(_ri, 1)}"><div>{_c(r.get("label"))}</div></td>'
                     f'<td class="l n" colspan="2">All</td>'
                     f'<td class="t1">{n}</td>'
-                    + _pt + f'<td class="t1 l w">{_who(r)}</td>' + _cov_cells(None) + _green(r, True) + "</tr>")  # "All" rows: no actions (requested) -- lineup / scorers only
+                    + _pt + '<td class="t1 l w"></td>' + _cov_cells(None) + _green(r, True) + "</tr>")  # "All" rows: nothing in the Actions column (requested twice -- not even the lineup / scorers)
             elif lvl == "formation" and _ri in _solo.values():
                 _form_n = n
                 continue
@@ -5081,7 +5081,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     _lab = "No Formation"  # CONFIRMED CHANGE (requested: "(none tagged)" -> "No Formation")
                 add(f'<tr class="ob-form"><td class="l n ob-fm" rowspan="{_span.get(_ri, 1)}">{_lab}{_pct(n, _sit_n)}</td>'
                     f'<td class="l ob-pcall ob-all">All</td><td class="t1">{n}</td>' + _pt
-                    + f'<td class="t1 l w">{_who(r)}</td>' + _cov_cells(None) + _green(r, True) + "</tr>")  # "All" row: no actions (requested) -- lineup / scorers only
+                    + '<td class="t1 l w"></td>' + _cov_cells(None) + _green(r, True) + "</tr>")  # "All" row: nothing in the Actions column (requested twice -- not even the lineup / scorers)
             elif lvl == "play_call":
                 _fr = ob.loc[_solo[_ri]] if _ri in _solo else None
                 _fcell = ""

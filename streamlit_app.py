@@ -15972,6 +15972,10 @@ def render_previous_games():
         if game_pbp.empty:
             st.warning("No play-by-play data found for this game yet.")
         else:
+            # CONFIRMED BUG (fixed; 2026-27: no play-by-play video descriptions yet -> an all-empty number column, and .str
+            # crashed the page). The column is text, empty when missing.
+            game_pbp["video_description"] = (game_pbp["video_description"] if "video_description" in game_pbp.columns
+                                        else pd.Series("", index=game_pbp.index)).fillna("").astype(str)
             game_pbp["play_type"] = game_pbp["video_description"].str.split(">").str[1].str.strip()
             game_pbp["shot_outcome"] = game_pbp["video_description"].str.extract(r"(Make \d+ Pts|Miss \d+ Pts|Turnover|Foul)", expand=False)
 
@@ -17014,6 +17018,10 @@ def render_team():
         st.info("No play-by-play data available yet.")
     else:
         # Parse play type and outcome from video_description
+        # CONFIRMED BUG (fixed; 2026-27: no play-by-play video descriptions yet -> an all-empty number column, and .str
+        # crashed the page). The column is text, empty when missing.
+        pbp["video_description"] = (pbp["video_description"] if "video_description" in pbp.columns
+                                    else pd.Series("", index=pbp.index)).fillna("").astype(str)
         pbp["play_type"] = pbp["video_description"].str.split(">").str[1].str.strip()
         pbp["shot_outcome"] = pbp["video_description"].str.extract(r"(Make \d+ Pts|Miss \d+ Pts|Turnover|Foul)", expand=False)
 
