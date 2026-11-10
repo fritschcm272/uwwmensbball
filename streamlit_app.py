@@ -8160,6 +8160,7 @@ def render_film_tagging():
                "**space** = play / pause. The 10th clip's Next saves these 10 and opens the next 10.")
     _bid = f"{d.get('slug')}_{d.get('run')}_{_blk}"
     _form = _form_no_enter(f"ft_form_{_bid}")
+    _clr_pi, _fill_pi = [], []
     with _form:
         for pi in range(_lo, _hi):
             pl = _all[pi]
@@ -8186,6 +8187,19 @@ def render_film_tagging():
                         st.image(os.path.join(d["_dir"], pl["clip"]))
                 if pl.get("synergy_url"):
                     st.markdown(f"[Open in Synergy]({pl['synergy_url']})" + (f" (clip {pl['synergy_pos']})" if pl.get("synergy_pos") else ""))
+                # CONFIRMED CHANGE (requested: "Add a button to clear out any pre-filled suggestions" -> "just clear the
+                # current clip"): this clip's fields still on the automatic suggestion go to -- (picked, typed or saved
+                # answers are kept). Each clip has its own button, so only the clip on screen is cleared.
+                _cb1, _cb2, _ = st.columns([1, 1, 2])
+                if _cb1.form_submit_button("Clear suggestions on this clip", key=f"ftclr_{_bid}_{pi}", use_container_width=True,
+                                           help="Sets every field of THIS clip that's still on the automatic suggestion to --"):
+                    _clr_pi.append(pi)
+                # CONFIRMED CHANGE (requested: "Add a button to forward fill the situation and formation from the current
+                # clip"): this clip's Situation and Formation are copied to every later clip in these 10
+                if _cb2.form_submit_button("Fill situation + formation forward", key=f"ftfill_{_bid}_{pi}",
+                                           use_container_width=True, disabled=pi >= _hi - 1,
+                                           help="Copies THIS clip's Situation and Formation to the rest of these 10 clips"):
+                    _fill_pi.append(pi)
                 _ft_field_widgets(d, pi, store, kp)
                 _ft_actions_editor(d, pi, store, kp)
         _go = st.form_submit_button(f"Save clips {_lo + 1}–{_hi}" + (" and open the next 10" if _blk < _nb - 1 else ""),
@@ -8218,6 +8232,59 @@ if(!P.__ftWatch){P.__ftWatch=setInterval(function(){var bar=D.getElementById('ft
 var t=0,iv=setInterval(function(){show();if(++t>40)clearInterval(iv);},250);})();</script>""" % (json.dumps(_bid), _hi - _lo), height=0)
     except Exception:
         pass
+    if _fill_pi:
+        _run = d.get("run")
+        _savedv = st.session_state.get(f"_ft_savedvals_{_run}") or {}
+
+        def _ans(pi_, fi_, f_):
+            """the answer this field shows now (store, else the saved / coach / automatic starting answer)"""
+            v_ = store.get(f"{kp}_v_{_run}_{pi_}_{fi_}")
+            if v_ == "wrong":
+                return store.get(f"{kp}_t_{_run}_{pi_}_{fi_}")
+            if v_ == "right":
+                return f_.get("auto")
+            if v_ == "cleared":
+                return None
+            return _savedv.get((pi_, fi_)) or (f_.get("coach") or None) or f_.get("auto")
+        src = _fill_pi[0]
+        _src_f = {f_.get("field"): (fi_, f_) for fi_, f_ in enumerate(_all[src].get("fields", []))}
+        _n_fill = 0
+        for fld in ("situation", "formation"):
+            if fld not in _src_f:
+                continue
+            a_ = _ans(src, *_src_f[fld])
+            for pj in range(src + 1, _hi):
+                for fj, fj_ in enumerate(_all[pj].get("fields", [])):
+                    if fj_.get("field") != fld:
+                        continue
+                    kv, kt = f"{kp}_v_{_run}_{pj}_{fj}", f"{kp}_t_{_run}_{pj}_{fj}"
+                    if not a_:
+                        store[kv] = "cleared"
+                        store.pop(kt, None)
+                    elif fj_.get("auto") and _pr_norm(a_) == _pr_norm(fj_["auto"]):
+                        store[kv] = "right"
+                        store.pop(kt, None)
+                    else:
+                        store[kv], store[kt] = "wrong", a_
+                    st.session_state.pop(f"{kv}_ft", None)       # (so the list and box redraw with it)
+                    st.session_state.pop(f"{kt}_ft", None)
+                    _n_fill += 1
+        st.session_state["_ft_flash"] = (f"Situation and formation of clip {src - _lo + 1} copied to clips {src - _lo + 2}\u2013"
+                                         f"{_hi - _lo} of these 10.")
+        st.rerun()
+    if _clr_pi:
+        _n_clr = 0
+        _savedv = st.session_state.get(f"_ft_savedvals_{d.get('run')}") or {}
+        for pi in _clr_pi:
+            for fi, f in enumerate(_all[pi].get("fields", [])):
+                kv = f"{kp}_v_{d.get('run')}_{pi}_{fi}"
+                if f.get("auto") and kv not in store and not _savedv.get((pi, fi)):
+                    store[kv] = "cleared"
+                    store.pop(f"{kp}_t_{d.get('run')}_{pi}_{fi}", None)
+                    st.session_state.pop(f"{kv}_ft", None)       # (so the list redraws on --)
+                    _n_clr += 1
+        st.session_state["_ft_flash"] = f"Cleared {_n_clr} automatic suggestion(s) on clip {_clr_pi[0] - _lo + 1} of these 10."
+        st.rerun()
     if _go:
         if not str(_coach).strip():
             st.error("Add your name at the top, then press Save again (your answers are still there).")
