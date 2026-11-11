@@ -137,9 +137,12 @@ def extract_roster_from_pdf(elements_df, opponent):
                         content = nel["element_content"].strip()
                         if "player notes" in content.lower() and "keys to defending" in content.lower():
                             combined_blob = content
-                        elif _mode == "notes" and content:
+                        # CONFIRMED BUG (fixed; the brief showed bullets reading just "S" and "L"): Ripon's 11/14 report is
+                        # still being written -- several players' notes / keys are a single letter ("H", "S", "L", "N",
+                        # "B", "E"). A line of 1-2 characters isn't a note and is skipped.
+                        elif _mode == "notes" and len(content) > 2:
                             notes.append(content)
-                        elif _mode == "keys" and content:
+                        elif _mode == "keys" and len(content) > 2:
                             keys.append(content)
                     else:
                         _mode = None

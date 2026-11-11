@@ -717,4 +717,12 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-10T07:48:19,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
 2026-11-10T08:57:49,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
 2026-11-10T09:04:00,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
-2026-11-10T09:09:16,screener,Screener,,,,,125,nan,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
+2026-11-10T09:09:16,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
+2026-11-10T18:46:15,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
+2026-11-10T18:55:10,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
+2026-11-10T19:06:12,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
+2026-11-10T19:26:28,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
+2026-11-10T19:53:25,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
+2026-11-10T20:06:12,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
+2026-11-10T20:10:39,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
+2026-11-10T20:14:53,screener,Screener,,,,,125,nan,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22

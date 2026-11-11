@@ -2,41 +2,44 @@ opponent,day,date,segment,minutes,detail,ties_to,schedule_is_sample,is_sample
 Ripon Red Hawks,Recovery + film,"Mon, Nov 9",Film,40,"Scout film: Ripon Motion #1, Motion, Ripon Motion Option #2",Opponent sets,True,True
 Ripon Red Hawks,Recovery + film,"Mon, Nov 9",Shooting,20,"Form and free throws, no contact",,True,True
 Ripon Red Hawks,Practice 1,"Tue, Nov 10",Warm-up / dynamic,10,,,True,True
-Ripon Red Hawks,Practice 1,"Tue, Nov 10",Defensive install,12,Take away their go-to set: Ripon Motion #1,Key 4,True,True
-Ripon Red Hawks,Practice 1,"Tue, Nov 10",Defensive install,12,Know their best set: STAGGER,Key 5,True,True
+Ripon Red Hawks,Practice 1,"Tue, Nov 10",Defensive install,12,Opponent strength: Motion offense with good ball movement & cutting,Key 5,True,True
+Ripon Red Hawks,Practice 1,"Tue, Nov 10",Defensive install,12,Take away their go-to set: Ripon Motion #1,Key 6,True,True
+Ripon Red Hawks,Practice 1,"Tue, Nov 10",Defensive install,12,Know their best set: STAGGER,Key 7,True,True
 Ripon Red Hawks,Practice 1,"Tue, Nov 10",Scout team,15,"Scout team runs Ripon Motion #1, Motion, Ripon Motion Option #2",Opponent sets,True,True
 Ripon Red Hawks,Practice 1,"Tue, Nov 10",Defensive emphasis,10,"Reps in press -- they scored 0.75 PPP against it on 13 tagged possessions, their lowest",What to play them in,True,True
 Ripon Red Hawks,Practice 1,"Tue, Nov 10",Press reps,8,Press reps -- pressure moved their turnover rate +23.7 points (13% to 37%) over 19 pressed possessions,Pressure response,True,True
-Ripon Red Hawks,Practice 1,"Tue, Nov 10",Offensive emphasis,10,Attack Opponent Worst Offensive Shot Selection & Quality,Key 1,True,True
-Ripon Red Hawks,Practice 1,"Tue, Nov 10",Offensive emphasis,10,Call our best set: Motion,Key 2,True,True
+Ripon Red Hawks,Practice 1,"Tue, Nov 10",Offensive emphasis,10,ATTACK THE BASKET,Key 1,True,True
+Ripon Red Hawks,Practice 1,"Tue, Nov 10",Offensive emphasis,10,Attack Opponent Worst Offensive Shot Selection & Quality,Key 2,True,True
 Ripon Red Hawks,Practice 1,"Tue, Nov 10",Special situations,8,Defend BLOB BLOB #1,Opponent sets,True,True
 Ripon Red Hawks,Practice 1,"Tue, Nov 10",Late game,8,End-of-game situations,,True,True
-Ripon Red Hawks,Practice 1,"Tue, Nov 10",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- counter with Madson, McEwen, Rogers, Teague-Johnson, Castillo",Key 6,True,True
+Ripon Red Hawks,Practice 1,"Tue, Nov 10",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- counter with Madson, McEwen, Rogers, Teague-Johnson, Castillo",Key 8,True,True
 Ripon Red Hawks,Practice 2,"Wed, Nov 11",Warm-up / dynamic,10,,,True,True
-Ripon Red Hawks,Practice 2,"Wed, Nov 11",Defensive install,12,Take away their go-to set: Ripon Motion #1,Key 4,True,True
-Ripon Red Hawks,Practice 2,"Wed, Nov 11",Defensive install,12,Know their best set: STAGGER,Key 5,True,True
+Ripon Red Hawks,Practice 2,"Wed, Nov 11",Defensive install,12,Opponent strength: Motion offense with good ball movement & cutting,Key 5,True,True
+Ripon Red Hawks,Practice 2,"Wed, Nov 11",Defensive install,12,Take away their go-to set: Ripon Motion #1,Key 6,True,True
+Ripon Red Hawks,Practice 2,"Wed, Nov 11",Defensive install,12,Know their best set: STAGGER,Key 7,True,True
 Ripon Red Hawks,Practice 2,"Wed, Nov 11",Scout team,15,"Scout team runs Ripon Motion #1, Motion, Ripon Motion Option #2",Opponent sets,True,True
 Ripon Red Hawks,Practice 2,"Wed, Nov 11",Defensive emphasis,10,"Reps in press -- they scored 0.75 PPP against it on 13 tagged possessions, their lowest",What to play them in,True,True
 Ripon Red Hawks,Practice 2,"Wed, Nov 11",Press reps,8,Press reps -- pressure moved their turnover rate +23.7 points (13% to 37%) over 19 pressed possessions,Pressure response,True,True
-Ripon Red Hawks,Practice 2,"Wed, Nov 11",Offensive emphasis,10,Attack Opponent Worst Offensive Shot Selection & Quality,Key 1,True,True
-Ripon Red Hawks,Practice 2,"Wed, Nov 11",Offensive emphasis,10,Call our best set: Motion,Key 2,True,True
+Ripon Red Hawks,Practice 2,"Wed, Nov 11",Offensive emphasis,10,ATTACK THE BASKET,Key 1,True,True
+Ripon Red Hawks,Practice 2,"Wed, Nov 11",Offensive emphasis,10,Attack Opponent Worst Offensive Shot Selection & Quality,Key 2,True,True
 Ripon Red Hawks,Practice 2,"Wed, Nov 11",Special situations,8,Defend BLOB BLOB #1,Opponent sets,True,True
 Ripon Red Hawks,Practice 2,"Wed, Nov 11",Late game,8,End-of-game situations,,True,True
-Ripon Red Hawks,Practice 2,"Wed, Nov 11",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- counter with Madson, McEwen, Rogers, Teague-Johnson, Castillo",Key 6,True,True
+Ripon Red Hawks,Practice 2,"Wed, Nov 11",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- counter with Madson, McEwen, Rogers, Teague-Johnson, Castillo",Key 8,True,True
 Ripon Red Hawks,Practice 3,"Thu, Nov 12",Warm-up / dynamic,10,,,True,True
-Ripon Red Hawks,Practice 3,"Thu, Nov 12",Defensive install,12,Take away their go-to set: Ripon Motion #1,Key 4,True,True
-Ripon Red Hawks,Practice 3,"Thu, Nov 12",Defensive install,12,Know their best set: STAGGER,Key 5,True,True
+Ripon Red Hawks,Practice 3,"Thu, Nov 12",Defensive install,12,Opponent strength: Motion offense with good ball movement & cutting,Key 5,True,True
+Ripon Red Hawks,Practice 3,"Thu, Nov 12",Defensive install,12,Take away their go-to set: Ripon Motion #1,Key 6,True,True
+Ripon Red Hawks,Practice 3,"Thu, Nov 12",Defensive install,12,Know their best set: STAGGER,Key 7,True,True
 Ripon Red Hawks,Practice 3,"Thu, Nov 12",Scout team,15,"Scout team runs Ripon Motion #1, Motion, Ripon Motion Option #2",Opponent sets,True,True
 Ripon Red Hawks,Practice 3,"Thu, Nov 12",Defensive emphasis,10,"Reps in press -- they scored 0.75 PPP against it on 13 tagged possessions, their lowest",What to play them in,True,True
 Ripon Red Hawks,Practice 3,"Thu, Nov 12",Press reps,8,Press reps -- pressure moved their turnover rate +23.7 points (13% to 37%) over 19 pressed possessions,Pressure response,True,True
-Ripon Red Hawks,Practice 3,"Thu, Nov 12",Offensive emphasis,10,Attack Opponent Worst Offensive Shot Selection & Quality,Key 1,True,True
-Ripon Red Hawks,Practice 3,"Thu, Nov 12",Offensive emphasis,10,Call our best set: Motion,Key 2,True,True
+Ripon Red Hawks,Practice 3,"Thu, Nov 12",Offensive emphasis,10,ATTACK THE BASKET,Key 1,True,True
+Ripon Red Hawks,Practice 3,"Thu, Nov 12",Offensive emphasis,10,Attack Opponent Worst Offensive Shot Selection & Quality,Key 2,True,True
 Ripon Red Hawks,Practice 3,"Thu, Nov 12",Special situations,8,Defend BLOB BLOB #1,Opponent sets,True,True
 Ripon Red Hawks,Practice 3,"Thu, Nov 12",Late game,8,End-of-game situations,,True,True
-Ripon Red Hawks,Practice 3,"Thu, Nov 12",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- counter with Madson, McEwen, Rogers, Teague-Johnson, Castillo",Key 6,True,True
+Ripon Red Hawks,Practice 3,"Thu, Nov 12",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- counter with Madson, McEwen, Rogers, Teague-Johnson, Castillo",Key 8,True,True
 Ripon Red Hawks,Practice 4 (light),"Fri, Nov 13",Warm-up / dynamic,10,,,True,True
-Ripon Red Hawks,Practice 4 (light),"Fri, Nov 13",Defensive walkthrough,10,Take away their go-to set: Ripon Motion #1,Key 4,True,True
+Ripon Red Hawks,Practice 4 (light),"Fri, Nov 13",Defensive walkthrough,10,Opponent strength: Motion offense with good ball movement & cutting,Key 5,True,True
 Ripon Red Hawks,Practice 4 (light),"Fri, Nov 13",Scout team,15,"Scout team runs Ripon Motion #1, Motion, Ripon Motion Option #2",Opponent sets,True,True
-Ripon Red Hawks,Practice 4 (light),"Fri, Nov 13",Offensive emphasis,10,Attack Opponent Worst Offensive Shot Selection & Quality,Key 1,True,True
+Ripon Red Hawks,Practice 4 (light),"Fri, Nov 13",Offensive emphasis,10,ATTACK THE BASKET,Key 1,True,True
 Ripon Red Hawks,Practice 4 (light),"Fri, Nov 13",Special situations,8,Defend BLOB BLOB #1,Opponent sets,True,True
 Ripon Red Hawks,Game day,"Sat, Nov 14",Shootaround,45,"Walk their sets, matchups and the foul list; 50 game-speed shots each",Matchups,True,True

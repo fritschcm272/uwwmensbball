@@ -8297,6 +8297,153 @@ var t=0,iv=setInterval(function(){show();if(++t>40)clearInterval(iv);},250);})()
 
 
 # ---------------------------------------------------------------------------------------------------------------------
+# Analytics > Play Diagrams. CONFIRMED CHANGE (requested: "I need a way in the application for the coaches to be given a list of
+# all the plays that were tagged and then they can upload an image of all the plays (ex. Ripon Motion #1). I then want there
+# to be a collapsed section in all of the briefs that allow the coaches to view these images."). Every tagged play call of a
+# team (this season), how often it was tagged, and an upload box. An upload is committed to the saves branch as
+# data/play_diagrams/<team>__<play>__<time>.<ext> (the newest one counts); the parser copies the folder on its next run and
+# every brief shows the team's diagrams in a collapsed "Play diagrams" section under its offense table.
+# ---------------------------------------------------------------------------------------------------------------------
+PD_FOLDER = "data/play_diagrams"
+
+
+def _pd_key(x):
+    """Same matching as the parser's play-call names: capitals, spaces, punctuation, a bracket note and "option" ignored."""
+    k = re.sub(r"\([^)]*\)", " ", str(x).lower())
+    k = re.sub(r"\b(?:option|opt)\b\.?", " ", k)
+    return re.sub(r"[^a-z0-9#]+", "", k).replace("#", "n") or "x"
+
+
+@st.cache_data(ttl=120, show_spinner=False)
+def _pd_remote_list(token, repo, sb):
+    """Diagram files on the saves branch -> {file name: (api url, size)}."""
+    import requests
+    out = {}
+    if not (token and repo and sb):
+        return out
+    try:
+        r = requests.get(f"https://api.github.com/repos/{repo}/contents/{PD_FOLDER}", params={"ref": sb},
+                         headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"}, timeout=20)
+        if r.status_code == 200 and isinstance(r.json(), list):
+            out = {it["name"]: (it["url"], it.get("size")) for it in r.json() if it.get("type") == "file"}
+    except Exception:
+        pass
+    return out
+
+
+@st.cache_data(ttl=600, show_spinner=False)
+def _pd_remote_bytes(token, url):
+    import requests
+    try:
+        r = requests.get(url, headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github.raw"}, timeout=30)
+        return r.content if r.status_code == 200 else None
+    except Exception:
+        return None
+
+
+def _pd_latest(team):
+    """{play key: (file name, image bytes)} -- the newest diagram per play of this team (local data folder + saves branch)."""
+    tk = _pd_key(team)
+    files = {}
+    for f in glob.glob(os.path.join(DATA_DIR, "play_diagrams", "*")):
+        files[os.path.basename(f)] = ("local", f)
+    try:
+        token, repo, _br, sb, _f = _gh_cfg()
+        for n, (u, _sz) in _pd_remote_list(token, repo, sb).items():
+            files.setdefault(n, ("remote", u))
+    except Exception:
+        token = None
+    best = {}
+    for n in sorted(files):                              # names end in <time>, so later sorts last
+        parts = n.rsplit(".", 1)[0].split("__")
+        if len(parts) < 3 or parts[0] != tk:
+            continue
+        best[parts[1]] = n
+    out = {}
+    for pk, n in best.items():
+        kind, loc = files[n]
+        if kind == "local":
+            try:
+                with open(loc, "rb") as fh:
+                    out[pk] = (n, fh.read())
+            except Exception:
+                continue
+        else:
+            b = _pd_remote_bytes(token, loc)
+            if b:
+                out[pk] = (n, b)
+    return out
+
+
+def _pd_upload(team, play, data, ext, coach):
+    import requests
+    token, repo, branch, sb, _f = _gh_cfg()
+    if not token or not repo:
+        return False, "GitHub isn't set up in the app's secrets yet ([github] token and repo)"
+    name = f"{_pd_key(team)}__{_pd_key(play)}__{datetime.now().strftime('%Y%m%d_%H%M%S')}.{ext}"
+    try:
+        r = requests.put(f"https://api.github.com/repos/{repo}/contents/{PD_FOLDER}/{name}",
+                         headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"},
+                         json={"message": f"Play diagram: {team} -- {play} by {coach}",
+                               "content": base64.b64encode(data).decode(), "branch": sb or branch}, timeout=60)
+    except Exception as e:
+        return False, f"{type(e).__name__}: {e}"
+    if r.status_code in (200, 201):
+        _pd_remote_list.clear()
+        return True, name
+    return False, f"GitHub said {r.status_code}: {r.text[:200]}"
+
+
+def render_play_diagrams():
+    section_header("\U0001f5bc\ufe0f PLAY DIAGRAMS",
+                   "Every play call tagged for a team this season. Upload a picture of each play (a whiteboard photo, a "
+                   "screenshot of the diagram...) -- every scouting brief shows the team's diagrams in a collapsed "
+                   "\"Play diagrams\" section after the next parser run.")
+    pc = load_table("uww_play_calls")
+    if pc.empty or "play_call" not in pc.columns or "offense_team" not in pc.columns:
+        st.info("No tagged play calls yet.")
+        return
+    t = pc[pc["play_call"].notna() & ~pc["play_call"].astype(str).str.contains("unspecified", case=False, na=False)
+           & (pc["play_call"].astype(str).str.strip() != "") & pc["offense_team"].notna()].copy()
+    if "game_date" in t.columns:                     # this season (from August)
+        _gd = pd.to_datetime(t["game_date"], errors="coerce")
+        _y = _gd.max().year - (1 if _gd.max().month < 8 else 0) if _gd.notna().any() else None
+        if _y:
+            t = t[_gd >= pd.Timestamp(_y, 8, 1)]
+    if t.empty:
+        st.info("No tagged play calls this season yet.")
+        return
+    teams = t["offense_team"].astype(str).value_counts()
+    _opp = None
+    if "side" in t.columns and (t["side"] == "Opponent").any():
+        _opp = t.loc[t["side"] == "Opponent", "offense_team"].astype(str).value_counts().index[0]
+    _ti = list(teams.index).index(_opp) if _opp in teams.index else 0
+    team = st.selectbox("Team", list(teams.index), index=_ti,
+                        format_func=lambda x: f"{x} ({teams[x]} tagged possessions)", key="pd_team")
+    coach = st.text_input("Your name (required to upload)", key="pd_coach")
+    tt = t[t["offense_team"].astype(str) == team]
+    calls = tt.groupby(tt["play_call"].astype(str)).size().sort_values(ascending=False)
+    have = _pd_latest(team)
+    st.caption(f"{len(calls)} play call(s) tagged \u00b7 {sum(_pd_key(c) in have for c in calls.index)} with a diagram (\u2705)")
+    for call, n in calls.items():
+        ok_ = _pd_key(call) in have
+        _mk = "\u2705" if ok_ else "\u2b1c"
+        with st.expander(f"{_mk} {call} \u2014 tagged {n}x", expanded=False):
+            if ok_:
+                st.image(have[_pd_key(call)][1], caption=f"Current diagram ({have[_pd_key(call)][0]})", use_container_width=True)
+            up = st.file_uploader("Upload " + ("a new diagram (replaces the current one)" if ok_ else "the diagram"),
+                                  type=["png", "jpg", "jpeg", "gif", "webp"], key=f"pd_up_{_pd_key(team)}_{_pd_key(call)}")
+            if up is not None and st.button("Save this diagram", key=f"pd_save_{_pd_key(team)}_{_pd_key(call)}", type="primary"):
+                if not str(coach).strip():
+                    st.error("Add your name at the top first.")
+                else:
+                    ext = up.name.rsplit(".", 1)[-1].lower() if "." in up.name else "png"
+                    okk, msg = _pd_upload(team, call, up.getvalue(), ext, coach)
+                    (st.success if okk else st.error)(("Saved -- it shows in the briefs after the next parser run."
+                                                       if okk else "Not saved: ") + ("" if okk else msg))
+
+
+# ---------------------------------------------------------------------------------------------------------------------
 # Analytics > Court Calibration. CONFIRMED CHANGE (requested: "add court calibrations to the application instead of
 # stopping the parser notebook ... like the player number tracking ... and it would pick up the calibrations on the next
 # run of the parser"). The parser writes one package per uncalibrated gym into data/court_calibration/<gym>/ (request.json
@@ -18365,6 +18512,7 @@ def render_analytics():
         "Player Number Tracking": render_player_number_tracking,
         "Court Calibration": render_court_calibration,
         "Film Tagging": render_film_tagging,
+        "Play Diagrams": render_play_diagrams,
     }
     _tab_order = list(_renderers)
     _pinned = st.session_state.get("_analytics_open_tab")

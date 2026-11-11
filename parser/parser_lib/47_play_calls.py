@@ -2495,6 +2495,32 @@ def _sync_saves_branch(d):
                       f"OneDrive full?", flush=True)
         if n_fixed:
             print(f"  [saves] {n_fixed} saved review file(s) here were damaged or out of date -- replaced from the branch", flush=True)
+        # CONFIRMED CHANGE (requested: coaches upload a diagram of each play in the app -- Analytics > Play Diagrams -- and
+        # the briefs show them): the saves branch's data/play_diagrams/ folder is copied next to the saves
+        # (<data>/play_diagrams), new / changed files only.
+        try:
+            _pd_rel = (os.path.dirname(rel) + "/play_diagrams").lstrip("/")
+            _pd_dst = os.path.join(os.path.dirname(d), "play_diagrams")
+            _pls = _sp.run([git_, "-C", top_dir, "ls-tree", "-r", f"origin/{br}", "--", _pd_rel],
+                           capture_output=True, text=True, timeout=90)
+            _n_pd = 0
+            for _ln in _pls.stdout.splitlines():
+                _meta, _, _pth = _ln.partition("\t")
+                if len(_meta.split()) != 3:
+                    continue
+                _dst = os.path.join(_pd_dst, os.path.basename(_pth.strip('"')))
+                if os.path.exists(_dst):
+                    continue
+                _b = _sp.run([git_, "-C", top_dir, "cat-file", "blob", _meta.split()[2]], capture_output=True, timeout=60)
+                if _b.returncode == 0:
+                    os.makedirs(_pd_dst, exist_ok=True)
+                    with open(_dst, "wb") as fh:
+                        fh.write(_b.stdout)
+                    _n_pd += 1
+            if _n_pd:
+                print(f"  [saves] {_n_pd} new play diagram(s) copied into {os.path.relpath(_pd_dst, top_dir)}", flush=True)
+        except Exception as _pde:
+            print(f"  [saves] play diagrams not copied ({type(_pde).__name__}: {_pde})", flush=True)
         _tip = run_("log", "-1", "--format=%ci  %s", f"origin/{br}").stdout.strip()
         _n_br = len([x for x in ls.stdout.splitlines() if x.endswith(".json")])
         print(f"  [saves] fetched branch '{br}': {n_new} new saved review file(s) copied into {rel} "
@@ -4220,6 +4246,7 @@ def season_play_calls(df):
 PLAY_CALL_RENAMES = globals().get("PLAY_CALL_RENAMES") or {
     "RIPON MOTION": "Ripon Motion #1",
     "Ripon Motion left": "Ripon Motion #1",
+    "Ripon Motion #2": "Ripon Motion #2",         # (also "Ripon Motion Option #2", "RIPON MOTION #2 (RICKY)" -- requested)
 }
 
 
@@ -5249,6 +5276,134 @@ def _pl_offense_breakdown(pc):
         agg = x.groupby(x["player"].astype(str).str.strip())["_P"].agg(["sum", "count"]).sort_values(["sum", "count"], ascending=False)
         return " · ".join(f"{_short_last(nm)} {int(r_['sum'])} pts ({int(r_['count'])})" for nm, r_ in agg.head(3).iterrows())
 
+    # CONFIRMED CHANGE (requested: "Right above the table, I want you to summarize the table into a few bullet points that
+    # explains what play calls and actions they run most out of each formation. I would include what they did the most and
+    # what things they were most successful in doing. Include which lineup or players we need to be aware of, what defense
+    # their opponents were doing and also if we should do something the same or different."). uww_offense_summary: a few
+    # bullets per team (perspective as in the table), worked out here from the same possessions.
+    _SMIN = int(globals().get("OB_SUMMARY_MIN_POSS", 2))      # a play call / coverage needs this many possessions to rate
+
+    def _summary(g, opp, side, team):
+        out = []
+        name = "we" if side == "UWW" else str(team)
+        hc = g[g["_SIT"] == "Half court"]
+        hc = hc if len(hc) else g
+        tp = ppp(g)
+        _pc_ok = lambda x: x["play_call"].notna() & ~x["play_call"].astype(str).str.contains("unspecified", case=False, na=False) \
+            & (x["play_call"].astype(str).str.strip() != "")  # noqa: E731
+        add = lambda kind, text: out.append({"scouted_opponent": opp, "perspective": side, "team": team, "order": len(out) + 1,  # noqa: E731
+                                             "kind": kind, "text": text})
+        # 1. by formation (the three most used in the half court). CONFIRMED CHANGE (requested: written as sentences --
+        # "When they are running I Form, be aware that they run Ripon Motion #1 the most (45%, 0.78 PPP). Opponents struggled
+        # to stop Ripon Motion #1 with Switch 2 ball coverage (1.50 PPP). They were most successful running RIPON MOTION #3
+        # (10%, 1.00 PPP).") -- % = share of that formation's possessions.
+        _us_ = side == "UWW"
+
+        def _block(gf, lab, kind, intro=None):
+            pcs = gf[_pc_ok(gf)]
+            vc = pcs["play_call"].astype(str).value_counts()
+            pct = lambda n_: round(100 * n_ / max(len(gf), 1))  # noqa: E731
+            if not len(vc):
+                add(kind, (intro + ", no play call has been tagged yet.") if intro else
+                    ((f"When we run {lab}" if _us_ else f"When they are running {lab}")
+                     + f" ({len(gf)} possessions" + (f", {ppp(gf):.2f} PPP" if ppp(gf) is not None else "")
+                     + "), no play call has been tagged yet."))
+                return
+            top_n = vc.index[0]
+            gt = pcs[pcs["play_call"].astype(str) == top_n]
+            pt = ppp(gt)
+            txt = (((intro + f", {'we' if _us_ else 'they'} run {top_n} the most") if intro else
+                    (f"When we run {lab}, we run {top_n} the most" if _us_ else
+                     f"When they are running {lab}, be aware that they run {top_n} the most"))
+                   + f" ({pct(len(gt))}%" + (f", {pt:.2f} PPP" if pt is not None else "") + ").")
+            # the ball-screen coverage that did best / worst against that play call
+            cgt = _cov_split(gt)
+            cgt = cgt[cgt["kind"] == "Ball screen"] if len(cgt) else cgt
+            covs = [(f_, len(x), ppp(x)) for f_, x in cgt.groupby("fam")] if len(cgt) else []
+            covs = [z for z in covs if z[2] is not None]
+            if covs:
+                hi = max(covs, key=lambda z: (z[2], z[1]))
+                lo = min(covs, key=lambda z: (z[2], -z[1]))
+                # CONFIRMED CHANGE (requested wording: "Opponents struggled to stop it with ball-screen coverage of Switch
+                # (2x, 1.50 PPP) but Drop slowed it down best (1x, 0.00 PPP).") -- one sentence
+                _struggle = tp is not None and hi[2] > tp
+                _slow = lo[0] != hi[0] or (tp is not None and lo[2] <= tp)
+                if _struggle and _slow and lo[0] != hi[0]:
+                    txt += (f" Opponents struggled to stop it with ball-screen coverage of {hi[0]} ({hi[1]}x, {hi[2]:.2f} PPP)"
+                            f" but {lo[0]} slowed it down best ({lo[1]}x, {lo[2]:.2f} PPP).")
+                elif _struggle:
+                    txt += f" Opponents struggled to stop it with ball-screen coverage of {hi[0]} ({hi[1]}x, {hi[2]:.2f} PPP)."
+                elif _slow:
+                    txt += f" Ball-screen coverage of {lo[0]} slowed it down best ({lo[1]}x, {lo[2]:.2f} PPP)."
+            best = None
+            for pcn, gp in pcs.groupby(pcs["play_call"].astype(str)):
+                pp_ = ppp(gp)
+                if len(gp) >= _SMIN and pp_ is not None and (best is None or pp_ > best[1]):
+                    best = (pcn, pp_, len(gp))
+            if best and best[0] != top_n:
+                txt += (f" {'We were' if _us_ else 'They were'} most successful running {best[0]} "
+                        f"({pct(best[2])}%, {best[1]:.2f} PPP).")
+            elif best:
+                txt += f" It's also {'our' if _us_ else 'their'} most successful play call out of {lab}."
+            add(kind, txt)
+
+        for fm, gf in sorted(hc.groupby("_FORM"), key=lambda x: -len(x[1]))[:3]:
+            _block(gf, "no formation" if fm == "(none tagged)" else fm, "formation")
+        # CONFIRMED CHANGE (requested: "Also include one bullet point each for SLOB and BLOB formations")
+        for _ob in ("BLOB", "SLOB"):
+            go = g[g["_SIT"].astype(str).str.upper() == _ob]
+            if len(go):
+                _block(go, _ob, "oob", intro=(f"On {_ob} ({len(go)} possessions"
+                                              + (f", {ppp(go):.2f} PPP" if ppp(go) is not None else "") + ")"))
+        # 2. most successful (play calls and actions, SMIN+ possessions, above the team's average)
+        good = []
+        for pcn, gp in g[_pc_ok(g)].groupby(g.loc[_pc_ok(g), "play_call"].astype(str)):
+            pp_ = ppp(gp)
+            if len(gp) >= _SMIN and pp_ is not None and (tp is None or pp_ > tp):
+                good.append((pp_, len(gp), pcn))
+        acts_good = []
+        for lab_a, rx in ACTION_GROUPS:
+            x = g[g["_ACTS"].str.contains(rx, regex=True)]
+            pp_ = ppp(x)
+            if len(x) >= _SMIN and pp_ is not None and (tp is None or pp_ > tp):
+                acts_good.append((pp_, len(x), _lab(lab_a)))
+        # CONFIRMED CHANGE (requested: "Split the Most successful line into 2 ... one explaining the most successful play
+        # calls overall and the most successful actions")
+        _avg = f" (team average {tp:.2f} PPP)." if tp is not None else "."
+        if good:
+            add("success", ("Most successful play calls overall: " if side != "UWW" else "Our most successful play calls: ")
+                + " · ".join(f"{n_} ({c_}x, {p_:.2f} PPP)" for p_, c_, n_ in sorted(good, reverse=True)[:3]) + _avg)
+        if acts_good:
+            add("success_actions", ("Most successful actions: " if side != "UWW" else "Our most successful actions: ")
+                + " · ".join(f"{n_} ({c_}x, {p_:.2f} PPP)" for p_, c_, n_ in sorted(acts_good, reverse=True)[:3]) + _avg)
+        # 3. who to be aware of
+        # (CONFIRMED CHANGE, requested: the "Be aware of" five goes into the TOP LINEUPS table now -- only the top scorers
+        # are kept here, printed under that table)
+        sc = _top_scorers(g)
+        if sc:
+            add("scorers", ("Top scorers on tagged plays: " if side != "UWW" else "Our top scorers on tagged plays: ") + sc + ".")
+        # 4. the defense their opponents played, and 5. same or different
+        cg = _cov_split(g)
+        cg = cg[cg["kind"] == "Ball screen"] if len(cg) else cg
+        if len(cg):
+            fams = [(f_, len(x), ppp(x)) for f_, x in cg.groupby("fam")]
+            fams = sorted(fams, key=lambda z: -z[1])
+            add("defense", ("Their opponents' ball-screen defense: " if side != "UWW" else "Opponents' ball-screen defense against us: ")
+                + " · ".join(f"{f_} {n_}x" + (f" ({p_:.2f} PPP)" if p_ is not None else "") for f_, n_, p_ in fams[:4]) + ".")
+            rated = [z for z in fams if z[1] >= _SMIN and z[2] is not None]
+            if len(rated) >= 1:
+                lo, hi = min(rated, key=lambda z: z[2]), max(rated, key=lambda z: z[2])
+                if side != "UWW":
+                    txt = f"Do the same: {lo[0]} held them to {lo[2]:.2f} PPP ({lo[1]}x)"
+                    if hi[0] != lo[0]:
+                        txt += f"; do differently than {hi[0]} -- they scored {hi[2]:.2f} PPP against it ({hi[1]}x)"
+                else:
+                    txt = f"Expect {lo[0]} -- it held us to {lo[2]:.2f} PPP ({lo[1]}x)"
+                    if hi[0] != lo[0]:
+                        txt += f"; we scored best against {hi[0]} ({hi[2]:.2f} PPP, {hi[1]}x)"
+                add("advice", txt + ".")
+        return out
+
     rows = []
     # CONFIRMED CHANGE (requested: "the opposite of HOW CARROLL (WI) RUNS OFFENSE for how we run offense and how they
     # might defend it"): the same rows for OUR offense (perspective "UWW"); its comparison side is the opponent's own
@@ -5271,6 +5426,10 @@ def _pl_offense_breakdown(pc):
         uo = (ours if side == "Opponent" else theirs_def)
         uo = uo[uo["scouted_opponent"] == opp]
         _persp = side
+        try:
+            _OB_SUMMARY.extend(_summary(g, opp, side, team))
+        except Exception as _se:
+            print(f"  (offense summary for {team} not written: {type(_se).__name__}: {_se})", flush=True)
         sits = [x for x in _OB_SIT_ORDER if (g["_SIT"] == x).any()] + \
                [x for x in g["_SIT"].value_counts().index if x not in _OB_SIT_ORDER]
         k = 0
@@ -5331,7 +5490,9 @@ def _pl_offense_breakdown(pc):
     return pd.DataFrame(rows)
 
 
+_OB_SUMMARY = []
 offense_breakdown = _pl_offense_breakdown(play_calls)
+offense_summary = pd.DataFrame(_OB_SUMMARY, columns=["scouted_opponent", "perspective", "team", "order", "kind", "text"])
 motion_breakdown, motion_needs_action = _pl_motion_tables(play_calls)
 print(f"  Motion breakdown: {len(motion_breakdown)} team x family row(s); {len(motion_needs_action)} Motion play(s) tagged "
       "with no action (uww_motion_needs_action -- Analytics > Film Tagging lists them)", flush=True)
@@ -5339,7 +5500,7 @@ for _nm, _df in (("uww_screen_defenders", screen_defenders), ("uww_action_reads"
                  ("uww_screen_taggers", screen_taggers),
                  ("uww_motion_breakdown", motion_breakdown), ("uww_motion_needs_action", motion_needs_action),
                  ("uww_action_frequency", action_frequency), ("uww_player_tendencies", player_tendencies),
-                 ("uww_offense_breakdown", offense_breakdown)):
+                 ("uww_offense_breakdown", offense_breakdown), ("uww_offense_summary", offense_summary)):
     try:
         _df.to_csv(os.path.join(globals().get("APP_DATA_DIR") or OUTPUT_DIR, f"{_nm}.csv"), index=False)
     except Exception as _e:

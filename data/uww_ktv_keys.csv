@@ -1,18 +1,22 @@
 opponent,game_date,category,key_number,icon,headline,evidence,reasoning,source,impact,confidence,brief_eligible,priority_score
-Ripon Red Hawks,2026-11-14,Offense,1,🎯,Attack Opponent Worst Offensive Shot Selection & Quality,,No video-tagged data yet for teams Ripon Red Hawks played before facing UWW this season -- needs a local/live-scraped _pbp and _video file for each of those games.,Data-Driven,,,False,62.5
-Ripon Red Hawks,2026-11-14,Offense,2,📋,Call our best set: Motion,"0.67 PPP on 6 uses vs our 0.50 overall · 1/5 FG
+Ripon Red Hawks,2026-11-14,Offense,1,📋,ATTACK THE BASKET,,,Keys to Victory,,,True,80.0
+Ripon Red Hawks,2026-11-14,Offense,2,🎯,Attack Opponent Worst Offensive Shot Selection & Quality,,No video-tagged data yet for teams Ripon Red Hawks played before facing UWW this season -- needs a local/live-scraped _pbp and _video file for each of those games.,Data-Driven,,,False,62.5
+Ripon Red Hawks,2026-11-14,Offense,3,📋,Call our best set: Motion,"0.67 PPP on 6 uses vs our 0.50 overall · 1/5 FG
 Finished most by Collin Madson","Our most productive set this season -- go to it when we need a good look, with Collin Madson finishing.",Data-Driven,0.1428571428571428,0.3,True,45.2
-Ripon Red Hawks,2026-11-14,Offense,3,,Send an extra body to the offensive glass,Opponents rebound 40% of their own misses against them.,They secure only 60% of defensive boards -- our misses are live balls. Crash with a fourth man when the shot goes up from the perimeter.,Data-Driven,0.7023255813953488,0.2866666666666667,True,67.4
-Ripon Red Hawks,2026-11-14,Defense,4,📋,Take away their go-to set: Ripon Motion #1,"11 uses in 1 games · 0.64 PPP vs their 0.72 overall · 2/6 FG · 3 TO
+Ripon Red Hawks,2026-11-14,Offense,4,,Send an extra body to the offensive glass,Opponents rebound 40% of their own misses against them.,They secure only 60% of defensive boards -- our misses are live balls. Crash with a fourth man when the shot goes up from the perimeter.,Data-Driven,0.7023255813953488,0.2866666666666667,True,67.4
+Ripon Red Hawks,2026-11-14,Defense,5,⚠️,Opponent strength: Motion offense with good ball movement & cutting,,,Team Strengths,,,True,49.5
+Ripon Red Hawks,2026-11-14,Defense,6,📋,Take away their go-to set: Ripon Motion #1,"11 uses in 1 games · 0.64 PPP vs their 0.72 overall · 2/6 FG · 3 TO
 Finished most by Jose Gonzales
 Built on: Down Screen
 Next most-called: Motion
 Tagged as: [app] I FORM RIPON MOTION: Man-to-Man | [app] Opener I Form Ripon Motion: Man-to-Man | [app] I-Form Ripon Motion left: Man-to-Man (Drop)","Their most-called half-court set. Jose Gonzales finishes it most, usually off the down screen -- take away the down screen and make someone else beat us.",Data-Driven,1.0,0.55,True,83.2
-Ripon Red Hawks,2026-11-14,Defense,5,📋,Know their best set: STAGGER,"1.25 PPP on 4 uses vs 0.72 overall
+Ripon Red Hawks,2026-11-14,Defense,7,📋,Know their best set: STAGGER,"1.25 PPP on 4 uses vs 0.72 overall
 Finished most by Michael Asman",Their most productive set -- recognize the alignment and call it out before the action starts; Michael Asman is usually the one finishing it.,Data-Driven,1.0,0.2,True,71.0
-Ripon Red Hawks,2026-11-14,Personnel,6,🔒,"Counter with Madson, McEwen, Rogers, Teague-Johnson, Castillo","+2.37/min — Madson, McEwen, Rogers, Teague-Johnson, Castillo
+Ripon Red Hawks,2026-11-14,Personnel,8,🔒,"Counter with Madson, McEwen, Rogers, Teague-Johnson, Castillo","+2.37/min — Madson, McEwen, Rogers, Teague-Johnson, Castillo
 +0.90/min — Madson, Lukenbill, McEwen, Rogers, Castillo
-+0.74/min — Madson, Robinson, Lukenbill, McEwen, Teague-Johnson","UWW's best net margin against opponent units that resemble Ripon Red Hawks's most-used lineup (Flowers, Gonzales, Rahn, Asman, Bunders). Target profile: 3 guard, 2 forward · avg 6'4"" · three point shooter / catch and shoot. Measured across 19 comparable opponent unit(s), 40 min this season.",Lineup Scouting,1.0,0.661,True,82.9
-Ripon Red Hawks,2026-11-14,Personnel,7,🔒,"Attack Ripon Red Hawks's Flowers, Gonzales, Asman combo","Worst +/- 3-man combos:
++0.74/min — Madson, Robinson, Lukenbill, McEwen, Teague-Johnson","UWW's best net margin against opponent units that resemble Ripon Red Hawks's most-used lineup (Flowers, Gonzales, Rahn, Asman, Bunders). Target profile: 3 guard, 2 forward · avg 6'4"" · three point shooter / slasher driver / catch and shoot. Measured across 19 comparable opponent unit(s), 40 min this season.",Lineup Scouting,1.0,0.661,True,82.9
+Ripon Red Hawks,2026-11-14,Personnel,9,🔒,"Attack Ripon Red Hawks's Flowers, Gonzales, Asman combo","Worst +/- 3-man combos:
 -6.0 in 12.5 min — Flowers, Gonzales, Asman
 -3.0 in 13.4 min — Flowers, Rahn, Bunders",Ripon Red Hawks's most exploitable 3-man combinations: their worst net-rating units with real minutes this season.,Lineup Scouting,0.96,0.3125,True,76.1
+Ripon Red Hawks,2026-11-14,General,10,📋,DOMINATE THE GLASS,,,Keys to Victory,,,True,80.0
+Ripon Red Hawks,2026-11-14,General,11,📋,COMMUNICATION ON SCREENING ACTION!,,,Keys to Victory,,,True,80.0

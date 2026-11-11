@@ -1107,14 +1107,20 @@ def _download_matching_scout_pdf(page, docs_url, opponent, game_date, location, 
     if os.path.exists(dest_path):
         _rec = _scout_lm_read().get(filename)
         _newer = False
+        _lmt = pd.to_datetime(_lm, errors="coerce") if _lm else pd.NaT
+        _fday = pd.Timestamp(os.path.getmtime(dest_path), unit="s").normalize()
+        _age_h = (time.time() - os.path.getmtime(dest_path)) / 3600
         if refresh_if_modified and _lm and _lm != _rec:
             if _rec is not None:
                 _newer = True                       # FastScout shows a different Last Modified than the saved copy's
             else:
                 # first time it's seen: download again only if FastScout's Last Modified is on/after the saved file's day
-                _lmt = pd.to_datetime(_lm, errors="coerce")
-                _newer = bool(pd.notna(_lmt) and _lmt.normalize()
-                              >= pd.Timestamp(os.path.getmtime(dest_path), unit="s").normalize())
+                _newer = bool(pd.notna(_lmt) and _lmt.normalize() >= _fday)
+        elif (refresh_if_modified and pd.notna(_lmt) and _lmt.normalize() >= _fday
+              and _age_h >= float(globals().get("SCOUT_REFRESH_HOURS", 6))):
+            # Last Modified is only a DATE: edited on (or after) the day the copy was saved, so a later edit that same
+            # day can't be seen -- download again once the copy is SCOUT_REFRESH_HOURS old (it then carries a later day)
+            _newer = True
         if not _newer:
             if _lm and _rec is None:
                 _scout_lm_write(filename, _lm)
@@ -1316,6 +1322,27 @@ if _before_scout_enabled and next_upcoming_date is not None:
     in_scope_mask = in_scope_mask & (raw_uww_games["parsed_date"] != next_upcoming_date)
     print(f"[before_scout=yes] Not downloading a scouting report for the upcoming "
           f"{next_upcoming_date:%m/%d/%y} game.")
+
+# CONFIRMED BUG (fixed; the brief showed "S" / "L" for Ripon players' notes: the 11/14 report was downloaded on 11/9 while
+# the staff was still typing it, and the Last Modified check only ran for an EXTRA_GAMES game). CONFIRMED CHANGE (requested:
+# 'There is also a "Last Modified Date" on the scouting report that you could use'): the UPCOMING game's saved report is
+# checked against FastScout's documents page every run and downloaded again when its Last Modified changed -- or, since
+# Last Modified is only a date, when it's the same day as (or later than) the saved copy and that copy is
+# SCOUT_REFRESH_HOURS (6) old, so edits made later the same day are picked up too (see _download_matching_scout_pdf).
+if next_upcoming_date is not None and not _before_scout_enabled and fastscout_username and fastscout_password:
+    _stem = f"{next_upcoming_date.month}_{next_upcoming_date.day}_{next_upcoming_date.strftime('%y')} "
+    _have_up = [x for x in scout_pdf_files if os.path.basename(x).startswith(_stem) and x.lower().endswith("_scout.html")]
+    _up = raw_uww_games[raw_uww_games["parsed_date"] == next_upcoming_date]
+    if _have_up and len(_up) and pd.notna(_up.iloc[0].get("opponent_url")):
+        _ur = _up.iloc[0]
+        _docs = (f"{str(_ur['opponent_url']).split('?')[0].rstrip('/')}/documents?league={FASTSCOUT_DOCS_LEAGUE}"
+                 f"&season={FASTSCOUT_DOCS_SEASON}")
+        try:
+            run_in_fastscout_session(lambda page: _download_matching_scout_pdf(
+                page, _docs, _ur["opponent"], next_upcoming_date, _ur.get("location"), refresh_if_modified=True))
+        except Exception as _re:
+            print(f"  (upcoming game's report: couldn't check FastScout's Last Modified -- {type(_re).__name__}: "
+                  f"{str(_re)[:160]})", flush=True)
 
 games_needing_scout_pdf = raw_uww_games[
     raw_uww_games["opponent_url"].notna()

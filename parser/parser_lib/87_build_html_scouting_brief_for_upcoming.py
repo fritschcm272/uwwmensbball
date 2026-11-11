@@ -1204,6 +1204,7 @@ th.num, td.num { text-align: right; width: 2.4rem; }
 .pc-grid { display: flex; gap: 12px; flex-wrap: wrap; }
 /* ---- condensed layout (#6) ---- */
 .pb { break-after: page; page-break-after: always; height: 0; }
+.hs-ls { color: #777; font-style: italic; }
 .divider { margin: 18px 0 10px; padding: 10px 14px; border-radius: 8px; background: var(--banner); color: #fff; }
 .divider .dt { font-size: 1.05rem; font-weight: 800; letter-spacing: 0.6px; }
 .divider .ds { font-size: 0.78rem; color: var(--warhawk-gray); margin-top: 2px; }
@@ -1298,6 +1299,16 @@ table.mb-tbl { width: 100%; table-layout: fixed; }
 table.ob-tbl { width: 100%; border-collapse: collapse; font-size: 0.74rem; table-layout: fixed; }
 table.ob-tbl col.c1 { width: 15%; }
 table.ob-tbl th, table.ob-tbl td { padding: 4px 6px; text-align: right; white-space: normal; overflow-wrap: anywhere; }
+details.ob-det { margin: 6px 0 10px; }
+.pd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 10px; }
+.pd-card { border: 1px solid #ddd; border-radius: 8px; padding: 6px; break-inside: avoid; }
+.pd-card .pd-t { font-weight: 700; font-size: 0.8rem; margin-bottom: 4px; }
+.pd-card img { width: 100%; height: auto; display: block; }
+details.ob-det > summary { cursor: pointer; font-weight: 700; color: var(--purple, #4E2A84); padding: 6px 10px;
+  border: 1px solid #ddd; border-radius: 6px; background: #f6f3fa; list-style: revert; }
+details.ob-det[open] > summary { margin-bottom: 6px; }
+ul.ob-sum { margin: 0; padding-left: 18px; font-size: 0.8rem; line-height: 1.4; }
+ul.ob-sum li { margin: 2px 0; }
 table.ob-tbl .ob-who { margin-top: 3px; font-size: 0.66rem; line-height: 1.25; color: #555; overflow-wrap: normal; }
 table.ob-tbl th { color: #666; font-weight: 600; }
 table.ob-tbl th.ob-b1 { border-top: 3px solid var(--warhawk-purple); background: #f4f1f9; color: var(--warhawk-purple);
@@ -1801,6 +1812,55 @@ def _sb_film_status():
     return info, rows
 
 
+def _sb_pd_key(x):
+    """the app's play-diagram file key (streamlit_app._pd_key) -- keep the two the same"""
+    k = re.sub(r"\([^)]*\)", " ", str(x).lower())
+    k = re.sub(r"\b(?:option|opt)\b\.?", " ", k)
+    return re.sub(r"[^a-z0-9#]+", "", k).replace("#", "n") or "x"
+
+
+def _sb_play_diagrams(team, _names, pc_rows):
+    """<details> with every uploaded diagram of this team's play calls (most possessions first), or "" when none."""
+    d = os.path.join(APP_DATA_DIR, "play_diagrams")
+    if not os.path.isdir(d):
+        return ""
+    tk = _sb_pd_key(team)
+    best = {}
+    for n in sorted(os.listdir(d)):
+        parts = n.rsplit(".", 1)[0].split("__")
+        if len(parts) >= 3 and parts[0] == tk:
+            best[parts[1]] = os.path.join(d, n)
+    if not best:
+        return ""
+    # the team's play calls, most possessions first (all formations together)
+    order = []
+    if pc_rows is not None and len(pc_rows):
+        _n = pd.to_numeric(pc_rows["possessions"], errors="coerce").fillna(0)
+        order = list(_n.groupby(pc_rows["label"].astype(str)).sum().sort_values(ascending=False).index)
+    names = {_sb_pd_key(x): x for x in order}
+    keys = [k for k in (_sb_pd_key(x) for x in order) if k in best] + [k for k in best if k not in names]
+    import base64
+    cards = []
+    for k in keys:
+        try:
+            from PIL import Image as _PdI
+            import io as _pdio
+            im = _PdI.open(best[k])
+            im = im.convert("RGB")
+            if im.width > 1100:
+                im = im.resize((1100, int(im.height * 1100 / im.width)))
+            buf = _pdio.BytesIO()
+            im.save(buf, "JPEG", quality=82)
+            src = "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
+        except Exception:
+            continue
+        cards.append(f'<div class="pd-card"><div class="pd-t">{_sb_esc(names.get(k, k))}</div><img src="{src}" alt=""></div>')
+    if not cards:
+        return ""
+    return ('<details class="ob-det"><summary>Play diagrams (' + str(len(cards)) + ')</summary><div class="pd-grid">'
+            + "".join(cards) + "</div></details>")
+
+
 def _sb_build_html(_sb_d, game, scheduled_name, short):
     parts = []
     # Output goes to whichever list is on top of _sinks, so a block can be rendered into a side-by-side
@@ -2013,7 +2073,10 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # this season next to last season (first-games / preseason brief once the parser is on the new season's data --
     # season switch, 00b_season_switch: last season's tables are in LAST_SEASON_DATA_DIR)
     _ls_dir = globals().get("LAST_SEASON_DATA_DIR")
-    if _bt["type"] in ("preseason", "first_games") and not _bt["last_season"] and _ls_dir and os.path.isdir(_ls_dir):
+    # CONFIRMED CHANGE (requested: 'Instead of a "THIS SEASON vs LAST SEASON" table, create a "Last Season" row in TEAM
+    # STATS'): the separate section is off (BRIEF_SEASON_COMPARE_TABLE = True brings it back); see TEAM STATS below.
+    if (globals().get("BRIEF_SEASON_COMPARE_TABLE", False) and _bt["type"] in ("preseason", "first_games")
+            and not _bt["last_season"] and _ls_dir and os.path.isdir(_ls_dir)):
         try:
             def _ls_load(name, _d=_ls_dir):
                 try:
@@ -2134,7 +2197,27 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # (label, our number, theirs), and the columns run left to right across the full width of the
     # section. The old "cmp" layout stacked one stat per line down the page, which made this a tall
     # narrow list instead of a strip a coach can scan in one pass.
-    if us and them:
+    # CONFIRMED CHANGE (requested: a "Last Season" row in TEAM STATS): on a preseason / first-games brief (once the parser is
+    # on the new season), each team's last-season per-game line sits under this season's, from last season's tables
+    # (LAST_SEASON_DATA_DIR) -- the same numbers the old THIS SEASON vs LAST SEASON table showed.
+    _ls_lines = []
+    if (_bt["type"] in ("preseason", "first_games") and not _bt["last_season"] and _ls_dir and os.path.isdir(_ls_dir)):
+        def _ls_load2(name, _d=_ls_dir):
+            try:
+                return pd.read_csv(os.path.join(_d, f"{name}.csv"))
+            except Exception:
+                return pd.DataFrame()
+        for _lab_, _tm_, _u_ in (("UWW", "UW-Whitewater", True), (str(opp_display).upper(), short, False)):
+            try:
+                _n_, _d_ = _sc_line(_ls_load2, _tm_, _u_)
+            except Exception:
+                _n_, _d_ = 0, {}
+            if _d_:
+                _ls_lines.append((_lab_, _n_, _d_))
+    _LS_KEY = {"PTS": "PPG", "PACE": "Pace (poss/g)", "FG%": "FG%", "3P%": "3P%", "3PA": "3PA/g", "REB": "REB/g",
+               "AST": "AST/g", "TO": "TO/g", "STL": "STL/g"}
+    if (us and them) or _ls_lines:
+        us, them = us or {}, them or {}
         t_add('<span class="fnhold">' + footnote(
             "Team stats: both sides are built the same way, from play-by-play box scores rather than a scouting "
             "report, so they compare like with like. Their figures cover only the games before this matchup.")
@@ -2150,10 +2233,12 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         _cells = []
         for label, key, higher_is_better in comparisons:
             if key is None:
-                label, a, b, higher_is_better = "Points Against", us_allowed.get("PTS"), them_allowed.get("PTS"), False
+                label, a, b, higher_is_better = "Points Against", (us_allowed or {}).get("PTS"), (them_allowed or {}).get("PTS"), False
             else:
                 a, b = us.get(key), them.get(key)
-            if a is None and b is None:
+            _lsv = [(_d_.get("Opp PPG") if key is None else _d_.get(_LS_KEY.get(key, "")) if key else None)
+                    for _l_, _n_, _d_ in _ls_lines]
+            if a is None and b is None and all(v is None or (isinstance(v, float) and pd.isna(v)) for v in _lsv):
                 continue
             _us_cls, _them_cls = "hs-v", "hs-v"
             if higher_is_better is not None and a is not None and b is not None and abs(float(a) - float(b)) >= 0.05:
@@ -2163,9 +2248,14 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     _them_cls += " hs-win"
             _cells.append(f'<div class="hs-col"><div class="hs-l">{_sb_esc(label)}</div>'
                           f'<div class="{_us_cls}">{_sb_fmt(a)}</div>'
-                          f'<div class="{_them_cls}">{_sb_fmt(b)}</div></div>')
+                          f'<div class="{_them_cls}">{_sb_fmt(b)}</div>'
+                          + "".join(f'<div class="hs-v hs-ls">{_sb_fmt(v) if v is not None and not (isinstance(v, float) and pd.isna(v)) else "--"}</div>'
+                                    for v in _lsv) + '</div>')
         t_add('<div class="hstat"><div class="hs-col hs-key"><div class="hs-l">&nbsp;</div>'
-              f'<div class="hs-v">UWW</div><div class="hs-v">{_sb_esc(str(opp_display).upper())}</div></div>'
+              f'<div class="hs-v">UWW</div><div class="hs-v">{_sb_esc(str(opp_display).upper())}</div>'
+              + "".join(f'<div class="hs-v hs-ls">{_sb_esc(_l_)} last season'
+                        + (f' <span class="mini">({_n_} g)</span>' if _n_ else "") + "</div>"
+                        for _l_, _n_, _d_ in _ls_lines) + '</div>'
               + "".join(_cells) + "</div>")
         t_add('<p class="mini">Per game, before this matchup. Bold is the better number.</p>')
 
@@ -3343,13 +3433,47 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _lp = _offense_rows(side)
             _lp = _lp[_lp["level"] == "Personnel grouping"] if not _lp.empty else _lp
             _lu_ppp = {str(r["name"]): (r.get("ppp"), r.get("uses")) for _, r in _lp.iterrows()}
-        # Best units by shrunk margin per 40 (LINEUP_TABLE_RULES). Ours on competitive minutes when the
-        # parser exported them; PPP is shown but no longer ranks -- it's offense only, from tagged clips.
+        # CONFIRMED CHANGE (requested: "list out the best 2 5-man lineups for each of MIN, +/-, per 40, PPP and 3P%. Make their
+        # values bold in that column if they are in the top 2 and why they were added to the table", plus the "Be aware of"
+        # five (the one on the floor for the most tagged possessions) in this table instead of a sentence). Every unit that
+        # is top 2 in any of those columns is listed once; its top-2 values are bold (no "Why" column -- removed on request). per 40 and 3P% only
+        # rank units with LINEUP_TABLE_RULES["five_min_minutes"]+ minutes (all units if fewer than two have that), 3P% needs
+        # 3+ attempts, PPP 3+ tagged possessions.
         _clean = side == "UWW" and {"clean_min", "clean_pm"}.issubset(lu_df.columns)
-        top = _rank_units(lu_df, "clean_min" if _clean else "MIN", "clean_pm" if _clean else "+/-",
-                          LINEUP_TABLE_RULES["five_min_minutes"])
-        if top.empty:
+        d = lu_df.copy()
+        d["_rmin"] = pd.to_numeric(d["clean_min" if _clean else "MIN"], errors="coerce").fillna(0)
+        d["_rpm"] = pd.to_numeric(d["clean_pm" if _clean else "+/-"], errors="coerce").fillna(0)
+        d = d[d["_rmin"] > 0].copy()
+        if d.empty:
             return
+        d["_per40"] = d["_rpm"] / d["_rmin"] * 40
+        _setkey = lambda v: frozenset(_norm(x) for x in re.split(r"[,/|]", str(v)) if x.strip())  # noqa: E731
+        _ppp_by = {_setkey(k_): v_ for k_, v_ in _lu_ppp.items()}
+        d["_ppp"] = [pd.to_numeric((_ppp_by.get(_setkey(l_)) or (None, None))[0], errors="coerce") for l_ in d["lineup"]]
+        d["_pn"] = [pd.to_numeric((_ppp_by.get(_setkey(l_)) or (None, 0))[1], errors="coerce") for l_ in d["lineup"]]
+        d["_3p"] = pd.to_numeric(d["3P%"], errors="coerce") if "3P%" in d.columns else pd.Series(float("nan"), index=d.index)
+        d["_3pa"] = pd.to_numeric(d["FG3A"], errors="coerce") if "FG3A" in d.columns else pd.Series(99, index=d.index)
+        _floor = LINEUP_TABLE_RULES["five_min_minutes"]
+        _big = d[d["_rmin"] >= _floor] if (d["_rmin"] >= _floor).sum() >= 2 else d
+        _picks = [("_rmin", "Top 2 minutes", d), ("_rpm", "Top 2 +/-", d), ("_per40", "Top 2 per 40", _big),
+                  ("_ppp", "Top 2 PPP", d[d["_pn"].fillna(0) >= 3]), ("_3p", "Top 2 3P%", _big[_big["_3pa"].fillna(0) >= 3])]
+        _why, _bold, _order = {}, {}, []
+        for col, lab, pool in _picks:
+            pool = pool[pool[col].notna()]
+            for ix in pool.sort_values([col, "_rmin"], ascending=[False, False]).index[:2]:
+                _why.setdefault(ix, []).append(lab)
+                _bold.setdefault(ix, set()).add(col)
+                if ix not in _order:
+                    _order.append(ix)
+        # the five on the floor for the most tagged possessions ("Be aware of")
+        if d["_pn"].notna().any() and d["_pn"].max() > 0:
+            ix = d["_pn"].idxmax()
+            _why.setdefault(ix, []).append(f"On the floor most on film ({int(d.at[ix, '_pn'])} tagged possessions)")
+            if ix not in _order:
+                _order.append(ix)
+        if not _order:
+            return
+        top = d.loc[_order]
         # What each unit actually runs (requested), from the parser's per-lineup play-call table, plus its
         # grouping shape so the row says who is on the floor as well as what they call.
         _lu_calls, _lu_group = {}, {}
@@ -3358,29 +3482,39 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _lpc = _lpc[_lpc["side"] == side] if "side" in _lpc.columns else _lpc
             _lu_calls = {str(r["lineup"]): _sb_clean(r.get("top_calls")) for _, r in _lpc.iterrows()}
             _lu_group = {str(r["lineup"]): _sb_clean(r.get("grouping")) for _, r in _lpc.iterrows()}
+        _B = lambda ix, col, txt: f"<b>{txt}</b>" if col in _bold.get(ix, set()) else txt  # noqa: E731
         add('<table class="compact"><thead><tr><th style="text-align:left">Lineup</th>'
             '<th style="text-align:left">Group</th><th>GP</th><th>MIN</th>'
             '<th>+/-</th><th>per 40</th><th>PPP</th>' + ("<th>FG%</th><th>3P%</th>" if "FG%" in lu_df.columns else "")
             + '<th style="text-align:left">What they run</th>'
             + ('<th style="text-align:left">Key</th>' if note_rows else "") + "</tr></thead><tbody>")
-        for _, u in top.iterrows():
+        for ix, u in top.iterrows():
             key = ""
             if note_rows and not _notes_tbl.empty:
                 nr = _notes_tbl[(_notes_tbl["subject_type"] == "lineup") & (_notes_tbl["name"] == str(u["lineup"]))]
                 ks = [k for _, r in nr.iterrows() for k in _sb_split(r.get("keys_to_defending"))]
                 key = ks[0] if ks else ""
-            _ppp, _ppp_n = _lu_ppp.get(str(u["lineup"]), (None, None))
+            _ppp, _pn = u["_ppp"], u["_pn"]
             add(f'<tr><td class="wrap">{_sb_esc(u["lineup"])}</td>'
                 f'<td class="mini">{_sb_esc(_lu_group.get(str(u["lineup"]), ""))}</td>'
                 f'<td>{_sb_fmt(u.get("GP"), 0)}</td>'
-                f'<td>{_sb_fmt(u["_rmin"])}{"*" if u["_below"] else ""}</td><td>{_signed(u["_rpm"], 0)}</td>'
-                f'<td>{_signed(u["_per40"])}</td>'
-                + (f'<td title="{int(_ppp_n)} tagged possessions">{_sb_fmt(_ppp, 2)}</td>'
-                   if _ppp is not None and pd.notna(_ppp) else '<td class="mini">--</td>')
-                + (f'<td>{_sb_fmt(u.get("FG%"))}</td><td>{_sb_fmt(u.get("3P%"))}</td>' if "FG%" in lu_df.columns else "")
+                f'<td>{_B(ix, "_rmin", _sb_fmt(u["_rmin"]))}</td><td>{_B(ix, "_rpm", _signed(u["_rpm"], 0))}</td>'
+                f'<td>{_B(ix, "_per40", _signed(u["_per40"]))}</td>'
+                + (f'<td title="{int(_pn)} tagged possessions">{_B(ix, "_ppp", _sb_fmt(_ppp, 2))}</td>'
+                   if pd.notna(_ppp) else '<td class="mini">--</td>')
+                + (f'<td>{_sb_fmt(u.get("FG%"))}</td><td>{_B(ix, "_3p", _sb_fmt(u.get("3P%")))}</td>' if "FG%" in lu_df.columns else "")
                 + f'<td class="wrap mini">{_sb_esc(_lu_calls.get(str(u["lineup"]), "--"))}</td>'
                 + (f'<td class="wrap mini">{_sb_esc(key)}</td>' if note_rows else "") + "</tr>")
         add("</tbody></table>")
+        # (the top scorers on tagged plays -- what the "Be aware of" sentence used to say, built in 47)
+        try:
+            _osm_ = _sb_d("uww_offense_summary")
+            _sc_ = _osm_[(_osm_["kind"] == "scorers") & (_osm_["scouted_opponent"].astype(str) == str(short))
+                         & (_osm_["perspective"].fillna("Opponent").astype(str) == side)] if not _osm_.empty else _osm_
+            if len(_sc_):
+                add(f'<p class="mini">{_sb_esc(_sb_clean(_sc_.iloc[0]["text"]))}</p>')
+        except Exception:
+            pass
 
     def combos_table(side):
         """Top three 3-man combos (alongside the five-man units).
@@ -4456,7 +4590,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         lineups = pd.DataFrame()
     if not lineups.empty and "lineup" in lineups.columns:
         section("\U0001f501 TOP LINEUPS & 3-MAN COMBOS" + footnote(
-            "Their best three five-man units and best three 3-man combos, ranked by scoring margin per 40 "
+            "Five-man units: the top 2 in each of MIN, +/-, per 40, PPP and 3P% (bold = top 2 in that column), plus the five on the floor for the most tagged possessions. per 40 and 3P% rank units with "f"{LINEUP_TABLE_RULES['five_min_minutes']:.0f}+ minutes (3P% needs 3+ attempts, PPP 3+ tagged possessions). "
+            "3-man combos: their best three, ranked by scoring margin per 40 "
             f"minutes, shrunk toward zero as if {LINEUP_TABLE_RULES['shrink_minutes']:.0f} minutes of an even "
             "game were added, so a short hot stretch can't top the list. A five-man unit needs "
             f"{LINEUP_TABLE_RULES['five_min_minutes']:.0f}+ minutes and a combo "
@@ -4958,6 +5093,27 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             return " \u00b7 ".join(out)
         # CONFIRMED CHANGE (requested: play calls as their own rows under each formation, like Situation and Formation,
         # with "No Play Call" for the rest): Situation (vertical) > Formation > Play call > coverage lines.
+        # CONFIRMED CHANGE (requested: a few bullets right above the table -- what they run most out of each formation, what
+        # worked best, the lineup / players to be aware of, the defense their opponents played, and whether we should do
+        # the same or something different). Built in 47 (uww_offense_summary); the brief only prints them.
+        try:
+            _osm = _sb_d("uww_offense_summary")
+        except Exception:
+            _osm = pd.DataFrame()
+        if not _osm.empty and {"text", "perspective", "scouted_opponent", "team"} <= set(_osm.columns):
+            _osm = _osm[(_osm["scouted_opponent"].astype(str) == str(short))
+                        & (_osm["perspective"].fillna("Opponent").astype(str) == side)
+                        & _osm["team"].astype(str).isin(set(ob["team"].astype(str)))
+                        & ~_osm["kind"].astype(str).isin(["players", "scorers", "defense", "advice"])].sort_values("order")  # (in TOP LINEUPS now; no "Their opponents' ball-screen defense" or "Do the same" lines -- requested)
+            if len(_osm):
+                _ico = {"formation": "\U0001f4cb", "success": "\u2705", "players": "\U0001f440", "defense": "\U0001f6e1\ufe0f",
+                        "advice": "\U0001f449"}
+                add('<div class="card"><ul class="ob-sum">' + "".join(
+                    f'<li>{_sb_esc(_sb_clean(r_.get("text")))}</li>' for _, r_ in _osm.iterrows())
+                    + "</ul></div>")
+        # CONFIRMED CHANGE (requested: the table under HOW <OPP> RUNS OFFENSE in a collapsible section coaches open to view
+        # it): a <details> block, closed by default (it opens by itself when the brief is printed -- see _SB_PRINT_OPEN_JS)
+        add('<details class="ob-det"><summary>Show the full table (situation \u203a formation \u203a play call)</summary>')
         add('<div class="card"><table class="ob-tbl"><colgroup><col style="width:4%"><col style="width:9%"><col style="width:14%">'
             '<col style="width:7%"><col style="width:6%"><col style="width:22%"><col style="width:10%"><col style="width:10%">'
             '<col style="width:9%"><col style="width:9%"></colgroup><thead><tr><th colspan="3"></th>'
@@ -4968,17 +5124,26 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             '<th class="t1">PPP</th><th class="t1 l">Actions out of it</th><th class="t3 l">Ball screen coverage</th>'
             '<th class="t3 l">Off-ball screen coverage</th><th class="t2">Poss</th><th class="t2">PPP allowed</th></tr></thead><tbody>')
         _lv = ob["level"].astype(str).tolist()
-        # a play call with ONE coverage line folds it into the play-call row (requested earlier for formations)
+        # CONFIRMED CHANGE (requested: "Collapse the bottom three rows into the total row above them and put the PPP next to
+        # the three types of ball coverages in the same row"): EVERY coverage line folds into its play-call row -- each
+        # coverage with its possessions and PPP ("Switch 2 (1.50) · Drop 1 (0.00) · No coverage tagged 6 (0.67)") in the
+        # ball-screen / off-ball-screen column ("No coverage tagged" goes with the ball-screen coverages).
         _drop, _onecov = [], {}
         for _j, (_ix, _l) in enumerate(zip(ob.index, _lv)):
             if _l == "play_call":
                 _k = _j + 1
+                _bs, _ofb = [], []
                 while _k < len(_lv) and _lv[_k] == "coverage":
+                    _cr = ob.iloc[_k]
+                    _drop.append(ob.index[_k])
+                    _cn = pd.to_numeric(_cr.get("possessions"), errors="coerce")
+                    _cn = int(_cn) if pd.notna(_cn) else 0
+                    _cp = pd.to_numeric(_cr.get("ppp"), errors="coerce")
+                    _txt = (f'{_c(_cr.get("label"))} {_cn}' + (f' <span class="mini">({_cp:.2f})</span>' if pd.notna(_cp) else ""))
+                    (_ofb if str(_cr.get("cov_kind")) == "Off-ball screen" else _bs).append(_txt)
                     _k += 1
-                if _k - _j - 1 == 1:
-                    _cr = ob.iloc[_j + 1]
-                    _drop.append(ob.index[_j + 1])
-                    _onecov[_ix] = (_c(_cr.get("label")), str(_cr.get("cov_kind")) == "Off-ball screen")
+                if _bs or _ofb:
+                    _onecov[_ix] = (" \u00b7 ".join(_bs), " \u00b7 ".join(_ofb))
         ob = ob.drop(index=_drop)
         _lv = ob["level"].astype(str).tolist()
         _ids = list(ob.index)
@@ -5017,9 +5182,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
 
         def _cov_cells(ix):
             if ix in _onecov:
-                lab, off = _onecov[ix]
-                return (f'<td class="t3 l w"></td><td class="t3 l w">{lab}</td>' if off
-                        else f'<td class="t3 l w">{lab}</td><td class="t3 l w"></td>')
+                bs, ofb = _onecov[ix]
+                return f'<td class="t3 l w">{bs}</td><td class="t3 l w">{ofb}</td>'
             return '<td class="t3 l w"></td><td class="t3 l w"></td>'
 
         def _green(r, show):
@@ -5029,18 +5193,42 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             return (f'<td class="t2">{un if un else "--"}</td>'
                     f'<td class="t2">{_sb_fmt(pd.to_numeric(r.get("our_ppp_allowed"), errors="coerce"), 2) if un else "--"}</td>')
 
+        # CONFIRMED CHANGE (requested: "Flag based on that row's own numbers" -- STAGGER showed "Take away" next to 1 poss /
+        # 0.00 because the flag came from all of its possessions). Each play-call row is rated on ITS OWN possessions and PPP:
+        # used often = at least the median possessions of the play-call rows in this table, efficient = at or above the
+        # team's own PPP; a row needs _RQMIN (2 theirs / 3 ours) possessions to get a flag at all.
+        _RQMIN = 3 if _us else 2
+        _pcr = ob[ob["level"].astype(str) == "play_call"]
+        _pcr_n = pd.to_numeric(_pcr["possessions"], errors="coerce")
+        _row_cut = float(_pcr_n[_pcr_n >= _RQMIN].median()) if (_pcr_n >= _RQMIN).any() else None
+        _row_tp = None          # (this table's own PPP over every situation -- the right team for ours AND theirs)
+        if _row_tp is None:
+            _all_rows = ob[ob["level"].astype(str) == "situation"]
+            _w = pd.to_numeric(_all_rows["possessions"], errors="coerce")
+            _pp_ = pd.to_numeric(_all_rows["ppp"], errors="coerce")
+            _row_tp = float((_w * _pp_).sum() / _w[_pp_.notna()].sum()) if _w[_pp_.notna()].sum() else None
+        _QN = {"q-bad": "Take this away", "q-up": "Haven't seen it enough", "q-good": "Make them keep running it",
+               "q-dim": "Live with it"} if not _us else {"q-good": "Keep calling it", "q-up": "Call it more",
+                                                          "q-bad": "Fix it or cut it", "q-dim": "Shelve it"}
+
+        def _row_flag(n, pp):
+            if n < _RQMIN or pd.isna(pp) or _row_tp is None or _row_cut is None:
+                return None
+            often, good = n >= _row_cut, pp >= _row_tp
+            if _us:
+                return "q-good" if often and good else "q-up" if good else "q-bad" if often else "q-dim"
+            return "q-bad" if often and good else "q-up" if good else "q-good" if often else "q-dim"
+
         def _pc_label(r):
             nm = _sb_clean(r.get("label"))
             pp = pd.to_numeric(r.get("ppp"), errors="coerce")
             n = _num(r.get("possessions"))
-            f = _FL.get(_norm(nm))
+            q = _row_flag(n, pp)
             tag = ""
-            if f:
-                tag = (f' <span class="pc-flag {f[1]}" title="{_sb_esc(f[0] + (" -- " + f[2] if f[2] else ""))}">'
-                       f'{_FLS.get(f[1], f[0])}</span>')
-                if not _us and f[1] in ("q-good", "q-dim") and pd.notna(pp) and _TP is not None and pp >= _TP + 0.25 and n >= 2:
-                    _tt = _sb_esc(f"Season: {f[0]} -- but {pp:.2f} PPP in {n} possessions here")
-                    tag += f' <span class="pc-flag q-bad" title="{_tt}">Scored here</span>'
+            if q:
+                _tt = _sb_esc(f"{_QN.get(q, '')} -- {n} possessions here at {pp:.2f} PPP (team {_row_tp:.2f}; "
+                              f"run often = {_row_cut:.0f}+ here)")
+                tag = f' <span class="pc-flag {q}" title="{_tt}">{_FLS.get(q, _QN.get(q, ""))}</span>'
             # CONFIRMED CHANGE (requested: "The BLOB and SLOB sections do not need that repeated in the Play Call Name"):
             # "BLOB Set" under BLOB shows as "Set" (the flag still comes from the full name).
             _sit = str(r.get("situation") or "").strip()
@@ -5100,22 +5288,31 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     + ("" if _off else '<td class="t3"></td>') + _green(r, False) + "</tr>")
         add("</tbody></table>"
             '<p class="mini">Each situation (down the left) and its total ("All"), then each formation and its total, then '
-            "each play call they ran out of it (No Play Call = none tagged) and, under it, how defenses guarded it "
-            "(ball-screen and off-ball-screen coverages in their own columns). Action counts are possessions with PPP in "
+            "each play call they ran out of it (No Play Call = none tagged) and, on the same row, how defenses guarded it "
+            "(ball-screen and off-ball-screen coverages in their own columns, each with its possessions and PPP). Action counts are possessions with PPP in "
             "brackets. " + ("Green = their own defensive possessions (their games) in the same situation / formation."
                              if _us else "Green = our own defensive possessions in the same situation / formation.") + "</p>"
-            + ('<p class="mini">Play call flags (our call sheet, 3+ possessions): <span class="pc-flag q-good">Keep calling it</span> '
-               'called often, scores well · <span class="pc-flag q-up">Call it more</span> scores well, rarely called · '
-               '<span class="pc-flag q-bad">Fix or cut</span> called often, doesn\u2019t score · '
-               '<span class="pc-flag q-dim">Shelve it</span> rarely called, doesn\u2019t score.</p>' if _FL and _us else "")
-            + ('<p class="mini">Play call flags (2+ possessions, against their own usage and PPP): '
-               '<span class="pc-flag q-bad">Take away</span> run a lot and it works · '
-               '<span class="pc-flag q-up">Thin sample</span> efficient but rarely seen -- don\u2019t get surprised · '
-               '<span class="pc-flag q-good">Make them run it</span> run a lot and it doesn\u2019t score · '
-               '<span class="pc-flag q-dim">Live with it</span> rare and ineffective (their season). '
-               '<span class="pc-flag q-bad">Scored here</span> a set they usually don\u2019t score with that scored 0.25+ '
-               'PPP above their average in that formation (2+ possessions).</p>' if _FL and not _us else "")
-            + "</div>")
+            + ((f'<p class="mini">Play call flags rate each row on its OWN possessions ({_RQMIN}+): run often = '
+                f'{_row_cut:.0f}+ possessions in that row, efficient = at or above the team\u2019s {_row_tp:.2f} PPP in this '
+                'table. ' + ('<span class="pc-flag q-good">Keep calling it</span> often, scores · <span class="pc-flag q-up">Call it '
+                             'more</span> scores, rarely called · <span class="pc-flag q-bad">Fix or cut</span> often, doesn\u2019t '
+                             'score · <span class="pc-flag q-dim">Shelve it</span> rare, doesn\u2019t score.' if _us else
+                             '<span class="pc-flag q-bad">Take away</span> often, scores · <span class="pc-flag q-up">Thin '
+                             'sample</span> scores, rarely seen · <span class="pc-flag q-good">Make them run it</span> often, '
+                             'doesn\u2019t score · <span class="pc-flag q-dim">Live with it</span> rare, doesn\u2019t score.')
+                + "</p>") if _row_cut is not None and _row_tp is not None else "")
+            + "</div></details>")  # (end of the collapsible full table)
+        # CONFIRMED CHANGE (requested: coaches upload a picture of each play in the app -- Analytics > Play Diagrams -- and
+        # "a collapsed section in all of the briefs that allow the coaches to view these images"): the team's diagrams,
+        # most-run play first, in a <details> under the table (the newest upload per play; copied by the parser's saves
+        # fetch into <data>/play_diagrams).
+        try:
+            _pd_pc = ob[ob["level"].astype(str) == "play_call"]
+            _pd_html = _sb_play_diagrams(str(ob["team"].astype(str).value_counts().index[0]), None, _pd_pc)
+            if _pd_html:
+                add(_pd_html)
+        except Exception as _pde:
+            print(f"  (play diagrams not shown: {type(_pde).__name__}: {_pde})", flush=True)
         # CONFIRMED CHANGE (requested: passes per possession -- "a simple analysis on the scouting briefs"): one short card
         # under the table from uww_pass_summary (built after Player tracking): how often a possession ends on a pass
         # (Synergy, every game) and, on tracked games, the estimated passes per possession and PPP by passes.
@@ -5411,7 +5608,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     _uww_lu = _sb_d("uww_uww_lineup_season")
     if not _uww_lu.empty:
         section("\U0001f501 OUR TOP LINEUPS & 3-MAN COMBOS" + footnote(
-            "Our best three five-man units and best three 3-man combos this season, from the play-by-play's "
+            "Five-man units: the top 2 in each of MIN, +/-, per 40, PPP and 3P% (bold = top 2 in that column), plus the five on the floor for the most tagged possessions. per 40 and 3P% rank units with "f"{LINEUP_TABLE_RULES['five_min_minutes']:.0f}+ minutes (3P% needs 3+ attempts, PPP 3+ tagged possessions). "
+            "3-man combos: our best three this season, from the play-by-play's "
             "lineup stints, ranked by scoring margin per 40 minutes shrunk toward zero as if "
             f"{LINEUP_TABLE_RULES['shrink_minutes']:.0f} minutes of an even game were added. Competitive "
             "minutes only: MIN and +/- leave out stints that start in the 2nd half or later with the margin "
@@ -5968,7 +6166,12 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         + (f"<title>{_sb_esc(short)} &mdash; team analysis</title>\n" if _an["on"] else
            f"<title>{_sb_esc(_SB_UWW)} vs {_sb_esc(short)} &mdash; scouting brief</title>\n")
-        + f"<style>{_SB_CSS}</style>\n</head>\n<body>\n<div class=\"page\">\n{body}\n</div>\n</body>\n</html>\n"
+        + f"<style>{_SB_CSS}</style>\n"
+        # (a collapsed table still prints: every <details> opens before printing and closes again after)
+        + "<script>window.addEventListener('beforeprint',function(){document.querySelectorAll('details').forEach(function(d){"
+          "if(!d.open){d.open=true;d.dataset.pr='1';}});});window.addEventListener('afterprint',function(){"
+          "document.querySelectorAll('details[data-pr]').forEach(function(d){d.open=false;delete d.dataset.pr;});});</script>"
+        + f"\n</head>\n<body>\n<div class=\"page\">\n{body}\n</div>\n</body>\n</html>\n"
     )
 
 

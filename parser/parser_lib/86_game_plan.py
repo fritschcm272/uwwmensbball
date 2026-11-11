@@ -267,6 +267,11 @@ _GP_COVERAGE_BY_ACTION = {
 }
 _gp_pcs = _gp_load("uww_play_call_summary")
 _gp_pc = _gp_load("uww_play_calls")
+# CONFIRMED BUG (fixed; the brief's TOP LINEUPS "What they run" still listed last season's "Motion (4x)" -- uww_play_calls
+# keeps every season for Film Tagging): this season's clips only, the same rule as the play-call tables (47
+# season_play_calls, BRIEF_THIS_SEASON_ONLY).
+if "season_play_calls" in globals() and not _gp_pc.empty:
+    _gp_pc = season_play_calls(_gp_pc)
 # CONFIRMED BUG (fixed here): side == "Opponent" names the FILE a clip came from, and the coaches now tag the
 # opponent's DEFENSIVE possessions too (in the app's Film Tagging) -- e.g. 20 Marian possessions against MSOE on
 # 2/26. Every table below about THEIR offense (sets, shot clock, personnel grouping, game situations) read those
