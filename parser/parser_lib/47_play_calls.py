@@ -2288,7 +2288,9 @@ def _trk_numbers_for_game(game_date, game_code, report=None):
 class _NameNums(dict):
     """CONFIRMED BUG (fixed; "CAR #? Greg Smith Jr." -- he's #42): the roster writes "Greg Smith, Jr.", Synergy writes
     "Greg Smith Jr.", so the exact-name lookup missed. Names are also looked up with punctuation and spaces ignored."""
-    _k = staticmethod(lambda x: re.sub(r"[^a-z0-9]+", "", str(x).lower()))
+    # CONFIRMED BUG (fixed; "CAR #? Greg Smith" -- the play-by-play drops the "Jr." the roster has): a Jr./Sr./II/III/IV
+    # suffix is ignored too
+    _k = staticmethod(lambda x: re.sub(r"[^a-z0-9]+", "", re.sub(r"[\s,]+(?:jr|sr|ii|iii|iv|v)\.?\s*$", "", str(x).lower().strip())))
 
     def __init__(self, d):
         super().__init__(d)
