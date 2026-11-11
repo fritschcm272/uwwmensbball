@@ -206,7 +206,9 @@ def _tm_labels(pc):
     _fam = _pcl.astype(str).str.replace(r"^\s*(?:BLOB|SLOB)\s+", "", regex=True).str.strip()
     _is_m = _ps.astype(str).str.strip().str.lower().eq("motion")
     _good_fam = _fam.str.match(r"^.+ Motion$") & ~_fam.str.lower().eq("motion")
-    lab["label_play_call"] = _ps.where(~_is_m, _fam.where(_good_fam))
+    # CONFIRMED CHANGE (requested: play calls stay what the coaches tagged -- no Motion families): the model learns the
+    # coaches' own play-call names
+    lab["label_play_call"] = _ps
     for col in set(TAG_MODEL_TARGETS.values()):
         if not col.startswith("label_"):
             lab[col] = pc[col] if col in pc.columns else None

@@ -244,8 +244,8 @@ def _tr_auto(r, f, tagged):
     # action ("likely Ball-screen Motion -- Main action: Ball Screen"); with no Main action guess, no play call is offered.
     # CONFIRMED CHANGE (Tag model retargeted to the Motion type): the model now answers e.g. "Screen Motion". The play call
     # offered stays "Motion" (what the coaches tag; the action says which), with the type as the note.
-    if f == "play_call" and v is not None and re.match(r"^.+ Motion$", str(v).strip()) and str(v).strip().lower() != "motion":
-        return "Motion", c, f"likely {str(v).strip()}"
+    # (CONFIRMED CHANGE, requested: play calls stay what the coaches tagged -- a predicted name is offered as it is, no
+    # longer turned into "Motion" + a family note)
     if f == "play_call" and v is not None and str(v).strip().lower() == "motion":
         pa = _tr_auto_raw(r, "primary_action", tagged)[0]
         if not pa:
@@ -308,9 +308,7 @@ def _tr_vocab():
     except Exception:
         pass
     # the Tag model's Motion types ("Screen Motion" ...) are not play calls the coaches pick -- the list keeps "Motion"
-    if "play_call" in vals:
-        vals["play_call"] = {("Motion" if re.match(r"^.+ Motion$", x) or x.startswith("Motion (") else x)
-                             for x in vals["play_call"]}
+    # (CONFIRMED CHANGE, requested: the coaches' own play-call names are offered as they are -- no Motion mapping)
     # one spelling per answer: "No Screens" / "No screens" (capitals / spaces / punctuation only) are the same answer --
     # the capitalized spelling is kept
     _nrm = lambda s: re.sub(r"[^a-z0-9#]+", "", s.lower())

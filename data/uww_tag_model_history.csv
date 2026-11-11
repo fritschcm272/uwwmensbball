@@ -693,4 +693,28 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-09T19:17:44,screener,Screener,,,,,116,,False,,,,2026-11-09T12:58:10
 2026-11-09T19:30:03,screener,Screener,,,,,116,,False,,,,2026-11-09T12:58:10
 2026-11-09T19:37:22,screener,Screener,,,,,116,,False,,,,2026-11-09T12:58:10
-2026-11-09T19:46:19,screener,Screener,,,,,116,nan,False,nan,,,2026-11-09T12:58:10
+2026-11-09T19:46:19,screener,Screener,,,,,116,,False,,,,2026-11-09T12:58:10
+2026-11-09T20:20:45,formation,Formation,64.0,64.0,5 Out,523.0,583,usual answer,False,model not better than always guessing (64% vs 64%),8.0,13.0,2026-11-09T20:18:49
+2026-11-09T20:20:45,play_call,Play call,38.0,34.0,Screen Motion,454.0,560,model,True,38% vs 34% always guessing on 454 held-out plays (+4 pts),4.0,14.0,2026-11-09T20:18:49
+2026-11-09T20:20:45,defense,Defense,100.0,100.0,Man-to-Man,1140.0,1264,usual answer,True,the usual answer is right 100% of the time on 1140 held-out plays,20.0,20.0,2026-11-09T20:18:49
+2026-11-09T20:20:45,press,Press,83.0,83.0,,1259.0,1266,usual answer,False,model not better than always guessing (83% vs 83%),17.0,20.0,2026-11-09T20:18:49
+2026-11-09T20:20:45,situation,Situation,78.0,66.0,Half court,1468.0,1469,model,True,78% vs 66% always guessing on 1468 held-out plays (+12 pts),12.0,20.0,2026-11-09T20:18:49
+2026-11-09T20:20:45,primary_action,Main action,54.0,46.0,Ball Screen,401.0,500,model,True,54% vs 46% always guessing on 401 held-out plays (+8 pts),2.0,9.0,2026-11-09T20:18:49
+2026-11-09T20:20:45,ball_screen_coverage,Ball-screen coverage,28.0,31.0,Switch,193.0,211,usual answer,False,model not better than always guessing (28% vs 31%),3.0,7.0,2026-11-09T20:18:49
+2026-11-09T20:20:45,offball_coverage,Off-ball coverage,67.0,61.0,Over,64.0,94,model,True,67% vs 61% always guessing on 64 held-out plays (+6 pts),2.0,2.0,2026-11-09T20:18:49
+2026-11-09T20:20:45,screener,Screener,,,Collin Madson,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),0.0,1.0,2026-11-09T20:18:49
+2026-11-09T20:20:45,screen_defender,Screen defender,29.0,29.0,#5,55.0,93,usual answer,False,model not better than always guessing (29% vs 29%),,,2026-11-09T20:18:49
+2026-11-10T07:43:11,play_call,Play call,66.0,66.0,Motion,566.0,670,usual answer,False,model not better than always guessing (66% vs 66%),10.0,17.0,2026-11-10T07:41:22
+2026-11-10T07:43:11,screener,Screener,,,Collin Madson,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),0.0,1.0,2026-11-10T07:41:22
+2026-11-10T07:48:19,formation,Formation,64.0,64.0,5 Out,523.0,583,usual answer,False,model not better than always guessing (64% vs 64%),,,2026-11-10T07:41:22
+2026-11-10T07:48:19,play_call,Play call,66.0,66.0,Motion,566.0,670,usual answer,False,model not better than always guessing (66% vs 66%),,,2026-11-10T07:41:22
+2026-11-10T07:48:19,defense,Defense,100.0,100.0,Man-to-Man,1140.0,1264,usual answer,True,the usual answer is right 100% of the time on 1140 held-out plays,,,2026-11-10T07:41:22
+2026-11-10T07:48:19,press,Press,83.0,83.0,,1259.0,1266,usual answer,False,model not better than always guessing (83% vs 83%),,,2026-11-10T07:41:22
+2026-11-10T07:48:19,situation,Situation,78.0,66.0,,1468.0,1469,model,True,78% vs 66% always guessing on 1468 held-out plays (+12 pts),,,2026-11-10T07:41:22
+2026-11-10T07:48:19,primary_action,Main action,54.0,46.0,,401.0,500,model,True,54% vs 46% always guessing on 401 held-out plays (+8 pts),,,2026-11-10T07:41:22
+2026-11-10T07:48:19,ball_screen_coverage,Ball-screen coverage,28.0,31.0,Switch,193.0,211,usual answer,False,model not better than always guessing (28% vs 31%),,,2026-11-10T07:41:22
+2026-11-10T07:48:19,offball_coverage,Off-ball coverage,67.0,61.0,,64.0,94,model,True,67% vs 61% always guessing on 64 held-out plays (+6 pts),,,2026-11-10T07:41:22
+2026-11-10T07:48:19,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
+2026-11-10T08:57:49,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
+2026-11-10T09:04:00,screener,Screener,,,,,125,,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22
+2026-11-10T09:09:16,screener,Screener,,,,,125,nan,False,not trained: needs 30+ tagged clips over 2+ answers (has 24 over 4),,,2026-11-10T07:41:22

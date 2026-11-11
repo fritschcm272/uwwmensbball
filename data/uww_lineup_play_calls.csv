@@ -1,20 +1,20 @@
 scouted_opponent,side,lineup,top_calls,tagged_possessions,ppp,grouping
-Ripon Red Hawks,Opponent,"Anton Kilde, Jack Field, Jackson Flowers, Landon Lee, Sam Leoni","Drive Motion (1x), Off-ball screen Motion (1x)",2,0.0,2G-3W
-Ripon Red Hawks,Opponent,"Anton Kilde, Jack Field, Landon Lee, Michael Asman, Sam Leoni","Motion (no action tagged) (3x), Off-ball screen Motion (2x), DHO Motion (1x)",8,0.75,2G-3W
-Ripon Red Hawks,Opponent,"Anton Kilde, Jackson Flowers, Joey Daun, Keenan Rahn, Sam Leoni","Off-ball screen Motion (1x), Motion (no action tagged) (1x)",2,1.0,3G-2W
+Ripon Red Hawks,Opponent,"Anton Kilde, Jack Field, Jackson Flowers, Landon Lee, Sam Leoni","Motion (1x), Ripon Motion Option #2 (1x)",2,0.0,2G-3W
+Ripon Red Hawks,Opponent,"Anton Kilde, Jack Field, Landon Lee, Michael Asman, Sam Leoni","Motion (4x), Ripon Motion #1 (2x), STAGGER (1x)",8,0.75,2G-3W
+Ripon Red Hawks,Opponent,"Anton Kilde, Jackson Flowers, Joey Daun, Keenan Rahn, Sam Leoni","Ripon Motion Option #2 (1x), 5 Out Motion (1x)",2,1.0,3G-2W
 Ripon Red Hawks,Opponent,"Anton Kilde, Jackson Flowers, Landon Lee, Michael Asman, Sam Leoni",SLOB SLOB #2 (1x),1,2.0,2G-3W
 Ripon Red Hawks,Opponent,"Christian Wilson, Jackson Flowers, Jose Gonzales, Michael Asman, Seth Bunders",BLOB Blob #2 (1x),1,0.0,3G-2W
-Ripon Red Hawks,Opponent,"Christian Wilson, Jackson Flowers, Keenan Rahn, Michael Asman, Sam Leoni","BLOB BLOB #1 (1x), Screen Motion (1x), DHO Motion (1x)",3,1.0,3G-2W
-Ripon Red Hawks,Opponent,"Christian Wilson, Jackson Flowers, Keenan Rahn, Michael Asman, Seth Bunders","Off-ball screen Motion (1x), STAGGER (1x)",2,1.0,3G-2W
-Ripon Red Hawks,Opponent,"Jack Field, Jackson Flowers, Jose Gonzales, Keenan Rahn, Seth Bunders","Motion (no action tagged) (1x), Drive Motion (1x), STAGGER (1x)",3,1.0,3G-2W
-Ripon Red Hawks,Opponent,"Jack Field, Jackson Flowers, Keenan Rahn, Sam Leoni, Seth Bunders",Motion (no action tagged) (1x),1,0.0,3G-2W
-Ripon Red Hawks,Opponent,"Jack Field, Jose Gonzales, Landon Lee, Michael Asman, Seth Bunders","Off-ball screen Motion (1x), Motion (no action tagged) (1x)",2,0.0,3G-2W
-Ripon Red Hawks,Opponent,"Jackson Flowers, Joey Daun, Keenan Rahn, Michael Asman, Sam Leoni","Off-ball screen Motion (1x), Set 3 (1x)",2,0.5,3G-2W
-Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Keenan Rahn, Michael Asman, Seth Bunders","Off-ball screen Motion (2x), Screen Motion (2x), Set 2 (1x)",7,1.0,3G-2W
-Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Keenan Rahn, Sam Leoni, Seth Bunders","BLOB BLOB #1 (2x), Flow (1x), Screen Motion (1x)",6,0.5,4G-1W
-Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Landon Lee, Michael Asman, Sam Leoni",Motion (no action tagged) (1x),1,0.0,3G-2W
-Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Michael Asman, Sam Leoni, Seth Bunders",Motion (no action tagged) (2x),2,0.0,3G-2W
-Ripon Red Hawks,Opponent,"Jackson Flowers, Keenan Rahn, Landon Lee, Michael Asman, Seth Bunders","Off-ball screen Motion (2x), Screen Motion (1x)",3,0.0,3G-2W
+Ripon Red Hawks,Opponent,"Christian Wilson, Jackson Flowers, Keenan Rahn, Michael Asman, Sam Leoni","Motion (2x), BLOB BLOB #1 (1x)",3,1.0,3G-2W
+Ripon Red Hawks,Opponent,"Christian Wilson, Jackson Flowers, Keenan Rahn, Michael Asman, Seth Bunders","RIPON MOTION #3 (1x), STAGGER (1x)",2,1.0,3G-2W
+Ripon Red Hawks,Opponent,"Jack Field, Jackson Flowers, Jose Gonzales, Keenan Rahn, Seth Bunders","Ripon Motion Option #2 (1x), Motion (1x), STAGGER (1x)",3,1.0,3G-2W
+Ripon Red Hawks,Opponent,"Jack Field, Jackson Flowers, Keenan Rahn, Sam Leoni, Seth Bunders",RIPON MOTION #3 (1x),1,0.0,3G-2W
+Ripon Red Hawks,Opponent,"Jack Field, Jose Gonzales, Landon Lee, Michael Asman, Seth Bunders","RIPON MOTION #4 (1x), Ripon Motion #1 (1x)",2,0.0,3G-2W
+Ripon Red Hawks,Opponent,"Jackson Flowers, Joey Daun, Keenan Rahn, Michael Asman, Sam Leoni","Ripon Motion #1 (1x), Set 3 (1x)",2,0.5,3G-2W
+Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Keenan Rahn, Michael Asman, Seth Bunders","Ripon Motion #1 (3x), Motion (1x), Ripon Motion Option #2 (1x)",7,1.0,3G-2W
+Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Keenan Rahn, Sam Leoni, Seth Bunders","BLOB BLOB #1 (2x), Flow (1x), Ripon Motion #1 (1x)",6,0.5,4G-1W
+Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Landon Lee, Michael Asman, Sam Leoni",Ripon Motion #1 (1x),1,0.0,3G-2W
+Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Michael Asman, Sam Leoni, Seth Bunders","Ripon Motion Option #2 (1x), Ripon Motion #1 (1x)",2,0.0,3G-2W
+Ripon Red Hawks,Opponent,"Jackson Flowers, Keenan Rahn, Landon Lee, Michael Asman, Seth Bunders","Motion (2x), Ripon Motion #1 (1x)",3,0.0,3G-2W
 Ripon Red Hawks,UWW,"Agape Keyes Jr., Isaiah Robinson, Kelton McEwen, Mauryon Turner, Rashad Rogers",5 Out (1x),1,0.0,
 Ripon Red Hawks,UWW,"Agape Keyes Jr., Isaiah Robinson, Mikey Wildes, Rashad Rogers, Trent Grunewald","Twins (1x), 5 Out DHO (1x)",2,3.0,
 Ripon Red Hawks,UWW,"Agape Keyes Jr., Isaiah Robinson, Rashad Rogers, Trent Grunewald, Tristian Lynch","5 Out Flare (1x), 5 Out Down Screen (1x)",2,1.0,
@@ -28,58 +28,58 @@ Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges,
 Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Isaac Verges, Richie Warren","BLOB (1x), BLOB Line Curl (1x), Snap (1x)",3,0.67,
 Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Darius Chestnut, JR Lukenbill, Joey Berezowitz","BLOB Line Reject (1x), Twins Ball Screen (1x)",2,0.0,
 Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz",Flow (1x),1,,
-Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren","SLOB Screen Motion (1x), BLOB (1x), Ball Screen (1x)",5,1.2,
+Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Darius Chestnut, Luke Bara, Richie Warren","SLOB Motion (1x), BLOB (1x), Ball Screen (1x)",5,1.2,
 Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz","Flow (2x), 5 Out (1x)",3,0.0,
 Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara","Flow (4x), Panther (4x), BLOB Line Curl (3x)",35,1.06,
-Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Luke Bara","BLOB Motion (no action tagged) (1x), BLOB (1x), Flow (1x)",6,0.0,
-Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren","Screen Motion (18x), Motion (no action tagged) (9x), Off-ball screen Motion (5x)",50,0.76,
-Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Isaac Verges, Richie Warren, Tyshawn Teague-Johnson","Screen Motion (2x), Off-ball screen Motion (1x), DHO Motion (1x)",5,1.0,
-Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Isaiah Robinson, Luke Bara, Tyshawn Teague-Johnson","Off-ball screen Motion (2x), Drive Motion (1x), Screen Motion (1x)",4,0.25,
-Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Jake Quast, Luke Bara","BLOB Motion (no action tagged) (1x), Off-ball screen Motion (1x), Screen Motion (1x)",3,0.67,
-Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren","Screen Motion (5x), BLOB Motion (no action tagged) (3x), Off-ball screen Motion (3x)",23,0.95,
-Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson","Spain (1x), Screen Motion (1x), BLOB Motion (no action tagged) (1x)",5,0.4,
+Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Isaac Verges, Jake Quast, Luke Bara","BLOB Line Motion (1x), BLOB (1x), Flow (1x)",6,0.0,
+Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Isaac Verges, Luke Bara, Richie Warren","5 Out Motion (27x), Motion (5x), Set (4x)",50,0.76,
+Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Isaac Verges, Richie Warren, Tyshawn Teague-Johnson","5 Out Motion (4x), TWINS LEFT (1x)",5,1.0,
+Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Isaiah Robinson, Luke Bara, Tyshawn Teague-Johnson","Motion (2x), 5 Out Motion (1x), Set Motion (1x)",4,0.25,
+Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Jake Quast, Luke Bara","5 Out Motion (2x), BLOB Line Motion (1x)",3,0.67,
+Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Richie Warren","5 Out Motion (12x), BLOB Line Motion (3x), BLOB (3x)",23,0.95,
+Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, JR Lukenbill, Luke Bara, Tyshawn Teague-Johnson","BLOB Box Motion (2x), Spain (1x), 5 Out Motion (1x)",5,0.4,
 Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen","Ball Screen (3x), BLOB (1x), Spain (1x)",5,0.0,
-Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara","Screen Motion (2x), Off-ball screen Motion (1x)",3,1.5,
+Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara","5 Out Motion (1x), 4-1 Motion (1x), Motion (1x)",3,1.5,
 Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Jake Quast, Joey Berezowitz, Richie Warren","BLOB (2x), Scissors (1x)",3,0.67,
 Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Jake Quast, Kelton McEwen, Richie Warren","Flow (2x), SLOB (1x), Flow Ball Screen (1x)",4,0.67,
-Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Jake Quast, Luke Bara, Richie Warren","Ball Screen (2x), BLOB Off-ball screen Motion (1x), Spain (1x)",7,1.33,
-Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",Screen Motion (1x),1,2.0,
-Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren","Screen Motion (6x), Motion (no action tagged) (4x), Off-ball screen Motion (1x)",12,0.92,
-Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Kelton McEwen, Mauryon Turner, Richie Warren","BLOB Motion (no action tagged) (2x), SLOB (1x), BLOB (1x)",4,0.0,
+Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Jake Quast, Luke Bara, Richie Warren","BLOB Box Motion (2x), Ball Screen (2x), Spain (1x)",7,1.33,
+Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Joey Berezowitz, Kelton McEwen, Tyshawn Teague-Johnson",5 Out Motion (1x),1,2.0,
+Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren",5 Out Motion (12x),12,0.92,
+Ripon Red Hawks,UWW,"Brock Marino, Collin Madson, Kelton McEwen, Mauryon Turner, Richie Warren","BLOB Line Motion (2x), SLOB (1x), BLOB (1x)",4,0.0,
 Ripon Red Hawks,UWW,"Brock Marino, Darius Chestnut, Isaac Verges, JR Lukenbill, Luke Bara","Flow (2x), Panther (1x), Cheetah (1x)",5,2.5,
 Ripon Red Hawks,UWW,"Brock Marino, Darius Chestnut, Isaac Verges, Luke Bara, Mauryon Turner","Flow (1x), BLOB (1x), Cheetah (1x)",3,0.67,
 Ripon Red Hawks,UWW,"Brock Marino, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren","5 Out Down Screen (1x), 5 Out DHO (1x)",2,,
 Ripon Red Hawks,UWW,"Brock Marino, Darius Chestnut, Kelton McEwen, Mauryon Turner, Richie Warren",5 Out Down Screen (1x),1,2.0,
 Ripon Red Hawks,UWW,"Brock Marino, Isaac Verges, JR Lukenbill, Kelton McEwen, Richie Warren","Flow (4x), 5 Out (1x), BLOB (1x)",6,1.5,
-Ripon Red Hawks,UWW,"Brock Marino, Isaac Verges, JR Lukenbill, Luke Bara, Richie Warren",Motion (no action tagged) (1x),1,0.0,
-Ripon Red Hawks,UWW,"Brock Marino, JR Lukenbill, Jake Quast, Joey Berezowitz, Luke Bara","BLOB Motion (no action tagged) (2x), SLOB (1x), Flow Ricky (1x)",5,2.2,
-Ripon Red Hawks,UWW,"Brock Marino, JR Lukenbill, Joey Berezowitz, Kelton McEwen, Richie Warren",Off-ball screen Motion (2x),2,0.0,
-Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Taveon Vann",Screen Motion (1x),1,0.0,
-Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz","Ball Screen (2x), Double Ball Screen (1x), BLOB Motion (no action tagged) (1x)",8,1.12,
+Ripon Red Hawks,UWW,"Brock Marino, Isaac Verges, JR Lukenbill, Luke Bara, Richie Warren",Motion (1x),1,0.0,
+Ripon Red Hawks,UWW,"Brock Marino, JR Lukenbill, Jake Quast, Joey Berezowitz, Luke Bara","BLOB Line Motion (2x), SLOB (1x), Flow Ricky (1x)",5,2.2,
+Ripon Red Hawks,UWW,"Brock Marino, JR Lukenbill, Joey Berezowitz, Kelton McEwen, Richie Warren","Motion (1x), 4 Low Motion (1x)",2,0.0,
+Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Taveon Vann",Motion (1x),1,0.0,
+Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz","Ball Screen (2x), Double Ball Screen (1x), BLOB Line Motion (1x)",8,1.12,
 Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Richie Warren","Flow (3x), 5 Out (1x)",4,1.0,
-Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveon Vann","Screen Motion (2x), Off-ball screen Motion (1x)",3,1.33,
+Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveon Vann",Motion (3x),3,1.33,
 Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz, Rashad Rogers","BLOB (1x), 5 Out Down Screen (1x)",2,1.0,
 Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, Jake Quast, Joey Berezowitz, Richie Warren","BLOB Line (1x), 5 Out Flare (1x), BLOB Line Curl (1x)",3,1.0,
 Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Luke Bara, Richie Warren",DHO (1x),1,0.0,
-Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren, Tyshawn Teague-Johnson","Screen Motion (2x), Over (1x), Off-ball screen Motion (1x)",4,1.0,
-Ripon Red Hawks,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Joey Berezowitz","Over (1x), Set (1x), SLOB Screen Motion (1x)",4,1.0,
-Ripon Red Hawks,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Luke Bara","Screen Motion (1x), Set (1x)",2,2.0,
-Ripon Red Hawks,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Richie Warren","Screen Motion (6x), BLOB Set (1x), P2 (1x)",10,1.67,
+Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, Joey Berezowitz, Richie Warren, Tyshawn Teague-Johnson","5 Out Motion (3x), Over (1x)",4,1.0,
+Ripon Red Hawks,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Jake Quast, Joey Berezowitz","Over (1x), Set (1x), SLOB 5 Out Motion (1x)",4,1.0,
+Ripon Red Hawks,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Luke Bara","5 Out Motion (1x), Set (1x)",2,2.0,
+Ripon Red Hawks,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Richie Warren","5 Out Motion (6x), BLOB Set (1x), P2 (1x)",10,1.67,
 Ripon Red Hawks,UWW,"Collin Madson, Isaac Verges, JR Lukenbill, Luke Bara, Richie Warren","5 Out (2x), BLOB Line Ricky (rescreen) (1x), BLOB (1x)",4,0.75,
 Ripon Red Hawks,UWW,"Collin Madson, Isaac Verges, Jake Quast, Luke Bara, Richie Warren","5 Out Down Screen (1x), 5 Out (1x)",2,0.0,
-Ripon Red Hawks,UWW,"Collin Madson, Isaac Verges, Luke Bara, Rashad Rogers, Richie Warren","Screen Motion (3x), BLOB Set (2x), Motion (no action tagged) (1x)",9,0.86,
-Ripon Red Hawks,UWW,"Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson","Off-ball screen Motion (2x), Screen Motion (2x)",4,0.0,
+Ripon Red Hawks,UWW,"Collin Madson, Isaac Verges, Luke Bara, Rashad Rogers, Richie Warren","5 Out Motion (6x), BLOB Set (2x), ISO (1x)",9,0.86,
+Ripon Red Hawks,UWW,"Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson","5 Out Motion (2x), Motion (2x)",4,0.0,
 Ripon Red Hawks,UWW,"Collin Madson, JR Lukenbill, Jake Quast, Joey Berezowitz, Richie Warren",Flow (3x),3,0.0,
-Ripon Red Hawks,UWW,"Collin Madson, JR Lukenbill, Jake Quast, Luke Bara, Richie Warren","Motion (no action tagged) (1x), Screen Motion (1x)",2,0.0,
-Ripon Red Hawks,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren","Ball Screen (2x), Screen Motion (2x), DHO (1x)",7,1.5,
-Ripon Red Hawks,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Rashad Rogers, Richie Warren","Motion (no action tagged) (3x), Screen Motion (2x), Cheetah (1x)",8,1.17,
+Ripon Red Hawks,UWW,"Collin Madson, JR Lukenbill, Jake Quast, Luke Bara, Richie Warren","Twins Motion (1x), 5 Out Motion (1x)",2,0.0,
+Ripon Red Hawks,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Luke Bara, Richie Warren","5 Out Motion (3x), Ball Screen (2x), DHO (1x)",7,1.5,
+Ripon Red Hawks,UWW,"Collin Madson, JR Lukenbill, Joey Berezowitz, Rashad Rogers, Richie Warren","5 Out Motion (6x), Cheetah (1x), BLOB Set (1x)",8,1.17,
 Ripon Red Hawks,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Luke Bara, Richie Warren",Flow (3x),3,2.67,
 Ripon Red Hawks,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren","Ball Screen (1x), 5 Out (1x), M2M (1x)",4,2.0,
 Ripon Red Hawks,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Richie Warren","Ball Screen (2x), 5 Out Flare (1x)",3,0.0,
-Ripon Red Hawks,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Tyshawn Teague-Johnson","Screen Motion (3x), Motion (no action tagged) (1x)",4,0.0,
-Ripon Red Hawks,UWW,"Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson","BLOB Cutting Motion (1x), Cheetah (1x)",2,1.0,
+Ripon Red Hawks,UWW,"Collin Madson, Jake Quast, Joey Berezowitz, Luke Bara, Tyshawn Teague-Johnson",Motion (4x),4,0.0,
+Ripon Red Hawks,UWW,"Collin Madson, Joey Berezowitz, Luke Bara, Richie Warren, Tyshawn Teague-Johnson","BLOB Box Motion (1x), Cheetah (1x)",2,1.0,
 Ripon Red Hawks,UWW,"Darius Chestnut, JR Lukenbill, Jake Quast, Joey Berezowitz, Rashad Rogers","Flow (1x), Panther (1x)",2,2.0,
 Ripon Red Hawks,UWW,"Darius Chestnut, Jake Quast, Joey Berezowitz, Rashad Rogers, Richie Warren","BLOB (3x), Flow (3x), Panther (1x)",8,1.12,
-Ripon Red Hawks,UWW,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers","DHO Motion (2x), BLOB Set (1x), Snap (1x)",7,1.2,
+Ripon Red Hawks,UWW,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Rashad Rogers","5 Out Motion (3x), BLOB Set (1x), Snap (1x)",7,1.2,
 Ripon Red Hawks,UWW,"JR Lukenbill, Jake Quast, Joey Berezowitz, Kelton McEwen, Richie Warren",Flow (1x),1,0.0,
-Ripon Red Hawks,UWW,"JR Lukenbill, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Richie Warren","TWINS LEFT (1x), SLOB Motion (no action tagged) (1x), Motion (no action tagged) (1x)",3,1.5,
+Ripon Red Hawks,UWW,"JR Lukenbill, Joey Berezowitz, Kelton McEwen, Rashad Rogers, Richie Warren","TWINS LEFT (1x), SLOB 5 Out Motion (1x), 5 Out Motion (1x)",3,1.5,

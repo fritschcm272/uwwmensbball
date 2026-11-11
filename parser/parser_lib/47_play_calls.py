@@ -3845,26 +3845,19 @@ def _pl_motion_detail(df):
         else:
             label = f"{pre}{fam} Motion"
             detail = f"{pre}{form}Motion: " + " > ".join(shown)
-        df.at[i, "play_call"] = label
-        df.at[i, "play_call_detail"] = detail
-        # (the series too -- the brief's "What they went to most" read play_series and still printed "Motion (82x)")
-        if "play_series" in df.columns and re.search(r"\bmotion\b", str(r.get("play_series") or ""), re.I):
-            df.at[i, "play_series"] = label
+        # CONFIRMED CHANGE (requested: "Let's remove any of that code so that it stays what the coaches tagged it. I will
+        # find a different way to group them later"): a Motion play call is NOT renamed any more -- "RIPON MOTION #3" stays
+        # "RIPON MOTION #3" in play_call, play_call_detail and play_series. Only the family is noted (play_call_family, used
+        # by the separate Motion breakdown table); label / detail above are no longer applied.
         df.at[i, "play_call_family"] = fam or "no action tagged"
-    # a detail a team ran only once or twice rolls up into its family ("Screen Motion: other")
-    if mot.any() and "offense_team" in df.columns:
-        cnt = df[mot].groupby(["offense_team", "play_call_detail"])["play_call_detail"].transform("size")
-        rare = cnt[cnt < MOTION_DETAIL_MIN].index
-        df.loc[rare, "play_call_detail"] = df.loc[rare, "play_call"].astype(str) + ": other"
     return df
 
 
 play_calls = _pl_motion_detail(play_calls)
 _n_mot = int(play_calls["play_call_family"].notna().sum()) if "play_call_family" in play_calls.columns else 0
 if _n_mot:
-    print("  Motion broken out by what each team runs: " + ", ".join(
-        f"{k} {v}" for k, v in play_calls["play_call"].where(play_calls["play_call_family"].notna()).value_counts().items())
-        + f" ({_n_mot} Motion possession(s))", flush=True)
+    print(f"  Motion: {_n_mot} possession(s) with Motion in the play call -- kept as the coaches tagged them (family noted "
+          "for the Motion breakdown table only)", flush=True)
 
 # ---- Banked games: play-by-play and 5-man lineups (requested: "I need the hard parts built as well so that I can get the 5
 # man lineups on the court for each team in film tagging") -------------------------------------------------------------
@@ -4217,8 +4210,41 @@ def season_play_calls(df):
 # CONFIRMED CHANGE (requested: "BLOB #1" and "Blob #1" showed as two play calls -- "Things like this need to be combined on
 # the scouting briefs"). Names that differ only in capitals, spacing or punctuation spacing are one play call: every
 # spelling takes the one used most often (ties: the earliest). Applied to play_call and play_call_detail for every season.
-def _pl_merge_spellings(df, cols=("play_call", "play_call_detail")):
+# CONFIRMED CHANGE (requested: "Everywhere when reporting, Formations of 'I Form', 'I-Form', 'Iform' and 'iform' need to be
+# combined. Formations with '--' need to be combined with 'No Formation'. Formations with '41', '4 1', '4-1' and '4- 1' need
+# to be combined."). Formations too now, and spellings are matched ignoring capitals, spaces and hyphens / punctuation
+# (letters, digits and # only). A formation of only dashes ("--", "-") or "none" = no formation (blank -> "No Formation").
+# CONFIRMED CHANGE (requested: '"RIPON MOTION", and "Ripon Motion left" should all be "Ripon Motion #1"'). Play calls that
+# are the same set under another name: {the name as tagged -> the name to report}. Matched like the spellings below
+# (capitals, spaces, punctuation, a bracket note and "option" ignored). Add to it in parser_nb (PLAY_CALL_RENAMES = {...}).
+PLAY_CALL_RENAMES = globals().get("PLAY_CALL_RENAMES") or {
+    "RIPON MOTION": "Ripon Motion #1",
+    "Ripon Motion left": "Ripon Motion #1",
+}
+
+
+def _pl_name_key(x):
+    k_ = re.sub(r"\([^)]*\)", " ", str(x).lower())
+    k_ = re.sub(r"\b(?:option|opt)\b\.?", " ", k_)
+    k_ = re.sub(r"[^a-z0-9#]+", "", k_)
+    return k_ or str(x).lower()
+
+
+def _pl_merge_spellings(df, cols=("play_call", "play_call_detail", "play_formation")):
     n_ch = 0
+    _ren = {_pl_name_key(a): b for a, b in (PLAY_CALL_RENAMES or {}).items()}
+    for c in ("play_call", "play_call_detail", "play_set", "play_call_base"):
+        if c in df.columns and _ren:
+            _k = df[c].map(lambda v: _pl_name_key(v) if isinstance(v, str) and v.strip() else None)
+            _hit = _k.isin(list(_ren))
+            if _hit.any():
+                df.loc[_hit, c] = _k[_hit].map(_ren)
+                n_ch += int(_hit.sum())
+    if "play_formation" in df.columns:
+        _nf = df["play_formation"].astype(str).str.strip().str.lower().str.match(r"^(?:-+|none|no formation|n/?a)?$") \
+            & df["play_formation"].notna()
+        n_ch += int(_nf.sum())
+        df.loc[_nf, "play_formation"] = None
     for c in cols:
         if c not in df.columns:
             continue
@@ -4227,16 +4253,23 @@ def _pl_merge_spellings(df, cols=("play_call", "play_call_detail")):
         if not ok.any():
             continue
         txt = v[ok].astype(str).str.strip().str.replace(r"\s+", " ", regex=True)
-        key = txt.str.lower().str.replace(r"\s*([#/&+-])\s*", r"\1", regex=True)
+        # CONFIRMED CHANGE (requested: '"Ripon Motion #2", "Ripon Motion Option #2" and "RIPON MOTION #2 (RICKY)" should all
+        # be grouped together'): a note in brackets and the word "option" / "opt" don't make a different play call
+        key = (txt.str.lower().str.replace(r"\([^)]*\)", " ", regex=True)
+               .str.replace(r"\b(?:option|opt)\b\.?", " ", regex=True)
+               .str.replace(r"[^a-z0-9#]+", "", regex=True))
+        key = key.where(key != "", txt.str.lower())
         canon = {}
         for k_, grp in txt.groupby(key, sort=False):
             vc = grp.value_counts(sort=False)
-            canon[k_] = max(vc.index, key=lambda sp: (vc[sp], -list(vc.index).index(sp)))
+            # (the most-used spelling; a spelling with no bracket note wins a tie)
+            canon[k_] = max(vc.index, key=lambda sp: (vc[sp], "(" not in sp, -list(vc.index).index(sp)))
         new_v = key.map(canon)
         n_ch += int((new_v != v[ok].astype(str)).sum())
         df.loc[ok, c] = new_v
     if n_ch:
-        print(f"  Play-call names: {n_ch} clip(s) written the same way as the most-used spelling (e.g. 'Blob #1' = 'BLOB #1')",
+        print(f"  Play-call / formation names: {n_ch} clip(s) written the same way as the most-used spelling (e.g. 'Blob #1' = "
+              f"'BLOB #1', 'I-Form' = 'I Form', '4-1' = '41', '--' = No Formation)",
               flush=True)
     return df
 

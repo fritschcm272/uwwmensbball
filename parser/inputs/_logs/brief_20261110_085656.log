@@ -1,0 +1,1018 @@
+
+===== cell 1 <file> =====
+
+===== cell 108 46_frame_capture =====
+Frame archive: 32,487 tracking frame(s) are packed in clip videos -- unpacked automatically when a step reads them.
+Clips with frames: 3043 of 3180 in uww_clip_frames.csv -- 123 with capture errors (see the 'error' column)
+  (15 more row(s) with errors are from an old TEST capture of 2026-03-06 Loras Duhawks -- replaced when that game is captured)
+  Capture errors (first 3): clip video not in the export (the export stopped before it, or it is still being written) | clip video not in the export (the export stopped before it, or it is still being written) | clip video not in the export (the export stopped before it, or it is still being written)
+
+===== cell 110 47_play_calls =====
+  Film: last season's (2025-26) play-by-play added for the film cells -- UWW 29 game(s), opponents 26 game(s). The brief cells see this season's only.
+  Synergy exports: Beloit@Carroll(WI) - Nov 12, 2025\Export.csv: BEL@CAR 2025-11-12 has no coach tags (titles are player names) -- not added
+  Synergy exports: Beloit@Ripon - Feb 21, 2026\Export.csv: BEL@RIP 2026-02-21 has no coach tags (titles are player names) -- not added
+  Synergy exports: Carroll(WI)@Elmhurst - Feb 24, 2026\Export.csv: CAR@EC 2026-02-24 has no coach tags (titles are player names) -- not added
+  Synergy exports: Carroll(WI)@Wash(StLouis) - Nov 7, 2025\Export.csv: CAR@WAS 2025-11-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: Elmhurst@Ripon - Nov 7, 2026\Export.csv: EC@RIP 2026-11-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: MarianWI@MSOE - Feb 26, 2026\Export.csv: MAR@MSE 2026-02-26 has no coach tags (titles are player names) -- not added
+  Synergy exports: Millikin@WheatonIL - Feb 21, 2026\Export.csv: MIL@WHE 2026-02-21 has no coach tags (titles are player names) -- not added
+  Synergy exports: Thiel@UWPlatteville - Nov 6, 2026\Export.csv: THI@WPL 2026-11-06 has no coach tags (titles are player names) -- not added
+  Synergy exports: UWWhitewater@Carroll(WI) - Nov 7, 2026\Export.csv: WWW@CAR 2026-11-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: UWWhitewater@Wash(StLouis) - Mar 7, 2026\Export.csv: WWW@WAS 2026-03-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: WheatonIL@NorthPark - Feb 24, 2026\Export.csv: WHE@NP 2026-02-24 has no coach tags (titles are player names) -- not added
+  Captured clips with no Title: 2447 clip(s) from 16 game(s) not in uww_plays.csv added as play calls (342 placed on the play-by-play clock through the video-tagging match; the rest have no half / clock, so no lineups). The app's Play review is where they get tagged.
+  Blank Team on 110 clip(s) (Synergy's Non Shooting Foul clips): filled with the named player's own team -- 109 from his other clips in the game, 0 from the play-by-play (he drew the foul, so his team had the ball)
+  Play clips by game type: UWW 1616 clip(s) in 12 game(s), Opponent 178 clip(s) in 1 game(s), Other 2020 clip(s) in 11 game(s)
+  [saves] fetched branch 'saves': 0 new saved review file(s) copied into data/play_review_saves (100 on the branch; its newest commit: 2026-11-09 12:19:53 -0600  Play review: 2026-11-07|UWWhitewater@Carroll(WI) by Corey)
+  [saves] 95 saved review file(s) read from play_review_saves:
+    2025-11-07|Carroll(WI)@Wash(StLouis): 19 file(s) by Coach Jake, Corey, Corey2, Corey4, Coreyplay3, coreyplay2 (latest 2026-11-04 17:00 UTC) -- 50 play(s) with coach answers
+    2025-11-12|Beloit@Carroll(WI): 3 file(s) by Coach Jake (latest 2026-11-04 20:04 UTC) -- 22 play(s) with coach answers
+    2025-12-30|WWW@COE: 1 file(s) by Corey (latest 2026-10-05 13:45 UTC) -- 20 play(s) with coach answers
+    2026-01-03|WOS@WWW: 12 file(s) by Corey, someone (latest 2026-10-10 00:18 UTC) -- 77 play(s) with coach answers
+    2026-02-21|Beloit@Ripon: 2 file(s) by Coach Jake (latest 2026-11-06 17:33 UTC) -- 24 play(s) with coach answers
+    2026-02-21|Millikin@WheatonIL: 4 file(s) by Corey (latest 2026-10-28 16:15 UTC) -- 1 play(s) with coach answers
+    2026-02-24|Carroll(WI)@Elmhurst: 6 file(s) by Coach Jake (latest 2026-11-02 17:29 UTC) -- 50 play(s) with coach answers
+    2026-02-24|WheatonIL@NorthPark: 7 file(s) by Coach Jake, Corey (latest 2026-10-27 14:07 UTC) -- 115 play(s) with coach answers
+    2026-02-26|MarianWI@MSOE: 2 file(s) by Coach Jake, CoreyTEST (latest 2026-10-21 15:41 UTC) -- 14 play(s) with coach answers
+    2026-03-07|UWWhitewater@Wash(StLouis): 20 file(s) by COACH JAKE, Coach Jake, Corey (latest 2026-10-27 13:54 UTC) -- 137 play(s) with coach answers
+    2026-11-06|Thiel@UWPlatteville: 7 file(s) by Corey (latest 2026-11-08 20:20 UTC) -- 1 play(s) with coach answers
+    2026-11-07|Elmhurst@Ripon: 5 file(s) by Coach Jake (latest 2026-11-09 17:58 UTC) -- 57 play(s) with coach answers
+    2026-11-07|UWWhitewater@Carroll(WI): 7 file(s) by Coach Jake, Corey (latest 2026-11-09 18:19 UTC) -- 21 play(s) with coach answers
+  Film Tagging: answers saved before the tracking reset, and test saves, are set aside (TITLE_CHECKS_BEFORE_RESET = True uses the old ones again):
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-10-01T17:23:50.635Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-09-30T18:14:20.554Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-10-01T19:48:37.750Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-07T19:03:11+00:00 -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-09T00:23:56+00:00 -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-10T00:18:04+00:00 -- before the restart on the Synergy exports
+    - 2026-02-26|MarianWI@MSOE by CoreyTEST, saved 2026-10-13T21:18:09+00:00 -- a test save
+  App tags: 170 clip(s) tagged in the app (no Title) and 0 coach Title(s) corrected in the app -- used in every play-call table like a Title; 37 play(s) with more than one action recorded
+  Lineups: 1211 clip(s) with no matched play-by-play event got their uww lineup from the game clock
+  Lineups: 1211 clip(s) with no matched play-by-play event got their opp lineup from the game clock
+  App tags: 57 clip(s) tagged in the app (no Title) and 0 coach Title(s) corrected in the app -- used in every play-call table like a Title; 20 play(s) with more than one action recorded
+  Upcoming-opponent games: 89 clip(s) are the OTHER team's offense -- kept, but excluded from Ripon Red Hawks's play-call scouting.
+  App tags: 341 clip(s) tagged in the app (no Title) and 0 coach Title(s) corrected in the app -- used in every play-call table like a Title; 52 play(s) with more than one action recorded
+  Frames matched to 3043 of 3814 clip(s) (3180 captured).
+    captured page '2025-11-07 Carroll (WI) Pioneers vs Washingto': 221 clip(s), 221 matched to tagged clips
+    captured page '2025-11-07 Ripon Red Hawks vs UW-Whitewater W': 175 clip(s), 73 matched to tagged clips
+    captured page '2025-11-12 Carroll (WI) Pioneers vs Beloit Bu': 182 clip(s), 178 matched to tagged clips
+    captured page '2025-12-20 Alma Scots': 174 clip(s), 174 matched to tagged clips
+    captured page '2025-12-30 Coe Kohawks': 175 clip(s), 175 matched to tagged clips
+    captured page '2026-01-03 UW-Oshkosh Titans': 196 clip(s), 196 matched to tagged clips
+    captured page '2026-02-21 MSOE Raiders vs Aurora Spartans': 165 clip(s), 165 matched to tagged clips
+    captured page '2026-02-21 Ripon Red Hawks vs Beloit Buccanee': 175 clip(s), 175 matched to tagged clips
+    captured page '2026-02-21 Wheaton (IL) Thunder vs Millikin B': 179 clip(s), 179 matched to tagged clips
+    captured page '2026-02-24 Carroll (WI) Pioneers vs Elmhurst ': 176 clip(s), 160 matched to tagged clips
+    captured page '2026-02-24 MSOE Raiders vs Lakeland Muskies': 179 clip(s), 179 matched to tagged clips
+    captured page '2026-02-24 Wheaton (IL) Thunder vs North Park': 244 clip(s), 244 matched to tagged clips
+    captured page '2026-02-26 MSOE Raiders vs Marian (WI) Sabres': 191 clip(s), 191 matched to tagged clips
+    captured page '2026-03-06 Loras Duhawks': 15 clip(s), 1 matched to tagged clips
+    captured page '2026-03-07 Washington-St. Louis Bears': 167 clip(s), 167 matched to tagged clips
+    captured page '2026-11-06 Wisconsin-(Platteville) Pioneers v': 197 clip(s), 196 matched to tagged clips
+    captured page '2026-11-07 Carroll (WI) Pioneers': 191 clip(s), 191 matched to tagged clips
+    captured page '2026-11-07 Ripon Red Hawks vs Elmhurst Blueja': 178 clip(s), 178 matched to tagged clips
+    tagged game 2025-11-14 WWW@STC: 138 clip(s), NO frames -- capture it (Frame capture, VISION_ONLY_GAME = that game)
+    tagged game 2025-11-15 EC@WWW: 167 clip(s), NO frames -- capture it (Frame capture, VISION_ONLY_GAME = that game)
+    tagged game 2026-01-03 WEC@WSP: 140 clip(s), no frames -- a game between two other teams (not UWW or the upcoming opponent), which Frame capture doesn't capture; used from its Titles only
+    tagged game 2026-11-07 Cal@WST: 167 clip(s), no frames -- a game between two other teams (not UWW or the upcoming opponent), which Frame capture doesn't capture; used from its Titles only
+  (frame check: 2025-11-14 WWW@STC came in from a Synergy Export.csv -- coach tags only, no frames needed)
+  (frame check: 2025-11-15 EC@WWW came in from a Synergy Export.csv -- coach tags only, no frames needed)
+  (frame check: 34 non-possession line(s) (free throws, no violation) in 2025-12-20 WWW@AC have no clip on Synergy's page and are not counted)
+  (frame check: 36 non-possession line(s) (free throws, no violation) in 2025-12-30 WWW@COE have no clip on Synergy's page and are not counted)
+  (frame check: 1 non-possession line(s) (free throws, no violation) in 2026-01-03 WOS@WWW have no clip on Synergy's page and are not counted)
+  Motion: 412 possession(s) with Motion in the play call -- kept as the coaches tagged them (family noted for the Motion breakdown table only)
+  [synergy] 2026-11-07 Elmhurst@Ripon: Synergy lineups -- both fives found for 0 of 86 clip(s) with none from the play-by-play
+  [export lineups] 2026-11-07 Cal@WST: FastScout play-by-play 11_7_26 Calvin Knights @ UW-Stout Blue Devils_pbp.html; both fives for 128 of 167 clip(s)
+  Play-call / formation names: 41 clip(s) written the same way as the most-used spelling (e.g. 'Blob #1' = 'BLOB #1', 'I-Form' = 'I Form', '4-1' = '41', '--' = No Formation)
+  This season only (2026-27): 369 of 1794 clip(s) go into the brief's and the app's play-call tables (last season's 1425 stay for Film Tagging / tracking -- BRIEF_THIS_SEASON_ONLY = False uses them too)
+  play_call_summary: 136 offensive row(s), 0 defensive.
+  screen_coverage: 21 tagged screen coverage(s) -- Defenses opponent faced: 20, Defenses UWW faced: 1
+  Motion breakdown: 11 team x family row(s); 11 Motion play(s) tagged with no action (uww_motion_needs_action -- Analytics > Film Tagging lists them)
+  screen defense by defender: 0 row(s) (defenders with 2+ tagged screens); action reads: 39 row(s) from Film Tagging's Actions / Players -- 4 team(s), 19 defender reaction row(s)
+UWW games: 1616 clip(s) across 10 game(s); decoded {'No call': 816, 'Untagged': 386, 'Clean': 239, 'App tag': 154, 'Partial': 15, 'Needs review': 6}; matched to play-by-play 167/1616 ({'player + clock': 162, 'clip order + foul by the defense': 4, 'clock + result': 1}).
+  First unmatched clips (date, period, clock, player, result):
+    game_date period  Clock           player        result
+0  2025-12-20     H1    NaN  Donovan Collins  No Violation
+1  2025-12-20     H1  19:39  Donovan Collins    Make 3 Pts
+2  2025-12-20     H1  19:11     Brock Marino    Miss 2 Pts
+3  2025-12-20     H1  19:11     Brock Marino    Miss 2 Pts
+4  2025-12-20     H1  18:57  Korbin Heitzman      Turnover
+5  2025-12-20     H1    NaN    Collin Madson  No Violation
+  ... 1,443 more row(s) of 1,449 (SHOW_ROWS = 6)
+  Most-called: {'5 Out Motion': 105, 'Flow': 33, 'BLOB': 28, 'Motion': 20, 'SLOB': 15, 'Ball Screen': 15}
+  Shot clock estimated for 167/1616 clip(s) (needs a matched pbp event).
+  Defense tagged on 672/1616 clip(s): {'Man-to-Man': 664, '2-3 Zone': 7, 'ZONE': 1}; press on 181, coverage called on 630.
+    Possessions: 815 offensive, 801 defensive -> 322 defense-faced tag(s), 350 defense-played tag(s).
+upcoming-opponent games: 178 clip(s) across 1 game(s); decoded {'Untagged': 121, 'App tag': 48, 'No call': 9}; matched to play-by-play 164/178 ({'player + clock': 155, 'clip order + foul by the defense': 6, 'clip order + player': 2, 'clock + result': 1}).
+  First unmatched clips (date, period, clock, player, result):
+     game_date period Clock         player             result
+0   2026-11-07     H1  None  Michael Asman       No Violation
+70  2026-11-07     H1  None      Sam Leoni       No Violation
+80  2026-11-07     H1  None   Seth Bunders  Non Shooting Foul
+81  2026-11-07     H1  None   Seth Bunders  Non Shooting Foul
+91  2026-11-07     H2  None    Aidyn Boone       No Violation
+93  2026-11-07     H2  None     Jack Field       No Violation
+  ... 8 more row(s) of 14 (SHOW_ROWS = 6)
+  Most-called: {'Motion': 11, 'RIPON MOTION': 5, 'Ripon Motion': 3, 'STAGGER': 3, 'Ripon Motion left': 2, 'BLOB BLOB #1': 2}
+  Shot clock estimated for 164/178 clip(s) (needs a matched pbp event).
+  Defense tagged on 51/178 clip(s): {'Man-to-Man': 51}; press on 13, coverage called on 178.
+    Possessions: 89 offensive, 89 defensive -> 51 defense-faced tag(s), 0 defense-played tag(s).
+    NOTE: no defensive possessions in this file, so nothing here can describe the defense this team PLAYS -- only what its offense faced. If you tagged their defense, check whether the Team column names the team being scouted rather than the team with the ball.
+Clip order check: every tracked clip's spot in the game video agrees with the game clock.
+
+===== cell 112 48_jersey_number_recognizer =====
+
+===== cell 114 49_jersey_number_reader_test =====
+
+===== cell 117 50c_outfit_check =====
+
+===== cell 119 50d_reid_check =====
+
+===== cell 120 50_player_tracking =====
+  [tracking] filled 144 team lineup(s) for clips with no game clock, from the clips just before and after them (same five on both sides = nobody subbed)
+  [reuse] uww_player_tracks: the last run's 4,003 row(s)
+  [reuse] uww_tracking_report: the last run's 1 row(s)
+  [reuse] uww_trk_event_candidates: the last run's 16 row(s)
+  [reuse] uww_trk_lineup_slots: the last run's 270 row(s)
+  [reuse] player tracking (switched off this run): the last run's results put back on 195 clip(s) (18 column(s))
+  Passes per possession: 25 tracked possession(s) with an estimated pass count; 42 of 333 possession(s) end on a pass (Synergy 'Ball Delivered') -> uww_pass_counts / uww_pass_summary
+
+===== cell 122 50b_detector_compare =====
+
+===== cell 123  =====
+
+===== cell 125 51_court_mapping =====
+  [reuse] court mapping (switched off this run): the last run's results put back on 0 clip(s) (2 column(s))
+
+===== cell 127 53_tag_model =====
+  [reuse] tag model (switched off this run): the last run's results put back on 1,794 clip(s) (21 column(s))
+  [reuse] uww_tag_model_report: the last run's 10 row(s)
+  Automatic answers used for untagged plays / prefilled in Film Tagging: defense, situation, primary_action, offball_coverage | offered as 'not sure' only: formation, play_call, press, ball_screen_coverage, screener, screen_defender
+  Tag model history: 1 field(s) changed since the last run -> uww_tag_model_history.csv (the app: Analytics > Film Tagging > How good is the automatic tagging?)
+
+===== cell 129 54_tracking_insights =====
+Tracking insights: matchups 44, help 18, screens 27, screen_coverage 25, screen_pairs 7, sets 4, set_clips 24, inbounds 0, zone_press 0, coverage_execution 13, spacing 2, roles 776, clips 28, matchups_raw 641, help_raw 3240, matchups_by_game 44, help_by_game 18, screen_coverage_by_game 25, screen_pairs_by_game 7, sets_by_game 4, inbounds_by_game 0, zone_press_by_game 0, coverage_execution_by_game 13, spacing_by_game 2
+
+===== cell 131 55_court_insights =====
+Court insights: nothing on the court yet (court mapping needs a calibration -- see the court mapping cell).
+
+===== cell 133 55c_play_review =====
+
+===== cell 135 55d_defensive_roles =====
+Defensive roles: 512 player(s) -- 467 from play-by-play only, 21 from position only, 12 from film tracking, 9 from coach tags, 3 from coach tags + film (8 marked low sample)
+  roles: Low Activity 297; Point of Attack 124; Helper 67; Mobile Big 18; Wing Stopper 3; Anchor Big 2; Chaser 1
+
+===== cell 136 55e_film_quality =====
+Film on Ripon Red Hawks: no tracked games yet; 57 coach-tagged possessions on offense, 0 on defense.
+Film on UW-Whitewater: 1 tracked game (11/7/26 vs Carroll (WI) Pioneers, 28 clips) -- players named on 39% of floor spots; 623 coach-tagged possessions on offense, 601 on defense. Brief: per-player film reads off (named 39%, needs 50%), court sections off (placed <NA>%, shot spots agree <NA>% -- needs 60% and 80%). The app shows everything either way.
+
+===== cell 138 56_compute_biggest_scoring_runs_and_largest =====
+Scoring runs and largest leads: 1 game(s) (lineups for each are in scoring_runs)
+         date               opponent  UWW run  opp run  UWW lead  opp lead
+0  2026-11-07  Carroll (WI) Pioneers       10        9         4        16
+
+===== cell 140 57_surface_clutch_time_events_with_lineup =====
+                  opponent period time_remaining                   team  \
+435  Carroll (WI) Pioneers     H2     04:54 (H2)  Carroll (WI) Pioneers   
+437  Carroll (WI) Pioneers     H2     04:36 (H2)          UW-Whitewater   
+438  Carroll (WI) Pioneers     H2     04:36 (H2)          UW-Whitewater   
+439  Carroll (WI) Pioneers     H2     04:05 (H2)  Carroll (WI) Pioneers   
+440  Carroll (WI) Pioneers     H2     04:05 (H2)          UW-Whitewater   
+441  Carroll (WI) Pioneers     H2     04:02 (H2)  Carroll (WI) Pioneers   
+442  Carroll (WI) Pioneers     H2     04:02 (H2)          UW-Whitewater   
+444  Carroll (WI) Pioneers     H2     04:02 (H2)          UW-Whitewater   
+446  Carroll (WI) Pioneers     H2     03:40 (H2)  Carroll (WI) Pioneers   
+448  Carroll (WI) Pioneers     H2     03:31 (H2)          UW-Whitewater   
+450  Carroll (WI) Pioneers     H2     03:13 (H2)  Carroll (WI) Pioneers   
+453  Carroll (WI) Pioneers     H2     03:00 (H2)          UW-Whitewater   
+454  Carroll (WI) Pioneers     H2     03:00 (H2)          UW-Whitewater   
+457  Carroll (WI) Pioneers     H2     02:37 (H2)  Carroll (WI) Pioneers   
+458  Carroll (WI) Pioneers     H2     02:37 (H2)  Carroll (WI) Pioneers   
+462  Carroll (WI) Pioneers     H2     02:15 (H2)          UW-Whitewater   
+463  Carroll (WI) Pioneers     H2     02:15 (H2)          UW-Whitewater   
+464  Carroll (WI) Pioneers     H2     01:44 (H2)  Carroll (WI) Pioneers   
+466  Carroll (WI) Pioneers     H2     01:33 (H2)          UW-Whitewater   
+467  Carroll (WI) Pioneers     H2     01:33 (H2)  Carroll (WI) Pioneers   
+469  Carroll (WI) Pioneers     H2     01:32 (H2)          UW-Whitewater   
+475  Carroll (WI) Pioneers     H2     01:23 (H2)  Carroll (WI) Pioneers   
+476  Carroll (WI) Pioneers     H2     01:01 (H2)          UW-Whitewater   
+477  Carroll (WI) Pioneers     H2     00:49 (H2)          UW-Whitewater   
+478  Carroll (WI) Pioneers     H2     00:49 (H2)  Carroll (WI) Pioneers   
+480  Carroll (WI) Pioneers     H2     00:49 (H2)  Carroll (WI) Pioneers   
+485  Carroll (WI) Pioneers     H2     00:19 (H2)          UW-Whitewater   
+487  Carroll (WI) Pioneers     H2     00:17 (H2)  Carroll (WI) Pioneers   
+488  Carroll (WI) Pioneers     H2     00:17 (H2)          UW-Whitewater   
+489  Carroll (WI) Pioneers     H2     00:17 (H2)          UW-Whitewater   
+493  Carroll (WI) Pioneers     H2     00:06 (H2)  Carroll (WI) Pioneers   
+494  Carroll (WI) Pioneers     H2     00:06 (H2)          UW-Whitewater   
+497  Carroll (WI) Pioneers     H2     00:01 (H2)  Carroll (WI) Pioneers   
+
+                     player         event_type  \
+435          Michael McNabb          made_shot   
+437            JR Lukenbill          made_shot   
+438         Isaiah Robinson             assist   
+439          Peyton McKenna           turnover   
+440         Isaiah Robinson              steal   
+441           Dennis Estepp               foul   
+442         Isaiah Robinson  free_throw_missed   
+444         Isaiah Robinson  free_throw_missed   
+446          Michael McNabb        missed_shot   
+448            JR Lukenbill          made_shot   
+450          Peyton McKenna           turnover   
+453            JR Lukenbill               foul   
+454            JR Lukenbill           turnover   
+457     Logan Steffensmeier          made_shot   
+458          Michael McNabb             assist   
+462           Kelton McEwen          made_shot   
+463           Collin Madson             assist   
+464          Peyton McKenna        missed_shot   
+466            JR Lukenbill        missed_shot   
+467            Jimmy Tarjan              block   
+469         Isaiah Robinson          made_shot   
+475     Logan Steffensmeier          made_shot   
+476           Collin Madson          made_shot   
+477         Isaiah Robinson               foul   
+478          Peyton McKenna  free_throw_missed   
+480          Peyton McKenna    free_throw_made   
+485           Collin Madson        missed_shot   
+487            Jimmy Tarjan               foul   
+488  Tyshawn Teague-Johnson  free_throw_missed   
+489  Tyshawn Teague-Johnson    free_throw_made   
+493          Peyton McKenna        missed_shot   
+494  Tyshawn Teague-Johnson              block   
+497           Dennis Estepp        missed_shot   
+
+                                              raw_text  uww_score  opp_score  \
+435             Michael McNabb Makes 2PT Driving Layup       64.0       68.0   
+437                   JR Lukenbill Makes 3PT Jump Shot       67.0       68.0   
+438                            Isaiah Robinson Assists       67.0       68.0   
+439                Peyton McKenna Turnover (Lost Ball)       67.0       68.0   
+440                             Isaiah Robinson Steals       67.0       68.0   
+441                Dennis Estepp Commits Personal Foul       67.0       68.0   
+442         Isaiah Robinson Misses Free Throw (1 of 2)       67.0       68.0   
+444         Isaiah Robinson Misses Free Throw (2 of 2)       67.0       68.0   
+446            Michael McNabb Misses 2PT Driving Layup       67.0       68.0   
+448               JR Lukenbill Makes 2PT Driving Layup       69.0       68.0   
+450                 Peyton McKenna Turnover (Bad Pass)       69.0       68.0   
+453                JR Lukenbill Commits Offensive Foul       69.0       68.0   
+454             JR Lukenbill Turnover (Offensive Foul)       69.0       68.0   
+457            Logan Steffensmeier Makes 3PT Jump Shot       69.0       71.0   
+458                             Michael McNabb Assists       69.0       71.0   
+462                  Kelton McEwen Makes 3PT Jump Shot       72.0       71.0   
+463                              Collin Madson Assists       72.0       71.0   
+464        Peyton McKenna Misses 2PT Pull Up Jump Shot       72.0       71.0   
+466            JR Lukenbill Misses 2PT Layup (Blocked)       72.0       71.0   
+467                                Jimmy Tarjan Blocks       72.0       71.0   
+469                    Isaiah Robinson Makes 2PT Layup       74.0       71.0   
+475                 Logan Steffensmeier Makes 2PT Dunk       74.0       73.0   
+476          Collin Madson Makes 3PT Pull Up Jump Shot       77.0       73.0   
+477              Isaiah Robinson Commits Personal Foul       77.0       73.0   
+478          Peyton McKenna Misses Free Throw (1 of 2)       77.0       73.0   
+480           Peyton McKenna Makes Free Throw (2 of 2)       77.0       74.0   
+485                 Collin Madson Misses 3PT Jump Shot       77.0       74.0   
+487                 Jimmy Tarjan Commits Personal Foul       77.0       74.0   
+488  Tyshawn Teague-Johnson Misses Free Throw (2 of 2)       77.0       74.0   
+489   Tyshawn Teague-Johnson Makes Free Throw (1 of 2)       78.0       74.0   
+493          Peyton McKenna Misses 2PT Layup (Blocked)       78.0       74.0   
+494                      Tyshawn Teague-Johnson Blocks       78.0       74.0   
+497                 Dennis Estepp Misses 3PT Jump Shot       78.0       74.0   
+
+                                                                               uww_lineup  \
+435   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+437   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+438   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+439   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+440   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+441   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+442   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+444   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+446   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+448   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+450   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+453   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+454   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+457   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+458   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+462   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+463   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+464   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+466   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+467   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+469   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+475  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson   
+476  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson   
+477  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson   
+478  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson   
+480  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson   
+485   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+487   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+488   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+489   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+493   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+494   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+497   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+
+                                                                           opp_lineup  
+435  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+437  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+438  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+439  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+440  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+441  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+442  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+444  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+446  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+448  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+450  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+453    Cale Buboltz, Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Peyton McKenna  
+454    Cale Buboltz, Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Peyton McKenna  
+457  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+458  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+462    Cale Buboltz, Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Peyton McKenna  
+463    Cale Buboltz, Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Peyton McKenna  
+464    Cale Buboltz, Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Peyton McKenna  
+466    Cale Buboltz, Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Peyton McKenna  
+467    Cale Buboltz, Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Peyton McKenna  
+469    Cale Buboltz, Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Peyton McKenna  
+475  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+476  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+477  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+478  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+480  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+485  Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+487  Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+488  Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+489  Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+493  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+494  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+497  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna  
+
+Clutch-time points scored, by team:
+                opponent   game_date                   team  points
+0  Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers       8
+1  Carroll (WI) Pioneers  2026-11-07          UW-Whitewater      14
+
+UWW's 5-man lineup(s) used in clutch time, by game:
+  Carroll (WI) Pioneers 2026-11-07: ['Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson', 'Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson']
+
+===== cell 142 58_cross_reference_actual_pbp_turnovers =====
+                opponent outcome  ball_security_was_a_key  \
+0  Carroll (WI) Pioneers       W                    False   
+
+   uww_actual_turnovers uww_season_avg_turnovers uww_vs_season_avg  \
+0                     9                     None              None   
+
+   opponent_actual_turnovers uww_season_avg_turnovers_forced  \
+0                         13                            None   
+
+   turnover_margin_uww_favor  
+0                          4  
+Actual PBP turnovers vs. the Keys-to-Victory 'Ball Security / Turnovers' emphasis:
+
+Carroll (WI) Pioneers (W): ball security was NOT called out as a pre-game key.
+    UWW committed 9 turnovers this game vs. their N/A season average (N/A).
+    Carroll (WI) Pioneers committed 13 turnovers (UWW forces N/A/gm on average).
+    Turnover margin (opponent TOs minus UWW TOs): +4 (in UWW's favor)
+
+Only 1 game has play-by-play data so far -- a real win/loss split by turnover-battle outcome will populate automatically once more games are uploaded.
+
+UWW turnovers by 5-man lineup on the floor:
+                opponent  \
+2  Carroll (WI) Pioneers   
+3  Carroll (WI) Pioneers   
+0  Carroll (WI) Pioneers   
+1  Carroll (WI) Pioneers   
+4  Carroll (WI) Pioneers   
+5  Carroll (WI) Pioneers   
+
+                                                                               uww_lineup  \
+2    Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson   
+3       Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson   
+0                Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveon Vann   
+1     Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+4              Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Zavier Castillo   
+5  Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo   
+
+   turnovers  
+2          3  
+3          2  
+0          1  
+1          1  
+4          1  
+5          1  
+
+Opponent turnovers by their 5-man lineup on the floor:
+                opponent  \
+4  Carroll (WI) Pioneers   
+5  Carroll (WI) Pioneers   
+6  Carroll (WI) Pioneers   
+7  Carroll (WI) Pioneers   
+0  Carroll (WI) Pioneers   
+1  Carroll (WI) Pioneers   
+2  Carroll (WI) Pioneers   
+3  Carroll (WI) Pioneers   
+8  Carroll (WI) Pioneers   
+
+                                                                            opp_lineup  \
+4     Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna   
+5              Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton McKenna   
+6           Dennis Estepp, Hayden Stebbins, Jimmy Tarjan, Lucas Parker, Michael McNabb   
+7  Dennis Estepp, Hayden Stebbins, Logan Steffensmeier, Michael McNabb, Peyton McKenna   
+0       Cai Joseph, Cale Buboltz, Hayden Stebbins, Logan Steffensmeier, Peyton McKenna   
+1               Cai Joseph, Cale Buboltz, Jimmy Tarjan, Michael McNabb, Peyton McKenna   
+2        Cai Joseph, Cale Buboltz, Logan Steffensmeier, Michael McNabb, Peyton McKenna   
+3    Cale Buboltz, Dennis Estepp, Hayden Stebbins, Logan Steffensmeier, Peyton McKenna   
+8     Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Michael McNabb, Peyton McKenna   
+
+   turnovers  
+4          2  
+5          2  
+6          2  
+7          2  
+0          1  
+1          1  
+2          1  
+3          1  
+8          1  
+
+===== cell 144 59_cross_reference_actual_pbp_rebounding =====
+                opponent outcome  rebounding_was_a_key  uww_actual_reb  \
+0  Carroll (WI) Pioneers       W                 False              29   
+
+  uww_season_avg_reb uww_vs_season_avg_reb  uww_actual_oreb  uww_actual_dreb  \
+0               None                  None                7               22   
+
+   opponent_actual_reb uww_season_avg_reb_allowed  opponent_actual_oreb  \
+0                   37                       None                    14   
+
+   opponent_actual_dreb  rebound_margin_uww_favor  
+0                    23                        -8  
+Actual PBP rebounding vs. the Keys-to-Victory 'Rebounding' emphasis:
+
+Carroll (WI) Pioneers (W): rebounding was NOT called out as a pre-game key.
+    UWW grabbed 29 rebounds (7 off. / 22 def.) this game vs. their N/A season average (N/A).
+    Carroll (WI) Pioneers grabbed 37 rebounds (14 off. / 23 def.) -- UWW allows N/A/gm on average.
+    Rebound margin (UWW minus opponent): -8 (against UWW)
+
+Only 1 game has play-by-play data so far -- a real win/loss split by rebound-battle outcome will populate automatically once more games are uploaded.
+
+UWW rebounds by 5-man lineup on the floor:
+                opponent  \
+2  Carroll (WI) Pioneers   
+1  Carroll (WI) Pioneers   
+6  Carroll (WI) Pioneers   
+5  Carroll (WI) Pioneers   
+4  Carroll (WI) Pioneers   
+0  Carroll (WI) Pioneers   
+3  Carroll (WI) Pioneers   
+
+                                                                             uww_lineup  \
+2  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson   
+1   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson   
+6  Collin Madson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo   
+5   Collin Madson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson, Zavier Castillo   
+4            Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Zavier Castillo   
+0            Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Taveon Vann   
+3     Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson   
+
+   rebounds  
+2         9  
+1         8  
+6         5  
+5         3  
+4         2  
+0         1  
+3         1  
+
+Opponent rebounds by their 5-man lineup on the floor:
+                 opponent  \
+7   Carroll (WI) Pioneers   
+5   Carroll (WI) Pioneers   
+10  Carroll (WI) Pioneers   
+2   Carroll (WI) Pioneers   
+8   Carroll (WI) Pioneers   
+3   Carroll (WI) Pioneers   
+4   Carroll (WI) Pioneers   
+0   Carroll (WI) Pioneers   
+1   Carroll (WI) Pioneers   
+6   Carroll (WI) Pioneers   
+9   Carroll (WI) Pioneers   
+11  Carroll (WI) Pioneers   
+
+                                                                             opp_lineup  \
+7               Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton McKenna   
+5      Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna   
+10     Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Michael McNabb, Peyton McKenna   
+2         Cai Joseph, Cale Buboltz, Logan Steffensmeier, Michael McNabb, Peyton McKenna   
+8            Dennis Estepp, Hayden Stebbins, Jimmy Tarjan, Lucas Parker, Michael McNabb   
+3     Cale Buboltz, Dennis Estepp, Hayden Stebbins, Logan Steffensmeier, Michael McNabb   
+4     Cale Buboltz, Dennis Estepp, Hayden Stebbins, Logan Steffensmeier, Peyton McKenna   
+0        Cai Joseph, Cale Buboltz, Hayden Stebbins, Logan Steffensmeier, Peyton McKenna   
+1           Cai Joseph, Cale Buboltz, Logan Steffensmeier, Lucas Parker, Peyton McKenna   
+6      Cale Buboltz, Hayden Stebbins, Logan Steffensmeier, Lucas Parker, Peyton McKenna   
+9   Dennis Estepp, Hayden Stebbins, Logan Steffensmeier, Michael McNabb, Peyton McKenna   
+11            Dennis Estepp, Jimmy Tarjan, Lucas Parker, Michael McNabb, Peyton McKenna   
+
+    rebounds  
+7         10  
+5          5  
+10         5  
+2          4  
+8          4  
+3          2  
+4          2  
+0          1  
+1          1  
+6          1  
+9          1  
+11         1  
+
+===== cell 146 60_compute_scoring_margin_and_minutes_played =====
+Lineup stints: 55 across 1 game(s).
+Clock check: all 1 game(s) between 35 and 65 elapsed minutes.
+UWW's best 5-man lineups by net margin (of 11):
+                opponent                                                             uww_lineup  total_minutes  stints  net_margin  margin_per_min
+8  Carroll (WI) Pioneers  Collin Madson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnso...            3.8       4         9.0             2.4
+3  Carroll (WI) Pioneers  Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tysha...            8.2      12         6.0             0.7
+6  Carroll (WI) Pioneers  Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Zavier ...            4.5       5         4.0             0.9
+4  Carroll (WI) Pioneers  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...           12.8      16         2.0             0.2
+0  Carroll (WI) Pioneers  Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Tav...            1.2       2         0.0             0.0
+UWW's worst 5:
+                 opponent                                                             uww_lineup  total_minutes  stints  net_margin  margin_per_min
+10  Carroll (WI) Pioneers  Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-John...            1.4       2        -7.0            -4.8
+5   Carroll (WI) Pioneers  Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tyshawn...            1.6       3        -5.0            -3.2
+7   Carroll (WI) Pioneers  Collin Madson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson...            2.8       4        -3.0            -1.1
+9   Carroll (WI) Pioneers  Isaiah Robinson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tysha...            0.5       2        -2.0            -3.8
+2   Carroll (WI) Pioneers  Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveo...            2.3       3         0.0             0.0
+Opponent lineups that did best against UWW (of 19):
+                 opponent                                                             opp_lineup  total_minutes  stints  net_margin_for_uww  margin_per_min_for_uww
+17  Carroll (WI) Pioneers  Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Michael McNabb, ...            5.8       8               -11.0                    -1.9
+5   Carroll (WI) Pioneers  Cai Joseph, Cale Buboltz, Logan Steffensmeier, Michael McNabb, Pey...            2.6       3                -3.0                    -1.2
+1   Carroll (WI) Pioneers  Cai Joseph, Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Peyt...            1.3       3                -2.0                    -1.5
+4   Carroll (WI) Pioneers  Cai Joseph, Cale Buboltz, Logan Steffensmeier, Lucas Parker, Peyto...            0.6       1                -2.0                    -3.4
+12  Carroll (WI) Pioneers  Cale Buboltz, Hayden Stebbins, Logan Steffensmeier, Lucas Parker, ...            1.4       2                -2.0                    -1.4
+  (LINEUP_MARGIN_VERBOSE = True prints every stint and every lineup.)
+
+===== cell 148 61_add_minutes_played_onto_reconstructed_box =====
+Matched minutes played for 19 of 20 pbp_box_score row(s).
+
+===== cell 150 62_identify_lineups_on_court_during_each_team =====
+Lineups on the floor during each team's biggest scoring run:
+
+[Carroll (WI) Pioneers] Carroll (WI) Pioneers's biggest run: 9 points (H1 08:26 (H1) -> H1 06:51 (H1))
+    UWW made a substitution mid-run -- lineups on the floor: ['Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo', 'Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Zavier Castillo']
+    Carroll (WI) Pioneers made a substitution mid-run -- lineups on the floor: ['Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Michael McNabb, Peyton McKenna', 'Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna']
+
+[Carroll (WI) Pioneers] UW-Whitewater's biggest run: 10 points (H1 03:07 (H1) -> H1 00:56 (H1))
+    UWW lineup on the floor the whole run: Collin Madson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo
+    Carroll (WI) Pioneers lineup on the floor the whole run: Dennis Estepp, Hayden Stebbins, Jimmy Tarjan, Lucas Parker, Michael McNabb
+
+                opponent   game_date                   team  run_points  \
+0  Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers           9   
+1  Carroll (WI) Pioneers  2026-11-07          UW-Whitewater          10   
+
+   start_event_order  end_event_order  
+0                151              169  
+1                204              220  
+
+===== cell 152 63_season_wide_5_man_lineup_analysis_across =====
+Season-wide UWW 5-man lineups across 1 game(s) with play-by-play data (11 distinct lineups used):
+
+Most-used lineups overall (by total minutes on the floor):
+                                                               uww_lineup  games                opponents  stints  total_minutes  net_margin  margin_per_min
+4   Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...      1  [Carroll (WI) Pioneers]      16          12.78         2.0            0.16
+3   Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tysha...      1  [Carroll (WI) Pioneers]      12           8.16         6.0            0.74
+6   Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Zavier ...      1  [Carroll (WI) Pioneers]       5           4.46         4.0            0.90
+8   Collin Madson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnso...      1  [Carroll (WI) Pioneers]       4           3.80         9.0            2.37
+7   Collin Madson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson...      1  [Carroll (WI) Pioneers]       4           2.75        -3.0           -1.09
+2   Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveo...      1  [Carroll (WI) Pioneers]       3           2.28         0.0            0.00
+5   Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tyshawn...      1  [Carroll (WI) Pioneers]       3           1.57        -5.0           -3.18
+10  Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-John...      1  [Carroll (WI) Pioneers]       2           1.45        -7.0           -4.83
+0   Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Tav...      1  [Carroll (WI) Pioneers]       2           1.25         0.0            0.00
+1   Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Tys...      1  [Carroll (WI) Pioneers]       2           0.63         0.0            0.00
+  ... 1 more row(s) of 11 (SHOW_ROWS = 10)
+
+Best net-margin-per-minute UWW lineups season-wide (min 2.0 minutes played):
+                                                              uww_lineup  games                opponents  stints  total_minutes  net_margin  margin_per_min
+8  Collin Madson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnso...      1  [Carroll (WI) Pioneers]       4           3.80         9.0            2.37
+6  Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Zavier ...      1  [Carroll (WI) Pioneers]       5           4.46         4.0            0.90
+3  Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tysha...      1  [Carroll (WI) Pioneers]      12           8.16         6.0            0.74
+4  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...      1  [Carroll (WI) Pioneers]      16          12.78         2.0            0.16
+2  Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveo...      1  [Carroll (WI) Pioneers]       3           2.28         0.0            0.00
+7  Collin Madson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson...      1  [Carroll (WI) Pioneers]       4           2.75        -3.0           -1.09
+
+Worst net-margin-per-minute UWW lineups season-wide (min 2.0 minutes played):
+                                                              uww_lineup  games                opponents  stints  total_minutes  net_margin  margin_per_min
+7  Collin Madson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson...      1  [Carroll (WI) Pioneers]       4           2.75        -3.0           -1.09
+2  Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveo...      1  [Carroll (WI) Pioneers]       3           2.28         0.0            0.00
+4  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...      1  [Carroll (WI) Pioneers]      16          12.78         2.0            0.16
+3  Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tysha...      1  [Carroll (WI) Pioneers]      12           8.16         6.0            0.74
+6  Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Zavier ...      1  [Carroll (WI) Pioneers]       5           4.46         4.0            0.90
+8  Collin Madson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnso...      1  [Carroll (WI) Pioneers]       4           3.80         9.0            2.37
+
+No single 5-man lineup has repeated across multiple games yet -- each game so far has drawn from a distinct set of on-court combinations. This will populate as more games are added.
+
+UWW's starting (tip-off) lineup, by game:
+                opponent   game_date  \
+0  Carroll (WI) Pioneers  2026-11-07   
+
+                                                                        starting_lineup  
+0  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson  
+
+Same starting five has been used in EVERY game so far.
+
+Distinct UWW 5-man combinations used, by game:
+                opponent   game_date  distinct_lineups_used
+0  Carroll (WI) Pioneers  2026-11-07                     11
+
+===== cell 154 64_uww_performance_vs_opponent_lineup_profile =====
+UWW's season-wide net margin by OPPONENT lineup role composition (Starter/Bench mix on the floor):
+
+                opp_role_bucket  stints  total_minutes  net_margin_for_uww  \
+1          Mixed (2-3 starters)      34          25.79                10.0   
+2  Starter-heavy (4-5 starters)      19          12.72                -8.0   
+0    Bench-heavy (0-1 starters)       2           1.15                 2.0   
+
+   margin_per_min  
+1            0.39  
+2           -0.63  
+0            1.74  
+
+UWW's season-wide net margin by the OPPONENT lineup's dominant scouted playing style (a lineup can count toward more than one tag):
+
+        opp_style_tags  stints  total_minutes  net_margin_for_uww  \
+3  three_point_shooter      55          39.66                 4.0   
+2       slasher_driver      51          36.40                 8.0   
+0      catch_and_shoot      42          30.10                 9.0   
+1            rebounder      17          12.82                -9.0   
+
+   margin_per_min  
+3            0.10  
+2            0.22  
+0            0.30  
+1           -0.70  
+
+UWW's video-tagged shot-attempt play types, season-wide (0 video-matched attempts across 0 game(s)):
+
+Empty DataFrame
+Columns: [play_type, attempts, makes, fg_pct]
+Index: []
+
+For the top 0 most-attempted play types, which UWW lineup ran them most:
+
+Empty DataFrame
+Columns: [play_type, uww_lineup, attempts, makes, fg_pct]
+Index: []
+
+UWW's video-tagged play-type efficiency by individual player, season-wide (every player/play-type combination with at least one attempt):
+
+  (no data)
+
+Per-player summary -- overall video-tagged volume/efficiency plus each player's single most-used play type, season-wide:
+
+Empty DataFrame
+Columns: [player, total_attempts, total_makes, overall_fg_pct, most_used_play_type, attempts_of_that_type, makes_of_that_type]
+Index: []
+
+Starters vs. Bench: overall video-tagged shooting, season-wide:
+
+Empty DataFrame
+Columns: [role, attempts, makes, fg_pct]
+Index: []
+
+Starters vs. Bench shooting, broken down by play type, season-wide:
+
+Empty DataFrame
+Columns: [role, play_type, attempts, makes, fg_pct]
+Index: []
+
+===== cell 156 65_diagnose_spot_up_struggles =====
+Spot-Up shot-quality breakdown, season-wide (0 video-matched attempts):
+
+By shot mechanic:
+  (no data)
+
+By contest level:
+  (no data)
+
+By shot distance:
+  (no data)
+
+Catch-and-shoot Spot-Up jumpers only (0 attempts) -- contest x distance:
+  (no data)
+
+Per-player Spot-Up volume/efficiency, with their catch-and-shoot% and guarded% of those attempts:
+Empty DataFrame
+Columns: [player, attempts, makes, fg_pct, pct_catch_and_shoot, pct_guarded]
+Index: []
+
+===== cell 158 66_check_contest_mechanic_patterns_across_all =====
+ALL catch-and-shoot jumpers, every play type, season-wide (0 attempts):
+
+Which play types produce catch-and-shoot jumpers, and their efficiency:
+  (no data)
+
+Guarded vs. Open, ALL catch-and-shoot jumpers (every play type combined), season-wide:
+  (no data)
+
+Guarded vs. Open catch-and-shoot jumpers, by player, ALL play types combined, season-wide:
+Empty DataFrame
+Columns: [player, guarded_attempts, guarded_makes, guarded_fg_pct, open_attempts, open_makes, open_fg_pct, total_attempts]
+Index: []
+
+Non-catch-and-shoot attempts (drives, pull-ups, post moves, etc.), by play type and mechanic:
+  (no data)
+
+===== cell 160 67_contest_level =====
+Spot-Up shooting by player and contest level, season-wide (every player/contest combination with at least one attempt):
+
+Empty DataFrame
+Columns: [player, contest, attempts, makes, fg_pct]
+Index: []
+
+Guarded vs. Open Spot-Up shooting side-by-side, by player (season-wide):
+
+Empty DataFrame
+Columns: [player, guarded_attempts, guarded_makes, guarded_fg_pct, open_attempts, open_makes, open_fg_pct, total_attempts]
+Index: []
+
+===== cell 163 68_investigate_why_guarded_catch_and_shoot =====
+Not enough catch-and-shoot data yet to compare Guarded (n=0) vs. Open (n=0) -- need at least one attempt logged in each bucket. Skipping the significance test for now; the game-by-game and shooter-quality breakdowns below still run on whatever data exists.
+Guarded vs. Open catch-and-shoot FG%, broken out by game:
+
+  (no data)
+
+Average SEASON-LONG 3P% of the shooter taking the shot, by contest level (catch-and-shoot 3s only) -- tests whether the defense keys on UWW's better shooters, inflating the Guarded bucket's shooter-quality mix relative to Open:
+
+Empty DataFrame
+Columns: [contest, attempts, avg_shooter_season_3p_pct]
+Index: []
+
+===== cell 166 69_structured_coaching_flags_recommendations =====
+Coaching flags database: 8 flag(s) across 8 player(s) (full roster: 8).
+0 of 8 players have at least one Positive flag.
+All season-stat rules (FG%/3P%/FT%/PPG/MPG/GP-GS) are now built from pbp_box_score restricted to game_date < reference_date (2026-11-8), not the ungated season-to-date page -- 8 of 8 rostered player(s) have no play-by-play data at all before reference_date and fall back to the 'no data yet' flag rather than a leaked full-season number.
+
+Name reconciliation applied via KNOWN_NAME_ALIASES where the play-by-play spelling and the official season-stats spelling of a player's name differ.
+
+     player player_key     role sentiment                category                                        flag                                                               evidence  \
+0  Player 1   player 1  Unknown   Neutral  General / limited data  No performance data yet to flag positively  No recorded minutes, shot attempts, or season stats found for him ...   
+1  Player 2   player 2  Unknown   Neutral  General / limited data  No performance data yet to flag positively  No recorded minutes, shot attempts, or season stats found for him ...   
+2  Player 3   player 3  Unknown   Neutral  General / limited data  No performance data yet to flag positively  No recorded minutes, shot attempts, or season stats found for him ...   
+3  Player 4   player 4  Unknown   Neutral  General / limited data  No performance data yet to flag positively  No recorded minutes, shot attempts, or season stats found for him ...   
+4  Player 5   player 5  Unknown   Neutral  General / limited data  No performance data yet to flag positively  No recorded minutes, shot attempts, or season stats found for him ...   
+5  Player 6   player 6  Unknown   Neutral  General / limited data  No performance data yet to flag positively  No recorded minutes, shot attempts, or season stats found for him ...   
+6  Player 7   player 7  Unknown   Neutral  General / limited data  No performance data yet to flag positively  No recorded minutes, shot attempts, or season stats found for him ...   
+7    Totals     totals  Unknown   Neutral  General / limited data  No performance data yet to flag positively  No recorded minutes, shot attempts, or season stats found for him ...   
+
+                                                 recommendation     confidence  
+0  Re-evaluate once he sees game action and stats are recorded.  Low (no data)  
+1  Re-evaluate once he sees game action and stats are recorded.  Low (no data)  
+2  Re-evaluate once he sees game action and stats are recorded.  Low (no data)  
+3  Re-evaluate once he sees game action and stats are recorded.  Low (no data)  
+4  Re-evaluate once he sees game action and stats are recorded.  Low (no data)  
+5  Re-evaluate once he sees game action and stats are recorded.  Low (no data)  
+6  Re-evaluate once he sees game action and stats are recorded.  Low (no data)  
+7  Re-evaluate once he sees game action and stats are recorded.  Low (no data)  
+
+===== cell 168 70_expected_box_score_for_upcoming_game =====
+Expected box score: skipped -- UWW has no season stats yet this season (no 'Team Total' row).
+
+===== cell 171 71_reconstruct_box_score_for_opponent_games =====
+Reconstructed box score for 1 of the upcoming opponent's prior game(s), 27 player-game row(s) total.
+
+===== cell 173 72_minutes_played_for_upcoming_opponent_prior =====
+Matched minutes played for 27 of 27 pbp_box_score_upcoming row(s).
+Starters detected for 1 of Ripon Red Hawks's prior game(s).
+
+===== cell 175 73_replace_upcoming_opponent_pdf_scouting =====
+Replaced PDF-sourced stats with PBP-derived stats for 16 of 17 Ripon Red Hawks player_profiles row(s), from 1 prior game(s) of PBP data.
+  No PBP-only players to add -- every player in the prior-game PBP already had a player_profiles row.
+  Roster player(s) with no matching PBP box-score row yet (kept their PDF-sourced stats, if any): ['Domanic Rasberry']
+
+  Roster names for Ripon Red Hawks (17): ['Anton Kilde', 'Christian Wilson', 'Devon Feck', 'Domanic Rasberry', 'Dominic Rasberry', 'Fisher MacKenzie', 'Jack Field', 'Jackson Flowers', 'Jatyn Barkus', 'Joey Daun', 'Jose Gonzales', 'Keenan Rahn', 'Landon Lee', 'Michael Asman', 'Nick Ahlquist', 'Sam Leoni', 'Seth Bunders']
+  PBP-derived names found (16): ['Anton Kilde', 'Christian Wilson', 'Devon Feck', 'Dominic Rasberry', 'Fisher MacKenzie', 'Jack Field', 'Jackson Flowers', 'Jatyn Barkus', 'Joey Daun', 'Jose Gonzales', 'Keenan Rahn', 'Landon Lee', 'Michael Asman', 'Nick Ahlquist', 'Sam Leoni', 'Seth Bunders']
+  Per-player PTS after this override (spot-check against what the app is showing):
+                name   PTS
+11   Jackson Flowers  14.0
+13        Landon Lee   9.0
+23  Christian Wilson   8.0
+12     Michael Asman   6.0
+8       Seth Bunders   5.0
+9      Jose Gonzales   4.0
+15        Jack Field   3.0
+24       Anton Kilde   2.0
+14         Sam Leoni   1.0
+10       Keenan Rahn   0.0
+26  Fisher MacKenzie   0.0
+27        Devon Feck   0.0
+28         Joey Daun   0.0
+29      Jatyn Barkus   0.0
+30     Nick Ahlquist   0.0
+  ... 2 more row(s) of 17 (SHOW_ROWS = 15)
+
+===== cell 177 74_replace_upcoming_opponent_team_totals_with =====
+Replaced PDF-sourced team_totals for Ripon Red Hawks: team_ppg=52.0, opp_ppg_allowed=81.0 (from 1 prior game(s) of PBP data).
+
+===== cell 179 75_back_fill_past_scouted_opponents_player =====
+
+Back-filled PBP-derived stats for 0 player_profiles row(s) across 0 past opponent(s).
+
+Skipped (no data, not an error -- these keep blank stats and their comparisons stay notes-only):
+  Carroll (WI) Pioneers: no games before 2026-11-07
+
+===== cell 181 76_rebuild_player_comparisons_with_pbp =====
+LLM comparison skipped (use_llm=False) -- using tag-based similarity only.
+Rebuilt player comparisons for Ripon Red Hawks using PBP-derived stats.
+  0 of 17 comparisons now have stat evidence (0 gained it in this rebuild -- those were size-and-position guesses before).
+
+  Still thin (9) -- the app labels these so they aren't read as real matches:
+    Anton Kilde -> Lucas Parker (41% evidence) -- size and position only (no scouting notes, no stats)
+    Christian Wilson -> Lucas Parker (41% evidence) -- size and position only (no scouting notes, no stats)
+    Devon Feck -> Lucas Parker (41% evidence) -- size and position only (no scouting notes, no stats)
+    Domanic Rasberry -> Lucas Parker (41% evidence) -- size and position only (no scouting notes, no stats)
+    Dominic Rasberry -> Lucas Parker (41% evidence) -- size and position only (no scouting notes, no stats)
+    Fisher MacKenzie -> Lucas Parker (41% evidence) -- size and position only (no scouting notes, no stats)
+    Jatyn Barkus -> Lucas Parker (41% evidence) -- size and position only (no scouting notes, no stats)
+    Joey Daun -> Lucas Parker (41% evidence) -- size and position only (no scouting notes, no stats)
+    Nick Ahlquist -> Lucas Parker (41% evidence) -- size and position only (no scouting notes, no stats)
+
+  Comparisons for players with no scouting-report entry:
+    Anton Kilde -> Lucas Parker of Carroll (WI) Pioneers (score 0.5, 41% evidence)
+    Christian Wilson -> Lucas Parker of Carroll (WI) Pioneers (score 0.5, 41% evidence)
+    Devon Feck -> Lucas Parker of Carroll (WI) Pioneers (score 0.5, 41% evidence)
+    Domanic Rasberry -> Lucas Parker of Carroll (WI) Pioneers (score 0.5, 41% evidence)
+    Dominic Rasberry -> Lucas Parker of Carroll (WI) Pioneers (score 0.5, 41% evidence)
+    Fisher MacKenzie -> Lucas Parker of Carroll (WI) Pioneers (score 0.5, 41% evidence)
+    Jatyn Barkus -> Lucas Parker of Carroll (WI) Pioneers (score 0.5, 41% evidence)
+    Joey Daun -> Lucas Parker of Carroll (WI) Pioneers (score 0.5, 41% evidence)
+    Nick Ahlquist -> Lucas Parker of Carroll (WI) Pioneers (score 0.5, 41% evidence)
+
+===== cell 182 77_rebuild_player_comparisons_with_pbp_2 =====
+Note-theme rebuild skipped (needs USE_LLM=True and REBUILD_NOTE_THEMES=True). The app keeps using the existing data/note_themes.json -- classification is unaffected.
+
+===== cell 183 78_rebuild_player_comparisons_with_pbp_3 =====
+Found 4 roster snapshot(s):
+ - Carroll (WI) Pioneers - Roster_2026.html
+ - Ripon Red Hawks - Roster_2026.html
+ - UW-Stout Blue Devils - Roster_2023.html
+ - UW-Whitewater Warhawks - Roster_2025.html
+  Carroll (WI) Pioneers - Roster_2026.html: 0 player photo(s) referenced
+  Ripon Red Hawks - Roster_2026.html: 0 player photo(s) referenced
+  UW-Stout Blue Devils - Roster_2023.html: 0 player photo(s) referenced
+  UW-Whitewater Warhawks - Roster_2025.html: 0 player photo(s) referenced
+
+Headshots: 0 saved, 0 already on disk, 0 failed.  ->  ../data\uww_player_pictures
+
+===== cell 185 79_head_to_head =====
+  Meeting box scores: team labels were swapped in 1 meeting(s) -- fixed (the side whose players are ours is UWW).
+  Do the previous meetings matter? Partly -- useful for the players still there. Last met Fri, Nov 7 (last season). 76% of their points against us came from players still on their roster, and 59% of ours from players still on ours.
+  Meeting play-by-play parsed: 2025-26 Fri, Nov 7 (cached), 2024-25 Tue, Dec 31 (cached).
+  Roster continuity: 10 of 20 players who faced us are back; 71 of their points against us are gone.
+Head-to-head vs Ripon Red Hawks: 2 previous meeting(s), 2-0.
+    season         date home_away outcome  team_score  opponent_score
+0  2025-26   Fri, Nov 7      Away       W          76              58
+1  2024-25  Tue, Dec 31      Home       W          81              70
+
+===== cell 186 80_head_to_head_2 =====
+                               table  rows  csv_bytes
+0                       uww_schedule     4       1417
+1                   uww_season_stats     9        522
+2                     uww_pbp_events   500     120900
+3                  uww_pbp_box_score    20       2494
+4                  uww_lineup_stints    55      14197
+5                 uww_coaching_flags     8       2207
+6               uww_opponent_rosters    17       4044
+7                uww_player_profiles    32       9543
+8            uww_opponent_game_plans    26       3753
+9                     uww_ktv_splits     3        232
+10           uww_ktv_game_categories     3        261
+11              uww_pbp_derived_keys     0         66
+12          uww_opponent_team_totals     2         87
+13           uww_projected_box_score     0         83
+14  uww_opponent_projected_box_score     0        139
+  ... 64 more row(s) of 79 (SHOW_ROWS = 15)
+
+===== cell 188 81_extract_and_save_team_logos_from_pbp_mhtml =====
+Saved 1 team logos to ../data\logo:
+  - UW-Whitewater (145,562 bytes)
+
+===== cell 190 82_extract_player_headshots_from_scouting =====
+Processing 2 scout report(s) from scout_report_files...
+    [DIAG] Found 8 playerGroup tiles in PrintableNode
+    [DIAG] First playerGroup: has player-info-line=True, has img=True
+    [DIAG] First img src: https://stats-assets.fastmodelsports.com/images/personnel/Ripon/2026-2027/Seth Bunders/1792629334335
+    [DIAG] info_div found: True
+    [DIAG] info_text = '#30 • Seth Bunders • G • 6\'0" • 140 lbs • SR'
+    [DIAG] regex match: True
+    [DIAG] captured name: 'Seth Bunders'
+    [DIAG] Found 8 playerGroup tiles in PrintableNode
+    [DIAG] First playerGroup: has player-info-line=True, has img=True
+    [DIAG] First img src: https://stats-assets.fastmodelsports.com/images/personnel/Carroll (WI)/2026-2027/Dennis Estepp/17918
+    [DIAG] info_div found: True
+    [DIAG] info_text = '#33 • Dennis Estepp • G • 6\'0" • 170 lbs • SR'
+    [DIAG] regex match: True
+    [DIAG] captured name: 'Dennis Estepp'
+
+[INFO] No headshots required authenticated download.
+
+Extracted 0 new player headshot(s) to ../data\player_images
+Skipped 16 already-on-disk headshot(s)
+
+===== cell 192 83_assemble_every_key_to_victory_into_one =====
+  3-man combos: 50 ours, 118 Ripon Red Hawks -> uww_three_man_combos.csv
+Wrote uww_ktv_keys.csv -- 7 key(s) for Ripon Red Hawks: {'Offense': 3, 'Defense': 2, 'Personnel': 2}
+  Brief will show 5 of 7 (score >= 55, max 7); Bottom Line keys are added and re-ranked in the brief cell:
+   *  83.2  #4 Take away their go-to set: Motion
+   *  82.9  #6 Counter with Madson, McEwen, Rogers, Teague-Johnson, Castillo
+   *  76.1  #7 Attack Ripon Red Hawks's Flowers, Gonzales, Asman combo
+   *  71.0  #5 Know their best set: STAGGER
+   *  67.4  #3 Send an extra body to the offensive glass
+      62.5  #1 Attack Opponent Worst Offensive Shot Selection & Quality
+      45.2  #2 Call our best set: Motion
+  Generators that FAILED (their keys are missing from the table above):
+    - 3-man combos: no trio qualified to feature (40+ competitive min, 3+ games, positive shrunk margin and on/off) -- 50 trio(s) are still short of the minutes or games. No key rather than a weak one.
+    - Data-Driven (feature our best look): not enough tagged data yet on both sides -- our own series usage (6+ needed) and what's been run against this opponent by anyone (5+ needed) -- to cross-reference a matchup-specific best look.
+
+===== cell 194 84_style_matchups =====
+Wrote uww_style_matchups.csv -- 2 matched team(s) for Ripon Red Hawks: {'like_them': 1, 'like_us': 1}
+
+===== cell 196 85_scouting_notes_and_keys_to_defending =====
+Wrote uww_scouting_notes.csv -- 50 row(s) for Ripon Red Hawks: {('lineup', 'Data-Driven'): 26, ('player', 'Coach'): 8, ('player', 'Data-Driven'): 16}
+
+===== cell 198 86_game_plan =====
+  opp_defense: 0 clip(s) tagged with a defense Ripon Red Hawks PLAYED (need 5+), and 51 tagged with a defense they FACED -- staying sample.
+    ^ Every defense tag in opponent_plays.csv landed on an OFFENSIVE possession (Team = Ripon Red Hawks). If those clips are meant to be Ripon Red Hawks's own defense, the Team column is naming the team being scouted rather than the team with the ball -- see the possession_side note in the play-calls cell.
+  player_shot_profile: 10 of theirs, 7 of ours (rim / other 2 / three, from play-by-play).
+  defense_by_situation: 0 opponent clip(s) with a defense tag for Ripon Red Hawks, none of which reached 4+ in any one situation -- staying sample. (0 clips usually means opponent_plays.csv hasn't been re-tagged with the new Title format yet.)
+  ball_screen_coverage: no "Ball screen coverage" level in uww_play_call_summary -- the notebook needs a full re-run from the play-calls cell so the new Title tagging gets decoded. Staying sample.
+  trend_profile: only 1 tagged game(s) -- needs 4+ before an earlier-vs-recent split says anything. Staying sample.
+  rebound_tendencies: 85 misses across 1 game(s), 85 paired to a rebound, 42 of them Ripon Red Hawks's -> 7 row(s).
+Wrote game-plan tables for Ripon Red Hawks:
+  uww_late_game_foul_list        0 row(s)  [empty]
+  uww_sample_size_warnings       5 row(s)  [real]
+  uww_opp_sets                   8 row(s)  [real]
+  uww_opp_defense                6 row(s)  [SAMPLE]
+  uww_opp_personnel             15 row(s)  [real]
+  uww_opp_shot_zones             5 row(s)  [SAMPLE]
+  uww_opp_tendencies             5 row(s)  [SAMPLE]
+  uww_matchups                   5 row(s)  [SAMPLE]
+  uww_scout_team                 4 row(s)  [SAMPLE]
+  uww_uww_availability           5 row(s)  [SAMPLE]
+  uww_film_clips                 6 row(s)  [real]
+  uww_shot_clock_tendencies      3 row(s)  [real]
+  uww_defense_by_situation       4 row(s)  [SAMPLE]
+  uww_ball_screen_coverage       5 row(s)  [SAMPLE]
+  uww_help_rotation_tendencies   4 row(s)  [SAMPLE]
+  uww_personnel_grouping         4 row(s)  [real]
+  uww_rebound_tendencies         7 row(s)  [real]
+  uww_game_situation_splits      1 row(s)  [real]
+  uww_shot_quality_by_contest    4 row(s)  [SAMPLE]
+  uww_double_team_tendencies     2 row(s)  [SAMPLE]
+  uww_offball_screen_navigation   3 row(s)  [SAMPLE]
+  uww_matchup_history            4 row(s)  [SAMPLE]
+  uww_play_counters              3 row(s)  [SAMPLE]
+  uww_practice_plan             41 row(s)  [SAMPLE]
+  uww_personnel_tiers           25 row(s)  [real]
+  uww_tempo_profile              4 row(s)  [real]
+  uww_trend_profile              1 row(s)  [SAMPLE]
+  uww_uww_lineup_season         11 row(s)  [real]
+  Staff input templates: C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\data\staff_input_templates
+
+===== cell 200 86b_two_for_one =====
+Two-for-one: possessions rebuilt -- our games 141, Ripon Red Hawks's games 142. 2-for-1 chances (a possession starting with 35-60 sec left): 1 in our games, 1 in theirs.
+  Situation on our play-by-play rows: unknown 354, Transition 83, ATO 37, Half court 19, Opener 3  (coach tag on 142)
+  [When they have the chance] Ripon Red Hawks went for the 2-for-1 in 1 of 1 (100%) of their chances and got two shots to one in 1
+
+===== cell 202 87_build_html_scouting_brief_for_upcoming =====
+  Brief type: first_games -- FIRST GAMES BRIEF — SMALL SAMPLES
+Sample data left out of the brief (still in the app): uww_double_team_tendencies, uww_offball_screen_navigation, uww_opp_shot_zones, uww_opp_tendencies, uww_play_counters, uww_shot_quality_by_contest, uww_uww_availability
+Wrote C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\data\scouting_briefs\scouting_brief_Ripon_Red_Hawks.html (420,927 bytes) -- open it in a browser, or attach it to an email as-is.
+  9 methodology note(s) -> uww_brief_notes.csv (the brief links to these instead of printing them).
+  Opponent headshots: 10 found, 0 missing
+  UWW headshots: 7 found, 0 missing
+  Tables that were empty or missing (their sections were left out of the brief): uww_double_team_tendencies, uww_late_game_foul_list, uww_offball_screen_navigation, uww_opp_shot_zones, uww_opp_tendencies, uww_play_counters, uww_shot_quality_by_contest, uww_two_for_one_attack, uww_uww_availability
+
+===== cell 204 88_tracking_review_export =====
+
+===== cell 206 46a_frame_archive =====
+
+===== cell 208 89_cleanup =====
+
+===== cell 210 90_model_versions =====
+Model versions: 16 model(s) -> ../data\uww_model_versions.csv (no new versions this run)
+
+===== cell 211  =====
+Run time: 1 min across 45 section(s) -- the slowest:
+     0.6 min  47_play_calls
+     0.2 min  46_frame_capture
+     0.2 min  46a_frame_archive
+     0.1 min  50_player_tracking
+     0.0 min  54_tracking_insights
+     0.0 min  53_tag_model
+     0.0 min  87_build_html_scouting_brief_for_upcoming
+     0.0 min  79_head_to_head
+     0.0 min  78_rebuild_player_comparisons_with_pbp_3
+     0.0 min  55d_defensive_roles
+     0.0 min  86_game_plan
+     0.0 min  80_head_to_head_2
