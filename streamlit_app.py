@@ -8223,12 +8223,12 @@ if(!D.getElementById('ftnav')){var bar=D.createElement('div');bar.id='ftnav';
 bar.style.cssText='position:fixed;bottom:14px;left:50%%;transform:translateX(-50%%);z-index:99999;background:#4E2A84;color:#fff;padding:8px 12px;border-radius:10px;display:flex;gap:10px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.3);font-family:sans-serif';
 bar.innerHTML='<button id="ftnav-prev" style="padding:6px 12px;border-radius:6px;border:0;cursor:pointer">\u25c0 Previous clip</button><span id="ftnav-lab"></span><button id="ftnav-next" style="padding:6px 12px;border-radius:6px;border:0;cursor:pointer;font-weight:700">Next clip \u25b6</button>';
 D.body.appendChild(bar);D.getElementById('ftnav-prev').onclick=function(){P.__ftPrev();};D.getElementById('ftnav-next').onclick=function(){P.__ftNext();};}
-if(!P.__ftKeys){P.__ftKeys=1;D.addEventListener('keydown',function(e){if(!D.getElementById('ftnav')||!D.querySelector('.st-key-ftclip_0'))return;
+if(!P.__ftKeys){P.__ftKeys=1;D.addEventListener('keydown',function(e){var _b=D.getElementById('ftnav');if(!_b||_b.style.display==='none')return;
 var a=D.activeElement,tg=a?a.tagName:'';if(a&&a.getAttribute('aria-expanded')==='true')return;
 var typing=(tg==='INPUT'&&a.getAttribute('role')!=='combobox')||tg==='TEXTAREA'||(a&&a.isContentEditable);
 if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();e.stopPropagation();if(typing){a.blur();setTimeout(function(){P.__ftNext();},250);}else{P.__ftNext();}}
 else if((e.key===' '||e.code==='Space')&&!typing){var bx=boxes(),b=bx[P.__ftCur];var v=b?b.querySelector('video'):null;if(!v)return;e.preventDefault();if(v.paused){v.play();}else{v.pause();}}},true);}
-if(!P.__ftWatch){P.__ftWatch=setInterval(function(){var bar=D.getElementById('ftnav');if(bar)bar.style.display=D.querySelector('.st-key-ftclip_0')?'flex':'none';},500);}
+if(!P.__ftWatch){P.__ftWatch=setInterval(/* CONFIRMED BUG (fixed; nav bar showed on every tab: hidden tabs keep their DOM, so show it only while the clip is actually visible) */function(){var bar=D.getElementById('ftnav');if(bar)var c=D.querySelector('.st-key-ftclip_0');bar.style.display=(c&&c.getClientRects().length&&c.closest('[hidden],[aria-hidden="true"]')===null)?'flex':'none';},300);}
 var t=0,iv=setInterval(function(){show();if(++t>40)clearInterval(iv);},250);})();</script>""" % (json.dumps(_bid), _hi - _lo), height=0)
     except Exception:
         pass
