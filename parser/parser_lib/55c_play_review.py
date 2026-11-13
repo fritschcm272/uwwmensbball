@@ -1862,7 +1862,16 @@ def tag_queue():
         # game) goes PLAY_TAG_PER_GAME_OTHER plays at a time (40), in game order: the first 40, then the next 40.
         todo = todo.assign(_cn=pd.to_numeric(todo["clip_number"], errors="coerce")).sort_values("_cn", kind="stable")
         _uww_game = ("side" in g.columns and g["side"].astype(str).eq("UWW").any()) or bool(re.search(r"(?i)whitewater|WWW", str(gc)))
-        if _uww_game:
+        # CONFIRMED CHANGE (requested: "I want to remove the steps of only putting offense or defensive possessions into the
+        # app. I want all possessions in the app"): every untagged possession of the game, both teams, in game order.
+        # PLAY_TAG_ALL_POSSESSIONS = False = the old way (one side first). PLAY_TAG_UWW_MAX / PLAY_TAG_OTHER_MAX still cap it.
+        if globals().get("PLAY_TAG_ALL_POSSESSIONS", True):
+            _phase = "all"
+            pick = todo
+            _cap = globals().get("PLAY_TAG_UWW_MAX" if _uww_game else "PLAY_TAG_OTHER_MAX", None)
+            if _cap:
+                pick = pick.head(int(_cap))
+        elif _uww_game:
             _ot = todo["offense_team"].astype(str) if "offense_team" in todo.columns else pd.Series("", index=todo.index)
             _ps = todo["possession_side"].astype(str) if "possession_side" in todo.columns else pd.Series("", index=todo.index)
             _ours = _ot.str.contains("whitewater", case=False, na=False) | (_ot.isin(["nan", "None", ""]) & _ps.eq("Offense"))
@@ -1966,10 +1975,11 @@ def tag_queue():
             _export_play_review_to_app(rdir, slug, f"{gd}|{gc}", stamp, plays, vocab, kind="play_tag")
             shutil.rmtree(rdir, ignore_errors=True)
             print(f"Film Tagging: {gd} {gc}: {len(plays)} clip(s) to tag"
+                  + (" -- every untagged possession, both teams" if _phase == "all" else "")
                   + ((f" -- our {_phase} (every untagged UWW {_phase} play" + (", defense once all of the offense is tagged)"
-                                                                        if _phase == "offense" else ")")) if _phase and _uww_game
+                                                                        if _phase == "offense" else ")")) if _phase and _phase != "all" and _uww_game
                      else (" -- the scouted team's offense (every untagged play; the rest once those are tagged)"
-                           if _phase == "offense" else "") if _phase else "")
+                           if _phase == "offense" else "") if _phase and _phase != "all" else "")
                   + f" (of {len(todo)} untagged) -- in the app: Analytics > Film Tagging", flush=True)
         except Exception as _ae:
             print(f"  [film tagging] not exported to the app: {type(_ae).__name__}: {_ae}", flush=True)

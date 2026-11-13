@@ -1,334 +1,495 @@
 scouted_opponent,side,offense_team,defense_team,game_date,game_code,clip_number,play_situation,play_call,passes_tracked,ends_on_pass,points
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,1,Opener,5 Out Motion,8.0,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,2,Transition,,4.0,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,3,Half court,Motion,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,4,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,6,BLOB,BLOB,,True,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,7,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,8,Transition,,,False,1.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,9,Half court,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,10,Offensive rebound,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,11,Half court,Snap,,True,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,12,Half court,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,13,Half court,Motion,,True,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,14,Transition,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,15,Half court,Twins,,True,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,16,Half court,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,17,Half court,Motion,,True,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,18,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,20,SLOB,SLOB,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,21,Transition,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,23,SLOB,SLOB,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,24,Half court,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,25,Half court,Motion,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,26,Half court,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,27,Offensive rebound,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,28,Half court,Motion,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,29,Half court,,,True,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,30,Half court,Motion,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,31,Half court,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,32,Half court,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,33,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,34,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,35,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,36,ATO,Over Twirl,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,37,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,38,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,39,Offensive rebound,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,40,Half court,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,41,Offensive rebound,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,42,Half court,,,False,1.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,43,Half court,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,44,Half court,Cheetah,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,45,Transition,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,46,Half court,Ball Screen,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,47,Transition,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,48,ATO,Gold,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,49,Transition,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,50,Half court,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,51,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,52,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,53,Offensive rebound,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,54,Half court,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,55,Half court,Zona,,True,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,56,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,57,Half court,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,58,Transition,,,True,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,59,Half court,Zona,,True,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,60,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,61,SLOB,SLOB,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,62,Half court,Ball Screen,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,63,Half court,Ball Screen,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,64,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,65,Transition,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,66,Transition,,,True,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,67,Half court,,,True,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,68,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,69,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,70,Half court,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,71,Offensive rebound,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,72,Half court,,,True,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,73,ATO,,,True,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,74,Half court,,,False,1.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,75,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,76,Transition,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,77,Opening set,Opening set (unspecified),,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,78,Half court,40Back,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,79,Half court,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,80,Offensive rebound,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,81,BLOB,BLOB,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,83,Half court,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,84,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,85,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,86,Transition,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,87,Half court,Zona,,True,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,88,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,89,Transition,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,90,Half court,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,91,Half court,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,92,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,93,Half court,Ball Screen,,False,1.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,95,Half court,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,96,Half court,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,97,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,98,Transition,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,99,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,101,SLOB,SLOB,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,102,Half court,,,True,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,104,Half court,Motion,,True,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,105,Half court,,,True,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,106,Half court,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,107,Half court,Ball Screen,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,108,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,109,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,110,Offensive rebound,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,111,Offensive rebound,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,113,BLOB,BLOB,,True,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,114,Offensive rebound,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,115,Half court,Motion,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,116,Transition,,,False,1.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,119,BLOB,BLOB,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,120,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,122,SLOB,SLOB,,True,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,123,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,124,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,125,Half court,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,126,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,127,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,128,Transition,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,129,Half court,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,130,Half court,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,131,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,132,Transition,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,133,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,134,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,135,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,136,Transition,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,137,Half court,,,True,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,138,Transition,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,140,SLOB,SLOB,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,141,Half court,,,True,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,142,Offensive rebound,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,143,Half court,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,144,Half court,Ball Screen,,True,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,145,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,146,Offensive rebound,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,148,SLOB,SLOB,,False,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,149,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,150,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,151,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,152,Half court,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,154,ATO,ATO (unspecified),,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,155,Half court,Snap,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,156,Half court,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,157,ATO,,,False,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,158,Half court,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,159,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,160,Half court,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,161,ATO,ATO (unspecified),,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,162,Half court,ISO,,False,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,163,Half court,,,False,1.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,164,Offensive rebound,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,165,Half court,,,False,1.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,166,Half court,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,167,BLOB,BLOB,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),13,,,2.0,False,
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),15,,,1.0,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),30,,,5.0,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),31,,,3.0,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),32,,,3.0,False,
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),33,,,2.0,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),42,,,1.0,False,
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),61,,,,False,
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),64,,,2.0,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),65,,,,False,
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),67,,,3.0,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),101,,,,False,
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),116,,,,False,
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),125,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),149,,,,False,
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),154,,,,False,
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),156,,,,False,
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),172,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),173,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),185,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),207,,,,False,
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,2,Opener,Ripon Motion #1,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,3,,,,True,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,4,Half court,Motion,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,5,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,6,Transition,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,7,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,8,Half court,Ripon Motion #2,,True,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,9,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,10,Transition,,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,13,,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,16,Half court,Set 2,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,17,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,18,Half court,Ripon Motion #1,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,19,Transition,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,20,Transition,,,False,3.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,21,,,,True,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,22,Half court,Motion,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,23,,,,True,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,24,Half court,Motion,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,25,Transition,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,26,Half court,Ripon Motion #1,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,28,Half court,Ripon Motion #1,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,29,Transition,,,False,1.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,32,Half court,Motion,,False,3.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,33,,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,34,Half court,Motion,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,35,,,,True,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,36,Half court,Motion,,True,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,37,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,38,Half court,Motion,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,39,ATO,,,True,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,40,Half court,Motion,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,41,,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,42,Half court,Ripon Motion #2,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,43,,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,46,Half court,Ripon Motion #2,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,47,Half court,5 Out Motion,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,48,,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,50,Half court,Ripon Motion #1,,False,1.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,53,,,,True,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,54,Half court,Set 3,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,55,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,56,BLOB,BLOB BLOB #1,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,57,Transition,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,58,Half court,Motion,,True,3.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,59,,,,True,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,60,Half court,Motion,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,61,Transition,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,62,Half court,RIPON MOTION #3,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,63,,,,False,3.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,64,Half court,STAGGER,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,65,BLOB,BLOB Blob #2,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,66,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,67,,,,False,1.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,70,Half court,RIPON MOTION #4,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,71,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,72,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,73,,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,74,Half court,Ripon Motion #1,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,75,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,76,,,,True,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,78,Half court,Ripon Motion #2,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,79,Transition,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,80,Transition,,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,81,,,,True,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,83,BLOB,BLOB BLOB #1,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,84,,,,True,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,86,BLOB,BLOB BLOB #1,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,87,Transition,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,88,Half court,Ripon Motion #1,,True,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,89,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,90,Transition,,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,91,Transition,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,92,,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,93,Half court,BALL SCREEN-STAGGER,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,94,Transition,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,97,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,98,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,99,Opener,STAGGER,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,100,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,101,Transition,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,102,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,103,Half court,Ripon Motion #1,,True,3.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,104,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,105,Transition,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,107,ATO,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,109,Half court,Ripon Motion #2,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,110,Half court,Motion,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,113,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,114,Half court,STAGGER,,False,3.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,115,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,116,Transition,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,117,ATO,,,True,3.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,118,Half court,RIPON MOTION #3,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,120,,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,122,Half court,Ripon Motion #1,,True,3.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,123,,,,True,3.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,124,Half court,STAGGER,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,125,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,126,,,,False,3.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,127,Half court,RIPON MOTION #4,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,128,Transition,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,131,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,133,SLOB,SLOB SLOB #2,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,134,,,,False,3.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,136,Half court,Ripon Motion #1,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,137,,,,True,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,138,Transition,,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,141,,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,144,,,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,145,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,146,Transition,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,147,,,,False,
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,148,,,,False,3.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,150,ATO,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,151,,,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,152,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,153,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,154,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,156,,,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,157,,,,False,3.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,159,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,160,Transition,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,161,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,162,Transition,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,165,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,166,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,167,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,168,,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,169,,,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,170,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,171,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,172,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,174,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,175,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,176,,,,False,3.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,177,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,178,Transition,,,False,3.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,179,ATO,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,180,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,181,,,,False,
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,182,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,183,Transition,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,184,ATO,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,188,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,189,,,,False,0.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,190,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,192,,,,True,3.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,193,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,194,,,,False,3.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,196,ATO,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,197,,,,False,1.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,200,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,201,Transition,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,202,,,,False,0.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,203,Transition,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,204,,,,False,2.0
-Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,207,,,,False,2.0
-Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,209,,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,1,Opener,5 Out Motion,8.0,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,2,Transition,,4.0,False,3.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,3,Half court,Motion,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,4,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,6,BLOB,BLOB,,True,3.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,7,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,8,Transition,,,False,1.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,9,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,10,Offensive rebound,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,11,Half court,Snap,,True,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,12,Half court,,,False,3.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,13,Half court,Motion,,True,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,14,Transition,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,15,Half court,Twins,,True,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,16,Half court,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,17,Half court,Motion,,True,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,18,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,20,SLOB,SLOB,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,21,Transition,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,23,SLOB,SLOB,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,24,Half court,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,25,Half court,Motion,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,26,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,27,Offensive rebound,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,28,Half court,Motion,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,29,Half court,,,True,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,30,Half court,Motion,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,31,Half court,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,32,Half court,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,33,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,34,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,35,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,36,ATO,Over Twirl,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,37,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,38,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,39,Offensive rebound,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,40,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,41,Offensive rebound,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,42,Half court,,,False,1.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,43,Half court,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,44,Half court,Cheetah,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,45,Transition,,,False,3.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,46,Half court,Ball Screen,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,47,Transition,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,48,ATO,Gold,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,49,Transition,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,50,Half court,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,51,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,52,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,53,Offensive rebound,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,54,Half court,,,False,3.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,55,Half court,Zona,,True,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,56,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,57,Half court,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,58,Transition,,,True,3.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,59,Half court,Zona,,True,3.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,60,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,61,SLOB,SLOB,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,62,Half court,Ball Screen,,False,3.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,63,Half court,Ball Screen,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,64,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,65,Transition,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,66,Transition,,,True,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,67,Half court,,,True,3.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,68,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,69,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,70,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,71,Offensive rebound,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,72,Half court,,,True,3.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,73,ATO,,,True,3.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,74,Half court,,,False,1.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,75,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,76,Transition,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,77,Opening set,Opening set (unspecified),,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,78,Half court,40Back,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,79,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,80,Offensive rebound,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,81,BLOB,BLOB,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,83,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,84,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,85,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,86,Transition,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,87,Half court,Zona,,True,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,88,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,89,Transition,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,90,Half court,,,False,3.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,91,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,92,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,93,Half court,Ball Screen,,False,1.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,95,Half court,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,96,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,97,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,98,Transition,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,99,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,101,SLOB,SLOB,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,102,Half court,,,True,3.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,104,Half court,Motion,,True,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,105,Half court,,,True,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,106,Half court,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,107,Half court,Ball Screen,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,108,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,109,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,110,Offensive rebound,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,111,Offensive rebound,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,113,BLOB,BLOB,,True,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,114,Offensive rebound,,,False,3.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,115,Half court,Motion,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,116,Transition,,,False,1.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,119,BLOB,BLOB,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,120,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,122,SLOB,SLOB,,True,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,123,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,124,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,125,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,126,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,127,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,128,Transition,,,False,3.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,129,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,130,Half court,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,131,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,132,Transition,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,133,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,134,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,135,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,136,Transition,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,137,Half court,,,True,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,138,Transition,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,140,SLOB,SLOB,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,141,Half court,,,True,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,142,Offensive rebound,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,143,Half court,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,144,Half court,Ball Screen,,True,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,145,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,146,Offensive rebound,,,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,148,SLOB,SLOB,,False,3.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,149,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,150,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,151,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,152,Half court,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,154,ATO,ATO (unspecified),,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,155,Half court,Snap,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,156,Half court,,,False,3.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,157,ATO,,,False,3.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,158,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,159,Transition,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,160,Half court,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,161,ATO,ATO (unspecified),,False,2.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,162,Half court,ISO,,False,3.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,163,Half court,,,False,1.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,164,Offensive rebound,,,False,0.0
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,165,Half court,,,False,1.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,166,Half court,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,167,BLOB,BLOB,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),13,,,2.0,False,
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),15,,,1.0,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),30,,,5.0,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),31,,,3.0,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),32,,,3.0,False,
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),33,,,2.0,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),42,,,1.0,False,
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),61,,,,False,
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),64,,,2.0,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),65,,,,False,
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),67,,,3.0,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),101,,,,False,
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),116,,,,False,
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),125,,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),149,,,,False,
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),154,,,,False,
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),156,,,,False,
+Elmhurst Bluejays,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),172,,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),173,,,,False,2.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),185,,,,False,0.0
+Elmhurst Bluejays,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),207,,,,False,
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,2,Opener,Ripon Motion #1,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,3,,,,True,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,4,Half court,Motion,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,5,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,6,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,7,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,8,Half court,Ripon Motion #2,,True,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,9,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,10,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,13,,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,16,Half court,Set 2,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,17,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,18,Half court,Ripon Motion #1,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,19,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,20,Transition,,,False,3.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,21,,,,True,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,22,Half court,Motion,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,23,,,,True,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,24,Half court,Motion,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,25,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,26,Half court,Ripon Motion #1,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,28,Half court,Ripon Motion #1,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,29,Transition,,,False,1.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,32,Half court,Motion,,False,3.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,33,,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,34,Half court,Motion,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,35,,,,True,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,36,Half court,Motion,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,37,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,38,Half court,Motion,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,39,ATO,,,True,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,40,Half court,Motion,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,41,,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,42,Half court,Ripon Motion #2,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,43,,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,46,Half court,Ripon Motion #2,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,47,Half court,5 Out Motion,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,48,,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,50,Half court,Ripon Motion #1,,False,1.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,53,,,,True,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,54,Half court,Set 3,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,55,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,56,BLOB,BLOB BLOB #1,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,57,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,58,Half court,Motion,,True,3.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,59,,,,True,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,60,Half court,Motion,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,61,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,62,Half court,RIPON MOTION #3,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,63,,,,False,3.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,64,Half court,STAGGER,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,65,BLOB,BLOB Blob #2,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,66,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,67,,,,False,1.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,70,Half court,RIPON MOTION #4,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,71,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,72,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,73,,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,74,Half court,Ripon Motion #1,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,75,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,76,,,,True,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,78,Half court,Ripon Motion #2,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,79,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,80,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,81,,,,True,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,83,BLOB,BLOB BLOB #1,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,84,,,,True,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,86,BLOB,BLOB BLOB #1,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,87,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,88,Half court,Ripon Motion #1,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,89,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,90,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,91,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,92,,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,93,Half court,BALL SCREEN-STAGGER,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,94,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,97,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,98,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,99,Opener,STAGGER,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,100,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,101,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,102,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,103,Half court,Ripon Motion #1,,True,3.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,104,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,105,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,107,ATO,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,109,Half court,Ripon Motion #2,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,110,Half court,Motion,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,113,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,114,Half court,STAGGER,,False,3.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,115,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,116,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,117,ATO,,,True,3.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,118,Half court,RIPON MOTION #3,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,120,,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,122,Half court,Ripon Motion #1,,True,3.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,123,,,,True,3.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,124,Half court,STAGGER,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,125,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,126,,,,False,3.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,127,Half court,RIPON MOTION #4,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,128,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,131,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,133,SLOB,SLOB SLOB #2,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,134,,,,False,3.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,136,Half court,Ripon Motion #1,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,137,,,,True,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,138,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,141,,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,144,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,145,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,146,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,147,,,,False,
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,148,,,,False,3.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,150,ATO,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,151,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,152,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,153,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,154,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,156,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,157,,,,False,3.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,159,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,160,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,161,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,162,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,165,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,166,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,167,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,168,,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,169,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,170,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,171,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,172,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,174,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,175,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,176,,,,False,3.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,177,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,178,Transition,,,False,3.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,179,ATO,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,180,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,181,,,,False,
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,182,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,183,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,184,ATO,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,188,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,189,,,,False,0.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,190,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,192,,,,True,3.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,193,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,194,,,,False,3.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,196,ATO,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,197,,,,False,1.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,200,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,201,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,202,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,203,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,204,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,207,,,,False,2.0
+Elmhurst Bluejays,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,209,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,1,,,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,2,,,,True,3.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,3,,,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,4,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,5,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,6,,,,False,3.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,7,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,9,,,,True,3.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,11,,,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,12,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,13,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,14,,,,False,
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,15,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,17,,,,True,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,18,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,19,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,20,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,21,,,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,22,Transition,,,False,3.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,23,ATO,,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,26,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,27,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,28,,,,False,3.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,29,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,30,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,31,,,,False,
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,32,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,34,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,36,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,37,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,38,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,39,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,40,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,41,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,42,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,43,,,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,44,,,,False,3.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,46,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,47,,,,True,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,48,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,50,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,51,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,52,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,53,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,54,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,56,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,57,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,59,,,,True,3.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,60,,,,True,3.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,61,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,63,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,64,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,65,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,66,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,69,,,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,70,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,71,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,72,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,74,,,,False,
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,75,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,76,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,77,,,,False,
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,79,ATO,,,False,3.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,80,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,81,,,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,82,,,,False,
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,83,,,,False,1.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,86,,,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,88,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,90,,,,True,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,93,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,94,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,95,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,96,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,97,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,98,,,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,99,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,100,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,101,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,103,ATO,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,104,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,107,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,108,,,,False,3.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,109,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,110,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,112,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,114,,,,False,3.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,115,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,116,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,117,Transition,,,False,1.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,120,,,,True,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,121,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,122,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,123,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,124,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,125,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,126,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,127,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,128,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,131,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,132,,,,True,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,133,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,134,,,,False,
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,135,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,136,,,,False,
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,137,,,,True,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,140,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,141,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,142,,,,True,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,143,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,144,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,145,ATO,,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,146,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,147,,,,False,3.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,148,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,149,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,150,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,151,Transition,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,152,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,155,,,,True,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,156,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,158,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,159,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,160,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,162,,,,True,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,163,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,165,,,,False,
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,166,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,167,,,,False,
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,170,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,171,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,172,,,,False,
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,173,,,,True,3.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,175,ATO,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,176,,,,True,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,178,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,179,Transition,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,182,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,183,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,184,,,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,185,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,186,,,,False,
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,190,ATO,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,191,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,192,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,193,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,194,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,195,Transition,,,False,1.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,198,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,199,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,202,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,203,,,,False,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,204,,,,False,2.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,205,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,206,,,,False,
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,208,,,,False,2.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,209,ATO,,,True,0.0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,DePauw Tigers,2026-11-11,DePauw@Elmhurst,210,,,,False,1.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,213,,,,False,0.0
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,215,,,,False,
+Elmhurst Bluejays,Opponent,DePauw Tigers,Elmhurst Bluejays,2026-11-11,DePauw@Elmhurst,216,,,,False,1.0

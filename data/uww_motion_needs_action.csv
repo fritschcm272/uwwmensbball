@@ -1,13 +1,2 @@
 scouted_opponent,side,offense_team,game_date,game_code,clip_number,period,time_remaining_seconds,play_title,synergy_string
-Ripon Red Hawks,UWW,UW-Whitewater,2026-11-07,WWW@CAR,22,H1,837.0,motion-cobra:press(m2m,15 Collin Madson > Non Possession > Non Shooting Foul
-Ripon Red Hawks,Opponent,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,32,H1,809.0,[app] Motion: Man-to-Man,2 Landon Lee > Hand Off > From Stationary > Left > Dribble Jumper > Long/3pt > Make 3 Pts
-Ripon Red Hawks,Opponent,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,36,H1,753.0,[app] Motion: Man-to-Man,11 Sam Leoni > P&R Ball Handler > High P&R > Defense Commits > Ball Delivered > 42 Jack Field > Cut > Basket > Miss 2 Pts
-Ripon Red Hawks,Opponent,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,47,H1,587.0,[app] 5 Out Motion: Man-to-Man,20 Anton Kilde > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts
-Ripon Red Hawks,Opponent,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,74,H1,242.0,[app] I FORM RIPON MOTION: Man-to-Man,2 Landon Lee > ISO > Left > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts
-Ripon Red Hawks,Opponent,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,78,H1,199.0,[app] I-FORM RIPON MOTION #2 (RICKY): Man-to-Man,34 Jackson Flowers > Spot-Up > Drives Right > To Basket > Miss 2 Pts
-Ripon Red Hawks,Opponent,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,82,H1,141.0,[app] I FORM RIPON MOTION: Man-to-Man,0 Jose Gonzales > Non Possession > Non Shooting Foul
-Ripon Red Hawks,Opponent,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,103,H2,1083.0,[app] I FORM RIPON MOTION: Man-to-Man,35 Michael Asman > Post-Up > Left Block > Left Shoulder > Dribble Move > Defense Commits > Ball Delivered > 30 Seth Bunders > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts
-Ripon Red Hawks,Opponent,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,109,H2,1015.0,[app] I FORM RIPON MOTION #2: Man-to-Man,42 Jack Field > Post-Up > Right Block > Right Shoulder > Dribble Move > To Jumper > Miss 2 Pts
-Ripon Red Hawks,Opponent,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,118,H2,908.0,[app] I FORM RIPON MOTION #3: Man-to-Man,30 Seth Bunders > ISO > Left > Early Jumper > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts
-Ripon Red Hawks,Opponent,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,127,H2,786.0,[app] I FORM RIPON MOTION #4: Man-to-Man,11 Sam Leoni > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts
-Ripon Red Hawks,Opponent,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,136,H2,714.0,[app] I form ripon motion: Man-to-Man,35 Michael Asman > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts
+Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-07,WWW@CAR,22,H1,837.0,motion-cobra:press(m2m,15 Collin Madson > Non Possession > Non Shooting Foul

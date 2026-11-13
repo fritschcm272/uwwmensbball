@@ -1,19 +1,9 @@
 scouted_opponent,perspective,team,order,kind,text
-Ripon Red Hawks,Opponent,Ripon Red Hawks,1,formation,"When they are running I Form, be aware that they run Ripon Motion #1 the most (45%, 0.78 PPP). Opponents struggled to stop it with ball-screen coverage of Switch (2x, 1.50 PPP) but Drop slowed it down best (1x, 0.00 PPP). They were most successful running RIPON MOTION #3 (10%, 1.00 PPP)."
-Ripon Red Hawks,Opponent,Ripon Red Hawks,2,formation,"When they are running no formation, be aware that they run Motion the most (85%, 0.55 PPP). Opponents struggled to stop it with ball-screen coverage of Switch (4x, 0.75 PPP) but Drop slowed it down best (1x, 0.00 PPP). It's also their most successful play call out of no formation."
-Ripon Red Hawks,Opponent,Ripon Red Hawks,3,formation,"When they are running 41, be aware that they run STAGGER the most (67%, 1.50 PPP). It's also their most successful play call out of 41."
-Ripon Red Hawks,Opponent,Ripon Red Hawks,4,oob,"On BLOB (4 possessions, 0.50 PPP), they run BLOB BLOB #1 the most (75%, 0.67 PPP). It's also their most successful play call out of BLOB."
-Ripon Red Hawks,Opponent,Ripon Red Hawks,5,oob,"On SLOB (2 possessions, 2.00 PPP), they run SLOB SLOB #1 the most (50%)."
-Ripon Red Hawks,Opponent,Ripon Red Hawks,6,success,"Most successful play calls overall: STAGGER (4x, 1.25 PPP) · RIPON MOTION #3 (2x, 1.00 PPP) (team average 0.72 PPP)."
-Ripon Red Hawks,Opponent,Ripon Red Hawks,7,success_actions,"Most successful actions: Swing / ball reversal (2x, 1.00 PPP) · Ball screen (14x, 0.93 PPP) (team average 0.72 PPP)."
-Ripon Red Hawks,Opponent,Ripon Red Hawks,8,scorers,Top scorers on tagged plays: Flowers 11 pts (4) · Lee 7 pts (3) · Asman 6 pts (3).
-Ripon Red Hawks,Opponent,Ripon Red Hawks,9,defense,Their opponents' ball-screen defense: Switch 10x (0.80 PPP) · Drop 2x (0.00 PPP) · Over 2x (0.00 PPP) · Hedge / Show 1x (0.00 PPP).
-Ripon Red Hawks,Opponent,Ripon Red Hawks,10,advice,Do the same: Drop held them to 0.00 PPP (2x); do differently than Switch -- they scored 0.80 PPP against it (10x).
-Ripon Red Hawks,UWW,UW-Whitewater,1,formation,"When we run no formation, we run Motion the most (20%, 0.67 PPP). Opponents struggled to stop it with ball-screen coverage of Over (1x, 2.00 PPP) but Switch slowed it down best (1x, 0.00 PPP). We were most successful running Zona (9%, 1.67 PPP)."
-Ripon Red Hawks,UWW,UW-Whitewater,2,oob,"On BLOB (2 possessions, 2.50 PPP), we run BLOB the most (100%, 2.50 PPP). It's also our most successful play call out of BLOB."
-Ripon Red Hawks,UWW,UW-Whitewater,3,oob,"On SLOB (7 possessions, 1.29 PPP), we run SLOB the most (100%, 1.29 PPP). It's also our most successful play call out of SLOB."
-Ripon Red Hawks,UWW,UW-Whitewater,4,success,"Our most successful play calls: BLOB (2x, 2.50 PPP) · Zona (4x, 1.67 PPP) · SLOB (7x, 1.29 PPP) (team average 0.96 PPP)."
-Ripon Red Hawks,UWW,UW-Whitewater,5,success_actions,"Our most successful actions: DHO / handoff (2x, 2.00 PPP) (team average 0.96 PPP)."
-Ripon Red Hawks,UWW,UW-Whitewater,6,scorers,Our top scorers on tagged plays: Madson 28 pts (14) · Teague-Johnson 11 pts (6) · Lukenbill 11 pts (5).
-Ripon Red Hawks,UWW,UW-Whitewater,7,defense,Opponents' ball-screen defense against us: Over 6x (0.33 PPP) · Hedge / Show 5x (0.00 PPP) · Switch 1x (0.00 PPP).
-Ripon Red Hawks,UWW,UW-Whitewater,8,advice,"Expect Hedge / Show -- it held us to 0.00 PPP (5x); we scored best against Over (0.33 PPP, 6x)."
+Elmhurst Bluejays,UWW,UW-Whitewater,1,formation,"When we run no formation, we run Motion the most (20%, 0.67 PPP). Opponents struggled to stop it with ball-screen coverage of Over (1x, 2.00 PPP) but Switch slowed it down best (1x, 0.00 PPP). We were most successful running Zona (9%, 1.67 PPP)."
+Elmhurst Bluejays,UWW,UW-Whitewater,2,oob,"On BLOB (2 possessions, 2.50 PPP), we run BLOB the most (100%, 2.50 PPP). It's also our most successful play call out of BLOB."
+Elmhurst Bluejays,UWW,UW-Whitewater,3,oob,"On SLOB (7 possessions, 1.29 PPP), we run SLOB the most (100%, 1.29 PPP). It's also our most successful play call out of SLOB."
+Elmhurst Bluejays,UWW,UW-Whitewater,4,success,"Our most successful play calls: BLOB (2x, 2.50 PPP) · Zona (4x, 1.67 PPP) · SLOB (7x, 1.29 PPP) (team average 0.96 PPP)."
+Elmhurst Bluejays,UWW,UW-Whitewater,5,success_actions,"Our most successful actions: DHO / handoff (2x, 2.00 PPP) (team average 0.96 PPP)."
+Elmhurst Bluejays,UWW,UW-Whitewater,6,scorers,Our top scorers on tagged plays: Madson 28 pts (14) · Teague-Johnson 11 pts (6) · Lukenbill 11 pts (5).
+Elmhurst Bluejays,UWW,UW-Whitewater,7,defense,Opponents' ball-screen defense against us: Over 6x (0.33 PPP) · Hedge / Show 5x (0.00 PPP) · Switch 1x (0.00 PPP).
+Elmhurst Bluejays,UWW,UW-Whitewater,8,advice,"Expect Hedge / Show -- it held us to 0.00 PPP (5x); we scored best against Over (0.33 PPP, 6x)."
