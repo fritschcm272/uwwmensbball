@@ -1,17 +1,9 @@
 clip_key,clip_number,track,name,event,game_date
-,2,14,Jimmy Tarjan,rebound_defensive,2026-11-07
-,5,4,Michael McNabb,rebound_defensive,2026-11-07
-,8,139,Collin Madson,rebound_defensive,2026-11-07
-,9,0,Greg Smith,foul,2026-11-07
-,12,280,Jimmy Tarjan,rebound_offensive,2026-11-07
-,14,44,Jimmy Tarjan,rebound_offensive,2026-11-07
-,15,128,Jimmy Tarjan,rebound_offensive,2026-11-07
-,18,112,Jimmy Tarjan,rebound_defensive,2026-11-07
-,21,26,Dennis Estepp,rebound_defensive,2026-11-07
-,23,0,Rashad Rogers,foul,2026-11-07
-,29,170,Michael McNabb,rebound_offensive,2026-11-07
+,15,130,Jimmy Tarjan,rebound_offensive,2026-11-07
 ,30,80,Logan Steffensmeier,rebound_offensive,2026-11-07
-,31,17,Logan Steffensmeier,rebound_offensive,2026-11-07
-,31,15,Michael McNabb,rebound_offensive,2026-11-07
-,33,3,Michael McNabb,rebound_offensive,2026-11-07
-,33,6,Peyton McKenna,rebound_offensive,2026-11-07
+,31,13,Logan Steffensmeier,rebound_offensive,2026-11-07
+,31,13,Michael McNabb,rebound_offensive,2026-11-07
+,33,2,Michael McNabb,rebound_offensive,2026-11-07
+,33,3,Peyton McKenna,rebound_offensive,2026-11-07
+,67,38,Greg Smith,rebound_offensive,2026-11-07
+,67,42,Tyshawn Teague-Johnson,rebound_defensive,2026-11-07

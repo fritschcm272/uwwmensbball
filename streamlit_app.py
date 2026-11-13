@@ -8228,7 +8228,9 @@ var a=D.activeElement,tg=a?a.tagName:'';if(a&&a.getAttribute('aria-expanded')===
 var typing=(tg==='INPUT'&&a.getAttribute('role')!=='combobox')||tg==='TEXTAREA'||(a&&a.isContentEditable);
 if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();e.stopPropagation();if(typing){a.blur();setTimeout(function(){P.__ftNext();},250);}else{P.__ftNext();}}
 else if((e.key===' '||e.code==='Space')&&!typing){var bx=boxes(),b=bx[P.__ftCur];var v=b?b.querySelector('video'):null;if(!v)return;e.preventDefault();if(v.paused){v.play();}else{v.pause();}}},true);}
-if(!P.__ftWatch){P.__ftWatch=setInterval(/* CONFIRMED BUG (fixed; nav bar showed on every tab: hidden tabs keep their DOM, so show it only while the clip is actually visible) */function(){var bar=D.getElementById('ftnav');if(bar)var c=D.querySelector('.st-key-ftclip_0');bar.style.display=(c&&c.getClientRects().length&&c.closest('[hidden],[aria-hidden="true"]')===null)?'flex':'none';},300);}
+if(!P.__ftWatch){P.__ftWatch=setInterval(/* CONFIRMED BUG (fixed; nav bar showed on every tab: hidden tabs keep their DOM, so show it only while the clip is actually visible) */function(){var bar=D.getElementById('ftnav');if(!bar)return;var c=D.querySelector('.st-key-ftclip_0');var w=c?c.parentElement:null;bar.style.display=(w&&w.getClientRects().length&&w.closest('[hidden],[aria-hidden="true"]')===null)?'flex':'none';},300);}
+/* CONFIRMED BUG (fixed; "this doesn't seem to be working": the check looked at clip 1 itself, which the bar hides once you move
+   to clip 2 -- so the bar and Enter switched off after the first Next. It now checks the box that holds the clips.) */
 var t=0,iv=setInterval(function(){show();if(++t>40)clearInterval(iv);},250);})();</script>""" % (json.dumps(_bid), _hi - _lo), height=0)
     except Exception:
         pass

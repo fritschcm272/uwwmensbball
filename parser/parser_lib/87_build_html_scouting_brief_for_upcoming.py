@@ -1326,6 +1326,7 @@ table.ob-tbl tr.ob-form td.n { font-weight: 400; color: #444; }
 table.ob-tbl td.ob-fm { vertical-align: middle; }
 table.ob-tbl td.ob-pcall { vertical-align: middle; text-align: left; font-size: 0.7rem; border-top: 1px solid #ece8f2; }
 table.ob-tbl td.ob-all { color: #666; font-style: italic; }
+table.ob-tbl tr.ob-act td { font-size: 0.68rem; color: #444; border-top: 1px dotted #eee; }
 table.ob-tbl tr.ob-pc td { border-top: 1px solid #f0edf5; }
 table.ob-tbl td.ob-vs { border-top: 2px solid #cfc4e2; border-right: 1px solid #e3ddef; vertical-align: middle; text-align: center;
   padding: 4px 2px; }
@@ -5113,15 +5114,33 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     + "</ul></div>")
         # CONFIRMED CHANGE (requested: the table under HOW <OPP> RUNS OFFENSE in a collapsible section coaches open to view
         # it): a <details> block, closed by default (it opens by itself when the brief is printed -- see _SB_PRINT_OPEN_JS)
+        # CONFIRMED CHANGE (requested: right above the full table, a collapsible summary table of Play Call, Possessions and
+        # PPP): every play call added up over all situations / formations, most possessions first.
+        try:
+            _sp = ob[ob["level"].astype(str) == "play_call"].copy()
+            _sp["_n"] = pd.to_numeric(_sp["possessions"], errors="coerce").fillna(0)
+            _sp["_pts"] = _sp["_n"] * pd.to_numeric(_sp["ppp"], errors="coerce")
+            _sp["_pn"] = _sp["_n"].where(pd.to_numeric(_sp["ppp"], errors="coerce").notna(), 0)
+            _sg = _sp.groupby(_sp["label"].astype(str)).agg(n=("_n", "sum"), pts=("_pts", "sum"), pn=("_pn", "sum"))
+            _sg = _sg[_sg["n"] > 0].sort_values("n", ascending=False)
+            if len(_sg):
+                add('<details class="ob-det"><summary>Play call summary (' + str(len(_sg)) + ')</summary><div class="card">'
+                    '<table class="ob-tbl"><thead><tr><th class="l">Play call</th><th class="t1">Poss</th><th class="t1">PPP</th>'
+                    '</tr></thead><tbody>' + "".join(
+                        f'<tr><td class="l">{_sb_esc(i)}</td><td class="t1">{int(r_.n)}</td>'
+                        f'<td class="t1">{_sb_fmt(r_.pts / r_.pn, 2) if r_.pn else "--"}</td></tr>'
+                        for i, r_ in _sg.iterrows()) + "</tbody></table></div></details>")
+        except Exception as _spe:
+            print(f"  (play call summary not shown: {type(_spe).__name__}: {_spe})", flush=True)
         add('<details class="ob-det"><summary>Show the full table (situation \u203a formation \u203a play call)</summary>')
-        add('<div class="card"><table class="ob-tbl"><colgroup><col style="width:4%"><col style="width:9%"><col style="width:14%">'
-            '<col style="width:7%"><col style="width:6%"><col style="width:22%"><col style="width:10%"><col style="width:10%">'
-            '<col style="width:9%"><col style="width:9%"></colgroup><thead><tr><th colspan="3"></th>'
+        add('<div class="card"><table class="ob-tbl"><colgroup><col style="width:4%"><col style="width:9%"><col style="width:12%">'
+            '<col style="width:12%"><col style="width:6%"><col style="width:6%"><col style="width:15%"><col style="width:10%">'
+            '<col style="width:10%"><col style="width:8%"><col style="width:8%"></colgroup><thead><tr><th colspan="4"></th>'
             '<th colspan="3" class="ob-b1">' + ("OUR OFFENSE" if _us else _sb_esc(OPP_UP) + " OFFENSE") + '</th>'
             '<th colspan="2" class="ob-b3">OPPONENTS\u2019 DEFENSE</th>'
             '<th colspan="2" class="ob-b2">' + (_sb_esc(OPP_UP) + " DEFENSE IN IT" if _us else "OUR DEFENSE IN IT") + '</th></tr><tr>'
-            '<th class="l" colspan="2">Situation / formation</th><th class="l">Play call</th><th class="t1">Poss</th>'
-            '<th class="t1">PPP</th><th class="t1 l">Actions out of it</th><th class="t3 l">Ball screen coverage</th>'
+            '<th class="l" colspan="2">Situation / formation</th><th class="l">Play call</th><th class="l">Action</th><th class="t1">Poss</th>'
+            '<th class="t1">PPP</th><th class="t1 l">Runs it / scores</th><th class="t3 l">Ball screen coverage</th>'
             '<th class="t3 l">Off-ball screen coverage</th><th class="t2">Poss</th><th class="t2">PPP allowed</th></tr></thead><tbody>')
         _lv = ob["level"].astype(str).tolist()
         # CONFIRMED CHANGE (requested: "Collapse the bottom three rows into the total row above them and put the PPP next to
@@ -5176,6 +5195,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             elif _l == "formation" and _ix in _solo.values() and _sit_of in _span:
                 _span[_sit_of] -= 1
 
+        # CONFIRMED CHANGE (requested: "move the Actions out of it column to the right of the Play Call column so that it is
+        # also creating a row for each of the different Actions"): each play call's row is its "All" line, then one row per
+        # action group (possessions, PPP) under it.
         def _num(v):
             x = pd.to_numeric(v, errors="coerce")
             return int(x) if pd.notna(x) else 0
@@ -5256,7 +5278,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             if lvl == "situation":
                 _sit_n = n
                 add(f'<tr class="ob-sit"><td class="ob-vs" rowspan="{_span.get(_ri, 1)}"><div>{_c(r.get("label"))}</div></td>'
-                    f'<td class="l n" colspan="2">All</td>'
+                    f'<td class="l n" colspan="3">All</td>'
                     f'<td class="t1">{n}</td>'
                     + _pt + '<td class="t1 l w"></td>' + _cov_cells(None) + _green(r, True) + "</tr>")  # "All" rows: nothing in the Actions column (requested twice -- not even the lineup / scorers)
             elif lvl == "formation" and _ri in _solo.values():
@@ -5268,7 +5290,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 if _lab == "(none tagged)":
                     _lab = "No Formation"  # CONFIRMED CHANGE (requested: "(none tagged)" -> "No Formation")
                 add(f'<tr class="ob-form"><td class="l n ob-fm" rowspan="{_span.get(_ri, 1)}">{_lab}{_pct(n, _sit_n)}</td>'
-                    f'<td class="l ob-pcall ob-all">All</td><td class="t1">{n}</td>' + _pt
+                    f'<td class="l ob-pcall ob-all" colspan="2">All</td><td class="t1">{n}</td>' + _pt
                     + '<td class="t1 l w"></td>' + _cov_cells(None) + _green(r, True) + "</tr>")  # "All" row: nothing in the Actions column (requested twice -- not even the lineup / scorers)
             elif lvl == "play_call":
                 _fr = ob.loc[_solo[_ri]] if _ri in _solo else None
@@ -5278,9 +5300,14 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     _fl = "No Formation" if _fl == "(none tagged)" else _fl
                     _fcell = f'<td class="l n ob-fm" rowspan="{_span.get(_ri, 1)}">{_fl}{_pct(_num(_fr.get("possessions")), _sit_n)}</td>'
                 add(f'<tr class="{"ob-form" if _fr is not None else "ob-pc"}">{_fcell}<td class="l ob-pcall" rowspan="{_span.get(_ri, 1)}">{_pc_label(r)}</td>'
-                    f'<td class="t1">{n}{"" if _fr is not None else _pct(n, _form_n)}</td>' + _pt
-                    + f'<td class="t1 l w">{_c(r.get("actions"))}{_who(r)}</td>'
-                    + _cov_cells(_ri) + (_green(_fr, True) if _fr is not None else _green(r, False)) + "</tr>")
+                    f'<td class="l ob-all">All</td><td class="t1">{n}{"" if _fr is not None else _pct(n, _form_n)}</td>' + _pt
+                    + '<td class="t1 l w"></td>'
+                    + _cov_cells(None) + (_green(_fr, True) if _fr is not None else _green(r, False)) + "</tr>")
+            elif lvl == "action":   # one row per action under its play call: its own lineup / scorers / coverages
+                add(f'<tr class="ob-act"><td class="l">{_c(r.get("label"))}</td><td class="t1">{n}</td>' + _pt
+                    + f'<td class="t1 l w">{_who(r)}</td>'
+                    + f'<td class="t3 l w">{_sb_esc(_sb_clean(r.get("cov_ball")))}</td>'
+                    + f'<td class="t3 l w">{_sb_esc(_sb_clean(r.get("cov_offball")))}</td>' + _green(r, False) + "</tr>")
             else:   # coverage line under a play call
                 _off = str(r.get("cov_kind") or "Ball screen") == "Off-ball screen"
                 add(f'<tr class="ob-cov"><td class="t1">{n if n else "--"}</td>' + _pt + '<td class="t1"></td>'
@@ -5289,8 +5316,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         add("</tbody></table>"
             '<p class="mini">Each situation (down the left) and its total ("All"), then each formation and its total, then '
             "each play call they ran out of it (No Play Call = none tagged) and, on the same row, how defenses guarded it "
-            "(ball-screen and off-ball-screen coverages in their own columns, each with its possessions and PPP). Action counts are possessions with PPP in "
-            "brackets. " + ("Green = their own defensive possessions (their games) in the same situation / formation."
+            "(ball-screen and off-ball-screen coverages in their own columns, each with its possessions and PPP). Under each play call, one row per action run out of it (possessions, PPP). " + ("Green = their own defensive possessions (their games) in the same situation / formation."
                              if _us else "Green = our own defensive possessions in the same situation / formation.") + "</p>"
             + ((f'<p class="mini">Play call flags rate each row on its OWN possessions ({_RQMIN}+): run often = '
                 f'{_row_cut:.0f}+ possessions in that row, efficient = at or above the team\u2019s {_row_tp:.2f} PPP in this '

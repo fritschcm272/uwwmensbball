@@ -498,6 +498,11 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
         (_pm_num(x) is not None and _pm_num(x) > _PM_CORE_MAX) or x in _PM_MODEL
         for x in _pm_re.findall(r'run_section\("([^"]+)"', "".join(c.get("source") or [])))), len(nb["cells"]))
     _core_fp = _pm_core_fingerprint(nb, _first_model) if start_at is None else None
+    # CONFIRMED BUG (fixed; REFERENCE_DATE moved to "2026-11-15" in parser_models and the run still worked on Ripon): the
+    # upcoming game is decided in 01-45, but a new REFERENCE_DATE / EXTRA_GAMES didn't count as "changed", so they were skipped
+    if _core_fp is not None:
+        _core_fp = str(_core_fp) + "|" + _pm_json.dumps([G["_PM_OPTIONS"].get("REFERENCE_DATE"),
+                                                          G["_PM_OPTIONS"].get("EXTRA_GAMES"), mode], default=str)
     _skip_core = bool(start_at is None and not fresh and G.get("_pm_core_ok") and G.get("_pm_core_fp") == _core_fp
                       and "run_section" in G)
     if _skip_core:

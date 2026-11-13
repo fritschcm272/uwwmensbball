@@ -1,20 +1,25 @@
 scouted_opponent,side,lineup,top_calls,tagged_possessions,ppp,grouping
-Ripon Red Hawks,Opponent,"Anton Kilde, Jack Field, Jackson Flowers, Landon Lee, Sam Leoni","Motion (1x), Ripon Motion Option #2 (1x)",2,0.0,2G-3W
+Ripon Red Hawks,Opponent,"Anton Kilde, Jack Field, Jackson Flowers, Landon Lee, Sam Leoni","Motion (1x), Ripon Motion #2 (1x)",2,0.0,2G-3W
 Ripon Red Hawks,Opponent,"Anton Kilde, Jack Field, Landon Lee, Michael Asman, Sam Leoni","Motion (4x), Ripon Motion #1 (2x), STAGGER (1x)",8,0.75,2G-3W
-Ripon Red Hawks,Opponent,"Anton Kilde, Jackson Flowers, Joey Daun, Keenan Rahn, Sam Leoni","Ripon Motion Option #2 (1x), 5 Out Motion (1x)",2,1.0,3G-2W
+Ripon Red Hawks,Opponent,"Anton Kilde, Jackson Flowers, Joey Daun, Keenan Rahn, Sam Leoni","Ripon Motion #2 (1x), 5 Out Motion (1x)",2,1.0,3G-2W
 Ripon Red Hawks,Opponent,"Anton Kilde, Jackson Flowers, Landon Lee, Michael Asman, Sam Leoni",SLOB SLOB #2 (1x),1,2.0,2G-3W
 Ripon Red Hawks,Opponent,"Christian Wilson, Jackson Flowers, Jose Gonzales, Michael Asman, Seth Bunders",BLOB Blob #2 (1x),1,0.0,3G-2W
 Ripon Red Hawks,Opponent,"Christian Wilson, Jackson Flowers, Keenan Rahn, Michael Asman, Sam Leoni","Motion (2x), BLOB BLOB #1 (1x)",3,1.0,3G-2W
 Ripon Red Hawks,Opponent,"Christian Wilson, Jackson Flowers, Keenan Rahn, Michael Asman, Seth Bunders","RIPON MOTION #3 (1x), STAGGER (1x)",2,1.0,3G-2W
-Ripon Red Hawks,Opponent,"Jack Field, Jackson Flowers, Jose Gonzales, Keenan Rahn, Seth Bunders","Ripon Motion Option #2 (1x), Motion (1x), STAGGER (1x)",3,1.0,3G-2W
+Ripon Red Hawks,Opponent,"Jack Field, Jackson Flowers, Jose Gonzales, Keenan Rahn, Seth Bunders","Ripon Motion #2 (1x), Motion (1x), STAGGER (1x)",3,1.0,3G-2W
 Ripon Red Hawks,Opponent,"Jack Field, Jackson Flowers, Keenan Rahn, Sam Leoni, Seth Bunders",RIPON MOTION #3 (1x),1,0.0,3G-2W
 Ripon Red Hawks,Opponent,"Jack Field, Jose Gonzales, Landon Lee, Michael Asman, Seth Bunders","RIPON MOTION #4 (1x), Ripon Motion #1 (1x)",2,0.0,3G-2W
 Ripon Red Hawks,Opponent,"Jackson Flowers, Joey Daun, Keenan Rahn, Michael Asman, Sam Leoni","Ripon Motion #1 (1x), Set 3 (1x)",2,0.5,3G-2W
-Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Keenan Rahn, Michael Asman, Seth Bunders","Ripon Motion #1 (3x), Motion (1x), Ripon Motion Option #2 (1x)",7,1.0,3G-2W
+Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Keenan Rahn, Michael Asman, Seth Bunders","Ripon Motion #1 (3x), Motion (1x), Ripon Motion #2 (1x)",7,1.0,3G-2W
 Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Keenan Rahn, Sam Leoni, Seth Bunders","BLOB BLOB #1 (2x), Flow (1x), Ripon Motion #1 (1x)",6,0.5,4G-1W
 Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Landon Lee, Michael Asman, Sam Leoni",Ripon Motion #1 (1x),1,0.0,3G-2W
-Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Michael Asman, Sam Leoni, Seth Bunders","Ripon Motion Option #2 (1x), Ripon Motion #1 (1x)",2,0.0,3G-2W
+Ripon Red Hawks,Opponent,"Jackson Flowers, Jose Gonzales, Michael Asman, Sam Leoni, Seth Bunders","Ripon Motion #2 (1x), Ripon Motion #1 (1x)",2,0.0,3G-2W
 Ripon Red Hawks,Opponent,"Jackson Flowers, Keenan Rahn, Landon Lee, Michael Asman, Seth Bunders","Motion (2x), Ripon Motion #1 (1x)",3,0.0,3G-2W
-Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Taveon Vann",Motion (1x),1,0.0,
-Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveon Vann",Motion (3x),3,1.33,
-Ripon Red Hawks,UWW,"Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson","5 Out Motion (2x), Motion (2x)",4,0.0,
+Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Taveon Vann",Motion (2x),2,1.0,
+Ripon Red Hawks,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveon Vann","Motion (3x), SLOB (2x)",5,0.8,
+Ripon Red Hawks,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson","SLOB (2x), Over Twirl (1x), Ball Screen (1x)",6,0.5,
+Ripon Red Hawks,UWW,"Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson","Motion (2x), BLOB (2x), 5 Out Motion (1x)",13,0.92,
+Ripon Red Hawks,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Zavier Castillo","Zona (3x), Gold (1x), Motion (1x)",7,1.17,
+Ripon Red Hawks,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson, Zavier Castillo","Motion (1x), Ball Screen (1x), BLOB (1x)",3,0.67,
+Ripon Red Hawks,UWW,"Collin Madson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo","SLOB (2x), Ball Screen (2x)",4,1.75,
+Ripon Red Hawks,UWW,"Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo","Cheetah (1x), Ball Screen (1x)",2,0.0,

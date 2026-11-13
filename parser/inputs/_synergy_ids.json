@@ -1489,6 +1489,26 @@
    "away": "Hope College Flying Dutchmen",
    "away_short": "Hope",
    "away_id": "54457dd6300969b132fd01d1"
+  },
+  "6abc2667a50466db6de75138": {
+   "date": "2026-11-11",
+   "name": "StNorbert@Ripon",
+   "home": "Ripon Redhawks",
+   "home_short": "Ripon",
+   "home_id": "54457dda300969b132fd040f",
+   "away": "St. Norbert Green Knights",
+   "away_short": "StNorbert",
+   "away_id": "54457dd8300969b132fd02c2"
+  },
+  "6abeb580305bf1f84d1fca8a": {
+   "date": "2026-11-11",
+   "name": "DePauw@Elmhurst",
+   "home": "Elmhurst University Bluejays",
+   "home_short": "Elmhurst",
+   "home_id": "54457dd8300969b132fd0316",
+   "away": "DePauw University Tigers",
+   "away_short": "DePauw",
+   "away_id": "54457dd7300969b132fd0248"
   }
  },
  "teams": {
@@ -1732,6 +1752,8 @@
   "Wisconsin-(Milwaukee) Panthers": "54457dd3300969b132fcfefb",
   "UWMilwaukee": "54457dd3300969b132fcfefb",
   "Saginaw Valley State Cardinals": "54457dd6300969b132fd0134",
-  "SaginawValley": "54457dd6300969b132fd0134"
+  "SaginawValley": "54457dd6300969b132fd0134",
+  "DePauw University Tigers": "54457dd7300969b132fd0248",
+  "DePauw": "54457dd7300969b132fd0248"
  }
 }

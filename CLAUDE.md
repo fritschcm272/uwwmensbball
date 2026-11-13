@@ -46,7 +46,7 @@ C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\
     parser_nb.ipynb           ALL settings + one cell per section (Corey never opens it directly)
     parser_models.ipynb       job: run_parser("models")  -- tracking, court, jersey reader, tag model, checks
     parser_tagging.ipynb      job: run_parser("tagging") -- new Film Tagging batches, fast
-    parser_brief.ipynb        job: run_parser("brief")   -- scouting brief + app data (REFERENCE_DATE, EXTRA_GAMES in its first cell)
+    parser_brief.ipynb        job: run_parser("brief")   -- scouting brief + app data (game from parser_models' saved REFERENCE_DATE)
     parser_analysis.ipynb     job: run_parser("analysis") -- team analysis brief, no UWW sections (see section 0)
     parser_lib\NN_*.py        the code for each section (run_section("NN_name"))
     parser_lib\00_parser_modes.py   the job definitions (which sections each job runs, quiet mode)
@@ -106,7 +106,7 @@ F:\Backups\uwwmensbball_tracking\_tracking\ tracking files (TRACK_DIR) -- moved 
 
 ### Season / opponent
 - **Season 2026-27** (`SEASON = "2026-27"` in parser_nb; the switch moved 2025-26 FastScout files to `parser\inputs_2025-26`
-  and copied last season's tables to `data_2025-26`). `REFERENCE_DATE = "2026-11-8"` in parser_nb AND in parser_brief's first
+  and copied last season's tables to `data_2025-26`). `REFERENCE_DATE = "2026-11-8"` in parser_nb AND in parser_models' first
   cell -> upcoming game **Ripon Red Hawks, Home, Nov 14 2026**. `EXTRA_GAMES = []`.
 - UWW's first game: **@ Carroll, Nov 7 2026** (Synergy game `6ac6ee2d34559f81e3ab11c7`). FastScout had not posted its score /
   play-by-play as of 11/9, so the brief has no UWW season stats yet (many sections were made to handle empty tables).
@@ -188,7 +188,7 @@ Bad wrong-season files went to `inputs_2025-26\_wrong_season_scrapes`.
 - Empty-season fixes (no UWW pbp/stats yet): 36 typed empty pbp, 44 numeric clock, 70 expected box skipped (empty
   projected tables), 80 `reindex`, 86 empty player lines, 11 margin "n/a".
 - Offense breakdown / coverage tables, passing card, reads-to-roster etc. from earlier in the week (see the code comments).
-- `parser_brief` first cell has `REFERENCE_DATE` / `EXTRA_GAMES` (applied at 00b; replace parser_nb's).
+- `REFERENCE_DATE` / `EXTRA_GAMES` are set ONLY in `parser_models`' first cell (11/12, Corey's request). parser_models saves them to `parser\inputs\_upcoming_game.json`; parser_brief / parser_tagging read that file (00 `run_parser`), applied at 00b, replacing parser_nb's. parser_analysis still sets its own team.
 - Offense tables (11/9, Corey: "All of the offensive tables within briefs needs to also include the 5 person lineup that runs it most and any players that are best at scoring off of it"): `uww_offense_breakdown` has `top_lineup` / `top_scorers` on every situation / formation / play-call row (47 `_top_lineup`, `_top_scorers`); 87 `_offense_breakdown_card` shows them under each PLAY-CALL row ("Runs it:" / "Scores:") -- never on the "All" rows: Corey wants the All rows' Actions column empty. Applies to every brief kind (ours, theirs, analysis). Any NEW offensive table in a brief must carry the same two lines.
 - Offense-table play-call flags (11/10, Corey: "Flag based on that row's own numbers"): 87 `_row_flag` rates each play-call row on its own possessions / PPP -- often = at least the median possessions of the table's play-call rows, efficient = >= the table's own team PPP (from its situation rows); 2+ possessions theirs, 3+ ours. The season-wide flags (`_SB_PC_FLAGS`) and the "Scored here" flag are no longer used in that table.
 - Offense tables are collapsible (11/11): the full situation > formation > play-call table sits in `<details class="ob-det">` ("Show the full table"), closed by default; the summary bullets stay visible above it. A small script in the brief's <head> opens every <details> before printing.
@@ -297,3 +297,10 @@ Corey said it's "good enough" for now; don't test more unless he asks.
 - Parser: the saves fetch in 47 copies new files into `<data>/play_diagrams`.
 - Briefs (87, every kind incl. no-seniors and analyses): collapsed "Play diagrams (N)" `<details>` under each offense table, most-run play first, images embedded as JPEG base64.
 - Key rule must match in both places: app `_pd_key` == brief `_sb_pd_key` (lowercase, drop bracket note and "option/opt", keep a-z0-9#, `#`→`n`).
+
+## Synergy-tagged UWW titles (47 `_pt_normalize`)
+- A title starting with a play-call word (motion/flow) then "-" pieces = no formation, that play call, every piece an action: "motion-ds-straight cut-ghost: m2m" → Motion(ds, straight cut, ghost). "Straight Cut" added to `_PT_EXTRA_ACTIONS`.
+- Offense table: 47 writes level="action" rows after each play call (own poss, PPP, top_lineup, top_scorers, cov_ball, cov_offball). 87 shows the play-call row as "All" (poss, PPP, flag only) and lineup/scorers/coverages on the action rows.
+- Same rule for a named set first ("snap 30-bs", "twins left-bs" -> Snap / Twins + Ball Screen, No Formation) when every piece is a known action. "Twins" is a set (play call), not a formation, in _PD_SETS.
+- Above the full table: collapsed "Play call summary" (play call, poss, PPP over all situations/formations).
+- UWW: "No Play Call" is reported as "Flow" (47 offense breakdown; only for Whitewater rows).

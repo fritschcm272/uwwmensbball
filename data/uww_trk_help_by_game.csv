@@ -1,19 +1,16 @@
 defense_team,defender,approx_ft_off_man_ball side,approx_ft_off_man_on ball,approx_ft_off_man_weak side,frames_ball side,frames_on ball,frames_weak side,clips,tendency,game_date,game_code
-Carroll (WI) Pioneers,Dennis Estepp,10.2,6.4,10.1,8.0,3.0,18.0,2,in between,2026-11-07,UWWhitewater@Carroll(WI)
-Carroll (WI) Pioneers,Greg Smith;Jr.,4.6,,,2.0,,,1,,2026-11-07,UWWhitewater@Carroll(WI)
-Carroll (WI) Pioneers,Hayden Stebbins,5.8,5.1,9.9,5.0,4.0,4.0,1,in between,2026-11-07,UWWhitewater@Carroll(WI)
-Carroll (WI) Pioneers,Jimmy Tarjan,3.6,11.5,8.7,5.0,9.0,10.0,3,in between,2026-11-07,UWWhitewater@Carroll(WI)
-Carroll (WI) Pioneers,Logan Steffensmeier,4.2,4.2,7.2,6.0,6.0,2.0,3,in between,2026-11-07,UWWhitewater@Carroll(WI)
-Carroll (WI) Pioneers,Michael McNabb,8.1,5.7,6.9,4.0,5.0,11.0,3,stays attached,2026-11-07,UWWhitewater@Carroll(WI)
-Carroll (WI) Pioneers,Peyton McKenna,7.4,10.7,9.1,10.0,8.0,1.0,1,in between,2026-11-07,UWWhitewater@Carroll(WI)
-Carroll (WI) Pioneers,unnamed defense,7.2,8.0,9.0,547.0,357.0,633.0,13,in between,2026-11-07,UWWhitewater@Carroll(WI)
-UW-Whitewater,Collin Madson,6.5,5.9,,8.0,1.0,,3,,2026-11-07,UWWhitewater@Carroll(WI)
-UW-Whitewater,Darius Chestnut,7.6,4.5,16.1,21.0,11.0,2.0,3,helps / sags off,2026-11-07,UWWhitewater@Carroll(WI)
-UW-Whitewater,Greg Smith Jr.,22.7,24.6,14.7,6.0,1.0,4.0,1,helps / sags off,2026-11-07,UWWhitewater@Carroll(WI)
-UW-Whitewater,Isaiah Robinson,7.9,7.9,6.8,28.0,12.0,1.0,4,stays attached,2026-11-07,UWWhitewater@Carroll(WI)
-UW-Whitewater,Jr Lukenbill,16.6,,4.4,2.0,,4.0,3,stays attached,2026-11-07,UWWhitewater@Carroll(WI)
-UW-Whitewater,Kelton Mcewen,4.8,,,1.0,,,1,,2026-11-07,UWWhitewater@Carroll(WI)
-UW-Whitewater,Rashad Rogers,4.9,4.1,7.4,5.0,4.0,4.0,3,in between,2026-11-07,UWWhitewater@Carroll(WI)
-UW-Whitewater,Taveon Vann,20.4,,9.1,1.0,,1.0,1,in between,2026-11-07,UWWhitewater@Carroll(WI)
-UW-Whitewater,Tyshawn Teague-Johnson,6.5,9.8,3.5,8.0,6.0,1.0,4,stays attached,2026-11-07,UWWhitewater@Carroll(WI)
-UW-Whitewater,unnamed defense,8.9,9.0,8.8,655.0,335.0,460.0,15,in between,2026-11-07,UWWhitewater@Carroll(WI)
+Carroll (WI) Pioneers,Dennis Estepp,,6.4,,,3.0,,1,,2026-11-07,WWW@CAR
+Carroll (WI) Pioneers,Greg Smith;Jr.,4.6,,,2.0,,,1,,2026-11-07,WWW@CAR
+Carroll (WI) Pioneers,Jimmy Tarjan,3.6,15.1,6.3,5.0,6.0,5.0,1,stays attached,2026-11-07,WWW@CAR
+Carroll (WI) Pioneers,Michael McNabb,,6.1,6.5,,3.0,4.0,1,stays attached,2026-11-07,WWW@CAR
+Carroll (WI) Pioneers,Peyton McKenna,7.4,10.7,9.1,10.0,8.0,1.0,1,in between,2026-11-07,WWW@CAR
+Carroll (WI) Pioneers,unnamed defense,7.2,7.1,6.9,19.0,26.0,31.0,1,stays attached,2026-11-07,WWW@CAR
+UW-Whitewater,Collin Madson,4.4,5.9,,2.0,1.0,,1,,2026-11-07,WWW@CAR
+UW-Whitewater,Tyshawn Teague-Johnson,,6.2,,,1.0,,1,,2026-11-07,WWW@CAR
+UW-Whitewater,unnamed defense,11.9,8.7,9.3,26.0,20.0,9.0,1,in between,2026-11-07,WWW@CAR
+Carroll (WI) Pioneers,unnamed defense,5.4,5.4,11.6,16.0,4.0,33.0,1,in between,2026-11-07,UWWhitewater@Carroll(WI)
+UW-Whitewater,Collin Madson,9.1,7.6,,2.0,3.0,,1,,2026-11-07,UWWhitewater@Carroll(WI)
+UW-Whitewater,Darius Chestnut,4.7,4.8,4.3,6.0,12.0,3.0,2,stays attached,2026-11-07,UWWhitewater@Carroll(WI)
+UW-Whitewater,Isaiah Robinson,8.8,10.1,,5.0,2.0,,1,,2026-11-07,UWWhitewater@Carroll(WI)
+UW-Whitewater,Jr Lukenbill,16.6,,2.9,2.0,,2.0,2,stays attached,2026-11-07,UWWhitewater@Carroll(WI)
+UW-Whitewater,unnamed defense,9.3,10.5,9.5,196.0,161.0,123.0,9,in between,2026-11-07,UWWhitewater@Carroll(WI)

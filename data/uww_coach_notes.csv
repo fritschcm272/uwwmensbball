@@ -58,7 +58,7 @@ Wisconsin-(Oshkosh) Titans,H2,1067.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,Che
 Wisconsin-(Oshkosh) Titans,H2,1065.0,UW-Whitewater,Luke Bara,Turnover,,BLOB,Offense,2026-01-03,0,BLOB,blob:m2m,,,BLOB
 Wisconsin-(Oshkosh) Titans,H2,1015.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Ball Screen,Offense,2026-01-03,2,Ball Screen,BS(reject):press(rj),Reject,,Half court
 Wisconsin-(Oshkosh) Titans,H2,969.0,UW-Whitewater,Logan Rindfleisch,Miss 2 Pts,,5 Out Motion,Offense,2026-01-03,0,Motion,5out(DD):m2m,Dribble Drive,,Half court
-Wisconsin-(Oshkosh) Titans,H2,924.0,UW-Whitewater,Collin Madson,Foul,,Twins Motion,Offense,2026-01-03,,Motion,twin:press(rj),,,Half court
+Wisconsin-(Oshkosh) Titans,H2,924.0,UW-Whitewater,Collin Madson,Foul,,Twins,Offense,2026-01-03,,Twins,twin:press(rj),,,Half court
 Wisconsin-(Oshkosh) Titans,H2,899.0,UW-Whitewater,Oskar Kangas,Miss 2 Pts,,BLOB Box Motion,Offense,2026-01-03,0,BLOB,blob(box-sts):m2m,Screen the Screener,,BLOB
 Wisconsin-(Oshkosh) Titans,H2,869.0,UW-Whitewater,Nate Nazos,Make 3 Pts,,Spain,Offense,2026-01-03,3,Spain,spain:m2m(stay),,,Half court
 Wisconsin-(Oshkosh) Titans,H2,,UW-Whitewater,Brock Marino,Non Shooting Foul,,Panther,Offense,2026-01-03,,Panther,panther:press(rj),,,Half court
@@ -120,7 +120,7 @@ Eureka Red Devils,H2,1046.0,UW-Whitewater,Jr Lukenbill,Make 2 Pts,,BLOB Line Mot
 Eureka Red Devils,H2,,UW-Whitewater,Brock Marino,No Violation,,Flow,Offense,2025-11-15,,Flow,FLOW: M2M D,,,Half court
 Eureka Red Devils,H2,1013.0,UW-Whitewater,Luke Bara,Make 3 Pts,,BLOB Line Motion,Offense,2025-11-15,3,BLOB,BLOB-LINE: 2-3 ZONE,,,BLOB
 Eureka Red Devils,H2,993.0,UW-Whitewater,Andrew Coker,Make 2 Pts,,SLOB,Offense,2025-11-15,2,SLOB,UWW M2M- SLOB,,,SLOB
-Eureka Red Devils,H2,982.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Flow Ricky,Offense,2025-11-15,2,Flow,FLOW-RICKY:M2M DROP,Ricky,,Half court
+Eureka Red Devils,H2,982.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Flow,Offense,2025-11-15,2,Flow,FLOW-RICKY:M2M DROP,Ricky (rescreen),,Half court
 Eureka Red Devils,H2,956.0,UW-Whitewater,Joey Berezowitz,Make 2 Pts,,BLOB Line Double/Stagger Screen,Offense,2025-11-15,2,BLOB,BLOB-LINE-DOUBLE,Double/Stagger Screen,,BLOB
 Eureka Red Devils,H2,779.0,UW-Whitewater,Jacob Gonzalez,Make 2 Pts,,BLOB,Offense,2025-11-15,2,BLOB,UWW M2M D: BLOB,,,BLOB
 Eureka Red Devils,H2,756.0,UW-Whitewater,Darius Chestnut,Make 3 Pts,,Flow,Offense,2025-11-15,3,Flow,FLOW:2-3 ZONE,,,Half court
@@ -157,14 +157,14 @@ Ripon Redhawks,H1,413.0,UW-Whitewater,Collin Madson,Make 2 Pts,,P4,Offense,2025-
 Ripon Redhawks,H1,370.0,UW-Whitewater,Brock Marino,Foul,,BLOB Bot,Offense,2025-11-07,,BLOB,BLOB-LINE- BOT: M2M D,,,BLOB
 Ripon Redhawks,H1,361.0,UW-Whitewater,Collin Madson,Make 3 Pts,,BLOB Line Curl,Offense,2025-11-07,3,BLOB,BLOB-LINE-CURL- M2M,Curl,,BLOB
 Ripon Redhawks,H1,231.0,UW-Whitewater,Isaac Verges,Turnover,,5 Out DHO,Offense,2025-11-07,0,5 Out,5 OUT- DHO- PASS-FLAIR- RS BS: M2M D SOFT HEDGE,DHO | Pass | Flare | Ball Screen,Right Side,Half court
-Ripon Redhawks,H1,191.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,Twins Ball Screen,Offense,2025-11-07,0,Twins,TWINS- BS RS: M2M D- SWITCH,Ball Screen,Right Side,Half court
+Ripon Redhawks,H1,191.0,UW-Whitewater,Richie Warren,Miss 2 Pts,,Twins,Offense,2025-11-07,0,Twins,TWINS- BS RS: M2M D- SWITCH,Ball Screen,Right Side,Half court
 Ripon Redhawks,H1,126.0,UW-Whitewater,Jarton Davis,Turnover,,ATO (unspecified),Offense,2025-11-07,0,ATO,UWW D- M2M- ATO,,,ATO
 Ripon Redhawks,H1,,UW-Whitewater,Isaac Verges,Kicked Ball,,BLOB Line Curl,Offense,2025-11-07,0,BLOB,BLOB- LINE-CURL: M2M D,,,BLOB
 Ripon Redhawks,H1,,UW-Whitewater,Brock Marino,No Violation,,SLOB Ball Screen,Offense,2025-11-07,,SLOB,SLOB- BS- DROP: M2M D,Ball Screen,,SLOB
 Ripon Redhawks,H1,72.0,UW-Whitewater,Luke Bara,Turnover,,BLOB Line Double/Stagger Screen,Offense,2025-11-07,0,BLOB,BLOB- LINE-DOUBLE : M2M D,,,BLOB
 Ripon Redhawks,H1,2.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Snap,Offense,2025-11-07,0,Snap,SNAP : M2M D,,,Half court
 Ripon Redhawks,H2,1172.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Panther,Offense,2025-11-07,2,Panther,PANTHER: M2M D,,,Half court
-Ripon Redhawks,H2,1137.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Twins Curl,Offense,2025-11-07,2,Curl,TWINS- CURL: M2M D,,,Half court
+Ripon Redhawks,H2,1137.0,UW-Whitewater,Brock Marino,Make 2 Pts,,Twins,Offense,2025-11-07,2,Twins,TWINS- CURL: M2M D,Curl,,Half court
 Ripon Redhawks,H2,1116.0,UW-Whitewater,Seth Bunders,Miss 3 Pts,,BLOB,Offense,2025-11-07,0,BLOB,UWW M2M- BLOB,,,BLOB
 Ripon Redhawks,H2,1105.0,UW-Whitewater,Isaac Verges,Make 2 Pts,,Get,Offense,2025-11-07,2,Motion / no set,GET PLAY? : M2M- DROP,Get,,Half court
 Ripon Redhawks,H2,1079.0,UW-Whitewater,CJ Brown,Make 3 Pts,,SLOB,Offense,2025-11-07,3,SLOB,UWW M2M- SLOB,,,SLOB
@@ -192,7 +192,7 @@ Ripon Redhawks,H2,114.0,UW-Whitewater,Collin Madson,Foul,,Flow,Offense,2025-11-0
 Ripon Redhawks,H2,80.0,UW-Whitewater,Isaac Verges,Miss 3 Pts,,5 Out,Offense,2025-11-07,0,5 Out,5 OUT- M2M D,,,Half court
 Ripon Redhawks,H2,56.0,UW-Whitewater,Isaac Verges,Foul,,Flow,Offense,2025-11-07,,Flow,FLOW: M2M 1-2-1-1,,,Half court
 Ripon Redhawks,H2,15.0,UW-Whitewater,Mauryon Turner,Turnover,,5 Out,Offense,2025-11-07,0,5 Out,5 OUT : M2M D,,,Half court
-St. Thomas (TX) Celts,H1,1162.0,UW-Whitewater,Isaac Verges,Turnover,,Twins Motion,Offense,2025-11-14,0,Motion,Twins-: Press (M2M ((TOKEN)),,,Half court
+St. Thomas (TX) Celts,H1,1162.0,UW-Whitewater,Isaac Verges,Turnover,,Twins,Offense,2025-11-14,0,Twins,Twins-: Press (M2M ((TOKEN)),,,Half court
 St. Thomas (TX) Celts,H1,1114.0,UW-Whitewater,Isaac Verges,Miss 2 Pts,,Flow,Offense,2025-11-14,0,Flow,Flow: R + J,,,Half court
 St. Thomas (TX) Celts,H1,1084.0,UW-Whitewater,Collin Madson,Make 2 Pts,,5 Out Flare,Offense,2025-11-14,2,5 Out,5 Out Flair: M2M,Flare,,Half court
 St. Thomas (TX) Celts,H1,1039.0,UW-Whitewater,Jr Lukenbill,Make 3 Pts,,Flow,Offense,2025-11-14,3,Flow,Flow: M2M Press,,,Half court
@@ -204,7 +204,7 @@ St. Thomas (TX) Celts,H1,,UW-Whitewater,Luke Bara,Non Shooting Foul,,5 Out,Offen
 St. Thomas (TX) Celts,H1,904.0,UW-Whitewater,Brock Marino,Miss 2 Pts,,SLOB,Offense,2025-11-14,0,SLOB,Slob: M2M: Drop,,,SLOB
 St. Thomas (TX) Celts,H1,840.0,UW-Whitewater,Jr Lukenbill,Make 3 Pts,,5 Out,Offense,2025-11-14,3,5 Out,5 Out- M2M: Drop+Press,,,Half court
 St. Thomas (TX) Celts,H1,809.0,UW-Whitewater,Jr Lukenbill,Miss 3 Pts,,BLOB Line Reject,Offense,2025-11-14,0,BLOB,Blob-Line- reject: M2M,,,BLOB
-St. Thomas (TX) Celts,H1,768.0,UW-Whitewater,Darius Chestnut,Miss 3 Pts,,Twins Ball Screen,Offense,2025-11-14,0,Twins,Twins: Press: Hedge BS,Ball Screen,,Half court
+St. Thomas (TX) Celts,H1,768.0,UW-Whitewater,Darius Chestnut,Miss 3 Pts,,Twins,Offense,2025-11-14,0,Twins,Twins: Press: Hedge BS,Ball Screen,,Half court
 St. Thomas (TX) Celts,H1,759.0,UW-Whitewater,Collin Madson,Make 3 Pts,,BLOB Line,Offense,2025-11-14,3,BLOB,Blob: L : M2M,,,BLOB
 St. Thomas (TX) Celts,H1,701.0,UW-Whitewater,Richie Warren,0 Pts,,5 Out Flare,Offense,2025-11-14,0,5 Out,5 Out-flairs- M2M,Flare,,Half court
 St. Thomas (TX) Celts,H1,685.0,UW-Whitewater,Darius Chestnut,Turnover,,BLOB Line Curl,Offense,2025-11-14,0,BLOB,Blob-Line-Curl- M2M,Curl,,BLOB
@@ -256,14 +256,51 @@ St. Thomas (TX) Celts,H2,132.0,UW-Whitewater,Kelton Mcewen,Foul,,Flow,Offense,20
 St. Thomas (TX) Celts,H2,115.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Flow,Offense,2025-11-14,2,Flow,FLOW: M2M PRESS- SWITCH,,,Half court
 St. Thomas (TX) Celts,H2,72.0,UW-Whitewater,Collin Madson,Make 3 Pts,,Flow,Offense,2025-11-14,3,Flow,FLOW: M2M PRESS- ICE,,,Half court
 St. Thomas (TX) Celts,H2,19.0,UW-Whitewater,Luke Bara,Make 3 Pts,,Flow,Offense,2025-11-14,3,Flow,FLOW: M2M,,,Transition
-Carroll (WI) Pioneers,H1,1180.0,UW-Whitewater,Isaiah Robinson,Miss 2 Pts,,5 Out Motion,Offense,2026-11-07,0,Motion,[app] Opener 5 Out Motion: Man-to-Man (Through),Throw to 5 | Down Screen | Flare,,Opener
-Carroll (WI) Pioneers,H1,1142.0,UW-Whitewater,Rashad Rogers,Miss 2 Pts,,5 Out Motion,Offense,2026-11-07,0,Motion,[app] 5 Out Motion: Man-to-Man,pass to 5 | Down Screen | Ball Screen | Post Isolation,,Half court
-Carroll (WI) Pioneers,H1,1015.0,UW-Whitewater,Tyshawn Teague-Johnson,Miss 2 Pts,,Motion,Offense,2026-11-07,0,Motion,[app] Motion,Ball Screen,,Half court
-Carroll (WI) Pioneers,H1,949.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Motion,Offense,2026-11-07,0,Motion,[app] Motion,Ball Screen,,Half court
-Carroll (WI) Pioneers,H1,917.0,UW-Whitewater,Taveon Vann,Foul,,Motion,Offense,2026-11-07,2,Motion,[app] Motion,Ball Screen,,Half court
-Carroll (WI) Pioneers,H1,863.0,UW-Whitewater,Kelton Mcewen,Miss 3 Pts,,Motion,Offense,2026-11-07,0,Motion,[app] Motion,Down Screen,,Half court
-Carroll (WI) Pioneers,H1,824.0,UW-Whitewater,Jr Lukenbill,Make 2 Pts,,Motion,Offense,2026-11-07,2,Motion,[app] Motion,Ball Screen,,Half court
-Carroll (WI) Pioneers,H1,758.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,Motion,Offense,2026-11-07,0,Motion,[app] Motion,Ball Screen,,Half court
+Carroll (WI) Pioneers,H1,1180.0,UW-Whitewater,Isaiah Robinson,Miss 2 Pts,,5 Out Motion,Offense,2026-11-07,0,Motion,Motion-ds-cobra,Throw to 5 | Down Screen | Flare,,Opener
+Carroll (WI) Pioneers,H1,1142.0,UW-Whitewater,Rashad Rogers,Miss 2 Pts,,Motion,Offense,2026-11-07,0,Motion,motion-ds-straight cut- ghost: m2m (SHAD),Down Screen | Straight Cut | Ghost,,Half court
+Carroll (WI) Pioneers,H1,1117.0,UW-Whitewater,Kelton Mcewen,Make 3 Pts,,BLOB,Offense,2026-11-07,3,BLOB,blob #1,,,BLOB
+Carroll (WI) Pioneers,H1,1015.0,UW-Whitewater,Tyshawn Teague-Johnson,Miss 2 Pts,,Snap,Offense,2026-11-07,0,Snap,snap 30-bs:m2m(over-high hedge),Ball Screen,,Half court
+Carroll (WI) Pioneers,H1,977.0,UW-Whitewater,Isaiah Robinson,Miss 2 Pts,,Motion,Offense,2026-11-07,0,Motion,Motion-throw5-screen-post:press(m2m),Post Touch,,Half court
+Carroll (WI) Pioneers,H1,949.0,UW-Whitewater,Collin Madson,Miss 3 Pts,,Twins,Offense,2026-11-07,0,Twins,twins left-bs:m2m(over-high hedge),Ball Screen,,Half court
+Carroll (WI) Pioneers,H1,917.0,UW-Whitewater,Taveon Vann,Foul,,Motion,Offense,2026-11-07,2,Motion,motion-dho-zoom-bs:press(man)((over-high hedge),DHO | Zoom | Ball Screen,,Half court
+Carroll (WI) Pioneers,H1,863.0,UW-Whitewater,Kelton Mcewen,Miss 3 Pts,,SLOB,Offense,2026-11-07,0,SLOB,slob,,,SLOB
+Carroll (WI) Pioneers,H1,837.0,UW-Whitewater,Collin Madson,Non Shooting Foul,,Motion,Offense,2026-11-07,0,Motion,motion-cobra:press(m2m,,,Half court
+Carroll (WI) Pioneers,H1,824.0,UW-Whitewater,Jr Lukenbill,Make 2 Pts,,SLOB,Offense,2026-11-07,2,SLOB,slob,,,SLOB
+Carroll (WI) Pioneers,H1,797.0,UW-Whitewater,Darius Chestnut,Turnover,,Motion,Offense,2026-11-07,0,Motion,motion-throw5-twirl:m2m(press),Twirl,,Half court
+Carroll (WI) Pioneers,H1,758.0,UW-Whitewater,Collin Madson,Miss 2 Pts,,Motion,Offense,2026-11-07,0,Motion,"motion-ds-straight cut-bs:m2m(switch,switch)",Down Screen | Straight Cut | Ball Screen,,Half court
+Carroll (WI) Pioneers,H1,722.0,UW-Whitewater,Collin Madson,Foul,,Motion,Offense,2026-11-07,2,Motion,motion-ds-cobra:m2m,Down Screen,,Half court
+Carroll (WI) Pioneers,H1,619.0,UW-Whitewater,Jr Lukenbill,Miss 3 Pts,,Over Twirl,Offense,2026-11-07,0,Twirl,over-twirl:press(m2m),,,ATO
+Carroll (WI) Pioneers,H1,483.0,UW-Whitewater,Isaiah Robinson,Miss 3 Pts,,Cheetah,Offense,2026-11-07,0,Cheetah,cheetah:m2m,,,Half court
+Carroll (WI) Pioneers,H1,446.0,UW-Whitewater,Rashad Rogers,Turnover,,Ball Screen,Offense,2026-11-07,0,Ball Screen,"bs;press(m2m)((over,high hedge)",,,Half court
+Carroll (WI) Pioneers,H1,419.0,UW-Whitewater,Kelton Mcewen,Miss 2 Pts,,Gold,Offense,2026-11-07,0,Gold,gold:press(m2m),,,ATO
+Carroll (WI) Pioneers,H1,322.0,UW-Whitewater,Rashad Rogers,Make 2 Pts,,Zona,Offense,2026-11-07,2,Zona,zona:press(m2m),,,Half court
+Carroll (WI) Pioneers,H1,244.0,UW-Whitewater,Collin Madson,1 Pts,,Zona,Offense,2026-11-07,3,Zona,zona:press(m2m),,,Half court
+Carroll (WI) Pioneers,H1,224.0,UW-Whitewater,Zavier Castillo,Make 2 Pts,,SLOB,Offense,2026-11-07,2,SLOB,slob,,,SLOB
+Carroll (WI) Pioneers,H1,210.0,UW-Whitewater,Hayden Stebbins,Make 3 Pts,,Ball Screen,Offense,2026-11-07,3,Ball Screen,"bs:m2m(switch,switch)",,,Half court
+Carroll (WI) Pioneers,H1,187.0,UW-Whitewater,Collin Madson,Make 2 Pts,,Ball Screen,Offense,2026-11-07,2,Motion / no set,high bs:m2m,Ball Screen,,Half court
+Carroll (WI) Pioneers,H2,1183.0,UW-Whitewater,Michael McNabb,Foul,,Opening set (unspecified),Offense,2026-11-07,0,Opening set,2nd half opener:m2m,,,Opening set
+Carroll (WI) Pioneers,H2,1161.0,UW-Whitewater,Tyshawn Teague-Johnson,Make 2 Pts,,40Back,Offense,2026-11-07,2,40Back,40back:press(m2m),,,Half court
+Carroll (WI) Pioneers,H2,1123.0,UW-Whitewater,Michael McNabb,Miss 2 Pts,,BLOB,Offense,2026-11-07,0,BLOB,blob:m2m,,,BLOB
+Carroll (WI) Pioneers,H2,1058.0,UW-Whitewater,Tyshawn Teague-Johnson,Miss 2 Pts,,Zona,Offense,2026-11-07,0,Zona,zona:press(m2m),,,Half court
+Carroll (WI) Pioneers,H2,955.0,UW-Whitewater,Tyshawn Teague-Johnson,Foul,,Ball Screen,Offense,2026-11-07,1,Ball Screen,bs:press(m2m),,,Half court
+Carroll (WI) Pioneers,H2,870.0,UW-Whitewater,Collin Madson,Make 2 Pts,,SLOB,Offense,2026-11-07,2,SLOB,slob,,,SLOB
+Carroll (WI) Pioneers,H2,,UW-Whitewater,Isaiah Robinson,No Violation,,Gold,Offense,2026-11-07,,Gold,gold:press(m2m),,,Half court
+Carroll (WI) Pioneers,H2,823.0,UW-Whitewater,Kelton Mcewen,Make 2 Pts,,Motion,Offense,2026-11-07,2,Motion,motion-zoom:press(m2m),Zoom,,Half court
+Carroll (WI) Pioneers,H2,773.0,UW-Whitewater,Tyshawn Teague-Johnson,Miss 2 Pts,,Ball Screen,Offense,2026-11-07,0,Ball Screen,"bs:press(m2m)((over,high hedge))",,,Half court
+Carroll (WI) Pioneers,H2,717.0,UW-Whitewater,Lucas Parker,Miss 3 Pts,,BLOB,Offense,2026-11-07,0,BLOB,blob:m2m,,,BLOB
+Carroll (WI) Pioneers,H2,692.0,UW-Whitewater,Jr Lukenbill,Turnover,,Motion,Offense,2026-11-07,0,Motion / no set,motion:m2m,Motion,,Half court
+Carroll (WI) Pioneers,H2,,UW-Whitewater,Zavier Castillo,Kicked Ball,,SLOB,Offense,2026-11-07,0,SLOB,slob,,,SLOB
+Carroll (WI) Pioneers,H2,664.0,UW-Whitewater,Jr Lukenbill,Make 2 Pts,,BLOB,Offense,2026-11-07,2,BLOB,blob:m2m,,,BLOB
+Carroll (WI) Pioneers,H2,,UW-Whitewater,Collin Madson,No Violation,,Zona,Offense,2026-11-07,,Zona,zona:press(m2m),,,Half court
+Carroll (WI) Pioneers,H2,609.0,UW-Whitewater,Rashad Rogers,Miss 3 Pts,,SLOB,Offense,2026-11-07,0,SLOB,slob,,,SLOB
+Carroll (WI) Pioneers,H2,364.0,UW-Whitewater,Michael McNabb,Miss 3 Pts,,SLOB,Offense,2026-11-07,0,SLOB,slob:m2m,,,SLOB
+Carroll (WI) Pioneers,H2,314.0,UW-Whitewater,Jr Lukenbill,Miss 3 Pts,,Ball Screen,Offense,2026-11-07,0,Ball Screen,"bs:press(m2m)((over,high hedge)",,,Half court
+Carroll (WI) Pioneers,H2,276.0,UW-Whitewater,Jr Lukenbill,Make 3 Pts,,SLOB,Offense,2026-11-07,3,SLOB,slob:m2m,,,SLOB
+Carroll (WI) Pioneers,H2,193.0,UW-Whitewater,Peyton McKenna,Turnover,,ATO (unspecified),Offense,2026-11-07,0,ATO,ato:m2m,,,ATO
+Carroll (WI) Pioneers,H2,180.0,UW-Whitewater,Jr Lukenbill,Turnover,,Snap,Offense,2026-11-07,0,Snap,30 snap:m2m,,,Half court
+Carroll (WI) Pioneers,H2,83.0,UW-Whitewater,Logan Steffensmeier,Make 2 Pts,,ATO (unspecified),Offense,2026-11-07,2,ATO,ato:m2m,,,ATO
+Carroll (WI) Pioneers,H2,61.0,UW-Whitewater,Collin Madson,Make 3 Pts,,ISO,Offense,2026-11-07,3,Motion / no set,Madson-iso:m2m,ISO,,Half court
+Carroll (WI) Pioneers,H2,1.0,UW-Whitewater,Dennis Estepp,Miss 3 Pts,,BLOB,Offense,2026-11-07,0,BLOB,blob:m2m,,,BLOB
 Beloit Buccaneers,H1,1155.0,UW-Whitewater,CJ Brown,Turnover,,Set,Offense,2026-02-21,0,Set,[app] Set: Man-to-Man,Down Screen | Xaiver Screen | Down Screen | Rip Screen,,Half court
 Beloit Buccaneers,H1,1116.0,UW-Whitewater,Kolby Williams,Make 2 Pts,,Set Motion,Offense,2026-02-21,2,Motion,[app] Set Motion: Man-to-Man (Switch),Booty Screen | Stagger | Isolation,,Half court
 Beloit Buccaneers,H1,1092.0,UW-Whitewater,CJ Brown,Miss 2 Pts,,Motion,Offense,2026-02-21,0,Motion,[app] Motion: Man-to-Man (Switch),High Ball Screen | Stagger | Rifle,,Half court

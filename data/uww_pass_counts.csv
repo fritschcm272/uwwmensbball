@@ -1,178 +1,178 @@
 scouted_opponent,side,offense_team,defense_team,game_date,game_code,clip_number,play_situation,play_call,passes_tracked,ends_on_pass,points
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),1,Opener,5 Out Motion,8.0,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),2,Transition,,4.0,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),4,Half court,5 Out Motion,8.0,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),5,Transition,,1.0,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),7,,,6.0,True,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),8,,,12.0,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),9,,,9.0,False,1.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),12,,,18.0,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),13,,,,False,
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),14,,,3.0,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,1,Opener,5 Out Motion,8.0,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,2,Transition,,4.0,False,3.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,3,Half court,Motion,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,4,Transition,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,6,BLOB,BLOB,,True,3.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,7,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,8,Transition,,,False,1.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,9,Half court,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,10,Offensive rebound,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,11,Half court,Snap,,True,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,12,Half court,,,False,3.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,13,Half court,Motion,,True,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,14,Transition,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,15,Half court,Twins,,True,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,16,Half court,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,17,Half court,Motion,,True,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,18,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,20,SLOB,SLOB,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,21,Transition,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,23,SLOB,SLOB,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,24,Half court,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,25,Half court,Motion,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,26,Half court,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,27,Offensive rebound,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,28,Half court,Motion,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,29,Half court,,,True,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,30,Half court,Motion,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,31,Half court,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,32,Half court,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,33,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,34,Transition,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,35,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,36,ATO,Over Twirl,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,37,Transition,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,38,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,39,Offensive rebound,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,40,Half court,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,41,Offensive rebound,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,42,Half court,,,False,1.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,43,Half court,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,44,Half court,Cheetah,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,45,Transition,,,False,3.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,46,Half court,Ball Screen,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,47,Transition,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,48,ATO,Gold,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,49,Transition,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,50,Half court,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,51,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,52,Transition,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,53,Offensive rebound,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,54,Half court,,,False,3.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,55,Half court,Zona,,True,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,56,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,57,Half court,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,58,Transition,,,True,3.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,59,Half court,Zona,,True,3.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,60,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,61,SLOB,SLOB,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,62,Half court,Ball Screen,,False,3.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,63,Half court,Ball Screen,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,64,Transition,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,65,Transition,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,66,Transition,,,True,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,67,Half court,,,True,3.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,68,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,69,Transition,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,70,Half court,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,71,Offensive rebound,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,72,Half court,,,True,3.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,73,ATO,,,True,3.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,74,Half court,,,False,1.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,75,Transition,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,76,Transition,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,77,Opening set,Opening set (unspecified),,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,78,Half court,40Back,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,79,Half court,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,80,Offensive rebound,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,81,BLOB,BLOB,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,83,Half court,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,84,Transition,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,85,Transition,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,86,Transition,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,87,Half court,Zona,,True,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,88,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,89,Transition,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,90,Half court,,,False,3.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,91,Half court,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,92,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,93,Half court,Ball Screen,,False,1.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,95,Half court,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,96,Half court,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,97,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,98,Transition,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,99,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,101,SLOB,SLOB,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,102,Half court,,,True,3.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,104,Half court,Motion,,True,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,105,Half court,,,True,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,106,Half court,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,107,Half court,Ball Screen,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,108,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,109,Transition,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,110,Offensive rebound,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,111,Offensive rebound,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,113,BLOB,BLOB,,True,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,114,Offensive rebound,,,False,3.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,115,Half court,Motion,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,116,Transition,,,False,1.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,119,BLOB,BLOB,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,120,Transition,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,122,SLOB,SLOB,,True,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,123,Transition,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,124,Transition,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,125,Half court,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,126,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,127,Transition,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,128,Transition,,,False,3.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,129,Half court,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,130,Half court,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,131,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,132,Transition,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,133,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,134,Transition,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,135,Transition,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,136,Transition,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,137,Half court,,,True,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,138,Transition,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,140,SLOB,SLOB,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,141,Half court,,,True,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,142,Offensive rebound,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,143,Half court,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,144,Half court,Ball Screen,,True,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,145,Transition,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,146,Offensive rebound,,,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,148,SLOB,SLOB,,False,3.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,149,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,150,Transition,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,151,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,152,Half court,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,154,ATO,ATO (unspecified),,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,155,Half court,Snap,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,156,Half court,,,False,3.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,157,ATO,,,False,3.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,158,Half court,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,159,Transition,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,160,Half court,,,False,2.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,161,ATO,ATO (unspecified),,False,2.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,162,Half court,ISO,,False,3.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,163,Half court,,,False,1.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,164,Offensive rebound,,,False,0.0
+Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,WWW@CAR,165,Half court,,,False,1.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,166,Half court,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,WWW@CAR,167,BLOB,BLOB,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),13,,,2.0,False,
 Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),15,,,1.0,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),18,Half court,Motion,6.0,True,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),19,,,6.0,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),20,,,4.0,True,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),21,Transition,,4.0,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),22,Half court,Motion,6.0,True,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),23,,,9.0,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),26,Half court,Motion,6.0,True,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),29,,,12.0,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),30,,,4.0,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),30,,,5.0,False,0.0
 Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),31,,,3.0,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),32,,,,False,
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),32,,,3.0,False,
 Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),33,,,2.0,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),35,Half court,Motion,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),36,Transition,,0.0,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),38,Half court,Motion,1.0,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),39,,,4.0,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),40,,,7.0,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),41,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),42,,,,False,
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),43,,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),44,Half court,Motion,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),45,,,,True,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),46,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),49,,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),50,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),53,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),54,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),55,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),56,ATO,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),57,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),60,,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),42,,,1.0,False,
 Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),61,,,,False,
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),62,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),63,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),64,,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),64,,,2.0,False,0.0
 Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),65,,,,False,
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),66,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),67,,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),69,,,,False,1.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),72,,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),73,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),74,,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),75,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),76,Transition,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),77,ATO,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),78,Transition,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),79,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),80,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),81,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),82,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),83,,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),84,,,,True,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),85,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),86,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),87,,,,True,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),88,,,,True,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),90,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),91,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),92,,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),93,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),94,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),95,Transition,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),96,,,,True,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),97,,,,True,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),98,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),99,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),100,,,,False,0.0
+Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),67,,,3.0,False,2.0
 Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),101,,,,False,
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),102,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),103,,,,True,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),104,ATO,,,True,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),105,,,,False,1.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),108,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),109,Transition,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),111,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),114,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),115,,,,False,0.0
 Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),116,,,,False,
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),117,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),118,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),120,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),121,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),122,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),123,Transition,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),124,,,,True,0.0
 Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),125,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),126,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),127,Transition,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),130,,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),131,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),132,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),133,,,,False,1.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),137,,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),138,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),139,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),140,Transition,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),141,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),143,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),144,,,,True,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),146,,,,True,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),148,,,,True,0.0
 Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),149,,,,False,
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),150,,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),151,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),152,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),153,Transition,,,False,0.0
 Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),154,,,,False,
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),155,,,,False,0.0
 Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),156,,,,False,
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),157,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),159,,,,True,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),160,,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),162,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),163,Transition,,,False,1.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),168,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),169,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),171,,,,True,0.0
 Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),172,,,,False,0.0
 Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),173,,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),174,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),175,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),176,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),177,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),178,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),179,,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),180,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),182,,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),183,,,,False,0.0
 Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),185,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),186,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),187,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),188,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),189,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),190,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),193,,,,True,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),194,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),197,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),198,,,,True,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),199,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),202,,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),205,,,,True,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),206,Transition,,,False,0.0
 Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),207,,,,False,
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),208,,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),210,ATO,,,False,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),211,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),212,Transition,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),215,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),216,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),218,ATO,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),219,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),220,,,,False,3.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),221,ATO,,,False,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),222,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),223,Transition,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),224,,,,False,2.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),225,ATO,,,False,2.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),226,,,,False,3.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),227,,,,False,1.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),230,,,,False,0.0
-Ripon Red Hawks,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),231,,,,False,1.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),234,,,,False,0.0
-Ripon Red Hawks,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),235,ATO,,,False,0.0
 Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,2,Opener,Ripon Motion #1,,False,0.0
 Ripon Red Hawks,Opponent,Elmhurst Bluejays,Ripon Red Hawks,2026-11-07,Elmhurst@Ripon,3,,,,True,0.0
 Ripon Red Hawks,Opponent,Ripon Red Hawks,Elmhurst Bluejays,2026-11-07,Elmhurst@Ripon,4,Half court,Motion,,False,0.0

@@ -174,7 +174,7 @@ _PD_SETS = [
     # frequency unrecognized words in the new files, in order of how often they showed up):
     (r"\bflow\b", "Flow", "formation"),           # 46 clips -- reads as a base half-court offense, like "5 Out"
     (r"\bchin\b", "Chin", "formation"),            # 34 clips (incl. "chin,")
-    (r"\btwins?\b", "Twins", "formation"),         # 7 clips
+    (r"\btwins?\b", "Twins", "set"),               # 7 clips -- CONFIRMED CHANGE (requested: "Twins" is a PLAY CALL, formation "No Formation")
     (r"\bsnap\b", "Snap", "set"),                  # 7 clips
     (r"\bblack\b", "Black", "set"),                # 5 clips -- a color-coded call
     (r"\bbulldog\b", "Bulldog", "set"),            # 3 clips
@@ -525,6 +525,7 @@ _PT_BALL_SCREENS = {"Ball Screen", "DHO", "Double Drag", "Get", "High Ball Scree
 _PT_EXTRA_ACTIONS = {"pd": ("Pin Down", 2), "pin down": ("Pin Down", 2), "bks": ("Back Screen", 2),
                      "back screen": ("Back Screen", 2), "cs": ("Cross Screen", 2), "cross screen": ("Cross Screen", 2),
                      "roll": ("Roll", 3), "short roll": ("Short Roll", 3), "ghost": ("Ghost", 2),
+                     "straight cut": ("Straight Cut", 2),   # requested (Synergy-tagged UWW game)
                      "drive": ("Drive", 3), "kick": ("Kick Out", 3), "shot": ("Shot", 3),
                      # coach definitions (parser_check_WOS_at_WWW_1-3-26.xlsx)
                      "hi bs": ("High Ball Screen", 1), "high bs": ("High Ball Screen", 1), "hibs": ("High Ball Screen", 1),
@@ -576,6 +577,27 @@ def _pt_normalize(title):
     t = re.sub(r"\bprss\s*\(", "press(", t, flags=re.I)
     t = re.sub(r"\bm2m\s*\(\s*(rj)\s*\)", r"press(\1)", t, flags=re.I)
     t = re.sub(r":\s*\(", ":m2m(", t)
+    # CONFIRMED CHANGE (requested: UWW games tagged in Synergy -- "Motion Zoom" should be Play Call "Motion" + Action "Zoom";
+    # "Motion-Ds-Straight Cut Ghost" should be No Formation, Play Call "Motion", Actions "Down Screen", "Straight Cut",
+    # "Ghost"). A title that STARTS with a play-call word (motion / flow) followed by "-" pieces has no formation: every
+    # piece after it is an action -> "motion-ds-straight cut-ghost: m2m" is read as "Motion(ds, straight cut, ghost): m2m".
+    if ":" in t:
+        _off, _def = t.split(":", 1)
+        _m = re.match(r"^\s*([^()\-]+?)\s*-\s*([^()]+?)\s*$", _off)
+        # CONFIRMED CHANGE (requested: "Snap Ball Screen" -> Play Call "Snap" + Action "Ball Screen", same with "Twins Ball
+        # Screen", both "No Formation"): the same for any named SET in that first piece ("snap 30-bs", "twins left-bs") --
+        # the call is the set's name, the qualifier after it ("30", "left") is dropped.
+        _first = _m.group(1).strip().lower() if _m else ""
+        _call = _PT_PLAY_CALL_NAMES.get(_first)
+        if _m and _call is None:
+            _call = next((nm for pat, nm, kind in _PD_SETS if kind == "set" and re.fullmatch(
+                r"\s*(?:" + pat + r")(?:\s+(?:\d+|left|right|l|r))?\s*", _pd_prep(_first))), None)
+        if _m and _call and _m.group(2).strip(" -"):
+            _acts = [x.strip() for x in re.split(r"\s*-\s*", _m.group(2)) if x.strip()]
+            # (a named set only when every piece is a known action -- a legacy title like "TWINS- BS RS: M2M D- SWITCH"
+            # keeps the legacy reader, which understands it)
+            if _first in _PT_PLAY_CALL_NAMES or all(_pt_action(x)[0] for x in _acts):
+                t = _call + "(" + ", ".join(_acts) + "):" + _def
     return t
 
 
@@ -4249,6 +4271,10 @@ PLAY_CALL_RENAMES = globals().get("PLAY_CALL_RENAMES") or {
     "RIPON MOTION": "Ripon Motion #1",
     "Ripon Motion left": "Ripon Motion #1",
     "Ripon Motion #2": "Ripon Motion #2",         # (also "Ripon Motion Option #2", "RIPON MOTION #2 (RICKY)" -- requested)
+    # CONFIRMED CHANGE (requested: "spelling mistakes of Scissors that need to be grouped together")
+    "Scisors": "Scissors", "Sciorss": "Scissors", "Sissors": "Scissors", "Scissor": "Scissors",
+    "Sciorss Left": "Scissors Left", "Scisors Left": "Scissors Left",
+    "Pinch R": "Pinch", "Pinch L": "Pinch",       # requested: "Pinch and Pinch R should be the same"
 }
 
 
@@ -4262,6 +4288,25 @@ def _pl_name_key(x):
 def _pl_merge_spellings(df, cols=("play_call", "play_call_detail", "play_formation")):
     n_ch = 0
     _ren = {_pl_name_key(a): b for a, b in (PLAY_CALL_RENAMES or {}).items()}
+    # CONFIRMED CHANGE (requested: "Pinch ,Bs(3,4)" should be Play Call "Pinch" with an Action of "Ball Screen"): a play call
+    # typed with actions after a comma -> the call before the comma; the rest go to play_actions when EVERY piece is a known
+    # action (a bracket note like "(3,4)" is dropped). Anything else is left as typed.
+    if "play_call" in df.columns:
+        for _i, _v in df["play_call"].items():
+            if not isinstance(_v, str) or "," not in _v:
+                continue
+            _t = re.sub(r"\([^)]*\)", " ", _v)
+            _pcs = [x.strip() for x in _t.split(",") if x.strip()]
+            if len(_pcs) < 2:
+                continue
+            _acts = [_pt_action(x)[0] for x in _pcs[1:]]
+            if not all(_acts):
+                continue
+            df.at[_i, "play_call"] = _pcs[0]
+            if "play_actions" in df.columns:
+                _old = [x for x in str(df.at[_i, "play_actions"] or "").split(" | ") if x.strip() and x != "nan"]
+                df.at[_i, "play_actions"] = " | ".join(dict.fromkeys(_old + _acts))
+            n_ch += 1
     for c in ("play_call", "play_call_detail", "play_set", "play_call_base"):
         if c in df.columns and _ren:
             _k = df[c].map(lambda v: _pl_name_key(v) if isinstance(v, str) and v.strip() else None)
@@ -5139,7 +5184,8 @@ def _pl_offense_breakdown(pc):
             if len(x):
                 res.append((len(x), _lab(lab), ppp(x)))
         res.sort(key=lambda z: -z[0])
-        return " · ".join(f"{l} {n}" + (f" ({p:.2f})" if p is not None else "") for n, l, p in res[:3]) \
+        # CONFIRMED BUG (fixed; "the straight cut and ghost actions" missing from Motion's row): only the top 3 were listed
+        return " · ".join(f"{l} {n}" + (f" ({p:.2f})" if p is not None else "") for n, l, p in res) \
             or "no action tagged"
 
     class _PCStr(str):
@@ -5469,6 +5515,11 @@ def _pl_offense_breakdown(pc):
                         & (gf["play_call"].astype(str).str.strip() != ""), "No Play Call")
                     _ord = [x for x in _pcn.value_counts().index if x != "No Play Call"] + \
                            (["No Play Call"] if (_pcn == "No Play Call").any() else [])
+                    # CONFIRMED CHANGE (requested: '"No Play Call" for UWW should be called "Flow"')
+                    if "whitewater" in str(team).lower():
+                        _pcn = _pcn.replace("No Play Call", "Flow")
+                        _ord = ["Flow" if x == "No Play Call" else x for x in _ord]
+                        _ord = list(dict.fromkeys(_ord))
                     for _pn in _ord:
                         gp = gf[_pcn == _pn]
                         k += 1
@@ -5483,6 +5534,39 @@ def _pl_offense_breakdown(pc):
                          "top_lineup": _top_lineup(gp), "top_scorers": _top_scorers(gp)})
                         _cr, k = _cov_rows(gp, uf.iloc[0:0], {"scouted_opponent": opp, "team": team, "perspective": _persp, "situation": sit}, k)
                         rows += _cr
+                        # CONFIRMED CHANGE (requested: an Action column with a row per action under each play call, and
+                        # "the Runs It, Scores, Ball Screen and Off-Ball Screen coverages should not be on the 'All' rows, but on
+                        # the rows below it"): one "action" row per action group run out of this play call, with ITS OWN
+                        # possessions, PPP, five that runs it, scorers and coverages (cov_ball / cov_offball, "Over 1 (2.00) · ...").
+                        _ares = []
+                        for _alab, _arx in ACTION_GROUPS:
+                            ga = gp[gp["_ACTS"].str.contains(_arx, regex=True)]
+                            if len(ga):
+                                _ares.append((len(ga), _lab(_alab), ga))
+                        for _an, _al, ga in sorted(_ares, key=lambda z: -z[0]):
+                            _cs = _cov_split(ga)
+                            _cvt = {}
+                            for _kind in ("Ball screen", "Off-ball screen"):
+                                _kk = _cs[_cs["kind"] == _kind] if len(_cs) else _cs
+                                _bits = []
+                                for _f in (_kk["fam"].value_counts().index if len(_kk) else []):
+                                    _a = _kk[_kk["fam"] == _f]
+                                    _pp = ppp(_a)
+                                    _bits.append(f"{_f} {len(_a)}" + (f" ({_pp:.2f})" if _pp is not None else ""))
+                                _cvt[_kind] = _bits
+                            _ng = ga[~ga.index.isin(set(_cs["_i"]) if len(_cs) else set())]
+                            if len(_ng):
+                                _pp = ppp(_ng)
+                                _cvt["Ball screen"].append(f"No coverage tagged {len(_ng)}" + (f" ({_pp:.2f})" if _pp is not None else ""))
+                            k += 1
+                            rows.append({"scouted_opponent": opp, "team": team, "perspective": _persp, "order": k,
+                                         "level": "action", "situation": sit, "formation": fm, "play_call": _pn,
+                                         "label": _al, "possessions": _an, "share_pct": None,
+                                         "ppp": round(ppp(ga), 2) if ppp(ga) is not None else None, "play_calls": "",
+                                         "actions": "", "coverage": "", "our_possessions": 0, "our_ppp_allowed": None,
+                                         "cov_ball": " · ".join(_cvt["Ball screen"]),
+                                         "cov_offball": " · ".join(_cvt["Off-ball screen"]),
+                                         "top_lineup": _top_lineup(ga), "top_scorers": _top_scorers(ga)})
     for r in rows:
         r.setdefault("perspective", "Opponent")
         r.setdefault("top_lineup", "")
