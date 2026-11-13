@@ -8026,7 +8026,7 @@ def render_tag_model_scoreboard():
 
 
 FT_PAGE_SIZE = 20          # Film Tagging: plays per page (requested: "only 20 plays at a time ... save after each 20") -- no longer used
-FT_SAVE_EVERY = 10         # Film Tagging: one clip at a time, saved every 10 clips (requested)
+FT_SAVE_EVERY = 20         # Film Tagging: one clip at a time, saved every 20 clips (CONFIRMED CHANGE (requested: "Make it only save every 20 clips instead of every 10"); was 10)
 
 
 def _ft_saved_clip_keys(d):
@@ -8157,7 +8157,8 @@ def render_film_tagging():
             st.rerun()
     _lo, _hi = _blk * FT_SAVE_EVERY, min(len(_all), (_blk + 1) * FT_SAVE_EVERY)
     st.caption(f"{sum(_bdone)} of {_nb} group(s) of {FT_SAVE_EVERY} saved (✅). **Enter** or **Next clip** = next clip, "
-               "**space** = play / pause. The 10th clip's Next saves these 10 and opens the next 10.")
+               "**space** = play / pause, **M** = 2x, **N** = rewind. "
+               f"The last clip's Next saves these {FT_SAVE_EVERY} and opens the next {FT_SAVE_EVERY}.")
     _bid = f"{d.get('slug')}_{d.get('run')}_{_blk}"
     _form = _form_no_enter(f"ft_form_{_bid}")
     _clr_pi, _fill_pi = [], []
@@ -8198,11 +8199,11 @@ def render_film_tagging():
                 # clip"): this clip's Situation and Formation are copied to every later clip in these 10
                 if _cb2.form_submit_button("Fill situation + formation forward", key=f"ftfill_{_bid}_{pi}",
                                            use_container_width=True, disabled=pi >= _hi - 1,
-                                           help="Copies THIS clip's Situation and Formation to the rest of these 10 clips"):
+                                           help=f"Copies THIS clip's Situation and Formation to the rest of these {FT_SAVE_EVERY} clips"):
                     _fill_pi.append(pi)
                 _ft_field_widgets(d, pi, store, kp)
                 _ft_actions_editor(d, pi, store, kp)
-        _go = st.form_submit_button(f"Save clips {_lo + 1}–{_hi}" + (" and open the next 10" if _blk < _nb - 1 else ""),
+        _go = st.form_submit_button(f"Save clips {_lo + 1}–{_hi}" + (f" and open the next {FT_SAVE_EVERY}" if _blk < _nb - 1 else ""),
                                     type="primary", use_container_width=True)
     # the browser side: one clip shown at a time, a Previous / Next bar, Enter = next, space = play / pause, M = 2x, N = rewind
     try:
@@ -8292,7 +8293,7 @@ var t=0,iv=setInterval(function(){show();if(++t>40)clearInterval(iv);},250);})()
                     st.session_state.pop(f"{kt}_ft", None)
                     _n_fill += 1
         st.session_state["_ft_flash"] = (f"Situation and formation of clip {src - _lo + 1} copied to clips {src - _lo + 2}\u2013"
-                                         f"{_hi - _lo} of these 10.")
+                                         f"{_hi - _lo} of these {FT_SAVE_EVERY}.")
         st.rerun()
     if _clr_pi:
         _n_clr = 0
@@ -8305,7 +8306,7 @@ var t=0,iv=setInterval(function(){show();if(++t>40)clearInterval(iv);},250);})()
                     store.pop(f"{kp}_t_{d.get('run')}_{pi}_{fi}", None)
                     st.session_state.pop(f"{kv}_ft", None)       # (so the list redraws on --)
                     _n_clr += 1
-        st.session_state["_ft_flash"] = f"Cleared {_n_clr} automatic suggestion(s) on clip {_clr_pi[0] - _lo + 1} of these 10."
+        st.session_state["_ft_flash"] = f"Cleared {_n_clr} automatic suggestion(s) on clip {_clr_pi[0] - _lo + 1} of these {FT_SAVE_EVERY}."
         st.rerun()
     if _go:
         if not str(_coach).strip():
