@@ -1585,7 +1585,23 @@ def _sst_close_export_box(timeout_s=None):
                         or any(re.search(r"(?i)export is available", c.Name or "") for c in kids)):
                     continue
                 btn = next((c for c in kids if c.ControlTypeName == "ButtonControl"
-                            and re.match(r"(?i)^\s*close\s*$", c.Name or "")), None)
+                            and re.match(r"(?i)^\s*(close|ok|done)\s*$", c.Name or "")), None)
+                # CONFIRMED BUG (fixed; "Once again did not close the export window in synergy", Franklin @ Hope 11/13): the
+                # box is its own window "Export: <game>" (class ExportMediaDialog) whose buttons have no "Close" name -- an
+                # unnamed X ("Avalonia.Controls.StackPanel") and "Cancel" while it works. Once no "Processing: Clip ..." line
+                # is left in it, the window itself is closed (its window Close, else that X button). Never while processing.
+                if btn is None and (d.ClassName == "ExportMediaDialog" or re.match(r"(?i)^\s*export\s*:", d.Name or "")):
+                    _busy = [re.search(r"(?i)processing\D*(\d+)\D+(\d+)", c.Name or "") or re.search(r"(?i)processing", c.Name or "")
+                             for c in kids if re.search(r"(?i)processing", c.Name or "")]
+                    if any(m_.lastindex != 2 or m_.group(1) != m_.group(2) for m_ in _busy):   # ("Clip 253 of 253" = done)
+                        continue
+                    try:
+                        d.GetWindowPattern().Close()
+                        print(f"  [export] closed Synergy Editor's export box ({(d.Name or '').strip()!r})", flush=True)
+                        return True
+                    except Exception:
+                        btn = next((c for c in kids if c.ControlTypeName == "ButtonControl"
+                                    and (c.Name or "").startswith("Avalonia.Controls.StackPanel")), None)
                 if btn is None:
                     continue
                 try:
@@ -2093,6 +2109,9 @@ def _vx_densify_tracking(cache):
 # added game given as a FastScout game link: its box-score page is opened in the FastScout session and the Synergy video
 # link on it gives the Synergy game ID -> inputs/_bank_games.json ("_fastscout": {fastscout game id: synergy id}), once.
 # If the page has no video link the page is saved in inputs/_bank/fastscout_<id>.html and the game is skipped this run.
+_BANK_FS_TRIED = set()
+
+
 def _bank_resolve_fastscout():
     if "_fs_game_key" not in globals():
         return
@@ -2101,10 +2120,12 @@ def _bank_resolve_fastscout():
     for e in (globals().get("BANK_GAMES") or []):
         u = e.get("fastscout_url") if isinstance(e, dict) else (e if isinstance(e, str) else None)
         k = _fs_game_key(u) if u else None
-        if k and k[1] not in known:
+        if k and k[1] not in known and k[1] not in {t_[1][1] for t_ in todo} and k[1] not in _BANK_FS_TRIED:
             todo.append((u, k))
     if not todo:
         return
+    _BANK_FS_TRIED.update(t_[1][1] for t_ in todo)        # each link is opened at most once a run
+    info = {}
 
     def _work(page):
         got = {}
@@ -2125,9 +2146,25 @@ def _bank_resolve_fastscout():
                 continue
             links = re.findall(r'href="([^"]*synergysports[^"]*)"', html)
             gid = next((g for g in (_sst_game_id_of(h.replace("&amp;", "&")) for h in links) if g), None)
+            # CONFIRMED BUG (fixed; Franklin @ Hope 11/7/26): FastScout's box score has no Synergy link at all. The page's
+            # two teams and date are read instead (its <title> "11/7/26 Franklin @ Hope" and the score header) and the game
+            # is found on Synergy's games pages (_syn_lookup), like a played game with no video link.
+            try:
+                _txt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " | ", re.sub(r"<style.*?</style>|<script.*?</script>", "", html, flags=re.S)))
+                _txt = re.sub(r"(\| )+", "| ", _txt.replace("&nbsp;", " "))
+                _m = re.search(r"\| ([A-Z][^|]{2,60}?) \| \d{1,3} \| ([A-Z][^|]{2,60}?) \| \d{1,3} \| \w{3}, (\w+ \d{1,2})\w{0,2}, (\d{4})", _txt)
+                if _m:
+                    _d = pd.to_datetime(f"{_m.group(3)} {_m.group(4)}", errors="coerce")
+                    if not pd.isna(_d):
+                        info[fgid] = (_m.group(1).strip(), _m.group(2).strip(), str(_d.date()))
+            except Exception:
+                pass
             if gid:
                 got[fgid] = gid
                 print(f"  [bank] FastScout game {fgid}: Synergy game {gid}", flush=True)
+            elif fgid in info:
+                print(f"  [bank] FastScout game {fgid}: {info[fgid][0]} vs {info[fgid][1]} on {info[fgid][2]} -- no Synergy link on"
+                      " FastScout, looking it up on Synergy's games pages", flush=True)
             else:
                 try:
                     os.makedirs(os.path.join(INPUT_DIR, "_bank"), exist_ok=True)
@@ -2143,6 +2180,21 @@ def _bank_resolve_fastscout():
     except Exception as e:
         print(f"  [bank] FastScout game links not looked up ({type(e).__name__}: {e})", flush=True)
         return
+    for fgid, (t1, t2, d_) in info.items():
+        if fgid in got:
+            continue
+        try:
+            hit = _syn_lookup([(t2, d_, t1)]) or {}
+            gid = next(iter(hit.values()), None) or next(iter((_syn_lookup([(t1, d_, t2)]) or {}).values()), None)
+        except Exception as e_:
+            gid = None
+            print(f"  [bank] {t1} vs {t2}: Synergy lookup failed ({type(e_).__name__}: {e_})", flush=True)
+        if gid:
+            got[fgid] = gid
+            print(f"  [bank] {t1} vs {t2} {d_}: Synergy game {gid}", flush=True)
+        else:
+            print(f"  [bank] {t1} vs {t2} {d_}: not found on Synergy -- put its Synergy game ID in BANK_GAMES instead"
+                  " (the 24 characters after /games/ in the Synergy link)", flush=True)
     if got:
         known.update(got)
         _bank_cache({"_fastscout": known})
@@ -2175,7 +2227,9 @@ def _bank_fill():
         rec = {"date": str(d.iloc[0].date()) if len(d) else None,
                "label": (f"{teams[0]} vs {teams[1]}" if len(teams) == 2 else (hit.get("title") or b["label"])),
                "for": ours[0] if len(ours) == 1 else ""}
-        upd[b["gid"]] = rec
+        # CONFIRMED BUG (fixed; Franklin @ Hope 11/13: the starters read from Synergy earlier in the run were wiped): the
+        # looked-up date / label / "for" are now merged into what's already saved for the game instead of replacing it.
+        upd[b["gid"]] = dict(_bank_cache().get(b["gid"]) or {}, **rec)
         print(f"  [bank] {b['gid']}: {rec['label']} on {rec['date']}"
               + (f" -- banked for {rec['for']}" if rec["for"] else " -- couldn't tell which team we play: add \"for\" to its BANK_GAMES entry"), flush=True)
     if upd:

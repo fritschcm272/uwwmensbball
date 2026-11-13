@@ -313,7 +313,11 @@ def _pm_apply_options(G):
         add = [x for x in add if x not in _fs_add]
         _bg = G.get("BANK_GAMES") or []
         _bg = [_bg] if isinstance(_bg, (str, dict)) else list(_bg)
-        G["BANK_GAMES"] = _bg + [{"fastscout_url": x} for x in _fs_add]
+        # CONFIRMED BUG (fixed; run of 11/13 "stuck" at 46_frame_capture): this runs before EVERY section, so the link was
+        # added to BANK_GAMES again each time (33 copies, each opened on FastScout). Only links not already there are added.
+        _have = {(_fs_game_key(e.get("fastscout_url")) or (None, None))[1] for e in _bg if isinstance(e, dict) and e.get("fastscout_url")}
+        _have |= {_fs_game_key(e)[1] for e in _bg if isinstance(e, str) and _fs_game_key(e)}
+        G["BANK_GAMES"] = _bg + [{"fastscout_url": x} for x in dict.fromkeys(_fs_add) if _fs_game_key(x)[1] not in _have]
     for _b in bank_games() if G.get("BANK_GAMES") else []:     # banked games are tracked too (Player Number Tracking)
         add.append(f"{_b['date'].month}_{_b['date'].day}_{str(_b['date'].year)[2:]} {_b['label']}")
     if add:
@@ -405,7 +409,11 @@ def bank_game_for(gid=None, game_date=None, teams=()):
             except Exception:
                 continue
             txt = " ".join(str(t).lower() for t in teams)
-            if dd <= 1 and any(w in txt for w in _bank_words(b["for"])):
+            # CONFIRMED BUG (fixed; Franklin @ Hope, added by its FastScout link, got no Film Tagging batch): a banked game
+            # with no "for" team (neither team is on our schedule) never matched, because only the "for" team's name was
+            # compared. With no "for", either team named in its label matches.
+            _ws = _bank_words(b["for"]) or [w for t_ in _pm_re.split(r"\s+vs\.?\s+", b["label"]) for w in _bank_words(t_)[:1]]
+            if dd <= 1 and any(w in txt for w in _ws):
                 return b
     return None
 

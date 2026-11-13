@@ -1,0 +1,186 @@
+{
+ "game": "2026-11-11|DePauw@Elmhurst",
+ "run": "20261112_202406_tag",
+ "coach": "JT",
+ "saved": "2026-11-13T18:04:48+00:00",
+ "answers": [
+  {
+   "clip_key": "2026-11-11|77|40 Aidyn Boone > Offensive Rebound > Long > Run Offense",
+   "clip_number": 77,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Offensive rebound",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|78|2 Luke Smith > Non Possession > No Violation",
+   "clip_number": 78,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Turnover",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|79|1 Dominic Trelenberg > Hand Off > From Dribble > Left > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 79,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Slob #2",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|80|3 Brady Kunka > Cut > Basket > Miss 2 Pts",
+   "clip_number": 80,
+   "field": "defense",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Man-to-Man",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|81|1 Dominic Trelenberg > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 15 Vinnie Adjahoungbeta > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 81,
+   "field": "play_call",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Set #2",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|82|1 Dominic Trelenberg > Offensive Rebound > Long > Run Offense",
+   "clip_number": 82,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Offensive rebound",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|83|40 Aidyn Boone > Post-Up > Right Block > Left Shoulder > Dribble Move > To Drop Step > Foul",
+   "clip_number": 83,
+   "field": "play_call",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "ISO",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|86|11 Joe Smith > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 32 Vince Nixon > P&R Roll Man > Rolls to Basket > Miss 2 Pts",
+   "clip_number": 86,
+   "field": "primary_action",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Ball Screen",
+   "prefilled": true,
+   "accepted_default": true
+  },
+  {
+   "clip_key": "2026-11-11|86|11 Joe Smith > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 32 Vince Nixon > P&R Roll Man > Rolls to Basket > Miss 2 Pts",
+   "clip_number": 86,
+   "field": "defense",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Man-to-Man",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|87|40 Aidyn Boone > Non Possession > No Violation",
+   "clip_number": 87,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Transition",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|88|4 EJ Marshall > Cut > Basket > Miss 2 Pts",
+   "clip_number": 88,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "BLOB",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|88|4 EJ Marshall > Cut > Basket > Miss 2 Pts",
+   "clip_number": 88,
+   "field": "play_call",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Blob #3",
+   "prefilled": false,
+   "accepted_default": false
+  }
+ ],
+ "source": "streamlit app",
+ "part": "titles",
+ "actions_cleared": [
+  "2026-11-11|79|1 Dominic Trelenberg > Hand Off > From Dribble > Left > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+  "2026-11-11|81|1 Dominic Trelenberg > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 15 Vinnie Adjahoungbeta > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts"
+ ],
+ "actions": [
+  {
+   "clip_key": "2026-11-11|86|11 Joe Smith > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 32 Vince Nixon > P&R Roll Man > Rolls to Basket > Miss 2 Pts",
+   "clip_number": 86,
+   "action": "Ball Screen",
+   "trigger": null,
+   "trigger_action": null,
+   "screener": "Vince Nixon",
+   "screener_action": "Roll",
+   "coverage": null,
+   "trigger_defender": null,
+   "trigger_defender_action": null,
+   "screen_defender": null,
+   "screen_defender_action": null,
+   "tagger": null,
+   "order": 1,
+   "players": [
+    {
+     "role": "Screener",
+     "offense": "Vince Nixon",
+     "offense_did": "Roll",
+     "defender": null,
+     "defender_did": null
+    }
+   ],
+   "prefilled": true
+  }
+ ]
+}

@@ -1,4 +1,23 @@
 scouted_opponent,side,team,action,possessions,pct,tagged_possessions,games,order
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,No action tagged,36,81.8,44,1,0
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ball screen (any),7,15.9,44,1,1
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,"DHO / handoff (incl. Zoom, Pistol, Give)",0,0.0,44,1,2
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Swing / ball reversal,1,2.3,44,1,3
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Pinch post (throw / pass to the pinch),0,0.0,44,1,4
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Down screen,2,4.5,44,1,5
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Isolation,0,0.0,44,1,6
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Post entry / throw to the 5,2,4.5,44,1,7
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Split action (incl. split scissors),0,0.0,44,1,8
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Over,0,0.0,44,1,9
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,"Cuts (backdoor, slot, shallow, flash)",0,0.0,44,1,10
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Flare,0,0.0,44,1,11
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Stagger,0,0.0,44,1,12
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Cross / back screen,0,0.0,44,1,13
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Scissors,0,0.0,44,1,14
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Pass to corner,0,0.0,44,1,15
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ghost,0,0.0,44,1,16
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Rifle,1,2.3,44,1,17
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Wide pin,0,0.0,44,1,18
 Elmhurst Bluejays,UWW,UW-Whitewater,No action tagged,66,77.6,85,1,0
 Elmhurst Bluejays,UWW,UW-Whitewater,Ball screen (any),5,5.9,85,1,1
 Elmhurst Bluejays,UWW,UW-Whitewater,"DHO / handoff (incl. Zoom, Pistol, Give)",2,2.4,85,1,2

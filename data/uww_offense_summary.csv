@@ -1,4 +1,14 @@
 scouted_opponent,perspective,team,order,kind,text
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,1,formation,"When they are running no formation, be aware that they run Flow the most (33%, 1.50 PPP). Ball-screen coverage of Drop slowed it down best (1x, 0.00 PPP). They were most successful running Motion (17%, 3.00 PPP)."
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,2,formation,"When they are running 5 Out, be aware that they run Flow the most (50%, 1.00 PPP). It's also their most successful play call out of 5 Out."
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,3,formation,"When they are running Chin, be aware that they run Chin Set #1 the most (25%)."
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,4,oob,"On BLOB (2 possessions, 0.00 PPP), they run BLOB Blob #2 the most (50%, 0.00 PPP)."
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,5,oob,"On SLOB (1 possessions, 0.00 PPP), no play call has been tagged yet."
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,6,success,"Most successful play calls overall: Motion (2x, 3.00 PPP) · Flow (7x, 1.43 PPP) (team average 1.03 PPP)."
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,7,success_actions,"Most successful actions: Post entry / throw to the 5 (2x, 1.50 PPP) · Down screen (2x, 1.50 PPP) (team average 1.03 PPP)."
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,8,scorers,Top scorers on tagged plays: Boone 12 pts (5) · Trelenberg 11 pts (4) · Cherry 5 pts (2).
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,9,defense,Their opponents' ball-screen defense: Jam 2x (1.50 PPP) · Drop 1x (0.00 PPP) · Hedge / Show 1x (0.00 PPP).
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,10,advice,Do the same: Jam held them to 1.50 PPP (2x).
 Elmhurst Bluejays,UWW,UW-Whitewater,1,formation,"When we run no formation, we run Motion the most (20%, 0.67 PPP). Opponents struggled to stop it with ball-screen coverage of Over (1x, 2.00 PPP) but Switch slowed it down best (1x, 0.00 PPP). We were most successful running Zona (9%, 1.67 PPP)."
 Elmhurst Bluejays,UWW,UW-Whitewater,2,oob,"On BLOB (2 possessions, 2.50 PPP), we run BLOB the most (100%, 2.50 PPP). It's also our most successful play call out of BLOB."
 Elmhurst Bluejays,UWW,UW-Whitewater,3,oob,"On SLOB (7 possessions, 1.29 PPP), we run SLOB the most (100%, 1.29 PPP). It's also our most successful play call out of SLOB."

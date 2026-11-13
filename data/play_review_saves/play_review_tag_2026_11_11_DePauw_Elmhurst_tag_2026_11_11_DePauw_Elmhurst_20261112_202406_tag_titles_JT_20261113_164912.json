@@ -1,0 +1,312 @@
+{
+ "game": "2026-11-11|DePauw@Elmhurst",
+ "run": "20261112_202406_tag",
+ "coach": "JT",
+ "saved": "2026-11-13T16:49:12+00:00",
+ "answers": [
+  {
+   "clip_key": "2026-11-11|21|3 Brady Kunka > ISO > Left > Drives Right > Defense Commits > Ball Delivered > 10 Panayiotis Sotos > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 21,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Half court",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|21|3 Brady Kunka > ISO > Left > Drives Right > Defense Commits > Ball Delivered > 10 Panayiotis Sotos > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
+   "clip_number": 21,
+   "field": "defense",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Man-to-Man",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|22|1 Dominic Trelenberg > Transition > Left Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 22,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Transition",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|23|3 Brady Kunka > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 7 Evan Prusko > Spot-Up > Drives Left > To Basket > Foul",
+   "clip_number": 23,
+   "field": "primary_action",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Ball Screen",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|23|3 Brady Kunka > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 7 Evan Prusko > Spot-Up > Drives Left > To Basket > Foul",
+   "clip_number": 23,
+   "field": "press",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Full-court M2M Press",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|23|3 Brady Kunka > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 7 Evan Prusko > Spot-Up > Drives Left > To Basket > Foul",
+   "clip_number": 23,
+   "field": "ball_screen_coverage",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Flat Hedge",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|26|40 Aidyn Boone > No Play Type > Turnover",
+   "clip_number": 26,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Turnover",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|27|3 Brady Kunka > Transition > Ballhandler > To Basket > Make 2 Pts",
+   "clip_number": 27,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Transition",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|28|40 Aidyn Boone > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 28,
+   "field": "play_call",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "FLow",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|29|3 Brady Kunka > Cut > Screen > Make 2 Pts",
+   "clip_number": 29,
+   "field": "defense",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Man-to-Man",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|30|10 Chris Ketchum > Spot-Up > Drives Left > To Basket > Miss 2 Pts",
+   "clip_number": 30,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Half court",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|30|10 Chris Ketchum > Spot-Up > Drives Left > To Basket > Miss 2 Pts",
+   "clip_number": 30,
+   "field": "play_call",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "flow",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|30|10 Chris Ketchum > Spot-Up > Drives Left > To Basket > Miss 2 Pts",
+   "clip_number": 30,
+   "field": "primary_action",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Ball Screen",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|30|10 Chris Ketchum > Spot-Up > Drives Left > To Basket > Miss 2 Pts",
+   "clip_number": 30,
+   "field": "ball_screen_coverage",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Drop",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|31|15 Vinnie Adjahoungbeta > Offensive Rebound > Long > Run Offense",
+   "clip_number": 31,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Offensive rebound",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|32|2 Luke Smith > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts",
+   "clip_number": 32,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Offensive rebound",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|32|2 Luke Smith > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts",
+   "clip_number": 32,
+   "field": "play_call",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Flow",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|32|2 Luke Smith > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts",
+   "clip_number": 32,
+   "field": "primary_action",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Ball Screen",
+   "prefilled": true,
+   "accepted_default": true
+  }
+ ],
+ "source": "streamlit app",
+ "part": "titles",
+ "actions": [
+  {
+   "clip_key": "2026-11-11|23|3 Brady Kunka > P&R Ball Handler > High P&R > Dribble Off Pick > Defense Commits > Ball Delivered > 7 Evan Prusko > Spot-Up > Drives Left > To Basket > Foul",
+   "clip_number": 23,
+   "action": "Ball Screen",
+   "trigger": null,
+   "trigger_action": null,
+   "screener": null,
+   "screener_action": null,
+   "coverage": "Flat Hedge",
+   "trigger_defender": null,
+   "trigger_defender_action": "Over",
+   "screen_defender": null,
+   "screen_defender_action": "Flat Hedge",
+   "tagger": null,
+   "order": 1,
+   "players": [
+    {
+     "role": "Ball handler (trigger)",
+     "offense": null,
+     "offense_did": null,
+     "defender": null,
+     "defender_did": "Over"
+    },
+    {
+     "role": "Screener",
+     "offense": null,
+     "offense_did": null,
+     "defender": null,
+     "defender_did": "Flat Hedge"
+    }
+   ],
+   "prefilled": false
+  },
+  {
+   "clip_key": "2026-11-11|30|10 Chris Ketchum > Spot-Up > Drives Left > To Basket > Miss 2 Pts",
+   "clip_number": 30,
+   "action": "Ball Screen",
+   "trigger": null,
+   "trigger_action": null,
+   "screener": null,
+   "screener_action": null,
+   "coverage": "Drop",
+   "trigger_defender": null,
+   "trigger_defender_action": "Over",
+   "screen_defender": null,
+   "screen_defender_action": "Drop",
+   "tagger": null,
+   "order": 1,
+   "players": [
+    {
+     "role": "Ball handler (trigger)",
+     "offense": null,
+     "offense_did": null,
+     "defender": null,
+     "defender_did": "Over"
+    },
+    {
+     "role": "Screener",
+     "offense": null,
+     "offense_did": null,
+     "defender": null,
+     "defender_did": "Drop"
+    }
+   ],
+   "prefilled": false
+  },
+  {
+   "clip_key": "2026-11-11|32|2 Luke Smith > P&R Ball Handler > High P&R > Dribble Off Pick > To Basket > Make 2 Pts",
+   "clip_number": 32,
+   "action": "Ball Screen",
+   "trigger": null,
+   "trigger_action": null,
+   "screener": null,
+   "screener_action": null,
+   "coverage": null,
+   "trigger_defender": null,
+   "trigger_defender_action": null,
+   "screen_defender": null,
+   "screen_defender_action": null,
+   "tagger": null,
+   "order": 1,
+   "players": [],
+   "prefilled": true
+  }
+ ]
+}

@@ -1,18 +1,34 @@
 side,scouted_opponent,offense_team,team,side_of_ball,role,player,action,read,uses,games,ppp,share_pct
 UWW,Elmhurst Bluejays,UW-Whitewater,Carroll (WI) Pioneers,Defense,Off-ball defender,#23 Jimmy Tarjan,Flare,Through,1,1,0.0,100.0
-Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,Switch,7,1,1.43,78.0
+Opponent,Elmhurst Bluejays,DePauw Tigers,DePauw Tigers,Offense,Screener,#12 Caleb Washington,Ball Screen,Pop,1,1,0.0,100.0
+Opponent,Elmhurst Bluejays,DePauw Tigers,DePauw Tigers,Offense,Screener,#32 Vince Nixon,Ball Screen,Roll,1,1,0.0,100.0
+Opponent,Elmhurst Bluejays,Elmhurst Bluejays,DePauw Tigers,Defense,Off-ball defender,(no number),Ball Screen,Drop,1,1,0.0,33.0
+Opponent,Elmhurst Bluejays,Elmhurst Bluejays,DePauw Tigers,Defense,Off-ball defender,(no number),Ball Screen,Flat Hedge,1,1,0.0,33.0
+Opponent,Elmhurst Bluejays,Elmhurst Bluejays,DePauw Tigers,Defense,Off-ball defender,(no number),Ball Screen,Jam,1,1,0.0,33.0
+Opponent,Elmhurst Bluejays,Elmhurst Bluejays,DePauw Tigers,Defense,Off-ball defender,(no number),Rifle,Jam,1,1,3.0,100.0
+Opponent,Elmhurst Bluejays,Elmhurst Bluejays,DePauw Tigers,Defense,On-ball defender,(no number),Ball Screen,Over,2,1,0.0,67.0
+Opponent,Elmhurst Bluejays,Elmhurst Bluejays,DePauw Tigers,Defense,On-ball defender,(no number),Ball Screen,Drop,1,1,0.0,33.0
+Opponent,Elmhurst Bluejays,Elmhurst Bluejays,DePauw Tigers,Defense,On-ball defender,(no number),Rifle,Under,1,1,3.0,100.0
+Opponent,Elmhurst Bluejays,Elmhurst Bluejays,Elmhurst Bluejays,Offense,Ball handler (trigger),(no number),Down Screen,Reject,1,1,3.0,100.0
+Opponent,Elmhurst Bluejays,Elmhurst Bluejays,Elmhurst Bluejays,Offense,Screener,#40 Aidyn Boone,Ball Screen,Pop,1,1,3.0,100.0
+Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,Switch,7,1,1.43,58.0
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),DHO,Switch,4,1,0.0,100.0
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),High Ball Screen,Drop,2,1,0.0,100.0
-Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,High Hedge,1,1,0.0,11.0
-Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,Through,1,1,0.0,11.0
+Opponent,Elmhurst Bluejays,DePauw Tigers,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,Flat Hedge,1,1,0.0,8.0
+Opponent,Elmhurst Bluejays,DePauw Tigers,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,High Hedge,1,1,0.0,8.0
+Opponent,Elmhurst Bluejays,DePauw Tigers,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,Switch,1,1,0.0,8.0
+Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,High Hedge,1,1,0.0,8.0
+Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,Through,1,1,0.0,8.0
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Deuce Ball Screen,Switch,1,1,0.0,100.0
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Zoom,Switch,1,1,0.0,100.0
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,#4 EJ Marshall,Ball Screen,Over,1,1,0.0,100.0
-Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Ball Screen,Switch,7,1,1.43,78.0
+Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Ball Screen,Switch,7,1,1.43,58.0
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),DHO,Switch,4,1,0.0,100.0
+Opponent,Elmhurst Bluejays,DePauw Tigers,Elmhurst Bluejays,Defense,On-ball defender,(no number),Ball Screen,Over,2,1,0.0,17.0
+Opponent,Elmhurst Bluejays,DePauw Tigers,Elmhurst Bluejays,Defense,On-ball defender,(no number),Ball Screen,Switch,1,1,0.0,8.0
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Action,Switch,1,1,2.0,100.0
-Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Ball Screen,Over,1,1,0.0,11.0
-Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Ball Screen,Under,1,1,0.0,11.0
+Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Ball Screen,Over,1,1,0.0,8.0
+Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Ball Screen,Under,1,1,0.0,8.0
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Deuce Ball Screen,Switch,1,1,0.0,100.0
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),Down Screen,Over,1,1,0.0,100.0
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,On-ball defender,(no number),High Ball Screen,Over,1,1,0.0,50.0

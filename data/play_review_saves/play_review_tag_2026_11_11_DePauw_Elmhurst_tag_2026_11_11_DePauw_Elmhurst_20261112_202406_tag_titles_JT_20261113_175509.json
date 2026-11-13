@@ -1,0 +1,171 @@
+{
+ "game": "2026-11-11|DePauw@Elmhurst",
+ "run": "20261112_202406_tag",
+ "coach": "JT",
+ "saved": "2026-11-13T17:55:09+00:00",
+ "answers": [
+  {
+   "clip_key": "2026-11-11|64|12 Caleb Washington > Post-Up > Right Block > Left Shoulder > Dribble Move > To Drop Step > Make 2 Pts",
+   "clip_number": 64,
+   "field": "defense",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Man-to-Man",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|64|12 Caleb Washington > Post-Up > Right Block > Left Shoulder > Dribble Move > To Drop Step > Make 2 Pts",
+   "clip_number": 64,
+   "field": "press",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Token Press",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|65|21 Talen Pearson > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts",
+   "clip_number": 65,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Half court",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|65|21 Talen Pearson > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts",
+   "clip_number": 65,
+   "field": "formation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "5 Out",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|65|21 Talen Pearson > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts",
+   "clip_number": 65,
+   "field": "play_call",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "flow",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|66|1 Dominic Trelenberg > Offensive Rebound > Long > Scoring Attempt > Short to < 17' > Foul",
+   "clip_number": 66,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Offensive rebound",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|69|11 Joe Smith > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 10 Panayiotis Sotos > Spot-Up > Turnover",
+   "clip_number": 69,
+   "field": "primary_action",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Ball Screen",
+   "prefilled": true,
+   "accepted_default": true
+  },
+  {
+   "clip_key": "2026-11-11|69|11 Joe Smith > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 10 Panayiotis Sotos > Spot-Up > Turnover",
+   "clip_number": 69,
+   "field": "defense",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Man-to-Man",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|70|1 Dominic Trelenberg > Transition > Right Wing > Dribble Jumper > Long/3pt > Miss 3 Pts",
+   "clip_number": 70,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Transition",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-11|75|3 Brady Kunka > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts",
+   "clip_number": 75,
+   "field": "primary_action",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Ball Screen",
+   "prefilled": true,
+   "accepted_default": true
+  }
+ ],
+ "source": "streamlit app",
+ "part": "titles",
+ "actions_cleared": [
+  "2026-11-11|65|21 Talen Pearson > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Short to < 17' > Miss 2 Pts"
+ ],
+ "actions": [
+  {
+   "clip_key": "2026-11-11|69|11 Joe Smith > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 10 Panayiotis Sotos > Spot-Up > Turnover",
+   "clip_number": 69,
+   "action": "Ball Screen",
+   "trigger": null,
+   "trigger_action": null,
+   "screener": null,
+   "screener_action": null,
+   "coverage": null,
+   "trigger_defender": null,
+   "trigger_defender_action": null,
+   "screen_defender": null,
+   "screen_defender_action": null,
+   "tagger": null,
+   "order": 1,
+   "players": [],
+   "prefilled": true
+  },
+  {
+   "clip_key": "2026-11-11|75|3 Brady Kunka > P&R Ball Handler > Left P&R > Side > Dribble Off Pick > Dribble Jumper > Long/3pt > Miss 3 Pts",
+   "clip_number": 75,
+   "action": "Ball Screen",
+   "trigger": null,
+   "trigger_action": null,
+   "screener": null,
+   "screener_action": null,
+   "coverage": null,
+   "trigger_defender": null,
+   "trigger_defender_action": null,
+   "screen_defender": null,
+   "screen_defender_action": null,
+   "tagger": null,
+   "order": 1,
+   "players": [],
+   "prefilled": true
+  }
+ ]
+}

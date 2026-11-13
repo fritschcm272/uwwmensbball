@@ -796,4 +796,6 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-11T19:09:03,screener,Screener,,,Collin Madson,,125,,False,,0.0,1.0,2026-11-11T19:09:02
 2026-11-12T18:34:10,screener,Screener,,,Collin Madson,,125,,False,,0.0,1.0,2026-11-12T18:34:09
 2026-11-12T19:08:22,screener,Screener,,,Collin Madson,,125,,False,,0.0,1.0,2026-11-12T19:08:21
-2026-11-12T20:23:42,screener,Screener,,,Collin Madson,,134,nan,False,nan,0.0,1.0,2026-11-12T20:23:38
+2026-11-12T20:23:42,screener,Screener,,,Collin Madson,,134,,False,,0.0,1.0,2026-11-12T20:23:38
+2026-11-13T15:09:01,offball_coverage,Off-ball coverage,67.0,61.0,Over,64.0,94,model,True,67% vs 61% always guessing on 64 held-out plays (+6 pts),1.0,2.0,2026-11-13T15:09:00
+2026-11-13T15:09:01,screener,Screener,,,Collin Madson,,136,nan,False,nan,0.0,1.0,2026-11-13T15:09:00
