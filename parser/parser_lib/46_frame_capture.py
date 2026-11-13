@@ -2089,6 +2089,65 @@ def _vx_densify_tracking(cache):
     return cache, n_changed
 
 
+# CONFIRMED CHANGE (requested: "For the ADD_GAMES parameter, can I give it the game ID from fastscout instead"). A banked /
+# added game given as a FastScout game link: its box-score page is opened in the FastScout session and the Synergy video
+# link on it gives the Synergy game ID -> inputs/_bank_games.json ("_fastscout": {fastscout game id: synergy id}), once.
+# If the page has no video link the page is saved in inputs/_bank/fastscout_<id>.html and the game is skipped this run.
+def _bank_resolve_fastscout():
+    if "_fs_game_key" not in globals():
+        return
+    known = dict(_bank_cache().get("_fastscout") or {})
+    todo = []
+    for e in (globals().get("BANK_GAMES") or []):
+        u = e.get("fastscout_url") if isinstance(e, dict) else (e if isinstance(e, str) else None)
+        k = _fs_game_key(u) if u else None
+        if k and k[1] not in known:
+            todo.append((u, k))
+    if not todo:
+        return
+
+    def _work(page):
+        got = {}
+        for u, (tid, fgid) in todo:
+            url = u if u.lower().startswith("http") else None
+            if not url:
+                print(f"  [bank] fastscout:{fgid}: needs the full FastScout link (with /teams/<team>/) -- skipped", flush=True)
+                continue
+            try:
+                page.goto(url, wait_until="domcontentloaded", timeout=60000)
+                try:
+                    page.wait_for_selector("a[href*='synergysports']", timeout=30000)
+                except Exception:
+                    pass
+                html = page.content()
+            except Exception as e_:
+                print(f"  [bank] FastScout game {fgid}: page not opened ({type(e_).__name__}: {e_})", flush=True)
+                continue
+            links = re.findall(r'href="([^"]*synergysports[^"]*)"', html)
+            gid = next((g for g in (_sst_game_id_of(h.replace("&amp;", "&")) for h in links) if g), None)
+            if gid:
+                got[fgid] = gid
+                print(f"  [bank] FastScout game {fgid}: Synergy game {gid}", flush=True)
+            else:
+                try:
+                    os.makedirs(os.path.join(INPUT_DIR, "_bank"), exist_ok=True)
+                    with open(os.path.join(INPUT_DIR, "_bank", f"fastscout_{fgid}.html"), "w", encoding="utf-8") as fh:
+                        fh.write(html)
+                except Exception:
+                    pass
+                print(f"  [bank] FastScout game {fgid}: no Synergy video link on its page yet (FastScout can post it a day"
+                      f" or two late) -- skipped this run; page saved in inputs/_bank/fastscout_{fgid}.html", flush=True)
+        return got
+    try:
+        got = run_in_fastscout_session(_work)
+    except Exception as e:
+        print(f"  [bank] FastScout game links not looked up ({type(e).__name__}: {e})", flush=True)
+        return
+    if got:
+        known.update(got)
+        _bank_cache({"_fastscout": known})
+
+
 def _bank_fill():
     """Banked games given by Synergy ID only: their date, label and "for" team, read from their Synergy export (date and the
     two teams in Export.csv; "for" = the team that's on UW-Whitewater's schedule) -> inputs/_bank_games.json."""
@@ -2684,6 +2743,10 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
     except Exception as _sxe:
         print(f"  [synergy] export lineups skipped ({type(_sxe).__name__}: {_sxe})", flush=True)
     # banked games (BANK_GAMES -- a later opponent's game): captured whatever the run's date, like a hand-listed page
+    try:
+        _bank_resolve_fastscout()      # games given as a FastScout link (ADD_GAMES / BANK_GAMES): their Synergy ID (once)
+    except Exception as _bfe:
+        print(f"  [bank] FastScout links skipped ({type(_bfe).__name__}: {_bfe})", flush=True)
     _bank_fill()                       # games exported on an earlier run: their date / teams / "for" (once)
     try:
         _bank_starters_all()           # banked games: both teams' starters from Synergy's box score (once)

@@ -8204,25 +8204,35 @@ def render_film_tagging():
                 _ft_actions_editor(d, pi, store, kp)
         _go = st.form_submit_button(f"Save clips {_lo + 1}–{_hi}" + (" and open the next 10" if _blk < _nb - 1 else ""),
                                     type="primary", use_container_width=True)
-    # the browser side: one clip shown at a time, a Previous / Next bar, Enter = next, space = play / pause
+    # the browser side: one clip shown at a time, a Previous / Next bar, Enter = next, space = play / pause, M = 2x, N = rewind
     try:
         import streamlit.components.v1 as _kv1
         _kv1.html("""<script>(function(){var P=window.parent,D=P.document,BID=%s,N=%d;
 if(P.__ftBid!==BID){P.__ftBid=BID;P.__ftCur=0;}
 function boxes(){var o=[];for(var i=0;i<N;i++){var b=D.querySelector('.st-key-ftclip_'+i);if(b)o.push(b);}return o;}
 function saveBtn(){var bs=D.querySelectorAll('button');for(var i=0;i<bs.length;i++){if((bs[i].innerText||'').trim().indexOf('Save clips')===0)return bs[i];}return null;}
-function show(){var bx=boxes();if(!bx.length)return;P.__ftCur=Math.max(0,Math.min(P.__ftCur,bx.length-1));
+function show(){var bx=boxes();if(!bx.length)return;if(P.__ftStopSpeed&&P.__ftSpdVid&&bx[P.__ftCur]&&!bx[P.__ftCur].contains(P.__ftSpdVid))P.__ftStopSpeed();P.__ftCur=Math.max(0,Math.min(P.__ftCur,bx.length-1));
 for(var i=0;i<bx.length;i++){bx[i].style.display=(i===P.__ftCur)?'':'none';if(i!==P.__ftCur){var v=bx[i].querySelector('video');if(v&&!v.paused)v.pause();}}
 var lab=D.getElementById('ftnav-lab');if(lab)lab.textContent='Clip '+(P.__ftCur+1)+' of '+bx.length;
 var nx=D.getElementById('ftnav-next');if(nx)nx.textContent=(P.__ftCur>=bx.length-1)?'Save these clips \u2714':'Next clip \u25b6';
 var pv=D.getElementById('ftnav-prev');if(pv)pv.disabled=(P.__ftCur===0);P.scrollTo(0,0);}
 P.__ftShow=show;
+/* CONFIRMED CHANGE (requested: "I want to be able to fast forward the video at 2x speed by pressing the M key on the keyboard
+   and rewind using the N key"). M = play at 2x (press M again for normal speed); N = rewind at 2x (press N again, or space,
+   to stop). Moving to another clip goes back to normal speed. The bar shows "2x >>" / "<< 2x" while one is on. */
+P.__ftStopSpeed=function(){if(P.__ftRw){P.clearInterval(P.__ftRw);P.__ftRw=null;}var v=P.__ftSpdVid;if(v){try{v.playbackRate=1;}catch(_e){}}
+P.__ftMode=null;P.__ftSpdVid=null;var sp=D.getElementById('ftnav-spd');if(sp)sp.textContent='';};
+P.__ftSpeed=function(v,m){var was=P.__ftMode,same=(P.__ftSpdVid===v);P.__ftStopSpeed();if(was===m&&same)return;
+P.__ftMode=m;P.__ftSpdVid=v;var sp=D.getElementById('ftnav-spd');
+if(m==='ff'){v.playbackRate=2;v.play();if(sp)sp.textContent='2x \u23e9';}
+else{v.pause();if(sp)sp.textContent='\u23ea 2x';P.__ftRw=P.setInterval(function(){var t=Math.max(0,v.currentTime-0.1);v.currentTime=t;if(t<=0)P.__ftStopSpeed();},50);}};
 P.__ftNext=function(){var bx=boxes();if(P.__ftCur>=bx.length-1){var s=saveBtn();if(s)s.click();}else{P.__ftCur++;show();}};
 P.__ftPrev=function(){if(P.__ftCur>0){P.__ftCur--;show();}};
 if(!D.getElementById('ftnav')){var bar=D.createElement('div');bar.id='ftnav';
 bar.style.cssText='position:fixed;bottom:14px;left:50%%;transform:translateX(-50%%);z-index:99999;background:#4E2A84;color:#fff;padding:8px 12px;border-radius:10px;display:flex;gap:10px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.3);font-family:sans-serif';
-bar.innerHTML='<button id="ftnav-prev" style="padding:6px 12px;border-radius:6px;border:0;cursor:pointer">\u25c0 Previous clip</button><span id="ftnav-lab"></span><button id="ftnav-next" style="padding:6px 12px;border-radius:6px;border:0;cursor:pointer;font-weight:700">Next clip \u25b6</button>';
+bar.innerHTML='<button id="ftnav-prev" style="padding:6px 12px;border-radius:6px;border:0;cursor:pointer">\u25c0 Previous clip</button><span id="ftnav-lab"></span><span id="ftnav-spd" style="font-weight:700"></span><button id="ftnav-next" style="padding:6px 12px;border-radius:6px;border:0;cursor:pointer;font-weight:700">Next clip \u25b6</button>';
 D.body.appendChild(bar);}
+if(!D.getElementById('ftnav-spd')){var _sp=D.createElement('span');_sp.id='ftnav-spd';_sp.style.fontWeight='700';var _lb=D.getElementById('ftnav-lab');if(_lb)_lb.after(_sp);}
 /* CONFIRMED BUG (fixed; "switch to the Elmhurst vs Ripon game and you'll see that it doesn't work"): the button clicks, the
    Enter / space listener and the show-hide timer belonged to the FIRST script's little frame; switching games removes that
    frame and everything it set up stops working. They are now set up again by every new script (the old ones removed). */
@@ -8236,7 +8246,8 @@ if(P.__ftKeyFn){try{D.removeEventListener('keydown',P.__ftKeyFn,true);}catch(_e)
 var a=D.activeElement,tg=a?a.tagName:'';if(a&&a.getAttribute('aria-expanded')==='true')return;
 var typing=(tg==='INPUT'&&a.getAttribute('role')!=='combobox')||tg==='TEXTAREA'||(a&&a.isContentEditable);
 if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();e.stopPropagation();if(typing){a.blur();setTimeout(function(){P.__ftNext();},250);}else{P.__ftNext();}}
-else if((e.key===' '||e.code==='Space')&&!typing){var bx=boxes(),b=bx[P.__ftCur];var v=b?b.querySelector('video'):null;if(!v)return;e.preventDefault();if(v.paused){v.play();}else{v.pause();}}};D.addEventListener('keydown',P.__ftKeyFn,true);
+else if((e.key===' '||e.code==='Space')&&!typing){var bx=boxes(),b=bx[P.__ftCur];var v=b?b.querySelector('video'):null;if(!v)return;e.preventDefault();if(P.__ftMode==='rw'){P.__ftStopSpeed();return;}if(v.paused){v.play();}else{v.pause();}}
+else if((e.code==='KeyM'||e.code==='KeyN')&&!typing&&!e.ctrlKey&&!e.metaKey&&!e.altKey){var bx2=boxes(),b2=bx2[P.__ftCur];var v2=b2?b2.querySelector('video'):null;if(!v2)return;e.preventDefault();e.stopPropagation();if(e.repeat)return;P.__ftSpeed(v2,e.code==='KeyM'?'ff':'rw');}};D.addEventListener('keydown',P.__ftKeyFn,true);
 if(!P.__ftWatch2){P.__ftWatch2=P.setInterval(P.Function("var b=document.getElementById('ftnav');if(!b)return;var on=false;try{on=!!(window.__ftOnScreen&&window.__ftOnScreen());}catch(e){on=false;}b.style.display=on?'flex':'none';"),300);}
 /* CONFIRMED BUG (fixed; "this doesn't seem to be working": the check looked at clip 1 itself, which the bar hides once you move
    to clip 2 -- so the bar and Enter switched off after the first Next. It now checks the box that holds the clips.) */

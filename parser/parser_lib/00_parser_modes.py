@@ -303,6 +303,17 @@ def _pm_apply_options(G):
     if isinstance(add, str):
         add = [add]
     add = [str(x).strip() for x in add if str(x).strip()]
+    # CONFIRMED CHANGE (requested: "For the ADD_GAMES parameter, can I give it the game ID from fastscout instead"). An
+    # ADD_GAMES entry can be a FastScout game link (".../teams/<team>/games/<game>/boxscore?...") or "fastscout:<game>".
+    # It becomes a BANK_GAMES entry: Frame capture opens that FastScout page, reads the game's Synergy video link (the
+    # Synergy game ID) and remembers it in inputs/_bank_games.json; from there it is exported, tracked and given a Film
+    # Tagging batch like any banked game (date / teams / "for" looked up from the export).
+    _fs_add = [x for x in add if _fs_game_key(x)]
+    if _fs_add:
+        add = [x for x in add if x not in _fs_add]
+        _bg = G.get("BANK_GAMES") or []
+        _bg = [_bg] if isinstance(_bg, (str, dict)) else list(_bg)
+        G["BANK_GAMES"] = _bg + [{"fastscout_url": x} for x in _fs_add]
     for _b in bank_games() if G.get("BANK_GAMES") else []:     # banked games are tracked too (Player Number Tracking)
         add.append(f"{_b['date'].month}_{_b['date'].day}_{str(_b['date'].year)[2:]} {_b['label']}")
     if add:
@@ -337,6 +348,16 @@ def _bank_cache(update=None):
     return c
 
 
+def _fs_game_key(x):
+    """A FastScout game link or "fastscout:<id>" -> (team id or None, game id); anything else -> None."""
+    x = str(x or "").strip()
+    m = _pm_re.search(r"fastscout\.fastmodelsports\.com/teams/([^/?#]+)/games/([^/?#]+)", x)
+    if m:
+        return m.group(1), m.group(2)
+    m = _pm_re.match(r"^fastscout:\s*([A-Za-z0-9_-]{10,})$", x, _pm_re.I)
+    return (None, m.group(1)) if m else None
+
+
 def bank_games(with_unknown=False):
     """CONFIRMED CHANGE (requested: "can it look up the date, label and for from just the synergy_id?"): an entry can be just
     {"synergy_id": "..."} (or a bare ID string). Date, label and "for" are filled from the game's Synergy export after it
@@ -346,9 +367,12 @@ def bank_games(with_unknown=False):
     out, cache = [], _bank_cache()
     for e in (globals().get("BANK_GAMES") or []):
         if isinstance(e, str):
-            e = {"synergy_id": e}
+            e = {"fastscout_url": e} if _fs_game_key(e) else {"synergy_id": e}
         if not isinstance(e, dict):
             continue
+        if e.get("fastscout_url") and not e.get("synergy_id"):   # FastScout game link: its Synergy ID once looked up
+            _fk = _fs_game_key(e["fastscout_url"])
+            e = dict(e, synergy_id=((cache.get("_fastscout") or {}).get(_fk[1]) if _fk else None) or "")
         gid = str(e.get("synergy_id") or "").strip().lower()
         if len(gid) != 24:
             continue
