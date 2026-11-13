@@ -8223,12 +8223,17 @@ if(!D.getElementById('ftnav')){var bar=D.createElement('div');bar.id='ftnav';
 bar.style.cssText='position:fixed;bottom:14px;left:50%%;transform:translateX(-50%%);z-index:99999;background:#4E2A84;color:#fff;padding:8px 12px;border-radius:10px;display:flex;gap:10px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.3);font-family:sans-serif';
 bar.innerHTML='<button id="ftnav-prev" style="padding:6px 12px;border-radius:6px;border:0;cursor:pointer">\u25c0 Previous clip</button><span id="ftnav-lab"></span><button id="ftnav-next" style="padding:6px 12px;border-radius:6px;border:0;cursor:pointer;font-weight:700">Next clip \u25b6</button>';
 D.body.appendChild(bar);D.getElementById('ftnav-prev').onclick=function(){P.__ftPrev();};D.getElementById('ftnav-next').onclick=function(){P.__ftNext();};}
-if(!P.__ftKeys){P.__ftKeys=1;D.addEventListener('keydown',function(e){var _b=D.getElementById('ftnav');if(!_b||_b.style.display==='none')return;
+/* CONFIRMED BUG (fixed twice; bar on every page): it shows only when the clip being tagged is laid out on the page AND every
+   tab it sits in is the selected tab (Streamlit keeps other tabs' content in the page) */
+P.__ftOnScreen=function(){var bx=boxes(),b=bx[P.__ftCur]||bx[0];if(!b||b.offsetParent===null||!b.getBoundingClientRect().width)return false;
+var p=b.closest('[role="tabpanel"]');while(p){var id=p.getAttribute('aria-labelledby'),t=id?D.getElementById(id):null;
+if(t&&t.getAttribute('aria-selected')!=='true')return false;if(p.hidden)return false;p=p.parentElement?p.parentElement.closest('[role="tabpanel"]'):null;}return true;};
+if(!P.__ftKeys){P.__ftKeys=1;D.addEventListener('keydown',function(e){if(!P.__ftOnScreen||!P.__ftOnScreen())return;
 var a=D.activeElement,tg=a?a.tagName:'';if(a&&a.getAttribute('aria-expanded')==='true')return;
 var typing=(tg==='INPUT'&&a.getAttribute('role')!=='combobox')||tg==='TEXTAREA'||(a&&a.isContentEditable);
 if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();e.stopPropagation();if(typing){a.blur();setTimeout(function(){P.__ftNext();},250);}else{P.__ftNext();}}
 else if((e.key===' '||e.code==='Space')&&!typing){var bx=boxes(),b=bx[P.__ftCur];var v=b?b.querySelector('video'):null;if(!v)return;e.preventDefault();if(v.paused){v.play();}else{v.pause();}}},true);}
-if(!P.__ftWatch){P.__ftWatch=setInterval(/* CONFIRMED BUG (fixed; nav bar showed on every tab: hidden tabs keep their DOM, so show it only while the clip is actually visible) */function(){var bar=D.getElementById('ftnav');if(!bar)return;var c=D.querySelector('.st-key-ftclip_0');var w=c?c.parentElement:null;bar.style.display=(w&&w.getClientRects().length&&w.closest('[hidden],[aria-hidden="true"]')===null)?'flex':'none';},300);}
+if(!P.__ftWatch){P.__ftWatch=setInterval(/* CONFIRMED BUG (fixed; nav bar showed on every tab: hidden tabs keep their DOM, so show it only while the clip is actually visible) */function(){var bar=D.getElementById('ftnav');if(!bar)return;bar.style.display=P.__ftOnScreen()?'flex':'none';},300);}
 /* CONFIRMED BUG (fixed; "this doesn't seem to be working": the check looked at clip 1 itself, which the bar hides once you move
    to clip 2 -- so the bar and Enter switched off after the first Next. It now checks the box that holds the clips.) */
 var t=0,iv=setInterval(function(){show();if(++t>40)clearInterval(iv);},250);})();</script>""" % (json.dumps(_bid), _hi - _lo), height=0)
