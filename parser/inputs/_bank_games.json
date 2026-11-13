@@ -26,6 +26,22 @@
  "6ab818207c04d5284e260158": {
   "date": "2026-11-07",
   "label": "Hope College Flying Dutchmen vs Franklin Grizzlies",
-  "for": ""
+  "for": "",
+  "starters": {
+   "Franklin": [
+    "Dylan Beverly",
+    "Lebron Bennie-Powell",
+    "Tommy WIlliams Jr.",
+    "Justin Harrington",
+    "Zaryen Moore"
+   ],
+   "Hope": [
+    "Orion Yant",
+    "Tucker Walther",
+    "Kyle Blauch",
+    "Avery Sanchez",
+    "Brendan Cargill"
+   ]
+  }
  }
 }
