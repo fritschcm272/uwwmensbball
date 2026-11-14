@@ -304,3 +304,15 @@ Corey said it's "good enough" for now; don't test more unless he asks.
 - Same rule for a named set first ("snap 30-bs", "twins left-bs" -> Snap / Twins + Ball Screen, No Formation) when every piece is a known action. "Twins" is a set (play call), not a formation, in _PD_SETS.
 - Above the full table: collapsed "Play call summary" (play call, poss, PPP over all situations/formations).
 - UWW: "No Play Call" is reported as "Flow" (47 offense breakdown; only for Whitewater rows).
+
+## Clip videos on the `videos` branch (11/13)
+- Film Tagging / Play review clip videos (`data/play_tag/*/*.mp4`, `*_poster.jpg`, same in `play_review`) are NOT in main any
+  more (.gitignore). 55c `_push_clip_videos()` (end of the section, every models / tagging run) force-pushes the current ones
+  to branch `videos` as ONE parentless commit (no history), using a separate git folder `F:\Backups\uwwmensbball_tracking\_videos.git`
+  (`VIDEOS_GIT_DIR`), prunes old objects there, then `git rm --cached`s them from main only after `ls-remote` confirms the push.
+  `VIDEOS_BRANCH = ""` turns it off.
+- App: `_clip_here()` downloads a clip from the branch (secret `videos_branch`, default "videos"; uses the [github] token) into
+  the same data/ path the first time it's shown; `_clip_prefetch` loads a 20-clip block in parallel; `_has_vid` also counts clips
+  listed on the branch (`_vid_remote_list`, cached 5 min).
+- Old videos are still in main's HISTORY (.git ~10 GB on 11/13; also ~4.8 GB of leftover `.git\objects\pack\tmp_pack_*`).
+  Rewriting history is a separate, not-yet-done step.

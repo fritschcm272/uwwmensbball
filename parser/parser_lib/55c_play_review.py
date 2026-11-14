@@ -2202,6 +2202,127 @@ if RUN_PLAY_REVIEW:
         play_review()
     except Exception as _e:
         print(f"Play review skipped: {type(_e).__name__}: {_e}")
+
+# CONFIRMED CHANGE (requested: "How do I keep the Film Tagging videos out of git history?" -> "Yes, build option 1"; C: had
+# filled up and the repo's .git was ~10 GB, mostly clip videos). The clip videos of the open Film Tagging / Play review
+# batches (data/play_tag/*/ and data/play_review/*/: *.mp4 and *_poster.jpg) go to their OWN branch, VIDEOS_BRANCH ("videos"),
+# as ONE fresh commit each run (no parent) that replaces the last -- so that branch never builds up a history -- and main
+# stops tracking them (.gitignore + "git rm --cached": the files stay on disk). The app downloads a clip from that branch the
+# first time it's shown. The git objects for it live in a separate folder, VIDEOS_GIT_DIR (default
+# <SYNERGY_EXPORT_DIR>\_videos.git on F:), not in the repo's .git on C:, and old ones are pruned after each push.
+# Main is only touched AFTER GitHub confirms the push, so no batch is ever left without its videos.
+# VIDEOS_BRANCH = "" turns it all off (videos committed to main as before).
+_VID_IGNORE = ["data/play_tag/**/*.mp4", "data/play_tag/**/*_poster.jpg",
+               "data/play_review/**/*.mp4", "data/play_review/**/*_poster.jpg"]
+
+
+def _push_clip_videos():
+    import subprocess as _sp
+    import glob as _gl
+    br = str(globals().get("VIDEOS_BRANCH", "videos") or "").strip()
+    if not br:
+        return
+    git_ = _find_git() if "_find_git" in globals() else None
+    if not git_:
+        print("  [videos] git not found -- clip videos not pushed (they stay in data/ as before)", flush=True)
+        return
+    app = os.path.abspath(_pr_app_dir())
+    top = _sp.run([git_, "-C", app, "rev-parse", "--show-toplevel"], capture_output=True, text=True, timeout=60)
+    if top.returncode != 0:
+        print("  [videos] the data folder isn't in a git repository -- clip videos not pushed", flush=True)
+        return
+    top = os.path.normpath(top.stdout.strip())
+    url = _sp.run([git_, "-C", top, "remote", "get-url", "origin"], capture_output=True, text=True, timeout=60).stdout.strip()
+    if not url:
+        print("  [videos] no 'origin' remote -- clip videos not pushed", flush=True)
+        return
+    files = []
+    for kind in ("play_tag", "play_review"):
+        for pat in ("*.mp4", "*_poster.jpg"):
+            files += _gl.glob(os.path.join(app, kind, "*", pat))
+    rels = sorted({os.path.relpath(f_, top).replace(os.sep, "/") for f_ in files if os.path.getsize(f_) > 0})
+    if not rels:
+        print("  [videos] no clip videos in the open batches -- nothing to push", flush=True)
+        return
+    _root = str(globals().get("SYNERGY_EXPORT_DIR") or "")
+    gdir = str(globals().get("VIDEOS_GIT_DIR") or (os.path.join(_root, "_videos.git") if _root and os.path.isdir(_root) else ""))
+    if not gdir:
+        print("  [videos] no place for the videos' git folder (SYNERGY_EXPORT_DIR not found; set VIDEOS_GIT_DIR) -- not pushed", flush=True)
+        return
+    env = dict(os.environ, GIT_DIR=gdir, GIT_WORK_TREE=top, GIT_INDEX_FILE=os.path.join(gdir, "videos_index"),
+               GIT_TERMINAL_PROMPT="0", GIT_AUTHOR_NAME="uwwmensbball parser", GIT_AUTHOR_EMAIL="parser@localhost",
+               GIT_COMMITTER_NAME="uwwmensbball parser", GIT_COMMITTER_EMAIL="parser@localhost")
+    g = lambda *a, t=600, inp=None: _sp.run([git_, "-C", top, *a], capture_output=True, text=True, timeout=t, env=env, input=inp)
+    if not os.path.isfile(os.path.join(gdir, "HEAD")):
+        os.makedirs(gdir, exist_ok=True)
+        r = _sp.run([git_, "init", "--bare", gdir], capture_output=True, text=True, timeout=120)
+        if r.returncode != 0:
+            print(f"  [videos] couldn't create {gdir}: {r.stderr.strip()[:200]}", flush=True)
+            return
+        print(f"  [videos] created the videos' git folder: {gdir}", flush=True)
+    if g("remote", "get-url", "origin").returncode != 0:
+        g("remote", "add", "origin", url)
+    else:
+        g("remote", "set-url", "origin", url)
+    t0 = time.time()
+    try:
+        os.remove(env["GIT_INDEX_FILE"])
+    except OSError:
+        pass
+    r = g("add", "-f", "--pathspec-from-file=-", t=3600, inp="\n".join(rels) + "\n")
+    if r.returncode != 0:
+        print(f"  [videos] git add failed: {r.stderr.strip()[:300]}", flush=True)
+        return
+    tree = g("write-tree").stdout.strip()
+    # what GitHub has now (so only NEW clips are uploaded)
+    g("fetch", "--no-tags", "origin", f"+refs/heads/{br}:refs/remotes/origin/{br}", t=3600)
+    have = g("rev-parse", "--verify", "-q", f"refs/remotes/origin/{br}^{{tree}}").stdout.strip()
+    if have and have == tree:
+        print(f"  [videos] {len(rels)} clip file(s) -- the '{br}' branch already has exactly these, nothing to push", flush=True)
+        commit = g("rev-parse", f"refs/remotes/origin/{br}").stdout.strip()
+    else:
+        commit = g("commit-tree", tree, "-m", f"Film Tagging clip videos ({len(rels)} files) -- replaced every parser run").stdout.strip()
+        if not commit:
+            print("  [videos] couldn't make the commit -- not pushed", flush=True)
+            return
+        print(f"  [videos] pushing {len(rels)} clip file(s) to the '{br}' branch on GitHub (only new ones are uploaded)...", flush=True)
+        r = g("push", "--force", "origin", f"{commit}:refs/heads/{br}", t=3600)
+        if r.returncode != 0:
+            print(f"  [videos] push failed -- main still has the videos, nothing changed: {r.stderr.strip()[-400:]}", flush=True)
+            return
+    ls = g("ls-remote", "origin", f"refs/heads/{br}", t=300).stdout.split()
+    if not ls or ls[0] != commit:
+        print(f"  [videos] GitHub doesn't show the new '{br}' commit yet -- main left as it is (next run tries again)", flush=True)
+        return
+    g("update-ref", f"refs/heads/{br}", commit)
+    g("update-ref", f"refs/remotes/origin/{br}", commit)
+    g("reflog", "expire", "--expire=now", "--all")
+    g("prune", "--expire=now", t=1800)               # earlier runs' clips no longer in any batch
+    print(f"  [videos] '{br}' branch = {len(rels)} clip file(s) ({time.time() - t0:.0f}s)", flush=True)
+    # main: ignore and stop tracking them (the files stay on disk; GitHub Desktop shows them as removed -- commit that)
+    gi = os.path.join(top, ".gitignore")
+    try:
+        cur = open(gi, encoding="utf-8").read() if os.path.exists(gi) else ""
+        add = [p for p in _VID_IGNORE if p not in cur.splitlines()]
+        if add:
+            with open(gi, "a", encoding="utf-8") as fh:
+                fh.write(("" if cur.endswith("\n") or not cur else "\n")
+                         + "# Film Tagging / Play review clip videos live on the 'videos' branch (parser 55c _push_clip_videos)\n"
+                         + "\n".join(add) + "\n")
+    except Exception as e:
+        print(f"  [videos] .gitignore not updated ({type(e).__name__}: {e})", flush=True)
+    r = _sp.run([git_, "-C", top, "rm", "-r", "--cached", "--quiet", "--ignore-unmatch", "--",
+                 *[f":(glob){p}" for p in _VID_IGNORE]], capture_output=True, text=True, timeout=600)
+    if r.returncode != 0:
+        print(f"  [videos] main still tracks the videos (git rm --cached: {r.stderr.strip()[:200]}) -- close GitHub Desktop "
+              f"and run again", flush=True)
+    else:
+        n = _sp.run([git_, "-C", top, "diff", "--cached", "--name-only", "--diff-filter=D", "--", "data/play_tag", "data/play_review"],
+                    capture_output=True, text=True, timeout=120).stdout.split()
+        if n:
+            print(f"  [videos] main stops tracking {len(n)} clip file(s) -- in GitHub Desktop they show as removed: commit "
+                  f"and push that with streamlit_app.py (the files stay on this computer)", flush=True)
+
 if globals().get("RUN_TAG_QUEUE", True):
     try:
         tag_queue()
@@ -2212,6 +2333,10 @@ if globals().get("RUN_TAG_QUEUE", True) or RUN_PLAY_REVIEW:
         _pr_refresh_vocab()
     except Exception as _e:
         print(f"  (answer lists not refreshed in the open batches: {type(_e).__name__}: {_e})")
+    try:
+        _push_clip_videos()
+    except Exception as _e:
+        print(f"  [videos] clip videos not pushed ({type(_e).__name__}: {_e}) -- they stay in data/ and main as before")
 
 # CONFIRMED CHANGE (requested: the starters check works "similar to the court calibration where the notebook stops until it
 # is completed"). After the Play review and Film Tagging batches are written, the notebook STOPS while any game's starters

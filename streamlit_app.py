@@ -6117,6 +6117,100 @@ _PR_VIDEO_RESIZE_JS = r"""
 """
 
 
+# CONFIRMED CHANGE (requested: "How do I keep the Film Tagging videos out of git history?" -> "Yes, build option 1"). The clip
+# videos of Film Tagging / Play review (data/play_tag/*/ and data/play_review/*/: .mp4 and _poster.jpg) are no longer
+# committed to main. parser_models / parser_tagging push the CURRENT ones to their own branch (secret `videos_branch`,
+# default "videos"), replaced by one fresh commit every run so it never builds up a history. The app lists that branch once
+# (cached 5 min) and downloads a clip the first time it's shown into the same place in data/ it used to be, so everything
+# below works as before. A clip still in the folder (older deploys, local runs) is used as it is.
+def _vid_branch():
+    try:
+        cfg = dict(st.secrets.get("github", {}))
+    except Exception:
+        cfg = {}
+    return str(cfg.get("videos_branch", "videos") or "").strip()
+
+
+def _vid_rel(path):
+    """data-relative repo path ("data/play_tag/<batch>/clip_001_00.mp4") of a clip file in this app's data folder."""
+    try:
+        rel = os.path.relpath(os.path.abspath(path), os.path.dirname(DATA_DIR)).replace(os.sep, "/")
+    except Exception:
+        return None
+    return rel if rel.startswith("data/") and not rel.startswith("data/..") else None
+
+
+@st.cache_data(ttl=300, show_spinner=False)
+def _vid_remote_list(token, repo, vb):
+    """Every file path on the videos branch -> set (one API call, cached 5 minutes)."""
+    import requests
+    if not (repo and vb):
+        return set()
+    h = {"Accept": "application/vnd.github+json"}
+    if token:
+        h["Authorization"] = f"Bearer {token}"
+    try:
+        r = requests.get(f"https://api.github.com/repos/{repo}/git/trees/{vb}", params={"recursive": "1"}, headers=h, timeout=30)
+        if r.status_code != 200:
+            return set()
+        return {t.get("path") for t in (r.json().get("tree") or []) if t.get("type") == "blob"}
+    except Exception:
+        return set()
+
+
+def _vid_on_branch(path):
+    rel = _vid_rel(path)
+    if not rel:
+        return False
+    token, repo, _b, _sb, _f = _gh_cfg()
+    return rel in _vid_remote_list(token, repo, _vid_branch())
+
+
+def _clip_here(path):
+    """The clip's local path, downloaded from the videos branch first when it isn't in the folder; None when it's nowhere."""
+    try:
+        if os.path.exists(path) and os.path.getsize(path) > 0:
+            return path
+    except Exception:
+        pass
+    rel = _vid_rel(path)
+    vb = _vid_branch()
+    if not rel or not vb:
+        return None
+    token, repo, _b, _sb, _f = _gh_cfg()
+    if not repo:
+        return None
+    import requests
+    h = {"Accept": "application/vnd.github.raw"}
+    if token:
+        h["Authorization"] = f"Bearer {token}"
+    try:
+        r = requests.get(f"https://api.github.com/repos/{repo}/contents/{rel}", params={"ref": vb}, headers=h, timeout=60)
+        if r.status_code != 200 or not r.content:
+            return None
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        tmp = path + ".part"
+        with open(tmp, "wb") as fh:
+            fh.write(r.content)
+        os.replace(tmp, path)
+        return path
+    except Exception:
+        return None
+
+
+def _clip_prefetch(paths):
+    """Downloads the given clips (those not in the folder yet) a few at a time, so a block of clips opens quickly."""
+    todo = [p for p in paths if p and not os.path.exists(p)]
+    if not todo:
+        return
+    try:
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=6) as ex:
+            list(ex.map(_clip_here, todo))
+    except Exception:
+        pass
+
+
 def _pr_video(path, rate=None, width_share=None):
     """A play-review video, smaller than the full section and starting at PR_VIDEO_SPEED (1.5x).
     CONFIRMED CHANGE (requested: "default the play back speed to 1.5 ... and make the video player a little smaller"):
@@ -6195,7 +6289,7 @@ def _pr_title_widgets(d, pi, store, kp):
                 '<tr><td style="border:1px solid #ddd;padding:3px 8px"><b>Automatic Title</b></td>'
                 f'<td style="border:1px solid #ddd;padding:3px 8px;font-family:monospace">{esc_(pl.get("auto_title") or "nothing confident enough yet")}</td></tr>'
                 '</table>', unsafe_allow_html=True)
-    if pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
+    if pl.get("clip") and _clip_here(os.path.join(d["_dir"], pl["clip"])):
         _pr_video(os.path.join(d["_dir"], pl["clip"]))
     fields = pl.get("fields", [])
     if not fields:
@@ -8079,7 +8173,9 @@ def render_film_tagging():
     # A batch whose tags are already saved is waiting for the next parser run (which brings the next one), so it isn't listed.
     # CONFIRMED BUG (fixed; "2026-03-06 Loras@UWWhitewater -- tag 1 play(s)" was listed with no video of the play): only plays
     # whose video is in the batch are shown, and a batch with none isn't listed (the parser also stops making them)
-    _has_vid = lambda d, p: bool(p.get("clip")) and os.path.exists(os.path.join(d.get("_dir", ""), str(p.get("clip"))))
+    # (a clip counts when it's in the folder OR on the videos branch -- see _clip_here)
+    _has_vid = lambda d, p: bool(p.get("clip")) and (os.path.exists(os.path.join(d.get("_dir", ""), str(p.get("clip"))))
+                                                     or _vid_on_branch(os.path.join(d.get("_dir", ""), str(p.get("clip")))))
     tag_pk = []
     for d in sorted(_pr_app_packages("play_tag"), key=lambda d: str(d.get("game", "")), reverse=True):
         _pl = [p for p in d.get("plays", []) if _has_vid(d, p)]
@@ -8162,6 +8258,7 @@ def render_film_tagging():
     _bid = f"{d.get('slug')}_{d.get('run')}_{_blk}"
     _form = _form_no_enter(f"ft_form_{_bid}")
     _clr_pi, _fill_pi = [], []
+    _clip_prefetch([os.path.join(d["_dir"], _all[i_]["clip"]) for i_ in range(_lo, _hi) if _all[i_].get("clip")])
     with _form:
         for pi in range(_lo, _hi):
             pl = _all[pi]
@@ -8181,7 +8278,7 @@ def render_film_tagging():
                     st.markdown(f"Automatic Title: `{pl['auto_title']}`")
                 if pl.get("film"):
                     st.caption(pl["film"])
-                if pl.get("clip") and os.path.exists(os.path.join(d["_dir"], pl["clip"])):
+                if pl.get("clip") and _clip_here(os.path.join(d["_dir"], pl["clip"])):
                     if pl.get("clip_kind") == "video":
                         _pr_video(os.path.join(d["_dir"], pl["clip"]), rate=FT_VIDEO_SPEED)
                     else:
@@ -16704,7 +16801,7 @@ def render_app_play_review(game_iso, short_opponent, key_suffix="_pg"):
                         + ("  \u2014 *validation play*" if p.get("validation") else ""))
             left, right = st.columns([3, 4])
             with left:
-                if p.get("clip") and os.path.exists(os.path.join(d["_dir"], p["clip"])):
+                if p.get("clip") and _clip_here(os.path.join(d["_dir"], p["clip"])):
                     _pr_video(os.path.join(d["_dir"], p["clip"]), width_share=1.0)
                 if p.get("synergy_url"):
                     st.caption(f"[Open the game on Synergy]({p['synergy_url']}) -- clip #{p.get('clip_number')}"
