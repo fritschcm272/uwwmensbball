@@ -1777,6 +1777,19 @@ def _tag_run_reason(gd, gc, g):
     is_uww = side.eq("UWW").any() or any(k in low for k in ("whitewater", "www", "uww"))
     is_opp = side.eq("Opponent").any() or any(w in low for w in _fa_words(globals().get("upcoming_opponent_short") or ""))
     need = {"opp": is_opp, "uww": is_uww, "both": is_uww and is_opp}
+    # CONFIRMED CHANGE (requested 11/15: "leave all UWW games open for film tagging during the current season"). Before
+    # this, only our MOST RECENT game had a batch, so the morning after a game the previous game's batch left the app --
+    # on 11/15 the UWW @ Carroll batch was removed because the 11/14 Ripon game had become our most recent one, and its
+    # film could not be exported yet, leaving the coaches nothing of ours to tag. Every UWW game of the CURRENT season now
+    # keeps its batch. PLAY_TAG_ALL_UWW_THIS_SEASON = False goes back to our most recent game only.
+    if is_uww and globals().get("PLAY_TAG_ALL_UWW_THIS_SEASON", True):
+        _sy = globals().get("SEASON_START_YEAR")
+        try:
+            _s0 = pd.Timestamp(int(_sy), 8, 1).date() if _sy else None
+        except Exception:
+            _s0 = None
+        if _s0 is not None and d >= _s0:
+            return "our game this season (PLAY_TAG_ALL_UWW_THIS_SEASON)"
     return next((why for (cd, kind), why in cur.items() if abs((d - cd).days) <= 1 and need.get(kind)), None)
 
 
@@ -1854,9 +1867,16 @@ def tag_queue():
         g = g.assign(_key=[_pl_ckey_norm(f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}")
                            for _, r in g.iterrows()])
         untagged = g["decode_quality"].eq("Untagged") if "decode_quality" in g.columns else pd.Series(True, index=g.index)
-        todo = g[untagged & ~g["_key"].isin(answered)]
-        n_tagged = int((~untagged).sum())
-        summary.append(f"{gd} {gc}: {n_tagged} of {len(g)} clip(s) tagged, {len(todo)} to go")
+        # CONFIRMED CHANGE (requested 11/15: "a way for the coach to mark the clip as skipped ... they won't want to see it
+        # again unless we specifically tell it to be in the app again" -- coaches don't want to tag every part of a game).
+        # "Skip this clip" in Film Tagging saves the clip as skipped (47 reads it into the `skipped` column): it is NOT
+        # tagged and adds nothing to any table, it just never goes into another batch. PLAY_TAG_UNSKIP (47) puts clips back.
+        skipped = (g["skipped"].fillna(False).astype(bool) if "skipped" in g.columns
+                   else pd.Series(False, index=g.index))
+        todo = g[untagged & ~skipped & ~g["_key"].isin(answered)]
+        n_tagged, n_skip = int((~untagged).sum()), int(skipped.sum())
+        summary.append(f"{gd} {gc}: {n_tagged} of {len(g)} clip(s) tagged, {len(todo)} to go"
+                       + (f" ({n_skip} skipped by a coach)" if n_skip else ""))
         # CONFIRMED CHANGE (requested): a UWW game's batch is EVERY untagged UWW offensive play, then -- once those are all
         # tagged -- every defensive play (PLAY_TAG_UWW_MAX caps a batch; None = all). Any other game (an opponent's earlier
         # game) goes PLAY_TAG_PER_GAME_OTHER plays at a time (40), in game order: the first 40, then the next 40.

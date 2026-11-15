@@ -1,24 +1,22 @@
 opponent,game_date,category,key_number,icon,headline,evidence,reasoning,source,impact,confidence,brief_eligible,priority_score
-Ripon Red Hawks,2026-11-14,Offense,1,📋,ATTACK THE BASKET,,,Keys to Victory,,,True,80.0
-Ripon Red Hawks,2026-11-14,Offense,2,🎯,Attack Opponent Worst Offensive Shot Selection & Quality,,No video-tagged data yet for teams Ripon Red Hawks played before facing UWW this season -- needs a local/live-scraped _pbp and _video file for each of those games.,Data-Driven,,,False,62.5
-Ripon Red Hawks,2026-11-14,Offense,3,📋,Call our best set: Zona,"1.67 PPP on 4 uses vs our 0.96 overall · 1/2 FG
-Finished most by Collin Madson","Our most productive set this season -- go to it when we need a good look, with Collin Madson finishing.",Data-Driven,0.38545454545454527,0.2,True,53.4
-Ripon Red Hawks,2026-11-14,Offense,4,,Send an extra body to the offensive glass,Opponents rebound 40% of their own misses against them.,They secure only 60% of defensive boards -- our misses are live balls. Crash with a fourth man when the shot goes up from the perimeter.,Data-Driven,0.7023255813953488,0.2866666666666667,True,67.4
-Ripon Red Hawks,2026-11-14,Defense,5,⚠️,Opponent strength: Motion offense with good ball movement & cutting,,,Team Strengths,,,True,49.5
-Ripon Red Hawks,2026-11-14,Defense,6,⚠️,Opponent strength: Good gap and help defense with active hands,,,Team Strengths,,,True,49.5
-Ripon Red Hawks,2026-11-14,Defense,7,⚠️,Opponent strength: Mixing ball screens and DHO's at different angles,,,Team Strengths,,,True,49.5
-Ripon Red Hawks,2026-11-14,Defense,8,📋,Take away their go-to set: Ripon Motion #1,"11 uses in 1 games · 0.64 PPP vs their 0.72 overall · 2/6 FG · 3 TO
-Finished most by Jose Gonzales
-Built on: Down Screen
-Next most-called: Motion
-Tagged as: [app] I FORM RIPON MOTION: Man-to-Man | [app] Opener I Form Ripon Motion: Man-to-Man | [app] I-Form Ripon Motion left: Man-to-Man (Drop)","Their most-called half-court set. Jose Gonzales finishes it most, usually off the down screen -- take away the down screen and make someone else beat us.",Data-Driven,1.0,0.55,True,83.2
-Ripon Red Hawks,2026-11-14,Defense,9,📋,Know their best set: STAGGER,"1.25 PPP on 4 uses vs 0.72 overall
-Finished most by Michael Asman",Their most productive set -- recognize the alignment and call it out before the action starts; Michael Asman is usually the one finishing it.,Data-Driven,1.0,0.2,True,71.0
-Ripon Red Hawks,2026-11-14,Personnel,10,🔒,"Counter with Madson, McEwen, Rogers, Teague-Johnson, Castillo","+2.37/min — Madson, McEwen, Rogers, Teague-Johnson, Castillo
+Elmhurst Bluejays,2026-11-18,Offense,1,🎯,Attack Opponent Worst Offensive Shot Selection & Quality,,No video-tagged data yet for teams Elmhurst Bluejays played before facing UWW this season -- needs a local/live-scraped _pbp and _video file for each of those games.,Data-Driven,,,False,62.5
+Elmhurst Bluejays,2026-11-18,Offense,2,📋,Call our best set: Zona,"1.67 PPP on 4 uses vs our 0.96 overall · 1/2 FG
+Finished most by Collin Madson
+No coverage tagged against it yet","Our most productive set this season -- go to it when we need a good look, with Collin Madson finishing. Small sample: 1 game.",Data-Driven,0.38545454545454527,0.06666666666666667,True,51.4
+Elmhurst Bluejays,2026-11-18,Defense,3,📋,Take away their go-to set: Flow,"7 uses in 1 games · 1.43 PPP vs their 1.03 overall · 4/7 FG
+Finished most by Aidyn Boone
+Built on: Ball Screen
+Tagged as: [app] 5 Out flow | [app] Flow (Jam) | [app] FLow
+Coverages against it: Drop on the ball screen 1 (0.00) · Jam on the ball screen 1 (0.00)","Their most-called half-court set. Aidyn Boone finishes it most, usually off the ball screen -- take away the ball screen and make someone else beat us. Small sample: 2 games.",Data-Driven,1.0,0.2333333333333333,True,78.5
+Elmhurst Bluejays,2026-11-18,Defense,4,,Finish every defensive possession with a box-out,"They grab 41% of their own misses -- we usually allow 46%, so this is above our norm; most by Elmhurst, Chris Ketchum.",They get 41% of their own misses back -- a stop isn't a stop until we secure the rebound; find Elmhurst on every shot. Small sample: 2 games.,Data-Driven,0.8117647058823532,0.37777777777777777,True,73.1
+Elmhurst Bluejays,2026-11-18,Personnel,5,🔒,"Attack lineup of Boone, Trelenberg, Cherry, Pearson, Adjahoungbeta","Worst +/- lineups:
+-19.0 in 21.2 min, 41% FG — Boone, Trelenberg, Cherry, Pearson, Adjahoungbeta
+Highest TO rate (per 40 min):
+1.9 TO/40 — Boone, Trelenberg, Cherry, Pearson, Adjahoungbeta",their worst net-rating lineups with real minutes this season. Small sample: 2 games.,Lineup Scouting,1.0,0.35333333333333333,True,78.3
+Elmhurst Bluejays,2026-11-18,Personnel,6,🔒,"Counter with Madson, McEwen, Rogers, Teague-Johnson, Castillo","+2.37/min — Madson, McEwen, Rogers, Teague-Johnson, Castillo
 +0.90/min — Madson, Lukenbill, McEwen, Rogers, Castillo
-+0.74/min — Madson, Robinson, Lukenbill, McEwen, Teague-Johnson","UWW's best net margin against opponent units that resemble Ripon Red Hawks's most-used lineup (Flowers, Gonzales, Rahn, Asman, Bunders). Target profile: 3 guard, 2 forward · avg 6'4"" · three point shooter / slasher driver / catch and shoot. Measured across 19 comparable opponent unit(s), 40 min this season.",Lineup Scouting,1.0,0.661,True,82.9
-Ripon Red Hawks,2026-11-14,Personnel,11,🔒,"Attack Ripon Red Hawks's Flowers, Gonzales, Asman combo","Worst +/- 3-man combos:
--6.0 in 12.5 min — Flowers, Gonzales, Asman
--3.0 in 13.4 min — Flowers, Rahn, Bunders",Ripon Red Hawks's most exploitable 3-man combinations: their worst net-rating units with real minutes this season.,Lineup Scouting,0.96,0.3125,True,76.1
-Ripon Red Hawks,2026-11-14,General,12,📋,DOMINATE THE GLASS,,,Keys to Victory,,,True,80.0
-Ripon Red Hawks,2026-11-14,General,13,📋,COMMUNICATION ON SCREENING ACTION!,,,Keys to Victory,,,True,80.0
++0.74/min — Madson, Robinson, Lukenbill, McEwen, Teague-Johnson","UWW's best net margin against opponent units that resemble Elmhurst Bluejays's most-used lineup (Boone, Trelenberg, Cherry, Pearson, Adjahoungbeta). Target profile: 2 guard, 3 forward · avg 6'4"". Measured across 19 comparable opponent unit(s), 40 min this season. Small sample: 1 game.",Lineup Scouting,1.0,0.2203333333333333,True,76.3
+Elmhurst Bluejays,2026-11-18,Personnel,7,🔒,"Attack Elmhurst Bluejays's Boone, Trelenberg, Pearson combo","Worst +/- 3-man combos:
+-21.0 in 26.8 min — Boone, Trelenberg, Pearson
+-21.0 in 23.6 min — Boone, Cherry, Pearson
+-21.0 in 23.6 min — Trelenberg, Cherry, Pearson",Elmhurst Bluejays's most exploitable 3-man combinations: their worst net-rating units with real minutes this season. Small sample: 2 games.,Lineup Scouting,1.0,0.4466666666666667,True,79.7

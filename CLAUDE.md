@@ -1,7 +1,7 @@
 # CLAUDE.md — handoff notes for a new chat
 
 Read this first in any new chat about the UW-Whitewater (UWW) men's basketball scouting project.
-Last updated: Nov 9, 2026. Owner: Corey. (Sections 0, 4 and 7 are current; section 8 is the Nov 2 history.)
+Last updated: Nov 14, 2026. Owner: Corey. (Sections 0, 4, 7, 9 and 10 are current; section 8 is the Nov 2 history.)
 
 ---
 
@@ -102,7 +102,7 @@ F:\Backups\uwwmensbball_tracking\_tracking\ tracking files (TRACK_DIR) -- moved 
 
 ---
 
-## 4. Current state (Nov 9, 2026)
+## 4. Current state (Nov 9, 2026 -- see section 10 for Nov 14: the upcoming opponent is now Elmhurst, REFERENCE_DATE 2026-11-15)
 
 ### Season / opponent
 - **Season 2026-27** (`SEASON = "2026-27"` in parser_nb; the switch moved 2025-26 FastScout files to `parser\inputs_2025-26`
@@ -188,7 +188,7 @@ Bad wrong-season files went to `inputs_2025-26\_wrong_season_scrapes`.
 - Empty-season fixes (no UWW pbp/stats yet): 36 typed empty pbp, 44 numeric clock, 70 expected box skipped (empty
   projected tables), 80 `reindex`, 86 empty player lines, 11 margin "n/a".
 - Offense breakdown / coverage tables, passing card, reads-to-roster etc. from earlier in the week (see the code comments).
-- `REFERENCE_DATE` / `EXTRA_GAMES` are set ONLY in `parser_models`' first cell (11/12, Corey's request). parser_models saves them to `parser\inputs\_upcoming_game.json`; parser_brief / parser_tagging read that file (00 `run_parser`), applied at 00b, replacing parser_nb's. parser_analysis still sets its own team.
+- (SUPERSEDED 11/14, see section 10: the save / read code was missing and parser_brief now has its own REFERENCE_DATE.) `REFERENCE_DATE` / `EXTRA_GAMES` are set ONLY in `parser_models`' first cell (11/12, Corey's request). parser_models saves them to `parser\inputs\_upcoming_game.json`; parser_brief / parser_tagging read that file (00 `run_parser`), applied at 00b, replacing parser_nb's. parser_analysis still sets its own team.
 - Offense tables (11/9, Corey: "All of the offensive tables within briefs needs to also include the 5 person lineup that runs it most and any players that are best at scoring off of it"): `uww_offense_breakdown` has `top_lineup` / `top_scorers` on every situation / formation / play-call row (47 `_top_lineup`, `_top_scorers`); 87 `_offense_breakdown_card` shows them under each PLAY-CALL row ("Runs it:" / "Scores:") -- never on the "All" rows: Corey wants the All rows' Actions column empty. Applies to every brief kind (ours, theirs, analysis). Any NEW offensive table in a brief must carry the same two lines.
 - Offense-table play-call flags (11/10, Corey: "Flag based on that row's own numbers"): 87 `_row_flag` rates each play-call row on its own possessions / PPP -- often = at least the median possessions of the table's play-call rows, efficient = >= the table's own team PPP (from its situation rows); 2+ possessions theirs, 3+ ours. The season-wide flags (`_SB_PC_FLAGS`) and the "Scored here" flag are no longer used in that table.
 - Offense tables are collapsible (11/11): the full situation > formation > play-call table sits in `<details class="ob-det">` ("Show the full table"), closed by default; the summary bullets stay visible above it. A small script in the brief's <head> opens every <details> before printing.
@@ -305,14 +305,211 @@ Corey said it's "good enough" for now; don't test more unless he asks.
 - Above the full table: collapsed "Play call summary" (play call, poss, PPP over all situations/formations).
 - UWW: "No Play Call" is reported as "Flow" (47 offense breakdown; only for Whitewater rows).
 
-## Clip videos on the `videos` branch (11/13)
-- Film Tagging / Play review clip videos (`data/play_tag/*/*.mp4`, `*_poster.jpg`, same in `play_review`) are NOT in main any
-  more (.gitignore). 55c `_push_clip_videos()` (end of the section, every models / tagging run) force-pushes the current ones
-  to branch `videos` as ONE parentless commit (no history), using a separate git folder `F:\Backups\uwwmensbball_tracking\_videos.git`
-  (`VIDEOS_GIT_DIR`), prunes old objects there, then `git rm --cached`s them from main only after `ls-remote` confirms the push.
-  `VIDEOS_BRANCH = ""` turns it off.
-- App: `_clip_here()` downloads a clip from the branch (secret `videos_branch`, default "videos"; uses the [github] token) into
-  the same data/ path the first time it's shown; `_clip_prefetch` loads a 20-clip block in parallel; `_has_vid` also counts clips
-  listed on the branch (`_vid_remote_list`, cached 5 min).
-- Old videos are still in main's HISTORY (.git ~10 GB on 11/13; also ~4.8 GB of leftover `.git\objects\pack\tmp_pack_*`).
-  Rewriting history is a separate, not-yet-done step.
+---
+
+## 9. What was done Nov 13-14, 2026
+
+### Season / opponent
+- `REFERENCE_DATE = "2026-11-15"` in parser_models -> the upcoming opponent is **Elmhurst (Nov 18)**, on purpose. Corey: "we
+  have done enough scouting for Ripon". So the Ripon game (Nov 14) counts as played; its Synergy export fails until it is.
+- Film Tagging batches dropped because they weren't "this run's" games (UW-Oshkosh@UWW, Carroll@Elmhurst 2/24/26,
+  UWW@WashU 3/7/26, UWW@Ripon 11/7/25): Corey said that's fine ("we have moved on"). Saved answers are kept. Don't restore them.
+
+### ADD_GAMES takes a FastScout link (00_parser_modes.py, 46_frame_capture.py)
+- `ADD_GAMES = ["https://fastscout.fastmodelsports.com/teams/<team>/games/<game>/boxscore?..."]` (or `"fastscout:<game>"`)
+  becomes a BANK_GAMES entry `{"fastscout_url": ...}` (`_fs_game_key`). 46 `_bank_resolve_fastscout()` opens the page once a
+  run, takes the Synergy ID from a Synergy video link, or -- FastScout box scores usually have NONE -- reads the two teams and
+  date from the page and finds the game with `_syn_lookup`. Kept in `inputs\_bank_games.json` under `"_fastscout"`.
+- Bugs fixed: the options run before EVERY section, so the link was appended 33 times (run looked stuck at 46) -> de-duplicated;
+  `bank_game_for` only matched a banked game's "for" team, so a game between two teams we don't play (no "for") got no
+  Film Tagging batch -> with no "for", either team in its label matches; `_bank_fill` overwrote the Synergy starters -> merges.
+- Used for **Franklin @ Hope, Nov 7 2026** (Synergy `6ab818207c04d5284e260158`): exported, 212 clips, Film Tagging batch.
+  It is "Other" (no brief) since neither team is on our schedule.
+
+### Synergy export box (46 `_sst_close_export_box`)
+- The box is its own window "Export: <game>" (class `ExportMediaDialog`) whose buttons are an unnamed X
+  ("Avalonia.Controls.StackPanel") and "Cancel" -- no "Close" button, which is why it never closed. Now: once no
+  "Processing: Clip a of b" with a != b is shown, the window is closed (WindowPattern.Close, else the X). NOT yet seen working:
+  check the next export's log for `[export] closed Synergy Editor's export box`. Corey closes Synergy himself otherwise.
+
+### App -- Film Tagging (streamlit_app.py)
+- `FT_SAVE_EVERY = 20` (was 10): Enter / Next goes through 20 clips, the 20th saves them and opens the next 20.
+- Hot keys (browser script in the Film Tagging block): Enter = next (save on the last); Space = play / pause (stops a rewind);
+  **M = 2x speed toggle; N = rewind at 2x toggle** (N again or Space stops); speed resets on a new clip; keys ignored while
+  typing in a box or with a dropdown open. The purple bar shows "2x >>" / "<< 2x". No key for Previous (Corey may want one, e.g. B).
+
+### C: drive full -> clip videos moved off main, history cleaned
+- C: filled during a run: the repo's `.git` (OneDrive, on C:) was ~10 GB because every batch's clip .mp4s were committed and
+  kept in history (+ ~4.8 GB of leftover `.git\objects\pack\tmp_pack_*`). The parser's own folders are small
+  (data\ ~0.65 GB, frames 0.1-0.3 GB a game).
+- **`videos` branch** (Corey: "build option 1"): `data/play_tag/*/` and `data/play_review/*/` `*.mp4` + `*_poster.jpg` are in
+  `.gitignore`. 55c `_push_clip_videos()` (end of 55c, every models / tagging run) force-pushes the current ones to branch
+  `videos` as ONE parentless commit (no history), using a separate git folder `F:\Backups\uwwmensbball_tracking\_videos.git`
+  (`VIDEOS_GIT_DIR`), prunes old objects there, and only after `ls-remote` confirms the push does `git rm --cached` them in
+  main. `VIDEOS_BRANCH = ""` turns it off. First push 11/13: 936 files, 806 s; later runs upload only new clips.
+- App: `_clip_here()` downloads a clip from the branch (secret `videos_branch`, default "videos"; [github] token) into the same
+  data/ path the first time it's shown; `_clip_prefetch` loads a 20-clip block in parallel; `_has_vid` counts clips on the branch
+  (`_vid_remote_list`, cached 5 min). Corey confirmed clips play.
+- **History rewritten 11/13** with `C:\Users\frits\uww_git_cleanup.py` (git-filter-repo, branches main + saves only, the
+  `videos` branch untouched; force-with-lease push; local repo reset --soft to the new main + gc). Packed .git 5.4 GB -> 1.9 GB.
+  New main tip 8a2a57e ("clipvideosmoved"). **Any other clone of the repo must be re-cloned** -- pushing an old copy brings the
+  videos back. If GitHub Desktop ever offers to pull / says diverged right after this, don't -- check first.
+- Undo / leftovers on F:\Backups\uwwmensbball_tracking\: `_history_cleanup_backup_<time>` (keep the newest a couple of weeks),
+  older backups, `_history_cleanup_old_*` and `_history_cleanup` can be deleted. Keep `_videos.git`.
+- C: still showed ~5.8 GB free right after; OneDrive / Recycle Bin may hold the deleted packs. Other big things NOT yet measured:
+  anaconda3, Windows / pagefile, `$WINDOWS.~BT`.
+
+### Lessons for next time
+- `device_bash` du on the OneDrive mount is very slow -- measure folder by folder with timeouts, or use `device_list_dir`.
+- The device_bash VM can't reach GitHub; git pushes must run on Windows (a script Corey runs in Anaconda Prompt, or the parser).
+- Don't use `gc --aggressive` on a repo copy with videos (ran for an hour); a `--mirror` clone needs
+  `git config --unset remote.origin.mirror` before pushing named branches.
+
+---
+
+## 10. What was done Nov 14, 2026 (brief quality: contradictions, sample size, keys, brief check)
+
+Corey asked what a stronger model could add to the briefs and approved four of the suggestions ("everything except #4" --
+#4, a one-page "what matters" top, is NEXT; it needs his OK because he removed the players / defense / advice bullets on
+11/11). All of it is in brief-only sections (83, 85, 87): parser_models / parser_tagging don't run them, Film Tagging is
+untouched. **First real run: parser_brief 11/14 10:37 (Elmhurst), finished** -- log `brief_20261114_103722.log`: `Small sample:
+Elmhurst Bluejays has played 2 game(s) ... last season's numbers added for 7 returning player(s)`; `Read check: 2
+reworded` (Boone, Marshall "Driver"); `Brief check: 3 problem(s)` = false alarms on Bottom Line keys (fixed after).
+The later changes (the new "Built from:", the brief-check fix, the set-key coverage sentence, the "Check:" flag line) have
+NOT been seen in a real run -- check the next brief.
+
+- **One sample rule: `READ_MIN_GAMES` = 3** (85; same number as `BRIEF_FIRST_GAMES_MIN`; set it in parser_nb to change).
+  A player read needs 3 games AND the attempt floor. While the opponent has played < 3 games this season, returning
+  players' numbers are this season + last season (`LAST_SEASON_DATA_DIR` box scores / pbp; `_pn_last_season_rows`) and
+  their reads end in "-- incl. last season". A player still under 3 games: leader lines say "so far (..., 1 game)",
+  percentage / rate reads move to `below_minimum` (the roster `*`), and no box-score key is written (the tagged-film
+  "Know <set>" key stays). Log: `Small sample: <team> has played N game(s) ...`.
+- **Ties are not leaders** (85 `_pn_sole_leader`): "Leading scorer" / "Primary creator" need ONE leader; a rebounding tie
+  reads "Tied for their lead on the glass". (Ripon had two "Leads them on the glass" and a 4-way assist tie.)
+- **Contradiction pass: `85b_read_reconcile.py`**, run from 85's last line (no notebook cell). Sources ranked film >
+  coaches' report > box-score rules. `reword` a numbers line the film contradicts ("Driver" with < 15% drives on 8+ film
+  finishes); `drop` a numbers key opposite to the coaches' key, or one of two numbers lines that disagree (FG% vs true
+  shooting; "Top priority" + "Let him be the one who shoots it"); `flag` a line of the coaches' report the film / numbers
+  contradict -- **the coaches' words are never changed**: the roster card gets a yellow "Check: ..." line (87
+  `_read_flags`, in `lead`, max 2). Every change with the original line -> `uww_read_conflicts.csv`. Film needs
+  `READ_FILM_MIN_POSS` = 8. Log: `Read check (<team>): N reworded, N dropped, N flagged`.
+- **Keys to Victory (83, block after `ktv_select_for_brief`)**: (1) a computed key on < 3 games ends with "Small sample:
+  N game(s)." and its confidence is scaled by games / 3; (2) the set keys ("Take away their go-to set" / "Know their best
+  set" / "Call our best set") end with what coverage worked, from `uww_offense_breakdown` coverage rows
+  (`_ktv_set_how`; a coverage needs `KTV_HOW_MIN_POSS` = 2 trips; all coverages go in the key's evidence) -- right now
+  almost no coverage has 2 trips on one play call, so it mostly says nothing until more defense is tagged; (3) a staff
+  key with no reason carries the computed key on the same topic ("From the numbers: ..."; evidence "Linked data key:
+  ..."), shortened to "see key N: ..." when that key is also printed.
+- **Brief check: `87b_brief_check.py`**, run from 87's last line. Reads the finished HTML: leftovers ("<NA>", "nan"),
+  empty / missing sections, tables in the data folder that are for a different opponent (`scouted_opponent`), keys not
+  in `uww_ktv_keys.csv`, a player drawn twice, more than one "Leading scorer", percentages outside 0-100, dead links.
+  Problems print with `!!` (shown under "done 87_..."), everything -> `uww_brief_check.csv`. Changes nothing.
+- 87: the `*` legend said "last season" in every brief -> "Too few attempts or games on file".
+
+- **`_upcoming_game.json` save / read restored (00 `run_parser`)**: parser_brief on 11/14 ran on parser_nb's
+  `REFERENCE_DATE = "2026-11-8"` (Ripon) and stopped in 47 (`FramesNotReady`: DePauw@Elmhurst "captured, none in
+  uww_plays.csv") because the code section 7 describes -- models saves REFERENCE_DATE / EXTRA_GAMES to
+  `inputs\_upcoming_game.json`, brief / tagging read it -- was NOT in `00_parser_modes.py` (not on disk, not in any
+  commit; the json was last written 11/12). Now: models writes it, brief / tagging print `Upcoming game from
+  parser_models: REFERENCE_DATE = ...` and use it. If a file ever "loses" documented code again, suspect a stale copy.
+
+- **parser_brief has its own `REFERENCE_DATE`** (first cell, Corey's request; `None` = use parser_models' saved one). The
+  run's first line warns when it differs from the date parser_models last ran on.
+- **"Built from:" rewritten (87, Corey's review of the Elmhurst brief)**: tagged offense is split into "used in this brief
+  (this season)" by game, "tagged last season, not used in the tables", and "still untagged this season"; Player Number
+  Tracking / film tracking are listed only when 55e's `names_ok` / `court_ok` let film into the brief; the "Not available
+  for this build: uww_..." table-name line is removed (still in the log). Brief check no longer flags Bottom Line
+  ("Game Plan") keys. First real run 11/14 10:37 (Elmhurst) worked: blend for 7 players, 2 "Driver" lines reworded.
+
+### 11/15 -- Film Tagging keeps every UWW game of this season
+- `PLAY_TAG_ALL_UWW_THIS_SEASON = True` (parser_nb cell 133; 55c `_tag_run_reason`): every UW-Whitewater game of the
+  CURRENT season keeps its batch, not just our most recent one. Why: after the 11/14 Ripon game the 11/7 Carroll batch
+  was removed ("not part of this run") and the Ripon film could not be exported, so the app had NO UWW clips to tag.
+  False = back to our most recent game only. Not seen in a real run yet.
+- What a blank save counts as (checked in the code, 11/15): the app writes a row per (clip, field) only when the field has
+  a verdict or an answer (`_pr_title_default` -> "--" means no row). With `FILM_TAGGING_SUGGESTIONS = False` every field
+  starts blank, so clicking Next through a block and saving writes NOTHING: the clips stay `Untagged` and come back in the
+  next batch. With suggestions ON, an untouched field starts on the automatic answer and IS saved
+  (`prefilled`/`accepted_default` = True), so a click-through accepts the model's guesses as the tag. A clip saved with
+  only, say, defense / situation (no formation / play call / primary action) becomes `decode_quality = "No call"`: it
+  counts as tagged, is never offered again, and adds nothing to the play-call tables.
+
+### 11/15 -- "Skip this clip" in Film Tagging, and banked games stay banked
+- **Skip (requested: coaches don't want to tag certain parts of a game).** App: a "Skip this clip -- don't show it again"
+  box on every clip of a Film Tagging block; save the group as usual. The save carries `skipped` / `unskipped` clip keys
+  (`_pr_payload`), the box starts ticked for a clip already skipped (`_ft_skipped_clip_keys`), a skipped clip counts as
+  saved (the green check), and its header shows "skipped". Parser: 47 `title_review_answers` merges skips in save order
+  (latest wins) into `_title_review_skips`, `_pl_apply_app_tags` writes a **`skipped`** column on uww_play_calls.csv and
+  prints "Skipped in the app: N clip(s)". A skipped clip is NOT tagged -- decode_quality stays `Untagged` and nothing
+  about it reaches any table; it is only never offered again (55c `tag_queue` leaves it out of `todo` and says
+  "(N skipped by a coach)"), and 46's "have the coaches finished this game" gate ignores it so it can't block the next
+  game's capture. **To bring clips back: `PLAY_TAG_UNSKIP`** (parser_nb cell 133) = "all", a game ("Elmhurst") or one
+  clip ("Elmhurst 44"). Tested against copies of the data; not seen in a real run.
+- **A banked game stays banked (00 `bank_games`).** It listed only what parser_models' cell held, so emptying `ADD_GAMES`
+  on 11/15 dropped Franklin @ Hope (a LATER opponent's game Corey added on purpose) and 55c deleted its 212-clip batch.
+  Now every game remembered in `inputs\_bank_games.json` stays listed; `BANK_GAMES_DROP = ["<synergy id>"]` (or "all")
+  forgets one, `BANK_GAMES_STICKY = False` goes back to the old behaviour. The next run rebuilds the Franklin @ Hope
+  batch (212 clips, ~25 min of play videos). Its `"for"` is still blank in the json -- fill it in when Hope is scheduled.
+
+### 11/15 -- the UWW @ Ripon (11/14) export: Synergy had the video but had NOT coded the game
+- Symptom: `parser_models` stopped twice with `FramesNotReady` -- "2026-11-14 Ripon Red Hawks: 224 clip(s) captured, none
+  in uww_plays.csv". Cause: the Synergy Editor export worked (224 clips), but EVERY row of its Export.csv has a blank
+  `Title` and `Synergy String`, so the clip rows in `uww_clip_frames.csv` have no player and no description. 47's
+  `_pl_untagged_from_frames` needs the description, so the game could not become play calls, and the gap check asked
+  Corey to "export its tagged clips from Synergy" -- which no export could give.
+- Fixes: 46 `_vx_ingest` now checks Export.csv first and leaves an UNCODED export alone (nothing registered, so the game
+  is just "not captured yet" and the run goes on); `VISION_EXPORT_UNCODED_OK = True` captures it anyway, without
+  descriptions. 47's gap check turns the "captured but not in uww_plays.csv" stop into a note when the game's clips have
+  no description at all.
+- Still to do for that game: Synergy has to finish coding 11/14, then the export must be redone -- the existing folder
+  `F:\Backups\uwwmensbball_tracking\Ripon@UWWhitewater - Nov 14, 2026` has to be renamed or removed first (ask Corey),
+  and its 224 rows in `inputs\uww_clip_frames.csv` go away by themselves on the next run (46 drops them). The ~1,100
+  JPEGs in `inputs\_vision_frames\Nov_14_2026_Ripon@UWWhitewater` are then orphaned.
+- Do NOT make blank-description clips taggable: the app's clip key is `date|clip number|synergy string`, so coach answers
+  saved against a blank string would stop matching the moment a coded export replaced them.
+
+### 87 audit findings (11/14) -- listed for Corey, NOTHING changed yet
+Static scan of all of 87 + close reading of the roster, keys, matchup and team-stat code (not every line).
+1. `_sb_has_text` is defined twice (lines ~759 and ~777); the second silently wins.
+2. Six functions are never called: `name_link_lines`, `two_up`, `foul_cell`, `pc_table`, `foul_list_block`, `_reads_card`.
+3. `offense_section_test2` (theirs) and `offense_section_test_uww` (ours) are two near-copies -- every offense-table
+   change has to be made twice (the "any NEW offensive table must carry the same two lines" rule depends on it).
+4. Twelve switches exist only in code, not in the notebook cell: `BRIEF_TYPE`, `BRIEF_HEAD_TO_HEAD`, `BRIEF_TWO_FOR_ONE`,
+   `BRIEF_QUADRANT`, `BRIEF_ACTION_TABLES`, `BRIEF_CONFIRM_ON_FILM`, `BRIEF_COVERAGE_COUNTERS`, `BRIEF_SELF_SCOUT_FILM`,
+   `BRIEF_SEASON_COMPARE_TABLE`, `BRIEF_FILM_ON_FILE`, `BRIEF_FULL_BENCH_OPENER`, `PROJ_STARTER_POS_PENALTY`.
+5. Legends restate rules by hand (late foul "62% / 8+ / 75% / 85% on 4" = 86's `_GP_FOUL_*`; "averaging 8+ minutes";
+   "3+ tagged uses"; "2+ uses"). In sync today; they drift the day a rule changes.
+6. Today's real date is used instead of the run date: ~line 6140 labels a scouting report "the upcoming game's report"
+   when it is within 30 days of NOW (wrong on a re-run of an old game / an analysis); ~line 299 falls back to now().
+7. 32 `except` blocks: 9 are a bare `pass`, 18 fall back to a default without printing. A broken section just
+   disappears (the brief check now catches the empty / missing section, not the cause).
+8. ~line 3664: `int(them.get("games") or players["games"].max() or 1)` -- a silent default of 1 game.
+9. `_SB_PC_FLAGS` / `_SB_TEAM_PPP` are still computed and passed through globals (set ~5494 / ~5883, read ~5080)
+   although the 11/10 note says the season-wide flags are no longer used in that table.
+10. 87 also writes data (`uww_film_ai_status.csv`, `uww_brief_notes.csv`) -- the brief builder is a producer too.
+11. Old copies that could be opened by mistake (the 11/2 incident was a stale copy): `parser_lib\00_parser_modes-1.py`,
+    `46_frame_capture-1.py`, `parser_lib\.ipynb_checkpoints\`, `parser\Untitled.ipynb`; `data\scouting_briefs` has 12
+    dated / "before..." copies (8 MB, deployed with the app). Ask before deleting.
+
+### Open from the 11/13 models log (told Corey 11/14)
+- UWW@Carroll is in Film Tagging twice: `WWW@CAR` 167/167 tagged and `UWWhitewater@Carroll(WI)` 0/24 (a new 24-clip batch).
+  Looks like one game under two codes. NOT investigated (it is an open batch: read only, ask first).
+- Franklin@Hope still prints "couldn't tell which team we play: add 'for'" (it got its batch); 2 clips out of clock order.
+- 83 Elmhurst clips with no Team value assumed offense; Elmhurst@Ripon Synergy lineups 0 of 86.
+- Elmhurst brief built 11/14 10:42 (`data\\scouting_briefs\\scouting_brief_Elmhurst_Bluejays.html`); it needs one more
+  parser_brief run to pick up the new "Built from:".
+- Elmhurst's offense in the brief rests on 44 tagged possessions (DePauw@Elmhurst). Untagged Elmhurst offense on film:
+  Elmhurst@Ripon 11/7 (89), DePauw@Elmhurst (52) -- tagging those is the fastest way to a better brief.
+
+### How this chat went (11/14) and what is next
+1. Start-of-chat summary + review of `models_20261113_183205.log`.
+2. Corey asked what a stronger model could add to the briefs; six suggestions; he approved all but #4.
+3. Built #1 contradiction pass, #2 sample rule, #3 keys, #6 brief check; #5 = the audit list below (nothing changed).
+4. parser_brief stopped (`FramesNotReady`) -> wrong REFERENCE_DATE -> restored `_upcoming_game.json`, then (his request)
+   REFERENCE_DATE in parser_brief's first cell.
+5. He asked whether "Built from:" was correct and useful -> rewritten.
+NEXT, in his order: **#4 the one-page "what matters" top** (he said "I want to come back to that next"). Waiting on his
+answers: which audit items to fix (suggested: silent excepts, real-date uses); OK to look (read only) at the duplicate
+UWW@Carroll Film Tagging batch. Files changed today, for his commit: `00_parser_modes.py`, `83_...`, `85_...`,
+`85b_read_reconcile.py` (new), `87_...`, `87b_brief_check.py` (new), `parser_brief.ipynb`, `CLAUDE.md`. After the brief
+runs, `data\\` gains `uww_read_conflicts.csv` and `uww_brief_check.csv`.

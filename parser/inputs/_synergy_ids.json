@@ -1509,6 +1509,36 @@
    "away": "DePauw University Tigers",
    "away_short": "DePauw",
    "away_id": "54457dd7300969b132fd0248"
+  },
+  "6abc2fc7de4f83758d0df1fa": {
+   "date": "2026-11-13",
+   "name": "HowardPayne@GustavusAdolphus",
+   "home": "Gustavus Adolphus",
+   "home_short": "GustavusAdolphus",
+   "home_id": "54457dd8300969b132fd02fe",
+   "away": "Howard Payne Yellow Jackets",
+   "away_short": "HowardPayne",
+   "away_id": "54457dd5300969b132fd004e"
+  },
+  "6af13923a457001dbd2ab1d6": {
+   "date": "2026-11-07",
+   "name": "GustavusAdolphus@Wash(StLouis)",
+   "home": "Washington (St. Louis) Bears",
+   "home_short": "Wash(StLouis)",
+   "home_id": "54457dd9300969b132fd03db",
+   "away": "Gustavus Adolphus",
+   "away_short": "GustavusAdolphus",
+   "away_id": "54457dd8300969b132fd02fe"
+  },
+  "6ab956e03064cdc0afa3f84e": {
+   "date": "2026-11-06",
+   "name": "GustavusAdolphus@TransylvaniaUni",
+   "home": "Transylvania University Pioneers",
+   "home_short": "TransylvaniaUni",
+   "home_id": "54457dd7300969b132fd0220",
+   "away": "Gustavus Adolphus",
+   "away_short": "GustavusAdolphus",
+   "away_id": "54457dd8300969b132fd02fe"
   }
  },
  "teams": {
@@ -1754,6 +1784,10 @@
   "Saginaw Valley State Cardinals": "54457dd6300969b132fd0134",
   "SaginawValley": "54457dd6300969b132fd0134",
   "DePauw University Tigers": "54457dd7300969b132fd0248",
-  "DePauw": "54457dd7300969b132fd0248"
+  "DePauw": "54457dd7300969b132fd0248",
+  "Howard Payne Yellow Jackets": "54457dd5300969b132fd004e",
+  "HowardPayne": "54457dd5300969b132fd004e",
+  "Transylvania University Pioneers": "54457dd7300969b132fd0220",
+  "TransylvaniaUni": "54457dd7300969b132fd0220"
  }
 }

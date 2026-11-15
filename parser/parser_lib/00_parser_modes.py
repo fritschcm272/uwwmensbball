@@ -369,16 +369,35 @@ def bank_games(with_unknown=False):
     inputs/_bank_games.json; anything typed in BANK_GAMES wins. Until the export exists the game has no date
     (with_unknown=True lists it anyway, for Frame capture)."""
     out, cache = [], _bank_cache()
-    for e in (globals().get("BANK_GAMES") or []):
+
+    def _gid_of(e):
         if isinstance(e, str):
             e = {"fastscout_url": e} if _fs_game_key(e) else {"synergy_id": e}
         if not isinstance(e, dict):
-            continue
+            return None, None
         if e.get("fastscout_url") and not e.get("synergy_id"):   # FastScout game link: its Synergy ID once looked up
             _fk = _fs_game_key(e["fastscout_url"])
             e = dict(e, synergy_id=((cache.get("_fastscout") or {}).get(_fk[1]) if _fk else None) or "")
-        gid = str(e.get("synergy_id") or "").strip().lower()
-        if len(gid) != 24:
+        return e, str(e.get("synergy_id") or "").strip().lower()
+
+    _entries = list(globals().get("BANK_GAMES") or [])
+    # CONFIRMED CHANGE (requested 11/15: "Hope is an upcoming opponent, so we added it through ADD_GAMES because they
+    # aren't the 'next' opponent and we want to keep those games available in the app for coaches to tag"). A game banked
+    # once STAYS banked: every game remembered in inputs/_bank_games.json is listed even after it leaves BANK_GAMES /
+    # ADD_GAMES in parser_models' first cell. Emptying ADD_GAMES on 11/15 dropped Franklin @ Hope, its clips became
+    # "Other", and 55c removed its 212-clip Film Tagging batch from the app. BANK_GAMES_DROP = ["<synergy id>"] (or "all")
+    # forgets one on purpose; BANK_GAMES_STICKY = False goes back to "only what the cell lists".
+    if globals().get("BANK_GAMES_STICKY", True):
+        _drop = globals().get("BANK_GAMES_DROP") or []
+        _drop = {str(x).strip().lower() for x in ([_drop] if isinstance(_drop, str) else list(_drop))}
+        _have = {g for g in (_gid_of(e)[1] for e in _entries) if g}
+        for _gid in cache:
+            _gid = str(_gid).strip().lower()
+            if len(_gid) == 24 and _gid not in _have and _gid not in _drop and "all" not in _drop:
+                _entries.append({"synergy_id": _gid, "remembered": True})
+    for e in _entries:
+        e, gid = _gid_of(e)
+        if e is None or len(gid) != 24:
             continue
         k = dict(cache.get(gid) or {})
         k.update({x: e[x] for x in ("date", "label", "for") if e.get(x)})
@@ -390,7 +409,7 @@ def bank_games(with_unknown=False):
         if d is None and not with_unknown:
             continue
         out.append({"gid": gid, "date": d, "label": str(k.get("label") or f"banked game {gid}").strip(),
-                    "for": str(k.get("for") or "").strip()})
+                    "for": str(k.get("for") or "").strip(), "remembered": bool(e.get("remembered"))})
     return out
 
 
@@ -502,6 +521,49 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
                  if _o.get("ADD_GAMES") else "")
               + ("; player tracking OFF" if _o.get("DO_PLAYER_TRACKING") is False else "")
               + ("; Film Tagging OFF" if _o.get("DO_FILM_TAGGING") is False else ""), flush=True)
+    # CONFIRMED BUG (fixed 11/14; parser_brief stopped in 47 with "2026-11-11 Elmhurst Bluejays vs DePauw Tigers: 195 clip(s)
+    # captured, none in uww_plays.csv"). The brief ran on parser_nb's old REFERENCE_DATE ("2026-11-8" -> Ripon) while
+    # parser_models had moved to "2026-11-15" (Elmhurst), so Elmhurst's game was nobody's game. parser_brief's first cell
+    # says "this job uses what parser_models saved" (inputs\_upcoming_game.json) -- but the code that saves and reads that
+    # file was not in this file (nor in any commit): the json on disk was last written 11/12. Restored here:
+    #   models            -> writes its REFERENCE_DATE / EXTRA_GAMES to inputs\_upcoming_game.json
+    #   brief / tagging   -> read it (unless the job notebook passes its own) and run on the same game
+    # They are applied where the models job's are: right before 00b_season_switch (see _run_section below).
+    _ug_path = _pm_os.path.join(G.get("INPUT_DIR") or "./inputs", "_upcoming_game.json")
+    if mode == "models" and G["_PM_OPTIONS"].get("REFERENCE_DATE") is not None:
+        try:
+            with open(_ug_path, "w", encoding="utf-8") as _fh:
+                _pm_json.dump({"REFERENCE_DATE": G["_PM_OPTIONS"].get("REFERENCE_DATE"),
+                               "EXTRA_GAMES": G["_PM_OPTIONS"].get("EXTRA_GAMES") or []}, _fh, indent=1)
+        except Exception as _e:
+            print(f"!! could not save the upcoming game to {_ug_path} ({_e}) -- parser_brief / parser_tagging will not see it",
+                  flush=True)
+    elif mode in ("brief", "tagging"):
+        try:
+            with open(_ug_path, encoding="utf-8") as _fh:
+                _ug = _pm_json.load(_fh)
+        except Exception:
+            _ug = None
+        # (11/14, requested: "add the REFERENCE_DATE to the parser_brief") the job notebook's own date wins; when it is
+        # not the one parser_models saved, say so -- film / tagging were prepared for THAT game
+        _own = G["_PM_OPTIONS"].get("REFERENCE_DATE")
+        if _own is not None:
+            print(f"Upcoming game: REFERENCE_DATE = {_own!r} (set in this notebook)"
+                  + (f" -- !! parser_models last ran on {_ug.get('REFERENCE_DATE')!r}: if that is a different game, run "
+                     "parser_models with this date first" if isinstance(_ug, dict) and _ug.get("REFERENCE_DATE")
+                     and str(_ug.get("REFERENCE_DATE")) != str(_own) else ""), flush=True)
+            if G["_PM_OPTIONS"].get("EXTRA_GAMES") is None and isinstance(_ug, dict) and _ug.get("EXTRA_GAMES") is not None:
+                G["_PM_OPTIONS"]["EXTRA_GAMES"] = _ug["EXTRA_GAMES"]
+        elif isinstance(_ug, dict) and _ug.get("REFERENCE_DATE"):
+            for _k in ("REFERENCE_DATE", "EXTRA_GAMES"):
+                if G["_PM_OPTIONS"].get(_k) is None and _ug.get(_k) is not None:
+                    G["_PM_OPTIONS"][_k] = _ug[_k]
+            print(f"Upcoming game from parser_models: REFERENCE_DATE = {G['_PM_OPTIONS'].get('REFERENCE_DATE')!r}"
+                  + (f", EXTRA_GAMES = {G['_PM_OPTIONS'].get('EXTRA_GAMES')}" if G["_PM_OPTIONS"].get("EXTRA_GAMES") else ""),
+                  flush=True)
+        else:
+            print(f"!! no upcoming game saved by parser_models ({_ug_path}) -- using parser_nb's REFERENCE_DATE. Run "
+                  "parser_models once to set the game.", flush=True)
     started = start_at is None
     if not started and "run_section" not in G:
         raise RuntimeError("start_at needs an earlier run in this notebook (run it once without start_at first)")

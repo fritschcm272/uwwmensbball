@@ -6656,6 +6656,12 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False, only=None):
     for pi, pl in enumerate(d.get("plays", [])):
         if only is not None and pi not in only:          # Film Tagging saves one page (20 plays) at a time
             continue
+        # CONFIRMED CHANGE (requested: "a way for the coach to mark the clip as skipped, but that still counts as saving and
+        # they won't want to see it again"). "Skip this clip" is saved with the block: the parser never offers it again
+        # (it is not a tag -- nothing about the clip goes into any table). Unticking it puts the clip back.
+        _sk = store.get(f"{kp}_skip_{run}_{pi}")
+        if _sk is not None:
+            out.setdefault("skipped" if _sk else "unskipped", []).append(pl["clip_key"])
         # Film Tagging's Actions table (one row per action): saved as "actions", and its FIRST row (first ball-screen /
         # off-ball row for the coverages) also answers the single action fields below, so everything reading them still works
         _derived = None
@@ -8137,9 +8143,27 @@ def _ft_saved_clip_keys(d):
             for a in list(doc.get("answers") or []) + list(doc.get("actions") or []):
                 out.add(str(a.get("clip_key")))
             out |= {str(x) for x in doc.get("actions_cleared") or []}
+            out |= {str(x) for x in doc.get("skipped") or []}      # (11/15) a skipped clip counts as saved
         except Exception:
             continue
     return out
+
+
+def _ft_skipped_clip_keys(d):
+    """The clips of this batch a coach has marked "skip" (the latest save wins)."""
+    state, runs = {}, {str(d.get("run")), str(d.get("run_real", d.get("run")))}
+    _slug = re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game", ""))).strip("_")
+    for doc in sorted(_pr_save_docs(), key=lambda x: str(x.get("saved", ""))):
+        try:
+            if not ({str(doc.get("run")), f"{_slug}_{doc.get('run')}"} & runs):
+                continue
+            for x in doc.get("skipped") or []:
+                state[str(x)] = True
+            for x in doc.get("unskipped") or []:
+                state[str(x)] = False
+        except Exception:
+            continue
+    return {k for k, on in state.items() if on}
 
 
 def render_film_tagging():
@@ -8237,6 +8261,7 @@ def render_film_tagging():
         st.info("No plays in this batch.")
         return
     _sv = _ft_saved_clip_keys(d)
+    _skipped = _ft_skipped_clip_keys(d)
     _nb = max(1, -(-len(_all) // FT_SAVE_EVERY))
     _bdone = [all(str(p_.get("clip_key")) in _sv for p_ in _all[i * FT_SAVE_EVERY:(i + 1) * FT_SAVE_EVERY]) for i in range(_nb)]
     _bk = f"ft_block_{d.get('slug')}_{d.get('run')}"
@@ -8271,7 +8296,8 @@ def render_film_tagging():
                 st.markdown(f"**Clip {pi - _lo + 1} of {_hi - _lo}** (#{pi + 1} of {len(_all)}) · Clip {pl.get('clip_number')} "
                             f"· {pl.get('clock') or ''} · {str(pl.get('synergy') or '')[:110]}"
                             + (f"  — {n_set} changed" if n_set else "")
-                            + ("  ✅ saved" if str(pl.get("clip_key")) in _sv else ""))
+                            + ("  ✅ saved" if str(pl.get("clip_key")) in _sv else "")
+                            + ("  ⏭️ skipped" if str(pl.get("clip_key")) in _skipped else ""))
                 if pl.get("coach_title"):
                     st.markdown(f"Coach's Title (Synergy): `{pl['coach_title']}`")
                 if pl.get("auto_title"):
@@ -8298,6 +8324,19 @@ def render_film_tagging():
                                            use_container_width=True, disabled=pi >= _hi - 1,
                                            help=f"Copies THIS clip's Situation and Formation to the rest of these {FT_SAVE_EVERY} clips"):
                     _fill_pi.append(pi)
+                # CONFIRMED CHANGE (requested: "a way for the coach to mark the clip as skipped, but that still counts as
+                # saving and they won't want to see it again"): ticked and saved, this clip leaves Film Tagging for good --
+                # it is NOT tagged, so nothing about it reaches the play-call tables. The parser puts it back only when it
+                # is named in PLAY_TAG_UNSKIP.
+                _skv = f"{kp}_skip_{d.get('run')}_{pi}"
+                _was_sk = str(pl.get("clip_key")) in _skipped
+                _sk_now = st.checkbox("Skip this clip — don't show it again",
+                                      value=bool(store.get(_skv, _was_sk)), key=f"{_skv}_ft",
+                                      help="Save the group as usual. Nothing is tagged for this clip; it just stops "
+                                           "coming back. Untick it before saving to put it back.")
+                # only remembered when it means something: ticked now, or unticked after having been skipped
+                if _sk_now or _was_sk or _skv in store:
+                    store[_skv] = _sk_now
                 _ft_field_widgets(d, pi, store, kp)
                 _ft_actions_editor(d, pi, store, kp)
         _go = st.form_submit_button(f"Save clips {_lo + 1}–{_hi}" + (f" and open the next {FT_SAVE_EVERY}" if _blk < _nb - 1 else ""),

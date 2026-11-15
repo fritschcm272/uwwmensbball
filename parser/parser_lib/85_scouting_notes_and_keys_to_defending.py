@@ -49,6 +49,18 @@ _PN_LU_MIN_MINUTES = 8.0
 # Player-level reference to the decoded play-call tags (see the "Play calls" cell): a set needs this many
 # tagged uses BY this player before it's worth naming -- low on purpose, same reasoning as the floors above.
 _PN_MIN_PLAY_USES = 3
+# CONFIRMED CHANGE (requested 11/14: "Sample-size honesty ... one consistent rule that blends in last season or marks the
+# line as one game"). Bunders' "Cold from three -- 17% on 6" and Lee's "Pressure him full-court" were ONE game (1-of-6, 3
+# turnovers) stated as a scouting identity. The attempt floors above could not catch that: six threes in one night passes
+# a six-attempt floor. THE RULE, used by every read / note / key below: a player needs READ_MIN_GAMES games behind a
+# number AND the attempt floor.
+#   - While the TEAM has played fewer than READ_MIN_GAMES games this season, each returning player's numbers are this
+#     season + last season (LAST_SEASON_DATA_DIR) and his reads end in "incl. last season".
+#   - A player still under READ_MIN_GAMES after that (a freshman, a transfer): the leader lines say how many games
+#     ("so far ..., 1 game"), every percentage / rate read moves to below_minimum (the roster's *), and no box-score key
+#     is written for him -- only the "Know <set>" key from tagged film, which has its own floor.
+# Same number as the brief's BRIEF_FIRST_GAMES_MIN (3) on purpose; set READ_MIN_GAMES in parser_nb to change it.
+READ_MIN_GAMES = int(globals().get("READ_MIN_GAMES", 3) or 3)
 
 # ---- Driver and offensive-rebounding reads (requested; coaches' notes on Hillmer asked for both) --------
 # DRIVER: from the play-by-play text -- a make or miss described as a layup/dunk/tip is "at the rim".
@@ -110,6 +122,56 @@ def player_shot_zones(pbp, team_value, opponent_label, side_label):
     return rows
 
 
+def _pn_key(n):
+    """A player's name for matching across seasons / files: no punctuation, no Jr. / II."""
+    t = re.sub(r"[.,']", " ", str(n or "")).lower().split()
+    while len(t) > 2 and t[-1] in ("jr", "sr", "ii", "iii", "iv"):
+        t = t[:-1]
+    return " ".join(t)
+
+
+def _pn_sole_leader(table, col):
+    """The ONE player leading a column, or None on a tie (or all zeros).
+    CONFIRMED BUG (fixed 11/14; Ripon brief): idxmax() takes the first of a tie, so Jose Gonzales was "Primary creator
+    (2.0 apg)" with the key "Get it out of his hands" while Asman, Bunders and Lee had the same 2 assists -- and Flowers
+    and Rahn both "Lead them on the glass" at 5. A tie is not a leader."""
+    if table is None or table.empty or col not in table.columns:
+        return None
+    m = float(table[col].max())
+    if not m > 0:
+        return None
+    lead = table[table[col] == table[col].max()]
+    return lead.iloc[0]["player"] if len(lead) == 1 else None
+
+
+def _pn_last_season_rows(short, players):
+    """Last season's box-score rows for THIS season's players of `short` (see READ_MIN_GAMES), renamed to this season's
+    spelling. Empty when there is no last-season folder or the team isn't in it."""
+    d_ = globals().get("LAST_SEASON_DATA_DIR")
+    if not d_ or not os.path.isdir(str(d_)):
+        return pd.DataFrame()
+    want = {_pn_key(p): p for p in players}
+    out = []
+    for f in ("uww_opponent_prior_games_box_score", "uww_pbp_box_score"):
+        try:
+            t = pd.read_csv(os.path.join(str(d_), f + ".csv"))
+        except Exception:
+            continue
+        if t.empty or not {"team", "player", "game_date"} <= set(t.columns):
+            continue
+        t = t[t["team"].astype(str).str.strip().str.lower() == str(short).strip().lower()].copy()
+        t["_k"] = t["player"].map(_pn_key)
+        t = t[t["_k"].isin(want)]
+        if t.empty:
+            continue
+        t["player"] = t["_k"].map(want)
+        out.append(t.drop(columns="_k"))
+    if not out:
+        return pd.DataFrame()
+    r = pd.concat(out, ignore_index=True)
+    return r.drop_duplicates(["game_date", "player"])
+
+
 def _pn_player_reads(p, table, top_pts, top_oreb, top_ast, zone=None, team_oreb40=None):
     """(strengths, weaknesses) for one player as short phrases.
 
@@ -124,17 +186,30 @@ def _pn_player_reads(p, table, top_pts, top_oreb, top_ast, zone=None, team_oreb4
     # player's note). Kept apart from strengths/weaknesses so a thin-sample observation never outranks a
     # real read -- the roster shows these only when a player has no real read at all.
     below = []
+    # READ_MIN_GAMES (see the top): under it, a leader line says how many games and a percentage / rate read is not a
+    # strength or a weakness yet -- it goes to `below` as the plain numbers.
+    few = g < READ_MIN_GAMES
+    _gtxt = f"{int(g)} game{'s' if int(g) != 1 else ''}"
+    _sofar = f" so far" if few else ""
+    _gs = f", {_gtxt}" if few else ""
+
+    def _read(col, text, plain):
+        if few:
+            below.append(f"{plain} \u2014 only {_gtxt} on file")
+        else:
+            col.append(text)
 
     if p["player"] == top_pts and float(p["PTS"]) > 0:
-        strengths.append(f"Leading scorer ({float(p['PTS']) / g:.1f} ppg)")
+        strengths.append(f"Leading scorer{_sofar} ({float(p['PTS']) / g:.1f} ppg{_gs})")
     # Offensive glass, by rate against his own team (see _PN_OREB_VS_TEAM) -- replaces "team leader only".
     _oreb, _min = float(p["OREB"]), float(p.get("MIN") or 0)
     if _min > 0 and team_oreb40:
         _o40 = 40 * _oreb / _min
         _hits = _o40 >= _PN_OREB_VS_TEAM * team_oreb40
         if _hits and _oreb >= _PN_OREB_MIN and _min >= _PN_OREB_MIN_MINUTES:
-            strengths.append(f"Crashes the offensive glass \u2014 {_o40:.1f} per 40 min, "
-                             f"{_o40 / team_oreb40:.1f}x their average ({_oreb / g:.1f} a game)")
+            _read(strengths, f"Crashes the offensive glass \u2014 {_o40:.1f} per 40 min, "
+                             f"{_o40 / team_oreb40:.1f}x their average ({_oreb / g:.1f} a game)",
+                  f"{_o40:.1f} offensive rebounds per 40 ({_o40 / team_oreb40:.1f}x their average)")
         elif _hits and _oreb > 0:
             below.append(f"{_o40:.1f} offensive rebounds per 40 ({_o40 / team_oreb40:.1f}x their average) \u2014 "
                          f"under the {_PN_OREB_MIN}-rebound / {_PN_OREB_MIN_MINUTES}-minute minimum for a "
@@ -145,26 +220,32 @@ def _pn_player_reads(p, table, top_pts, top_oreb, top_ast, zone=None, team_oreb4
         if _rs is not None and _rs >= _PN_DRIVER_RIM_SHARE:
             _fg_txt = f", {_rfg:.0f}% there" if _rfg is not None else ""
             if _zf >= _PN_DRIVER_MIN_FGA:
-                strengths.append(f"Driver \u2014 {_rs:.0f}% of his shots at the rim{_fg_txt}")
+                _read(strengths, f"Driver \u2014 {_rs:.0f}% of his shots at the rim{_fg_txt}",
+                      f"{_rs:.0f}% of his shots at the rim ({_zf} attempts)")
             elif _zf > 0:
                 below.append(f"{_rs:.0f}% of his shots at the rim ({_zf} attempts) \u2014 under the "
                              f"{_PN_DRIVER_MIN_FGA}-attempt minimum for a driver read")
     if p["player"] == top_ast and float(p["AST"]) / g >= 2:
-        strengths.append(f"Primary creator ({float(p['AST']) / g:.1f} apg)")
+        strengths.append(f"Primary creator{_sofar} ({float(p['AST']) / g:.1f} apg{_gs})")
     if float(table["REB"].max()) > 0 and float(p["REB"]) == float(table["REB"].max()) and float(p["REB"]) / g >= 4:
-        strengths.append(f"Leads them on the glass ({float(p['REB']) / g:.1f} rpg)")
+        # (11/14) two players at the same total are "tied for", not both "leads" -- see _pn_sole_leader
+        _lead_txt = ("Leads them on the glass" if int((table["REB"] == table["REB"].max()).sum()) == 1
+                     else "Tied for their lead on the glass")
+        strengths.append(f"{_lead_txt}{_sofar} ({float(p['REB']) / g:.1f} rpg{_gs})")
     if float(table["STL"].max()) > 0 and float(p["STL"]) == float(table["STL"].max()) and float(p["STL"]) / g >= 1.2:
-        strengths.append(f"Active hands ({float(p['STL']) / g:.1f} spg)")
+        strengths.append(f"Active hands{_sofar} ({float(p['STL']) / g:.1f} spg{_gs})")
     if float(table["BLK"].max()) > 0 and float(p["BLK"]) == float(table["BLK"].max()) and float(p["BLK"]) / g >= 0.8:
-        strengths.append(f"Rim protection ({float(p['BLK']) / g:.1f} bpg)")
+        strengths.append(f"Rim protection{_sofar} ({float(p['BLK']) / g:.1f} bpg{_gs})")
 
     if f3a > 0:
         pct = 100 * float(p["FG3M"]) / f3a
         if f3a >= _PN_MIN_3PA:
             if pct >= 35:
-                strengths.append(f"Shooter \u2014 {pct:.0f}% on {int(f3a)} threes")
+                _read(strengths, f"Shooter \u2014 {pct:.0f}% on {int(f3a)} threes",
+                      f"{pct:.0f}% from three ({int(p['FG3M'])}-{int(f3a)})")
             elif pct <= 25:
-                weaknesses.append(f"Cold from three \u2014 {pct:.0f}% on {int(f3a)}")
+                _read(weaknesses, f"Cold from three \u2014 {pct:.0f}% on {int(f3a)}",
+                      f"{pct:.0f}% from three ({int(p['FG3M'])}-{int(f3a)})")
         elif pct >= 35 or pct <= 25:
             below.append(f"{pct:.0f}% from three ({int(p['FG3M'])}-{int(f3a)}) \u2014 under the "
                          f"{_PN_MIN_3PA}-attempt minimum for a shooting read")
@@ -172,9 +253,11 @@ def _pn_player_reads(p, table, top_pts, top_oreb, top_ast, zone=None, team_oreb4
         pct = 100 * float(p["FGM"]) / fga
         if fga >= _PN_MIN_FGA:
             if pct >= 50:
-                strengths.append(f"Efficient \u2014 {pct:.0f}% from the field")
+                _read(strengths, f"Efficient \u2014 {pct:.0f}% from the field",
+                      f"{pct:.0f}% from the field ({int(p['FGM'])}-{int(fga)})")
             elif pct <= 35:
-                weaknesses.append(f"Inefficient \u2014 {pct:.0f}% on {int(fga)} shots")
+                _read(weaknesses, f"Inefficient \u2014 {pct:.0f}% on {int(fga)} shots",
+                      f"{pct:.0f}% from the field ({int(p['FGM'])}-{int(fga)})")
         elif pct >= 50 or pct <= 35:
             below.append(f"{pct:.0f}% from the field ({int(p['FGM'])}-{int(fga)}) \u2014 under the "
                          f"{_PN_MIN_FGA}-shot minimum for an efficiency read")
@@ -182,16 +265,18 @@ def _pn_player_reads(p, table, top_pts, top_oreb, top_ast, zone=None, team_oreb4
         ft_pct = 100 * float(p["FTM"]) / fta
         if fta >= _PN_MIN_FTA:
             if fta / g >= 4:
-                strengths.append(f"Gets to the line ({fta / g:.1f} FTA/gm)")
+                _read(strengths, f"Gets to the line ({fta / g:.1f} FTA/gm)", f"{fta / g:.1f} free-throw attempts a game")
             if ft_pct <= 60:
-                weaknesses.append(f"Poor at the line \u2014 {ft_pct:.0f}%")
+                _read(weaknesses, f"Poor at the line \u2014 {ft_pct:.0f}%",
+                      f"{ft_pct:.0f}% at the line ({int(p['FTM'])}-{int(fta)})")
         elif fta / g >= 4 or ft_pct <= 60:
             below.append(f"{ft_pct:.0f}% at the line ({int(p['FTM'])}-{int(fta)}) \u2014 under the "
                          f"{_PN_MIN_FTA}-attempt minimum for a free-throw read")
     if float(p["TO"]) / g >= 2.5 and float(p["TO"]) >= float(p["AST"]):
-        weaknesses.append(f"Gives it away ({float(p['TO']) / g:.1f} TO vs {float(p['AST']) / g:.1f} AST)")
+        _read(weaknesses, f"Gives it away ({float(p['TO']) / g:.1f} TO vs {float(p['AST']) / g:.1f} AST)",
+              f"{float(p['TO']) / g:.1f} turnovers vs {float(p['AST']) / g:.1f} assists a game")
     if float(p["PF"]) / g >= 3.2:
-        weaknesses.append(f"Foul-prone ({float(p['PF']) / g:.1f} pf/gm)")
+        _read(weaknesses, f"Foul-prone ({float(p['PF']) / g:.1f} pf/gm)", f"{float(p['PF']) / g:.1f} fouls a game")
     if not strengths and not weaknesses and not below:
         # Nothing crossed a threshold, even ignoring sample size: say that, with the numbers, rather than
         # leaving the note empty -- "no read" must not look the same as "notes failed to load".
@@ -252,6 +337,23 @@ try:
         if _pn_own.empty:
             _pn_problems.append(f"no box-score rows for {_pn_short} in their prior games")
         else:
+            # READ_MIN_GAMES (see the top): early in the season, returning players' numbers are this season + last season
+            _pn_games_now = (int(_pn_own["game_date"].nunique()) if "game_date" in _pn_own.columns else READ_MIN_GAMES)
+            _pn_blend = {}                                    # player -> last-season games added to his numbers
+            _pn_ls_pbp = pd.DataFrame()
+            if _pn_games_now < READ_MIN_GAMES:
+                _pn_ls = _pn_last_season_rows(_pn_short, _pn_own["player"].astype(str).unique())
+                if not _pn_ls.empty:
+                    _pn_blend = _pn_ls.groupby("player")["game_date"].nunique().to_dict()
+                    _pn_own = pd.concat([_pn_own, _pn_ls[[c for c in _pn_ls.columns if c in _pn_own.columns]]],
+                                        ignore_index=True)
+                    try:
+                        _pn_ls_pbp = pd.read_csv(os.path.join(str(LAST_SEASON_DATA_DIR), "uww_opponent_prior_games_pbp.csv"))
+                    except Exception:
+                        _pn_ls_pbp = pd.DataFrame()
+                print(f"  Small sample: {_pn_short} has played {_pn_games_now} game(s) this season (reads need "
+                      f"{READ_MIN_GAMES}) -- last season's numbers added for {len(_pn_blend)} returning player(s)"
+                      + ("" if _pn_blend else " (none found in the last-season folder: every read is marked with its games)"))
             _pn_cols = ("PTS", "FGM", "FGA", "FG3M", "FG3A", "FTM", "FTA",
                         "OREB", "DREB", "REB", "AST", "STL", "BLK", "TO", "PF", "MIN")
             _pn_tot = _pn_own.groupby("player").apply(
@@ -263,9 +365,9 @@ try:
 
             _pn_team_pts = float(_pn_tot["PTS"].sum()) or 1.0
             _pn_team_fga = float(_pn_tot["FGA"].sum()) or 1.0
-            _pn_top_oreb = _pn_tot.loc[_pn_tot["OREB"].idxmax()]["player"] if _pn_tot["OREB"].max() > 0 else None
-            _pn_top_ast = _pn_tot.loc[_pn_tot["AST"].idxmax()]["player"] if _pn_tot["AST"].max() > 0 else None
-            _pn_top_pts = _pn_tot.loc[_pn_tot["PTS"].idxmax()]["player"] if _pn_tot["PTS"].max() > 0 else None
+            _pn_top_oreb = _pn_sole_leader(_pn_tot, "OREB")
+            _pn_top_ast = _pn_sole_leader(_pn_tot, "AST")
+            _pn_top_pts = _pn_sole_leader(_pn_tot, "PTS")
 
             _pn_team_games = (int(_pn_own["game_date"].nunique()) if "game_date" in _pn_own.columns
                               else int(_pn_tot["games"].max()))
@@ -275,14 +377,24 @@ try:
             if _pn_team_oreb40 is None:
                 _pn_problems.append("box score has no minutes -- the offensive-rebounding read was skipped")
             # Where each player shoots from, for the Driver read (same function the app's table uses).
+            _pn_zone_pbp = _pn_load("uww_opponent_prior_games_pbp")
+            if _pn_blend and not _pn_ls_pbp.empty and {"team", "player"} <= set(_pn_ls_pbp.columns):
+                # last season's shots too, under this season's spelling of each returning player's name
+                _zk = {_pn_key(k): k for k in _pn_blend}
+                _zl = _pn_ls_pbp[_pn_ls_pbp["team"].astype(str) == str(_pn_short)].copy()
+                _zl = _zl[_zl["player"].map(_pn_key).isin(_zk)]
+                _zl["player"] = _zl["player"].map(_pn_key).map(_zk)
+                _pn_zone_pbp = pd.concat([_pn_zone_pbp, _zl], ignore_index=True)
             _pn_zones = {str(r["player"]).strip().lower(): r for r in player_shot_zones(
-                _pn_load("uww_opponent_prior_games_pbp"), _pn_short, _pn_short, "Opponent")}
+                _pn_zone_pbp, _pn_short, _pn_short, "Opponent")}
             if not _pn_zones:
                 _pn_problems.append("no play-by-play shot text for their players -- the Driver read was skipped")
             for _, _p in _pn_tot.iterrows():
                 _nm = str(_p["player"])
                 _g = max(float(_p["games"]), 1.0)
                 _thin = _pn_team_games > 1 and _g < _PN_MIN_GAME_SHARE * _pn_team_games
+                _few_p = _g < READ_MIN_GAMES            # (11/14) see READ_MIN_GAMES: no box-score key off 1-2 games
+                _film_keys = []
                 _fga, _f3a, _fta = float(_p["FGA"]), float(_p["FG3A"]), float(_p["FTA"])
                 _notes, _keys = [], []
 
@@ -409,6 +521,7 @@ try:
                                     and _act.mode().iloc[0] not in _top_set else "")
                             _keys.append(f"Know {_top_set}{_how}{_where} \u2014 his most-tagged set on film "
                                          f"({int(_top_calls.iloc[0])}x).")
+                            _film_keys.append(_keys[-1])
 
                 _strengths, _weaknesses, _below = _pn_player_reads(
                     _p, _pn_tot, _pn_top_pts, _pn_top_oreb, _pn_top_ast,
@@ -418,6 +531,18 @@ try:
                     if _notes or _strengths or _weaknesses:
                         _notes.insert(0, f"Only {int(_g)} of {_pn_team_games} games on film \u2014 provisional.")
                     _keys = []
+                elif _few_p:
+                    # the same rule for a player with 1-2 games in all: his notes say so, and only the tagged-film key stays
+                    if _notes:
+                        _notes.insert(0, f"Only {int(_g)} game{'s' if int(_g) != 1 else ''} on file \u2014 provisional.")
+                    _keys = list(_film_keys)
+                if _pn_blend.get(_nm):
+                    _ls_n = int(_pn_blend[_nm])
+                    _strengths = [f"{x} \u2014 incl. last season" for x in _strengths]
+                    _weaknesses = [f"{x} \u2014 incl. last season" for x in _weaknesses]
+                    if _notes:
+                        _notes.insert(0, f"Numbers are this season ({_pn_games_now} game{'s' if _pn_games_now != 1 else ''}) "
+                                         f"plus last season ({_ls_n}).")
                 if _notes or _keys or _strengths or _weaknesses or _below:
                     _pn_rows.append({
                         "opponent": _pn_short, "subject_type": "player", "name": _nm,
@@ -596,3 +721,8 @@ if _pn_problems:
     print("  Notes:")
     for _p in _pn_problems:
         print(f"    - {_p}")
+
+# CONFIRMED CHANGE (requested 11/14: the contradiction pass on player lines). Settles where the film, the coaches' report
+# and the numbers above disagree about a player -- see parser_lib\85b_read_reconcile.py. Run from here (not from a
+# notebook cell of its own) so every job that writes the notes also checks them.
+run_section("85b_read_reconcile")

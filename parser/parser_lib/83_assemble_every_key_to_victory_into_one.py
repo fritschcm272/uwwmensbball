@@ -1483,7 +1483,170 @@ def ktv_select_for_brief(keys):
         shown = k.head(R["min_keys"])
     shown = shown.drop(columns="_topic")
     shown["brief_rank"] = range(1, len(shown) + 1)
+    # CONFIRMED CHANGE (requested 11/14: "Keys to Victory that connect"). A staff key tied to a data key (see "Linked data
+    # key" below) that is ALSO printed on the brief points at it ("see key 1: ...") instead of repeating its sentence.
+    if "evidence" in shown.columns:
+        _rank_of = {str(h): int(r) for h, r in zip(shown["headline"], shown["brief_rank"])}
+        for _i, _r in shown.iterrows():
+            _m = re.match(r"Linked data key: (.+)$", str(_r.get("evidence") or "").strip())
+            if _m and _m.group(1) in _rank_of:
+                shown.at[_i, "reasoning"] = f"see key {_rank_of[_m.group(1)]}: {_m.group(1)}"
     return shown
+
+
+# ========================================================================================================
+# CONFIRMED CHANGE (requested 11/14: "Sample-size honesty" and "Keys to Victory that connect ... each key could carry
+# its 'how' from the tagged data"). Three passes over the keys built above, before they are scored:
+#
+#   1. SAMPLE. Key 2 of the Ripon brief read "Measured across 19 comparable opponent unit(s), 40 min this season" --
+#      that was ONE game (every unit Carroll played), and "their worst net-rating units with real minutes this season"
+#      was Ripon's one game. A computed key (Data-Driven / Lineup Scouting) built on fewer than READ_MIN_GAMES games
+#      (the same number section 85 uses for player reads) now ends with "Small sample: 1 game." and its confidence is
+#      scaled by games / READ_MIN_GAMES, so it drops in the order. Whose games: ours for "Counter with / Feature the /
+#      Call our best set", the opponent's for the rest; for a set key, the games with tagged film.
+#   2. HOW. "Take away their go-to set" said what to take away but not what has worked. The offense table already has
+#      every coverage played against each play call with its PPP (uww_offense_breakdown, level "coverage"); the set
+#      keys now end with it: "On film, Switch on the ball screen held it to 0.50 PPP (4 trips); Drop gave up 1.50 (2)."
+#      A coverage needs KTV_HOW_MIN_POSS trips to be named; every coverage goes in the key's evidence for the app.
+#   3. STAFF KEYS. The staff's keys ("DOMINATE THE GLASS") print with no reason. When a computed key is about the same
+#      thing (rebounding, the paint, transition, threes, screens, turnovers, fouls), the staff key carries it: "From the
+#      numbers: ...". Its evidence says which key ("Linked data key: ..."). The staff's headline is never changed.
+KTV_HOW_MIN_POSS = int(globals().get("KTV_HOW_MIN_POSS", 2) or 2)
+_KTV_MIN_GAMES = int(globals().get("READ_MIN_GAMES", 3) or 3)
+_KTV_OURS = ("counter with", "feature the", "call our best set")
+_KTV_SET_KEYS = ("take away their go-to set:", "know their best set:", "call our best set:")
+_KTV_LINK_TOPICS = (
+    ("rebounding", r"rebound|\bglass\b|box[- ]?out|second[- ]chance|\bcrash"),
+    ("paint", r"\bpaint\b|\bbasket\b|\brim\b|\bdrives?\b"),
+    ("transition", r"transition|\btempo\b|\bpace\b|fast ?break"),
+    ("threes", r"\bthrees?\b|\b3'?s\b|3-point|perimeter|c&s|close ?outs?"),
+    ("screens", r"screen|\bdho\b|hand-?offs?"),
+    ("turnovers", r"turnover|take care of|ball pressure|\bpress\b|deflection"),
+    ("fouls", r"free throws?|\bfouls?\b|\bft line\b"),
+)
+
+
+def _ktv_link_topics(text):
+    t = str(text or "").lower()
+    return {name for name, rx in _KTV_LINK_TOPICS if re.search(rx, t)}
+
+
+def _ktv_sample_games():
+    """Games behind the computed keys: {"uww", "opp", "uww_film", "opp_film"} -> a count, or None when unknown."""
+    g = {"uww": None, "opp": None, "uww_film": None, "opp_film": None}
+    try:
+        if _ktv_stints is not None and not _ktv_stints.empty and "game_date" in _ktv_stints.columns:
+            g["uww"] = int(_ktv_stints["game_date"].nunique())
+        bx = _ktv_load("uww_opponent_prior_games_box_score")
+        if not bx.empty and {"team", "game_date"} <= set(bx.columns) and _ktv_short:
+            n = int(bx[bx["team"].astype(str) == str(_ktv_short)]["game_date"].nunique())
+            g["opp"] = n or None
+        if g["opp"] is None and _ktv_opp_lu is not None and "GP" in _ktv_opp_lu.columns and not _ktv_opp_lu.empty:
+            g["opp"] = int(_ktv_opp_lu["GP"].max()) or None
+        pc = _ktv_load("uww_play_call_summary")
+        if not pc.empty and {"side", "games", "scouted_opponent"} <= set(pc.columns) and _ktv_short:
+            pc = pc[pc["scouted_opponent"].astype(str) == str(_ktv_short)]
+            for side, key in (("UWW", "uww_film"), ("Opponent", "opp_film")):
+                v = pd.to_numeric(pc[pc["side"] == side]["games"], errors="coerce").max()
+                g[key] = int(v) if pd.notna(v) and v > 0 else None
+    except Exception as e:
+        _ktv_problems.append(f"sample games: {e}")
+    return g
+
+
+def _ktv_set_coverages(name, ours):
+    """Every coverage played against one play call, from the offense table: [(kind, coverage, possessions, ppp)]."""
+    ob = _ktv_load("uww_offense_breakdown")
+    need = {"team", "perspective", "level", "label", "possessions", "ppp", "order"}
+    if ob.empty or not need <= set(ob.columns) or not _ktv_short:
+        return []
+    if "scouted_opponent" in ob.columns:
+        ob = ob[ob["scouted_opponent"].astype(str) == str(_ktv_short)]
+    ob = ob[ob["perspective"].astype(str) == ("UWW" if ours else "Opponent")].sort_values("order")
+    key = lambda s: re.sub(r"[^a-z0-9#]+", "", str(s).lower())      # noqa: E731
+    agg, cur = {}, False
+    for _, r in ob.iterrows():
+        lvl = str(r["level"])
+        if lvl == "play_call":
+            cur = key(r["label"]) == key(name)
+        elif lvl in ("situation", "formation"):
+            cur = False
+        elif lvl == "coverage" and cur:
+            lab = str(r["label"]).strip()
+            n, p = pd.to_numeric(r["possessions"], errors="coerce"), pd.to_numeric(r["ppp"], errors="coerce")
+            if lab.lower().startswith("no coverage") or pd.isna(n) or pd.isna(p) or n <= 0:
+                continue
+            k = ("" if pd.isna(r.get("cov_kind")) else str(r.get("cov_kind")), lab)
+            a = agg.setdefault(k, [0.0, 0.0])
+            a[0] += float(n)
+            a[1] += float(n) * float(p)
+    return [(k[0], k[1], v[0], v[1] / v[0]) for k, v in agg.items()]
+
+
+def _ktv_set_how(name, ours):
+    """(sentence for the key, line for its evidence) on what has worked against a play call."""
+    cov = _ktv_set_coverages(name, ours)
+    lab = lambda c: c[1] + (" on the ball screen" if c[0].lower().startswith("ball") else   # noqa: E731
+                            " off the ball" if c[0].lower().startswith("off") else "")
+    ev = ("Coverages against it: " + " \u00b7 ".join(f"{lab(c)} {int(c[2])} ({c[3]:.2f})"
+                                                     for c in sorted(cov, key=lambda c: -c[2]))
+          if cov else "No coverage tagged against it yet")
+    ok = [c for c in cov if c[2] >= KTV_HOW_MIN_POSS]
+    if not ok:
+        return "", ev
+    best, worst = min(ok, key=lambda c: c[3]), max(ok, key=lambda c: c[3])
+    two = worst is not best and worst[3] - best[3] >= 0.25
+    trips = lambda c: f"{int(c[2])} trip{'s' if int(c[2]) != 1 else ''}"      # noqa: E731
+    if ours:
+        s = (f"Defenses have slowed it most with {lab(best)} ({best[3]:.2f} PPP, {trips(best)}); it has scored best "
+             f"against {lab(worst)} ({worst[3]:.2f}, {int(worst[2])})" if two else
+             f"Against {lab(best)} it has scored {best[3]:.2f} PPP ({trips(best)})")
+    else:
+        # with one coverage to go on there is nothing to compare it with: it "allowed", it did not "hold"
+        s = (f"On film, {lab(best)} held it to {best[3]:.2f} PPP ({trips(best)}); {lab(worst)} gave up "
+             f"{worst[3]:.2f} ({int(worst[2])})" if two else
+             f"On film, {lab(best)} allowed {best[3]:.2f} PPP against it ({trips(best)})")
+    return s + ".", ev
+
+
+try:
+    _ktv_g = _ktv_sample_games()
+    _ktv_computed = ("Data-Driven", "Lineup Scouting")
+    for _row in _ktv_rows:
+        if _row.get("source") not in _ktv_computed or not _row.get("brief_eligible", True):
+            continue
+        _h = str(_row.get("headline") or "").lower()
+        _ours = _h.startswith(_KTV_OURS)
+        _is_set = _h.startswith(_KTV_SET_KEYS)
+        # 2. how (before the sample note, so the note stays last)
+        if _is_set:
+            _how, _how_ev = _ktv_set_how(str(_row["headline"]).split(":", 1)[1].strip(), _ours)
+            if _how:
+                _row["reasoning"] = (str(_row.get("reasoning") or "").rstrip() + " " + _how).strip()
+            _row["evidence"] = "\n".join(x for x in (str(_row.get("evidence") or "").strip(), _how_ev) if x)
+        # 1. sample
+        _g = _ktv_g[("uww" if _ours else "opp") + ("_film" if _is_set else "")]
+        if _g is not None and _g < _KTV_MIN_GAMES:
+            _c = _row.get("confidence")
+            _c = KTV_BRIEF_RULES["default_confidence"] if _c is None or pd.isna(_c) else float(_c)
+            _row["confidence"] = max(0.0, min(1.0, _c)) * _g / _KTV_MIN_GAMES
+            _r0 = str(_row.get("reasoning") or "").rstrip()
+            _row["reasoning"] = ((_r0 if _r0.endswith((".", "!", "?")) or not _r0 else _r0 + ".")
+                                 + f" Small sample: {_g} game{'s' if _g != 1 else ''}.").strip()
+    # 3. staff keys carry the computed key about the same thing
+    _ktv_data = sorted((r for r in _ktv_rows if r.get("source") == "Data-Driven" and r.get("brief_eligible", True)
+                        and str(r.get("reasoning") or "").strip()), key=ktv_priority, reverse=True)
+    for _row in _ktv_rows:
+        if _row.get("source") not in KTV_BRIEF_RULES["staff_sources"] or str(_row.get("reasoning") or "").strip():
+            continue
+        _tp = _ktv_link_topics(_row.get("headline"))
+        _hit = next((d for d in _ktv_data
+                     if _tp & _ktv_link_topics(str(d["headline"]) + " " + str(d["reasoning"]))), None) if _tp else None
+        if _hit is not None:
+            _row["reasoning"] = f"From the numbers: {str(_hit['headline']).rstrip('.')}. {_hit['reasoning']}"
+            _row["evidence"] = f"Linked data key: {_hit['headline']}"
+except Exception as _e:
+    _ktv_problems.append(f"Sample / how / staff links: {_e}")
 
 
 ktv_keys = pd.DataFrame(_ktv_rows)

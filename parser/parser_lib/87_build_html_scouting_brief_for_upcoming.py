@@ -2777,6 +2777,20 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # Tendencies, e.g. "Screener on Ball Screen: Roll 5 of 5 (100%), 1.60 PPP".
     _reads_tbl = _sb_d("uww_action_reads")
 
+    # CONFIRMED CHANGE (requested 11/14: the contradiction pass on player lines). Where the film or the numbers contradict
+    # a line in the coaches' report, 85b_read_reconcile writes a "Check: ..." line (uww_read_conflicts, action "flag"); it
+    # rides above the player's reads. The coaches' own line is never changed. Read straight from the file (not _sb_d): an
+    # empty table is the normal case and must not be listed as "not available for this build".
+    _read_flags = {}
+    try:
+        _rcf = pd.read_csv(os.path.join(_sb_d.dir, "uww_read_conflicts.csv"))
+    except Exception:
+        _rcf = pd.DataFrame()
+    if not _rcf.empty and {"opponent", "player", "action", "brief_line"} <= set(_rcf.columns):
+        for _, _c in _rcf[(_rcf["opponent"].astype(str) == str(short)) & (_rcf["action"].astype(str) == "flag")].iterrows():
+            if _sb_clean(_c.get("brief_line")):
+                _read_flags.setdefault(_norm(_c["player"]), []).append(_sb_clean(_c["brief_line"]))
+
     def _reads_of(name, side):
         r = _reads_tbl
         if r.empty or not {"player", "offense_team", "uses"} <= set(r.columns):
@@ -3004,6 +3018,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _nt = (_tier_note if _k == "_tier" else _proj_note).get((side, _norm(name)))
             if _nt:
                 _lead.append(_nt)
+        if side == "Opponent":                           # (11/14) the report vs the film / the numbers -- at most two
+            _lead += (_read_flags.get(_norm(name)) or [])[:2]
         if _xf is not None:
             _lead.insert(0, f"Transfer from {_xf['team']} \u2014 his numbers are last season's there "
                             f"({_xf['games']} game{'s' if _xf['games'] != 1 else ''} on file"
@@ -3337,7 +3353,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _extra_n = 0
         if _thin_seen[0] > _thin0:
             _mins = [f"{n} {u}s for {'an' if k[:1] in 'aeiou' else 'a'} {k} read" for k, (n, u) in _thin_mins.items()]
-            add('<p class="mini"><span class="thin-ast">*</span> Too few attempts last season for a scouting read on him'
+            # CONFIRMED BUG (fixed 11/14): this said "last season" in every brief, all season long. And a read now also
+            # needs READ_MIN_GAMES games (85), so the line names both.
+            add('<p class="mini"><span class="thin-ast">*</span> Too few attempts or games on file for a scouting read on him'
                 + (" (the minimums: " + ", ".join(_mins) + ")" if _mins else "") + ".</p>")
         if side == "Opponent" and _foul_by:
             add('<p class="mini">Late game foul: <span class="call-foul">\u2714</span> foul him '
@@ -6099,9 +6117,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     add(f"<p>Generated {_sb_esc(generated)} from the scouting parser's exported data \u2014 the same "
         f"tables the scouting app reads, reconstructed from play-by-play, video-tagging and box-score "
         f"exports. Sample (placeholder) data is left out of this report; it still shows in the app.</p>")
-    if _sb_d.missing:
-        add(f'<p>Not available for this build: {_sb_esc(", ".join(sorted(set(_sb_d.missing))))}. '
-            f'Sections relying on those sources were left out rather than filled with estimates.</p>')
+    # CONFIRMED CHANGE (requested 11/14, review of the Elmhurst brief's "Built from:"): the "Not available for this build:
+    # uww_double_team_tendencies, ..." line is gone -- internal table names mean nothing to a coach. The run's log still
+    # lists them ("Tables that were empty or missing").
     add("<p>Prepared ahead of the staff's own scouting reports. Numbers will move as more film is "
         "tagged.</p>")
     # CONFIRMED CHANGE (requested: "On the bottom of the scouting briefs, make sure to include notes about the scouting
@@ -6124,9 +6142,19 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 for d, t in sorted(_reps)) + ".")
     except Exception:
         pass
+    # CONFIRMED CHANGE (requested 11/14: "Drop Player Number Tracking and tracked games unless a section used them"). The
+    # Elmhurst brief said "173 coach player check(s) in use" while its per-player film reads and court sections were OFF.
+    # Tracking is named only when the film-quality gate (55e names_ok / court_ok) let it into this brief for either team.
+    _trk_used = False
     try:
-        _ptg = _sb_d("uww_player_tracking_games")
-        _trr = _sb_d("uww_tracking_report")
+        if not _fq.empty and {"is_upcoming", "is_uww"} <= set(_fq.columns):
+            _fqu = _fq[(_fq["is_upcoming"].astype(str) == "True") | (_fq["is_uww"].astype(str) == "True")]
+            _trk_used = any(_fqu[c].astype(str).str.lower().eq("true").any() for c in ("names_ok", "court_ok") if c in _fqu.columns)
+    except Exception:
+        _trk_used = False
+    try:
+        _ptg = _sb_d("uww_player_tracking_games") if _trk_used else pd.DataFrame()
+        _trr = _sb_d("uww_tracking_report") if _trk_used else pd.DataFrame()
         if not _ptg.empty and "game" in _ptg.columns:
             _bits = []
             for _g in _ptg["game"].astype(str):
@@ -6153,30 +6181,55 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _rows_fq = _fq[(_fq.get("is_upcoming").astype(str) == "True") | (_fq.get("is_uww").astype(str) == "True")]
             _bits = [f"{_sb_esc(r['team'])} \u2014 {_sb_esc(_sb_clean(r.get('film_line')))}" for _, r in _rows_fq.iterrows()
                      if _sb_clean(r.get("film_line"))]
-            if _bits:
-                _src.append("<b>Film tracking and tagging:</b> " + "; ".join(_bits) + ".")
+            if _bits and _trk_used:               # (11/14) the tagged counts are in the lines below, split by what is used
+                _src.append("<b>Film tracking:</b> " + "; ".join(_bits) + ".")
     except Exception:
         pass
     # CONFIRMED CHANGE (requested: "Is there not any coach-tagged data for Carroll vs Elmhurst?" -- there is; the film line
     # only names the PLAYER-TRACKED games). Every game with coach-tagged possessions, per team, on offense.
+    # CONFIRMED CHANGE (requested 11/14, review of the Elmhurst brief). This list said "Elmhurst: 126 coach-tagged
+    # possessions on offense" when 82 were last season's (Carroll@Elmhurst 2/24/26) and the tables use this season's clips
+    # only (BRIEF_THIS_SEASON_ONLY) -- 44 possessions, one game. And it never said that Elmhurst@Ripon had 89 Elmhurst
+    # possessions nobody had tagged. Three lines now, each per team on offense:
+    #   used in this brief          this season's tagged possessions, by game
+    #   last season, not used       tagged, but left out of the tables
+    #   still untagged this season  possessions on film with no tag yet (what to tag next)
     try:
         _pcf = _sb_d("uww_play_calls")
         if not _pcf.empty and {"game_date", "game_code", "offense_team", "decode_quality"} <= set(_pcf.columns):
-            _pcf = _pcf[_pcf["decode_quality"].astype(str) != "Untagged"]
             if "scouted_opponent" in _pcf.columns:
                 _pcf = _pcf[_pcf["scouted_opponent"].astype(str) == str(short)]
-            _tb = []
-            for _team in [str(short)] + [t for t in _pcf["offense_team"].dropna().astype(str).unique()
-                                         if "whitewater" in t.lower()][:1]:
-                _gt = _pcf[_pcf["offense_team"].astype(str) == _team].groupby(["game_date", "game_code"]).size()
-                if len(_gt):
-                    _tb.append(f"{_sb_esc(_team)}: " + ", ".join(
-                        f"{_sb_esc(gc)} {pd.Timestamp(gd).month}/{pd.Timestamp(gd).day}/{pd.Timestamp(gd).strftime('%y')} ({int(n_)})"
-                        for (gd, gc), n_ in _gt.sort_index().items()))
-            if _tb:
-                _src.append("<b>Coach-tagged possessions on offense, by game:</b> " + "; ".join(_tb) + ".")
-    except Exception:
-        pass
+            _pcf = _pcf.assign(_d=pd.to_datetime(_pcf["game_date"], errors="coerce"),
+                               _tag=_pcf["decode_quality"].astype(str) != "Untagged")
+            _split = bool(globals().get("BRIEF_THIS_SEASON_ONLY", True)) and bool(globals().get("LAST_SEASON"))
+            _start = pd.Timestamp(int(globals().get("SEASON_START_YEAR") or 2000), 8, 1)
+            _now = (_pcf["_d"] >= _start) if _split else pd.Series(True, index=_pcf.index)
+            _fmt = lambda gt: ", ".join(                                                    # noqa: E731
+                f"{_sb_esc(gc)} {pd.Timestamp(gd).month}/{pd.Timestamp(gd).day}/{pd.Timestamp(gd).strftime('%y')} ({int(n_)})"
+                for (gd, gc), n_ in gt.sort_index().items())
+            _used, _old, _todo = [], [], []
+            _ot = _pcf["offense_team"].astype(str)
+            _teams = [(str(short), _ot == str(short))] + ([] if _an["on"] else
+                                                          [(_SB_UWW, _ot.str.contains("whitewater", case=False, na=False))])
+            for _team, _mk in _teams:
+                _g = lambda m: _pcf[m].groupby(["game_date", "game_code"]).size()           # noqa: E731
+                _u, _o, _t = _g(_mk & _now & _pcf["_tag"]), _g(_mk & ~_now & _pcf["_tag"]), _g(_mk & _now & ~_pcf["_tag"])
+                _used.append(f"{_sb_esc(_team)} \u2014 " + (f"{int(_u.sum())} possession{'s' if int(_u.sum()) != 1 else ''} in "
+                                                             f"{len(_u)} game{'s' if len(_u) != 1 else ''}: {_fmt(_u)}"
+                                                             if len(_u) else "none tagged yet"))
+                if len(_o):
+                    _old.append(f"{_sb_esc(_team)} \u2014 {int(_o.sum())} in {len(_o)} game{'s' if len(_o) != 1 else ''}"
+                                + (f": {_fmt(_o)}" if len(_o) <= 3 else ""))
+                if len(_t):
+                    _todo.append(f"{_sb_esc(_team)} \u2014 {_fmt(_t)}")
+            _src.append("<b>Tagged offense used in this brief" + (" (this season)" if _split else "") + ":</b> "
+                        + "; ".join(_used) + ".")
+            if _old:
+                _src.append("<b>Tagged last season, not used in the tables:</b> " + "; ".join(_old) + ".")
+            if _todo:
+                _src.append("<b>Still untagged this season (offensive possessions on film):</b> " + "; ".join(_todo) + ".")
+    except Exception as _e:
+        print(f"  !! Built from: the tagged-film lines could not be built ({type(_e).__name__}: {_e})")
     if _src:
         add('<p><b>Built from:</b></p><ul class="bl">' + "".join(f"<li>{x}</li>" for x in _src) + "</ul>")
     if footnotes or not gl.empty or _film_link:
@@ -6285,3 +6338,7 @@ else:
     if _sb_data.missing:
         print("  Tables that were empty or missing (their sections were left out of the brief): "
               + ", ".join(sorted(set(_sb_data.missing))))
+
+# CONFIRMED CHANGE (requested 11/14: "Brief check after every run"). Reads the finished brief file(s) written above
+# against the data folder and prints what looks wrong -- see parser_lib/87b_brief_check.py. It changes nothing in the brief.
+run_section("87b_brief_check")

@@ -1,4 +1,42 @@
 scouted_opponent,side,team,action,possessions,pct,tagged_possessions,games,order
+Elmhurst Bluejays,Banked,Calvin Knights,No action tagged,80,98.8,81,1,0
+Elmhurst Bluejays,Banked,Calvin Knights,Ball screen (any),0,0.0,81,1,1
+Elmhurst Bluejays,Banked,Calvin Knights,"DHO / handoff (incl. Zoom, Pistol, Give)",0,0.0,81,1,2
+Elmhurst Bluejays,Banked,Calvin Knights,Swing / ball reversal,0,0.0,81,1,3
+Elmhurst Bluejays,Banked,Calvin Knights,Pinch post (throw / pass to the pinch),0,0.0,81,1,4
+Elmhurst Bluejays,Banked,Calvin Knights,Down screen,0,0.0,81,1,5
+Elmhurst Bluejays,Banked,Calvin Knights,Isolation,1,1.2,81,1,6
+Elmhurst Bluejays,Banked,Calvin Knights,Post entry / throw to the 5,0,0.0,81,1,7
+Elmhurst Bluejays,Banked,Calvin Knights,Split action (incl. split scissors),0,0.0,81,1,8
+Elmhurst Bluejays,Banked,Calvin Knights,Over,0,0.0,81,1,9
+Elmhurst Bluejays,Banked,Calvin Knights,"Cuts (backdoor, slot, shallow, flash)",0,0.0,81,1,10
+Elmhurst Bluejays,Banked,Calvin Knights,Flare,0,0.0,81,1,11
+Elmhurst Bluejays,Banked,Calvin Knights,Stagger,0,0.0,81,1,12
+Elmhurst Bluejays,Banked,Calvin Knights,Cross / back screen,0,0.0,81,1,13
+Elmhurst Bluejays,Banked,Calvin Knights,Scissors,0,0.0,81,1,14
+Elmhurst Bluejays,Banked,Calvin Knights,Pass to corner,0,0.0,81,1,15
+Elmhurst Bluejays,Banked,Calvin Knights,Ghost,0,0.0,81,1,16
+Elmhurst Bluejays,Banked,Calvin Knights,Rifle,0,0.0,81,1,17
+Elmhurst Bluejays,Banked,Calvin Knights,Wide pin,0,0.0,81,1,18
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,No action tagged,59,68.6,86,1,0
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Ball screen (any),7,8.1,86,1,1
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,"DHO / handoff (incl. Zoom, Pistol, Give)",14,16.3,86,1,2
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Swing / ball reversal,0,0.0,86,1,3
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Pinch post (throw / pass to the pinch),0,0.0,86,1,4
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Down screen,0,0.0,86,1,5
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Isolation,0,0.0,86,1,6
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Post entry / throw to the 5,0,0.0,86,1,7
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Split action (incl. split scissors),0,0.0,86,1,8
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Over,0,0.0,86,1,9
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,"Cuts (backdoor, slot, shallow, flash)",0,0.0,86,1,10
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Flare,0,0.0,86,1,11
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Stagger,0,0.0,86,1,12
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Cross / back screen,0,0.0,86,1,13
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Scissors,3,3.5,86,1,14
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Pass to corner,0,0.0,86,1,15
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Ghost,0,0.0,86,1,16
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Rifle,0,0.0,86,1,17
+Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Wide pin,0,0.0,86,1,18
 Elmhurst Bluejays,Opponent,Elmhurst Bluejays,No action tagged,36,81.8,44,1,0
 Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Ball screen (any),7,15.9,44,1,1
 Elmhurst Bluejays,Opponent,Elmhurst Bluejays,"DHO / handoff (incl. Zoom, Pistol, Give)",0,0.0,44,1,2

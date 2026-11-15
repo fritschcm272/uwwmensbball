@@ -1668,13 +1668,40 @@ def _pl_app_screen_label(x):
     return "Screen"
 
 
+def _pl_unskip_match(r):
+    """Does PLAY_TAG_UNSKIP put this clip back into Film Tagging? "all" = every skipped clip; "<game>" = that game's;
+    "<game> <clip #>" = one clip (the same way PLAY_TAG_REOPEN names a play)."""
+    req = globals().get("PLAY_TAG_UNSKIP") or []
+    req = [req] if isinstance(req, str) else list(req)
+    gc, n = str(r.get("game_code") or ""), r.get("clip_number")
+    for q in (str(x).strip() for x in req if str(x).strip()):
+        if q.lower() == "all":
+            return True
+        m = re.match(r"^(.*?)\s+#?(\d+)$", q)
+        if m and m.group(1).strip():
+            try:
+                if m.group(1).strip().lower() in gc.lower() and int(float(n)) == int(m.group(2)):
+                    return True
+            except (TypeError, ValueError):
+                continue
+        elif q.lower() in gc.lower():
+            return True
+    return False
+
+
 def _pl_apply_app_tags(out):
     if out.empty or not globals().get("PLAY_CALLS_USE_APP_TAGS", True):
         return out
     by = _pl_app_answers()
-    if not by and not _pl_app_actions():
+    _skipped = globals().get("_title_review_skips")
+    if _skipped is None:
+        title_review_answers()                                   # fills _title_review_skips as well
+        _skipped = globals().get("_title_review_skips") or set()
+    if not by and not _pl_app_actions() and not _skipped:
         return out
     out = out.copy()
+    if "skipped" not in out.columns:
+        out["skipped"] = False
     norm = lambda x: re.sub(r"[^a-z0-9#]+", "", str(x).lower())
     blank = lambda v: v is None or (isinstance(v, float) and pd.isna(v)) or str(v).strip() in ("", "None", "nan")
     col_of = {"situation": "play_situation", "formation": "play_formation", "play_call": "play_set",
@@ -1703,8 +1730,12 @@ def _pl_apply_app_tags(out):
         js = [j for j in (_num_of.get(norm(p_)) for p_ in re.split(r"\s*/\s*", str(v or "")) if p_.strip()) if j]
         return (js[0] if js else None) if first else ("/".join(js) or None)
     n_multi = 0
+    _n_skip = 0
     for idx, r in out.iterrows():
         _ck = _pl_ckey_norm(f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}")
+        if _ck in _skipped and not _pl_unskip_match(r):
+            out.at[idx, "skipped"] = True
+            _n_skip += 1
         a = by.get(_ck) or {}
         untagged = r.get("decode_quality") == "Untagged" or blank(r.get("play_title"))
         # the play's Actions table (Film Tagging): used like the answers -- always on an untagged clip, on a coach-Titled
@@ -1905,6 +1936,10 @@ def _pl_apply_app_tags(out):
             n_fix += 1
             note = str(out.at[idx, "decode_note"] or "")
             put("decode_note", (note + "; " if note else "") + f"corrected in the app ({flds})")
+    if _n_skip or (_skipped and globals().get("PLAY_TAG_UNSKIP")):
+        _back = len(_skipped) - _n_skip
+        print(f"  Skipped in the app: {_n_skip} clip(s) the coaches marked \"skip\" -- not tagged, not offered again"
+              + (f"; {_back} put back by PLAY_TAG_UNSKIP" if _back > 0 else ""), flush=True)
     if n_new or n_fix:
         print(f"  App tags: {n_new} clip(s) tagged in the app (no Title) and {n_fix} coach Title(s) corrected in the app "
               f"-- used in every play-call table like a Title"
@@ -2948,7 +2983,7 @@ def title_review_answers():
         try:
             with open(f, encoding="utf-8") as fh:
                 d = json.load(fh)
-            if d.get("answers") and not _pl_title_save_ok(d, os.path.getmtime(f)):
+            if (d.get("answers") or d.get("skipped")) and not _pl_title_save_ok(d, os.path.getmtime(f)):
                 continue                       # before the restart on the Synergy exports, or a test save
             docs.append((str(d.get("saved", "")), os.path.getmtime(f), d))
         except Exception:
@@ -2959,8 +2994,18 @@ def title_review_answers():
     # his earlier changes weren't on screen) used to put the defaults back over his earlier answers. Now an untouched
     # default never replaces an answer a coach actually gave; only a later real answer does.
     coach_given = set()
+    # CONFIRMED CHANGE (requested 11/15: "a way for the coach to mark the clip as skipped, but that still counts as saving
+    # and they won't want to see it again"). A save carries "skipped" / "unskipped" clip keys from Film Tagging's "Skip this
+    # clip" box. Merged in save order like the answers, so the coach's latest word wins. A skipped clip is NOT tagged: it
+    # keeps decode_quality "Untagged", stays out of every play-call table, and is simply never offered again
+    # (55c tag_queue) until PLAY_TAG_UNSKIP names it.
+    _skips = {}
     for _s, _m, d in sorted(docs, key=lambda x: (x[0], x[1])):
         _no_act = _pl_no_action_clips(d)
+        for _ck in (d.get("skipped") or []):
+            _skips[_pl_ckey_norm(_ck)] = True
+        for _ck in (d.get("unskipped") or []):
+            _skips[_pl_ckey_norm(_ck)] = False
         for a in d.get("answers", []):
             key = (a.get("clip_key"), a.get("field"))
             if a.get("prefilled") and key in coach_given:
@@ -2980,6 +3025,7 @@ def title_review_answers():
             else:
                 out.pop(key, None)
     globals()["_title_review_marks"] = marks          # every mark (incl. "can't tell"), for the accuracy report
+    globals()["_title_review_skips"] = {ck for ck, on in _skips.items() if on}
     return out
 
 
@@ -3743,6 +3789,16 @@ if isinstance(globals().get("clip_frames"), pd.DataFrame) and not clip_frames.em
         if _cfp["frame_files"].dropna().astype(str).str.strip().eq("").all():
             print(f"  (frame check: {_lab}: no frames captured yet ({len(_cfp)} clip row(s), all with errors) -- not "
                   "stopping; re-export it in Synergy Editor and it is captured next run)", flush=True)
+            continue
+        # CONFIRMED BUG (fixed 11/15): a game whose captured clips have NO Synergy description (an export made before
+        # Synergy coded the game) can never become play calls -- _pl_untagged_from_frames needs the description -- so the
+        # old "export its tagged clips from Synergy into uww_plays.csv" stop asked for something no export could give.
+        # It is a note now, with the real cause. (46 no longer registers such an export at all; this covers the clips
+        # already in uww_clip_frames.csv from before that fix.)
+        if "description" in _cfp.columns and not _cfp["description"].notna().any():
+            print(f"  (frame check: {_lab}: {len(_cfp)} captured clip(s) have no Synergy description -- the export was "
+                  f"made before Synergy coded the game, so no play calls can be built from it. Re-export the game once "
+                  f"Synergy's coding is up; not stopping the run.)", flush=True)
             continue
         if not _cfp["frame_files"].dropna().astype(str).isin(_used_ff).any() and not _ignored(_lab, _url):
             _gaps_capt.append(f"    - {_lab}: {len(_cfp)} clip(s) captured, none in uww_plays.csv")

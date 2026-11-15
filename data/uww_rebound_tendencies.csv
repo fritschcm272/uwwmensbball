@@ -1,8 +1,9 @@
 opponent,situation,crash_pct,who_crashes,note,is_sample
-Ripon Red Hawks,Their missed layup / dunk,24,"Anton Kilde (1), Ripon (1), Jose Gonzales (1)",24% offensive rebound on 17 of 17 misses (0 unpaired),False
-Ripon Red Hawks,Their missed two-point jumper,5,Christian Wilson (1),5% offensive rebound on 21 of 21 misses (0 unpaired),False
-Ripon Red Hawks,All their misses,17,"Ripon (3), Anton Kilde (1), Jose Gonzales (1)",17% offensive rebound on 42 of 42 misses (0 unpaired),False
-Ripon Red Hawks,Opponent missed layup / dunk,41,"Keenan Rahn (2), Michael Asman (1), Anton Kilde (1)",They secure 41% of 17 opponent misses (0 unpaired),False
-Ripon Red Hawks,Opponent missed two-point jumper,88,"Jackson Flowers (4), Landon Lee (3), Seth Bunders (2)",They secure 88% of 17 opponent misses (0 unpaired),False
-Ripon Red Hawks,Opponent missed free throw,44,"Jose Gonzales (2), Michael Asman (1), Ripon (1)",They secure 44% of 9 opponent misses (0 unpaired),False
-Ripon Red Hawks,All opponent misses,60,"Jackson Flowers (5), Keenan Rahn (4), Michael Asman (3)",They secure 60% of 43 opponent misses (0 unpaired),False
+Elmhurst Bluejays,Their missed layup / dunk,50,"Elmhurst (6), Chris Ketchum (5), Aidyn Boone (2)",50% offensive rebound on 34 of 34 misses (0 unpaired),False
+Elmhurst Bluejays,Their missed two-point jumper,29,"Dominic Trelenberg (3), Vinnie Adjahoungbeta (3), Chris Ketchum (1)",29% offensive rebound on 34 of 34 misses (0 unpaired),False
+Elmhurst Bluejays,Their missed free throw,47,Elmhurst (8),47% offensive rebound on 17 of 17 misses (0 unpaired),False
+Elmhurst Bluejays,All their misses,41,"Elmhurst (14), Chris Ketchum (6), Vinnie Adjahoungbeta (5)",41% offensive rebound on 85 of 85 misses (0 unpaired),False
+Elmhurst Bluejays,Opponent missed layup / dunk,69,"Vinnie Adjahoungbeta (5), Elmhurst (3), EJ Marshall (3)",They secure 69% of 29 opponent misses (0 unpaired),False
+Elmhurst Bluejays,Opponent missed two-point jumper,82,"Chris Ketchum (8), Vinnie Adjahoungbeta (5), Dominic Trelenberg (5)",They secure 82% of 44 opponent misses (0 unpaired),False
+Elmhurst Bluejays,Opponent missed free throw,44,"Vinnie Adjahoungbeta (3), Elmhurst (1)",They secure 44% of 9 opponent misses (1 unpaired),False
+Elmhurst Bluejays,All opponent misses,73,"Vinnie Adjahoungbeta (13), Chris Ketchum (10), Dominic Trelenberg (7)",They secure 73% of 82 opponent misses (1 unpaired),False

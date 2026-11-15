@@ -1815,6 +1815,20 @@ def _vx_ingest(label, url, folder, cache):
     ex = pd.read_csv(os.path.join(folder, "Export.csv"), dtype=str)
     name = os.path.basename(folder)
     game_part = name.rsplit(" - ", 1)[0].strip() if " - " in name else name
+    # CONFIRMED BUG (fixed 11/15; the run stopped with "2026-11-14 Ripon Red Hawks: 224 clip(s) captured, none in
+    # uww_plays.csv"). Synergy had the game's video but had not CODED the game yet, so every row of Export.csv had an empty
+    # Title and Synergy String. The clips were registered with no description, 47 could not make play calls from them
+    # (it needs the Synergy string), and the gap check stopped the run asking for something no export could give. An
+    # uncoded export is now left alone: nothing is registered, so the game is simply not captured yet and the run goes on.
+    # Re-export it once Synergy has coded the game (its folder in SYNERGY_EXPORT_DIR has to be renamed or removed first,
+    # or set VISION_EXPORT_UNCODED_OK = True to use it as it is -- the clips then carry no Synergy description).
+    _un = ex[[c for c in ("Title", "Synergy String") if c in ex.columns]] if len(ex) else ex
+    if len(ex) and (_un.empty or _un.fillna("").apply(lambda c: c.str.strip() == "").all(axis=1).mean() >= 0.9) \
+            and not globals().get("VISION_EXPORT_UNCODED_OK", False):
+        print(f"  [export] {label}: Synergy has not coded this game yet -- every clip in {name!r} has a blank Title and "
+              f"Synergy String ({len(ex)} clips). Not captured; re-export it once Synergy's coding is up (rename or "
+              f"remove that folder first). VISION_EXPORT_UNCODED_OK = True captures it without descriptions.", flush=True)
+        return cache[cache["source_url"] != url].reset_index(drop=True) if not cache.empty else cache
     mine = cache[cache["source_url"] == url] if not cache.empty else cache
     have = {}
     for _, r in mine.iterrows():
@@ -2964,7 +2978,11 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
             _mine = _pc_last[_pc_last["frame_files"].astype(str).map(lambda x: any(f in _ff for f in x.split(";") if f))]
             if _mine.empty:
                 return False, "no play calls from it yet -- run the notebook through the Play review"
-            _nu = int((_mine.get("decode_quality", pd.Series(dtype=object)) == "Untagged").sum())
+            # (11/15) a clip a coach marked "skip" in Film Tagging is not waiting to be tagged -- it never blocks the
+            # side's next game (see the skipped column, written in 47 from the saves)
+            _sk = (_mine["skipped"].fillna(False).astype(bool) if "skipped" in _mine.columns
+                   else pd.Series(False, index=_mine.index))
+            _nu = int(((_mine.get("decode_quality", pd.Series(dtype=object)) == "Untagged") & ~_sk).sum())
             if _nu > _max_u:
                 return False, f"{_nu} of {len(_mine)} clips still untagged -- Analytics > Film Tagging"
             return True, ""
