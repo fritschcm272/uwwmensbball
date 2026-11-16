@@ -6656,12 +6656,12 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False, only=None):
     for pi, pl in enumerate(d.get("plays", [])):
         if only is not None and pi not in only:          # Film Tagging saves one page (20 plays) at a time
             continue
-        # CONFIRMED CHANGE (requested: "a way for the coach to mark the clip as skipped, but that still counts as saving and
-        # they won't want to see it again"). "Skip this clip" is saved with the block: the parser never offers it again
-        # (it is not a tag -- nothing about the clip goes into any table). Unticking it puts the clip back.
-        _sk = store.get(f"{kp}_skip_{run}_{pi}")
-        if _sk is not None:
-            out.setdefault("skipped" if _sk else "unskipped", []).append(pl["clip_key"])
+        # CONFIRMED CHANGE (requested 11/16: "What if they click the Next button and then save the clips" -> option A).
+        # In a Film Tagging batch, a clip the coach SAVED with nothing filled in is his answer: he looked and there is
+        # nothing to tag. It is recorded as skipped -- not tagged, nothing of it in any table, and never offered again
+        # (PLAY_TAG_UNSKIP brings it back). Before this such a clip wrote nothing at all: it came back in the next batch
+        # and the group never showed as saved. Counted after the play's fields and actions below (see _n_before).
+        _n_before = (len(out["answers"]), len(out.get("actions") or []), len(out.get("actions_cleared") or []))
         # Film Tagging's Actions table (one row per action): saved as "actions", and its FIRST row (first ball-screen /
         # off-ball row for the coverages) also answers the single action fields below, so everything reading them still works
         _derived = None
@@ -6721,6 +6721,9 @@ def _pr_payload(d, store, coach, kp, part=None, actions=False, only=None):
                                    # untouched automatic answer on a clip with no coach tag: it's the clip's tag, but the
                                    # tag model doesn't learn from it (it would only be learning its own guess)
                                    "accepted_default": bool(pre and not touched and f.get("coach") in (None, ""))})
+        if actions and part != "players" and _n_before == (len(out["answers"]), len(out.get("actions") or []),
+                                                            len(out.get("actions_cleared") or [])):
+            out.setdefault("skipped", []).append(pl["clip_key"])      # saved with nothing on it: nothing to tag here
         for ki, pic in enumerate(pl.get("pictures", []) if part != "titles" else []):
             _who = store.get(f"{kp}_b_{run}_{pi}_{ki}_missed_who") or {}
             _opts = _pr_player_opts(pl)
@@ -6763,9 +6766,13 @@ def _pr_commit(d, store, coach, kp, part, key_suffix, actions=False, only=None):
              f"{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
     ok, msg = _pr_github_save(fname, out)
     n = len(out.get("answers", [])) if part == "titles" else len(out.get("checks", []))
+    _n_none = len(out.get("skipped") or [])                # clips saved with nothing on them (see _pr_payload)
     if ok:
         _is_tag = "/play_tag/" in str(d.get("_dir", "")).replace(os.sep, "/")
-        st.success(f"Saved {n} {'tag field(s)' if part == 'titles' else what} ({msg}). The app does not restart; the parser picks "
+        st.success(f"Saved {n} {'tag field(s)' if part == 'titles' else what} ({msg})."
+                   + (f" {_n_none} clip(s) had nothing on them -- taken as 'nothing to tag' and not offered again."
+                      if _n_none else "")
+                   + " The app does not restart; the parser picks "
                    f"it up when it runs (it fetches the saves branch) and brings this game's next batch."
                    + ("" if part == "titles" else " The review is finished once its player checks are saved."))
         _st = st.session_state.get("pr_answers", {}).get(str(d.get("run")), {})
@@ -8363,7 +8370,7 @@ def render_film_tagging():
                f"The last clip's Next saves these {FT_SAVE_EVERY} and opens the next {FT_SAVE_EVERY}.")
     _bid = f"{d.get('slug')}_{d.get('run')}_{_blk}"
     _form = _form_no_enter(f"ft_form_{_bid}")
-    _clr_pi, _fill_pi, _skip_pi = [], [], []
+    _clr_pi, _fill_pi = [], []
     _clip_prefetch([os.path.join(d["_dir"], _all[i_]["clip"]) for i_ in range(_lo, _hi) if _all[i_].get("clip")])
     with _form:
         for pi in range(_lo, _hi):
@@ -8373,14 +8380,12 @@ def render_film_tagging():
             except TypeError:
                 _box = st.container()
             with _box:
-                _skv = f"{kp}_skip_{d.get('run')}_{pi}"
-                _is_sk = bool(store.get(_skv, str(pl.get("clip_key")) in _skipped))
                 n_set = len([k for k in store if k.startswith(f"{kp}_v_{d.get('run')}_{pi}_")])
                 st.markdown(f"**Clip {pi - _lo + 1} of {_hi - _lo}** (#{pi + 1} of {len(_all)}) · Clip {pl.get('clip_number')} "
                             f"· {pl.get('clock') or ''} · {str(pl.get('synergy') or '')[:110]}"
                             + (f"  — {n_set} changed" if n_set else "")
                             + ("  ✅ saved" if str(pl.get("clip_key")) in _sv else "")
-                            + ("  ⏭️ skipped" if _is_sk else ""))
+                            + ("  ⏭️ skipped" if str(pl.get("clip_key")) in _skipped else ""))
                 if pl.get("coach_title"):
                     st.markdown(f"Coach's Title (Synergy): `{pl['coach_title']}`")
                 if pl.get("auto_title"):
@@ -8397,7 +8402,7 @@ def render_film_tagging():
                 # CONFIRMED CHANGE (requested: "Add a button to clear out any pre-filled suggestions" -> "just clear the
                 # current clip"): this clip's fields still on the automatic suggestion go to -- (picked, typed or saved
                 # answers are kept). Each clip has its own button, so only the clip on screen is cleared.
-                _cb1, _cb2, _cb3, _ = st.columns([1, 1, 1, 1])
+                _cb1, _cb2, _ = st.columns([1, 1, 2])
                 if _cb1.form_submit_button("Clear suggestions on this clip", key=f"ftclr_{_bid}_{pi}", use_container_width=True,
                                            help="Sets every field of THIS clip that's still on the automatic suggestion to --"):
                     _clr_pi.append(pi)
@@ -8407,20 +8412,11 @@ def render_film_tagging():
                                            use_container_width=True, disabled=pi >= _hi - 1,
                                            help=f"Copies THIS clip's Situation and Formation to the rest of these {FT_SAVE_EVERY} clips"):
                     _fill_pi.append(pi)
-                # CONFIRMED CHANGE (requested: "a way for the coach to mark the clip as skipped, but that still counts as
-                # saving and they won't want to see it again"): ticked and saved, this clip leaves Film Tagging for good --
-                # it is NOT tagged, so nothing about it reaches the play-call tables. The parser puts it back only when it
-                # is named in PLAY_TAG_UNSKIP.
-                # CONFIRMED CHANGE (requested 11/16: "Skip this Clip should be a button like above that takes it
-                # automatically to the next clip"): a third button beside the other two. It marks the clip skipped and
-                # moves straight on to the next one; pressing it again on a skipped clip puts it back. The skip is
-                # written with the group, like every other answer.
-                if _cb3.form_submit_button("Un-skip this clip" if _is_sk else "Skip this clip",
-                                           key=f"ftskip_{_bid}_{pi}", use_container_width=True,
-                                           help=("Puts this clip back in Film Tagging." if _is_sk else
-                                                 "Nothing is tagged for this clip and it stops coming back. Saves with "
-                                                 "the group, and jumps to the next clip.")):
-                    _skip_pi.append(pi)
+                # (11/16, requested: "remove the 'Skip this Clip' button because it does the same thing as just doing
+                # the 'Next Clip' button"). There is no per-clip skip control in the app any more -- Next leaves a clip
+                # untagged and it simply comes back in the game's next batch. A coach who wants a game out of Film
+                # Tagging for good uses "Skip this whole game" under the Game picker. The parser still understands a
+                # per-clip skip in a save file (47 `skipped` column), so nothing saved earlier is lost.
                 _ft_field_widgets(d, pi, store, kp)
                 _ft_actions_editor(d, pi, store, kp)
         _go = st.form_submit_button(f"Save clips {_lo + 1}–{_hi}" + (f" and open the next {FT_SAVE_EVERY}" if _blk < _nb - 1 else ""),
@@ -8428,9 +8424,8 @@ def render_film_tagging():
     # the browser side: one clip shown at a time, a Previous / Next bar, Enter = next, space = play / pause, M = 2x, N = rewind
     try:
         import streamlit.components.v1 as _kv1
-        _kv1.html("""<script>(function(){var P=window.parent,D=P.document,BID=%s,N=%d,GOTO=%d;
+        _kv1.html("""<script>(function(){var P=window.parent,D=P.document,BID=%s,N=%d;
 if(P.__ftBid!==BID){P.__ftBid=BID;P.__ftCur=0;}
-if(GOTO>=0){P.__ftCur=GOTO;}   /* "Skip this clip" moved on to the next one */
 function boxes(){var o=[];for(var i=0;i<N;i++){var b=D.querySelector('.st-key-ftclip_'+i);if(b)o.push(b);}return o;}
 function saveBtn(){var bs=D.querySelectorAll('button');for(var i=0;i<bs.length;i++){if((bs[i].innerText||'').trim().indexOf('Save clips')===0)return bs[i];}return null;}
 function show(){var bx=boxes();if(!bx.length)return;if(P.__ftStopSpeed&&P.__ftSpdVid&&bx[P.__ftCur]&&!bx[P.__ftCur].contains(P.__ftSpdVid))P.__ftStopSpeed();P.__ftCur=Math.max(0,Math.min(P.__ftCur,bx.length-1));
@@ -8473,7 +8468,7 @@ else if((e.code==='KeyM'||e.code==='KeyN')&&!typing&&!e.ctrlKey&&!e.metaKey&&!e.
 if(!P.__ftWatch2){P.__ftWatch2=P.setInterval(P.Function("var b=document.getElementById('ftnav');if(!b)return;var on=false;try{on=!!(window.__ftOnScreen&&window.__ftOnScreen());}catch(e){on=false;}b.style.display=on?'flex':'none';"),300);}
 /* CONFIRMED BUG (fixed; "this doesn't seem to be working": the check looked at clip 1 itself, which the bar hides once you move
    to clip 2 -- so the bar and Enter switched off after the first Next. It now checks the box that holds the clips.) */
-var t=0,iv=setInterval(function(){show();if(++t>40)clearInterval(iv);},250);})();</script>""" % (json.dumps(_bid), _hi - _lo, int(st.session_state.pop("_ft_goto", -1))), height=0)
+var t=0,iv=setInterval(function(){show();if(++t>40)clearInterval(iv);},250);})();</script>""" % (json.dumps(_bid), _hi - _lo), height=0)
     except Exception:
         pass
     if _fill_pi:
@@ -8515,17 +8510,6 @@ var t=0,iv=setInterval(function(){show();if(++t>40)clearInterval(iv);},250);})()
                     _n_fill += 1
         st.session_state["_ft_flash"] = (f"Situation and formation of clip {src - _lo + 1} copied to clips {src - _lo + 2}\u2013"
                                          f"{_hi - _lo} of these {FT_SAVE_EVERY}.")
-        st.rerun()
-    if _skip_pi:
-        _pi_ = _skip_pi[0]
-        _skv_ = f"{kp}_skip_{d.get('run')}_{_pi_}"
-        _now_ = not bool(store.get(_skv_, str(_all[_pi_].get("clip_key")) in _skipped))
-        store[_skv_] = _now_
-        st.session_state["_ft_flash"] = (
-            f"Clip {_pi_ - _lo + 1} of these {FT_SAVE_EVERY}: " + ("skipped -- it leaves Film Tagging when you save this "
-            "group, and nothing about it is tagged." if _now_ else "back in -- tag it as usual."))
-        if _now_ and _pi_ < _hi - 1:
-            st.session_state["_ft_goto"] = _pi_ - _lo + 1      # the browser script opens the next clip (see below)
         st.rerun()
     if _clr_pi:
         _n_clr = 0

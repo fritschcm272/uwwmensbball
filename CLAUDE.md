@@ -507,12 +507,21 @@ Corey: "Couldn't I just delete the export in F drive". Answer: no, and the setti
 
 ### 11/16 -- "Skip this whole game" in Film Tagging
 Requested after the per-clip skip: coaches don't want to tag every game at all.
-- **Skip one clip is a BUTTON** (11/16, requested: "Skip this Clip should be a button like above that takes it
-  automatically to the next clip"): a third button beside "Clear suggestions on this clip" and "Fill situation +
-  formation forward" (it was a checkbox under them). It flips the clip's skip flag and jumps straight to the next clip --
-  the browser script takes a `GOTO` index from `st.session_state["_ft_goto"]`, which the handler sets and the script pops.
-  On a clip already skipped the button reads "Un-skip this clip" and puts it back. The skip is written with the group,
-  like every other answer, and the clip's header shows "skipped" as soon as the button is pressed.
+- **Saving a clip with nothing on it = "nothing to tag"** (11/16, Corey: "What if they click the Next button and then save
+  the clips" -> option A). In a Film Tagging batch (`actions=True`), a clip that is saved with no answer and no action row
+  is recorded in the save's `skipped` list: not tagged, nothing of it in any table, never offered again, and
+  PLAY_TAG_UNSKIP brings it back. Before this such a clip wrote NOTHING -- it came back in the next batch, the group
+  never showed as saved (the saved-clips set counts answers / actions / skips), and an empty file went to the saves
+  branch. The save message now says how many clips were taken that way. Title checks (`actions=False`) are not affected,
+  and with FILM_TAGGING_SUGGESTIONS on an untouched clip still saves the model's answers as accepted, as before.
+  Tested on a stand-in of the app's state: all three clips skipped when nothing was filled in; only the two passed over
+  when one was tagged; nothing skipped on a Title check or with suggestions on.
+- **There is NO per-clip skip control in the app** (11/16, Corey: "remove the 'Skip this Clip' button because it does the
+  same thing as just doing the 'Next Clip' button"). It was a checkbox, then briefly a third button beside "Clear
+  suggestions" / "Fill forward"; both are gone. Next leaves a clip untagged and it comes back in the game's next batch;
+  a coach who wants a game gone for good uses "Skip this whole game". The parser side of the per-clip skip is still
+  there and still read from save files (47's `skipped` column, 55c, 46's gate), so older saves keep working and the
+  control can come back as one button if it is ever wanted.
 - **App**: under the Game picker in Analytics > Film Tagging, an expander "Skip this whole game" -- name + a confirm tick
   + a button. It saves one small file (`..._skipgame_<coach>_<time>.json`, `{"game": "<date>|<code>", "skipped_game":
   true}`) straight to the saves branch, and the game leaves the list right away (`_ft_skipped_games`, used to filter the
