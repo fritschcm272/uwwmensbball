@@ -507,6 +507,12 @@ Corey: "Couldn't I just delete the export in F drive". Answer: no, and the setti
 
 ### 11/16 -- "Skip this whole game" in Film Tagging
 Requested after the per-clip skip: coaches don't want to tag every game at all.
+- **Skip one clip is a BUTTON** (11/16, requested: "Skip this Clip should be a button like above that takes it
+  automatically to the next clip"): a third button beside "Clear suggestions on this clip" and "Fill situation +
+  formation forward" (it was a checkbox under them). It flips the clip's skip flag and jumps straight to the next clip --
+  the browser script takes a `GOTO` index from `st.session_state["_ft_goto"]`, which the handler sets and the script pops.
+  On a clip already skipped the button reads "Un-skip this clip" and puts it back. The skip is written with the group,
+  like every other answer, and the clip's header shows "skipped" as soon as the button is pressed.
 - **App**: under the Game picker in Analytics > Film Tagging, an expander "Skip this whole game" -- name + a confirm tick
   + a button. It saves one small file (`..._skipgame_<coach>_<time>.json`, `{"game": "<date>|<code>", "skipped_game":
   true}`) straight to the saves branch, and the game leaves the list right away (`_ft_skipped_games`, used to filter the
