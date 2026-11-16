@@ -1,0 +1,34 @@
+{
+ "game": "2026-11-07|WWW@CAR",
+ "run": "20261111_103105",
+ "coach": "Corey",
+ "saved": "2026-11-16T16:06:34+00:00",
+ "answers": [
+  {
+   "clip_key": "2026-11-07|2|12 Peyton McKenna > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "field": "situation",
+   "coach": "Transition",
+   "auto": "Transition",
+   "auto_conf": 1.0,
+   "verdict": "right",
+   "correct": null,
+   "prefilled": true,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-07|2|12 Peyton McKenna > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts",
+   "clip_number": 2,
+   "field": "defense",
+   "coach": null,
+   "auto": "Man-to-Man",
+   "auto_conf": 0.99,
+   "verdict": "right",
+   "correct": null,
+   "prefilled": true,
+   "accepted_default": true
+  }
+ ],
+ "source": "streamlit app",
+ "part": "titles"
+}
