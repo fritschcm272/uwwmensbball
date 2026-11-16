@@ -468,6 +468,43 @@ NOT been seen in a real run -- check the next brief.
 - Do NOT make blank-description clips taggable: the app's clip key is `date|clip number|synergy string`, so coach answers
   saved against a blank string would stop matching the moment a coded export replaced them.
 
+### 11/15 -- the two export guards (both requested after the 11/14 Ripon mess)
+Confirmed in the browser on 11/15: Synergy has the 11/14 game as **partially logged**. Its Game Breakdown shows only
+"All Clips 224" plus the situational rows (out of bounds, after time outs, push ball, live free throws) and a single
+ALL CLIPS link. A fully logged game (Elmhurst @ Ripon 11/7) shows "All Play Clips", "All Possessions",
+"Possessions + Assists" and the SHOTS / SETS / TRANSITION / PRESS OFFENSE sections. UWW won 73-70.
+- **`VISION_EXPORT_REQUIRE_LOGGED = True`** (parser_nb cell 108; 46 `_syn_game_logged`): before exporting a game the run
+  opens its Game Breakdown page and looks for those markers. "Not logged yet" -> the export is skipped with a message and
+  tried again on a later run. Anything unclear (page didn't load, no Synergy login, an error) answers None and the export
+  goes ahead as before -- the check never blocks on doubt. A True is remembered in `inputs\_synergy_logged.json`; a
+  False is re-checked every run. Set it False to export regardless.
+- **`VISION_REEXPORT_GAMES = []`** (same cell; 46 `_vx_reexport_wanted` / `_vx_set_aside`): names games whose export
+  should be thrown away and done again -- "Ripon 11/14", "Ripon@UWWhitewater", "2026-11-14", "Nov 14", or "all". The old
+  export is MOVED (never deleted) to `<SYNERGY_EXPORT_DIR>\_uncoded\<name>` (two levels down, where `_vx_find_export`
+  does not look), the registry forgets the game and its clips are dropped from uww_clip_frames.csv, so the next export
+  starts clean. A date in an entry is compared as a date, so "Ripon 11/11" does not match the 11/14 game.
+- **To get the 11/14 game in once Synergy finishes logging it:** put `VISION_REEXPORT_GAMES = ["Ripon 11/14"]` in
+  parser_models' cell... no -- it lives in parser_nb cell 108; set it there, run parser_models, then empty it again.
+  With both guards on, a run before Synergy is done just says so and changes nothing.
+- Tested: the matcher on 12 entry forms (including the near-miss "Ripon 11/11"), the move / registry / clip-drop on a
+  copy of the folder layout, and the logged-check rules against the real page text of both games. No real run yet.
+
+### 11/16 -- VISION_REEXPORT_GAMES moved to where the games are CHOSEN (it could never have fired)
+Corey: "Couldn't I just delete the export in F drive". Answer: no, and the setting as written on 11/15 had the same hole.
+- A game whose clips are ALL captured with frames and no errors (the 11/14 Ripon game: 224 rows) is filtered out of
+  `_vis_sources` before `_vision_from_exports` runs, and that function is where the setting was being read. So neither
+  the setting nor deleting the export on F: would have put the game back: **the clip rows alone keep a game "captured"**.
+- Fixed in 46: the VISION_REEXPORT_GAMES request is now handled where `_done` is computed (the selection step), so the
+  game goes back in the queue. The rows are dropped from `clip_frames` itself, never from `_full` (which is only that
+  block's view and leaves out test_run rows -- assigning it back would have deleted those rows).
+- `_vx_set_aside` now copes with an export folder that is already gone (deleted by hand): it skips the move, still
+  forgets the registry entry and still drops the clips, and says so.
+- Tested on a copy of the folder layout: export present -> moved to `_uncoded\` + 224 rows dropped + other games' rows
+  kept + the export is no longer found (so it is exported again); folder already deleted -> same minus the move; setting
+  empty -> nothing touched.
+- So to redo that game: set `VISION_REEXPORT_GAMES = ["Ripon 11/14"]` in parser_nb cell 108 and run parser_models.
+  Deleting the folder on F: first is optional and changes nothing -- the setting is what drops the clip rows.
+
 ### 87 audit findings (11/14) -- listed for Corey, NOTHING changed yet
 Static scan of all of 87 + close reading of the roster, keys, matchup and team-stat code (not every line).
 1. `_sb_has_text` is defined twice (lines ~759 and ~777); the second silently wins.

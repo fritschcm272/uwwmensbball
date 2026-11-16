@@ -1515,6 +1515,146 @@ def _vx_find_export(game_id, label, url, cache):
     return None
 
 
+_SST_BREAKDOWN = "https://apps.synergysports.com/basketball/games/{gid}/breakdown"
+_VX_LOGGED_FILE = "_synergy_logged.json"
+
+
+def _syn_game_logged(gid, label=""):
+    """CONFIRMED CHANGE (requested 11/15: "a pre-export check" -- have frame capture ask Synergy whether the game is fully
+    logged before exporting). Has Synergy finished logging this game's play types? True / False / None = couldn't tell.
+
+    Read off the game's Game Breakdown page, which is how the two cases were told apart by hand on 11/15:
+      fully logged (Elmhurst @ Ripon 11/7)   "All Play Clips", "All Possessions", "Possessions + Assists", and the
+                                             SHOTS / SETS / TRANSITION breakdowns.
+      partially logged (Ripon @ UWW 11/14)   only "All Clips" and the situational rows Synergy can read off the
+                                             play-by-play (out of bounds, after time outs, push ball, live free throws).
+    A partially logged game exports fine but every clip's Title / Synergy String / Result is BLANK, which is what made the
+    11/14 export useless (no descriptions -> no play calls -> no Film Tagging) and stopped two runs.
+    Never blocks on doubt: anything other than a clear "not logged yet" answers None and the export goes ahead as before.
+    A True is remembered in inputs/_synergy_logged.json; a False is re-checked every run (logging finishes later)."""
+    if not globals().get("SYNERGY_LOOKUP", True) or not (globals().get("synergy_username") and globals().get("synergy_password")):
+        return None
+    _p = os.path.join(INPUT_DIR, _VX_LOGGED_FILE)
+    try:
+        with open(_p, encoding="utf-8") as fh:
+            done = json.load(fh) or {}
+    except Exception:
+        done = {}
+    if done.get(gid):
+        return True
+
+    def _work(page):
+        try:
+            _syn_capture(page, _SST_BREAKDOWN.format(gid=gid))
+            txt = page.inner_text("body")
+        except Exception:
+            return None
+        low = re.sub(r"\s+", " ", str(txt or "")).lower()
+        if "all clips" not in low and "game breakdown" not in low:
+            return None                                    # the page never loaded -- say nothing rather than block
+        return any(k in low for k in ("all play clips", "all possessions", "possessions + assists"))
+
+    try:
+        r = run_in_fastscout_session(_work)
+    except Exception as e:
+        print(f"  [synergy] {label or gid}: could not check Synergy's logging ({type(e).__name__}: {e}) -- exporting anyway",
+              flush=True)
+        return None
+    if r:
+        done[gid] = pd.Timestamp.now().isoformat(timespec="seconds")
+        try:
+            with open(_p, "w", encoding="utf-8") as fh:
+                json.dump(done, fh, indent=1)
+        except Exception:
+            pass
+    return r
+
+
+def _vx_reexport_wanted(label, folder):
+    """Does VISION_REEXPORT_GAMES name this game? An entry matches when every WORD in it appears in the game's label or its
+    export folder name, and its date (if it has one) is the game's own date: "Ripon 11/14", "Ripon@UWWhitewater",
+    "2026-11-14", "Nov 14". "all" matches every game. A date is compared as a date, so "Ripon 11/11" does NOT match the
+    11/14 game just because both numbers happen to appear in "2026-11-14"."""
+    req = globals().get("VISION_REEXPORT_GAMES") or []
+    req = [req] if isinstance(req, str) else list(req)
+    name = os.path.basename(folder or "")
+    hay = re.sub(r"[^a-z0-9]+", " ", f"{label} {name}".lower())
+    words_have, hay_sq = set(hay.split()), hay.replace(" ", "")
+    gdate = None                                           # the game's date: the label's "2026-11-14 ..." else the folder's " - Nov 14, 2026"
+    for cand in (re.match(r"^\s*(\d{4}-\d{2}-\d{2})", str(label)), None):
+        if cand:
+            gdate = pd.Timestamp(cand.group(1))
+    if gdate is None and " - " in name:
+        try:
+            gdate = pd.Timestamp(name.rsplit(" - ", 1)[1].strip())
+        except Exception:
+            gdate = None
+    for q in (str(x).strip() for x in req if str(x).strip()):
+        if q.lower() == "all":
+            return True
+        words = [w for w in re.split(r"[^a-z]+", q.lower()) if w]
+        nums = re.findall(r"\d+", q)
+        if words and not all((w in words_have or w in hay_sq) for w in words):
+            continue
+        qd = None
+        if len(nums) >= 2:                                 # a date in the entry ("11/14", "11-14-26", "2026-11-14")
+            try:
+                qd = pd.Timestamp(q if len(nums) >= 3 or len(nums[0]) == 4 else
+                                  f"{nums[0]}/{nums[1]}/{gdate.year if gdate is not None else pd.Timestamp.now().year}")
+            except Exception:
+                qd = None
+        if qd is not None:
+            if gdate is None or qd.date() != gdate.date():
+                continue
+        elif nums and not all(n in words_have for n in nums):
+            continue
+        if words or nums:
+            return True
+    return False
+
+
+def _vx_set_aside(folder, gid, label, cache):
+    """CONFIRMED CHANGE (requested 11/15: "a re-export path, so you don't have to hand-move folders"). Moves a stale export
+    out of the export folder into <SYNERGY_EXPORT_DIR>\\_uncoded\\ (two levels down, where _vx_find_export doesn't look),
+    forgets it in the registry and drops its clips from uww_clip_frames.csv, so the game is exported again from scratch.
+    -> the cache without that game's clips. The export itself is never deleted."""
+    # (11/16) the export may already be gone -- Corey can simply delete it on F: -- and the rest still has to happen:
+    # without dropping the game's clip rows it still counts as captured and is never exported again.
+    dest = None
+    if folder and os.path.isdir(folder):
+        dest_root = os.path.join(_vx_root(), "_uncoded")
+        dest = os.path.join(dest_root, os.path.basename(folder))
+        n = 2
+        while os.path.exists(dest):
+            dest = os.path.join(dest_root, f"{os.path.basename(folder)} ({n})")
+            n += 1
+        import shutil as _sh_mv
+        try:
+            os.makedirs(dest_root, exist_ok=True)
+            _sh_mv.move(folder, dest)
+        except Exception as e:
+            print(f"  [export] {label}: could not set its old export aside ({type(e).__name__}: {e}) -- move "
+                  f"{os.path.basename(folder)!r} out of {_vx_root()} by hand, then run again.", flush=True)
+            return cache
+    reg = _vx_registry()
+    if gid in reg:
+        reg.pop(gid, None)
+        try:
+            with open(os.path.join(os.path.abspath(VISION_FRAMES_DIR), _VX_REGISTRY), "w", encoding="utf-8") as fh:
+                json.dump(reg, fh, indent=1)
+        except Exception:
+            pass
+    print(f"  [export] {label}: VISION_REEXPORT_GAMES -- "
+          + (f"its old export was moved to {dest} and its captured clips dropped" if dest else
+             "it has no export folder any more (deleted by hand?), so its captured clips were dropped")
+          + "; the game is exported again.", flush=True)
+    if isinstance(cache, pd.DataFrame) and not cache.empty and "source_url" in cache.columns:
+        _u = next((u for u in cache["source_url"].dropna().astype(str).unique() if _sst_game_id_of(u) == gid), None)
+        if _u:
+            return cache[cache["source_url"] != _u].reset_index(drop=True)
+    return cache
+
+
 def _vx_make_export(game_id, label):
     """Synergy Editor: open the game and export it. -> the export folder, or None."""
     from urllib.parse import urlparse, parse_qs
@@ -1973,8 +2113,20 @@ def _vision_from_exports(sources, cache):
             print(f"  [export] {label}: no Synergy game ID in its video link -- skipped", flush=True)
             continue
         folder = _vx_find_export(gid, label, url, cache)
+        # (11/15, requested) VISION_REEXPORT_GAMES: throw this game's export away and do it again
+        if folder is not None and _vx_reexport_wanted(label, folder):
+            cache = _vx_set_aside(folder, gid, label, cache)
+            folder = None
         _vx_new = False                                   # exported by this run (then its box is closed / cache cleared)
         if folder is None:
+            # (11/15, requested) don't export a game Synergy hasn't finished logging: every clip's Title / Synergy String
+            # would be blank and nothing could be tagged from it (see _syn_game_logged).
+            if globals().get("VISION_EXPORT_REQUIRE_LOGGED", True) and _syn_game_logged(gid, label) is False:
+                print(f"  [export] {label}: Synergy has not finished logging this game yet -- its Game Breakdown has no "
+                      f"play clips or possessions, so every clip in an export would have a blank Title and Synergy "
+                      f"String. Not exported; it goes again on a later run. VISION_EXPORT_REQUIRE_LOGGED = False exports "
+                      f"it anyway.", flush=True)
+                continue
             if not globals().get("VISION_EXPORT_AUTO", True) or sys.platform != "win32":
                 print(f"  [export] {label}: no Synergy export in {_vx_root()} -- export the game from Synergy Editor "
                       f"(FULL GAME VIDEO > Editor, then Ctrl+E) into that folder and run again.", flush=True)
@@ -2922,6 +3074,23 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
                 f"recorded -- checked once)" if _n_inc else "",
                 f"{_n_gap} page(s) with clips whose files are missing or failed" if _n_gap else "") if x)
                 + " -- each is completed (only what's missing) before its side moves on to another game.")
+        # CONFIRMED BUG (fixed 11/16; Corey: "Couldn't I just delete the export in F drive"). VISION_REEXPORT_GAMES was
+        # only acted on inside _vision_from_exports, which runs for the games this run CAPTURES -- and a game whose clips
+        # are all captured (the 11/14 Ripon game: 224 rows, frames, no errors) is filtered out right here, before that.
+        # So the setting could never fire for exactly the game it was written for, and deleting the export by hand
+        # wouldn't have helped either: the clip rows alone keep the game "captured" for good. The request is handled
+        # HERE now, while the game can still be put back in the queue, and it covers a folder that is already gone.
+        for _l_, _u_, _d_ in list(_vis_sources):
+            _gid_ = _sst_game_id_of(_u_) or ""
+            _fold_ = _vx_find_export(_gid_, _l_, _u_, _full)
+            if not _vx_reexport_wanted(_l_, _fold_ or ""):
+                continue
+            # the rows go from clip_frames itself (the table that is saved); _full is only this block's view of it
+            clip_frames = _vx_set_aside(_fold_, _gid_, _l_, clip_frames)
+            _full = _full[_full["source_url"] != _u_] if "source_url" in _full.columns else _full
+            _gap_urls.discard(_u_)
+            _incomplete.discard(_u_)
+            _missing.discard(_u_)
         _done = set(_full["source_url"].dropna()) - _missing
         _vis_sources = [s for s in _vis_sources if s[1] not in _done]
     else:

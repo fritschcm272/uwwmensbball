@@ -1539,6 +1539,16 @@
    "away": "Gustavus Adolphus",
    "away_short": "GustavusAdolphus",
    "away_id": "54457dd8300969b132fd02fe"
+  },
+  "6ab818207c04d5284e260159": {
+   "date": "2026-11-14",
+   "name": "Elmhurst@Hope",
+   "home": "Hope College Flying Dutchmen",
+   "home_short": "Hope",
+   "home_id": "54457dd6300969b132fd01d1",
+   "away": "Elmhurst University Bluejays",
+   "away_short": "Elmhurst",
+   "away_id": "54457dd8300969b132fd0316"
   }
  },
  "teams": {
