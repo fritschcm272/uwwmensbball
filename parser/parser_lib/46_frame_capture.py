@@ -1307,14 +1307,25 @@ def _sst_editor_export(link, export_dir, game_id=None):
     # Combine into single file). One .mp4 per clip plus Synergy's CSV of the clips, no text drawn on the video.
     ctrls = _sst_walk(auto, dlg)
     want_type = str(globals().get("SYNERGY_EXPORT_TYPE", "MP4 + CSV"))
+    # CONFIRMED BUG (fixed; Elmhurst @ Hope - Nov 14, 2026 wrote Export.csv and NO clip videos on two runs in a row while this
+    # window read "MP4 + CSV: on", and Synergy jumped straight to "Export is available"): the choice is now CLICKED -- what a
+    # coach does -- and only then read back, because a UIA Select() can leave Synergy's own export setting on the old choice
+    # even though the radio reports itself selected. Select() stays as the fallback, and a choice that still won't read "on"
+    # stops the export below (OK NOT pressed) instead of exporting the wrong thing.
     for c in ctrls:
         if c.ControlTypeName == "RadioButtonControl" and _norm(c.Name) == _norm(want_type):
-            try:
-                sp = c.GetSelectionItemPattern()
-                if not sp.IsSelected:
-                    sp.Select()
-            except Exception:
-                c.Click(simulateMove=False)
+            _sel = lambda: bool(c.GetSelectionItemPattern().IsSelected)
+            for _how in ("click", "select", "click"):
+                try:
+                    c.Click(simulateMove=False) if _how == "click" else c.GetSelectionItemPattern().Select()
+                except Exception:
+                    pass
+                time.sleep(0.4)
+                try:
+                    if _sel():
+                        break
+                except Exception:
+                    break
     for pat, key, dflt in ((r"text overlay", "SYNERGY_EXPORT_TEXT_OVERLAY", False),
                            (r"combine into single file", "SYNERGY_EXPORT_COMBINE", False)):
         want = bool(globals().get(key, dflt))
@@ -1912,8 +1923,9 @@ def _vx_wait_done(folder):
             _avg = (sum(os.path.getsize(v) for v in vids) / len(vids) / 1024 ** 3) if vids else None
             if not vids:
                 print(f"  [export] {os.path.basename(folder)}: Synergy Editor wrote the clip list but NO clip videos -- the game's "
-                      "video most likely hadn't loaded when the export started. Export it by hand in Synergy Editor (Ctrl+E) into "
-                      "this same folder (move this folder away first), then rerun.", flush=True)
+                      "video most likely hadn't loaded when the export started (Synergy jumps straight to 'Export is available'). "
+                      f"Raise SYNERGY_EDITOR_LOAD_WAIT (now {globals().get('SYNERGY_EDITOR_LOAD_WAIT', 60):.0f} s) and run again, or export it "
+                      "by hand in Synergy Editor (Ctrl+E) into this same folder (move this folder away first).", flush=True)
                 return False
             print(f"  [export] {os.path.basename(folder)}: the export STOPPED at {len(vids)} of {n_rows} clip videos (nothing new "
                   f"for {(time.time() - newest) / 60:.0f} min) -- using the {len(vids)} there."

@@ -592,3 +592,20 @@ answers: which audit items to fix (suggested: silent excepts, real-date uses); O
 UWW@Carroll Film Tagging batch. Files changed today, for his commit: `00_parser_modes.py`, `83_...`, `85_...`,
 `85b_read_reconcile.py` (new), `87_...`, `87b_brief_check.py` (new), `parser_brief.ipynb`, `CLAUDE.md`. After the brief
 runs, `data\\` gains `uww_read_conflicts.csv` and `uww_brief_check.csv`.
+
+
+### Synergy export wrote Export.csv and no clip videos (11/16)
+Elmhurst@Hope - Nov 14, 2026 failed the same way on two runs in a row: Synergy Editor jumped straight to
+"Export is available.", wrote `Export.csv` (223 rows) into the export folder and NO `video\` folder at all, so the run
+logged `0 of 223 clip videos written...` for 5 minutes, said so, closed the export box and carried on (0 clips captured,
+178 rows with errors). This is the Beloit @ Ripon bug again: the game's video had not loaded in Synergy Editor when the
+run pressed Ctrl+E. That bug's fix raised the wait to 60 s **in the code's default only** -- `parser_nb.ipynb` pinned
+`SYNERGY_EDITOR_LOAD_WAIT = 20`, so the fix never applied. Checked and ruled out: the export window read
+`MP4 + CSV: on; CSV only: off` on both failed runs and on all ten successful exports, and the failed `Export.csv` matches
+a good one column for column (`In Point`/`Out Point` are `N/A` in every export, good and bad).
+
+Changed: `SYNERGY_EDITOR_LOAD_WAIT = 150` in parser_nb cell 108; `_sst_export_edit` now CLICKS the MP4 + CSV radio and
+reads it back (up to three tries, Select() as the fallback) instead of calling Select() once -- a UIA Select() can leave
+Synergy's own setting on the old choice -- and still refuses to press OK unless it reads "on"; the no-clip-videos message
+now names SYNERGY_EDITOR_LOAD_WAIT and its current value. A videoless export folder is NOT reused: keep
+`VISION_REEXPORT_GAMES = ["Hope 11/14"]` for the next run so the folder is set aside and the game exported again.
