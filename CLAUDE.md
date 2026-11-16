@@ -505,6 +505,33 @@ Corey: "Couldn't I just delete the export in F drive". Answer: no, and the setti
 - So to redo that game: set `VISION_REEXPORT_GAMES = ["Ripon 11/14"]` in parser_nb cell 108 and run parser_models.
   Deleting the folder on F: first is optional and changes nothing -- the setting is what drops the clip rows.
 
+### 11/16 -- "Skip this whole game" in Film Tagging
+Requested after the per-clip skip: coaches don't want to tag every game at all.
+- **App**: under the Game picker in Analytics > Film Tagging, an expander "Skip this whole game" -- name + a confirm tick
+  + a button. It saves one small file (`..._skipgame_<coach>_<time>.json`, `{"game": "<date>|<code>", "skipped_game":
+  true}`) straight to the saves branch, and the game leaves the list right away (`_ft_skipped_games`, used to filter the
+  picker; the skipped games are named in a caption). An `unskipped_game` save undoes it; the latest save for a game wins.
+- **Parser**: 47 `title_review_answers` reads the game skips into `_title_review_game_skips`, and `_pl_apply_app_tags`
+  marks EVERY clip of such a game `skipped` -- so everything built for the per-clip skip applies unchanged (no tags, out
+  of every table, never offered again, and 46's "have the coaches finished this game" gate ignores it). 55c additionally
+  removes the game's batch folder and says "a coach skipped the whole game in the app, so it has no batch".
+- **To bring a game back**: `PLAY_TAG_UNSKIP = ["Thiel"]` (parser_nb cell 133) -- the game name is enough.
+- Tested against a copy of the data: a game skip marks all 196 of its clips and removes its batch; a later
+  `unskipped_game` save un-skips the game (Franklin@Hope stayed); single-clip skips and other games are untouched;
+  PLAY_TAG_UNSKIP with the game name brings every clip back. Not seen in a real run yet.
+
+### 11/16 -- Film Tagging opens fast (requested: "it is kind of slow when you first click on the Film Tagging tab")
+- The Game list now starts on **"-- choose a game --"**: opening the tab draws no clips, fetches no clip videos from the
+  videos branch and reads no saved answers. It lists the games with their clip counts and waits for the coach to pick
+  one. A `ft_game` value that is no longer in the list (the game got tagged, or skipped whole) is dropped instead of
+  raising -- which the new "skip this whole game" button made possible.
+- The saved review files were being re-read once per batch: `_pr_save_docs()` reads all 109 files (3.1 MB) and was called
+  about 9 times per page load. The tab now reads them ONCE and hands the list to `_ft_saved_clip_keys`,
+  `_ft_skipped_games`, `_ft_skipped_clip_keys` and `_ft_seed_from_saves` (each takes an optional `docs`; passing nothing
+  keeps the old behaviour for other callers). Measured on the OneDrive mount: one pass = 1.7 s, so ~15 s -> ~1.7 s there;
+  Streamlit Cloud's own disk is faster but the 9x stands.
+- Not seen in the app yet -- needs a commit and push.
+
 ### 87 audit findings (11/14) -- listed for Corey, NOTHING changed yet
 Static scan of all of 87 + close reading of the roster, keys, matchup and team-stat code (not every line).
 1. `_sb_has_text` is defined twice (lines ~759 and ~777); the second silently wins.

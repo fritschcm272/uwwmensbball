@@ -7925,7 +7925,7 @@ def _form_no_enter(key):
         return st.form(key)
 
 
-def _ft_seed_from_saves(d, store, kp):
+def _ft_seed_from_saves(d, store, kp, docs=None):
     """CONFIRMED CHANGE (requested: "make the form reload them"). When a coach opens a Film Tagging batch that already has
     saves (a reload or a new app version used to show only the automatic answers again), the form starts on the answers
     already saved for this batch -- every coach's, the latest save winning, same rule as the parser. Untouched defaults
@@ -7940,7 +7940,7 @@ def _ft_seed_from_saves(d, store, kp):
     pi_of = {str(pl.get("clip_key")): pi for pi, pl in enumerate(plays)}
     docs = []
     try:
-        for doc in _pr_save_docs():
+        for doc in (_pr_save_docs() if docs is None else docs):
             # CONFIRMED CHANGE (requested: reopen saved plays for edits): a "fix" batch starts on EVERY earlier save of its
             # game (its plays were saved in other batches), the latest winning
             if str(doc.get("game")) == game and (str(doc.get("run")) in real or d.get("seed_all_runs")) \
@@ -8129,12 +8129,14 @@ FT_PAGE_SIZE = 20          # Film Tagging: plays per page (requested: "only 20 p
 FT_SAVE_EVERY = 20         # Film Tagging: one clip at a time, saved every 20 clips (CONFIRMED CHANGE (requested: "Make it only save every 20 clips instead of every 10"); was 10)
 
 
-def _ft_saved_clip_keys(d):
-    """The plays of this batch already saved (any coach, any page) -- their clip keys."""
+def _ft_saved_clip_keys(d, docs=None):
+    """The plays of this batch already saved (any coach, any page) -- their clip keys.
+    docs: the saved documents, read once by the caller (_pr_save_docs re-reads 100+ files, and this used to run once per
+    batch on every page load -- see the Film Tagging tab)."""
     out = set()
     _slug = re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game", ""))).strip("_")
     runs = {str(d.get("run")), str(d.get("run_real", d.get("run")))}
-    for doc in _pr_save_docs():
+    for doc in (_pr_save_docs() if docs is None else docs):
         try:
             if not ({str(doc.get("run")), f"{_slug}_{doc.get('run')}"} & runs):
                 continue
@@ -8149,11 +8151,47 @@ def _ft_saved_clip_keys(d):
     return out
 
 
-def _ft_skipped_clip_keys(d):
+def _ft_skipped_games(docs=None):
+    """The games a coach has marked "skip this whole game" (the latest save for a game wins) -> {"<date>|<game code>"}."""
+    state = {}
+    for doc in sorted((_pr_save_docs() if docs is None else docs), key=lambda x: str(x.get("saved", ""))):
+        try:
+            g = str(doc.get("game") or "").strip()
+            if not g:
+                continue
+            if doc.get("skipped_game"):
+                state[g] = True
+            elif doc.get("unskipped_game"):
+                state[g] = False
+        except Exception:
+            continue
+    return {g for g, on in state.items() if on}
+
+
+def _ft_skip_game_save(d, coach, on=True):
+    """CONFIRMED CHANGE (requested: "Can we add a 'Skip this full game' option for coaches?"). Saves one little file that
+    says this whole game is skipped: nothing in it is tagged, and the parser stops offering it (47 marks every clip of the
+    game `skipped`, 55c takes its batch out of the app). PLAY_TAG_UNSKIP names the game to bring it back."""
+    out = {"game": d.get("game"), "run": d.get("run_real", d.get("run")), "coach": str(coach).strip(),
+           "saved": pd.Timestamp.now(tz="UTC").isoformat(timespec="seconds"), "answers": [], "checks": [],
+           "source": "streamlit app", "part": "titles", ("skipped_game" if on else "unskipped_game"): True}
+    fname = (f"play_review_{d.get('slug')}_{d.get('run')}_skipgame_"
+             f"{re.sub(r'[^A-Za-z0-9]+', '_', str(coach).strip()).strip('_')}_"
+             f"{pd.Timestamp.now(tz='UTC').strftime('%Y%m%d_%H%M%S')}.json")
+    ok, msg = _pr_github_save(fname, out)
+    if ok:
+        try:
+            _pr_remote_save_docs.clear()
+        except Exception:
+            pass
+    return ok, msg, fname, out
+
+
+def _ft_skipped_clip_keys(d, docs=None):
     """The clips of this batch a coach has marked "skip" (the latest save wins)."""
     state, runs = {}, {str(d.get("run")), str(d.get("run_real", d.get("run")))}
     _slug = re.sub(r"[^A-Za-z0-9]+", "_", str(d.get("game", ""))).strip("_")
-    for doc in sorted(_pr_save_docs(), key=lambda x: str(x.get("saved", ""))):
+    for doc in sorted((_pr_save_docs() if docs is None else docs), key=lambda x: str(x.get("saved", ""))):
         try:
             if not ({str(doc.get("run")), f"{_slug}_{doc.get('run')}"} & runs):
                 continue
@@ -8216,11 +8254,20 @@ def render_film_tagging():
                 rev_pk.append(v)
     # CONFIRMED CHANGE (requested: pages of 20, each saved as you go): a batch is waiting for the parser only once EVERY
     # play in it is saved; a partly saved batch stays here and opens on its first page not saved yet
+    _save_docs = _pr_save_docs()                           # read once for this page load, not once per batch
     def _saved(d):
-        _k = _ft_saved_clip_keys(d)
+        _k = _ft_saved_clip_keys(d, _save_docs)
         return bool(d.get("plays")) and all(str(p.get("clip_key")) in _k for p in d.get("plays", []))
     waiting = [d for d in tag_pk + rev_pk if _saved(d)]
     pkgs = [d for d in tag_pk + rev_pk if not _saved(d)]
+    # (requested) a game a coach skipped whole leaves the list at once -- the parser takes its batch out on its next run
+    _skipped_games = _ft_skipped_games(_save_docs)
+    if _skipped_games:
+        _gone = sorted({_pnt_game_label(d.get("game")) for d in pkgs if str(d.get("game")) in _skipped_games})
+        pkgs = [d for d in pkgs if str(d.get("game")) not in _skipped_games]
+        waiting = [d for d in waiting if str(d.get("game")) not in _skipped_games]
+        if _gone:
+            st.caption("Skipped by a coach (not tagged, and not coming back): " + "; ".join(_gone))
     if waiting:
         st.caption("Saved and waiting for the next parser run (it brings the next batch): "
                    + "; ".join(sorted({_pnt_game_label(d.get("game")) for d in waiting})))
@@ -8233,12 +8280,25 @@ def render_film_tagging():
                        + (f"fix {len(d.get('plays', []))} saved play(s)" if d.get("reopen") else
                           f"tag {len(d.get('plays', []))} play(s)" if _is_tag(d) else f"check {len(d.get('plays', []))} Title(s)"))
     names = [label(d) for d in pkgs]
-    pick = st.selectbox("Game", names, key="ft_game")
+    # CONFIRMED CHANGE (requested 11/16: "it is kind of slow when you first click on the Film Tagging tab. Instead of
+    # loading clips from a game right away, can you make it so you have to choose a game first"). The list starts on
+    # "choose a game", so opening the tab draws nothing heavy -- no clip videos are fetched from the videos branch and no
+    # saved answers are read until a coach picks the game he is tagging.
+    _FT_PICK = "\u2014 choose a game \u2014"
+    _opts = [_FT_PICK] + names
+    if st.session_state.get("ft_game") not in _opts:
+        st.session_state.pop("ft_game", None)              # a game that has gone (tagged, or skipped whole) is not kept
+    pick = st.selectbox("Game", _opts, key="ft_game")
+    if pick == _FT_PICK:
+        st.info("Pick the game you want to tag. Its clips load once you choose -- that keeps opening this tab quick.")
+        for _d_ in pkgs:
+            st.caption(f"\u2022 {label(_d_)}")
+        return
     d = pkgs[names.index(pick)]
     _pr_show_save_history(d.get("game"), "titles")
     store = _pr_store(d.get("run"))
     kp = f"ft{d.get('slug')}"
-    _n_seed, _seed_when = _ft_seed_from_saves(d, store, kp)
+    _n_seed, _seed_when = _ft_seed_from_saves(d, store, kp, _save_docs)
     if _n_seed:
         st.info(f"Loaded the answers already saved for {_n_seed} play(s) in this batch (latest save {_seed_when} UTC). "
                 f"They're marked {_FT_SAVED_MARK}. Keep going from there -- saving again keeps them.")
@@ -8249,6 +8309,27 @@ def render_film_tagging():
                 str(d.get("_dir", "")).replace(os.sep, "/") else
                 "Each field starts on the coach's answer (\u2713 = the automatic answer). ")
                + "Change only what's wrong; set a field to -- if you can't tell. Saving accepts the rest as they are.")
+    # CONFIRMED CHANGE (requested: "Can we add a 'Skip this full game' option for coaches?"). Coaches don't want to tag
+    # every game. This skips the WHOLE game in one go -- same meaning as ticking "Skip this clip" on every clip of it:
+    # nothing is tagged, nothing of it reaches the play-call tables, and it never comes back.
+    with st.expander("Skip this whole game"):
+        st.caption(f"Leaves {_pnt_game_label(d.get('game'))} out of Film Tagging for good: {len(d.get('plays', []))} "
+                   f"clip(s) here, and any later batch of the same game. Nothing about the game is tagged -- it is simply "
+                   f"never offered again. It comes back only when it is named in the parser's PLAY_TAG_UNSKIP setting.")
+        _sg_coach = st.text_input("Your name (required)", key=f"ftskipg_who_{d.get('slug')}")
+        _sg_sure = st.checkbox("Yes -- skip this whole game", key=f"ftskipg_ck_{d.get('slug')}")
+        if st.button("Skip this game", key=f"ftskipg_go_{d.get('slug')}", disabled=not (_sg_sure and str(_sg_coach).strip()),
+                     type="secondary"):
+            _ok, _msg, _fn, _out = _ft_skip_game_save(d, _sg_coach, on=True)
+            if _ok:
+                st.session_state["_ft_flash"] = (f"{_pnt_game_label(d.get('game'))} is skipped ({_msg}). It leaves the list "
+                                                 f"now; the parser takes its batch out of the app when it next runs.")
+                st.rerun()
+            else:
+                st.warning(f"Couldn't save to GitHub ({_msg}). Download the file and put it in the repo's "
+                           f"data/play_review_saves folder.")
+                st.download_button("Download", json.dumps(_out, indent=1), file_name=_fn, mime="application/json",
+                                   key=f"ftskipg_dl_{d.get('slug')}")
     _sfx = f"_ft_{d.get('slug')}"
     # ---- ONE clip at a time, 10 clips loaded at once --------------------------------------------------------------------
     # CONFIRMED CHANGE (requested: one clip at a time with Next / Previous buttons, Enter = next, space = play, "I only want to
@@ -8260,8 +8341,8 @@ def render_film_tagging():
     if not _all:
         st.info("No plays in this batch.")
         return
-    _sv = _ft_saved_clip_keys(d)
-    _skipped = _ft_skipped_clip_keys(d)
+    _sv = _ft_saved_clip_keys(d, _save_docs)
+    _skipped = _ft_skipped_clip_keys(d, _save_docs)
     _nb = max(1, -(-len(_all) // FT_SAVE_EVERY))
     _bdone = [all(str(p_.get("clip_key")) in _sv for p_ in _all[i * FT_SAVE_EVERY:(i + 1) * FT_SAVE_EVERY]) for i in range(_nb)]
     _bk = f"ft_block_{d.get('slug')}_{d.get('run')}"

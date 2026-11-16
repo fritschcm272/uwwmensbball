@@ -1697,7 +1697,10 @@ def _pl_apply_app_tags(out):
     if _skipped is None:
         title_review_answers()                                   # fills _title_review_skips as well
         _skipped = globals().get("_title_review_skips") or set()
-    if not by and not _pl_app_actions() and not _skipped:
+    # a whole game a coach skipped = every clip of it skipped (see title_review_answers)
+    _gskipped = globals().get("_title_review_game_skips") or set()
+    _gkey = lambda r: re.sub(r"\s+", " ", f"{r.get('game_date')}|{r.get('game_code')}").strip().lower()   # noqa: E731
+    if not by and not _pl_app_actions() and not _skipped and not _gskipped:
         return out
     out = out.copy()
     if "skipped" not in out.columns:
@@ -1730,12 +1733,13 @@ def _pl_apply_app_tags(out):
         js = [j for j in (_num_of.get(norm(p_)) for p_ in re.split(r"\s*/\s*", str(v or "")) if p_.strip()) if j]
         return (js[0] if js else None) if first else ("/".join(js) or None)
     n_multi = 0
-    _n_skip = 0
+    _n_skip = _n_gskip = 0
     for idx, r in out.iterrows():
         _ck = _pl_ckey_norm(f"{r.get('game_date')}|{r.get('clip_number')}|{r.get('synergy_string')}")
-        if _ck in _skipped and not _pl_unskip_match(r):
+        if (_ck in _skipped or _gkey(r) in _gskipped) and not _pl_unskip_match(r):
             out.at[idx, "skipped"] = True
             _n_skip += 1
+            _n_gskip += int(_ck not in _skipped)
         a = by.get(_ck) or {}
         untagged = r.get("decode_quality") == "Untagged" or blank(r.get("play_title"))
         # the play's Actions table (Film Tagging): used like the answers -- always on an untagged clip, on a coach-Titled
@@ -1939,6 +1943,7 @@ def _pl_apply_app_tags(out):
     if _n_skip or (_skipped and globals().get("PLAY_TAG_UNSKIP")):
         _back = len(_skipped) - _n_skip
         print(f"  Skipped in the app: {_n_skip} clip(s) the coaches marked \"skip\" -- not tagged, not offered again"
+              + (f" ({_n_gskip} of them from {len(_gskipped)} whole game(s) skipped)" if _n_gskip else "")
               + (f"; {_back} put back by PLAY_TAG_UNSKIP" if _back > 0 else ""), flush=True)
     if n_new or n_fix:
         print(f"  App tags: {n_new} clip(s) tagged in the app (no Title) and {n_fix} coach Title(s) corrected in the app "
@@ -3000,8 +3005,16 @@ def title_review_answers():
     # keeps decode_quality "Untagged", stays out of every play-call table, and is simply never offered again
     # (55c tag_queue) until PLAY_TAG_UNSKIP names it.
     _skips = {}
+    # (11/16, requested: "a 'Skip this full game' option for coaches") a save can skip a WHOLE game instead of single
+    # clips -- {"game": "<date>|<game code>", "skipped_game": true}. Latest save for a game wins, same as the clip skips.
+    _gskips = {}
     for _s, _m, d in sorted(docs, key=lambda x: (x[0], x[1])):
         _no_act = _pl_no_action_clips(d)
+        _g_ = re.sub(r"\s+", " ", str(d.get("game") or "")).strip().lower()
+        if _g_ and d.get("skipped_game"):
+            _gskips[_g_] = True
+        elif _g_ and d.get("unskipped_game"):
+            _gskips[_g_] = False
         for _ck in (d.get("skipped") or []):
             _skips[_pl_ckey_norm(_ck)] = True
         for _ck in (d.get("unskipped") or []):
@@ -3026,6 +3039,7 @@ def title_review_answers():
                 out.pop(key, None)
     globals()["_title_review_marks"] = marks          # every mark (incl. "can't tell"), for the accuracy report
     globals()["_title_review_skips"] = {ck for ck, on in _skips.items() if on}
+    globals()["_title_review_game_skips"] = {g for g, on in _gskips.items() if on}
     return out
 
 

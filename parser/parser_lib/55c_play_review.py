@@ -1873,6 +1873,14 @@ def tag_queue():
         # tagged and adds nothing to any table, it just never goes into another batch. PLAY_TAG_UNSKIP (47) puts clips back.
         skipped = (g["skipped"].fillna(False).astype(bool) if "skipped" in g.columns
                    else pd.Series(False, index=g.index))
+        # (11/16, requested) a coach skipped the WHOLE game in the app: its batch leaves the app and it is never offered
+        # again (47 marks every clip of it skipped). PLAY_TAG_UNSKIP with the game's name brings it back.
+        if len(g) and bool(skipped.all()) and f"{gd}|{gc}".strip().lower() in (globals().get("_title_review_game_skips") or set()):
+            if os.path.isdir(pkg):
+                shutil.rmtree(pkg, ignore_errors=True)
+            print(f"Film Tagging: {gd} {gc} -- a coach skipped the whole game in the app, so it has no batch "
+                  f"({len(g)} clip(s) left untagged on purpose; PLAY_TAG_UNSKIP brings it back)", flush=True)
+            continue
         todo = g[untagged & ~skipped & ~g["_key"].isin(answered)]
         n_tagged, n_skip = int((~untagged).sum()), int(skipped.sum())
         summary.append(f"{gd} {gc}: {n_tagged} of {len(g)} clip(s) tagged, {len(todo)} to go"
