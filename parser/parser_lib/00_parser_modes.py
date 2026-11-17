@@ -508,6 +508,14 @@ def _pm_scratch(mode):
     are cleared at the start of a run, and both drives' free space is printed (a warning below PARSER_MIN_FREE_GB)."""
     import tempfile as _tf, shutil as _sh, time as _tm
     G = globals()
+    _said = G["_PM_SCRATCH_LINES"] = []                    # copied into the log once it exists (this runs before it does)
+
+    import builtins as _bi
+
+    def print(*a, **k):                                    # noqa: A001 -- same call, kept for the log as well
+        _said.append(" ".join(str(x) for x in a))
+        return _bi.print(*a, **k)
+
     out = _pm_os.path.abspath(G.get("OUTPUT_DIR") or "../data")
     drive = _pm_os.path.splitdrive(out)[0]
     want = G.get("PARSER_TEMP_DIR") or (_pm_os.path.join(drive + _pm_os.sep, "uwwmensbball_temp") if drive
@@ -642,6 +650,11 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
         _pm_os.makedirs(_ld, exist_ok=True)
         _log = _pm_os.path.join(_ld, f"{mode}_{_pm_time.strftime('%Y%m%d_%H%M%S')}.log")
         print(f"(quiet: one line per section; everything else goes to {_log})", flush=True)
+        try:                                               # the disk/scratch report is printed before this file exists
+            with open(_log, "a", encoding="utf-8") as _fh:
+                _fh.write("\n".join(G.get("_PM_SCRATCH_LINES") or []) + "\n")
+        except Exception:
+            pass
     G["_pm_quiet"] = (quiet, _real_out)
     # CONFIRMED CHANGE (requested: "does parser_models really need to run all of the cells through 44 ... when it is being
     # run for a game that stopped at court calibration? nothing should change for the same game"). The core sections

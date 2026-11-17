@@ -218,8 +218,30 @@ SEASON_START_YEAR = _ss_want
 SEASON_NOW = _ss_label(_ss_want)
 _ss_mk = _ss_read_mark()
 LAST_SEASON = _ss_mk.get("last_season") if _ss_mk.get("season") == SEASON_NOW else None
-LAST_SEASON_DATA_DIR = (_ss_mk.get("data_archive") if LAST_SEASON and _ss_os.path.isdir(_ss_mk.get("data_archive") or "")
-                        else None)
+# CONFIRMED BUG (fixed; the first run after the project moved to F: printed "last season 2025-26: None" and the brief lost
+# its "this season vs last season" columns): the season marker keeps the archive folders as FULL paths, written when the
+# switch happened, so moving the project leaves both pointing at a drive that no longer holds them. The stored path is
+# still used when it is there; when it is not, the same folder name beside this season's is used, and the marker is put
+# right so the next run reads it straight.
+def _ss_archive(key, beside):
+    """The archive folder the marker names, or the same name beside this season's folders when that path is gone."""
+    want = _ss_mk.get(key) or ""
+    if want and _ss_os.path.isdir(want):
+        return want
+    alt = _ss_os.path.abspath(_ss_os.path.join(beside, _ss_os.path.basename(want.rstrip("\\/")) or ""))
+    if want and _ss_os.path.isdir(alt):
+        print(f"  (last season's {key} moved: {want} -> {alt})", flush=True)
+        _ss_mk[key] = alt
+        try:
+            with open(_ss_os.path.join(INPUT_DIR, "_season.json"), "w", encoding="utf-8") as _fh:
+                _ss_json.dump(_ss_mk, _fh, indent=1)
+        except Exception:
+            pass
+        return alt
+    return None
+
+
+LAST_SEASON_DATA_DIR = _ss_archive("data_archive", _ss_os.path.join(OUTPUT_DIR, "..")) if LAST_SEASON else None
 if LAST_SEASON:
     # the new season's own games are on FastScout's schedule: an EXTRA_GAMES real game (not a scrimmage) is dropped, and a
     # "today" from last season is replaced by the real one

@@ -659,3 +659,29 @@ Changed with the move:
 Not done, still open: the `videos` branch history only grows (5.75 GB of packs; every run re-makes the batch videos, so
 each push adds blobs nothing will reach again). Resetting that branch to a single orphan commit was offered and NOT
 approved -- do not touch git history without Corey asking.
+
+
+### First run on F: -- what the move cost (11/17 05:10 models run)
+The run finished (119 min) and made the Film Tagging batches for Thiel (196) and Franklin@Hope (212), but two things did
+not come across with the folder:
+1. **`parser\.env` is gone.** The log opens with "No FastScout credentials found" / "No Synergy credentials found" and
+   "APP_BASE_URL is blank", so there was no live scraping at all this run -- rosters and schedules came from the local
+   backup pages, one UWW game's play-by-play was skipped, and the brief's app links would render dead. A dot-file is easy
+   to miss in a move and it is not in git. `parser\.env.example` now lists the keys the parser reads (UWW_APP_URL,
+   FASTSCOUT_USERNAME/PASSWORD, SYNERGY_USERNAME/PASSWORD, and the optional AI_MODEL / OPENAI_BASE_URL /
+   PLAYWRIGHT_BROWSERS_PATH); Corey has to fill in a real `.env` beside it.
+2. **`inputs\_season.json` kept absolute C: paths** (`data_archive`, `inputs_archive`), so the run printed
+   "last season 2025-26: None" and lost last season's tables. Both values were repointed at F:, and `00b_season_switch.py`
+   now has `_ss_archive()`: when the stored path is gone it looks for the same folder name beside this season's, says so,
+   and rewrites the marker -- so the next move heals itself.
+Also: `_pm_scratch`'s `[disk]` lines run before the log file is opened, so they were only in the notebook. run_parser now
+copies them into the log as soon as it names it (`_PM_SCRATCH_LINES`).
+
+### Why nothing showed up in the app's Court Calibration (11/17)
+Not a path problem and nothing to do with the move: `parser_nb` cell 125 has `RUN_COURT_MAPPING = False`, and the models
+mode uses the notebook's own flags (`"flags": {}`), so the whole block at the end of `51_court_mapping.py` is skipped --
+including the part that writes `data/court_calibration/<gym>/request.json` and its frame pictures, which is exactly what
+Analytics > Court Calibration reads. The run says so twice: "[reuse] court mapping (switched off this run)" and "Court
+insights: nothing on the court yet (court mapping needs a calibration)". `data/court_calibration` is empty. Set
+`RUN_COURT_MAPPING = True` in cell 125 and run parser_models to get the packages (the block also needs `player_tracks`
+non-empty; the 179 clips / 1,212 tracks carried over from earlier runs satisfy that even when nothing is tracked anew).
