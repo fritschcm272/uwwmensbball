@@ -724,3 +724,19 @@ waiting on go first).
 NOTE for editing the job notebooks: JupyterLab holds its own copy of an open notebook. After any edit to
 parser_tagging.ipynb / parser_models.ipynb on disk, use File > Reload Notebook from Disk before running it -- on 11/17
 VIDEOS_PUSH_FIRST was set on disk, the browser ran the old cell, and the setting never reached the kernel.
+
+
+### The parser publishes the app's data itself now (11/17)
+Corey: "When running the parser_models, can't it push this stuff for me?" -> "Yes, both and the default." The
+court-calibration stop made the case: the run writes data/court_calibration/<gym>/ and then CANNOT go on until that
+folder is in the app, which until now meant remembering to open GitHub Desktop.
+`_pm_push_data(mode)` in `00_parser_modes.py`, and `run_parser` is wrapped so it runs in a `finally` -- the data goes up
+whether the run finished or stopped on the way (CourtCalibrationNeeded, an error). What it does:
+- `git add -A -- data` and `git commit -- data`, both limited to that one path, so streamlit_app.py, the parser's own
+  files and anything else in flight are never touched. The clip videos are .gitignore'd in data/ and still go to the
+  videos branch on their own.
+- pushes to APP_BRANCH ("main"). If the repo is on another branch it says so and stops. If the push is refused the
+  commit is still made and the message says to push it in GitHub Desktop. Nothing is pulled, merged, forced or rewritten.
+- `PUSH_DATA_TO_MAIN = False` goes back to pushing everything by hand.
+This is the one place the parser writes to GitHub on its own besides the videos branch. The standing rule otherwise
+stands: no pulls, no history, no pushes of anything but data/ -- and never on another branch.

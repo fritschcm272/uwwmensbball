@@ -496,6 +496,68 @@ def _pm_analysis_setup(G, o):
           flush=True)
 
 
+def _pm_push_data(mode):
+    """Commit the app's data folder and push it to the branch the app is deployed from -- ONLY that folder.
+    CONFIRMED CHANGE (requested: "When running the parser_models, can't it push this stuff for me?" -> "Yes, both and
+    the default"). A run that makes something for the app (a Film Tagging batch, a court calibration request, the
+    scouting tables) left it sitting on disk until Corey remembered to open GitHub Desktop; the court-calibration stop
+    on 11/17 is a run that cannot continue until its own output has been published. This commits data/ -- the clip
+    videos are .gitignore'd there and go to the videos branch on their own -- and pushes it. It NEVER touches
+    streamlit_app.py, the parser's own files or anything else in flight: both the add and the commit are limited to
+    that one path. Nothing is pulled, merged, forced or rewritten; if the branch has moved on, it says so and stops.
+    PUSH_DATA_TO_MAIN = False leaves everything to be pushed by hand, as before."""
+    G = globals()
+    if not bool(G.get("PUSH_DATA_TO_MAIN", True)):
+        return
+    import subprocess as _sp
+    _git = "git"
+    try:
+        if callable(G.get("_find_git")):
+            _git = G["_find_git"]() or "git"
+    except Exception:
+        pass
+    _env = dict(_pm_os.environ, GIT_TERMINAL_PROMPT="0", GIT_OPTIONAL_LOCKS="0")
+    out = _pm_os.path.abspath(G.get("OUTPUT_DIR") or "../data")
+    if not _pm_os.path.isdir(out):
+        return
+
+    def _git_run(*a, t=600):
+        return _sp.run([_git, *a], capture_output=True, text=True, timeout=t, env=_env)
+
+    r = _git_run("-C", out, "rev-parse", "--show-toplevel", t=120)
+    if r.returncode != 0:
+        print("  [data] the data folder isn't in a git repository -- not pushed", flush=True)
+        return
+    top = _pm_os.path.normpath(r.stdout.strip())
+    rel = _pm_os.path.relpath(out, top).replace(_pm_os.sep, "/")
+    want = str(G.get("APP_BRANCH", "main"))
+    now = _git_run("-C", top, "rev-parse", "--abbrev-ref", "HEAD", t=120).stdout.strip()
+    if now != want:
+        print(f"  [data] the repo is on {now!r}, not {want!r} -- not pushed (switch back and push it in GitHub Desktop)",
+              flush=True)
+        return
+    st = _git_run("-C", top, "status", "--porcelain", "--", rel, t=600).stdout.strip()
+    if not st:
+        print("  [data] nothing new for the app", flush=True)
+        return
+    n = len(st.splitlines())
+    if _git_run("-C", top, "add", "-A", "--", rel, t=1800).returncode != 0:
+        print("  [data] couldn't stage the data folder -- not pushed", flush=True)
+        return
+    _msg = f"{mode}: app data ({n} file(s)) -- {_pm_time.strftime('%Y-%m-%d %H:%M')}"
+    c = _git_run("-C", top, "commit", "-q", "-m", _msg, "--", rel, t=1800)
+    if c.returncode != 0:
+        print(f"  [data] couldn't commit the data folder: {(c.stderr or c.stdout).strip()[:200]} -- not pushed", flush=True)
+        return
+    print(f"  [data] committed {n} file(s) in {rel}/ -- pushing to {want}...", flush=True)
+    pu = _git_run("-C", top, "push", "origin", want, t=3600)
+    if pu.returncode != 0:
+        print(f"  [data] push refused -- the commit IS made, push it in GitHub Desktop: "
+              f"{pu.stderr.strip()[-300:]}", flush=True)
+        return
+    print(f"  [data] {n} file(s) pushed to {want} -- the app picks them up in a minute", flush=True)
+
+
 def _pm_scratch(mode):
     """Put the parser's scratch space on the same drive as the data, clear what earlier runs left there, and say how much
     room is left.
@@ -797,3 +859,17 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
         print(f"[{mode}] finished -- everything the sections printed is in {_log}", flush=True)
     if _skipped:
         print(f"[{mode}] skipped {len(_skipped)} section(s) this job doesn't need: " + ", ".join(_skipped), flush=True)
+
+
+# the data goes up whether the run finished or stopped on the way (the court-calibration stop is exactly that case)
+_pm_run_parser_core = run_parser
+
+
+def run_parser(mode, *a, **k):
+    try:
+        return _pm_run_parser_core(mode, *a, **k)
+    finally:
+        try:
+            _pm_push_data(mode)
+        except Exception as _e:
+            print(f"  [data] not pushed ({type(_e).__name__}: {_e}) -- push the data folder in GitHub Desktop", flush=True)
