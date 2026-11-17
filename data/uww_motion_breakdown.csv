@@ -2,6 +2,6 @@ scouted_opponent,side,team,motion_family,uses,share_pct,ppp,actions,trigger,scre
 Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,Motion,1,100,0.0,Motion (1),,,Spot-Up (1),1
 Elmhurst Bluejays,Opponent,Elmhurst Bluejays,Motion,2,67,3.0,Motion (2),,Aidyn Boone (1),Spot-Up (1) · P&R Ball Handler (1),1
 Elmhurst Bluejays,Opponent,Elmhurst Bluejays,5 Out Motion,1,33,0.0,5 Out Motion (1),,,Off Screen (1),1
-Elmhurst Bluejays,UWW,UW-Whitewater,Motion,9,64,0.67,Motion (9),,,P&R Ball Handler (3) · No Play Type (3),1
-Elmhurst Bluejays,UWW,UW-Whitewater,5 Out Motion,3,21,1.0,5 Out Motion (3),,,Off Screen (1) · Spot-Up (1),2
-Elmhurst Bluejays,UWW,UW-Whitewater,SLOB Motion,2,14,1.0,SLOB Motion (2),,,P&R Ball Handler (1) · Off Screen (1),1
+Elmhurst Bluejays,UWW,UW-Whitewater,5 Out Motion,11,50,0.91,5 Out Motion (11),,,No Play Type (3) · Spot-Up (2),2
+Elmhurst Bluejays,UWW,UW-Whitewater,Motion,9,41,0.67,Motion (9),,,P&R Ball Handler (3) · No Play Type (3),1
+Elmhurst Bluejays,UWW,UW-Whitewater,SLOB Motion,2,9,1.0,SLOB Motion (2),,,P&R Ball Handler (1) · Off Screen (1),1

@@ -1,10 +1,10 @@
 {
  "kind": "court_calibration_request",
- "game": "2026-11-14|Elmhurst@Hope",
- "arena": "Hope",
+ "game": "2026-11-07|WWW@CAR",
+ "arena": "CAR",
  "frames": [
   {
-   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/1_a0d1f339_t061a.jpg",
+   "file": "Nov_7_2026_UWWhitewater@Carroll_WI/track1920v2/1_4da44fa7_t053a.jpg",
    "image": "frame_01.jpg",
    "W": 1920,
    "H": 1080,
@@ -12,56 +12,8 @@
    "h": 720
   },
   {
-   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/26_89243e34_t030a.jpg",
+   "file": "Nov_7_2026_UWWhitewater@Carroll_WI/track1920v2/2_13de1697_t028.jpg",
    "image": "frame_02.jpg",
-   "W": 1920,
-   "H": 1080,
-   "w": 1280,
-   "h": 720
-  },
-  {
-   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/57_474ee6b7_t033a.jpg",
-   "image": "frame_03.jpg",
-   "W": 1920,
-   "H": 1080,
-   "w": 1280,
-   "h": 720
-  },
-  {
-   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/84_a9a316bf_t029a.jpg",
-   "image": "frame_04.jpg",
-   "W": 1920,
-   "H": 1080,
-   "w": 1280,
-   "h": 720
-  },
-  {
-   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/117_162fd17a_t026.jpg",
-   "image": "frame_05.jpg",
-   "W": 1920,
-   "H": 1080,
-   "w": 1280,
-   "h": 720
-  },
-  {
-   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/144_8639fb8a_t047a.jpg",
-   "image": "frame_06.jpg",
-   "W": 1920,
-   "H": 1080,
-   "w": 1280,
-   "h": 720
-  },
-  {
-   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/171_7ed69b01_t032.jpg",
-   "image": "frame_07.jpg",
-   "W": 1920,
-   "H": 1080,
-   "w": 1280,
-   "h": 720
-  },
-  {
-   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/223_b963667a_t017.jpg",
-   "image": "frame_08.jpg",
    "W": 1920,
    "H": 1080,
    "w": 1280,
@@ -178,5 +130,5 @@
    25
   ]
  },
- "created": "2026-11-17T19:53:53+00:00"
+ "created": "2026-11-17T21:07:13+00:00"
 }
