@@ -1,0 +1,395 @@
+{
+ "kind": "court_calibration",
+ "arena": "Hope",
+ "game": "2026-11-14|Elmhurst@Hope",
+ "coach": "Corey",
+ "saved": "2026-11-17T20:38:36+00:00",
+ "source": "streamlit app",
+ "frames": [
+  {
+   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/1_a0d1f339_t061a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 609.7,
+     "py": 210.4
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1264.9,
+     "py": 581.0
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1181.2,
+     "py": 559.5
+    },
+    {
+     "landmark": "LEFT baseline x far sideline",
+     "px": 640.8,
+     "py": 186.5
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 198.5,
+     "py": 538.0
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 406.5,
+     "py": 387.3
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/26_89243e34_t030a.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 621.7,
+     "py": 585.8
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 717.3,
+     "py": 571.5
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1021.0,
+     "py": 628.8
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 877.5,
+     "py": 461.5
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 946.8,
+     "py": 538.0
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1709.6,
+     "py": 535.6
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1513.5,
+     "py": 385.0
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1298.3,
+     "py": 222.4
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/57_474ee6b7_t033a.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 1131.0,
+     "py": 545.2
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 533.2,
+     "py": 528.4
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 466.3,
+     "py": 523.6
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 241.5,
+     "py": 602.5
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 322.8,
+     "py": 449.5
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 1111.8,
+     "py": 954.0
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 1138.1,
+     "py": 284.5
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1747.8,
+     "py": 561.9
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 1833.9,
+     "py": 559.5
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/84_a9a316bf_t029a.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 624.1,
+     "py": 571.5
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 707.7,
+     "py": 566.7
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1040.1,
+     "py": 626.5
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 870.3,
+     "py": 456.7
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 949.2,
+     "py": 545.2
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1508.7,
+     "py": 375.4
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1709.6,
+     "py": 535.6
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1293.5,
+     "py": 215.2
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/117_162fd17a_t026.jpg",
+   "points": [
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1269.6,
+     "py": 588.2
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1193.1,
+     "py": 571.5
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 896.6,
+     "py": 633.6
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1035.3,
+     "py": 459.1
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 954.0,
+     "py": 549.9
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 215.2,
+     "py": 540.4
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 416.0,
+     "py": 389.7
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 609.7,
+     "py": 234.3
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/144_8639fb8a_t047a.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 50.2,
+     "py": 643.2
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 16.7,
+     "py": 337.1
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 55.0,
+     "py": 738.8
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 35.9,
+     "py": 552.3
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 750.8,
+     "py": 566.7
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1018.6,
+     "py": 530.8
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1083.1,
+     "py": 609.7
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 961.2,
+     "py": 459.1
+    },
+    {
+     "landmark": "RIGHT baseline x far sideline",
+     "px": 1310.3,
+     "py": 222.4
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/171_7ed69b01_t032.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 83.7,
+     "py": 640.8
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 102.8,
+     "py": 726.9
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 78.9,
+     "py": 552.3
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 57.4,
+     "py": 346.7
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 762.7,
+     "py": 564.3
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1025.8,
+     "py": 523.6
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 829.7,
+     "py": 552.3
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1095.1,
+     "py": 609.7
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 985.1,
+     "py": 456.7
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1511.1,
+     "py": 392.1
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1676.1,
+     "py": 535.6
+    },
+    {
+     "landmark": "RIGHT baseline x far sideline",
+     "px": 1305.5,
+     "py": 229.5
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Elmhurst@Hope/track1920v2/223_b963667a_t017.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 638.4,
+     "py": 557.1
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 657.5,
+     "py": 977.9
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 628.8,
+     "py": 289.3
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 636.0,
+     "py": 633.6
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1250.5,
+     "py": 528.4
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 633.6,
+     "py": 480.6
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 1458.5,
+     "py": 451.9
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1561.3,
+     "py": 593.0
+    },
+    {
+     "landmark": "RIGHT baseline x far sideline",
+     "px": 1786.1,
+     "py": 246.3
+    }
+   ]
+  }
+ ]
+}
