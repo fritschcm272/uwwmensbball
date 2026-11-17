@@ -6851,30 +6851,60 @@ def _gh_cfg():
     return token, repo, branch, sb, str(cfg.get("reviews_path", "data/play_review_saves")).strip("/")
 
 
+# CONFIRMED CHANGE (requested: "The saving between the 20 clips takes very long. What can we do to make this better for the
+# coaches trying to tag games"). Every save cleared this cache, so the NEXT page load downloaded every save file on the
+# branch again, ONE REQUEST EACH (112 files = 113 round trips, 25-50 s between each block of 20 clips -- and one more file
+# every time a coach saved). A save file never changes once written, so the listing (one request, two minutes) and the files
+# themselves (by their git sha, kept for good) are now cached apart: after a save the listing is read again and ONLY the new
+# file is downloaded. _pr_save_docs also passes the names it already has from the deployed data folder, which were being
+# downloaded and then thrown away as duplicates. A save costs 2 requests instead of 113.
 @st.cache_data(ttl=120, show_spinner=False)
-def _pr_remote_save_docs(token, repo, sb, folder):
-    """Every review .json on the saves branch -> {file name: document}. Cached for two minutes (a save clears it)."""
+def _pr_remote_save_list(token, repo, sb, folder):
+    """[(file name, git sha)] for every review .json on the saves branch -- one request, cached for two minutes."""
     import requests
-    out = {}
     if not (token and repo and sb):
-        return out
+        return []
     h = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"}
     try:
         r = requests.get(f"https://api.github.com/repos/{repo}/contents/{folder}", params={"ref": sb}, headers=h, timeout=20)
         if r.status_code != 200 or not isinstance(r.json(), list):
-            return out
-        for it in r.json():
-            if not str(it.get("name", "")).endswith(".json"):
-                continue
-            try:
-                rr = requests.get(it["url"], headers=h, timeout=20)
-                if rr.status_code == 200:
-                    out[it["name"]] = json.loads(base64.b64decode(rr.json()["content"]).decode("utf-8"))
-            except Exception:
-                continue
+            return []
+        return [(str(it.get("name")), str(it.get("sha"))) for it in r.json()
+                if str(it.get("name", "")).endswith(".json") and it.get("sha")]
     except Exception:
-        pass
+        return []
+
+
+@st.cache_data(show_spinner=False, max_entries=5000)
+def _pr_remote_save_blob(token, repo, sha):
+    """One review .json off the saves branch, by its git sha. A file never changes, so this is kept for good. A failed read
+    raises (Streamlit does not cache that), so a file missed once is tried again on the next page load."""
+    import requests
+    h = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"}
+    r = requests.get(f"https://api.github.com/repos/{repo}/git/blobs/{sha}", headers=h, timeout=20)
+    if r.status_code != 200:
+        raise ValueError(f"GitHub said {r.status_code} for blob {sha[:7]}")
+    return json.loads(base64.b64decode(r.json()["content"]).decode("utf-8"))
+
+
+def _pr_remote_save_docs(token, repo, sb, folder, skip=()):
+    """Every review .json on the saves branch -> {file name: document}. skip = file names already in hand (the deployed
+    data folder's), which are not downloaded at all."""
+    out, skip = {}, set(skip or ())
+    for name, sha in _pr_remote_save_list(token, repo, sb, folder):
+        if name in skip:
+            continue
+        try:
+            d = _pr_remote_save_blob(token, repo, sha)
+        except Exception:
+            continue
+        if isinstance(d, dict):
+            out[name] = d
     return out
+
+
+# every _pr_remote_save_docs.clear() in the app clears the listing; the files themselves stay cached by their sha
+_pr_remote_save_docs.clear = _pr_remote_save_list.clear
 
 
 def _pr_save_docs():
@@ -6890,7 +6920,7 @@ def _pr_save_docs():
             continue
     try:
         token, repo, _br, sb, folder = _gh_cfg()
-        for name, d in _pr_remote_save_docs(token, repo, sb, folder).items():
+        for name, d in _pr_remote_save_docs(token, repo, sb, folder, skip=seen).items():
             if name not in seen and isinstance(d, dict):
                 docs.append(d)
     except Exception:

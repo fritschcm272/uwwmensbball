@@ -609,3 +609,17 @@ reads it back (up to three tries, Select() as the fallback) instead of calling S
 Synergy's own setting on the old choice -- and still refuses to press OK unless it reads "on"; the no-clip-videos message
 now names SYNERGY_EDITOR_LOAD_WAIT and its current value. A videoless export folder is NOT reused: keep
 `VISION_REEXPORT_GAMES = ["Hope 11/14"]` for the next run so the folder is set aside and the game exported again.
+
+
+### Film Tagging: the wait between each block of 20 clips (11/16)
+Corey: "The saving between the 20 clips takes very long." The save itself (one PUT to GitHub) was never the problem.
+Every save called `_pr_remote_save_docs.clear()` (twice -- in `_pr_github_save` and `_pr_commit`), and that cache held
+EVERY save file on the `saves` branch, fetched ONE REQUEST PER FILE. So the next render after each save made 1 listing +
+112 file downloads = 113 round trips (25-50 s), growing by one file per save. Worse, the deployed `data/play_review_saves`
+folder already had all 112 of those files, so they were downloaded and then dropped as duplicates.
+Changed in `streamlit_app.py`: `_pr_remote_save_list` (names + git shas, one request, ttl 120) and `_pr_remote_save_blob`
+(one file by its sha, cached for good -- a save file never changes; a failed read RAISES so the failure is not cached)
+replace the old single cached function; `_pr_remote_save_docs(token, repo, sb, folder, skip=())` builds the same
+{name: document} from them and skips names handed to it; `_pr_save_docs` passes `skip=seen` (the deployed folder's names);
+`_pr_remote_save_docs.clear = _pr_remote_save_list.clear` so the five `.clear()` calls in the app still work and now clear
+only the cheap listing. A save is 2 requests instead of 113. Nothing else about saving, the answers or the batches changed.
