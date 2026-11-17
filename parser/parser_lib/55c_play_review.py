@@ -2311,27 +2311,93 @@ def _push_clip_videos():
         os.remove(env["GIT_INDEX_FILE"])
     except OSError:
         pass
-    r = g("add", "-f", "--pathspec-from-file=-", t=3600, inp="\n".join(rels) + "\n")
-    if r.returncode != 0:
-        print(f"  [videos] git add failed: {r.stderr.strip()[:300]}", flush=True)
-        return
-    tree = g("write-tree").stdout.strip()
     # what GitHub has now (so only NEW clips are uploaded)
     g("fetch", "--no-tags", "origin", f"+refs/heads/{br}:refs/remotes/origin/{br}", t=3600)
-    have = g("rev-parse", "--verify", "-q", f"refs/remotes/origin/{br}^{{tree}}").stdout.strip()
-    if have and have == tree:
-        print(f"  [videos] {len(rels)} clip file(s) -- the '{br}' branch already has exactly these, nothing to push", flush=True)
-        commit = g("rev-parse", f"refs/remotes/origin/{br}").stdout.strip()
-    else:
-        commit = g("commit-tree", tree, "-m", f"Film Tagging clip videos ({len(rels)} files) -- replaced every parser run").stdout.strip()
-        if not commit:
+    _has_remote = g("rev-parse", "--verify", "-q", f"refs/remotes/origin/{br}").returncode == 0
+    _on_github = set(g("ls-tree", "-r", "--name-only", f"refs/remotes/origin/{br}", t=900).stdout.splitlines()) if _has_remote else set()
+
+    # CONFIRMED CHANGE (requested: "Can you write code to do the 'Push in chunks' part when there is more than 1 game to
+    # push?"). One push of every new clip is 5+ GB in a single transfer, and GitHub's smart HTTP answers 500 and drops it
+    # ("RPC failed; HTTP 500 ... the remote end hung up", twice on 11/16-11/17, 1,952 files). The branch is one orphan
+    # commit holding every open batch's clips, so it can be built up a game at a time: each push sends ONE game's new
+    # clips (about 400 MB) on top of what GitHub already has, and the branch ends on the same full-tree commit as before.
+    # Every step is a superset of the one before, so a batch already on GitHub never disappears mid-way, and if a push
+    # fails the games already sent STAY sent -- the next run carries on with the rest instead of starting over.
+    # VIDEOS_PUSH_PER_GAME = False goes back to one push for everything.
+    def _vid_game(_p):
+        _parts = _p.split("/")
+        return "/".join(_parts[:3]) if len(_parts) > 3 else os.path.dirname(_p)
+
+    _by_game = {}
+    for _p in rels:
+        _by_game.setdefault(_vid_game(_p), []).append(_p)
+    _new_games = [_gm for _gm, _ps in sorted(_by_game.items()) if any(_p not in _on_github for _p in _ps)]
+    _per_game = bool(globals().get("VIDEOS_PUSH_PER_GAME", True)) and len(_new_games) > 1
+
+    def _add(_paths):
+        _r = g("add", "-f", "--pathspec-from-file=-", t=3600, inp="\n".join(_paths) + "\n")
+        if _r.returncode != 0:
+            print(f"  [videos] git add failed: {_r.stderr.strip()[:300]}", flush=True)
+        return _r.returncode == 0
+
+    def _commit_tree(_label):
+        _tree = g("write-tree").stdout.strip()
+        if not _tree:
+            print("  [videos] couldn't write the tree -- not pushed", flush=True)
+            return None, None
+        _c = g("commit-tree", _tree, "-m", f"Film Tagging clip videos ({_label}) -- replaced every parser run").stdout.strip()
+        if not _c:
             print("  [videos] couldn't make the commit -- not pushed", flush=True)
+        return _tree, _c
+
+    if not _per_game:
+        if not _add(rels):
             return
-        print(f"  [videos] pushing {len(rels)} clip file(s) to the '{br}' branch on GitHub (only new ones are uploaded)...", flush=True)
-        r = g("push", "--force", "origin", f"{commit}:refs/heads/{br}", t=3600)
-        if r.returncode != 0:
-            print(f"  [videos] push failed -- main still has the videos, nothing changed: {r.stderr.strip()[-400:]}", flush=True)
+        tree = g("write-tree").stdout.strip()
+        have = g("rev-parse", "--verify", "-q", f"refs/remotes/origin/{br}^{{tree}}").stdout.strip()
+        if have and have == tree:
+            print(f"  [videos] {len(rels)} clip file(s) -- the '{br}' branch already has exactly these, nothing to push", flush=True)
+            commit = g("rev-parse", f"refs/remotes/origin/{br}").stdout.strip()
+        else:
+            tree, commit = _commit_tree(f"{len(rels)} files")
+            if not commit:
+                return
+            print(f"  [videos] pushing {len(rels)} clip file(s) to the '{br}' branch on GitHub (only new ones are uploaded)...", flush=True)
+            r = g("push", "--force", "origin", f"{commit}:refs/heads/{br}", t=3600)
+            if r.returncode != 0:
+                print(f"  [videos] push failed -- main still has the videos, nothing changed: {r.stderr.strip()[-400:]}", flush=True)
+                return
+    else:
+        _n_new = sum(len(_by_game[_gm]) for _gm in _new_games)
+        print(f"  [videos] {_n_new} new clip file(s) in {len(_new_games)} game(s) -- pushing one game at a time "
+              f"(a single push of them all is what GitHub refuses; VIDEOS_PUSH_PER_GAME)", flush=True)
+        _done_games = [_gm for _gm in sorted(_by_game) if _gm not in set(_new_games)]
+        _sent = [_p for _gm in _done_games for _p in _by_game[_gm]]
+        if _sent and not _add(_sent):                 # the clips GitHub already has: nothing is uploaded for these
             return
+        commit = None
+        for _i, _gm in enumerate(_new_games, 1):
+            _mine = _by_game[_gm]
+            _mb = sum(os.path.getsize(os.path.join(top, _f)) for _f in _mine
+                      if os.path.exists(os.path.join(top, _f))) / 1024 ** 2
+            if not _add(_mine):
+                return
+            _sent += _mine
+            tree, commit = _commit_tree(f"{len(_sent)} files")
+            if not commit:
+                return
+            print(f"  [videos] {_i} of {len(_new_games)}: {os.path.basename(_gm)} -- "
+                  f"{len([_p for _p in _mine if _p not in _on_github])} new clip file(s), {_mb:,.0f} MB...", flush=True)
+            r = g("push", "--force", "origin", f"{commit}:refs/heads/{br}", t=3600)
+            if r.returncode != 0:
+                print(f"  [videos] push failed on {os.path.basename(_gm)} ({_i} of {len(_new_games)}) -- the "
+                      f"{_i - 1} game(s) before it ARE on GitHub and stay there; the rest go on the next run. "
+                      f"Main still has the videos, nothing changed: {r.stderr.strip()[-400:]}", flush=True)
+                return
+            print(f"  [videos] {_i} of {len(_new_games)}: {os.path.basename(_gm)} pushed ({time.time() - t0:.0f}s so far)",
+                  flush=True)
+        if commit is None:
+            commit = g("rev-parse", f"refs/remotes/origin/{br}").stdout.strip()
     ls = g("ls-remote", "origin", f"refs/heads/{br}", t=300).stdout.split()
     if not ls or ls[0] != commit:
         print(f"  [videos] GitHub doesn't show the new '{br}' commit yet -- main left as it is (next run tries again)", flush=True)

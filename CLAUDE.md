@@ -685,3 +685,19 @@ Analytics > Court Calibration reads. The run says so twice: "[reuse] court mappi
 insights: nothing on the court yet (court mapping needs a calibration)". `data/court_calibration` is empty. Set
 `RUN_COURT_MAPPING = True` in cell 125 and run parser_models to get the packages (the block also needs `player_tracks`
 non-empty; the 179 clips / 1,212 tracks carried over from earlier runs satisfy that even when nothing is tracked anew).
+
+
+### The clip-video push goes one game at a time (11/17)
+Two runs in a row ended with `[videos] push failed -- ... RPC failed; HTTP 500 ... the remote end hung up` on 1,952 clip
+files (~5.5 GB in one transfer). The branch is a single orphan commit holding every open batch's clips, so it can be
+built up a game at a time instead. `_push_clip_videos()` in `55c_play_review.py` now:
+- fetches `origin/videos` and lists its paths, so it knows which GAMES have clips GitHub doesn't have yet;
+- with more than one such game (`VIDEOS_PUSH_PER_GAME`, default True), adds the already-pushed clips to the index first
+  (they upload nothing), then one game per step: add -> write-tree -> commit-tree -> `push --force`, each push about
+  400 MB. The branch ends on the same full-tree commit as before, so everything after the push is unchanged.
+- Every step is a superset of the one before, so no batch already on GitHub disappears mid-way, and a failure leaves the
+  games already pushed ON GitHub: the run stops there, main is left alone, and the next run carries on with the rest
+  instead of starting the 5 GB over.
+- One new game, or `VIDEOS_PUSH_PER_GAME = False`, keeps the old single push.
+Not fixed by this: the branch still grows every run (each run re-makes the batch videos as new blobs). Pruning it, or
+moving clip hosting off git, is still open -- offered twice, not approved. Do not touch git history without Corey asking.
