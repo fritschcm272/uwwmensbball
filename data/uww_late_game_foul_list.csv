@@ -1,4 +1,5 @@
 opponent,player,call,ft_pct,ft_pct_adj,ftm,fta,games,note,is_sample
-Elmhurst Bluejays,Chris Ketchum,Foul,25.0,44.3,2,8,2,,False
-Elmhurst Bluejays,Aidyn Boone,Neutral,70.0,70.0,7,10,2,,False
-Elmhurst Bluejays,Dominic Trelenberg,Neutral,75.0,72.9,6,8,2,,False
+Elmhurst Bluejays,Chris Ketchum,Foul,25.0,44.3,2,8,3,,False
+Elmhurst Bluejays,Aidyn Boone,Neutral,72.7,71.8,8,11,3,,False
+Elmhurst Bluejays,Jack Cherry,Do not foul,87.5,80.0,7,8,3,,False
+Elmhurst Bluejays,Dominic Trelenberg,Do not foul,85.7,81.0,12,14,3,,False

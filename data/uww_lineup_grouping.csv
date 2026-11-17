@@ -1,8 +1,17 @@
 side,team,lineup,grouping,shape,scouted_opponent
 UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,Elmhurst Bluejays
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, Kelton McEwen, Taveon Vann, Tyshawn Teague-Johnson",3G-2W,3G-2W,Elmhurst Bluejays
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Taveon Vann",3G-2W,3G-2W,Elmhurst Bluejays
 UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveon Vann",3G-2W,3G-2W,Elmhurst Bluejays
-UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Taveon Vann",3G-2W,3G-2W,Elmhurst Bluejays
+UWW,UW-Whitewater,"Darius Chestnut, Isaiah Robinson, JR Lukenbill, Rashad Rogers, Tyshawn Teague-Johnson",2G-3W,2G-3W,Elmhurst Bluejays
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson",3G-2W,3G-2W,Elmhurst Bluejays
 UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Tyshawn Teague-Johnson",3G-2W,3G-2W,Elmhurst Bluejays
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Luke Paddock, Tyshawn Teague-Johnson",3G-2W,3G-2W,Elmhurst Bluejays
+UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Rashad Rogers",3G-2W,3G-2W,Elmhurst Bluejays
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Rashad Rogers",3G-2W,3G-2W,Elmhurst Bluejays
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaiah Robinson, Taveon Vann, Tyshawn Teague-Johnson",3G-2W,3G-2W,Elmhurst Bluejays
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Rashad Rogers",3G-2W,3G-2W,Elmhurst Bluejays
+UWW,UW-Whitewater,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Taveon Vann",3G-2W,3G-2W,Elmhurst Bluejays
 UWW,UW-Whitewater,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson",3G-2W,3G-2W,Elmhurst Bluejays
 UWW,UW-Whitewater,"Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo",2G-3W,2G-3W,Elmhurst Bluejays
 UWW,UW-Whitewater,"Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Zavier Castillo",2G-3W,2G-3W,Elmhurst Bluejays
@@ -300,10 +309,11 @@ UWW,UW-Whitewater,"Brock Marino, Collin Madson, Isaac Verges, Richie Warren, Tys
 UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Richie Warren",Base five (one big),,Elmhurst Bluejays
 UWW,UW-Whitewater,"Collin Madson, Isaac Verges, JR Lukenbill, Joey Berezowitz, Luke Bara",Base five (one big),,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, Dominic Trelenberg, Jack Cherry, Talen Pearson, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
-Opponent,Elmhurst Bluejays,"Andy Colvin, Chris Ketchum, EJ Marshall, Luke Smith, Vinnie Adjahoungbeta",3G-2W,3G-2W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, Dominic Trelenberg, EJ Marshall, Jack Cherry, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
-Opponent,Elmhurst Bluejays,"Aidyn Boone, Chris Ketchum, EJ Marshall, Luke Smith, Vinnie Adjahoungbeta",3G-2W,3G-2W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, Chris Ketchum, Dominic Trelenberg, EJ Marshall, Luke Smith",3G-2W,3G-2W,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Andy Colvin, Chris Ketchum, EJ Marshall, Luke Smith, Vinnie Adjahoungbeta",3G-2W,3G-2W,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Aidyn Boone, Dominic Trelenberg, EJ Marshall, Jack Cherry, Talen Pearson",3G-2W,3G-2W,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Aidyn Boone, Chris Ketchum, EJ Marshall, Luke Smith, Vinnie Adjahoungbeta",3G-2W,3G-2W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Andy Colvin, Chris Ketchum, Dominic Trelenberg, EJ Marshall, Luke Smith",3G-2W,3G-2W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, Dominic Trelenberg, EJ Marshall, Luke Smith, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, Chris Ketchum, DJ Jervier, Dominic Trelenberg, Luke Smith",3G-2W,3G-2W,Elmhurst Bluejays
@@ -311,21 +321,30 @@ Opponent,Elmhurst Bluejays,"Andy Colvin, Dominic Trelenberg, EJ Marshall, Talen 
 Opponent,Elmhurst Bluejays,"Aidyn Boone, Chris Ketchum, Dominic Trelenberg, Jack Cherry, Talen Pearson",3G-2W,3G-2W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, Chris Ketchum, Dominic Trelenberg, Luke Smith, Talen Pearson",3G-2W,3G-2W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, Chris Ketchum, Dominic Trelenberg, Jack Cherry, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Andy Colvin, Chris Ketchum, DJ Jervier, EJ Marshall, Luke Smith",4G-1W,4G-1W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Andy Colvin, Chris Ketchum, Cooper Hasz, DJ Jervier, Luke Smith",3G-1W-1B,3G-1W-1B,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Chris Ketchum, Cooper Hasz, Dominic Trelenberg, EJ Marshall, Jack Cherry",3G-1W-1B,3G-1W-1B,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Aidyn Boone, DJ Jervier, EJ Marshall, Luke Smith, Vinnie Adjahoungbeta",3G-2W,3G-2W,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Chris Ketchum, Dominic Trelenberg, Jack Cherry, Talen Pearson, Vinnie Adjahoungbeta",3G-2W,3G-2W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, DJ Jervier, Dominic Trelenberg, Jack Cherry, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, DJ Jervier, Dominic Trelenberg, Luke Smith, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, Chris Ketchum, Dominic Trelenberg, EJ Marshall, Jack Cherry",3G-2W,3G-2W,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Aidyn Boone, DJ Jervier, Dominic Trelenberg, EJ Marshall, Luke Smith",3G-2W,3G-2W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Chris Ketchum, Dominic Trelenberg, Luke Smith, Talen Pearson, Vinnie Adjahoungbeta",3G-2W,3G-2W,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Chris Ketchum, DJ Jervier, EJ Marshall, Talen Pearson, Vinnie Adjahoungbeta",4G-1W,4G-1W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, Dominic Trelenberg, Jack Cherry, Luke Smith, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Andy Colvin, Chris Ketchum, Cooper Hasz, DJ Jervier, Talen Pearson",3G-1W-1B,3G-1W-1B,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Chris Ketchum, Dominic Trelenberg, EJ Marshall, Luke Smith, Vinnie Adjahoungbeta",3G-2W,3G-2W,Elmhurst Bluejays
-Opponent,Elmhurst Bluejays,"Chris Ketchum, DJ Jervier, EJ Marshall, Talen Pearson, Vinnie Adjahoungbeta",4G-1W,4G-1W,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Aidyn Boone, Chris Ketchum, EJ Marshall, Jack Cherry, Talen Pearson",4G-1W,4G-1W,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Dominic Trelenberg, EJ Marshall, Jack Cherry, Talen Pearson, Vinnie Adjahoungbeta",3G-2W,3G-2W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Andy Colvin, Dominic Trelenberg, EJ Marshall, Jack Cherry, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Andy Colvin, Chris Ketchum, DJ Jervier, Dominic Trelenberg, Luke Smith",3G-2W,3G-2W,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Aidyn Boone, Chris Ketchum, DJ Jervier, EJ Marshall, Jack Cherry",4G-1W,4G-1W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, DJ Jervier, Dominic Trelenberg, EJ Marshall, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
-Opponent,Elmhurst Bluejays,"Aidyn Boone, Dominic Trelenberg, Luke Smith, Talen Pearson, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, Dominic Trelenberg, EJ Marshall, Talen Pearson, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Aidyn Boone, Dominic Trelenberg, Luke Smith, Talen Pearson, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Chris Ketchum, EJ Marshall, Luke Smith, Talen Pearson, Vinnie Adjahoungbeta",4G-1W,4G-1W,Elmhurst Bluejays
-Opponent,Elmhurst Bluejays,"Aidyn Boone, Chris Ketchum, Dominic Trelenberg, EJ Marshall, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Aidyn Boone, Chris Ketchum, DJ Jervier, Dominic Trelenberg, Jack Cherry",3G-2W,3G-2W,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Aidyn Boone, Chris Ketchum, Dominic Trelenberg, EJ Marshall, Vinnie Adjahoungbeta",2G-3W,2G-3W,Elmhurst Bluejays
+Opponent,Elmhurst Bluejays,"Dominic Trelenberg, Jack Cherry, Luke Smith, Talen Pearson, Vinnie Adjahoungbeta",3G-2W,3G-2W,Elmhurst Bluejays
 Opponent,Elmhurst Bluejays,"Chris Ketchum, DJ Jervier, Dominic Trelenberg, EJ Marshall, Vinnie Adjahoungbeta",3G-2W,3G-2W,Elmhurst Bluejays

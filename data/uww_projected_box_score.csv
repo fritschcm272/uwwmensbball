@@ -1,1 +1,20 @@
-PLAYER,MIN,projected_PTS,projected_REB,projected_AST,FG%,3P%,FT%,projection_basis
+opponent,game_date,PLAYER,MIN,projected_PTS,projected_REB,projected_AST,FG%,3P%,FT%,projection_basis
+Elmhurst Bluejays,"Wed, Nov 18",Collin Madson,38.0,26.4,4.5,3.0,53.3%,33.3%,76.9%,"Own season avg: 28.0 PTS, 4.5 REB, 3.0 AST/gm over 38 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 72 pts: 50% season PPG 75.5 + 50% actual PPG vs scouted opponents this season 68.8)"
+Elmhurst Bluejays,"Wed, Nov 18",JR Lukenbill,21.0,9.0,4.5,0.5,63.6%,50%,100%,"Own season avg: 9.5 PTS, 4.5 REB, 0.5 AST/gm over 21 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 72 pts: 50% season PPG 75.5 + 50% actual PPG vs scouted opponents this season 68.8)"
+Elmhurst Bluejays,"Wed, Nov 18",Kelton McEwen,33.0,8.5,1.0,3.0,38.9%,25%,100%,"Own season avg: 9.0 PTS, 1.0 REB, 3.0 AST/gm over 33 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 72 pts: 50% season PPG 75.5 + 50% actual PPG vs scouted opponents this season 68.8)"
+Elmhurst Bluejays,"Wed, Nov 18",Tyshawn Teague-Johnson,29.0,7.1,8.5,1.0,30%,16.7%,50%,"Own season avg: 7.5 PTS, 8.5 REB, 1.0 AST/gm over 29 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 72 pts: 50% season PPG 75.5 + 50% actual PPG vs scouted opponents this season 68.8)"
+Elmhurst Bluejays,"Wed, Nov 18",Isaiah Robinson,26.0,7.1,4.0,1.5,45.5%,40%,42.9%,"Own season avg: 7.5 PTS, 4.0 REB, 1.5 AST/gm over 26 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 72 pts: 50% season PPG 75.5 + 50% actual PPG vs scouted opponents this season 68.8)"
+Elmhurst Bluejays,"Wed, Nov 18",Rashad Rogers,27.0,5.7,7.0,1.0,36.4%,25%,33.3%,"Own season avg: 6.0 PTS, 7.0 REB, 1.0 AST/gm over 27 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 72 pts: 50% season PPG 75.5 + 50% actual PPG vs scouted opponents this season 68.8)"
+Elmhurst Bluejays,"Wed, Nov 18",Darius Chestnut,14.0,4.2,2.5,0.0,50%,33.3%,66.7%,"Own season avg: 4.5 PTS, 2.5 REB, 0.0 AST/gm over 14 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 72 pts: 50% season PPG 75.5 + 50% actual PPG vs scouted opponents this season 68.8)"
+Elmhurst Bluejays,"Wed, Nov 18",Taveon Vann,6.0,2.4,2.0,0.0,100%,-,75%,"Own season avg: 2.5 PTS, 2.0 REB, 0.0 AST/gm over 6 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 72 pts: 50% season PPG 75.5 + 50% actual PPG vs scouted opponents this season 68.8)"
+Elmhurst Bluejays,"Wed, Nov 18",Zavier Castillo,12.0,1.9,0.0,0.0,100%,-,-,"Own season avg: 2.0 PTS, 0.0 REB, 0.0 AST/gm over 12 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 72 pts: 50% season PPG 75.5 + 50% actual PPG vs scouted opponents this season 68.8)"
+Elmhurst Bluejays,"Wed, Nov 18",Luke Paddock,1.0,0.0,0.0,0.0,-,-,-,"Own season avg: 0.0 PTS, 0.0 REB, 0.0 AST/gm over 1 min | Scaled x0.94 for this matchup's projected pace (UWW projected team total 72 pts: 50% season PPG 75.5 + 50% actual PPG vs scouted opponents this season 68.8)"
+Elmhurst Bluejays,"Wed, Nov 18",Mikey Wildes,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Elmhurst Bluejays,"Wed, Nov 18",Mauryon Turner,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Elmhurst Bluejays,"Wed, Nov 18",Brock Marino,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Elmhurst Bluejays,"Wed, Nov 18",Agape Keys Jr.,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Elmhurst Bluejays,"Wed, Nov 18",Agape Keyes Jr.,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Elmhurst Bluejays,"Wed, Nov 18",Chris Johnson,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Elmhurst Bluejays,"Wed, Nov 18",Zay Howard,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Elmhurst Bluejays,"Wed, Nov 18",Trent Grunewald,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.
+Elmhurst Bluejays,"Wed, Nov 18",Jonathan Aluyi,,,,,-,-,-,No season stats recorded for this player yet -- insufficient data to project.

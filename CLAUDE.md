@@ -623,3 +623,16 @@ replace the old single cached function; `_pr_remote_save_docs(token, repo, sb, f
 {name: document} from them and skips names handed to it; `_pr_save_docs` passes `skip=seen` (the deployed folder's names);
 `_pr_remote_save_docs.clear = _pr_remote_save_list.clear` so the five `.clear()` calls in the app still work and now clear
 only the cheap listing. A save is 2 requests instead of 113. Nothing else about saving, the answers or the batches changed.
+
+
+### Film Tagging: the next block's clips download in the background (11/16)
+Corey asked whether 30 clips a block instead of 20 would be slower. Saving no longer cares (2 requests either way), but a
+block's clips are pulled from the `videos` branch when the block OPENS (`_clip_prefetch`, 6 at a time; ~2.9 MB a clip, so
+~57 MB for 20 and ~85 MB for 30, and `st.video` holds each one in the app's memory -- Community Cloud gives about 1 GB).
+So 30 would mean 6 longer waits instead of 9 shorter ones, with more memory per block. Built instead: `_ft_prefetch_next`
+(beside `_clip_prefetch`) starts a daemon thread that downloads the NEXT block's clips while the coach tags this one, so
+the block boundary stops being a wait at either size. It runs once per block per app process (`_FT_PREFETCHED`, a
+module-level set shared by every session), skips clips already in the folder, makes no Streamlit calls in the thread
+(`add_script_run_ctx` only keeps the "missing ScriptRunContext" warning out of the logs), and is started right after the
+current block's own blocking prefetch, so the two never compete. FT_SAVE_EVERY is still 20 (line 8194): with this in
+place 30 is a real option, at ~85 MB of video per block.

@@ -1,4 +1,8 @@
 opponent,player,verdict,late_share_pct,fouls_per_40,late_fouls,defensive_role,why,basis
-Elmhurst Bluejays,Vinnie Adjahoungbeta,Attack,75,4.2,1,Helper,"4.2 fouls per 40 min, 1 foul(s) defending 2-for-1 possessions; defensive role Helper",on the floor for that share of their 8 end-of-half defensive possessions
-Elmhurst Bluejays,Aidyn Boone,Attack,38,3.5,0,,3.5 fouls per 40 min,on the floor for that share of their 8 end-of-half defensive possessions
-Elmhurst Bluejays,Dominic Trelenberg,Attack,62,0.0,0,Low Activity,0.0 fouls per 40 min; defensive role Low Activity,on the floor for that share of their 8 end-of-half defensive possessions
+Elmhurst Bluejays,Vinnie Adjahoungbeta,Attack,87,4.9,1,Helper,"4.9 fouls per 40 min, 1 foul(s) defending 2-for-1 possessions; defensive role Helper",on the floor for that share of their 15 end-of-half defensive possessions
+Elmhurst Bluejays,EJ Marshall,Attack,53,5.9,2,Point of Attack,"5.9 fouls per 40 min, 2 foul(s) defending 2-for-1 possessions; defensive role Point of Attack",on the floor for that share of their 15 end-of-half defensive possessions
+Elmhurst Bluejays,Talen Pearson,Attack,67,2.8,0,Low Activity,2.8 fouls per 40 min; defensive role Low Activity,on the floor for that share of their 15 end-of-half defensive possessions
+Elmhurst Bluejays,Chris Ketchum,,53,4.0,0,Helper,4.0 fouls per 40 min; defensive role Helper,on the floor for that share of their 15 end-of-half defensive possessions
+Elmhurst Bluejays,Aidyn Boone,,33,4.4,0,,4.4 fouls per 40 min,on the floor for that share of their 15 end-of-half defensive possessions
+Elmhurst Bluejays,Dominic Trelenberg,,67,0.8,0,Low Activity,0.8 fouls per 40 min; defensive role Low Activity,on the floor for that share of their 15 end-of-half defensive possessions
+Elmhurst Bluejays,Jack Cherry,Avoid,47,3.6,0,Point of Attack,3.6 fouls per 40 min; defensive role Point of Attack,on the floor for that share of their 15 end-of-half defensive possessions

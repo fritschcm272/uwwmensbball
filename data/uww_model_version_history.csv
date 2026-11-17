@@ -676,3 +676,9 @@ Tag model: primary_action,v2026.11.10,2026-11-10,trained,2026-11-10T07:41:22,"50
 Tag model: screen_defender,v2026.11.10,2026-11-10,trained,2026-11-10T07:41:22,"93 tagged clips, 7 answers learned, one answer only",2026-11-10T07:44:43
 Tag model: situation,v2026.11.10,2026-11-10,trained,2026-11-10T07:41:22,"1469 tagged clips, 7 answers learned",2026-11-10T07:44:43
 Tag model (overall),v2026.11.10,2026-11-10,trained,2026-11-10T07:41:22,newest of 9 field model(s); last retrained field: situation,2026-11-10T07:44:43
+Player tracking,v2026.11.17,2026-11-17,pretrained + code,370182bdbf4a,"detector yolo11s.pt, pose yolo11n-pose.pt, appearance facebook/dinov2-small (none retrained)",2026-11-16T18:36:34
+Jersey-number reader test,v2026.11.17,2026-11-17,pretrained + code,67e4a43e06b5,scores the OCR readers; none retrained here,2026-11-16T18:36:34
+Court mapping,v2026.11.17,2026-11-17,rules + code,aef008bd9a7f,0 calibration file(s),2026-11-16T18:36:34
+Offensive roles,v2026.11.17,2026-11-17,rules + code,e773e1bd67b7,"12 BBall Index-style roles, Division III cut-offs",2026-11-16T18:36:34
+Defensive roles,v2026.11.17,2026-11-17,rules + code,0d13cba0aaf6,"7 BBall Index-style roles, Division III cut-offs",2026-11-16T18:36:34
+Player comparison,v2026.11.17,2026-11-17,rules + code,6b8facb024ba,tag-based similarity; LLM blend off,2026-11-16T18:36:34

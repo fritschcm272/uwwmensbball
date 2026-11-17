@@ -27,7 +27,7 @@ Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,Ball Screen,Defender x s
 Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Drop,17,12,False,,2,1,2,0.0,0.0,2,0,[app] I-Form Ripon Motion left: Man-to-Man (Drop) | [app] Motion: Run & Jump - Man-to-Man (Drop | Switch)
 Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),High Hedge,17,12,False,,2,2,2,0.0,0.0,1,1,[app] Motion (High Hedge)
 Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Over,17,12,False,,2,1,2,0.0,0.0,2,0,[app] Iform Set 2: Man-to-Man (Over) | [app] 21 RIPON MOTION #4: Man-to-Man (Over)
-Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Flat Hedge,17,6,False,,1,1,1,0.0,,0,0,[app] Motion: Full-court M2M Press - Man-to-Man (Flat Hedge)
+Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Flat Hedge,17,6,False,,1,1,0,,,0,0,[app] Motion: Full-court M2M Press - Man-to-Man (Flat Hedge)
 Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,DHO,Defender x screen x coverage,(no jersey),Switch,4,100,True,,4,1,4,0.0,0.0,2,2,[app] I form Ripon Motion left: Man-to-Man (Switch) | [app] Motion: Man-to-Man (Switch)
 Opponent,Elmhurst Bluejays,Opponent defense,Off-ball screen,Off-ball screen,Defender x screen x coverage,(no jersey),Through,1,100,True,,1,1,1,0.0,0.0,1,0,[app] Motion (Through)
 Opponent,Elmhurst Bluejays,Opponent defense,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),Switch,1,100,True,,1,1,1,2.0,100.0,1,0,[app] BLOB BLOB #1: Man-to-Man (Switch)
@@ -35,7 +35,7 @@ Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,Ball Screen,Screen x cov
 Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,Ball Screen,Screen x coverage,,Drop,17,12,False,(no jersey),2,1,2,0.0,0.0,2,0,[app] I-Form Ripon Motion left: Man-to-Man (Drop) | [app] Motion: Run & Jump - Man-to-Man (Drop | Switch)
 Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,Ball Screen,Screen x coverage,,High Hedge,17,12,False,(no jersey),2,2,2,0.0,0.0,1,1,[app] Motion (High Hedge)
 Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,Ball Screen,Screen x coverage,,Over,17,12,False,(no jersey),2,1,2,0.0,0.0,2,0,[app] Iform Set 2: Man-to-Man (Over) | [app] 21 RIPON MOTION #4: Man-to-Man (Over)
-Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,Ball Screen,Screen x coverage,,Flat Hedge,17,6,False,(no jersey),1,1,1,0.0,,0,0,[app] Motion: Full-court M2M Press - Man-to-Man (Flat Hedge)
+Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,Ball Screen,Screen x coverage,,Flat Hedge,17,6,False,(no jersey),1,1,0,,,0,0,[app] Motion: Full-court M2M Press - Man-to-Man (Flat Hedge)
 Opponent,Elmhurst Bluejays,Opponent defense,Ball screen,DHO,Screen x coverage,,Switch,4,100,True,(no jersey),4,1,4,0.0,0.0,2,2,[app] I form Ripon Motion left: Man-to-Man (Switch) | [app] Motion: Man-to-Man (Switch)
 Opponent,Elmhurst Bluejays,Opponent defense,Off-ball screen,Off-ball screen,Screen x coverage,,Through,1,100,True,(no jersey),1,1,1,0.0,0.0,1,0,[app] Motion (Through)
 Opponent,Elmhurst Bluejays,Opponent defense,Off-ball screen,Screen,Screen x coverage,,Switch,1,100,True,(no jersey),1,1,1,2.0,100.0,1,0,[app] BLOB BLOB #1: Man-to-Man (Switch)
@@ -45,3 +45,33 @@ UWW,Elmhurst Bluejays,UWW defense,Off-ball screen,Screen,Defender x screen x cov
 UWW,Elmhurst Bluejays,UWW defense,Ball screen,Ball Screen,Screen x coverage,,Switch,1,100,True,(no jersey),1,1,1,3.0,100.0,1,0,"bs:m2m(switch,switch)"
 UWW,Elmhurst Bluejays,UWW defense,Off-ball screen,Screen,Screen x coverage,,Switch,2,50,True,(no jersey),1,1,1,3.0,100.0,1,0,"bs:m2m(switch,switch)"
 UWW,Elmhurst Bluejays,UWW defense,Off-ball screen,Screen,Screen x coverage,,press,2,50,True,(no jersey),1,1,1,0.0,0.0,1,0,:m2m(press)
+Banked,Elmhurst Bluejays,Unknown,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Drop,28,50,False,,14,1,11,0.64,30.0,10,0,"bs:m2m(over,drop) | Pinch(spilit),BS(3,4):m2m(over,drop)"
+Banked,Elmhurst Bluejays,Unknown,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Over,28,21,False,,6,1,5,0.2,0.0,4,0,"bs:m2m(over,drop) | scissors-pinch(over,go,give,bs):m2m(over,drop)"
+Banked,Elmhurst Bluejays,Unknown,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Switch,28,14,False,,4,1,4,1.0,66.7,3,1,bs:m2m(switch)
+Banked,Elmhurst Bluejays,Unknown,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Under,28,14,False,,4,1,4,0.5,33.3,3,1,"Opener:5out-zoom,backsideRICKY:m2m(Under,through) | pistoltran,pinchover,bs(12,4):m2m(through,under)"
+Banked,Elmhurst Bluejays,Unknown,Ball screen,DHO,Defender x screen x coverage,(no jersey),Over,4,75,True,,3,1,3,0.0,0.0,2,1,"Scissors(dho,bs):m2m(over,drop) | tran(dho,drag,clear)pinch(zoom-over)BS:m2mbs(over,drop)"
+Banked,Elmhurst Bluejays,Unknown,Ball screen,DHO,Defender x screen x coverage,(no jersey),Under,4,25,True,,1,1,0,,,0,0,"scissors(dho,bs):m2m(under,drop)"
+Banked,Elmhurst Bluejays,Unknown,Ball screen,Zoom,Defender x screen x coverage,(no jersey),Over,2,100,True,,2,1,2,1.0,50.0,2,0,"pinch(over,zoom):m2m | sci-pinch(over,zoom):m2m"
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Down Screen,Defender x screen x coverage,(no jersey),Over,1,100,True,,1,1,1,0.0,,0,1,DS:m2m(over)
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Off-ball screen,Defender x screen x coverage,(no jersey),Through,2,100,True,,2,1,2,0.0,0.0,1,1,"Opener:5out-zoom,backsideRICKY:m2m(Under,through) | pistoltran,pinchover,bs(12,4):m2m(through,under)"
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),Over,18,72,False,,13,1,8,1.12,57.1,7,1,"Pinch(spilit),BS(3,4):m2m(over,drop) | pinch(over):m2m"
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),Switch,18,11,False,,2,1,2,0.0,0.0,2,0,"ghost:m2m(switch) | sciorss left:m2m(over,switch)"
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),press,18,6,False,,1,1,1,3.0,100.0,1,0,:m2m(press)
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),switch all,18,6,False,,1,1,1,0.0,,0,1,screens:m2m(switch all)
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),versus twirl clip this,18,6,False,,1,1,1,2.0,100.0,1,0,m2m (VERSUS TWIRL CLIP THIS)
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Stagger,Defender x screen x coverage,#11,Switch,1,100,True,,1,1,1,0.0,0.0,1,0,stagger:m2m(11switch)
+Banked,Elmhurst Bluejays,Unknown,Ball screen,Ball Screen,Screen x coverage,,Drop,28,50,False,(no jersey),14,1,11,0.64,30.0,10,0,"bs:m2m(over,drop) | Pinch(spilit),BS(3,4):m2m(over,drop)"
+Banked,Elmhurst Bluejays,Unknown,Ball screen,Ball Screen,Screen x coverage,,Over,28,21,False,(no jersey),6,1,5,0.2,0.0,4,0,"bs:m2m(over,drop) | scissors-pinch(over,go,give,bs):m2m(over,drop)"
+Banked,Elmhurst Bluejays,Unknown,Ball screen,Ball Screen,Screen x coverage,,Switch,28,14,False,(no jersey),4,1,4,1.0,66.7,3,1,bs:m2m(switch)
+Banked,Elmhurst Bluejays,Unknown,Ball screen,Ball Screen,Screen x coverage,,Under,28,14,False,(no jersey),4,1,4,0.5,33.3,3,1,"Opener:5out-zoom,backsideRICKY:m2m(Under,through) | pistoltran,pinchover,bs(12,4):m2m(through,under)"
+Banked,Elmhurst Bluejays,Unknown,Ball screen,DHO,Screen x coverage,,Over,4,75,True,(no jersey),3,1,3,0.0,0.0,2,1,"Scissors(dho,bs):m2m(over,drop) | tran(dho,drag,clear)pinch(zoom-over)BS:m2mbs(over,drop)"
+Banked,Elmhurst Bluejays,Unknown,Ball screen,DHO,Screen x coverage,,Under,4,25,True,(no jersey),1,1,0,,,0,0,"scissors(dho,bs):m2m(under,drop)"
+Banked,Elmhurst Bluejays,Unknown,Ball screen,Zoom,Screen x coverage,,Over,2,100,True,(no jersey),2,1,2,1.0,50.0,2,0,"pinch(over,zoom):m2m | sci-pinch(over,zoom):m2m"
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Down Screen,Screen x coverage,,Over,1,100,True,(no jersey),1,1,1,0.0,,0,1,DS:m2m(over)
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Off-ball screen,Screen x coverage,,Through,2,100,True,(no jersey),2,1,2,0.0,0.0,1,1,"Opener:5out-zoom,backsideRICKY:m2m(Under,through) | pistoltran,pinchover,bs(12,4):m2m(through,under)"
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Screen,Screen x coverage,,Over,18,72,False,(no jersey),13,1,8,1.12,57.1,7,1,"Pinch(spilit),BS(3,4):m2m(over,drop) | pinch(over):m2m"
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Screen,Screen x coverage,,Switch,18,11,False,(no jersey),2,1,2,0.0,0.0,2,0,"ghost:m2m(switch) | sciorss left:m2m(over,switch)"
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Screen,Screen x coverage,,press,18,6,False,(no jersey),1,1,1,3.0,100.0,1,0,:m2m(press)
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Screen,Screen x coverage,,switch all,18,6,False,(no jersey),1,1,1,0.0,,0,1,screens:m2m(switch all)
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Screen,Screen x coverage,,versus twirl clip this,18,6,False,(no jersey),1,1,1,2.0,100.0,1,0,m2m (VERSUS TWIRL CLIP THIS)
+Banked,Elmhurst Bluejays,Unknown,Off-ball screen,Stagger,Screen x coverage,,Switch,1,100,True,#11,1,1,1,0.0,0.0,1,0,stagger:m2m(11switch)

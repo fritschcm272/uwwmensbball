@@ -1,22 +1,30 @@
 opponent,game_date,category,key_number,icon,headline,evidence,reasoning,source,impact,confidence,brief_eligible,priority_score
 Elmhurst Bluejays,2026-11-18,Offense,1,🎯,Attack Opponent Worst Offensive Shot Selection & Quality,,No video-tagged data yet for teams Elmhurst Bluejays played before facing UWW this season -- needs a local/live-scraped _pbp and _video file for each of those games.,Data-Driven,,,False,62.5
-Elmhurst Bluejays,2026-11-18,Offense,2,📋,Call our best set: Zona,"1.67 PPP on 4 uses vs our 0.96 overall · 1/2 FG
+Elmhurst Bluejays,2026-11-18,Offense,2,📋,Call our best set: Zona,"1.67 PPP on 4 uses vs our 0.99 overall · 1/2 FG
 Finished most by Collin Madson
-No coverage tagged against it yet","Our most productive set this season -- go to it when we need a good look, with Collin Madson finishing. Small sample: 1 game.",Data-Driven,0.38545454545454527,0.06666666666666667,True,51.4
-Elmhurst Bluejays,2026-11-18,Defense,3,📋,Take away their go-to set: Flow,"7 uses in 1 games · 1.43 PPP vs their 1.03 overall · 4/7 FG
+No coverage tagged against it yet","Our most productive set this season -- go to it when we need a good look, with Collin Madson finishing. Small sample: 2 games.",Data-Driven,0.36909090909090914,0.13333333333333333,True,51.8
+Elmhurst Bluejays,2026-11-18,Defense,3,📋,PHYSICAL BOX OUTS & DRIVE THEM OUT!,Linked data key: Finish every defensive possession with a box-out,From the numbers: Finish every defensive possession with a box-out. They get 40% of their own misses back -- a stop isn't a stop until we secure the rebound; find Elmhurst on every shot.,Keys to Victory,,,True,80.0
+Elmhurst Bluejays,2026-11-18,Defense,4,⚠️,Opponent strength: Great offensive rebounding team (12 per game),,,Team Strengths,,,True,49.5
+Elmhurst Bluejays,2026-11-18,Defense,5,⚠️,Opponent strength: All starters with perimeter skills & shooting ability (37% 3 pt),,,Team Strengths,,,True,49.5
+Elmhurst Bluejays,2026-11-18,Defense,6,⚠️,Opponent strength: Physical & Aggressive on ball defensively,,,Team Strengths,,,True,49.5
+Elmhurst Bluejays,2026-11-18,Defense,7,📋,Take away their go-to set: Flow,"7 uses in 1 games · 1.43 PPP vs their 1.09 overall · 4/7 FG
 Finished most by Aidyn Boone
 Built on: Ball Screen
 Tagged as: [app] 5 Out flow | [app] Flow (Jam) | [app] FLow
 Coverages against it: Drop on the ball screen 1 (0.00) · Jam on the ball screen 1 (0.00)","Their most-called half-court set. Aidyn Boone finishes it most, usually off the ball screen -- take away the ball screen and make someone else beat us. Small sample: 2 games.",Data-Driven,1.0,0.2333333333333333,True,78.5
-Elmhurst Bluejays,2026-11-18,Defense,4,,Finish every defensive possession with a box-out,"They grab 41% of their own misses -- we usually allow 46%, so this is above our norm; most by Elmhurst, Chris Ketchum.",They get 41% of their own misses back -- a stop isn't a stop until we secure the rebound; find Elmhurst on every shot. Small sample: 2 games.,Data-Driven,0.8117647058823532,0.37777777777777777,True,73.1
-Elmhurst Bluejays,2026-11-18,Personnel,5,🔒,"Attack lineup of Boone, Trelenberg, Cherry, Pearson, Adjahoungbeta","Worst +/- lineups:
--19.0 in 21.2 min, 41% FG — Boone, Trelenberg, Cherry, Pearson, Adjahoungbeta
+Elmhurst Bluejays,2026-11-18,Defense,8,,Finish every defensive possession with a box-out,"They grab 40% of their own misses -- we usually allow 37%, so this is above our norm; most by Elmhurst, Vinnie Adjahoungbeta.",They get 40% of their own misses back -- a stop isn't a stop until we secure the rebound; find Elmhurst on every shot.,Data-Driven,0.7121693121693122,0.84,True,76.1
+Elmhurst Bluejays,2026-11-18,Personnel,9,🔒,"Attack lineup of Boone, Ketchum, Trelenberg, Marshall, Smith","Worst +/- lineups:
+-8.0 in 8.6 min, 32% FG — Boone, Ketchum, Trelenberg, Marshall, Smith
+-3.0 in 37.3 min, 40% FG — Boone, Trelenberg, Cherry, Pearson, Adjahoungbeta
 Highest TO rate (per 40 min):
-1.9 TO/40 — Boone, Trelenberg, Cherry, Pearson, Adjahoungbeta",their worst net-rating lineups with real minutes this season. Small sample: 2 games.,Lineup Scouting,1.0,0.35333333333333333,True,78.3
-Elmhurst Bluejays,2026-11-18,Personnel,6,🔒,"Counter with Madson, McEwen, Rogers, Teague-Johnson, Castillo","+2.37/min — Madson, McEwen, Rogers, Teague-Johnson, Castillo
-+0.90/min — Madson, Lukenbill, McEwen, Rogers, Castillo
-+0.74/min — Madson, Robinson, Lukenbill, McEwen, Teague-Johnson","UWW's best net margin against opponent units that resemble Elmhurst Bluejays's most-used lineup (Boone, Trelenberg, Cherry, Pearson, Adjahoungbeta). Target profile: 2 guard, 3 forward · avg 6'4"". Measured across 19 comparable opponent unit(s), 40 min this season. Small sample: 1 game.",Lineup Scouting,1.0,0.2203333333333333,True,76.3
-Elmhurst Bluejays,2026-11-18,Personnel,7,🔒,"Attack Elmhurst Bluejays's Boone, Trelenberg, Pearson combo","Worst +/- 3-man combos:
--21.0 in 26.8 min — Boone, Trelenberg, Pearson
--21.0 in 23.6 min — Boone, Cherry, Pearson
--21.0 in 23.6 min — Trelenberg, Cherry, Pearson",Elmhurst Bluejays's most exploitable 3-man combinations: their worst net-rating units with real minutes this season. Small sample: 2 games.,Lineup Scouting,1.0,0.4466666666666667,True,79.7
+14.0 TO/40 — Boone, Ketchum, Trelenberg, Marshall, Smith
+8.9 TO/40 — Boone, Trelenberg, Marshall, Cherry, Adjahoungbeta",their worst net-rating lineups with real minutes this season,Lineup Scouting,1.0,0.215,True,76.2
+Elmhurst Bluejays,2026-11-18,Personnel,10,🔒,"Counter with Madson, Chestnut, Lukenbill, McEwen, Rogers","+0.73/min — Madson, Chestnut, Lukenbill, McEwen, Rogers
++0.65/min — Madson, Robinson, Lukenbill, McEwen, Teague-Johnson
++0.00/min — Madson, Lukenbill, McEwen, Teague-Johnson, Castillo","UWW's best net margin against opponent units that resemble Elmhurst Bluejays's most-used lineup (Boone, Trelenberg, Cherry, Pearson, Adjahoungbeta). Target profile: 2 guard, 3 forward · avg 6'4"" · three point shooter / slasher driver / post scorer. Measured across 10 comparable opponent unit(s), 40 min this season. Small sample: 2 games.",Lineup Scouting,1.0,0.4463333333333333,True,79.7
+Elmhurst Bluejays,2026-11-18,Personnel,11,🔒,"Attack Elmhurst Bluejays's Boone, Trelenberg, Smith combo","Worst +/- 3-man combos:
+-18.0 in 22.1 min — Boone, Trelenberg, Smith
+-17.0 in 21.0 min — Boone, Marshall, Smith
+-12.0 in 19.1 min — Trelenberg, Marshall, Smith",Elmhurst Bluejays's most exploitable 3-man combinations: their worst net-rating units with real minutes this season.,Lineup Scouting,1.0,0.5525,True,81.3
+Elmhurst Bluejays,2026-11-18,General,12,📋,COMMUNICATE SCREENS & ACTIONS,Linked data key: Take away their go-to set: Flow,"From the numbers: Take away their go-to set: Flow. Their most-called half-court set. Aidyn Boone finishes it most, usually off the ball screen -- take away the ball screen and make someone else beat us. Small sample: 2 games.",Keys to Victory,,,True,80.0
+Elmhurst Bluejays,2026-11-18,General,13,📋,DOMINATE THE PAINT,,,Keys to Victory,,,True,80.0

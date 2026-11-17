@@ -6211,6 +6211,34 @@ def _clip_prefetch(paths):
         pass
 
 
+# CONFIRMED CHANGE (requested, after "Will it slow things down to make it be 30 clips at a time instead of 20?"): a block's
+# clips are downloaded from the videos branch when the block opens (about 2.9 MB a clip, so ~57 MB for 20), which is the
+# wait a coach feels at each block boundary. The NEXT block is now fetched in the background while he tags this one, so by
+# the time he saves, its clips are already on disk and the next block opens straight away. Each block is started once per
+# app process (_FT_PREFETCHED); the thread only downloads files (no Streamlit calls), skips clips already in the folder,
+# and is a daemon, so nothing waits on it and a coach who stops tagging costs nothing but the download already running.
+_FT_PREFETCHED = set()
+
+
+def _ft_prefetch_next(paths, bid):
+    """Start downloading the next block's clips in the background. Does nothing if that block is already in hand."""
+    todo = [x for x in paths if x and not os.path.exists(x)]
+    if not todo or bid in _FT_PREFETCHED:
+        return
+    _FT_PREFETCHED.add(bid)
+    try:
+        import threading
+        t = threading.Thread(target=_clip_prefetch, args=(todo,), name=f"ft_prefetch_{bid}", daemon=True)
+        try:                                             # keeps Streamlit from logging "missing ScriptRunContext"
+            from streamlit.runtime.scriptrunner import add_script_run_ctx, get_script_run_ctx
+            add_script_run_ctx(t, get_script_run_ctx())
+        except Exception:
+            pass
+        t.start()
+    except Exception:
+        _FT_PREFETCHED.discard(bid)                      # it never started -- let the next page load try again
+
+
 def _pr_video(path, rate=None, width_share=None):
     """A play-review video, smaller than the full section and starting at PR_VIDEO_SPEED (1.5x).
     CONFIRMED CHANGE (requested: "default the play back speed to 1.5 ... and make the video player a little smaller"):
@@ -8402,6 +8430,9 @@ def render_film_tagging():
     _form = _form_no_enter(f"ft_form_{_bid}")
     _clr_pi, _fill_pi = [], []
     _clip_prefetch([os.path.join(d["_dir"], _all[i_]["clip"]) for i_ in range(_lo, _hi) if _all[i_].get("clip")])
+    # this block is in hand; the next one downloads in the background while the coach tags this one
+    _ft_prefetch_next([os.path.join(d["_dir"], _all[i_]["clip"]) for i_ in range(_hi, min(len(_all), _hi + FT_SAVE_EVERY))
+                       if _all[i_].get("clip")], f"{_bid}_next")
     with _form:
         for pi in range(_lo, _hi):
             pl = _all[pi]

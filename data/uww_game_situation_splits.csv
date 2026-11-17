@@ -1,2 +1,4 @@
 opponent,situation,ppp,primary_actions,note,is_sample
-Elmhurst Bluejays,Trailing by 10+,1.0,"Motion (12x), Flow (5x)",26 tagged possessions (their overall 1.03 PPP),False
+Elmhurst Bluejays,Leading by 10+,0.85,"Slows down, more Hi-Lo DHO",Stops running in transition,True
+Elmhurst Bluejays,Trailing by 10+,1.15,"More ball screens, faster pace",Dominic Trelenberg takes over possessions,True
+Elmhurst Bluejays,"Clutch (last 5 min, margin ≤ 8)",0.97,Isolation for Dominic Trelenberg,Goes away from their sets late,True

@@ -1,9 +1,9 @@
 opponent,situation,crash_pct,who_crashes,note,is_sample
-Elmhurst Bluejays,Their missed layup / dunk,50,"Elmhurst (6), Chris Ketchum (5), Aidyn Boone (2)",50% offensive rebound on 34 of 34 misses (0 unpaired),False
-Elmhurst Bluejays,Their missed two-point jumper,29,"Dominic Trelenberg (3), Vinnie Adjahoungbeta (3), Chris Ketchum (1)",29% offensive rebound on 34 of 34 misses (0 unpaired),False
-Elmhurst Bluejays,Their missed free throw,47,Elmhurst (8),47% offensive rebound on 17 of 17 misses (0 unpaired),False
-Elmhurst Bluejays,All their misses,41,"Elmhurst (14), Chris Ketchum (6), Vinnie Adjahoungbeta (5)",41% offensive rebound on 85 of 85 misses (0 unpaired),False
-Elmhurst Bluejays,Opponent missed layup / dunk,69,"Vinnie Adjahoungbeta (5), Elmhurst (3), EJ Marshall (3)",They secure 69% of 29 opponent misses (0 unpaired),False
-Elmhurst Bluejays,Opponent missed two-point jumper,82,"Chris Ketchum (8), Vinnie Adjahoungbeta (5), Dominic Trelenberg (5)",They secure 82% of 44 opponent misses (0 unpaired),False
-Elmhurst Bluejays,Opponent missed free throw,44,"Vinnie Adjahoungbeta (3), Elmhurst (1)",They secure 44% of 9 opponent misses (1 unpaired),False
-Elmhurst Bluejays,All opponent misses,73,"Vinnie Adjahoungbeta (13), Chris Ketchum (10), Dominic Trelenberg (7)",They secure 73% of 82 opponent misses (1 unpaired),False
+Elmhurst Bluejays,Their missed layup / dunk,45,"Elmhurst (6), Chris Ketchum (5), Vinnie Adjahoungbeta (3)",45% offensive rebound on 47 of 47 misses (0 unpaired),False
+Elmhurst Bluejays,Their missed two-point jumper,33,"Vinnie Adjahoungbeta (8), Dominic Trelenberg (4), Aidyn Boone (3)",33% offensive rebound on 61 of 61 misses (0 unpaired),False
+Elmhurst Bluejays,Their missed free throw,50,Elmhurst (8),50% offensive rebound on 18 of 18 misses (0 unpaired),False
+Elmhurst Bluejays,All their misses,40,"Elmhurst (14), Vinnie Adjahoungbeta (11), Chris Ketchum (6)",40% offensive rebound on 126 of 126 misses (0 unpaired),False
+Elmhurst Bluejays,Opponent missed layup / dunk,71,"Vinnie Adjahoungbeta (8), Aidyn Boone (3), Elmhurst (3)",They secure 71% of 38 opponent misses (0 unpaired),False
+Elmhurst Bluejays,Opponent missed two-point jumper,79,"Chris Ketchum (10), Aidyn Boone (9), Jack Cherry (7)",They secure 79% of 63 opponent misses (0 unpaired),False
+Elmhurst Bluejays,Opponent missed free throw,40,"Vinnie Adjahoungbeta (4), Talen Pearson (3), Elmhurst (1)",They secure 40% of 20 opponent misses (1 unpaired),False
+Elmhurst Bluejays,All opponent misses,70,"Vinnie Adjahoungbeta (19), Chris Ketchum (12), Aidyn Boone (12)",They secure 70% of 121 opponent misses (1 unpaired),False
