@@ -14,7 +14,7 @@ Opponent,Elmhurst Bluejays,Elmhurst Bluejays,Elmhurst Bluejays,Offense,Screener,
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,Switch,7,1,1.43,58.0
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),DHO,Switch,4,1,0.0,100.0
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),High Ball Screen,Drop,2,1,0.0,100.0
-Opponent,Elmhurst Bluejays,DePauw Tigers,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,Flat Hedge,1,1,,8.0
+Opponent,Elmhurst Bluejays,DePauw Tigers,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,Flat Hedge,1,1,0.0,8.0
 Opponent,Elmhurst Bluejays,DePauw Tigers,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,High Hedge,1,1,0.0,8.0
 Opponent,Elmhurst Bluejays,DePauw Tigers,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,Switch,1,1,0.0,8.0
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Elmhurst Bluejays,Defense,Off-ball defender,(no number),Ball Screen,High Hedge,1,1,0.0,8.0
@@ -48,6 +48,6 @@ UWW,Elmhurst Bluejays,Ripon Red Hawks,Ripon Red Hawks,Offense,Screener,#35 Micha
 Opponent,Elmhurst Bluejays,Ripon Red Hawks,Ripon Red Hawks,Offense,Screener,#40,Ball Screen,Pop,1,1,0.0,100.0
 UWW,Elmhurst Bluejays,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#15 Collin Madson,Down Screen,Cobra,1,1,0.0,100.0
 UWW,Elmhurst Bluejays,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#5 Isaiah Robinson,Flare,Use it,1,1,0.0,100.0
-UWW,Elmhurst Bluejays,UW-Whitewater,UW-Whitewater,Offense,Screener,#25 Taveon Vann,Ball Screen,Roll,2,1,2.0,100.0
+UWW,Elmhurst Bluejays,UW-Whitewater,UW-Whitewater,Offense,Screener,#25 Taveon Vann,Ball Screen,Roll,2,1,1.5,100.0
 UWW,Elmhurst Bluejays,UW-Whitewater,UW-Whitewater,Offense,Screener,#35 Rashad Rogers,Flare,Pop,1,1,0.0,100.0
 UWW,Elmhurst Bluejays,UW-Whitewater,UW-Whitewater,Offense,Screener,#5 Isaiah Robinson,Down Screen,Pop,1,1,0.0,100.0
