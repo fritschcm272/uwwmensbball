@@ -701,3 +701,26 @@ built up a game at a time instead. `_push_clip_videos()` in `55c_play_review.py`
 - One new game, or `VIDEOS_PUSH_PER_GAME = False`, keeps the old single push.
 Not fixed by this: the branch still grows every run (each run re-makes the batch videos as new blobs). Pruning it, or
 moving clip hosting off git, is still open -- offered twice, not approved. Do not touch git history without Corey asking.
+
+
+### Why the clip-video push kept failing: the commit had no parent (11/17)
+Chunking alone did not fix it. One game per push still died ("2 of 2: Ripon_UWWhitewater, 270 new clip file(s), 389 MB"
+-> HTTP 500), and by hand every push enumerated the WHOLE branch: "Enumerating objects: 1714 ... Writing objects: 100%
+(1714/1714), 2.06 GiB" -> 500 again, three times. The cause is the parentless commit the branch is built from: git has no
+shared history to diff against, so it offers every object in the tree however much GitHub already holds. GitHub takes the
+whole 2 GB upload and then refuses the pack.
+Proved by hand: with `commit-tree -p refs/remotes/origin/videos`, the same files went up as four fast-forward pushes of
+"74 objects, 95 MB" each, in about a minute apiece. Ripon@UWWhitewater's 270 files landed at 0da82b4.
+In `_push_clip_videos()` now:
+- `_base` = what GitHub has (`refs/remotes/origin/videos`). If that ref exists but its tree is NOT in the videos git
+  folder -- which is what the run's own `git prune --expire=now` causes -- the ref is deleted and re-fetched, so git can
+  tell what is already up there. (A plain `git fetch` does NOT repair this: the ref looks current, so nothing downloads.)
+- every push, chunked or not, is a child of what GitHub has, so only the new clips go up;
+- when the pushes are done the branch is flattened back to ONE parentless commit with the same tree (that push carries a
+  single commit object), so the branch still never builds up history and GitHub can still collect the old blobs. If the
+  flattening push is refused the clips are all there anyway and the next run flattens it again.
+Settings: VIDEOS_PUSH_PER_GAME (True), VIDEOS_PUSH_CHUNK_MB (120), VIDEOS_PUSH_FIRST ([] -- the game(s) the coaches are
+waiting on go first).
+NOTE for editing the job notebooks: JupyterLab holds its own copy of an open notebook. After any edit to
+parser_tagging.ipynb / parser_models.ipynb on disk, use File > Reload Notebook from Disk before running it -- on 11/17
+VIDEOS_PUSH_FIRST was set on disk, the browser ran the old cell, and the setting never reached the kernel.
