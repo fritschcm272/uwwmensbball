@@ -2459,3 +2459,110 @@ Film Tagging -- tagging progress by game (Titles + app tags):
   2026-11-07 Franklin@Hope: 0 of 212 clip(s) tagged, 212 to go
 Film Tagging: 4 game(s) with film left out -- not part of this run (the upcoming opponent's games and our most recent game; PLAY_TAG_RUN_ONLY = False tags every game): 2025-12-20 WWW@AC; 2025-12-30 WWW@COE; 2026-01-03 UWOshkosh@UWWhitewater; 2026-01-03 WOS@WWW
   [videos] pushing 816 clip file(s) to the 'videos' branch on GitHub (only new ones are uploaded)...
+  [videos] 'videos' branch = 816 clip file(s) (625s)
+  [time] 55c_play_review: 54.7 min
+
+===== cell 135 55d_defensive_roles =====
+Defensive roles: 344 player(s) -- 293 from play-by-play only, 29 from position only, 12 from coach tags, 8 from film tracking, 2 from coach tags + film (12 marked low sample)
+  roles: Low Activity 185; Point of Attack 79; Helper 48; Mobile Big 23; Anchor Big 5; Wing Stopper 2; Chaser 2
+
+===== cell 136 55e_film_quality =====
+Film on Elmhurst Bluejays: no tracked games yet; 126 coach-tagged possessions on offense, 98 on defense.
+Film on UW-Whitewater: 1 tracked game (11/7/26 vs Carroll (WI) Pioneers, 12 clips); 720 coach-tagged possessions on offense, 662 on defense. Brief: per-player film reads off (named <NA>%, needs 50%), court sections off (placed <NA>%, shot spots agree <NA>% -- needs 60% and 80%). The app shows everything either way.
+
+===== cell 138 56_compute_biggest_scoring_runs_and_largest =====
+
+===== cell 140 57_surface_clutch_time_events_with_lineup =====
+
+===== cell 142 58_cross_reference_actual_pbp_turnovers =====
+
+===== cell 144 59_cross_reference_actual_pbp_rebounding =====
+
+===== cell 146 60_compute_scoring_margin_and_minutes_played =====
+
+===== cell 148 61_add_minutes_played_onto_reconstructed_box =====
+
+===== cell 150 62_identify_lineups_on_court_during_each_team =====
+
+===== cell 152 63_season_wide_5_man_lineup_analysis_across =====
+
+===== cell 154 64_uww_performance_vs_opponent_lineup_profile =====
+
+===== cell 156 65_diagnose_spot_up_struggles =====
+
+===== cell 158 66_check_contest_mechanic_patterns_across_all =====
+
+===== cell 160 67_contest_level =====
+
+===== cell 163 68_investigate_why_guarded_catch_and_shoot =====
+
+===== cell 166 69_structured_coaching_flags_recommendations =====
+
+===== cell 168 70_expected_box_score_for_upcoming_game =====
+
+===== cell 171 71_reconstruct_box_score_for_opponent_games =====
+
+===== cell 173 72_minutes_played_for_upcoming_opponent_prior =====
+
+===== cell 175 73_replace_upcoming_opponent_pdf_scouting =====
+
+===== cell 177 74_replace_upcoming_opponent_team_totals_with =====
+
+===== cell 179 75_back_fill_past_scouted_opponents_player =====
+
+===== cell 181 76_rebuild_player_comparisons_with_pbp =====
+
+===== cell 182 77_rebuild_player_comparisons_with_pbp_2 =====
+
+===== cell 183 78_rebuild_player_comparisons_with_pbp_3 =====
+
+===== cell 185 79_head_to_head =====
+
+===== cell 186 80_head_to_head_2 =====
+
+===== cell 188 81_extract_and_save_team_logos_from_pbp_mhtml =====
+
+===== cell 190 82_extract_player_headshots_from_scouting =====
+
+===== cell 192 83_assemble_every_key_to_victory_into_one =====
+
+===== cell 194 84_style_matchups =====
+
+===== cell 196 85_scouting_notes_and_keys_to_defending =====
+
+===== cell 198 86_game_plan =====
+
+===== cell 200 86b_two_for_one =====
+
+===== cell 202 87_build_html_scouting_brief_for_upcoming =====
+
+===== cell 204 88_tracking_review_export =====
+
+===== cell 206 46a_frame_archive =====
+Frame archive: 32,487 tracking frame(s) are packed in clip videos -- unpacked automatically when a step reads them.
+  [saves] fetched branch 'saves': 0 new saved review file(s) copied into data/play_review_saves (112 on the branch; its newest commit: 2026-11-16 14:32:29 -0600  Play review: 2026-11-14|Ripon@UWWhitewater by JT)
+
+===== cell 208 89_cleanup =====
+Cleanup (DELETING): 0 item(s), 0 KB
+  court_homographies.pkl: 8,248 of 14,523 saved entries point at frames or readers no longer used
+  jersey_numbers.pkl: 7,127 of 14,743 saved entries point at frames or readers no longer used
+  fingerprints_facebook_dinov2_small.pkl: 12,570 of 12,720 saved entries point at frames or readers no longer used
+  done -- freed about 0 KB
+
+===== cell 210 90_model_versions =====
+Model versions: 6 model(s) -> ../data\uww_model_versions.csv (no new versions this run)
+
+===== cell 211  =====
+Run time: 119 min across 61 section(s) -- the slowest:
+    54.7 min  55c_play_review
+    50.1 min  53_tag_model
+    12.9 min  47_play_calls
+     0.9 min  46_frame_capture
+     0.2 min  46a_frame_archive
+     0.2 min  46a_frame_archive
+     0.1 min  54_tracking_insights
+     0.1 min  50_player_tracking
+     0.1 min  89_cleanup
+     0.0 min  26_parse_play_by_play_events_for_opponent
+     0.0 min  02_parse_every_team_schedule_scrape_live_from
+     0.0 min  08_parse_each_opponent_fastscout_scoutbuilder
