@@ -1,0 +1,420 @@
+{
+ "kind": "court_calibration",
+ "arena": "UWWhitewater",
+ "game": "2026-11-14|Ripon@UWWhitewater",
+ "coach": "Corey",
+ "saved": "2026-11-17T20:46:44+00:00",
+ "source": "streamlit app",
+ "frames": [
+  {
+   "file": "Nov_14_2026_Ripon@UWWhitewater/track1920v2/1_715b98db_t063.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 284.5,
+     "py": 834.5
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 220.0,
+     "py": 724.5
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 313.2,
+     "py": 887.1
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 258.2,
+     "py": 793.8
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 736.4,
+     "py": 801.0
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 784.3,
+     "py": 796.2
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1255.3,
+     "py": 784.3
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1119.0,
+     "py": 743.6
+    },
+    {
+     "landmark": "RIGHT baseline x far sideline",
+     "px": 944.5,
+     "py": 686.2
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Ripon@UWWhitewater/track1920v2/27_b583c3f0_t054.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 705.4,
+     "py": 760.3
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 767.5,
+     "py": 786.7
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 628.8,
+     "py": 789.0
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 822.5,
+     "py": 691.0
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 585.8,
+     "py": 798.6
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 246.3,
+     "py": 1061.6
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 28.7,
+     "py": 734.0
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1111.8,
+     "py": 767.5
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 820.1,
+     "py": 805.8
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Ripon@UWWhitewater/track1920v2/56_84ad759a_t031.jpg",
+   "points": [
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1159.7,
+     "py": 801.0
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1102.3,
+     "py": 798.6
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 949.2,
+     "py": 810.6
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1006.6,
+     "py": 755.6
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 985.1,
+     "py": 777.1
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 542.8,
+     "py": 753.2
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 667.1,
+     "py": 712.5
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 1597.2,
+     "py": 738.8
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 1671.3,
+     "py": 908.6
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, near",
+     "px": 296.5,
+     "py": 836.9
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Ripon@UWWhitewater/track1920v2/88_e63e3adb_t039a.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 212.8,
+     "py": 841.6
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 246.3,
+     "py": 882.3
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 193.7,
+     "py": 801.0
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 671.9,
+     "py": 793.8
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 712.5,
+     "py": 796.2
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1202.7,
+     "py": 774.7
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1061.6,
+     "py": 734.0
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Ripon@UWWhitewater/track1920v2/117_4bd342c8_t045a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 915.8,
+     "py": 803.4
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 997.1,
+     "py": 743.6
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 954.0,
+     "py": 769.9
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1083.1,
+     "py": 791.4
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 786.7,
+     "py": 667.1
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1138.1,
+     "py": 793.8
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 1657.0,
+     "py": 899.0
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 1613.9,
+     "py": 808.2
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 1633.1,
+     "py": 848.8
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Ripon@UWWhitewater/track1920v2/151_ac33deee_t016a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT corner 3 at baseline, near",
+     "px": 184.1,
+     "py": 844.0
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 724.5,
+     "py": 667.1
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1083.1,
+     "py": 796.2
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 1566.1,
+     "py": 851.2
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 1685.7,
+     "py": 1078.4
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 860.8,
+     "py": 805.8
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 937.3,
+     "py": 748.4
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 901.4,
+     "py": 777.1
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 461.5,
+     "py": 762.7
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Ripon@UWWhitewater/track1920v2/180_a8aa28b4_t049a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT corner 3 at baseline, near",
+     "px": 313.2,
+     "py": 841.6
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 822.5,
+     "py": 667.1
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1183.6,
+     "py": 805.8
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 963.6,
+     "py": 805.8
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1035.3,
+     "py": 753.2
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 1001.8,
+     "py": 779.5
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1131.0,
+     "py": 801.0
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 1714.4,
+     "py": 908.6
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 1666.6,
+     "py": 813.0
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 1623.5,
+     "py": 738.8
+    }
+   ]
+  },
+  {
+   "file": "Nov_14_2026_Ripon@UWWhitewater/track1920v2/216_018ea3e3_t024a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 729.3,
+     "py": 796.2
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1637.9,
+     "py": 844.0
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 1279.2,
+     "py": 1028.1
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 1135.7,
+     "py": 714.9
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 1209.9,
+     "py": 863.2
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 1164.4,
+     "py": 784.3
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 1176.4,
+     "py": 820.1
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 499.7,
+     "py": 815.3
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 581.0,
+     "py": 755.6
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 1795.7,
+     "py": 822.5
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1848.3,
+     "py": 851.2
+    }
+   ]
+  }
+ ]
+}
