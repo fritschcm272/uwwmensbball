@@ -36,9 +36,9 @@ tracking and the models.
 - **Streamlit app** (`streamlit_app.py`, repo root): the coaches' app, deployed on Streamlit Community Cloud straight from GitHub. It shows only what's in `data/`, so **nothing changes in the app until Corey commits and pushes**.
 - **Coaches**: Corey, plus Coach Jake, who does most of the Film Tagging in the app.
 
-### Repo layout (Windows, inside OneDrive)
+### Repo layout (Windows, on the external F: drive -- moved off C:/OneDrive 11/17)
 ```
-C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball\
+F:\uwwmensbball\                 (was C:\Users\frits\OneDrive\Documents\GitHub\uwwmensbball)
   streamlit_app.py            the app (~1.2 MB)
   data\                       everything the app reads (CSVs, play_tag\, play_review\, scouting_briefs\)
   data\play_review_saves\     coaches' saved answers (also on the git branch 'saves')
@@ -636,3 +636,26 @@ module-level set shared by every session), skips clips already in the folder, ma
 (`add_script_run_ctx` only keeps the "missing ScriptRunContext" warning out of the logs), and is started right after the
 current block's own blocking prefetch, so the two never compete. FT_SAVE_EVERY is still 20 (line 8194): with this in
 place 30 is a real option, at ~85 MB of video per block.
+
+
+### The whole project moved to F: (11/17)
+After the C: drive filled (see above), Corey moved the repo to **F:\uwwmensbball** -- an EXTERNAL drive, so nothing runs
+while it is unplugged -- and out of OneDrive, which had been syncing a 9+ GB repo full of clip video. Done by him in
+GitHub Desktop: tmp_pack files and leftover temp folders deleted first, "Always keep on this device" + pause sync, move
+the folder, then Remove repository and File > Add local repository on the new path. History, branches and remote all came
+with it; `.git` is 5.8 GB there with no tmp_pack files left. Nothing in the code needed repathing: INPUT_DIR/OUTPUT_DIR
+are relative and SYNERGY_EXPORT_DIR / TRACK_DIR were already on F:. The only absolute C: paths left are in old logs and
+`.ipynb_checkpoints`.
+Still on C: and deliberately left there: anaconda3, the Playwright browsers and Synergy Editor's own cache.
+Changed with the move:
+- `_pm_scratch()` in `00_parser_modes.py`, called at the top of every `run_parser`: sets `tempfile.tempdir` and TMP/TEMP
+  to `PARSER_TEMP_DIR` (default `uwwmensbball_temp` at the top of the data drive, so F:), clears the parser's own
+  leftovers (`play_tag_*`, `play_review_*`, `lean_*`) older than `PARSER_TEMP_KEEP_HOURS` (6) in both the new scratch
+  folder and the system temp folder, and prints free space for the data and scratch drives -- a `!!` line below
+  `PARSER_MIN_FREE_GB` (10). This is what stops a repeat: the clip videos for the app were always written to the system
+  temp folder on C: first, whatever drive the data was on.
+- `55c_play_review.py`: the Film Tagging video loop checks free space every 20 clips and STOPS the batch with a `!!` line
+  ("stopped at N of M") instead of writing hundreds of failed clips, as the 11/16 run did.
+Not done, still open: the `videos` branch history only grows (5.75 GB of packs; every run re-makes the batch videos, so
+each push adds blobs nothing will reach again). Resetting that branch to a single orphan commit was offered and NOT
+approved -- do not touch git history without Corey asking.

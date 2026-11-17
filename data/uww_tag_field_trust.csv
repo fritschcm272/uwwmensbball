@@ -1,11 +1,11 @@
 field,trusted,why,accuracy_pct,baseline_pct,clips_scored,trained_at
-formation,False,model not better than always guessing (64% vs 64%),64.0,64.0,523.0,2026-11-16T16:06:56
-play_call,False,model not better than always guessing (66% vs 66%),66.0,66.0,566.0,2026-11-16T16:06:56
-defense,True,the usual answer is right 100% of the time on 1140 held-out plays,100.0,100.0,1140.0,2026-11-16T16:06:56
-press,False,model not better than always guessing (83% vs 83%),83.0,83.0,1259.0,2026-11-16T16:06:56
-situation,True,78% vs 66% always guessing on 1468 held-out plays (+12 pts),78.0,66.0,1468.0,2026-11-16T16:06:56
-primary_action,True,54% vs 46% always guessing on 401 held-out plays (+8 pts),54.0,46.0,401.0,2026-11-16T16:06:56
-ball_screen_coverage,False,model not better than always guessing (28% vs 31%),28.0,31.0,193.0,2026-11-16T16:06:56
-offball_coverage,True,67% vs 61% always guessing on 64 held-out plays (+6 pts),67.0,61.0,64.0,2026-11-16T16:06:56
-screener,False,nan,,,,2026-11-16T16:06:56
-screen_defender,False,model not better than always guessing (29% vs 29%),29.0,29.0,55.0,2026-11-16T16:06:56
+formation,False,nan,,,,2026-11-16T23:15:03
+play_call,False,nan,,,,2026-11-16T23:15:03
+defense,False,nan,,,,2026-11-16T23:15:03
+press,False,nan,,,,2026-11-16T23:15:03
+situation,False,nan,,,,2026-11-16T23:15:03
+primary_action,False,nan,,,,2026-11-16T23:15:03
+ball_screen_coverage,False,nan,,,,2026-11-16T23:15:03
+offball_coverage,False,nan,,,,2026-11-16T23:15:03
+screener,False,nan,,,,2026-11-16T23:15:03
+screen_defender,False,nan,,,,2026-11-16T23:15:03

@@ -1961,7 +1961,21 @@ def tag_queue():
         _rosters = _tag_rosters(g)
         print(f"Film Tagging: {gd} {gc}: making the video of each of {len(pick)} play(s) for the app...", flush=True)
         _tg_t0, _tg_st = time.time(), {}
+        # CONFIRMED BUG (fixed; 11/16: 256 "clip video not made (OSError: [Errno 28] No space left on device)" lines in a
+        # row, then a batch the app could not use). A full disk is not something to keep writing through: the batch stops
+        # where it is, with the clips it has, and says so.
+        _tg_minfree = float(globals().get("PARSER_MIN_FREE_GB", 10)) / 2.0
         for _tg_i, (_, r) in enumerate(pick.iterrows(), 1):
+            if _tg_i % 20 == 1:
+                try:
+                    _tg_free = shutil.disk_usage(rdir).free / 1024 ** 3
+                except Exception:
+                    _tg_free = None
+                if _tg_free is not None and _tg_free < _tg_minfree:
+                    print(f"!! [film tagging] {gc}: stopped at {_tg_i - 1} of {len(pick)} play video(s) -- only "
+                          f"{_tg_free:.1f} GB free where the clips are written ({rdir}). The plays made so far are kept; "
+                          f"free space and run again for the rest.", flush=True)
+                    break
             _pr_progress(f"[film tagging] {gc} play videos made", _tg_i - 1, len(pick), _tg_t0, _tg_st)
             files = [f for f in str(r.get("track_files") or "").split(";") if f] or \
                     [f for f in str(r.get("frame_files") or "").split(";") if f]

@@ -496,6 +496,66 @@ def _pm_analysis_setup(G, o):
           flush=True)
 
 
+def _pm_scratch(mode):
+    """Put the parser's scratch space on the same drive as the data, clear what earlier runs left there, and say how much
+    room is left.
+    CONFIRMED BUG (fixed; the 11/16 20:45 models run: 566 ffmpeg writes died with "[Errno 28] No space left on device",
+    three model caches went unsaved and five Film Tagging batches were dropped). Every clip video for the app is written
+    to the system temp folder first and copied into data/play_tag after, so a run writes gigabytes to whatever drive TEMP
+    is on -- the C: drive -- however much room the data drive has. A run that stops partway leaves its whole batch behind
+    there too (1.2 GB of play_tag_* folders had piled up by 11/17). Scratch now follows the data (PARSER_TEMP_DIR, by
+    default uwwmensbball_temp at the top of the data drive), the parser's own leftovers older than PARSER_TEMP_KEEP_HOURS
+    are cleared at the start of a run, and both drives' free space is printed (a warning below PARSER_MIN_FREE_GB)."""
+    import tempfile as _tf, shutil as _sh, time as _tm
+    G = globals()
+    out = _pm_os.path.abspath(G.get("OUTPUT_DIR") or "../data")
+    drive = _pm_os.path.splitdrive(out)[0]
+    want = G.get("PARSER_TEMP_DIR") or (_pm_os.path.join(drive + _pm_os.sep, "uwwmensbball_temp") if drive
+                                        else _pm_os.path.join(out, "_scratch"))
+    try:
+        _pm_os.makedirs(want, exist_ok=True)
+        _tf.tempdir = want
+        _pm_os.environ["TMP"] = _pm_os.environ["TEMP"] = want      # ffmpeg and the other child processes too
+    except Exception as _e:
+        want = _tf.gettempdir()
+        print(f"!! couldn't make the scratch folder ({type(_e).__name__}: {_e}) -- staying on {want}", flush=True)
+    # an interrupted run leaves a whole batch of clip videos behind; clear the parser's own folders, nobody else's
+    keep_h = float(G.get("PARSER_TEMP_KEEP_HOURS", 6))
+    freed, n = 0, 0
+    for base in dict.fromkeys([want, _tf.gettempdir()]):
+        try:
+            names = _pm_os.listdir(base)
+        except Exception:
+            continue
+        for name in names:
+            if not name.startswith(("play_tag_", "play_review_", "lean_")):
+                continue
+            d = _pm_os.path.join(base, name)
+            try:
+                if not _pm_os.path.isdir(d) or _tm.time() - _pm_os.path.getmtime(d) < keep_h * 3600:
+                    continue
+                sz = sum(_pm_os.path.getsize(_pm_os.path.join(dp, f)) for dp, _dn, fns in _pm_os.walk(d) for f in fns)
+                _sh.rmtree(d, ignore_errors=True)
+                if not _pm_os.path.exists(d):
+                    freed, n = freed + sz, n + 1
+            except Exception:
+                continue
+    print(f"  [disk] scratch folder: {want}"
+          + (f" -- cleared {n} leftover folder(s) from earlier runs ({freed / 1024 ** 3:.2f} GB)" if n else ""), flush=True)
+    need = float(G.get("PARSER_MIN_FREE_GB", 10))
+    for label, path in (("data", out), ("scratch", want)):
+        try:
+            free = _sh.disk_usage(path).free / 1024 ** 3
+        except Exception:
+            continue
+        print(f"  [disk] {label} ({_pm_os.path.splitdrive(path)[0] or path}): {free:.1f} GB free", flush=True)
+        if free < need:
+            print(f"!! only {free:.1f} GB free for the {label} -- this run writes clip videos and frames and needs about "
+                  f"{need:.0f} GB. Free space before it gets there, or the run ends with 'No space left on device'.",
+                  flush=True)
+    return want
+
+
 def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb", quiet=None, fresh=False, options=None):
     """Run parser_nb.ipynb's cells for one job: "models", "tagging" or "brief" (see the top of this file).
     start_at = a section name ("50_player_tracking") to continue from after a stop -- the sections above it are not run
@@ -511,6 +571,7 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
     with open(notebook, encoding="utf-8") as fh:
         nb = _pm_json.load(fh)
     print(f"=== {mode.upper()}: {plan['label']} ===", flush=True)
+    _pm_scratch(mode)
     G["_PM_OPTIONS"] = dict(options or {})
     G["ANALYSIS_MODE"] = (mode == "analysis")
     if G["_PM_OPTIONS"]:
