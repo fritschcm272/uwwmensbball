@@ -1,8 +1,8 @@
 opponent,day,date,segment,minutes,detail,ties_to,schedule_is_sample,is_sample
 Elmhurst Bluejays,Recovery + film,"Sun, Nov 15",Film,40,"Scout film: Flow, Motion, Set #1",Opponent sets,True,True
-Elmhurst Bluejays,Recovery + film,"Sun, Nov 15",Shooting,20,"Form and free throws, no contact","Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson",True,True
+Elmhurst Bluejays,Recovery + film,"Sun, Nov 15",Shooting,20,"Form and free throws, no contact","Isaiah Robinson, Jackson Flowers",True,True
 Elmhurst Bluejays,Practice 1,"Mon, Nov 16",Warm-up / dynamic,10,,,True,True
-Elmhurst Bluejays,Practice 1,"Mon, Nov 16",Individual,12,Catch-and-shoot and free-throw reps,"Player flags: Robinson, Rogers, Teague-Johnson",True,True
+Elmhurst Bluejays,Practice 1,"Mon, Nov 16",Individual,12,Catch-and-shoot and free-throw reps,"Player flags: Robinson, Flowers",True,True
 Elmhurst Bluejays,Practice 1,"Mon, Nov 16",Defensive install,12,Take away their most efficient high-volume actions,Key 4,True,True
 Elmhurst Bluejays,Practice 1,"Mon, Nov 16",Defensive install,12,Funnel them into their worst high-volume looks,Key 5,True,True
 Elmhurst Bluejays,Practice 1,"Mon, Nov 16",Defensive install,12,Pressure the actions they turn it over on,Key 6,True,True

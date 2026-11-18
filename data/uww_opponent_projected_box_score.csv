@@ -1,12 +1,1 @@
-opponent,game_date,name,jersey_number,role,position,MIN,projected_PTS,projected_REB,projected_AST,comp_used,comp_from_game,similarity_score,projection_basis
-Elmhurst Bluejays,"Wed, Nov 18",Dominic Trelenberg,#1,Starter,F,,14.7,5.0,2.0,Michael Asman,Ripon Red Hawks,8.99,No season stats recorded for this player yet -- insufficient data to project.
-Elmhurst Bluejays,"Wed, Nov 18",Aidyn Boone,#40,Starter,F,,14.7,5.0,2.0,Michael Asman,Ripon Red Hawks,10.11,No season stats recorded for this player yet -- insufficient data to project.
-Elmhurst Bluejays,"Wed, Nov 18",Vinnie Adjahoungbeta,#15,Starter,F,,9.2,7.0,1.0,Logan Steffensmeier,Carroll (WI) Pioneers,11.0,No season stats recorded for this player yet -- insufficient data to project.
-Elmhurst Bluejays,"Wed, Nov 18",Andy Colvin,#20,Bench,F,,9.2,7.0,1.0,Logan Steffensmeier,Carroll (WI) Pioneers,10.15,No season stats recorded for this player yet -- insufficient data to project.
-Elmhurst Bluejays,"Wed, Nov 18",Talen Pearson,#21,Starter,G,,7.9,5.0,4.0,Michael McNabb,Carroll (WI) Pioneers,11.5,No season stats recorded for this player yet -- insufficient data to project.
-Elmhurst Bluejays,"Wed, Nov 18",Chris Ketchum,#10,Bench,G,,7.9,5.0,4.0,Michael McNabb,Carroll (WI) Pioneers,8.82,No season stats recorded for this player yet -- insufficient data to project.
-Elmhurst Bluejays,"Wed, Nov 18",EJ Marshall,#4,Bench,G,,6.7,3.0,1.0,Jose Gonzales,Ripon Red Hawks,10.46,No season stats recorded for this player yet -- insufficient data to project.
-Elmhurst Bluejays,"Wed, Nov 18",Jack Cherry,#0,Starter,G,,0.0,0.0,0.0,Landon Lee,Ripon Red Hawks,10.05,No season stats recorded for this player yet -- insufficient data to project.
-Elmhurst Bluejays,"Wed, Nov 18",Luke Smith,#2,Bench,G,,0.0,2.0,0.0,Joey Daun,Ripon Red Hawks,10.67,No season stats recorded for this player yet -- insufficient data to project.
-Elmhurst Bluejays,"Wed, Nov 18",DJ Jervier,#3,Bench,,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,3.5,No season stats recorded for this player yet -- insufficient data to project.
-Elmhurst Bluejays,"Wed, Nov 18",Cooper Hasz,#23,Bench,,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,3.5,No season stats recorded for this player yet -- insufficient data to project.
+name,jersey_number,role,position,MIN,projected_PTS,projected_REB,projected_AST,comp_used,comp_from_game,similarity_score,projection_basis
