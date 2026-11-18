@@ -1,7 +1,7 @@
 {
  "game": "2026-11-14|Elmhurst@Hope",
  "slug": "2026_11_14_Elmhurst_Hope",
- "run": "20261118_091821",
+ "run": "20261118_114856",
  "plays": [
   {
    "clip_key": "2026-11-14|1|2 Brendan Cargill > P&R Ball Handler > Right P&R > Side > Dribble Off Pick > Defense Commits > Ball Delivered > 1 Avery Sanchez > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts",
@@ -47,7 +47,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Aidyn Boone",
+       "hidden_guess": "Talen Pearson",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.4129,
@@ -74,7 +74,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Jack Cherry",
+       "hidden_guess": "Vinnie Adjahoungbeta",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.0552,
@@ -101,7 +101,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Talen Pearson",
+       "hidden_guess": "Aidyn Boone",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.5079,
@@ -113,7 +113,7 @@
       },
       {
        "id": "D",
-       "track": 45,
+       "track": 44,
        "side": "defense",
        "box": [
         614.6336,
@@ -128,7 +128,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Vinnie Adjahoungbeta",
+       "hidden_guess": "Dominic Trelenberg",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.3201,
@@ -155,7 +155,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Dominic Trelenberg",
+       "hidden_guess": "Jack Cherry",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.4372,
@@ -305,7 +305,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Dominic Trelenberg",
+       "hidden_guess": "Jack Cherry",
        "hidden_guess_p": 0.2,
        "nbox": [
         -0.0042,
@@ -332,7 +332,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Jack Cherry",
+       "hidden_guess": "Vinnie Adjahoungbeta",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.5442,
@@ -359,7 +359,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Talen Pearson",
+       "hidden_guess": "Aidyn Boone",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.19,
@@ -386,7 +386,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Vinnie Adjahoungbeta",
+       "hidden_guess": "Dominic Trelenberg",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.394,
@@ -413,7 +413,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Aidyn Boone",
+       "hidden_guess": "Talen Pearson",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.4809,
@@ -563,7 +563,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Dominic Trelenberg",
+       "hidden_guess": "Jack Cherry",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.2313,
@@ -590,7 +590,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Talen Pearson",
+       "hidden_guess": "Aidyn Boone",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.7072,
@@ -617,7 +617,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Aidyn Boone",
+       "hidden_guess": "Vinnie Adjahoungbeta",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.3622,
@@ -644,7 +644,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Vinnie Adjahoungbeta",
+       "hidden_guess": "Dominic Trelenberg",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.4643,
@@ -1333,5 +1333,5 @@
    "ZAVIER CASTILLO"
   ]
  },
- "built": "2026-11-18T09:18:35"
+ "built": "2026-11-18T11:49:09"
 }
