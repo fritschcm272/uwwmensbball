@@ -1644,3 +1644,86 @@ the rebuild copies the videos instead of re-encoding them. `PLAY_TAG_UNSKIP` (cl
 duplicates, `skipped` present; a flagged frame survives the reindex; `skipped.all()` is True and
 `f"{gd}|{gc}".lower()` matches the saved `2026-11-06|thiel@uwplatteville`, so the whole-game branch fires; 0 of
 3 clips are still offered; and a frame with one skipped clip keeps that one flag and offers the other two.
+
+
+## 2026-11-18 -- CONFIRMED BUG: two of Elmhurst's games were routed as OURS in parser_brief
+
+**What Corey saw.** "Whitewater should not have any offensive plays called 'Ripon Motion #2'" in the Play Call
+Summary. He was right, and the leak was 356 clips wide.
+
+**It is job-dependent** -- the same inputs, two different answers, from `Play clips by game type`:
+
+| job | UWW | Opponent |
+|---|---|---|
+| `parser_models` 09:08 and 11:39 | 1,616 clip(s) / 13 game(s) | 711 / 4 |
+| `parser_brief` 07:13 and 07:39 | 1,972 / **15** | 355 / **2** |
+
+The 356-clip gap is exactly two games: **Elmhurst@Ripon (11/07, 178)** and **Elmhurst@Hope (11/14, 178)**. The
+two that stayed right are DePauw@Elmhurst (195) + Carroll(WI)@Elmhurst (160) = 355. The brief builds the brief,
+so the brief was the broken one. In `uww_play_call_summary.csv` that shows up as
+`side=UWW, possession_side=Offense, level=Play call, name=Ripon Motion #2, uses=5, top_player=Jack Field,
+game_codes=Elmhurst@Ripon` -- Ripon's set, Ripon's and Elmhurst's players, filed under our offense.
+
+**Why those two and no others.** In `_pl_untagged_from_frames` (47), a captured page's side comes from `_urls`
+(which schedule the clip page was found on). `parser_brief` runs frame capture with `RUN_FRAME_CAPTURE = False`,
+so no page is registered, `hint` is None and `_sd0` is None, and the code fell to its last resort: the nearest
+play-by-play within a day, then `hint = "UWW" if (e_["_src"] == "pbp_events").mean() >= 0.5`. Elmhurst played at
+Ripon on 11/07, the day we played Carroll; Elmhurst played at Hope on 11/14, the day we played Ripon. Both
+matched OUR play-by-play and were stamped UWW. Elmhurst's two home games fall on dates we did not play, so they
+were unaffected. Same family as the MarianWI@MSOE bug already noted in that function.
+
+**Fix (`47_play_calls.py`, 371,117 b).** The clip page's own Game cell decides, in two places:
+
+* the no-schedule-date branch matches a page against ONE side's play-by-play when the Game cell names exactly
+  one of the two teams (`_pg_uww != _pg_opp`) -- `pbp_events` for ours, `pbp_events_upcoming` for theirs, with no
+  fallback: no match at all beats a match to the wrong game (it also stops the wrong game donating its half,
+  clock and lineups);
+* `hint = "UWW" if _pg_uww else "Opponent"` in that same case, before the `_src`-majority rule, so routing no
+  longer depends on which play-by-play a job happens to have loaded.
+
+A page naming BOTH teams (us against the upcoming opponent) is untouched and still sees both sides' events.
+
+**The consumers were already right** and needed no change: 47 splits `play_call_summary` by `possession_side`
+and stamps every row, and the brief's `_offense_rows(side)` drops `possession_side == "Defense"` (fixed earlier
+on 11/18 for the headline bug). Routing was the last hole.
+
+**Validation** (`~/wmtest/route_t.py`, both edited blocks lifted verbatim out of the file by string slice, then
+exec'd): with our game and theirs on the SAME date, a page naming Elmhurst only routes `Opponent` and sees only
+`pbp_events_upcoming`; a page naming Whitewater only routes `UWW` and sees only `pbp_events`; a page naming both
+still sees both; with the opponent's play-by-play absent it routes `Opponent` and matches nothing rather than
+matching ours; and a side already known from the schedule page still wins. All pass.
+
+**Still open (small, 2 clips).** Ripon@UWWhitewater clips 88 and 95 are `Non Possession > Non Shooting Foul` by
+Joey Daun and Michael Asman -- both Ripon players -- yet carry `offense_team = UW-Whitewater`, so they come out
+`possession_side = Offense` and put "Ripon Motion #1" (2 uses) under our offense. The foul was drawn by their
+player, so Ripon had the ball and these should be our Defense; `_pl_fill_blank_team` filled the Team cell with
+ours instead. Not fixed -- `possession_side` also feeds Film Tagging's lineup options, so it needs Corey's go-ahead.
+
+
+## 2026-11-18 -- Film Tagging no longer asks who is tagging
+
+**CONFIRMED CHANGE (requested:** "I would like to remove the name requirement from saving within the
+film_tagging. I don't need to know which coach made the saves.") `streamlit_app.py` (1,239,394 b):
+
+* `FT_GUEST_COACH = "Guest"` beside `FT_SAVE_EVERY`. Every Film Tagging save is stamped with it.
+* The "Your name (required to save)" box above the clips is gone (`_coach = FT_GUEST_COACH`), and so is the
+  `st.error("Add your name at the top...")` gate -- Save now just saves.
+* "Skip this whole game" lost its name box too; the "Yes -- skip this whole game" tick box is the whole
+  confirmation, and `_ft_skip_game_save(d, FT_GUEST_COACH, on=True)`.
+* Nothing else changed: the `coach` field is still written into the save file and into its name
+  (`play_review_<slug>_<run>_titles_Guest_<utc>.json`), so `_pr_commit`, the save merge (latest save wins, by
+  time -- never by who), `_ft_saved_clip_keys`, `_ft_skipped_clip_keys` and 47's `title_review_answers` all work
+  unchanged. The accuracy report's "Games / reviewers" will simply read 1 reviewer from now on.
+* The OTHER sections still ask for a name on purpose: Player Number Tracking checks (`pr_coach_players`),
+  the starters check (`pr_coach_starters`), coverage plans (`cp_coach`), court calibration (`cc_coach`),
+  play diagrams (`pd_coach`), KTV feedback.
+* Saves already on the `saves` branch keep the names they were saved with (Corey, JT); this is not retroactive.
+
+**Watch out.** 47's `_pl_title_save_ok` throws away any save whose coach name CONTAINS "test"
+(`if "test" in str(d.get("coach")).lower()`), which is how CoreyTEST's saves are ignored. "Guest" does not
+contain it -- but "Guest Tester", "Tester" or "Test User" would be silently dropped, so do not change
+`FT_GUEST_COACH` to anything with "test" in it without first making that rule a whole-word match.
+
+**Validation** (`~/wmtest/`-style check run inline): `FT_GUEST_COACH` read back out of the file is "Guest";
+`"test" not in "guest"`; the Film Tagging name widgets and the name-gate message are absent from the file; the
+five other sections' name keys are still present; the module parses and byte-compiles.

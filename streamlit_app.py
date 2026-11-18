@@ -8191,6 +8191,12 @@ def render_tag_model_scoreboard():
 
 
 FT_PAGE_SIZE = 20          # Film Tagging: plays per page (requested: "only 20 plays at a time ... save after each 20") -- no longer used
+# CONFIRMED CHANGE (requested 11/18: "I would like to remove the name requirement from saving within the film_tagging.
+# I don't need to know which coach made the saves"). Film Tagging no longer asks who is tagging: every save it writes is
+# stamped with this name. The field is still in the save file and in the file name, so the parser, the save merge (latest
+# save wins, by time) and the accuracy report work exactly as before -- they just see one "coach". The other sections
+# (player checks, starters, coverage plans, court calibration) still ask for a name.
+FT_GUEST_COACH = "Guest"
 FT_SAVE_EVERY = 20         # Film Tagging: one clip at a time, saved every 20 clips (CONFIRMED CHANGE (requested: "Make it only save every 20 clips instead of every 10"); was 10)
 
 
@@ -8381,11 +8387,10 @@ def render_film_tagging():
         st.caption(f"Leaves {_pnt_game_label(d.get('game'))} out of Film Tagging for good: {len(d.get('plays', []))} "
                    f"clip(s) here, and any later batch of the same game. Nothing about the game is tagged -- it is simply "
                    f"never offered again. It comes back only when it is named in the parser's PLAY_TAG_UNSKIP setting.")
-        _sg_coach = st.text_input("Your name (required)", key=f"ftskipg_who_{d.get('slug')}")
         _sg_sure = st.checkbox("Yes -- skip this whole game", key=f"ftskipg_ck_{d.get('slug')}")
-        if st.button("Skip this game", key=f"ftskipg_go_{d.get('slug')}", disabled=not (_sg_sure and str(_sg_coach).strip()),
+        if st.button("Skip this game", key=f"ftskipg_go_{d.get('slug')}", disabled=not _sg_sure,
                      type="secondary"):
-            _ok, _msg, _fn, _out = _ft_skip_game_save(d, _sg_coach, on=True)
+            _ok, _msg, _fn, _out = _ft_skip_game_save(d, FT_GUEST_COACH, on=True)
             if _ok:
                 st.session_state["_ft_flash"] = (f"{_pnt_game_label(d.get('game'))} is skipped ({_msg}). It leaves the list "
                                                  f"now; the parser takes its batch out of the app when it next runs.")
@@ -8414,7 +8419,7 @@ def render_film_tagging():
     if _bk not in st.session_state:
         st.session_state[_bk] = next((i for i, ok_ in enumerate(_bdone) if not ok_), 0)
     _blk = min(int(st.session_state[_bk]), _nb - 1)
-    _coach = st.text_input("Your name (required to save)", key=f"pr_coach_titles{_sfx}")
+    _coach = FT_GUEST_COACH                            # (requested) Film Tagging doesn't ask who is tagging
     if _nb > 1:
         _sel = st.selectbox("Clips", list(range(_nb)), index=_blk, key=f"{_bk}_sel_{_blk}",
                             format_func=lambda i: (f"Clips {i * FT_SAVE_EVERY + 1}–{min(len(_all), (i + 1) * FT_SAVE_EVERY)}"
@@ -8586,9 +8591,7 @@ var t=0,iv=setInterval(function(){show();if(++t>40)clearInterval(iv);},250);})()
         st.session_state["_ft_flash"] = f"Cleared {_n_clr} automatic suggestion(s) on clip {_clr_pi[0] - _lo + 1} of these {FT_SAVE_EVERY}."
         st.rerun()
     if _go:
-        if not str(_coach).strip():
-            st.error("Add your name at the top, then press Save again (your answers are still there).")
-        elif _pr_commit(d, store, _coach, kp, "titles", _sfx, actions=True, only=set(range(_lo, _hi))):
+        if _pr_commit(d, store, _coach, kp, "titles", _sfx, actions=True, only=set(range(_lo, _hi))):
             st.session_state["_ft_flash"] = (f"Saved clips {_lo + 1}\u2013{_hi}."
                                              + (" Next 10 below." if _blk < _nb - 1 else " That was the last group."))
             if _blk < _nb - 1:

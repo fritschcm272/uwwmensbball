@@ -3349,7 +3349,18 @@ def _pl_untagged_from_frames(tagged):
             gd0 = _sd0
             e_ = ev[ev["game_date"] == gd0] if not ev.empty else pd.DataFrame()
         else:
-            e_ = ev[[abs((x - d).days) <= 1 for x in ev["game_date"]]] if not ev.empty else pd.DataFrame()
+            # CONFIRMED BUG (fixed 11/18; same family as the MarianWI@MSOE note above). With no schedule page and no
+            # date of its own, a captured game took the nearest play-by-play within a day -- and in parser_brief
+            # (RUN_FRAME_CAPTURE = False, so _urls is empty) that was OUR game on the same date: Elmhurst@Ripon (11/07,
+            # the day we played Carroll) and Elmhurst@Hope (11/14, the day we played Ripon) were both routed "UWW",
+            # 356 clips of Elmhurst film became our own, and Ripon's sets ("Ripon Motion #2", top player Jack Field)
+            # showed up under Whitewater's offense in the Play Call Summary. models routed them "Opponent" from _urls,
+            # so the brief and the app disagreed. A page whose Game cell names exactly one of the two teams is now
+            # matched ONLY against that team's play-by-play -- no match at all beats a match to the wrong game.
+            _ev = ev
+            if not _ev.empty and "_src" in _ev.columns and _pg_uww != _pg_opp:
+                _ev = _ev[_ev["_src"] == ("pbp_events" if _pg_uww else "pbp_events_upcoming")]
+            e_ = _ev[[abs((x - d).days) <= 1 for x in _ev["game_date"]]] if not _ev.empty else pd.DataFrame()
             gd0 = min(e_["game_date"].unique(), key=lambda x: abs((x - d).days)) if not e_.empty else d
             if not e_.empty:
                 e_ = e_[e_["game_date"] == gd0]
@@ -3380,6 +3391,8 @@ def _pl_untagged_from_frames(tagged):
                                                    _clock_to_seconds(x_.get("Clock")) if pd.notna(x_.get("Clock")) else None)
             except Exception as _bce:
                 print(f"  (banked game's half / clock not read: {type(_bce).__name__}: {_bce})", flush=True)
+        if hint is None and _pg_uww != _pg_opp:
+            hint = "UWW" if _pg_uww else "Opponent"        # the page's Game cell names one of them and not the other
         if hint is None and not e_.empty and "_src" in e_.columns:
             hint = "UWW" if (e_["_src"] == "pbp_events").mean() >= 0.5 else "Opponent"
         if hint is None and any(("WWW" in str(x).upper() or "WHITEWATER" in str(x).upper()) for x in g.get("clip_game", pd.Series(dtype=object)).dropna()):
