@@ -1,133 +1,50 @@
 team,player,side,cell_hy,cell_hx,frames
-Ripon Red Hawks,TEAM,defense,20,40,24
-Ripon Red Hawks,TEAM,defense,20,35,18
-Ripon Red Hawks,TEAM,defense,20,30,25
-UW-Whitewater,TEAM,offense,20,25,9
-UW-Whitewater,TEAM,offense,25,25,13
-UW-Whitewater,TEAM,offense,20,30,13
-UW-Whitewater,TEAM,offense,25,20,6
-UW-Whitewater,TEAM,offense,30,20,19
-UW-Whitewater,TEAM,offense,40,20,1
-UW-Whitewater,TEAM,offense,35,20,12
-UW-Whitewater,TEAM,offense,35,15,12
-UW-Whitewater,TEAM,offense,30,15,22
-UW-Whitewater,TEAM,offense,35,25,5
-UW-Whitewater,TEAM,offense,40,25,2
-Ripon Red Hawks,TEAM,defense,20,45,12
-Ripon Red Hawks,TEAM,defense,20,25,56
-Ripon Red Hawks,TEAM,defense,25,30,7
-Ripon Red Hawks,TEAM,defense,25,25,6
-Ripon Red Hawks,TEAM,defense,30,25,12
-Ripon Red Hawks,TEAM,defense,35,25,1
-Ripon Red Hawks,TEAM,defense,40,25,5
-Ripon Red Hawks,TEAM,defense,40,20,4
-Ripon Red Hawks,TEAM,defense,45,20,1
-Ripon Red Hawks,TEAM,defense,45,15,6
-Ripon Red Hawks,TEAM,defense,25,35,21
-UW-Whitewater,TEAM,offense,25,45,1
-UW-Whitewater,TEAM,offense,25,40,2
-UW-Whitewater,TEAM,offense,20,20,7
-UW-Whitewater,TEAM,offense,20,15,39
-UW-Whitewater,TEAM,offense,20,10,87
-UW-Whitewater,TEAM,offense,25,10,18
-Ripon Red Hawks,TEAM,defense,30,45,1
-Ripon Red Hawks,TEAM,defense,30,40,10
-Ripon Red Hawks,TEAM,defense,30,35,17
-UW-Whitewater,TEAM,offense,15,5,97
-UW-Whitewater,TEAM,offense,10,5,1
-Ripon Red Hawks,TEAM,defense,25,45,2
-Ripon Red Hawks,TEAM,defense,25,40,5
-UW-Whitewater,TEAM,offense,20,35,1
-Ripon Red Hawks,TEAM,defense,15,25,7
-Ripon Red Hawks,TEAM,defense,15,20,14
-Ripon Red Hawks,TEAM,defense,15,15,65
-Ripon Red Hawks,TEAM,defense,15,10,45
-Ripon Red Hawks,TEAM,defense,15,5,101
-Ripon Red Hawks,TEAM,defense,15,0,132
-Ripon Red Hawks,TEAM,defense,20,15,57
-Ripon Red Hawks,TEAM,defense,20,20,72
-Ripon Red Hawks,TEAM,defense,25,20,25
-Ripon Red Hawks,TEAM,defense,20,10,60
-Ripon Red Hawks,TEAM,defense,25,15,26
-UW-Whitewater,TEAM,offense,20,5,89
-Ripon Red Hawks,TEAM,defense,25,10,13
-Ripon Red Hawks,TEAM,defense,25,5,20
-Ripon Red Hawks,TEAM,defense,30,30,11
-UW-Whitewater,TEAM,offense,25,15,17
-UW-Whitewater,TEAM,offense,15,10,87
-UW-Whitewater,TEAM,offense,15,0,127
-UW-Whitewater,TEAM,offense,15,15,16
-UW-Whitewater,TEAM,offense,30,10,1
-UW-Whitewater,TEAM,offense,45,45,1
-UW-Whitewater,TEAM,offense,40,40,5
-UW-Whitewater,TEAM,offense,35,35,2
-UW-Whitewater,TEAM,offense,25,5,2
-UW-Whitewater,TEAM,offense,40,45,1
-UW-Whitewater,TEAM,offense,35,40,2
-UW-Whitewater,TEAM,offense,35,30,2
-UW-Whitewater,TEAM,offense,30,25,10
-UW-Whitewater,TEAM,offense,30,30,4
-UW-Whitewater,TEAM,offense,40,35,2
-Ripon Red Hawks,TEAM,defense,20,5,8
-UW-Whitewater,TEAM,offense,30,35,6
-Ripon Red Hawks,TEAM,defense,35,35,9
-Ripon Red Hawks,TEAM,defense,35,45,7
-Ripon Red Hawks,TEAM,defense,35,40,5
-UW-Whitewater,TEAM,offense,25,30,2
-UW-Whitewater,TEAM,offense,30,40,6
-UW-Whitewater,TEAM,offense,30,45,4
-Ripon Red Hawks,TEAM,defense,40,40,2
-Ripon Red Hawks,TEAM,defense,40,45,1
-Ripon Red Hawks,TEAM,defense,45,25,3
-Ripon Red Hawks,TEAM,defense,40,15,1
-UW-Whitewater,TEAM,offense,20,0,9
-Ripon Red Hawks,TEAM,defense,30,10,2
-Ripon Red Hawks,TEAM,defense,25,0,1
 UW-Whitewater,TEAM,defense,30,45,24
 UW-Whitewater,TEAM,defense,30,40,7
-UW-Whitewater,TEAM,defense,30,35,28
+UW-Whitewater,TEAM,defense,30,35,24
 UW-Whitewater,TEAM,defense,25,35,16
-UW-Whitewater,TEAM,defense,25,30,52
-UW-Whitewater,TEAM,defense,20,30,63
-UW-Whitewater,TEAM,defense,20,35,16
-UW-Whitewater,TEAM,defense,15,35,9
-UW-Whitewater,TEAM,defense,20,40,17
+UW-Whitewater,TEAM,defense,20,40,19
+UW-Whitewater,TEAM,defense,25,30,33
+UW-Whitewater,TEAM,defense,20,30,39
+UW-Whitewater,TEAM,defense,20,35,14
+UW-Whitewater,TEAM,defense,15,35,7
 UW-Whitewater,TEAM,defense,25,45,9
 UW-Whitewater,TEAM,defense,20,45,8
 UW-Whitewater,TEAM,defense,15,40,3
 UW-Whitewater,TEAM,defense,15,45,13
 UW-Whitewater,TEAM,defense,10,45,3
-UW-Whitewater,TEAM,defense,15,30,7
-UW-Whitewater,TEAM,defense,20,25,110
-UW-Whitewater,TEAM,defense,25,25,57
-UW-Whitewater,TEAM,defense,25,20,59
-UW-Whitewater,TEAM,defense,25,10,119
-UW-Whitewater,TEAM,defense,35,10,28
-UW-Whitewater,TEAM,defense,30,10,100
-UW-Whitewater,TEAM,defense,30,15,104
-UW-Whitewater,TEAM,defense,30,25,59
-UW-Whitewater,TEAM,defense,20,20,67
-UW-Whitewater,TEAM,defense,35,25,163
-UW-Whitewater,TEAM,defense,35,20,128
-UW-Whitewater,TEAM,defense,35,15,85
-UW-Whitewater,TEAM,defense,15,25,23
+UW-Whitewater,TEAM,defense,15,30,10
+UW-Whitewater,TEAM,defense,20,25,109
+UW-Whitewater,TEAM,defense,25,25,53
+UW-Whitewater,TEAM,defense,25,20,71
+UW-Whitewater,TEAM,defense,15,25,25
+UW-Whitewater,TEAM,defense,20,20,76
 UW-Whitewater,TEAM,defense,15,20,40
-UW-Whitewater,TEAM,defense,20,15,98
-UW-Whitewater,TEAM,defense,25,15,147
-UW-Whitewater,TEAM,defense,30,20,59
-UW-Whitewater,TEAM,defense,15,15,152
-UW-Whitewater,TEAM,defense,15,10,230
-UW-Whitewater,TEAM,defense,30,30,29
-UW-Whitewater,TEAM,defense,40,20,78
-UW-Whitewater,TEAM,defense,20,10,129
-UW-Whitewater,TEAM,defense,15,5,123
-UW-Whitewater,TEAM,defense,20,5,104
+UW-Whitewater,TEAM,defense,20,15,99
+UW-Whitewater,TEAM,defense,25,15,155
+UW-Whitewater,TEAM,defense,30,25,60
+UW-Whitewater,TEAM,defense,30,20,68
+UW-Whitewater,TEAM,defense,15,15,153
+UW-Whitewater,TEAM,defense,15,10,231
+UW-Whitewater,TEAM,defense,30,30,30
+UW-Whitewater,TEAM,defense,25,10,121
+UW-Whitewater,TEAM,defense,15,5,126
 UW-Whitewater,TEAM,defense,25,5,72
+UW-Whitewater,TEAM,defense,20,5,109
+UW-Whitewater,TEAM,defense,20,10,143
+UW-Whitewater,TEAM,defense,10,5,25
+UW-Whitewater,TEAM,defense,10,10,95
+UW-Whitewater,TEAM,defense,35,20,126
+UW-Whitewater,TEAM,defense,40,20,76
+UW-Whitewater,TEAM,defense,35,25,139
+UW-Whitewater,TEAM,defense,30,15,120
+UW-Whitewater,TEAM,defense,35,15,92
+UW-Whitewater,TEAM,defense,35,10,26
+UW-Whitewater,TEAM,defense,30,10,99
 UW-Whitewater,TEAM,defense,10,25,30
 UW-Whitewater,TEAM,defense,40,35,37
 UW-Whitewater,TEAM,defense,40,30,6
-UW-Whitewater,TEAM,defense,35,35,14
-UW-Whitewater,TEAM,defense,10,10,95
+UW-Whitewater,TEAM,defense,5,5,36
 UW-Whitewater,TEAM,defense,20,0,31
 Ripon Red Hawks,TEAM,offense,35,25,3
 UW-Whitewater,TEAM,defense,25,40,8
@@ -189,9 +106,7 @@ Carroll (WI) Pioneers,TEAM,offense,15,40,56
 Carroll (WI) Pioneers,TEAM,offense,15,35,70
 UW-Whitewater,TEAM,defense,5,0,4
 UW-Whitewater,TEAM,defense,10,0,5
-UW-Whitewater,TEAM,defense,5,5,33
 UW-Whitewater,TEAM,defense,5,10,8
-UW-Whitewater,TEAM,defense,10,5,22
 UW-Whitewater,TEAM,defense,0,5,36
 UW-Whitewater,TEAM,defense,0,0,11
 Carroll (WI) Pioneers,TEAM,offense,15,30,60
@@ -318,6 +233,7 @@ Carroll (WI) Pioneers,Peyton McKenna,offense,5,30,11
 UW-Whitewater,Collin Madson,defense,25,10,4
 UW-Whitewater,Collin Madson,defense,25,5,3
 UW-Whitewater,TEAM,defense,35,30,7
+UW-Whitewater,TEAM,defense,35,35,11
 UW-Whitewater,Taveon Vann,defense,25,20,1
 UW-Whitewater,Darius Chestnut,defense,35,10,1
 UW-Whitewater,Darius Chestnut,defense,15,10,5
@@ -365,3 +281,82 @@ Carroll (WI) Pioneers,TEAM,offense,5,35,6
 Carroll (WI) Pioneers,TEAM,offense,25,45,3
 Carroll (WI) Pioneers,TEAM,offense,30,35,5
 Carroll (WI) Pioneers,TEAM,offense,30,45,1
+Hope Flying Dutchmen,TEAM,offense,20,40,13
+Hope Flying Dutchmen,TEAM,offense,20,35,7
+Hope Flying Dutchmen,TEAM,offense,20,30,16
+Hope Flying Dutchmen,TEAM,offense,20,25,11
+Hope Flying Dutchmen,TEAM,offense,25,30,7
+Hope Flying Dutchmen,TEAM,offense,25,25,14
+Hope Flying Dutchmen,TEAM,offense,25,20,5
+Hope Flying Dutchmen,TEAM,offense,30,20,23
+Hope Flying Dutchmen,TEAM,offense,35,20,10
+Hope Flying Dutchmen,TEAM,offense,35,15,12
+Hope Flying Dutchmen,TEAM,offense,30,15,23
+Hope Flying Dutchmen,TEAM,offense,35,25,5
+Elmhurst Bluejays,TEAM,defense,20,45,11
+Elmhurst Bluejays,TEAM,defense,20,40,11
+Elmhurst Bluejays,TEAM,defense,20,35,12
+Elmhurst Bluejays,TEAM,defense,20,30,14
+Elmhurst Bluejays,TEAM,defense,25,30,10
+Elmhurst Bluejays,TEAM,defense,25,25,2
+Elmhurst Bluejays,TEAM,defense,30,25,12
+Elmhurst Bluejays,TEAM,defense,35,25,1
+Elmhurst Bluejays,TEAM,defense,40,25,5
+Elmhurst Bluejays,TEAM,defense,40,20,5
+Elmhurst Bluejays,TEAM,defense,40,15,6
+Elmhurst Bluejays,TEAM,defense,45,15,4
+Elmhurst Bluejays,TEAM,defense,45,10,7
+Elmhurst Bluejays,TEAM,defense,25,35,28
+Elmhurst Bluejays,TEAM,defense,20,25,35
+Elmhurst Bluejays,TEAM,defense,25,20,27
+Elmhurst Bluejays,TEAM,defense,20,20,38
+Elmhurst Bluejays,TEAM,defense,25,15,29
+Elmhurst Bluejays,TEAM,defense,25,45,4
+Elmhurst Bluejays,TEAM,defense,20,15,36
+Elmhurst Bluejays,TEAM,defense,15,10,60
+Elmhurst Bluejays,TEAM,defense,15,5,134
+Elmhurst Bluejays,TEAM,defense,15,0,127
+Elmhurst Bluejays,TEAM,defense,25,40,9
+Elmhurst Bluejays,TEAM,defense,30,40,10
+Elmhurst Bluejays,TEAM,defense,30,35,17
+Elmhurst Bluejays,TEAM,defense,15,20,15
+Elmhurst Bluejays,TEAM,defense,15,15,64
+Hope Flying Dutchmen,TEAM,offense,20,20,5
+Hope Flying Dutchmen,TEAM,offense,20,15,41
+Hope Flying Dutchmen,TEAM,offense,20,10,93
+Hope Flying Dutchmen,TEAM,offense,25,10,13
+Hope Flying Dutchmen,TEAM,offense,25,40,1
+Elmhurst Bluejays,TEAM,defense,15,25,6
+Elmhurst Bluejays,TEAM,defense,20,10,38
+Elmhurst Bluejays,TEAM,defense,20,5,17
+Elmhurst Bluejays,TEAM,defense,25,10,20
+Elmhurst Bluejays,TEAM,defense,30,10,4
+Hope Flying Dutchmen,TEAM,offense,25,15,17
+Hope Flying Dutchmen,TEAM,offense,20,5,79
+Hope Flying Dutchmen,TEAM,offense,15,10,86
+Hope Flying Dutchmen,TEAM,offense,15,5,87
+Hope Flying Dutchmen,TEAM,offense,15,15,16
+Hope Flying Dutchmen,TEAM,offense,15,0,127
+Hope Flying Dutchmen,TEAM,offense,40,25,2
+Elmhurst Bluejays,TEAM,defense,25,5,18
+Elmhurst Bluejays,TEAM,defense,30,30,11
+Hope Flying Dutchmen,TEAM,offense,40,40,4
+Hope Flying Dutchmen,TEAM,offense,40,45,2
+Hope Flying Dutchmen,TEAM,offense,35,40,2
+Hope Flying Dutchmen,TEAM,offense,35,30,2
+Hope Flying Dutchmen,TEAM,offense,30,25,12
+Hope Flying Dutchmen,TEAM,offense,30,30,5
+Hope Flying Dutchmen,TEAM,offense,40,35,2
+Hope Flying Dutchmen,TEAM,offense,35,35,2
+Hope Flying Dutchmen,TEAM,offense,30,35,6
+Elmhurst Bluejays,TEAM,defense,35,35,9
+Elmhurst Bluejays,TEAM,defense,35,45,7
+Elmhurst Bluejays,TEAM,defense,35,40,5
+Hope Flying Dutchmen,TEAM,offense,30,40,6
+Hope Flying Dutchmen,TEAM,offense,30,45,4
+Elmhurst Bluejays,TEAM,defense,40,40,2
+Hope Flying Dutchmen,TEAM,offense,25,5,2
+Elmhurst Bluejays,TEAM,defense,40,45,1
+Elmhurst Bluejays,TEAM,defense,45,25,3
+Hope Flying Dutchmen,TEAM,offense,20,0,8
+Elmhurst Bluejays,TEAM,defense,25,0,1

@@ -1,12 +1,13 @@
 scouted_opponent,team,possessions,ends_on_pass_pct,ppp_ends_on_pass,ppp_no_final_pass,tracked_possessions,avg_passes,poss_0_1,ppp_0_1,poss_2_3,ppp_2_3,poss_4_plus,ppp_4_plus
 Elmhurst Bluejays,Calvin Knights,68,13,0.83,0.7,0,,0,,0,,0,
-Elmhurst Bluejays,Carroll (WI) Pioneers,94,9,1.12,0.8,10,2.6,2,0.0,6,0.0,2,1.5
+Elmhurst Bluejays,Carroll (WI) Pioneers,93,9,1.12,0.81,10,2.6,2,0.0,6,0.0,2,1.5
 Elmhurst Bluejays,DePauw Tigers,87,20,0.94,0.67,0,,0,,0,,0,
-Elmhurst Bluejays,Elmhurst Bluejays,85,16,1.0,0.88,0,,0,,0,,0,
+Elmhurst Bluejays,Elmhurst Bluejays,256,17,1.14,0.77,0,,0,,0,,0,
 Elmhurst Bluejays,Franklin Grizzlies,82,5,0.25,0.65,0,,0,,0,,0,
 Elmhurst Bluejays,Hope College Flying Dutchmen,98,5,0.4,0.78,0,,0,,0,,0,
-Elmhurst Bluejays,Ripon Red Hawks,76,17,1.15,0.87,0,,0,,0,,0,
+Elmhurst Bluejays,Hope Flying Dutchmen,72,18,0.82,0.87,1,5.0,0,,0,,1,0.0
+Elmhurst Bluejays,Ripon Red Hawks,152,12,1.21,0.71,0,,0,,0,,0,
 Elmhurst Bluejays,Thiel,91,18,1.0,0.62,0,,0,,0,,0,
-Elmhurst Bluejays,UW-Whitewater,488,17,1.19,0.75,2,6.5,0,,0,,2,0.0
+Elmhurst Bluejays,UW-Whitewater,170,19,1.15,0.87,1,8.0,0,,0,,1,0.0
 Elmhurst Bluejays,Wisconsin-(Platteville) Pioneers,86,7,0.6,1.08,0,,0,,0,,0,
 Elmhurst Bluejays,Wisconsin-(Stout) Blue Devils,77,13,0.62,0.69,0,,0,,0,,0,

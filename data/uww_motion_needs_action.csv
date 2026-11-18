@@ -1,22 +1,7 @@
 scouted_opponent,side,offense_team,game_date,game_code,clip_number,period,time_remaining_seconds,play_title,synergy_string
 Elmhurst Bluejays,Banked,Wisconsin-(Stout) Blue Devils,2026-11-07,Cal@WST,2,H1,1160.0,"Opener:5out-zoom,backsideRICKY:m2m(Under,through)",4 Aiden Johnson > Spot-Up > Drives Right > Turnover
 Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-07,WWW@CAR,22,H1,837.0,motion-cobra:press(m2m,15 Collin Madson > Non Possession > Non Shooting Foul
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-07,Elmhurst@Ripon,32,H1,809.0,[app] Motion: Man-to-Man,2 Landon Lee > Hand Off > From Stationary > Left > Dribble Jumper > Long/3pt > Make 3 Pts
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-07,Elmhurst@Ripon,36,H1,852.0,[app] Motion: Man-to-Man,11 Sam Leoni > P&R Ball Handler > High P&R > Defense Commits > Ball Delivered > 42 Jack Field > Cut > Basket > Miss 2 Pts
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-07,Elmhurst@Ripon,47,H1,584.0,[app] 5 Out Motion: Man-to-Man,20 Anton Kilde > Offensive Rebound > Short > Scoring Attempt > At Basket > Make 2 Pts
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-07,Elmhurst@Ripon,74,H1,473.0,[app] I FORM RIPON MOTION: Man-to-Man,2 Landon Lee > ISO > Left > Drives Left > Dribble Jumper > Short to < 17' > Miss 2 Pts
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-07,Elmhurst@Ripon,78,H1,411.0,[app] I-FORM RIPON MOTION #2 (RICKY): Man-to-Man,34 Jackson Flowers > Spot-Up > Drives Right > To Basket > Miss 2 Pts
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-07,Elmhurst@Ripon,82,H1,349.0,[app] I FORM RIPON MOTION: Man-to-Man,0 Jose Gonzales > Non Possession > Non Shooting Foul
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-07,Elmhurst@Ripon,103,H1,56.0,[app] I FORM RIPON MOTION: Man-to-Man,35 Michael Asman > Post-Up > Left Block > Left Shoulder > Dribble Move > Defense Commits > Ball Delivered > 30 Seth Bunders > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-07,Elmhurst@Ripon,109,H1,2.0,[app] I FORM RIPON MOTION #2: Man-to-Man,42 Jack Field > Post-Up > Right Block > Right Shoulder > Dribble Move > To Jumper > Miss 2 Pts
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-07,Elmhurst@Ripon,118,H2,1123.0,[app] I FORM RIPON MOTION #3: Man-to-Man,30 Seth Bunders > ISO > Left > Early Jumper > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-07,Elmhurst@Ripon,127,H2,1027.0,[app] I FORM RIPON MOTION #4: Man-to-Man,11 Sam Leoni > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-07,Elmhurst@Ripon,136,H2,714.0,[app] I form ripon motion: Man-to-Man,35 Michael Asman > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-14,Elmhurst@Hope,6,H1,1130.0,[app] Motion: Man-to-Man,1 Dominic Trelenberg > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Ball Delivered > 0 Jack Cherry > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-14,Elmhurst@Hope,7,H1,1105.0,[app] 41 Motion: Man-to-Man,44 Kyle Blauch > Post-Up > Right Block > Right Shoulder > Dribble Move > To Basket > Miss 2 Pts
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-14,Elmhurst@Hope,9,H1,1069.0,[app] 41 Motion: Man-to-Man,44 Kyle Blauch > Post-Up > Left Block > Left Shoulder > Dribble Move > Defense Commits > Turnover
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-14,Elmhurst@Hope,18,H1,990.0,[app] Motion: Man-to-Man,33 Sean Wesolek > ISO > Right > Drives Right > To Basket > Make 2 Pts
-Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-14,Elmhurst@Hope,20,H1,971.0,[app] Pinch Motion: Man-to-Man,11 Carter Bishop > Cut > Basket > Make 2 Pts
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,6,H1,1130.0,[app] Motion: Man-to-Man,1 Dominic Trelenberg > Post-Up > Right Block > Right Shoulder > Dribble Move > Defense Commits > Ball Delivered > 0 Jack Cherry > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Make 3 Pts
 Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-14,Ripon@UWWhitewater,66,H1,411.0,[app] 5 Out Motion: Man-to-Man,12 Tyshawn Teague-Johnson > Spot-Up > Drives Straight > To Basket > Miss 2 Pts
 Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-14,Ripon@UWWhitewater,88,H1,174.0,[app] Ripon Motion #1: Man-to-Man,4 Joey Daun > Non Possession > Non Shooting Foul
 Elmhurst Bluejays,UWW,UW-Whitewater,2026-11-14,Ripon@UWWhitewater,95,H1,125.0,[app] Ripon Motion #1: Man-to-Man,35 Michael Asman > Non Possession > Non Shooting Foul
