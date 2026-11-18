@@ -3735,6 +3735,12 @@ PLAY_CALL_COLS = [
     # NEW: this clip's dense tracking frames (frame-capture cell), read by the player-tracking cell, and each
     # frame's time in the full-game video (links possessions to each other).
     "track_files", "track_times", "video_start_s",
+    # CONFIRMED BUG (fixed 11/18): "skipped" was missing from this list, so the reindex just below threw away the
+    # column _pl_apply_app_tags had filled a moment earlier -- "Skipped in the app: 196 clip(s)" was printed and then
+    # the flag was gone. 55c tag_queue falls back to all-False when the column isn't there, so every clip a coach
+    # skipped was offered again: the 11/18 11:39 run built a 196-clip batch for 2026-11-06 Thiel@UWPlatteville, a
+    # game a coach had skipped WHOLE at 11:11, and the 14 single-clip skips were being re-offered too.
+    "skipped",
 ]
 _pl_frames = []
 for _f in (_pl_uww, _pl_opp, _pl_other):

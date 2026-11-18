@@ -758,6 +758,83 @@ def _pr_clip(files, rows, numtxt, out_base, fps=None):
         pal = [im.convert("P", palette=Image.ADAPTIVE, colors=64) for im in frames]
         pal[0].save(path, save_all=True, append_images=pal[1:], duration=int(1000 * every / fps), loop=0, optimize=True)
         return os.path.basename(path)
+
+
+# CONFIRMED CHANGE (requested 11/18: "it should definitely be caching those videos so that we are not replicating any
+# work"). Film Tagging offers the WHOLE game, so every time a coach saves a partial batch the next run throws the batch
+# away and builds one with every clip still untagged -- on 11/18 that was 138 Elmhurst@Hope plays, 18.5 min of encoding
+# for videos most of which had been made the run before. Every play video is now kept in PLAY_TAG_CLIP_CACHE_DIR
+# (parser/inputs/_clip_cache, git-ignored) under a name made from the clip's own frames / export clip and the export
+# settings, so a rebuilt batch copies what it already has and only encodes what is new. The cache is additive -- nothing
+# in it is ever deleted by the parser; a whole season of captured clips is a few GB. PLAY_TAG_CLIP_CACHE = False turns it
+# off. Changing PLAY_REVIEW_VIDEO / _EXPORT_WIDTH / _EXPORT_FPS / _EXPORT_CRF / VISION_TRACK_FPS changes the name, so a
+# settings change re-encodes instead of serving an old-looking video.
+def _pr_clip_cache_dir():
+    d = globals().get("PLAY_TAG_CLIP_CACHE_DIR")
+    if not d:
+        base = globals().get("INPUT_DIR") or os.path.dirname(VISION_FRAMES_DIR)
+        d = os.path.join(base, "_clip_cache")
+    return d
+
+
+def _pr_clip_cache_key(files, fps=None):
+    """A name for this play's video: the frames it is made of, the clip/export it comes from (with that file's size and
+    date, so a re-exported game is re-encoded) and every setting that changes what comes out."""
+    import hashlib
+    sig = ["v1", str(PLAY_REVIEW_VIDEO),
+           str(globals().get("PLAY_REVIEW_EXPORT_WIDTH", 960)),
+           str(globals().get("PLAY_REVIEW_EXPORT_FPS", 30)),
+           str(globals().get("PLAY_REVIEW_EXPORT_CRF", 25)),
+           str(float(fps or globals().get("VISION_TRACK_FPS") or 2.0)),
+           "|".join(files)]
+    src = None
+    try:
+        src = vision_clip_media(files) if "vision_clip_media" in globals() else None
+        if not src and files and "_fx_lookup" in globals():
+            h0 = _fx_lookup(os.path.join(VISION_FRAMES_DIR, files[0]))
+            if h0 is not None:
+                src = h0[0]
+        if not src and files:
+            src = os.path.join(VISION_FRAMES_DIR, files[0])
+        if src and os.path.exists(src):
+            st = os.stat(src)
+            sig += [str(int(st.st_mtime)), str(st.st_size)]
+    except Exception:
+        pass
+    return hashlib.sha1("\x1f".join(sig).encode("utf-8")).hexdigest()
+
+
+def _pr_clip_cached(files, rows, numtxt, out_base, fps=None):
+    """_pr_clip, with the finished video kept and reused. -> file name, or None (same as _pr_clip)."""
+    if not globals().get("PLAY_TAG_CLIP_CACHE", True) or not files:
+        return _pr_clip(files, rows, numtxt, out_base, fps=fps)
+    cdir, key = _pr_clip_cache_dir(), _pr_clip_cache_key(files, fps)
+    for ext in (".mp4", ".gif"):
+        c = os.path.join(cdir, key + ext)
+        try:
+            if os.path.exists(c) and os.path.getsize(c) > 0:
+                shutil.copy2(c, out_base + ext)
+                cp = os.path.join(cdir, key + "_poster.jpg")
+                if os.path.exists(cp):
+                    shutil.copy2(cp, out_base + "_poster.jpg")
+                globals()["_PR_CLIP_CACHE_HITS"] = int(globals().get("_PR_CLIP_CACHE_HITS", 0)) + 1
+                return os.path.basename(out_base + ext)
+        except Exception:
+            break                                          # a cached file that cannot be copied: make the video instead
+    made = _pr_clip(files, rows, numtxt, out_base, fps=fps)
+    if made:
+        try:
+            os.makedirs(cdir, exist_ok=True)
+            ext = os.path.splitext(made)[1]
+            for a, b in ((out_base + ext, os.path.join(cdir, key + ext)),
+                         (out_base + "_poster.jpg", os.path.join(cdir, key + "_poster.jpg"))):
+                if os.path.exists(a):
+                    shutil.copy2(a, b + ".part")            # .part then rename: a run stopped halfway leaves no half video
+                    os.replace(b + ".part", b)
+            globals()["_PR_CLIP_CACHE_NEW"] = int(globals().get("_PR_CLIP_CACHE_NEW", 0)) + 1
+        except Exception as _ke:
+            print(f"  [clip cache] {os.path.basename(out_base)} not kept ({type(_ke).__name__}: {_ke})", flush=True)
+    return made
     return None
 
 
@@ -1959,8 +2036,10 @@ def tag_queue():
         except Exception:
             _gn = {}
         _rosters = _tag_rosters(g)
-        print(f"Film Tagging: {gd} {gc}: making the video of each of {len(pick)} play(s) for the app...", flush=True)
+        print(f"Film Tagging: {gd} {gc}: making the video of each of {len(pick)} play(s) for the app "
+              f"(ones made on an earlier run are copied from the clip cache)...", flush=True)
         _tg_t0, _tg_st = time.time(), {}
+        _tg_h0, _tg_n0 = int(globals().get("_PR_CLIP_CACHE_HITS", 0)), int(globals().get("_PR_CLIP_CACHE_NEW", 0))
         # CONFIRMED BUG (fixed; 11/16: 256 "clip video not made (OSError: [Errno 28] No space left on device)" lines in a
         # row, then a batch the app could not use). A full disk is not something to keep writing through: the batch stops
         # where it is, with the clips it has, and says so.
@@ -1984,7 +2063,7 @@ def tag_queue():
             clip_file = None
             if PLAY_REVIEW_VIDEO and files:
                 try:
-                    clip_file = _pr_clip(files, [], None, os.path.join(rdir, f"clip_{fid}"))
+                    clip_file = _pr_clip_cached(files, [], None, os.path.join(rdir, f"clip_{fid}"))
                 except Exception as _ce:
                     print(f"  [film tagging] clip video not made ({type(_ce).__name__}: {_ce})", flush=True)
             if PLAY_REVIEW_VIDEO and not clip_file:
@@ -2007,6 +2086,10 @@ def tag_queue():
                           # no known five gets the team's roster for the game instead (see _tag_people)
                           **_tag_people(r, _rosters, _gn)})
         _pr_progress(f"[film tagging] {gc} play videos made", len(pick), len(pick), _tg_t0, _tg_st)
+        _tg_h = int(globals().get("_PR_CLIP_CACHE_HITS", 0)) - _tg_h0
+        _tg_n = int(globals().get("_PR_CLIP_CACHE_NEW", 0)) - _tg_n0
+        if _tg_h or _tg_n:
+            print(f"  [clip cache] {gc}: {_tg_h} play video(s) copied from the cache, {_tg_n} newly made", flush=True)
         if not plays:
             shutil.rmtree(rdir, ignore_errors=True)
             shutil.rmtree(pkg, ignore_errors=True)
@@ -2120,7 +2203,7 @@ def _tag_reopen(pc, vocab, min_c):
             clip_file = None
             if PLAY_REVIEW_VIDEO and files:
                 try:
-                    clip_file = _pr_clip(files, [], None, os.path.join(rdir, f"clip_{fid}"))
+                    clip_file = _pr_clip_cached(files, [], None, os.path.join(rdir, f"clip_{fid}"))
                 except Exception as _ce:
                     print(f"  [fix saved plays] clip video not made ({type(_ce).__name__}: {_ce})", flush=True)
             if PLAY_REVIEW_VIDEO and not clip_file:

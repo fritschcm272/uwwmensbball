@@ -15,3 +15,5 @@ data/play_tag/**/*.mp4
 data/play_tag/**/*_poster.jpg
 data/play_review/**/*.mp4
 data/play_review/**/*_poster.jpg
+# Film Tagging play videos kept between runs (parser 55c _pr_clip_cached) -- rebuilt from the film if deleted
+parser/inputs/_clip_cache/

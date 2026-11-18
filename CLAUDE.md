@@ -1326,3 +1326,321 @@ card's own flag -- `_foul_by`, from the late-game foul list -- and **no neutral 
 two calls or nothing at all. Opponent side only; those calls are about fouling THEM. Checked against the real
 table: Cherry "Don't foul late" (87.5% FT), Ketchum "Foul him late" (25%), Boone neutral so nothing, a player
 missing from the table nothing, and our own side nothing.
+
+
+## 2026-11-18 -- lineup cards: three always, no headers, both teams
+
+Requested: "Don't dynamically group the top lineups by MIN, +/-, and PPP even if they are the same lineups.
+List all three of them separately. Remove the 'OUR TOP LINEUPS & 3-MAN COMBOS' header. And this also needs to
+be done for their top lineups."
+
+* **No grouping.** The merge-identical-titles behaviour from an hour ago is out: three cards, in that order,
+  always. A unit that tops two or three columns simply appears on each of them.
+* **No section header, either side.** Neither `section("TOP LINEUPS & 3-MAN COMBOS")` nor its OUR counterpart
+  is emitted. The cards are the heading. The methodology footnote that hung off each title now rides on that
+  side's "Full tables" bar (`_lu_note`), so the link to the notes page is not lost with the header. With no
+  header of their own, both blocks ride inside the roster section above them, which is itself always visible,
+  and "OUR TOP LINEUPS" came out of `_SB_FIXED` as a title that no longer exists.
+* **Theirs now matches ours**: `_lu_cards("Opponent", lineups)` above a "Full tables" expander holding
+  `lineups_table` and `combos_table`, and their old one-line headline is gone.
+* **PPP says how many possessions it rests on.** Their most-used five showed "1.83 PPP" -- true, and on SIX
+  tagged possessions. The card's sub-line now reads "37 min - -3 - 1.83 PPP on 6 tagged" so the number cannot
+  look better founded than it is.
+
+Both sides run against the real tables. Theirs: five-man most minutes Boone / Trelenberg / Cherry / Pearson /
+Adjahoungbeta (37 min), best +/- Boone / Trelenberg / Marshall / Cherry / Adjahoungbeta (+5 in 9), best PPP the
+most-used five (1.83 on 6); trios most minutes Boone / Trelenberg / Cherry (60 min), best +/- Colvin / Ketchum
+/ Smith (+11 in 16), best PPP Boone / Pearson / Adjahoungbeta (1.83). Ours: 25-minute five, the 8-minute five
+at +6 for both +/- and PPP, and one trio (Madson / McEwen / Rogers, 43 min) on all three cards.
+
+
+## 2026-11-18 -- the 3-man table picked like the 5-man one, surnames in both
+
+Requested: "The 3 man lineup table should be formatted similar to the 5 man lineup with the top 2 of each of
+the 3 metrics. Remove first names to make it cleaner."
+
+`combos_table` no longer ranks every trio by shrunk margin per 40 and prints the best three. It is picked the
+way `lineups_table` picks fives: **the top 2 in MINUTES, in +/- and in PPP**, each trio listed once however
+many columns it tops, with its top-2 values bold. PPP still needs 3+ tagged possessions to be ranked on, the
+`*` still marks a trio under the minutes floor, and trios with identical numbers still collapse to one row
+with "(+N identical)" -- that was `_rank_units(collapse_twins=True)` and is now inline, since the new
+selection does not go through `_rank_units`.
+
+Our side keeps the "Feature the ... combo" key's own bar (games played, on/off positive), but only when at
+least one trio clears it -- with two games played nobody has 3 GP yet, and without that guard the table would
+have come out empty.
+
+**Surnames in both tables.** "Collin Madson, Kelton McEwen, Rashad Rogers" is now "Madson / McEwen / Rogers",
+in the five-man table too, with the full names on the cell's tooltip so nothing is lost.
+
+Checked against the real tables, both sides. Ours: 5 rows, 6 bolded cells -- Madson / McEwen / Rogers 42.8 min
+and Madson / McEwen / Teague-Johnson 42.4 for minutes, Madson / Rogers / Castillo +13 and Madson / Lukenbill /
+McEwen +12 for +/-, 1.47 and 1.33 for PPP. Theirs: 6 rows, 6 bolded -- Boone / Trelenberg / Cherry 60.3 and
+Boone / Trelenberg / Adjahoungbeta 57.9, +12 and +11, and two trios tied at 1.83 PPP.
+
+
+## 2026-11-18 -- validating the lineup minutes: the number was right, the heading was wrong
+
+Corey: "Validate that this data is being calculated correctly. I don't think a 3 man lineup can be averaging
+this many minutes per game." Right to ask, wrong culprit: **MIN in the lineup tables is a SEASON TOTAL**, not a
+per-game average. Boone / Trelenberg / Cherry's 60.3 is 20.1 a game across three games, which is ordinary for
+three starters.
+
+**Validated four ways before changing anything** (repeat these if the lineup tables are ever reworked):
+1. The five-man units sum to **118.6** minutes against **120** of game time (40 x 3 games) -- one unit is on
+   the floor at a time, so the total has to land there.
+2. The trios sum to **1186** against the **1200** expected: every five contains C(5,3) = 10 trios, so the trio
+   total must be ten times game time.
+3. No trio exceeds the season minutes of its own least-used player -- 60.3 against Cherry's 66.7, the tightest
+   of them, and every one of the top trios passed.
+4. Elmhurst's player-minutes sum to 592.8 against 600 (40 x 5 x 3), so the box score behind all of it is sound.
+
+The gap between 118.6 and 120 (and 592.8 against 600) is stint rounding in the play-by-play, not a fault.
+
+**Fixed: the heading.** `MIN` now reads `MIN (3 g)` -- `_min_head(side)` from `_side_games(side)`, counted off
+the same box scores TEAM COMPARISON uses -- in the five-man and 3-man tables, both sides. The cards say it in
+words: "60 min over 3 games". A per-game reading is no longer available to a tired reader at 6am.
+
+
+**Minutes now read per game (requested, same morning).** `MIN` became `MIN/G` in both lineup tables, both
+sides, and the cards say "21.4 Min/G" -- the column name itself rather than a sentence (requested). Only the DISPLAY divides by games on file (`_min_pg`); the stored
+number stays the season total, because the ranking, the minutes floors and the **per 40** column are all
+computed from it -- dividing before per 40 would have quietly broken that column. Each minutes cell carries
+the total on its tooltip ("42.8 minutes in all"), and the below-floor note now reads in the same units:
+"under 20.0 minutes a game together (40 in all)".
+
+Elmhurst's trios now read 20.1 / 19.3 / 14.8 a game instead of 60.3 / 57.9 / 44.3 in all -- the number Corey
+expected to see when he challenged it.
+
+
+**"on N tagged" off the cards (requested: "No where in the scouting brief does it need to say '...on 85
+tagged'").** The lineup cards read "0.88 PPP" now. The possession count is still kept in the data -- the
+3-possession floor before a PPP can be ranked on still uses it -- and still sits on the table cell's tooltip,
+so the sample is one hover away without spending card space on it.
+
+Two other places still put a count in visible text, both older than these cards and both left alone for now:
+the WHAT TO PLAY THEM IN headline ("N.NN points a possession on N tagged") and a game-plan sentence that reads
+"(1.23 PPP on 7)".
+
+
+**All of them, then (requested: "Remove those as well").** No possession counts anywhere in the brief's
+visible text:
+* WHAT TO PLAY THEM IN headline -> "Play them in <defense> -- N.NN points a possession". The 3-clip floor
+  still decides whether the line prints at all; it just no longer says so out loud.
+* the game-plan sentence under that table -> "They struggle most against X (0.83 PPP) and hurt you most
+  against Y (1.42 PPP)".
+* HOW THEY / WE RUN OFFENSE headline -> "Most-used set: Flow -- 1.43 points a possession".
+* the player card's film line -> "Tagged film: featured in 5 Out Motion (14x), Flow (6x), Cheetah (4x) --
+  1.06 PPP." The per-set (14x) counts stay: those are the content, not a sample-size disclaimer.
+
+Every floor and minimum behind these lines is unchanged -- 3 tagged possessions before a PPP is ranked on,
+3 clips before a defense family is named, 3 uses before a set is listed. What changed is that the brief no
+longer narrates its own sample size; the counts remain in the tables, the tooltips and the app.
+
+
+## 2026-11-18 -- the lineup cards say what the unit is
+
+Corey picked option B from three mock-ups and asked to fold in two clauses from the others: "31% of their floor
+time", who the shooters are, and "Five out, no true big. Adjahoungbeta is the only one on the glass."
+
+A card now reads:
+
+    Most minutes - 31% of their floor time
+    Boone / Trelenberg / Cherry / Pearson / Adjahoungbeta
+    12.4 Min/G
+    12.4 Min/G - -3 - 1.83 PPP
+    Four of five take threes: Trelenberg 7.7 3PA (43%), Boone 5.3 3PA (44%), Pearson 3.7 3PA (27%),
+                              Cherry 2.7 3PA (50%)
+    Five out, no true big. Adjahoungbeta leads the group on the glass (3.7 offensive boards a game).
+
+`_lu_read(side, lineup, grouping)` builds the two lines, `_lu_box(side)` the per-player totals behind them,
+`_lu_groupings(side)` the shape. Every clause is read off tables the brief already prints, and any clause
+whose data is missing is simply left out -- a trio has no grouping row, so it gets no shape sentence.
+
+Rules, each chosen so the line cannot overstate what is behind it:
+* **Shooters**: 1.5+ three-point attempts a game, most first, **four names at most**. A fifth name is the man
+  nobody is closing out on, and the line stops being a list of who to chase -- it was listing Adjahoungbeta at
+  2.0 attempts and 17% alongside Trelenberg at 7.7 and 43%.
+* **Shape**: "Five out, no true big" only when the lineup's own position grouping (3G-2B, 2G-3W ...) carries no
+  B. It is the parser's own shape string, not a guess from heights.
+* **Glass**: "is the only one on the glass" only when the next man has a third of his boards or fewer;
+  otherwise "leads the group on the glass". Per game, like everything else on the card.
+* The share is minutes over 40 x games -- the floor time there is to take.
+
+Wording bugs caught in the same pass: "One of 3 take threes" (now "One of three takes threes"), the mixed
+word-and-digit counts, and "leads them on the glass" printing on our own cards about our own players.
+
+
+## 2026-11-18 -- what each lineup struggles with, per card, and the footer collapsed
+
+**Offence and defence on the lineup cards** (requested: "include what each lineup has struggled with
+defensively and offensively", then "Make that based on which card is shown"). Each card gets the end of the
+floor its own metric is about:
+
+| card | line |
+| --- | --- |
+| Most minutes | "With them out there: 0.78 (team 0.88) scored, 0.91 (team 0.89) allowed" |
+| Best +/- | "That margin is the defence: ... scored, ... allowed" -- or "Neither end stands out" |
+| Best PPP | "Offence with them out there: 0.88 (team 0.88) a possession" |
+
+Both numbers are points per tagged possession with those players on the floor, against the same team's own
+rate. The defensive half is new: `_unit_clips_def()` matches the DEFENDING five. Checked on the data before
+relying on it -- on a defensive row `on_court_lineup` is the defending team's five (UWW defending Alma lists
+our five, Elmhurst defending DePauw lists theirs), so the same matching works for points allowed.
+
+**CONFIRMED BUG caught before shipping -- thin pools.** With a 5-possession floor this printed
+**"0.14 allowed (team 0.61)"** for Elmhurst. Their whole tagged pool is 38 offensive and 38 defensive
+possessions with a lineup attached: 0.61 allowed is not a defensive rate, it is a team whose film is barely
+tagged, and a unit's slice of 38 is a handful of clips. Then at a 10-possession floor one of OUR
+four-minute fives "allowed 0.31" -- four points across a dozen possessions, not a defensive identity.
+Final gate: **100+ possessions in that side's pool on that end, 20+ for the unit itself.** Ours clears it
+(706 offensive, 564 defensive; 85-115 per unit), so the line shows for us now; Elmhurst's cards carry no
+two-way line at all until more of their film is tagged. A missing line is the honest output here.
+Also: the +/- card only credits an end that beats the team rate by 0.05 or more, instead of crediting one
+that wins only after rounding.
+
+**The footer is collapsed** (requested: "This information should be in a collapsible section as well and be
+collapsed by default"). "How this brief was built -- sources, the film tagged behind it, methodology" wraps
+the generated-from paragraph, the Built from list and the methodology link. It still prints in full, since the
+`beforeprint` handler opens every `<details>`.
+
+
+**Card layout (requested 11/18):** the share of floor time came out of the card's title and sits with the
+minutes it belongs to; the margin and PPP moved to a line of their own under it.
+
+    MOST MINUTES
+    Boone / Trelenberg / Cherry / Pearson / Adjahoungbeta
+    12.4 Min/G
+    12.4 Min/G - 31% of their floor time
+    -3 +/- - 1.83 PPP
+    Four of five take threes: ...
+    Five out, no true big. ...
+
+
+## 2026-11-18 -- TEAM COMPARISON opens with cards, not a sentence
+
+Requested: replace the section's one-sentence verdict header with "3 to 5 card style pieces of important
+information similar to the other sections we've edited recently". Four cards now, built from the same numbers
+the sentence carried:
+
+| card | Elmhurst, tonight |
+| --- | --- |
+| Expected here | UW-Whitewater 70 -- Elmhurst 74 &middot; **~4.2 to them** &middot; about two possessions &middot; built on 2 of our games and 3 of theirs |
+| What decides it | Shot quality &middot; **-2.6 PPG** &middot; 53 v 63 points from the floor |
+| Where we gain | Free-throw rate &middot; **+0.9 PPG** &middot; 25 v 17 free throws |
+| The man | **Dominic Trelenberg** &middot; the one to take away (16.0 a game, 43% from three) |
+
+The third card is "Where we gain" when any factor other than the deciding one is in our favour, and "And
+after that" when none is -- it then shows the next biggest problem rather than inventing an edge. The fourth
+only appears when `_wm_face` has a man for the deciding factor. `_wm_face` writes its clause to follow a name
+("is the one to take away ..."), so on a card, where the name is the line above, the leading verb is dropped.
+
+The cards go through `_sb_sechead`, so they are the always-visible part and the table, the Oliver label, the
+expected score line and the season averages stay behind "Show the detail".
+
+
+**Five cards now (requested): "The man" out, two season-average cards in.** TEAM COMPARISON opens with
+Expected here / What decides it / Where we gain / **What we do better** / **What they do better**. The last
+two name the biggest season-average edge each way, from the per-game strip that sits inside the same section.
+
+* The rows are collected **as that strip is built** (`_TEAM_STAT_ROWS`), not re-derived, so a card and the row
+  it came from cannot disagree -- including on which direction is better, which only that loop knows (points
+  allowed and turnovers are won by the LOWER number).
+* Ranked by gap **relative to the larger of the two numbers**. A raw gap would hand it to points every time,
+  where three points apart is nothing, over steals, where two apart is enormous.
+* A percentage row says "by 4.6 percentage points", everything else "by 4.3 a game".
+
+The man card is gone, and with it the only card that depended on `_wm_face` -- that function is still used
+for the trailing clause of nothing now, so it stays only as the source of the deciding-factor player if we
+want it back.
+
+
+## 2026-11-18 -- Film Tagging keeps the play videos it makes (clip cache)
+
+**What happened.** The 11/18 `parser_models` spent 18.5 min "making the video of each of 138 play(s)" for
+2026-11-14 Elmhurst@Hope and then 1085s pushing clips, on a game that was already in the app with 40 plays
+tagged. Nothing was wrong with what it picked. The chain, from `models_20261118_090811.log`:
+
+* line 2195 -- `2026-11-14|Elmhurst@Hope: 2 file(s) by JT (latest 2026-11-18 04:42 UTC) -- 40 play(s) with
+  coach answers`. That save carries a `titles` part.
+* `55c_play_review.py`, the open-batch check: `_tag_titles_saved(slug_game, old_run)` is tested FIRST, and
+  when the coach has saved titles for the run the batch was built from, the batch is finished -- `shutil.rmtree(pkg)`,
+  silently (no "rebuilt to the new order" line; that is why Elmhurst@Ripon, UWW@Carroll and DePauw@Elmhurst got
+  `open batch -- offense / defense and lineups updated` on lines 2641-2643 and Elmhurst@Hope did not).
+* line 2692 -- the new batch is `138 clip(s) to tag -- every untagged possession, both teams (of 138 untagged)`.
+  178 clips in the game - 40 answered = 138. No tagged clip's video was re-made.
+
+**The full game is going in, and should stay that way.** `PLAY_TAG_ALL_POSSESSIONS` (default True) and no cap --
+`PLAY_TAG_UWW_MAX = None` in parser_nb cell 133, `PLAY_TAG_OTHER_MAX` never set (default None). Note
+`PLAY_TAG_PER_GAME_OTHER = 40` in that cell is dead code under the current rule: it only applies on the
+`PLAY_TAG_ALL_POSSESSIONS = False` branch. **Do not cap the batch to shorten the run** (I suggested it once;
+it is wrong -- the coach is meant to get the whole game).
+
+**CONFIRMED CHANGE (requested).** The cost is real, though: with `PLAY_TAG_REQUIRE_SAVED = True`, every partial
+save means the next run rebuilds the batch and re-encodes every clip still untagged. So every play video is now
+kept and reused -- `55c_play_review.py` (170,417 b):
+
+* `_pr_clip_cache_dir()` -> `PLAY_TAG_CLIP_CACHE_DIR` or `INPUT_DIR/_clip_cache` (added to `.gitignore`, 693 b).
+* `_pr_clip_cache_key(files, fps)` -> sha1 of: `PLAY_REVIEW_VIDEO`, `PLAY_REVIEW_EXPORT_WIDTH` / `_FPS` / `_CRF`,
+  the frame rate, the clip's frame file names, and the size + mtime of the file the video is made from (the lean
+  mode media, the export clip via `_fx_lookup`, else the first frame). A settings change or a re-exported game
+  therefore re-encodes instead of serving a stale-looking video.
+* `_pr_clip_cached(files, rows, numtxt, out_base, fps=None)` wraps `_pr_clip` with the same signature and return
+  value: a hit is `shutil.copy2` of the video and its poster into the batch; a miss encodes, then copies into the
+  cache as `.part` and `os.replace`s it, so a run stopped halfway never leaves a half-written video behind.
+  `PLAY_TAG_CLIP_CACHE = False` turns it off; failures to cache print `[clip cache] ... not kept` and are not fatal.
+* Both batch builders use it (the Film Tagging batch and `_tag_reopen`'s fix batch). The Play review build
+  (line ~1497) still calls `_pr_clip` directly -- it draws number overlays per run and is one play, not 138.
+* Each game now prints `[clip cache] <game>: N play video(s) copied from the cache, M newly made`, and the
+  "making the video of each" line says the earlier ones are copied.
+* The cache is additive -- the parser never deletes from it. A whole season of captured clips (2,271 on 11/18,
+  ~2.8 MB each) is single-digit GB against 1.6 TB free on F:. Deleting the folder is safe: it is rebuilt from film.
+* The `videos` branch push does not need a matching change: it is a git tree, so a byte-identical video under a
+  different `fid` is the same blob and is not uploaded again. The cache makes "byte-identical" certain, where
+  re-encoding only made it likely.
+
+**Validation** (`~/wmtest/cache_t.py`, the three functions pulled out by AST with a stub `_pr_clip` that counts
+calls): a first request encodes; the batch folder wiped and the same clip requested under a different `fid`
+copies from the cache with the right bytes and poster and does not encode; changing `PLAY_REVIEW_EXPORT_CRF`
+re-encodes; rewriting the source frame re-encodes; `PLAY_TAG_CLIP_CACHE = False` passes straight through; an
+empty file list passes straight through; no `.part` files are left. All pass.
+
+
+## 2026-11-18 -- CONFIRMED BUG: every "skip" a coach saved was being ignored (Thiel@UWPlatteville)
+
+**What happened.** JT skipped the WHOLE 2026-11-06 Thiel@UWPlatteville game in the app at 11:11 (save
+`play_review_tag_2026_11_06_Thiel_UWPlatteville_..._tag_skipgame_JT_20261118_171110.json`, `"skipped_game": true`).
+The 11:39 `parser_models` then started building a 196-clip Film Tagging batch for it anyway
+(`Thiel@UWPlatteville play videos made: 20 / 196`).
+
+**Why.** The two halves of the skip feature were fine; the column carrying it was thrown away between them.
+
+* `47_play_calls.py` `title_review_answers()` read the save into `_title_review_game_skips`, and
+  `_pl_apply_app_tags()` set `skipped = True` on all 196 rows -- the log even says so:
+  `Skipped in the app: 196 clip(s) ... (196 of them from 1 whole game(s) skipped)`.
+* Then `_f.reindex(columns=PLAY_CALL_COLS)` (47:3755) built each side's frame for `play_calls`, and
+  **`"skipped"` was not in `PLAY_CALL_COLS`** -- so the flag was dropped on the way into `play_calls`
+  (that is also why `data/uww_play_calls.csv` had no `skipped` column).
+* `55c_play_review.py` `tag_queue()` reads
+  `skipped = g["skipped"]... if "skipped" in g.columns else pd.Series(False, index=g.index)`. With the column
+  gone it took the all-False fallback, so `bool(skipped.all())` was False and the whole-game branch never fired,
+  and `todo = g[untagged & ~skipped & ...]` kept every skipped clip.
+
+So **no skip had any effect since the feature went in on 11/15** -- not the whole-game skip, and not the 14
+single-clip skips (`Skipped in the app: 14 clip(s)` in the same run). They were saved, counted, printed, and
+then re-offered on the next run. The symptom looked like wasted encoding time; the cause was a dropped column.
+
+**Fix.** `"skipped"` added to `PLAY_CALL_COLS` (`47_play_calls.py`, 369,811 b), with the explanation above in
+place. Nothing else changes: 47 already filled the column and 55c already read it.
+
+**What the next run does.** The whole-game branch fires for Thiel@UWPlatteville: its batch is removed from the
+app and it prints `a coach skipped the whole game in the app, so it has no batch (196 clip(s) left untagged on
+purpose; PLAY_TAG_UNSKIP brings it back)`. The games holding the 14 single-clip skips lose those clips from
+their batches, so those batches rebuild -- nothing saved is lost, and with the clip cache (same date, above)
+the rebuild copies the videos instead of re-encoding them. `PLAY_TAG_UNSKIP` (clip keys) and a save with
+`"unskipped_game": true` are still the ways back.
+
+**Validation** (`~/wmtest/skip_t.py`, `PLAY_CALL_COLS` read out of the file by AST): the list has 70 columns, no
+duplicates, `skipped` present; a flagged frame survives the reindex; `skipped.all()` is True and
+`f"{gd}|{gc}".lower()` matches the saved `2026-11-06|thiel@uwplatteville`, so the whole-game branch fires; 0 of
+3 clips are still offered; and a frame with one skipped clip keeps that one flag and offers the other two.
