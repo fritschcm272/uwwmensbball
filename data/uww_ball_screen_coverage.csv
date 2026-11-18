@@ -1,6 +1,4 @@
 opponent,coverage,freq_pct,ppp,fg_pct,note,is_sample
-Elmhurst Bluejays,Switch,67,0.71,44.4,14 tagged ball screens -- most often by (no jersey),False
-Elmhurst Bluejays,Drop,10,0.0,0.0,2 tagged ball screens -- most often by (no jersey),False
-Elmhurst Bluejays,High Hedge,10,0.0,0.0,2 tagged ball screens -- most often by (no jersey),False
-Elmhurst Bluejays,Over,10,0.0,0.0,2 tagged ball screens -- most often by (no jersey),False
-Elmhurst Bluejays,Flat Hedge,5,0.0,,1 tagged ball screen -- most often by (no jersey),False
+Elmhurst Bluejays,Flat Hedge,33,2.0,,1 tagged ball screen -- most often by (no jersey) (thin sample),False
+Elmhurst Bluejays,High Hedge,33,0.0,0.0,1 tagged ball screen -- most often by (no jersey) (thin sample),False
+Elmhurst Bluejays,Switch,33,0.0,0.0,1 tagged ball screen -- most often by (no jersey) (thin sample),False

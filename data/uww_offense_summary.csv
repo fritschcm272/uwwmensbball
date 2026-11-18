@@ -1,7 +1,7 @@
 scouted_opponent,perspective,team,order,kind,text
-Elmhurst Bluejays,Opponent,Elmhurst Bluejays,1,formation,"When they are running no formation, be aware that they run Flow the most (33%, 1.50 PPP). Ball-screen coverage of Drop slowed it down best (1x, 0.00 PPP). They were most successful running Motion (17%, 3.00 PPP)."
-Elmhurst Bluejays,Opponent,Elmhurst Bluejays,2,formation,"When they are running 5 Out, be aware that they run Flow the most (50%, 1.00 PPP). It's also their most successful play call out of 5 Out."
-Elmhurst Bluejays,Opponent,Elmhurst Bluejays,3,formation,"When they are running Chin, be aware that they run Chin Set #1 the most (25%)."
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,1,formation,"When they are running no formation, be aware that they run Flow the most (36%, 1.50 PPP). Ball-screen coverage of Drop slowed it down best (1x, 0.00 PPP). They were most successful running Motion (18%, 3.00 PPP)."
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,2,formation,"When they are running 5 Out, be aware that they run Flow the most (67%, 1.00 PPP). It's also their most successful play call out of 5 Out."
+Elmhurst Bluejays,Opponent,Elmhurst Bluejays,3,formation,"When they are running Chin, be aware that they run Chin #1 the most (33%, 0.00 PPP)."
 Elmhurst Bluejays,Opponent,Elmhurst Bluejays,4,oob,"On BLOB (2 possessions, 0.00 PPP), they run BLOB Blob #2 the most (50%, 0.00 PPP)."
 Elmhurst Bluejays,Opponent,Elmhurst Bluejays,5,oob,"On SLOB (1 possessions, 0.00 PPP), no play call has been tagged yet."
 Elmhurst Bluejays,Opponent,Elmhurst Bluejays,6,success,"Most successful play calls overall: Motion (2x, 3.00 PPP) · Flow (7x, 1.43 PPP) (team average 1.03 PPP)."
@@ -9,12 +9,13 @@ Elmhurst Bluejays,Opponent,Elmhurst Bluejays,7,success_actions,"Most successful 
 Elmhurst Bluejays,Opponent,Elmhurst Bluejays,8,scorers,Top scorers on tagged plays: Boone 12 pts (5) · Trelenberg 11 pts (4) · Cherry 5 pts (2).
 Elmhurst Bluejays,Opponent,Elmhurst Bluejays,9,defense,Their opponents' ball-screen defense: Jam 2x (1.50 PPP) · Drop 1x (0.00 PPP) · Hedge / Show 1x (0.00 PPP).
 Elmhurst Bluejays,Opponent,Elmhurst Bluejays,10,advice,Do the same: Jam held them to 1.50 PPP (2x).
-Elmhurst Bluejays,UWW,UW-Whitewater,1,formation,"When we run no formation, we run Motion the most (14%, 0.67 PPP). Opponents struggled to stop it with ball-screen coverage of Over (1x, 2.00 PPP) but Switch slowed it down best (1x, 0.00 PPP). We were most successful running Cheetah (8%, 1.80 PPP)."
-Elmhurst Bluejays,UWW,UW-Whitewater,2,formation,"When we run 5 Out, we run 5 Out Motion the most (61%, 1.29 PPP). We were most successful running Zoom (13%, 1.67 PPP)."
-Elmhurst Bluejays,UWW,UW-Whitewater,3,oob,"On BLOB (8 possessions, 1.43 PPP), we run BLOB the most (25%, 2.50 PPP). It's also our most successful play call out of BLOB."
-Elmhurst Bluejays,UWW,UW-Whitewater,4,oob,"On SLOB (11 possessions, 1.10 PPP), we run SLOB the most (64%, 1.29 PPP). It's also our most successful play call out of SLOB."
-Elmhurst Bluejays,UWW,UW-Whitewater,5,success,"Our most successful play calls: BLOB (2x, 2.50 PPP) · Cheetah (5x, 1.80 PPP) · Zoom (3x, 1.67 PPP) (team average 0.92 PPP)."
-Elmhurst Bluejays,UWW,UW-Whitewater,6,success_actions,"Our most successful actions: DHO / handoff (5x, 2.00 PPP) (team average 0.92 PPP)."
-Elmhurst Bluejays,UWW,UW-Whitewater,7,scorers,Our top scorers on tagged plays: Madson 53 pts (25) · Lukenbill 19 pts (8) · Mcewen 18 pts (7).
-Elmhurst Bluejays,UWW,UW-Whitewater,8,defense,Opponents' ball-screen defense against us: Over 6x (0.33 PPP) · Hedge / Show 5x (0.00 PPP) · Switch 1x (0.00 PPP).
-Elmhurst Bluejays,UWW,UW-Whitewater,9,advice,"Expect Hedge / Show -- it held us to 0.00 PPP (5x); we scored best against Over (0.33 PPP, 6x)."
+Elmhurst Bluejays,UWW,UW-Whitewater,1,formation,"When we run no formation, we run Motion the most (24%, 0.63 PPP). Opponents struggled to stop it with ball-screen coverage of Over (1x, 2.00 PPP) but Drop slowed it down best (1x, 0.00 PPP). We were most successful running Cheetah (6%, 1.80 PPP)."
+Elmhurst Bluejays,UWW,UW-Whitewater,2,formation,"When we run 5 Out, we run 5 Out Motion the most (62%, 1.33 PPP). We were most successful running Pistol (8%, 2.50 PPP)."
+Elmhurst Bluejays,UWW,UW-Whitewater,3,formation,"When we run I Form, we run Ripon Motion #1 the most (45%, 1.00 PPP). Opponents struggled to stop it with ball-screen coverage of Switch (2x, 1.50 PPP) but Drop slowed it down best (1x, 0.00 PPP). We were most successful running RIPON MOTION #3 (10%, 1.00 PPP)."
+Elmhurst Bluejays,UWW,UW-Whitewater,4,oob,"On BLOB (12 possessions, 1.09 PPP), we run BLOB BLOB #1 the most (25%, 0.67 PPP). We were most successful running BLOB (17%, 2.50 PPP)."
+Elmhurst Bluejays,UWW,UW-Whitewater,5,oob,"On SLOB (12 possessions, 1.18 PPP), we run SLOB the most (58%, 1.29 PPP). It's also our most successful play call out of SLOB."
+Elmhurst Bluejays,UWW,UW-Whitewater,6,success,"Our most successful play calls: Pistol (2x, 2.50 PPP) · BLOB (2x, 2.50 PPP) · Cheetah (5x, 1.80 PPP) (team average 0.87 PPP)."
+Elmhurst Bluejays,UWW,UW-Whitewater,7,success_actions,"Our most successful actions: Isolation (5x, 1.25 PPP) · Swing / ball reversal (2x, 1.00 PPP) · DHO / handoff (11x, 0.91 PPP) (team average 0.87 PPP)."
+Elmhurst Bluejays,UWW,UW-Whitewater,8,scorers,Our top scorers on tagged plays: Madson 56 pts (26) · Lukenbill 19 pts (8) · Mcewen 18 pts (7).
+Elmhurst Bluejays,UWW,UW-Whitewater,9,defense,Opponents' ball-screen defense against us: Switch 11x (0.73 PPP) · Over 8x (0.25 PPP) · Hedge / Show 6x (0.00 PPP) · Drop 2x (0.00 PPP).
+Elmhurst Bluejays,UWW,UW-Whitewater,10,advice,"Expect Hedge / Show -- it held us to 0.00 PPP (6x); we scored best against Switch (0.73 PPP, 11x)."

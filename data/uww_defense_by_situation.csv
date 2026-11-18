@@ -1,4 +1,2 @@
 opponent,situation,primary_defense,freq_pct,secondary_defense,note,is_sample
-Elmhurst Bluejays,BLOB,Man-to-Man,100,,6 tagged possessions,False
-Elmhurst Bluejays,Half court,Man-to-Man,100,,48 tagged possessions; press seen on 11,False
-Elmhurst Bluejays,Transition,Man-to-Man,100,,8 tagged possessions; press seen on 1,False
+Elmhurst Bluejays,Half court,Man-to-Man,94,PRESS(m2m),16 tagged possessions; press seen on 1,False
