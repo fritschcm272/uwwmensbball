@@ -395,6 +395,67 @@ for _o, _ps in _by_opp.items():
             _up_paths[_o] = _after[-1]
     else:
         _hist_paths[_o] = _ps[-1]
+# CONFIRMED CHANGE (requested 11/17; FastScout lists Elmhurst twice -- "Nov 18, 2026" (Andy Fitzgerald) and
+# "Dec 02, 2025" (Luke Freitag): "make sure that our scouting reports are pulling only coaching scouting reports
+# from FastScout that match the Game Date. I don't want it using the one from the game from 2025-2026.")
+# The download already matches the documents page's Game Date column, year included (section 02,
+# _find_matching_scout_document_row). What was NOT checked is the other end: when no report for the upcoming
+# game is on disk, _hist_paths falls back to the most recent OLDER report and every downstream cell treats its
+# keys, strengths and schemes as the plan for this game -- silently, apart from a small "2025-26" tag on the
+# brief. The upcoming opponent's staff report is now required to carry the upcoming game's own date.
+#   scout_report_stale[opp] = (filename, the date it was written for, the date it had to match)
+# With SCOUT_REPORT_MUST_MATCH_GAME on (the default), a report that doesn't match is not used as this game's
+# plan (section 10 drops those rows). It stays in scout_reports either way: the roster, the season stats and
+# the pairing of past keys with that past game's result are all still its own game's, and correct.
+SCOUT_REPORT_MUST_MATCH_GAME = bool(globals().get("SCOUT_REPORT_MUST_MATCH_GAME", True))
+scout_report_stale = {}
+
+
+def _scout_upcoming_game():
+    """(date, opponent) of the upcoming UW-Whitewater game from the schedule built in section 02, or (None, None)
+    when the schedule can't say -- in which case nothing below is enforced."""
+    _s = globals().get("schedule")
+    if _s is None or getattr(_s, "empty", True) or not {"Upcoming", "team"} <= set(_s.columns):
+        return None, None
+    _u = _s[(_s["Upcoming"].astype(str) == "Yes")
+            & _s["team"].astype(str).str.contains("Whitewater", case=False, na=False)]
+    if _u.empty:
+        return None, None
+    _r = _u.iloc[0]
+    _d = _r.get("_parsed_date") if "_parsed_date" in _u.columns else None
+    if _d is None or pd.isna(_d):
+        _f, _yr = globals().get("parse_schedule_date"), globals().get("uww_season_start_year")
+        _d = _f(_r.get("date"), _yr) if callable(_f) else None
+    if _d is None or pd.isna(_d):
+        return None, None
+    return pd.to_datetime(_d).to_pydatetime(), str(_r.get("opponent") or "").strip()
+
+
+_up_game_date, _up_game_opp = _scout_upcoming_game()
+if _up_game_date and _up_game_opp:
+    # the opponent's short name as the filenames spell it (the schedule's full name is the long one)
+    _opp_key = next((_o for _o in _by_opp if _o and (_o in _up_game_opp or _up_game_opp in _o
+                                                     or _o.split()[0].lower() == _up_game_opp.split()[0].lower())), None)
+    if _opp_key:
+        _chosen = _up_paths.get(_opp_key) or _hist_paths.get(_opp_key)
+        _cd = scout_file_game_date(_chosen) if _chosen else None
+        if _chosen and (_cd is None or _cd.date() != _up_game_date.date()):
+            scout_report_stale[_opp_key] = (os.path.basename(_chosen),
+                                            _cd.strftime("%Y-%m-%d") if _cd else "no date in the filename",
+                                            _up_game_date.strftime("%Y-%m-%d"))
+            _up_paths.pop(_opp_key, None)
+            print(f"  !! {_opp_key}: the only scouting report on disk is "
+                  f"'{os.path.basename(_chosen)}', written for {scout_report_stale[_opp_key][1]}, and the upcoming "
+                  f"game is {_up_game_date.strftime('%b %d, %Y')}. "
+                  + ("It is NOT used as this game's plan (SCOUT_REPORT_MUST_MATCH_GAME). Download this game's "
+                     "report from FastScout, or set SCOUT_REPORT_MUST_MATCH_GAME = False to use the older one."
+                     if SCOUT_REPORT_MUST_MATCH_GAME else
+                     "SCOUT_REPORT_MUST_MATCH_GAME is off, so it IS used -- its keys were written for another game."),
+                  flush=True)
+        elif _chosen:
+            print(f"  {_opp_key}: scouting report '{os.path.basename(_chosen)}' matches the upcoming game date "
+                  f"({_up_game_date.strftime('%b %d, %Y')}).", flush=True)
+
 for path in [p for _o, p in _hist_paths.items()]:
     # Filenames are either "<date> UW-Whitewater @ <Opponent>_scout.<ext>" (away game) or
     # "<date> <Opponent> @ UW-Whitewater_scout.<ext>" (home game, e.g. the Aurora report) -- reuse the

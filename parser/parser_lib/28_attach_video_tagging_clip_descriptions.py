@@ -78,6 +78,13 @@ for _, row in prev_games.iterrows():
         clips = parse_video_mhtml_cached(video_matches[0])
     elif row["game_date"] in live_clips_by_game:
         clips = live_clips_by_game[row["game_date"]]
+    elif ("clips_from_synergy_export" in globals()
+          and len(clips_from_synergy_export(row["game_date"], set(pbp_events_upcoming.loc[game_mask, "player"].dropna())))
+              >= int(globals().get("VIDEO_EXPORT_MIN_CLIPS", 10))):
+        # the opponent's prior game was exported with Synergy Editor instead of saved as a "_video" page
+        # (see clips_from_synergy_export in the helpers cell): same clip log, same order
+        clips = clips_from_synergy_export(row["game_date"], set(pbp_events_upcoming.loc[game_mask, "player"].dropna()))
+        _vs_row["video_file"] = "(Synergy export)"
     else:
         # No local "<m>_<d>_<yy>*<Opponent>*_video.*" file, and either no video_url on the schedule row or
         # the live scrape failed. Note that the glob needs BOTH the no-leading-zero date and the opponent's

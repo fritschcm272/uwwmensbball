@@ -105,6 +105,22 @@ print(f"Found {len(video_files)} video-tagging file(s):")
 for f in video_files:
     print(" -", os.path.basename(f))
 
+# CONFIRMED BUG (fixed; see clips_from_synergy_export in the shared helpers cell): with no "<game>_video.html" pages
+# saved any more, this cell matched nothing all season and every downstream user of video_description ran empty. A UWW
+# game with no video file now takes its clip log from the Synergy Editor export instead -- same columns, same clip
+# order, so it goes through the same alignment below. VIDEO_EXPORT_MIN_CLIPS guards against a half-captured game.
+_vt_sources = [(f, None) for f in video_files]
+_vt_have = {game_date_from_pbp_filename(f.replace("_video.", "_pbp.")) for f in video_files}
+if "clips_from_synergy_export" in globals():
+    _vt_min = int(globals().get("VIDEO_EXPORT_MIN_CLIPS", 10))
+    for (_vt_opp, _vt_gd), _vt_g in pbp_events.groupby(["opponent", "game_date"]):
+        if _vt_gd in _vt_have:
+            continue
+        _vt_clips = clips_from_synergy_export(_vt_gd, set(_vt_g["player"].dropna()))
+        if len(_vt_clips) >= _vt_min:
+            _vt_sources.append((f"Synergy export {_vt_gd}", (_vt_opp, _vt_gd, _vt_clips)))
+            print(f" - Synergy export for {_vt_opp} on {_vt_gd}: {len(_vt_clips)} clip(s) (no _video page saved)")
+
 video_desc_col = pd.Series(index=pbp_events.index, dtype=object)
 video_result_col = pd.Series(index=pbp_events.index, dtype=object)
 video_player_col = pd.Series(index=pbp_events.index, dtype=object)
@@ -112,20 +128,23 @@ video_clip_number_col = pd.Series(index=pbp_events.index, dtype=float)
 
 # CONFIRMED_CLIP_EVENT_OVERRIDES is reused from the "Shared video-tagging helper functions" cell above.
 opponents_with_video = []
-for path in video_files:
-    # Home/away-aware extraction (mirrors opponent_from_pbp_filename above); matches ".mhtml" or ".html".
-    _vname = re.sub(r"_video\.(mhtml|html)$", "", os.path.basename(path), flags=re.IGNORECASE)
-    _vname = re.sub(r"^\d+_\d+_\d+\s+", "", _vname)
-    if " @ " in _vname:
-        _left, _right = [side.strip() for side in _vname.split(" @ ", 1)]
-        opponent_short = _right if _left == "UW-Whitewater" else _left
-    else:
-        opponent_short = _vname
+for path, _vt_export in _vt_sources:
+    if _vt_export is None:
+        # Home/away-aware extraction (mirrors opponent_from_pbp_filename above); matches ".mhtml" or ".html".
+        _vname = re.sub(r"_video\.(mhtml|html)$", "", os.path.basename(path), flags=re.IGNORECASE)
+        _vname = re.sub(r"^\d+_\d+_\d+\s+", "", _vname)
+        if " @ " in _vname:
+            _left, _right = [side.strip() for side in _vname.split(" @ ", 1)]
+            opponent_short = _right if _left == "UW-Whitewater" else _left
+        else:
+            opponent_short = _vname
+        # A video file covers ONE game. Scope the alignment to that game (by its own filename date), or a
+        # rematch's clips get aligned against both meetings' events at once.
+        video_game_date = game_date_from_pbp_filename(path.replace("_video.", "_pbp."))
+        clips = parse_video_mhtml_cached(path)
+    else:                                         # the Synergy Editor export for a game with no _video page
+        opponent_short, video_game_date, clips = _vt_export
     opponents_with_video.append(opponent_short)
-    # A video file covers ONE game. Scope the alignment to that game (by its own filename date), or a
-    # rematch's clips get aligned against both meetings' events at once.
-    video_game_date = game_date_from_pbp_filename(path.replace("_video.", "_pbp."))
-    clips = parse_video_mhtml_cached(path)
     total_clips_n = len(clips)
 
     game_mask = pbp_events["opponent"] == opponent_short

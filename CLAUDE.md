@@ -740,3 +740,589 @@ whether the run finished or stopped on the way (CourtCalibrationNeeded, an error
 - `PUSH_DATA_TO_MAIN = False` goes back to pushing everything by hand.
 This is the one place the parser writes to GitHub on its own besides the videos branch. The standing rule otherwise
 stands: no pulls, no history, no pushes of anything but data/ -- and never on another branch.
+
+
+### Naming players at UWW home games: the baseline to beat (11/17)
+Corey, on the Starters check crops: "extremely zoomed out video and very blurry zoomed in photos of jerseys." He is
+right, and it is the camera, not the pipeline. Measured from the detector's own boxes (median person height in a
+native 1920x1080 frame): Thiel@UWPlatteville 151 px; UWW@Carroll 145; Elmhurst@Hope 137; UWW@Wash(StL) 128;
+**Ripon@UWWhitewater 102** -- UWW's home camera is ~30% further out than any other venue, so a jersey number is ~15 px.
+The source really is the best there is: the Synergy export is 1920x1080 30 fps 8 Mbps, every game captures at
+track1920v2 (native width), and no better home angle exists. OCR needs ~20-25 px; it is not coming back.
+Why nothing gets named today (from uww_player_tracks.csv, 1,609 tracks / 14 clips):
+- `anchored` is 0 on EVERY track -- no clip's Synergy anchor is ever attached to a track;
+- names come only from `coach checked` (50) and `followed player` (38); `evidence` and `elimination`: never;
+- **46 player-side tracks per clip for 10 players** (4.6 fragments each, median 11 frames; worst clip 118 tracks);
+- and it is configured that way: TRACK_USE_RIM_ANCHORS / TRACK_USE_POSE_ANCHORS were False, the ball anchor only fires
+  on Turnover|Foul clips, and TRACK_ANCHOR_WEIGHT (0.3) sits BELOW TRACK_MIN_NAME_EVIDENCE (0.5), so an anchor alone
+  can never name anyone. Both audits in the notebook explain why: Synergy anchors were right 0 of 10, the late ball
+  holder 3 of 14. With fragments this short an anchor names a 2-second sliver, which is probably why.
+Set up for the measurement run: TRACK_USE_RIM_ANCHORS = True (cell 120) and PLAYER_TRACKING_TYPE = "20 Clips"
+(parser_models). Weights untouched ON PURPOSE -- the run NAMES NOBODY, it only reports how often the rim anchor agrees
+with the coach-checked name ("agreement with Synergy anchors (anchor hidden)" + tracking_anchor_audit.csv).
+The courts were calibrated 11/17 (UWWhitewater from Ripon 11/14, Hope from Elmhurst 11/14, 8 frames each, in
+data/play_review_saves). That matters twice: the rim anchor needs the homography, AND `_trk_link` gates association by
+REAL FEET (TRACK_MAX_SPEED_FTS) once a frame has court coordinates, instead of falling back to "less than 2 box widths"
+in the picture. At 102 px and 4 fps a sprinting player moves about 1.5 box widths a frame, right at that gate -- so the
+calibration may cut the fragmentation on its own. Compare the next run against: 46 player tracks a clip, median 11
+frames, 0 anchored, 0 named by evidence or elimination.
+
+
+### Offensive roles were being decided with NO film at all (11/17)
+Corey, on Kelton McEwen's player card: "Do you believe that he is really a Primary Ball Handler?" His row in
+uww_offensive_roles.csv: role_basis "play-by-play only", video_possessions 0, every play-type share 0%, onball 0.42,
+ast_per_poss 0.30, 20 poss -- the role came from SIX ASSISTS. The Tendencies box right under it (spot-up 40%, off a
+screen 30%, 67% of shots from three) said the opposite, because the two halves read different sources.
+Root cause: `41b_offensive_roles` takes its play types from `pbp_events["video_description"]`, which cells 28 and 41
+fill from saved "<game>_video.html" pages. Since the move to Synergy Editor exports those pages are not saved -- the run
+says "Found 0 video-tagging file(s)" and "pbp_events rows with a matched video description: 0 of 946" -- so EVERY
+player this season was typed from assists alone. Not McEwen's problem: everyone's.
+Fixed, three ways:
+1. `_or_clip_chains()` in 41b reads the same Synergy strings from the clip rows (`inputs/uww_plays.csv`, the Export.csv
+   columns) and stands in wherever the play-by-play has none (`role_basis` then reads "Synergy clips"). A name that
+   appears for two teams is skipped. Checked on McEwen: 24 chains -> spot-up 33%, off screen 21%, transition 21%,
+   PnR 12% -> **Off Screen Shooter**, which is what the film and the 67% 3PA rate say.
+2. ROLE_MIN_POSS 20 -> 40 (cell 97), so two games no longer earn an unqualified role; the brief already prints
+   "(low sample)" from role_basis.
+3. In `_or_decide`, PRIMARY Ball Handler now needs MEASURED on-ball play: with the play-by-play-only stand-in (onball
+   invented from assists) the most a player can be is Secondary. The brief also prints "(box score only)" next to a
+   role that had no film behind it (`_q` in 87).
+Worth doing later, bigger: have cells 28/41 attach the export's Synergy strings onto pbp_events directly, which would
+fix every other consumer of video_description (29, 31, the weakness diagnostics) the same way. They run before 47,
+which is where clips are matched onto the play-by-play clock, so it is a real reordering job, not a one-liner.
+
+
+## 2026-11-17 -- Offensive roles were computed with zero film all season (the "deeper fix")
+
+**Symptom.** Kelton McEwen's brief card said **Primary Ball Handler** while the Tendencies box right underneath it --
+built from the same games -- said spot-up 40%, off a screen 30%, 67% of his shots from three.
+
+**Cause.** `41b_offensive_roles.py` reads play types from `pbp_events["video_description"]`, which cells **28** and **41**
+fill by matching saved `<game>_video.html` pages. Since the move to Synergy Editor exports those pages are not saved any
+more, so the logs read `Found 0 video-tagging file(s)` and `pbp_events rows with a matched video description: 0 of 946`.
+With no play types, every player this season was typed from **assists alone** (McEwen: 6 assists in 20 possessions ->
+on-ball 0.42 -> Primary). Nothing crashed, which is why it went unnoticed.
+
+**Fix, in three layers.**
+
+1. **Attach layer (the deeper fix).** New `clips_from_synergy_export(game_date, players=None)` in
+   `27_shared_video_tagging_helper_functions.py` builds the `parse_video_mhtml` clip schema
+   (`["No.","Result","Description","player","Team","Duration"]`) straight out of `inputs/uww_clip_frames.csv`
+   (falling back to `inputs/uww_plays.csv`), so the exports feed `video_description` with no `_video.html` page at all.
+   Wired into `41_attach_video_tagging_clip_descriptions_2.py` (UWW games -- synthesized `_vt_sources` entries for games
+   with no `_video` file, gated by `VIDEO_EXPORT_MIN_CLIPS = 10`) and `28_attach_video_tagging_clip_descriptions.py`
+   (opponents' prior games, labelled `video_file = "(Synergy export)"`).
+   Measured end-to-end against the real `uww_pbp_events.csv`:
+   `2026-11-07 vs Carroll 149 of 232 events matched (190 clips)`, `2026-11-14 vs Ripon 148 of 213 (175 clips)` --
+   from 0 of 946. The unmatched third is events with no clip (extra free throws, fouls, team turnovers).
+   This also repairs the other consumers of `video_description`: 29 (opponent tendencies) and 31 (weak-spot diagnosis).
+2. **Role layer (fallback).** `_or_features` falls back to `_or_clip_chains()` when fewer than `ROLE_MIN_VIDEO_POSS`
+   possessions carry a chain, and marks `f["source"] = "Synergy clips"`; `_or_decide` now only allows
+   **Primary Ball Handler** when the on-ball share was actually measured (`source` not starting with `play-by-play`),
+   and 87's `_q` appends " (box score only)" to `role_basis` when it wasn't.
+3. **`_or_clip_chains` bugs found while testing it.**
+   - *Date-only filtering.* My first version matched clips by date, so 2026-11-07 returned **581** clips from the three
+     games exported that day and each game's clip numbers restart at 1 -- which breaks the order-preserving
+     `global_align`. Fixed with the `players` filter: 190 and 175, correct.
+   - *One source only.* It read `uww_plays.csv` alone, which only gets games whose Titles are coach tags (the 11/14
+     games are not in it). It now reads **both** files and concatenates -- `uww_clip_frames.csv` adds the recent games,
+     `uww_plays.csv` adds 77 players the frames file lacks. 162 -> **300** players with clip play types.
+   - *Team-alias guard (this was the one that mattered).* The same-name-on-two-teams guard dropped any player whose name
+     appeared under two team labels. The clip rows spell our own team both `Wisconsin-(Whitewater) Warhawks` and `WWW`,
+     so **every UWW player was thrown away** -- McEwen had 0 chains. New `_or_team_akin(a, b)` treats two labels as one
+     team when one normalised label is a prefix of the other (`_or_team_canon`'s rule) or when the short one is the
+     initials of the long one (`WWW` = Wisconsin Whitewater Warhawks). McEwen: 0 -> **59 chains**.
+
+**Verification.** McEwen's 59 chains: spot-up 29%, off screen 24%, transition 15%, P&R ball handler 10%, 58% of shots
+from three -- i.e. the Tendencies box, not a ball handler. 67 players now clear 20 clip chains.
+
+Files touched: `parser_lib/27_shared_video_tagging_helper_functions.py` (22,701 b),
+`parser_lib/41_attach_video_tagging_clip_descriptions_2.py` (19,251 b),
+`parser_lib/28_attach_video_tagging_clip_descriptions.py` (13,171 b),
+`parser_lib/41b_offensive_roles.py` (26,280 b),
+`parser_lib/87_build_html_scouting_brief_for_upcoming.py` (425,735 b).
+
+**Still open:** the one-page "what matters" top of the brief (#4, deferred); the tracking measurement run
+(rim anchors on, `PLAYER_TRACKING_TYPE = "20 Clips"`); `_trk_link` fragmentation (46 tracks/clip vs 10 players).
+
+
+## 2026-11-17 -- WHAT MATTERS: the one-page digest under KEYS TO VICTORY
+
+Requested: "Create the one-page 'what matters' right under the keys to victory. I may want to combine them after
+seeing your first example." Built in `87_build_html_scouting_brief_for_upcoming.py` as `_wm_what_matters()`, called
+immediately after the KTV card closes, so it is the next thing on the page.
+
+**The split that makes it combinable.** KEYS TO VICTORY are the INSTRUCTIONS. This page is the EVIDENCE under them:
+what each instruction is worth, who makes it happen, and which key covers it. It introduces no new analysis -- every
+number comes from tables already printed further down the brief (`uww_pbp_box_score`,
+`uww_opponent_prior_games_box_score`, `uww_offensive_roles`, `uww_player_tendencies`), so the two can never disagree
+and merging them later is a layout change, not a data change.
+
+**What's on it.**
+1. One-sentence verdict: the biggest factor and the man to take away.
+2. The four factors as **points per game**, biggest first, us vs them, with a plain-English "why" per row.
+   A point of eFG% = 2 points on every FGA; a turnover = one possession at that team's own PPP; an offensive rebound
+   = a fresh possession at 0.30 of a normal one (the standard second-chance discount, since it is a putback into a
+   set defence); extra free-throw trips at that team's own FT%. The same stat is one team's offence and the other's
+   defence, so the two rates are blended 50/50 rather than trusting either. NET is us minus them.
+3. WHO DECIDES IT: their three leading scorers -- box-score line, the first clause of their film tendencies, and
+   their offensive role (carrying the "(box score only)" tag when the role had no film).
+4. THE KEY THAT COVERS IT: each top factor matched to a brief key by keyword, so the page points at the instruction
+   instead of restating it.
+5. A confidence line naming the sample ("Built on 2 UW-Whitewater games and 3 Elmhurst games").
+
+New CSS lives in `_SB_CSS` under the `.wm-` prefix. `WHAT MATTERS` was added to `_AN_DROP` so `ANALYSIS_MODE`
+(parser_analysis, no UWW information) leaves the page out -- it compares the two teams.
+
+**Elmhurst, Nov 18 (real output, preview at `what_matters_preview.html` in the repo root).**
+Shot quality +7.0 a game to us (52.8 vs 48.9) | Free-throw rate +2.3 (51.4 vs 30.4) | Offensive boards +1.4
+(37.3 vs 33.3) | Turnovers -0.9 (18.6 vs 15.9). Trelenberg 16.0 a game on 7.7 threes at 43%.
+
+**Two bugs found while building it.**
+- `_KEYWORD` for the free-throw row was `line`, which matches "lineup" -- the row pointed at "Attack lineup of
+  Boone, Ketchum, ...". Fixed with word boundaries.
+- **CONFIRMED BUG (fixed): every three-pointer was filed as "Other 2" in `player_shot_zones()`
+  (`85_scouting_notes_and_keys_to_defending.py`).** `shot_type` arrives NUMERIC from the play-by-play parser, so
+  `s["shot_type"].astype(str) == "3"` compared against `"3.0"` and was never true. `uww_player_shot_profile.csv`
+  had `three_att = 0` for all 19 players while the box scores showed Trelenberg at 23 attempts; the brief's WHERE
+  THEY SHOOT table called him 81% mid-range twos, and the roster's Driver read keys off the same numbers. Fixed to
+  compare numerically; Trelenberg now reads 23 threes at 43.5%, Boone 16 at 43.8% -- matching the box score exactly.
+  (This is why the new page takes its three-point numbers from the box score, not from the shot profile.)
+
+**DECIDED (11/17):** keep the two sections as they are -- KEYS TO VICTORY (instructions) then WHAT MATTERS
+(evidence). Corey reviewed the Elmhurst example and said to keep it as is; do not merge them into one section.
+
+
+## 2026-11-17 (later) -- WHAT MATTERS: the net ratings were wrong (fixed)
+
+Corey, on the first Elmhurst page: "Do these net ratings look correct?" They did not. **Three faults, all in
+`_wm_what_matters()`'s points conversion. If a brief was produced between the two entries above, its WHAT MATTERS
+numbers are wrong -- re-run it.**
+
+1. **Baseline (the one that mattered).** Each team was compared with the OTHER TEAM'S SCHEDULE -- our 52.8 eFG
+   against "Elmhurst allow 43.0" -- and both halves were then ADDED. Elmhurst's 43.0 was earned against DePauw,
+   Hope and Ripon; our 51.6 allowed came from Carroll and Ripon. The two halves are the same schedule comparison
+   from opposite ends, so adding them counts it twice instead of cancelling it. Shot quality printed **+7.0 for
+   us** when the matchup estimate is **-2.8 against us** -- a sign error in the headline verdict -- and the page
+   totalled +9.8, a blowout nothing in the data supports.
+2. **Free throws counted double.** `... * fga_g * 2 * ftpct`: a free throw is worth about 0.66 points, not 1.3.
+3. **Offensive boards against the wrong denominator.** `poss_g * 0.30` stood in for rebound chances. The chances
+   are the missed shots (33.4 a game here), and the board is a fresh possession at the going PPP.
+
+**The fix.** What a team should do IN THIS GAME is the midpoint of its own rate and the other team's matching
+defensive rate -- the usual matchup estimate with no league average to divide by. The two midpoints are compared,
+which takes both schedules out of it. The US / THEM columns now show those expectations (header: "Us here" /
+"Them here"), not season averages, and the verdict ends with what the four rows add up to.
+
+**Cross-check** (this is the test to repeat if the conversion is ever touched again): expected points built
+independently from the same rates give 72.3 us / 68.6 them, a +3.7 margin from shooting and free throws -- exactly
+what the shot-quality and free-throw rows sum to. Season averages are 75.5 and 72.7, so the level is right too.
+
+**Elmhurst, Nov 18, corrected:** free-throw rate **+6.5** (44.0 vs 27.0) | shot quality **-2.8** (47.9 vs 50.3) |
+turnovers **-1.1** (18.1 vs 16.5) | offensive boards **-0.7** (30.3 vs 32.3). Total **+1.9**, a one-possession
+game. The real edge is the line, not shooting -- and the three negative rows agree with the staff's own keys
+("BE STRONG & PHYSICAL V. THEIR PRESSURE", "WIN THE GLASS & TURNOVER BATTLES!"), which the broken version
+contradicted.
+
+Preview regenerated at `what_matters_preview.html` (repo root, 42,190 b).
+
+
+## 2026-11-17 -- the upcoming opponent's FastScout report must match the game date
+
+Requested, with FastScout showing Elmhurst twice -- "Nov 18, 2026" (Andy Fitzgerald) and "Dec 02, 2025" (Luke
+Freitag, last modified Nov 16, 2026, so it sorts near the top): "make sure that our scouting reports are pulling
+only coaching scouting reports from FastScout that match the Game Date. I don't want it using the one from the
+game from 2025-2026."
+
+**Checked first: today's brief is already correct.** `uww_opponent_game_plans` has Carroll 2026-11-07, Ripon
+2026-11-14 and Elmhurst **2026-11-18** -- each opponent's plan from the report written for that game. The
+download end was already strict: `_find_matching_scout_document_row` (02) matches the documents page's Game Date
+column including the year, which was fixed earlier when Ripon's brief picked up St. Thomas's 11/14/**25** report.
+
+**What was NOT checked -- the other end.** When no report for the upcoming game is on disk, `_hist_paths` falls
+back to the most recent OLDER report and every downstream cell treats its keys, strengths and schemes as the plan
+for THIS game. Nothing fails; the only sign is a small "2025-26" tag beside the keys on the brief. That is exactly
+the case Corey was worried about, and it would have happened the moment the 11/18 download failed.
+
+**The guard** (`08_parse_each_opponent_fastscout_scoutbuilder.py`): the upcoming game's date and opponent come from
+the schedule built in 02 (`Upcoming == "Yes"`, `_parsed_date`, else `parse_schedule_date`). The report chosen for the
+upcoming opponent must carry that date. If it doesn't, it goes into `scout_report_stale[opp] = (filename, the date
+it was written for, the date it had to match)`, is dropped from `scout_reports_upcoming`, and prints a `!!` line
+naming both dates. `10_extract_uw_whitewater_offensive_and.py` then drops that opponent's rows from
+`all_game_plans` -- what the app, the keys to victory and the brief read -- while `all_game_plans_history` keeps
+them, since 11 / 12 need those keys paired with the game they were written for. The report also stays in
+`scout_reports`: the roster and the season stats are its own game's and are still right.
+
+`SCOUT_REPORT_MUST_MATCH_GAME` (default **True**) turns the enforcement off; the `!!` line prints either way.
+
+**Known consequence -- preseason and season-opener briefs.** When the only report for the upcoming opponent is
+last season's, that is now a stale report and its staff keys are dropped, so a preseason brief comes through with
+data-driven keys only instead of last season's staff keys tagged "2025-26". If that is not wanted for a
+scrimmage or an opener, set `SCOUT_REPORT_MUST_MATCH_GAME = False` for that run.
+
+Tested offline against the real inputs folder, four cases: this game's report present (passes, named in the log);
+only the Dec 02 2025 report (flagged, dropped); both present (the 11/18 one is used); a report for a LATER game
+(11/21) with this game's missing (flagged, dropped).
+
+
+## 2026-11-17 -- WHAT MATTERS: the man named in the verdict follows the factor
+
+Corey, reading "This game turns on free-throw rate ... and Dominic Trelenberg is the one to take away (16.0 a
+game)": "Why is the Dominic Trelenberg comment in there? Shouldn't it list out which player of theirs gets to the
+free throw line the most?" Right -- the verdict named the LEADING SCORER whatever the factor was, so the sentence
+read as a non sequitur unless shot quality happened to win.
+
+`_wm_face(k, net)` now picks the opponent player the winning factor actually runs through, and the clause says
+what he does about it:
+
+| factor | net our way | net their way |
+|---|---|---|
+| Shot quality | the leading scorer, with his three-point percentage ("the one to take away") | same |
+| Free-throw rate | **who fouls the most** -- we are the ones getting there, so the man is the one to go at | who draws the most attempts ("lives at the line") |
+| Offensive boards | the offensive-rebound leader ("the one to box out") | same |
+| Turnovers | their most turnover-prone ("gives it away most") | their steals leader ("takes it off us") |
+
+**Ties.** `idxmax()` hands a tie to whoever sorts first -- the same fault as the 11/14 `_pn_sole_leader` bug (Jose
+Gonzales called "primary creator" over three players with the same 2 assists). Two tied are both named, with the
+verb and "each" adjusted; three or more and no one is named, the clause is simply left off. An 8-minutes-a-game
+floor keeps a 4-minute player with 2 fouls from topping a per-game rate.
+
+Elmhurst now reads: "... and **Aidyn Boone** and **Vinnie Adjahoungbeta** foul the most (3.3 a game each) -- go at
+them." Both branches of all four factors were run against the real box score: Trelenberg (16.0, 43% from three) /
+Boone + Adjahoungbeta (3.3 fouls) / Trelenberg (4.7 attempts) / Adjahoungbeta (3.7 offensive boards) / Cherry (2.0
+turnovers) / steals correctly left unnamed -- Ketchum, Adjahoungbeta and Marshall are all on 1.7.
+
+
+## 2026-11-17 (third pass) -- the net ratings, again: free throws are not free
+
+Corey: "I also am not sure that the net ratings are correct yet." He was right again. The 11/17 fix corrected the
+BASELINE (midpoints instead of each team against the other's schedule) but kept converting each factor to points
+on its own, and the free-throw row was still badly wrong.
+
+**The fault.** Extra trips to the line were counted as pure added points: 9.8 extra attempts x 66% = +6.5 a game.
+But a trip to the line USES UP the possession it came from -- the possession identity says so outright
+(`P = FGA - OREB + TO + 0.475*FTA`) -- so those trips replace field-goal attempts worth about a point each. The
+free-throw edge is worth about **+0.9**, not +6.5, and the error was large enough to flip the page's verdict: it
+called the game "+1.9 to us" when the model says we should expect to trail by about four.
+
+**The fix: one scoring model instead of four conversions.** FGA is solved out of the possession identity, with
+`TO = TOV*P`, `FTA = FTR*FGA`, `OREB = ORB*(1-FG%)*FGA`:
+
+    FGA    = P * (1 - TOV) / (1 + 0.475*FTR - ORB*(1 - FG%))
+    points = 2*eFG*FGA + FTR*FGA*FT%
+
+Each factor is then worth what we lose by playing it at their rate with everything else held (swap one,
+recompute, difference). The rows add up to the expected margin because they are differences of one model rather
+than four separate conversions.
+
+**VALIDATION -- repeat this if any of it is touched.** Fed a team's own rates and pace, the engine must return
+that team's real scoring. UW-Whitewater: 75.5 points on 54.5 attempts vs 75.5 on 54.5 actual -- exact. Elmhurst:
+74.7 on 63.1 vs 72.7 on 61.3, about two points high because ORB% has its own denominator (offensive over
+offensive plus defensive rebounds, not over missed shots). The old per-factor conversions passed no such test.
+
+**Elmhurst, Nov 18, third version:** shot quality **-2.6** | turnovers **-1.3** | free-throw rate **+0.9** |
+offensive boards **-0.8**. Expected here: UW-Whitewater 70, Elmhurst 74. The page now leads with shot quality and
+names Trelenberg, which is the right man for that factor.
+
+**The three versions, for the record:** +7.0 / +2.3 / +1.4 / -0.9 (schedule double-counted), then
++6.5 / -2.8 / -1.1 / -0.7 (baseline fixed, free throws still free), now -2.6 / -1.3 / +0.9 / -0.8. Any brief
+produced before this entry has the wrong numbers on that page.
+
+
+## 2026-11-17 -- WHAT MATTERS: the countable version of each row, and where this sits next to Dean Oliver
+
+Corey: "I don't understand how 44.0 is +.9 compared to 27." Fair -- the rate columns showed a 17-point gap beside
+a net under a point. A new **IN THIS GAME** column now carries the countable thing behind each rate, us v them,
+from the same model: points from the floor, giveaways, second shots, free throws. The footnote explains the one
+thing a reader has to know: those counts carry every factor at once, while NET moves one factor and holds the
+rest, so the two can differ without contradicting each other. Free throws spelled out: 25 trips against 17 is
+worth about +5.4, the ~5 shots from the floor those possessions cost is about -4.5, net about +0.9 -- roughly a
+third of a point a trip, not the whole trip.
+
+**Against Oliver.** Same four factors, same definitions for eFG% and ORB%. Two deliberate departures, both
+already in the code: free-throw rate is FTA/FGA (the Basketball-Reference convention) where Oliver's original is
+FTM/FGA, and possessions use 0.475 (Ken Pomeroy's college coefficient, a change Corey requested) where Oliver
+uses 0.44.
+
+**The real difference is the weighting, and the two sections of the brief disagree because of it.** Oliver's
+40 / 25 / 20 / 15 are fixed league-average importance weights, and `_SB_FF_WEIGHTS` (section 87, line ~881) uses
+them for the app's Four Factors dialog. WHAT MATTERS does not weight at all -- it prices each factor through the
+scoring model for THIS matchup, so a factor's value depends on how big that particular gap is and what the
+possessions around it are worth.
+
+For Elmhurst the two orderings disagree at the top. Oliver's weights on the unadjusted season rates:
+FT Rate +3.15, eFG +1.56, ORB +0.80, TOV -0.68 -- free throws first. WHAT MATTERS: shot quality -2.6, turnovers
+-1.3, free throws +0.9, boards -0.8 -- shooting first. Both are "the four factors"; they answer different
+questions (fixed importance on raw season edges vs what each is worth in this matchup once free throws are
+charged for the possessions they use). Worth knowing before a coach puts the two side by side.
+
+
+**Labelled, both sides (11/17, "Leave them and label them").** The two rankings stay as they are, each saying
+what it answers:
+* `streamlit_app.py`, the Four Factors dialog (~line 14410): a second `st.caption` -- this ranks by Oliver's
+  fixed weights on season rates, the brief's WHAT MATTERS prices each factor for this opponent with free throws
+  charged for the possessions they use, so the two can lead with different factors and neither is wrong.
+* `87`, WHAT MATTERS: a visible `mini` line under the table saying the same thing from the other side, with a
+  link to the app's dialog -- on the page, not only in the footnote, since nobody opens a footnote mid-practice.
+  The footnote also now states plainly that these ARE Oliver's four factors, names the two definition
+  departures (FTA/FGA rather than FTM/FGA; 0.475 rather than 0.44) and says the ranking is the part that is not
+  his.
+
+
+## 2026-11-17 -- WHAT MATTERS: the duplicated blocks taken out
+
+Corey, on the player cards and the key list: "I think we need to remove this part of that section because it's
+duplicated throughout the scouting report." Removed from `_wm_what_matters()`:
+
+* **WHO DECIDES IT** (three player cards) -- the same tendencies line and the same offensive role the personnel
+  section prints further down, in its own cards. With it went `_wm_player_card()`, `_agg`, and the
+  `uww_offensive_roles` / `uww_player_tendencies` reads that only fed it.
+* **THE KEY THAT COVERS IT** -- it restated keys printed a few inches above it. With it went `_KEYWORD` and
+  `_wm_key_for()`.
+* Their CSS (`.wm-who`, `.wm-p*`, `.wm-swing*`).
+
+What is left is only what appears nowhere else on the brief: the verdict, the four factors priced for this
+matchup with the countable column, the Oliver label, and the expected score. The man named in the verdict stays
+-- that is one name tied to the deciding factor, not a roster block, and `_wm_face` still needs `_all`.
+
+87: 453,097 -> 448,323 b. The page is now about half a page, which is what a one-pager under the keys should be.
+
+
+**Column renamed (11/17, requested): "Net" -> "PPG difference"**, in the table header and everywhere the
+footnote referred to it. Both say the same thing -- the points a game that factor is worth to us -- and the new
+label says it without a coach having to work out what "net" is the net OF.
+
+
+## 2026-11-18 -- "FOUR FACTORS", and every section behind an expander
+
+Two requests: rename the section, and "I'm looking for the scouting briefs to show the most important
+information and then hide the rest of it behind an expander", with Streamlit's lazy-loading `st.expander`
+example as the model.
+
+**Renamed.** WHAT MATTERS -> **FOUR FACTORS** (the scales icon, matching the app's own Four Factors dialog).
+`_AN_DROP` updated with it, or `parser_analysis` would stop leaving the section out.
+
+**Expanders.** The brief is a file that gets emailed and printed, so the HTML equivalent of `st.expander` is
+`<details>`, which the brief already uses for the play-call tables. `_sb_collapse()` runs over the output chunks
+just before they are joined: every run from one section header to the next becomes
+`<details class="secdet"><summary>` + that section's own header bar + `</summary>` + its content. The header bar
+IS the summary, so the brief opens as a page of headings with a chevron on each.
+
+* `BRIEF_OPEN_SECTIONS` (notebook cell) decides what starts open; default `("KEYS TO VICTORY", "FOUR FACTORS")`,
+  matched case-insensitively against the title, so "KEYS" is enough.
+* `BRIEF_COLLAPSE_SECTIONS = False` turns the whole thing off and prints the brief as one long page again.
+* Banners, dividers and the footer are left alone -- they are not sections and are needed on sight. A section
+  header with no body under it is left alone too.
+* **Printing is already handled**: the `<head>` script opens every `<details>` on `beforeprint` and closes them
+  again on `afterprint`. That was added for the collapsed play-call tables and covers this for free -- a printed
+  or PDF'd brief is still the whole brief.
+
+Checked against the brief Corey generated at 10:26 UTC: 12 sections, every one wrapped, KEYS TO VICTORY open.
+FOUR FACTORS will join it once the brief is run again (that copy still has the old section title).
+
+
+## 2026-11-18 -- the Four Factors header IS the verdict
+
+Corey: "Instead of 'FOUR FACTORS', I want it to say 'This game turns on shot quality: ...' before it is
+expanded. Expanding the section will give the full Four Factors table."
+
+The section's header bar is now the verdict sentence itself, so closed it already answers the question and
+opening it is for the table behind the answer. The verdict is therefore built BEFORE `section()` is called --
+`_wm_face`, `_top` and the `_v` string all moved above it -- and the separate `<p class="wm-verdict">` is gone.
+`.sect .t .wm-sumline` styles that one header as a sentence (weight 600, normal letter-spacing, body colour)
+with the bolded parts in Warhawk purple.
+
+**`<!-- FOUR FACTORS -->` inside the title is load-bearing**, and invisible to a reader. Two things match on
+section titles: `_AN_DROP` (ANALYSIS_MODE decides what to leave out) and `BRIEF_OPEN_SECTIONS`. With the title
+now a sentence about us and them, neither had anything to match, and `parser_analysis` would have started
+printing a UW-Whitewater comparison into a no-UWW brief. `_sb_collapse` strips `<!--` / `-->` before matching so
+the name still works for both.
+
+`BRIEF_OPEN_SECTIONS` default is now `("KEYS TO VICTORY",)` alone -- Four Factors starts closed by design.
+
+Demo rebuilt from Corey's 10:26 brief: 12 sections, KEYS TO VICTORY open, the Four Factors bar reading
+"This game turns on shot quality: ..." and opening to the table.
+
+
+## 2026-11-18 -- starters across the top of each roster, and the expander icon
+
+**The five starters, in a row.** Requested: "Just put the 5 starters in a horizontal line with their photos,
+offensive and defensive roles and main information (one to two sentences) about them. Then there should be a
+collapsible section underneath that opens the current roster section." New `_starter_strip(side, names,
+stats_df)` in 87 draws photo, name (linked into the app), bio, the per-game line, Off and Def roles and one or
+two sentences per starter, five across. **It reads everything from `_roster_player()`** -- the same builder the
+roster table underneath uses -- so the strip can never say something different from the card it sits above.
+The sentences are his lead notes first (the 2-for-1 call, a transfer line, the coaches' own read), then whatever
+the Offense and Defense columns lead with, de-duplicated, two at most.
+
+Under the strip, everything that was the roster section -- every starter's card, every bench tier, the notes --
+is inside `<details class="rosdet">` ("Full roster"). `BRIEF_OPEN_SECTIONS` default is now `("ROSTER",)`, so a roster
+section opens to its strip with the rest one click down.
+
+**KEYS TO VICTORY is not collapsible at all** (requested: "can be kept out of a collapsible section and should
+always be visible") -- not an expander that starts open, no expander: `_SB_FIXED` / `BRIEF_FIXED_SECTIONS`
+(default `("KEYS TO VICTORY",)`) makes `_sb_collapse` emit those sections exactly as they were built, so there is
+no chevron to click and no way for anyone to collapse the one section that has to be read.
+
+Tested in isolation against six fake players: 5 drawn and the 6th cut, balanced divs, a missing photo, NaN and
+None stats, a dict instead of a Series, tuple and plain-string read items, a line repeated between lead and
+offense (de-duplicated to one), and an empty starter list (nothing emitted at all).
+
+**CONFIRMED BUG (fixed) -- the expander icon was a tofu box.** Corey: "I don't think the icon for the expander
+is working." `content: "\25b8"` (and `\25be`): Montserrat has neither glyph, so the browser drew its .notdef
+box with the codepoint inside, and the open-state `rotate(90deg)` turned that box on its side -- which is what
+the screenshot showed. Both are now triangles **drawn with CSS borders** (`border-left` solid, top and bottom
+transparent), rotated 90 degrees when open. A border triangle is a shape, not a character, so no font can fail
+to render it. The rule holds for anything added to this brief later: it is printed and PDF'd on machines whose
+font fallback is unknown, so symbols get drawn, not typed.
+
+
+## 2026-11-18 -- Expand all
+
+Requested: "Create an expand all button or option somewhere." One button, top right of the page, above the
+banner. It opens EVERY `<details>` in the brief -- the section expanders, the full-roster blocks and the
+play-call tables that were already collapsible (15 of them on the Elmhurst brief) -- and re-labels itself
+"Collapse all" once everything is open.
+
+* It stays in step with the chevrons: opening or closing any single section re-labels the button. `toggle` does
+  not bubble, so the listener is registered on `document` with capture, which is how one listener hears all of
+  them.
+* Built in the final assembly rather than through `add()`. It belongs to the page, not to a section, and
+  `add()` would have dropped it in ANALYSIS_MODE, where everything before the first section is skipped.
+* `.xall` is `display: none` until the script sets `.js` on `<html>`, so nobody is shown a button that cannot
+  work, and `@media print` hides it -- printing already opens everything by itself.
+* Not emitted at all when `BRIEF_COLLAPSE_SECTIONS` is False: with nothing collapsed there is nothing to expand.
+
+
+## 2026-11-18 -- the starters row is always on the page
+
+Requested, looking at the rendered strip: "I want these removed from the roster collapsible section. So the five
+starters row should always be visible." Both ROSTER sections join KEYS TO VICTORY in `_SB_FIXED` --
+`BRIEF_FIXED_SECTIONS` now defaults to `("KEYS TO VICTORY", "ROSTER")`, so neither is wrapped in a section
+expander at all and neither can be collapsed by anyone.
+
+The rosters keep their own inner **Full roster** expander: the five-across strip is always on the page, and the
+cards, the bench and the reads are behind that one click. `BRIEF_OPEN_SECTIONS` now defaults to empty -- with
+Keys and the rosters always on, everything that is still an expander starts closed.
+
+So the brief reads, top to bottom: banner -> Keys to Victory (fixed) -> the Four Factors verdict in one line,
+openable -> the opponent's five starters (fixed) with the full roster one click down -> our five -> every other
+section closed -> Expand all, top right, for the whole lot at once.
+
+
+## 2026-11-18 -- recent results gets the same treatment
+
+Requested: "I want to do something similar with the recent results section." It was five chips and nothing else,
+so the shape is: the last five games always on the page, the rest of their season behind one expander.
+
+* The section joins `_SB_FIXED`, under both of its titles -- "RECENT RESULTS" and, on a preseason brief,
+  "HOW THEY FINISHED LAST SEASON" -- so it can never be collapsed.
+* A record line above the chips: `5-3 so far - 3-1 at home - 2-2 away`, from `opp_before`'s own outcomes, with
+  the home and away halves left out when there are none.
+* Games older than the last five go into `<details class="rosdet">` ("Every other game -- N earlier games this
+  season"), the same control the roster uses. `_rs_chip()` builds a chip for both lists, so the two can't drift.
+
+Tested against 0, 1, 3, 5 and 8 games: nothing at all for 0; chips only up to 5; at 8, five chips and an
+expander holding the other three; balanced markup and a correct record line in every case. Elmhurst has three
+prior games, so right now it shows the record and three chips with no expander.
+
+`BRIEF_FIXED_SECTIONS` default is now
+`("KEYS TO VICTORY", "ROSTER", "RECENT RESULTS", "HOW THEY FINISHED LAST SEASON")`.
+
+
+## 2026-11-18 -- every section: a real headline, the rest behind one expander
+
+Requested: "Do the same with all other sections as well", and, asked whether to write a real headline per
+section or just hide the body behind a generic bar, Corey chose the real headline.
+
+**The mechanism.** `_sb_sechead(html)` emits a `<div class="sechead">` straight after a section header.
+`_sb_collapse` recognises it: header and headline stay on the page, everything after them goes into one
+`<details>` ("Show the detail -- tables, reads and notes"), and the section is never wrapped in a section
+expander of its own. A section that emits no headline keeps the old behaviour and collapses whole. Each
+headline is computed from the very data that section is about to render, so the two cannot disagree, and each
+prints nothing when its data is missing.
+
+| section | headline | source |
+| --- | --- | --- |
+| TEAM STATS | Biggest gap: FT Rate -- us 51.4, them 30.4 (ours) | `_ff_top`, already ranked for the Bottom Line |
+| TOP LINEUPS (theirs) | Most minutes: Boone / Trelenberg / Cherry / Pearson / Adjahoungbeta -- 37 min, -3 net | `lineups` |
+| OUR TOP LINEUPS | Most minutes: Madson / Robinson / McEwen / Rogers / Teague-Johnson -- 25 min, -5 net | `_uww_lu` |
+| HOW THEY GUARD SCREENS | Against the ball screen they mostly flat hedge -- 1 of 3 tagged (+ "thin sample, confirm on film" under `_scv_thin_n`) | `_scv_t` |
+| WHAT TO PLAY THEM IN | Play them in <defense> -- N.NN points a possession on N tagged | `_pf_opp`, 3+ clips |
+| HOW THEY RUN OFFENSE | Most-used set: Motion -- 14 tagged possessions, 0.43 points each | `uww_play_call_summary` |
+| HOW WE RUN OFFENSE | Most-used set: Motion -- 24 tagged possessions, 0.77 points each | same |
+
+`_lu_short()` turns "Aidyn Boone, Dominic Trelenberg, ..." into "Boone / Trelenberg / ..." -- five full names do
+not fit on one line and the surnames are what a coach says out loud.
+
+Tested: the collapse pass against a section with a headline (header + headline out, rest behind the expander),
+one without (collapses whole) and a fixed one; and every headline computation above run against the real CSVs,
+which is where the table's example values come from.
+
+**Still collapsing whole, having no headline yet:** THIS SEASON vs LAST SEASON, LATE-GAME FOUL LIST, WHEN WE'VE
+PLAYED <OPP>, TWO-FOR-ONE, NEEDS TAGGING OR STAFF INPUT, SELF-SCOUT FROM THE FILM. They are situational or
+list-shaped; say the word and they get headlines too.
+
+
+## 2026-11-18 -- TEAM COMPARISON, and the headline that named our own set as theirs
+
+**Combined (requested): "Combine these two sections into a 'Team Comparison' section."** FOUR FACTORS and TEAM
+STATS are one section now, `📊 TEAM COMPARISON`: the section header, then the verdict sentence as its headline
+line (`_sb_sechead`, the same treatment every other section got), then behind "Show the detail" the four-factors
+table, the Oliver label, the expected score and -- under a "Season averages, per game" sub-heading -- the strip
+that used to be TEAM STATS. The old TEAM STATS section is gone. `_AN_DROP` now matches TEAM COMPARISON, or
+`parser_analysis` would start printing a UWW comparison into a no-UWW brief.
+
+Its old headline went with it, and that is a relief: it read **"Biggest gap: FT Rate -- us 51.4, them 30.4"**
+off `_ff_top`, which is Dean Oliver's FIXED weighting, while the table two inches above it had free throws
+FOURTH at +0.9 and shot quality first. Two rankings of the same four factors contradicting each other on one
+page -- the exact confusion the 11/17 labels were written to keep apart. Combining the sections removes it.
+
+**CONFIRMED BUG (fixed) -- "HOW ELMHURST RUNS OFFENSE" was headlined with OUR set.** Corey: "something doesn't
+seem correct with the headlines that were created." `_sb_pc_top()` read `uww_play_call_summary` directly, and
+`side` there names the FILE a clip came from, not whose possession it was: the Opponent file carries our own
+offensive possessions from that game as `possession_side = "Defense"`. The headline therefore read
+**"Most-used set: Motion -- 14 tagged possessions, 0.43 points each"**, which is OUR Motion run against them
+(hence the key "Feature our best look: Motion"). This is the same class of fault `_offense_rows()` was written
+for -- its docstring records a SLOB finished by a Ripon player turning up under our own sets.
+
+Fixed by going through `_offense_rows()`, the filter the section's own tables use, and dropping the
+"unspecified" bucket as they do. Elmhurst now reads **"Most-used set: Flow -- 7 tagged possessions, 1.43 points
+each"**, which agrees with the key "Take away their go-to set: Flow". Ours is unchanged at Motion, 24 at 0.77,
+though its third row moves, so the filter mattered on both sides.
+
+**Rule for any future headline: compute it through the section's own selection, never from the CSV directly.**
+
+
+## 2026-11-18 -- lineup cards, and the two foul flags on the starter cards
+
+**OUR TOP LINEUPS & 3-MAN COMBOS, in the roster's shape** (requested: "three cards always visible which show
+the top lineups by MIN, +/-, and PPP. Then have the expandable full table below. Do this for 5 and 3 man
+lineups"). `_lu_cards(side, five_df)` draws a row of cards for the five-man units and another for the trios,
+then the existing `lineups_table` / `combos_table` sit behind one "Full tables" expander. The section joins
+`_SB_FIXED` ("OUR TOP LINEUPS"), so the cards cannot be collapsed, and the one-line headline it had is gone --
+the cards say it with the numbers attached.
+
+* **One implementation, shared.** `_unit_clips()`, `_unit_on()` and `_unit_ppp()` were lifted out of
+  `combos_table` into the enclosing scope and `combos_table` now calls them, so a card and the table row it
+  stands for match possessions to units the same way -- that function's own note demanded no duplicate clip
+  matching. Five-man PPP comes from `_five_ppp_map()`, the same "Personnel grouping" rows the table's PPP
+  column ranks on; PPP needs 3+ tagged possessions, as there.
+* **CONFIRMED CHANGE -- minutes floors on the cards.** Without them "Best +/-" and "Best points per
+  possession" both landed on a five-man unit that had played FOUR minutes (+9, 1.71 PPP). They now rank only
+  units clearing the same floor the tables use (`five_min_minutes` 8.0; our trios `uww_three_min_minutes` 40),
+  and if nothing clears it the best of what exists shows with a `*` and a line saying so -- the convention the
+  lineup tables already use.
+* **Merged titles.** One unit often tops more than one column early in a season, and three identical cards
+  read as a rendering fault. Titles merge onto a single card instead: our trios currently show one card,
+  "Most minutes, best +/- and best points per possession -- Madson / McEwen / Rogers, 43 min".
+* Current output: five-man "Most minutes: Madson / Robinson / McEwen / Rogers / Teague-Johnson, 25 min" and
+  "Best +/- and best points per possession: Madson / Robinson / Lukenbill / McEwen / Teague-Johnson, +6 in 8
+  min".
+
+**The two late-foul flags on the starter cards** (requested: "Add the foul late and don't foul late flags to
+the bottom of the starters cards. But only those 2 flags."). Same source, wording and styling as the player
+card's own flag -- `_foul_by`, from the late-game foul list -- and **no neutral chip**: a card shows one of the
+two calls or nothing at all. Opponent side only; those calls are about fouling THEM. Checked against the real
+table: Cherry "Don't foul late" (87.5% FT), Ketchum "Foul him late" (25%), Boone neutral so nothing, a player
+missing from the table nothing, and our own side nothing.

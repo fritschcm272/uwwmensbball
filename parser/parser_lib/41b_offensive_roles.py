@@ -119,6 +119,71 @@ def _or_assists(canon=None):
     return {k: int(v) for k, v in a.groupby(["team", "player"]).size().items()}
 
 
+def _or_team_akin(a, b):
+    """Two team labels for the same team? CONFIRMED BUG (fixed; Kelton McEwen had NO clip chains at all): the clip rows
+    spell our own team both "Wisconsin-(Whitewater) Warhawks" and "WWW", so the same-name-on-two-teams guard below threw
+    away every UWW player. Same if one normalised label is a prefix of the other (_or_team_canon's rule) or if the
+    shorter one is the initials of the longer one's words."""
+    na, nb = _or_norm(a), _or_norm(b)
+    if not na or not nb or na == nb:
+        return True
+    if len(min(na, nb, key=len)) >= 5 and (na.startswith(nb) or nb.startswith(na)):
+        return True
+    for x, y in ((a, b), (b, a)):                        # "WWW" == Wisconsin (Whitewater) Warhawks
+        _ini = "".join(w[0] for w in re.findall(r"[A-Za-z]+", str(y)))
+        _sh = re.sub(r"[^a-z]", "", str(x).lower())
+        if 2 <= len(_sh) <= 4 and _ini.lower().startswith(_sh):
+            return True
+    return False
+
+
+def _or_clip_chains():
+    """{player (normalised): [{chain, three}, ...]} from the Synergy EXPORT clip rows (inputs/uww_plays.csv).
+    CONFIRMED BUG (fixed; Corey, on Kelton McEwen's card: "Do you believe that he is really a Primary Ball Handler?" --
+    the role said Primary Ball Handler while the Tendencies box right underneath it, built from the same game, said
+    spot-up 40%, off a screen 30%, 67% of his shots from three). The roles read their play types from
+    pbp_events["video_description"], which cells 28 and 41 fill from saved "<game>_video.html" pages. Since the move to
+    Synergy Editor exports those pages aren't saved any more -- "Found 0 video-tagging file(s)", "0 of 946 events with a
+    matched video description" -- so EVERY player this season was typed from assists alone (McEwen: 6 assists in 20
+    possessions -> onball 0.42 -> Primary). The clip rows hold the same Synergy strings, so they stand in wherever the
+    play-by-play has none. A player whose name appears for more than one team is skipped (nothing to match him on)."""
+    cached = globals().get("_OR_CLIP_CHAINS")
+    if cached is not None:
+        return cached
+    import os as _os
+    out, teams = {}, {}
+    # BOTH files: uww_clip_frames.csv holds every captured game (the 11/14 games are only there), uww_plays.csv holds
+    # 77 players the frames file doesn't. Rows duplicated across the two are harmless -- the chains are shares.
+    _parts = []
+    for _fn, _pl_c, _ss_c, _tm_c in (("uww_clip_frames.csv", "player", "description", "team"),
+                                     ("uww_plays.csv", "Player", "Synergy String", "Team")):
+        try:
+            _p = _os.path.join(str(globals().get("INPUT_DIR") or "./inputs"), _fn)
+            _d = pd.read_csv(_p, low_memory=False) if _os.path.exists(_p) else None
+        except Exception:
+            _d = None
+        if _d is not None and {_pl_c, _ss_c} <= set(_d.columns) and _d[_ss_c].notna().any():
+            _d = _d.rename(columns={_pl_c: "Player", _ss_c: "Synergy String", _tm_c: "Team"})
+            _parts.append(_d[["Player", "Synergy String"] + (["Team"] if "Team" in _d.columns else [])])
+    df = pd.concat(_parts, ignore_index=True) if _parts else None
+    if df is not None and {"Player", "Synergy String"} <= set(df.columns):
+        _tm = df["Team"] if "Team" in df.columns else pd.Series([""] * len(df))
+        for pl, sstr, tm in zip(df["Player"], df["Synergy String"], _tm):
+            ch = _or_chain(sstr, pl)
+            if not ch:
+                continue
+            k = _or_norm(pl)
+            teams.setdefault(k, set()).add(str(tm))
+            out.setdefault(k, []).append({"chain": ch,
+                                          "three": bool(re.search(r"3\s*pts|3pt", str(sstr), re.I))})
+        for k, tms in teams.items():                     # the same name on two teams: can't tell them apart
+            _t = [t for t in tms if t and t != "nan"]
+            if len(_t) > 1 and not all(_or_team_akin(a, b) for a in _t for b in _t):
+                out.pop(k, None)
+    globals()["_OR_CLIP_CHAINS"] = out
+    return out
+
+
 def _or_features(g, n_ast):
     """One player's rows -> the numbers the roles are decided from."""
     poss = len(g)
@@ -127,10 +192,16 @@ def _or_features(g, n_ast):
     f = {"poss": poss, "fga": len(shots), "three_rate": shots["three"].mean() if len(shots) else 0.0,
          "assists": n_ast, "ast_per_poss": n_ast / max(poss, 1)}
     vid = g[g["chain"].map(lambda c: isinstance(c, list) and len(c) > 0)]
-    f["poss_video"] = len(vid)
+    rows_v = [{"chain": r["chain"], "three": bool(r["three"])} for _, r in vid.iterrows()]
+    _from_clips = False
+    if len(rows_v) < ROLE_MIN_VIDEO_POSS:                # no description reached the play-by-play: use the clip rows
+        _alt = _or_clip_chains().get(_or_norm(g["player"].iloc[0] if len(g) else "")) or []
+        if len(_alt) > len(rows_v):
+            rows_v, _from_clips = _alt, True
+    f["poss_video"] = len(rows_v)
     types = {k: 0 for k in set(_OR_TYPES.values())}
     drives = trans_bh = drib3 = three_v = 0
-    for _, r in vid.iterrows():
+    for r in rows_v:
         c = [s.lower() for s in r["chain"]]
         t = _OR_TYPES.get(c[0])
         if t == "roll" and any("pop" in s_ for s_ in c[1:3]):
@@ -145,14 +216,14 @@ def _or_features(g, n_ast):
             three_v += 1
             if t in ("trans", "handoff", "offscreen") or any("dribble jumper" in s and "no dribble" not in s for s in c):
                 drib3 += 1
-    nv = max(len(vid), 1)
-    if len(vid) >= ROLE_MIN_VIDEO_POSS:
+    nv = max(len(rows_v), 1)
+    if len(rows_v) >= ROLE_MIN_VIDEO_POSS:
         f.update({k: v / nv for k, v in types.items()})
         f["trans_bh"] = trans_bh / nv
         f["drive"] = drives / nv
         f["onball"] = (types["prbh"] + types["iso"] + trans_bh) / nv
         f["moving3"] = drib3 / max(three_v, 1)
-        f["source"] = "Synergy play types"
+        f["source"] = "Synergy clips" if _from_clips else "Synergy play types"
     else:                                         # play-by-play only: close stand-ins
         f.update({k: 0.0 for k in types})
         f["post"] = shots["post_shot"].sum() / fga
@@ -192,7 +263,12 @@ def _or_decide(f, pos, height_in, team_onball_share):
     elif f["iso"] >= ROLE_ISO_SHARE:
         role = "Shot Creator"
     elif f["onball"] >= ROLE_ONBALL_MIN and creator:
-        role = "Primary Ball Handler" if team_onball_share >= ROLE_PRIMARY_TEAM_SHARE else "Secondary Ball Handler"
+        # CONFIRMED CHANGE (same card): with no play types, "onball" is not measured at all -- it is made up from
+        # assists (ast_per_poss / ROLE_ASSIST_BALLHANDLER * ROLE_ONBALL_MIN). Six assists in 20 possessions is not
+        # evidence that a 6-2 guard runs the offence, so without film the most he can be is SECONDARY.
+        _measured = not str(f.get("source", "")).startswith("play-by-play")
+        role = ("Primary Ball Handler" if (_measured and team_onball_share >= ROLE_PRIMARY_TEAM_SHARE)
+                else "Secondary Ball Handler")
     elif f["drive"] >= ROLE_DRIVE_SHARE and tr < ROLE_SHOOTER_3PA_RATE:
         role = "Slasher"
     elif (f["cut"] + f["putback"] + (f["trans"] - f["trans_bh"])) >= ROLE_FINISHER_SHARE and tr < ROLE_FINISHER_MAX_3PA:

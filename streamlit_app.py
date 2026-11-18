@@ -14411,6 +14411,17 @@ rather than taking the label's word for it.
                        "throws 15%). Edge is stated so positive always favors UWW -- for turnovers that "
                        "means a LOWER rate. UWW's factors are from their own games; the opponent's are from "
                        "their prior games, so neither is adjusted for who they played.")
+            # CONFIRMED CHANGE (requested 11/17, "Leave them and label them"): this ranking and the brief's
+            # WHAT MATTERS page can put different factors on top, and a coach with both open needs to know
+            # why rather than assume one of them is broken. Oliver's weights are fixed league-average
+            # importance applied to raw season rates; WHAT MATTERS prices each factor for the matchup. Free
+            # throws are where they part company: a high FT rate is a big edge on Oliver's weighting, and
+            # worth much less once the possessions those trips use up are charged against it.
+            st.caption("This ranks the factors by Oliver's fixed weights on each side's season rates. The "
+                       "scouting brief's WHAT MATTERS page asks a different question -- what each factor is "
+                       "worth in points against THIS opponent, with free throws charged for the possessions "
+                       "they use -- so the two can put different factors first. Neither is wrong; the brief "
+                       "answers 'what is it worth here', this answers 'how much does it usually matter'.")
 
         def _render_four_factors_card(_n):
             _fft = _card_data.get("four_factors_top") or {}

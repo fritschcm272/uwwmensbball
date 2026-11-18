@@ -172,6 +172,61 @@ def parse_video_mhtml(path):
     return parse_video_mhtml_html(load_html_snapshot(path))
 
 
+def clips_from_synergy_export(game_date, players=None, _cache={}):
+    """One game's clip log from the SYNERGY EDITOR EXPORT, in the same shape parse_video_mhtml() returns
+    ("No.", "Result", "Description", "player", "Team", "Duration") -- so it can go through the same alignment.
+    CONFIRMED BUG (fixed; Corey: "Do you believe that he is really a Primary Ball Handler?"). The cells that attach
+    clip descriptions onto pbp_events read saved "<game>_video.html" pages. Since the move to Synergy Editor exports
+    nobody saves those any more, so the 11/17 run printed "Found 0 video-tagging file(s)" and "pbp_events rows with a
+    matched video description: 0 of 946" -- every consumer of video_description (offensive roles in 41b, the
+    opponent's own tendencies in 29, the weak-spot diagnosis in 31) was running on nothing for the whole season.
+    The export holds the same Synergy strings, one row per clip, already in clip order: inputs/uww_clip_frames.csv
+    (every captured game, description + player + result per clip), or inputs/uww_plays.csv (the raw Export.csv
+    columns) for a game that only got that far. Returns an empty frame when the game has neither."""
+    import os as _os
+    cols = ["No.", "Result", "Description", "player", "Team", "Duration"]
+    want = pd.to_datetime(game_date, errors="coerce")
+    if pd.isna(want):
+        return pd.DataFrame(columns=cols)
+    want = want.date()
+    # CONFIRMED BUG (fixed before it shipped; 2026-11-07 has THREE exported games -- Elmhurst@Ripon, Franklin@Hope and
+    # UWWhitewater@Carroll -- so the date alone returned all 581 clips at once, and each game's clip numbers start at 1
+    # again, which breaks the order-preserving alignment). The caller passes the players in the game's play-by-play;
+    # only their clips are kept, which picks out the one game.
+    _pl = {str(x).strip().casefold() for x in (players or []) if isinstance(x, str) and str(x).strip()}
+    key = (str(want), tuple(sorted(_pl)))
+    if key in _cache:
+        return _cache[key]
+    base = str(globals().get("INPUT_DIR") or "./inputs")
+    out = pd.DataFrame(columns=cols)
+    for fn, c_no, c_res, c_desc, c_pl, c_team, c_date in (
+            ("uww_clip_frames.csv", "position", "result", "description", "player", "team", "clip_date"),
+            ("uww_plays.csv", "#", "Result", "Synergy String", "Player", "Team", "Date")):
+        try:
+            df = pd.read_csv(_os.path.join(base, fn), low_memory=False)
+        except Exception:
+            continue
+        if not {c_no, c_res, c_desc, c_pl, c_date} <= set(df.columns):
+            continue
+        d = pd.to_datetime(df[c_date], errors="coerce").dt.date
+        g = df[(d == want) & df[c_desc].notna() & df[c_pl].notna()]
+        if _pl:
+            g = g[g[c_pl].astype(str).str.strip().str.casefold().isin(_pl)]
+        if g.empty:
+            continue
+        out = pd.DataFrame({
+            "No.": pd.to_numeric(g[c_no], errors="coerce"),
+            "Result": g[c_res].astype(str).str.strip(),
+            "Description": g[c_desc].astype(str),
+            "player": g[c_pl].astype(str).str.strip(),
+            "Team": g[c_team].astype(str) if c_team in g.columns else "",
+            "Duration": "",
+        }).dropna(subset=["No."]).sort_values("No.").reset_index(drop=True)
+        break
+    _cache[key] = out
+    return out
+
+
 def login_to_synergy(page, username, password, timeout_ms=30000):
     """Log into Synergy Sports Tech's own identity provider (auth.synergysportstech.com) -- a separate login
     from FastScout/Hudl with its OWN credentials (see synergy_username/synergy_password in the

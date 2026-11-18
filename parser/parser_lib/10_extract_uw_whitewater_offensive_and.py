@@ -74,5 +74,19 @@ if _gp_up:
                                ignore_index=True)
     print("Game plans from the UPCOMING game's report: " + "; ".join(
         f"{o} ({_rdu.get(o)}, {len(p)} topic(s))" for o, p in zip(_gp_up, _new_plans)), flush=True)
+# CONFIRMED CHANGE (requested 11/17, with FastScout listing Elmhurst twice -- this game and a 2025-26 one):
+# section 08 flags an upcoming opponent whose only report was written for a DIFFERENT game. Its keys, strengths
+# and schemes are that game's, so they are not this game's plan: the rows come out of all_game_plans (what the
+# app, the keys to victory and the brief read). all_game_plans_history keeps them -- paired with the game they
+# were actually written for, which is what sections 11 / 12 need.
+_gp_stale = globals().get("scout_report_stale") or {}
+if _gp_stale and globals().get("SCOUT_REPORT_MUST_MATCH_GAME", True):
+    _drop = all_game_plans["opponent"].isin(list(_gp_stale))
+    if _drop.any():
+        for _o, (_fn, _was, _want) in _gp_stale.items():
+            print(f"!! {_o}: dropping {int((all_game_plans['opponent'] == _o).sum())} game-plan topic(s) -- they come "
+                  f"from '{_fn}', written for {_was}, and the upcoming game is {_want}. The brief will have no "
+                  f"staff keys for {_o} until this game's report is downloaded from FastScout.", flush=True)
+        all_game_plans = all_game_plans[~_drop].reset_index(drop=True)
 pd.set_option("display.max_colwidth", 150)
 print(all_game_plans)

@@ -102,7 +102,12 @@ def player_shot_zones(pbp, team_value, opponent_label, side_label):
     if s.empty:
         return []
     _txt = s["raw_text"].astype(str).str.lower() if "raw_text" in s.columns else pd.Series("", index=s.index)
-    _three = s["shot_type"].astype(str) == "3" if "shot_type" in s.columns else pd.Series(False, index=s.index)
+    # CONFIRMED BUG (fixed 11/17): shot_type arrives NUMERIC from the play-by-play parser, so astype(str) is
+    # "3.0" and this test was never true -- every three was filed as "Other 2" (Trelenberg: 23 of his 32
+    # attempts were threes and the table said 81% "other twos", 0% threes), which also mis-reads a shooter as
+    # a mid-range jump shooter in the roster's Driver line. Compare as a number.
+    _three = (pd.to_numeric(s["shot_type"], errors="coerce") == 3) if "shot_type" in s.columns \
+        else pd.Series(False, index=s.index)
     s["_zone"] = "Other 2"
     s.loc[_txt.apply(lambda t: any(w in t for w in _RIM_WORDS)) & ~_three, "_zone"] = "Rim"
     s.loc[_three, "_zone"] = "Three"
