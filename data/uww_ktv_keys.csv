@@ -1,8 +1,8 @@
 opponent,game_date,category,key_number,icon,headline,evidence,reasoning,source,impact,confidence,brief_eligible,priority_score
-Elmhurst Bluejays,2026-11-18,Offense,1,🏀,Feature our best look: Motion,"Us: 0.91 PPP on 36 tagged possessions this season vs our 0.87 average
+Elmhurst Bluejays,2026-11-18,Offense,1,🏀,Feature our best look: Motion,"Us: 1.02 PPP on 43 tagged possessions this season vs our 0.85 average
 Them: opponents scored 0.43 PPP running this against Elmhurst Bluejays on 14 tagged possessions
-Runs it most: Marino, Madson, Verges, Bara, Warren
-Usually comes off 5 Out Motion","We score 0.91 a possession on it and Elmhurst Bluejays gives up 0.43 defending it -- go to it early, usually out of 5 Out Motion.",Data-Driven,0.38000000000000006,0.7,True,60.7
+Runs it most: Madson, Robinson, McEwen, Rogers, Teague-Johnson
+Usually comes off 5 Out Motion","We score 1.02 a possession on it and Elmhurst Bluejays gives up 0.43 defending it -- go to it early, usually out of 5 Out Motion.",Data-Driven,0.6400000000000001,0.7,True,71.1
 Elmhurst Bluejays,2026-11-18,Offense,2,🎯,Attack their weakest look: Drive to the basket,"Opponents shot 21/40 · 52% FG · 52% eFG · 1.05 pts/attempt · +0.19 vs all looks · 25% of attempts on this against Elmhurst Bluejays
 Best on this shot:
 • Madson, Chestnut, Lukenbill, McEwen, Vann 4/5 · 80%
@@ -12,9 +12,9 @@ Runs it most:
 • Madson, Chestnut, Lukenbill, McEwen, Vann 5x · 80%
 • Madson, Chestnut, Robinson, Rogers, Teague-Johnson 3x · 100%
 Usually comes off SLOB for us",Teams have shot 52% on it against Elmhurst Bluejays -- hunt it; we usually get it out of SLOB.,Data-Driven,0.6,1.0,True,74.0
-Elmhurst Bluejays,2026-11-18,Offense,3,📋,Call our best set: Cheetah,"1.80 PPP on 5 uses vs our 0.87 overall · 1/2 FG
+Elmhurst Bluejays,2026-11-18,Offense,3,📋,Call our best set: Cheetah,"1.80 PPP on 5 uses vs our 0.85 overall · 1/2 FG
 Finished most by Kelton Mcewen
-No coverage tagged against it yet","Our most productive set this season -- go to it when we need a good look, with Kelton Mcewen finishing. Small sample: 2 games.",Data-Driven,0.7153846153846157,0.16666666666666666,True,66.1
+No coverage tagged against it yet","Our most productive set this season -- go to it when we need a good look, with Kelton Mcewen finishing. Small sample: 2 games.",Data-Driven,0.7307692307692311,0.16666666666666666,True,66.7
 Elmhurst Bluejays,2026-11-18,Defense,4,📊,Take away their most efficient high-volume actions,Offensive Rebound: 56.2% on 16 attempts; Transition: 52.2% on 23 attempts,"Each is 5+ points above their 41.3% overall clip on 15+ attempts. Offensive Rebound: hit a body on every shot before going to the ball. Transition: sprint back, stop the ball first and match up second.",Data-Driven,,,True,62.5
 Elmhurst Bluejays,2026-11-18,Defense,5,📊,Funnel them into their worst high-volume looks,Spot-Up: 30.8% on 52 attempts,Each is 5+ points below their 41.3% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
 Elmhurst Bluejays,2026-11-18,Defense,6,📊,Pressure the actions they turn it over on,P&R Ball Handler: 7 TO in 30 uses (23.3% vs 12.1% across all actions); Transition: 6 TO in 29 uses (20.7% vs 12.1% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
