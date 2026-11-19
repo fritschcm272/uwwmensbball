@@ -1,7 +1,7 @@
 {
  "game": "2026-11-14|Ripon@UWWhitewater",
  "slug": "2026_11_14_Ripon_UWWhitewater",
- "run": "20261118_091821",
+ "run": "20261119_074300",
  "plays": [
   {
    "clip_key": "2026-11-14|1|34 Jackson Flowers > Spot-Up > Drives Right > Turnover",
@@ -47,7 +47,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Isaiah Robinson",
+       "hidden_guess": "Jose Gonzales",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.6735,
@@ -74,7 +74,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Kelton McEwen",
+       "hidden_guess": "Keenan Rahn",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.5777,
@@ -101,7 +101,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Tyshawn Teague-Johnson",
+       "hidden_guess": "Seth Bunders",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.6603,
@@ -128,7 +128,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Rashad Rogers",
+       "hidden_guess": "Michael Asman",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.7122,
@@ -155,7 +155,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Collin Madson",
+       "hidden_guess": "Jackson Flowers",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.6884,
@@ -197,7 +197,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Tyshawn Teague-Johnson",
+       "hidden_guess": "Seth Bunders",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.5281,
@@ -224,7 +224,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Isaiah Robinson",
+       "hidden_guess": "Jose Gonzales",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.6872,
@@ -251,7 +251,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Kelton McEwen",
+       "hidden_guess": "Keenan Rahn",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.6004,
@@ -278,7 +278,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Rashad Rogers",
+       "hidden_guess": "Michael Asman",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.3924,
@@ -305,7 +305,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Collin Madson",
+       "hidden_guess": "Jackson Flowers",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.4516,
@@ -347,7 +347,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Collin Madson",
+       "hidden_guess": "Jackson Flowers",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.622,
@@ -374,7 +374,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Kelton McEwen",
+       "hidden_guess": "Keenan Rahn",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.5477,
@@ -401,7 +401,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Isaiah Robinson",
+       "hidden_guess": "Jose Gonzales",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.2635,
@@ -428,7 +428,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Rashad Rogers",
+       "hidden_guess": "Michael Asman",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.4501,
@@ -455,7 +455,7 @@
        "label": "",
        "conf": null,
        "guess": false,
-       "hidden_guess": "Tyshawn Teague-Johnson",
+       "hidden_guess": "Seth Bunders",
        "hidden_guess_p": 0.2,
        "nbox": [
         0.392,
@@ -509,18 +509,18 @@
    ],
    "five": {
     "offense": [
-     "Jackson Flowers",
-     "Jose Gonzales",
-     "Keenan Rahn",
-     "Michael Asman",
-     "Seth Bunders"
-    ],
-    "defense": [
      "Collin Madson",
      "Isaiah Robinson",
      "Kelton McEwen",
      "Rashad Rogers",
      "Tyshawn Teague-Johnson"
+    ],
+    "defense": [
+     "Jackson Flowers",
+     "Jose Gonzales",
+     "Keenan Rahn",
+     "Michael Asman",
+     "Seth Bunders"
     ]
    },
    "teams": {
@@ -531,53 +531,65 @@
     "offense": [
      "Anton Kilde",
      "Christian Wilson",
-     "Collin Madson",
-     "Dominic Rasberry",
-     "Jack Field",
-     "Joey Daun",
-     "Landon Lee",
-     "Nick Ahlquist",
-     "Sam Leoni"
-    ],
-    "defense": [
      "Darius Chestnut",
      "JR Lukenbill",
+     "Jack Field",
      "Jackson Flowers",
      "Joey Daun",
-     "Jr Lukenbill",
+     "Jose Gonzales",
      "Keenan Rahn",
-     "Kelton Mcewen",
+     "Landon Lee",
      "Luke Paddock",
      "Michael Asman",
+     "Nick Ahlquist",
+     "Sam Leoni",
      "Seth Bunders",
      "Taveon Vann"
+    ],
+    "defense": [
+     "Anton Kilde",
+     "Christian Wilson",
+     "Collin Madson",
+     "Darius Chestnut",
+     "Dominic Rasberry",
+     "Isaiah Robinson",
+     "Jack Field",
+     "Joey Daun",
+     "Jr Lukenbill",
+     "Kelton Mcewen",
+     "Landon Lee",
+     "Nick Ahlquist",
+     "Rashad Rogers",
+     "Sam Leoni",
+     "Taveon Vann",
+     "Tyshawn Teague-Johnson"
     ]
    },
    "five_labels": {
-    "Jackson Flowers": "#34 Jackson Flowers",
-    "Jose Gonzales": "#0 Jose Gonzales",
-    "Keenan Rahn": "#3 Keenan Rahn",
-    "Michael Asman": "#35 Michael Asman",
-    "Seth Bunders": "#30 Seth Bunders",
-    "Anton Kilde": "#20 Anton Kilde",
-    "Christian Wilson": "#5 Christian Wilson",
     "Collin Madson": "#15 Collin Madson",
-    "Dominic Rasberry": "#? Dominic Rasberry",
-    "Jack Field": "#42 Jack Field",
-    "Joey Daun": "#4 Joey Daun",
-    "Landon Lee": "#2 Landon Lee",
-    "Nick Ahlquist": "#1 Nick Ahlquist",
-    "Sam Leoni": "#11 Sam Leoni",
     "Isaiah Robinson": "#5 Isaiah Robinson",
     "Kelton McEwen": "#2 Kelton McEwen",
     "Rashad Rogers": "#35 Rashad Rogers",
     "Tyshawn Teague-Johnson": "#12 Tyshawn Teague-Johnson",
+    "Anton Kilde": "#20 Anton Kilde",
+    "Christian Wilson": "#5 Christian Wilson",
     "Darius Chestnut": "#10 Darius Chestnut",
     "JR Lukenbill": "#1 JR Lukenbill",
-    "Jr Lukenbill": "#1 Jr Lukenbill",
-    "Kelton Mcewen": "#2 Kelton Mcewen",
+    "Jack Field": "#42 Jack Field",
+    "Jackson Flowers": "#34 Jackson Flowers",
+    "Joey Daun": "#4 Joey Daun",
+    "Jose Gonzales": "#0 Jose Gonzales",
+    "Keenan Rahn": "#3 Keenan Rahn",
+    "Landon Lee": "#2 Landon Lee",
     "Luke Paddock": "#11 Luke Paddock",
-    "Taveon Vann": "#25 Taveon Vann"
+    "Michael Asman": "#35 Michael Asman",
+    "Nick Ahlquist": "#1 Nick Ahlquist",
+    "Sam Leoni": "#11 Sam Leoni",
+    "Seth Bunders": "#30 Seth Bunders",
+    "Taveon Vann": "#25 Taveon Vann",
+    "Dominic Rasberry": "#? Dominic Rasberry",
+    "Jr Lukenbill": "#1 Jr Lukenbill",
+    "Kelton Mcewen": "#2 Kelton Mcewen"
    },
    "kind": "starters"
   }
@@ -811,6 +823,7 @@
    "STS",
    "Swing",
    "Swing (pass across)",
+   "Swirl",
    "Throw 5",
    "Throw Pinch",
    "Throw to 5",
@@ -1009,5 +1022,5 @@
    "ZAVIER CASTILLO"
   ]
  },
- "built": "2026-11-18T09:18:46"
+ "built": "2026-11-19T07:43:20"
 }
