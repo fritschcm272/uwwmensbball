@@ -2284,3 +2284,154 @@ against the real input files): for 11/14 Ripon, column 2 holds 13 players and no
 **Still to do: the data on disk is wrong until the sections from 36 down are re-run.** Everything derived from
 that game -- box score, minutes, lineups, clutch, the brief's roster -- carries the flip. The 11/19 models run
 finished before this fix, so the Hope brief it produced should not be trusted on anything involving 11/14.
+
+
+## 2026-11-19 -- a fourth lineup card: best in the clutch
+
+**CONFIRMED CHANGE (requested:** "add a card for best clutch group for 5 and 3 man lineups.")
+`87_build_html_scouting_brief_for_upcoming.py` (548,233 b). `_lu_cards` now builds a fourth card beside Most
+minutes / Best +/- / Best PPP, for the five-man units and again for the 3-man combos.
+
+* `_clutch_units(three)` walks this run's clutch clips (`game_situation` starts "Clutch" -- 47's shared rule:
+  not the first half, 5:00 or less, margin 8 or fewer) and tallies, per group, offensive possessions and
+  points FOR from `offense_lineup`, defensive possessions and points AGAINST from `defense_lineup`. For trios
+  every three-player combination of each lineup on the floor is counted, so a trio collects far more
+  possessions than its fives do.
+* **Judged on both ends.** The ranking is points a possession scored MINUS points a possession allowed, since
+  a clutch five that scores and gives it straight back is not the five to close with. Today:
+  `Madson / Robinson / Lukenbill / McEwen / Teague-Johnson -- +0.60 PPP net (17 Poss) -- 1.22 scored, 0.62
+  allowed -- 9 with the ball, 8 defending`, and the trio `Madson / Robinson / McEwen` at +0.67 on 21.
+* **CONFIRMED BUG (caught before shipping):** with "at least one possession at each end" as the floor,
+  Elmhurst's five read "+1.00 PPP net" off TWO offensive possessions -- 2.00 scored is a single three. Each
+  end now needs **3** (the floor the lineup tables' own PPP column already ranks on) and 6 in total for a five,
+  8 for a trio. Their five correctly drops off; their trio (4 with the ball, 12 defending) stays.
+* A side with no clutch film gets no card, and an empty lineup table still prints the clutch card alone if
+  there is one.
+
+**Validation** (`~/wmtest/cluunit_t.py`, both functions lifted by AST and run against the live
+`uww_play_calls.csv`): for each side and both sizes the card's possession counts add up (`with the ball` +
+`defending` = the bracketed total), `scored - allowed` equals the stated net to two decimals, every group shown
+has possessions at both ends, and an empty frame produces no card and no error.
+
+
+**CONFIRMED CHANGE (requested 11/19, same file, 548,670 b):** "Move the link to the application into the
+expandable section right after the table." The "All N keys with evidence and reasoning" link was sitting loose
+under the closed expander bar, which read as a second, redundant way in. It is built once (`_ktv_link`) and
+emitted inside the `<details>` straight after `</tbody></table>`. It still prints outside when there is no
+expander to put it in (`_ktv_expander` false -- every key already on a card).
+
+**Validation**: `~/wmtest/ktvtbl_t.py` extended -- the link is inside the `<details>`, after the `</table>`, and
+nothing after `</details>` mentions it. (The test's opponent was also moved to Hope, since `uww_ktv_keys.csv`
+is Hope-only now: 11 keys, 5 carded.)
+
+
+## 2026-11-19 -- the KTV cards group the way the app does
+
+**CONFIRMED CHANGE (requested:** "I want the Keys to Victory cards to better match the Keys to Victory section
+in the application. So maybe three cards for Offense, Defense and Personnel, Rotation & Intangibles.")
+`87_build_html_scouting_brief_for_upcoming.py` (552,213 b).
+
+The row was five cards, one key each, ranked by score. It is now **three cards, one per group**, built on the
+SAME `category` column the app groups on, so the brief and the app sort the keys the same way:
+
+* **Offense** -- `category == "offense"`
+* **Defense** -- `category == "defense"`
+* **Personnel, rotation & intangibles** -- everything else, which picks up Personnel and the odd "General" key,
+  the way the app's own catch-all bucket behaves.
+
+Each card carries its group's key count on the top strip, leads with that group's best-scoring key (linked to
+the app, with its score and source badge), lists the rest beneath it, and ends with "+N more in the table
+below" when the group is longer than `BRIEF_KTV_KEYS_PER_CARD` (4). The cards are built from the WHOLE `ktv`
+frame, not the brief's six-key selection, because a group can easily have no key in that selection -- the
+expander below still holds every key, and the "\u2605 on a card above" marks now follow `_ktv_on_card`, the keys
+actually shown.
+
+Today: Offense 2 keys, Defense 5 (one spilling to "+1 more"), Personnel 4.
+
+`BRIEF_KTV_CARDS = False` still gives the old numbered sentences, and if the keys file ever has no categories
+at all the card path stands down and the sentences print instead.
+
+**Validation** (`~/wmtest/ktvgrp_t.py`, the block lifted out of the file and run against `uww_ktv_keys.csv`):
+three cards in the expected order, every key in the file lands in exactly one group (counts sum to 11), no card
+shows more than four keys, and the group with more than four reports the remainder. `ktvtbl_t.py` and
+`briefchk_t.py` still pass against the new markup.
+
+
+**CONFIRMED CHANGE (requested 11/19, same file, 553,003 b):** under the lead key on each KTV card goes its
+REASONING, not its score and source tag -- "Finish every defensive possession with a box-out / They get 46% of
+their own misses back -- a stop isn't a stop until we secure the rebound; find Orion Yant on every shot",
+where it used to read "90 Data-Driven". The number and the tag say where a key came from; the reasoning says
+what to do about it, which is what a coach reads a card for. Both are still on every row of the table below.
+Falls back to the key's `evidence` line when it has no reasoning, the same fallback the table uses. The
+remaining keys on a card stay headline-only -- three cards of four full reasons would be a page, not a row.
+
+**Validation**: `~/wmtest/ktvgrp_t.py` now asserts the lead key carries a reasoning line and that no score or
+source badge survives above the first `ktv-more` line.
+
+
+**CONFIRMED BUG (fixed 11/19, same file, 553,853 b): "All keys table is way too wide."** The page's own cell
+rule is `td { ... white-space: nowrap }` -- right for a stat cell, wrong for a sentence. Each key's reasoning
+sat on one unbroken line and dragged the table far past the 1000px page. `table.ktv-tbl` now sets
+`table-layout: fixed`, `white-space: normal` with `overflow-wrap: anywhere`, and fixed column widths
+(Area 11%, Key 64%, Score 7%, Source 18%) so the text column takes the room rather than the badges. The global
+nowrap is left alone for every other table, which wants it.
+
+Worth remembering: this file's tables inherit `white-space: nowrap`, so any NEW table that puts prose in a cell
+needs its own `white-space: normal` or it will blow the page width the same way.
+
+
+**CONFIRMED CHANGE (11/19, 87_..._brief_for_upcoming.py): "I don't need the '7 KEYS' or the '+3 More in the
+Table' notes."** The KTV group cards dropped the `N keys` badge in `lc-t` and the `+N more in the table below`
+line. Both described the card rather than the game, and the All-keys table directly below already lists every
+key. The card is now: group name, lead key, its reasoning, the other keys. `~/wmtest/ktvgrp_t.py` had been
+counting keys per group off that badge -- it now checks the grouping against `_KTV_GROUPS` on the data and
+asserts the badge and overflow line are gone.
+
+**CONFIRMED CHANGE (11/19, same file): more explanation on "Expected here".** Two scores with no account of
+where they come from read as a prediction. The line now says it is a projection off season rates; that each
+team gets the midpoint of its own rate and the other's matching defensive rate across the four factors at the
+average of the two paces (`_pos_g`); that points come through the possession identity, so free throws are
+charged for the possessions they use; and that measuring the two teams against each other rather than a league
+average means it says nothing about schedule strength. When either side has fewer than 6 games the "Built on
+N and M games" clause adds that one outlier still moves it several points and the gap should be read as a
+range; at 6+ games each it ends plainly.
+
+
+**CONFIRMED BUG (fixed 11/19, 18_turn_raw_4_column_play_by_play_table_into.py -- SIGN FLIP ON EVERY SCOUTED
+OPPONENT'S PRIOR GAMES).** Found from the brief: Hope's last-five-minute possessions against Franklin were
+labelled "Trailing by 10+" in a game Hope won 79-59.
+
+The play-by-play table is `Time | <Team A> | Score | <Team B>` and the score cell is `<A>-<B>` -- it follows
+COLUMN ORDER. `build_pbp_events` took `score_m.group(1)` as `uww_score` and `group(2)` as `opp_score`
+positionally, no matter which column `self_column` pointed at. For UWW's own files that was right: 36_ detects
+a swapped file, swaps the text columns AND reverses the score string, then calls with the default
+`self_column="uww_text"`. But an opponent's own file puts their events in whichever column their FastScout
+account captured, 26_ resolves that empirically and passes it -- and the score was never swapped to match.
+Three of Hope's four prior games (Elmhurst, Anderson, Franklin) have them in the SECOND column, so on those
+games everything reading `uww_score` as the self team's score was inverted:
+ - `game_situation`: Leading/Trailing by 10+ backwards (the clutch test is `abs(margin)`, so clutch itself was
+   never affected -- that is why this hid for so long).
+ - **45_aggregate_upcoming_opponent_5_man_lineup.py**: `end_self_score=("uww_score","last")` -> the scouted
+   opponent's whole lineup +/- was negated. `uww_opponent_prior_games_lineup_stints.csv` had Hope at -6 and
+   -20 in games they won by 6 and 20. That number drives `uww_opp_lineup_season_box`, which feeds the keys
+   ("their worst net-rating units"), the brief's lineup cards and the app -- so the units we were being told
+   to ATTACK were in fact their best, and the ones to counter were their worst.
+ - 70_'s expected box score and 75_'s back-fill read the same column.
+
+Fix: `build_pbp_events` now swaps the two scores when `self_column != "uww_text"`, at the source, so every
+caller is right at once. 36_ and 79_ pass no `self_column`, so the new branch cannot fire on UWW's own games.
+Harness `~/wmtest/pbpscore_t.py` parses all four Hope files and checks the self team's margin against the
+header plus the final score cell (+6, -5, +27, +20 -- the -5 at North Central is genuine, Hope are in the
+first column of that file), and asserts 36_/79_ still call with the default column.
+
+**THE DATA ON DISK IS STILL FLIPPED** until a full `parser_models` run regenerates it. Anything read off the
+opponent lineup tables before that run is backwards.
+
+**CONFIRMED CHANGE (11/19, 87_..._brief_for_upcoming.py): the clutch card prints even when nothing
+qualifies.** "Leave the card empty and note that there isn't a 5 man lineup." Returning "" left a hole in the
+row that looked identical to a rendering fault. The card now says `No five qualifies`, whether the cause is no
+clutch film at all or no group with 3 possessions at each end, and names the closest group with its own counts
+(Hope: Sanchez/Miller/Cargill/Yant/Wesolek, 2 with the ball and 5 defending, out of 19 clutch possessions of
+which only 4 are offensive). Their 3-man card still qualifies, because a trio collects possessions from every
+five it sits in -- that asymmetry is expected, not a bug. `.lc-empty` dims the headline. `cluunit_t.py` now
+asserts the card always renders.

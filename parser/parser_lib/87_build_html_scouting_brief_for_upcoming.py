@@ -1569,6 +1569,22 @@ tr.dayhead td { background: var(--warhawk-light); color: var(--warhawk-purple); 
   letter-spacing: 0; font-weight: 700; }
 .lcards.ktv-cards .lc-n { font-size: 0.86rem; }
 .lcards.ktv-cards .lc-n a { color: inherit; }
+.lcards.ktv-cards .lc-t .ktv-n { font-size: 0.62rem; font-weight: 700; color: var(--dim); }
+.lcards .lc.lc-empty .lc-n { color: var(--dim); font-weight: 600; font-size: 0.95rem; }
+.lcards.ktv-cards .lc-x.ktv-more { border-top: 0; padding-top: 0; margin-top: 5px; font-weight: 700; font-size: 0.74rem; }
+.lcards.ktv-cards .lc-x.ktv-more a { color: inherit; }
+.lcards.ktv-cards .lc-x.mini { font-weight: 400; color: var(--dim); }
+.lcards.ktv-cards .lc-s.ktv-why { font-variant-numeric: normal; line-height: 1.35; margin-top: 4px; }
+/* CONFIRMED BUG (fixed 11/19: "All keys table is way too wide"). The page's own `td` rule is
+   `white-space: nowrap`, which is right for a stat cell and wrong for a sentence: each key's reasoning sat on one
+   unbroken line and pushed the table far past the 1000px page. The Key column wraps, and the four columns get fixed
+   widths so the text column takes the room instead of the badges. */
+table.ktv-tbl { table-layout: fixed; width: 100%; }
+table.ktv-tbl th, table.ktv-tbl td { white-space: normal; overflow-wrap: anywhere; }
+table.ktv-tbl th:nth-child(1), table.ktv-tbl td:nth-child(1) { width: 11%; }
+table.ktv-tbl th:nth-child(2), table.ktv-tbl td:nth-child(2) { width: 64%; }
+table.ktv-tbl th:nth-child(3), table.ktv-tbl td:nth-child(3) { width: 7%; }
+table.ktv-tbl th:nth-child(4), table.ktv-tbl td:nth-child(4) { width: 18%; }
 table.ktv-tbl td { vertical-align: top; }
 table.ktv-tbl tr.ktv-on td { background: #fffbe9; }
 table.ktv-tbl .mini { color: var(--dim); font-weight: 400; }
@@ -4190,10 +4206,37 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
 
         def _clutch_card(three):
             _cu = _clutch_units(three)
-            _CL_MIN = 6 if three else 5            # clutch possessions in all, both ends counted
-            _cand = [(k, v) for k, v in _cu.items() if v[0] and v[2] and (v[0] + v[2]) >= _CL_MIN]
+            # CONFIRMED BUG (caught before shipping): with "a possession at each end" as the only floor, Elmhurst's
+            # card read "+1.00 PPP net" off TWO offensive clutch possessions -- 2.00 scored is one three. Each end now
+            # needs 3, the same floor the lineup tables' own PPP column ranks on, so a rate is never built on one play.
+            # A team whose clutch film is barely tagged gets no card rather than a flattering one.
+            _CL_END, _CL_MIN = 3, 8 if three else 6
+            _CL_MARGIN_TXT = "eight points"
+            _cand = [(k, v) for k, v in _cu.items()
+                     if v[0] >= _CL_END and v[2] >= _CL_END and (v[0] + v[2]) >= _CL_MIN]
             if not _cand:
-                return ""
+                # CONFIRMED CHANGE (requested 11/19: "leave the card empty and note that there isn't a 5 man
+                # lineup"). Returning "" left a hole in the row with nothing to explain it, and a missing card
+                # looks the same as a team with no clutch film at all. The card now prints and says which it is,
+                # with the nearest group's own counts so the gap is countable rather than asserted. Hope are the
+                # case that found this: 19 clutch possessions, only 4 of them with the ball, so their busiest
+                # five has 2 and 5 -- a five-man card would be a rate off two possessions.
+                _unit = "trio" if three else "five"
+                if not _cu:
+                    _why = ("No clutch possessions of theirs are on film yet \u2014 their games on file were "
+                            "never inside " + str(_CL_MARGIN_TXT) + " in the last five minutes, or are untagged.")
+                    _near = ""
+                else:
+                    _bk, _bv = max(_cu.items(), key=lambda kv: (kv[1][0] + kv[1][2], kv[1][0]))
+                    _why = (f"No {_unit} has {_CL_END} clutch possessions at each end yet, so a rate here would "
+                            f"rest on one or two plays.")
+                    _near = (f'<div class="lc-x">Closest: {_sb_esc(_lu_short(_bv[4], 3 if three else 5))} '
+                             f'\u2014 {_bv[0]} with the ball, {_bv[2]} defending.</div>')
+                return (f'<div class="lc lc-empty"><div class="lc-t">Best in the clutch</div>'
+                        f'<div class="lc-n">No {_unit} qualifies</div>'
+                        f'<div class="lc-s">{_sb_esc(_why)}</div>' + _near
+                        + '<div class="lc-x">Needs 3 clutch possessions at each end \u2014 scored and allowed '
+                          'are both part of the ranking.</div></div>')
             _net = lambda v: v[1] / v[0] - v[3] / v[2]      # noqa: E731
             _k, _v = max(_cand, key=lambda kv: (_net(kv[1]), kv[1][0] + kv[1][2]))
             _o, _d, _n = _v[1] / _v[0], _v[3] / _v[2], _v[0] + _v[2]
@@ -4694,13 +4737,72 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         # reasoning underneath. BRIEF_KTV_CARDS = False goes back to the sentence list. Nothing about WHICH keys are
         # shown, their order, their links or their scoring changes -- this is the layout only.
         _ktv_cards = bool(globals().get("BRIEF_KTV_CARDS", True))
-        # CONFIRMED CHANGE (requested 11/18: "I only want one row of cards"). The cards are ONE row -- the top
-        # BRIEF_KTV_CARDS_MAX keys, 5 by default, the same width as the offense sections' row. Nothing is lost: every
-        # key, these included, is in the "All N keys" expander right underneath.
-        _ktv_row = max(1, int(globals().get("BRIEF_KTV_CARDS_MAX", 5)))
-        add('<div class="lcards ktv-cards">' if _ktv_cards else '<div class="card">')
+        # CONFIRMED CHANGE (requested 11/19: "I want the Keys to Victory cards to better match the Keys to Victory
+        # section in the application. So maybe three cards for Offense, Defense and Personnel, Rotation &
+        # Intangibles"). One row, three cards, by the SAME `category` column the app groups on -- so a coach reading
+        # the brief and a coach reading the app see the keys sorted the same way. Each card leads with its group's
+        # best-scoring key and lists the rest under it; "Personnel, rotation & intangibles" takes Personnel and
+        # anything with no category of its own (General), which is how the app's own "Other" bucket behaves.
+        # BRIEF_KTV_KEYS_PER_CARD (4) caps a card; the rest are a "+N more below" line, and every key is in the
+        # expander underneath either way. BRIEF_KTV_CARDS = False still gives the old numbered sentences.
+        _ktv_row = max(1, int(globals().get("BRIEF_KTV_CARDS_MAX", 5)))         # the sentence path's own cap
+        _KTV_PER = max(1, int(globals().get("BRIEF_KTV_KEYS_PER_CARD", 4)))
+        _KTV_GROUPS = (("Offense", lambda c: c == "offense"),
+                       ("Defense", lambda c: c == "defense"),
+                       ("Personnel, rotation &amp; intangibles", lambda c: c not in ("offense", "defense")))
+
+        def _ktv_key_html(k):
+            """(headline as a link where the app has the key, its score + source badge)."""
+            _h = _sb_clean(k.get("headline")).rstrip(".")
+            _ak = int(k["key_number"]) if pd.notna(k.get("key_number")) else None
+            _hh = (name_link(_h, page="upcoming", tab="keys", key=_ak)
+                   if _ak and str(k.get("source")) != "Game Plan" else _sb_esc(_h))
+            _p = pd.to_numeric(k.get("priority_score"), errors="coerce")
+            _sc = (f'<span class="ktv-score" title="Priority score (0-100)">{int(round(_p))}</span>'
+                   if pd.notna(_p) else "")
+            return _hh, _sc + (source_badge(k.get("source")) or "")
+
+        _ktv_on_card = set()
+        if _ktv_cards:
+            _kk = ktv.copy()
+            _kk["_ps"] = pd.to_numeric(_kk.get("priority_score"), errors="coerce")
+            _kk["_cat"] = _kk.get("category", pd.Series("", index=_kk.index)).astype(str).str.strip().str.lower()
+            _kk = _kk.sort_values("_ps", ascending=False, na_position="last")
+            _cards_out = []
+            for _gname, _gtest in _KTV_GROUPS:
+                _g = _kk[_kk["_cat"].map(_gtest)]
+                if _g.empty:
+                    continue
+                _shown = _g.head(_KTV_PER)
+                _ktv_on_card |= {str(x) for x in _shown.get("key_number", pd.Series(dtype=object)).dropna().astype(str)}
+                # CONFIRMED CHANGE (requested 11/19): under the lead key goes its REASONING -- "They get 46% of their
+                # own misses back -- a stop isn't a stop until we secure the rebound; find Orion Yant on every shot"
+                # -- not its score and source tag. The number and the tag say where a key came from; the reasoning
+                # says what to do about it, which is what a coach reads a card for. Both are still in the table below.
+                _lead, _lead_badge = _ktv_key_html(_shown.iloc[0])
+                _lead_why = (_sb_clean(_shown.iloc[0].get("reasoning")).rstrip(".")
+                             or _sb_clean(_shown.iloc[0].get("evidence")).rstrip("."))
+                _rest = "".join(f'<div class="lc-x ktv-more">{_ktv_key_html(r_)[0]}</div>'
+                                for _, r_ in _shown.iloc[1:].iterrows())
+                # CONFIRMED CHANGE (requested 11/19): "I don't need the '7 KEYS' or the '+3 More in the Table'
+                # notes." Both were housekeeping ABOUT the card rather than coaching: the count said how many
+                # keys the category holds and the overflow line said the table has the rest, which the table
+                # directly below already shows. The card now carries only the keys themselves.
+                _cards_out.append(
+                    f'<div class="lc"><div class="lc-t">{_gname}</div>'
+                    f'<div class="lc-n">{_lead}</div>'
+                    + (f'<div class="lc-s ktv-why">{_sb_esc(_lead_why)}.</div>' if _lead_why else "") + _rest
+                    + "</div>")
+            if _cards_out:
+                add('<div class="lcards ktv-cards">' + "".join(_cards_out) + "</div>")
+            else:
+                _ktv_cards = False      # nothing to group (no categories at all) -- fall back to the sentences
+        if not _ktv_cards:
+            add('<div class="card">')
         for _ki, (_, k) in enumerate(ktv_brief.iterrows()):
-            if _ktv_cards and _ki >= _ktv_row:
+            if _ktv_cards:
+                break                   # the cards above replace the per-key list
+            if _ki >= _ktv_row:
                 break
             _rank = int(k["brief_rank"]) if "brief_rank" in k and pd.notna(k.get("brief_rank")) else ""
             _app_key = int(k["key_number"]) if pd.notna(k.get("key_number")) else None
@@ -4732,13 +4834,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             if _score:
                 _source = (_source.replace('<span class="ktv-right">', '<span class="ktv-right">' + _score, 1)
                            if 'class="ktv-right"' in _source else f'<span class="ktv-right">{_score}{_source}</span>')
-            if _ktv_cards:
-                add(f'<div class="lc"><div class="lc-t">Key {_rank}{_source}</div>'
-                    f'<div class="lc-n">{_head_html}</div>'
-                    + (f'<div class="lc-x">{_sb_esc(_reasoning)}.</div>' if _reasoning else "") + "</div>")
-            else:
-                add(f'<div class="ktv-sentence">{_sentence} {_source}</div>')   # a space: copied text reads "... reason. Data-Driven"
-        add("</div>")
+            add(f'<div class="ktv-sentence">{_sentence} {_source}</div>')   # a space: copied text reads "... reason. Data-Driven"
+        if not _ktv_cards:
+            add("</div>")
         # CONFIRMED CHANGE (requested 11/18: "Make a table of keys to victory that can be expanded with all of them
         # available"). The cards are the six the brief leads with; this is EVERY key the parser built for this game
         # behind one expander -- the same <details> the other sections use, so "Expand all" opens it and printing
@@ -4748,11 +4846,17 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         if not _ktv_all.empty and "priority_score" in _ktv_all.columns:
             _ktv_all = _ktv_all.assign(_ps=pd.to_numeric(_ktv_all["priority_score"], errors="coerce")) \
                                .sort_values("_ps", ascending=False, na_position="last")
-        if len(_ktv_all) > (min(len(ktv_brief), _ktv_row) if _ktv_cards else len(ktv_brief)):
+        # CONFIRMED CHANGE (requested 11/19): the app link belongs inside the expander, under the table it refers to,
+        # not loose beneath the closed bar. It stays outside only when there is no expander to put it in.
+        _ktv_link = ('<p class="mini">'
+                     + app_link(f"All {_ktv_total} keys with evidence and reasoning", page="upcoming", tab="keys")
+                     + "</p>")
+        _ktv_expander = False
+        if len(_ktv_all) > (len(_ktv_on_card) if _ktv_cards else len(ktv_brief)):
             # only the keys that actually made the row are marked -- with cards capped at one row, a key the brief
             # selected but did not card is new information down here and must not be flagged as seen above
-            _carded = ktv_brief.head(_ktv_row) if _ktv_cards else ktv_brief
-            _on_card = {str(x) for x in _carded.get("key_number", pd.Series(dtype=object)).dropna().astype(str)}
+            _on_card = _ktv_on_card if _ktv_cards else {
+                str(x) for x in ktv_brief.get("key_number", pd.Series(dtype=object)).dropna().astype(str)}
             _ktv_rows = []
             for _, k in _ktv_all.iterrows():
                 _hl = _sb_clean(k.get("headline")).rstrip(".")
@@ -4774,8 +4878,11 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 + ' keys</span><span class="rd-sub">every key the parser built for this game, best first</span>'
                 "</summary>"
                 '<table class="compact ktv-tbl"><thead><tr><th>Area</th><th style="text-align:left">Key</th>'
-                "<th>Score</th><th>Source</th></tr></thead><tbody>" + "".join(_ktv_rows) + "</tbody></table></details>")
-        add('<p class="mini">' + app_link(f"All {_ktv_total} keys with evidence and reasoning", page="upcoming", tab="keys") + "</p>")
+                "<th>Score</th><th>Source</th></tr></thead><tbody>" + "".join(_ktv_rows)
+                + "</tbody></table>" + _ktv_link + "</details>")
+            _ktv_expander = True
+        if not _ktv_expander:
+            add(_ktv_link)
 
     # ---- WHAT MATTERS: the one page a coach reads if he reads nothing else (requested) ----------------
     # Sits directly under KEYS TO VICTORY on purpose. The keys are the INSTRUCTIONS; this page is the
@@ -5115,10 +5222,23 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         # left is what appears nowhere else: the verdict, the four factors priced for this matchup, and the
         # expected score. The man named in the verdict stays: one name tied to the factor, not a roster block.
 
+        # CONFIRMED CHANGE (requested 11/19): "add more explanation to 'Expected here'". The two numbers were
+        # printed with no account of where they come from or how much weight to put on them, which invites a
+        # coach to read a projection off season rates as a prediction of a result. What it is, how it is built
+        # and what it cannot see now sit with it.
         add(f'<p class="mini">Expected here: UW-Whitewater {_pts_u:.0f}, '
             f'{_sb_esc(_sb_strip_mascot(short))} {_pts_t:.0f}. '
+            f"This is what the season rates project for this matchup, not a prediction of a final score. Each "
+            f"team is credited with the midpoint of its own rate and the other team's matching defensive rate "
+            f"in all four factors -- shot quality, turnovers, offensive rebounds and free-throw rate -- played "
+            f"at {_pos_g:.0f} possessions, the average of the two teams' pace. Those rates become points through "
+            f"the possession identity, so free throws are charged for the possessions they use rather than "
+            f"added on top. Because each team is measured against the other and not against a league average, "
+            f"the estimate says nothing about the strength of who either team has played so far. "
             f'Built on {_gu} UW-Whitewater game{"s" if _gu != 1 else ""} and {_gt} '
-            f'{_sb_esc(_sb_strip_mascot(short))} game{"s" if _gt != 1 else ""}. '
+            f'{_sb_esc(_sb_strip_mascot(short))} game{"s" if _gt != 1 else ""}'
+            + (" -- few enough that one outlier still moves it several points, so read the gap as a range "
+               "rather than a number. " if min(_gu, _gt) < 6 else ". ")
             + app_link("Every number behind this", page="upcoming", tab="keys") + "</p>")
         add("</div>")
         # CONFIRMED CHANGE (requested 11/18): "Combine these two sections into a 'Team Comparison' section."

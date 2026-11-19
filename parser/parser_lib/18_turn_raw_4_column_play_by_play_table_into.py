@@ -38,6 +38,19 @@ def build_pbp_events(raw_df, opponent, game_date, self_team="UW-Whitewater", sel
             })
             continue
         uww_score, opp_score = int(score_m.group(1)), int(score_m.group(2))
+        # CONFIRMED BUG (found 11/19 from the brief: Hope's late possessions against Franklin were labelled
+        # "Trailing by 10+" when Hope were WINNING by 20). The score cell follows the TABLE'S COLUMN ORDER --
+        # header "Time | <Team A> | Score | <Team B>" means "<A>-<B>" -- but these two names were assigned
+        # positionally no matter which column `self_column` points at. For UWW's own files that is right
+        # (36_ pre-swaps the columns AND reverses the score before calling), but an opponent's own file puts
+        # their events in whichever column their FastScout account captured, and all four of Hope's prior
+        # games put them SECOND. Everything that reads "uww_score" as the self_team's score was therefore
+        # inverted on those games: the Leading/Trailing labels, and -- the costly one -- 45_'s opponent
+        # lineup +/-, which feeds "their worst net-rating units" on the keys, the cards and the app. Hope's
+        # stints summed to -6 and -20 in games they won by 6 and 20. The clutch filter uses abs(margin), so
+        # it was never affected. Scores now follow self_column, as the events already do.
+        if self_column != "uww_text":
+            uww_score, opp_score = opp_score, uww_score
         opp_column = "opp_text" if self_column == "uww_text" else "uww_text"
         for team_label, text in [(self_team, r[self_column]), (opponent, r[opp_column])]:
             if pd.notna(text) and str(text).strip():
