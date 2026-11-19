@@ -1367,6 +1367,9 @@ table.dfam .dfam-band th.band-us { color: #2e7d32; border-top: 2px solid #2e7d32
 .pcard .ph-name { font-weight: 800; font-size: 0.95rem; }
 .pcard .ph-bio { font-weight: 400; font-size: 0.72rem; color: var(--dim); }
 .pcard .ph-foul { margin-left: auto; font-size: 0.72rem; font-weight: 700; white-space: nowrap; }
+.pcard .ph-clutch { margin-left: 8px; color: #5c4a00; background: #fff3b0; border-radius: 9px;
+  padding: 2px 8px; font-size: 0.68rem; }
+.pc-chip.clutch { background: #fff3b0; color: #5c4a00; border: 1px solid #e3cf7a; }
 .pcard table.pstats { width: 100%; margin: 4px 0 0; }
 .pcard table.pstats th, .pcard table.pstats td { text-align: center; }
 .pcard table.sz-row { width: 100%; border-collapse: collapse; table-layout: fixed; margin: 2px 0 0; }
@@ -1558,6 +1561,17 @@ tr.dayhead td { background: var(--warhawk-light); color: var(--warhawk-purple); 
 .lcards .lc-x + .lc-x { margin-top: 4px; padding-top: 0; border-top: 0; }
 .lcards .lc-x b { color: var(--warhawk-purple); }
 @media screen and (max-width: 820px) { .lcards { flex-wrap: wrap; } .lcards .lc { flex: 1 1 45%; } }
+.lcards.ktv-cards .lc { flex: 1 1 0; min-width: 0; }
+.lcards.ktv-cards .lc-t { display: flex; align-items: center; gap: 6px; color: var(--dim); }
+.lcards.ktv-cards .lc-t .ktv-right { margin-left: auto; display: flex; align-items: center; gap: 5px; }
+.lcards.ktv-cards .lc-t > .src { margin-left: auto; }   /* a key with no score: the badge still sits right */
+.lcards.ktv-cards .lc-t .src, .lcards.ktv-cards .lc-t .ktv-score, .lcards.ktv-cards .lc-t .lsn { text-transform: none;
+  letter-spacing: 0; font-weight: 700; }
+.lcards.ktv-cards .lc-n { font-size: 0.86rem; }
+.lcards.ktv-cards .lc-n a { color: inherit; }
+table.ktv-tbl td { vertical-align: top; }
+table.ktv-tbl tr.ktv-on td { background: #fffbe9; }
+table.ktv-tbl .mini { color: var(--dim); font-weight: 400; }
 /* ---- the five starters across the top of a roster ---------------------------------------------- */
 .sfive { display: flex; gap: 8px; align-items: stretch; margin: 0 0 8px; }
 .sfive .sf { flex: 1 1 0; min-width: 0; border: 1px solid var(--edge); border-radius: 8px; padding: 8px;
@@ -1567,13 +1581,21 @@ tr.dayhead td { background: var(--warhawk-light); color: var(--warhawk-purple); 
 .sfive .sf-bio { font-size: 0.68rem; color: var(--dim); margin-top: 1px; }
 .sfive .sf-st { font-size: 0.74rem; font-variant-numeric: tabular-nums; margin-top: 3px; }
 .sfive .sf-role { font-size: 0.7rem; margin-top: 3px; text-align: left; line-height: 1.25; }
-.sfive .sf-role .sf-k { display: inline-block; min-width: 1.9em; font-size: 0.6rem; font-weight: 800;
-                        letter-spacing: 0.4px; text-transform: uppercase; color: var(--warhawk-purple); }
+.sfive .sf-role .sf-k { display: inline-block; min-width: 2.2em; margin-right: 5px; font-size: 0.6rem;
+                        font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase;
+                        color: var(--warhawk-purple); }
+/* CONFIRMED BUG (fixed 11/18): "OFF" is wider than the 1.9em it was given at this size, so the label ran
+   straight into the role -- "OFFStationary Shooter". The min-width now fits the longer of the two labels and
+   a margin guarantees the gap whatever the font does. */
 .sfive .sf-role strong { font-weight: 700; }
 .sfive .sf-say { font-size: 0.7rem; color: #333; text-align: left; margin-top: 5px; padding-top: 4px;
                  border-top: 1px dotted var(--edge); line-height: 1.3; }
 .sfive .sf-foul { margin-top: 6px; }
 .sfive .sf-foul .pc-foul { font-size: 0.66rem; }
+table.compact tr.rsub td { background: #f6f4ef; font-weight: 700; font-size: 0.72rem; text-align: left; padding-top: 5px; }
+.lc .lc-split { margin-top: 4px; border-top: 1px dotted #e3e0d8; padding-top: 4px; }
+.sfive .sf-clutch { margin-top: 5px; }
+.sfive .sf-clutch .pc-chip { font-size: 0.62rem; white-space: normal; line-height: 1.25; }
 details.rosdet > summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 8px;
                            border: 1px solid var(--edge); border-radius: 6px; padding: 5px 10px;
                            background: #fafafa; }
@@ -2910,6 +2932,10 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # section for the player"): each player's reads (uww_action_reads, 2+ uses) become lines in his card's
     # Tendencies, e.g. "Screener on Ball Screen: Roll 5 of 5 (100%), 1.60 PPP".
     _reads_tbl = _sb_d("uww_action_reads")
+    # CONFIRMED CHANGE (requested 11/18): the reads were gated at 2+ uses, and 47 of the table's 58 rows sit at 1, so
+    # most of the trigger / screener split never reached the page. A read a coach tagged once is still a read -- the Uses
+    # column says how thin it is. BRIEF_READS_MIN_USES raises the bar again if it ever gets noisy.
+    _READS_MIN = int(globals().get("BRIEF_READS_MIN_USES", 1))
 
     # CONFIRMED CHANGE (requested 11/14: the contradiction pass on player lines). Where the film or the numbers contradict
     # a line in the coaches' report, 85b_read_reconcile writes a "Check: ..." line (uww_read_conflicts, action "flag"); it
@@ -2931,7 +2957,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             return []
         own = "whitewater" if side == "UWW" else _norm(short)
         r = r[r["offense_team"].astype(str).map(_norm).str.contains(own, regex=False)
-              & (pd.to_numeric(r["uses"], errors="coerce") >= 2)]
+              & (pd.to_numeric(r["uses"], errors="coerce") >= _READS_MIN)]
         r = r[r["player"].astype(str).str.replace(r"^#\S+\s+", "", regex=True).map(_xkey) == _xkey(name)]
         out = []
         for _, x in r.sort_values("uses", ascending=False).head(3).iterrows():
@@ -3029,6 +3055,152 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             res.append(f"{typ} -- {why}" + (f". Our fit: {', '.join(fits)}" if fits else ""))
         return res
 
+    # CONFIRMED CHANGE (requested 11/18: "I want the roster sections to have a subsection under Offense that says how
+    # well they do during 'Clutch' moments based on our definition"). OUR definition, not a new one: section 47's
+    # _gs_situation stamps every clip with game_situation, and clutch is "not the first half, 5:00 or less on the clock,
+    # margin 8 or fewer" (_GS_CLUTCH_SECONDS = 300, _GS_CLUTCH_MARGIN = 8) -- the same rule the clutch-time event log and
+    # the game plan use. It is applied to pbp_events and pbp_events_upcoming alike, so a scouted opponent's clutch comes
+    # from THEIR games. side alone is not enough (it names the file a clip came from), so possession_side == "Offense"
+    # keeps it to possessions where this player's team had the ball.
+    def _clutch_tbl(side, poss="Offense"):
+        if _pcc_all.empty or not {"game_situation", "player", "side"} <= set(_pcc_all.columns):
+            return pd.DataFrame()
+        t = _pcc_all[_pcc_all["game_situation"].astype(str).str.startswith("Clutch")
+                     & (_pcc_all["side"].astype(str) == side)]
+        if "possession_side" in t.columns:
+            t = t[t["possession_side"].astype(str) == poss]
+        return t
+
+    def _clutch_of(name, side):
+        """How this player's team has done with the ball in the clutch when he is the man in the possession.
+        Small samples are normal here (a game has a handful of clutch trips), so the count leads and the rate is
+        only shown once there are 3 -- and fouls drawn are named, because a trip that ends at the line scores no
+        points on the clip itself and would otherwise read as a wasted possession."""
+        t = _clutch_tbl(side)
+        if t.empty:
+            return []
+        mine = t[t["player"].astype(str).map(_xkey) == _xkey(name)]
+        n = len(mine)
+        if not n:
+            return []
+        pts = float(pd.to_numeric(mine.get("points"), errors="coerce").fillna(0).sum())
+        res = mine.get("result", pd.Series(dtype=object)).astype(str)
+        fouls = int(res.str.contains("foul", case=False, na=False).sum())
+        tos = int(res.str.contains("turnover", case=False, na=False).sum())
+        made = int(res.str.contains("make", case=False, na=False).sum())
+        shots = int(res.str.contains("make|miss", case=False, regex=True, na=False).sum())
+        _team_n = len(t)
+        _team_ppp = (float(pd.to_numeric(t.get("points"), errors="coerce").fillna(0).sum()) / _team_n) if _team_n else None
+        line = (f"HIM: the ball on {n} clutch possession{'s' if n != 1 else ''} on film \u2014 they produced "
+                f"{pts:g} point{'s' if pts != 1 else ''}")
+        if n >= 3:
+            line += f", {pts / n:.2f} PPP"
+            if _team_ppp is not None and _team_n >= 8:
+                line += f" (the team {_team_ppp:.2f} on {_team_n})"
+        out = [line]
+        bits = []
+        if shots:
+            bits.append(f"{made} of {shots} from the floor")
+        if fouls:
+            bits.append(f"{fouls} foul{'s' if fouls != 1 else ''} drawn")
+        if tos:
+            bits.append(f"{tos} turnover{'s' if tos != 1 else ''}")
+        if bits:
+            # the same rule as the defensive card: what happened ON those trips is not a personal stat line
+            out.append("ON THOSE TRIPS: " + ", ".join(bits) + ".")
+        return out
+
+    # CONFIRMED CHANGE (requested 11/18: "add information for each player that was on the court on defense during
+    # clutch moments"). Defense has no "the man in the possession", so this one goes by WHO WAS ON THE FLOOR:
+    # defense_lineup on a clutch possession his team defended. Same clutch rule as above. Lower is better here, so the
+    # team's own number rides along for scale, and being on the floor for most of them is itself the point -- the count
+    # is "on the floor for N of the team's M".
+    def _clutch_def_of(name, side):
+        t = _clutch_tbl(side, "Defense")
+        if t.empty or "defense_lineup" not in t.columns:
+            return []
+        _k = _xkey(name)
+        _on = t["defense_lineup"].astype(str).map(
+            lambda v: _k in {_xkey(x) for x in str(v).split(",") if str(x).strip()})
+        mine = t[_on]
+        n, _team_n = len(mine), len(t)
+        if not n:
+            return []
+        pts = float(pd.to_numeric(mine.get("points"), errors="coerce").fillna(0).sum())
+        # CONFIRMED CHANGE (requested 11/18: "Defensive clutch information needs to be clear what are things the player
+        # did and things the team did"). Nothing below is his own stat line -- there is no individual defensive box score
+        # here. The ONLY thing about him is that he was on the floor; everything after it is what the five he was in gave
+        # up, and it says so in those words.
+        out = [f"HIM: on the floor for {n} of the team's {_team_n} clutch defensive possession"
+               f"{'s' if _team_n != 1 else ''}" + (" \u2014 every one of them" if n == _team_n and n > 1 else "") + "."]
+        line = (f"THE FIVE HE WAS IN (team numbers, not his): {pts:g} point{'s' if pts != 1 else ''} allowed on "
+                f"{n} possession{'s' if n != 1 else ''}")
+        if n >= 3:
+            line += f", {pts / n:.2f} PPP"
+            if _team_n >= 8 and _team_n > n:
+                line += (f" \u2014 the team allowed "
+                         f"{float(pd.to_numeric(t.get('points'), errors='coerce').fillna(0).sum()) / _team_n:.2f} "
+                         f"PPP across all {_team_n}")
+        out.append(line + ".")
+        res = mine.get("result", pd.Series(dtype=object)).astype(str)
+        made = int(res.str.contains("make", case=False, na=False).sum())
+        shots = int(res.str.contains("make|miss", case=False, regex=True, na=False).sum())
+        tos = int(res.str.contains("turnover", case=False, na=False).sum())
+        fouls = int(res.str.contains("foul", case=False, na=False).sum())
+        bits = ([f"{made} of {shots} shooting against"] if shots else []) \
+            + ([f"{tos} turnover{'s' if tos != 1 else ''} forced"] if tos else []) \
+            + ([f"{fouls} foul{'s' if fouls != 1 else ''} given up"] if fouls else [])
+        if bits:
+            out[-1] = out[-1][:-1] + ": " + ", ".join(bits) + "."
+        return out
+
+    # CONFIRMED CHANGE (requested 11/18: "Put a flag on the players that are the best clutch offensive and defensive
+    # players"). One flag each per side, and only when the flag means something: an offensive flag needs 3+ clutch
+    # possessions of his own and at least two players who clear that bar, and a defensive flag needs him on the floor for
+    # 3+ (and at least 40% of the team's clutch defensive possessions) AND two different rates among those who qualify --
+    # otherwise every man in a five that never changed would be "the best". The defensive one is a FIVE-MAN number and
+    # the chip's tooltip says so, in line with how the cards read.
+    _clutch_best_cache = {}
+
+    def _clutch_best(side):
+        if side in _clutch_best_cache:
+            return _clutch_best_cache[side]
+        out = {"off": None, "def": None}
+        o = _clutch_tbl(side)
+        if not o.empty and "player" in o.columns:
+            _r = []
+            for k, g in o.groupby(o["player"].astype(str).map(_xkey)):
+                if k and len(g) >= 3:
+                    _r.append((k, float(pd.to_numeric(g.get("points"), errors="coerce").fillna(0).sum()) / len(g), len(g)))
+            if len(_r) >= 2:
+                out["off"] = max(_r, key=lambda x: (x[1], x[2]))
+        d = _clutch_tbl(side, "Defense")
+        if not d.empty and "defense_lineup" in d.columns:
+            _pts = pd.to_numeric(d.get("points"), errors="coerce").fillna(0).tolist()
+            _by = {}
+            for _i, (_, r_) in enumerate(d.iterrows()):
+                for nm in str(r_.get("defense_lineup") or "").split(","):
+                    if nm.strip():
+                        _by.setdefault(_xkey(nm), []).append(_pts[_i])
+            _floor = max(3, round(0.4 * len(d)))
+            _r = [(k, sum(v) / len(v), len(v)) for k, v in _by.items() if len(v) >= _floor]
+            if len({round(x[1], 3) for x in _r}) >= 2:
+                out["def"] = min(_r, key=lambda x: (x[1], -x[2]))
+        _clutch_best_cache[side] = out
+        return out
+
+    def _clutch_flags(name, side):
+        """[(chip text, tooltip)] -- at most one of each."""
+        _cb, _k, out = _clutch_best(side), _xkey(name), []
+        if _cb.get("off") and _cb["off"][0] == _k:
+            out.append(("Clutch \u2014 best with the ball",
+                        f"{_cb['off'][1]:.2f} PPP on the {_cb['off'][2]} clutch possessions he ran"))
+        if _cb.get("def") and _cb["def"][0] == _k:
+            out.append(("Clutch \u2014 best five on defense",
+                        f"{_cb['def'][1]:.2f} PPP allowed over the {_cb['def'][2]} clutch possessions he was on the "
+                        f"floor for \u2014 a five-man number, not his alone"))
+        return out
+
     def _roster_player(name, stats_df, side, bullets):
         """Everything one roster entry needs, assembled once so the table layout and the stacked layout
         can't show different reads, keys or flags for the same player."""
@@ -3106,9 +3278,10 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         _team_q = short if side == "Opponent" else "Whitewater"
         # CONFIRMED CHANGE (same card as the role fix): a role worked out with no film behind it says so, so a coach
         # can see the difference between "we watched him" and "we counted his assists".
-        _q = lambda bb: (" (low sample)" if "low sample" in str(bb) else
-                         " (position only)" if str(bb) == "position only" else
-                         " (box score only)" if str(bb).startswith("play-by-play") else "")
+        # CONFIRMED CHANGE (requested 11/18: "I don't think you need to mention '(low sample)' or '(box score only)'").
+        # A role is a role; how thin the evidence behind it is belongs in the methodology, not beside every name on
+        # every card. "(position only)" stays -- that one says there is no data at all behind the label.
+        _q = lambda bb: (" (position only)" if str(bb) == "position only" else "")  # noqa: E731
         if "offensive_role_for" in globals():
             _role, _basis = offensive_role_for(name, _team_q)
             if _role:
@@ -3163,7 +3336,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                             + (f", vs {_xf['vs']}" if _xf["vs"] else "") + ")")
         return {"p": p, "bio": bio, "bits": bits, "items": items, "detail": detail, "team": team, "film": _film,
                 "off": _off[:3], "def": _dfn[:3], "lead": _lead, "xfer": _xf, "tend": _tendencies_of(name, side)[:8],
-                "struggle": _struggles_of(name, side),
+                "struggle": _struggles_of(name, side), "clutch": _clutch_of(name, side),
+                "clutch_def": _clutch_def_of(name, side), "clutch_flag": _clutch_flags(name, side),
                 "bits_bio": _bits_bio, "role_off": _role_html, "role_def": _drole_html,
                 "thin": _thin}
 
@@ -3198,6 +3372,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             # (a projected starter's note -- with his minutes -- is the yellow line above the reads, so no chip for it)
             if r.get("xfer"):
                 _chips += f'<span class="pc-chip">Transfer \u2014 {_sb_esc(r["xfer"]["team"])}</span>'
+            for _ct, _cttl in r.get("clutch_flag") or []:
+                _chips += (f'<span class="pc-chip clutch" title="{_sb_esc(_cttl)}">\u2605 {_sb_esc(_ct)}</span>')
             _foul = ""
             if _opp:
                 _fr = _foul_by.get(_norm(name))
@@ -3227,13 +3403,19 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 + "".join(f'<div class="rd-lead">{_sb_esc(x)}</div>' for x in r.get("lead") or [] if not x.startswith("Transfer from"))
                 + f'<div class="rd2"><div class="rd-o"><span class="rd-h">Offense</span>'
                 + (f'<div class="rd-role">{r["role_off"]}</div>' if r.get("role_off") else "") + f'{_li(r.get("off"))}'
+                + ('<div class="rd-tend"><span class="rd-sub">In the clutch (last 5 min, margin &le; 8)</span><ul>'
+                   + "".join(f"<li>{_sb_esc(x)}</li>" for x in r.get("clutch") or []) + "</ul></div>" if r.get("clutch") else "")
                 + ('<div class="rd-tend"><span class="rd-sub">Tendencies (from the film)</span><ul>'
                    + "".join(f"<li>{_sb_esc(x)}</li>" for x in r.get("tend") or []) + "</ul></div>" if r.get("tend") else "")
                 + ('<div class="rd-tend"><span class="rd-sub">Struggles against</span><ul>'
                    + "".join(f"<li>{_sb_esc(x)}</li>" for x in r.get("struggle") or []) + "</ul></div>" if r.get("struggle") else "")
                 + '</div>'
                   f'<div class="rd-d"><span class="rd-h">Defense</span>'
-                + (f'<div class="rd-role">{r["role_def"]}</div>' if r.get("role_def") else "") + f'{_li(r.get("def"))}</div></div></td></tr>')
+                + (f'<div class="rd-role">{r["role_def"]}</div>' if r.get("role_def") else "") + f'{_li(r.get("def"))}'
+                + ('<div class="rd-tend"><span class="rd-sub">In the clutch (last 5 min, margin &le; 8)</span><ul>'
+                   + "".join(f"<li>{_sb_esc(x)}</li>" for x in r.get("clutch_def") or []) + "</ul></div>"
+                   if r.get("clutch_def") else "")
+                + '</div></div></td></tr>')
             add("</tbody></table>")
 
     # ---- STACKED roster layout (requested example) ---------------------------------------------------
@@ -3288,6 +3470,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     _fc = "call-foul" if _call == "Foul" else "call-nofoul"
                     _foul = (f'<span class="ph-foul {_fc}">{_fl} '
                              f'<span class="mini">({_sb_fmt(_fr.get("ft_pct"))}% FT)</span></span>')
+            _foul = "".join(f'<span class="ph-foul ph-clutch" title="{_sb_esc(_cttl)}">\u2605 {_sb_esc(_ct)}</span>'
+                            for _ct, _cttl in r.get("clutch_flag") or []) + _foul
             add('<div class="pcard gone">' if _norm(name) in globals().get("_SB_STRUCK", ()) else '<div class="pcard">')
             add(f'<div class="ph">{photo_cell(bio.get("photo_url") if bio is not None else None, name, side)}'
                 f'<div class="ph-name">{name_link(name, page="upcoming", tab="personnel", team=r["team"], player=name)}'
@@ -3353,8 +3537,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 + footnote(f"{team_title} starters: {basis}. Per-game averages from their own film. "
                            "After each bio: 'Off' = his offensive role (BBall Index's 12) from his play types; 'Def' "
                            "= his defensive role (BBall Index's 7) from coverage tags with his number, film tracking "
-                           "where he was identified for sure, and his steals/blocks -- '(low sample)' when there's "
-                           "little to go on, '(position only)' with no data. "
+                           "where he was identified for sure, and his steals/blocks -- '(position only)' when "
+                           "there's no data behind the label at all. "
                            + ("Photo, jersey, position, height and class come from the FastScout roster page when "
                               "a live scrape has run; hand and status aren't on that page and stay blank. Coach "
                               "notes pass through as written; data-driven lines are stated against the team's own "
@@ -3517,6 +3701,13 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             # something here only when the call is one of the two, and nothing at all otherwise. Same source,
             # wording and styling as the player card's own flag (_foul_by, the late-game foul list's table),
             # and only for the opponent: those calls are about fouling THEM.
+            # CONFIRMED CHANGE (requested 11/18): "Add the clutch flags also to the starters list." Same chips, same
+            # rules and same tooltips as the roster card's -- _clutch_flags is the single source -- and for both sides,
+            # since who to have on the floor late is a question about our five as much as theirs.
+            _cfl = "".join(f'<span class="pc-chip clutch" title="{_sb_esc(_cttl)}">\u2605 {_sb_esc(_ct)}</span>'
+                           for _ct, _cttl in _clutch_flags(_nm, side))
+            if _cfl:
+                add(f'<div class="sf-clutch">{_cfl}</div>')
             if side == "Opponent":
                 _fr = _foul_by.get(_norm(_nm))
                 _call = _sb_clean(_fr.get("call")) if _fr is not None else ""
@@ -3767,7 +3958,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         """The same, for the possessions this side DEFENDED. Checked on the data before relying on it: on a
         defensive row, on_court_lineup is the DEFENDING team's five (UWW defending Alma lists our five;
         Elmhurst defending DePauw lists theirs), so a unit's points allowed can be measured the same way its
-        offence is."""
+        offense is."""
         if _pcc_all.empty or not {"on_court_lineup", "possession_side"} <= set(_pcc_all.columns):
             return pd.DataFrame()
         c = _pcc_all[(_pcc_all["side"] == side) & (~_pcc_all["decode_quality"].isin(["Needs review", "Untagged"]))
@@ -3905,7 +4096,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 _sb_clean(r.get("grouping")) for _, r in _d.iterrows()}
 
     def _lu_two_way(side):
-        """(offence clips, defence clips, team offence PPP, team defence PPP) for one side, once per card
+        """(offense clips, defense clips, team offense PPP, team defense PPP) for one side, once per card
         block -- the baselines a unit's own numbers are read against."""
         _o, _d = _unit_clips(side), _unit_clips_def(side)
         _p = lambda c: (c["_pts"].sum() / c["_pts"].notna().sum()) if (not c.empty and c["_pts"].notna().any()) else None
@@ -3927,8 +4118,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             """CONFIRMED CHANGE (requested 11/18): "Also include what each lineup has struggled with
             defensively and offensively", then "Make that based on which card is shown." Each card gets the
             side of the ball its own metric is about: the minutes card gets both, the +/- card leads with
-            whichever end the margin came from, the PPP card stays on offence. Both numbers are points per
-            tagged possession with those players on the floor -- their own offence, and what they gave up --
+            whichever end the margin came from, the PPP card stays on offense. Both numbers are points per
+            tagged possession with those players on the floor -- their own offense, and what they gave up --
             against the same team's own rate. Under 5 possessions either way, nothing is said."""
             # CONFIRMED BUG (caught before shipping): with a 5-possession floor this printed "0.14 allowed
             # (team 0.61)" for Elmhurst. Their whole tagged pool is 38 offensive and 38 defensive possessions
@@ -3951,17 +4142,17 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 return ""
             _vs = lambda v, b: (f"{v:.2f}" + (f" (team {b:.2f})" if b is not None else ""))
             if kind == "ppp" or not _ok_d:
-                return (f"Offence with them out there: {_vs(_o, _team_off)} a possession" if _ok_o else "")
+                return (f"Offense with them out there: {_vs(_o, _team_off)} a possession" if _ok_o else "")
             if not _ok_o:
-                return f"Defence with them out there: {_vs(_d, _team_def)} allowed"
+                return f"Defense with them out there: {_vs(_d, _team_def)} allowed"
             if kind == "pm":
                 # a tenth of a point either way is the difference worth naming; inside that, say so rather
                 # than crediting an end that only wins after rounding
                 _TOL = 0.05
                 _dd = (_team_def - _d) if (_team_def is not None) else 0.0
                 _od = (_o - _team_off) if (_team_off is not None) else 0.0
-                _edge = ("the defence" if _dd >= _TOL and _dd >= _od
-                         else "the offence" if _od >= _TOL else "")
+                _edge = ("the defense" if _dd >= _TOL and _dd >= _od
+                         else "the offense" if _od >= _TOL else "")
                 return ((f"That margin is {_edge}: " if _edge else "Neither end stands out: ")
                         + f"{_vs(_o, _team_off)} scored, {_vs(_d, _team_def)} allowed")
             return f"With them out there: {_vs(_o, _team_off)} scored, {_vs(_d, _team_def)} allowed"
@@ -4439,9 +4630,20 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             f"REBOUNDING KEYS: \"box out\" when they rebound {_RRn['crash_rate']}%+ of their own misses, \"crash "
             f"the glass\" when they secure {_RRn['soft_rate']}% or less of opponents' misses, each on "
             f"{_RRn['min_paired']}+ paired misses from their play-by-play."))
-        # Full-width display with reasoning (requested)
-        add('<div class="card">')
-        for _, k in ktv_brief.iterrows():
+        # CONFIRMED CHANGE (requested 11/18: "create a card style format for the KEYS TO VICTORY section"). The keys
+        # were a list of numbered sentences; they are now the same cards the rest of the brief uses (lcards / lc), three
+        # to a row, with the key's number and its score + source badge on the top strip, the instruction in bold and the
+        # reasoning underneath. BRIEF_KTV_CARDS = False goes back to the sentence list. Nothing about WHICH keys are
+        # shown, their order, their links or their scoring changes -- this is the layout only.
+        _ktv_cards = bool(globals().get("BRIEF_KTV_CARDS", True))
+        # CONFIRMED CHANGE (requested 11/18: "I only want one row of cards"). The cards are ONE row -- the top
+        # BRIEF_KTV_CARDS_MAX keys, 5 by default, the same width as the offense sections' row. Nothing is lost: every
+        # key, these included, is in the "All N keys" expander right underneath.
+        _ktv_row = max(1, int(globals().get("BRIEF_KTV_CARDS_MAX", 5)))
+        add('<div class="lcards ktv-cards">' if _ktv_cards else '<div class="card">')
+        for _ki, (_, k) in enumerate(ktv_brief.iterrows()):
+            if _ktv_cards and _ki >= _ktv_row:
+                break
             _rank = int(k["brief_rank"]) if "brief_rank" in k and pd.notna(k.get("brief_rank")) else ""
             _app_key = int(k["key_number"]) if pd.notna(k.get("key_number")) else None
             _headline = _sb_clean(k.get("headline")).rstrip(".")
@@ -4472,9 +4674,50 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             if _score:
                 _source = (_source.replace('<span class="ktv-right">', '<span class="ktv-right">' + _score, 1)
                            if 'class="ktv-right"' in _source else f'<span class="ktv-right">{_score}{_source}</span>')
-            add(f'<div class="ktv-sentence">{_sentence} {_source}</div>')   # a space: copied text reads "... reason. Data-Driven"
-        add('<p class="mini">' + app_link(f"All {_ktv_total} keys with evidence and reasoning", page="upcoming", tab="keys") + "</p>")
+            if _ktv_cards:
+                add(f'<div class="lc"><div class="lc-t">Key {_rank}{_source}</div>'
+                    f'<div class="lc-n">{_head_html}</div>'
+                    + (f'<div class="lc-x">{_sb_esc(_reasoning)}.</div>' if _reasoning else "") + "</div>")
+            else:
+                add(f'<div class="ktv-sentence">{_sentence} {_source}</div>')   # a space: copied text reads "... reason. Data-Driven"
         add("</div>")
+        # CONFIRMED CHANGE (requested 11/18: "Make a table of keys to victory that can be expanded with all of them
+        # available"). The cards are the six the brief leads with; this is EVERY key the parser built for this game
+        # behind one expander -- the same <details> the other sections use, so "Expand all" opens it and printing
+        # unfolds it. Best first by priority score, the six already on a card marked, and a key with no reasoning
+        # falls back to its evidence line (what the app shows when you click a key).
+        _ktv_all = ktv.copy()
+        if not _ktv_all.empty and "priority_score" in _ktv_all.columns:
+            _ktv_all = _ktv_all.assign(_ps=pd.to_numeric(_ktv_all["priority_score"], errors="coerce")) \
+                               .sort_values("_ps", ascending=False, na_position="last")
+        if len(_ktv_all) > (min(len(ktv_brief), _ktv_row) if _ktv_cards else len(ktv_brief)):
+            # only the keys that actually made the row are marked -- with cards capped at one row, a key the brief
+            # selected but did not card is new information down here and must not be flagged as seen above
+            _carded = ktv_brief.head(_ktv_row) if _ktv_cards else ktv_brief
+            _on_card = {str(x) for x in _carded.get("key_number", pd.Series(dtype=object)).dropna().astype(str)}
+            _ktv_rows = []
+            for _, k in _ktv_all.iterrows():
+                _hl = _sb_clean(k.get("headline")).rstrip(".")
+                if not _hl:
+                    continue
+                _kn = str(k.get("key_number")) if pd.notna(k.get("key_number")) else ""
+                _why = _sb_clean(k.get("reasoning")).rstrip(".") or _sb_clean(k.get("evidence")).rstrip(".")
+                _psv = pd.to_numeric(k.get("priority_score"), errors="coerce")
+                _area = _sb_clean(k.get("category")) or "—"
+                _star = (" ★ on a card above") if (_kn and _kn in _on_card) else ""
+                _sc = str(int(round(_psv))) if pd.notna(_psv) else ""
+                _ktv_rows.append(
+                    ("<tr class=\"ktv-on\">" if _star else "<tr>")
+                    + f'<td>{_sb_esc(_area)}</td><td style="text-align:left"><b>{_sb_esc(_hl)}</b>'
+                    + (f'<span class="mini">{_sb_esc(_star)}</span>' if _star else "")
+                    + (f'<div class="mini">{_sb_esc(_why)}.</div>' if _why else "")
+                    + f'</td><td>{_sc}</td><td>{source_badge(k.get("source"))}</td></tr>')
+            add('<details class="rosdet"><summary><span class="rd-open">All ' + str(_ktv_total)
+                + ' keys</span><span class="rd-sub">every key the parser built for this game, best first</span>'
+                "</summary>"
+                '<table class="compact ktv-tbl"><thead><tr><th>Area</th><th style="text-align:left">Key</th>'
+                "<th>Score</th><th>Source</th></tr></thead><tbody>" + "".join(_ktv_rows) + "</tbody></table></details>")
+        add('<p class="mini">' + app_link(f"All {_ktv_total} keys with evidence and reasoning", page="upcoming", tab="keys") + "</p>")
 
     # ---- WHAT MATTERS: the one page a coach reads if he reads nothing else (requested) ----------------
     # Sits directly under KEYS TO VICTORY on purpose. The keys are the INSTRUCTIONS; this page is the
@@ -4604,7 +4847,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         _NAMES = {"eFG": "Shot quality (eFG%)", "TOV": "Turnovers (TOV%)",
                   "ORB": "Offensive boards (ORB%)", "FTR": "Free-throw rate"}
         _SAY = {
-            "eFG": ("we should get the better looks against this defence",
+            "eFG": ("we should get the better looks against this defense",
                     "they are the better bet to score against ours"),
             "TOV": ("we should handle their pressure better than they handle ours",
                     "they should take care of it better than we do"),
@@ -4754,10 +4997,10 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             "free throws most of all, which weigh heavily on fixed weights and much less once the "
             "possessions the trips use up are charged against them. "
             "WHAT THE US AND THEM COLUMNS ARE: not season averages -- what each team should do IN THIS GAME. "
-            "Every rate is one team's offence and the other team's defence at the same time, so each side's "
-            "expected rate is the midpoint of the two: our shooting against their shooting defence, theirs "
-            "against ours. Comparing the two midpoints is what takes the two schedules out of it -- a defence "
-            "that has only faced weak offences looks better than it is, and measuring ourselves against what "
+            "Every rate is one team's offense and the other team's defense at the same time, so each side's "
+            "expected rate is the midpoint of the two: our shooting against their shooting defense, theirs "
+            "against ours. Comparing the two midpoints is what takes the two schedules out of it -- a defense "
+            "that has only faced weak offenses looks better than it is, and measuring ourselves against what "
             "it has allowed would count that difference twice. "
             "HOW THE POINTS ARE WORKED OUT: both sides' expected rates are run through one scoring model and "
             "PPG DIFFERENCE is what each factor is worth -- the points a game we lose if we play that one "
@@ -5699,7 +5942,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         _ar = _sb_d("uww_action_reads")
         if _ar.empty or "offense_team" not in _ar.columns:
             return ""
-        _ar = _ar[(_ar["offense_team"].astype(str) == str(team)) & (pd.to_numeric(_ar["uses"], errors="coerce") >= 2)
+        _ar = _ar[(_ar["offense_team"].astype(str) == str(team)) & (pd.to_numeric(_ar["uses"], errors="coerce") >= _READS_MIN)
                   & ~_ar["player"].astype(str).str.startswith("(")]
         if _ar.empty:
             return ""
@@ -6378,6 +6621,267 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             "several actions, so the shares add to more than 100%. \u201cNo action tagged\u201d is mostly transition and "
             "putbacks; it makes every other share a minimum.</p></div>")
 
+    # CONFIRMED CHANGE (requested 11/18: "format the 'HOW ELMHURST RUNS OFFENSE' and 'HOW WE RUN OFFENSE' sections the
+    # same way with 5 of the most important pieces of information as cards above an expandable section ... Motion, Plays,
+    # Actions, BLOB/SLOB and Tempo"). The cards ride in the _sb_sechead slot, so _sb_collapse keeps them beside the
+    # header and puts the tables behind one "Show the detail" expander -- the same shape as TEAM COMPARISON and the
+    # lineup sections. They are built from _offense_rows(side), the SAME rows the section's own tables use, so a card can
+    # never contradict the table under it (the 11/18 headline bug was exactly that). Rates are shown against the side's
+    # own average (team_ppp), never a league number, and no card quotes a tagged-possession denominator (requested
+    # earlier: nothing should read "... on 85 tagged").
+    def _off_cards(side):
+        # CONFIRMED CHANGE (requested 11/18, second pass: "make each of those 5 cards be actually informative for coaches
+        # and not just how many possessions and PPP"). Every card now answers who runs it, what it turns into, what shape
+        # they are in, what shots come out of it and what it costs -- all columns the summary already carries
+        # (top_player, top_action, personnel_grouping_mode, fga/fg3a/fg_pct, turnovers, fouls_drawn), none of them
+        # computed here. The read line at the bottom is the one a coach repeats in a staff meeting.
+        sm = _offense_rows(side)
+        if sm.empty or not {"level", "name", "uses", "ppp"} <= set(sm.columns):
+            return ""
+        _mine = side == "UWW"
+        _us, _our = ("we", "our") if _mine else ("they", "their")
+
+        def _lvl(name):
+            d = sm[sm["level"].astype(str) == name].copy()
+            if d.empty:
+                return d
+            d["_u"] = pd.to_numeric(d["uses"], errors="coerce").fillna(0)
+            d["_p"] = pd.to_numeric(d["ppp"], errors="coerce")
+            return d[~d["name"].astype(str).str.contains("unspecified", case=False, na=False)].sort_values("_u", ascending=False)
+
+        _t = pd.to_numeric(sm.get("team_ppp"), errors="coerce").dropna()
+        _team = float(_t.iloc[0]) if len(_t) else None
+        _n = lambda r, c: (float(pd.to_numeric(r.get(c), errors="coerce")) if pd.notna(pd.to_numeric(r.get(c), errors="coerce")) else None)  # noqa: E731
+        _last = lambda x: str(x).split()[-1] if str(x).strip() else ""  # noqa: E731
+
+        def _rate(d):
+            d = d[d["_p"].notna()] if not d.empty else d
+            u = float(d["_u"].sum()) if not d.empty else 0.0
+            return (float((d["_p"] * d["_u"]).sum()) / u) if u else None
+
+        def _poss(n, p=None):
+            # CONFIRMED CHANGE (requested 11/18): the rate leads and the sample rides in brackets --
+            # "0.97 PPP (30 Poss)", not "30 possessions, 0.97 a trip".
+            return f"{p:.2f} PPP ({int(n)} Poss)" if p is not None else f"{int(n)} Poss"
+
+        def _who(r, verb="in"):
+            """Who the possession ran through, and how often -- surname only, the way it is said out loud."""
+            nm, u = _last(_sb_clean(r.get("top_player"))), _n(r, "top_player_uses")
+            return f"{nm} {verb} {int(u)}" if nm and u else (nm or "")
+
+        def _shape(r):
+            g = _sb_clean(r.get("personnel_grouping_mode"))
+            return g if g and g.lower() != "nan" else ""
+
+        def _into(r):
+            a = _sb_clean(r.get("top_action"))
+            return f"into {a}" if a and a.lower() != "nan" else ""
+
+        def _shots(r):
+            """What comes out of it: how many of the shots are threes, and how they shoot overall."""
+            fga, fg3a, pct = _n(r, "fga"), _n(r, "fg3a"), _n(r, "fg_pct")
+            if not fga:
+                return ""
+            out = f"{int(fg3a)} of {int(fga)} shots from three" if fg3a else f"{int(fga)} shots, none from three"
+            return out + (f", {pct:.0f}% overall" if pct is not None and fga >= 4 else "")
+
+        def _cost(r):
+            to, fd = _n(r, "turnovers"), _n(r, "fouls_drawn")
+            bits = ([f"{int(to)} turnover" + ("s" if int(to) != 1 else "")] if to else []) \
+                + ([f"{int(fd)} foul" + ("s" if int(fd) != 1 else "") + " drawn"] if fd else [])
+            return ", ".join(bits)
+
+        def _vs(p):
+            if p is None or _team is None:
+                return ""
+            d = p - _team
+            return ("above " if d > 0.05 else "below " if d < -0.05 else "right at ") + f"{_our} average ({_team:.2f})"
+
+        def _card(t, name, value, sub, note, split=""):
+            # `split` is a second sub-line of its own (the trigger / screener split), not more text on the first
+            return (f'<div class="lc"><div class="lc-t">{_sb_esc(t)}</div><div class="lc-n">{_sb_esc(name)}</div>'
+                    + (f'<div class="lc-v">{_sb_esc(value)}</div>' if value else "")
+                    + (f'<div class="lc-s">{_sb_esc(sub)}</div>' if sub else "")
+                    + (f'<div class="lc-s lc-split">{_sb_esc(split)}</div>' if split else "")
+                    + (f'<div class="lc-x">{_sb_esc(note)}</div>' if note else "") + "</div>")
+
+        # CONFIRMED BUG (fixed 11/18; Corey: "Plays and Actions cards don't match the bullet points underneath").
+        # The cards were ranking play_call_summary rows while the bullets under them come from
+        # uww_offense_summary, which 47 builds from the clips with its own grouping (ACTION_GROUPS folds "DHO /
+        # handoff" into one, OB_SUMMARY_MIN_POSS gates it) -- so the card said "Cheetah scores best (1.80 on 5)"
+        # while the bullet said "BLOB (2x, 2.50 PPP) \u00b7 Cheetah (5x, 1.80 PPP) \u00b7 Zoom (3x, 1.67 PPP)". The
+        # most-successful half of both cards is now LIFTED FROM THAT BULLET's own text, numbers and all, so the two
+        # read the same words. Most-used still comes from the summary table, and both halves are now labelled.
+        def _best_from_bullets(kind):
+            try:
+                _os_ = _sb_d("uww_offense_summary")
+            except Exception:
+                return []
+            if _os_.empty or "kind" not in _os_.columns:
+                return []
+            _r = _os_[(_os_["kind"].astype(str) == kind)
+                      & (_os_["perspective"].astype(str) == side)]
+            if "scouted_opponent" in _r.columns:
+                _r = _r[_r["scouted_opponent"].astype(str) == str(short)]
+            if _r.empty:
+                return []
+            return [(m.group(1).strip(" \u00b7"), int(m.group(2)), float(m.group(3)))
+                    for m in re.finditer(r"([^\u00b7:]+?)\s*\((\d+)x,\s*([\d.]+)\s*PPP\)", str(_r.iloc[0]["text"]))]
+
+        def _best_line(kind, fallback_df=None):
+            _b = _best_from_bullets(kind)
+            if _b:
+                return "Most successful: " + ", ".join(f"{n_} {p_:.2f} PPP ({c_} Poss)" for n_, c_, p_ in _b[:3])
+            if fallback_df is not None and not fallback_df.empty:
+                _f = fallback_df[fallback_df["_p"].notna() & (fallback_df["_u"] >= 2)].sort_values("_p", ascending=False)
+                if len(_f):
+                    return (f"Most successful: {_sb_clean(_f.iloc[0]['name'])} {_f.iloc[0]['_p']:.2f} PPP "
+                            f"({int(_f.iloc[0]['_u'])} Poss)")
+            return ""
+
+        _dot = lambda *x: " \u00b7 ".join([y for y in x if y])  # noqa: E731
+        _cap1 = lambda t: (t[:1].upper() + t[1:]) if t else t   # noqa: E731  (str.capitalize() would eat PPP / DHO)
+
+        # CONFIRMED CHANGE (requested 11/18: "the scouting brief ... not splitting actions into trigger and screen
+        # actions"). Film Tagging's Actions table records the two halves of every action separately -- what the man with
+        # the ball did (trigger_actions: "Ball Screen (#3): Use Ball Screen") and what the screener did
+        # (screener_actions: "Ball Screen (#35): Roll") -- but nothing in the brief ever read those two columns: the
+        # Actions card, the breakdown table and the "most successful actions" bullet all counted the action TYPE and
+        # stopped there. uww_action_reads does carry the split, per player, but it is gated at 2+ uses and most rows sit
+        # at 1, so almost none of it reached the page. This reads the clip columns straight, so the split shows from the
+        # first tagged possession.
+        _ACT_RX = re.compile(r"^\s*(.*?)\s*(?:\(#(\d{1,2})\))?\s*:\s*(.+?)\s*$")
+
+        def _role_reads(_side):
+            """("Ball handler: Use Ball Screen 31 (0.87 PPP) \u00b7 Reject 3", "Screener: Roll 30 (0.87 PPP) \u00b7 Pop 6")."""
+            if _pcc_all.empty or "side" not in _pcc_all.columns:
+                return ""
+            t = _pcc_all[_pcc_all["side"].astype(str) == _side]
+            if "possession_side" in t.columns:
+                t = t[t["possession_side"].astype(str) == "Offense"]
+            if t.empty:
+                return ""
+            out = []
+            for col, lab in (("trigger_actions", "Ball handler"), ("screener_actions", "Screener")):
+                if col not in t.columns:
+                    continue
+                _n, _p = {}, {}
+                for _, r_ in t.iterrows():
+                    v = str(r_.get(col) or "")
+                    if not v.strip() or v == "nan":
+                        continue
+                    _pts = float(pd.to_numeric(pd.Series([r_.get("points")]), errors="coerce").fillna(0).iloc[0])
+                    for part in v.split(" | "):
+                        m = _ACT_RX.match(part)
+                        if not m:
+                            continue
+                        _read = _sb_clean(m.group(3))
+                        if not _read or _read.lower() == "trigger":   # "Trigger" is the box being ticked, not a read
+                            continue
+                        _n[_read] = _n.get(_read, 0) + 1
+                        _p[_read] = _p.get(_read, 0.0) + _pts
+                if not _n:
+                    continue
+                _top = sorted(_n, key=lambda k: (-_n[k], k))[:3]
+                out.append(f"{lab}: " + " \u00b7 ".join(
+                    f"{k} {_n[k]}" + (f" ({_p[k] / _n[k]:.2f} PPP)" if k == _top[0] and _n[k] >= 3 else "")
+                    for k in _top))
+            return " \u2014 ".join(out)
+        _MOT = r"(?i)motion|flow|5 ?out|four ?out|open ?post"
+        cards = []
+        ser, calls, act, sit, sc = (_lvl("Series"), _lvl("Play call"), _lvl("Primary action"),
+                                    _lvl("Situation"), _lvl("Shot clock"))
+
+        # 1. Motion -- the no-call offense: who it runs through, what it becomes, what it shoots
+        mot = ser[ser["name"].astype(str).str.contains(_MOT, regex=True, na=False)] if not ser.empty else ser
+        if not mot.empty and mot["_u"].sum():
+            _b, _r = mot.iloc[0], _rate(mot)
+            cards.append(_card("Motion", _sb_clean(_b["name"]), _poss(mot["_u"].sum(), _r),
+                               _dot(_who(_b), _into(_b), _shape(_b)),
+                               _cap1(_dot(_shots(_b), _cost(_b), _vs(_r))) + "."
+                               if _dot(_shots(_b), _cost(_b), _vs(_r)) else ""))
+
+        # 2. Plays -- the called sets, with the one that actually scores named
+        if not calls.empty:
+            plays = calls[~calls["name"].astype(str).str.contains(_MOT + r"|blob|slob", regex=True, na=False)]
+            if not plays.empty and plays["_u"].sum():
+                _top = plays.iloc[0]
+                _bn = _best_line("success", plays)
+                cards.append(_card("Plays", _sb_clean(_top["name"]), _poss(_top["_u"], _n(_top, "ppp")),
+                                   _dot("Most used", _who(_top), _into(_top), f"{len(plays)} named sets"),
+                                   _dot(_bn, f"nothing run more than {int(_top['_u'])} times yet"
+                                        if _top["_u"] < 3 else "") + ("." if _bn or _top["_u"] < 3 else "")))
+
+        # 3. Actions -- what they run into, and how it has gone against each coverage
+        if not act.empty and act["_u"].sum():
+            _a = act.iloc[0]
+            _cov = _lvl("Ball screen coverage faced")
+            _cov = _cov[_cov["_p"].notna() & (_cov["_u"] >= 1)] if not _cov.empty else _cov
+            _covtxt = ""
+            if not _cov.empty and re.search(r"(?i)ball ?screen|p&r|pnr|dho|hand ?off", str(_a["name"])):
+                _covtxt = "Against " + ", ".join(f"{_sb_clean(r['name'])} {r['_p']:.2f} PPP on {int(r['_u'])}"
+                                                 for _, r in _cov.head(2).iterrows())
+            _rest = act.iloc[1:3]
+            _abest = _best_line("success_actions", act)
+            _split = _role_reads(side)
+            cards.append(_card("Actions", _sb_clean(_a["name"]), _poss(_a["_u"], _n(_a, "ppp")),
+                               _dot("Most used", _who(_a, "runs it"), _shape(_a)),
+                               _dot(_abest, _covtxt,
+                                    "then " + ", ".join(f"{_sb_clean(r['name'])} ({int(r['_u'])} Poss)"
+                                                        for _, r in _rest.iterrows()) if len(_rest) else "")
+                               + ("." if _abest or _covtxt or len(_rest) else ""), split=_split))
+
+        # 4. BLOB / SLOB -- the two inbounds as a pair: where each one goes and which one hurts
+        if not sit.empty:
+            _ib = {k: sit[sit["name"].astype(str).str.fullmatch(k, case=False, na=False)] for k in ("BLOB", "SLOB")}
+            _have = {k: v.iloc[0] for k, v in _ib.items() if not v.empty and v["_u"].sum()}
+            if _have:
+                _rs = {k: _n(r, "ppp") for k, r in _have.items() if _n(r, "ppp") is not None}
+                _name = " \u00b7 ".join(f"{k} {int(_have[k]['_u'])}" for k in _have)
+                _val = " \u00b7 ".join(f"{k} {_rs[k]:.2f} PPP ({int(_have[k]['_u'])} Poss)" for k in _rs) if _rs else ""
+                _sub = _dot(*[f"{k} to {_who(r, 'in')}".replace(" in ", " \u2014 ") + (f", {_into(r)}" if _into(r) else "")
+                              for k, r in _have.items() if _who(r)])
+                if _rs and max(_rs.values()) == 0:
+                    _note = f"No points off either yet \u2014 {_us} have put up "
+                    _note += ", ".join(f"{int(_n(r, 'fga') or 0)} shot(s) on {k}" for k, r in _have.items()) + "."
+                elif len(_rs) == 2:
+                    _hi = max(_rs, key=_rs.get)
+                    _note = (f"{_hi} is the one that hurts ({_rs[_hi]:.2f} against {_rs[min(_rs, key=_rs.get)]:.2f})."
+                             if _rs[_hi] > min(_rs.values()) else "Both score about the same.")
+                else:
+                    _k0 = next(iter(_rs), None)
+                    _note = (f"{_k0} is {_vs(_rs[_k0])}." if _k0 else "")
+                cards.append(_card("BLOB / SLOB", _name, _val, _sub, _note))
+
+        # 5. Tempo -- the whole clock distribution, where they are best, and how much is transition
+        if not sc.empty and sc["_u"].sum():
+            _short = lambda n: ("early" if "early" in str(n).lower() else
+                                "late" if "late" in str(n).lower() else "organized")  # noqa: E731
+            _by = {_short(r["name"]): r for _, r in sc.iterrows()}
+            _order = [k for k in ("early", "organized", "late") if k in _by]
+            _name = " \u00b7 ".join(f"{k.capitalize()} {int(_by[k]['_u'])}" for k in _order)
+            _bestsc = sc[sc["_p"].notna()].sort_values("_p", ascending=False)
+            _tr = sit[sit["name"].astype(str).str.fullmatch("transition", case=False, na=False)] if not sit.empty else sm.iloc[0:0]
+            _trtxt = ""
+            if not _tr.empty and _tr["_u"].sum():
+                _trr = _n(_tr.iloc[0], "ppp")
+                _trtxt = (f"{_trr:.2f} PPP in transition ({int(_tr['_u'].sum())} Poss)" if _trr is not None
+                          else f"{int(_tr['_u'].sum())} Poss in transition")
+            _bb = _bestsc.iloc[0] if len(_bestsc) else None
+            cards.append(_card(
+                "Tempo", _name,
+                (f"best with the clock {_short(_bb['name'])}: {_bb['_p']:.2f} PPP ({int(_bb['_u'])} Poss)"
+                 if _bb is not None else ""),
+                _dot(_trtxt, _who(_by[_order[0]]) if _order else ""),
+                ((f"{_us.capitalize()} spend most of it {_short(sc.iloc[0]['name'])} "
+                  f"({_shots(sc.iloc[0]) or 'no shots logged'})." if _shots(sc.iloc[0]) else "")
+                 + (f" Worst {_short(_bestsc.iloc[-1]['name'])}: {_bestsc.iloc[-1]['_p']:.2f}."
+                    if len(_bestsc) > 1 else "")).strip()))
+
+        if len(cards) < 2:
+            return _sb_pc_top(side)                        # not enough tagged yet -- the one-line headline instead
+        return '<div class="lcards wm-cards">' + "".join(cards[:5]) + "</div>"
+
     def offense_section_test2(side, title, extra=None, extra_note=""):
         """extra: HTML cards built into this section (requested: their film and reads go in here, not in sections of
         their own) -- after the quadrant card, or the section's only content when their offense isn't tagged yet."""
@@ -6394,7 +6898,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 _has_tbl = False
             if extra or _has_tbl:
                 section(title + footnote(extra_note))
-                _sb_sechead(_sb_pc_top("Opponent" if side == "Opponent" else "UWW"))
+                _sb_sechead(_off_cards("Opponent" if side == "Opponent" else "UWW"))
                 (_action_freq_card if globals().get("BRIEF_ACTION_TABLES", False) else _offense_breakdown_card)(side)
                 add(f'<p class="mini">{_sb_esc(OPP_UP)}\u2019s offense isn\u2019t coach-tagged enough for the set '
                     "breakdown yet -- what follows is from the film.</p>")
@@ -6426,7 +6930,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             f"with fewer than {_QMIN} tagged possessions are left out. \"Haven't seen it enough\" is the "
             "cell to read twice: those are efficient looks with a thin sample, which is what beats a "
             "defense that only prepared for the obvious." + (" " + extra_note if extra and extra_note else "")))
-        _sb_sechead(_sb_pc_top("Opponent" if side == "Opponent" else "UWW"))
+        _sb_sechead(_off_cards("Opponent" if side == "Opponent" else "UWW"))
 
         _quads = [
             ("Take this away", "They run it a lot and it works", "q-bad",
@@ -6651,7 +7155,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         def _extra_only():
             if extra:
                 section(title + footnote(extra_note))
-                _sb_sechead(_sb_pc_top("Opponent" if side == "Opponent" else "UWW"))
+                _sb_sechead(_off_cards("Opponent" if side == "Opponent" else "UWW"))
                 add("".join(extra))
         sm = _offense_rows(side)
         if sm.empty:
@@ -6831,7 +7335,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             f"with fewer than {_QMIN} tagged possessions are left out -- not enough reps to judge. Read it "
             "as a call sheet, not a verdict: a low-efficiency set may still be there to set up something "
             "else." + (" " + extra_note if extra and extra_note else "")))
-        _sb_sechead(_sb_pc_top("Opponent" if side == "Opponent" else "UWW"))
+        _sb_sechead(_off_cards("Opponent" if side == "Opponent" else "UWW"))
         _quads = [
             ("Keep calling it", "Called often, scores well", "q-good",
              lambda r: r["_uses"] >= _use_cut and r["_ppp"] >= team_ppp),
@@ -6987,6 +7491,62 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     offense_section_test_uww("UWW", "\U0001f3c0 HOW WE RUN OFFENSE", extra=[_ru_card] if _ru_card else [],
                              extra_note=_READS_NOTE if _ru_card else "")
 
+    # CONFIRMED CHANGE (requested 11/18: "Give the trigger/screener split its own section ... per player"). The split
+    # rides on the Actions card as a team total; this is the same thing player by player, from uww_action_reads, both
+    # teams side by side: who uses the screen and who rejects it, who rolls and who pops. Offense only -- the defenders'
+    # reactions are in the app's READS OFF ACTIONS table, which shows every row without a minimum.
+    def _trigger_screen_section():
+        _ar = _sb_d("uww_action_reads")
+        if _ar.empty or not {"offense_team", "role", "player", "action", "read", "uses"} <= set(_ar.columns):
+            return
+        _ar = _ar[_ar["role"].astype(str).str.contains(r"(?i)ball handler|trigger|screener", regex=True, na=False)
+                  & (pd.to_numeric(_ar["uses"], errors="coerce") >= _READS_MIN)
+                  & ~_ar["player"].astype(str).str.startswith("(")]
+        if "side_of_ball" in _ar.columns:
+            _ar = _ar[_ar["side_of_ball"].astype(str) == "Offense"]
+        if _ar.empty:
+            return
+        _blocks = []
+        for _tm, _ttl in ((str(short), f"{OPP_UP}"), (_ar_uww, _SB_UWW.upper())):
+            _t = _ar[_ar["offense_team"].astype(str) == str(_tm)]
+            if _t.empty:
+                continue
+            _rows = []
+            for _role, _lab in (("Ball handler (trigger)", "Trigger \u2014 the man with the ball"),
+                                ("Screener", "Screener")):
+                _g = _t[_t["role"].astype(str).str.fullmatch(re.escape(_role), case=False, na=False)]
+                if _g.empty:
+                    continue
+                _rows.append(f'<tr class="rsub"><td colspan="5">{_sb_esc(_lab)}</td></tr>')
+                for _, _r in _g.sort_values("uses", ascending=False).head(10).iterrows():
+                    _sh = pd.to_numeric(_r.get("share_pct"), errors="coerce")
+                    _rows.append(
+                        f'<tr><td class="nm">{_sb_esc(_r["player"])}</td>'
+                        f'<td style="text-align:left">{_sb_esc(_r["action"])}</td>'
+                        f'<td style="text-align:left"><b>{_sb_esc(_r["read"])}</b></td>'
+                        f'<td>{int(pd.to_numeric(_r["uses"], errors="coerce"))}'
+                        + (f' <span class="mini">({int(_sh)}%)</span>' if pd.notna(_sh) and _sh > 0 else "")
+                        + f'</td><td>{_sb_fmt(_r.get("ppp"), 2)}</td></tr>')
+            if _rows:
+                _blocks.append('<div class="card"><div class="pc-sub">' + _sb_esc(_ttl) + "</div>"
+                               '<table class="compact"><thead><tr><th style="text-align:left">Player</th>'
+                               '<th style="text-align:left">Action</th><th style="text-align:left">Did</th>'
+                               '<th>Uses</th><th>PPP</th></tr></thead><tbody>' + "".join(_rows)
+                               + "</tbody></table></div>")
+        if not _blocks:
+            return
+        section("\U0001f501 TRIGGER &amp; SCREENER READS" + footnote(
+            "Film Tagging records the two halves of every action separately: what the man with the ball did with it "
+            "(use it, reject it, Cobra, Twirl) and what the screener did (roll, pop, slip). This is that split, player "
+            "by player. A read tagged once is still listed -- Uses says how thin it is. The defenders' reactions to "
+            "these same actions are in the app."))
+        _sb_sechead("")
+        add("".join(_blocks))
+        add('<p class="mini">' + app_link("Every read, by player, with the defenders' reactions",
+                                          page="upcoming", tab="game_plan", section="reads") + "</p>")
+
+    _trigger_screen_section()
+
     # AVAILABILITY and SCOUT TEAM removed from the brief (requested) -- still built and shown in full in
     # the app's Game Plan tab. Availability status still feeds the roster's per-player flag (see _avail_by
     # above), so that lookup stays; only the standalone OUR WEEK section is gone.
@@ -7094,6 +7654,53 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # lists them ("Tables that were empty or missing").
     add("<p>Prepared ahead of the staff's own scouting reports. Numbers will move as more film is "
         "tagged.</p>")
+    # CONFIRMED CHANGE (requested 11/18: "add a part in 'How this brief was built' that shows our metric definitions").
+    # Every number here is OUR definition, written from the constants the code actually uses -- the Four Factors weights
+    # come straight out of _SB_FF_WEIGHTS, so this list cannot drift from the ranking it describes. Where the repo
+    # departs from Dean Oliver's original (FT Rate on attempts, 0.475 on free throws) it says so.
+    _defs = [
+        ("Possession", "FGA \u2212 OREB + TO + 0.475 \u00d7 FTA. The 0.475 is KenPom's: it counts the share of free-throw "
+                       "attempts that end a trip, rather than Oliver's original 0.44."),
+        ("Points a possession (PPP)", "points \u00f7 possessions. On a play-call or lineup table it is the points scored on "
+                                      "that set's or that unit's own tagged possessions."),
+        ("Clutch", "not the first half, 5:00 or less on the clock, and the margin 8 points or fewer \u2014 the same rule "
+                   "the clutch event log and the game plan use, applied to each team's own games."),
+        ("Clutch, on offense", "the possessions where he was the man with the ball. The points are the "
+                               "POSSESSION'S points, not his own scoring \u2014 a kick-out that someone else finishes "
+                               "counts here \u2014 and the rate appears once there are three of them. A trip that ends at "
+                               "the line scores nothing on the clip itself, so fouls drawn are counted separately."),
+        ("Clutch, on defense", "there is no individual defensive box score here, so the card separates the two: "
+                               "\u201cHIM\u201d is the one thing that is his \u2014 that he was on the floor for those "
+                               "possessions \u2014 and \u201cTHE FIVE HE WAS IN\u201d is what the defense gave up while "
+                               "he was out there, a team number that belongs to all five. Lower is better, and the team's "
+                               "rate across every clutch defensive possession rides along for scale."),
+        ("Clutch flags on a card", "the gold \u2605 chips. \u201cBest with the ball\u201d is the highest points a "
+                                   "trip among players with at least three clutch possessions of their own. \u201cBest "
+                                   "five on defense\u201d is the fewest points allowed a possession with him on the floor, "
+                                   "among players on for at least three and 40% of the team's clutch defensive "
+                                   "possessions \u2014 a five-man number, so it credits the lineup he was in, not him "
+                                   "alone. Neither is given when too few players clear the bar, or when everyone who "
+                                   "does has the same number."),
+        ("Leading / Trailing by 10+", "the margin is 10 or more, either way, outside the clutch window above."),
+        ("eFG%", "(FGM + 0.5 \u00d7 3PM) \u00f7 FGA \u2014 a three counted at its real worth."),
+        ("TOV%", "turnovers \u00f7 possessions."),
+        ("ORB%", "offensive rebounds \u00f7 (our offensive rebounds + their defensive rebounds) \u2014 the share of "
+                 "available misses rebounded."),
+        ("FT Rate", "FTA \u00f7 FGA, the Basketball-Reference form (how often they get to the line). Oliver's original "
+                    "uses FTM \u00f7 FGA, which measures getting there AND making them."),
+        ("Four Factors ranking", "the FOUR FACTORS table ranks the four at fixed weights \u2014 "
+                                 + ", ".join(f"{k} {int(v * 100)}%" for k, v in _SB_FF_WEIGHTS.items())
+                                 + " \u2014 Oliver's own order of importance. TEAM COMPARISON does something different: it "
+                                   "prices each factor for THIS matchup, so the two can disagree about what matters most."),
+        ("PPG difference", "points scored minus points allowed, a game."),
+        ("Min/G (lineups)", "that unit's minutes on the floor divided by the games it appeared in \u2014 not its total "
+                            "minutes, and not minutes a game for the players in it."),
+        ("Shot clock", "seconds USED, scaled to a 30-second clock: Early 0\u20139, Organized 10\u201319, Late 20+."),
+        ("\u201cOn film\u201d / \u201ctagged\u201d", "from the clips the coaches have tagged in the app, not the full "
+                                               "season's box score \u2014 so these counts grow as tagging continues."),
+    ]
+    add('<p><b>What the numbers mean</b></p><ul class="tbl-bul">'
+        + "".join(f"<li><b>{_sb_esc(k)}</b> \u2014 {_sb_esc(v)}</li>" for k, v in _defs) + "</ul>")
     # CONFIRMED CHANGE (requested: "On the bottom of the scouting briefs, make sure to include notes about the scouting
     # reports, player number tracking and film tracking that was used in creation").
     _src = []

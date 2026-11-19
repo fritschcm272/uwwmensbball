@@ -3811,6 +3811,25 @@ if isinstance(globals().get("clip_frames"), pd.DataFrame) and not clip_frames.em
     _ign = [str(x).lower() for x in globals().get("FRAMES_STOP_IGNORE_GAMES", [])]
     _ignored = lambda *labels: any(i and any(i in str(l).lower() for l in labels) for i in _ign)
     _allow = int(globals().get("FRAMES_MISSING_PLAYS_ALLOWED", 2))
+    # CONFIRMED CHANGE (requested 11/19, after the 11/18 20:59 brief stopped on "2026-11-14 Elmhurst Bluejays vs Hope
+    # Flying Dutchmen: 178 clip(s) captured, none in uww_plays.csv"). That run had REFERENCE_DATE = 2026-11-13 to rebuild
+    # the Ripon brief, so both 11/14 games were in the FUTURE and belonged to no side of the run -- their captured frames
+    # looked orphaned and this guard stopped a run that was working as asked. A game played AFTER the reference date
+    # cannot be part of that run, so it is noted and skipped instead. Frames for games ON or BEFORE the date are still
+    # checked exactly as before, which is what the guard is for.
+    _fr_ref = pd.to_datetime(globals().get("REFERENCE_DATE"), errors="coerce")
+
+    def _fr_game_date(lab, rows):
+        """The captured game's own date: its label starts with it ("2026-11-14 Ripon Red Hawks"), else clip_date."""
+        _m = re.match(r"\s*(\d{4}-\d{2}-\d{2})", str(lab))
+        if _m:
+            return pd.to_datetime(_m.group(1), errors="coerce")
+        for _c in ("clip_date", "game_date", "date"):
+            if _c in rows.columns:
+                _d = pd.to_datetime(rows[_c], errors="coerce").dropna()
+                if len(_d):
+                    return _d.min()
+        return pd.NaT
     _gaps_capt, _gaps_tag, _gaps_part = [], [], []
     _used_ff = set(play_calls["frame_files"].dropna().astype(str))
     for (_lab, _url), _cfp in clip_frames.groupby([clip_frames.get("source_label", pd.Series("", index=clip_frames.index)),
@@ -3834,6 +3853,12 @@ if isinstance(globals().get("clip_frames"), pd.DataFrame) and not clip_frames.em
                   f"Synergy's coding is up; not stopping the run.)", flush=True)
             continue
         if not _cfp["frame_files"].dropna().astype(str).isin(_used_ff).any() and not _ignored(_lab, _url):
+            _gdt = _fr_game_date(_lab, _cfp)
+            if pd.notna(_fr_ref) and pd.notna(_gdt) and _gdt.date() > _fr_ref.date():
+                print(f"  (frame check: {_lab}: played after this run's reference date "
+                      f"({_fr_ref.date()}) -- not part of this run, so its {len(_cfp)} captured clip(s) are not a gap)",
+                      flush=True)
+                continue
             _gaps_capt.append(f"    - {_lab}: {len(_cfp)} clip(s) captured, none in uww_plays.csv")
     for (_gd, _gc), _g in play_calls.groupby(["game_date", "game_code"], dropna=False):
         if _ignored(f"{_gd} {_gc}", _gc, _gd):
@@ -4374,7 +4399,10 @@ def _pl_name_key(x):
     return k_ or str(x).lower()
 
 
-def _pl_merge_spellings(df, cols=("play_call", "play_call_detail", "play_formation")):
+# CONFIRMED BUG (fixed 11/18, same request): play_series and play_set are written at decode time (lines ~444 / ~938),
+# BEFORE this runs, so they kept the raw spelling -- "30 Snap" and "Snap 30" were two different Series in the brief's
+# tables even once the play call itself had been merged. They are merged here too now.
+def _pl_merge_spellings(df, cols=("play_call", "play_call_detail", "play_formation", "play_series", "play_set")):
     n_ch = 0
     _ren = {_pl_name_key(a): b for a, b in (PLAY_CALL_RENAMES or {}).items()}
     # CONFIRMED CHANGE (requested: "Pinch ,Bs(3,4)" should be Play Call "Pinch" with an Action of "Ball Screen"): a play call
@@ -4396,6 +4424,41 @@ def _pl_merge_spellings(df, cols=("play_call", "play_call_detail", "play_formati
                 _old = [x for x in str(df.at[_i, "play_actions"] or "").split(" | ") if x.strip() and x != "nan"]
                 df.at[_i, "play_actions"] = " | ".join(dict.fromkeys(_old + _acts))
             n_ch += 1
+    # CONFIRMED CHANGE (requested 11/18: '"Twins Right Twirl" is really "Twins Right" play call with "Twirl" as the
+    # trigger action'). A call that ENDS in one of these words is split: the word leaves the name and joins the play's
+    # actions, so "Twins Right" and "Twins Right Twirl" stop being two different calls in every table that groups by
+    # play call. Only the listed words move. A blanket "the last word is a known action" rule would also take apart
+    # "5 Out Motion" and "Snap Zoom" -- Motion and Zoom are known actions AND calls in their own right -- so new ones
+    # are added here on purpose: PLAY_CALL_TRAILING_ACTIONS = ["Twirl", "Swirl", "Cobra", ...].
+    _TRAIL = [str(x).strip() for x in (globals().get("PLAY_CALL_TRAILING_ACTIONS") or ["Twirl", "Swirl"]) if str(x).strip()]
+    if _TRAIL and "play_call" in df.columns:
+        _trx = re.compile(r"^(?P<base>.+?)\s+(?P<act>" + "|".join(re.escape(w) for w in _TRAIL) + r")\s*$", re.I)
+        _n_tr = 0
+        for _i, _v in df["play_call"].items():
+            if not isinstance(_v, str) or not _v.strip():
+                continue
+            _m = _trx.match(_v.strip())
+            if not _m or not _m.group("base").strip():
+                continue
+            _base = _m.group("base").strip()
+            _word = next((w for w in _TRAIL if w.lower() == _m.group("act").lower()), _m.group("act"))
+            _act = _pt_action(_word)[0] or _word.title()
+            # the call's own name, and the names derived from it at decode time
+            for _c in ("play_call", "play_call_detail", "play_set", "play_series", "play_call_base"):
+                if _c in df.columns and isinstance(df.at[_i, _c], str) and df.at[_i, _c].strip().lower() == _v.strip().lower():
+                    df.at[_i, _c] = _base
+            if "play_actions" in df.columns:
+                _old = [x for x in str(df.at[_i, "play_actions"] or "").split(" | ") if x.strip() and x != "nan"]
+                df.at[_i, "play_actions"] = " | ".join(dict.fromkeys(_old + [_act]))
+            if "primary_action" in df.columns:
+                _pa = df.at[_i, "primary_action"]
+                if not isinstance(_pa, str) or not _pa.strip() or _pa.strip().lower() == "nan":
+                    df.at[_i, "primary_action"] = _act
+            _n_tr += 1
+            n_ch += 1
+        if _n_tr:
+            print(f"  Play calls: {_n_tr} clip(s) had a trailing action taken out of the name and put with the play's "
+                  f"actions ({', '.join(_TRAIL)}) -- e.g. 'Twins Right Twirl' = 'Twins Right' + Twirl", flush=True)
     for c in ("play_call", "play_call_detail", "play_set", "play_call_base"):
         if c in df.columns and _ren:
             _k = df[c].map(lambda v: _pl_name_key(v) if isinstance(v, str) and v.strip() else None)
@@ -4418,21 +4481,43 @@ def _pl_merge_spellings(df, cols=("play_call", "play_call_detail", "play_formati
         txt = v[ok].astype(str).str.strip().str.replace(r"\s+", " ", regex=True)
         # CONFIRMED CHANGE (requested: '"Ripon Motion #2", "Ripon Motion Option #2" and "RIPON MOTION #2 (RICKY)" should all
         # be grouped together'): a note in brackets and the word "option" / "opt" don't make a different play call
-        key = (txt.str.lower().str.replace(r"\([^)]*\)", " ", regex=True)
-               .str.replace(r"\b(?:option|opt)\b\.?", " ", regex=True)
-               .str.replace(r"[^a-z0-9#]+", "", regex=True))
+        # CONFIRMED CHANGE (requested 11/18: '"Snap 30" and "30 Snap" should always be made "Snap 30". Anything
+        # similar should follow the same rules'). The key used to keep word ORDER, so the two were different calls.
+        # It is now the call's words SORTED, so any re-ordering of the same words is one call.
+        _base = (txt.str.lower().str.replace(r"\([^)]*\)", " ", regex=True)
+                 .str.replace(r"\b(?:option|opt)\b\.?", " ", regex=True)
+                 .str.replace(r"[^a-z0-9#]+", " ", regex=True).str.strip())
+        key = _base.map(lambda t: " ".join(sorted(t.split())))
         key = key.where(key != "", txt.str.lower())
+
+        def _canon_pick(vc):
+            """The spelling to keep. Most-used, as before -- except where the ONLY difference is a bare number that
+            moved from the front to the back ("30 Snap" / "Snap 30"), where the name leads and the number follows,
+            however the coaches happened to type it most often. The test is deliberately narrow: drop the bare
+            numbers and what is left must be identical, in the same order, in every spelling -- so "5 Out Motion"
+            and "Motion 5 Out" (where "Out" also moves) are still settled by usage, and a formation number that
+            leads a call stays where it is."""
+            sps = list(vc.index)
+            _bare = lambda w: bool(re.fullmatch(r"#?\d+", w))  # noqa: E731
+            _rest = lambda sp: tuple(w.lower() for w in sp.split() if not _bare(w))
+            pool = sps
+            if len(sps) > 1 and len({_rest(sp) for sp in sps}) == 1:
+                _tail = [sp for sp in sps if sp.split() and not _bare(sp.split()[0])]
+                if _tail:
+                    pool = _tail
+            return max(pool, key=lambda sp: (vc[sp], "(" not in sp, -sps.index(sp)))
+
         canon = {}
         for k_, grp in txt.groupby(key, sort=False):
             vc = grp.value_counts(sort=False)
             # (the most-used spelling; a spelling with no bracket note wins a tie)
-            canon[k_] = max(vc.index, key=lambda sp: (vc[sp], "(" not in sp, -list(vc.index).index(sp)))
+            canon[k_] = _canon_pick(vc)
         new_v = key.map(canon)
         n_ch += int((new_v != v[ok].astype(str)).sum())
         df.loc[ok, c] = new_v
     if n_ch:
         print(f"  Play-call / formation names: {n_ch} clip(s) written the same way as the most-used spelling (e.g. 'Blob #1' = "
-              f"'BLOB #1', 'I-Form' = 'I Form', '4-1' = '41', '--' = No Formation)",
+              f"'BLOB #1', 'I-Form' = 'I Form', '4-1' = '41', '30 Snap' = 'Snap 30', '--' = No Formation)",
               flush=True)
     return df
 

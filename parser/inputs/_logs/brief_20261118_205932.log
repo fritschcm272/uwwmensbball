@@ -1,0 +1,1972 @@
+  [disk] scratch folder: F:\uwwmensbball_temp
+  [disk] data (F:): 1612.9 GB free
+  [disk] scratch (F:): 1612.9 GB free
+
+===== cell 1 <file> =====
+
+===== cell 2 00b_season_switch, 01_uw_whitewater_scouting_parser =====
+Season: 2026-27 (last season 2025-26: F:\uwwmensbball\data_2025-26)
+Input directory: ./inputs
+Output directory: ../data
+LLM comparisons: disabled
+Reference date: 2026-11-13
+Before scout: no -- using every scouting report found
+APP_BASE_URL taken from UWW_APP_URL in .env
+Brief links -> https://uwwmensbball-new.streamlit.app
+
+===== cell 4  =====
+
+===== cell 5  =====
+
+===== cell 7 02_parse_every_team_schedule_scrape_live_from =====
+Found 9 schedule MHTML file(s) in ./inputs:
+ - Carroll (WI) Pioneers - Schedule_2026.html
+ - Elmhurst Bluejays - Schedule_2026.html
+ - Ripon Red Hawks - Schedule_2026.html
+ - UW-Stout Blue Devils - Schedule_2023.html
+ - UW-Stout Blue Devils - Schedule_2026.html
+ - UW-Whitewater - Schedule_2023.html
+ - UW-Whitewater - Schedule_2024.html
+ - UW-Whitewater - Schedule_2025.html
+ - UW-Whitewater - Schedule_2026.html
+Detected season 2026 from UWW's local schedule snapshot -- using FASTSCOUT_DOCS_SEASON='26' for any live-scrape URLs below (was hardcoded to '25').
+Skipping live scrape for UW-Whitewater's own schedule -- a local schedule file already exists: UW-Whitewater - Schedule_2026.html
+Excluding 22 game(s) scheduled beyond the next upcoming game -- not downloading those reports yet.
+    [login] navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [auth-retry] got redirected to identity.hudl.com while waiting on https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26 -- logging in and retrying
+    [auth-retry] login_to_fastscout returned, now at https://fastscout.fastmodelsports.com/#access_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZaYjBkN0VpWG9TQ0FhUTdYaW90SCJ9.eyJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2Nvbm5lY3Rpb25fbmFtZSI6InByb2QtaHVkbC11c2Vycy10ZXJyYWZvcm0iLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL3VzZXJfaWQiOiI2NDM1MDQ3IiwiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS90b2siOiJpZCIsImh0dHBzOi8vaWRlbnRpdHkuaHVkbC5jb20vaXNfc3lzYWRtaW4iOmZhbHNlLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2ludGVybmFsX2lkX2h1ZGwiOiI2NDM1MDQ3IiwiZ2l2ZW5fbmFtZSI6IkNvcmV5IiwiZmFtaWx5X25hbWUiOiJGcml0c2NoIiwibmlja25hbWUiOiJmcml0c2NoY20yNyIsIm5hbWUiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOTY3OWI2Mzk1N2E1ZTJmZmE2NjMyYWZhYjVmMGExYTU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZmci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAyNi0xMS0xOVQwMzowMDoxMi44MDNaIiwiZW1haWwiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS8iLCJhdWQiOiJ1UFJyRFVpWkZOU3d2RnJ0cnVsQ3lBWDBwaDZBckx6VSIsInN1YiI6ImF1dGgwfGh1ZGx8NjQzNTA0NyIsImlhdCI6MTc5NTA1NzIxMywiZXhwIjoxNzk2MjY2ODEzLCJzaWQiOiI0cHNhcnBQX2NjSUx3V0tzT2tsU01CQ2lobmRHYmQwLSIsImNfaGFzaCI6ImhkSFIxZ050aS0ySDNvLWs3akVibHciLCJub25jZSI6ImU4MGYxNThhLTE1NjQtNGY2NS1iM2YwLWFiMmY0NWYzZjA1OSJ9.irhppOQmRs5bP_uhoSW7Q8Ixt8NFa6cHywds_TdvlBs1egDGw8wi5mUcu5Z0m_bdYvnUAW0uoOJDb606Y8I7lJvaQ-cecDyu-PaUm90rIEtm-dfpi8YyCkr6pDxl9RsCdlGlNbdRjpKCqjTO0P3idzXaHm7WawXcAVsNqCeAaBGE_D0hNiU8tSZtvnaVKZFQwH8HbHqgclP01b7e9cYg2O5tIcWvEGCMIM7MZaQagUwsQnEt3goi0CE3bxsj-rMN5eG-2gqp6-XLcKP-lnYtW-rN53ECSNrhG2HwkHk0wOzL-rxFVzT2QFmedm_lgM_nsA4lssRDax_pVc06Li4hwA&token_type=Bearer&expires_at=1796266813 -- re-navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [auth-retry] re-navigated, now at https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26 -- waiting for 'text=SCHEDULE'
+    [login] confirmed logged in, landed on https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [save] myTeam analytics dashboard (diagnostic) -> myTeam - Analytics Dashboard.html
+  [Ripon Red Hawks] scout report already exists in ./inputs -- skipping download: 11_14_26 Ripon Red Hawks @ UW-Whitewater_scout.html (FastScout Last Modified: Nov 12, 2026)
+
+Every game already has a local scouting-report PDF, or is missing required data -- nothing to download from FastScout. (24 raw game(s) found; 0 missing opponent_url, 0 missing a parseable date.)
+  UW-Whitewater Warhawks (UW-Whitewater - Schedule_2026.html): 2 game(s) -- scouted opponents: ['Ripon Red Hawks', 'Elmhurst Bluejays', 'Carroll (WI) Pioneers']
+
+Fetching 2 opponent schedule(s) (scrape opponent_url, MHTML backup on failure):
+  Skipping live scrape for Carroll (WI) Pioneers -- a local schedule file already exists.
+  Skipping live scrape for Ripon Red Hawks -- a local schedule file already exists.
+  Falling back to local backup MHTML for Carroll (WI) Pioneers: Carroll (WI) Pioneers - Schedule_2026.html
+  Carroll (WI) Pioneers (Carroll (WI) Pioneers - Schedule_2026.html): 1 game(s) -- all games before 2026-11-13
+  Falling back to local backup MHTML for Ripon Red Hawks: Ripon Red Hawks - Schedule_2026.html
+  Ripon Red Hawks (Ripon Red Hawks - Schedule_2026.html): 3 game(s) -- all games before 2026-11-13
+Synergy game IDs: 0 of 1 played UWW game(s), 0 game row(s) in all -- no video link on FastScout for: Sat, Nov 7 Carroll (WI) Pioneers
+          date                   opponent                    team location  \
+0   Sat, Nov 7      Carroll (WI) Pioneers  UW-Whitewater Warhawks     Away   
+1  Sat, Nov 14            Ripon Red Hawks  UW-Whitewater Warhawks     Home   
+2   Sat, Nov 7     UW-Whitewater Warhawks   Carroll (WI) Pioneers     Home   
+3   Sat, Nov 7          Elmhurst Bluejays         Ripon Red Hawks     Home   
+4   Sun, Nov 8     Milwaukee Panthers EXH         Ripon Red Hawks     Away   
+5  Wed, Nov 11  St. Norbert Green Knights         Ripon Red Hawks     Home   
+
+                                        opponent_url  \
+0  https://fastscout.fastmodelsports.com/teams/nk...   
+1  https://fastscout.fastmodelsports.com/teams/NY...   
+2  https://fastscout.fastmodelsports.com/teams/YN...   
+3  https://fastscout.fastmodelsports.com/teams/wI...   
+4  https://fastscout.fastmodelsports.com/teams/jS...   
+5  https://fastscout.fastmodelsports.com/teams/md...   
+
+                                            game_url video_url  \
+0  https://fastscout.fastmodelsports.com/teams/YN...      None   
+1  https://fastscout.fastmodelsports.com/teams/YN...      None   
+2  https://fastscout.fastmodelsports.com/teams/nk...      None   
+3  https://fastscout.fastmodelsports.com/teams/NY...      None   
+4  https://fastscout.fastmodelsports.com/teams/NY...      None   
+5  https://fastscout.fastmodelsports.com/teams/NY...      None   
+
+  synergy_game_id synergy_boxscore_url outcome  team_score  opponent_score  \
+0            None                 None       W        78.0            74.0   
+1            None                 None    None         NaN             NaN   
+2            None                 None       L        74.0            78.0   
+3            None                 None       L        52.0            81.0   
+4            None                 None       L        48.0            99.0   
+5            None                 None       L        68.0            74.0   
+
+   point_margin   season Upcoming  
+0           4.0  2026-27       No  
+1           NaN  2026-27      Yes  
+2          -4.0  2026-27       No  
+3         -29.0  2026-27       No  
+4         -51.0  2026-27       No  
+5          -6.0  2026-27       No  
+  [time] 02_parse_every_team_schedule_scrape_live_from: 1.0 min
+
+===== cell 9  =====
+
+===== cell 11  =====
+   jersey_number    PLAYER GP-GS MIN FGM-A FG% 3PM-A 3P% 3P-R FTM-A FT% PTS  \
+0            NaN  Player 1     -   -     -   -     -   -    -     -   -   -   
+1            NaN  Player 2     -   -     -   -     -   -    -     -   -   -   
+2            NaN  Player 3     -   -     -   -     -   -    -     -   -   -   
+3            NaN  Player 4     -   -     -   -     -   -    -     -   -   -   
+4            NaN  Player 5     -   -     -   -     -   -    -     -   -   -   
+5            NaN  Player 6     -   -     -   -     -   -    -     -   -   -   
+6            NaN  Player 7     -   -     -   -     -   -    -     -   -   -   
+7            NaN    Totals     -   -     -   -     -   -    -     -   -   -   
+8            NaN  Opponent     -   -     -   -     -   -    -     -   -   -   
+
+  ORB DRB REB AST TO STL BLK PF  
+0   -   -   -   -  -   -   -  -  
+1   -   -   -   -  -   -   -  -  
+2   -   -   -   -  -   -   -  -  
+3   -   -   -   -  -   -   -  -  
+4   -   -   -   -  -   -   -  -  
+5   -   -   -   -  -   -   -  -  
+6   -   -   -   -  -   -   -  -  
+7   -   -   -   -  -   -   -  -  
+8   -   -   -   -  -   -   -  -  
+
+===== cell 13 03_investigate_playerstattable_tile_widgets =====
+
+===== cell 15 04_investigate_myteam_analytics_dashboard =====
+
+===== cell 16 05_investigate_myteam_analytics_dashboard_2 =====
+
+===== cell 17 06_investigate_myteam_analytics_dashboard_3 =====
+
+===== cell 18 07_investigate_myteam_analytics_dashboard_4 =====
+
+===== cell 20  =====
+Overall record (W-L): 1-0
+outcome location  W  games
+0           Away  1      1
+  location  avg_point_margin
+0     Away               4.0
+1     Home               NaN
+
+===== cell 22 08_parse_each_opponent_fastscout_scoutbuilder =====
+Found 0 PDF scout report(s) and 3 HTML scout report(s):
+ - 11_14_26 Ripon Red Hawks @ UW-Whitewater_scout.html
+ - 11_18_26 UW-Whitewater @ Elmhurst Bluejays_scout.html
+ - 11_7_26 UW-Whitewater @ Carroll (WI) Pioneers_scout.html
+  Ripon Red Hawks: scouting report '11_14_26 Ripon Red Hawks @ UW-Whitewater_scout.html' matches the upcoming game date (Nov 14, 2026).
+  Parsed 'Carroll (WI) Pioneers' (.html): 121 elements, 1 tables
+  Parsed 'Ripon Red Hawks' (.html): 142 elements, 1 tables
+  Parsed 'Elmhurst Bluejays' (.html): 146 elements, 1 tables
+
+===== cell 24 09_extract_each_opponent_roster =====
+                 opponent   game_date jersey_number                  name  \
+0   Carroll (WI) Pioneers  2026-11-07           #33         Dennis Estepp   
+1   Carroll (WI) Pioneers  2026-11-07           #12        Peyton McKenna   
+2   Carroll (WI) Pioneers  2026-11-07           #34          Cahlil Jones   
+3   Carroll (WI) Pioneers  2026-11-07            #4        Michael McNabb   
+4   Carroll (WI) Pioneers  2026-11-07           #25   Logan Steffensmeier   
+5   Carroll (WI) Pioneers  2026-11-07            #3          Lucas Parker   
+6   Carroll (WI) Pioneers  2026-11-07           #23          Jimmy Tarjan   
+7   Carroll (WI) Pioneers  2026-11-07           #42       Greg Smith, Jr.   
+8         Ripon Red Hawks  2026-11-14           #30          Seth Bunders   
+9         Ripon Red Hawks  2026-11-14            #0         Jose Gonzales   
+10        Ripon Red Hawks  2026-11-14            #3           Keenan Rahn   
+11        Ripon Red Hawks  2026-11-14           #35         Michael Asman   
+12        Ripon Red Hawks  2026-11-14           #34       Jackson Flowers   
+13        Ripon Red Hawks  2026-11-14           #11             Sam Leoni   
+14        Ripon Red Hawks  2026-11-14            #2            Landon Lee   
+15        Ripon Red Hawks  2026-11-14           #42            Jack Field   
+16        Ripon Red Hawks  2026-11-14            #4             Joey Daun   
+17      Elmhurst Bluejays  2026-11-07            #0           Jack Cherry   
+18      Elmhurst Bluejays  2026-11-07           #21         Talen Pearson   
+19      Elmhurst Bluejays  2026-11-07            #1    Dominic Trelenberg   
+20      Elmhurst Bluejays  2026-11-07           #15  Vinnie Adjahoungbeta   
+21      Elmhurst Bluejays  2026-11-07           #40           Aidyn Boone   
+22      Elmhurst Bluejays  2026-11-07           #10         Chris Ketchum   
+23      Elmhurst Bluejays  2026-11-07            #4           EJ Marshall   
+24      Elmhurst Bluejays  2026-11-07            #2            Luke Smith   
+25      Elmhurst Bluejays  2026-11-07           #20           Andy Colvin   
+
+   position height   weight class_year     role  \
+0         G   6'0"  170 lbs         SR  Starter   
+1         G   6'2"  175 lbs         JR  Starter   
+2         G   6'2"     None         FR  Starter   
+3         G   6'5"  205 lbs         JR  Starter   
+4         F   6'7"     None         SO  Starter   
+5         G   6'4"  185 lbs         SR    Bench   
+6       G/F   6'3"  200 lbs         JR    Bench   
+7         F   6'7"  215 lbs         SO    Bench   
+8         G   6'0"  140 lbs         SR  Starter   
+9         G   6'3"     None         SO  Starter   
+10        G   6'5"     None         JR  Starter   
+11        F   6'7"     None         JR  Starter   
+12        F   6'6"     None         JR  Starter   
+13        G   6'1"     None         JR    Bench   
+14        G  5'10"     None         SO    Bench   
+15        F   6'7"  195 lbs         SR    Bench   
+16        G   6'2"     None         SO    Bench   
+17        G   6'2"  190 lbs         JR  Starter   
+18        G   6'5"  185 lbs         JR  Starter   
+19        F   6'5"  205 lbs         GR  Starter   
+20        F   6'5"  215 lbs         JR  Starter   
+21        F   6'5"  245 lbs         SR  Starter   
+22        G   6'5"  205 lbs         JR    Bench   
+23        G   6'0"  180 lbs         SR    Bench   
+24        G   6'0"  185 lbs         SO    Bench   
+25        F   6'8"  200 lbs         SO    Bench   
+
+                                         player_notes  \
+0   PG - pushes tempo in transition | Driver/shoot...   
+1   Shooter! (213 of 254 shot attempts were 3's) |...   
+2   Driver/Shooter | Looking to score in transitio...   
+3   LH Driver/Shooter | Seeks contact on most fini...   
+4   Driver/Shooter | Likes to slash to basket | Cr...   
+5       Shooter!! | C&S 3's | Hunts 3's in transition   
+6                    Driver/Cutter | Crashes O-Boards   
+7         5 man | Screener & ball mover | Non-shooter   
+8   Shooter/Driver | Seeks contact on drives and j...   
+9             Driver | Looking to score in transition   
+10                Shooter (38% last season) | C&S 3's   
+11  C&S 3's, quick release | Screener/Cutter | LS/...   
+12                       Pick and pop 5 man | C&S 3's   
+13      Driver/Shooter | Likes to reject ball screens   
+14                                     Driver/Shooter   
+15                   Shooter/Driver | Hunts the C&S 3   
+16  Shooter | Leading scorer in last game (4 made ...   
+17  PG, looking to push in transition | Shooter/Dr...   
+18   Shooter/Driver | Moves the ball/looks for others   
+19  LH 3 level scorer, likes to post | Straight li...   
+20  3 level scorer (Shoots, drives, & posts) | RH ...   
+21  Shooter/Driver | Hunts Pick & Pop or Ghost scr...   
+22  Driver/Cutter | Good athlete and offensive reb...   
+23                            Drive 1st | Prefers RHD   
+24            Ball handler | Shooter/Driver | C&S 3's   
+25  Scores on drop-offs | Offensive rebounding threat   
+
+                                    keys_to_defending  has_scouting_report  
+0   Stop him early in transition | No back cuts!!!...                 True  
+1   LOCK & TRAIL!!! | OVER EVERYTHING!!! | Pressur...                 True  
+2   Anticipate RHD | Keep out of the paint!! | Con...                 True  
+3   Show hands/don't foul on drives!! | Heavy gap ...                 True  
+4                 Box Out!! | No SLD! | No rhythm C&S                 True  
+5          NO C&S 3's!!! | Locate early in transition                 True  
+6         Box Out | Keep him in front | Be a Helper!!                 True  
+7                            Be a Helper!!! | Box out                 True  
+8   NO C&S 3's! | Wall up and force him to finish ...                 True  
+9   Pick up early in transition | Keep him in fron...                 True  
+10          No C&S 3's | Make him put it on the floor                 True  
+11  No C&S 3s!! (stunt v. pick & pop) | NLS in pos...                 True  
+12  No C&S 3s!! (stunt v. pick & pop) | No 1-pass ...                 True  
+13        Keep him in front. No rejects! | No C&S 3's                 True  
+14              Stop early in transition | No C&S 3's                 True  
+15                No C&S 3's | Stunt the pick and pop                 True  
+16                                         No C&S 3's                 True  
+17  Get him STOPPED in Transition | No C & S 3's |...                 True  
+18               Closeout with high hand | No C&S 3's                 True  
+19  Anticipate quick 1st step (LHD) | Be physical ...                 True  
+20           No C&S 3's | Anticipate LHD | BOX OUT!!!                 True  
+21  Expect pops after screens on & off ball | No C...                 True  
+22                  MUST BOX OUT!! | See ball and man                 True  
+23         Anticipate RHD | Cut him off in transition                 True  
+24  No Rhythm C&S 3's | Force tough finishes | Att...                 True  
+25                   Must box out | Attack him inside                 True  
+
+===== cell 26 10_extract_uw_whitewater_offensive_and =====
+                 opponent                                    category  \
+0   Carroll (WI) Pioneers                          Game Plan Overview   
+1   Carroll (WI) Pioneers                          Game Plan Overview   
+2   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+3   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+4   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+5   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+6   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+7   Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+8   Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+9   Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+10  Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+11  Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+12        Ripon Red Hawks                          Game Plan Overview   
+13        Ripon Red Hawks                          Game Plan Overview   
+14        Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+15        Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+16        Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+17        Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+18        Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+19        Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+20        Ripon Red Hawks  Defensive Game Plan (vs. Opponent Offense)   
+21        Ripon Red Hawks  Defensive Game Plan (vs. Opponent Offense)   
+22        Ripon Red Hawks  Defensive Game Plan (vs. Opponent Offense)   
+23        Ripon Red Hawks  Defensive Game Plan (vs. Opponent Offense)   
+24        Ripon Red Hawks  Defensive Game Plan (vs. Opponent Offense)   
+25        Ripon Red Hawks  Defensive Game Plan (vs. Opponent Offense)   
+26      Elmhurst Bluejays                          Game Plan Overview   
+27      Elmhurst Bluejays                          Game Plan Overview   
+28      Elmhurst Bluejays  Offensive Game Plan (vs. Opponent Defense)   
+29      Elmhurst Bluejays  Offensive Game Plan (vs. Opponent Defense)   
+30      Elmhurst Bluejays  Offensive Game Plan (vs. Opponent Defense)   
+31      Elmhurst Bluejays  Offensive Game Plan (vs. Opponent Defense)   
+32      Elmhurst Bluejays  Offensive Game Plan (vs. Opponent Defense)   
+33      Elmhurst Bluejays  Offensive Game Plan (vs. Opponent Defense)   
+34      Elmhurst Bluejays  Defensive Game Plan (vs. Opponent Offense)   
+35      Elmhurst Bluejays  Defensive Game Plan (vs. Opponent Offense)   
+36      Elmhurst Bluejays  Defensive Game Plan (vs. Opponent Offense)   
+37      Elmhurst Bluejays  Defensive Game Plan (vs. Opponent Offense)   
+38      Elmhurst Bluejays  Defensive Game Plan (vs. Opponent Offense)   
+39      Elmhurst Bluejays  Defensive Game Plan (vs. Opponent Offense)   
+
+                              topic  \
+0                   KEYS TO VICTORY   
+1                    TEAM STRENGTHS   
+2          Overall Defensive Scheme   
+3         Ball Screen & DHO Defense   
+4       Ball Screen Actions & Reads   
+5        Speciality Defensive Notes   
+6   Potential Adjustments (Defense)   
+7            Defending Their Action   
+8   Ball Screen Actions & Personnel   
+9           Ball Screen Coverage(s)   
+10  Potential Adjustments (Offense)   
+11                      ELOB & SLOB   
+12                  KEYS TO VICTORY   
+13                   TEAM STRENGTHS   
+14      Attacking their man defense   
+15         Overall Defensive Scheme   
+16        Ball Screen & DHO Defense   
+17      Ball Screen Actions & Reads   
+18       Speciality Defensive Notes   
+19  Potential Adjustments (Defense)   
+20         Overall OFFENSIVE SCHEME   
+21           Defending Their Action   
+22          Ball Screen Coverage(s)   
+23  Ball Screen Actions & Personnel   
+24  Potential Adjustments (Offense)   
+25                      ELOB & SLOB   
+26                  KEYS TO VICTORY   
+27                   TEAM STRENGTHS   
+28      Attacking their man defense   
+29         Overall Defensive Scheme   
+30        Ball Screen & DHO Defense   
+31      Ball Screen Actions & Reads   
+32       Speciality Defensive Notes   
+33  Potential Adjustments (Defense)   
+34         Overall OFFENSIVE SCHEME   
+35           Defending Their Action   
+36  Ball Screen Actions & Personnel   
+37          Ball Screen Coverage(s)   
+38  Potential Adjustments (Offense)   
+39                      ELOB & SLOB   
+
+                                                                                                                                                    notes  \
+0                                        1. TRANSITION DEFENSE!!! | 2. SQUEEZE & LIMIT #4 (Guard 1 on 1 + Gap Help) | 3. DOMINATE THE PAINT OFFENSIVELY!!   
+1   1. Transition/Fast paced offense (quick ball movement & cutting) | 2. Main scorer #4 capable of carrying offense (22 ppg) | 3. Quick & aggressive ...   
+2   M2M Defense | Full/Deep help in Gaps | Protecting the basket first | Struggle to closeout & rotate after gap help | Full court 2 man press | Looki...   
+3            FH-Will switch when guard is late to recover | Will switch 1-4 | DHO vs shooter-Guard chases over. Big FH | DHO vs Driver- Open & go through   
+4                                                                                         Attack the big | Reject the screen! | Hit the pop or short roll   
+5                                                                                                           2 Man Press (want to push up sideline & trap)   
+6                                                                                                                                                           
+7   TRANSITION DEFENSE!!! | Contain & turn the ball handler early | No Back cuts! | Keep them off the FT Line = Wall up and Stay Down | SQUEEZE #4 ON ...   
+8                   DHO's & ball screens after entry to 5 man at high post | Like to Ghost ball screens | 5 setting drag screens & step ups in transition   
+9                                                                                                                   14X-Strong (Hard Hedge) | No splits!!   
+10                                                                                                                                            15X / Blitz   
+11                                                                                                                              Staggered screens for #12   
+12                                    1. REBOUNDING & TRANSITION DEFENSE | 2. COMMUNICATION ON SCREENING ACTION! | 3. EARLY BALL MOVEMENT & PAINT TOUCHES   
+13               Motion offense with good ball movement & cutting | 2.Aggressive gap and help defense with active hands | 3.Mixing ball screens and DHO's   
+14  REBOUNDS = RUN!!! | Hunt for paint touches | Drive & kick 3's available vs Gap help | Don't drive through the help ( Kick it out! ) | Attack the H...   
+15  M2M Gap Defense | Heavy Gap Help | Active with hands in gaps=steals | Give help deep around FT line or lower | Fight over & chase vs screens off t...   
+16                      Hard Hedge vs Ball Screens | Slower posts more of a quick show | Switch certain match ups | Chase & trail or slide under vs DHO's   
+17                                                                                   Roll man available vs HH | Attack #34 when he shows | Attack in DHOs   
+18                                                                                                               Used a 3-2 zone some last couple seasons   
+19                                                                                                                                                          
+20  Motion Offense | Pin downs, flares, baseline screens | Early Staggered screens (will Swirl) | Heavy Ball Screen & DHO usage. | 3 Side Action. 1st ...   
+21  Transition Defense | SPRINT - TURN - TALK!! | Ball Pressure & Trace = Deflections!! | No Baseline drives or Rejects | See ball & man at all times ...   
+22                                                                                   13X-Strong | No rejects | Good tags on #35 | ACTIVE HANDS BY GUARDS!   
+23  Use a lot of ball screens | Will set screens toward the middle and side line | Often start possessions with a butt screen or drag ball screen | DH...   
+24                                                                                                                                              14X | 15X   
+25                                                                  They run our BLOB out of a Diamond formation | SLOB is into a double high ball screen   
+26                               WIN THE GLASS & TURNOVER BATTLES! | BE STRONG & PHYSICAL V. THEIR PRESSURE | GUARD YOUR YARD - WIN THE 1V1'S DEFENSIVELY   
+27  1. Great offensive rebounding team (12 per game) | 2. All starters with perimeter skills & shooting ability (37% 3 pt) | 3. Physical & Aggressive ...   
+28  Handle Pressure/Don't settle for quick shots early | Physical Cutting & Come off Tight | ATTACK THE PAINT!!! | Guards-Test them v. ball screens | ...   
+29  M2M Defense | Active hands & physical pressure on the ball | Help or show in Gaps | Physical fighting through screens | Take the clearest path to ...   
+30                                                     Ball screen Defense | Switch 1-5 | Have hard hedged with the 5 | Guards are aggressive v. Handoffs   
+31                                     Bigs- Strong/physical ball screens | Look for slips | Throw backs and post entries | Ball screen rejects available   
+32                                                                                                                                                          
+33                                                                                                                                         ZONA & GOLD!!!   
+34  Look to push in transition | 5 out offense (usually starts with a set play) | 8-10 set plays they run consistently | 5 man is trigger to start off...   
+35  SPRINT BACK & STOP THE BALL!!! | Guard Your Yard | WIN closeouts at all positions | Stay down on shot fakes | Anticipate pop after all screens | T...   
+36                                Wing ball screens | Bigs Pop after most ball screens | Guards looking to attack & throwback to screener | Ghost screens   
+37                                                                                                                                                    15X   
+38                                                                                            14X-Strong | Aggressive tags v. pick and pop | "12" (1-2-2)   
+39                                                                                             1-4 high alignment w/ curls, slips, handoffs for inbounder   
+
+   report_date  
+0   2026-11-07  
+1   2026-11-07  
+2   2026-11-07  
+3   2026-11-07  
+4   2026-11-07  
+5   2026-11-07  
+6   2026-11-07  
+7   2026-11-07  
+8   2026-11-07  
+9   2026-11-07  
+10  2026-11-07  
+11  2026-11-07  
+12  2026-11-14  
+13  2026-11-14  
+14  2026-11-14  
+15  2026-11-14  
+16  2026-11-14  
+17  2026-11-14  
+18  2026-11-14  
+19  2026-11-14  
+20  2026-11-14  
+21  2026-11-14  
+22  2026-11-14  
+23  2026-11-14  
+24  2026-11-14  
+25  2026-11-14  
+26  2026-11-18  
+27  2026-11-18  
+28  2026-11-18  
+29  2026-11-18  
+30  2026-11-18  
+31  2026-11-18  
+32  2026-11-18  
+33  2026-11-18  
+34  2026-11-18  
+35  2026-11-18  
+36  2026-11-18  
+37  2026-11-18  
+38  2026-11-18  
+39  2026-11-18  
+
+===== cell 28  =====
+Team efficiency narrative (ORtg/DRtg/Pace/FASTINTELLIGENCE) is not captured in the PDF export -- it's a
+UI-only panel that isn't part of the printable ScoutBuilder report, and is no longer available now that
+scouting reports are sourced exclusively from PDFs.
+
+===== cell 30 11_cross_reference_each_scouted_opponent =====
+                opponent         date location outcome opp_season_avg_ppg  \
+0  Carroll (WI) Pioneers   Sat, Nov 7     Away       W               None   
+1        Ripon Red Hawks  Sat, Nov 14     Home    None               None   
+2      Elmhurst Bluejays   Sat, Nov 7     Home       L               None   
+
+   opp_actual_ppg opp_ppg_vs_average  uww_points opp_season_avg_ppg_allowed  \
+0            74.0               None        78.0                       None   
+1             NaN               None         NaN                       None   
+2            81.0               None        52.0                       None   
+
+  uww_ppg_vs_opp_avg_allowed  point_margin  
+0                       None           4.0  
+1                       None           NaN  
+2                       None         -29.0  
+
+(opp_season_avg_ppg / opp_ppg_vs_average / opp_season_avg_ppg_allowed / uww_ppg_vs_opp_avg_allowed are always blank now -- team/player statistics from the scouting report are no longer used; see the blanking earlier in this cell.)
+
+Carroll (WI) Pioneers (Sat, Nov 7, Away): UWW 78.0 - Carroll (WI) Pioneers 74.0 (W, margin +4)
+  Pre-game keys to victory: 1. TRANSITION DEFENSE!!! | 2. SQUEEZE & LIMIT #4 (Guard 1 on 1 + Gap Help) | 3. DOMINATE THE PAINT OFFENSIVELY!!
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Ripon Red Hawks (Sat, Nov 14, Home): UWW nan - Ripon Red Hawks nan (None, margin n/a)
+  Pre-game keys to victory: 1. REBOUNDING & TRANSITION DEFENSE | 2. COMMUNICATION ON SCREENING ACTION! | 3. EARLY BALL MOVEMENT & PAINT TOUCHES
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Elmhurst Bluejays (Sat, Nov 7, Home): UWW 52.0 - Elmhurst Bluejays 81.0 (L, margin -29)
+  Pre-game keys to victory: WIN THE GLASS & TURNOVER BATTLES! | BE STRONG & PHYSICAL V. THEIR PRESSURE | GUARD YOUR YARD - WIN THE 1V1'S DEFENSIVELY
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+===== cell 32 12_win_loss_splits_by_keys_to_victory =====
+Per-game 'Keys to Victory' categories detected WITH SIDE ATTRIBUTION:
+  UWW = what Whitewater does proactively (attack, score, rebound, share)
+  OPP = what Whitewater does to contain the opponent (guard, force TOs, limit, pressure)
+                opponent outcome                           category side
+0  Carroll (WI) Pioneers       W  Perimeter Defense / Ball Pressure  OPP
+1  Carroll (WI) Pioneers       W                     Scoring Inside  UWW
+2        Ripon Red Hawks    None            Ball Movement / Assists  UWW
+3        Ripon Red Hawks    None                         Rebounding  UWW
+4      Elmhurst Bluejays       L          Ball Security / Turnovers  UWW
+5      Elmhurst Bluejays       L  Perimeter Defense / Ball Pressure  OPP
+6      Elmhurst Bluejays       L                         Rebounding  UWW
+
+Win/loss splits by category + side (UWW vs OPP emphasis):
+           display_label side                           category  games  wins  \
+0    UWW: Share the Ball  UWW            Ball Movement / Assists      0     0   
+1  UWW: Protect the Ball  UWW          Ball Security / Turnovers      1     0   
+2   OPP: On-Ball Defense  OPP  Perimeter Defense / Ball Pressure      2     1   
+3  UWW: Crash the Boards  UWW                         Rebounding      1     0   
+4  UWW: Attack the Paint  UWW                     Scoring Inside      1     1   
+
+   losses  win_pct  
+0       0      NaN  
+1       1      0.0  
+2       1      0.5  
+3       1      0.0  
+4       0      1.0  
+
+===== cell 34 13_keys_to_victory_category_reference =====
+                             category         stat_cols                                                        example_phrases                                                             why_chosen
+0           Ball Security / Turnovers                TO  ball security, turnover, protect/take care of the ball, limit turn...  Directly named -- "ball security"/"turnovers" have a 1:1 stat colu...
+1                          Rebounding     REB, ORB, DRB  own the paint, bully/dominate the glass, rebound, board, second ch...  "Glass"/"board"/"crash"/"own the paint" possession language in thi...
+2                Three-Point Shooting        3PM-A, 3P%  three, 3 pt, 3pt, perimeter shooting, spacing, shooting ability, s...  Direct stat match for perimeter shot volume/efficiency. Expanded w...
+3                         Free Throws        FTM-A, FT%                                     free throw, ft line, getting to ft  Direct stat match. Added "ft line" / "getting to ft" from Aurora (...
+4                  Fouls / Discipline                PF                                           foul, wall up, drawing fouls  Direct stat match for foul-discipline emphasis. Added "wall up" (A...
+5             Ball Movement / Assists               AST   assist, ball movement, share the ball, playmaking, playmaker, create  Direct stat match for offensive ball-sharing emphasis. Added "play...
+6           Paint Protection / Blocks               BLK                               block, protect the rim, paint protection                 Direct stat match for interior shot-blocking emphasis.
+7   Perimeter Defense / Ball Pressure               STL  steal, press capable, full court press, force turnovers, force to'...  Renamed from "Ball Pressure / Steals" once Aurora/Eureka/Elmhurst ...
+8                      Scoring Inside  FG2M, FG2A, FG2%  dominate the paint, attack the paint, live in the paint, attack th...  Interior-scoring emphasis -- uses derived 2PT FG stats (FGM-FG3M, ...
+9               Field Goal Efficiency        FGM-A, FG%                                                    limit their scoring  Overall shooting efficiency emphasis -- used when the scouting not...
+10           (intentionally unmapped)                 -  communication screening action / communicate screens & actions (Ri...  No corresponding stat exists in a season box score for screen-navi...
+
+===== cell 36 14_build_per_player_scouting_profiles =====
+Adding 12 box-score-only player(s) with no scouting writeup (defaulted to role=Bench):
+                 opponent jersey_number              name
+5   Carroll (WI) Pioneers           #22  Andrew Hollerich
+6   Carroll (WI) Pioneers           #10        Cai Joseph
+7   Carroll (WI) Pioneers           #11       Evan Oleson
+8   Carroll (WI) Pioneers           #24      Cale Buboltz
+9   Carroll (WI) Pioneers           #15   Hayden Stebbins
+10  Carroll (WI) Pioneers           #35     Matt Leonhard
+11  Carroll (WI) Pioneers           #30    Auggie Hoffman
+15        Ripon Red Hawks            #5  Christian Wilson
+19        Ripon Red Hawks           #20       Anton Kilde
+21        Ripon Red Hawks           #12  Domanic Rasberry
+29      Elmhurst Bluejays            #3        DJ Jervier
+34      Elmhurst Bluejays           #23       Cooper Hasz
+Scouting-report player statistics are disabled by design (PDF reports are last-season data) -- player_profiles stat columns start blank and are only filled in by the PBP-derived override further down this notebook, from real current-season games.
+                 opponent jersey_number                  name     role  \
+0   Carroll (WI) Pioneers           #33         Dennis Estepp  Starter   
+1   Carroll (WI) Pioneers           #12        Peyton McKenna  Starter   
+2   Carroll (WI) Pioneers           #34          Cahlil Jones  Starter   
+3   Carroll (WI) Pioneers            #4        Michael McNabb  Starter   
+4   Carroll (WI) Pioneers           #25   Logan Steffensmeier  Starter   
+5   Carroll (WI) Pioneers            #3          Lucas Parker    Bench   
+6   Carroll (WI) Pioneers           #23          Jimmy Tarjan    Bench   
+7   Carroll (WI) Pioneers           #42       Greg Smith, Jr.    Bench   
+8         Ripon Red Hawks           #30          Seth Bunders  Starter   
+9         Ripon Red Hawks            #0         Jose Gonzales  Starter   
+10        Ripon Red Hawks            #3           Keenan Rahn  Starter   
+11        Ripon Red Hawks           #35         Michael Asman  Starter   
+12        Ripon Red Hawks           #34       Jackson Flowers  Starter   
+13        Ripon Red Hawks           #11             Sam Leoni    Bench   
+14        Ripon Red Hawks            #2            Landon Lee    Bench   
+15        Ripon Red Hawks           #42            Jack Field    Bench   
+16        Ripon Red Hawks            #4             Joey Daun    Bench   
+17      Elmhurst Bluejays            #0           Jack Cherry  Starter   
+18      Elmhurst Bluejays           #21         Talen Pearson  Starter   
+19      Elmhurst Bluejays            #1    Dominic Trelenberg  Starter   
+20      Elmhurst Bluejays           #15  Vinnie Adjahoungbeta  Starter   
+21      Elmhurst Bluejays           #40           Aidyn Boone  Starter   
+22      Elmhurst Bluejays           #10         Chris Ketchum    Bench   
+23      Elmhurst Bluejays            #4           EJ Marshall    Bench   
+24      Elmhurst Bluejays            #2            Luke Smith    Bench   
+25      Elmhurst Bluejays           #20           Andy Colvin    Bench   
+26  Carroll (WI) Pioneers           #22      Andrew Hollerich    Bench   
+27  Carroll (WI) Pioneers           #10            Cai Joseph    Bench   
+28  Carroll (WI) Pioneers           #11           Evan Oleson    Bench   
+29  Carroll (WI) Pioneers           #24          Cale Buboltz    Bench   
+30  Carroll (WI) Pioneers           #15       Hayden Stebbins    Bench   
+31  Carroll (WI) Pioneers           #35         Matt Leonhard    Bench   
+32  Carroll (WI) Pioneers           #30        Auggie Hoffman    Bench   
+33        Ripon Red Hawks            #5      Christian Wilson    Bench   
+34        Ripon Red Hawks           #20           Anton Kilde    Bench   
+35        Ripon Red Hawks           #12      Domanic Rasberry    Bench   
+36      Elmhurst Bluejays            #3            DJ Jervier    Bench   
+37      Elmhurst Bluejays           #23           Cooper Hasz    Bench   
+
+                                             notes_tags_display  \
+0                           slasher_driver, three_point_shooter   
+1                          catch_and_shoot, three_point_shooter   
+2                           slasher_driver, three_point_shooter   
+3                           slasher_driver, three_point_shooter   
+4                rebounder, slasher_driver, three_point_shooter   
+5                          catch_and_shoot, three_point_shooter   
+6                                     rebounder, slasher_driver   
+7                                                     playmaker   
+8                           slasher_driver, three_point_shooter   
+9                                                slasher_driver   
+10                         catch_and_shoot, three_point_shooter   
+11            catch_and_shoot, post_scorer, three_point_shooter   
+12                         catch_and_shoot, three_point_shooter   
+13                          slasher_driver, three_point_shooter   
+14                          slasher_driver, three_point_shooter   
+15         catch_and_shoot, slasher_driver, three_point_shooter   
+16                                          three_point_shooter   
+17         pull_up_shooter, slasher_driver, three_point_shooter   
+18                          slasher_driver, three_point_shooter   
+19                          cutter, post_scorer, slasher_driver   
+20  post_scorer, rebounder, slasher_driver, three_point_shooter   
+21             post_scorer, slasher_driver, three_point_shooter   
+22                                    rebounder, slasher_driver   
+23                                               slasher_driver   
+24         catch_and_shoot, slasher_driver, three_point_shooter   
+25                                                    rebounder   
+26                                                                
+27                                                                
+28                                                                
+29                                                                
+30                                                                
+31                                                                
+32                                                                
+33                                                                
+34                                                                
+35                                                                
+36                                                                
+37                                                                
+
+                                                                                  keys_tags_display  \
+0                                                                     deny_cuts, transition_defense   
+1                                                                                  pressure_disrupt   
+2                                                                    anticipate_move, keep_in_front   
+3                                                                                      help_defense   
+4                                                            box_out_priority, deny_catch_and_shoot   
+5                                                          deny_catch_and_shoot, transition_defense   
+6                                                     box_out_priority, help_defense, keep_in_front   
+7                                                                    box_out_priority, help_defense   
+8                                                         deny_catch_and_shoot, physical_discipline   
+9                                                   help_defense, keep_in_front, transition_defense   
+10                                                                             deny_catch_and_shoot   
+11                                             box_out_priority, deny_catch_and_shoot, post_defense   
+12                                                           box_out_priority, deny_catch_and_shoot   
+13                                                              deny_catch_and_shoot, keep_in_front   
+14                                                         deny_catch_and_shoot, transition_defense   
+15                                                                             deny_catch_and_shoot   
+16                                                                             deny_catch_and_shoot   
+17                                                         deny_catch_and_shoot, transition_defense   
+18                                                                             deny_catch_and_shoot   
+19  anticipate_move, box_out_priority, deny_catch_and_shoot, physical_discipline, screen_navigation   
+20                                          anticipate_move, box_out_priority, deny_catch_and_shoot   
+21                                        box_out_priority, deny_catch_and_shoot, screen_navigation   
+22                                                                                 box_out_priority   
+23                                                              anticipate_move, transition_defense   
+24                                                                             deny_catch_and_shoot   
+25                                                                                 box_out_priority   
+26                                                                                                    
+27                                                                                                    
+28                                                                                                    
+29                                                                                                    
+30                                                                                                    
+31                                                                                                    
+32                                                                                                    
+33                                                                                                    
+34                                                                                                    
+35                                                                                                    
+36                                                                                                    
+37                                                                                                    
+
+     PTS   REB   AST   FG%   3P%  
+0   None  None  None  None  None  
+1   None  None  None  None  None  
+2   None  None  None  None  None  
+3   None  None  None  None  None  
+4   None  None  None  None  None  
+5   None  None  None  None  None  
+6   None  None  None  None  None  
+7   None  None  None  None  None  
+8   None  None  None  None  None  
+9   None  None  None  None  None  
+10  None  None  None  None  None  
+11  None  None  None  None  None  
+12  None  None  None  None  None  
+13  None  None  None  None  None  
+14  None  None  None  None  None  
+15  None  None  None  None  None  
+16  None  None  None  None  None  
+17  None  None  None  None  None  
+18  None  None  None  None  None  
+19  None  None  None  None  None  
+20  None  None  None  None  None  
+21  None  None  None  None  None  
+22  None  None  None  None  None  
+23  None  None  None  None  None  
+24  None  None  None  None  None  
+25  None  None  None  None  None  
+26  None  None  None  None  None  
+27  None  None  None  None  None  
+28  None  None  None  None  None  
+29  None  None  None  None  None  
+30  None  None  None  None  None  
+31  None  None  None  None  None  
+32  None  None  None  None  None  
+33  None  None  None  None  None  
+34  None  None  None  None  None  
+35  None  None  None  None  None  
+36  None  None  None  None  None  
+37  None  None  None  None  None  
+
+===== cell 38 15_break_out_keys_to_victory_categories_by =====
+Opponent production by role (Starter vs Bench) for the stat(s) behind each matched Keys-to-Victory category:
+Empty DataFrame
+Columns: [opponent, outcome, category, role, stat, players_with_data, avg_per_player, role_total]
+Index: []
+No count-type stats available yet to compare Starter vs Bench totals for the matched categories.
+
+===== cell 40 16_play_by_play_parsing_functions =====
+
+===== cell 42 17_classify_each_raw_play_by_play_text_string =====
+
+===== cell 44 18_turn_raw_4_column_play_by_play_table_into =====
+
+===== cell 46 19_extract_opponent_name_from_pbp_mhtml =====
+
+===== cell 48 20_identify_upcoming_opponent =====
+
+===== cell 50 21_roster_pages =====
+Roster targets this run: ['UW-Whitewater Warhawks', 'Carroll (WI) Pioneers', 'Ripon Red Hawks']
+  Skipping live roster scrape for UW-Whitewater Warhawks -- a local roster file already exists.
+  Skipping live roster scrape for Carroll (WI) Pioneers -- a local roster file already exists.
+  Skipping live roster scrape for Ripon Red Hawks -- a local roster file already exists.
+
+live_rosters: 60 player(s) across 3 team(s).
+                        value
+team                         
+Carroll (WI) Pioneers      20
+Ripon Red Hawks            22
+UW-Whitewater Warhawks     18
+
+===== cell 52 22_locate_opponent_own_schedule_backup_file =====
+
+===== cell 54  =====
+
+===== cell 56 23_build_opp_schedule =====
+
+===== cell 58 24_find_opponent_games_before_they_played_uw =====
+Ripon Red Hawks's games before facing UW-Whitewater on 2026-11-14:
+          date   game_date                   opponent outcome  team_score  \
+0   Sat, Nov 7  2026-11-07          Elmhurst Bluejays       L        52.0   
+1   Sun, Nov 8  2026-11-08     Milwaukee Panthers EXH       L        48.0   
+2  Wed, Nov 11  2026-11-11  St. Norbert Green Knights       L        68.0   
+
+   opponent_score video_url synergy_game_id synergy_boxscore_url  \
+0            81.0      None            None                 None   
+1            99.0      None            None                 None   
+2            74.0      None            None                 None   
+
+                                                                                                                              game_url  \
+0  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/Q-R41YqCRVa_Rf_nXXlVQg/boxscore?league=NCAAB-III&season=26   
+1  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/l7jJkzfjQuiRIg2E05SX0w/boxscore?league=NCAAB-III&season=26   
+2  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/M2_CR747RjyMi26xDFn6IQ/boxscore?league=NCAAB-III&season=26   
+
+  location  
+0     Home  
+1     Away  
+2     Home  
+
+Video links for these games (raw full-game film, independent of any manually-tagged _video.mhtml export):
+  2026-11-07 vs Elmhurst Bluejays: (no video_url)
+  2026-11-08 vs Milwaukee Panthers EXH: (no video_url)
+  2026-11-11 vs St. Norbert Green Knights: (no video_url)
+
+Missing _pbp or _video files for the following games before the Whitewater matchup:
+  2026-11-07 vs Elmhurst Bluejays: pbp_found=True, video_found=False
+  2026-11-08 vs Milwaukee Panthers EXH: pbp_found=False, video_found=False
+  2026-11-11 vs St. Norbert Green Knights: pbp_found=False, video_found=False
+
+===== cell 60 25_live_scrape_any_missing_play_by_play_files =====
+    [save] scraped play-by-play -> 11_8_26 Ripon Red Hawks @ Milwaukee Panthers EXH_pbp.html
+    [save] scraped play-by-play -> 11_11_26 St. Norbert Green Knights @ Ripon Red Hawks_pbp.html
+
+===== cell 62 26_parse_play_by_play_events_for_opponent =====
+             opponent   game_date  event_order period time_remaining  time_remaining_seconds               team         event_type                               raw_text  uww_score  opp_score                player  \
+0   Elmhurst Bluejays  2026-11-07            0   None           None                     NaN               None      period_marker                         Start 1st Half        NaN        NaN                   NaN   
+1   Elmhurst Bluejays  2026-11-07            1     H1     19:56 (H1)                  1196.0    Ripon Red Hawks      jump_ball_won           Michael Asman Wins Jump Ball        0.0        0.0         Michael Asman   
+2   Elmhurst Bluejays  2026-11-07            2     H1     19:56 (H1)                  1196.0  Elmhurst Bluejays     jump_ball_lost            Aidyn Boone Loses Jump Ball        0.0        0.0           Aidyn Boone   
+3   Elmhurst Bluejays  2026-11-07            3     H1     19:37 (H1)                  1177.0    Ripon Red Hawks           turnover     Jose Gonzales Turnover (Lost Ball)        0.0        0.0         Jose Gonzales   
+4   Elmhurst Bluejays  2026-11-07            4     H1     19:21 (H1)                  1161.0  Elmhurst Bluejays        missed_shot       Aidyn Boone Misses 3PT Jump Shot        0.0        0.0           Aidyn Boone   
+5   Elmhurst Bluejays  2026-11-07            5     H1     19:18 (H1)                  1158.0    Ripon Red Hawks  rebound_defensive        Michael Asman Defensive Rebound        0.0        0.0         Michael Asman   
+6   Elmhurst Bluejays  2026-11-07            6     H1     19:02 (H1)                  1142.0    Ripon Red Hawks           turnover      Jose Gonzales Turnover (Bad Pass)        0.0        0.0         Jose Gonzales   
+7   Elmhurst Bluejays  2026-11-07            7     H1     19:02 (H1)                  1142.0  Elmhurst Bluejays              steal                     Jack Cherry Steals        0.0        0.0           Jack Cherry   
+8   Elmhurst Bluejays  2026-11-07            8     H1     19:02 (H1)                  1142.0    Ripon Red Hawks               foul    Michael Asman Commits Personal Foul        0.0        0.0         Michael Asman   
+9   Elmhurst Bluejays  2026-11-07            9     H1     18:42 (H1)                  1122.0  Elmhurst Bluejays        missed_shot       Jack Cherry Misses 2PT Jump Shot        0.0        0.0           Jack Cherry   
+10  Elmhurst Bluejays  2026-11-07           10     H1     18:40 (H1)                  1120.0    Ripon Red Hawks  rebound_defensive         Seth Bunders Defensive Rebound        0.0        0.0          Seth Bunders   
+11  Elmhurst Bluejays  2026-11-07           11     H1     18:38 (H1)                  1118.0    Ripon Red Hawks           turnover      Seth Bunders Turnover (Lost Ball)        0.0        0.0          Seth Bunders   
+12  Elmhurst Bluejays  2026-11-07           12     H1     18:38 (H1)                  1118.0  Elmhurst Bluejays              steal                     Jack Cherry Steals        0.0        0.0           Jack Cherry   
+13  Elmhurst Bluejays  2026-11-07           13     H1     18:26 (H1)                  1106.0  Elmhurst Bluejays        missed_shot  Vinnie Adjahoungbeta Misses 2PT Layup        0.0        0.0  Vinnie Adjahoungbeta   
+14  Elmhurst Bluejays  2026-11-07           14     H1     18:24 (H1)                  1104.0    Ripon Red Hawks  rebound_defensive        Michael Asman Defensive Rebound        0.0        0.0         Michael Asman   
+15  Elmhurst Bluejays  2026-11-07           15     H1     18:00 (H1)                  1080.0    Ripon Red Hawks          made_shot          Michael Asman Makes 2PT Layup        0.0        2.0         Michael Asman   
+16  Elmhurst Bluejays  2026-11-07           16     H1     18:00 (H1)                  1080.0    Ripon Red Hawks             assist                  Jose Gonzales Assists        0.0        2.0         Jose Gonzales   
+17  Elmhurst Bluejays  2026-11-07           17     H1     17:45 (H1)                  1065.0  Elmhurst Bluejays        missed_shot       Aidyn Boone Misses 3PT Jump Shot        0.0        2.0           Aidyn Boone   
+18  Elmhurst Bluejays  2026-11-07           18     H1     17:41 (H1)                  1061.0    Ripon Red Hawks  rebound_defensive          Keenan Rahn Defensive Rebound        0.0        2.0           Keenan Rahn   
+19  Elmhurst Bluejays  2026-11-07           19     H1     17:36 (H1)                  1056.0  Elmhurst Bluejays               foul      Aidyn Boone Commits Personal Foul        0.0        2.0           Aidyn Boone   
+
+   turnover_type shot_type  shot_desc      foul_type ft_num ft_total  
+0            NaN       NaN        NaN            NaN    NaN      NaN  
+1            NaN       NaN        NaN            NaN    NaN      NaN  
+2            NaN       NaN        NaN            NaN    NaN      NaN  
+3      Lost Ball       NaN        NaN            NaN    NaN      NaN  
+4            NaN         3  Jump Shot            NaN    NaN      NaN  
+5            NaN       NaN        NaN            NaN    NaN      NaN  
+6       Bad Pass       NaN        NaN            NaN    NaN      NaN  
+7            NaN       NaN        NaN            NaN    NaN      NaN  
+8            NaN       NaN        NaN  Personal Foul    NaN      NaN  
+9            NaN         2  Jump Shot            NaN    NaN      NaN  
+10           NaN       NaN        NaN            NaN    NaN      NaN  
+11     Lost Ball       NaN        NaN            NaN    NaN      NaN  
+12           NaN       NaN        NaN            NaN    NaN      NaN  
+13           NaN         2      Layup            NaN    NaN      NaN  
+14           NaN       NaN        NaN            NaN    NaN      NaN  
+15           NaN         2      Layup            NaN    NaN      NaN  
+16           NaN       NaN        NaN            NaN    NaN      NaN  
+17           NaN         3  Jump Shot            NaN    NaN      NaN  
+18           NaN       NaN        NaN            NaN    NaN      NaN  
+19           NaN       NaN        NaN  Personal Foul    NaN      NaN  
+  ... 1,484 more row(s) of 1,504 (SHOW_ROWS = 20)
+
+===== cell 64 27_shared_video_tagging_helper_functions =====
+
+===== cell 66 28_attach_video_tagging_clip_descriptions =====
+  Elmhurst Bluejays: matched 167/205 eligible pbp events to 168 video sub-events (177 clips)
+
+Tagged-video coverage for Ripon Red Hawks: 1 of 3 game(s) before facing UWW contributed tagged shots.
+    game_date                         vs        video_file  pbp_rows  clips  matched                                      why
+0  2026-11-07          Elmhurst Bluejays  (Synergy export)       523    177      167                                         
+1  2026-11-08     Milwaukee Panthers EXH                         533      0        0  no _video file found and no live scrape
+2  2026-11-11  St. Norbert Green Knights                         448      0        0  no _video file found and no live scrape
+
+2 game(s) contributed nothing -- reasons above. The most common cause is a filename the glob can't see: it needs BOTH the no-leading-zero date ("1_10_26", not "01_10_26") and "Ripon Red Hawks" in the name, e.g. "1_10_26 Ripon Red Hawks @ Coe_video.mhtml".
+
+Games with a video-tagging file: ['Elmhurst Bluejays']
+pbp_events_upcoming rows with a matched video description: 167 of 1504
+             opponent   game_date  event_order period time_remaining  time_remaining_seconds               team   event_type                                 raw_text  uww_score  opp_score                player  \
+3   Elmhurst Bluejays  2026-11-07            3     H1     19:37 (H1)                  1177.0    Ripon Red Hawks     turnover       Jose Gonzales Turnover (Lost Ball)        0.0        0.0         Jose Gonzales   
+4   Elmhurst Bluejays  2026-11-07            4     H1     19:21 (H1)                  1161.0  Elmhurst Bluejays  missed_shot         Aidyn Boone Misses 3PT Jump Shot        0.0        0.0           Aidyn Boone   
+6   Elmhurst Bluejays  2026-11-07            6     H1     19:02 (H1)                  1142.0    Ripon Red Hawks     turnover        Jose Gonzales Turnover (Bad Pass)        0.0        0.0         Jose Gonzales   
+9   Elmhurst Bluejays  2026-11-07            9     H1     18:42 (H1)                  1122.0  Elmhurst Bluejays  missed_shot         Jack Cherry Misses 2PT Jump Shot        0.0        0.0           Jack Cherry   
+11  Elmhurst Bluejays  2026-11-07           11     H1     18:38 (H1)                  1118.0    Ripon Red Hawks     turnover        Seth Bunders Turnover (Lost Ball)        0.0        0.0          Seth Bunders   
+13  Elmhurst Bluejays  2026-11-07           13     H1     18:26 (H1)                  1106.0  Elmhurst Bluejays  missed_shot    Vinnie Adjahoungbeta Misses 2PT Layup        0.0        0.0  Vinnie Adjahoungbeta   
+15  Elmhurst Bluejays  2026-11-07           15     H1     18:00 (H1)                  1080.0    Ripon Red Hawks    made_shot            Michael Asman Makes 2PT Layup        0.0        2.0         Michael Asman   
+17  Elmhurst Bluejays  2026-11-07           17     H1     17:45 (H1)                  1065.0  Elmhurst Bluejays  missed_shot         Aidyn Boone Misses 3PT Jump Shot        0.0        2.0           Aidyn Boone   
+19  Elmhurst Bluejays  2026-11-07           19     H1     17:36 (H1)                  1056.0  Elmhurst Bluejays         foul        Aidyn Boone Commits Personal Foul        0.0        2.0           Aidyn Boone   
+22  Elmhurst Bluejays  2026-11-07           22     H1     17:16 (H1)                  1036.0    Ripon Red Hawks         foul        Keenan Rahn Commits Personal Foul        0.0        4.0           Keenan Rahn   
+29  Elmhurst Bluejays  2026-11-07           29     H1     17:04 (H1)                  1024.0    Ripon Red Hawks  missed_shot        Seth Bunders Misses 3PT Jump Shot        2.0        4.0          Seth Bunders   
+31  Elmhurst Bluejays  2026-11-07           31     H1     16:59 (H1)                  1019.0  Elmhurst Bluejays     turnover  Dominic Trelenberg Turnover (Lost Ball)        2.0        4.0    Dominic Trelenberg   
+34  Elmhurst Bluejays  2026-11-07           34     H1     16:42 (H1)                  1002.0    Ripon Red Hawks  missed_shot         Jackson Flowers Misses 2PT Layup        2.0        4.0       Jackson Flowers   
+36  Elmhurst Bluejays  2026-11-07           36     H1     16:37 (H1)                   997.0  Elmhurst Bluejays     turnover          Chris Ketchum Turnover (Travel)        2.0        4.0         Chris Ketchum   
+41  Elmhurst Bluejays  2026-11-07           41     H1     16:23 (H1)                   983.0    Ripon Red Hawks    made_shot      Jackson Flowers Makes 3PT Jump Shot        2.0        7.0       Jackson Flowers   
+43  Elmhurst Bluejays  2026-11-07           43     H1     16:06 (H1)                   966.0  Elmhurst Bluejays    made_shot              Andy Colvin Makes 2PT Layup        4.0        7.0           Andy Colvin   
+45  Elmhurst Bluejays  2026-11-07           45     H1     15:37 (H1)                   937.0    Ripon Red Hawks  missed_shot        Seth Bunders Misses 3PT Jump Shot        4.0        7.0          Seth Bunders   
+47  Elmhurst Bluejays  2026-11-07           47     H1     15:16 (H1)                   916.0  Elmhurst Bluejays    made_shot       Dominic Trelenberg Makes 2PT Layup        6.0        7.0    Dominic Trelenberg   
+48  Elmhurst Bluejays  2026-11-07           48     H1     15:05 (H1)                   905.0    Ripon Red Hawks     turnover           Landon Lee Turnover (Bad Pass)        6.0        7.0            Landon Lee   
+50  Elmhurst Bluejays  2026-11-07           50     H1     15:01 (H1)                   901.0  Elmhurst Bluejays    made_shot              EJ Marshall Makes 2PT Layup        8.0        7.0           EJ Marshall   
+
+   turnover_type shot_type  shot_desc      foul_type ft_num ft_total                                                      video_description video_result          video_player  video_clip_number  
+3      Lost Ball       NaN        NaN            NaN    NaN      NaN                     0 Jose Gonzales > Spot-Up > Drives Left > Turnover     Turnover         Jose Gonzales                2.0  
+4            NaN         3  Jump Shot            NaN    NaN      NaN  1 Dominic Trelenberg > P&R Ball Handler > High P&R > Dribble Off P...   Miss 3 Pts           Aidyn Boone                3.0  
+6       Bad Pass       NaN        NaN            NaN    NaN      NaN  0 Jose Gonzales > P&R Ball Handler > High P&R > Dribble Off Pick >...     Turnover         Jose Gonzales                4.0  
+9            NaN         2  Jump Shot            NaN    NaN      NaN  0 Jack Cherry > Post-Up > Left Block > Left Shoulder > Dribble Mov...   Miss 2 Pts           Jack Cherry                5.0  
+11     Lost Ball       NaN        NaN            NaN    NaN      NaN                  30 Seth Bunders > Transition > Ballhandler > Turnover     Turnover          Seth Bunders                6.0  
+13           NaN         2      Layup            NaN    NaN      NaN  15 Vinnie Adjahoungbeta > P&R Ball Handler > Left P&R > Side > Dri...   Miss 2 Pts  Vinnie Adjahoungbeta                7.0  
+15           NaN         2      Layup            NaN    NaN      NaN  3 Keenan Rahn > P&R Ball Handler > Right P&R > Baseline > Dribble ...   Make 2 Pts         Michael Asman                8.0  
+17           NaN         3  Jump Shot            NaN    NaN      NaN  40 Aidyn Boone > Spot-Up > No Dribble Jumper > Open > Long/3pt > M...   Miss 3 Pts           Aidyn Boone                9.0  
+19           NaN       NaN        NaN  Personal Foul    NaN      NaN  30 Seth Bunders > P&R Ball Handler > High P&R > Dribble Off Pick >...         Foul          Seth Bunders               10.0  
+22           NaN       NaN        NaN  Personal Foul    NaN      NaN                                   40 Aidyn Boone > Cut > Basket > Foul         Foul           Aidyn Boone               13.0  
+29           NaN         3  Jump Shot            NaN    NaN      NaN  30 Seth Bunders > Off Screen > To Shooter's Left > Straight > No D...   Miss 3 Pts          Seth Bunders               16.0  
+31     Lost Ball       NaN        NaN            NaN    NaN      NaN  1 Dominic Trelenberg > P&R Ball Handler > Right P&R > Baseline > D...     Turnover    Dominic Trelenberg               17.0  
+34           NaN         2      Layup            NaN    NaN      NaN    34 Jackson Flowers > Spot-Up > Drives Left > To Basket > Miss 2 Pts   Miss 2 Pts       Jackson Flowers               18.0  
+36        Travel       NaN        NaN            NaN    NaN      NaN     10 Chris Ketchum > Transition > Ballhandler > To Basket > Turnover     Turnover         Chris Ketchum               19.0  
+41           NaN         3  Jump Shot            NaN    NaN      NaN  34 Jackson Flowers > Spot-Up > No Dribble Jumper > Guarded > Long/...   Make 3 Pts       Jackson Flowers               20.0  
+43           NaN         2      Layup            NaN    NaN      NaN  0 Jack Cherry > P&R Ball Handler > Left P&R > Side > Dribble Off P...   Make 2 Pts           Andy Colvin               21.0  
+45           NaN         3  Jump Shot            NaN    NaN      NaN  30 Seth Bunders > Spot-Up > Drives Left > Dribble Jumper > Long/3p...   Miss 3 Pts          Seth Bunders               22.0  
+47           NaN         2      Layup            NaN    NaN      NaN  2 Luke Smith > P&R Ball Handler > Left P&R > Baseline > Dribble Of...   Make 2 Pts    Dominic Trelenberg               23.0  
+48      Bad Pass       NaN        NaN            NaN    NaN      NaN                                 2 Landon Lee > No Play Type > Turnover     Turnover            Landon Lee               24.0  
+50           NaN         2      Layup            NaN    NaN      NaN      4 EJ Marshall > Transition > Ballhandler > To Basket > Make 2 Pts   Make 2 Pts           EJ Marshall               25.0  
+  ... 147 more row(s) of 167 (SHOW_ROWS = 20)
+
+===== cell 68 29_scout_upcoming_opponent_own_tendencies =====
+Ripon Red Hawks's own events across their 3 games before Whitewater: 718
+Their opponents' events across those same games: 774
+
+Ripon Red Hawks's shot-type tendencies (volume + efficiency, tagged by play_type/guarded) across their last 3 games:
+   shot_type  shot_desc          play_type guarded  attempts  makes  fg_pct
+0          3  Jump Shot            Spot-Up     Yes         7      5    71.4
+1          2      Layup                Cut     N/A         6      2    33.3
+2          3  Jump Shot            Spot-Up      No         5      1    20.0
+3          2      Layup            Spot-Up     N/A         4      0     0.0
+4          2      Layup         Transition     N/A         4      2    50.0
+5          2  Jump Shot         Off Screen     N/A         3      1    33.3
+6          2      Layup            Post-Up     N/A         3      2    66.7
+7          2  Jump Shot                ISO     N/A         2      0     0.0
+8          2  Jump Shot   P&R Ball Handler     N/A         2      1    50.0
+9          2      Layup  Offensive Rebound     N/A         2      1    50.0
+10         3  Jump Shot         Off Screen     N/A         1      0     0.0
+11         3  Jump Shot         Off Screen      No         1      0     0.0
+12         3  Jump Shot   P&R Ball Handler     N/A         1      0     0.0
+13         3  Jump Shot         Off Screen     Yes         1      0     0.0
+14         3  Jump Shot           Hand Off     Yes         1      0     0.0
+  ... 13 more row(s) of 28 (SHOW_ROWS = 15)
+
+Ripon Red Hawks's shot attempts by play type:
+            play_type  attempts  makes  fg_pct
+0             Spot-Up        20      7    35.0
+1          Off Screen         7      2    28.6
+2                 Cut         6      2    33.3
+3          Transition         6      2    33.3
+4    P&R Ball Handler         4      2    50.0
+5            Hand Off         3      1    33.3
+6                 ISO         3      0     0.0
+7             Post-Up         3      2    66.7
+8   Offensive Rebound         2      1    50.0
+9        No Play Type         1      0     0.0
+10       P&R Roll Man         1      0     0.0
+
+Ripon Red Hawks's shot attempts by contest level:
+  guarded  attempts  makes  fg_pct
+0     N/A        39     13    33.3
+1     Yes        10      5    50.0
+2      No         7      1    14.3
+
+Ripon Red Hawks's turnover types (45 total, tagged by play_type):
+  turnover_type         play_type  count
+0      Bad Pass      No Play Type      6
+1      Bad Pass        Off Screen      1
+2      Bad Pass  P&R Ball Handler      1
+3     Lost Ball               ISO      1
+4     Lost Ball      No Play Type      1
+5     Lost Ball        Off Screen      1
+6     Lost Ball           Spot-Up      1
+7     Lost Ball        Transition      1
+
+Ripon Red Hawks's foul types (48 total, with video_description):
+       foul_type                                                      video_description  count
+7  Personal Foul                                   40 Aidyn Boone > Cut > Basket > Foul      2
+0  Personal Foul  1 Dominic Trelenberg > Off Screen > To Shooter's Right > Straight ...      1
+1  Personal Foul        1 Dominic Trelenberg > Spot-Up > Drives Left > To Basket > Foul      1
+2  Personal Foul                                 10 Chris Ketchum > Cut > Basket > Foul      1
+3  Personal Foul         10 Chris Ketchum > Transition > Ballhandler > To Basket > Foul      1
+4  Personal Foul                  21 Talen Pearson > Non Possession > Non Shooting Foul      1
+5  Personal Foul  4 EJ Marshall > P&R Ball Handler > Right P&R > Side > Dribble Off ...      1
+6  Personal Foul  4 EJ Marshall > Spot-Up > No Dribble Jumper > Guarded > Long/3pt >...      1
+8  Personal Foul                    40 Aidyn Boone > Non Possession > Non Shooting Foul      1
+9  Personal Foul            40 Aidyn Boone > Transition > Right Wing > To Basket > Foul      1
+
+Ripon Red Hawks's top scorers across their last 3 games (from play-by-play):
+             player  total_points_across_3_games
+0   Jackson Flowers                         30.0
+1         Joey Daun                         21.0
+2     Michael Asman                         20.0
+3       Anton Kilde                         16.0
+4      Seth Bunders                         15.0
+5  Christian Wilson                         13.0
+6     Jose Gonzales                         12.0
+7        Landon Lee                         12.0
+8  Dominic Rasberry                          9.0
+9        Jack Field                          9.0
+
+===== cell 70 30_compare_pbp_derived_opponent_tendencies_to =====
+UWW's own scouting notes for Ripon Red Hawks [SOURCE: SCOUTING REPORT]:
+  KEYS TO VICTORY: 1. REBOUNDING & TRANSITION DEFENSE | 2. COMMUNICATION ON SCREENING ACTION! | 3. EARLY BALL MOVEMENT & PAINT TOUCHES
+  TEAM STRENGTHS: Motion offense with good ball movement & cutting | 2.Aggressive gap and help defense with active hands | 3.Mixing ball screens and DHO's
+
+--- Comparing PBP evidence to the stated Keys to Victory [SOURCE: SCOUTING REPORT] ---
+
+KEY 1 [SCOUTING REPORT] -- COMMUNICATE SCREENS & ACTIONS:
+  Not directly measurable from play-by-play event types (no screen-action tagging) -- this is a
+  communication/technique key tied to their offensive scheme (per the scout's own Offensive Scheme notes),
+  not something the event log alone can confirm or refute.
+
+KEY 2 [SCOUTING REPORT] -- DOMINATE THE PAINT:
+  Their own rebounding split across their 3 games: [{'rebound_type': 'defensive', 'count': 74}, {'rebound_type': 'offensive', 'count': 27}]
+  Their layup-area attempts (Layup + Driving Layup): 25 of 56 total FGA
+  Blocks recorded against them by opponents: 9
+  Compare against their own Defensive Scheme notes and layup-area conversion rate to judge whether this key
+  is supported by the evidence.
+
+KEY 3 [SCOUTING REPORT] -- GUARD 1 ON 1:
+  Measured 3PT jump-shot rate: 21 attempts at 33.3%.
+  Scoring balance (top 5 scorers): [{'player': 'Jackson Flowers', 'total_points_across_3_games': 30.0}, {'player': 'Joey Daun', 'total_points_across_3_games': 21.0}, {'player': 'Michael Asman', 'total_points_across_3_games': 20.0}, {'player': 'Anton Kilde', 'total_points_across_3_games': 16.0}, {'player': 'Seth Bunders', 'total_points_across_3_games': 15.0}]
+  Compare against the scout's own TEAM STRENGTHS note on shooting/scoring balance to judge whether
+  over-helping creates open catch-and-shoot looks that straight man coverage would limit.
+
+
+--- New Keys to Victory, derived from PBP data/tendencies [SOURCE: PBP-DERIVED] ---
+
+  No action cleared the volume and gap floors -- no PBP-derived keys this week.
+
+Structured PBP-derived keys, ready for CSV export:
+  (no data)
+
+===== cell 72 31_diagnose_opponent_weakest_video_tagged =====
+Ripon Red Hawks's video-tagged play types, across their 3 games before Whitewater (56 video-matched attempts):
+
+            play_type  attempts  makes  fg_pct
+0             Spot-Up        20      7    35.0
+1          Off Screen         7      2    28.6
+2                 Cut         6      2    33.3
+3          Transition         6      2    33.3
+4    P&R Ball Handler         4      2    50.0
+5            Hand Off         3      1    33.3
+6                 ISO         3      0     0.0
+7             Post-Up         3      2    66.7
+8   Offensive Rebound         2      1    50.0
+9        No Play Type         1      0     0.0
+10       P&R Roll Man         1      0     0.0
+Weakest high-volume play type (>= 10 attempts): 'Spot-Up' at 35.0% (7/20)
+
+'Spot-Up' shot-quality breakdown (20 attempts):
+
+By shot mechanic:
+             shot_mechanic  attempts  makes  fg_pct
+0          Catch-and-shoot        13      6    46.2
+1      Drive to the basket         5      0     0.0
+2  Pull-up off the dribble         2      1    50.0
+
+By contest level:
+                                                 contest  attempts  makes  fg_pct
+0                                                Guarded         7      5    71.4
+1  Not tagged (contest recorded only on catch-and-shoot)         7      1    14.3
+2                                                   Open         6      1    16.7
+
+By shot distance:
+            distance  attempts  makes  fg_pct
+0           Long/3pt        13      6    46.2
+2                N/A         5      0     0.0
+1  Medium/17' to <3p         1      0     0.0
+3     Short to < 17'         1      1   100.0
+
+Per-player 'Spot-Up' volume/efficiency, with catch-and-shoot% and guarded% of those attempts:
+             player  attempts  makes  fg_pct  pct_catch_and_shoot  pct_guarded
+2   Jackson Flowers         8      4    50.0                 62.5         50.0
+7      Seth Bunders         3      1    33.3                 66.7         66.7
+1        Jack Field         2      1    50.0                100.0          0.0
+4       Keenan Rahn         2      0     0.0                100.0          0.0
+6         Sam Leoni         2      0     0.0                 50.0          0.0
+0  Christian Wilson         1      1   100.0                  0.0          0.0
+3     Jose Gonzales         1      0     0.0                  0.0          0.0
+5     Michael Asman         1      0     0.0                100.0        100.0
+
+===== cell 74 32_load_player_comparison_algorithms_and =====
+LLM comparison skipped (use_llm=False) -- using tag-based similarity only.
+Loaded player comparison algorithms (version 2026-07-29-portable). use_llm=False
+
+Scouted opponents and their game number on the schedule:
+  Game #1: Carroll (WI) Pioneers
+  Game #2: Ripon Red Hawks
+  Game #4: Elmhurst Bluejays
+
+Target (most recently scouted game): Ripon Red Hawks (game #2)
+Previous scouted opponents to compare against: ['Carroll (WI) Pioneers']
+
+player_notes-derived tag frequency and rarity-based importance weight (rarer tags count more toward similarity):
+                   tag  count  importance_weight
+0  three_point_shooter     19              1.668
+1       slasher_driver     18              1.719
+2      catch_and_shoot      7              2.584
+3            rebounder      5              2.872
+4          post_scorer      4              3.054
+5               cutter      1              3.970
+6            playmaker      1              3.970
+7      pull_up_shooter      1              3.970
+
+keys_to_defending-derived tag frequency and rarity-based importance weight:
+                     tag  count  importance_weight
+0   deny_catch_and_shoot     16              1.830
+1       box_out_priority     10              2.266
+2     transition_defense      6              2.718
+3        anticipate_move      4              3.054
+4           help_defense      4              3.054
+5          keep_in_front      4              3.054
+6    physical_discipline      2              3.565
+7      screen_navigation      2              3.565
+8              deny_cuts      1              3.970
+9           post_defense      1              3.970
+10      pressure_disrupt      1              3.970
+
+===== cell 76 33_surface_tag_based_best_match_per_target =====
+       target_player target_position  target_opponent target_game_date  \
+0       Seth Bunders               G  Ripon Red Hawks      Sat, Nov 14   
+1        Keenan Rahn               G  Ripon Red Hawks      Sat, Nov 14   
+2          Sam Leoni               G  Ripon Red Hawks      Sat, Nov 14   
+3         Landon Lee               G  Ripon Red Hawks      Sat, Nov 14   
+4    Jackson Flowers               F  Ripon Red Hawks      Sat, Nov 14   
+5      Jose Gonzales               G  Ripon Red Hawks      Sat, Nov 14   
+6         Jack Field               F  Ripon Red Hawks      Sat, Nov 14   
+7      Michael Asman               F  Ripon Red Hawks      Sat, Nov 14   
+8          Joey Daun               G  Ripon Red Hawks      Sat, Nov 14   
+9        Anton Kilde            None  Ripon Red Hawks      Sat, Nov 14   
+10  Christian Wilson            None  Ripon Red Hawks      Sat, Nov 14   
+11  Domanic Rasberry            None  Ripon Red Hawks      Sat, Nov 14   
+
+        compared_player      compared_opponent compared_game_date  \
+0         Dennis Estepp  Carroll (WI) Pioneers         Sat, Nov 7   
+1          Lucas Parker  Carroll (WI) Pioneers         Sat, Nov 7   
+2          Cahlil Jones  Carroll (WI) Pioneers         Sat, Nov 7   
+3         Dennis Estepp  Carroll (WI) Pioneers         Sat, Nov 7   
+4   Logan Steffensmeier  Carroll (WI) Pioneers         Sat, Nov 7   
+5          Cahlil Jones  Carroll (WI) Pioneers         Sat, Nov 7   
+6   Logan Steffensmeier  Carroll (WI) Pioneers         Sat, Nov 7   
+7   Logan Steffensmeier  Carroll (WI) Pioneers         Sat, Nov 7   
+8          Lucas Parker  Carroll (WI) Pioneers         Sat, Nov 7   
+9          Lucas Parker  Carroll (WI) Pioneers         Sat, Nov 7   
+10         Lucas Parker  Carroll (WI) Pioneers         Sat, Nov 7   
+11         Lucas Parker  Carroll (WI) Pioneers         Sat, Nov 7   
+
+   compared_position  similarity_score  stat_similarity  ... target_PTS  \
+0                  G             11.50              1.0  ...       None   
+1                  G             11.47              1.0  ...       None   
+2                  G             11.44              1.0  ...       None   
+3                  G             10.97              1.0  ...       None   
+4                  F             10.73              1.0  ...       None   
+5                  G             10.20              1.0  ...       None   
+6                  F             10.04              1.0  ...       None   
+7                  F              9.94              1.0  ...       None   
+8                  G              9.81              1.0  ...       None   
+9                  G              3.50              1.0  ...       None   
+10                 G              3.50              1.0  ...       None   
+11                 G              3.50              1.0  ...       None   
+
+   compared_PTS target_REB compared_REB target_AST compared_AST target_FG%  \
+0          None       None         None       None         None       None   
+1          None       None         None       None         None       None   
+2          None       None         None       None         None       None   
+3          None       None         None       None         None       None   
+4          None       None         None       None         None       None   
+5          None       None         None       None         None       None   
+6          None       None         None       None         None       None   
+7          None       None         None       None         None       None   
+8          None       None         None       None         None       None   
+9          None       None         None       None         None       None   
+10         None       None         None       None         None       None   
+11         None       None         None       None         None       None   
+
+   compared_FG% target_3P% compared_3P%  
+0          None       None         None  
+1          None       None         None  
+2          None       None         None  
+3          None       None         None  
+4          None       None         None  
+5          None       None         None  
+6          None       None         None  
+7          None       None         None  
+8          None       None         None  
+9          None       None         None  
+10         None       None         None  
+11         None       None         None  
+
+[12 rows x 22 columns]
+Most comparable previously-scouted player for each Ripon Red Hawks player (scouted Sat, Nov 14):
+
+Seth Bunders (G) -> Dennis Estepp of Carroll (WI) Pioneers on Sat, Nov 7 (G), score=11.5 -- shared NOTES tags: slasher_driver, three_point_shooter; no shared keys tags
+    Season-stat similarity contribution: 1.0 (0-1 scale, weighted x3 into the score above)
+    No season stats available for Dennis Estepp (no PDF scout report for Carroll (WI) Pioneers).
+    No season stats available for Seth Bunders (no PDF scout report for Ripon Red Hawks yet).
+Keenan Rahn (G) -> Lucas Parker of Carroll (WI) Pioneers on Sat, Nov 7 (G), score=11.47 -- shared NOTES tags: catch_and_shoot, three_point_shooter; shared KEYS tags: deny_catch_and_shoot
+    Season-stat similarity contribution: 1.0 (0-1 scale, weighted x3 into the score above)
+    No season stats available for Lucas Parker (no PDF scout report for Carroll (WI) Pioneers).
+    No season stats available for Keenan Rahn (no PDF scout report for Ripon Red Hawks yet).
+Sam Leoni (G) -> Cahlil Jones of Carroll (WI) Pioneers on Sat, Nov 7 (G), score=11.44 -- shared NOTES tags: slasher_driver, three_point_shooter; shared KEYS tags: keep_in_front
+    Season-stat similarity contribution: 1.0 (0-1 scale, weighted x3 into the score above)
+    No season stats available for Cahlil Jones (no PDF scout report for Carroll (WI) Pioneers).
+    No season stats available for Sam Leoni (no PDF scout report for Ripon Red Hawks yet).
+Landon Lee (G) -> Dennis Estepp of Carroll (WI) Pioneers on Sat, Nov 7 (G), score=10.97 -- shared NOTES tags: slasher_driver, three_point_shooter; shared KEYS tags: transition_defense
+    Season-stat similarity contribution: 1.0 (0-1 scale, weighted x3 into the score above)
+    No season stats available for Dennis Estepp (no PDF scout report for Carroll (WI) Pioneers).
+    No season stats available for Landon Lee (no PDF scout report for Ripon Red Hawks yet).
+Jackson Flowers (F) -> Logan Steffensmeier of Carroll (WI) Pioneers on Sat, Nov 7 (F), score=10.73 -- shared NOTES tags: three_point_shooter; shared KEYS tags: box_out_priority, deny_catch_and_shoot
+    Season-stat similarity contribution: 1.0 (0-1 scale, weighted x3 into the score above)
+    No season stats available for Logan Steffensmeier (no PDF scout report for Carroll (WI) Pioneers).
+    No season stats available for Jackson Flowers (no PDF scout report for Ripon Red Hawks yet).
+Jose Gonzales (G) -> Cahlil Jones of Carroll (WI) Pioneers on Sat, Nov 7 (G), score=10.2 -- shared NOTES tags: slasher_driver; shared KEYS tags: keep_in_front
+    Season-stat similarity contribution: 1.0 (0-1 scale, weighted x3 into the score above)
+    No season stats available for Cahlil Jones (no PDF scout report for Carroll (WI) Pioneers).
+    No season stats available for Jose Gonzales (no PDF scout report for Ripon Red Hawks yet).
+Jack Field (F) -> Logan Steffensmeier of Carroll (WI) Pioneers on Sat, Nov 7 (F), score=10.04 -- shared NOTES tags: slasher_driver, three_point_shooter; shared KEYS tags: deny_catch_and_shoot
+    Season-stat similarity contribution: 1.0 (0-1 scale, weighted x3 into the score above)
+    No season stats available for Logan Steffensmeier (no PDF scout report for Carroll (WI) Pioneers).
+    No season stats available for Jack Field (no PDF scout report for Ripon Red Hawks yet).
+Michael Asman (F) -> Logan Steffensmeier of Carroll (WI) Pioneers on Sat, Nov 7 (F), score=9.94 -- shared NOTES tags: three_point_shooter; shared KEYS tags: box_out_priority, deny_catch_and_shoot
+    Season-stat similarity contribution: 1.0 (0-1 scale, weighted x3 into the score above)
+    No season stats available for Logan Steffensmeier (no PDF scout report for Carroll (WI) Pioneers).
+    No season stats available for Michael Asman (no PDF scout report for Ripon Red Hawks yet).
+Joey Daun (G) -> Lucas Parker of Carroll (WI) Pioneers on Sat, Nov 7 (G), score=9.81 -- shared NOTES tags: three_point_shooter; shared KEYS tags: deny_catch_and_shoot
+    Season-stat similarity contribution: 1.0 (0-1 scale, weighted x3 into the score above)
+    No season stats available for Lucas Parker (no PDF scout report for Carroll (WI) Pioneers).
+    No season stats available for Joey Daun (no PDF scout report for Ripon Red Hawks yet).
+Anton Kilde (None) -> Lucas Parker of Carroll (WI) Pioneers on Sat, Nov 7 (G), score=3.5 -- no shared notes tags; no shared keys tags
+    Season-stat similarity contribution: 1.0 (0-1 scale, weighted x3 into the score above)
+    No season stats available for Lucas Parker (no PDF scout report for Carroll (WI) Pioneers).
+    No season stats available for Anton Kilde (no PDF scout report for Ripon Red Hawks yet).
+Christian Wilson (None) -> Lucas Parker of Carroll (WI) Pioneers on Sat, Nov 7 (G), score=3.5 -- no shared notes tags; no shared keys tags
+    Season-stat similarity contribution: 1.0 (0-1 scale, weighted x3 into the score above)
+    No season stats available for Lucas Parker (no PDF scout report for Carroll (WI) Pioneers).
+    No season stats available for Christian Wilson (no PDF scout report for Ripon Red Hawks yet).
+Domanic Rasberry (None) -> Lucas Parker of Carroll (WI) Pioneers on Sat, Nov 7 (G), score=3.5 -- no shared notes tags; no shared keys tags
+    Season-stat similarity contribution: 1.0 (0-1 scale, weighted x3 into the score above)
+    No season stats available for Lucas Parker (no PDF scout report for Carroll (WI) Pioneers).
+    No season stats available for Domanic Rasberry (no PDF scout report for Ripon Red Hawks yet).
+
+===== cell 78  =====
+LLM-based comparison was skipped (USE_LLM=False). Set the USE_LLM config variable to True to run this cell.
+
+===== cell 80 34_surface_llm_best_match_per_player =====
+LLM-based comparison was skipped (USE_LLM=False). Set the USE_LLM config variable to True to run this cell.
+
+===== cell 82 35_blend_tag_based_and_llm_similarity_scores =====
+LLM-based comparison was skipped (USE_LLM=False), so there is no LLM score to blend with the tag-based score. Set the USE_LLM config variable to True to run this cell.
+
+===== cell 84  =====
+       target_player target_position target_role  target_opponent  \
+0       Seth Bunders               G     Starter  Ripon Red Hawks   
+1        Keenan Rahn               G     Starter  Ripon Red Hawks   
+2          Sam Leoni               G       Bench  Ripon Red Hawks   
+3         Landon Lee               G       Bench  Ripon Red Hawks   
+4    Jackson Flowers               F     Starter  Ripon Red Hawks   
+5      Jose Gonzales               G     Starter  Ripon Red Hawks   
+6         Jack Field               F       Bench  Ripon Red Hawks   
+7      Michael Asman               F     Starter  Ripon Red Hawks   
+8          Joey Daun               G       Bench  Ripon Red Hawks   
+9        Anton Kilde            None       Bench  Ripon Red Hawks   
+10  Christian Wilson            None       Bench  Ripon Red Hawks   
+11  Domanic Rasberry            None       Bench  Ripon Red Hawks   
+
+   target_game_date      compared_opponent compared_game_date  \
+0       Sat, Nov 14  Carroll (WI) Pioneers         Sat, Nov 7   
+1       Sat, Nov 14  Carroll (WI) Pioneers         Sat, Nov 7   
+2       Sat, Nov 14  Carroll (WI) Pioneers         Sat, Nov 7   
+3       Sat, Nov 14  Carroll (WI) Pioneers         Sat, Nov 7   
+4       Sat, Nov 14  Carroll (WI) Pioneers         Sat, Nov 7   
+5       Sat, Nov 14  Carroll (WI) Pioneers         Sat, Nov 7   
+6       Sat, Nov 14  Carroll (WI) Pioneers         Sat, Nov 7   
+7       Sat, Nov 14  Carroll (WI) Pioneers         Sat, Nov 7   
+8       Sat, Nov 14  Carroll (WI) Pioneers         Sat, Nov 7   
+9       Sat, Nov 14  Carroll (WI) Pioneers         Sat, Nov 7   
+10      Sat, Nov 14  Carroll (WI) Pioneers         Sat, Nov 7   
+11      Sat, Nov 14  Carroll (WI) Pioneers         Sat, Nov 7   
+
+        compared_player compared_position compared_role  ...  target_PTS  \
+0         Dennis Estepp                 G       Starter  ...        None   
+1          Lucas Parker                 G         Bench  ...        None   
+2          Cahlil Jones                 G       Starter  ...        None   
+3         Dennis Estepp                 G       Starter  ...        None   
+4   Logan Steffensmeier                 F       Starter  ...        None   
+5          Cahlil Jones                 G       Starter  ...        None   
+6   Logan Steffensmeier                 F       Starter  ...        None   
+7   Logan Steffensmeier                 F       Starter  ...        None   
+8          Lucas Parker                 G         Bench  ...        None   
+9          Lucas Parker                 G         Bench  ...        None   
+10         Lucas Parker                 G         Bench  ...        None   
+11         Lucas Parker                 G         Bench  ...        None   
+
+   compared_PTS target_REB  compared_REB  target_AST  compared_AST target_FG%  \
+0          None       None          None        None          None       None   
+1          None       None          None        None          None       None   
+2          None       None          None        None          None       None   
+3          None       None          None        None          None       None   
+4          None       None          None        None          None       None   
+5          None       None          None        None          None       None   
+6          None       None          None        None          None       None   
+7          None       None          None        None          None       None   
+8          None       None          None        None          None       None   
+9          None       None          None        None          None       None   
+10         None       None          None        None          None       None   
+11         None       None          None        None          None       None   
+
+    compared_FG% target_3P% compared_3P%  
+0           None       None         None  
+1           None       None         None  
+2           None       None         None  
+3           None       None         None  
+4           None       None         None  
+5           None       None         None  
+6           None       None         None  
+7           None       None         None  
+8           None       None         None  
+9           None       None         None  
+10          None       None         None  
+11          None       None         None  
+
+[12 rows x 28 columns]
+
+===== cell 86 36_parse_play_by_play_mhtml_files_into =====
+Found 2 UW-Whitewater play-by-play file(s):
+ - 11_14_26 Ripon Red Hawks @ UW-Whitewater_pbp.html
+ - 11_7_26 UW-Whitewater @ Carroll (WI) Pioneers_pbp.html
+  Parsed 'Ripon Red Hawks': 446 events
+  Parsed 'Carroll (WI) Pioneers': 500 events
+Dropped 446 pbp_events row(s) with a game_date on/after reference_date (2026-11-13) -- not yet 'played' in this simulation.
+
+Every play-by-play line was classified.
+                 opponent   game_date  event_order period time_remaining  time_remaining_seconds                   team                       event_type                                    raw_text  uww_score  \
+0   Carroll (WI) Pioneers  2026-11-07            0   None           None                     NaN                   None                    period_marker                              Start 1st Half        NaN   
+1   Carroll (WI) Pioneers  2026-11-07            1     H1     19:59 (H1)                  1199.0          UW-Whitewater                    jump_ball_won       Tyshawn Teague-Johnson Wins Jump Ball        0.0   
+2   Carroll (WI) Pioneers  2026-11-07            2     H1     19:59 (H1)                  1199.0  Carroll (WI) Pioneers                   jump_ball_lost                  Greg Smith Loses Jump Ball        0.0   
+3   Carroll (WI) Pioneers  2026-11-07            3     H1     19:40 (H1)                  1180.0          UW-Whitewater                      missed_shot    Isaiah Robinson Misses 2PT Driving Layup        0.0   
+4   Carroll (WI) Pioneers  2026-11-07            4     H1     19:37 (H1)                  1177.0  Carroll (WI) Pioneers                rebound_defensive              Jimmy Tarjan Defensive Rebound        0.0   
+5   Carroll (WI) Pioneers  2026-11-07            5     H1     19:33 (H1)                  1173.0  Carroll (WI) Pioneers                        made_shot          Peyton McKenna Makes 3PT Jump Shot        0.0   
+6   Carroll (WI) Pioneers  2026-11-07            6     H1     19:33 (H1)                  1173.0  Carroll (WI) Pioneers                           assist                      Michael McNabb Assists        0.0   
+7   Carroll (WI) Pioneers  2026-11-07            7     H1     19:25 (H1)                  1165.0  Carroll (WI) Pioneers                             foul         Dennis Estepp Commits Personal Foul        0.0   
+8   Carroll (WI) Pioneers  2026-11-07            8     H1     19:02 (H1)                  1142.0          UW-Whitewater                      missed_shot              Rashad Rogers Misses 2PT Layup        0.0   
+9   Carroll (WI) Pioneers  2026-11-07            9     H1     18:57 (H1)                  1137.0  Carroll (WI) Pioneers                rebound_defensive            Michael McNabb Defensive Rebound        0.0   
+10  Carroll (WI) Pioneers  2026-11-07           10     H1     18:56 (H1)                  1136.0  Carroll (WI) Pioneers                         turnover          Michael McNabb Turnover (Bad Pass)        0.0   
+11  Carroll (WI) Pioneers  2026-11-07           11     H1     18:56 (H1)                  1136.0          UW-Whitewater                            steal                      Isaiah Robinson Steals        0.0   
+12  Carroll (WI) Pioneers  2026-11-07           12     H1     18:37 (H1)                  1117.0          UW-Whitewater                        made_shot           Kelton McEwen Makes 3PT Jump Shot        3.0   
+13  Carroll (WI) Pioneers  2026-11-07           13     H1     18:37 (H1)                  1117.0          UW-Whitewater                           assist              Tyshawn Teague-Johnson Assists        3.0   
+14  Carroll (WI) Pioneers  2026-11-07           14     H1     18:05 (H1)                  1085.0  Carroll (WI) Pioneers                      missed_shot     Michael McNabb Misses 2PT Driving Layup        3.0   
+15  Carroll (WI) Pioneers  2026-11-07           15     H1     18:00 (H1)                  1080.0          UW-Whitewater                rebound_defensive             Collin Madson Defensive Rebound        3.0   
+16  Carroll (WI) Pioneers  2026-11-07           16     H1     17:49 (H1)                  1069.0  Carroll (WI) Pioneers                             foul            Greg Smith Commits Personal Foul        3.0   
+17  Carroll (WI) Pioneers  2026-11-07           17     H1     17:49 (H1)                  1069.0          UW-Whitewater                free_throw_missed    Collin Madson Misses Free Throw (1 of 2)        3.0   
+18  Carroll (WI) Pioneers  2026-11-07           18     H1     17:49 (H1)                  1069.0          UW-Whitewater  team_deadball_rebound_offensive  Wis.-Whitewater Offensive Deadball Rebound        3.0   
+19  Carroll (WI) Pioneers  2026-11-07           19     H1     17:49 (H1)                  1069.0          UW-Whitewater                  free_throw_made     Collin Madson Makes Free Throw (2 of 2)        4.0   
+
+    opp_score                  player turnover_type shot_type      shot_desc      foul_type ft_num ft_total  
+0         NaN                     NaN           NaN       NaN            NaN            NaN    NaN      NaN  
+1         0.0  Tyshawn Teague-Johnson           NaN       NaN            NaN            NaN    NaN      NaN  
+2         0.0              Greg Smith           NaN       NaN            NaN            NaN    NaN      NaN  
+3         0.0         Isaiah Robinson           NaN         2  Driving Layup            NaN    NaN      NaN  
+4         0.0            Jimmy Tarjan           NaN       NaN            NaN            NaN    NaN      NaN  
+5         3.0          Peyton McKenna           NaN         3      Jump Shot            NaN    NaN      NaN  
+6         3.0          Michael McNabb           NaN       NaN            NaN            NaN    NaN      NaN  
+7         3.0           Dennis Estepp           NaN       NaN            NaN  Personal Foul    NaN      NaN  
+8         3.0           Rashad Rogers           NaN         2          Layup            NaN    NaN      NaN  
+9         3.0          Michael McNabb           NaN       NaN            NaN            NaN    NaN      NaN  
+10        3.0          Michael McNabb      Bad Pass       NaN            NaN            NaN    NaN      NaN  
+11        3.0         Isaiah Robinson           NaN       NaN            NaN            NaN    NaN      NaN  
+12        3.0           Kelton McEwen           NaN         3      Jump Shot            NaN    NaN      NaN  
+13        3.0  Tyshawn Teague-Johnson           NaN       NaN            NaN            NaN    NaN      NaN  
+14        3.0          Michael McNabb           NaN         2  Driving Layup            NaN    NaN      NaN  
+15        3.0           Collin Madson           NaN       NaN            NaN            NaN    NaN      NaN  
+16        3.0              Greg Smith           NaN       NaN            NaN  Personal Foul    NaN      NaN  
+17        3.0           Collin Madson           NaN       NaN            NaN            NaN      1        2  
+18        3.0         Wis.-Whitewater           NaN       NaN            NaN            NaN    NaN      NaN  
+19        3.0           Collin Madson           NaN       NaN            NaN            NaN      2        2  
+  ... 480 more row(s) of 500 (SHOW_ROWS = 20)
+
+===== cell 88 37_load_coach_tagged_recap_csvs =====
+Found 1 playbook catalog file(s):
+ - UW-Whitewater - Plays.mhtml
+
+Parsed 27 play(s) across 9 series and 17 family/families.
+        series play_family       play_name aliases
+0         ELOB        ELOB            "20"      20
+1         Snap        Snap  20 Snap (flip)        
+2         Snap        Snap       30 (flip)        
+3         Snap        Snap         40 Snap        
+4         Over     Cheetah         Cheetah        
+5       Bursts       Cobra           Cobra        
+6       Bursts         Fox             Fox        
+7   Transition         Get             Get        
+8     Specials    Kentucky        Kentucky        
+9     Specials     Panther  Panther 2 "P2"      P2
+10    Specials     Panther  Panther-4 "P4"      P4
+11    Specials     Panther     Panther "P"       P
+12        Over         Pin       Pin Flair        
+13     Entries      Pistol          Pistol        
+14  Transition       Pitch           Pitch        
+  ... 12 more row(s) of 27 (SHOW_ROWS = 15)
+
+===== cell 89 38_load_coach_tagged_recap_csvs_2 =====
+Found 0 coach-note/play-log CSV(s):
+
+===== cell 91 39_reconstruct_on_court_5_man_lineup_for_both =====
+Lineup column check: 0 game(s) had our lineup in the opponent's column and were corrected.
+                 opponent period time_remaining                   team                       event_type                                    raw_text  \
+0   Carroll (WI) Pioneers   None           None                   None                    period_marker                              Start 1st Half   
+1   Carroll (WI) Pioneers     H1     19:59 (H1)          UW-Whitewater                    jump_ball_won       Tyshawn Teague-Johnson Wins Jump Ball   
+2   Carroll (WI) Pioneers     H1     19:59 (H1)  Carroll (WI) Pioneers                   jump_ball_lost                  Greg Smith Loses Jump Ball   
+3   Carroll (WI) Pioneers     H1     19:40 (H1)          UW-Whitewater                      missed_shot    Isaiah Robinson Misses 2PT Driving Layup   
+4   Carroll (WI) Pioneers     H1     19:37 (H1)  Carroll (WI) Pioneers                rebound_defensive              Jimmy Tarjan Defensive Rebound   
+5   Carroll (WI) Pioneers     H1     19:33 (H1)  Carroll (WI) Pioneers                        made_shot          Peyton McKenna Makes 3PT Jump Shot   
+6   Carroll (WI) Pioneers     H1     19:33 (H1)  Carroll (WI) Pioneers                           assist                      Michael McNabb Assists   
+7   Carroll (WI) Pioneers     H1     19:25 (H1)  Carroll (WI) Pioneers                             foul         Dennis Estepp Commits Personal Foul   
+8   Carroll (WI) Pioneers     H1     19:02 (H1)          UW-Whitewater                      missed_shot              Rashad Rogers Misses 2PT Layup   
+9   Carroll (WI) Pioneers     H1     18:57 (H1)  Carroll (WI) Pioneers                rebound_defensive            Michael McNabb Defensive Rebound   
+10  Carroll (WI) Pioneers     H1     18:56 (H1)  Carroll (WI) Pioneers                         turnover          Michael McNabb Turnover (Bad Pass)   
+11  Carroll (WI) Pioneers     H1     18:56 (H1)          UW-Whitewater                            steal                      Isaiah Robinson Steals   
+12  Carroll (WI) Pioneers     H1     18:37 (H1)          UW-Whitewater                        made_shot           Kelton McEwen Makes 3PT Jump Shot   
+13  Carroll (WI) Pioneers     H1     18:37 (H1)          UW-Whitewater                           assist              Tyshawn Teague-Johnson Assists   
+14  Carroll (WI) Pioneers     H1     18:05 (H1)  Carroll (WI) Pioneers                      missed_shot     Michael McNabb Misses 2PT Driving Layup   
+15  Carroll (WI) Pioneers     H1     18:00 (H1)          UW-Whitewater                rebound_defensive             Collin Madson Defensive Rebound   
+16  Carroll (WI) Pioneers     H1     17:49 (H1)  Carroll (WI) Pioneers                             foul            Greg Smith Commits Personal Foul   
+17  Carroll (WI) Pioneers     H1     17:49 (H1)          UW-Whitewater                free_throw_missed    Collin Madson Misses Free Throw (1 of 2)   
+18  Carroll (WI) Pioneers     H1     17:49 (H1)          UW-Whitewater  team_deadball_rebound_offensive  Wis.-Whitewater Offensive Deadball Rebound   
+19  Carroll (WI) Pioneers     H1     17:49 (H1)          UW-Whitewater                  free_throw_made     Collin Madson Makes Free Throw (2 of 2)   
+20  Carroll (WI) Pioneers     H1     17:23 (H1)  Carroll (WI) Pioneers                      missed_shot         Peyton McKenna Misses 3PT Jump Shot   
+21  Carroll (WI) Pioneers     H1     17:19 (H1)  Carroll (WI) Pioneers                rebound_offensive              Jimmy Tarjan Offensive Rebound   
+22  Carroll (WI) Pioneers     H1     17:17 (H1)  Carroll (WI) Pioneers                      missed_shot         Michael McNabb Misses 3PT Jump Shot   
+23  Carroll (WI) Pioneers     H1     17:15 (H1)  Carroll (WI) Pioneers                rebound_offensive              Jimmy Tarjan Offensive Rebound   
+24  Carroll (WI) Pioneers     H1     17:14 (H1)          UW-Whitewater                             foul         Rashad Rogers Commits Personal Foul   
+25  Carroll (WI) Pioneers     H1     17:14 (H1)  Carroll (WI) Pioneers                free_throw_missed     Jimmy Tarjan Misses Free Throw (1 of 2)   
+26  Carroll (WI) Pioneers     H1     17:14 (H1)  Carroll (WI) Pioneers  team_deadball_rebound_offensive     Carroll (WI) Offensive Deadball Rebound   
+27  Carroll (WI) Pioneers     H1     17:14 (H1)  Carroll (WI) Pioneers                free_throw_missed     Jimmy Tarjan Misses Free Throw (2 of 2)   
+28  Carroll (WI) Pioneers     H1     17:14 (H1)  Carroll (WI) Pioneers                          sub_out                         Greg Smith Subs Out   
+29  Carroll (WI) Pioneers     H1     17:14 (H1)  Carroll (WI) Pioneers                           sub_in                 Logan Steffensmeier Subs In   
+
+                                                               uww_lineup                                                             opp_lineup  
+0   Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+1   Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+2   Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+3   Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+4   Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+5   Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+6   Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+7   Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+8   Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+9   Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+10  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+11  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+12  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+13  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+14  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+15  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+16  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+17  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+18  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+19  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+20  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+21  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+22  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+23  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+24  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+25  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+26  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+27  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+28  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  
+29  Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tysh...  Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Michael McNabb, ...  
+  ... 470 more row(s) of 500 (SHOW_ROWS = 30)
+
+Lineup size check (every non-null value should be exactly 5 players):
+ uww_lineup sizes: {5: 500}
+ opp_lineup sizes: {5: 500}
+
+===== cell 93 40_classify_each_on_court_opponent_lineup =====
+                  opponent  \
+0    Carroll (WI) Pioneers   
+353  Carroll (WI) Pioneers   
+349  Carroll (WI) Pioneers   
+306  Carroll (WI) Pioneers   
+301  Carroll (WI) Pioneers   
+290  Carroll (WI) Pioneers   
+281  Carroll (WI) Pioneers   
+227  Carroll (WI) Pioneers   
+388  Carroll (WI) Pioneers   
+182  Carroll (WI) Pioneers   
+115  Carroll (WI) Pioneers   
+105  Carroll (WI) Pioneers   
+92   Carroll (WI) Pioneers   
+75   Carroll (WI) Pioneers   
+68   Carroll (WI) Pioneers   
+51   Carroll (WI) Pioneers   
+29   Carroll (WI) Pioneers   
+162  Carroll (WI) Pioneers   
+452  Carroll (WI) Pioneers   
+
+                                                                              opp_lineup  \
+0                Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton McKenna   
+353               Cai Joseph, Cale Buboltz, Jimmy Tarjan, Michael McNabb, Peyton McKenna   
+349             Cale Buboltz, Jimmy Tarjan, Lucas Parker, Michael McNabb, Peyton McKenna   
+306    Cale Buboltz, Dennis Estepp, Hayden Stebbins, Logan Steffensmeier, Michael McNabb   
+301        Cai Joseph, Cale Buboltz, Dennis Estepp, Hayden Stebbins, Logan Steffensmeier   
+290       Cai Joseph, Cale Buboltz, Hayden Stebbins, Logan Steffensmeier, Peyton McKenna   
+281         Cai Joseph, Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Peyton McKenna   
+227  Dennis Estepp, Hayden Stebbins, Logan Steffensmeier, Michael McNabb, Peyton McKenna   
+388    Cale Buboltz, Dennis Estepp, Hayden Stebbins, Logan Steffensmeier, Peyton McKenna   
+182              Cale Buboltz, Dennis Estepp, Jimmy Tarjan, Lucas Parker, Peyton McKenna   
+115            Dennis Estepp, Jimmy Tarjan, Lucas Parker, Michael McNabb, Peyton McKenna   
+105           Dennis Estepp, Hayden Stebbins, Jimmy Tarjan, Lucas Parker, Michael McNabb   
+92             Cale Buboltz, Hayden Stebbins, Jimmy Tarjan, Lucas Parker, Michael McNabb   
+75      Cale Buboltz, Hayden Stebbins, Logan Steffensmeier, Lucas Parker, Peyton McKenna   
+68           Cai Joseph, Cale Buboltz, Logan Steffensmeier, Lucas Parker, Peyton McKenna   
+51         Cai Joseph, Cale Buboltz, Logan Steffensmeier, Michael McNabb, Peyton McKenna   
+29      Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Michael McNabb, Peyton McKenna   
+162     Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, Peyton McKenna   
+452       Cale Buboltz, Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Peyton McKenna   
+
+                                                                                                                                                                                                   opp_lineup_summary  
+0    3 Starter / 1 Bench | Pos: 3 Guard, 1 Wing | Style: slasher_driver x3, three_point_shooter x3, catch_and_shoot x1 | Defend: help_defense x2, transition_defense x1, deny_cuts x1 | No scouting match: Greg Smith  
+353                     3 Bench / 2 Starter | Pos: 2 Guard, 2 Unknown, 1 Wing | Style: three_point_shooter x2, slasher_driver x2, catch_and_shoot x1 | Defend: help_defense x2, pressure_disrupt x1, keep_in_front x1  
+349              3 Bench / 2 Starter | Pos: 3 Guard, 1 Wing, 1 Unknown | Style: three_point_shooter x3, catch_and_shoot x2, slasher_driver x2 | Defend: help_defense x2, pressure_disrupt x1, deny_catch_and_shoot x1  
+306                     3 Starter / 2 Bench | Pos: 2 Guard, 2 Unknown, 1 Forward/Post | Style: slasher_driver x3, three_point_shooter x3, rebounder x1 | Defend: transition_defense x1, deny_cuts x1, help_defense x1  
+301             3 Bench / 2 Starter | Pos: 3 Unknown, 1 Guard, 1 Forward/Post | Style: slasher_driver x2, three_point_shooter x2, rebounder x1 | Defend: transition_defense x1, deny_cuts x1, deny_catch_and_shoot x1  
+290  3 Bench / 2 Starter | Pos: 3 Unknown, 1 Guard, 1 Forward/Post | Style: three_point_shooter x2, catch_and_shoot x1, slasher_driver x1 | Defend: pressure_disrupt x1, deny_catch_and_shoot x1, box_out_priority x1  
+281           3 Starter / 2 Bench | Pos: 2 Guard, 2 Unknown, 1 Forward/Post | Style: three_point_shooter x3, slasher_driver x2, catch_and_shoot x1 | Defend: transition_defense x1, deny_cuts x1, pressure_disrupt x1  
+227           4 Starter / 1 Bench | Pos: 3 Guard, 1 Forward/Post, 1 Unknown | Style: three_point_shooter x4, slasher_driver x3, catch_and_shoot x1 | Defend: transition_defense x1, deny_cuts x1, pressure_disrupt x1  
+388           3 Starter / 2 Bench | Pos: 2 Guard, 2 Unknown, 1 Forward/Post | Style: three_point_shooter x3, slasher_driver x2, catch_and_shoot x1 | Defend: transition_defense x1, deny_cuts x1, pressure_disrupt x1  
+182                   3 Bench / 2 Starter | Pos: 3 Guard, 1 Wing, 1 Unknown | Style: three_point_shooter x3, slasher_driver x2, catch_and_shoot x2 | Defend: transition_defense x2, deny_cuts x1, pressure_disrupt x1  
+115                                  3 Starter / 2 Bench | Pos: 4 Guard, 1 Wing | Style: three_point_shooter x4, slasher_driver x3, catch_and_shoot x2 | Defend: transition_defense x2, help_defense x2, deny_cuts x1  
+105                       3 Bench / 2 Starter | Pos: 3 Guard, 1 Wing, 1 Unknown | Style: slasher_driver x3, three_point_shooter x3, catch_and_shoot x1 | Defend: transition_defense x2, help_defense x2, deny_cuts x1  
+92             4 Bench / 1 Starter | Pos: 2 Guard, 2 Unknown, 1 Wing | Style: slasher_driver x2, three_point_shooter x2, catch_and_shoot x1 | Defend: help_defense x2, deny_catch_and_shoot x1, transition_defense x1  
+75   3 Bench / 2 Starter | Pos: 2 Guard, 2 Unknown, 1 Forward/Post | Style: three_point_shooter x3, catch_and_shoot x2, slasher_driver x1 | Defend: deny_catch_and_shoot x2, pressure_disrupt x1, box_out_priority x1  
+68   3 Bench / 2 Starter | Pos: 2 Guard, 2 Unknown, 1 Forward/Post | Style: three_point_shooter x3, catch_and_shoot x2, slasher_driver x1 | Defend: deny_catch_and_shoot x2, pressure_disrupt x1, box_out_priority x1  
+51       3 Starter / 2 Bench | Pos: 2 Guard, 2 Unknown, 1 Forward/Post | Style: three_point_shooter x3, slasher_driver x2, catch_and_shoot x1 | Defend: pressure_disrupt x1, help_defense x1, deny_catch_and_shoot x1  
+29                  4 Starter / 1 Bench | Pos: 3 Guard, 1 Forward/Post, 1 Wing | Style: slasher_driver x4, three_point_shooter x4, rebounder x2 | Defend: help_defense x2, box_out_priority x2, transition_defense x1  
+162           4 Starter / 1 Bench | Pos: 3 Guard, 1 Forward/Post, 1 Unknown | Style: three_point_shooter x4, slasher_driver x3, catch_and_shoot x1 | Defend: transition_defense x1, deny_cuts x1, pressure_disrupt x1  
+452         3 Starter / 2 Bench | Pos: 2 Guard, 1 Forward/Post, 1 Wing, 1 Unknown | Style: slasher_driver x3, three_point_shooter x3, rebounder x2 | Defend: box_out_priority x2, transition_defense x1, deny_cuts x1  
+
+===== cell 95 41_attach_video_tagging_clip_descriptions_2 =====
+Skipping 1 video file(s) for games UWW didn't play in (handled by the opponent prior-games cell).
+Found 0 video-tagging file(s):
+ - Synergy export for Carroll (WI) Pioneers on 2026-11-07: 190 clip(s) (no _video page saved)
+  Carroll (WI) Pioneers: matched 170/232 made/missed-shot, turnover, free-throw & foul pbp_events rows to a video clip description via a single global order-preserving alignment across the whole game (of which 3/44 are free throws, and 26/43 are fouls). video log had 170 taggable sub-events of these types.
+                 opponent  event_order                   team  \
+0   Carroll (WI) Pioneers            0                   None   
+1   Carroll (WI) Pioneers            1          UW-Whitewater   
+2   Carroll (WI) Pioneers            2  Carroll (WI) Pioneers   
+3   Carroll (WI) Pioneers            3          UW-Whitewater   
+4   Carroll (WI) Pioneers            4  Carroll (WI) Pioneers   
+5   Carroll (WI) Pioneers            5  Carroll (WI) Pioneers   
+6   Carroll (WI) Pioneers            6  Carroll (WI) Pioneers   
+7   Carroll (WI) Pioneers            7  Carroll (WI) Pioneers   
+8   Carroll (WI) Pioneers            8          UW-Whitewater   
+9   Carroll (WI) Pioneers            9  Carroll (WI) Pioneers   
+10  Carroll (WI) Pioneers           10  Carroll (WI) Pioneers   
+11  Carroll (WI) Pioneers           11          UW-Whitewater   
+12  Carroll (WI) Pioneers           12          UW-Whitewater   
+13  Carroll (WI) Pioneers           13          UW-Whitewater   
+14  Carroll (WI) Pioneers           14  Carroll (WI) Pioneers   
+15  Carroll (WI) Pioneers           15          UW-Whitewater   
+16  Carroll (WI) Pioneers           16  Carroll (WI) Pioneers   
+17  Carroll (WI) Pioneers           17          UW-Whitewater   
+18  Carroll (WI) Pioneers           18          UW-Whitewater   
+19  Carroll (WI) Pioneers           19          UW-Whitewater   
+
+                    player                       event_type  \
+0                      NaN                    period_marker   
+1   Tyshawn Teague-Johnson                    jump_ball_won   
+2               Greg Smith                   jump_ball_lost   
+3          Isaiah Robinson                      missed_shot   
+4             Jimmy Tarjan                rebound_defensive   
+5           Peyton McKenna                        made_shot   
+6           Michael McNabb                           assist   
+7            Dennis Estepp                             foul   
+8            Rashad Rogers                      missed_shot   
+9           Michael McNabb                rebound_defensive   
+10          Michael McNabb                         turnover   
+11         Isaiah Robinson                            steal   
+12           Kelton McEwen                        made_shot   
+13  Tyshawn Teague-Johnson                           assist   
+14          Michael McNabb                      missed_shot   
+15           Collin Madson                rebound_defensive   
+16              Greg Smith                             foul   
+17           Collin Madson                free_throw_missed   
+18         Wis.-Whitewater  team_deadball_rebound_offensive   
+19           Collin Madson                  free_throw_made   
+
+                                      raw_text  video_clip_number  \
+0                               Start 1st Half                NaN   
+1        Tyshawn Teague-Johnson Wins Jump Ball                NaN   
+2                   Greg Smith Loses Jump Ball                NaN   
+3     Isaiah Robinson Misses 2PT Driving Layup                1.0   
+4               Jimmy Tarjan Defensive Rebound                NaN   
+5           Peyton McKenna Makes 3PT Jump Shot                2.0   
+6                       Michael McNabb Assists                NaN   
+7          Dennis Estepp Commits Personal Foul                3.0   
+8               Rashad Rogers Misses 2PT Layup                4.0   
+9             Michael McNabb Defensive Rebound                NaN   
+10          Michael McNabb Turnover (Bad Pass)                5.0   
+11                      Isaiah Robinson Steals                NaN   
+12           Kelton McEwen Makes 3PT Jump Shot                7.0   
+13              Tyshawn Teague-Johnson Assists                NaN   
+14     Michael McNabb Misses 2PT Driving Layup                8.0   
+15             Collin Madson Defensive Rebound                NaN   
+16            Greg Smith Commits Personal Foul                9.0   
+17    Collin Madson Misses Free Throw (1 of 2)                NaN   
+18  Wis.-Whitewater Offensive Deadball Rebound                NaN   
+19     Collin Madson Makes Free Throw (2 of 2)                NaN   
+
+         video_result     video_player  \
+0                 NaN              NaN   
+1                 NaN              NaN   
+2                 NaN              NaN   
+3          Miss 2 Pts  Isaiah Robinson   
+4                 NaN              NaN   
+5          Make 3 Pts   Peyton McKenna   
+6                 NaN              NaN   
+7   Non Shooting Foul  Isaiah Robinson   
+8          Miss 2 Pts    Rashad Rogers   
+9                 NaN              NaN   
+10           Turnover   Michael McNabb   
+11                NaN              NaN   
+12         Make 3 Pts    Kelton McEwen   
+13                NaN              NaN   
+14         Miss 2 Pts   Michael McNabb   
+15                NaN              NaN   
+16               Foul    Collin Madson   
+17                NaN              NaN   
+18                NaN              NaN   
+19                NaN              NaN   
+
+                                                                                                                                                         video_description  
+0                                                                                                                                                                      NaN  
+1                                                                                                                                                                      NaN  
+2                                                                                                                                                                      NaN  
+3                                                                                     5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts  
+4                                                                                                                                                                      NaN  
+5                                                                           12 Peyton McKenna > Transition > Right Wing > No Dribble Jumper > Open > Long/3pt > Make 3 Pts  
+6                                                                                                                                                                      NaN  
+7                                                                                                                   5 Isaiah Robinson > Non Possession > Non Shooting Foul  
+8                                                                            35 Rashad Rogers > Post-Up > Left Block > Left Shoulder > Dribble Move > To Hook > Miss 2 Pts  
+9                                                                                                                                                                      NaN  
+10                                                                                                                  4 Michael McNabb > Transition > Ballhandler > Turnover  
+11                                                                                                                                                                     NaN  
+12  12 Tyshawn Teague-Johnson > ISO > Top > Drives Right > Defense Commits > Ball Delivered > 2 Kelton Mcewen > Spot-Up > No Dribble Jumper > Open > Long/3pt > Make 3 Pts  
+13                                                                                                                                                                     NaN  
+14                                                                                                       4 Michael McNabb > Spot-Up > Drives Left > To Basket > Miss 2 Pts  
+15                                                                                                                                                                     NaN  
+16                                                                                                           15 Collin Madson > ISO > Top > Drives Left > To Basket > Foul  
+17                                                                                                                                                                     NaN  
+18                                                                                                                                                                     NaN  
+19                                                                                                                                                                     NaN  
+
+61 still-unmatched row(s) among attempted event types across 1 game(s) with a video-tagging file (1 bare team-level turnover(s) with no player excluded -- never matchable):
+  Carroll (WI) Pioneers: 61 unmatched
+                  opponent  event_order period time_remaining  \
+17   Carroll (WI) Pioneers           17     H1     17:49 (H1)   
+19   Carroll (WI) Pioneers           19     H1     17:49 (H1)   
+25   Carroll (WI) Pioneers           25     H1     17:14 (H1)   
+27   Carroll (WI) Pioneers           27     H1     17:14 (H1)   
+33   Carroll (WI) Pioneers           33     H1     16:50 (H1)   
+..                     ...          ...    ...            ...   
+453  Carroll (WI) Pioneers          453     H2     03:00 (H2)   
+478  Carroll (WI) Pioneers          478     H2     00:49 (H2)   
+480  Carroll (WI) Pioneers          480     H2     00:49 (H2)   
+488  Carroll (WI) Pioneers          488     H2     00:17 (H2)   
+489  Carroll (WI) Pioneers          489     H2     00:17 (H2)   
+
+                      team                  player         event_type  \
+17           UW-Whitewater           Collin Madson  free_throw_missed   
+19           UW-Whitewater           Collin Madson    free_throw_made   
+25   Carroll (WI) Pioneers            Jimmy Tarjan  free_throw_missed   
+27   Carroll (WI) Pioneers            Jimmy Tarjan  free_throw_missed   
+33           UW-Whitewater           Collin Madson               foul   
+..                     ...                     ...                ...   
+453          UW-Whitewater            JR Lukenbill               foul   
+478  Carroll (WI) Pioneers          Peyton McKenna  free_throw_missed   
+480  Carroll (WI) Pioneers          Peyton McKenna    free_throw_made   
+488          UW-Whitewater  Tyshawn Teague-Johnson  free_throw_missed   
+489          UW-Whitewater  Tyshawn Teague-Johnson    free_throw_made   
+
+                                              raw_text  
+17            Collin Madson Misses Free Throw (1 of 2)  
+19             Collin Madson Makes Free Throw (2 of 2)  
+25             Jimmy Tarjan Misses Free Throw (1 of 2)  
+27             Jimmy Tarjan Misses Free Throw (2 of 2)  
+33                 Collin Madson Commits Personal Foul  
+..                                                 ...  
+453                JR Lukenbill Commits Offensive Foul  
+478          Peyton McKenna Misses Free Throw (1 of 2)  
+480           Peyton McKenna Makes Free Throw (2 of 2)  
+488  Tyshawn Teague-Johnson Misses Free Throw (2 of 2)  
+489   Tyshawn Teague-Johnson Makes Free Throw (1 of 2)  
+
+[61 rows x 8 columns]
+No unmatched clips found in the video-tagging files.
+
+Timing: live scraping 0s, parsing + aligning 0s.
+
+===== cell 97 41b_offensive_roles =====
+Offensive roles: 91 player(s) -- 35 from Synergy play types, 28 from the play-by-play only, 28 from roster position only (63 marked low sample)
+  roles: Stationary Shooter 26; Secondary Ball Handler 20; Roll & Cut Big 17; Slasher 12; Athletic Finisher 6; Primary Ball Handler 2; Off Screen Shooter 2; Post Scorer 2; Versatile Big 2; Shot Creator 1; Movement Shooter 1
+  Carroll (WI) Pioneers: Peyton McKenna = Primary Ball Handler; Michael McNabb = Secondary Ball Handler; Cale Buboltz = Shot Creator; Dennis Estepp = Stationary Shooter; Logan Steffensmeier = Stationary Shooter; Jimmy Tarjan = Slasher; Lucas Parker = Stationary Shooter; Hayden Stebbins = Stationary Shooter; Greg Smith = Roll & Cut Big
+  Elmhurst Bluejays: Dominic Trelenberg = Off Screen Shooter; Chris Ketchum = Athletic Finisher; Aidyn Boone = Stationary Shooter; Vinnie Adjahoungbeta = Slasher; Jack Cherry = Secondary Ball Handler; Luke Smith = Secondary Ball Handler; EJ Marshall = Secondary Ball Handler; Andy Colvin = Roll & Cut Big; Talen Pearson = Stationary Shooter
+  Milwaukee Panthers EXH: Amare Hereford = Secondary Ball Handler; Jake Hansen = Stationary Shooter; Nate Malosa = Roll & Cut Big; Chandler Jackson = Stationary Shooter; Dylan Omweno = Secondary Ball Handler; Aaron Womack III = Stationary Shooter; Al Amadou = Post Scorer; Ben Akoro = Slasher; Tre Norman = Slasher
+  Ripon Red Hawks: Seth Bunders = Movement Shooter; Jackson Flowers = Stationary Shooter; Landon Lee = Primary Ball Handler; Michael Asman = Stationary Shooter; Jose Gonzales = Slasher; Sam Leoni = Stationary Shooter; Jack Field = Versatile Big; Joey Daun = Stationary Shooter; Christian Wilson = Slasher
+  St. Norbert Green Knights: Reid Rosseland = Roll & Cut Big; Will Stuckey = Secondary Ball Handler; Ryan Brown = Athletic Finisher; Connor Pytleski = Stationary Shooter; Cole Uhlenbrauck = Stationary Shooter; Ryan Cox = Athletic Finisher; Jaeden Grade = Stationary Shooter; Mason Freiburger = Roll & Cut Big; Maddox Cornette = Stationary Shooter
+  UW-Whitewater: Collin Madson = Slasher; Tyshawn Teague-Johnson = Athletic Finisher; JR Lukenbill = Stationary Shooter; Kelton McEwen = Off Screen Shooter; Isaiah Robinson = Stationary Shooter; Rashad Rogers = Versatile Big; Darius Chestnut = Slasher; Zavier Castillo = Athletic Finisher
+
+===== cell 98  =====
+    period time_remaining  event_order  uww_score  opp_score  \
+0     None           None            0        NaN        NaN   
+1       H1     19:59 (H1)            1        0.0        0.0   
+2       H1     19:59 (H1)            2        0.0        0.0   
+3       H1     19:40 (H1)            3        0.0        0.0   
+4       H1     19:37 (H1)            4        0.0        0.0   
+..     ...            ...          ...        ...        ...   
+495     H2     00:06 (H2)          495       78.0       74.0   
+496     H2     00:06 (H2)          496       78.0       74.0   
+497     H2     00:01 (H2)          497       78.0       74.0   
+498     H2     00:00 (H2)          498       78.0       74.0   
+499     H2           None          499        NaN        NaN   
+
+                      team                  player  \
+0                     None                     NaN   
+1            UW-Whitewater  Tyshawn Teague-Johnson   
+2    Carroll (WI) Pioneers              Greg Smith   
+3            UW-Whitewater         Isaiah Robinson   
+4    Carroll (WI) Pioneers            Jimmy Tarjan   
+..                     ...                     ...   
+495  Carroll (WI) Pioneers                    None   
+496  Carroll (WI) Pioneers                     NaN   
+497  Carroll (WI) Pioneers           Dennis Estepp   
+498          UW-Whitewater  Tyshawn Teague-Johnson   
+499                   None                     NaN   
+
+                          event_type  \
+0                      period_marker   
+1                      jump_ball_won   
+2                     jump_ball_lost   
+3                        missed_shot   
+4                  rebound_defensive   
+..                               ...   
+495  team_deadball_rebound_offensive   
+496                          timeout   
+497                      missed_shot   
+498                rebound_defensive   
+499                    period_marker   
+
+                                     raw_text shot_type      shot_desc  \
+0                              Start 1st Half       NaN            NaN   
+1       Tyshawn Teague-Johnson Wins Jump Ball       NaN            NaN   
+2                  Greg Smith Loses Jump Ball       NaN            NaN   
+3    Isaiah Robinson Misses 2PT Driving Layup         2  Driving Layup   
+4              Jimmy Tarjan Defensive Rebound       NaN            NaN   
+..                                        ...       ...            ...   
+495                         Offensive Rebound       NaN            NaN   
+496                      Carroll (WI) Timeout       NaN            NaN   
+497        Dennis Estepp Misses 3PT Jump Shot         3      Jump Shot   
+498  Tyshawn Teague-Johnson Defensive Rebound       NaN            NaN   
+499                              End 2nd Half       NaN            NaN   
+
+     video_clip_number  \
+0                  NaN   
+1                  NaN   
+2                  NaN   
+3                  1.0   
+4                  NaN   
+..                 ...   
+495                NaN   
+496                NaN   
+497              235.0   
+498                NaN   
+499                NaN   
+
+                                                                        video_description  \
+0                                                                                     NaN   
+1                                                                                     NaN   
+2                                                                                     NaN   
+3    5 Isaiah Robinson > Off Screen > To Shooter's Right > Flare > To Basket > Miss 2 Pts   
+4                                                                                     NaN   
+..                                                                                    ...   
+495                                                                                   NaN   
+496                                                                                   NaN   
+497      33 Dennis Estepp > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts   
+498                                                                                   NaN   
+499                                                                                   NaN   
+
+        video_player video_result  
+0                NaN          NaN  
+1                NaN          NaN  
+2                NaN          NaN  
+3    Isaiah Robinson   Miss 2 Pts  
+4                NaN          NaN  
+..               ...          ...  
+495              NaN          NaN  
+496              NaN          NaN  
+497    Dennis Estepp   Miss 3 Pts  
+498              NaN          NaN  
+499              NaN          NaN  
+
+[500 rows x 15 columns]
+
+===== cell 100 42_reconstruct_and_validate_per_game_box =====
+Added 1 synthetic TEAM row(s) for 1 bare (unattributed) team-level turnover(s) that would otherwise be missing from the box score entirely.
+Validating PBP-reconstructed final scores against the schedule:
+
+  Carroll (WI) Pioneers 2026-11-07: PBP 78-74 vs. schedule 78.0-74.0 [OK]
+    UW-Whitewater starters: Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson
+    Carroll (WI) Pioneers starters: Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton McKenna
+
+1 game(s) reconcile exactly, 0 do not.
+                 opponent   game_date                   team                  player  started  PTS  FGM  FGA  FG3M  FG3A  FTM  FTA  OREB  DREB  REB  AST  STL  BLK  TO  PF    FG%   3P%    FT%
+10  Carroll (WI) Pioneers  2026-11-07          UW-Whitewater           Collin Madson     True   28    9   15     1     4    9   12     2     2    4    2    0    0   1   4   60.0  25.0   75.0
+6   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers     Logan Steffensmeier    False   15    5    7     3     4    2    2     1     6    7    1    0    0   0   1   71.4  75.0  100.0
+9   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers          Peyton McKenna     True   14    5   17     3    11    1    4     2     1    3    4    2    0   4   3   29.4  27.3   25.0
+8   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers          Michael McNabb     True   13    6   15     1     4    0    2     1     4    5    4    0    0   2   1   40.0  25.0    0.0
+17  Carroll (WI) Pioneers  2026-11-07          UW-Whitewater  Tyshawn Teague-Johnson     True   13    5   12     1     3    2    4     2    11   13    1    2    4   0   1   41.7  33.3   50.0
+13  Carroll (WI) Pioneers  2026-11-07          UW-Whitewater            JR Lukenbill    False   11    4    7     1     3    2    2     2     1    3    1    0    0   3   3   57.1  33.3  100.0
+2   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers           Dennis Estepp     True   10    3    7     1     4    3    4     2     3    5    1    1    0   2   3   42.9  25.0   75.0
+14  Carroll (WI) Pioneers  2026-11-07          UW-Whitewater           Kelton McEwen     True   10    4   10     2     7    0    0     0     0    0    2    0    0   0   2   40.0  28.6    NaN
+1   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers            Cale Buboltz    False    9    4    7     1     2    0    0     0     0    0    1    0    0   2   1   57.1  50.0    NaN
+4   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers         Hayden Stebbins    False    6    2    4     2     4    0    0     2     1    3    2    0    0   0   3   50.0  50.0    NaN
+12  Carroll (WI) Pioneers  2026-11-07          UW-Whitewater         Isaiah Robinson     True    6    2    6     0     2    2    5     1     2    3    1    4    0   3   3   33.3   0.0   40.0
+15  Carroll (WI) Pioneers  2026-11-07          UW-Whitewater           Rashad Rogers     True    6    2    5     1     2    1    3     0     5    5    1    1    1   1   2   40.0  50.0   33.3
+5   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers            Jimmy Tarjan     True    5    2    4     0     0    1    3     5     6   11    0    0    1   2   5   50.0   NaN   33.3
+3   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers              Greg Smith     True    2    1    1     0     0    0    1     1     0    1    0    0    0   0   4  100.0   NaN    0.0
+16  Carroll (WI) Pioneers  2026-11-07          UW-Whitewater             Taveon Vann    False    2    0    0     0     0    2    2     0     1    1    0    0    0   0   1    NaN   NaN  100.0
+  ... 5 more row(s) of 20 (SHOW_ROWS = 15)
+
+Found 0 official box-score file(s) to cross-validate against:
+
+Validating PBP-reconstructed per-player box score against the official box-score file, where available:
+
+
+===== cell 102 43_diagnostic =====
+Every played, scouted game in uww_team_schedule has a box score in pbp_box_score. No gaps found.
+
+===== cell 104 44_reconstruct_single_game_box_score_by_5_man =====
+Validating lineup-level PTS totals against the schedule:
+
+  Carroll (WI) Pioneers 2026-11-07: lineup box score 78-74 vs. schedule 78.0-74.0 [OK]
+                 opponent   game_date                   team                                                                 lineup   MIN   +/-  PTS  FGM  FGA  FG3M  FG3A  FTM  FTA  OREB  DREB  REB  AST  STL  BLK  TO  \
+17  Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Dennis Estepp, Jimmy Tarjan, Logan Steffensmeier, Michael McNabb, ...  5.75  11.0   18    6    7     2     3    4    4     0     5    5    5    2    0   1   
+10  Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Michael McNabb, ...  5.36   1.0   13    5   10     2     4    1    2     3     4    7    2    0    0   2   
+15  Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Dennis Estepp, Hayden Stebbins, Jimmy Tarjan, Lucas Parker, Michae...  4.16  -6.0    6    2    9     1     5    1    1     2     2    4    1    0    0   2   
+5   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Cai Joseph, Cale Buboltz, Logan Steffensmeier, Michael McNabb, Pey...  2.60   3.0    5    2    7     1     4    0    0     3     2    5    1    0    0   1   
+14  Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Dennis Estepp, Greg Smith, Jimmy Tarjan, Michael McNabb, Peyton Mc...  5.66  -2.0    5    2   12     1     4    0    5    10     4   14    1    0    0   2   
+12  Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Cale Buboltz, Hayden Stebbins, Logan Steffensmeier, Lucas Parker, ...  1.40   2.0    4    2    3     0     1    0    0     1     1    2    1    0    0   0   
+0   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Cai Joseph, Cale Buboltz, Dennis Estepp, Hayden Stebbins, Logan St...  0.72   1.0    3    1    1     1     1    0    0     0     0    0    1    0    0   0   
+1   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Cai Joseph, Cale Buboltz, Dennis Estepp, Logan Steffensmeier, Peyt...  1.33   2.0    3    1    2     1     2    0    0     0     0    0    0    0    0   0   
+9   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Cale Buboltz, Dennis Estepp, Jimmy Tarjan, Lucas Parker, Peyton Mc...  1.57  -4.0    3    1    2     1     2    0    0     0     0    0    1    0    0   0   
+16  Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Dennis Estepp, Hayden Stebbins, Logan Steffensmeier, Michael McNab...  1.61  -4.0    3    1    2     1     2    0    0     0     1    1    1    0    0   2   
+2   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Cai Joseph, Cale Buboltz, Hayden Stebbins, Logan Steffensmeier, Pe...  1.28  -0.0    2    1    2     0     1    0    0     0     1    1    0    0    0   1   
+4   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Cai Joseph, Cale Buboltz, Logan Steffensmeier, Lucas Parker, Peyto...  0.58   2.0    2    1    1     0     0    0    0     0     1    1    0    0    0   0   
+6   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Cale Buboltz, Dennis Estepp, Hayden Stebbins, Logan Steffensmeier,...  1.87  -2.0    2    1    3     0     1    0    0     1     1    2    0    0    0   0   
+7   Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Cale Buboltz, Dennis Estepp, Hayden Stebbins, Logan Steffensmeier,...  1.13  -0.0    2    1    2     0     1    0    0     0     2    2    0    0    0   1   
+11  Carroll (WI) Pioneers  2026-11-07  Carroll (WI) Pioneers  Cale Buboltz, Hayden Stebbins, Jimmy Tarjan, Lucas Parker, Michael...  1.15  -2.0    2    1    2     0     1    0    0     0     0    0    0    0    0   0   
+
+    PF    FG%    3P%    FT%  
+17   3   85.7   66.7  100.0  
+10   1   50.0   50.0   50.0  
+15   1   22.2   20.0  100.0  
+5    2   28.6   25.0    NaN  
+14   5   16.7   25.0    0.0  
+12   0   66.7    0.0    NaN  
+0    0  100.0  100.0    NaN  
+1    2   50.0   50.0    NaN  
+9    1   50.0   50.0    NaN  
+16   3   50.0   50.0    NaN  
+2    1   50.0    0.0    NaN  
+4    2  100.0    NaN    NaN  
+6    0   33.3    0.0    NaN  
+7    1   50.0    0.0    NaN  
+11   2   50.0    0.0    NaN  
+  ... 15 more row(s) of 30 (SHOW_ROWS = 15)
+
+===== cell 106 45_aggregate_upcoming_opponent_5_man_lineup =====
+Ripon Red Hawks season 5-man lineup box scores (3 game(s) of PBP data, 66 distinct units):
+                                                                        lineup  \
+0     Jackson Flowers, Jose Gonzales, Keenan Rahn, Michael Asman, Seth Bunders   
+1         Jackson Flowers, Joey Daun, Jose Gonzales, Landon Lee, Michael Asman   
+2                Anton Kilde, Jack Field, Landon Lee, Michael Asman, Sam Leoni   
+3         Dominic Rasberry, Jack Field, Joey Daun, Jose Gonzales, Seth Bunders   
+4              Anton Kilde, Jack Field, Jackson Flowers, Landon Lee, Sam Leoni   
+..                                                                         ...   
+61     Christian Wilson, Jackson Flowers, Joey Daun, Landon Lee, Michael Asman   
+62         Anton Kilde, Dominic Rasberry, Landon Lee, Michael Asman, Sam Leoni   
+63  Christian Wilson, Jackson Flowers, Landon Lee, Michael Asman, Seth Bunders   
+64            Jackson Flowers, Joey Daun, Landon Lee, Michael Asman, Sam Leoni   
+65           Jose Gonzales, Landon Lee, Michael Asman, Sam Leoni, Seth Bunders   
+
+    GP   MIN   +/-  PTS  FGM  FGA   FG%  FG3M  FG3A  ...  FTA   FT%  OREB  \
+0    3  18.1 -17.0   29    9   23  39.1     4     9  ...    9  77.8     4   
+1    1   5.6   8.0    7    3    8  37.5     1     4  ...    0   NaN     2   
+2    2   5.4   0.0    9    3    8  37.5     3     5  ...    0   NaN     0   
+3    1   4.0  -2.0    7    3    6  50.0     1     1  ...    0   NaN     1   
+4    2   3.7   7.0    4    2    6  33.3     0     3  ...    0   NaN     0   
+..  ..   ...   ...  ...  ...  ...   ...   ...   ...  ...  ...   ...   ...   
+61   1   0.3  -1.0    3    1    2  50.0     1     2  ...    0   NaN     1   
+62   1   0.3   0.0    0    0    0   NaN     0     0  ...    0   NaN     0   
+63   1   0.0   0.0    0    0    0   NaN     0     0  ...    0   NaN     0   
+64   1   0.0   0.0    0    0    0   NaN     0     0  ...    0   NaN     0   
+65   1   0.0   2.0    0    0    0   NaN     0     0  ...    0   NaN     0   
+
+    DREB  REB  AST  STL  BLK  TO  PF  
+0     16   20    6    0    2   7   6  
+1      2    4    1    1    0   3   2  
+2      3    3    3    0    0   3   3  
+3      4    5    1    1    0   1   0  
+4      3    3    1    1    0   0   2  
+..   ...  ...  ...  ...  ...  ..  ..  
+61     0    1    0    1    0   1   1  
+62     0    0    0    0    0   0   0  
+63     0    0    0    0    0   0   0  
+64     0    0    0    0    0   0   0  
+65     0    0    0    0    0   0   0  
+
+[66 rows x 22 columns]
+
+===== cell 108 46_frame_capture =====
+Frame archive: 32,487 tracking frame(s) are packed in clip videos -- unpacked automatically when a step reads them.
+Clips with frames: 3803 of 3940 in uww_clip_frames.csv -- 123 with capture errors (see the 'error' column)
+  (15 more row(s) with errors are from an old TEST capture of 2026-03-06 Loras Duhawks -- replaced when that game is captured)
+  Capture errors (first 3): clip video not in the export (the export stopped before it, or it is still being written) | clip video not in the export (the export stopped before it, or it is still being written) | clip video not in the export (the export stopped before it, or it is still being written)
+
+===== cell 110 47_play_calls =====
+  Film: last season's (2025-26) play-by-play added for the film cells -- UWW 29 game(s), opponents 26 game(s). The brief cells see this season's only.
+  Synergy exports: Beloit@Carroll(WI) - Nov 12, 2025\Export.csv: BEL@CAR 2025-11-12 has no coach tags (titles are player names) -- not added
+  Synergy exports: Beloit@Ripon - Feb 21, 2026\Export.csv: BEL@RIP 2026-02-21 has no coach tags (titles are player names) -- not added
+  Synergy exports: Carroll(WI)@Elmhurst - Feb 24, 2026\Export.csv: CAR@EC 2026-02-24 has no coach tags (titles are player names) -- not added
+  Synergy exports: Carroll(WI)@Wash(StLouis) - Nov 7, 2025\Export.csv: CAR@WAS 2025-11-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: DePauw@Elmhurst - Nov 11, 2026\Export.csv: DPU@EC 2026-11-11 has no coach tags (titles are player names) -- not added
+  Synergy exports: Elmhurst@Hope - Nov 14, 2026\Export.csv: EC@HCD 2026-11-14 has no coach tags (titles are player names) -- not added
+  Synergy exports: Elmhurst@Ripon - Nov 7, 2026\Export.csv: EC@RIP 2026-11-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: Franklin@Hope - Nov 7, 2026\Export.csv: FC@HCD 2026-11-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: MarianWI@MSOE - Feb 26, 2026\Export.csv: MAR@MSE 2026-02-26 has no coach tags (titles are player names) -- not added
+  Synergy exports: Millikin@WheatonIL - Feb 21, 2026\Export.csv: MIL@WHE 2026-02-21 has no coach tags (titles are player names) -- not added
+  Synergy exports: PEVGAS\Export.csv: THI@WPL 2026-11-06 has no coach tags (titles are player names) -- not added
+  Synergy exports: Ripon@UWWhitewater - Nov 14, 2026\Export.csv: RIP@WWW 2026-11-14 has no coach tags (titles are player names) -- not added
+  Synergy exports: Thiel@UWPlatteville - Nov 6, 2026\Export.csv: THI@WPL 2026-11-06 has no coach tags (titles are player names) -- not added
+  Synergy exports: UWWhitewater@Wash(StLouis) - Mar 7, 2026\Export.csv: WWW@WAS 2026-03-07 has no coach tags (titles are player names) -- not added
+  Synergy exports: WheatonIL@NorthPark - Feb 24, 2026\Export.csv: WHE@NP 2026-02-24 has no coach tags (titles are player names) -- not added
+  Synergy exports: _uncoded\Elmhurst@Hope - Nov 14, 2026 (2)\Export.csv: EC@HCD 2026-11-14 has no coach tags (titles are player names) -- not added
+  Synergy exports: _uncoded\Elmhurst@Hope - Nov 14, 2026\Export.csv: EC@HCD 2026-11-14 has no coach tags (titles are player names) -- not added
+  Captured clips with no Title: 2687 clip(s) from 20 game(s) not in uww_plays.csv added as play calls (239 placed on the play-by-play clock through the video-tagging match; the rest have no half / clock, so no lineups). The app's Play review is where they get tagged.
+  Blank Team on 133 clip(s) (Synergy's Non Shooting Foul clips): filled with the named player's own team -- 132 from his other clips in the game, 0 from the play-by-play (he drew the foul, so his team had the ball)
+  Play clips by game type: UWW 1441 clip(s) in 12 game(s), Opponent 353 clip(s) in 2 game(s), Other 2610 clip(s) in 14 game(s)
+  [saves] fetched branch 'saves': 0 new saved review file(s) copied into data/play_review_saves (126 on the branch; its newest commit: 2026-11-18 13:09:11 -0600  Play review: 2026-11-14|Elmhurst@Hope by Guest)
+  [saves] 119 saved review file(s) read from play_review_saves:
+    2025-11-07|Carroll(WI)@Wash(StLouis): 19 file(s) by Coach Jake, Corey, Corey2, Corey4, Coreyplay3, coreyplay2 (latest 2026-11-04 17:00 UTC) -- 50 play(s) with coach answers
+    2025-11-12|Beloit@Carroll(WI): 3 file(s) by Coach Jake (latest 2026-11-04 20:04 UTC) -- 22 play(s) with coach answers
+    2025-12-30|WWW@COE: 1 file(s) by Corey (latest 2026-10-05 13:45 UTC) -- 20 play(s) with coach answers
+    2026-01-03|WOS@WWW: 12 file(s) by Corey, someone (latest 2026-10-10 00:18 UTC) -- 77 play(s) with coach answers
+    2026-02-21|Beloit@Ripon: 2 file(s) by Coach Jake (latest 2026-11-06 17:33 UTC) -- 24 play(s) with coach answers
+    2026-02-21|Millikin@WheatonIL: 4 file(s) by Corey (latest 2026-10-28 16:15 UTC) -- 1 play(s) with coach answers
+    2026-02-24|Carroll(WI)@Elmhurst: 6 file(s) by Coach Jake (latest 2026-11-02 17:29 UTC) -- 50 play(s) with coach answers
+    2026-02-24|WheatonIL@NorthPark: 7 file(s) by Coach Jake, Corey (latest 2026-10-27 14:07 UTC) -- 115 play(s) with coach answers
+    2026-02-26|MarianWI@MSOE: 2 file(s) by Coach Jake, CoreyTEST (latest 2026-10-21 15:41 UTC) -- 14 play(s) with coach answers
+    2026-03-07|UWWhitewater@Wash(StLouis): 20 file(s) by COACH JAKE, Coach Jake, Corey (latest 2026-10-27 13:54 UTC) -- 137 play(s) with coach answers
+    2026-11-06|Thiel@UWPlatteville: 8 file(s) by Corey, JT (latest 2026-11-18 17:11 UTC) -- 1 play(s) with coach answers
+    2026-11-07|Elmhurst@Ripon: 5 file(s) by Coach Jake (latest 2026-11-09 17:58 UTC) -- 57 play(s) with coach answers
+    2026-11-07|UWWhitewater@Carroll(WI): 7 file(s) by Coach Jake, Corey (latest 2026-11-09 18:19 UTC) -- 21 play(s) with coach answers
+    2026-11-07|WWW@CAR: 1 file(s) by Corey (latest 2026-11-16 16:06 UTC) -- 0 play(s) with coach answers
+    2026-11-11|DePauw@Elmhurst: 9 file(s) by JT (latest 2026-11-13 18:26 UTC) -- 83 play(s) with coach answers
+    2026-11-14|Elmhurst@Hope: 4 file(s) by Guest, JT (latest 2026-11-18 19:09 UTC) -- 41 play(s) with coach answers
+    2026-11-14|Ripon@UWWhitewater: 9 file(s) by JT (latest 2026-11-17 21:02 UTC) -- 168 play(s) with coach answers
+  Film Tagging: answers saved before the tracking reset, and test saves, are set aside (TITLE_CHECKS_BEFORE_RESET = True uses the old ones again):
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-10-01T17:23:50.635Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-09-30T18:14:20.554Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by unknown coach, saved 2026-10-01T19:48:37.750Z -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-07T19:03:11+00:00 -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-09T00:23:56+00:00 -- before the restart on the Synergy exports
+    - 2026-01-03|WOS@WWW by Corey, saved 2026-10-10T00:18:04+00:00 -- before the restart on the Synergy exports
+    - 2026-02-26|MarianWI@MSOE by CoreyTEST, saved 2026-10-13T21:18:09+00:00 -- a test save
+  App tags: 122 clip(s) tagged in the app (no Title) and 1 coach Title(s) corrected in the app -- used in every play-call table like a Title; 19 play(s) with more than one action recorded
+  Lineups: 1044 clip(s) with no matched play-by-play event got their uww lineup from the game clock
+  Lineups: 1044 clip(s) with no matched play-by-play event got their opp lineup from the game clock
+  App tags: 97 clip(s) tagged in the app (no Title) and 0 coach Title(s) corrected in the app -- used in every play-call table like a Title; 37 play(s) with more than one action recorded
+  Upcoming-opponent games: 176 clip(s) are the OTHER team's offense -- kept, but excluded from Ripon Red Hawks's play-call scouting.
+  Lineups: 8 clip(s) with no matched play-by-play event got their self lineup from the game clock
+  Lineups: 8 clip(s) with no matched play-by-play event got their their lineup from the game clock
+  Skipped in the app: 196 clip(s) the coaches marked "skip" -- not tagged, not offered again (196 of them from 2 whole game(s) skipped)
+  App tags: 426 clip(s) tagged in the app (no Title) and 0 coach Title(s) corrected in the app -- used in every play-call table like a Title; 54 play(s) with more than one action recorded
+  Banked games: 575 clip(s) kept for Film Tagging / tracking, left out of every scouting table until their team is the upcoming opponent
+  Frames matched to 3450 of 4404 clip(s) (3940 captured).
+    captured page '2025-11-07 Carroll (WI) Pioneers vs Washingto': 221 clip(s), 221 matched to tagged clips
+    captured page '2025-11-07 Ripon Red Hawks vs UW-Whitewater W': 175 clip(s), 73 matched to tagged clips
+    captured page '2025-11-12 Carroll (WI) Pioneers vs Beloit Bu': 182 clip(s), 178 matched to tagged clips
+    captured page '2025-12-20 Alma Scots': 174 clip(s), 174 matched to tagged clips
+    captured page '2025-12-30 Coe Kohawks': 175 clip(s), 175 matched to tagged clips
+    captured page '2026-01-03 UW-Oshkosh Titans': 196 clip(s), 196 matched to tagged clips
+    captured page '2026-02-21 MSOE Raiders vs Aurora Spartans': 165 clip(s), 165 matched to tagged clips
+    captured page '2026-02-21 Ripon Red Hawks vs Beloit Buccanee': 175 clip(s), 175 matched to tagged clips
+    captured page '2026-02-21 Wheaton (IL) Thunder vs Millikin B': 179 clip(s), 179 matched to tagged clips
+    captured page '2026-02-24 Carroll (WI) Pioneers vs Elmhurst ': 176 clip(s), 160 matched to tagged clips
+    captured page '2026-02-24 MSOE Raiders vs Lakeland Muskies': 179 clip(s), 179 matched to tagged clips
+    captured page '2026-02-24 Wheaton (IL) Thunder vs North Park': 244 clip(s), 244 matched to tagged clips
+    captured page '2026-02-26 MSOE Raiders vs Marian (WI) Sabres': 191 clip(s), 191 matched to tagged clips
+    captured page '2026-03-06 Loras Duhawks': 15 clip(s), 1 matched to tagged clips
+    captured page '2026-03-07 Washington-St. Louis Bears': 167 clip(s), 167 matched to tagged clips
+    captured page '2026-11-06 Wisconsin-(Platteville) Pioneers v': 197 clip(s), 196 matched to tagged clips
+    captured page '2026-11-07 Carroll (WI) Pioneers': 191 clip(s), 191 matched to tagged clips
+    captured page '2026-11-07 Hope College Flying Dutchmen vs Fr': 212 clip(s), 212 matched to tagged clips
+    captured page '2026-11-07 Ripon Red Hawks vs Elmhurst Blueja': 178 clip(s), 178 matched to tagged clips
+    captured page '2026-11-11 Elmhurst Bluejays vs DePauw Tigers': 195 clip(s), 195 matched to tagged clips
+    captured page '2026-11-14 Elmhurst Bluejays vs Hope Flying D': 178 clip(s), 0 matched to tagged clips -- NONE match a tagged clip: this game isn't in uww_plays.csv (export its clips from Synergy into it to track and review them)
+    captured page '2026-11-14 Ripon Red Hawks': 175 clip(s), 0 matched to tagged clips -- NONE match a tagged clip: this game isn't in uww_plays.csv (export its clips from Synergy into it to track and review them)
+    tagged game 2025-11-14 WWW@STC: 138 clip(s), NO frames -- capture it (Frame capture, VISION_ONLY_GAME = that game)
+    tagged game 2025-11-15 EC@WWW: 167 clip(s), NO frames -- capture it (Frame capture, VISION_ONLY_GAME = that game)
+    tagged game 2026-01-03 WEC@WSP: 140 clip(s), no frames -- a game between two other teams (not UWW or the upcoming opponent), which Frame capture doesn't capture; used from its Titles only
+    tagged game 2026-11-07 Cal@WST: 167 clip(s), NO frames -- capture it (Frame capture, VISION_ONLY_GAME = that game)
+    tagged game 2026-11-08 BV@WPL: 183 clip(s), no frames -- a game between two other teams (not UWW or the upcoming opponent), which Frame capture doesn't capture; used from its Titles only
+  (frame check: 2025-11-14 WWW@STC came in from a Synergy Export.csv -- coach tags only, no frames needed)
+  (frame check: 2025-11-15 EC@WWW came in from a Synergy Export.csv -- coach tags only, no frames needed)
+  (frame check: 34 non-possession line(s) (free throws, no violation) in 2025-12-20 WWW@AC have no clip on Synergy's page and are not counted)
+  (frame check: 36 non-possession line(s) (free throws, no violation) in 2025-12-30 WWW@COE have no clip on Synergy's page and are not counted)
+  (frame check: 1 non-possession line(s) (free throws, no violation) in 2026-01-03 WOS@WWW have no clip on Synergy's page and are not counted)
+  (frame check: 2026-11-07 Cal@WST came in from a Synergy Export.csv -- coach tags only, no frames needed)
+  ====================================================================================================
+  STOPPED: the captured frames and uww_plays.csv don't line up yet.
+  Games with frames captured that are NOT in uww_plays.csv -- export their tagged clips from Synergy into uww_plays.csv:
+    - 2026-11-14 Elmhurst Bluejays vs Hope Flying Dutchmen: 178 clip(s) captured, none in uww_plays.csv
+    - 2026-11-14 Ripon Red Hawks: 175 clip(s) captured, none in uww_plays.csv
+  Then rerun from the Frame capture cell (or this cell, if only uww_plays.csv changed).
+  To go on without a game, add it to FRAMES_STOP_IGNORE_GAMES (e.g. "WEC@WSP"); to turn this check off, FRAMES_STOP_FOR_GAPS = False.
+  ====================================================================================================
+  [time] 47_play_calls: 1.0 min

@@ -113,10 +113,21 @@ def brief_check(path, short, data_dir, analysis=False, no_seniors=False):
     if not analysis:
         # CONFIRMED BUG (fixed 11/14; first real run flagged "Monitor three-point shooting." and two more): the Bottom Line
         # keys (source tag "Game Plan") are written by the brief itself and are never in uww_ktv_keys.csv -- not checked.
+        _not_gp = lambda blob: ('class="src"' not in blob  # noqa: E731
+                                or not re.search(r'class="src"[^>]*>\s*Game Plan\s*<', blob))
         shown = [_bc_text(m.group(2)) for m in
                  re.finditer(r'<div class="ktv-sentence">((?:(?!<div\b).)*?<span>(?:<a [^>]*>)?(.*?)(?:</a>| — |</span>)'
                              r'(?:(?!<div\b).)*?)</div>', body, flags=re.S)
-                 if 'class="src"' not in m.group(1) or not re.search(r'class="src"[^>]*>\s*Game Plan\s*<', m.group(1))]
+                 if _not_gp(m.group(1))]
+        # CONFIRMED BUG (fixed 11/19): the keys became CARDS on 11/18 (lcards ktv-cards / lc-n) and this check still
+        # only knew the old "ktv-sentence" markup, so the 11/18 21:05 run reported "no Keys to Victory are printed"
+        # on a brief that printed ten of them -- and, worse, silently stopped checking that every printed key is in
+        # uww_ktv_keys.csv. Both shapes are read now, so the membership check below runs whichever the brief used.
+        if not shown:
+            shown = [_bc_text(m.group(2)) for m in
+                     re.finditer(r'<div class="lc-t">Key[^<]*((?:(?!<div class="lc\b").)*?)</div>'
+                                 r'<div class="lc-n">(?:<a [^>]*>)?(.*?)(?:</a>)?</div>', body, flags=re.S)
+                     if _not_gp(m.group(1))]
         if not shown:
             add("problem", "keys", "no Keys to Victory are printed")
         else:

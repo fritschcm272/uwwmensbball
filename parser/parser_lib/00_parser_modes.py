@@ -661,10 +661,17 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
     #   brief / tagging   -> read it (unless the job notebook passes its own) and run on the same game
     # They are applied where the models job's are: right before 00b_season_switch (see _run_section below).
     _ug_path = _pm_os.path.join(G.get("INPUT_DIR") or "./inputs", "_upcoming_game.json")
-    if mode == "models" and G["_PM_OPTIONS"].get("REFERENCE_DATE") is not None:
+    # CONFIRMED BUG (fixed 11/19): this only recorded a models run that was given an EXPLICIT REFERENCE_DATE. A models
+    # run with none (the common case -- it means today) left the file saying whatever the last explicit run said, so the
+    # brief compared its date against a stale one. With the 11/19 auto-run in place that is worse than a wrong warning:
+    # it would start a models run for a game models had already prepared. The EFFECTIVE date is written now -- the
+    # option when there is one, today when there is not, the same fallback the options cell uses for REFERENCE_DATE.
+    if mode == "models":
         try:
+            _eff_ref = str(G["_PM_OPTIONS"].get("REFERENCE_DATE") or "").strip() \
+                or _pm_pd.Timestamp.now().strftime("%Y-%m-%d")
             with open(_ug_path, "w", encoding="utf-8") as _fh:
-                _pm_json.dump({"REFERENCE_DATE": G["_PM_OPTIONS"].get("REFERENCE_DATE"),
+                _pm_json.dump({"REFERENCE_DATE": _eff_ref,
                                "EXTRA_GAMES": G["_PM_OPTIONS"].get("EXTRA_GAMES") or []}, _fh, indent=1)
         except Exception as _e:
             print(f"!! could not save the upcoming game to {_ug_path} ({_e}) -- parser_brief / parser_tagging will not see it",
@@ -679,10 +686,42 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
         # not the one parser_models saved, say so -- film / tagging were prepared for THAT game
         _own = G["_PM_OPTIONS"].get("REFERENCE_DATE")
         if _own is not None:
+            # CONFIRMED CHANGE (requested 11/19: "have it stop the notebook and explain that I should run parser_models
+            # with that reference date ... or better yet, have it automatically call out and run parser_models with that
+            # reference date"). A warning line was not enough: the 11/18 20:59 brief ran on 2026-11-13 while the film and
+            # tagging on disk had been prepared for 2026-11-15, and it stopped 40 minutes later inside 47 with a message
+            # about captured frames. The mismatch is known HERE, before any section runs, so it is dealt with here:
+            #   BRIEF_AUTORUN_MODELS = True  (default) runs parser_models on this date first, then goes on with the job
+            #   BRIEF_AUTORUN_MODELS = False stops the notebook now and says what to run
+            # Either way nothing downstream sees a half-prepared run. The models job is long (around 50 min on a full
+            # run) and pushes data when it finishes -- the banner says so before it starts.
+            _saved = str(_ug.get("REFERENCE_DATE")) if isinstance(_ug, dict) and _ug.get("REFERENCE_DATE") else None
+            _differs = bool(_saved) and _saved != str(_own)
             print(f"Upcoming game: REFERENCE_DATE = {_own!r} (set in this notebook)"
-                  + (f" -- !! parser_models last ran on {_ug.get('REFERENCE_DATE')!r}: if that is a different game, run "
-                     "parser_models with this date first" if isinstance(_ug, dict) and _ug.get("REFERENCE_DATE")
-                     and str(_ug.get("REFERENCE_DATE")) != str(_own) else ""), flush=True)
+                  + (f" -- !! parser_models last ran on {_saved!r}" if _differs else ""), flush=True)
+            if _differs:
+                _auto = G.get("BRIEF_AUTORUN_MODELS", G["_PM_OPTIONS"].get("AUTORUN_MODELS", True))
+                _why = (f"The film, tagging and tables on disk were prepared by parser_models for {_saved}, not for "
+                        f"{_own}. Running {mode} on them gives a brief for one game built on another game's run "
+                        f"(it is what stopped the 11/18 brief inside 47_play_calls).")
+                if not _auto:
+                    raise RuntimeError(
+                        f"{_why}\n\nRun this first, then this notebook again:\n"
+                        f"    run_parser(\"models\", options={{\"REFERENCE_DATE\": \"{_own}\"}})\n\n"
+                        f"Or set BRIEF_AUTORUN_MODELS = True to have it run automatically, or clear this notebook's "
+                        f"REFERENCE_DATE to use the one parser_models prepared ({_saved}).")
+                print("=" * 100
+                      + f"\n  {_why}\n  BRIEF_AUTORUN_MODELS is on, so parser_models runs first on {_own}. It is the "
+                        f"long job (around 50 min on a full run) and it pushes data when it finishes.\n"
+                        f"  Set BRIEF_AUTORUN_MODELS = False to stop with instructions instead of running it.\n"
+                      + "=" * 100, flush=True)
+                _keep = dict(G.get("_PM_OPTIONS") or {})
+                try:
+                    run_parser("models", notebook=notebook,
+                               options={**_keep, "REFERENCE_DATE": _own})
+                finally:
+                    G["_PM_OPTIONS"] = _keep
+                print(f"=== back in {mode.upper()}: parser_models has prepared {_own}; carrying on ===", flush=True)
             if G["_PM_OPTIONS"].get("EXTRA_GAMES") is None and isinstance(_ug, dict) and _ug.get("EXTRA_GAMES") is not None:
                 G["_PM_OPTIONS"]["EXTRA_GAMES"] = _ug["EXTRA_GAMES"]
         elif isinstance(_ug, dict) and _ug.get("REFERENCE_DATE"):

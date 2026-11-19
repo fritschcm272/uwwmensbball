@@ -60,6 +60,27 @@ for f in pbp_files:
 # Build a roster set for auto-detecting column swaps -- UWW season stats' second column is the player name.
 _player_col = stats.columns[1]
 uww_roster_names = set(stats[_player_col].dropna().tolist()) - {"Team Total", "Opponent"}
+# CONFIRMED BUG (fixed 11/19; Corey: "there are Ripon players in UWW's roster"). The swap check below compared the
+# play-by-play's own names against THIS set only, and this set comes from the UWW season-stats scrape -- which on the
+# 11/19 run never loaded ("second stats table never loaded, proceeding with schedule table only"). With it empty, both
+# sides of the comparison were 0, `uww_in_opp_col > uww_in_uww_col` was False, and the file was taken as un-swapped.
+# For 11_14_26 Ripon Red Hawks @ UW-Whitewater -- the one game this season where UWW is HOME, so the columns ARE
+# reversed -- that put every UWW event under Ripon and every Ripon event under us: 13 Ripon players in UWW's
+# uww_pbp_box_score, and so in the brief's own roster. The roster set now also takes the live roster pages (built in
+# 21, two cells up) and compares case-insensitively, since those are ALL CAPS and the play-by-play is not.
+_pbp_nm = lambda s_: re.sub(r"[^a-z ]", "", str(s_).lower()).strip()                     # noqa: E731
+_uww_names_norm = {_pbp_nm(n) for n in uww_roster_names if _pbp_nm(n)}
+try:
+    _lr = globals().get("live_rosters")
+    if isinstance(_lr, pd.DataFrame) and not _lr.empty and {"team", "name"} <= set(_lr.columns):
+        _uww_names_norm |= {_pbp_nm(x) for x in
+                            _lr.loc[_lr["team"].astype(str).str.contains("whitewater", case=False, na=False),
+                                    "name"].dropna() if _pbp_nm(x)}
+except Exception as _e:
+    print(f"  (play-by-play: live rosters not used for the column check: {type(_e).__name__}: {_e})", flush=True)
+if not _uww_names_norm:
+    print("  WARNING: no UW-Whitewater roster names are available (the season-stats table and the live roster pages "
+          "are both empty), so a swapped play-by-play can only be caught by the table's own header.", flush=True)
 
 pbp_events_list = []
 for path in pbp_files:
@@ -80,8 +101,23 @@ for path in pbp_files:
 
     uww_col_players = _extract_player_names(raw_df["uww_text"])
     opp_col_players = _extract_player_names(raw_df["opp_text"])
-    uww_in_uww_col = len(uww_col_players & uww_roster_names)
-    uww_in_opp_col = len(opp_col_players & uww_roster_names)
+    uww_in_uww_col = len({_pbp_nm(n) for n in uww_col_players} & _uww_names_norm)
+    uww_in_opp_col = len({_pbp_nm(n) for n in opp_col_players} & _uww_names_norm)
+    _swap_why = "UWW roster found in right column"
+
+    # Neither column held a name we know: fall back to what the table itself says its columns are, and then to the
+    # file name, which names the away team first ("11_14_26 Ripon Red Hawks @ UW-Whitewater" = UWW at home = right
+    # column). Guessing is what caused the bug above; these two read it off the file instead.
+    if not (uww_in_uww_col or uww_in_opp_col):
+        _is_uww_lab = lambda s_: bool(re.search(r"(?i)whitewater|\bUWW\b|\bWWW\b", str(s_ or "")))   # noqa: E731
+        _labs = raw_df.attrs.get("column_teams") or {}
+        if _is_uww_lab(_labs.get("opp_text")) and not _is_uww_lab(_labs.get("uww_text")):
+            uww_in_opp_col, _swap_why = 1, (f"the table's own header reads {_labs.get('uww_text')!r} | "
+                                            f"{_labs.get('opp_text')!r}")
+        elif not _is_uww_lab(_labs.get("uww_text")):
+            _fn = re.search(r"(.+?)\s*@\s*(.+?)_pbp", os.path.basename(path))
+            if _fn and _is_uww_lab(_fn.group(2)) and not _is_uww_lab(_fn.group(1)):
+                uww_in_opp_col, _swap_why = 1, f"the file name says UWW were at home ({os.path.basename(path)})"
 
     if uww_in_opp_col > uww_in_uww_col:
         # Columns are swapped: UWW events are in "opp_text" and opponent events in "uww_text".
@@ -91,7 +127,7 @@ for path in pbp_files:
         raw_df["score_raw"] = raw_df["score_raw"].apply(
             lambda s: "-".join(reversed(str(s).strip().split("-"))) if pd.notna(s) and re.match(r"^\d+-\d+$", str(s).strip()) else s
         )
-        print(f"  WARNING: Detected swapped columns for '{opponent_short}' (UWW roster found in right column) -- auto-corrected")
+        print(f"  WARNING: Detected swapped columns for '{opponent_short}' ({_swap_why}) -- auto-corrected")
 
     # Date this game from its OWN filename, not from game_date_for() -- see
     # game_date_from_pbp_filename(). Without this, a rematch inherits the first meeting's date and

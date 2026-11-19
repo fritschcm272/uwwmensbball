@@ -863,8 +863,8 @@ and merging them later is a layout change, not a data change.
 2. The four factors as **points per game**, biggest first, us vs them, with a plain-English "why" per row.
    A point of eFG% = 2 points on every FGA; a turnover = one possession at that team's own PPP; an offensive rebound
    = a fresh possession at 0.30 of a normal one (the standard second-chance discount, since it is a putback into a
-   set defence); extra free-throw trips at that team's own FT%. The same stat is one team's offence and the other's
-   defence, so the two rates are blended 50/50 rather than trusting either. NET is us minus them.
+   set defense); extra free-throw trips at that team's own FT%. The same stat is one team's offense and the other's
+   defense, so the two rates are blended 50/50 rather than trusting either. NET is us minus them.
 3. WHO DECIDES IT: their three leading scorers -- box-score line, the first clause of their film tendencies, and
    their offensive role (carrying the "(box score only)" tag when the role had no film).
 4. THE KEY THAT COVERS IT: each top factor matched to a brief key by keyword, so the page points at the instruction
@@ -1473,15 +1473,15 @@ word-and-digit counts, and "leads them on the glass" printing on our own cards a
 
 ## 2026-11-18 -- what each lineup struggles with, per card, and the footer collapsed
 
-**Offence and defence on the lineup cards** (requested: "include what each lineup has struggled with
+**Offense and defense on the lineup cards** (requested: "include what each lineup has struggled with
 defensively and offensively", then "Make that based on which card is shown"). Each card gets the end of the
 floor its own metric is about:
 
 | card | line |
 | --- | --- |
 | Most minutes | "With them out there: 0.78 (team 0.88) scored, 0.91 (team 0.89) allowed" |
-| Best +/- | "That margin is the defence: ... scored, ... allowed" -- or "Neither end stands out" |
-| Best PPP | "Offence with them out there: 0.88 (team 0.88) a possession" |
+| Best +/- | "That margin is the defense: ... scored, ... allowed" -- or "Neither end stands out" |
+| Best PPP | "Offense with them out there: 0.88 (team 0.88) a possession" |
 
 Both numbers are points per tagged possession with those players on the floor, against the same team's own
 rate. The defensive half is new: `_unit_clips_def()` matches the DEFENDING five. Checked on the data before
@@ -1727,3 +1727,560 @@ contain it -- but "Guest Tester", "Tester" or "Test User" would be silently drop
 **Validation** (`~/wmtest/`-style check run inline): `FT_GUEST_COACH` read back out of the file is "Guest";
 `"test" not in "guest"`; the Film Tagging name widgets and the name-gate message are absent from the file; the
 five other sections' name keys are still present; the module parses and byte-compiles.
+
+
+## 2026-11-18 -- clutch on every roster card, and the metric definitions in the footer
+
+**CONFIRMED CHANGE (requested:** "I want the roster sections to have a subsection under Offense that says how
+well they do during 'Clutch' moments based on our definition" ... "Also add information for each player that was
+on the court on defense during clutch moments" ... "add a part in 'How this brief was built' that shows our
+metric definitions.") `87_build_html_scouting_brief_for_upcoming.py` (510,328 b).
+
+**Our definition, not a new one.** 47's `_gs_situation` already stamps every clip with `game_situation`, and
+clutch is `_GS_CLUTCH_SECONDS = 300` / `_GS_CLUTCH_MARGIN = 8`: not the first half, 5:00 or less, margin 8 or
+fewer. It runs over `pbp_events` AND `pbp_events_upcoming`, so a scouted opponent's clutch comes from THEIR
+games. Nothing new was computed in the brief.
+
+* `_clutch_tbl(side, poss="Offense")` -- clutch clips of one side, one possession side. `side` alone is never
+  enough (it names the file a clip came from), hence the `possession_side` filter.
+* `_clutch_of(name, side)` -> under **Offense**, "In the clutch (last 5 min, margin &le; 8)": the possessions
+  where he was the man in the possession. The count leads; the rate appears only at 3+ (a game has a handful of
+  clutch trips); the team's rate rides along once the pool is 8+. **Fouls drawn are named** because a trip that
+  ends at the line scores nothing on the clip itself -- Cargill's 3 clutch trips are 0.00 a trip and 3 fouls
+  drawn, which without the second line would read as three wasted possessions.
+* `_clutch_def_of(name, side)` -> under **Defense**, same heading: defense has no man in the possession, so it
+  goes by `defense_lineup` -- "On the floor for 17 of the team's 19 clutch defensive possessions -- 18 points
+  allowed, 1.06 a trip (the team 1.11)", then "8 of 13 shooting against, 2 turnovers forced, 2 fouls given up".
+  The team's number is left off when he was on the floor for all of them (`_team_n > n`).
+* Both are omitted entirely for a player with no clutch possessions, and both carry on `_roster_player`'s dict
+  (`clutch`, `clutch_def`), so the starters strip can use them later if asked.
+
+**What the numbers mean** -- a 15-item list in "How this brief was built": Possession (and why 0.475, not
+Oliver's 0.44), PPP, Clutch, clutch on offense, clutch on defense, Leading / Trailing by 10+, eFG%, TOV%, ORB%,
+FT Rate (ours is FTA/FGA, Oliver's is FTM/FGA -- said so), the Four Factors ranking, PPG difference, Min/G,
+the shot-clock buckets, and what "on film / tagged" means. The weights are interpolated from `_SB_FF_WEIGHTS`
+at build time, so that line cannot drift from the table it describes, and it says plainly that TEAM COMPARISON
+prices each factor for THIS matchup instead -- which is why the two sections can disagree.
+
+**Validation** (`~/wmtest/clutch_t.py`, `clutchdef_t.py`, `defs_t.py` -- each pulls the functions and the
+`_defs` list out of the file by AST and runs them against `data/uww_play_calls.csv`):
+`_clutch_tbl` returns 20 offensive and 19 defensive clutch possessions for UWW, 16 and 6 for Elmhurst, all
+`Clutch`, all the right possession side; an unknown name and an empty frame both return nothing; 2 possessions
+show a count and no rate, 5 show count + rate + team rate; a defender on the floor for every one of them gets no
+redundant team figure; across both sides every player's on-floor count is <= the team's total; and every
+definition is asserted against the constant it describes (0.475, the eFG and FT Rate formulas, the four weights,
+300 / 8 / 10, and 47's shot-clock bins).
+
+
+## 2026-11-18 -- five cards above both offense sections (Motion / Plays / Actions / BLOB-SLOB / Tempo)
+
+**CONFIRMED CHANGE (requested:** "format the 'HOW ELMHURST RUNS OFFENSE' and 'HOW WE RUN OFFENSE' sections the
+same way with 5 of the most important pieces of information as cards above an expandable section ... Motion,
+Plays, Actions, BLOB/SLOB and Tempo.") `87_build_html_scouting_brief_for_upcoming.py` (518,290 b).
+
+`_off_cards(side)` is new, and the four `_sb_sechead(_sb_pc_top(...))` calls in `offense_section_test2`
+(opponent) and `offense_section_test_uww` (ours) -- the main path and the `_extra_only` path of each -- now call
+it instead. Riding in the `_sb_sechead` slot is what makes the layout work: `_sb_collapse` keeps that chunk
+beside the header and puts everything after it behind one "Show the detail" expander, the same shape as TEAM
+COMPARISON and the lineup sections. Same `lc` / `lcards wm-cards` markup as those, so no new CSS.
+
+The five, all from `_offense_rows(side)` -- **the same rows the section's own tables use**, so a card can never
+contradict the table under it (the 11/18 headline bug was exactly that):
+
+| card | built from | reads |
+|---|---|---|
+| Motion | `Series` rows matching motion / flow / 5-out / four-out / open post, as one number | `Motion · 30 possessions, 0.97 a trip · our average 0.88 · "How we play without a call. 4 variations of it on film."` |
+| Plays | `Play call` rows that are NOT motion and NOT an inbounds | `Zona · 6 possessions, 1.00 a trip · 21 named set(s) on film · "Best of them: Cheetah at 1.80."` |
+| Actions | `Primary action` | `Ball Screen · 21 possessions, 0.76 a trip · "Then Down Screen (6), Offensive Rebound (6)."` |
+| BLOB / SLOB | `Situation` rows that are exactly BLOB or SLOB | `BLOB 8 · SLOB 11 / BLOB 1.43 · SLOB 1.10 · "BLOB is the better of the two."` |
+| Tempo | `Shot clock` buckets + the `Transition` situation | `Organized offense · 64 possessions spent there · 38 in transition · "Best clock: late clock at 1.00."` |
+
+Rules it follows:
+
+* rates are weighted by uses (`_rate`), and compared only to the side's OWN average (`team_ppp`) -- never a
+  league number;
+* no card quotes a tagged-possession denominator (requested earlier: nothing reads "... on 85 tagged");
+* thin samples say so instead of hiding: "None run more than 2 time(s) yet", and BLOB/SLOB at 0.00 for both
+  reads "No points off either on film yet" rather than "Both score about the same";
+* a card with no data is dropped, and with fewer than two cards the section falls back to the old one-line
+  `_sb_pc_top` headline, so a barely-tagged opponent still gets a headline rather than an empty card row.
+
+**Validation** (`~/wmtest/offcards_t.py`, `_off_cards` pulled out by AST and run against
+`data/uww_play_call_summary.csv` with a stub `_offense_rows`): both sides produce five parsed cards; no card
+contains "unspecified", "nan" or the words "tagged possession"; an empty frame returns "" and a
+single-level frame returns the headline fallback.
+
+**Note on the numbers above:** they come from the summary CSV the 07:39 brief wrote, which still had the
+Elmhurst@Ripon routing bug, so Elmhurst's figures will move (mostly grow) on the next `parser_brief`.
+
+
+## 2026-11-18 -- the five offense cards say something, and the clutch cards say whose number it is
+
+Two follow-ups to the same afternoon's work. `87_build_html_scouting_brief_for_upcoming.py` (523,404 b).
+
+### 1. CONFIRMED CHANGE (requested): "make each of those 5 cards be actually informative for coaches and not
+just how many possessions and PPP"
+
+`_off_cards` was rewritten. Every card now answers who it runs through, what it turns into, what shape they are
+in, what shots come out of it and what it costs -- all of it columns the summary already carries
+(`top_player` / `top_player_uses`, `top_action`, `personnel_grouping_mode`, `fga` / `fg3a` / `fg_pct`,
+`turnovers`, `fouls_drawn`), nothing recomputed here. Helpers: `_who` (surname + how many, the way it is said
+out loud), `_into`, `_shape`, `_shots`, `_cost`, `_vs` (against that side's own average).
+
+What it reads like now:
+
+* **Motion** -- `Motion / 30 possessions - 0.97 a trip / Madson in 7 - into Ball Screen - 3G-2W / 7 of 14 shots
+  from three, 43% overall - 5 turnovers, 5 fouls drawn - above our average (0.88).`
+* **Plays** -- the most-used called set (motion and inbounds excluded), who runs it, how many named sets there
+  are, and **which one actually scores**: `Cheetah scores best (1.80 on 5)`.
+* **Actions** -- the top action plus **how it has gone against each coverage**, from `Ball screen coverage
+  faced`: `Against over | high hedge 0.33 on 6, switch 0.00 on 1 - then down screen (6), offensive rebound (6)`.
+  The coverage line only prints when the action is a ball screen / DHO.
+* **BLOB / SLOB** -- `BLOB 8 - SLOB 11 / BLOB 1.43 - SLOB 1.10 / BLOB to Mcewen - 3, into Down Screen ... /
+  BLOB is the one that hurts (1.43 against 1.10).`
+* **Tempo** -- the whole clock distribution (`Early 56 - Organized 64 - Late 46`), where they are best, how much
+  is transition and at what rate, and the worst bucket.
+
+Rules kept from the first pass: no tagged-possession denominators, rates only against the side's own
+`team_ppp`, empty cards dropped, fewer than two cards -> the old `_sb_pc_top` headline.
+
+### 2. CONFIRMED CHANGE (requested): "Defensive clutch information needs to be clear what are things the player
+did and things the team did"
+
+The defensive card read like a personal stat line ("On the floor for 19 ... 21 points allowed ... 9 of 14
+shooting against"), and none of it except the first clause is his. There is no individual defensive box score
+in this data, so the card now labels the two parts outright:
+
+* `HIM: on the floor for 19 of the team's 19 clutch defensive possessions -- every one of them.`
+* `THE FIVE HE WAS IN (team numbers, not his): 21 points allowed on 19 possessions, 1.11 a trip: 9 of 14
+  shooting against, 2 turnovers forced, 3 fouls given up.` (plus `-- the team allowed 1.11 across all 19` when
+  he was not on for all of them)
+
+The offensive card had the same ambiguity and got the same treatment: `HIM: the ball on 4 clutch possessions on
+film -- they produced 5 points, 1.25 a trip` and `ON THOSE TRIPS: 1 of 3 from the floor, 1 foul drawn.` The
+points are the POSSESSION'S points, not his own scoring -- a kick-out someone else finishes counts -- and the
+footer definitions for both now say so in those words.
+
+**Validation**: `~/wmtest/offcards_t.py` (five parsed cards a side, no "unspecified" / "nan" / "tagged
+possession", empty frame -> "", single level -> headline fallback), `clutch_t.py` and `clutchdef_t.py` updated
+to the new wording (HIM / THE FIVE HE WAS IN / ON THOSE TRIPS, "every one of them" only when he was on for all
+of them, the team's rate only when he was not, every on-floor count <= the team's total). All pass.
+
+**Note:** the 12:02 `parser_tagging` run rewrote `data/uww_play_calls.csv` with the `skipped` fix in place, so
+Elmhurst's clutch defensive sample moved from 6 possessions to 4 between runs. The numbers above are from the
+current file.
+
+
+## 2026-11-18 -- clutch flags on the roster cards
+
+**CONFIRMED CHANGE (requested:** "Put a flag on the players that are the best clutch offensive and defensive
+players.") `87_build_html_scouting_brief_for_upcoming.py` (527,538 b). `_clutch_best(side)` (cached per side)
+picks at most one of each, `_clutch_flags(name, side)` turns that into chips, and both roster layouts render
+them: `pc-chip clutch` in the table layout's chip row, `ph-foul ph-clutch` in the stacked header beside the
+late-foul call. Gold chips, with the detail in the tooltip.
+
+* **Best with the ball** -- highest points a trip among players with 3+ clutch possessions of their own, and
+  only when at least two players clear that bar.
+* **Best five on defense** -- fewest points allowed a trip with him on the floor, among players on for at least
+  3 AND 40% of the team's clutch defensive possessions. It is a FIVE-MAN number and the tooltip says so
+  ("a five-man number, not his alone"), the same attribution rule as the cards.
+* Neither flag is given when the pool is too thin or when every qualifier has the same rate -- which is why
+  Elmhurst currently gets an offensive flag (Trelenberg, 1.25 on 4) and no defensive one: their four clutch
+  defensive possessions were defended by the same five, so "best" would have been meaningless.
+* A 16th definition in "What the numbers mean" spells both rules out.
+
+**Known sharp edge:** the offensive flag is a rate with a 3-possession minimum, so it can favour a small
+sample -- today Madson (1.67 on 3) over Lukenbill (1.17 on 6). Raise the minimum in `_clutch_best` if that
+reads wrong once more film is tagged.
+
+**Validation** (`~/wmtest/clutchflag_t.py`, functions lifted by AST, run against `data/uww_play_calls.csv`):
+the offensive pick really is the max rate among those with 3+; the defensive pick clears the 3-and-40% floor;
+at most one of each flag exists per side; an unknown name and an empty frame flag nobody.
+
+
+## 2026-11-18 -- rate first, sample in brackets: "0.97 PPP (30 Poss)"
+
+**CONFIRMED CHANGE (requested:** "Instead of '30 possessions - 0.97 a trip' it should be '0.97 PPP (30 Poss)'.")
+`_poss(n, p)` in `_off_cards` now returns `f"{p:.2f} PPP ({int(n)} Poss)"` (and `"{n} Poss"` with no rate), and
+every other rate inside those cards follows the same words: BLOB / SLOB values, the best clock bucket,
+transition, "scores best (1.80 PPP on 5)" and the coverage line ("Against Jam 1.50 PPP on 2"). The clutch
+cards and the clutch flag tooltips say PPP too, so one vocabulary runs through the brief.
+
+**CONFIRMED BUG (fixed in the same pass).** The card notes were built with `str.capitalize()`, which uppercases
+the first letter and LOWERCASES everything after it -- so the new wording came out as "1.80 ppp on 5",
+"Against jam ... then dho (2), down screen (2)". Replaced with `_cap1` (first character only). Acronyms and set
+names now survive: "Against Jam 1.50 PPP on 2, Drop 0.00 PPP on 1 - then DHO (2), Down Screen (2)."
+
+**Validation**: `~/wmtest/offcards_t.py` re-run (five cards a side, both now reading "x.xx PPP (N Poss)"),
+`clutch_t.py`, `clutchdef_t.py` and `clutchflag_t.py` all still pass.
+
+
+## 2026-11-18 -- CONFIRMED BUG: the Plays and Actions cards disagreed with the bullets under them
+
+**What Corey saw.** The PLAYS card said "Cheetah scores best (1.80 on 5)" while the bullet two inches below
+said "Our most successful play calls: BLOB (2x, 2.50 PPP) · Cheetah (5x, 1.80 PPP) · Zoom (3x, 1.67 PPP)",
+and the ACTIONS card led with Ball Screen (the most-used) while the bullet named "DHO / handoff (5x, 2.00 PPP)"
+as the most successful. Two different tables, two different answers, stacked on each other.
+
+**Why.** The cards ranked `uww_play_call_summary` rows; the bullets come from `uww_offense_summary`, which 47
+builds from the clips with its OWN grouping -- `ACTION_GROUPS` folds "DHO / handoff" into one label,
+`OB_SUMMARY_MIN_POSS` gates the sample, and BLOB counts as a play call there while the card excluded inbounds.
+Neither was wrong; they answered different questions from different pools.
+
+**Fix (requested: "We should probably list out what is used most often and what has been most successful").**
+Both cards now carry both halves, labelled, and the most-successful half is **lifted from the bullet's own
+text** -- `_best_from_bullets(kind)` parses `uww_offense_summary`'s `success` / `success_actions` row for this
+side and opponent with `([^·:]+?)\s*\((\d+)x,\s*([\d.]+)\s*PPP\)`, so the card quotes the bullet's own
+names and numbers. `_best_line` falls back to the summary table's best when that row doesn't exist yet.
+
+* **Plays** -- `Zona / 1.00 PPP (6 Poss) / Most used · Madson in 3 · into Ball Screen · 21 named sets /
+  Most successful: BLOB 2.50 PPP (2 Poss), Cheetah 1.80 PPP (5 Poss), Zoom 1.67 PPP (3 Poss).`
+* **Actions** -- `Ball Screen / 0.76 PPP (21 Poss) / Most used · Madson runs it 9 · 3G-2W / Most successful:
+  DHO / handoff 2.00 PPP (5 Poss) · Against Over | High Hedge 0.33 PPP on 6, Switch 0.00 PPP on 1 · then
+  Down Screen (6 Poss), Offensive Rebound (6 Poss).`
+
+**Worth knowing:** "most used" on the Plays card still excludes motion and inbounds (they have cards of their
+own), while the bullet's "most successful" list does not -- which is why Elmhurst's card reads "DHO set, most
+used" and then names Motion and Flow as their most successful. It is faithful to the bullet; say the word if
+the two pools should be aligned instead.
+
+**Validation** (`~/wmtest/offcards_t.py`, extended): a new `must_match_bullets` check re-parses
+`uww_offense_summary` and asserts every name/count/PPP the card quotes as "Most successful" appears verbatim in
+the bullet it came from, for both sides. Passes, alongside the existing five-card / no-"unspecified" /
+empty-frame / headline-fallback checks.
+
+
+## 2026-11-18 -- clutch flags on the starters strip, and American spelling
+
+**CONFIRMED CHANGE (requested:** "Add the clutch flags also to the starters list. Make sure it is spelled
+'defense' not 'defence'.") `87_build_html_scouting_brief_for_upcoming.py` (530,620 b).
+
+* `_starter_strip` now renders the same chips, from the same `_clutch_flags(name, side)` -- one source, so the
+  strip and the roster card can never disagree -- in a `sf-clutch` row above the late-foul flag, with CSS that
+  lets them wrap on a narrow card (`white-space: normal`, 0.62rem). **Both sides get them**, unlike the foul
+  flags, which are opponent-only: who to have on the floor late is a question about our five too.
+* Every "defence" / "offence" in the brief is now "defense" / "offense" -- the clutch flag text, the two footer
+  definitions, and the older prose in the possession-model and Team Comparison notes that already had the
+  British spelling. Zero left in that file.
+* Deliberately NOT changed: `47_play_calls.py` line 999 maps `"bad offence": "BO"` -- that is an INPUT
+  spelling the decoder accepts from a coach's tag, not display text, and dropping it would stop reading tags
+  that are already saved. `41b_offensive_roles.py` line 268 is a code comment.
+* `_starter_strip` and `_clutch_flags` are both nested in `_sb_build_html` (lines 3630 and 3171), so the call
+  resolves -- checked with an AST parent walk, since py_compile cannot catch a missing closure name.
+
+**Validation**: `clutchflag_t.py`, `clutchdef_t.py`, `clutch_t.py`, `offcards_t.py` and `defs_t.py` all pass
+(the first two updated for the new wording: "five on defense", and "PPP" where they still asserted "a trip").
+
+
+## 2026-11-18 -- "(low sample)" and "(box score only)" dropped from the role lines
+
+**CONFIRMED CHANGE (requested:** "For the scouting briefs, I don't think you need to mention '(low sample)' or
+'(box score only)'.") `87_build_html_scouting_brief_for_upcoming.py` (530,802 b). `_q(bb)` in `_roster_player`
+returned one of three parenthetical qualifiers after every Off / Def role; it now returns `" (position only)"`
+and nothing else. That one stays because it says the label has NO data behind it, which is a different claim
+from "a bit thin". The ROSTER footnote that explained the three was rewritten to match.
+
+It fed every surface at once -- the role line on the roster card, the stacked card header and the `Off` / `Def`
+lines on the starters strip (all read `role_off` / `role_def`), so dropping it at the source clears all three.
+How thin the evidence is still lives where it belongs: the methodology footnote and "How this brief was built".
+
+
+## 2026-11-18 -- "30 Snap" is "Snap 30", and the same rule for every re-ordered call
+
+**CONFIRMED CHANGE (requested:** '"Snap 30" and "30 Snap" should always be made "Snap 30". Anything similar
+should follow the same rules.') `47_play_calls.py` (373,016 b), in `_pl_merge_spellings`.
+
+* The grouping key kept WORD ORDER (`"[^a-z0-9#]+" -> ""`), so the two were different calls. The key is now the
+  call's words **sorted**, so any re-ordering of the same words is one call.
+* `_canon_pick(vc)` chooses the spelling to keep. Most-used, exactly as before -- **except** where the only
+  difference is a bare number that moved from the front to the back, and then the name leads and the number
+  follows however the coaches typed it most often. The test is deliberately narrow: strip the bare numbers
+  (`#?\d+`) and what is left must be identical AND in the same order in every spelling. So "Snap 30" wins over
+  "30 Snap" even at 1-vs-3, while "5 Out Motion" vs "Motion 5 Out" (where "Out" moves too) is still settled by
+  usage, and a formation number that leads a call and never moves is left alone.
+
+**CONFIRMED BUG (fixed in the same pass).** `play_series` and `play_set` are written at decode time (~444 /
+~938), BEFORE this function runs at 4462, so they kept the raw spelling -- which is why the brief's Series
+tables listed "Flow" and "flow", "Stagger" and "stagger", "Ripon Motion" and "ripon motion" as separate rows
+next to each other. Both columns are now in the default `cols`, which normalises 51 clips on the current file
+on top of the one play-call change.
+
+**Worth knowing:** the most-used rule decides capitalisation, so "RIPON MOTION" (5 uses) beats "Ripon Motion"
+(3). Ugly but consistent, and it is the pre-existing rule -- say so if title case should win ties or outrank
+usage.
+
+**Validation** (`~/wmtest/spell_t.py`, `_pl_merge_spellings` lifted by AST): "Snap 30" / "30 Snap" collapse to
+"Snap 30", and still do when "30 Snap" is three times as common; "Zoom #2" / "#2 Zoom" and "41 Flare" /
+"Flare 41" follow the same rule; "5 Out Motion" keeps its name against "Motion 5 Out"; bracket notes, "option",
+punctuation and case grouping all behave as before; "Snap", "Snap 30" and "30 Gold" stay three different calls;
+and on the real file the only play-call change is "30 Snap" -> "Snap 30", with "Snap 10" untouched.
+
+
+## 2026-11-18 -- the brief never read the trigger / screener split
+
+**CONFIRMED BUG (requested:** "The scouting brief, and maybe the data in the application, are not splitting
+actions into trigger and screen actions.") `87_build_html_scouting_brief_for_upcoming.py` (533,992 b).
+
+**The split is in the data and always was.** Film Tagging's Actions table writes the two halves of every action
+to their own columns on the clip: `trigger_actions` ("Ball Screen (#3): Use Ball Screen", 87 clips today) and
+`screener_actions` ("Ball Screen (#35): Roll", 84 clips). Nothing in the brief read either one -- the Actions
+card, the offense-breakdown table and the "most successful actions" bullet all counted the action TYPE (Ball
+Screen, DHO) and stopped. `uww_action_reads` does carry the split per player, and both the brief's reads card
+and the app's READS OFF ACTIONS render it, but it is gated at 2+ uses and 47 of its 58 rows sit at 1 use, so
+almost none of it reached the page.
+
+**Fix.** `_role_reads(side)` in `_off_cards` parses the two clip columns directly
+(`^\s*(.*?)\s*(?:\(#(\d{1,2})\))?\s*:\s*(.+?)\s*$`, the same shape 47's `_pl_reads` uses for its fallback)
+and the Actions card carries the result on a line of its own (`lc-split`, a dotted rule above it). `_card` took
+a sixth argument rather than smuggling markup through `sub`, which `_sb_esc` would have escaped. Today it reads:
+
+* ours -- `Ball handler: Use Ball Screen 35 (0.89 PPP) \u00b7 Reject Ball Screen 4 \u00b7 Cobra 2 \u2014 Screener:
+  Roll 32 (0.88 PPP) \u00b7 Pop 16 \u00b7 Fox 2`
+* theirs -- `Ball handler: Use Ball Screen 3 (0.00 PPP) \u00b7 Reject 1 \u00b7 USe DHO 1 \u2014 Screener: Roll 5
+  (0.80 PPP) \u00b7 Pop 3 \u00b7 Ghost 1`
+
+PPP rides on the top read only, and only at 3+. A bare "Trigger" read (the box ticked with nothing behind it)
+is skipped. No minimum uses: reading the clip columns means the split shows from the first tagged possession
+instead of waiting for a player to repeat a read twice.
+
+**Also seen, not a new bug:** `data/uww_action_reads.csv` currently files #34 Jackson Flowers and #35 Michael
+Asman under `side = UWW`. Neither is on our roster -- it is the Elmhurst@Ripon routing bug from this morning,
+baked into a file written before the fix. It clears on the next full run.
+
+**Validation**: `~/wmtest/offcards_t.py` extended with a real `_pcc_all`; the split line parses out of the card
+as its own `lc-s lc-split` div for both sides, and the existing checks (five cards, bullet-matching,
+no "unspecified" / "nan", empty-frame and headline fallbacks) still pass.
+
+
+## 2026-11-18 (late afternoon) -- reads without a floor, their own section, a trailing action, KTV cards
+
+Four requested changes, plus one correction to the entry above.
+
+### 1. The reads' 2+ uses floor is a setting, default 1
+`87` (540,012 b). `_READS_MIN = int(globals().get("BRIEF_READS_MIN_USES", 1))` replaces the hard-coded `>= 2`
+in `_reads_of` (the roster card's Tendencies lines) and in `_reads_card`. 47 of `uww_action_reads`' 58 rows sit
+at 1 use, so the old floor hid most of the trigger / screener split. **The app was never gating** --
+`render_action_reads` has always shown every row -- so nothing changed there.
+
+### 2. TRIGGER & SCREENER READS, its own section, player by player
+`_trigger_screen_section()` runs after HOW WE RUN OFFENSE: one card per team, two role groups inside
+("Trigger -- the man with the ball", "Screener"), each row player / action / what he did / uses (share) / PPP.
+Offense only -- the defenders' reactions stay in the app, which shows them with no minimum. Players with no
+jersey (`(no number)`) are left out. With `BRIEF_READS_MIN_USES = 5` the section disappears rather than
+printing an empty shell.
+
+### 3. CONFIRMED CHANGE: "Twins Right Twirl" = "Twins Right" + Twirl
+`47` (375,633 b), in `_pl_merge_spellings` ahead of the renames. A call ending in a word from
+`PLAY_CALL_TRAILING_ACTIONS` (default `["Twirl", "Swirl"]`) loses that word from `play_call`,
+`play_call_detail`, `play_set`, `play_series` and `play_call_base`, and gains it in `play_actions` --
+`primary_action` too, but only when the clip has none, so an action a coach actually tagged is never
+overwritten. Only listed words move: "Motion" and "Zoom" are known actions AND calls in their own right, so a
+blanket "last word is an action" rule would take apart "5 Out Motion" and "Zoom". On the current file it
+changes three clips: Twins Right Twirl, Twins Left Swirl, and **"Over Twirl" -> "Over"** -- "Over" is a
+ball-screen coverage, so that one may be a coverage typed into the play-call field. Flagged, not fixed.
+
+### 4. CONFIRMED CHANGE: KEYS TO VICTORY as cards
+The keys were numbered sentences; they are now the brief's own cards (`lcards ktv-cards`), three to a row,
+each with "Key N" plus the priority score and source badge on the top strip, the instruction in bold, and the
+reasoning under a rule. `BRIEF_KTV_CARDS = False` restores the sentence list. Which keys appear, their order,
+their links and their scoring are untouched -- layout only. A staff key with no reasoning renders as a
+headline-only card, which is correct.
+
+### 5. CORRECTION to the "trigger / screener split" entry above
+That entry says `uww_action_reads.csv` files Jackson Flowers and Michael Asman under `side = UWW` and calls it
+routing contamination. **It is not.** `side` names the FILE a clip came from, so a Ripon possession inside our
+own 11/14 game is legitimately `side = UWW`; `team` and `offense_team` both read "Ripon Red Hawks", and every
+consumer (the new section included) filters on `offense_team`. Nothing to fix. The lesson is the one this file
+keeps relearning: `side` is the file, not the team.
+
+**Validation**: `~/wmtest/trail_t.py` (the Twins pair splits both ways, an existing `primary_action` survives,
+5 Out Motion / Zoom / Snap 30 untouched, three real-file changes), `tsread_t.py` (the section emits once with
+both role groups, single-use reads appear, no `(no number)` rows, a 5-use floor suppresses the section), and a
+replay of the KTV card loop against `uww_ktv_keys.csv` (6 cards, every one with a title strip and a headline).
+
+**Runs**: the 14:58 and 15:18 `parser_brief` runs both routed correctly (UWW 1,616 / 13 games, Opponent 711 /
+4) and wrote the brief clean -- the 07:39 run was the only broken one. The brief on disk already carries the
+clutch sections, the flags, the PPP format and the split line; the new section and the KTV cards land on the
+next run.
+
+
+## 2026-11-18 -- every key behind an expander under the KTV cards
+
+**CONFIRMED CHANGE (requested:** "Make a table of keys to victory that can be expanded with all of them
+available.") `87` (542,819 b). Under the six cards sits one `<details class="rosdet">` -- "All 19 keys / every
+key the parser built for this game, best first" -- holding the whole `ktv` frame, not just the brief's
+selection: Area (category), the key in bold with its reasoning (or its evidence line when it has no reasoning,
+which is what the app shows when you click a key), the 0-100 priority score, and the source badge. Sorted by
+score, and the six already on a card are marked "\u2605 on a card above" and tinted, so it is obvious what is
+new below the fold. Being an ordinary `<details>`, "Expand all" opens it and the print handler unfolds it.
+
+It only renders when there is more to show (`len(_ktv_all) > len(ktv_brief)`) -- with six keys and six cards
+there would be nothing behind the expander.
+
+**Two Python 3.10 traps hit on the way in**, both caught by `ast.parse` before anything was written, worth
+remembering for the next patch to this file: a stray `")` closing an f-string that opened with `'`, and
+`f'...{x or "\u2014"}...'` -- a backslash escape inside an f-string EXPRESSION is a SyntaxError before 3.12
+(the same trap the `_foul` block already carries a comment about). Build the value into a variable first.
+
+**Validation** (`~/wmtest/ktvtbl_t.py`, the block lifted verbatim out of the file and run against
+`uww_ktv_keys.csv`): 19 rows for 19 keys, exactly one `<details>`, scores strictly descending, exactly six rows
+flagged as on a card, and no "nan" anywhere in the markup.
+
+
+## 2026-11-18 -- the KTV cards are one row
+
+**CONFIRMED CHANGE (requested:** "I only want one row of cards.") `87` (543,539 b). The six keys wrapped onto a
+second row at three a row; now `BRIEF_KTV_CARDS_MAX` (default **5**) caps the cards at one row and the CSS no
+longer wraps on a wide screen -- `.lcards.ktv-cards .lc { flex: 1 1 0; min-width: 0 }`, the same shape as the
+offense sections' five-card row. The base `.lcards` media query still wraps them on a narrow screen.
+
+Two knock-ons handled rather than left to rot:
+
+* the "\u2605 on a card above" marks in the All-keys table are now driven by `ktv_brief.head(_ktv_row)`, not by
+  `ktv_brief` -- otherwise the 6th key, selected but no longer carded, would be flagged as already seen when it
+  is the first genuinely new row in the table;
+* the expander's "is there anything more to show" test compares against the number CARDED, not the number
+  selected, so the table still appears when the brief selects exactly as many keys as the row holds.
+
+Nothing is lost by the cap: every key, the carded five included, is in the expander directly below.
+
+**Validation**: `~/wmtest/ktvtbl_t.py` updated -- 19 rows for 19 keys, exactly five flagged as on the row, the
+6th key ("Counter with Madson, Chestnut, Lukenbill, McEwen, Rogers") correctly unflagged, scores descending.
+
+
+**CONFIRMED BUG (fixed 11/18, same file, 543,860 b).** On the starters strip the role labels ran into the role:
+"OFFStationary Shooter", "DEFHelper". The markup has no space between `<span class="sf-k">Off</span>` and the
+role text by design -- the gap was supposed to come from the label's `min-width: 1.9em`, which is narrower than
+"OFF" renders at 0.6rem. Now `min-width: 2.2em` plus `margin-right: 5px`, so the gap holds whatever the font
+does. CSS only; no markup change.
+
+
+## 2026-11-19 -- the Ripon brief stop, the Hope brief, and a check that didn't know about cards
+
+**Corey:** "I tried to use an old reference date to get a scouting report for the Ripon game and it errored out."
+
+### What happened, from the logs
+
+* **20:59 run, `Reference date: 2026-11-13`** (so the next game is Ripon, 11/14). It did not crash -- it hit the
+  frames-vs-plays guard in 47 and stopped on purpose:
+  `STOPPED: the captured frames and uww_plays.csv don't line up yet` naming
+  `2026-11-14 Elmhurst Bluejays vs Hope Flying Dutchmen: 178 clip(s) captured, none in uww_plays.csv` and
+  `2026-11-14 Ripon Red Hawks: 175 clip(s)`. With the clock rolled back to 11/13 both 11/14 games are in the
+  FUTURE, so they belong to no side of this run (`Play clips by game type: UWW 1441 / 12 games, Opponent 353 /
+  2, Other 2610 / 14` against the usual 1616 / 13, 711 / 4, 2430 / 13) -- their captured frames look orphaned
+  and the guard fires. `inputs/_upcoming_game.json` still says `"REFERENCE_DATE": "2026-11-15"`, so this is the
+  same failure the 11/14 note in `00_parser_modes.py` describes: **the brief ran on an older date than the one
+  parser_models prepared the film for.**
+  Ways round it: run `parser_models` with the old date first (what the warning says), or for a one-off
+  historical brief set `FRAMES_STOP_FOR_GAPS = False`, or name the two games in `FRAMES_STOP_IGNORE_GAMES`.
+  **Fixed the same morning (requested): the guard now skips captured games dated after `REFERENCE_DATE`** --
+  see the entry below -- so an old-date brief runs without any of those workarounds.
+* **21:05 run, `Reference date: 2026-11-19`**: this one worked. It picked **Hope Flying Dutchmen** -- not a
+  mistake, UWW play them **Tue, Nov 24** -- and wrote a 4.9 MB brief. No FastScout report exists for Hope yet
+  (`No scout report on file for the next scheduled opponent`), so the scouting-report-sourced output is thin.
+
+### CONFIRMED BUG (fixed): the brief check didn't know the keys had become cards
+That run ended `!! [keys] no Keys to Victory are printed` on a brief that printed five. `87b_brief_check.py`
+scrapes the printed keys out of `<div class="ktv-sentence">`, which the 11/18 card change replaced with
+`lcards ktv-cards` / `lc-n`. So the check reported a false problem AND silently stopped doing its real job --
+verifying every printed key exists in `uww_ktv_keys.csv`. It now reads the card markup when no sentences are
+found (`87b_brief_check.py`, 12,812 b). The lesson for the next layout change in 87: **87b scrapes the brief's
+own HTML, so changing markup there can blind a check without failing anything.**
+
+**Validation** (`~/wmtest/briefchk_t.py`, the block lifted out of 87b and run against the real Hope brief):
+five keys read from the cards, zero problems raised, the old sentence markup still read, and a brief with
+neither shape still flagged "no Keys to Victory are printed".
+
+
+## 2026-11-19 -- the frames guard respects the reference date
+
+**CONFIRMED CHANGE (requested:** "make the guard skip captured games dated after the reference date.")
+`47_play_calls.py` (377,337 b). In the frames-vs-plays check, a captured game whose own date is AFTER
+`REFERENCE_DATE` can't belong to that run, so it is noted and skipped instead of stopping the run:
+
+    (frame check: 2026-11-14 Ripon Red Hawks: played after this run's reference date (2026-11-13)
+     -- not part of this run, so its 175 captured clip(s) are not a gap)
+
+`_fr_game_date(lab, rows)` takes the date from the label, which always starts with one
+("2026-11-14 Ripon Red Hawks"), and falls back to the rows' `clip_date`. Only the FIRST loop (captured games
+with no play-call rows) is affected; tagged plays missing frames are checked as before, and a game ON the
+reference date is still checked -- the guard is unchanged for any run whose date is today's.
+
+**Validation** (`~/wmtest/frguard_t.py`, the helper lifted by AST, run against the real
+`parser/inputs/uww_clip_frames.csv`): all 22 captured games yield a date; the no-date-in-label path falls back
+to `clip_date`; at `REFERENCE_DATE = 2026-11-13` exactly the two games that stopped the 20:59 run are skipped
+(2026-11-14 Ripon, 2026-11-14 Elmhurst vs Hope) and nothing else; at 2026-11-19 nothing is skipped at all.
+
+
+## 2026-11-19 -- a date mismatch now runs parser_models, or stops the notebook
+
+**CONFIRMED CHANGE (requested:** "have it stop the notebook and explain that I should run parser_models with
+that reference date ... or better yet, have it automatically call out and run parser_models with that
+reference date.") `00_parser_modes.py` (57,014 b), in the `brief` / `tagging` branch that reads
+`inputs/_upcoming_game.json`.
+
+A warning line was never enough: on 11/18 the brief ran on 2026-11-13 while the film and tagging had been
+prepared for 2026-11-15, printed one `!!`, and stopped forty minutes later inside 47 with a message about
+captured frames. The mismatch is known HERE, before a single section runs, so it is settled here:
+
+* **`BRIEF_AUTORUN_MODELS = True` (the default)** -- a banner explains the mismatch, says the models job is
+  long (~50 min) and pushes data when it finishes, then
+  `run_parser("models", notebook=notebook, options={**own, "REFERENCE_DATE": <the notebook's date>})` runs and
+  the job carries on: `=== back in BRIEF: parser_models has prepared 2026-11-13; carrying on ===`.
+  The job's own `_PM_OPTIONS` are saved and restored around the nested run (in a `finally`), so the brief sees
+  its own options afterwards.
+* **`BRIEF_AUTORUN_MODELS = False`** -- raises before anything runs, with the reason and the exact line to run:
+  `run_parser("models", options={"REFERENCE_DATE": "2026-11-13"})`, plus the two other ways out (turn the
+  setting on, or clear the notebook's own REFERENCE_DATE to use the prepared one).
+
+Nothing happens when the dates match, or when no `_upcoming_game.json` exists (nothing to compare).
+
+**Worth knowing:** a brief run can now become a models run, which pushes `data/**` on the way out. The banner
+says so before it starts; `BRIEF_AUTORUN_MODELS = False` is the switch for anyone who would rather be told.
+
+**Validation** (`~/wmtest/autorun_t.py`, the block lifted out of the file and exec'd with a stub `run_parser`):
+differing dates call `("models", "2026-11-13")` exactly once and restore `_PM_OPTIONS`; equal dates do nothing
+and print no `!!`; with the setting off a RuntimeError carries the runnable line; a missing
+`_upcoming_game.json` neither stops nor auto-runs.
+
+
+## 2026-11-19 -- CONFIRMED BUG: Ripon players in UWW's roster (a whole game's teams reversed)
+
+**Corey:** "something is wrong with the Hope scouting brief because now there are Ripon players in UWW's
+roster." They were, and it was not the roster -- `data/uww_live_rosters.csv` is clean (18 UWW, 22 Ripon).
+`data/uww_pbp_box_score.csv` had the 2026-11-14 game **completely inverted**: our nine (Madson 28 pts,
+Chestnut, Robinson, Lukenbill, McEwen, Rogers, Vann, Teague-Johnson, Paddock) filed under `Ripon Red Hawks`,
+and thirteen Ripon players (Flowers, Asman, Daun, Leoni, Gonzales, Bunders, Rahn ...) filed under
+`UW-Whitewater`. The 11/07 Carroll game in the same file is correct, which is the tell.
+
+**Why.** FastScout's play-by-play is `Time | LeftTeam | Score | RightTeam` and which side is UWW depends on
+home/away. `36_parse_play_by_play_mhtml_files_into.py` already detects that: it pulls player names out of both
+columns and compares them with `uww_roster_names`. But that set is built from `stats`, the UWW SEASON-STATS
+scrape -- and on the 11/19 run that scrape timed out ("second stats table never loaded, proceeding with
+schedule table only", three times in the log). Empty set -> `0 > 0` is False -> the file was taken as
+un-swapped. 11/14 Ripon @ UW-Whitewater is the one game this season where UWW is HOME, so its columns really
+were reversed, and every event, the box score, the roster the brief draws from, the lineups and the minutes
+went to the wrong team. No warning was printed because the check "succeeded".
+
+**Fix** (`36_...py`, 13,768 b), three ways to decide, in order:
+
+1. **roster names, case-insensitively, from the live roster pages as well as season stats.** `live_rosters`
+   (built in 21, two cells earlier) is ALL CAPS and the play-by-play is not, which is why it could not simply
+   be added to the old exact-match set. Both sides are normalised (`[^a-z ]` stripped) before comparing.
+2. **the table's own header**, when no name matched: `raw_df.attrs["column_teams"]` -- which `parse_pbp_html`
+   has always set and section 25 already uses -- reads `{'uww_text': 'Ripon', 'opp_text': 'UW-Whitewater'}` for
+   this file. Decisive on its own.
+3. **the file name**, when the header is no help: it names the away team first, so
+   "11_14_26 Ripon Red Hawks @ UW-Whitewater" means UWW were home and the right column is ours.
+
+The warning now says which of the three caught it. If none can (no roster anywhere, no header), that is printed
+as a warning rather than passing silently.
+
+**Validation** (`~/wmtest/pbpswap_t.py`, `parse_pbp_mhtml` / `classify_event` lifted out of 16 and 17 and run
+against the real input files): for 11/14 Ripon, column 2 holds 13 players and none of ours while column 4 holds
+10 of which 9 are ours -- swap detected both with a roster and, by the header, with **no roster at all** (the
+11/19 case); for 11/07 at Carroll, no swap either way.
+
+**Still to do: the data on disk is wrong until the sections from 36 down are re-run.** Everything derived from
+that game -- box score, minutes, lineups, clutch, the brief's roster -- carries the flip. The 11/19 models run
+finished before this fix, so the Hope brief it produced should not be trusted on anything involving 11/14.
