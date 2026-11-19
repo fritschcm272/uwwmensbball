@@ -4157,6 +4157,56 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                         + f"{_vs(_o, _team_off)} scored, {_vs(_d, _team_def)} allowed")
             return f"With them out there: {_vs(_o, _team_off)} scored, {_vs(_d, _team_def)} allowed"
 
+        # CONFIRMED CHANGE (requested 11/19: "add a card for best clutch group for 5 and 3 man lineups"). The other
+        # three cards rank a whole season of floor time; this one ranks the handful of possessions that decided games --
+        # OUR clutch, the same rule as everywhere else (47's _gs_situation: not the first half, 5:00 or less, margin 8
+        # or fewer). A group is judged on both ends, because a clutch five that scores and gives it straight back is not
+        # the five to close with: points a possession with them on the floor MINUS points a possession they allowed. It
+        # needs possessions at BOTH ends and _CL_MIN in total, so a group that only ever defended cannot win it.
+        def _clutch_units(three):
+            """{key: [off poss, points for, def poss, points against, display]} for this side's clutch possessions."""
+            t = _pcc_all
+            if t.empty or not {"game_situation", "side", "possession_side"} <= set(t.columns):
+                return {}
+            t = t[t["game_situation"].astype(str).str.startswith("Clutch") & (t["side"].astype(str) == side)]
+            out = {}
+            for _poss, _col, _i in (("Offense", "offense_lineup", 0), ("Defense", "defense_lineup", 2)):
+                if _col not in t.columns:
+                    continue
+                for _, r_ in t[t["possession_side"].astype(str) == _poss].iterrows():
+                    _nm = [x.strip() for x in str(r_.get(_col) or "").split(",") if x.strip()]
+                    if len(_nm) < (3 if three else 5):
+                        continue
+                    _p = float(pd.to_numeric(pd.Series([r_.get("points")]), errors="coerce").fillna(0).iloc[0])
+                    _groups = ([(_nm[a], _nm[b], _nm[c])
+                                for a in range(len(_nm)) for b in range(a + 1, len(_nm)) for c in range(b + 1, len(_nm))]
+                               if three else [tuple(_nm)])
+                    for _g in _groups:
+                        _k = frozenset(_norm(x) for x in _g)
+                        _v = out.setdefault(_k, [0, 0.0, 0, 0.0, ", ".join(_g)])
+                        _v[_i] += 1
+                        _v[_i + 1] += _p
+            return out
+
+        def _clutch_card(three):
+            _cu = _clutch_units(three)
+            _CL_MIN = 6 if three else 5            # clutch possessions in all, both ends counted
+            _cand = [(k, v) for k, v in _cu.items() if v[0] and v[2] and (v[0] + v[2]) >= _CL_MIN]
+            if not _cand:
+                return ""
+            _net = lambda v: v[1] / v[0] - v[3] / v[2]      # noqa: E731
+            _k, _v = max(_cand, key=lambda kv: (_net(kv[1]), kv[1][0] + kv[1][2]))
+            _o, _d, _n = _v[1] / _v[0], _v[3] / _v[2], _v[0] + _v[2]
+            _shoot, _read = _lu_read(side, _v[4], _grp.get(_k, ""))
+            return (f'<div class="lc"><div class="lc-t">Best in the clutch</div>'
+                    f'<div class="lc-n">{_sb_esc(_lu_short(_v[4], 3 if three else 5))}</div>'
+                    f'<div class="lc-v">{_net(_v):+.2f} PPP net ({_n} Poss)</div>'
+                    f'<div class="lc-s">{_o:.2f} PPP scored \u00b7 {_d:.2f} PPP allowed</div>'
+                    f'<div class="lc-s">{_v[0]} with the ball \u00b7 {_v[2]} defending</div>'
+                    + (f'<div class="lc-x">{_shoot}</div>' if _shoot else "")
+                    + '<div class="lc-x">Last 5 min, margin &le; 8 \u2014 every clutch possession on film, '
+                      'both ends.</div></div>')
+
         def _rows(df, min_col, pm_col, three):
             d = df.copy()
             d["_m"] = pd.to_numeric(d[min_col], errors="coerce").fillna(0)
@@ -4176,13 +4226,17 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             d["_ppp"], d["_npos"] = _pp, _nn
             return d
 
-        def _cards(d, label, floor):
+        def _cards(d, label, floor, three=False):
             """CONFIRMED CHANGE: the cards rank only units that clear the same minutes floor the tables below
             them use -- without it, "Best +/-" and "Best PPP" both landed on a five-man unit that played FOUR
             minutes (+9, 1.71), which is the small-sample trap every other ranking in this file guards
             against. If nothing clears the floor the best of what there is shows with a *, the same
             convention the lineup tables use for a unit shown below their floor."""
             if d.empty:
+                _cl0 = _clutch_card(three)
+                if _cl0:
+                    add(f'<div class="lc-lab">{_sb_esc(label)}</div>')
+                    add('<div class="lcards">' + _cl0 + "</div>")
                 return
             _thin = d["_m"] < floor
             d = d.copy()
@@ -4225,6 +4279,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                                 _two_way({_norm(x) for x in re.split(r"[,/|]", str(_r["lineup"])) if x.strip()},
                                          _kind))
                             + "</div>")
+            _cl = _clutch_card(three)
+            if _cl:
+                _out.append(_cl)
             if _out:
                 add(f'<div class="lc-lab">{_sb_esc(label)}</div>')
                 add('<div class="lcards">' + "".join(_out) + "</div>")
@@ -4245,7 +4302,8 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 _c3clean = side == "UWW" and {"clean_min", "clean_pm"}.issubset(_c3.columns)
                 _cards(_rows(_c3, "clean_min" if _c3clean else "MIN", "clean_pm" if _c3clean else "+/-", True),
                        "3-man combos",
-                       LINEUP_TABLE_RULES["uww_three_min_minutes" if side == "UWW" else "opp_three_min_minutes"])
+                       LINEUP_TABLE_RULES["uww_three_min_minutes" if side == "UWW" else "opp_three_min_minutes"],
+                       three=True)
 
     def combos_table(side):
         """Top three 3-man combos (alongside the five-man units).
