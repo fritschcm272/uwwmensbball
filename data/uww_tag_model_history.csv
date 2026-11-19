@@ -1262,13 +1262,23 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-19T11:29:07,offball_coverage,Off-ball coverage,,,,,106,,False,,,,2026-11-19T09:09:20
 2026-11-19T11:29:07,screener,Screener,,,,,156,,False,,,,2026-11-19T09:09:20
 2026-11-19T11:29:07,screen_defender,Screen defender,,,,,93,,False,,,,2026-11-19T09:09:20
-2026-11-19T12:14:11,formation,Formation,,,5 Out,,637,nan,False,nan,0.0,7.0,2026-11-19T12:14:10
-2026-11-19T12:14:11,play_call,Play call,,,Motion,,892,nan,False,nan,0.0,11.0,2026-11-19T12:14:10
-2026-11-19T12:14:11,defense,Defense,,,Man-to-Man,,1613,nan,False,nan,0.0,20.0,2026-11-19T12:14:10
-2026-11-19T12:14:11,press,Press,,,None,,1615,nan,False,nan,0.0,20.0,2026-11-19T12:14:10
-2026-11-19T12:14:11,situation,Situation,,,Half court,,1988,nan,False,nan,0.0,20.0,2026-11-19T12:14:10
-2026-11-19T12:14:11,primary_action,Main action,,,Ball Screen,,635,nan,False,nan,0.0,4.0,2026-11-19T12:14:10
-2026-11-19T12:14:11,ball_screen_coverage,Ball-screen coverage,,,Switch,,238,nan,False,nan,0.0,4.0,2026-11-19T12:14:10
-2026-11-19T12:14:11,offball_coverage,Off-ball coverage,,,Over,,106,nan,False,nan,,,2026-11-19T12:14:10
-2026-11-19T12:14:11,screener,Screener,,,Seth Bunders,,156,nan,False,nan,0.0,3.0,2026-11-19T12:14:10
-2026-11-19T12:14:11,screen_defender,Screen defender,,,#5,,93,nan,False,nan,,,2026-11-19T12:14:10
+2026-11-19T12:14:11,formation,Formation,,,5 Out,,637,,False,,0.0,7.0,2026-11-19T12:14:10
+2026-11-19T12:14:11,play_call,Play call,,,Motion,,892,,False,,0.0,11.0,2026-11-19T12:14:10
+2026-11-19T12:14:11,defense,Defense,,,Man-to-Man,,1613,,False,,0.0,20.0,2026-11-19T12:14:10
+2026-11-19T12:14:11,press,Press,,,,,1615,,False,,0.0,20.0,2026-11-19T12:14:10
+2026-11-19T12:14:11,situation,Situation,,,Half court,,1988,,False,,0.0,20.0,2026-11-19T12:14:10
+2026-11-19T12:14:11,primary_action,Main action,,,Ball Screen,,635,,False,,0.0,4.0,2026-11-19T12:14:10
+2026-11-19T12:14:11,ball_screen_coverage,Ball-screen coverage,,,Switch,,238,,False,,0.0,4.0,2026-11-19T12:14:10
+2026-11-19T12:14:11,offball_coverage,Off-ball coverage,,,Over,,106,,False,,,,2026-11-19T12:14:10
+2026-11-19T12:14:11,screener,Screener,,,Seth Bunders,,156,,False,,0.0,3.0,2026-11-19T12:14:10
+2026-11-19T12:14:11,screen_defender,Screen defender,,,#5,,93,,False,,,,2026-11-19T12:14:10
+2026-11-19T12:23:35,formation,Formation,,,,,637,nan,False,nan,,,2026-11-19T12:14:10
+2026-11-19T12:23:35,play_call,Play call,,,,,892,nan,False,nan,,,2026-11-19T12:14:10
+2026-11-19T12:23:35,defense,Defense,,,,,1613,nan,False,nan,,,2026-11-19T12:14:10
+2026-11-19T12:23:35,press,Press,,,,,1615,nan,False,nan,,,2026-11-19T12:14:10
+2026-11-19T12:23:35,situation,Situation,,,,,1988,nan,False,nan,,,2026-11-19T12:14:10
+2026-11-19T12:23:35,primary_action,Main action,,,,,635,nan,False,nan,,,2026-11-19T12:14:10
+2026-11-19T12:23:35,ball_screen_coverage,Ball-screen coverage,,,,,238,nan,False,nan,,,2026-11-19T12:14:10
+2026-11-19T12:23:35,offball_coverage,Off-ball coverage,,,,,106,nan,False,nan,,,2026-11-19T12:14:10
+2026-11-19T12:23:35,screener,Screener,,,,,156,nan,False,nan,,,2026-11-19T12:14:10
+2026-11-19T12:23:35,screen_defender,Screen defender,,,,,93,nan,False,nan,,,2026-11-19T12:14:10
