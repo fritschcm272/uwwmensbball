@@ -1242,13 +1242,23 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-19T10:55:03,offball_coverage,Off-ball coverage,,,,,106,,False,,,,2026-11-19T09:09:20
 2026-11-19T10:55:03,screener,Screener,,,,,156,,False,,,,2026-11-19T09:09:20
 2026-11-19T10:55:03,screen_defender,Screen defender,,,,,93,,False,,,,2026-11-19T09:09:20
-2026-11-19T11:15:14,formation,Formation,,,,,637,nan,False,nan,,,2026-11-19T09:09:20
-2026-11-19T11:15:14,play_call,Play call,,,,,892,nan,False,nan,,,2026-11-19T09:09:20
-2026-11-19T11:15:14,defense,Defense,,,,,1613,nan,False,nan,,,2026-11-19T09:09:20
-2026-11-19T11:15:14,press,Press,,,,,1615,nan,False,nan,,,2026-11-19T09:09:20
-2026-11-19T11:15:14,situation,Situation,,,,,1988,nan,False,nan,,,2026-11-19T09:09:20
-2026-11-19T11:15:14,primary_action,Main action,,,,,635,nan,False,nan,,,2026-11-19T09:09:20
-2026-11-19T11:15:14,ball_screen_coverage,Ball-screen coverage,,,,,238,nan,False,nan,,,2026-11-19T09:09:20
-2026-11-19T11:15:14,offball_coverage,Off-ball coverage,,,,,106,nan,False,nan,,,2026-11-19T09:09:20
-2026-11-19T11:15:14,screener,Screener,,,,,156,nan,False,nan,,,2026-11-19T09:09:20
-2026-11-19T11:15:14,screen_defender,Screen defender,,,,,93,nan,False,nan,,,2026-11-19T09:09:20
+2026-11-19T11:15:14,formation,Formation,,,,,637,,False,,,,2026-11-19T09:09:20
+2026-11-19T11:15:14,play_call,Play call,,,,,892,,False,,,,2026-11-19T09:09:20
+2026-11-19T11:15:14,defense,Defense,,,,,1613,,False,,,,2026-11-19T09:09:20
+2026-11-19T11:15:14,press,Press,,,,,1615,,False,,,,2026-11-19T09:09:20
+2026-11-19T11:15:14,situation,Situation,,,,,1988,,False,,,,2026-11-19T09:09:20
+2026-11-19T11:15:14,primary_action,Main action,,,,,635,,False,,,,2026-11-19T09:09:20
+2026-11-19T11:15:14,ball_screen_coverage,Ball-screen coverage,,,,,238,,False,,,,2026-11-19T09:09:20
+2026-11-19T11:15:14,offball_coverage,Off-ball coverage,,,,,106,,False,,,,2026-11-19T09:09:20
+2026-11-19T11:15:14,screener,Screener,,,,,156,,False,,,,2026-11-19T09:09:20
+2026-11-19T11:15:14,screen_defender,Screen defender,,,,,93,,False,,,,2026-11-19T09:09:20
+2026-11-19T11:29:07,formation,Formation,,,,,637,nan,False,nan,,,2026-11-19T09:09:20
+2026-11-19T11:29:07,play_call,Play call,,,,,892,nan,False,nan,,,2026-11-19T09:09:20
+2026-11-19T11:29:07,defense,Defense,,,,,1613,nan,False,nan,,,2026-11-19T09:09:20
+2026-11-19T11:29:07,press,Press,,,,,1615,nan,False,nan,,,2026-11-19T09:09:20
+2026-11-19T11:29:07,situation,Situation,,,,,1988,nan,False,nan,,,2026-11-19T09:09:20
+2026-11-19T11:29:07,primary_action,Main action,,,,,635,nan,False,nan,,,2026-11-19T09:09:20
+2026-11-19T11:29:07,ball_screen_coverage,Ball-screen coverage,,,,,238,nan,False,nan,,,2026-11-19T09:09:20
+2026-11-19T11:29:07,offball_coverage,Off-ball coverage,,,,,106,nan,False,nan,,,2026-11-19T09:09:20
+2026-11-19T11:29:07,screener,Screener,,,,,156,nan,False,nan,,,2026-11-19T09:09:20
+2026-11-19T11:29:07,screen_defender,Screen defender,,,,,93,nan,False,nan,,,2026-11-19T09:09:20
