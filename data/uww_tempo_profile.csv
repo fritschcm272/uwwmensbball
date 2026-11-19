@@ -1,5 +1,5 @@
 opponent,metric,value,note,is_sample
-Elmhurst Bluejays,Possessions per game,71.2,Estimated over 3 game(s): FGA - OREB + TO + 0.475*FTA,False
-Elmhurst Bluejays,Points per possession,1.02,Their scoring over 3 game(s) of film,False
+Hope Flying Dutchmen,Possessions per game,72.1,Estimated over 4 game(s): FGA - OREB + TO + 0.475*FTA,False
+Hope Flying Dutchmen,Points per possession,1.06,Their scoring over 4 game(s) of film,False
 UW-Whitewater,Possessions per game,68.7,Our own pace over 2 game(s),False
-Elmhurst Bluejays,Early-offense share,35.0,% of 237 tagged possessions shooting inside 10 seconds,False
+Hope Flying Dutchmen,Early-offense share,25.0,% of 61 tagged possessions shooting inside 10 seconds,False

@@ -1,9 +1,9 @@
 opponent,situation,crash_pct,who_crashes,note,is_sample
-Elmhurst Bluejays,Their missed layup / dunk,45,"Elmhurst (6), Chris Ketchum (5), Vinnie Adjahoungbeta (3)",45% offensive rebound on 47 of 47 misses (0 unpaired),False
-Elmhurst Bluejays,Their missed two-point jumper,33,"Vinnie Adjahoungbeta (8), Dominic Trelenberg (4), Aidyn Boone (3)",33% offensive rebound on 61 of 61 misses (0 unpaired),False
-Elmhurst Bluejays,Their missed free throw,50,Elmhurst (8),50% offensive rebound on 18 of 18 misses (0 unpaired),False
-Elmhurst Bluejays,All their misses,40,"Elmhurst (14), Vinnie Adjahoungbeta (11), Chris Ketchum (6)",40% offensive rebound on 126 of 126 misses (0 unpaired),False
-Elmhurst Bluejays,Opponent missed layup / dunk,71,"Vinnie Adjahoungbeta (8), Aidyn Boone (3), Elmhurst (3)",They secure 71% of 38 opponent misses (0 unpaired),False
-Elmhurst Bluejays,Opponent missed two-point jumper,79,"Chris Ketchum (10), Aidyn Boone (9), Jack Cherry (7)",They secure 79% of 63 opponent misses (0 unpaired),False
-Elmhurst Bluejays,Opponent missed free throw,40,"Vinnie Adjahoungbeta (4), Talen Pearson (3), Elmhurst (1)",They secure 40% of 20 opponent misses (1 unpaired),False
-Elmhurst Bluejays,All opponent misses,70,"Vinnie Adjahoungbeta (19), Chris Ketchum (12), Aidyn Boone (12)",They secure 70% of 121 opponent misses (1 unpaired),False
+Hope Flying Dutchmen,Their missed layup / dunk,52,"Kyle Blauch (6), Orion Yant (4), Carter Bishop (3)",52% offensive rebound on 48 of 48 misses (0 unpaired),False
+Hope Flying Dutchmen,Their missed two-point jumper,37,"Orion Yant (10), Carter Bishop (4), Sean Wesolek (3)",37% offensive rebound on 78 of 78 misses (0 unpaired),False
+Hope Flying Dutchmen,Their missed free throw,63,"Hope (14), Orion Yant (1), Kaden Grau (1)",63% offensive rebound on 27 of 30 misses (3 unpaired),False
+Hope Flying Dutchmen,All their misses,46,"Orion Yant (15), Hope (15), Kyle Blauch (8)",46% offensive rebound on 153 of 156 misses (3 unpaired),False
+Hope Flying Dutchmen,Opponent missed layup / dunk,67,"Kyle Blauch (8), Brendan Cargill (3), Sean Wesolek (3)",They secure 67% of 45 opponent misses (0 unpaired),False
+Hope Flying Dutchmen,Opponent missed two-point jumper,72,"Orion Yant (14), Brendan Cargill (11), Avery Sanchez (8)",They secure 72% of 105 opponent misses (0 unpaired),False
+Hope Flying Dutchmen,Opponent missed free throw,53,"Orion Yant (5), Brady Miller (2), Sean Wesolek (1)",They secure 53% of 19 opponent misses (1 unpaired),False
+Hope Flying Dutchmen,All opponent misses,69,"Orion Yant (20), Kyle Blauch (15), Brendan Cargill (14)",They secure 69% of 169 opponent misses (1 unpaired),False

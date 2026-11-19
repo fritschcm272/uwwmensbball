@@ -1,28 +1,34 @@
 opponent,side,player,fga,rim_att,rim_share,rim_fg,other2_att,other2_share,other2_fg,three_att,three_share,three_fg
-Elmhurst Bluejays,Opponent,Aidyn Boone,31,15,48,53.3,0,0,,16,52,43.8
-Elmhurst Bluejays,Opponent,Andy Colvin,8,5,62,80.0,0,0,,3,38,33.3
-Elmhurst Bluejays,Opponent,Chris Ketchum,17,15,88,26.7,2,12,100.0,0,0,
-Elmhurst Bluejays,Opponent,DJ Jervier,7,7,100,71.4,0,0,,0,0,
-Elmhurst Bluejays,Opponent,Dominic Trelenberg,32,6,19,16.7,3,9,66.7,23,72,43.5
-Elmhurst Bluejays,Opponent,EJ Marshall,10,9,90,33.3,1,10,100.0,0,0,
-Elmhurst Bluejays,Opponent,Jack Cherry,17,4,24,50.0,5,29,40.0,8,47,50.0
-Elmhurst Bluejays,Opponent,Luke Smith,18,6,33,16.7,4,22,25.0,8,44,25.0
-Elmhurst Bluejays,Opponent,Talen Pearson,18,3,17,33.3,4,22,0.0,11,61,27.3
-Elmhurst Bluejays,Opponent,Vinnie Adjahoungbeta,26,12,46,50.0,8,31,62.5,6,23,16.7
-Elmhurst Bluejays,UWW,Christian Wilson,4,1,25,0.0,1,25,100.0,2,50,0.0
-Elmhurst Bluejays,UWW,Collin Madson,15,7,47,85.7,4,27,50.0,4,27,25.0
-Elmhurst Bluejays,UWW,Isaiah Robinson,6,4,67,50.0,0,0,,2,33,0.0
-Elmhurst Bluejays,UWW,JR Lukenbill,7,3,43,66.7,1,14,100.0,3,43,33.3
-Elmhurst Bluejays,UWW,Jack Field,1,1,100,100.0,0,0,,0,0,
-Elmhurst Bluejays,UWW,Jackson Flowers,6,1,17,100.0,2,33,0.0,3,50,0.0
-Elmhurst Bluejays,UWW,Jose Gonzales,7,5,71,60.0,2,29,50.0,0,0,
-Elmhurst Bluejays,UWW,Keenan Rahn,3,1,33,100.0,0,0,,2,67,50.0
-Elmhurst Bluejays,UWW,Kelton McEwen,10,0,0,,3,30,66.7,7,70,28.6
-Elmhurst Bluejays,UWW,Landon Lee,1,0,0,,0,0,,1,100,0.0
-Elmhurst Bluejays,UWW,Michael Asman,15,5,33,40.0,5,33,60.0,5,33,60.0
-Elmhurst Bluejays,UWW,Nick Ahlquist,4,0,0,,3,75,66.7,1,25,0.0
-Elmhurst Bluejays,UWW,Rashad Rogers,5,2,40,50.0,1,20,0.0,2,40,50.0
-Elmhurst Bluejays,UWW,Sam Leoni,4,1,25,100.0,2,50,0.0,1,25,100.0
-Elmhurst Bluejays,UWW,Seth Bunders,11,1,9,100.0,3,27,33.3,7,64,42.9
-Elmhurst Bluejays,UWW,Tyshawn Teague-Johnson,12,6,50,50.0,3,25,33.3,3,25,33.3
-Elmhurst Bluejays,UWW,Zavier Castillo,1,1,100,100.0,0,0,,0,0,
+Hope Flying Dutchmen,Opponent,Avery Sanchez,27,7,26,71.4,10,37,60.0,10,37,50.0
+Hope Flying Dutchmen,Opponent,Ben Mehendale,1,1,100,0.0,0,0,,0,0,
+Hope Flying Dutchmen,Opponent,Brady Miller,20,8,40,37.5,4,20,25.0,8,40,25.0
+Hope Flying Dutchmen,Opponent,Brendan Cargill,45,17,38,64.7,6,13,83.3,22,49,18.2
+Hope Flying Dutchmen,Opponent,Carter Bishop,18,8,44,62.5,3,17,33.3,7,39,28.6
+Hope Flying Dutchmen,Opponent,Carter Goodyke,6,4,67,50.0,1,17,0.0,1,17,0.0
+Hope Flying Dutchmen,Opponent,Drew Kozel,2,2,100,100.0,0,0,,0,0,
+Hope Flying Dutchmen,Opponent,Jacob Van Hekken,2,1,50,100.0,0,0,,1,50,100.0
+Hope Flying Dutchmen,Opponent,Jared Ryg,6,4,67,25.0,2,33,50.0,0,0,
+Hope Flying Dutchmen,Opponent,Johnny Lake,6,5,83,60.0,1,17,0.0,0,0,
+Hope Flying Dutchmen,Opponent,Justin Fisher,2,1,50,0.0,1,50,0.0,0,0,
+Hope Flying Dutchmen,Opponent,Kaden Grau,9,1,11,100.0,2,22,0.0,6,67,16.7
+Hope Flying Dutchmen,Opponent,Kyle Blauch,16,14,88,42.9,2,12,100.0,0,0,
+Hope Flying Dutchmen,Opponent,Orion Yant,31,23,74,65.2,8,26,37.5,0,0,
+Hope Flying Dutchmen,Opponent,Sean Wesolek,23,11,48,72.7,4,17,25.0,8,35,25.0
+Hope Flying Dutchmen,Opponent,Tucker Walther,19,8,42,50.0,5,26,40.0,6,32,16.7
+Hope Flying Dutchmen,UWW,Christian Wilson,4,1,25,0.0,1,25,100.0,2,50,0.0
+Hope Flying Dutchmen,UWW,Collin Madson,15,7,47,85.7,4,27,50.0,4,27,25.0
+Hope Flying Dutchmen,UWW,Isaiah Robinson,6,4,67,50.0,0,0,,2,33,0.0
+Hope Flying Dutchmen,UWW,JR Lukenbill,7,3,43,66.7,1,14,100.0,3,43,33.3
+Hope Flying Dutchmen,UWW,Jack Field,1,1,100,100.0,0,0,,0,0,
+Hope Flying Dutchmen,UWW,Jackson Flowers,6,1,17,100.0,2,33,0.0,3,50,0.0
+Hope Flying Dutchmen,UWW,Jose Gonzales,7,5,71,60.0,2,29,50.0,0,0,
+Hope Flying Dutchmen,UWW,Keenan Rahn,3,1,33,100.0,0,0,,2,67,50.0
+Hope Flying Dutchmen,UWW,Kelton McEwen,10,0,0,,3,30,66.7,7,70,28.6
+Hope Flying Dutchmen,UWW,Landon Lee,1,0,0,,0,0,,1,100,0.0
+Hope Flying Dutchmen,UWW,Michael Asman,15,5,33,40.0,5,33,60.0,5,33,60.0
+Hope Flying Dutchmen,UWW,Nick Ahlquist,4,0,0,,3,75,66.7,1,25,0.0
+Hope Flying Dutchmen,UWW,Rashad Rogers,5,2,40,50.0,1,20,0.0,2,40,50.0
+Hope Flying Dutchmen,UWW,Sam Leoni,4,1,25,100.0,2,50,0.0,1,25,100.0
+Hope Flying Dutchmen,UWW,Seth Bunders,11,1,9,100.0,3,27,33.3,7,64,42.9
+Hope Flying Dutchmen,UWW,Tyshawn Teague-Johnson,12,6,50,50.0,3,25,33.3,3,25,33.3
+Hope Flying Dutchmen,UWW,Zavier Castillo,1,1,100,100.0,0,0,,0,0,

@@ -1,13 +1,12 @@
 scouted_opponent,team,possessions,ends_on_pass_pct,ppp_ends_on_pass,ppp_no_final_pass,tracked_possessions,avg_passes,poss_0_1,ppp_0_1,poss_2_3,ppp_2_3,poss_4_plus,ppp_4_plus
-Elmhurst Bluejays,Calvin Knights,68,13,0.83,0.7,0,,0,,0,,0,
-Elmhurst Bluejays,Carroll (WI) Pioneers,93,9,1.12,0.82,10,2.6,2,0.0,6,0.0,2,1.5
-Elmhurst Bluejays,DePauw Tigers,87,20,0.94,0.67,0,,0,,0,,0,
-Elmhurst Bluejays,Elmhurst Bluejays,255,17,1.16,0.76,0,,0,,0,,0,
-Elmhurst Bluejays,Franklin Grizzlies,82,5,0.25,0.65,0,,0,,0,,0,
-Elmhurst Bluejays,Hope College Flying Dutchmen,98,5,0.4,0.78,0,,0,,0,,0,
-Elmhurst Bluejays,Hope Flying Dutchmen,72,18,0.82,0.9,1,5.0,0,,0,,1,0.0
-Elmhurst Bluejays,Ripon Red Hawks,153,12,1.37,0.6,0,,0,,0,,0,
-Elmhurst Bluejays,Thiel,91,18,1.0,0.62,0,,0,,0,,0,
-Elmhurst Bluejays,UW-Whitewater,170,19,1.03,0.75,1,8.0,0,,0,,1,0.0
-Elmhurst Bluejays,Wisconsin-(Platteville) Pioneers,86,7,0.6,1.08,0,,0,,0,,0,
-Elmhurst Bluejays,Wisconsin-(Stout) Blue Devils,77,13,0.62,0.69,0,,0,,0,,0,
+Hope Flying Dutchmen,Calvin Knights,68,13,0.83,0.7,0,,0,,0,,0,
+Hope Flying Dutchmen,Carroll (WI) Pioneers,93,9,1.12,0.82,10,2.6,2,0.0,6,0.0,2,1.5
+Hope Flying Dutchmen,Elmhurst Bluejays,88,18,1.06,0.53,0,,0,,0,,0,
+Hope Flying Dutchmen,Franklin Grizzlies,82,5,0.25,0.65,0,,0,,0,,0,
+Hope Flying Dutchmen,Hope College Flying Dutchmen,98,5,0.4,0.78,0,,0,,0,,0,
+Hope Flying Dutchmen,Hope Flying Dutchmen,72,18,0.82,0.9,1,5.0,0,,0,,1,0.0
+Hope Flying Dutchmen,Ripon Red Hawks,76,17,1.15,0.64,0,,0,,0,,0,
+Hope Flying Dutchmen,Thiel,91,18,1.0,0.62,0,,0,,0,,0,
+Hope Flying Dutchmen,UW-Whitewater,170,19,1.03,0.75,1,8.0,0,,0,,1,0.0
+Hope Flying Dutchmen,Wisconsin-(Platteville) Pioneers,86,7,0.6,1.08,0,,0,,0,,0,
+Hope Flying Dutchmen,Wisconsin-(Stout) Blue Devils,77,13,0.62,0.69,0,,0,,0,,0,

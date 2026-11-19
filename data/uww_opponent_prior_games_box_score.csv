@@ -1,75 +1,109 @@
 opponent,game_date,team,player,PTS,FGM,FGA,FG3M,FG3A,FTM,FTA,OREB,DREB,AST,STL,BLK,TO,PF,REB,FG%,3P%,FT%,MIN,started
-DePauw Tigers,2026-11-11,DePauw Tigers,Andre Ozlowski,6,3,5,0,1,0,1,0,2,0,0,0,0,1,2,60.0,0.0,0.0,14.6,False
-DePauw Tigers,2026-11-11,DePauw Tigers,Brady Kunka,17,8,15,1,3,0,1,4,6,2,1,0,2,2,10,53.3,33.3,0.0,34.8,False
-DePauw Tigers,2026-11-11,DePauw Tigers,Caleb Washington,4,2,5,0,1,0,0,3,1,1,0,0,0,3,4,40.0,0.0,,16.4,False
-DePauw Tigers,2026-11-11,DePauw Tigers,Chris Tacher,3,1,1,1,1,0,0,0,0,0,0,0,0,0,0,100.0,100.0,,0.8,False
-DePauw Tigers,2026-11-11,DePauw Tigers,Dominic Nixon,2,1,2,0,1,0,0,0,0,0,0,0,1,0,0,50.0,0.0,,4.0,False
-DePauw Tigers,2026-11-11,DePauw Tigers,Evan Prusko,2,0,0,0,0,2,3,0,0,0,1,0,1,2,0,,,66.7,9.7,False
-DePauw Tigers,2026-11-11,DePauw Tigers,Jack Jacobs,0,0,2,0,2,0,0,0,0,0,1,0,1,2,0,0.0,0.0,,12.4,False
-DePauw Tigers,2026-11-11,DePauw Tigers,James DeYoung,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.8,False
-DePauw Tigers,2026-11-11,DePauw Tigers,Joe Smith,10,1,11,1,9,7,8,0,0,1,0,0,2,3,0,9.1,11.1,87.5,29.8,False
-DePauw Tigers,2026-11-11,DePauw Tigers,Logan Sigler,3,1,4,1,3,0,1,2,4,0,0,1,1,2,6,25.0,33.3,0.0,26.6,False
-DePauw Tigers,2026-11-11,DePauw Tigers,Lucas Johnson,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0.0,0.0,,2.1,False
-DePauw Tigers,2026-11-11,DePauw Tigers,Panayiotis Sotos,7,2,7,1,4,2,3,1,2,2,0,0,4,3,3,28.6,25.0,66.7,26.3,False
-DePauw Tigers,2026-11-11,DePauw Tigers,Vince Nixon,6,3,4,0,0,0,0,2,6,2,1,0,2,1,8,75.0,,,18.4,False
-DePauw Tigers,2026-11-11,DePauw Tigers,Whit Charboneau,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,,,,0.8,False
-DePauw Tigers,2026-11-11,Elmhurst Bluejays,Aidyn Boone,18,6,14,3,6,3,4,1,3,1,1,1,2,2,4,42.9,50.0,75.0,29.5,True
-DePauw Tigers,2026-11-11,Elmhurst Bluejays,Andy Colvin,3,1,3,1,2,0,0,0,1,0,0,1,0,2,1,33.3,50.0,,7.0,False
-DePauw Tigers,2026-11-11,Elmhurst Bluejays,Chris Ketchum,4,2,4,0,0,0,4,2,4,0,2,1,0,2,6,50.0,,0.0,18.2,False
-DePauw Tigers,2026-11-11,Elmhurst Bluejays,Cooper Hasz,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.8,False
-DePauw Tigers,2026-11-11,Elmhurst Bluejays,DJ Jervier,4,1,2,0,0,2,2,0,0,0,0,0,0,0,0,50.0,,100.0,6.2,False
-DePauw Tigers,2026-11-11,Elmhurst Bluejays,Dominic Trelenberg,14,4,8,3,6,3,4,4,5,1,0,0,2,0,9,50.0,50.0,75.0,32.1,True
-DePauw Tigers,2026-11-11,Elmhurst Bluejays,EJ Marshall,1,0,2,0,0,1,2,0,2,1,4,0,0,3,2,0.0,,50.0,19.0,False
-DePauw Tigers,2026-11-11,Elmhurst Bluejays,Jack Cherry,10,3,5,1,1,3,4,0,1,1,1,0,0,4,1,60.0,100.0,75.0,15.6,True
-DePauw Tigers,2026-11-11,Elmhurst Bluejays,Luke Smith,4,2,8,0,1,0,0,0,2,3,1,0,2,4,2,25.0,0.0,,19.4,False
-DePauw Tigers,2026-11-11,Elmhurst Bluejays,Talen Pearson,0,0,3,0,2,0,0,0,1,2,1,0,1,0,1,0.0,0.0,,18.8,True
-DePauw Tigers,2026-11-11,Elmhurst Bluejays,Vinnie Adjahoungbeta,17,7,11,1,4,2,2,5,5,3,2,2,2,2,10,63.6,25.0,100.0,30.5,True
-Hope Flying Dutchmen,2026-11-14,Elmhurst Bluejays,Aidyn Boone,13,5,8,2,5,1,1,2,6,2,1,1,3,5,8,62.5,40.0,100.0,33.3,True
-Hope Flying Dutchmen,2026-11-14,Elmhurst Bluejays,Andy Colvin,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0.0,0.0,,1.9,False
-Hope Flying Dutchmen,2026-11-14,Elmhurst Bluejays,Chris Ketchum,2,1,4,0,0,0,0,0,2,0,1,0,1,2,2,25.0,,,11.0,False
-Hope Flying Dutchmen,2026-11-14,Elmhurst Bluejays,Cooper Hasz,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.8,False
-Hope Flying Dutchmen,2026-11-14,Elmhurst Bluejays,DJ Jervier,3,1,2,0,0,1,2,1,0,0,0,0,0,2,1,50.0,,50.0,5.8,False
-Hope Flying Dutchmen,2026-11-14,Elmhurst Bluejays,Dominic Trelenberg,15,3,12,3,11,6,6,1,0,3,0,0,0,2,1,25.0,27.3,100.0,34.6,True
-Hope Flying Dutchmen,2026-11-14,Elmhurst Bluejays,EJ Marshall,0,0,3,0,0,0,0,0,0,0,0,0,2,4,0,0.0,,,21.7,False
-Hope Flying Dutchmen,2026-11-14,Elmhurst Bluejays,Jack Cherry,14,4,8,2,4,4,4,0,5,3,0,0,3,2,5,50.0,50.0,100.0,30.4,True
-Hope Flying Dutchmen,2026-11-14,Elmhurst Bluejays,Luke Smith,0,0,4,0,2,0,0,0,1,3,0,0,2,0,1,0.0,0.0,,9.5,False
-Hope Flying Dutchmen,2026-11-14,Elmhurst Bluejays,Talen Pearson,11,4,11,3,7,0,0,1,3,0,0,1,1,1,4,36.4,42.9,,25.0,True
-Hope Flying Dutchmen,2026-11-14,Elmhurst Bluejays,Vinnie Adjahoungbeta,4,2,7,0,0,0,0,6,6,2,2,1,2,4,12,28.6,,,23.8,True
-Hope Flying Dutchmen,2026-11-14,Hope Flying Dutchmen,Avery Sanchez,8,3,5,0,2,2,4,1,1,0,2,0,0,2,2,60.0,0.0,50.0,29.9,False
-Hope Flying Dutchmen,2026-11-14,Hope Flying Dutchmen,Brady Miller,10,3,6,1,2,3,4,0,1,1,1,0,0,1,1,50.0,50.0,75.0,16.0,False
-Hope Flying Dutchmen,2026-11-14,Hope Flying Dutchmen,Brendan Cargill,16,2,8,0,4,12,14,0,4,1,0,1,2,0,4,25.0,0.0,85.7,35.1,False
-Hope Flying Dutchmen,2026-11-14,Hope Flying Dutchmen,Carter Bishop,7,2,3,1,2,2,2,1,0,0,0,0,2,1,1,66.7,50.0,100.0,16.5,False
-Hope Flying Dutchmen,2026-11-14,Hope Flying Dutchmen,Jared Ryg,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0.0,,,10.1,False
-Hope Flying Dutchmen,2026-11-14,Hope Flying Dutchmen,Kyle Blauch,2,1,3,0,0,0,0,1,1,0,0,0,2,0,2,33.3,,,13.6,False
-Hope Flying Dutchmen,2026-11-14,Hope Flying Dutchmen,Orion Yant,18,8,14,0,0,2,6,4,7,3,1,2,1,4,11,57.1,,33.3,35.6,False
-Hope Flying Dutchmen,2026-11-14,Hope Flying Dutchmen,Sean Wesolek,2,1,4,0,1,0,2,0,4,1,0,1,0,1,4,25.0,0.0,0.0,21.6,False
-Hope Flying Dutchmen,2026-11-14,Hope Flying Dutchmen,Tucker Walther,5,2,6,1,3,0,0,0,0,0,1,0,0,2,0,33.3,33.3,,20.5,False
-Ripon Red Hawks,2026-11-07,Elmhurst Bluejays,Aidyn Boone,14,4,9,2,5,4,6,2,3,3,2,0,0,3,5,44.4,40.0,66.7,27.9,True
-Ripon Red Hawks,2026-11-07,Elmhurst Bluejays,Andy Colvin,8,4,4,0,0,0,1,1,4,0,0,0,1,0,5,100.0,,0.0,11.4,False
-Ripon Red Hawks,2026-11-07,Elmhurst Bluejays,Chris Ketchum,8,3,9,0,0,2,4,4,6,1,2,1,1,1,10,33.3,,50.0,20.8,False
-Ripon Red Hawks,2026-11-07,Elmhurst Bluejays,Cooper Hasz,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.8,False
-Ripon Red Hawks,2026-11-07,Elmhurst Bluejays,DJ Jervier,6,3,3,0,0,0,0,0,0,1,1,0,0,1,0,100.0,,,4.4,False
-Ripon Red Hawks,2026-11-07,Elmhurst Bluejays,Dominic Trelenberg,19,6,12,4,6,3,4,0,3,3,0,1,1,0,3,50.0,66.7,75.0,30.4,True
-Ripon Red Hawks,2026-11-07,Elmhurst Bluejays,EJ Marshall,11,4,5,0,0,3,5,0,1,4,1,0,1,2,1,80.0,,60.0,20.1,False
-Ripon Red Hawks,2026-11-07,Elmhurst Bluejays,Jack Cherry,3,1,4,1,3,0,0,0,2,2,2,0,3,0,2,25.0,33.3,,20.7,True
-Ripon Red Hawks,2026-11-07,Elmhurst Bluejays,Luke Smith,6,2,6,2,5,0,0,0,1,2,1,0,1,0,1,33.3,40.0,,18.6,False
-Ripon Red Hawks,2026-11-07,Elmhurst Bluejays,Talen Pearson,0,0,4,0,2,0,0,1,1,0,0,0,1,3,2,0.0,0.0,,13.5,True
-Ripon Red Hawks,2026-11-07,Elmhurst Bluejays,Vinnie Adjahoungbeta,6,3,8,0,2,0,1,0,8,2,1,1,1,4,8,37.5,0.0,0.0,27.3,True
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Anton Kilde,2,1,1,0,0,0,0,1,1,0,0,0,1,2,2,100.0,,,8.0,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Christian Wilson,8,3,4,0,0,2,2,1,1,0,0,1,0,2,2,75.0,,100.0,11.0,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Devon Feck,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,,,,1.8,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Dominic Rasberry,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,,,,1.8,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Fisher MacKenzie,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.2,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Jack Field,3,1,4,1,2,0,0,0,0,1,0,0,0,4,0,25.0,50.0,,10.5,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Jackson Flowers,14,5,10,4,5,0,0,0,5,0,1,4,0,1,5,50.0,80.0,,27.6,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Jatyn Barkus,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.6,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Joey Daun,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.8,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Jose Gonzales,4,2,4,0,0,0,2,1,3,2,0,1,2,1,4,50.0,,0.0,23.1,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Keenan Rahn,0,0,5,0,1,0,0,1,4,1,3,0,1,1,5,0.0,0.0,,22.5,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Landon Lee,9,3,8,1,4,2,2,0,3,2,0,0,3,0,3,37.5,25.0,100.0,19.4,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Michael Asman,6,3,6,0,2,0,1,0,3,2,1,0,0,1,3,50.0,0.0,0.0,28.7,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Nick Ahlquist,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,1.2,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Sam Leoni,1,0,4,0,1,1,2,0,0,1,0,0,1,1,0,0.0,0.0,50.0,18.9,False
-Ripon Red Hawks,2026-11-07,Ripon Red Hawks,Seth Bunders,5,1,11,1,6,2,2,0,3,2,1,0,2,1,3,9.1,16.7,100.0,18.7,False
-Hope Flying Dutchmen,2026-11-14,Elmhurst Bluejays,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
-Hope Flying Dutchmen,2026-11-14,Hope Flying Dutchmen,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Aden Daugherty,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0.0,0.0,,9.5,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Brevon Burns,4,1,6,1,4,1,3,0,0,0,4,0,1,3,0,16.7,25.0,33.3,18.2,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Bryce Williams,11,4,8,0,2,3,6,1,2,1,2,0,3,5,3,50.0,0.0,50.0,22.2,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Cedric Anderson,0,0,2,0,1,0,0,1,2,0,0,0,1,0,3,0.0,0.0,,5.7,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Clay Bowman,3,1,2,1,2,0,0,0,0,0,0,0,0,0,0,50.0,50.0,,0.5,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Cole Duncan,2,0,2,0,2,2,4,1,4,0,0,1,0,3,5,0.0,0.0,50.0,15.1,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Jacob Scruggs,0,0,2,0,0,0,0,0,2,0,0,0,1,0,2,0.0,,,6.2,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Josiah Marshall,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0.0,0.0,,4.2,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Nolan Swan,16,6,15,4,10,0,0,1,2,2,1,2,2,2,3,40.0,40.0,,25.3,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Patrick Hardimon,0,0,0,0,0,0,0,1,2,1,0,0,0,0,3,,,,9.9,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Randy Smith,1,0,7,0,3,1,2,0,2,3,3,1,1,2,2,0.0,0.0,50.0,25.1,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Rob Davidson,11,4,8,0,2,3,4,1,3,1,1,0,1,3,4,50.0,0.0,75.0,23.5,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Will Jamison,14,5,8,1,2,3,3,0,1,1,0,0,1,0,1,62.5,50.0,100.0,12.9,False
+Anderson (IN) Ravens,2026-11-06,Anderson (IN) Ravens,Worthy Ebiringa,1,0,2,0,1,1,2,0,0,1,0,0,0,0,0,0.0,0.0,50.0,20.3,False
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Avery Sanchez,11,2,3,0,0,7,7,1,4,2,1,0,2,3,5,66.7,,100.0,22.4,True
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Ben Mehendale,0,0,1,0,0,0,0,0,2,0,0,2,0,1,2,0.0,,,4.2,False
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Brady Miller,3,1,4,1,3,0,0,0,1,0,1,1,2,1,1,25.0,33.3,,17.3,False
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Brendan Cargill,20,7,13,2,6,4,5,0,4,2,0,1,2,1,4,53.8,33.3,80.0,23.6,True
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Carter Bishop,4,1,5,0,2,2,2,2,2,0,1,0,1,4,4,20.0,0.0,100.0,9.7,False
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Carter Goodyke,4,2,5,0,0,0,0,0,1,0,0,0,0,1,1,40.0,,,0.0,False
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Drew Kozel,4,2,2,0,0,0,0,2,0,0,0,0,0,0,2,100.0,,,19.3,False
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Jacob Van Hekken,4,1,1,1,1,1,2,0,1,1,0,0,1,1,1,100.0,100.0,50.0,3.7,False
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Jared Ryg,3,1,3,0,0,1,2,1,1,2,2,0,0,1,2,33.3,,50.0,13.4,False
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Johnny Lake,0,0,2,0,0,0,0,0,0,1,1,0,0,0,0,0.0,,,4.2,False
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Justin Fisher,0,0,0,0,0,0,0,0,2,0,0,0,0,0,2,,,,14.8,False
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Kaden Grau,3,1,5,1,3,0,0,0,2,0,0,0,2,0,2,20.0,33.3,,3.9,False
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Kyle Blauch,4,2,4,0,0,0,0,5,8,1,0,0,2,1,13,50.0,,,16.0,True
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Orion Yant,14,4,8,0,0,6,8,4,5,0,1,2,5,3,9,50.0,,75.0,17.6,True
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Sean Wesolek,10,4,5,1,2,1,2,0,3,0,0,1,0,2,3,80.0,50.0,50.0,12.0,False
+Anderson (IN) Ravens,2026-11-06,Hope Flying Dutchmen,Tucker Walther,6,2,4,0,1,2,2,0,2,0,1,0,0,3,2,50.0,0.0,100.0,17.3,True
+Elmhurst Bluejays,2026-11-14,Elmhurst Bluejays,Aidyn Boone,13,5,8,2,5,1,1,2,6,2,1,1,3,5,8,62.5,40.0,100.0,33.3,False
+Elmhurst Bluejays,2026-11-14,Elmhurst Bluejays,Andy Colvin,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0.0,0.0,,1.9,False
+Elmhurst Bluejays,2026-11-14,Elmhurst Bluejays,Chris Ketchum,2,1,4,0,0,0,0,0,2,0,1,0,1,2,2,25.0,,,11.0,False
+Elmhurst Bluejays,2026-11-14,Elmhurst Bluejays,Cooper Hasz,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,1.8,False
+Elmhurst Bluejays,2026-11-14,Elmhurst Bluejays,DJ Jervier,3,1,2,0,0,1,2,1,0,0,0,0,0,2,1,50.0,,50.0,5.8,False
+Elmhurst Bluejays,2026-11-14,Elmhurst Bluejays,Dominic Trelenberg,15,3,12,3,11,6,6,1,0,3,0,0,0,2,1,25.0,27.3,100.0,34.6,False
+Elmhurst Bluejays,2026-11-14,Elmhurst Bluejays,EJ Marshall,0,0,3,0,0,0,0,0,0,0,0,0,2,4,0,0.0,,,21.7,False
+Elmhurst Bluejays,2026-11-14,Elmhurst Bluejays,Jack Cherry,14,4,8,2,4,4,4,0,5,3,0,0,3,2,5,50.0,50.0,100.0,30.4,False
+Elmhurst Bluejays,2026-11-14,Elmhurst Bluejays,Luke Smith,0,0,4,0,2,0,0,0,1,3,0,0,2,0,1,0.0,0.0,,9.5,False
+Elmhurst Bluejays,2026-11-14,Elmhurst Bluejays,Talen Pearson,11,4,11,3,7,0,0,1,3,0,0,1,1,1,4,36.4,42.9,,25.0,False
+Elmhurst Bluejays,2026-11-14,Elmhurst Bluejays,Vinnie Adjahoungbeta,4,2,7,0,0,0,0,6,6,2,2,1,2,4,12,28.6,,,23.8,False
+Elmhurst Bluejays,2026-11-14,Hope Flying Dutchmen,Avery Sanchez,8,3,5,0,2,2,4,1,1,0,2,0,0,2,2,60.0,0.0,50.0,29.9,True
+Elmhurst Bluejays,2026-11-14,Hope Flying Dutchmen,Brady Miller,10,3,6,1,2,3,4,0,1,1,1,0,0,1,1,50.0,50.0,75.0,16.0,False
+Elmhurst Bluejays,2026-11-14,Hope Flying Dutchmen,Brendan Cargill,16,2,8,0,4,12,14,0,4,1,0,1,2,0,4,25.0,0.0,85.7,35.1,True
+Elmhurst Bluejays,2026-11-14,Hope Flying Dutchmen,Carter Bishop,7,2,3,1,2,2,2,1,0,0,0,0,2,1,1,66.7,50.0,100.0,16.5,False
+Elmhurst Bluejays,2026-11-14,Hope Flying Dutchmen,Jared Ryg,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0.0,,,10.1,False
+Elmhurst Bluejays,2026-11-14,Hope Flying Dutchmen,Kyle Blauch,2,1,3,0,0,0,0,1,1,0,0,0,2,0,2,33.3,,,13.6,True
+Elmhurst Bluejays,2026-11-14,Hope Flying Dutchmen,Orion Yant,18,8,14,0,0,2,6,4,7,3,1,2,1,4,11,57.1,,33.3,35.6,True
+Elmhurst Bluejays,2026-11-14,Hope Flying Dutchmen,Sean Wesolek,2,1,4,0,1,0,2,0,4,1,0,1,0,1,4,25.0,0.0,0.0,21.6,False
+Elmhurst Bluejays,2026-11-14,Hope Flying Dutchmen,Tucker Walther,5,2,6,1,3,0,0,0,0,0,1,0,0,2,0,33.3,33.3,,20.5,True
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Alec Platipodis,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.5,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Clay Mullins,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,0.4,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Cole Mullins,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,1.0,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,David Streitmatter,0,0,1,0,1,0,0,0,1,0,0,0,0,1,1,0.0,0.0,,7.0,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Dylan Beverly,4,2,8,0,4,0,0,0,0,1,3,2,2,1,0,25.0,0.0,,27.0,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Eli Zahm,2,1,1,0,0,0,0,0,3,0,1,0,1,0,3,100.0,,,3.7,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Isaac Richardson,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,2.3,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Jace Birney,0,0,1,0,1,0,0,0,1,0,1,0,0,1,1,0.0,0.0,,3.1,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Justin Harrington,18,7,15,2,9,2,2,2,2,1,3,0,1,1,4,46.7,22.2,100.0,27.0,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Kaden Temple,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,4.8,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Kyson Neddenriep,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,,,,2.3,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,LeBron Bennie-Powell,8,3,8,1,3,1,2,1,0,0,1,1,1,4,1,37.5,33.3,50.0,27.3,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Ledger Gelfius,4,1,3,0,2,2,2,0,0,0,1,0,0,1,0,33.3,0.0,100.0,4.3,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Parker Doolin,4,1,4,0,2,2,2,2,0,1,1,0,1,3,2,25.0,0.0,100.0,10.7,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Rohan Pearson,6,2,8,0,3,2,4,1,0,1,1,0,2,1,1,25.0,0.0,50.0,19.0,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Terrence Nord,5,1,2,1,2,2,3,0,0,0,0,0,2,0,0,50.0,50.0,66.7,11.0,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Tommy Williams Jr.,3,1,3,0,0,1,1,0,1,1,0,0,1,4,1,33.3,,100.0,21.2,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,Zaryen Moore,5,2,3,0,1,1,2,0,4,1,2,0,2,2,4,66.7,0.0,50.0,22.2,False
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Avery Sanchez,6,3,4,0,1,0,0,1,4,1,1,0,2,2,5,75.0,0.0,,23.0,True
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Ben Mehendale,0,0,0,0,0,0,2,1,0,1,0,1,0,1,1,,,0.0,4.0,False
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Brady Miller,3,0,5,0,3,3,4,0,7,4,1,0,1,0,7,0.0,0.0,75.0,17.1,False
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Brendan Cargill,20,7,12,1,5,5,7,1,4,0,0,0,1,0,5,58.3,20.0,71.4,24.6,True
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Carter Bishop,6,3,4,0,0,0,0,1,1,1,2,1,1,2,2,75.0,,,16.2,False
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Carter Goodyke,0,0,1,0,1,0,0,0,0,0,0,0,3,0,0,0.0,0.0,,3.9,False
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Drew Kozel,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,,,,2.3,False
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Jacob Van Hekken,3,1,1,0,0,1,1,0,1,1,0,0,1,0,1,100.0,,100.0,4.2,False
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Jared Ryg,2,1,2,0,0,0,0,1,2,0,2,0,2,4,3,50.0,,,17.1,False
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Johnny Lake,6,3,4,0,0,0,0,0,0,0,0,0,0,0,0,75.0,,,3.3,False
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Justin Fisher,0,0,2,0,0,0,1,1,1,0,0,0,1,1,2,0.0,,0.0,7.8,False
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Kaden Grau,3,1,2,0,1,1,1,0,0,0,0,1,1,1,0,50.0,0.0,100.0,7.5,False
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Kyle Blauch,7,3,6,0,0,1,2,2,4,2,0,0,1,0,6,50.0,,50.0,11.9,True
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Orion Yant,13,4,5,0,0,5,5,4,4,4,3,1,4,1,8,80.0,,100.0,23.0,True
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Sean Wesolek,8,4,6,0,0,0,0,3,0,0,0,0,1,1,3,66.7,,,11.2,False
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,Tucker Walther,2,1,6,0,2,0,0,2,1,0,0,0,0,2,3,16.7,0.0,,19.8,True
+North Central (IL) Cardinals,2026-11-17,Hope Flying Dutchmen,Avery Sanchez,21,8,15,5,7,0,0,0,1,1,1,0,1,2,1,53.3,71.4,,32.5,True
+North Central (IL) Cardinals,2026-11-17,Hope Flying Dutchmen,Brady Miller,4,2,5,0,0,0,0,0,1,2,1,0,1,3,1,40.0,,,19.2,False
+North Central (IL) Cardinals,2026-11-17,Hope Flying Dutchmen,Brendan Cargill,13,4,12,1,7,4,5,1,2,1,0,0,5,3,3,33.3,14.3,80.0,36.7,True
+North Central (IL) Cardinals,2026-11-17,Hope Flying Dutchmen,Carter Bishop,10,2,6,1,3,5,6,3,4,0,0,0,0,1,7,33.3,33.3,83.3,13.0,False
+North Central (IL) Cardinals,2026-11-17,Hope Flying Dutchmen,Jared Ryg,0,0,0,0,0,0,0,0,1,0,0,0,0,4,1,,,,11.4,False
+North Central (IL) Cardinals,2026-11-17,Hope Flying Dutchmen,Justin Fisher,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,4.2,False
+North Central (IL) Cardinals,2026-11-17,Hope Flying Dutchmen,Kaden Grau,0,0,2,0,2,0,1,1,0,0,0,0,0,0,1,0.0,0.0,0.0,3.0,False
+North Central (IL) Cardinals,2026-11-17,Hope Flying Dutchmen,Kyle Blauch,4,2,3,0,0,0,0,0,2,2,0,0,1,1,2,66.7,,,13.0,True
+North Central (IL) Cardinals,2026-11-17,Hope Flying Dutchmen,Orion Yant,8,2,4,0,0,4,6,3,4,6,2,0,3,4,7,50.0,,66.7,24.4,True
+North Central (IL) Cardinals,2026-11-17,Hope Flying Dutchmen,Sean Wesolek,5,2,8,1,5,0,0,0,2,4,0,0,0,2,2,25.0,20.0,,19.3,False
+North Central (IL) Cardinals,2026-11-17,Hope Flying Dutchmen,Tucker Walther,4,2,3,0,0,0,1,2,1,0,1,1,0,1,3,66.7,,0.0,22.0,True
+North Central (IL) Cardinals,2026-11-17,North Central (IL) Cardinals,Alejandro Diaz,9,2,11,1,4,4,4,5,4,6,4,1,3,2,9,18.2,25.0,100.0,30.3,False
+North Central (IL) Cardinals,2026-11-17,North Central (IL) Cardinals,Daniel Sveiteris,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,,,,1.3,False
+North Central (IL) Cardinals,2026-11-17,North Central (IL) Cardinals,Eli Podoll,2,1,5,0,3,0,0,0,1,0,3,0,2,1,1,20.0,0.0,,20.2,False
+North Central (IL) Cardinals,2026-11-17,North Central (IL) Cardinals,Faisal Mohamud,2,1,6,0,3,0,1,0,3,2,0,0,2,3,3,16.7,0.0,0.0,19.2,False
+North Central (IL) Cardinals,2026-11-17,North Central (IL) Cardinals,Justin Sveiteris,15,4,5,0,0,7,8,3,7,0,0,3,2,3,10,80.0,,87.5,33.4,False
+North Central (IL) Cardinals,2026-11-17,North Central (IL) Cardinals,Tre Davis,11,3,5,1,3,4,4,1,3,0,0,0,4,1,4,60.0,33.3,100.0,22.3,False
+North Central (IL) Cardinals,2026-11-17,North Central (IL) Cardinals,Tyler DiSilvio,5,2,2,1,1,0,1,1,2,1,0,0,1,2,3,100.0,100.0,0.0,13.2,False
+North Central (IL) Cardinals,2026-11-17,North Central (IL) Cardinals,Tyler Surin,3,1,1,0,0,1,2,2,0,1,0,0,0,4,2,100.0,,50.0,19.3,False
+North Central (IL) Cardinals,2026-11-17,North Central (IL) Cardinals,Tyler Swierczek,27,8,17,5,12,6,6,1,5,0,1,0,1,2,6,47.1,41.7,100.0,39.5,False
+Elmhurst Bluejays,2026-11-14,Elmhurst Bluejays,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Elmhurst Bluejays,2026-11-14,Hope Flying Dutchmen,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Franklin Grizzlies,2026-11-07,Franklin Grizzlies,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False
+Franklin Grizzlies,2026-11-07,Hope Flying Dutchmen,TEAM,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,,,,,False

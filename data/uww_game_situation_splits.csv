@@ -1,2 +1,4 @@
 opponent,situation,ppp,primary_actions,note,is_sample
-Elmhurst Bluejays,Trailing by 10+,1.0,"Motion (11x), Flow (5x)",26 tagged possessions (their overall 0.85 PPP),False
+Hope Flying Dutchmen,Leading by 10+,0.85,"Slows down, more Hi-Lo DHO",Stops running in transition,True
+Hope Flying Dutchmen,Trailing by 10+,1.15,"More ball screens, faster pace",Brendan Cargill takes over possessions,True
+Hope Flying Dutchmen,"Clutch (last 5 min, margin ≤ 8)",0.97,Isolation for Brendan Cargill,Goes away from their sets late,True

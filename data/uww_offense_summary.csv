@@ -1,20 +1,17 @@
 scouted_opponent,perspective,team,order,kind,text
-Elmhurst Bluejays,Opponent,Elmhurst Bluejays,1,formation,"When they are running no formation, be aware that they run Motion the most (31%, 1.80 PPP). Opponents struggled to stop it with ball-screen coverage of Jam (1x, 3.00 PPP). It's also their most successful play call out of no formation."
-Elmhurst Bluejays,Opponent,Elmhurst Bluejays,2,formation,"When they are running 5 Out, be aware that they run Flow the most (33%, 1.00 PPP). It's also their most successful play call out of 5 Out."
-Elmhurst Bluejays,Opponent,Elmhurst Bluejays,3,formation,"When they are running 41, be aware that they run Flare Screen 3 the most (33%, 3.00 PPP)."
-Elmhurst Bluejays,Opponent,Elmhurst Bluejays,4,oob,"On BLOB (3 possessions, 0.00 PPP), they run BLOB Blob #2 the most (33%, 0.00 PPP)."
-Elmhurst Bluejays,Opponent,Elmhurst Bluejays,5,oob,"On SLOB (2 possessions, 0.00 PPP), no play call has been tagged yet."
-Elmhurst Bluejays,Opponent,Elmhurst Bluejays,6,success,"Most successful play calls overall: Motion (5x, 1.80 PPP) · Flow (8x, 1.25 PPP) · Set #1 (2x, 1.00 PPP) (team average 0.85 PPP)."
-Elmhurst Bluejays,Opponent,Elmhurst Bluejays,7,success_actions,"Most successful actions: Post entry / throw to the 5 (2x, 1.50 PPP) · Down screen (3x, 1.00 PPP) · Ball screen (11x, 0.91 PPP) (team average 0.85 PPP)."
-Elmhurst Bluejays,Opponent,Elmhurst Bluejays,8,scorers,Top scorers on tagged plays: Boone 15 pts (6) · Trelenberg 11 pts (4) · Cherry 10 pts (4).
-Elmhurst Bluejays,Opponent,Elmhurst Bluejays,9,defense,Their opponents' ball-screen defense: Jam 2x (1.50 PPP) · Drop 1x (0.00 PPP) · Hedge / Show 1x (0.00 PPP).
-Elmhurst Bluejays,Opponent,Elmhurst Bluejays,10,advice,Do the same: Jam held them to 1.50 PPP (2x).
-Elmhurst Bluejays,UWW,UW-Whitewater,1,formation,"When we run no formation, we run Motion the most (14%, 0.67 PPP). Opponents struggled to stop it with ball-screen coverage of Over (1x, 2.00 PPP) but Switch slowed it down best (1x, 0.00 PPP). We were most successful running Twins Right (3%, 1.50 PPP)."
-Elmhurst Bluejays,UWW,UW-Whitewater,2,formation,"When we run 5 Out, we run 5 Out Motion the most (61%, 1.00 PPP). We were most successful running Zoom (13%, 1.67 PPP)."
-Elmhurst Bluejays,UWW,UW-Whitewater,3,oob,"On BLOB (8 possessions, 1.43 PPP), we run BLOB the most (25%, 2.50 PPP). It's also our most successful play call out of BLOB."
-Elmhurst Bluejays,UWW,UW-Whitewater,4,oob,"On SLOB (11 possessions, 1.10 PPP), we run SLOB the most (64%, 1.29 PPP). It's also our most successful play call out of SLOB."
-Elmhurst Bluejays,UWW,UW-Whitewater,5,success,"Our most successful play calls: BLOB (2x, 2.50 PPP) · Zoom (3x, 1.67 PPP) · Twins Right (2x, 1.50 PPP) (team average 0.79 PPP)."
-Elmhurst Bluejays,UWW,UW-Whitewater,6,success_actions,"Our most successful actions: DHO / handoff (5x, 1.40 PPP) (team average 0.79 PPP)."
-Elmhurst Bluejays,UWW,UW-Whitewater,7,scorers,Our top scorers on tagged plays: Madson 45 pts (21) · Lukenbill 19 pts (8) · Mcewen 15 pts (6).
-Elmhurst Bluejays,UWW,UW-Whitewater,8,defense,Opponents' ball-screen defense against us: Over 6x (0.33 PPP) · Hedge / Show 5x (0.00 PPP) · Switch 1x (0.00 PPP).
-Elmhurst Bluejays,UWW,UW-Whitewater,9,advice,"Expect Hedge / Show -- it held us to 0.00 PPP (5x); we scored best against Over (0.33 PPP, 6x)."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,1,formation,"When they are running no formation, be aware that they run Motion the most (62%, 1.33 PPP). It's also their most successful play call out of no formation."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,2,formation,"When they are running 41, be aware that they run 41 Motion the most (100%, 1.00 PPP). It's also their most successful play call out of 41."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,3,formation,"When they are running Horns, be aware that they run Horns-Hi Low the most (50%, 0.00 PPP)."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,4,oob,"On BLOB (1 possessions, 2.00 PPP), no play call has been tagged yet."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,5,success,"Most successful play calls overall: Motion (5x, 1.33 PPP) (team average 1.00 PPP)."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,6,success_actions,"Most successful actions: Ball screen (6x, 1.75 PPP) (team average 1.00 PPP)."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,7,scorers,Top scorers on tagged plays: Yant 6 pts (3) · Sanchez 4 pts (2) · Walther 3 pts (1).
+Hope Flying Dutchmen,UWW,UW-Whitewater,1,formation,"When we run no formation, we run Motion the most (14%, 0.67 PPP). Opponents struggled to stop it with ball-screen coverage of Over (1x, 2.00 PPP) but Switch slowed it down best (1x, 0.00 PPP). We were most successful running Twins Right (3%, 1.50 PPP)."
+Hope Flying Dutchmen,UWW,UW-Whitewater,2,formation,"When we run 5 Out, we run 5 Out Motion the most (61%, 1.00 PPP). We were most successful running Zoom (13%, 1.67 PPP)."
+Hope Flying Dutchmen,UWW,UW-Whitewater,3,oob,"On BLOB (8 possessions, 1.43 PPP), we run BLOB the most (25%, 2.50 PPP). It's also our most successful play call out of BLOB."
+Hope Flying Dutchmen,UWW,UW-Whitewater,4,oob,"On SLOB (11 possessions, 1.10 PPP), we run SLOB the most (64%, 1.29 PPP). It's also our most successful play call out of SLOB."
+Hope Flying Dutchmen,UWW,UW-Whitewater,5,success,"Our most successful play calls: BLOB (2x, 2.50 PPP) · Zoom (3x, 1.67 PPP) · Twins Right (2x, 1.50 PPP) (team average 0.79 PPP)."
+Hope Flying Dutchmen,UWW,UW-Whitewater,6,success_actions,"Our most successful actions: DHO / handoff (5x, 1.40 PPP) (team average 0.79 PPP)."
+Hope Flying Dutchmen,UWW,UW-Whitewater,7,scorers,Our top scorers on tagged plays: Madson 45 pts (21) · Lukenbill 19 pts (8) · Mcewen 15 pts (6).
+Hope Flying Dutchmen,UWW,UW-Whitewater,8,defense,Opponents' ball-screen defense against us: Over 6x (0.33 PPP) · Hedge / Show 5x (0.00 PPP) · Switch 1x (0.00 PPP).
+Hope Flying Dutchmen,UWW,UW-Whitewater,9,advice,"Expect Hedge / Show -- it held us to 0.00 PPP (5x); we scored best against Over (0.33 PPP, 6x)."

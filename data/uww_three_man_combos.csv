@@ -1,247 +1,368 @@
 lineup,MIN,PTS,+/-,GP,clean_min,clean_pm,clean_gp,garbage_min,per40,shrunk_per40,off_per40,on_off,side,scouted_opponent,gp_exact
-"Anton Kilde, Christian Wilson, Jack Field",2.6,4.0,-1.0,1.0,2.6,-1.0,1.0,0.0,-15.384615384615383,-0.9389671361502347,1.0434328942219904,-16.428048278837373,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Christian Wilson, Joey Daun",2.6,4.0,-1.0,1.0,2.6,-1.0,1.0,0.0,-15.384615384615383,-0.9389671361502347,1.0434328942219904,-16.428048278837373,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Christian Wilson, Landon Lee",0.78,2.0,-1.0,1.0,0.78,-1.0,1.0,0.0,-51.28205128205128,-0.980872976949485,1.0192381195056697,-52.30128940155695,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Christian Wilson, Sam Leoni",1.82,2.0,0.0,1.0,1.82,0.0,1.0,0.0,0.0,0.0,0.5164622336991608,-0.5164622336991608,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Jack Field, Joey Daun",2.6,4.0,-1.0,1.0,2.6,-1.0,1.0,0.0,-15.384615384615383,-0.9389671361502347,1.0434328942219904,-16.428048278837373,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Jack Field, Landon Lee",0.78,2.0,-1.0,1.0,0.78,-1.0,1.0,0.0,-51.28205128205128,-0.980872976949485,1.0192381195056697,-52.30128940155695,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Jack Field, Sam Leoni",1.82,2.0,0.0,1.0,1.82,0.0,1.0,0.0,0.0,0.0,0.5164622336991608,-0.5164622336991608,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Joey Daun, Landon Lee",0.78,2.0,-1.0,1.0,0.78,-1.0,1.0,0.0,-51.28205128205128,-0.980872976949485,1.0192381195056697,-52.30128940155695,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Joey Daun, Sam Leoni",1.82,2.0,0.0,1.0,1.82,0.0,1.0,0.0,0.0,0.0,0.5164622336991608,-0.5164622336991608,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Jose Gonzales, Michael Asman",0.7,0.0,-2.0,1.0,0.7,-2.0,1.0,0.0,-114.28571428571429,-1.9656019656019654,1.5273004963726613,-115.81301478208695,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Jose Gonzales, Sam Leoni",0.7,0.0,-2.0,1.0,0.7,-2.0,1.0,0.0,-114.28571428571429,-1.9656019656019654,1.5273004963726613,-115.81301478208695,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Jose Gonzales, Seth Bunders",0.7,0.0,-2.0,1.0,0.7,-2.0,1.0,0.0,-114.28571428571429,-1.9656019656019654,1.5273004963726613,-115.81301478208695,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Michael Asman, Sam Leoni",0.7,0.0,-2.0,1.0,0.7,-2.0,1.0,0.0,-114.28571428571429,-1.9656019656019654,1.5273004963726613,-115.81301478208695,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Michael Asman, Seth Bunders",0.7,0.0,-2.0,1.0,0.7,-2.0,1.0,0.0,-114.28571428571429,-1.9656019656019654,1.5273004963726613,-115.81301478208695,UWW,Elmhurst Bluejays,True
-"Anton Kilde, Sam Leoni, Seth Bunders",0.7,0.0,-2.0,1.0,0.7,-2.0,1.0,0.0,-114.28571428571429,-1.9656019656019654,1.5273004963726613,-115.81301478208695,UWW,Elmhurst Bluejays,True
-"Christian Wilson, Dominic Rasberry, Joey Daun",2.45,0.0,-6.0,1.0,2.45,-6.0,1.0,0.0,-97.95918367346937,-5.653710247349823,3.6448841447539704,-101.60406781822334,UWW,Elmhurst Bluejays,True
-"Christian Wilson, Dominic Rasberry, Landon Lee",2.45,0.0,-6.0,1.0,2.45,-6.0,1.0,0.0,-97.95918367346937,-5.653710247349823,3.6448841447539704,-101.60406781822334,UWW,Elmhurst Bluejays,True
-"Christian Wilson, Dominic Rasberry, Michael Asman",2.45,0.0,-6.0,1.0,2.45,-6.0,1.0,0.0,-97.95918367346937,-5.653710247349823,3.6448841447539704,-101.60406781822334,UWW,Elmhurst Bluejays,True
-"Christian Wilson, Jack Field, Joey Daun",2.6,4.0,-1.0,1.0,2.6,-1.0,1.0,0.0,-15.384615384615383,-0.9389671361502347,1.0434328942219904,-16.428048278837373,UWW,Elmhurst Bluejays,True
-"Christian Wilson, Jack Field, Landon Lee",0.78,2.0,-1.0,1.0,0.78,-1.0,1.0,0.0,-51.28205128205128,-0.980872976949485,1.0192381195056697,-52.30128940155695,UWW,Elmhurst Bluejays,True
-"Christian Wilson, Jack Field, Sam Leoni",1.82,2.0,0.0,1.0,1.82,0.0,1.0,0.0,0.0,0.0,0.5164622336991608,-0.5164622336991608,UWW,Elmhurst Bluejays,True
-"Christian Wilson, Jackson Flowers, Joey Daun",0.94,0.0,-2.0,1.0,0.94,-2.0,1.0,0.0,-85.1063829787234,-1.9540791402051785,1.5319800842589046,-86.63836306298231,UWW,Elmhurst Bluejays,True
-"Christian Wilson, Jackson Flowers, Landon Lee",0.94,0.0,-2.0,1.0,0.94,-2.0,1.0,0.0,-85.1063829787234,-1.9540791402051785,1.5319800842589046,-86.63836306298231,UWW,Elmhurst Bluejays,True
-"Christian Wilson, Jackson Flowers, Michael Asman",0.94,0.0,-2.0,1.0,0.94,-2.0,1.0,0.0,-85.1063829787234,-1.9540791402051785,1.5319800842589046,-86.63836306298231,UWW,Elmhurst Bluejays,True
-"Christian Wilson, Joey Daun, Landon Lee",4.17,2.0,-9.0,1.0,4.17,-9.0,1.0,0.0,-86.33093525179856,-8.15032827711116,5.326231691078562,-91.65716694287713,UWW,Elmhurst Bluejays,True
-"Christian Wilson, Joey Daun, Michael Asman",3.39,0.0,-8.0,1.0,3.39,-8.0,1.0,0.0,-94.3952802359882,-7.374971191518783,4.744333157617291,-99.13961339360549,UWW,Elmhurst Bluejays,True
-"Christian Wilson, Joey Daun, Sam Leoni",1.82,2.0,0.0,1.0,1.82,0.0,1.0,0.0,0.0,0.0,0.5164622336991608,-0.5164622336991608,UWW,Elmhurst Bluejays,True
-"Christian Wilson, Landon Lee, Michael Asman",3.39,0.0,-8.0,1.0,3.39,-8.0,1.0,0.0,-94.3952802359882,-7.374971191518783,4.744333157617291,-99.13961339360549,UWW,Elmhurst Bluejays,True
-"Collin Madson, Darius Chestnut, Isaiah Robinson",1.88,4.0,0.0,1.0,1.88,0.0,1.0,0.0,0.0,0.0,0.5168626437524227,-0.5168626437524227,UWW,Elmhurst Bluejays,True
-"Collin Madson, Darius Chestnut, JR Lukenbill",4.16,8.0,0.0,1.0,4.16,0.0,1.0,0.0,0.0,0.0,0.5325522566901877,-0.5325522566901877,UWW,Elmhurst Bluejays,True
-"Collin Madson, Darius Chestnut, Kelton McEwen",2.2800000000000002,4.0,0.0,1.0,2.2800000000000002,0.0,1.0,0.0,0.0,0.0,0.5195479932458761,-0.5195479932458761,UWW,Elmhurst Bluejays,True
-"Collin Madson, Darius Chestnut, Taveon Vann",3.5300000000000002,6.0,0.0,1.0,3.5300000000000002,0.0,1.0,0.0,0.0,0.0,0.5281225244256669,-0.5281225244256669,UWW,Elmhurst Bluejays,True
-"Collin Madson, Darius Chestnut, Tyshawn Teague-Johnson",0.63,2.0,0.0,1.0,0.63,0.0,1.0,0.0,0.0,0.0,0.508646998982706,-0.508646998982706,UWW,Elmhurst Bluejays,True
-"Collin Madson, Isaiah Robinson, JR Lukenbill",10.040000000000001,19.0,6.0,1.0,10.040000000000001,6.0,1.0,0.0,23.90438247011952,4.796163069544365,-2.8889209880109785,26.793303458130495,UWW,Elmhurst Bluejays,True
-"Collin Madson, Isaiah Robinson, Kelton McEwen",20.94,40.0,8.0,1.0,20.94,8.0,1.0,0.0,15.281757402101242,5.2510666229077785,-4.800274301388651,20.082031703489893,UWW,Elmhurst Bluejays,True
-"Collin Madson, Isaiah Robinson, Rashad Rogers",12.78,25.0,2.0,1.0,12.78,2.0,1.0,0.0,6.259780907668232,1.515725653656688,-0.601594224695443,6.861375132363675,UWW,Elmhurst Bluejays,True
-"Collin Madson, Isaiah Robinson, Taveon Vann",1.25,2.0,0.0,1.0,1.25,0.0,1.0,0.0,0.0,0.0,0.5126890540886953,-0.5126890540886953,UWW,Elmhurst Bluejays,True
-"Collin Madson, Isaiah Robinson, Tyshawn Teague-Johnson",21.57,42.0,8.0,1.0,21.57,8.0,1.0,0.0,14.835419564209552,5.19733636511288,-4.852686308492201,19.688105872701755,UWW,Elmhurst Bluejays,True
-"Collin Madson, JR Lukenbill, Kelton McEwen",19.22,37.0,2.0,1.0,19.22,2.0,1.0,0.0,4.162330905306972,1.3508949679162447,-0.6661115736885928,4.828442478995565,UWW,Elmhurst Bluejays,True
-"Collin Madson, JR Lukenbill, Rashad Rogers",6.03,13.0,-1.0,1.0,6.03,-1.0,1.0,0.0,-6.633499170812604,-0.8689984792526613,1.0922992900054616,-7.725798460818066,UWW,Elmhurst Bluejays,True
-"Collin Madson, JR Lukenbill, Taveon Vann",3.5300000000000002,6.0,0.0,1.0,3.5300000000000002,0.0,1.0,0.0,0.0,0.0,0.5281225244256669,-0.5281225244256669,UWW,Elmhurst Bluejays,True
-"Collin Madson, JR Lukenbill, Tyshawn Teague-Johnson",13.11,22.0,-2.0,1.0,13.11,-2.0,1.0,0.0,-6.102212051868802,-1.5063076633402372,1.8137847642079807,-7.915996816076783,UWW,Elmhurst Bluejays,True
-"Collin Madson, JR Lukenbill, Zavier Castillo",7.21,18.0,1.0,1.0,7.21,1.0,1.0,0.0,5.547850208044382,0.8472781190425758,0.0,5.547850208044382,UWW,Elmhurst Bluejays,True
-"Collin Madson, Kelton McEwen, Rashad Rogers",22.61,50.0,10.0,1.0,22.61,10.0,1.0,0.0,17.69128704113224,6.3887557898099345,-6.353688669255206,24.044975710387448,UWW,Elmhurst Bluejays,True
-"Collin Madson, Kelton McEwen, Taveon Vann",2.2800000000000002,4.0,0.0,1.0,2.2800000000000002,0.0,1.0,0.0,0.0,0.0,0.5195479932458761,-0.5195479932458761,UWW,Elmhurst Bluejays,True
-"Collin Madson, Kelton McEwen, Tyshawn Teague-Johnson",29.060000000000002,57.0,9.0,1.0,29.060000000000002,9.0,1.0,0.0,12.388162422573982,5.2128583840139004,-6.373232423819957,18.76139484639394,UWW,Elmhurst Bluejays,True
-"Collin Madson, Kelton McEwen, Zavier Castillo",11.01,30.0,10.0,1.0,11.01,10.0,1.0,0.0,36.330608537693,7.8415996863360125,-5.273952534427191,41.60456107212019,UWW,Elmhurst Bluejays,True
-"Collin Madson, Rashad Rogers, Tyshawn Teague-Johnson",18.15,37.0,6.0,1.0,18.15,6.0,1.0,0.0,13.223140495867769,4.12725709372313,-3.272251308900524,16.495391804768293,UWW,Elmhurst Bluejays,True
-"Collin Madson, Rashad Rogers, Zavier Castillo",8.26,25.0,13.0,1.0,8.26,13.0,1.0,0.0,62.95399515738499,10.774968918358889,-6.759611322348967,69.71360647973395,UWW,Elmhurst Bluejays,True
-"Collin Madson, Tyshawn Teague-Johnson, Zavier Castillo",6.55,17.0,6.0,1.0,6.55,6.0,1.0,0.0,36.6412213740458,5.155746509129968,-2.7502750275027505,39.39149640154855,UWW,Elmhurst Bluejays,True
-"Darius Chestnut, Isaiah Robinson, JR Lukenbill",1.88,4.0,0.0,1.0,1.88,0.0,1.0,0.0,0.0,0.0,0.5168626437524227,-0.5168626437524227,UWW,Elmhurst Bluejays,True
-"Darius Chestnut, Isaiah Robinson, Taveon Vann",1.25,2.0,0.0,1.0,1.25,0.0,1.0,0.0,0.0,0.0,0.5126890540886953,-0.5126890540886953,UWW,Elmhurst Bluejays,True
-"Darius Chestnut, Isaiah Robinson, Tyshawn Teague-Johnson",0.63,2.0,0.0,1.0,0.63,0.0,1.0,0.0,0.0,0.0,0.508646998982706,-0.508646998982706,UWW,Elmhurst Bluejays,True
-"Darius Chestnut, JR Lukenbill, Kelton McEwen",2.2800000000000002,4.0,0.0,1.0,2.2800000000000002,0.0,1.0,0.0,0.0,0.0,0.5195479932458761,-0.5195479932458761,UWW,Elmhurst Bluejays,True
-"Darius Chestnut, JR Lukenbill, Taveon Vann",3.5300000000000002,6.0,0.0,1.0,3.5300000000000002,0.0,1.0,0.0,0.0,0.0,0.5281225244256669,-0.5281225244256669,UWW,Elmhurst Bluejays,True
-"Darius Chestnut, JR Lukenbill, Tyshawn Teague-Johnson",0.63,2.0,0.0,1.0,0.63,0.0,1.0,0.0,0.0,0.0,0.508646998982706,-0.508646998982706,UWW,Elmhurst Bluejays,True
-"Darius Chestnut, Kelton McEwen, Taveon Vann",2.2800000000000002,4.0,0.0,1.0,2.2800000000000002,0.0,1.0,0.0,0.0,0.0,0.5195479932458761,-0.5195479932458761,UWW,Elmhurst Bluejays,True
-"Dominic Rasberry, Jackson Flowers, Joey Daun",1.05,0.0,-3.0,1.0,1.05,-3.0,1.0,0.0,-114.28571428571429,-2.92326431181486,2.0455126566095627,-116.33122694232385,UWW,Elmhurst Bluejays,True
-"Dominic Rasberry, Jackson Flowers, Jose Gonzales",1.05,0.0,-3.0,1.0,1.05,-3.0,1.0,0.0,-114.28571428571429,-2.92326431181486,2.0455126566095627,-116.33122694232385,UWW,Elmhurst Bluejays,True
-"Dominic Rasberry, Jackson Flowers, Seth Bunders",1.05,0.0,-3.0,1.0,1.05,-3.0,1.0,0.0,-114.28571428571429,-2.92326431181486,2.0455126566095627,-116.33122694232385,UWW,Elmhurst Bluejays,True
-"Dominic Rasberry, Joey Daun, Jose Gonzales",1.05,0.0,-3.0,1.0,1.05,-3.0,1.0,0.0,-114.28571428571429,-2.92326431181486,2.0455126566095627,-116.33122694232385,UWW,Elmhurst Bluejays,True
-"Dominic Rasberry, Joey Daun, Landon Lee",2.45,0.0,-6.0,1.0,2.45,-6.0,1.0,0.0,-97.95918367346937,-5.653710247349823,3.6448841447539704,-101.60406781822334,UWW,Elmhurst Bluejays,True
-"Dominic Rasberry, Joey Daun, Michael Asman",2.45,0.0,-6.0,1.0,2.45,-6.0,1.0,0.0,-97.95918367346937,-5.653710247349823,3.6448841447539704,-101.60406781822334,UWW,Elmhurst Bluejays,True
-"Dominic Rasberry, Joey Daun, Seth Bunders",1.05,0.0,-3.0,1.0,1.05,-3.0,1.0,0.0,-114.28571428571429,-2.92326431181486,2.0455126566095627,-116.33122694232385,UWW,Elmhurst Bluejays,True
-"Dominic Rasberry, Jose Gonzales, Seth Bunders",1.05,0.0,-3.0,1.0,1.05,-3.0,1.0,0.0,-114.28571428571429,-2.92326431181486,2.0455126566095627,-116.33122694232385,UWW,Elmhurst Bluejays,True
-"Dominic Rasberry, Landon Lee, Michael Asman",2.45,0.0,-6.0,1.0,2.45,-6.0,1.0,0.0,-97.95918367346937,-5.653710247349823,3.6448841447539704,-101.60406781822334,UWW,Elmhurst Bluejays,True
-"Isaiah Robinson, JR Lukenbill, Kelton McEwen",8.690000000000001,15.0,4.0,1.0,8.690000000000001,4.0,1.0,0.0,18.411967779056383,3.286095707537482,-1.7001983564749221,20.112166135531304,UWW,Elmhurst Bluejays,True
-"Isaiah Robinson, JR Lukenbill, Rashad Rogers",0.53,0.0,-2.0,1.0,0.53,-2.0,1.0,0.0,-150.94339622641508,-1.9738465334320257,1.5240030480060962,-152.46739927442118,UWW,Elmhurst Bluejays,True
-"Isaiah Robinson, JR Lukenbill, Taveon Vann",1.25,2.0,0.0,1.0,1.25,0.0,1.0,0.0,0.0,0.0,0.5126890540886953,-0.5126890540886953,UWW,Elmhurst Bluejays,True
-"Isaiah Robinson, JR Lukenbill, Tyshawn Teague-Johnson",9.32,17.0,4.0,1.0,9.32,4.0,1.0,0.0,17.167381974248926,3.2441200324412,-1.7155110793423878,18.882893053591314,UWW,Elmhurst Bluejays,True
-"Isaiah Robinson, Kelton McEwen, Rashad Rogers",14.76,25.0,-7.0,1.0,14.76,-7.0,1.0,0.0,-18.97018970189702,-5.113221329437546,4.960471244768254,-23.930660946665274,UWW,Elmhurst Bluejays,True
-"Isaiah Robinson, Kelton McEwen, Tyshawn Teague-Johnson",22.92,40.0,-1.0,1.0,22.92,-1.0,1.0,0.0,-1.7452006980802792,-0.6357279084551812,1.4196983141082522,-3.164899012188531,UWW,Elmhurst Bluejays,True
-"Isaiah Robinson, Kelton McEwen, Zavier Castillo",1.45,0.0,-7.0,1.0,1.45,-7.0,1.0,0.0,-193.10344827586206,-6.7551266586248495,4.112053456694937,-197.21550173255702,UWW,Elmhurst Bluejays,True
-"Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson",14.76,25.0,-7.0,1.0,14.76,-7.0,1.0,0.0,-18.97018970189702,-5.113221329437546,4.960471244768254,-23.930660946665274,UWW,Elmhurst Bluejays,True
-"Isaiah Robinson, Rashad Rogers, Zavier Castillo",1.45,0.0,-7.0,1.0,1.45,-7.0,1.0,0.0,-193.10344827586206,-6.7551266586248495,4.112053456694937,-197.21550173255702,UWW,Elmhurst Bluejays,True
-"Isaiah Robinson, Tyshawn Teague-Johnson, Zavier Castillo",1.45,0.0,-7.0,1.0,1.45,-7.0,1.0,0.0,-193.10344827586206,-6.7551266586248495,4.112053456694937,-197.21550173255702,UWW,Elmhurst Bluejays,True
-"JR Lukenbill, Kelton McEwen, Rashad Rogers",6.5600000000000005,13.0,-3.0,1.0,6.5600000000000005,-3.0,1.0,0.0,-18.292682926829265,-2.5773195876288657,2.2005226241232294,-20.493205550952496,UWW,Elmhurst Bluejays,True
-"JR Lukenbill, Kelton McEwen, Taveon Vann",2.2800000000000002,4.0,0.0,1.0,2.2800000000000002,0.0,1.0,0.0,0.0,0.0,0.5195479932458761,-0.5195479932458761,UWW,Elmhurst Bluejays,True
-"JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson",13.010000000000002,20.0,-4.0,1.0,13.010000000000002,-4.0,1.0,0.0,-12.298232129131437,-3.018298434257687,3.0184123151222457,-15.316644444253683,UWW,Elmhurst Bluejays,True
-"JR Lukenbill, Kelton McEwen, Zavier Castillo",7.21,18.0,1.0,1.0,7.21,1.0,1.0,0.0,5.547850208044382,0.8472781190425758,0.0,5.547850208044382,UWW,Elmhurst Bluejays,True
-"JR Lukenbill, Rashad Rogers, Tyshawn Teague-Johnson",2.1,0.0,-7.0,1.0,2.1,-7.0,1.0,0.0,-133.33333333333331,-6.65083135391924,4.146689127899442,-137.48002246123275,UWW,Elmhurst Bluejays,True
-"JR Lukenbill, Rashad Rogers, Zavier Castillo",4.46,13.0,4.0,1.0,4.46,4.0,1.0,0.0,35.87443946188341,3.598740440845704,-1.6040636278572382,37.47850308974065,UWW,Elmhurst Bluejays,True
-"JR Lukenbill, Tyshawn Teague-Johnson, Zavier Castillo",2.75,5.0,-3.0,1.0,2.75,-3.0,1.0,0.0,-43.63636363636363,-2.807017543859649,2.0909566126502876,-45.72732024901392,UWW,Elmhurst Bluejays,True
-"Jack Field, Joey Daun, Landon Lee",0.78,2.0,-1.0,1.0,0.78,-1.0,1.0,0.0,-51.28205128205128,-0.980872976949485,1.0192381195056697,-52.30128940155695,UWW,Elmhurst Bluejays,True
-"Jack Field, Joey Daun, Sam Leoni",1.82,2.0,0.0,1.0,1.82,0.0,1.0,0.0,0.0,0.0,0.5164622336991608,-0.5164622336991608,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Joey Daun, Jose Gonzales",1.15,2.0,-1.0,1.0,1.15,-1.0,1.0,0.0,-34.78260869565218,-0.9720534629404618,1.0240655401945724,-35.80667423584675,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Joey Daun, Landon Lee",0.94,0.0,-2.0,1.0,0.94,-2.0,1.0,0.0,-85.1063829787234,-1.9540791402051785,1.5319800842589046,-86.63836306298231,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Joey Daun, Michael Asman",3.19,4.0,0.0,1.0,3.19,0.0,1.0,0.0,0.0,0.0,0.5257623554153522,-0.5257623554153522,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Joey Daun, Nick Ahlquist",2.15,2.0,0.0,1.0,2.15,0.0,1.0,0.0,0.0,0.0,0.5186721991701245,-0.5186721991701245,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Joey Daun, Seth Bunders",3.3,4.0,-1.0,1.0,3.3,-1.0,1.0,0.0,-12.121212121212121,-0.9237875288683604,1.0530472554955903,-13.174259376707711,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Jose Gonzales, Keenan Rahn",10.24,16.0,0.0,1.0,10.24,0.0,1.0,0.0,0.0,0.0,0.5794582065768507,-0.5794582065768507,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Jose Gonzales, Michael Asman",13.12,22.0,0.0,1.0,13.12,0.0,1.0,0.0,0.0,0.0,0.6046863189720333,-0.6046863189720333,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Jose Gonzales, Nick Ahlquist",2.78,4.0,-2.0,1.0,2.78,-2.0,1.0,0.0,-28.77697841726619,-1.8700327255726976,1.5688325271277292,-30.345810944393918,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Jose Gonzales, Seth Bunders",14.17,22.0,-3.0,1.0,14.17,-3.0,1.0,0.0,-8.468595624558928,-2.2152482924127743,2.457757296466974,-10.926352921025902,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Keenan Rahn, Michael Asman",19.41,39.0,3.0,1.0,19.41,3.0,1.0,0.0,6.182380216383308,2.0198619760983,-1.3364517206815905,7.518831937064898,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Keenan Rahn, Nick Ahlquist",0.87,0.0,-1.0,1.0,0.87,-1.0,1.0,0.0,-45.97701149425287,-0.9787129924149744,1.0204081632653064,-46.99741965751818,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Keenan Rahn, Sam Leoni",8.3,23.0,4.0,1.0,8.3,4.0,1.0,0.0,19.277108433734938,3.312629399585921,-1.6908552909680146,20.96796372470295,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Keenan Rahn, Seth Bunders",19.41,39.0,3.0,1.0,19.41,3.0,1.0,0.0,6.182380216383308,2.0198619760983,-1.3364517206815905,7.518831937064898,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Landon Lee, Michael Asman",0.94,0.0,-2.0,1.0,0.94,-2.0,1.0,0.0,-85.1063829787234,-1.9540791402051785,1.5319800842589046,-86.63836306298231,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Michael Asman, Nick Ahlquist",9.26,16.0,4.0,1.0,9.26,4.0,1.0,0.0,17.278617710583152,3.2480714575720664,-1.7140408513069563,18.99265856189011,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Michael Asman, Sam Leoni",11.76,33.0,11.0,1.0,11.76,11.0,1.0,0.0,37.41496598639456,8.500772797527048,-5.925048141016147,43.34001412741071,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Michael Asman, Seth Bunders",27.9,57.0,10.0,1.0,27.9,10.0,1.0,0.0,14.336917562724015,5.891016200294549,-7.007981312049835,21.34489887477385,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Nick Ahlquist, Sam Leoni",3.46,10.0,7.0,1.0,3.46,7.0,1.0,0.0,80.92485549132948,6.4427059364933275,-3.1658092599920855,84.09066475132157,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Nick Ahlquist, Seth Bunders",9.26,16.0,4.0,1.0,9.26,4.0,1.0,0.0,17.278617710583152,3.2480714575720664,-1.7140408513069563,18.99265856189011,UWW,Elmhurst Bluejays,True
-"Jackson Flowers, Sam Leoni, Seth Bunders",11.76,33.0,11.0,1.0,11.76,11.0,1.0,0.0,37.41496598639456,8.500772797527048,-5.925048141016147,43.34001412741071,UWW,Elmhurst Bluejays,True
-"Joey Daun, Jose Gonzales, Michael Asman",0.1,2.0,2.0,1.0,0.1,2.0,1.0,0.0,800.0,1.99501246882793,-0.5052418845522294,800.5052418845522,UWW,Elmhurst Bluejays,True
-"Joey Daun, Jose Gonzales, Seth Bunders",1.15,2.0,-1.0,1.0,1.15,-1.0,1.0,0.0,-34.78260869565218,-0.9720534629404618,1.0240655401945724,-35.80667423584675,UWW,Elmhurst Bluejays,True
-"Joey Daun, Landon Lee, Michael Asman",3.39,0.0,-8.0,1.0,3.39,-8.0,1.0,0.0,-94.3952802359882,-7.374971191518783,4.744333157617291,-99.13961339360549,UWW,Elmhurst Bluejays,True
-"Joey Daun, Michael Asman, Nick Ahlquist",2.15,2.0,0.0,1.0,2.15,0.0,1.0,0.0,0.0,0.0,0.5186721991701245,-0.5186721991701245,UWW,Elmhurst Bluejays,True
-"Joey Daun, Michael Asman, Seth Bunders",2.25,4.0,2.0,1.0,2.25,2.0,1.0,0.0,35.55555555555556,1.893491124260355,-0.5193456245131135,36.07490118006867,UWW,Elmhurst Bluejays,True
-"Joey Daun, Nick Ahlquist, Seth Bunders",2.15,2.0,0.0,1.0,2.15,0.0,1.0,0.0,0.0,0.0,0.5186721991701245,-0.5186721991701245,UWW,Elmhurst Bluejays,True
-"Jose Gonzales, Keenan Rahn, Michael Asman",14.21,25.0,1.0,1.0,14.21,1.0,1.0,0.0,2.8149190710767065,0.7378712414683637,0.0,2.8149190710767065,UWW,Elmhurst Bluejays,True
-"Jose Gonzales, Keenan Rahn, Sam Leoni",3.97,9.0,1.0,1.0,3.97,1.0,1.0,0.0,10.075566750629722,0.9097111667045714,0.0,10.075566750629722,UWW,Elmhurst Bluejays,True
-"Jose Gonzales, Keenan Rahn, Seth Bunders",14.21,25.0,1.0,1.0,14.21,1.0,1.0,0.0,2.8149190710767065,0.7378712414683637,0.0,2.8149190710767065,UWW,Elmhurst Bluejays,True
-"Jose Gonzales, Michael Asman, Nick Ahlquist",2.78,4.0,-2.0,1.0,2.78,-2.0,1.0,0.0,-28.77697841726619,-1.8700327255726976,1.5688325271277292,-30.345810944393918,UWW,Elmhurst Bluejays,True
-"Jose Gonzales, Michael Asman, Sam Leoni",4.67,9.0,-1.0,1.0,4.67,-1.0,1.0,0.0,-8.565310492505354,-0.8954555630176853,1.0723860589812333,-9.637696551486588,UWW,Elmhurst Bluejays,True
-"Jose Gonzales, Michael Asman, Seth Bunders",17.79,31.0,-1.0,1.0,17.79,-1.0,1.0,0.0,-2.2484541877459248,-0.6921612735767434,1.3012361743656475,-3.5496903621115723,UWW,Elmhurst Bluejays,True
-"Jose Gonzales, Nick Ahlquist, Seth Bunders",2.78,4.0,-2.0,1.0,2.78,-2.0,1.0,0.0,-28.77697841726619,-1.8700327255726976,1.5688325271277292,-30.345810944393918,UWW,Elmhurst Bluejays,True
-"Jose Gonzales, Sam Leoni, Seth Bunders",4.67,9.0,-1.0,1.0,4.67,-1.0,1.0,0.0,-8.565310492505354,-0.8954555630176853,1.0723860589812333,-9.637696551486588,UWW,Elmhurst Bluejays,True
-"Keenan Rahn, Michael Asman, Nick Ahlquist",0.87,0.0,-1.0,1.0,0.87,-1.0,1.0,0.0,-45.97701149425287,-0.9787129924149744,1.0204081632653064,-46.99741965751818,UWW,Elmhurst Bluejays,True
-"Keenan Rahn, Michael Asman, Sam Leoni",12.27,32.0,5.0,1.0,12.27,5.0,1.0,0.0,16.299918500407497,3.826286588865506,-2.388059701492537,18.687978201900034,UWW,Elmhurst Bluejays,True
-"Keenan Rahn, Michael Asman, Seth Bunders",23.38,48.0,4.0,1.0,23.38,4.0,1.0,0.0,6.8434559452523525,2.524455664247397,-2.147074610842727,8.990530556095079,UWW,Elmhurst Bluejays,True
-"Keenan Rahn, Nick Ahlquist, Seth Bunders",0.87,0.0,-1.0,1.0,0.87,-1.0,1.0,0.0,-45.97701149425287,-0.9787129924149744,1.0204081632653064,-46.99741965751818,UWW,Elmhurst Bluejays,True
-"Keenan Rahn, Sam Leoni, Seth Bunders",12.27,32.0,5.0,1.0,12.27,5.0,1.0,0.0,16.299918500407497,3.826286588865506,-2.388059701492537,18.687978201900034,UWW,Elmhurst Bluejays,True
-"Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",20.13,37.0,-3.0,1.0,20.13,-3.0,1.0,0.0,-5.961251862891207,-1.9956760352569434,2.7054447074737906,-8.666696570364998,UWW,Elmhurst Bluejays,True
-"Kelton McEwen, Rashad Rogers, Zavier Castillo",9.71,25.0,6.0,1.0,9.71,6.0,1.0,0.0,24.716786817713693,4.828002414001206,-2.875215641173088,27.592002458886782,UWW,Elmhurst Bluejays,True
-"Kelton McEwen, Tyshawn Teague-Johnson, Zavier Castillo",8.0,17.0,-1.0,1.0,8.0,-1.0,1.0,0.0,-5.0,-0.8333333333333333,1.1224919320892381,-6.122491932089238,UWW,Elmhurst Bluejays,True
-"Michael Asman, Nick Ahlquist, Sam Leoni",3.46,10.0,7.0,1.0,3.46,7.0,1.0,0.0,80.92485549132948,6.4427059364933275,-3.1658092599920855,84.09066475132157,UWW,Elmhurst Bluejays,True
-"Michael Asman, Nick Ahlquist, Seth Bunders",9.26,16.0,4.0,1.0,9.26,4.0,1.0,0.0,17.278617710583152,3.2480714575720664,-1.7140408513069563,18.99265856189011,UWW,Elmhurst Bluejays,True
-"Michael Asman, Sam Leoni, Seth Bunders",16.43,42.0,10.0,1.0,16.43,10.0,1.0,0.0,24.345709068776628,7.088428141059721,-5.728835136855507,30.074544205632137,UWW,Elmhurst Bluejays,True
-"Nick Ahlquist, Sam Leoni, Seth Bunders",3.46,10.0,7.0,1.0,3.46,7.0,1.0,0.0,80.92485549132948,6.4427059364933275,-3.1658092599920855,84.09066475132157,UWW,Elmhurst Bluejays,True
-"Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo",5.25,12.0,2.0,1.0,5.25,2.0,1.0,0.0,15.238095238095237,1.7679558011049723,-0.5403944879762226,15.77848972607146,UWW,Elmhurst Bluejays,True
-"Aidyn Boone, Chris Ketchum, DJ Jervier",3.5999999999999996,7.0,-1.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Chris Ketchum, Dominic Trelenberg",20.099999999999998,40.0,-4.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Chris Ketchum, EJ Marshall",16.8,31.0,3.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Chris Ketchum, Jack Cherry",7.5,16.0,4.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Chris Ketchum, Luke Smith",18.9,37.0,-4.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Chris Ketchum, Talen Pearson",5.6,12.0,1.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Chris Ketchum, Vinnie Adjahoungbeta",7.3,16.0,7.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, DJ Jervier, Dominic Trelenberg",8.0,15.0,-4.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, DJ Jervier, EJ Marshall",4.3,1.0,-9.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, DJ Jervier, Jack Cherry",2.4,2.0,-3.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, DJ Jervier, Luke Smith",7.5,14.0,-5.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, DJ Jervier, Vinnie Adjahoungbeta",5.4,9.0,-2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Dominic Trelenberg, EJ Marshall",31.099999999999998,51.0,-11.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Dominic Trelenberg, Jack Cherry",60.3,119.0,-4.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Dominic Trelenberg, Luke Smith",22.099999999999998,42.0,-18.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Dominic Trelenberg, Talen Pearson",48.3,90.0,-8.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Dominic Trelenberg, Vinnie Adjahoungbeta",57.9,117.0,-2.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, EJ Marshall, Jack Cherry",17.3,33.0,7.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, EJ Marshall, Luke Smith",21.0,32.0,-17.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, EJ Marshall, Talen Pearson",6.6000000000000005,10.0,0.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, EJ Marshall, Vinnie Adjahoungbeta",21.099999999999998,37.0,3.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Jack Cherry, Luke Smith",0.9,3.0,-3.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Jack Cherry, Talen Pearson",45.9,88.0,-5.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Jack Cherry, Vinnie Adjahoungbeta",50.8,105.0,-2.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Luke Smith, Talen Pearson",2.8,5.0,0.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Luke Smith, Vinnie Adjahoungbeta",13.799999999999999,26.0,-4.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Aidyn Boone, Talen Pearson, Vinnie Adjahoungbeta",38.099999999999994,74.0,-3.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Chris Ketchum, Cooper Hasz",2.6,9.0,6.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Chris Ketchum, DJ Jervier",5.1,11.0,8.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Chris Ketchum, Dominic Trelenberg",4.8,9.0,8.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Chris Ketchum, EJ Marshall",13.7,26.0,4.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Chris Ketchum, Luke Smith",16.1,33.0,11.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Chris Ketchum, Talen Pearson",0.8,2.0,1.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Chris Ketchum, Vinnie Adjahoungbeta",7.6,15.0,-2.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Cooper Hasz, DJ Jervier",2.6,9.0,6.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Cooper Hasz, Luke Smith",1.8,7.0,5.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Cooper Hasz, Talen Pearson",0.8,2.0,1.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, DJ Jervier, Dominic Trelenberg",0.6,0.0,2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, DJ Jervier, EJ Marshall",1.9,2.0,0.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, DJ Jervier, Luke Smith",4.3,9.0,7.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, DJ Jervier, Talen Pearson",0.8,2.0,1.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Dominic Trelenberg, EJ Marshall",7.5,11.0,12.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Dominic Trelenberg, Jack Cherry",0.7,0.0,2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Dominic Trelenberg, Luke Smith",4.8,9.0,8.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Dominic Trelenberg, Talen Pearson",2.6,2.0,4.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Dominic Trelenberg, Vinnie Adjahoungbeta",3.3,2.0,6.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, EJ Marshall, Jack Cherry",0.7,0.0,2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, EJ Marshall, Luke Smith",13.7,26.0,4.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, EJ Marshall, Talen Pearson",2.6,2.0,4.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, EJ Marshall, Vinnie Adjahoungbeta",10.9,17.0,4.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Jack Cherry, Vinnie Adjahoungbeta",0.7,0.0,2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Luke Smith, Vinnie Adjahoungbeta",7.6,15.0,-2.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Andy Colvin, Talen Pearson, Vinnie Adjahoungbeta",2.6,2.0,4.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Cooper Hasz, DJ Jervier",2.6,9.0,6.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Cooper Hasz, Dominic Trelenberg",1.8,2.0,-2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Cooper Hasz, EJ Marshall",1.8,2.0,-2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Cooper Hasz, Jack Cherry",1.8,2.0,-2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Cooper Hasz, Luke Smith",1.8,7.0,5.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Cooper Hasz, Talen Pearson",0.8,2.0,1.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, DJ Jervier, Dominic Trelenberg",3.6999999999999997,7.0,2.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, DJ Jervier, EJ Marshall",3.5,2.0,-5.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, DJ Jervier, Jack Cherry",0.8,0.0,-1.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, DJ Jervier, Luke Smith",7.1,16.0,7.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, DJ Jervier, Talen Pearson",1.7000000000000002,2.0,-3.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, DJ Jervier, Vinnie Adjahoungbeta",1.0,0.0,-4.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Dominic Trelenberg, EJ Marshall",17.2,29.0,1.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Dominic Trelenberg, Jack Cherry",9.5,18.0,3.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Dominic Trelenberg, Luke Smith",20.5,36.0,4.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Dominic Trelenberg, Talen Pearson",7.5,12.0,5.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Dominic Trelenberg, Vinnie Adjahoungbeta",5.8,9.0,10.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, EJ Marshall, Jack Cherry",4.7,8.0,3.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, EJ Marshall, Luke Smith",28.5,51.0,0.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, EJ Marshall, Talen Pearson",2.0,3.0,-1.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, EJ Marshall, Vinnie Adjahoungbeta",15.0,25.0,0.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Jack Cherry, Talen Pearson",4.8,10.0,4.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Jack Cherry, Vinnie Adjahoungbeta",3.6,9.0,4.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Luke Smith, Talen Pearson",3.8,5.0,4.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Luke Smith, Vinnie Adjahoungbeta",14.899999999999999,25.0,6.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Chris Ketchum, Talen Pearson, Vinnie Adjahoungbeta",3.9000000000000004,3.0,3.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Cooper Hasz, DJ Jervier, Luke Smith",1.8,7.0,5.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Cooper Hasz, DJ Jervier, Talen Pearson",0.8,2.0,1.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Cooper Hasz, Dominic Trelenberg, EJ Marshall",1.8,2.0,-2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Cooper Hasz, Dominic Trelenberg, Jack Cherry",1.8,2.0,-2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Cooper Hasz, EJ Marshall, Jack Cherry",1.8,2.0,-2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"DJ Jervier, Dominic Trelenberg, EJ Marshall",2.0,0.0,-5.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"DJ Jervier, Dominic Trelenberg, Jack Cherry",1.8,2.0,-2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"DJ Jervier, Dominic Trelenberg, Luke Smith",6.3,13.0,0.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"DJ Jervier, Dominic Trelenberg, Vinnie Adjahoungbeta",3.7,8.0,1.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"DJ Jervier, EJ Marshall, Jack Cherry",0.6,0.0,-1.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"DJ Jervier, EJ Marshall, Luke Smith",5.1,3.0,-8.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"DJ Jervier, EJ Marshall, Talen Pearson",0.9,0.0,-4.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"DJ Jervier, EJ Marshall, Vinnie Adjahoungbeta",3.3000000000000003,1.0,-7.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"DJ Jervier, Jack Cherry, Vinnie Adjahoungbeta",1.6,2.0,-2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"DJ Jervier, Luke Smith, Vinnie Adjahoungbeta",3.3,7.0,0.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"DJ Jervier, Talen Pearson, Vinnie Adjahoungbeta",0.9,0.0,-4.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Dominic Trelenberg, EJ Marshall, Jack Cherry",19.1,34.0,7.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Dominic Trelenberg, EJ Marshall, Luke Smith",19.099999999999998,30.0,-12.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Dominic Trelenberg, EJ Marshall, Talen Pearson",9.1,11.0,3.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Dominic Trelenberg, EJ Marshall, Vinnie Adjahoungbeta",19.1,30.0,10.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Dominic Trelenberg, Jack Cherry, Luke Smith",1.1,5.0,-2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Dominic Trelenberg, Jack Cherry, Talen Pearson",47.599999999999994,92.0,-2.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Dominic Trelenberg, Jack Cherry, Vinnie Adjahoungbeta",54.0,112.0,6.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Dominic Trelenberg, Luke Smith, Talen Pearson",4.1,7.0,5.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Dominic Trelenberg, Luke Smith, Vinnie Adjahoungbeta",9.0,17.0,0.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Dominic Trelenberg, Talen Pearson, Vinnie Adjahoungbeta",44.3,83.0,11.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"EJ Marshall, Jack Cherry, Talen Pearson",6.9,12.0,2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"EJ Marshall, Jack Cherry, Vinnie Adjahoungbeta",10.4,22.0,9.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"EJ Marshall, Luke Smith, Talen Pearson",0.3,0.0,0.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"EJ Marshall, Luke Smith, Vinnie Adjahoungbeta",19.7,32.0,-6.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"EJ Marshall, Talen Pearson, Vinnie Adjahoungbeta",4.9,4.0,2.0,2.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Jack Cherry, Luke Smith, Talen Pearson",0.2,2.0,1.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Jack Cherry, Luke Smith, Vinnie Adjahoungbeta",1.1,5.0,-2.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Jack Cherry, Talen Pearson, Vinnie Adjahoungbeta",39.8,81.0,3.0,3.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
-"Luke Smith, Talen Pearson, Vinnie Adjahoungbeta",2.0,2.0,5.0,1.0,,,,,,,,,Opponent,Elmhurst Bluejays,False
+"Anton Kilde, Christian Wilson, Jack Field",2.6,4.0,-1.0,1.0,2.6,-1.0,1.0,0.0,-15.384615384615383,-0.9389671361502347,1.0434328942219904,-16.428048278837373,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Christian Wilson, Joey Daun",2.6,4.0,-1.0,1.0,2.6,-1.0,1.0,0.0,-15.384615384615383,-0.9389671361502347,1.0434328942219904,-16.428048278837373,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Christian Wilson, Landon Lee",0.78,2.0,-1.0,1.0,0.78,-1.0,1.0,0.0,-51.28205128205128,-0.980872976949485,1.0192381195056697,-52.30128940155695,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Christian Wilson, Sam Leoni",1.82,2.0,0.0,1.0,1.82,0.0,1.0,0.0,0.0,0.0,0.5164622336991608,-0.5164622336991608,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Jack Field, Joey Daun",2.6,4.0,-1.0,1.0,2.6,-1.0,1.0,0.0,-15.384615384615383,-0.9389671361502347,1.0434328942219904,-16.428048278837373,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Jack Field, Landon Lee",0.78,2.0,-1.0,1.0,0.78,-1.0,1.0,0.0,-51.28205128205128,-0.980872976949485,1.0192381195056697,-52.30128940155695,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Jack Field, Sam Leoni",1.82,2.0,0.0,1.0,1.82,0.0,1.0,0.0,0.0,0.0,0.5164622336991608,-0.5164622336991608,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Joey Daun, Landon Lee",0.78,2.0,-1.0,1.0,0.78,-1.0,1.0,0.0,-51.28205128205128,-0.980872976949485,1.0192381195056697,-52.30128940155695,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Joey Daun, Sam Leoni",1.82,2.0,0.0,1.0,1.82,0.0,1.0,0.0,0.0,0.0,0.5164622336991608,-0.5164622336991608,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Jose Gonzales, Michael Asman",0.7,0.0,-2.0,1.0,0.7,-2.0,1.0,0.0,-114.28571428571429,-1.9656019656019654,1.5273004963726613,-115.81301478208695,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Jose Gonzales, Sam Leoni",0.7,0.0,-2.0,1.0,0.7,-2.0,1.0,0.0,-114.28571428571429,-1.9656019656019654,1.5273004963726613,-115.81301478208695,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Jose Gonzales, Seth Bunders",0.7,0.0,-2.0,1.0,0.7,-2.0,1.0,0.0,-114.28571428571429,-1.9656019656019654,1.5273004963726613,-115.81301478208695,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Michael Asman, Sam Leoni",0.7,0.0,-2.0,1.0,0.7,-2.0,1.0,0.0,-114.28571428571429,-1.9656019656019654,1.5273004963726613,-115.81301478208695,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Michael Asman, Seth Bunders",0.7,0.0,-2.0,1.0,0.7,-2.0,1.0,0.0,-114.28571428571429,-1.9656019656019654,1.5273004963726613,-115.81301478208695,UWW,Hope Flying Dutchmen,True
+"Anton Kilde, Sam Leoni, Seth Bunders",0.7,0.0,-2.0,1.0,0.7,-2.0,1.0,0.0,-114.28571428571429,-1.9656019656019654,1.5273004963726613,-115.81301478208695,UWW,Hope Flying Dutchmen,True
+"Christian Wilson, Dominic Rasberry, Joey Daun",2.45,0.0,-6.0,1.0,2.45,-6.0,1.0,0.0,-97.95918367346937,-5.653710247349823,3.6448841447539704,-101.60406781822334,UWW,Hope Flying Dutchmen,True
+"Christian Wilson, Dominic Rasberry, Landon Lee",2.45,0.0,-6.0,1.0,2.45,-6.0,1.0,0.0,-97.95918367346937,-5.653710247349823,3.6448841447539704,-101.60406781822334,UWW,Hope Flying Dutchmen,True
+"Christian Wilson, Dominic Rasberry, Michael Asman",2.45,0.0,-6.0,1.0,2.45,-6.0,1.0,0.0,-97.95918367346937,-5.653710247349823,3.6448841447539704,-101.60406781822334,UWW,Hope Flying Dutchmen,True
+"Christian Wilson, Jack Field, Joey Daun",2.6,4.0,-1.0,1.0,2.6,-1.0,1.0,0.0,-15.384615384615383,-0.9389671361502347,1.0434328942219904,-16.428048278837373,UWW,Hope Flying Dutchmen,True
+"Christian Wilson, Jack Field, Landon Lee",0.78,2.0,-1.0,1.0,0.78,-1.0,1.0,0.0,-51.28205128205128,-0.980872976949485,1.0192381195056697,-52.30128940155695,UWW,Hope Flying Dutchmen,True
+"Christian Wilson, Jack Field, Sam Leoni",1.82,2.0,0.0,1.0,1.82,0.0,1.0,0.0,0.0,0.0,0.5164622336991608,-0.5164622336991608,UWW,Hope Flying Dutchmen,True
+"Christian Wilson, Jackson Flowers, Joey Daun",0.94,0.0,-2.0,1.0,0.94,-2.0,1.0,0.0,-85.1063829787234,-1.9540791402051785,1.5319800842589046,-86.63836306298231,UWW,Hope Flying Dutchmen,True
+"Christian Wilson, Jackson Flowers, Landon Lee",0.94,0.0,-2.0,1.0,0.94,-2.0,1.0,0.0,-85.1063829787234,-1.9540791402051785,1.5319800842589046,-86.63836306298231,UWW,Hope Flying Dutchmen,True
+"Christian Wilson, Jackson Flowers, Michael Asman",0.94,0.0,-2.0,1.0,0.94,-2.0,1.0,0.0,-85.1063829787234,-1.9540791402051785,1.5319800842589046,-86.63836306298231,UWW,Hope Flying Dutchmen,True
+"Christian Wilson, Joey Daun, Landon Lee",4.17,2.0,-9.0,1.0,4.17,-9.0,1.0,0.0,-86.33093525179856,-8.15032827711116,5.326231691078562,-91.65716694287713,UWW,Hope Flying Dutchmen,True
+"Christian Wilson, Joey Daun, Michael Asman",3.39,0.0,-8.0,1.0,3.39,-8.0,1.0,0.0,-94.3952802359882,-7.374971191518783,4.744333157617291,-99.13961339360549,UWW,Hope Flying Dutchmen,True
+"Christian Wilson, Joey Daun, Sam Leoni",1.82,2.0,0.0,1.0,1.82,0.0,1.0,0.0,0.0,0.0,0.5164622336991608,-0.5164622336991608,UWW,Hope Flying Dutchmen,True
+"Christian Wilson, Landon Lee, Michael Asman",3.39,0.0,-8.0,1.0,3.39,-8.0,1.0,0.0,-94.3952802359882,-7.374971191518783,4.744333157617291,-99.13961339360549,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Darius Chestnut, Isaiah Robinson",1.88,4.0,0.0,1.0,1.88,0.0,1.0,0.0,0.0,0.0,0.5168626437524227,-0.5168626437524227,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Darius Chestnut, JR Lukenbill",4.16,8.0,0.0,1.0,4.16,0.0,1.0,0.0,0.0,0.0,0.5325522566901877,-0.5325522566901877,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Darius Chestnut, Kelton McEwen",2.2800000000000002,4.0,0.0,1.0,2.2800000000000002,0.0,1.0,0.0,0.0,0.0,0.5195479932458761,-0.5195479932458761,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Darius Chestnut, Taveon Vann",3.5300000000000002,6.0,0.0,1.0,3.5300000000000002,0.0,1.0,0.0,0.0,0.0,0.5281225244256669,-0.5281225244256669,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Darius Chestnut, Tyshawn Teague-Johnson",0.63,2.0,0.0,1.0,0.63,0.0,1.0,0.0,0.0,0.0,0.508646998982706,-0.508646998982706,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Isaiah Robinson, JR Lukenbill",10.040000000000001,19.0,6.0,1.0,10.040000000000001,6.0,1.0,0.0,23.90438247011952,4.796163069544365,-2.8889209880109785,26.793303458130495,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Isaiah Robinson, Kelton McEwen",20.94,40.0,8.0,1.0,20.94,8.0,1.0,0.0,15.281757402101242,5.2510666229077785,-4.800274301388651,20.082031703489893,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Isaiah Robinson, Rashad Rogers",12.78,25.0,2.0,1.0,12.78,2.0,1.0,0.0,6.259780907668232,1.515725653656688,-0.601594224695443,6.861375132363675,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Isaiah Robinson, Taveon Vann",1.25,2.0,0.0,1.0,1.25,0.0,1.0,0.0,0.0,0.0,0.5126890540886953,-0.5126890540886953,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Isaiah Robinson, Tyshawn Teague-Johnson",21.57,42.0,8.0,1.0,21.57,8.0,1.0,0.0,14.835419564209552,5.19733636511288,-4.852686308492201,19.688105872701755,UWW,Hope Flying Dutchmen,True
+"Collin Madson, JR Lukenbill, Kelton McEwen",19.22,37.0,2.0,1.0,19.22,2.0,1.0,0.0,4.162330905306972,1.3508949679162447,-0.6661115736885928,4.828442478995565,UWW,Hope Flying Dutchmen,True
+"Collin Madson, JR Lukenbill, Rashad Rogers",6.03,13.0,-1.0,1.0,6.03,-1.0,1.0,0.0,-6.633499170812604,-0.8689984792526613,1.0922992900054616,-7.725798460818066,UWW,Hope Flying Dutchmen,True
+"Collin Madson, JR Lukenbill, Taveon Vann",3.5300000000000002,6.0,0.0,1.0,3.5300000000000002,0.0,1.0,0.0,0.0,0.0,0.5281225244256669,-0.5281225244256669,UWW,Hope Flying Dutchmen,True
+"Collin Madson, JR Lukenbill, Tyshawn Teague-Johnson",13.11,22.0,-2.0,1.0,13.11,-2.0,1.0,0.0,-6.102212051868802,-1.5063076633402372,1.8137847642079807,-7.915996816076783,UWW,Hope Flying Dutchmen,True
+"Collin Madson, JR Lukenbill, Zavier Castillo",7.21,18.0,1.0,1.0,7.21,1.0,1.0,0.0,5.547850208044382,0.8472781190425758,0.0,5.547850208044382,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Kelton McEwen, Rashad Rogers",22.61,50.0,10.0,1.0,22.61,10.0,1.0,0.0,17.69128704113224,6.3887557898099345,-6.353688669255206,24.044975710387448,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Kelton McEwen, Taveon Vann",2.2800000000000002,4.0,0.0,1.0,2.2800000000000002,0.0,1.0,0.0,0.0,0.0,0.5195479932458761,-0.5195479932458761,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Kelton McEwen, Tyshawn Teague-Johnson",29.060000000000002,57.0,9.0,1.0,29.060000000000002,9.0,1.0,0.0,12.388162422573982,5.2128583840139004,-6.373232423819957,18.76139484639394,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Kelton McEwen, Zavier Castillo",11.01,30.0,10.0,1.0,11.01,10.0,1.0,0.0,36.330608537693,7.8415996863360125,-5.273952534427191,41.60456107212019,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Rashad Rogers, Tyshawn Teague-Johnson",18.15,37.0,6.0,1.0,18.15,6.0,1.0,0.0,13.223140495867769,4.12725709372313,-3.272251308900524,16.495391804768293,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Rashad Rogers, Zavier Castillo",8.26,25.0,13.0,1.0,8.26,13.0,1.0,0.0,62.95399515738499,10.774968918358889,-6.759611322348967,69.71360647973395,UWW,Hope Flying Dutchmen,True
+"Collin Madson, Tyshawn Teague-Johnson, Zavier Castillo",6.55,17.0,6.0,1.0,6.55,6.0,1.0,0.0,36.6412213740458,5.155746509129968,-2.7502750275027505,39.39149640154855,UWW,Hope Flying Dutchmen,True
+"Darius Chestnut, Isaiah Robinson, JR Lukenbill",1.88,4.0,0.0,1.0,1.88,0.0,1.0,0.0,0.0,0.0,0.5168626437524227,-0.5168626437524227,UWW,Hope Flying Dutchmen,True
+"Darius Chestnut, Isaiah Robinson, Taveon Vann",1.25,2.0,0.0,1.0,1.25,0.0,1.0,0.0,0.0,0.0,0.5126890540886953,-0.5126890540886953,UWW,Hope Flying Dutchmen,True
+"Darius Chestnut, Isaiah Robinson, Tyshawn Teague-Johnson",0.63,2.0,0.0,1.0,0.63,0.0,1.0,0.0,0.0,0.0,0.508646998982706,-0.508646998982706,UWW,Hope Flying Dutchmen,True
+"Darius Chestnut, JR Lukenbill, Kelton McEwen",2.2800000000000002,4.0,0.0,1.0,2.2800000000000002,0.0,1.0,0.0,0.0,0.0,0.5195479932458761,-0.5195479932458761,UWW,Hope Flying Dutchmen,True
+"Darius Chestnut, JR Lukenbill, Taveon Vann",3.5300000000000002,6.0,0.0,1.0,3.5300000000000002,0.0,1.0,0.0,0.0,0.0,0.5281225244256669,-0.5281225244256669,UWW,Hope Flying Dutchmen,True
+"Darius Chestnut, JR Lukenbill, Tyshawn Teague-Johnson",0.63,2.0,0.0,1.0,0.63,0.0,1.0,0.0,0.0,0.0,0.508646998982706,-0.508646998982706,UWW,Hope Flying Dutchmen,True
+"Darius Chestnut, Kelton McEwen, Taveon Vann",2.2800000000000002,4.0,0.0,1.0,2.2800000000000002,0.0,1.0,0.0,0.0,0.0,0.5195479932458761,-0.5195479932458761,UWW,Hope Flying Dutchmen,True
+"Dominic Rasberry, Jackson Flowers, Joey Daun",1.05,0.0,-3.0,1.0,1.05,-3.0,1.0,0.0,-114.28571428571429,-2.92326431181486,2.0455126566095627,-116.33122694232385,UWW,Hope Flying Dutchmen,True
+"Dominic Rasberry, Jackson Flowers, Jose Gonzales",1.05,0.0,-3.0,1.0,1.05,-3.0,1.0,0.0,-114.28571428571429,-2.92326431181486,2.0455126566095627,-116.33122694232385,UWW,Hope Flying Dutchmen,True
+"Dominic Rasberry, Jackson Flowers, Seth Bunders",1.05,0.0,-3.0,1.0,1.05,-3.0,1.0,0.0,-114.28571428571429,-2.92326431181486,2.0455126566095627,-116.33122694232385,UWW,Hope Flying Dutchmen,True
+"Dominic Rasberry, Joey Daun, Jose Gonzales",1.05,0.0,-3.0,1.0,1.05,-3.0,1.0,0.0,-114.28571428571429,-2.92326431181486,2.0455126566095627,-116.33122694232385,UWW,Hope Flying Dutchmen,True
+"Dominic Rasberry, Joey Daun, Landon Lee",2.45,0.0,-6.0,1.0,2.45,-6.0,1.0,0.0,-97.95918367346937,-5.653710247349823,3.6448841447539704,-101.60406781822334,UWW,Hope Flying Dutchmen,True
+"Dominic Rasberry, Joey Daun, Michael Asman",2.45,0.0,-6.0,1.0,2.45,-6.0,1.0,0.0,-97.95918367346937,-5.653710247349823,3.6448841447539704,-101.60406781822334,UWW,Hope Flying Dutchmen,True
+"Dominic Rasberry, Joey Daun, Seth Bunders",1.05,0.0,-3.0,1.0,1.05,-3.0,1.0,0.0,-114.28571428571429,-2.92326431181486,2.0455126566095627,-116.33122694232385,UWW,Hope Flying Dutchmen,True
+"Dominic Rasberry, Jose Gonzales, Seth Bunders",1.05,0.0,-3.0,1.0,1.05,-3.0,1.0,0.0,-114.28571428571429,-2.92326431181486,2.0455126566095627,-116.33122694232385,UWW,Hope Flying Dutchmen,True
+"Dominic Rasberry, Landon Lee, Michael Asman",2.45,0.0,-6.0,1.0,2.45,-6.0,1.0,0.0,-97.95918367346937,-5.653710247349823,3.6448841447539704,-101.60406781822334,UWW,Hope Flying Dutchmen,True
+"Isaiah Robinson, JR Lukenbill, Kelton McEwen",8.690000000000001,15.0,4.0,1.0,8.690000000000001,4.0,1.0,0.0,18.411967779056383,3.286095707537482,-1.7001983564749221,20.112166135531304,UWW,Hope Flying Dutchmen,True
+"Isaiah Robinson, JR Lukenbill, Rashad Rogers",0.53,0.0,-2.0,1.0,0.53,-2.0,1.0,0.0,-150.94339622641508,-1.9738465334320257,1.5240030480060962,-152.46739927442118,UWW,Hope Flying Dutchmen,True
+"Isaiah Robinson, JR Lukenbill, Taveon Vann",1.25,2.0,0.0,1.0,1.25,0.0,1.0,0.0,0.0,0.0,0.5126890540886953,-0.5126890540886953,UWW,Hope Flying Dutchmen,True
+"Isaiah Robinson, JR Lukenbill, Tyshawn Teague-Johnson",9.32,17.0,4.0,1.0,9.32,4.0,1.0,0.0,17.167381974248926,3.2441200324412,-1.7155110793423878,18.882893053591314,UWW,Hope Flying Dutchmen,True
+"Isaiah Robinson, Kelton McEwen, Rashad Rogers",14.76,25.0,-7.0,1.0,14.76,-7.0,1.0,0.0,-18.97018970189702,-5.113221329437546,4.960471244768254,-23.930660946665274,UWW,Hope Flying Dutchmen,True
+"Isaiah Robinson, Kelton McEwen, Tyshawn Teague-Johnson",22.92,40.0,-1.0,1.0,22.92,-1.0,1.0,0.0,-1.7452006980802792,-0.6357279084551812,1.4196983141082522,-3.164899012188531,UWW,Hope Flying Dutchmen,True
+"Isaiah Robinson, Kelton McEwen, Zavier Castillo",1.45,0.0,-7.0,1.0,1.45,-7.0,1.0,0.0,-193.10344827586206,-6.7551266586248495,4.112053456694937,-197.21550173255702,UWW,Hope Flying Dutchmen,True
+"Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson",14.76,25.0,-7.0,1.0,14.76,-7.0,1.0,0.0,-18.97018970189702,-5.113221329437546,4.960471244768254,-23.930660946665274,UWW,Hope Flying Dutchmen,True
+"Isaiah Robinson, Rashad Rogers, Zavier Castillo",1.45,0.0,-7.0,1.0,1.45,-7.0,1.0,0.0,-193.10344827586206,-6.7551266586248495,4.112053456694937,-197.21550173255702,UWW,Hope Flying Dutchmen,True
+"Isaiah Robinson, Tyshawn Teague-Johnson, Zavier Castillo",1.45,0.0,-7.0,1.0,1.45,-7.0,1.0,0.0,-193.10344827586206,-6.7551266586248495,4.112053456694937,-197.21550173255702,UWW,Hope Flying Dutchmen,True
+"JR Lukenbill, Kelton McEwen, Rashad Rogers",6.5600000000000005,13.0,-3.0,1.0,6.5600000000000005,-3.0,1.0,0.0,-18.292682926829265,-2.5773195876288657,2.2005226241232294,-20.493205550952496,UWW,Hope Flying Dutchmen,True
+"JR Lukenbill, Kelton McEwen, Taveon Vann",2.2800000000000002,4.0,0.0,1.0,2.2800000000000002,0.0,1.0,0.0,0.0,0.0,0.5195479932458761,-0.5195479932458761,UWW,Hope Flying Dutchmen,True
+"JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson",13.010000000000002,20.0,-4.0,1.0,13.010000000000002,-4.0,1.0,0.0,-12.298232129131437,-3.018298434257687,3.0184123151222457,-15.316644444253683,UWW,Hope Flying Dutchmen,True
+"JR Lukenbill, Kelton McEwen, Zavier Castillo",7.21,18.0,1.0,1.0,7.21,1.0,1.0,0.0,5.547850208044382,0.8472781190425758,0.0,5.547850208044382,UWW,Hope Flying Dutchmen,True
+"JR Lukenbill, Rashad Rogers, Tyshawn Teague-Johnson",2.1,0.0,-7.0,1.0,2.1,-7.0,1.0,0.0,-133.33333333333331,-6.65083135391924,4.146689127899442,-137.48002246123275,UWW,Hope Flying Dutchmen,True
+"JR Lukenbill, Rashad Rogers, Zavier Castillo",4.46,13.0,4.0,1.0,4.46,4.0,1.0,0.0,35.87443946188341,3.598740440845704,-1.6040636278572382,37.47850308974065,UWW,Hope Flying Dutchmen,True
+"JR Lukenbill, Tyshawn Teague-Johnson, Zavier Castillo",2.75,5.0,-3.0,1.0,2.75,-3.0,1.0,0.0,-43.63636363636363,-2.807017543859649,2.0909566126502876,-45.72732024901392,UWW,Hope Flying Dutchmen,True
+"Jack Field, Joey Daun, Landon Lee",0.78,2.0,-1.0,1.0,0.78,-1.0,1.0,0.0,-51.28205128205128,-0.980872976949485,1.0192381195056697,-52.30128940155695,UWW,Hope Flying Dutchmen,True
+"Jack Field, Joey Daun, Sam Leoni",1.82,2.0,0.0,1.0,1.82,0.0,1.0,0.0,0.0,0.0,0.5164622336991608,-0.5164622336991608,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Joey Daun, Jose Gonzales",1.15,2.0,-1.0,1.0,1.15,-1.0,1.0,0.0,-34.78260869565218,-0.9720534629404618,1.0240655401945724,-35.80667423584675,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Joey Daun, Landon Lee",0.94,0.0,-2.0,1.0,0.94,-2.0,1.0,0.0,-85.1063829787234,-1.9540791402051785,1.5319800842589046,-86.63836306298231,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Joey Daun, Michael Asman",3.19,4.0,0.0,1.0,3.19,0.0,1.0,0.0,0.0,0.0,0.5257623554153522,-0.5257623554153522,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Joey Daun, Nick Ahlquist",2.15,2.0,0.0,1.0,2.15,0.0,1.0,0.0,0.0,0.0,0.5186721991701245,-0.5186721991701245,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Joey Daun, Seth Bunders",3.3,4.0,-1.0,1.0,3.3,-1.0,1.0,0.0,-12.121212121212121,-0.9237875288683604,1.0530472554955903,-13.174259376707711,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Jose Gonzales, Keenan Rahn",10.24,16.0,0.0,1.0,10.24,0.0,1.0,0.0,0.0,0.0,0.5794582065768507,-0.5794582065768507,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Jose Gonzales, Michael Asman",13.12,22.0,0.0,1.0,13.12,0.0,1.0,0.0,0.0,0.0,0.6046863189720333,-0.6046863189720333,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Jose Gonzales, Nick Ahlquist",2.78,4.0,-2.0,1.0,2.78,-2.0,1.0,0.0,-28.77697841726619,-1.8700327255726976,1.5688325271277292,-30.345810944393918,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Jose Gonzales, Seth Bunders",14.17,22.0,-3.0,1.0,14.17,-3.0,1.0,0.0,-8.468595624558928,-2.2152482924127743,2.457757296466974,-10.926352921025902,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Keenan Rahn, Michael Asman",19.41,39.0,3.0,1.0,19.41,3.0,1.0,0.0,6.182380216383308,2.0198619760983,-1.3364517206815905,7.518831937064898,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Keenan Rahn, Nick Ahlquist",0.87,0.0,-1.0,1.0,0.87,-1.0,1.0,0.0,-45.97701149425287,-0.9787129924149744,1.0204081632653064,-46.99741965751818,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Keenan Rahn, Sam Leoni",8.3,23.0,4.0,1.0,8.3,4.0,1.0,0.0,19.277108433734938,3.312629399585921,-1.6908552909680146,20.96796372470295,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Keenan Rahn, Seth Bunders",19.41,39.0,3.0,1.0,19.41,3.0,1.0,0.0,6.182380216383308,2.0198619760983,-1.3364517206815905,7.518831937064898,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Landon Lee, Michael Asman",0.94,0.0,-2.0,1.0,0.94,-2.0,1.0,0.0,-85.1063829787234,-1.9540791402051785,1.5319800842589046,-86.63836306298231,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Michael Asman, Nick Ahlquist",9.26,16.0,4.0,1.0,9.26,4.0,1.0,0.0,17.278617710583152,3.2480714575720664,-1.7140408513069563,18.99265856189011,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Michael Asman, Sam Leoni",11.76,33.0,11.0,1.0,11.76,11.0,1.0,0.0,37.41496598639456,8.500772797527048,-5.925048141016147,43.34001412741071,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Michael Asman, Seth Bunders",27.9,57.0,10.0,1.0,27.9,10.0,1.0,0.0,14.336917562724015,5.891016200294549,-7.007981312049835,21.34489887477385,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Nick Ahlquist, Sam Leoni",3.46,10.0,7.0,1.0,3.46,7.0,1.0,0.0,80.92485549132948,6.4427059364933275,-3.1658092599920855,84.09066475132157,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Nick Ahlquist, Seth Bunders",9.26,16.0,4.0,1.0,9.26,4.0,1.0,0.0,17.278617710583152,3.2480714575720664,-1.7140408513069563,18.99265856189011,UWW,Hope Flying Dutchmen,True
+"Jackson Flowers, Sam Leoni, Seth Bunders",11.76,33.0,11.0,1.0,11.76,11.0,1.0,0.0,37.41496598639456,8.500772797527048,-5.925048141016147,43.34001412741071,UWW,Hope Flying Dutchmen,True
+"Joey Daun, Jose Gonzales, Michael Asman",0.1,2.0,2.0,1.0,0.1,2.0,1.0,0.0,800.0,1.99501246882793,-0.5052418845522294,800.5052418845522,UWW,Hope Flying Dutchmen,True
+"Joey Daun, Jose Gonzales, Seth Bunders",1.15,2.0,-1.0,1.0,1.15,-1.0,1.0,0.0,-34.78260869565218,-0.9720534629404618,1.0240655401945724,-35.80667423584675,UWW,Hope Flying Dutchmen,True
+"Joey Daun, Landon Lee, Michael Asman",3.39,0.0,-8.0,1.0,3.39,-8.0,1.0,0.0,-94.3952802359882,-7.374971191518783,4.744333157617291,-99.13961339360549,UWW,Hope Flying Dutchmen,True
+"Joey Daun, Michael Asman, Nick Ahlquist",2.15,2.0,0.0,1.0,2.15,0.0,1.0,0.0,0.0,0.0,0.5186721991701245,-0.5186721991701245,UWW,Hope Flying Dutchmen,True
+"Joey Daun, Michael Asman, Seth Bunders",2.25,4.0,2.0,1.0,2.25,2.0,1.0,0.0,35.55555555555556,1.893491124260355,-0.5193456245131135,36.07490118006867,UWW,Hope Flying Dutchmen,True
+"Joey Daun, Nick Ahlquist, Seth Bunders",2.15,2.0,0.0,1.0,2.15,0.0,1.0,0.0,0.0,0.0,0.5186721991701245,-0.5186721991701245,UWW,Hope Flying Dutchmen,True
+"Jose Gonzales, Keenan Rahn, Michael Asman",14.21,25.0,1.0,1.0,14.21,1.0,1.0,0.0,2.8149190710767065,0.7378712414683637,0.0,2.8149190710767065,UWW,Hope Flying Dutchmen,True
+"Jose Gonzales, Keenan Rahn, Sam Leoni",3.97,9.0,1.0,1.0,3.97,1.0,1.0,0.0,10.075566750629722,0.9097111667045714,0.0,10.075566750629722,UWW,Hope Flying Dutchmen,True
+"Jose Gonzales, Keenan Rahn, Seth Bunders",14.21,25.0,1.0,1.0,14.21,1.0,1.0,0.0,2.8149190710767065,0.7378712414683637,0.0,2.8149190710767065,UWW,Hope Flying Dutchmen,True
+"Jose Gonzales, Michael Asman, Nick Ahlquist",2.78,4.0,-2.0,1.0,2.78,-2.0,1.0,0.0,-28.77697841726619,-1.8700327255726976,1.5688325271277292,-30.345810944393918,UWW,Hope Flying Dutchmen,True
+"Jose Gonzales, Michael Asman, Sam Leoni",4.67,9.0,-1.0,1.0,4.67,-1.0,1.0,0.0,-8.565310492505354,-0.8954555630176853,1.0723860589812333,-9.637696551486588,UWW,Hope Flying Dutchmen,True
+"Jose Gonzales, Michael Asman, Seth Bunders",17.79,31.0,-1.0,1.0,17.79,-1.0,1.0,0.0,-2.2484541877459248,-0.6921612735767434,1.3012361743656475,-3.5496903621115723,UWW,Hope Flying Dutchmen,True
+"Jose Gonzales, Nick Ahlquist, Seth Bunders",2.78,4.0,-2.0,1.0,2.78,-2.0,1.0,0.0,-28.77697841726619,-1.8700327255726976,1.5688325271277292,-30.345810944393918,UWW,Hope Flying Dutchmen,True
+"Jose Gonzales, Sam Leoni, Seth Bunders",4.67,9.0,-1.0,1.0,4.67,-1.0,1.0,0.0,-8.565310492505354,-0.8954555630176853,1.0723860589812333,-9.637696551486588,UWW,Hope Flying Dutchmen,True
+"Keenan Rahn, Michael Asman, Nick Ahlquist",0.87,0.0,-1.0,1.0,0.87,-1.0,1.0,0.0,-45.97701149425287,-0.9787129924149744,1.0204081632653064,-46.99741965751818,UWW,Hope Flying Dutchmen,True
+"Keenan Rahn, Michael Asman, Sam Leoni",12.27,32.0,5.0,1.0,12.27,5.0,1.0,0.0,16.299918500407497,3.826286588865506,-2.388059701492537,18.687978201900034,UWW,Hope Flying Dutchmen,True
+"Keenan Rahn, Michael Asman, Seth Bunders",23.38,48.0,4.0,1.0,23.38,4.0,1.0,0.0,6.8434559452523525,2.524455664247397,-2.147074610842727,8.990530556095079,UWW,Hope Flying Dutchmen,True
+"Keenan Rahn, Nick Ahlquist, Seth Bunders",0.87,0.0,-1.0,1.0,0.87,-1.0,1.0,0.0,-45.97701149425287,-0.9787129924149744,1.0204081632653064,-46.99741965751818,UWW,Hope Flying Dutchmen,True
+"Keenan Rahn, Sam Leoni, Seth Bunders",12.27,32.0,5.0,1.0,12.27,5.0,1.0,0.0,16.299918500407497,3.826286588865506,-2.388059701492537,18.687978201900034,UWW,Hope Flying Dutchmen,True
+"Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",20.13,37.0,-3.0,1.0,20.13,-3.0,1.0,0.0,-5.961251862891207,-1.9956760352569434,2.7054447074737906,-8.666696570364998,UWW,Hope Flying Dutchmen,True
+"Kelton McEwen, Rashad Rogers, Zavier Castillo",9.71,25.0,6.0,1.0,9.71,6.0,1.0,0.0,24.716786817713693,4.828002414001206,-2.875215641173088,27.592002458886782,UWW,Hope Flying Dutchmen,True
+"Kelton McEwen, Tyshawn Teague-Johnson, Zavier Castillo",8.0,17.0,-1.0,1.0,8.0,-1.0,1.0,0.0,-5.0,-0.8333333333333333,1.1224919320892381,-6.122491932089238,UWW,Hope Flying Dutchmen,True
+"Michael Asman, Nick Ahlquist, Sam Leoni",3.46,10.0,7.0,1.0,3.46,7.0,1.0,0.0,80.92485549132948,6.4427059364933275,-3.1658092599920855,84.09066475132157,UWW,Hope Flying Dutchmen,True
+"Michael Asman, Nick Ahlquist, Seth Bunders",9.26,16.0,4.0,1.0,9.26,4.0,1.0,0.0,17.278617710583152,3.2480714575720664,-1.7140408513069563,18.99265856189011,UWW,Hope Flying Dutchmen,True
+"Michael Asman, Sam Leoni, Seth Bunders",16.43,42.0,10.0,1.0,16.43,10.0,1.0,0.0,24.345709068776628,7.088428141059721,-5.728835136855507,30.074544205632137,UWW,Hope Flying Dutchmen,True
+"Nick Ahlquist, Sam Leoni, Seth Bunders",3.46,10.0,7.0,1.0,3.46,7.0,1.0,0.0,80.92485549132948,6.4427059364933275,-3.1658092599920855,84.09066475132157,UWW,Hope Flying Dutchmen,True
+"Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo",5.25,12.0,2.0,1.0,5.25,2.0,1.0,0.0,15.238095238095237,1.7679558011049723,-0.5403944879762226,15.77848972607146,UWW,Hope Flying Dutchmen,True
+"Avery Sanchez, Ben Mehendale, Drew Kozel",4.2,9.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Ben Mehendale, Johnny Lake",4.2,9.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Ben Mehendale, Justin Fisher",4.2,9.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brady Miller, Brendan Cargill",22.2,49.0,-2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brady Miller, Carter Bishop",5.0,6.0,7.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brady Miller, Carter Goodyke",1.5,0.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brady Miller, Drew Kozel",0.6,2.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brady Miller, Jared Ryg",2.1,9.0,-7.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brady Miller, Justin Fisher",3.8000000000000003,5.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brady Miller, Kaden Grau",1.5,0.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brady Miller, Kyle Blauch",3.0,5.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brady Miller, Orion Yant",15.6,45.0,-1.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brady Miller, Sean Wesolek",16.5,33.0,8.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brady Miller, Tucker Walther",8.9,11.0,-13.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brendan Cargill, Carter Bishop",27.8,59.0,-13.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brendan Cargill, Drew Kozel",5.4,20.0,-9.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brendan Cargill, Jared Ryg",10.8,16.0,-16.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brendan Cargill, Justin Fisher",8.1,12.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brendan Cargill, Kaden Grau",2.7,4.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brendan Cargill, Kyle Blauch",46.9,94.0,-21.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brendan Cargill, Orion Yant",72.39999999999999,164.0,-56.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brendan Cargill, Sean Wesolek",30.6,58.0,-18.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Brendan Cargill, Tucker Walther",50.9,103.0,-43.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Carter Bishop, Carter Goodyke",1.5,0.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Carter Bishop, Drew Kozel",1.4,2.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Carter Bishop, Jared Ryg",2.6,2.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Carter Bishop, Justin Fisher",2.8,5.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Carter Bishop, Kaden Grau",1.5,0.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Carter Bishop, Kyle Blauch",8.9,15.0,8.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Carter Bishop, Orion Yant",19.7,46.0,-16.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Carter Bishop, Sean Wesolek",13.4,24.0,-20.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Carter Bishop, Tucker Walther",8.399999999999999,24.0,-7.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Carter Goodyke, Kaden Grau",1.5,0.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Drew Kozel, Jared Ryg",3.0,9.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Drew Kozel, Johnny Lake",4.2,9.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Drew Kozel, Justin Fisher",6.8,16.0,-7.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Drew Kozel, Kyle Blauch",3.8,16.0,-8.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Drew Kozel, Orion Yant",6.2,22.0,-9.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Drew Kozel, Sean Wesolek",3.4,9.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Drew Kozel, Tucker Walther",3.0,12.0,-6.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Jared Ryg, Justin Fisher",4.2,9.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Jared Ryg, Kaden Grau",3.3,6.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Jared Ryg, Kyle Blauch",5.2,4.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Jared Ryg, Orion Yant",10.4,18.0,-19.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Jared Ryg, Sean Wesolek",7.9,16.0,-8.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Jared Ryg, Tucker Walther",2.4,4.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Johnny Lake, Justin Fisher",4.2,9.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Justin Fisher, Kaden Grau",2.9000000000000004,2.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Justin Fisher, Kyle Blauch",5.6000000000000005,9.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Justin Fisher, Orion Yant",2.1,4.0,-4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Justin Fisher, Sean Wesolek",7.4,10.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Justin Fisher, Tucker Walther",1.3,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Kaden Grau, Kyle Blauch",4.0,4.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Kaden Grau, Sean Wesolek",1.6,2.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Kaden Grau, Tucker Walther",2.3,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Kyle Blauch, Orion Yant",37.8,77.0,-27.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Kyle Blauch, Sean Wesolek",0.2,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Kyle Blauch, Tucker Walther",34.9,70.0,-22.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Orion Yant, Sean Wesolek",25.4,58.0,-16.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Orion Yant, Tucker Walther",45.3,94.0,-38.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Avery Sanchez, Sean Wesolek, Tucker Walther",8.8,9.0,-10.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Brady Miller, Jacob Van Hekken",1.6,8.0,-4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Brady Miller, Jared Ryg",1.6,8.0,-4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Brady Miller, Johnny Lake",1.0,7.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Brady Miller, Kaden Grau",0.6,1.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Carter Goodyke, Drew Kozel",2.3,2.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Carter Goodyke, Jacob Van Hekken",2.3,2.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Carter Goodyke, Johnny Lake",2.3,2.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Drew Kozel, Jacob Van Hekken",2.3,2.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Drew Kozel, Johnny Lake",6.5,11.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Drew Kozel, Justin Fisher",4.2,9.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Jacob Van Hekken, Jared Ryg",1.6,8.0,-4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Jacob Van Hekken, Johnny Lake",3.3,9.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Jacob Van Hekken, Kaden Grau",0.6,1.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Jared Ryg, Johnny Lake",1.0,7.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Jared Ryg, Kaden Grau",0.6,1.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Ben Mehendale, Johnny Lake, Justin Fisher",4.2,9.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Brendan Cargill, Carter Bishop",14.4,23.0,-2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Brendan Cargill, Drew Kozel",0.6,2.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Brendan Cargill, Jared Ryg",14.8,36.0,2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Brendan Cargill, Justin Fisher",3.2,3.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Brendan Cargill, Kaden Grau",1.8,6.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Brendan Cargill, Kyle Blauch",5.7,11.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Brendan Cargill, Orion Yant",26.5,68.0,8.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Brendan Cargill, Sean Wesolek",28.1,49.0,5.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Brendan Cargill, Tucker Walther",21.3,38.0,-8.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Bishop, Carter Goodyke",1.6,0.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Bishop, Drew Kozel",2.6,3.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Bishop, Jared Ryg",12.200000000000001,26.0,-3.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Bishop, Justin Fisher",2.6,3.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Bishop, Kaden Grau",5.0,7.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Bishop, Kyle Blauch",2.3,4.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Bishop, Orion Yant",10.0,21.0,-1.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Bishop, Sean Wesolek",15.3,20.0,-4.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Bishop, Tucker Walther",9.700000000000001,13.0,-13.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Goodyke, Drew Kozel",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Goodyke, Jacob Van Hekken",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Goodyke, Jared Ryg",0.1,0.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Goodyke, Justin Fisher",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Carter Goodyke, Kaden Grau",1.6,0.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Drew Kozel, Jacob Van Hekken",3.0,6.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Drew Kozel, Jared Ryg",3.0,6.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Drew Kozel, Justin Fisher",6.1,11.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Drew Kozel, Sean Wesolek",0.1,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Drew Kozel, Tucker Walther",2.6,3.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Jacob Van Hekken, Jared Ryg",4.8,14.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Jacob Van Hekken, Johnny Lake",1.0,7.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Jacob Van Hekken, Justin Fisher",2.9,6.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Jacob Van Hekken, Kaden Grau",0.8,1.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Jacob Van Hekken, Sean Wesolek",0.30000000000000004,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Jared Ryg, Johnny Lake",1.0,7.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Jared Ryg, Justin Fisher",6.9,14.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Jared Ryg, Kaden Grau",4.3,8.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Jared Ryg, Kyle Blauch",3.5,8.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Jared Ryg, Orion Yant",14.1,35.0,0.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Jared Ryg, Sean Wesolek",14.4,26.0,-4.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Jared Ryg, Tucker Walther",13.200000000000001,25.0,6.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Justin Fisher, Kyle Blauch",1.2000000000000002,2.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Justin Fisher, Orion Yant",3.4000000000000004,6.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Justin Fisher, Sean Wesolek",5.4,7.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Justin Fisher, Tucker Walther",2.6,3.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Kaden Grau, Orion Yant",3.3,7.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Kaden Grau, Sean Wesolek",3.6,10.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Kaden Grau, Tucker Walther",0.3,2.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Kyle Blauch, Orion Yant",2.8,7.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Kyle Blauch, Tucker Walther",1.0,2.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Orion Yant, Sean Wesolek",18.5,39.0,15.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Orion Yant, Tucker Walther",14.1,24.0,-1.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brady Miller, Sean Wesolek, Tucker Walther",15.100000000000001,20.0,-16.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Carter Bishop, Drew Kozel",1.0,2.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Carter Bishop, Jared Ryg",7.2,10.0,5.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Carter Bishop, Justin Fisher",2.8,5.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Carter Bishop, Kyle Blauch",9.7,19.0,7.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Carter Bishop, Orion Yant",24.099999999999998,55.0,-19.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Carter Bishop, Sean Wesolek",22.7,31.0,-16.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Carter Bishop, Tucker Walther",13.9,30.0,-8.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Drew Kozel, Justin Fisher",0.6,2.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Drew Kozel, Kyle Blauch",3.8,16.0,-8.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Drew Kozel, Orion Yant",4.8,18.0,-7.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Drew Kozel, Tucker Walther",3.0,12.0,-6.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Jared Ryg, Kaden Grau",1.7,4.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Jared Ryg, Kyle Blauch",8.8,12.0,6.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Jared Ryg, Orion Yant",15.8,30.0,-5.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Jared Ryg, Sean Wesolek",10.3,12.0,-2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Jared Ryg, Tucker Walther",15.8,27.0,17.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Justin Fisher, Kaden Grau",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Justin Fisher, Kyle Blauch",4.3,9.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Justin Fisher, Orion Yant",2.1,4.0,-4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Justin Fisher, Sean Wesolek",3.2,1.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Justin Fisher, Tucker Walther",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Kaden Grau, Kyle Blauch",2.7,4.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Kaden Grau, Orion Yant",2.0,6.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Kaden Grau, Sean Wesolek",2.3,8.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Kaden Grau, Tucker Walther",1.8,4.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Kyle Blauch, Orion Yant",38.699999999999996,79.0,-24.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Kyle Blauch, Sean Wesolek",0.2,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Kyle Blauch, Tucker Walther",36.4,74.0,-16.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Orion Yant, Sean Wesolek",29.1,61.0,-10.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Orion Yant, Tucker Walther",53.0,112.0,-26.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brendan Cargill, Sean Wesolek, Tucker Walther",16.0,20.0,-7.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Carter Goodyke, Jared Ryg",0.1,0.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Carter Goodyke, Kaden Grau",1.6,0.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Drew Kozel, Justin Fisher",2.6,3.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Drew Kozel, Orion Yant",1.4,2.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Drew Kozel, Sean Wesolek",0.4,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Drew Kozel, Tucker Walther",2.6,3.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Jared Ryg, Kaden Grau",3.5,7.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Jared Ryg, Kyle Blauch",3.2,4.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Jared Ryg, Orion Yant",6.3,12.0,0.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Jared Ryg, Sean Wesolek",9.0,13.0,4.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Jared Ryg, Tucker Walther",5.4,4.0,2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Justin Fisher, Kyle Blauch",1.8,5.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Justin Fisher, Sean Wesolek",1.0,0.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Justin Fisher, Tucker Walther",2.6,3.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Kaden Grau, Orion Yant",1.8,3.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Kaden Grau, Sean Wesolek",1.6,4.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Kyle Blauch, Orion Yant",2.4,2.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Kyle Blauch, Sean Wesolek",0.2,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Kyle Blauch, Tucker Walther",3.3,8.0,-3.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Orion Yant, Sean Wesolek",15.0,28.0,-16.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Orion Yant, Tucker Walther",7.5,20.0,-9.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Bishop, Sean Wesolek, Tucker Walther",6.6000000000000005,6.0,0.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Goodyke, Drew Kozel, Jacob Van Hekken",2.3,2.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Goodyke, Drew Kozel, Johnny Lake",2.3,2.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Goodyke, Drew Kozel, Justin Fisher",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Goodyke, Jacob Van Hekken, Johnny Lake",2.3,2.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Goodyke, Jacob Van Hekken, Justin Fisher",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Carter Goodyke, Jared Ryg, Kaden Grau",0.1,0.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Jacob Van Hekken, Jared Ryg",3.6,8.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Jacob Van Hekken, Johnny Lake",2.3,2.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Jacob Van Hekken, Justin Fisher",2.9,6.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Jacob Van Hekken, Kaden Grau",0.6,2.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Jacob Van Hekken, Sean Wesolek",0.7,2.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Jared Ryg, Justin Fisher",4.9,11.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Jared Ryg, Kaden Grau",0.6,2.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Jared Ryg, Orion Yant",1.0,4.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Jared Ryg, Sean Wesolek",3.7,11.0,-4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Johnny Lake, Justin Fisher",4.2,9.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Justin Fisher, Kaden Grau",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Justin Fisher, Sean Wesolek",2.0,5.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Justin Fisher, Tucker Walther",2.6,3.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Kaden Grau, Sean Wesolek",0.6,2.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Kyle Blauch, Orion Yant",3.8,16.0,-8.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Kyle Blauch, Tucker Walther",3.0,12.0,-6.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Orion Yant, Sean Wesolek",1.4,4.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Drew Kozel, Orion Yant, Tucker Walther",3.0,12.0,-6.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jacob Van Hekken, Jared Ryg, Johnny Lake",1.0,7.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jacob Van Hekken, Jared Ryg, Justin Fisher",2.9,6.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jacob Van Hekken, Jared Ryg, Kaden Grau",1.4,3.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jacob Van Hekken, Jared Ryg, Sean Wesolek",0.9,2.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jacob Van Hekken, Kaden Grau, Sean Wesolek",0.8,2.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jared Ryg, Justin Fisher, Kaden Grau",1.6,2.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jared Ryg, Justin Fisher, Kyle Blauch",0.8,2.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jared Ryg, Justin Fisher, Orion Yant",3.4000000000000004,6.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jared Ryg, Justin Fisher, Sean Wesolek",6.8,13.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jared Ryg, Kaden Grau, Kyle Blauch",1.7,4.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jared Ryg, Kaden Grau, Orion Yant",1.8,3.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jared Ryg, Kaden Grau, Sean Wesolek",4.0,8.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jared Ryg, Kyle Blauch, Orion Yant",5.1000000000000005,4.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jared Ryg, Kyle Blauch, Tucker Walther",3.2,4.0,8.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jared Ryg, Orion Yant, Sean Wesolek",7.7,14.0,-7.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jared Ryg, Orion Yant, Tucker Walther",9.7,18.0,7.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Jared Ryg, Sean Wesolek, Tucker Walther",8.200000000000001,11.0,1.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Justin Fisher, Kaden Grau, Kyle Blauch",1.3,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Justin Fisher, Kaden Grau, Sean Wesolek",1.6,2.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Justin Fisher, Kaden Grau, Tucker Walther",1.3,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Justin Fisher, Kyle Blauch, Orion Yant",2.9000000000000004,6.0,-6.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Justin Fisher, Kyle Blauch, Tucker Walther",1.3,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Justin Fisher, Orion Yant, Sean Wesolek",2.6,4.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Kaden Grau, Kyle Blauch, Tucker Walther",2.3,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Kaden Grau, Orion Yant, Sean Wesolek",2.0,6.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Kaden Grau, Orion Yant, Tucker Walther",0.5,2.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Kaden Grau, Sean Wesolek, Tucker Walther",0.8,4.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Kyle Blauch, Orion Yant, Tucker Walther",30.7,64.0,-18.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Orion Yant, Sean Wesolek, Tucker Walther",7.2,8.0,-2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
