@@ -6553,6 +6553,106 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                         for i, r_ in _sg.iterrows()) + "</tbody></table></div></details>")
         except Exception as _spe:
             print(f"  (play call summary not shown: {type(_spe).__name__}: {_spe})", flush=True)
+        # CONFIRMED CHANGE (requested 11/19: "create an expandable section that lists things that you believe are
+        # tagged incorrectly like these. And if possible can you make a link to the plays in the application or in
+        # Synergy"). Two checks, and they are NOT equally sure of themselves, so the table says which is which:
+        #   1. the call names a team that did not have the ball -- a contradiction, the Ripon Motion #1 case;
+        #   2. the call is one the OTHER side runs often (3+ possessions) and we have at most 2 -- a question,
+        #      not a verdict, since "Stagger" and "BLOB Motion" are words anyone can use.
+        # Nothing is corrected here: a coach's answer is only ever questioned out loud, with the clip named and a
+        # way to open it.
+        def _mistag_rows(for_us):
+            _cl = _pcc_all
+            if not isinstance(_cl, pd.DataFrame) or _cl.empty or "play_call" not in _cl.columns:
+                return []
+            _cl = _cl[_cl["play_call"].notna() & _cl.get("offense_team", pd.Series(dtype=object)).notna()]
+            if _cl.empty:
+                return []
+            _mine = _cl["offense_team"].astype(str) == _SB_UWW
+            _side = _cl[_mine] if for_us else _cl[~_mine]
+            if _side.empty:
+                return []
+
+            def _tword(t):
+                for _w in re.split(r"[^A-Za-z]+", str(t or "")):
+                    if len(_w) > 3 and _w.lower() not in ("college", "university", "state", "saint"):
+                        return _w.lower()
+                return ""
+
+            _teams = {_tword(x) for x in _cl["offense_team"].dropna().unique()}
+            _teams |= {_tword(x) for x in _cl.get("opponent", pd.Series(dtype=object)).dropna().unique()}
+            _teams.discard("")
+            # Counted WITHIN A GAME, not across the season. Season-wide this flagged "Flow", "Set", "5 Out",
+            # "SLOB Motion" -- words every team in the country uses -- and a list of noise is a list nobody
+            # opens. In ONE game, the other team running a call three or more times while this side has it
+            # once or twice is a real question about those one or two.
+            _oth = _cl[~_cl.index.isin(_side.index)]
+            _other_uses = _oth.groupby([_oth["game_code"].astype(str), _oth["play_call"].astype(str)]).size()
+            _own_uses = _side.groupby([_side["game_code"].astype(str), _side["play_call"].astype(str)]).size()
+            _out = []
+            for _, _r in _side.iterrows():
+                _call = str(_r.get("play_call") or "").strip()
+                if not _call:
+                    continue
+                _own = str(_r.get("offense_team") or "")
+                _first = _tword(_call.split()[0])
+                _why, _sure = "", 0
+                if _first and _first in _teams and _first not in re.sub(r"[^a-z]", " ", _own.lower()):
+                    _why = f"names {_call.split()[0]}, but {_sb_strip_mascot(_own)} had the ball"
+                    _sure = 2
+                else:
+                    _gk = (str(_r.get("game_code") or ""), _call)
+                    _them, _usn = int(_other_uses.get(_gk, 0)), int(_own_uses.get(_gk, 0))
+                    if _them >= 3 and _usn <= 2:
+                        _why = (f"the other team ran this {_them} times in this game; "
+                                f"{'we have' if for_us else 'they have'} it {_usn}")
+                        _sure = 1
+                if not _why:
+                    continue
+                _out.append({"clip": str(_r.get("clip_number") or "").strip(),
+                             "game": str(_r.get("game_code") or "").strip(),
+                             "call": _call, "why": _why, "sure": _sure,
+                             "when": str(_r.get("video_start_s") or "").strip()})
+            _out.sort(key=lambda d_: (-d_["sure"], d_["game"], d_["clip"]))
+            return _out
+
+        def _mistag_details(for_us):
+            _rows = _mistag_rows(for_us)
+            if not _rows:
+                return ""
+            _syn = {}
+            try:
+                import json as _mt_json          # this section has no json import of its own
+                with open(os.path.join(globals().get("INPUT_DIR", "./inputs"), "_synergy_ids.json"),
+                          encoding="utf-8") as _sfh:
+                    for _gid, _g in (_mt_json.load(_sfh).get("games") or {}).items():
+                        if _g.get("name"):
+                            _syn[str(_g["name"])] = str(_gid)
+            except Exception:
+                pass
+            _tr = []
+            for _d in _rows[:40]:
+                _open = app_link("App", page="analytics", game=_d["game"], clip=_d["clip"])
+                _sid = _syn.get(_d["game"])
+                if _sid:
+                    _open += (f' <a class="applink" href="https://apps.synergysports.com/basketball/games/'
+                              f'{_sb_esc(_sid)}/breakdown"{_SB_NEWTAB}>Synergy &rarr;</a>')
+                _mark = "❗" if _d["sure"] == 2 else "?"
+                _tr.append(f'<tr><td class="t1">{_mark}</td><td class="t1">{_sb_esc(_d["clip"])}</td>'
+                           f'<td class="l">{_sb_esc(_d["game"])}</td><td class="l">{_sb_esc(_d["call"])}</td>'
+                           f'<td class="l">{_sb_esc(_d["why"])}</td><td class="l">{_open}</td></tr>')
+            _n2 = sum(1 for _d in _rows if _d["sure"] == 2)
+            return ('<details class="ob-det"><summary>Possibly mis-tagged (' + str(len(_rows)) + ')</summary>'
+                    '<div class="card"><p class="mini">Tagged answers that argue with the play-by-play. '
+                    + (f'<b>❗ {_n2}</b> contradict it outright; ' if _n2 else "")
+                    + 'a <b>?</b> is only a question. Nothing here is corrected automatically — open the clip '
+                      'and retag it if it is wrong.</p>'
+                      '<table class="ob-tbl"><thead><tr><th class="t1"></th><th class="t1">Clip</th>'
+                      '<th class="l">Game</th><th class="l">Tagged as</th><th class="l">Why it looks wrong</th>'
+                      '<th class="l">Open</th></tr></thead><tbody>' + "".join(_tr) + '</tbody></table></div></details>')
+
+        add(_mistag_details(_us))
+
         add('<details class="ob-det"><summary>Show the full table (situation \u203a formation \u203a play call)</summary>')
         add('<div class="card"><table class="ob-tbl"><colgroup><col style="width:4%"><col style="width:9%"><col style="width:12%">'
             '<col style="width:12%"><col style="width:6%"><col style="width:6%"><col style="width:15%"><col style="width:10%">'

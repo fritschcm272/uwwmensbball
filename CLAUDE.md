@@ -2730,3 +2730,28 @@ numbers so someone can re-check them in the app. The coach's answer on the clip 
 `~/wmtest/foreign_t.py` on the real table: exactly 2 of 2,177 clips flagged (88 and 95), Ripon's own 25
 "Ripon Motion" clips on Ripon possessions untouched, and our own vocabulary (Zoom, Cheetah, Pistol, Snap 30,
 Motion -- 46 clips) untouched.
+
+
+**CONFIRMED CHANGE (11/19, 87_..._brief_for_upcoming.py, 565,278 b): "Possibly mis-tagged" inside the
+offense detail.** Requested: "create an expandable section that lists things that you believe are tagged
+incorrectly like these. And if possible can you make a link to the plays in the application or in Synergy."
+A `<details>` sits with the other collapsibles under HOW WE RUN OFFENSE / HOW <OPP> RUNS OFFENSE, built by
+`_mistag_rows()` / `_mistag_details()` from `_pcc_all` -- so it works off the clips table as it stands and
+does NOT wait for 47's new `call_names_other_team` column.
+
+Two checks, and the table says which is which, because they are not equally sure:
+ - **!!** the call's first word names a team that did not have the ball ("Ripon Motion #1" while
+   UW-Whitewater had it). A contradiction.
+ - **?** within ONE game, the other team ran that call 3+ times and this side has it once or twice. A
+   question, not a verdict.
+
+The second check was season-wide at first and flagged "Flow", "Set", "5 Out", "SLOB Motion" -- words every
+team uses -- which is how a list stops being worth opening. Counting inside a single game cut the opponent
+side from 9 to 3 and kept the real ones (Ripon ran Stagger 12 times in that game; we have it twice).
+
+Each row links to the app (`page=analytics&game=<game_code>&clip=<n>`; the app has no per-clip route yet, so
+it lands on Analytics and carries the params) and to Synergy's breakdown page for that game, from
+`inputs/_synergy_ids.json` keyed on the game name, which matches game_code ("Ripon@UWWhitewater"). Nothing
+is corrected: a coach's answer is only ever questioned out loud. Traps: this section has no `json` import of
+its own (import it inside the function), and these helpers sit at 12-space indentation inside another
+function. `~/wmtest/mistag_t.py` renders it from the real clips.

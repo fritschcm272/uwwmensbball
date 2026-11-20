@@ -2929,6 +2929,16 @@
    "away": "Dallas Baptist Patriots",
    "away_short": "DallasBaptist",
    "away_id": "54457dd5300969b132fd0022"
+  },
+  "6ad7a102a35d5a7b0bed1f4d": {
+   "date": "2026-11-20",
+   "name": "AlabamaState@FresnoState",
+   "home": "Fresno State Bulldogs",
+   "home_short": "FresnoState",
+   "home_id": "54457dd4300969b132fcff09",
+   "away": "Alabama State Hornets",
+   "away_short": "AlabamaState",
+   "away_id": "54457dd4300969b132fcffd2"
   }
  },
  "teams": {
@@ -3694,6 +3704,8 @@
   "Harding Bisons": "54457dd5300969b132fd0044",
   "Harding": "54457dd5300969b132fd0044",
   "Dallas Baptist Patriots": "54457dd5300969b132fd0022",
-  "DallasBaptist": "54457dd5300969b132fd0022"
+  "DallasBaptist": "54457dd5300969b132fd0022",
+  "Alabama State Hornets": "54457dd4300969b132fcffd2",
+  "AlabamaState": "54457dd4300969b132fcffd2"
  }
 }
