@@ -1302,13 +1302,23 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-19T17:37:48,offball_coverage,Off-ball coverage,,,Over,,106,,False,,,,2026-11-19T17:37:47
 2026-11-19T17:37:48,screener,Screener,,,Seth Bunders,,156,,False,,0.0,3.0,2026-11-19T17:37:47
 2026-11-19T17:37:48,screen_defender,Screen defender,,,#5,,93,,False,,,,2026-11-19T17:37:47
-2026-11-19T18:30:59,formation,Formation,,,5 Out,,637,nan,False,nan,0.0,7.0,2026-11-19T18:30:59
-2026-11-19T18:30:59,play_call,Play call,,,Motion,,892,nan,False,nan,0.0,11.0,2026-11-19T18:30:59
-2026-11-19T18:30:59,defense,Defense,,,Man-to-Man,,1613,nan,False,nan,0.0,20.0,2026-11-19T18:30:59
-2026-11-19T18:30:59,press,Press,,,None,,1615,nan,False,nan,0.0,20.0,2026-11-19T18:30:59
-2026-11-19T18:30:59,situation,Situation,,,Half court,,1988,nan,False,nan,0.0,20.0,2026-11-19T18:30:59
-2026-11-19T18:30:59,primary_action,Main action,,,Ball Screen,,635,nan,False,nan,0.0,4.0,2026-11-19T18:30:59
-2026-11-19T18:30:59,ball_screen_coverage,Ball-screen coverage,,,Switch,,238,nan,False,nan,0.0,4.0,2026-11-19T18:30:59
-2026-11-19T18:30:59,offball_coverage,Off-ball coverage,,,Over,,106,nan,False,nan,,,2026-11-19T18:30:59
-2026-11-19T18:30:59,screener,Screener,,,Collin Madson,,160,nan,False,nan,0.0,3.0,2026-11-19T18:30:59
-2026-11-19T18:30:59,screen_defender,Screen defender,,,#5,,93,nan,False,nan,,,2026-11-19T18:30:59
+2026-11-19T18:30:59,formation,Formation,,,5 Out,,637,,False,,0.0,7.0,2026-11-19T18:30:59
+2026-11-19T18:30:59,play_call,Play call,,,Motion,,892,,False,,0.0,11.0,2026-11-19T18:30:59
+2026-11-19T18:30:59,defense,Defense,,,Man-to-Man,,1613,,False,,0.0,20.0,2026-11-19T18:30:59
+2026-11-19T18:30:59,press,Press,,,,,1615,,False,,0.0,20.0,2026-11-19T18:30:59
+2026-11-19T18:30:59,situation,Situation,,,Half court,,1988,,False,,0.0,20.0,2026-11-19T18:30:59
+2026-11-19T18:30:59,primary_action,Main action,,,Ball Screen,,635,,False,,0.0,4.0,2026-11-19T18:30:59
+2026-11-19T18:30:59,ball_screen_coverage,Ball-screen coverage,,,Switch,,238,,False,,0.0,4.0,2026-11-19T18:30:59
+2026-11-19T18:30:59,offball_coverage,Off-ball coverage,,,Over,,106,,False,,,,2026-11-19T18:30:59
+2026-11-19T18:30:59,screener,Screener,,,Collin Madson,,160,,False,,0.0,3.0,2026-11-19T18:30:59
+2026-11-19T18:30:59,screen_defender,Screen defender,,,#5,,93,,False,,,,2026-11-19T18:30:59
+2026-11-19T19:35:25,formation,Formation,,,,,637,nan,False,nan,,,2026-11-19T18:30:59
+2026-11-19T19:35:25,play_call,Play call,,,,,892,nan,False,nan,,,2026-11-19T18:30:59
+2026-11-19T19:35:25,defense,Defense,,,,,1613,nan,False,nan,,,2026-11-19T18:30:59
+2026-11-19T19:35:25,press,Press,,,,,1615,nan,False,nan,,,2026-11-19T18:30:59
+2026-11-19T19:35:25,situation,Situation,,,,,1988,nan,False,nan,,,2026-11-19T18:30:59
+2026-11-19T19:35:25,primary_action,Main action,,,,,635,nan,False,nan,,,2026-11-19T18:30:59
+2026-11-19T19:35:25,ball_screen_coverage,Ball-screen coverage,,,,,238,nan,False,nan,,,2026-11-19T18:30:59
+2026-11-19T19:35:25,offball_coverage,Off-ball coverage,,,,,106,nan,False,nan,,,2026-11-19T18:30:59
+2026-11-19T19:35:25,screener,Screener,,,,,160,nan,False,nan,,,2026-11-19T18:30:59
+2026-11-19T19:35:25,screen_defender,Screen defender,,,,,93,nan,False,nan,,,2026-11-19T18:30:59

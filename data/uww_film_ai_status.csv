@@ -1,20 +1,20 @@
 area,measure,value,detail,games_captured,clips_captured,games_tagged,clips_tagged,games_tracked,clips_tracked,frames_tracked,player_checks,plays_checked,title_answers,plays_title_reviewed,players_from_evidence,player_slots,review_overrides_title
-Players,"Real player (not a referee, coach or fan)",858 of 1655 (52%),every box a coach checked,22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Players,Right team,763 of 858 (89%),boxes that were players; 'wrong team' counts against,22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Players,Right name -- all names the film gave,"251 of 374 (67%) -- 79 not a player, 43 really someone else, 1 wrong team",named boxes a coach checked,22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Players,Right name -- named by jersey number,"198 of 274 (72%) -- 43 not a player, 33 really someone else",,22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Players,Right name -- named by appearance,"4 of 40 (10%) -- 33 not a player, 3 really someone else",,22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Players,Right name -- named by coach checked,39 of 39 (100%),,22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Players,Right name -- named by followed player,9 of 9 (100%),,22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Players,Right name -- named by same player as your check,1 of 5 (20%) -- 4 really someone else,,22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Players,Right name -- named by Synergy,"0 of 4 (0%) -- 2 really someone else, 1 wrong team, 1 not a player",,22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Players,Right name -- named by lineup matching,"0 of 3 (0%) -- 2 not a player, 1 really someone else",,22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Automatic Title,Situation,coach reviews 0 of 406 (0%),"plays the model never trained on, or coaches' right/wrong marks",22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Automatic Title,Formation,coach reviews 0 of 155 (0%),"plays the model never trained on, or coaches' right/wrong marks",22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Automatic Title,Play call,coach reviews 0 of 235 (0%),"plays the model never trained on, or coaches' right/wrong marks",22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Automatic Title,Primary action,coach reviews 77 of 242 (32%),"plays the model never trained on, or coaches' right/wrong marks",22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Automatic Title,Defense,coach reviews 0 of 251 (0%),"plays the model never trained on, or coaches' right/wrong marks",22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Automatic Title,Press,coach reviews 0 of 29 (0%),"plays the model never trained on, or coaches' right/wrong marks",22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Automatic Title,Ball screen coverage,coach reviews 17 of 112 (15%),"plays the model never trained on, or coaches' right/wrong marks",22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Automatic Title,Offball coverage,coach reviews 4 of 27 (15%),"plays the model never trained on, or coaches' right/wrong marks",22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
-Automatic Title,Screen defender,coach reviews 3 of 41 (7%),"plays the model never trained on, or coaches' right/wrong marks",22,3940,17,2369,13,1737,169235,1655,246,3058,877,0,20,True
+Players,"Real player (not a referee, coach or fan)",858 of 1655 (52%),every box a coach checked,23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Players,Right team,763 of 858 (89%),boxes that were players; 'wrong team' counts against,23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Players,Right name -- all names the film gave,"251 of 374 (67%) -- 79 not a player, 43 really someone else, 1 wrong team",named boxes a coach checked,23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Players,Right name -- named by jersey number,"198 of 274 (72%) -- 43 not a player, 33 really someone else",,23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Players,Right name -- named by appearance,"4 of 40 (10%) -- 33 not a player, 3 really someone else",,23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Players,Right name -- named by coach checked,39 of 39 (100%),,23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Players,Right name -- named by followed player,9 of 9 (100%),,23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Players,Right name -- named by same player as your check,1 of 5 (20%) -- 4 really someone else,,23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Players,Right name -- named by Synergy,"0 of 4 (0%) -- 2 really someone else, 1 wrong team, 1 not a player",,23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Players,Right name -- named by lineup matching,"0 of 3 (0%) -- 2 not a player, 1 really someone else",,23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Automatic Title,Situation,coach reviews 0 of 406 (0%),"plays the model never trained on, or coaches' right/wrong marks",23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Automatic Title,Formation,coach reviews 0 of 155 (0%),"plays the model never trained on, or coaches' right/wrong marks",23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Automatic Title,Play call,coach reviews 0 of 235 (0%),"plays the model never trained on, or coaches' right/wrong marks",23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Automatic Title,Primary action,coach reviews 77 of 242 (32%),"plays the model never trained on, or coaches' right/wrong marks",23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Automatic Title,Defense,coach reviews 0 of 251 (0%),"plays the model never trained on, or coaches' right/wrong marks",23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Automatic Title,Press,coach reviews 0 of 29 (0%),"plays the model never trained on, or coaches' right/wrong marks",23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Automatic Title,Ball screen coverage,coach reviews 17 of 112 (15%),"plays the model never trained on, or coaches' right/wrong marks",23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Automatic Title,Offball coverage,coach reviews 4 of 27 (15%),"plays the model never trained on, or coaches' right/wrong marks",23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
+Automatic Title,Screen defender,coach reviews 3 of 41 (7%),"plays the model never trained on, or coaches' right/wrong marks",23,4111,18,2540,14,1908,181236,1655,246,3058,877,0,20,True
