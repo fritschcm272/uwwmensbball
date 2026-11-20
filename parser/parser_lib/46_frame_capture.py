@@ -1680,22 +1680,38 @@ def _vx_make_export(game_id, label):
     if not link:
         return None
     title = (parse_qs(urlparse(link).query).get("title") or [""])[0]
-    t0 = time.time()
+    # CONFIRMED BUG (fixed 11/19; Corey, on the first successful Elmhurst export: "I don't think it waited
+    # long enough for them to be exported"). The 180-second budget started HERE, before Synergy Editor had
+    # even been opened -- and opening it is the slow part: 17 s for the window, then a fixed 150 s to let the
+    # game load, then the export dialog. By the time OK was pressed the budget was spent, so the wait looked
+    # once, printed "never wrote an Export.csv", and gave up. Synergy wrote it about two minutes later and
+    # finished all 226 clips ten minutes after that -- a complete export the run had already walked away from.
+    # The clock now starts when OK is pressed, the budget is SYNERGY_EXPORT_CSV_WAIT_S (15 min by default,
+    # since a full game is big), and the wait says where it is rather than sitting silent.
     if not _sst_editor_export(link, _vx_root(), game_id):
         return None
-    folder = None
-    while time.time() - t0 < 180 and folder is None:          # the folder Synergy Editor made (named after the game)
+    t0 = time.time()
+    _csv_wait = float(globals().get("SYNERGY_EXPORT_CSV_WAIT_S", 900))
+    folder, _said = None, 0
+    while time.time() - t0 < _csv_wait and folder is None:    # the folder Synergy Editor made (named after the game)
         exact = os.path.join(_vx_root(), title)
         if title and os.path.isfile(os.path.join(exact, "Export.csv")):
             folder = exact
             break
         new = [os.path.dirname(f) for f in glob.glob(os.path.join(_vx_root(), "*", "Export.csv"))
-               if os.path.getmtime(f) >= t0 - 5]
+               if os.path.getmtime(f) >= t0 - 60]
         folder = max(new, key=os.path.getmtime) if new else None
         if folder is None:
+            _mins = int((time.time() - t0) // 60)
+            if _mins > _said:
+                _said = _mins
+                print(f"  [export] waiting for Synergy Editor to write Export.csv -- {_mins} of "
+                      f"{int(_csv_wait // 60)} min", flush=True)
             time.sleep(3)
     if folder is None:
-        print("  [export] Synergy Editor never wrote an Export.csv -- check the export in Synergy Editor.", flush=True)
+        print(f"  [export] Synergy Editor never wrote an Export.csv in {int(_csv_wait // 60)} min -- it may still "
+              f"be exporting. Check Synergy Editor; if it finishes on its own, the next run finds the folder "
+              f"and uses it (SYNERGY_EXPORT_CSV_WAIT_S raises the wait).", flush=True)
         return None
     _vx_registry({game_id: {"folder": os.path.basename(folder), "title": title, "label": label,
                             "exported": pd.Timestamp.now().isoformat(timespec="seconds")}})

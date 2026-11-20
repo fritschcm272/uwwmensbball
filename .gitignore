@@ -17,3 +17,10 @@ data/play_review/**/*.mp4
 data/play_review/**/*_poster.jpg
 # Film Tagging play videos kept between runs (parser 55c _pr_clip_cached) -- rebuilt from the film if deleted
 parser/inputs/_clip_cache/
+# The kept browser profile (parser 02 _bootstrap): Synergy's remembered-device token lives here, so the
+# emailed two-factor code is only needed once. Machine-specific and large -- never committed.
+parser/inputs/_browser_profile/
+# The one-time code, typed in while a run waits (parser 27 login_to_synergy)
+parser/inputs/_synergy_code.txt
+parser/inputs/_synergy_code.txt.used
+parser/inputs/_synergy_lockout.txt

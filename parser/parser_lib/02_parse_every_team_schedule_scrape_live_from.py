@@ -12,6 +12,7 @@
 # (template for future games).
 import asyncio
 import concurrent.futures
+import os
 import subprocess
 import time
 import traceback
@@ -742,8 +743,25 @@ def run_in_fastscout_session(fn):
         try:
             sync_playwright = _ensure_playwright_ready()
             playwright = sync_playwright().start()
-            browser = playwright.chromium.launch(headless=True)
-            page = browser.new_page()
+            # CONFIRMED CHANGE (11/19): open the browser on a PROFILE THAT SURVIVES BETWEEN RUNS. Every run
+            # used to get a brand-new throwaway profile, so Synergy saw an unrecognised device every time and
+            # (since they turned on two-factor) emailed a security code every time -- a code no unattended run
+            # can answer, which is what stopped the 11/18 Elmhurst export three days running. With a kept
+            # profile, the "Remember My Login" token from one successful sign-in (see login_to_synergy, which
+            # now ticks that box and can answer the code once) is still there on the next run. If the profile
+            # can't be opened -- most often a second run already has it, Chromium locks it -- fall back to the
+            # old throwaway browser so the run still happens, and say why the code will be asked for again.
+            _prof = globals().get("FASTSCOUT_PROFILE_DIR") or os.path.join(INPUT_DIR, "_browser_profile")
+            try:
+                os.makedirs(_prof, exist_ok=True)
+                browser = playwright.chromium.launch_persistent_context(_prof, headless=True)
+                page = browser.pages[0] if browser.pages else browser.new_page()
+            except Exception as _prof_err:
+                print(f"    [session] the saved browser profile ({_prof}) could not be opened "
+                      f"({type(_prof_err).__name__}: {_prof_err}) -- using a throwaway one for this run, so "
+                      f"Synergy will ask for an emailed code again.", flush=True)
+                browser = playwright.chromium.launch(headless=True)
+                page = browser.new_page()
             _ensure_fastscout_login(page)
             _fastscout_session.update(playwright=playwright, browser=browser, page=page)
         except BaseException:

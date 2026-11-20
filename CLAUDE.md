@@ -2435,3 +2435,187 @@ clutch film at all or no group with 3 possessions at each end, and names the clo
 which only 4 are offensive). Their 3-man card still qualifies, because a trio collects possessions from every
 five it sits in -- that asymmetry is expected, not a bug. `.lc-empty` dims the headline. `cluunit_t.py` now
 asserts the card always renders.
+
+
+**OPEN (11/19): the 11/18 UWW @ Elmhurst game has no film, because Synergy will not let the parser log in.**
+Everything from the play-by-play is in (schedule L 65-73, 474 pbp events, box score, 58 lineup stints, 23
+clutch events). Nothing from Synergy is: no clips, no frames, no play calls, no tracking, no Film Tagging
+batch. The run picks the game correctly -- "game pages still to capture -- 1 of UWW's" -- then:
+
+    [export] 2026-11-18 Elmhurst Bluejays: no Synergy export yet -- exporting it with Synergy Editor ...
+    [editor] signing in to Synergy...
+    [synergy-login] username field matched: name='Username' id='Username' type='text'
+    [synergy-login] password field matched: name='Password' id='Password'
+    [export] 2026-11-18 Elmhurst Bluejays: export failed (RuntimeError: Synergy login did not leave the
+             login page ... Timeout 60000ms exceeded)
+
+Both fields are found and filled and the Login button clicks without error; the page simply never leaves
+/Account/Login. Login timeouts appear in every log since 11/17, but cost nothing until 11/19, the first run
+needing a NEW export (every other game already had its export folder). There is no
+`UWWhitewater@Elmhurst - Nov 18, 2026` folder in F:\Backups\uwwmensbball_tracking to fall back on.
+
+The login page carries a hidden `DeviceHash` (empty, filled by the page's own script) and a "Setup phone
+number for MFA code via text (SMS)" link, so an unrecognised device raising an MFA challenge is as likely as
+a wrong password -- and the logs could not tell them apart, because the saved diagnostic HTML is the PRISTINE
+page, captured before anything is typed.
+
+Fixed that blind spot in 27_shared_video_tagging_helper_functions.py (24,661 b): `_page_error_text()` now also
+reads `.validation-summary-errors` / `.field-validation-error` / `.text-danger` (ASP.NET Identity's own
+rejection markup, which none of the three original selectors matched), and the failure branch saves
+`Synergy - Login Page (after submit).html` and appends to the error whether a one-time-code field has appeared
+and whether DeviceHash is still empty. The next failed run should name the cause instead of only the symptom.
+
+Workaround meanwhile: export the game by hand in Synergy Editor (Ctrl+E) into
+F:\Backups\uwwmensbball_tracking as `UWWhitewater@Elmhurst - Nov 18, 2026`. With the folder present the
+parser uses it and never logs in -- the same path the Thiel message recommends.
+
+
+**RESOLVED (11/19): Synergy turned on two-factor by email, and the parser could not answer it.** Corey's
+screenshot: "Two Factor Authentication -- We sent a security code by email to F***@gmail.com", with a Code
+box and LOGIN / RESEND CODE / CANCEL. That form POSTS BACK TO THE SAME /Account/Login URL, which is why
+`wait_for_url("/Account/Login" not in url)` could only sit there for 60s and report "did not leave the login
+page". Correct credentials the whole time.
+
+Two things were needed, because either alone is useless:
+
+1. **A browser profile that survives between runs** (02_parse_every_team_schedule_scrape_live_from.py,
+   118,962 b). `_bootstrap` used `chromium.launch(headless=True)` + `new_page()` -- a throwaway profile every
+   run, so Synergy saw an unrecognised device every run and emailed a new code every run. It now opens
+   `launch_persistent_context(FASTSCOUT_PROFILE_DIR or INPUT_DIR/_browser_profile)`. If the profile can't be
+   opened (a second run holds the Chromium lock) it falls back to the old throwaway browser and SAYS so, so
+   the run still happens. This is the session EVERY FastScout step shares -- schedules, rosters,
+   play-by-play, the editor export -- so watch it after the first few runs.
+2. **Answering the code once** (27_shared_video_tagging_helper_functions.py, 29,225 b). `login_to_synergy`
+   now ticks **Remember My Login** before submitting (without it no device token is issued at all, so a kept
+   profile would still be challenged forever), then waits for EITHER outcome -- leaving the login URL, or a
+   code field appearing. On a code field it takes the digits from `SYNERGY_MFA_CODE` if the notebook set one,
+   otherwise polls `inputs/_synergy_code.txt` for `SYNERGY_MFA_WAIT_S` seconds (default 300), submits, and
+   renames the file to `.used` so a stale code is never replayed. A FILE and not `input()`: this runs on the
+   Playwright worker thread, where the notebook's stdin is not reliable.
+
+`~/wmtest/synmfa_t.py` drives the function against a stub page through all four endings: plain sign-in
+(Remember ticked), two-factor answered from the file, two-factor answered from `SYNERGY_MFA_CODE`,
+two-factor with no code (its own error), and refused credentials (the old error, with the DeviceHash/MFA
+clues). .gitignore now excludes the profile folder and the code file.
+
+Expectation worth recording: the first run after this still asks for a code. Later runs should not, until
+Synergy expires the remembered device -- if the prompt comes back every single run, suspect the profile is
+not persisting (look for the "[session] the saved browser profile ... could not be opened" line) rather than
+the login code.
+
+
+**CONFIRMED BUG (introduced and fixed 11/19, within the hour): the two-factor handling sent a flood of codes
+and got the account locked out.** Corey: "It sent me a ton of codes and there is no file yet for me to put it
+in." The 15:18 run tried ten sign-ins; `Synergy - Login Page (after submit).html` -- the diagnostic added
+earlier the same day -- caught Synergy's own verdict: **"Error. Too many two-factor authentication attempts.
+Please try again in 60 minutes."**
+
+Two faults, the second being what turned one bad attempt into ten:
+ 1. The success test was still `"/Account/Login" not in page.url`. The two-factor form lives at its OWN
+    /Account/ URL, so the moment the submit navigated there this function returned SUCCESS. The caller then
+    found "0 game(s)" (never actually signed in) and tried again -- each attempt emailing a fresh code and
+    walking away from it. The earlier symptom (a 60s timeout) only looked different because without
+    "Remember My Login" ticked the page used to post back to the same URL.
+ 2. Nothing read the page's own error text during the wait, so the lockout was invisible and the retries
+    kept feeding the counter that caused it.
+
+Fixes in 27_shared_video_tagging_helper_functions.py (32,580 b):
+ - The code field is looked for BEFORE any success test; a code page can never read as signed in.
+ - Success means leaving the identity provider altogether (`auth.synergysportstech.com` and `/Account/` both
+   gone), not leaving one page of it.
+ - A lockout ("too many" / "locked" / "try again in") raises at once and is written to
+   `inputs/_synergy_lockout.txt`; while that timestamp is in the future every later call -- in this process
+   AND in the next run -- refuses before touching the form. Delete the file to override. The rule to keep in
+   mind: an attempt made while locked out emails another code and RESTARTS their 60 minutes.
+ - `inputs/_synergy_code.txt` is created empty when the wait begins, so there is something to paste into.
+
+`~/wmtest/synmfa_t.py` now covers eight endings, including the two-factor page on its own URL (must not read
+as success), the lockout (raised, persisted, and the next call submits NOTHING), and the code file being
+created. A lockout file was written by hand at 15:25 local, expiring 16:22, to stop the clock being restarted
+before Synergy's own window closes.
+
+
+**CONFIRMED BUG (fixed 11/19, third pass -- the one that actually mattered): the code field was never found,
+because the selector could not be parsed.** The 17:05 run reached the right page -- the error names it:
+`https://auth.synergysportstech.com/Account/VerifyCode?userId=...&rememberLogin=True&sentTwoFactor=None` --
+and the saved after-submit HTML shows the field sitting there as `<input id="Code" name="Code"
+placeholder="Code" inputmode="numeric">`, with buttons Login / Resend code. The prompt to paste a code never
+printed once.
+
+Cause: the selector list was written with CSS Level 4's case-insensitivity flag, `input[name="Code" i]`.
+Playwright's own selector parser rejects it, so the whole comma-joined locator raised on every call -- and
+`_code_field()` swallowed that in a bare `except: return None`, reporting "no code field" sixty times while
+the field was plainly on screen. The polling loop ran out, the 5s fallback raised, the caller retried, and
+another code was emailed.
+
+Fixed: no `i` flag anywhere, selectors tried ONE AT A TIME (`input#Code`, `input[name="Code"]`,
+`input[autocomplete="one-time-code"]`, `input[inputmode="numeric"]`, and the TwoFactor/VerifyCode/Otp
+variants), so a single bad selector cannot blind the rest, and the first failure of each prints
+`the selector ... is unusable` instead of vanishing. 27_shared_video_tagging_helper_functions.py is 33,742 b.
+
+Two rules worth keeping: **never put the `i` flag in a Playwright selector**, and **never swallow a selector
+error** -- a silent `except` here cost three rounds of emailed codes and an account lockout. The
+"Remember My Login" tick did work: the VerifyCode URL carries `rememberLogin=True`.
+
+Also note for next time: a parser_lib section is exec'd when the run STARTS, so a fix landing mid-run does
+not reach the run in progress. It has to be stopped and restarted.
+
+
+**NEW (11/19): parser/synergy_login.ipynb -- the first-time Synergy sign-in, done by hand.** Requested after
+three rounds of emailed codes: "can you just write a new notebook that does this login for the first time."
+Four cells. It opens a VISIBLE Chromium on the same profile the parser uses
+(`inputs/_browser_profile`, or FASTSCOUT_PROFILE_DIR), fills SYNERGY_USERNAME / SYNERGY_PASSWORD from .env
+with "Remember My Login" ticked, then stops and waits up to 10 minutes while YOU type the emailed code in
+the window. Cell 2 reopens the same profile HEADLESS, the way the parser does, and says whether it is still
+signed in -- so the profile is proved before a parser run depends on it.
+
+Notes worth keeping: the Playwright sync API will not run on a Jupyter kernel's main thread (it already has
+an asyncio loop), so the notebook does its work on a worker thread with the Windows Proactor policy, the
+same shape as run_in_fastscout_session. Closing the context is what flushes the profile to disk, so both
+cells close in a `finally`. And Chromium LOCKS a profile folder: stop any parser run before using this, or
+the parser falls back to a throwaway profile and the codes start again.
+
+
+**RESOLVED (11/19): the Synergy sign-in works.** The 17:21 models run signed in, found the game, opened
+Synergy Editor and pressed OK:
+
+    [editor] game title on Synergy: UWWhitewater@Elmhurst - Nov 18, 2026
+    [export] OK pressed -- Synergy Editor is exporting the clips to F:\Backups\uwwmensbball_tracking
+
+**CONFIRMED BUG (fixed 11/19, 46_frame_capture.py, 200,818 b): the Export.csv wait started before Synergy
+Editor was even opened.** Corey: "I don't think it waited long enough for them to be exported." In
+`_vx_make_export`, `t0 = time.time()` sat ABOVE `_sst_editor_export(...)`, and the budget was a flat 180 s.
+Opening the editor is the slow part -- 17 s for the window, a fixed 150 s to let the game load, then the
+dialog -- so the budget was gone by the time OK was pressed: the wait looked once, printed "never wrote an
+Export.csv", and returned None. Synergy wrote Export.csv about two minutes later and finished all 226 clips
+(3.2 GB) ten minutes after that. A complete export the run had walked away from.
+
+Fix: the clock starts when OK is pressed, the budget is `SYNERGY_EXPORT_CSV_WAIT_S` (default 900 s), the
+wait prints "waiting for Synergy Editor to write Export.csv -- N of 15 min" as it goes, and the give-up
+message now says the export may still be running and that the next run will find the folder.
+`~/wmtest/vxwait_t.py` drives the function on a virtual clock: real-world timing (175 s to open, CSV 120 s
+after OK) now succeeds where it used to fail at once; an 8-minute CSV is still caught; and a dead export
+still gives up and registers nothing.
+
+No re-export is needed for Elmhurst: `_vx_find_export` matches a folder by date plus team words, and
+`UWWhitewater@Elmhurst - Nov 18, 2026` matches "2026-11-18 Elmhurst Bluejays" (elmh + whitewater in the
+folder name, date in range), so the next run adopts the finished export.
+
+Housekeeping noticed in passing: `parser_lib/46_frame_capture-1.py` (141 KB, 11/17) is a stray copy. Nothing
+loads it -- run_section resolves "46_frame_capture" -- but it is confusing next to the real one.
+
+
+**HOUSEKEEPING (11/19): the stray parser_lib copies are out.** Two of them, both dated 11/17 (the move to
+F:), not one: `46_frame_capture-1.py` (141 KB against the real 200 KB) and `00_parser_modes-1.py`. Moved to
+`parser/Claude outputs/_superseded_parser_lib/` rather than deleted -- git records it as a rename, so they
+are recoverable.
+
+They were inert, and it is worth knowing WHY, because the answer says what would have been dangerous:
+sections are resolved by name. `run_parser` executes the notebook's cells, each naming its section through
+`run_section("46_frame_capture")`, and `_pm_core_fingerprint` stats only the files those calls name. Nothing
+globs `parser_lib/*.py`. A stray is therefore invisible to the run -- but a stray that someone edits by
+mistake is invisible too, which is the real cost, and both these files were 1,000+ lines adrift.
+
+Still tracked and probably shouldn't be (not touched -- say the word): `.ipynb_checkpoints/` throughout,
+`__pycache__/*.pyc` (including parser_lib's, which any compile rewrites and dirties the working tree), and
+the older `-1` copies already sitting in `parser/Claude outputs/`.
