@@ -1571,6 +1571,7 @@ tr.dayhead td { background: var(--warhawk-light); color: var(--warhawk-purple); 
 .lcards.ktv-cards .lc-n a { color: inherit; }
 .lcards.ktv-cards .lc-t .ktv-n { font-size: 0.62rem; font-weight: 700; color: var(--dim); }
 .lcards .lc.lc-empty .lc-n { color: var(--dim); font-weight: 600; font-size: 0.95rem; }
+.photo-note { font-size: 0.56rem; line-height: 1.1; color: var(--dim); text-align: center; margin-top: 2px; max-width: 64px; overflow-wrap: anywhere; }
 .lcards.ktv-cards .lc-x.ktv-more { border-top: 0; padding-top: 0; margin-top: 5px; font-weight: 700; font-size: 0.74rem; }
 .lcards.ktv-cards .lc-x.ktv-more a { color: inherit; }
 .lcards.ktv-cards .lc-x.mini { font-weight: 400; color: var(--dim); }
@@ -2603,6 +2604,27 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
 
     _photo_stats = {"Opponent": [0, []], "UWW": [0, []]}
 
+    # CONFIRMED CHANGE (requested 11/19: "you could do a fall back of getting the roster pictures from the
+    # previous year ... Just make a note of that in the application and the scouting reports"). 82_ writes
+    # where each picture came from; a photo that is not from THIS season's report says so under the face,
+    # because an old picture of a player who has changed a lot is worse than useless if nobody knows it is old.
+    _sb_photo_src = {}
+    try:
+        _psrc = _sb_d("uww_player_image_sources")
+        if not _psrc.empty and {"player", "source"} <= set(_psrc.columns):
+            for _, _pr in _psrc.iterrows():
+                _sb_photo_src[_norm(_pr.get("player"))] = (str(_pr.get("source") or ""),
+                                                           str(_pr.get("detail") or ""))
+    except Exception:
+        pass
+
+    def _photo_note(name):
+        """"last season (2025-26)" / "hope.edu" -- or "" when it came from this season's report."""
+        _src, _det = _sb_photo_src.get(_norm(name), ("", ""))
+        if not _src or _src == "scouting report":
+            return ""
+        return f"{_src} ({_det})" if _det else _src
+
     def photo_cell(url, name=None, side=None):
         url = _sb_clean(url)
         if not url and name:
@@ -2614,8 +2636,12 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 _photo_stats[side][0] += 1
             else:
                 _photo_stats[side][1].append(str(name))
-        return (f'<img src="{_sb_esc(url)}" class="photo-thumb" alt="">' if url
-                else '<div class="photo-thumb photo-thumb-blank"></div>')
+        if not url:
+            return '<div class="photo-thumb photo-thumb-blank"></div>'
+        _note = _photo_note(name) if name else ""
+        return (f'<img src="{_sb_esc(url)}" class="photo-thumb" alt=""'
+                + (f' title="Photo: {_sb_esc(_note)}">' if _note else ">")
+                + (f'<div class="photo-note">{_sb_esc(_note)}</div>' if _note else ""))
 
     def bio_bits(r, extra=None):
         bits = []

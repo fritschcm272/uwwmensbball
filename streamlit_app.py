@@ -12354,6 +12354,24 @@ def render_upcoming_game():
                     return f"data:image/png;base64,{_b64}"
                 return _roster_photo_urls.get(_photo_name_key(player_name))
 
+            # CONFIRMED CHANGE (requested 11/19: "Just make a note of that in the application and the
+            # scouting reports"). The parser's 82_ falls back to last season's picture and then to the team's
+            # own athletics site, and writes where each one came from. A picture that is not from THIS
+            # season's report says so under the face -- an old photo nobody knows is old is worse than none.
+            _img_src_tbl = load_table("uww_player_image_sources")
+            _img_src_by_player = {}
+            if not _img_src_tbl.empty and {"player", "source"} <= set(_img_src_tbl.columns):
+                for _, _isr in _img_src_tbl.iterrows():
+                    _img_src_by_player[_photo_name_key(str(_isr.get("player") or ""))] = (
+                        str(_isr.get("source") or ""), str(_isr.get("detail") or ""))
+
+            def _player_img_note(player_name):
+                """"last season (2025-26)" / "team website (athletics.hope.edu)", or "" for this year's report."""
+                _src, _det = _img_src_by_player.get(_photo_name_key(player_name), ("", ""))
+                if not _src or _src == "scouting report":
+                    return ""
+                return f"{_src} ({_det})" if _det else _src
+
             def _render_computed_player_comparison(_pc_name):
                 """Comparable player worked out from box scores, when the parser table has no row.
 
@@ -12429,7 +12447,10 @@ def render_upcoming_game():
                 if _dlg_img:
                     _dlg_col_img, _dlg_col_info = st.columns([1, 3])
                     with _dlg_col_img:
+                        _dlg_note = _player_img_note(player_name)
                         st.markdown(f'<img src="{html.escape(_dlg_img)}" style="width:100px;height:125px;object-fit:cover;border-radius:8px;">', unsafe_allow_html=True)
+                        if _dlg_note:
+                            st.caption(f"Photo: {_dlg_note}")
                     with _dlg_col_info:
                         st.markdown(f"### {jersey_str}{player_name}")
                         if info_parts:
@@ -12663,7 +12684,11 @@ def render_upcoming_game():
                                 with st.container(border=True):
                                     _p_img = _get_player_img_src(name)
                                     if _p_img:
-                                        st.markdown(f'<div style="text-align:center;margin-bottom:6px;"><img src="{html.escape(_p_img)}" style="width:60px;height:75px;object-fit:cover;border-radius:6px;"></div>', unsafe_allow_html=True)
+                                        _p_note = _player_img_note(name)
+                                        st.markdown(f'<div style="text-align:center;margin-bottom:6px;"><img src="{html.escape(_p_img)}" style="width:60px;height:75px;object-fit:cover;border-radius:6px;"'
+                                                    + (f' title="Photo: {html.escape(_p_note)}">' if _p_note else ">")
+                                                    + (f'<div style="font-size:0.62rem;color:#888;line-height:1.1;margin-top:2px;">{html.escape(_p_note)}</div>' if _p_note else "")
+                                                    + '</div>', unsafe_allow_html=True)
                                     st.markdown(
                                         f"<div style='min-height:2.8em;line-height:1.4em;'>"
                                         f"<strong>{jersey_str} {esc(name)}</strong>{_status_badge}</div>",

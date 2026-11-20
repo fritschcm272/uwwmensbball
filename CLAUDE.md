@@ -2619,3 +2619,114 @@ mistake is invisible too, which is the real cost, and both these files were 1,00
 Still tracked and probably shouldn't be (not touched -- say the word): `.ipynb_checkpoints/` throughout,
 `__pycache__/*.pyc` (including parser_lib's, which any compile rewrites and dirties the working tree), and
 the older `-1` copies already sitting in `parser/Claude outputs/`.
+
+
+**NOT A BUG (11/19): Hope vs North Central (11/17) is queued, not lost.** It is the "1 of the upcoming
+opponent's" page in `Frame capture: game pages still to capture`. Synergy does have the game --
+`[synergy] 2026-11-17 Hope Flying Dutchmen vs North Central (IL) Cardinals: Synergy game
+6ab8194c211bee6ed9ce80bc (not on FastScout yet)` -- which is why the earlier lines read
+"(no video_url)" and "no _video file found": FastScout has nothing for it, but capture uses Synergy's page,
+so that does not block it. `VISION_ONE_GAME_AT_A_TIME` is False, so the coaches-finish-first gate is not
+holding it either. It waited purely on `VISION_MAX_GAMES_PER_RUN = 2`, and the 18:04 run spent both slots on
+Thiel's missing frames and the Elmhurst export. Another run picks it up.
+
+**Worth fixing, though: Thiel eats a slot on EVERY run.** `Thiel@UWPlatteville - Nov 6, 2026` has 235 rows
+in Export.csv and 234 videos -- exactly one missing, `98.mp4` -- so the folder is permanently "some clips'
+frames are missing or failed" and is re-queued for completion every single time ("nothing new for 18560 min"
+and counting). One of the two slots per run is therefore spoken for before anything new is considered.
+Re-export that game in Synergy Editor (Ctrl+E) into the same folder, or move the folder aside, and both
+slots go to real work again.
+
+
+**CONFIRMED CHANGE (11/19, 00_parser_modes.py, 60,088 b): removing a game from the cell now stops it.**
+Corey: "I have removed the Thiel game from BANK_GAMES, so it should not be trying to do anything further
+with it until that is put back in there. The same should be true with ADD_GAMES and EXTRA_GAMES."
+
+Thiel WAS commented out of BANK_GAMES, and ADD_GAMES is empty; `BANK_GAMES_STICKY` (default True, added
+11/15) kept it alive from `inputs/_bank_games.json` anyway, and every run spent one of its two frame-capture
+slots "completing" it. But 11/15's stickiness was not pointless: it exists because emptying ADD_GAMES had
+silently dropped Hope vs Franklin and taken its 212-clip Film Tagging batch out of the app.
+
+So stickiness is now NARROW: a remembered game is kept only while it still has an OPEN BATCH --
+`<data>/play_tag/tag_<date>_<teams>/review.json`, the file 55c writes with a batch and removes with it.
+`_bank_batch_open()` matches on the game's date plus one team name (the loose match `_vx_find_export` uses,
+since the folder spells teams its own way: "Wisconsin-(Platteville) Pioneers vs Thiel" ->
+`tag_2026_11_06_Thiel_UWPlatteville`). A game with no date on file is kept rather than guessed away.
+
+Saved answers deliberately do NOT keep a game banked. Thiel has 8 files in data/play_review_saves --
+starters checks, a player review, and the `tag_skipgame` save itself -- and un-banking touches none of them;
+they live on the 'saves' branch. A game whose batch a coach skipped is exactly the case this is meant to
+drop.
+
+`~/wmtest/bankstick_t.py` runs it against the real `_bank_games.json` and `data/`: Thiel -> dropped,
+Hope vs Franklin -> kept, saves alone do not hold a game, a batch that reopens brings it back with no edit
+to the cell, no date -> kept, missing play_tag folder -> dropped without crashing.
+
+ADD_GAMES needs nothing of its own: entries become BANK_GAMES entries (00_parser_modes ~302-320), so the
+same rule covers it. EXTRA_GAMES already behaves this way BY DESIGN -- parser_models passes its list
+explicitly (so [] wins), and parser_brief's cell says `EXTRA_GAMES = None`, meaning "parser_models'
+setting", which it reads from `inputs/_upcoming_game.json`; models rewrites that file every run. The only
+stale path is a brief/tagging run with no models run since the change.
+
+
+**CONFIRMED CHANGE (11/19): roster photos now fall back, and the fallback is labelled.** Hope found this:
+all nine of their saved "headshots" were the SAME 5,637-byte grey silhouette. Their report carries no
+photos, so 82_ saved the report's own no-photo avatar under every name -- a fake photo, which is worse than
+no photo because it looks like the system worked. The size guard there is `len(img_bytes) > 500`, and an
+avatar sails past it.
+
+Three steps, appended to `82_extract_player_headshots_from_scouting.py` (34,114 b), in order:
+ 1. **Avatar sweep.** Group player_images by md5: the same bytes under two or more names is never two
+    headshots. Those files move to `player_images/_placeholders/` (moved, not deleted) and the players count
+    as having no photo.
+ 2. **Last season.** Any `data_<season>/player_images` beside `data/`, newest first.
+ 3. **The team's own site.** `inputs/opponent_sites.json` maps opponent -> roster URL (seeded with
+    `"Hope Flying Dutchmen": "https://athletics.hope.edu/sports/mens-basketball/roster"`). The roster TABLE
+    is read every run and written to `uww_opponent_web_rosters.csv` -- jersey, position, height, weight,
+    class, hometown, high school, profile URL -- because none of that is in the scouting report and it is
+    worth having on its own. A player still without a photo gets his profile page's `og:image`, which is
+    where Sidearm sites keep the headshot (verified: Brady Miller's is
+    athletics.hope.edu/images/2026/11/3/Miller_Brady.jpg). The page is cached on disk for
+    OPPONENT_SITE_FRESH_HOURS (12) and saved as `<team> - Roster (web).html` so a parse failure can be
+    looked at.
+
+Provenance goes to `uww_player_image_sources.csv` (player, source, detail, opponent). The brief
+(87_, 558,900 b) prints it under the face via `_photo_note()` plus a `.photo-note` style and an `img title`;
+the app (1,241,270 b) shows it on the roster card and in the player dialog. "scouting report" prints
+nothing -- only a photo that is NOT this season's is labelled.
+
+Traps paid for while building it: `read_html` types a numeric column, so jersey 13 arrived as `13.0` and an
+empty cell as `nan` -- hence `_pi2_txt()`; and the block was first written with a stale `_pi_pd.` prefix
+(pandas is plain `pd` in these sections).
+
+`~/wmtest/photofb_t.py` runs the whole chain against a sandbox with a Sidearm-shaped roster page over
+file://: the avatar is swept, one player is restored from last season, three come from the site with the
+right table fields (#13 F 6-6 210 Jr. | Zeeland, MI / Zeeland West), a genuine report photo is left alone,
+and every source lands in the CSV.
+
+Untested on the real site: this shell cannot reach athletics.hope.edu (proxy allowlist), so the first live
+run is the real test. If the table does not parse, the saved HTML is in parser/inputs.
+
+
+**CONFIRMED BUG (fixed 11/19, 47_play_calls.py, 380,187 b): "Ripon Motion #1 is still showing as one of UWW
+plays in the Play Table."** NOT the routing this time -- the 11/18 Game-cell fix is holding. The data itself
+says UWW ran it. Two clips of the 11/14 Ripon game:
+
+    clip 88  Offense  offense_team=UW-Whitewater  player=Joey Daun     result=Non Shooting Foul
+    clip 95  Offense  offense_team=UW-Whitewater  player=Michael Asman result=Non Shooting Foul
+    both: offense_lineup = UWW's five, defense_lineup = Ripon's five, coach_play_call = "Ripon Motion #1"
+
+So a coach typed Ripon's set name on two possessions the play-by-play says were ours, and the tagged player
+on each is a Ripon man. Both are non-shooting fouls, which is the shape of clip where a possession boundary
+is easiest to read the wrong way -- so either the call is wrong or the possession is, and from here the two
+cannot be told apart.
+
+The parser now refuses to guess: `_pl_foreign_call()` flags a row whose play call's first word names a team
+that is NOT the team on offense, writes it to the new `call_names_other_team` column (added to
+PLAY_CALL_COLS -- the Thiel "skipped" lesson: a column missing from that list is reindexed away), keeps it
+out of `play_call_summary` for BOTH sides, and prints a "!!" line naming the game, the call and the clip
+numbers so someone can re-check them in the app. The coach's answer on the clip is never rewritten.
+
+`~/wmtest/foreign_t.py` on the real table: exactly 2 of 2,177 clips flagged (88 and 95), Ripon's own 25
+"Ripon Motion" clips on Ripon possessions untouched, and our own vocabulary (Zoom, Cheetah, Pistol, Snap 30,
+Motion -- 46 clips) untouched.

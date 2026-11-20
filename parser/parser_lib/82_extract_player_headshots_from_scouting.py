@@ -436,3 +436,271 @@ else:
             print(f"\n[before_scout=no] Restored {len(_bs_restored)} previously hidden {_bs_label}(s) to "
                   f"{_bs_dir}"
                   + (f" ({_bs_dupes} left in place -- a live copy already exists)." if _bs_dupes else "."))
+
+
+# --- Roster photos: what to do when the scouting report has none --------------------------------------
+# CONFIRMED CHANGE (requested 11/19: "you could do a fall back of getting the roster pictures from the
+# previous year ... I can also provide a second fall back of entering in their official website to get their
+# player roster. There is additional information on there normally, so it's good information to have stored").
+# Hope was the case that found this: all nine of their saved "headshots" were the SAME 5,637-byte grey
+# silhouette -- their report carries no photos, so the extractor above saved the report's own no-photo avatar
+# under every name. A fake photo is worse than none: it looks like the system worked.
+# Three steps, in this order, and every photo records where it came from so the app and the brief can say so:
+#   1. throw out the avatars (the same bytes under two or more names is never two headshots),
+#   2. last season's archive (data_<season>/player_images beside data/),
+#   3. the team's own athletics site, from inputs/opponent_sites.json -- which also gives the roster table
+#      (hometown, high school, class, height, weight), worth keeping on its own.
+import hashlib as _pi2_hashlib
+import json as _pi2_json
+import shutil as _pi2_shutil
+
+_PI2_EXTS = ("png", "jpeg", "jpg")                      # the app and the brief try these, in this order
+_PI2_SITES_JSON = os.path.join(INPUT_DIR, "opponent_sites.json")
+_PI2_SOURCES_CSV = os.path.join(APP_DATA_DIR, "uww_player_image_sources.csv")
+_PI2_WEB_CSV = os.path.join(APP_DATA_DIR, "uww_opponent_web_rosters.csv")
+_PI2_PLACEHOLDER_DIR = os.path.join(_PI_OUTPUT_DIR, "_placeholders")
+_pi2_sources = {}                                       # player -> {source, detail, opponent}
+
+
+def _pi2_key(name):
+    return _pi_re.sub(r"[^a-z]", "", str(name).lower())
+
+
+def _pi2_path(name):
+    """The saved photo for this player, whatever extension it has -- or None."""
+    for _e in _PI2_EXTS:
+        _p = os.path.join(_PI_OUTPUT_DIR, f"{name}.{_e}")
+        if os.path.isfile(_p):
+            return _p
+    return None
+
+
+# ---- 1. the report's own "no photo" avatar ----------------------------------------------------------
+_pi2_by_hash = {}
+for _f in sorted(os.listdir(_PI_OUTPUT_DIR)):
+    _p = os.path.join(_PI_OUTPUT_DIR, _f)
+    if not os.path.isfile(_p) or _f.rsplit(".", 1)[-1].lower() not in _PI2_EXTS:
+        continue
+    try:
+        with open(_p, "rb") as _fh:
+            _pi2_by_hash.setdefault(_pi2_hashlib.md5(_fh.read()).hexdigest(), []).append(_f)
+    except OSError:
+        continue
+_pi2_avatars = {h: fs for h, fs in _pi2_by_hash.items() if len(fs) >= 2}
+if _pi2_avatars:
+    os.makedirs(_PI2_PLACEHOLDER_DIR, exist_ok=True)
+    for _h, _fs in sorted(_pi2_avatars.items()):
+        for _f in _fs:
+            try:
+                _pi2_shutil.move(os.path.join(_PI_OUTPUT_DIR, _f), os.path.join(_PI2_PLACEHOLDER_DIR, _f))
+            except OSError:
+                pass
+        print(f"  [photos] the same image was saved for {len(_fs)} player(s) -- that is the report's "
+              f"'no photo' avatar, not a headshot: {', '.join(sorted(os.path.splitext(x)[0] for x in _fs)[:6])}"
+              + (" ..." if len(_fs) > 6 else ""), flush=True)
+
+
+# ---- who still needs a photo ------------------------------------------------------------------------
+_pi2_need = {}                                          # player name -> opponent
+try:
+    _pi2_ros = pd.read_csv(os.path.join(APP_DATA_DIR, "uww_opponent_rosters.csv"), dtype=str)
+except Exception:
+    _pi2_ros = pd.DataFrame()
+if not _pi2_ros.empty and {"name", "opponent"} <= set(_pi2_ros.columns):
+    for _, _r in _pi2_ros.iterrows():
+        _nm = str(_r.get("name") or "").strip()
+        if _nm and _pi2_path(_nm) is None:
+            _pi2_need[_nm] = str(_r.get("opponent") or "").strip()
+
+
+# ---- 2. last season's archive -----------------------------------------------------------------------
+_pi2_archives = []
+_pi2_parent = os.path.dirname(os.path.abspath(APP_DATA_DIR))
+for _d in sorted(os.listdir(_pi2_parent) if os.path.isdir(_pi2_parent) else [], reverse=True):
+    _pid = os.path.join(_pi2_parent, _d, "player_images")
+    if _d.startswith("data_") and os.path.isdir(_pid):
+        _pi2_archives.append((_d.replace("data_", ""), _pid))
+_pi2_from_last = 0
+for _nm in sorted(_pi2_need):
+    for _season, _dir in _pi2_archives:
+        _hit = next((os.path.join(_dir, f"{_nm}.{e}") for e in _PI2_EXTS
+                     if os.path.isfile(os.path.join(_dir, f"{_nm}.{e}"))), None)
+        if not _hit:
+            continue
+        try:
+            _pi2_shutil.copy2(_hit, os.path.join(_PI_OUTPUT_DIR, os.path.basename(_hit)))
+        except OSError:
+            break
+        _pi2_sources[_nm] = {"source": "last season", "detail": _season, "opponent": _pi2_need[_nm]}
+        _pi2_from_last += 1
+        break
+if _pi2_from_last:
+    print(f"  [photos] {_pi2_from_last} from last season's pictures "
+          f"({', '.join(s for s, _ in _pi2_archives)}) -- shown with the season on the card", flush=True)
+for _nm in list(_pi2_need):
+    if _pi2_path(_nm) is not None:
+        _pi2_need.pop(_nm, None)
+
+
+# ---- 3. the team's own athletics site ---------------------------------------------------------------
+# inputs/opponent_sites.json: {"Hope Flying Dutchmen": "https://athletics.hope.edu/sports/mens-basketball/roster"}
+# The roster TABLE is read every time, photos or not: hometown, high school, class, height and weight are
+# not in the scouting report and are worth having. A player who still has no photo gets one from his own
+# profile page's og:image, which is where these sites keep the headshot.
+import time as _pi2_time
+from io import StringIO as _PI2_StringIO
+from urllib.parse import urljoin as _pi2_urljoin
+
+_PI2_FRESH_H = float(globals().get("OPPONENT_SITE_FRESH_HOURS", 12))
+
+
+def _pi2_get(url, timeout=25):
+    _req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (UWW scouting parser)"})
+    with urllib.request.urlopen(_req, timeout=timeout) as _r:
+        return _r.read()
+
+
+def _pi2_cached(url, path):
+    """The page, from disk when it was fetched recently -- a roster changes about once a season."""
+    try:
+        if os.path.isfile(path) and (_pi2_time.time() - os.path.getmtime(path)) < _PI2_FRESH_H * 3600:
+            with open(path, "rb") as _fh:
+                return _fh.read(), True
+    except OSError:
+        pass
+    _body = _pi2_get(url)
+    try:
+        with open(path, "wb") as _fh:
+            _fh.write(_body)
+    except OSError:
+        pass
+    return _body, False
+
+
+def _pi2_txt(v):
+    """A cell as the page meant it. read_html types a numeric column, so jersey 13 arrives as 13.0 and would
+    be written "13.0"; an empty cell arrives as NaN and would be written "nan"."""
+    if v is None:
+        return ""
+    if isinstance(v, float):
+        if v != v:
+            return ""
+        if float(v).is_integer():
+            return str(int(v))
+    _s = str(v).strip()
+    return "" if _s.lower() in ("nan", "none") else _s
+
+
+def _pi2_col(cols, *wants):
+    for _c in cols:
+        _l = str(_c).strip().lower()
+        if any(_w in _l for _w in wants):
+            return _c
+    return None
+
+
+_pi2_sites = {}
+try:
+    with open(_PI2_SITES_JSON, encoding="utf-8") as _fh:
+        _pi2_sites = {str(k).strip(): str(v).strip() for k, v in (_pi2_json.load(_fh) or {}).items() if str(v).strip()}
+except FileNotFoundError:
+    pass
+except Exception as _e:
+    print(f"  [roster site] {os.path.basename(_PI2_SITES_JSON)} could not be read "
+          f"({type(_e).__name__}: {_e}) -- skipped", flush=True)
+
+_pi2_web_rows, _pi2_from_web = [], 0
+for _opp, _url in sorted(_pi2_sites.items()):
+    _safe = _pi_re.sub(r"[^A-Za-z0-9 ()-]+", " ", _opp).strip()
+    _page = os.path.join(INPUT_DIR, f"{_safe} - Roster (web).html")
+    _was_cached = False
+    try:
+        _html_b, _was_cached = _pi2_cached(_url, _page)
+        _html = _html_b.decode("utf-8", "replace")
+    except Exception as _e:
+        print(f"  [roster site] {_opp}: {_url} could not be read ({type(_e).__name__}: {_e})", flush=True)
+        continue
+    try:
+        _tables = pd.read_html(_PI2_StringIO(_html))
+    except Exception:
+        _tables = []
+    _tbl = next((t for t in _tables if _pi2_col(t.columns, "name") is not None and len(t) >= 3), None)
+    if _tbl is None:
+        print(f"  [roster site] {_opp}: no roster table found -- the page is saved as "
+              f"{os.path.basename(_page)} for a look", flush=True)
+        continue
+    _c_name = _pi2_col(_tbl.columns, "name")
+    _c_no = _pi2_col(_tbl.columns, "#", "no.", "jersey")
+    _c_pos = _pi2_col(_tbl.columns, "pos")
+    _c_ht = _pi2_col(_tbl.columns, "ht", "height")
+    _c_wt = _pi2_col(_tbl.columns, "wt", "weight")
+    _c_cl = _pi2_col(_tbl.columns, "class", "year", " yr")
+    _c_hm = _pi2_col(_tbl.columns, "hometown", "high school")
+    _links = {}                                   # name -> profile page, where the headshot lives
+    for _href, _txt in _pi_re.findall(r'href="([^"]*/roster/[^"]+?/\d+)"[^>]*>([^<]{3,60})<', _html):
+        if _pi2_key(_txt):
+            _links.setdefault(_pi2_key(_txt), _href)
+    _rows_here = 0
+    for _, _r in _tbl.iterrows():
+        _nm = _pi_re.sub(r"\s+", " ", str(_r.get(_c_name) or "")).strip()
+        if not _nm or _nm.lower() in ("nan", "name"):
+            continue
+        _hm = _pi2_txt(_r.get(_c_hm)) if _c_hm else ""
+        _home, _hs = (_hm.split("/", 1) + [""])[:2]
+        _cell = lambda c: (_pi2_txt(_r.get(c)) if c else "")              # noqa: E731
+        _pi2_web_rows.append({
+            "opponent": _opp, "jersey_number": _cell(_c_no), "name": _nm, "position": _cell(_c_pos),
+            "height": _cell(_c_ht), "weight": _cell(_c_wt), "class_year": _cell(_c_cl),
+            "hometown": _home.strip(), "high_school": _hs.strip(),
+            "profile_url": _pi2_urljoin(_url, _links.get(_pi2_key(_nm), "")) if _links.get(_pi2_key(_nm)) else "",
+            "source_url": _url, "fetched": pd.Timestamp.now().isoformat(timespec="seconds"),
+        })
+        _rows_here += 1
+    _got_here = 0
+    for _row in [r for r in _pi2_web_rows if r["opponent"] == _opp and r["profile_url"]]:
+        if _row["name"] not in _pi2_need and not any(_pi2_key(_row["name"]) == _pi2_key(n) for n in _pi2_need):
+            continue
+        _nm = next((n for n in _pi2_need if _pi2_key(n) == _pi2_key(_row["name"])), _row["name"])
+        try:
+            _pbody = _pi2_get(_row["profile_url"]).decode("utf-8", "replace")
+        except Exception:
+            continue
+        _m = (_pi_re.search(r'property="og:image"[^>]*content="([^"]+)"', _pbody)
+              or _pi_re.search(r'content="([^"]+)"[^>]*property="og:image"', _pbody))
+        if not _m:
+            continue
+        try:
+            _bytes = _pi2_get(_pi2_urljoin(_row["profile_url"], _m.group(1)))
+        except Exception:
+            continue
+        if len(_bytes) < 2000:                    # the site's own placeholder -- the same trap as the report's
+            continue
+        _ext = "png" if _bytes[:8] == b"\x89PNG\r\n\x1a\n" else "jpg"
+        try:
+            with open(os.path.join(_PI_OUTPUT_DIR, f"{_nm}.{_ext}"), "wb") as _fh:
+                _fh.write(_bytes)
+        except OSError:
+            continue
+        _pi2_sources[_nm] = {"source": "team website", "detail": urlparse(_url).netloc, "opponent": _opp}
+        _got_here += 1
+    _pi2_from_web += _got_here
+    print(f"  [roster site] {_opp}: {_rows_here} player(s) from {urlparse(_url).netloc}"
+          + (" (saved page)" if _was_cached else "") + (f", {_got_here} photo(s)" if _got_here else ""), flush=True)
+
+if _pi2_web_rows:
+    pd.DataFrame(_pi2_web_rows).to_csv(_PI2_WEB_CSV, index=False)
+    print(f"  [roster site] {len(_pi2_web_rows)} roster row(s) -> {os.path.basename(_PI2_WEB_CSV)} "
+          f"(hometown, high school, class, height, weight)", flush=True)
+
+# ---- where each photo came from, so the app and the brief can say so ---------------------------------
+if not _pi2_ros.empty:
+    for _nm in sorted({str(x).strip() for x in _pi2_ros.get("name", pd.Series(dtype=str)).dropna()}):
+        if _nm and _nm not in _pi2_sources and _pi2_path(_nm) is not None:
+            _pi2_sources[_nm] = {"source": "scouting report", "detail": "", "opponent": ""}
+if _pi2_sources:
+    pd.DataFrame([{"player": _k, "source": _v["source"], "detail": _v["detail"], "opponent": _v["opponent"]}
+                  for _k, _v in sorted(_pi2_sources.items())]).to_csv(_PI2_SOURCES_CSV, index=False)
+    _n_alt = sum(1 for _v in _pi2_sources.values() if _v["source"] != "scouting report")
+    if _n_alt:
+        print(f"  [photos] {_n_alt} picture(s) are not from this season's report -- the card says where "
+              f"each came from ({os.path.basename(_PI2_SOURCES_CSV)})", flush=True)

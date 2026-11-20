@@ -326,6 +326,32 @@ def _pm_apply_options(G):
 
 # CONFIRMED CHANGE (requested: bank a game for a LATER opponent -- "Wisconsin-Platteville played Thiel tonight ... should not be
 # used in any of the Carroll or Ripon scouting briefs ... only for when we play Platteville later in the year").
+def _bank_batch_open(k):
+    """Does this remembered game still have an open Film Tagging batch in the app? That is
+    <data>/play_tag/tag_<date>_<teams>/review.json -- the file 55c writes for a batch and removes with it.
+    Matched on the game's date plus one of its team names, the same loose match _vx_find_export uses, because
+    the folder spells teams its own way ("Wisconsin-(Platteville) Pioneers vs Thiel" -> Thiel_UWPlatteville).
+    A game with no date on file is KEPT: better a wasted slot than dropping something we cannot identify."""
+    _date = str(k.get("date") or "")[:10].replace("-", "_")
+    if not _date:
+        return True
+    _data = (globals().get("APP_DATA_DIR") or globals().get("OUTPUT_DIR")
+             or _pm_os.path.join(_pm_os.getcwd(), "..", "data"))
+    _words = [w for w in _pm_re.split(r"[^a-z]+", str(k.get("label") or "").lower()) if len(w) > 3]
+    _pref = "tag_" + _date
+    try:
+        _names = [n for n in _pm_os.listdir(_pm_os.path.join(_data, "play_tag")) if n.startswith(_pref)]
+    except OSError:
+        return False
+    for _n in _names:
+        _tail = _n[len(_pref):].lower()
+        if _words and not any(w[:4] in _tail for w in _words):
+            continue
+        if _pm_os.path.isfile(_pm_os.path.join(_data, "play_tag", _n, "review.json")):
+            return True
+    return False
+
+
 # BANK_GAMES (parser_models' first cell): [{"synergy_id": "<24 characters after /games/>", "date": "Nov 6, 2026",
 #   "label": "UW-Platteville Pioneers vs Thiel", "for": "UW-Platteville Pioneers"}]. A banked game is exported from Synergy,
 # captured, tracked (Player Number Tracking) and given a Film Tagging batch NOW -- whatever the run's date -- but its plays
@@ -387,6 +413,15 @@ def bank_games(with_unknown=False):
     # ADD_GAMES in parser_models' first cell. Emptying ADD_GAMES on 11/15 dropped Franklin @ Hope, its clips became
     # "Other", and 55c removed its 212-clip Film Tagging batch from the app. BANK_GAMES_DROP = ["<synergy id>"] (or "all")
     # forgets one on purpose; BANK_GAMES_STICKY = False goes back to "only what the cell lists".
+    # CONFIRMED CHANGE (requested 11/19: "I have removed the Thiel game from BANK_GAMES, so it should not be
+    # trying to do anything further with it until that is put back in there. The same should be true with
+    # ADD_GAMES and EXTRA_GAMES"). Sticky-forever was too broad: Thiel left the cell, a coach had skipped the
+    # whole game so it had no batch at all, and every run still spent one of its two frame-capture slots
+    # completing it. Stickiness now keeps a game ONLY while it still has an open Film Tagging batch -- the
+    # thing the 11/15 change existed to protect. Everything else honours the cell: out of BANK_GAMES /
+    # ADD_GAMES means out, until it is put back. Saved answers do not keep a game banked on their own: they
+    # live on the 'saves' branch and in data/play_review_saves, and un-banking never touches them (a game
+    # whose batch a coach SKIPPED has saves and no batch -- exactly Thiel's case).
     if globals().get("BANK_GAMES_STICKY", True):
         _drop = globals().get("BANK_GAMES_DROP") or []
         _drop = {str(x).strip().lower() for x in ([_drop] if isinstance(_drop, str) else list(_drop))}
@@ -394,6 +429,8 @@ def bank_games(with_unknown=False):
         for _gid in cache:
             _gid = str(_gid).strip().lower()
             if len(_gid) == 24 and _gid not in _have and _gid not in _drop and "all" not in _drop:
+                if not _bank_batch_open(cache.get(_gid) or {}):
+                    continue
                 _entries.append({"synergy_id": _gid, "remembered": True})
     for e in _entries:
         e, gid = _gid_of(e)

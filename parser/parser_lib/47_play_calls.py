@@ -3727,6 +3727,9 @@ PLAY_CALL_COLS = [
     # NEW: the defense this offense faced on the clip, from the coaches' updated Title tagging (see
     # decode_defense_tag). "defense_team" above is WHICH team was on defense; these are WHAT they played.
     "defense_type", "defense_press", "defense_press_formation", "defense_coverage",
+    # A coach's play call that names the OTHER team (see _pl_foreign_call): kept on the clip, kept out of the
+    # play tables. Listed here because a column missing from PLAY_CALL_COLS is silently reindexed away.
+    "call_names_other_team",
     # Offense vs Defense possession, and the unambiguous split of the four fields above (see
     # _pl_possession_side). Prefer defense_faced / defense_played over the raw defense_type downstream:
     # the raw field means opposite things on offensive and defensive possessions.
@@ -4674,10 +4677,50 @@ if not play_calls.empty:
                 rows.append(_r)
         return rows
 
-    _pl_sum_rows += _pl_sum_side(play_calls[play_calls["side"] == "UWW"], "UWW")
+    # CONFIRMED BUG (fixed 11/19; Corey: "Ripon Motion #1 is still showing as one of UWW plays in the Play
+    # Table"). Not the routing this time -- the data. Two clips of the 11/14 Ripon game (88 and 95, both
+    # "Non Shooting Foul") have UWW's five on offense, Ripon's five on defense, and a coach's
+    # coach_play_call of "Ripon Motion #1". A call naming a team OTHER than the one with the ball is a
+    # contradiction: either the call or the possession is wrong, and printing it as one of our plays is
+    # wrong either way. The clip keeps the coach's answer -- saved answers are never rewritten here -- and is
+    # flagged and left out of the play tables, with the clips named so someone can look.
+    def _pl_team_word(t):
+        for _w in re.split(r"[^A-Za-z]+", str(t or "")):
+            if len(_w) > 3 and _w.lower() not in ("college", "university", "state", "saint"):
+                return _w.lower()
+        return ""
+
+    def _pl_foreign_call(df):
+        """Mask: this row's play call names a team that is not the team on offense."""
+        if df.empty or "play_call" not in df.columns:
+            return pd.Series(False, index=df.index)
+        _teams = {_pl_team_word(x) for x in df.get("opponent", pd.Series(dtype=object)).dropna().unique()}
+        _teams |= {_pl_team_word(x) for x in df.get("offense_team", pd.Series(dtype=object)).dropna().unique()}
+        _teams.discard("")
+
+        def _bad(r):
+            _call = str(r.get("play_call") or "").strip()
+            _first = _pl_team_word(_call.split()[0]) if _call else ""
+            if not _first or _first not in _teams:
+                return False
+            return _first not in re.sub(r"[^a-z]", " ", str(r.get("offense_team") or "").lower())
+
+        return df.apply(_bad, axis=1)
+
+    play_calls["call_names_other_team"] = _pl_foreign_call(play_calls)
+    _pl_flag = play_calls["call_names_other_team"].fillna(False).astype(bool)
+    for _gc, _g in play_calls[_pl_flag].groupby(play_calls.loc[_pl_flag, "game_code"].astype(str)):
+        _clips = ", ".join(str(x) for x in _g.get("clip_number", pd.Series(dtype=object)).dropna().astype(str)[:8])
+        _calls = ", ".join(sorted({str(x) for x in _g["play_call"].dropna()})[:4])
+        _own = ", ".join(sorted({str(x) for x in _g["offense_team"].dropna()})[:2])
+        print(f"  !! {_gc}: {len(_g)} clip(s) tagged with a call that names the other team ({_calls}) while "
+              f"{_own} had the ball -- left out of the play tables; re-check clip(s) {_clips}", flush=True)
+    _pl_clean = play_calls[~_pl_flag]
+
+    _pl_sum_rows += _pl_sum_side(_pl_clean[_pl_clean["side"] == "UWW"], "UWW")
     # For the opponent, an OFFENSIVE possession is one where they had the ball; their defensive clips keep
     # their own team label, so filter on possession_side rather than on offense_team alone.
-    _opp_clips = play_calls[play_calls["side"] == "Opponent"]
+    _opp_clips = _pl_clean[_pl_clean["side"] == "Opponent"]
     if "possession_side" in _opp_clips.columns:
         _opp_clips = _opp_clips[((_opp_clips["possession_side"].astype(str) == "Offense")
                                  & (_opp_clips["offense_team"] == upcoming_opponent_short))
