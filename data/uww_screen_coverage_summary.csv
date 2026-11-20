@@ -23,33 +23,3 @@ UWW,Hope Flying Dutchmen,UWW defense,Off-ball screen,Screen,Defender x screen x 
 UWW,Hope Flying Dutchmen,UWW defense,Ball screen,Ball Screen,Screen x coverage,,Switch,1,100,True,(no jersey),1,1,1,3.0,100.0,1,0,"bs:m2m(switch,switch)"
 UWW,Hope Flying Dutchmen,UWW defense,Off-ball screen,Screen,Screen x coverage,,Switch,2,50,True,(no jersey),1,1,1,3.0,100.0,1,0,"bs:m2m(switch,switch)"
 UWW,Hope Flying Dutchmen,UWW defense,Off-ball screen,Screen,Screen x coverage,,press,2,50,True,(no jersey),1,1,1,0.0,0.0,1,0,:m2m(press)
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Drop,28,50,False,,14,1,11,0.64,30.0,10,0,"bs:m2m(over,drop) | Pinch(spilit),BS(3,4):m2m(over,drop)"
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Over,28,21,False,,6,1,5,0.2,0.0,4,0,"bs:m2m(over,drop) | scissors-pinch(over,go,give,bs):m2m(over,drop)"
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Switch,28,14,False,,4,1,4,1.0,66.7,3,1,bs:m2m(switch)
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Under,28,14,False,,4,1,4,0.5,33.3,3,1,"Opener:5out-zoom,backsideRICKY:m2m(Under,through) | pistoltran,pinchover,bs(12,4):m2m(through,under)"
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,DHO,Defender x screen x coverage,(no jersey),Over,4,75,True,,3,1,3,0.0,0.0,2,1,"Scissors(dho,bs):m2m(over,drop) | tran(dho,drag,clear)pinch(zoom-over)BS:m2mbs(over,drop)"
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,DHO,Defender x screen x coverage,(no jersey),Under,4,25,True,,1,1,0,,,0,0,"scissors(dho,bs):m2m(under,drop)"
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,Zoom,Defender x screen x coverage,(no jersey),Over,2,100,True,,2,1,2,1.0,50.0,2,0,"pinch(over,zoom):m2m | sci-pinch(over,zoom):m2m"
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Down Screen,Defender x screen x coverage,(no jersey),Over,1,100,True,,1,1,1,0.0,,0,1,DS:m2m(over)
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Off-ball screen,Defender x screen x coverage,(no jersey),Through,2,100,True,,2,1,2,0.0,0.0,1,1,"Opener:5out-zoom,backsideRICKY:m2m(Under,through) | pistoltran,pinchover,bs(12,4):m2m(through,under)"
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),Over,18,72,False,,13,1,8,1.12,57.1,7,1,"Pinch(spilit),BS(3,4):m2m(over,drop) | pinch(over):m2m"
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),Switch,18,11,False,,2,1,2,0.0,0.0,2,0,"ghost:m2m(switch) | sciorss left:m2m(over,switch)"
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),press,18,6,False,,1,1,1,3.0,100.0,1,0,:m2m(press)
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),switch all,18,6,False,,1,1,1,0.0,,0,1,screens:m2m(switch all)
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),versus twirl clip this,18,6,False,,1,1,1,2.0,100.0,1,0,m2m (VERSUS TWIRL CLIP THIS)
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Stagger,Defender x screen x coverage,#11,Switch,1,100,True,,1,1,1,0.0,0.0,1,0,stagger:m2m(11switch)
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,Ball Screen,Screen x coverage,,Drop,28,50,False,(no jersey),14,1,11,0.64,30.0,10,0,"bs:m2m(over,drop) | Pinch(spilit),BS(3,4):m2m(over,drop)"
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,Ball Screen,Screen x coverage,,Over,28,21,False,(no jersey),6,1,5,0.2,0.0,4,0,"bs:m2m(over,drop) | scissors-pinch(over,go,give,bs):m2m(over,drop)"
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,Ball Screen,Screen x coverage,,Switch,28,14,False,(no jersey),4,1,4,1.0,66.7,3,1,bs:m2m(switch)
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,Ball Screen,Screen x coverage,,Under,28,14,False,(no jersey),4,1,4,0.5,33.3,3,1,"Opener:5out-zoom,backsideRICKY:m2m(Under,through) | pistoltran,pinchover,bs(12,4):m2m(through,under)"
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,DHO,Screen x coverage,,Over,4,75,True,(no jersey),3,1,3,0.0,0.0,2,1,"Scissors(dho,bs):m2m(over,drop) | tran(dho,drag,clear)pinch(zoom-over)BS:m2mbs(over,drop)"
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,DHO,Screen x coverage,,Under,4,25,True,(no jersey),1,1,0,,,0,0,"scissors(dho,bs):m2m(under,drop)"
-Banked,Hope Flying Dutchmen,Unknown,Ball screen,Zoom,Screen x coverage,,Over,2,100,True,(no jersey),2,1,2,1.0,50.0,2,0,"pinch(over,zoom):m2m | sci-pinch(over,zoom):m2m"
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Down Screen,Screen x coverage,,Over,1,100,True,(no jersey),1,1,1,0.0,,0,1,DS:m2m(over)
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Off-ball screen,Screen x coverage,,Through,2,100,True,(no jersey),2,1,2,0.0,0.0,1,1,"Opener:5out-zoom,backsideRICKY:m2m(Under,through) | pistoltran,pinchover,bs(12,4):m2m(through,under)"
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Screen,Screen x coverage,,Over,18,72,False,(no jersey),13,1,8,1.12,57.1,7,1,"Pinch(spilit),BS(3,4):m2m(over,drop) | pinch(over):m2m"
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Screen,Screen x coverage,,Switch,18,11,False,(no jersey),2,1,2,0.0,0.0,2,0,"ghost:m2m(switch) | sciorss left:m2m(over,switch)"
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Screen,Screen x coverage,,press,18,6,False,(no jersey),1,1,1,3.0,100.0,1,0,:m2m(press)
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Screen,Screen x coverage,,switch all,18,6,False,(no jersey),1,1,1,0.0,,0,1,screens:m2m(switch all)
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Screen,Screen x coverage,,versus twirl clip this,18,6,False,(no jersey),1,1,1,2.0,100.0,1,0,m2m (VERSUS TWIRL CLIP THIS)
-Banked,Hope Flying Dutchmen,Unknown,Off-ball screen,Stagger,Screen x coverage,,Switch,1,100,True,#11,1,1,1,0.0,0.0,1,0,stagger:m2m(11switch)
