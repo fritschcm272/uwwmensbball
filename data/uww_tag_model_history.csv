@@ -1375,7 +1375,7 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-22T10:18:32,formation,Formation,59.0,58.0,5 Out,693.0,743,model,False,59% vs 58% always guessing on 693 held-out plays (+1 pts) -- needs +3 pts on 30+ plays,6.0,9.0,2026-11-22T10:13:18
 2026-11-22T10:18:32,play_call,Play call,60.0,60.0,Motion,859.0,1107,usual answer,False,model not better than always guessing (60% vs 60%),2.0,9.0,2026-11-22T10:13:18
 2026-11-22T10:18:32,defense,Defense,99.0,99.0,Man-to-Man,1950.0,1955,usual answer,True,the usual answer is right 99% of the time on 1950 held-out plays,19.0,20.0,2026-11-22T10:13:18
-2026-11-22T10:18:32,press,Press,86.0,87.0,None,1948.0,1957,usual answer,False,model not better than always guessing (86% vs 87%),13.0,20.0,2026-11-22T10:13:18
+2026-11-22T10:18:32,press,Press,86.0,87.0,,1948.0,1957,usual answer,False,model not better than always guessing (86% vs 87%),13.0,20.0,2026-11-22T10:13:18
 2026-11-22T10:18:32,situation,Situation,77.0,63.0,Half court,2370.0,2388,model,True,77% vs 63% always guessing on 2370 held-out plays (+14 pts),14.0,20.0,2026-11-22T10:13:18
 2026-11-22T10:18:32,primary_action,Main action,64.0,52.0,Ball Screen,638.0,749,model,True,64% vs 52% always guessing on 638 held-out plays (+12 pts),1.0,4.0,2026-11-22T10:13:18
 2026-11-22T10:18:32,ball_screen_coverage,Ball-screen coverage,29.0,30.0,Switch,220.0,243,usual answer,False,model not better than always guessing (29% vs 30%),1.0,2.0,2026-11-22T10:13:18
