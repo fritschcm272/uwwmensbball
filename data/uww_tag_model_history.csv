@@ -1382,3 +1382,6 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-22T10:18:32,offball_coverage,Off-ball coverage,72.0,57.0,Over,74.0,107,model,True,72% vs 57% always guessing on 74 held-out plays (+15 pts),,,2026-11-22T10:13:18
 2026-11-22T10:18:32,screener,Screener,73.0,22.0,Collin Madson,37.0,165,model,True,73% vs 22% always guessing on 37 held-out plays (+51 pts),2.0,2.0,2026-11-22T10:13:18
 2026-11-22T10:18:32,screen_defender,Screen defender,16.0,29.0,#5,55.0,93,usual answer,False,model not better than always guessing (16% vs 29%),,,2026-11-22T10:13:18
+2026-11-22T15:29:15,formation,Formation,59.0,58.0,5 Out,693.0,743,model,False,59% vs 58% always guessing on 693 held-out plays (+1 pts) -- needs +3 pts on 30+ plays,5.0,9.0,2026-11-22T15:29:13
+2026-11-22T15:29:15,situation,Situation,77.0,63.0,Half court,2370.0,2388,model,True,77% vs 63% always guessing on 2370 held-out plays (+14 pts),16.0,20.0,2026-11-22T15:29:13
+2026-11-22T15:29:15,primary_action,Main action,64.0,52.0,Ball Screen,638.0,749,model,True,64% vs 52% always guessing on 638 held-out plays (+12 pts),2.0,4.0,2026-11-22T15:29:13
