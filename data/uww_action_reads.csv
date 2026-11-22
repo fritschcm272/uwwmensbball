@@ -1,6 +1,20 @@
 side,scouted_opponent,offense_team,team,side_of_ball,role,player,action,read,uses,games,ppp,share_pct
 UWW,Hope Flying Dutchmen,UW-Whitewater,Carroll (WI) Pioneers,Defense,Off-ball defender,#23 Jimmy Tarjan,Flare,Through,1,1,0.0,100.0
-Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,Elmhurst Bluejays,Offense,Screener,#40 Aidyn Boone,Ball Screen,Slip,1,1,3.0,100.0
+UWW,Hope Flying Dutchmen,Elmhurst Bluejays,Elmhurst Bluejays,Offense,Screener,#20 Andy Colvin,Ball Screen,Pop,1,1,0.0,100.0
+UWW,Hope Flying Dutchmen,Elmhurst Bluejays,Elmhurst Bluejays,Offense,Screener,#21 Talen Pearson,Ball Screen,Pop,1,1,0.0,100.0
+Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,Elmhurst Bluejays,Offense,Screener,#40 Aidyn Boone,Ball Screen,Slip,1,1,3.0,50.0
+UWW,Hope Flying Dutchmen,Elmhurst Bluejays,Elmhurst Bluejays,Offense,Screener,#40 Aidyn Boone,Ball Screen,Pop,1,1,0.0,50.0
+Opponent,Hope Flying Dutchmen,Hope Flying Dutchmen,Hope Flying Dutchmen,Offense,Screener,#1 Avery Sanchez,Ball Screen,Pop,1,1,0.0,100.0
+Opponent,Hope Flying Dutchmen,North Central (IL) Cardinals,Hope Flying Dutchmen,Defense,Off-ball defender,(no number),Ball Screen,Flat Hedge,2,1,2.0,67.0
+Opponent,Hope Flying Dutchmen,North Central (IL) Cardinals,Hope Flying Dutchmen,Defense,Off-ball defender,(no number),Action,Switch,1,1,0.0,100.0
+Opponent,Hope Flying Dutchmen,North Central (IL) Cardinals,Hope Flying Dutchmen,Defense,Off-ball defender,(no number),Ball Screen,Switch,1,1,2.0,33.0
+Opponent,Hope Flying Dutchmen,North Central (IL) Cardinals,Hope Flying Dutchmen,Defense,On-ball defender,(no number),Action,Switch,1,1,0.0,100.0
+Opponent,Hope Flying Dutchmen,North Central (IL) Cardinals,Hope Flying Dutchmen,Defense,On-ball defender,(no number),Ball Screen,Over,1,1,2.0,33.0
+Opponent,Hope Flying Dutchmen,North Central (IL) Cardinals,Hope Flying Dutchmen,Defense,On-ball defender,(no number),Ball Screen,Switch,1,1,2.0,33.0
+Opponent,Hope Flying Dutchmen,North Central (IL) Cardinals,Hope Flying Dutchmen,Defense,On-ball defender,(no number),Ball Screen,Under,1,1,2.0,33.0
+Opponent,Hope Flying Dutchmen,North Central (IL) Cardinals,North Central (IL) Cardinals,Offense,Screener,#20 Tyler Swierczek,Ball Screen,Pop,1,1,0.0,50.0
+Opponent,Hope Flying Dutchmen,North Central (IL) Cardinals,North Central (IL) Cardinals,Offense,Screener,#20 Tyler Swierczek,Ball Screen,Slip,1,1,3.0,50.0
+Opponent,Hope Flying Dutchmen,North Central (IL) Cardinals,North Central (IL) Cardinals,Offense,Screener,#44 Justin Sveiteris,Ball Screen,Pop,1,1,2.0,100.0
 UWW,Hope Flying Dutchmen,Ripon Red Hawks,Ripon Red Hawks,Offense,Screener,#34 Jackson Flowers,Ball Screen,Slip,2,1,0.0,100.0
 UWW,Hope Flying Dutchmen,Ripon Red Hawks,Ripon Red Hawks,Offense,Screener,#35 Michael Asman,Ball Screen,Pop,2,1,0.0,50.0
 UWW,Hope Flying Dutchmen,Ripon Red Hawks,Ripon Red Hawks,Offense,Screener,#35 Michael Asman,Ball Screen,Roll,1,1,0.0,25.0
@@ -8,7 +22,8 @@ UWW,Hope Flying Dutchmen,Ripon Red Hawks,Ripon Red Hawks,Offense,Screener,#35 Mi
 UWW,Hope Flying Dutchmen,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#15 Collin Madson,Down Screen,Cobra,1,1,0.0,100.0
 UWW,Hope Flying Dutchmen,UW-Whitewater,UW-Whitewater,Offense,Ball handler (trigger),#5 Isaiah Robinson,Flare,Use it,1,1,0.0,100.0
 UWW,Hope Flying Dutchmen,UW-Whitewater,UW-Whitewater,Offense,Screener,#25 Taveon Vann,Ball Screen,Roll,2,1,1.5,100.0
-UWW,Hope Flying Dutchmen,UW-Whitewater,UW-Whitewater,Offense,Screener,#35 Rashad Rogers,Ball Screen,Pop,1,1,0.0,50.0
-UWW,Hope Flying Dutchmen,UW-Whitewater,UW-Whitewater,Offense,Screener,#35 Rashad Rogers,Ball Screen,Roll,1,1,0.0,50.0
+UWW,Hope Flying Dutchmen,UW-Whitewater,UW-Whitewater,Offense,Screener,#35 Rashad Rogers,Ball Screen,Pop,1,1,0.0,33.0
+UWW,Hope Flying Dutchmen,UW-Whitewater,UW-Whitewater,Offense,Screener,#35 Rashad Rogers,Ball Screen,Roll,1,1,0.0,33.0
+UWW,Hope Flying Dutchmen,UW-Whitewater,UW-Whitewater,Offense,Screener,#35 Rashad Rogers,Ball Screen,Slip,1,1,0.0,33.0
 UWW,Hope Flying Dutchmen,UW-Whitewater,UW-Whitewater,Offense,Screener,#35 Rashad Rogers,Flare,Pop,1,1,0.0,100.0
 UWW,Hope Flying Dutchmen,UW-Whitewater,UW-Whitewater,Offense,Screener,#5 Isaiah Robinson,Down Screen,Pop,1,1,0.0,100.0

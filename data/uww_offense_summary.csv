@@ -1,17 +1,18 @@
 scouted_opponent,perspective,team,order,kind,text
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,1,formation,"When they are running no formation, be aware that they run Motion the most (62%, 1.33 PPP). It's also their most successful play call out of no formation."
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,2,formation,"When they are running 41, be aware that they run 41 Motion the most (100%, 1.00 PPP). It's also their most successful play call out of 41."
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,3,formation,"When they are running Horns, be aware that they run Horns-Hi Low the most (50%, 0.00 PPP)."
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,4,oob,"On BLOB (1 possessions, 2.00 PPP), no play call has been tagged yet."
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,5,success,"Most successful play calls overall: Motion (5x, 1.33 PPP) (team average 1.00 PPP)."
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,6,success_actions,"Most successful actions: Ball screen (6x, 1.75 PPP) (team average 1.00 PPP)."
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,7,scorers,Top scorers on tagged plays: Yant 6 pts (3) · Sanchez 4 pts (2) · Walther 3 pts (1).
-Hope Flying Dutchmen,UWW,UW-Whitewater,1,formation,"When we run no formation, we run Motion the most (13%, 0.67 PPP). Opponents struggled to stop it with ball-screen coverage of Over (1x, 2.00 PPP) but Switch slowed it down best (1x, 0.00 PPP). We were most successful running Cheetah (7%, 1.80 PPP)."
-Hope Flying Dutchmen,UWW,UW-Whitewater,2,formation,"When we run 5 Out, we run 5 Out Motion the most (61%, 1.29 PPP). We were most successful running Zoom (13%, 1.67 PPP)."
-Hope Flying Dutchmen,UWW,UW-Whitewater,3,oob,"On BLOB (8 possessions, 1.43 PPP), we run BLOB the most (25%, 2.50 PPP). It's also our most successful play call out of BLOB."
-Hope Flying Dutchmen,UWW,UW-Whitewater,4,oob,"On SLOB (11 possessions, 1.10 PPP), we run SLOB the most (64%, 1.29 PPP). It's also our most successful play call out of SLOB."
-Hope Flying Dutchmen,UWW,UW-Whitewater,5,success,"Our most successful play calls: BLOB (2x, 2.50 PPP) · Cheetah (5x, 1.80 PPP) · Zoom (3x, 1.67 PPP) (team average 0.88 PPP)."
-Hope Flying Dutchmen,UWW,UW-Whitewater,6,success_actions,"Our most successful actions: DHO / handoff (5x, 2.00 PPP) (team average 0.88 PPP)."
-Hope Flying Dutchmen,UWW,UW-Whitewater,7,scorers,Our top scorers on tagged plays: Madson 53 pts (25) · Lukenbill 19 pts (8) · Mcewen 18 pts (7).
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,1,formation,"When they are running 41, be aware that they run 41 Motion the most (36%, 0.62 PPP). They were most successful running DD (8%, 1.33 PPP)."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,2,formation,"When they are running no formation, be aware that they run Motion the most (31%, 1.33 PPP). It's also their most successful play call out of no formation."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,3,formation,"When they are running 5 Out, be aware that they run bs the most (22%, 1.50 PPP). It's also their most successful play call out of 5 Out."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,4,oob,"On BLOB (9 possessions, 1.00 PPP), they run BLOB Motion the most (22%, 1.00 PPP). It's also their most successful play call out of BLOB."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,5,oob,"On SLOB (5 possessions, 0.40 PPP), no play call has been tagged yet."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,6,success,"Most successful play calls overall: bs (3x, 1.67 PPP) · Motion (6x, 1.00 PPP) · Hi-lo (4x, 1.00 PPP) (team average 0.78 PPP)."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,7,success_actions,"Most successful actions: DHO / handoff (7x, 1.14 PPP) · Ball screen (26x, 1.04 PPP) (team average 0.78 PPP)."
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,8,scorers,Top scorers on tagged plays: Sanchez 27 pts (11) · Yant 15 pts (8) · Cargill 13 pts (6).
+Hope Flying Dutchmen,UWW,UW-Whitewater,1,formation,"When we run no formation, we run Motion the most (12%, 0.85 PPP). Opponents struggled to stop it with ball-screen coverage of Over (1x, 2.00 PPP) but Switch slowed it down best (1x, 0.00 PPP). We were most successful running RAM SCREEN (2%, 2.00 PPP)."
+Hope Flying Dutchmen,UWW,UW-Whitewater,2,formation,"When we run 5 Out, we run 5 Out Motion the most (63%, 1.00 PPP). We were most successful running Zoom (9%, 1.67 PPP)."
+Hope Flying Dutchmen,UWW,UW-Whitewater,3,oob,"On BLOB (13 possessions, 1.09 PPP), we run BLOB Motion the most (23%, 0.00 PPP). We were most successful running BLOB (15%, 2.50 PPP)."
+Hope Flying Dutchmen,UWW,UW-Whitewater,4,oob,"On SLOB (14 possessions, 1.00 PPP), we run SLOB the most (50%, 1.29 PPP). It's also our most successful play call out of SLOB."
+Hope Flying Dutchmen,UWW,UW-Whitewater,5,success,"Our most successful play calls: BLOB (2x, 2.50 PPP) · RAM SCREEN (2x, 2.00 PPP) · Cheetah (5x, 1.80 PPP) (team average 0.84 PPP)."
+Hope Flying Dutchmen,UWW,UW-Whitewater,6,success_actions,"Our most successful actions: Isolation (2x, 3.00 PPP) · DHO / handoff (11x, 1.18 PPP) (team average 0.84 PPP)."
+Hope Flying Dutchmen,UWW,UW-Whitewater,7,scorers,Our top scorers on tagged plays: Madson 71 pts (33) · Mcewen 30 pts (12) · Lukenbill 22 pts (10).
 Hope Flying Dutchmen,UWW,UW-Whitewater,8,defense,Opponents' ball-screen defense against us: Over 6x (0.33 PPP) · Hedge / Show 5x (0.00 PPP) · Switch 1x (0.00 PPP).
 Hope Flying Dutchmen,UWW,UW-Whitewater,9,advice,"Expect Hedge / Show -- it held us to 0.00 PPP (5x); we scored best against Over (0.33 PPP, 6x)."

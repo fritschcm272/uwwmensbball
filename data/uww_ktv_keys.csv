@@ -1,30 +1,44 @@
 opponent,game_date,category,key_number,icon,headline,evidence,reasoning,source,impact,confidence,brief_eligible,priority_score
-Hope Flying Dutchmen,2026-11-24,Offense,1,🎯,Attack their weakest look: Catch-and-shoot (open),"Opponents shot 11/26 · 42% FG · 63% eFG · 1.27 pts/attempt · +0.39 vs all looks · 16% of attempts · 96% of them threes on this against Hope Flying Dutchmen
+Hope Flying Dutchmen,2026-11-24,Offense,1,📋,Win the rebounding & free throw battles,Linked data key: Finish every defensive possession with a box-out,From the numbers: Finish every defensive possession with a box-out. They get 46% of their own misses back -- a stop isn't a stop until we secure the rebound; find Orion Yant on every shot.,Keys to Victory,,,True,80.0
+Hope Flying Dutchmen,2026-11-24,Offense,2,🏀,Feature our best look: Motion,"Us: 0.95 PPP on 38 tagged possessions this season vs our 0.85 average
+Them: opponents scored 0.54 PPP running this against Hope Flying Dutchmen on 14 tagged possessions
+Runs it most: Marino, Madson, Verges, Bara, Warren
+Usually comes off 5 Out Motion","We score 0.95 a possession on it and Hope Flying Dutchmen gives up 0.54 defending it -- go to it early, usually out of 5 Out Motion.",Data-Driven,0.49999999999999994,0.7,True,65.5
+Hope Flying Dutchmen,2026-11-24,Offense,3,🎯,Attack their weakest look: Catch-and-shoot (open),"Opponents shot 11/26 · 42% FG · 63% eFG · 1.27 pts/attempt · +0.39 vs all looks · 16% of attempts · 96% of them threes on this against Hope Flying Dutchmen
 Runs it most:
 • Madson, Robinson, Lukenbill, McEwen, Teague-Johnson 4x · 50%
 • Madson, Robinson, McEwen, Rogers, Teague-Johnson 3x · 67%
 • Madson, McEwen, Rogers, Teague-Johnson, Castillo 2x · 50%
 Usually comes off SLOB for us",Teams have shot 42% on it against Hope Flying Dutchmen -- hunt it; we usually get it out of SLOB.,Data-Driven,0.6,0.8666666666666667,True,72.0
-Hope Flying Dutchmen,2026-11-24,Offense,2,📋,Call our best set: Cheetah,"1.80 PPP on 5 uses vs our 0.89 overall · 1/2 FG
+Hope Flying Dutchmen,2026-11-24,Offense,4,📋,Call our best set: Cheetah,"1.80 PPP on 5 uses vs our 0.85 overall · 1/2 FG
 Finished most by Kelton Mcewen
-No coverage tagged against it yet","Our most productive set this season -- go to it when we need a good look, with Kelton Mcewen finishing. Small sample: 2 games.",Data-Driven,0.7,0.16666666666666666,True,65.5
-Hope Flying Dutchmen,2026-11-24,Defense,3,📊,Take away their most efficient high-volume actions,Cut: 57.7% on 26 attempts; Transition: 55.0% on 20 attempts,"Each is 5+ points above their 45.9% overall clip on 15+ attempts. Cut: jump to the ball on every pass and see man and ball -- no back-cuts behind ball-watchers. Transition: sprint back, stop the ball first and match up second.",Data-Driven,,,True,62.5
-Hope Flying Dutchmen,2026-11-24,Defense,4,📊,Funnel them into their worst high-volume looks,Spot-Up: 31.4% on 51 attempts,Each is 5+ points below their 45.9% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
-Hope Flying Dutchmen,2026-11-24,Defense,5,📊,Pressure the actions they turn it over on,Transition: 3 TO in 23 uses (13.0% vs 9.4% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
-Hope Flying Dutchmen,2026-11-24,Defense,6,🛡️,What Hope Flying Dutchmen goes to most: Drive to the basket,"56 attempts, 61% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
-Hope Flying Dutchmen,2026-11-24,Defense,7,📋,Take away their go-to set: Motion,"5 uses in 1 games · 1.33 PPP vs their 1.00 overall · 2/3 FG
+No coverage tagged against it yet","Our most productive set this season -- go to it when we need a good look, with Kelton Mcewen finishing.",Data-Driven,0.7307692307692311,0.25,True,68.0
+Hope Flying Dutchmen,2026-11-24,Defense,5,📊,Take away their most efficient high-volume actions,Cut: 57.7% on 26 attempts; Transition: 55.0% on 20 attempts,"Each is 5+ points above their 45.9% overall clip on 15+ attempts. Cut: jump to the ball on every pass and see man and ball -- no back-cuts behind ball-watchers. Transition: sprint back, stop the ball first and match up second.",Data-Driven,,,True,62.5
+Hope Flying Dutchmen,2026-11-24,Defense,6,📊,Funnel them into their worst high-volume looks,Spot-Up: 31.4% on 51 attempts,Each is 5+ points below their 45.9% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
+Hope Flying Dutchmen,2026-11-24,Defense,7,📊,Pressure the actions they turn it over on,Transition: 3 TO in 23 uses (13.0% vs 9.4% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
+Hope Flying Dutchmen,2026-11-24,Defense,8,📋,Guard Your Yard 1 on 1,,,Keys to Victory,,,True,80.0
+Hope Flying Dutchmen,2026-11-24,Defense,9,📋,Elite communication on defense,,,Keys to Victory,,,True,80.0
+Hope Flying Dutchmen,2026-11-24,Defense,10,⚠️,Opponent strength: Putting constant pressure on the paint offensively,,,Team Strengths,,,True,49.5
+Hope Flying Dutchmen,2026-11-24,Defense,11,⚠️,Opponent strength: Disciplined defense holding opponents to 36% FG,,,Team Strengths,,,True,49.5
+Hope Flying Dutchmen,2026-11-24,Defense,12,⚠️,Opponent strength: Offensive rebounding & drawing fouls,,,Team Strengths,,,True,49.5
+Hope Flying Dutchmen,2026-11-24,Defense,13,🛡️,What Hope Flying Dutchmen goes to most: Drive to the basket,"56 attempts, 61% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
+Hope Flying Dutchmen,2026-11-24,Defense,14,📋,Take away their go-to set: 41 Motion,"14 uses in 3 games · 0.62 PPP vs their 0.78 overall · 3/9 FG · 3 TO
+Finished most by Brendan Cargill
 Built on: Ball Screen
-Tagged as: [app] Motion | [app] Motion: Man-to-Man
-No coverage tagged against it yet",Their most-called half-court set. It's built on the ball screen -- take that away first. Small sample: 1 game.,Data-Driven,1.0,0.08333333333333333,True,76.2
-Hope Flying Dutchmen,2026-11-24,Defense,8,,Finish every defensive possession with a box-out,"They grab 46% of their own misses -- we usually allow 39%, so this is above our norm; most by Orion Yant, Hope.",They get 46% of their own misses back -- a stop isn't a stop until we secure the rebound; find Orion Yant on every shot.,Data-Driven,1.0,1.0,True,90.0
-Hope Flying Dutchmen,2026-11-24,Personnel,9,🔒,"Counter with Madson, Chestnut, McEwen, Rogers, Grunewald","+2.40/min — Madson, Chestnut, McEwen, Rogers, Grunewald
-+0.93/min — Madson, Robinson, Lukenbill, McEwen, Teague-Johnson
-+0.84/min — Madson, Robinson, McEwen, Rogers, Teague-Johnson","UWW's best net margin against opponent units that resemble Hope Flying Dutchmen's most-used lineup (Sanchez, Cargill, Blauch, Yant, Walther). Target profile: 2 guard, 1 wing, 2 forward · avg 6'3"". Measured across 23 comparable opponent unit(s), 42 min this season.",Lineup Scouting,1.0,0.6988333333333334,True,83.5
-Hope Flying Dutchmen,2026-11-24,Personnel,10,🔒,"Attack Hope Flying Dutchmen's Miller, Cargill, Walther combo","Worst +/- 3-man combos:
+Next most-called: Motion
+Tagged as: [app] 41 Motion: Man-to-Man | [app] 41 Motion: Token Press - Man-to-Man | [app] 41 Motion: Full-court M2M Press - Man-to-Man
+No coverage tagged against it yet","Their most-called half-court set. Brendan Cargill finishes it most, usually off the ball screen -- take away the ball screen and make someone else beat us.",Data-Driven,1.0,0.7,True,85.5
+Hope Flying Dutchmen,2026-11-24,Defense,15,📋,Know their best set: Motion,"1.00 PPP on 6 uses vs 0.78 overall
+No coverage tagged against it yet",Their most productive set -- recognize the alignment and call it out before the action starts.,Data-Driven,0.43999999999999995,0.3,True,50.1
+Hope Flying Dutchmen,2026-11-24,Defense,16,,Finish every defensive possession with a box-out,"They grab 46% of their own misses -- we usually allow 39%, so this is above our norm; most by Orion Yant, Hope.",They get 46% of their own misses back -- a stop isn't a stop until we secure the rebound; find Orion Yant on every shot.,Data-Driven,1.0,1.0,True,90.0
+Hope Flying Dutchmen,2026-11-24,Personnel,17,🔒,"Counter with Madson, McEwen, Rogers, Grunewald, Castillo","+1.39/min — Madson, McEwen, Rogers, Grunewald, Castillo
++1.16/min — Madson, Robinson, Lukenbill, McEwen, Teague-Johnson
++0.00/min — Madson, Robinson, McEwen, Rogers, Teague-Johnson","UWW's best net margin against opponent units that resemble Hope Flying Dutchmen's most-used lineup (Sanchez, Cargill, Blauch, Yant, Walther). Target profile: 2 guard, 1 wing, 2 forward · avg 6'3"" · three point shooter / slasher driver / post scorer / rebounder. Measured across 24 comparable opponent unit(s), 41 min this season.",Lineup Scouting,1.0,0.6761666666666667,True,83.1
+Hope Flying Dutchmen,2026-11-24,Personnel,18,🔒,"Attack Hope Flying Dutchmen's Miller, Cargill, Walther combo","Worst +/- 3-man combos:
 -12.0 in 21.3 min — Miller, Cargill, Walther
 -11.0 in 16.0 min — Cargill, Wesolek, Walther
 -9.0 in 15.8 min — Cargill, Ryg, Walther",Hope Flying Dutchmen's most exploitable 3-man combinations: their worst net-rating units with real minutes this season.,Lineup Scouting,1.0,0.5325,True,81.0
-Hope Flying Dutchmen,2026-11-24,Personnel,11,,"Feature the Madson, McEwen, Rogers combo","Madson, McEwen, Rogers: +3.9 per 40 after shrinkage · on/off +14.2 · 63 competitive min in 3 games
+Hope Flying Dutchmen,2026-11-24,Personnel,19,,"Feature the Madson, McEwen, Rogers combo","Madson, McEwen, Rogers: +3.9 per 40 after shrinkage · on/off +14.2 · 63 competitive min in 3 games
 Madson, Robinson, Teague-Johnson: +2.0 per 40 after shrinkage · on/off +7.4 · 61 competitive min in 3 games
 Madson, Lukenbill, McEwen: +0.9 per 40 after shrinkage · on/off +3.3 · 49 competitive min in 3 games
 On/off: +14.2 per 40 minutes (better with them on the floor)",Our best trio this season -- +3.9 per 40 minutes together; get them on the floor together.,Lineup Scouting,0.32268473701193934,0.5275,True,53.8

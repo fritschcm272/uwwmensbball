@@ -1,23 +1,50 @@
 scouted_opponent,side,lineup,top_calls,tagged_possessions,ppp,grouping
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Carter Bishop, Orion Yant, Sean Wesolek","Motion (2x), FUN HORNS STS SET (1x), 5 out-flash screen set (1x)",12,0.83,3G-1W-1B
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Kyle Blauch, Orion Yant, Tucker Walther","Motion (3x), Quick Post Set (2x), 41 Motion (2x)",10,0.6,3G-2W
-Hope Flying Dutchmen,Opponent,"Brady Miller, Brendan Cargill, Jared Ryg, Orion Yant, Tucker Walther","Motion (2x), DHO set (1x), Pinch-Ball Screen (1x)",5,1.5,4G-1W
-Hope Flying Dutchmen,Opponent,"Brady Miller, Carter Bishop, Jared Ryg, Sean Wesolek, Tucker Walther","pinch-clear (1x), Motion (1x), DHO set (1x)",3,0.0,4G-1B
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brady Miller, Brendan Cargill, Carter Bishop, Orion Yant",Dho-flair EOG (1x),1,0.0,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brady Miller, Brendan Cargill, Carter Bishop, Sean Wesolek","cut-DD (1x), Ghost (1x), Ds-flash (1x)",4,0.75,Small / shooting five (no true big)
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brady Miller, Brendan Cargill, Orion Yant, Sean Wesolek","BLOB Motion (2x), post (1x), Hi-lo (1x)",10,1.0,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brady Miller, Brendan Cargill, Orion Yant, Tucker Walther","bs-pitch-ghost (1x), Booty Screen (1x), bs-ds (1x)",4,1.33,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brady Miller, Brendan Cargill, Sean Wesolek, Tucker Walther","Motion (2x), Bs-bs- DD (1x), Horns #1 (1x)",6,1.33,Small / shooting five (no true big)
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Carter Bishop, Jared Ryg, Kyle Blauch",Hi-lo (1x),1,0.0,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Carter Bishop, Justin Fisher, Kyle Blauch","41 Motion (1x), DHO (1x), Flex Screen (1x)",4,1.67,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Carter Bishop, Justin Fisher, Sean Wesolek","SLOB Motion (1x), 41 (1x), 41 Motion (1x)",3,0.0,Small / shooting five (no true big)
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Carter Bishop, Kyle Blauch, Tucker Walther","BLOB Motion (1x), DD (1x), GBS-BBS (1x)",4,1.25,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Carter Bishop, Orion Yant, Sean Wesolek","Motion (3x), 41 Motion (2x), FUN HORNS STS SET (1x)",19,0.74,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Jared Ryg, Kaden Grau, Kyle Blauch","WTF To ball Screen (1x), BLOB Motion (1x), Knicks (1x)",6,1.8,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Jared Ryg, Orion Yant, Sean Wesolek","Knicks (2x), Horns Motion (1x), Stagger-zoom (1x)",9,1.0,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Kyle Blauch, Orion Yant, Tucker Walther","41 Motion (7x), Motion (4x), bs (2x)",34,0.7,Two-big lineup
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Orion Yant, Sean Wesolek, Tucker Walther","41 Motion (2x), bs (1x)",3,0.0,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Avery Sanchez, Justin Fisher, Kaden Grau, Kyle Blauch, Tucker Walther","DHO-flash-swing-ricky (1x), #4 (1x), Drag BS (1x)",4,0.0,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Brady Miller, Brendan Cargill, Carter Bishop, Jared Ryg, Orion Yant",Down Screens (1x),1,2.0,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Brady Miller, Brendan Cargill, Carter Bishop, Sean Wesolek, Tucker Walther","bs (2x), cuts (1x), Horns #5 (1x)",6,0.83,Small / shooting five (no true big)
+Hope Flying Dutchmen,Opponent,"Brady Miller, Brendan Cargill, Jared Ryg, Orion Yant, Tucker Walther","Motion (3x), DHO set (1x), Pinch-Ball Screen (1x)",9,1.38,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Brady Miller, Brendan Cargill, Jared Ryg, Sean Wesolek, Tucker Walther","Rip Set (1x), 41 Motion (1x), Jokic Action (1x)",3,0.0,Small / shooting five (no true big)
+Hope Flying Dutchmen,Opponent,"Brady Miller, Carter Bishop, Jared Ryg, Orion Yant, Tucker Walther","Iverson (1x), Iverson #2 (1x)",2,0.0,Base five (one big)
+Hope Flying Dutchmen,Opponent,"Brady Miller, Carter Bishop, Jared Ryg, Sean Wesolek, Tucker Walther","pinch-clear (1x), Motion (1x), DHO set (1x)",3,0.0,Small / shooting five (no true big)
+Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Kelton McEwen","Isolation (2x), ISO (1x)",3,0.0,
 Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Rashad Rogers","5 Out Motion (2x), Ripon Motion #1 (1x), Stagger (1x)",4,1.75,
 Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Taveon Vann",Motion (2x),2,1.0,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Tyshawn Teague-Johnson","Ripon Motion #1 (2x), BLOB Motion (2x), Pistol (1x)",7,0.71,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson","Zoom (2x), Gold (1x), Motion (1x)",8,1.38,
+Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Tyshawn Teague-Johnson","Ripon Motion #1 (2x), BLOB Motion (2x), RAM SCREEN (2x)",11,0.82,
+Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson","SLOB Motion (3x), Motion (2x), Zoom (2x)",18,1.12,
+Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, Rashad Rogers, Zavier Castillo","Motion (2x), STS (1x), 5 Out Motion (1x)",4,1.25,
 Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, Taveon Vann, Tyshawn Teague-Johnson","Set (2x), Zoom (1x), Stagger (1x)",4,0.0,
 Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Rashad Rogers","Ripon Motion #1 (4x), Stagger (2x), 5 Out Motion (2x)",17,0.76,
 Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveon Vann","Stagger (5x), Motion (3x), SLOB (2x)",18,0.89,
+Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson","BLOB Motion (2x), Spread Zoom Motion (1x), Motion-over (1x)",6,0.83,
 Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Luke Paddock, Tyshawn Teague-Johnson","5 Out Motion (1x), Ripon Motion #1 (1x)",2,1.5,
-Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Rashad Rogers","Zona (1x), Ripon Motion #1 (1x), 5 Out Motion (1x)",3,1.33,
+Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Kelton McEwen, Rashad Rogers, Trent Grunewald","5 Out Motion (2x), Hawkeye (1x), Flex Set (1x)",8,1.5,
+Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",5 Out Motion (3x),3,0.67,
+Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Rashad Rogers","Zona (1x), Ripon Motion #1 (1x), 5 Out Motion (1x)",10,0.88,
 Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Taveon Vann","Stagger (1x), Flow (1x), Ripon Motion #1 (1x)",3,0.0,
-Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson","SLOB (2x), Over (1x), Ball Screen (1x)",6,0.5,
-Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson","Ripon Motion #1 (8x), 5 Out Motion (6x), Motion (5x)",45,0.84,
+Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Trent Grunewald","BLOB Motion (1x), Twins Left (1x), Ricky Set (1x)",6,0.5,
+Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson","Motion (4x), SLOB (2x), Ball Screen (2x)",19,0.68,
+Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Zavier Castillo","77 BS (1x), Hawk (1x), Go cut-Ball Screen (1x)",3,1.33,
+Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson","5 Out Motion (9x), Motion (8x), Ripon Motion #1 (8x)",72,0.73,
 Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, Kelton McEwen, Taveon Vann, Tyshawn Teague-Johnson","Motion (2x), SLOB Motion (1x), Twins Left (1x)",5,0.6,
+Hope Flying Dutchmen,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson","Stagger (1x), Gold (1x), Ram 15 (1x)",4,1.33,
 Hope Flying Dutchmen,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Zavier Castillo","Zona (3x), Gold (1x), Motion (1x)",7,1.17,
 Hope Flying Dutchmen,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson, Zavier Castillo","Motion (1x), Ball Screen (1x), BLOB (1x)",3,0.67,
+Hope Flying Dutchmen,UWW,"Collin Madson, Kelton McEwen, Rashad Rogers, Trent Grunewald, Zavier Castillo","Gold (3x), Motion (2x), floppy (1x)",8,0.5,
 Hope Flying Dutchmen,UWW,"Collin Madson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo","SLOB (2x), Ball Screen (2x)",4,1.75,
 Hope Flying Dutchmen,UWW,"Darius Chestnut, Isaiah Robinson, JR Lukenbill, Rashad Rogers, Tyshawn Teague-Johnson","Stagger (2x), Ripon Motion #1 (1x), Twins Left (1x)",5,1.25,
+Hope Flying Dutchmen,UWW,"Darius Chestnut, Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo",Gold (1x),1,0.0,
 Hope Flying Dutchmen,UWW,"Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo","Cheetah (1x), Ball Screen (1x)",2,0.0,

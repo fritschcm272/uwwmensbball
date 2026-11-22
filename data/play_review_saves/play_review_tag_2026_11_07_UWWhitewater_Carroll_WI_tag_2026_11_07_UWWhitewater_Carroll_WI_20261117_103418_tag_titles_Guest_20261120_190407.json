@@ -1,0 +1,118 @@
+{
+ "game": "2026-11-07|UWWhitewater@Carroll(WI)",
+ "run": "20261117_103418_tag",
+ "coach": "Guest",
+ "saved": "2026-11-20T19:04:07+00:00",
+ "answers": [
+  {
+   "clip_key": "2026-11-07|185|25 Logan Steffensmeier > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 185,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Transition",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-07|185|25 Logan Steffensmeier > Spot-Up > No Dribble Jumper > Guarded > Long/3pt > Miss 3 Pts",
+   "clip_number": 185,
+   "field": "defense",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Man-to-Man",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-07|196|4 Michael McNabb > Non Possession > No Violation",
+   "clip_number": 196,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Half court",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-07|196|4 Michael McNabb > Non Possession > No Violation",
+   "clip_number": 196,
+   "field": "formation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Knicks",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-07|196|4 Michael McNabb > Non Possession > No Violation",
+   "clip_number": 196,
+   "field": "play_call",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Knicks",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-07|196|4 Michael McNabb > Non Possession > No Violation",
+   "clip_number": 196,
+   "field": "defense",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Man-to-Man",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-07|207|33 Dennis Estepp > Offensive Rebound > Long > Run Offense",
+   "clip_number": 207,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Offensive rebound",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-07|207|33 Dennis Estepp > Offensive Rebound > Long > Run Offense",
+   "clip_number": 207,
+   "field": "defense",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Man-to-Man",
+   "prefilled": false,
+   "accepted_default": false
+  },
+  {
+   "clip_key": "2026-11-07|217|24 Cale Buboltz > Non Possession > No Violation",
+   "clip_number": 217,
+   "field": "situation",
+   "coach": null,
+   "auto": null,
+   "auto_conf": null,
+   "verdict": "wrong",
+   "correct": "Ref's TO",
+   "prefilled": false,
+   "accepted_default": false
+  }
+ ],
+ "source": "streamlit app",
+ "part": "titles"
+}

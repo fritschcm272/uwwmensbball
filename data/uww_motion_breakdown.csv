@@ -1,9 +1,12 @@
 scouted_opponent,side,team,motion_family,uses,share_pct,ppp,actions,trigger,screener,finish,games
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Motion,5,56,1.33,Motion (5),,,P&R Ball Handler (4) · ISO (1),1
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,41 Motion,3,33,1.0,41 Motion (3),,,Post-Up (2) · P&R Ball Handler (1),1
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Pinch Motion,1,11,2.0,Pinch Motion (1),,,Cut (1),1
-Hope Flying Dutchmen,UWW,UW-Whitewater,5 Out Motion,15,48,1.2,5 Out Motion (15),,,Spot-Up (4) · P&R Ball Handler (4),2
-Hope Flying Dutchmen,UWW,UW-Whitewater,Motion,10,32,0.6,Motion (10),,,P&R Ball Handler (4) · No Play Type (3),2
-Hope Flying Dutchmen,UWW,UW-Whitewater,SLOB Motion,3,10,0.67,SLOB Motion (3),,,P&R Ball Handler (2) · Off Screen (1),1
-Hope Flying Dutchmen,UWW,UW-Whitewater,Ripon Motion #1,2,6,0.0,Ripon Motion #1 (2),,,Non Possession (2),1
-Hope Flying Dutchmen,UWW,UW-Whitewater,BLOB Motion,1,3,0.0,BLOB Motion (1),,,Off Screen (1),1
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,41 Motion,14,61,0.62,41 Motion (14),,,P&R Ball Handler (6) · Post-Up (2),3
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Motion,6,26,1.0,Motion (6),,,P&R Ball Handler (4) · Non Possession (1),2
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,BLOB Motion,2,9,1.0,BLOB Motion (2),,,P&R Ball Handler (1) · Off Screen (1),1
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Pinch Motion,1,4,2.0,Pinch Motion (1),,,Cut (1),1
+Hope Flying Dutchmen,UWW,UW-Whitewater,5 Out Motion,24,46,0.92,5 Out Motion (24),,Rashad Rogers (1),Spot-Up (6) · P&R Ball Handler (6),3
+Hope Flying Dutchmen,UWW,UW-Whitewater,Motion,15,29,0.93,Motion (15),Collin Madson (1),,P&R Ball Handler (5) · Post-Up (3),3
+Hope Flying Dutchmen,UWW,UW-Whitewater,SLOB Motion,6,12,0.67,SLOB Motion (6),,,P&R Ball Handler (4) · Off Screen (2),2
+Hope Flying Dutchmen,UWW,UW-Whitewater,BLOB Motion,3,6,0.0,BLOB Motion (3),,,Off Screen (1) · Hand Off (1),2
+Hope Flying Dutchmen,UWW,UW-Whitewater,Ripon Motion #1,2,4,0.0,Ripon Motion #1 (2),,,Non Possession (2),1
+Hope Flying Dutchmen,UWW,UW-Whitewater,Motion-go-bs,1,2,2.0,Motion-go-bs (1),,,P&R Ball Handler (1),1
+Hope Flying Dutchmen,UWW,UW-Whitewater,Motion-over,1,2,0.0,Motion-over (1),,,ISO (1),1

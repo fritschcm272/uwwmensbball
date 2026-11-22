@@ -1,3 +1,7 @@
 opponent,situation,set_name,primary_player,action,frequency,our_call,film_ref,is_sample
-Hope Flying Dutchmen,Half court,Motion,Sean Wesolek,Ball Screen,"5 uses in 1 games, 1.33 PPP",Pick one ball-screen coverage and stay in it; no middle,Elmhurst@Hope,False
-Hope Flying Dutchmen,Half court,41 Motion,Kyle Blauch,Ball Screen,"3 uses in 1 games, 1.00 PPP",Pick one ball-screen coverage and stay in it; no middle,Elmhurst@Hope,False
+Hope Flying Dutchmen,Half court,41 Motion,Brendan Cargill,Ball Screen,"14 uses in 3 games, 0.62 PPP",Pick one ball-screen coverage and stay in it; no middle,Elmhurst@Hope Franklin@Hope Hope@NorthCentralIL,False
+Hope Flying Dutchmen,Half court,Motion,Brendan Cargill,Ball Screen,"6 uses in 2 games, 1.00 PPP",Pick one ball-screen coverage and stay in it; no middle,Elmhurst@Hope Franklin@Hope,False
+Hope Flying Dutchmen,Half court,DD,Avery Sanchez,Ball Screen,"4 uses in 1 games, 1.00 PPP",Pick one ball-screen coverage and stay in it; no middle,Hope@NorthCentralIL,False
+Hope Flying Dutchmen,Half court,Hi-lo,Orion Yant,nan,"4 uses in 1 games, 1.00 PPP",,Hope@NorthCentralIL,False
+Hope Flying Dutchmen,Half court,bs,Avery Sanchez,DHO,"3 uses in 2 games, 1.67 PPP",Get into the handoff; force it away from the middle,Franklin@Hope Hope@NorthCentralIL,False
+Hope Flying Dutchmen,BLOB,BLOB Motion,Avery Sanchez,Ball Screen,"2 uses in 1 games, 1.00 PPP",Pick one ball-screen coverage and stay in it; no middle,Hope@NorthCentralIL,False

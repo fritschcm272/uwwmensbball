@@ -1,45 +1,48 @@
 opponent,day,date,segment,minutes,detail,ties_to,schedule_is_sample,is_sample
-Hope Flying Dutchmen,Recovery + film,"Thu, Nov 19",Film,40,"Scout film: Motion, 41 Motion",Opponent sets,True,True
+Hope Flying Dutchmen,Recovery + film,"Thu, Nov 19",Film,40,"Scout film: 41 Motion, Motion, DD",Opponent sets,True,True
 Hope Flying Dutchmen,Recovery + film,"Thu, Nov 19",Shooting,20,"Form and free throws, no contact","Collin Madson, Isaiah Robinson, Rashad Rogers",True,True
 Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Warm-up / dynamic,10,,,True,True
 Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Individual,12,Catch-and-shoot and free-throw reps,"Player flags: Madson, Robinson, Rogers",True,True
-Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Defensive install,12,Take away their most efficient high-volume actions,Key 3,True,True
-Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Defensive install,12,Funnel them into their worst high-volume looks,Key 4,True,True
-Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Defensive install,12,Pressure the actions they turn it over on,Key 5,True,True
-Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Scout team,15,"Scout team runs Motion, 41 Motion",Opponent sets,True,True
-Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Press reps,8,Skip the press -- pressure only moved their turnover rate -2.9 points; work half-court defense instead,Pressure response,True,True
-Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Offensive emphasis,10,Attack their weakest look: Catch-and-shoot (open),Key 1,True,True
-Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Offensive emphasis,10,Call our best set: Cheetah,Key 2,True,True
-Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Special situations,8,Defend their BLOB/SLOB/ATO,Opponent sets,True,True
+Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Defensive install,12,Take away their most efficient high-volume actions,Key 5,True,True
+Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Defensive install,12,Funnel them into their worst high-volume looks,Key 6,True,True
+Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Defensive install,12,Pressure the actions they turn it over on,Key 7,True,True
+Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Scout team,15,"Scout team runs 41 Motion, Motion, DD",Opponent sets,True,True
+Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Defensive emphasis,10,"Reps in press -- they scored 0.55 PPP against it on 13 tagged possessions, their lowest",What to play them in,True,True
+Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Press reps,8,Skip the press -- pressure only moved their turnover rate +3.8 points; work half-court defense instead,Pressure response,True,True
+Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Offensive emphasis,10,Win the rebounding & free throw battles,Key 1,True,True
+Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Offensive emphasis,10,Feature our best look: Motion,Key 2,True,True
+Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Special situations,8,Defend BLOB Motion,Opponent sets,True,True
 Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Late game,8,End-of-game situations,,True,True
-Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- counter with Madson, Chestnut, McEwen, Rogers, Grunewald",Key 9,True,True
+Hope Flying Dutchmen,Practice 1,"Fri, Nov 20",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- counter with Madson, McEwen, Rogers, Grunewald, Castillo",Key 17,True,True
 Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Warm-up / dynamic,10,,,True,True
 Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Individual,12,Catch-and-shoot and free-throw reps,"Player flags: Madson, Robinson, Rogers",True,True
-Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Defensive install,12,Take away their most efficient high-volume actions,Key 3,True,True
-Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Defensive install,12,Funnel them into their worst high-volume looks,Key 4,True,True
-Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Defensive install,12,Pressure the actions they turn it over on,Key 5,True,True
-Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Scout team,15,"Scout team runs Motion, 41 Motion",Opponent sets,True,True
-Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Press reps,8,Skip the press -- pressure only moved their turnover rate -2.9 points; work half-court defense instead,Pressure response,True,True
-Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Offensive emphasis,10,Attack their weakest look: Catch-and-shoot (open),Key 1,True,True
-Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Offensive emphasis,10,Call our best set: Cheetah,Key 2,True,True
-Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Special situations,8,Defend their BLOB/SLOB/ATO,Opponent sets,True,True
+Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Defensive install,12,Take away their most efficient high-volume actions,Key 5,True,True
+Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Defensive install,12,Funnel them into their worst high-volume looks,Key 6,True,True
+Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Defensive install,12,Pressure the actions they turn it over on,Key 7,True,True
+Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Scout team,15,"Scout team runs 41 Motion, Motion, DD",Opponent sets,True,True
+Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Defensive emphasis,10,"Reps in press -- they scored 0.55 PPP against it on 13 tagged possessions, their lowest",What to play them in,True,True
+Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Press reps,8,Skip the press -- pressure only moved their turnover rate +3.8 points; work half-court defense instead,Pressure response,True,True
+Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Offensive emphasis,10,Win the rebounding & free throw battles,Key 1,True,True
+Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Offensive emphasis,10,Feature our best look: Motion,Key 2,True,True
+Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Special situations,8,Defend BLOB Motion,Opponent sets,True,True
 Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Late game,8,End-of-game situations,,True,True
-Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- counter with Madson, Chestnut, McEwen, Rogers, Grunewald",Key 9,True,True
+Hope Flying Dutchmen,Practice 2,"Sat, Nov 21",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- counter with Madson, McEwen, Rogers, Grunewald, Castillo",Key 17,True,True
 Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Warm-up / dynamic,10,,,True,True
 Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Individual,12,Catch-and-shoot and free-throw reps,"Player flags: Madson, Robinson, Rogers",True,True
-Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Defensive install,12,Take away their most efficient high-volume actions,Key 3,True,True
-Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Defensive install,12,Funnel them into their worst high-volume looks,Key 4,True,True
-Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Defensive install,12,Pressure the actions they turn it over on,Key 5,True,True
-Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Scout team,15,"Scout team runs Motion, 41 Motion",Opponent sets,True,True
-Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Press reps,8,Skip the press -- pressure only moved their turnover rate -2.9 points; work half-court defense instead,Pressure response,True,True
-Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Offensive emphasis,10,Attack their weakest look: Catch-and-shoot (open),Key 1,True,True
-Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Offensive emphasis,10,Call our best set: Cheetah,Key 2,True,True
-Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Special situations,8,Defend their BLOB/SLOB/ATO,Opponent sets,True,True
+Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Defensive install,12,Take away their most efficient high-volume actions,Key 5,True,True
+Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Defensive install,12,Funnel them into their worst high-volume looks,Key 6,True,True
+Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Defensive install,12,Pressure the actions they turn it over on,Key 7,True,True
+Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Scout team,15,"Scout team runs 41 Motion, Motion, DD",Opponent sets,True,True
+Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Defensive emphasis,10,"Reps in press -- they scored 0.55 PPP against it on 13 tagged possessions, their lowest",What to play them in,True,True
+Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Press reps,8,Skip the press -- pressure only moved their turnover rate +3.8 points; work half-court defense instead,Pressure response,True,True
+Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Offensive emphasis,10,Win the rebounding & free throw battles,Key 1,True,True
+Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Offensive emphasis,10,Feature our best look: Motion,Key 2,True,True
+Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Special situations,8,Defend BLOB Motion,Opponent sets,True,True
 Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Late game,8,End-of-game situations,,True,True
-Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- counter with Madson, Chestnut, McEwen, Rogers, Grunewald",Key 9,True,True
+Hope Flying Dutchmen,Practice 3,"Sun, Nov 22",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- counter with Madson, McEwen, Rogers, Grunewald, Castillo",Key 17,True,True
 Hope Flying Dutchmen,Practice 4 (light),"Mon, Nov 23",Warm-up / dynamic,10,,,True,True
-Hope Flying Dutchmen,Practice 4 (light),"Mon, Nov 23",Defensive walkthrough,10,Take away their most efficient high-volume actions,Key 3,True,True
-Hope Flying Dutchmen,Practice 4 (light),"Mon, Nov 23",Scout team,15,"Scout team runs Motion, 41 Motion",Opponent sets,True,True
-Hope Flying Dutchmen,Practice 4 (light),"Mon, Nov 23",Offensive emphasis,10,Attack their weakest look: Catch-and-shoot (open),Key 1,True,True
-Hope Flying Dutchmen,Practice 4 (light),"Mon, Nov 23",Special situations,8,Defend their BLOB/SLOB/ATO,Opponent sets,True,True
+Hope Flying Dutchmen,Practice 4 (light),"Mon, Nov 23",Defensive walkthrough,10,Take away their most efficient high-volume actions,Key 5,True,True
+Hope Flying Dutchmen,Practice 4 (light),"Mon, Nov 23",Scout team,15,"Scout team runs 41 Motion, Motion, DD",Opponent sets,True,True
+Hope Flying Dutchmen,Practice 4 (light),"Mon, Nov 23",Offensive emphasis,10,Win the rebounding & free throw battles,Key 1,True,True
+Hope Flying Dutchmen,Practice 4 (light),"Mon, Nov 23",Special situations,8,Defend BLOB Motion,Opponent sets,True,True
 Hope Flying Dutchmen,Game day,"Tue, Nov 24",Shootaround,45,"Walk their sets, matchups and the foul list; 50 game-speed shots each",Matchups,True,True

@@ -1,4 +1,3 @@
 opponent,situation,ppp,primary_actions,note,is_sample
-Hope Flying Dutchmen,Leading by 10+,0.85,"Slows down, more Hi-Lo DHO",Stops running in transition,True
-Hope Flying Dutchmen,Trailing by 10+,1.15,"More ball screens, faster pace",Brendan Cargill takes over possessions,True
-Hope Flying Dutchmen,"Clutch (last 5 min, margin ≤ 8)",0.97,Isolation for Brendan Cargill,Goes away from their sets late,True
+Hope Flying Dutchmen,Trailing by 10+,0.62,"bs (3x), Knicks (2x)",21 tagged possessions (their overall 0.78 PPP),False
+Hope Flying Dutchmen,"Clutch (last 5 min, margin ≤ 8)",0.86,"BLOB Motion (2x), Kansas EOG (1x)",7 tagged possessions (their overall 0.78 PPP),False
