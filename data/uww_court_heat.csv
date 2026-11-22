@@ -1,101 +1,107 @@
 team,player,side,cell_hy,cell_hx,frames
 UW-Whitewater,TEAM,defense,30,45,24
-UW-Whitewater,TEAM,defense,30,40,7
-UW-Whitewater,TEAM,defense,30,35,24
+UW-Whitewater,TEAM,defense,30,40,8
+UW-Whitewater,TEAM,defense,30,35,25
 UW-Whitewater,TEAM,defense,25,35,16
-UW-Whitewater,TEAM,defense,20,40,19
-UW-Whitewater,TEAM,defense,25,30,33
-UW-Whitewater,TEAM,defense,20,30,39
-UW-Whitewater,TEAM,defense,20,35,14
+UW-Whitewater,TEAM,defense,20,40,11
+UW-Whitewater,TEAM,defense,25,30,29
+UW-Whitewater,TEAM,defense,20,30,42
+UW-Whitewater,TEAM,defense,20,35,13
 UW-Whitewater,TEAM,defense,15,35,7
-UW-Whitewater,TEAM,defense,25,45,9
-UW-Whitewater,TEAM,defense,20,45,8
-UW-Whitewater,TEAM,defense,15,40,3
-UW-Whitewater,TEAM,defense,15,45,13
-UW-Whitewater,TEAM,defense,10,45,3
+UW-Whitewater,TEAM,defense,25,45,4
+UW-Whitewater,TEAM,defense,20,45,2
+UW-Whitewater,TEAM,defense,15,40,1
+UW-Whitewater,TEAM,defense,15,45,7
+UW-Whitewater,TEAM,defense,10,45,2
 UW-Whitewater,TEAM,defense,15,30,10
-UW-Whitewater,TEAM,defense,20,25,109
+UW-Whitewater,TEAM,defense,20,25,111
 UW-Whitewater,TEAM,defense,25,25,53
-UW-Whitewater,TEAM,defense,25,20,71
+UW-Whitewater,TEAM,defense,25,20,83
 UW-Whitewater,TEAM,defense,15,25,25
-UW-Whitewater,TEAM,defense,20,20,76
-UW-Whitewater,TEAM,defense,15,20,40
-UW-Whitewater,TEAM,defense,20,15,99
-UW-Whitewater,TEAM,defense,25,15,155
-UW-Whitewater,TEAM,defense,30,25,60
-UW-Whitewater,TEAM,defense,30,20,68
-UW-Whitewater,TEAM,defense,15,15,153
-UW-Whitewater,TEAM,defense,15,10,231
+UW-Whitewater,TEAM,defense,20,20,82
+UW-Whitewater,TEAM,defense,15,20,38
+UW-Whitewater,TEAM,defense,20,15,118
+UW-Whitewater,TEAM,defense,25,15,157
+UW-Whitewater,TEAM,defense,30,25,58
+UW-Whitewater,TEAM,defense,30,20,89
+UW-Whitewater,TEAM,defense,15,15,139
+UW-Whitewater,TEAM,defense,15,10,227
 UW-Whitewater,TEAM,defense,30,30,30
-UW-Whitewater,TEAM,defense,25,10,121
-UW-Whitewater,TEAM,defense,15,5,126
-UW-Whitewater,TEAM,defense,25,5,72
-UW-Whitewater,TEAM,defense,20,5,109
-UW-Whitewater,TEAM,defense,20,10,143
-UW-Whitewater,TEAM,defense,10,5,25
-UW-Whitewater,TEAM,defense,10,10,95
-UW-Whitewater,TEAM,defense,35,20,126
-UW-Whitewater,TEAM,defense,40,20,76
-UW-Whitewater,TEAM,defense,35,25,139
-UW-Whitewater,TEAM,defense,30,15,120
-UW-Whitewater,TEAM,defense,35,15,92
-UW-Whitewater,TEAM,defense,35,10,26
-UW-Whitewater,TEAM,defense,30,10,99
+UW-Whitewater,TEAM,defense,25,10,149
+UW-Whitewater,TEAM,defense,15,5,103
+UW-Whitewater,TEAM,defense,25,5,96
+UW-Whitewater,TEAM,defense,20,5,118
+UW-Whitewater,TEAM,defense,20,10,140
+UW-Whitewater,TEAM,defense,10,5,27
+UW-Whitewater,TEAM,defense,10,10,91
+UW-Whitewater,TEAM,defense,35,20,129
+UW-Whitewater,TEAM,defense,40,20,77
+UW-Whitewater,TEAM,defense,35,25,144
+UW-Whitewater,TEAM,defense,30,15,114
+UW-Whitewater,TEAM,defense,35,15,78
+UW-Whitewater,TEAM,defense,35,10,23
+UW-Whitewater,TEAM,defense,30,10,105
 UW-Whitewater,TEAM,defense,10,25,30
-UW-Whitewater,TEAM,defense,40,35,37
-UW-Whitewater,TEAM,defense,40,30,6
+UW-Whitewater,TEAM,defense,40,35,44
+UW-Whitewater,TEAM,defense,40,30,14
 UW-Whitewater,TEAM,defense,5,5,36
-UW-Whitewater,TEAM,defense,20,0,31
+UW-Whitewater,TEAM,defense,20,0,34
 Ripon Red Hawks,TEAM,offense,35,25,3
-UW-Whitewater,TEAM,defense,25,40,8
+UW-Whitewater,TEAM,defense,25,40,4
 UW-Whitewater,TEAM,defense,5,35,1
 UW-Whitewater,TEAM,defense,10,30,14
-Carroll (WI) Pioneers,TEAM,offense,20,5,29
-Carroll (WI) Pioneers,TEAM,offense,20,10,141
-Carroll (WI) Pioneers,TEAM,offense,20,15,71
-Carroll (WI) Pioneers,TEAM,offense,20,20,71
-Carroll (WI) Pioneers,TEAM,offense,20,25,94
-Carroll (WI) Pioneers,TEAM,offense,20,30,85
-Carroll (WI) Pioneers,TEAM,offense,20,35,24
-Carroll (WI) Pioneers,TEAM,offense,20,40,8
-Carroll (WI) Pioneers,TEAM,offense,15,15,88
-Carroll (WI) Pioneers,TEAM,offense,10,15,83
-Carroll (WI) Pioneers,TEAM,offense,10,20,58
-Carroll (WI) Pioneers,TEAM,offense,5,20,48
-Carroll (WI) Pioneers,TEAM,offense,5,25,77
-Carroll (WI) Pioneers,TEAM,offense,0,25,5
-Carroll (WI) Pioneers,TEAM,offense,0,30,4
-Carroll (WI) Pioneers,TEAM,offense,0,35,18
-Carroll (WI) Pioneers,TEAM,offense,30,5,16
-Carroll (WI) Pioneers,TEAM,offense,35,0,2
-Carroll (WI) Pioneers,TEAM,offense,25,5,47
-Carroll (WI) Pioneers,TEAM,offense,25,10,63
-Carroll (WI) Pioneers,TEAM,offense,15,10,125
-UW-Whitewater,TEAM,defense,45,35,28
-UW-Whitewater,TEAM,defense,40,40,162
-Carroll (WI) Pioneers,TEAM,offense,40,15,46
-Carroll (WI) Pioneers,TEAM,offense,40,20,36
-Carroll (WI) Pioneers,TEAM,offense,35,25,55
-Carroll (WI) Pioneers,TEAM,offense,40,25,1
-Carroll (WI) Pioneers,TEAM,offense,40,30,9
-Carroll (WI) Pioneers,TEAM,offense,40,35,7
-Carroll (WI) Pioneers,TEAM,offense,40,40,4
-Carroll (WI) Pioneers,TEAM,offense,40,45,1
-Carroll (WI) Pioneers,TEAM,offense,0,40,2
-Carroll (WI) Pioneers,TEAM,offense,0,45,2
-Carroll (WI) Pioneers,TEAM,offense,45,35,79
-Carroll (WI) Pioneers,TEAM,offense,45,30,1
-Carroll (WI) Pioneers,TEAM,offense,35,35,5
-Carroll (WI) Pioneers,TEAM,offense,30,40,23
-UW-Whitewater,TEAM,defense,0,35,2
+Carroll (WI) Pioneers,TEAM,offense,15,5,105
+Carroll (WI) Pioneers,TEAM,offense,15,10,140
+Carroll (WI) Pioneers,TEAM,offense,15,15,90
+Carroll (WI) Pioneers,TEAM,offense,20,10,139
+Carroll (WI) Pioneers,TEAM,offense,25,15,69
+Carroll (WI) Pioneers,TEAM,offense,20,15,68
+Carroll (WI) Pioneers,TEAM,offense,25,20,72
+Carroll (WI) Pioneers,TEAM,offense,20,25,95
+Carroll (WI) Pioneers,TEAM,offense,20,30,84
+Carroll (WI) Pioneers,TEAM,offense,20,35,23
+Carroll (WI) Pioneers,TEAM,offense,20,40,14
+Carroll (WI) Pioneers,TEAM,offense,15,45,6
+UW-Whitewater,TEAM,defense,10,15,58
+UW-Whitewater,TEAM,defense,10,20,56
+UW-Whitewater,TEAM,defense,5,20,45
+UW-Whitewater,TEAM,defense,5,25,19
+UW-Whitewater,TEAM,defense,0,25,3
+UW-Whitewater,TEAM,defense,0,30,4
+UW-Whitewater,TEAM,defense,0,35,5
+Carroll (WI) Pioneers,TEAM,offense,25,25,54
+Carroll (WI) Pioneers,TEAM,offense,30,30,42
+Carroll (WI) Pioneers,TEAM,offense,25,30,80
+Carroll (WI) Pioneers,TEAM,offense,25,35,59
+Carroll (WI) Pioneers,TEAM,offense,25,10,52
+Carroll (WI) Pioneers,TEAM,offense,20,20,73
+Carroll (WI) Pioneers,TEAM,offense,45,35,83
+Carroll (WI) Pioneers,TEAM,offense,40,40,1
+Carroll (WI) Pioneers,TEAM,offense,35,15,17
+Carroll (WI) Pioneers,TEAM,offense,30,15,33
+Carroll (WI) Pioneers,TEAM,offense,30,10,33
+UW-Whitewater,TEAM,defense,40,10,5
+UW-Whitewater,TEAM,defense,40,15,12
+UW-Whitewater,TEAM,defense,40,25,23
+UW-Whitewater,TEAM,defense,40,40,165
+UW-Whitewater,TEAM,defense,40,45,1
+UW-Whitewater,TEAM,defense,30,5,67
+UW-Whitewater,TEAM,defense,25,0,51
+Carroll (WI) Pioneers,TEAM,offense,40,10,9
+Carroll (WI) Pioneers,TEAM,offense,45,15,13
+Carroll (WI) Pioneers,TEAM,offense,25,40,37
+Carroll (WI) Pioneers,TEAM,offense,30,40,13
+Carroll (WI) Pioneers,TEAM,offense,25,45,8
 UW-Whitewater,TEAM,defense,0,40,2
-UW-Whitewater,TEAM,defense,5,40,7
-UW-Whitewater,TEAM,defense,10,40,5
-Carroll (WI) Pioneers,TEAM,offense,25,40,33
-Carroll (WI) Pioneers,TEAM,offense,25,35,60
-Carroll (WI) Pioneers,TEAM,offense,30,20,79
+UW-Whitewater,TEAM,defense,0,45,2
+Carroll (WI) Pioneers,TEAM,offense,20,45,6
+UW-Whitewater,TEAM,defense,5,30,42
+Carroll (WI) Pioneers,TEAM,offense,35,25,50
+Carroll (WI) Pioneers,TEAM,offense,30,20,78
 Carroll (WI) Pioneers,TEAM,offense,30,25,76
 Carroll (WI) Pioneers,TEAM,offense,35,20,27
+Carroll (WI) Pioneers,TEAM,offense,10,15,83
+Carroll (WI) Pioneers,TEAM,offense,10,20,56
 Carroll (WI) Pioneers,TEAM,offense,15,20,64
 Carroll (WI) Pioneers,TEAM,offense,15,25,48
 Carroll (WI) Pioneers,TEAM,offense,10,25,105
@@ -106,33 +112,27 @@ Carroll (WI) Pioneers,TEAM,offense,15,40,56
 Carroll (WI) Pioneers,TEAM,offense,15,35,70
 UW-Whitewater,TEAM,defense,5,0,4
 UW-Whitewater,TEAM,defense,10,0,5
-UW-Whitewater,TEAM,defense,5,10,8
-UW-Whitewater,TEAM,defense,0,5,36
-UW-Whitewater,TEAM,defense,0,0,11
+UW-Whitewater,TEAM,defense,5,10,7
+UW-Whitewater,TEAM,defense,0,5,7
+UW-Whitewater,TEAM,defense,0,0,10
+Carroll (WI) Pioneers,TEAM,offense,5,20,44
 Carroll (WI) Pioneers,TEAM,offense,15,30,60
-UW-Whitewater,TEAM,defense,15,0,9
-UW-Whitewater,TEAM,defense,30,5,49
-UW-Whitewater,TEAM,defense,45,25,99
-Carroll (WI) Pioneers,TEAM,offense,5,0,11
-Carroll (WI) Pioneers,TEAM,offense,10,0,15
-Carroll (WI) Pioneers,TEAM,offense,10,5,30
-Carroll (WI) Pioneers,TEAM,offense,10,10,42
-Carroll (WI) Pioneers,TEAM,offense,25,15,73
-Carroll (WI) Pioneers,TEAM,offense,30,10,41
-UW-Whitewater,TEAM,defense,5,30,34
-Carroll (WI) Pioneers,TEAM,offense,5,10,20
+UW-Whitewater,TEAM,defense,15,0,15
+Carroll (WI) Pioneers,TEAM,offense,5,0,16
+Carroll (WI) Pioneers,TEAM,offense,10,0,17
+Carroll (WI) Pioneers,TEAM,offense,10,5,32
+Carroll (WI) Pioneers,TEAM,offense,10,10,44
+Carroll (WI) Pioneers,TEAM,offense,0,0,39
+Carroll (WI) Pioneers,TEAM,offense,0,5,60
 Carroll (WI) Pioneers,TEAM,offense,0,10,37
-Carroll (WI) Pioneers,TEAM,offense,0,15,23
+Carroll (WI) Pioneers,TEAM,offense,5,10,20
+Carroll (WI) Pioneers,TEAM,offense,0,15,17
 Carroll (WI) Pioneers,TEAM,offense,5,15,27
-Carroll (WI) Pioneers,TEAM,offense,25,25,49
-Carroll (WI) Pioneers,TEAM,offense,25,30,77
-UW-Whitewater,TEAM,defense,10,15,59
-Carroll (WI) Pioneers,TEAM,offense,25,20,71
-Carroll (WI) Pioneers,TEAM,offense,35,15,12
-UW-Whitewater,TEAM,defense,35,5,19
+Carroll (WI) Pioneers,TEAM,offense,35,40,8
+Carroll (WI) Pioneers,TEAM,offense,35,35,1
+UW-Whitewater,TEAM,defense,35,5,24
 UW-Whitewater,TEAM,defense,40,5,4
-UW-Whitewater,TEAM,defense,40,15,4
-UW-Whitewater,TEAM,defense,45,10,9
+UW-Whitewater,TEAM,defense,45,10,7
 Carroll (WI) Pioneers,Michael McNabb,offense,10,20,4
 Carroll (WI) Pioneers,Michael McNabb,offense,15,20,5
 Carroll (WI) Pioneers,Michael McNabb,offense,15,25,2
@@ -141,145 +141,101 @@ Carroll (WI) Pioneers,Michael McNabb,offense,25,30,16
 UW-Whitewater,Isaiah Robinson,defense,10,25,6
 Carroll (WI) Pioneers,Peyton McKenna,offense,15,40,12
 Carroll (WI) Pioneers,Peyton McKenna,offense,15,35,4
-UW-Whitewater,TEAM,defense,30,0,50
+UW-Whitewater,TEAM,defense,30,0,55
 UW-Whitewater,Kelton Mcewen,defense,25,20,1
 UW-Whitewater,Rashad Rogers,defense,15,10,7
-UW-Whitewater,TEAM,defense,0,10,41
-UW-Whitewater,TEAM,defense,0,15,23
-Carroll (WI) Pioneers,TEAM,offense,15,5,98
+Carroll (WI) Pioneers,TEAM,offense,20,5,34
+Carroll (WI) Pioneers,TEAM,offense,20,0,26
 UW-Whitewater,Isaiah Robinson,defense,5,30,16
 UW-Whitewater,Isaiah Robinson,defense,10,30,7
-UW-Whitewater,TEAM,defense,10,20,54
-UW-Whitewater,TEAM,defense,40,25,20
 Carroll (WI) Pioneers,Peyton McKenna,offense,10,35,5
 Carroll (WI) Pioneers,Peyton McKenna,offense,10,40,8
 Carroll (WI) Pioneers,Cale Buboltz,offense,5,30,1
 Carroll (WI) Pioneers,TEAM,offense,5,30,85
-Carroll (WI) Pioneers,Michael McNabb,offense,15,30,6
 Carroll (WI) Pioneers,Logan Steffensmeier,offense,0,10,1
-Carroll (WI) Pioneers,TEAM,offense,30,30,43
-UW-Whitewater,Taveon Vann,defense,10,10,12
-UW-Whitewater,Taveon Vann,defense,10,15,1
-UW-Whitewater,Taveon Vann,defense,15,10,4
+UW-Whitewater,TEAM,defense,45,25,61
 UW-Whitewater,Darius Chestnut,defense,15,25,2
-UW-Whitewater,Jr Lukenbill,defense,30,15,14
+UW-Whitewater,Collin Madson,defense,20,25,2
+UW-Whitewater,TEAM,defense,45,20,95
 UW-Whitewater,Kelton Mcewen,defense,30,20,1
+Carroll (WI) Pioneers,Michael McNabb,offense,15,30,6
+UW-Whitewater,Taveon Vann,defense,10,15,1
+UW-Whitewater,Taveon Vann,defense,10,10,11
+UW-Whitewater,Taveon Vann,defense,15,10,4
+Carroll (WI) Pioneers,TEAM,offense,40,20,27
+Carroll (WI) Pioneers,TEAM,offense,45,20,9
+Carroll (WI) Pioneers,TEAM,offense,40,15,29
+Carroll (WI) Pioneers,TEAM,offense,35,10,7
+UW-Whitewater,TEAM,defense,35,0,6
 UW-Whitewater,TEAM,defense,35,40,9
-UW-Whitewater,Collin Madson,defense,20,25,19
-Carroll (WI) Pioneers,Logan Steffensmeier,offense,15,10,17
-Carroll (WI) Pioneers,Logan Steffensmeier,offense,20,10,6
-Carroll (WI) Pioneers,Logan Steffensmeier,offense,15,15,10
-Carroll (WI) Pioneers,Logan Steffensmeier,offense,10,15,3
-Carroll (WI) Pioneers,Logan Steffensmeier,offense,10,20,13
-UW-Whitewater,Darius Chestnut,defense,15,20,15
-UW-Whitewater,Darius Chestnut,defense,10,20,15
-UW-Whitewater,Darius Chestnut,defense,20,15,17
-UW-Whitewater,Darius Chestnut,defense,20,10,7
-UW-Whitewater,Collin Madson,defense,25,25,1
-UW-Whitewater,Collin Madson,defense,15,20,6
-UW-Whitewater,TEAM,defense,40,10,16
-Carroll (WI) Pioneers,TEAM,offense,45,15,15
-Carroll (WI) Pioneers,TEAM,offense,45,20,14
-Carroll (WI) Pioneers,TEAM,offense,35,10,8
-Carroll (WI) Pioneers,TEAM,offense,30,15,28
-UW-Whitewater,Collin Madson,defense,15,15,5
-UW-Whitewater,Collin Madson,defense,20,15,1
-UW-Whitewater,Collin Madson,defense,20,10,1
-Carroll (WI) Pioneers,TEAM,offense,40,10,12
-UW-Whitewater,TEAM,defense,45,20,112
-UW-Whitewater,TEAM,defense,45,30,1
-UW-Whitewater,Darius Chestnut,defense,25,10,6
-UW-Whitewater,Darius Chestnut,defense,25,15,13
-UW-Whitewater,Darius Chestnut,defense,20,20,4
-UW-Whitewater,Darius Chestnut,defense,15,15,12
-UW-Whitewater,Darius Chestnut,defense,10,15,6
-UW-Whitewater,Darius Chestnut,defense,5,20,17
-UW-Whitewater,TEAM,defense,5,20,41
-UW-Whitewater,Darius Chestnut,defense,5,25,15
-UW-Whitewater,TEAM,defense,5,25,17
-UW-Whitewater,TEAM,defense,45,15,7
-Carroll (WI) Pioneers,TEAM,offense,35,30,47
-Carroll (WI) Pioneers,Logan Steffensmeier,offense,20,15,2
-Carroll (WI) Pioneers,Logan Steffensmeier,offense,20,20,1
-Carroll (WI) Pioneers,Logan Steffensmeier,offense,20,25,11
+UW-Whitewater,TEAM,defense,40,0,7
+Carroll (WI) Pioneers,TEAM,offense,45,5,4
+Carroll (WI) Pioneers,TEAM,offense,40,5,4
+Carroll (WI) Pioneers,TEAM,offense,5,25,75
+Carroll (WI) Pioneers,TEAM,offense,0,25,2
 Carroll (WI) Pioneers,Michael McNabb,offense,15,35,38
 Carroll (WI) Pioneers,Michael McNabb,offense,10,35,1
 Carroll (WI) Pioneers,Michael McNabb,offense,15,40,19
 Carroll (WI) Pioneers,Michael McNabb,offense,20,30,7
 Carroll (WI) Pioneers,Michael McNabb,offense,30,30,15
 Carroll (WI) Pioneers,Michael McNabb,offense,30,25,6
-Carroll (WI) Pioneers,Michael McNabb,offense,35,30,20
+Carroll (WI) Pioneers,Michael McNabb,offense,35,30,18
+Carroll (WI) Pioneers,TEAM,offense,35,30,41
 Carroll (WI) Pioneers,Michael McNabb,offense,30,20,1
 Carroll (WI) Pioneers,Michael McNabb,offense,30,15,3
 Carroll (WI) Pioneers,Michael McNabb,offense,25,15,2
 Carroll (WI) Pioneers,Michael McNabb,offense,25,10,3
 Carroll (WI) Pioneers,Michael McNabb,offense,20,10,1
-UW-Whitewater,TEAM,defense,25,0,26
-UW-Whitewater,Darius Chestnut,defense,25,0,1
-UW-Whitewater,Darius Chestnut,defense,30,10,1
-UW-Whitewater,Darius Chestnut,defense,30,5,16
-Carroll (WI) Pioneers,Peyton McKenna,offense,45,15,10
-UW-Whitewater,Taveon Vann,defense,20,20,5
+Carroll (WI) Pioneers,TEAM,offense,30,5,13
 Carroll (WI) Pioneers,TEAM,offense,35,5,6
-Carroll (WI) Pioneers,TEAM,offense,20,0,15
-Carroll (WI) Pioneers,TEAM,offense,15,0,28
-Carroll (WI) Pioneers,Peyton McKenna,offense,40,10,4
-Carroll (WI) Pioneers,Peyton McKenna,offense,35,10,1
-Carroll (WI) Pioneers,Peyton McKenna,offense,45,5,1
-Carroll (WI) Pioneers,TEAM,offense,45,5,1
-Carroll (WI) Pioneers,Peyton McKenna,offense,45,10,4
-Carroll (WI) Pioneers,TEAM,offense,45,10,15
+UW-Whitewater,TEAM,defense,45,15,8
+Carroll (WI) Pioneers,TEAM,offense,25,5,49
+Carroll (WI) Pioneers,TEAM,offense,15,0,27
+Carroll (WI) Pioneers,TEAM,offense,45,10,12
+UW-Whitewater,TEAM,defense,35,30,11
+UW-Whitewater,TEAM,defense,35,35,16
 Carroll (WI) Pioneers,Peyton McKenna,offense,5,30,11
+Carroll (WI) Pioneers,TEAM,offense,40,30,2
 UW-Whitewater,Collin Madson,defense,25,10,4
 UW-Whitewater,Collin Madson,defense,25,5,3
-UW-Whitewater,TEAM,defense,35,30,7
-UW-Whitewater,TEAM,defense,35,35,11
+UW-Whitewater,Darius Chestnut,defense,10,20,5
+UW-Whitewater,Taveon Vann,defense,20,20,8
 UW-Whitewater,Taveon Vann,defense,25,20,1
-UW-Whitewater,Darius Chestnut,defense,35,10,1
-UW-Whitewater,Darius Chestnut,defense,15,10,5
-Carroll (WI) Pioneers,TEAM,offense,40,5,3
+UW-Whitewater,Taveon Vann,defense,25,10,6
+UW-Whitewater,Darius Chestnut,defense,10,15,1
 Carroll (WI) Pioneers,Peyton McKenna,offense,15,20,3
 Carroll (WI) Pioneers,Peyton McKenna,offense,10,25,9
 Carroll (WI) Pioneers,Peyton McKenna,offense,5,25,21
 Carroll (WI) Pioneers,Peyton McKenna,offense,10,20,8
 Carroll (WI) Pioneers,Peyton McKenna,offense,5,20,3
 Carroll (WI) Pioneers,TEAM,offense,5,5,34
-Carroll (WI) Pioneers,TEAM,offense,0,5,49
-Carroll (WI) Pioneers,TEAM,offense,0,0,19
-Carroll (WI) Pioneers,Michael McNabb,offense,35,25,12
+UW-Whitewater,TEAM,defense,45,30,5
+Carroll (WI) Pioneers,Michael McNabb,offense,35,25,9
 Carroll (WI) Pioneers,Cale Buboltz,offense,25,10,6
 Carroll (WI) Pioneers,Cale Buboltz,offense,20,10,6
 Carroll (WI) Pioneers,Cale Buboltz,offense,20,15,3
 Carroll (WI) Pioneers,Cale Buboltz,offense,15,15,1
 Carroll (WI) Pioneers,Cale Buboltz,offense,15,20,1
-Carroll (WI) Pioneers,Cale Buboltz,offense,15,10,6
-Carroll (WI) Pioneers,Cale Buboltz,offense,10,10,7
-UW-Whitewater,Jr Lukenbill,defense,35,30,1
-UW-Whitewater,Jr Lukenbill,defense,35,35,6
-UW-Whitewater,Jr Lukenbill,defense,35,40,3
-UW-Whitewater,Jr Lukenbill,defense,30,35,2
-UW-Whitewater,Taveon Vann,defense,25,5,8
-UW-Whitewater,Taveon Vann,defense,25,10,7
-UW-Whitewater,Taveon Vann,defense,35,0,1
-UW-Whitewater,TEAM,defense,35,0,1
-UW-Whitewater,Taveon Vann,defense,35,10,1
-UW-Whitewater,Taveon Vann,defense,20,10,2
-UW-Whitewater,Kelton Mcewen,defense,40,0,1
-UW-Whitewater,TEAM,defense,40,0,1
+Carroll (WI) Pioneers,Cale Buboltz,offense,15,10,8
+Carroll (WI) Pioneers,Cale Buboltz,offense,10,10,4
+Carroll (WI) Pioneers,TEAM,offense,25,0,4
 Carroll (WI) Pioneers,Cale Buboltz,offense,10,0,3
 Carroll (WI) Pioneers,Cale Buboltz,offense,5,0,3
-UW-Whitewater,Taveon Vann,defense,30,0,1
+UW-Whitewater,Taveon Vann,defense,30,0,2
+UW-Whitewater,Jr Lukenbill,defense,30,35,2
 Carroll (WI) Pioneers,Michael McNabb,offense,35,20,3
-UW-Whitewater,TEAM,defense,45,5,1
+UW-Whitewater,TEAM,defense,45,5,2
+UW-Whitewater,TEAM,defense,0,15,21
 Carroll (WI) Pioneers,TEAM,offense,30,0,2
-Carroll (WI) Pioneers,Cale Buboltz,offense,0,0,1
-Carroll (WI) Pioneers,Cale Buboltz,offense,0,5,4
+Carroll (WI) Pioneers,TEAM,offense,35,0,1
+Carroll (WI) Pioneers,Michael McNabb,offense,45,30,1
+Carroll (WI) Pioneers,TEAM,offense,45,30,1
 Carroll (WI) Pioneers,TEAM,offense,45,25,1
 Carroll (WI) Pioneers,TEAM,offense,45,40,9
-Carroll (WI) Pioneers,TEAM,offense,25,0,1
 Carroll (WI) Pioneers,TEAM,offense,5,35,6
-Carroll (WI) Pioneers,TEAM,offense,25,45,3
+Carroll (WI) Pioneers,TEAM,offense,0,35,13
 Carroll (WI) Pioneers,TEAM,offense,30,35,5
+UW-Whitewater,TEAM,defense,0,10,32
 Carroll (WI) Pioneers,TEAM,offense,30,45,1
 Hope Flying Dutchmen,TEAM,offense,20,40,13
 Hope Flying Dutchmen,TEAM,offense,20,35,7

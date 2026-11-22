@@ -1362,13 +1362,23 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-22T09:22:31,offball_coverage,Off-ball coverage,,,,,106,,False,,,,2026-11-19T22:30:20
 2026-11-22T09:22:31,screener,Screener,,,,,165,,False,,,,2026-11-19T22:30:20
 2026-11-22T09:22:31,screen_defender,Screen defender,,,,,93,,False,,,,2026-11-19T22:30:20
-2026-11-22T09:50:19,formation,Formation,,,5 Out,,743,nan,False,nan,0.0,9.0,2026-11-22T09:50:19
-2026-11-22T09:50:19,play_call,Play call,,,Motion,,1107,nan,False,nan,0.0,9.0,2026-11-22T09:50:19
-2026-11-22T09:50:19,defense,Defense,,,Man-to-Man,,1955,nan,False,nan,0.0,20.0,2026-11-22T09:50:19
-2026-11-22T09:50:19,press,Press,,,None,,1957,nan,False,nan,0.0,20.0,2026-11-22T09:50:19
-2026-11-22T09:50:19,situation,Situation,,,Half court,,2388,nan,False,nan,0.0,20.0,2026-11-22T09:50:19
-2026-11-22T09:50:19,primary_action,Main action,,,Ball Screen,,749,nan,False,nan,0.0,4.0,2026-11-22T09:50:19
-2026-11-22T09:50:19,ball_screen_coverage,Ball-screen coverage,,,Switch,,243,nan,False,nan,0.0,2.0,2026-11-22T09:50:19
-2026-11-22T09:50:19,offball_coverage,Off-ball coverage,,,Over,,107,nan,False,nan,,,2026-11-22T09:50:19
-2026-11-22T09:50:19,screener,Screener,,,Collin Madson,,165,nan,False,nan,0.0,2.0,2026-11-22T09:50:19
-2026-11-22T09:50:19,screen_defender,Screen defender,,,#5,,93,nan,False,nan,,,2026-11-22T09:50:19
+2026-11-22T09:50:19,formation,Formation,,,5 Out,,743,,False,,0.0,9.0,2026-11-22T09:50:19
+2026-11-22T09:50:19,play_call,Play call,,,Motion,,1107,,False,,0.0,9.0,2026-11-22T09:50:19
+2026-11-22T09:50:19,defense,Defense,,,Man-to-Man,,1955,,False,,0.0,20.0,2026-11-22T09:50:19
+2026-11-22T09:50:19,press,Press,,,,,1957,,False,,0.0,20.0,2026-11-22T09:50:19
+2026-11-22T09:50:19,situation,Situation,,,Half court,,2388,,False,,0.0,20.0,2026-11-22T09:50:19
+2026-11-22T09:50:19,primary_action,Main action,,,Ball Screen,,749,,False,,0.0,4.0,2026-11-22T09:50:19
+2026-11-22T09:50:19,ball_screen_coverage,Ball-screen coverage,,,Switch,,243,,False,,0.0,2.0,2026-11-22T09:50:19
+2026-11-22T09:50:19,offball_coverage,Off-ball coverage,,,Over,,107,,False,,,,2026-11-22T09:50:19
+2026-11-22T09:50:19,screener,Screener,,,Collin Madson,,165,,False,,0.0,2.0,2026-11-22T09:50:19
+2026-11-22T09:50:19,screen_defender,Screen defender,,,#5,,93,,False,,,,2026-11-22T09:50:19
+2026-11-22T10:18:32,formation,Formation,59.0,58.0,5 Out,693.0,743,model,False,59% vs 58% always guessing on 693 held-out plays (+1 pts) -- needs +3 pts on 30+ plays,6.0,9.0,2026-11-22T10:13:18
+2026-11-22T10:18:32,play_call,Play call,60.0,60.0,Motion,859.0,1107,usual answer,False,model not better than always guessing (60% vs 60%),2.0,9.0,2026-11-22T10:13:18
+2026-11-22T10:18:32,defense,Defense,99.0,99.0,Man-to-Man,1950.0,1955,usual answer,True,the usual answer is right 99% of the time on 1950 held-out plays,19.0,20.0,2026-11-22T10:13:18
+2026-11-22T10:18:32,press,Press,86.0,87.0,None,1948.0,1957,usual answer,False,model not better than always guessing (86% vs 87%),13.0,20.0,2026-11-22T10:13:18
+2026-11-22T10:18:32,situation,Situation,77.0,63.0,Half court,2370.0,2388,model,True,77% vs 63% always guessing on 2370 held-out plays (+14 pts),14.0,20.0,2026-11-22T10:13:18
+2026-11-22T10:18:32,primary_action,Main action,64.0,52.0,Ball Screen,638.0,749,model,True,64% vs 52% always guessing on 638 held-out plays (+12 pts),1.0,4.0,2026-11-22T10:13:18
+2026-11-22T10:18:32,ball_screen_coverage,Ball-screen coverage,29.0,30.0,Switch,220.0,243,usual answer,False,model not better than always guessing (29% vs 30%),1.0,2.0,2026-11-22T10:13:18
+2026-11-22T10:18:32,offball_coverage,Off-ball coverage,72.0,57.0,Over,74.0,107,model,True,72% vs 57% always guessing on 74 held-out plays (+15 pts),,,2026-11-22T10:13:18
+2026-11-22T10:18:32,screener,Screener,73.0,22.0,Collin Madson,37.0,165,model,True,73% vs 22% always guessing on 37 held-out plays (+51 pts),2.0,2.0,2026-11-22T10:13:18
+2026-11-22T10:18:32,screen_defender,Screen defender,16.0,29.0,#5,55.0,93,usual answer,False,model not better than always guessing (16% vs 29%),,,2026-11-22T10:13:18
