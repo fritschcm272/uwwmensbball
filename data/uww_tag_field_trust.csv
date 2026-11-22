@@ -1,11 +1,11 @@
 field,trusted,why,accuracy_pct,baseline_pct,clips_scored,trained_at
-formation,False,59% vs 58% always guessing on 693 held-out plays (+1 pts) -- needs +3 pts on 30+ plays,59,58,693,2026-11-22T15:45:15
-play_call,False,model not better than always guessing (60% vs 60%),60,60,859,2026-11-22T15:45:15
-defense,True,the usual answer is right 99% of the time on 1950 held-out plays,99,99,1950,2026-11-22T15:45:15
-press,False,model not better than always guessing (86% vs 87%),86,87,1948,2026-11-22T15:45:15
-situation,True,77% vs 63% always guessing on 2370 held-out plays (+14 pts),77,63,2370,2026-11-22T15:45:15
-primary_action,True,64% vs 52% always guessing on 638 held-out plays (+12 pts),64,52,638,2026-11-22T15:45:15
-ball_screen_coverage,False,model not better than always guessing (29% vs 30%),29,30,220,2026-11-22T15:45:15
-offball_coverage,True,72% vs 57% always guessing on 74 held-out plays (+15 pts),72,57,74,2026-11-22T15:45:15
-screener,True,73% vs 22% always guessing on 37 held-out plays (+51 pts),73,22,37,2026-11-22T15:45:15
-screen_defender,False,model not better than always guessing (16% vs 29%),16,29,55,2026-11-22T15:45:15
+formation,False,59% vs 58% always guessing on 693 held-out plays (+1 pts) -- needs +3 pts on 30+ plays,59,58,693,2026-11-22T16:05:05
+play_call,False,model not better than always guessing (60% vs 60%),60,60,859,2026-11-22T16:05:05
+defense,True,the usual answer is right 99% of the time on 1950 held-out plays,99,99,1950,2026-11-22T16:05:05
+press,False,model not better than always guessing (86% vs 87%),86,87,1948,2026-11-22T16:05:05
+situation,True,77% vs 63% always guessing on 2370 held-out plays (+14 pts),77,63,2370,2026-11-22T16:05:05
+primary_action,True,64% vs 52% always guessing on 638 held-out plays (+12 pts),64,52,638,2026-11-22T16:05:05
+ball_screen_coverage,False,model not better than always guessing (29% vs 30%),29,30,220,2026-11-22T16:05:05
+offball_coverage,True,72% vs 57% always guessing on 74 held-out plays (+15 pts),72,57,74,2026-11-22T16:05:05
+screener,True,73% vs 22% always guessing on 37 held-out plays (+51 pts),73,22,37,2026-11-22T16:05:05
+screen_defender,False,model not better than always guessing (16% vs 29%),16,29,55,2026-11-22T16:05:05
