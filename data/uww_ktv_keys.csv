@@ -4,24 +4,24 @@ Hope Flying Dutchmen,2026-11-24,Offense,2,🏀,Feature our best look: Motion,"Us
 Them: opponents scored 0.54 PPP running this against Hope Flying Dutchmen on 14 tagged possessions
 Runs it most: Marino, Madson, Verges, Bara, Warren
 Usually comes off 5 Out Motion","We score 0.95 a possession on it and Hope Flying Dutchmen gives up 0.54 defending it -- go to it early, usually out of 5 Out Motion.",Data-Driven,0.49999999999999994,0.7,True,65.5
-Hope Flying Dutchmen,2026-11-24,Offense,3,🎯,Attack their weakest look: Catch-and-shoot (open),"Opponents shot 11/26 · 42% FG · 63% eFG · 1.27 pts/attempt · +0.39 vs all looks · 16% of attempts · 96% of them threes on this against Hope Flying Dutchmen
+Hope Flying Dutchmen,2026-11-24,Offense,3,🎯,Attack their weakest look: Catch-and-shoot (open),"Opponents shot 14/33 · 42% FG · 64% eFG · 1.27 pts/attempt · +0.43 vs all looks · 15% of attempts · 97% of them threes on this against Hope Flying Dutchmen
 Runs it most:
 • Madson, Robinson, Lukenbill, McEwen, Teague-Johnson 4x · 50%
 • Madson, Robinson, McEwen, Rogers, Teague-Johnson 3x · 67%
 • Madson, McEwen, Rogers, Teague-Johnson, Castillo 2x · 50%
-Usually comes off SLOB for us",Teams have shot 42% on it against Hope Flying Dutchmen -- hunt it; we usually get it out of SLOB.,Data-Driven,0.6,0.8666666666666667,True,72.0
+Usually comes off SLOB for us",Teams have shot 42% on it against Hope Flying Dutchmen -- hunt it; we usually get it out of SLOB.,Data-Driven,0.6,1.0,True,74.0
 Hope Flying Dutchmen,2026-11-24,Offense,4,📋,Call our best set: Cheetah,"1.80 PPP on 5 uses vs our 0.85 overall · 1/2 FG
 Finished most by Kelton Mcewen
 No coverage tagged against it yet","Our most productive set this season -- go to it when we need a good look, with Kelton Mcewen finishing.",Data-Driven,0.7307692307692311,0.25,True,68.0
-Hope Flying Dutchmen,2026-11-24,Defense,5,📊,Take away their most efficient high-volume actions,Cut: 57.7% on 26 attempts; Transition: 55.0% on 20 attempts,"Each is 5+ points above their 45.9% overall clip on 15+ attempts. Cut: jump to the ball on every pass and see man and ball -- no back-cuts behind ball-watchers. Transition: sprint back, stop the ball first and match up second.",Data-Driven,,,True,62.5
-Hope Flying Dutchmen,2026-11-24,Defense,6,📊,Funnel them into their worst high-volume looks,Spot-Up: 31.4% on 51 attempts,Each is 5+ points below their 45.9% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
-Hope Flying Dutchmen,2026-11-24,Defense,7,📊,Pressure the actions they turn it over on,Transition: 3 TO in 23 uses (13.0% vs 9.4% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
+Hope Flying Dutchmen,2026-11-24,Defense,5,📊,Take away their most efficient high-volume actions,Offensive Rebound: 60.0% on 20 attempts; P&R Ball Handler: 56.5% on 23 attempts,Each is 5+ points above their 45.9% overall clip on 15+ attempts. Offensive Rebound: hit a body on every shot before going to the ball. P&R Ball Handler: pick one ball-screen coverage and stay in it -- keep the handler out of the middle.,Data-Driven,,,True,62.5
+Hope Flying Dutchmen,2026-11-24,Defense,6,📊,Funnel them into their worst high-volume looks,Spot-Up: 34.7% on 72 attempts,Each is 5+ points below their 45.9% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
+Hope Flying Dutchmen,2026-11-24,Defense,7,📊,Pressure the actions they turn it over on,Post-Up: 9 TO in 28 uses (32.1% vs 11.3% across all actions); P&R Ball Handler: 4 TO in 27 uses (14.8% vs 11.3% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
 Hope Flying Dutchmen,2026-11-24,Defense,8,📋,Guard Your Yard 1 on 1,,,Keys to Victory,,,True,80.0
 Hope Flying Dutchmen,2026-11-24,Defense,9,📋,Elite communication on defense,,,Keys to Victory,,,True,80.0
 Hope Flying Dutchmen,2026-11-24,Defense,10,⚠️,Opponent strength: Putting constant pressure on the paint offensively,,,Team Strengths,,,True,49.5
 Hope Flying Dutchmen,2026-11-24,Defense,11,⚠️,Opponent strength: Disciplined defense holding opponents to 36% FG,,,Team Strengths,,,True,49.5
 Hope Flying Dutchmen,2026-11-24,Defense,12,⚠️,Opponent strength: Offensive rebounding & drawing fouls,,,Team Strengths,,,True,49.5
-Hope Flying Dutchmen,2026-11-24,Defense,13,🛡️,What Hope Flying Dutchmen goes to most: Drive to the basket,"56 attempts, 61% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
+Hope Flying Dutchmen,2026-11-24,Defense,13,🛡️,What Hope Flying Dutchmen goes to most: Drive to the basket,"80 attempts, 59% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
 Hope Flying Dutchmen,2026-11-24,Defense,14,📋,Take away their go-to set: 41 Motion,"14 uses in 3 games · 0.62 PPP vs their 0.78 overall · 3/9 FG · 3 TO
 Finished most by Brendan Cargill
 Built on: Ball Screen
