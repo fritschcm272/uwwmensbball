@@ -3716,6 +3716,7 @@ def _pl_attach_frames(clips):
 
 # ---- One table of every clip -------------------------------------------------------------------------
 PLAY_CALL_COLS = [
+    "play_call_as_tagged",     # CONFIRMED CHANGE 11/23: the call as tagged, when play_call_remap.csv changed it
     "side", "scouted_opponent", "offense_team", "defense_team", "opponent", "game_date", "game_code", "period",
     "time_remaining_seconds", "player", "result", "points", "points_source", "matched_event", "matched_by",
     "play_title", "play_call", "play_series", "play_situation", "play_formation", "play_set", "play_actions",
@@ -4600,6 +4601,97 @@ def _pl_merge_spellings(df, cols=("play_call", "play_call_detail", "play_formati
 
 
 play_calls = _pl_merge_spellings(play_calls)
+
+
+# CONFIRMED CHANGE (requested 11/23: "I have worked with our coaches and need a way to update the information from the film
+# tagging after we have seen the scouting briefs" -- a table of Current Play Call -> what the Situation, Formation and Play
+# Call should actually be). The table is parser\inputs\play_call_remap.csv, columns Current Play Call, Situation, Formation,
+# Play Call (optional: Team = only that offense team; blank = every team). It is applied HERE, to the finished clip table, so
+# it never touches the coaches' saved answers, the Film Tagging batches or the saves branch -- delete a row (or the file) and the
+# next run puts the tagged values back. The call as the coaches tagged it is kept in `play_call_as_tagged`.
+# Rules: one pass, matched on the tagged name only (so DD -> Dribble Drive is NOT then sent on to Motion by the
+# "Dribble Drive" row); names match ignoring capitals, spaces, punctuation, a bracket note and "option" (as the renames do);
+# "No Formation" = no formation; the Situation is written the way the data already spells it ("Half Court" = "Half court");
+# a blank cell leaves that field alone. Add rows by editing the file; REMAP_PLAY_CALLS = False turns it off.
+def _pl_apply_remap(df):
+    if not globals().get("REMAP_PLAY_CALLS", True) or df is None or df.empty or "play_call" not in df.columns:
+        return df
+    _fp = globals().get("PLAY_CALL_REMAP_FILE") or os.path.join(INPUT_DIR, "play_call_remap.csv")
+    if not os.path.exists(_fp):
+        return df
+    try:
+        _t = pd.read_csv(_fp, dtype=str, keep_default_na=False, encoding="utf-8-sig")
+    except Exception as _e:
+        print(f"  !! Play-call remap: couldn't read {os.path.basename(_fp)} ({type(_e).__name__}: {_e}) -- not applied", flush=True)
+        return df
+    _t.columns = [str(c).strip() for c in _t.columns]
+    _need = ["Current Play Call", "Situation", "Formation", "Play Call"]
+    if any(c not in _t.columns for c in _need):
+        print(f"  !! Play-call remap: {os.path.basename(_fp)} needs the columns {', '.join(_need)} -- not applied", flush=True)
+        return df
+    if "play_call_as_tagged" not in df.columns:
+        df["play_call_as_tagged"] = None
+    _sit_lc = {}
+    if "play_situation" in df.columns:
+        for _v, _n in df["play_situation"].dropna().astype(str).str.strip().value_counts().items():
+            _sit_lc.setdefault(_v.lower(), _v)
+    _form_lc = {}
+    if "play_formation" in df.columns:
+        for _v, _n in df["play_formation"].dropna().astype(str).str.strip().value_counts().items():
+            _form_lc.setdefault(_pl_name_key(_v), _v)
+    _keys = df["play_call"].map(lambda v: _pl_name_key(v) if isinstance(v, str) and v.strip() else None)
+    _teams = df["offense_team"].astype(str).str.lower() if "offense_team" in df.columns else None
+    _rules, _seen = [], {}
+    for _, _r in _t.iterrows():
+        _cur = str(_r["Current Play Call"]).strip()
+        if not _cur:
+            continue
+        _tm = str(_r["Team"]).strip().lower() if "Team" in _t.columns else ""
+        _k = (_pl_name_key(_cur), _tm)
+        if _k in _seen and _seen[_k] != tuple(str(_r[c]).strip() for c in _need[1:]):
+            print(f"  !! Play-call remap: '{_cur}' is listed twice with different answers -- the later row wins", flush=True)
+        _seen[_k] = tuple(str(_r[c]).strip() for c in _need[1:])
+        _rules.append((_k[0], _tm, _cur, _seen[_k]))
+    _done = df["play_call"].isna() & False                         # clips already changed (one pass)
+    _hit_n, _by = 0, {}
+    _snap_call = df["play_call"].copy()
+    for _k, _tm, _cur, (_sit, _form, _call) in {(a, b): (a, b, c, d) for a, b, c, d in _rules}.values():
+        _m = (_keys == _k) & ~_done
+        if _tm and _teams is not None:
+            _m = _m & _teams.str.contains(re.escape(_tm), na=False)
+        if not _m.any():
+            continue
+        _done = _done | _m
+        _hit_n += int(_m.sum())
+        _by[_cur] = int(_m.sum())
+        df.loc[_m, "play_call_as_tagged"] = _snap_call[_m]
+        if _call:
+            _base = _call.split(" - ")[0].strip()
+            for _c in ("play_call", "play_call_detail", "play_set", "play_call_base"):
+                if _c in df.columns:
+                    df.loc[_m, _c] = _call
+            if "play_series" in df.columns:
+                # the series follows the call when it was just the call's own name (BLOB / SLOB series stay as they were)
+                _ser = df["play_series"].map(lambda v: _pl_name_key(v) if isinstance(v, str) else None)
+                _sm = _m & (_ser == _k)
+                df.loc[_sm, "play_series"] = _base
+        if _sit and "play_situation" in df.columns:
+            df.loc[_m, "play_situation"] = _sit_lc.get(_sit.lower(), _sit)
+        if _form and "play_formation" in df.columns:
+            if _pl_name_key(_form) in ("noformation", "none"):
+                df.loc[_m, "play_formation"] = None
+            else:
+                df.loc[_m, "play_formation"] = _form_lc.get(_pl_name_key(_form), _form)
+    if _hit_n:
+        print(f"  Play-call remap (play_call_remap.csv): {_hit_n} clip(s) in {len(_by)} of {len(_rules)} listed call(s) now carry the "
+              f"Situation / Formation / Play Call the coaches gave; the tagged call is kept in play_call_as_tagged", flush=True)
+    _unused = [c for (_, _, c, _) in _rules if c not in _by]
+    if _unused:
+        print(f"  (remap: no clips use {len(_unused)} listed call(s): {', '.join(_unused[:8])}{' ...' if len(_unused) > 8 else ''})", flush=True)
+    return df
+
+
+play_calls = _pl_apply_remap(play_calls)
 _pc_all_seasons = play_calls
 play_calls = season_play_calls(play_calls)
 if len(play_calls) != len(_pc_all_seasons):

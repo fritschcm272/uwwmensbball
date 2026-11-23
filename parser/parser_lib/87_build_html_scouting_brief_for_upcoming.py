@@ -6904,6 +6904,66 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     '<div class="pcs-h"><span class="l">Play call <span class="mini">(click one to see its plays)</span></span>'
                     '<span class="t1">Poss</span><span class="t1">PPP</span></div>'
                     + "".join(_pcs_rows) + '</div></details>')
+                # CONFIRMED CHANGE (requested 11/23): CLUTCH SITUATIONS, laid out like the play call summary -- every clutch
+                # possession by game with its play call, action and result, and Synergy links: one for ALL of them, one per game.
+                try:
+                    _ctab = _clutch_poss("UWW" if _us else "Opponent")
+                    if len(_ctab):
+                        _cids = [str(int(float(x))) for x in _ctab.get("synergy_iid", pd.Series(dtype=object)).dropna()]
+                        _cg = _ctab.loc[_ctab.get("synergy_iid", pd.Series(dtype=object)).notna(), "game_code"].astype(str).nunique()
+                        _chead = ""
+                        if _cids:
+                            _chead = ('<div class="pcs-gh"><b>All clutch possessions</b> <span class="mini">'
+                                      f'<a class="applink" href="{_sb_esc(_pcs_watch(_cids, "Clutch situations"))}"{_SB_NEWTAB} '
+                                      f'title="Opens Synergy\u2019s video player on these plays">watch all {len(_cids)} plays '
+                                      f'({_cg} game{"s" if _cg != 1 else ""}) in Synergy</a></span></div>')
+                        _cgs = []
+                        for (_gc, _gdate), _gr in _ctab.groupby([_ctab["game_code"].astype(str), _ctab["game_date"].astype(str)], sort=False):
+                            _opp = _sb_strip_mascot(str(_gr.iloc[0].get("opponent") or "").strip()) or _gc
+                            _sid = _syn_pcs.get(_gc) or next((str(x) for x in _gr.get("synergy_game_id", pd.Series(dtype=object)).dropna()), "")
+                            _gi = [str(int(float(x))) for x in _gr.get("synergy_iid", pd.Series(dtype=object)).dropna()]
+                            if _gi:
+                                _how = (f'<a class="applink" href="{_sb_esc(_pcs_watch(_gi, "Clutch - " + _opp + " " + _gdate))}"{_SB_NEWTAB}>'
+                                        f'watch {len(_gi)} play{"s" if len(_gi) != 1 else ""} in Synergy</a>')
+                            elif _sid:
+                                _how = (f'<a class="applink" href="https://apps.synergysports.com/basketball/games/{_sb_esc(_sid)}/breakdown"'
+                                        f'{_SB_NEWTAB}>open the game in Synergy</a> (play links not fetched yet)')
+                            else:
+                                _how = ""
+                            _ctr = []
+                            for _, _c_ in _gr.iterrows():
+                                _no = pd.to_numeric(_c_.get("clip_number"), errors="coerce")
+                                _pts = pd.to_numeric(_c_.get("points"), errors="coerce")
+                                _res = str(_c_.get("result") or "").strip()
+                                _res_s = _res + (f" ({int(_pts)} pt{'s' if int(_pts) != 1 else ''})" if pd.notna(_pts) and _res else "")
+                                _pcv = _c_.get("play_call")
+                                _pcv = "No play call" if not isinstance(_pcv, str) or not _pcv.strip() or _pcv.strip().lower() == "nan" else _sb_clean(_pcv)
+                                _al = [x.strip() for x in str(_c_.get("play_actions") or "").split("|") if x.strip() and x.strip().lower() != "nan"]
+                                if not _al and str(_c_.get("primary_action") or "").strip().lower() not in ("", "nan", "none"):
+                                    _al = [str(_c_.get("primary_action")).strip()]
+                                _ctr.append(
+                                    f'<tr><td class="t1">{_sb_esc(str(int(_no)) if pd.notna(_no) else "--")}</td>'
+                                    f'<td class="l">{_sb_esc(_pcs_clock(_c_.get("period"), _c_.get("time_remaining_seconds")))}</td>'
+                                    f'<td class="l">{_sb_esc(_pcv)}</td><td class="l">{_sb_esc(", ".join(_al) or "--")}</td>'
+                                    f'<td class="l">{_sb_esc(str(_c_.get("player") or "").strip())}</td>'
+                                    f'<td class="l">{_sb_esc(_res_s)}</td>'
+                                    f'<td class="l">{_sb_esc(_pcs_sur(_c_.get("offense_lineup") or _c_.get("on_court_lineup")))}</td></tr>')
+                            _cgs.append(
+                                f'<div class="pcs-g"><div class="pcs-gh"><b>vs {_sb_esc(_opp)}</b> <span class="mini">{_sb_esc(_gdate)} \u00b7 '
+                                f'{len(_gr)} possession{"s" if len(_gr) != 1 else ""} \u00b7 {_how}</span></div>'
+                                '<table class="ob-tbl pcs-t"><thead><tr><th class="t1">Clip</th><th class="l">When</th>'
+                                '<th class="l">Play call</th><th class="l">Actions</th><th class="l">Player</th>'
+                                '<th class="l">Result</th><th class="l">Five on the floor</th></tr></thead><tbody>'
+                                + "".join(_ctr) + '</tbody></table></div>')
+                        add('<details class="ob-det"><summary>Clutch situations (' + str(len(_ctab)) + ')</summary><div class="card pcs">'
+                            '<div class="pcs-b"><p class="mini">Clutch = second half, 5:00 or less on the clock, score within 8 \u2014 '
+                            'the same rule as the clutch lines on the roster cards. This season\u2019s tagged possessions with the ball. '
+                            + ('Click <b>watch all</b> to see every one of them in Synergy\u2019s video player, or the link on a game for just that game '
+                               '(you must be signed in to Synergy).' if _cids else
+                               'Open the game in Synergy and go to the clip numbers shown (play links not fetched yet).')
+                            + '</p>' + _chead + "".join(_cgs) + '</div></div></details>')
+                except Exception as _cse:
+                    print(f"  (clutch situations not shown: {type(_cse).__name__}: {_cse})", flush=True)
         except Exception as _spe:
             print(f"  (play call summary not shown: {type(_spe).__name__}: {_spe})", flush=True)
         # CONFIRMED CHANGE (requested 11/19: "create an expandable section that lists things that you believe are
@@ -7289,6 +7349,46 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # never contradict the table under it (the 11/18 headline bug was exactly that). Rates are shown against the side's
     # own average (team_ppp), never a league number, and no card quotes a tagged-possession denominator (requested
     # earlier: nothing should read "... on 85 tagged").
+    # CONFIRMED CHANGE (requested 11/23: "a card next to Actions ... that says what each team will do in 'Clutch Situations' ... then
+    # a section similar to Play Call Summary ... that lists out the Clutch Situations and how to view them all in Synergy").
+    # OUR clutch definition (section 47's _gs_situation, the same rule the clutch lines on the roster cards use): not the first
+    # half, 5:00 or less, margin 8 or fewer. This season's tagged possessions with the ball, for one side ("UWW" / "Opponent");
+    # a call that names the other team is left out, as in every other offense table.
+    def _clutch_poss(side):
+        try:
+            t = _clutch_tbl("UWW" if side == "UWW" else "Opponent")
+            if t is None or t.empty:
+                return pd.DataFrame()
+            _spc = globals().get("season_play_calls")
+            if callable(_spc):
+                t = _spc(t)
+            if "call_names_other_team" in t.columns:
+                t = t[t["call_names_other_team"].isna()]
+            if "decode_quality" in t.columns:
+                t = t[t["decode_quality"].astype(str) != "Untagged"]
+            if {"game_date", "clip_number"} <= set(t.columns):
+                t = t.sort_values(["game_date", "clip_number"], ascending=[False, True])
+            return t
+        except Exception as _ce:
+            print(f"  (clutch possessions not built: {type(_ce).__name__}: {_ce})", flush=True)
+            return pd.DataFrame()
+
+    def _clutch_counts(t):
+        """(play calls, actions) counted over the clutch possessions, most used first."""
+        calls, acts = {}, {}
+        for _, r in t.iterrows():
+            _pc = r.get("play_call")
+            _pc = "No play call" if not isinstance(_pc, str) or not _pc.strip() or _pc.strip().lower() == "nan" else _sb_clean(_pc)
+            calls[_pc] = calls.get(_pc, 0) + 1
+            _al = [x.strip() for x in str(r.get("play_actions") or "").split("|") if x.strip() and x.strip().lower() != "nan"]
+            if not _al:
+                _pa = str(r.get("primary_action") or "").strip()
+                _al = [_pa] if _pa and _pa.lower() not in ("nan", "none") else []
+            for _a_ in dict.fromkeys(_al):
+                acts[_sb_clean(_a_)] = acts.get(_sb_clean(_a_), 0) + 1
+        _srt = lambda d: sorted(d.items(), key=lambda kv: (-kv[1], kv[0]))
+        return _srt(calls), _srt(acts)
+
     def _off_cards(side):
         # CONFIRMED CHANGE (requested 11/18, second pass: "make each of those 5 cards be actually informative for coaches
         # and not just how many possessions and PPP"). Every card now answers who runs it, what it turns into, what shape
@@ -7527,6 +7627,20 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                                                         for _, r in _rest.iterrows()) if len(_rest) else "")
                                + ("." if _abest or _covtxt or len(_rest) else ""), split=_split))
 
+        # CONFIRMED CHANGE (requested 11/23): CLUTCH card beside Actions -- what the team runs when the game is close late.
+        try:
+            _ct = _clutch_poss(side)
+            if len(_ct):
+                _cc, _ca = _clutch_counts(_ct)
+                _cp = pd.to_numeric(_ct.get("points"), errors="coerce").fillna(0).sum() / len(_ct)
+                _named = [k for k, v in _cc if k != "No play call"]
+                cards.append(_card(
+                    "Clutch", (_named[0] if _named else _cc[0][0]), _poss(len(_ct), float(_cp)),
+                    "Plays: " + ", ".join(f"{('Flow' if (side == 'UWW' and k == 'No play call') else k)} ({v})" for k, v in _cc[:4]),
+                    ("Actions: " + ", ".join(f"{k} ({v})" for k, v in _ca[:4])) if _ca else "No actions tagged on these yet"))
+        except Exception as _e:
+            print(f"[offense cards] clutch card skipped: {type(_e).__name__}: {_e}")
+
         # 4. BLOB / SLOB -- the two inbounds as a pair: where each one goes and which one hurts
         if not sit.empty:
             _ib = {k: sit[sit["name"].astype(str).str.fullmatch(k, case=False, na=False)] for k in ("BLOB", "SLOB")}
@@ -7636,7 +7750,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
 
         if len(cards) < 2:
             return _sb_pc_top(side)                        # not enough tagged yet -- the one-line headline instead
-        _r1 = [c for c in cards if any(f'lc-t">{t}<' in c for t in ("Motion", "Plays", "Actions"))]
+        _r1 = [c for c in cards if any(f'lc-t">{t}<' in c for t in ("Motion", "Plays", "Actions", "Clutch"))]
         _r2 = [c for c in cards if c not in _r1]
         _rows = [r for r in (_r1, _r2) if r]
         return "".join('<div class="lcards wm-cards">' + "".join(r) + "</div>" for r in _rows)

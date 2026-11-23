@@ -134,9 +134,57 @@ def _cm_slug(s):
     return re.sub(r"[^A-Za-z0-9]+", "_", str(s)).strip("_")
 
 
+# CONFIRMED CHANGE (requested 11/23: "Gustavus Adolphus vs Transylvania is actually played on the same court as the
+# Gustavus at Wash U game, but it is asking for a court configuration because it thinks it is at Transylvania"). A game's
+# court is the text after "@" in its code -- right for a home game, wrong for a game played somewhere else. This maps a game
+# code (or an arena name) to the court it was really played on, so it uses that court's calibration and asks for none of its
+# own. Add more in parser_nb: COURT_ARENA_ALIASES = {"<game code or arena>": "<arena it was played in>"}.
+# CONFIRMED CHANGE (requested 11/23: Gustavus vs Howard Payne, NCAA.com game 6664638 lists Siebens Fieldhouse, Storm Lake, IA =
+# Buena Vista's gym). A key may also be just the start of the "@ <team>" text, so one entry covers however FastScout spells it.
+COURT_ARENA_ALIASES = dict({"GustavusAdolphus@TransylvaniaUni": "Wash(StLouis)", "GustavusAdolphus@HowardPayne": "BuenaVista"}, **(globals().get("COURT_ARENA_ALIASES") or {}))
+
+
+def _cm_neutral_note(game_date, game_code):
+    """CONFIRMED CHANGE (requested 11/23: "find any games that are listed as playing on a 'Neutral Court' in fastscout
+    schedule"). FastScout's schedule tables list a Location of Home / Away / Neutral Court. A neutral-court game's code still
+    ends in "@<team>", but that team's gym is not where it was played, so this says so when such a game wants a court
+    calibration of its own. FastScout does not name the venue (the NCAA.com game page does) -- set COURT_ARENA_ALIASES for it.
+    Returns a note, or "" when the game is not listed as neutral (or no schedule file has it)."""
+    try:
+        import pandas as _pd
+        d = _pd.Timestamp(str(game_date)[:10])
+        want = f"{d.strftime('%a')}, {d.strftime('%b')} {d.day}"
+        a = str(game_code).split("@")[-1].strip().lower()
+        b = str(game_code).split("@")[0].strip().lower()
+        for fn in glob.glob(os.path.join(INPUT_DIR, "*Schedule_2026.html")):
+            try:
+                tabs = _pd.read_html(fn)
+            except Exception:
+                continue
+            for t in tabs:
+                if not {"Date", "Opponent", "Location"} <= set(map(str, t.columns)):
+                    continue
+                for _, r in t.iterrows():
+                    if str(r["Date"]).strip() == want and "neutral" in str(r["Location"]).lower():
+                        opp = re.sub(r"[^a-z]", "", str(r["Opponent"]).lower())
+                        if (a[:6] and a[:6] in opp) or (b[:6] and b[:6] in opp) or (a[:6] and a[:6] in os.path.basename(fn).lower().replace(" ", "")):
+                            return (f"FastScout lists this game as a Neutral Court, so '@{str(game_code).split('@')[-1]}' is not "
+                                    f"the gym it was played in")
+    except Exception:
+        pass
+    return ""
+
+
 def _cm_arena(game_code):
     g = str(game_code or "")
-    return g.split("@")[-1].strip() if "@" in g else g
+    a = g.split("@")[-1].strip() if "@" in g else g
+    _hit = COURT_ARENA_ALIASES.get(g) or COURT_ARENA_ALIASES.get(a)
+    if not _hit:
+        for _k, _v in COURT_ARENA_ALIASES.items():
+            if "@" in _k and g.lower().startswith(_k.lower()):
+                _hit = _v
+                break
+    return _hit or a
 
 
 def _cm_calibration_files():
@@ -296,7 +344,9 @@ def _cm_app_cleanup(calibrated_arenas):
     root = os.path.join(_cm_app_dir(), "court_calibration")
     if not os.path.isdir(root):
         return
-    for a in calibrated_arenas:
+    # a court an alias points at being calibrated also settles the games mapped onto it: drop their old packages too
+    _gone = [(k.split("@")[-1].strip() if "@" in k else k) for k, v in COURT_ARENA_ALIASES.items() if v in set(calibrated_arenas)]
+    for a in list(calibrated_arenas) + _gone:
         d = os.path.join(root, _cm_slug(a) or "gym")
         if os.path.isdir(d):
             shutil.rmtree(d, ignore_errors=True)
@@ -631,6 +681,11 @@ def court_mapping(pc, tracks, frames_only=False, feet_tracks=None):
             pool = [fl[len(fl) // 2] for _, fl in clips if fl]
             pick = [pool[int(i)] for i in np.linspace(0, len(pool) - 1, min(COURT_REF_FRAMES, len(pool)))] if pool else []
             print(f"  [court] {game_key}: gym '{arena}' has no calibration yet -- writing the calibration page...", flush=True)
+            _nn = _cm_neutral_note(gd, gc)
+            if _nn:
+                print(f"  !! [court] {game_key}: {_nn}. If you know the court it was played on (the NCAA.com game page names the venue), "
+                      f"set COURT_ARENA_ALIASES = {{\"{gc}\": \"<arena, e.g. Wash(StLouis)>\"}} in parser_nb and it reuses that "
+                      f"court's calibration.", flush=True)
             tool = _cm_write_tool(game_key, arena, pick, base) if pick else None
             report.append({"game": game_key, "arena": arena, "calibrated": False, "frames": sum(len(fl) for _, fl in clips),
                            "mapped_pct": 0, "calibration_error_ft": None, "calibration_page": tool})

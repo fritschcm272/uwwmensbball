@@ -1,0 +1,42 @@
+  [disk] scratch folder: F:\uwwmensbball_temp
+  [disk] data (F:): 1583.0 GB free
+  [disk] scratch (F:): 1583.0 GB free
+
+===== cell 1 <file> =====
+
+===== cell 2 00b_season_switch, 01_uw_whitewater_scouting_parser =====
+Season: 2026-27 (last season 2025-26: F:\uwwmensbball\data_2025-26)
+Input directory: ./inputs
+Output directory: ../data
+LLM comparisons: disabled
+Reference date: 2026-11-25
+Before scout: no -- using every scouting report found
+APP_BASE_URL taken from UWW_APP_URL in .env
+Brief links -> https://uwwmensbball-new.streamlit.app
+
+===== cell 4  =====
+
+===== cell 5  =====
+
+===== cell 7 02_parse_every_team_schedule_scrape_live_from =====
+Found 11 schedule MHTML file(s) in ./inputs:
+ - Carroll (WI) Pioneers - Schedule_2026.html
+ - Elmhurst Bluejays - Schedule_2026.html
+ - Gustavus Adolphus Golden Gusties - Schedule_2026.html
+ - Hope Flying Dutchmen - Schedule_2026.html
+ - Ripon Red Hawks - Schedule_2026.html
+ - UW-Stout Blue Devils - Schedule_2023.html
+ - UW-Stout Blue Devils - Schedule_2026.html
+ - UW-Whitewater - Schedule_2023.html
+ - UW-Whitewater - Schedule_2024.html
+ - UW-Whitewater - Schedule_2025.html
+ - UW-Whitewater - Schedule_2026.html
+Detected season 2026 from UWW's local schedule snapshot -- using FASTSCOUT_DOCS_SEASON='26' for any live-scrape URLs below (was hardcoded to '25').
+Skipping live scrape for UW-Whitewater's own schedule -- a local schedule file already exists: UW-Whitewater - Schedule_2026.html
+Excluding 19 game(s) scheduled beyond the next upcoming game -- not downloading those reports yet.
+
+Downloading 1 missing scouting-report PDF(s) from FastScout:
+    [login] navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [login] confirmed logged in, landed on https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [save] myTeam analytics dashboard (diagnostic) -> myTeam - Analytics Dashboard.html
+  [Gustavus Adolphus Golden Gusties] could not download scouting report: RuntimeError: No row matched game date Nov 28 on https://fastscout.fastmodelsports.com/teams/1PsWyF01QLKdWZ9gzEg5DQ/documents?league=NCAAB-III&season=26 -- 'Game Date' values seen on the page: ['', 'Nov 10, 2023', 'Nov 10, 2023', 'Nov 12, 2021']
