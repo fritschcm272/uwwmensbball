@@ -60,7 +60,7 @@ clip_key,clip_number,game_date,team,side,player,lineup_source,located,tracks,sec
 2026-11-07|32|12 Peyton McKenna > Offensive Rebound > Long > Run Offense,32,2026-11-07,UW-Whitewater,defense,Kelton McEwen,play-by-play,False,,0.0,not located,
 2026-11-07|32|12 Peyton McKenna > Offensive Rebound > Long > Run Offense,32,2026-11-07,UW-Whitewater,defense,Taveon Vann,play-by-play,False,,0.0,not located,
 2026-11-07|33|24 Cale Buboltz > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,33,2026-11-07,Carroll (WI) Pioneers,offense,Cai Joseph,play-by-play,False,,0.0,not located,
-2026-11-07|33|24 Cale Buboltz > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,33,2026-11-07,Carroll (WI) Pioneers,offense,Cale Buboltz,play-by-play,True,7;38,4.4,coach checked;followed player,0.99
+2026-11-07|33|24 Cale Buboltz > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,33,2026-11-07,Carroll (WI) Pioneers,offense,Cale Buboltz,play-by-play,True,7;38;90,11.0,coach checked;followed player,0.99
 2026-11-07|33|24 Cale Buboltz > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,33,2026-11-07,Carroll (WI) Pioneers,offense,Logan Steffensmeier,play-by-play,False,,0.0,not located,
 2026-11-07|33|24 Cale Buboltz > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,33,2026-11-07,Carroll (WI) Pioneers,offense,Michael McNabb,play-by-play,True,1;24;44;88,6.1,coach checked;followed player,0.99
 2026-11-07|33|24 Cale Buboltz > Spot-Up > No Dribble Jumper > Open > Long/3pt > Miss 3 Pts,33,2026-11-07,Carroll (WI) Pioneers,offense,Peyton McKenna,play-by-play,False,,0.0,not located,

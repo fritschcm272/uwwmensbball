@@ -696,3 +696,14 @@ Tag model: screen_defender,v2026.11.22,2026-11-22,trained,2026-11-22T10:13:18,"9
 Tag model: screener,v2026.11.22,2026-11-22,trained,2026-11-22T10:13:18,"165 tagged clips, 6 answers learned",2026-11-22T10:52:39
 Tag model: situation,v2026.11.22,2026-11-22,trained,2026-11-22T10:13:18,"2388 tagged clips, 8 answers learned",2026-11-22T10:52:39
 Tag model (overall),v2026.11.22,2026-11-22,trained,2026-11-22T10:13:18,newest of 10 field model(s); last retrained field: situation,2026-11-22T10:52:39
+Tag model: ball_screen_coverage,v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,"243 tagged clips, 7 answers learned",2026-11-23T05:20:41
+Tag model: defense,v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,"1955 tagged clips, 2 answers learned, one answer only",2026-11-23T05:20:41
+Tag model: formation,v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,"743 tagged clips, 15 answers learned",2026-11-23T05:20:41
+Tag model: offball_coverage,v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,"107 tagged clips, 3 answers learned",2026-11-23T05:20:41
+Tag model: play_call,v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,"1107 tagged clips, 25 answers learned, one answer only",2026-11-23T05:20:41
+Tag model: press,v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,"1957 tagged clips, 5 answers learned, one answer only",2026-11-23T05:20:41
+Tag model: primary_action,v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,"749 tagged clips, 15 answers learned",2026-11-23T05:20:41
+Tag model: screen_defender,v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,"93 tagged clips, 7 answers learned, one answer only",2026-11-23T05:20:41
+Tag model: screener,v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,"175 tagged clips, 6 answers learned",2026-11-23T05:20:41
+Tag model: situation,v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,"2388 tagged clips, 8 answers learned",2026-11-23T05:20:41
+Tag model (overall),v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,newest of 10 field model(s); last retrained field: situation,2026-11-23T05:20:41
