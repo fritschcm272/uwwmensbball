@@ -42,7 +42,7 @@ PARSER_MODES = {
         # (quiet_show): problems ("!!"), the Synergy export, the court calibration and the starters check.
         "quiet": True,
         # (+ the tracking scorecard and the jersey-vote test -- requested: compare the new tracking with the old)
-        "quiet_show": r"!!|\[export\]|\[court\]|\[starters\]|\[scorecard\]|jersey vote \(|Starters to validate|calibrat|STOP",
+        "quiet_show": r"!!|\[synergy-login\] Synergy emailed|\[export\]|\[court\]|\[starters\]|\[scorecard\]|jersey vote \(|Starters to validate|calibrat|STOP",
         # the one updating status line: each section's steps and progress (see _PmQuietBuf)
         "quiet_status": r"\[(tracking|court|play review|tag model[^\]]*|recognizer|jersey|outfit|reid|frame archive|frame capture|saves)\]|min left|so far|step \d|clip videos written|Frame capture",
     },
@@ -59,7 +59,7 @@ PARSER_MODES = {
         # problems ("!!"), the Synergy export, each game's Film Tagging result (clips to tag / left out / removed / no
         # batch) and the tagging-progress lines; the updating status line follows frame capture and the play videos.
         "quiet": True,
-        "quiet_show": r"!!|\[export\]|STOP|\[film tagging\]|Film Tagging: .*(clip\(s\) to tag|left out|removed|no batch|rebuilt)"
+        "quiet_show": r"!!|\[synergy-login\] Synergy emailed|\[export\]|STOP|\[film tagging\]|Film Tagging: .*(clip\(s\) to tag|left out|removed|no batch|rebuilt)"
                       r"|Film Tagging -- tagging progress|^  \d{4}-\d\d-\d\d .*clip\(s\) tagged",
         "quiet_status": r"Frame capture|\[frame archive\]|Frame archive|Film Tagging: .*(checking|reading|making the video|open batch)"
                         r"|min left|so far|step \d",
@@ -712,6 +712,7 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
     print(f"=== {mode.upper()}: {plan['label']} ===", flush=True)
     _pm_scratch(mode)
     G["_PM_OPTIONS"] = _pm_split_games(dict(options or {}))
+    G["_SYNERGY_NO_CODE_THIS_RUN"] = False      # a new run asks for a code again (see login_to_synergy)
     G["ANALYSIS_MODE"] = (mode == "analysis")
     if G["_PM_OPTIONS"]:
         _o = G["_PM_OPTIONS"]

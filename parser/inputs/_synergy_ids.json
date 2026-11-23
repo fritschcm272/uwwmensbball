@@ -2942,23 +2942,23 @@
   },
   "6ad7a102d6233fed84ab1796": {
    "date": "2026-11-22",
-   "name": "SanJoseState@LoyolaChicago",
-   "home": "Loyola (Chicago) Ramblers",
-   "home_short": "LoyolaChicago",
-   "home_id": "54457dd4300969b132fcff71",
-   "away": "San Jose State Spartans",
-   "away_short": "SanJoseState",
-   "away_id": "54457dd3300969b132fcfeef"
+   "name": "LoyolaChicago@SanJoseState",
+   "home": "San Jose State Spartans",
+   "home_short": "SanJoseState",
+   "home_id": "54457dd3300969b132fcfeef",
+   "away": "Loyola (Chicago) Ramblers",
+   "away_short": "LoyolaChicago",
+   "away_id": "54457dd4300969b132fcff71"
   },
   "6ad7a102d6233fed84ab1795": {
    "date": "2026-11-22",
-   "name": "Seattle@UCSanDiego",
-   "home": "UC San Diego Tritons",
-   "home_short": "UCSanDiego",
-   "home_id": "54457dd5300969b132fd00c2",
-   "away": "Seattle Redhawks",
-   "away_short": "Seattle",
-   "away_id": "54457dd4300969b132fcffd9"
+   "name": "UCSanDiego@Seattle",
+   "home": "Seattle Redhawks",
+   "home_short": "Seattle",
+   "home_id": "54457dd4300969b132fcffd9",
+   "away": "UC San Diego Tritons",
+   "away_short": "UCSanDiego",
+   "away_id": "54457dd5300969b132fd00c2"
   },
   "6ad7a102d6233fed84ab1793": {
    "date": "2026-11-22",
@@ -4689,6 +4689,96 @@
    "away": "Chico State Wildcats",
    "away_short": "Chico",
    "away_id": "54457dd7300969b132fd01f0"
+  },
+  "6ad7a1030d6a5de5bbebd45e": {
+   "date": "2026-11-24",
+   "name": "Bellarmine@GeorgiaSouthern",
+   "home": "Georgia Southern Eagles",
+   "home_short": "GeorgiaSouthern",
+   "home_id": "54457dd4300969b132fcff47",
+   "away": "Bellarmine Knights",
+   "away_short": "Bellarmine",
+   "away_id": "54457dd6300969b132fd01b2"
+  },
+  "6ad7a1030d6a5de5bbebd459": {
+   "date": "2026-11-23",
+   "name": "ColoradoState@Arizona",
+   "home": "Arizona Wildcats",
+   "home_short": "Arizona",
+   "home_id": "54457dd3300969b132fcfe88",
+   "away": "Colorado State Rams",
+   "away_short": "ColoradoState",
+   "away_id": "54457dd4300969b132fcff19"
+  },
+  "6ad7a1030d6a5de5bbebd458": {
+   "date": "2026-11-23",
+   "name": "AlabamaState@California",
+   "home": "California Golden Bears",
+   "home_short": "California",
+   "home_id": "54457dd3300969b132fcfeaa",
+   "away": "Alabama State Hornets",
+   "away_short": "AlabamaState",
+   "away_id": "54457dd4300969b132fcffd2"
+  },
+  "6ad7a1030d6a5de5bbebd457": {
+   "date": "2026-11-23",
+   "name": "EasternWashington@UNLV",
+   "home": "UNLV Rebels",
+   "home_short": "UNLV",
+   "home_id": "54457dd3300969b132fcfeb1",
+   "away": "Eastern Washington Eagles",
+   "away_short": "EasternWashington",
+   "away_id": "54457dd4300969b132fcff45"
+  },
+  "6ad7a103d6233fed84ab179c": {
+   "date": "2026-11-23",
+   "name": "UNCGreensboro@Pepperdine",
+   "home": "Pepperdine Waves",
+   "home_short": "Pepperdine",
+   "home_id": "54457dd3300969b132fcfe9c",
+   "away": "UNC Greensboro Spartans",
+   "away_short": "UNCGreensboro",
+   "away_id": "54457dd3300969b132fcfed2"
+  },
+  "6ad6a97ea9169932f4f7ef7a": {
+   "date": "2026-11-22",
+   "name": "RegisCO@NebKearney",
+   "home": "Nebraska-Kearney Lopers",
+   "home_short": "NebKearney",
+   "home_id": "54457dd5300969b132fd0080",
+   "away": "Regis (CO) Rangers",
+   "away_short": "RegisCO",
+   "away_id": "54457dd6300969b132fd018f"
+  },
+  "6ab9580d5e26a75cfa5fddf0": {
+   "date": "2026-11-22",
+   "name": "Mount Union@TransylvaniaUni",
+   "home": "Transylvania University Pioneers",
+   "home_short": "TransylvaniaUni",
+   "home_id": "54457dd7300969b132fd0220",
+   "away": "Mount Union Raiders",
+   "away_short": "Mount Union",
+   "away_id": "54457dd6300969b132fd01ad"
+  },
+  "6ac0c72c4d561a146c1617c8": {
+   "date": "2026-11-21",
+   "name": "Linfield@LaVerne",
+   "home": "La Verne Leopards",
+   "home_short": "LaVerne",
+   "home_id": "54457dd5300969b132fd0059",
+   "away": "Linfield University Wildcats",
+   "away_short": "Linfield",
+   "away_id": "54457dd5300969b132fd005f"
+  },
+  "6a95bd361b15a16841dd33c8": {
+   "date": "2026-11-21",
+   "name": "BethanyKS@OttawaUniKS",
+   "home": "Ottawa University (KS) Braves",
+   "home_short": "OttawaUniKS",
+   "home_id": "54457dd8300969b132fd0314",
+   "away": "Bethany College (KS) Swedes",
+   "away_short": "BethanyKS",
+   "away_id": "54457dd7300969b132fd028d"
   }
  },
  "teams": {
@@ -5879,6 +5969,20 @@
   "William Jessup": "54457dd5300969b132fd00db",
   "WilliamJessup": "54457dd5300969b132fd00db",
   "Chico State Wildcats": "54457dd7300969b132fd01f0",
-  "Chico": "54457dd7300969b132fd01f0"
+  "Chico": "54457dd7300969b132fd01f0",
+  "Eastern Washington Eagles": "54457dd4300969b132fcff45",
+  "EasternWashington": "54457dd4300969b132fcff45",
+  "UNC Greensboro Spartans": "54457dd3300969b132fcfed2",
+  "UNCGreensboro": "54457dd3300969b132fcfed2",
+  "Nebraska-Kearney Lopers": "54457dd5300969b132fd0080",
+  "NebKearney": "54457dd5300969b132fd0080",
+  "Regis (CO) Rangers": "54457dd6300969b132fd018f",
+  "RegisCO": "54457dd6300969b132fd018f",
+  "La Verne Leopards": "54457dd5300969b132fd0059",
+  "LaVerne": "54457dd5300969b132fd0059",
+  "Linfield University Wildcats": "54457dd5300969b132fd005f",
+  "Linfield": "54457dd5300969b132fd005f",
+  "Ottawa University (KS) Braves": "54457dd8300969b132fd0314",
+  "OttawaUniKS": "54457dd8300969b132fd0314"
  }
 }

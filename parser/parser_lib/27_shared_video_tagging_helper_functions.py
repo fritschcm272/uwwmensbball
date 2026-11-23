@@ -283,6 +283,13 @@ def login_to_synergy(page, username, password, timeout_ms=30000):
             f"attempted for 60 minutes (delete {_lock_path} to override). Every attempt while locked out "
             f"emails another code and restarts their clock.")
 
+    # CONFIRMED CHANGE (11/23, after the 04:22 models run asked for a code FOUR times in one run -- lookup, play ids, two
+    # frame-capture logins -- each one emailing a new code and waiting 5 minutes with nobody there): once a sign-in in
+    # this run has ended with no code, every later sign-in in the same run is skipped, so one run costs one email and
+    # one wait. The next run asks again. SYNERGY_MFA_RETRY_IN_RUN = True goes back to asking every time.
+    if globals().get("_SYNERGY_NO_CODE_THIS_RUN") and not globals().get("SYNERGY_MFA_RETRY_IN_RUN", False):
+        raise RuntimeError("Synergy sign-in skipped: this run already asked for an emailed code and none was entered "
+                           "(not asking again until the next run).")
     _until = _locked_until()
     if time.time() < _until:
         raise RuntimeError(
@@ -437,6 +444,7 @@ def login_to_synergy(page, username, password, timeout_ms=30000):
     if _twofa is not None:
         _code = _mfa_code()
         if not _code:
+            globals()["_SYNERGY_NO_CODE_THIS_RUN"] = True
             raise RuntimeError(
                 "Synergy asked for the security code it emailed, and none arrived: set SYNERGY_MFA_CODE in "
                 f"the notebook, or write the digits into {os.path.join(schedules_dir, '_synergy_code.txt')} "
