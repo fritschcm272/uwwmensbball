@@ -707,3 +707,15 @@ Tag model: screen_defender,v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,"9
 Tag model: screener,v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,"175 tagged clips, 6 answers learned",2026-11-23T05:20:41
 Tag model: situation,v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,"2388 tagged clips, 8 answers learned",2026-11-23T05:20:41
 Tag model (overall),v2026.11.23,2026-11-23,trained,2026-11-23T05:11:38,newest of 10 field model(s); last retrained field: situation,2026-11-23T05:20:41
+Tag model: ball_screen_coverage,v2026.11.23.2,2026-11-23,trained,2026-11-23T13:52:26,"243 tagged clips, 7 answers learned, one answer only",2026-11-23T14:58:32
+Tag model: defense,v2026.11.23.2,2026-11-23,trained,2026-11-23T13:52:26,"1955 tagged clips, 2 answers learned, one answer only",2026-11-23T14:58:32
+Tag model: formation,v2026.11.23.2,2026-11-23,trained,2026-11-23T13:52:26,"742 tagged clips, 15 answers learned",2026-11-23T14:58:32
+Tag model: offball_coverage,v2026.11.23.2,2026-11-23,trained,2026-11-23T13:52:26,"107 tagged clips, 3 answers learned",2026-11-23T14:58:32
+Tag model: play_call,v2026.11.23.2,2026-11-23,trained,2026-11-23T13:52:26,"1109 tagged clips, 25 answers learned, one answer only",2026-11-23T14:58:32
+Tag model: press,v2026.11.23.2,2026-11-23,trained,2026-11-23T13:52:26,"1957 tagged clips, 5 answers learned, one answer only",2026-11-23T14:58:32
+Tag model: primary_action,v2026.11.23.2,2026-11-23,trained,2026-11-23T13:52:26,"749 tagged clips, 15 answers learned",2026-11-23T14:58:32
+Tag model: screen_defender,v2026.11.23.2,2026-11-23,trained,2026-11-23T13:52:26,"93 tagged clips, 7 answers learned, one answer only",2026-11-23T14:58:32
+Tag model: screener,v2026.11.23.2,2026-11-23,trained,2026-11-23T13:52:26,"177 tagged clips, 6 answers learned",2026-11-23T14:58:32
+Tag model: situation,v2026.11.23.2,2026-11-23,trained,2026-11-23T13:52:26,"2388 tagged clips, 8 answers learned",2026-11-23T14:58:32
+Tag model (overall),v2026.11.23.2,2026-11-23,trained,2026-11-23T13:52:26,newest of 10 field model(s); last retrained field: situation,2026-11-23T14:58:32
+Court mapping,v2026.11.23,2026-11-23,rules + code,574fa6835f18,1 calibration file(s),2026-11-23T14:58:32

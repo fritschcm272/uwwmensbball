@@ -1,7 +1,7 @@
 {
  "game": "2026-11-07|UWWhitewater@Carroll(WI)",
  "slug": "2026_11_07_UWWhitewater_Carroll_WI",
- "run": "20261123_051657",
+ "run": "20261123_135635",
  "plays": [
   {
    "clip_key": "2026-11-07|3|5 Isaiah Robinson > Non Possession > Non Shooting Foul",
@@ -226,7 +226,7 @@
        "hidden_guess_p": 0.09,
        "guess_left": 5,
        "guess_all": {
-        "Jimmy Tarjan": 0.64,
+        "Jimmy Tarjan": 0.63,
         "Michael McNabb": 0.1,
         "Dennis Estepp": 0.09,
         "Greg Smith": 0.09,
@@ -408,6 +408,16 @@
      "auto": "Man-to-Man",
      "conf": 0.99,
      "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Switch",
+     "conf": 0.3,
+     "sure": false,
      "same": null,
      "note": ""
     },
@@ -711,10 +721,10 @@
        "conf": null,
        "guess": false,
        "hidden_guess": "Jimmy Tarjan",
-       "hidden_guess_p": 0.62,
+       "hidden_guess_p": 0.61,
        "guess_left": 5,
        "guess_all": {
-        "Jimmy Tarjan": 0.62,
+        "Jimmy Tarjan": 0.61,
         "Michael McNabb": 0.1,
         "Dennis Estepp": 0.1,
         "Greg Smith": 0.1,
@@ -826,6 +836,16 @@
      "auto": "Man-to-Man",
      "conf": 0.99,
      "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Switch",
+     "conf": 0.3,
+     "sure": false,
      "same": null,
      "note": ""
     },
@@ -1244,6 +1264,16 @@
      "auto": "Man-to-Man",
      "conf": 0.99,
      "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Switch",
+     "conf": 0.3,
+     "sure": false,
      "same": null,
      "note": ""
     },
@@ -1682,6 +1712,16 @@
      "auto": "Man-to-Man",
      "conf": 0.99,
      "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Switch",
+     "conf": 0.3,
+     "sure": false,
      "same": null,
      "note": ""
     },
@@ -2170,6 +2210,16 @@
      "auto": "Man-to-Man",
      "conf": 0.99,
      "sure": true,
+     "same": null,
+     "note": ""
+    },
+    {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Switch",
+     "conf": 0.3,
+     "sure": false,
      "same": null,
      "note": ""
     },
@@ -2690,6 +2740,16 @@
      "note": ""
     },
     {
+     "field": "ball_screen_coverage",
+     "label": "Ball-screen coverage",
+     "coach": null,
+     "auto": "Switch",
+     "conf": 0.3,
+     "sure": false,
+     "same": null,
+     "note": ""
+    },
+    {
      "field": "screen_defender",
      "label": "Screen defender",
      "coach": null,
@@ -2825,13 +2885,14 @@
    "Bot",
    "Box",
    "Box #1 STS",
-   "Box #2- Curl",
+   "Box #2 Curl",
    "BS",
    "BS Set",
    "BS- Flex Screen",
    "bs- swing-post",
    "Bs-bs- DD",
    "bs-ds",
+   "BS-DS-Clear",
    "Bs-flair",
    "bs-pitch-ghost",
    "Bulldog",
@@ -2896,11 +2957,15 @@
    "Iverson #2",
    "Jokic Action",
    "Jungle",
+   "Kansas",
    "Kansas EOG",
    "Knicks",
    "Low",
    "Lwing",
    "Motion",
+   "Motion - Post",
+   "Motion - Ricky",
+   "Motion - Zoom",
    "Motion-go-bs",
    "Motion-over",
    "None",
@@ -2933,6 +2998,7 @@
    "Ricky (rescreen)",
    "Ricky Set",
    "Rifle",
+   "Rip",
    "Rip Screen Set",
    "Rip Set",
    "RIPON MOTION",
@@ -3155,6 +3221,7 @@
    "Devin Martin",
    "DJ Jervier",
    "Dominic Trelenberg",
+   "Drew Marshall",
    "Easton Switzer",
    "EJ Marshall",
    "Eli Podoll",
@@ -3259,5 +3326,5 @@
    "ZAVIER CASTILLO"
   ]
  },
- "built": "2026-11-23T05:17:42"
+ "built": "2026-11-23T13:57:22"
 }

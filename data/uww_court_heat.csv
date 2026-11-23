@@ -21,7 +21,7 @@ UW-Whitewater,TEAM,defense,15,25,25
 UW-Whitewater,TEAM,defense,20,20,82
 UW-Whitewater,TEAM,defense,15,20,38
 UW-Whitewater,TEAM,defense,20,15,118
-UW-Whitewater,TEAM,defense,25,15,157
+UW-Whitewater,TEAM,defense,25,15,154
 UW-Whitewater,TEAM,defense,30,25,58
 UW-Whitewater,TEAM,defense,30,20,89
 UW-Whitewater,TEAM,defense,15,15,139
@@ -37,7 +37,7 @@ UW-Whitewater,TEAM,defense,10,10,91
 UW-Whitewater,TEAM,defense,35,20,129
 UW-Whitewater,TEAM,defense,40,20,77
 UW-Whitewater,TEAM,defense,35,25,144
-UW-Whitewater,TEAM,defense,30,15,114
+UW-Whitewater,TEAM,defense,30,15,117
 UW-Whitewater,TEAM,defense,35,15,78
 UW-Whitewater,TEAM,defense,35,10,23
 UW-Whitewater,TEAM,defense,30,10,105
@@ -50,9 +50,9 @@ Ripon Red Hawks,TEAM,offense,35,25,3
 UW-Whitewater,TEAM,defense,25,40,4
 UW-Whitewater,TEAM,defense,5,35,1
 UW-Whitewater,TEAM,defense,10,30,14
-Carroll (WI) Pioneers,TEAM,offense,15,5,102
-Carroll (WI) Pioneers,TEAM,offense,15,10,138
-Carroll (WI) Pioneers,TEAM,offense,15,15,89
+Carroll (WI) Pioneers,TEAM,offense,15,5,105
+Carroll (WI) Pioneers,TEAM,offense,15,10,140
+Carroll (WI) Pioneers,TEAM,offense,15,15,90
 Carroll (WI) Pioneers,TEAM,offense,20,10,139
 Carroll (WI) Pioneers,TEAM,offense,25,15,69
 Carroll (WI) Pioneers,TEAM,offense,20,15,68
@@ -186,7 +186,7 @@ Carroll (WI) Pioneers,Michael McNabb,offense,30,15,3
 Carroll (WI) Pioneers,Michael McNabb,offense,25,15,2
 Carroll (WI) Pioneers,Michael McNabb,offense,25,10,3
 Carroll (WI) Pioneers,Michael McNabb,offense,20,10,1
-Carroll (WI) Pioneers,TEAM,offense,30,5,8
+Carroll (WI) Pioneers,TEAM,offense,30,5,13
 Carroll (WI) Pioneers,TEAM,offense,35,5,6
 UW-Whitewater,TEAM,defense,45,15,8
 Carroll (WI) Pioneers,TEAM,offense,25,5,49
@@ -213,11 +213,11 @@ UW-Whitewater,TEAM,defense,45,30,5
 Carroll (WI) Pioneers,Michael McNabb,offense,35,25,9
 Carroll (WI) Pioneers,Cale Buboltz,offense,25,10,6
 Carroll (WI) Pioneers,Cale Buboltz,offense,20,10,6
-Carroll (WI) Pioneers,Cale Buboltz,offense,20,15,8
-Carroll (WI) Pioneers,Cale Buboltz,offense,15,15,12
+Carroll (WI) Pioneers,Cale Buboltz,offense,20,15,3
+Carroll (WI) Pioneers,Cale Buboltz,offense,15,15,1
 Carroll (WI) Pioneers,Cale Buboltz,offense,15,20,1
 Carroll (WI) Pioneers,Cale Buboltz,offense,15,10,8
-Carroll (WI) Pioneers,Cale Buboltz,offense,10,10,8
+Carroll (WI) Pioneers,Cale Buboltz,offense,10,10,4
 Carroll (WI) Pioneers,TEAM,offense,25,0,4
 Carroll (WI) Pioneers,Cale Buboltz,offense,10,0,3
 Carroll (WI) Pioneers,Cale Buboltz,offense,5,0,3
@@ -230,12 +230,6 @@ Carroll (WI) Pioneers,TEAM,offense,30,0,2
 Carroll (WI) Pioneers,TEAM,offense,35,0,1
 Carroll (WI) Pioneers,Michael McNabb,offense,45,30,1
 Carroll (WI) Pioneers,TEAM,offense,45,30,1
-Carroll (WI) Pioneers,Cale Buboltz,offense,0,0,8
-Carroll (WI) Pioneers,Cale Buboltz,offense,0,5,8
-Carroll (WI) Pioneers,Cale Buboltz,offense,0,10,1
-Carroll (WI) Pioneers,Cale Buboltz,offense,0,15,2
-Carroll (WI) Pioneers,Cale Buboltz,offense,5,10,2
-Carroll (WI) Pioneers,Cale Buboltz,offense,10,15,7
 Carroll (WI) Pioneers,TEAM,offense,45,25,1
 Carroll (WI) Pioneers,TEAM,offense,45,40,9
 Carroll (WI) Pioneers,TEAM,offense,5,35,6
