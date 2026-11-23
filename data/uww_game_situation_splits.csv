@@ -1,3 +1,3 @@
 opponent,situation,ppp,primary_actions,note,is_sample
-Hope Flying Dutchmen,Trailing by 10+,0.62,"bs (3x), Knicks (2x)",21 tagged possessions (their overall 0.78 PPP),False
-Hope Flying Dutchmen,"Clutch (last 5 min, margin ≤ 8)",0.86,"BLOB Motion (2x), Kansas EOG (1x)",7 tagged possessions (their overall 0.78 PPP),False
+Hope Flying Dutchmen,Trailing by 10+,0.62,"Motion (10x), Knicks (2x)",21 tagged possessions (their overall 0.78 PPP),False
+Hope Flying Dutchmen,"Clutch (last 5 min, margin ≤ 8)",0.86,"Motion (3x), Kansas (1x)",7 tagged possessions (their overall 0.78 PPP),False
