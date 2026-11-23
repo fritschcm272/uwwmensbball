@@ -1,0 +1,380 @@
+{
+ "kind": "court_calibration",
+ "arena": "Wash(StLouis)",
+ "game": "2026-11-07|GustavusAdolphus@Wash(StLouis)",
+ "coach": "Corey",
+ "saved": "2026-11-23T16:21:44+00:00",
+ "source": "streamlit app",
+ "frames": [
+  {
+   "file": "Nov_7_2026_GustavusAdolphus@Wash_StLouis/track1920v2/1_847dbeb8_t048a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT baseline x near sideline",
+     "px": 23.9,
+     "py": 801.0
+    },
+    {
+     "landmark": "LEFT baseline x far sideline",
+     "px": 793.8,
+     "py": 253.4
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 425.6,
+     "py": 521.2
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 595.4,
+     "py": 399.3
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 863.2,
+     "py": 614.5
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 994.7,
+     "py": 473.4
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 925.3,
+     "py": 545.2
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1092.7,
+     "py": 569.1
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, near",
+     "px": 110.0,
+     "py": 734.0
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 1767.0,
+     "py": 710.1
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 1786.1,
+     "py": 396.9
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_GustavusAdolphus@Wash_StLouis/track1920v2/29_c71366cb_t056.jpg",
+   "points": [
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 872.7,
+     "py": 624.1
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1021.0,
+     "py": 461.5
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 949.2,
+     "py": 542.8
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1135.7,
+     "py": 569.1
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 748.4,
+     "py": 227.1
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1221.8,
+     "py": 576.2
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 341.9,
+     "py": 514.1
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 533.2,
+     "py": 373.0
+    },
+    {
+     "landmark": "LEFT baseline x far sideline",
+     "px": 777.1,
+     "py": 200.8
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_GustavusAdolphus@Wash_StLouis/track1920v2/63_ced602c5_t020a.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 683.8,
+     "py": 585.8
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, near",
+     "px": 1896.1,
+     "py": 691.0
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1073.6,
+     "py": 251.1
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 762.7,
+     "py": 573.8
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1044.9,
+     "py": 619.3
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 851.2,
+     "py": 468.6
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1298.3,
+     "py": 365.8
+    },
+    {
+     "landmark": "RIGHT baseline x far sideline",
+     "px": 1030.5,
+     "py": 222.4
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_GustavusAdolphus@Wash_StLouis/track1920v2/97_a9a61b6b_t049a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 867.9,
+     "py": 626.5
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1018.6,
+     "py": 456.7
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 946.8,
+     "py": 542.8
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1152.5,
+     "py": 571.5
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 327.6,
+     "py": 511.7
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 528.4,
+     "py": 370.6
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_GustavusAdolphus@Wash_StLouis/track1920v2/129_d59587d0_t019.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 688.6,
+     "py": 595.4
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 762.7,
+     "py": 576.2
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, near",
+     "px": 1896.1,
+     "py": 681.4
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1078.4,
+     "py": 246.3
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1049.7,
+     "py": 609.7
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 12.0,
+     "py": 765.1
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_GustavusAdolphus@Wash_StLouis/track1920v2/165_4a847935_t031a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT baseline x near sideline",
+     "px": 35.9,
+     "py": 796.2
+    },
+    {
+     "landmark": "LEFT baseline x far sideline",
+     "px": 810.6,
+     "py": 260.6
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 437.6,
+     "py": 516.5
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 607.3,
+     "py": 396.9
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 882.3,
+     "py": 614.5
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 999.5,
+     "py": 471.0
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 934.9,
+     "py": 540.4
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 1767.0,
+     "py": 707.7
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 1800.4,
+     "py": 401.7
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_GustavusAdolphus@Wash_StLouis/track1920v2/209_1808297a_t017a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT baseline x far sideline",
+     "px": 771.5,
+     "py": 201.2
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 328.1,
+     "py": 507.8
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 533.2,
+     "py": 367.2
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 865.3,
+     "py": 632.8
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1023.5,
+     "py": 464.9
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 935.6,
+     "py": 546.9
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1140.7,
+     "py": 574.2
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_GustavusAdolphus@Wash_StLouis/track1920v2/248_0e2ee942_t024a.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 1179.7,
+     "py": 541.0
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 1207.1,
+     "py": 1031.3
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 1164.1,
+     "py": 308.6
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 1187.5,
+     "py": 632.8
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 1177.8,
+     "py": 474.6
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 673.9,
+     "py": 537.1
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1685.6,
+     "py": 552.8
+    },
+    {
+     "landmark": "LEFT baseline x far sideline",
+     "px": 283.2,
+     "py": 281.3
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 253.9,
+     "py": 306.7
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 103.5,
+     "py": 441.4
+    }
+   ]
+  }
+ ]
+}
